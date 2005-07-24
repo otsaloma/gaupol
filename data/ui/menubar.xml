@@ -1,0 +1,60 @@
+<ui>
+	<menubar>
+		<menu action="file">
+			<menuitem action="new"/>
+			<menuitem action="open"/>
+			<menuitem action="import_translation"/>
+			<separator/>
+			<menuitem action="save"/>
+			<menuitem action="save_as"/>
+			<menuitem action="save_a_copy"/>
+			<separator/>
+			<menuitem action="save_translation"/>
+			<menuitem action="save_translation_as"/>
+			<menuitem action="save_a_copy_of_translation"/>
+			<separator/>
+			<menuitem action="revert"/>
+			<separator/>
+			<placeholder name="recent">
+			</placeholder>
+			<separator/>
+			<menuitem action="close"/>
+			<menuitem action="quit"/>
+		</menu>
+		<menu action="view">
+			<menuitem action="toolbar"/>
+			<menuitem action="statusbar"/>
+			<separator/>
+			<menuitem action="times"/>
+			<menuitem action="frames"/>
+			<separator/>
+			<menu action="framerate">
+				<menuitem action="23.976"/>
+				<menuitem action="25"/>
+				<menuitem action="29.97"/>
+			</menu>
+			<separator/>
+			<menu action="columns">
+				<menuitem action="no"/>
+				<menuitem action="show"/>
+				<menuitem action="hide"/>
+				<menuitem action="duration"/>
+				<menuitem action="original"/>
+				<menuitem action="translation"/>
+			</menu>
+		</menu>
+		<menu action="documents">
+			<menuitem action="save_all"/>
+			<menuitem action="close_all"/>
+			<separator/>
+			<menuitem action="previous"/>
+			<menuitem action="next"/>
+			<separator/>
+			<placeholder name="open">
+			</placeholder>
+		</menu>
+		<menu action="help">
+			<menuitem action="about"/>
+		</menu>
+	</menubar>
+</ui>

@@ -1,0 +1,5 @@
+<ui>
+	<toolbar>
+		<toolitem action="save"/>
+	</toolbar>
+</ui>

@@ -1,0 +1,223 @@
+#!/usr/bin/env python
+
+# Copyright (C) 2005 Osmo Salomaa
+#
+# This file is part of Gaupol.
+#
+# Gaupol is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# Gaupol is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Gaupol; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+
+# Gaupol start script
+#
+# Determination of correct paths for running from source directory vs. running
+# installed adaptively copied from Gazpacho by Lorenzo Gil Sanchez.
+
+
+import gettext
+import locale
+import logging
+import optparse
+import os
+import sys
+
+
+VERSION    = '0.0'
+LOG_FORMAT = '%(levelname)s: %(message)s'
+
+
+def _check_dependencies():
+    # Check existance and versions of dependencies.
+    
+    major, minor = sys.version_info[0], sys.version_info[1]
+    if (major, minor) < (2, 4):
+        logger.critical('Python 2.4 or later is required to run Gaupol.')
+        sys.exit()
+
+    try:
+        import gtk
+        if gtk.pygtk_version < (2, 6, 0):
+            raise ImportError
+    except ImportError:
+        logger.critical('PyGTK 2.6.0 or later is required to run Gaupol.')
+        sys.exit()
+
+    try:
+        import gtk.glade
+    except ImportError:
+        logger.critical('Glade support in PyGTK is required to run Gaupol')
+        sys.exit()
+    
+def _check_paths():
+    # Determine paths and write them to file if needed.
+    #
+    # Gaupol can be run from either the source directory or from install
+    # location after installation. Paths to use will be determined based on the
+    # paths.py file.
+
+    current_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
+
+    if os.path.isfile(os.path.join(current_dir, 'gaupol.desktop')):
+        _prepare_source_run(current_dir)
+    else:
+        prefix = os.path.abspath(os.path.join(current_dir, '..'))
+        _prepare_installed_run(prefix)
+    
+def _import_optional_modules():
+    # Import optional modules.
+
+    try:
+        import psyco
+        psyco.profile()
+    except ImportError:
+        logger.info('Psyco not found.')
+
+def _parse_options():
+    # Parse command line options and arguments.
+    #
+    # Return: arguments, english (True or False)
+
+    parser = optparse.OptionParser(version='Gaupol %s' % VERSION)
+
+    parser.add_option(
+        '-q', '--quiet', action='store_true', dest='quiet', default=False,
+        help='produce less output'
+    )
+    parser.add_option(
+        '', '--english', action='store_true', dest='english', default=False,
+        help='ignore possible translation and use english'
+    )
+
+    options, args = parser.parse_args(sys.argv)
+    
+    if options.quiet:
+        logging.basicConfig(level=logging.WARNING, format=LOG_FORMAT)
+    else:
+        logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
+        
+    return args, options.english
+    
+def _prepare_gettext(use_english):
+    # Prepare internationalization using gettext.
+    #
+    # Gettext translation function is installed to Python's built-in namespace
+    # making it available everywhere without need to import anything. Gettext
+    # will be available with the underscore function.
+
+    locale.setlocale(locale.LC_ALL, '')
+
+    if use_english:
+        __builtins__.__dict__['_'] = lambda x: x
+        return
+
+    import gtk.glade
+    from gaupol.paths import LANG_DIR
+    
+    gettext.bindtextdomain('gaupol', LANG_DIR)
+    gettext.textdomain('gaupol')
+    gettext.install('gaupol', LANG_DIR, unicode=1)
+
+    gtk.glade.bindtextdomain('gaupol', LANG_DIR)
+    gtk.glade.textdomain('gaupol')
+    
+def _prepare_installed_run(prefix):
+    # Prepare path information for running installed.
+    #
+    # Python library directory is added to Python path just in case.
+
+    major, minor = sys.version_info[0], sys.version_info[1]
+    python_dir = 'python%d.%d' % (major, minor)
+    lib_dir = os.path.join(prefix, 'lib', python_dir, 'site-packages')
+
+    if lib_dir not in sys.path:
+        sys.path.append(lib_dir)
+    
+def _prepare_source_run(prefix):
+    # Prepare path information for running from source directory.
+    #
+    # Prefix is added to Python path and a paths.py file generated holding
+    # information on paths to be used.
+
+    lib_dir = os.path.join(prefix, 'lib')
+
+    if lib_dir not in sys.path:
+        sys.path.insert(0, lib_dir)
+
+    # Correct paths.
+    data_dir   = os.path.join(prefix, 'data'           )
+    glade_dir  = os.path.join(prefix, 'data', 'glade'  )
+    ui_dir     = os.path.join(prefix, 'data', 'ui'     )
+    pixmap_dir = os.path.join(prefix, 'data', 'pixmaps')
+    lang_dir   = os.path.join(prefix, 'locale'         )
+    
+    # Check paths in paths.py.
+    try:
+
+        from gaupol import paths
+
+        if paths.DATA_DIR   != data_dir   or \
+           paths.GLADE_DIR  != glade_dir  or \
+           paths.UI_DIR     != ui_dir     or \
+           paths.PIXMAP_DIR != pixmap_dir or \
+           paths.LANG_DIR   != lang_dir   :
+
+            # Set variables to affect this session.
+            paths.DATA_DIR   = data_dir
+            paths.GLADE_DIR  = glade_dir
+            paths.UI_DIR     = ui_dir
+            paths.PIXMAP_DIR = pixmap_dir
+            paths.LANG_DIR   = lang_dir
+            
+            raise ValueError
+
+    # Write paths.py to affect future sessions.
+    except (ImportError, AttributeError, SyntaxError, ValueError):
+
+        filename = os.path.join(lib_dir, 'gaupol', 'paths.py')
+
+        logger.info('Writing path information file "%s"...' % filename)
+
+        try:
+            paths_file = file(filename, 'w')
+            
+            try:
+                paths_file.write('DATA_DIR   = %r\n' % data_dir  )
+                paths_file.write('GLADE_DIR  = %r\n' % glade_dir )
+                paths_file.write('UI_DIR     = %r\n' % ui_dir    )
+                paths_file.write('PIXMAP_DIR = %r\n' % pixmap_dir)
+                paths_file.write('LANG_DIR   = %r\n' % lang_dir  )
+            
+            finally:
+                paths_file.close()
+        
+        except IOError, (errno, detail):
+            logger.critical('Failed to write path information file "%s": %s.' \
+                            % (filename, detail))
+            sys.exit()
+
+        logger.info('...done.')
+
+
+if __name__ == '__main__':
+
+    args, use_english = _parse_options()
+    logger = logging.getLogger()
+    
+    _check_dependencies()
+    _import_optional_modules()
+    _check_paths()
+    _prepare_gettext(use_english)
+
+    from gaupol.gui import main
+    main.main(args[1:])

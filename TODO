@@ -1,0 +1,22 @@
+Short-term Roadmap
+==================
+- Manual editing features
+- Finnish translation
+- Installation and uninstallation
+- Website
+* Release 0.1
+- Search, search and replace
+* Release 0.2
+- Spellcheck
+* Release 0.3
+- Subtitle editing features
+
+Unscheduled
+===========
+- Documentation
+- Support for additional subtitle formats:
+	o MPlayer
+	o SubViewer
+	o SubStation Alpha
+	o SAMI
+- Debianization?

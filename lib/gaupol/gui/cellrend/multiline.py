@@ -1,0 +1,107 @@
+# Copyright (C) 2005 Osmo Salomaa
+#
+# This file is part of Gaupol.
+#
+# Gaupol is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# Gaupol is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Gaupol; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+
+"""CellRenderer for cells containing multiline text."""
+
+
+try:
+    from psyco.classes import *
+except ImportError:
+    pass
+
+import gtk
+import gobject
+
+from gaupol.gui.cellrend.custom import CustomCellRenderer
+
+
+class CellRendererMultilineText(CustomCellRenderer):
+
+    """CellRenderer for cells containing multiline text."""
+
+    def on_start_editing(self, event, widget, path, bg_area, cell_area, flags):
+        """
+        Initiate editing of the cell.
+
+        Return: CellTextView
+        """
+        editor = CellTextView()
+
+        editor.set_wrap_mode(gtk.WRAP_NONE)
+        editor.modify_font(self.font_desc)
+
+        editor.set_text(self.text or '')
+
+        editor.connect('editing-done'   , self.on_editing_done   , path)
+        editor.connect('key-press-event', self.on_key_press_event      )
+
+        editor.grab_focus()
+        editor.show()
+
+        return editor
+
+    def on_key_press_event(self, editor, event):
+        """
+        End editing if Return or Keypad Enter is pressed.
+        
+        Shift, Ctrl or Alt combined with Return or Keypad Enter can be used
+        for linebreaking.
+        """
+        mask = event.state
+        keyname = gtk.gdk.keyval_name(event.keyval)
+
+        accel_masks = gtk.gdk.CONTROL_MASK|gtk.gdk.SHIFT_MASK|gtk.gdk.MOD1_MASK
+
+        if mask & accel_masks:
+            return
+
+        if keyname in ['Return', 'KP_Enter']:
+            editor.emit('editing-done')
+
+
+class CellTextView(gtk.TextView, gtk.CellEditable):
+
+    """TextView that implements CellEditable."""
+
+    def do_editing_done(self, *args):
+        """Empty method to avoid console error output."""
+        pass
+
+    def do_remove_widget(self, *args):
+        """Empty method to avoid console error output."""
+        pass
+    
+    def do_start_editing(self, *args):
+        """Empty method to avoid console error output."""
+        pass
+    
+    def get_text(self, *args):
+        """Get the text."""
+
+        text_buffer = self.get_buffer()
+        start, end = text_buffer.get_bounds()
+        return text_buffer.get_text(start, end, True)
+        
+    def set_text(self, text):
+        """Set the text."""
+
+        self.get_buffer().set_text(text)
+
+
+gobject.type_register(CellTextView)

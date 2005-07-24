@@ -1,0 +1,22 @@
+2005-07-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* New file: lib/gaupol/gui/constants.py.
+	* View menu action states now get updated on document switch.
+	* Changed key and section names in config.py.
+	
+	* Project moved from SourceForge to Gna!.
+	* Code, without history, moved to Subversion system.
+	
+2005-07-21  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* Cell renderers redone. New config setting: "font".
+
+2005-07-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* View menu done. New files: viewer.py and frconv.py.
+	* Some minor bug fixes.
+
+2005-07-13  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* Initial CVS upload.
+	* File, Documents and Help menus done.
