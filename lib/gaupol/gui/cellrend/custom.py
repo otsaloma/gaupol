@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Custom CellRenderers to display subtitle data."""
+"""Generic custom CellRenderer for editable cells."""
 
 
 try:
