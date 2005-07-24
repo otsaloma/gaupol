@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Generic custom CellRenderer for editable cells."""
+"""Generic custom CellRenderer text cells."""
 
 
 try:
@@ -32,7 +32,7 @@ import pango
 
 class CustomCellRenderer(gtk.GenericCellRenderer):
 
-    """Generic custom CellRenderer for editable cells."""
+    """Generic custom CellRenderer text cells."""
 
     __gproperties__ = {
         'font': (
