@@ -68,8 +68,8 @@ class CustomFileChooserDialog(gtk.FileChooserDialog):
         
             format, name, mime, pattern = entry
             file_filter = gtk.FileFilter()
+
             file_filter.set_name(name)
-            
             if mime is not None:
                 file_filter.add_mime_type(mime)
             if pattern is not None:
@@ -342,6 +342,7 @@ class SaveDialog(CustomFileChooserDialog):
 
     def set_newlines(self, newlines):
         """Set active newlines in the newlines combo box."""
+        
         try:
             self._nwl_cmbox.set_active(NEWLINES.index(newlines))
         except ValueError:

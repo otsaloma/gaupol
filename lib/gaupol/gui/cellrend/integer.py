@@ -34,7 +34,7 @@ class CellRendererInteger(CustomCellRenderer):
 
     """CellRenderer for cells containing integer data."""
 
-    def on_start_editing(self, event, widget, path, bg_area, cell_area, flags):
+    def on_start_editing(self, event, widget, row, bg_area, cell_area, flags):
         """
         Initiate editing of the cell.
 
@@ -49,8 +49,8 @@ class CellRendererInteger(CustomCellRenderer):
 
         editor.set_text(self.text or '')
 
-        editor.connect('editing-done', self.on_editing_done, path)
-        editor.connect('insert-text' , self.on_insert_text       )
+        editor.connect('editing-done', self.on_editing_done, row)
+        editor.connect('insert-text' , self.on_insert_text      )
 
         editor.grab_focus()
         editor.show()

@@ -25,6 +25,7 @@ try:
 except ImportError:
     pass
 
+from gaupol.lib.delegates.editor import Editor
 from gaupol.lib.delegates.filereader import FileReader
 from gaupol.lib.delegates.filewriter import FileWriter
 from gaupol.lib.delegates.frconv import FramerateConverter
@@ -66,6 +67,7 @@ class Data(object):
     def _assign_delegations(self):
         """Map method names to Delegate objects."""
         
+        editor      = Editor(self)
         file_reader = FileReader(self)
         file_writer = FileWriter(self)
         fr_conv     = FramerateConverter(self)
@@ -74,6 +76,7 @@ class Data(object):
             'change_framerate'      : fr_conv,
             'read_main_file'        : file_reader,
             'read_translation_file' : file_reader,
+            'set_single_value'      : editor,
             'write_main_file'       : file_writer,
             'write_translation_file': file_writer,
         }

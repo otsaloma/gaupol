@@ -21,6 +21,10 @@
 			<menuitem action="close"/>
 			<menuitem action="quit"/>
 		</menu>
+		<menu action="edit">
+			<menuitem action="undo"/>
+			<menuitem action="redo"/>
+		</menu>
 		<menu action="view">
 			<menuitem action="toolbar"/>
 			<menuitem action="statusbar"/>

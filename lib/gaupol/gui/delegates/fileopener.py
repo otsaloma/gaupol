@@ -55,19 +55,11 @@ class FileOpener(Delegate):
 
         self.projects.append(project)
         index = self.projects.index(project)
-
-        # Set GUI properties.
-
-        project.set_tab_labels()
-        self.window.set_title(project.tab_label.get_text())
-        self.refresh_documents_menu()
-        self.set_sensitivities_and_visiblities(project)
+        self._connect_project_signals(project)
 
         if project.data.main_file is not None:
             self.add_to_recent_files(project.data.main_file.path)
 
-        # Add page to notebook.
-        
         scroller = gtk.ScrolledWindow()
         scroller.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
         scroller.add(project.tree_view)
@@ -78,39 +70,47 @@ class FileOpener(Delegate):
         self.notebook.show_all()
         self.notebook.set_current_page(index)
 
-        self._connect_project_signals(project)
-        
         project.reload_all_tree_view_data()
+
+    def add_to_recent_files(self, path):
+        """Add path to recent file menus."""
+    
+        recent_files = self.config.getlist('file', 'recent_files')
+        maximum = self.config.getint('file', 'maximum_recent_files')
+        
+        try:
+            recent_files.remove(path)
+        except ValueError:
+            pass
+        
+        recent_files.insert(0, path)
+        
+        while len(recent_files) > maximum:
+            recent_files.pop()
+
+        self.config.setlist('file', 'recent_files', recent_files)
 
     def _connect_project_signals(self, project):
         """Connect gObject signals emitted by project."""
         
         signals = (
             'notebook-tab-close-button-clicked',
-            #'tree-view-cell-edited',
+            'tree-view-cell-edited',
+            'tree-view-cell-editing-started',
             'tree-view-headers-clicked',
             #'tree-view-selection-changed,
         )
             
         callbacks = (
             self.on_notebook_tab_close_button_clicked,
-            #self.on_tree_view_cell_edited,
+            self.on_tree_view_cell_edited,
+            self.on_tree_view_cell_editing_started,
             self.on_tree_view_headers_clicked,
             #self.on_tree_view_selection_changed,
         )
-
-        args = (
-            None,
-            #None,
-            None,
-            #None,
-        )
         
         for i in range(len(signals)):
-            if args[i] is not None:
-                project.connect(signals[i], callbacks[i], args[i])
-            else:
-                project.connect(signals[i], callbacks[i])
+            project.connect(signals[i], callbacks[i])
 
     def _get_default_encoding(self):
         """
@@ -142,17 +142,17 @@ class FileOpener(Delegate):
                 continue
                 
             self.notebook.set_current_page(i)
+
             self.set_status_message(_('Subtitle file "%s" is already open.') \
                                     % self.projects[i].get_main_basename())
             return True
 
         return False
         
-    def on_files_dropped(self, notebook, context, x, y, selection_data,
-                         info, time):
+    def on_files_dropped(self, notebook, context, x, y, sel_data, info, time):
         """Open drag-dropped files."""
         
-        uris = selection_data.get_uris()
+        uris = sel_data.get_uris()
         paths = []
 
         for uri in uris:
@@ -194,6 +194,7 @@ class FileOpener(Delegate):
         if new_project is None:
             gui.set_cursor_normal(self.window)
             return
+
         project = new_project
 
         # Show the translation column.
@@ -201,15 +202,9 @@ class FileOpener(Delegate):
             name = '/ui/menubar/view/columns/translation'
             self.uim.get_action(name).activate()
 
-        # Show the translation statusbar.
-        self.tran_stbar.show()
-        self.orig_stbar.set_has_resize_grip(False)
-        
+        project.tran_changed = 0
+        self.set_sensitivities()
         project.reload_all_tree_view_data()
-        project.tran_changed = False
-        project.set_tab_labels()
-        self.refresh_documents_menu()
-        self.set_sensitivities_and_visiblities(project)
 
         self.set_status_message(_('Imported translation file "%s".') \
                                 % project.get_translation_basename())
@@ -286,15 +281,10 @@ class FileOpener(Delegate):
                 project.data.tran_file.encoding
             )
 
+        project.main_changed = 0
+        project.tran_changed = 0
+        self.set_sensitivities()
         project.reload_all_tree_view_data()
-
-        project.main_changed = False
-        project.tran_changed = False
-        project.set_tab_labels()
-        
-        self.window.set_title(project.tab_label.get_text())
-        self.refresh_documents_menu()
-        self.set_sensitivities_and_visiblities(project)
 
         gui.set_cursor_normal(self.window)
 

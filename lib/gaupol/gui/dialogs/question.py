@@ -105,5 +105,5 @@ class RevertQuestionDialog(gtk.MessageDialog):
         self.set_default_response(gtk.RESPONSE_NO)
         
         self.format_secondary_text( \
-            _('Changes will be permanently lost.') \
+            _('If you revert, changes will be permanently lost.') \
         )

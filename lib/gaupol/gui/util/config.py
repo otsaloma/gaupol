@@ -51,8 +51,10 @@ KEY, VALUE = 0, 1
 DEFAULTS = {
     'editor':
     (
-        ('edit_mode', 'time'  ),
-        ('framerate', '23.976'),
+        ('edit_mode'  , 'time'  ),
+        ('framerate'  , '23.976'),
+        ('limit_undo' , 'false' ),
+        ('undo_levels', '50'    ),
     ),
     'encoding_dialog':
     (

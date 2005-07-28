@@ -112,8 +112,8 @@ class Viewer(Delegate):
         self.config.set('editor', 'framerate', framerate)
 
         # Set the correct framerate menu item active.
-        name = '/ui/menubar/view/framerate/%s' % framerate
-        self.uim.get_widget(name).set_active(True)
+        path = '/ui/menubar/view/framerate/%s' % framerate
+        self.uim.get_widget(path).set_active(True)
         
         if project.edit_mode != project.data.main_file.MODE:
             project.reload_tree_view_data_in_columns([SHOW, HIDE, DURN])
@@ -175,10 +175,11 @@ class Viewer(Delegate):
         name  = toggle_action.get_name()
         index = COLUMN_NAMES.index(name)
 
-        column = project.tree_view.get_column(index)
-        visible = column.get_property('visible')
+        tree_col = project.tree_view.get_column(index)
+        visible = tree_col.get_property('visible')
 
-        action = self.uim.get_action('/ui/menubar/view/columns/%s' % name)
+        path = '/ui/menubar/view/columns/%s' % name
+        action = self.uim.get_action(path)
         active = action.get_active()
 
         # Return if only refreshing widget state.
@@ -186,23 +187,22 @@ class Viewer(Delegate):
             return
 
         gui.set_cursor_busy(self.window)
-        columns = self.config.getlist('view', 'columns')
+        vis_cols = self.config.getlist('view', 'columns')
 
         if visible:
-            columns.remove(name)
+            vis_cols.remove(name)
         else:
-            columns.append(name)
+            vis_cols.append(name)
 
-        column.set_visible(not visible)
-        self.config.setlist('view', 'columns', columns)
+        tree_col.set_visible(not visible)
+        self.config.setlist('view', 'columns', vis_cols)
 
-        self.set_sensitivities_and_visiblities()
-
+        self.set_sensitivities()
         gui.set_cursor_normal(self.window)
 
     def on_tree_view_headers_clicked(self, button, event):
         """
-		Show a popup menu when list headers are right-clicked.
+        Show a popup menu when list headers are right-clicked.
         
         Popup menu allows showing/hiding list columns.
         """

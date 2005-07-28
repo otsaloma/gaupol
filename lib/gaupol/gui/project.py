@@ -40,6 +40,13 @@ from gaupol.gui.util import gui
 from gaupol.lib.data import Data
 
 
+NORM_ATTR = pango.AttrList()
+NORM_ATTR.insert(pango.AttrUnderline(pango.UNDERLINE_NONE, 0, -1))
+
+EMPH_ATTR = pango.AttrList()
+EMPH_ATTR.insert(pango.AttrUnderline(pango.UNDERLINE_SINGLE, 0, -1))
+
+
 class Project(gobject.GObject):
 
     """
@@ -56,7 +63,13 @@ class Project(gobject.GObject):
     
     __gsignals__ = {
         'notebook-tab-close-button-clicked': (STAGE, None, ()       ),
-        'tree-view-cell-edited'            : (STAGE, None, (object,)),
+        'tree-view-cell-edited'            :
+            (STAGE, None, (
+                gobject.TYPE_STRING,
+                gobject.TYPE_INT,
+                gobject.TYPE_INT
+            )),
+        'tree-view-cell-editing-started'   : (STAGE, None, (object,)),
         'tree-view-headers-clicked'        : (STAGE, None, (object,)),
         'tree-view-selection-changed'      : (STAGE, None, (object,)),
     }
@@ -75,9 +88,13 @@ class Project(gobject.GObject):
         self.untitle   = _('Untitled %d') % counter
         self.edit_mode = config.get('editor', 'edit_mode')
 
-        self.main_changed = False
-        self.tran_changed = False
+        # Undoing will decrease changed value by one. Doing and redoing will
+        # increase changed value by one. At zero the document is at its
+        # unchanged (saved) state.
+        self.main_changed = 0
+        self.tran_changed = 0
         
+        # Stacks of actions of type DURAction.   
         self.undoables = []
         self.redoables = []
 
@@ -87,7 +104,6 @@ class Project(gobject.GObject):
         self.tab_widget     = None
         self.tree_view      = None
         self.tooltips       = gtk.Tooltips()
-        self.uim_id         = None
 
         self._build_tab_labels()
         self.build_tree_view()
@@ -156,60 +172,73 @@ class Project(gobject.GObject):
 
         font = self._config.get('view', 'font')
 
+        signals   = ['editing-started', 'edited']
+        callbacks = [
+            self._on_tree_view_cell_editing_started,
+            self._on_tree_view_cell_edited
+        ]
+
         for i in range(6):
-            cr = eval('cr_%d' % i)
+        
+            cell_rend = eval('cr_%d' % i)
+            
             if i != 0:
-                cr.set_editable(True)
-            cr.set_property('font', font)
-            cr.connect('edited', self._on_tree_view_cell_edited, i)
+                cell_rend.set_editable(True)
+            cell_rend.set_property('font', font)
+
+            for k in range(len(signals)):
+                cell_rend.connect(signals[k], callbacks[k], i)
 
         store = gtk.ListStore(*columns)
         self.tree_view.set_model(store)
         
-        col_0 = gtk.TreeViewColumn(_('No.')        , cr_0, text=0)
-        col_1 = gtk.TreeViewColumn(_('Show')       , cr_1, text=1)
-        col_2 = gtk.TreeViewColumn(_('Hide')       , cr_2, text=2)
-        col_3 = gtk.TreeViewColumn(_('Duration')   , cr_3, text=3)
-        col_4 = gtk.TreeViewColumn(_('Text')       , cr_4, text=4)
-        col_5 = gtk.TreeViewColumn(_('Translation'), cr_5, text=5)
+        tree_col_0 = gtk.TreeViewColumn(_('No.')        , cr_0, text=0)
+        tree_col_1 = gtk.TreeViewColumn(_('Show')       , cr_1, text=1)
+        tree_col_2 = gtk.TreeViewColumn(_('Hide')       , cr_2, text=2)
+        tree_col_3 = gtk.TreeViewColumn(_('Duration')   , cr_3, text=3)
+        tree_col_4 = gtk.TreeViewColumn(_('Text')       , cr_4, text=4)
+        tree_col_5 = gtk.TreeViewColumn(_('Translation'), cr_5, text=5)
 
-        columns = self._config.getlist('view', 'columns')
+        vis_columns = self._config.getlist('view', 'columns')
         
         # Set column properties and append columns.
         for i in range(6):
         
-            col = eval('col_%d' % i)
-            self.tree_view.append_column(col)
+            tree_col = eval('tree_col_%d' % i)
+            self.tree_view.append_column(tree_col)
 
-            col.set_resizable(True)
-            col.set_clickable(True)
+            tree_col.set_resizable(True)
+            tree_col.set_clickable(True)
             
-            col.set_sort_column_id(i)
+            tree_col.set_sort_column_id(i)
             if i == NO:
                 store.set_sort_column_id(NO, gtk.SORT_ASCENDING)
 
             col_name = COLUMN_NAMES[i]
-            if col_name not in columns:
-                col.set_visible(False)
+            if col_name not in vis_columns:
+                tree_col.set_visible(False)
 
             # Set a label widget as the column title.
-            label = gtk.Label(col.get_title())
-            col.set_widget(label)
+            label = gtk.Label(tree_col.get_title())
+            tree_col.set_widget(label)
             label.show()
             
             # Get button from the column title.
-            button = col.get_widget()
+            button = tree_col.get_widget()
             while not isinstance(button, gtk.Button):
-                button = button.get_parent() 
-            
+                button = button.get_parent()
+
             # Show a column hide/show popup menu on column header right-click.
-            button.connect('button_release_event',
-                           self._on_tree_view_headers_clicked)
+            signal = 'button_release_event'
+            method = self._on_tree_view_headers_clicked
+            button.connect(signal, method)
 
         selection = self.tree_view.get_selection()
         selection.set_mode(gtk.SELECTION_MULTIPLE)
         selection.unselect_all()
         selection.connect('changed', self._on_tree_view_selection_changed)
+
+        self.tree_view.connect_after('move-cursor', self._set_active_column)
 
     def get_main_basename(self):
         """Get basename of main document."""
@@ -291,15 +320,30 @@ class Project(gobject.GObject):
         return path, format, encoding, newlines
 
     def _on_notebook_tab_close_button_clicked(self, *args):
+        """Emit signal that the notebook tab close button has been clicked."""
+        
         self.emit('notebook-tab-close-button-clicked')
 
-    def _on_tree_view_cell_edited(self, *args):
-        self.emit('tree-view-cell-edited')
+    def _on_tree_view_cell_edited(self, cell_rend, new_value, row, col):
+        """Emit signal that a tree view cell has been edited."""
+
+        self.emit('tree-view-cell-edited', new_value, row, col)
+
+    def _on_tree_view_cell_editing_started(self, cell_rend, editor, row, col):
+        """Emit signal that a tree view cell editing has started."""
+
+        self._set_active_column()
+        self.emit('tree-view-cell-editing-started', col)
         
     def _on_tree_view_headers_clicked(self, button, event):
+        """Emit signal that a tree view cell header has been clicked."""
+
         self.emit('tree-view-headers-clicked', event)
 
     def _on_tree_view_selection_changed(self, tree_sel):
+        """Emit signal that a tree view selection has changed."""
+
+        self._set_active_column()
         self.emit('tree-view-selection-changed', tree_sel)
 
     def reload_all_tree_view_data(self):
@@ -316,14 +360,12 @@ class Project(gobject.GObject):
         self.tree_view.freeze_child_notify()
 
         if self.edit_mode == 'time':
-            for i in range(len(self.data.times)):
-                store.append([i + 1] + self.data.times[i] + \
-                             self.data.texts[i])
-
+            timings = self.data.times
         elif self.edit_mode == 'frame':
-            for i in range(len(self.data.times)):
-                store.append([i + 1] + self.data.frames[i] + \
-                             self.data.texts[i])
+            timings = self.data.frames
+
+        for i in range(len(self.data.times)):
+            store.append([i + 1] + timings[i] + self.data.texts[i])
 
         # Try to speed up loading large amounts of data. (2)
         self.tree_view.thaw_child_notify()
@@ -349,12 +391,12 @@ class Project(gobject.GObject):
             if col in [SHOW, HIDE, DURN]:
 
                 if self.edit_mode == 'time':
-                    source = self.data.times
+                    timings = self.data.times
                 elif self.edit_mode == 'frame':
-                    source = self.data.frames
+                    timings = self.data.frames
                 
                 for i in range(len(store)):
-                    store[i][col] = source[i][col - 1]
+                    store[i][col] = timings[i][col - 1]
                             
             elif col in [ORIG, TRAN]:
             
@@ -366,9 +408,39 @@ class Project(gobject.GObject):
         # Try to speed up loading large amounts of data. (2)
         self.tree_view.thaw_child_notify()
 
+    def reload_tree_view_data_in_row(self, row):
+        """Reload the subtitle data in the specified row of ListStore."""
+
+        store = self.tree_view.get_model()
+        data_row = store[row][NO] - 1
+
+        if self.edit_mode == 'time':
+            timings = self.data.times
+        elif self.edit_mode == 'frame':
+            timings = self.data.frames
+
+        texts = self.data.texts
+
+        store[row] = [data_row + 1] + timings[data_row] + texts[data_row]
+
+    def _set_active_column(self, *args):
+        """Set the active column title bold."""
+
+        focus_row, focus_tree_col = self.tree_view.get_cursor()
+
+        for i in range(6):
+
+            tree_col = self.tree_view.get_column(i)
+            label = tree_col.get_widget()
+
+            if tree_col == focus_tree_col:
+                label.set_attributes(EMPH_ATTR)
+            else:
+                label.set_attributes(NORM_ATTR)
+
     def set_tab_labels(self):
         """
-        Set text in tab labels to reflect current filename and state.
+        Set text in tab labels to reflect current filename and changed state.
         
         Return: tab label title
         """

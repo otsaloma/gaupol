@@ -78,8 +78,7 @@ class FileSaver(Delegate):
         if not success:
             return False
 
-        self.window.set_title(project.tab_label.get_text())
-        self.set_sensitivities_and_visiblities(project)
+        self.set_sensitivities()
 
         return True
 
@@ -93,8 +92,7 @@ class FileSaver(Delegate):
                 self.save_translation_document(project)
 
         project = self.get_current_project()
-        self.window.set_title(project.tab_label.get_text())
-        self.set_sensitivities_and_visiblities(project)
+        self.set_sensitivities()
 
     def on_save_as_activated(self, *args):
         """
@@ -108,8 +106,7 @@ class FileSaver(Delegate):
         if not success:
             return False
 
-        self.window.set_title(project.tab_label.get_text())
-        self.set_sensitivities_and_visiblities(project)
+        self.set_sensitivities()
 
         return True
 
@@ -125,7 +122,7 @@ class FileSaver(Delegate):
         if not success:
             return False
 
-        self.set_sensitivities_and_visiblities(project)
+        self.set_sensitivities()
 
         return True
 
@@ -141,7 +138,7 @@ class FileSaver(Delegate):
         if not success:
             return False
 
-        self.set_sensitivities_and_visiblities(project)
+        self.set_sensitivities()
 
         return True
 
@@ -165,7 +162,6 @@ class FileSaver(Delegate):
         if path is None:
             gui.set_cursor_normal(self.window)
             return False
-
 
         self.set_status_message(_('Saved a copy of subtitle file to "%s".') \
                                 % path)
@@ -194,7 +190,6 @@ class FileSaver(Delegate):
             gui.set_cursor_normal(self.window)
             return False
 
-
         self.set_status_message(_('Saved a copy of translation file to "%s".') \
                                 % path)
         gui.set_cursor_normal(self.window)
@@ -219,9 +214,7 @@ class FileSaver(Delegate):
             gui.set_cursor_normal(self.window)
             return False
         
-        project.main_changed = False
-        project.set_tab_labels()
-        self.refresh_documents_menu()
+        project.main_changed = 0
         
         basename = os.path.basename(project.data.main_file.path)
         self.set_status_message(_('Saved subtitle file "%s".') % basename)
@@ -255,9 +248,7 @@ class FileSaver(Delegate):
             if format != project.data.main_file.FORMAT:
                 project.reload_tree_view_data_in_columns([ORIG])
 
-        project.main_changed = False
-        project.set_tab_labels()
-        self.refresh_documents_menu()
+        project.main_changed = 0
         self.add_to_recent_files(path)
         
         self.set_status_message(_('Saved subtitle file as "%s".') % path)
@@ -283,9 +274,7 @@ class FileSaver(Delegate):
             gui.set_cursor_normal(self.window)
             return False
         
-        project.tran_changed = False
-        project.set_tab_labels()
-        self.refresh_documents_menu()
+        project.tran_changed = 0
         
         basename = os.path.basename(project.data.tran_file.path)
         self.set_status_message(_('Saved translation file "%s".') % basename)
@@ -320,9 +309,7 @@ class FileSaver(Delegate):
             if format != project.data.tran_file.FORMAT:
                 project.reload_tree_view_data_in_columns([TRAN])
 
-        project.tran_changed = False
-        project.set_tab_labels()
-        self.refresh_documents_menu()
+        project.tran_changed = 0
         
         self.set_status_message(_('Saved translation file as "%s".') % path)
         gui.set_cursor_normal(self.window)

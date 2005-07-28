@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Generic custom CellRenderer text cells."""
+"""Generic custom CellRenderer for cells containing text."""
 
 
 try:
@@ -32,7 +32,7 @@ import pango
 
 class CustomCellRenderer(gtk.GenericCellRenderer):
 
-    """Generic custom CellRenderer text cells."""
+    """Generic custom CellRenderer for cells containing text."""
 
     __gproperties__ = {
         'font': (
@@ -52,7 +52,7 @@ class CustomCellRenderer(gtk.GenericCellRenderer):
     __gsignals__ = {
         'edited': (
             gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE,
-            (gobject.TYPE_INT, gobject.TYPE_STRING)
+            (gobject.TYPE_STRING, gobject.TYPE_INT)
         )
     }
 
@@ -72,10 +72,12 @@ class CustomCellRenderer(gtk.GenericCellRenderer):
         
         Raise AttributeError, if property does not exist.
         """
-        if property.name in self.property_names:
-            return self.__dict__[property.name]
+        name = property.name
+        
+        if name in self.property_names:
+            return self.__dict__[name]
         else:
-            raise AttributeError('No property named "%s".' % property.name)
+            raise AttributeError('No property named "%s".' % name)
 
     def do_set_property(self, property, value):
         """
@@ -83,10 +85,12 @@ class CustomCellRenderer(gtk.GenericCellRenderer):
         
         Raise AttributeError, if property does not exist.
         """
-        if property.name in self.property_names:
-            self.__dict__[property.name] = value
+        name = property.name
+
+        if name in self.property_names:
+            self.__dict__[name] = value
         else:
-            raise AttributeError('No property named "%s".' % property.name)
+            raise AttributeError('No property named "%s".' % name)
             
     def _get_layout(self, widget):
         """Get the Pango layout for the cell."""
@@ -111,10 +115,10 @@ class CustomCellRenderer(gtk.GenericCellRenderer):
         self.font_desc = font_desc
         return layout
 
-    def on_editing_done(self, editor, path):
+    def on_editing_done(self, editor, row):
         """End editing of the cell."""
-
-        self.emit('edited', path, editor.get_text())
+        
+        self.emit('edited', editor.get_text(), int(row))
 
     def on_get_size(self, widget, cell_area):
         """

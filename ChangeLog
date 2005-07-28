@@ -1,3 +1,15 @@
+2005-07-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* Undo/redo system written.
+	  New file: durmanager.py
+	  
+	* Manual editing is now possible.
+	  New files: maneditor.py, editor.py
+	  
+	* guiupdater.py rewritten.
+	
+	* Miscellanous bug fixes and minor additions.
+
 2005-07-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* New file: lib/gaupol/gui/constants.py.

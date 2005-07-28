@@ -74,20 +74,23 @@ class MultiCloseWarningDialog(gtk.Dialog):
         # Widgets
         self._dialog         = glade_xml.get_widget('dialog')
         self._main_tree_view = glade_xml.get_widget('main_document_tree_view')
-        self._tran_tree_view = glade_xml.get_widget('translation_document_tree_view')
+        self._tran_tree_view = glade_xml.get_widget( \
+                                             'translation_document_tree_view')
         self._save_button    = glade_xml.get_widget('save_button')
         self._title_label    = glade_xml.get_widget('title_label')
 
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_YES)
 
-        self._build_main_document_tree_view(glade_xml)
-        self._build_translation_document_tree_view(glade_xml)
+        self._build_main_tree_view(glade_xml)
+        self._build_translation_tree_view(glade_xml)
         self._set_title()
+
+        self._save_button.grab_focus()
 
         self._dialog.show()
 
-    def _build_main_document_tree_view(self, glade_xml):
+    def _build_main_tree_view(self, glade_xml):
         """Build the list of main documents."""
         
         label = glade_xml.get_widget('main_document_label')
@@ -104,14 +107,15 @@ class MultiCloseWarningDialog(gtk.Dialog):
         # Set sensible size for TreeView. 24 pixels are added to account for
         # possible scroll bar.
         width, height = self._main_tree_view.size_request()
-        self._main_tree_view.set_size_request(min(150, width  + 24),
-                                              min(126, height + 24))
+        width  = min(150, width  + 24)
+        height = min(126, height + 24)
+        self._main_tree_view.set_size_request(width, height)
         
         if self._main_count == 0:
             glade_xml.get_widget('main_document_label').hide()
             glade_xml.get_widget('main_document_scrolled_window').hide()
 
-    def _build_translation_document_tree_view(self, glade_xml):
+    def _build_translation_tree_view(self, glade_xml):
         """Build the list of translation documents."""
         
         label = glade_xml.get_widget('translation_document_label')
@@ -128,8 +132,9 @@ class MultiCloseWarningDialog(gtk.Dialog):
         # Set sensible size for TreeView. 24 pixels are added to account for
         # possible scroll bar.
         width, height = self._tran_tree_view.size_request()
-        self._tran_tree_view.set_size_request(min(150, width  + 24),
-                                              min(126, height + 24))
+        width  = min(150, width  + 24)
+        height = min(126, height + 24)
+        self._tran_tree_view.set_size_request(width, height)
 
         if self._tran_count == 0:
             glade_xml.get_widget('translation_document_label').hide()
@@ -158,10 +163,10 @@ class MultiCloseWarningDialog(gtk.Dialog):
         tree_view.append_column(toggle_col)
 
         # File basename column rendering function.
-        def render_basename_column(tree_view_col, cell_rend, store, tree_iter):
+        def render_basename_column(tree_col, cell_rend, store, tree_iter):
             project = store.get_value(tree_iter, PROJ)
-            cell_rend.set_property('text',
-                eval('project.get_%s_basename()' % file_type))
+            basename = eval('project.get_%s_basename()' % file_type)
+            cell_rend.set_property('text', basename)
 
         # File basename column.
         cr_text = gtk.CellRendererText()        
@@ -224,16 +229,32 @@ class MultiCloseWarningDialog(gtk.Dialog):
         
         title = ''
 
-        if self._main_count > 0 and self._tran_count == 0:
+        if self._main_count > 1 and self._tran_count == 0:
             title = _('There are %d subtitle documents with unsaved changes.') \
                     % self._main_count
 
-        elif self._main_count > 0 and self._tran_count > 0:
+        elif self._main_count == 1 and self._tran_count == 0:
+            title = _('There is %d subtitle document with unsaved changes.') \
+                    % self._main_count
+
+        elif self._main_count > 1 and self._tran_count > 1:
             title = _('There are %d subtitle documents and %d translation documents with unsaved changes.') \
                     % (self._main_count, self._tran_count)
+
+        elif self._main_count == 1 and self._tran_count > 1:
+            title = _('There is %d subtitle document and %d translation documents with unsaved changes.') \
+                    % (self._main_count, self._tran_count)
+
+        elif self._main_count > 1 and self._tran_count == 1:
+            title = _('There are %d subtitle documents and %d translation document with unsaved changes.') \
+                    % (self._main_count, self._tran_count)
                     
-        elif self._main_count == 0 and self._tran_count > 0:
+        elif self._main_count == 0 and self._tran_count > 1:
             title = _('There are %d translation documents with unsaved changes.') \
+                    % self._tran_count
+
+        elif self._main_count == 0 and self._tran_count == 1:
+            title = _('There is %d translation document with unsaved changes.') \
                     % self._tran_count
 
         title       = _('%s Save changes before closing?') % title

@@ -35,7 +35,7 @@ class CellRendererMultilineText(CustomCellRenderer):
 
     """CellRenderer for cells containing multiline text."""
 
-    def on_start_editing(self, event, widget, path, bg_area, cell_area, flags):
+    def on_start_editing(self, event, widget, row, bg_area, cell_area, flags):
         """
         Initiate editing of the cell.
 
@@ -48,8 +48,8 @@ class CellRendererMultilineText(CustomCellRenderer):
 
         editor.set_text(self.text or '')
 
-        editor.connect('editing-done'   , self.on_editing_done   , path)
-        editor.connect('key-press-event', self.on_key_press_event      )
+        editor.connect('editing-done'   , self.on_editing_done   , row)
+        editor.connect('key-press-event', self.on_key_press_event     )
 
         editor.grab_focus()
         editor.show()
@@ -80,8 +80,9 @@ class CellTextView(gtk.TextView, gtk.CellEditable):
     """TextView that implements CellEditable."""
 
     def do_editing_done(self, *args):
-        """Empty method to avoid console error output."""
-        pass
+        """End editing by removing the editor."""
+
+        self.remove_widget()
 
     def do_remove_widget(self, *args):
         """Empty method to avoid console error output."""

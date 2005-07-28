@@ -53,13 +53,13 @@ class GUIBuilder(Delegate):
         self.fr_cmbox = gtk.combo_box_new_text()
 
         # Get framerate index.
-        framerate_name  = self.config.get('editor', 'framerate')
-        framerate_index = FRAMERATE_NAMES.index(framerate_name)
+        framerate = self.config.get('editor', 'framerate')
+        index     = FRAMERATE_NAMES.index(framerate)
         
         self.fr_cmbox.insert_text(0, _('23.976 fps'))
         self.fr_cmbox.insert_text(1, _('25 fps'    ))
         self.fr_cmbox.insert_text(2, _('29.97 fps' ))
-        self.fr_cmbox.set_active(framerate_index)
+        self.fr_cmbox.set_active(index)
         
         self.fr_cmbox.connect('changed', self.on_framerate_changed)
 
@@ -78,7 +78,20 @@ class GUIBuilder(Delegate):
         toolbar.insert(gtk.SeparatorToolItem(), -1)
         toolbar.insert(tool_item, -1)
 
-    def build_menubar_and_toolbar(self):
+    def build_gui(self):
+        """Build and prepare the entire GUI."""
+    
+        self._build_window()
+        self._build_menubar_and_toolbar()
+        self._build_notebook()
+        self._build_statusbar()
+
+        self.set_menu_notify_events('main')
+        self.set_sensitivities()
+
+        self.notebook.grab_focus()
+
+    def _build_menubar_and_toolbar(self):
         """Build the menubar and the toolbar."""
 
         self._build_ui_manager()
@@ -92,6 +105,7 @@ class GUIBuilder(Delegate):
         self.main_vbox.reorder_child(toolbar, 1)
 
         self._build_open_button()
+        self._build_undo_and_redo_buttons()
         self._build_framerate_combo_box()
 
         toolbar.show_all()
@@ -99,14 +113,15 @@ class GUIBuilder(Delegate):
         if not self.config.getboolean('view', 'toolbar'):
             toolbar.hide()
 
-    def build_notebook(self):
+    def _build_notebook(self):
         """Build the notebook."""
 
         # Glade refuses to create a notebook with 0 pages.
         self.notebook.remove_page(0)
         
-        self.notebook.connect_after('switch-page',
-                                    self.on_notebook_page_switched)
+        signal = 'switch-page'
+        method = self.on_notebook_page_switched
+        self.notebook.connect_after(signal, method)
 
         # Set drag-and-drop file opening.
         self.notebook.drag_dest_set(
@@ -124,15 +139,16 @@ class GUIBuilder(Delegate):
         self.open_button.set_is_important(True)
         self.open_button.connect('clicked', self.on_open_activated)
         
-        self.open_button.set_tooltip(
-            self.ttips_always, _('Open a subtitle file'))
-        self.open_button.set_arrow_tooltip(
-            self.ttips_always, _('Open a recently used subtitle file'))
+        tip = _('Open a subtitle file')
+        self.open_button.set_tooltip(self.ttips_always, tip)
+
+        tip = _('Open a recently used subtitle file')
+        self.open_button.set_arrow_tooltip(self.ttips_always, tip)
         
         toolbar = self.uim.get_widget('/ui/toolbar')
         toolbar.insert(self.open_button, 0)
 
-    def build_statusbar(self):
+    def _build_statusbar(self):
         """Build the statusbar."""
 
         event_box = gui.get_event_box(self.orig_stbar)
@@ -258,6 +274,20 @@ class GUIBuilder(Delegate):
                 _('Quit Gaupol'),
                 self.on_quit_activated
             ), (
+                'undo',
+                gtk.STOCK_UNDO,
+                _('_Undo'),
+                '<control>Z',
+                _('Undo the last action'),
+                self.on_undo_activated
+            ), (
+                'redo',
+                gtk.STOCK_REDO,
+                _('_Redo'),
+                '<shift><control>Z',
+                _('Redo the last undone action'),
+                self.on_redo_activated
+            ), (
                 'save_all',
                 gtk.STOCK_SAVE,
                 _('_Save All'),
@@ -276,14 +306,14 @@ class GUIBuilder(Delegate):
                 None,
                 _('_Previous'),
                 '<control>Page_Up',
-                _('Activate subtitle document in previous tab'),
+                _('Activate document in previous tab'),
                 self.on_previous_activated
             ), (
                 'next',
                 None,
                 _('_Next'),
                 '<control>Page_Down',
-                _('Activate subtitle document in next tab'),
+                _('Activate document in next tab'),
                 self.on_next_activated
             ), ( 
                 'about',
@@ -444,6 +474,7 @@ class GUIBuilder(Delegate):
         self.uim.insert_action_group(action_group                ,  0)
         self.uim.insert_action_group(gtk.ActionGroup('recent')   , -1)
         self.uim.insert_action_group(gtk.ActionGroup('documents'), -1)
+        self.uim.insert_action_group(gtk.ActionGroup('undo_redo'), -1)
         
         self.uim.add_ui_from_file(MENUBAR_XML_PATH)
         self.uim.add_ui_from_file(TOOLBAR_XML_PATH)
@@ -451,7 +482,37 @@ class GUIBuilder(Delegate):
         
         self.window.add_accel_group(self.uim.get_accel_group())
 
-    def build_window(self):
+    def _build_undo_and_redo_buttons(self):
+        """Build the undo and redo buttons on the toolbar."""
+        
+        self.undo_button = gtk.MenuToolButton(gtk.STOCK_UNDO)
+        self.undo_button.set_label(_('Undo'))
+        self.undo_button.set_is_important(True)
+        self.undo_button.connect('clicked', self.on_undo_button_clicked)
+        
+        tip = _('Undo the last action')
+        self.undo_button.set_tooltip(self.ttips_open, tip)
+
+        tip = _('Undo several actions')
+        self.undo_button.set_arrow_tooltip(self.ttips_open, tip)
+
+        self.redo_button = gtk.MenuToolButton(gtk.STOCK_REDO)
+        self.redo_button.set_label(_('Redo'))
+        self.redo_button.set_is_important(False)
+        self.redo_button.connect('clicked', self.on_redo_button_clicked)
+        
+        tip = _('Redo the last undone action')
+        self.redo_button.set_tooltip(self.ttips_open, tip)
+
+        tip = _('Redo several undone actions')
+        self.redo_button.set_arrow_tooltip(self.ttips_open, tip)
+        
+        toolbar = self.uim.get_widget('/ui/toolbar')
+        toolbar.insert(gtk.SeparatorToolItem(), 2)
+        toolbar.insert(self.undo_button, 3)
+        toolbar.insert(self.redo_button, 4)
+
+    def _build_window(self):
         """Build the window."""
 
         width, height = self.config.getlistint('main_window', 'size')

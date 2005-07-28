@@ -51,6 +51,14 @@ class TimeFrameConverter(object):
         """
         self.framerate = float(framerate)
 
+    def add_times(self, time_x, time_y):
+        """Add time_y to time_x."""
+        
+        time_x = self.time_to_seconds(time_x)
+        time_y = self.time_to_seconds(time_y)
+        
+        return self.seconds_to_time(time_x + time_y)
+
     def frame_to_seconds(self, frame):
         """Convert frame to seconds."""
         
@@ -96,12 +104,18 @@ class TimeFrameConverter(object):
         return int(round(seconds * self.framerate, 0))
 
     def seconds_to_time(self, seconds):
-        """Convert seconds to time."""
-
+        """
+        Convert seconds to time.
+        
+        Do not return a time greater that 99:99:99,999.
+        """
         seconds_left = round(seconds, 3)
         
         hours = floor(seconds_left / 3600)
         seconds_left -= hours * 3600
+
+        if hours > 99:
+            return u'99:99:99,999'
         
         minutes = floor(seconds_left / 60)
         seconds_left -= minutes * 60

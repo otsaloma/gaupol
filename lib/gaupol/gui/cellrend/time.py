@@ -165,7 +165,7 @@ class CellRendererTime(CustomCellRenderer):
             editor.emit_stop_by_name('key-press-event')
             gobject.idle_add(self._change_to_zero, editor, keyname)
 
-    def on_start_editing(self, event, tree, path, bg_area, cell_area, flags):
+    def on_start_editing(self, event, tree, row, bg_area, cell_area, flags):
         """
         Initiate editing of the cell.
 
@@ -183,9 +183,9 @@ class CellRendererTime(CustomCellRenderer):
         editor.set_text(self.text or '')
 
         # Simple methods
-        editor.connect('cut-clipboard'   , self.on_cut_clipboard         )
-        editor.connect('editing-done'    , self.on_editing_done    , path)
-        editor.connect('toggle-overwrite', self.on_toggle_overwrite      )
+        editor.connect('cut-clipboard'   , self.on_cut_clipboard        )
+        editor.connect('editing-done'    , self.on_editing_done    , row)
+        editor.connect('toggle-overwrite', self.on_toggle_overwrite     )
 
         # Overriding methods
 

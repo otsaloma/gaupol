@@ -32,12 +32,14 @@ except ImportError:
 import gtk
 import gtk.glade
 
+from gaupol.gui.delegates.durmanager import DURManager
 from gaupol.gui.delegates.filecloser import FileCloser
 from gaupol.gui.delegates.fileopener import FileOpener
 from gaupol.gui.delegates.filesaver import FileSaver
 from gaupol.gui.delegates.guibuilder import GUIBuilder
 from gaupol.gui.delegates.guiupdater import GUIUpdater
 from gaupol.gui.delegates.helper import Helper
+from gaupol.gui.delegates.maneditor import ManualEditor
 from gaupol.gui.delegates.viewer import Viewer
 from gaupol.gui.util.config import Config
 from gaupol.paths import GLADE_DIR
@@ -72,7 +74,7 @@ class Application(object):
         self.config       = Config()
         self._delegations = None
 
-        # Widgets from Glade XML file.
+        # Widgets from the Glade XML file.
         self.main_vbox  = glade_xml.get_widget('main_vbox')
         self.msg_stbar  = glade_xml.get_widget('message_statusbar')
         self.notebook   = glade_xml.get_widget('notebook')
@@ -84,10 +86,14 @@ class Application(object):
         # Widgets to be manually created.
         self.fr_cmbox    = None
         self.open_button = None
+        self.redo_button = None
+        self.undo_button = None
 
         # UIManager and merge IDs.
-        self.uim           = None
-        self.recent_uim_id = None
+        self.uim              = None
+        self.documents_uim_id = None
+        self.recent_uim_id    = None
+        self.undo_redo_uim_id = None
 
         # Tooltips.
         self.ttips_always = gtk.Tooltips()
@@ -99,38 +105,26 @@ class Application(object):
         self.config.read_from_file()
         self._assign_delegations()
 
-        self.build_window()
-        self.build_menubar_and_toolbar()
-        self.build_notebook()
-        self.build_statusbar()
-
-        self.refresh_recent_file_menus()
-        self.set_menu_tooltips('main')
-        self.set_menu_tooltips('recent')
-
-        self.set_sensitivities_and_visiblities()
-
-        self.notebook.set_property('has-focus', True)
-
+        self.build_gui()
         self.window.show()
         
     def _assign_delegations(self):
         """Map method names to Delegate objects."""
         
+        dur_manager = DURManager(self)
         file_closer = FileCloser(self)
         file_opener = FileOpener(self)
         file_saver  = FileSaver(self)
         gui_builder = GUIBuilder(self)
         gui_updater = GUIUpdater(self)
         helper      = Helper(self)
+        man_editor  = ManualEditor(self)
         viewer      = Viewer(self)
 
         self._delegations = {
-            'add_to_recent_files'                    : gui_updater,
-            'build_menubar_and_toolbar'              : gui_builder,
-            'build_notebook'                         : gui_builder,
-            'build_statusbar'                        : gui_builder,
-            'build_window'                           : gui_builder,
+            'add_to_recent_files'                    : file_opener,
+            'build_gui'                              : gui_builder,
+            'do_action'                              : dur_manager,
             'on_about_activated'                     : helper,
             'on_close_activated'                     : file_closer,
             'on_close_all_activated'                 : file_closer,
@@ -148,7 +142,9 @@ class Application(object):
             'on_previous_activated'                  : gui_updater,
             'on_quit_activated'                      : file_closer,
             'on_recent_file_activated'               : file_opener,
-            'on_report_a_bug_activated'              : helper,
+            'on_redo_activated'                      : dur_manager,
+            'on_redo_button_clicked'                 : dur_manager,
+            'on_redo_item_activated'                 : dur_manager,
             'on_revert_activated'                    : file_opener,
             'on_save_a_copy_activated'               : file_saver,
             'on_save_a_copy_of_translation_activated': file_saver,
@@ -159,20 +155,25 @@ class Application(object):
             'on_save_translation_as_activated'       : file_saver,
             'on_statusbar_toggled'                   : viewer,
             'on_toolbar_toggled'                     : viewer,
+            'on_tree_view_cell_edited'               : man_editor,
+            'on_tree_view_cell_editing_started'      : man_editor,
             'on_tree_view_column_toggled'            : viewer,
             'on_tree_view_headers_clicked'           : viewer,
+            'on_undo_activated'                      : dur_manager,
+            'on_undo_button_clicked'                 : dur_manager,
+            'on_undo_item_activated'                 : dur_manager,
             'on_window_delete_event'                 : file_closer,
             'on_window_state_event'                  : gui_updater,
             'open_main_files'                        : file_opener,
-            'refresh_documents_menu'                 : gui_updater,
-            'refresh_recent_file_menus'              : gui_updater,
+            'redo_action'                            : dur_manager,
             'save_main_document_as'                  : file_saver,
             'save_main_document'                     : file_saver,
             'save_translation_document_as'           : file_saver,
             'save_translation_document'              : file_saver,
-            'set_menu_tooltips'                      : gui_updater,
-            'set_sensitivities_and_visiblities'      : gui_updater,
+            'set_menu_notify_events'                 : gui_updater,
+            'set_sensitivities'                      : gui_updater,
             'set_status_message'                     : gui_updater,
+            'undo_action'                            : dur_manager,
         }
 
     def __getattr__(self, name):
