@@ -441,6 +441,7 @@ class GUIUpdater(Delegate):
         if project is None:
             prev_action.set_sensitive(False)
             next_action.set_sensitive(False)
+            self.window.set_title('Gaupol')
             return
 
         prj_index = self.projects.index(project)
