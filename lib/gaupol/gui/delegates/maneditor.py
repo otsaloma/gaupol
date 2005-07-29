@@ -42,9 +42,9 @@ class ManualEditAction(object):
         self.col       = col
 
         if col == TRAN:
-            action.document = 'translation'
+            self.document = 'translation'
         else:
-            action.document = 'main'
+            self.document = 'main'
 
         edit_mode = project.edit_mode
         subtitle  = row + 1
@@ -82,10 +82,9 @@ class ManualEditAction(object):
             section = 'texts'
             col = self.col - 4
 
-        row = self.store[self.row][NO] - 1
+        row = store[self.row][NO] - 1
             
         self.project.data.set_single_value(section, col, row, value)
-
         self.project.reload_tree_view_data_in_row(self.row)
         
     def undo(self):
@@ -115,10 +114,7 @@ class ManualEditor(Delegate):
         if old_value == new_value:
             return
 
-        action = ManualEditAction(
-            project, store, old_value, new_value, row, col
-        )
-
+        action = ManualEditAction(project, old_value, new_value, row, col)
         self.do_action(project, action)
 
     def on_tree_view_cell_editing_started(self, project, col):
