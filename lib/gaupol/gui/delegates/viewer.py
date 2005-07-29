@@ -176,7 +176,7 @@ class Viewer(Delegate):
         index = COLUMN_NAMES.index(name)
 
         tree_col = project.tree_view.get_column(index)
-        visible = tree_col.get_property('visible')
+        visible = tree_col.get_visible()
 
         path = '/ui/menubar/view/columns/%s' % name
         action = self.uim.get_action(path)
@@ -187,14 +187,13 @@ class Viewer(Delegate):
             return
 
         gui.set_cursor_busy(self.window)
-        vis_cols = self.config.getlist('view', 'columns')
-
-        if visible:
-            vis_cols.remove(name)
-        else:
-            vis_cols.append(name)
-
         tree_col.set_visible(not visible)
+        vis_cols = []
+        
+        for i in range(len(COLUMN_NAMES)):
+            if project.tree_view.get_column(i).get_visible():
+                vis_cols.append(COLUMN_NAMES[i])
+        
         self.config.setlist('view', 'columns', vis_cols)
 
         self.set_sensitivities()
