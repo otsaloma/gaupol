@@ -159,6 +159,10 @@ class GUIUpdater(Delegate):
             label    = '%d. %s' % (i + 1, tab_label)
             tooltip  = _('Activate "%s"') % basename
 
+            # Ellipsize too long menu item names.
+            if len(label) > 60:
+                label = label[:30] + '...' + label[-30:]
+
             # Unaccelerate underscores.
             label = label.replace('_', '__')
 
@@ -244,8 +248,8 @@ class GUIUpdater(Delegate):
             tooltip    = _('Open "%s"') % basenames[i]
 
             # Ellipsize too long menu item names.
-            if len(menu_label) > 50:
-                menu_label = menu_label[:50] + '...'
+            if len(menu_label) > 60:
+                menu_label = menu_label[:30] + '...' + menu_label[-30:]
 
             # Unaccelerate underscores.
             menu_label = menu_label.replace('_', '__')
@@ -266,8 +270,8 @@ class GUIUpdater(Delegate):
             ob_label = ob_label.replace('_', '__')
 
             # Ellipsize too long menu item names.
-            if len(ob_label) > 80:
-                ob_label = ob_label[:80] + '...'
+            if len(ob_label) > 100:
+                ob_label = ob_label[:50] + '...' + ob_label[-50:]
 
             ob_actions.append((
                 ob_name, None, ob_label, None, tooltip,
