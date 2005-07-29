@@ -143,7 +143,7 @@ class FileOpener(Delegate):
                 
             self.notebook.set_current_page(i)
 
-            self.set_status_message(_('Subtitle file "%s" is already open.') \
+            self.set_status_message(_('Subtitle file "%s" is already open') \
                                     % self.projects[i].get_main_basename())
             return True
 
@@ -206,7 +206,7 @@ class FileOpener(Delegate):
         self.set_sensitivities()
         project.reload_all_tree_view_data()
 
-        self.set_status_message(_('Imported translation file "%s".') \
+        self.set_status_message(_('Imported translation file "%s"') \
                                 % project.get_translation_basename())
         gui.set_cursor_normal(self.window)
         
@@ -221,7 +221,7 @@ class FileOpener(Delegate):
         project.data.texts.append([u''] * 2)
 
         self._add_new_project(project)
-        self.set_status_message(_('Created a new subtitle.'))
+        self.set_status_message(_('Created a new subtitle'))
 
     def on_open_activated(self, *args):
         """Open a main file with FileChooser."""
@@ -234,7 +234,7 @@ class FileOpener(Delegate):
             return
 
         self._add_new_project(project)
-        self.set_status_message(_('Opened subtitle file "%s".') \
+        self.set_status_message(_('Opened subtitle file "%s"') \
                                 % project.get_main_basename())
 
         gui.set_cursor_normal(self.window)
@@ -311,7 +311,7 @@ class FileOpener(Delegate):
                 continue
 
             self._add_new_project(project)
-            self.set_status_message(_('Opened subtitle file "%s".') \
+            self.set_status_message(_('Opened subtitle file "%s"') \
                                     % project.get_main_basename())
 
             # Show the new notebook page right away.

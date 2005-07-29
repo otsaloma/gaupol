@@ -33,12 +33,12 @@ class DURAction(Delegate):
 
     """Base class for actions, that can be done, undone and redone."""
     
-    def __init__(self, project):
+    def __init__(self, *args):
         
         self.description = None
         self.document    = None
 
-        # Tree view properties tha can be restored.
+        # Tree view properties that can be restored.
         self.focus_row      = None
         self.focus_tree_col = None
         self.sel_rows       = None
@@ -61,7 +61,7 @@ class DURAction(Delegate):
 
 class DURManager(Delegate):
 
-    """Performer for actions, that can be done, undone and redone."""
+    """Manager for actions, that can be done, undone and redone."""
 
     def do_action(self, project, action):
         """Do action and update things affected."""

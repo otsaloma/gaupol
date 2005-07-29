@@ -163,7 +163,7 @@ class FileSaver(Delegate):
             gui.set_cursor_normal(self.window)
             return False
 
-        self.set_status_message(_('Saved a copy of subtitle file to "%s".') \
+        self.set_status_message(_('Saved a copy of subtitle file to "%s"') \
                                 % path)
         gui.set_cursor_normal(self.window)
         
@@ -190,7 +190,7 @@ class FileSaver(Delegate):
             gui.set_cursor_normal(self.window)
             return False
 
-        self.set_status_message(_('Saved a copy of translation file to "%s".') \
+        self.set_status_message(_('Saved a copy of translation file to "%s"') \
                                 % path)
         gui.set_cursor_normal(self.window)
         
@@ -217,7 +217,7 @@ class FileSaver(Delegate):
         project.main_changed = 0
         
         basename = os.path.basename(project.data.main_file.path)
-        self.set_status_message(_('Saved subtitle file "%s".') % basename)
+        self.set_status_message(_('Saved subtitle file "%s"') % basename)
         gui.set_cursor_normal(self.window)
         
         return True
@@ -251,7 +251,7 @@ class FileSaver(Delegate):
         project.main_changed = 0
         self.add_to_recent_files(path)
         
-        self.set_status_message(_('Saved subtitle file as "%s".') % path)
+        self.set_status_message(_('Saved subtitle file as "%s"') % path)
         gui.set_cursor_normal(self.window)
         
         return True
@@ -277,7 +277,7 @@ class FileSaver(Delegate):
         project.tran_changed = 0
         
         basename = os.path.basename(project.data.tran_file.path)
-        self.set_status_message(_('Saved translation file "%s".') % basename)
+        self.set_status_message(_('Saved translation file "%s"') % basename)
         gui.set_cursor_normal(self.window)
         
         return True
@@ -311,7 +311,7 @@ class FileSaver(Delegate):
 
         project.tran_changed = 0
         
-        self.set_status_message(_('Saved translation file as "%s".') % path)
+        self.set_status_message(_('Saved translation file as "%s"') % path)
         gui.set_cursor_normal(self.window)
         
         return True

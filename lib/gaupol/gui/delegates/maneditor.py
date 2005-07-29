@@ -33,22 +33,21 @@ class ManualEditAction(object):
 
     """Manual edit action for subtitle data."""
     
-    def __init__(self, project, store, old_value, new_value, row, col):
+    def __init__(self, project, old_value, new_value, row, col):
         
-        self.project = project
-        self.store   = store
-        self.row     = row
-        self.col     = col
+        self.project   = project
+        self.old_value = old_value
+        self.new_value = new_value
+        self.row       = row
+        self.col       = col
+
+        if col == TRAN:
+            action.document = 'translation'
+        else:
+            action.document = 'main'
 
         edit_mode = project.edit_mode
         subtitle  = row + 1
-
-        if edit_mode == 'frame' and col in [SHOW, HIDE, DURN]:
-            self.old_value = int(old_value)
-            self.new_value = int(new_value)
-        else:
-            self.old_value = old_value
-            self.new_value = new_value
 
         DESCRIPTIONS = [
             None,
@@ -73,6 +72,8 @@ class ManualEditAction(object):
 
     def _set_value(self, value):
         """Set value to data."""
+
+        store = self.project.tree_view.get_model()
         
         if self.col in [SHOW, HIDE, DURN]:
             section = self.project.edit_mode + 's'
@@ -104,19 +105,19 @@ class ManualEditor(Delegate):
         self.set_status_message(None)
     
         store = project.tree_view.get_model()
+
+        # new_value is by default a string.
+        if project.edit_mode == 'frame' and col in [SHOW, HIDE, DURN]:
+            new_value = int(new_value)
+
         old_value = store[row][col]
 
-        if str(old_value) == str(new_value):
+        if old_value == new_value:
             return
 
         action = ManualEditAction(
             project, store, old_value, new_value, row, col
         )
-
-        if col == TRAN:
-            action.document = 'translation'
-        else:
-            action.document = 'main'
 
         self.do_action(project, action)
 
