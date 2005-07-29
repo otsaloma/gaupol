@@ -381,8 +381,9 @@ class Project(gobject.GObject):
         # Try to speed up loading large amounts of data. (1)
         self.tree_view.freeze_child_notify()
 
-        # When looping over the store, the sort order must be unambiguous,
-        # hence sort order is temporarily changed to No. column.
+        # When looping over the store, the sort order must be unambiguous.
+        # New data could change the sort order and ruin looping order.
+        # Hence sort order is temporarily changed to No. column.
         sort_col, sort_order = store.get_sort_column_id()
         store.set_sort_column_id(NO, gtk.SORT_ASCENDING)
 
@@ -422,6 +423,36 @@ class Project(gobject.GObject):
         texts = self.data.texts
 
         store[row] = [data_row + 1] + timings[data_row] + texts[data_row]
+
+    def reload_tree_view_data_in_rows(self, row_a, row_b):
+        """Reload the subtitle data between row_a and row_b of Data."""
+
+        start_row = min(row_a, row_b)
+        end_row   = max(row_a, row_b)
+
+        store = self.tree_view.get_model()
+
+        # Try to speed up loading large amounts of data. (1)
+        self.tree_view.freeze_child_notify()
+
+        # When looping over the store, the sort order must be unambiguous.
+        # New data could change the sort order and ruin looping order.
+        # Hence sort order is temporarily changed to No. column.
+        sort_col, sort_order = store.get_sort_column_id()
+        store.set_sort_column_id(NO, gtk.SORT_ASCENDING)
+
+        if self.edit_mode == 'time':
+            timings = self.data.times
+        elif self.edit_mode == 'frame':
+            timings = self.data.frames
+
+        for i in range(start_row, end_row + 1):
+            store[i] = [i + 1] + timings[i] + self.data.texts[i]
+
+        store.set_sort_column_id(sort_col, sort_order)
+                        
+        # Try to speed up loading large amounts of data. (2)
+        self.tree_view.thaw_child_notify()
 
     def _set_active_column(self, *args):
         """Set the active column title bold."""

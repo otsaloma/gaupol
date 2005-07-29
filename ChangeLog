@@ -1,5 +1,9 @@
 2005-07-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* Data is now resorted by show time/frame after manual editing.
+
+2005-07-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* Undo/redo system written.
 	  New file: durmanager.py
 	  

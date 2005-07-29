@@ -57,6 +57,10 @@ class SubtitleFile(object):
         self.encoding = encoding
         self.newlines = newlines
 
+        self.FORMAT    = None
+        self.EXTENSION = None
+        self.MODE      = None
+
     def _get_newline_character(self):
         """
         Get character used for newlines.

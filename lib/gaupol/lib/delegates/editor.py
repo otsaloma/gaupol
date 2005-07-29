@@ -60,6 +60,7 @@ class Editor(Delegate):
         Set value of single data item and all ones that it affects.
         
         section: "times", "frames" or "texts"
+        Return: new index of row
         """
         if section == 'times':
             
@@ -89,5 +90,67 @@ class Editor(Delegate):
 
         elif section == 'texts':
 
-            self.texts[row][col] = value        
+            self.texts[row][col] = value
         
+        if col == SHOW:
+            return self._sort_data(row)
+
+        return row
+
+    def _sort_data(self, row):
+        """
+        Sort data after show value in row has changed.
+        
+        Return: new index of row
+        """
+        # Time is the default mode for an unsaved subtitled.
+        if self.main_file is not None:
+            mode = self.main_file.MODE
+        else:
+            mode = 'time'
+
+        # Get native timings for comparison.
+        if mode == 'time':
+            timings = self.times
+        elif mode == 'frame':
+            timings = self.frames
+
+        direction = None
+        length = len(timings)
+        
+        # Get direction to move to.
+        if row < length - 1 and timings[row][SHOW] > timings[row + 1][SHOW]:
+            direction = 'later'
+        elif row > 0 and timings[row][SHOW] < timings[row - 1][SHOW]:
+            direction = 'earlier'
+
+        if direction is None:
+            return row
+
+        # Get new row, where to move row to.
+        new_row = row
+
+        if direction == 'later':
+            for i in range(row + 1, length):
+                if timings[row][SHOW] > timings[i][SHOW]:
+                    new_row = i + 1
+                else:
+                    break
+            remove_row = row
+            result_row = new_row - 1
+
+        if direction == 'earlier':
+            for i in reversed(range(row)):
+                if timings[row][SHOW] < timings[i][SHOW]:
+                    new_row = i
+                else:
+                    break
+            remove_row = row + 1
+            result_row = new_row
+
+        # Move row in data.
+        for data in [self.times, self.frames, self.texts]:
+            data.insert(new_row, data[row])
+            data.pop(remove_row)
+
+        return result_row

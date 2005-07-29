@@ -401,7 +401,7 @@ class GUIUpdater(Delegate):
 
         ui = ui_undo + ui_redo + ui_close
         self.undo_redo_uim_id = self.uim.add_ui_from_string(ui)
-        
+            
         self.undo_button.set_menu(self.uim.get_widget('/ui/undo_popup'))
         self.redo_button.set_menu(self.uim.get_widget('/ui/redo_popup'))
 
