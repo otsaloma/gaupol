@@ -30,6 +30,7 @@ except ImportError:
 import gobject
 import gtk
 
+from gaupol.gui.cellrend.multiline import CellRendererMultilineText
 from gaupol.gui.constants import COLUMN_NAMES
 from gaupol.gui.constants import FRAMERATE_NAMES
 from gaupol.gui.constants import NO, SHOW, HIDE, DURN, ORIG, TRAN
@@ -119,6 +120,18 @@ class GUIUpdater(Delegate):
         """Switch to previous page in notebook."""
         
         self.notebook.prev_page()
+
+    def on_tree_view_cursor_moved(self, *args):
+        """Update GUI properties when tree view cursor has moved."""
+
+        project = self.get_current_project()
+        self._set_format_sensitivities(project)
+        
+    def on_tree_view_selection_changed(self, *args):
+        """Update GUI properties when tree view selection has changed."""
+
+        project = self.get_current_project()
+        self._set_format_sensitivities(project)
 
     def on_window_state_event(self, window, event):
         """Remember whether window is maximized or not."""
@@ -536,25 +549,54 @@ class GUIUpdater(Delegate):
         path = '/ui/menubar/file/revert'
         self.uim.get_action(path).set_sensitive(sensitive)
 
-    def _set_main_file_exists(self, project):
-        """
-        Set GUI properties to suit main file exist state.
-        
-        The existance of the main file means that the file format (e.g.
-        native mode and tags) is known.
-        """
+    def _set_format_sensitivities(self, project):
+        """Set sensitivity of actions in the Format menu."""
+
+        dialog_action = self.uim.get_action('/ui/menubar/format/dialog')
+        italic_action = self.uim.get_action('/ui/menubar/format/italic')
+        case_action   = self.uim.get_action('/ui/menubar/format/case' )
+
+        if project is None:
+            dialog_action.set_sensitive(False)
+            italic_action.set_sensitive(False)
+            case_action.set_sensitive(False)
+            return
+
+        selection = project.tree_view.get_selection()
+        sel_row_count = selection.count_selected_rows()
+        store_col = project.get_store_focus()[1]
+
+        sensitivity = True
+
+        # Something must be selected.
+        if sel_row_count == 0:
+            sensitivity = False
+
+        # A text column must be active and file format must be known.
+        if store_col == ORIG:
+            if project.data.main_file is None:
+                sensitivity = False
+        elif store_col == TRAN:
+            if project.data.tran_file is None:
+                if project.data.main_file is None:
+                    sensitivity = False
+        else:
+            sensitivity = False
+
+        dialog_action.set_sensitive(sensitivity)
+        italic_action.set_sensitive(sensitivity)
+        case_action.set_sensitive(sensitivity)
+
+    def _set_framerate_sensitivities(self, project):
+        """Set sensitivity of framerate widgets and actions."""
 
         if project is None:
             exists = False
         else:
             exists = bool(project.data.main_file)
 
-        uim_paths = (
-            '/ui/menubar/view/framerate',
-        )
-            
-        for path in uim_paths:
-            self.uim.get_action(path).set_sensitive(exists)
+        path = '/ui/menubar/view/framerate'
+        self.uim.get_action(path).set_sensitive(exists)
         
         self.fr_cmbox.set_sensitive(exists)
         gui.get_event_box(self.fr_cmbox).set_sensitive(exists)
@@ -609,7 +651,8 @@ class GUIUpdater(Delegate):
         self._set_current_document(project)
         self._set_document_open()
         self._set_file_sensitivities(project)
-        self._set_main_file_exists(project)
+        self._set_format_sensitivities(project)
+        self._set_framerate_sensitivities(project)
         self._set_undo_and_redo_sensitivities(project)
         self._set_visibility_of_statusbars(project)
 
@@ -652,11 +695,8 @@ class GUIUpdater(Delegate):
             undoable = bool(project.undoables)
             redoable = bool(project.redoables)
 
-        path = '/ui/menubar/edit/undo'
-        self.uim.get_action(path).set_sensitive(undoable)
-
-        path = '/ui/menubar/edit/redo'
-        self.uim.get_action(path).set_sensitive(redoable)
+        self.uim.get_action('/ui/menubar/edit/undo').set_sensitive(undoable)
+        self.uim.get_action('/ui/menubar/edit/redo').set_sensitive(redoable)
 
         self.undo_button.set_sensitive(undoable)
         self.redo_button.set_sensitive(redoable)

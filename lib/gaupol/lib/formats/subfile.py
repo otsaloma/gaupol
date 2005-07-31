@@ -99,7 +99,6 @@ class SubtitleFile(object):
         """Strip leading and trailing spaces in list of strings."""
         
         for i in range(len(strings)):
-            strings[i] = strings[i].lstrip()
-            strings[i] = strings[i].rstrip()
+            strings[i] = strings[i].strip()
 
         return strings

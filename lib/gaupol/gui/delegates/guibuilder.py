@@ -174,6 +174,8 @@ class GUIBuilder(Delegate):
             ('view'     , None, _('_View')     ),
             ('columns'  , None, _('_Columns')  ),
             ('framerate', None, _('F_ramerate')),
+            ('format'   , None, _('F_ormat')   ),
+            ('case'     , None, _('_Case')     ),
             ('documents', None, _('_Documents')),
             ('help'     , None, _('_Help')     ),
         ]
@@ -288,6 +290,55 @@ class GUIBuilder(Delegate):
                 _('Redo the last undone action'),
                 self.on_redo_activated
             ), (
+                'dialog',
+                None,
+                _('_Dialog'),
+                '<control>D',
+                _('Toggle dialog lines on selected text'),
+                self.on_dialog_lines_activated
+            ), (
+                'italic',
+                gtk.STOCK_ITALIC,
+                _('_Italic'),
+                '<control>I',
+                _('Toggle the italicization of selected text'),
+                self.on_italic_style_activated
+            ), (
+                'title',
+                None,
+                _('_Title'),
+                '<control>1',
+                _('Change selected text to Title Case'),
+                self.on_title_case_activated
+            ), (
+                'sentence',
+                None,
+                _('_Sentence'),
+                '<control>2',
+                _('Change selected text to Sentence case'),
+                self.on_sentence_case_activated
+            ), (
+                'upper',
+                None,
+                _('_Upper'),
+                '<control>3',
+                _('Change selected text to UPPER CASE'),
+                self.on_upper_case_activated
+            ), (
+                'lower',
+                None,
+                _('_Lower'),
+                '<control>4',
+                _('Change selected text to lower case'),
+                self.on_lower_case_activated
+            ), (
+                'invert',
+                None,
+                _('_Invert'),
+                '<control>5',
+                _('Invert selected text case'),
+                self.on_invert_case_activated
+            ), (
                 'save_all',
                 gtk.STOCK_SAVE,
                 _('_Save All'),
@@ -318,7 +369,7 @@ class GUIBuilder(Delegate):
             ), ( 
                 'about',
                 gtk.STOCK_ABOUT,
-                _('_About...'),
+                _('_About'),
                 None,
                 _('Information about Gaupol'),
                 self.on_about_activated

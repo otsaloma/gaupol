@@ -27,29 +27,28 @@ except ImportError:
 
 from gaupol.gui.constants import NO, SHOW, HIDE, DURN, ORIG, TRAN
 from gaupol.gui.delegates.delegate import Delegate
+from gaupol.gui.delegates.durmanager import DURAction
 
 
-class ManualEditAction(object):
+class ManualEditAction(DURAction):
 
     """Manual edit action for subtitle data."""
     
-    def __init__(self, project, old_value, new_value, row, col):
+    def __init__(self, project, old_value, new_value, store_row, store_col):
         
-        self.project   = project
-        self.old_value = old_value
-        self.new_value = new_value
+        self.project         = project
+        self.old_value       = old_value
+        self.new_value       = new_value
+        self.focus_data_row  = project.get_data_row(store_row)
+        self.focus_store_col = store_col
 
-        # row and col point to ListStore.
-        self.row = row
-        self.col = col
-
-        if col == TRAN:
+        if store_col == TRAN:
             self.document = 'translation'
         else:
             self.document = 'main'
 
         edit_mode = project.edit_mode
-        subtitle  = row + 1
+        subtitle  = store_row + 1
 
         DESCRIPTIONS = [
             None,
@@ -60,57 +59,48 @@ class ManualEditAction(object):
             _('Editing translation of subtitle %d') % subtitle,
         ]
         
-        self.description = DESCRIPTIONS[col]
+        self.description = DESCRIPTIONS[store_col]
         
     def do(self):
         """Do editing."""
 
         self._set_value(self.new_value)
 
-    def redo(self):
-        """Redo editing."""
-        
-        self.do()
-
     def _set_value(self, value):
         """Set value to data."""
 
-        store = self.project.tree_view.get_model()
+        store    = self.project.tree_view.get_model()
+        data     = self.project.data
+        data_row = self.focus_data_row
         
-        if self.col in [SHOW, HIDE, DURN]:
-            section = self.project.edit_mode + 's'
-            data_col = self.col - 1
-        else:
-            section = 'texts'
-            data_col = self.col - 4
+        if self.focus_store_col in [SHOW, HIDE, DURN]:
+        
+            data_col = self.focus_store_col - 1
+            
+            if self.project.edit_mode == 'time':
+                new_data_row = data.set_time(data_row, data_col, value)
+            if self.project.edit_mode == 'frame':
+                new_data_row = data.set_frame(data_row, data_col, value)
+                
+        elif self.focus_store_col in [ORIG, TRAN]:
+        
+            data_col = self.focus_store_col - 4
+            data.set_text(data_row, data_col, value)
+            new_data_row = data_row
 
-        data_row = store[self.row][NO] - 1
-        new_data_row = self.project.data.set_single_value(
-            section, data_col, data_row, value
-        )
-        
         if new_data_row == data_row:
-
-            self.project.reload_tree_view_data_in_row(self.row)
-
+            self.project.reload_data_in_row(data_row)
         else:
-        
-            self.project.reload_tree_view_data_in_rows(data_row, new_data_row)
-            
-            subtitle = new_data_row + 1
-            new_store_row = None
-            
-            for i in range(len(store)):
-                if store[i][NO] == subtitle:
-                    new_store_row = i
-                    break
+            self.project.reload_data_in_rows(data_row, new_data_row)
 
-            tree_col = self.project.tree_view.get_column(self.col)
-            self.project.tree_view.set_cursor(new_store_row, tree_col)
+            store_col = self.focus_store_col
+            store_row = self.project.get_store_row(new_data_row)
+            tree_col  = self.project.tree_view.get_column(store_col)
+            self.project.tree_view.set_cursor(store_row, tree_col)
 
-            # Instance variable pointing to store row needs to be updated to
-            # be able to undo at the correct row.
-            self.row = new_store_row
+        # Instance variable pointing to data row needs to be updated to
+        # be able to undo at the correct row.
+        self.focus_data_row = new_data_row
         
     def undo(self):
         """Undo editing."""

@@ -36,6 +36,7 @@ from gaupol.gui.delegates.durmanager import DURManager
 from gaupol.gui.delegates.filecloser import FileCloser
 from gaupol.gui.delegates.fileopener import FileOpener
 from gaupol.gui.delegates.filesaver import FileSaver
+from gaupol.gui.delegates.formatter import Formatter
 from gaupol.gui.delegates.guibuilder import GUIBuilder
 from gaupol.gui.delegates.guiupdater import GUIUpdater
 from gaupol.gui.delegates.helper import Helper
@@ -115,6 +116,7 @@ class Application(object):
         file_closer = FileCloser(self)
         file_opener = FileOpener(self)
         file_saver  = FileSaver(self)
+        formatter   = Formatter(self)
         gui_builder = GUIBuilder(self)
         gui_updater = GUIUpdater(self)
         helper      = Helper(self)
@@ -128,12 +130,16 @@ class Application(object):
             'on_about_activated'                     : helper,
             'on_close_activated'                     : file_closer,
             'on_close_all_activated'                 : file_closer,
+            'on_dialog_lines_activated'              : formatter,
             'on_document_toggled'                    : gui_updater,
             'on_edit_mode_toggled'                   : viewer,
             'on_files_dropped'                       : file_opener,
             'on_framerate_changed'                   : viewer,
             'on_framerate_toggled'                   : viewer,
             'on_import_translation_activated'        : file_opener,
+            'on_invert_case_activated'               : formatter,
+            'on_italic_style_activated'              : formatter,
+            'on_lower_case_activated'                : formatter,
             'on_new_activated'                       : file_opener,
             'on_next_activated'                      : gui_updater,
             'on_notebook_page_switched'              : gui_updater,
@@ -153,15 +159,20 @@ class Application(object):
             'on_save_as_activated'                   : file_saver,
             'on_save_translation_activated'          : file_saver,
             'on_save_translation_as_activated'       : file_saver,
+            'on_sentence_case_activated'             : formatter,
             'on_statusbar_toggled'                   : viewer,
+            'on_title_case_activated'                : formatter,
             'on_toolbar_toggled'                     : viewer,
             'on_tree_view_cell_edited'               : man_editor,
             'on_tree_view_cell_editing_started'      : man_editor,
             'on_tree_view_column_toggled'            : viewer,
+            'on_tree_view_cursor_moved'              : gui_updater,
             'on_tree_view_headers_clicked'           : viewer,
+            'on_tree_view_selection_changed'         : gui_updater,
             'on_undo_activated'                      : dur_manager,
             'on_undo_button_clicked'                 : dur_manager,
             'on_undo_item_activated'                 : dur_manager,
+            'on_upper_case_activated'                : formatter,
             'on_window_delete_event'                 : file_closer,
             'on_window_state_event'                  : gui_updater,
             'open_main_files'                        : file_opener,

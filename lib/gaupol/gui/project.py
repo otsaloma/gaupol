@@ -41,10 +41,10 @@ from gaupol.lib.data import Data
 
 
 NORM_ATTR = pango.AttrList()
-NORM_ATTR.insert(pango.AttrUnderline(pango.UNDERLINE_NONE, 0, -1))
+NORM_ATTR.insert(pango.AttrWeight(pango.WEIGHT_NORMAL, 0, -1))
 
 EMPH_ATTR = pango.AttrList()
-EMPH_ATTR.insert(pango.AttrUnderline(pango.UNDERLINE_SINGLE, 0, -1))
+EMPH_ATTR.insert(pango.AttrWeight(pango.WEIGHT_BOLD, 0, -1))
 
 
 class Project(gobject.GObject):
@@ -70,8 +70,9 @@ class Project(gobject.GObject):
                 gobject.TYPE_INT
             )),
         'tree-view-cell-editing-started'   : (STAGE, None, (object,)),
+        'tree-view-cursor-moved'           : (STAGE, None, ()       ),
         'tree-view-headers-clicked'        : (STAGE, None, (object,)),
-        'tree-view-selection-changed'      : (STAGE, None, (object,)),
+        'tree-view-selection-changed'      : (STAGE, None, ()       ),
     }
 
     def __init__(self, config, counter=0):
@@ -222,6 +223,13 @@ class Project(gobject.GObject):
             label = gtk.Label(tree_col.get_title())
             tree_col.set_widget(label)
             label.show()
+
+            # Set the label wide enough that it fits the emphasized text
+            # without having to grow wider.
+            label.set_attributes(EMPH_ATTR)
+            width = label.size_request()[0]
+            label.set_size_request(width, -1)
+            label.set_attributes(NORM_ATTR)
             
             # Get button from the column title.
             button = tree_col.get_widget()
@@ -238,7 +246,45 @@ class Project(gobject.GObject):
         selection.unselect_all()
         selection.connect('changed', self._on_tree_view_selection_changed)
 
-        self.tree_view.connect_after('move-cursor', self._set_active_column)
+        method = self._on_tree_view_cursor_moved
+        self.tree_view.connect_after('move-cursor', method)
+
+    def get_data_focus(self):
+        """
+        Get the location in Data where the tree view focus points to.
+        
+        Return: section, row, column (any one could be None)
+        """
+        store = self.tree_view.get_model()
+        store_row, store_col = self.get_store_focus()
+        
+        if store_row is None:
+            data_row = None
+        else:
+            data_row = store[store_row][NO] - 1
+        
+        if store_col is None or store_col == NO:
+            data_section = None
+            data_col     = None
+            
+        elif store_col in [SHOW, HIDE, DURN]:
+            data_section = self.edit_mode + 's'
+            data_col     = store_col - 1
+            
+        elif store_col in [ORIG, TRAN]:
+            data_section = 'texts'
+            data_col     = store_col - 4
+
+        return data_section, data_row, data_col
+
+    def get_data_row(self, store_row):
+        """Get Data row that corresponds to ListStore row."""
+        
+        if store_row is None:
+            return None
+            
+        store = self.tree_view.get_model()
+        return store[store_row][NO] - 1
 
     def get_main_basename(self):
         """Get basename of main document."""
@@ -272,6 +318,52 @@ class Project(gobject.GObject):
             return path, format, encoding, newlines
         else:
             return None, None, None, None
+
+    def get_selected_data_rows(self):
+        """Get rows in Data, that match the selection in TreeView."""
+
+        store = self.tree_view.get_model()
+        store_rows = self.get_selected_store_rows()
+        return [store[i][NO] - 1 for i in store_rows]
+
+    def get_selected_store_rows(self):
+        """Get rows in ListStore, that match the selection in TreeView."""
+
+        selection = self.tree_view.get_selection()
+        return selection.get_selected_rows()[1]
+
+    def get_store_focus(self):
+        """
+        Get the location in ListStore where the tree view focus points to.
+        
+        Return: row, column (either one could be None)
+        """
+        store = self.tree_view.get_model()
+        store_row, tree_col = self.tree_view.get_cursor()
+
+        if tree_col is None:
+            return store_row, None
+
+        tree_cols = self.tree_view.get_columns()
+        store_col = tree_cols.index(tree_col)
+
+        return store_row, store_col
+
+    def get_store_row(self, data_row):
+        """Get ListStore row that corresponds to Data row."""
+
+        if data_row is None:
+            return None
+
+        store = self.tree_view.get_model()
+        
+        if store.get_sort_column_id()[0] == NO:
+            return data_row
+        
+        subtitle = data_row + 1
+        for i in range(len(store)):
+            if store[i][NO] == subtitle:
+                return i
 
     def get_translation_basename(self):
         """Get basename of translation document."""
@@ -334,21 +426,27 @@ class Project(gobject.GObject):
 
         self._set_active_column()
         self.emit('tree-view-cell-editing-started', col)
+
+    def _on_tree_view_cursor_moved(self, *args):
+        """Emit signal that the tree view cursor has moved."""
+
+        self._set_active_column()
+        self.emit('tree-view-cursor-moved')
         
     def _on_tree_view_headers_clicked(self, button, event):
         """Emit signal that a tree view cell header has been clicked."""
 
         self.emit('tree-view-headers-clicked', event)
 
-    def _on_tree_view_selection_changed(self, tree_sel):
+    def _on_tree_view_selection_changed(self, *args):
         """Emit signal that a tree view selection has changed."""
 
         self._set_active_column()
-        self.emit('tree-view-selection-changed', tree_sel)
+        self.emit('tree-view-selection-changed')
 
     def reload_all_tree_view_data(self):
         """
-        Reload all the subtitle data in the TreeView.
+        Reload all data in the TreeView.
         
         Data is reordered by subtitle number. Possible selection is lost.
         """
@@ -370,12 +468,9 @@ class Project(gobject.GObject):
         # Try to speed up loading large amounts of data. (2)
         self.tree_view.thaw_child_notify()
 
-    def reload_tree_view_data_in_columns(self, col_list):
-        """
-        Reload the subtitle data in the specified columns.
+    def reload_data_in_columns(self, col_list):
+        """Reload all data in given columns of the TreeView."""
         
-        col_list: list of column indexes; column 0 cannot be reloaded
-        """
         store = self.tree_view.get_model()
 
         # Try to speed up loading large amounts of data. (1)
@@ -405,15 +500,15 @@ class Project(gobject.GObject):
                     store[i][col] = self.data.texts[i][col - 4]
 
         store.set_sort_column_id(sort_col, sort_order)
-                        
+
         # Try to speed up loading large amounts of data. (2)
         self.tree_view.thaw_child_notify()
 
-    def reload_tree_view_data_in_row(self, row):
-        """Reload the subtitle data in the specified row of ListStore."""
+    def reload_data_in_row(self, data_row):
+        """Reload TreeView data in given Data row."""
 
         store = self.tree_view.get_model()
-        data_row = store[row][NO] - 1
+        store_row = self.get_store_row(data_row)
 
         if self.edit_mode == 'time':
             timings = self.data.times
@@ -422,10 +517,10 @@ class Project(gobject.GObject):
 
         texts = self.data.texts
 
-        store[row] = [data_row + 1] + timings[data_row] + texts[data_row]
+        store[store_row] = [data_row + 1] + timings[data_row] + texts[data_row]
 
-    def reload_tree_view_data_in_rows(self, row_a, row_b):
-        """Reload the subtitle data between row_a and row_b of Data."""
+    def reload_data_in_rows(self, row_a, row_b):
+        """Reload TreeView data between given Data rows."""
 
         start_row = min(row_a, row_b)
         end_row   = max(row_a, row_b)
@@ -455,16 +550,15 @@ class Project(gobject.GObject):
         self.tree_view.thaw_child_notify()
 
     def _set_active_column(self, *args):
-        """Set the active column title bold."""
+        """Set the active column title emphasized."""
 
-        focus_row, focus_tree_col = self.tree_view.get_cursor()
+        col = self.get_store_focus()[1]
 
         for i in range(6):
 
-            tree_col = self.tree_view.get_column(i)
-            label = tree_col.get_widget()
+            label = self.tree_view.get_column(i).get_widget()
 
-            if tree_col == focus_tree_col:
+            if i == col:
                 label.set_attributes(EMPH_ATTR)
             else:
                 label.set_attributes(NORM_ATTR)

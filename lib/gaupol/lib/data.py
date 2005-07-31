@@ -28,6 +28,7 @@ except ImportError:
 from gaupol.lib.delegates.editor import Editor
 from gaupol.lib.delegates.filereader import FileReader
 from gaupol.lib.delegates.filewriter import FileWriter
+from gaupol.lib.delegates.formatter import Formatter
 from gaupol.lib.delegates.frconv import FramerateConverter
 from gaupol.lib.time.timeframe import TimeFrameConverter
 
@@ -70,13 +71,19 @@ class Data(object):
         editor      = Editor(self)
         file_reader = FileReader(self)
         file_writer = FileWriter(self)
+        formatter   = Formatter(self)
         fr_conv     = FramerateConverter(self)
 
         self._delegations = {
+            'change_case'           : formatter,
             'change_framerate'      : fr_conv,
             'read_main_file'        : file_reader,
             'read_translation_file' : file_reader,
-            'set_single_value'      : editor,
+            'set_frame'             : editor,
+            'set_text'              : editor,
+            'set_time'              : editor,
+            'toggle_dialog_lines'   : formatter,
+            'toggle_italicization'  : formatter,
             'write_main_file'       : file_writer,
             'write_translation_file': file_writer,
         }

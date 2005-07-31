@@ -1,3 +1,12 @@
+2005-07-31  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* Format menu done.
+	  New files: formatter.py (x2)
+	  
+	* Fixed sort order interfearing with editing.
+
+	* Miscellanous bug fixes.
+
 2005-07-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* Data is now resorted by show time/frame after manual editing.

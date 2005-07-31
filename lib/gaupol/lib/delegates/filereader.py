@@ -53,7 +53,7 @@ class FileReader(Delegate):
 
         main_file = eval(format)(path, encoding)
         shows, hides, texts = main_file.read()
-        shows, hides, texts = self._sort_subtitle_data(shows, hides, texts)
+        shows, hides, texts = self._sort_data(shows, hides, texts)
 
         # After successful reading, instance variables can be set.
         self.main_file = main_file
@@ -113,7 +113,7 @@ class FileReader(Delegate):
 
         tran_file = eval(format)(path, encoding)
         shows, hides, trans = tran_file.read()
-        shows, hides, trans = self._sort_subtitle_data(shows, hides, trans)
+        shows, hides, trans = self._sort_data(shows, hides, trans)
         
         # After successful reading, instance variables can be set.
         self.tran_file = tran_file
@@ -145,9 +145,9 @@ class FileReader(Delegate):
                 self.frames.append([final_frame] * 2 + [0])
                 self.texts.append([u'', trans[i]])
 
-    def _sort_subtitle_data(self, shows, hides, texts):
+    def _sort_data(self, shows, hides, texts):
         """
-        Sort subtitle data based on show times/frames.
+        Sort data based on show times/frames.
 
         Return: shows, hides, texts
         """

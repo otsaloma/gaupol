@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Data editor."""
+"""Data editor to set new values."""
 
 
 try:
@@ -31,7 +31,7 @@ from gaupol.lib.delegates.delegate import Delegate
 
 class Editor(Delegate):
     
-    """Data editor."""
+    """Data editor to set new values."""
 
     def _set_durations(self, row):
         """Set duration values for row based on shows and hides."""
@@ -44,6 +44,27 @@ class Editor(Delegate):
         hide = self.frames[row][HIDE]
         self.frames[row][DURN] = self.tf_conv.get_frame_duration(show, hide)
 
+    def set_frame(self, row, col, value):
+        """
+        Set value of frame in given position.
+        
+        Return: new index of row
+        """
+        self.frames[row][col] = value
+    
+        if col in [SHOW, HIDE]:
+            self.times[row][col] = self.tf_conv.frame_to_time(value)
+            self._set_durations(row)
+            
+        elif col == DURN:
+            self.times[row][col] = self.tf_conv.frame_to_time(value)
+            self._set_hidings(row)
+
+        if col == SHOW:
+            return self._sort_data(row)
+
+        return row
+
     def _set_hidings(self, row):
         """Set hide times and frames for row based on shows and durations."""
         
@@ -54,44 +75,28 @@ class Editor(Delegate):
         show = self.frames[row][SHOW]
         durn = self.frames[row][DURN]
         self.frames[row][HIDE] = show + durn
-    
-    def set_single_value(self, section, col, row, value):
+
+    def set_text(self, row, col, value):
+        """Set value of text in given position."""
+
+        self.texts[row][col] = value
+
+    def set_time(self, row, col, value):
         """
-        Set value of single data item and all ones that it affects.
+        Set value of time in given position.
         
-        section: "times", "frames" or "texts"
         Return: new index of row
         """
-        if section == 'times':
+        self.times[row][col] = value
+    
+        if col in [SHOW, HIDE]:
+            self.frames[row][col] = self.tf_conv.time_to_frame(value)
+            self._set_durations(row)
             
-            conv = self.tf_conv
-            self.times[row][col] = value
-        
-            if col in [SHOW, HIDE]:
-                self.frames[row][col] = conv.time_to_frame(value)
-                self._set_durations(row)
-                
-            elif col == DURN:
-                self.frames[row][col] = conv.time_to_frame(value)
-                self._set_hidings(row)
+        elif col == DURN:
+            self.frames[row][col] = self.tf_conv.time_to_frame(value)
+            self._set_hidings(row)
 
-        elif section == 'frames':
-
-            conv = self.tf_conv
-            self.frames[row][col] = value
-        
-            if col in [SHOW, HIDE]:
-                self.times[row][col] = conv.frame_to_time(value)
-                self._set_durations(row)
-                
-            elif col == DURN:
-                self.times[row][col] = conv.frame_to_time(value)
-                self._set_hidings(row)
-
-        elif section == 'texts':
-
-            self.texts[row][col] = value
-        
         if col == SHOW:
             return self._sort_data(row)
 

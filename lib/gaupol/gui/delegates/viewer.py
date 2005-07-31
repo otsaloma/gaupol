@@ -58,10 +58,12 @@ class Viewer(Delegate):
         # Get sort order.
         sort_col, sort_order = store.get_sort_column_id()
 
+        # Get focus.
+        focus_row, focus_col = project.get_store_focus()
+
         # Get selection.
-        selection = project.tree_view.get_selection()
-        sel_rows = selection.get_selected_rows()[1]
-        sel_subs = [store[row][NO] for row in sel_rows]
+        sel_data_rows = project.get_selected_data_rows()
+        sel_subs      = [i + 1 for i in sel_data_rows]
 
         # Remove tree view.
         scroller = project.tree_view.get_parent()
@@ -79,6 +81,10 @@ class Viewer(Delegate):
 
         # Set sort order.
         store.set_sort_column_id(sort_col, sort_order)
+
+        # Restore focus.
+        tree_col = project.tree_view.get_column(focus_col)
+        project.tree_view.set_cursor(focus_row, tree_col)
 
         # Set selection.
         selection = project.tree_view.get_selection()
@@ -116,7 +122,7 @@ class Viewer(Delegate):
         self.uim.get_widget(path).set_active(True)
         
         if project.edit_mode != project.data.main_file.MODE:
-            project.reload_tree_view_data_in_columns([SHOW, HIDE, DURN])
+            project.reload_data_in_columns([SHOW, HIDE, DURN])
 
         gui.set_cursor_normal(self.window)
 
@@ -146,7 +152,7 @@ class Viewer(Delegate):
         self.fr_cmbox.set_active(index)
         
         if project.edit_mode != project.data.main_file.MODE:
-            project.reload_tree_view_data_in_columns([SHOW, HIDE, DURN])
+            project.reload_data_in_columns([SHOW, HIDE, DURN])
 
         gui.set_cursor_normal(self.window)
 

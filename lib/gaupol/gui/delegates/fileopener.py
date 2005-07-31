@@ -97,16 +97,18 @@ class FileOpener(Delegate):
             'notebook-tab-close-button-clicked',
             'tree-view-cell-edited',
             'tree-view-cell-editing-started',
+            'tree-view-cursor-moved',
             'tree-view-headers-clicked',
-            #'tree-view-selection-changed,
+            'tree-view-selection-changed',
         )
             
         callbacks = (
             self.on_notebook_tab_close_button_clicked,
             self.on_tree_view_cell_edited,
             self.on_tree_view_cell_editing_started,
+            self.on_tree_view_cursor_moved,
             self.on_tree_view_headers_clicked,
-            #self.on_tree_view_selection_changed,
+            self.on_tree_view_selection_changed,
         )
         
         for i in range(len(signals)):
@@ -283,6 +285,10 @@ class FileOpener(Delegate):
 
         project.main_changed = 0
         project.tran_changed = 0
+
+        project.undoables = []
+        project.redoables = []
+
         self.set_sensitivities()
         project.reload_all_tree_view_data()
 

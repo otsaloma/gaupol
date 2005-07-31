@@ -307,7 +307,7 @@ class FileSaver(Delegate):
         # saving in a different format.
         if format is not None:
             if format != project.data.tran_file.FORMAT:
-                project.reload_tree_view_data_in_columns([TRAN])
+                project.reload_data_in_columns([TRAN])
 
         project.tran_changed = 0
         

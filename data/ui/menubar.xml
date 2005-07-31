@@ -47,6 +47,19 @@
 				<menuitem action="translation"/>
 			</menu>
 		</menu>
+		<menu action="format">
+			<menuitem action="dialog"/>
+			<separator/>
+			<menuitem action="italic"/>
+			<separator/>
+			<menu action="case">
+				<menuitem action="title"/>
+				<menuitem action="sentence"/>
+				<menuitem action="upper"/>
+				<menuitem action="lower"/>
+				<menuitem action="invert"/>
+			</menu>
+		</menu>
 		<menu action="documents">
 			<menuitem action="save_all"/>
 			<menuitem action="close_all"/>

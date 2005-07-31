@@ -156,12 +156,28 @@ class MicroDVD(object):
             r'{S:\1}\2'
         )
     )
+
+    def toggle_italicization(texts):
+        """Toggle italicization of texts."""
+        
+        re_italic_tag = re.compile('\{y:i\}', re.IGNORECASE)
+
+        turn_into_italics = _get_italicize(re_italic_tag, texts)
+            
+        for i in range(len(texts)):
+            texts[i] = re_italic_tag.sub('', texts[i])
+            if turn_into_italics:
+                texts[i] = '{Y:i}%s' % texts[i]
+        
+        return texts
+
+    toggle_italicization = staticmethod(toggle_italicization)
     
     
 class SubRip(object):
 
     """SubRip tags."""
-    
+
     TAG = r'</?(b|i|u)>', re.IGNORECASE
     
     DECODE_TAGS = (
@@ -195,6 +211,22 @@ class SubRip(object):
             r''
         )
     )
+
+    def toggle_italicization(texts):
+        """Toggle italicization of texts."""
+        
+        re_italic_tag = re.compile('</?i>', re.IGNORECASE)
+
+        turn_into_italics = _get_italicize(re_italic_tag, texts)
+            
+        for i in range(len(texts)):
+            texts[i] = re_italic_tag.sub('', texts[i])
+            if turn_into_italics:
+                texts[i] = '<i>%s</i>' % texts[i]
+        
+        return texts
+
+    toggle_italicization = staticmethod(toggle_italicization)
 
 
 class TagConverter(object):
@@ -257,3 +289,28 @@ class TagConverter(object):
             string = self._to_res[i][REGEX].sub(self._to_res[i][REPL], string)
 
         return string
+
+
+def _get_italicize(re_italic_tag, texts):
+    """Return True if texts should italicized, otherwise return False."""
+    
+    for text in texts:
+        if re_italic_tag.match(text) is None:
+            return True
+            
+    return False
+
+def get_tag_re(format):
+    """Get regular expression for tag in format."""
+
+    regex, flags = eval(format).TAG
+    
+    try:
+        return re.compile(regex, flags)
+    except TypeError:
+        return re.compile(regex)
+    
+def toggle_italicization(format, texts):
+    """Toggle italicization of texts in given format."""
+
+    return eval(format).toggle_italicization(texts)

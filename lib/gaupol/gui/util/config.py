@@ -53,8 +53,8 @@ DEFAULTS = {
     (
         ('edit_mode'  , 'time'  ),
         ('framerate'  , '23.976'),
-        ('limit_undo' , 'false' ),
-        ('undo_levels', '50'    ),
+        ('limit_undo' , 'true'  ),
+        ('undo_levels', '25'    ),
     ),
     'encoding_dialog':
     (

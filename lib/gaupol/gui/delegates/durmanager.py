@@ -25,11 +25,12 @@ try:
 except ImportError:
     pass
 
+from gaupol.gui.constants import NO, SHOW, HIDE, DURN, ORIG, TRAN
 from gaupol.gui.delegates.delegate import Delegate
 from gaupol.gui.util import gui
 
 
-class DURAction(Delegate):
+class DURAction(object):
 
     """Base class for actions, that can be done, undone and redone."""
     
@@ -39,11 +40,11 @@ class DURAction(Delegate):
         self.document    = None
 
         # Tree view properties that can be restored.
-        self.focus_row      = None
-        self.focus_tree_col = None
-        self.sel_rows       = None
-        self.sort_col       = None
-        self.sort_order     = None
+        self.focus_data_row  = None
+        self.focus_store_col = None
+        self.sel_data_rows   = None
+        self.sort_col        = None
+        self.sort_order      = None
         
     def do(self):
         """Do action."""
@@ -74,7 +75,7 @@ class DURManager(Delegate):
 
         if self.config.getboolean('editor', 'limit_undo'):
             undo_levels = self.config.getint('editor', 'undo_levels')
-            while len(self.undoables) > undo_levels:
+            while len(project.undoables) > undo_levels:
                 project.undoables.pop()
 
         project.redoables = []
@@ -151,7 +152,7 @@ class DURManager(Delegate):
 
         if self.config.getboolean('editor', 'limit_undo'):
             undo_levels = self.config.getint('editor', 'undo_levels')
-            while len(self.undoables) > undo_levels:
+            while len(project.undoables) > undo_levels:
                 project.undoables.pop()
 
         project.redoables.pop(0)
@@ -164,33 +165,37 @@ class DURManager(Delegate):
         self.set_sensitivities(project)
 
     def _restore_tree_view_properties(self, project, action):
-        """Restore tree view sort column, sort order and selected rows."""
+        """Restore tree view properties."""
 
-        project.tree_view.set_cursor(action.focus_row, action.focus_tree_col)
+        # Focus
+        store_row = project.get_store_row(action.focus_data_row)
+        tree_col  = project.tree_view.get_column(action.focus_store_col)
+        project.tree_view.set_cursor(store_row, tree_col)
 
+        # Selection
+        selection = project.tree_view.get_selection()
+        selection.unselect_all()
+        for row in action.sel_data_rows:
+            store_row = project.get_store_row(row)
+            selection.select_path(store_row)
+
+        # Sort order and column
         store = project.tree_view.get_model()
         store.set_sort_column_id(action.sort_col, action.sort_order)
 
-        selection = project.tree_view.get_selection()
-        selection.unselect_all()
-        for row in action.sel_rows:
-            selection.select_path(row)
-
-        if action.row is not None:
-            scroller = project.tree_view.get_parent()
-            project.tree_view.scroll_to_cell(action.row, None, True, 0.5)
-
     def _save_tree_view_properties(self, project, action):
-        """Save tree view sort column, sort order and selected rows."""
+        """Save tree view properties."""
 
-        action.focus_row, action.focus_tree_col = \
-            project.tree_view.get_cursor()
-    
+        # Focus
+        action.focus_data_row  = project.get_data_focus()[1]
+        action.focus_store_col = project.get_store_focus()[1]
+
+        # Selection
+        action.sel_data_rows = project.get_selected_data_rows()
+        
+        # Sort order and column
         store = project.tree_view.get_model()
         action.sort_col, action.sort_order = store.get_sort_column_id()
-
-        selection = project.tree_view.get_selection()
-        action.sel_rows = selection.get_selected_rows()[1]
 
     def undo_action(self, project, action):
         """Undo action and update things affected."""
@@ -203,7 +208,7 @@ class DURManager(Delegate):
 
         if self.config.getboolean('editor', 'limit_undo'):
             undo_levels = self.config.getint('editor', 'undo_levels')
-            while len(self.redoables) > undo_levels:
+            while len(project.redoables) > undo_levels:
                 project.redoables.pop()
 
         project.undoables.pop(0)
