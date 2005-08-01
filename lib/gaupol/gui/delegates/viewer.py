@@ -75,7 +75,7 @@ class Viewer(Delegate):
         scroller.add(project.tree_view)
         scroller.show_all()
         
-        project.reload_all_tree_view_data()
+        project.reload_all_data()
         project.tree_view.columns_autosize()
         store = project.tree_view.get_model()
 

@@ -246,11 +246,11 @@ class FileSaver(Delegate):
         # saving in a different format.
         if format is not None:
             if format != project.data.main_file.FORMAT:
-                project.reload_tree_view_data_in_columns([ORIG])
+                project.reload_data_in_columns([ORIG])
 
         project.main_changed = 0
         self.add_to_recent_files(path)
-        
+
         self.set_status_message(_('Saved subtitle file as "%s"') % path)
         gui.set_cursor_normal(self.window)
         

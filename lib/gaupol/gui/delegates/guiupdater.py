@@ -504,6 +504,7 @@ class GUIUpdater(Delegate):
             '/ui/menubar/file/save_a_copy_of_translation',
             '/ui/menubar/file/save_as',
             '/ui/menubar/file/save_translation_as',
+            '/ui/menubar/search/go_to_subtitle',
             '/ui/menubar/view/columns',
             '/ui/menubar/view/frames',
             '/ui/menubar/view/times',

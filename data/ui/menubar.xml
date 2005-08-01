@@ -25,6 +25,9 @@
 			<menuitem action="undo"/>
 			<menuitem action="redo"/>
 		</menu>
+		<menu action="search">
+			<menuitem action="go_to_subtitle"/>
+		</menu>
 		<menu action="view">
 			<menuitem action="toolbar"/>
 			<menuitem action="statusbar"/>

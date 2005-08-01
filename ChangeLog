@@ -1,3 +1,8 @@
+2005-08-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* "Go To Subtitle" under Search menu done.
+	  New files: goto-dialog.glade, searcher.py, goto.py
+
 2005-07-31  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* Format menu done.

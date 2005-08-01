@@ -173,9 +173,10 @@ class GUIBuilder(Delegate):
             ('edit'     , None, _('_Edit')     ),
             ('view'     , None, _('_View')     ),
             ('columns'  , None, _('_Columns')  ),
-            ('framerate', None, _('F_ramerate')),
+            ('framerate', None, _('_Framerate')),
             ('format'   , None, _('F_ormat')   ),
             ('case'     , None, _('_Case')     ),
+            ('search'   , None, _('_Search')   ),
             ('documents', None, _('_Documents')),
             ('help'     , None, _('_Help')     ),
         ]
@@ -289,6 +290,13 @@ class GUIBuilder(Delegate):
                 '<shift><control>Z',
                 _('Redo the last undone action'),
                 self.on_redo_activated
+            ), (
+                'go_to_subtitle',
+                gtk.STOCK_JUMP_TO,
+                _('_Go To Subtitle'),
+                '<control>L',
+                _('Go to a specific subtitle'),
+                self.on_go_to_subtitle_activated
             ), (
                 'dialog',
                 None,
@@ -470,7 +478,7 @@ class GUIBuilder(Delegate):
             ), (
                 'frames',
                 None,
-                _('_Frames'),
+                _('F_rames'),
                 '<control>F',
                 _('Show timings as frames'),
                 1

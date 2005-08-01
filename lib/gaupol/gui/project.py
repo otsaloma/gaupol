@@ -444,7 +444,7 @@ class Project(gobject.GObject):
         self._set_active_column()
         self.emit('tree-view-selection-changed')
 
-    def reload_all_tree_view_data(self):
+    def reload_all_data(self):
         """
         Reload all data in the TreeView.
         

@@ -136,7 +136,7 @@
 	      <child>
 		<widget class="GtkLabel" id="main_document_label">
 		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">S_elect the subtitle documents you want to save:</property>
+		  <property name="label" translatable="yes">Select the su_btitle documents you want to save:</property>
 		  <property name="use_underline">True</property>
 		  <property name="use_markup">False</property>
 		  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -191,7 +191,7 @@
 	      <child>
 		<widget class="GtkLabel" id="translation_document_label">
 		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">Se_lect the translation documents you want to save:</property>
+		  <property name="label" translatable="yes">Select the _translation documents you want to save:</property>
 		  <property name="use_underline">True</property>
 		  <property name="use_markup">False</property>
 		  <property name="justify">GTK_JUSTIFY_LEFT</property>

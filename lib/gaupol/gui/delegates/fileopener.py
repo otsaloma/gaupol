@@ -70,7 +70,7 @@ class FileOpener(Delegate):
         self.notebook.show_all()
         self.notebook.set_current_page(index)
 
-        project.reload_all_tree_view_data()
+        project.reload_all_data()
 
     def add_to_recent_files(self, path):
         """Add path to recent file menus."""
@@ -206,7 +206,7 @@ class FileOpener(Delegate):
 
         project.tran_changed = 0
         self.set_sensitivities()
-        project.reload_all_tree_view_data()
+        project.reload_all_data()
 
         self.set_status_message(_('Imported translation file "%s"') \
                                 % project.get_translation_basename())
@@ -290,7 +290,7 @@ class FileOpener(Delegate):
         project.redoables = []
 
         self.set_sensitivities()
-        project.reload_all_tree_view_data()
+        project.reload_all_data()
 
         gui.set_cursor_normal(self.window)
 

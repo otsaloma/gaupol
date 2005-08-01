@@ -217,7 +217,7 @@ class OpenDialog(CustomFileChooserDialog):
         self._enc_cmbox.connect('changed', self._on_encoding_changed)
         
         enc_label = gtk.Label()
-        enc_label.set_markup_with_mnemonic(_('C_haracter encoding:'))
+        enc_label.set_markup_with_mnemonic(_('Character _encoding:'))
         enc_label.set_mnemonic_widget(self._enc_cmbox)
         
         enc_hbox = gtk.HBox(False, 12)

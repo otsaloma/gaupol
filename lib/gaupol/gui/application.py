@@ -41,6 +41,7 @@ from gaupol.gui.delegates.guibuilder import GUIBuilder
 from gaupol.gui.delegates.guiupdater import GUIUpdater
 from gaupol.gui.delegates.helper import Helper
 from gaupol.gui.delegates.maneditor import ManualEditor
+from gaupol.gui.delegates.searcher import Searcher
 from gaupol.gui.delegates.viewer import Viewer
 from gaupol.gui.util.config import Config
 from gaupol.paths import GLADE_DIR
@@ -121,6 +122,7 @@ class Application(object):
         gui_updater = GUIUpdater(self)
         helper      = Helper(self)
         man_editor  = ManualEditor(self)
+        searcher    = Searcher(self)
         viewer      = Viewer(self)
 
         self._delegations = {
@@ -136,6 +138,7 @@ class Application(object):
             'on_files_dropped'                       : file_opener,
             'on_framerate_changed'                   : viewer,
             'on_framerate_toggled'                   : viewer,
+            'on_go_to_subtitle_activated'            : searcher,
             'on_import_translation_activated'        : file_opener,
             'on_invert_case_activated'               : formatter,
             'on_italic_style_activated'              : formatter,

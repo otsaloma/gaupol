@@ -1,14 +1,17 @@
-Short-term Roadmap
-==================
-- Manual editing features
+Before 0.1
+==========
+- Character counts on statusbar
+- Edit menu & list right-click menu
+- Preferences dialog
+- Installation
+- Uninstallation
 - Finnish translation
-- Installation and uninstallation
 - Website
-* Release 0.1
+
+After 0.1
+=========
 - Search, search and replace
-* Release 0.2
-- Spellcheck
-* Release 0.3
+- Spell-check
 - Subtitle editing features
 
 Unscheduled
@@ -19,4 +22,3 @@ Unscheduled
 	o SubViewer
 	o SubStation Alpha
 	o SAMI
-- Debianization?
