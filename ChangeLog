@@ -1,5 +1,10 @@
 2005-08-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* Character counts are now displayed in the statusbar.
+	  New file: analyzer.py
+
+2005-08-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* "Go To Subtitle" under Search menu done.
 	  New files: goto-dialog.glade, searcher.py, goto.py
 

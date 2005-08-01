@@ -132,6 +132,7 @@ class GUIUpdater(Delegate):
 
         project = self.get_current_project()
         self._set_format_sensitivities(project)
+        self._set_character_status(project)
 
     def on_window_state_event(self, window, event):
         """Remember whether window is maximized or not."""
@@ -449,6 +450,47 @@ class GUIUpdater(Delegate):
         
         self.set_menu_notify_events('undo_redo')
 
+    def _set_character_status(self, project):
+        """Set charcter length info to statusbar."""
+
+        self.orig_stbar.pop(0)
+        self.tran_stbar.pop(0)
+
+        if project is None:
+            return
+        
+        selection = project.tree_view.get_selection()
+        sel_rows = selection.get_selected_rows()[1]
+
+        if len(sel_rows) != 1:
+            return
+            
+        data_row = project.get_data_row(sel_rows[0])
+        stbars = [self.orig_stbar, self.tran_stbar]
+
+        for i in range(2):
+        
+            stbar = stbars[i]
+            
+            lengths, total = project.data.get_character_count(data_row, i)
+            lengths = [str(length) for length in lengths]
+            message = '+'.join(lengths) + '=' + str(total)
+
+            stbar.push(0, message)
+            
+            # Get width required display message.
+            label = gtk.Label(message)
+            width = label.size_request()[0]
+
+            # Account 12 pixels for general extra (paddings, borders, etc)
+            # and height for resize grip.
+            new_width = width + 12
+            if stbar.get_has_resize_grip():
+                new_width += stbar.size_request()[1]
+            new_width = max(100, new_width)
+            
+            stbar.set_size_request(new_width, -1)
+
     def _set_current_document(self, project):
         """Set GUI properties to suit current document."""
 
@@ -649,6 +691,7 @@ class GUIUpdater(Delegate):
         self._refresh_recent_file_menus()
         self._refresh_undo_and_redo_menus(project)
 
+        self._set_character_status(project)
         self._set_current_document(project)
         self._set_document_open()
         self._set_file_sensitivities(project)

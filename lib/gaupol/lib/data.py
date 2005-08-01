@@ -25,6 +25,8 @@ try:
 except ImportError:
     pass
 
+from gaupol.lib.constants import SHOW, HIDE, DURN, ORIG, TRAN
+from gaupol.lib.delegates.analyzer import Analyzer
 from gaupol.lib.delegates.editor import Editor
 from gaupol.lib.delegates.filereader import FileReader
 from gaupol.lib.delegates.filewriter import FileWriter
@@ -68,6 +70,7 @@ class Data(object):
     def _assign_delegations(self):
         """Map method names to Delegate objects."""
         
+        analyzer    = Analyzer(self)
         editor      = Editor(self)
         file_reader = FileReader(self)
         file_writer = FileWriter(self)
@@ -77,6 +80,7 @@ class Data(object):
         self._delegations = {
             'change_case'           : formatter,
             'change_framerate'      : fr_conv,
+            'get_character_count'   : analyzer,
             'read_main_file'        : file_reader,
             'read_translation_file' : file_reader,
             'set_frame'             : editor,
@@ -92,3 +96,18 @@ class Data(object):
         """Delegate method calls to Delegate objects."""
         
         return self._delegations[name].__getattribute__(name)
+
+    def get_format(self, col):
+        """Get file format used in given text column."""
+        
+        if col == ORIG:
+            try:
+                return self.main_file.FORMAT
+            except AttributeError:
+                return None
+
+        elif col == TRAN:
+            try:
+                return self.tran_file.FORMAT
+            except AttributeError:
+                return self.get_format(ORIG)

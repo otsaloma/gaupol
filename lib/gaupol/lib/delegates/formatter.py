@@ -45,7 +45,7 @@ class Formatter(Delegate):
         """
         texts = [self.texts[i][col] for i in rows]
 
-        format = self._get_format(col)
+        format = self.get_format(col)
         re_tag = tags_module.get_tag_re(format)
 
         for i in range(len(texts)):
@@ -74,21 +74,6 @@ class Formatter(Delegate):
             
         return texts
 
-    def _get_format(self, col):
-        """Get file format used in given text column."""
-        
-        if col == ORIG:
-            try:
-                return self.main_file.FORMAT
-            except AttributeError:
-                return None
-
-        elif col == TRAN:
-            try:
-                return self.tran_file.FORMAT
-            except AttributeError:
-                return self._get_format(ORIG)
-
     def toggle_dialog_lines(self, rows, col):
         """
         Toggle dialog lines on texts specified by rows and col.
@@ -97,7 +82,7 @@ class Formatter(Delegate):
         """
         texts = [self.texts[i][col] for i in rows]
 
-        format = self._get_format(col)
+        format = self.get_format(col)
         re_tag = tags_module.get_tag_re(format)
         re_dialog = re.compile('^-\s*')
         TAG, POS = 0, 1
@@ -170,7 +155,7 @@ class Formatter(Delegate):
         Return: new texts
         """
         texts = [self.texts[i][col] for i in rows]
-        format = self._get_format(col)
+        format = self.get_format(col)
         
         texts = tags_module.toggle_italicization(format, texts)
 
