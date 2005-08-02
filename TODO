@@ -2,9 +2,12 @@ Before 0.1
 ==========
 - Edit menu & list right-click menu
 - Preferences dialog
+- Help menu
 - Installation
 - Uninstallation
 - Finnish translation
+- Code review
+- Testing and bugfixing
 - Website
 
 After 0.1
@@ -17,7 +20,8 @@ Unscheduled
 ===========
 - Documentation
 - Support for additional subtitle formats:
-	o MPlayer
+	o MPlayer (http://www.mplayerhq.hu/DOCS/tech/mpsub.sub)
 	o SubViewer
-	o SubStation Alpha
-	o SAMI
+	o SubViewer 2.0
+	o SubStation Alpha (http://moodub.free.fr/ass-specs.doc)
+	o SAMI (http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dnacc/html/atg_samiarticle.asp)

@@ -74,6 +74,12 @@ class Formatter(Delegate):
             
         return texts
 
+    def clear(self, rows, col):
+        """Clear texts specified by rows and col."""
+        
+        for row in rows:
+            self.texts[row][col] = u''
+
     def toggle_dialog_lines(self, rows, col):
         """
         Toggle dialog lines on texts specified by rows and col.

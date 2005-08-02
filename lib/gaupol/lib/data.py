@@ -80,6 +80,7 @@ class Data(object):
         self._delegations = {
             'change_case'           : formatter,
             'change_framerate'      : fr_conv,
+            'clear'                 : formatter,
             'get_character_count'   : analyzer,
             'read_main_file'        : file_reader,
             'read_translation_file' : file_reader,

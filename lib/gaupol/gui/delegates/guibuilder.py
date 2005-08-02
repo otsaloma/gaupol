@@ -291,61 +291,89 @@ class GUIBuilder(Delegate):
                 _('Redo the last undone action'),
                 self.on_redo_activated
             ), (
-                'go_to_subtitle',
-                gtk.STOCK_JUMP_TO,
-                _('_Go To Subtitle'),
-                '<control>L',
-                _('Go to a specific subtitle'),
-                self.on_go_to_subtitle_activated
+                'clear',
+                gtk.STOCK_CLEAR,
+                _('_Clear'),
+                'Delete',
+                _('Clear the selected texts'),
+                self.on_clear_activated
+            ), (
+                'select_all',
+                None,
+                _('Select _All'),
+                '<control>A',
+                _('Select all subtitles'),
+                self.on_select_all_activated
+            ), (
+                'unselect_all',
+                None,
+                _('Unse_lect All'),
+                '<shift><control>A',
+                _('Unselect all subtitles'),
+                self.on_unselect_all_activated
+            ), (
+                'invert_selection',
+                None,
+                _('_Invert Selection'),
+                None,
+                _('Invert current selection'),
+                self.on_invert_selection_activated
             ), (
                 'dialog',
                 None,
                 _('_Dialog'),
                 '<control>D',
-                _('Toggle dialog lines on selected text'),
+                _('Toggle dialog lines on selected texts'),
                 self.on_dialog_lines_activated
             ), (
                 'italic',
                 gtk.STOCK_ITALIC,
                 _('_Italic'),
                 '<control>I',
-                _('Toggle the italicization of selected text'),
+                _('Toggle the italicization of selected texts'),
                 self.on_italic_style_activated
             ), (
                 'title',
                 None,
                 _('_Title'),
                 '<control>1',
-                _('Change selected text to Title Case'),
+                _('Change selected texts to Title Case'),
                 self.on_title_case_activated
             ), (
                 'sentence',
                 None,
                 _('_Sentence'),
                 '<control>2',
-                _('Change selected text to Sentence case'),
+                _('Change selected texts to Sentence case'),
                 self.on_sentence_case_activated
             ), (
                 'upper',
                 None,
                 _('_Upper'),
                 '<control>3',
-                _('Change selected text to UPPER CASE'),
+                _('Change selected texts to UPPER CASE'),
                 self.on_upper_case_activated
             ), (
                 'lower',
                 None,
                 _('_Lower'),
                 '<control>4',
-                _('Change selected text to lower case'),
+                _('Change selected texts to lower case'),
                 self.on_lower_case_activated
             ), (
                 'invert',
                 None,
                 _('_Invert'),
                 '<control>5',
-                _('Invert selected text case'),
+                _('Invert selected texts case'),
                 self.on_invert_case_activated
+            ), (
+                'go_to_subtitle',
+                gtk.STOCK_JUMP_TO,
+                _('_Go To Subtitle'),
+                '<control>L',
+                _('Go to a specific subtitle'),
+                self.on_go_to_subtitle_activated
             ), (
                 'save_all',
                 gtk.STOCK_SAVE,

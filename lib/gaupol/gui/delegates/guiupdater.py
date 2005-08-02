@@ -121,6 +121,43 @@ class GUIUpdater(Delegate):
         
         self.notebook.prev_page()
 
+    def on_tree_view_button_press_event(self, project, event):
+        """
+        Display a menu on TreeView right-click.
+        
+        Return: True or False
+        """
+        if event.button != 3:
+            return False
+
+        x = int(event.x)
+        y = int(event.y)
+        path_info = project.tree_view.get_path_at_pos(x, y)
+
+        if path_info is None:
+            return False
+
+        row, tree_col, x, y = path_info
+        selection = project.tree_view.get_selection()
+        sel_rows = selection.get_selected_rows()[1]
+
+        # Move focus if user right-clicked outside the selection.
+        if row not in sel_rows:
+            project.tree_view.set_cursor(row, tree_col)
+            project.tree_view.grab_focus()
+            project.set_active_column()
+            self._set_format_sensitivities(project)
+
+        # If user right-clicked in the selection, the focus cannot be moved,
+        # because it would destoy the selection and select only the clicked
+        # row. Restoring the selection after its destruction would be too slow.
+        
+        menu = self.uim.get_widget('/ui/tree_view_popup')
+        menu.popup(None, None, None, event.button, event.time)
+
+        # Must return True when handling signal to avoid selection being lost.
+        return True
+
     def on_tree_view_cursor_moved(self, *args):
         """Update GUI properties when tree view cursor has moved."""
 
@@ -540,6 +577,9 @@ class GUIUpdater(Delegate):
         uim_paths = (
             '/ui/menubar/documents/close_all',
             '/ui/menubar/documents/save_all',
+            '/ui/menubar/edit/invert_selection',
+            '/ui/menubar/edit/select_all',
+            '/ui/menubar/edit/unselect_all',
             '/ui/menubar/file/close',
             '/ui/menubar/file/import_translation',
             '/ui/menubar/file/save_a_copy',
@@ -595,14 +635,16 @@ class GUIUpdater(Delegate):
     def _set_format_sensitivities(self, project):
         """Set sensitivity of actions in the Format menu."""
 
+        case_action   = self.uim.get_action('/ui/menubar/format/case'  )
+        clear_action  = self.uim.get_action('/ui/menubar/edit/clear'   )
         dialog_action = self.uim.get_action('/ui/menubar/format/dialog')
         italic_action = self.uim.get_action('/ui/menubar/format/italic')
-        case_action   = self.uim.get_action('/ui/menubar/format/case' )
 
         if project is None:
+            case_action.set_sensitive(False)
+            clear_action.set_sensitive(False)
             dialog_action.set_sensitive(False)
             italic_action.set_sensitive(False)
-            case_action.set_sensitive(False)
             return
 
         selection = project.tree_view.get_selection()
@@ -617,18 +659,21 @@ class GUIUpdater(Delegate):
 
         # A text column must be active and file format must be known.
         if store_col == ORIG:
+            clear_action.set_sensitive(sensitivity)
             if project.data.main_file is None:
                 sensitivity = False
         elif store_col == TRAN:
+            clear_action.set_sensitive(sensitivity)
             if project.data.tran_file is None:
                 if project.data.main_file is None:
                     sensitivity = False
         else:
             sensitivity = False
+            clear_action.set_sensitive(sensitivity)
 
+        case_action.set_sensitive(sensitivity)
         dialog_action.set_sensitive(sensitivity)
         italic_action.set_sensitive(sensitivity)
-        case_action.set_sensitive(sensitivity)
 
     def _set_framerate_sensitivities(self, project):
         """Set sensitivity of framerate widgets and actions."""

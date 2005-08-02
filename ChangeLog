@@ -1,5 +1,11 @@
 2005-08-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* Clearing and selecting under Edit menu done.
+
+	* List right-click menu operational.
+
+2005-08-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* Character counts are now displayed in the statusbar.
 	  New file: analyzer.py
 

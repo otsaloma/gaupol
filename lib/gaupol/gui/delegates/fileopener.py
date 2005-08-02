@@ -95,6 +95,7 @@ class FileOpener(Delegate):
         
         signals = (
             'notebook-tab-close-button-clicked',
+            'tree-view-button-press-event',
             'tree-view-cell-edited',
             'tree-view-cell-editing-started',
             'tree-view-cursor-moved',
@@ -104,6 +105,7 @@ class FileOpener(Delegate):
             
         callbacks = (
             self.on_notebook_tab_close_button_clicked,
+            self.on_tree_view_button_press_event,
             self.on_tree_view_cell_edited,
             self.on_tree_view_cell_editing_started,
             self.on_tree_view_cursor_moved,

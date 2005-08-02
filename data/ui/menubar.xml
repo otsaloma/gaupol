@@ -24,9 +24,12 @@
 		<menu action="edit">
 			<menuitem action="undo"/>
 			<menuitem action="redo"/>
-		</menu>
-		<menu action="search">
-			<menuitem action="go_to_subtitle"/>
+			<separator/>
+			<menuitem action="clear"/>
+			<separator/>
+			<menuitem action="select_all"/>
+			<menuitem action="unselect_all"/>
+			<menuitem action="invert_selection"/>
 		</menu>
 		<menu action="view">
 			<menuitem action="toolbar"/>
@@ -62,6 +65,9 @@
 				<menuitem action="lower"/>
 				<menuitem action="invert"/>
 			</menu>
+		</menu>
+		<menu action="search">
+			<menuitem action="go_to_subtitle"/>
 		</menu>
 		<menu action="documents">
 			<menuitem action="save_all"/>

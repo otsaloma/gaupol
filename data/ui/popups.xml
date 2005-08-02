@@ -7,4 +7,7 @@
 		<menuitem action="original"/>
 		<menuitem action="translation"/>
 	</popup>
+    <popup name="tree_view_popup">
+		<menuitem action="clear"/>
+	</popup>
 </ui>

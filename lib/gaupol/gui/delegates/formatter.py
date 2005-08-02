@@ -101,6 +101,37 @@ class CaseChangeAction(FormatAction):
             store[store_row][store_col] = texts[i]
 
 
+class ClearAction(FormatAction):
+
+    """Action to clear text."""
+
+    def __init__(self, project):
+
+        FormatAction.__init__(self, project)
+
+        if self.focus_store_col == TRAN:
+            self.description = _('Clearing translation case')
+        else:
+            self.description = _('Clearing text case')
+
+    def do(self):
+        """Clear text."""
+
+        store     = self.project.tree_view.get_model()
+        data      = self.project.data
+        texts     = self.project.data.texts
+        data_col  = self.focus_store_col - 4
+        store_col = self.focus_store_col
+
+        data.clear(self.sel_data_rows, data_col)
+        
+        for i in range(len(self.sel_data_rows)):
+        
+            data_row = self.sel_data_rows[i]
+            store_row = self.project.get_store_row(data_row)
+            store[store_row][store_col] = texts[data_row][data_col]
+
+
 class DialogLineAction(FormatAction):
 
     """Action to toggle dialog lines on text."""
@@ -171,6 +202,13 @@ class Formatter(Delegate):
         """
         project = self.get_current_project()
         action = CaseChangeAction(project, method)
+        self.do_action(project, action)
+
+    def on_clear_activated(self, *args):
+        """Clear the selected text cells."""
+        
+        project = self.get_current_project()
+        action = ClearAction(project)
         self.do_action(project, action)
 
     def on_dialog_lines_activated(self, *args):

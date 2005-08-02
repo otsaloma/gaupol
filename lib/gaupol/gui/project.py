@@ -60,19 +60,18 @@ class Project(gobject.GObject):
     """
 
     STAGE = gobject.SIGNAL_RUN_LAST
+    BOOL  = gobject.TYPE_BOOLEAN
+    INT   = gobject.TYPE_INT
+    STR   = gobject.TYPE_STRING
     
     __gsignals__ = {
-        'notebook-tab-close-button-clicked': (STAGE, None, ()       ),
-        'tree-view-cell-edited'            :
-            (STAGE, None, (
-                gobject.TYPE_STRING,
-                gobject.TYPE_INT,
-                gobject.TYPE_INT
-            )),
-        'tree-view-cell-editing-started'   : (STAGE, None, (object,)),
-        'tree-view-cursor-moved'           : (STAGE, None, ()       ),
-        'tree-view-headers-clicked'        : (STAGE, None, (object,)),
-        'tree-view-selection-changed'      : (STAGE, None, ()       ),
+        'notebook-tab-close-button-clicked': (STAGE, None, ()             ),
+        'tree-view-button-press-event'     : (STAGE, BOOL, (object,)      ),
+        'tree-view-cell-edited'            : (STAGE, None, (STR, INT, INT)),
+        'tree-view-cell-editing-started'   : (STAGE, None, (object,)      ),
+        'tree-view-cursor-moved'           : (STAGE, None, ()             ),
+        'tree-view-headers-clicked'        : (STAGE, None, (object,)      ),
+        'tree-view-selection-changed'      : (STAGE, None, ()             ),
     }
 
     def __init__(self, config, counter=0):
@@ -237,7 +236,7 @@ class Project(gobject.GObject):
                 button = button.get_parent()
 
             # Show a column hide/show popup menu on column header right-click.
-            signal = 'button_release_event'
+            signal = 'button-press-event'
             method = self._on_tree_view_headers_clicked
             button.connect(signal, method)
 
@@ -248,6 +247,9 @@ class Project(gobject.GObject):
 
         method = self._on_tree_view_cursor_moved
         self.tree_view.connect_after('move-cursor', method)
+
+        method = self._on_tree_view_button_press_event
+        self.tree_view.connect('button-press-event', method)
 
     def get_data_focus(self):
         """
@@ -416,6 +418,12 @@ class Project(gobject.GObject):
         
         self.emit('notebook-tab-close-button-clicked')
 
+    def _on_tree_view_button_press_event(self, tree_view, event):
+        """Emit signal that a tree view cell has been clicked."""
+
+        # Must return True when signal is handled.
+        return self.emit('tree-view-button-press-event', event)
+
     def _on_tree_view_cell_edited(self, cell_rend, new_value, row, col):
         """Emit signal that a tree view cell has been edited."""
 
@@ -424,13 +432,13 @@ class Project(gobject.GObject):
     def _on_tree_view_cell_editing_started(self, cell_rend, editor, row, col):
         """Emit signal that a tree view cell editing has started."""
 
-        self._set_active_column()
+        self.set_active_column()
         self.emit('tree-view-cell-editing-started', col)
 
     def _on_tree_view_cursor_moved(self, *args):
         """Emit signal that the tree view cursor has moved."""
 
-        self._set_active_column()
+        self.set_active_column()
         self.emit('tree-view-cursor-moved')
         
     def _on_tree_view_headers_clicked(self, button, event):
@@ -441,7 +449,7 @@ class Project(gobject.GObject):
     def _on_tree_view_selection_changed(self, *args):
         """Emit signal that a tree view selection has changed."""
 
-        self._set_active_column()
+        self.set_active_column()
         self.emit('tree-view-selection-changed')
 
     def reload_all_data(self):
@@ -549,7 +557,7 @@ class Project(gobject.GObject):
         # Try to speed up loading large amounts of data. (2)
         self.tree_view.thaw_child_notify()
 
-    def _set_active_column(self, *args):
+    def set_active_column(self, *args):
         """Set the active column title emphasized."""
 
         col = self.get_store_focus()[1]

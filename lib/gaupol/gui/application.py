@@ -33,6 +33,7 @@ import gtk
 import gtk.glade
 
 from gaupol.gui.delegates.durmanager import DURManager
+from gaupol.gui.delegates.editor import Editor
 from gaupol.gui.delegates.filecloser import FileCloser
 from gaupol.gui.delegates.fileopener import FileOpener
 from gaupol.gui.delegates.filesaver import FileSaver
@@ -114,6 +115,7 @@ class Application(object):
         """Map method names to Delegate objects."""
         
         dur_manager = DURManager(self)
+        editor      = Editor(self)
         file_closer = FileCloser(self)
         file_opener = FileOpener(self)
         file_saver  = FileSaver(self)
@@ -130,6 +132,7 @@ class Application(object):
             'build_gui'                              : gui_builder,
             'do_action'                              : dur_manager,
             'on_about_activated'                     : helper,
+            'on_clear_activated'                     : formatter,
             'on_close_activated'                     : file_closer,
             'on_close_all_activated'                 : file_closer,
             'on_dialog_lines_activated'              : formatter,
@@ -141,6 +144,7 @@ class Application(object):
             'on_go_to_subtitle_activated'            : searcher,
             'on_import_translation_activated'        : file_opener,
             'on_invert_case_activated'               : formatter,
+            'on_invert_selection_activated'          : editor,
             'on_italic_style_activated'              : formatter,
             'on_lower_case_activated'                : formatter,
             'on_new_activated'                       : file_opener,
@@ -162,10 +166,12 @@ class Application(object):
             'on_save_as_activated'                   : file_saver,
             'on_save_translation_activated'          : file_saver,
             'on_save_translation_as_activated'       : file_saver,
+            'on_select_all_activated'                : editor,
             'on_sentence_case_activated'             : formatter,
             'on_statusbar_toggled'                   : viewer,
             'on_title_case_activated'                : formatter,
             'on_toolbar_toggled'                     : viewer,
+            'on_tree_view_button_press_event'        : gui_updater,
             'on_tree_view_cell_edited'               : man_editor,
             'on_tree_view_cell_editing_started'      : man_editor,
             'on_tree_view_column_toggled'            : viewer,
@@ -175,6 +181,7 @@ class Application(object):
             'on_undo_activated'                      : dur_manager,
             'on_undo_button_clicked'                 : dur_manager,
             'on_undo_item_activated'                 : dur_manager,
+            'on_unselect_all_activated'              : editor,
             'on_upper_case_activated'                : formatter,
             'on_window_delete_event'                 : file_closer,
             'on_window_state_event'                  : gui_updater,
