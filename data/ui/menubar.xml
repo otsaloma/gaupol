@@ -25,7 +25,13 @@
 			<menuitem action="undo"/>
 			<menuitem action="redo"/>
 			<separator/>
+			<menuitem action="cut"/>
+			<menuitem action="copy"/>
+			<menuitem action="paste"/>
 			<menuitem action="clear"/>
+			<separator/>
+			<menuitem action="insert_subtitles"/>
+			<menuitem action="remove_subtitles"/>
 			<separator/>
 			<menuitem action="select_all"/>
 			<menuitem action="unselect_all"/>
@@ -80,6 +86,10 @@
 			</placeholder>
 		</menu>
 		<menu action="help">
+			<menuitem action="support"/>
+			<menuitem action="report_a_bug"/>
+			<menuitem action="check_latest_version"/>
+			<separator/>
 			<menuitem action="about"/>
 		</menu>
 	</menubar>

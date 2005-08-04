@@ -7,7 +7,15 @@
 		<menuitem action="original"/>
 		<menuitem action="translation"/>
 	</popup>
-    <popup name="tree_view_popup">
+	<popup name="tree_view_popup">
+		<menuitem action="edit"/>
+		<separator/>
+		<menuitem action="cut"/>
+		<menuitem action="copy"/>
+		<menuitem action="paste"/>
 		<menuitem action="clear"/>
+		<separator/>
+		<menuitem action="insert_subtitles"/>
+		<menuitem action="remove_subtitles"/>
 	</popup>
 </ui>
