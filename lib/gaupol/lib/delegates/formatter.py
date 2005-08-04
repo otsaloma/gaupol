@@ -169,3 +169,18 @@ class Formatter(Delegate):
             self.texts[rows[i]][col] = texts[i]
             
         return texts
+
+    def get_format(self, col):
+        """Get file format used in given text column."""
+        
+        if col == ORIG:
+            try:
+                return self.main_file.FORMAT
+            except AttributeError:
+                return None
+
+        elif col == TRAN:
+            try:
+                return self.tran_file.FORMAT
+            except AttributeError:
+                return self.get_format(ORIG)
