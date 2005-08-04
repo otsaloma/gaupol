@@ -25,7 +25,6 @@ try:
 except ImportError:
     pass
 
-from gaupol.lib.constants import SHOW, HIDE, DURN, ORIG, TRAN
 from gaupol.lib.delegates.analyzer import Analyzer
 from gaupol.lib.delegates.editor import Editor
 from gaupol.lib.delegates.filereader import FileReader
@@ -40,15 +39,13 @@ class Data(object):
     """
     Subtitle project data.
 
-    This is the master class for gaupol lib. This class holds the all the
+    This is the main class for gaupol.lib. This class holds the all the
     subtitle data of one project. All methods are outsourced to delegates.
     
-    times: list of lists of strings: [[show-1, hide-1, duration-1],...]
-    frames: list of lists of integers: [[show-1, hide-1, duration-1],...]
-    texts:list of lists of strings: [[original-1, translation-1],...]
+    times    : list of lists of strings : [[show-1, hide-1, duration-1],...]
+    frames   : list of lists of integers: [[show-1, hide-1, duration-1],...]
+    texts    : list of lists of strings : [[original-1, translation-1],...]
     framerate: string
-    main_file: gaupol.lib.formats.subfile.SubtitleFile
-    tran_file: gaupol.lib.formats.subfile.SubtitleFile
     """
     
     def __init__(self, framerate):
@@ -80,12 +77,16 @@ class Data(object):
         self._delegations = {
             'change_case'           : formatter,
             'change_framerate'      : fr_conv,
-            'clear'                 : formatter,
+            'clear_texts'           : editor,
             'get_character_count'   : analyzer,
+            'get_format'            : formatter,
+            'insert_subtitles'      : editor,
             'read_main_file'        : file_reader,
             'read_translation_file' : file_reader,
+            'remove_subtitles'      : editor,
             'set_frame'             : editor,
             'set_text'              : editor,
+            'set_texts'             : editor,
             'set_time'              : editor,
             'toggle_dialog_lines'   : formatter,
             'toggle_italicization'  : formatter,
@@ -97,18 +98,3 @@ class Data(object):
         """Delegate method calls to Delegate objects."""
         
         return self._delegations[name].__getattribute__(name)
-
-    def get_format(self, col):
-        """Get file format used in given text column."""
-        
-        if col == ORIG:
-            try:
-                return self.main_file.FORMAT
-            except AttributeError:
-                return None
-
-        elif col == TRAN:
-            try:
-                return self.tran_file.FORMAT
-            except AttributeError:
-                return self.get_format(ORIG)
