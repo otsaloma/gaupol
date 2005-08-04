@@ -28,7 +28,7 @@ try:
 except ImportError:
     pass
 
-from gaupol.lib.formats.subfile import SubtitleFile
+from gaupol.lib.file.subfile import SubtitleFile
 
 
 RE_LINE = re.compile(r'^\{(\d+)\}\{(\d+)\}(.*?)$')
@@ -62,9 +62,9 @@ class MicroDVD(SubtitleFile):
         """
         lines = self._read_lines()
         
-        show_frames = []
-        hide_frames = []
-        texts       = []
+        shows = []
+        hides = []
+        texts = []
 
         # Split lines list to components.
         for line in lines:
@@ -72,25 +72,25 @@ class MicroDVD(SubtitleFile):
             match = RE_LINE.match(line)
             
             if match is not None:
-                show_frames.append(match.group(1))
-                hide_frames.append(match.group(2))
-                texts.append      (match.group(3))
+                shows.append(match.group(1))
+                hides.append(match.group(2))
+                texts.append(match.group(3))
 
         # Replace pipes in texts with Python internal newline characters.
         for i in range(len(texts)):
             texts[i] = texts[i].replace('|', '\n')
 
         # Remove leading and trailing spaces.
-        for i in [show_frames, hide_frames, texts]:
+        for i in [shows, hides, texts]:
             self._strip_spaces(i)
 
         # Frames should be integers.
-        show_frames = [int(frame) for frame in show_frames]
-        hide_frames = [int(frame) for frame in hide_frames]
+        shows = [int(frame) for frame in shows]
+        hides = [int(frame) for frame in hides]
 
-        return show_frames, hide_frames, texts
+        return shows, hides, texts
 
-    def write(self, show_frames, hide_frames, texts):
+    def write(self, shows, hides, texts):
         """
         Write MicroDVD file.
 
@@ -108,7 +108,7 @@ class MicroDVD(SubtitleFile):
         try:
             for i in range(len(show_frames)):
                 sub_file.write('{%.0f}{%.0f}%s%s' % (
-                    show_frames[i], hide_frames[i], texts[i], newl_char
+                    shows[i], hides[i], texts[i], newl_char
                 ))
         finally:
             sub_file.close()

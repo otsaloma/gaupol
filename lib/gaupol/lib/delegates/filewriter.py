@@ -32,8 +32,8 @@ except ImportError:
 
 from gaupol.lib.constants import SHOW, HIDE, DURN, ORIG, TRAN
 from gaupol.lib.delegates.delegate import Delegate
-from gaupol.lib.formats.all import *
-from gaupol.lib.formats.tags import TagConverter
+from gaupol.lib.file.all import *
+from gaupol.lib.tags.tagconv import TagConverter
 
 
 logger = logging.getLogger()
@@ -95,7 +95,7 @@ class FileWriter(Delegate):
     def _write_file(self, text_part, keep_changes, path, format, encoding,
                     newlines):
         """
-        Write a subtitle file.
+        Write subtitle file.
         
         text_part: "original" or "translation"
         keep_changes: True or False
@@ -150,7 +150,7 @@ class FileWriter(Delegate):
                 texts.append(new_texts[i][col])
                 
         # If the file to be written already exists, a backup copy of it is
-        # be made in case writing fails. The backup file should be temporary,
+        # made in case writing fails. The backup file should be temporary,
         # unharmful and invisible to the user.
         #
         # If the file does not exist and writing fails, the result usually is

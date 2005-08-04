@@ -20,15 +20,14 @@
 """
 Encodings and encoding names.
 
-Python name: Encoding name to be used in code
-Display name: Somewhat standards compliant encoding name
-Description: Short description of language, character set or region
+Python name     : Encoding name used in code
+Display name    : Somewhat standards compliant encoding name
+Description     : Short description of language, character set or region
 Descriptive name: A more informative name - "Description (Display name)"
 
 Description and descriptive names are translation dependent. Also, the format
 of descriptive name is translation dependent.
 """
-
 
 # Display names mostly from
 # http://www.iana.org/assignments/character-sets

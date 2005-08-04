@@ -40,11 +40,8 @@ class SubtitleFile(object):
     """
     Base class for subtitle files.
     
-    This class is meant to be subclassed and extended by actual subtitle file
-    formats.
-    
     encoding: Python name of encoding used
-    newlines: OS name ("Mac", "Unix" or "Windows")
+    newlines: "Mac", "Unix" or "Windows"
     """
     
     def __init__(self, path, encoding, newlines=None):

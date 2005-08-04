@@ -21,7 +21,6 @@
 
 
 from math import floor
-import re
 
 try:
     from psyco.classes import *
@@ -29,17 +28,14 @@ except ImportError:
     pass
 
 
-RE_TIME = re.compile(r'^(\d\d):(\d\d):(\d\d),(\d\d\d)$')
-
-
 class TimeFrameConverter(object):
     
     """
     Conversions between times and frames.
 
-    time: string in format hh:mm:ss,sss
-    frame: integer
-    seconds: float
+    time     : string in format hh:mm:ss,sss
+    frame    : integer
+    seconds  : float
     framerate: float
     """
     
@@ -47,17 +43,17 @@ class TimeFrameConverter(object):
         """
         Initialize a TimeFrameConverter object.
         
-        framerate can be given as any data type convertable to float.
+        framerate can be given as any data type convertible to float.
         """
         self.framerate = float(framerate)
 
-    def add_times(self, time_x, time_y):
-        """Add time_y to time_x."""
+    def add_times(self, x, y):
+        """Add time y to time x."""
         
-        time_x = self.time_to_seconds(time_x)
-        time_y = self.time_to_seconds(time_y)
+        x = self.time_to_seconds(x)
+        y = self.time_to_seconds(y)
         
-        return self.seconds_to_time(time_x + time_y)
+        return self.seconds_to_time(x + y)
 
     def frame_to_seconds(self, frame):
         """Convert frame to seconds."""
@@ -71,32 +67,32 @@ class TimeFrameConverter(object):
         
         return self.seconds_to_time(seconds)
 
-    def get_frame_duration(self, show_frame, hide_frame):
+    def get_frame_duration(self, x, y):
         """
-        Get duration from show_frame to hide_frame.
+        Get duration from frame x to frame y.
 
         For negative durations, return zero (0).
         """
-        duration = hide_frame - show_frame
+        duration = y - x
 
         return max(duration, 0)
 
-    def get_time_duration(self, show_time, hide_time):
+    def get_time_duration(self, x, y):
         """
-        Get duration from show_time to hide_time.
+        Get duration from time x to time y.
 
         For negative durations, return zero (00:00:00,000).
         """
         
-        show_sec = self.time_to_seconds(show_time)
-        hide_sec = self.time_to_seconds(hide_time)
+        x = self.time_to_seconds(x)
+        y = self.time_to_seconds(y)
         
-        durn_sec = hide_sec - show_sec
+        duration = y - x
 
-        if durn_sec > 0:    
-            return self.seconds_to_time(durn_sec)
+        if duration > 0:
+            return self.seconds_to_time(duration)
         else:
-            return u'00:00:00,000'
+            return '00:00:00,000'
 
     def seconds_to_frame(self, seconds):
         """Convert seconds to frame."""
@@ -115,7 +111,7 @@ class TimeFrameConverter(object):
         seconds_left -= hours * 3600
 
         if hours > 99:
-            return u'99:99:99,999'
+            return '99:99:99,999'
         
         minutes = floor(seconds_left / 60)
         seconds_left -= minutes * 60
@@ -125,7 +121,7 @@ class TimeFrameConverter(object):
 
         milliseconds = seconds_left * 1000
 
-        return u'%02.0f:%02.0f:%02.0f,%03.0f' \
+        return '%02.0f:%02.0f:%02.0f,%03.0f' \
                % (hours, minutes, seconds, milliseconds)
 
     def time_to_frame(self, time):
@@ -136,21 +132,14 @@ class TimeFrameConverter(object):
         return self.seconds_to_frame(seconds)
         
     def time_to_seconds(self, time):
-        """
-        Convert time to seconds.
-
-        Raise ValueError if time is not a valid time.
-        """
-        match = RE_TIME.match(time)
-
-        if match is not None:
+        """Convert time to seconds."""
         
-            hours        = float(match.group(1))
-            minutes      = float(match.group(2))
-            seconds      = float(match.group(3))
-            milliseconds = float(match.group(4))
+        hours        = float(time[ :2])
+        minutes      = float(time[3:5])
+        seconds      = float(time[6:8])
+        milliseconds = float(time[9: ])
             
-            return (hours * 3600) + (minutes * 60) + seconds \
-                   + (milliseconds / 1000)
+        return (hours * 3600) + (minutes * 60) + seconds \
+               + (milliseconds / 1000)
 
         raise ValueError('Invalid time: "%s".' % time)

@@ -27,7 +27,7 @@ try:
 except ImportError:
     pass
 
-from gaupol.lib.formats.subfile import SubtitleFile
+from gaupol.lib.file.subfile import SubtitleFile
 
 
 RE_IDS = {

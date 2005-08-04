@@ -28,12 +28,12 @@ try:
 except ImportError:
     pass
 
-from gaupol.lib.formats.subfile import SubtitleFile
+from gaupol.lib.file.subfile import SubtitleFile
 
 
 RE_BLANK_LINE = re.compile(r'^\s*$')
 RE_TIME_LINE  = re.compile( \
-                   r'^(\d\d:\d\d:\d\d,\d\d\d) --> (\d\d:\d\d:\d\d,\d\d\d)\s*$' \
+                  r'^(\d\d:\d\d:\d\d,\d\d\d) --> (\d\d:\d\d:\d\d,\d\d\d)\s*$' \
                 )
 
 
@@ -83,9 +83,9 @@ class SubRip(SubtitleFile):
             else:
                 good_lines.append(line)
 
-        show_times = []
-        hide_times = []
-        texts      = []
+        shows = []
+        hides = []
+        texts = []
         
         # Split to components.
         for line in good_lines:
@@ -93,19 +93,19 @@ class SubRip(SubtitleFile):
             match = RE_TIME_LINE.match(line)
             
             if match is not None:
-                show_times.append(match.group(1))
-                hide_times.append(match.group(2))
+                shows.append(match.group(1))
+                hides.append(match.group(2))
                 texts.append(u'')
             else:
                 texts[-1] += line
 
         # Remove leading and trailing spaces.
-        for i in [show_times, hide_times, texts]:
+        for i in [shows, hides, texts]:
             self._strip_spaces(i)
 
-        return show_times, hide_times, texts
+        return shows, hides, texts
 
-    def write(self, show_times, hide_times, texts):
+    def write(self, shows, hides, texts):
         """
         Write SubRip file.
 
@@ -125,7 +125,7 @@ class SubRip(SubtitleFile):
             for i in range(len(show_times)):
                 sub_file.write('%.0f%s%s --> %s%s%s%s%s' % (
                     i + 1, newl_char,
-                    show_times[i], hide_times[i], newl_char,
+                    shows[i], hides[i], newl_char,
                     texts[i], newl_char, newl_char
                 ))
         finally:

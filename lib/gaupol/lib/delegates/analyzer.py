@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Analyzer to provide statistics and information."""
+"""Provider of statistics and information."""
 
 
 import re
@@ -33,7 +33,7 @@ from gaupol.lib.formats import tags as tags_module
 
 class Analyzer(Delegate):
     
-    """Analyzer to provide statistics and information."""
+    """Provider of statistics and information."""
 
     def get_character_count(self, row, col):
         """
@@ -41,16 +41,16 @@ class Analyzer(Delegate):
         
         Return: list of row lengths, total length
         """
-        text = self.texts[row][col]
+        text   = self.texts[row][col]
         format = self.get_format(col)
 
         if format != None:
-            re_tag = tags_module.get_tag_re(format)
-            text = re_tag.sub('', text)
+            re_tag = self.get_tag_re(col)
+            text   = re_tag.sub('', text)
 
         lines = text.split('\n')
 
         lengths = [len(line) for line in lines]
-        total = len(text)
+        total   = len(text)
         
         return lengths, total

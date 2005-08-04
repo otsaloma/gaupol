@@ -20,5 +20,5 @@
 """Convenience module that provides all subtitle file format classes."""
 
 
-from gaupol.lib.formats.microdvd import MicroDVD
-from gaupol.lib.formats.subrip   import SubRip
+from gaupol.lib.file.microdvd import MicroDVD
+from gaupol.lib.file.subrip   import SubRip

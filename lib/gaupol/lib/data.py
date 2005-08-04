@@ -31,7 +31,7 @@ from gaupol.lib.delegates.filereader import FileReader
 from gaupol.lib.delegates.filewriter import FileWriter
 from gaupol.lib.delegates.formatter import Formatter
 from gaupol.lib.delegates.frconv import FramerateConverter
-from gaupol.lib.time.timeframe import TimeFrameConverter
+from gaupol.lib.timing.timeframe import TimeFrameConverter
 
 
 class Data(object):
@@ -77,16 +77,15 @@ class Data(object):
         self._delegations = {
             'change_case'           : formatter,
             'change_framerate'      : fr_conv,
-            'clear_texts'           : editor,
+            'clear_text'            : editor,
             'get_character_count'   : analyzer,
-            'get_format'            : formatter,
+            'get_tag_re'            : formatter,
             'insert_subtitles'      : editor,
             'read_main_file'        : file_reader,
             'read_translation_file' : file_reader,
             'remove_subtitles'      : editor,
             'set_frame'             : editor,
             'set_text'              : editor,
-            'set_texts'             : editor,
             'set_time'              : editor,
             'toggle_dialog_lines'   : formatter,
             'toggle_italicization'  : formatter,

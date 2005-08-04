@@ -27,9 +27,8 @@ except ImportError:
 
 from gaupol.lib.constants import SHOW, HIDE, DURN, ORIG, TRAN
 from gaupol.lib.delegates.delegate import Delegate
-from gaupol.lib.formats.all import *
-from gaupol.lib.formats.determiner import FileFormatDeterminer
-from gaupol.lib.time.timeframe import TimeFrameConverter
+from gaupol.lib.file.all import *
+from gaupol.lib.file.determiner import FileFormatDeterminer
 
 
 class FileReader(Delegate):
@@ -71,7 +70,7 @@ class FileReader(Delegate):
 
                 show_time = shows[i]
                 hide_time = hides[i]
-                text = texts[i]
+                text      = texts[i]
                 
                 durn_time  = conv.get_time_duration(show_time, hide_time)
                 show_frame = conv.time_to_frame(show_time)
@@ -88,7 +87,7 @@ class FileReader(Delegate):
 
                 show_frame = shows[i]
                 hide_frame = hides[i]
-                text = texts[i]
+                text       = texts[i]
 
                 durn_frame = conv.get_frame_duration(show_frame, hide_frame)
                 show_time  = conv.frame_to_time(show_frame)
@@ -128,7 +127,7 @@ class FileReader(Delegate):
         if self.times:
             final_time = self.times[-1][HIDE]
         else:
-            final_time = u'00:00:00,000'
+            final_time = '00:00:00,000'
             
         if self.frames:
             final_frame = self.frames[-1][HIDE]
@@ -141,7 +140,7 @@ class FileReader(Delegate):
             if texts_length > i:
                 self.texts[i][TRAN] = trans[i]
             else:
-                self.times.append([final_time] * 2 + [u'00:00:00,000'])
+                self.times.append([final_time] * 2 + ['00:00:00,000'])
                 self.frames.append([final_frame] * 2 + [0])
                 self.texts.append([u'', trans[i]])
 

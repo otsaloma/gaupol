@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Data editor to set new values."""
+"""Data value editor."""
 
 
 try:
@@ -31,10 +31,25 @@ from gaupol.lib.delegates.delegate import Delegate
 
 class Editor(Delegate):
     
-    """Data editor to set new values."""
+    """Data value editor."""
+
+    def clear_text(self, row, col):
+        """Clear text to blank."""
+        
+        self.set_text(row, col, u'')
+
+    def insert_subtitles(self, start_row, count):
+        """Insert count amount of blank subtitles staring at start_row."""
+
+        pass
+
+    def remove_subtitles(self, rows):
+        """Remove subtitles."""
+
+        pass
 
     def _set_durations(self, row):
-        """Set duration values for row based on shows and hides."""
+        """Set duration for row based on show and hide."""
 
         show = self.times[row][SHOW]
         hide = self.times[row][HIDE]
@@ -46,7 +61,7 @@ class Editor(Delegate):
 
     def set_frame(self, row, col, value):
         """
-        Set value of frame in given position.
+        Set value of frame.
         
         Return: new index of row
         """
@@ -66,7 +81,7 @@ class Editor(Delegate):
         return row
 
     def _set_hidings(self, row):
-        """Set hide times and frames for row based on shows and durations."""
+        """Set hides for row based on shows and durations."""
         
         show = self.times[row][SHOW]
         durn = self.times[row][DURN]
@@ -77,14 +92,14 @@ class Editor(Delegate):
         self.frames[row][HIDE] = show + durn
 
     def set_text(self, row, col, value):
-        """Set value of text in given position."""
+        """Set text."""
 
         self.texts[row][col] = value
 
     def set_time(self, row, col, value):
         """
-        Set value of time in given position.
-        
+        Set time.
+
         Return: new index of row
         """
         self.times[row][col] = value
@@ -109,9 +124,9 @@ class Editor(Delegate):
         Return: new index of row
         """
         # Time is the default mode for an unsaved subtitled.
-        if self.main_file is not None:
+        try:
             mode = self.main_file.MODE
-        else:
+        except AttributeError:
             mode = 'time'
 
         # Get native timings for comparison.
