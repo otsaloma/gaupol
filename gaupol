@@ -33,15 +33,18 @@ import os
 import sys
 
 
-VERSION    = '0.0'
-LOG_FORMAT = '%(levelname)s: %(message)s'
+VERSION    = '0.0.SVN'
+
+
+# Set up logger.
+logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
+logger = logging.getLogger()
 
 
 def _check_dependencies():
     # Check existance and versions of dependencies.
     
-    major, minor = sys.version_info[0], sys.version_info[1]
-    if (major, minor) < (2, 4):
+    if sys.version_info[:3] < (2, 4, 0):
         logger.critical('Python 2.4 or later is required to run Gaupol.')
         sys.exit()
 
@@ -50,7 +53,7 @@ def _check_dependencies():
         if gtk.pygtk_version < (2, 6, 0):
             raise ImportError
     except ImportError:
-        logger.critical('PyGTK 2.6.0 or later is required to run Gaupol.')
+        logger.critical('PyGTK 2.6 or later is required to run Gaupol.')
         sys.exit()
 
     try:
@@ -86,27 +89,18 @@ def _import_optional_modules():
 def _parse_options():
     # Parse command line options and arguments.
     #
-    # Return: arguments, english (True or False)
+    # Return: use english (True or False), arguments
 
     parser = optparse.OptionParser(version='Gaupol %s' % VERSION)
 
-    parser.add_option(
-        '-q', '--quiet', action='store_true', dest='quiet', default=False,
-        help='produce less output'
-    )
     parser.add_option(
         '', '--english', action='store_true', dest='english', default=False,
         help='ignore possible translation and use english'
     )
 
     options, args = parser.parse_args(sys.argv)
-    
-    if options.quiet:
-        logging.basicConfig(level=logging.WARNING, format=LOG_FORMAT)
-    else:
-        logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
-        
-    return args, options.english
+
+    return options.english, args
     
 def _prepare_gettext(use_english):
     # Prepare internationalization using gettext.
@@ -122,13 +116,13 @@ def _prepare_gettext(use_english):
         return
 
     import gtk.glade
-    from gaupol.paths import LANG_DIR
+    from gaupol.paths import LOCALE_DIR
     
-    gettext.bindtextdomain('gaupol', LANG_DIR)
+    gettext.bindtextdomain('gaupol', LOCALE_DIR)
     gettext.textdomain('gaupol')
-    gettext.install('gaupol', LANG_DIR, unicode=1)
+    gettext.install('gaupol', LOCALE_DIR, unicode=1)
 
-    gtk.glade.bindtextdomain('gaupol', LANG_DIR)
+    gtk.glade.bindtextdomain('gaupol', LOCALE_DIR)
     gtk.glade.textdomain('gaupol')
     
 def _prepare_installed_run(prefix):
@@ -136,83 +130,34 @@ def _prepare_installed_run(prefix):
     #
     # Python library directory is added to Python path just in case.
 
-    major, minor = sys.version_info[0], sys.version_info[1]
-    python_dir = 'python%d.%d' % (major, minor)
+    python_dir = 'python%d.%d' % sys.version_info[:2]
     lib_dir = os.path.join(prefix, 'lib', python_dir, 'site-packages')
 
     if lib_dir not in sys.path:
-        sys.path.append(lib_dir)
+        sys.path.insert(0, lib_dir)
     
 def _prepare_source_run(prefix):
     # Prepare path information for running from source directory.
     #
-    # Prefix is added to Python path and a paths.py file generated holding
-    # information on paths to be used.
+    # Prefix is added to Python path and a path contants in paths module
+    # are set.
 
     lib_dir = os.path.join(prefix, 'lib')
 
     if lib_dir not in sys.path:
         sys.path.insert(0, lib_dir)
 
-    # Correct paths.
-    data_dir   = os.path.join(prefix, 'data'           )
-    glade_dir  = os.path.join(prefix, 'data', 'glade'  )
-    ui_dir     = os.path.join(prefix, 'data', 'ui'     )
-    pixmap_dir = os.path.join(prefix, 'data', 'pixmaps')
-    lang_dir   = os.path.join(prefix, 'locale'         )
-    
-    # Check paths in paths.py.
-    try:
+    from gaupol import paths
 
-        from gaupol import paths
-
-        if paths.DATA_DIR   != data_dir   or \
-           paths.GLADE_DIR  != glade_dir  or \
-           paths.UI_DIR     != ui_dir     or \
-           paths.PIXMAP_DIR != pixmap_dir or \
-           paths.LANG_DIR   != lang_dir   :
-
-            # Set variables to affect this session.
-            paths.DATA_DIR   = data_dir
-            paths.GLADE_DIR  = glade_dir
-            paths.UI_DIR     = ui_dir
-            paths.PIXMAP_DIR = pixmap_dir
-            paths.LANG_DIR   = lang_dir
+    paths.DATA_DIR   = os.path.join(prefix, 'data'           )
+    paths.GLADE_DIR  = os.path.join(prefix, 'data', 'glade'  )
+    paths.LOCALE_DIR = os.path.join(prefix, 'locale'         )
+    paths.PIXMAP_DIR = os.path.join(prefix, 'data', 'pixmaps')
+    paths.UI_DIR     = os.path.join(prefix, 'data', 'ui'     )
             
-            raise ValueError
-
-    # Write paths.py to affect future sessions.
-    except (ImportError, AttributeError, SyntaxError, ValueError):
-
-        filename = os.path.join(lib_dir, 'gaupol', 'paths.py')
-
-        logger.info('Writing path information file "%s"...' % filename)
-
-        try:
-            paths_file = file(filename, 'w')
-            
-            try:
-                paths_file.write('DATA_DIR   = %r\n' % data_dir  )
-                paths_file.write('GLADE_DIR  = %r\n' % glade_dir )
-                paths_file.write('UI_DIR     = %r\n' % ui_dir    )
-                paths_file.write('PIXMAP_DIR = %r\n' % pixmap_dir)
-                paths_file.write('LANG_DIR   = %r\n' % lang_dir  )
-            
-            finally:
-                paths_file.close()
-        
-        except IOError, (errno, detail):
-            logger.critical('Failed to write path information file "%s": %s.' \
-                            % (filename, detail))
-            sys.exit()
-
-        logger.info('...done.')
-
-
 if __name__ == '__main__':
 
-    args, use_english = _parse_options()
-    logger = logging.getLogger()
+    use_english, args = _parse_options()
     
     _check_dependencies()
     _import_optional_modules()

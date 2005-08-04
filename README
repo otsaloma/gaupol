@@ -8,34 +8,36 @@ Gaupol is in early development stage and is currently not very useful. The aim
 is to make a simple, but powerful, subtitle editor for multiple subtitle
 formats.
 
+Current features:
+- Support for a wide range of character encodings
+- Convenient translating
+- Text formatting
+- Mostly Gnome HIG compliant GUI
+
 Gaupol is released under the GNU General Public License (GPL), see the file
 "COPYING" for details.
 
 The official web site is:
 
-	http://home.gna.org/gaupol/
+	http://home.gna.org/gaupol
 
 
 Requirements
 ============
 
-Gaupol should run on all POSIX (Linux/BSD/UNIX-like) operating systems. On
-other operating systems, you can try it to see if it works.
+Gaupol should run on all POSIX (Linux/BSD/UNIX-like) operating systems.
+On other operating systems, you can try it to see if it works.
 
 Required:
-
-	- Python >= 2.4
-	- PyGTK (with libglade support) >= 2.6.0
+- Python >= 2.4
+- PyGTK (with libglade support) >= 2.6.0
 
 Optional:
-
-	- Psyco, for best results >= 1.4
-	- Additional codecs not included in your Python installation
-	  (e.g. Japanese and Korean codecs)
+- Psyco, for best results >= 1.4
 
 
-Installation
-============
+Running Gaupol
+==============
 
 Gaupol can be run either (1) directly from the source directory or (2) it can
 be installed to a selected location.
@@ -43,8 +45,5 @@ be installed to a selected location.
 (1) In the source directory, execute the command
 
 	./gaupol
-
-    When running Gaupol for the first time at the source directory's current
-    location, you will need write permissions to the lib/gaupol directory.
 
 (2) See the file "INSTALL".

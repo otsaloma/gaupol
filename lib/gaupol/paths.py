@@ -13,11 +13,21 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with Gaupol; if falset, write to the Free Software
+# along with Gaupol; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""gaupol-wide constants."""
+"""
+Paths used by Gaupol.
 
+When running from source, path constants will be added to this module (but
+not written to this file) when starting Gaupol. If installing, path constants
+will be written to this file during the installation process.
 
-VERSION = '0.0.SVN'
+Paths available:
+DATA_DIR
+GLADE_DIR
+LOCALE_DIR
+PIXMAP_DIR
+UI_DIR
+"""
