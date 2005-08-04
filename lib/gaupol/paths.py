@@ -27,7 +27,8 @@ will be written to this file during the installation process.
 Paths available:
 DATA_DIR
 GLADE_DIR
+ICON_DIR
 LOCALE_DIR
-PIXMAP_DIR
 UI_DIR
 """
+
