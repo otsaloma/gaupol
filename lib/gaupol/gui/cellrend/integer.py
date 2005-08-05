@@ -57,11 +57,11 @@ class CellRendererInteger(CustomCellRenderer):
 
         return editor
 
-    def on_insert_text(self, editor, string, length, pointer):
+    def on_insert_text(self, editor, text, length, pointer):
         """
-        Insert string to the cell.
+        Insert text to the cell.
         
-        string must be a digit to be inserted.
+        text must consist solely of digits to be inserted.
         """
-        if not string.isdigit():
+        if not text.isdigit():
             editor.emit_stop_by_name('insert-text')

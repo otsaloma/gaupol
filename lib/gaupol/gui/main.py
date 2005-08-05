@@ -39,13 +39,14 @@ def main(args):
     application = Application()
     paths = []
 
-    # Get full paths of all argument files. Accept only existing files.
     for arg in args:
     
+        # Get full path.
         basename = os.path.basename(arg)
         dirname  = os.path.abspath(os.path.dirname(arg))
         path     = os.path.join(dirname, basename)
         
+        # Accept only existing files.
         if os.path.isfile(path):
             paths.append(path)
         else:

@@ -31,6 +31,36 @@ import gobject
 from gaupol.gui.cellrend.custom import CustomCellRenderer
 
 
+class CellTextView(gtk.TextView, gtk.CellEditable):
+
+    """TextView that implements CellEditable."""
+
+    def do_editing_done(self, *args):
+        """End editing by removing the editor."""
+
+        self.remove_widget()
+
+    def do_remove_widget(self, *args):
+        """Empty method to avoid console error output."""
+        pass
+    
+    def do_start_editing(self, *args):
+        """Empty method to avoid console error output."""
+        pass
+    
+    def get_text(self, *args):
+        """Get the text."""
+
+        text_buffer = self.get_buffer()
+        start, end = text_buffer.get_bounds()
+        return text_buffer.get_text(start, end, True)
+        
+    def set_text(self, text):
+        """Set the text."""
+
+        self.get_buffer().set_text(text)
+
+
 class CellRendererMultilineText(CustomCellRenderer):
 
     """CellRenderer for cells containing multiline text."""
@@ -73,36 +103,6 @@ class CellRendererMultilineText(CustomCellRenderer):
 
         if keyname in ['Return', 'KP_Enter']:
             editor.emit('editing-done')
-
-
-class CellTextView(gtk.TextView, gtk.CellEditable):
-
-    """TextView that implements CellEditable."""
-
-    def do_editing_done(self, *args):
-        """End editing by removing the editor."""
-
-        self.remove_widget()
-
-    def do_remove_widget(self, *args):
-        """Empty method to avoid console error output."""
-        pass
-    
-    def do_start_editing(self, *args):
-        """Empty method to avoid console error output."""
-        pass
-    
-    def get_text(self, *args):
-        """Get the text."""
-
-        text_buffer = self.get_buffer()
-        start, end = text_buffer.get_bounds()
-        return text_buffer.get_text(start, end, True)
-        
-    def set_text(self, text):
-        """Set the text."""
-
-        self.get_buffer().set_text(text)
 
 
 gobject.type_register(CellTextView)

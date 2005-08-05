@@ -127,7 +127,7 @@ class CustomCellRenderer(gtk.GenericCellRenderer):
         Return: X offset, Y offset, width, height
         """
         # The following size calculations have been tested so that the cell
-        # will be the same size as a CellRendererText cell with same amount
+        # should be the same size as a CellRendererText cell with same amount
         # of rows.
 
         xpad = 2

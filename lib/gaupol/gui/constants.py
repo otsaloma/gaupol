@@ -24,4 +24,5 @@ COLUMN_NAMES    = ['no', 'show', 'hide', 'duration', 'original', 'translation']
 EDIT_MODE_NAMES = ['time', 'frame']
 FRAMERATE_NAMES = ['23.976', '25', '29.97']
 
+# Column indexes.
 NO, SHOW, HIDE, DURN, ORIG, TRAN = range(6)
