@@ -193,6 +193,7 @@ class Formatter(Delegate):
         for text in texts:
             if re_italic_tag.match(text) is None:
                 turn_into_italics = True
+                break
 
         # Remove existing italic tags and italicize if that is to be done.
         for i in range(len(texts)):

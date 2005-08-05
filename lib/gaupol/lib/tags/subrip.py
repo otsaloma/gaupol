@@ -47,7 +47,7 @@ class SubRip(TagLibrary):
             r'(</?)B>', None,
             r'\1b>'
         ), (
-            # Uppercase italics
+            # Uppercase italic
             r'(</?)I>', None,
             r'\1i>'
         ), (
