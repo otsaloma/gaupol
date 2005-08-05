@@ -97,8 +97,8 @@ class Config(RawConfigParser):
 
     Settings are stored in an .ini-style file in ~/.gaupol/gaupol.conf. Values
     'true' or 'false' are used for boolean fields and comma-separated strings
-    for lists. All stored values should be strings. Functions can be used to
-    get or set other value types than strings.
+    for lists. All stored values are strings. Functions can be used to get or
+    set other value types than strings.
 
     This class will both read and write settings as well as store settings so
     that they can be requested while application is running.
@@ -144,6 +144,7 @@ class Config(RawConfigParser):
         """
         self._set_defaults()
         
+        # Read from file.
         result = self.read([CONFIG_PATH])
         if not result:
             logger.info( \
@@ -211,12 +212,14 @@ class Config(RawConfigParser):
 
         try:
         
+            # Write header.
             config_file = open(CONFIG_PATH, 'w')
             try:
                 config_file.write(HEADER)
             finally:
                 config_file.close()
-                
+            
+            # Write settings.
             config_file = open(CONFIG_PATH, 'a')
             try:
                 self.write(config_file)

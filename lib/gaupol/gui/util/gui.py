@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Widely useful functions for GTK GUI components."""
+"""Common functions for GTK GUI components."""
 
 
 import os
@@ -40,16 +40,22 @@ def open_url(url):
 
     # TODO:
     # webbrowser module is not very good. It will open some browser, but
-    # not the default browser. Add other OSs/DEs start commands, if such
-    # exist.
+    # not the default browser. Add detection and start commands for other
+    # OSs and DEs if such exist.
     
+    # Windows
     if sys.platform == 'win32':
         os.startfile(WEBSITE)
-    elif os.path.isfile('/usr/bin/gnome-open'):
-        os.system('/usr/bin/gnome-open "%s"' % url)
-    else:
-        import webbrowser
-        webbrowser.open(url)
+        return
+
+    # Gnome
+    if os.getenv('GNOME_DESKTOP_SESSION_ID') is not None:
+        return_value = os.system('gnome-open "%s"' % url)
+        if return_value == 0:
+            return
+
+    import webbrowser
+    webbrowser.open(url)
 
 def set_cursor_busy(window):
     """
