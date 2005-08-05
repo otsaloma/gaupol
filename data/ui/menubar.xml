@@ -25,6 +25,8 @@
 			<menuitem action="undo"/>
 			<menuitem action="redo"/>
 			<separator/>
+			<menuitem action="edit"/>
+			<separator/>
 			<menuitem action="cut"/>
 			<menuitem action="copy"/>
 			<menuitem action="paste"/>

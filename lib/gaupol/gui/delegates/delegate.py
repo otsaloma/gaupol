@@ -36,9 +36,6 @@ class Delegate(object):
     """
     Base class for delegate classes.
     
-    This class is meant to be subclassed and extended by actual delegate
-    classes.
-    
     The purpose of the methods in this class is to provide direct access to the
     master class's attributes by redirecting all self.attribute calls not found
     in the delegate class.

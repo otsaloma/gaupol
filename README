@@ -30,7 +30,7 @@ On other operating systems, you can try it to see if it works.
 
 Required:
 - Python >= 2.4
-- PyGTK (with libglade support) >= 2.6.0
+- PyGTK (with libglade support) >= 2.6
 
 Optional:
 - Psyco, for best results >= 1.4
