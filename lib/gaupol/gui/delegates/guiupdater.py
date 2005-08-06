@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""GUI updater to update GUI components' properties."""
+"""Updater of GUI components' properties."""
 
 
 import os
@@ -31,8 +31,7 @@ import gobject
 import gtk
 
 from gaupol.gui.cellrend.multiline import CellRendererMultilineText
-from gaupol.gui.constants import COLUMN_NAMES
-from gaupol.gui.constants import FRAMERATE_NAMES
+from gaupol.gui.constants import COLUMN_NAMES, FRAMERATE_NAMES
 from gaupol.gui.constants import NO, SHOW, HIDE, DURN, ORIG, TRAN
 from gaupol.gui.delegates.delegate import Delegate
 from gaupol.gui.util import gui
@@ -40,7 +39,7 @@ from gaupol.gui.util import gui
 
 class GUIUpdater(Delegate):
 
-    """GUI updater to update GUI components' properties."""
+    """Updater of GUI components' properties."""
 
     def _get_action_group(self, name):
         """
@@ -51,10 +50,11 @@ class GUIUpdater(Delegate):
         action_groups = self.uim.get_action_groups()
         action_group_names = [ag.get_name() for ag in action_groups]
         index = action_group_names.index(name)
+
         return action_groups[index]
 
     def on_document_toggled(self, some_action, new_action):
-        """Switch page in notebook when file toggled in Subtitles menu."""
+        """Switch page in notebook."""
 
         index = int(new_action.get_name().split('-')[-1])
         self.notebook.set_current_page(index)
@@ -67,10 +67,10 @@ class GUIUpdater(Delegate):
         
         # Set selections for undo and redo menu items.
 
-        name = action.get_name()
+        name   = action.get_name()
+        prefix = name[:5]
                 
-        if not name.startswith('undo-') and \
-           not name.startswith('redo-') :
+        if prefix not in ['undo-', 'redo-']:
             return
         
         part  = name[:4]
@@ -88,9 +88,9 @@ class GUIUpdater(Delegate):
         # Set selections for undo and redo menu items.
 
         name = action.get_name()
+        prefix = name[:5]
                 
-        if not name.startswith('undo-') and \
-           not name.startswith('redo-') :
+        if prefix not in ['undo-', 'redo-']:
             return
         
         part  = name[:4]
@@ -155,20 +155,23 @@ class GUIUpdater(Delegate):
         menu = self.uim.get_widget('/ui/tree_view_popup')
         menu.popup(None, None, None, event.button, event.time)
 
-        # Must return True when handling signal to avoid selection being lost.
+        # Return True to stop other handlers.
         return True
 
     def on_tree_view_cursor_moved(self, *args):
         """Update GUI properties when tree view cursor has moved."""
 
         project = self.get_current_project()
-        self._set_format_sensitivities(project)
+        self._set_edit_value_sensitivity(project)
+        self._set_text_operation_sensitivities(project)
         
     def on_tree_view_selection_changed(self, *args):
         """Update GUI properties when tree view selection has changed."""
 
         project = self.get_current_project()
-        self._set_format_sensitivities(project)
+        self._set_edit_value_sensitivity(project)
+        self._set_row_operation_sensitivities(project)
+        self._set_text_operation_sensitivities(project)
         self._set_character_status(project)
 
     def on_window_state_event(self, window, event):
@@ -537,7 +540,6 @@ class GUIUpdater(Delegate):
         if project is None:
             prev_action.set_sensitive(False)
             next_action.set_sensitive(False)
-            self.window.set_title('Gaupol')
             return
 
         prj_index = self.projects.index(project)
@@ -570,7 +572,7 @@ class GUIUpdater(Delegate):
             self.uim.get_action(path).set_active(visible)
 
     def _set_document_open(self):
-        """Set GUI properties to suit main document open state."""
+        """Set GUI properties to suit whether a document is open or not."""
 
         is_open = bool(self.projects)
 
@@ -600,6 +602,23 @@ class GUIUpdater(Delegate):
         else:
             self.ttips_open.disable()
             self.set_status_message(None)
+            self.window.set_title('Gaupol')
+
+    def _set_edit_value_sensitivity(self, project):
+        """Set sensitivity of "Edit Value" action."""
+        
+        action = self.uim.get_action('/ui/menubar/edit/edit_value')
+
+        if project is None:
+            action.set_sensitive(False)
+            return
+
+        # Some cell must have focus.
+        store_row, store_col = project.get_store_focus()
+        if store_row is not None and store_col is not None:
+            action.set_sensitive(True)
+        else:
+            action.set_sensitive(False)
 
     def _set_file_sensitivities(self, project):
         """Set file action properties to suit main document state."""
@@ -633,50 +652,101 @@ class GUIUpdater(Delegate):
         self.uim.get_action(path).set_sensitive(sensitive)
 
     def _set_format_sensitivities(self, project):
-        """Set sensitivity of actions in the Format menu."""
+        """Set sensitivities of text formatting actions."""
 
-        case_action   = self.uim.get_action('/ui/menubar/format/case'  )
-        clear_action  = self.uim.get_action('/ui/menubar/edit/clear'   )
-        dialog_action = self.uim.get_action('/ui/menubar/format/dialog')
-        italic_action = self.uim.get_action('/ui/menubar/format/italic')
+        uim_paths = (
+            '/ui/menubar/format/case',
+            '/ui/menubar/format/dialog',
+            '/ui/menubar/format/italic',
+        )
 
         if project is None:
-            case_action.set_sensitive(False)
-            clear_action.set_sensitive(False)
-            dialog_action.set_sensitive(False)
-            italic_action.set_sensitive(False)
+            for path in uim_paths:
+                self.uim.get_action(path).set_sensitive(False)
             return
 
         selection = project.tree_view.get_selection()
         sel_row_count = selection.count_selected_rows()
         store_col = project.get_store_focus()[1]
 
-        sensitivity = True
+        sensitive = True
 
         # Something must be selected.
         if sel_row_count == 0:
-            sensitivity = False
+            sensitive = False
 
-        # A text column must be active and file format must be known.
+        # A text column must have focus and file format must be known.
         if store_col == ORIG:
-            clear_action.set_sensitive(sensitivity)
             if project.data.main_file is None:
-                sensitivity = False
+                sensitive = False
         elif store_col == TRAN:
-            clear_action.set_sensitive(sensitivity)
             if project.data.tran_file is None:
                 if project.data.main_file is None:
-                    sensitivity = False
+                    sensitive = False
         else:
-            sensitivity = False
-            clear_action.set_sensitive(sensitivity)
+            sensitive = False
 
-        case_action.set_sensitive(sensitivity)
-        dialog_action.set_sensitive(sensitivity)
-        italic_action.set_sensitive(sensitivity)
+        for path in uim_paths:
+            self.uim.get_action(path).set_sensitive(sensitive)
+
+    def _set_row_operation_sensitivities(self, project):
+        """Set sensitivity of row-operating actions."""
+
+        uim_paths = (
+            '/ui/menubar/edit/insert_subtitles',
+            '/ui/menubar/edit/remove_subtitles',
+        )
+
+        if project is None:
+            sensitive = False
+        else:
+            selection = project.tree_view.get_selection()
+            sel_row_count = selection.count_selected_rows()
+            sensitive = bool(sel_row_count > 0)
+
+        for path in uim_paths:
+            self.uim.get_action(path).set_sensitive(sensitive)
+
+    def _set_text_edit_sensitivities(self, project):
+        """Set sensitivities of text editing actions."""
+
+        uim_paths = (
+            '/ui/menubar/edit/clear',
+            '/ui/menubar/edit/copy',
+            '/ui/menubar/edit/cut',
+            '/ui/menubar/edit/paste',
+        )
+
+        if project is None:
+            for path in uim_paths:
+                self.uim.get_action(path).set_sensitive(False)
+            return
+
+        selection = project.tree_view.get_selection()
+        sel_row_count = selection.count_selected_rows()
+        store_col = project.get_store_focus()[1]
+
+        sensitive = True
+
+        # Something must be selected.
+        if sel_row_count == 0:
+            sensitive = False
+
+        # A text column must have focus.
+        if store_col not in [ORIG, TRAN]:
+            sensitive = False
+
+        for path in uim_paths:
+            self.uim.get_action(path).set_sensitive(sensitive)
+
+    def _set_text_operation_sensitivities(self, project):
+        """Set sensitivities of text-operating actions."""
+
+        self._set_format_sensitivities(project)
+        self._set_text_edit_sensitivities(project)
 
     def _set_framerate_sensitivities(self, project):
-        """Set sensitivity of framerate widgets and actions."""
+        """Set sensitivities of framerate widgets and actions."""
 
         if project is None:
             exists = False
@@ -739,9 +809,11 @@ class GUIUpdater(Delegate):
         self._set_character_status(project)
         self._set_current_document(project)
         self._set_document_open()
+        self._set_edit_value_sensitivity(project)
         self._set_file_sensitivities(project)
-        self._set_format_sensitivities(project)
         self._set_framerate_sensitivities(project)
+        self._set_row_operation_sensitivities(project)
+        self._set_text_operation_sensitivities(project)
         self._set_undo_and_redo_sensitivities(project)
         self._set_visibility_of_statusbars(project)
 

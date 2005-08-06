@@ -40,9 +40,11 @@ from gaupol.gui.util import gui
 from gaupol.lib.data import Data
 
 
+# Normal column header
 NORM_ATTR = pango.AttrList()
 NORM_ATTR.insert(pango.AttrWeight(pango.WEIGHT_NORMAL, 0, -1))
 
+# Focused column header
 EMPH_ATTR = pango.AttrList()
 EMPH_ATTR.insert(pango.AttrWeight(pango.WEIGHT_BOLD, 0, -1))
 
@@ -56,7 +58,7 @@ class Project(gobject.GObject):
     notebook and contains two documents: main and translation.
     
     This class is implemented as a GObject. All UI events will send out a
-    signal, that will be responded to in Application class.
+    signal, that will be responded to in the Application class.
     """
 
     STAGE = gobject.SIGNAL_RUN_LAST
@@ -94,7 +96,7 @@ class Project(gobject.GObject):
         self.main_changed = 0
         self.tran_changed = 0
         
-        # Stacks of actions of type DURAction.   
+        # Stacks of actions of type DURAction.  
         self.undoables = []
         self.redoables = []
 
@@ -172,11 +174,14 @@ class Project(gobject.GObject):
 
         font = self._config.get('view', 'font')
 
-        signals   = ['editing-started', 'edited']
-        callbacks = [
+        signals   = (
+            'editing-started',
+            'edited',
+        )
+        callbacks = (
             self._on_tree_view_cell_editing_started,
-            self._on_tree_view_cell_edited
-        ]
+            self._on_tree_view_cell_edited,
+        )
 
         for i in range(6):
         
@@ -391,7 +396,7 @@ class Project(gobject.GObject):
         """
         Get properties of translation document.
 
-        Properties are inherited from main document, if translation file does
+        Properties are inherited from main document if translation file does
         not exist.
         
         Return: path, format, encoding, newlines (of which any can be None)
@@ -421,7 +426,7 @@ class Project(gobject.GObject):
     def _on_tree_view_button_press_event(self, tree_view, event):
         """Emit signal that a tree view cell has been clicked."""
 
-        # Must return True when signal is handled.
+        # Return True to stop other handlers or False to not to.
         return self.emit('tree-view-button-press-event', event)
 
     def _on_tree_view_cell_edited(self, cell_rend, new_value, row, col):
@@ -462,7 +467,6 @@ class Project(gobject.GObject):
         store.clear()
         store.set_sort_column_id(NO, gtk.SORT_ASCENDING)
 
-        # Try to speed up loading large amounts of data. (1)
         self.tree_view.freeze_child_notify()
 
         if self.edit_mode == 'time':
@@ -473,7 +477,6 @@ class Project(gobject.GObject):
         for i in range(len(self.data.times)):
             store.append([i + 1] + timings[i] + self.data.texts[i])
 
-        # Try to speed up loading large amounts of data. (2)
         self.tree_view.thaw_child_notify()
 
     def reload_data_in_columns(self, col_list):
@@ -481,7 +484,6 @@ class Project(gobject.GObject):
         
         store = self.tree_view.get_model()
 
-        # Try to speed up loading large amounts of data. (1)
         self.tree_view.freeze_child_notify()
 
         # When looping over the store, the sort order must be unambiguous.
@@ -509,7 +511,6 @@ class Project(gobject.GObject):
 
         store.set_sort_column_id(sort_col, sort_order)
 
-        # Try to speed up loading large amounts of data. (2)
         self.tree_view.thaw_child_notify()
 
     def reload_data_in_row(self, data_row):
@@ -535,7 +536,6 @@ class Project(gobject.GObject):
 
         store = self.tree_view.get_model()
 
-        # Try to speed up loading large amounts of data. (1)
         self.tree_view.freeze_child_notify()
 
         # When looping over the store, the sort order must be unambiguous.
@@ -554,7 +554,6 @@ class Project(gobject.GObject):
 
         store.set_sort_column_id(sort_col, sort_order)
                         
-        # Try to speed up loading large amounts of data. (2)
         self.tree_view.thaw_child_notify()
 
     def set_active_column(self, *args):
@@ -588,5 +587,6 @@ class Project(gobject.GObject):
         self.tooltips.set_tip(event_box, title)
 
         return title
+
 
 gobject.type_register(Project)

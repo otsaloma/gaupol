@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Searcher to move around in the document."""
+"""Searcher of specific data in document."""
 
 
 try:
@@ -33,7 +33,7 @@ from gaupol.gui.dialogs.goto import GoToDialog
 
 class Searcher(Delegate):
 
-    """Searcher to move around in the document."""
+    """Searcher of specific data in document."""
 
     def on_go_to_subtitle_activated(self, *args):
         """Go to a specific subtitle."""
@@ -59,5 +59,4 @@ class Searcher(Delegate):
         selection.select_path(store_row)
         
         project.tree_view.set_cursor(store_row, tree_col)
-        project.tree_view.scroll_to_cell(store_row, tree_col, True, 0.5, 0)
-        
+        project.tree_view.scroll_to_cell(store_row, tree_col, True, 0.5, 0)        

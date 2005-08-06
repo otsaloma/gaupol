@@ -8,7 +8,7 @@
 		<menuitem action="translation"/>
 	</popup>
 	<popup name="tree_view_popup">
-		<menuitem action="edit"/>
+		<menuitem action="edit_value"/>
 		<separator/>
 		<menuitem action="cut"/>
 		<menuitem action="copy"/>

@@ -1,3 +1,19 @@
+2005-08-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* Major code clean-up done.
+	
+	* Lots of modules and functions renamed.
+
+	* paths.py file is no longer written when running from source.
+	
+	* Changing format in save dialog now changes extension as well.
+
+	* Invert case menu entry removed.
+	
+	* Shortcut keys for menu entries changed.
+
+	* Several non-functional menu items added to Edit and Help menus.
+
 2005-08-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* Clearing and selecting under Edit menu done.

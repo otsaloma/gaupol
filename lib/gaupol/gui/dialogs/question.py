@@ -34,7 +34,7 @@ TYPE    = gtk.MESSAGE_QUESTION
 
 class OverwriteFileQuestionDialog(gtk.MessageDialog):
 
-    """Warning dialog displayed when saving as an existing file."""
+    """Question dialog displayed when saving as an existing file."""
     
     def __init__(self, parent, basename):
         """
@@ -59,7 +59,7 @@ class OverwriteFileQuestionDialog(gtk.MessageDialog):
 
 class RevertQuestionDialog(gtk.MessageDialog):
 
-    """Confirm dialog displayed before reverting changes of a file."""
+    """Question dialog displayed before reverting changes of a file."""
     
     def __init__(self, parent, main_exists, tran_exists, main_changed,
                  tran_changed, main_basename, tran_basename):

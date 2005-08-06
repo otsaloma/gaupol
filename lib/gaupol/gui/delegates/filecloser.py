@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""File closer to close documents and quit application."""
+"""Closer of documents and quitter of application."""
 
 try:
     from psyco.classes import *
@@ -27,25 +27,26 @@ except ImportError:
 import gtk
 
 from gaupol.gui.delegates.delegate import Delegate
+from gaupol.gui.dialogs.multiclose import MultiCloseWarningDialog
 from gaupol.gui.dialogs.warning import CloseMainDocumentWarningDialog
 from gaupol.gui.dialogs.warning import CloseTranslationDocumentWarningDialog
-from gaupol.gui.multiclose import MultiCloseWarningDialog
 from gaupol.gui.project import Project
 from gaupol.gui.util import gui
 
 
 class FileCloser(Delegate):
 
-    """File closer to close documents and quit application."""
+    """Closer of documents and quitter of application."""
 
     def _close_all_projects(self):
         """
-        Close all projects.
+        Close all projects after asking for confirmation.
         
         Return: False if cancelled, otherwise True
         """
         unsaved_count = 0
 
+        # Get amount of unsaved documents.
         for project in self.projects:
 
             if project.main_changed:
@@ -59,13 +60,15 @@ class FileCloser(Delegate):
             if unsaved_count > 1:
                 break
 
+        # Confirm closing single unsaved document.
         if unsaved_count == 1:
             success = self._close_project(unsaved_prj)
             if not success:
                 return False
 
+        # Confirm closing multiple unsaved documents.
         elif unsaved_count > 1:
-            success = self._close_multiple_documents(self.projects)
+            success = self._confirm_closing_multiple_documents(self.projects)
             if not success:
                 return False
 
@@ -73,42 +76,6 @@ class FileCloser(Delegate):
         
         while self.notebook.get_current_page() > -1:
             self.notebook.remove_page(0)
-
-        return True
-
-    def _close_multiple_documents(self, projects):
-        """
-        Close all documents of given projects.
-        
-        Return: False is cancelled, otherwise True
-        """
-        dialog = MultiCloseWarningDialog(self.window, projects)
-        response = dialog.run()
-
-        # "Cancel" or dialog close button clicked.
-        if response != gtk.RESPONSE_YES and response != gtk.RESPONSE_NO:
-            dialog.destroy()
-            return False
-
-        # "Close without saving" clicked.
-        elif response == gtk.RESPONSE_NO:
-            dialog.destroy()
-            return True
-            
-        # "Save" clicked.
-        main_prjs = dialog.get_main_projects_to_save()
-        tran_prjs = dialog.get_translation_projects_to_save()
-        dialog.destroy()
-
-        gui.set_cursor_busy(self.window)
-
-        for project in main_prjs:
-            self.save_main_document(project)
-
-        for project in tran_prjs:
-            self.save_translation_document(project)
-
-        gui.set_cursor_normal(self.window)
 
         return True
 
@@ -154,21 +121,57 @@ class FileCloser(Delegate):
         # Multidocument close dialog.
         elif project.main_changed and project.tran_changed:
 
-            success = self._close_multiple_documents([project])
+            success = self._confirm_closing_multiple_documents([project])
             if not success:
                 return False
         
         notebook_index = self.notebook.get_current_page()
         project_index  = self.projects.index(project)
 
-        # Notebook widget doesn't seem to be able to handle post page close
-        # page switching smoothly. So, as a workaround, we'll switch to next
+        # Notebook widget does not seem to be able to handle post page-close
+        # page-switching smoothly. So, as a workaround, we'll switch to next
         # page if we're closing the current page.
         if notebook_index == project_index:
             self.notebook.next_page()
         
         self.projects.remove(project)
         self.notebook.remove_page(project_index)
+
+        return True
+
+    def _confirm_closing_multiple_documents(self, projects):
+        """
+        Confirm closing given projects.
+        
+        Return: False is cancelled, otherwise True
+        """
+        dialog = MultiCloseWarningDialog(self.window, projects)
+        response = dialog.run()
+
+        # "Cancel" or dialog close button clicked.
+        if response != gtk.RESPONSE_YES and response != gtk.RESPONSE_NO:
+            dialog.destroy()
+            return False
+
+        # "Close Without Saving" clicked.
+        elif response == gtk.RESPONSE_NO:
+            dialog.destroy()
+            return True
+            
+        # "Save" clicked.
+        main_prjs = dialog.get_main_projects_to_save()
+        tran_prjs = dialog.get_translation_projects_to_save()
+        dialog.destroy()
+
+        gui.set_cursor_busy(self.window)
+
+        for project in main_prjs:
+            self.save_main_document(project)
+
+        for project in tran_prjs:
+            self.save_translation_document(project)
+
+        gui.set_cursor_normal(self.window)
 
         return True
 
@@ -182,7 +185,7 @@ class FileCloser(Delegate):
             self.set_sensitivities()
 
     def on_close_all_activated(self, *args):
-        """Close all currently open projects."""
+        """Close all currently open projects after asking for confirmation."""
         
         success = self._close_all_projects()
         
@@ -198,7 +201,7 @@ class FileCloser(Delegate):
             self.set_sensitivities()
 
     def on_quit_activated(self, *args):
-        """Quit application."""
+        """Quit application after asking for confirmation."""
 
         success = self._close_all_projects()
         if not success:
@@ -217,7 +220,7 @@ class FileCloser(Delegate):
         gtk.main_quit()
 
     def on_window_delete_event(self, *args):
-        """Quit application."""
+        """Quit application after asking for confirmation."""
         
         self.on_quit_activated()
 

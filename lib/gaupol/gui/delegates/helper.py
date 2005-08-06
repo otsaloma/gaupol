@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Helper to perform tasks in the Help menu."""
+"""Offerer of support and information."""
 
 
 try:
@@ -31,7 +31,7 @@ from gaupol.gui.dialogs.about import AboutDialog
 
 class Helper(Delegate):
     
-    """Helper to perform tasks in the Help menu."""
+    """Offerer of support and information."""
 
     def on_about_activated(self, *args):
         """Display the about dialog."""
@@ -39,3 +39,18 @@ class Helper(Delegate):
         dialog = AboutDialog(self.window)
         dialog.run()
         dialog.destroy()
+
+    def on_check_latest_version_activated(self, *args):
+        """Check latest version of Gaupol from the project page."""
+        
+        pass
+        
+    def on_report_a_bug_activated(self, *args):
+        """Report a bug at the project page."""
+
+        pass
+        
+    def on_support_activated(self, *args):
+        """Request support at the project page."""
+
+        pass

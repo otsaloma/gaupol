@@ -36,10 +36,13 @@ class DURAction(object):
     
     def __init__(self, *args):
         
+        # One line description.
         self.description = None
-        self.document    = None
 
-        # Tree view properties that can be restored.
+        # Document affected.
+        self.document = None
+
+        # TreeView properties that can be restored.
         self.focus_data_row  = None
         self.focus_store_col = None
         self.sel_data_rows   = None
@@ -73,6 +76,7 @@ class DURManager(Delegate):
 
         project.undoables.insert(0, action)
 
+        # Remove oldest undo action if level limit is exceeded.
         if self.config.getboolean('editor', 'limit_undo'):
             undo_levels = self.config.getint('editor', 'undo_levels')
             while len(project.undoables) > undo_levels:
@@ -150,6 +154,7 @@ class DURManager(Delegate):
 
         project.undoables.insert(0, action)
 
+        # Remove oldest undo action if level limit is exceeded.
         if self.config.getboolean('editor', 'limit_undo'):
             undo_levels = self.config.getint('editor', 'undo_levels')
             while len(project.undoables) > undo_levels:
@@ -206,6 +211,7 @@ class DURManager(Delegate):
 
         project.redoables.insert(0, action)
 
+        # Remove oldest redo action if level limit is exceeded.
         if self.config.getboolean('editor', 'limit_undo'):
             undo_levels = self.config.getint('editor', 'undo_levels')
             while len(project.redoables) > undo_levels:

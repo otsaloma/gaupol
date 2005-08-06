@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""About dialog to display application information."""
+"""Dialog to display application information."""
 
 
 #import locale
@@ -36,13 +36,13 @@ from gaupol.gui.util import gui
 NAME         = 'Gaupol'
 COPYRIGHT    = u'Copyright \xa9 2005 Osmo Salomaa'
 COMMENTS     = _('Subtitle editor')
-WEBSITE      = 'http://home.gna.org/gaupol/'
+WEBSITE      = 'http://home.gna.org/gaupol'
 AUTHORS      = ['Osmo Salomaa <otsaloma@cc.hut.fi>']
 #DOCUMENTERS = []
 #ARTISTS     = []
 #TRANSLATORS = {'fi_FI': 'Osmo Salomaa <otsaloma@cc.hut.fi>'}
 LICENSE      = \
-_('''Gaupol is free software; you can redistribute it and/or modify
+'''Gaupol is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or
 (at your option) any later version.
@@ -54,12 +54,12 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with Gaupol; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA''')
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA'''
 
 
 class AboutDialog(gtk.AboutDialog):
 
-    """About dialog to display application information."""
+    """Dialog to display application information."""
 
     def __init__(self, parent):
 

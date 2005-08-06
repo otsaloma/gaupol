@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""File opener to open existing subtitle files and create new ones."""
+"""Opener of existing subtitle files and creator new ones."""
 
 
 import os
@@ -42,13 +42,13 @@ from gaupol.gui.dialogs.warning import ImportTranslationWarningDialog
 from gaupol.gui.dialogs.warning import OpenBigFileWarningDialog
 from gaupol.gui.project import Project
 from gaupol.gui.util import gui
-from gaupol.lib.formats.determiner import UnknownFileFormatError
+from gaupol.lib.file.determiner import UnknownFileFormatError
 from gaupol.lib.util import encodings as encodings_module
 
 
 class FileOpener(Delegate):
 
-    """File opener to open existing subtitle files and create new ones."""
+    """Opener of existing subtitle files and creator new ones."""
     
     def _add_new_project(self, project):
         """Add a new project and open a new notebook page for it."""
@@ -147,8 +147,10 @@ class FileOpener(Delegate):
                 
             self.notebook.set_current_page(i)
 
-            self.set_status_message(_('Subtitle file "%s" is already open') \
-                                    % self.projects[i].get_main_basename())
+            basename = self.projects[i].get_main_basename()
+            message = _('Subtitle file "%s" is already open') % basename
+            self.set_status_message(message)
+
             return True
 
         return False
@@ -168,7 +170,7 @@ class FileOpener(Delegate):
         self.open_main_files(paths)
         
     def on_import_translation_activated(self, *args):
-        """Import a translation file with filechooser."""
+        """Import a translation file with FileChooser."""
 
         gui.set_cursor_busy(self.window)
         project = self.get_current_project()
@@ -210,8 +212,10 @@ class FileOpener(Delegate):
         self.set_sensitivities()
         project.reload_all_data()
 
-        self.set_status_message(_('Imported translation file "%s"') \
-                                % project.get_translation_basename())
+        basename = project.get_translation_basename()
+        message = _('Imported translation file "%s"') % basename
+        self.set_status_message(message)
+        
         gui.set_cursor_normal(self.window)
         
     def on_new_activated(self, *args):
@@ -220,7 +224,7 @@ class FileOpener(Delegate):
         self.counter += 1
         project = Project(self.config, self.counter)
         
-        project.data.times.append([u'00:00:00,000'] * 3)
+        project.data.times.append(['00:00:00,000'] * 3)
         project.data.frames.append([0] * 3)
         project.data.texts.append([u''] * 2)
 
@@ -238,8 +242,10 @@ class FileOpener(Delegate):
             return
 
         self._add_new_project(project)
-        self.set_status_message(_('Opened subtitle file "%s"') \
-                                % project.get_main_basename())
+
+        basename = project.get_main_basename()
+        message = _('Opened subtitle file "%s"') % basename
+        self.set_status_message(message)
 
         gui.set_cursor_normal(self.window)
 
@@ -300,7 +306,7 @@ class FileOpener(Delegate):
         """
         Open main files in paths list.
 
-        Files are opened with default encoding.
+        Files are opened with the default encoding.
         """
         gui.set_cursor_busy(self.window)
 
@@ -319,8 +325,10 @@ class FileOpener(Delegate):
                 continue
 
             self._add_new_project(project)
-            self.set_status_message(_('Opened subtitle file "%s"') \
-                                    % project.get_main_basename())
+            
+            basename = project.get_main_basename()
+            message = _('Opened subtitle file "%s"') % basename
+            self.set_status_message(message)
 
             # Show the new notebook page right away.
             while gtk.events_pending():
@@ -365,8 +373,9 @@ class FileOpener(Delegate):
                     open_dialog.destroy()
                     return None
 
-            project = self._read_file(open_dialog, file_type, path, encoding,
-                                      project)
+            project = self._read_file(
+                open_dialog, file_type, path, encoding, project
+            )
             if project is not None:
                 break
 

@@ -127,8 +127,8 @@ class ImportTranslationWarningDialog(gtk.MessageDialog):
     """
     Warning dialog displayed when trying to import a translation file.
     
-    Dialog will be displayed if currently open translation document has unsaved
-    changes.
+    Dialog will be displayed if currently open translation document has
+    unsaved changes.
     """
     
     def __init__(self, parent, basename):
@@ -143,7 +143,7 @@ class ImportTranslationWarningDialog(gtk.MessageDialog):
             % basename
         )
         
-        self.add_button(_('_Import Without Saving'), gtk.RESPONSE_NO    )
+        self.add_button(_('Import _Without Saving'), gtk.RESPONSE_NO    )
         self.add_button(gtk.STOCK_CANCEL           , gtk.RESPONSE_CANCEL)
         self.add_button(gtk.STOCK_SAVE             , gtk.RESPONSE_YES   )
         

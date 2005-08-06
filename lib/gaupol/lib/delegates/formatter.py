@@ -85,12 +85,15 @@ class Formatter(Delegate):
             try:
                 return self.tran_file.FORMAT
             except AttributeError:
-                return self.get_format(ORIG)
+                return self._get_format(ORIG)
 
     def get_tag_re(self, col):
         """Get regular expression for tag in given text column."""
 
         format = self._get_format(col)
+
+        if format is None:
+            return None
 
         regex, flags = eval(format).TAG
         

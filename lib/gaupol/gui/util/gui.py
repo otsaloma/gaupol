@@ -24,7 +24,27 @@ import os
 import sys
 
 import gtk
+import gtk.glade
 
+from gaupol.paths import GLADE_DIR
+
+
+def get_glade_xml(basename):
+    """
+    Get gtk.glade.XML object from basename in Glade directory.
+    
+    Exit if unable to import Glade XML file.
+    """
+    # TODO.
+    # Is sys.exit() too harsh?
+    
+    path = os.path.join(GLADE_DIR, basename)
+
+    try:
+        return gtk.glade.XML(path)
+    except RuntimeError:
+        logger.critical('Failed to import glade XML file "%s".' % path)
+        sys.exit()
 
 def get_event_box(widget):
     """Get EventBox, if it is a parent of widget."""

@@ -20,6 +20,8 @@
 """Dialogs to select files for opening and saving."""
 
 
+import os
+
 try:
     from psyco.classes import *
 except ImportError:
@@ -27,8 +29,8 @@ except ImportError:
 
 import gtk
 
-from gaupol.lib.util import encodings as encodings_module
 from gaupol.gui.dialogs.encoding import EncodingDialog
+from gaupol.lib.util import encodings as encodings_module
 
 
 ENCODINGS = encodings_module.get_valid_python_names()
@@ -41,18 +43,17 @@ FILTERS = (
     ('SubRip'  , _('SubRip (*.srt)')  , None        , '*.srt'),
 )
 
-FORMATS  = ['MicroDVD', 'SubRip']
-NEWLINES = ['Mac', 'Unix', 'Windows']
+EXTENSIONS = {
+    'MicroDVD': '.sub',
+    'SubRip'  : '.srt',
+}
+FORMATS    = ['MicroDVD', 'SubRip']
+NEWLINES   = ['Mac', 'Unix', 'Windows']
 
 
 class CustomFileChooserDialog(gtk.FileChooserDialog):
     
-    """
-    Custom dialog to select files for opening and saving.
-    
-    This is a generic class meant to be subclassed and extended by actual open-
-    and savedialogs.
-    """
+    """Base class for custom dialogs to select files for opening and saving."""
     
     def _add_filters(self):
         """Add file filters displayed in a ComboBox."""
@@ -60,7 +61,7 @@ class CustomFileChooserDialog(gtk.FileChooserDialog):
         # File-filter setting is not remembered, because applying it is
         # somewhat problematic. Setting a filename that conflicts with the
         # filter causes the filter combo box to display empty. The filter
-        # would have to be checked and possible adjusted when setting the
+        # would have to be checked and possibly adjusted when setting the
         # filename and there is no easy way to determine when the filename
         # conflicts with the filter.
         
@@ -92,7 +93,7 @@ class CustomFileChooserDialog(gtk.FileChooserDialog):
             if desc_name == encodings_module.get_descriptive_name(python_name):
                 return python_name
     
-    def _fill_encoding_combo_box(self, encoding=None):
+    def _fill_encoding_combo_box(self):
         """Insert items to encoding ComboBox."""
 
         cmbox_entries = self._get_encoding_combo_box_entries()
@@ -114,6 +115,7 @@ class CustomFileChooserDialog(gtk.FileChooserDialog):
         vis_encs = self._config.getlist('file', 'visible_encodings')
         act_enc  = self._config.get('file', 'encoding')
         
+        # Add active encoding.
         if encodings_module.is_valid_python_name(act_enc):
             if not act_enc in vis_encs:
                 vis_encs.append(act_enc)
@@ -166,7 +168,6 @@ class CustomFileChooserDialog(gtk.FileChooserDialog):
         
         entries: encoding combo box entries
         """
-
         entries = entries or self._get_encoding_combo_box_entries()
 
         try:
@@ -201,6 +202,7 @@ class OpenDialog(CustomFileChooserDialog):
         )
         
         self._config = config
+
         self._enc_cmbox = None
 
         self.set_default_response(gtk.RESPONSE_OK)
@@ -233,11 +235,6 @@ class SaveDialog(CustomFileChooserDialog):
     """Dialog to select file for saving."""
     
     def __init__(self, config, title, parent):
-        """
-        Initialize a SaveDialog object.
-        
-        Either filename or untitle must be given.
-        """
 
         gtk.FileChooserDialog.__init__(
             self, title, parent, gtk.FILE_CHOOSER_ACTION_SAVE,
@@ -266,6 +263,7 @@ class SaveDialog(CustomFileChooserDialog):
         """Build ComboBoxes for selecting format, encoding and newlines."""
 
         self._frm_cmbox = gtk.combo_box_new_text()
+        self._frm_cmbox.connect('changed', self._on_format_changed)
         
         frm_label = gtk.Label()
         frm_label.set_property('xalign', 0)
@@ -331,6 +329,33 @@ class SaveDialog(CustomFileChooserDialog):
         """Get selected newlines."""
 
         return self._nwl_cmbox.get_active_text()
+
+    def _on_format_changed(self, combo_box):
+        """Change extension to reflect new format."""
+
+        new_format = combo_box.get_active_text()
+        path = self.get_filename()
+
+        if path is None:
+            return
+        
+        self.unselect_filename(path)
+
+        dirname  = os.path.dirname(path)
+        basename = os.path.basename(path)
+        
+        # Remove possible existing extension.
+        for format, extension in EXTENSIONS.items():
+            if basename.endswith(extension):
+                basename = basename[:-len(extension)]
+                break
+
+        # Add new extension.
+        basename += EXTENSIONS[new_format]
+        path = os.path.join(dirname, basename)
+
+        self.set_current_name(basename)
+        self.set_filename(path)
 
     def set_format(self, format):
         """Set active format in the format combo box."""

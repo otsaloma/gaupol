@@ -25,7 +25,7 @@
 			<menuitem action="undo"/>
 			<menuitem action="redo"/>
 			<separator/>
-			<menuitem action="edit"/>
+			<menuitem action="edit_value"/>
 			<separator/>
 			<menuitem action="cut"/>
 			<menuitem action="copy"/>
@@ -71,7 +71,6 @@
 				<menuitem action="sentence"/>
 				<menuitem action="upper"/>
 				<menuitem action="lower"/>
-				<menuitem action="invert"/>
 			</menu>
 		</menu>
 		<menu action="search">

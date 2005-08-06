@@ -20,38 +20,27 @@
 """Gaupol main user interface."""
 
 
-import logging
-import os
-import sys
-
 try:
     from psyco.classes import *
 except ImportError:
     pass
 
 import gtk
-import gtk.glade
 
+from gaupol.gui.delegates.celleditor import CellEditor
 from gaupol.gui.delegates.durmanager import DURManager
-from gaupol.gui.delegates.editor import Editor
 from gaupol.gui.delegates.filecloser import FileCloser
 from gaupol.gui.delegates.fileopener import FileOpener
 from gaupol.gui.delegates.filesaver import FileSaver
-from gaupol.gui.delegates.formatter import Formatter
 from gaupol.gui.delegates.guibuilder import GUIBuilder
 from gaupol.gui.delegates.guiupdater import GUIUpdater
 from gaupol.gui.delegates.helper import Helper
-from gaupol.gui.delegates.maneditor import ManualEditor
+from gaupol.gui.delegates.roweditor import RowEditor
 from gaupol.gui.delegates.searcher import Searcher
+from gaupol.gui.delegates.texteditor import TextEditor
 from gaupol.gui.delegates.viewer import Viewer
 from gaupol.gui.util.config import Config
-from gaupol.paths import GLADE_DIR
-
-
-logger = logging.getLogger()
-
-
-GLADE_XML_PATH   = os.path.join(GLADE_DIR , 'main-window.glade')
+from gaupol.gui.util import gui
 
 
 class Application(object):
@@ -65,17 +54,12 @@ class Application(object):
     
     def __init__(self):
 
-        try:
-            glade_xml = gtk.glade.XML(GLADE_XML_PATH)
-        except RuntimeError:
-            logger.critical('Failed to import Glade XML file "%s".' \
-                            % GLADE_XML_PATH) 
-            sys.exit()
-
         self.projects     = []
         self.counter      = 0
         self.config       = Config()
         self._delegations = None
+
+        glade_xml = gui.get_glade_xml('main-window.glade')
 
         # Widgets from the Glade XML file.
         self.main_vbox  = glade_xml.get_widget('main_vbox')
@@ -114,17 +98,17 @@ class Application(object):
     def _assign_delegations(self):
         """Map method names to Delegate objects."""
         
+        cell_editor = CellEditor(self)
         dur_manager = DURManager(self)
-        editor      = Editor(self)
         file_closer = FileCloser(self)
         file_opener = FileOpener(self)
         file_saver  = FileSaver(self)
-        formatter   = Formatter(self)
         gui_builder = GUIBuilder(self)
         gui_updater = GUIUpdater(self)
         helper      = Helper(self)
-        man_editor  = ManualEditor(self)
+        row_editor  = RowEditor(self)
         searcher    = Searcher(self)
+        text_editor = TextEditor(self)
         viewer      = Viewer(self)
 
         self._delegations = {
@@ -132,32 +116,39 @@ class Application(object):
             'build_gui'                              : gui_builder,
             'do_action'                              : dur_manager,
             'on_about_activated'                     : helper,
-            'on_clear_activated'                     : formatter,
+            'on_check_latest_version_activated'      : helper,
+            'on_clear_activated'                     : text_editor,
             'on_close_activated'                     : file_closer,
             'on_close_all_activated'                 : file_closer,
-            'on_dialog_lines_activated'              : formatter,
+            'on_copy_activated'                      : text_editor,
+            'on_cut_activated'                       : text_editor,
+            'on_dialog_lines_activated'              : text_editor,
             'on_document_toggled'                    : gui_updater,
             'on_edit_mode_toggled'                   : viewer,
+            'on_edit_value_activated'                : cell_editor,
             'on_files_dropped'                       : file_opener,
             'on_framerate_changed'                   : viewer,
             'on_framerate_toggled'                   : viewer,
             'on_go_to_subtitle_activated'            : searcher,
             'on_import_translation_activated'        : file_opener,
-            'on_invert_case_activated'               : formatter,
-            'on_invert_selection_activated'          : editor,
-            'on_italic_style_activated'              : formatter,
-            'on_lower_case_activated'                : formatter,
+            'on_insert_subtitles_activated'          : row_editor,
+            'on_invert_selection_activated'          : row_editor,
+            'on_italic_style_activated'              : text_editor,
+            'on_lower_case_activated'                : text_editor,
             'on_new_activated'                       : file_opener,
             'on_next_activated'                      : gui_updater,
             'on_notebook_page_switched'              : gui_updater,
             'on_notebook_tab_close_button_clicked'   : file_closer,
             'on_open_activated'                      : file_opener,
+            'on_paste_activated'                     : text_editor,
             'on_previous_activated'                  : gui_updater,
             'on_quit_activated'                      : file_closer,
             'on_recent_file_activated'               : file_opener,
             'on_redo_activated'                      : dur_manager,
             'on_redo_button_clicked'                 : dur_manager,
             'on_redo_item_activated'                 : dur_manager,
+            'on_remove_subtitles_activated'          : row_editor,
+            'on_report_a_bug_activated'              : helper,
             'on_revert_activated'                    : file_opener,
             'on_save_a_copy_activated'               : file_saver,
             'on_save_a_copy_of_translation_activated': file_saver,
@@ -166,14 +157,15 @@ class Application(object):
             'on_save_as_activated'                   : file_saver,
             'on_save_translation_activated'          : file_saver,
             'on_save_translation_as_activated'       : file_saver,
-            'on_select_all_activated'                : editor,
-            'on_sentence_case_activated'             : formatter,
+            'on_select_all_activated'                : row_editor,
+            'on_sentence_case_activated'             : text_editor,
             'on_statusbar_toggled'                   : viewer,
-            'on_title_case_activated'                : formatter,
+            'on_support_activated'                   : helper,
+            'on_title_case_activated'                : text_editor,
             'on_toolbar_toggled'                     : viewer,
             'on_tree_view_button_press_event'        : gui_updater,
-            'on_tree_view_cell_edited'               : man_editor,
-            'on_tree_view_cell_editing_started'      : man_editor,
+            'on_tree_view_cell_edited'               : cell_editor,
+            'on_tree_view_cell_editing_started'      : cell_editor,
             'on_tree_view_column_toggled'            : viewer,
             'on_tree_view_cursor_moved'              : gui_updater,
             'on_tree_view_headers_clicked'           : viewer,
@@ -181,8 +173,8 @@ class Application(object):
             'on_undo_activated'                      : dur_manager,
             'on_undo_button_clicked'                 : dur_manager,
             'on_undo_item_activated'                 : dur_manager,
-            'on_unselect_all_activated'              : editor,
-            'on_upper_case_activated'                : formatter,
+            'on_unselect_all_activated'              : row_editor,
+            'on_upper_case_activated'                : text_editor,
             'on_window_delete_event'                 : file_closer,
             'on_window_state_event'                  : gui_updater,
             'open_main_files'                        : file_opener,

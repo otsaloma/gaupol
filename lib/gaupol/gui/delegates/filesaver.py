@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""File saver to save currently open main or translation documents."""
+"""Saver of currently open documents."""
 
 
 import os
@@ -36,13 +36,13 @@ from gaupol.gui.dialogs.error import WriteFileErrorDialog
 from gaupol.gui.dialogs.filechooser import SaveDialog
 from gaupol.gui.dialogs.question import OverwriteFileQuestionDialog
 from gaupol.gui.util import gui
-from gaupol.lib.formats.all import *
+from gaupol.lib.file.all import *
 from gaupol.lib.util import encodings as encodings_module
 
 
 class FileSaver(Delegate):
 
-    """File saver to save currently open main or translation documents."""
+    """Saver of currently open documents."""
 
     def on_save_a_copy_activated(self, *args):
         """Save a copy of the main document."""
@@ -68,7 +68,7 @@ class FileSaver(Delegate):
 
     def on_save_activated(self, *args):
         """
-        Save the main document.
+        Save main document.
 
         Return: success (True or False)
         """
@@ -83,7 +83,7 @@ class FileSaver(Delegate):
         return True
 
     def on_save_all_activated(self, *args):
-        """Save all subtitle and translation document."""
+        """Save all subtitle and translation documents."""
 
         for project in self.projects:
             if project.main_changed:
@@ -96,7 +96,7 @@ class FileSaver(Delegate):
 
     def on_save_as_activated(self, *args):
         """
-        Save the main document with FileChooser.
+        Save main document with FileChooser.
 
         Return: success (True or False)
         """
@@ -112,7 +112,7 @@ class FileSaver(Delegate):
 
     def on_save_translation_activated(self, *args):
         """
-        Save the translation document.
+        Save translation document.
 
         Return: success (True or False)
         """
@@ -128,7 +128,7 @@ class FileSaver(Delegate):
 
     def on_save_translation_as_activated(self, *args):
         """
-        Save the translation file with FileChooser.
+        Save translation document with FileChooser.
 
         Return: success (True or False)
         """
@@ -144,9 +144,9 @@ class FileSaver(Delegate):
 
     def save_a_copy_of_main_document(self, project):
         """
-        Save a copy of the main document with FileChooser.
+        Save a copy of main document with FileChooser.
         
-        return: success (True or False)
+        Return: success (True or False)
         """
         gui.set_cursor_busy(self.window)
 
@@ -163,15 +163,16 @@ class FileSaver(Delegate):
             gui.set_cursor_normal(self.window)
             return False
 
-        self.set_status_message(_('Saved a copy of subtitle file to "%s"') \
-                                % path)
+        message = _('Saved a copy of subtitle file to "%s"') % path
+        self.set_status_message(message)
+        
         gui.set_cursor_normal(self.window)
         
         return True
 
     def save_a_copy_of_translation_document(self, project):
         """
-        Save a copy of the translation document with FileChooser.
+        Save a copy of translation document with FileChooser.
         
         return: success (True or False)
         """
@@ -190,15 +191,16 @@ class FileSaver(Delegate):
             gui.set_cursor_normal(self.window)
             return False
 
-        self.set_status_message(_('Saved a copy of translation file to "%s"') \
-                                % path)
+        message = _('Saved a copy of translation file to "%s"') % path
+        self.set_status_message(message)
+        
         gui.set_cursor_normal(self.window)
         
         return True
 
     def save_main_document(self, project):
         """
-        Save the main document.
+        Save main document.
 
         Return: success (True or False)
         """
@@ -217,14 +219,16 @@ class FileSaver(Delegate):
         project.main_changed = 0
         
         basename = os.path.basename(project.data.main_file.path)
-        self.set_status_message(_('Saved subtitle file "%s"') % basename)
+        message = _('Saved subtitle file "%s"') % basename
+        self.set_status_message(message)
+        
         gui.set_cursor_normal(self.window)
         
         return True
 
     def save_main_document_as(self, project):
         """
-        Save the main document with FileChooser.
+        Save main document with FileChooser.
 
         Return: success (True or False)
         """
@@ -251,14 +255,16 @@ class FileSaver(Delegate):
         project.main_changed = 0
         self.add_to_recent_files(path)
 
-        self.set_status_message(_('Saved subtitle file as "%s"') % path)
+        message = _('Saved subtitle file as "%s"') % path
+        self.set_status_message(message)
+        
         gui.set_cursor_normal(self.window)
         
         return True
     
     def save_translation_document(self, project):
         """
-        Save the translation document.
+        Save translation document.
 
         Return: success (True or False)
         """
@@ -277,14 +283,16 @@ class FileSaver(Delegate):
         project.tran_changed = 0
         
         basename = os.path.basename(project.data.tran_file.path)
-        self.set_status_message(_('Saved translation file "%s"') % basename)
+        message = _('Saved translation file "%s"') % basename
+        self.set_status_message(message)
+        
         gui.set_cursor_normal(self.window)
         
         return True
 
     def save_translation_document_as(self, project):
         """
-        Save the translation document with FileChooser.
+        Save translation document with FileChooser.
 
         Return: success (True or False)
         """
@@ -311,20 +319,22 @@ class FileSaver(Delegate):
 
         project.tran_changed = 0
         
-        self.set_status_message(_('Saved translation file as "%s"') % path)
+        message = _('Saved translation file as "%s"') % path
+        self.set_status_message(message)
+        
         gui.set_cursor_normal(self.window)
         
         return True
         
     def _select_and_write_file(
-        self, project, file_type, title,
+        self, project, document_type, title,
         path, untitle, format, encoding, newlines,
         keep_changes=True
     ):
         """
-        Select a file with FileChooser and write it.
+        Select document with FileChooser and write it.
         
-        file_type: "main" or "translation"
+        document_type: "main" or "translation"
         Return: path or None, if unsuccessfull
         """
         save_dialog = SaveDialog(self.config, title, self.window)
@@ -366,7 +376,7 @@ class FileSaver(Delegate):
             self.config.set('file', 'newlines' , newlines   )
             
             success = self._write_file(
-                project, file_type, save_dialog,
+                project, document_type, save_dialog,
                 True, keep_changes,
                 path, format, encoding, newlines,
             )
@@ -380,20 +390,20 @@ class FileSaver(Delegate):
         return path
         
     def _write_file(
-        self, project, file_type, parent,
+        self, project, document_type, parent,
         ask_overwrite, keep_changes=True,
         path=None, format=None, encoding=None, newlines=None,
     ):
         """
-        Check if a file is writeable and write it if possible.
+        Check if file is writeable and write it if possible.
         
-        file_type: "main" or "translation"
+        document_type: "main" or "translation"
         Return: success (True or False)
         """
         if path is None:
-            if file_type == 'main':
+            if document_type == 'main':
                 path = project.data.main_file.path
-            elif file_type == 'translation':
+            elif document_type == 'translation':
                 path = project.data.tran_file.path
 
         basename = os.path.basename(path)
@@ -408,16 +418,15 @@ class FileSaver(Delegate):
 
         try:
 
+            method = 'project.data.write_%s_file' % document_type
+
             if path     is None or \
                format   is None or \
                encoding is None or \
                newlines is None :
-                eval('project.data.write_%s_file' % file_type)(keep_changes)
-
+                eval(method)(keep_changes)
             else:
-                eval('project.data.write_%s_file' % file_type)(
-                    keep_changes, path, format, encoding, newlines
-                )
+                eval(method)(keep_changes, path, format, encoding, newlines)
 
         except IOError, (errno, detail):
             dialog = WriteFileErrorDialog(parent, basename, detail)

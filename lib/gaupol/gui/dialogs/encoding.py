@@ -17,11 +17,8 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Dialog to select encodings."""
+"""Dialog to select character encodings."""
 
-
-import os
-import sys
 
 try:
     from psyco.classes import *
@@ -30,30 +27,23 @@ except ImportError:
 
 import gobject
 import gtk
-import gtk.glade
 
+from gaupol.gui.util import gui
 from gaupol.lib.util import encodings as encodings_module
-from gaupol.paths import GLADE_DIR
 
 
-GLADE_XML_PATH = os.path.join(GLADE_DIR, 'encoding-dialog.glade')
 DESC, NAME, SHOW = 0, 1, 2
 
 
 class EncodingDialog(object):
 
-    """Dialog to select encodings."""
+    """Dialog to select character encodings."""
     
     def __init__(self, config, parent):
 
         self._config = config
 
-        try:
-            glade_xml = gtk.glade.XML(GLADE_XML_PATH)
-        except RuntimeError:
-            logger.critical('Failed to import glade XML file "%s".' \
-                            % GLADE_XML_PATH)
-            sys.exit()
+        glade_xml = gui.get_glade_xml('encoding-dialog.glade')
                             
         self._dialog    = glade_xml.get_widget('dialog')
         self._tree_view = glade_xml.get_widget('tree_view')
@@ -143,11 +133,8 @@ class EncodingDialog(object):
         return encodings_module.get_python_name(disp_name)
 
     def get_visible_encodings(self):
-        """
-        Get encodings chosen to be visible.
-
-        Return: list
-        """
+        """Get encodings chosen to be visible."""
+        
         store    = self._tree_view.get_model()
         vis_encs = []
         
@@ -168,4 +155,6 @@ class EncodingDialog(object):
         """Show and run the dialog."""
         
         self._dialog.show()
+        self._tree_view.grab_focus()
+        
         return self._dialog.run()            

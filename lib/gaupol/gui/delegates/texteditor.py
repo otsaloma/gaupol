@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Formatter to change text style."""
+"""Editor of text data."""
 
 
 try:
@@ -29,9 +29,10 @@ from gaupol.gui.constants import NO, SHOW, HIDE, DURN, ORIG, TRAN
 from gaupol.gui.delegates.delegate import Delegate
 from gaupol.gui.delegates.durmanager import DURAction
 
-class FormatAction(DURAction):
 
-    """Base class for formatting actions."""
+class TextEditAction(DURAction):
+
+    """Base class for text-editing actions."""
 
     def __init__(self, project):
 
@@ -43,13 +44,11 @@ class FormatAction(DURAction):
         col   = self.focus_store_col - 4
         self.orig_texts = [texts[i][col] for i in self.sel_data_rows]
 
-        if self.focus_store_col == TRAN:
-            self.document    = 'translation'
-        else:
-            self.document    = 'main'
+        documents = ['main'] * 5 + ['translation']
+        self.document = documents[self.focus_store_col]
 
     def undo(self):
-        """Undo formatting."""
+        """Undo text-editing."""
 
         texts     = self.project.data.texts
         store     = self.project.tree_view.get_model()
@@ -66,7 +65,7 @@ class FormatAction(DURAction):
             texts[data_row][data_col]   = text
 
 
-class CaseChangeAction(FormatAction):
+class CaseChangeAction(TextEditAction):
 
     """Action to change text case."""
 
@@ -76,14 +75,16 @@ class CaseChangeAction(FormatAction):
         
         method: "capitalize", "upper", "lower", "title" or "swapcase"
         """
-        FormatAction.__init__(self, project)
+        TextEditAction.__init__(self, project)
 
         self.method  = method
 
-        if self.focus_store_col == TRAN:
-            self.description = _('Changing translation case')
-        else:
-            self.description = _('Changing text case')
+        descriptions = [
+            None, None, None, None,
+            _('Changing translation case'),
+            _('Changing text case')
+        ]
+        self.description = descriptions[self.focus_store_col]
 
     def do(self):
         """Change case."""
@@ -101,18 +102,20 @@ class CaseChangeAction(FormatAction):
             store[store_row][store_col] = texts[i]
 
 
-class ClearAction(FormatAction):
+class ClearAction(TextEditAction):
 
     """Action to clear text."""
 
     def __init__(self, project):
 
-        FormatAction.__init__(self, project)
+        TextEditAction.__init__(self, project)
 
-        if self.focus_store_col == TRAN:
-            self.description = _('Clearing translation case')
-        else:
-            self.description = _('Clearing text case')
+        descriptions = [
+            None, None, None, None,
+            _('Clearing translation case'),
+            _('Clearing text case')
+        ]
+        self.description = descriptions[self.focus_store_col]
 
     def do(self):
         """Clear text."""
@@ -123,7 +126,7 @@ class ClearAction(FormatAction):
         data_col  = self.focus_store_col - 4
         store_col = self.focus_store_col
 
-        data.clear(self.sel_data_rows, data_col)
+        data.clear_text(self.sel_data_rows, data_col)
         
         for i in range(len(self.sel_data_rows)):
         
@@ -132,18 +135,20 @@ class ClearAction(FormatAction):
             store[store_row][store_col] = texts[data_row][data_col]
 
 
-class DialogLineAction(FormatAction):
+class DialogLineAction(TextEditAction):
 
     """Action to toggle dialog lines on text."""
 
     def __init__(self, project):
 
-        FormatAction.__init__(self, project)
+        TextEditAction.__init__(self, project)
 
-        if self.focus_store_col == TRAN:
-            self.description = _('Toggling translation dialog lines')
-        else:
-            self.description = _('Toggling text dialog lines')
+        descriptions = [
+            None, None, None, None,
+            _('Toggling translation dialog lines'),
+            _('Toggling text dialog lines')
+        ]
+        self.description = descriptions[self.focus_store_col]
 
     def do(self):
         """Toggle dialog lines."""
@@ -161,18 +166,20 @@ class DialogLineAction(FormatAction):
             store[store_row][store_col] = texts[i]
 
 
-class ItalicAction(FormatAction):
+class ItalicAction(TextEditAction):
 
     """Action to toggle text italicization."""
 
     def __init__(self, project):
 
-        FormatAction.__init__(self, project)
+        TextEditAction.__init__(self, project)
 
-        if self.focus_store_col == TRAN:
-            self.description = _('Toggling translation italicization')
-        else:
-            self.description = _('Toggling text italicization')
+        descriptions = [
+            None, None, None, None,
+            _('Toggling translation italicization'),
+            _('Toggling text italicization')
+        ]
+        self.description = descriptions[self.focus_store_col]
 
     def do(self):
         """Toggle italicization."""
@@ -190,9 +197,9 @@ class ItalicAction(FormatAction):
             store[store_row][store_col] = texts[i]
 
 
-class Formatter(Delegate):
+class TextEditor(Delegate):
 
-    """Formatter to change text style."""
+    """Editor of text data."""
 
     def _change_case(self, method):
         """
@@ -211,17 +218,22 @@ class Formatter(Delegate):
         action = ClearAction(project)
         self.do_action(project, action)
 
+    def on_copy_activated(self, *args):
+        """Copy selection to the clipboard."""
+        
+        pass
+
+    def on_cut_activated(self, *args):
+        """Cut selection to the clipboard."""
+        
+        pass
+
     def on_dialog_lines_activated(self, *args):
         """Toggle dialog lines on selected text cells."""
         
         project = self.get_current_project()
         action = DialogLineAction(project)
         self.do_action(project, action)
-
-    def on_invert_case_activated(self, *args):
-        """Invert case of selected text cells."""
-
-        self._change_case('swapcase')
         
     def on_italic_style_activated(self, *args):
         """Italicize selected text cells."""
@@ -234,6 +246,11 @@ class Formatter(Delegate):
         """Change case to lower in selected text cells."""
 
         self._change_case('lower')
+
+    def on_paste_activated(self, *args):
+        """Paste the clipboard contents."""
+        
+        pass
 
     def on_sentence_case_activated(self, *args):
         """Change case to sentence in selected text cells."""

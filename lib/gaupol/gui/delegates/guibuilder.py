@@ -17,9 +17,10 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""GUI builder to prepare the GUI before the main window is shown."""
+"""Builder to prepare the GUI before the main window is shown."""
 
 
+import logging
 import os
 
 try:
@@ -30,22 +31,24 @@ except ImportError:
 import gobject
 import gtk
 
-from gaupol.gui.constants import EDIT_MODE_NAMES
-from gaupol.gui.constants import FRAMERATE_NAMES
+from gaupol.gui.constants import EDIT_MODE_NAMES, FRAMERATE_NAMES
 from gaupol.gui.delegates.delegate import Delegate
 from gaupol.gui.util import gui
-from gaupol.paths import UI_DIR, PIXMAP_DIR
+from gaupol.paths import UI_DIR, ICON_DIR
 
 
-MENUBAR_XML_PATH = os.path.join(UI_DIR    , 'menubar.xml'      )
-POPUPS_XML_PATH  = os.path.join(UI_DIR    , 'popups.xml'       )
-TOOLBAR_XML_PATH = os.path.join(UI_DIR    , 'toolbar.xml'      )
-GAUPOL_ICON_PATH = os.path.join(PIXMAP_DIR, 'gaupol-icon.png'  )
+MENUBAR_XML_PATH = os.path.join(UI_DIR  , 'menubar.xml')
+POPUPS_XML_PATH  = os.path.join(UI_DIR  , 'popups.xml' )
+TOOLBAR_XML_PATH = os.path.join(UI_DIR  , 'toolbar.xml')
+GAUPOL_ICON_PATH = os.path.join(ICON_DIR, 'gaupol.png' )
+
+
+logger = logging.getLogger()
 
 
 class GUIBuilder(Delegate):
 
-    """GUI builder."""
+    """Builder to prepare the GUI before the main window is shown."""
 
     def _build_framerate_combo_box(self):
         """Build the framerate combo box in the toolbar."""
@@ -291,12 +294,54 @@ class GUIBuilder(Delegate):
                 _('Redo the last undone action'),
                 self.on_redo_activated
             ), (
+                'edit_value',
+                gtk.STOCK_EDIT,
+                _('_Edit Value'),
+                'Return',
+                _('Edit value of focused cell'),
+                self.on_edit_value_activated
+            ), (
+                'cut',
+                gtk.STOCK_CUT,
+                _('Cu_t'),
+                '<control>X',
+                _('Cut the selection to the clipboard'),
+                self.on_cut_activated
+            ), (
+                'copy',
+                gtk.STOCK_COPY,
+                _('_Copy'),
+                '<control>C',
+                _('Copy the selection to the clipboard'),
+                self.on_copy_activated
+            ), (
+                'paste',
+                gtk.STOCK_PASTE,
+                _('_Paste'),
+                '<control>V',
+                _('Paste from the clipboard'),
+                self.on_paste_activated
+            ), (
                 'clear',
                 gtk.STOCK_CLEAR,
-                _('_Clear'),
+                _('C_lear'),
                 'Delete',
                 _('Clear the selected texts'),
                 self.on_clear_activated
+            ), (
+                'insert_subtitles',
+                gtk.STOCK_ADD,
+                _('_Insert Subtitles'),
+                '<control>Insert',
+                _('Insert blank subtitles'),
+                self.on_insert_subtitles_activated
+            ), (
+                'remove_subtitles',
+                gtk.STOCK_REMOVE,
+                _('_Remove Subtitles'),
+                '<control>Delete',
+                _('Remove selected subtitles'),
+                self.on_remove_subtitles_activated
             ), (
                 'select_all',
                 None,
@@ -314,7 +359,7 @@ class GUIBuilder(Delegate):
             ), (
                 'invert_selection',
                 None,
-                _('_Invert Selection'),
+                _('I_nvert Selection'),
                 None,
                 _('Invert current selection'),
                 self.on_invert_selection_activated
@@ -336,42 +381,35 @@ class GUIBuilder(Delegate):
                 'title',
                 None,
                 _('_Title'),
-                '<control>1',
+                '<control>L',
                 _('Change selected texts to Title Case'),
                 self.on_title_case_activated
             ), (
                 'sentence',
                 None,
                 _('_Sentence'),
-                '<control>2',
+                '<control>E',
                 _('Change selected texts to Sentence case'),
                 self.on_sentence_case_activated
             ), (
                 'upper',
                 None,
                 _('_Upper'),
-                '<control>3',
+                '<control>U',
                 _('Change selected texts to UPPER CASE'),
                 self.on_upper_case_activated
             ), (
                 'lower',
                 None,
                 _('_Lower'),
-                '<control>4',
+                '<control>R',
                 _('Change selected texts to lower case'),
                 self.on_lower_case_activated
-            ), (
-                'invert',
-                None,
-                _('_Invert'),
-                '<control>5',
-                _('Invert selected texts case'),
-                self.on_invert_case_activated
             ), (
                 'go_to_subtitle',
                 gtk.STOCK_JUMP_TO,
                 _('_Go To Subtitle'),
-                '<control>L',
+                '<control>B',
                 _('Go to a specific subtitle'),
                 self.on_go_to_subtitle_activated
             ), (
@@ -402,7 +440,28 @@ class GUIBuilder(Delegate):
                 '<control>Page_Down',
                 _('Activate document in next tab'),
                 self.on_next_activated
-            ), ( 
+            ), (
+                'support',
+                None,
+                _('_Support'),
+                None,
+                _('Request support at Gaupol project page'),
+                self.on_support_activated
+            ), (
+                'report_a_bug',
+                None,
+                _('_Report A Bug'),
+                None,
+                _('Report a bug at Gaupol project page'),
+                self.on_report_a_bug_activated
+            ), (
+                'check_latest_version',
+                None,
+                _('_Check Latest Version'),
+                None,
+                _('Check if you have the latest version of Gaupol'),
+                self.on_check_latest_version_activated
+            ), (
                 'about',
                 gtk.STOCK_ABOUT,
                 _('_About'),
@@ -614,8 +673,7 @@ class GUIBuilder(Delegate):
         try:
             gtk.window_set_default_icon_from_file(GAUPOL_ICON_PATH)
         except gobject.GError:
-            logger.warning('Failed to import icon file "%s".' \
-                           % GAUPOL_ICON_PATH)
+            logger.error('Failed to import icon file "%s".' % GAUPOL_ICON_PATH)
 
         self.window.connect('delete_event'      , self.on_window_delete_event)
         self.window.connect('window_state_event', self.on_window_state_event )

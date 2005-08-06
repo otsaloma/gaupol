@@ -122,7 +122,7 @@ class SubRip(SubtitleFile):
         sub_file = codecs.open(self.path, 'w', self.encoding)
 
         try:
-            for i in range(len(show_times)):
+            for i in range(len(shows)):
                 sub_file.write('%.0f%s%s --> %s%s%s%s%s' % (
                     i + 1, newl_char,
                     shows[i], hides[i], newl_char,

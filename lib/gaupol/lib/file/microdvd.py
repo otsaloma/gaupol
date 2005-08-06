@@ -106,7 +106,7 @@ class MicroDVD(SubtitleFile):
         sub_file = codecs.open(self.path, 'w', self.encoding)
 
         try:
-            for i in range(len(show_frames)):
+            for i in range(len(shows)):
                 sub_file.write('{%.0f}{%.0f}%s%s' % (
                     shows[i], hides[i], texts[i], newl_char
                 ))

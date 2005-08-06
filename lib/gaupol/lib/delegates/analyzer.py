@@ -28,7 +28,6 @@ except ImportError:
     pass
 
 from gaupol.lib.delegates.delegate import Delegate
-from gaupol.lib.formats import tags as tags_module
 
 
 class Analyzer(Delegate):
@@ -42,11 +41,11 @@ class Analyzer(Delegate):
         Return: list of row lengths, total length
         """
         text   = self.texts[row][col]
-        format = self.get_format(col)
 
-        if format != None:
-            re_tag = self.get_tag_re(col)
-            text   = re_tag.sub('', text)
+        re_tag = self.get_tag_re(col)
+        
+        if re_tag is not None:
+            text = re_tag.sub('', text)
 
         lines = text.split('\n')
 

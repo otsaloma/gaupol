@@ -20,10 +20,6 @@
 """Warning dialog displayed when trying to close multiple documents."""
 
 
-import logging
-import os
-import sys
-
 try:
     from psyco.classes import *
 except ImportError:
@@ -31,19 +27,14 @@ except ImportError:
 
 import gobject
 import gtk
-import gtk.glade
 
-from gaupol.paths import GLADE_DIR
-
-
-logger = logging.getLogger()
+from gaupol.gui.util import gui
 
 
-GLADE_XML_PATH = os.path.join(GLADE_DIR, 'multi-close-dialog.glade')
 SAVE, PROJ = 0, 1
 
 
-class MultiCloseWarningDialog(gtk.Dialog):
+class MultiCloseWarningDialog(object):
     
     """
     Warning dialog displayed when trying to close multiple documents.
@@ -59,25 +50,21 @@ class MultiCloseWarningDialog(gtk.Dialog):
         All projects or only a subset list can be given. Changed-ness will
         be checked in this class.
         """
-        try:
-            glade_xml = gtk.glade.XML(GLADE_XML_PATH)
-        except RuntimeError:
-            logger.critical('Failed to import Glade XML file "%s".' \
-                            % GLADE_XML_PATH) 
-            sys.exit()
-
         self._projects   = projects
 
+        # Amount of documents to display.
         self._main_count = 0
         self._tran_count = 0
+
+        glade_xml = gui.get_glade_xml('multi-close-dialog.glade')
 
         # Widgets
         self._dialog         = glade_xml.get_widget('dialog')
         self._main_tree_view = glade_xml.get_widget('main_document_tree_view')
-        self._tran_tree_view = glade_xml.get_widget( \
-                                             'translation_document_tree_view')
         self._save_button    = glade_xml.get_widget('save_button')
         self._title_label    = glade_xml.get_widget('title_label')
+        self._tran_tree_view = glade_xml.get_widget( \
+                                   'translation_document_tree_view')
 
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_YES)
@@ -86,8 +73,7 @@ class MultiCloseWarningDialog(gtk.Dialog):
         self._build_translation_tree_view(glade_xml)
         self._set_title()
 
-        self._save_button.grab_focus()
-
+        self._main_tree_view.grab_focus()
         self._dialog.show()
 
     def _build_main_tree_view(self, glade_xml):
@@ -147,7 +133,7 @@ class MultiCloseWarningDialog(gtk.Dialog):
         file_type: "main" or "translation"
         """
         # This method adaptively copied from Gazpacho by Lorenzo Gil Sanchez.
-        # Gazpacho has a similar dialog made without using glade. 
+        # Gazpacho has a similar dialog made without using Glade. 
     
         store = gtk.ListStore(gobject.TYPE_BOOLEAN, object)
 
@@ -205,19 +191,15 @@ class MultiCloseWarningDialog(gtk.Dialog):
                 
         return projects
 
-    def _on_tree_view_cell_toggled(self, cell_rend, path, store):
+    def _on_tree_view_cell_toggled(self, cell_rend, row, store):
         """Toggle the value on the checkmark column."""
 
-        store[path][SAVE] = not store[path][SAVE]
+        store[row][SAVE] = not store[row][SAVE]
 
         mains = self.get_main_projects_to_save()
         trans = self.get_translation_projects_to_save()
 
-        # Set save button's sensitivity.
-        if not mains and not trans:
-            self._save_button.set_sensitive(False)
-        else:
-            self._save_button.set_sensitive(True)
+        self._save_button.set_sensitive(bool(mains or trans))
 
     def run(self):
         """Run the dialog."""

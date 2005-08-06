@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Manual editing of subtitle data."""
+"""Editing a single value of subtitle data."""
 
 
 try:
@@ -30,27 +30,27 @@ from gaupol.gui.delegates.delegate import Delegate
 from gaupol.gui.delegates.durmanager import DURAction
 
 
-class ManualEditAction(DURAction):
+class CellEditAction(DURAction):
 
-    """Manual edit action for subtitle data."""
+    """Action for editing a single value of subtitle data."""
     
     def __init__(self, project, old_value, new_value, store_row, store_col):
         
-        self.project         = project
-        self.old_value       = old_value
-        self.new_value       = new_value
+        self.project = project
+        
+        self.old_value = old_value
+        self.new_value = new_value
+        
         self.focus_data_row  = project.get_data_row(store_row)
         self.focus_store_col = store_col
 
-        if store_col == TRAN:
-            self.document = 'translation'
-        else:
-            self.document = 'main'
+        documents = ['main'] * 5 + ['translation']
+        self.document = documents[store_col]
 
         edit_mode = project.edit_mode
         subtitle  = store_row + 1
 
-        DESCRIPTIONS = [
+        descriptions = [
             None,
             _('Editing show %s of subtitle %d')     % (edit_mode, subtitle),
             _('Editing hide %s of subtitle %d')     % (edit_mode, subtitle),
@@ -59,7 +59,7 @@ class ManualEditAction(DURAction):
             _('Editing translation of subtitle %d') % subtitle,
         ]
         
-        self.description = DESCRIPTIONS[store_col]
+        self.description = descriptions[store_col]
         
     def do(self):
         """Do editing."""
@@ -108,14 +108,19 @@ class ManualEditAction(DURAction):
         self._set_value(self.old_value)
 
 
-class ManualEditor(Delegate):
+class CellEditor(Delegate):
 
-    """Manual editor for subtitle data."""
+    """Editor for editing a single value of subtitle data."""
+
+    def on_edit_value_activated(self, *args):
+        """Edit value of focused cell."""
+        
+        pass
 
     def on_tree_view_cell_edited(self, project, new_value, row, col):
-        """Edit value in tree view cell."""
+        """Edit value in TreeView cell."""
 
-        self._set_action_sensitivities(True)
+        self._set_sensitivities(True)
         self.set_status_message(None)
         store = project.tree_view.get_model()
 
@@ -128,19 +133,19 @@ class ManualEditor(Delegate):
         if old_value == new_value:
             return
 
-        action = ManualEditAction(project, old_value, new_value, row, col)
+        action = CellEditAction(project, old_value, new_value, row, col)
         self.do_action(project, action)
 
     def on_tree_view_cell_editing_started(self, project, col):
-        """Set menubar and toolbar actions insensitive while editing."""
+        """Set GUI properties for editing."""
 
-        self._set_action_sensitivities(False)
+        self._set_sensitivities(False)
 
         if col in [ORIG, TRAN]:
             message = _('Use Ctrl+Enter for line-break')
             self.set_status_message(message, False)
 
-    def _set_action_sensitivities(self, sensitive):
+    def _set_sensitivities(self, sensitive):
         """Set  sensitivity of menubar and toolbar actions."""
 
         action_groups = self.uim.get_action_groups()

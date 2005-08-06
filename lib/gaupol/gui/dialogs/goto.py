@@ -20,21 +20,14 @@
 """Dialog to choose a subtitle number to go to."""
 
 
-import os
-import sys
-
 try:
     from psyco.classes import *
 except ImportError:
     pass
 
 import gtk
-import gtk.glade
 
-from gaupol.paths import GLADE_DIR
-
-
-GLADE_XML_PATH = os.path.join(GLADE_DIR, 'goto-dialog.glade')
+from gaupol.gui.util import gui
 
 
 class GoToDialog(object):
@@ -43,12 +36,7 @@ class GoToDialog(object):
     
     def __init__(self, parent, maximum):
 
-        try:
-            glade_xml = gtk.glade.XML(GLADE_XML_PATH)
-        except RuntimeError:
-            logger.critical('Failed to import glade XML file "%s".' \
-                            % GLADE_XML_PATH)
-            sys.exit()
+        glade_xml = gui.get_glade_xml('goto-dialog.glade')
                             
         self._dialog      = glade_xml.get_widget('dialog'     )
         self._spin_button = glade_xml.get_widget('spin_button')
@@ -79,6 +67,7 @@ class GoToDialog(object):
         """Get selected subtitle number."""
         
         self._spin_button.update()
+
         return self._spin_button.get_value_as_int()
 
     def run(self):

@@ -47,10 +47,10 @@ class TagLibrary(object):
     <size="int"></size>
     """
 
-    TAG         = None
-    ITALIC      = None
-    DECODE_TAGS = None
-    ENCODE_TAGS = None
+    TAG         = ''
+    ITALIC      = ''
+    DECODE_TAGS = []
+    ENCODE_TAGS = []
 
     def italicize(cls, text):
         """Italicize text."""
