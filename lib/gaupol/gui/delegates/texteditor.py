@@ -126,12 +126,11 @@ class ClearAction(TextEditAction):
         data_col  = self.focus_store_col - 4
         store_col = self.focus_store_col
 
-        data.clear_text(self.sel_data_rows, data_col)
-        
         for i in range(len(self.sel_data_rows)):
         
             data_row = self.sel_data_rows[i]
             store_row = self.project.get_store_row(data_row)
+            data.clear_text(data_row, data_col)
             store[store_row][store_col] = texts[data_row][data_col]
 
 

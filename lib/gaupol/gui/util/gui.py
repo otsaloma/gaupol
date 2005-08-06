@@ -35,7 +35,7 @@ def get_glade_xml(basename):
     
     Exit if unable to import Glade XML file.
     """
-    # TODO.
+    # TODO:
     # Is sys.exit() too harsh?
     
     path = os.path.join(GLADE_DIR, basename)
@@ -43,7 +43,7 @@ def get_glade_xml(basename):
     try:
         return gtk.glade.XML(path)
     except RuntimeError:
-        logger.critical('Failed to import glade XML file "%s".' % path)
+        logger.critical('Failed to import Glade XML file "%s".' % path)
         sys.exit()
 
 def get_event_box(widget):

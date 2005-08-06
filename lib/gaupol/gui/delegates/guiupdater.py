@@ -143,10 +143,15 @@ class GUIUpdater(Delegate):
 
         # Move focus if user right-clicked outside the selection.
         if row not in sel_rows:
+
             project.tree_view.set_cursor(row, tree_col)
             project.tree_view.grab_focus()
             project.set_active_column()
-            self._set_format_sensitivities(project)
+
+            self._set_edit_value_sensitivity(project)
+            self._set_row_operation_sensitivities(project)
+            self._set_text_operation_sensitivities(project)
+            self._set_character_status(project)
 
         # If user right-clicked in the selection, the focus cannot be moved,
         # because it would destoy the selection and select only the clicked
