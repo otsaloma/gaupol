@@ -77,7 +77,7 @@ class EncodingDialog(object):
         cr_1 = gtk.CellRendererText()
         cr_2 = gtk.CellRendererToggle()
 
-        cr_show.connect('toggled', self._on_tree_view_cell_toggled)
+        cr_2.connect('toggled', self._on_tree_view_cell_toggled)
 
         tree_col_0 = gtk.TreeViewColumn(_('Description') , cr_0, text  =0)
         tree_col_1 = gtk.TreeViewColumn(_('Encoding')    , cr_1, text  =1)
