@@ -20,4 +20,4 @@
 """gaupol-wide constants."""
 
 
-VERSION = '0.0.SVN'
+VERSION = '0.0+svn'

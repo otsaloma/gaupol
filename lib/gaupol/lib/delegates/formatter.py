@@ -54,8 +54,7 @@ class Formatter(Delegate):
             tags = []
 
             for match in re_tag.finditer(text):
-                start = match.start()
-                end   = match.end()
+                start, end = match.span()
                 tags.append([text[start:end], start])
 
             text = re_tag.sub('', text)
@@ -135,8 +134,7 @@ class Formatter(Delegate):
                 tags = []
                 
                 for match in re_tag.finditer(line):
-                    start = match.start()
-                    end   = match.end()
+                    start, end = match.span()
                     tags.append([line[start:end], start])
 
                 line = re_tag.sub('', line)

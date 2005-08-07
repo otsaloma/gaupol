@@ -116,6 +116,25 @@ class UnknownFileFormatErrorDialog(gtk.MessageDialog):
         )
 
 
+class VersionCheckErrorDialog(gtk.MessageDialog):
+    
+    """Error dialog displayed when version check fails."""
+    
+    def __init__(self, parent, detail):
+
+        gtk.MessageDialog.__init__(
+            self, parent, FLAGS, TYPE, gtk.BUTTONS_NONE,
+            _('Failed to check latest version')
+        )
+
+        self.add_button(_('_Go To Download Page'), gtk.RESPONSE_ACCEPT)
+        self.add_button(gtk.STOCK_OK             , gtk.RESPONSE_OK    )
+
+        self.set_default_response(gtk.RESPONSE_OK)
+
+        self.format_secondary_text(detail)
+
+
 class WriteFileErrorDialog(gtk.MessageDialog):
     
     """Error dialog displayed when IOError occurs when trying to write file."""

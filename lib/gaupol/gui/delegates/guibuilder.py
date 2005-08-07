@@ -445,21 +445,21 @@ class GUIBuilder(Delegate):
                 None,
                 _('_Support'),
                 None,
-                _('Request support at Gaupol project page'),
+                _('Submit a support request'),
                 self.on_support_activated
             ), (
                 'report_a_bug',
                 None,
                 _('_Report A Bug'),
                 None,
-                _('Report a bug at Gaupol project page'),
+                _('Submit a bug report'),
                 self.on_report_a_bug_activated
             ), (
                 'check_latest_version',
                 None,
                 _('_Check Latest Version'),
                 None,
-                _('Check if you have the latest version of Gaupol'),
+                _('Check if you have the latest version'),
                 self.on_check_latest_version_activated
             ), (
                 'about',
