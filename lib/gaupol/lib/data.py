@@ -31,7 +31,7 @@ from gaupol.lib.delegates.filereader import FileReader
 from gaupol.lib.delegates.filewriter import FileWriter
 from gaupol.lib.delegates.formatter import Formatter
 from gaupol.lib.delegates.frconv import FramerateConverter
-from gaupol.lib.timing.timeframe import TimeFrameConverter
+from gaupol.lib.timing.timeframe import TimeFrameCalculator
 
 
 class Data(object):
@@ -55,7 +55,7 @@ class Data(object):
         self.texts  = []
 
         self.framerate = framerate
-        self.converter = TimeFrameConverter(framerate)
+        self.calc      = TimeFrameCalculator(framerate)
 
         self.main_file = None
         self.tran_file = None

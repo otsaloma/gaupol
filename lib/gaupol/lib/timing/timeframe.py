@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Conversions between times and frames."""
+"""Time and frame calculations."""
 
 
 from math import floor
@@ -28,10 +28,10 @@ except ImportError:
     pass
 
 
-class TimeFrameConverter(object):
+class TimeFrameCalculator(object):
     
     """
-    Conversions between times and frames.
+    Time and frame calculations.
 
     time     : string in format hh:mm:ss,sss
     frame    : integer
@@ -41,7 +41,7 @@ class TimeFrameConverter(object):
     
     def __init__(self, framerate):
         """
-        Initialize a TimeFrameConverter object.
+        Initialize a TimeFrameCalculator object.
         
         framerate can be given as any data type convertible to float.
         """
@@ -73,9 +73,7 @@ class TimeFrameConverter(object):
 
         For negative durations, return zero (0).
         """
-        duration = y - x
-
-        return max(duration, 0)
+        return max(y - x, 0)
 
     def get_time_duration(self, x, y):
         """
@@ -141,5 +139,3 @@ class TimeFrameConverter(object):
             
         return (hours * 3600) + (minutes * 60) + seconds \
                + (milliseconds / 1000)
-
-        raise ValueError('Invalid time: "%s".' % time)
