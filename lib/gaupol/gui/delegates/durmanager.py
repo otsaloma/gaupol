@@ -88,6 +88,9 @@ class DURManager(Delegate):
             project.main_changed += 1
         elif action.document == 'translation':
             project.tran_changed += 1
+        elif action.document == 'both':
+            project.main_changed += 1
+            project.tran_changed += 1
 
         self.set_sensitivities(project)
 
@@ -166,30 +169,49 @@ class DURManager(Delegate):
             project.main_changed += 1
         elif action.document == 'translation':
             project.tran_changed += 1
+        elif action.document == 'both':
+            project.main_changed += 1
+            project.tran_changed += 1
 
         self.set_sensitivities(project)
 
     def _restore_tree_view_properties(self, project, action):
         """Restore tree view properties."""
 
+        # Sort order and column
+        store = project.tree_view.get_model()
+        store.set_sort_column_id(action.sort_col, action.sort_order)
+
         # Focus
         store_row = project.get_store_row(action.focus_data_row)
         tree_col  = project.tree_view.get_column(action.focus_store_col)
-        project.tree_view.set_cursor(store_row, tree_col)
+        try:
+            project.tree_view.set_cursor(store_row, tree_col)
+        except TypeError:
+            pass
 
+        # Scroll position
+        try:
+            project.tree_view.scroll_to_cell(store_row, tree_col, False, 0.5, 0)
+        except TypeError:
+            pass
+        
         # Selection
         selection = project.tree_view.get_selection()
         selection.unselect_all()
         for row in action.sel_data_rows:
             store_row = project.get_store_row(row)
-            selection.select_path(store_row)
-
-        # Sort order and column
-        store = project.tree_view.get_model()
-        store.set_sort_column_id(action.sort_col, action.sort_order)
+            try:
+                selection.select_path(store_row)
+            except TypeError:
+                pass
 
     def _save_tree_view_properties(self, project, action):
         """Save tree view properties."""
+
+        # Sort order and column
+        store = project.tree_view.get_model()
+        action.sort_col, action.sort_order = store.get_sort_column_id()
 
         # Focus
         action.focus_data_row  = project.get_data_focus()[1]
@@ -197,10 +219,6 @@ class DURManager(Delegate):
 
         # Selection
         action.sel_data_rows = project.get_selected_data_rows()
-        
-        # Sort order and column
-        store = project.tree_view.get_model()
-        action.sort_col, action.sort_order = store.get_sort_column_id()
 
     def undo_action(self, project, action):
         """Undo action and update things affected."""
@@ -222,6 +240,9 @@ class DURManager(Delegate):
         if action.document == 'main':
             project.main_changed -= 1
         elif action.document == 'translation':
+            project.tran_changed -= 1
+        elif action.document == 'both':
+            project.main_changed -= 1
             project.tran_changed -= 1
 
         self.set_sensitivities(project)

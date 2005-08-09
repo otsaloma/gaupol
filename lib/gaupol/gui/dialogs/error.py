@@ -33,6 +33,22 @@ TYPE    = gtk.MESSAGE_ERROR
 BUTTONS = gtk.BUTTONS_OK
 
 
+class PasteFitErrorDialog(gtk.MessageDialog):
+    
+    """Error dialog displayed clipboard contents don't fit to be pasted."""
+    
+    def __init__(self, parent, lacking):
+
+        gtk.MessageDialog.__init__(
+            self, parent, FLAGS, TYPE, BUTTONS,
+            _('Not enough subtitles to fit cliboard contents')
+        )
+        self.format_secondary_text( \
+            _('To paste to the current location, first create %d new subtitles.') \
+            % lacking \
+        )
+
+
 class ReadFileErrorDialog(gtk.MessageDialog):
     
     """Error dialog displayed when IOError occurs when reading file."""

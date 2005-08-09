@@ -74,6 +74,11 @@ DEFAULTS = {
     (
         ('version', VERSION),
     ),
+    'insert_subtitles':
+    (
+        ('amount'  , 1      ),
+        ('position', 'below'),
+    ),
     'main_window':
     (
         ('maximized', 'false'  ),
@@ -177,6 +182,14 @@ class Config(RawConfigParser):
             self.set(section, key, 'true')
         else:
             self.set(section, key, 'false')
+
+    def setint(self, section, key, value):
+        """
+        Set an integer value to key.
+
+        Raise NoSectionError if section doesn't exist.
+        """
+        self.set(section, key, str(value))
 
     def setlist(self, section, key, str_list):
         """

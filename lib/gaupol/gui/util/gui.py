@@ -55,28 +55,6 @@ def get_event_box(widget):
 
     return event_box
 
-def open_url(url):
-    """Open url in web-browser."""
-
-    # TODO:
-    # webbrowser module is not very good. It will open some browser, but
-    # not the default browser. Add detection and start commands for other
-    # OSs and DEs if such exist.
-    
-    # Windows
-    if sys.platform == 'win32':
-        os.startfile(WEBSITE)
-        return
-
-    # Gnome
-    if os.getenv('GNOME_DESKTOP_SESSION_ID') is not None:
-        return_value = os.system('gnome-open "%s"' % url)
-        if return_value == 0:
-            return
-
-    import webbrowser
-    webbrowser.open(url)
-
 def set_cursor_busy(window):
     """
     Set cursor busy when above window.

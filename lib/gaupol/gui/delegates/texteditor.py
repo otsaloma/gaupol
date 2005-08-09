@@ -28,6 +28,7 @@ except ImportError:
 from gaupol.gui.constants import NO, SHOW, HIDE, DURN, ORIG, TRAN
 from gaupol.gui.delegates.delegate import Delegate
 from gaupol.gui.delegates.durmanager import DURAction
+from gaupol.gui.dialogs.error import PasteFitErrorDialog
 
 
 class TextEditAction(DURAction):
@@ -41,8 +42,8 @@ class TextEditAction(DURAction):
         self.focus_store_col = project.get_store_focus()[1]
 
         texts = project.data.texts
-        col   = self.focus_store_col - 4
-        self.orig_texts = [texts[i][col] for i in self.sel_data_rows]
+        data_col = self.focus_store_col - 4
+        self.orig_texts = [texts[i][data_col] for i in self.sel_data_rows]
 
         documents = ['main'] * 5 + ['translation']
         self.document = documents[self.focus_store_col]
@@ -81,8 +82,8 @@ class CaseChangeAction(TextEditAction):
 
         descriptions = [
             None, None, None, None,
-            _('Changing translation case'),
-            _('Changing text case')
+            _('Changing text case'),
+            _('Changing translation case')
         ]
         self.description = descriptions[self.focus_store_col]
 
@@ -112,8 +113,8 @@ class ClearAction(TextEditAction):
 
         descriptions = [
             None, None, None, None,
-            _('Clearing translation case'),
-            _('Clearing text case')
+            _('Clearing text case'),
+            _('Clearing translation case')
         ]
         self.description = descriptions[self.focus_store_col]
 
@@ -134,6 +135,22 @@ class ClearAction(TextEditAction):
             store[store_row][store_col] = texts[data_row][data_col]
 
 
+class CutAction(ClearAction):
+
+    """Action to clear text after text has been copied to clipboard."""
+
+    def __init__(self, project):
+
+        ClearAction.__init__(self, project)
+
+        descriptions = [
+            None, None, None, None,
+            _('Cutting text'),
+            _('Cutting translation')
+        ]
+        self.description = descriptions[self.focus_store_col]
+
+
 class DialogLineAction(TextEditAction):
 
     """Action to toggle dialog lines on text."""
@@ -144,8 +161,8 @@ class DialogLineAction(TextEditAction):
 
         descriptions = [
             None, None, None, None,
-            _('Toggling translation dialog lines'),
-            _('Toggling text dialog lines')
+            _('Toggling text dialog lines'),
+            _('Toggling translation dialog lines')
         ]
         self.description = descriptions[self.focus_store_col]
 
@@ -175,8 +192,8 @@ class ItalicAction(TextEditAction):
 
         descriptions = [
             None, None, None, None,
-            _('Toggling translation italicization'),
-            _('Toggling text italicization')
+            _('Toggling text italicization'),
+            _('Toggling translation italicization')
         ]
         self.description = descriptions[self.focus_store_col]
 
@@ -196,6 +213,89 @@ class ItalicAction(TextEditAction):
             store[store_row][store_col] = texts[i]
 
 
+class PasteAction(DURAction):
+
+    """Action to paste text cells."""
+
+    def __init__(self, project, texts):
+
+        self.project         = project
+        self.sel_data_rows   = project.get_selected_data_rows()
+        self.focus_store_col = project.get_store_focus()[1]
+
+        documents = ['main'] * 5 + ['translation']
+        self.document = documents[self.focus_store_col]
+
+        descriptions = [
+            None, None, None, None,
+            _('Pasting text'),
+            _('Pasting translation')
+        ]
+        self.description = descriptions[self.focus_store_col]
+
+        self.new_texts = texts
+
+        start_row = self.sel_data_rows[0]
+        data_col  = self.focus_store_col - 4
+        texts     = self.project.data.texts
+
+        self.orig_texts = []
+        for i in range(len(self.new_texts)):
+        
+            if self.new_texts[i] is None:
+                self.orig_texts.append(None)
+                continue
+            
+            data_row = start_row + i
+            self.orig_texts.append(texts[data_row][data_col])
+
+    def do(self):
+        """Clear text."""
+
+        store     = self.project.tree_view.get_model()
+        data      = self.project.data
+        texts     = self.project.data.texts
+        data_col  = self.focus_store_col - 4
+        store_col = self.focus_store_col
+
+        start_row = self.sel_data_rows[0]
+
+        selection = self.project.tree_view.get_selection()
+        selection.unselect_all()
+
+        for i in range(len(self.new_texts)):
+        
+            if self.new_texts[i] is None:
+                continue
+            
+            data_row = start_row + i
+            store_row = self.project.get_store_row(data_row)
+            data.set_text(data_row, data_col, self.new_texts[i])
+            store[store_row][store_col] = texts[data_row][data_col]
+            selection.select_path(store_row)
+
+    def undo(self):
+        """Undo text-editing."""
+
+        store     = self.project.tree_view.get_model()
+        data      = self.project.data
+        texts     = self.project.data.texts
+        data_col  = self.focus_store_col - 4
+        store_col = self.focus_store_col
+
+        start_row = self.sel_data_rows[0]
+
+        for i in range(len(self.orig_texts)):
+        
+            if self.orig_texts[i] is None:
+                continue
+            
+            data_row = start_row + i
+            store_row = self.project.get_store_row(data_row)
+            data.set_text(data_row, data_col, self.orig_texts[i])
+            store[store_row][store_col] = texts[data_row][data_col]
+
+
 class TextEditor(Delegate):
 
     """Editor of text data."""
@@ -210,6 +310,24 @@ class TextEditor(Delegate):
         action = CaseChangeAction(project, method)
         self.do_action(project, action)
 
+    def _copy_selection(self):
+        """Copy selected data to clipboard."""
+        
+        project   = self.get_current_project()
+        store     = project.tree_view.get_model()
+        sel_rows  = project.get_selected_store_rows()
+        store_col = project.get_store_focus()[1]
+        texts     = []
+        
+        # Add texts to list and None for unselected elements.
+        for row in range(sel_rows[0], sel_rows[-1] + 1):
+            if row in sel_rows:
+                texts.append(store[row][store_col])
+            else:
+                texts.append(None)
+        
+        self.clipboard.set_data(texts)
+
     def on_clear_activated(self, *args):
         """Clear the selected text cells."""
         
@@ -220,12 +338,16 @@ class TextEditor(Delegate):
     def on_copy_activated(self, *args):
         """Copy selection to the clipboard."""
         
-        pass
+        self._copy_selection()
 
     def on_cut_activated(self, *args):
         """Cut selection to the clipboard."""
         
-        pass
+        self._copy_selection()
+
+        project = self.get_current_project()
+        action = CutAction(project)
+        self.do_action(project, action)
 
     def on_dialog_lines_activated(self, *args):
         """Toggle dialog lines on selected text cells."""
@@ -248,8 +370,21 @@ class TextEditor(Delegate):
 
     def on_paste_activated(self, *args):
         """Paste the clipboard contents."""
+
+        project     = self.get_current_project()
+        store       = project.tree_view.get_model()
+        top_row     = project.get_selected_store_rows()[0]
+        rows_room   = len(store) - top_row
+        rows_needed = len(self.clipboard.get_data())
         
-        pass
+        if rows_needed > rows_room:
+            dialog = PasteFitErrorDialog(self.window, rows_needed - rows_room)
+            dialog.run()
+            dialog.destroy()
+            return
+
+        action = PasteAction(project, self.clipboard.data)
+        self.do_action(project, action)
 
     def on_sentence_case_activated(self, *args):
         """Change case to sentence in selected text cells."""

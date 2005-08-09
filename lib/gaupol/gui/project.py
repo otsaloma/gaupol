@@ -337,7 +337,11 @@ class Project(gobject.GObject):
         """Get rows in ListStore, that match the selection in TreeView."""
 
         selection = self.tree_view.get_selection()
-        return selection.get_selected_rows()[1]
+        sel_rows = selection.get_selected_rows()[1]
+
+        # sel_rows is a list of one-tuples of integers. Change that to a
+        # list of integers.
+        return [row[0] for row in sel_rows]
 
     def get_store_focus(self):
         """
@@ -493,8 +497,13 @@ class Project(gobject.GObject):
         store.set_sort_column_id(NO, gtk.SORT_ASCENDING)
 
         for col in col_list:
+
+            if col == NO:
             
-            if col in [SHOW, HIDE, DURN]:
+                for i in range(len(store)):
+                    store[i][col] = i + 1
+            
+            elif col in [SHOW, HIDE, DURN]:
 
                 if self.edit_mode == 'time':
                     timings = self.data.times

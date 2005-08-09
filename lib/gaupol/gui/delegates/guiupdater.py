@@ -517,7 +517,10 @@ class GUIUpdater(Delegate):
         
             stbar = stbars[i]
             
-            lengths, total = project.data.get_character_count(data_row, i)
+            try:
+                lengths, total = project.data.get_character_count(data_row, i)
+            except IndexError:
+                return
             lengths = [str(length) for length in lengths]
             message = '+'.join(lengths) + '=' + str(total)
 
@@ -661,6 +664,10 @@ class GUIUpdater(Delegate):
 
         uim_paths = (
             '/ui/menubar/format/case',
+            '/ui/menubar/format/case/title',
+            '/ui/menubar/format/case/sentence',
+            '/ui/menubar/format/case/upper',
+            '/ui/menubar/format/case/lower',
             '/ui/menubar/format/dialog',
             '/ui/menubar/format/italic',
         )
@@ -693,62 +700,6 @@ class GUIUpdater(Delegate):
 
         for path in uim_paths:
             self.uim.get_action(path).set_sensitive(sensitive)
-
-    def _set_row_operation_sensitivities(self, project):
-        """Set sensitivity of row-operating actions."""
-
-        uim_paths = (
-            '/ui/menubar/edit/insert_subtitles',
-            '/ui/menubar/edit/remove_subtitles',
-        )
-
-        if project is None:
-            sensitive = False
-        else:
-            selection = project.tree_view.get_selection()
-            sel_row_count = selection.count_selected_rows()
-            sensitive = bool(sel_row_count > 0)
-
-        for path in uim_paths:
-            self.uim.get_action(path).set_sensitive(sensitive)
-
-    def _set_text_edit_sensitivities(self, project):
-        """Set sensitivities of text editing actions."""
-
-        uim_paths = (
-            '/ui/menubar/edit/clear',
-            '/ui/menubar/edit/copy',
-            '/ui/menubar/edit/cut',
-            '/ui/menubar/edit/paste',
-        )
-
-        if project is None:
-            for path in uim_paths:
-                self.uim.get_action(path).set_sensitive(False)
-            return
-
-        selection = project.tree_view.get_selection()
-        sel_row_count = selection.count_selected_rows()
-        store_col = project.get_store_focus()[1]
-
-        sensitive = True
-
-        # Something must be selected.
-        if sel_row_count == 0:
-            sensitive = False
-
-        # A text column must have focus.
-        if store_col not in [ORIG, TRAN]:
-            sensitive = False
-
-        for path in uim_paths:
-            self.uim.get_action(path).set_sensitive(sensitive)
-
-    def _set_text_operation_sensitivities(self, project):
-        """Set sensitivities of text-operating actions."""
-
-        self._set_format_sensitivities(project)
-        self._set_text_edit_sensitivities(project)
 
     def _set_framerate_sensitivities(self, project):
         """Set sensitivities of framerate widgets and actions."""
@@ -787,6 +738,24 @@ class GUIUpdater(Delegate):
             for widget in widgets:
                 widget.connect(signals[0], methods[0], action)
                 widget.connect(signals[1], methods[1], action)
+
+    def _set_row_operation_sensitivities(self, project):
+        """Set sensitivity of row-operating actions."""
+
+        uim_paths = (
+            '/ui/menubar/edit/insert_subtitles',
+            '/ui/menubar/edit/remove_subtitles',
+        )
+
+        if project is None:
+            sensitive = False
+        else:
+            selection = project.tree_view.get_selection()
+            sel_row_count = selection.count_selected_rows()
+            sensitive = bool(sel_row_count > 0)
+
+        for path in uim_paths:
+            self.uim.get_action(path).set_sensitive(sensitive)
 
     def set_sensitivities(self, project=None):
         """
@@ -850,6 +819,49 @@ class GUIUpdater(Delegate):
             self.msg_stbar_gobj_tag = gobject.timeout_add(5000, method, None)
 
         return False
+
+    def _set_text_edit_sensitivities(self, project):
+        """Set sensitivities of text editing actions."""
+
+        uim_paths = (
+            '/ui/menubar/edit/clear',
+            '/ui/menubar/edit/copy',
+            '/ui/menubar/edit/cut',
+            '/ui/menubar/edit/paste',
+        )
+
+        if project is None:
+            for path in uim_paths:
+                self.uim.get_action(path).set_sensitive(False)
+            return
+
+        selection = project.tree_view.get_selection()
+        sel_row_count = selection.count_selected_rows()
+        store_col = project.get_store_focus()[1]
+
+        sensitive = True
+
+        # Something must be selected.
+        if sel_row_count == 0:
+            sensitive = False
+
+        # A text column must have focus.
+        if store_col not in [ORIG, TRAN]:
+            sensitive = False
+
+        for path in uim_paths:
+            self.uim.get_action(path).set_sensitive(sensitive)
+
+        # Paste action requires something on the clipboard.
+        if self.clipboard.data is None:
+            path = '/ui/menubar/edit/paste'
+            self.uim.get_action(path).set_sensitive(False)
+
+    def _set_text_operation_sensitivities(self, project):
+        """Set sensitivities of text-operating actions."""
+
+        self._set_format_sensitivities(project)
+        self._set_text_edit_sensitivities(project)
 
     def _set_undo_and_redo_sensitivities(self, project):
         """Set sensitivities of undo and redo actions."""

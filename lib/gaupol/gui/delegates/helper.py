@@ -32,8 +32,8 @@ from gaupol.gui.delegates.delegate import Delegate
 from gaupol.gui.dialogs.about import AboutDialog
 from gaupol.gui.dialogs.error import VersionCheckErrorDialog
 from gaupol.gui.dialogs.info import VersionCheckInfoDialog
+from gaupol.lib.util.urldoc import URLDocument, TimeoutError, open_url
 from gaupol.gui.util import gui
-from gaupol.lib.util.urldoc import URLDocument, TimeoutError
 
 
 BUG_REPORT_URL = 'http://gna.org/bugs/?func=additem&group=gaupol'
@@ -90,14 +90,14 @@ class Helper(Delegate):
         dialog.destroy()
 
         if response == gtk.RESPONSE_ACCEPT:
-            gui.open_url(DOWNLOAD_URL)
+            open_url(DOWNLOAD_URL)
         
     def on_report_a_bug_activated(self, *args):
         """Report a bug at the project page."""
 
-        gui.open_url(BUG_REPORT_URL)
+        open_url(BUG_REPORT_URL)
         
     def on_support_activated(self, *args):
         """Request support at the project page."""
 
-        gui.open_url(SUPPORT_URL)
+        open_url(SUPPORT_URL)

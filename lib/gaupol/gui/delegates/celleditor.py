@@ -115,7 +115,9 @@ class CellEditor(Delegate):
     def on_edit_value_activated(self, *args):
         """Edit value of focused cell."""
         
-        pass
+        tree_view = self.get_current_project().tree_view
+        row, tree_col = tree_view.get_cursor()
+        tree_view.set_cursor_on_cell(row, tree_col, None, True)
 
     def on_tree_view_cell_edited(self, project, new_value, row, col):
         """Edit value in TreeView cell."""

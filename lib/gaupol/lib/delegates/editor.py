@@ -41,12 +41,74 @@ class Editor(Delegate):
     def insert_subtitles(self, start_row, count):
         """Insert count amount of blank subtitles staring at start_row."""
 
-        pass
+        # Time is the default mode for an unsaved subtitled.
+        try:
+            mode = self.main_file.MODE
+        except AttributeError:
+            mode = 'time'
+
+        # Get native timings for comparison.
+        if mode == 'time':
+            timings = self.times
+            start = '00:00:00,000'
+        elif mode == 'frame':
+            timings = self.frames
+            start = 0
+
+        if start_row > 0:
+            start = timings[start_row - 1][HIDE]
+        
+        try:
+            end = timings[start_row][SHOW]
+        except IndexError:
+            if mode == 'time':
+                sec = self.tf_conv.time_to_seconds(start)
+                sec += (3 * count)
+                end = self.tf_conv.seconds_to_time(sec)
+            elif mode == 'frame':
+                end = start + (80 * count)
+
+        for i in range(count):
+            self.times.insert(start_row, ['00:00:00,000'] * 3)
+            self.frames.insert(start_row, [0] * 3)
+            self.texts.insert(start_row, [''] * 2)
+
+        for i in range(start_row, start_row + count):
+            if mode == 'time':
+                start_sec = self.tf_conv.time_to_seconds(start)
+                end_sec   = self.tf_conv.time_to_seconds(end)
+                dur_sec = (end_sec - start_sec) / count
+                pos = i - start_row
+                start_time = self.tf_conv.seconds_to_time(start_sec + (pos * dur_sec))
+                end_time = self.tf_conv.seconds_to_time(start_sec + (pos * dur_sec) + dur_sec)
+                self.times[i][SHOW] = start_time
+                self.times[i][HIDE] = end_time
+                self.frames[i][SHOW] = self.tf_conv.time_to_frame(start_time)
+                self.frames[i][HIDE] = self.tf_conv.time_to_frame(end_time)
+                self._set_durations(i)
+            elif mode == 'frame':
+                dur = int((end - start) / count)
+                pos = i - start_row
+                start_frame = start + (pos * dur)
+                end_frame = start + (pos * dur) + dur
+                self.frames[i][SHOW] = start_frame
+                self.frames[i][HIDE] = end_frame
+                self.times[i][SHOW] = self.tf_conv.frame_to_time(start_frame)
+                self.times[i][HIDE] = self.tf_conv.frame_to_time(end_frame)
+                self._set_durations(i)
+
+        
 
     def remove_subtitles(self, rows):
         """Remove subtitles."""
 
-        pass
+        rows.sort()
+        rows.reverse()
+        
+        for row in rows:
+            self.texts.pop(row)
+            self.times.pop(row)
+            self.frames.pop(row)
 
     def _set_durations(self, row):
         """Set duration for row based on show and hide."""

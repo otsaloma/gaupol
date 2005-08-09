@@ -83,8 +83,11 @@ class Viewer(Delegate):
         store.set_sort_column_id(sort_col, sort_order)
 
         # Restore focus.
-        tree_col = project.tree_view.get_column(focus_col)
-        project.tree_view.set_cursor(focus_row, tree_col)
+        try:
+            tree_col = project.tree_view.get_column(focus_col)
+            project.tree_view.set_cursor(focus_row, tree_col)
+        except TypeError:
+            pass
 
         # Set selection.
         selection = project.tree_view.get_selection()

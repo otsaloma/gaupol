@@ -30,7 +30,7 @@ except ImportError:
 import gtk
 
 from gaupol.constants import VERSION
-from gaupol.gui.util import gui
+from gaupol.lib.util.urldoc import open_url
 
 
 NAME         = 'Gaupol'
@@ -90,4 +90,4 @@ class AboutDialog(gtk.AboutDialog):
     def _on_url_clicked(self, *args):
         """Open website in browser when user clicks on URL."""
 
-        gui.open_url(WEBSITE)
+        open_url(WEBSITE)

@@ -39,6 +39,7 @@ from gaupol.gui.delegates.roweditor import RowEditor
 from gaupol.gui.delegates.searcher import Searcher
 from gaupol.gui.delegates.texteditor import TextEditor
 from gaupol.gui.delegates.viewer import Viewer
+from gaupol.gui.util.clipboard import Clipboard
 from gaupol.gui.util.config import Config
 from gaupol.gui.util import gui
 
@@ -85,6 +86,9 @@ class Application(object):
         # Tooltips.
         self.ttips_always = gtk.Tooltips()
         self.ttips_open   = gtk.Tooltips()
+
+        # Internal clipboard.
+        self.clipboard = Clipboard()
 
         # GObject timeout tag for message statusbar timed-out vanishings.
         self.msg_stbar_gobj_tag = None
