@@ -38,6 +38,8 @@
 			<menuitem action="select_all"/>
 			<menuitem action="unselect_all"/>
 			<menuitem action="invert_selection"/>
+			<separator/>
+			<menuitem action="preferences"/>
 		</menu>
 		<menu action="view">
 			<menuitem action="toolbar"/>
@@ -73,7 +75,7 @@
 			</menu>
 		</menu>
 		<menu action="search">
-			<menuitem action="go_to_subtitle"/>
+			<menuitem action="jump_to_subtitle"/>
 		</menu>
 		<menu action="documents">
 			<menuitem action="save_all"/>
