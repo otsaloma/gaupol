@@ -55,31 +55,30 @@ class Data(object):
         self.texts  = []
 
         self.framerate = framerate
-        self.tf_conv   = TimeFrameConverter(framerate)
+        self.converter = TimeFrameConverter(framerate)
 
         self.main_file = None
         self.tran_file = None
 
         self._delegations = None
-
         self._assign_delegations()
 
     def _assign_delegations(self):
         """Map method names to Delegate objects."""
         
-        analyzer    = Analyzer(self)
-        editor      = Editor(self)
-        file_reader = FileReader(self)
-        file_writer = FileWriter(self)
-        formatter   = Formatter(self)
-        fr_conv     = FramerateConverter(self)
+        analyzer            = Analyzer(self)
+        editor              = Editor(self)
+        file_reader         = FileReader(self)
+        file_writer         = FileWriter(self)
+        formatter           = Formatter(self)
+        framerate_converter = FramerateConverter(self)
 
         self._delegations = {
             'change_case'           : formatter,
-            'change_framerate'      : fr_conv,
+            'change_framerate'      : framerate_converter,
             'clear_text'            : editor,
             'get_character_count'   : analyzer,
-            'get_tag_re'            : formatter,
+            'get_regex_for_tag'     : formatter,
             'insert_subtitles'      : editor,
             'read_main_file'        : file_reader,
             'read_translation_file' : file_reader,

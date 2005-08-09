@@ -17,13 +17,14 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Reading documents on the WWW."""
+"""Connecting to resources on the Internet."""
 
 
 import os
 import sys
 import threading
 import urllib
+import webbrowser
 
 try:
     from psyco.classes import *
@@ -33,14 +34,14 @@ except ImportError:
 
 class TimeoutError(Exception):
 
-    """Exception raised when operation times out."""
+    """Exception raised when connection times out."""
 
     pass
 
 
 class URLDocument(object):
 
-    """Reading documents on the WWW."""
+    """Reading text documents on the Internet."""
 
     def __init__(self, url, timeout):
         """
@@ -88,7 +89,7 @@ def open_url(url):
     
     # Windows
     if sys.platform == 'win32':
-        os.startfile(WEBSITE)
+        os.startfile(url)
         return
 
     # Gnome
@@ -97,5 +98,4 @@ def open_url(url):
         if return_value == 0:
             return
 
-    import webbrowser
     webbrowser.open(url)

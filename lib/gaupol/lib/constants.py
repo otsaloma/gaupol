@@ -20,6 +20,9 @@
 """gaupol.lib-wide constants."""
 
 
-# Column indexes for subtitle data.
+# Column indexes for subtitle data
 SHOW, HIDE, DURN = 0, 1, 2
 ORIG, TRAN       = 0, 1
+
+# Timing modes
+TIME, FRAME = 0, 1

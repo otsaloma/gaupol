@@ -134,39 +134,39 @@ ENCODINGS = (
 
 def get_description(python_name):
     """
-    Get the description of an encoding.
+    Get description of an encoding.
     
     Return value is translation dependent.
     Raise ValueError if not found.
     """
     for entry in ENCODINGS:
-        if python_name == entry[PY_NAME]:
+        if entry[PY_NAME] == python_name:
             return entry[PY_NAME]
 
     raise ValueError('Invalid encoding Python name "%s".' % python_name)
 
 def get_descriptive_name(python_name):
     """
-    Get descriptive, user presentable name for encoding.
+    Get descriptive name for encoding.
     
     Raise ValueError if not found.
     Return value and its format are translation dependent.
     Return: "description (display name)" or None
     """
     for entry in ENCODINGS:
-        if python_name == entry[PY_NAME]:
+        if entry[PY_NAME] == python_name:
             return _('%s (%s)') % (entry[DESC], entry[DISP_NAME])
 
     raise ValueError('Invalid encoding Python name "%s".' % python_name)
                     
 def get_display_name(python_name):
     """
-    Get the display name of an encoding.
+    Get display name of an encoding.
     
     Raise ValueError if not found.
     """
     for entry in ENCODINGS:
-        if python_name == entry[PY_NAME]:
+        if entry[PY_NAME] == python_name:
             return entry[DISP_NAME]
     
     raise ValueError('Invalid encoding Python name "%s".' % python_name)
@@ -177,22 +177,20 @@ def get_locale_encoding():
     
     Return: (Python name, display name, description) or None
     """
-    encoding = locale.getdefaultlocale()[1]
+    python_name = locale.getdefaultlocale()[1]
 
-    try:
-        codec_tuple = codecs.lookup(encoding)
-    except LookupError:
+    if not is_valid_python_name(python_name):
         return None
 
     for entry in ENCODINGS:
-        if codec_tuple == codecs.lookup(entry[PY_NAME]):
+        if entry[PY_NAME] == python_name:
             return entry
 
     return None
 
 def get_locale_descriptive_name():
     """
-    Get descriptive, user presentable name for locale encoding.
+    Get descriptive name for locale encoding.
     
     Return value and its format are translation dependent.
     Return: "Current locale (display name)" or None
@@ -206,12 +204,12 @@ def get_locale_descriptive_name():
 
 def get_python_name(display_name):
     """
-    Get the Python name of an encoding.
+    Get Python name of an encoding.
     
     Raise ValueError if not found.
     """
     for entry in ENCODINGS:
-        if display_name == entry[DISP_NAME]:
+        if entry[DISP_NAME] == display_name:
             return entry[PY_NAME]
 
     raise ValueError('Invalid encoding display name "%s".' % display_name)
@@ -222,17 +220,17 @@ def get_valid_encodings():
     
     Return: list with elements (Python name, display name, description)
     """
-    valid_encs = []
+    valid_encodings = []
     
     for entry in ENCODINGS:
         if is_valid_python_name(entry[PY_NAME]):
-            valid_encs.append(entry)
+            valid_encodings.append(entry)
     
-    return valid_encs
+    return valid_encodings
     
 def get_valid_descriptive_names():
     """
-    Get a list of descriptive, user presentable encoding names.
+    Get a list of valid descriptive names.
 
     Return value and its format are translation dependent.
     Return: list with elements "description (display name)"
@@ -257,7 +255,7 @@ def get_valid_python_names():
     return valid_names
 
 def is_valid_python_name(python_name):
-    """Determine whether encoding python_name is valid or not."""
+    """Return whether encoding is valid or not."""
 
     # Empty string lookup returns tuple for UCS-4LE!
     if not python_name:
