@@ -20,13 +20,13 @@
   <property name="has_separator">False</property>
 
   <child internal-child="vbox">
-    <widget class="GtkVBox" id="dialog_vbox">
+    <widget class="GtkVBox" id="vbox">
       <property name="visible">True</property>
       <property name="homogeneous">False</property>
       <property name="spacing">0</property>
 
       <child internal-child="action_area">
-	<widget class="GtkHButtonBox" id="dialog_action_area">
+	<widget class="GtkHButtonBox" id="action_area">
 	  <property name="visible">True</property>
 	  <property name="layout_style">GTK_BUTTONBOX_END</property>
 
@@ -44,7 +44,7 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkButton" id="go_button">
+	    <widget class="GtkButton" id="jump_button">
 	      <property name="visible">True</property>
 	      <property name="can_default">True</property>
 	      <property name="can_focus">True</property>

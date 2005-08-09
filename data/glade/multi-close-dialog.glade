@@ -102,7 +102,7 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkVBox" id="msg_vbox">
+	    <widget class="GtkVBox" id="message_vbox">
 	      <property name="visible">True</property>
 	      <property name="homogeneous">False</property>
 	      <property name="spacing">6</property>
@@ -134,7 +134,7 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkLabel" id="main_document_label">
+		<widget class="GtkLabel" id="main_label">
 		  <property name="visible">True</property>
 		  <property name="label" translatable="yes">Select the su_btitle documents you want to save:</property>
 		  <property name="use_underline">True</property>
@@ -159,7 +159,7 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkScrolledWindow" id="main_document_scrolled_window">
+		<widget class="GtkScrolledWindow" id="main_scrolled_window">
 		  <property name="visible">True</property>
 		  <property name="can_focus">True</property>
 		  <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
@@ -168,7 +168,7 @@
 		  <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
 
 		  <child>
-		    <widget class="GtkTreeView" id="main_document_tree_view">
+		    <widget class="GtkTreeView" id="main_tree_view">
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
 		      <property name="headers_visible">False</property>
@@ -189,7 +189,7 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkLabel" id="translation_document_label">
+		<widget class="GtkLabel" id="translation_label">
 		  <property name="visible">True</property>
 		  <property name="label" translatable="yes">Select the _translation documents you want to save:</property>
 		  <property name="use_underline">True</property>
@@ -214,7 +214,7 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkScrolledWindow" id="translation_document_scrolled_window">
+		<widget class="GtkScrolledWindow" id="translation_scrolled_window">
 		  <property name="visible">True</property>
 		  <property name="can_focus">True</property>
 		  <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
@@ -223,7 +223,7 @@
 		  <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
 
 		  <child>
-		    <widget class="GtkTreeView" id="translation_document_tree_view">
+		    <widget class="GtkTreeView" id="translation_tree_view">
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
 		      <property name="headers_visible">False</property>

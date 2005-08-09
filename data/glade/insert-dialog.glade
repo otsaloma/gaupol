@@ -17,16 +17,16 @@
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
-  <property name="has_separator">False</property>
+  <property name="has_separator">True</property>
 
   <child internal-child="vbox">
-    <widget class="GtkVBox" id="dialog_vbox">
+    <widget class="GtkVBox" id="vbox">
       <property name="visible">True</property>
       <property name="homogeneous">False</property>
       <property name="spacing">0</property>
 
       <child internal-child="action_area">
-	<widget class="GtkHButtonBox" id="dialog_action_area">
+	<widget class="GtkHButtonBox" id="action_area">
 	  <property name="visible">True</property>
 	  <property name="layout_style">GTK_BUTTONBOX_END</property>
 
@@ -158,7 +158,7 @@ Below selection</property>
 	      <property name="update_policy">GTK_UPDATE_ALWAYS</property>
 	      <property name="snap_to_ticks">False</property>
 	      <property name="wrap">False</property>
-	      <property name="adjustment">1 1 10000 1 10 10</property>
+	      <property name="adjustment">1 1 9999 1 10 10</property>
 	    </widget>
 	    <packing>
 	      <property name="left_attach">1</property>
