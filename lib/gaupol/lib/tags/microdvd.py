@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""MicroDVD tags."""
+"""MicroDVD tag library."""
 
 # Documentation:
 # http://netti.nic.fi/~temp/easydivx/help/mdvddoc/#step5
@@ -38,7 +38,7 @@ COMMON = re.MULTILINE|re.DOTALL
 
 class MicroDVD(TagLibrary):
 
-    """MicroDVD tags."""
+    """MicroDVD tag library."""
 
     TAG = r'\{[a-z]:.*?\}', re.IGNORECASE
 

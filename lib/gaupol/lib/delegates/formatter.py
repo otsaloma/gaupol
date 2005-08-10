@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Text style changer."""
+"""Text style formatting."""
 
 
 import re
@@ -27,14 +27,14 @@ try:
 except ImportError:
     pass
 
-from gaupol.lib.constants import SHOW, HIDE, DURN, ORIG, TRAN
+from gaupol.lib.constants import ORIG, TRAN
 from gaupol.lib.delegates.delegate import Delegate
 from gaupol.lib.tags.all import *
 
 
 class Formatter(Delegate):
     
-    """Text style changer."""
+    """Text style formatting."""
 
     def change_case(self, rows, col, method):
         """
@@ -44,7 +44,7 @@ class Formatter(Delegate):
         Return: new texts
         """
         texts  = [self.texts[row][col] for row in rows]
-        re_tag = self.get_tag_re(col)
+        re_tag = self.get_regex_for_tag(col)
 
         for i in range(len(texts)):
 
@@ -53,13 +53,16 @@ class Formatter(Delegate):
             # List of found tags and their positions.
             tags = []
 
+            # Find tags.
             for match in re_tag.finditer(text):
                 start, end = match.span()
                 tags.append([text[start:end], start])
 
+            # Remove tags and change case.
             text = re_tag.sub('', text)
             text = eval('text.%s()' % method)
 
+            # Reconstruct text.
             for entry in tags:
                 tag, start = entry
                 text = text[:start] + tag + text[start:]
@@ -72,8 +75,14 @@ class Formatter(Delegate):
         return texts
 
     def _get_format(self, col):
-        """Get file format used in given text column."""
+        """
+        Get file format used in given text column.
         
+        Translation column will inherit original column's format if
+        translation file does not exist.
+
+        Return: format or None
+        """
         if col == ORIG:
             try:
                 return self.main_file.FORMAT
@@ -86,9 +95,12 @@ class Formatter(Delegate):
             except AttributeError:
                 return self._get_format(ORIG)
 
-    def get_tag_re(self, col):
-        """Get regular expression for tag in given text column."""
-
+    def get_regex_for_tag(self, col):
+        """
+        Get regular expression for tag in given text column.
+        
+        Return: re object or None
+        """
         format = self._get_format(col)
 
         if format is None:
@@ -108,13 +120,11 @@ class Formatter(Delegate):
         Return: new texts
         """
         texts     = [self.texts[row][col] for row in rows]
-        re_tag    = self.get_tag_re(col)
+        re_tag    = self.get_regex_for_tag(col)
         re_dialog = re.compile('^-\s*')
-        TAG, POS  = 0, 1
-        
-        turn_into_dialog = False
         
         # Get action to be done.
+        turn_into_dialog = False
         for text in texts:
             lines = text.split('\n')
             for line in lines:
@@ -133,6 +143,7 @@ class Formatter(Delegate):
                 # List of found tags and their positions.
                 tags = []
                 
+                # Find tags.
                 for match in re_tag.finditer(line):
                     start, end = match.span()
                     tags.append([line[start:end], start])

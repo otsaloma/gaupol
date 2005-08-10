@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Provider of statistics and information."""
+"""Statistics and information."""
 
 
 import re
@@ -32,7 +32,7 @@ from gaupol.lib.delegates.delegate import Delegate
 
 class Analyzer(Delegate):
     
-    """Provider of statistics and information."""
+    """Statistics and information."""
 
     def get_character_count(self, row, col):
         """
@@ -41,8 +41,7 @@ class Analyzer(Delegate):
         Return: list of row lengths, total length
         """
         text   = self.texts[row][col]
-
-        re_tag = self.get_tag_re(col)
+        re_tag = self.get_regex_for_tag(col)
         
         if re_tag is not None:
             text = re_tag.sub('', text)

@@ -28,6 +28,7 @@ try:
 except ImportError:
     pass
 
+from gaupol.constants import FRAME_MODE
 from gaupol.lib.file.subfile import SubtitleFile
 
 
@@ -50,7 +51,7 @@ class MicroDVD(SubtitleFile):
         
         self.FORMAT    = 'MicroDVD'
         self.EXTENSION = '.sub'
-        self.MODE      = 'frame'
+        self.MODE      = FRAME_MODE
     
     def read(self):
         """
@@ -81,8 +82,8 @@ class MicroDVD(SubtitleFile):
             texts[i] = texts[i].replace('|', '\n')
 
         # Remove leading and trailing spaces.
-        for i in [shows, hides, texts]:
-            self._strip_spaces(i)
+        for entry in [shows, hides, texts]:
+            self._strip_spaces(entry)
 
         # Frames should be integers.
         shows = [int(frame) for frame in shows]
@@ -97,18 +98,17 @@ class MicroDVD(SubtitleFile):
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
-        newl_char = self._get_newline_character()
+        newline_character = self._get_newline_character()
 
         # Replace Python internal newline characters in text with pipes.
-        for i in range(len(texts)):
-            texts[i] = texts[i].replace('\n', '|')
+        texts = [text.replace('\n', '|') for text in texts]
 
-        sub_file = codecs.open(self.path, 'w', self.encoding)
+        subtitle_file = codecs.open(self.path, 'w', self.encoding)
 
         try:
             for i in range(len(shows)):
-                sub_file.write('{%.0f}{%.0f}%s%s' % (
-                    shows[i], hides[i], texts[i], newl_char
+                subtitle_file.write('{%.0f}{%.0f}%s%s' % (
+                    shows[i], hides[i], texts[i], newline_character
                 ))
         finally:
-            sub_file.close()
+            subtitle_file.close()

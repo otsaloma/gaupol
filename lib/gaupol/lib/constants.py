@@ -23,6 +23,3 @@
 # Column indexes for subtitle data
 SHOW, HIDE, DURN = 0, 1, 2
 ORIG, TRAN       = 0, 1
-
-# Timing modes
-TIME, FRAME = 0, 1

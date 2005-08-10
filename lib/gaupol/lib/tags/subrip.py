@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""SubRip tags."""
+"""SubRip tag library."""
 
 
 import re
@@ -29,13 +29,10 @@ except ImportError:
 
 from gaupol.lib.tags.taglib import TagLibrary
 
-
-COMMON = re.MULTILINE|re.DOTALL
-
     
 class SubRip(TagLibrary):
 
-    """SubRip tags."""
+    """SubRip tag library."""
 
     TAG = r'</?(b|i|u)>', re.IGNORECASE
 

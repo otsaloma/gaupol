@@ -31,7 +31,7 @@ from gaupol.lib.delegates.filereader import FileReader
 from gaupol.lib.delegates.filewriter import FileWriter
 from gaupol.lib.delegates.formatter import Formatter
 from gaupol.lib.delegates.frconv import FramerateConverter
-from gaupol.lib.timing.timeframe import TimeFrameCalculator
+from gaupol.lib.timing.calc import TimeFrameCalculator
 
 
 class Data(object):
@@ -78,7 +78,9 @@ class Data(object):
             'change_framerate'      : framerate_converter,
             'clear_text'            : editor,
             'get_character_count'   : analyzer,
+            'get_mode'              : editor,
             'get_regex_for_tag'     : formatter,
+            'get_timings'           : editor,
             'insert_subtitles'      : editor,
             'read_main_file'        : file_reader,
             'read_translation_file' : file_reader,

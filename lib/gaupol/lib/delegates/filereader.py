@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Subtitle file reader."""
+"""Subtitle file reading."""
 
 
 try:
@@ -25,6 +25,7 @@ try:
 except ImportError:
     pass
 
+from gaupol.constants import TIME_MODE, FRAME_MODE
 from gaupol.lib.constants import SHOW, HIDE, DURN, ORIG, TRAN
 from gaupol.lib.delegates.delegate import Delegate
 from gaupol.lib.file.all import *
@@ -33,7 +34,7 @@ from gaupol.lib.file.determiner import FileFormatDeterminer
 
 class FileReader(Delegate):
     
-    """Subtitle file reader."""
+    """Subtitle file reading."""
     
     def read_main_file(self, path=None, encoding=None):
         """
@@ -54,7 +55,7 @@ class FileReader(Delegate):
         shows, hides, texts = main_file.read()
         shows, hides, texts = self._sort_data(shows, hides, texts)
 
-        # After successful reading, instance variables can be set.
+        # After successful reading, instance variable can be set.
         self.main_file = main_file
 
         # Blank possible existing data.
@@ -62,9 +63,9 @@ class FileReader(Delegate):
         self.frames = []
         self.texts  = []
 
-        conv = self.tf_conv
+        calc = self.calc
 
-        if self.main_file.MODE == 'time':
+        if self.main_file.MODE == TIME_MODE:
             
             for i in range(len(shows)):
 
@@ -72,16 +73,16 @@ class FileReader(Delegate):
                 hide_time = hides[i]
                 text      = texts[i]
                 
-                durn_time  = conv.get_time_duration(show_time, hide_time)
-                show_frame = conv.time_to_frame(show_time)
-                hide_frame = conv.time_to_frame(hide_time)
-                durn_frame = conv.get_frame_duration(show_frame, hide_frame)
+                durn_time  = calc.get_time_duration(show_time, hide_time)
+                show_frame = calc.time_to_frame(show_time)
+                hide_frame = calc.time_to_frame(hide_time)
+                durn_frame = calc.get_frame_duration(show_frame, hide_frame)
                             
-                self.times.append([show_time, hide_time, durn_time])
+                self.times.append( [show_time , hide_time , durn_time ])
                 self.frames.append([show_frame, hide_frame, durn_frame])
-                self.texts.append([text, u''])
+                self.texts.append( [text, u''])
 
-        elif self.main_file.MODE == 'frame':
+        elif self.main_file.MODE == FRAME_MODE:
             
             for i in range(len(shows)):
 
@@ -89,14 +90,14 @@ class FileReader(Delegate):
                 hide_frame = hides[i]
                 text       = texts[i]
 
-                durn_frame = conv.get_frame_duration(show_frame, hide_frame)
-                show_time  = conv.frame_to_time(show_frame)
-                hide_time  = conv.frame_to_time(hide_frame)
-                durn_time  = conv.get_time_duration(show_time, hide_time)
+                durn_frame = calc.get_frame_duration(show_frame, hide_frame)
+                show_time  = calc.frame_to_time(show_frame)
+                hide_time  = calc.frame_to_time(hide_frame)
+                durn_time  = calc.get_time_duration(show_time, hide_time)
 
-                self.times.append([show_time, hide_time, durn_time])
+                self.times.append( [show_time , hide_time , durn_time ])
                 self.frames.append([show_frame, hide_frame, durn_frame])
-                self.texts.append([text, u''])
+                self.texts.append( [text, u''])
 
     def read_translation_file(self, path, encoding):
         """
@@ -114,35 +115,22 @@ class FileReader(Delegate):
         shows, hides, trans = tran_file.read()
         shows, hides, trans = self._sort_data(shows, hides, trans)
         
-        # After successful reading, instance variables can be set.
+        # After successful reading, instance variable can be set.
         self.tran_file = tran_file
 
         # Blank possible existing translations.
         for i in range(len(self.texts)):
             self.texts[i][TRAN] = u''
 
-        # Get time and frame values to be appended if translation file is
-        # longer than main file.
-
-        if self.times:
-            final_time = self.times[-1][HIDE]
-        else:
-            final_time = '00:00:00,000'
-            
-        if self.frames:
-            final_frame = self.frames[-1][HIDE]
-        else:
-            final_frame = 0
-
-        texts_length = len(self.texts)
+        # If translation file is longer than main file, subtitles need to be
+        # inserted.
+        if len(trans) > len(self.times):
+            start_row = len(self.times)
+            amount    = len(trans) - len(self.times)
+            self.insert_subtitles(start_row, amount)
 
         for i in range(len(trans)):
-            if texts_length > i:
-                self.texts[i][TRAN] = trans[i]
-            else:
-                self.times.append([final_time] * 2 + ['00:00:00,000'])
-                self.frames.append([final_frame] * 2 + [0])
-                self.texts.append([u'', trans[i]])
+            self.texts[i][TRAN] = trans[i]
 
     def _sort_data(self, shows, hides, texts):
         """

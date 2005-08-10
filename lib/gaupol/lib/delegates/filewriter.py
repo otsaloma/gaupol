@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Subtitle file writer."""
+"""Subtitle file writing."""
 
 
 import logging
@@ -30,6 +30,8 @@ try:
 except ImportError:
     pass
 
+from gaupol.constants import ORIGINAL_TEXT, TRANSLATION_TEXT
+from gaupol.constants import TIME_MODE, FRAME_MODE
 from gaupol.lib.constants import SHOW, HIDE, DURN, ORIG, TRAN
 from gaupol.lib.delegates.delegate import Delegate
 from gaupol.lib.file.all import *
@@ -41,7 +43,7 @@ logger = logging.getLogger()
 
 class FileWriter(Delegate):
     
-    """Subtitle file writer."""
+    """Subtitle file writing."""
     
     def _create_temporary_backup_file(self, path, bak_path):
         """
@@ -97,57 +99,58 @@ class FileWriter(Delegate):
         """
         Write subtitle file.
         
-        text_part: "original" or "translation"
+        text_part: ORIGINAL_TEXT or TRANSLATION_TEXT
         keep_changes: True or False
 
         Raise IOError if reading fails.
         Raise UnicodeError if encoding fails.
         """
-        text_parts = ['original', 'translation']
+        text_parts = [ORIGINAL_TEXT, TRANSLATION_TEXT]
         col = text_parts.index(text_part)
         
         files = [self.main_file, self.tran_file]
-        cur_file = files[col]
+        current_file = files[col]
         
         # Create a copy of texts, because possible tag conversions might be
         # only temporary.
         new_texts = self.texts[:]
 
         # Convert tags if saving in different format.
-        if cur_file is not None     and \
-           format   is not None     and \
-           cur_file.FORMAT != format:
+        if current_file is not None     and \
+           format       is not None     and \
+           current_file.FORMAT != format:
             
-            conv = TagConverter(cur_file.FORMAT, format)
+            conv = TagConverter(current_file.FORMAT, format)
             for i in range(len(new_texts)):
                 new_texts[i][col] = conv.convert_tags(new_texts[i][col])
 
+        # Get subtitle file object.
         if path     is None or \
            format   is None or \
            encoding is None or \
            newlines is None :
            
-            sub_file = cur_file
-            path     = cur_file.path
+            subtitle_file = current_file
+            path          = current_file.path
             
         else:
-            sub_file = eval(format)(path, encoding, newlines)
+            subtitle_file = eval(format)(path, encoding, newlines)
 
         shows = []
         hides = []
         texts = []
 
-        if sub_file.MODE == 'time':
+        if subtitle_file.MODE == TIME_MODE:
             for i in range(len(self.times)):
                 shows.append(self.times[i][SHOW])
                 hides.append(self.times[i][HIDE])
-                texts.append(new_texts[i][col])
+                texts.append(new_texts [i][col ])
 
-        elif sub_file.MODE == 'frame':
+        elif subtitle_file.MODE == FRAME_MODE:
             for i in range(len(self.times)):
                 shows.append(self.frames[i][SHOW])
                 hides.append(self.frames[i][HIDE])
-                texts.append(new_texts[i][col])
+                texts.append(new_texts  [i][col ])
                 
         # If the file to be written already exists, a backup copy of it is
         # made in case writing fails. The backup file should be temporary,
@@ -158,6 +161,7 @@ class FileWriter(Delegate):
 
         file_existed = os.path.isfile(path)
 
+        # Create backup.
         if file_existed:
             while True:
                 number = int(random.random() * 1000000)
@@ -166,10 +170,13 @@ class FileWriter(Delegate):
                     break
             bak_success = self._create_temporary_backup_file(path, bak_path)
 
+        # Write file.
         write_success = False
         try:
-            sub_file.write(shows, hides, texts)
+            subtitle_file.write(shows, hides, texts)
             write_success = True
+
+        # Clean up.
         finally:
             if file_existed and bak_success and (not write_success):
                 self._restore_original_file(path, bak_path)                
@@ -180,10 +187,10 @@ class FileWriter(Delegate):
                 
         # After successful writing, instance variables can be set.
         if keep_changes:
-            if text_part == 'original':
-                self.main_file = sub_file
-            elif text_part == 'translation':
-                self.tran_file = sub_file
+            if text_part == ORIGINAL_TEXT:
+                self.main_file = subtitle_file
+            elif text_part == TRANSLATION_TEXT:
+                self.tran_file = subtitle_file
             self.texts = new_texts
 
     def write_main_file(
@@ -197,7 +204,7 @@ class FileWriter(Delegate):
         Raise UnicodeError if encoding fails.
         """
         self._write_file(
-           'original', keep_changes, path, format, encoding, newlines
+           ORIGINAL_TEXT, keep_changes, path, format, encoding, newlines
         )
 
     def write_translation_file(
@@ -211,5 +218,5 @@ class FileWriter(Delegate):
         Raise UnicodeError if encoding fails.
         """
         self._write_file(
-           'translation', keep_changes, path, format, encoding, newlines
+           TRANSLATION_TEXT, keep_changes, path, format, encoding, newlines
         )

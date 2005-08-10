@@ -30,11 +30,12 @@ except ImportError:
 from gaupol.lib.file.subfile import SubtitleFile
 
 
+microdvd_id = r'^\{\d+\}\{\d+\}.*?$'
+subrip_id   = r'^\d\d:\d\d:\d\d,\d\d\d --> \d\d:\d\d:\d\d,\d\d\d\s*$'
+
 RE_IDS = {
-    'SubRip'  : re.compile( \
-                    r'^\d\d:\d\d:\d\d,\d\d\d --> \d\d:\d\d:\d\d,\d\d\d\s*$' \
-                ),
-    'MicroDVD': re.compile(r'^\{\d+\}\{\d+\}.*?$'),
+    'MicroDVD': re.compile(microdvd_id),
+    'SubRip'  : re.compile(subrip_id),
 }
 
 

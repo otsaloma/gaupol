@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Base class for subtitle tags."""
+"""Base class for subtitle tag libraries."""
 
 
 try:
@@ -29,7 +29,7 @@ except ImportError:
 class TagLibrary(object):
 
     """
-    Base class for subtitle tags.
+    Base class for subtitle tag libraries.
     
     This class cannot be instantiated. This is a grouping-class that holds
     constants and classmethods.
@@ -47,8 +47,11 @@ class TagLibrary(object):
     <size="int"></size>
     """
 
-    TAG         = ''
-    ITALIC      = ''
+    # Pattern, Flags
+    TAG    = '', None
+    ITALIC = '', None
+
+    # Pattern, Flags, Replacement
     DECODE_TAGS = []
     ENCODE_TAGS = []
 

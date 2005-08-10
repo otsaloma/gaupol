@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Data value editor."""
+"""Editing of data values."""
 
 
 try:
@@ -25,79 +25,115 @@ try:
 except ImportError:
     pass
 
+from gaupol.constants import TIME_MODE, FRAME_MODE
 from gaupol.lib.constants import SHOW, HIDE, DURN, ORIG, TRAN
 from gaupol.lib.delegates.delegate import Delegate
 
 
 class Editor(Delegate):
     
-    """Data value editor."""
+    """Editing of data values."""
 
     def clear_text(self, row, col):
         """Clear text to blank."""
         
         self.set_text(row, col, u'')
 
-    def insert_subtitles(self, start_row, count):
-        """Insert count amount of blank subtitles staring at start_row."""
-
-        # Time is the default mode for an unsaved subtitled.
+    def get_mode(self):
+        """
+        Get main file's mode.
+        
+        If main file does not exist return time mode (because of its greater
+        accuracy).
+        """
         try:
-            mode = self.main_file.MODE
+            return self.main_file.MODE
         except AttributeError:
-            mode = 'time'
+            return TIME_MODE
 
-        # Get native timings for comparison.
-        if mode == 'time':
-            timings = self.times
-            start = '00:00:00,000'
-        elif mode == 'frame':
-            timings = self.frames
-            start = 0
+    def get_timings(self):
+        """Return self.times or self.frames depending on main file's mode."""
+        
+        mode = self.get_mode()
+        
+        if mode == TIME_MODE:
+            return self.times
+        elif mode == FRAME_MODE:
+            return self.frames
 
+    def insert_subtitles(self, start_row, amount):
+        """Insert blank subtitles starting at start_row."""
+
+        OPTIMAL_SECOND_DURATION = 3
+        OPTIMAL_FRAME_DURATION  = 80
+
+        calc = self.calc
+
+        mode    = self.get_mode()
+        timings = self.get_timings()
+
+        # Get time window start edge.
         if start_row > 0:
             start = timings[start_row - 1][HIDE]
-        
+        else:
+            if mode == TIME_MODE:
+                start = '00:00:00,000'
+            elif mode == FRAME_MODE:
+                start = 0
+
+        # Get time window end edge.
         try:
             end = timings[start_row][SHOW]
         except IndexError:
-            if mode == 'time':
-                sec = self.tf_conv.time_to_seconds(start)
-                sec += (3 * count)
-                end = self.tf_conv.seconds_to_time(sec)
-            elif mode == 'frame':
-                end = start + (80 * count)
+            if mode == TIME_MODE:
+                end = calc.time_to_seconds(start)
+                end += (OPTIMAL_SECOND_DURATION * amount)
+                end = calc.seconds_to_time(end)
+            elif mode == FRAME_MODE:
+                end = start + (OPTIMAL_FRAME_DURATION * amount)
 
-        for i in range(count):
-            self.times.insert(start_row, ['00:00:00,000'] * 3)
-            self.frames.insert(start_row, [0] * 3)
-            self.texts.insert(start_row, [''] * 2)
-
-        for i in range(start_row, start_row + count):
-            if mode == 'time':
-                start_sec = self.tf_conv.time_to_seconds(start)
-                end_sec   = self.tf_conv.time_to_seconds(end)
-                dur_sec = (end_sec - start_sec) / count
-                pos = i - start_row
-                start_time = self.tf_conv.seconds_to_time(start_sec + (pos * dur_sec))
-                end_time = self.tf_conv.seconds_to_time(start_sec + (pos * dur_sec) + dur_sec)
-                self.times[i][SHOW] = start_time
-                self.times[i][HIDE] = end_time
-                self.frames[i][SHOW] = self.tf_conv.time_to_frame(start_time)
-                self.frames[i][HIDE] = self.tf_conv.time_to_frame(end_time)
-                self._set_durations(i)
-            elif mode == 'frame':
-                dur = int((end - start) / count)
-                pos = i - start_row
-                start_frame = start + (pos * dur)
-                end_frame = start + (pos * dur) + dur
-                self.frames[i][SHOW] = start_frame
-                self.frames[i][HIDE] = end_frame
-                self.times[i][SHOW] = self.tf_conv.frame_to_time(start_frame)
-                self.times[i][HIDE] = self.tf_conv.frame_to_time(end_frame)
-                self._set_durations(i)
-
+        # Insert new subtitles with sensible timings.
+        if mode == TIME_MODE:
         
+            start    = calc.time_to_seconds(start)
+            end      = calc.time_to_seconds(end)
+            duration = (end - start) / amount
+            
+            for i in range(amount):
+
+                show_time = calc.seconds_to_time(start + ( i      * duration))
+                hide_time = calc.seconds_to_time(start + ((i + 1) * duration))
+                durn_time = calc.get_time_duration(show_time, hide_time)
+
+                show_frame = calc.time_to_frame(show_time)
+                hide_frame = calc.time_to_frame(hide_time)
+                durn_frame = conv.get_frame_duration(show_frame, hide_frame)
+
+                row = start_row + i
+
+                self.times.insert( row, [show_time , hide_time , durn_time ])
+                self.frames.insert(row, [show_frame, hide_frame, durn_frame])
+                self.texts.insert( row, [text, u''])
+            
+        elif mode == FRAME_MODE:
+
+            duration = int(round((end - start) / amount, 0))
+            
+            for i in range(amount):
+
+                show_frame = start + ( i      * duration)
+                hide_frame = start + ((i + 1) * duration)
+                durn_frame = calc.get_frame_duration(show_frame, hide_frame)
+
+                show_time = calc.frame_to_time(show_frame)
+                hide_time = calc.frame_to_time(hide_frame)
+                durn_time = conv.get_time_duration(show_time, hide_time)
+
+                row = start_row + i
+
+                self.times.insert( row, [show_time , hide_time , durn_time ])
+                self.frames.insert(row, [show_frame, hide_frame, durn_frame])
+                self.texts.insert( row, [text, u''])
 
     def remove_subtitles(self, rows):
         """Remove subtitles."""
@@ -106,20 +142,19 @@ class Editor(Delegate):
         rows.reverse()
         
         for row in rows:
-            self.texts.pop(row)
-            self.times.pop(row)
-            self.frames.pop(row)
+            for entry in [self.times, self.frames, self.texts]
+                entry.pop(row)
 
     def _set_durations(self, row):
-        """Set duration for row based on show and hide."""
+        """Set durations for row based on shows and hides."""
 
         show = self.times[row][SHOW]
         hide = self.times[row][HIDE]
-        self.times[row][DURN] = self.tf_conv.get_time_duration(show, hide)
+        self.times[row][DURN] = self.calc.get_time_duration(show, hide)
 
         show = self.frames[row][SHOW]
         hide = self.frames[row][HIDE]
-        self.frames[row][DURN] = self.tf_conv.get_frame_duration(show, hide)
+        self.frames[row][DURN] = self.calc.get_frame_duration(show, hide)
 
     def set_frame(self, row, col, value):
         """
@@ -128,15 +163,15 @@ class Editor(Delegate):
         Return: new index of row
         """
         self.frames[row][col] = value
-    
+        self.times[row][col]  = self.calc.frame_to_time(value)
+
+        # Calculate affected data.
         if col in [SHOW, HIDE]:
-            self.times[row][col] = self.tf_conv.frame_to_time(value)
             self._set_durations(row)
-            
         elif col == DURN:
-            self.times[row][col] = self.tf_conv.frame_to_time(value)
             self._set_hidings(row)
 
+        # Resort if show frame drastically changed.
         if col == SHOW:
             return self._sort_data(row)
 
@@ -147,7 +182,7 @@ class Editor(Delegate):
         
         show = self.times[row][SHOW]
         durn = self.times[row][DURN]
-        self.times[row][HIDE] = self.tf_conv.add_times(show, durn)
+        self.times[row][HIDE] = self.calc.add_times(show, durn)
 
         show = self.frames[row][SHOW]
         durn = self.frames[row][DURN]
@@ -164,16 +199,16 @@ class Editor(Delegate):
 
         Return: new index of row
         """
-        self.times[row][col] = value
-    
+        self.times[row][col]  = value
+        self.frames[row][col] = self.calc.time_to_frame(value)
+
+        # Calculate affected data.
         if col in [SHOW, HIDE]:
-            self.frames[row][col] = self.tf_conv.time_to_frame(value)
             self._set_durations(row)
-            
         elif col == DURN:
-            self.frames[row][col] = self.tf_conv.time_to_frame(value)
             self._set_hidings(row)
 
+        # Resort if show frame drastically changed.
         if col == SHOW:
             return self._sort_data(row)
 
@@ -185,54 +220,52 @@ class Editor(Delegate):
         
         Return: new index of row
         """
-        # Time is the default mode for an unsaved subtitled.
-        try:
-            mode = self.main_file.MODE
-        except AttributeError:
-            mode = 'time'
-
-        # Get native timings for comparison.
-        if mode == 'time':
-            timings = self.times
-        elif mode == 'frame':
-            timings = self.frames
-
+        timings   = self.get_timings()
+        length    = len(timings)
         direction = None
-        length = len(timings)
-        
+
+        EARLIER, LATER = 0, 1
+
         # Get direction to move to.
-        if row < length - 1 and timings[row][SHOW] > timings[row + 1][SHOW]:
-            direction = 'later'
-        elif row > 0 and timings[row][SHOW] < timings[row - 1][SHOW]:
-            direction = 'earlier'
+        if   row > 0          and timings[row][SHOW] < timings[row - 1][SHOW]:
+            direction = EARLIER
+        elif row < length - 1 and timings[row][SHOW] > timings[row + 1][SHOW]:
+            direction = LATER
 
         if direction is None:
             return row
 
-        # Get new row, where to move row to.
+        # New row, where to move row to.
         new_row = row
 
-        if direction == 'later':
-            for i in range(row + 1, length):
-                if timings[row][SHOW] > timings[i][SHOW]:
-                    new_row = i + 1
-                else:
-                    break
-            remove_row = row
-            result_row = new_row - 1
+        if direction == EARLIER:
 
-        if direction == 'earlier':
+            # Get new row.
             for i in reversed(range(row)):
                 if timings[row][SHOW] < timings[i][SHOW]:
                     new_row = i
                 else:
                     break
-            remove_row = row + 1
-            result_row = new_row
 
-        # Move row in data.
-        for data in [self.times, self.frames, self.texts]:
-            data.insert(new_row, data[row])
-            data.pop(remove_row)
+            # Move rows.
+            for entry in [self.times, self.frames, self.texts]:
+                data = entry.pop(row)
+                entry.insert(new_row, data)
 
-        return result_row
+            return new_row
+
+        if direction == LATER:
+
+            # Get new row.
+            for i in range(row + 1, length):
+                if timings[row][SHOW] > timings[i][SHOW]:
+                    new_row = i + 1
+                else:
+                    break
+
+            # Move rows.
+            for entry in [self.times, self.frames, self.texts]:
+                entry.insert(new_row, entry[row])
+                entry.pop(row)
+                
+            return new_row - 1

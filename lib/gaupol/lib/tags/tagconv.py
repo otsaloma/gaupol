@@ -45,8 +45,8 @@ class TagConverter(object):
         from_tags = eval(from_format).DECODE_TAGS
         to_tags   = eval(  to_format).ENCODE_TAGS
 
-        self._from_res = []
-        self._to_res   = []
+        self._from_regexs = []
+        self._to_regexs   = []
 
         PATTERN, FLAGS, REPL = 0, 1, 2
 
@@ -55,14 +55,14 @@ class TagConverter(object):
                 regex = re.compile(entry[PATTERN], entry[FLAGS])
             except TypeError:
                 regex = re.compile(entry[PATTERN])
-            self._from_res.append([regex, entry[REPL]])
+            self._from_regexs.append([regex, entry[REPL]])
 
         for entry in to_tags:
             try:
                 regex = re.compile(entry[PATTERN], entry[FLAGS])
             except TypeError:
                 regex = re.compile(entry[PATTERN])
-            self._to_res.append([regex, entry[REPL]])
+            self._to_regexs.append([regex, entry[REPL]])
 
     def convert_tags(self, string):
         """Convert subtitle tags in string."""
@@ -73,11 +73,11 @@ class TagConverter(object):
         REGEX, REPL = 0, 1
 
         # Convert to internal format ("decode").
-        for entry in self._from_res:
+        for entry in self._from_regexs:
             string = entry[REGEX].sub(entry[REPL], string)
         
         # Convert to desired format ("encode").
-        for entry in self._to_res:
+        for entry in self._to_regexs:
             string = entry[REGEX].sub(entry[REPL], string)
 
         return string

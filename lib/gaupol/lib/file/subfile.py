@@ -64,9 +64,9 @@ class SubtitleFile(object):
 
         Raise ValueError if self.newlines doesn't have a proper value.
         """
-        for char, oper_syst in NEWLINES.items():
-            if self.newlines == oper_syst:
-                return char
+        for character, operating_system in NEWLINES.items():
+            if self.newlines == operating_system:
+                return character
         
         raise ValueError('Invalid newline class: "%s".' % self.newlines)
 
@@ -77,25 +77,22 @@ class SubtitleFile(object):
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
         """
-        sub_file = codecs.open(self.path, 'rU', self.encoding)
+        subtitle_file = codecs.open(self.path, 'rU', self.encoding)
 
         try:
-            lines = sub_file.readlines()
-            newline_chars = sub_file.newlines
+            lines = subtitle_file.readlines()
+            newline_characters = subtitle_file.newlines
         finally:
-            sub_file.close()
+            subtitle_file.close()
 
-        if isinstance(newline_chars, tuple):
-            self.newlines = NEWLINES[newline_chars[0]]
-        elif isinstance(newline_chars, basestring):
-            self.newlines = NEWLINES[newline_chars]
+        if isinstance(newline_characters, tuple):
+            self.newlines = NEWLINES[newline_characters[0]]
+        elif isinstance(newline_characters, basestring):
+            self.newlines = NEWLINES[newline_characters]
             
         return lines
 
     def _strip_spaces(self, strings):
         """Strip leading and trailing spaces in list of strings."""
-        
-        for i in range(len(strings)):
-            strings[i] = strings[i].strip()
 
-        return strings
+        return [string.strip() for string in strings]

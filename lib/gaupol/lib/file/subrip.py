@@ -28,13 +28,15 @@ try:
 except ImportError:
     pass
 
+from gaupol.constants import TIME_MODE
 from gaupol.lib.file.subfile import SubtitleFile
 
 
-RE_BLANK_LINE = re.compile(r'^\s*$')
-RE_TIME_LINE  = re.compile( \
-                  r'^(\d\d:\d\d:\d\d,\d\d\d) --> (\d\d:\d\d:\d\d,\d\d\d)\s*$' \
-                )
+blank_line = r'^\s*$'
+time_line  = r'^(\d\d:\d\d:\d\d,\d\d\d) --> (\d\d:\d\d:\d\d,\d\d\d)\s*$'
+
+RE_BLANK_LINE = re.compile(blank_line)
+RE_TIME_LINE  = re.compile(time_line)
 
 
 class SubRip(SubtitleFile):
@@ -60,7 +62,7 @@ class SubRip(SubtitleFile):
 
         self.FORMAT    = 'SubRip'
         self.EXTENSION = '.srt'
-        self.MODE      = 'time'
+        self.MODE      = TIME_MODE
 
     def read(self):
         """
@@ -100,8 +102,8 @@ class SubRip(SubtitleFile):
                 texts[-1] += line
 
         # Remove leading and trailing spaces.
-        for i in [shows, hides, texts]:
-            self._strip_spaces(i)
+        for entry in [shows, hides, texts]:
+            self._strip_spaces(entry)
 
         return shows, hides, texts
 
@@ -112,21 +114,20 @@ class SubRip(SubtitleFile):
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
-        newl_char = self._get_newline_character()
+        newline_character = self._get_newline_character()
 
         # Replace python internal newline characters in text with desired
         # newline characters.
-        for i in range(len(texts)):
-            texts[i] = texts[i].replace('\n', newl_char)
+        texts = [text.replace('\n', newline_character) for text in texts]
 
-        sub_file = codecs.open(self.path, 'w', self.encoding)
+        subtitle_file = codecs.open(self.path, 'w', self.encoding)
 
         try:
             for i in range(len(shows)):
-                sub_file.write('%.0f%s%s --> %s%s%s%s%s' % (
-                    i + 1, newl_char,
-                    shows[i], hides[i], newl_char,
-                    texts[i], newl_char, newl_char
+                subtitle_file.write('%.0f%s%s --> %s%s%s%s%s' % (
+                    i + 1, newline_character,
+                    shows[i], hides[i], newline_character,
+                    texts[i], newline_character, newline_character
                 ))
         finally:
-            sub_file.close()
+            subtitle_file.close()
