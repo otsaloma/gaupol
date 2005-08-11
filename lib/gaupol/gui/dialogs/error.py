@@ -35,7 +35,7 @@ BUTTONS = gtk.BUTTONS_OK
 
 class PasteFitErrorDialog(gtk.MessageDialog):
     
-    """Error dialog displayed clipboard contents don't fit to be pasted."""
+    """Clipboard contents don't fit to space available."""
     
     def __init__(self, parent, lacking):
 
@@ -51,14 +51,14 @@ class PasteFitErrorDialog(gtk.MessageDialog):
 
 class ReadFileErrorDialog(gtk.MessageDialog):
     
-    """Error dialog displayed when IOError occurs when reading file."""
+    """IOError occurs when reading file."""
     
     def __init__(self, parent, basename, detail):
         """
         Initialize a ReadFileErrorDialog object.
         
         basename: basename of the file being opened
-        detail: detailed error message from IOError
+        detail  : detailed error message from IOError
         """
         gtk.MessageDialog.__init__(
             self, parent, FLAGS, TYPE, BUTTONS,
@@ -70,14 +70,14 @@ class ReadFileErrorDialog(gtk.MessageDialog):
 
 class UnicodeDecodeErrorDialog(gtk.MessageDialog):
     
-    """Error dialog displayed when UnicodeError occurs when reading file."""
+    """UnicodeError occurs when reading file."""
     
     def __init__(self, parent, basename, codec):
         """
         Initialize a UnicodeDecodeErrorDialog object.
         
         basename: basename of the file being opened
-        codec: character encoding used for conversion
+        codec   : character encoding used for conversion
         """
         gtk.MessageDialog.__init__(
             self, parent, FLAGS, TYPE, BUTTONS,
@@ -90,14 +90,14 @@ class UnicodeDecodeErrorDialog(gtk.MessageDialog):
 
 class UnicodeEncodeErrorDialog(gtk.MessageDialog):
     
-    """Error dialog displayed when UnicodeError occurs when writing file."""
+    """UnicodeError occurs when writing file."""
     
     def __init__(self, parent, basename, codec):
         """
         Initialize a UnicodeEncodeErrorDialog object.
         
         basename: basename of the file being written
-        codec: character encoding used for conversion
+        codec   : character encoding used for conversion
         """
         gtk.MessageDialog.__init__(
             self, parent, FLAGS, TYPE, BUTTONS,
@@ -110,12 +110,7 @@ class UnicodeEncodeErrorDialog(gtk.MessageDialog):
 
 class UnknownFileFormatErrorDialog(gtk.MessageDialog):
     
-    """
-    Error dialog displayed when UnknownFileFormatError occurs.
-    
-    UnknownFileFormatError will occur when trying to open a file of an
-    unknown/unsupported format.
-    """
+    """Trying to open a file of an unknown/unsupported format."""
     
     def __init__(self, parent, basename):
         """
@@ -134,7 +129,7 @@ class UnknownFileFormatErrorDialog(gtk.MessageDialog):
 
 class VersionCheckErrorDialog(gtk.MessageDialog):
     
-    """Error dialog displayed when version check fails."""
+    """Version check fails."""
     
     def __init__(self, parent, detail):
 
@@ -153,14 +148,14 @@ class VersionCheckErrorDialog(gtk.MessageDialog):
 
 class WriteFileErrorDialog(gtk.MessageDialog):
     
-    """Error dialog displayed when IOError occurs when trying to write file."""
+    """IOError occurs when trying to write file."""
     
     def __init__(self, parent, basename, detail):
         """
         Initialize a WriteFileErrorDialog object.
         
         basename: basename of the file being opened
-        detail: detailed error message from IOError
+        detail  : detailed error message from IOError
         """
         gtk.MessageDialog.__init__(
             self, parent, FLAGS, TYPE, BUTTONS,

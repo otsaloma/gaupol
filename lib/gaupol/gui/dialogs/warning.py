@@ -35,14 +35,14 @@ BUTTONS = gtk.BUTTONS_NONE
 
 class OpenBigFileWarningDialog(gtk.MessageDialog):
 
-    """Warning dialog displayed when trying to open a file over 1 MB."""
+    """Trying to open a file over 1 MB."""
     
     def __init__(self, parent, basename, size):
         """
         Initialize an OpenBigFileWarningDialog object.
         
         basename: basename of the file being opened
-        size: file's size in megabytes.
+        size    : file's size in megabytes
         """
         gtk.MessageDialog.__init__(
             self, parent, FLAGS, TYPE, BUTTONS,
@@ -62,11 +62,7 @@ class OpenBigFileWarningDialog(gtk.MessageDialog):
 
 class CloseMainDocumentWarningDialog(gtk.MessageDialog):
 
-    """
-    Warning dialog displayed when trying to close a main document.
-    
-    Dialog will be displayed if subtitle document has unsaved changes.
-    """
+    """Closing main document that has unsaved changes."""
     
     def __init__(self, parent, basename):
         """
@@ -93,11 +89,7 @@ class CloseMainDocumentWarningDialog(gtk.MessageDialog):
 
 class CloseTranslationDocumentWarningDialog(gtk.MessageDialog):
 
-    """
-    Warning dialog displayed when trying to close a translation document. 
-    
-    Dialog will be displayed if translation document has unsaved changes.
-    """
+    """Closing translation document that has unsaved changes."""
     
     def __init__(self, parent, basename):
         """
@@ -124,12 +116,7 @@ class CloseTranslationDocumentWarningDialog(gtk.MessageDialog):
 
 class ImportTranslationWarningDialog(gtk.MessageDialog):
 
-    """
-    Warning dialog displayed when trying to import a translation file.
-    
-    Dialog will be displayed if currently open translation document has
-    unsaved changes.
-    """
+    """Importing a translation document over a changed one."""
     
     def __init__(self, parent, basename):
         """

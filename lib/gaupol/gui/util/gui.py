@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Common functions for GTK GUI components."""
+"""Functions for GTK widgets."""
 
 
 import os
@@ -33,18 +33,15 @@ def get_glade_xml(basename):
     """
     Get gtk.glade.XML object from basename in Glade directory.
     
-    Exit if unable to import Glade XML file.
+    Raise RuntimeError if unable to load Glade XML file.
     """
-    # TODO:
-    # Is sys.exit() too harsh?
-    
     path = os.path.join(GLADE_DIR, basename)
 
     try:
         return gtk.glade.XML(path)
     except RuntimeError:
-        logger.critical('Failed to import Glade XML file "%s".' % path)
-        sys.exit()
+        logger.critical('Failed to load Glade XML file "%s".' % path)
+        raise
 
 def get_event_box(widget):
     """Get EventBox, if it is a parent of widget."""

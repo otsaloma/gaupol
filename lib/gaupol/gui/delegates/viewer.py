@@ -107,7 +107,7 @@ class Viewer(Delegate):
         project = self.get_current_project()
 
         # Get new framerate.
-        index     = self.fr_cmbox.get_active()
+        index     = self.framerate_combo_box.get_active()
         framerate = FRAMERATE_NAMES[index]
 
         # Return if only refreshing widget state.
@@ -152,7 +152,7 @@ class Viewer(Delegate):
         self.config.set('editor', 'framerate', framerate)
 
         # Set the correct framerate combo box entry active.
-        self.fr_cmbox.set_active(index)
+        self.framerate_combo_box.set_active(index)
         
         if project.edit_mode != project.data.main_file.MODE:
             project.reload_data_in_columns([SHOW, HIDE, DURN])
@@ -162,9 +162,9 @@ class Viewer(Delegate):
     def on_statusbar_toggled(self, *args):
         """Toggle visibility of the statusbar."""
 
-        visible = not self.stbar_hbox.get_property('visible')
+        visible = not self.statusbar_hbox.get_property('visible')
         
-        self.stbar_hbox.set_property('visible', visible)
+        self.statusbar_hbox.set_property('visible', visible)
         self.config.setboolean('view', 'statusbar', visible)
 
     def on_toolbar_toggled(self, *args):

@@ -35,6 +35,7 @@ from gaupol.gui.delegates.filesaver import FileSaver
 from gaupol.gui.delegates.guibuilder import GUIBuilder
 from gaupol.gui.delegates.guiupdater import GUIUpdater
 from gaupol.gui.delegates.helper import Helper
+from gaupol.gui.delegates.prefeditor import PreferenceEditor
 from gaupol.gui.delegates.roweditor import RowEditor
 from gaupol.gui.delegates.searcher import Searcher
 from gaupol.gui.delegates.texteditor import TextEditor
@@ -49,7 +50,7 @@ class Application(object):
     """
     Gaupol main user interface.
     
-    This is the master class for gaupol gui. All methods are outsourced to
+    This is the main class for gaupol gui. All methods are outsourced to
     delegates.
     """
     
@@ -61,37 +62,38 @@ class Application(object):
         self._delegations = None
 
         glade_xml = gui.get_glade_xml('main-window.glade')
+        get_widget = glade_xml.get_widget
 
         # Widgets from the Glade XML file.
-        self.main_vbox  = glade_xml.get_widget('main_vbox')
-        self.msg_stbar  = glade_xml.get_widget('message_statusbar')
-        self.notebook   = glade_xml.get_widget('notebook')
-        self.orig_stbar = glade_xml.get_widget('original_text_statusbar')
-        self.stbar_hbox = glade_xml.get_widget('statusbar_hbox')
-        self.tran_stbar = glade_xml.get_widget('translation_text_statusbar')
-        self.window     = glade_xml.get_widget('window')
+        self.message_statusbar     = get_widget('message_statusbar')
+        self.notebook              = get_widget('notebook')
+        self.original_statusbar    = get_widget('original_statusbar')
+        self.statusbar_hbox        = get_widget('statusbar_hbox')
+        self.translation_statusbar = get_widget('translation_statusbar')
+        self.vbox                  = get_widget('vbox')
+        self.window                = get_widget('window')
 
         # Widgets to be manually created.
-        self.fr_cmbox    = None
-        self.open_button = None
-        self.redo_button = None
-        self.undo_button = None
+        self.framerate_combo_box = None
+        self.open_button         = None
+        self.redo_button         = None
+        self.undo_button         = None
 
         # UIManager and merge IDs.
-        self.uim              = None
         self.documents_uim_id = None
         self.recent_uim_id    = None
+        self.uim              = None
         self.undo_redo_uim_id = None
 
         # Tooltips.
-        self.ttips_always = gtk.Tooltips()
-        self.ttips_open   = gtk.Tooltips()
+        self.tooltips_always = gtk.Tooltips()
+        self.tooltips_open   = gtk.Tooltips()
 
         # Internal clipboard.
         self.clipboard = Clipboard()
 
-        # GObject timeout tag for message statusbar timed-out vanishings.
-        self.msg_stbar_gobj_tag = None
+        # GObject timeout tag for message statusbar.
+        self.message_tag = None
 
         self.config.read_from_file()
         self._assign_delegations()
@@ -102,18 +104,19 @@ class Application(object):
     def _assign_delegations(self):
         """Map method names to Delegate objects."""
         
-        cell_editor = CellEditor(self)
-        dur_manager = DURManager(self)
-        file_closer = FileCloser(self)
-        file_opener = FileOpener(self)
-        file_saver  = FileSaver(self)
-        gui_builder = GUIBuilder(self)
-        gui_updater = GUIUpdater(self)
-        helper      = Helper(self)
-        row_editor  = RowEditor(self)
-        searcher    = Searcher(self)
-        text_editor = TextEditor(self)
-        viewer      = Viewer(self)
+        cell_editor       = CellEditor(self)
+        dur_manager       = DURManager(self)
+        file_closer       = FileCloser(self)
+        file_opener       = FileOpener(self)
+        file_saver        = FileSaver(self)
+        gui_builder       = GUIBuilder(self)
+        gui_updater       = GUIUpdater(self)
+        helper            = Helper(self)
+        preference_editor = PreferenceEditor(self)
+        row_editor        = RowEditor(self)
+        searcher          = Searcher(self)
+        text_editor       = TextEditor(self)
+        viewer            = Viewer(self)
 
         self._delegations = {
             'add_to_recent_files'                    : file_opener,
@@ -133,18 +136,19 @@ class Application(object):
             'on_files_dropped'                       : file_opener,
             'on_framerate_changed'                   : viewer,
             'on_framerate_toggled'                   : viewer,
-            'on_go_to_subtitle_activated'            : searcher,
             'on_import_translation_activated'        : file_opener,
             'on_insert_subtitles_activated'          : row_editor,
             'on_invert_selection_activated'          : row_editor,
-            'on_italic_style_activated'              : text_editor,
-            'on_lower_case_activated'                : text_editor,
+            'on_italic_activated'                    : text_editor,
+            'on_jump_to_subtitle_activated'          : searcher,
+            'on_lower_activated'                     : text_editor,
             'on_new_activated'                       : file_opener,
             'on_next_activated'                      : gui_updater,
             'on_notebook_page_switched'              : gui_updater,
             'on_notebook_tab_close_button_clicked'   : file_closer,
             'on_open_activated'                      : file_opener,
             'on_paste_activated'                     : text_editor,
+            'on_preferences_activated'               : preference_editor,
             'on_previous_activated'                  : gui_updater,
             'on_quit_activated'                      : file_closer,
             'on_recent_file_activated'               : file_opener,
@@ -162,10 +166,10 @@ class Application(object):
             'on_save_translation_activated'          : file_saver,
             'on_save_translation_as_activated'       : file_saver,
             'on_select_all_activated'                : row_editor,
-            'on_sentence_case_activated'             : text_editor,
+            'on_sentence_activated'                  : text_editor,
             'on_statusbar_toggled'                   : viewer,
             'on_support_activated'                   : helper,
-            'on_title_case_activated'                : text_editor,
+            'on_title_activated'                     : text_editor,
             'on_toolbar_toggled'                     : viewer,
             'on_tree_view_button_press_event'        : gui_updater,
             'on_tree_view_cell_edited'               : cell_editor,
@@ -178,7 +182,7 @@ class Application(object):
             'on_undo_button_clicked'                 : dur_manager,
             'on_undo_item_activated'                 : dur_manager,
             'on_unselect_all_activated'              : row_editor,
-            'on_upper_case_activated'                : text_editor,
+            'on_upper_activated'                     : text_editor,
             'on_window_delete_event'                 : file_closer,
             'on_window_state_event'                  : gui_updater,
             'open_main_files'                        : file_opener,

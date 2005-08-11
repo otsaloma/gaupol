@@ -1,12 +1,14 @@
+===================
 General Information
 ===================
 
 Gaupol is a subtitle editor for text-based subtitles. Currently supported
 formats include SubRip and MicroDVD. Gaupol is in early development stage and
-does not contain any advanced features. The aim is to make a simple, but
+does not yet contain any advanced features. The aim is to make a simple, but
 powerful, subtitle editor for multiple subtitle formats.
 
-Current features:
+Current features
+================
 - Support for a wide range of character encodings
 - Convenient translating
 - Text formatting
@@ -20,20 +22,24 @@ The official web site is:
 	http://home.gna.org/gaupol
 
 
+============
 Requirements
 ============
 
 Gaupol should run on all POSIX (Linux/BSD/UNIX-like) operating systems.
 On other operating systems, you can try it to see if it works.
 
-Required:
+Required
+========
 - Python >= 2.4
 - PyGTK (with libglade support) >= 2.6
 
-Optional:
+Optional
+========
 - Psyco, for best results >= 1.4
 
 
+==============
 Running Gaupol
 ==============
 

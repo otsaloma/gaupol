@@ -58,7 +58,7 @@ DEFAULTS = {
     ),
     'encoding_dialog':
     (
-        ('size', '400,400'),
+        ('size', '400|400'),
     ),
     'file':
     (
@@ -82,15 +82,15 @@ DEFAULTS = {
     'main_window':
     (
         ('maximized', 'false'  ),
-        ('position' , '0,0'    ),
-        ('size'     , '600,400'),
+        ('position' , '0|0'    ),
+        ('size'     , '600|400'),
     ),
     'view':
     (
         ('font'     , ''                              ),
         ('statusbar', 'true'                          ),
         ('toolbar'  , 'true'                          ),
-        ('columns'  , 'no,show,hide,duration,original'),
+        ('columns'  , 'no|show|hide|duration|original'),
     ),
 }
 
@@ -101,7 +101,7 @@ class Config(RawConfigParser):
     Application settings.
 
     Settings are stored in an .ini-style file in ~/.gaupol/gaupol.conf. Values
-    'true' or 'false' are used for boolean fields and comma-separated strings
+    'true' or 'false' are used for boolean fields and pipe-separated strings
     for lists. All stored values are strings. Functions can be used to get or
     set other value types than strings.
 
@@ -125,7 +125,7 @@ class Config(RawConfigParser):
         """
         string = self.get(section, key)
         
-        return string.split(',')
+        return string.split('|')
 
     def getlistint(self, section, key):
         """
@@ -136,10 +136,10 @@ class Config(RawConfigParser):
         """
         string = self.get(section, key)
         
-        str_list = string.split(',')
-        int_list = [int(value) for value in str_list]
+        string_list  = string.split('|')
+        integer_list = [int(value) for value in string_list]
         
-        return int_list
+        return integer_list
 
     def read_from_file(self):
         """
@@ -191,24 +191,24 @@ class Config(RawConfigParser):
         """
         self.set(section, key, str(value))
 
-    def setlist(self, section, key, str_list):
+    def setlist(self, section, key, string_list):
         """
         Set a list of strings to key.
 
         Raise NoSectionError if section doesn't exist.
         """
-        string = ','.join(str_list)
+        string = '|'.join(string_list)
         
         self.set(section, key, string)
 
-    def setlistint(self, section, key, int_list):
+    def setlistint(self, section, key, integer_list):
         """
         Set a list of intergers to key.
 
         Raise NoSectionError if section doesn't exist.
         """
-        str_list = [str(value) for value in int_list]
-        string = ','.join(str_list)
+        string_list = [str(value) for value in integer_list]
+        string = '|'.join(string_list)
         
         self.set(section, key, string)
 

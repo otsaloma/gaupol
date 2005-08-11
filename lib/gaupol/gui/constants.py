@@ -17,12 +17,12 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""gaupol/gui-wide constants."""
+"""gaupol.gui-wide constants."""
 
 
 COLUMN_NAMES    = ['no', 'show', 'hide', 'duration', 'original', 'translation']
-EDIT_MODE_NAMES = ['time', 'frame']
 FRAMERATE_NAMES = ['23.976', '25', '29.97']
+MODE_NAMES      = ['time', 'frame']
 
 # Column indexes.
 NO, SHOW, HIDE, DURN, ORIG, TRAN = range(6)

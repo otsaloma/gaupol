@@ -63,11 +63,11 @@ def _check_dependencies():
         sys.exit()
     
 def _check_paths():
-    # Determine paths and write them to file if needed.
+    # Determine paths of Gaupol files.
     #
     # Gaupol can be run from either the source directory or from install
-    # location after installation. Paths to use will be determined based on the
-    # paths.py file.
+    # location after installation. Paths to use will be determined based on
+    # the paths.py file.
 
     current_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
 

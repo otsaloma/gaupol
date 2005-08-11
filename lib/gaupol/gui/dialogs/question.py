@@ -34,7 +34,7 @@ TYPE    = gtk.MESSAGE_QUESTION
 
 class OverwriteFileQuestionDialog(gtk.MessageDialog):
 
-    """Question dialog displayed when saving as an existing file."""
+    """Saving as an existing file."""
     
     def __init__(self, parent, basename):
         """
@@ -59,7 +59,7 @@ class OverwriteFileQuestionDialog(gtk.MessageDialog):
 
 class RevertQuestionDialog(gtk.MessageDialog):
 
-    """Question dialog displayed before reverting changes of a file."""
+    """Reverting changes of a file."""
     
     def __init__(self, parent, main_exists, tran_exists, main_changed,
                  tran_changed, main_basename, tran_basename):
@@ -72,8 +72,8 @@ class RevertQuestionDialog(gtk.MessageDialog):
             if not tran_exists or not tran_changed:
                 raise ValueError('There\'s nothing to revert!')
 
-        # Since revert reverts both subtitle and translation documents, the
-        # user must be clearly informed of the changes she will lose.
+        # Since revert reverts both main and translation documents, the
+        # user must be informed of which changes she will lose.
 
         if main_exists and main_changed and tran_exists and tran_changed:
             title = _('Revert unsaved changes to both subtitle document "%s" and translation document "%s"?') \

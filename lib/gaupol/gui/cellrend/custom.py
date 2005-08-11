@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Generic custom CellRenderer for cells containing text."""
+"""Custom CellRenderer for cells containing text."""
 
 
 try:
@@ -32,14 +32,14 @@ import pango
 
 class CustomCellRenderer(gtk.GenericCellRenderer):
 
-    """Generic custom CellRenderer for cells containing text."""
+    """Custom CellRenderer for cells containing text."""
 
     __gproperties__ = {
         'font': (
             gobject.TYPE_STRING, 'font', 'font', '',
             gobject.PARAM_READWRITE
         ),
-        'font_desc': (
+        'font_description': (
             gobject.TYPE_STRING, 'font description', 'font description', '',
             gobject.PARAM_READWRITE
         ),
@@ -62,9 +62,9 @@ class CustomCellRenderer(gtk.GenericCellRenderer):
     
         self.__gobject_init__()
 
-        self.font      = None
-        self.font_desc = None
-        self.text      = None
+        self.font             = None
+        self.font_description = None
+        self.text             = None
 
     def do_get_property(self, property):
         """
@@ -95,24 +95,25 @@ class CustomCellRenderer(gtk.GenericCellRenderer):
     def _get_layout(self, widget):
         """Get the Pango layout for the cell."""
 
-        context = widget.get_pango_context()
+        pango_context = widget.get_pango_context()
         
         # Get the default font description.
-        font_desc = context.get_font_description()
+        font_description = pango_context.get_font_description()
 
         # Create custom font description and merge that with the default.
-        custom_font_desc = pango.FontDescription(self.font)
-        font_desc.merge(custom_font_desc, True)
+        custom_font_description = pango.FontDescription(self.font)
+        font_description.merge(custom_font_description, True)
 
-        layout = pango.Layout(context)
-        layout.set_font_description(font_desc)
+        layout = pango.Layout(pango_context)
+        layout.set_font_description(font_description)
 
         # Do not wrap text.
         layout.set_width(-1)
         
         layout.set_text(self.text or '')
 
-        self.font_desc = font_desc
+        self.font_description = font_description
+
         return layout
 
     def on_editing_done(self, editor, row):
@@ -130,23 +131,23 @@ class CustomCellRenderer(gtk.GenericCellRenderer):
         # should be the same size as a CellRendererText cell with same amount
         # of rows.
 
-        xpad = 2
-        ypad = 2
+        x_padding = 2
+        y_padding = 2
         
-        xalign = 0
-        yalign = 0.5
+        x_align = 0
+        y_align = 0.5
 
         layout = self._get_layout(widget)
         width, height = layout.get_pixel_size()
 
         if cell_area is not None:
         
-            x_offset = xalign * (cell_area.width  - width )
-            y_offset = yalign * (cell_area.height - height)
+            x_offset = x_align * (cell_area.width  - width )
+            y_offset = y_align * (cell_area.height - height)
 
             # Offsets should be at least the size of padding.
-            x_offset = max(x_offset, xpad)
-            y_offset = max(y_offset, ypad)
+            x_offset = max(x_offset, x_padding)
+            y_offset = max(y_offset, y_padding)
 
             # Offsets should have integer values.
             x_offset = int(round(x_offset, 0))
@@ -154,15 +155,16 @@ class CustomCellRenderer(gtk.GenericCellRenderer):
 
         else:
         
-            x_offset = xpad
-            y_offset = ypad
+            x_offset = x_padding
+            y_offset = y_padding
 
-        width  = width  + (xpad * 2)
-        height = height + (ypad * 2)
+        width  = width  + (x_padding * 2)
+        height = height + (y_padding * 2)
 
         return x_offset, y_offset, width, height
 
-    def on_render(self, window, widget, bg_area, cell_area, exp_area, flags):
+    def on_render(self, window, widget, background_area, cell_area,
+                  expose_area, flags):
         """Render the cell."""
         
         x_offset, y_offset, width, height = self.get_size(widget, cell_area)

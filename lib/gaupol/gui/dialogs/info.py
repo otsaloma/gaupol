@@ -34,7 +34,7 @@ TYPE  = gtk.MESSAGE_INFO
 
 class VersionCheckInfoDialog(gtk.MessageDialog):
 
-    """Information on whether user has the latest version or not.""" 
+    """Information on whether user has the latest version or not."""
     
     def __init__(self, parent, local_version, remote_version):
 

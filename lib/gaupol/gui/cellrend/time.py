@@ -144,11 +144,11 @@ class CellRendererTime(CustomCellRenderer):
         editor.emit_stop_by_name('cut-clipboard')
         editor.emit('copy-clipboard')
 
-    def on_delete_text(self, editor, start_pos, end_pos):
+    def on_delete_text(self, editor, start_position, end_position):
         """Do not allow deleting text."""
 
         editor.emit_stop_by_name('delete-text')
-        editor.set_position(start_pos)
+        editor.set_position(start_position)
 
     def on_insert_text(self, editor, text, length, pointer):
         """Insert text to editor."""
@@ -165,7 +165,8 @@ class CellRendererTime(CustomCellRenderer):
             editor.emit_stop_by_name('key-press-event')
             gobject.idle_add(self._change_to_zero, editor, keyname)
 
-    def on_start_editing(self, event, tree, row, bg_area, cell_area, flags):
+    def on_start_editing(self, event, widget, row, background_area, cell_area,
+                         flags):
         """
         Initiate editing of the cell.
 
@@ -178,7 +179,7 @@ class CellRendererTime(CustomCellRenderer):
         editor.set_width_chars(12)
         editor.set_max_length(12)
         editor.set_size_request(-1, cell_area.height)
-        editor.modify_font(self.font_desc)
+        editor.modify_font(self.font_description)
 
         editor.set_text(self.text or '')
 

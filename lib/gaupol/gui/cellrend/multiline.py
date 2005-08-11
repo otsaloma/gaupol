@@ -65,7 +65,8 @@ class CellRendererMultilineText(CustomCellRenderer):
 
     """CellRenderer for cells containing multiline text."""
 
-    def on_start_editing(self, event, widget, row, bg_area, cell_area, flags):
+    def on_start_editing(self, event, widget, row, background_area, cell_area,
+                         flags):
         """
         Initiate editing of the cell.
 
@@ -74,7 +75,7 @@ class CellRendererMultilineText(CustomCellRenderer):
         editor = CellTextView()
 
         editor.set_wrap_mode(gtk.WRAP_NONE)
-        editor.modify_font(self.font_desc)
+        editor.modify_font(self.font_description)
 
         editor.set_text(self.text or '')
 

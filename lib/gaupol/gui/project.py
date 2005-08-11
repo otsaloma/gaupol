@@ -31,10 +31,11 @@ import gobject
 import gtk
 import pango
 
+from gaupol.constants import TIME_MODE, FRAME_MODE
 from gaupol.gui.cellrend.integer import CellRendererInteger
 from gaupol.gui.cellrend.multiline import CellRendererMultilineText
 from gaupol.gui.cellrend.time import CellRendererTime
-from gaupol.gui.constants import COLUMN_NAMES
+from gaupol.gui.constants import COLUMN_NAMES, MODE_NAMES
 from gaupol.gui.constants import NO, SHOW, HIDE, DURN, ORIG, TRAN
 from gaupol.gui.util import gui
 from gaupol.lib.data import Data
@@ -85,10 +86,14 @@ class Project(gobject.GObject):
         gobject.GObject.__init__(self)
     
         self._config = config
-        self.data    = Data(config.get('editor', 'framerate'))
 
+        framerate = config.get('editor', 'framerate')
+        edit_mode = config.get('editor', 'edit_mode')
+        edit_mode = MODE_NAMES.index(edit_mode)
+
+        self.data      = Data(framerate)
         self.untitle   = _('Untitled %d') % counter
-        self.edit_mode = config.get('editor', 'edit_mode')
+        self.edit_mode = edit_mode
 
         # Undoing will decrease changed value by one. Doing and redoing will
         # increase changed value by one. At zero the document is at its
@@ -156,14 +161,14 @@ class Project(gobject.GObject):
         self.tree_view.set_enable_search(False)
         self.tree_view.columns_autosize()
 
-        if self.edit_mode == 'time':
-            columns = [gobject.TYPE_INT] + [gobject.TYPE_STRING] * 5
+        if self.edit_mode == TIME_MODE:
+            columns = [INT] + [STR] * 5
             cr_1 = CellRendererTime()
             cr_2 = CellRendererTime()
             cr_3 = CellRendererTime()
 
-        elif self.edit_mode == 'frame':
-            columns = [gobject.TYPE_INT] * 4 + [gobject.TYPE_STRING] * 2
+        elif self.edit_mode == FRAME_MODE:
+            columns = [INT] * 4 + [STR] * 2
             cr_1 = CellRendererInteger()
             cr_2 = CellRendererInteger()
             cr_3 = CellRendererInteger()
@@ -185,14 +190,14 @@ class Project(gobject.GObject):
 
         for i in range(6):
         
-            cell_rend = eval('cr_%d' % i)
+            cell_renderer = eval('cr_%d' % i)
             
             if i != 0:
-                cell_rend.set_editable(True)
-            cell_rend.set_property('font', font)
+                cell_renderer.set_editable(True)
+            cell_renderer.set_property('font', font)
 
             for k in range(len(signals)):
-                cell_rend.connect(signals[k], callbacks[k], i)
+                cell_renderer.connect(signals[k], callbacks[k], i)
 
         store = gtk.ListStore(*columns)
         self.tree_view.set_model(store)
@@ -204,31 +209,26 @@ class Project(gobject.GObject):
         tree_col_4 = gtk.TreeViewColumn(_('Text')       , cr_4, text=4)
         tree_col_5 = gtk.TreeViewColumn(_('Translation'), cr_5, text=5)
 
-        vis_columns = self._config.getlist('view', 'columns')
+        visible_columns = self._config.getlist('view', 'columns')
         
         # Set column properties and append columns.
         for i in range(6):
         
-            tree_col = eval('tree_col_%d' % i)
-            self.tree_view.append_column(tree_col)
+            tree_view_column = eval('tree_col_%d' % i)
+            self.tree_view.append_column(tree_view_column)
 
-            tree_col.set_resizable(True)
-            tree_col.set_clickable(True)
-            
-            tree_col.set_sort_column_id(i)
-            if i == NO:
-                store.set_sort_column_id(NO, gtk.SORT_ASCENDING)
+            tree_view_column.set_resizable(True)
 
-            col_name = COLUMN_NAMES[i]
-            if col_name not in vis_columns:
-                tree_col.set_visible(False)
+            column_name = COLUMN_NAMES[i]
+            if column_name not in visible_columns:
+                tree_view_column.set_visible(False)
 
             # Set a label widget as the column title.
-            label = gtk.Label(tree_col.get_title())
-            tree_col.set_widget(label)
+            label = gtk.Label(tree_view_column.get_title())
+            tree_view_column.set_widget(label)
             label.show()
 
-            # Set the label wide enough that it fits the emphasized text
+            # Set the label wide enough that it fits the emphasized title
             # without having to grow wider.
             label.set_attributes(EMPH_ATTR)
             width = label.size_request()[0]
@@ -236,11 +236,11 @@ class Project(gobject.GObject):
             label.set_attributes(NORM_ATTR)
             
             # Get button from the column title.
-            button = tree_col.get_widget()
+            button = tree_view_column.get_widget()
             while not isinstance(button, gtk.Button):
                 button = button.get_parent()
 
-            # Show a column hide/show popup menu on column header right-click.
+            # Allow TreeViewColumn header to be clicked.
             signal = 'button-press-event'
             method = self._on_tree_view_headers_clicked
             button.connect(signal, method)
@@ -256,59 +256,49 @@ class Project(gobject.GObject):
         method = self._on_tree_view_button_press_event
         self.tree_view.connect('button-press-event', method)
 
-    def get_data_focus(self):
-        """
-        Get the location in Data where the tree view focus points to.
+    def get_data_col(self, store_col):
+        """Get Data column to match ListStore column."""
         
-        Return: section, row, column (any one could be None)
-        """
-        store = self.tree_view.get_model()
-        store_row, store_col = self.get_store_focus()
-        
-        if store_row is None:
-            data_row = None
-        else:
-            data_row = store[store_row][NO] - 1
-        
-        if store_col is None or store_col == NO:
-            data_section = None
-            data_col     = None
-            
-        elif store_col in [SHOW, HIDE, DURN]:
-            data_section = self.edit_mode + 's'
-            data_col     = store_col - 1
-            
-        elif store_col in [ORIG, TRAN]:
-            data_section = 'texts'
-            data_col     = store_col - 4
-
-        return data_section, data_row, data_col
-
-    def get_data_row(self, store_row):
-        """Get Data row that corresponds to ListStore row."""
-        
-        if store_row is None:
+        if store_col == NO:
             return None
-            
+        if store_col in [SHOW, HIDE, DURN]:
+            return store_col - 1
+        if store_col in [ORIG, TRAN]:
+            return store_col - 4
+
+    def get_focus(self):
+        """
+        Get the location of current focus.
+        
+        Return: row, column, gtk.TreeViewColumn (any of which could be None)
+        """
         store = self.tree_view.get_model()
-        return store[store_row][NO] - 1
+        row, tree_view_column = self.tree_view.get_cursor()
+
+        if tree_view_column is None:
+            col = None
+        else:
+            tree_view_columns = self.tree_view.get_columns()
+            col = tree_view_columns.index(tree_view_column)
+
+        return row, col, tree_view_column
 
     def get_main_basename(self):
         """Get basename of main document."""
         
-        if self.data.main_file is not None:
+        try:
             return os.path.basename(self.data.main_file.path)
-        else:
+        except AttributeError:
             return self.untitle
 
     def get_main_corename(self):
         """Get basename of main document without extension."""
 
-        if self.data.main_file is not None:
+        try:
             basename = os.path.basename(self.data.main_file.path)
             extension = self.data.main_file.EXTENSION
             return basename[0:-len(extension)]
-        else:
+        except AttributeError:
             return self.untitle
 
     def get_main_document_properties(self):
@@ -317,64 +307,32 @@ class Project(gobject.GObject):
 
         Return: (path, format, encoding, newlines) or (None, None, None None)
         """
-        if self.data.main_file is not None:
+        try:
             path     = self.data.main_file.path
             format   = self.data.main_file.FORMAT
             encoding = self.data.main_file.encoding
             newlines = self.data.main_file.newlines
             return path, format, encoding, newlines
-        else:
+        except AttributeError:
             return None, None, None, None
 
-    def get_selected_data_rows(self):
-        """Get rows in Data, that match the selection in TreeView."""
-
-        store = self.tree_view.get_model()
-        store_rows = self.get_selected_store_rows()
-        return [store[i][NO] - 1 for i in store_rows]
-
-    def get_selected_store_rows(self):
-        """Get rows in ListStore, that match the selection in TreeView."""
+    def get_selected_rows(self):
+        """Get rows selected in TreeView."""
 
         selection = self.tree_view.get_selection()
-        sel_rows = selection.get_selected_rows()[1]
+        selected_rows = selection.get_selected_rows()[1]
 
-        # sel_rows is a list of one-tuples of integers. Change that to a
+        # selected_rows is a list of one-tuples of integers. Change that to a
         # list of integers.
-        return [row[0] for row in sel_rows]
+        return [row[0] for row in selected_rows]
 
-    def get_store_focus(self):
-        """
-        Get the location in ListStore where the tree view focus points to.
+    def get_timings(self):
+        """Return time or frame data depending on edit mode."""
         
-        Return: row, column (either one could be None)
-        """
-        store = self.tree_view.get_model()
-        store_row, tree_col = self.tree_view.get_cursor()
-
-        if tree_col is None:
-            return store_row, None
-
-        tree_cols = self.tree_view.get_columns()
-        store_col = tree_cols.index(tree_col)
-
-        return store_row, store_col
-
-    def get_store_row(self, data_row):
-        """Get ListStore row that corresponds to Data row."""
-
-        if data_row is None:
-            return None
-
-        store = self.tree_view.get_model()
-        
-        if store.get_sort_column_id()[0] == NO:
-            return data_row
-        
-        subtitle = data_row + 1
-        for i in range(len(store)):
-            if store[i][NO] == subtitle:
-                return i
+        if self.edit_mode == TIME_MODE:
+            return self.data.times
+        elif self.edit_mode == FRAME_MODE:
+            return self.data.frames
 
     def get_translation_basename(self):
         """Get basename of translation document."""
@@ -389,11 +347,11 @@ class Project(gobject.GObject):
     def get_translation_corename(self):
         """Get basename of translation document without extension."""
 
-        if self.data.tran_file is not None:
+        try:
             basename = os.path.basename(self.data.tran_file.path)
             extension = self.data.tran_file.EXTENSION
             return basename[0:-len(extension)]
-        else:
+        except AttributeError:
             return self.get_translation_basename()
 
     def get_translation_document_properties(self):
@@ -410,53 +368,53 @@ class Project(gobject.GObject):
             format   = self.data.tran_file.FORMAT
             encoding = self.data.tran_file.encoding
             newlines = self.data.tran_file.newlines
+            return path, format, encoding, newlines
 
         elif self.data.main_file is not None:
             path     = None
             format   = self.data.main_file.FORMAT
             encoding = self.data.main_file.encoding
             newlines = self.data.main_file.newlines
+            return path, format, encoding, newlines
 
         else:
             return None, None, None, None
 
-        return path, format, encoding, newlines
-
     def _on_notebook_tab_close_button_clicked(self, *args):
-        """Emit signal that the notebook tab close button has been clicked."""
+        """Emit signal that the Notebook tab close button has been clicked."""
         
         self.emit('notebook-tab-close-button-clicked')
 
     def _on_tree_view_button_press_event(self, tree_view, event):
-        """Emit signal that a tree view cell has been clicked."""
+        """Emit signal that a TreeView cell has been clicked."""
 
         # Return True to stop other handlers or False to not to.
         return self.emit('tree-view-button-press-event', event)
 
     def _on_tree_view_cell_edited(self, cell_rend, new_value, row, col):
-        """Emit signal that a tree view cell has been edited."""
+        """Emit signal that a TreeView cell has been edited."""
 
         self.emit('tree-view-cell-edited', new_value, row, col)
 
     def _on_tree_view_cell_editing_started(self, cell_rend, editor, row, col):
-        """Emit signal that a tree view cell editing has started."""
+        """Emit signal that a TreeView cell editing has started."""
 
         self.set_active_column()
         self.emit('tree-view-cell-editing-started', col)
 
     def _on_tree_view_cursor_moved(self, *args):
-        """Emit signal that the tree view cursor has moved."""
+        """Emit signal that the TreeView cursor has moved."""
 
         self.set_active_column()
         self.emit('tree-view-cursor-moved')
         
     def _on_tree_view_headers_clicked(self, button, event):
-        """Emit signal that a tree view cell header has been clicked."""
+        """Emit signal that a TreeViewColumn header has been clicked."""
 
         self.emit('tree-view-headers-clicked', event)
 
     def _on_tree_view_selection_changed(self, *args):
-        """Emit signal that a tree view selection has changed."""
+        """Emit signal that the TreeView selection has changed."""
 
         self.set_active_column()
         self.emit('tree-view-selection-changed')
@@ -469,14 +427,10 @@ class Project(gobject.GObject):
         """
         store = self.tree_view.get_model()
         store.clear()
-        store.set_sort_column_id(NO, gtk.SORT_ASCENDING)
 
         self.tree_view.freeze_child_notify()
 
-        if self.edit_mode == 'time':
-            timings = self.data.times
-        elif self.edit_mode == 'frame':
-            timings = self.data.frames
+        timings = self.get_timings()
 
         for i in range(len(self.data.times)):
             store.append([i + 1] + timings[i] + self.data.texts[i])
@@ -484,7 +438,7 @@ class Project(gobject.GObject):
         self.tree_view.thaw_child_notify()
 
     def reload_data_in_columns(self, col_list):
-        """Reload all data in given columns of the TreeView."""
+        """Reload all data in given columns."""
         
         store = self.tree_view.get_model()
 
@@ -505,10 +459,7 @@ class Project(gobject.GObject):
             
             elif col in [SHOW, HIDE, DURN]:
 
-                if self.edit_mode == 'time':
-                    timings = self.data.times
-                elif self.edit_mode == 'frame':
-                    timings = self.data.frames
+                timings = self.get_timings()
                 
                 for i in range(len(store)):
                     store[i][col] = timings[i][col - 1]
@@ -522,44 +473,29 @@ class Project(gobject.GObject):
 
         self.tree_view.thaw_child_notify()
 
-    def reload_data_in_row(self, data_row):
-        """Reload TreeView data in given Data row."""
+    def reload_data_in_row(self, row):
+        """Reload TreeView data in given row."""
 
-        store = self.tree_view.get_model()
-        store_row = self.get_store_row(data_row)
+        store   = self.tree_view.get_model()
+        timings = self.get_timings()
+        texts   = self.data.texts
 
-        if self.edit_mode == 'time':
-            timings = self.data.times
-        elif self.edit_mode == 'frame':
-            timings = self.data.frames
+        store[row] = [row + 1] + timings[row] + texts[row]
 
-        texts = self.data.texts
+    def reload_data_in_rows(self, row_x, row_y):
+        """Reload TreeView data between given rows."""
 
-        store[store_row] = [data_row + 1] + timings[data_row] + texts[data_row]
+        start_row = min(row_x, row_y)
+        end_row   = max(row_x, row_y)
 
-    def reload_data_in_rows(self, row_a, row_b):
-        """Reload TreeView data between given Data rows."""
-
-        start_row = min(row_a, row_b)
-        end_row   = max(row_a, row_b)
-
-        store = self.tree_view.get_model()
+        store   = self.tree_view.get_model()
+        timings = self.get_timings()
+        texts   = self.data.texts
 
         self.tree_view.freeze_child_notify()
 
-        # When looping over the store, the sort order must be unambiguous.
-        # New data could change the sort order and ruin looping order.
-        # Hence sort order is temporarily changed to No. column.
-        sort_col, sort_order = store.get_sort_column_id()
-        store.set_sort_column_id(NO, gtk.SORT_ASCENDING)
-
-        if self.edit_mode == 'time':
-            timings = self.data.times
-        elif self.edit_mode == 'frame':
-            timings = self.data.frames
-
         for i in range(start_row, end_row + 1):
-            store[i] = [i + 1] + timings[i] + self.data.texts[i]
+            store[i] = [i + 1] + timings[i] + texts[i]
 
         store.set_sort_column_id(sort_col, sort_order)
                         
@@ -568,7 +504,7 @@ class Project(gobject.GObject):
     def set_active_column(self, *args):
         """Set the active column title emphasized."""
 
-        col = self.get_store_focus()[1]
+        col = self.get_focus()[1]
 
         for i in range(6):
 

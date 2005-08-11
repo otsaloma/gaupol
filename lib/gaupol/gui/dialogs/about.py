@@ -30,7 +30,7 @@ except ImportError:
 import gtk
 
 from gaupol.constants import VERSION
-from gaupol.lib.util.urldoc import open_url
+from gaupol.lib.util import internet
 
 
 NAME         = 'Gaupol'
@@ -80,14 +80,14 @@ class AboutDialog(gtk.AboutDialog):
         #self.set_documenters(DOCUMENTERS)
         #self.set_artists(ARTISTS)
 
-        #lang = locale.getdefaultlocale()[0]
+        #language = locale.getdefaultlocale()[0]
 
         #try:
-        #    self.set_translator_credits(TRANSLATORS[lang])
+        #    self.set_translator_credits(TRANSLATORS[language])
         #except KeyError:
         #    pass
         
     def _on_url_clicked(self, *args):
         """Open website in browser when user clicks on URL."""
 
-        open_url(WEBSITE)
+        internet.open_url(WEBSITE)

@@ -53,23 +53,23 @@ class GUIBuilder(Delegate):
     def _build_framerate_combo_box(self):
         """Build the framerate combo box in the toolbar."""
         
-        self.fr_cmbox = gtk.combo_box_new_text()
+        self.framerate_combo_box = gtk.combo_box_new_text()
 
         # Get framerate index.
         framerate = self.config.get('editor', 'framerate')
         index     = FRAMERATE_NAMES.index(framerate)
         
-        self.fr_cmbox.insert_text(0, _('23.976 fps'))
-        self.fr_cmbox.insert_text(1, _('25 fps'    ))
-        self.fr_cmbox.insert_text(2, _('29.97 fps' ))
-        self.fr_cmbox.set_active(index)
+        self.framerate_combo_box.insert_text(0, _('23.976 fps'))
+        self.framerate_combo_box.insert_text(1, _('25 fps'    ))
+        self.framerate_combo_box.insert_text(2, _('29.97 fps' ))
+        self.framerate_combo_box.set_active(index)
         
-        self.fr_cmbox.connect('changed', self.on_framerate_changed)
+        self.framerate_combo_box.connect('changed', self.on_framerate_changed)
 
         # Put framerate combo box to an event box and enable tooltip.
         event_box = gtk.EventBox()
-        event_box.add(self.fr_cmbox)
-        self.ttips_open.set_tip(event_box, _('Framerate'))
+        event_box.add(self.framerate_combo_box)
+        self.tooltips_open.set_tip(event_box, _('Framerate'))
 
         # Create a tool item for the framerate combo box.
         tool_item = gtk.ToolItem()
@@ -102,10 +102,10 @@ class GUIBuilder(Delegate):
         # Pack menu and toolbar.
         menubar = self.uim.get_widget('/ui/menubar')
         toolbar = self.uim.get_widget('/ui/toolbar')
-        self.main_vbox.pack_start(menubar, False, False, 0)
-        self.main_vbox.pack_start(toolbar, False, False, 0)
-        self.main_vbox.reorder_child(menubar, 0)
-        self.main_vbox.reorder_child(toolbar, 1)
+        self.vbox.pack_start(menubar, False, False, 0)
+        self.vbox.pack_start(toolbar, False, False, 0)
+        self.vbox.reorder_child(menubar, 0)
+        self.vbox.reorder_child(toolbar, 1)
 
         self._build_open_button()
         self._build_undo_and_redo_buttons()
@@ -143,10 +143,10 @@ class GUIBuilder(Delegate):
         self.open_button.connect('clicked', self.on_open_activated)
         
         tip = _('Open a subtitle file')
-        self.open_button.set_tooltip(self.ttips_always, tip)
+        self.open_button.set_tooltip(self.tooltips_always, tip)
 
         tip = _('Open a recently used subtitle file')
-        self.open_button.set_arrow_tooltip(self.ttips_always, tip)
+        self.open_button.set_arrow_tooltip(self.tooltips_always, tip)
         
         toolbar = self.uim.get_widget('/ui/toolbar')
         toolbar.insert(self.open_button, 0)
@@ -154,16 +154,16 @@ class GUIBuilder(Delegate):
     def _build_statusbar(self):
         """Build the statusbar."""
 
-        event_box = gui.get_event_box(self.orig_stbar)
+        event_box = gui.get_event_box(self.original_statusbar)
         tip = _('Amount of characters in the text of the selected subtitle')
-        self.ttips_open.set_tip(event_box, tip)
+        self.tooltips_open.set_tip(event_box, tip)
         
-        event_box = gui.get_event_box(self.tran_stbar)
+        event_box = gui.get_event_box(self.translation_statusbar)
         tip = _('Amount of characters in the translation of the selected subtitle')
-        self.ttips_open.set_tip(event_box, tip)
+        self.tooltips_open.set_tip(event_box, tip)
 
         if not self.config.getboolean('view', 'statusbar'):
-            self.stbar_hbox.hide()
+            self.statusbar_hbox.hide()
 
     def _build_ui_manager(self):
         """Build the menubar and toolbar actions usings gtk.UIManager."""
@@ -363,6 +363,13 @@ class GUIBuilder(Delegate):
                 None,
                 _('Invert current selection'),
                 self.on_invert_selection_activated
+            ), (
+                'preferences',
+                gtk.STOCK_PREFERENCES,
+                _('Pre_ferences'),
+                None,
+                _('Configure Gaupol'),
+                self.on_preferences_activated
             ), (
                 'dialog',
                 None,
@@ -637,10 +644,10 @@ class GUIBuilder(Delegate):
         self.undo_button.connect('clicked', self.on_undo_button_clicked)
         
         tip = _('Undo the last action')
-        self.undo_button.set_tooltip(self.ttips_open, tip)
+        self.undo_button.set_tooltip(self.tooltips_open, tip)
 
         tip = _('Undo several actions')
-        self.undo_button.set_arrow_tooltip(self.ttips_open, tip)
+        self.undo_button.set_arrow_tooltip(self.tooltips_open, tip)
 
         self.redo_button = gtk.MenuToolButton(gtk.STOCK_REDO)
         self.redo_button.set_label(_('Redo'))
@@ -648,10 +655,10 @@ class GUIBuilder(Delegate):
         self.redo_button.connect('clicked', self.on_redo_button_clicked)
         
         tip = _('Redo the last undone action')
-        self.redo_button.set_tooltip(self.ttips_open, tip)
+        self.redo_button.set_tooltip(self.tooltips_open, tip)
 
         tip = _('Redo several undone actions')
-        self.redo_button.set_arrow_tooltip(self.ttips_open, tip)
+        self.redo_button.set_arrow_tooltip(self.tooltips_open, tip)
         
         toolbar = self.uim.get_widget('/ui/toolbar')
         toolbar.insert(gtk.SeparatorToolItem(), 2)

@@ -86,13 +86,13 @@ class EncodingDialog(object):
         # Set column properties and append columns.
         for i in range(3):
         
-            tree_col = eval('tree_col_%d' % i)
-            self._tree_view.append_column(tree_col)
+            tree_view_column = eval('tree_col_%d' % i)
+            self._tree_view.append_column(tree_view_column)
             
-            tree_col.set_resizable(True)
-            tree_col.set_clickable(True)
+            tree_view_column.set_resizable(True)
+            tree_view_column.set_clickable(True)
             
-            tree_col.set_sort_column_id(i)
+            tree_view_column.set_sort_column_id(i)
             if i == DESC:
                 store.set_sort_column_id(DESC, gtk.SORT_ASCENDING)
 
@@ -100,12 +100,12 @@ class EncodingDialog(object):
         selection.set_mode(gtk.SELECTION_SINGLE)
         selection.unselect_all()
 
-        vis_encs   = self._config.getlist('file', 'visible_encodings')
-        valid_encs = encodings_module.get_valid_encodings()
+        visible_encodings = self._config.getlist('file', 'visible_encodings')
+        valid_encodings   = encodings_module.get_valid_encodings()
         
         # Insert data.
-        for entry in valid_encs:
-            store.append([entry[2], entry[1], entry[0] in vis_encs])
+        for entry in valid_encodings:
+            store.append([entry[2], entry[1], entry[0] in visible_encodings])
 
     def destroy(self):
         """Destroy the dialog."""
@@ -129,23 +129,23 @@ class EncodingDialog(object):
         else:
             row = rows[0]
         
-        disp_name = store[row][NAME]
-        return encodings_module.get_python_name(disp_name)
+        display_name = store[row][NAME]
+        return encodings_module.get_python_name(display_name)
 
     def get_visible_encodings(self):
         """Get encodings chosen to be visible."""
         
-        store    = self._tree_view.get_model()
-        vis_encs = []
+        store = self._tree_view.get_model()
+        visible_encodings = []
         
         for row in range(len(store)):
             if store[row][SHOW]:
                 encoding = encodings_module.get_python_name(store[row][NAME])
-                vis_encs.append(encoding)
+                visible_encodings.append(encoding)
                 
-        return vis_encs
+        return visible_encodings
 
-    def _on_tree_view_cell_toggled(self, cell_rend, row):
+    def _on_tree_view_cell_toggled(self, cell_renderer, row):
         """Toggle the "Show In Menu" column cell value."""
 
         store = self._tree_view.get_model()
