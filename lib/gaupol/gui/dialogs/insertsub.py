@@ -52,11 +52,9 @@ class InsertSubtitleDialog(object):
         button = glade_xml.get_widget('insert_button')
         alignment = button.get_children()[0]
         hbox = alignment.get_children()[0]
-        go_label = hbox.get_children()[1]
-        go_label.set_text(_('_Insert'))
-        go_label.set_use_underline(True)
-
-        button.grab_focus()
+        insert_label = hbox.get_children()[1]
+        insert_label.set_text(_('_Insert'))
+        insert_label.set_use_underline(True)
 
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_OK)

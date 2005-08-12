@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Dialog to choose a subtitle number to go to."""
+"""Dialog to choose a subtitle number to jump to."""
 
 
 try:
@@ -30,9 +30,9 @@ import gtk
 from gaupol.gui.util import gui
 
 
-class GoToDialog(object):
+class JumpToSubtitleDialog(object):
 
-    """Dialog to choose a subtitle number to go to."""
+    """Dialog to choose a subtitle number to jump to."""
     
     def __init__(self, parent, maximum):
 
@@ -46,14 +46,6 @@ class GoToDialog(object):
 
         self._spin_button.set_activates_default(True)
         self._spin_button.set_range(1, maximum)
-
-        # Set Go button label.
-        button = glade_xml.get_widget('go_button')
-        alignment = button.get_children()[0]
-        hbox = alignment.get_children()[0]
-        go_label = hbox.get_children()[1]
-        go_label.set_text(_('_Go'))
-        go_label.set_use_underline(True)
 
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_OK)
