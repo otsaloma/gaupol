@@ -95,16 +95,16 @@ class CustomCellRenderer(gtk.GenericCellRenderer):
     def _get_layout(self, widget):
         """Get the Pango layout for the cell."""
 
-        pango_context = widget.get_pango_context()
+        context = widget.get_pango_context()
         
         # Get the default font description.
-        font_description = pango_context.get_font_description()
+        font_description = context.get_font_description()
 
         # Create custom font description and merge that with the default.
         custom_font_description = pango.FontDescription(self.font)
         font_description.merge(custom_font_description, True)
 
-        layout = pango.Layout(pango_context)
+        layout = pango.Layout(context)
         layout.set_font_description(font_description)
 
         # Do not wrap text.

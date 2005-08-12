@@ -391,12 +391,13 @@ class Project(gobject.GObject):
         # Return True to stop other handlers or False to not to.
         return self.emit('tree-view-button-press-event', event)
 
-    def _on_tree_view_cell_edited(self, cell_rend, new_value, row, col):
+    def _on_tree_view_cell_edited(self, cell_renderer, new_value, row, col):
         """Emit signal that a TreeView cell has been edited."""
 
         self.emit('tree-view-cell-edited', new_value, row, col)
 
-    def _on_tree_view_cell_editing_started(self, cell_rend, editor, row, col):
+    def _on_tree_view_cell_editing_started(self, cell_renderer, editor, row,
+                                           col):
         """Emit signal that a TreeView cell editing has started."""
 
         self.set_active_column()
@@ -420,17 +421,14 @@ class Project(gobject.GObject):
         self.emit('tree-view-selection-changed')
 
     def reload_all_data(self):
-        """
-        Reload all data in the TreeView.
+        """Reload all data in the TreeView."""
         
-        Data is reordered by subtitle number. Possible selection is lost.
-        """
         store = self.tree_view.get_model()
         store.clear()
 
-        self.tree_view.freeze_child_notify()
-
         timings = self.get_timings()
+
+        self.tree_view.freeze_child_notify()
 
         for i in range(len(self.data.times)):
             store.append([i + 1] + timings[i] + self.data.texts[i])
@@ -444,12 +442,6 @@ class Project(gobject.GObject):
 
         self.tree_view.freeze_child_notify()
 
-        # When looping over the store, the sort order must be unambiguous.
-        # New data could change the sort order and ruin looping order.
-        # Hence sort order is temporarily changed to No. column.
-        sort_col, sort_order = store.get_sort_column_id()
-        store.set_sort_column_id(NO, gtk.SORT_ASCENDING)
-
         for col in col_list:
 
             if col == NO:
@@ -459,17 +451,18 @@ class Project(gobject.GObject):
             
             elif col in [SHOW, HIDE, DURN]:
 
-                timings = self.get_timings()
+                timings  = self.get_timings()
+                data_col = self.get_data_column(col)
                 
                 for i in range(len(store)):
-                    store[i][col] = timings[i][col - 1]
+                    store[i][col] = timings[i][data_col]
                             
             elif col in [ORIG, TRAN]:
+
+                data_col = self.get_data_column(col)
             
                 for i in range(len(store)):
-                    store[i][col] = self.data.texts[i][col - 4]
-
-        store.set_sort_column_id(sort_col, sort_order)
+                    store[i][col] = self.data.texts[i][data_col]
 
         self.tree_view.thaw_child_notify()
 
@@ -496,8 +489,6 @@ class Project(gobject.GObject):
 
         for i in range(start_row, end_row + 1):
             store[i] = [i + 1] + timings[i] + texts[i]
-
-        store.set_sort_column_id(sort_col, sort_order)
                         
         self.tree_view.thaw_child_notify()
 

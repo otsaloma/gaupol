@@ -80,10 +80,10 @@ class Application(object):
         self.undo_button         = None
 
         # UIManager and merge IDs.
-        self.documents_uim_id = None
-        self.recent_uim_id    = None
-        self.uim              = None
-        self.undo_redo_uim_id = None
+        self.uim                 = None
+        self.documents_uim_id    = None
+        self.recent_files_uim_id = None
+        self.undo_redo_uim_id    = None
 
         # Tooltips.
         self.tooltips_always = gtk.Tooltips()
