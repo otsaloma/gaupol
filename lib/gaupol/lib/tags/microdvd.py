@@ -161,9 +161,9 @@ class MicroDVD(TagLibrary):
         )
     )
 
-    def italicize(cls, text):
+    def italicize(text):
         """Italicize text."""
         
         return u'{Y:i}%s' % text
 
-    italicize = classmethod(italicize)
+    italicize = staticmethod(italicize)

@@ -32,7 +32,7 @@ class TagLibrary(object):
     Base class for subtitle tag libraries.
     
     This class cannot be instantiated. This is a grouping-class that holds
-    constants and classmethods.
+    constants, static- and classmethods.
 
     DECODE_TAGS is a list of regular expressions that convert tags to the
     Gaupol internal format. ENCODE_TAGS convert from Gaupol internal format
@@ -55,9 +55,9 @@ class TagLibrary(object):
     DECODE_TAGS = []
     ENCODE_TAGS = []
 
-    def italicize(cls, text):
+    def italicize(text):
         """Italicize text."""
         
         return text
 
-    italicize = classmethod(italicize)
+    italicize = staticmethod(italicize)

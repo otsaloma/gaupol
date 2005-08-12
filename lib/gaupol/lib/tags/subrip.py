@@ -70,9 +70,9 @@ class SubRip(TagLibrary):
         )
     )
 
-    def italicize(cls, text):
+    def italicize(text):
         """Italicize text."""
         
         return u'<i>%s</i>' % text
 
-    italicize = classmethod(italicize)
+    italicize = staticmethod(italicize)
