@@ -34,7 +34,7 @@ from gaupol.constants import ORIGINAL_TEXT, TRANSLATION_TEXT
 from gaupol.constants import TIME_MODE, FRAME_MODE
 from gaupol.lib.constants import SHOW, HIDE, DURN, ORIG, TRAN
 from gaupol.lib.delegates.delegate import Delegate
-from gaupol.lib.file.all import *
+from gaupol.lib.files.all import *
 from gaupol.lib.tags.tagconv import TagConverter
 
 

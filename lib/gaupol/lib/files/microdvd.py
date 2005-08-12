@@ -29,7 +29,7 @@ except ImportError:
     pass
 
 from gaupol.constants import FRAME_MODE
-from gaupol.lib.file.subfile import SubtitleFile
+from gaupol.lib.files.subfile import SubtitleFile
 
 
 RE_LINE = re.compile(r'^\{(\d+)\}\{(\d+)\}(.*?)$')

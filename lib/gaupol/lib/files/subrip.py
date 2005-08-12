@@ -29,7 +29,7 @@ except ImportError:
     pass
 
 from gaupol.constants import TIME_MODE
-from gaupol.lib.file.subfile import SubtitleFile
+from gaupol.lib.files.subfile import SubtitleFile
 
 
 blank_line = r'^\s*$'

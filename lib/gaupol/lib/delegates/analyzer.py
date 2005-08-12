@@ -36,7 +36,7 @@ class Analyzer(Delegate):
 
     def get_character_count(self, row, col):
         """
-        Get character of text specified by row and col.
+        Get character count of text specified by row and col.
         
         Return: list of row lengths, total length
         """

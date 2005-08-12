@@ -28,8 +28,8 @@ except ImportError:
 from gaupol.constants import TIME_MODE, FRAME_MODE
 from gaupol.lib.constants import SHOW, HIDE, DURN, ORIG, TRAN
 from gaupol.lib.delegates.delegate import Delegate
-from gaupol.lib.file.all import *
-from gaupol.lib.file.determiner import FileFormatDeterminer
+from gaupol.lib.files.all import *
+from gaupol.lib.files.determiner import FileFormatDeterminer
 
 
 class FileReader(Delegate):

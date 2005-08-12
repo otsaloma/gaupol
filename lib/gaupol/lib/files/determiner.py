@@ -27,7 +27,7 @@ try:
 except ImportError:
     pass
 
-from gaupol.lib.file.subfile import SubtitleFile
+from gaupol.lib.files.subfile import SubtitleFile
 
 
 microdvd_id = r'^\{\d+\}\{\d+\}.*?$'
