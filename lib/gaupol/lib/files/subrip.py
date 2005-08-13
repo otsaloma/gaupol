@@ -28,6 +28,7 @@ try:
 except ImportError:
     pass
 
+from gaupol.constants.Format import *
 from gaupol.constants.Mode import *
 from gaupol.lib.files.subfile import SubtitleFile
 
@@ -60,8 +61,8 @@ class SubRip(SubtitleFile):
 
         SubtitleFile.__init__(self, *args)
 
-        self.FORMAT    = 'SubRip'
-        self.EXTENSION = '.srt'
+        self.FORMAT    = FORMAT_SUBRIP
+        self.EXTENSION = EXTENSION_SUBRIP
         self.MODE      = MODE_TIME
 
     def read(self):

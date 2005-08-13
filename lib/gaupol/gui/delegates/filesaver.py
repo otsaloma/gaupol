@@ -45,6 +45,47 @@ class FileSaver(Delegate):
 
     """Saving documents."""
 
+    def get_main_document_properties(self):
+        """
+        Get properties of main document.
+
+        Return: (path, format, encoding, newlines) or (None, None, None None)
+        """
+        try:
+            path     = self.data.main_file.path
+            format   = self.data.main_file.FORMAT
+            encoding = self.data.main_file.encoding
+            newlines = self.data.main_file.newlines
+            return path, format, encoding, newlines
+        except AttributeError:
+            return None, None, None, None
+
+    def get_translation_document_properties(self):
+        """
+        Get properties of translation document.
+
+        Properties are inherited from main document if translation file does
+        not exist.
+        
+        Return: path, format, encoding, newlines (of which any can be None)
+        """
+        if self.data.tran_file is not None:
+            path     = self.data.tran_file.path
+            format   = self.data.tran_file.FORMAT
+            encoding = self.data.tran_file.encoding
+            newlines = self.data.tran_file.newlines
+            return path, format, encoding, newlines
+
+        elif self.data.main_file is not None:
+            path     = None
+            format   = self.data.main_file.FORMAT
+            encoding = self.data.main_file.encoding
+            newlines = self.data.main_file.newlines
+            return path, format, encoding, newlines
+
+        else:
+            return None, None, None, None
+
     def on_save_a_copy_activated(self, *args):
         """Save a copy of the main document."""
 

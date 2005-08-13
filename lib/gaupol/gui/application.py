@@ -56,22 +56,19 @@ class Application(object):
     
     def __init__(self):
 
-        self.projects     = []
-        self.counter      = 0
-        self.config       = Config()
-        self._delegations = None
+        self.projects = []
+        self.counter  = 0
+        self.config   = Config()
 
-        glade_xml = gui.get_glade_xml('main-window.glade')
+        glade_xml  = gui.get_glade_xml('main-window.glade')
         get_widget = glade_xml.get_widget
 
         # Widgets from the Glade XML file.
-        self.message_statusbar     = get_widget('message_statusbar')
-        self.notebook              = get_widget('notebook')
-        self.original_statusbar    = get_widget('original_statusbar')
-        self.statusbar_hbox        = get_widget('statusbar_hbox')
-        self.translation_statusbar = get_widget('translation_statusbar')
-        self.vbox                  = get_widget('vbox')
         self.window                = get_widget('window')
+        self.notebook              = get_widget('notebook')
+        self.message_statusbar     = get_widget('message_statusbar')
+        self.text_statusbar        = get_widget('text_statusbar')
+        self.translation_statusbar = get_widget('translation_statusbar')
 
         # Widgets to be manually created.
         self.framerate_combo_box = None
@@ -85,9 +82,8 @@ class Application(object):
         self.recent_files_uim_id = None
         self.undo_redo_uim_id    = None
 
-        # Tooltips.
-        self.tooltips_always = gtk.Tooltips()
-        self.tooltips_open   = gtk.Tooltips()
+        # Tooltips, which are enabled when a document is open.
+        self.tooltips = gtk.Tooltips()
 
         # Internal clipboard.
         self.clipboard = Clipboard()
@@ -95,9 +91,10 @@ class Application(object):
         # GObject timeout tag for message statusbar.
         self.message_tag = None
 
-        self.config.read_from_file()
+        self._delegations = None
         self._assign_delegations()
-
+        
+        self.config.read_from_file()
         self.build_gui()
         self.window.show()
         

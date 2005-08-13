@@ -31,13 +31,12 @@ import gobject
 import gtk
 import pango
 
-from gaupol.constants import MAIN_DOCUMENT, TRAN_DOCUMENT
-from gaupol.constants import MODE_TIME, MODE_FRAME
+from gaupol.constants.Mode import *
+from gaupol.constants.Type import *
 from gaupol.gui.cellrend.integer import CellRendererInteger
 from gaupol.gui.cellrend.multiline import CellRendererMultilineText
 from gaupol.gui.cellrend.time import CellRendererTime
-from gaupol.gui.constants import COLUMN_NAMES, MODE_NAMES
-from gaupol.gui.constants import NO, SHOW, HIDE, DURN, TEXT, TRAN
+from gaupol.gui.constants.Column import *
 from gaupol.gui.util import gui
 from gaupol.lib.data import Data
 
@@ -96,12 +95,14 @@ class Project(gobject.GObject):
         self.untitle   = _('Untitled %d') % counter
         self.edit_mode = edit_mode
 
-        # Undoing will decrease changed value by one. Doing and redoing will
-        # increase changed value by one. At zero the document is at its
+        # Doing and redoing will increase changed value by one. Undoing will
+        # decrease changed value by one. At zero the document is at its
         # unchanged (saved) state.
         self.main_changed = 0
         self.tran_changed = 0
 
+        # True, if translation file exists or any action affecting translation
+        # only has been performed.
         self.tran_active = False
         
         # Stacks of actions of type DURAction.  
@@ -111,48 +112,10 @@ class Project(gobject.GObject):
         # Widgets
         self.tab_label      = None
         self.tab_menu_label = None
-        self.tab_widget     = None
         self.tree_view      = None
         self.tooltips       = gtk.Tooltips()
 
-        self._build_tab_labels()
         self.build_tree_view()
-
-    def _build_tab_labels(self):
-        """Build the notebook tab label widgets."""
-
-        title = self.get_main_basename()
-        
-        # Tab label.
-        self.tab_label = gtk.Label(title)
-        self.tab_label.set_ellipsize(pango.ELLIPSIZE_MIDDLE)
-        self.tab_label.set_max_width_chars(24)
-
-        # Event box for tooltip.
-        event_box = gtk.EventBox()
-        event_box.add(self.tab_label)
-        self.tooltips.set_tip(event_box, title)
-
-        # Tab close image.
-        image = gtk.image_new_from_stock(gtk.STOCK_CLOSE, gtk.ICON_SIZE_MENU)
-        width, height = image.size_request()
-
-        # Tab close button.
-        button = gtk.Button()
-        button.add(image)
-        button.set_relief(gtk.RELIEF_NONE)
-        button.set_size_request(width + 2, height + 2)
-        button.connect('clicked', self._on_notebook_tab_close_button_clicked)
-
-        # Tab horizontal box.
-        self.tab_widget = gtk.HBox(False, 4)
-        self.tab_widget.pack_start(event_box, True , True , 0)
-        self.tab_widget.pack_start(button   , False, False, 0)
-        self.tab_widget.show_all()
-
-        # Tab menu label.
-        self.tab_menu_label = gtk.Label(title)
-        self.tab_menu_label.set_property('xalign', 0)
 
     def build_tree_view(self):
         """Build the TreeView used to display subtitle data."""
@@ -164,21 +127,32 @@ class Project(gobject.GObject):
         self.tree_view.set_enable_search(False)
         self.tree_view.columns_autosize()
 
+        method = self._on_tree_view_cursor_moved
+        self.tree_view.connect_after('move-cursor', method)
+
+        method = self._on_tree_view_button_press_event
+        self.tree_view.connect('button-press-event', method)
+
+        selection = self.tree_view.get_selection()
+        selection.set_mode(gtk.SELECTION_MULTIPLE)
+        selection.unselect_all()
+        selection.connect('changed', self._on_tree_view_selection_changed)
+
         if self.edit_mode == MODE_TIME:
-            columns = [INT] + [STR] * 5
-            cr_1 = CellRendererTime()
-            cr_2 = CellRendererTime()
-            cr_3 = CellRendererTime()
+            columns = [gobject.TYPE_INT] + [gobject.TYPE_STRING] * 5
+            cell_renderer_1 = CellRendererTime()
+            cell_renderer_2 = CellRendererTime()
+            cell_renderer_3 = CellRendererTime()
 
         elif self.edit_mode == MODE_FRAME:
-            columns = [INT] * 4 + [STR] * 2
-            cr_1 = CellRendererInteger()
-            cr_2 = CellRendererInteger()
-            cr_3 = CellRendererInteger()
+            columns = [gobject.TYPE_INT] * 4 + [gobject.TYPE_STRING] * 2
+            cell_renderer_1 = CellRendererInteger()
+            cell_renderer_2 = CellRendererInteger()
+            cell_renderer_3 = CellRendererInteger()
 
-        cr_0 = CellRendererInteger()
-        cr_4 = CellRendererMultilineText()
-        cr_5 = CellRendererMultilineText()
+        cell_renderer_0 = CellRendererInteger()
+        cell_renderer_4 = CellRendererMultilineText()
+        cell_renderer_5 = CellRendererMultilineText()
 
         font = self._config.get('view', 'font')
 
@@ -191,9 +165,10 @@ class Project(gobject.GObject):
             self._on_tree_view_cell_edited,
         )
 
+        # Set CellRenderer properties.
         for i in range(6):
         
-            cell_renderer = eval('cr_%d' % i)
+            cell_renderer = eval('cell_renderer_%d' % i)
             
             if i != 0:
                 cell_renderer.set_editable(True)
@@ -202,22 +177,25 @@ class Project(gobject.GObject):
             for k in range(len(signals)):
                 cell_renderer.connect(signals[k], callbacks[k], i)
 
-        store = gtk.ListStore(*columns)
-        self.tree_view.set_model(store)
-        
-        tree_col_0 = gtk.TreeViewColumn(_('No.')        , cr_0, text=0)
-        tree_col_1 = gtk.TreeViewColumn(_('Show')       , cr_1, text=1)
-        tree_col_2 = gtk.TreeViewColumn(_('Hide')       , cr_2, text=2)
-        tree_col_3 = gtk.TreeViewColumn(_('Duration')   , cr_3, text=3)
-        tree_col_4 = gtk.TreeViewColumn(_('Text')       , cr_4, text=4)
-        tree_col_5 = gtk.TreeViewColumn(_('Translation'), cr_5, text=5)
+        model = gtk.ListStore(*columns)
+        self.tree_view.set_model(model)
+
+        tree_view_column_0 = gtk.TreeViewColumn(_('No'))
+        tree_view_column_1 = gtk.TreeViewColumn(_('Show'))
+        tree_view_column_2 = gtk.TreeViewColumn(_('Hide'))
+        tree_view_column_3 = gtk.TreeViewColumn(_('Duration'))
+        tree_view_column_4 = gtk.TreeViewColumn(_('Text'))
+        tree_view_column_5 = gtk.TreeViewColumn(_('Translation'))
 
         visible_columns = self._config.getlist('view', 'columns')
         
-        # Set column properties and append columns.
+        # Set column properties and append them to the TreeView.
         for i in range(6):
         
             tree_view_column = eval('tree_col_%d' % i)
+            cell_renderer    = eval('cell_renderer_%d' % i)
+
+            tree_view_column.set_attributes(cell_renderer, text=i)
             self.tree_view.append_column(tree_view_column)
 
             tree_view_column.set_resizable(True)
@@ -248,42 +226,30 @@ class Project(gobject.GObject):
             method = self._on_tree_view_headers_clicked
             button.connect(signal, method)
 
-        selection = self.tree_view.get_selection()
-        selection.set_mode(gtk.SELECTION_MULTIPLE)
-        selection.unselect_all()
-        selection.connect('changed', self._on_tree_view_selection_changed)
-
-        method = self._on_tree_view_cursor_moved
-        self.tree_view.connect_after('move-cursor', method)
-
-        method = self._on_tree_view_button_press_event
-        self.tree_view.connect('button-press-event', method)
-
-    def get_data_column(self, store_col):
+    def get_data_column(self, col):
         """Get Data column to match ListStore column."""
         
-        if store_col == NO:
+        if col == NO:
             return None
-        if store_col in [SHOW, HIDE, DURN]:
-            return store_col - 1
-        if store_col in [TEXT, TRAN]:
-            return store_col - 4
+        if col in [SHOW, HIDE, DURN]:
+            return col - 1
+        if col in [TEXT, TRAN]:
+            return col - 4
 
-    def get_document(self, col):
-        """Get constant for document in col."""
+    def get_document_type(self, col):
+        """Get constant for the type of document in col."""
         
         if col == TRAN:
-            return TRAN_DOCUMENT
+            return TYPE_TRANSLATION
         else:
-            return MAIN_DOCUMENT
+            return TYPE_MAIN
 
     def get_focus(self):
         """
-        Get the location of current focus.
+        Get the location of current TreeView focus.
         
         Return: row, column, gtk.TreeViewColumn (any of which could be None)
         """
-        store = self.tree_view.get_model()
         row, tree_view_column = self.tree_view.get_cursor()
 
         if tree_view_column is None:
@@ -312,21 +278,6 @@ class Project(gobject.GObject):
         except AttributeError:
             return self.untitle
 
-    def get_main_document_properties(self):
-        """
-        Get properties of main document.
-
-        Return: (path, format, encoding, newlines) or (None, None, None None)
-        """
-        try:
-            path     = self.data.main_file.path
-            format   = self.data.main_file.FORMAT
-            encoding = self.data.main_file.encoding
-            newlines = self.data.main_file.newlines
-            return path, format, encoding, newlines
-        except AttributeError:
-            return None, None, None, None
-
     def get_selected_rows(self):
         """Get rows selected in TreeView."""
 
@@ -336,6 +287,44 @@ class Project(gobject.GObject):
         # selected_rows is a list of one-tuples of integers. Change that to a
         # list of integers.
         return [row[0] for row in selected_rows]
+
+    def get_tab_widget(self):
+        """Build notebook tab labels and return notebook tab widget."""
+
+        title = self.get_main_basename()
+        
+        # Tab label
+        self.tab_label = gtk.Label(title)
+        self.tab_label.set_ellipsize(pango.ELLIPSIZE_MIDDLE)
+        self.tab_label.set_max_width_chars(24)
+
+        # Event box for tooltip
+        event_box = gtk.EventBox()
+        event_box.add(self.tab_label)
+        self.tooltips.set_tip(event_box, title)
+
+        # Tab close image
+        image = gtk.image_new_from_stock(gtk.STOCK_CLOSE, gtk.ICON_SIZE_MENU)
+        width, height = image.size_request()
+
+        # Tab close button
+        button = gtk.Button()
+        button.add(image)
+        button.set_relief(gtk.RELIEF_NONE)
+        button.set_size_request(width + 2, height + 2)
+        button.connect('clicked', self._on_notebook_tab_close_button_clicked)
+
+        # Tab horizontal box
+        tab_widget = gtk.HBox(False, 4)
+        tab_widget.pack_start(event_box, True , True , 0)
+        tab_widget.pack_start(button   , False, False, 0)
+        tab_widget.show_all()
+
+        # Tab menu label.
+        self.tab_menu_label = gtk.Label(title)
+        self.tab_menu_label.set_property('xalign', 0)
+
+        return tab_widget
 
     def get_timings(self):
         """Return time or frame data depending on edit mode."""
@@ -365,32 +354,6 @@ class Project(gobject.GObject):
         except AttributeError:
             return self.get_translation_basename()
 
-    def get_translation_document_properties(self):
-        """
-        Get properties of translation document.
-
-        Properties are inherited from main document if translation file does
-        not exist.
-        
-        Return: path, format, encoding, newlines (of which any can be None)
-        """
-        if self.data.tran_file is not None:
-            path     = self.data.tran_file.path
-            format   = self.data.tran_file.FORMAT
-            encoding = self.data.tran_file.encoding
-            newlines = self.data.tran_file.newlines
-            return path, format, encoding, newlines
-
-        elif self.data.main_file is not None:
-            path     = None
-            format   = self.data.main_file.FORMAT
-            encoding = self.data.main_file.encoding
-            newlines = self.data.main_file.newlines
-            return path, format, encoding, newlines
-
-        else:
-            return None, None, None, None
-
     def _on_notebook_tab_close_button_clicked(self, *args):
         """Emit signal that the Notebook tab close button has been clicked."""
         
@@ -415,7 +378,7 @@ class Project(gobject.GObject):
         self.emit('tree-view-cell-editing-started', col)
 
     def _on_tree_view_cursor_moved(self, *args):
-        """Emit signal that the TreeView cursor has moved."""
+        """Emit signal that the focus in the TreeView has moved."""
 
         self.set_active_column()
         self.emit('tree-view-cursor-moved')
@@ -434,77 +397,73 @@ class Project(gobject.GObject):
     def reload_all_data(self):
         """Reload all data in the TreeView."""
         
-        store = self.tree_view.get_model()
-        store.clear()
+        model = self.tree_view.get_model()
+        model.clear()
 
         timings = self.get_timings()
-
-        self.tree_view.freeze_child_notify()
+        texts   = self.data.texts
 
         for i in range(len(self.data.times)):
-            store.append([i + 1] + timings[i] + self.data.texts[i])
-
-        self.tree_view.thaw_child_notify()
+            model.append([i + 1] + timings[i] + texts[i])
 
     def reload_data_between_rows(self, row_x, row_y):
-        """Reload TreeView data between given rows."""
+        """Reload TreeView data between row_x and row_y."""
 
         start_row = min(row_x, row_y)
         end_row   = max(row_x, row_y)
 
-        store   = self.tree_view.get_model()
+        model   = self.tree_view.get_model()
         timings = self.get_timings()
         texts   = self.data.texts
 
-        self.tree_view.freeze_child_notify()
-
         for i in range(start_row, end_row + 1):
-            store[i] = [i + 1] + timings[i] + texts[i]
-                        
-        self.tree_view.thaw_child_notify()
+            model[i] = [i + 1] + timings[i] + texts[i]
 
-    def reload_data_in_columns(self, col_list):
-        """Reload all data in given columns."""
+    def reload_data_in_columns(self, cols):
+        """
+        Reload all data in given columns.
         
-        store = self.tree_view.get_model()
+        cols: string (for single column) or list (for multiple columns)
+        """
+        if isinstance(cols, basestring):
+            cols = [cols]
 
-        self.tree_view.freeze_child_notify()
+        model = self.tree_view.get_model()
 
-        for col in col_list:
+        for col in cols:
 
             if col == NO:
             
-                for i in range(len(store)):
-                    store[i][col] = i + 1
+                for i in range(len(model)):
+                    model[i][col] = i + 1
             
             elif col in [SHOW, HIDE, DURN]:
 
                 timings  = self.get_timings()
                 data_col = self.get_data_column(col)
                 
-                for i in range(len(store)):
-                    store[i][col] = timings[i][data_col]
+                for i in range(len(model)):
+                    model[i][col] = timings[i][data_col]
                             
             elif col in [TEXT, TRAN]:
 
+                texts    = self.data.texts
                 data_col = self.get_data_column(col)
             
-                for i in range(len(store)):
-                    store[i][col] = self.data.texts[i][data_col]
-
-        self.tree_view.thaw_child_notify()
+                for i in range(len(model)):
+                    model[i][col] = self.data.texts[i][data_col]
 
     def reload_data_in_row(self, row):
         """Reload TreeView data in given row."""
 
-        store   = self.tree_view.get_model()
+        model   = self.tree_view.get_model()
         timings = self.get_timings()
         texts   = self.data.texts
 
-        store[row] = [row + 1] + timings[row] + texts[row]
+        model[row] = [row + 1] + timings[row] + texts[row]
 
     def set_active_column(self, *args):
-        """Set the active column title emphasized."""
+        """Emphasize the active column title."""
 
         col = self.get_focus()[1]
 
@@ -524,7 +483,9 @@ class Project(gobject.GObject):
         Return: tab label title
         """
         title = self.get_main_basename()
-        if self.main_changed or self.tran_changed:
+        if self.main_changed:
+            title = '*' + title
+        elif self.tran_active and self.tran_changed:
             title = '*' + title
         
         self.tab_label.set_text(title)

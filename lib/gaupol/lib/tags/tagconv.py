@@ -42,8 +42,11 @@ class TagConverter(object):
     
     def __init__(self, from_format, to_format):
 
-        from_tags = eval(from_format).DECODE_TAGS
-        to_tags   = eval(  to_format).ENCODE_TAGS
+        from_format_name = FORMAT_NAMES[from_format]
+        to_format_name   = FORMAT_NAMES[  to_format]
+
+        from_tags = eval(from_format_name).DECODE_TAGS
+        to_tags   = eval(  to_format_name).ENCODE_TAGS
 
         self._from_regexs = []
         self._to_regexs   = []

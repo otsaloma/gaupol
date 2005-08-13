@@ -69,7 +69,7 @@ class GUIBuilder(Delegate):
         # Put framerate combo box to an event box and enable tooltip.
         event_box = gtk.EventBox()
         event_box.add(self.framerate_combo_box)
-        self.tooltips_open.set_tip(event_box, _('Framerate'))
+        self.tooltips.set_tip(event_box, _('Framerate'))
 
         # Create a tool item for the framerate combo box.
         tool_item = gtk.ToolItem()
@@ -141,12 +141,15 @@ class GUIBuilder(Delegate):
         self.open_button.set_label(_('Open'))
         self.open_button.set_is_important(True)
         self.open_button.connect('clicked', self.on_open_activated)
+
+        ### EI INSTANSSIMUUTT!!!
+        tooltips_always = gtk.Tooltips()
         
         tip = _('Open a subtitle file')
-        self.open_button.set_tooltip(self.tooltips_always, tip)
+        self.open_button.set_tooltip(tooltips_always, tip)
 
         tip = _('Open a recently used subtitle file')
-        self.open_button.set_arrow_tooltip(self.tooltips_always, tip)
+        self.open_button.set_arrow_tooltip(tooltips_always, tip)
         
         toolbar = self.uim.get_widget('/ui/toolbar')
         toolbar.insert(self.open_button, 0)
@@ -154,13 +157,13 @@ class GUIBuilder(Delegate):
     def _build_statusbar(self):
         """Build the statusbar."""
 
-        event_box = gui.get_event_box(self.original_statusbar)
+        event_box = gui.get_event_box(self.text_statusbar)
         tip = _('Amount of characters in the text of the selected subtitle')
-        self.tooltips_open.set_tip(event_box, tip)
+        self.tooltips.set_tip(event_box, tip)
         
         event_box = gui.get_event_box(self.translation_statusbar)
         tip = _('Amount of characters in the translation of the selected subtitle')
-        self.tooltips_open.set_tip(event_box, tip)
+        self.tooltips.set_tip(event_box, tip)
 
         if not self.config.getboolean('view', 'statusbar'):
             self.statusbar_hbox.hide()
@@ -644,10 +647,10 @@ class GUIBuilder(Delegate):
         self.undo_button.connect('clicked', self.on_undo_button_clicked)
         
         tip = _('Undo the last action')
-        self.undo_button.set_tooltip(self.tooltips_open, tip)
+        self.undo_button.set_tooltip(self.tooltips, tip)
 
         tip = _('Undo several actions')
-        self.undo_button.set_arrow_tooltip(self.tooltips_open, tip)
+        self.undo_button.set_arrow_tooltip(self.tooltips, tip)
 
         self.redo_button = gtk.MenuToolButton(gtk.STOCK_REDO)
         self.redo_button.set_label(_('Redo'))
@@ -655,10 +658,10 @@ class GUIBuilder(Delegate):
         self.redo_button.connect('clicked', self.on_redo_button_clicked)
         
         tip = _('Redo the last undone action')
-        self.redo_button.set_tooltip(self.tooltips_open, tip)
+        self.redo_button.set_tooltip(self.tooltips, tip)
 
         tip = _('Redo several undone actions')
-        self.redo_button.set_arrow_tooltip(self.tooltips_open, tip)
+        self.redo_button.set_arrow_tooltip(self.tooltips, tip)
         
         toolbar = self.uim.get_widget('/ui/toolbar')
         toolbar.insert(gtk.SeparatorToolItem(), 2)

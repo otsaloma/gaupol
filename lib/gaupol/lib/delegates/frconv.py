@@ -51,26 +51,30 @@ class FramerateConverter(Delegate):
         self.framerate      = framerate
         self.calc.framerate = float(framerate)
 
+        calc   = self.calc
+        times  = self.times
+        frames = self.frames
+
         if self.main_file.MODE == MODE_TIME:
 
-            for i in range(len(self.times)):
+            for i in range(len(times)):
 
-                show = self.calc.time_to_frame(self.times[i][SHOW])
-                hide = self.calc.time_to_frame(self.times[i][HIDE])
-                durn = self.calc.get_frame_duration(show, hide)
+                show = calc.time_to_frame(times[i][SHOW])
+                hide = calc.time_to_frame(times[i][HIDE])
+                durn = calc.get_frame_duration(show, hide)
 
-                self.frames[i][SHOW] = show
-                self.frames[i][HIDE] = hide
-                self.frames[i][DURN] = durn
+                frames[i][SHOW] = show
+                frames[i][HIDE] = hide
+                frames[i][DURN] = durn
 
         elif self.main_file.MODE == MODE_FRAME:
 
             for i in range(len(self.times)):
 
-                show = self.calc.frame_to_time(self.frames[i][SHOW])
-                hide = self.calc.frame_to_time(self.frames[i][HIDE])
-                durn = self.calc.get_time_duration(show, hide)
+                show = calc.frame_to_time(frames[i][SHOW])
+                hide = calc.frame_to_time(frames[i][HIDE])
+                durn = calc.get_time_duration(show, hide)
 
-                self.times[i][SHOW] = show
-                self.times[i][HIDE] = hide
-                self.times[i][DURN] = durn
+                times[i][SHOW] = show
+                times[i][HIDE] = hide
+                times[i][DURN] = durn

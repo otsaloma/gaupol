@@ -23,6 +23,14 @@
 VERSION = '0.0+svn'
 
 
+# Extension and Format class constants must have the same order.
+
+class Extension(object):
+
+    EXTENSION_VALUES   = ['.sub', '.srt']
+    EXTENSION_MICRODVD = 0
+    EXTENSION_SUBRIP   = 1
+
 class Format(object):
 
     FORMAT_NAMES    = ['MicroDVD', 'SubRip']

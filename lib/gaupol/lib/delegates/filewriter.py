@@ -30,6 +30,7 @@ try:
 except ImportError:
     pass
 
+from gaupol.constants.Format import *
 from gaupol.constants.Mode import *
 from gaupol.lib.constants.Column import *
 from gaupol.lib.delegates.delegate import Delegate
@@ -129,23 +130,26 @@ class FileWriter(Delegate):
             path          = current_file.path
             
         else:
-            subtitle_file = eval(format)(path, encoding, newlines)
+            format_name = FORMAT_NAMES[format]
+            subtitle_file = eval(format_name)(path, encoding, newlines)
 
         shows = []
         hides = []
         texts = []
 
         if subtitle_file.MODE == MODE_TIME:
-            for i in range(len(self.times)):
-                shows.append(self.times[i][SHOW])
-                hides.append(self.times[i][HIDE])
-                texts.append(new_texts [i][col ])
+            times = self.times
+            for i in range(len(times)):
+                shows.append(times[i][SHOW])
+                hides.append(times[i][HIDE])
+                texts.append(new_texts[i][col])
 
         elif subtitle_file.MODE == MODE_FRAME:
-            for i in range(len(self.times)):
-                shows.append(self.frames[i][SHOW])
-                hides.append(self.frames[i][HIDE])
-                texts.append(new_texts  [i][col ])
+            frames = self.frames
+            for i in range(len(times)):
+                shows.append(frames[i][SHOW])
+                hides.append(frames[i][HIDE])
+                texts.append(new_texts[i][col])
                 
         # If the file to be written already exists, a backup copy of it is
         # made in case writing fails. The backup file should be temporary,

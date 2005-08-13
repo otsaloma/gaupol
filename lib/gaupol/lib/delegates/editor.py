@@ -67,7 +67,10 @@ class Editor(Delegate):
         OPTIMAL_SECOND_DURATION = 3
         OPTIMAL_FRAME_DURATION  = 80
 
-        calc = self.calc
+        calc   = self.calc
+        times  = self.times
+        frames = self.frames
+        texts  = self.texts
 
         mode    = self.get_mode()
         timings = self.get_timings()
@@ -111,9 +114,9 @@ class Editor(Delegate):
 
                 row = start_row + i
 
-                self.times.insert( row, [show_time , hide_time , durn_time ])
-                self.frames.insert(row, [show_frame, hide_frame, durn_frame])
-                self.texts.insert( row, [text, u''])
+                times.insert( row, [show_time , hide_time , durn_time ])
+                frames.insert(row, [show_frame, hide_frame, durn_frame])
+                texts.insert( row, [text, u''])
             
         elif mode == MODE_FRAME:
 
@@ -131,9 +134,9 @@ class Editor(Delegate):
 
                 row = start_row + i
 
-                self.times.insert( row, [show_time , hide_time , durn_time ])
-                self.frames.insert(row, [show_frame, hide_frame, durn_frame])
-                self.texts.insert( row, [text, u''])
+                times.insert( row, [show_time , hide_time , durn_time ])
+                frames.insert(row, [show_frame, hide_frame, durn_frame])
+                texts.insert( row, [text, u''])
 
     def remove_subtitles(self, rows):
         """Remove subtitles."""

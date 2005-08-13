@@ -27,6 +27,7 @@ try:
 except ImportError:
     pass
 
+from gaupol.constants.Format import *
 from gaupol.lib.constants.Column import *
 from gaupol.lib.delegates.delegate import Delegate
 from gaupol.lib.tags.all import *
@@ -74,26 +75,26 @@ class Formatter(Delegate):
             
         return texts
 
-    def _get_format(self, col):
+    def _get_format_name(self, col):
         """
-        Get file format used in given text column.
+        Get name of file format used in given text column.
         
         Translation column will inherit original column's format if
         translation file does not exist.
 
-        Return: format or None
+        Return: format name or None
         """
         if col == TEXT:
             try:
-                return self.main_file.FORMAT
+                return FORMAT_NAMES[self.main_file.FORMAT]
             except AttributeError:
                 return None
 
         elif col == TRAN:
             try:
-                return self.tran_file.FORMAT
+                return FORMAT_NAMES[self.tran_file.FORMAT]
             except AttributeError:
-                return self._get_format(TEXT)
+                return self._get_format_name(TEXT)
 
     def get_regex_for_tag(self, col):
         """
@@ -101,12 +102,12 @@ class Formatter(Delegate):
         
         Return: re object or None
         """
-        format = self._get_format(col)
+        format_name = self._get_format_name(col)
 
         if format is None:
             return None
 
-        regex, flags = eval(format).TAG
+        regex, flags = eval(format_name).TAG
         
         try:
             return re.compile(regex, flags)
@@ -191,10 +192,10 @@ class Formatter(Delegate):
         Return: new texts
         """
         texts  = [self.texts[row][col] for row in rows]
-        format = self._get_format(col)
+        format_name = self._get_format_name(col)
 
         # Get regular expression for an italic tag.
-        regex, flags = eval(format).ITALIC
+        regex, flags = eval(format_name).ITALIC
         try:
             re_italic_tag = re.compile(regex, flags)
         except TypeError:

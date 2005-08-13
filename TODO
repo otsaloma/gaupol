@@ -1,5 +1,7 @@
 Before 0.1
 ==========
+- Benchmark TreeView performance with different speeding tricks
+  http://www.mail-archive.com/pygtk@daa.com.au/msg10991.html
 - Preferences dialog
 - Code review
 - Testing and bugfixing

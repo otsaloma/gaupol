@@ -89,20 +89,20 @@ def _import_optional_modules():
 def _parse_options():
     # Parse command line options and arguments.
     #
-    # Return: use english (True or False), arguments
+    # Return: no_translation (True or False), arguments
 
     parser = optparse.OptionParser(version='Gaupol %s' % VERSION)
 
     parser.add_option(
-        '', '--english', action='store_true', dest='english', default=False,
-        help='ignore possible translation and use english'
+        '', '--no-translation', action='store_true', dest='no_translation',
+        default=False, help='ignore possible translation (use english)'
     )
 
     options, args = parser.parse_args(sys.argv)
 
-    return options.english, args
+    return options.no_translation, args
     
-def _prepare_gettext(use_english):
+def _prepare_gettext(no_translation):
     # Prepare internationalization using gettext.
     #
     # Gettext translation function is installed to Python's built-in namespace
@@ -111,7 +111,7 @@ def _prepare_gettext(use_english):
 
     locale.setlocale(locale.LC_ALL, '')
 
-    if use_english:
+    if no_translation:
         __builtins__.__dict__['_'] = lambda x: x
         return
 
@@ -151,7 +151,7 @@ def _prepare_source_run(prefix):
             
 if __name__ == '__main__':
 
-    use_english, args = _parse_options()
+    no_translation, args = _parse_options()
     
     _check_dependencies()
     _import_optional_modules()

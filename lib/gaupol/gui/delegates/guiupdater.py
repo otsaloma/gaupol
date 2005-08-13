@@ -483,13 +483,13 @@ class GUIUpdater(Delegate):
 
         if project.undoables:
             tip = _('Undo %s') % project.undoables[0].description
-            self.undo_button.set_tooltip(self.tooltips_open, tip)
+            self.undo_button.set_tooltip(self.tooltips, tip)
             action = self.uim.get_action('/ui/menubar/edit/undo')
             action.set_property('tooltip', tip)
 
         if project.redoables:
             tip = _('Redo %s') % project.redoables[0].description
-            self.redo_button.set_tooltip(self.tooltips_open, tip)
+            self.redo_button.set_tooltip(self.tooltips, tip)
             action = self.uim.get_action('/ui/menubar/edit/redo')
             action.set_property('tooltip', tip)
         
@@ -498,7 +498,7 @@ class GUIUpdater(Delegate):
     def _set_character_status(self, project):
         """Set charcter length info to statusbar."""
 
-        self.original_statusbar.pop(0)
+        self.text_statusbar.pop(0)
         self.translation_statusbar.pop(0)
 
         if project is None:
@@ -511,7 +511,7 @@ class GUIUpdater(Delegate):
             return
             
         data_row = project.get_data_row(sel_rows[0])
-        stbars = [self.original_statusbar, self.translation_statusbar]
+        stbars = [self.text_statusbar, self.translation_statusbar]
 
         for i in range(2):
         
@@ -606,9 +606,9 @@ class GUIUpdater(Delegate):
             self.uim.get_action(path).set_sensitive(is_open)
 
         if is_open:
-            self.tooltips_open.enable()
+            self.tooltips.enable()
         else:
-            self.tooltips_open.disable()
+            self.tooltips.disable()
             self.set_status_message(None)
             self.window.set_title('Gaupol')
 
@@ -806,7 +806,7 @@ class GUIUpdater(Delegate):
 
         # Set tooltip
         event_box = gui.get_event_box(self.message_statusbar)
-        self.tooltips_open.set_tip(event_box, message)
+        self.tooltips.set_tip(event_box, message)
 
         if message is None:
             return False
@@ -883,7 +883,7 @@ class GUIUpdater(Delegate):
         """Set visibility of the statusbars based on tree view columns."""
 
         if project is None:
-            self.original_statusbar.hide()
+            self.text_statusbar.hide()
             self.translation_statusbar.hide()
             self.message_statusbar.set_has_resize_grip(True)
             return
@@ -891,19 +891,19 @@ class GUIUpdater(Delegate):
         orig_visible = project.tree_view.get_column(TEXT).get_visible()
         tran_visible = project.tree_view.get_column(TRAN).get_visible()
         
-        self.original_statusbar.set_property('visible', orig_visible)
+        self.text_statusbar.set_property('visible', orig_visible)
         self.translation_statusbar.set_property('visible', tran_visible)
         
         if tran_visible:
             self.message_statusbar.set_has_resize_grip(False)
-            self.original_statusbar.set_has_resize_grip(False)
+            self.text_statusbar.set_has_resize_grip(False)
             self.translation_statusbar.set_has_resize_grip(True)
         else:
             if orig_visible:
                 self.message_statusbar.set_has_resize_grip(False)
-                self.original_statusbar.set_has_resize_grip(True)
+                self.text_statusbar.set_has_resize_grip(True)
                 self.translation_statusbar.set_has_resize_grip(False)
             else:
                 self.message_statusbar.set_has_resize_grip(True)
-                self.original_statusbar.set_has_resize_grip(False)
+                self.text_statusbar.set_has_resize_grip(False)
                 self.translation_statusbar.set_has_resize_grip(False)

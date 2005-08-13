@@ -25,6 +25,7 @@ try:
 except ImportError:
     pass
 
+from gaupol.constants.Format import *
 from gaupol.constants.Mode import *
 from gaupol.lib.constants.Column import *
 from gaupol.lib.delegates.delegate import Delegate
@@ -50,8 +51,9 @@ class FileReader(Delegate):
         
         determiner = FileFormatDeterminer(path, encoding)
         format = determiner.determine_file_format()
+        format_name = FORMAT_NAMES[format]
 
-        main_file = eval(format)(path, encoding)
+        main_file = eval(format_name)(path, encoding)
         shows, hides, texts = main_file.read()
         shows, hides, texts = self._sort_data(shows, hides, texts)
 
@@ -63,7 +65,10 @@ class FileReader(Delegate):
         self.frames = []
         self.texts  = []
 
-        calc = self.calc
+        calc   = self.calc
+        times  = self.times
+        frames = self.frames
+        texts  = self.texts
 
         if self.main_file.MODE == MODE_TIME:
             
@@ -78,9 +83,9 @@ class FileReader(Delegate):
                 hide_frame = calc.time_to_frame(hide_time)
                 durn_frame = calc.get_frame_duration(show_frame, hide_frame)
                             
-                self.times.append( [show_time , hide_time , durn_time ])
-                self.frames.append([show_frame, hide_frame, durn_frame])
-                self.texts.append( [text, u''])
+                times.append( [show_time , hide_time , durn_time ])
+                frames.append([show_frame, hide_frame, durn_frame])
+                texts.append( [text, u''])
 
         elif self.main_file.MODE == MODE_FRAME:
             
@@ -95,9 +100,9 @@ class FileReader(Delegate):
                 hide_time  = calc.frame_to_time(hide_frame)
                 durn_time  = calc.get_time_duration(show_time, hide_time)
 
-                self.times.append( [show_time , hide_time , durn_time ])
-                self.frames.append([show_frame, hide_frame, durn_frame])
-                self.texts.append( [text, u''])
+                times.append( [show_time , hide_time , durn_time ])
+                frames.append([show_frame, hide_frame, durn_frame])
+                texts.append( [text, u''])
 
     def read_translation_file(self, path, encoding):
         """
@@ -110,8 +115,9 @@ class FileReader(Delegate):
         """
         determiner = FileFormatDeterminer(path, encoding)
         format = determiner.determine_file_format()
+        format_name = FORMAT_NAMES[format]
 
-        tran_file = eval(format)(path, encoding)
+        tran_file = eval(format_name)(path, encoding)
         shows, hides, trans = tran_file.read()
         shows, hides, trans = self._sort_data(shows, hides, trans)
         

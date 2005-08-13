@@ -129,13 +129,13 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkEventBox" id="original_event_box">
+	    <widget class="GtkEventBox" id="text_event_box">
 	      <property name="visible">True</property>
 	      <property name="visible_window">True</property>
 	      <property name="above_child">False</property>
 
 	      <child>
-		<widget class="GtkStatusbar" id="original_statusbar">
+		<widget class="GtkStatusbar" id="text_statusbar">
 		  <property name="width_request">100</property>
 		  <property name="visible">True</property>
 		  <property name="has_resize_grip">False</property>
