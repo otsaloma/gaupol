@@ -45,8 +45,8 @@
 			<menuitem action="toolbar"/>
 			<menuitem action="statusbar"/>
 			<separator/>
-			<menuitem action="times"/>
 			<menuitem action="frames"/>
+			<menuitem action="times"/>
 			<separator/>
 			<menu action="framerate">
 				<menuitem action="23.976"/>
@@ -55,11 +55,11 @@
 			</menu>
 			<separator/>
 			<menu action="columns">
-				<menuitem action="no"/>
+				<menuitem action="number"/>
 				<menuitem action="show"/>
 				<menuitem action="hide"/>
 				<menuitem action="duration"/>
-				<menuitem action="original"/>
+				<menuitem action="text"/>
 				<menuitem action="translation"/>
 			</menu>
 		</menu>

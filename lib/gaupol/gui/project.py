@@ -31,12 +31,13 @@ import gobject
 import gtk
 import pango
 
-from gaupol.constants import TIME_MODE, FRAME_MODE
+from gaupol.constants import MAIN_DOCUMENT, TRAN_DOCUMENT
+from gaupol.constants import MODE_TIME, MODE_FRAME
 from gaupol.gui.cellrend.integer import CellRendererInteger
 from gaupol.gui.cellrend.multiline import CellRendererMultilineText
 from gaupol.gui.cellrend.time import CellRendererTime
 from gaupol.gui.constants import COLUMN_NAMES, MODE_NAMES
-from gaupol.gui.constants import NO, SHOW, HIDE, DURN, ORIG, TRAN
+from gaupol.gui.constants import NO, SHOW, HIDE, DURN, TEXT, TRAN
 from gaupol.gui.util import gui
 from gaupol.lib.data import Data
 
@@ -100,6 +101,8 @@ class Project(gobject.GObject):
         # unchanged (saved) state.
         self.main_changed = 0
         self.tran_changed = 0
+
+        self.tran_active = False
         
         # Stacks of actions of type DURAction.  
         self.undoables = []
@@ -161,13 +164,13 @@ class Project(gobject.GObject):
         self.tree_view.set_enable_search(False)
         self.tree_view.columns_autosize()
 
-        if self.edit_mode == TIME_MODE:
+        if self.edit_mode == MODE_TIME:
             columns = [INT] + [STR] * 5
             cr_1 = CellRendererTime()
             cr_2 = CellRendererTime()
             cr_3 = CellRendererTime()
 
-        elif self.edit_mode == FRAME_MODE:
+        elif self.edit_mode == MODE_FRAME:
             columns = [INT] * 4 + [STR] * 2
             cr_1 = CellRendererInteger()
             cr_2 = CellRendererInteger()
@@ -256,15 +259,23 @@ class Project(gobject.GObject):
         method = self._on_tree_view_button_press_event
         self.tree_view.connect('button-press-event', method)
 
-    def get_data_col(self, store_col):
+    def get_data_column(self, store_col):
         """Get Data column to match ListStore column."""
         
         if store_col == NO:
             return None
         if store_col in [SHOW, HIDE, DURN]:
             return store_col - 1
-        if store_col in [ORIG, TRAN]:
+        if store_col in [TEXT, TRAN]:
             return store_col - 4
+
+    def get_document(self, col):
+        """Get constant for document in col."""
+        
+        if col == TRAN:
+            return TRAN_DOCUMENT
+        else:
+            return MAIN_DOCUMENT
 
     def get_focus(self):
         """
@@ -329,9 +340,9 @@ class Project(gobject.GObject):
     def get_timings(self):
         """Return time or frame data depending on edit mode."""
         
-        if self.edit_mode == TIME_MODE:
+        if self.edit_mode == MODE_TIME:
             return self.data.times
-        elif self.edit_mode == FRAME_MODE:
+        elif self.edit_mode == MODE_FRAME:
             return self.data.frames
 
     def get_translation_basename(self):
@@ -435,6 +446,23 @@ class Project(gobject.GObject):
 
         self.tree_view.thaw_child_notify()
 
+    def reload_data_between_rows(self, row_x, row_y):
+        """Reload TreeView data between given rows."""
+
+        start_row = min(row_x, row_y)
+        end_row   = max(row_x, row_y)
+
+        store   = self.tree_view.get_model()
+        timings = self.get_timings()
+        texts   = self.data.texts
+
+        self.tree_view.freeze_child_notify()
+
+        for i in range(start_row, end_row + 1):
+            store[i] = [i + 1] + timings[i] + texts[i]
+                        
+        self.tree_view.thaw_child_notify()
+
     def reload_data_in_columns(self, col_list):
         """Reload all data in given columns."""
         
@@ -457,7 +485,7 @@ class Project(gobject.GObject):
                 for i in range(len(store)):
                     store[i][col] = timings[i][data_col]
                             
-            elif col in [ORIG, TRAN]:
+            elif col in [TEXT, TRAN]:
 
                 data_col = self.get_data_column(col)
             
@@ -474,23 +502,6 @@ class Project(gobject.GObject):
         texts   = self.data.texts
 
         store[row] = [row + 1] + timings[row] + texts[row]
-
-    def reload_data_in_rows(self, row_x, row_y):
-        """Reload TreeView data between given rows."""
-
-        start_row = min(row_x, row_y)
-        end_row   = max(row_x, row_y)
-
-        store   = self.tree_view.get_model()
-        timings = self.get_timings()
-        texts   = self.data.texts
-
-        self.tree_view.freeze_child_notify()
-
-        for i in range(start_row, end_row + 1):
-            store[i] = [i + 1] + timings[i] + texts[i]
-                        
-        self.tree_view.thaw_child_notify()
 
     def set_active_column(self, *args):
         """Set the active column title emphasized."""

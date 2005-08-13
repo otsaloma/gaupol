@@ -36,11 +36,6 @@ class Clipboard(object):
     
         self.data = None
         self.x_clipboard = gtk.Clipboard()
-
-    def get_data(self):
-        """Return clipboard contents."""
-        
-        return self.data
         
     def set_data(self, data):
         """

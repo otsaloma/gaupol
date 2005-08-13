@@ -322,6 +322,8 @@ class SaveDialog(CustomFileChooserDialog):
         newlines = self._config.get('file', 'newlines')
         self._newline_combo_box.set_active(NEWLINES.index(newlines))
 
+    def get_filename
+        add extesnion
     def get_format(self):
         """Get selected format."""
 

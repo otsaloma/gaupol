@@ -22,11 +22,42 @@
 
 VERSION = '0.0+svn'
 
-TIME_MODE  = 0
-FRAME_MODE = 1
 
-ORIGINAL_TEXT    = 0
-TRANSLATION_TEXT = 1
+class Format(object):
 
-MAIN_FILE        = 0
-TRANSLATION_FILE = 1
+    FORMAT_NAMES    = ['MicroDVD', 'SubRip']
+    FORMAT_MICRODVD = 0
+    FORMAT_SUBRIP   = 1
+
+class Framerate(object):
+
+    FRAMERATE_NAMES  = ['23.976', '25', '29.97']
+    FRAMERATE_23_976 = 0
+    FRAMERATE_25     = 1
+    FRAMERATE_29_97  = 2
+
+class Mode(object):
+
+    MODE_NAMES = ['frame', 'time']
+    MODE_FRAME = 0
+    MODE_TIME  = 1
+
+class Newlines(object):
+
+    NEWLINES_NAMES   = ['Mac', 'Unix', 'Windows']
+    NEWLINES_VALUES  = ['\r' , '\n'  , '\r\n'   ]
+    NEWLINES_UNIX    = 'Unix'
+    NEWLINES_MAC     = 'Mac'
+    NEWLINES_WINDOWS = 'Windows'
+
+class Position(object):
+
+    POSITION_NAMES = ['above', 'below']
+    POSITION_ABOVE = 0
+    POSITION_BELOW = 1
+
+class Type(object):
+
+    TYPE_NAMES       = ['main', 'translation']
+    TYPE_MAIN        = 0
+    TYPE_TRANSLATION = 1

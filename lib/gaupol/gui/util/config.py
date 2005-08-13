@@ -46,8 +46,6 @@ HEADER = \
 
 '''
 
-KEY, VALUE = 0, 1
-
 DEFAULTS = {
     'editor':
     (
@@ -90,7 +88,7 @@ DEFAULTS = {
         ('font'     , ''                              ),
         ('statusbar', 'true'                          ),
         ('toolbar'  , 'true'                          ),
-        ('columns'  , 'no|show|hide|duration|original'),
+        ('columns'  , 'number|show|hide|duration|text'),
     ),
 }
 
@@ -147,7 +145,13 @@ class Config(RawConfigParser):
 
         If settings don't exist in file, defaults will be used.
         """
-        self._set_defaults()
+        KEY, VALUE = 0, 1
+
+        # Set default settings.
+        for section in DEFAULTS:
+            self.add_section(section)
+            for setting in DEFAULTS[section]:
+                self.set(section, setting[KEY], setting[VALUE])
         
         # Read from file.
         result = self.read([CONFIG_PATH])
@@ -211,14 +215,6 @@ class Config(RawConfigParser):
         string = '|'.join(string_list)
         
         self.set(section, key, string)
-
-    def _set_defaults(self):
-        """Set default values for all settings."""
-
-        for section in DEFAULTS:
-            self.add_section(section)
-            for setting in DEFAULTS[section]:
-                self.set(section, setting[KEY], setting[VALUE])
 
     def write_to_file(self):
         """Write settings to file."""

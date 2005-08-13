@@ -20,6 +20,11 @@
 """gaupol.lib-wide constants."""
 
 
-# Column indexes
-SHOW, HIDE, DURN = 0, 1, 2
-ORIG, TRAN       = 0, 1
+class Column(object):
+
+    SHOW = 0
+    HIDE = 1
+    DURN = 2
+    
+    TEXT = 0
+    TRAN = 1

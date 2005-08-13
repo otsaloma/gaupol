@@ -27,7 +27,7 @@ try:
 except ImportError:
     pass
 
-from gaupol.lib.constants import ORIG, TRAN
+from gaupol.lib.constants.Column import *
 from gaupol.lib.delegates.delegate import Delegate
 from gaupol.lib.tags.all import *
 
@@ -83,7 +83,7 @@ class Formatter(Delegate):
 
         Return: format or None
         """
-        if col == ORIG:
+        if col == TEXT:
             try:
                 return self.main_file.FORMAT
             except AttributeError:
@@ -93,7 +93,7 @@ class Formatter(Delegate):
             try:
                 return self.tran_file.FORMAT
             except AttributeError:
-                return self._get_format(ORIG)
+                return self._get_format(TEXT)
 
     def get_regex_for_tag(self, col):
         """

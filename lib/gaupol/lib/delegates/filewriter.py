@@ -30,9 +30,8 @@ try:
 except ImportError:
     pass
 
-from gaupol.constants import ORIGINAL_TEXT, TRANSLATION_TEXT
-from gaupol.constants import TIME_MODE, FRAME_MODE
-from gaupol.lib.constants import SHOW, HIDE, DURN, ORIG, TRAN
+from gaupol.constants.Mode import *
+from gaupol.lib.constants.Column import *
 from gaupol.lib.delegates.delegate import Delegate
 from gaupol.lib.files.all import *
 from gaupol.lib.tags.tagconv import TagConverter
@@ -94,20 +93,16 @@ class FileWriter(Delegate):
                 % (path, bak_path, detail) \
             )
             
-    def _write_file(self, text_part, keep_changes, path, format, encoding,
+    def _write_file(self, text_col, keep_changes, path, format, encoding,
                     newlines):
         """
         Write subtitle file.
         
-        text_part: ORIGINAL_TEXT or TRANSLATION_TEXT
         keep_changes: True or False
-
         Raise IOError if reading fails.
         Raise UnicodeError if encoding fails.
         """
-        text_parts = [ORIGINAL_TEXT, TRANSLATION_TEXT]
-        col = text_parts.index(text_part)
-        
+        col = text_col
         files = [self.main_file, self.tran_file]
         current_file = files[col]
         
@@ -140,13 +135,13 @@ class FileWriter(Delegate):
         hides = []
         texts = []
 
-        if subtitle_file.MODE == TIME_MODE:
+        if subtitle_file.MODE == MODE_TIME:
             for i in range(len(self.times)):
                 shows.append(self.times[i][SHOW])
                 hides.append(self.times[i][HIDE])
                 texts.append(new_texts [i][col ])
 
-        elif subtitle_file.MODE == FRAME_MODE:
+        elif subtitle_file.MODE == MODE_FRAME:
             for i in range(len(self.times)):
                 shows.append(self.frames[i][SHOW])
                 hides.append(self.frames[i][HIDE])
@@ -187,9 +182,9 @@ class FileWriter(Delegate):
                 
         # After successful writing, instance variables can be set.
         if keep_changes:
-            if text_part == ORIGINAL_TEXT:
+            if col == TEXT:
                 self.main_file = subtitle_file
-            elif text_part == TRANSLATION_TEXT:
+            elif col == TRAN:
                 self.tran_file = subtitle_file
             self.texts = new_texts
 
@@ -204,7 +199,7 @@ class FileWriter(Delegate):
         Raise UnicodeError if encoding fails.
         """
         self._write_file(
-           ORIGINAL_TEXT, keep_changes, path, format, encoding, newlines
+           TEXT, keep_changes, path, format, encoding, newlines
         )
 
     def write_translation_file(
@@ -218,5 +213,5 @@ class FileWriter(Delegate):
         Raise UnicodeError if encoding fails.
         """
         self._write_file(
-           TRANSLATION_TEXT, keep_changes, path, format, encoding, newlines
+           TRAN, keep_changes, path, format, encoding, newlines
         )

@@ -27,7 +27,7 @@ except ImportError:
 
 from gaupol.gui.constants import COLUMN_NAMES
 from gaupol.gui.constants import FRAMERATE_NAMES
-from gaupol.gui.constants import NO, SHOW, HIDE, DURN, ORIG, TRAN
+from gaupol.gui.constants import NO, SHOW, HIDE, DURN, TEXT, TRAN
 from gaupol.gui.delegates.delegate import Delegate
 from gaupol.gui.util import gui
 

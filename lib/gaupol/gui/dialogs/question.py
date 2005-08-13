@@ -34,7 +34,7 @@ TYPE    = gtk.MESSAGE_QUESTION
 
 class OverwriteFileQuestionDialog(gtk.MessageDialog):
 
-    """Saving as an existing file."""
+    """Dialog to ask whether to overwrite existing file or not."""
     
     def __init__(self, parent, basename):
         """
@@ -59,7 +59,7 @@ class OverwriteFileQuestionDialog(gtk.MessageDialog):
 
 class RevertQuestionDialog(gtk.MessageDialog):
 
-    """Reverting changes of a file."""
+    """Dialog to ask whether to revert changes or not."""
     
     def __init__(self, parent, main_exists, tran_exists, main_changed,
                  tran_changed, main_basename, tran_basename):
@@ -72,23 +72,25 @@ class RevertQuestionDialog(gtk.MessageDialog):
             if not tran_exists or not tran_changed:
                 raise ValueError('There\'s nothing to revert!')
 
+        ##### project.tran_active
+
         # Since revert reverts both main and translation documents, the
         # user must be informed of which changes she will lose.
 
         if main_exists and main_changed and tran_exists and tran_changed:
-            title = _('Revert unsaved changes to both subtitle document "%s" and translation document "%s"?') \
+            title = _('Revert unsaved changes to both main document "%s" and translation document "%s"?') \
                     % (main_basename, tran_basename)
 
         elif main_exists and main_changed and not tran_exists and tran_changed:
-            title = _('Revert unsaved changes to subtitle document "%s" and lose changes translation document "%s"?') \
+            title = _('Revert unsaved changes to main document "%s" and lose changes translation document "%s"?') \
                     % (main_basename, tran_basename)
 
         elif main_exists and main_changed and not tran_changed:
-            title = _('Revert unsaved changes to subtitle document "%s"?') \
+            title = _('Revert unsaved changes to main document "%s"?') \
                     % main_basename
                     
         elif not main_exists and main_changed and tran_exists and tran_changed:
-            title = _('Revert unsaved changes to translation document "%s" and lose changes subtitle document "%s"?') \
+            title = _('Revert unsaved changes to translation document "%s" and lose changes main document "%s"?') \
                     % (tran_basename, main_basename)
                     
         elif not main_changed and tran_exists and tran_changed:

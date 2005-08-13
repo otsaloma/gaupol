@@ -25,7 +25,8 @@ try:
 except ImportError:
     pass
 
-from gaupol.gui.constants import NO, SHOW, HIDE, DURN, ORIG, TRAN
+from gaupol.constants import MAIN_DOCUMENT, TRAN_DOCUMENT, BOTH_DOCUMENTS
+from gaupol.gui.constants import NO, SHOW, HIDE, DURN, TEXT, TRAN
 from gaupol.gui.delegates.delegate import Delegate
 from gaupol.gui.util import gui
 
@@ -35,19 +36,19 @@ class DURAction(object):
     """Base class for actions, that can be done, undone and redone."""
     
     def __init__(self, *args):
+
+        self.project = None
         
         # One line description.
         self.description = None
 
-        # Document affected.
+        # Document(s) affected.
         self.document = None
 
         # TreeView properties that can be restored.
-        self.focus_data_row  = None
-        self.focus_store_col = None
-        self.sel_data_rows   = None
-        self.sort_col        = None
-        self.sort_order      = None
+        self.focus_row     = None
+        self.focus_col     = None
+        self.selected_rows = None
         
     def do(self):
         """Do action."""
@@ -65,7 +66,7 @@ class DURAction(object):
 
 class DURManager(Delegate):
 
-    """Manager for actions, that can be done, undone and redone."""
+    """Handling of do, undo and redo actions."""
 
     def do_action(self, project, action):
         """Do action and update things affected."""
@@ -83,14 +84,7 @@ class DURManager(Delegate):
                 project.undoables.pop()
 
         project.redoables = []
-
-        if action.document == 'main':
-            project.main_changed += 1
-        elif action.document == 'translation':
-            project.tran_changed += 1
-        elif action.document == 'both':
-            project.main_changed += 1
-            project.tran_changed += 1
+        self._shift_changed_value(project, action, 1)
 
         self.set_sensitivities(project)
 
@@ -164,61 +158,58 @@ class DURManager(Delegate):
                 project.undoables.pop()
 
         project.redoables.pop(0)
-        
-        if action.document == 'main':
-            project.main_changed += 1
-        elif action.document == 'translation':
-            project.tran_changed += 1
-        elif action.document == 'both':
-            project.main_changed += 1
-            project.tran_changed += 1
+        self._shift_changed_value(project, action, 1)
 
         self.set_sensitivities(project)
 
     def _restore_tree_view_properties(self, project, action):
         """Restore tree view properties."""
 
-        # Sort order and column
-        store = project.tree_view.get_model()
-        store.set_sort_column_id(action.sort_col, action.sort_order)
+        tree_view        = project.tree_view
+        row              = action.focus_row
+        tree_view_column = tree_view.get_column(action.focus_col)
 
         # Focus
-        store_row = project.get_store_row(action.focus_data_row)
-        tree_col  = project.tree_view.get_column(action.focus_store_col)
         try:
-            project.tree_view.set_cursor(store_row, tree_col)
+            project.tree_view.set_cursor(row, tree_view_column)
         except TypeError:
             pass
 
         # Scroll position
         try:
-            project.tree_view.scroll_to_cell(store_row, tree_col, False, 0.5, 0)
+            tree_view.scroll_to_cell(row, tree_view_column, False, 0.5, 0)
         except TypeError:
             pass
         
         # Selection
-        selection = project.tree_view.get_selection()
+        selection = tree_view.get_selection()
         selection.unselect_all()
-        for row in action.sel_data_rows:
-            store_row = project.get_store_row(row)
+        for row in action.selected_data_rows:
             try:
-                selection.select_path(store_row)
+                selection.select_path(row)
             except TypeError:
                 pass
 
     def _save_tree_view_properties(self, project, action):
         """Save tree view properties."""
 
-        # Sort order and column
-        store = project.tree_view.get_model()
-        action.sort_col, action.sort_order = store.get_sort_column_id()
-
         # Focus
-        action.focus_data_row  = project.get_data_focus()[1]
-        action.focus_store_col = project.get_store_focus()[1]
+        action.focus_row, action.focus_col = project.get_focus()[:2]
 
         # Selection
-        action.sel_data_rows = project.get_selected_data_rows()
+        action.selected_rows = project.get_selected_rows()
+
+    def _shift_changed_value(self, project, action, shift):
+        """Shift value(s) of document(s) changed variables."""
+        
+        if action.document == MAIN_DOCUMENT:
+            project.main_changed += shift
+        elif action.document == TRAN_DOCUMENT:
+            project.tran_changed += shift
+            project.tran_active = True
+        elif action.document == BOTH_DOCUMENTS:
+            project.main_changed += shift
+            project.tran_changed += shift
 
     def undo_action(self, project, action):
         """Undo action and update things affected."""
@@ -236,13 +227,6 @@ class DURManager(Delegate):
                 project.redoables.pop()
 
         project.undoables.pop(0)
-
-        if action.document == 'main':
-            project.main_changed -= 1
-        elif action.document == 'translation':
-            project.tran_changed -= 1
-        elif action.document == 'both':
-            project.main_changed -= 1
-            project.tran_changed -= 1
+        self._shift_changed_value(project, action, -1)
 
         self.set_sensitivities(project)

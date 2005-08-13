@@ -25,8 +25,8 @@ try:
 except ImportError:
     pass
 
-from gaupol.constants import TIME_MODE, FRAME_MODE
-from gaupol.lib.constants import SHOW, HIDE, DURN, ORIG, TRAN
+from gaupol.constants.Mode import *
+from gaupol.lib.constants.Column import *
 from gaupol.lib.delegates.delegate import Delegate
 
 
@@ -49,16 +49,16 @@ class Editor(Delegate):
         try:
             return self.main_file.MODE
         except AttributeError:
-            return TIME_MODE
+            return MODE_TIME
 
     def get_timings(self):
         """Return self.times or self.frames depending on main file's mode."""
         
         mode = self.get_mode()
         
-        if mode == TIME_MODE:
+        if mode == MODE_TIME:
             return self.times
-        elif mode == FRAME_MODE:
+        elif mode == MODE_FRAME:
             return self.frames
 
     def insert_subtitles(self, start_row, amount):
@@ -76,24 +76,24 @@ class Editor(Delegate):
         if start_row > 0:
             start = timings[start_row - 1][HIDE]
         else:
-            if mode == TIME_MODE:
+            if mode == MODE_TIME:
                 start = '00:00:00,000'
-            elif mode == FRAME_MODE:
+            elif mode == MODE_FRAME:
                 start = 0
 
         # Get time window end edge.
         try:
             end = timings[start_row][SHOW]
         except IndexError:
-            if mode == TIME_MODE:
+            if mode == MODE_TIME:
                 end = calc.time_to_seconds(start)
                 end += (OPTIMAL_SECOND_DURATION * amount)
                 end = calc.seconds_to_time(end)
-            elif mode == FRAME_MODE:
+            elif mode == MODE_FRAME:
                 end = start + (OPTIMAL_FRAME_DURATION * amount)
 
         # Insert new subtitles with sensible timings.
-        if mode == TIME_MODE:
+        if mode == MODE_TIME:
         
             start    = calc.time_to_seconds(start)
             end      = calc.time_to_seconds(end)
@@ -115,7 +115,7 @@ class Editor(Delegate):
                 self.frames.insert(row, [show_frame, hide_frame, durn_frame])
                 self.texts.insert( row, [text, u''])
             
-        elif mode == FRAME_MODE:
+        elif mode == MODE_FRAME:
 
             duration = int(round((end - start) / amount, 0))
             

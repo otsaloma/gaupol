@@ -48,7 +48,7 @@ class InsertSubtitleDialog(object):
         amount_label = glade_xml.get_widget('amount_label')
         amount_label.set_mnemonic_widget(self._spin_button)
 
-        # Set Insert button label.
+        # Set Insert button label ("Add" in Glade XML file).
         button = glade_xml.get_widget('insert_button')
         alignment = button.get_children()[0]
         hbox = alignment.get_children()[0]
@@ -60,7 +60,7 @@ class InsertSubtitleDialog(object):
         self._dialog.set_default_response(gtk.RESPONSE_OK)
     
     def destroy(self):
-        """Destroy the dialog."""
+        """Destroy dialog."""
         
         self._dialog.destroy()
         
@@ -72,20 +72,32 @@ class InsertSubtitleDialog(object):
         return self._spin_button.get_value_as_int()
 
     def get_position(self):
-        """Get position to insert subtitles to."""
+        """
+        Get position to insert subtitles to.
         
+        Return: POSITION_ABOVE or POSITION_BELOW
+        """
+        # ComboBox entry index corresponds to values of constants
+        # POSITION_ABOVE and POSITION_BELOW.
         return self._combo_box.get_active()
 
     def set_amount(self, value):
+        """Set amount of subtitles to insert."""
 
         self._spin_button.set_value(value)
 
-    def set_position(self, index):
-
-        self._combo_box.set_active(index)
+    def set_position(self, position):
+        """
+        Set position to insert subtitles to.
+        
+        position: POSITION_ABOVE or POSITION_BELOW
+        """
+        # ComboBox entry index corresponds to values of constants
+        # POSITION_ABOVE and POSITION_BELOW.
+        self._combo_box.set_active(position)
 
     def run(self):
-        """Show and run the dialog."""
+        """Show and run dialog."""
         
         self._dialog.show()
         

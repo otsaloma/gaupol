@@ -27,7 +27,7 @@ except ImportError:
 
 import gtk
 
-from gaupol.gui.constants import NO, SHOW, HIDE, DURN, ORIG, TRAN
+from gaupol.gui.constants import NO, SHOW, HIDE, DURN, TEXT, TRAN
 from gaupol.gui.delegates.delegate import Delegate
 from gaupol.gui.delegates.durmanager import DURAction
 from gaupol.gui.dialogs.insertsub import InsertSubtitleDialog

@@ -80,10 +80,9 @@ class AboutDialog(gtk.AboutDialog):
         #self.set_documenters(DOCUMENTERS)
         #self.set_artists(ARTISTS)
 
-        #language = locale.getdefaultlocale()[0]
-
+        #lang = locale.getdefaultlocale()[0]
         #try:
-        #    self.set_translator_credits(TRANSLATORS[language])
+        #    self.set_translator_credits(TRANSLATORS[lang])
         #except KeyError:
         #    pass
         

@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Closer of documents and quitter of application."""
+"""Closing documents and quitting application."""
 
 try:
     from psyco.classes import *
@@ -36,7 +36,7 @@ from gaupol.gui.util import gui
 
 class FileCloser(Delegate):
 
-    """Closer of documents and quitter of application."""
+    """Closing documents and quitting application."""
 
     def _close_all_projects(self):
         """
@@ -50,11 +50,11 @@ class FileCloser(Delegate):
         for project in self.projects:
 
             if project.main_changed:
-                unsaved_prj = project
+                unsaved_project = project
                 unsaved_count += 1
 
-            if project.tran_changed:
-                unsaved_prj = project
+            if project.tran_changed and project.tran_active:
+                unsaved_project = project
                 unsaved_count += 1
 
             if unsaved_count > 1:
@@ -62,7 +62,7 @@ class FileCloser(Delegate):
 
         # Confirm closing single unsaved document.
         if unsaved_count == 1:
-            success = self._close_project(unsaved_prj)
+            success = self._close_project(unsaved_project)
             if not success:
                 return False
 
@@ -89,38 +89,41 @@ class FileCloser(Delegate):
         if project.main_changed and not project.tran_changed:
 
             basename = project.get_main_basename()
-            
             dialog = CloseMainDocumentWarningDialog(self.window, basename)
             response = dialog.run()
             dialog.destroy()
             
+            # Cancel or dialog close button clicked.
             if response != gtk.RESPONSE_YES and response != gtk.RESPONSE_NO:
                 return False
+            
+            # Save clicked.
             elif response == gtk.RESPONSE_YES:
                 success = self.save_main_document(project)
                 if not success:
                     return False
         
         # Translation document close dialog.
-        elif not project.main_changed and project.tran_changed:
+        elif not project.main_changed and project.tran_changed and project.tran_active:
         
             basename = project.get_translation_basename()
-            
             dialog = CloseTranslationDocumentWarningDialog(self.window,
                                                            basename)
             response = dialog.run()
             dialog.destroy()
             
+            # Cancel or dialog close button clicked.
             if response != gtk.RESPONSE_YES and response != gtk.RESPONSE_NO:
                 return False
+
+            # Save clicked.
             elif response == gtk.RESPONSE_YES:
                 success = self.save_translation_document(project)
                 if not success:
                     return False
 
         # Multidocument close dialog.
-        elif project.main_changed and project.tran_changed:
-
+        elif project.main_changed and project.tran_changed and project.tran_active:
             success = self._confirm_closing_multiple_documents([project])
             if not success:
                 return False
@@ -141,7 +144,7 @@ class FileCloser(Delegate):
 
     def _confirm_closing_multiple_documents(self, projects):
         """
-        Confirm closing given projects.
+        Confirm closing projects.
         
         Return: False is cancelled, otherwise True
         """
@@ -159,16 +162,16 @@ class FileCloser(Delegate):
             return True
             
         # "Save" clicked.
-        main_prjs = dialog.get_main_projects_to_save()
-        tran_prjs = dialog.get_translation_projects_to_save()
+        main_projects = dialog.get_main_projects_to_save()
+        tran_projects = dialog.get_translation_projects_to_save()
         dialog.destroy()
 
         gui.set_cursor_busy(self.window)
 
-        for project in main_prjs:
+        for project in main_projects:
             self.save_main_document(project)
 
-        for project in tran_prjs:
+        for project in tran_projects:
             self.save_translation_document(project)
 
         gui.set_cursor_normal(self.window)

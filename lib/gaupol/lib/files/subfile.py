@@ -28,11 +28,7 @@ except ImportError:
     pass
 
 
-NEWLINES = {
-    '\n'  : 'Unix',
-    '\r'  : 'Mac',
-    '\r\n': 'Windows',
-}
+from gaupol.constants.Newlines import *
 
 
 class SubtitleFile(object):
@@ -59,16 +55,9 @@ class SubtitleFile(object):
         self.MODE      = None
 
     def _get_newline_character(self):
-        """
-        Get character used for newlines.
-
-        Raise ValueError if self.newlines doesn't have a proper value.
-        """
-        for character, operating_system in NEWLINES.items():
-            if self.newlines == operating_system:
-                return character
+        """Get character used for newlines."""
         
-        raise ValueError('Invalid newline class: "%s".' % self.newlines)
+        return NEWLINES_VALUES[self.newlines]
 
     def _read_lines(self):
         """
@@ -86,9 +75,9 @@ class SubtitleFile(object):
             subtitle_file.close()
 
         if isinstance(newline_characters, tuple):
-            self.newlines = NEWLINES[newline_characters[0]]
+            self.newlines = NEWLINES_VALUES.index(newline_characters[0])
         elif isinstance(newline_characters, basestring):
-            self.newlines = NEWLINES[newline_characters]
+            self.newlines = NEWLINES_VALUES.index(newline_characters)
             
         return lines
 

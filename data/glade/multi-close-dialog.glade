@@ -136,7 +136,7 @@
 	      <child>
 		<widget class="GtkLabel" id="main_label">
 		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">Select the su_btitle documents you want to save:</property>
+		  <property name="label" translatable="yes">Select the _main documents you want to save:</property>
 		  <property name="use_underline">True</property>
 		  <property name="use_markup">False</property>
 		  <property name="justify">GTK_JUSTIFY_LEFT</property>

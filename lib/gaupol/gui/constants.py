@@ -20,9 +20,20 @@
 """gaupol.gui-wide constants."""
 
 
-COLUMN_NAMES    = ['no', 'show', 'hide', 'duration', 'original', 'translation']
-FRAMERATE_NAMES = ['23.976', '25', '29.97']
-MODE_NAMES      = ['time', 'frame']
+class Column(object):
 
-# Column indexes.
-NO, SHOW, HIDE, DURN, ORIG, TRAN = range(6)
+    COLUMN_NAMES = [
+        'number',
+        'show',
+        'hide',
+        'duration',
+        'text',
+        'translation'
+    ]
+    
+    NO   = 0
+    SHOW = 1
+    HIDE = 2
+    DURN = 3
+    TEXT = 4
+    TRAN = 5

@@ -127,20 +127,14 @@ def _prepare_gettext(use_english):
     
 def _prepare_installed_run(prefix):
     # Prepare path information for running installed.
-    #
-    # Python library directory is added to Python path just in case.
 
-    python_dir = 'python%d.%d' % sys.version_info[:2]
-    lib_dir = os.path.join(prefix, 'lib', python_dir, 'site-packages')
+    lib_dir = os.path.join(prefix, 'lib')
 
     if lib_dir not in sys.path:
         sys.path.insert(0, lib_dir)
     
 def _prepare_source_run(prefix):
     # Prepare path information for running from source directory.
-    #
-    # Prefix is added to Python path and a path contants in paths module
-    # are set.
 
     lib_dir = os.path.join(prefix, 'lib')
 

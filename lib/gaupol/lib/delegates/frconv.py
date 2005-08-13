@@ -25,8 +25,8 @@ try:
 except ImportError:
     pass
 
-from gaupol.constants import TIME_MODE, FRAME_MODE
-from gaupol.lib.constants import SHOW, HIDE, DURN
+from gaupol.constants.Mode import *
+from gaupol.lib.constants.Column import *
 from gaupol.lib.delegates.delegate import Delegate
 
 
@@ -51,7 +51,7 @@ class FramerateConverter(Delegate):
         self.framerate      = framerate
         self.calc.framerate = float(framerate)
 
-        if self.main_file.MODE == TIME_MODE:
+        if self.main_file.MODE == MODE_TIME:
 
             for i in range(len(self.times)):
 
@@ -63,7 +63,7 @@ class FramerateConverter(Delegate):
                 self.frames[i][HIDE] = hide
                 self.frames[i][DURN] = durn
 
-        elif self.main_file.MODE == FRAME_MODE:
+        elif self.main_file.MODE == MODE_FRAME:
 
             for i in range(len(self.times)):
 
@@ -73,4 +73,4 @@ class FramerateConverter(Delegate):
 
                 self.times[i][SHOW] = show
                 self.times[i][HIDE] = hide
-                self.times[i][DURN] = durn        
+                self.times[i][DURN] = durn

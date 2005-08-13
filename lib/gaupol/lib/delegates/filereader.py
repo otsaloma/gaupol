@@ -25,8 +25,8 @@ try:
 except ImportError:
     pass
 
-from gaupol.constants import TIME_MODE, FRAME_MODE
-from gaupol.lib.constants import SHOW, HIDE, DURN, ORIG, TRAN
+from gaupol.constants.Mode import *
+from gaupol.lib.constants.Column import *
 from gaupol.lib.delegates.delegate import Delegate
 from gaupol.lib.files.all import *
 from gaupol.lib.files.determiner import FileFormatDeterminer
@@ -65,7 +65,7 @@ class FileReader(Delegate):
 
         calc = self.calc
 
-        if self.main_file.MODE == TIME_MODE:
+        if self.main_file.MODE == MODE_TIME:
             
             for i in range(len(shows)):
 
@@ -82,7 +82,7 @@ class FileReader(Delegate):
                 self.frames.append([show_frame, hide_frame, durn_frame])
                 self.texts.append( [text, u''])
 
-        elif self.main_file.MODE == FRAME_MODE:
+        elif self.main_file.MODE == MODE_FRAME:
             
             for i in range(len(shows)):
 

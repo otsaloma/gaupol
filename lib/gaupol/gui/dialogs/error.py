@@ -35,7 +35,7 @@ BUTTONS = gtk.BUTTONS_OK
 
 class PasteFitErrorDialog(gtk.MessageDialog):
     
-    """Clipboard contents don't fit to space available."""
+    """Dialog to inform that clipboard contents don't fit where pasted."""
     
     def __init__(self, parent, lacking):
 
@@ -51,7 +51,7 @@ class PasteFitErrorDialog(gtk.MessageDialog):
 
 class ReadFileErrorDialog(gtk.MessageDialog):
     
-    """IOError occurs when reading file."""
+    """Dialog to inform that IOError occured while reading."""
     
     def __init__(self, parent, basename, detail):
         """
@@ -70,7 +70,7 @@ class ReadFileErrorDialog(gtk.MessageDialog):
 
 class UnicodeDecodeErrorDialog(gtk.MessageDialog):
     
-    """UnicodeError occurs when reading file."""
+    """Dialog to inform that UnicodeError occured while reading."""
     
     def __init__(self, parent, basename, codec):
         """
@@ -90,7 +90,7 @@ class UnicodeDecodeErrorDialog(gtk.MessageDialog):
 
 class UnicodeEncodeErrorDialog(gtk.MessageDialog):
     
-    """UnicodeError occurs when writing file."""
+    """Dialog to inform that UnicodeError occured while writing."""
     
     def __init__(self, parent, basename, codec):
         """
@@ -110,7 +110,7 @@ class UnicodeEncodeErrorDialog(gtk.MessageDialog):
 
 class UnknownFileFormatErrorDialog(gtk.MessageDialog):
     
-    """Trying to open a file of an unknown/unsupported format."""
+    """Dialog to inform that filetype is not supported."""
     
     def __init__(self, parent, basename):
         """
@@ -129,7 +129,7 @@ class UnknownFileFormatErrorDialog(gtk.MessageDialog):
 
 class VersionCheckErrorDialog(gtk.MessageDialog):
     
-    """Version check fails."""
+    """Dialog to inform that version check failed."""
     
     def __init__(self, parent, detail):
 
@@ -148,7 +148,7 @@ class VersionCheckErrorDialog(gtk.MessageDialog):
 
 class WriteFileErrorDialog(gtk.MessageDialog):
     
-    """IOError occurs when trying to write file."""
+    """Dialog to inform that IOError occured while writing."""
     
     def __init__(self, parent, basename, detail):
         """

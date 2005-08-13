@@ -32,7 +32,7 @@ import gtk
 
 from gaupol.gui.cellrend.multiline import CellRendererMultilineText
 from gaupol.gui.constants import COLUMN_NAMES, FRAMERATE_NAMES
-from gaupol.gui.constants import NO, SHOW, HIDE, DURN, ORIG, TRAN
+from gaupol.gui.constants import NO, SHOW, HIDE, DURN, TEXT, TRAN
 from gaupol.gui.delegates.delegate import Delegate
 from gaupol.gui.util import gui
 
@@ -688,7 +688,7 @@ class GUIUpdater(Delegate):
             sensitive = False
 
         # A text column must have focus and file format must be known.
-        if store_col == ORIG:
+        if store_col == TEXT:
             if project.data.main_file is None:
                 sensitive = False
         elif store_col == TRAN:
@@ -846,7 +846,7 @@ class GUIUpdater(Delegate):
             sensitive = False
 
         # A text column must have focus.
-        if store_col not in [ORIG, TRAN]:
+        if store_col not in [TEXT, TRAN]:
             sensitive = False
 
         for path in uim_paths:
@@ -888,7 +888,7 @@ class GUIUpdater(Delegate):
             self.message_statusbar.set_has_resize_grip(True)
             return
         
-        orig_visible = project.tree_view.get_column(ORIG).get_visible()
+        orig_visible = project.tree_view.get_column(TEXT).get_visible()
         tran_visible = project.tree_view.get_column(TRAN).get_visible()
         
         self.original_statusbar.set_property('visible', orig_visible)

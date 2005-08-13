@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Dialog to choose a subtitle number to jump to."""
+"""Dialog for choose a subtitle number to jump to."""
 
 
 try:
@@ -36,7 +36,7 @@ class JumpToSubtitleDialog(object):
     
     def __init__(self, parent, maximum):
 
-        glade_xml = gui.get_glade_xml('goto-dialog.glade')
+        glade_xml = gui.get_glade_xml('jump-dialog.glade')
                             
         self._dialog      = glade_xml.get_widget('dialog'     )
         self._spin_button = glade_xml.get_widget('spin_button')
@@ -51,7 +51,7 @@ class JumpToSubtitleDialog(object):
         self._dialog.set_default_response(gtk.RESPONSE_OK)
     
     def destroy(self):
-        """Destroy the dialog."""
+        """Destroy dialog."""
         
         self._dialog.destroy()
         
@@ -63,9 +63,9 @@ class JumpToSubtitleDialog(object):
         return self._spin_button.get_value_as_int()
 
     def run(self):
-        """Show and run the dialog."""
+        """Show and run dialog."""
         
-        self._dialog.show()
         self._spin_button.select_region(0, -1)
+        self._dialog.show()
         
-        return self._dialog.run()        
+        return self._dialog.run()
