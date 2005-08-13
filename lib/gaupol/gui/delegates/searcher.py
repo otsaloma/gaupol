@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Searcher of specific data in document."""
+"""Searching for specific data in document."""
 
 
 try:
@@ -28,21 +28,21 @@ except ImportError:
 import gtk
 
 from gaupol.gui.delegates.delegate import Delegate
-from gaupol.gui.dialogs.goto import GoToDialog
+from gaupol.gui.dialogs.jumpto import JumpToSubtitleDialog
 
 
 class Searcher(Delegate):
 
-    """Searcher of specific data in document."""
+    """Searching for specific data in document."""
 
-    def on_go_to_subtitle_activated(self, *args):
-        """Go to a specific subtitle."""
+    def on_jump_to_subtitle_activated(self, *args):
+        """Jump to a specific subtitle."""
         
-        project = self.get_current_project()
-        maximum = len(project.data.times)
-        tree_col = project.tree_view.get_cursor()[1]
+        project         = self.get_current_project()
+        maximum         = len(project.data.times)
+        treeview_column = project.get_focus()[2]
         
-        dialog = GoToDialog(self.window, maximum)
+        dialog   = JumpToSubtitleDialog(self.window, maximum)
         response = dialog.run()
         subtitle = dialog.get_subtitle()
         dialog.destroy()
@@ -51,12 +51,11 @@ class Searcher(Delegate):
             return
             
         store = project.tree_view.get_model()
-        data_row = subtitle - 1
-        store_row = project.get_store_row(data_row)
+        row   = subtitle - 1
                 
         selection = project.tree_view.get_selection()
         selection.unselect_all()
-        selection.select_path(store_row)
+        selection.select_path(row)
         
-        project.tree_view.set_cursor(store_row, tree_col)
-        project.tree_view.scroll_to_cell(store_row, tree_col, True, 0.5, 0)        
+        project.tree_view.set_cursor(row, treeview_column)
+        project.tree_view.scroll_to_cell(row, treeview_column, True, 0.5, 0)

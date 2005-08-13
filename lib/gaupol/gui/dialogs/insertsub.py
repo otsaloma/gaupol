@@ -36,7 +36,7 @@ class InsertSubtitleDialog(object):
     
     def __init__(self, parent):
 
-        glade_xml = gui.get_glade_xml('insert-dialog.glade')
+        glade_xml = gui.get_glade_xml('insertsub-dialog.glade')
                             
         self._combo_box   = glade_xml.get_widget('position_combo_box')
         self._dialog      = glade_xml.get_widget('dialog'            )

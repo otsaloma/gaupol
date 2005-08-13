@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Offerer of support and information."""
+"""Support and information."""
 
 
 try:
@@ -32,8 +32,8 @@ from gaupol.gui.delegates.delegate import Delegate
 from gaupol.gui.dialogs.about import AboutDialog
 from gaupol.gui.dialogs.error import VersionCheckErrorDialog
 from gaupol.gui.dialogs.info import VersionCheckInfoDialog
-from gaupol.lib.util.urldoc import URLDocument, TimeoutError, open_url
 from gaupol.gui.util import gui
+from gaupol.lib.util import internet
 
 
 BUG_REPORT_URL = 'http://gna.org/bugs/?func=additem&group=gaupol'
@@ -45,33 +45,32 @@ VERSION_URL    = 'http://download.gna.org/gaupol/latest.txt'
 
 class Helper(Delegate):
     
-    """Offerer of support and information."""
+    """Support and information."""
 
     def on_about_activated(self, *args):
-        """Display the about dialog."""
+        """Display about dialog."""
         
         dialog = AboutDialog(self.window)
         dialog.run()
         dialog.destroy()
 
     def on_check_latest_version_activated(self, *args):
-        """Check latest version of Gaupol from the project page."""
+        """Check latest version of Gaupol."""
 
         gui.set_cursor_busy(self.window)
 
         try:
-            text = URLDocument(VERSION_URL, TIMEOUT_SEC).read()
+            text = internet.URLDocument(VERSION_URL, TIMEOUT_SEC).read()
             
         except IOError, (errno, detail):
             message = '%s.' % detail
-            dialog = VersionCheckErrorDialog(self.window, message)
+            dialog  = VersionCheckErrorDialog(self.window, message)
             
-        except TimeoutError:
-            message = _('Operation timed out. Try again later or proceed to the download page.')
-            dialog = VersionCheckErrorDialog(self.window, message)
+        except internet.TimeoutError:
+            message = _('Operation timed out. Please try again later or proceed to the download page.')
+            dialog  = VersionCheckErrorDialog(self.window, message)
             
         else:
-        
             remote_version = text.strip()
             
             # Automated HTML error message must be distinguished from the
@@ -79,25 +78,24 @@ class Helper(Delegate):
             if remote_version.find('\n') != -1:
                 message = _('No version information found at URL "%s".') \
                           % VERSION_URL
-                dialog = VersionCheckErrorDialog(self.window, message)
+                dialog  = VersionCheckErrorDialog(self.window, message)
             else:
-                dialog = VersionCheckInfoDialog(
-                            self.window, VERSION, remote_version
-                         )
+                dialog  = VersionCheckInfoDialog(self.window, VERSION,
+                                                 remote_version)
 
         gui.set_cursor_normal(self.window)
         response = dialog.run()
         dialog.destroy()
 
         if response == gtk.RESPONSE_ACCEPT:
-            open_url(DOWNLOAD_URL)
+            internet.open_url(DOWNLOAD_URL)
         
     def on_report_a_bug_activated(self, *args):
-        """Report a bug at the project page."""
+        """Open the project bug report page in a web browser."""
 
-        open_url(BUG_REPORT_URL)
+        internet.open_url(BUG_REPORT_URL)
         
     def on_support_activated(self, *args):
-        """Request support at the project page."""
+        """Open the project support page in a web browser."""
 
-        open_url(SUPPORT_URL)
+        internet.open_url(SUPPORT_URL)

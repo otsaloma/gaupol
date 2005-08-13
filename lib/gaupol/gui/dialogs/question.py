@@ -57,6 +57,22 @@ class OverwriteFileQuestionDialog(gtk.MessageDialog):
         )
 
 
+class PasteFitQuestionDialog(gtk.MessageDialog):
+    ### Questonize!
+    """Dialog to inform that clipboard contents don't fit where pasted."""
+    
+    def __init__(self, parent, lacking):
+
+        gtk.MessageDialog.__init__(
+            self, parent, FLAGS, TYPE, BUTTONS,
+            _('Not enough subtitles to fit cliboard contents')
+        )
+        self.format_secondary_text( \
+            _('To paste to the current location, first create %d new subtitles.') \
+            % lacking \
+        )
+
+
 class RevertQuestionDialog(gtk.MessageDialog):
 
     """Dialog to ask whether to revert changes or not."""

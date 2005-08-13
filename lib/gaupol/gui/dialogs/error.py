@@ -33,23 +33,22 @@ TYPE    = gtk.MESSAGE_ERROR
 BUTTONS = gtk.BUTTONS_OK
 
 
-class PasteFitErrorDialog(gtk.MessageDialog):
+class IOErrorDialog(gtk.MessageDialog):
     
-    """Dialog to inform that clipboard contents don't fit where pasted."""
+    """Base class for IOError dialogs."""
     
-    def __init__(self, parent, lacking):
+    def __init__(self, parent, title, detail):
+        """
+        Initialize an IOErrorDialog object.
+        
+        detail: detailed error message from IOError
+        """
+        gtk.MessageDialog.__init__(self, parent, FLAGS, TYPE, BUTTONS, title)
 
-        gtk.MessageDialog.__init__(
-            self, parent, FLAGS, TYPE, BUTTONS,
-            _('Not enough subtitles to fit cliboard contents')
-        )
-        self.format_secondary_text( \
-            _('To paste to the current location, first create %d new subtitles.') \
-            % lacking \
-        )
+        self.format_secondary_text('%s.' % detail)
 
 
-class ReadFileErrorDialog(gtk.MessageDialog):
+class ReadFileErrorDialog(IOErrorDialog):
     
     """Dialog to inform that IOError occured while reading."""
     
@@ -60,12 +59,8 @@ class ReadFileErrorDialog(gtk.MessageDialog):
         basename: basename of the file being opened
         detail  : detailed error message from IOError
         """
-        gtk.MessageDialog.__init__(
-            self, parent, FLAGS, TYPE, BUTTONS,
-            _('Failed to read file "%s"') % basename
-        )
-
-        self.format_secondary_text('%s.' % detail)
+        title = _('Failed to read file "%s"') % basename
+        IOErrorDialog.__init__(self, parent, title, detail)
 
 
 class UnicodeDecodeErrorDialog(gtk.MessageDialog):
@@ -77,7 +72,7 @@ class UnicodeDecodeErrorDialog(gtk.MessageDialog):
         Initialize a UnicodeDecodeErrorDialog object.
         
         basename: basename of the file being opened
-        codec   : character encoding used for conversion
+        codec   : character encoding used for decoding
         """
         gtk.MessageDialog.__init__(
             self, parent, FLAGS, TYPE, BUTTONS,
@@ -97,7 +92,7 @@ class UnicodeEncodeErrorDialog(gtk.MessageDialog):
         Initialize a UnicodeEncodeErrorDialog object.
         
         basename: basename of the file being written
-        codec   : character encoding used for conversion
+        codec   : character encoding used for encoding
         """
         gtk.MessageDialog.__init__(
             self, parent, FLAGS, TYPE, BUTTONS,
@@ -146,7 +141,7 @@ class VersionCheckErrorDialog(gtk.MessageDialog):
         self.format_secondary_text(detail)
 
 
-class WriteFileErrorDialog(gtk.MessageDialog):
+class WriteFileErrorDialog(IOErrorDialog):
     
     """Dialog to inform that IOError occured while writing."""
     
@@ -157,9 +152,5 @@ class WriteFileErrorDialog(gtk.MessageDialog):
         basename: basename of the file being opened
         detail  : detailed error message from IOError
         """
-        gtk.MessageDialog.__init__(
-            self, parent, FLAGS, TYPE, BUTTONS,
-            _('Failed to write file "%s"') % basename
-        )
-        
-        self.format_secondary_text('%s.' % detail)
+        title = _('Failed to write file "%s"') % basename
+        IOErrorDialog.__init__(self, parent, title, detail)

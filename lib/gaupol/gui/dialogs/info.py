@@ -39,12 +39,12 @@ class VersionCheckInfoDialog(gtk.MessageDialog):
     def __init__(self, parent, local_version, remote_version):
 
         if remote_version > local_version:
-            message = _('A newer version is available')
+            title = _('A newer version is available')
         else:
-            message = _('You have the latest version')
+            title = _('You have the latest version')
         
         gtk.MessageDialog.__init__(
-            self, parent, FLAGS, TYPE, gtk.BUTTONS_NONE, message
+            self, parent, FLAGS, TYPE, gtk.BUTTONS_NONE, title
         )
         
         self.add_button(_('_Go To Download Page'), gtk.RESPONSE_ACCEPT)

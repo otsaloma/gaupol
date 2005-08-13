@@ -33,6 +33,84 @@ TYPE    = gtk.MESSAGE_WARNING
 BUTTONS = gtk.BUTTONS_NONE
 
 
+class CloseDocumentWarningDialog(gtk.MessageDialog):
+
+    """Base class for document closing warning dialogs."""
+    
+    def __init__(self, parent, title):
+
+        gtk.MessageDialog.__init__(self, parent, FLAGS, TYPE, BUTTONS, title)
+        
+        self.add_button(_('Close _Without Saving'), gtk.RESPONSE_NO    )
+        self.add_button(gtk.STOCK_CANCEL          , gtk.RESPONSE_CANCEL)
+        self.add_button(gtk.STOCK_SAVE            , gtk.RESPONSE_YES   )
+        
+        self.set_default_response(gtk.RESPONSE_YES)
+        
+        self.format_secondary_text( \
+            _('If you don\'t save, changes will be permanently lost.') \
+        )
+
+
+class CloseMainDocumentWarningDialog(CloseDocumentWarningDialog):
+
+    """Dialog to warn when closing main document with unsaved changes."""
+    
+    def __init__(self, parent, basename):
+        """
+        Initialize a CloseMainDocumentWarningDialog object.
+        
+        basename: basename of the document being closed
+        """
+        title = _('Save changes to main document "%s" before closing?') \
+                % basename
+
+        CloseDocumentWarningDialog.__init__(self, parent, title)
+
+
+class CloseTranslationDocumentWarningDialog(CloseDocumentWarningDialog):
+
+    """Dialog to warn when closing translation with unsaved changes."""
+    
+    def __init__(self, parent, basename):
+        """
+        Initialize a CloseTranslationDocumentWarningDialog object.
+        
+        basename: basename of the document being closed
+        """
+        title = _('Save changes to translation document "%s" before closing?') \
+                % basename
+
+        CloseDocumentWarningDialog.__init__(self, parent, title)
+
+
+class ImportTranslationWarningDialog(gtk.MessageDialog):
+
+    """Dialog to warn when importing a translation over a changed one."""
+    
+    def __init__(self, parent, basename):
+        """
+        Initialize an ImportTranslationWarningDialog object.
+        
+        basename: basename of the file being opened
+        """
+        gtk.MessageDialog.__init__(
+            self, parent, FLAGS, TYPE, BUTTONS,
+            _('Save changes to translation document "%s" before importing a new one?') \
+            % basename
+        )
+        
+        self.add_button(_('Import _Without Saving'), gtk.RESPONSE_NO    )
+        self.add_button(gtk.STOCK_CANCEL           , gtk.RESPONSE_CANCEL)
+        self.add_button(gtk.STOCK_SAVE             , gtk.RESPONSE_YES   )
+        
+        self.set_default_response(gtk.RESPONSE_YES)
+        
+        self.format_secondary_text( \
+            _('If you don\'t save, changes will be permanently lost.') \
+        )
+
+
 class OpenBigFileWarningDialog(gtk.MessageDialog):
 
     """Dialog to warn when opening a file over 1 MB."""
@@ -57,85 +135,4 @@ class OpenBigFileWarningDialog(gtk.MessageDialog):
         self.format_secondary_text( \
             _('Size of the file is %.1f MB, which is abnormally large for a text-based subtitle file. Please, check that you are not trying to open a binary file.') \
             % size \
-        )
-
-
-class CloseMainDocumentWarningDialog(gtk.MessageDialog):
-
-    """Dialog to warn when closing main document with unsaved changes."""
-    
-    def __init__(self, parent, basename):
-        """
-        Initialize a CloseMainDocumentWarningDialog object.
-        
-        basename: basename of the document being closed
-        """
-        gtk.MessageDialog.__init__(
-            self, parent, FLAGS, TYPE, BUTTONS,
-            _('Save changes to main document "%s" before closing?') \
-            % basename
-        )
-        
-        self.add_button(_('Close _Without Saving'), gtk.RESPONSE_NO    )
-        self.add_button(gtk.STOCK_CANCEL          , gtk.RESPONSE_CANCEL)
-        self.add_button(gtk.STOCK_SAVE            , gtk.RESPONSE_YES   )
-        
-        self.set_default_response(gtk.RESPONSE_YES)
-        
-        self.format_secondary_text( \
-            _('If you don\'t save, changes will be permanently lost.') \
-        )
-
-
-class CloseTranslationDocumentWarningDialog(gtk.MessageDialog):
-
-    """Dialog to warn when closing translation with unsaved changes."""
-    
-    def __init__(self, parent, basename):
-        """
-        Initialize a CloseTranslationDocumentWarningDialog object.
-        
-        basename: basename of the document being closed
-        """
-        gtk.MessageDialog.__init__(
-            self, parent, FLAGS, TYPE, BUTTONS,
-            _('Save changes to translation document "%s" before closing?') \
-            % basename
-        )
-        
-        self.add_button(_('Close _Without Saving'), gtk.RESPONSE_NO    )
-        self.add_button(gtk.STOCK_CANCEL          , gtk.RESPONSE_CANCEL)
-        self.add_button(gtk.STOCK_SAVE            , gtk.RESPONSE_YES   )
-        
-        self.set_default_response(gtk.RESPONSE_YES)
-        
-        self.format_secondary_text( \
-            _('If you don\'t save, changes will be permanently lost.') \
-        )
-
-
-class ImportTranslationWarningDialog(gtk.MessageDialog):
-
-    """Dialog to wanr when importing a translation over a changed one."""
-    
-    def __init__(self, parent, basename):
-        """
-        Initialize an ImportTranslationWarningDialog object.
-        
-        basename: basename of the file being opened
-        """
-        gtk.MessageDialog.__init__(
-            self, parent, FLAGS, TYPE, BUTTONS,
-            _('Save changes to translation document "%s" before importing a new one?') \
-            % basename
-        )
-        
-        self.add_button(_('Import _Without Saving'), gtk.RESPONSE_NO    )
-        self.add_button(gtk.STOCK_CANCEL           , gtk.RESPONSE_CANCEL)
-        self.add_button(gtk.STOCK_SAVE             , gtk.RESPONSE_YES   )
-        
-        self.set_default_response(gtk.RESPONSE_YES)
-        
-        self.format_secondary_text( \
-            _('If you don\'t save, changes will be permanently lost.') \
         )

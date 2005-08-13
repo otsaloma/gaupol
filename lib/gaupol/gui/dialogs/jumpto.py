@@ -36,7 +36,7 @@ class JumpToSubtitleDialog(object):
     
     def __init__(self, parent, maximum):
 
-        glade_xml = gui.get_glade_xml('jump-dialog.glade')
+        glade_xml = gui.get_glade_xml('jumpto-dialog.glade')
                             
         self._dialog      = glade_xml.get_widget('dialog'     )
         self._spin_button = glade_xml.get_widget('spin_button')
