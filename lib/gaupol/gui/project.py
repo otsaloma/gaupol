@@ -87,9 +87,9 @@ class Project(gobject.GObject):
     
         self._config = config
 
-        framerate = config.get('editor', 'framerate')
-        edit_mode = config.get('editor', 'edit_mode')
-        edit_mode = MODE_NAMES.index(edit_mode)
+        framerate      = config.get('editor', 'framerate')
+        edit_mode_name = config.get('editor', 'edit_mode')
+        edit_mode      = MODE_NAMES.index(edit_mode_name)
 
         self.data      = Data(framerate)
         self.untitle   = _('Untitled %d') % counter

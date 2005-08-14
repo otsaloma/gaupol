@@ -28,6 +28,7 @@ except ImportError:
 import gobject
 import gtk
 
+from gaupol.constants.Type import *
 from gaupol.gui.util import gui
 
 
@@ -52,115 +53,123 @@ class MultiCloseWarningDialog(object):
         """
         self._projects   = projects
 
-        # Amount of documents to display.
-        self._main_count = 0
-        self._tran_count = 0
-
         glade_xml = gui.get_glade_xml('multi-close-dialog.glade')
+        get_widget = glade_xml.get_widget
 
         # Widgets
-        self._dialog         = glade_xml.get_widget('dialog')
-        self._main_tree_view = glade_xml.get_widget('main_document_tree_view')
-        self._save_button    = glade_xml.get_widget('save_button')
-        self._title_label    = glade_xml.get_widget('title_label')
-        self._tran_tree_view = glade_xml.get_widget( \
-                                   'translation_document_tree_view')
+        self._dialog                = get_widget('dialog')
+        title_label                 = get_widget('title_label')
+        self._main_tree_view        = get_widget('main_tree_view')
+        self._translation_tree_view = get_widget('translation_tree_view')
 
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_YES)
 
-        self._build_main_tree_view(glade_xml)
-        self._build_translation_tree_view(glade_xml)
-        self._set_title()
+        main_count        = self._build_main_tree_view(glade_xml)
+        translation_count = self._build_translation_tree_view(glade_xml)
+
+        self._set_title(title_label, main_count, translation_count)
 
         self._main_tree_view.grab_focus()
         self._dialog.show()
 
     def _build_main_tree_view(self, glade_xml):
-        """Build the list of main documents."""
+        """
+        Build the list of main documents.
         
-        label = glade_xml.get_widget('main_document_label')
-        label.set_mnemonic_widget(self._main_tree_view)
-        self._main_tree_view, store = \
-            self._build_tree_view(self._main_tree_view, 'main')
+        Return: amount of documents
+        """
+        tree_view = self._main_tree_view
+        label = glade_xml.get_widget('main_label')
+        label.set_mnemonic_widget(tree_view)
+        tree_view, model = self._build_tree_view(tree_view, TYPE_MAIN)
 
         # Insert data.
+        amount = 0
         for project in self._projects:
             if project.main_changed:
-                self._main_count += 1
-                store.append([True, project])
+                amount += 1
+                model.append([True, project])
 
         # Set sensible size for TreeView. 24 pixels are added to account for
         # possible scroll bar.
-        width, height = self._main_tree_view.size_request()
+        width, height = tree_view.size_request()
         width  = min(150, width  + 24)
         height = min(126, height + 24)
-        self._main_tree_view.set_size_request(width, height)
+        tree_view.set_size_request(width, height)
         
-        if self._main_count == 0:
-            glade_xml.get_widget('main_document_label').hide()
-            glade_xml.get_widget('main_document_scrolled_window').hide()
+        if amount == 0:
+            glade_xml.get_widget('main_label').hide()
+            glade_xml.get_widget('main_scrolled_window').hide()
+
+        return amount
 
     def _build_translation_tree_view(self, glade_xml):
-        """Build the list of translation documents."""
+        """
+        Build the list of translation documents.
         
-        label = glade_xml.get_widget('translation_document_label')
-        label.set_mnemonic_widget(self._tran_tree_view)
-        self._tran_tree_view, store = \
-            self._build_tree_view(self._tran_tree_view, 'translation')
+        Return: amount of documents
+        """
+        tree_view = self._translation_tree_view
+        label = glade_xml.get_widget('translation_label')
+        label.set_mnemonic_widget(tree_view)
+        tree_view, model = self._build_tree_view(tree_view, TYPE_TRANSLATION)
 
         # Insert data.
+        amount = 0
         for project in self._projects:
             if project.tran_changed:
-                self._tran_count += 1
-                store.append([True, project])
+                amount += 1
+                model.append([True, project])
 
         # Set sensible size for TreeView. 24 pixels are added to account for
         # possible scroll bar.
-        width, height = self._tran_tree_view.size_request()
+        width, height = _tran_tree_view.size_request()
         width  = min(150, width  + 24)
         height = min(126, height + 24)
-        self._tran_tree_view.set_size_request(width, height)
+        _tran_tree_view.set_size_request(width, height)
 
-        if self._tran_count == 0:
-            glade_xml.get_widget('translation_document_label').hide()
-            glade_xml.get_widget('translation_document_scrolled_window').hide()
+        if amount == 0:
+            glade_xml.get_widget('translation_label').hide()
+            glade_xml.get_widget('translation_scrolled_window').hide()
+
+        return amount
 
     def _build_tree_view(self, tree_view, file_type):
         """
-        Build properties for tree_view.
+        Build properties for TreeView.
         
-        file_type: "main" or "translation"
+        file_type: TYPE_MAIN or TYPE_TRANSLATION
+        Return: TreeView, TreeModel
         """
-        # This method adaptively copied from Gazpacho by Lorenzo Gil Sanchez.
-        # Gazpacho has a similar dialog made without using Glade. 
-    
-        store = gtk.ListStore(gobject.TYPE_BOOLEAN, object)
+        model = gtk.ListStore(gobject.TYPE_BOOLEAN, object)
 
-        tree_view.set_model(store)
+        tree_view.set_model(model)
         tree_view.set_headers_visible(False)
+
+        # CellRenderers
+        cell_renderer_0 = gtk.CellRendererToggle()
+        cell_renderer_1 = gtk.CellRendererText()
+
+        cell_renderer_0.set_property('activatable', True)
+
+        method = self._on_tree_view_cell_toggled
+        cell_renderer_0.connect('toggled', method, model)
         
-        # Check-box column.
-        cr_toggle = gtk.CellRendererToggle()
-        cr_toggle.set_property('activatable', True)
-        cr_toggle.connect('toggled', self._on_tree_view_cell_toggled, store)
-        toggle_col = gtk.TreeViewColumn('Save', cr_toggle)
-        toggle_col.add_attribute(cr_toggle, 'active', SAVE)
-        tree_view.append_column(toggle_col)
+        # Columns
+        tree_view_column_0 = gtk.TreeViewColumn()
+        tree_view_column_1 = gtk.TreeViewColumn()
 
-        # File basename column rendering function.
-        def render_basename_column(tree_col, cell_rend, store, tree_iter):
-            project = store.get_value(tree_iter, PROJ)
-            basename = eval('project.get_%s_basename()' % file_type)
-            cell_rend.set_property('text', basename)
+        tree_view_column_0.set_attributes(cell_renderer_0, active=0)
+        tree_view_column_1.set_attributes(cell_renderer_1,   text=1)
 
-        # File basename column.
-        cr_text = gtk.CellRendererText()        
-        text_col = gtk.TreeViewColumn('Document', cr_text)
-        text_col.set_cell_data_func(cr_text, render_basename_column)
-        tree_view.append_column(text_col)
+        method = self._render_basename_column
+        tree_view_column_1.set_cell_data_func(cell_renderer_1, method)
+        
+        tree_view.append_column(tree_view_column_0)
+        tree_view.append_column(tree_view_column_1)
 
-        return tree_view, store
+        return tree_view, model
 
     def destroy(self):
         """Destroy the dialog."""
@@ -170,77 +179,91 @@ class MultiCloseWarningDialog(object):
     def get_main_projects_to_save(self):
         """Get projects, whose main files were chosen to be saved."""
         
-        store    = self._main_tree_view.get_model()
+        model    = self._main_tree_view.get_model()
         projects = []
         
-        for i in range(len(store)):
-            if store[i][SAVE]:
-                projects.append(store[i][PROJ])
+        for i in range(len(model)):
+            if model[i][SAVE]:
+                projects.append(model[i][PROJ])
                 
         return projects
 
     def get_translation_projects_to_save(self):
         """Get projects, whose translation files were chosen to be saved."""
         
-        store   = self._tran_tree_view.get_model()
+        model   = self._translation_tree_view.get_model()
         projects = []
         
-        for i in range(len(store)):
-            if store[i][SAVE]:
-                projects.append(store[i][PROJ])
+        for i in range(len(model)):
+            if model[i][SAVE]:
+                projects.append(model[i][PROJ])
                 
         return projects
 
-    def _on_tree_view_cell_toggled(self, cell_rend, row, store):
-        """Toggle the value on the checkmark column."""
+    def _on_tree_view_cell_toggled(self, cell_rend, row, model):
+        """Toggle the value on the CheckButton column."""
 
-        store[row][SAVE] = not store[row][SAVE]
+        model[row][SAVE] = not model[row][SAVE]
 
-        mains = self.get_main_projects_to_save()
-        trans = self.get_translation_projects_to_save()
+        mains       = self.get_main_projects_to_save()
+        tranlations = self.get_translation_projects_to_save()
 
-        self._save_button.set_sensitive(bool(mains or trans))
+        sensitive = bool(mains or tranlations)
+        self._dialog.set_response_sensitive(gtk.RESPONSE_YES, sensitive)
+
+    def _render_basename_column(self, tree_view_column, cell_renderer, model,
+                                tree_iter, file_type):
+        """Render basename column with the correct basename."""
+        
+        project = model.get_value(tree_iter, PROJ)
+
+        if file_type == TYPE_MAIN:
+            basename = project.get_main_basename()
+        elif file_type == TYPE_TRANSLATION:
+            basename = project.get_translation_basename
+
+        cell_renderer.set_property('text', basename)
 
     def run(self):
         """Run the dialog."""
         
         return self._dialog.run()
         
-    def _set_title(self):
+    def _set_title(self, title_label, main_count, translation_count):
         """Set dialog title based on amount of documents."""
         
         title = ''
 
-        if self._main_count > 1 and self._tran_count == 0:
-            title = _('There are %d subtitle documents with unsaved changes.') \
+        if self._main_count > 1 and self._translation_count == 0:
+            title = _('There are %d main documents with unsaved changes.') \
                     % self._main_count
 
-        elif self._main_count == 1 and self._tran_count == 0:
-            title = _('There is %d subtitle document with unsaved changes.') \
+        elif self._main_count == 1 and self._translation_count == 0:
+            title = _('There is %d main document with unsaved changes.') \
                     % self._main_count
 
-        elif self._main_count > 1 and self._tran_count > 1:
-            title = _('There are %d subtitle documents and %d translation documents with unsaved changes.') \
-                    % (self._main_count, self._tran_count)
+        elif self._main_count > 1 and self._translation_count > 1:
+            title = _('There are %d main documents and %d translation documents with unsaved changes.') \
+                    % (self._main_count, self._translation_count)
 
-        elif self._main_count == 1 and self._tran_count > 1:
-            title = _('There is %d subtitle document and %d translation documents with unsaved changes.') \
-                    % (self._main_count, self._tran_count)
+        elif self._main_count == 1 and self._translation_count > 1:
+            title = _('There is %d main document and %d translation documents with unsaved changes.') \
+                    % (self._main_count, self._translation_count)
 
-        elif self._main_count > 1 and self._tran_count == 1:
-            title = _('There are %d subtitle documents and %d translation document with unsaved changes.') \
-                    % (self._main_count, self._tran_count)
+        elif self._main_count > 1 and self._translation_count == 1:
+            title = _('There are %d main documents and %d translation document with unsaved changes.') \
+                    % (self._main_count, self._translation_count)
                     
-        elif self._main_count == 0 and self._tran_count > 1:
+        elif self._main_count == 0 and self._translation_count > 1:
             title = _('There are %d translation documents with unsaved changes.') \
-                    % self._tran_count
+                    % self._translation_count
 
-        elif self._main_count == 0 and self._tran_count == 1:
+        elif self._main_count == 0 and self._translation_count == 1:
             title = _('There is %d translation document with unsaved changes.') \
-                    % self._tran_count
+                    % self._translation_count
 
         title       = _('%s Save changes before closing?') % title
         fancy_title = '<span weight="bold" size="larger">%s</span>\n' % title
         
-        self._title_label.set_text(fancy_title)
-        self._title_label.set_use_markup(True)
+        title_label.set_text(fancy_title)
+        title_label.set_use_markup(True)

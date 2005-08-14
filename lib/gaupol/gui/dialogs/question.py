@@ -58,19 +58,22 @@ class OverwriteFileQuestionDialog(gtk.MessageDialog):
 
 
 class PasteFitQuestionDialog(gtk.MessageDialog):
-    ### Questonize!
-    """Dialog to inform that clipboard contents don't fit where pasted."""
+
+    """Dialog to ask whether to add new subtitles to fit clipboard contents."""
     
     def __init__(self, parent, lacking):
 
         gtk.MessageDialog.__init__(
-            self, parent, FLAGS, TYPE, BUTTONS,
-            _('Not enough subtitles to fit cliboard contents')
+            self, parent, FLAGS, TYPE, gtk.BUTTONS_NONE,
+            _('Not enough subtitles exist to fit clipboard contents')
         )
-        self.format_secondary_text( \
-            _('To paste to the current location, first create %d new subtitles.') \
-            % lacking \
-        )
+        
+        self.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_NO )
+        self.add_button(gtk.STOCK_ADD   , gtk.RESPONSE_YES)
+
+        self.set_default_response(gtk.RESPONSE_YES)
+        
+        self.format_secondary_text(_('Add %d new subtitles?') % lacking)
 
 
 class RevertQuestionDialog(gtk.MessageDialog):
@@ -78,38 +81,44 @@ class RevertQuestionDialog(gtk.MessageDialog):
     """Dialog to ask whether to revert changes or not."""
     
     def __init__(self, parent, main_exists, tran_exists, main_changed,
-                 tran_changed, main_basename, tran_basename):
+                 tran_changed, tran_active, main_basename, tran_basename):
         """
         Initialize a RevertQuestionDialog object.
         
         Raise ValueError if called with nothing to revert.
         """
-        if not main_exists or not main_changed:
-            if not tran_exists or not tran_changed:
-                raise ValueError('There\'s nothing to revert!')
+        main_ok = not main_changed
+        tran_ok = not tran_changed or not tran_active
 
-        ##### project.tran_active
+        main_revertable = main_exists and main_changed
+        tran_revertable = tran_exists and tran_changed and tran_active
+
+        main_loseable = not main_exists and main_changed
+        tran_loseable = not tran_exists and tran_changed and tran_active
+
+        if not main_revertable and not tran_revertable:
+            raise ValueError('There\'s nothing to revert!')
 
         # Since revert reverts both main and translation documents, the
         # user must be informed of which changes she will lose.
 
-        if main_exists and main_changed and tran_exists and tran_changed:
+        if main_revertable and tran_revertable:
             title = _('Revert unsaved changes to both main document "%s" and translation document "%s"?') \
                     % (main_basename, tran_basename)
 
-        elif main_exists and main_changed and not tran_exists and tran_changed:
+        elif main_revertable and tran_loseable:
             title = _('Revert unsaved changes to main document "%s" and lose changes translation document "%s"?') \
                     % (main_basename, tran_basename)
 
-        elif main_exists and main_changed and not tran_changed:
+        elif main_revertable and tran_ok:
             title = _('Revert unsaved changes to main document "%s"?') \
                     % main_basename
                     
-        elif not main_exists and main_changed and tran_exists and tran_changed:
+        elif main_loseable and tran_revertable:
             title = _('Revert unsaved changes to translation document "%s" and lose changes main document "%s"?') \
                     % (tran_basename, main_basename)
                     
-        elif not main_changed and tran_exists and tran_changed:
+        elif main_ok and tran_revertable:
             title = _('Revert unsaved changes to translation document "%s"?') \
                     % tran_basename
 

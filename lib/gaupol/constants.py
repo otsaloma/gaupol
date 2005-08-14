@@ -39,7 +39,8 @@ class Format(object):
 
 class Framerate(object):
 
-    FRAMERATE_NAMES  = ['23.976', '25', '29.97']
+    FRAMERATE_NAMES  = ['23.976', '25'  , '29.97']
+    FRAMERATE_VALUES = [ 23.976 ,  25.0 ,  29.97 ]
     FRAMERATE_23_976 = 0
     FRAMERATE_25     = 1
     FRAMERATE_29_97  = 2
@@ -50,13 +51,13 @@ class Mode(object):
     MODE_FRAME = 0
     MODE_TIME  = 1
 
-class Newlines(object):
+class Newline(object):
 
-    NEWLINES_NAMES   = ['Mac', 'Unix', 'Windows']
-    NEWLINES_VALUES  = ['\r' , '\n'  , '\r\n'   ]
-    NEWLINES_UNIX    = 'Unix'
-    NEWLINES_MAC     = 'Mac'
-    NEWLINES_WINDOWS = 'Windows'
+    NEWLINE_NAMES   = ['Mac', 'Unix', 'Windows']
+    NEWLINE_VALUES  = ['\r' , '\n'  , '\r\n'   ]
+    NEWLINE_UNIX    = 'Unix'
+    NEWLINE_MAC     = 'Mac'
+    NEWLINE_WINDOWS = 'Windows'
 
 class Position(object):
 

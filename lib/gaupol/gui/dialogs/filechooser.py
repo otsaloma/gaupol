@@ -29,26 +29,11 @@ except ImportError:
 
 import gtk
 
+from gaupol.constants.Extension import *
+from gaupol.constants.Format import *
+from gaupol.constants.Newline import *
 from gaupol.gui.dialogs.encoding import EncodingDialog
-from gaupol.lib.util import encodings as encodings_module
-
-
-ENCODINGS = encodings_module.get_valid_python_names()
-
-FILTERS = (
-    # Format   , # Name               , Mime-type   , Pattern
-    (None      , _('All files')       , None        , '*'    ),
-    (None      , _('Plain text')      , 'text/plain', None   ),
-    ('MicroDVD', _('MicroDVD (*.sub)'), None        , '*.sub'),
-    ('SubRip'  , _('SubRip (*.srt)')  , None        , '*.srt'),
-)
-
-EXTENSIONS = {
-    'MicroDVD': '.sub',
-    'SubRip'  : '.srt',
-}
-FORMATS    = ['MicroDVD', 'SubRip']
-NEWLINES   = ['Mac', 'Unix', 'Windows']
+from gaupol.lib.util import encodinglib
 
 
 class CustomFileChooserDialog(gtk.FileChooserDialog):
@@ -64,6 +49,21 @@ class CustomFileChooserDialog(gtk.FileChooserDialog):
         # would have to be checked and possibly adjusted when setting the
         # filename and there is no easy way to determine when the filename
         # conflicts with the filter.
+
+        filters = [
+            # Format, Name           , Mime-type   , Pattern
+            (None   , _('All files') , None        , '*'    ),
+            (None   , _('Plain text'), 'text/plain', None   ),
+        ]
+
+        for i in range(len(FORMAT_NAMES)):
+        
+            format_name = FORMAT_NAMES[i]
+            extension_value = EXTENSION_VALUES[i]
+            name = _('%s (*%s)') % (format_name, extension_value)
+            pattern = '*%s' % extension_value
+            
+            filters.append((format_name, name, None, pattern))
         
         for entry in FILTERS:
         
@@ -79,18 +79,16 @@ class CustomFileChooserDialog(gtk.FileChooserDialog):
             self.add_filter(file_filter)
 
     def get_encoding(self):
-        """
-        Get selected encoding.
-        
-        Raise ValueError if an invalid encoding is selected.
-        """
-        entry = self._encoding_combo_box.get_active_text()
+        """Get selected encoding."""
 
-        if entry == encodings_module.get_locale_descriptive_name():
-            return encodings_module.get_locale_encoding()[0]
+        encodings = encodinglib.get_valid_python_names()
+        entry     = self._encoding_combo_box.get_active_text()
+
+        if entry == encodinglib.get_locale_descriptive_name():
+            return encodinglib.get_locale_encoding()[0]
         
-        for python_name in ENCODINGS:
-            if entry == encodings_module.get_descriptive_name(python_name):
+        for python_name in encodings:
+            if entry == encodinglib.get_descriptive_name(python_name):
                 return python_name
     
     def _fill_encoding_combo_box(self):
@@ -99,6 +97,7 @@ class CustomFileChooserDialog(gtk.FileChooserDialog):
         entries = self._get_encoding_combo_box_entries()
 
         # Clear ComboBox.
+        # TODO: Does this return None?
         while self._encoding_combo_box.get_active_text():
             self._encoding_combo_box.remove_text(0)
         
@@ -116,7 +115,7 @@ class CustomFileChooserDialog(gtk.FileChooserDialog):
         active_encoding   = self._config.get('file', 'encoding')
         
         # Add active encoding.
-        if encodings_module.is_valid_python_name(active_encoding):
+        if encodinglib.is_valid_python_name(active_encoding):
             if not active_encoding in visible_encodings:
                 visible_encodings.append(active_encoding)
         
@@ -124,14 +123,14 @@ class CustomFileChooserDialog(gtk.FileChooserDialog):
         entries = []
         for encoding in visible_encodings:
             try:
-                entries.append(encodings_module.get_descriptive_name(encoding))
+                entries.append(encodinglib.get_descriptive_name(encoding))
             except ValueError:
                 continue
         
         entries.sort()
         
         # Add locale encoding.
-        locale_name = encodings_module.get_locale_descriptive_name()
+        locale_name = encodinglib.get_locale_descriptive_name()
         if locale_name is not None:
             entries.insert(0, locale_name)
         
@@ -151,17 +150,17 @@ class CustomFileChooserDialog(gtk.FileChooserDialog):
         response = dialog.run()
 
         if response != gtk.RESPONSE_OK:
-            enc_dialog.destroy()
+            dialog.destroy()
             self._fill_encoding_combo_box()
 
         encoding = dialog.get_encoding()
         if encoding is not None:
             self._config.set('file', 'encoding', encoding)
             
-        visible_encodings = enc_dialog.get_visible_encodings()
+        visible_encodings = dialog.get_visible_encodings()
         self._config.setlist('file', 'visible_encodings', visible_encodings)
 
-        enc_dialog.destroy()
+        dialog.destroy()
         self._fill_encoding_combo_box()
 
     def set_encoding(self, encoding, entries=None):
@@ -172,23 +171,25 @@ class CustomFileChooserDialog(gtk.FileChooserDialog):
         """
         entries = entries or self._get_encoding_combo_box_entries()
 
-        try:
-            locale_encoding = encodings_module.get_locale_encoding()[0]
-        except TypeError:
-            locale_encoding = None
-
         self._encoding_combo_box.set_active(0)
 
-        if locale_encoding != encoding:
-            try:
-                encoding_name = encodings_module.get_descriptive_name(encoding)
-            except ValueError:
-                pass
-            else:
-                for i in range(len(entries)):
-                    if entries[i] == encoding_name:
-                        self._encoding_combo_box.set_active(i)
-                        break
+        # Leave locale encoding active or...
+        try:
+            if encoding == encodinglib.get_locale_encoding()[0]:
+                return
+        except TypeError:
+            pass
+
+        # ...set another encoding active.
+        try:
+            encoding_name = encodinglib.get_descriptive_name(encoding)
+        except ValueError:
+            pass
+        else:
+            for i in range(len(entries)):
+                if entries[i] == encoding_name:
+                    self._encoding_combo_box.set_active(i)
+                    break
 
 
 class OpenDialog(CustomFileChooserDialog):
@@ -260,7 +261,7 @@ class SaveDialog(CustomFileChooserDialog):
         
         self._fill_format_combo_box()
         self._fill_encoding_combo_box()
-        self._fill_newlines_combo_box()
+        self._fill_newline_combo_box()
 
     def _build_extra_widget(self):
         """Build ComboBoxes for selecting format, encoding and newlines."""
@@ -288,7 +289,7 @@ class SaveDialog(CustomFileChooserDialog):
         self._encoding_combo_box.connect('changed', self._on_encoding_changed)
 
         table = gtk.Table(3, 2)
-        table.set_row_spacings(12)
+        table.set_row_spacings(6)
         table.set_col_spacings(12)
         
         options = gtk.FILL
@@ -307,37 +308,50 @@ class SaveDialog(CustomFileChooserDialog):
     def _fill_format_combo_box(self):
         """Insert items to format ComboBox."""
 
-        for format in FORMATS:
-            self._format_combo_box.append_text(format)
+        for format_name in FORMAT_NAMES:
+            self._format_combo_box.append_text(format_name)
 
-        format = self._config.get('file', 'format')
-        self._format_combo_box.set_active(FORMATS.index(format))
+        format_name = self._config.get('file', 'format')
+        self._format_combo_box.set_active(FORMAT_NAMES.index(format_name))
 
-    def _fill_newlines_combo_box(self):
-        """Insert items to newlines ComboBox."""
+    def _fill_newline_combo_box(self):
+        """Insert items to newline ComboBox."""
 
-        for newlines in NEWLINES:
-            self._newline_combo_box.append_text(newlines)
+        for newline_name in NEWLINE_NAMES:
+            self._newline_combo_box.append_text(newline_name)
 
-        newlines = self._config.get('file', 'newlines')
-        self._newline_combo_box.set_active(NEWLINES.index(newlines))
+        newline_name = self._config.get('file', 'newlines')
+        self._newline_combo_box.set_active(NEWLINE_NAMES.index(newline_name))
 
-    def get_filename
-        add extesnion
+    def get_filename_with_extension(self):
+        """Get filename and add extension if it is lacking."""
+        
+        path = self.get_filename()
+
+        if path is None:
+            return None
+
+        extension_value = EXTENSION_VALUES[self.get_format()]
+        if not path.endswith(extension_value):
+            path += extension_value
+
+        return path
+        
     def get_format(self):
         """Get selected format."""
 
-        return self._format_combo_box.get_active_text()
+        return self._format_combo_box.get_active()
 
     def get_newlines(self):
         """Get selected newlines."""
 
-        return self._newline_combo_box.get_active_text()
+        return self._newline_combo_box.get_active()
 
     def _on_format_changed(self, combo_box):
         """Change extension to reflect new format."""
 
-        new_format = combo_box.get_active_text()
+        new_format_name = combo_box.get_active_text()
+        new_format = FORMAT_NAMES.index(new_format_name)
         path = self.get_filename()
 
         if path is None:
@@ -349,13 +363,13 @@ class SaveDialog(CustomFileChooserDialog):
         basename = os.path.basename(path)
         
         # Remove possible existing extension.
-        for format, extension in EXTENSIONS.items():
+        for extension in EXTENSION_VALUES:
             if basename.endswith(extension):
                 basename = basename[:-len(extension)]
                 break
 
         # Add new extension.
-        basename += EXTENSIONS[new_format]
+        basename += EXTENSION_VALUES[new_format]
         path = os.path.join(dirname, basename)
 
         self.set_current_name(basename)
@@ -365,7 +379,7 @@ class SaveDialog(CustomFileChooserDialog):
         """Set active format in the format combo box."""
 
         try:
-            self._format_combo_box.set_active(FORMATS.index(format))
+            self._format_combo_box.set_active(format)
         except ValueError:
             pass
 
@@ -373,6 +387,6 @@ class SaveDialog(CustomFileChooserDialog):
         """Set active newlines in the newlines combo box."""
         
         try:
-            self._newline_combo_box.set_active(NEWLINES.index(newlines))
+            self._newline_combo_box.set_active(newlines)
         except ValueError:
             pass

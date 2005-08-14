@@ -38,7 +38,7 @@ from gaupol.gui.dialogs.filechooser import SaveDialog
 from gaupol.gui.dialogs.question import OverwriteFileQuestionDialog
 from gaupol.gui.util import gui
 from gaupol.lib.file.all import *
-from gaupol.lib.util import encodings as encodings_module
+from gaupol.lib.util import encodinglib
 
 
 class FileSaver(Delegate):
@@ -475,7 +475,7 @@ class FileSaver(Delegate):
             return False
 
         except UnicodeError:
-            enc_disp = encodings_module.get_display_name(encoding)
+            enc_disp = encodinglib.get_display_name(encoding)
             dialog = UnicodeEncodeErrorDialog(parent, basename, enc_disp)
             response = dialog.run()
             dialog.destroy()

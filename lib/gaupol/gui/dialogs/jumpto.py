@@ -30,42 +30,82 @@ import gtk
 from gaupol.gui.util import gui
 
 
-class JumpToSubtitleDialog(object):
+class JumpToSubtitleDialog(gobject.GObject):
 
     """Dialog to choose a subtitle number to jump to."""
+
+    STAGE = gobject.SIGNAL_RUN_LAST
+    BOOL  = gobject.TYPE_BOOLEAN
+    INT   = gobject.TYPE_INT
+
+    __gsignals__ = {
+        'jump-to-button-clicked' : (STAGE, None, (INT, )),
+        'keep-open-value-changed': (STAGE, None, (BOOL,)),
+    }
     
-    def __init__(self, parent, maximum):
+    def __init__(self, parent, maximum, keep_open):
+
+        gobject.GObject.__init__(self)
 
         glade_xml = gui.get_glade_xml('jumpto-dialog.glade')
                             
-        self._dialog      = glade_xml.get_widget('dialog'     )
-        self._spin_button = glade_xml.get_widget('spin_button')
-
+        self._dialog         = glade_xml.get_widget('dialog'        )
+        self._spin_button    = glade_xml.get_widget('spin_button'   )
+        self._check_button   = glade_xml.get_widget('check_button'  )
+        self._cancel_button  = glade_xml.get_widget('cancel_button' )
+        self._jump_to_button = glade_xml.get_widget('jump_to_button')
+        
+        # Set mnemonics.
         label = glade_xml.get_widget('label')
         label.set_mnemonic_widget(self._spin_button)
 
+        # Configure SpinButton.
         self._spin_button.set_activates_default(True)
         self._spin_button.set_range(1, maximum)
 
+        self._check_button.set_active(keep_open)
+
+        # Connect signals.
+        self._check_button.connect('toggled' , self._on_check_button_toggled )
+        self._cancel_button.connect('clicked', self._on_cancel_button_clicked)
+        self._dialog.connect('delete-event'  , self._on_dialog_delete_event  )
+        
+        method = self._on_jump_to_button_clicked
+        self._jump_to_button.connect('clicked', method)
+        
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_OK)
-    
-    def destroy(self):
-        """Destroy dialog."""
-        
+
+    def _on_cancel_button_clicked(self, *args):
+        """Destroy dialog"""
+
         self._dialog.destroy()
+        self.destroy()
+
+    def _on_check_button_toggled(self, *args):
+        """Emit signal that the "keep open" value has changed."""
         
-    def get_subtitle(self):
-        """Get selected subtitle number."""
+        keep_open = self._check_button.get_active()
+        self.emit('keep-open-value-changed', keep_open)
+        
+    def _on_dialog_delete_event(self, *args):
+        """Destroy dialog"""
+
+        self._dialog.destroy()
+        self.destroy()
+
+    def _on_jump_to_button_clicked(self, *args):
+        """Emit signal that the "jump to" button has been clicked."""
         
         self._spin_button.update()
+        subtitle = self._spin_button.get_value_as_int()
+        self.emit('jump-to-button-clicked', subtitle)
 
-        return self._spin_button.get_value_as_int()
-
-    def run(self):
-        """Show and run dialog."""
+    def show(self):
+        """Show dialog."""
         
         self._spin_button.select_region(0, -1)
         self._dialog.show()
-        
-        return self._dialog.run()
+
+
+gobject.type_register(JumpToSubtitleDialog)

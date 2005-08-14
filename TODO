@@ -1,9 +1,10 @@
 Before 0.1
 ==========
+- Code review
 - Benchmark TreeView performance with different speeding tricks
   http://www.mail-archive.com/pygtk@daa.com.au/msg10991.html
+- Dialog types, modality, running and destruction
 - Preferences dialog
-- Code review
 - Testing and bugfixing
 - Finnish translation
 - Installation & Uninstallation + instructions

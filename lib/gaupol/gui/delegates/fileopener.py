@@ -44,7 +44,7 @@ from gaupol.gui.dialogs.warning import OpenBigFileWarningDialog
 from gaupol.gui.project import Project
 from gaupol.gui.util import gui
 from gaupol.lib.files.determiner import UnknownFileFormatError
-from gaupol.lib.util import encodings as encodings_module
+from gaupol.lib.util import encodinglib
 
 
 class FileOpener(Delegate):
@@ -126,7 +126,7 @@ class FileOpener(Delegate):
         valid, then UTF-8.
         """
         try:
-            return encodings_module.get_locale_encoding()[0]
+            return encodinglib.get_locale_encoding()[0]
         except TypeError:
             return 'utf_8'
 
@@ -420,7 +420,7 @@ class FileOpener(Delegate):
             return None
 
         except UnicodeError:
-            encoding_name = encodings_module.get_display_name(encoding)
+            encoding_name = encodinglib.get_display_name(encoding)
             dialog = UnicodeDecodeErrorDialog(parent, basename, encoding_name)
             response = dialog.run()
             dialog.destroy()

@@ -28,7 +28,7 @@ except ImportError:
     pass
 
 
-from gaupol.constants.Newlines import *
+from gaupol.constants.Newline import *
 
 
 class SubtitleFile(object):
@@ -57,7 +57,7 @@ class SubtitleFile(object):
     def _get_newline_character(self):
         """Get character used for newlines."""
         
-        return NEWLINES_VALUES[self.newlines]
+        return NEWLINE_VALUES[self.newlines]
 
     def _read_lines(self):
         """
@@ -75,9 +75,9 @@ class SubtitleFile(object):
             subtitle_file.close()
 
         if isinstance(newline_characters, tuple):
-            self.newlines = NEWLINES_VALUES.index(newline_characters[0])
+            self.newlines = NEWLINE_VALUES.index(newline_characters[0])
         elif isinstance(newline_characters, basestring):
-            self.newlines = NEWLINES_VALUES.index(newline_characters)
+            self.newlines = NEWLINE_VALUES.index(newline_characters)
             
         return lines
 

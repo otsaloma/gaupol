@@ -1,7 +1,5 @@
 <ui>
 	<toolbar>
 		<toolitem action="save"/>
-		<separator/>
-		<toolitem action="jump_to_subtitle"/>
 	</toolbar>
 </ui>

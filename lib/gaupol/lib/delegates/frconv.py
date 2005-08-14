@@ -25,6 +25,7 @@ try:
 except ImportError:
     pass
 
+from gaupol.constants.Framerate import *
 from gaupol.constants.Mode import *
 from gaupol.lib.constants.Column import *
 from gaupol.lib.delegates.delegate import Delegate
@@ -42,14 +43,13 @@ class FramerateConverter(Delegate):
         thus affects only how non-native timing data is calculated. Native
         timings will remain unchanged.
 
-        framerate: string
         Raise TypeError if main file does not exist.
         """
         if self.main_file is None:
             raise TypeError('Main file does not exist.')
             
         self.framerate      = framerate
-        self.calc.framerate = float(framerate)
+        self.calc.framerate = FRAMERATE_VALUES[framerate]
 
         calc   = self.calc
         times  = self.times

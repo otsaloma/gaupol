@@ -45,7 +45,6 @@ class Data(object):
     times    : list of lists of strings : [[show-1, hide-1, duration-1],...]
     frames   : list of lists of integers: [[show-1, hide-1, duration-1],...]
     texts    : list of lists of strings : [[original-1, translation-1],...]
-    framerate: string
     """
     
     def __init__(self, framerate):
