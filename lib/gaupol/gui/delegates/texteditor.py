@@ -28,10 +28,10 @@ except ImportError:
 import gtk
 
 from gaupol.constants import POSITION
-from gaupol.gui.constants import *
+from gaupol.gui.colcons import *
 from gaupol.gui.delegates.delegate import Delegate
 from gaupol.gui.delegates.durmanager import DURAction
-from gaupol.gui.dialogs.error import PasteFitErrorDialog
+from gaupol.gui.dialogs.question import PasteFitQuestionDialog
 
 
 class TextEditAction(DURAction):
@@ -394,21 +394,21 @@ class TextEditor(Delegate):
         action = CutAction(project)
         self.do_action(project, action)
 
-    def on_dialog_lines_activated(self, *args):
+    def on_dialog_activated(self, *args):
         """Toggle dialog lines on selected text cells."""
         
         project = self.get_current_project()
         action = DialogLineAction(project)
         self.do_action(project, action)
         
-    def on_italic_style_activated(self, *args):
+    def on_italic_activated(self, *args):
         """Italicize selected text cells."""
 
         project = self.get_current_project()
         action = ItalicAction(project)
         self.do_action(project, action)
         
-    def on_lower_case_activated(self, *args):
+    def on_lower_activated(self, *args):
         """Change case to lower in selected text cells."""
 
         self._change_case('lower')
@@ -449,17 +449,17 @@ class TextEditor(Delegate):
         action = PasteAction(project, self.clipboard.data)
         self.do_action(project, action)
 
-    def on_sentence_case_activated(self, *args):
+    def on_sentence_activated(self, *args):
         """Change case to sentence in selected text cells."""
 
         self._change_case('capitalize')
         
-    def on_title_case_activated(self, *args):
+    def on_title_activated(self, *args):
         """Change case to title in selected text cells."""
 
         self._change_case('title')
         
-    def on_upper_case_activated(self, *args):
+    def on_upper_activated(self, *args):
         """Change case to upper in selected text cells."""
 
         self._change_case('upper')

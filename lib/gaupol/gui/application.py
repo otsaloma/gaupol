@@ -60,7 +60,7 @@ class Application(object):
         self.counter  = 0
         self.config   = Config()
 
-        glade_xml  = gui.get_glade_xml('main-window.glade')
+        glade_xml  = gui.get_glade_xml('application-window.glade')
         get_widget = glade_xml.get_widget
 
         # Widgets from the Glade XML file.
@@ -77,10 +77,10 @@ class Application(object):
         self.undo_button         = None
 
         # UIManager and merge IDs.
-        self.uim                 = None
-        self.documents_uim_id    = None
-        self.recent_files_uim_id = None
-        self.undo_redo_uim_id    = None
+        self.uim              = None
+        self.documents_uim_id = None
+        self.recent_uim_id    = None
+        self.undo_redo_uim_id = None
 
         # Tooltips, which are enabled when a document is open.
         self.tooltips = gtk.Tooltips()
@@ -127,7 +127,7 @@ class Application(object):
             'on_close_all_activated'                 : file_closer,
             'on_copy_activated'                      : text_editor,
             'on_cut_activated'                       : text_editor,
-            'on_dialog_lines_activated'              : text_editor,
+            'on_dialog_activated'                    : text_editor,
             'on_document_toggled'                    : gui_updater,
             'on_edit_cell_activated'                 : cell_editor,
             'on_edit_mode_toggled'                   : viewer,

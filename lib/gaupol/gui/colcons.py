@@ -20,18 +20,20 @@
 """gaupol.gui-wide column constants."""
 
 
-COLUMN_NAMES = [
-    'number',
-    'show',
-    'hide',
-    'duration',
-    'text',
-    'translation'
-]
-
 NO   = 0
 SHOW = 1
 HIDE = 2
 DURN = 3
 TEXT = 4
 TRAN = 5
+
+class COLUMN(object):
+
+    NAMES = [
+        'number',
+        'show',
+        'hide',
+        'duration',
+        'text',
+        'translation'
+    ]

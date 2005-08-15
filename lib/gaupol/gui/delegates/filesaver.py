@@ -30,14 +30,13 @@ except ImportError:
 import gtk
 
 from gaupol.constants import TYPE
-from gaupol.gui.constants import *
+from gaupol.gui.colcons import *
 from gaupol.gui.delegates.delegate import Delegate
 from gaupol.gui.dialogs.error import UnicodeEncodeErrorDialog
 from gaupol.gui.dialogs.error import WriteFileErrorDialog
 from gaupol.gui.dialogs.filechooser import SaveDialog
 from gaupol.gui.dialogs.question import OverwriteFileQuestionDialog
 from gaupol.gui.util import gui
-from gaupol.lib.file.all import *
 from gaupol.lib.util import encodinglib
 
 

@@ -25,6 +25,7 @@ try:
 except ImportError:
     pass
 
+import gobject
 import gtk
 
 from gaupol.gui.util import gui
@@ -49,19 +50,19 @@ class PreferencesDialog(gobject.GObject):
     STR   = gobject.TYPE_STRING
 
     __gsignals__ = {
-        'recent-files-amount-changed': (STAGE, None, (INT,)),
-        'recent-files-cleared'       : (STAGE, None, ()    ),
-        'undo-limit-toggled'         : (STAGE, None, (BOOL)),
-        'undo-levels-changed'        : (STAGE, None, (INT,)),
-        'font-use-theme-toggled'     : (STAGE, None, (BOOL)),
-        'font-set'                   : (STAGE, None, (STR,)),
+        'recent-files-amount-changed': (STAGE, None, (INT ,)),
+        'recent-files-cleared'       : (STAGE, None, ()     ),
+        'undo-limit-toggled'         : (STAGE, None, (BOOL,)),
+        'undo-levels-changed'        : (STAGE, None, (INT ,)),
+        'font-use-theme-toggled'     : (STAGE, None, (BOOL,)),
+        'font-set'                   : (STAGE, None, (STR ,)),
     }
 
     def __init__(self, parent):
 
         gobject.GObject.__init__(self)
 
-        glade_xml = gui.get_glade_xml('goto-dialog.glade')
+        glade_xml = gui.get_glade_xml('prefs-dialog.glade')
         get = glade_xml.get_widget
 
         # Widgets

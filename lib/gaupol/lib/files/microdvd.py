@@ -28,7 +28,7 @@ try:
 except ImportError:
     pass
 
-from gaupol.constants import FORMAT, MODE
+from gaupol.constants import EXTENSION, FORMAT, MODE
 from gaupol.lib.files.subfile import SubtitleFile
 
 
@@ -80,10 +80,6 @@ class MicroDVD(SubtitleFile):
         # Replace pipes in texts with Python internal newline characters.
         for i in range(len(texts)):
             texts[i] = texts[i].replace('|', '\n')
-
-        # Remove leading and trailing spaces.
-        for entry in [shows, hides, texts]:
-            self._strip_spaces(entry)
 
         # Frames should be integers.
         shows = [int(frame) for frame in shows]

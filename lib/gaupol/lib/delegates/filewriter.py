@@ -31,7 +31,7 @@ except ImportError:
     pass
 
 from gaupol.constants import FORMAT, MODE
-from gaupol.lib.constants import *
+from gaupol.lib.colcons import *
 from gaupol.lib.delegates.delegate import Delegate
 from gaupol.lib.files.all import *
 from gaupol.lib.tags.tagconv import TagConverter

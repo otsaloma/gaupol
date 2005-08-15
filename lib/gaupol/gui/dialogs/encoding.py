@@ -85,13 +85,11 @@ class EncodingDialog(object):
 
         cell_renderer_2.connect('toggled', self._on_tree_view_cell_toggled)
 
-        tree_view_column_0 = gtk.TreeViewColumn(_('Description'))
-        tree_view_column_1 = gtk.TreeViewColumn(_('Encoding'))
-        tree_view_column_2 = gtk.TreeViewColumn(_('Show In Menu'))
+        TVC = gtk.TreeViewColumn
 
-        tree_view_column_0.set_attributes(cell_renderer_0, text  =0)
-        tree_view_column_0.set_attributes(cell_renderer_1, text  =1)
-        tree_view_column_0.set_attributes(cell_renderer_2, active=2)
+        tree_view_column_0 = TVC(_('Description') , cell_renderer_0, text  =0)
+        tree_view_column_1 = TVC(_('Encoding')    , cell_renderer_1, text  =1)
+        tree_view_column_2 = TVC(_('Show In Menu'), cell_renderer_2, active=2)
 
         # Set column properties and append columns.
         for i in range(3):

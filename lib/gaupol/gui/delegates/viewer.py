@@ -26,7 +26,7 @@ except ImportError:
     pass
 
 from gaupol.constants import FRAMERATE, MODE
-from gaupol.gui.constants import *
+from gaupol.gui.colcons import *
 from gaupol.gui.delegates.delegate import Delegate
 from gaupol.gui.util import gui
 
@@ -84,7 +84,7 @@ class Viewer(Delegate):
 
         # Restore selection.
         selection = project.tree_view.get_selection()
-        for row in selected rows:
+        for row in selected_rows:
             selection.select_path(row)
 
         project.tree_view.set_property('has-focus', has_focus)

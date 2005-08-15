@@ -1,10 +1,10 @@
 <ui>
 	<popup name="column_popup">
-		<menuitem action="no"/>
+		<menuitem action="number"/>
 		<menuitem action="show"/>
 		<menuitem action="hide"/>
 		<menuitem action="duration"/>
-		<menuitem action="original"/>
+		<menuitem action="text"/>
 		<menuitem action="translation"/>
 	</popup>
 	<popup name="tree_view_popup">

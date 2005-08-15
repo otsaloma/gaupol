@@ -28,7 +28,7 @@ except ImportError:
 import gtk
 
 from gaupol.constants import POSITION, TYPE
-from gaupol.gui.constants import *
+from gaupol.gui.colcons import *
 from gaupol.gui.delegates.delegate import Delegate
 from gaupol.gui.delegates.durmanager import DURAction
 from gaupol.gui.dialogs.insertsub import InsertSubtitleDialog

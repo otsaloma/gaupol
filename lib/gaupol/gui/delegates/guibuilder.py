@@ -57,7 +57,7 @@ class GUIBuilder(Delegate):
 
         # Add entries.
         for i in range(len(FRAMERATE.NAMES)):
-            entry = _('%s fps') % framerate_name
+            entry = _('%s fps') % FRAMERATE.NAMES[i]
             self.framerate_combo_box.insert_text(i, entry)
 
         # Set active framerate.
@@ -379,42 +379,42 @@ class GUIBuilder(Delegate):
                 _('_Dialog'),
                 '<control>D',
                 _('Toggle dialog lines on the selected texts'),
-                self.on_dialog_lines_activated
+                self.on_dialog_activated
             ), (
                 'italic',
                 gtk.STOCK_ITALIC,
                 _('_Italic'),
                 '<control>I',
                 _('Toggle the italicization of the selected texts'),
-                self.on_italic_style_activated
+                self.on_italic_activated
             ), (
                 'title',
                 None,
                 _('_Title'),
                 '<control>L',
                 _('Change the selected texts to Title Case'),
-                self.on_title_case_activated
+                self.on_title_activated
             ), (
                 'sentence',
                 None,
                 _('_Sentence'),
                 '<control>E',
                 _('Change the selected texts to Sentence case'),
-                self.on_sentence_case_activated
+                self.on_sentence_activated
             ), (
                 'upper',
                 None,
                 _('_Upper'),
                 '<control>U',
                 _('Change the selected texts to UPPER CASE'),
-                self.on_upper_case_activated
+                self.on_upper_activated
             ), (
                 'lower',
                 None,
                 _('_Lower'),
                 '<control>R',
                 _('Change the selected texts to lower case'),
-                self.on_lower_case_activated
+                self.on_lower_activated
             ), (
                 'jump_to_subtitle',
                 gtk.STOCK_JUMP_TO,
@@ -622,10 +622,10 @@ class GUIBuilder(Delegate):
         action_group.add_toggle_actions(toggle_items, None)
 
         action_group.add_radio_actions(
-            edit_mode_radio_items, edit_mode_index, self.on_edit_mode_toggled
+            edit_mode_radio_items, edit_mode, self.on_edit_mode_toggled
         )
         action_group.add_radio_actions(
-            framerate_radio_items, framerate_index, self.on_framerate_toggled,
+            framerate_radio_items, framerate, self.on_framerate_toggled,
         )
         
         # Add ActionGroups to UIManager.

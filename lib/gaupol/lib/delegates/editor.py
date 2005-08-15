@@ -26,7 +26,7 @@ except ImportError:
     pass
 
 from gaupol.constants import MODE
-from gaupol.lib.constants import *
+from gaupol.lib.colcons import *
 from gaupol.lib.delegates.delegate import Delegate
 
 
@@ -145,7 +145,7 @@ class Editor(Delegate):
         rows.reverse()
         
         for row in rows:
-            for entry in [self.times, self.frames, self.texts]
+            for entry in [self.times, self.frames, self.texts]:
                 entry.pop(row)
 
     def _set_durations(self, row):

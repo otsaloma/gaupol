@@ -28,7 +28,7 @@ except ImportError:
     pass
 
 from gaupol.constants import FORMAT
-from gaupol.lib.constants import *
+from gaupol.lib.colcons import *
 from gaupol.lib.delegates.delegate import Delegate
 from gaupol.lib.tags.all import *
 

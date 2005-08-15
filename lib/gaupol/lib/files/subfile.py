@@ -82,6 +82,10 @@ class SubtitleFile(object):
         return lines
 
     def _strip_spaces(self, strings):
-        """Strip leading and trailing spaces in list of strings."""
-
-        return [string.strip() for string in strings]
+        """
+        Strip leading and trailing spaces in list of strings.
+        
+        Stripping is done in-place, nothing is returned.
+        """
+        for i in range(len(strings)):
+            strings[i] = strings[i].strip()

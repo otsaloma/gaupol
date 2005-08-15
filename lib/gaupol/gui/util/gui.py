@@ -20,6 +20,7 @@
 """Functions for GTK widgets."""
 
 
+import logging
 import os
 import sys
 
@@ -27,6 +28,9 @@ import gtk
 import gtk.glade
 
 from gaupol.paths import GLADE_DIR
+
+
+logger = logging.getLogger()
 
 
 def get_glade_xml(basename):

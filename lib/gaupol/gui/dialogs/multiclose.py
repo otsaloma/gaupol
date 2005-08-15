@@ -157,11 +157,8 @@ class MultiCloseWarningDialog(object):
         cell_renderer_0.connect('toggled', method, model)
         
         # Columns
-        tree_view_column_0 = gtk.TreeViewColumn()
-        tree_view_column_1 = gtk.TreeViewColumn()
-
-        tree_view_column_0.set_attributes(cell_renderer_0, active=0)
-        tree_view_column_1.set_attributes(cell_renderer_1,   text=1)
+        tree_view_column_0 = gtk.TreeViewColumn('', cell_renderer_0, active=0)
+        tree_view_column_1 = gtk.TreeViewColumn('', cell_renderer_1, text  =1)
 
         method = self._render_basename_column
         tree_view_column_1.set_cell_data_func(cell_renderer_1, method)

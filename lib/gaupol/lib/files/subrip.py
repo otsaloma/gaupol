@@ -28,7 +28,7 @@ try:
 except ImportError:
     pass
 
-from gaupol.constants import FORMAT, MODE
+from gaupol.constants import EXTENSION, FORMAT, MODE
 from gaupol.lib.files.subfile import SubtitleFile
 
 
@@ -102,8 +102,7 @@ class SubRip(SubtitleFile):
                 texts[-1] += line
 
         # Remove leading and trailing spaces.
-        for entry in [shows, hides, texts]:
-            self._strip_spaces(entry)
+        self._strip_spaces(texts)
 
         return shows, hides, texts
 

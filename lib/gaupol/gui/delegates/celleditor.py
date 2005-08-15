@@ -26,7 +26,7 @@ except ImportError:
     pass
 
 from gaupol.constants import MODE
-from gaupol.gui.constants import *
+from gaupol.gui.colcons import *
 from gaupol.gui.delegates.delegate import Delegate
 from gaupol.gui.delegates.durmanager import DURAction
 

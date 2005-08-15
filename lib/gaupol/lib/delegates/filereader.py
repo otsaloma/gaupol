@@ -26,7 +26,7 @@ except ImportError:
     pass
 
 from gaupol.constants import FORMAT, MODE
-from gaupol.lib.constants import *
+from gaupol.lib.colcons import *
 from gaupol.lib.delegates.delegate import Delegate
 from gaupol.lib.files.all import *
 from gaupol.lib.files.determiner import FileFormatDeterminer
@@ -64,10 +64,10 @@ class FileReader(Delegate):
         self.frames = []
         self.texts  = []
 
-        calc   = self.calc
-        times  = self.times
-        frames = self.frames
-        texts  = self.texts
+        calc       = self.calc
+        times      = self.times
+        frames     = self.frames
+        both_texts = self.texts
 
         if self.main_file.MODE == MODE.TIME:
             
@@ -84,7 +84,7 @@ class FileReader(Delegate):
                             
                 times.append( [show_time , hide_time , durn_time ])
                 frames.append([show_frame, hide_frame, durn_frame])
-                texts.append( [text, u''])
+                both_texts.append([text, u''])
 
         elif self.main_file.MODE == MODE.FRAME:
             
@@ -101,7 +101,7 @@ class FileReader(Delegate):
 
                 times.append( [show_time , hide_time , durn_time ])
                 frames.append([show_frame, hide_frame, durn_frame])
-                texts.append( [text, u''])
+                both_texts.append([text, u''])
 
     def read_translation_file(self, path, encoding):
         """

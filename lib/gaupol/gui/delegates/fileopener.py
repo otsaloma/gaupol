@@ -32,7 +32,7 @@ except ImportError:
 import gtk
 
 from gaupol.constants import TYPE
-from gaupol.gui.constants import *
+from gaupol.gui.colcons import *
 from gaupol.gui.delegates.delegate import Delegate
 from gaupol.gui.dialogs.error import ReadFileErrorDialog
 from gaupol.gui.dialogs.error import UnicodeDecodeErrorDialog
@@ -66,10 +66,12 @@ class FileOpener(Delegate):
         scrolled_window = gtk.ScrolledWindow()
         scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
         scrolled_window.add(project.tree_view)
+
+        tab_widget = project.get_tab_widget()
     
         # Put ScrolledWindow in Notebook.
         self.notebook.append_page_menu(
-            scrolled_window, project.tab_widget, project.tab_menu_label
+            scrolled_window, tab_widget, project.tab_menu_label
         )       
         self.notebook.show_all()
         self.notebook.set_current_page(self.projects.index(project))
@@ -333,7 +335,7 @@ class FileOpener(Delegate):
             self._add_new_project(project)
             
             basename = project.get_main_basename()
-            message = _('Opened subtitle file "%s"') % basename
+            message = _('Opened main file "%s"') % basename
             self.set_status_message(message)
 
             # Show the new notebook page right away.

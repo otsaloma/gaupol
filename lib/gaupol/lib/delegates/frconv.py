@@ -26,7 +26,7 @@ except ImportError:
     pass
 
 from gaupol.constants import FRAMERATE, MODE
-from gaupol.lib.constants import *
+from gaupol.lib.colcons import *
 from gaupol.lib.delegates.delegate import Delegate
 
 

@@ -31,11 +31,11 @@ import gobject
 import gtk
 import pango
 
-from gaupol.constants import MODE, TYPE
+from gaupol.constants import FRAMERATE, MODE, TYPE
 from gaupol.gui.cellrend.integer import CellRendererInteger
 from gaupol.gui.cellrend.multiline import CellRendererMultilineText
 from gaupol.gui.cellrend.time import CellRendererTime
-from gaupol.gui.constants import *
+from gaupol.gui.colcons import *
 from gaupol.gui.util import gui
 from gaupol.lib.data import Data
 
@@ -86,7 +86,9 @@ class Project(gobject.GObject):
     
         self._config = config
 
-        framerate = config.get('editor', 'framerate')
+        framerate_name = config.get('editor', 'framerate')
+        framerate = FRAMERATE.NAMES.index(framerate_name)
+
         edit_mode_name = config.get('editor', 'edit_mode')
         edit_mode = MODE.NAMES.index(edit_mode_name)
 
@@ -179,24 +181,24 @@ class Project(gobject.GObject):
         model = gtk.ListStore(*columns)
         self.tree_view.set_model(model)
 
-        tree_view_column_0 = gtk.TreeViewColumn(_('No'))
-        tree_view_column_1 = gtk.TreeViewColumn(_('Show'))
-        tree_view_column_2 = gtk.TreeViewColumn(_('Hide'))
-        tree_view_column_3 = gtk.TreeViewColumn(_('Duration'))
-        tree_view_column_4 = gtk.TreeViewColumn(_('Text'))
-        tree_view_column_5 = gtk.TreeViewColumn(_('Translation'))
+        TVC = gtk.TreeViewColumn
+
+        tree_view_column_0 = TVC(_('No')         , cell_renderer_0, text=0)
+        tree_view_column_1 = TVC(_('Show')       , cell_renderer_1, text=1)
+        tree_view_column_2 = TVC(_('Hide')       , cell_renderer_2, text=2)
+        tree_view_column_3 = TVC(_('Duration')   , cell_renderer_3, text=3)
+        tree_view_column_4 = TVC(_('Text')       , cell_renderer_4, text=4)
+        tree_view_column_5 = TVC(_('Translation'), cell_renderer_5, text=5)
 
         visible_columns = self._config.getlist('view', 'columns')
         
         # Set column properties and append them to the TreeView.
         for i in range(6):
         
-            tree_view_column = eval('tree_col_%d' % i)
-            cell_renderer    = eval('cell_renderer_%d' % i)
-
-            tree_view_column.set_attributes(cell_renderer, text=i)
+            tree_view_column = eval('tree_view_column_%d' % i)
             self.tree_view.append_column(tree_view_column)
 
+            tree_view_column.set_clickable(True)
             tree_view_column.set_resizable(True)
 
             column_name = COLUMN.NAMES[i]

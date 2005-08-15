@@ -32,7 +32,7 @@ import gtk
 
 from gaupol.constants import FRAMERATE, MODE
 from gaupol.gui.cellrend.multiline import CellRendererMultilineText
-from gaupol.gui.constants import *
+from gaupol.gui.colcons import *
 from gaupol.gui.delegates.delegate import Delegate
 from gaupol.gui.util import gui
 
@@ -599,7 +599,7 @@ class GUIUpdater(Delegate):
             '/ui/menubar/view/times',
             '/ui/menubar/view/frames',
             '/ui/menubar/view/columns',
-            '/ui/menubar/search/go_to_subtitle',
+            '/ui/menubar/search/jump_to_subtitle',
             '/ui/menubar/documents/save_all',
             '/ui/menubar/documents/close_all',
         )

@@ -1,3 +1,15 @@
+2005-08-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* Major code clean-up done.
+	
+	* Code uses more constants now.
+	
+	* List is no longer sortable.
+	
+	* Preferences dialog exists, but is not yet functional.
+	
+	* Huge amounts of new bugs.
+
 2005-08-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* New Edit menu items are now functional, although perhaps buggy.
