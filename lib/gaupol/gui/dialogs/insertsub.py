@@ -60,7 +60,7 @@ class InsertSubtitleDialog(object):
         self._dialog.set_default_response(gtk.RESPONSE_OK)
     
     def destroy(self):
-        """Destroy dialog."""
+        """Destroy the dialog."""
         
         self._dialog.destroy()
         
@@ -75,10 +75,10 @@ class InsertSubtitleDialog(object):
         """
         Get position to insert subtitles to.
         
-        Return: POSITION_ABOVE or POSITION_BELOW
+        Return: POSITION.ABOVE or POSITION.BELOW
         """
         # ComboBox entry index corresponds to values of constants
-        # POSITION_ABOVE and POSITION_BELOW.
+        # POSITION.ABOVE and POSITION.BELOW.
         return self._combo_box.get_active()
 
     def set_amount(self, value):
@@ -90,14 +90,14 @@ class InsertSubtitleDialog(object):
         """
         Set position to insert subtitles to.
         
-        position: POSITION_ABOVE or POSITION_BELOW
+        position: POSITION.ABOVE or POSITION.BELOW
         """
         # ComboBox entry index corresponds to values of constants
-        # POSITION_ABOVE and POSITION_BELOW.
+        # POSITION.ABOVE and POSITION.BELOW.
         self._combo_box.set_active(position)
 
     def run(self):
-        """Show and run dialog."""
+        """Show and run the dialog."""
         
         self._dialog.show()
         

@@ -28,8 +28,8 @@ import gtk
 
 from gaupol.gui.delegates.delegate import Delegate
 from gaupol.gui.dialogs.multiclose import MultiCloseWarningDialog
-from gaupol.gui.dialogs.warning import CloseMainDocumentWarningDialog
-from gaupol.gui.dialogs.warning import CloseTranslationDocumentWarningDialog
+from gaupol.gui.dialogs.warning import CloseMainWarningDialog
+from gaupol.gui.dialogs.warning import CloseTranslationWarningDialog
 from gaupol.gui.project import Project
 from gaupol.gui.util import gui
 
@@ -53,7 +53,7 @@ class FileCloser(Delegate):
                 unsaved_project = project
                 unsaved_count += 1
 
-            if project.tran_changed and project.tran_active:
+            if project.tran_active and project.tran_changed:
                 unsaved_project = project
                 unsaved_count += 1
 
@@ -85,11 +85,14 @@ class FileCloser(Delegate):
         
         Return: False if cancelled, otherwise True
         """
+        confirm_main = project.main_changed
+        confirm_tran =  project.tran_active and project.tran_changed
+
         # Main document close dialog.
-        if project.main_changed and not project.tran_changed:
+        if confirm_main and not confirm_tran:
 
             basename = project.get_main_basename()
-            dialog = CloseMainDocumentWarningDialog(self.window, basename)
+            dialog = CloseMainWarningDialog(self.window, basename)
             response = dialog.run()
             dialog.destroy()
             
@@ -104,11 +107,10 @@ class FileCloser(Delegate):
                     return False
         
         # Translation document close dialog.
-        elif not project.main_changed and project.tran_changed and project.tran_active:
+        elif not confirm_main and confirm_tran:
         
             basename = project.get_translation_basename()
-            dialog = CloseTranslationDocumentWarningDialog(self.window,
-                                                           basename)
+            dialog = CloseTranslationWarningDialog(self.window, basename)
             response = dialog.run()
             dialog.destroy()
             
@@ -123,7 +125,7 @@ class FileCloser(Delegate):
                     return False
 
         # Multidocument close dialog.
-        elif project.main_changed and project.tran_changed and project.tran_active:
+        elif confirm_main and confirm_tran:
             success = self._confirm_closing_multiple_documents([project])
             if not success:
                 return False
@@ -182,10 +184,7 @@ class FileCloser(Delegate):
         """Close project after asking for confirmation."""
         
         project = self.get_current_project()
-        success = self._close_project(project)
-
-        if success:
-            self.set_sensitivities()
+        self.on_notebook_tab_close_button_clicked(project)
 
     def on_close_all_activated(self, *args):
         """Close all currently open projects after asking for confirmation."""

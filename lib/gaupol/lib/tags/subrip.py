@@ -34,9 +34,8 @@ class SubRip(TagLibrary):
 
     """SubRip tag library."""
 
-    TAG = r'</?(b|i|u)>', re.IGNORECASE
-
-    ITALIC = '</?i>', re.IGNORECASE
+    TAG    = r'</?(b|i|u)>', re.IGNORECASE
+    ITALIC = r'</?i>'      , re.IGNORECASE
     
     DECODE_TAGS = (
         (

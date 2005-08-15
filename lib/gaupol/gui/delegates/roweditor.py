@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Performer of actions on entire rows (subtitles)."""
+"""Editing entire rows (subtitles)."""
 
 
 try:
@@ -27,7 +27,8 @@ except ImportError:
 
 import gtk
 
-from gaupol.gui.constants import NO, SHOW, HIDE, DURN, TEXT, TRAN
+from gaupol.constants import POSITION, TYPE
+from gaupol.gui.constants import *
 from gaupol.gui.delegates.delegate import Delegate
 from gaupol.gui.delegates.durmanager import DURAction
 from gaupol.gui.dialogs.insertsub import InsertSubtitleDialog
@@ -40,52 +41,52 @@ class RowInsertAction(DURAction):
     def __init__(self, project, position, amount):
 
         self.project = project
-        self.position = position
-        self.amount = amount
 
-        self.document    = 'both'
-        self.description = _('Inserting rows')
+        selected_rows = project.get_selected_rows()
+        if position == POSITION.ABOVE:
+            self._start_row = selected_rows[0]
+        elif position == POSITION.BELOW:
+            self._start_row = selected_rows[0] + 1
 
-        self.store_rows = self.project.get_selected_store_rows()
-        self.data_rows = []
+        self._amount = amount
+        self._inserted_rows = []
+
+        first = position + 1
+        last  = position + 1 + amount
+
+        if amount == 1:
+            self.description = _('Inserting subtitle %d') % first
+        else:
+            self.description = _('Inserting subtitles %d-%d') % (first, last)
+
+        self.documents = [TYPE.MAIN, TYPE.TRAN]
 
     def do(self):
         """Insert rows."""
 
-        ABOVE, BELOW = 0, 1
-        
-        store_rows = self.store_rows
-        if self.position == ABOVE:
-            start_row = self.project.get_data_row(store_rows[0])
-        elif self.position == BELOW:
-            start_row = self.project.get_data_row(store_rows[-1]) + 1
-
-        self.project.data.insert_subtitles(start_row, self.amount)
+        self.project.data.insert_subtitles(self._start_row, self._amount)
 
         self.project.reload_all_data()
         
+        # Select all new rows.
         selection = self.project.tree_view.get_selection()
         selection.unselect_all()
-        
-        self.data_rows = []
-        for row in range(start_row, start_row + self.amount):
-            store_row = self.project.get_store_row(row)
-            selection.select_path(store_row)
-            self.data_rows.append(row)
+        for row in range(self._start_row, self._start_row + self._amount):
+            selection.select_path(row)
+            self._inserted_rows.append(row)
 
     def undo(self):
-    
-        store    = self.project.tree_view.get_model()
-        data     = self.project.data
+        """Remove inserted rows."""
 
-        data.remove_subtitles(self.data_rows)
+        # Remove rows from Data.
+        self.project.data.remove_subtitles(self._inserted_rows)
         
-        for data_row in self.data_rows:
-            store_row = self.project.get_store_row(data_row)
-            store.remove(store.get_iter(store_row))
+        # Remove rows from ListStore.
+        model = self.project.tree_view.get_model()
+        for row in self._inserted_rows:
+            model.remove(model.get_iter(row))
 
-        self.project.reload_data_in_columns([NO])
-
+        self.project.reload_data_in_columns(NO)
 
 
 class RowRemoveAction(DURAction):
@@ -95,111 +96,117 @@ class RowRemoveAction(DURAction):
     def __init__(self, project):
 
         self.project = project
-        self.data_rows = project.get_selected_data_rows()
+
+        self._selected_rows = project.get_selected_rows()
+        
+        first = self._selected_rows[ 0] + 1
+        last  = self._selected_rows[-1] + 1
+
+        if start == end:
+            self.description = _('Removing subtitle %d') % first
+        else:
+            self.description = _('Removing subtitles %d-%d') % (first, last)
+
+        self.documents = [TYPE.MAIN, TYPE.TRAN]
 
         texts  = project.data.texts
         times  = project.data.times
         frames = project.data.frames
 
         # Save data.
-        self.removed_texts  = [texts[row]  for row in self.data_rows]
-        self.removed_times  = [times[row]  for row in self.data_rows]
-        self.removed_frames = [frames[row] for row in self.data_rows]
-
-        self.document    = 'both'
-        self.description = _('Removing rows')
-
-        self.top_store_row = self.project.get_selected_store_rows()[0]
+        self._removed_times  = [times[row]  for row in self._selected_rows]
+        self._removed_frames = [frames[row] for row in self._selected_rows]
+        self._removed_texts  = [texts[row]  for row in self._selected_rows]
 
     def do(self):
         """Remove rows."""
 
-        top_store_row = self.top_store_row
-
-        tree_col = self.project.tree_view.get_cursor()[1]
-        store    = self.project.tree_view.get_model()
-        data     = self.project.data
-
-        data.remove_subtitles(self.data_rows)
+        # Remove rows from Data.
+        self.project.data.remove_subtitles(self._selected_rows)
         
-        for data_row in self.data_rows:
-            store_row = self.project.get_store_row(data_row)
-            store.remove(store.get_iter(store_row))
+        # Remove rows from ListStore.
+        model = self.project.tree_view.get_model()
+        for row in self._selected_rows:
+            model.remove(model.get_iter(row))
 
-        self.project.reload_data_in_columns([NO])
+        self.project.reload_data_in_columns(NO)
 
+        # Select first row of selection.
         selection = self.project.tree_view.get_selection()
         selection.unselect_all()
-        selection.select_path(top_store_row)
-
-        self.project.tree_view.set_cursor(top_store_row, tree_col)
+        try:
+            selection.select_path(self._selected_rows[0])
+        except TypeError:
+            pass
 
     def undo(self):
         """Restore rows."""
         
-        store = self.project.tree_view.get_model()
+        model = self.project.tree_view.get_model()
         data  = self.project.data
-
-        data_rows = self.data_rows[:]
-        data_rows.sort()
         
-        for data_row in data_rows:
+        for i in range(len(self._selected_rows)):
 
-            i = self.data_rows.index(data_row)
-            data.texts.insert(data_row, self.removed_texts[i])
-            data.times.insert(data_row, self.removed_times[i])
-            data.frames.insert(data_row, self.removed_frames[i])
+            # Restore rows to Data.
+            row = self._selected_rows[i]
+            data.texts.insert( row, self.removed_texts[ i])
+            data.times.insert( row, self.removed_times[ i])
+            data.frames.insert(row, self.removed_frames[i])
             
-            store_row = self.project.get_store_row(data_row)
+            # Add blank rows to ListStore.
+            model.append()
 
-            store.append()
-
+        # Restore rows to ListStore.
         self.project.reload_all_data()
 
 
 class RowEditor(Delegate):
 
-    """Performer of actions on entire rows (subtitles)."""
+    """Editing entire rows (subtitles)."""
+
+    def insert_subtitles(self, position, amount):
+        """Insert blank subtitles at selection."""
+        
+        project = self.get_current_project()
+        action = RowInsertAction(project, position, amount)
+        self.do_action(project, action)
 
     def on_insert_subtitles_activated(self, *args):
         """Insert blank subtitles at selection."""
         
-        positions = ['above', 'below']
-        position = self.config.get('insert_subtitles', 'position')
-        amount   = self.config.getint('insert_subtitles', 'amount')
+        position_name = self.config.get('insert_subtitles', 'position')
+        position = POSITION.NAMES.index(position_name)
+        amount = self.config.getint('insert_subtitles', 'amount')
         
         dialog = InsertSubtitleDialog(self.window)
         
         dialog.set_amount(amount)
-        dialog.set_position(positions.index(position))
+        dialog.set_position(position)
         
         response = dialog.run()
         position = dialog.get_position()
-        amount   = dialog.get_amount()
-
+        position_name = POSITION.NAMES[position]
+        amount = dialog.get_amount()
         dialog.destroy()
 
         if response != gtk.RESPONSE_OK:
             return
 
-        self.config.set('insert_subtitles', 'position', positions[position])
+        self.config.set('insert_subtitles', 'position', position_name)
         self.config.setint('insert_subtitles', 'amount', amount)
 
-        project = self.get_current_project()
-        action = RowInsertAction(project, position, amount)
-        self.do_action(project, action)
+        self.insert_subtitles(position, amount)
 
     def on_invert_selection_activated(self, *args):
         """Invert current selection."""
 
         project = self.get_current_project()
-        store = project.tree_view.get_model()
+        
+        selected_rows = project.get_selected_rows()
         selection = project.tree_view.get_selection()
         
-        rows = selection.get_selected_rows()[1]
         selection.select_all()
-        
-        for row in rows:
+        for row in selected_rows:
             selection.unselect_path(row)
 
         project.tree_view.grab_focus()
@@ -215,14 +222,18 @@ class RowEditor(Delegate):
         """Select all subtitles."""
 
         project = self.get_current_project()
+        
         selection = project.tree_view.get_selection()
         selection.select_all()
+        
         project.tree_view.grab_focus()
 
     def on_unselect_all_activated(self, *args):
         """Unselect all subtitles."""
 
         project = self.get_current_project()
+        
         selection = project.tree_view.get_selection()
         selection.unselect_all()
+        
         project.tree_view.grab_focus()

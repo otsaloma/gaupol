@@ -17,15 +17,24 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
+"""Configuring Gaupol."""
+
+
 try:
     from psyco.classes import *
 except ImportError:
     pass
 
 from gaupol.gui.delegates.delegate import Delegate
+from gaupol.gui.dialogs.prefs import PreferencesDialog
 
 
-class PreferencesEditor(Delegate):
+class PreferenceEditor(Delegate):
+
+    """Configuring Gaupol."""
 
     def on_preferences_activated(self, *args):
-        pass
+        """Show the preferences dialog."""
+        
+        dialog = PreferencesDialog(self.window)
+        dialog.show()

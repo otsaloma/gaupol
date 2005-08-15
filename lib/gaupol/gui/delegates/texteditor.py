@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Editor of text data."""
+"""Editing of text data."""
 
 
 try:
@@ -25,7 +25,10 @@ try:
 except ImportError:
     pass
 
-from gaupol.gui.constants import NO, SHOW, HIDE, DURN, TEXT, TRAN
+import gtk
+
+from gaupol.constants import POSITION
+from gaupol.gui.constants import *
 from gaupol.gui.delegates.delegate import Delegate
 from gaupol.gui.delegates.durmanager import DURAction
 from gaupol.gui.dialogs.error import PasteFitErrorDialog
@@ -37,33 +40,29 @@ class TextEditAction(DURAction):
 
     def __init__(self, project):
 
-        self.project         = project
-        self.sel_data_rows   = project.get_selected_data_rows()
-        self.focus_store_col = project.get_store_focus()[1]
+        self.project = project
 
+        self._col = project.get_focus()[1]
+        self._selected_rows = project.get_selected_rows()
+
+        # Save original texts.
         texts = project.data.texts
-        data_col = self.focus_store_col - 4
-        self.orig_texts = [texts[i][data_col] for i in self.sel_data_rows]
+        rows = self._selected_rows
+        self._orig_texts = [texts[row][self._col] for row in rows]
 
-        documents = ['main'] * 5 + ['translation']
-        self.document = documents[self.focus_store_col]
+        self.documents = [project.get_document_type(self._col)]
 
     def undo(self):
         """Undo text-editing."""
 
-        texts     = self.project.data.texts
-        store     = self.project.tree_view.get_model()
-        data_col  = self.focus_store_col - 4
-        store_col = self.focus_store_col
+        texts = self.project.data.texts
+        model = self.project.tree_view.get_model()
+        data_col = project.get_data_col(self._col)
 
-        for i in range(len(self.sel_data_rows)):
-
-            data_row  = self.sel_data_rows[i]
-            store_row = self.project.get_store_row(data_row)
-            text      = self.orig_texts[i]
-
-            store[store_row][store_col] = text
-            texts[data_row][data_col]   = text
+        for i in range(len(self._selected_rows)):
+            text = self._orig_texts[i]
+            model[row][self._col] = text
+            texts[row][ data_col] = text
 
 
 class CaseChangeAction(TextEditAction):
@@ -78,29 +77,36 @@ class CaseChangeAction(TextEditAction):
         """
         TextEditAction.__init__(self, project)
 
-        self.method  = method
+        self._method  = method
 
-        descriptions = [
-            None, None, None, None,
-            _('Changing text case'),
-            _('Changing translation case')
-        ]
-        self.description = descriptions[self.focus_store_col]
+        first = self._selected_rows[ 0] + 1
+        last  = self._selected_rows[-1] + 1
+        subs  = (first, last)
+
+        descriptions = (
+            (
+                _('Changing case of texts of subtitle %d')        % first,
+                _('Changing case of translation of subtitle %d') % first
+            ), (
+                _('Changing case of text of subtitles %d, ... , %d') % subs,
+                _('Changing case of translation of subtitles %d, ... , %d') \
+                % subs
+            )
+        )
+        self.description = descriptions[min(last - first, 1)][self._col]
 
     def do(self):
         """Change case."""
 
-        store     = self.project.tree_view.get_model()
-        data      = self.project.data
-        data_col  = self.focus_store_col - 4
-        store_col = self.focus_store_col
+        model = self.project.tree_view.get_model()
+        texts = self.project.data.texts
+        col = self._col
+        data_col = self.project.get_data_col(col)
 
-        texts = data.change_case(self.sel_data_rows, data_col, self.method)
+        data.change_case(self._selected_rows, data_col, self._method)
         
-        for i in range(len(self.sel_data_rows)):
-        
-            store_row = self.project.get_store_row(self.sel_data_rows[i])
-            store[store_row][store_col] = texts[i]
+        for row in self._selected_rows:
+            model[row][col] = texts[row][data_col]
 
 
 class ClearAction(TextEditAction):
@@ -111,28 +117,32 @@ class ClearAction(TextEditAction):
 
         TextEditAction.__init__(self, project)
 
-        descriptions = [
-            None, None, None, None,
-            _('Clearing text case'),
-            _('Clearing translation case')
-        ]
-        self.description = descriptions[self.focus_store_col]
+        first = self._selected_rows[ 0] + 1
+        last  = self._selected_rows[-1] + 1
+        subs  = (first, last)
+
+        descriptions = (
+            (
+                _('Clearing text of subtitle %d')        % first,
+                _('Clearing translation of subtitle %d') % first
+            ), (
+                _('Clearing text of subtitles %d, ... , %d')        % subs,
+                _('Clearing translation of subtitles %d, ... , %d') % subs
+            )
+        )
+        self.description = descriptions[min(last - first, 1)][self._col]
 
     def do(self):
         """Clear text."""
 
-        store     = self.project.tree_view.get_model()
-        data      = self.project.data
-        texts     = self.project.data.texts
-        data_col  = self.focus_store_col - 4
-        store_col = self.focus_store_col
-
-        for i in range(len(self.sel_data_rows)):
+        model = self.project.tree_view.get_model()
+        texts = self.project.data.texts
+        col = self._col
+        data_col = self.project.get_data_col(col)
         
-            data_row = self.sel_data_rows[i]
-            store_row = self.project.get_store_row(data_row)
-            data.clear_text(data_row, data_col)
-            store[store_row][store_col] = texts[data_row][data_col]
+        for row in self._selected_rows:
+            texts[row][data_col] = u''
+            model[row][     col] = u''
 
 
 class CutAction(ClearAction):
@@ -143,12 +153,20 @@ class CutAction(ClearAction):
 
         ClearAction.__init__(self, project)
 
-        descriptions = [
-            None, None, None, None,
-            _('Cutting text'),
-            _('Cutting translation')
-        ]
-        self.description = descriptions[self.focus_store_col]
+        first = self._selected_rows[ 0] + 1
+        last  = self._selected_rows[-1] + 1
+        subs  = (first, last)
+
+        descriptions = (
+            (
+                _('Cutting text of subtitle %d')        % first,
+                _('Cutting translation of subtitle %d') % first
+            ), (
+                _('Cutting text of subtitles %d, ... , %d')        % subs,
+                _('Cutting translation of subtitles %d, ... , %d') % subs
+            )
+        )
+        self.description = descriptions[min(last - first, 1)][self._col]
 
 
 class DialogLineAction(TextEditAction):
@@ -159,27 +177,37 @@ class DialogLineAction(TextEditAction):
 
         TextEditAction.__init__(self, project)
 
-        descriptions = [
-            None, None, None, None,
-            _('Toggling text dialog lines'),
-            _('Toggling translation dialog lines')
-        ]
-        self.description = descriptions[self.focus_store_col]
+        first = self._selected_rows[ 0] + 1
+        last  = self._selected_rows[-1] + 1
+        subs  = (first, last)
+
+        descriptions = (
+            (
+                _('Toggling dialog lines on text of subtitle %d')        \
+                % first,
+                _('Toggling dialog lines on translation of subtitle %d') \
+                % first
+            ), (
+                _('Toggling dialog lines on text of subtitles %d, ... , %d') \
+                % subs,
+                _('Toggling dialog lines on translation of subtitles %d, ... , %d') \
+                % subs
+            )
+        )
+        self.description = descriptions[min(last - first, 1)][self._col]
 
     def do(self):
         """Toggle dialog lines."""
 
-        store     = self.project.tree_view.get_model()
-        data      = self.project.data
-        data_col  = self.focus_store_col - 4
-        store_col = self.focus_store_col
+        model = self.project.tree_view.get_model()
+        texts = self.project.data.texts
+        col = self._col
+        data_col = self.project.get_data_col(col)
 
-        texts = data.toggle_dialog_lines(self.sel_data_rows, data_col)
+        data.toggle_dialog_lines(self._selected_rows, data_col)
         
-        for i in range(len(self.sel_data_rows)):
-        
-            store_row = self.project.get_store_row(self.sel_data_rows[i])
-            store[store_row][store_col] = texts[i]
+        for row in self._selected_rows:
+            model[row][col] = texts[row][data_col]
 
 
 class ItalicAction(TextEditAction):
@@ -190,115 +218,132 @@ class ItalicAction(TextEditAction):
 
         TextEditAction.__init__(self, project)
 
-        descriptions = [
-            None, None, None, None,
-            _('Toggling text italicization'),
-            _('Toggling translation italicization')
-        ]
-        self.description = descriptions[self.focus_store_col]
+        descriptions = (
+            (
+                _('Toggling italicization of text of subtitle %d')        \
+                % first,
+                _('Toggling italicization of translation of subtitle %d') \
+                % first
+            ), (
+                _('Toggling italicization of text of subtitles %d, ... , %d') \
+                % subs,
+                _('Toggling italicization of translation of subtitles %d, ... , %d') \
+                % subs
+            )
+        )
+        self.description = descriptions[min(last - first, 1)][self._col]
 
     def do(self):
         """Toggle italicization."""
 
-        store     = self.project.tree_view.get_model()
-        data      = self.project.data
-        data_col  = self.focus_store_col - 4
-        store_col = self.focus_store_col
+        model = self.project.tree_view.get_model()
+        texts = self.project.data.texts
+        col = self._col
+        data_col = self.project.get_data_col(col)
 
-        texts = data.toggle_italicization(self.sel_data_rows, data_col)
+        data.italicization(self._selected_rows, data_col)
         
-        for i in range(len(self.sel_data_rows)):
-        
-            store_row = self.project.get_store_row(self.sel_data_rows[i])
-            store[store_row][store_col] = texts[i]
+        for row in self._selected_rows:
+            model[row][col] = texts[row][data_col]
 
 
 class PasteAction(DURAction):
 
-    """Action to paste text cells."""
+    """Action to paste texts from clipboard."""
 
     def __init__(self, project, texts):
 
-        self.project         = project
-        self.sel_data_rows   = project.get_selected_data_rows()
-        self.focus_store_col = project.get_store_focus()[1]
+        self.project = project
 
-        documents = ['main'] * 5 + ['translation']
-        self.document = documents[self.focus_store_col]
+        self._col = project.get_focus()[1]
+        self._start_row = project.get_selected_rows()[0]
 
-        descriptions = [
-            None, None, None, None,
-            _('Pasting text'),
-            _('Pasting translation')
-        ]
-        self.description = descriptions[self.focus_store_col]
+        # Texts from clipboard.
+        self._new_texts = texts
 
-        self.new_texts = texts
-
-        start_row = self.sel_data_rows[0]
-        data_col  = self.focus_store_col - 4
-        texts     = self.project.data.texts
-
-        self.orig_texts = []
-        for i in range(len(self.new_texts)):
+        data_col = project.get_data_col(self._col)
+        texts = self.project.data.texts
+        self._orig_texts = []
         
-            if self.new_texts[i] is None:
-                self.orig_texts.append(None)
+        # Save original texts. Skipped rows have None elements.
+        for i in range(len(self._new_texts)):
+        
+            if self._new_texts[i] is None:
+                self._orig_texts.append(None)
                 continue
             
-            data_row = start_row + i
-            self.orig_texts.append(texts[data_row][data_col])
+            row = start_row + i
+            self._orig_texts.append(texts[row][data_col])
+
+
+        self.documents = [project.get_document_type(self._col)]
+
+        first = self._selected_rows[ 0] + 1
+        last  = self._selected_rows[-1] + 1
+        subs  = (first, last)
+
+        descriptions = (
+            (
+                _('Pasting text of subtitle %d')                   % first,
+                _('Pasting translation of subtitle %d')            % first
+            ), (
+                _('Pasting text of subtitles %d, ... , %d')        % subs,
+                _('Pasting translation of subtitles %d, ... , %d') % subs
+            )
+        )
+        self.description = descriptions[min(last - first, 1)][self._col]
 
     def do(self):
-        """Clear text."""
+        """Paste texts from clipboard."""
 
-        store     = self.project.tree_view.get_model()
-        data      = self.project.data
-        texts     = self.project.data.texts
-        data_col  = self.focus_store_col - 4
-        store_col = self.focus_store_col
+        model = self.project.tree_view.get_model()
+        texts = self.project.data.texts
+        col = self._col
+        data_col = project.get_data_col(self._col)
 
-        start_row = self.sel_data_rows[0]
-
+        # Unselect all subtitles.
         selection = self.project.tree_view.get_selection()
         selection.unselect_all()
 
-        for i in range(len(self.new_texts)):
+        for i in range(len(self._new_texts)):
         
-            if self.new_texts[i] is None:
+            if self._new_texts[i] is None:
                 continue
             
-            data_row = start_row + i
-            store_row = self.project.get_store_row(data_row)
-            data.set_text(data_row, data_col, self.new_texts[i])
-            store[store_row][store_col] = texts[data_row][data_col]
-            selection.select_path(store_row)
+            row = self._start_row + i
+            text = self._new_texts[i]
+            
+            # Set data.
+            texts[row][data_col] = text
+            model[row][     col] = text
+            
+            # Selected row where pasted.
+            selection.select_path(row)
 
     def undo(self):
-        """Undo text-editing."""
+        """Restore original texts."""
 
-        store     = self.project.tree_view.get_model()
-        data      = self.project.data
-        texts     = self.project.data.texts
-        data_col  = self.focus_store_col - 4
-        store_col = self.focus_store_col
+        model = self.project.tree_view.get_model()
+        texts = self.project.data.texts
+        col = self._col
+        data_col = project.get_data_col(self._col)
 
-        start_row = self.sel_data_rows[0]
-
-        for i in range(len(self.orig_texts)):
+        for i in range(len(self._orig_texts)):
         
-            if self.orig_texts[i] is None:
+            if self._orig_texts[i] is None:
                 continue
             
-            data_row = start_row + i
-            store_row = self.project.get_store_row(data_row)
-            data.set_text(data_row, data_col, self.orig_texts[i])
-            store[store_row][store_col] = texts[data_row][data_col]
+            row = self._start_row + i
+            text = self._orig_texts[i]
+            
+            # Set data.
+            texts[row][data_col] = text
+            model[row][     col] = text
 
 
 class TextEditor(Delegate):
 
-    """Editor of text data."""
+    """Editing of text data."""
 
     def _change_case(self, method):
         """
@@ -313,16 +358,16 @@ class TextEditor(Delegate):
     def _copy_selection(self):
         """Copy selected data to clipboard."""
         
-        project   = self.get_current_project()
-        store     = project.tree_view.get_model()
-        sel_rows  = project.get_selected_store_rows()
-        store_col = project.get_store_focus()[1]
-        texts     = []
+        project = self.get_current_project()
+        model = project.tree_view.get_model()
+        selected_rows = project.get_selected_rows()
+        col = project.get_focus()[1]
+        texts = []
         
-        # Add texts to list and None for unselected elements.
-        for row in range(sel_rows[0], sel_rows[-1] + 1):
-            if row in sel_rows:
-                texts.append(store[row][store_col])
+        # Add selected texts to list and None for unselected elements.
+        for row in range(selected_rows[0], selected_rows[-1] + 1):
+            if row in selected_rows:
+                texts.append(model[row][col])
             else:
                 texts.append(None)
         
@@ -371,17 +416,35 @@ class TextEditor(Delegate):
     def on_paste_activated(self, *args):
         """Paste the clipboard contents."""
 
-        project     = self.get_current_project()
-        store       = project.tree_view.get_model()
-        top_row     = project.get_selected_store_rows()[0]
-        rows_room   = len(store) - top_row
-        rows_needed = len(self.clipboard.get_data())
+        project = self.get_current_project()
+        model = project.tree_view.get_model()
+        start_row = project.get_selected_rows()[0]
+
+        rows_room    = len(model) - start_row
+        rows_needed  = len(self.clipboard.data)
+        rows_lacking = rows_needed - rows_room
         
-        if rows_needed > rows_room:
-            dialog = PasteFitErrorDialog(self.window, rows_needed - rows_room)
-            dialog.run()
+        if rows_lacking > 0:
+        
+            dialog = PasteFitQuestionDialog(self.window, rows_lacking)
+            response = dialog.run()
             dialog.destroy()
-            return
+
+            # User chose not to add new subtitles.
+            if response != gtk.RESPONSE_YES:
+                return
+            
+            # Select the very last row to insert new rows at correct location.
+            selection = project.tree_view.get_selection()
+            selection.unselect_all()
+            selection.select_path(len(model) - 1)
+            
+            # Insert needed amount of rows.
+            self.insert_subtitles(POSITION.BELOW, lacking)
+
+            # Restore first row of selection to paste at correct location.
+            selection.unselect_all()
+            selection.select_path(start_row)
 
         action = PasteAction(project, self.clipboard.data)
         self.do_action(project, action)

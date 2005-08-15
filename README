@@ -24,7 +24,7 @@ The official web site is:
 Requirements
 ============
 
-Gaupol should run on all POSIX (Linux/BSD/UNIX-like) operating systems.
+Gaupol should run on any UNIX-like (Linux, BSD, etc.) operating system.
 On other operating systems, you can try it to see if it works.
 
 Required:

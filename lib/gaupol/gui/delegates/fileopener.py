@@ -31,8 +31,8 @@ except ImportError:
 
 import gtk
 
-from gaupol.constants import MAIN_FILE, TRAN_FILE
-from gaupol.gui.constants import TEXT, TRAN
+from gaupol.constants import TYPE
+from gaupol.gui.constants import *
 from gaupol.gui.delegates.delegate import Delegate
 from gaupol.gui.dialogs.error import ReadFileErrorDialog
 from gaupol.gui.dialogs.error import UnicodeDecodeErrorDialog
@@ -62,10 +62,12 @@ class FileOpener(Delegate):
         except TypeError:
             pass
 
+        # Put TreeView in a ScrolledWindow.
         scrolled_window = gtk.ScrolledWindow()
         scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
         scrolled_window.add(project.tree_view)
     
+        # Put ScrolledWindow in Notebook.
         self.notebook.append_page_menu(
             scrolled_window, project.tab_widget, project.tab_menu_label
         )       
@@ -150,7 +152,7 @@ class FileOpener(Delegate):
             self.notebook.set_current_page(i)
 
             basename = self.projects[i].get_main_basename()
-            message = _('Subtitle file "%s" is already open') % basename
+            message = _('Main file "%s" is already open') % basename
             self.set_status_message(message)
 
             return True
@@ -164,6 +166,7 @@ class FileOpener(Delegate):
         uris  = selection_data.get_uris()
         paths = []
 
+        # Get paths from uris.
         for uri in uris:
             unquoted_uri = urllib.unquote(uri)
             path = urlparse.urlsplit(unquoted_uri)[2]
@@ -178,7 +181,7 @@ class FileOpener(Delegate):
         project = self.get_current_project()
 
         # Warn if current translation is unsaved.
-        if project.tran_changed and project.tran_active:
+        if project.tran_active and project.tran_changed:
 
             basename = project.get_translation_basename()
             dialog = ImportTranslationWarningDialog(self.window, basename)
@@ -196,7 +199,7 @@ class FileOpener(Delegate):
         gui.set_cursor_busy(self.window)
 
         new_project = self._select_and_read_file(
-            TRAN_FILE, _('Import Translation'), project
+            TYPE.TRAN, _('Import Translation'), project
         )
         if new_project is None:
             gui.set_cursor_normal(self.window)
@@ -209,8 +212,8 @@ class FileOpener(Delegate):
             path = '/ui/menubar/view/columns/translation'
             self.uim.get_action(path).activate()
 
-        project.tran_changed = 0
         project.tran_active = True
+        project.tran_changed = 0
         self.set_sensitivities()
         project.reload_all_data()
 
@@ -226,17 +229,17 @@ class FileOpener(Delegate):
         self.counter += 1
         project = Project(self.config, self.counter)
         
-        project.insert_subtitles(0, 1)
+        project.data.insert_subtitles(0, 1)
         
         self._add_new_project(project)
-        self.set_status_message(_('Created a new subtitle'))
+        self.set_status_message(_('Created a new main document'))
 
     def on_open_activated(self, *args):
         """Open a main file with FileChooser."""
 
         gui.set_cursor_busy(self.window)
 
-        project = self._select_and_read_file(MAIN_FILE, _('Open'))
+        project = self._select_and_read_file(TYPE.MAIN, _('Open'))
         if project is None:
             gui.set_cursor_normal(self.window)
             return
@@ -244,7 +247,7 @@ class FileOpener(Delegate):
         self._add_new_project(project)
 
         basename = project.get_main_basename()
-        message = _('Opened subtitle file "%s"') % basename
+        message = _('Opened main file "%s"') % basename
         self.set_status_message(message)
 
         gui.set_cursor_normal(self.window)
@@ -268,7 +271,7 @@ class FileOpener(Delegate):
         
         dialog = RevertQuestionDialog(
             self.window,
-            project.main_changed, project.tran_changed, project.tran_active
+            project.main_changed, project.tran_active, project.tran_changed, 
             main_exists, tran_exists,
             project.get_main_basename(), project.get_translation_basename()
         )
@@ -279,15 +282,18 @@ class FileOpener(Delegate):
             return
 
         gui.set_cursor_busy(self.window)
-            
+        
+        # Revert main file.
         if main_exists and project.main_changed:
             self._read_file(
-                self.window, MAIN_FILE, project.data.main_file.path,
+                self.window, TYPE.MAIN, project.data.main_file.path,
                 project.data.main_file.encoding, project
             )
-        if tran_exists and project.tran_changed and project.tran_active:
+
+        # Revert translation file.
+        if tran_exists and project.tran_active and project.tran_changed:
             self._read_file(
-                self.window, TRAN_FILE, project.data.tran_file.path,
+                self.window, TYPE.TRAN, project.data.tran_file.path,
                 project.data.tran_file.encoding
             )
 
@@ -315,7 +321,7 @@ class FileOpener(Delegate):
 
         for path in paths:
 
-            project = self._read_file(self.window, MAIN_FILE, path, encoding)
+            project = self._read_file(self.window, TYPE.MAIN, path, encoding)
             if project is None:
                 continue
 
@@ -340,7 +346,7 @@ class FileOpener(Delegate):
         """
         Select a file with FileChooser and read it.
         
-        file_type: MAIN_FILE or TRAN_FILE
+        file_type: TYPE.MAIN or TYPE.TRAN
         project: should be given when reading into existing project
 
         Return: Project or None if unsuccessful
@@ -367,7 +373,7 @@ class FileOpener(Delegate):
             self.config.set('file', 'filter'   , file_filter)
 
             # Make sure file is not already open.
-            if file_type == MAIN_FILE:
+            if file_type == TYPE.MAIN:
                 is_open = self._get_main_file_open(path)
                 if is_open:
                     open_dialog.destroy()
@@ -388,28 +394,28 @@ class FileOpener(Delegate):
         """
         Check if a file is openable and read it if possible.
         
-        file_type: MAIN_FILE or TRAN_FILE
+        file_type: TYPE.MAIN or TYPE.TRAN
         project: should be given when reading into existing project
         
         Return: Project or None if unsuccessful
         """
-        basename   = os.path.basename(path)
+        basename = os.path.basename(path)
         size_bytes = os.stat(path)[6]
-        size_megs  = float(size_bytes) / 1048576.0
+        size_megabytes = float(size_bytes) / 1048576.0
 
         # Show a warning dialog if filesize is over 1 MB.
-        if size_megs > 1:
-            dialog = OpenBigFileWarningDialog(parent, basename, size_megs)
+        if size_megabytes > 1:
+            dialog = OpenBigFileWarningDialog(parent, basename, size_megabytes)
             response = dialog.run()
             dialog.destroy()
             if response != gtk.RESPONSE_OK:
                 return None
 
         try:
-            if file_type == MAIN_FILE:
+            if file_type == TYPE.MAIN:
                 project = project or Project(self.config)
                 project.data.read_main_file(path, encoding)
-            elif file_type == TRAN_FILE:
+            elif file_type == TYPE.TRAN:
                 project.data.read_translation_file(path, encoding)
             return project
 

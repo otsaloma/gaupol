@@ -25,9 +25,8 @@ try:
 except ImportError:
     pass
 
-from gaupol.constants.Format import *
-from gaupol.constants.Mode import *
-from gaupol.lib.constants.Column import *
+from gaupol.constants import FORMAT, MODE
+from gaupol.lib.constants import *
 from gaupol.lib.delegates.delegate import Delegate
 from gaupol.lib.files.all import *
 from gaupol.lib.files.determiner import FileFormatDeterminer
@@ -51,7 +50,7 @@ class FileReader(Delegate):
         
         determiner = FileFormatDeterminer(path, encoding)
         format = determiner.determine_file_format()
-        format_name = FORMAT_NAMES[format]
+        format_name = FORMAT.NAMES[format]
 
         main_file = eval(format_name)(path, encoding)
         shows, hides, texts = main_file.read()
@@ -70,7 +69,7 @@ class FileReader(Delegate):
         frames = self.frames
         texts  = self.texts
 
-        if self.main_file.MODE == MODE_TIME:
+        if self.main_file.MODE == MODE.TIME:
             
             for i in range(len(shows)):
 
@@ -87,7 +86,7 @@ class FileReader(Delegate):
                 frames.append([show_frame, hide_frame, durn_frame])
                 texts.append( [text, u''])
 
-        elif self.main_file.MODE == MODE_FRAME:
+        elif self.main_file.MODE == MODE.FRAME:
             
             for i in range(len(shows)):
 
@@ -115,7 +114,7 @@ class FileReader(Delegate):
         """
         determiner = FileFormatDeterminer(path, encoding)
         format = determiner.determine_file_format()
-        format_name = FORMAT_NAMES[format]
+        format_name = FORMAT.NAMES[format]
 
         tran_file = eval(format_name)(path, encoding)
         shows, hides, trans = tran_file.read()

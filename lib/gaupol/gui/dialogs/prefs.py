@@ -105,7 +105,7 @@ class PreferencesDialog(gobject.GObject):
     def set_use_default_font(self): pass
 
     def show(self):
-        """Show dialog."""
+        """Show the dialog."""
         
         self._dialog.show()
 

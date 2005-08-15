@@ -27,7 +27,7 @@ try:
 except ImportError:
     pass
 
-from gaupol.constants.Framerate import *
+from gaupol.constants import FRAMERATE
 
 
 class TimeFrameCalculator(object):
@@ -43,7 +43,7 @@ class TimeFrameCalculator(object):
     
     def __init__(self, framerate):
 
-        self.framerate = FRAMERATE_VALUES[framerate]
+        self.framerate = FRAMERATE.VALUES[framerate]
 
     def add_times(self, x, y):
         """Add time y to time x."""

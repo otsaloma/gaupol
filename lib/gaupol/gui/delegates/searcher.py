@@ -38,24 +38,25 @@ class Searcher(Delegate):
     def on_jump_to_subtitle_activated(self, *args):
         """Jump to a specific subtitle."""
         
-        project         = self.get_current_project()
-        maximum         = len(project.data.times)
-        treeview_column = project.get_focus()[2]
+        project = self.get_current_project()
+        maximum = len(project.data.times)
+        tree_view_column = project.get_focus()[2]
         
         dialog   = JumpToSubtitleDialog(self.window, maximum)
-        response = dialog.run()
-        subtitle = dialog.get_subtitle()
-        dialog.destroy()
+        dialog.show()
+        #response = dialog.run()
+        #subtitle = dialog.get_subtitle()
+        #dialog.destroy()
 
-        if response != gtk.RESPONSE_OK:
-            return
+        #if response != gtk.RESPONSE_OK:
+        #    return
             
-        store = project.tree_view.get_model()
-        row   = subtitle - 1
+        #model = project.tree_view.get_model()
+        #row   = subtitle - 1
                 
-        selection = project.tree_view.get_selection()
-        selection.unselect_all()
-        selection.select_path(row)
+        #selection = project.tree_view.get_selection()
+        #selection.unselect_all()
+        #selection.select_path(row)
         
-        project.tree_view.set_cursor(row, treeview_column)
-        project.tree_view.scroll_to_cell(row, treeview_column, True, 0.5, 0)
+        #project.tree_view.set_cursor(row, treeview_column)
+        #project.tree_view.scroll_to_cell(row, tree_view_column, True, 0.5, 0)

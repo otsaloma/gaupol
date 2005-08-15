@@ -17,23 +17,21 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""gaupol.gui-wide constants."""
+"""gaupol.gui-wide column constants."""
 
 
-class Column(object):
+COLUMN_NAMES = [
+    'number',
+    'show',
+    'hide',
+    'duration',
+    'text',
+    'translation'
+]
 
-    COLUMN_NAMES = [
-        'number',
-        'show',
-        'hide',
-        'duration',
-        'text',
-        'translation'
-    ]
-    
-    NO   = 0
-    SHOW = 1
-    HIDE = 2
-    DURN = 3
-    TEXT = 4
-    TRAN = 5
+NO   = 0
+SHOW = 1
+HIDE = 2
+DURN = 3
+TEXT = 4
+TRAN = 5

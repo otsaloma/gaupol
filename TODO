@@ -1,31 +1,68 @@
 Before 0.1
 ==========
-- Code review
+
 - Benchmark TreeView performance with different speeding tricks
   http://www.mail-archive.com/pygtk@daa.com.au/msg10991.html
+  affects project.py and durmanager.py
+  
 - Dialog types, modality, running and destruction
+
 - Preferences dialog
+
 - Testing and bugfixing
+
 - Finnish translation
+
 - Installation & Uninstallation + instructions
+
 - Project page
+
 - Website
+
 
 After 0.1
 =========
+
 - Search, search and replace
 - Spell-check
 - Subtitle editing features
 
+
 Unscheduled
 ===========
+
 - Documentation
 - Support for additional subtitle formats:
+
 	o MPlayerSub/MPSub
 	  http://www.mplayerhq.hu/DOCS/tech/mpsub.sub
-	o SubViewer
-	o SubViewer 2.0
+	  
+	o SubViewer & SubViewer 2.0
+	
 	o SubStation Alpha (SSA & ASS)
 	  http://moodub.free.fr/ass-specs.doc
+	  
 	o SAMI
 	  http://msdn.microsoft.com/library/en-us/dnacc/html/atg_samiarticle.asp
+
+
+Interesting new stuff in GTK+ 2.8
+=================================
+
+- Use typeahead search to replace jump-to-dialog?
+
+	The GtkTreeView::enable-search property has been changed to control
+	only typeahead search, not the C-f keybinding to start an interactive
+	search. To turn off interactive searching completely, you have to set
+	GtkTreeView::search-column to -1.
+  
+
+Interesting new stuff in PyGTK 2.8
+==================================
+
+http://live.gnome.org/PyGTK/WhatsNew28
+
+- Tighter GObject/Python Integration (cosmetic syntax change)
+- Properties as Object Attributes (e.g. widget.props.visible)
+
+Switch to these if something else causes PyGTK 2.8 to be required.

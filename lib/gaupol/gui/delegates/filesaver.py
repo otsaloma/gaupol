@@ -29,8 +29,8 @@ except ImportError:
 
 import gtk
 
-from gaupol.constants import MAIN_DOCUMENT, TRAN_DOCUMENT
-from gaupol.gui.constants import TEXT, TRAN
+from gaupol.constants import TYPE
+from gaupol.gui.constants import *
 from gaupol.gui.delegates.delegate import Delegate
 from gaupol.gui.dialogs.error import UnicodeEncodeErrorDialog
 from gaupol.gui.dialogs.error import WriteFileErrorDialog
@@ -45,42 +45,42 @@ class FileSaver(Delegate):
 
     """Saving documents."""
 
-    def get_main_document_properties(self):
+    def get_main_file_properties(self, project):
         """
-        Get properties of main document.
+        Get properties of main file.
 
         Return: (path, format, encoding, newlines) or (None, None, None None)
         """
         try:
-            path     = self.data.main_file.path
-            format   = self.data.main_file.FORMAT
-            encoding = self.data.main_file.encoding
-            newlines = self.data.main_file.newlines
+            path     = project.data.main_file.path
+            format   = project.data.main_file.FORMAT
+            encoding = project.data.main_file.encoding
+            newlines = project.data.main_file.newlines
             return path, format, encoding, newlines
         except AttributeError:
             return None, None, None, None
 
-    def get_translation_document_properties(self):
+    def get_translation_file_properties(self, project):
         """
-        Get properties of translation document.
+        Get properties of translation file.
 
-        Properties are inherited from main document if translation file does
-        not exist.
+        Properties are inherited from main file if translation file does not
+        exist.
         
-        Return: path, format, encoding, newlines (of which any can be None)
+        Return: (path, format, encoding, newlines) or (None, None, None None)
         """
-        if self.data.tran_file is not None:
-            path     = self.data.tran_file.path
-            format   = self.data.tran_file.FORMAT
-            encoding = self.data.tran_file.encoding
-            newlines = self.data.tran_file.newlines
+        if project.data.tran_file is not None:
+            path     = project.data.tran_file.path
+            format   = project.data.tran_file.FORMAT
+            encoding = project.data.tran_file.encoding
+            newlines = project.data.tran_file.newlines
             return path, format, encoding, newlines
 
-        elif self.data.main_file is not None:
+        elif project.data.main_file is not None:
             path     = None
-            format   = self.data.main_file.FORMAT
-            encoding = self.data.main_file.encoding
-            newlines = self.data.main_file.newlines
+            format   = project.data.main_file.FORMAT
+            encoding = project.data.main_file.encoding
+            newlines = project.data.main_file.newlines
             return path, format, encoding, newlines
 
         else:
@@ -130,7 +130,7 @@ class FileSaver(Delegate):
         for project in self.projects:
             if project.main_changed:
                 self.save_main_document(project)
-            if project.tran_changed and project.tran_active:
+            if project.tran_active and project.tran_changed:
                 self.save_translation_document(project)
 
         self.set_sensitivities()
@@ -191,12 +191,12 @@ class FileSaver(Delegate):
         """
         gui.set_cursor_busy(self.window)
 
-        path, format, encoding, newlines = \
-            project.get_main_document_properties()
+        properties = project.get_main_file_properties()
+        path, format, encoding, newlines = properties
         untitle = _('%s (copy)') % project.get_main_corename()
 
         path = self._select_and_write_file(
-            project, MAIN_DOCUMENT, _('Save A Copy'), 
+            project, TYPE.MAIN, _('Save A Copy'), 
             None, untitle, format, encoding, newlines,
             False
         )
@@ -219,12 +219,12 @@ class FileSaver(Delegate):
         """
         gui.set_cursor_busy(self.window)
 
-        path, format, encoding, newlines = \
-            project.get_translation_document_properties()
+        properties = project.get_translation_file_properties()
+        path, format, encoding, newlines = properties
         untitle = _('%s (copy)') % project.get_translation_corename()
 
         path = self._select_and_write_file(
-            project, TRAN_DOCUMENT, _('Save A Copy Of Translation'), 
+            project, TYPE.TRAN, _('Save A Copy Of Translation'), 
             None, untitle, format, encoding, newlines,
             False
         )
@@ -251,7 +251,7 @@ class FileSaver(Delegate):
             return self.save_main_document_as(project)
 
         success = self._write_file(
-            project, MAIN_DOCUMENT, self.window, False, True
+            project, TYPE.MAIN, self.window, False, True
         )
         if not success:
             gui.set_cursor_normal(self.window)
@@ -275,11 +275,11 @@ class FileSaver(Delegate):
         """
         gui.set_cursor_busy(self.window)
 
-        path, format, encoding, newlines = \
-            project.get_main_document_properties()
+        properties = project.get_main_file_properties()
+        path, format, encoding, newlines = properties
 
         path = self._select_and_write_file(
-            project, MAIN_DOCUMENT, _('Save As'), 
+            project, TYPE.MAIN, _('Save As'), 
             path, project.untitle, format, encoding, newlines,
             True
         )
@@ -287,11 +287,11 @@ class FileSaver(Delegate):
             gui.set_cursor_normal(self.window)
             return False
 
-        # Reload original text column data if tags might have chaged after
+        # Reload original text column data if tags might have changed after
         # saving in a different format.
         if format is not None:
             if format != project.data.main_file.FORMAT:
-                project.reload_data_in_columns([TEXT])
+                project.reload_data_in_columns(TEXT)
 
         project.main_changed = 0
         self.add_to_recent_files(path)
@@ -315,12 +315,13 @@ class FileSaver(Delegate):
             return self.save_translation_document_as(project)
 
         success = self._write_file(
-            project, TRAN_DOCUMENT, self.window, False, True
+            project, TYPE.TRAN, self.window, False, True
         )
         if not success:
             gui.set_cursor_normal(self.window)
             return False
         
+        project.tran_active = True
         project.tran_changed = 0
         
         basename = os.path.basename(project.data.tran_file.path)
@@ -339,12 +340,12 @@ class FileSaver(Delegate):
         """
         gui.set_cursor_busy(self.window)
 
-        path, format, encoding, newlines = \
-            project.get_translation_document_properties()
+        properties = project.get_main_translation_properties()
+        path, format, encoding, newlines = properties
         untitle = project.get_translation_corename()
 
         path = self._select_and_write_file(
-            project, TRAN_DOCUMENT, _('Save Translation As'), 
+            project, TYPE.TRAN, _('Save Translation As'), 
             path, untitle, format, encoding, newlines,
             True
         )
@@ -358,6 +359,7 @@ class FileSaver(Delegate):
             if format != project.data.tran_file.FORMAT:
                 project.reload_data_in_columns([TRAN])
 
+        project.tran_active = True
         project.tran_changed = 0
         
         message = _('Saved translation file as "%s"') % path
@@ -375,7 +377,7 @@ class FileSaver(Delegate):
         """
         Select document with FileChooser and write it.
         
-        document_type: MAIN_DOCUMENT or TRAN_DOCUMENT
+        document_type: TYPE.MAIN or TYPE.TRAN
         Return: path or None, if unsuccessful
         """
         save_dialog = SaveDialog(self.config, title, self.window)
@@ -422,6 +424,7 @@ class FileSaver(Delegate):
                 break
             
         save_dialog.destroy()
+
         gui.set_cursor_busy(self.window)
 
         return path
@@ -434,13 +437,13 @@ class FileSaver(Delegate):
         """
         Check if file is writeable and write it if possible.
         
-        document_type: MAIN_DOCUMENT or TRAN_DOCUMENT
+        document_type: TYPE.MAIN or TYPE.TRAN
         Return: success (True or False)
         """
         if path is None:
-            if document_type == MAIN_DOCUMENT:
+            if document_type == TYPE.MAIN:
                 path = project.data.main_file.path
-            elif document_type == TRAN_DOCUMENT:
+            elif document_type == TYPE.TRAN:
                 path = project.data.tran_file.path
 
         basename = os.path.basename(path)
@@ -455,9 +458,9 @@ class FileSaver(Delegate):
 
         try:
 
-            if document_type == MAIN_DOCUMENT:
+            if document_type == TYPE.MAIN:
                 method = project.data.write_main_file
-            elif document_type == TRAN_DOCUMENT:
+            elif document_type == TYPE.TRAN:
                 method = project.data.write_translation_file
 
             if path     is None or \

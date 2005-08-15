@@ -52,13 +52,13 @@ class CloseDocumentWarningDialog(gtk.MessageDialog):
         )
 
 
-class CloseMainDocumentWarningDialog(CloseDocumentWarningDialog):
+class CloseMainWarningDialog(CloseDocumentWarningDialog):
 
     """Dialog to warn when closing main document with unsaved changes."""
     
     def __init__(self, parent, basename):
         """
-        Initialize a CloseMainDocumentWarningDialog object.
+        Initialize a CloseMainWarningDialog object.
         
         basename: basename of the document being closed
         """
@@ -68,13 +68,13 @@ class CloseMainDocumentWarningDialog(CloseDocumentWarningDialog):
         CloseDocumentWarningDialog.__init__(self, parent, title)
 
 
-class CloseTranslationDocumentWarningDialog(CloseDocumentWarningDialog):
+class CloseTranslationWarningDialog(CloseDocumentWarningDialog):
 
     """Dialog to warn when closing translation with unsaved changes."""
     
     def __init__(self, parent, basename):
         """
-        Initialize a CloseTranslationDocumentWarningDialog object.
+        Initialize a CloseTranslationWarningDialog object.
         
         basename: basename of the document being closed
         """

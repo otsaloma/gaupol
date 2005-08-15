@@ -40,7 +40,7 @@ class Analyzer(Delegate):
         
         Return: list of row lengths, total length
         """
-        text   = self.texts[row][col]
+        text = self.texts[row][col]
         re_tag = self.get_regex_for_tag(col)
         
         if re_tag is not None:
@@ -49,6 +49,6 @@ class Analyzer(Delegate):
         lines = text.split('\n')
 
         lengths = [len(line) for line in lines]
-        total   = len(text)
+        total = len(text)
         
         return lengths, total

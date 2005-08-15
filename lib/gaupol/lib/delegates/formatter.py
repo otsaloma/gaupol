@@ -27,8 +27,8 @@ try:
 except ImportError:
     pass
 
-from gaupol.constants.Format import *
-from gaupol.lib.constants.Column import *
+from gaupol.constants import FORMAT
+from gaupol.lib.constants import *
 from gaupol.lib.delegates.delegate import Delegate
 from gaupol.lib.tags.all import *
 
@@ -42,9 +42,8 @@ class Formatter(Delegate):
         Change case of texts specified by rows and col.
         
         method: "capitalize", "upper", "lower", "title" or "swapcase"
-        Return: new texts
         """
-        texts  = [self.texts[row][col] for row in rows]
+        texts = [self.texts[row][col] for row in rows]
         re_tag = self.get_regex_for_tag(col)
 
         for i in range(len(texts)):
@@ -72,8 +71,6 @@ class Formatter(Delegate):
         
         for i in range(len(rows)):
             self.texts[rows[i]][col] = texts[i]
-            
-        return texts
 
     def _get_format_name(self, col):
         """
@@ -86,13 +83,13 @@ class Formatter(Delegate):
         """
         if col == TEXT:
             try:
-                return FORMAT_NAMES[self.main_file.FORMAT]
+                return FORMAT.NAMES[self.main_file.FORMAT]
             except AttributeError:
                 return None
 
         elif col == TRAN:
             try:
-                return FORMAT_NAMES[self.tran_file.FORMAT]
+                return FORMAT.NAMES[self.tran_file.FORMAT]
             except AttributeError:
                 return self._get_format_name(TEXT)
 
@@ -115,13 +112,10 @@ class Formatter(Delegate):
             return re.compile(regex)
 
     def toggle_dialog_lines(self, rows, col):
-        """
-        Toggle dialog lines on texts specified by rows and col.
-
-        Return: new texts
-        """
-        texts     = [self.texts[row][col] for row in rows]
-        re_tag    = self.get_regex_for_tag(col)
+        """Toggle dialog lines on texts specified by rows and col."""
+        
+        texts = [self.texts[row][col] for row in rows]
+        re_tag = self.get_regex_for_tag(col)
         re_dialog = re.compile('^-\s*')
         
         # Get action to be done.
@@ -183,15 +177,10 @@ class Formatter(Delegate):
         for i in range(len(rows)):
             self.texts[rows[i]][col] = texts[i]
 
-        return texts
-
     def toggle_italicization(self, rows, col):
-        """
-        Toggle italicization of texts specified by rows and col.
-
-        Return: new texts
-        """
-        texts  = [self.texts[row][col] for row in rows]
+        """Toggle italicization of texts specified by rows and col."""
+        
+        texts = [self.texts[row][col] for row in rows]
         format_name = self._get_format_name(col)
 
         # Get regular expression for an italic tag.
@@ -216,5 +205,3 @@ class Formatter(Delegate):
 
         for i in range(len(rows)):
             self.texts[rows[i]][col] = texts[i]
-            
-        return texts

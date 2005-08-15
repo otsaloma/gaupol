@@ -25,8 +25,8 @@ try:
 except ImportError:
     pass
 
-from gaupol.constants import MAIN_DOCUMENT, TRAN_DOCUMENT, BOTH_DOCUMENTS
-from gaupol.gui.constants import NO, SHOW, HIDE, DURN, TEXT, TRAN
+from gaupol.constants import TYPE
+from gaupol.gui.constants import *
 from gaupol.gui.delegates.delegate import Delegate
 from gaupol.gui.util import gui
 
@@ -42,8 +42,8 @@ class DURAction(object):
         # One line description.
         self.description = None
 
-        # Document(s) affected.
-        self.document = None
+        # List of documents affected.
+        self.document = []
 
         # TreeView properties that can be restored.
         self.focus_row     = None
@@ -56,7 +56,7 @@ class DURAction(object):
 
     def redo(self):
         """Redo action."""
-        
+
         self.do()
         
     def undo(self):
@@ -93,11 +93,6 @@ class DURManager(Delegate):
 
         self.uim.get_action('/ui/redo_popup/redo-0').activate()
 
-    def on_redo_button_clicked(self, *args):
-        """Redo most recently undone action."""
-
-        self.uim.get_action('/ui/redo_popup/redo-0').activate()
-
     def on_redo_item_activated(self, action):
         """Redo action and all newer actions."""
 
@@ -116,11 +111,6 @@ class DURManager(Delegate):
         gui.set_cursor_normal(self.window)
         
     def on_undo_activated(self, *args):
-        """Undo most recently done action."""
-        
-        self.uim.get_action('/ui/undo_popup/undo-0').activate()
-
-    def on_undo_button_clicked(self, *args):
         """Undo most recently done action."""
         
         self.uim.get_action('/ui/undo_popup/undo-0').activate()
@@ -165,8 +155,8 @@ class DURManager(Delegate):
     def _restore_tree_view_properties(self, project, action):
         """Restore tree view properties."""
 
-        tree_view        = project.tree_view
-        row              = action.focus_row
+        tree_view = project.tree_view
+        row = action.focus_row
         tree_view_column = tree_view.get_column(action.focus_col)
 
         # Focus
@@ -200,16 +190,26 @@ class DURManager(Delegate):
         action.selected_rows = project.get_selected_rows()
 
     def _shift_changed_value(self, project, action, shift):
-        """Shift value(s) of document(s) changed variables."""
+        """
+        Shift value(s) of document(s) changed variables.
         
-        if action.document == MAIN_DOCUMENT:
+        Raise ValueError if action.documents has an invalid value.
+        """
+        
+        if TYPE.MAIN in action.documents and \
+           TYPE.TRAN in action.documents:
             project.main_changed += shift
-        elif action.document == TRAN_DOCUMENT:
             project.tran_changed += shift
+            
+        elif TYPE.MAIN in action.documents:
+            project.main_changed += shift
+            
+        elif TYPE.TRAN in action.documents:
             project.tran_active = True
-        elif action.document == BOTH_DOCUMENTS:
-            project.main_changed += shift
             project.tran_changed += shift
+            
+        else:
+            raise ValueError('What document was changed?')
 
     def undo_action(self, project, action):
         """Undo action and update things affected."""

@@ -31,12 +31,11 @@ import gobject
 import gtk
 import pango
 
-from gaupol.constants.Mode import *
-from gaupol.constants.Type import *
+from gaupol.constants import MODE, TYPE
 from gaupol.gui.cellrend.integer import CellRendererInteger
 from gaupol.gui.cellrend.multiline import CellRendererMultilineText
 from gaupol.gui.cellrend.time import CellRendererTime
-from gaupol.gui.constants.Column import *
+from gaupol.gui.constants import *
 from gaupol.gui.util import gui
 from gaupol.lib.data import Data
 
@@ -87,13 +86,17 @@ class Project(gobject.GObject):
     
         self._config = config
 
-        framerate      = config.get('editor', 'framerate')
+        framerate = config.get('editor', 'framerate')
         edit_mode_name = config.get('editor', 'edit_mode')
-        edit_mode      = MODE_NAMES.index(edit_mode_name)
+        edit_mode = MODE.NAMES.index(edit_mode_name)
 
         self.data      = Data(framerate)
         self.untitle   = _('Untitled %d') % counter
         self.edit_mode = edit_mode
+
+        # True, if translation file exists or any action affecting translation
+        # only has been performed.
+        self.tran_active = False
 
         # Doing and redoing will increase changed value by one. Undoing will
         # decrease changed value by one. At zero the document is at its
@@ -101,10 +104,6 @@ class Project(gobject.GObject):
         self.main_changed = 0
         self.tran_changed = 0
 
-        # True, if translation file exists or any action affecting translation
-        # only has been performed.
-        self.tran_active = False
-        
         # Stacks of actions of type DURAction.  
         self.undoables = []
         self.redoables = []
@@ -138,13 +137,13 @@ class Project(gobject.GObject):
         selection.unselect_all()
         selection.connect('changed', self._on_tree_view_selection_changed)
 
-        if self.edit_mode == MODE_TIME:
+        if self.edit_mode == MODE.TIME:
             columns = [gobject.TYPE_INT] + [gobject.TYPE_STRING] * 5
             cell_renderer_1 = CellRendererTime()
             cell_renderer_2 = CellRendererTime()
             cell_renderer_3 = CellRendererTime()
 
-        elif self.edit_mode == MODE_FRAME:
+        elif self.edit_mode == MODE.FRAME:
             columns = [gobject.TYPE_INT] * 4 + [gobject.TYPE_STRING] * 2
             cell_renderer_1 = CellRendererInteger()
             cell_renderer_2 = CellRendererInteger()
@@ -200,7 +199,7 @@ class Project(gobject.GObject):
 
             tree_view_column.set_resizable(True)
 
-            column_name = COLUMN_NAMES[i]
+            column_name = COLUMN.NAMES[i]
             if column_name not in visible_columns:
                 tree_view_column.set_visible(False)
 
@@ -217,9 +216,8 @@ class Project(gobject.GObject):
             label.set_attributes(NORM_ATTR)
             
             # Get button from the column title.
-            button = tree_view_column.get_widget()
-            while not isinstance(button, gtk.Button):
-                button = button.get_parent()
+            widget = tree_view_column.get_widget()
+            button = gui.get_parent_widget(widget, gtk.Button)
 
             # Allow TreeViewColumn header to be clicked.
             signal = 'button-press-event'
@@ -240,9 +238,9 @@ class Project(gobject.GObject):
         """Get constant for the type of document in col."""
         
         if col == TRAN:
-            return TYPE_TRANSLATION
+            return TYPE.TRAN
         else:
-            return TYPE_MAIN
+            return TYPE.MAIN
 
     def get_focus(self):
         """
@@ -329,9 +327,9 @@ class Project(gobject.GObject):
     def get_timings(self):
         """Return time or frame data depending on edit mode."""
         
-        if self.edit_mode == MODE_TIME:
+        if self.edit_mode == MODE.TIME:
             return self.data.times
-        elif self.edit_mode == MODE_FRAME:
+        elif self.edit_mode == MODE.FRAME:
             return self.data.frames
 
     def get_translation_basename(self):
@@ -456,7 +454,7 @@ class Project(gobject.GObject):
     def reload_data_in_row(self, row):
         """Reload TreeView data in given row."""
 
-        model   = self.tree_view.get_model()
+        model = self.tree_view.get_model()
         timings = self.get_timings()
         texts   = self.data.texts
 

@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Updater of GUI components' properties."""
+"""GUI component state updating."""
 
 
 import os
@@ -30,25 +30,25 @@ except ImportError:
 import gobject
 import gtk
 
+from gaupol.constants import FRAMERATE, MODE
 from gaupol.gui.cellrend.multiline import CellRendererMultilineText
-from gaupol.gui.constants import COLUMN_NAMES, FRAMERATE_NAMES
-from gaupol.gui.constants import NO, SHOW, HIDE, DURN, TEXT, TRAN
+from gaupol.gui.constants import *
 from gaupol.gui.delegates.delegate import Delegate
 from gaupol.gui.util import gui
 
 
 class GUIUpdater(Delegate):
 
-    """Updater of GUI components' properties."""
+    """GUI component state updating."""
 
     def _get_action_group(self, name):
         """
-        Get action group from UI Manager.
+        Get action group from UIManager.
         
         name: "main", "recent", "documents" or "undo_redo"
         """
         action_groups = self.uim.get_action_groups()
-        action_group_names = [ag.get_name() for ag in action_groups]
+        action_group_names = [group.get_name() for group in action_groups]
         index = action_group_names.index(name)
 
         return action_groups[index]
@@ -67,13 +67,13 @@ class GUIUpdater(Delegate):
         
         # Set selections for undo and redo menu items.
 
-        name   = action.get_name()
+        name = action.get_name()
         prefix = name[:5]
                 
         if prefix not in ['undo-', 'redo-']:
             return
         
-        part  = name[:4]
+        part = name[:4]
         index = int(name.split('-')[-1])
 
         for i in range(index):
@@ -93,7 +93,7 @@ class GUIUpdater(Delegate):
         if prefix not in ['undo-', 'redo-']:
             return
         
-        part  = name[:4]
+        part = name[:4]
         index = int(name.split('-')[-1])
 
         for i in range(index):
@@ -127,6 +127,8 @@ class GUIUpdater(Delegate):
         
         Return: True or False
         """
+        # True is returned to stop other handlers or False to not to.
+
         if event.button != 3:
             return False
 
@@ -137,44 +139,41 @@ class GUIUpdater(Delegate):
         if path_info is None:
             return False
 
-        row, tree_col, x, y = path_info
-        selection = project.tree_view.get_selection()
-        sel_rows = selection.get_selected_rows()[1]
+        row, tree_view_column, x, y = path_info
+        selected_rows = project.get_selected_rows()
 
         # Move focus if user right-clicked outside the selection.
-        if row not in sel_rows:
+        if row not in selected_rows:
 
-            project.tree_view.set_cursor(row, tree_col)
+            project.tree_view.set_cursor(row, tree_view_column)
             project.tree_view.grab_focus()
             project.set_active_column()
 
-            self._set_edit_value_sensitivity(project)
+            self._set_edit_cell_sensitivity(project)
             self._set_row_operation_sensitivities(project)
             self._set_text_operation_sensitivities(project)
             self._set_character_status(project)
 
         # If user right-clicked in the selection, the focus cannot be moved,
-        # because it would destoy the selection and select only the clicked
-        # row. Restoring the selection after its destruction would be too slow.
+        # because moving focus always changes selection as well.
         
         menu = self.uim.get_widget('/ui/tree_view_popup')
         menu.popup(None, None, None, event.button, event.time)
 
-        # Return True to stop other handlers.
         return True
 
     def on_tree_view_cursor_moved(self, *args):
-        """Update GUI properties when tree view cursor has moved."""
+        """Update GUI properties when TreeView cursor has moved."""
 
         project = self.get_current_project()
-        self._set_edit_value_sensitivity(project)
+        self._set_edit_cell_sensitivity(project)
         self._set_text_operation_sensitivities(project)
         
     def on_tree_view_selection_changed(self, *args):
-        """Update GUI properties when tree view selection has changed."""
+        """Update GUI properties when TreeView selection has changed."""
 
         project = self.get_current_project()
-        self._set_edit_value_sensitivity(project)
+        self._set_edit_cell_sensitivity(project)
         self._set_row_operation_sensitivities(project)
         self._set_text_operation_sensitivities(project)
         self._set_character_status(project)
@@ -261,8 +260,8 @@ class GUIUpdater(Delegate):
 
         for i in range(len(self.projects)):
         
-            # To get the message statusbar tooltips working, proxies need to be
-            # connected.
+            # To get the message statusbar tooltips working, proxies need to
+            # be connected.
             path = '/ui/menubar/documents/open/document-%d' % i
             action = self.uim.get_action(path)
             widget = self.uim.get_widget(path)
@@ -274,8 +273,9 @@ class GUIUpdater(Delegate):
         """
         Refresh the list of recent files in the File and open button menus.
         
-        Files' action names are "recent-menu-N" and "recent-ob-N", where N is
-        an integer, which matches the file's index in recent files list.
+        Files' action names are "recent-menu-N" and "recent-open-button-N",
+        where N is an integer, which matches the file's index in recent files
+        list.
         """
         all_recent_files = self.config.getlist('file', 'recent_files')
         recent_files = []
@@ -295,50 +295,50 @@ class GUIUpdater(Delegate):
         self.uim.remove_action_group(action_group)
 
         action_group = gtk.ActionGroup('recent')
-        menu_actions = []
-        ob_actions   = []
+        menu_actions        = []
+        open_button_actions = []
 
         # Add actions to actions group.
 
         for i in range(len(basenames)):
         
-            menu_name  = 'recent-menu-%d' % i
-            menu_label = '%d. %s' % (i + 1, basenames[i])
-            tooltip    = _('Open "%s"') % basenames[i]
+            name    = 'recent-menu-%d' % i
+            label   = '%d. %s' % (i + 1, basenames[i])
+            tooltip = _('Open "%s"') % basenames[i]
 
             # Ellipsize too long menu item names.
-            if len(menu_label) > 60:
-                menu_label = menu_label[:30] + '...' + menu_label[-30:]
+            if len(label) > 60:
+                label = label[:30] + '...' + label[-30:]
 
             # Unaccelerate underscores.
-            menu_label = menu_label.replace('_', '__')
+            label = label.replace('_', '__')
 
             # Add an underscore accelerator to the first 9 files.
             if i < 9:
-                menu_label = '_' + menu_label
+                label = '_' + label
 
             menu_actions.append((
-                menu_name, None, menu_label, None, tooltip,
+                name, None, label, None, tooltip,
                 self.on_recent_file_activated
             ))
 
-            ob_name  = 'recent-ob-%d' % i
-            ob_label = basenames[i]
+            name  = 'recent-open-button-%d' % i
+            label = basenames[i]
 
             # Unaccelerate underscores.
-            ob_label = ob_label.replace('_', '__')
+            label = label.replace('_', '__')
 
             # Ellipsize too long menu item names.
-            if len(ob_label) > 100:
-                ob_label = ob_label[:50] + '...' + ob_label[-50:]
+            if len(label) > 100:
+                label = label[:50] + '...' + label[-50:]
 
-            ob_actions.append((
-                ob_name, None, ob_label, None, tooltip,
+            open_button_actions.append((
+                name, None, label, None, tooltip,
                 self.on_recent_file_activated
             ))
 
-        action_group.add_actions(menu_actions, None)
-        action_group.add_actions(ob_actions  , None)
+        action_group.add_actions(menu_actions         , None)
+        action_group.add_actions(open_button_actions  , None)
 
         self.uim.insert_action_group(action_group, -1)
 
@@ -359,8 +359,8 @@ class GUIUpdater(Delegate):
         </ui>'''
 
         for i in range(len(basenames)):
-            ui_start  += '<menuitem action="recent-menu-%d"/>' % i
-            ui_middle += '<menuitem action="recent-ob-%d"/>'   % i
+            ui_start  += '<menuitem action="recent-menu-%d"/>'          % i
+            ui_middle += '<menuitem action="recent-open-button-%d"/>'   % i
 
         ui = ui_start + ui_middle + ui_end
         self.recent_uim_id = self.uim.add_ui_from_string(ui)
@@ -368,12 +368,12 @@ class GUIUpdater(Delegate):
 
         for i in range(len(basenames)):
 
-            # To get the message statusbar tooltips working, proxies need to be
-            # connected.
+            # To get the message statusbar tooltips working, proxies need to
+            # be connected.
 
             names = (
                 '/ui/menubar/file/recent/recent-menu-%d' % i,
-                '/ui/recent_popup/recent-ob-%d'          % i
+                '/ui/recent_popup/recent-open-button-%d' % i
             )
             
             for name in names:
@@ -498,46 +498,46 @@ class GUIUpdater(Delegate):
     def _set_character_status(self, project):
         """Set charcter length info to statusbar."""
 
+        # Remove existing messages.
         self.text_statusbar.pop(0)
-        self.translation_statusbar.pop(0)
+        self.tran_statusbar.pop(0)
 
         if project is None:
             return
         
+        # Single row must be selected.
         selection = project.tree_view.get_selection()
-        sel_rows = selection.get_selected_rows()[1]
-
-        if len(sel_rows) != 1:
+        if selection.count_selected_rows() != 1:
             return
-            
-        data_row = project.get_data_row(sel_rows[0])
-        stbars = [self.text_statusbar, self.translation_statusbar]
+
+        row = selection.get_selected_rows()[1][0]
+        statusbars = [self.text_statusbar, self.tran_statusbar]
 
         for i in range(2):
         
-            stbar = stbars[i]
+            statusbar = statusbars[i]
             
             try:
-                lengths, total = project.data.get_character_count(data_row, i)
+                lengths, total = project.data.get_character_count(row, i)
             except IndexError:
                 return
             lengths = [str(length) for length in lengths]
             message = '+'.join(lengths) + '=' + str(total)
 
-            stbar.push(0, message)
+            statusbar.push(0, message)
             
-            # Get width required display message.
+            # Get width required to display message.
             label = gtk.Label(message)
             width = label.size_request()[0]
 
             # Account 12 pixels for general extra (paddings, borders, etc)
             # and height for resize grip.
             new_width = width + 12
-            if stbar.get_has_resize_grip():
-                new_width += stbar.size_request()[1]
+            if statusbar.get_has_resize_grip():
+                new_width += statusbar.size_request()[1]
             new_width = max(100, new_width)
             
-            stbar.set_size_request(new_width, -1)
+            statusbar.set_size_request(new_width, -1)
 
     def _set_current_document(self, project):
         """Set GUI properties to suit current document."""
@@ -550,33 +550,35 @@ class GUIUpdater(Delegate):
             next_action.set_sensitive(False)
             return
 
-        prj_index = self.projects.index(project)
+        project_index = self.projects.index(project)
 
-        prev_action.set_sensitive(bool(prj_index != 0))
-        next_action.set_sensitive(bool(prj_index != len(self.projects) - 1))
+        sensitive = bool(project_index != 0)
+        prev_action.set_sensitive(sensitive)
+        
+        sensitive = bool(project_index != len(self.projects) - 1)
+        next_action.set_sensitive(sensitive)
 
         title = project.set_tab_labels()
         self.window.set_title(title)
         
-        edit_mode = project.edit_mode
-        framerate = project.data.framerate
-        fr_index  = FRAMERATE_NAMES.index(project.data.framerate)
+        edit_mode_name = MODE.NAMES[project.edit_mode]
+        framerate_name = FRAMERATE.NAMES[project.data.framerate]
 
         uim_paths = (
-            '/ui/menubar/view/%ss' % edit_mode,
-            '/ui/menubar/view/framerate/%s' % framerate,
-            '/ui/menubar/documents/open/document-%d' % prj_index,
+            '/ui/menubar/view/%ss' % edit_mode_name,
+            '/ui/menubar/view/framerate/%s' % framerate_name,
+            '/ui/menubar/documents/open/document-%d' % project_index,
         )
         
         for path in uim_paths:
             self.uim.get_action(path).set_active(True)
 
-        self.framerate_combo_box.set_active(fr_index)
+        self.framerate_combo_box.set_active(project.data.framerate)
 
-        for col in range(len(COLUMN_NAMES)):
-            tree_col = project.tree_view.get_column(col)
-            visible = tree_col.get_property('visible')
-            path = '/ui/menubar/view/columns/%s' % COLUMN_NAMES[col]
+        for i in range(len(COLUMN.NAMES)):
+            tree_view_column = project.tree_view.get_column(i)
+            visible = tree_view_column.get_property('visible')
+            path = '/ui/menubar/view/columns/%s' % COLUMN.NAMES[i]
             self.uim.get_action(path).set_active(visible)
 
     def _set_document_open(self):
@@ -585,21 +587,21 @@ class GUIUpdater(Delegate):
         is_open = bool(self.projects)
 
         uim_paths = (
-            '/ui/menubar/documents/close_all',
-            '/ui/menubar/documents/save_all',
-            '/ui/menubar/edit/invert_selection',
+            '/ui/menubar/file/import_translation',
+            '/ui/menubar/file/save_as',
+            '/ui/menubar/file/save_a_copy',
+            '/ui/menubar/file/save_translation_as',
+            '/ui/menubar/file/save_a_copy_of_translation',
+            '/ui/menubar/file/close',
             '/ui/menubar/edit/select_all',
             '/ui/menubar/edit/unselect_all',
-            '/ui/menubar/file/close',
-            '/ui/menubar/file/import_translation',
-            '/ui/menubar/file/save_a_copy',
-            '/ui/menubar/file/save_a_copy_of_translation',
-            '/ui/menubar/file/save_as',
-            '/ui/menubar/file/save_translation_as',
-            '/ui/menubar/search/go_to_subtitle',
-            '/ui/menubar/view/columns',
-            '/ui/menubar/view/frames',
+            '/ui/menubar/edit/invert_selection',
             '/ui/menubar/view/times',
+            '/ui/menubar/view/frames',
+            '/ui/menubar/view/columns',
+            '/ui/menubar/search/go_to_subtitle',
+            '/ui/menubar/documents/save_all',
+            '/ui/menubar/documents/close_all',
         )
 
         for path in uim_paths:
@@ -612,18 +614,18 @@ class GUIUpdater(Delegate):
             self.set_status_message(None)
             self.window.set_title('Gaupol')
 
-    def _set_edit_value_sensitivity(self, project):
-        """Set sensitivity of "Edit Value" action."""
+    def _set_edit_cell_sensitivity(self, project):
+        """Set sensitivity of "Edit" action."""
         
-        action = self.uim.get_action('/ui/menubar/edit/edit_value')
+        action = self.uim.get_action('/ui/menubar/edit/edit_cell')
 
         if project is None:
             action.set_sensitive(False)
             return
 
-        # Some cell must have focus.
-        store_row, store_col = project.get_store_focus()
-        if store_row is not None and store_col is not None:
+        # A cell must have focus.
+        row, col = project.get_focus()[:2]
+        if row is not None and col is not None:
             action.set_sensitive(True)
         else:
             action.set_sensitive(False)
@@ -634,11 +636,13 @@ class GUIUpdater(Delegate):
         if project is None:
             main_changed = False
             tran_changed = False
+            tran_active = False
             main_file = None
             tran_file = None
         else:
             main_changed = bool(project.main_changed)
             tran_changed = bool(project.tran_changed)
+            tran_active = project.tran_active
             main_file = project.data.main_file
             tran_file = project.data.tran_file
             
@@ -646,12 +650,12 @@ class GUIUpdater(Delegate):
         self.uim.get_action(path).set_sensitive(main_changed)
 
         path = '/ui/menubar/file/save_translation'
-        self.uim.get_action(path).set_sensitive(tran_changed)
+        self.uim.get_action(path).set_sensitive(tran_active and tran_changed)
 
         # Revert sensitivity.
         if main_changed and main_file is not None:
             sensitive = True
-        elif tran_changed and tran_file is not None:
+        elif tran_active and tran_changed and tran_file is not None:
             sensitive = True
         else:
             sensitive = False
@@ -663,13 +667,13 @@ class GUIUpdater(Delegate):
         """Set sensitivities of text formatting actions."""
 
         uim_paths = (
+            '/ui/menubar/format/dialog',
+            '/ui/menubar/format/italic',
             '/ui/menubar/format/case',
             '/ui/menubar/format/case/title',
             '/ui/menubar/format/case/sentence',
             '/ui/menubar/format/case/upper',
             '/ui/menubar/format/case/lower',
-            '/ui/menubar/format/dialog',
-            '/ui/menubar/format/italic',
         )
 
         if project is None:
@@ -678,20 +682,20 @@ class GUIUpdater(Delegate):
             return
 
         selection = project.tree_view.get_selection()
-        sel_row_count = selection.count_selected_rows()
-        store_col = project.get_store_focus()[1]
+        selected_count = selection.count_selected_rows()
+        col = project.get_focus()[1]
 
         sensitive = True
 
         # Something must be selected.
-        if sel_row_count == 0:
+        if selected_count == 0:
             sensitive = False
 
         # A text column must have focus and file format must be known.
-        if store_col == TEXT:
+        if col == TEXT:
             if project.data.main_file is None:
                 sensitive = False
-        elif store_col == TRAN:
+        elif col == TRAN:
             if project.data.tran_file is None:
                 if project.data.main_file is None:
                     sensitive = False
@@ -751,8 +755,8 @@ class GUIUpdater(Delegate):
             sensitive = False
         else:
             selection = project.tree_view.get_selection()
-            sel_row_count = selection.count_selected_rows()
-            sensitive = bool(sel_row_count > 0)
+            selected_count = selection.count_selected_rows()
+            sensitive = bool(selected_count > 0)
 
         for path in uim_paths:
             self.uim.get_action(path).set_sensitive(sensitive)
@@ -783,7 +787,7 @@ class GUIUpdater(Delegate):
         self._set_character_status(project)
         self._set_current_document(project)
         self._set_document_open()
-        self._set_edit_value_sensitivity(project)
+        self._set_edit_cell_sensitivity(project)
         self._set_file_sensitivities(project)
         self._set_framerate_sensitivities(project)
         self._set_row_operation_sensitivities(project)
@@ -836,17 +840,17 @@ class GUIUpdater(Delegate):
             return
 
         selection = project.tree_view.get_selection()
-        sel_row_count = selection.count_selected_rows()
-        store_col = project.get_store_focus()[1]
+        selected_count = selection.count_selected_rows()
+        col = project.get_focus()[1]
 
         sensitive = True
 
         # Something must be selected.
-        if sel_row_count == 0:
+        if selected_count == 0:
             sensitive = False
 
         # A text column must have focus.
-        if store_col not in [TEXT, TRAN]:
+        if col not in [TEXT, TRAN]:
             sensitive = False
 
         for path in uim_paths:
@@ -884,26 +888,26 @@ class GUIUpdater(Delegate):
 
         if project is None:
             self.text_statusbar.hide()
-            self.translation_statusbar.hide()
+            self.tran_statusbar.hide()
             self.message_statusbar.set_has_resize_grip(True)
             return
         
-        orig_visible = project.tree_view.get_column(TEXT).get_visible()
+        text_visible = project.tree_view.get_column(TEXT).get_visible()
         tran_visible = project.tree_view.get_column(TRAN).get_visible()
         
-        self.text_statusbar.set_property('visible', orig_visible)
-        self.translation_statusbar.set_property('visible', tran_visible)
+        self.text_statusbar.set_property('visible', text_visible)
+        self.tran_statusbar.set_property('visible', tran_visible)
         
         if tran_visible:
             self.message_statusbar.set_has_resize_grip(False)
             self.text_statusbar.set_has_resize_grip(False)
-            self.translation_statusbar.set_has_resize_grip(True)
+            self.tran_statusbar.set_has_resize_grip(True)
         else:
-            if orig_visible:
+            if text_visible:
                 self.message_statusbar.set_has_resize_grip(False)
                 self.text_statusbar.set_has_resize_grip(True)
-                self.translation_statusbar.set_has_resize_grip(False)
+                self.tran_statusbar.set_has_resize_grip(False)
             else:
                 self.message_statusbar.set_has_resize_grip(True)
                 self.text_statusbar.set_has_resize_grip(False)
-                self.translation_statusbar.set_has_resize_grip(False)
+                self.tran_statusbar.set_has_resize_grip(False)

@@ -40,9 +40,8 @@ class MicroDVD(TagLibrary):
 
     """MicroDVD tag library."""
 
-    TAG = r'\{[a-z]:.*?\}', re.IGNORECASE
-
-    ITALIC = '\{y:i\}', re.IGNORECASE
+    TAG    = r'\{[a-z]:.*?\}', re.IGNORECASE
+    ITALIC = r'\{y:i\}'      , re.IGNORECASE
 
     DECODE_TAGS = (
         (    

@@ -112,7 +112,7 @@ class EncodingDialog(object):
             model.append([entry[2], entry[1], entry[0] in visible_encodings])
 
     def destroy(self):
-        """Destroy dialog."""
+        """Destroy the dialog."""
         
         size = self._dialog.get_size()
         self._config.setlistint('encoding_dialog', 'size', size)
@@ -121,7 +121,7 @@ class EncodingDialog(object):
         
     def get_encoding(self):
         """
-        Get selected encoding.
+        Get the selected encoding.
 
         Return: encoding or None
         """
@@ -137,7 +137,7 @@ class EncodingDialog(object):
         return encodinglib.get_python_name(display_name)
 
     def get_visible_encodings(self):
-        """Get encodings chosen to be visible."""
+        """Get the encodings chosen to be visible."""
         
         model = self._tree_view.get_model()
         visible_encodings = []
@@ -156,7 +156,7 @@ class EncodingDialog(object):
         model[row][SHOW] = not model[row][SHOW]
 
     def run(self):
-        """Show and run dialog."""
+        """Show and run the dialog."""
         
         self._dialog.show()
         self._tree_view.grab_focus()

@@ -17,14 +17,12 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""gaupol.lib-wide constants."""
+"""gaupol.lib-wide column constants."""
 
 
-class Column(object):
-
-    SHOW = 0
-    HIDE = 1
-    DURN = 2
+SHOW = 0
+HIDE = 1
+DURN = 2
     
-    TEXT = 0
-    TRAN = 1
+TEXT = 0
+TRAN = 1

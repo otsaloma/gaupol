@@ -25,7 +25,7 @@
 			<menuitem action="undo"/>
 			<menuitem action="redo"/>
 			<separator/>
-			<menuitem action="edit_value"/>
+			<menuitem action="edit_cell"/>
 			<separator/>
 			<menuitem action="cut"/>
 			<menuitem action="copy"/>

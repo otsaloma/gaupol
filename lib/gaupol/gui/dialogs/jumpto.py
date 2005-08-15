@@ -77,7 +77,7 @@ class JumpToSubtitleDialog(gobject.GObject):
         self._dialog.set_default_response(gtk.RESPONSE_OK)
 
     def _on_cancel_button_clicked(self, *args):
-        """Destroy dialog"""
+        """Destroy the dialog"""
 
         self._dialog.destroy()
         self.destroy()
@@ -89,7 +89,7 @@ class JumpToSubtitleDialog(gobject.GObject):
         self.emit('keep-open-value-changed', keep_open)
         
     def _on_dialog_delete_event(self, *args):
-        """Destroy dialog"""
+        """Destroy the dialog"""
 
         self._dialog.destroy()
         self.destroy()
@@ -102,7 +102,7 @@ class JumpToSubtitleDialog(gobject.GObject):
         self.emit('jump-to-button-clicked', subtitle)
 
     def show(self):
-        """Show dialog."""
+        """Show the dialog."""
         
         self._spin_button.select_region(0, -1)
         self._dialog.show()

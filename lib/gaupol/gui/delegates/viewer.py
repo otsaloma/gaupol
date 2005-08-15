@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Alterer of how documents and application are displayed."""
+"""Changing application appearance."""
 
 
 try:
@@ -25,16 +25,15 @@ try:
 except ImportError:
     pass
 
-from gaupol.gui.constants import COLUMN_NAMES
-from gaupol.gui.constants import FRAMERATE_NAMES
-from gaupol.gui.constants import NO, SHOW, HIDE, DURN, TEXT, TRAN
+from gaupol.constants import FRAMERATE, MODE
+from gaupol.gui.constants import *
 from gaupol.gui.delegates.delegate import Delegate
 from gaupol.gui.util import gui
 
 
 class Viewer(Delegate):
 
-    """Alterer of how documents and application are displayed."""
+    """Changing application appearance."""
 
     def on_edit_mode_toggled(self, some_action, new_action):
         """Change edit mode."""
@@ -42,73 +41,67 @@ class Viewer(Delegate):
         project = self.get_current_project()
 
         # Cut off the plural "s".
-        new_edit_mode = new_action.get_name()[:-1]
+        new_edit_mode_name = new_action.get_name()[:-1]
+        new_edit_mode = MODE.NAMES.index(new_edit_mode_name)
 
         # Return if only refreshing widget state.
         if new_edit_mode == project.edit_mode:
             return
 
         gui.set_cursor_busy(self.window)
-        store = project.tree_view.get_model()
+
+        model = project.tree_view.get_model()
         has_focus = project.tree_view.get_property('has-focus')
 
         project.edit_mode = new_edit_mode
-        self.config.set('editor', 'edit_mode', new_edit_mode)
-
-        # Get sort order.
-        sort_col, sort_order = store.get_sort_column_id()
+        self.config.set('editor', 'edit_mode', new_edit_mode_name)
 
         # Get focus.
-        focus_row, focus_col = project.get_store_focus()
+        row, col, tree_view_column = project.get_focus()
 
         # Get selection.
-        sel_data_rows = project.get_selected_data_rows()
-        sel_subs      = [i + 1 for i in sel_data_rows]
+        selected_rows = project.get_selected_rows()
 
         # Remove tree view.
-        scroller = project.tree_view.get_parent()
-        scroller.remove(project.tree_view)
+        scrolled_window = project.tree_view.get_parent()
+        scrolled_window.remove(project.tree_view)
         
         project.build_tree_view()
 
         # Add tree view.
-        scroller.add(project.tree_view)
-        scroller.show_all()
+        scrolled_window.add(project.tree_view)
+        scrolled_window.show_all()
         
         project.reload_all_data()
         project.tree_view.columns_autosize()
-        store = project.tree_view.get_model()
-
-        # Set sort order.
-        store.set_sort_column_id(sort_col, sort_order)
+        model = project.tree_view.get_model()
 
         # Restore focus.
         try:
-            tree_col = project.tree_view.get_column(focus_col)
-            project.tree_view.set_cursor(focus_row, tree_col)
+            project.tree_view.set_cursor(row, tree_view_column)
         except TypeError:
             pass
 
-        # Set selection.
+        # Restore selection.
         selection = project.tree_view.get_selection()
-        for i in range(len(store)):
-            if store[i][NO] in sel_subs:
-                selection.select_path(i)
+        for row in selected rows:
+            selection.select_path(row)
 
         project.tree_view.set_property('has-focus', has_focus)
+
         gui.set_cursor_normal(self.window)
 
     def on_framerate_changed(self, *args):
         """
         Change framerate.
         
-        This method is called from the framerate combo box.
+        This method is called from the framerate ComboBox.
         """
         project = self.get_current_project()
 
         # Get new framerate.
-        index     = self.framerate_combo_box.get_active()
-        framerate = FRAMERATE_NAMES[index]
+        framerate = self.framerate_combo_box.get_active()
+        framerate_name = FRAMERATE.NAMES[index]
 
         # Return if only refreshing widget state.
         if framerate == project.data.framerate:
@@ -118,10 +111,10 @@ class Viewer(Delegate):
 
         # Set new framerate and save setting.
         project.data.change_framerate(framerate)
-        self.config.set('editor', 'framerate', framerate)
+        self.config.set('editor', 'framerate', framerate_name)
 
         # Set the correct framerate menu item active.
-        path = '/ui/menubar/view/framerate/%s' % framerate
+        path = '/ui/menubar/view/framerate/%s' % framerate_name
         self.uim.get_widget(path).set_active(True)
         
         if project.edit_mode != project.data.main_file.MODE:
@@ -131,15 +124,15 @@ class Viewer(Delegate):
 
     def on_framerate_toggled(self, some_action, new_action):
         """
-         Change framerate.
+        Change framerate.
         
         This method is called from the menu.
         """
         project = self.get_current_project()
 
         # Get new framerate.
-        framerate = new_action.get_name()
-        index     = FRAMERATE_NAMES.index(framerate)
+        framerate_name = new_action.get_name()
+        framerate = FRAMERATE.NAMES[framerate]
 
         # Return if only refreshing widget state.
         if framerate == project.data.framerate:
@@ -149,10 +142,10 @@ class Viewer(Delegate):
 
         # Set new framerate and save setting.
         project.data.change_framerate(framerate)
-        self.config.set('editor', 'framerate', framerate)
+        self.config.set('editor', 'framerate', framerate_name)
 
-        # Set the correct framerate combo box entry active.
-        self.framerate_combo_box.set_active(index)
+        # Set the correct framerate ComboBox entry active.
+        self.framerate_combo_box.set_active(framerate)
         
         if project.edit_mode != project.data.main_file.MODE:
             project.reload_data_in_columns([SHOW, HIDE, DURN])
@@ -160,34 +153,35 @@ class Viewer(Delegate):
         gui.set_cursor_normal(self.window)
 
     def on_statusbar_toggled(self, *args):
-        """Toggle visibility of the statusbar."""
+        """Toggle the visibility of the statusbar."""
 
-        visible = not self.statusbar_hbox.get_property('visible')
-        
-        self.statusbar_hbox.set_property('visible', visible)
-        self.config.setboolean('view', 'statusbar', visible)
+        statusbar_hbox = gui.get_parent_widget(self.text_statusbar, gtk.HBox)
+        visible = self.statusbar_hbox.get_property('visible')
+
+        self.statusbar_hbox.set_property('visible', not visible)
+        self.config.setboolean('view', 'statusbar', not visible)
 
     def on_toolbar_toggled(self, *args):
-        """Toggle visibility of the toolbar."""
+        """Toggle the visibility of the toolbar."""
         
         toolbar = self.uim.get_widget('/ui/toolbar')
-        visible = not toolbar.get_property('visible')
+        visible = toolbar.get_property('visible')
         
-        toolbar.set_property('visible', visible)
-        self.config.setboolean('view', 'toolbar', visible)
+        toolbar.set_property('visible', not visible)
+        self.config.setboolean('view', 'toolbar', not visible)
 
     def on_tree_view_column_toggled(self, toggle_action):
-        """Toggle visibility of TreeView column."""
+        """Toggle the visibility of a TreeView column."""
 
         project = self.get_current_project()
 
-        name  = toggle_action.get_name()
-        index = COLUMN_NAMES.index(name)
+        col_name = toggle_action.get_name()
+        col = COLUMN.NAMES.index(col_name)
 
-        tree_col = project.tree_view.get_column(index)
-        visible = tree_col.get_visible()
+        tree_view_column = project.tree_view.get_column(col)
+        visible = tree_view_column.get_visible()
 
-        path = '/ui/menubar/view/columns/%s' % name
+        path = '/ui/menubar/view/columns/%s' % col_name
         action = self.uim.get_action(path)
         active = action.get_active()
 
@@ -196,16 +190,18 @@ class Viewer(Delegate):
             return
 
         gui.set_cursor_busy(self.window)
-        tree_col.set_visible(not visible)
-        vis_cols = []
+
+        tree_view_column.set_visible(not visible)
+        visible_columns = []
         
-        for i in range(len(COLUMN_NAMES)):
+        for i in range(len(COLUMN.NAMES)):
             if project.tree_view.get_column(i).get_visible():
-                vis_cols.append(COLUMN_NAMES[i])
+                visible_columns.append(COLUMN.NAMES[i])
         
-        self.config.setlist('view', 'columns', vis_cols)
+        self.config.setlist('view', 'columns', visible_columns)
 
         self.set_sensitivities()
+
         gui.set_cursor_normal(self.window)
 
     def on_tree_view_headers_clicked(self, button, event):

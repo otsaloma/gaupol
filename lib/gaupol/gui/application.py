@@ -64,11 +64,11 @@ class Application(object):
         get_widget = glade_xml.get_widget
 
         # Widgets from the Glade XML file.
-        self.window                = get_widget('window')
-        self.notebook              = get_widget('notebook')
-        self.message_statusbar     = get_widget('message_statusbar')
-        self.text_statusbar        = get_widget('text_statusbar')
-        self.translation_statusbar = get_widget('translation_statusbar')
+        self.window            = get_widget('window')
+        self.notebook          = get_widget('notebook')
+        self.message_statusbar = get_widget('message_statusbar')
+        self.text_statusbar    = get_widget('text_statusbar')
+        self.tran_statusbar    = get_widget('translation_statusbar')
 
         # Widgets to be manually created.
         self.framerate_combo_box = None
@@ -119,6 +119,7 @@ class Application(object):
             'add_to_recent_files'                    : file_opener,
             'build_gui'                              : gui_builder,
             'do_action'                              : dur_manager,
+            'insert_subtitles'                       : row_editor,
             'on_about_activated'                     : helper,
             'on_check_latest_version_activated'      : helper,
             'on_clear_activated'                     : text_editor,
@@ -128,8 +129,8 @@ class Application(object):
             'on_cut_activated'                       : text_editor,
             'on_dialog_lines_activated'              : text_editor,
             'on_document_toggled'                    : gui_updater,
+            'on_edit_cell_activated'                 : cell_editor,
             'on_edit_mode_toggled'                   : viewer,
-            'on_edit_value_activated'                : cell_editor,
             'on_files_dropped'                       : file_opener,
             'on_framerate_changed'                   : viewer,
             'on_framerate_toggled'                   : viewer,
@@ -150,7 +151,6 @@ class Application(object):
             'on_quit_activated'                      : file_closer,
             'on_recent_file_activated'               : file_opener,
             'on_redo_activated'                      : dur_manager,
-            'on_redo_button_clicked'                 : dur_manager,
             'on_redo_item_activated'                 : dur_manager,
             'on_remove_subtitles_activated'          : row_editor,
             'on_report_a_bug_activated'              : helper,
@@ -176,7 +176,6 @@ class Application(object):
             'on_tree_view_headers_clicked'           : viewer,
             'on_tree_view_selection_changed'         : gui_updater,
             'on_undo_activated'                      : dur_manager,
-            'on_undo_button_clicked'                 : dur_manager,
             'on_undo_item_activated'                 : dur_manager,
             'on_unselect_all_activated'              : row_editor,
             'on_upper_activated'                     : text_editor,

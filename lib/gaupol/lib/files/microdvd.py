@@ -28,8 +28,7 @@ try:
 except ImportError:
     pass
 
-from gaupol.constants.Format import *
-from gaupol.constants.Mode import *
+from gaupol.constants import FORMAT, MODE
 from gaupol.lib.files.subfile import SubtitleFile
 
 
@@ -50,9 +49,9 @@ class MicroDVD(SubtitleFile):
 
         SubtitleFile.__init__(self, *args)
         
-        self.FORMAT    = FORMAT_MICRODVD
-        self.EXTENSION = EXTENSION_MICRODVD
-        self.MODE      = MODE_FRAME
+        self.FORMAT    = FORMAT.MICRODVD
+        self.EXTENSION = EXTENSION.MICRODVD
+        self.MODE      = MODE.FRAME
     
     def read(self):
         """

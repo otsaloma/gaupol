@@ -25,8 +25,8 @@ try:
 except ImportError:
     pass
 
-from gaupol.constants import MODE_TIME, MODE_FRAME
-from gaupol.gui.constants import NO, SHOW, HIDE, DURN, TEXT, TRAN
+from gaupol.constants import MODE
+from gaupol.gui.constants import *
 from gaupol.gui.delegates.delegate import Delegate
 from gaupol.gui.delegates.durmanager import DURAction
 
@@ -39,24 +39,26 @@ class CellEditAction(DURAction):
         
         self.project = project
 
-        descriptions = [
-            None,
-            _('Editing show of subtitle %d')        % row + 1,
-            _('Editing hide of subtitle %d')        % row + 1,
-            _('Editing duration of subtitle %d')    % row + 1,
-            _('Editing text of subtitle %d')        % row + 1,
-            _('Editing translation of subtitle %d') % row + 1,
-        ]
-        
-        self.description = descriptions[col]
-
-        self.document = project.get_document(col)
-
-        self.focus_row = row
-        self.focus_col = col
+        self._row = row
+        self._col = col
         
         self._old_value = old_value
         self._new_value = new_value
+
+        mode_name = MODE.NAMES[project.edit_mode]
+        subtitle = row + 1
+
+        descriptions = [
+            None,
+            _('Editing show %s of subtitle %d')     % (mode_name, subtitle),
+            _('Editing hide %s of subtitle %d')     % (mode_name, subtitle),
+            _('Editing duration of subtitle %d')    % subtitle,
+            _('Editing text of subtitle %d')        % subtitle,
+            _('Editing translation of subtitle %d') % subtitle,
+        ]
+        
+        self.description = descriptions[col]
+        self.documents = [project.get_document_type(col)]
         
     def do(self):
         """Do editing."""
@@ -66,36 +68,36 @@ class CellEditAction(DURAction):
     def _set_value(self, value):
         """Set value to data."""
 
-        store    = self.project.tree_view.get_model()
-        data     = self.project.data
-        data_col = self.project.get_data_column(self.focus_col)
+        project = self.project
+        model = project.tree_view.get_model()
+        data = project.data
+        data_col = project.get_data_col(self._col)
         
-        if self.focus_col in [SHOW, HIDE, DURN]:
+        if self._col in [SHOW, HIDE, DURN]:
             
-            if self.project.edit_mode == MODE_TIME:
+            if project.edit_mode == MODE.TIME:
                 new_row = data.set_time(row, data_col, value)
-            if self.project.edit_mode == MODE_FRAME:
+            if project.edit_mode == MODE.FRAME:
                 new_row = data.set_frame(row, data_col, value)
                 
-        elif self.focus_col in [TEXT, TRAN]:
+        elif self._col in [TEXT, TRAN]:
         
             data.set_text(row, data_col, value)
             new_row = row
 
         # Reload changed data.
         if new_data_row == data_row:
-            self.project.reload_data_in_row(row)
+            project.reload_data_in_row(row)
         else:
-            self.project.reload_data_between_rows(row, new_row)
+            project.reload_data_between_rows(row, new_row)
 
             # Set focus to new location of row.
-            tree_view = self.project.tree_view
-            tree_view_column = tree_view.get_column(self.focus_col)
-            self.project.tree_view.set_cursor(new_row, tree_view_column)
+            tree_view_column = project.tree_view.get_column(self._col)
+            project.tree_view.set_cursor(new_row, tree_view_column)
 
             # Instance variable pointing to row needs to be updated to be
             # able to undo at the correct row.
-            self.focus_row = new_row
+            self._row = new_row
         
     def undo(self):
         """Undo editing."""
@@ -107,8 +109,8 @@ class CellEditor(Delegate):
 
     """Editing a single value of subtitle data."""
 
-    def on_edit_value_activated(self, *args):
-        """Edit value of focused cell."""
+    def on_edit_cell_activated(self, *args):
+        """Edit focused cell."""
         
         tree_view = self.get_current_project().tree_view
         row, tree_view_column = tree_view.get_cursor()
@@ -120,13 +122,13 @@ class CellEditor(Delegate):
         self._set_sensitivities(True)
         self.set_status_message(None)
 
-        store = project.tree_view.get_model()
+        model = project.tree_view.get_model()
 
         # new_value is by default a string.
-        if project.edit_mode == MODE_FRAME and col in [SHOW, HIDE, DURN]:
+        if project.edit_mode == MODE.FRAME and col in [SHOW, HIDE, DURN]:
             new_value = int(new_value)
 
-        old_value = store[row][col]
+        old_value = model[row][col]
 
         if old_value == new_value:
             return

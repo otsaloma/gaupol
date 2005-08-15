@@ -25,48 +25,48 @@ VERSION = '0.0+svn'
 
 # Extension and Format class constants must have the same order.
 
-class Extension(object):
+class EXTENSION(object):
 
-    EXTENSION_VALUES   = ['.sub', '.srt']
-    EXTENSION_MICRODVD = 0
-    EXTENSION_SUBRIP   = 1
+    VALUES   = ['.sub', '.srt']
+    MICRODVD = 0
+    SUBRIP   = 1
 
-class Format(object):
+class FORMAT(object):
 
-    FORMAT_NAMES    = ['MicroDVD', 'SubRip']
-    FORMAT_MICRODVD = 0
-    FORMAT_SUBRIP   = 1
+    NAMES    = ['MicroDVD', 'SubRip']
+    MICRODVD = 0
+    SUBRIP   = 1
 
-class Framerate(object):
+class FRAMERATE(object):
 
-    FRAMERATE_NAMES  = ['23.976', '25'  , '29.97']
-    FRAMERATE_VALUES = [ 23.976 ,  25.0 ,  29.97 ]
-    FRAMERATE_23_976 = 0
-    FRAMERATE_25     = 1
-    FRAMERATE_29_97  = 2
+    NAMES   = ['23.976', '25'  , '29.97']
+    VALUES  = [ 23.976 ,  25.0 ,  29.97 ]
+    _23_976 = 0
+    _25     = 1
+    _29_97  = 2
 
-class Mode(object):
+class MODE(object):
 
-    MODE_NAMES = ['frame', 'time']
-    MODE_FRAME = 0
-    MODE_TIME  = 1
+    NAMES = ['time', 'frame']
+    TIME  = 0
+    FRAME = 1
 
-class Newline(object):
+class NEWLINE(object):
 
-    NEWLINE_NAMES   = ['Mac', 'Unix', 'Windows']
-    NEWLINE_VALUES  = ['\r' , '\n'  , '\r\n'   ]
-    NEWLINE_UNIX    = 'Unix'
-    NEWLINE_MAC     = 'Mac'
-    NEWLINE_WINDOWS = 'Windows'
+    NAMES   = ['Mac', 'Unix', 'Windows']
+    VALUES  = ['\r' , '\n'  , '\r\n'   ]
+    UNIX    = 'Unix'
+    MAC     = 'Mac'
+    WINDOWS = 'Windows'
 
-class Position(object):
+class POSITION(object):
 
-    POSITION_NAMES = ['above', 'below']
-    POSITION_ABOVE = 0
-    POSITION_BELOW = 1
+    NAMES = ['above', 'below']
+    ABOVE = 0
+    BELOW = 1
 
-class Type(object):
+class TYPE(object):
 
-    TYPE_NAMES       = ['main', 'translation']
-    TYPE_MAIN        = 0
-    TYPE_TRANSLATION = 1
+    NAMES = ['main', 'translation']
+    MAIN  = 0
+    TRAN  = 1

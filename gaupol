@@ -156,7 +156,7 @@ if __name__ == '__main__':
     _check_dependencies()
     _import_optional_modules()
     _check_paths()
-    _prepare_gettext(use_english)
+    _prepare_gettext(no_translation)
 
     from gaupol.gui import main
     main.main(args[1:])

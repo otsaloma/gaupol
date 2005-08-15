@@ -52,6 +52,15 @@ def get_event_box(widget):
 
     return event_box
 
+def get_parent_widget(child, parent_type):
+    """Get parent of widget that is type parent."""
+    
+    parent = child
+    while not isinstance(parent, parent_type):
+        parent = parent.get_parent()
+
+    return parent
+
 def set_cursor_busy(window):
     """
     Set cursor busy when above window.

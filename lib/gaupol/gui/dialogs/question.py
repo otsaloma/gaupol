@@ -81,20 +81,20 @@ class RevertQuestionDialog(gtk.MessageDialog):
     """Dialog to ask whether to revert changes or not."""
     
     def __init__(self, parent, main_exists, tran_exists, main_changed,
-                 tran_changed, tran_active, main_basename, tran_basename):
+                 tran_active, tran_changed, main_basename, tran_basename):
         """
         Initialize a RevertQuestionDialog object.
         
         Raise ValueError if called with nothing to revert.
         """
         main_ok = not main_changed
-        tran_ok = not tran_changed or not tran_active
+        tran_ok = not tran_active or not tran_changed
 
         main_revertable = main_exists and main_changed
-        tran_revertable = tran_exists and tran_changed and tran_active
+        tran_revertable = tran_exists and tran_active and tran_changed
 
         main_loseable = not main_exists and main_changed
-        tran_loseable = not tran_exists and tran_changed and tran_active
+        tran_loseable = not tran_exists and tran_active and tran_changed
 
         if not main_revertable and not tran_revertable:
             raise ValueError('There\'s nothing to revert!')

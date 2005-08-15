@@ -29,9 +29,7 @@ except ImportError:
 
 import gtk
 
-from gaupol.constants.Extension import *
-from gaupol.constants.Format import *
-from gaupol.constants.Newline import *
+from gaupol.constants import EXTENSION, FORMAT, NEWLINE
 from gaupol.gui.dialogs.encoding import EncodingDialog
 from gaupol.lib.util import encodinglib
 
@@ -56,10 +54,10 @@ class CustomFileChooserDialog(gtk.FileChooserDialog):
             (None   , _('Plain text'), 'text/plain', None   ),
         ]
 
-        for i in range(len(FORMAT_NAMES)):
+        for i in range(len(FORMAT.NAMES)):
         
-            format_name = FORMAT_NAMES[i]
-            extension_value = EXTENSION_VALUES[i]
+            format_name = FORMAT.NAMES[i]
+            extension_value = EXTENSION.VALUES[i]
             name = _('%s (*%s)') % (format_name, extension_value)
             pattern = '*%s' % extension_value
             
@@ -82,7 +80,7 @@ class CustomFileChooserDialog(gtk.FileChooserDialog):
         """Get selected encoding."""
 
         encodings = encodinglib.get_valid_python_names()
-        entry     = self._encoding_combo_box.get_active_text()
+        entry = self._encoding_combo_box.get_active_text()
 
         if entry == encodinglib.get_locale_descriptive_name():
             return encodinglib.get_locale_encoding()[0]
@@ -308,20 +306,20 @@ class SaveDialog(CustomFileChooserDialog):
     def _fill_format_combo_box(self):
         """Insert items to format ComboBox."""
 
-        for format_name in FORMAT_NAMES:
+        for format_name in FORMAT.NAMES:
             self._format_combo_box.append_text(format_name)
 
         format_name = self._config.get('file', 'format')
-        self._format_combo_box.set_active(FORMAT_NAMES.index(format_name))
+        self._format_combo_box.set_active(FORMAT.NAMES.index(format_name))
 
     def _fill_newline_combo_box(self):
         """Insert items to newline ComboBox."""
 
-        for newline_name in NEWLINE_NAMES:
+        for newline_name in NEWLINE.NAMES:
             self._newline_combo_box.append_text(newline_name)
 
         newline_name = self._config.get('file', 'newlines')
-        self._newline_combo_box.set_active(NEWLINE_NAMES.index(newline_name))
+        self._newline_combo_box.set_active(NEWLINE.NAMES.index(newline_name))
 
     def get_filename_with_extension(self):
         """Get filename and add extension if it is lacking."""
@@ -331,7 +329,7 @@ class SaveDialog(CustomFileChooserDialog):
         if path is None:
             return None
 
-        extension_value = EXTENSION_VALUES[self.get_format()]
+        extension_value = EXTENSION.VALUES[self.get_format()]
         if not path.endswith(extension_value):
             path += extension_value
 
@@ -351,7 +349,7 @@ class SaveDialog(CustomFileChooserDialog):
         """Change extension to reflect new format."""
 
         new_format_name = combo_box.get_active_text()
-        new_format = FORMAT_NAMES.index(new_format_name)
+        new_format = FORMAT.NAMES.index(new_format_name)
         path = self.get_filename()
 
         if path is None:
@@ -363,13 +361,13 @@ class SaveDialog(CustomFileChooserDialog):
         basename = os.path.basename(path)
         
         # Remove possible existing extension.
-        for extension in EXTENSION_VALUES:
+        for extension in EXTENSION.VALUES:
             if basename.endswith(extension):
                 basename = basename[:-len(extension)]
                 break
 
         # Add new extension.
-        basename += EXTENSION_VALUES[new_format]
+        basename += EXTENSION.VALUES[new_format]
         path = os.path.join(dirname, basename)
 
         self.set_current_name(basename)

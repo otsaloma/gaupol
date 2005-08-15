@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Builder to prepare the GUI before the main window is shown."""
+"""Building and preparing the application main window."""
 
 
 import logging
@@ -31,15 +31,15 @@ except ImportError:
 import gobject
 import gtk
 
-from gaupol.gui.constants import EDIT_MODE_NAMES, FRAMERATE_NAMES
+from gaupol.constants import FRAMERATE, MODE
 from gaupol.gui.delegates.delegate import Delegate
 from gaupol.gui.util import gui
 from gaupol.paths import UI_DIR, ICON_DIR
 
 
 MENUBAR_XML_PATH = os.path.join(UI_DIR  , 'menubar.xml')
-POPUPS_XML_PATH  = os.path.join(UI_DIR  , 'popups.xml' )
 TOOLBAR_XML_PATH = os.path.join(UI_DIR  , 'toolbar.xml')
+POPUPS_XML_PATH  = os.path.join(UI_DIR  , 'popups.xml' )
 GAUPOL_ICON_PATH = os.path.join(ICON_DIR, 'gaupol.png' )
 
 
@@ -48,25 +48,26 @@ logger = logging.getLogger()
 
 class GUIBuilder(Delegate):
 
-    """Builder to prepare the GUI before the main window is shown."""
+    """Building and preparing the application main window."""
 
     def _build_framerate_combo_box(self):
-        """Build the framerate combo box in the toolbar."""
+        """Build the framerate ComboBox in the toolbar."""
         
         self.framerate_combo_box = gtk.combo_box_new_text()
 
-        # Get framerate index.
-        framerate = self.config.get('editor', 'framerate')
-        index     = FRAMERATE_NAMES.index(framerate)
-        
-        self.framerate_combo_box.insert_text(0, _('23.976 fps'))
-        self.framerate_combo_box.insert_text(1, _('25 fps'    ))
-        self.framerate_combo_box.insert_text(2, _('29.97 fps' ))
-        self.framerate_combo_box.set_active(index)
+        # Add entries.
+        for i in range(len(FRAMERATE.NAMES)):
+            entry = _('%s fps') % framerate_name
+            self.framerate_combo_box.insert_text(i, entry)
+
+        # Set active framerate.
+        framerate_name = self.config.get('editor', 'framerate')
+        framerate = FRAMERATE.NAMES.index(framerate_name)
+        self.framerate_combo_box.set_active(framerate)
         
         self.framerate_combo_box.connect('changed', self.on_framerate_changed)
 
-        # Put framerate combo box to an event box and enable tooltip.
+        # Put framerate ComboBox to an event box and enable tooltip.
         event_box = gtk.EventBox()
         event_box.add(self.framerate_combo_box)
         self.tooltips.set_tip(event_box, _('Framerate'))
@@ -99,13 +100,14 @@ class GUIBuilder(Delegate):
 
         self._build_ui_manager()
         
-        # Pack menu and toolbar.
+        # Pack menubar and toolbar.
         menubar = self.uim.get_widget('/ui/menubar')
         toolbar = self.uim.get_widget('/ui/toolbar')
-        self.vbox.pack_start(menubar, False, False, 0)
-        self.vbox.pack_start(toolbar, False, False, 0)
-        self.vbox.reorder_child(menubar, 0)
-        self.vbox.reorder_child(toolbar, 1)
+        vbox = self.window.get_child()
+        vbox.pack_start(menubar, False, False, 0)
+        vbox.pack_start(toolbar, False, False, 0)
+        vbox.reorder_child(menubar, 0)
+        vbox.reorder_child(toolbar, 1)
 
         self._build_open_button()
         self._build_undo_and_redo_buttons()
@@ -122,11 +124,10 @@ class GUIBuilder(Delegate):
         # Glade refuses to create a notebook with 0 pages.
         self.notebook.remove_page(0)
         
-        signal = 'switch-page'
         method = self.on_notebook_page_switched
-        self.notebook.connect_after(signal, method)
+        self.notebook.connect_after('switch-page', method)
 
-        # Set drag-and-drop file opening.
+        # Set drag-and-drop for file opening.
         self.notebook.drag_dest_set(
             gtk.DEST_DEFAULT_ALL, [('text/uri-list', 0, 0)],
             gtk.gdk.ACTION_DEFAULT|gtk.gdk.ACTION_COPY|gtk.gdk.ACTION_MOVE| \
@@ -142,14 +143,15 @@ class GUIBuilder(Delegate):
         self.open_button.set_is_important(True)
         self.open_button.connect('clicked', self.on_open_activated)
 
-        ### EI INSTANSSIMUUTT!!!
-        tooltips_always = gtk.Tooltips()
+        # Not self.tooltips, because the open button tooltip should always
+        # be visible, whether or not a document is open.
+        tooltips = gtk.Tooltips()
         
         tip = _('Open a subtitle file')
-        self.open_button.set_tooltip(tooltips_always, tip)
+        self.open_button.set_tooltip(tooltips, tip)
 
         tip = _('Open a recently used subtitle file')
-        self.open_button.set_arrow_tooltip(tooltips_always, tip)
+        self.open_button.set_arrow_tooltip(tooltips, tip)
         
         toolbar = self.uim.get_widget('/ui/toolbar')
         toolbar.insert(self.open_button, 0)
@@ -161,35 +163,33 @@ class GUIBuilder(Delegate):
         tip = _('Amount of characters in the text of the selected subtitle')
         self.tooltips.set_tip(event_box, tip)
         
-        event_box = gui.get_event_box(self.translation_statusbar)
+        event_box = gui.get_event_box(self.tran_statusbar)
         tip = _('Amount of characters in the translation of the selected subtitle')
         self.tooltips.set_tip(event_box, tip)
 
+        statusbar_hbox = gui.get_parent_widget(self.text_statusbar, gtk.HBox)
+
         if not self.config.getboolean('view', 'statusbar'):
-            self.statusbar_hbox.hide()
+            statusbar_hbox.hide()
 
     def _build_ui_manager(self):
-        """Build the menubar and toolbar actions usings gtk.UIManager."""
+        """Build menubar and toolbar actions usings UIManager."""
 
         self.uim = gtk.UIManager()
 
         menus = [
-            # Name, Stock-icon, Label
-            ('file'     , None, _('_File')     ),
-            ('edit'     , None, _('_Edit')     ),
-            ('view'     , None, _('_View')     ),
-            ('columns'  , None, _('_Columns')  ),
-            ('framerate', None, _('_Framerate')),
-            ('format'   , None, _('F_ormat')   ),
-            ('case'     , None, _('_Case')     ),
-            ('search'   , None, _('_Search')   ),
-            ('documents', None, _('_Documents')),
-            ('help'     , None, _('_Help')     ),
+            # Name      , Stock-icon, Label
+            ('file'     , None      , _('_File')     ),
+            ('edit'     , None      , _('_Edit')     ),
+            ('view'     , None      , _('_View')     ),
+            ('columns'  , None      , _('_Columns')  ),
+            ('framerate', None      , _('_Framerate')),
+            ('format'   , None      , _('F_ormat')   ),
+            ('case'     , None      , _('_Case')     ),
+            ('search'   , None      , _('_Search')   ),
+            ('documents', None      , _('_Documents')),
+            ('help'     , None      , _('_Help')     ),
         ]
-        
-        # Menu entries should have ellipses (...) where appropriate, but
-        # toolbar entries not. Hence "name-toolbar" are ellipseless entries for
-        # toolbar.
 
         action_items = [
             # Name,
@@ -297,32 +297,32 @@ class GUIBuilder(Delegate):
                 _('Redo the last undone action'),
                 self.on_redo_activated
             ), (
-                'edit_value',
+                'edit_cell',
                 gtk.STOCK_EDIT,
-                _('_Edit Value'),
+                _('_Edit'),
                 'Return',
-                _('Edit value of focused cell'),
-                self.on_edit_value_activated
+                _('Edit the focused cell'),
+                self.on_edit_cell_activated
             ), (
                 'cut',
                 gtk.STOCK_CUT,
                 _('Cu_t'),
                 '<control>X',
-                _('Cut the selection to the clipboard'),
+                _('Cut the selected texts to clipboard'),
                 self.on_cut_activated
             ), (
                 'copy',
                 gtk.STOCK_COPY,
                 _('_Copy'),
                 '<control>C',
-                _('Copy the selection to the clipboard'),
+                _('Copy the selected texts to clipboard'),
                 self.on_copy_activated
             ), (
                 'paste',
                 gtk.STOCK_PASTE,
                 _('_Paste'),
                 '<control>V',
-                _('Paste from the clipboard'),
+                _('Paste texts from clipboard'),
                 self.on_paste_activated
             ), (
                 'clear',
@@ -364,7 +364,7 @@ class GUIBuilder(Delegate):
                 None,
                 _('I_nvert Selection'),
                 None,
-                _('Invert current selection'),
+                _('Invert the current selection'),
                 self.on_invert_selection_activated
             ), (
                 'preferences',
@@ -378,77 +378,77 @@ class GUIBuilder(Delegate):
                 None,
                 _('_Dialog'),
                 '<control>D',
-                _('Toggle dialog lines on selected texts'),
+                _('Toggle dialog lines on the selected texts'),
                 self.on_dialog_lines_activated
             ), (
                 'italic',
                 gtk.STOCK_ITALIC,
                 _('_Italic'),
                 '<control>I',
-                _('Toggle the italicization of selected texts'),
+                _('Toggle the italicization of the selected texts'),
                 self.on_italic_style_activated
             ), (
                 'title',
                 None,
                 _('_Title'),
                 '<control>L',
-                _('Change selected texts to Title Case'),
+                _('Change the selected texts to Title Case'),
                 self.on_title_case_activated
             ), (
                 'sentence',
                 None,
                 _('_Sentence'),
                 '<control>E',
-                _('Change selected texts to Sentence case'),
+                _('Change the selected texts to Sentence case'),
                 self.on_sentence_case_activated
             ), (
                 'upper',
                 None,
                 _('_Upper'),
                 '<control>U',
-                _('Change selected texts to UPPER CASE'),
+                _('Change the selected texts to UPPER CASE'),
                 self.on_upper_case_activated
             ), (
                 'lower',
                 None,
                 _('_Lower'),
                 '<control>R',
-                _('Change selected texts to lower case'),
+                _('Change the selected texts to lower case'),
                 self.on_lower_case_activated
             ), (
-                'go_to_subtitle',
+                'jump_to_subtitle',
                 gtk.STOCK_JUMP_TO,
-                _('_Go To Subtitle'),
-                '<control>B',
-                _('Go to a specific subtitle'),
-                self.on_go_to_subtitle_activated
+                _('_Jump To Subtitle'),
+                '<control>J',
+                _('Jump to a specific subtitle'),
+                self.on_jump_to_subtitle_activated
             ), (
                 'save_all',
                 gtk.STOCK_SAVE,
                 _('_Save All'),
                 '<shift><control>L',
-                _('Save all open files'),
+                _('Save all open documents'),
                 self.on_save_all_activated
             ), (
                 'close_all',
                 gtk.STOCK_CLOSE,
                 _('_Close All'),
                 '<shift><control>W',
-                _('Close all open files'),
+                _('Close all open documents'),
                 self.on_close_all_activated
             ), (
                 'previous',
                 None,
                 _('_Previous'),
                 '<control>Page_Up',
-                _('Activate document in previous tab'),
+                _('Activate document in the previous tab'),
                 self.on_previous_activated
             ), (
                 'next',
                 None,
                 _('_Next'),
                 '<control>Page_Down',
-                _('Activate document in next tab'),
+                _('Activate document in the next tab'),
                 self.on_next_activated
             ), (
                 'support',
@@ -508,13 +508,13 @@ class GUIBuilder(Delegate):
                 self.on_statusbar_toggled,
                 self.config.getboolean('view', 'statusbar')
             ), (
-                'no',
+                'number',
                 None,
                 _('_No.'),
                 None,
                 _('Change the visibility of the "No." column'),
                 self.on_tree_view_column_toggled,
-                'no' in columns
+                'number' in columns
             ), (
                 'show',
                 None,
@@ -540,13 +540,13 @@ class GUIBuilder(Delegate):
                 self.on_tree_view_column_toggled,
                 'duration' in columns
             ), (
-                'original',
+                'text',
                 None,
                 _('_Text'),
                 None,
                 _('Change the visibility of the "Text" column'),
                 self.on_tree_view_column_toggled,
-                'original' in columns
+                'text' in columns
             ), (
                 'translation',
                 None,
@@ -588,33 +588,34 @@ class GUIBuilder(Delegate):
                 None,
                 _('2_3.976 fps'),
                 None,
-                _('Assume video framerate to be 23.976 fps'),
+                _('Calculate unnative timings with framerate 23.976 fps'),
                 0
             ), (
                 '25',
                 None,
                 _('2_5 fps'),
                 None,
-                _('Assume video framerate to be 25 fps'),
+                _('Calculate unnative timings with framerate 25 fps'),
                 1
             ), (
                 '29.97',
                 None,
                 _('2_9.97 fps'),
                 None,
-                _('Assume video framerate to be 29.97 fps'),
+                _('Calculate unnative timings with framerate 29.97 fps'),
                 2
             )
         ]
 
-        # Get edit mode index.
-        edit_mode_name  = self.config.get('editor', 'edit_mode')
-        edit_mode_index = EDIT_MODE_NAMES.index(edit_mode_name)
+        # Get edit mode.
+        edit_mode_name = self.config.get('editor', 'edit_mode')
+        edit_mode = MODE.NAMES.index(edit_mode_name)
 
-        # Get framerate index.
-        framerate_name  = self.config.get('editor', 'framerate')
-        framerate_index = FRAMERATE_NAMES.index(framerate_name)
+        # Get framerate.
+        framerate_name = self.config.get('editor', 'framerate')
+        framerate = FRAMERATE.NAMES.index(framerate_name)
 
+        # Add actions to ActionGroup.
         action_group = gtk.ActionGroup('main')
         action_group.add_actions(menus, None)
         action_group.add_actions(action_items, None)
@@ -627,11 +628,13 @@ class GUIBuilder(Delegate):
             framerate_radio_items, framerate_index, self.on_framerate_toggled,
         )
         
+        # Add ActionGroups to UIManager.
         self.uim.insert_action_group(action_group                ,  0)
         self.uim.insert_action_group(gtk.ActionGroup('recent')   , -1)
         self.uim.insert_action_group(gtk.ActionGroup('documents'), -1)
         self.uim.insert_action_group(gtk.ActionGroup('undo_redo'), -1)
         
+        # Add menubar, toolbar and popup entries.
         self.uim.add_ui_from_file(MENUBAR_XML_PATH)
         self.uim.add_ui_from_file(TOOLBAR_XML_PATH)
         self.uim.add_ui_from_file(POPUPS_XML_PATH )
@@ -644,7 +647,7 @@ class GUIBuilder(Delegate):
         self.undo_button = gtk.MenuToolButton(gtk.STOCK_UNDO)
         self.undo_button.set_label(_('Undo'))
         self.undo_button.set_is_important(True)
-        self.undo_button.connect('clicked', self.on_undo_button_clicked)
+        self.undo_button.connect('clicked', self.on_undo_activated)
         
         tip = _('Undo the last action')
         self.undo_button.set_tooltip(self.tooltips, tip)
@@ -655,7 +658,7 @@ class GUIBuilder(Delegate):
         self.redo_button = gtk.MenuToolButton(gtk.STOCK_REDO)
         self.redo_button.set_label(_('Redo'))
         self.redo_button.set_is_important(False)
-        self.redo_button.connect('clicked', self.on_redo_button_clicked)
+        self.redo_button.connect('clicked', self.on_redo_activated)
         
         tip = _('Redo the last undone action')
         self.redo_button.set_tooltip(self.tooltips, tip)
@@ -663,6 +666,7 @@ class GUIBuilder(Delegate):
         tip = _('Redo several undone actions')
         self.redo_button.set_arrow_tooltip(self.tooltips, tip)
         
+        # Pack buttons.
         toolbar = self.uim.get_widget('/ui/toolbar')
         toolbar.insert(gtk.SeparatorToolItem(), 2)
         toolbar.insert(self.undo_button, 3)
@@ -683,7 +687,7 @@ class GUIBuilder(Delegate):
         try:
             gtk.window_set_default_icon_from_file(GAUPOL_ICON_PATH)
         except gobject.GError:
-            logger.error('Failed to import icon file "%s".' % GAUPOL_ICON_PATH)
+            logger.error('Failed to load icon file "%s".' % GAUPOL_ICON_PATH)
 
         self.window.connect('delete_event'      , self.on_window_delete_event)
         self.window.connect('window_state_event', self.on_window_state_event )

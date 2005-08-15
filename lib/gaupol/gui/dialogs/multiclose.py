@@ -28,7 +28,7 @@ except ImportError:
 import gobject
 import gtk
 
-from gaupol.constants.Type import *
+from gaupol.constants import TYPE
 from gaupol.gui.util import gui
 
 
@@ -57,18 +57,18 @@ class MultiCloseWarningDialog(object):
         get_widget = glade_xml.get_widget
 
         # Widgets
-        self._dialog                = get_widget('dialog')
-        title_label                 = get_widget('title_label')
-        self._main_tree_view        = get_widget('main_tree_view')
-        self._translation_tree_view = get_widget('translation_tree_view')
+        self._dialog         = get_widget('dialog')
+        title_label          = get_widget('title_label')
+        self._main_tree_view = get_widget('main_tree_view')
+        self._tran_tree_view = get_widget('translation_tree_view')
 
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_YES)
 
-        main_count        = self._build_main_tree_view(glade_xml)
-        translation_count = self._build_translation_tree_view(glade_xml)
+        main_count = self._build_main_tree_view(glade_xml)
+        tran_count = self._build_translation_tree_view(glade_xml)
 
-        self._set_title(title_label, main_count, translation_count)
+        self._set_title(title_label, main_count, tran_count)
 
         self._main_tree_view.grab_focus()
         self._dialog.show()
@@ -82,7 +82,7 @@ class MultiCloseWarningDialog(object):
         tree_view = self._main_tree_view
         label = glade_xml.get_widget('main_label')
         label.set_mnemonic_widget(tree_view)
-        tree_view, model = self._build_tree_view(tree_view, TYPE_MAIN)
+        tree_view, model = self._build_tree_view(tree_view, TYPE.MAIN)
 
         # Insert data.
         amount = 0
@@ -110,10 +110,10 @@ class MultiCloseWarningDialog(object):
         
         Return: amount of documents
         """
-        tree_view = self._translation_tree_view
+        tree_view = self._tran_tree_view
         label = glade_xml.get_widget('translation_label')
         label.set_mnemonic_widget(tree_view)
-        tree_view, model = self._build_tree_view(tree_view, TYPE_TRANSLATION)
+        tree_view, model = self._build_tree_view(tree_view, TYPE.TRAN)
 
         # Insert data.
         amount = 0
@@ -137,9 +137,9 @@ class MultiCloseWarningDialog(object):
 
     def _build_tree_view(self, tree_view, file_type):
         """
-        Build properties for TreeView.
+        Build properties for tree_view.
         
-        file_type: TYPE_MAIN or TYPE_TRANSLATION
+        file_type: TYPE.MAIN or TYPE.TRAN
         Return: TreeView, TreeModel
         """
         model = gtk.ListStore(gobject.TYPE_BOOLEAN, object)
@@ -179,7 +179,7 @@ class MultiCloseWarningDialog(object):
     def get_main_projects_to_save(self):
         """Get projects, whose main files were chosen to be saved."""
         
-        model    = self._main_tree_view.get_model()
+        model = self._main_tree_view.get_model()
         projects = []
         
         for i in range(len(model)):
@@ -191,7 +191,7 @@ class MultiCloseWarningDialog(object):
     def get_translation_projects_to_save(self):
         """Get projects, whose translation files were chosen to be saved."""
         
-        model   = self._translation_tree_view.get_model()
+        model = self._tran_tree_view.get_model()
         projects = []
         
         for i in range(len(model)):
@@ -217,9 +217,9 @@ class MultiCloseWarningDialog(object):
         
         project = model.get_value(tree_iter, PROJ)
 
-        if file_type == TYPE_MAIN:
+        if file_type == TYPE.MAIN:
             basename = project.get_main_basename()
-        elif file_type == TYPE_TRANSLATION:
+        elif file_type == TYPE.TRAN:
             basename = project.get_translation_basename
 
         cell_renderer.set_property('text', basename)
@@ -229,38 +229,38 @@ class MultiCloseWarningDialog(object):
         
         return self._dialog.run()
         
-    def _set_title(self, title_label, main_count, translation_count):
+    def _set_title(self, title_label, main_count, tran_count):
         """Set dialog title based on amount of documents."""
         
         title = ''
 
-        if self._main_count > 1 and self._translation_count == 0:
+        if main_count > 1 and tran_count == 0:
             title = _('There are %d main documents with unsaved changes.') \
-                    % self._main_count
+                    % main_count
 
-        elif self._main_count == 1 and self._translation_count == 0:
+        elif main_count == 1 and tran_count == 0:
             title = _('There is %d main document with unsaved changes.') \
                     % self._main_count
 
-        elif self._main_count > 1 and self._translation_count > 1:
+        elif main_count > 1 and tran_count > 1:
             title = _('There are %d main documents and %d translation documents with unsaved changes.') \
-                    % (self._main_count, self._translation_count)
+                    % (main_count, tran_count)
 
-        elif self._main_count == 1 and self._translation_count > 1:
+        elif main_count == 1 and tran_count > 1:
             title = _('There is %d main document and %d translation documents with unsaved changes.') \
-                    % (self._main_count, self._translation_count)
+                    % (main_count, tran_count)
 
-        elif self._main_count > 1 and self._translation_count == 1:
+        elif main_count > 1 and tran_count == 1:
             title = _('There are %d main documents and %d translation document with unsaved changes.') \
-                    % (self._main_count, self._translation_count)
+                    % (main_count, tran_count)
                     
-        elif self._main_count == 0 and self._translation_count > 1:
+        elif main_count == 0 and tran_count > 1:
             title = _('There are %d translation documents with unsaved changes.') \
-                    % self._translation_count
+                    % tran_count
 
-        elif self._main_count == 0 and self._translation_count == 1:
+        elif main_count == 0 and tran_count == 1:
             title = _('There is %d translation document with unsaved changes.') \
-                    % self._translation_count
+                    % tran_count
 
         title       = _('%s Save changes before closing?') % title
         fancy_title = '<span weight="bold" size="larger">%s</span>\n' % title
