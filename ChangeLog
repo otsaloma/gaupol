@@ -1,5 +1,10 @@
 2005-08-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* TreeView model is now detached during heavy data reloading. Speed
+	  increase almost 30 %. Insignificant freeze/thaw methods removed.
+
+2005-08-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* Major code clean-up done.
 	
 	* Code uses more constants now.

@@ -102,12 +102,10 @@ class DURManager(Delegate):
         index = int(name.split('-')[-1])
 
         project = self.get_current_project()
-        project.tree_view.freeze_child_notify()
 
         for i in range(index + 1):
             self.redo_action(project, project.redoables[0])
 
-        project.tree_view.thaw_child_notify()
         gui.set_cursor_normal(self.window)
         
     def on_undo_activated(self, *args):
@@ -124,12 +122,10 @@ class DURManager(Delegate):
         index = int(name.split('-')[-1])
 
         project = self.get_current_project()
-        project.tree_view.freeze_child_notify()
 
         for i in range(index + 1):
             self.undo_action(project, project.undoables[0])
 
-        project.tree_view.thaw_child_notify()
         gui.set_cursor_normal(self.window)
 
     def redo_action(self, project, action):

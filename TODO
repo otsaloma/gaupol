@@ -1,10 +1,6 @@
 Before 0.1
 ==========
 
-- Benchmark TreeView performance with different speeding tricks
-  http://www.mail-archive.com/pygtk@daa.com.au/msg10991.html
-  affects project.py and durmanager.py
-  
 - Dialog types, modality, running and destruction
 
 - Preferences dialog
