@@ -31,12 +31,14 @@ from gaupol.constants import FORMAT
 from gaupol.lib.files.subfile import SubtitleFile
 
 
-microdvd_id = r'^\{\d+\}\{\d+\}.*?$'
-subrip_id   = r'^\d\d:\d\d:\d\d,\d\d\d --> \d\d:\d\d:\d\d,\d\d\d\s*$'
+microdvd = r'^\{\d+\}\{\d+\}.*?$'
+mpl2     = r'^\[\d+\]\[\d+\].*?$'
+subrip   = r'^\d\d:\d\d:\d\d,\d\d\d --> \d\d:\d\d:\d\d,\d\d\d\s*$'
 
 RE_IDS = {
-    FORMAT.MICRODVD: re.compile(microdvd_id),
-    FORMAT.SUBRIP  : re.compile(subrip_id),
+    FORMAT.MICRODVD: re.compile(microdvd),
+    FORMAT.MPL2    : re.compile(mpl2),
+    FORMAT.SUBRIP  : re.compile(subrip),
 }
 
 

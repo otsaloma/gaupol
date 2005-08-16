@@ -29,7 +29,7 @@ except ImportError:
 
 import gtk
 
-from gaupol.constants import TYPE
+from gaupol.constants import FORMAT, NEWLINE, TYPE
 from gaupol.gui.colcons import *
 from gaupol.gui.delegates.delegate import Delegate
 from gaupol.gui.dialogs.error import UnicodeEncodeErrorDialog
@@ -190,7 +190,7 @@ class FileSaver(Delegate):
         """
         gui.set_cursor_busy(self.window)
 
-        properties = project.get_main_file_properties()
+        properties = self.get_main_file_properties(project)
         path, format, encoding, newlines = properties
         untitle = _('%s (copy)') % project.get_main_corename()
 
@@ -218,7 +218,7 @@ class FileSaver(Delegate):
         """
         gui.set_cursor_busy(self.window)
 
-        properties = project.get_translation_file_properties()
+        properties = self.get_translation_file_properties(project)
         path, format, encoding, newlines = properties
         untitle = _('%s (copy)') % project.get_translation_corename()
 
@@ -274,7 +274,7 @@ class FileSaver(Delegate):
         """
         gui.set_cursor_busy(self.window)
 
-        properties = project.get_main_file_properties()
+        properties = self.get_main_file_properties(project)
         path, format, encoding, newlines = properties
 
         path = self._select_and_write_file(
@@ -339,7 +339,7 @@ class FileSaver(Delegate):
         """
         gui.set_cursor_busy(self.window)
 
-        properties = project.get_main_translation_properties()
+        properties = self.get_main_translation_properties(project)
         path, format, encoding, newlines = properties
         untitle = project.get_translation_corename()
 
@@ -407,11 +407,14 @@ class FileSaver(Delegate):
             file_filter = save_dialog.get_filter().get_name()
             newlines    = save_dialog.get_newlines()
 
-            self.config.set('file', 'directory', dirname    )
-            self.config.set('file', 'encoding' , encoding   )
-            self.config.set('file', 'filter'   , file_filter)
-            self.config.set('file', 'format'   , format     )
-            self.config.set('file', 'newlines' , newlines   )
+            format_name  = FORMAT.NAMES[format]
+            newline_name = NEWLINE.NAMES[newlines]
+
+            self.config.set('file', 'directory', dirname     )
+            self.config.set('file', 'encoding' , encoding    )
+            self.config.set('file', 'filter'   , file_filter )
+            self.config.set('file', 'format'   , format_name )
+            self.config.set('file', 'newlines' , newline_name)
             
             success = self._write_file(
                 project, document_type, save_dialog,
@@ -466,9 +469,9 @@ class FileSaver(Delegate):
                format   is None or \
                encoding is None or \
                newlines is None :
-                eval(method)(keep_changes)
+                method(keep_changes)
             else:
-                eval(method)(keep_changes, path, format, encoding, newlines)
+                method(keep_changes, path, format, encoding, newlines)
 
         except IOError, (errno, detail):
             dialog = WriteFileErrorDialog(parent, basename, detail)

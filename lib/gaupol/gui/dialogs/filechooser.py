@@ -63,7 +63,7 @@ class CustomFileChooserDialog(gtk.FileChooserDialog):
             
             filters.append((format_name, name, None, pattern))
         
-        for entry in FILTERS:
+        for entry in filters:
         
             format, name, mime, pattern = entry
             file_filter = gtk.FileFilter()
@@ -264,6 +264,13 @@ class SaveDialog(CustomFileChooserDialog):
     def _build_extra_widget(self):
         """Build ComboBoxes for selecting format, encoding and newlines."""
 
+        self._format_combo_box   = gtk.combo_box_new_text()
+        self._encoding_combo_box = gtk.combo_box_new_text()
+        self._newline_combo_box  = gtk.combo_box_new_text()
+
+        self._format_combo_box.connect(  'changed', self._on_format_changed  )
+        self._encoding_combo_box.connect('changed', self._on_encoding_changed)
+
         format_label = gtk.Label()
         format_label.set_property('xalign', 0)
         format_label.set_markup_with_mnemonic(_('Fo_rmat:'))
@@ -278,13 +285,6 @@ class SaveDialog(CustomFileChooserDialog):
         newline_label.set_property('xalign', 0)
         newline_label.set_markup_with_mnemonic(_('Ne_wlines:'))
         newline_label.set_mnemonic_widget(self._newline_combo_box)
-
-        self._format_combo_box   = gtk.combo_box_new_text()
-        self._encoding_combo_box = gtk.combo_box_new_text()
-        self._newline_combo_box  = gtk.combo_box_new_text()
-
-        self._format_combo_box.connect(  'changed', self._on_format_changed  )
-        self._encoding_combo_box.connect('changed', self._on_encoding_changed)
 
         table = gtk.Table(3, 2)
         table.set_row_spacings(6)
@@ -378,7 +378,7 @@ class SaveDialog(CustomFileChooserDialog):
 
         try:
             self._format_combo_box.set_active(format)
-        except ValueError:
+        except TypeError, ValueError:
             pass
 
     def set_newlines(self, newlines):
@@ -386,5 +386,5 @@ class SaveDialog(CustomFileChooserDialog):
         
         try:
             self._newline_combo_box.set_active(newlines)
-        except ValueError:
+        except TypeError, ValueError:
             pass

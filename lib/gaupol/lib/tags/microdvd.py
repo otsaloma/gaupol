@@ -43,7 +43,7 @@ class MicroDVD(TagLibrary):
     TAG    = r'\{[a-z]:.*?\}', re.IGNORECASE
     ITALIC = r'\{y:i\}'      , re.IGNORECASE
 
-    DECODE_TAGS = (
+    DECODE_TAGS = [
         (    
             # Style x3 (single line)
             r'\{y:(b|i|u).*?(b|i|u).*?(b|i|u)\}(.*?)$', COMMON,
@@ -98,9 +98,9 @@ class MicroDVD(TagLibrary):
             r'\{[a-z]:.*?\}', re.IGNORECASE,
             r''
         )
-    )
+    ]
 
-    ENCODE_TAGS = (
+    ENCODE_TAGS = [
         (
             # Remove duplicate style tags (e.g. <b>foo</b><b>bar</b>).
             r'</(b|i|u)>(\n?)<\1>', COMMON,
@@ -158,7 +158,7 @@ class MicroDVD(TagLibrary):
             r'<size="(.*?)">(.*?)</size>', COMMON,
             r'{S:\1}\2'
         )
-    )
+    ]
 
     def italicize(text):
         """Italicize text."""

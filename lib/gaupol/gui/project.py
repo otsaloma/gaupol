@@ -432,7 +432,7 @@ class Project(gobject.GObject):
         
         cols: string (for single column) or list (for multiple columns)
         """
-        if isinstance(cols, basestring):
+        if not isinstance(cols, list):
             cols = [cols]
 
         model = self.tree_view.get_model()

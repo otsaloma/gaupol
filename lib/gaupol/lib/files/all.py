@@ -21,4 +21,5 @@
 
 
 from gaupol.lib.files.microdvd import MicroDVD
+from gaupol.lib.files.mpl2     import MPL2
 from gaupol.lib.files.subrip   import SubRip

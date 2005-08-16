@@ -675,13 +675,13 @@ class GUIBuilder(Delegate):
     def _build_window(self):
         """Build the window."""
 
-        width, height = self.config.getlistint('main_window', 'size')
+        width, height = self.config.getlistint('application_window', 'size')
         self.window.resize(width, height)
         
-        x_pos, y_pos = self.config.getlistint('main_window', 'position')
+        x_pos, y_pos = self.config.getlistint('application_window', 'position')
         self.window.move(x_pos, y_pos )
 
-        if self.config.getboolean('main_window', 'maximized'):
+        if self.config.getboolean('application_window', 'maximized'):
             self.window.maximize()
         
         try:

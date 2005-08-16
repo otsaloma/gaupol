@@ -27,6 +27,7 @@ try:
 except ImportError:
     pass
 
+from gaupol.constants import FORMAT
 from gaupol.lib.tags.all import *
 
 

@@ -17,10 +17,10 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""MicroDVD file."""
+"""MPL2 file."""
 
 # Documentation:
-# http://netti.nic.fi/~temp/easydivx/help/mdvddoc
+# http://napisy.ussbrowarek.org/mpl2-eng.html
 
 
 import codecs
@@ -33,36 +33,37 @@ except ImportError:
 
 from gaupol.constants import EXTENSION, FORMAT, MODE
 from gaupol.lib.files.subfile import SubtitleFile
+from gaupol.lib.timing.calc import TimeFrameCalculator
 
 
-RE_LINE = re.compile(r'^\{(\d+)\}\{(\d+)\}(.*?)$')
+RE_LINE = re.compile(r'^\[(\d+)\]\[(\d+)\](.*?)$')
 
 
-class MicroDVD(SubtitleFile):
+class MPL2(SubtitleFile):
     
     """
-    MicroDVD file.
+    MPL2 file.
     
-    MicroDVD format quick reference:
-    {436}{531}And that completes my final report|until we reach touchdown.
-    {533}{624}We're now on full automatic,|in the hands of the computers.
+    MPL2 format quick reference:
+    [182][221]And that completes my final report|until we reach touchdown.
+    [222][260]We're now on full automatic,|in the hands of the computers.
     """
     
     def __init__(self, *args):
 
         SubtitleFile.__init__(self, *args)
         
-        self.FORMAT    = FORMAT.MICRODVD
-        self.EXTENSION = EXTENSION.MICRODVD
-        self.MODE      = MODE.FRAME
+        self.FORMAT    = FORMAT.MPL2
+        self.EXTENSION = EXTENSION.MPL2
+        self.MODE      = MODE.TIME
     
     def read(self):
         """
-        Read MicroDVD file.
+        Read MPL2 file.
 
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
-        Return: show frames, hide frames, texts
+        Return: show times, hide times, texts
         """
         lines = self._read_lines()
         
@@ -80,9 +81,14 @@ class MicroDVD(SubtitleFile):
                 hides.append(match.group(2))
                 texts.append(match.group(3))
 
-        # Frames should be integers.
-        shows = [int(frame) for frame in shows]
-        hides = [int(frame) for frame in hides]
+        calc = TimeFrameCalculator()
+
+        # Convert timings from decaseconds to seconds and finally times.
+        for entry in [shows, hides]:
+            for i in range(len(entry)):
+                deca_string = entry[i]
+                seconds = float(deca_string[:-1] + '.' + deca_string[-1])
+                entry[i] = calc.seconds_to_time(seconds)
 
         # Replace pipes in texts with Python internal newline characters.
         for i in range(len(texts)):
@@ -92,12 +98,20 @@ class MicroDVD(SubtitleFile):
 
     def write(self, shows, hides, texts):
         """
-        Write MicroDVD file.
+        Write MPL2 file.
 
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
         newline_character = self._get_newline_character()
+
+        calc = TimeFrameCalculator()
+
+        # Convert timings from times to seconds and finally decaseconds.
+        for entry in [shows, hides]:
+            for i in range(len(entry)):
+                decaseconds = calc.time_to_seconds(entry[i]) * 10
+                entry[i] = '%.1f' % decaseconds
 
         # Replace Python internal newline characters in text with pipes.
         texts = [text.replace('\n', '|') for text in texts]
@@ -106,7 +120,7 @@ class MicroDVD(SubtitleFile):
 
         try:
             for i in range(len(shows)):
-                subtitle_file.write('{%.0f}{%.0f}%s%s' % (
+                subtitle_file.write('[%s][%s]%s%s' % (
                     shows[i], hides[i], texts[i], newline_character
                 ))
         finally:

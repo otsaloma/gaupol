@@ -59,7 +59,7 @@ class FileOpener(Delegate):
 
         try:
             self.add_to_recent_files(project.data.main_file.path)
-        except TypeError:
+        except AttributeError:
             pass
 
         # Put TreeView in a ScrolledWindow.

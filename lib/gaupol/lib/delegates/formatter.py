@@ -101,7 +101,7 @@ class Formatter(Delegate):
         """
         format_name = self._get_format_name(col)
 
-        if format is None:
+        if format_name is None:
             return None
 
         regex, flags = eval(format_name).TAG

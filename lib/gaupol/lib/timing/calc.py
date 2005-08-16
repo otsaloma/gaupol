@@ -41,7 +41,7 @@ class TimeFrameCalculator(object):
     framerate: float
     """
     
-    def __init__(self, framerate):
+    def __init__(self, framerate=FRAMERATE._23_976):
 
         self.framerate = FRAMERATE.VALUES[framerate]
 

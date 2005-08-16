@@ -35,28 +35,41 @@ class Searcher(Delegate):
 
     """Searching for specific data in document."""
 
+    def _jump_to_subtitle(self, dialog, subtitle):
+        """Select subtitle and scroll to it."""
+
+        project = self.get_current_project()
+        tree_view_column = project.get_focus()[2]
+
+        # Save keep open value.
+        keep_open = dialog.get_keep_open()
+        self.config.setboolean('jump_to_dialog', 'keep_open', keep_open)
+
+        # Jump to last subtitle if subtitle number greater than what exists.
+        if subtitle > len(project.data.times):
+            subtitle = len(project.data.times)
+        dialog.set_subtitle_number(subtitle)
+
+        if not keep_open:
+            dialog.destroy()
+
+        row = subtitle - 1
+        
+        # Select subtitle.
+        selection = project.tree_view.get_selection()
+        selection.unselect_all()
+        selection.select_path(row)
+        
+        # Scroll to subtitle.
+        project.tree_view.set_cursor(row, tree_view_column)
+        project.tree_view.scroll_to_cell(row, tree_view_column, True, 0.5, 0)
+
+        project.tree_view.grab_focus()
+
     def on_jump_to_subtitle_activated(self, *args):
         """Jump to a specific subtitle."""
-        
-        project = self.get_current_project()
-        maximum = len(project.data.times)
-        tree_view_column = project.get_focus()[2]
-        
-        dialog   = JumpToSubtitleDialog(self.window, maximum)
-        dialog.show()
-        #response = dialog.run()
-        #subtitle = dialog.get_subtitle()
-        #dialog.destroy()
 
-        #if response != gtk.RESPONSE_OK:
-        #    return
-            
-        #model = project.tree_view.get_model()
-        #row   = subtitle - 1
-                
-        #selection = project.tree_view.get_selection()
-        #selection.unselect_all()
-        #selection.select_path(row)
-        
-        #project.tree_view.set_cursor(row, treeview_column)
-        #project.tree_view.scroll_to_cell(row, tree_view_column, True, 0.5, 0)
+        keep_open = self.config.getboolean('jump_to_dialog', 'keep_open')
+        dialog = JumpToSubtitleDialog(self.window, keep_open)
+        dialog.connect('jump-button-clicked', self._jump_to_subtitle)
+        dialog.show()

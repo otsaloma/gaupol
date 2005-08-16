@@ -27,15 +27,17 @@ VERSION = '0.0+svn'
 
 class EXTENSION(object):
 
-    VALUES   = ['.sub', '.srt']
+    VALUES   = ['.sub', '.txt', '.srt']
     MICRODVD = 0
-    SUBRIP   = 1
+    MPL2     = 1
+    SUBRIP   = 2
 
 class FORMAT(object):
 
-    NAMES    = ['MicroDVD', 'SubRip']
+    NAMES    = ['MicroDVD', 'MPL2', 'SubRip']
     MICRODVD = 0
-    SUBRIP   = 1
+    MPL2     = 1
+    SUBRIP   = 2
 
 class FRAMERATE(object):
 

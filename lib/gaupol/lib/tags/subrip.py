@@ -37,7 +37,7 @@ class SubRip(TagLibrary):
     TAG    = r'</?(b|i|u)>', re.IGNORECASE
     ITALIC = r'</?i>'      , re.IGNORECASE
     
-    DECODE_TAGS = (
+    DECODE_TAGS = [
         (
             # Uppercase bold
             r'(</?)B>', None,
@@ -51,9 +51,9 @@ class SubRip(TagLibrary):
             r'(</?)U>', None,
             r'\1u>'
         )
-    )
+    ]
 
-    ENCODE_TAGS = (
+    ENCODE_TAGS = [
         (
             # Color
             r'</?color.*?>', None,
@@ -67,7 +67,7 @@ class SubRip(TagLibrary):
             r'</?size.*?>', None,
             r''
         )
-    )
+    ]
 
     def italicize(text):
         """Italicize text."""

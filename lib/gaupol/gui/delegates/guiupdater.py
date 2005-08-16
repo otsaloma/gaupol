@@ -183,7 +183,7 @@ class GUIUpdater(Delegate):
 
         state = event.new_window_state
         maximized = bool(state & gtk.gdk.WINDOW_STATE_MAXIMIZED)
-        self.config.setboolean('main_window', 'maximized', maximized)
+        self.config.setboolean('application_window', 'maximized', maximized)
 
     def _refresh_documents_menu(self, project):
         """
@@ -510,7 +510,7 @@ class GUIUpdater(Delegate):
         if selection.count_selected_rows() != 1:
             return
 
-        row = selection.get_selected_rows()[1][0]
+        row = project.get_selected_rows()[0]
         statusbars = [self.text_statusbar, self.tran_statusbar]
 
         for i in range(2):

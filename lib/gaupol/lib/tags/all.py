@@ -21,4 +21,5 @@
 
 
 from gaupol.lib.tags.microdvd import MicroDVD
+from gaupol.lib.tags.mpl2     import MPL2
 from gaupol.lib.tags.subrip   import SubRip

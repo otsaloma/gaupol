@@ -1,5 +1,11 @@
 2005-08-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* "Jump To Subtitle" dialog is far cooler now, and it works.
+	
+	* New supported format: MPL2.
+
+2005-08-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* TreeView model is now detached during heavy data reloading. Speed
 	  increase almost 30 %. Insignificant freeze/thaw methods removed.
 

@@ -110,13 +110,13 @@ class Editor(Delegate):
 
                 show_frame = calc.time_to_frame(show_time)
                 hide_frame = calc.time_to_frame(hide_time)
-                durn_frame = conv.get_frame_duration(show_frame, hide_frame)
+                durn_frame = calc.get_frame_duration(show_frame, hide_frame)
 
                 row = start_row + i
 
                 times.insert( row, [show_time , hide_time , durn_time ])
                 frames.insert(row, [show_frame, hide_frame, durn_frame])
-                texts.insert( row, [text, u''])
+                texts.insert( row, [u'', u''])
             
         elif mode == MODE.FRAME:
 
@@ -136,7 +136,7 @@ class Editor(Delegate):
 
                 times.insert( row, [show_time , hide_time , durn_time ])
                 frames.insert(row, [show_frame, hide_frame, durn_frame])
-                texts.insert( row, [text, u''])
+                texts.insert( row, [u'', u''])
 
     def remove_subtitles(self, rows):
         """Remove subtitles."""

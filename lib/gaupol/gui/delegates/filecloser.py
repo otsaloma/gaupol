@@ -209,13 +209,13 @@ class FileCloser(Delegate):
         if not success:
             return
 
-        if not self.config.getboolean('main_window', 'maximized'):
+        if not self.config.getboolean('application_window', 'maximized'):
 
             size = self.window.get_size()
-            self.config.setlistint('main_window', 'size', size)
+            self.config.setlistint('application_window', 'size', size)
 
             position = self.window.get_position()
-            self.config.setlistint('main_window', 'position', position)
+            self.config.setlistint('application_window', 'position', position)
 
         self.config.write_to_file()
 

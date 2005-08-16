@@ -5,7 +5,7 @@
 
 <widget class="GtkDialog" id="dialog">
   <property name="border_width">6</property>
-  <property name="title" translatable="yes">Go To Subtitle</property>
+  <property name="title" translatable="yes">Jump To Subtitle</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
   <property name="window_position">GTK_WIN_POS_NONE</property>
   <property name="modal">False</property>
@@ -31,15 +31,15 @@
 	  <property name="layout_style">GTK_BUTTONBOX_END</property>
 
 	  <child>
-	    <widget class="GtkButton" id="cancel_button">
+	    <widget class="GtkButton" id="close_button">
 	      <property name="visible">True</property>
 	      <property name="can_default">True</property>
 	      <property name="can_focus">True</property>
-	      <property name="label">gtk-cancel</property>
+	      <property name="label">gtk-close</property>
 	      <property name="use_stock">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
 	      <property name="focus_on_click">True</property>
-	      <property name="response_id">-6</property>
+	      <property name="response_id">-7</property>
 	    </widget>
 	  </child>
 
