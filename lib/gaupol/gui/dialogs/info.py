@@ -53,6 +53,6 @@ class VersionCheckInfoDialog(gtk.MessageDialog):
         self.set_default_response(gtk.RESPONSE_OK)
         
         self.format_secondary_text( \
-            _('The latest version is %s. You are using %s.') \
+            _('The latest version is %s.\nYou are using %s.') \
             % (remote_version, local_version) \
         )

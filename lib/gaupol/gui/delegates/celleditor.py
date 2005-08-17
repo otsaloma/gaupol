@@ -71,7 +71,7 @@ class CellEditAction(DURAction):
         project = self.project
         model = project.tree_view.get_model()
         data = project.data
-        data_col = project.get_data_col(self._col)
+        data_col = project.get_data_column(self._col)
         
         if self._col in [SHOW, HIDE, DURN]:
             

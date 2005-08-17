@@ -53,7 +53,7 @@ class MultiCloseWarningDialog(object):
         """
         self._projects   = projects
 
-        glade_xml = gui.get_glade_xml('multi-close-dialog.glade')
+        glade_xml = gui.get_glade_xml('multiclose-dialog.glade')
         get_widget = glade_xml.get_widget
 
         # Widgets

@@ -20,7 +20,7 @@
 """Application settings."""
 
 
-from ConfigParser import RawConfigParser
+import ConfigParser
 import logging
 import os
 
@@ -100,7 +100,7 @@ DEFAULTS = {
 }
 
 
-class Config(RawConfigParser):
+class Config(ConfigParser.RawConfigParser):
 
     """
     Application settings.

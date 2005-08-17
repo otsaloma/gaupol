@@ -1,5 +1,9 @@
 <ui>
 	<toolbar>
 		<toolitem action="save"/>
+		<separator/>
+		<toolitem action="cut"/>
+		<toolitem action="copy"/>
+		<toolitem action="paste"/>
 	</toolbar>
 </ui>

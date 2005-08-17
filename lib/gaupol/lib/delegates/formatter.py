@@ -121,9 +121,14 @@ class Formatter(Delegate):
         # Get action to be done.
         turn_into_dialog = False
         for text in texts:
+        
             lines = text.split('\n')
             for line in lines:
-                if not line.startswith('-'):
+            
+                # Strip all tags from line. If leftover doesn't start with
+                # "-", dialog lines should be added.
+                tagless_line = re_tag.sub('', line)
+                if not tagless_line.startswith('-'):
                     turn_into_dialog = True
                     break
 
@@ -182,6 +187,7 @@ class Formatter(Delegate):
         
         texts = [self.texts[row][col] for row in rows]
         format_name = self._get_format_name(col)
+        re_tag = self.get_regex_for_tag(col)
 
         # Get regular expression for an italic tag.
         regex, flags = eval(format_name).ITALIC
@@ -193,15 +199,30 @@ class Formatter(Delegate):
         # Get action to be done.
         turn_into_italics = False
         for text in texts:
-            if re_italic_tag.match(text) is None:
-                turn_into_italics = True
-                break
+        
+            lines = text.split('\n')
+            for line in lines:
+            
+                # Remove tags from the start of the line ending after all
+                # tags are removed or when an italic tag is found.
+                tagless_line = line
+                while re_tag.match(tagless_line):
+                    if re_italic_tag.match(tagless_line):
+                        break
+                    else:
+                        tagless_line = re_tag.sub('', tagless_line, 1)
+
+                # If there is no italic tag at the start of the line,
+                # texts should be italicized.
+                if re_italic_tag.match(tagless_line) is None:
+                    turn_into_italics = True
+                    break
 
         # Remove existing italic tags and italicize if that is to be done.
         for i in range(len(texts)):
             texts[i] = re_italic_tag.sub('', texts[i])
             if turn_into_italics:
-                texts[i] = eval(format).italicize(texts[i])
+                texts[i] = eval(format_name).italicize(texts[i])
 
         for i in range(len(rows)):
             self.texts[rows[i]][col] = texts[i]

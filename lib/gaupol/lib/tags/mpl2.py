@@ -95,10 +95,7 @@ class MPL2(TagLibrary):
 
     def italicize(text):
         """Italicize text."""
-
-        text = '/' + text
-        text = text.replace('\n', '\n/')
         
-        return text
+        return '/' + text.replace('\n', '\n/')
 
     italicize = staticmethod(italicize)

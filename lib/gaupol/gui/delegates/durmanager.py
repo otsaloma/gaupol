@@ -163,14 +163,14 @@ class DURManager(Delegate):
 
         # Scroll position
         try:
-            tree_view.scroll_to_cell(row, tree_view_column, False, 0.5, 0)
+            tree_view.scroll_to_cell(row, tree_view_column, True, 0.5, 0)
         except TypeError:
             pass
         
         # Selection
         selection = tree_view.get_selection()
         selection.unselect_all()
-        for row in action.selected_data_rows:
+        for row in action.selected_rows:
             try:
                 selection.select_path(row)
             except TypeError:

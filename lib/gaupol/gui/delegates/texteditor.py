@@ -43,12 +43,12 @@ class TextEditAction(DURAction):
         self.project = project
 
         self._col = project.get_focus()[1]
-        self._selected_rows = project.get_selected_rows()
+        self._rows = project.get_selected_rows()
 
         # Save original texts.
         texts = project.data.texts
-        rows = self._selected_rows
-        self._orig_texts = [texts[row][self._col] for row in rows]
+        data_col = project.get_data_column(self._col)
+        self._orig_texts = [texts[row][data_col] for row in self._rows]
 
         self.documents = [project.get_document_type(self._col)]
 
@@ -57,9 +57,10 @@ class TextEditAction(DURAction):
 
         texts = self.project.data.texts
         model = self.project.tree_view.get_model()
-        data_col = project.get_data_col(self._col)
+        data_col = self.project.get_data_column(self._col)
 
-        for i in range(len(self._selected_rows)):
+        for i in range(len(self._rows)):
+            row = self._rows[i]
             text = self._orig_texts[i]
             model[row][self._col] = text
             texts[row][ data_col] = text
@@ -79,13 +80,14 @@ class CaseChangeAction(TextEditAction):
 
         self._method  = method
 
-        first = self._selected_rows[ 0] + 1
-        last  = self._selected_rows[-1] + 1
+        data_col = project.get_data_column(self._col)
+        first = self._rows[ 0] + 1
+        last  = self._rows[-1] + 1
         subs  = (first, last)
 
         descriptions = (
             (
-                _('Changing case of texts of subtitle %d')        % first,
+                _('Changing case of text of subtitle %d')        % first,
                 _('Changing case of translation of subtitle %d') % first
             ), (
                 _('Changing case of text of subtitles %d, ... , %d') % subs,
@@ -93,19 +95,20 @@ class CaseChangeAction(TextEditAction):
                 % subs
             )
         )
-        self.description = descriptions[min(last - first, 1)][self._col]
+        self.description = descriptions[min(last - first, 1)][data_col]
 
     def do(self):
         """Change case."""
 
         model = self.project.tree_view.get_model()
+        data = self.project.data
         texts = self.project.data.texts
         col = self._col
-        data_col = self.project.get_data_col(col)
+        data_col = self.project.get_data_column(col)
 
-        data.change_case(self._selected_rows, data_col, self._method)
+        data.change_case(self._rows, data_col, self._method)
         
-        for row in self._selected_rows:
+        for row in self._rows:
             model[row][col] = texts[row][data_col]
 
 
@@ -117,8 +120,9 @@ class ClearAction(TextEditAction):
 
         TextEditAction.__init__(self, project)
 
-        first = self._selected_rows[ 0] + 1
-        last  = self._selected_rows[-1] + 1
+        data_col = project.get_data_column(self._col)
+        first = self._rows[ 0] + 1
+        last  = self._rows[-1] + 1
         subs  = (first, last)
 
         descriptions = (
@@ -130,7 +134,7 @@ class ClearAction(TextEditAction):
                 _('Clearing translation of subtitles %d, ... , %d') % subs
             )
         )
-        self.description = descriptions[min(last - first, 1)][self._col]
+        self.description = descriptions[min(last - first, 1)][data_col]
 
     def do(self):
         """Clear text."""
@@ -138,9 +142,9 @@ class ClearAction(TextEditAction):
         model = self.project.tree_view.get_model()
         texts = self.project.data.texts
         col = self._col
-        data_col = self.project.get_data_col(col)
+        data_col = self.project.get_data_column(col)
         
-        for row in self._selected_rows:
+        for row in self._rows:
             texts[row][data_col] = u''
             model[row][     col] = u''
 
@@ -153,8 +157,9 @@ class CutAction(ClearAction):
 
         ClearAction.__init__(self, project)
 
-        first = self._selected_rows[ 0] + 1
-        last  = self._selected_rows[-1] + 1
+        data_col = project.get_data_column(self._col)
+        first = self._rows[ 0] + 1
+        last  = self._rows[-1] + 1
         subs  = (first, last)
 
         descriptions = (
@@ -166,7 +171,7 @@ class CutAction(ClearAction):
                 _('Cutting translation of subtitles %d, ... , %d') % subs
             )
         )
-        self.description = descriptions[min(last - first, 1)][self._col]
+        self.description = descriptions[min(last - first, 1)][data_col]
 
 
 class DialogLineAction(TextEditAction):
@@ -177,8 +182,9 @@ class DialogLineAction(TextEditAction):
 
         TextEditAction.__init__(self, project)
 
-        first = self._selected_rows[ 0] + 1
-        last  = self._selected_rows[-1] + 1
+        data_col = project.get_data_column(self._col)
+        first = self._rows[ 0] + 1
+        last  = self._rows[-1] + 1
         subs  = (first, last)
 
         descriptions = (
@@ -194,19 +200,20 @@ class DialogLineAction(TextEditAction):
                 % subs
             )
         )
-        self.description = descriptions[min(last - first, 1)][self._col]
+        self.description = descriptions[min(last - first, 1)][data_col]
 
     def do(self):
         """Toggle dialog lines."""
 
         model = self.project.tree_view.get_model()
+        data = self.project.data
         texts = self.project.data.texts
         col = self._col
-        data_col = self.project.get_data_col(col)
+        data_col = self.project.get_data_column(col)
 
-        data.toggle_dialog_lines(self._selected_rows, data_col)
+        data.toggle_dialog_lines(self._rows, data_col)
         
-        for row in self._selected_rows:
+        for row in self._rows:
             model[row][col] = texts[row][data_col]
 
 
@@ -217,6 +224,11 @@ class ItalicAction(TextEditAction):
     def __init__(self, project):
 
         TextEditAction.__init__(self, project)
+
+        data_col = project.get_data_column(self._col)
+        first = self._rows[ 0] + 1
+        last  = self._rows[-1] + 1
+        subs  = (first, last)
 
         descriptions = (
             (
@@ -231,19 +243,20 @@ class ItalicAction(TextEditAction):
                 % subs
             )
         )
-        self.description = descriptions[min(last - first, 1)][self._col]
+        self.description = descriptions[min(last - first, 1)][data_col]
 
     def do(self):
         """Toggle italicization."""
 
         model = self.project.tree_view.get_model()
+        data = self.project.data
         texts = self.project.data.texts
         col = self._col
-        data_col = self.project.get_data_col(col)
+        data_col = self.project.get_data_column(col)
 
-        data.italicization(self._selected_rows, data_col)
+        data.toggle_italicization(self._rows, data_col)
         
-        for row in self._selected_rows:
+        for row in self._rows:
             model[row][col] = texts[row][data_col]
 
 
@@ -261,7 +274,7 @@ class PasteAction(DURAction):
         # Texts from clipboard.
         self._new_texts = texts
 
-        data_col = project.get_data_col(self._col)
+        data_col = project.get_data_column(self._col)
         texts = self.project.data.texts
         self._orig_texts = []
         
@@ -278,8 +291,9 @@ class PasteAction(DURAction):
 
         self.documents = [project.get_document_type(self._col)]
 
-        first = self._selected_rows[ 0] + 1
-        last  = self._selected_rows[-1] + 1
+        data_col = project.get_data_column(self._col)
+        first = self._rows[ 0] + 1
+        last  = self._rows[-1] + 1
         subs  = (first, last)
 
         descriptions = (
@@ -291,7 +305,7 @@ class PasteAction(DURAction):
                 _('Pasting translation of subtitles %d, ... , %d') % subs
             )
         )
-        self.description = descriptions[min(last - first, 1)][self._col]
+        self.description = descriptions[min(last - first, 1)][data_col]
 
     def do(self):
         """Paste texts from clipboard."""
@@ -299,7 +313,7 @@ class PasteAction(DURAction):
         model = self.project.tree_view.get_model()
         texts = self.project.data.texts
         col = self._col
-        data_col = project.get_data_col(self._col)
+        data_col = project.get_data_column(self._col)
 
         # Unselect all subtitles.
         selection = self.project.tree_view.get_selection()
@@ -326,7 +340,7 @@ class PasteAction(DURAction):
         model = self.project.tree_view.get_model()
         texts = self.project.data.texts
         col = self._col
-        data_col = project.get_data_col(self._col)
+        data_col = project.get_data_column(self._col)
 
         for i in range(len(self._orig_texts)):
         
