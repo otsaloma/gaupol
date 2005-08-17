@@ -1,15 +1,11 @@
 Before 0.1
 ==========
 
-- Dialog types, modality, running and destruction
-
-- Preferences dialog
-
 - Testing and bugfixing
 
 - Finnish translation
 
-- Installation & Uninstallation + instructions
+- Installation & uninstallation + instructions
 
 - Project page
 
@@ -58,7 +54,7 @@ Interesting new stuff in PyGTK 2.8
 
 http://live.gnome.org/PyGTK/WhatsNew28
 
-- Tighter GObject/Python Integration (cosmetic syntax change)
-- Properties as Object Attributes (e.g. widget.props.visible)
+Switch to these if something else causes PyGTK 2.8 to be required?
 
-Switch to these if something else causes PyGTK 2.8 to be required.
+	- Tighter GObject/Python Integration
+	- Properties as Object Attributes

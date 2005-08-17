@@ -155,7 +155,10 @@ class Project(gobject.GObject):
         cell_renderer_4 = CellRendererMultilineText()
         cell_renderer_5 = CellRendererMultilineText()
 
-        font = self._config.get('view', 'font')
+        if self._config.getboolean('view', 'use_default_font'):
+            font = ''
+        else:
+            font = self._config.get('view', 'font')
 
         signals   = (
             'editing-started',

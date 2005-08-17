@@ -60,8 +60,10 @@ DEFAULTS = {
     ),
     'file':
     (
+        ('default_encoding'    , ''                     ),
         ('directory'           , os.path.expanduser('~')),
         ('encoding'            , ''                     ),
+        ('fallback_encoding'   , 'utf_8'                ),
         ('format'              , 'SubRip'               ),
         ('maximum_recent_files', '5'                    ),
         ('newlines'            , 'Unix'                 ),
@@ -89,10 +91,11 @@ DEFAULTS = {
     ),
     'view':
     (
-        ('font'     , ''                              ),
-        ('statusbar', 'true'                          ),
-        ('toolbar'  , 'true'                          ),
-        ('columns'  , 'number|show|hide|duration|text'),
+        ('font'            , ''                              ),
+        ('use_default_font', 'true'                          ),
+        ('statusbar'       , 'true'                          ),
+        ('toolbar'         , 'true'                          ),
+        ('columns'         , 'number|show|hide|duration|text'),
     ),
 }
 

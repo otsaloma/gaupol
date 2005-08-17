@@ -36,12 +36,9 @@ class PreferencesDialog(gobject.GObject):
     """
     Dialog for changing settings.
     
-    This class is implemented as a gObject. All settings are applied
+    This class is implemented as a GObject. All settings are applied
     instantly. These events will send signals to the Application class,
     which will apply the changed settings.
-
-    Settings not instant-applied can be gotten with the get-methods and
-    applied after closing this dialog.
     """
 
     STAGE = gobject.SIGNAL_RUN_LAST
@@ -50,12 +47,10 @@ class PreferencesDialog(gobject.GObject):
     STR   = gobject.TYPE_STRING
 
     __gsignals__ = {
-        'recent-files-amount-changed': (STAGE, None, (INT ,)),
-        'recent-files-cleared'       : (STAGE, None, ()     ),
-        'undo-limit-toggled'         : (STAGE, None, (BOOL,)),
-        'undo-levels-changed'        : (STAGE, None, (INT ,)),
-        'font-use-theme-toggled'     : (STAGE, None, (BOOL,)),
-        'font-set'                   : (STAGE, None, (STR ,)),
+        'limit-undo-toggled'      : (STAGE, None, (BOOL,)),
+        'undo-levels-changed'     : (STAGE, None, (INT ,)),
+        'use-default-font-toggled': (STAGE, None, (BOOL,)),
+        'font-set'                : (STAGE, None, (STR ,)),
     }
 
     def __init__(self, parent):
@@ -67,43 +62,109 @@ class PreferencesDialog(gobject.GObject):
 
         # Widgets
         self._dialog                      = get('dialog')
-        self._recent_spin_button          = get('recent_spin_button')
-        self._recent_clear_button         = get('recent_clear_button')
         self._undo_limit_radio_button     = get('undo_limit_radio_button')
         self._undo_levels_spin_button     = get('undo_levels_spin_button')
         self._undo_unlimited_radio_button = get('undo_unlimited_radio_button')
-        self._font_theme_radio_button     = get('font_theme_radio_button')
-        self._font_custom_radio_button    = get('font_custom_radio_button')
+        self._font_default_check_button   = get('font_default_check_button')
+        self._font_custom_label           = get('font_custom_label')
         self._font_button                 = get('font_button')
+        self._close_button                = get('close_button')
 
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_CLOSE)
+        self._dialog.connect('delete-event', self._destroy)
 
-    def connect_signals(self):pass
+        self._set_mnemonics(glade_xml)
+        self._connect_signals()
+
+    def _connect_signals(self):
+        """Connect signals to widgets."""
+        
+        # Set a group for undo RadioButtons. Glade creates a separate group
+        # for each RadioButton.
+        group = self._undo_limit_radio_button.get_group()[0]
+        self._undo_unlimited_radio_button.set_group(group)
+
+        # Undo limit RadioButton (It is enough to connect only one of the two
+        # RadioButtons.)
+        method = self._on_undo_limit_radio_button_toggled
+        self._undo_limit_radio_button.connect('toggled', method)
+
+        # Undo levels SpinButton
+        method = self._on_undo_levels_spin_button_value_changed
+        self._undo_levels_spin_button.connect('value-changed', method)
+
+        # Font default CheckButton
+        method = self._on_font_default_check_button_toggled
+        self._font_default_check_button.connect('toggled', method)
+
+        # FontButton
+        method = self._on_font_button_font_set
+        self._font_button.connect('font-set', method)
+
+        # Close button
+        self._close_button.connect('clicked', self._destroy)
+
+    def _destroy(self, *args):
+        """Destroy the dialog."""
+        
+        self._dialog.destroy()
     
-    def on_font_button_font_set(self): pass
+    def _on_font_button_font_set(self, font_button):
+        """Emit signal that the custom font has been set."""
+        
+        font = font_button.get_font_name()
+        self.emit('font-set', font)
     
-    def on_font_theme_radio_button_toggled(self): pass
+    def _on_font_default_check_button_toggled(self, check_button):
+        """Emit signal that use default/custom font has changed."""
+        
+        use_default = check_button.get_active()
+        self._font_custom_label.set_sensitive(not use_default)
+        self._font_button.set_sensitive(not use_default)
+        self.emit('use-default-font-toggled', use_default)
     
-    def on_recent_clear_button_clicked(self): pass
+    def _on_undo_levels_spin_button_value_changed(self, spin_button):
+        """Emit signal that the amount of undo levels has changed."""
+
+        spin_button.update()
+        levels = spin_button.get_value_as_int()
+        self.emit('undo-levels-changed', levels)
     
-    def on_recent_spin_button_value_changed(self):pass
+    def _on_undo_limit_radio_button_toggled(self, radio_button):
+        """Emit signal that undo limit/unlimit has changed."""
+        
+        limit = self._undo_limit_radio_button.get_active()
+        self._undo_levels_spin_button.set_sensitive(limit)
+        self.emit('limit-undo-toggled', limit)
+
+    def set_font(self, font):
+        """Set custom font in FontButton."""
+        
+        self._font_button.set_font_name(font)
     
-    def on_undo_levels_spin_button_value_changed(self): pass
+    def set_limit_undo(self, limit):
+        """Set value of undo limiting/unlimiting."""
+        
+        self._undo_limit_radio_button.set_active(limit)
+
+    def _set_mnemonics(self, glade_xml):
+        """Set mnemonics for widgets."""
+
+        undo_levels_label = glade_xml.get_widget('undo_levels_label')
+        undo_levels_label.set_mnemonic_widget(self._undo_levels_spin_button)
+
+        self._font_custom_label.set_mnemonic_widget(self._font_button)
     
-    def on_undo_limit_radio_button_toggled(self): pass
+    def set_undo_levels(self, levels):
+        """Set value of undo levels."""
+        
+        self._undo_levels_spin_button.set_value(levels)
     
-    def prepare_mnemonics(self): pass
-    
-    def set_font(self): pass
-    
-    def set_limit_undo(self): pass
-    
-    def set_maximum_recent_files(self): pass
-    
-    def set_undo_levels(self): pass
-    
-    def set_use_default_font(self): pass
+    def set_use_default_font(self, default):
+        """Set value of use default/custom font."""
+
+        self._font_default_check_button.set_active(default)
 
     def show(self):
         """Show the dialog."""

@@ -126,13 +126,25 @@ class FileOpener(Delegate):
         """
         Get default encoding to use for opening files.
         
-        Default encoding is locale encoding, or if it doesn't exist or isn't
-        valid, then UTF-8.
+        Try order:
+        default encoding (if specified)
+        locale encoding
+        fallback encoding (if specified)
+        UTF-8
         """
+        default_encoding  = self.config.get('file', 'default_encoding')
+        fallback_encoding = self.config.get('file', 'fallback_encoding')
+
+        if encodinglib.is_valid_python_name(default_encoding):
+            return default_encoding
+        
         try:
             return encodinglib.get_locale_encoding()[0]
         except TypeError:
-            return 'utf_8'
+            if encodinglib.is_valid_python_name(fallback_encoding):
+                return fallback_encoding
+            else:
+                return 'utf_8'
 
     def _get_main_file_open(self, path):
         """
