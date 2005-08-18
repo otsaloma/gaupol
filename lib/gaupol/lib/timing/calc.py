@@ -99,7 +99,7 @@ class TimeFrameCalculator(object):
         """
         Convert seconds to time.
         
-        Do not return a time greater that 99:99:99,999.
+        Do not return a time greater that 99:59:59,999.
         """
         seconds_left = round(seconds, 3)
         
@@ -107,7 +107,7 @@ class TimeFrameCalculator(object):
         seconds_left -= hours * 3600
 
         if hours > 99:
-            return '99:99:99,999'
+            return '99:59:59,999'
         
         minutes = floor(seconds_left / 60)
         seconds_left -= minutes * 60

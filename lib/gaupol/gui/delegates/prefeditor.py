@@ -58,9 +58,9 @@ class PreferenceEditor(Delegate):
             return
         
         for project in self.projects:
-            while len(project.undoables) > amount:
+            while len(project.undoables) > levels:
                 project.undoables.pop()
-            while len(project.redoables) > amount:
+            while len(project.redoables) > levels:
                 project.redoables.pop()
         
         self.set_sensitivities()
@@ -143,7 +143,7 @@ class PreferenceEditor(Delegate):
 
     def _on_limit_undo_toggled(self, dialog, limit):
         """Limit or unlimit undoing."""
-        
+        print limit
         self.config.setboolean('editor', 'limit_undo', limit)
 
         if limit:

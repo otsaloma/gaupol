@@ -145,8 +145,9 @@ class PreferencesDialog(gobject.GObject):
     
     def set_limit_undo(self, limit):
         """Set value of undo limiting/unlimiting."""
-        
+
         self._undo_limit_radio_button.set_active(limit)
+        self._undo_unlimited_radio_button.set_active(not limit)
 
     def _set_mnemonics(self, glade_xml):
         """Set mnemonics for widgets."""

@@ -38,7 +38,7 @@ import gtk
 from gaupol.gui.cellrend.custom import CustomCellRenderer
 
 
-RE_TIME   = re.compile('^\d\d:\d\d:\d\d,\d\d\d$')
+RE_TIME   = re.compile('^\d\d:[0-5]\d:[0-5]\d,\d\d\d$')
 RE_NUMBER = re.compile('\d')
 
 

@@ -100,10 +100,10 @@ class CaseChangeAction(TextEditAction):
     def do(self):
         """Change case."""
 
-        model = self.project.tree_view.get_model()
-        data = self.project.data
-        texts = self.project.data.texts
-        col = self._col
+        model    = self.project.tree_view.get_model()
+        data     = self.project.data
+        texts    = self.project.data.texts
+        col      = self._col
         data_col = self.project.get_data_column(col)
 
         data.change_case(self._rows, data_col, self._method)
@@ -139,9 +139,9 @@ class ClearAction(TextEditAction):
     def do(self):
         """Clear text."""
 
-        model = self.project.tree_view.get_model()
-        texts = self.project.data.texts
-        col = self._col
+        model    = self.project.tree_view.get_model()
+        texts    = self.project.data.texts
+        col      = self._col
         data_col = self.project.get_data_column(col)
         
         for row in self._rows:
@@ -205,10 +205,10 @@ class DialogLineAction(TextEditAction):
     def do(self):
         """Toggle dialog lines."""
 
-        model = self.project.tree_view.get_model()
-        data = self.project.data
-        texts = self.project.data.texts
-        col = self._col
+        model    = self.project.tree_view.get_model()
+        data     = self.project.data
+        texts    = self.project.data.texts
+        col      = self._col
         data_col = self.project.get_data_column(col)
 
         data.toggle_dialog_lines(self._rows, data_col)
@@ -248,10 +248,10 @@ class ItalicAction(TextEditAction):
     def do(self):
         """Toggle italicization."""
 
-        model = self.project.tree_view.get_model()
-        data = self.project.data
-        texts = self.project.data.texts
-        col = self._col
+        model    = self.project.tree_view.get_model()
+        data     = self.project.data
+        texts    = self.project.data.texts
+        col      = self._col
         data_col = self.project.get_data_column(col)
 
         data.toggle_italicization(self._rows, data_col)
@@ -285,24 +285,24 @@ class PasteAction(DURAction):
                 self._orig_texts.append(None)
                 continue
             
-            row = start_row + i
+            row = self._start_row + i
             self._orig_texts.append(texts[row][data_col])
 
 
         self.documents = [project.get_document_type(self._col)]
 
         data_col = project.get_data_column(self._col)
-        first = self._rows[ 0] + 1
-        last  = self._rows[-1] + 1
+        first = self._start_row + 1
+        last  = self._start_row + len(self._new_texts)
         subs  = (first, last)
 
         descriptions = (
             (
-                _('Pasting text of subtitle %d')                   % first,
-                _('Pasting translation of subtitle %d')            % first
+                _('Pasting to text of subtitle %d')                   % first,
+                _('Pasting to translation of subtitle %d')            % first
             ), (
-                _('Pasting text of subtitles %d, ... , %d')        % subs,
-                _('Pasting translation of subtitles %d, ... , %d') % subs
+                _('Pasting to text of subtitles %d, ... , %d')        % subs,
+                _('Pasting to translation of subtitles %d, ... , %d') % subs
             )
         )
         self.description = descriptions[min(last - first, 1)][data_col]
@@ -310,10 +310,11 @@ class PasteAction(DURAction):
     def do(self):
         """Paste texts from clipboard."""
 
-        model = self.project.tree_view.get_model()
-        texts = self.project.data.texts
-        col = self._col
-        data_col = project.get_data_column(self._col)
+        model    = self.project.tree_view.get_model()
+        data     = self.project.data
+        texts    = self.project.data.texts
+        col      = self._col
+        data_col = self.project.get_data_column(self._col)
 
         # Unselect all subtitles.
         selection = self.project.tree_view.get_selection()
@@ -328,8 +329,8 @@ class PasteAction(DURAction):
             text = self._new_texts[i]
             
             # Set data.
-            texts[row][data_col] = text
-            model[row][     col] = text
+            data.set_text(row, data_col, text)
+            model[row][col] = text
             
             # Selected row where pasted.
             selection.select_path(row)
@@ -337,10 +338,11 @@ class PasteAction(DURAction):
     def undo(self):
         """Restore original texts."""
 
-        model = self.project.tree_view.get_model()
-        texts = self.project.data.texts
-        col = self._col
-        data_col = project.get_data_column(self._col)
+        model    = self.project.tree_view.get_model()
+        data     = self.project.data
+        texts    = self.project.data.texts
+        col      = self._col
+        data_col = self.project.get_data_column(self._col)
 
         for i in range(len(self._orig_texts)):
         
@@ -351,8 +353,8 @@ class PasteAction(DURAction):
             text = self._orig_texts[i]
             
             # Set data.
-            texts[row][data_col] = text
-            model[row][     col] = text
+            data.set_text(row, data_col, text)
+            model[row][col] = text
 
 
 class TextEditor(Delegate):
@@ -454,7 +456,7 @@ class TextEditor(Delegate):
             selection.select_path(len(model) - 1)
             
             # Insert needed amount of rows.
-            self.insert_subtitles(POSITION.BELOW, lacking)
+            self.insert_subtitles(POSITION.BELOW, rows_lacking)
 
             # Restore first row of selection to paste at correct location.
             selection.unselect_all()

@@ -51,8 +51,8 @@ class RowInsertAction(DURAction):
         self._amount = amount
         self._inserted_rows = []
 
-        first = position + 1
-        last  = position + 1 + amount
+        first = self._start_row + 1
+        last  = self._start_row + amount
 
         if amount == 1:
             self.description = _('Inserting subtitle %d') % first
@@ -64,16 +64,33 @@ class RowInsertAction(DURAction):
     def do(self):
         """Insert rows."""
 
+        # Insert new rows to Data.
         self.project.data.insert_subtitles(self._start_row, self._amount)
 
-        self.project.reload_all_data()
-        
+        tree_view_column = self.project.get_focus()[2]
+        tree_view = self.project.tree_view
+        model     = tree_view.get_model()
+        timings   = self.project.get_timings()
+        texts     = self.project.data.texts
+
+        # Insert rows to ListStore and save new rows.
+        for row in range(self._start_row, self._start_row + self._amount):
+            model.insert(row, [row + 1] + timings[row] + texts[row])
+            self._inserted_rows.append(row)
+
+        self.project.reload_data_in_columns(NO)
+
+        # Move focus to first of the new rows.
+        try:
+            tree_view.set_cursor(self._start_row, tree_view_column)
+        except TypeError:
+            pass
+
         # Select all new rows.
-        selection = self.project.tree_view.get_selection()
+        selection = tree_view.get_selection()
         selection.unselect_all()
         for row in range(self._start_row, self._start_row + self._amount):
             selection.select_path(row)
-            self._inserted_rows.append(row)
 
     def undo(self):
         """Remove inserted rows."""
@@ -102,7 +119,7 @@ class RowRemoveAction(DURAction):
         first = self._selected_rows[ 0] + 1
         last  = self._selected_rows[-1] + 1
 
-        if start == end:
+        if first == last:
             self.description = _('Removing subtitle %d') % first
         else:
             self.description = _('Removing subtitles %d-%d') % (first, last)
@@ -121,23 +138,29 @@ class RowRemoveAction(DURAction):
     def do(self):
         """Remove rows."""
 
+        tree_view_column = self.project.get_focus()[2]
+
         # Remove rows from Data.
         self.project.data.remove_subtitles(self._selected_rows)
+
+        rows = self._selected_rows[:]
+        rows.sort()
+        rows.reverse()
         
         # Remove rows from ListStore.
         model = self.project.tree_view.get_model()
-        for row in self._selected_rows:
+        for row in rows:
             model.remove(model.get_iter(row))
 
         self.project.reload_data_in_columns(NO)
 
-        # Select first row of selection.
-        selection = self.project.tree_view.get_selection()
-        selection.unselect_all()
-        try:
-            selection.select_path(self._selected_rows[0])
-        except TypeError:
-            pass
+        # Move focus and select first row of selection or last existing row.
+        if self.project.data.times:
+            row = min(self._selected_rows[0], len(self.project.data.times) - 1)
+            try:
+                self.project.tree_view.set_cursor(row, tree_view_column)
+            except TypeError:
+                pass
 
     def undo(self):
         """Restore rows."""
@@ -149,9 +172,9 @@ class RowRemoveAction(DURAction):
 
             # Restore rows to Data.
             row = self._selected_rows[i]
-            data.texts.insert( row, self.removed_texts[ i])
-            data.times.insert( row, self.removed_times[ i])
-            data.frames.insert(row, self.removed_frames[i])
+            data.texts.insert( row, self._removed_texts[ i])
+            data.times.insert( row, self._removed_times[ i])
+            data.frames.insert(row, self._removed_frames[i])
             
             # Add blank rows to ListStore.
             model.append()

@@ -131,9 +131,9 @@ class DURManager(Delegate):
     def redo_action(self, project, action):
         """Redo action and update things affected."""
 
-        action.redo()
-
         self._restore_tree_view_properties(project, action)
+
+        action.redo()
 
         project.undoables.insert(0, action)
 

@@ -76,20 +76,20 @@ class CellEditAction(DURAction):
         if self._col in [SHOW, HIDE, DURN]:
             
             if project.edit_mode == MODE.TIME:
-                new_row = data.set_time(row, data_col, value)
+                new_row = data.set_time(self._row, data_col, value)
             if project.edit_mode == MODE.FRAME:
-                new_row = data.set_frame(row, data_col, value)
+                new_row = data.set_frame(self._row, data_col, value)
                 
         elif self._col in [TEXT, TRAN]:
         
-            data.set_text(row, data_col, value)
-            new_row = row
+            data.set_text(self._row, data_col, value)
+            new_row = self._row
 
         # Reload changed data.
-        if new_data_row == data_row:
-            project.reload_data_in_row(row)
+        if new_row == self._row:
+            project.reload_data_in_row(self._row)
         else:
-            project.reload_data_between_rows(row, new_row)
+            project.reload_data_between_rows(self._row, new_row)
 
             # Set focus to new location of row.
             tree_view_column = project.tree_view.get_column(self._col)

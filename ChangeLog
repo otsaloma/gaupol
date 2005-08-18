@@ -1,5 +1,16 @@
 2005-08-18  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* Edit menu bug-fixed.
+	
+	* lib/delegates/editor.py (set_text):
+	  Convert value to unicode.
+	
+	* gui/cellrend/time.py (RE_TIME):
+	  lib/timing/calc.py (seconds_to_time):
+	  Do not allow values greater than 59 for minutes and seconds.
+
+2005-08-18  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* View menu bug-fixed.
 
 2005-08-17  Osmo Salomaa  <otsaloma@cc.hut.fi>

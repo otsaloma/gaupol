@@ -142,6 +142,9 @@ class GUIUpdater(Delegate):
         row, tree_view_column, x, y = path_info
         selected_rows = project.get_selected_rows()
 
+        # Row is a one-tuple. Make that an integer.
+        row = row[0]
+
         # Move focus if user right-clicked outside the selection.
         if row not in selected_rows:
 

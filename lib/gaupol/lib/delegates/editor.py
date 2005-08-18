@@ -141,6 +141,7 @@ class Editor(Delegate):
     def remove_subtitles(self, rows):
         """Remove subtitles."""
 
+        rows = rows[:]
         rows.sort()
         rows.reverse()
         
@@ -192,9 +193,13 @@ class Editor(Delegate):
         self.frames[row][HIDE] = show + durn
 
     def set_text(self, row, col, value):
-        """Set text."""
-
-        self.texts[row][col] = value
+        """
+        Set text.
+        
+        This method will convert value to unicode and hence should always be
+        used instead of setting data to self.texts directly.
+        """
+        self.texts[row][col] = unicode(value)
 
     def set_time(self, row, col, value):
         """

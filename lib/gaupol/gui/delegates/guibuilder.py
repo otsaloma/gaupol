@@ -100,9 +100,13 @@ class GUIBuilder(Delegate):
 
         self._build_ui_manager()
         
-        # Pack menubar and toolbar.
+        
         menubar = self.uim.get_widget('/ui/menubar')
         toolbar = self.uim.get_widget('/ui/toolbar')
+
+        toolbar.set_show_arrow(True)
+
+        # Pack menubar and toolbar.
         vbox = self.window.get_child()
         vbox.pack_start(menubar, False, False, 0)
         vbox.pack_start(toolbar, False, False, 0)
@@ -341,28 +345,28 @@ class GUIBuilder(Delegate):
             ), (
                 'remove_subtitles',
                 gtk.STOCK_REMOVE,
-                _('_Remove Subtitles'),
+                _('Re_move Subtitles'),
                 '<control>Delete',
                 _('Remove selected subtitles'),
                 self.on_remove_subtitles_activated
             ), (
                 'select_all',
                 None,
-                _('Select _All'),
+                _('_Select All'),
                 '<control>A',
                 _('Select all subtitles'),
                 self.on_select_all_activated
             ), (
                 'unselect_all',
                 None,
-                _('Unse_lect All'),
+                _('U_nselect All'),
                 '<shift><control>A',
                 _('Unselect all subtitles'),
                 self.on_unselect_all_activated
             ), (
                 'invert_selection',
                 None,
-                _('I_nvert Selection'),
+                _('In_vert Selection'),
                 None,
                 _('Invert the current selection'),
                 self.on_invert_selection_activated
