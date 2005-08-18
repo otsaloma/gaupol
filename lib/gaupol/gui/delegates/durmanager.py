@@ -149,7 +149,7 @@ class DURManager(Delegate):
         self.set_sensitivities(project)
 
     def _restore_tree_view_properties(self, project, action):
-        """Restore tree view properties."""
+        """Restore TreeView properties."""
 
         tree_view = project.tree_view
         row = action.focus_row
@@ -177,7 +177,7 @@ class DURManager(Delegate):
                 pass
 
     def _save_tree_view_properties(self, project, action):
-        """Save tree view properties."""
+        """Save TreeView properties."""
 
         # Focus
         action.focus_row, action.focus_col = project.get_focus()[:2]

@@ -50,7 +50,7 @@ def get_glade_xml(basename):
 def get_event_box(widget):
     """Get EventBox, if it is a parent of widget."""
     
-    event_box = widget
+    event_box = widget.get_parent()
     while not isinstance(event_box, gtk.EventBox):
         event_box = event_box.get_parent()
 
@@ -59,7 +59,7 @@ def get_event_box(widget):
 def get_parent_widget(child, parent_type):
     """Get parent of widget that is type parent."""
     
-    parent = child
+    parent = child.get_parent()
     while not isinstance(parent, parent_type):
         parent = parent.get_parent()
 

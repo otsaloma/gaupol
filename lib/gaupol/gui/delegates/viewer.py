@@ -25,6 +25,8 @@ try:
 except ImportError:
     pass
 
+import gtk
+
 from gaupol.constants import FRAMERATE, MODE
 from gaupol.gui.colcons import *
 from gaupol.gui.delegates.delegate import Delegate
@@ -57,7 +59,7 @@ class Viewer(Delegate):
         self.config.set('editor', 'edit_mode', new_edit_mode_name)
 
         # Get focus.
-        row, col, tree_view_column = project.get_focus()
+        row, col = project.get_focus()[:2]
 
         # Get selection.
         selected_rows = project.get_selected_rows()
@@ -73,21 +75,30 @@ class Viewer(Delegate):
         scrolled_window.show_all()
         
         project.reload_all_data()
-        project.tree_view.columns_autosize()
-        model = project.tree_view.get_model()
+        tree_view = project.tree_view
+        tree_view.columns_autosize()
+        model = tree_view.get_model()
 
         # Restore focus.
+        tree_view_column = tree_view.get_column(col)
         try:
-            project.tree_view.set_cursor(row, tree_view_column)
+            tree_view.set_cursor(row, tree_view_column)
+        except TypeError:
+            pass
+        project.set_active_column()
+
+        # Scroll to focus.
+        try:
+            tree_view.scroll_to_cell(row, tree_view_column, True, 0.5, 0)
         except TypeError:
             pass
 
         # Restore selection.
-        selection = project.tree_view.get_selection()
+        selection = tree_view.get_selection()
         for row in selected_rows:
             selection.select_path(row)
 
-        project.tree_view.set_property('has-focus', has_focus)
+        tree_view.set_property('has-focus', has_focus)
 
         gui.set_cursor_normal(self.window)
 
@@ -101,7 +112,7 @@ class Viewer(Delegate):
 
         # Get new framerate.
         framerate = self.framerate_combo_box.get_active()
-        framerate_name = FRAMERATE.NAMES[index]
+        framerate_name = FRAMERATE.NAMES[framerate]
 
         # Return if only refreshing widget state.
         if framerate == project.data.framerate:
@@ -132,7 +143,7 @@ class Viewer(Delegate):
 
         # Get new framerate.
         framerate_name = new_action.get_name()
-        framerate = FRAMERATE.NAMES[framerate]
+        framerate = FRAMERATE.NAMES.index(framerate_name)
 
         # Return if only refreshing widget state.
         if framerate == project.data.framerate:
@@ -156,9 +167,9 @@ class Viewer(Delegate):
         """Toggle the visibility of the statusbar."""
 
         statusbar_hbox = gui.get_parent_widget(self.text_statusbar, gtk.HBox)
-        visible = self.statusbar_hbox.get_property('visible')
+        visible = statusbar_hbox.get_property('visible')
 
-        self.statusbar_hbox.set_property('visible', not visible)
+        statusbar_hbox.set_property('visible', not visible)
         self.config.setboolean('view', 'statusbar', not visible)
 
     def on_toolbar_toggled(self, *args):

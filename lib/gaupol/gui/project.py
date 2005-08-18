@@ -398,8 +398,11 @@ class Project(gobject.GObject):
         self.emit('tree-view-selection-changed')
 
     def reload_all_data(self):
-        """Reload all data in the TreeView."""
-
+        """
+        Reload all data in the TreeView.
+        
+        Possible selection, focus and scroll position are lost.
+        """
         model = self.tree_view.get_model()
         self.tree_view.set_model(None)
         model.clear()
@@ -419,15 +422,12 @@ class Project(gobject.GObject):
         end_row   = max(row_x, row_y)
 
         model   = self.tree_view.get_model()
-        self.tree_view.set_model(None)
         
         timings = self.get_timings()
         texts   = self.data.texts
 
         for i in range(start_row, end_row + 1):
             model[i] = [i + 1] + timings[i] + texts[i]
-
-        self.tree_view.set_model(model)
 
     def reload_data_in_columns(self, cols):
         """
@@ -439,7 +439,6 @@ class Project(gobject.GObject):
             cols = [cols]
 
         model = self.tree_view.get_model()
-        self.tree_view.set_model(None)
 
         for col in cols:
 
@@ -463,8 +462,6 @@ class Project(gobject.GObject):
             
                 for i in range(len(model)):
                     model[i][col] = self.data.texts[i][data_col]
-
-        self.tree_view.set_model(model)
 
     def reload_data_in_row(self, row):
         """Reload TreeView data in given row."""
