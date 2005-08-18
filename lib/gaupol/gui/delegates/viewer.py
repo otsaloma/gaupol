@@ -80,8 +80,8 @@ class Viewer(Delegate):
         model = tree_view.get_model()
 
         # Restore focus.
-        tree_view_column = tree_view.get_column(col)
         try:
+            tree_view_column = tree_view.get_column(col)
             tree_view.set_cursor(row, tree_view_column)
         except TypeError:
             pass
@@ -89,6 +89,7 @@ class Viewer(Delegate):
 
         # Scroll to focus.
         try:
+            tree_view_column = tree_view.get_column(col)
             tree_view.scroll_to_cell(row, tree_view_column, True, 0.5, 0)
         except TypeError:
             pass

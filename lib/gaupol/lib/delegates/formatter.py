@@ -199,24 +199,21 @@ class Formatter(Delegate):
         # Get action to be done.
         turn_into_italics = False
         for text in texts:
-        
-            lines = text.split('\n')
-            for line in lines:
             
-                # Remove tags from the start of the line ending after all
-                # tags are removed or when an italic tag is found.
-                tagless_line = line
-                while re_tag.match(tagless_line):
-                    if re_italic_tag.match(tagless_line):
-                        break
-                    else:
-                        tagless_line = re_tag.sub('', tagless_line, 1)
-
-                # If there is no italic tag at the start of the line,
-                # texts should be italicized.
-                if re_italic_tag.match(tagless_line) is None:
-                    turn_into_italics = True
+            # Remove tags from the start of the text, ending after all
+            # tags are removed or when an italic tag is found.
+            tagless_text = text
+            while re_tag.match(tagless_text):
+                if re_italic_tag.match(tagless_text):
                     break
+                else:
+                    tagless_text = re_tag.sub('', tagless_text, 1)
+
+            # If there is no italic tag at the start of the text,
+            # texts should be italicized.
+            if re_italic_tag.match(tagless_text) is None:
+                turn_into_italics = True
+                break
 
         # Remove existing italic tags and italicize if that is to be done.
         for i in range(len(texts)):

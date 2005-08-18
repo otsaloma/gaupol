@@ -207,42 +207,42 @@ class GUIBuilder(Delegate):
                 gtk.STOCK_NEW,
                 _('_New...'),
                 '<control>N',
-                _('Create a new subtitle document'),
+                _('Create a new document'),
                 self.on_new_activated
             ), (
                 'open',
                 gtk.STOCK_OPEN,
                 _('_Open...'),
                 '<control>O',
-                _('Open a subtitle file'),
+                _('Open a file'),
                 self.on_open_activated
             ), (
                 'import_translation',
                 None,
                 _('_Import Translation...'),
                 None,
-                _('Import translations from a subtitle file'),
+                _('Import translations from a file'),
                 self.on_import_translation_activated
             ), (
                 'save',
                 gtk.STOCK_SAVE,
                 _('_Save'),
                 '<control>S',
-                _('Save the current subtitle file'),
+                _('Save the current main file'),
                 self.on_save_activated
             ), (
                 'save_as',
                 gtk.STOCK_SAVE_AS,
                 _('Save _As...'),
                 '<shift><control>S',
-                _('Save the current subtitle file with a different name'),
+                _('Save the current main file with a different name'),
                 self.on_save_as_activated
             ), (
                 'save_a_copy',
                 None,
                 _('Sa_ve A Copy...'),
                 None,
-                _('Save a copy of the current subtitle document.'),
+                _('Save a copy of the current main document.'),
                 self.on_save_a_copy_activated
             ), (
                 'save_translation',
@@ -277,7 +277,7 @@ class GUIBuilder(Delegate):
                 gtk.STOCK_CLOSE,
                 _('_Close'),
                 '<control>W',
-                _('Close the current subtitle file'),
+                _('Close the current file'),
                 self.on_close_activated
             ), (
                 'quit',
