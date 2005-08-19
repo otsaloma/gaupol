@@ -1,3 +1,7 @@
+2005-08-19  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* New subtitles can now be inserted when none exist.
+
 2005-08-18  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* Edit menu bug-fixed.

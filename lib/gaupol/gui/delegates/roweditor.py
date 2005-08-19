@@ -43,7 +43,10 @@ class RowInsertAction(DURAction):
         self.project = project
 
         selected_rows = project.get_selected_rows()
-        if position == POSITION.ABOVE:
+
+        if not selected_rows:
+            self._start_row = 0
+        elif position == POSITION.ABOVE:
             self._start_row = selected_rows[0]
         elif position == POSITION.BELOW:
             self._start_row = selected_rows[0] + 1
@@ -205,6 +208,10 @@ class RowEditor(Delegate):
         
         dialog.set_amount(amount)
         dialog.set_position(position)
+
+        project = self.get_current_project()
+        if not project.data.times:
+            dialog.set_position_sensitive(False)
         
         response = dialog.run()
         position = dialog.get_position()

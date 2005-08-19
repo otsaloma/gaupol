@@ -756,7 +756,15 @@ class GUIUpdater(Delegate):
 
         if project is None:
             sensitive = False
+        
         else:
+
+            # If not subtitles exist, inserting must be possible.
+            if not project.data.times:
+                self.uim.get_action(uim_paths[0]).set_sensitive(True)
+                self.uim.get_action(uim_paths[1]).set_sensitive(False)
+                return
+                
             selection = project.tree_view.get_selection()
             selected_count = selection.count_selected_rows()
             sensitive = bool(selected_count > 0)
