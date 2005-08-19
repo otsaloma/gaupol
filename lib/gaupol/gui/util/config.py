@@ -79,10 +79,6 @@ DEFAULTS = {
         ('amount'  , 1      ),
         ('position', 'below'),
     ),
-    'jump_to_dialog':
-    (
-        ('keep_open', 'false'),
-    ),
     'application_window':
     (
         ('maximized', 'false'  ),

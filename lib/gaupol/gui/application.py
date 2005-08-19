@@ -37,7 +37,6 @@ from gaupol.gui.delegates.guiupdater import GUIUpdater
 from gaupol.gui.delegates.helper import Helper
 from gaupol.gui.delegates.prefeditor import PreferenceEditor
 from gaupol.gui.delegates.roweditor import RowEditor
-from gaupol.gui.delegates.searcher import Searcher
 from gaupol.gui.delegates.texteditor import TextEditor
 from gaupol.gui.delegates.viewer import Viewer
 from gaupol.gui.util.clipboard import Clipboard
@@ -111,7 +110,6 @@ class Application(object):
         helper            = Helper(self)
         preference_editor = PreferenceEditor(self)
         row_editor        = RowEditor(self)
-        searcher          = Searcher(self)
         text_editor       = TextEditor(self)
         viewer            = Viewer(self)
 
@@ -138,7 +136,6 @@ class Application(object):
             'on_insert_subtitles_activated'          : row_editor,
             'on_invert_selection_activated'          : row_editor,
             'on_italic_activated'                    : text_editor,
-            'on_jump_to_subtitle_activated'          : searcher,
             'on_lower_activated'                     : text_editor,
             'on_new_activated'                       : file_opener,
             'on_next_activated'                      : gui_updater,

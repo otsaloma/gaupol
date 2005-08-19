@@ -1,5 +1,13 @@
 2005-08-19  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* jumpto-dialog.glade:
+	  gui/dialogs/jumpto.py:
+	  gui/delegates/searcher.py:
+	  Removed in favor of gtk.TreeView in-built search functionality.
+	  Removed all references to these.
+
+2005-08-19  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gui/project.py (build_tree_view):
 	  Enable search for number column in list.
 	  
