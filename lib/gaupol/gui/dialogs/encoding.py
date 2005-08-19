@@ -99,6 +99,8 @@ class EncodingDialog(object):
             
             tree_view_column.set_resizable(True)
             tree_view_column.set_clickable(True)
+
+            tree_view_column.set_sort_column_id(i)
             
         model.set_sort_column_id(DESC, gtk.SORT_ASCENDING)
 

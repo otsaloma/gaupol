@@ -111,7 +111,7 @@ class MPL2(SubtitleFile):
         for entry in [shows, hides]:
             for i in range(len(entry)):
                 decaseconds = calc.time_to_seconds(entry[i]) * 10
-                entry[i] = '%.1f' % decaseconds
+                entry[i] = '%.0f' % decaseconds
 
         # Replace Python internal newline characters in text with pipes.
         texts = [text.replace('\n', '|') for text in texts]

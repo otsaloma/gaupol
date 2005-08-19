@@ -70,15 +70,17 @@ class MPL2(TagLibrary):
 
     ENCODE_TAGS = []
     
+    # TODO:
+    # Replace this terribly slow and ugly hack with something better?
+    #
     # Ugly hack get style tags at the start of every line, assuming subtitle
-    # has a maximum of ten lines.
+    # has a maximum of six lines.
     style_tags = [
         (r'<i>', r'</i>', r'/' ),
         (r'<b>', r'</b>', r'\\'),
         (r'<u>', r'</u>', r'_' ),
     ]
-
-    for i in range(10):
+    for i in range(6):
         for entry in style_tags:
 
             pattern  = r'%s(.*?)' % entry[0]

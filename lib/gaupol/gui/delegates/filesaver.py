@@ -129,8 +129,10 @@ class FileSaver(Delegate):
         for project in self.projects:
             if project.main_changed:
                 self.save_main_document(project)
+                project.set_tab_labels()
             if project.tran_active and project.tran_changed:
                 self.save_translation_document(project)
+                project.set_tab_labels()
 
         self.set_sensitivities()
 
@@ -339,7 +341,7 @@ class FileSaver(Delegate):
         """
         gui.set_cursor_busy(self.window)
 
-        properties = self.get_main_translation_properties(project)
+        properties = self.get_translation_file_properties(project)
         path, format, encoding, newlines = properties
         untitle = project.get_translation_corename()
 

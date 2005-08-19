@@ -1,5 +1,9 @@
 2005-08-19  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* Trivial bug-fixes on File and Documents menus' actions.
+
+2005-08-19  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* jumpto-dialog.glade:
 	  gui/dialogs/jumpto.py:
 	  gui/delegates/searcher.py:

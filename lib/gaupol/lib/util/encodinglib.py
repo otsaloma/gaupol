@@ -179,11 +179,13 @@ def get_locale_encoding():
     """
     python_name = locale.getdefaultlocale()[1]
 
-    if not is_valid_python_name(python_name):
+    try:
+        locale_tuple = codecs.lookup(python_name)
+    except LookupError:
         return None
 
     for entry in ENCODINGS:
-        if entry[PY_NAME] == python_name:
+        if codecs.lookup(entry[PY_NAME]) == locale_tuple:
             return entry
 
     return None

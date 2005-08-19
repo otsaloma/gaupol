@@ -118,16 +118,16 @@ class MultiCloseWarningDialog(object):
         # Insert data.
         amount = 0
         for project in self._projects:
-            if project.tran_changed:
+            if project.tran_active and project.tran_changed:
                 amount += 1
                 model.append([True, project])
 
         # Set sensible size for TreeView. 24 pixels are added to account for
         # possible scroll bar.
-        width, height = _tran_tree_view.size_request()
+        width, height = tree_view.size_request()
         width  = min(150, width  + 24)
         height = min(126, height + 24)
-        _tran_tree_view.set_size_request(width, height)
+        tree_view.set_size_request(width, height)
 
         if amount == 0:
             glade_xml.get_widget('translation_label').hide()
@@ -142,28 +142,42 @@ class MultiCloseWarningDialog(object):
         file_type: TYPE.MAIN or TYPE.TRAN
         Return: TreeView, TreeModel
         """
+        # This method adaptively copied from Gazpacho by Lorenzo Gil Sanchez.
+        # Gazpacho has a similar dialog made without using Glade.
+    
         model = gtk.ListStore(gobject.TYPE_BOOLEAN, object)
 
         tree_view.set_model(model)
         tree_view.set_headers_visible(False)
-
-        # CellRenderers
+        
+        # Check-box column
         cell_renderer_0 = gtk.CellRendererToggle()
-        cell_renderer_1 = gtk.CellRendererText()
-
         cell_renderer_0.set_property('activatable', True)
 
         method = self._on_tree_view_cell_toggled
         cell_renderer_0.connect('toggled', method, model)
-        
-        # Columns
-        tree_view_column_0 = gtk.TreeViewColumn('', cell_renderer_0, active=0)
-        tree_view_column_1 = gtk.TreeViewColumn('', cell_renderer_1, text  =1)
 
-        method = self._render_basename_column
-        tree_view_column_1.set_cell_data_func(cell_renderer_1, method)
-        
+        tree_view_column_0 = gtk.TreeViewColumn('', cell_renderer_0)
+        tree_view_column_0.add_attribute(cell_renderer_0, 'active', 0)
         tree_view.append_column(tree_view_column_0)
+
+        # File basename column
+        def render_basename(tree_view_column, cell_renderer, model, tree_iter):
+            """Render text in file basename column."""
+
+            project = model.get_value(tree_iter, PROJ)
+
+            if file_type == TYPE.MAIN:
+                basename = project.get_main_basename()
+            elif file_type == TYPE.TRAN:
+                basename = project.get_translation_basename()
+
+            cell_renderer.set_property('text', basename)
+
+        cell_renderer_1 = gtk.CellRendererText()
+             
+        tree_view_column_1 = gtk.TreeViewColumn('', cell_renderer_1)
+        tree_view_column_1.set_cell_data_func(cell_renderer_1, render_basename)
         tree_view.append_column(tree_view_column_1)
 
         return tree_view, model
@@ -207,19 +221,6 @@ class MultiCloseWarningDialog(object):
 
         sensitive = bool(mains or tranlations)
         self._dialog.set_response_sensitive(gtk.RESPONSE_YES, sensitive)
-
-    def _render_basename_column(self, tree_view_column, cell_renderer, model,
-                                tree_iter, file_type):
-        """Render basename column with the correct basename."""
-        
-        project = model.get_value(tree_iter, PROJ)
-
-        if file_type == TYPE.MAIN:
-            basename = project.get_main_basename()
-        elif file_type == TYPE.TRAN:
-            basename = project.get_translation_basename
-
-        cell_renderer.set_property('text', basename)
 
     def run(self):
         """Run the dialog."""

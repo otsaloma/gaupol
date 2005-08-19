@@ -284,9 +284,8 @@ class FileOpener(Delegate):
         tran_exists = project.data.tran_file is not None
         
         dialog = RevertQuestionDialog(
-            self.window,
-            project.main_changed, project.tran_active, project.tran_changed, 
-            main_exists, tran_exists,
+            self.window, main_exists, tran_exists, project.main_changed,
+            project.tran_active, project.tran_changed,
             project.get_main_basename(), project.get_translation_basename()
         )
         response = dialog.run()
@@ -308,7 +307,7 @@ class FileOpener(Delegate):
         if tran_exists and project.tran_active and project.tran_changed:
             self._read_file(
                 self.window, TYPE.TRAN, project.data.tran_file.path,
-                project.data.tran_file.encoding
+                project.data.tran_file.encoding, project
             )
 
         project.main_changed = 0

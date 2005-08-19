@@ -95,8 +95,7 @@ class CustomFileChooserDialog(gtk.FileChooserDialog):
         entries = self._get_encoding_combo_box_entries()
 
         # Clear ComboBox.
-        # TODO: Does this return None?
-        while self._encoding_combo_box.get_active_text():
+        while self._encoding_combo_box.get_active_text() is not None:
             self._encoding_combo_box.remove_text(0)
         
         # Fill ComboBox.
@@ -150,6 +149,7 @@ class CustomFileChooserDialog(gtk.FileChooserDialog):
         if response != gtk.RESPONSE_OK:
             dialog.destroy()
             self._fill_encoding_combo_box()
+            return
 
         encoding = dialog.get_encoding()
         if encoding is not None:

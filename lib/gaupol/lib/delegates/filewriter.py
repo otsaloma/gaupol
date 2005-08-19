@@ -145,7 +145,7 @@ class FileWriter(Delegate):
 
         elif subtitle_file.MODE == MODE.FRAME:
             frames = self.frames
-            for i in range(len(times)):
+            for i in range(len(frames)):
                 shows.append(frames[i][SHOW])
                 hides.append(frames[i][HIDE])
                 texts.append(new_texts[i][col])

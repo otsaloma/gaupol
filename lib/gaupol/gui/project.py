@@ -31,7 +31,7 @@ import gobject
 import gtk
 import pango
 
-from gaupol.constants import FRAMERATE, MODE, TYPE
+from gaupol.constants import EXTENSION, FRAMERATE, MODE, TYPE
 from gaupol.gui.cellrend.integer import CellRendererInteger
 from gaupol.gui.cellrend.multiline import CellRendererMultilineText
 from gaupol.gui.cellrend.time import CellRendererTime
@@ -281,7 +281,8 @@ class Project(gobject.GObject):
         try:
             basename = os.path.basename(self.data.main_file.path)
             extension = self.data.main_file.EXTENSION
-            return basename[0:-len(extension)]
+            extension_value = EXTENSION.VALUES[extension]
+            return basename[0:-len(extension_value)]
         except AttributeError:
             return self.untitle
 
@@ -357,7 +358,8 @@ class Project(gobject.GObject):
         try:
             basename = os.path.basename(self.data.tran_file.path)
             extension = self.data.tran_file.EXTENSION
-            return basename[0:-len(extension)]
+            extension_value = EXTENSION.VALUES[extension]
+            return basename[0:-len(extension_value)]
         except AttributeError:
             return self.get_translation_basename()
 
