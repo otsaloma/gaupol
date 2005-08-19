@@ -395,7 +395,7 @@ class GUIBuilder(Delegate):
                 'title',
                 None,
                 _('_Title'),
-                '<control>L',
+                '<control>T',
                 _('Change the selected texts to Title Case'),
                 self.on_title_activated
             ), (
@@ -416,16 +416,9 @@ class GUIBuilder(Delegate):
                 'lower',
                 None,
                 _('_Lower'),
-                '<control>R',
+                '<control>L',
                 _('Change the selected texts to lower case'),
                 self.on_lower_activated
-            ), (
-                'jump_to_subtitle',
-                gtk.STOCK_JUMP_TO,
-                _('_Jump To Subtitle'),
-                '<control>J',
-                _('Jump to a specific subtitle'),
-                self.on_jump_to_subtitle_activated
             ), (
                 'save_all',
                 gtk.STOCK_SAVE,
@@ -573,14 +566,14 @@ class GUIBuilder(Delegate):
                 'times',
                 None,
                 _('T_imes') ,
-                '<control>T',
+                '<control>M',
                 _('Show timings as times'),
                 0
             ), (
                 'frames',
                 None,
                 _('F_rames'),
-                '<control>F',
+                '<control>R',
                 _('Show timings as frames'),
                 1
             )

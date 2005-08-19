@@ -38,17 +38,6 @@ Unscheduled
 	  http://msdn.microsoft.com/library/en-us/dnacc/html/atg_samiarticle.asp
 
 
-Interesting new stuff in GTK+ 2.8
-=================================
-
-- Use typeahead search to replace jump-to-dialog?
-
-	The GtkTreeView::enable-search property has been changed to control
-	only typeahead search, not the C-f keybinding to start an interactive
-	search. To turn off interactive searching completely, you have to set
-	GtkTreeView::search-column to -1.
-  
-
 Interesting new stuff in PyGTK 2.8
 ==================================
 

@@ -1,5 +1,16 @@
 2005-08-19  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gui/project.py (build_tree_view):
+	  Enable search for number column in list.
+	  
+	* menubar.xml:
+	  Removed jump_to_subtitle item and all references to it.
+	  
+	* gui/delegates/guibuilder.py (_build_ui_manager):
+	  Changed shortcut keys due to freeing Ctrl+F for searching. 
+
+2005-08-19  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* New subtitles can now be inserted when none exist.
 
 2005-08-18  Osmo Salomaa  <otsaloma@cc.hut.fi>

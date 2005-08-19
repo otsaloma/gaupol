@@ -229,6 +229,10 @@ class Project(gobject.GObject):
             method = self._on_tree_view_headers_clicked
             button.connect(signal, method)
 
+        # Enable search for number column.
+        self.tree_view.set_enable_search(True)
+        self.tree_view.set_search_column(NO)
+
     def get_data_column(self, col):
         """Get Data column to match ListStore column."""
         

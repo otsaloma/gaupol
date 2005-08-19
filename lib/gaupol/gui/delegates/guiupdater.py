@@ -602,7 +602,6 @@ class GUIUpdater(Delegate):
             '/ui/menubar/view/times',
             '/ui/menubar/view/frames',
             '/ui/menubar/view/columns',
-            '/ui/menubar/search/jump_to_subtitle',
             '/ui/menubar/documents/save_all',
             '/ui/menubar/documents/close_all',
         )
