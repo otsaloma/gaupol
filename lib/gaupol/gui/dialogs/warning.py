@@ -78,7 +78,7 @@ class CloseTranslationWarningDialog(CloseDocumentWarningDialog):
         
         basename: basename of the document being closed
         """
-        title = _('Save changes to translation document "%s" before closing?') \
+        title = _('Save changes to translation document "%s" before closing?')\
                 % basename
 
         CloseDocumentWarningDialog.__init__(self, parent, title)
@@ -96,7 +96,8 @@ class ImportTranslationWarningDialog(gtk.MessageDialog):
         """
         gtk.MessageDialog.__init__(
             self, parent, FLAGS, TYPE, BUTTONS,
-            _('Save changes to translation document "%s" before importing a new one?') \
+            _('Save changes to translation document ' + \
+              '"%s" before importing a new one?') \
             % basename
         )
         
@@ -133,6 +134,8 @@ class OpenBigFileWarningDialog(gtk.MessageDialog):
         self.set_default_response(gtk.RESPONSE_NO)
         
         self.format_secondary_text( \
-            _('Size of the file is %.1f MB, which is abnormally large for a text-based subtitle file. Please, check that you are not trying to open a binary file.') \
+            _('Size of the file is %.1f MB, which is abnormally large for ' + \
+              'a text-based subtitle file. Please, check that you are not ' + \
+              'trying to open a binary file.') \
             % size \
         )

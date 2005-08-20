@@ -58,37 +58,29 @@ class MultiCloseWarningDialog(object):
 
         # Widgets
         self._dialog         = get_widget('dialog')
-        title_label          = get_widget('title_label')
         self._main_tree_view = get_widget('main_tree_view')
         self._tran_tree_view = get_widget('translation_tree_view')
 
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_YES)
 
-        main_count = self._build_main_tree_view(glade_xml)
-        tran_count = self._build_translation_tree_view(glade_xml)
-
-        self._set_title(title_label, main_count, tran_count)
+        self._build_main_tree_view(glade_xml)
+        self._build_translation_tree_view(glade_xml)
 
         self._main_tree_view.grab_focus()
         self._dialog.show()
 
     def _build_main_tree_view(self, glade_xml):
-        """
-        Build the list of main documents.
+        """Build the list of main documents."""
         
-        Return: amount of documents
-        """
         tree_view = self._main_tree_view
         label = glade_xml.get_widget('main_label')
         label.set_mnemonic_widget(tree_view)
         tree_view, model = self._build_tree_view(tree_view, TYPE.MAIN)
 
         # Insert data.
-        amount = 0
         for project in self._projects:
             if project.main_changed:
-                amount += 1
                 model.append([True, project])
 
         # Set sensible size for TreeView. 24 pixels are added to account for
@@ -98,28 +90,21 @@ class MultiCloseWarningDialog(object):
         height = min(126, height + 24)
         tree_view.set_size_request(width, height)
         
-        if amount == 0:
+        if len(model) == 0:
             glade_xml.get_widget('main_label').hide()
             glade_xml.get_widget('main_scrolled_window').hide()
 
-        return amount
-
     def _build_translation_tree_view(self, glade_xml):
-        """
-        Build the list of translation documents.
+        """Build the list of translation documents."""
         
-        Return: amount of documents
-        """
         tree_view = self._tran_tree_view
         label = glade_xml.get_widget('translation_label')
         label.set_mnemonic_widget(tree_view)
         tree_view, model = self._build_tree_view(tree_view, TYPE.TRAN)
 
         # Insert data.
-        amount = 0
         for project in self._projects:
             if project.tran_active and project.tran_changed:
-                amount += 1
                 model.append([True, project])
 
         # Set sensible size for TreeView. 24 pixels are added to account for
@@ -129,11 +114,9 @@ class MultiCloseWarningDialog(object):
         height = min(126, height + 24)
         tree_view.set_size_request(width, height)
 
-        if amount == 0:
+        if len(model) == 0:
             glade_xml.get_widget('translation_label').hide()
             glade_xml.get_widget('translation_scrolled_window').hide()
-
-        return amount
 
     def _build_tree_view(self, tree_view, file_type):
         """
@@ -226,42 +209,3 @@ class MultiCloseWarningDialog(object):
         """Run the dialog."""
         
         return self._dialog.run()
-        
-    def _set_title(self, title_label, main_count, tran_count):
-        """Set dialog title based on amount of documents."""
-        
-        title = ''
-
-        if main_count > 1 and tran_count == 0:
-            title = _('There are %d main documents with unsaved changes.') \
-                    % main_count
-
-        elif main_count == 1 and tran_count == 0:
-            title = _('There is %d main document with unsaved changes.') \
-                    % self._main_count
-
-        elif main_count > 1 and tran_count > 1:
-            title = _('There are %d main documents and %d translation documents with unsaved changes.') \
-                    % (main_count, tran_count)
-
-        elif main_count == 1 and tran_count > 1:
-            title = _('There is %d main document and %d translation documents with unsaved changes.') \
-                    % (main_count, tran_count)
-
-        elif main_count > 1 and tran_count == 1:
-            title = _('There are %d main documents and %d translation document with unsaved changes.') \
-                    % (main_count, tran_count)
-                    
-        elif main_count == 0 and tran_count > 1:
-            title = _('There are %d translation documents with unsaved changes.') \
-                    % tran_count
-
-        elif main_count == 0 and tran_count == 1:
-            title = _('There is %d translation document with unsaved changes.') \
-                    % tran_count
-
-        title       = _('%s Save changes before closing?') % title
-        fancy_title = '<span weight="bold" size="larger">%s</span>\n' % title
-        
-        title_label.set_text(fancy_title)
-        title_label.set_use_markup(True)

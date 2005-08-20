@@ -110,7 +110,7 @@
 	      <child>
 		<widget class="GtkLabel" id="title_label">
 		  <property name="visible">True</property>
-		  <property name="label">&lt;span weight=&quot;bold&quot; size=&quot;larger&quot;&gt;There are several documents with unsaved changes. Save changes before closing?&lt;/span&gt;
+		  <property name="label" translatable="yes">&lt;span weight=&quot;bold&quot; size=&quot;larger&quot;&gt;There are several documents with unsaved changes. Save changes before closing?&lt;/span&gt;
 </property>
 		  <property name="use_underline">True</property>
 		  <property name="use_markup">True</property>

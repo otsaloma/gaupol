@@ -89,8 +89,9 @@ class FileWriter(Delegate):
             shutil.move(bak_path, path)
         except IOError, (errno, detail):
             logger.warning( \
-                'Failed to restore file "%s" from temporary backup file "%s" after failing to write it: %s.' \
-                % (path, bak_path, detail) \
+                'Failed to restore file "%s" '     % path     + \
+                'from temporary backup file "%s" ' % bak_path + \
+                'after failing to write it: %s.'   % detail     \
             )
             
     def _write_file(self, text_col, keep_changes, path, format, encoding,

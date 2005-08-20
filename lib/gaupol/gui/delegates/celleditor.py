@@ -50,7 +50,9 @@ class CellEditAction(DURAction):
 
         descriptions = [
             None,
+            # TRANSLATORS: Editing show {time,frame} of subtitle N
             _('Editing show %s of subtitle %d')     % (mode_name, subtitle),
+            # TRANSLATORS: Editing show {time,frame} of subtitle N
             _('Editing hide %s of subtitle %d')     % (mode_name, subtitle),
             _('Editing duration of subtitle %d')    % subtitle,
             _('Editing text of subtitle %d')        % subtitle,

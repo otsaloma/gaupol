@@ -67,7 +67,8 @@ class Helper(Delegate):
             dialog  = VersionCheckErrorDialog(self.window, message)
             
         except internet.TimeoutError:
-            message = _('Operation timed out. Please try again later or proceed to the download page.')
+            message = _('Operation timed out. Please try again later or ' + \
+                        'proceed to the download page.')
             dialog  = VersionCheckErrorDialog(self.window, message)
             
         else:

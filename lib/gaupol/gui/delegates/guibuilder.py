@@ -57,6 +57,7 @@ class GUIBuilder(Delegate):
 
         # Add entries.
         for i in range(len(FRAMERATE.NAMES)):
+            # TRANSLATORS: framerate, e.g. "23.976 fps"
             entry = _('%s fps') % FRAMERATE.NAMES[i]
             self.framerate_combo_box.insert_text(i, entry)
 
@@ -151,10 +152,10 @@ class GUIBuilder(Delegate):
         # be visible, whether or not a document is open.
         tooltips = gtk.Tooltips()
         
-        tip = _('Open a subtitle file')
+        tip = _('Open a file')
         self.open_button.set_tooltip(tooltips, tip)
 
-        tip = _('Open a recently used subtitle file')
+        tip = _('Open a recently used file')
         self.open_button.set_arrow_tooltip(tooltips, tip)
         
         toolbar = self.uim.get_widget('/ui/toolbar')
@@ -183,6 +184,7 @@ class GUIBuilder(Delegate):
 
         menus = [
             # Name      , Stock-icon, Label
+
             ('file'     , None      , _('_File')     ),
             ('edit'     , None      , _('_Edit')     ),
             ('view'     , None      , _('_View')     ),

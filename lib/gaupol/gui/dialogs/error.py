@@ -79,7 +79,8 @@ class UnicodeDecodeErrorDialog(gtk.MessageDialog):
             _('Failed to decode file "%s" with codec "%s"') % (basename, codec)
         )
         self.format_secondary_text( \
-            _('Please try to open the file with a different character encoding.') \
+            _('Please try to open the file with a different character ' + \
+              'encoding.') \
         )
 
 
@@ -99,7 +100,8 @@ class UnicodeEncodeErrorDialog(gtk.MessageDialog):
             _('Failed to encode file "%s" with codec "%s"') % (basename, codec)
         )
         self.format_secondary_text( \
-            _('Please try to save the file with a different character encoding.') \
+            _('Please try to save the file with a different character ' + \
+              'encoding.') \
         )
 
 
@@ -118,7 +120,8 @@ class UnknownFileFormatErrorDialog(gtk.MessageDialog):
             _('Failed to recognize format of file "%s"') % basename
         )
         self.format_secondary_text( \
-            _('Please check that the file you are trying to open is a subtitle file of a format supported by Gaupol.') \
+            _('Please check that the file you are trying to open is a ' + \
+              'subtitle file of a format supported by Gaupol.') \
         )
 
 

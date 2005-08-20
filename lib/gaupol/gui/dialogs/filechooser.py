@@ -50,6 +50,7 @@ class CustomFileChooserDialog(gtk.FileChooserDialog):
 
         filters = [
             # Format, Name           , Mime-type   , Pattern
+
             (None   , _('All files') , None        , '*'    ),
             (None   , _('Plain text'), 'text/plain', None   ),
         ]
@@ -58,6 +59,8 @@ class CustomFileChooserDialog(gtk.FileChooserDialog):
         
             format_name = FORMAT.NAMES[i]
             extension_value = EXTENSION.VALUES[i]
+
+            # TRANSLATORS: File filters - e.g. "SubRip (*.srt)".
             name = _('%s (*%s)') % (format_name, extension_value)
             pattern = '*%s' % extension_value
             
@@ -378,7 +381,7 @@ class SaveDialog(CustomFileChooserDialog):
 
         try:
             self._format_combo_box.set_active(format)
-        except TypeError, ValueError:
+        except (TypeError, ValueError):
             pass
 
     def set_newlines(self, newlines):
@@ -386,5 +389,5 @@ class SaveDialog(CustomFileChooserDialog):
         
         try:
             self._newline_combo_box.set_active(newlines)
-        except TypeError, ValueError:
+        except (TypeError, ValueError):
             pass

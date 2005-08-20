@@ -218,6 +218,8 @@ class GUIUpdater(Delegate):
 
             name     = 'document-%d' % i
             label    = '%d. %s' % (i + 1, tab_label)
+
+            # TRANSLATORS: Activate a document - "Activate <basename>".
             tooltip  = _('Activate "%s"') % basename
 
             # Ellipsize too long menu item names.
@@ -307,6 +309,8 @@ class GUIUpdater(Delegate):
         
             name    = 'recent-menu-%d' % i
             label   = '%d. %s' % (i + 1, basenames[i])
+
+            # TRANSLATORS: Open a document - "Open <basename>".
             tooltip = _('Open "%s"') % basenames[i]
 
             # Ellipsize too long menu item names.

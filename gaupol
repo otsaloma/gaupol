@@ -19,10 +19,12 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-# Gaupol start script
-#
-# Determination of correct paths for running from source directory vs. running
-# installed adaptively copied from Gazpacho by Lorenzo Gil Sanchez.
+"""
+Gaupol start script
+
+Determination of correct paths for running from source directory vs. running
+installed adaptively copied from Gazpacho by Lorenzo Gil Sanchez.
+"""
 
 
 import gettext
@@ -42,7 +44,7 @@ logger = logging.getLogger()
 
 
 def _check_dependencies():
-    # Check existance and versions of dependencies.
+    """Check existance and versions of dependencies."""
     
     if sys.version_info[:3] < (2, 4, 0):
         logger.critical('Python 2.4 or later is required to run Gaupol.')
@@ -63,12 +65,13 @@ def _check_dependencies():
         sys.exit()
     
 def _check_paths():
-    # Determine paths of Gaupol files.
-    #
-    # Gaupol can be run from either the source directory or from install
-    # location after installation. Paths to use will be determined based on
-    # the paths.py file.
-
+    """
+    Determine paths of Gaupol files.
+    
+    Gaupol can be run from either the source directory or from install
+    location after installation. Paths to use will be determined based on
+    the paths.py file.
+    """
     current_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
 
     if os.path.isfile(os.path.join(current_dir, 'gaupol.desktop')):
@@ -78,7 +81,7 @@ def _check_paths():
         _prepare_installed_run(prefix)
     
 def _import_optional_modules():
-    # Import optional modules.
+    """Import optional modules."""
 
     try:
         import psyco
@@ -87,46 +90,43 @@ def _import_optional_modules():
         logger.info('Psyco not found.')
 
 def _parse_options():
-    # Parse command line options and arguments.
-    #
-    # Return: no_translation (True or False), arguments
-
+    """
+    Parse command line options and arguments.
+    
+    Return: arguments
+    """
     parser = optparse.OptionParser(version='Gaupol %s' % VERSION)
-
-    parser.add_option(
-        '', '--no-translation', action='store_true', dest='no_translation',
-        default=False, help='ignore possible translation (use english)'
-    )
-
     options, args = parser.parse_args(sys.argv)
 
-    return options.no_translation, args
+    return args
     
-def _prepare_gettext(no_translation):
-    # Prepare internationalization using gettext.
-    #
-    # Gettext translation function is installed to Python's built-in namespace
-    # making it available everywhere without need to import anything. Gettext
-    # will be available with the underscore function.
-
-    locale.setlocale(locale.LC_ALL, '')
-
-    if no_translation:
-        __builtins__.__dict__['_'] = lambda x: x
-        return
-
+def _prepare_gettext():
+    """
+    Prepare internationalization using gettext.
+    
+    Gettext translation function is installed to Python's built-in namespace
+    making it available everywhere without need to import anything. Gettext
+    will be available with the underscore function and plural gettext with
+    "ngettext".
+    """
     import gtk.glade
     from gaupol.paths import LOCALE_DIR
+
+    locale.setlocale(locale.LC_ALL, '')
     
     gettext.bindtextdomain('gaupol', LOCALE_DIR)
     gettext.textdomain('gaupol')
     gettext.install('gaupol', LOCALE_DIR, unicode=1)
 
+    # A shorter name cannot be used for ngettext, because strings wouldn't
+    # get parsed correctly by xgettext.
+    __builtins__.__dict__['ngettext'] = lambda *args: gettext.ngettext(*args)
+
     gtk.glade.bindtextdomain('gaupol', LOCALE_DIR)
     gtk.glade.textdomain('gaupol')
     
 def _prepare_installed_run(prefix):
-    # Prepare path information for running installed.
+    """Prepare path information for running installed."""
 
     lib_dir = os.path.join(prefix, 'lib')
 
@@ -134,7 +134,7 @@ def _prepare_installed_run(prefix):
         sys.path.insert(0, lib_dir)
     
 def _prepare_source_run(prefix):
-    # Prepare path information for running from source directory.
+    """Prepare path information for running from source directory."""
 
     lib_dir = os.path.join(prefix, 'lib')
 
@@ -151,12 +151,12 @@ def _prepare_source_run(prefix):
             
 if __name__ == '__main__':
 
-    no_translation, args = _parse_options()
+    args = _parse_options()
     
     _check_dependencies()
     _import_optional_modules()
     _check_paths()
-    _prepare_gettext(no_translation)
+    _prepare_gettext()
 
     from gaupol.gui import main
     main.main(args[1:])

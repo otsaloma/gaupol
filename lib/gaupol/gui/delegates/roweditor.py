@@ -57,10 +57,11 @@ class RowInsertAction(DURAction):
         first = self._start_row + 1
         last  = self._start_row + amount
 
-        if amount == 1:
-            self.description = _('Inserting subtitle %d') % first
-        else:
-            self.description = _('Inserting subtitles %d-%d') % (first, last)
+        self.description = ngettext(
+            'Inserting subtitle %d'     % first,
+            'Inserting subtitles %d-%d' % (first, last),
+            amount
+        )
 
         self.documents = [TYPE.MAIN, TYPE.TRAN]
 
@@ -122,10 +123,11 @@ class RowRemoveAction(DURAction):
         first = self._selected_rows[ 0] + 1
         last  = self._selected_rows[-1] + 1
 
-        if first == last:
-            self.description = _('Removing subtitle %d') % first
-        else:
-            self.description = _('Removing subtitles %d-%d') % (first, last)
+        self.description = ngettext(
+            'Removing subtitle %d'           % first,
+            'Removing subtitles %d, ... , %d' % (first, last),
+            last - first + 1
+        )
 
         self.documents = [TYPE.MAIN, TYPE.TRAN]
 

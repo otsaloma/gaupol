@@ -186,7 +186,7 @@ class Project(gobject.GObject):
 
         TVC = gtk.TreeViewColumn
 
-        tree_view_column_0 = TVC(_('No')         , cell_renderer_0, text=0)
+        tree_view_column_0 = TVC(_('No.')        , cell_renderer_0, text=0)
         tree_view_column_1 = TVC(_('Show')       , cell_renderer_1, text=1)
         tree_view_column_2 = TVC(_('Hide')       , cell_renderer_2, text=2)
         tree_view_column_3 = TVC(_('Duration')   , cell_renderer_3, text=3)
@@ -348,8 +348,10 @@ class Project(gobject.GObject):
         if self.data.tran_file is not None:
             return os.path.basename(self.data.tran_file.path)
         elif self.data.main_file is not None:
+            # TRANSLATORS: Suggested translation basename - "<main basename> translation".
             return _('%s translation') % self.get_main_corename()
         else:
+            # TRANSLATORS: Suggested translation basename - "<main basename> translation".
             return _('%s translation') % self.untitle
 
     def get_translation_corename(self):

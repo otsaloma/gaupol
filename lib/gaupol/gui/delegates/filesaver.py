@@ -194,6 +194,8 @@ class FileSaver(Delegate):
 
         properties = self.get_main_file_properties(project)
         path, format, encoding, newlines = properties
+
+        # TRANSLATORS: File basename for "Save As" - "<basename> (copy)"
         untitle = _('%s (copy)') % project.get_main_corename()
 
         path = self._select_and_write_file(
@@ -222,6 +224,8 @@ class FileSaver(Delegate):
 
         properties = self.get_translation_file_properties(project)
         path, format, encoding, newlines = properties
+
+        # TRANSLATORS: File basename for "Save As" - "<basename> (copy)"
         untitle = _('%s (copy)') % project.get_translation_corename()
 
         path = self._select_and_write_file(

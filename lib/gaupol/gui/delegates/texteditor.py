@@ -85,17 +85,19 @@ class CaseChangeAction(TextEditAction):
         last  = self._rows[-1] + 1
         subs  = (first, last)
 
-        descriptions = (
-            (
-                _('Changing case of text of subtitle %d')        % first,
-                _('Changing case of translation of subtitle %d') % first
-            ), (
-                _('Changing case of text of subtitles %d, ... , %d') % subs,
-                _('Changing case of translation of subtitles %d, ... , %d') \
-                % subs
+        if self._col == TEXT:
+            self.description = ngettext(
+                'Changing case of text of subtitle %d'            % first,
+                'Changing case of text of subtitles %d, ... , %d' % subs,
+                last - first + 1 \
             )
-        )
-        self.description = descriptions[min(last - first, 1)][data_col]
+        elif self._col == TRAN:
+            self.description = ngettext(
+                'Changing case of translation of subtitle %d' % first,
+                'Changing case of translation of subtitles %d, ... , %d' \
+                % subs,
+                last - first + 1
+            )
 
     def do(self):
         """Change case."""
@@ -125,16 +127,18 @@ class ClearAction(TextEditAction):
         last  = self._rows[-1] + 1
         subs  = (first, last)
 
-        descriptions = (
-            (
-                _('Clearing text of subtitle %d')        % first,
-                _('Clearing translation of subtitle %d') % first
-            ), (
-                _('Clearing text of subtitles %d, ... , %d')        % subs,
-                _('Clearing translation of subtitles %d, ... , %d') % subs
+        if self._col == TEXT:
+            self.description = ngettext(
+                'Clearing text of subtitle %d'            % first,
+                'Clearing text of subtitles %d, ... , %d' % subs,
+                last - first + 1 \
             )
-        )
-        self.description = descriptions[min(last - first, 1)][data_col]
+        elif self._col == TRAN:
+            self.description = ngettext(
+                'Clearing translation of subtitle %d'            % first,
+                'Clearing translation of subtitles %d, ... , %d' % subs,
+                last - first + 1
+            )
 
     def do(self):
         """Clear text."""
@@ -162,16 +166,18 @@ class CutAction(ClearAction):
         last  = self._rows[-1] + 1
         subs  = (first, last)
 
-        descriptions = (
-            (
-                _('Cutting text of subtitle %d')        % first,
-                _('Cutting translation of subtitle %d') % first
-            ), (
-                _('Cutting text of subtitles %d, ... , %d')        % subs,
-                _('Cutting translation of subtitles %d, ... , %d') % subs
+        if self._col == TEXT:
+            self.description = ngettext(
+                'Cutting text of subtitle %d'            % first,
+                'Cutting text of subtitles %d, ... , %d' % subs,
+                last - first + 1 \
             )
-        )
-        self.description = descriptions[min(last - first, 1)][data_col]
+        elif self._col == TRAN:
+            self.description = ngettext(
+                'Cutting translation of subtitle %d'            % first,
+                'Cutting translation of subtitles %d, ... , %d' % subs,
+                last - first + 1
+            )
 
 
 class DialogLineAction(TextEditAction):
@@ -187,20 +193,22 @@ class DialogLineAction(TextEditAction):
         last  = self._rows[-1] + 1
         subs  = (first, last)
 
-        descriptions = (
-            (
-                _('Toggling dialog lines on text of subtitle %d')        \
+        if self._col == TEXT:
+            self.description = ngettext(
+                'Toggling dialog lines on text of subtitle %d'            \
                 % first,
-                _('Toggling dialog lines on translation of subtitle %d') \
-                % first
-            ), (
-                _('Toggling dialog lines on text of subtitles %d, ... , %d') \
+                'Toggling dialog lines on text of subtitles %d, ... , %d' \
                 % subs,
-                _('Toggling dialog lines on translation of subtitles %d, ... , %d') \
-                % subs
+                last - first + 1 \
             )
-        )
-        self.description = descriptions[min(last - first, 1)][data_col]
+        elif self._col == TRAN:
+            self.description = ngettext(
+                'Toggling dialog lines on translation of subtitle %d'         \
+                % first,
+                'Toggling dialog lines on translation of subtitles %d, ... , %d' \
+                % subs,
+                last - first + 1
+            )
 
     def do(self):
         """Toggle dialog lines."""
@@ -230,20 +238,22 @@ class ItalicAction(TextEditAction):
         last  = self._rows[-1] + 1
         subs  = (first, last)
 
-        descriptions = (
-            (
-                _('Toggling italicization of text of subtitle %d')        \
+        if self._col == TEXT:
+            self.description = ngettext(
+                'Toggling italicization of text of subtitle %d'            \
                 % first,
-                _('Toggling italicization of translation of subtitle %d') \
-                % first
-            ), (
-                _('Toggling italicization of text of subtitles %d, ... , %d') \
+                'Toggling italicization of text of subtitles %d, ... , %d' \
                 % subs,
-                _('Toggling italicization of translation of subtitles %d, ... , %d') \
-                % subs
+                last - first + 1 \
             )
-        )
-        self.description = descriptions[min(last - first, 1)][data_col]
+        elif self._col == TRAN:
+            self.description = ngettext(
+                'Toggling italicization of translation of subtitle %d'        \
+                % first,
+                'Toggling italicization of translation of subtitles %d, ... , %d' \
+                % subs,
+                last - first + 1
+            )
 
     def do(self):
         """Toggle italicization."""
@@ -296,16 +306,18 @@ class PasteAction(DURAction):
         last  = self._start_row + len(self._new_texts)
         subs  = (first, last)
 
-        descriptions = (
-            (
-                _('Pasting to text of subtitle %d')                   % first,
-                _('Pasting to translation of subtitle %d')            % first
-            ), (
-                _('Pasting to text of subtitles %d, ... , %d')        % subs,
-                _('Pasting to translation of subtitles %d, ... , %d') % subs
+        if self._col == TEXT:
+            self.description = ngettext(
+                'Pasting to text of subtitle %d'            % first,
+                'Pasting to text of subtitles %d, ... , %d' % subs,
+                last - first + 1 \
             )
-        )
-        self.description = descriptions[min(last - first, 1)][data_col]
+        elif self._col == TRAN:
+            self.description = ngettext(
+                'Pasting to translation of subtitle %d'            % first,
+                'Pasting to translation of subtitles %d, ... , %d' % subs,
+                last - first + 1
+            )
 
     def do(self):
         """Paste texts from clipboard."""

@@ -1,5 +1,22 @@
 2005-08-19  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* trantool:
+	  New file to automate translation tasks.
+	  
+	* README.translators:
+	  New file for translation instructions (blank for now).
+	  
+	* po:
+	  New directory for .po files.
+
+	* Added comments for translators above translatable strings.
+
+	* gaupol:
+	  Install plural ngettext function to builtin namespace.
+	  Updated all plural strings to use ngettext.
+
+2005-08-19  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* Trivial bug-fixes on File and Documents menus' actions.
 
 2005-08-19  Osmo Salomaa  <otsaloma@cc.hut.fi>

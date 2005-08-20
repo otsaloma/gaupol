@@ -155,6 +155,7 @@ def get_descriptive_name(python_name):
     """
     for entry in ENCODINGS:
         if entry[PY_NAME] == python_name:
+            # TRANSLATORS: Encoding descriptive name - e.g. "Unicode (UTF-8)".
             return _('%s (%s)') % (entry[DESC], entry[DISP_NAME])
 
     raise ValueError('Invalid encoding Python name "%s".' % python_name)
@@ -181,7 +182,7 @@ def get_locale_encoding():
 
     try:
         locale_tuple = codecs.lookup(python_name)
-    except LookupError:
+    except (TypeError, LookupError):
         return None
 
     for entry in ENCODINGS:
@@ -241,6 +242,7 @@ def get_valid_descriptive_names():
     
     for entry in ENCODINGS:
         if is_valid_python_name(entry[PY_NAME]):
+            # TRANSLATORS: Encoding descriptive name - e.g. "Unicode (UTF-8)".
             valid_names.append(_('%s (%s)') % (entry[DESC], entry[DISP_NAME]))
     
     return valid_names

@@ -1,14 +1,10 @@
 Before 0.1
 ==========
 
-- Testing and bugfixing
-
 - Finnish translation
-
+- gaupol-translators (or gaupol-i18n) mailing list
 - Installation & uninstallation + instructions
-
 - Project page
-
 - Website
 
 
@@ -38,8 +34,8 @@ Unscheduled
 	  http://msdn.microsoft.com/library/en-us/dnacc/html/atg_samiarticle.asp
 
 
-Interesting new stuff in PyGTK 2.8
-==================================
+Notable new stuff in PyGTK 2.8
+==============================
 
 http://live.gnome.org/PyGTK/WhatsNew28
 

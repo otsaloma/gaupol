@@ -103,11 +103,13 @@ class RevertQuestionDialog(gtk.MessageDialog):
         # user must be informed of which changes she will lose.
 
         if main_revertable and tran_revertable:
-            title = _('Revert unsaved changes to both main document "%s" and translation document "%s"?') \
+            title = _('Revert unsaved changes to both main document ' + \
+                      '"%s" and translation document "%s"?') \
                     % (main_basename, tran_basename)
 
         elif main_revertable and tran_loseable:
-            title = _('Revert unsaved changes to main document "%s" and lose changes translation document "%s"?') \
+            title = _('Revert unsaved changes to main document ' + \
+                      '"%s" and lose changes translation document "%s"?') \
                     % (main_basename, tran_basename)
 
         elif main_revertable and tran_ok:
@@ -115,7 +117,8 @@ class RevertQuestionDialog(gtk.MessageDialog):
                     % main_basename
                     
         elif main_loseable and tran_revertable:
-            title = _('Revert unsaved changes to translation document "%s" and lose changes main document "%s"?') \
+            title = _('Revert unsaved changes to translation document ' + \
+                      '"%s" and lose changes main document "%s"?') \
                     % (tran_basename, main_basename)
                     
         elif main_ok and tran_revertable:
