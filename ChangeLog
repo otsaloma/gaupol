@@ -1,4 +1,18 @@
-2005-08-19  Osmo Salomaa  <otsaloma@cc.hut.fi>
+2005-08-21  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol: Minor coding style change.
+	  
+	* README: Formatting changed.
+	
+	* trantool: Code clean-up.
+	
+	* TODO: Formatting changed.
+	
+	* README.translators: File written.
+
+	* ChangeLog: Fixed faulty date on entry below.
+
+2005-08-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* trantool:
 	  New file to automate translation tasks.

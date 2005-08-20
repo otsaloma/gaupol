@@ -43,7 +43,7 @@ logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
 logger = logging.getLogger()
 
 
-def _check_dependencies():
+def check_dependencies():
     """Check existance and versions of dependencies."""
     
     if sys.version_info[:3] < (2, 4, 0):
@@ -64,7 +64,7 @@ def _check_dependencies():
         logger.critical('Glade support in PyGTK is required to run Gaupol')
         sys.exit()
     
-def _check_paths():
+def check_paths():
     """
     Determine paths of Gaupol files.
     
@@ -75,12 +75,12 @@ def _check_paths():
     current_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
 
     if os.path.isfile(os.path.join(current_dir, 'gaupol.desktop')):
-        _prepare_source_run(current_dir)
+        prepare_source_run(current_dir)
     else:
         prefix = os.path.abspath(os.path.join(current_dir, '..'))
-        _prepare_installed_run(prefix)
+        prepare_installed_run(prefix)
     
-def _import_optional_modules():
+def import_optional_modules():
     """Import optional modules."""
 
     try:
@@ -89,7 +89,7 @@ def _import_optional_modules():
     except ImportError:
         logger.info('Psyco not found.')
 
-def _parse_options():
+def parse_options():
     """
     Parse command line options and arguments.
     
@@ -100,7 +100,7 @@ def _parse_options():
 
     return args
     
-def _prepare_gettext():
+def prepare_gettext():
     """
     Prepare internationalization using gettext.
     
@@ -125,7 +125,7 @@ def _prepare_gettext():
     gtk.glade.bindtextdomain('gaupol', LOCALE_DIR)
     gtk.glade.textdomain('gaupol')
     
-def _prepare_installed_run(prefix):
+def prepare_installed_run(prefix):
     """Prepare path information for running installed."""
 
     lib_dir = os.path.join(prefix, 'lib')
@@ -133,7 +133,7 @@ def _prepare_installed_run(prefix):
     if lib_dir not in sys.path:
         sys.path.insert(0, lib_dir)
     
-def _prepare_source_run(prefix):
+def prepare_source_run(prefix):
     """Prepare path information for running from source directory."""
 
     lib_dir = os.path.join(prefix, 'lib')
@@ -151,12 +151,12 @@ def _prepare_source_run(prefix):
             
 if __name__ == '__main__':
 
-    args = _parse_options()
+    args = parse_options()
     
-    _check_dependencies()
-    _import_optional_modules()
-    _check_paths()
-    _prepare_gettext()
+    check_dependencies()
+    import_optional_modules()
+    check_paths()
+    prepare_gettext()
 
     from gaupol.gui import main
     main.main(args[1:])

@@ -1,0 +1,93 @@
+Table of Contents
+
+  1. Introduction
+  2. Creating a new .po file
+  3. Updating an existing .po file
+  4. Compiling .mo files
+  5. Testing your translation
+  6. References
+
+
+1. Introduction
+===============
+
+  This README file assumes that you are familiar with gettext and that you
+  know what to do with a .po file.
+
+  Gaupol uses the standard gettext system for translations. To automate the
+  process of creating .po and .mo files, a python script "trantool" can be
+  used. trantool relies on the following executables:
+
+    - intltool-extract
+    - msgfmt
+    - msginit
+    - msgmerge
+    - xgettext
+  
+  trantool can be used to create a .po file of translatable strings in Glade
+  XML files and Python source code files. Desktop file "gaupol.desktop" needs
+  to be translated separately.
+
+  To print a help message on using trantool, type
+  
+    ./trantool -h
+
+  The process done by trantool is modelled after PyGTK FAQ 22.2[1].
+
+
+2. Creating a new .po file
+==========================
+
+  To create a new .po file, use command
+  
+    ./trantool -c <lang>
+    
+  where lang is the language code in format "xx" or "xx_YY", e.g. "fi" or
+  "zh_CN". The resulting .po file is placed in the "po" directory.
+
+
+3. Updating an existing .po file
+================================
+
+  To update an existing .po file with new strings that have been added since
+  the last update, type
+  
+    ./trantool -u <lang>
+    
+  To update all .po files, substitute <lang> with "all".
+
+
+4. Compiling .mo files
+======================
+
+  To compile a binary .mo file based on the .po file you have translated, type
+  
+    ./trantool -m <lang>
+
+  To compile all languages, substitute <lang> with "all". The resulting .mo
+  file is placed in "locale" directory according to standard directory
+  hierarchy.
+
+
+5. Testing your translation
+===========================
+
+  After you have compiled a .mo file, the translation is available to Gaupol.
+  
+  To start gaupol without a translation, type
+  
+    LANG=C ./gaupol
+    
+  To start Gaupol with a translation in your current locale, type
+  
+    ./gaupol
+    
+  To start your application with a Finnish translation, type
+  
+    LANG=fi ./gaupol
+
+
+7. References
+=============
+
+  [1] http://www.async.com.br/faq/pygtk/index.py?req=show&file=faq22.002.htp

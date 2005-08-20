@@ -22,15 +22,20 @@
 """
 Automation of translation related tasks for Gaupol.
 
-With this script one can create a new .po file for a language, update an
-existing .po file or compile .mo files.
+Tasks handled by this script:
+- creating a new .po file
+- updating an existing .po file
+- compiling .mo files
 
 Needed tools:
-msgfmt
-msginit
-intltool-extract
-xgettext
-msgmerge
+- intltool-extract
+- msgfmt
+- msginit
+- msgmerge
+- xgettext
+
+Translatable strings are extracted from Glade XML files and Python source
+code files.
 """
 
 
@@ -46,7 +51,7 @@ LOCALE_DIR = os.path.join(WORK_DIR, 'locale'         )
 PO_DIR     = os.path.join(WORK_DIR, 'po'             )
 
 # Files
-POT_PATH = os.path.join(PO_DIR, 'messages.pot')
+POT_PATH = os.path.join(PO_DIR, 'gaupol.pot')
 
 # Paths of the C header files created from the Glade XML files.
 h_paths  = []
@@ -55,19 +60,25 @@ h_paths  = []
 py_paths = []
 
 
-def _check_write_permissions(dirnames):
-    """Check that the user has write permissions to paths and exit if not."""
+def check_write_permissions(dirnames):
+    """Check that the write permissions to dirnames exist and exit if not."""
     
     for dirname in dirnames:
-        if os.path.isdir(dirname) and not os.access(dirname, os.W_OK):
+    
+        # If the directory doesn't exist, it needs to be created i.e.
+        # write permissions are needed to its parent directory.
+        while not os.path.isdir(dirname):
+            dirname = os.path.join(dirname, '..')
+            
+        if not os.access(dirname, os.W_OK):
             sys.exit('You need write permissions to directory "%s".' % dirname)
     
-def _compile_mo(lang):
-    """Compile binary .mo files."""
+def compile_mo(lang):
+    """Compile binary .mo file for language lang."""
 
-    for lang in _get_languages(lang):
+    for lang in get_languages(lang):
 
-        _fancy_print('Compiling .mo file for language "%s"...' % lang)
+        fancy_print('Compiling .mo file for language "%s"...' % lang)
 
         po_path = os.path.join(PO_DIR, '%s.po' % lang)
         mo_dir  = os.path.join(LOCALE_DIR, lang, 'LC_MESSAGES')
@@ -78,31 +89,31 @@ def _compile_mo(lang):
             
         os.system('msgfmt %s -o %s' % (po_path, mo_path))
 
-def _create_po(lang):
+def create_po(lang):
     """Create a .po file for a new language."""
     
     po_path = os.path.join(PO_DIR, '%s.po' % lang)
     
     if os.path.isfile(po_path):
-        print '.po file for language "%s" already exists. ' + \
-              'Use the "-u" option to update the existing file.'
+        print '.po file for language "%s" already exists.' % lang
+        print 'Use the "-u" option to update the existing file.'
         return
 
-    _fancy_print('Creating .po file for language "%s"...' % lang)
+    fancy_print('Creating .po file for language "%s"...' % lang)
     
     os.system('msginit -l %s -i %s -o %s' % (lang, POT_PATH, po_path))
 
-def _create_pot():
+def create_pot():
     """Create a .pot file."""
     
-    _extract_strings_from_glade_files()
-    _get_python_source_files()
-    _extract_strings_from_source_files()
+    extract_strings_from_glade_files()
+    get_python_source_files()
+    extract_strings_from_source_files()
 
-def _extract_strings_from_glade_files():
+def extract_strings_from_glade_files():
     """Extract strings from Glade XML files to C header files."""
 
-    _fancy_print('Extracting strings from Glade XML files...')
+    fancy_print('Extracting strings from Glade XML files...')
 
     for (dirpath, dirnames, basenames) in os.walk(GLADE_DIR):
         os.chdir(dirpath)
@@ -112,10 +123,10 @@ def _extract_strings_from_glade_files():
             os.system('intltool-extract --type=gettext/glade %s' % basename)
             h_paths.append(os.path.join(dirpath, '%s.h' % basename))
 
-def _extract_strings_from_source_files():
+def extract_strings_from_source_files():
     """Extract strings from .py and .h source files to a .pot file."""
 
-    _fancy_print('Generating a .pot file from all source files...')
+    fancy_print('Generating a .pot file from all source files...')
 
     paths = h_paths + py_paths
 
@@ -127,15 +138,18 @@ def _extract_strings_from_source_files():
     path_arg = ' '.join(paths)
     os.system('xgettext -k_ -kN_ -c -o %s %s' % (POT_PATH, path_arg))
 
-def _fancy_print(text):
+def fancy_print(text):
     """Print a message that stands out from rest of the output."""
 
     line = '=' * len(text)
-    print '%s\n%s\n%s' % (line, text, line)
+    print '\n'.join((line, text, line))
 
-def _get_languages(lang):
-    """Get a list of languages."""
+def get_languages(lang):
+    """
+    Get a list of languages.
     
+    lang = xx_YY or "all"
+    """
     langs = []
     if lang == 'all':
         paths = os.listdir(PO_DIR)
@@ -147,7 +161,7 @@ def _get_languages(lang):
 
     return langs
 
-def _get_python_source_files():
+def get_python_source_files():
     """Get a list of Python source code files."""
 
     for (dirpath, dirnames, basenames) in os.walk(LIB_DIR):
@@ -155,7 +169,7 @@ def _get_python_source_files():
             if basename.endswith('.py'):
                 py_paths.append(os.path.join(dirpath, basename))
 
-def _parse_options():
+def parse_options():
     """
     Parse given command line options and arguments.
     
@@ -180,15 +194,15 @@ def _parse_options():
     parser.add_option(
         '-m', '', action='store', type='string',
         metavar='<lang/all>', dest='compile_mo', default=False,
-        help='compile a .po file to a .mo file'
+        help='compile a .mo file'
     )
 
     return parser.parse_args(sys.argv)
 
-def _remove_temporary_files():
-    """Remove temporary files creating during operations."""
+def remove_temporary_files():
+    """Remove temporary files created during operations."""
 
-    _fancy_print('Removing temporary files...')
+    fancy_print('Removing temporary files...')
 
     # .pot file
     print POT_PATH.replace(WORK_DIR, '.')
@@ -199,12 +213,12 @@ def _remove_temporary_files():
         print path.replace(WORK_DIR, '.')
         os.remove(path)
 
-def _update_po(lang):
+def update_po(lang):
     """Update an existing .po file with new strings."""
 
-    for lang in _get_languages(lang):
+    for lang in get_languages(lang):
 
-        _fancy_print('Updating .po file for language "%s"...' % lang)
+        fancy_print('Updating .po file for language "%s"...' % lang)
         
         po_path = os.path.join(PO_DIR, '%s.po' % lang)
         os.system('msgmerge -U %s %s' % (po_path, POT_PATH))
@@ -212,26 +226,26 @@ def _update_po(lang):
 
 if __name__ == '__main__':
 
-    opts, args = _parse_options()
+    opts, args = parse_options()
     
     if opts.create_po:
     
-        _check_write_permissions([GLADE_DIR, PO_DIR])
-        _create_pot()
-        _create_po(opts.create_po)
-        _remove_temporary_files()
+        check_write_permissions([GLADE_DIR, PO_DIR])
+        create_pot()
+        create_po(opts.create_po)
+        remove_temporary_files()
 
     elif opts.update_po:
     
-        _check_write_permissions([GLADE_DIR, PO_DIR])
-        _create_pot()
-        _update_po(opts.update_po)
-        _remove_temporary_files()
+        check_write_permissions([GLADE_DIR, PO_DIR])
+        create_pot()
+        update_po(opts.update_po)
+        remove_temporary_files()
 
     elif opts.compile_mo:
     
-        _check_write_permissions([LOCALE_DIR])
-        _compile_mo(opts.compile_mo)
+        check_write_permissions([LOCALE_DIR])
+        compile_mo(opts.compile_mo)
 
     else:
         print 'Type "./trantool -h" for help.'

@@ -1,45 +1,44 @@
 Before 0.1
 ==========
 
-- Finnish translation
-- gaupol-translators (or gaupol-i18n) mailing list
-- Installation & uninstallation + instructions
-- Project page
-- Website
+  - Finnish translation
+  - gaupol-translators (or gaupol-i18n) mailing list
+  - Installation & uninstallation + instructions
+  - Project page
+  - Website
 
 
 After 0.1
 =========
 
-- Search, search and replace
-- Spell-check
-- Subtitle editing features
+  - Search, search and replace
+  - Spell-check
+  - Subtitle editing features
 
 
 Unscheduled
 ===========
 
-- Documentation
-- Support for additional subtitle formats:
+  - Documentation
 
-	o MPlayerSub/MPSub
-	  http://www.mplayerhq.hu/DOCS/tech/mpsub.sub
-	  
-	o SubViewer & SubViewer 2.0
-	
-	o SubStation Alpha (SSA & ASS)
-	  http://moodub.free.fr/ass-specs.doc
-	  
-	o SAMI
-	  http://msdn.microsoft.com/library/en-us/dnacc/html/atg_samiarticle.asp
+  - Support for additional subtitle formats:
+
+      o MPlayerSub/MPSub
+        http://www.mplayerhq.hu/DOCS/tech/mpsub.sub
+    
+      o SubViewer & SubViewer 2.0
+
+      o SubStation Alpha (SSA & ASS)
+        http://moodub.free.fr/ass-specs.doc
+
+      o SAMI
+        http://msdn.microsoft.com/library/en-us/dnacc/html/atg_samiarticle.asp
 
 
-Notable new stuff in PyGTK 2.8
-==============================
+New in PyGTK 2.8
+================
 
-http://live.gnome.org/PyGTK/WhatsNew28
+  http://live.gnome.org/PyGTK/WhatsNew28
 
-Switch to these if something else causes PyGTK 2.8 to be required?
-
-	- Tighter GObject/Python Integration
-	- Properties as Object Attributes
+  - Tighter GObject/Python Integration
+  - Properties as Object Attributes
