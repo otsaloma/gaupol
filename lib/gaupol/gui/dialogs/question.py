@@ -126,8 +126,8 @@ class RevertQuestionDialog(gtk.MessageDialog):
             self, parent, FLAGS, TYPE, gtk.BUTTONS_NONE, title
         )
         
-        self.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_NO )
-        self.add_button(_('_Revert')    , gtk.RESPONSE_YES)
+        self.add_button(gtk.STOCK_CANCEL         , gtk.RESPONSE_NO )
+        self.add_button(gtk.STOCK_REVERT_TO_SAVED, gtk.RESPONSE_YES)
 
         self.set_default_response(gtk.RESPONSE_NO)
         

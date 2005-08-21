@@ -42,8 +42,9 @@ PY_NAME, DISP_NAME, DESC = 0, 1, 2
 # This list cannot be used directly because some encodings might require
 # additional modules installed to be available. Hence the functions should be
 # used to acquire a list of available encodings.
-ENCODINGS = (
+
     # Python name     , Display name      , Description
+ENCODINGS = (
     ('ascii'          , 'US-ASCII'        , _('English')),
     ('big5'           , 'Big5'            , _('Chinese traditional')),
     ('big5hkscs'      , 'Big5-HKSCS'      , _('Chinese traditional')),

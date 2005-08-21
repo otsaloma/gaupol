@@ -49,11 +49,11 @@ class CellEditAction(DURAction):
 
         descriptions = [
             None,
-            _('Editing show of subtitle %d')        % subtitle,
-            _('Editing hide of subtitle %d')        % subtitle,
-            _('Editing duration of subtitle %d')    % subtitle,
-            _('Editing text of subtitle %d')        % subtitle,
-            _('Editing translation of subtitle %d') % subtitle,
+            _('Editing show'),
+            _('Editing hide'),
+            _('Editing duration'),
+            _('Editing text'),
+            _('Editing translation'),
         ]
         
         self.description = descriptions[col]

@@ -182,9 +182,8 @@ class GUIBuilder(Delegate):
 
         self.uim = gtk.UIManager()
 
+        # Name      , Stock-icon, Label
         menus = [
-            # Name      , Stock-icon, Label
-
             ('file'     , None      , _('_File')     ),
             ('edit'     , None      , _('_Edit')     ),
             ('view'     , None      , _('_View')     ),
@@ -206,7 +205,7 @@ class GUIBuilder(Delegate):
             (    
                 'new',
                 gtk.STOCK_NEW,
-                _('_New...'),
+                _('_New'),
                 '<control>N',
                 _('Create a new document'),
                 self.on_new_activated
@@ -568,14 +567,14 @@ class GUIBuilder(Delegate):
                 None,
                 _('T_imes') ,
                 '<control>M',
-                _('Show timings as times'),
+                _('Use time units'),
                 0
             ), (
                 'frames',
                 None,
                 _('F_rames'),
                 '<control>R',
-                _('Show timings as frames'),
+                _('Use frame units'),
                 1
             )
         ]
@@ -586,21 +585,21 @@ class GUIBuilder(Delegate):
                 None,
                 _('2_3.976 fps'),
                 None,
-                _('Calculate unnative timings with framerate 23.976 fps'),
+                _('Calculate unnative units with framerate 23.976 fps'),
                 0
             ), (
                 '25',
                 None,
                 _('2_5 fps'),
                 None,
-                _('Calculate unnative timings with framerate 25 fps'),
+                _('Calculate unnative units with framerate 25 fps'),
                 1
             ), (
                 '29.97',
                 None,
                 _('2_9.97 fps'),
                 None,
-                _('Calculate unnative timings with framerate 29.97 fps'),
+                _('Calculate unnative units with framerate 29.97 fps'),
                 2
             )
         ]

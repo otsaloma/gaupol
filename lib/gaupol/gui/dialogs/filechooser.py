@@ -48,9 +48,8 @@ class CustomFileChooserDialog(gtk.FileChooserDialog):
         # filename and there is no easy way to determine when the filename
         # conflicts with the filter.
 
+        # Format, Name           , Mime-type   , Pattern
         filters = [
-            # Format, Name           , Mime-type   , Pattern
-
             (None   , _('All files') , None        , '*'    ),
             (None   , _('Plain text'), 'text/plain', None   ),
         ]

@@ -237,7 +237,7 @@ class FileSaver(Delegate):
             gui.set_cursor_normal(self.window)
             return False
 
-        message = _('Saved a copy of translation file to "%s"') % path
+        message = _('Saved a copy of translation document to "%s"') % path
         self.set_status_message(message)
         
         gui.set_cursor_normal(self.window)

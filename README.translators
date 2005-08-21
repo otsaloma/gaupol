@@ -79,15 +79,11 @@ Table of Contents
   
   To start gaupol without a translation, type
   
-    LANG=C ./gaupol
+    ./gaupol -t
     
   To start Gaupol with a translation in your current locale, type
   
     ./gaupol
-    
-  To start your application with a Finnish translation, type
-  
-    LANG=fi ./gaupol
 
 
 7. References

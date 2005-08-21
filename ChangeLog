@@ -1,5 +1,30 @@
 2005-08-21  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol: Re-added "-t" / "--no-translation" option.
+
+	* README.translators:
+	  Fixed instructions on testing translation.
+
+	* TODO: Updated.
+	
+	* gui/dialogs/filechooser.py:
+	  gui/delegates/guibuilder.py:
+	  gui/delegates/filesaver.py:
+	  gui/delegates/celleditor.py:
+	  lib/util/encodinglib.py:
+	  Fixed translatable strings.
+	  
+	* gui/dialogs/question.py (RevertQuestionDialog):
+	  Use stock button for revert.
+
+	* gui/delegates/texteditor.py:
+	  gui/delegates/roweditor.py:
+	  Removed faulty and complicated ngettext strings.
+
+	* fi.po: Added finnish translation.
+
+2005-08-21  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol.desktop: Altered finnish translation.
 	
 	* trantool (check_write_permissions):

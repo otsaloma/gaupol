@@ -93,14 +93,20 @@ def parse_options():
     """
     Parse command line options and arguments.
     
-    Return: arguments
+    Return: options, arguments
     """
     parser = optparse.OptionParser(version='Gaupol %s' % VERSION)
-    options, args = parser.parse_args(sys.argv)
 
-    return args
+    parser.add_option(
+        '-t', '--no-translation', action='store_true', dest='no_translation',
+        default=False, help='ignore possible translation (use english)'
+    )
+
+    opts, args = parser.parse_args(sys.argv)
+
+    return opts, args
     
-def prepare_gettext():
+def prepare_gettext(no_translation):
     """
     Prepare internationalization using gettext.
     
@@ -109,6 +115,11 @@ def prepare_gettext():
     will be available with the underscore function and plural gettext with
     "ngettext".
     """
+    if no_translation:
+        __builtins__.__dict__['_']        = lambda x: x
+        __builtins__.__dict__['ngettext'] = lambda x: x
+        return
+
     import gtk.glade
     from gaupol.paths import LOCALE_DIR
 
@@ -151,12 +162,12 @@ def prepare_source_run(prefix):
             
 if __name__ == '__main__':
 
-    args = parse_options()
+    opts, args = parse_options()
     
     check_dependencies()
     import_optional_modules()
     check_paths()
-    prepare_gettext()
+    prepare_gettext(opts.no_translation)
 
     from gaupol.gui import main
     main.main(args[1:])

@@ -54,15 +54,7 @@ class RowInsertAction(DURAction):
         self._amount = amount
         self._inserted_rows = []
 
-        first = self._start_row + 1
-        last  = self._start_row + amount
-
-        self.description = ngettext(
-            'Inserting subtitle %d'     % first,
-            'Inserting subtitles %d-%d' % (first, last),
-            amount
-        )
-
+        self.description = _('Inserting subtitles')
         self.documents = [TYPE.MAIN, TYPE.TRAN]
 
     def do(self):
@@ -120,15 +112,7 @@ class RowRemoveAction(DURAction):
 
         self._selected_rows = project.get_selected_rows()
         
-        first = self._selected_rows[ 0] + 1
-        last  = self._selected_rows[-1] + 1
-
-        self.description = ngettext(
-            'Removing subtitle %d'           % first,
-            'Removing subtitles %d, ... , %d' % (first, last),
-            last - first + 1
-        )
-
+        self.description = _('Removing subtitles')
         self.documents = [TYPE.MAIN, TYPE.TRAN]
 
         texts  = project.data.texts
