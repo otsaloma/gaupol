@@ -68,7 +68,7 @@ def check_write_permissions(dirnames):
         # If the directory doesn't exist, it needs to be created i.e.
         # write permissions are needed to its parent directory.
         while not os.path.isdir(dirname):
-            dirname = os.path.join(dirname, '..')
+            dirname = os.path.abspath(os.path.join(dirname, '..'))
             
         if not os.access(dirname, os.W_OK):
             sys.exit('You need write permissions to directory "%s".' % dirname)

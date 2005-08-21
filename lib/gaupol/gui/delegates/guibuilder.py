@@ -192,7 +192,6 @@ class GUIBuilder(Delegate):
             ('framerate', None      , _('_Framerate')),
             ('format'   , None      , _('F_ormat')   ),
             ('case'     , None      , _('_Case')     ),
-            ('search'   , None      , _('_Search')   ),
             ('documents', None      , _('_Documents')),
             ('help'     , None      , _('_Help')     ),
         ]

@@ -1,5 +1,25 @@
 2005-08-21  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol.desktop: Altered finnish translation.
+	
+	* trantool (check_write_permissions):
+	  Fixed diretory recursion bug.
+	  
+	* gui/dialogs/error.py:
+	  gui/dialogs/warning.py:
+	  gui/dialogs/question.py:
+	  gui/delegates/helper.py:
+	  gui/delegates/celleditor.py:
+	  Fixed formatting of translatable strings.
+	  
+	* gui/delegates/guibuilder.py: Removed search menu.
+	
+	* README.translators: Minor formatting and typo fixes.
+	
+	* prefs-dialog.glade (undo_levels_spin_button): Do not expand.
+
+2005-08-21  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol: Minor coding style change.
 	  
 	* README: Formatting changed.

@@ -45,15 +45,12 @@ class CellEditAction(DURAction):
         self._old_value = old_value
         self._new_value = new_value
 
-        mode_name = MODE.NAMES[project.edit_mode]
         subtitle = row + 1
 
         descriptions = [
             None,
-            # TRANSLATORS: Editing show {time,frame} of subtitle N
-            _('Editing show %s of subtitle %d')     % (mode_name, subtitle),
-            # TRANSLATORS: Editing show {time,frame} of subtitle N
-            _('Editing hide %s of subtitle %d')     % (mode_name, subtitle),
+            _('Editing show of subtitle %d')        % subtitle,
+            _('Editing hide of subtitle %d')        % subtitle,
             _('Editing duration of subtitle %d')    % subtitle,
             _('Editing text of subtitle %d')        % subtitle,
             _('Editing translation of subtitle %d') % subtitle,

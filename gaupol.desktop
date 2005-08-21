@@ -1,9 +1,9 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Gaupol Subtitle Editor
-Name[fi]=Gaupol Tekstityseditori
+Name[fi]=Gaupol Tekstitysmuokkain
 GenericName=Subtitle Editor
-GenericName[fi]=Tekstityseditori
+GenericName[fi]=Tekstitysmuokkain
 Comment=Edit subtitle files
 Comment[fi]=Muokkaa tekstitystiedostoja
 Exec=gaupol

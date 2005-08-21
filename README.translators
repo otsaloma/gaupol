@@ -1,3 +1,6 @@
+Translating Gaupol
+==================
+
 Table of Contents
 
   1. Introduction
@@ -38,7 +41,7 @@ Table of Contents
 2. Creating a new .po file
 ==========================
 
-  To create a new .po file, use command
+  To create a new .po file, type
   
     ./trantool -c <lang>
     
