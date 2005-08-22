@@ -13,8 +13,8 @@ Uninstallation
 
   To be able to uninstall, two files are needed: "setup.py" and
   "installed-files.log", which was generated during installation. If you
-  accidentally deleted the log file, just install again to the same prefix
-  and an appropriate log file will be generated.
+  accidentally deleted the log file, just install the same version again to
+  the same prefix and an appropriate log file will be generated.
   
   The uninstallation command is not a part of distutils, but instead an
   unstable extension. To uninstall, type
