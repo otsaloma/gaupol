@@ -654,7 +654,7 @@ msgstr "Lisää tyhjiä tekstejä"
 
 #: lib/gaupol/gui/delegates/guibuilder.py:348
 msgid "Re_move Subtitles"
-msgstr "_Poista tekstit"
+msgstr "_Poista tekstejä"
 
 #: lib/gaupol/gui/delegates/guibuilder.py:350
 msgid "Remove selected subtitles"
