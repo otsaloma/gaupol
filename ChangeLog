@@ -1,5 +1,9 @@
 2005-08-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* setup.py: Changed package name to lowercase.
+
+2005-08-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* MANIFEST.in: New file.
 	
 	* setup.cfg: New file.

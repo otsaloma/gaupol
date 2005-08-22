@@ -193,7 +193,7 @@ class Uninstall(Command):
 
 
 setup(
-    name='Gaupol',
+    name='gaupol',
     version=VERSION,
     description='Subtitle Editor',
     author='Osmo Salomaa',
