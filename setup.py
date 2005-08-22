@@ -49,7 +49,7 @@ contains only files, not directories. After all the files have been removed,
 the process will continue by recursively going through all the empty parent
 directories and asking if you want them removed.
 
-Note: the "--dry-run" option is not supported. All files will actually be
+Note: The "--dry-run" option is not supported. All files will actually be
 removed if you choose to continue.
 '''
 
