@@ -1,0 +1,26 @@
+Installation
+============
+
+  Gaupol uses Python distutils for installation. To install gaupol, type
+  
+    ./setup.py install [--prefix=...]
+    
+  By default the prefix is /usr/local.
+
+
+Uninstallation
+==============
+
+  To be able to uninstall, two files are needed: "setup.py" and
+  "installed-files.log", which was generated during installation. If you
+  accidentally deleted the log file, just install again to the same prefix
+  and an appropriate log file will be generated.
+  
+  The uninstallation command is not a part of distutils, but instead an
+  unstable extension. To uninstall, type
+
+    ./setup.py uninstall
+    
+  The uninstallation process will first display a warning explaining how the
+  uninstallation works. After reading the warning, you can still abort with
+  no files removed.
