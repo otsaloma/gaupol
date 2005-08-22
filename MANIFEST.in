@@ -1,0 +1,17 @@
+include AUTHORS
+include ChangeLog
+include COPYING
+include gaupol
+include gaupol.desktop
+include INSTALL
+include NEWS
+include README
+include README.translators
+include setup.cfg
+include setup.py
+include TODO
+include trantool
+recursive-include data *.glade *.xml *.png
+recursive-include lib *.py
+recursive-include locale *.mo
+recursive-include po *.po

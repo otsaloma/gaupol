@@ -39,6 +39,7 @@ code files.
 """
 
 
+from glob import glob
 import optparse
 import os
 import sys
@@ -152,10 +153,9 @@ def get_languages(lang):
     """
     langs = []
     if lang == 'all':
-        paths = os.listdir(PO_DIR)
+        paths = glob(os.path.join(PO_DIR, '*.po'))
         for path in paths:
-            if path.endswith('.po'):
-                langs.append(os.path.basename(path)[:-3])
+            langs.append(os.path.basename(path)[:-3])
     else:
         langs.append(lang)
 

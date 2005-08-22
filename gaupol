@@ -138,8 +138,9 @@ def prepare_gettext(no_translation):
     
 def prepare_installed_run(prefix):
     """Prepare path information for running installed."""
-
-    lib_dir = os.path.join(prefix, 'lib')
+    
+    python_dir = 'python%d.%d' % sys.version_info[:2]
+    lib_dir = os.path.join(prefix, 'lib', python_dir, 'site-packages')
 
     if lib_dir not in sys.path:
         sys.path.insert(0, lib_dir)
@@ -157,8 +158,8 @@ def prepare_source_run(prefix):
     paths.DATA_DIR   = os.path.join(prefix, 'data'           )
     paths.GLADE_DIR  = os.path.join(prefix, 'data'  , 'glade')
     paths.ICON_DIR   = os.path.join(prefix, 'data'  , 'icons')
-    paths.LOCALE_DIR = os.path.join(prefix, 'locale'         )
     paths.UI_DIR     = os.path.join(prefix, 'data'  , 'ui'   )
+    paths.LOCALE_DIR = os.path.join(prefix, 'locale'         )
             
 if __name__ == '__main__':
 

@@ -11,4 +11,4 @@ Icon=gaupol.png
 StartupNotify=true
 Terminal=false
 Type=Application
-Categories=Application;Video;
+Categories=Application;AudioVideo;

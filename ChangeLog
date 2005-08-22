@@ -1,3 +1,20 @@
+2005-08-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* MANIFEST.in: New file.
+	
+	* setup.cfg: New file.
+	
+	* setup.py: File initially written.
+	
+	* gaupol (prepare_installed_run):
+	  Changed LIB_DIR to point to Python's site-packages.
+	  
+	* gaupol.desktop: Fixed Category to AudioVideo.
+	
+	* trantool: Use glob to find files.
+	
+	* uninstall.py: Removed in favor of uninstallation in setup.py.
+
 2005-08-21  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol: Re-added "-t" / "--no-translation" option.
