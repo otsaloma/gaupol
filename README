@@ -6,9 +6,16 @@ General Information
   stage and does not yet contain any advanced features. The aim is to make a
   simple, but powerful, subtitle editor for multiple subtitle formats.
 
+  Currently supported formats:
+  
+    - MicroDVD
+    - MPL2
+    - SubRip
+
   Current features:
 
     - Support for a wide range of character encodings
+    - Conversions between all supported formats
     - Convenient translating
     - Text formatting
     - Gnome HIG 2.0 compliant user interface

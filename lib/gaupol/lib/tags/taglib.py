@@ -37,6 +37,10 @@ class TagLibrary(object):
     DECODE_TAGS is a list of regular expressions that convert tags to the
     Gaupol internal format. ENCODE_TAGS convert from Gaupol internal format
     to the class's format.
+    
+    pre and post decode and encode functions can be used to perform arbitrary
+    tasks in tag conversion. pre methods are run before regular exressions
+    and post methods after.
 
     Internal tags:
     <b></b>
@@ -54,6 +58,20 @@ class TagLibrary(object):
     # Pattern, Flags, Replacement
     DECODE_TAGS = []
     ENCODE_TAGS = []
+    
+    def pre_decode(text):
+        return text
+    def pre_encode(text):
+        return text
+    def post_decode(text):
+        return text
+    def post_encode(text):
+        return text
+        
+    pre_decode  = staticmethod( pre_decode)
+    post_decode = staticmethod(post_decode)
+    pre_encode  = staticmethod( pre_encode)
+    post_encode = staticmethod(post_encode)
 
     def italicize(text):
         """Italicize text."""

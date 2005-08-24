@@ -68,32 +68,48 @@ class MPL2(TagLibrary):
         )
     ] + MicroDVD.DECODE_TAGS
 
-    ENCODE_TAGS = []
+    ENCODE_TAGS = MicroDVD.ENCODE_TAGS
     
-    # TODO:
-    # Replace this terribly slow and ugly hack with something better?
-    #
-    # Ugly hack get style tags at the start of every line, assuming subtitle
-    # has a maximum of six lines.
-    style_tags = [
-        (r'<i>', r'</i>', r'/' ),
-        (r'<b>', r'</b>', r'\\'),
-        (r'<u>', r'</u>', r'_' ),
-    ]
-    for i in range(6):
-        for entry in style_tags:
-
-            pattern  = r'%s(.*?)' % entry[0]
-            pattern += r'\n(.*?)' * i
-            pattern += r'%s' % entry[1]
-
-            replacement = r'%s\1' % entry[2]
-            for k in range(1, i + 1):
-                replacement += r'\n%s\%d' % (entry[2], k + 1)
-
-            ENCODE_TAGS.append((pattern, re.MULTILINE, replacement))
+    def pre_encode(text):
+        """Convert style tags to native MPL2 style tags."""
+        
+        style_tags = [
+            ('<i>', '</i>', '/' ),
+            ('<b>', '</b>', '\\'),
+            ('<u>', '</u>', '_' ),
+        ]
     
-    ENCODE_TAGS += MicroDVD.ENCODE_TAGS
+        for i in range(len(style_tags)):
+    
+            opening, closing, replacement = style_tags[i]
+    
+            while text.find(opening) != -1:
+        
+                # Get start and end positions of tag.
+                start = text.find(opening)
+                try:
+                    end = text.index(closing)
+                except ValueError:
+                    end = len(text)
+                
+                # Divide text into parts.
+                before = text[:start]
+                middle = text[start + 3:end]
+                after  = text[end   + 4:]
+    
+                # Add new style tags to beginning of each line.
+                lines = middle.split('\n')
+                for i in range(1, len(lines)):
+                    if not lines[i].startswith(replacement):
+                        lines[i] = replacement + lines[i]
+                middle = '\n'.join(lines)
+    
+                # Reconstruct line.
+                text = before + replacement + middle + after
+        
+        return text
+        
+    pre_encode  = staticmethod(pre_encode)
 
     def italicize(text):
         """Italicize text."""

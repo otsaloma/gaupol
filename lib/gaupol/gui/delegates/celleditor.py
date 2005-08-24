@@ -141,7 +141,7 @@ class CellEditor(Delegate):
         self._set_sensitivities(False)
 
         if col in [TEXT, TRAN]:
-            message = _('Use Ctrl+Enter for line-break')
+            message = _('Use Ctrl+Return for line-break')
             self.set_status_message(message, False)
 
     def _set_sensitivities(self, sensitive):

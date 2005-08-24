@@ -1,3 +1,15 @@
+2005-08-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gui/delegates/celleditor.py:
+	  fi/po:
+	  Fixed one translatable string.
+	  
+	* lib/gaupol/lib/tags/taglib.py:
+	  lib/gaupol/lib/tags/tagconv.py:
+	  lib/gaupol/lib/tags/mpl2.py:
+	  Added arbitrary pre and post encode and decode tag conversion functions
+	  and used one for MPL2.
+
 2005-08-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* setup.py: Fixed location of "doc" directory.

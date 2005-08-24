@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-21 16:34+0300\n"
+"POT-Creation-Date: 2005-08-24 03:56+0300\n"
 "PO-Revision-Date: 2005-08-21 04:11+0200\n"
 "Last-Translator: Osmo Salomaa <otsaloma@cc.hut.fi>\n"
 "Language-Team: Finnish\n"
@@ -15,6 +15,26 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: data/glade/insertsub-dialog.glade.h:1
+msgid ""
+"Above selection\n"
+"Below selection"
+msgstr ""
+"Valinnan yläpuolelle\n"
+"Valinnan alapuolelle"
+
+#: data/glade/insertsub-dialog.glade.h:3
+msgid "Insert Subtitles"
+msgstr "Lisää tekstejä"
+
+#: data/glade/insertsub-dialog.glade.h:4
+msgid "_Amount:"
+msgstr "_Määrä:"
+
+#: data/glade/insertsub-dialog.glade.h:5
+msgid "_Position:"
+msgstr "_Sijainti:"
 
 #: data/glade/prefs-dialog.glade.h:1
 msgid "<span weight=\"bold\">Font</span>"
@@ -79,26 +99,6 @@ msgstr "_Valitse pääasiakirjat, jotka haluat tallentaa:"
 msgid "Select the _translation documents you want to save:"
 msgstr "Va_litse käännösasiakirjat, jotka haluat tallentaa:"
 
-#: data/glade/insertsub-dialog.glade.h:1
-msgid ""
-"Above selection\n"
-"Below selection"
-msgstr ""
-"Valinnan yläpuolelle\n"
-"Valinnan alapuolelle"
-
-#: data/glade/insertsub-dialog.glade.h:3
-msgid "Insert Subtitles"
-msgstr "Lisää tekstejä"
-
-#: data/glade/insertsub-dialog.glade.h:4
-msgid "_Amount:"
-msgstr "_Määrä:"
-
-#: data/glade/insertsub-dialog.glade.h:5
-msgid "_Position:"
-msgstr "_Sijainti:"
-
 #: data/glade/encoding-dialog.glade.h:1
 msgid "Character Encodings"
 msgstr "Merkistön koodaustavat"
@@ -141,6 +141,10 @@ msgstr "Käännös"
 #, python-format
 msgid "%s translation"
 msgstr "%s käännös"
+
+#: lib/gaupol/gui/dialogs/insertsub.py:60
+msgid "_Insert"
+msgstr "_Lisää"
 
 #: lib/gaupol/gui/dialogs/error.py:62
 #, python-format
@@ -195,6 +199,23 @@ msgstr "Tiedoston \"%s\" kirjoittaminen epäonnistui"
 #: lib/gaupol/gui/dialogs/about.py:38
 msgid "Subtitle editor"
 msgstr "Tekstitysmuokkain"
+
+#: lib/gaupol/gui/dialogs/info.py:42
+msgid "A newer version is available"
+msgstr "Uudempi versio on saatavissa"
+
+#: lib/gaupol/gui/dialogs/info.py:44
+msgid "You have the latest version"
+msgstr "Sinulla on uusin versio"
+
+#: lib/gaupol/gui/dialogs/info.py:56
+#, python-format
+msgid ""
+"The latest version is %s.\n"
+"You are using %s."
+msgstr ""
+"Uusin versio on %s.\n"
+"Sinulla on käytössä %s."
 
 #: lib/gaupol/gui/dialogs/filechooser.py:53
 msgid "All files"
@@ -344,27 +365,6 @@ msgstr ""
 msgid "If you revert, changes will be permanently lost."
 msgstr "Mikäli palautat levyltä, muutokset menetetään lopullisesti."
 
-#: lib/gaupol/gui/dialogs/info.py:42
-msgid "A newer version is available"
-msgstr "Uudempi versio on saatavissa"
-
-#: lib/gaupol/gui/dialogs/info.py:44
-msgid "You have the latest version"
-msgstr "Sinulla on uusin versio"
-
-#: lib/gaupol/gui/dialogs/info.py:56
-#, python-format
-msgid ""
-"The latest version is %s.\n"
-"You are using %s."
-msgstr ""
-"Uusin versio on %s.\n"
-"Sinulla on käytössä %s."
-
-#: lib/gaupol/gui/dialogs/insertsub.py:60
-msgid "_Insert"
-msgstr "_Lisää"
-
 #: lib/gaupol/gui/delegates/fileopener.py:169
 #, python-format
 msgid "Main file \"%s\" is already open"
@@ -425,14 +425,6 @@ msgstr "Kumoa %s"
 #, python-format
 msgid "Redo %s"
 msgstr "Tee uudelleen %s"
-
-#: lib/gaupol/gui/delegates/roweditor.py:57
-msgid "Inserting subtitles"
-msgstr "Tekstien lisääminen"
-
-#: lib/gaupol/gui/delegates/roweditor.py:115
-msgid "Removing subtitles"
-msgstr "Tekstien poistaminen"
 
 #. TRANSLATORS: framerate, e.g. "23.976 fps"
 #: lib/gaupol/gui/delegates/guibuilder.py:61
@@ -924,6 +916,38 @@ msgstr "Tee uudelleen"
 msgid "Redo several undone actions"
 msgstr "Tee uudelleen useita kumottuja toimintoja"
 
+#: lib/gaupol/gui/delegates/texteditor.py:85
+msgid "Changing case"
+msgstr "Kirjainkoon muuttaminen"
+
+#: lib/gaupol/gui/delegates/texteditor.py:112
+msgid "Clearing"
+msgstr "Tyhjentäminen"
+
+#: lib/gaupol/gui/delegates/texteditor.py:137
+msgid "Cutting"
+msgstr "Leikkaus"
+
+#: lib/gaupol/gui/delegates/texteditor.py:150
+msgid "Toggling dialog lines"
+msgstr "Vuoropuheluksi muuttaminen"
+
+#: lib/gaupol/gui/delegates/texteditor.py:177
+msgid "Toggling italicization"
+msgstr "Kursiiviksi muuttaminen"
+
+#: lib/gaupol/gui/delegates/texteditor.py:224
+msgid "Pasting"
+msgstr "Liittäminen"
+
+#: lib/gaupol/gui/delegates/roweditor.py:57
+msgid "Inserting subtitles"
+msgstr "Tekstien lisääminen"
+
+#: lib/gaupol/gui/delegates/roweditor.py:115
+msgid "Removing subtitles"
+msgstr "Tekstien poistaminen"
+
 #: lib/gaupol/gui/delegates/helper.py:70
 msgid ""
 "Operation timed out. Please try again later or proceed to the download page."
@@ -988,30 +1012,6 @@ msgstr "Tallenna käännös nimellä"
 msgid "Saved translation file as \"%s\""
 msgstr "Tallennettiin käännöstiedosto nimellä \"%s\""
 
-#: lib/gaupol/gui/delegates/texteditor.py:85
-msgid "Changing case"
-msgstr "Kirjainkoon muuttaminen"
-
-#: lib/gaupol/gui/delegates/texteditor.py:112
-msgid "Clearing"
-msgstr "Tyhjentäminen"
-
-#: lib/gaupol/gui/delegates/texteditor.py:137
-msgid "Cutting"
-msgstr "Leikkaus"
-
-#: lib/gaupol/gui/delegates/texteditor.py:150
-msgid "Toggling dialog lines"
-msgstr "Vuoropuheluksi muuttaminen"
-
-#: lib/gaupol/gui/delegates/texteditor.py:177
-msgid "Toggling italicization"
-msgstr "Kursiiviksi muuttaminen"
-
-#: lib/gaupol/gui/delegates/texteditor.py:224
-msgid "Pasting"
-msgstr "Liittäminen"
-
 #: lib/gaupol/gui/delegates/celleditor.py:52
 msgid "Editing show"
 msgstr "Näytön muokkaaminen"
@@ -1033,8 +1033,8 @@ msgid "Editing translation"
 msgstr "Käännöksen muokkaaminen"
 
 #: lib/gaupol/gui/delegates/celleditor.py:144
-msgid "Use Ctrl+Enter for line-break"
-msgstr "Käytä näppäinyhdistelmää Ctrl+Enter rivinvaihtoon"
+msgid "Use Ctrl+Return for line-break"
+msgstr "Käytä näppäinyhdistelmää Ctrl+Return rivinvaihtoon"
 
 #: lib/gaupol/lib/util/encodinglib.py:48 lib/gaupol/lib/util/encodinglib.py:51
 #: lib/gaupol/lib/util/encodinglib.py:53
