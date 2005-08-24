@@ -1,5 +1,19 @@
 2005-08-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* README: Updated based on website text.
+	
+	* gui/delegates/helper.py: Changed DOWNLOAD_URL to point to new URL.
+	
+	* README.translators: Added a bit more info.
+	
+	* fi.po: Added package and version info.
+
+	* doc: New directory for documentation.
+	
+	* doc/releasing.txt: New file for release checklist.
+
+2005-08-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gui/delegates/celleditor.py:
 	  fi/po:
 	  Fixed one translatable string.

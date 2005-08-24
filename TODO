@@ -1,10 +1,7 @@
 Before 0.1
 ==========
 
-  - Website
-  - Revise README based on website.
-  - Download page link for version check dialog button
-  - Release process: branching, tarballing and informing
+  - Release process: branching/tagging, GPG key, tarballing, informing
 
 
 After 0.1

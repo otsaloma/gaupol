@@ -1,10 +1,11 @@
 General Information
 ===================
 
-  Gaupol is a subtitle editor for text-based subtitles. Currently supported
-  formats include SubRip, MicroDVD and MPL2. Gaupol is in early development
-  stage and does not yet contain any advanced features. The aim is to make a
-  simple, but powerful, subtitle editor for multiple subtitle formats.
+  Gaupol is a subtitle editor for text-based subtitles. Gaupol is in early
+  development stage and does not yet contain any advanced features. The aim is
+  to make a simple, but powerful, subtitle editor for multiple subtitle
+  formats. Currently Gaupol is useful for converting between different
+  formats, translating and manual editing.
 
   Currently supported formats:
   
@@ -15,13 +16,16 @@ General Information
   Current features:
 
     - Support for a wide range of character encodings
-    - Conversions between all supported formats
+    - Conversions between supported formats, including conversion of most tags
+    - Multiple document interface
+    - Undo/Redo
+    - Editing in either time or frame mode
     - Convenient translating
-    - Text formatting
-    - Gnome HIG 2.0 compliant user interface
+    - Text formatting: toggling of italics and dialog lines, case changing
+    - GNOME HIG 2.0 compliant user interface
 
-  Gaupol is released under the GNU General Public License (GPL), see the file
-  "COPYING" for details.
+  Gaupol is free sofrware released under the GNU General Public License (GPL),
+  see the file "COPYING" for details.
 
   The official web site is:
 
@@ -31,8 +35,9 @@ General Information
 Requirements
 ============
 
-  Gaupol should run on any UNIX-like (Linux, BSD, etc.) operating system. On
-  other operating systems, you can try it to see if it works.
+  Gaupol should run on all Unix-like (Linux, BSD, etc.) operating systems.
+  Technically there is no obstacle why it couldn't run on Windows or Mac, but
+  that has not been tested.
 
   Required:
 

@@ -37,7 +37,7 @@ from gaupol.lib.util import internet
 
 
 BUG_REPORT_URL = 'http://gna.org/bugs/?func=additem&group=gaupol'
-DOWNLOAD_URL   = 'http://home.gna.org/gaupol'
+DOWNLOAD_URL   = 'http://home.gna.org/gaupol/#download'
 SUPPORT_URL    = 'http://gna.org/support/?func=additem&group=gaupol'
 TIMEOUT_SEC    = 10
 VERSION_URL    = 'http://download.gna.org/gaupol/latest.txt'

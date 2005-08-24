@@ -8,7 +8,8 @@ Table of Contents
   3. Updating an existing .po file
   4. Compiling .mo files
   5. Testing your translation
-  6. References
+  6. Submitting your translation
+  7. References
 
 
 1. Introduction
@@ -16,6 +17,11 @@ Table of Contents
 
   This README file assumes that you are familiar with gettext and that you
   know what to do with a .po file.
+
+  To avoid doing pointless work, first check the the latest list of existing
+  translations at the subversion trunk:
+
+     http://svn.gna.org/viewcvs/gaupol/trunk/po/
 
   Gaupol uses the standard gettext system for translations. To automate the
   process of creating .po and .mo files, a python script "trantool" can be
@@ -85,6 +91,12 @@ Table of Contents
   
     ./gaupol
 
+
+6. Submitting your translation
+==============================
+
+  When you are done, make sure that your .po file is UTF-8 encoded and then
+  send it by e-mail to otsaloma@cc.hut.fi.
 
 7. References
 =============
