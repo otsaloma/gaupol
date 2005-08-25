@@ -88,7 +88,7 @@ def compile_mo(lang):
         if not os.path.isdir(mo_dir):
             os.makedirs(mo_dir)
             
-        os.system('msgfmt %s -o %s' % (po_path, mo_path))
+        os.system('msgfmt -cv %s -o %s' % (po_path, mo_path))
 
 def create_po(lang):
     """Create a .po file for a new language."""

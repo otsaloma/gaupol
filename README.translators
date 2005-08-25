@@ -76,6 +76,9 @@ Table of Contents
   To compile all languages, substitute <lang> with "all". The resulting .mo
   file is placed in "locale" directory according to standard directory
   hierarchy.
+  
+  The compilation will perform checks on header, format and domain. Correct
+  any errors encountered.
 
 
 5. Testing your translation
@@ -101,12 +104,6 @@ Table of Contents
     mv <lang>.po <lang>.po.bak
     mv <lang>.po.new <lang>.po
     
-  Make sure your translation is syntactically correct
-  
-    msgfmt -cv <lang>.po
-    
-  Correct any possible errors.
-
   When you are done, send the .po file and the desktop file "gaupol.desktop"
   by e-mail to otsaloma@cc.hut.fi.
 
