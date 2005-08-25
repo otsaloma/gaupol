@@ -20,7 +20,7 @@
 """gaupol-wide constants."""
 
 
-VERSION = '0.0+svn'
+VERSION = '0.0.0'
 
 
 # Extension and Format class constants must have the same order.

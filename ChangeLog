@@ -1,3 +1,15 @@
+2005-08-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* setup.py: Import VERSION from same directory.
+	
+	* gaupol:
+	  constants.py:
+	  Changed version numbers to 0.0.0.
+	  
+	* releasing.txt: Wrote file.
+	
+	* README.translators: Added a bit more info.
+
 2005-08-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* README: Updated based on website text.

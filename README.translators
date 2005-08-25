@@ -95,8 +95,20 @@ Table of Contents
 6. Submitting your translation
 ==============================
 
-  When you are done, make sure that your .po file is UTF-8 encoded and then
-  send it by e-mail to otsaloma@cc.hut.fi.
+  All .po files should be UTF-8 encoded. If not already, convert to UTF-8
+  
+    msgconv -t UTF-8 <lang>.po -o <lang>.po.new
+    mv <lang>.po <lang>.po.bak
+    mv <lang>.po.new <lang>.po
+    
+  Make sure your translation is syntactically correct
+  
+    msgfmt -cv <lang>.po
+    
+  Correct any possible errors.
+
+  When you are done, send the .po file and the desktop file "gaupol.desktop"
+  by e-mail to otsaloma@cc.hut.fi.
 
 7. References
 =============

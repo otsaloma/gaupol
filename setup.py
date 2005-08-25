@@ -9,7 +9,7 @@ from glob import glob
 import os
 import sys
 
-sys.path.append('lib')
+sys.path.insert(0, 'lib')
 from gaupol.constants import VERSION
 
 
