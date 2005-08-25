@@ -1,11 +1,5 @@
-Before 0.1
-==========
-
-  - Release process: branching/tagging, GPG key, tarballing, informing
-
-
-After 0.1
-=========
+After 0.1.0
+===========
 
   - Search, search and replace
   - Spell-check

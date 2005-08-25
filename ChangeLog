@@ -1,5 +1,11 @@
 2005-08-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* po/ChangeLog: Added separate ChangeLog for translations.
+	
+	* MANIFEST.in: Added po/ChangeLog.
+
+2005-08-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* setup.py: Import VERSION from same directory.
 	
 	* gaupol:

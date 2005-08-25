@@ -14,4 +14,4 @@ include trantool
 recursive-include data *.glade *.xml *.png
 recursive-include lib *.py
 recursive-include locale *.mo
-recursive-include po *.po
+recursive-include po *.po ChangeLog
