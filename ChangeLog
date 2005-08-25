@@ -1,4 +1,8 @@
 2005-08-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
+	
+	* gui/dialogs/about.py: Added translator credits.
+
+2005-08-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* po/ChangeLog: Added separate ChangeLog for translations.
 	

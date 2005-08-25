@@ -20,7 +20,7 @@
 """Dialog to display application information."""
 
 
-#import locale
+import locale
 
 try:
     from psyco.classes import *
@@ -40,7 +40,7 @@ WEBSITE      = 'http://home.gna.org/gaupol'
 AUTHORS      = ['Osmo Salomaa <otsaloma@cc.hut.fi>']
 #DOCUMENTERS = []
 #ARTISTS     = []
-#TRANSLATORS = {'fi_FI': 'Osmo Salomaa <otsaloma@cc.hut.fi>'}
+TRANSLATORS = {'fi': 'Osmo Salomaa <otsaloma@cc.hut.fi>'}
 LICENSE      = \
 '''Gaupol is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -80,11 +80,16 @@ class AboutDialog(gtk.AboutDialog):
         #self.set_documenters(DOCUMENTERS)
         #self.set_artists(ARTISTS)
 
-        #lang = locale.getdefaultlocale()[0]
-        #try:
-        #    self.set_translator_credits(TRANSLATORS[lang])
-        #except KeyError:
-        #    pass
+        lang = locale.getdefaultlocale()[0]
+
+		# lang is xx_YY. Try that first, if no luck get translator for xx.
+        try:
+            self.set_translator_credits(TRANSLATORS[lang])
+        except KeyError:
+            try:
+            	self.set_translator_credits(TRANSLATORS[lang[:2]])
+            except KeyError:
+            	pass
         
     def _on_url_clicked(self, *args):
         """Open website in browser when user clicks on URL."""
