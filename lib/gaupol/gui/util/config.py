@@ -163,6 +163,9 @@ class Config(ConfigParser.RawConfigParser):
                 'Failed to read settings from file "%s". Using default settings.' \
                 % CONFIG_PATH \
             )
+            
+        # Set version to current version.
+        self.set('general', 'version', VERSION)
 
         # Accept only keys and sections that exist.
         sections = self.sections()

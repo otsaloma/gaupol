@@ -1,3 +1,8 @@
+2005-08-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gui/util/config.py (read_from_file):
+	  Set version based on current version, not from config file.
+
 2005-08-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* releasing.txt: Revised instructions.
