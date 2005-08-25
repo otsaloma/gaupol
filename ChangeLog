@@ -1,4 +1,8 @@
 2005-08-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* setup.py: Added README.translators and TODO to doc files.
+
+2005-08-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
 	
 	* trantool (compile_mo): Check syntax and be verbose.
 
