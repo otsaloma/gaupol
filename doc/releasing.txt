@@ -89,7 +89,7 @@ Note: Steps marked with "*" need to be revised after actual experiences.
            
      4.4. Commit changes to subversion.
    
-    *4.5. For bugfix releases, repeat steps 4.1 - 4.4 for trunk.
+     4.5. For bugfix releases, repeat steps 4.1 - 4.4 for trunk.
      
 5. Tag subversion
 
@@ -98,7 +98,7 @@ Note: Steps marked with "*" need to be revised after actual experiences.
             svn copy svn+ssh://osmo@svn.gna.org/svn/gaupol/trunk \
                      svn+ssh://osmo@svn.gna.org/svn/gaupol/tags/x.y.z
                     
-    *5.2. For bug-fix releases
+     5.2. For bug-fix releases
     
             svn copy svn+ssh://osmo@svn.gna.org/svn/gaupol/branches/x.y \
                      svn+ssh://osmo@svn.gna.org/svn/gaupol/tags/x.y.z
@@ -116,6 +116,8 @@ Note: Steps marked with "*" need to be revised after actual experiences.
            
      6.3. Move tarballs into release directory.
      
+     6.4. If making a bug-fix release, remove previous symlink.
+     
      6.4. Sync release directory x.y with Gna! download area
      
             rsync --delete -avr --rsh="ssh" . \
@@ -126,22 +128,22 @@ Note: Steps marked with "*" need to be revised after actual experiences.
             scp latest.txt osmo@download.gna.org:/upload/gaupol/
             scp latest.txt.sig osmo@download.gna.org:/upload/gaupol/
      
-6. Spread the word.
+7. Spread the word.
 
-     9.1 Edit the download section of Gaupol website and upload.
+     7.1. Edit the download section of Gaupol website and upload.
     
-     9.2 Post a news item at the Gaupol project page
+     7.2. Post a news item at the Gaupol project page
      
-           https://gna.org/news/submit.php?group=gaupol
+            http://gna.org/news/submit.php?group=gaupol
     
-     9.3 Send e-mail to Gaupol-announcements mailing list
+     7.3. Send e-mail to Gaupol-announcements mailing list
      
-           gaupol-announcements@gna.org
+            gaupol-announcements@gna.org
     
-     9.4 Update third-party sites
+     7.4. Update third-party sites
     
-           http://www.gnomefiles.com/devs/devcorner.php
-           http://freshmeat.net/my/
+            http://www.gnomefiles.com/devs/devcorner.php
+            http://freshmeat.net/projects/gaupol/
            
-           http://gnome-apps.berlios.de
-           (Maybe in the future, currently they seem to require a DOAP file.)
+            http://gnome-apps.berlios.de
+            (Maybe in the future, currently they seem to require a DOAP file.)
