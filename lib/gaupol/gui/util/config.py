@@ -35,7 +35,8 @@ from gaupol.constants import VERSION
 logger = logging.getLogger()
 
 
-CONFIG_PATH = os.path.join(os.path.expanduser('~'), '.gaupol', 'gaupol.conf')
+CONFIG_DIR  = os.path.join(os.path.expanduser('~'), '.gaupol')
+CONFIG_PATH = os.path.join(CONFIG_DIR, 'gaupol.conf')
 
 HEADER = \
 '''# Gaupol configuration file
@@ -224,6 +225,14 @@ class Config(ConfigParser.RawConfigParser):
 
     def write_to_file(self):
         """Write settings to file."""
+        
+        # Create directory ~/.gaupol if it doesn't exist.
+        if not os.path.isdir(CONFIG_DIR):
+            try:
+                os.mkdir(CONFIG_DIR)
+            except OSError, detail:
+                logger.error('Failed to create profile directory "%s": %s.' \
+                             % CONFIG_DIR)
 
         try:
         

@@ -1,17 +1,36 @@
-After 0.1.0
-===========
+Plans for 0.2.0
+===============
 
-  - Search, search and replace
-  - Spell-check
-  - Subtitle editing features
+  W = Work in progress
+  D = Done
+  P = Postponed
+  N = Not to be implemented
+
+  Implement spell-checking using PyEnchant
+    [W] Script to test PyEnchant installation
+    [ ] Glade files for dialogs
+    [ ] lib implementation
+    [ ] gui implementation
+    [ ] Test error handling
+
+
+Plans after 0.2.0
+=================
+
+  - Find, find and replace
+      o Regular expressions?
 
 
 Unscheduled
 ===========
 
-  - Documentation
+  - Documentation (HTML)
 
-  - Support for additional subtitle formats:
+  - Support for additional subtitle formats
+  
+      o Add support for headers
+          * Header editing?
+          * Header conversion?
 
       o MPlayerSub/MPSub
         http://www.mplayerhq.hu/DOCS/tech/mpsub.sub
@@ -30,5 +49,5 @@ New in PyGTK 2.8
 
   http://live.gnome.org/PyGTK/WhatsNew28
 
-  - Tighter GObject/Python Integration
-  - Properties as Object Attributes
+  - Tighter GObject/Python integration (deprecation warning!)
+  - Properties as object attributes (widget.props notation)
