@@ -1,3 +1,9 @@
+2005-08-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* test: New directory for tests.
+	* test/pyenchant: New file to test PyEnchant installation.
+	* MANIFEST.in: Added new test directory and all contents.
+
 2005-08-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gui/delegates/fileopener.py:
