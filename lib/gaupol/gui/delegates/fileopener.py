@@ -146,30 +146,31 @@ class FileOpener(Delegate):
             else:
                 return 'utf_8'
 
-    def _get_main_file_open(self, path):
+    def _is_file_open(self, path):
         """
-        Make sure main file is not already open.
+        Make sure file is not already open.
         
-        If it is already open, select that page in the notebook.
-        Return: True, if main file is open, otherwise False
+        If file is already open, select that page in the notebook.
+        Return: True, if file is open, otherwise False
         """
         for i in range(len(self.projects)):
         
-            main_file = self.projects[i].data.main_file
+            data = self.projects[i].data
+            for sub_file in [data.main_file, data.tran_file]:
             
-            if main_file is None:
-                continue
-                
-            if main_file.path != path:
-                continue
-                
-            self.notebook.set_current_page(i)
-
-            basename = self.projects[i].get_main_basename()
-            message = _('Main file "%s" is already open') % basename
-            self.set_status_message(message)
-
-            return True
+                if sub_file is None:
+                    continue
+                    
+                if sub_file.path != path:
+                    continue
+                    
+                self.notebook.set_current_page(i)
+    
+                basename = os.path.basename(path)
+                message = _('File "%s" is already open') % basename
+                self.set_status_message(message)
+    
+                return True
 
         return False
         
@@ -246,7 +247,7 @@ class FileOpener(Delegate):
         project.data.insert_subtitles(0, 1)
         
         self._add_new_project(project)
-        self.set_status_message(_('Created a new main document'))
+        self.set_status_message(_('Created a new document'))
 
     def on_open_activated(self, *args):
         """Open a main file with FileChooser."""
@@ -261,7 +262,7 @@ class FileOpener(Delegate):
         self._add_new_project(project)
 
         basename = project.get_main_basename()
-        message = _('Opened main file "%s"') % basename
+        message = _('Opened file "%s"') % basename
         self.set_status_message(message)
 
         gui.set_cursor_normal(self.window)
@@ -339,14 +340,14 @@ class FileOpener(Delegate):
                 continue
 
             # Make sure file is not already open.
-            is_open = self._get_main_file_open(path)
+            is_open = self._is_file_open(path)
             if is_open:
                 continue
 
             self._add_new_project(project)
             
             basename = project.get_main_basename()
-            message = _('Opened main file "%s"') % basename
+            message = _('Opened file "%s"') % basename
             self.set_status_message(message)
 
             # Show the new notebook page right away.
@@ -385,12 +386,11 @@ class FileOpener(Delegate):
             self.config.set('file', 'encoding' , encoding   )
             self.config.set('file', 'filter'   , file_filter)
 
-            # Make sure file is not already open.
-            if file_type == TYPE.MAIN:
-                is_open = self._get_main_file_open(path)
-                if is_open:
-                    open_dialog.destroy()
-                    return None
+            # Make file is not already open.
+            is_open = self._is_file_open(path)
+            if is_open:
+                open_dialog.destroy()
+                return None
 
             project = self._read_file(
                 open_dialog, file_type, path, encoding, project

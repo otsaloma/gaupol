@@ -1,5 +1,12 @@
 2005-08-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gui/delegates/fileopener.py:
+	  Method _get_main_file_open renamed to _is_file_open and extended to
+	  check translation files. Corrected terminology regarding main,
+	  translation, file, document, opening and importing.
+
+2005-08-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* releasing.txt: Revised instructions.
 
 2005-08-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
