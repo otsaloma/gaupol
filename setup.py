@@ -3,11 +3,16 @@
 from distutils.core import Command
 from distutils.command.install_data import install_data
 from distutils.command.install_lib import install_lib
+from distutils.command.sdist import sdist
 from distutils.core import setup
 from distutils.log import info
 from glob import glob
 import os
+import shutil
 import sys
+import tarfile
+import tempfile
+
 
 sys.path.insert(0, 'lib')
 from gaupol.constants import VERSION
@@ -123,6 +128,105 @@ class InstallLib(install_lib):
         return install_lib.install(self)
 
 
+class SDist(sdist):
+
+    def finalize_options(self):
+    
+        sdist.finalize_options(self)
+        
+        # Set distribution directory to "dist/x.y".
+        self.dist_dir = os.path.join(self.dist_dir, VERSION[:3])
+
+    def run(self):
+    
+        basename = 'gaupol-%s' % VERSION
+        temp_dir = tempfile.gettempdir()
+        test_dir = os.path.join(temp_dir, basename)
+    
+        # Remove build and test directories.
+        for dir in ('build', 'dist', 'locale', test_dir):
+            info('removing %s' % dir)
+            for root, dirs, files in os.walk(dir, topdown=False):
+                for name in files:
+                    os.remove(os.path.join(root, name))
+                for name in dirs:
+                    os.rmdir(os.path.join(root, name))
+            if os.path.isdir(dir):
+                os.rmdir(dir)
+        
+        # Remove build files.
+        for name in ('installed-files.log', 'MANIFEST'):
+            if os.path.isfile(name):
+                info('removing %s' % name)
+                os.remove(name)
+        
+        # Compile all translations.
+        os.system('./trantool -m all')
+        
+        # Create tarballs.
+        sdist.run(self)
+        tarballs = os.listdir(self.dist_dir)
+        
+        # Compare tarball contents with working copy.
+        for tarball in tarballs:
+        
+            tarball_path = os.path.join(self.dist_dir, tarball)
+            if not tarfile.is_tarfile(tarball_path):
+                continue
+                
+            tar_file = tarfile.open(tarball_path, 'r')
+            for member in tar_file.getmembers():
+                tar_file.extract(member, temp_dir)
+            
+            info('comparing tarball (temp) with working copy (.)')
+            os.system('diff -r -x *.pyc -x .svn . %s' % test_dir)
+            
+            # Stop and ask if all necessary files are included.
+            response = raw_input('Are all files in the tarball [Y/n]? ')
+            if response.lower() == 'n':
+                info('aborted')
+                return
+            
+            break
+            
+        # Change to directory "dist/x.y".
+        os.chdir(self.dist_dir)
+
+        # Calculate md5sums.
+        info('calculating md5sums')
+        os.system('md5sum * > %s.md5sum' % basename)
+        
+        # Create changes file.
+        path = os.path.join('..', '..', 'ChangeLog')
+        info('creating %s.changes' % basename)
+        shutil.copyfile(path, '%s.changes' % basename)
+        
+        # Create news file.
+        path = os.path.join('..', '..', 'NEWS')
+        info('creating %s.news' % basename)
+        shutil.copyfile(path, '%s.news' % basename)
+        
+        # Sign tarballs.
+        for tarball in tarballs:
+            info('signing %s' % tarball)
+            os.system('gpg --detach %s' % tarball)
+        
+        # Create symlink to latest file (tar.gz).
+        info('creating LATEST-IS-%s' % VERSION)
+        os.symlink('%s.tar.gz' % basename, 'LATEST-IS-%s' % VERSION)
+        
+        # Change to directory "dist".
+        os.chdir('..')
+        
+        # Create and sign latest.txt file.
+        info('creating latest.txt')
+        latest_file = open('latest.txt', 'w')
+        latest_file.write('%s\n' % VERSION)
+        latest_file.close()
+        info('signing latest.txt')
+        os.system('gpg --detach latest.txt')
+
+
 class Uninstall(Command):
 
     description = "uninstall installed files"
@@ -216,6 +320,7 @@ setup(
     cmdclass={
         'install_data': InstallData,
         'install_lib' : InstallLib,
+        'sdist'       : SDist,
         'uninstall'   : Uninstall
     }
 )

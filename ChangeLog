@@ -1,5 +1,11 @@
 2005-08-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* setup.py: Automated source distribution building.
+	
+	* releasing.txt: Revised instructions.
+
+2005-08-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gui/util/config.py (write_to_file):
 	  Create directory ~/.gaupol if it doesn't exist. Fixes #2816.
 	  

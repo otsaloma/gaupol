@@ -3,147 +3,124 @@ Checklist for making a new release
 
 Note: Steps marked with "*" need to be revised after actual experiences.
 
-1. Get translations.
+1. Branch if making a bug-fix release
 
-    *1.1 Send word to translators, that a new release is coming.
-     
-    *1.2 Check received translations.
-     
-           1.2.1 Headers
-           
-           1.2.3 UTF-8 encoding
-           
-           1.2.4 Syntactical correctness
-           
-                   msgfmt -cv <lang>.po
-    
-    *1.3 Merge all translations of file "gaupol.desktop".
-     
-     1.4 Add names of all new translators to the about dialog
-     
-           lib/gaupol/gui/dialogs/about.py
-           
-     1.5 Add entries to ChangeLogs and commit changes to subversion.
-     
-2. Make sure Gaupol works.
+     1.1. Create a brach from tagged x.y.0 if branch doesn't already exist
 
-     2.1 Check the list of open bugs and make sure all bugs scheduled for
-         this release are fixed.
-         
-           http://gna.org/bugs/?func=browse&set=open&group=gaupol
-         
-     2.3 Check the "TODO" file for anything undone for this release.
-         
-     2.2 Search the source code for "TODO" and fix anything that needs to be
-         fixed for this release.
-         
-     2.3 Make sure all files are in the subversion repository
-     
-           svn status | grep -v .pyc
-           
-     2.4 Run Gaupol from the source directory and check that it works
-     
-           ./gaupol
-           
-     2.5 Install Gaupol and check that it works
-     
-           ./setup.py install --prefix=/tmp/gaupol
-           /tmp/gaupol/bin/gaupol
-           
-     2.6 Check the installation directory. Make sure all files are in right
-         places.
-         
-     2.7 Uninstall Gaupol and make sure it works
-     
-           ./setup.py uninstall
-
-3. Update files affected by new version number.
-           
-     3.1 Bump version numbers in files
-
-           gaupol
-           lib/gaupol/constants.py
-     
-     3.2 Move all items concerning this release from the "TODO" file to the
-         "NEWS" file.
-         
-     3.3 Add ChangeLog entries noting that a release took place
-
-           ChangeLog
-           po/ChangeLog
-           
-     3.4 Commit changes to subversion.
-   
-    *3.5 For bugfix releases, also update files "TODO", "NEWS" and ChangeLogs
-         in trunk and commit.
-     
-4. Tag subversion
-
-     4.1 For major or minor releases
-
-           svn copy svn+ssh://osmo@svn.gna.org/svn/gaupol/trunk \
-                    svn+ssh://osmo@svn.gna.org/svn/gaupol/tags/X.Y.Z
-                    
-    *4.2 For bug-fix releases
+            svn copy svn+ssh://osmo@svn.gna.org/svn/gaupol/tags/x.y.0 \
+                     svn+ssh://osmo@svn.gna.org/svn/gaupol/branches/x.y
               
-5. Build tarballs.
-
-     5.1 Remove build directories and files
-
-           build/
-           dist/
-           locale/
-           installed-files.log
-           MANIFEST
-
-     5.2 Build .mo files to get them included in the tarball
+     1.2. Bring all bug-fix changes from trunk to branch.
      
-           ./trantool -m all
+     1.3. Add entry to ChangeLog and commit changes to subversion.
 
-     5.3 Build tarballs
+2. Get translations.
 
-           ./setup.py sdist --formats bztar,gztar
+    *2.1. Send word to translators, that a new release is coming.
+     
+    *2.2. Check received translations.
+     
+            2.2.1. Headers
            
-     5.4 Untar a tarball and make sure all necessary files are contained in
-         the tarball.
+            2.2.3. UTF-8 encoding
+           
+            2.2.4. Syntactical correctness
+           
+                     msgfmt -cv <lang>.po
+    
+    *2.3. Merge all translations of file "gaupol.desktop".
+     
+     2.4. Add names of all new translators to the about dialog
+     
+            lib/gaupol/gui/dialogs/about.py
+           
+     2.5. Add entries to ChangeLogs and commit changes to subversion.
+     
+3. Make sure Gaupol works.
+
+     3.1. Check the list of open bugs and make sure all bugs scheduled for
+          this release are fixed.
          
-           diff -r -x *.pyc -x .svn <working copy> <untarred copy>
+            http://gna.org/bugs/?func=browse&set=open&group=gaupol
+         
+     3.3. Check the "TODO" file for anything undone for this release.
+         
+     3.2. Search the source code for "TODO" and fix anything that needs to be
+          fixed for this release.
+         
+     3.3. Make sure all files are in the subversion repository
+     
+            svn status | grep -v .pyc
            
+     3.4. Run Gaupol from the source directory and check that it works
+     
+            ./gaupol
+           
+     3.5. Install Gaupol and check that it works
+     
+            ./setup.py install --prefix=/tmp/gaupol
+            /tmp/gaupol/bin/gaupol
+           
+     3.6. Check the installation directory /tmp/gaupol. Make sure all files
+          are in right places.
+         
+     3.7. Uninstall Gaupol and make sure it works
+     
+            ./setup.py uninstall
+
+4. Update files affected by new version number.
+           
+     4.1. Bump version numbers in files
+
+            gaupol
+            lib/gaupol/constants.py
+     
+     4.2. Move all items concerning this release from the "TODO" file to the
+          "NEWS" file.
+         
+     4.3. Add ChangeLog entries noting that a release took place
+
+            ChangeLog
+            po/ChangeLog
+           
+     4.4. Commit changes to subversion.
+   
+    *4.5. For bugfix releases, repeat steps 4.1 - 4.4 for trunk.
+     
+5. Tag subversion
+
+     5.1. For major or minor releases
+
+            svn copy svn+ssh://osmo@svn.gna.org/svn/gaupol/trunk \
+                     svn+ssh://osmo@svn.gna.org/svn/gaupol/tags/x.y.z
+                    
+    *5.2. For bug-fix releases
+    
+            svn copy svn+ssh://osmo@svn.gna.org/svn/gaupol/branches/x.y \
+                     svn+ssh://osmo@svn.gna.org/svn/gaupol/tags/x.y.z
+
 6. Prepare files for release.
-           
-     6.1 Move tarballs into release directory.
-     
-    *6.3 Create files
-     
-           gaupol-X.Y.Z.changes
-           gaupol-X.Y.Z.news
-           
-         based on relevant portions of ChangeLogs and "NEWS" file.
-     
-     6.2 Calculate md5sums
-     
-           md5sum *X.Y.Z* > gaupol-X.Y.Z.md5sum
-           
-     6.2 Sign tarballs
-     
-           gpg --detach gaupol-X.Y.Z.tar.gz
-           gpg --detach gaupol-X.Y.Z.tar.bz2
+              
+     6.1. Build tarballs.
 
-     6.4 Update symlink to latest version
+            ./setup.py sdist --formats bztar,gztar
+            
+     6.2. Cut news and and changes files to relevant parts
      
-           rm LATEST-IS-*
-           ln -s gaupol-X.Y.Z.tar.gz LATEST-IS-X.Y.Z
+            dist/x.y/gaupol-x.y.z.news
+            dist/x.y/gaupol-x.y.z.changes
+           
+     6.3. Move tarballs into release directory.
      
-     6.5 Sync release directory with Gna! download area
+     6.4. Sync release directory x.y with Gna! download area
      
-           rsync --delete -avr --rsh="ssh" . \
-               osmo@download.gna.org:/upload/gaupol/X.Y/
+            rsync --delete -avr --rsh="ssh" . \
+                  osmo@download.gna.org:/upload/gaupol/x.y/
 
-     6.6 Update, sign and upload latest.txt
+     6.5. Upload latest.txt
      
-           gpg --detach latest.txt
-           scp latest.txt osmo@download.gna.org:/upload/gaupol/
-           scp latest.txt.sig osmo@download.gna.org:/upload/gaupol/
+            scp latest.txt osmo@download.gna.org:/upload/gaupol/
+            scp latest.txt.sig osmo@download.gna.org:/upload/gaupol/
      
 6. Spread the word.
 
