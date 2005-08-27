@@ -9,10 +9,14 @@ Note: Steps marked with "*" need to be revised after actual experiences.
 
             svn copy svn+ssh://osmo@svn.gna.org/svn/gaupol/tags/x.y.0 \
                      svn+ssh://osmo@svn.gna.org/svn/gaupol/branches/x.y
-              
-     1.2. Bring all bug-fix changes from trunk to branch.
+                     
+     1.2. Check out branch
      
-     1.3. Add entry to ChangeLog and commit changes to subversion.
+            svn co svn+ssh://osmo@svn.gna.org/svn/gaupol/branches/x.y
+              
+     1.3. Bring all bug-fix changes from trunk to branch.
+     
+     1.4. Add entry to ChangeLog and commit changes to subversion branch.
 
 2. Get translations.
 

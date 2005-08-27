@@ -1,5 +1,15 @@
 2005-08-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	RELEASE 0.1.1
+
+	* gaupol:
+	  constants.py:
+	  Bumped version numbers to 0.1.1.
+	  
+	* NEWS: Added release news.
+
+2005-08-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* setup.py: Automated source distribution building.
 	
 	* releasing.txt: Revised instructions.
