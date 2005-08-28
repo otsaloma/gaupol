@@ -191,6 +191,7 @@ class GUIBuilder(Delegate):
             ('framerate', None      , _('_Framerate')),
             ('format'   , None      , _('F_ormat')   ),
             ('case'     , None      , _('_Case')     ),
+            ('tools'    , None      , _('_Tools')    ),
             ('documents', None      , _('_Documents')),
             ('help'     , None      , _('_Help')     ),
         ]
@@ -419,6 +420,20 @@ class GUIBuilder(Delegate):
                 '<control>L',
                 _('Change the selected texts to lower case'),
                 self.on_lower_activated
+            ), (
+                'check_spelling',
+                gtk.STOCK_SPELL_CHECK,
+                _('_Check Spelling'),
+                'F7',
+                _('Check for incorrect spelling'),
+                self.on_check_spelling_activated
+            ), (
+                'set_language_and_target',
+                None,
+                _('Set _Language And Target'),
+                None,
+                _('Set document language and set target for spell-checking'),
+                self.on_set_language_and_target_activated
             ), (
                 'save_all',
                 gtk.STOCK_SAVE,

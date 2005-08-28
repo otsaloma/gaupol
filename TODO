@@ -4,19 +4,22 @@ Plans for 0.2.0
   W = Work in progress
   D = Done
   P = Postponed
-  N = Not to be implemented
+  ? = Questionable
 
-  Implement spell-checking using PyEnchant
-    [D] Script to test PyEnchant installation
-    [ ] Outline general spell-checking strategy
-    [ ] Optional import in gaupol (start script)
-    [ ] Glade files for dialogs (Gedit!)
-    [N] lib implementation (Not sensible, PyEnchant is the lib!)
-    [ ] gui: Spell check dialog (wxSpellCheckerDialog.py!)
-    [ ] gui: Settings dialog
-    [ ] gui: delegate
-    [ ] gui: Menu entry visibility
-    [ ] Test error handling
+  [W] Implement spell-checking using PyEnchant
+        [D] Script to test PyEnchant installation
+        [D] Outline general spell-checking strategy
+        [D] Glade files for dialogs (Gedit!)
+        [D] lib: langlib
+        [D] gui: config entries
+        [ ] gui: Spell check dialog (wxSpellCheckerDialog.py!)
+        [ ] gui: Settings dialog
+        [ ] gui: delegate
+        [D] gui: Menu entry visibility
+        [ ] Test error handling
+        [ ] Ensure that PyEnchant is easily installable.
+  [?] Revise terminology: project = main document + translation document
+  [ ] Update Finnish translation
 
 
 Plans after 0.2.0

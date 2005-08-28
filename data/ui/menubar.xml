@@ -74,6 +74,11 @@
 				<menuitem action="lower"/>
 			</menu>
 		</menu>
+		<menu action="tools">
+			<menuitem action="check_spelling"/>
+			<menuitem action="set_language_and_target"/>
+			<separator/>
+		</menu>
 		<menu action="documents">
 			<menuitem action="save_all"/>
 			<menuitem action="close_all"/>

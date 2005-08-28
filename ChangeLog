@@ -1,3 +1,38 @@
+2005-08-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gui/application.py:
+	  Added spell-check methods to delegation dictionary.
+	  
+	* gui/delegates/guibuilder.py:
+	  Added tools menu and spell-check menu items.
+
+	* gui/delegates/spellchecker.py:
+	  New delegate for spell-checks.
+	  
+	* gui/delegates/guiupdater.py:
+	  Added sensitivity setting for spell-check items.
+	  
+	* gui/util/config.py:
+	  Added spell-checking settings.
+
+	* lib/util/langlib.py:
+	  New file for language codes and names.
+	  
+	* language-dialog.glade: 
+	  New file for language setting dialog.
+	  
+	* spellcheck-window.glade:
+	  New file for spell-check window.
+	  
+	* edit-dialog.glade:
+	  New file for single text edit dialog.
+	  
+	* toolbar.xml:
+	  Added spell-check item.
+	
+	* menubar.xml:
+	  Added spell-check items.
+
 2005-08-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* test: New directory for tests.

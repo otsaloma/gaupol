@@ -37,6 +37,7 @@ from gaupol.gui.delegates.guiupdater import GUIUpdater
 from gaupol.gui.delegates.helper import Helper
 from gaupol.gui.delegates.prefeditor import PreferenceEditor
 from gaupol.gui.delegates.roweditor import RowEditor
+from gaupol.gui.delegates.spellchecker import SpellChecker
 from gaupol.gui.delegates.texteditor import TextEditor
 from gaupol.gui.delegates.viewer import Viewer
 from gaupol.gui.util.clipboard import Clipboard
@@ -110,6 +111,7 @@ class Application(object):
         helper            = Helper(self)
         preference_editor = PreferenceEditor(self)
         row_editor        = RowEditor(self)
+        spell_checker     = SpellChecker(self)
         text_editor       = TextEditor(self)
         viewer            = Viewer(self)
 
@@ -120,6 +122,7 @@ class Application(object):
             'insert_subtitles'                       : row_editor,
             'on_about_activated'                     : helper,
             'on_check_latest_version_activated'      : helper,
+            'on_check_spelling_activated'            : spell_checker,
             'on_clear_activated'                     : text_editor,
             'on_close_activated'                     : file_closer,
             'on_close_all_activated'                 : file_closer,
@@ -161,6 +164,7 @@ class Application(object):
             'on_save_translation_as_activated'       : file_saver,
             'on_select_all_activated'                : row_editor,
             'on_sentence_activated'                  : text_editor,
+            'on_set_language_and_target_activated'   : spell_checker,
             'on_statusbar_toggled'                   : viewer,
             'on_support_activated'                   : helper,
             'on_title_activated'                     : text_editor,

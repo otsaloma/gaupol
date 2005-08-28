@@ -48,6 +48,12 @@ HEADER = \
 '''
 
 DEFAULTS = {
+    'application_window':
+    (
+        ('maximized', 'false'  ),
+        ('position' , '0|0'    ),
+        ('size'     , '600|400'),
+    ),
     'editor':
     (
         ('edit_mode'  , 'time'  ),
@@ -80,11 +86,13 @@ DEFAULTS = {
         ('amount'  , 1      ),
         ('position', 'below'),
     ),
-    'application_window':
+    'spell_check':
     (
-        ('maximized', 'false'  ),
-        ('position' , '0|0'    ),
-        ('size'     , '600|400'),
+        ('check_all_documents' , 'false'),
+        ('check_text'          , 'true' ),
+        ('check_translation'   , 'false'),
+        ('text_language'       , ''     ),
+        ('translation_language', ''     ),
     ),
     'view':
     (

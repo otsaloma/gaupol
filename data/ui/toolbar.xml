@@ -5,5 +5,7 @@
 		<toolitem action="cut"/>
 		<toolitem action="copy"/>
 		<toolitem action="paste"/>
+		<separator/>
+		<toolitem action="check_spelling"/>
 	</toolbar>
 </ui>

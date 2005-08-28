@@ -20,6 +20,7 @@
 """GUI component state updating."""
 
 
+import logging
 import os
 
 try:
@@ -35,6 +36,19 @@ from gaupol.gui.cellrend.multiline import CellRendererMultilineText
 from gaupol.gui.colcons import *
 from gaupol.gui.delegates.delegate import Delegate
 from gaupol.gui.util import gui
+
+
+logger = logging.getLogger()
+
+# Check if PyEnchant is available.
+enchant_available = False
+try:
+    import enchant
+    enchant_available = True
+except ImportError:
+    logger.info('PyEnchant not found. Spell-checking not possible.')
+except enchant.Error, detail:
+    logger.error('Failed to import PyEnchant: %s. Spell-checking not possible.' % detail)
 
 
 class GUIUpdater(Delegate):
@@ -612,6 +626,16 @@ class GUIUpdater(Delegate):
 
         for path in uim_paths:
             self.uim.get_action(path).set_sensitive(is_open)
+        
+        # Set spell-checking sensitivity.
+        uim_paths = (
+            '/ui/menubar/tools/check_spelling',
+            '/ui/menubar/tools/set_language_and_target',
+            '/ui/toolbar/check_spelling'
+        )
+        sensitive = is_open and enchant_available
+        for path in uim_paths:
+            self.uim.get_action(path).set_sensitive(sensitive)
 
         if is_open:
             self.tooltips.enable()
