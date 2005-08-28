@@ -1,5 +1,10 @@
 2005-08-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* spellcheck-window.glade:
+	  Revised wording and added "Add Lower" button.
+
+2005-08-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gui/application.py:
 	  Added spell-check methods to delegation dictionary.
 	  
