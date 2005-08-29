@@ -40,15 +40,19 @@ from gaupol.gui.util import gui
 
 logger = logging.getLogger()
 
-# Check if PyEnchant is available.
+
+# Check if PyEnchant 1.1.3 or later is available.
 enchant_available = False
 try:
     import enchant
-    enchant_available = True
+    if enchant.__version__ < '1.1.3':
+        logger.info('PyEnchant version less than 1.1.3. Spell-checking not possible.')
+    else:
+        enchant_available = True
 except ImportError:
     logger.info('PyEnchant not found. Spell-checking not possible.')
 except enchant.Error, detail:
-    logger.error('Failed to import PyEnchant: %s. Spell-checking not possible.' % detail)
+    logger.error('PyEnchant: %s. Spell-checking not possible.' % detail)
 
 
 class GUIUpdater(Delegate):

@@ -34,13 +34,13 @@ icon_files  = glob(os.path.join('data', 'icons', '*.png'  ))
 ui_files    = glob(os.path.join('data', 'ui'   , '*.xml'  ))
 
 doc_files = (
-	'AUTHORS',
-	'ChangeLog',
-	'COPYING',
-	'NEWS',
-	'README',
-	'README.translators',
-	'TODO'
+    'AUTHORS',
+    'ChangeLog',
+    'COPYING',
+    'NEWS',
+    'README',
+    'README.translators',
+    'TODO'
 )
 
 data_files = [

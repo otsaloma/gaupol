@@ -1,5 +1,14 @@
 2005-08-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* setup.py:
+	  gui/dialogs/about.py:
+	  Replaced accidental tabs with spaces.
+	  
+	* gui/delegates/guiupdater.py:
+	  Check for PyEnchant version as well.
+
+2005-08-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* spellcheck-window.glade:
 	  Revised wording and added "Add Lower" button.
 

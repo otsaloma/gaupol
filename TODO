@@ -17,8 +17,9 @@ Plans for 0.2.0
         [ ] gui: delegate
         [D] gui: Menu entry visibility
         [ ] Test error handling
-        [ ] Ensure that PyEnchant is easily installable.
+        [ ] Ensure that PyEnchant is easily installable (dependecies!)
   [?] Revise terminology: project = main document + translation document
+  [?] Assign Ctrl + arrow keys for moving to edit an adjacent cell
   [ ] Update Finnish translation
 
 

@@ -82,14 +82,14 @@ class AboutDialog(gtk.AboutDialog):
 
         lang = locale.getdefaultlocale()[0]
 
-		# lang is xx_YY. Try that first, if no luck get translator for xx.
+        # lang is xx_YY. Try that first, if no luck get translator for xx.
         try:
             self.set_translator_credits(TRANSLATORS[lang])
         except KeyError:
             try:
-            	self.set_translator_credits(TRANSLATORS[lang[:2]])
+                self.set_translator_credits(TRANSLATORS[lang[:2]])
             except KeyError:
-            	pass
+                pass
         
     def _on_url_clicked(self, *args):
         """Open website in browser when user clicks on URL."""
