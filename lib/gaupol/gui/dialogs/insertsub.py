@@ -81,6 +81,13 @@ class InsertSubtitleDialog(object):
         # ComboBox entry index corresponds to values of constants
         # POSITION.ABOVE and POSITION.BELOW.
         return self._position_combo_box.get_active()
+        
+    def run(self):
+        """Show and run the dialog."""
+        
+        self._dialog.show()
+        
+        return self._dialog.run()
 
     def set_amount(self, value):
         """Set amount of subtitles to insert."""
@@ -102,10 +109,3 @@ class InsertSubtitleDialog(object):
         
         self._position_label.set_sensitive(sensitive)
         self._position_combo_box.set_sensitive(sensitive)
-
-    def run(self):
-        """Show and run the dialog."""
-        
-        self._dialog.show()
-        
-        return self._dialog.run()        

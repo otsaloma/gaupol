@@ -80,10 +80,13 @@ class PreferencesDialog(gobject.GObject):
     def _connect_signals(self):
         """Connect signals to widgets."""
         
-        # Set a group for undo RadioButtons. Glade creates a separate group
-        # for each RadioButton.
+        # Set a group for undo RadioButtons. ValueError is raised if button
+        # already is in group.
         group = self._undo_limit_radio_button.get_group()[0]
-        self._undo_unlimited_radio_button.set_group(group)
+        try:
+            self._undo_unlimited_radio_button.set_group(group)
+        except ValueError:
+            pass
 
         # Undo limit RadioButton (It is enough to connect only one of the two
         # RadioButtons.)

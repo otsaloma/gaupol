@@ -143,7 +143,7 @@ class PreferenceEditor(Delegate):
 
     def _on_limit_undo_toggled(self, dialog, limit):
         """Limit or unlimit undoing."""
-        print limit
+
         self.config.setboolean('editor', 'limit_undo', limit)
 
         if limit:

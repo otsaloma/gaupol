@@ -1,3 +1,24 @@
+2005-08-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gui/dialogs/insertsub.py:
+	  Reordered methods.
+	  
+	* gui/dialogs/prefs.py(_connect_signals):
+	  Improved error handling for radio button grouping.
+	  
+	* gui/dialogs/language.py:
+	  New file for language selection dialog. Works!
+	  
+	* gui/delegates/prefeditor.py:
+	  Removed a debugging print command left by accident.
+
+	* gui/delegates/spellchecker.py:
+	  Added code for language dialog. Works!
+	  
+	* lib/util/langlib.py:
+	  Added a better and longer list of languages. Added method
+	  get_descriptive_name.
+
 2005-08-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* setup.py:

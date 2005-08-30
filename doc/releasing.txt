@@ -51,24 +51,27 @@ Note: Steps marked with "*" need to be revised after actual experiences.
          
      3.2. Search the source code for "TODO" and fix anything that needs to be
           fixed for this release.
+          
+     3.3. Search the source code for "print". All printing should be removed
+          or converted to logging.
          
-     3.3. Make sure all files are in the subversion repository
+     3.4. Make sure all files are in the subversion repository
      
             svn status | grep -v .pyc
            
-     3.4. Run Gaupol from the source directory and check that it works
+     3.5. Run Gaupol from the source directory and check that it works
      
             ./gaupol
            
-     3.5. Install Gaupol and check that it works
+     3.6. Install Gaupol and check that it works
      
             ./setup.py install --prefix=/tmp/gaupol
             /tmp/gaupol/bin/gaupol
            
-     3.6. Check the installation directory /tmp/gaupol. Make sure all files
+     3.7. Check the installation directory /tmp/gaupol. Make sure all files
           are in right places.
          
-     3.7. Uninstall Gaupol and make sure it works
+     3.8. Uninstall Gaupol and make sure it works
      
             ./setup.py uninstall
 
