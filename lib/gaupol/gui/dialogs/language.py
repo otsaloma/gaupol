@@ -43,11 +43,6 @@ for lang in LANGS:
     except KeyError:
         LANG_DESC_NAMES.append(lang)
 
-try:
-    DEFAULT_LANG = enchant.Dict().tag
-except enchant.Error:
-    DEFAULT_LANG = None
-
 
 class LanguageDialog(object):
 
@@ -111,26 +106,6 @@ class LanguageDialog(object):
         selection = tree_view.get_selection()
         selection.set_mode(gtk.SELECTION_SINGLE)
         selection.unselect_all()
-        
-        # Select default language.
-        if DEFAULT_LANG is not None:
-        
-            # Get index of language.
-            try:
-                index = LANGS.index(DEFAULT_LANG)
-            except ValueError:
-                try:
-                    index = LANGS.index(DEFAULT_LANG[:2])
-                except ValueError:
-                    index = None
-                    
-            # Select index.
-            if index is not None:
-                desc_name = LANG_DESC_NAMES[index]
-                for i in range(len(model)):
-                    if model[i][0] == desc_name:
-                        selection.select_path(i)
-                        break
 
     def get_check_all_documents(self):
         """Return True if all documents are chosen to be checked."""
@@ -203,10 +178,30 @@ class LanguageDialog(object):
         
         model = selection.get_tree_view().get_model()
         
+        # Try language.
         try:
             index = LANGS.index(lang)
         except ValueError:
-            return
+        
+            # Try language with only first two letters.
+            try:
+                index = LANGS.index(lang[:2])
+            except (TypeError, ValueError):
+        
+                # Try default language.
+                try:
+                    lang = enchant.Dict().tag
+                    try:
+                        index = LANGS.index(lang)
+                    except ValueError:
+                    
+                        # Try default language with only first two letters.
+                        try:
+                            index = LANGS.index(lang[:2])
+                        except ValueError:
+                            return
+                except enchant.Error:
+                    return
             
         desc_name = LANG_DESC_NAMES[index]
         

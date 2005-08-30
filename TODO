@@ -10,14 +10,16 @@ Plans for 0.2.0
         [D] Script to test PyEnchant installation
         [D] Outline general spell-checking strategy
         [D] Glade files for dialogs (Gedit!)
-        [D] lib: langlib
-        [D] gui: config entries
-        [ ] gui: Spell check dialog (wxSpellCheckerDialog.py!)
-        [ ] gui: Settings dialog
-        [ ] gui: delegate
-        [D] gui: Menu entry visibility
+        [D] Langlib
+        [D] Config entries
+        [ ] Spell-check window (wxSpellCheckerDialog.py!)
+        [ ] Edit dialog for spell-check window
+        [D] Settings dialog
+        [ ] Delegate
+        [D] Menu entry visibility
         [ ] Test error handling
         [ ] Ensure that PyEnchant is easily installable (dependecies!)
+        [ ] Revise README file
   [?] Revise terminology: project = main document + translation document
   [?] Assign Ctrl + arrow keys for moving to edit an adjacent cell
   [ ] Update Finnish translation

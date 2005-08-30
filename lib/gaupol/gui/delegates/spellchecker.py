@@ -27,6 +27,7 @@ except ImportError:
 
 from gaupol.gui.delegates.delegate import Delegate
 from gaupol.gui.dialogs.language import LanguageDialog
+from gaupol.gui.util import gui
 
 
 class SpellChecker(Delegate):
@@ -40,6 +41,8 @@ class SpellChecker(Delegate):
         
     def on_set_language_and_target_activated(self, *args):
         """Select language and target for spell-checking."""
+        
+        gui.set_cursor_busy(self.window)
         
         dialog = LanguageDialog(self.window)
         
@@ -58,6 +61,8 @@ class SpellChecker(Delegate):
         # Set string values.
         for method, setting in settings[3:]:
             method(self.config.get('spell_check', setting))
+            
+        gui.set_cursor_normal(self.window)
         
         dialog.run()
         

@@ -1,5 +1,14 @@
 2005-08-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gui/dialogs/language.py:
+	  Moved slow default language determination to _set_language method having
+	  it run only when absolutely needed.
+	  
+	* gui/delegates/spellchecker.py (on_set_language_and_target_activated):
+	  Added busy cursor due to possible slowness of the language dialog.
+
+2005-08-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gui/dialogs/insertsub.py:
 	  Reordered methods.
 	  
