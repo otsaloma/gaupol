@@ -117,7 +117,7 @@ def prepare_gettext(no_translation):
     """
     if no_translation:
         __builtins__.__dict__['_']        = lambda x: x
-        __builtins__.__dict__['ngettext'] = lambda x: x
+        __builtins__.__dict__['dgettext'] = lambda *args: args[1]
         return
 
     import gtk.glade
@@ -128,10 +128,9 @@ def prepare_gettext(no_translation):
     gettext.bindtextdomain('gaupol', LOCALE_DIR)
     gettext.textdomain('gaupol')
     gettext.install('gaupol', LOCALE_DIR, unicode=1)
-
-    # A shorter name cannot be used for ngettext, because strings wouldn't
-    # get parsed correctly by xgettext.
-    __builtins__.__dict__['ngettext'] = lambda *args: gettext.ngettext(*args)
+    
+    # Domain specific gettext
+    __builtins__.__dict__['dgettext'] = lambda *args: gettext.dgettext(*args)
 
     gtk.glade.bindtextdomain('gaupol', LOCALE_DIR)
     gtk.glade.textdomain('gaupol')

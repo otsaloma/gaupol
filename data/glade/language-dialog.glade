@@ -446,8 +446,8 @@
 
 		      <child>
 			<widget class="GtkScrolledWindow" id="language_text_scrolled_window">
-			  <property name="width_request">180</property>
-			  <property name="height_request">180</property>
+			  <property name="width_request">220</property>
+			  <property name="height_request">220</property>
 			  <property name="visible">True</property>
 			  <property name="can_focus">True</property>
 			  <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
@@ -460,7 +460,7 @@
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
 			      <property name="headers_visible">False</property>
-			      <property name="rules_hint">False</property>
+			      <property name="rules_hint">True</property>
 			      <property name="reorderable">False</property>
 			      <property name="enable_search">True</property>
 			      <property name="fixed_height_mode">False</property>
@@ -479,8 +479,8 @@
 
 		      <child>
 			<widget class="GtkScrolledWindow" id="language_translation_scrolled_window">
-			  <property name="width_request">180</property>
-			  <property name="height_request">180</property>
+			  <property name="width_request">220</property>
+			  <property name="height_request">220</property>
 			  <property name="visible">True</property>
 			  <property name="can_focus">True</property>
 			  <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
@@ -493,7 +493,7 @@
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
 			      <property name="headers_visible">False</property>
-			      <property name="rules_hint">False</property>
+			      <property name="rules_hint">True</property>
 			      <property name="reorderable">False</property>
 			      <property name="enable_search">True</property>
 			      <property name="fixed_height_mode">False</property>

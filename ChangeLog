@@ -1,5 +1,17 @@
 2005-08-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol (prepare_gettext):
+	  Added dgettext and removed broken ngettext for now.
+
+	* gui/dialogs/language.py:
+	  language-dialog.glade:
+	  Reformatted language lists.
+
+	* lib/util/langlib.py:
+	  Rewrote module based on iso-codes project.
+
+2005-08-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gui/dialogs/language.py:
 	  Moved slow default language determination to _set_language method having
 	  it run only when absolutely needed.
