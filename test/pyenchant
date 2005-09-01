@@ -62,9 +62,11 @@ except enchant.Error, detail:
 
 # Test all available languages.
 for lang in langs:
-    print '\nTesting word "%s" in language "%s"...' % (WORD, lang)
+    print '\nTesting language "%s"...' % lang
     try:
         dict = enchant.Dict(lang)
+        print 'Provider:', dict.provider.name
+        print 'Testing word "%s"...' % WORD
         print 'Correct:', dict.check(WORD)
         print 'Suggestions:', ', '.join(dict.suggest(WORD))
     except enchant.Error, detail:

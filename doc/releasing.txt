@@ -133,7 +133,7 @@ Note: Steps marked with "*" need to be revised after actual experiences.
      
 7. Spread the word.
 
-     7.1. Edit the download section of Gaupol website and upload.
+     7.1. Edit the download section of Gaupol website and upload to cvs.
     
      7.2. Post a news item at the Gaupol project page
      
@@ -146,7 +146,7 @@ Note: Steps marked with "*" need to be revised after actual experiences.
      7.4. Update third-party sites
     
             http://www.gnomefiles.com/devs/devcorner.php
-            http://freshmeat.net/projects/gaupol/
+            http://freshmeat.net/projects/gaupol
            
             http://gnome-apps.berlios.de
             (Maybe in the future, currently they seem to require a DOAP file.)

@@ -55,7 +55,7 @@ def check_dependencies():
         if gtk.pygtk_version < (2, 6, 0):
             raise ImportError
     except ImportError:
-        logger.critical('PyGTK 2.6 or later is required to run Gaupol.')
+        logger.critical('PyGTK 2.6.0 or later is required to run Gaupol.')
         sys.exit()
 
     try:
@@ -70,7 +70,7 @@ def check_paths():
     
     Gaupol can be run from either the source directory or from install
     location after installation. Paths to use will be determined based on
-    the paths.py file.
+    the paths.py module.
     """
     current_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
 
@@ -112,12 +112,11 @@ def prepare_gettext(no_translation):
     
     Gettext translation function is installed to Python's built-in namespace
     making it available everywhere without need to import anything. Gettext
-    will be available with the underscore function and plural gettext with
-    "ngettext".
+    will be available with the underscore function.
     """
     if no_translation:
-        __builtins__.__dict__['_']        = lambda x: x
-        __builtins__.__dict__['dgettext'] = lambda *args: args[1]
+        __builtins__.__dict__['_']        = lambda string: string
+        __builtins__.__dict__['dgettext'] = lambda domain, string: string
         return
 
     import gtk.glade

@@ -4,8 +4,8 @@ General Information
   Gaupol is a subtitle editor for text-based subtitles. Gaupol is in early
   development stage and does not yet contain any advanced features. The aim is
   to make a simple, but powerful, subtitle editor for multiple subtitle
-  formats. Currently Gaupol is useful for converting between different
-  formats, translating and manual editing.
+  formats. Currently Gaupol is useful for converting between different formats,
+  translating and manual editing.
 
   Currently supported formats:
   
@@ -22,6 +22,7 @@ General Information
     - Editing in either time or frame mode
     - Convenient translating
     - Text formatting: toggling of italics and dialog lines, case changing
+    - Spell-checking
     - GNOME HIG 2.0 compliant user interface
 
   Gaupol is free software released under the GNU General Public License (GPL),
@@ -44,9 +45,29 @@ Requirements
     - Python >= 2.4
     - PyGTK (with libglade support) >= 2.6
 
+  Most users will find both Python and PyGTK packaged by their operating
+  system, probably already installed.
+
   Optional:
 
     - Psyco, for best results >= 1.4
+    - PyEnchant >= 1.1.3
+    - iso-codes (any version)
+
+  Psyco can make Gaupol run a bit faster. PyEnchant is required for
+  spell-checking. iso-codes allows the spell-checker to show the language and
+  country names in your locale.
+
+  Most users will find Psyco and iso-codes packaged by their operating system.
+  PyEnchant you might need to install from source. See PyEnchant installation
+  instructions at
+
+    http://pyenchant.sourceforge.net/tutorial/tutorial.html
+
+  To test your PyEnchant installation and list the dictionaries available for
+  it, type
+  
+    test/pyenchant
 
 
 Running Gaupol
@@ -55,7 +76,7 @@ Running Gaupol
   Gaupol can be run either (1) directly from the source directory or (2) it
   can be installed to a selected location.
 
-  (1) In the source directory, execute command
+  (1) In the source directory, type
 
         ./gaupol
 

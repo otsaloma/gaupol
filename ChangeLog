@@ -1,3 +1,16 @@
+2005-09-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* test/pyenchant:
+	  Print also the names of the dictionary providers.
+
+	* gaupol:
+	  setup.py:
+	  trantool:
+	  Minor adjustments.
+
+	* README:
+	  Added info on new optional dependencies.
+
 2005-09-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/gui/dialogs/error.py (SpellCheckErrorDialog):

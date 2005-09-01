@@ -20,7 +20,8 @@ Plans for 0.2.0
         [ ] Test error handling
         [ ] Test unicode handling
         [ ] Ensure that PyEnchant is easily installable (dependecies!)
-        [ ] Revise README file (PyEnchant & iso-codes)
+        [W] Revise README file (PyEnchant & iso-codes)
+        [ ] Revise Website (PyEnchant & iso-codes)
   [W] Garbage collect destructed GObjects
   [W] Always copy.deepcopy nested lists instead of [:]
   [?] Revise terminology: project = main document + translation document

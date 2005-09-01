@@ -39,20 +39,22 @@ code files.
 """
 
 
-from glob import glob
+import glob
 import optparse
 import os
 import sys
 
+
 # Directories
-WORK_DIR   = os.path.dirname(os.path.abspath(sys.argv[0]))
-GLADE_DIR  = os.path.join(WORK_DIR, 'data'  , 'glade')
-LIB_DIR    = os.path.join(WORK_DIR, 'lib'            )
-LOCALE_DIR = os.path.join(WORK_DIR, 'locale'         )
-PO_DIR     = os.path.join(WORK_DIR, 'po'             )
+SOURCE_DIR = os.path.dirname(os.path.abspath(sys.argv[0]))
+GLADE_DIR  = os.path.join(SOURCE_DIR, 'data'  , 'glade')
+LIB_DIR    = os.path.join(SOURCE_DIR, 'lib'            )
+LOCALE_DIR = os.path.join(SOURCE_DIR, 'locale'         )
+PO_DIR     = os.path.join(SOURCE_DIR, 'po'             )
 
 # Files
 POT_PATH = os.path.join(PO_DIR, 'gaupol.pot')
+
 
 # Paths of the C header files created from the Glade XML files.
 h_paths  = []
@@ -61,19 +63,6 @@ h_paths  = []
 py_paths = []
 
 
-def check_write_permissions(dirnames):
-    """Check that the write permissions to dirnames exist and exit if not."""
-    
-    for dirname in dirnames:
-    
-        # If the directory doesn't exist, it needs to be created i.e.
-        # write permissions are needed to its parent directory.
-        while not os.path.isdir(dirname):
-            dirname = os.path.abspath(os.path.join(dirname, '..'))
-            
-        if not os.access(dirname, os.W_OK):
-            sys.exit('You need write permissions to directory "%s".' % dirname)
-    
 def compile_mo(lang):
     """Compile binary .mo file for language lang."""
 
@@ -131,11 +120,11 @@ def extract_strings_from_source_files():
 
     paths = h_paths + py_paths
 
-    # Cut WORK_DIR out of paths to have only relevant parts of the paths
+    # Cut SOURCE_DIR out of paths to have only relevant parts of the paths
     # printed in the .po file.
-    paths = [path.replace(WORK_DIR, '.') for path in paths]
+    paths = [path.replace(SOURCE_DIR, '.') for path in paths]
 
-    os.chdir(WORK_DIR)
+    os.chdir(SOURCE_DIR)
     path_arg = ' '.join(paths)
     os.system('xgettext -k_ -kN_ -c -o %s %s' % (POT_PATH, path_arg))
 
@@ -153,7 +142,7 @@ def get_languages(lang):
     """
     langs = []
     if lang == 'all':
-        paths = glob(os.path.join(PO_DIR, '*.po'))
+        paths = glob.glob(os.path.join(PO_DIR, '*.po'))
         for path in paths:
             langs.append(os.path.basename(path)[:-3])
     else:
@@ -205,12 +194,12 @@ def remove_temporary_files():
     fancy_print('Removing temporary files...')
 
     # .pot file
-    print POT_PATH.replace(WORK_DIR, '.')
+    print POT_PATH.replace(SOURCE_DIR, '.')
     os.remove(POT_PATH)
     
     # .h files
     for path in h_paths:
-        print path.replace(WORK_DIR, '.')
+        print path.replace(SOURCE_DIR, '.')
         os.remove(path)
 
 def update_po(lang):
@@ -229,22 +218,16 @@ if __name__ == '__main__':
     opts, args = parse_options()
     
     if opts.create_po:
-    
-        check_write_permissions([GLADE_DIR, PO_DIR])
         create_pot()
         create_po(opts.create_po)
         remove_temporary_files()
 
     elif opts.update_po:
-    
-        check_write_permissions([GLADE_DIR, PO_DIR])
         create_pot()
         update_po(opts.update_po)
         remove_temporary_files()
 
     elif opts.compile_mo:
-    
-        check_write_permissions([LOCALE_DIR])
         compile_mo(opts.compile_mo)
 
     else:

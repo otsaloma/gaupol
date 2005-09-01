@@ -74,8 +74,7 @@ Table of Contents
     ./trantool -m <lang>
 
   To compile all languages, substitute <lang> with "all". The resulting .mo
-  file is placed in "locale" directory according to standard directory
-  hierarchy.
+  file is placed in the "locale" directory according to standard hierarchy.
   
   The compilation will perform checks on header, format and domain. Correct
   any errors encountered.
@@ -100,9 +99,8 @@ Table of Contents
 
   All .po files should be UTF-8 encoded. If not already, convert to UTF-8
   
-    msgconv -t UTF-8 <lang>.po -o <lang>.po.new
     mv <lang>.po <lang>.po.bak
-    mv <lang>.po.new <lang>.po
+    msgconv -t UTF-8 <lang>.po.bak -o <lang>.po
     
   When you are done, send the .po file and the desktop file "gaupol.desktop"
   by e-mail to otsaloma@cc.hut.fi.

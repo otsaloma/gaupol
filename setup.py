@@ -1,18 +1,19 @@
 #!/usr/bin/env python
 
-from distutils.core import Command
-from distutils.command.install_data import install_data
-from distutils.command.install_lib import install_lib
-from distutils.command.sdist import sdist
-from distutils.core import setup
-from distutils.log import info
-from glob import glob
+
+import glob
 import os
 import shutil
 import sys
 import tarfile
 import tempfile
 
+from distutils.command.install_data import install_data
+from distutils.command.install_lib import install_lib
+from distutils.command.sdist import sdist
+from distutils.core import Command
+from distutils.core import setup
+from distutils.log import info
 
 sys.path.insert(0, 'lib')
 from gaupol.constants import VERSION
@@ -29,9 +30,9 @@ for (dirpath, dirnames, basenames) in os.walk('lib'):
 
 scripts = ['gaupol']
 
-glade_files = glob(os.path.join('data', 'glade', '*.glade'))
-icon_files  = glob(os.path.join('data', 'icons', '*.png'  ))
-ui_files    = glob(os.path.join('data', 'ui'   , '*.xml'  ))
+glade_files = glob.glob(os.path.join('data', 'glade', '*.glade'))
+icon_files  = glob.glob(os.path.join('data', 'icons', '*.png'  ))
+ui_files    = glob.glob(os.path.join('data', 'ui'   , '*.xml'  ))
 
 doc_files = (
     'AUTHORS',
@@ -58,7 +59,7 @@ This uninstallation feature is not a part of Python distutils, but instead an
 unstable extension. No responsibility will be taken for possible data loss.
 
 The uninstallation process will first remove all files listed in
-"installed-files.log", which was generated during the installation. That log
+"installed-files.log", which was generated during installation. That log
 contains only files, not directories. After all the files have been removed,
 the process will continue by recursively going through all the empty parent
 directories and asking if you want them removed.
@@ -72,6 +73,7 @@ class InstallData(install_data):
 
     def run(self):
 
+        # Compile translations and add the to data files.
         self.data_files.extend(self._get_mo_files())
         
         install_data.run(self)
@@ -80,7 +82,7 @@ class InstallData(install_data):
     
         mo_files = []
         
-        for po_path in glob(os.path.join('po', '*.po')):
+        for po_path in glob.glob(os.path.join('po', '*.po')):
         
             lang = os.path.basename(po_path[:-3])
             
@@ -93,7 +95,7 @@ class InstallData(install_data):
                 os.makedirs(mo_dir)
             
             info('compiling %s' % mo_path)
-            os.system('msgfmt %s -o %s' % (po_path, mo_path))
+            os.system('msgfmt -cv %s -o %s' % (po_path, mo_path))
 
             if os.path.isfile(mo_path):
                 mo_files.append((destination, [mo_path]))
@@ -105,6 +107,8 @@ class InstallLib(install_lib):
 
     def install(self):
     
+        # Write path information to file "paths.py".
+        
         paths_path = os.path.join(self.build_dir, 'gaupol', 'paths.py')
         
         install = self.distribution.get_command_obj('install')
@@ -178,7 +182,7 @@ class SDist(sdist):
             for member in tar_file.getmembers():
                 tar_file.extract(member, temp_dir)
             
-            info('comparing tarball (temp) with working copy (.)')
+            info('comparing tarball (tmp) with working copy (.)')
             os.system('diff -r -x *.pyc -x .svn . %s' % test_dir)
             
             # Stop and ask if all necessary files are included.
@@ -197,13 +201,13 @@ class SDist(sdist):
         os.system('md5sum * > %s.md5sum' % basename)
         
         # Create changes file.
-        path = os.path.join('..', '..', 'ChangeLog')
         info('creating %s.changes' % basename)
+        path = os.path.join('..', '..', 'ChangeLog') 
         shutil.copyfile(path, '%s.changes' % basename)
         
         # Create news file.
-        path = os.path.join('..', '..', 'NEWS')
         info('creating %s.news' % basename)
+        path = os.path.join('..', '..', 'NEWS')
         shutil.copyfile(path, '%s.news' % basename)
         
         # Sign tarballs.
@@ -229,6 +233,8 @@ class SDist(sdist):
 
 class Uninstall(Command):
 
+    """Uninstallation of files specified in installation log."""
+
     description = "uninstall installed files"
     user_options = []
     
@@ -239,6 +245,7 @@ class Uninstall(Command):
         pass
 
     def run (self):
+        """Remove files."""
     
         print UNINSTALL_WARNING
         response = raw_input('Continue [y/N]? ')
@@ -247,6 +254,7 @@ class Uninstall(Command):
 
         log_path = 'installed-files.log'
         
+        # Get list of files.
         try:
             log_file = open(log_path, 'r')
             try:
@@ -284,6 +292,7 @@ class Uninstall(Command):
             
                 path = paths[i]
                 
+                # Skip already removed directories.
                 if not os.path.isdir(path):
                     paths.pop(i)
                     continue
