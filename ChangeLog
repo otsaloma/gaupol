@@ -1,5 +1,17 @@
 2005-09-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gui/delegates/guibuilder.py (_build_framerate_combo_box):
+	  Shifted framerate combo to the left of the spell-check item.
+
+	* data/glade/insertsub-dialog.glade:
+	  Removed separator.
+
+	* data/glade/spellcheck-window.glade:
+	  Added "Join Back" and "Join Forward" buttons. Made language label
+	  wider.
+
+2005-09-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* test/pyenchant:
 	  Print also the names of the dictionary providers.
 

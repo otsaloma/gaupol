@@ -80,8 +80,8 @@ class GUIBuilder(Delegate):
 
          # Add tool item to toolbar.
         toolbar = self.uim.get_widget('/ui/toolbar')
-        toolbar.insert(gtk.SeparatorToolItem(), -1)
-        toolbar.insert(tool_item, -1)
+        toolbar.insert(gtk.SeparatorToolItem(), 9)
+        toolbar.insert(tool_item, 10)
 
     def build_gui(self):
         """Build and prepare the entire GUI."""
