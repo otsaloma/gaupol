@@ -10,17 +10,19 @@ Plans for 0.2.0
         [D] Script to test PyEnchant installation
         [D] Outline general spell-checking strategy
         [D] Glade files for dialogs (Gedit!)
-        [D] Langlib
-        [D] Config entries
-        [ ] Spell-check window (wxSpellCheckerDialog.py!)
-        [ ] Edit dialog for spell-check window
-        [D] Settings dialog
-        [W] Delegate
+        [D] langlib for iso-codes
+        [D] config entries
+        [D] Language selection dialog
+        [W] Spell-check window (wxSpellCheckerDialog.py!)
+        [W] Text-edit dialog for spell-check window
+        [W] Spell-checker delegate
         [D] Menu entry visibility
-        [ ] Test to see if PyEnchant 1.1.2 would be enough
         [ ] Test error handling
+        [ ] Test unicode handling
         [ ] Ensure that PyEnchant is easily installable (dependecies!)
         [ ] Revise README file (PyEnchant & iso-codes)
+  [W] Garbage collect destructed GObjects
+  [W] Always copy.deepcopy nested lists instead of [:]
   [?] Revise terminology: project = main document + translation document
   [?] Assign Ctrl + arrow keys for moving to edit an adjacent cell
   [ ] Update Finnish translation

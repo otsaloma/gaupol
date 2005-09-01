@@ -240,7 +240,7 @@ class Config(ConfigParser.RawConfigParser):
                 os.mkdir(CONFIG_DIR)
             except OSError, detail:
                 logger.error('Failed to create profile directory "%s": %s.' \
-                             % CONFIG_DIR)
+                             % (CONFIG_DIR, detail))
 
         try:
         

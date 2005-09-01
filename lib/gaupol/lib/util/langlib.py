@@ -479,6 +479,24 @@ def get_country(code):
     else:
         return None
         
+def get_descriptive_name(code):
+    """
+    Get descriptive name for language in format "language (country)"
+    
+    Return value and format are translation dependent.
+    Raise KeyError is language not found.
+    Raise ValueError if improper language code given.
+    """
+    if len(code) == 2:
+        return LANGS[code]
+    elif len(code) == 5:
+        lang = LANGS[code[:2]]
+        country = COUNTRIES[code[3:]]
+        # TRANSLATORS: Language descriptive name, e.g. "English (Canada)".
+        return _('%s (%s)') % (lang, country)
+    else:
+        raise ValueError('Invalid language code: "%s".' % code)
+        
 def get_language(code):
     """
     Get language from language code.

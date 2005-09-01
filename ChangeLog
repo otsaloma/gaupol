@@ -1,3 +1,33 @@
+2005-09-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/gui/dialogs/error.py (SpellCheckErrorDialog):
+	  New class for spell-check errors.
+	
+	* lib/gaupol/gui/spellcheck.py:
+	  New module for spell-check window. Buggy and incomplete!
+	
+	* lib/gaupol/gui/delegates/spellchecker.py:
+	  Major rewrite.
+
+	* lib/gaupol/gui/delegates/durmanager.py (DURAction.__init__):
+	  Fixed typo.
+	
+	* lib/gaupol/gui/delegates/durmanager.py (DURManager.register_action):
+	  lib/gaupol/gui/application.py:
+	  New method for actions already done. Added to delegation dictionary.
+	
+	* lib/gaupol/gui/util/config.py (Config.write_to_file):
+	  Fixed a bug with profile directory creation error handling.
+	
+	* lib/gaupol/lib/util/langlib.py (get_descriptive_name):
+	  New method for getting descriptive name.
+	
+	* data/glade/spellcheck-window.glade:
+	  Minor adjustments.
+
+	* data/glade/edit-dialog.glade:
+	  Removed in favor of manual construction.
+
 2005-08-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol (prepare_gettext):

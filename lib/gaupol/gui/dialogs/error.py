@@ -61,6 +61,19 @@ class ReadFileErrorDialog(IOErrorDialog):
         """
         title = _('Failed to read file "%s"') % basename
         IOErrorDialog.__init__(self, parent, title, detail)
+        
+        
+class SpellCheckErrorDialog(gtk.MessageDialog):
+    
+    """Dialog to inform that UnicodeError occured while reading."""
+    
+    def __init__(self, parent, detail):
+
+        gtk.MessageDialog.__init__(
+            self, parent, FLAGS, TYPE, BUTTONS,
+            _('Failed to start spell-check')
+        )
+        self.format_secondary_text('%s.' % detail)
 
 
 class UnicodeDecodeErrorDialog(gtk.MessageDialog):

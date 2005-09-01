@@ -43,7 +43,7 @@ class DURAction(object):
         self.description = None
 
         # List of documents affected.
-        self.document = []
+        self.documents = []
 
         # TreeView properties that can be restored.
         self.focus_row     = None
@@ -144,6 +144,25 @@ class DURManager(Delegate):
                 project.undoables.pop()
 
         project.redoables.pop(0)
+        self._shift_changed_value(project, action, 1)
+
+        self.set_sensitivities(project)
+        
+    def register_action(self, action):
+        """Register an already done action and update things affected."""
+
+        project = action.project
+        self._save_tree_view_properties(project, action)
+
+        project.undoables.insert(0, action)
+
+        # Remove oldest undo action if level limit is exceeded.
+        if self.config.getboolean('editor', 'limit_undo'):
+            undo_levels = self.config.getint('editor', 'undo_levels')
+            while len(project.undoables) > undo_levels:
+                project.undoables.pop()
+
+        project.redoables = []
         self._shift_changed_value(project, action, 1)
 
         self.set_sensitivities(project)

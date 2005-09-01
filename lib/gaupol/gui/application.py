@@ -184,6 +184,7 @@ class Application(object):
             'on_window_state_event'                  : gui_updater,
             'open_main_files'                        : file_opener,
             'redo_action'                            : dur_manager,
+            'register_action'                        : dur_manager,
             'save_main_document_as'                  : file_saver,
             'save_main_document'                     : file_saver,
             'save_translation_document_as'           : file_saver,
