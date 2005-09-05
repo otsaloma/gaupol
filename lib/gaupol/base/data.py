@@ -20,18 +20,16 @@
 """Subtitle project data."""
 
 
+import types
+
 try:
     from psyco.classes import *
 except ImportError:
     pass
 
-from gaupol.lib.delegates.analyzer import Analyzer
-from gaupol.lib.delegates.editor import Editor
-from gaupol.lib.delegates.filereader import FileReader
-from gaupol.lib.delegates.filewriter import FileWriter
-from gaupol.lib.delegates.formatter import Formatter
-from gaupol.lib.delegates.frconv import FramerateConverter
-from gaupol.lib.timing.calc import TimeFrameCalculator
+from gaupol.base.delegates import *
+from gaupol.base.delegates import delegate_names
+from gaupol.base.time.calc import TimeFrameCalculator
 
 
 class Data(object):
@@ -39,12 +37,13 @@ class Data(object):
     """
     Subtitle project data.
 
-    This is the main class for gaupol.lib. This class holds the all the
+    This is the main class for gaupol.base. This class holds the all the
     subtitle data of one project. All methods are outsourced to delegates.
     
     times    : list of lists of strings : [[show-1, hide-1, duration-1],...]
     frames   : list of lists of integers: [[show-1, hide-1, duration-1],...]
     texts    : list of lists of strings : [[text-1, translation-1],...]
+    framerate: string
     """
     
     def __init__(self, framerate):
@@ -54,44 +53,33 @@ class Data(object):
         self.texts  = []
 
         self.framerate = framerate
-        self.calc      = TimeFrameCalculator(framerate)
-
         self.main_file = None
         self.tran_file = None
 
-        self._delegations = None
+        self.calc = TimeFrameCalculator(framerate)
+
+        self._delegations = {}
         self._assign_delegations()
 
     def _assign_delegations(self):
         """Map method names to Delegate objects."""
-        
-        analyzer            = Analyzer(self)
-        editor              = Editor(self)
-        file_reader         = FileReader(self)
-        file_writer         = FileWriter(self)
-        formatter           = Formatter(self)
-        framerate_converter = FramerateConverter(self)
 
-        self._delegations = {
-            'change_case'           : formatter,
-            'change_framerate'      : framerate_converter,
-            'clear_text'            : editor,
-            'get_character_count'   : analyzer,
-            'get_mode'              : editor,
-            'get_regex_for_tag'     : formatter,
-            'get_timings'           : editor,
-            'insert_subtitles'      : editor,
-            'read_main_file'        : file_reader,
-            'read_translation_file' : file_reader,
-            'remove_subtitles'      : editor,
-            'set_frame'             : editor,
-            'set_text'              : editor,
-            'set_time'              : editor,
-            'toggle_dialog_lines'   : formatter,
-            'toggle_italicization'  : formatter,
-            'write_main_file'       : file_writer,
-            'write_translation_file': file_writer,
-        }
+        # Loop through all delegates creating an instance of the delegate and
+        # mapping all its methods that don't start with an underscore to that
+        # instance.
+        for delegate_name in delegate_names:
+
+            delegate = eval(delegate_name)
+            for attr_name in dir(delegate):
+            
+                if attr_name.startswith('_'):
+                    continue
+                
+                attr = eval('delegate.%s' % attr_name)
+                if not isinstance(attr, types.MethodType):
+                    continue
+                
+                self._delegations[attr_name] = delegate
         
     def __getattr__(self, name):
         """Delegate method calls to Delegate objects."""
