@@ -40,9 +40,9 @@ class Data(object):
     This is the main class for gaupol.base. This class holds the all the
     subtitle data of one project. All methods are outsourced to delegates.
     
-    times    : list of lists of strings : [[show-1, hide-1, duration-1],...]
-    frames   : list of lists of integers: [[show-1, hide-1, duration-1],...]
-    texts    : list of lists of strings : [[text-1, translation-1],...]
+    times    : list of lists of strings,  [[show, hide, duration], ...]
+    frames   : list of lists of integers, [[show, hide, duration], ...]
+    texts    : list of lists of strings,  [[text, translation], ...]
     framerate: string
     """
     
