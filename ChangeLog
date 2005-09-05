@@ -1,3 +1,11 @@
+2005-09-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	START OF PARTIAL CODE REWRITE. BROKEN!
+
+	* lib/gaupol/gtk: Renamed from lib/gaupol/gui.
+
+	* lib/gaupol/base: Renamed from lib/gaupol/lib.
+
 2005-09-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/gui/delegates/guibuilder.py (_build_framerate_combo_box):
