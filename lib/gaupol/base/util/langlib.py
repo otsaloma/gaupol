@@ -20,20 +20,23 @@
 """
 Language and country names and their ISO codes.
 
-All codes in the function are language codes in format "xx" or "xx_YY",
-e.g. "en" or "en_US".
+Language codes are ISO 639 two-letter codes. Country codes are ISO 3166 codes.
+These match the codes used by most computer software to identify locales, "xx"
+or "xx_YY". For example, "en_US" has the ISO 639 language code for English and
+the ISO 3166 country code for United States.
+
+Translations for the language and country names are acquired from the iso-codes
+package, if it is installed. That means from the "iso-codes" gettext domain.
 """
 
-# Lists generated from iso-codes project XML files using:
+# LANGS and COUNTRIES lists have been generated from iso-codes project's XML
+# files using:
 #
 # python iso639tab.py  iso_639.xml  > iso-639.txt
 # python iso3166tab.py iso_3166.xml > iso-3166.txt
 #
 # Original XML files by Alastair McKinstry and Andreas Jochens.
 # http://alioth.debian.org/projects/pkg-isocodes/
-#
-# Translations are acquired from iso-codes package as well, if it is
-# installed.
 
 
 LANGS = {
@@ -468,11 +471,11 @@ COUNTRIES = {
 
 def get_country(code):
     """
-    Get country from language code.
+    Get localized country name from language code.
     
-    Return value is translation dependent.
-    Raise KeyError is language not found.
-    Return None, if no coutry in code.
+    code: locale language code, "xx" or "xx_YY"
+    Raise KeyError if language not found.
+    Return None, if no country in code
     """
     if len(code) == 5:
         return dgettext('iso_3166', COUNTRIES[code[3:]])
@@ -481,27 +484,26 @@ def get_country(code):
         
 def get_descriptive_name(code):
     """
-    Get descriptive name for language in format "language (country)"
+    Get localized descriptive name for language.
     
-    Return value and format are translation dependent.
-    Raise KeyError is language not found.
-    Raise ValueError if improper language code given.
+    code: locale language code, "xx" or "xx_YY"
+    Raise KeyError if language or country not found.
+    Return: "Language (Country)"
     """
-    if len(code) == 2:
-        return LANGS[code]
-    elif len(code) == 5:
-        lang = LANGS[code[:2]]
-        country = COUNTRIES[code[3:]]
+    lang    = get_language(code)
+    country = get_country(code)
+
+    if country is None:
+        return lang
+    else:
         # TRANSLATORS: Language descriptive name, e.g. "English (Canada)".
         return _('%s (%s)') % (lang, country)
-    else:
-        raise ValueError('Invalid language code: "%s".' % code)
-        
+
 def get_language(code):
     """
     Get language from language code.
     
-    Return value is translation dependent.
+    code: locale language code, "xx" or "xx_YY"
     Raise KeyError is language not found.
     """
     return dgettext('iso_639', LANGS[code[:2]])

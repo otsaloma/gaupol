@@ -34,18 +34,18 @@ except ImportError:
 
 class TimeoutError(Exception):
 
-    """Exception raised when connection times out."""
+    """Connection timed out."""
 
     pass
 
 
 class URLDocument(object):
 
-    """Reading text documents on the Internet."""
+    """Reading text documents hosted in the Internet."""
 
     def __init__(self, url, timeout):
         """
-        Initialize an URLDocument object.
+        Initialize a URLDocument object.
         
         timeout is in seconds.
         """ 
@@ -61,7 +61,6 @@ class URLDocument(object):
         Raise TimeoutError, if reading times out.
         """
         thread = threading.Thread(target=self._read)
-        
         thread.start()
         thread.join(self.timeout)
         
@@ -83,8 +82,8 @@ def open_url(url):
     """Open url in web-browser."""
 
     # TODO:
-    # webbrowser module is not very good. It will open some browser, but
-    # not the default browser. Add detection and start commands for other
+    # The Python webbrowser module is not very good. It will open some browser,
+    # but not the default browser. Add detection and start commands for other
     # OSs and DEs if such exist.
     
     # Windows
