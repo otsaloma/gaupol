@@ -29,7 +29,7 @@ except ImportError:
 
 from gaupol.base.delegates import *
 from gaupol.base.delegates import delegate_names
-from gaupol.base.time.calc import TimeFrameCalculator
+from gaupol.base.timing.calc import TimeFrameCalculator
 
 
 class Data(object):

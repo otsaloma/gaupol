@@ -20,7 +20,7 @@
 """Time and frame calculations."""
 
 
-from math import floor
+import floor
 
 try:
     from psyco.classes import *
@@ -41,7 +41,7 @@ class TimeFrameCalculator(object):
     framerate: float
     """
     
-    def __init__(self, framerate=FRAMERATE._23_976):
+    def __init__(self, framerate):
 
         self.framerate = FRAMERATE.VALUES[framerate]
 
@@ -103,16 +103,16 @@ class TimeFrameCalculator(object):
         """
         seconds_left = round(seconds, 3)
         
-        hours = floor(seconds_left / 3600)
+        hours = math.floor(seconds_left / 3600)
         seconds_left -= hours * 3600
 
         if hours > 99:
             return '99:59:59,999'
         
-        minutes = floor(seconds_left / 60)
+        minutes = math.floor(seconds_left / 60)
         seconds_left -= minutes * 60
         
-        seconds = floor(seconds_left)
+        seconds = math.floor(seconds_left)
         seconds_left -= seconds
 
         milliseconds = seconds_left * 1000
