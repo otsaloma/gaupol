@@ -28,7 +28,7 @@ Paths available:
 DATA_DIR
 GLADE_DIR
 ICON_DIR
-LOCALE_DIR
 UI_DIR
+LOCALE_DIR
 """
 

@@ -20,9 +20,6 @@
 """gaupol-wide constants."""
 
 
-VERSION = '0.1.1'
-
-
 # Extension and Format class constants must have the same order.
 
 class EXTENSION(object):
@@ -41,11 +38,11 @@ class FORMAT(object):
 
 class FRAMERATE(object):
 
-    NAMES   = ['23.976', '25'  , '29.97']
-    VALUES  = [ 23.976 ,  25.0 ,  29.97 ]
-    _23_976 = 0
-    _25     = 1
-    _29_97  = 2
+    NAMES     = ['23.976', '25'  , '29.97']
+    VALUES    = [ 23.976 ,  25.0 ,  29.97 ]
+    FR_23_976 = 0
+    FR_25     = 1
+    FR_29_97  = 2
 
 class MODE(object):
 

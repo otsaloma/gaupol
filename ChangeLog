@@ -1,5 +1,14 @@
 2005-09-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/constants.py: Removed constant VERSION. Renamed framerate
+	  constants.
+
+	* lib/gaupol/__init__.py: Added attribute __version__.
+
+	* lib/gaupol/paths.py: Minor fixes.
+
+2005-09-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	START OF PARTIAL CODE REWRITE. BROKEN!
 
 	* lib/gaupol/gtk: Renamed from lib/gaupol/gui.
