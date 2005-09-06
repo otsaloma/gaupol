@@ -22,10 +22,9 @@
 
 # Documentation:
 # http://napisy.ussbrowarek.org/mpl2-eng.html
-# (Unreliable website; found needed info from Google search cache.)
 #
 # MPL exists as well, but is probably not much used. There might be MPL3 as
-# well, but documentation is poor or non-existent.
+# well, but documentation is poor.
 # 
 # Basically:
 # / starts italics

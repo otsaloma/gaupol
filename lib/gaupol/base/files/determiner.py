@@ -28,18 +28,8 @@ except ImportError:
     pass
 
 from gaupol.constants import FORMAT
-from gaupol.lib.files.subfile import SubtitleFile
-
-
-microdvd = r'^\{\d+\}\{\d+\}.*?$'
-mpl2     = r'^\[\d+\]\[\d+\].*?$'
-subrip   = r'^\d\d:\d\d:\d\d,\d\d\d --> \d\d:\d\d:\d\d,\d\d\d\s*$'
-
-RE_IDS = {
-    FORMAT.MICRODVD: re.compile(microdvd),
-    FORMAT.MPL2    : re.compile(mpl2),
-    FORMAT.SUBRIP  : re.compile(subrip),
-}
+from gaupol.base.files import *
+from gaupol.base.files.subfile import SubtitleFile
 
 
 class FileFormatDeterminer(SubtitleFile):
@@ -59,16 +49,27 @@ class FileFormatDeterminer(SubtitleFile):
         """
         lines = self._read_lines()
 
-        for line in lines:
-            for format, re_id in RE_IDS.items():
-                if re_id.match(line) is not None:
-                    return format
+        # Assemble a list of regular expressions.
+        re_ids = []
+        for format in range(len(FORMAT.NAMES)):
+            pattern = eval(FORMAT.NAMES[format]).ID_PATTERN
+            try:
+                re_id = re.compile(pattern[0], pattern[1])
+            except TypeError:
+                re_id = re.compile(pattern[0])
+            re_ids.append((format, re_id))
 
+        # Find correct format.
+        for line in lines:
+            for format, re_id in re_ids:
+                if re_id.search(line) is not None:
+                    return format
+            
         raise UnknownFileFormatError
 
         
 class UnknownFileFormatError(Exception):
     
-    """Error raised when encountered a subtitle file of an unkown format."""
+    """Unknown subtitle file format."""
     
     pass

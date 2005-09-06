@@ -33,18 +33,17 @@ from gaupol.constants import NEWLINE
 
 class SubtitleFile(object):
     
-    """
-    Base class for subtitle files.
-    
-    encoding: Python name of encoding used
-    newlines: "Mac", "Unix" or "Windows"
-    """
+    """Base class for subtitle files."""
+
+    # Regular expression for identifiying that a file is of this format.
+    # Pattern, flags
+    ID_PATTERN = None, None
     
     def __init__(self, path, encoding, newlines=None):
         """
         Initialize a SubtitleFile object.
         
-        newlines can be omitted if creating a file object only for reading.
+        newlines can be omitted if creating an instance only for reading.
         """
         self.path     = path
         self.encoding = encoding
@@ -55,7 +54,7 @@ class SubtitleFile(object):
         self.MODE      = None
 
     def _get_newline_character(self):
-        """Get character used for newlines."""
+        """Get character(s) used for newlines."""
         
         return NEWLINE.VALUES[self.newlines]
 
@@ -68,12 +67,14 @@ class SubtitleFile(object):
         """
         subtitle_file = codecs.open(self.path, 'rU', self.encoding)
 
+        # Read.
         try:
             lines = subtitle_file.readlines()
             newline_characters = subtitle_file.newlines
         finally:
             subtitle_file.close()
-
+       
+        # Save newline format.
         if isinstance(newline_characters, tuple):
             self.newlines = NEWLINE.VALUES.index(newline_characters[0])
         elif isinstance(newline_characters, basestring):

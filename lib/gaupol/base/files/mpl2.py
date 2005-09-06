@@ -19,6 +19,7 @@
 
 """MPL2 file."""
 
+
 # Documentation:
 # http://napisy.ussbrowarek.org/mpl2-eng.html
 
@@ -32,11 +33,8 @@ except ImportError:
     pass
 
 from gaupol.constants import EXTENSION, FORMAT, MODE
-from gaupol.lib.files.subfile import SubtitleFile
-from gaupol.lib.timing.calc import TimeFrameCalculator
-
-
-RE_LINE = re.compile(r'^\[(\d+)\]\[(\d+)\](.*?)$')
+from gaupol.base.files.subfile import SubtitleFile
+from gaupol.base.timing.calc import TimeFrameCalculator
 
 
 class MPL2(SubtitleFile):
@@ -48,6 +46,8 @@ class MPL2(SubtitleFile):
     [182][221]And that completes my final report|until we reach touchdown.
     [222][260]We're now on full automatic,|in the hands of the computers.
     """
+
+    ID_PATTERN = r'^\[\d+\]\[\d+\].*?$', None
     
     def __init__(self, *args):
 
@@ -65,6 +65,9 @@ class MPL2(SubtitleFile):
         Raise UnicodeError if decoding fails.
         Return: show times, hide times, texts
         """
+        # Compile regular expressions.
+        re_line = re.compile(r'^\[(\d+)\]\[(\d+)\](.*?)$')
+        
         lines = self._read_lines()
         
         shows = []
@@ -74,7 +77,7 @@ class MPL2(SubtitleFile):
         # Split lines list to components.
         for line in lines:
         
-            match = RE_LINE.match(line)
+            match = re_line.match(line)
             
             if match is not None:
                 shows.append(match.group(1))
@@ -83,7 +86,7 @@ class MPL2(SubtitleFile):
 
         calc = TimeFrameCalculator()
 
-        # Convert timings from decaseconds to seconds and finally times.
+        # Convert timings from decaseconds to seconds and finally timestrings.
         for entry in [shows, hides]:
             for i in range(len(entry)):
                 deca_string = entry[i]
@@ -107,7 +110,7 @@ class MPL2(SubtitleFile):
 
         calc = TimeFrameCalculator()
 
-        # Convert timings from times to seconds and finally decaseconds.
+        # Convert timings from timestrings to seconds and finally decaseconds.
         for entry in [shows, hides]:
             for i in range(len(entry)):
                 decaseconds = calc.time_to_seconds(entry[i]) * 10

@@ -19,6 +19,7 @@
 
 """MicroDVD file."""
 
+
 # Documentation:
 # http://netti.nic.fi/~temp/easydivx/help/mdvddoc
 
@@ -32,10 +33,7 @@ except ImportError:
     pass
 
 from gaupol.constants import EXTENSION, FORMAT, MODE
-from gaupol.lib.files.subfile import SubtitleFile
-
-
-RE_LINE = re.compile(r'^\{(\d+)\}\{(\d+)\}(.*?)$')
+from gaupol.base.files.subfile import SubtitleFile
 
 
 class MicroDVD(SubtitleFile):
@@ -47,6 +45,8 @@ class MicroDVD(SubtitleFile):
     {436}{531}And that completes my final report|until we reach touchdown.
     {533}{624}We're now on full automatic,|in the hands of the computers.
     """
+
+    ID_PATTERN = r'^\{\d+\}\{\d+\}.*?$', None
     
     def __init__(self, *args):
 
@@ -64,6 +64,9 @@ class MicroDVD(SubtitleFile):
         Raise UnicodeError if decoding fails.
         Return: show frames, hide frames, texts
         """
+        # Compile regular expressions.
+        re_line = re.compile(r'^\{(\d+)\}\{(\d+)\}(.*?)$')
+
         lines = self._read_lines()
         
         shows = []
@@ -73,7 +76,7 @@ class MicroDVD(SubtitleFile):
         # Split lines list to components.
         for line in lines:
         
-            match = RE_LINE.match(line)
+            match = re_line.match(line)
             
             if match is not None:
                 shows.append(match.group(1))

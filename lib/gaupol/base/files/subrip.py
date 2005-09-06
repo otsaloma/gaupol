@@ -29,14 +29,7 @@ except ImportError:
     pass
 
 from gaupol.constants import EXTENSION, FORMAT, MODE
-from gaupol.lib.files.subfile import SubtitleFile
-
-
-blank_line = r'^\s*$'
-time_line  = r'^(\d\d:\d\d:\d\d,\d\d\d) --> (\d\d:\d\d:\d\d,\d\d\d)\s*$'
-
-RE_BLANK_LINE = re.compile(blank_line)
-RE_TIME_LINE  = re.compile(time_line)
+from gaupol.base.files.subfile import SubtitleFile
 
 
 class SubRip(SubtitleFile):
@@ -55,6 +48,8 @@ class SubRip(SubtitleFile):
     We're now on full automatic,
     in the hands of the computers.
     """
+
+    ID_PATTERN = r'^\d\d:\d\d:\d\d,\d\d\d --> \d\d:\d\d:\d\d,\d\d\d\s*$', None
     
     def __init__(self, *args):
 
@@ -72,15 +67,20 @@ class SubRip(SubtitleFile):
         Raise UnicodeError if decoding fails.
         Return: show times, hide times, texts
         """
-        lines      = self._read_lines()
+        # Compile regular expressions.
+        re_blank_line = re.compile(r'^\s*$')
+        time = r'\d\d:\d\d:\d\d,\d\d\d'
+        re_time_line = re.compile(r'^(%s) --> (%s)\s*$' % (time, time))
+        
+        lines = self._read_lines()
         good_lines = []
         
         # Remove blank lines and unit numbers.
         for line in lines:
 
-            if RE_BLANK_LINE.match(line) is not None:
+            if re_blank_line.match(line) is not None:
                 continue
-            elif RE_TIME_LINE.match(line) is not None:
+            elif re_time_line.match(line) is not None:
                 good_lines[-1] = line
             else:
                 good_lines.append(line)
@@ -92,7 +92,7 @@ class SubRip(SubtitleFile):
         # Split to components.
         for line in good_lines:
         
-            match = RE_TIME_LINE.match(line)
+            match = re_time_line.match(line)
             
             if match is not None:
                 shows.append(match.group(1))
