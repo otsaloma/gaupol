@@ -28,7 +28,7 @@ except ImportError:
     pass
 
 from gaupol.constants import FORMAT
-from gaupol.lib.tags.all import *
+from gaupol.base.tags import *
 
 
 class TagConverter(object):

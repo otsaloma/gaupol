@@ -20,6 +20,10 @@
 """SubRip tag library."""
 
 
+# No documentation found for SubRip format, but according to rumors, SubRip
+# supports only style tags (bold, italic and underline).
+
+
 import re
 
 try:
@@ -27,7 +31,7 @@ try:
 except ImportError:
     pass
 
-from gaupol.lib.tags.taglib import TagLibrary
+from gaupol.base.tags.taglib import TagLibrary
 
     
 class SubRip(TagLibrary):

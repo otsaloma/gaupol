@@ -19,6 +19,7 @@
 
 """MicroDVD tag library."""
 
+
 # Documentation:
 # http://netti.nic.fi/~temp/easydivx/help/mdvddoc/#step5
 
@@ -30,7 +31,7 @@ try:
 except ImportError:
     pass
 
-from gaupol.lib.tags.taglib import TagLibrary
+from gaupol.base.tags.taglib import TagLibrary
 
 
 COMMON = re.MULTILINE|re.DOTALL

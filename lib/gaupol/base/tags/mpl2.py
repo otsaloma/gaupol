@@ -19,16 +19,21 @@
 
 """MPL2 tag library."""
 
+
 # Documentation:
 # http://napisy.ussbrowarek.org/mpl2-eng.html
+# (Unreliable website; found needed info from Google search cache.)
+#
+# MPL exists as well, but is probably not much used. There might be MPL3 as
+# well, but documentation is poor or non-existent.
 # 
 # Basically:
 # / starts italics
 # \ starts bold
 # _ starts underline
 # 
-# All above tags affect only single line.
-# In addition, MicroDVD tags can be used in MPL2.
+# All above tags affect only a single line.
+# In addition, all MicroDVD tags can be used (hence the "2" after MPL).
 
 
 import re
@@ -38,8 +43,8 @@ try:
 except ImportError:
     pass
 
-from gaupol.lib.tags.microdvd import MicroDVD
-from gaupol.lib.tags.taglib import TagLibrary
+from gaupol.base.tags.microdvd import MicroDVD
+from gaupol.base.tags.taglib import TagLibrary
 
 
 COMMON = re.MULTILINE|re.DOTALL
@@ -83,10 +88,13 @@ class MPL2(TagLibrary):
     
             opening, closing, replacement = style_tags[i]
     
-            while text.find(opening) != -1:
+            while True:
         
-                # Get start and end positions of tag.
                 start = text.find(opening)
+                if start == -1:
+                    break
+                    
+                # Get start and end positions of tag.    
                 try:
                     end = text.index(closing)
                 except ValueError:
@@ -109,7 +117,7 @@ class MPL2(TagLibrary):
         
         return text
         
-    pre_encode  = staticmethod(pre_encode)
+    pre_encode = staticmethod(pre_encode)
 
     def italicize(text):
         """Italicize text."""
