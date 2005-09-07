@@ -1,3 +1,116 @@
+2005-09-07  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* ChangeLog: Forgot to commit this.
+
+2005-09-07  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/base/data.py: Fixed imports. Minor fixes.
+
+	* lib/gaupol/base/delegates/__init__.py:
+	  lib/gaupol/base/files/__init__.py:
+	  lib/gaupol/base/tags/__init__.py:
+	  Cleared in favor of classes.py modules.
+
+	* lib/gaupol/base/delegates/analyzer.py:
+	  lib/gaupol/base/delegates/delegate.py:
+	  lib/gaupol/base/delegates/editor.py:
+	  lib/gaupol/base/delegates/filereader.py:
+	  lib/gaupol/base/delegates/filewriter.py:
+	  lib/gaupol/base/delegates/frconv.py:
+	  lib/gaupol/base/files/microdvd.py:
+	  lib/gaupol/base/files/mpl2.py:
+	  lib/gaupol/base/files/subrip.py:
+	  lib/gaupol/base/tags/microdvd.py:
+	  lib/gaupol/base/tags/mpl2.py:
+	  lib/gaupol/base/timing/calc.py:
+	  lib/gaupol/base/util/encodinglib.py:
+	  lib/gaupol/base/util/internet.py:
+	  lib/gaupol/base/util/langlib.py:
+	  Minor fixes.
+
+	* lib/gaupol/base/delegates/classes.py:
+	  lib/gaupol/base/files/classes.py:
+	  lib/gaupol/base/tags/classes.py:
+	  New files for importing all classes.
+
+	* lib/gaupol/base/delegates/formatter.py: Made use of TextParser. Minor
+	  fixes.
+
+	* lib/gaupol/base/files/determiner.py: Minor fixes.
+	  (FileFormatError): Renamed from UnknownFileFormatError.
+
+	* lib/gaupol/base/text/parser.py:
+	  (TextParser.__init__): Do not require or set text.
+	  (TextParser.set_text): Fixed attribute names.
+
+2005-09-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/base/files/__init__.py: Added variable __all__.
+
+	* lib/gaupol/base/files/determiner.py: Automated retrieval of regular
+	  expression identifiers.
+
+	* lib/gaupol/base/files/microdvd.py:
+	  lib/gaupol/base/files/mpl2.py:
+	  lib/gaupol/base/files/subfile.py:
+	  lib/gaupol/base/files/subrip.py:
+	  Added class variable ID_PATTERN. Minor fixes.
+
+	* lib/gaupol/base/tags/mpl2.py: Minor comment fixes.
+
+2005-09-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/base/tags/__init__.py: Added variable __all__.
+
+	* lib/gaupol/base/tags/microdvd.py:
+	  lib/gaupol/base/tags/mpl2.py:
+	  lib/gaupol/base/tags/subrip.py:
+	  lib/gaupol/base/tags/tagconv.py:
+	  Minor fixes.
+
+	* lib/gaupol/base/tags/taglib.py:
+	  Defined ENCODE_TAGS to clear all tags. Minor fixes.
+
+2005-09-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/base/files/all.py:
+	  lib/gaupol/base/tags/all.py:
+	  Removed in favor of using __init__.py.
+
+2005-09-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/base/data.py: Fixed docstrings.
+
+	* lib/gaupol/base/text:
+	  lib/gaupol/base/text/__init__.py:
+	  New module for text operations.
+
+	* lib/gaupol/base/text/parser.py: New module for parsing text so that
+	  the text can be edited while keeping its tags intact.
+
+2005-09-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/base/data.py: Fixed imports.
+
+	* lib/gaupol/base/timing/calc.py: Minor fixes.
+
+2005-09-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/base/util/encodinglib.py: Added a note for translators.
+	  Minor fixes.
+
+	* lib/gaupol/base/util/internet.py: Minor fixes.
+
+	* lib/gaupol/base/util/langlib.py: Improved docstring. Minor fixes.
+	  (get_descriptive_name): Added lacking dgettext calls.
+
+2005-09-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/base/data.py: Minor fixes.
+	  (_assign_delegations): Automated delegate listing.
+
+	* lib/gaupol/base/colcons.py: Minor fixes.
+
 2005-09-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/constants.py: Removed constant VERSION. Renamed framerate
