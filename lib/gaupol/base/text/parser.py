@@ -49,13 +49,11 @@ class TextParser(object):
     tags     : List of tags, [[tag_string, start_pos], ...]
     """
 
-    def __init__(self, text, re_tag=None):
+    def __init__(self, re_tag=None):
 
         self.text   = None
         self.re_tag = re_tag
-        self.tags   = []
-
-        self.set_text(text)
+        self.tags   = None
 
     def get_text(self):
         """Reassemble text and return it."""
@@ -91,15 +89,17 @@ class TextParser(object):
     def set_text(self, text):
         """Set text and parse it for tags."""
 
+        self.tags = []
+
         if self.re_tag is None:
-            self.pure_text = text
+            self.text = text
             return
 
         for match in self.re_tag.finditer(text):
             start, end = match.span()
             self.tags.append([text[start:end], start])
 
-        self.pure_text = re_tag.sub('', text)
+        self.text = re_tag.sub('', text)
 
     def substitute(self, regex, repl):
         """Perform a regular expression substitution on text."""

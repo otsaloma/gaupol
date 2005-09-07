@@ -20,7 +20,7 @@
 """Time and frame calculations."""
 
 
-import floor
+import math
 
 try:
     from psyco.classes import *

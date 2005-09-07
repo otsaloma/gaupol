@@ -25,12 +25,12 @@
 #
 # MPL exists as well, but is probably not much used. There might be MPL3 as
 # well, but documentation is poor.
-# 
+#
 # Basically:
 # / starts italics
 # \ starts bold
 # _ starts underline
-# 
+#
 # All above tags affect only a single line.
 # In addition, all MicroDVD tags can be used (hence the "2" after MPL).
 
@@ -93,7 +93,7 @@ class MPL2(TagLibrary):
                 if start == -1:
                     break
                     
-                # Get start and end positions of tag.    
+                # Get start and end positions of tag.
                 try:
                     end = text.index(closing)
                 except ValueError:

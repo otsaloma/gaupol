@@ -17,38 +17,25 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Statistics and information."""
+"""All delegate classes."""
 
 
-import re
-
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
-
-from gaupol.base.delegates.delegate import Delegate
+from gaupol.base.delegates.analyzer   import Analyzer
+from gaupol.base.delegates.editor     import Editor
+from gaupol.base.delegates.filereader import FileReader
+from gaupol.base.delegates.filewriter import FileWriter
+from gaupol.base.delegates.formatter  import Formatter
+from gaupol.base.delegates.frconv     import FramerateConverter
 
 
-class Analyzer(Delegate):
+def get_delegates():
+    """Get a list of delegate classes."""
     
-    """Statistics and information."""
-
-    def get_character_count(self, row, col):
-        """
-        Get character count of text specified by row and col.
-        
-        Return list of row lengths, total length.
-        """
-        text = self.texts[row][col]
-        re_tag = self.get_regex_for_tag(col)
-        
-        if re_tag is not None:
-            text = re_tag.sub('', text)
-
-        lines = text.split('\n')
-
-        lengths = [len(line) for line in lines]
-        total = len(text)
-        
-        return lengths, total
+    return [
+        Analyzer,
+        Editor,
+        FileReader,
+        FileWriter,
+        Formatter,
+        FramerateConverter,
+    ]

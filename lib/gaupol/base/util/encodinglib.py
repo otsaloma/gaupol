@@ -178,7 +178,7 @@ def get_locale_encoding():
     """
     Get locale encoding.
     
-    Return: (Python name, display name, description) or None
+    Return (Python name, display name, description) or None.
     """
     python_name = locale.getdefaultlocale()[1]
 
@@ -197,7 +197,7 @@ def get_locale_descriptive_name():
     """
     Get descriptive name for locale encoding.
     
-    Return: Descriptive name or None
+    Return name or None.
     """
     locale_tuple = get_locale_encoding()
 
@@ -222,7 +222,7 @@ def get_valid_encodings():
     """
     Get a list of valid encodings.
     
-    Return: list with elements (Python name, display name, description)
+    Return list with elements (Python name, display name, description).
     """
     valid_encodings = []
     

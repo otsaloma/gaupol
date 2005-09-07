@@ -65,7 +65,7 @@ class SubRip(SubtitleFile):
 
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
-        Return: show times, hide times, texts
+        Return show times, hide times, texts.
         """
         # Compile regular expressions.
         re_blank_line = re.compile(r'^\s*$')

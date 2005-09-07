@@ -26,10 +26,10 @@ except ImportError:
     pass
 
 from gaupol.constants import FORMAT, MODE
-from gaupol.lib.colcons import *
-from gaupol.lib.delegates.delegate import Delegate
-from gaupol.lib.files.all import *
-from gaupol.lib.files.determiner import FileFormatDeterminer
+from gaupol.base.colcons import *
+from gaupol.base.delegates.delegate import Delegate
+from gaupol.base.files.classes import *
+from gaupol.base.files.determiner import FileFormatDeterminer
 
 
 class FileReader(Delegate):
@@ -64,10 +64,11 @@ class FileReader(Delegate):
         self.frames = []
         self.texts  = []
 
-        calc       = self.calc
-        times      = self.times
-        frames     = self.frames
-        both_texts = self.texts
+        self_times  = self.times
+        self_frames = self.frames
+        self_texts  = self.texts
+
+        calc = self.calc
 
         if self.main_file.MODE == MODE.TIME:
             
@@ -82,9 +83,9 @@ class FileReader(Delegate):
                 hide_frame = calc.time_to_frame(hide_time)
                 durn_frame = calc.get_frame_duration(show_frame, hide_frame)
                             
-                times.append( [show_time , hide_time , durn_time ])
-                frames.append([show_frame, hide_frame, durn_frame])
-                both_texts.append([text, u''])
+                self_times.append([show_time, hide_time, durn_time])
+                self_frames.append([show_frame, hide_frame, durn_frame])
+                self_texts.append([text, u''])
 
         elif self.main_file.MODE == MODE.FRAME:
             
@@ -99,9 +100,9 @@ class FileReader(Delegate):
                 hide_time  = calc.frame_to_time(hide_frame)
                 durn_time  = calc.get_time_duration(show_time, hide_time)
 
-                times.append( [show_time , hide_time , durn_time ])
-                frames.append([show_frame, hide_frame, durn_frame])
-                both_texts.append([text, u''])
+                self_times.append([show_time, hide_time, durn_time])
+                self_frames.append([show_frame, hide_frame, durn_frame])
+                self_both_texts.append([text, u''])
 
     def read_translation_file(self, path, encoding):
         """
@@ -110,7 +111,7 @@ class FileReader(Delegate):
         Main file should always exist before reading translations.
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
-        Raise UnknownFileFormatError if unable to detect file format.
+        Raise FileFormatError if unable to detect file format.
         """
         determiner = FileFormatDeterminer(path, encoding)
         format = determiner.determine_file_format()
@@ -127,11 +128,11 @@ class FileReader(Delegate):
         for i in range(len(self.texts)):
             self.texts[i][TRAN] = u''
 
-        # If translation file is longer than main file, subtitles need to be
-        # inserted.
+        # If translation file is longer than main file, new subtitles need to
+        # be inserted.
         if len(trans) > len(self.times):
             start_row = len(self.times)
-            amount    = len(trans) - len(self.times)
+            amount = len(trans) - len(self.times)
             self.insert_subtitles(start_row, amount)
 
         for i in range(len(trans)):
@@ -141,7 +142,7 @@ class FileReader(Delegate):
         """
         Sort data based on show times/frames.
 
-        Return: shows, hides, texts
+        Return shows, hides, texts.
         """
         data = [[shows[i], hides[i], texts[i]] for i in range(len(shows))]
         data.sort(lambda x, y: cmp(x[0], y[0]))

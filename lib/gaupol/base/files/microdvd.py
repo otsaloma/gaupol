@@ -62,7 +62,7 @@ class MicroDVD(SubtitleFile):
 
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
-        Return: show frames, hide frames, texts
+        Return show frames, hide frames, texts.
         """
         # Compile regular expressions.
         re_line = re.compile(r'^\{(\d+)\}\{(\d+)\}(.*?)$')

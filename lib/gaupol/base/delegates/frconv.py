@@ -26,8 +26,8 @@ except ImportError:
     pass
 
 from gaupol.constants import FRAMERATE, MODE
-from gaupol.lib.colcons import *
-from gaupol.lib.delegates.delegate import Delegate
+from gaupol.base.colcons import *
+from gaupol.base.delegates.delegate import Delegate
 
 
 class FramerateConverter(Delegate):
@@ -68,7 +68,7 @@ class FramerateConverter(Delegate):
 
         elif self.main_file.MODE == MODE.FRAME:
 
-            for i in range(len(self.times)):
+            for i in range(len(times)):
 
                 show = calc.frame_to_time(frames[i][SHOW])
                 hide = calc.frame_to_time(frames[i][HIDE])

@@ -475,7 +475,7 @@ def get_country(code):
     
     code: locale language code, "xx" or "xx_YY"
     Raise KeyError if language not found.
-    Return None, if no country in code
+    Return None, if no country in code.
     """
     if len(code) == 5:
         return dgettext('iso_3166', COUNTRIES[code[3:]])
@@ -488,7 +488,7 @@ def get_descriptive_name(code):
     
     code: locale language code, "xx" or "xx_YY"
     Raise KeyError if language or country not found.
-    Return: "Language (Country)"
+    Return "Language (Country)".
     """
     lang    = get_language(code)
     country = get_country(code)

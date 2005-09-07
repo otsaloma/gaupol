@@ -26,8 +26,8 @@ except ImportError:
     pass
 
 from gaupol.constants import MODE
-from gaupol.lib.colcons import *
-from gaupol.lib.delegates.delegate import Delegate
+from gaupol.base.colcons import *
+from gaupol.base.delegates.delegate import Delegate
 
 
 class Editor(Delegate):
@@ -43,8 +43,8 @@ class Editor(Delegate):
         """
         Get main file's mode.
         
-        If main file does not exist return time mode (because of its greater
-        accuracy).
+        If main file does not exist return time mode. Due to its greater
+        accuracy, time mode is the preferred mode for new documents.
         """
         try:
             return self.main_file.MODE
@@ -75,7 +75,7 @@ class Editor(Delegate):
         mode    = self.get_mode()
         timings = self.get_timings()
 
-        # Get time window start edge.
+        # Get the time window start edge.
         if start_row > 0:
             start = timings[start_row - 1][HIDE]
         else:
@@ -84,7 +84,7 @@ class Editor(Delegate):
             elif mode == MODE.FRAME:
                 start = 0
 
-        # Get time window end edge.
+        # Get the time window end edge.
         try:
             end = timings[start_row][SHOW]
         except IndexError:
@@ -120,7 +120,8 @@ class Editor(Delegate):
             
         elif mode == MODE.FRAME:
 
-            duration = int(round((end - start) / amount, 0))
+            duration = (end - start) / amount
+            duration = int(round(duration, 0))
             
             for i in range(amount):
 
@@ -164,7 +165,7 @@ class Editor(Delegate):
         """
         Set value of frame.
         
-        Return: new index of row
+        Return new index of row.
         """
         self.frames[row][col] = value
         self.times[row][col]  = self.calc.frame_to_time(value)
@@ -175,7 +176,7 @@ class Editor(Delegate):
         elif col == DURN:
             self._set_hidings(row)
 
-        # Resort if show frame drastically changed.
+        # Resort if show frame changed.
         if col == SHOW:
             return self._sort_data(row)
 
@@ -205,7 +206,7 @@ class Editor(Delegate):
         """
         Set time.
 
-        Return: new index of row
+        Return new index of row.
         """
         self.times[row][col]  = value
         self.frames[row][col] = self.calc.time_to_frame(value)
@@ -216,7 +217,7 @@ class Editor(Delegate):
         elif col == DURN:
             self._set_hidings(row)
 
-        # Resort if show frame drastically changed.
+        # Resort if show time changed.
         if col == SHOW:
             return self._sort_data(row)
 
@@ -226,7 +227,7 @@ class Editor(Delegate):
         """
         Sort data after show value in row has changed.
         
-        Return: new index of row
+        Return new index of row.
         """
         timings = self.get_timings()
         length = len(timings)

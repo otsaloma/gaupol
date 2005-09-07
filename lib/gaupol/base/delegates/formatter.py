@@ -28,9 +28,10 @@ except ImportError:
     pass
 
 from gaupol.constants import FORMAT
-from gaupol.lib.colcons import *
-from gaupol.lib.delegates.delegate import Delegate
-from gaupol.lib.tags.all import *
+from gaupol.base.colcons import *
+from gaupol.base.delegates.delegate import Delegate
+from gaupol.base.tags.classes import *
+from gaupol.base.text.parser import TextParser
 
 
 class Formatter(Delegate):
@@ -43,34 +44,14 @@ class Formatter(Delegate):
         
         method: "capitalize", "upper", "lower", "title" or "swapcase"
         """
-        texts = [self.texts[row][col] for row in rows]
+        texts = self.texts
         re_tag = self.get_regex_for_tag(col)
+        parser = TextParser(re_tag)
 
-        for i in range(len(texts)):
-
-            text = texts[i]
-
-            # List of found tags and their positions.
-            tags = []
-
-            # Find tags.
-            for match in re_tag.finditer(text):
-                start, end = match.span()
-                tags.append([text[start:end], start])
-
-            # Remove tags and change case.
-            text = re_tag.sub('', text)
-            text = eval('text.%s()' % method)
-
-            # Reconstruct text.
-            for entry in tags:
-                tag, start = entry
-                text = text[:start] + tag + text[start:]
-
-            texts[i] = text
-        
-        for i in range(len(rows)):
-            self.texts[rows[i]][col] = texts[i]
+        for row in rows:
+            parser.set_text(texts[row][col])
+            parser.text = eval('parser.text.%s()' % method)
+            texts[row][col] = parser.get_text()
 
     def _get_format_name(self, col):
         """
@@ -79,7 +60,7 @@ class Formatter(Delegate):
         Translation column will inherit original column's format if
         translation file does not exist.
 
-        Return: format name or None
+        Return name or None.
         """
         if col == TEXT:
             try:
@@ -97,7 +78,7 @@ class Formatter(Delegate):
         """
         Get regular expression for tag in given text column.
         
-        Return: re object or None
+        Return re object or None.
         """
         format_name = self._get_format_name(col)
 
@@ -114,78 +95,42 @@ class Formatter(Delegate):
     def toggle_dialog_lines(self, rows, col):
         """Toggle dialog lines on texts specified by rows and col."""
         
-        texts = [self.texts[row][col] for row in rows]
         re_tag = self.get_regex_for_tag(col)
-        re_dialog = re.compile('^-\s*')
+        re_dialog = re.compile('^-\s*', re.MULTILINE)
+        re_line_start = re.compile('^', re.MULTILINE)
+        parser = TextParser(re_tag)
         
         # Get action to be done.
-        turn_into_dialog = False
-        for text in texts:
+        dialogize = False
+        for row in rows:
         
-            lines = text.split('\n')
+            lines = self.texts[row][col].split('\n')
             for line in lines:
             
                 # Strip all tags from line. If leftover doesn't start with
                 # "-", dialog lines should be added.
                 tagless_line = re_tag.sub('', line)
                 if not tagless_line.startswith('-'):
-                    turn_into_dialog = True
+                    dialogize = True
                     break
 
-        for i in range(len(texts)):
+        # Add or remove dialog lines.
+        for row in rows:
 
-            lines = texts[i].split('\n')
+            parser.set_text(self.texts[row][col])
 
-            for k in range(len(lines)):
+            # Remove existing dialog lines.
+            parser.substitute(re_dialog, '')
 
-                line = lines[k]
+            # Add dialog lines.
+            if dialogize:
+                parser.substitute(re_line_start, '- ')
+
+            self.texts[row][col] = parser.get_text()
             
-                # List of found tags and their positions.
-                tags = []
-                
-                # Find tags.
-                for match in re_tag.finditer(line):
-                    start, end = match.span()
-                    tags.append([line[start:end], start])
-
-                line = re_tag.sub('', line)
-
-                # Shift in tag positions caused by dialog line operations.
-                shift = 0
-
-                # Remove existing dialog lines.
-                match = re_dialog.match(line)
-                if match is not None:
-                    line = re_dialog.sub('', line)
-                    shift -= match.end()
-
-                # Add dialog line.
-                if turn_into_dialog:
-                    line = '- ' + line
-                    shift += 2
-
-                # Sum of the lengths of preceding tags.
-                length = 0
-                
-                # Reconstruct line.
-                for entry in tags:
-                    tag, start = entry
-                    if start > length:
-                        start = start + shift
-                    line = line[:start] + tag + line[start:]
-                    length += len(tag)
-
-                lines[k] = line
-
-            texts[i] = '\n'.join(lines)
-            
-        for i in range(len(rows)):
-            self.texts[rows[i]][col] = texts[i]
-
     def toggle_italicization(self, rows, col):
         """Toggle italicization of texts specified by rows and col."""
         
-        texts = [self.texts[row][col] for row in rows]
         format_name = self._get_format_name(col)
         re_tag = self.get_regex_for_tag(col)
 
@@ -197,12 +142,12 @@ class Formatter(Delegate):
             re_italic_tag = re.compile(regex)
 
         # Get action to be done.
-        turn_into_italics = False
-        for text in texts:
+        italicize = False
+        for row in rows:
             
             # Remove tags from the start of the text, ending after all
             # tags are removed or when an italic tag is found.
-            tagless_text = text
+            tagless_text = self.texts[row][col][:]
             while re_tag.match(tagless_text):
                 if re_italic_tag.match(tagless_text):
                     break
@@ -212,14 +157,13 @@ class Formatter(Delegate):
             # If there is no italic tag at the start of the text,
             # texts should be italicized.
             if re_italic_tag.match(tagless_text) is None:
-                turn_into_italics = True
+                italicize = True
                 break
 
-        # Remove existing italic tags and italicize if that is to be done.
-        for i in range(len(texts)):
-            texts[i] = re_italic_tag.sub('', texts[i])
-            if turn_into_italics:
-                texts[i] = eval(format_name).italicize(texts[i])
-
-        for i in range(len(rows)):
-            self.texts[rows[i]][col] = texts[i]
+        # Remove existing italic tags and italicize or unitalicize.
+        for row in rows:
+            text = self.texts[row][col]
+            text = re_italic_tag.sub('', text)
+            if italicize:
+                text = eval(format_name).italicize(text)
+            self.texts[row][col] = text

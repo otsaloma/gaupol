@@ -48,7 +48,7 @@ class URLDocument(object):
         Initialize a URLDocument object.
         
         timeout is in seconds.
-        """ 
+        """
         self.url     = url
         self.timeout = timeout
         self.text    = None

@@ -27,8 +27,7 @@ try:
 except ImportError:
     pass
 
-from gaupol.base.delegates import *
-from gaupol.base.delegates import delegate_names
+from gaupol.base.delegates.classes import *
 from gaupol.base.timing.calc import TimeFrameCalculator
 
 
@@ -43,7 +42,6 @@ class Data(object):
     times    : list of lists of strings,  [[show, hide, duration], ...]
     frames   : list of lists of integers, [[show, hide, duration], ...]
     texts    : list of lists of strings,  [[text, translation], ...]
-    framerate: string
     """
     
     def __init__(self, framerate):
@@ -67,9 +65,8 @@ class Data(object):
         # Loop through all delegates creating an instance of the delegate and
         # mapping all its methods that don't start with an underscore to that
         # instance.
-        for delegate_name in delegate_names:
+        for delegate in get_delegates():
 
-            delegate = eval(delegate_name)
             for attr_name in dir(delegate):
             
                 if attr_name.startswith('_'):

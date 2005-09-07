@@ -28,7 +28,7 @@ except ImportError:
     pass
 
 from gaupol.constants import FORMAT
-from gaupol.base.files import *
+from gaupol.base.files.classes import *
 from gaupol.base.files.subfile import SubtitleFile
 
 
@@ -65,11 +65,11 @@ class FileFormatDeterminer(SubtitleFile):
                 if re_id.search(line) is not None:
                     return format
             
-        raise UnknownFileFormatError
+        raise FileFormatError(_('Unrecognized subtitle file format'))
 
         
-class UnknownFileFormatError(Exception):
+class FileFormatError(Exception):
     
-    """Unknown subtitle file format."""
+    """Bad subtitle file format."""
     
     pass

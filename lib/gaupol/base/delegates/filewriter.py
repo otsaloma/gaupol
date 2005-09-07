@@ -20,6 +20,7 @@
 """Subtitle file writing."""
 
 
+import copy
 import logging
 import os
 import random
@@ -31,10 +32,10 @@ except ImportError:
     pass
 
 from gaupol.constants import FORMAT, MODE
-from gaupol.lib.colcons import *
-from gaupol.lib.delegates.delegate import Delegate
-from gaupol.lib.files.all import *
-from gaupol.lib.tags.tagconv import TagConverter
+from gaupol.base.colcons import *
+from gaupol.base.delegates.delegate import Delegate
+from gaupol.base.files.classes import *
+from gaupol.base.tags.tagconv import TagConverter
 
 
 logger = logging.getLogger()
@@ -48,7 +49,7 @@ class FileWriter(Delegate):
         """
         Create a temporary backup file before writing.
 
-        Return: success (True or False)
+        Return success (True or False).
         """
         try:
             shutil.copyfile(path, bak_path)
@@ -109,7 +110,7 @@ class FileWriter(Delegate):
         
         # Create a copy of texts, because possible tag conversions might be
         # only temporary.
-        new_texts = self.texts[:]
+        new_texts = copy.deepcopy(self.texts)
 
         # Convert tags if saving in different format.
         if current_file is not None     and \
@@ -121,14 +122,9 @@ class FileWriter(Delegate):
                 new_texts[i][col] = conv.convert_tags(new_texts[i][col])
 
         # Get subtitle file object.
-        if path     is None or \
-           format   is None or \
-           encoding is None or \
-           newlines is None :
-           
+        if None in [path, format, encoding, newlines]:
             subtitle_file = current_file
             path = current_file.path
-            
         else:
             format_name = FORMAT.NAMES[format]
             subtitle_file = eval(format_name)(path, encoding, newlines)
@@ -178,7 +174,7 @@ class FileWriter(Delegate):
         # Clean up.
         finally:
             if file_existed and bak_success and (not write_success):
-                self._restore_original_file(path, bak_path)                
+                self._restore_original_file(path, bak_path)
             elif (not file_existed) and (not write_success):
                 self._remove_failed_file(path)
             elif file_existed and bak_success and write_success:
@@ -202,9 +198,7 @@ class FileWriter(Delegate):
         Raise IOError if reading fails.
         Raise UnicodeError if encoding fails.
         """
-        self._write_file(
-           TEXT, keep_changes, path, format, encoding, newlines
-        )
+        self._write_file(TEXT, keep_changes, path, format, encoding, newlines)
 
     def write_translation_file(
         self, keep_changes=True,
@@ -216,6 +210,4 @@ class FileWriter(Delegate):
         Raise IOError if reading fails.
         Raise UnicodeError if encoding fails.
         """
-        self._write_file(
-           TRAN, keep_changes, path, format, encoding, newlines
-        )
+        self._write_file(TRAN, keep_changes, path, format, encoding, newlines)

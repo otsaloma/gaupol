@@ -45,7 +45,7 @@ class MicroDVD(TagLibrary):
     ITALIC = r'\{y:i\}'      , re.IGNORECASE
 
     DECODE_TAGS = [
-        (    
+        (
             # Style x3 (single line)
             r'\{y:(b|i|u).*?(b|i|u).*?(b|i|u)\}(.*?)$', COMMON,
             r'<\1><\2><\3>\4</\1></\2></\3>'
