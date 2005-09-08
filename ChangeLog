@@ -1,3 +1,23 @@
+2005-09-08  Osmo Salomaa  otsaloma@cc.hut.fi
+
+	* data/glade/encoding-dialog.glade:
+	  data/glade/insertsub-dialog.glade:
+	  data/glade/multiclose-dialog.glade:
+	  Minor fixes.
+
+	* data/glade/language-dialog.glade:
+	  data/ui/menubar.xml:
+	  Terminology fixes.
+
+	* data/glade/prefs-dialog.glade:
+	  Added a notebook. Added file preferences.
+
+	* data/glade/spellcheck-dialog.glade:
+	  New file to replace spellcheck-window.glade. Fixed alingments.
+
+	* data/glade/spellcheck-window.glade:
+	  Removed in favor of spellcheck-dialog.glade.
+
 2005-09-07  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* ChangeLog: Forgot to commit this.

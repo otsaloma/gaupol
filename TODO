@@ -8,15 +8,13 @@ Plans for 0.2.0
 
   [W] Implement spell-checking using PyEnchant
         [D] Script to test PyEnchant installation
-        [D] Outline general spell-checking strategy
-        [D] Glade files for dialogs (Gedit!)
+        [W] Glade files for dialogs (Gedit!)
         [D] langlib for iso-codes
-        [D] config entries
-        [D] Language selection dialog
-        [W] Spell-check window (wxSpellCheckerDialog.py!)
-        [W] Text-edit dialog for spell-check window
+        [W] config entries
+        [W] Language selection dialog
+        [W] Spell-check dialog (wxSpellCheckerDialog.py!)
         [W] Spell-checker delegate
-        [D] Menu entry visibility
+        [W] Menu entry visibility
         [ ] Test error handling
         [ ] Test unicode handling
         [ ] Ensure that PyEnchant is easily installable (dependecies!)
@@ -24,8 +22,15 @@ Plans for 0.2.0
         [ ] Revise Website (PyEnchant & iso-codes)
   [W] Garbage collect destructed GObjects
   [W] Always copy.deepcopy nested lists instead of [:]
-  [?] Revise terminology: project = main document + translation document
+  [W] Revise terminology: project = main document + translation document
+  [W] Revise terminology: open translation instead of importing
   [?] Assign Ctrl + arrow keys for moving to edit an adjacent cell
+  [W] Automate delegate listings
+  [ ] Make config module use global variables for easy access
+  [D] Add a text parser
+  [?] Redesign the undo/redo system
+  [ ] Make fallback encodings be a list
+  [ ] Add default and fallbck encoding selection to preferences dialog
   [ ] Update Finnish translation
 
 
@@ -63,6 +68,9 @@ New in PyGTK 2.8
 ================
 
   http://live.gnome.org/PyGTK/WhatsNew28
-
-  - Tighter GObject/Python integration (deprecation warning!)
-  - Properties as object attributes (widget.props notation)
+  http://www.pygtk.org/pygtk2reference/pygtk-ref-changelog.html
+ 
+  - gobject.GObject: deprecation warning for gobject.type_register(Class)
+  - gobject.GObject: widget.props.property_name notation
+  - gtk.FileChooser: stock overwrite dialog with set_do_overwrite
+  - gtk.AboutDialog: wrap license with set_wrap_license

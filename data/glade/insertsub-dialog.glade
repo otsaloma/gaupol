@@ -20,7 +20,7 @@
   <property name="has_separator">False</property>
 
   <child internal-child="vbox">
-    <widget class="GtkVBox" id="vbox">
+    <widget class="GtkVBox" id="dialog_vbox">
       <property name="visible">True</property>
       <property name="homogeneous">False</property>
       <property name="spacing">0</property>

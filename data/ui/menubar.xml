@@ -3,7 +3,7 @@
 		<menu action="file">
 			<menuitem action="new"/>
 			<menuitem action="open"/>
-			<menuitem action="import_translation"/>
+			<menuitem action="open_translation"/>
 			<separator/>
 			<menuitem action="save"/>
 			<menuitem action="save_as"/>
@@ -76,10 +76,10 @@
 		</menu>
 		<menu action="tools">
 			<menuitem action="check_spelling"/>
-			<menuitem action="set_language_and_target"/>
+			<menuitem action="configure_spell_check"/>
 			<separator/>
 		</menu>
-		<menu action="documents">
+		<menu action="projects">
 			<menuitem action="save_all"/>
 			<menuitem action="close_all"/>
 			<separator/>
