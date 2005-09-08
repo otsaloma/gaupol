@@ -383,7 +383,7 @@ class FileSaver(Delegate):
         Select document with FileChooser and write it.
         
         document_type: TYPE.MAIN or TYPE.TRAN
-        Return: path or None, if unsuccessful
+        Return: path or None if unsuccessful
         """
         save_dialog = SaveDialog(self.config, title, self.window)
         

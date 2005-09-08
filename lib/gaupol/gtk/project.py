@@ -96,7 +96,7 @@ class Project(gobject.GObject):
         self.untitle   = _('Untitled %d') % counter
         self.edit_mode = edit_mode
 
-        # True, if translation file exists or any action affecting translation
+        # True if translation file exists or any action affecting translation
         # only has been performed.
         self.tran_active = False
 

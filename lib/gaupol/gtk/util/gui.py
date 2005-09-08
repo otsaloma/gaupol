@@ -48,7 +48,7 @@ def get_glade_xml(basename):
         raise
 
 def get_event_box(widget):
-    """Get EventBox, if it is a parent of widget."""
+    """Get EventBox if it is a parent of widget."""
     
     event_box = widget.get_parent()
     while not isinstance(event_box, gtk.EventBox):

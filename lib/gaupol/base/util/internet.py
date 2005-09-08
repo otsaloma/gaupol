@@ -57,8 +57,8 @@ class URLDocument(object):
         """
         Read document.
         
-        Raise IOError, if reading fails.
-        Raise TimeoutError, if reading times out.
+        Raise IOError if reading fails.
+        Raise TimeoutError if reading times out.
         """
         thread = threading.Thread(target=self._read)
         thread.start()
@@ -73,7 +73,7 @@ class URLDocument(object):
         """
         Read document.
         
-        Raise IOError, if reading fails.
+        Raise IOError if reading fails.
         """
         self.text = urllib.urlopen(self.url).read()
 

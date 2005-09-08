@@ -151,7 +151,7 @@ class FileOpener(Delegate):
         Make sure file is not already open.
         
         If file is already open, select that page in the notebook.
-        Return: True, if file is open, otherwise False
+        Return: True if file is open, otherwise False
         """
         for i in range(len(self.projects)):
         

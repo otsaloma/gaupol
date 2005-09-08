@@ -70,7 +70,7 @@ class CustomCellRenderer(gtk.GenericCellRenderer):
         """
         Get value of property.
         
-        Raise AttributeError, if property does not exist.
+        Raise AttributeError if property does not exist.
         """
         name = property.name
         
@@ -83,7 +83,7 @@ class CustomCellRenderer(gtk.GenericCellRenderer):
         """
         Set value of property.
         
-        Raise AttributeError, if property does not exist.
+        Raise AttributeError if property does not exist.
         """
         name = property.name
 

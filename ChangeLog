@@ -1,5 +1,17 @@
 2005-09-08  Osmo Salomaa  otsaloma@cc.hut.fi
 
+	* lib/gaupol/base/util/internet.py:
+	  lib/gaupol/base/util/langlib.py:
+	  lib/gaupol/gtk/cellrend/custom.py:
+	  lib/gaupol/gtk/delegates/fileopener.py:
+	  lib/gaupol/gtk/delegates/filesaver.py:
+	  lib/gaupol/gtk/dialogs/about.py:
+	  lib/gaupol/gtk/project.py:
+	  lib/gaupol/gtk/util/gui.py:
+	  Minor docstring fixes.
+
+2005-09-08  Osmo Salomaa  otsaloma@cc.hut.fi
+
 	* data/glade/prefs-dialog.glade: Changed encoding preferences.
 
 2005-09-08  Osmo Salomaa  otsaloma@cc.hut.fi

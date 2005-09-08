@@ -26,7 +26,7 @@ or "xx_YY". For example, "en_US" has the ISO 639 language code for English and
 the ISO 3166 country code for United States.
 
 Translations for the language and country names are acquired from the iso-codes
-package, if it is installed. That means from the "iso-codes" gettext domain.
+package if it is installed. That means from the "iso-codes" gettext domain.
 """
 
 # LANGS and COUNTRIES lists have been generated from iso-codes project's XML
@@ -475,7 +475,7 @@ def get_country(code):
     
     code: locale language code, "xx" or "xx_YY"
     Raise KeyError if language not found.
-    Return None, if no country in code.
+    Return None if no country in code.
     """
     if len(code) == 5:
         return dgettext('iso_3166', COUNTRIES[code[3:]])
