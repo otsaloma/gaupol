@@ -1,5 +1,9 @@
 2005-09-08  Osmo Salomaa  otsaloma@cc.hut.fi
 
+	* data/glade/prefs-dialog.glade: Changed encoding preferences.
+
+2005-09-08  Osmo Salomaa  otsaloma@cc.hut.fi
+
 	* data/glade/encoding-dialog.glade:
 	  data/glade/insertsub-dialog.glade:
 	  data/glade/multiclose-dialog.glade:
