@@ -23,8 +23,8 @@
 import copy
 import logging
 import os
-import random
 import shutil
+import tempfile
 
 try:
     from psyco.classes import *
@@ -90,17 +90,15 @@ class FileWriter(Delegate):
             msg += ' from temporary backup file "%s"' % bak_path
             msg += ' after failing to write it: %s.' % detail
             logger.error(msg)
-            
-    def _write_file(self, text_col, keep_changes, path, format, encoding,
-                    newlines):
+
+    def _write_file(self, col, keep_changes,
+                    path, format, encoding, newlines):
         """
         Write subtitle file.
         
-        keep_changes: True or False
         Raise IOError if reading fails.
         Raise UnicodeError if encoding fails.
         """
-        col = text_col
         files = [self.main_file, self.tran_file]
         current_file = files[col]
         
@@ -109,13 +107,11 @@ class FileWriter(Delegate):
         new_texts = copy.deepcopy(self.texts)
 
         # Convert tags if saving in different format.
-        if current_file is not None     and \
-           format       is not None     and \
-           current_file.FORMAT != format:
-            
-            conv = TagConverter(current_file.FORMAT, format)
-            for i in range(len(new_texts)):
-                new_texts[i][col] = conv.convert_tags(new_texts[i][col])
+        if current_file is not None and format is not None:
+            if current_file.FORMAT != format:
+                conv = TagConverter(current_file.FORMAT, format)
+                for i in range(len(new_texts)):
+                    new_texts[i][col] = conv.convert_tags(new_texts[i][col])
 
         # Get subtitle file object.
         if None in [path, format, encoding, newlines]:
@@ -125,6 +121,7 @@ class FileWriter(Delegate):
             format_name = FORMAT.CLASS_NAMES[format]
             subtitle_file = eval(format_name)(path, encoding, newlines)
 
+        # Prepare data for writing.
         shows = []
         hides = []
         texts = []
@@ -142,23 +139,18 @@ class FileWriter(Delegate):
                 shows.append(frames[i][SHOW])
                 hides.append(frames[i][HIDE])
                 texts.append(new_texts[i][col])
-                
-        # If the file to be written already exists, a backup copy of it is
-        # made in case writing fails. The backup file should be temporary,
-        # unharmful and invisible to the user.
-        #
-        # If the file does not exist and writing fails, the result usually is
-        # an empty file which is removed afterwards.
+
+        # If the file to be written already exists, a temporary backup copy of
+        # it is made in case writing fails. If the file does not exist and
+        # writing fails, the resulting file is removed.
 
         file_existed = os.path.isfile(path)
 
         # Create backup.
         if file_existed:
-            while True:
-                number = int(random.random() * 1000000)
-                bak_path = path + '~gaupol-%d' % number
-                if not os.path.isfile(bak_path):
-                    break
+            temp_dir = tempfile.gettempdir()
+            basename = os.path.basename(path)
+            bak_path = os.path.join(temp_dir, basename, '.gaupol')
             bak_success = self._create_temporary_backup_file(path, bak_path)
 
         # Write file.
@@ -175,7 +167,7 @@ class FileWriter(Delegate):
                 self._remove_failed_file(path)
             elif file_existed and bak_success and write_success:
                 self._remove_temporary_backup_file(bak_path)
-                
+
         # After successful writing, instance variables can be set.
         if keep_changes:
             if col == TEXT:
@@ -189,7 +181,7 @@ class FileWriter(Delegate):
         path=None, format=None, encoding=None, newlines=None
     ):
         """
-        Write times/frames and original texts to main file.
+        Write main file.
         
         Raise IOError if reading fails.
         Raise UnicodeError if encoding fails.
@@ -201,7 +193,7 @@ class FileWriter(Delegate):
         path=None, format=None, encoding=None, newlines=None
     ):
         """
-        Write times/frames and translated texts to translation file.
+        Write translation file.
         
         Raise IOError if reading fails.
         Raise UnicodeError if encoding fails.

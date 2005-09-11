@@ -1,5 +1,17 @@
 2005-09-11  Osmo Salomaa  otsaloma@cc.hut.fi
 
+	* lib/gaupol/base/delegates/editor.py:
+	  lib/gaupol/base/delegates/filereader.py:
+	  Minor fixes.
+
+	* lib/gaupol/base/delegates/filewriter.py: Minor fixes.
+	  (FileWriter._write_file): Use temp directory for backup.
+
+	* lib/gaupol/constants.py: NEWLINE and FORMAT UI_NAMES are now
+	  translatable.
+
+2005-09-11  Osmo Salomaa  otsaloma@cc.hut.fi
+
 	* lib/gaupol/base/colcons.py:
 	  lib/gaupol/constants.py:
 	  Replaced vague attributes NAMES with CLASS_NAMES, ID_NAMES and

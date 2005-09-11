@@ -89,9 +89,9 @@ class Editor(Delegate):
             end = timings[start_row][SHOW]
         except IndexError:
             if mode == MODE.TIME:
-                end = calc.time_to_seconds(start)
+                end  = calc.time_to_seconds(start)
                 end += (OPTIMAL_SECOND_DURATION * amount)
-                end = calc.seconds_to_time(end)
+                end  = calc.seconds_to_time(end)
             elif mode == MODE.FRAME:
                 end = start + (OPTIMAL_FRAME_DURATION * amount)
 
@@ -276,5 +276,5 @@ class Editor(Delegate):
             for entry in [self.times, self.frames, self.texts]:
                 entry.insert(new_row, entry[row])
                 entry.pop(row)
-                
+
             return new_row - 1

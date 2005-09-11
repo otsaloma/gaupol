@@ -41,9 +41,9 @@ class EXTENSION(object):
 
 class FORMAT(object):
 
-    CLASS_NAMES = ['MicroDVD', 'MPL2', 'SubRip']
-    ID_NAMES    = ['microdvd', 'mpl2', 'subrip']
-    UI_NAMES    = ['MicroDVD', 'MPL2', 'SubRip']
+    CLASS_NAMES = [  'MicroDVD' ,   'MPL2' ,   'SubRip' ]
+    ID_NAMES    = [  'microdvd' ,   'mpl2' ,   'subrip' ]
+    UI_NAMES    = [_('MicroDVD'), _('MPL2'), _('SubRip')]
     
     MICRODVD = 0
     MPL2     = 1
@@ -68,9 +68,9 @@ class MODE(object):
 
 class NEWLINE(object):
 
-    ID_NAMES = ['mac', 'unix', 'windows']
-    UI_NAMES = ['Mac', 'Unix', 'Windows']
-    VALUES   = ['\r' , '\n'  , '\r\n'   ]
+    ID_NAMES = [  'mac' ,   'unix' ,   'windows' ]
+    UI_NAMES = [_('Mac'), _('Unix'), _('Windows')]
+    VALUES   = [  '\r'  ,   '\n'   ,   '\r\n'    ]
     
     MAC     = 0
     UNIX    = 1

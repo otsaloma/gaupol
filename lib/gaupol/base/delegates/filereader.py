@@ -40,7 +40,7 @@ class FileReader(Delegate):
         """
         Read times/frames and texts from main file.
         
-        path and encoding can be omitted if reading an existing main file.
+        path and encoding can be omitted if main file is already open.
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
         Raise UnknownFileFormatError if unable to detect file format.
@@ -48,10 +48,12 @@ class FileReader(Delegate):
         path     = path     or self.main_file.path
         encoding = encoding or self.main_file.encoding
         
+        # Get format.
         determiner = FileFormatDeterminer(path, encoding)
         format = determiner.determine_file_format()
         format_name = FORMAT.CLASS_NAMES[format]
 
+        # Read file.
         main_file = eval(format_name)(path, encoding)
         shows, hides, texts = main_file.read()
         shows, hides, texts = self._sort_data(shows, hides, texts)
@@ -104,19 +106,25 @@ class FileReader(Delegate):
                 self_frames.append([show_frame, hide_frame, durn_frame])
                 self_both_texts.append([text, u''])
 
-    def read_translation_file(self, path, encoding):
+    def read_translation_file(self, path=None, encoding=None):
         """
         Read texts from translation file.
         
-        Main file should always exist before reading translations.
+        path and encoding can be omitted if translation file is already open.
+        Main file should always exist before reading translation file.
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
         Raise FileFormatError if unable to detect file format.
         """
+        path     = path     or self.tran_file.path
+        encoding = encoding or self.tran_file.encoding
+        
+        # Get format
         determiner = FileFormatDeterminer(path, encoding)
         format = determiner.determine_file_format()
         format_name = FORMAT.CLASS_NAMES[format]
 
+        # Read file.
         tran_file = eval(format_name)(path, encoding)
         shows, hides, trans = tran_file.read()
         shows, hides, trans = self._sort_data(shows, hides, trans)
@@ -129,7 +137,7 @@ class FileReader(Delegate):
             self.texts[i][TRAN] = u''
 
         # If translation file is longer than main file, new subtitles need to
-        # be inserted.
+        # be added.
         if len(trans) > len(self.times):
             start_row = len(self.times)
             amount = len(trans) - len(self.times)
