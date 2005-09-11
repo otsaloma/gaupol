@@ -125,7 +125,7 @@ class CustomCellRenderer(gtk.GenericCellRenderer):
         """
         Get size of the cell.
 
-        Return: X offset, Y offset, width, height
+        Return X offset, Y offset, width, height.
         """
         # The following size calculations have been tested so that the cell
         # should be the same size as a CellRendererText cell with same amount
@@ -185,7 +185,7 @@ class CustomCellRenderer(gtk.GenericCellRenderer):
         )
 
     def set_editable(self, editable):
-        """Set editability of cell."""
+        """Set editability of the cell."""
         
         if editable:
             mode = gtk.CELL_RENDERER_MODE_EDITABLE

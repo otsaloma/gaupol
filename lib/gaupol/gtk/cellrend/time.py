@@ -63,7 +63,6 @@ class CellRendererTime(CustomCellRenderer):
         """
         editor.handler_block(self._delete_signal   )
         editor.handler_block(self._insert_signal   )
-        editor.handler_block(self._key_press_signal)
 
         position  = editor.get_position()
         bounds    = editor.get_selection_bounds()
@@ -109,7 +108,6 @@ class CellRendererTime(CustomCellRenderer):
 
         editor.handler_unblock(self._delete_signal   )
         editor.handler_unblock(self._insert_signal   )
-        editor.handler_unblock(self._key_press_signal)
 
     def _insert_text(self, editor, text):
         """
@@ -124,7 +122,7 @@ class CellRendererTime(CustomCellRenderer):
         position  = editor.get_position()
 
         orig_text = editor.get_text()
-        new_text  = orig_text[:position] + text + orig_text[position + length:]
+        new_text = orig_text[:position] + text + orig_text[position + length:]
         
         if RE_TIME.match(new_text):
             
@@ -189,7 +187,6 @@ class CellRendererTime(CustomCellRenderer):
         editor.connect('toggle-overwrite', self.on_toggle_overwrite     )
 
         # Overriding methods
-
         signal = 'delete-text'
         method = self.on_delete_text
         self._delete_signal = editor.connect(signal, method)

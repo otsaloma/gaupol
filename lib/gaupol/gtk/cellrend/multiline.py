@@ -51,8 +51,7 @@ class CellTextView(gtk.TextView, gtk.CellEditable):
     def get_text(self, *args):
         """Get the text."""
 
-        text_buffer = self.get_buffer()
-        start, end = text_buffer.get_bounds()
+        start, end = self.get_buffer().get_bounds()
         return text_buffer.get_text(start, end, True)
         
     def set_text(self, text):
@@ -91,16 +90,15 @@ class CellRendererMultilineText(CustomCellRenderer):
         """
         End editing if Return or Keypad Enter is pressed.
         
-        Shift, Ctrl or Alt combined with Return or Keypad Enter can be used
-        for linebreaking.
+        Shift or Control combined with Return or Keypad Enter can be used for
+        linebreaking.
         """
         mask = event.state
-        keyname = gtk.gdk.keyval_name(event.keyval)
 
-        accel_masks = gtk.gdk.CONTROL_MASK|gtk.gdk.SHIFT_MASK|gtk.gdk.MOD1_MASK
-
-        if mask & accel_masks:
+        if mask & gtk.gdk.CONTROL_MASK|gtk.gdk.SHIFT_MASK:
             return
+
+        keyname = gtk.gdk.keyval_name(event.keyval)
 
         if keyname in ['Return', 'KP_Enter']:
             editor.emit('editing-done')

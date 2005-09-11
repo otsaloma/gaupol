@@ -1,5 +1,17 @@
 2005-09-11  Osmo Salomaa  otsaloma@cc.hut.fi
 
+	* lib/gaupol/gtk/cellrend/custom.py: Minor fixes.
+
+	* lib/gaupol/gtk/cellrend/multiline.py: Minor fixes.
+	  (CellRendererMultilineText.on_key_press_event): Removed Alt from
+	  linebreaking accel masks.
+
+	* lib/gaupol/gtk/cellrend/time.py: Minor fixes.
+	  (CellRendererTime._change_to_zero): Removed unnecessary blocking of
+	  key-press-event signal.
+
+2005-09-11  Osmo Salomaa  otsaloma@cc.hut.fi
+
 	* lib/gaupol/base/delegates/editor.py:
 	  lib/gaupol/base/delegates/filereader.py:
 	  Minor fixes.
