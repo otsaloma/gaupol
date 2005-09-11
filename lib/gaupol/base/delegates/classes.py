@@ -28,14 +28,14 @@ from gaupol.base.delegates.formatter  import Formatter
 from gaupol.base.delegates.frconv     import FramerateConverter
 
 
-def get_delegates():
-    """Get a list of delegate classes."""
+def get_delegate_names():
+    """Get a list of the names of the delegate classes."""
     
     return [
-        Analyzer,
-        Editor,
-        FileReader,
-        FileWriter,
-        Formatter,
-        FramerateConverter,
+        'Analyzer',
+        'Editor',
+        'FileReader',
+        'FileWriter',
+        'Formatter',
+        'FramerateConverter',
     ]

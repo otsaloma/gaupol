@@ -29,11 +29,20 @@ TRAN = 5
 
 class COLUMN(object):
 
-    NAMES = [
+    ID_NAMES = [
         'number',
         'show',
         'hide',
         'duration',
         'text',
         'translation'
+    ]
+    
+    UI_NAMES = [
+        _('No.'),
+        _('Show'),
+        _('Hide'),
+        _('Duration'),
+        _('Text'),
+        _('Translation'),
     ]

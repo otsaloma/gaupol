@@ -50,7 +50,7 @@ class FileReader(Delegate):
         
         determiner = FileFormatDeterminer(path, encoding)
         format = determiner.determine_file_format()
-        format_name = FORMAT.NAMES[format]
+        format_name = FORMAT.CLASS_NAMES[format]
 
         main_file = eval(format_name)(path, encoding)
         shows, hides, texts = main_file.read()
@@ -115,7 +115,7 @@ class FileReader(Delegate):
         """
         determiner = FileFormatDeterminer(path, encoding)
         format = determiner.determine_file_format()
-        format_name = FORMAT.NAMES[format]
+        format_name = FORMAT.CLASS_NAMES[format]
 
         tran_file = eval(format_name)(path, encoding)
         shows, hides, trans = tran_file.read()

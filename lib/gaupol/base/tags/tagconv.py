@@ -43,8 +43,8 @@ class TagConverter(object):
     
     def __init__(self, from_format, to_format):
 
-        from_format_name = FORMAT.NAMES[from_format]
-        to_format_name   = FORMAT.NAMES[  to_format]
+        from_format_name = FORMAT.CLASS_NAMES[from_format]
+        to_format_name   = FORMAT.CLASS_NAMES[  to_format]
         
         # Regular expressions
         from_tags = eval(from_format_name).DECODE_TAGS

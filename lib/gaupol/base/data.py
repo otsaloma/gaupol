@@ -20,7 +20,7 @@
 """Subtitle project data."""
 
 
-import types
+import inspect
 
 try:
     from psyco.classes import *
@@ -39,9 +39,9 @@ class Data(object):
     This is the main class for gaupol.base. This class holds the all the
     subtitle data of one project. All methods are outsourced to delegates.
     
-    times    : list of lists of strings,  [[show, hide, duration], ...]
-    frames   : list of lists of integers, [[show, hide, duration], ...]
-    texts    : list of lists of strings,  [[text, translation], ...]
+    times : list of lists of strings,  [[show, hide, duration], ...]
+    frames: list of lists of integers, [[show, hide, duration], ...]
+    texts : list of lists of strings,  [[text, translation], ...]
     """
     
     def __init__(self, framerate):
@@ -65,18 +65,24 @@ class Data(object):
         # Loop through all delegates creating an instance of the delegate and
         # mapping all its methods that don't start with an underscore to that
         # instance.
-        for delegate in get_delegates():
+        for delegate_name in get_delegate_names():
 
-            for attr_name in dir(delegate):
+            delegate = eval(delegate_name)(self)
+            module   = inspect.getmodule(delegate)
             
-                if attr_name.startswith('_'):
+            for name, value in inspect.get_members(delegate):
+
+                if name.startswith('_'):
+                    continue
+
+                if not inspect.ismethod(value):
+                    continue
+
+                # Disregard imported methods.
+                if inspect.getmodule(value) != module:
                     continue
                 
-                attr = eval('delegate.%s' % attr_name)
-                if not isinstance(attr, types.MethodType):
-                    continue
-                
-                self._delegations[attr_name] = delegate
+                self._delegations[name] = delegate
         
     def __getattr__(self, name):
         """Delegate method calls to Delegate objects."""

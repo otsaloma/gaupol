@@ -1,3 +1,30 @@
+2005-09-11  Osmo Salomaa  otsaloma@cc.hut.fi
+
+	* lib/gaupol/base/colcons.py:
+	  lib/gaupol/constants.py:
+	  Replaced vague attributes NAMES with CLASS_NAMES, ID_NAMES and
+	  UI_NAMES and fixed all references in other modules to attribute
+	  NAMES.
+
+	* lib/gaupol/base/data.py (Data._assign_delegations):
+	  Fixed automatic delegate listing.
+
+	* lib/gaupol/base/delegates/classes.py (get_delegate_names):
+	  Replaces function get_delegates.
+
+	* lib/gaupol/base/delegates/delegate.py: Fixed docstring.
+
+	* lib/gaupol/base/delegates/filewriter.py: Beautified logger messages.
+
+	* lib/gaupol/gtk/colcons.py: Removed trailing space.
+
+	* lib/gaupol/gtk/util/clipboard.py: Docstring fixes.
+	  (Clipboard.set_data): Use unicode string.
+
+	* lib/gaupol/gtk/util/config.py: Completely rewritten.
+
+	* lib/gaupol/gtk/util/gui.py: Minor fixes.
+
 2005-09-08  Osmo Salomaa  otsaloma@cc.hut.fi
 
 	* lib/gaupol/base/util/internet.py:

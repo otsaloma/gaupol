@@ -64,13 +64,13 @@ class Formatter(Delegate):
         """
         if col == TEXT:
             try:
-                return FORMAT.NAMES[self.main_file.FORMAT]
+                return FORMAT.CLASS_NAMES[self.main_file.FORMAT]
             except AttributeError:
                 return None
 
         elif col == TRAN:
             try:
-                return FORMAT.NAMES[self.tran_file.FORMAT]
+                return FORMAT.CLASS_NAMES[self.tran_file.FORMAT]
             except AttributeError:
                 return self._get_format_name(TEXT)
 

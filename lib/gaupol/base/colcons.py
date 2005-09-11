@@ -23,6 +23,6 @@
 SHOW = 0
 HIDE = 1
 DURN = 2
-    
+
 TEXT = 0
 TRAN = 1

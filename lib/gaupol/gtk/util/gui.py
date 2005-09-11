@@ -44,7 +44,7 @@ def get_glade_xml(basename):
     try:
         return gtk.glade.XML(path)
     except RuntimeError:
-        logger.critical('Failed to load Glade XML file "%s".' % path)
+        logger.error('Failed to load Glade XML file "%s".' % path)
         raise
 
 def get_event_box(widget):
@@ -57,7 +57,7 @@ def get_event_box(widget):
     return event_box
 
 def get_parent_widget(child, parent_type):
-    """Get parent of widget that is type parent."""
+    """Get parent of widget that is of given type."""
     
     parent = child.get_parent()
     while not isinstance(parent, parent_type):

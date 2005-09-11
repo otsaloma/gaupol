@@ -55,10 +55,9 @@ class FileWriter(Delegate):
             shutil.copyfile(path, bak_path)
             return True
         except IOError, (errno, detail):
-            logger.warning( \
-                'Failed to create temporary backup file "%s": %s.' \
-                % (bak_path, detail) \
-            )
+            info = bak_path, detail
+            msg = 'Failed to create temporary backup file "%s": %s.' % info
+            logger.warning(msg)
             return False
 
     def _remove_failed_file(self, path):
@@ -67,10 +66,9 @@ class FileWriter(Delegate):
         try:
             os.remove(path)
         except OSError, (errno, detail):
-            logger.warning( \
-                'Failed to remove file "%s" after failing to write it: %s.' \
-                % (path, detail) \
-            )
+            msg  = 'Failed to remove file "%s"' % path
+            msg += ' after failing to write it: %s.' % detail
+            logger.warning(msg)
         
     def _remove_temporary_backup_file(self, bak_path):
         """Remove temporary backup file after successful writing."""
@@ -78,10 +76,9 @@ class FileWriter(Delegate):
         try:
             os.remove(bak_path)
         except OSError, (errno, detail):
-            logger.warning( \
-                'Failed to remove temporary backup file "%s": %s.' \
-                % (bak_path, detail) \
-            )
+            info = bak_path, detail
+            msg = 'Failed to remove temporary backup file "%s": %s.' % info
+            logger.warning(msg)
 
     def _restore_original_file(self, path, bak_path):
         """Restore file from temporary backup after failing writing."""
@@ -89,11 +86,10 @@ class FileWriter(Delegate):
         try:
             shutil.move(bak_path, path)
         except IOError, (errno, detail):
-            logger.warning( \
-                'Failed to restore file "%s" '     % path     + \
-                'from temporary backup file "%s" ' % bak_path + \
-                'after failing to write it: %s.'   % detail     \
-            )
+            msg  = 'Failed to restore file "%s" ' % path
+            msg += ' from temporary backup file "%s"' % bak_path
+            msg += ' after failing to write it: %s.' % detail
+            logger.error(msg)
             
     def _write_file(self, text_col, keep_changes, path, format, encoding,
                     newlines):
@@ -126,7 +122,7 @@ class FileWriter(Delegate):
             subtitle_file = current_file
             path = current_file.path
         else:
-            format_name = FORMAT.NAMES[format]
+            format_name = FORMAT.CLASS_NAMES[format]
             subtitle_file = eval(format_name)(path, encoding, newlines)
 
         shows = []

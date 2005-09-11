@@ -28,8 +28,11 @@ class Clipboard(object):
     """
     Gaupol internal clipboard.
 
-    This clipboard stores Python objects of type lists of strings. All data
+    This clipboard stores Python objects of type list of strings. All data
     stored in this clipboard is also put in the X clipboard in string format.
+
+    Data on the clipboard is directly available as attribute "data". If the clipboard
+    is empty, the value of the "data" attribute is None.
     """
     
     def __init__(self):
@@ -39,7 +42,7 @@ class Clipboard(object):
         
     def set_data(self, data):
         """
-        Set data and a string representation of it to X clipboard.
+        Set data and set a string representation of it to X clipboard.
         
         data: list of strings or Nones
         """
@@ -48,7 +51,7 @@ class Clipboard(object):
         # Replace Nones with empty strings.
         string_list = []
         for element in data:
-            string_list.append(element or '')
+            string_list.append(element or u'')
         
         # Separate list elements with a blank line to form a string.
         text = '\n\n'.join(string_list)
