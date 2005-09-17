@@ -1,3 +1,12 @@
+2005-09-17  Osmo Salomaa  otsaloma@cc.hut.fi
+
+	* lib/gaupol/gtk/actions:
+	  lib/gaupol/gtk/actions/__init__.py:
+	  lib/gaupol/gtk/actions/action.py:
+	  New directory and files for the new action system.
+
+	* lib/gaupol/gtk/util/config.py: Aligned stuff.
+
 2005-09-11  Osmo Salomaa  otsaloma@cc.hut.fi
 
 	* lib/gaupol/gtk/cellrend/custom.py: Minor fixes.
