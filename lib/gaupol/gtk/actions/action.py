@@ -25,7 +25,10 @@ try:
 except ImportError:
     pass
 
-class Action(object):
+from gaupol.gtk.delegates.delegate import Delegate
+
+
+class Action(Delegate):
 
     """Base class for actions."""
 
@@ -43,17 +46,14 @@ class Action(object):
 
     is_doable = staticmethod(is_doable)
 
-    def __init__(self, *args):
+    def __init__(self, master, *args):
 
-        self.project = None
+        Delegate.__init__(self, master)
 
-        # One line description.
+        self.project     = None
         self.description = None
+        self.documents   = None
 
-        # List of documents affected.
-        self.documents = []
-
-        # TreeView properties that can be restored.
         self.focus_row     = None
         self.focus_col     = None
         self.selected_rows = None

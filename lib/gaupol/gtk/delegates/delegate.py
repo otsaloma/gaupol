@@ -20,7 +20,7 @@
 """Base class for delegate classes."""
 
 
-# Code borrowed from:
+# Code borrowed from
 # "Automatic delegation as an alternative to inheritance" by Alex Martelli
 # http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52295
 
@@ -36,9 +36,12 @@ class Delegate(object):
     """
     Base class for delegate classes.
     
-    The purpose of the methods in this class is to provide direct access to the
-    master class's attributes by redirecting all self.attribute calls not found
-    in the delegate class.
+    The purpose of the methods in this class is to provide direct access to
+    the master class's attributes by redirecting all self.attribute calls not
+    found in the delegate class.
+
+    All methods defined in a delegate class, whose names don't start with an
+    underscore are automatically made available through the master class.
     """
 
     def __init__(self, master):
