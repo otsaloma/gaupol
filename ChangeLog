@@ -1,5 +1,10 @@
 2005-09-18  Osmo Salomaa  otsaloma@cc.hut.fi
 
+	* lib/gaupol/gtk/dialogs/spellcheck.py: Renamed from
+	  lib/gaupol/gtk/spellcheck.py.
+
+2005-09-18  Osmo Salomaa  otsaloma@cc.hut.fi
+
 	* lib/gaupol/gtk/actions/action.py (Action): Subclass Delegate.
 
 	* lib/gaupol/gtk/delegates/delegate.py: Synced with delegate in base.
