@@ -75,10 +75,10 @@ class TYPE(object):
     BOOLEAN_LIST  = 6
     CONSTANT_LIST = 7
 
-    def is_list(type):
-        """Return True if type is a list type."""
+    def is_list(type_):
+        """Return True if type_ is a list type."""
         
-        return type in [4, 5, 6, 7]
+        return type_ in [4, 5, 6, 7]
 
     is_list = staticmethod(is_list)
 
@@ -297,39 +297,39 @@ def _set_config_option(parser, section, option):
     Raise ValueError, AttributeError or NameError if something goes wrong.
     """
     string = parser.get(section, option)
-    type   = eval('%s._%s_type' % (section, option))
+    type_  = eval('%s._%s_type' % (section, option))
 
     # Convert string to proper data type.
     if string == '':
-        if TYPE.is_list(type):
+        if TYPE.is_list(type_):
             value = []
         else:
             value = None
             
-    elif type == TYPE.STRING:
+    elif type_ == TYPE.STRING:
         value = string
         
-    elif type == TYPE.INTEGER:
+    elif type_ == TYPE.INTEGER:
         value = int(string)
         
-    elif type == TYPE.BOOLEAN:
+    elif type_ == TYPE.BOOLEAN:
         value = _get_boolean(string)
         
-    elif type == TYPE.CONSTANT:
+    elif type_ == TYPE.CONSTANT:
         value = _get_constant(section, option, string)
         
-    elif type == TYPE.STRING_LIST:
+    elif type_ == TYPE.STRING_LIST:
         value = string.split('|')
         
-    elif type == TYPE.INTEGER_LIST:
+    elif type_ == TYPE.INTEGER_LIST:
         str_list = string.split('|')
         value = [int(entry) for entry in str_list]
         
-    elif type == TYPE.BOOLEAN_LIST:
+    elif type_ == TYPE.BOOLEAN_LIST:
         str_list = string.split('|')
         value = [_get_boolean(entry) for entry in str_list]
         
-    elif type == TYPE.CONSTANT_LIST:
+    elif type_ == TYPE.CONSTANT_LIST:
         str_list = string.split('|')
         value = [_get_constant(section, option, entry) for entry in str_list]
 
@@ -344,36 +344,36 @@ def _set_parser_option(parser, section, option):
     Raise ValueError, AttributeError or NameError if something goes wrong.
     """
     value = eval('%s.%s'       % (section, option))
-    type  = eval('%s._%s_type' % (section, option))
+    type_ = eval('%s._%s_type' % (section, option))
 
     # Convert data type to string.
     if value == None:
         string = ''
         
-    elif type == TYPE.STRING:
+    elif type_ == TYPE.STRING:
         string = value
         
-    elif type == TYPE.INTEGER:
+    elif type_ == TYPE.INTEGER:
         string = str(value)
         
-    elif type == TYPE.BOOLEAN:
+    elif type_ == TYPE.BOOLEAN:
         string = _get_boolean(value)
         
-    elif type == TYPE.CONSTANT:
+    elif type_ == TYPE.CONSTANT:
         string = _get_constant(section, option, value)
         
-    elif type == TYPE.STRING_LIST:
+    elif type_ == TYPE.STRING_LIST:
         string = '|'.join(value)
         
-    elif type == TYPE.INTEGER_LIST:
+    elif type_ == TYPE.INTEGER_LIST:
         str_list = [str(entry) for entry in value]
         string = '|'.join(str_list)
         
-    elif type == TYPE.BOOLEAN_LIST:
+    elif type_ == TYPE.BOOLEAN_LIST:
         str_list = [_get_boolean(entry) for entry in value]
         string = '|'.join(str_list)
         
-    elif type == TYPE.CONSTANT_LIST:
+    elif type_ == TYPE.CONSTANT_LIST:
         str_list = [_get_constant(section, option, entry) for entry in value]
         string = '|'.join(str_list)
 

@@ -1,3 +1,9 @@
+2005-09-19  Osmo Salomaa  otsaloma@cc.hut.fi
+
+	* lib/gaupol/gtk/util/config.py: Renamed "type" variables to "type_"
+	  to avoid possible namespace clashes with the built-in "type"
+	  function.
+
 2005-09-18  Osmo Salomaa  otsaloma@cc.hut.fi
 
 	* lib/gaupol/gtk/dialogs/spellcheck.py: Renamed from
