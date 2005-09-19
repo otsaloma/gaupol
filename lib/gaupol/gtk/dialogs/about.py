@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Dialog to display application information."""
+"""Dialog to display information about Gaupol."""
 
 
 import locale
@@ -30,7 +30,7 @@ except ImportError:
 import gtk
 
 from gaupol.constants import VERSION
-from gaupol.lib.util import internet
+from gaupol.base.util import internet
 
 
 NAME         = 'Gaupol'

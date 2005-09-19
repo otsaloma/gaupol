@@ -16,7 +16,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Module to start Gaupol GUI."""
+"""Module to start Gaupol GTK+ user interface."""
 
 
 import logging
@@ -32,7 +32,7 @@ logger = logging.getLogger()
 
 def main(args):
     """
-    Start the Gaupol GUI and open files given as arguments.
+    Start the Gaupol GTK+ UI and open files given as arguments.
     
     args: sys.argv[1:]
     """
