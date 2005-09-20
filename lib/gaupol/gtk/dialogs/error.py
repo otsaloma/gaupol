@@ -33,112 +33,82 @@ TYPE    = gtk.MESSAGE_ERROR
 BUTTONS = gtk.BUTTONS_OK
 
 
-class IOErrorDialog(gtk.MessageDialog):
-    
-    """Base class for IOError dialogs."""
-    
-    def __init__(self, parent, title, detail):
-        """
-        Initialize an IOErrorDialog object.
-        
-        detail: detailed error message from IOError
-        """
-        gtk.MessageDialog.__init__(self, parent, FLAGS, TYPE, BUTTONS, title)
+class GenericErrorDialog(gtk.MessageDialog):
 
-        self.format_secondary_text('%s.' % detail)
+    """Generic dialog for errors."""
+
+    def __init__(self, parent, title, detail):
+
+        gtk.MessageDialog.__init__(self, parent, FLAGS, TYPE, BUTTONS, title)
+        self.format_secondary_text(detail)
 
 
 class ReadFileErrorDialog(IOErrorDialog):
-    
-    """Dialog to inform that IOError occured while reading."""
-    
+
+    """Dialog to inform that IOError occured while reading file."""
+
     def __init__(self, parent, basename, detail):
-        """
-        Initialize a ReadFileErrorDialog object.
-        
-        basename: basename of the file being opened
-        detail  : detailed error message from IOError
-        """
-        title = _('Failed to read file "%s"') % basename
-        IOErrorDialog.__init__(self, parent, title, detail)
-        
-        
+
+        title  = _('Failed to read file "%s"') % basename
+        detail = '%s.' % detail
+
+        GenericErrorDialog.__init__(self, parent, title, detail)
+
+
 class SpellCheckErrorDialog(gtk.MessageDialog):
-    
-    """Dialog to inform that UnicodeError occured while reading."""
-    
+
+    """Dialog to inform that an Error occured while checking spelling."""
+
     def __init__(self, parent, detail):
 
-        gtk.MessageDialog.__init__(
-            self, parent, FLAGS, TYPE, BUTTONS,
-            _('Failed to start spell-check')
-        )
-        self.format_secondary_text('%s.' % detail)
+        title  = _('Failed to start spell-check')
+        detail = '%s.' % detail
+
+        GenericErrorDialog.__init__(self, parent, title, detail)
 
 
 class UnicodeDecodeErrorDialog(gtk.MessageDialog):
-    
-    """Dialog to inform that UnicodeError occured while reading."""
-    
+
+    """Dialog to inform that UnicodeError occured while reading file."""
+
     def __init__(self, parent, basename, codec):
-        """
-        Initialize a UnicodeDecodeErrorDialog object.
-        
-        basename: basename of the file being opened
-        codec   : character encoding used for decoding
-        """
-        gtk.MessageDialog.__init__(
-            self, parent, FLAGS, TYPE, BUTTONS,
-            _('Failed to decode file "%s" with codec "%s"') % (basename, codec)
-        )
-        self.format_secondary_text( \
-            _('Please try to open the file with a different character encoding.') \
-        )
+
+        info   = basename, codec
+        title  = _('Failed to decode file "%s" with codec "%s"') % info
+        detail = _('Please try to open the file with a different character encoding.')
+
+        GenericErrorDialog.__init__(self, parent, title, detail)
 
 
 class UnicodeEncodeErrorDialog(gtk.MessageDialog):
-    
-    """Dialog to inform that UnicodeError occured while writing."""
-    
+
+    """Dialog to inform that UnicodeError occured while writing file."""
+
     def __init__(self, parent, basename, codec):
-        """
-        Initialize a UnicodeEncodeErrorDialog object.
-        
-        basename: basename of the file being written
-        codec   : character encoding used for encoding
-        """
-        gtk.MessageDialog.__init__(
-            self, parent, FLAGS, TYPE, BUTTONS,
-            _('Failed to encode file "%s" with codec "%s"') % (basename, codec)
-        )
-        self.format_secondary_text( \
-            _('Please try to save the file with a different character encoding.') \
-        )
+
+        info   = basename, codec
+        title  = _('Failed to encode file "%s" with codec "%s"') % info
+        detail = _('Please try to save the file with a different character encoding.')
+
+        GenericErrorDialog.__init__(self, parent, title, detail)
 
 
 class UnknownFileFormatErrorDialog(gtk.MessageDialog):
-    
+
     """Dialog to inform that filetype is not supported."""
-    
+
     def __init__(self, parent, basename):
-        """
-        Initialize an UnknownFileFormatErrorDialog object.
-        
-        basename: basename of the file being opened
-        """
-        gtk.MessageDialog.__init__(
-            self, parent, FLAGS, TYPE, BUTTONS,
-            _('Failed to recognize format of file "%s"') % basename
-        )
-        self.format_secondary_text( \
-            _('Please check that the file you are trying to open is a subtitle file of a format supported by Gaupol.') \
-        )
+
+        title  = _('Failed to recognize format of file "%s"') % basename
+        detail = _('Please check that the file you are trying to open is a subtitle file of a format supported by Gaupol.')
+
+        GenericErrorDialog.__init__(self, parent, title, detail)
 
 
 class VersionCheckErrorDialog(gtk.MessageDialog):
-    
+
     """Dialog to inform that version check failed."""
-    
+
     def __init__(self, parent, detail):
 
         gtk.MessageDialog.__init__(
@@ -155,15 +125,12 @@ class VersionCheckErrorDialog(gtk.MessageDialog):
 
 
 class WriteFileErrorDialog(IOErrorDialog):
-    
-    """Dialog to inform that IOError occured while writing."""
-    
+
+    """Dialog to inform that IOError occured while writing file."""
+
     def __init__(self, parent, basename, detail):
-        """
-        Initialize a WriteFileErrorDialog object.
-        
-        basename: basename of the file being opened
-        detail  : detailed error message from IOError
-        """
-        title = _('Failed to write file "%s"') % basename
-        IOErrorDialog.__init__(self, parent, title, detail)
+
+        title  = _('Failed to write file "%s"') % basename
+        detail = '%s.' % detail
+
+        GenericErrorDialog.__init__(self, parent, title, detail)

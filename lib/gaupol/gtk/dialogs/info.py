@@ -34,25 +34,25 @@ TYPE  = gtk.MESSAGE_INFO
 
 class VersionCheckInfoDialog(gtk.MessageDialog):
 
-    """Dialog to tell whether user has the latest version or not."""
-    
+    """Dialog to inform whether user has the latest version or not."""
+
     def __init__(self, parent, local_version, remote_version):
 
         if remote_version > local_version:
             title = _('A newer version is available')
         else:
             title = _('You have the latest version')
-        
+
+        detail = _('The latest version is %s.\nYou are using %s.') \
+                 % (remote_version, local_version)
+
         gtk.MessageDialog.__init__(
             self, parent, FLAGS, TYPE, gtk.BUTTONS_NONE, title
         )
-        
-        self.add_button(_('_Go To Download Page'), gtk.RESPONSE_ACCEPT)
-        self.add_button(gtk.STOCK_OK             , gtk.RESPONSE_OK    )
+
+        self.add_button(_('_Open Download Page'), gtk.RESPONSE_ACCEPT)
+        self.add_button(gtk.STOCK_OK            , gtk.RESPONSE_OK    )
 
         self.set_default_response(gtk.RESPONSE_OK)
-        
-        self.format_secondary_text( \
-            _('The latest version is %s.\nYou are using %s.') \
-            % (remote_version, local_version) \
-        )
+
+        self.format_secondary_text(detail)

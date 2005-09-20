@@ -1,3 +1,14 @@
+2005-09-20  Osmo Salomaa  otsaloma@cc.hut.fi
+
+	* lib/gaupol/gtk/dialogs/error.py:
+	  lib/gaupol/gtk/dialogs/info.py:
+	  lib/gaupol/gtk/dialogs/question.py:
+	  lib/gaupol/gtk/dialogs/warning.py:
+	  Minor fixes.
+
+	* lib/gaupol/gtk/dialogs/warning.py (OpenTranslationWarningDialog):
+	  Renamed from ImportTranslationWarningDialog.
+
 2005-09-19  Osmo Salomaa  otsaloma@cc.hut.fi
 
 	* lib/gaupol/gtk/colcons.py:
