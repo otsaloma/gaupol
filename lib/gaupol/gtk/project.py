@@ -480,6 +480,9 @@ class Project(gobject.GObject):
 
         model[row] = [row + 1] + timings[row] + texts[row]
 
+    def select_rows(rows):
+        pass
+
     def set_active_column(self, *args):
         """Emphasize the active column title."""
 
@@ -493,6 +496,9 @@ class Project(gobject.GObject):
                 label.set_attributes(EMPH_ATTR)
             else:
                 label.set_attributes(NORM_ATTR)
+
+    def set_focus(self, row, col):
+        pass
 
     def set_tab_labels(self):
         """

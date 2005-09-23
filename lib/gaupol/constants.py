@@ -29,25 +29,16 @@ the correct Python data type.
 """
 
 
-# Extension and Format class constants must have the same order.
-
-class EXTENSION(object):
-
-    VALUES = ['.sub', '.txt', '.srt']
-    
-    MICRODVD = 0
-    MPL2     = 1
-    SUBRIP   = 2
-
 class FORMAT(object):
 
-    CLASS_NAMES = [  'MicroDVD' ,   'MPL2' ,   'SubRip' ]
-    ID_NAMES    = [  'microdvd' ,   'mpl2' ,   'subrip' ]
-    UI_NAMES    = [_('MicroDVD'), _('MPL2'), _('SubRip')]
-    
     MICRODVD = 0
     MPL2     = 1
     SUBRIP   = 2
+
+    CLASS_NAMES   = [  'MicroDVD' ,   'MPL2' ,   'SubRip' ]
+    DISPLAY_NAMES = [_('MicroDVD'), _('MPL2'), _('SubRip')]
+    EXTENSIONS    = [  '.sub'     ,   '.txt' ,   '.srt'   ]
+    ID_NAMES      = [  'microdvd' ,   'mpl2' ,   'subrip' ]
 
 class FRAMERATE(object):
 

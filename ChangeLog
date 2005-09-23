@@ -1,3 +1,26 @@
+2005-09-24  Osmo Salomaa  otsaloma@cc.hut.fi
+
+	* data/glade/insertsub-dialog.glade: Changed "Add" button caption to
+	  "Insert".
+
+	* data/glade/prefs-dialog.glade: Minor fixes.
+
+	* data/glade/spellcheck-dialog.glade: Corrected border width to 12
+	  pixels.
+
+	* data/icons/gaupol.png: New icon.
+
+	* lib/gaupol/constants.py (EXTENSION): Removed class.
+	  (FORMAT): Added attribute "EXTENSIONS".
+
+	* lib/gaupol/gtk/actions/action.py (UndoableAction): New class.
+
+	* lib/gaupol/gtk/dialogs/insertsub.py: Removed "Insert" button caption
+	  changing, since it's now in the Glade file.
+
+	* lib/gaupol/gtk/project.py (Project.select_rows, Project.set_focus):
+	  New functions that could be implemented later.
+
 2005-09-20  Osmo Salomaa  otsaloma@cc.hut.fi
 
 	* lib/gaupol/gtk/dialogs/error.py:

@@ -27,18 +27,18 @@ except ImportError:
 
 import gtk
 
-from gaupol.gui.util import gui
+from gaupol.gtk.util import gui
 
 
 class InsertSubtitleDialog(object):
 
     """Dialog for inserting new subtitles."""
-    
+
     def __init__(self, parent):
 
         glade_xml = gui.get_glade_xml('insertsub-dialog.glade')
         get_widget = glade_xml.get_widget
-        
+
         self._dialog             = get_widget('dialog')
         self._position_label     = get_widget('position_label')
         self._position_combo_box = get_widget('position_combo_box')
@@ -49,25 +49,17 @@ class InsertSubtitleDialog(object):
 
         # Set mnemonics.
         self._position_label.set_mnemonic_widget(self._position_combo_box)
-        amount_label = glade_xml.get_widget('amount_label')
+        amount_label = get_widget('amount_label')
         amount_label.set_mnemonic_widget(self._amount_spin_button)
-
-        # Set Insert button label ("Add" in Glade XML file).
-        button = glade_xml.get_widget('insert_button')
-        alignment = button.get_children()[0]
-        hbox = alignment.get_children()[0]
-        insert_label = hbox.get_children()[1]
-        insert_label.set_text(_('_Insert'))
-        insert_label.set_use_underline(True)
 
     def destroy(self):
         """Destroy the dialog."""
-        
+
         self._dialog.destroy()
-        
+
     def get_amount(self):
         """Get amount of subtitles to insert."""
-        
+
         self._amount_spin_button.update()
 
         return self._amount_spin_button.get_value_as_int()
@@ -75,18 +67,18 @@ class InsertSubtitleDialog(object):
     def get_position(self):
         """
         Get position to insert subtitles to.
-        
+
         Return: POSITION.ABOVE or POSITION.BELOW
         """
         # ComboBox entry index corresponds to values of constants
         # POSITION.ABOVE and POSITION.BELOW.
         return self._position_combo_box.get_active()
-        
+
     def run(self):
         """Show and run the dialog."""
-        
+
         self._dialog.show()
-        
+
         return self._dialog.run()
 
     def set_amount(self, value):
@@ -97,7 +89,7 @@ class InsertSubtitleDialog(object):
     def set_position(self, position):
         """
         Set position to insert subtitles to.
-        
+
         position: POSITION.ABOVE or POSITION.BELOW
         """
         # ComboBox entry index corresponds to values of constants
@@ -105,7 +97,11 @@ class InsertSubtitleDialog(object):
         self._position_combo_box.set_active(position)
 
     def set_position_sensitive(self, sensitive):
-        """Set sensitivity of position-selecting."""
-        
+        """
+        Set sensitivity of position-selecting.
+
+        If no subtitles exist, the position-selecting becomes pointless and
+        can be disabled.
+        """
         self._position_label.set_sensitive(sensitive)
         self._position_combo_box.set_sensitive(sensitive)

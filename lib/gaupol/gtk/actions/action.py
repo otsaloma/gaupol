@@ -32,8 +32,6 @@ class Action(Delegate):
 
     """Base class for actions."""
 
-    undoable = False
-
     # UI Manager entries
     uim_actions        = []
     uim_radio_actions  = []
@@ -46,6 +44,11 @@ class Action(Delegate):
 
     is_doable = staticmethod(is_doable)
 
+
+class UndoableAction(Action):
+
+    """Base class for actions that can be undone."""
+
     def __init__(self, master, *args):
 
         Delegate.__init__(self, master)
@@ -53,10 +56,6 @@ class Action(Delegate):
         self.project     = None
         self.description = None
         self.documents   = None
-
-        self.focus_row     = None
-        self.focus_col     = None
-        self.selected_rows = None
 
     def do(self):
         """Do action."""
