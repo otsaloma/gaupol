@@ -1,0 +1,13 @@
+Gaupol 0.1.1
+============
+
+  Fixes:
+  
+    - Bug #2816: Settings not being saved.
+    - Write correct version number to config file.
+
+
+Gaupol 0.1.0
+============
+
+  Initial release.

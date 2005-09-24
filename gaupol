@@ -1,0 +1,172 @@
+#!/usr/bin/env python
+
+# Copyright (C) 2005 Osmo Salomaa
+#
+# This file is part of Gaupol.
+#
+# Gaupol is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# Gaupol is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Gaupol; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+
+"""
+Gaupol start script
+
+Determination of correct paths for running from source directory vs. running
+installed adaptively copied from Gazpacho by Lorenzo Gil Sanchez.
+"""
+
+
+import gettext
+import locale
+import logging
+import optparse
+import os
+import sys
+
+
+VERSION = '0.1.1'
+
+
+# Set up logger.
+logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
+logger = logging.getLogger()
+
+
+def check_dependencies():
+    """Check existance and versions of dependencies."""
+    
+    if sys.version_info[:3] < (2, 4, 0):
+        logger.critical('Python 2.4 or later is required to run Gaupol.')
+        sys.exit()
+
+    try:
+        import gtk
+        if gtk.pygtk_version < (2, 6, 0):
+            raise ImportError
+    except ImportError:
+        logger.critical('PyGTK 2.6.0 or later is required to run Gaupol.')
+        sys.exit()
+
+    try:
+        import gtk.glade
+    except ImportError:
+        logger.critical('Glade support in PyGTK is required to run Gaupol')
+        sys.exit()
+    
+def check_paths():
+    """
+    Determine paths of Gaupol files.
+    
+    Gaupol can be run from either the source directory or from install
+    location after installation. Paths to use will be determined based on
+    the paths.py module.
+    """
+    current_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
+
+    if os.path.isfile(os.path.join(current_dir, 'gaupol.desktop')):
+        prepare_source_run(current_dir)
+    else:
+        prefix = os.path.abspath(os.path.join(current_dir, '..'))
+        prepare_installed_run(prefix)
+    
+def import_optional_modules():
+    """Import optional modules."""
+
+    try:
+        import psyco
+        psyco.profile()
+    except ImportError:
+        logger.info('Psyco not found.')
+
+def parse_options():
+    """
+    Parse command line options and arguments.
+    
+    Return: options, arguments
+    """
+    parser = optparse.OptionParser(version='Gaupol %s' % VERSION)
+
+    parser.add_option(
+        '-t', '--no-translation', action='store_true', dest='no_translation',
+        default=False, help='ignore possible translation (use english)'
+    )
+
+    opts, args = parser.parse_args(sys.argv)
+
+    return opts, args
+    
+def prepare_gettext(no_translation):
+    """
+    Prepare internationalization using gettext.
+    
+    Gettext translation function is installed to Python's built-in namespace
+    making it available everywhere without need to import anything. Gettext
+    will be available with the underscore function.
+    """
+    if no_translation:
+        __builtins__.__dict__['_']        = lambda string: string
+        __builtins__.__dict__['dgettext'] = lambda domain, string: string
+        return
+
+    import gtk.glade
+    from gaupol.paths import LOCALE_DIR
+
+    locale.setlocale(locale.LC_ALL, '')
+    
+    gettext.bindtextdomain('gaupol', LOCALE_DIR)
+    gettext.textdomain('gaupol')
+    gettext.install('gaupol', LOCALE_DIR, unicode=1)
+    
+    # Domain specific gettext
+    __builtins__.__dict__['dgettext'] = lambda *args: gettext.dgettext(*args)
+
+    gtk.glade.bindtextdomain('gaupol', LOCALE_DIR)
+    gtk.glade.textdomain('gaupol')
+    
+def prepare_installed_run(prefix):
+    """Prepare path information for running installed."""
+    
+    python_dir = 'python%d.%d' % sys.version_info[:2]
+    lib_dir = os.path.join(prefix, 'lib', python_dir, 'site-packages')
+
+    if lib_dir not in sys.path:
+        sys.path.insert(0, lib_dir)
+    
+def prepare_source_run(prefix):
+    """Prepare path information for running from source directory."""
+
+    lib_dir = os.path.join(prefix, 'lib')
+
+    if lib_dir not in sys.path:
+        sys.path.insert(0, lib_dir)
+
+    from gaupol import paths
+
+    paths.DATA_DIR   = os.path.join(prefix, 'data'           )
+    paths.GLADE_DIR  = os.path.join(prefix, 'data'  , 'glade')
+    paths.ICON_DIR   = os.path.join(prefix, 'data'  , 'icons')
+    paths.UI_DIR     = os.path.join(prefix, 'data'  , 'ui'   )
+    paths.LOCALE_DIR = os.path.join(prefix, 'locale'         )
+            
+if __name__ == '__main__':
+
+    opts, args = parse_options()
+    
+    check_dependencies()
+    import_optional_modules()
+    check_paths()
+    prepare_gettext(opts.no_translation)
+
+    from gaupol.gui import main
+    main.main(args[1:])

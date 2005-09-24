@@ -1,0 +1,14 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Gaupol Subtitle Editor
+Name[fi]=Gaupol Tekstitysmuokkain
+GenericName=Subtitle Editor
+GenericName[fi]=Tekstitysmuokkain
+Comment=Edit subtitle files
+Comment[fi]=Muokkaa tekstitystiedostoja
+Exec=gaupol
+Icon=gaupol.png
+StartupNotify=true
+Terminal=false
+Type=Application
+Categories=Application;AudioVideo;
