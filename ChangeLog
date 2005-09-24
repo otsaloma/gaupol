@@ -1,5 +1,33 @@
 2005-09-24  Osmo Salomaa  otsaloma@cc.hut.fi
 
+	* data:
+	  data/glade:
+	  data/glade/encoding-dialog.glade:
+	  data/glade/insertsub-dialog.glade:
+	  data/glade/language-dialog.glade:
+	  data/glade/multiclose-dialog.glade:
+	  data/glade/prefs-dialog.glade:
+	  data/glade/spellcheck-dialog.glade:
+	  data/icons:
+	  data/icons/gaupol.png:
+	  data/ui:
+	  data/ui/menubar.xml:
+	  data/ui/toolbar.xml:
+	  data/ui/treeview.xml:
+	  doc:
+	  doc/releasing.txt:
+	  lib:
+	  lib/gaupol:
+	  lib/gaupol/__init__.py:
+	  po:
+	  po/ChangeLog:
+	  po/fi.po:
+	  test:
+	  test/pyenchant:
+	  New files added from trunk with varying amount of fixes.
+
+2005-09-24  Osmo Salomaa  otsaloma@cc.hut.fi
+
 	* INSTALL:
 	  NEWS:
 	  README:

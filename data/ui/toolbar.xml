@@ -1,0 +1,11 @@
+<ui>
+	<toolbar>
+		<toolitem name="save" action="save_file"/>
+		<separator/>
+		<toolitem name="cut"   action="cut_text"/>
+		<toolitem name="copy"  action="copy_text"/>
+		<toolitem name="paste" action="paste_text"/>
+		<separator/>
+		<toolitem name="check_spelling" action="check_spelling"/>
+	</toolbar>
+</ui>

@@ -1,0 +1,62 @@
+<ui>
+	<menubar>
+		<menu action="file">
+			<menuitem name="new"              action="new_document"/>
+			<menuitem name="open"             action="open_file"/>
+			<menuitem name="open_translation" action="open_translation_file"/>
+			<separator/>
+			<menuitem name="save"        action="save_file"/>
+			<menuitem name="save_as"     action="save_document_as"/>
+			<menuitem name="save_a_copy" action="save_a_copy_of_document"/>
+			<separator/>
+			<menuitem name="save_translation"           action="save_translation_file"/>
+			<menuitem name="save_translation_as"        action="save_translation_document_as"/>
+			<menuitem name="save_a_copy_of_translation" action="save_a_copy_of_translation_document"/>
+			<separator/>
+			<menuitem name="revert" action="revert_project"/>
+			<separator/>
+			<placeholder name="recent">
+			</placeholder>
+			<separator/>
+			<menuitem name="close" action="close_project"/>
+			<menuitem name="quit"  action="quit"/>
+			</menu>
+		<menu action="edit">
+		</menu>
+		<menu action="view">
+		</menu>
+		<menu action="format">
+			<menuitem name="dialog" action="toggle_dialog_lines"/>
+			<menuitem name="italic" action="toggle_italicization"/>
+			<separator/>
+			<menu action="case">
+				<menuitem name="title"    action="use_title_case"/>
+				<menuitem name="sentence" action="use_sentence_case"/>
+				<menuitem name="upper"    action="use_upper_case"/>
+				<menuitem name="lower"    action="use_lower_case"/>
+			</menu>
+		</menu>
+		<menu action="tools">
+			<menuitem name="check_spelling"        action="check_spelling"/>
+			<menuitem name="configure_spell_check" action="configure_spell_check"/>
+			<separator/>
+		</menu>
+		<menu action="projects">
+			<menuitem name="save_all"  action="save_all_documents"/>
+			<menuitem name="close_all" action="close_all_projects"/>
+			<separator/>
+			<menuitem name="previous" action="activate_previous_project"/>
+			<menuitem name="next"     action="activate_next_project"/>
+			<separator/>
+			<placeholder name="list">
+			</placeholder>
+		</menu>
+		<menu action="help">
+			<menuitem name="support"              action="get_support"/>
+			<menuitem name="report_a_bug"         action="report_a_bug"/>
+			<menuitem name="check_latest_version" action="check_latest_version"/>
+			<separator/>
+			<menuitem name="about" action="view_about_dialog"/>
+		</menu>
+	</menubar>
+</ui>

@@ -1,0 +1,1195 @@
+# Finnish translations for Gaupol package.
+# Copyright (C) 2005 Osmo Salomaa
+# This file is distributed under the same license as the Gaupol package.
+# Osmo Salomaa <otsaloma@cc.hut.fi>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Gaupol 0.1.0\n"
+"Report-Msgid-Bugs-To: Osmo Salomaa <otsaloma@cc.hut.fi>\n"
+"POT-Creation-Date: 2005-08-24 03:56+0300\n"
+"PO-Revision-Date: 2005-08-21 04:11+0200\n"
+"Last-Translator: Osmo Salomaa <otsaloma@cc.hut.fi>\n"
+"Language-Team: Finnish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: data/glade/insertsub-dialog.glade.h:1
+msgid ""
+"Above selection\n"
+"Below selection"
+msgstr ""
+"Valinnan yläpuolelle\n"
+"Valinnan alapuolelle"
+
+#: data/glade/insertsub-dialog.glade.h:3
+msgid "Insert Subtitles"
+msgstr "Lisää tekstejä"
+
+#: data/glade/insertsub-dialog.glade.h:4
+msgid "_Amount:"
+msgstr "_Määrä:"
+
+#: data/glade/insertsub-dialog.glade.h:5
+msgid "_Position:"
+msgstr "_Sijainti:"
+
+#: data/glade/prefs-dialog.glade.h:1
+msgid "<span weight=\"bold\">Font</span>"
+msgstr "<span weight=\"bold\">Kirjasin</span>"
+
+#: data/glade/prefs-dialog.glade.h:2
+msgid "<span weight=\"bold\">Undo</span>"
+msgstr "<span weight=\"bold\">Kumoaminen</span>"
+
+#: data/glade/prefs-dialog.glade.h:3
+msgid "Pick the Editor Font"
+msgstr "Valitse muokkaimen kirjasin"
+
+#: data/glade/prefs-dialog.glade.h:4
+msgid "Preferences"
+msgstr "Asetukset"
+
+#: data/glade/prefs-dialog.glade.h:5
+msgid "Use _default theme font"
+msgstr "_Käytä teeman oletuskirjasinta"
+
+#: data/glade/prefs-dialog.glade.h:6
+msgid "_Editor font:"
+msgstr "_Muokkaimen kirjasin:"
+
+#. Limit to <spin button> actions
+#: data/glade/prefs-dialog.glade.h:8
+msgid "_Limit to"
+msgstr "_Rajoita"
+
+#: data/glade/prefs-dialog.glade.h:9
+msgid "_Unlimited undo"
+msgstr "Ra_joittamaton kumoaminen"
+
+#. Limit to <spin button> actions
+#: data/glade/prefs-dialog.glade.h:11
+msgid "_actions"
+msgstr "_toimintoon"
+
+#: data/glade/multiclose-dialog.glade.h:1
+msgid ""
+"<span weight=\"bold\" size=\"larger\">There are several documents with "
+"unsaved changes. Save changes before closing?</span>\n"
+msgstr ""
+"<span weight=\"bold\" size=\"larger\">Useissa asiakirjoissa on "
+"tallentamattomia muutoksia. Tallennetaanko muutokset ennen sulkemista?</"
+"span>\n"
+
+#: data/glade/multiclose-dialog.glade.h:3 lib/gaupol/gui/dialogs/warning.py:44
+msgid "Close _Without Saving"
+msgstr "_Sulje tallentamatta"
+
+#: data/glade/multiclose-dialog.glade.h:4
+msgid "If you don't save, all your changes will be permanently lost."
+msgstr "Mikäli et tallenna, kaikki tekemäsi muutokset menetetään lopullisesti."
+
+#: data/glade/multiclose-dialog.glade.h:5
+msgid "Select the _main documents you want to save:"
+msgstr "_Valitse pääasiakirjat, jotka haluat tallentaa:"
+
+#: data/glade/multiclose-dialog.glade.h:6
+msgid "Select the _translation documents you want to save:"
+msgstr "Va_litse käännösasiakirjat, jotka haluat tallentaa:"
+
+#: data/glade/encoding-dialog.glade.h:1
+msgid "Character Encodings"
+msgstr "Merkistön koodaustavat"
+
+#: data/glade/encoding-dialog.glade.h:2
+msgid "Character _encodings:"
+msgstr "_Merkistön koodaustavat:"
+
+#: lib/gaupol/gui/project.py:96
+#, python-format
+msgid "Untitled %d"
+msgstr "Nimetön %d"
+
+#: lib/gaupol/gui/project.py:189
+msgid "No."
+msgstr "Nro"
+
+#: lib/gaupol/gui/project.py:190
+msgid "Show"
+msgstr "Näytä"
+
+#: lib/gaupol/gui/project.py:191
+msgid "Hide"
+msgstr "Piilota"
+
+#: lib/gaupol/gui/project.py:192
+msgid "Duration"
+msgstr "Kesto"
+
+#: lib/gaupol/gui/project.py:193
+msgid "Text"
+msgstr "Teksti"
+
+#: lib/gaupol/gui/project.py:194
+msgid "Translation"
+msgstr "Käännös"
+
+#. TRANSLATORS: Suggested translation basename - "<main basename> translation".
+#: lib/gaupol/gui/project.py:352 lib/gaupol/gui/project.py:355
+#, python-format
+msgid "%s translation"
+msgstr "%s käännös"
+
+#: lib/gaupol/gui/dialogs/insertsub.py:60
+msgid "_Insert"
+msgstr "_Lisää"
+
+#: lib/gaupol/gui/dialogs/error.py:62
+#, python-format
+msgid "Failed to read file \"%s\""
+msgstr "Lukeminen tiedostosta \"%s\" epäonnistui."
+
+#: lib/gaupol/gui/dialogs/error.py:79
+#, python-format
+msgid "Failed to decode file \"%s\" with codec \"%s\""
+msgstr "Tiedoston \"%s\" avaaminen epäonnistui merkistön koodauksella \"%s\""
+
+#: lib/gaupol/gui/dialogs/error.py:82
+msgid "Please try to open the file with a different character encoding."
+msgstr "Yritä avata tiedosto eri merkistön koodauksella."
+
+#: lib/gaupol/gui/dialogs/error.py:99
+#, python-format
+msgid "Failed to encode file \"%s\" with codec \"%s\""
+msgstr ""
+"Tiedoston \"%s\" kirjoittaminen epäonnistui merkistön koodauksella \"%s\""
+
+#: lib/gaupol/gui/dialogs/error.py:102
+msgid "Please try to save the file with a different character encoding."
+msgstr "Yritä tallentaa tiedosto eri merkistön koodauksella."
+
+#: lib/gaupol/gui/dialogs/error.py:118
+#, python-format
+msgid "Failed to recognize format of file \"%s\""
+msgstr "Tiedoston \"%s\" tyypin tunnistus epäonnistui"
+
+#: lib/gaupol/gui/dialogs/error.py:121
+msgid ""
+"Please check that the file you are trying to open is a subtitle file of a "
+"format supported by Gaupol."
+msgstr ""
+"Tarkasta, että tiedosto, jota yrität avata on Gaupolin tukemaa tyyppiä oleva "
+"tekstitystiedosto."
+
+#: lib/gaupol/gui/dialogs/error.py:133
+msgid "Failed to check latest version"
+msgstr "Uusimman version tarkastus epäonnistui"
+
+#: lib/gaupol/gui/dialogs/error.py:136 lib/gaupol/gui/dialogs/info.py:50
+msgid "_Go To Download Page"
+msgstr "_Siirry lataussivulle"
+
+#: lib/gaupol/gui/dialogs/error.py:155
+#, python-format
+msgid "Failed to write file \"%s\""
+msgstr "Tiedoston \"%s\" kirjoittaminen epäonnistui"
+
+#: lib/gaupol/gui/dialogs/about.py:38
+msgid "Subtitle editor"
+msgstr "Tekstitysmuokkain"
+
+#: lib/gaupol/gui/dialogs/info.py:42
+msgid "A newer version is available"
+msgstr "Uudempi versio on saatavissa"
+
+#: lib/gaupol/gui/dialogs/info.py:44
+msgid "You have the latest version"
+msgstr "Sinulla on uusin versio"
+
+#: lib/gaupol/gui/dialogs/info.py:56
+#, python-format
+msgid ""
+"The latest version is %s.\n"
+"You are using %s."
+msgstr ""
+"Uusin versio on %s.\n"
+"Sinulla on käytössä %s."
+
+#: lib/gaupol/gui/dialogs/filechooser.py:53
+msgid "All files"
+msgstr "Kaikki tiedostot"
+
+#: lib/gaupol/gui/dialogs/filechooser.py:54
+msgid "Plain text"
+msgstr "Teksti"
+
+#. TRANSLATORS: File filters - e.g. "SubRip (*.srt)".
+#: lib/gaupol/gui/dialogs/filechooser.py:63
+#, python-format
+msgid "%s (*%s)"
+msgstr "%s (*%s)"
+
+#: lib/gaupol/gui/dialogs/filechooser.py:136
+#: lib/gaupol/gui/dialogs/filechooser.py:145
+msgid "Other..."
+msgstr "Muu..."
+
+#: lib/gaupol/gui/dialogs/filechooser.py:225
+#: lib/gaupol/gui/dialogs/filechooser.py:283
+msgid "Character _encoding:"
+msgstr "_Merkistön koodaus:"
+
+#: lib/gaupol/gui/dialogs/filechooser.py:278
+msgid "Fo_rmat:"
+msgstr "T_yyppi:"
+
+#: lib/gaupol/gui/dialogs/filechooser.py:288
+msgid "Ne_wlines:"
+msgstr "_Rivinvaihdot:"
+
+#: lib/gaupol/gui/dialogs/warning.py:51 lib/gaupol/gui/dialogs/warning.py:110
+msgid "If you don't save, changes will be permanently lost."
+msgstr "Mikäli et tallenna, muutokset menetetään lopullisesti."
+
+#: lib/gaupol/gui/dialogs/warning.py:65
+#, python-format
+msgid "Save changes to main document \"%s\" before closing?"
+msgstr "Tallennetaanko muutokset pääasiakirjaan \"%s\" ennen sulkemista?"
+
+#: lib/gaupol/gui/dialogs/warning.py:81
+#, python-format
+msgid "Save changes to translation document \"%s\" before closing?"
+msgstr "Tallennetaanko muutokset käännösasiakirjaan \"%s\" ennen sulkemista?"
+
+#: lib/gaupol/gui/dialogs/warning.py:99
+#, python-format
+msgid "Save changes to translation document \"%s\" before importing a new one?"
+msgstr ""
+"Tallennetaanko muutokset käännösasiakirjaan \"%s\" ennen uuden tuomista?"
+
+#: lib/gaupol/gui/dialogs/warning.py:103
+msgid "Import _Without Saving"
+msgstr "Tuo ta_llentamatta"
+
+#: lib/gaupol/gui/dialogs/warning.py:127
+#, python-format
+msgid "Open abnormally large file \"%s\"?"
+msgstr "Avaa poikkeuksellisen iso tiedosto \"%s\"?"
+
+#: lib/gaupol/gui/dialogs/warning.py:136
+#, python-format
+msgid ""
+"Size of the file is %.1f MB, which is abnormally large for a text-based "
+"subtitle file. Please, check that you are not trying to open a binary file."
+msgstr ""
+"Tiedoston koko on %.1f MB, mikä poikkeuksellisen suuri tekstipohjaiselle "
+"tekstitystiedostolle. Tarkasta ettet yritä avata binääritiedostoa."
+
+#: lib/gaupol/gui/dialogs/encoding.py:90
+msgid "Description"
+msgstr "Kuvaus"
+
+#: lib/gaupol/gui/dialogs/encoding.py:91
+msgid "Encoding"
+msgstr "Koodaus"
+
+#: lib/gaupol/gui/dialogs/encoding.py:92
+msgid "Show In Menu"
+msgstr "Näytä valikossa"
+
+#: lib/gaupol/gui/dialogs/question.py:47
+#, python-format
+msgid "A file named \"%s\" already exists"
+msgstr "Tiedosto nimeltä \"%s\" on jo olemassa"
+
+#: lib/gaupol/gui/dialogs/question.py:51
+msgid "_Replace"
+msgstr "_Korvaa"
+
+#: lib/gaupol/gui/dialogs/question.py:56
+msgid "Do you want to replace it with the one you are saving?"
+msgstr "Haluatko korvata sen tiedostolla jota olet tallentamassa?"
+
+#: lib/gaupol/gui/dialogs/question.py:68
+msgid "Not enough subtitles exist to fit clipboard contents"
+msgstr "Leikepöydän sisältö ei mahdu olemassaoleviin teksteihin"
+
+#: lib/gaupol/gui/dialogs/question.py:76
+#, python-format
+msgid "Add %d new subtitles?"
+msgstr "Lisää %d uutta tekstiä?"
+
+#: lib/gaupol/gui/dialogs/question.py:106
+#, python-format
+msgid ""
+"Revert unsaved changes to both main document \"%s\" and translation document "
+"\"%s\"?"
+msgstr ""
+"Hylkää tallentamisen jälkeen tehdyt muutokset ja palauta sekä pääasiakirja "
+"\"%s\" että käännösasiakirja \"%s\"?"
+
+#: lib/gaupol/gui/dialogs/question.py:110
+#, python-format
+msgid ""
+"Revert unsaved changes to main document \"%s\" and lose changes translation "
+"document \"%s\"?"
+msgstr ""
+"Hylkää tallentamisen jälkeen tehdyt muutokset sekä palauta pääasiakirja \"%s"
+"\" ja menetä muutokset käännösasiakirjaan \"%s\"?"
+
+#: lib/gaupol/gui/dialogs/question.py:114
+#, python-format
+msgid "Revert unsaved changes to main document \"%s\"?"
+msgstr ""
+"Hylkää tallentamisen jälkeen tehdyt muutokset ja palauta pääasiakirja \"%s\""
+
+#: lib/gaupol/gui/dialogs/question.py:118
+#, python-format
+msgid ""
+"Revert unsaved changes to translation document \"%s\" and lose changes main "
+"document \"%s\"?"
+msgstr ""
+"Hylkää tallentamisen jälkeen tehdyt muutokset sekä palauta käännösasiakirja "
+"\"%s\" ja menetä muutokset pääasiakirjaan \"%s\"?"
+
+#: lib/gaupol/gui/dialogs/question.py:122
+#, python-format
+msgid "Revert unsaved changes to translation document \"%s\"?"
+msgstr ""
+"Hylkää tallentamisen jälkeen tehdyt muutokset ja palauta käännösasiakirja \"%"
+"s\""
+
+#: lib/gaupol/gui/dialogs/question.py:135
+msgid "If you revert, changes will be permanently lost."
+msgstr "Mikäli palautat levyltä, muutokset menetetään lopullisesti."
+
+#: lib/gaupol/gui/delegates/fileopener.py:169
+#, python-format
+msgid "Main file \"%s\" is already open"
+msgstr "Päätiedosto \"%s\" on jo auki"
+
+#: lib/gaupol/gui/delegates/fileopener.py:216
+msgid "Import Translation"
+msgstr "Tuo käännös"
+
+#: lib/gaupol/gui/delegates/fileopener.py:235
+#, python-format
+msgid "Imported translation file \"%s\""
+msgstr "Tuotiin käännöstiedosto \"%s\""
+
+#: lib/gaupol/gui/delegates/fileopener.py:249
+msgid "Created a new main document"
+msgstr "Luotiin uusi pääasiakirja"
+
+#: lib/gaupol/gui/delegates/fileopener.py:256
+#: lib/gaupol/gui/delegates/guibuilder.py:147
+msgid "Open"
+msgstr "Avaa"
+
+#: lib/gaupol/gui/delegates/fileopener.py:264
+#: lib/gaupol/gui/delegates/fileopener.py:349
+#, python-format
+msgid "Opened main file \"%s\""
+msgstr "Avattiin päätiedosto \"%s\""
+
+#. TRANSLATORS: Activate a document - "Activate <basename>".
+#: lib/gaupol/gui/delegates/guiupdater.py:223
+#, python-format
+msgid "Activate \"%s\""
+msgstr "Siirry asiakirjaan \"%s\""
+
+#. TRANSLATORS: Open a document - "Open <basename>".
+#: lib/gaupol/gui/delegates/guiupdater.py:314
+#, python-format
+msgid "Open \"%s\""
+msgstr "Avaa \"%s\""
+
+#: lib/gaupol/gui/delegates/guiupdater.py:423
+#, python-format
+msgid "Undo up to %s"
+msgstr "Kumoa toimintoon %s"
+
+#: lib/gaupol/gui/delegates/guiupdater.py:436
+#, python-format
+msgid "Redo up to %s"
+msgstr "Tee uudelleen toimintoon %s"
+
+#: lib/gaupol/gui/delegates/guiupdater.py:492
+#, python-format
+msgid "Undo %s"
+msgstr "Kumoa %s"
+
+#: lib/gaupol/gui/delegates/guiupdater.py:498
+#, python-format
+msgid "Redo %s"
+msgstr "Tee uudelleen %s"
+
+#. TRANSLATORS: framerate, e.g. "23.976 fps"
+#: lib/gaupol/gui/delegates/guibuilder.py:61
+#, python-format
+msgid "%s fps"
+msgstr "%s fps"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:74
+msgid "Framerate"
+msgstr "Kehysnopeus"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:155
+#: lib/gaupol/gui/delegates/guibuilder.py:217
+msgid "Open a file"
+msgstr "Avaa tiedosto"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:158
+msgid "Open a recently used file"
+msgstr "Avaa äskettäin käytetty tiedosto"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:168
+msgid "Amount of characters in the text of the selected subtitle"
+msgstr "Merkkien määrä valitun tekstin tekstiosassa"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:172
+msgid "Amount of characters in the translation of the selected subtitle"
+msgstr "Merkkien määrä valitun tekstin käännösosassa"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:187
+msgid "_File"
+msgstr "_Tiedosto"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:188
+#: lib/gaupol/gui/delegates/guibuilder.py:306
+msgid "_Edit"
+msgstr "_Muokkaa"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:189
+msgid "_View"
+msgstr "_Näytä"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:190
+msgid "_Columns"
+msgstr "_Sarakkeet"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:191
+msgid "_Framerate"
+msgstr "Ke_hysnopeus"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:192
+msgid "F_ormat"
+msgstr "M_uotoile"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:193
+msgid "_Case"
+msgstr "Ki_rjainkoko"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:194
+msgid "_Documents"
+msgstr "_Asiakirjat"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:195
+msgid "_Help"
+msgstr "_Ohje"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:208
+msgid "_New"
+msgstr "_Uusi"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:210
+msgid "Create a new document"
+msgstr "Luo uusi asiakirja"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:215
+msgid "_Open..."
+msgstr "_Avaa..."
+
+#: lib/gaupol/gui/delegates/guibuilder.py:222
+msgid "_Import Translation..."
+msgstr "Tu_o käännös..."
+
+#: lib/gaupol/gui/delegates/guibuilder.py:224
+msgid "Import translations from a file"
+msgstr "Tuo käännökset tiedostosta"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:229
+msgid "_Save"
+msgstr "_Tallenna"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:231
+msgid "Save the current main file"
+msgstr "Tallenna nykyinen päätiedosto"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:236
+msgid "Save _As..."
+msgstr "Ta_llenna nimellä..."
+
+#: lib/gaupol/gui/delegates/guibuilder.py:238
+msgid "Save the current main file with a different name"
+msgstr "Tallenna nykyinen päätiedosto eri nimellä"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:243
+msgid "Sa_ve A Copy..."
+msgstr "Tall_enna kopio..."
+
+#: lib/gaupol/gui/delegates/guibuilder.py:245
+msgid "Save a copy of the current main document."
+msgstr "Tallenna kopio nykyisestä pääasiakirjasta"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:250
+msgid "Sav_e Translation"
+msgstr "Talle_nna käännös"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:252
+msgid "Save the current translation file"
+msgstr "Tallenna nykyinen käännöstiedosto"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:257
+msgid "Save _Translation As..."
+msgstr "Tallenna _käännös nimellä..."
+
+#: lib/gaupol/gui/delegates/guibuilder.py:259
+msgid "Save the current translation file with a different name"
+msgstr "Tallenna nykyinen käännöstiedosto eri nimellä"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:264
+msgid "Save A Cop_y Of Translation..."
+msgstr "Tallenna kopio k_äännöksestä..."
+
+#: lib/gaupol/gui/delegates/guibuilder.py:266
+msgid "Save a copy of the current translation document"
+msgstr "Tallenna kopio nykyisestä käännösasiakirjasta"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:271
+msgid "_Revert"
+msgstr "_Palauta levyltä"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:273
+msgid "Revert to a saved version"
+msgstr "Palauta levylle tallennettu versio tiedostosta"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:278
+msgid "_Close"
+msgstr "_Sulje"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:280
+msgid "Close the current file"
+msgstr "Sulje nykyinen tiedosto"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:285
+msgid "_Quit"
+msgstr "_Lopeta"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:287
+msgid "Quit Gaupol"
+msgstr "Lopeta Gaupol"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:292
+msgid "_Undo"
+msgstr "_Kumoa"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:294
+#: lib/gaupol/gui/delegates/guibuilder.py:649
+msgid "Undo the last action"
+msgstr "Kumoa edellinen toiminto"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:299
+msgid "_Redo"
+msgstr "Tee _uudelleen"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:301
+#: lib/gaupol/gui/delegates/guibuilder.py:660
+msgid "Redo the last undone action"
+msgstr "Tee viimeisin kumottu toiminto uudelleen"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:308
+msgid "Edit the focused cell"
+msgstr "Muokkaa kohdistettua solua"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:313
+msgid "Cu_t"
+msgstr "_Leikkaa"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:315
+msgid "Cut the selected texts to clipboard"
+msgstr "Leikkaa valitut tekstiosat leikepöydälle"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:320
+msgid "_Copy"
+msgstr "K_opioi"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:322
+msgid "Copy the selected texts to clipboard"
+msgstr "Kopioi valitut tekstiosat leikepöydälle"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:327
+msgid "_Paste"
+msgstr "L_iitä"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:329
+msgid "Paste texts from clipboard"
+msgstr "Liitä tekstiosat leikepöydältä"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:334
+msgid "C_lear"
+msgstr "_Tyhjennä"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:336
+msgid "Clear the selected texts"
+msgstr "Tyhjennä valitut tekstiosat"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:341
+msgid "_Insert Subtitles"
+msgstr "Li_sää tekstejä"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:343
+msgid "Insert blank subtitles"
+msgstr "Lisää tyhjiä tekstejä"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:348
+msgid "Re_move Subtitles"
+msgstr "_Poista tekstejä"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:350
+msgid "Remove selected subtitles"
+msgstr "Poista valitut tekstit"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:355
+msgid "_Select All"
+msgstr "_Valitse kaikki"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:357
+msgid "Select all subtitles"
+msgstr "Valitse kaikki tekstit"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:362
+msgid "U_nselect All"
+msgstr "T_yhjennä valinta"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:364
+msgid "Unselect all subtitles"
+msgstr "Tyhjennä nykyinen valinta"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:369
+msgid "In_vert Selection"
+msgstr "Kää_nnä valinta"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:371
+msgid "Invert the current selection"
+msgstr "Käännä nykyinen valinta"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:376
+msgid "Pre_ferences"
+msgstr "_Asetukset"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:378
+msgid "Configure Gaupol"
+msgstr "Muokkaa Gaupolin asetuksia"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:383
+msgid "_Dialog"
+msgstr "_Vuoropuhelu"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:385
+msgid "Toggle dialog lines on the selected texts"
+msgstr "Muuta valittu tekstiosa vuoropuheluksi"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:390
+msgid "_Italic"
+msgstr "_Kursiivi"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:392
+msgid "Toggle the italicization of the selected texts"
+msgstr "Kursivoi valittu tekstiosa"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:397
+msgid "_Title"
+msgstr "_Otsikko"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:399
+msgid "Change the selected texts to Title Case"
+msgstr "Muuta valittu tekstiosa Otsikko Kirjasinkokoon"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:404
+msgid "_Sentence"
+msgstr "_Lause"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:406
+msgid "Change the selected texts to Sentence case"
+msgstr "Muuta valittu tekstiosa Lause kirjasinkokoon"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:411
+msgid "_Upper"
+msgstr "_Iso"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:413
+msgid "Change the selected texts to UPPER CASE"
+msgstr "Muuta valittu tekstiosa ISOON KIRJASINKOKOON"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:418
+msgid "_Lower"
+msgstr "_Pieni"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:420
+msgid "Change the selected texts to lower case"
+msgstr "Muuta valittu tekstiosa pieneen kirjasinkokoon"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:425
+msgid "_Save All"
+msgstr "_Tallenna kaikki"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:427
+msgid "Save all open documents"
+msgstr "Tallenna kaikki avoimet asiakirjat"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:432
+msgid "_Close All"
+msgstr "_Sulje kaikki"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:434
+msgid "Close all open documents"
+msgstr "Sulje kaikki avoimet asiakirjat"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:439
+msgid "_Previous"
+msgstr "_Edellinen"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:441
+msgid "Activate document in the previous tab"
+msgstr "Siirry edellisessä välilehdessä olevaan asiakirjaan"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:446
+msgid "_Next"
+msgstr "Seu_raava"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:448
+msgid "Activate document in the next tab"
+msgstr "Siirry seuraavassa välilehdessä olevaan asiakirjaan"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:453
+msgid "_Support"
+msgstr "Tu_ki"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:455
+msgid "Submit a support request"
+msgstr "Toimita tukipyyntö"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:460
+msgid "_Report A Bug"
+msgstr "_Ilmoita virheestä"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:462
+msgid "Submit a bug report"
+msgstr "Toimita virheilmoitus"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:467
+msgid "_Check Latest Version"
+msgstr "Ta_rkasta uusin versio"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:469
+msgid "Check if you have the latest version"
+msgstr "Tarkasta onko sinulla uusin versio"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:474
+msgid "_About"
+msgstr "_Tietoja"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:476
+msgid "Information about Gaupol"
+msgstr "Tietoja Gaupolista"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:494
+msgid "_Toolbar"
+msgstr "_Työkalupalkki"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:496
+msgid "Change the visibility of the toolbar"
+msgstr "Muuta työkalupalkin näkyvyyttä"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:502
+msgid "_Statusbar"
+msgstr "Tila_rivi"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:504
+msgid "Change the visibility of the statusbar"
+msgstr "Muuta tilarivin näkyvyyttä"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:510
+msgid "_No."
+msgstr "_Nro"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:512
+msgid "Change the visibility of the \"No.\" column"
+msgstr "Muuta sarakkeen \"Nro\" näkyvyyttä"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:518
+msgid "_Show"
+msgstr "Nä_ytä"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:520
+msgid "Change the visibility of the \"Show\" column"
+msgstr "Muuta sarakkeen \"Näytä\" näkyvyyttä"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:526
+msgid "_Hide"
+msgstr "_Piilota"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:528
+msgid "Change the visibility of the \"Hide\" column"
+msgstr "Muuta sarakkeen \"Piilota\" näkyvyyttä"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:534
+msgid "_Duration"
+msgstr "_Kesto"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:536
+msgid "Change the visibility of the \"Duration\" column"
+msgstr "Muuta sarakkeen \"Kesto\" näkyvyyttä"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:542
+msgid "_Text"
+msgstr "_Teksti"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:544
+msgid "Change the visibility of the \"Text\" column"
+msgstr "Muuta sarakkeen \"Teksti\" näkyvyyttä"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:550
+msgid "T_ranslation"
+msgstr "Kää_nnös"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:552
+msgid "Change the visibility of the \"Translation\" column"
+msgstr "Muuta sarakkeen \"Käännös\" näkyvyyttä"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:568
+msgid "T_imes"
+msgstr "_Ajat"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:570
+msgid "Use time units"
+msgstr "Käytä yksikkönä aikaa"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:575
+msgid "F_rames"
+msgstr "_Kehykset"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:577
+msgid "Use frame units"
+msgstr "Käytä yksikkönä kehyksiä"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:586
+msgid "2_3.976 fps"
+msgstr "2_3.976 fps"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:588
+msgid "Calculate unnative units with framerate 23.976 fps"
+msgstr "Laske toissijaiset yksiköt kehysnopeudella 23.976 fps"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:593
+msgid "2_5 fps"
+msgstr "2_5 fps"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:595
+msgid "Calculate unnative units with framerate 25 fps"
+msgstr "Laske toissijaiset yksiköt kehysnopeudella 25 fps"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:600
+msgid "2_9.97 fps"
+msgstr "2_9.97 fps"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:602
+msgid "Calculate unnative units with framerate 29.97 fps"
+msgstr "Laske toissijaiset yksiköt kehysnopeudella 29.97 fps"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:645
+msgid "Undo"
+msgstr "Kumoa"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:652
+msgid "Undo several actions"
+msgstr "Kumoa useita toimintoja"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:656
+msgid "Redo"
+msgstr "Tee uudelleen"
+
+#: lib/gaupol/gui/delegates/guibuilder.py:663
+msgid "Redo several undone actions"
+msgstr "Tee uudelleen useita kumottuja toimintoja"
+
+#: lib/gaupol/gui/delegates/texteditor.py:85
+msgid "Changing case"
+msgstr "Kirjainkoon muuttaminen"
+
+#: lib/gaupol/gui/delegates/texteditor.py:112
+msgid "Clearing"
+msgstr "Tyhjentäminen"
+
+#: lib/gaupol/gui/delegates/texteditor.py:137
+msgid "Cutting"
+msgstr "Leikkaus"
+
+#: lib/gaupol/gui/delegates/texteditor.py:150
+msgid "Toggling dialog lines"
+msgstr "Vuoropuheluksi muuttaminen"
+
+#: lib/gaupol/gui/delegates/texteditor.py:177
+msgid "Toggling italicization"
+msgstr "Kursiiviksi muuttaminen"
+
+#: lib/gaupol/gui/delegates/texteditor.py:224
+msgid "Pasting"
+msgstr "Liittäminen"
+
+#: lib/gaupol/gui/delegates/roweditor.py:57
+msgid "Inserting subtitles"
+msgstr "Tekstien lisääminen"
+
+#: lib/gaupol/gui/delegates/roweditor.py:115
+msgid "Removing subtitles"
+msgstr "Tekstien poistaminen"
+
+#: lib/gaupol/gui/delegates/helper.py:70
+msgid ""
+"Operation timed out. Please try again later or proceed to the download page."
+msgstr ""
+"Toiminto aikakatkaistiin. Yritä myöhemmin uudelleen tai siirry lataussivulle."
+
+#: lib/gaupol/gui/delegates/helper.py:79
+#, python-format
+msgid "No version information found at URL \"%s\"."
+msgstr "Versiotietoja ei löydetty URL-osoitteesta \"%s\"."
+
+#. TRANSLATORS: File basename for "Save As" - "<basename> (copy)"
+#: lib/gaupol/gui/delegates/filesaver.py:199
+#: lib/gaupol/gui/delegates/filesaver.py:229
+#, python-format
+msgid "%s (copy)"
+msgstr "%s (kopio)"
+
+#: lib/gaupol/gui/delegates/filesaver.py:202
+msgid "Save A Copy"
+msgstr "Tallenna kopio"
+
+#: lib/gaupol/gui/delegates/filesaver.py:210
+#, python-format
+msgid "Saved a copy of main document to \"%s\""
+msgstr "Tallennettiin kopio pääasiakirjasta tiedostoon \"%s\""
+
+#: lib/gaupol/gui/delegates/filesaver.py:232
+msgid "Save A Copy Of Translation"
+msgstr "Tallenna kopio käännöksestä"
+
+#: lib/gaupol/gui/delegates/filesaver.py:240
+#, python-format
+msgid "Saved a copy of translation document to \"%s\""
+msgstr "Tallennettiin kopio käännösasiakirjasta tiedostoon \"%s\""
+
+#: lib/gaupol/gui/delegates/filesaver.py:268
+#, python-format
+msgid "Saved main file \"%s\""
+msgstr "Tallennettiin päätiedosto \"%s\""
+
+#: lib/gaupol/gui/delegates/filesaver.py:287
+msgid "Save As"
+msgstr "Tallenna nimellä"
+
+#: lib/gaupol/gui/delegates/filesaver.py:304
+#, python-format
+msgid "Saved main file as \"%s\""
+msgstr "Tallennettiin päätiedosto nimellä \"%s\""
+
+#: lib/gaupol/gui/delegates/filesaver.py:333
+#, python-format
+msgid "Saved translation file \"%s\""
+msgstr "Tallennettiin käännöstiedosto \"%s\""
+
+#: lib/gaupol/gui/delegates/filesaver.py:353
+msgid "Save Translation As"
+msgstr "Tallenna käännös nimellä"
+
+#: lib/gaupol/gui/delegates/filesaver.py:370
+#, python-format
+msgid "Saved translation file as \"%s\""
+msgstr "Tallennettiin käännöstiedosto nimellä \"%s\""
+
+#: lib/gaupol/gui/delegates/celleditor.py:52
+msgid "Editing show"
+msgstr "Näytön muokkaaminen"
+
+#: lib/gaupol/gui/delegates/celleditor.py:53
+msgid "Editing hide"
+msgstr "Piilotuksen muokkaaminen"
+
+#: lib/gaupol/gui/delegates/celleditor.py:54
+msgid "Editing duration"
+msgstr "Keston muokkaaminen"
+
+#: lib/gaupol/gui/delegates/celleditor.py:55
+msgid "Editing text"
+msgstr "Tekstin muokkaaminen"
+
+#: lib/gaupol/gui/delegates/celleditor.py:56
+msgid "Editing translation"
+msgstr "Käännöksen muokkaaminen"
+
+#: lib/gaupol/gui/delegates/celleditor.py:144
+msgid "Use Ctrl+Return for line-break"
+msgstr "Käytä näppäinyhdistelmää Ctrl+Return rivinvaihtoon"
+
+#: lib/gaupol/lib/util/encodinglib.py:48 lib/gaupol/lib/util/encodinglib.py:51
+#: lib/gaupol/lib/util/encodinglib.py:53
+msgid "English"
+msgstr "Englanti"
+
+#: lib/gaupol/lib/util/encodinglib.py:49 lib/gaupol/lib/util/encodinglib.py:50
+#: lib/gaupol/lib/util/encodinglib.py:74
+msgid "Chinese traditional"
+msgstr "Kiinalainen (perinteinen)"
+
+#: lib/gaupol/lib/util/encodinglib.py:52 lib/gaupol/lib/util/encodinglib.py:60
+#: lib/gaupol/lib/util/encodinglib.py:64 lib/gaupol/lib/util/encodinglib.py:83
+#: lib/gaupol/lib/util/encodinglib.py:109
+msgid "Hebrew"
+msgstr "Heprea"
+
+#: lib/gaupol/lib/util/encodinglib.py:54 lib/gaupol/lib/util/encodinglib.py:57
+#: lib/gaupol/lib/util/encodinglib.py:77 lib/gaupol/lib/util/encodinglib.py:80
+#: lib/gaupol/lib/util/encodinglib.py:102
+#: lib/gaupol/lib/util/encodinglib.py:114
+#: lib/gaupol/lib/util/encodinglib.py:122
+msgid "Western"
+msgstr "Länsimainen"
+
+#: lib/gaupol/lib/util/encodinglib.py:55 lib/gaupol/lib/util/encodinglib.py:69
+#: lib/gaupol/lib/util/encodinglib.py:71 lib/gaupol/lib/util/encodinglib.py:81
+#: lib/gaupol/lib/util/encodinglib.py:108
+#: lib/gaupol/lib/util/encodinglib.py:119
+msgid "Greek"
+msgstr "Kreikkalainen"
+
+#: lib/gaupol/lib/util/encodinglib.py:56 lib/gaupol/lib/util/encodinglib.py:85
+#: lib/gaupol/lib/util/encodinglib.py:105
+#: lib/gaupol/lib/util/encodinglib.py:112
+msgid "Baltic"
+msgstr "Baltialainen"
+
+#: lib/gaupol/lib/util/encodinglib.py:58 lib/gaupol/lib/util/encodinglib.py:78
+#: lib/gaupol/lib/util/encodinglib.py:103
+#: lib/gaupol/lib/util/encodinglib.py:121
+msgid "Central European"
+msgstr "Keskieurooppalainen"
+
+#: lib/gaupol/lib/util/encodinglib.py:59 lib/gaupol/lib/util/encodinglib.py:79
+#: lib/gaupol/lib/util/encodinglib.py:106
+#: lib/gaupol/lib/util/encodinglib.py:118
+msgid "Cyrillic"
+msgstr "Kyrillinen"
+
+#: lib/gaupol/lib/util/encodinglib.py:61 lib/gaupol/lib/util/encodinglib.py:76
+#: lib/gaupol/lib/util/encodinglib.py:82
+#: lib/gaupol/lib/util/encodinglib.py:110
+#: lib/gaupol/lib/util/encodinglib.py:123
+msgid "Turkish"
+msgstr "Turkkilainen"
+
+#: lib/gaupol/lib/util/encodinglib.py:62
+msgid "Portugese"
+msgstr "Portugalilainen"
+
+#: lib/gaupol/lib/util/encodinglib.py:63
+#: lib/gaupol/lib/util/encodinglib.py:120
+msgid "Icelandic"
+msgstr "Islantilainen"
+
+#: lib/gaupol/lib/util/encodinglib.py:65
+msgid "Canadian"
+msgstr "Kanadalainen"
+
+#: lib/gaupol/lib/util/encodinglib.py:66 lib/gaupol/lib/util/encodinglib.py:84
+#: lib/gaupol/lib/util/encodinglib.py:107
+msgid "Arabic"
+msgstr "Arabialainen"
+
+#: lib/gaupol/lib/util/encodinglib.py:67
+#: lib/gaupol/lib/util/encodinglib.py:111
+msgid "Nordic"
+msgstr "Pohjoismainen"
+
+#: lib/gaupol/lib/util/encodinglib.py:68
+#: lib/gaupol/lib/util/encodinglib.py:116
+msgid "Russian"
+msgstr "Venäläinen"
+
+#: lib/gaupol/lib/util/encodinglib.py:70
+msgid "Thai"
+msgstr "Thaimaalainen"
+
+#: lib/gaupol/lib/util/encodinglib.py:72 lib/gaupol/lib/util/encodinglib.py:87
+#: lib/gaupol/lib/util/encodinglib.py:88 lib/gaupol/lib/util/encodinglib.py:89
+#: lib/gaupol/lib/util/encodinglib.py:95 lib/gaupol/lib/util/encodinglib.py:96
+#: lib/gaupol/lib/util/encodinglib.py:97 lib/gaupol/lib/util/encodinglib.py:98
+#: lib/gaupol/lib/util/encodinglib.py:99
+#: lib/gaupol/lib/util/encodinglib.py:100
+#: lib/gaupol/lib/util/encodinglib.py:125
+#: lib/gaupol/lib/util/encodinglib.py:126
+#: lib/gaupol/lib/util/encodinglib.py:127
+msgid "Japanese"
+msgstr "Japanilainen"
+
+#: lib/gaupol/lib/util/encodinglib.py:73 lib/gaupol/lib/util/encodinglib.py:90
+#: lib/gaupol/lib/util/encodinglib.py:101
+#: lib/gaupol/lib/util/encodinglib.py:115
+msgid "Korean"
+msgstr "Korealainen"
+
+#: lib/gaupol/lib/util/encodinglib.py:75
+msgid "Urdu"
+msgstr "Urdu"
+
+#: lib/gaupol/lib/util/encodinglib.py:86
+msgid "Vietnamese"
+msgstr "Vietnamilainen"
+
+#: lib/gaupol/lib/util/encodinglib.py:91 lib/gaupol/lib/util/encodinglib.py:94
+msgid "Chinese simplified"
+msgstr "Kiinalainen (yksinkertaistettu)"
+
+#: lib/gaupol/lib/util/encodinglib.py:92 lib/gaupol/lib/util/encodinglib.py:93
+msgid "Chinese unified"
+msgstr "Kiinalainen (yhdistetty)"
+
+#: lib/gaupol/lib/util/encodinglib.py:104
+msgid "South European"
+msgstr "Eteläeurooppalainen"
+
+#: lib/gaupol/lib/util/encodinglib.py:113
+msgid "Celtic"
+msgstr "Kelttiläinen"
+
+#: lib/gaupol/lib/util/encodinglib.py:117
+msgid "Ukrainian"
+msgstr "Ukrainalainen"
+
+#: lib/gaupol/lib/util/encodinglib.py:124
+msgid "Cyrillic Asian"
+msgstr "Aasian kyrillinen"
+
+#: lib/gaupol/lib/util/encodinglib.py:128
+#: lib/gaupol/lib/util/encodinglib.py:129
+#: lib/gaupol/lib/util/encodinglib.py:130
+#: lib/gaupol/lib/util/encodinglib.py:131
+#: lib/gaupol/lib/util/encodinglib.py:132
+msgid "Unicode"
+msgstr "Unicode"
+
+#. TRANSLATORS: Encoding descriptive name - e.g. "Unicode (UTF-8)".
+#: lib/gaupol/lib/util/encodinglib.py:160
+#: lib/gaupol/lib/util/encodinglib.py:247
+#, python-format
+msgid "%s (%s)"
+msgstr "%s (%s)"
+
+#: lib/gaupol/lib/util/encodinglib.py:207
+#, python-format
+msgid "Current locale (%s)"
+msgstr "Nykyiset maa-asetukset (%s)"
