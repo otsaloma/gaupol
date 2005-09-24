@@ -1,5 +1,17 @@
 2005-09-24  Osmo Salomaa  otsaloma@cc.hut.fi
 
+	* INSTALL:
+	  NEWS:
+	  README:
+	  README.translators:
+	  TODO:
+	  gaupol:
+	  setup.py:
+	  trantool:
+	  Minor fixes.
+
+2005-09-24  Osmo Salomaa  otsaloma@cc.hut.fi
+
 	START OF CODEBASE REDESIGN AND CODE REWRITE.
 
 	* COPYING:
@@ -330,26 +342,26 @@
 
 	* lib/gaupol/gui/dialogs/error.py (SpellCheckErrorDialog):
 	  New class for spell-check errors.
-	
+
 	* lib/gaupol/gui/spellcheck.py:
 	  New module for spell-check window. Buggy and incomplete!
-	
+
 	* lib/gaupol/gui/delegates/spellchecker.py:
 	  Major rewrite.
 
 	* lib/gaupol/gui/delegates/durmanager.py (DURAction.__init__):
 	  Fixed typo.
-	
+
 	* lib/gaupol/gui/delegates/durmanager.py (DURManager.register_action):
 	  lib/gaupol/gui/application.py:
 	  New method for actions already done. Added to delegation dictionary.
-	
+
 	* lib/gaupol/gui/util/config.py (Config.write_to_file):
 	  Fixed a bug with profile directory creation error handling.
-	
+
 	* lib/gaupol/lib/util/langlib.py (get_descriptive_name):
 	  New method for getting descriptive name.
-	
+
 	* data/glade/spellcheck-window.glade:
 	  Minor adjustments.
 
@@ -373,7 +385,7 @@
 	* gui/dialogs/language.py:
 	  Moved slow default language determination to _set_language method having
 	  it run only when absolutely needed.
-	  
+
 	* gui/delegates/spellchecker.py (on_set_language_and_target_activated):
 	  Added busy cursor due to possible slowness of the language dialog.
 
@@ -381,19 +393,19 @@
 
 	* gui/dialogs/insertsub.py:
 	  Reordered methods.
-	  
+
 	* gui/dialogs/prefs.py(_connect_signals):
 	  Improved error handling for radio button grouping.
-	  
+
 	* gui/dialogs/language.py:
 	  New file for language selection dialog. Works!
-	  
+
 	* gui/delegates/prefeditor.py:
 	  Removed a debugging print command left by accident.
 
 	* gui/delegates/spellchecker.py:
 	  Added code for language dialog. Works!
-	  
+
 	* lib/util/langlib.py:
 	  Added a better and longer list of languages. Added method
 	  get_descriptive_name.
@@ -403,7 +415,7 @@
 	* setup.py:
 	  gui/dialogs/about.py:
 	  Replaced accidental tabs with spaces.
-	  
+
 	* gui/delegates/guiupdater.py:
 	  Check for PyEnchant version as well.
 
@@ -416,34 +428,34 @@
 
 	* gui/application.py:
 	  Added spell-check methods to delegation dictionary.
-	  
+
 	* gui/delegates/guibuilder.py:
 	  Added tools menu and spell-check menu items.
 
 	* gui/delegates/spellchecker.py:
 	  New delegate for spell-checks.
-	  
+
 	* gui/delegates/guiupdater.py:
 	  Added sensitivity setting for spell-check items.
-	  
+
 	* gui/util/config.py:
 	  Added spell-checking settings.
 
 	* lib/util/langlib.py:
 	  New file for language codes and names.
-	  
-	* language-dialog.glade: 
+
+	* language-dialog.glade:
 	  New file for language setting dialog.
-	  
+
 	* spellcheck-window.glade:
 	  New file for spell-check window.
-	  
+
 	* edit-dialog.glade:
 	  New file for single text edit dialog.
-	  
+
 	* toolbar.xml:
 	  Added spell-check item.
-	
+
 	* menubar.xml:
 	  Added spell-check items.
 
@@ -471,20 +483,20 @@
 	* gaupol:
 	  constants.py:
 	  Bumped version numbers to 0.1.1.
-	  
+
 	* NEWS: Added release news.
 
 2005-08-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* setup.py: Automated source distribution building.
-	
+
 	* releasing.txt: Revised instructions.
 
 2005-08-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gui/util/config.py (write_to_file):
 	  Create directory ~/.gaupol if it doesn't exist. Fixes #2816.
-	  
+
 	* TODO: Drafted plans for 0.2.0.
 
 2005-08-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
@@ -503,7 +515,7 @@
 	* gaupol:
 	  constants.py:
 	  Bumped version numbers to 0.1.0.
-	  
+
 	* NEWS: Added release news.
 
 2005-08-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
@@ -511,45 +523,45 @@
 	* setup.py: Added README.translators and TODO to doc files.
 
 2005-08-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
-	
+
 	* trantool (compile_mo): Check syntax and be verbose.
 
 	* README.translators: Updated to reflect changes in trantool.
 
 2005-08-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
-	
+
 	* gui/dialogs/about.py: Added translator credits.
 
 2005-08-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* po/ChangeLog: Added separate ChangeLog for translations.
-	
+
 	* MANIFEST.in: Added po/ChangeLog.
 
 2005-08-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* setup.py: Import VERSION from same directory.
-	
+
 	* gaupol:
 	  constants.py:
 	  Changed version numbers to 0.0.0.
-	  
+
 	* releasing.txt: Wrote file.
-	
+
 	* README.translators: Added a bit more info.
 
 2005-08-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* README: Updated based on website text.
-	
+
 	* gui/delegates/helper.py: Changed DOWNLOAD_URL to point to new URL.
-	
+
 	* README.translators: Added a bit more info.
-	
+
 	* fi.po: Added package and version info.
 
 	* doc: New directory for documentation.
-	
+
 	* doc/releasing.txt: New file for release checklist.
 
 2005-08-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
@@ -557,7 +569,7 @@
 	* gui/delegates/celleditor.py:
 	  fi/po:
 	  Fixed one translatable string.
-	  
+
 	* lib/gaupol/lib/tags/taglib.py:
 	  lib/gaupol/lib/tags/tagconv.py:
 	  lib/gaupol/lib/tags/mpl2.py:
@@ -583,18 +595,18 @@
 2005-08-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* MANIFEST.in: New file.
-	
+
 	* setup.cfg: New file.
-	
+
 	* setup.py: File initially written.
-	
+
 	* gaupol (prepare_installed_run):
 	  Changed LIB_DIR to point to Python's site-packages.
-	  
+
 	* gaupol.desktop: Fixed Category to AudioVideo.
-	
+
 	* trantool: Use glob to find files.
-	
+
 	* uninstall.py: Removed in favor of uninstallation in setup.py.
 
 2005-08-21  Osmo Salomaa  <otsaloma@cc.hut.fi>
@@ -605,14 +617,14 @@
 	  Fixed instructions on testing translation.
 
 	* TODO: Updated.
-	
+
 	* gui/dialogs/filechooser.py:
 	  gui/delegates/guibuilder.py:
 	  gui/delegates/filesaver.py:
 	  gui/delegates/celleditor.py:
 	  lib/util/encodinglib.py:
 	  Fixed translatable strings.
-	  
+
 	* gui/dialogs/question.py (RevertQuestionDialog):
 	  Use stock button for revert.
 
@@ -625,33 +637,33 @@
 2005-08-21  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol.desktop: Altered finnish translation.
-	
+
 	* trantool (check_write_permissions):
 	  Fixed diretory recursion bug.
-	  
+
 	* gui/dialogs/error.py:
 	  gui/dialogs/warning.py:
 	  gui/dialogs/question.py:
 	  gui/delegates/helper.py:
 	  gui/delegates/celleditor.py:
 	  Fixed formatting of translatable strings.
-	  
+
 	* gui/delegates/guibuilder.py: Removed search menu.
-	
+
 	* README.translators: Minor formatting and typo fixes.
-	
+
 	* prefs-dialog.glade (undo_levels_spin_button): Do not expand.
 
 2005-08-21  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol: Minor coding style change.
-	  
+
 	* README: Formatting changed.
-	
+
 	* trantool: Code clean-up.
-	
+
 	* TODO: Formatting changed.
-	
+
 	* README.translators: File written.
 
 	* ChangeLog: Fixed faulty date on entry below.
@@ -660,10 +672,10 @@
 
 	* trantool:
 	  New file to automate translation tasks.
-	  
+
 	* README.translators:
 	  New file for translation instructions (blank for now).
-	  
+
 	* po:
 	  New directory for .po files.
 
@@ -689,12 +701,12 @@
 
 	* gui/project.py (build_tree_view):
 	  Enable search for number column in list.
-	  
+
 	* menubar.xml:
 	  Removed jump_to_subtitle item and all references to it.
-	  
+
 	* gui/delegates/guibuilder.py (_build_ui_manager):
-	  Changed shortcut keys due to freeing Ctrl+F for searching. 
+	  Changed shortcut keys due to freeing Ctrl+F for searching.
 
 2005-08-19  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
@@ -703,10 +715,10 @@
 2005-08-18  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* Edit menu bug-fixed.
-	
+
 	* lib/delegates/editor.py (set_text):
 	  Convert value to unicode.
-	
+
 	* gui/cellrend/time.py (RE_TIME):
 	  lib/timing/calc.py (seconds_to_time):
 	  Do not allow values greater than 59 for minutes and seconds.
@@ -726,7 +738,7 @@
 2005-08-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* "Jump To Subtitle" dialog is far cooler now, and it works.
-	
+
 	* New supported format: MPL2.
 
 2005-08-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
@@ -737,13 +749,13 @@
 2005-08-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* Major code clean-up done.
-	
+
 	* Code uses more constants now.
-	
+
 	* List is no longer sortable.
-	
+
 	* Preferences dialog exists, but is not yet functional.
-	
+
 	* Huge amounts of new bugs.
 
 2005-08-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
@@ -757,15 +769,15 @@
 2005-08-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* Major code clean-up done.
-	
+
 	* Lots of modules and functions renamed.
 
 	* paths.py file is no longer written when running from source.
-	
+
 	* Changing format in save dialog now changes extension as well.
 
 	* Invert case menu entry removed.
-	
+
 	* Shortcut keys for menu entries changed.
 
 	* Several non-functional menu items added to Edit and Help menus.
@@ -790,7 +802,7 @@
 
 	* Format menu done.
 	  New files: formatter.py (x2)
-	  
+
 	* Fixed sort order interfearing with editing.
 
 	* Miscellanous bug fixes.
@@ -803,12 +815,12 @@
 
 	* Undo/redo system written.
 	  New file: durmanager.py
-	  
+
 	* Manual editing is now possible.
 	  New files: maneditor.py, editor.py
-	  
+
 	* guiupdater.py rewritten.
-	
+
 	* Miscellanous bug fixes and minor additions.
 
 2005-07-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
@@ -816,10 +828,10 @@
 	* New file: lib/gaupol/gui/constants.py.
 	* View menu action states now get updated on document switch.
 	* Changed key and section names in config.py.
-	
+
 	* Project moved from SourceForge to Gna!.
 	* Code, without history, moved to Subversion system.
-	
+
 2005-07-21  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* Cell renderers redone. New config setting: "font".
