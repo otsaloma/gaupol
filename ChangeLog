@@ -1,5 +1,9 @@
 2005-09-25  Osmo Salomaa  otsaloma@cc.hut.fi
 
+	* data/ui/popups.xml: Renamed from data/ui/treeview.xml.
+
+2005-09-25  Osmo Salomaa  otsaloma@cc.hut.fi
+
 	* data/glade/language-dialog.glade: Renamed sections back to columns.
 
 	* data/ui/menubar.xml:
