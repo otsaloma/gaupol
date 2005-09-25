@@ -1,3 +1,11 @@
+2005-09-25  Osmo Salomaa  otsaloma@cc.hut.fi
+
+	* data/glade/language-dialog.glade: Renamed sections back to columns.
+
+	* data/ui/menubar.xml:
+	  data/ui/treeview.xml:
+	  Moved edit and view menus back to menubar.xml.
+
 2005-09-24  Osmo Salomaa  otsaloma@cc.hut.fi
 
 	* data:
