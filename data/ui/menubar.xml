@@ -1,97 +1,68 @@
 <ui>
 	<menubar>
-		<menu action="file">
-			<menuitem name="new"              action="new_document"/>
-			<menuitem name="open"             action="open_file"/>
+		<menu name="file" action="show_file_menu">
+			<menuitem name="new" action="new_project"/>
+			<menuitem name="open" action="open_main_file"/>
 			<menuitem name="open_translation" action="open_translation_file"/>
 			<separator/>
-			<menuitem name="save"        action="save_file"/>
-			<menuitem name="save_as"     action="save_document_as"/>
-			<menuitem name="save_a_copy" action="save_a_copy_of_document"/>
+			<menuitem name="save" action="save_main_document"/>
+			<menuitem name="save_as" action="save_main_document_as"/>
+			<menuitem name="save_a_copy" action="save_a_copy_of_main_document"/>
 			<separator/>
-			<menuitem name="save_translation"           action="save_translation_file"/>
-			<menuitem name="save_translation_as"        action="save_translation_document_as"/>
+			<menuitem name="save_translation" action="save_translation_document"/>
+			<menuitem name="save_translation_as" action="save_translation_document_as"/>
 			<menuitem name="save_a_copy_of_translation" action="save_a_copy_of_translation_document"/>
-			<separator/>
-			<menuitem name="revert" action="revert_project"/>
 			<separator/>
 			<placeholder name="recent">
 			</placeholder>
 			<separator/>
 			<menuitem name="close" action="close_project"/>
-			<menuitem name="quit"  action="quit"/>
-			</menu>
-		<menu action="edit">
+			<menuitem name="quit" action="quit"/>
+		</menu>
+		<menu name="edit" action="show_edit_menu">
 			<menuitem name="undo" action="undo_action"/>
 			<menuitem name="redo" action="redo_action"/>
 			<separator/>
-			<menuitem name="edit" action="edit_cell"/>
-			<separator/>
-			<menuitem name="cut"   action="cut_text"/>
-			<menuitem name="copy"  action="copy_text"/>
-			<menuitem name="paste" action="paste_text"/>
-			<menuitem name="clear" action="clear_text"/>
-			<separator/>
-			<menuitem name="insert" action="insert_subtitles"/>
-			<menuitem name="remove" action="remove_subtitles"/>
-			<separator/>
-			<menuitem name="select_all"       action="select_all"/>
-			<menuitem name="invert_selection" action="invert_selection"/>
-			<separator/>
-			<menuitem name="preferences" action="edit_preferences"/>
+			<menuitem name="value" action="edit_value"/>
 		</menu>
-		<menu action="view">
-			<menuitem name="toolbar"   action="toggle_toolbar"/>
+		<menu name="view" action="show_view_menu">
+			<menuitem name="toolbar" action="toggle_toolbar"/>
 			<menuitem name="statusbar" action="toggle_statusbar"/>
 			<separator/>
-			<menuitem name="times"  action="view_times"/>
-			<menuitem name="frames" action="view_frames"/>
+			<menuitem name="times" action="show_times"/>
+			<menuitem name="frames" action="show_frames"/>
 			<separator/>
-			<menu action="framerate">
+			<menu name="framerate" action="show_framerate_menu">
 				<menuitem name="23_976" action="view_framerate_23_976"/>
-				<menuitem name="25"     action="view_framerate_25"/>
-				<menuitem name="29_97"  action="view_framerate_29_97"/>
+				<menuitem name="25" action="view_framerate_25"/>
+				<menuitem name="29_97" action="view_framerate_29_97"/>
 			</menu>
 			<separator/>
-			<menu action="columns">
-				<menuitem name="number"      action="toggle_number_column"/>
-				<menuitem name="show"        action="toggle_show_column"/>
-				<menuitem name="hide"        action="toggle_hide_column"/>
-				<menuitem name="duration"    action="toggle_duration_column"/>
-				<menuitem name="text"        action="toggle_text_column"/>
-				<menuitem name="translation" action="toggle_translation_column"/>
+			<menu name="columns" action="show_columns_menu">
+				<menuitem name="number" action="toggle_number_column"/>
+				<menuitem name="show" action="toggle_show_column"/>
+				<menuitem name="hide" action="toggle_hide_column"/>
+				<menuitem name="duration" action="toggle_duration_column"/>
+				<menuitem name="main_text" action="toggle_main_text_column"/>
+				<menuitem name="translation_text" action="toggle_translation_text_column"/>
 			</menu>
 		</menu>
-	</menubar>
-		<menu action="format">
-			<menuitem name="dialog" action="toggle_dialog_lines"/>
-			<menuitem name="italic" action="toggle_italicization"/>
-			<separator/>
-			<menu action="case">
-				<menuitem name="title"    action="use_title_case"/>
-				<menuitem name="sentence" action="use_sentence_case"/>
-				<menuitem name="upper"    action="use_upper_case"/>
-				<menuitem name="lower"    action="use_lower_case"/>
-			</menu>
+		<menu name="format" action="show_format_menu">
 		</menu>
-		<menu action="tools">
-			<menuitem name="check_spelling"        action="check_spelling"/>
-			<menuitem name="configure_spell_check" action="configure_spell_check"/>
-			<separator/>
+		<menu name="tools" action="show_tools_menu">
 		</menu>
-		<menu action="projects">
-			<menuitem name="save_all"  action="save_all_documents"/>
+		<menu name="projects" action="show_projects_menu">
+			<menuitem name="save_all" action="save_all_documents"/>
 			<menuitem name="close_all" action="close_all_projects"/>
 			<separator/>
 			<menuitem name="previous" action="activate_previous_project"/>
-			<menuitem name="next"     action="activate_next_project"/>
+			<menuitem name="next" action="activate_next_project"/>
 			<separator/>
-			<placeholder name="list">
+			<placeholder name="open">
 			</placeholder>
 		</menu>
-		<menu action="help">
-			<menuitem name="support"              action="get_support"/>
-			<menuitem name="report_a_bug"         action="report_a_bug"/>
+		<menu name="help" action="show_help_menu">
+			<menuitem name="report_a_bug" action="report_a_bug"/>
 			<menuitem name="check_latest_version" action="check_latest_version"/>
 			<separator/>
 			<menuitem name="about" action="view_about_dialog"/>

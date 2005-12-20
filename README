@@ -43,7 +43,7 @@ Requirements
   Required:
 
     - Python >= 2.4
-    - PyGTK (with libglade support) >= 2.6
+    - PyGTK (with libglade support) >= 2.8
 
   Optional:
 
@@ -55,9 +55,9 @@ Requirements
   spell-checking. iso-codes allows the spell-checker to show the language and
   country names in your locale.
 
-  If you have PyEnchant installed, but spell-checking does not work, run a
-  test to print information on your PyEnchant installation and list
-  dictionaries available for it. To run the test, type
+  If you have PyEnchant installed, but spell-checking does not work, you can
+  run a test to print information on your PyEnchant installation and list the
+  dictionaries available for it. To run the test, in the source directory type
 
     test/pyenchant
 

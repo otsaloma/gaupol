@@ -4,6 +4,7 @@ include COPYING
 include gaupol
 include gaupol.desktop
 include INSTALL
+include MANIFEST.in
 include NEWS
 include README
 include README.translators

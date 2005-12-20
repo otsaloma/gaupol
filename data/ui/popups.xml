@@ -1,21 +1,13 @@
 <ui>
-	<popup action="columns">
-		<menuitem name="number"      action="toggle_number_column"/>
-		<menuitem name="show"        action="toggle_show_column"/>
-		<menuitem name="hide"        action="toggle_hide_column"/>
-		<menuitem name="duration"    action="toggle_duration_column"/>
-		<menuitem name="text"        action="toggle_text_column"/>
-		<menuitem name="translation" action="toggle_translation_column"/>
+	<popup action="view">
+		<menuitem name="value" action="edit_value"/>
 	</popup>
-	<popup action="edit">
-		<menuitem name="edit" action="edit_cell"/>
-		<separator/>
-		<menuitem name="cut"   action="cut_text"/>
-		<menuitem name="copy"  action="copy_text"/>
-		<menuitem name="paste" action="paste_text"/>
-		<menuitem name="clear" action="clear_text"/>
-		<separator/>
-		<menuitem name="insert" action="insert_subtitles"/>
-		<menuitem name="remove" action="remove_subtitles"/>
+	<popup action="view_header">
+		<menuitem name="number" action="toggle_number_column"/>
+		<menuitem name="show" action="toggle_show_column"/>
+		<menuitem name="hide" action="toggle_hide_column"/>
+		<menuitem name="duration" action="toggle_duration_column"/>
+		<menuitem name="main_text" action="toggle_main_text_column"/>
+		<menuitem name="translation_text" action="toggle_translation_text_column"/>
 	</popup>
 </ui>

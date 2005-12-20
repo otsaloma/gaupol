@@ -7,15 +7,21 @@ Plans for 0.2.0
   ? = Questionable
 
   [W] Implement spell-check
+        [ ] List available dictionaries
         [ ] Test unicode handling
-        [ ] Ensure that PyEnchant is easily installable
-        [ ] Revise README file and website (PyEnchant & iso-codes)
+        [W] Revise README file and website (PyEnchant & iso-codes)
   [W] Redesign and rewrite code
-  [W] Revise terminology: project = main document + translation document
-  [W] Revise terminology: open translation instead of importing
-  [?] Assign Ctrl + arrow keys for moving to edit an adjacent cell
-  [W] Improve encoding handling
-  [ ] Update Finnish translation
+  [W] Improve encoding handling with a list of fallback encodings
+  [ ] Update (or discontinue) Finnish translation
+  [W] Adapt to PyGTK 2.8
+  [D] Improve uninstallation
+  [ ] Update home page and project page
+  [D] Move to edit adjacent cell on Alt+Arrow key-press-event
+  [?] Start editing on alphanumeric key-press-event
+      gtk.TreeView: start-interactive-search
+  [ ] Examine hotshot results
+  [ ] Examine PyChecker results
+  [?] Web forum
 
 
 Plans after 0.2.0
@@ -23,6 +29,9 @@ Plans after 0.2.0
 
   - Find, find and replace
       o Regular expressions?
+      o Bar (gtk.Box) or dialog?
+      o gtk.CellRenderer.start_editing(...) and gtk.Editable.select_region(...)
+        on match.
 
 
 Unscheduled
@@ -46,14 +55,3 @@ Unscheduled
 
       o SAMI
         http://msdn.microsoft.com/library/en-us/dnacc/html/atg_samiarticle.asp
-
-
-New in PyGTK 2.8
-================
-
-  http://live.gnome.org/PyGTK/WhatsNew28
-  http://www.pygtk.org/pygtk2reference/pygtk-ref-changelog.html
-
-  - gobject.GObject: deprecation warning for gobject.type_register(Class)
-  - gobject.GObject: widget.props.name notation
-  - gtk.FileChooser: stock overwrite dialog with set_do_overwrite

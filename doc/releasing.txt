@@ -1,148 +1,174 @@
 Checklist for Making a New Release
 ==================================
 
-Note: Steps marked with "*" need to be revised after actual experiences.
+Table of Contents
 
-1. Branch if making a bug-fix release
+  1. Create branch
+  2. Get translations
+  3. Make sure Gaupol works
+  4. Bump version number
+  5. Tag subversion
+  6. Prepare files for release
+  7. Spread the word
 
-     1.1. Create a brach from tagged x.y.0 if branch doesn't already exist
 
-            svn copy svn+ssh://osmo@svn.gna.org/svn/gaupol/tags/x.y.0 \
-                     svn+ssh://osmo@svn.gna.org/svn/gaupol/branches/x.y
+1. Create branch (only for bug-fix releases)
+============================================
 
-     1.2. Check out branch
+  o Create a brach from tagged x.y.0 if branch doesn't already exist
 
-            svn co svn+ssh://osmo@svn.gna.org/svn/gaupol/branches/x.y
+     svn copy svn+ssh://osmo@svn.gna.org/svn/gaupol/tags/x.y.0 \
+              svn+ssh://osmo@svn.gna.org/svn/gaupol/branches/x.y
 
-     1.3. Bring all bug-fix changes from trunk to branch.
+  o Check out branch
 
-     1.4. Add entry to ChangeLog and commit changes to subversion branch.
+     svn co svn+ssh://osmo@svn.gna.org/svn/gaupol/branches/x.y
+
+  o Bring all bug-fix changes from trunk to branch.
+
+  o Add entry to ChangeLog and commit changes to subversion branch.
+
 
 2. Get translations
+===================
 
-    *2.1. Send word to translators, that a new release is coming.
+  o Send word to translators, that a new release is coming.
 
-    *2.2. Check received translations.
+  o Check received translations.
 
-            2.2.1. Headers
+      * Headers
 
-            2.2.3. UTF-8 encoding
+      * UTF-8 encoding
 
-            2.2.4. Syntactical correctness
+      * Syntactical correctness
 
-                     msgfmt -cv <lang>.po
+          msgfmt -cv <lang>.po
 
-    *2.3. Merge all translations of file "gaupol.desktop".
+  o Merge all translations of file "gaupol.desktop".
 
-     2.4. Add names of all new translators to the about dialog
+  o Add names of all new translators to the about dialog
 
-            lib/gaupol/gtk/dialogs/about.py
+      lib/gaupol/gtk/dialogs/about.py
 
-     2.5. Add entries to ChangeLogs and commit changes to subversion.
+  o Add entries to ChangeLogs and commit changes to subversion.
+
 
 3. Make sure Gaupol works
+=========================
 
-     3.1. Check the list of open bugs and make sure all bugs scheduled for
-          this release are fixed.
+  o Check the list of open bugs and make sure all bugs scheduled for
+    this release are fixed.
 
-            http://gna.org/bugs/?func=browse&set=open&group=gaupol
+      http://gna.org/bugs/?func=browse&set=open&group=gaupol
 
-     3.3. Check the "TODO" file for anything undone for this release.
+  o Check the "TODO" file for anything undone for this release.
 
-     3.2. Search the source code for "TODO" and fix anything that needs to be
-          fixed for this release.
+  o Search the source code for "TODO:" and "FIX:" and fix anything that
+    needs to be fixed for this release.
 
-     3.3. Search the source code for "print". All debug printing should be
-          removed or converted to logging.
+  o Search the source code for "print". All debug printing should be
+    removed or converted to logging.
 
-     3.4. Make sure all files are in the subversion repository
+  o Run PyChecker
 
-            svn status | grep -v .pyc
+      ./gaupol -c | grep -v "Using is None" | grep -v "Using is not None" | sort
 
-     3.5. Run Gaupol from the source directory and check that it works
+  o Make sure all files are in the subversion repository
 
-            ./gaupol
+      svn status | grep -v .pyc
 
-     3.6. Install Gaupol and check that it works
+  o Run Gaupol from the source directory and check that it works
 
-            ./setup.py install --prefix=/tmp/gaupol
-            /tmp/gaupol/bin/gaupol
+      ./gaupol
 
-     3.7. Check the installation directory /tmp/gaupol. Make sure all files
-          are in right places.
+  o Install Gaupol and check that it works
 
-     3.8. Uninstall Gaupol and make sure it works
+      ./setup.py install --prefix=/tmp/gaupol
+      /tmp/gaupol/bin/gaupol
 
-            ./setup.py uninstall
+  o Check the installation directory /tmp/gaupol. Make sure all files
+    are in right places.
 
-4. Update files affected by new version number
+  o Uninstall Gaupol and make sure it works
 
-     4.1. Bump version number
+      ./setup.py uninstall
 
-            lib/gaupol/__init__.py
 
-     4.2. Move all items concerning this release from the "TODO" file to the
-          "NEWS" file.
+4. Bump version number
+======================
 
-     4.3. Add ChangeLog entries noting that a release took place
+  o Bump version number
 
-            ChangeLog
-            po/ChangeLog
+      lib/gaupol/__init__.py
 
-     4.4. Commit changes to subversion.
+  o Move all items concerning this release from the "TODO" file to the
+    "NEWS" file.
 
-     4.5. For bugfix releases, repeat steps 4.1 - 4.4 for trunk.
+  o Add ChangeLog entries noting that a release took place
+
+      ChangeLog
+      po/ChangeLog
+
+  o Commit changes to subversion.
+
+  o For bugfix releases, repeat for trunk.
+
 
 5. Tag subversion
+=================
 
-     5.1. For major or minor releases
+  o For major or minor releases
 
-            svn copy svn+ssh://osmo@svn.gna.org/svn/gaupol/trunk \
-                     svn+ssh://osmo@svn.gna.org/svn/gaupol/tags/x.y.z
+      svn copy svn+ssh://osmo@svn.gna.org/svn/gaupol/trunk \
+               svn+ssh://osmo@svn.gna.org/svn/gaupol/tags/x.y.z
 
-     5.2. For bug-fix releases
+  o For bug-fix releases
 
-            svn copy svn+ssh://osmo@svn.gna.org/svn/gaupol/branches/x.y \
-                     svn+ssh://osmo@svn.gna.org/svn/gaupol/tags/x.y.z
+      svn copy svn+ssh://osmo@svn.gna.org/svn/gaupol/branches/x.y \
+               svn+ssh://osmo@svn.gna.org/svn/gaupol/tags/x.y.z
+
 
 6. Prepare files for release
+============================
 
-     6.1. Build tarballs.
+  o Build tarballs
 
-            ./setup.py sdist --formats bztar,gztar
+      ./setup.py sdist --formats bztar,gztar
 
-     6.2. Cut news and and changes files to relevant parts
+  o Cut news and and changes files to relevant parts
 
-            dist/x.y/gaupol-x.y.z.news
-            dist/x.y/gaupol-x.y.z.changes
+      dist/x.y/gaupol-x.y.z.news
+      dist/x.y/gaupol-x.y.z.changes
 
-     6.3. Move tarballs into release directory.
+  o Move tarballs into release directory.
 
-     6.4. If making a bug-fix release, remove previous symlink.
+  o If making a bug-fix release, remove previous symlink.
 
-     6.4. Sync release directory x.y with Gna! download area
+  o Sync release directory x.y with Gna! download area
 
-            rsync --delete -avr --rsh="ssh" . \
-                  osmo@download.gna.org:/upload/gaupol/x.y/
+      rsync --delete -avr --rsh="ssh" . \
+            osmo@download.gna.org:/upload/gaupol/x.y/
 
-     6.5. Upload latest.txt
+  o Upload latest.txt
 
-            scp latest.txt     osmo@download.gna.org:/upload/gaupol/
-            scp latest.txt.sig osmo@download.gna.org:/upload/gaupol/
+      scp latest.txt     osmo@download.gna.org:/upload/gaupol/
+      scp latest.txt.sig osmo@download.gna.org:/upload/gaupol/
 
-7. Spread the word.
 
-     7.1. Edit the download section of Gaupol website.
+7. Spread the word
+==================
 
-     7.2. Post a news item at the Gaupol project page
+  o Edit the download section of Gaupol website.
 
-            http://gna.org/news/submit.php?group=gaupol
+  o Post a news item at the Gaupol project page
 
-     7.3. Send e-mail to Gaupol-announcements mailing list
+      http://gna.org/news/submit.php?group=gaupol
 
-            gaupol-announcements@gna.org
+  o Send e-mail to Gaupol-announcements mailing list
 
-     7.4. Update third-party sites
+      gaupol-announcements@gna.org
 
-            http://www.gnomefiles.com/devs/devcorner.php
-            http://freshmeat.net/projects/gaupol
+  o Update third-party sites
+
+      http://www.gnomefiles.com/devs/devcorner.php
+      http://freshmeat.net/projects/gaupol

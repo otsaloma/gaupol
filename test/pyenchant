@@ -22,14 +22,13 @@
 """Script to test PyEnchant installation."""
 
 
+import os
 import sys
 
-
-try:
-    WORD = sys.argv[1]
-except IndexError:
-    WORD = 'huuhaa'
-    print 'No word given. Using "%s".' % WORD
+testpath = os.path.dirname(os.path.abspath(__file__))
+libpath = os.path.join(testpath, '..', 'lib')
+sys.path.insert(0, libpath)
+from gaupol.base.util import langlib
 
 
 # Try importing enchant.
@@ -39,42 +38,23 @@ try:
     print 'success'
 except ImportError, detail:
     print detail
-    sys.exit()
+    raise SystemError
 except enchant.Error, detail:
     print detail
-    sys.exit()
+    raise SystemError
 
 # Print version
-print 'Version:',
+print 'PyEnchant version:',
 try:
     print enchant.__version__
 except enchant.Error, detail:
     print detail
 
-# List available languages.
-print 'Available languages:',
-try:
-    langs = enchant.list_languages()
-    print ', '.join(langs)
-except enchant.Error, detail:
-    langs = []
-    print detail
-
-# Print default language.
-print 'Default language:',
-try:
-    print enchant.Dict().tag
-except enchant.Error, detail:
-    print detail
-
-# Test all available languages.
-for lang in langs:
-    print '\nTesting language "%s"...' % lang
+# Test all languages.
+print '\nFound dictionaries:'
+for lang in langlib.locales:
     try:
-        dict = enchant.Dict(lang)
-        print 'Provider:', dict.provider.name
-        print 'Testing word "%s"...' % WORD
-        print 'Correct:', dict.check(WORD)
-        print 'Suggestions:', ', '.join(dict.suggest(WORD))
+        dictionary = enchant.Dict(lang)
+        print '%s (%s)' % (lang, dictionary.provider.name)
     except enchant.Error, detail:
-        print detail
+        pass

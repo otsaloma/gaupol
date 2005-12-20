@@ -1,3 +1,111 @@
+2005-12-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* INSTALL:
+	* MANIFEST.in:
+	* README:
+	* README.translators:
+	* TODO:
+	* data/glade/language-dialog.glade:
+	* data/glade/prefs-dialog.glade:
+	* data/glade/spellcheck-dialog.glade:
+	* data/ui/menubar.xml:
+	* data/ui/popups.xml:
+	* data/ui/toolbar.xml:
+	* doc/releasing.txt:
+	* gaupol:
+	* lib/gaupol/base:
+	* lib/gaupol/base/__init__.py:
+	* lib/gaupol/base/colconstants.py:
+	* lib/gaupol/base/delegates:
+	* lib/gaupol/base/delegates/__init__.py:
+	* lib/gaupol/base/delegates/action.py:
+	* lib/gaupol/base/delegates/edit.py:
+	* lib/gaupol/base/delegates/fileopen.py:
+	* lib/gaupol/base/delegates/filesave.py:
+	* lib/gaupol/base/delegates/format.py:
+	* lib/gaupol/base/delegates/frconv.py:
+	* lib/gaupol/base/delegates/stat.py:
+	* lib/gaupol/base/error.py:
+	* lib/gaupol/base/files:
+	* lib/gaupol/base/files/__init__.py:
+	* lib/gaupol/base/files/classes.py:
+	* lib/gaupol/base/files/determiner.py:
+	* lib/gaupol/base/files/microdvd.py:
+	* lib/gaupol/base/files/mpl2.py:
+	* lib/gaupol/base/files/subrip.py:
+	* lib/gaupol/base/model.py:
+	* lib/gaupol/base/project.py:
+	* lib/gaupol/base/tags:
+	* lib/gaupol/base/tags/__init__.py:
+	* lib/gaupol/base/tags/classes.py:
+	* lib/gaupol/base/tags/converter.py:
+	* lib/gaupol/base/tags/microdvd.py:
+	* lib/gaupol/base/tags/mpl2.py:
+	* lib/gaupol/base/tags/subrip.py:
+	* lib/gaupol/base/text:
+	* lib/gaupol/base/text/__init__.py:
+	* lib/gaupol/base/text/parser.py:
+	* lib/gaupol/base/timing:
+	* lib/gaupol/base/timing/__init__.py:
+	* lib/gaupol/base/timing/calc.py:
+	* lib/gaupol/base/util:
+	* lib/gaupol/base/util/__init__.py:
+	* lib/gaupol/base/util/encodinglib.py:
+	* lib/gaupol/base/util/langlib.py:
+	* lib/gaupol/base/util/listlib.py:
+	* lib/gaupol/base/util/relib.py:
+	* lib/gaupol/base/util/wwwlib.py:
+	* lib/gaupol/constants.py:
+	* lib/gaupol/gtk:
+	* lib/gaupol/gtk/__init__.py:
+	* lib/gaupol/gtk/application.py:
+	* lib/gaupol/gtk/cellrend:
+	* lib/gaupol/gtk/cellrend/__init__.py:
+	* lib/gaupol/gtk/cellrend/classes.py:
+	* lib/gaupol/gtk/cellrend/integer.py:
+	* lib/gaupol/gtk/cellrend/multiline.py:
+	* lib/gaupol/gtk/cellrend/text.py:
+	* lib/gaupol/gtk/cellrend/time.py:
+	* lib/gaupol/gtk/colconstants.py:
+	* lib/gaupol/gtk/delegates:
+	* lib/gaupol/gtk/delegates/__init__.py:
+	* lib/gaupol/gtk/delegates/action.py:
+	* lib/gaupol/gtk/delegates/appupdate.py:
+	* lib/gaupol/gtk/delegates/edit.py:
+	* lib/gaupol/gtk/delegates/fileclose.py:
+	* lib/gaupol/gtk/delegates/fileopen.py:
+	* lib/gaupol/gtk/delegates/filesave.py:
+	* lib/gaupol/gtk/delegates/guiinit.py:
+	* lib/gaupol/gtk/delegates/help.py:
+	* lib/gaupol/gtk/delegates/menuupdate.py:
+	* lib/gaupol/gtk/delegates/view.py:
+	* lib/gaupol/gtk/delegates/viewupdate.py:
+	* lib/gaupol/gtk/dialogs:
+	* lib/gaupol/gtk/dialogs/__init__.py:
+	* lib/gaupol/gtk/dialogs/about.py:
+	* lib/gaupol/gtk/dialogs/encoding.py:
+	* lib/gaupol/gtk/dialogs/filechooser.py:
+	* lib/gaupol/gtk/dialogs/message.py:
+	* lib/gaupol/gtk/dialogs/multiclose.py:
+	* lib/gaupol/gtk/error.py:
+	* lib/gaupol/gtk/main.py:
+	* lib/gaupol/gtk/page.py:
+	* lib/gaupol/gtk/paths.py:
+	* lib/gaupol/gtk/util:
+	* lib/gaupol/gtk/util/__init__.py:
+	* lib/gaupol/gtk/util/config.py:
+	* lib/gaupol/gtk/util/gui.py:
+	* lib/gaupol/gtk/view.py:
+	* setup.py:
+	* test/pyenchant:
+	* trantool:
+
+	Major update with files taken from trunk and rewritten for the alvar
+	branch. Contains a huge amount of changes compared to the trunk. Most
+	notably, new undo-redo system, new config module and new GUI building
+	and updating. All features are not yet ported from the trunk, but all
+	the framework should be done.
+
 2005-09-25  Osmo Salomaa  otsaloma@cc.hut.fi
 
 	* data/ui/popups.xml: Renamed from data/ui/treeview.xml.

@@ -66,7 +66,7 @@ def compile_mo(lang):
 
     for lang in get_languages(lang):
 
-        fancy_print('Compiling a .mo file for language "%s"...' % lang)
+        title_print('Compiling a .mo file for language "%s"...' % lang)
 
         po_path = os.path.join(PO_DIR, '%s.po' % lang)
         mo_dir  = os.path.join(LOCALE_DIR, lang, 'LC_MESSAGES')
@@ -87,16 +87,16 @@ def create_po(lang):
         print 'Use the "-u" option to update the existing file.'
         raise SystemExit
 
-    fancy_print('Creating a .po file for language "%s"...' % lang)
+    title_print('Creating a .po file for language "%s"...' % lang)
 
     os.system('msginit -l %s -i %s -o %s' % (lang, POT_PATH, po_path))
 
 def create_pot():
     """Create a .pot file."""
 
-    # Extract strings from Glade XML files to C header files.
-    fancy_print('Extracting strings from Glade XML files...')
+    title_print('Extracting strings from Glade XML files...')
 
+    # Extract strings from Glade XML files to C header files.
     for (dirpath, dirnames, filenames) in os.walk(GLADE_DIR):
         os.chdir(dirpath)
         for filename in filenames:
@@ -112,7 +112,7 @@ def create_pot():
                 py_paths.append(os.path.join(dirpath, filename))
 
     # Create a .pot file from all source code files.
-    fancy_print('Creating a .pot file from source files...')
+    title_print('Creating a .pot file from source files...')
 
     paths = h_paths + py_paths
 
@@ -123,11 +123,10 @@ def create_pot():
     os.chdir(SOURCE_DIR)
     os.system('xgettext -k_ -kN_ -c -o %s %s' % (POT_PATH, ' '.join(paths)))
 
-def fancy_print(text):
+def title_print(text):
     """Print a message that stands out from rest of the output."""
 
-    line = '=' * len(text)
-    print '\n'.join((line, text, line))
+    print '** %s' % text
 
 def get_languages(lang):
     """
@@ -152,39 +151,40 @@ def parse_options():
     Return: options, arguments
     """
     description = \
-        '<lang> should be either format "ll" or "ll_CC", e.g. "fi" or "zh_CN".' + \
-        ' Use "all" to process all languages found in the "po" directory.'
+        '<lang> should be either format "ll" or "ll_CC", e.g. "fi" or'   + \
+        ' "zh_CN". Use "all" to process all languages found in the "po"' + \
+        ' directory.'
 
     parser = optparse.OptionParser(description=description)
 
     parser.add_option(
-        '-c',
-        '',
+        '-p',
+        '--create-po',
         action='store',
         type='string',
         metavar='<lang>',
         dest='create_po',
-        default=False,
+        default='',
         help='create a new .po file'
     )
     parser.add_option(
         '-u',
-        '',
+        '--update-po',
         action='store',
         type='string',
         metavar='<lang/all>',
         dest='update_po',
-        default=False,
+        default='',
         help='update an existing .po file'
     )
     parser.add_option(
         '-m',
-        '',
+        '--compile-mo',
         action='store',
         type='string',
         metavar='<lang/all>',
         dest='compile_mo',
-        default=False,
+        default='',
         help='compile a .mo file'
     )
 
@@ -193,11 +193,11 @@ def parse_options():
 def remove_temporary_files():
     """Remove temporary files created during operations."""
 
-    fancy_print('Removing temporary files...')
+    title_print('Removing temporary files...')
 
     # .pot file
-    print POT_PATH.replace(SOURCE_DIR, '.')
-    os.remove(POT_PATH)
+    #print POT_PATH.replace(SOURCE_DIR, '.')
+    #os.remove(POT_PATH)
 
     # .h files
     for path in h_paths:
@@ -209,7 +209,7 @@ def update_po(lang):
 
     for lang in get_languages(lang):
 
-        fancy_print('Updating .po file for language "%s"...' % lang)
+        title_print('Updating .po file for language "%s"...' % lang)
 
         po_path = os.path.join(PO_DIR, '%s.po' % lang)
         os.system('msgmerge -U %s %s' % (po_path, POT_PATH))

@@ -19,12 +19,10 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""
-Gaupol start script
+"""Gaupol start script"""
 
-Determination of correct paths for running from source directory vs. running
-installed adaptively copied from Gazpacho by Lorenzo Gil Sanchez.
-"""
+# Determination of correct paths for running from source directory vs. running
+# installed adapted from Gazpacho by Lorenzo Gil Sanchez.
 
 
 import gettext
@@ -46,23 +44,23 @@ def check_dependencies():
     # Python
     if sys.version_info[:3] < (2, 4, 0):
         logger.critical('Python 2.4 or later is required to run Gaupol.')
-        Raise SystemExit
+        raise SystemExit
 
     # GTK
     try:
         import gtk
-        if gtk.pygtk_version < (2, 6, 0):
+        if gtk.pygtk_version < (2, 8, 0):
             raise ImportError
     except ImportError:
-        logger.critical('PyGTK 2.6.0 or later is required to run Gaupol.')
-        Raise SystemExit
+        logger.critical('PyGTK 2.8.0 or later is required to run Gaupol.')
+        raise SystemExit
 
     # Glade support in GTK
     try:
         import gtk.glade
     except ImportError:
         logger.critical('Glade support in PyGTK is required to run Gaupol')
-        Raise SystemExit
+        raise SystemExit
 
 def check_paths():
     """
@@ -70,7 +68,7 @@ def check_paths():
 
     Gaupol can be run from either the source directory or from install
     location after installation. Paths to use will be determined based on
-    the gaupol.paths module.
+    the gaupol.gtk.paths module.
     """
     current_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
 
@@ -98,6 +96,24 @@ def parse_options():
     parser = optparse.OptionParser()
 
     parser.add_option(
+        '-c',
+        '--pycheck',
+        action='store_true',
+        dest='pycheck',
+        default=False,
+        help='run pychecker to check correctness of code'
+    )
+
+    parser.add_option(
+        '-s',
+        '--hotshot',
+        action='store_true',
+        dest='hotshot',
+        default=False,
+        help='profile with python\'s hotshot module'
+    )
+
+    parser.add_option(
         '-t',
         '--no-translation',
         action='store_true',
@@ -121,7 +137,7 @@ def prepare_gettext(no_translation):
         return
 
     import gtk.glade
-    from gaupol.paths import LOCALE_DIR
+    from gaupol.gtk.paths import LOCALE_DIR
 
     locale.setlocale(locale.LC_ALL, '')
 
@@ -149,7 +165,7 @@ def prepare_source_run(prefix):
     if lib_dir not in sys.path:
         sys.path.insert(0, lib_dir)
 
-    from gaupol import paths
+    from gaupol.gtk import paths
 
     paths.DATA_DIR   = os.path.join(prefix, 'data'           )
     paths.GLADE_DIR  = os.path.join(prefix, 'data'  , 'glade')
@@ -162,9 +178,32 @@ if __name__ == '__main__':
     opts, args = parse_options()
 
     check_dependencies()
-    import_optional_modules()
     check_paths()
     prepare_gettext(opts.no_translation)
 
-    from gaupol.gtk import main
-    main.main(args[1:])
+    # The world is not big enough for PyChecker and Psyco.
+    if not opts.pycheck:
+        import_optional_modules()
+
+    # Run as requested.
+    if opts.pycheck:
+        os.environ['PYCHECKER'] = '--config=test/pycheckrc'
+        import pychecker.checker
+        from gaupol.gtk import main
+        main.main(args[1:])
+
+    if opts.hotshot:
+        import hotshot
+        import hotshot.stats
+        from gaupol.gtk import main
+        profile = hotshot.Profile('gaupol-hotshot.stats')
+        profile.runcall(main.main, args[1:])
+        profile.close()
+        stats = hotshot.stats.load('gaupol-hotshot.stats')
+        stats.sort_stats('time', 'calls')
+        stats.print_stats(25)
+        os.remove('gaupol-hotshot.stats')
+
+    else:
+        from gaupol.gtk import main
+        main.main(args[1:])

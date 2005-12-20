@@ -1,5 +1,11 @@
 #!/usr/bin/env python
 
+# NOTE:
+# This file contains significant hacks overriding some distutils methods to get
+# uninstallation to work elegantly. This file *must* be carefully tested or
+# revised if Python 2.5 ships with a new version of distutils. Hopefully the
+# next distutils will have uninstallation routines of it's own, in which case
+# exercising backspace and delete will fix this file.
 
 import glob
 import os
@@ -13,26 +19,18 @@ from distutils.command.install_lib  import install_lib
 from distutils.command.sdist        import sdist
 from distutils.core                 import Command
 from distutils.core                 import setup
+from distutils                      import dir_util
 from distutils.log                  import info
 
 # "lib" directory must be first in path to avoid getting version number from
-# a previous installed version.
+# a previously installed version.
 sys.path.insert(0, 'lib')
 from gaupol import __version__
 
 
 UNINSTALL_WARNING = '''
-This uninstallation feature is not a part of Python distutils, but instead an
-unstable extension that has not been tested enough.
-
-The uninstallation process will first remove all files listed in
-"installed-files.log", which was generated during installation. The log file
-does not list directories created during installation and therefore they
-cannot be deleted automatically. For all empty parent directories of the
-installed files, you will be asked if you want the directory removed.
-
-Note: The "--dry-run" option is not supported. All files will actually be
-removed if you choose to continue.
+If you choose to continue, all files listed in the "installed-files.log" will
+be permanently removed.
 '''
 
 packages = []
@@ -74,6 +72,13 @@ class InstallData(install_data):
 
     """Installation of data files."""
 
+    def initialize_options(self):
+
+        install_data.initialize_options(self)
+
+        # List of directories created during installation
+        self.__output_dirs = []
+
     def _get_mo_files(self):
 
         mo_files = []
@@ -98,6 +103,21 @@ class InstallData(install_data):
 
         return mo_files
 
+    def get_outputs(self):
+
+        # Add directories to the list of outputs.
+        outputs = install_data.get_outputs(self)
+        return outputs + self.__output_dirs
+
+    def mkpath (self, name, mode=0777):
+
+        created_dirs = dir_util.mkpath(name, mode, dry_run=self.dry_run)
+
+        # Add created directories to outputs.
+        for entry in created_dirs:
+            if entry not in self.__output_dirs:
+                self.__output_dirs.append(entry)
+
     def run(self):
 
         # Compile translations and add them to data files.
@@ -110,12 +130,26 @@ class InstallLib(install_lib):
 
     """Installation of library files."""
 
+    def get_outputs(self):
+
+        outputs = install_lib.get_outputs(self)
+
+        # Add created directories to outputs.
+        output_dirs = []
+
+        root_dir = os.path.join(self.install_dir, 'gaupol')
+        output_dirs.append(root_dir)
+
+        for root, dirs, files in os.walk(root_dir):
+            for dirname in dirs:
+                output_dirs.append(os.path.join(root, dirname))
+
+        return outputs + output_dirs
+
     def install(self):
 
         # Write path information to file "paths.py".
-
-        paths_path = os.path.join(self.build_dir, 'gaupol', 'paths.py')
-
+        paths_path = os.path.join(self.build_dir, 'gaupol', 'gtk', 'paths.py')
         prefix = self.distribution.get_command_obj('install').prefix
 
         data_dir   = os.path.join(prefix, 'share', 'gaupol')
@@ -243,7 +277,7 @@ class Uninstall(Command):
 
     """Uninstallation of files listed in the installation log."""
 
-    description = "uninstall installed files"
+    description  = 'uninstall installed files'
     user_options = []
 
     def initialize_options(self):
@@ -254,10 +288,11 @@ class Uninstall(Command):
 
     def run (self):
 
-        print UNINSTALL_WARNING
-        response = raw_input('Continue [y/N]? ')
-        if response.lower() != 'y':
-            raise SystemExit
+        if not self.dry_run:
+            print UNINSTALL_WARNING
+            response = raw_input('Continue [y/N]? ')
+            if response.lower() != 'y':
+                raise SystemExit
 
         log_path = 'installed-files.log'
 
@@ -274,55 +309,28 @@ class Uninstall(Command):
 
         paths = [line.strip() for line in lines]
 
-        # Remove files.
+        # Sort list to have files precede directories.
+        paths.sort()
+        paths.reverse()
+
+        # Remove files and directories.
         for path in paths:
             if os.path.isfile(path):
                 info('removing file %s' % path)
-                try:
-                    os.remove(path)
-                except IOError,  (errno, detail):
-                    info('failed to remove file %s: %s' % (path, detail))
-                except OSError, detail:
-                    info('failed to remove file %s: %s' % (path, detail))
+                if not self.dry_run:
+                    try:
+                        os.remove(path)
+                    except (IOError, OSError),  (errno, detail):
+                        info('failed to remove file %s: %s' % (path, detail))
+            elif os.path.isdir(path):
+                info('removing directory %s' % path)
+                if not self.dry_run:
+                    try:
+                        os.rmdir(path)
+                    except (IOError, OSError),  (errno, detail):
+                        info('failed to remove directory %s: %s' % (path, detail))
             else:
                 info('file %s not found' % path)
-
-        # Remove empty parent directories.
-        while paths:
-
-            # Get a list of the parent directories and remove duplicates.
-            paths = [os.path.dirname(path) for path in paths]
-            paths.sort()
-            for i in reversed(range(1, len(paths))):
-                if paths[i] == paths[i - 1]:
-                    paths.pop(i)
-
-            for i in reversed(range(len(paths))):
-
-                path = paths[i]
-
-                # Skip directories already removed.
-                if not os.path.isdir(path):
-                    paths.pop(i)
-                    continue
-
-                # Skip non-empty directories.
-                if os.listdir(path):
-                    paths.pop(i)
-                    continue
-
-                # Remove empty directory.
-                question = 'Remove empty directory %s [y/N]? ' % path
-                response = raw_input(question)
-                if response.lower() != 'y':
-                    paths.pop(i)
-                    continue
-                try:
-                    os.rmdir(path)
-                except IOError,  (errno, detail):
-                    info('failed to remove directory %s: %s' % (path, detail))
-                except OSError, detail:
-                    info('failed to remove directory %s: %s' % (path, detail))
 
 
 setup(

@@ -1,10 +1,6 @@
 Installation
 ============
 
-  The installation procedure has been written with the Unix-style directory
-  structure in mind and might not be elegant for operating systems with a
-  different directory structure.
-
   Gaupol uses the standard Python distutils for installation. To install
   Gaupol, type
 
@@ -25,7 +21,3 @@ Uninstallation
   unstable extension. To uninstall, type
 
     ./setup.py uninstall
-
-  The uninstallation procedure will first display a warning message explaining
-  how the uninstallation works. After reading the warning, you can still abort
-  with no files removed.

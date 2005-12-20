@@ -33,7 +33,7 @@ Table of Contents
     - msgmerge
     - xgettext
 
-  trantool will create the .po files by extracting strings from the Glade XML
+  trantool will create the .po file by extracting strings from the Glade XML
   files and the Python source code files. Desktop file "gaupol.desktop" needs
   to be translated separately.
 
@@ -49,7 +49,7 @@ Table of Contents
 
   To create a new .po file, type
 
-    ./trantool -c <lang>
+    ./trantool -p <lang>
 
   where lang is the language code in format "ll" or "ll_CC", e.g. "fi" or
   "zh_CN". The resulting .po file is placed in the "po" directory.
