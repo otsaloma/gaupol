@@ -222,9 +222,14 @@ class EditDelegate(Delegate):
         self.set_status_message(None)
         page = self.get_current_page()
 
-        # value is by default a string.
+        # value is by default a string, which cannot be empty to be a frame.
         if page.edit_mode == Mode.FRAME and col in (SHOW, HIDE, DURN):
-            value = int(value)
+            try:
+                value = int(value)
+            except ValueError:
+                self.set_sensitivities(page)
+                gui.set_cursor_normal(self.window)
+                return
 
         if col in (SHOW, HIDE, DURN):
             gui.set_cursor_busy(self.window)
@@ -262,43 +267,48 @@ class EditDelegate(Delegate):
         min_row = 0
         max_row = len(page.project.times) - 1
 
-        # Determine the visible edge columns that the user cannot move beyond.
-        min_col = SHOW
-        max_col = TTXT
+        # Determine the visible columns.
+        visible_cols = []
         for i in range(1, 6):
             if view.get_column(i).get_visible():
-                min_col = i
-                break
-        for i in reversed(range(1, 6)):
-            if view.get_column(i).get_visible():
-                max_col = i
-                break
+                visible_cols.append(i)
+        min_col = min(visible_cols)
+        max_col = max(visible_cols)
 
         def on_key_press_event(editor, event):
             """Move to edit an adjacent cell on Alt+Arrow key press."""
 
             accel_masks = gtk.gdk.MOD1_MASK
             keymap = gtk.gdk.keymap_get_default()
-            keyval, egroup, level, consumed = keymap.translate_keyboard_state(
-                event.hardware_keycode, event.state, event.group
-            )
+
+            args = event.hardware_keycode, event.state, event.group
+            output = keymap.translate_keyboard_state(*args)
+            keyval, egroup, level, consumed = output
+            keyname = gtk.gdk.keyval_name(keyval)
 
             if not event.state & ~consumed & accel_masks:
                 return
-            if keyval not in (65361, 65362, 65363, 65364):
+            if keyname not in ('Up', 'Down', 'Left', 'Right'):
                 return
 
             editor.emit('editing-done')
             next_col = col
             next_row = row
 
-            if keyval == 65361: # Left
-                next_col = max(min_col, col - 1)
-            elif keyval == 65362: # Up
+            # Determine next row or column.
+            if keyname == 'Left':
+                for i in reversed(range(min_col, col)):
+                    if i in visible_cols:
+                        next_col = i
+                        break
+            elif keyname == 'Up':
                 next_row = max(min_row, row - 1)
-            elif keyval == 65363: # Right
-                next_col = min(max_col, col + 1)
-            elif keyval == 65364: # Down
+            elif keyname == 'Right':
+                for i in range(col + 1, max_col + 1):
+                    if i in visible_cols:
+                        next_col = i
+                        break
+            elif keyname == 'Down':
                 next_row = min(row + 1, max_row)
 
             while gtk.events_pending():

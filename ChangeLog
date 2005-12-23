@@ -1,5 +1,18 @@
 2005-12-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/cellrend/integer.py:
+	* lib/gaupol/gtk/cellrend/multiline.py:
+	* lib/gaupol/gtk/cellrend/time.py:
+	* lib/gaupol/gtk/delegates/edit.py:
+	  Changed keyvals to keynames for clarity.
+
+	* lib/gaupol/gtk/delegates/edit.py
+	  (EditDelegate.on_view_cell_editing_started):
+	  Fixed Alt+Arrow moving when some columns are not visible. Added error
+	  handling for empty string frame value.
+
+2005-12-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/ui/menubar.xml:
 	* data/ui/popups.xml:
 	* lib/gaupol/gtk/delegates/edit.py:

@@ -78,7 +78,7 @@ class CellRendererTime(CellRendererText):
             editor.set_position(start)
 
         # Change previous number to zero if backspace pressed.
-        elif keyval == 65288:
+        elif keyname == 'BackSpace':
 
             if position > 0 and orig_text[position - 1].isdigit():
 
@@ -91,7 +91,7 @@ class CellRendererTime(CellRendererText):
             editor.set_position(max(position - 1, 0))
 
         # Change next number to zero if delete pressed.
-        elif keyval == 65535:
+        elif keyname == 'Delete':
 
             if position < 12 and orig_text[position].isdigit():
 
@@ -156,16 +156,18 @@ class CellRendererTime(CellRendererText):
         Change numbers to zero if BackSpace or Delete pressed. Cancel editing
         if Escape pressed.
         """
+        keyname = gtk.gdk.keyval_name(event.keyval)
+
         # Escape
-        if event.keyval == 65307:
+        if keyname == 'Escape':
             editor.remove_widget()
             self.emit('editing-canceled')
             return True
 
         # Backspace or delete
-        if event.keyval in (65288, 65535):
+        if keyname in ('BackSpace', 'Delete'):
             editor.emit_stop_by_name('key-press-event')
-            gobject.idle_add(self._change_to_zero, editor, event.keyval)
+            gobject.idle_add(self._change_to_zero, editor, keyname)
 
     def on_start_editing(self, event, widget, row, background_area, cell_area,
                          flags):

@@ -96,20 +96,20 @@ class CellRendererMultilineText(CellRendererText):
         """
         accel_masks = (gtk.gdk.CONTROL_MASK | gtk.gdk.SHIFT_MASK)
         keymap = gtk.gdk.keymap_get_default()
-        keyval, egroup, level, consumed = keymap.translate_keyboard_state(
-            event.hardware_keycode, event.state, event.group
-        )
+
+        args = event.hardware_keycode, event.state, event.group
+        output = keymap.translate_keyboard_state(*args)
+        keyval, egroup, level, consumed = output
+        keyname = gtk.gdk.keyval_name(keyval)
 
         if event.state & ~consumed & accel_masks:
             return
 
-        # Return or Keypad Enter
-        if keyval in (65293, 65421):
+        if keyname in ('Return', 'KP_Enter'):
             editor.emit('editing-done')
             return True
 
-        # Escape
-        if keyval == 65307:
+        if keyname == 'Escape':
             editor.remove_widget()
             self.emit('editing-canceled')
             return True

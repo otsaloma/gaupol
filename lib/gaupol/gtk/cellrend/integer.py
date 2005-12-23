@@ -72,7 +72,9 @@ class CellRendererInteger(CellRendererText):
 
         Cancel editing if Escape pressed.
         """
-        if event.keyval == 65307:
+        keyname = gtk.gdk.keyval_name(event.keyval)
+
+        if keyname == 'Escape':
             editor.remove_widget()
             self.emit('editing-canceled')
             return True
