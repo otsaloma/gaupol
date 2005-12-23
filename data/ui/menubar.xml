@@ -24,6 +24,11 @@
 			<menuitem name="redo" action="redo_action"/>
 			<separator/>
 			<menuitem name="value" action="edit_value"/>
+			<separator/>
+			<menuitem name="cut" action="cut_texts"/>
+			<menuitem name="copy" action="copy_texts"/>
+			<menuitem name="paste" action="paste_texts"/>
+			<menuitem name="clear" action="clear_texts"/>
 		</menu>
 		<menu name="view" action="show_view_menu">
 			<menuitem name="toolbar" action="toggle_toolbar"/>

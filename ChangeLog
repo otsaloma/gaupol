@@ -1,3 +1,26 @@
+2005-12-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/ui/menubar.xml:
+	* data/ui/popups.xml:
+	* lib/gaupol/gtk/delegates/edit.py:
+	* lib/gaupol/base/project.py:
+	* lib/gaupol/gtk/application.py:
+	  Added cut, copy, paste and clear functionality.
+
+	* lib/gaupol/base/delegates/edit.py:
+	  Added cut, copy, paste and clear functionality.
+	  Simplified descriptions.
+
+	* lib/gaupol/base/delegates/action.py:
+	  Added modify_action_description method.
+
+	* lib/gaupol/gtk/delegates/action.py:
+	  Fixed data modification problems with [:]s.
+
+	* lib/gaupol/gtk/util/gui.py:
+	  Removed slow and perhaps pointless gtk.main_iteration() calls while
+	  gtk.events_pending() in mouse cursor functions.
+
 2005-12-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* INSTALL:

@@ -138,16 +138,23 @@ class ActionDelegate(Delegate):
         # data rows that need updating, but were not already updated are
         # updated.
 
-        if action.rows_inserted or action.rows_removed:
+        rows_inserted          = action.rows_inserted[:]
+        rows_removed           = action.rows_removed[:]
+        rows_updated           = action.rows_updated[:]
+        timing_rows_updated    = action.timing_rows_updated[:]
+        main_text_rows_updated = action.main_text_rows_updated[:]
+        tran_text_rows_updated = action.tran_text_rows_updated[:]
 
-            first_row = min(action.rows_inserted + action.rows_removed)
+        if rows_inserted or rows_removed:
+
+            first_row = min(rows_inserted + rows_removed)
             page.reload_between_rows(first_row, -1)
 
             lists = [
-                action.rows_updated,
-                action.timing_rows_updated,
-                action.main_text_rows_updated,
-                action.tran_text_rows_updated,
+                rows_updated,
+                timing_rows_updated,
+                main_text_rows_updated,
+                tran_text_rows_updated,
             ]
 
             for data in lists:
@@ -155,29 +162,29 @@ class ActionDelegate(Delegate):
                     if data[i] >= first_row:
                         data.pop(i)
 
-        if action.rows_updated:
+        if rows_updated:
 
-            page.reload_rows(action.rows_updated)
+            page.reload_rows(rows_updated)
 
             lists = [
-                action.timing_rows_updated,
-                action.main_text_rows_updated,
-                action.tran_text_rows_updated,
+                timing_rows_updated,
+                main_text_rows_updated,
+                tran_text_rows_updated,
             ]
 
             for data in lists:
                 for i in reversed(range(len(data))):
-                    if data[i] in action.rows_updated:
+                    if data[i] in rows_updated:
                         data.pop(i)
 
-        if action.timing_rows_updated:
-            page.reload_rows(action.timing_rows_updated)
+        if timing_rows_updated:
+            page.reload_rows(timing_rows_updated)
 
-        if action.main_text_rows_updated:
-            page.reload_columns([MTXT], action.main_text_rows_updated)
+        if main_text_rows_updated:
+            page.reload_columns([MTXT], main_text_rows_updated)
 
-        if action.tran_text_rows_updated:
-            page.reload_columns([TTXT], action.tran_text_rows_updated)
+        if tran_text_rows_updated:
+            page.reload_columns([TTXT], tran_text_rows_updated)
 
     def _show_updated_data(self, action):
         """Focus, select and scroll to data updated by action."""
@@ -185,7 +192,7 @@ class ActionDelegate(Delegate):
         page = self.get_current_page()
 
         # List all rows that have changed.
-        changed_rows  = action.rows_inserted
+        changed_rows  = action.rows_inserted[:]
         changed_rows += action.rows_removed
         changed_rows += action.rows_updated
         changed_rows += action.timing_rows_updated

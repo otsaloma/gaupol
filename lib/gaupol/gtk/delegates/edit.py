@@ -33,6 +33,86 @@ from gaupol.gtk.delegates    import Action, Delegate
 from gaupol.gtk.util         import gui
 
 
+class ClipboardAction(Action):
+
+    """Base class for clipboard actions."""
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return whether action can or cannot be done."""
+
+        if page is None:
+            return False
+
+        selection = bool(page.view.get_selected_rows())
+        focus = page.view.get_focus()[1] in (MTXT, TTXT)
+        return bool(selection and focus)
+
+
+class ClearTextsAction(ClipboardAction):
+
+    """Clearing texts."""
+
+    uim_action_item = (
+        'clear_texts',
+        gtk.STOCK_CLEAR,
+        _('C_lear'),
+        'Delete',
+        _('Clear the selected texts'),
+        'on_clear_texts_activated'
+    )
+
+    uim_paths = ['/ui/menubar/edit/clear']
+
+
+class CopyTextsAction(ClipboardAction):
+
+    """Copying texts to the clipboard."""
+
+    uim_action_item = (
+        'copy_texts',
+        gtk.STOCK_COPY,
+        _('_Copy'),
+        '<control>C',
+        _('Copy the selected texts to the clipboard'),
+        'on_copy_texts_activated'
+    )
+
+    uim_paths = ['/ui/menubar/edit/copy']
+
+
+class CutTextsAction(ClipboardAction):
+
+    """Cutting texts to the clipboard."""
+
+    uim_action_item = (
+        'cut_texts',
+        gtk.STOCK_CUT,
+        _('Cu_t'),
+        '<control>X',
+        _('Cut the selected texts to the clipboard'),
+        'on_cut_texts_activated'
+    )
+
+    uim_paths = ['/ui/menubar/edit/cut']
+
+
+class PasteTextsAction(ClipboardAction):
+
+    """Pasting texts from the clipboard."""
+
+    uim_action_item = (
+        'paste_texts',
+        gtk.STOCK_PASTE,
+        _('_Paste'),
+        '<control>V',
+        _('Paste texts from the clipboard'),
+        'on_paste_texts_activated'
+    )
+
+    uim_paths = ['/ui/menubar/edit/paste']
+
+
 class EditValueAction(Action):
 
     """Editing the value of a single cell."""
@@ -69,12 +149,70 @@ class EditDelegate(Delegate):
 
     """Editing subtitle data."""
 
+    def on_clear_texts_activated(self, *args):
+        """Paste texts from the clipboard."""
+
+        page = self.get_current_page()
+        rows = page.view.get_selected_rows()
+        col  = page.view.get_focus()[1]
+        doc  = col - 4
+
+        page.project.clear_texts(rows, doc)
+        self.set_sensitivities(page)
+
+    def on_copy_texts_activated(self, *args):
+        """Cut the selected texts to the clipboard."""
+
+        page = self.get_current_page()
+        rows = page.view.get_selected_rows()
+        col  = page.view.get_focus()[1]
+        doc  = col - 4
+
+        page.project.copy_texts(rows, doc)
+
+        # Additionally, put a string representation of the Gaupol internal
+        # clipboard to the X clipboard.
+        text = page.project.clipboard.get_data_as_string()
+        self.clipboard.set_text(text)
+
+        self.set_sensitivities(page)
+
+    def on_cut_texts_activated(self, *args):
+        """Cut the selected texts to the clipboard."""
+
+        page = self.get_current_page()
+        rows = page.view.get_selected_rows()
+        col  = page.view.get_focus()[1]
+        doc  = col - 4
+
+        page.project.cut_texts(rows, doc)
+
+        # Additionally, put a string representation of the Gaupol internal
+        # clipboard to the X clipboard.
+        text = page.project.clipboard.get_data_as_string()
+        self.clipboard.set_text(text)
+
+        self.set_sensitivities(page)
+
     def on_edit_value_activated(self, *args):
         """Edit the focused cell."""
 
         view = self.get_current_page().view
         row, tree_view_column = view.get_cursor()
         view.set_cursor(row, tree_view_column, True)
+
+    def on_paste_texts_activated(self, *args):
+        """Paste texts from the clipboard."""
+
+        page = self.get_current_page()
+        rows = page.view.get_selected_rows()
+        col  = page.view.get_focus()[1]
+        doc  = col - 4
+
+        # FIX: Added subs?
+
+        page.project.paste_texts(rows[0], doc)
+        self.set_sensitivities(page)
 
     def on_view_cell_edited(self, cell_renderer, value, row, col):
         """Finish editing of a cell."""

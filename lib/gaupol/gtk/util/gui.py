@@ -73,9 +73,6 @@ def set_cursor_busy(window):
     """
     window.window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
 
-    while gtk.events_pending():
-        gtk.main_iteration()
-
 def set_cursor_normal(window):
     """
     Set cursor normal when above window.
@@ -83,6 +80,3 @@ def set_cursor_normal(window):
     window: gtk.Window
     """
     window.window.set_cursor(gtk.gdk.Cursor(gtk.gdk.LEFT_PTR))
-
-    while gtk.events_pending():
-        gtk.main_iteration()

@@ -27,6 +27,7 @@ except ImportError:
 
 import types
 
+from gaupol.base.clipboard   import Clipboard
 from gaupol.base.delegates   import Delegates
 from gaupol.base.model       import Model
 from gaupol.base.timing.calc import TimeFrameCalculator
@@ -73,6 +74,9 @@ class Project(Model):
 
         # Maximum size for the above stacks. None for no size limit.
         self.undo_limit = undo_limit
+
+        # Clipboard for Gaupol internal use.
+        self.clipboard = Clipboard()
 
         self._delegations = {}
         self._assign_delegations()

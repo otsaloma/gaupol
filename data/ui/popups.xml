@@ -1,6 +1,11 @@
 <ui>
 	<popup action="view">
 		<menuitem name="value" action="edit_value"/>
+		<separator/>
+		<menuitem name="cut" action="cut_texts"/>
+		<menuitem name="copy" action="copy_texts"/>
+		<menuitem name="paste" action="paste_texts"/>
+		<menuitem name="clear" action="clear_texts"/>
 	</popup>
 	<popup action="view_header">
 		<menuitem name="number" action="toggle_number_column"/>

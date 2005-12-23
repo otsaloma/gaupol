@@ -36,6 +36,36 @@ class EditDelegate(Delegate):
 
     """Editing subtitle data."""
 
+    def clear_texts(self, rows, document, register=Action.DO):
+        """Clear texts."""
+
+        new_texts = [u''] * len(rows)
+        self.replace_texts(rows, document, new_texts, register)
+        self.modify_action_description(register, _('Clearing texts'))
+
+    def copy_texts(self, rows, document):
+        """Copy texts to the clipboard."""
+
+        min_row = min(rows)
+        max_row = max(rows)
+        texts   = (self.main_texts, self.tran_texts)[document]
+        data    = []
+
+        for row in range(min_row, max_row + 1):
+            if row in rows:
+                data.append(texts[row])
+            else:
+                data.append(None)
+
+        self.clipboard.data = data
+
+    def cut_texts(self, rows, document, register=Action.DO):
+        """Cut texts to the clipboard."""
+
+        self.copy_texts(rows, document)
+        self.clear_texts(rows, document, register)
+        self.modify_action_description(register, _('Cutting texts'))
+
     def get_mode(self):
         """
         Get main file's mode.
@@ -61,6 +91,52 @@ class EditDelegate(Delegate):
     def insert_subtitles(self, start_row, amount, register=Action.DO):
         """Insert blank subtitles starting at start_row."""
         pass
+
+    def paste_texts(self, first_row, document, register=Action.DO):
+        """Paste texts from the clipboard."""
+
+        rows      = []
+        new_texts = []
+
+        data = self.clipboard.data
+        for i in range(len(data)):
+            if data[i] is not None:
+                rows.append(first_row + i)
+                new_texts.append(data[i])
+
+        # FIX: Added subs?
+
+        self.replace_texts(rows, document, new_texts, register)
+        self.modify_action_description(register, _('Pasting texts'))
+
+    def replace_texts(self, rows, document, new_texts, register=Action.DO):
+        """Restore texts from list."""
+
+        if document == Document.MAIN:
+            texts = self.main_texts
+            main_text_rows_updated = rows
+            tran_text_rows_updated = []
+        elif document == Document.TRAN:
+            texts = self.tran_texts
+            main_text_rows_updated = []
+            tran_text_rows_updated = rows
+
+        orig_texts = []
+
+        for i in range(len(rows)):
+            row = rows[i]
+            orig_texts.append(texts[row])
+            texts[row] = new_texts[i]
+
+        self.register_action(
+            register=register,
+            documents=[document],
+            description=_('Restoring texts'),
+            revert_method=self.replace_texts,
+            revert_method_args=[rows, document, orig_texts],
+            main_text_rows_updated=main_text_rows_updated,
+            tran_text_rows_updated=tran_text_rows_updated
+        )
 
     def _set_durations(self, row):
         """Set durations for row based on shows and hides."""
@@ -103,16 +179,10 @@ class EditDelegate(Delegate):
                 revert_row = new_row
                 timing_rows_updated = []
 
-        description = (
-            _('Editing show frame'),
-            _('Editing hide frame'),
-            _('Editing frame duration')
-        )[col]
-
         self.register_action(
             register=register,
             documents=[Document.MAIN],
-            description=description,
+            description=_('Editing frame'),
             revert_method=self.set_frame,
             revert_method_args=[revert_row, col, orig_value],
             rows_updated=rows_updated,
@@ -141,7 +211,6 @@ class EditDelegate(Delegate):
             orig_value = self.main_texts[row]
             self.main_texts[row] = value
             main_text_rows_updated = [row]
-
         elif document == Document.TRAN:
             orig_value = self.tran_texts[row]
             self.tran_texts[row] = value
@@ -150,15 +219,10 @@ class EditDelegate(Delegate):
         if value == orig_value:
             return
 
-        description = (
-            _('Editing main text'),
-            _('Editing translation text'),
-        )[document]
-
         self.register_action(
             register=register,
             documents=[document],
-            description=description,
+            description=_('Editing text'),
             revert_method=self.set_text,
             revert_method_args=[row, document, orig_value],
             main_text_rows_updated=main_text_rows_updated,
@@ -195,16 +259,10 @@ class EditDelegate(Delegate):
                 revert_row = new_row
                 timing_rows_updated = []
 
-        description = (
-            _('Editing show time'),
-            _('Editing hide time'),
-            _('Editing time duration')
-        )[col]
-
         self.register_action(
             register=register,
             documents=[Document.MAIN],
-            description=description,
+            description=_('Editing time'),
             revert_method=self.set_time,
             revert_method_args=[revert_row, col, orig_value],
             rows_updated=rows_updated,
@@ -221,7 +279,7 @@ class EditDelegate(Delegate):
         data = [self.times, self.frames, self.main_texts, self.tran_texts]
 
         # Get new row.
-        lst  = timings[:row] + timings[row + 1:]
+        lst = timings[:row] + timings[row + 1:]
         item = timings[row]
         new_row = bisect.bisect_right(lst, item)
 

@@ -67,6 +67,9 @@ class Application(object):
         # Tooltips, which are enabled when a document is open
         self.tooltips = gtk.Tooltips()
 
+        # X clipboard
+        self.clipboard = gtk.Clipboard()
+
         self._delegations = {}
         self._assign_delegations()
 

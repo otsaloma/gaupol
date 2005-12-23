@@ -144,6 +144,14 @@ class ActionDelegate(Delegate):
 
         return bool(self.undoables)
 
+    def modify_action_description(self, register, description):
+        """Modify the description of the most recent action."""
+
+        if register in (Action.DO, Action.REDO):
+            self.undoables[0].description = description
+        if register == Action.UNDO:
+            self.redoables[0].description = description
+
     def redo(self, amount=1):
         """Redo actions."""
 
