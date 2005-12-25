@@ -1,5 +1,12 @@
 2005-12-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/glade/debug-dialog.glade:
+	* lib/gaupol/gtk/dialogs/debug.py:
+	* lib/gaupol/gtk/main.py:
+	  Implemented a debug dialog to serve as a sys.excepthook.
+
+2005-12-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/insertsub-dialog.glade:
 	  Changed dialog to modal.
 

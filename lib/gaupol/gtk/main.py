@@ -21,10 +21,12 @@
 
 
 import os
+import sys
 
 import gtk
 
 from gaupol.gtk.application import Application
+from gaupol.gtk.dialogs     import debug
 
 
 def main(args):
@@ -33,6 +35,8 @@ def main(args):
 
     args: list of files to open, should be sys.argv[1:]
     """
+    sys.excepthook = debug.show
+
     application = Application()
     paths = []
 
