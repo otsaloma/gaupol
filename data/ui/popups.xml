@@ -6,6 +6,9 @@
 		<menuitem name="copy" action="copy_texts"/>
 		<menuitem name="paste" action="paste_texts"/>
 		<menuitem name="clear" action="clear_texts"/>
+		<separator/>
+		<menuitem name="insert" action="insert_subtitles"/>
+		<menuitem name="remove" action="remove_subtitles"/>
 	</popup>
 	<popup action="view_header">
 		<menuitem name="number" action="toggle_number_column"/>

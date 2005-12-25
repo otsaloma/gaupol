@@ -1,3 +1,39 @@
+2005-12-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/insertsub-dialog.glade:
+	  Changed dialog to modal.
+
+	* data/ui/menubar.xml:
+	* data/ui/popups.xml:
+	* lib/gaupol/base/delegates/edit.py:
+	* lib/gaupol/base/delegates/fileopen.py:
+	* lib/gaupol/base/error.py:
+	* lib/gaupol/gtk/delegates/edit.py:
+	  Implemented subtitle inserting and removing.
+
+	* lib/gaupol/base/delegates/action.py:
+	  Fixed docstring.
+
+	* lib/gaupol/gtk/delegates/action.py:
+	  Fixed view updating bugs.
+
+	* lib/gaupol/gtk/delegates/fileclose.py:
+	  Added missing uim_paths class variables.
+
+	* lib/gaupol/gtk/delegates/viewupdate.py
+	  (ViewUpdateDelegate.set_status):
+	  Improved exception handling.
+
+	* lib/gaupol/gtk/dialogs/multiclose.py:
+	  Fixed a function call typo.
+
+	* lib/gaupol/gtk/page.py:
+	  Fixed reload methods.
+
+	* lib/gaupol/gtk/view.py
+	  (View.get_focus): Improved exception handling.
+	  (View.select_rows): Implemented selecting by ranges.
+
 2005-12-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/gtk/cellrend/integer.py:

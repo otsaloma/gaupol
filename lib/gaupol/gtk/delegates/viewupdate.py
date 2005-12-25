@@ -103,9 +103,8 @@ class ViewUpdateDelegate(Delegate):
         def set_status(statusbar, document):
             """Set character length info from document to statusbar."""
 
-            info = page.project.get_character_count(row, document)
-
             try:
+                info = page.project.get_character_count(row, document)
                 lengths, total = info
             except IndexError:
                 return

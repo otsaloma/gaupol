@@ -133,7 +133,8 @@ class FileOpenDelegate(Delegate):
         # be added.
         difference = len(texts) - len(self.times)
         if difference > 0:
-            self.insert_subtitles(len(self.times), difference, register=None)
+            rows = range(len(self.times), len(self.times) + difference)
+            self.insert_subtitles(rows, register=None)
 
         tran_texts[:len(texts)] = texts
 

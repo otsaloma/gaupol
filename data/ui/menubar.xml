@@ -29,6 +29,9 @@
 			<menuitem name="copy" action="copy_texts"/>
 			<menuitem name="paste" action="paste_texts"/>
 			<menuitem name="clear" action="clear_texts"/>
+			<separator/>
+			<menuitem name="insert" action="insert_subtitles"/>
+			<menuitem name="remove" action="remove_subtitles"/>
 		</menu>
 		<menu name="view" action="show_view_menu">
 			<menuitem name="toolbar" action="toggle_toolbar"/>

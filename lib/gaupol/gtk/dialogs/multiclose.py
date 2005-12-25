@@ -56,7 +56,7 @@ class MultiCloseWarningDialog(object):
             if page.project.main_changed:
                 self._main_data.append((page, page.get_main_basename()))
             if page.project.tran_active and page.project.tran_changed:
-                self._tran_data.append((page, page.get_main_basename()))
+                self._tran_data.append((page, page.get_translation_basename()))
 
         glade_xml = gui.get_glade_xml('multiclose-dialog.glade')
 

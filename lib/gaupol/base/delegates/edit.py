@@ -29,7 +29,8 @@ import bisect
 
 from gaupol.base.colconstants import *
 from gaupol.base.delegates    import Delegate
-from gaupol.constants         import Action, Document, Mode
+from gaupol.base.error        import FitError
+from gaupol.constants         import Action, Document, Framerate, Mode
 
 
 class EditDelegate(Delegate):
@@ -46,12 +47,12 @@ class EditDelegate(Delegate):
     def copy_texts(self, rows, document):
         """Copy texts to the clipboard."""
 
-        min_row = min(rows)
-        max_row = max(rows)
-        texts   = (self.main_texts, self.tran_texts)[document]
-        data    = []
+        start_row = min(rows)
+        end_row   = max(rows)
+        texts     = (self.main_texts, self.tran_texts)[document]
+        data      = []
 
-        for row in range(min_row, max_row + 1):
+        for row in range(start_row, end_row + 1):
             if row in rows:
                 data.append(texts[row])
             else:
@@ -88,29 +89,181 @@ class EditDelegate(Delegate):
         elif mode == Mode.FRAME:
             return self.frames
 
-    def insert_subtitles(self, start_row, amount, register=Action.DO):
-        """Insert blank subtitles starting at start_row."""
-        pass
+    def _insert_blank(self, rows):
+        """
+        Insert blank subtitles.
 
-    def paste_texts(self, first_row, document, register=Action.DO):
-        """Paste texts from the clipboard."""
+        rows must be a single range.
+        """
+        times      = self.times
+        frames     = self.frames
+        main_texts = self.main_texts
+        tran_texts = self.tran_texts
+        calc       = self.calc
+        mode       = self.get_mode()
+        timings    = self.get_timings()
+        start_row  = min(rows)
+        amount     = len(rows)
+
+        # Optimal durations
+        opt_sec = 3
+        opt_frm = int(round(Framerate.values[self.framerate] * opt_sec, 0))
+
+        # Get the first show time or frame.
+        if start_row > 0:
+            start = timings[start_row - 1][HIDE]
+            if mode == Mode.TIME:
+                start = calc.time_to_seconds(start)
+        else:
+            start = 0
+
+        # Get duration.
+        if start_row < len(self.times):
+            end = timings[start_row][SHOW]
+            if mode == Mode.TIME:
+                end = calc.time_to_seconds(end)
+                duration = float(end - start) / float(amount)
+            if mode == Mode.FRAME:
+                duration = int((end - start) / amount)
+        else:
+            if mode == Mode.TIME:
+                duration = 3
+            if mode == Mode.FRAME:
+                fr_value = Framerate.values[self.framerate]
+                duration = int(round(fr_value * 3, 0))
+
+        if mode == Mode.TIME:
+            for i in range(amount):
+
+                show_time = calc.seconds_to_time(start + ( i      * duration))
+                hide_time = calc.seconds_to_time(start + ((i + 1) * duration))
+                durn_time = calc.get_time_duration(show_time, hide_time)
+
+                show_frame = calc.time_to_frame(show_time)
+                hide_frame = calc.time_to_frame(hide_time)
+                durn_frame = calc.get_frame_duration(show_frame, hide_frame)
+
+                row = start_row + i
+                times.insert(row, [show_time, hide_time, durn_time])
+                frames.insert(row, [show_frame, hide_frame, durn_frame])
+                main_texts.insert(row, u'')
+                tran_texts.insert(row, u'')
+
+        elif mode == Mode.FRAME:
+            for i in range(amount):
+
+                show_frame = start + ( i      * duration)
+                hide_frame = start + ((i + 1) * duration)
+                durn_frame = calc.get_frame_duration(show_frame, hide_frame)
+
+                show_time = calc.frame_to_time(show_frame)
+                hide_time = calc.frame_to_time(hide_frame)
+                durn_time = conv.get_time_duration(show_time, hide_time)
+
+                row = start_row + i
+                times.insert(row, [show_time, hide_time, durn_time])
+                frames.insert(row, [show_frame, hide_frame, durn_frame])
+                main_texts.insert(row, u'')
+                tran_texts.insert(row, u'')
+
+    def _insert_data(self, rows, times, frames, main_texts, tran_texts):
+        """
+        Insert subtitles with data.
+
+        rows, times, frames, main_texts and tran_texts must all have the same
+        length. subtitles are inserted in ascending order by simply inserting
+        elements of data in positions defined by elements of rows. This means
+        that the addition of subtitles must be taken into account beforehand in
+        the "rows" argument.
+        """
+        for i in range(len(rows)):
+            row = rows[i]
+            self.times.insert(row, times[i])
+            self.frames.insert(row, frames[i])
+            self.main_texts.insert(row, main_texts[i])
+            self.tran_texts.insert(row, tran_texts[i])
+
+    def insert_subtitles(self, rows, times=None, frames=None, main_texts=None,
+                         tran_texts=None, register=Action.DO):
+        """
+        Insert subtitles.
+
+        rows, times, frames, main_texts and tran_texts must all have the same
+        length. subtitles are inserted in ascending order by simply inserting
+        elements of data in positions defined by elements of rows. This means
+        that the addition of subtitles must be taken into account beforehand in
+        the "rows" argument.
+        """
+        rows = rows[:]
+        rows.sort()
+
+        if None in (times, frames, main_texts, tran_texts):
+            self._insert_blank(rows)
+        else:
+            args = rows, times, frames, main_texts, tran_texts
+            self._insert_data(*args)
+
+        self.register_action(
+            register=register,
+            documents=[Document.MAIN, Document.TRAN],
+            description=_('Inserting subtitles'),
+            revert_method=self.remove_subtitles,
+            revert_method_args=[rows],
+            rows_inserted=rows,
+        )
+
+    def paste_texts(self, start_row, document, register=Action.DO):
+        """
+        Paste texts from the clipboard.
+
+        Raise FitError if clipboard contents don't fit.
+        Return rows that were pasted into.
+        """
+        data = self.clipboard.data
+        if len(data) > len(self.times) - start_row:
+            raise FitError
 
         rows      = []
         new_texts = []
 
-        data = self.clipboard.data
         for i in range(len(data)):
             if data[i] is not None:
-                rows.append(first_row + i)
+                rows.append(start_row + i)
                 new_texts.append(data[i])
-
-        # FIX: Added subs?
 
         self.replace_texts(rows, document, new_texts, register)
         self.modify_action_description(register, _('Pasting texts'))
+        return rows
+
+    def remove_subtitles(self, rows, register=Action.DO):
+        """Remove subtitles."""
+
+        # Removed data.
+        times      = []
+        frames     = []
+        main_texts = []
+        tran_texts = []
+
+        rows = rows[:]
+        rows.sort()
+
+        for row in reversed(rows):
+            times.insert(0, self.times.pop(row))
+            frames.insert(0, self.frames.pop(row))
+            main_texts.insert(0, self.main_texts.pop(row))
+            tran_texts.insert(0, self.tran_texts.pop(row))
+
+        self.register_action(
+            register=register,
+            documents=[Document.MAIN, Document.TRAN],
+            description=_('Removing subtitles'),
+            revert_method=self.insert_subtitles,
+            revert_method_args=[rows, times, frames, main_texts, tran_texts],
+            rows_removed=rows,
+        )
 
     def replace_texts(self, rows, document, new_texts, register=Action.DO):
-        """Restore texts from list."""
+        """Replace texts in rows with new_texts."""
 
         if document == Document.MAIN:
             texts = self.main_texts
@@ -131,7 +284,7 @@ class EditDelegate(Delegate):
         self.register_action(
             register=register,
             documents=[document],
-            description=_('Restoring texts'),
+            description=_('Replacing texts'),
             revert_method=self.replace_texts,
             revert_method_args=[rows, document, orig_texts],
             main_text_rows_updated=main_text_rows_updated,
@@ -150,11 +303,14 @@ class EditDelegate(Delegate):
         self.frames[row][DURN] = self.calc.get_frame_duration(show, hide)
 
     def set_frame(self, row, col, value, register=Action.DO):
-        """Set frame."""
+        """
+        Set frame.
 
+        Return new index of row.
+        """
         orig_value = self.frames[row][col]
         if value == orig_value:
-            return
+            return row
 
         rows_updated = []
         timing_rows_updated = [row]
@@ -188,6 +344,8 @@ class EditDelegate(Delegate):
             rows_updated=rows_updated,
             timing_rows_updated=timing_rows_updated,
         )
+
+        return revert_row
 
     def _set_hides(self, row):
         """Set hides for row based on shows and durations."""
@@ -230,11 +388,14 @@ class EditDelegate(Delegate):
         )
 
     def set_time(self, row, col, value, register=Action.DO):
-        """Set time."""
+        """
+        Set time.
 
+        Return new index of row.
+        """
         orig_value = self.times[row][col]
         if value == orig_value:
-            return
+            return row
 
         rows_updated = []
         timing_rows_updated = [row]
@@ -268,6 +429,8 @@ class EditDelegate(Delegate):
             rows_updated=rows_updated,
             timing_rows_updated=timing_rows_updated,
         )
+
+        return revert_row
 
     def _sort_data(self, row):
         """

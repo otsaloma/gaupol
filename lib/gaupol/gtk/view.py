@@ -146,6 +146,12 @@ class View(gtk.TreeView):
         """
         row, tree_view_column = self.get_cursor()
 
+        # Get an integer if row is a one-tuple.
+        try:
+            row = row[0]
+        except TypeError:
+            pass
+
         if tree_view_column is None:
             col = None
         else:
@@ -160,8 +166,7 @@ class View(gtk.TreeView):
         selection = self.get_selection()
         selected_rows = selection.get_selected_rows()[1]
 
-        # selected_rows is a list of one-tuples of integers (Why?). Change that
-        # to a list of integers.
+        # Get an integers from the row one-tuples.
         return [row[0] for row in selected_rows]
 
     def scroll_to_row(self, row):
@@ -170,13 +175,34 @@ class View(gtk.TreeView):
         self.scroll_to_cell(row, None, True, 0.5, 0)
 
     def select_rows(self, rows):
-       """Select rows clearing previous selection."""
+        """
+        Select rows clearing previous selection.
 
-       selection = self.get_selection()
-       selection.unselect_all()
+        rows can be an empty list to unselect all.
+        """
+        selection = self.get_selection()
+        selection.unselect_all()
 
-       for row in rows:
-           selection.select_path(row)
+        if not rows:
+            return
+
+        rows = rows[:]
+        rows.sort()
+
+        # To avoid sending "changed" signal on the selection for every single
+        # row, the list of rows needs to be broken down into ranges and
+        # selected with the "select_range" method.
+        ranges = [[rows[0]]]
+        rindex = 0
+        for i in range(1, len(rows)):
+            if rows[i] == rows[i - 1] + 1:
+                ranges[rindex].append(rows[i])
+            else:
+                ranges.append([rows[i]])
+                rindex += 1
+
+        for entry in ranges:
+            selection.select_range(entry[0], entry[-1])
 
     def set_focus(self, row, col):
         """Move focus to row, col."""

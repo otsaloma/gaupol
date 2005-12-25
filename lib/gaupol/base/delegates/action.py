@@ -30,10 +30,10 @@ To do some action without possibility of reverting, None can be given as a
 value to the "register" keyword argument.
 
 All data-changing methods need to come in pairs as each action needs to be
-revertable. For example insert_rows and remove_rows form a pair.
+revertable. For example insert_subtitles and remove_subtitles form a pair.
 
 During the "register_action" method, a signal will be emitted notifying that
-an action was done. Any possible GUI can hook up to that signal and use it to
+an action was done. Any possible UI can hook up to that signal and use it to
 refresh the data display.
 """
 

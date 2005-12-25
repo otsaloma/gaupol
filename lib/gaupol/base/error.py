@@ -27,6 +27,13 @@ class FileFormatError(Exception):
     pass
 
 
+class FitError(Exception):
+
+    """Data does not fit in given space."""
+
+    pass
+
+
 class TimeoutError(Exception):
 
     """Connection timed out."""

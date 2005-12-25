@@ -175,6 +175,31 @@ class Page(gobject.GObject):
 
         self.emit('close-button-clicked')
 
+    def reload_after_row(self, row):
+        """Reload view after row."""
+
+        store      = self.view.get_model()
+        timings    = self._get_timings()
+        main_texts = self.project.main_texts
+        tran_texts = self.project.tran_texts
+
+        # Selection must be cleared before removing rows to avoid selection
+        # constantly changing and emitting the "changed" signal if the row
+        # being removed was selected.
+        selected_rows = self.view.get_selected_rows()
+        self.view.select_rows([])
+
+        while len(store) > row:
+            store.remove(store.get_iter(row))
+        for i in range(row, len(self.project.times)):
+            store.append([i + 1] + timings[i] + [main_texts[i], tran_texts[i]])
+
+        # Reselect all rows that still exist.
+        for i in reversed(range(len(selected_rows))):
+            if selected_rows[i] >= len(self.project.times):
+                selected_rows.pop(i)
+        self.view.select_rows(selected_rows)
+
     def reload_all(self):
         """
         Reload all data in the view.
@@ -195,16 +220,7 @@ class Page(gobject.GObject):
         self.view.set_model(store)
 
     def reload_between_rows(self, row_x, row_y):
-        """
-        Reload view by full rows between row_x and row_y.
-
-        Use a negative for the last row.
-        """
-        # Translate negative value to the last row.
-        if row_x < 0:
-            row_x = len(self.project.times) - 1
-        if row_y < 0:
-            row_y = len(self.project.times) - 1
+        """Reload view by full rows between row_x and row_y."""
 
         first_row = min(row_x, row_y)
         last_row  = max(row_x, row_y)
@@ -254,8 +270,8 @@ class Page(gobject.GObject):
         tran_texts = self.project.tran_texts
 
         for row in rows:
-            store[row] = [row + 1] + timings[row] \
-                         + [main_texts[row], tran_texts[row]]
+            store[row] = [row + 1] + timings[row] + \
+                         [main_texts[row], tran_texts[row]]
 
     def update_tab_labels(self):
         """

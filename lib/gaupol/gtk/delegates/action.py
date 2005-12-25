@@ -135,7 +135,7 @@ class ActionDelegate(Delegate):
 
         # Updating is done in an incremental manner. First all rows starting
         # with the first row added or removed are updated. After that data by
-        # data rows that need updating, but were not already updated are
+        # data rows that need updating, but were not already updated, are
         # updated.
 
         rows_inserted          = action.rows_inserted[:]
@@ -148,7 +148,7 @@ class ActionDelegate(Delegate):
         if rows_inserted or rows_removed:
 
             first_row = min(rows_inserted + rows_removed)
-            page.reload_between_rows(first_row, -1)
+            page.reload_after_row(first_row)
 
             lists = [
                 rows_updated,
@@ -191,9 +191,14 @@ class ActionDelegate(Delegate):
 
         page = self.get_current_page()
 
+        if not page.project.times:
+            return
+
         # List all rows that have changed.
-        changed_rows  = action.rows_inserted[:]
-        changed_rows += action.rows_removed
+        if action.rows_inserted or action.rows_removed:
+            first_row = min(action.rows_inserted + action.rows_removed)
+            changed_rows = range(first_row, len(page.project.times))
+
         changed_rows += action.rows_updated
         changed_rows += action.timing_rows_updated
         changed_rows += action.main_text_rows_updated

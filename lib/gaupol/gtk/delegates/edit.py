@@ -27,10 +27,13 @@ except ImportError:
 
 import gtk
 
-from gaupol.constants        import Mode
-from gaupol.gtk.colconstants import *
-from gaupol.gtk.delegates    import Action, Delegate
-from gaupol.gtk.util         import gui
+from gaupol.base.error            import FitError
+from gaupol.constants             import Mode, Position
+from gaupol.gtk.colconstants      import *
+from gaupol.gtk.delegates         import Action, Delegate
+from gaupol.gtk.dialogs.insertsub import InsertSubtitleDialog
+from gaupol.gtk.dialogs.message   import ErrorDialog
+from gaupol.gtk.util              import config, gui
 
 
 class ClipboardAction(Action):
@@ -62,7 +65,7 @@ class ClearTextsAction(ClipboardAction):
         'on_clear_texts_activated'
     )
 
-    uim_paths = ['/ui/menubar/edit/clear']
+    uim_paths = ['/ui/menubar/edit/clear', '/ui/view/clear']
 
 
 class CopyTextsAction(ClipboardAction):
@@ -78,7 +81,7 @@ class CopyTextsAction(ClipboardAction):
         'on_copy_texts_activated'
     )
 
-    uim_paths = ['/ui/menubar/edit/copy']
+    uim_paths = ['/ui/menubar/edit/copy', '/ui/view/copy']
 
 
 class CutTextsAction(ClipboardAction):
@@ -94,23 +97,7 @@ class CutTextsAction(ClipboardAction):
         'on_cut_texts_activated'
     )
 
-    uim_paths = ['/ui/menubar/edit/cut']
-
-
-class PasteTextsAction(ClipboardAction):
-
-    """Pasting texts from the clipboard."""
-
-    uim_action_item = (
-        'paste_texts',
-        gtk.STOCK_PASTE,
-        _('_Paste'),
-        '<control>V',
-        _('Paste texts from the clipboard'),
-        'on_paste_texts_activated'
-    )
-
-    uim_paths = ['/ui/menubar/edit/paste']
+    uim_paths = ['/ui/menubar/edit/cut', '/ui/view/cut']
 
 
 class EditValueAction(Action):
@@ -145,6 +132,90 @@ class EditValueAction(Action):
             return True
 
 
+class InsertSubtitlesAction(Action):
+
+    """Inserting subtitles."""
+
+    uim_action_item = (
+        'insert_subtitles',
+        gtk.STOCK_ADD,
+        _('_Insert Subtitles'),
+        '<control>Insert',
+        _('Insert blank subtitles'),
+        'on_insert_subtitles_activated'
+    )
+
+    uim_paths = ['/ui/menubar/edit/insert', '/ui/view/insert']
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return whether action can or cannot be done."""
+
+        if page is None:
+            return False
+
+        if page.view.get_selected_rows():
+            return True
+        if not page.project.times:
+            return True
+
+        return False
+
+
+class PasteTextsAction(ClipboardAction):
+
+    """Pasting texts from the clipboard."""
+
+    uim_action_item = (
+        'paste_texts',
+        gtk.STOCK_PASTE,
+        _('_Paste'),
+        '<control>V',
+        _('Paste texts from the clipboard'),
+        'on_paste_texts_activated'
+    )
+
+    uim_paths = ['/ui/menubar/edit/paste', '/ui/view/paste']
+
+
+class RemoveSubtitlesAction(Action):
+
+    """Removing subtitles."""
+
+    uim_action_item = (
+        'remove_subtitles',
+        gtk.STOCK_REMOVE,
+        _('Re_move Subtitles'),
+        '<control>Delete',
+        _('Remove the selected subtitles'),
+        'on_remove_subtitles_activated'
+    )
+
+    uim_paths = ['/ui/menubar/edit/remove', '/ui/view/remove']
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return whether action can or cannot be done."""
+
+        if page is None:
+            return False
+
+        return bool(page.view.get_selected_rows())
+
+
+class PasteFitErrorDialog(ErrorDialog):
+
+    """Dialog to inform that clipboard contents did not fit."""
+
+    def __init__(self, parent):
+
+        title  = _('Not enough space available to fit clipboard contents')
+        detail = _('Please first insert new subtitles if you wish to paste at '
+                   'the current location')
+
+        ErrorDialog.__init__(self, parent, title, detail)
+
+
 class EditDelegate(Delegate):
 
     """Editing subtitle data."""
@@ -170,8 +241,8 @@ class EditDelegate(Delegate):
 
         page.project.copy_texts(rows, doc)
 
-        # Additionally, put a string representation of the Gaupol internal
-        # clipboard to the X clipboard.
+        # Put a string representation of the Gaupol internal clipboard to the
+        # X clipboard.
         text = page.project.clipboard.get_data_as_string()
         self.clipboard.set_text(text)
 
@@ -187,8 +258,8 @@ class EditDelegate(Delegate):
 
         page.project.cut_texts(rows, doc)
 
-        # Additionally, put a string representation of the Gaupol internal
-        # clipboard to the X clipboard.
+        # Put a string representation of the Gaupol internal clipboard to the
+        # X clipboard.
         text = page.project.clipboard.get_data_as_string()
         self.clipboard.set_text(text)
 
@@ -201,6 +272,42 @@ class EditDelegate(Delegate):
         row, tree_view_column = view.get_cursor()
         view.set_cursor(row, tree_view_column, True)
 
+    def on_insert_subtitles_activated(self, *args):
+        """Insert blank subtitles."""
+
+        position = config.subtitle_insert.position
+        amount   = config.subtitle_insert.amount
+
+        dialog = InsertSubtitleDialog(self.window)
+        dialog.set_amount(amount)
+        dialog.set_position(position)
+
+        page = self.get_current_page()
+        if not page.project.times:
+            dialog.set_position_sensitive(False)
+
+        response = dialog.run()
+        position = dialog.get_position()
+        amount   = dialog.get_amount()
+        dialog.destroy()
+
+        if response != gtk.RESPONSE_OK:
+            return
+
+        config.subtitle_insert.position = position
+        config.subtitle_insert.amount   = amount
+
+        if page.project.times:
+            start_row = page.view.get_selected_rows()[0]
+            if position == Position.BELOW:
+                start_row += 1
+        else:
+            start_row = 0
+        rows = range(start_row, start_row + amount)
+
+        page.project.insert_subtitles(rows)
+        page.view.select_rows(rows)
+
     def on_paste_texts_activated(self, *args):
         """Paste texts from the clipboard."""
 
@@ -209,10 +316,28 @@ class EditDelegate(Delegate):
         col  = page.view.get_focus()[1]
         doc  = col - 4
 
-        # FIX: Added subs?
+        try:
+            rows = page.project.paste_texts(rows[0], doc)
+        except FitError:
+            dialog = PasteFitErrorDialog(self.window)
+            dialog.run()
+            dialog.destroy()
+            return
 
-        page.project.paste_texts(rows[0], doc)
-        self.set_sensitivities(page)
+        page.view.select_rows(rows)
+
+    def on_remove_subtitles_activated(self, *args):
+        """Remove selected subtitles."""
+
+        page = self.get_current_page()
+        col  = page.view.get_focus()[1]
+        rows = page.view.get_selected_rows()
+
+        page.project.remove_subtitles(rows)
+
+        if page.project.times:
+            row = min(rows[0], len(page.project.times) - 1)
+            page.view.set_focus(row, col)
 
     def on_view_cell_edited(self, cell_renderer, value, row, col):
         """Finish editing of a cell."""
@@ -234,14 +359,14 @@ class EditDelegate(Delegate):
         if col in (SHOW, HIDE, DURN):
             gui.set_cursor_busy(self.window)
             if page.edit_mode == Mode.TIME:
-                page.project.set_time(row, col - 1, value)
+                new_row = page.project.set_time(row, col - 1, value)
             if page.edit_mode == Mode.FRAME:
-                page.project.set_frame(row, col - 1, value)
-            gui.set_cursor_normal(self.window)
+                new_row = page.project.set_frame(row, col - 1, value)
+            page.view.set_focus(new_row, col)
         elif col in (MTXT, TTXT):
             page.project.set_text(row, col - 4, value)
+            self.set_sensitivities(page)
 
-        self.set_sensitivities(page)
         gui.set_cursor_normal(self.window)
 
     def on_view_cell_editing_canceled(self, cell_renderer, editor):

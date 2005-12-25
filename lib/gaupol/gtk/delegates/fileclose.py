@@ -48,6 +48,8 @@ class CloseAllProjectsAction(Action):
         'on_close_all_projects_activated'
     )
 
+    uim_paths = ['/ui/menubar/projects/close_all']
+
     @classmethod
     def is_doable(cls, application, page):
         """Return whether action can or cannot be done."""
@@ -67,6 +69,8 @@ class CloseProjectAction(Action):
         _('Close the current project'),
         'on_close_project_activated'
     )
+
+    uim_paths = ['/ui/menubar/file/close']
 
     @classmethod
     def is_doable(cls, application, page):
