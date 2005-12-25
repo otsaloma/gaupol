@@ -32,6 +32,10 @@
 			<separator/>
 			<menuitem name="insert" action="insert_subtitles"/>
 			<menuitem name="remove" action="remove_subtitles"/>
+			<separator/>
+			<menuitem name="select_all" action="select_all"/>
+			<menuitem name="unselect_all" action="unselect_all"/>
+			<menuitem name="invert_selection" action="invert_selection"/>
 		</menu>
 		<menu name="view" action="show_view_menu">
 			<menuitem name="toolbar" action="toggle_toolbar"/>

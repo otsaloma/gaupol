@@ -1,3 +1,9 @@
+2005-12-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/ui/menubar.xml:
+	* lib/gaupol/gtk/delegates/edit.py:
+	  Implemented selection manipulations.
+
 2005-12-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/base/clipboard.py:

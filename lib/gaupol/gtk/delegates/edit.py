@@ -52,6 +52,20 @@ class ClipboardAction(Action):
         return bool(selection and focus)
 
 
+class SelectionAction(Action):
+
+    """Base class for selection actions."""
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return whether action can or cannot be done."""
+
+        if page is None:
+            return False
+
+        return bool(page.project.times)
+
+
 class ClearTextsAction(ClipboardAction):
 
     """Clearing texts."""
@@ -162,6 +176,22 @@ class InsertSubtitlesAction(Action):
         return False
 
 
+class InvertSelectionAction(SelectionAction):
+
+    """Inverting selection."""
+
+    uim_action_item = (
+        'invert_selection',
+        None,
+        _('In_vert Selection'),
+        None,
+        _('Invert the current selection'),
+        'on_invert_selection_activated'
+    )
+
+    uim_paths = ['/ui/menubar/edit/invert_selection']
+
+
 class PasteTextsAction(ClipboardAction):
 
     """Pasting texts from the clipboard."""
@@ -203,6 +233,22 @@ class RemoveSubtitlesAction(Action):
         return bool(page.view.get_selected_rows())
 
 
+class SelectAllAction(SelectionAction):
+
+    """Selecting all subtitles."""
+
+    uim_action_item = (
+        'select_all',
+        None,
+        _('_Select All'),
+        '<control>A',
+        _('Select all subtitles'),
+        'on_select_all_activated'
+    )
+
+    uim_paths = ['/ui/menubar/edit/select_all']
+
+
 class PasteFitErrorDialog(ErrorDialog):
 
     """Dialog to inform that clipboard contents did not fit."""
@@ -214,6 +260,22 @@ class PasteFitErrorDialog(ErrorDialog):
                    'the current location')
 
         ErrorDialog.__init__(self, parent, title, detail)
+
+
+class UnSelectAllAction(SelectionAction):
+
+    """Unselecting all subtitles."""
+
+    uim_action_item = (
+        'unselect_all',
+        None,
+        _('U_nselect All'),
+        '<shift><control>A',
+        _('Unselect all subtitles'),
+        'on_unselect_all_activated'
+    )
+
+    uim_paths = ['/ui/menubar/edit/unselect_all']
 
 
 class EditDelegate(Delegate):
@@ -308,6 +370,19 @@ class EditDelegate(Delegate):
         page.project.insert_subtitles(rows)
         page.view.select_rows(rows)
 
+    def on_invert_selection_activated(self, *args):
+        """Invert the current selection."""
+
+        page = self.get_current_page()
+
+        selected_rows = page.view.get_selected_rows()
+        rows = range(0, len(page.project.times))
+        for row in selected_rows:
+            rows.remove(row)
+
+        page.view.select_rows(rows)
+        page.view.grab_focus()
+
     def on_paste_texts_activated(self, *args):
         """Paste texts from the clipboard."""
 
@@ -338,6 +413,22 @@ class EditDelegate(Delegate):
         if page.project.times:
             row = min(rows[0], len(page.project.times) - 1)
             page.view.set_focus(row, col)
+
+    def on_select_all_activated(self, *args):
+        """Select all subtitles."""
+
+        page = self.get_current_page()
+        selection = page.view.get_selection()
+        selection.select_all()
+        page.view.grab_focus()
+
+    def on_unselect_all_activated(self, *args):
+        """Unselect all subtitles."""
+
+        page = self.get_current_page()
+        selection = page.view.get_selection()
+        selection.unselect_all()
+        page.view.grab_focus()
 
     def on_view_cell_edited(self, cell_renderer, value, row, col):
         """Finish editing of a cell."""
