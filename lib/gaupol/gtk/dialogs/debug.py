@@ -20,7 +20,9 @@
 """Debug dialog."""
 
 # This file has been adpated from Gazpacho's debugwindow.py by Lorenzo Gil
-# Sanchez and Johan Dahlin.
+# Sanchez and Johan Dahlin. URLs in text view has been adapted from Porthole's
+# summary.py by Fredrik Arnerup, Daniel G. Taylor, Brian Dolbec and
+# Wm. F. Wheeler.
 
 
 try:
@@ -36,9 +38,29 @@ import traceback
 import gtk
 import pango
 
-from gaupol.base.util          import wwwlib
-from gaupol.gtk.delegates.help import BUG_REPORT_URL
-from gaupol.gtk.util           import gui
+from gaupol.base.util           import wwwlib
+from gaupol.gtk.delegates.help  import BUG_REPORT_URL
+from gaupol.gtk.dialogs.message import ErrorDialog
+from gaupol.gtk.util            import config, gui
+
+
+normal_cursor = gtk.gdk.Cursor(gtk.gdk.XTERM)
+hand_cursor   = gtk.gdk.Cursor(gtk.gdk.HAND2)
+
+
+class OpenEditorErrorDialog(ErrorDialog):
+
+    """Dialog to inform that editor was not successfully opened."""
+
+    def __init__(self, parent, editor):
+
+        title  = _('Failed to open editor "%s"') % editor
+        detail = _('Currently only "gvim" and "emacs" editors are supported. '
+                   'If you don\'t like this, file a bug report. To change '
+                   'the editor, edit file "%s" under section "general".') \
+                 % config.CONFIG_PATH
+
+        ErrorDialog.__init__(self, parent, title, detail)
 
 
 class DebugDialog(object):
@@ -52,6 +74,10 @@ class DebugDialog(object):
         self._text_view = glade_xml.get_widget('text_view')
         self._dialog.set_default_response(gtk.RESPONSE_CLOSE)
 
+        # Follow the mouse pointer.
+        args = 'motion_notify_event', self._on_text_view_motion_notify_event
+        self._text_view.connect(*args)
+
         # Create text tags for text view.
         tag = self._text_view.get_buffer().create_tag
         tag('header', weight=pango.WEIGHT_BOLD, scale=pango.SCALE_LARGE)
@@ -59,6 +85,13 @@ class DebugDialog(object):
         tag('text'  , left_margin=12)
         tag('code'  , family='monospace', left_margin=24)
 
+        # Text tags for URLs
+        self._url_tags = []
+
+        # Tuples of filepath and line numbers
+        self._files = []
+
+        # Current working directory
         self._pwd = os.getcwd()
 
     def destroy(self):
@@ -73,14 +106,67 @@ class DebugDialog(object):
         end_iter = text_buffer.get_end_iter()
         text_buffer.insert_with_tags_by_name(end_iter, text, *tags)
 
+    def _insert_url(self, url):
+        """Insert url into text view."""
+
+        # Create a new tag for URL and insert text with that tag.
+        text_buffer = self._text_view.get_buffer()
+        tag = text_buffer.create_tag(url, foreground='blue')
+        tag.connect('event', self._on_url_event)
+        self._url_tags.append(tag)
+        self._insert_text(url, tag.props.name)
+
+    def _on_text_view_motion_notify_event(self, widget, event):
+        """Set GUI properties when mouse moves over URL."""
+
+        # Get a list of text tags at mouse position.
+        x, y = self._text_view.get_pointer()
+        tags = self._text_view.get_iter_at_location(x, y).get_tags()
+
+        # Underline current URL.
+        for tag in self._url_tags:
+            if tag in tags:
+                tag.props.underline = pango.UNDERLINE_SINGLE
+            else:
+                tag.props.underline = pango.UNDERLINE_NONE
+
+        # Show hand cursor over URL.
+        window = self._text_view.get_window(gtk.TEXT_WINDOW_TEXT)
+        for tag in tags:
+            if tag in self._url_tags:
+                window.set_cursor(hand_cursor)
+                return
+
+        window.set_cursor(normal_cursor)
+
+    def _on_url_event(self, tag, widget, event, itr):
+        """Open URL."""
+
+        if not event.type == gtk.gdk.BUTTON_RELEASE:
+            return
+
+        for path, lineno in self._files:
+            if path.endswith(tag.props.name):
+                editor = config.general.editor
+                if editor in ('gvim', 'emacs'):
+                    retval = os.system('%s +%d "%s"' % (editor, lineno, path))
+                    if retval == 0:
+                        return
+
+        dialog = OpenEditorErrorDialog(self._dialog, editor)
+        dialog.run()
+        dialog.destroy()
+
     def _print_file(self, filename, lineno, name):
         """Print a single file traceback text view."""
+
+        self._files.append((filename, lineno))
 
         if filename.startswith(self._pwd):
             filename = filename.replace(self._pwd, '')[1:]
 
         self._insert_text('File: '   , 'title')
-        self._insert_text(filename   , 'text' )
+        self._insert_url(filename)
         self._insert_text('\n'       , 'text' )
         self._insert_text('Line: '   , 'title')
         self._insert_text(str(lineno), 'text' )
@@ -195,15 +281,21 @@ def show(exctype, value, tb):
     if exctype is KeyboardInterrupt:
         return
 
-    dialog = DebugDialog()
-    dialog.set_text(exctype, value, tb)
+    # Wrap all of this debug-windowing in a try-except wrapper to avoid
+    # spawning a new debug dialog if this raises an exception.
+    try:
+        dialog = DebugDialog()
+        dialog.set_text(exctype, value, tb)
 
-    # Leave the dialog open if user clicked to report the bug.
-    while True:
-        response = dialog.run()
-        if response == gtk.RESPONSE_YES:
-            wwwlib.open_url(BUG_REPORT_URL)
-        else:
-            break
+        # Leave the dialog open if user clicked to report the bug.
+        while True:
+            response = dialog.run()
+            if response == gtk.RESPONSE_YES:
+                wwwlib.open_url(BUG_REPORT_URL)
+            else:
+                break
 
-    dialog.destroy()
+        dialog.destroy()
+
+    except Exception:
+        print traceback.print_tb(sys.exc_info()[2])

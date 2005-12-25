@@ -1,5 +1,17 @@
 2005-12-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/clipboard.py:
+	* lib/gaupol/gtk/dialogs/insertsub.py:
+	  Forgot to add these new files earlier.
+
+	* lib/gaupol/gtk/dialogs/debug.py:
+	  Hyperlinks in debug dialog. Cool.
+
+	* lib/gaupol/gtk/util/config.py:
+	  New setting general.editor.
+
+2005-12-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/debug-dialog.glade:
 	* lib/gaupol/gtk/dialogs/debug.py:
 	* lib/gaupol/gtk/main.py:

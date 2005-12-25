@@ -176,9 +176,11 @@ class file(object):
 
 class general(object):
 
+    editor  = 'gvim'
     version = __version__
 
     types = {
+        'editor' : Type.STRING,
         'version': Type.STRING,
     }
 
