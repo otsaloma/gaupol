@@ -3,6 +3,13 @@
 	* data/ui/menubar.xml:
 	* lib/gaupol/base/delegates/format.py:
 	* lib/gaupol/gtk/delegates/format.py:
+	  Implemented case changing.
+
+2005-12-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/ui/menubar.xml:
+	* lib/gaupol/base/delegates/format.py:
+	* lib/gaupol/gtk/delegates/format.py:
 	  Implemented italicization toggling.
 
 2005-12-27  Osmo Salomaa  <otsaloma@cc.hut.fi>

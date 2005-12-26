@@ -64,6 +64,13 @@
 		<menu name="format" action="show_format_menu">
 			<menuitem name="dialog" action="toggle_dialog_lines"/>
 			<menuitem name="italic" action="toggle_italicization"/>
+			<separator/>
+			<menu name="case" action="show_case_menu">
+				<menuitem name="title" action="use_title_case"/>
+				<menuitem name="sentence" action="use_sentence_case"/>
+				<menuitem name="upper" action="use_upper_case"/>
+				<menuitem name="lower" action="use_lower_case"/>
+			</menu>
 		</menu>
 		<menu name="tools" action="show_tools_menu">
 		</menu>

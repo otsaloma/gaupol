@@ -39,6 +39,26 @@ class FormatDelegate(Delegate):
 
     """Formatting text."""
 
+    def change_case(self, rows, document, method, register=Action.DO):
+        """
+        Change case.
+
+        method: "title", "capitalize", "upper" or "lower"
+        """
+        re_tag = self.get_regular_expression_for_tag(document)
+        parser = TextParser(re_tag)
+
+        texts = (self.main_texts, self.tran_texts)[document]
+        new_texts = []
+
+        for row in rows:
+            parser.set_text(texts[row])
+            parser.text = eval('parser.text.%s()' % method)
+            new_texts.append(parser.get_text())
+
+        self.replace_texts(rows, document, new_texts, register)
+        self.modify_action_description(register, _('Changing case'))
+
     def _get_format_class_name(self, document):
         """
         Get the class name of document's file format.
