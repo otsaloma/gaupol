@@ -1,5 +1,10 @@
 2005-12-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/glade/preferences-dialog.glade:
+	  Renamed from prefs-dialog.glade.
+
+2005-12-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/ui/menubar.xml:
 	* lib/gaupol/gtk/delegates/edit.py:
 	  Implemented selection manipulations.
