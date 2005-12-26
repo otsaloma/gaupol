@@ -1,5 +1,12 @@
 2005-12-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/ui/menubar.xml:
+	* lib/gaupol/base/delegates/format.py:
+	* lib/gaupol/gtk/delegates/format.py:
+	  Implemented italicization toggling.
+
+2005-12-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/debug-dialog.glade:
 	* lib/gaupol/gtk/dialogs/debug.py:
 	  Added a quit button.

@@ -63,6 +63,22 @@ class ToggleDialogLinesAction(FormatAction):
     uim_paths = ['/ui/menubar/format/dialog']
 
 
+class ToggleItalicizationAction(FormatAction):
+
+    """Toggling italicization."""
+
+    uim_action_item = (
+        'toggle_italicization',
+        gtk.STOCK_ITALIC,
+        _('_Italic'),
+        '<control>I',
+        _('Toggle italicization of the selected texts'),
+        'on_toggle_italicization_activated'
+    )
+
+    uim_paths = ['/ui/menubar/format/italic']
+
+
 class PreferencesDelegate(Delegate):
 
     """Formatting text."""
@@ -78,4 +94,13 @@ class PreferencesDelegate(Delegate):
         page.project.toggle_dialog_lines(rows, doc)
         self.set_sensitivities(page)
 
+    def on_toggle_italicization_activated(self, *args):
+        """Toggle italicization."""
 
+        page = self.get_current_page()
+        rows = page.view.get_selected_rows()
+        col  = page.view.get_focus()[1]
+        doc  = col - 4
+
+        page.project.toggle_italicization(rows, doc)
+        self.set_sensitivities(page)

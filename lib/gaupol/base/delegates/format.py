@@ -107,3 +107,44 @@ class FormatDelegate(Delegate):
         self.replace_texts(rows, document, new_texts, register)
         description = _('Toggling dialog lines')
         self.modify_action_description(register, description)
+
+    def toggle_italicization(self, rows, document, register=Action.DO):
+        """Toggle italicization."""
+
+        format_name = self._get_format_class_name(document)
+        re_tag = self.get_regular_expression_for_tag(document)
+        regex, flags = eval(format_name).italic_tag
+        re_italic_tag = relib.compile(regex, flags)
+
+        texts = (self.main_texts, self.tran_texts)[document]
+        new_texts = []
+
+        # Get action to be done.
+        italicize = False
+        for row in rows:
+
+            # Remove tags from the start of the text, ending after all
+            # tags are removed or when an italic tag is found.
+            tagless_text = texts[row][:]
+            while re_tag.match(tagless_text):
+                if re_italic_tag.match(tagless_text):
+                    break
+                tagless_text = re_tag.sub('', tagless_text, 1)
+
+            # If there is no italic tag at the start of the text,
+            # texts should be italicized.
+            if re_italic_tag.match(tagless_text) is None:
+                italicize = True
+                break
+
+        # Remove existing italic tags and italicize or unitalicize.
+        for row in rows:
+            text = texts[row][:]
+            text = re_italic_tag.sub('', text)
+            if italicize:
+                text = eval(format_name).italicize(text)
+            new_texts.append(text)
+
+        self.replace_texts(rows, document, new_texts, register)
+        description = _('Toggling italicization')
+        self.modify_action_description(register, description)

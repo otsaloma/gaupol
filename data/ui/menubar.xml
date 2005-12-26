@@ -63,6 +63,7 @@
 		</menu>
 		<menu name="format" action="show_format_menu">
 			<menuitem name="dialog" action="toggle_dialog_lines"/>
+			<menuitem name="italic" action="toggle_italicization"/>
 		</menu>
 		<menu name="tools" action="show_tools_menu">
 		</menu>
