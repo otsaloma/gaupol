@@ -20,11 +20,6 @@
 """Additional functions for manipulating regular expressions"""
 
 
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
-
 import re
 
 

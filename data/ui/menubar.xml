@@ -36,6 +36,8 @@
 			<menuitem name="select_all" action="select_all"/>
 			<menuitem name="unselect_all" action="unselect_all"/>
 			<menuitem name="invert_selection" action="invert_selection"/>
+			<separator/>
+			<menuitem name="preferences" action="edit_preferences"/>
 		</menu>
 		<menu name="view" action="show_view_menu">
 			<menuitem name="toolbar" action="toggle_toolbar"/>

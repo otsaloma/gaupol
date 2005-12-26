@@ -20,12 +20,6 @@
 """Additional functions for manipulating lists."""
 
 
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
-
-
 def remove_duplicates(lst):
     """
     Remove duplicates from list.

@@ -30,11 +30,6 @@ for lists. All stored values are strings.
 """
 
 
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
-
 import ConfigParser
 import logging
 import os

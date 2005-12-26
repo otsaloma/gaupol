@@ -20,6 +20,11 @@
 """Connecting to remote documents."""
 
 
+try:
+    from psyco.classes import *
+except ImportError:
+    pass
+
 import os
 import sys
 import threading

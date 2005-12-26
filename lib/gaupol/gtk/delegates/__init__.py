@@ -40,6 +40,7 @@ module_names = [
     'guiinit',
     'help',
     'menuupdate',
+    'preferences',
     'view',
     'viewupdate',
 ]

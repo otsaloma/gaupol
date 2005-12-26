@@ -75,8 +75,8 @@ class DebugDialog(object):
         self._dialog.set_default_response(gtk.RESPONSE_CLOSE)
 
         # Follow the mouse pointer.
-        args = 'motion_notify_event', self._on_text_view_motion_notify_event
-        self._text_view.connect(*args)
+        method = self._on_text_view_motion_notify_event
+        self._text_view.connect('motion_notify_event', method)
 
         # Create text tags for text view.
         tag = self._text_view.get_buffer().create_tag
@@ -85,11 +85,15 @@ class DebugDialog(object):
         tag('text'  , left_margin=12)
         tag('code'  , family='monospace', left_margin=24)
 
-        # Text tags for URLs
+        # Text tags for URLs. Names of the tags are integers corresponding to
+        # indexes in self._files.
         self._url_tags = []
 
-        # Tuples of filepath and line numbers
+        # Tuples of filepaths and line numbers
         self._files = []
+
+        # Lines of code displayed.
+        self._code_lines = []
 
         # Current working directory
         self._pwd = os.getcwd()
@@ -106,15 +110,24 @@ class DebugDialog(object):
         end_iter = text_buffer.get_end_iter()
         text_buffer.insert_with_tags_by_name(end_iter, text, *tags)
 
-    def _insert_url(self, url):
+    def _insert_url(self, url, lineno):
         """Insert url into text view."""
 
-        # Create a new tag for URL and insert text with that tag.
+        # Create a new tag for URL.
         text_buffer = self._text_view.get_buffer()
-        tag = text_buffer.create_tag(url, foreground='blue')
+        name = str(len(self._files))
+        tag = text_buffer.create_tag(name, foreground='blue')
         tag.connect('event', self._on_url_event)
+
+        # Append URL to lists of tags and files.
         self._url_tags.append(tag)
-        self._insert_text(url, tag.props.name)
+        self._files.append((url, lineno))
+
+        # Shorten URL for display.
+        text = url
+        if url.startswith(self._pwd):
+            text = url.replace(self._pwd, '')[1:]
+        self._insert_text(text, name)
 
     def _on_text_view_motion_notify_event(self, widget, event):
         """Set GUI properties when mouse moves over URL."""
@@ -140,40 +153,22 @@ class DebugDialog(object):
         window.set_cursor(normal_cursor)
 
     def _on_url_event(self, tag, widget, event, itr):
-        """Open URL."""
+        """Open URL in editor."""
 
         if not event.type == gtk.gdk.BUTTON_RELEASE:
             return
 
-        for path, lineno in self._files:
-            if path.endswith(tag.props.name):
-                editor = config.general.editor
-                if editor in ('gvim', 'emacs'):
-                    retval = os.system('%s +%d "%s"' % (editor, lineno, path))
-                    if retval == 0:
-                        return
+        path, lineno = self._files[int(tag.props.name)]
+
+        editor = config.general.editor
+        if editor in ('gvim', 'emacs'):
+            retval = os.system('%s +%d "%s"' % (editor, lineno, path))
+            if retval == 0:
+                return
 
         dialog = OpenEditorErrorDialog(self._dialog, editor)
         dialog.run()
         dialog.destroy()
-
-    def _print_file(self, filename, lineno, name):
-        """Print a single file traceback text view."""
-
-        self._files.append((filename, lineno))
-
-        if filename.startswith(self._pwd):
-            filename = filename.replace(self._pwd, '')[1:]
-
-        self._insert_text('File: '   , 'title')
-        self._insert_url(filename)
-        self._insert_text('\n'       , 'text' )
-        self._insert_text('Line: '   , 'title')
-        self._insert_text(str(lineno), 'text' )
-        self._insert_text('\n'       , 'text' )
-        self._insert_text('In: '     , 'title')
-        self._insert_text(name       , 'text' )
-        self._insert_text('\n'       , 'text' )
 
     def _print_system_information(self):
         """Print system information."""
@@ -193,12 +188,26 @@ class DebugDialog(object):
 
         # Python
         self._insert_text('Python version: ', 'title')
-        self._insert_text(sys.version, 'text')
+        self._insert_text('%d.%d.%d' % sys.version_info[:3], 'text')
+        self._insert_text('\n', 'text')
+
+        # GTK
+        self._insert_text('GTK version: ', 'title')
+        self._insert_text('%d.%d.%d' % gtk.gtk_version, 'text')
         self._insert_text('\n', 'text')
 
         # PyGTK
         self._insert_text('PyGTK version: ', 'title')
         self._insert_text('%d.%d.%d' % gtk.pygtk_version, 'text')
+        self._insert_text('\n', 'text')
+
+        # Psyco. Hex.
+        self._insert_text('Psyco version: ', 'title')
+        try:
+            import psyco
+            self._insert_text('%x' % psyco.__version__, 'text')
+        except ImportError:
+            self._insert_text('Not found', 'text')
         self._insert_text('\n', 'text')
 
         # PyEnchant
@@ -211,7 +220,7 @@ class DebugDialog(object):
         self._insert_text('\n', 'text')
 
     def _print_traceback(self, tb, limit=None):
-        """Print up to limit stack trace entries from the traceback "tb"."""
+        """Print up to limit stack trace entries from the traceback."""
 
         if limit is None:
             if hasattr(sys, 'tracebacklimit'):
@@ -225,10 +234,22 @@ class DebugDialog(object):
             filename = code.co_filename
             name     = code.co_name
 
-            self._print_file(filename, lineno, name)
+            # Insert file information.
+            self._insert_text('File: '   , 'title')
+            self._insert_url(filename, lineno)
+            self._insert_text('\n'       , 'text' )
+            self._insert_text('Line: '   , 'title')
+            self._insert_text(str(lineno), 'text' )
+            self._insert_text('\n'       , 'text' )
+            self._insert_text('In: '     , 'title')
+            self._insert_text(name       , 'text' )
+            self._insert_text('\n'       , 'text' )
+
+            # Insert one line of code.
             line = linecache.getline(filename, lineno)
             line = line.lstrip()
             if line:
+                self._code_lines.append(line.strip())
                 self._insert_text('\n', 'code')
                 self._insert_text(line, 'code')
                 self._insert_text('\n', 'code')
@@ -252,8 +273,13 @@ class DebugDialog(object):
 
         # Exception
         exception = traceback.format_exception_only(exctype, value)[0]
-        self._insert_text(exception, 'title')
-        self._insert_text('\n', 'title')
+        try:
+            exception, detail = exception.split(' ', 1)
+            self._insert_text(exception, 'title')
+            self._insert_text(' %s' % detail, 'text')
+        except ValueError:
+            self._insert_text(exception, 'title')
+        self._insert_text('\n', 'text')
 
         # System information
         self._insert_text('System Information', 'header')
@@ -265,10 +291,22 @@ class DebugDialog(object):
         start, end = text_buffer.get_bounds()
         text = text_buffer.get_text(start, end, True)
         label = gtk.Label(text)
-        width, height = label.size_request()
+        text_width, height = label.size_request()
 
-        width  = min(500, width  + 48)
-        height = min(400, height + 48)
+        # Get required width to display code.
+        attrs = pango.AttrList()
+        attrs.insert(pango.AttrFamily('monospace', 0, -1))
+        label.set_attributes(attrs)
+        label.set_text('\n'.join(self._code_lines))
+        code_width = label.size_request()[0]
+
+        # Account for left margins and possible scroll bars.
+        width  = max(text_width + 12, code_width + 24) + 48
+        height = height + 48
+
+        # Set text view size.
+        width  = min(560, width )
+        height = min(400, height)
         self._text_view.set_size_request(width, height)
 
 
@@ -281,7 +319,7 @@ def show(exctype, value, tb):
     if exctype is KeyboardInterrupt:
         return
 
-    # Wrap all of this debug-windowing in a try-except wrapper to avoid
+    # Wrap all of this debug-dialoging in a try-except wrapper to avoid
     # spawning a new debug dialog if this raises an exception.
     try:
         dialog = DebugDialog()

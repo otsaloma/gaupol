@@ -1,6 +1,29 @@
 2005-12-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/glade/preferences-dialog.glade:
+	  Shortened names and adjusted fallback encoding tree view's
+	  properties.
+
+	* data/ui/menubar.xml:
+	* lib/gaupol/gtk/delegates/__init__.py:
+	* lib/gaupol/gtk/delegates/preferences.py:
+	* lib/gaupol/gtk/dialogs/preferences.py:
+	  Implemented preferences dialog.
+
+	* lib/gaupol/base/util/listlib.py:
+	* lib/gaupol/base/util/relib.py:
+	* lib/gaupol/base/util/wwwlib.py:
+	* lib/gaupol/gtk/util/config.py:
+	  Removed psyco.classes imports.
+
+	* lib/gaupol/gtk/dialogs/debug.py:
+	  Fixed multiple URL tags of the same file. Restructured code. Improved
+	  dialog size guessing. Added GTK and Psyco versions to system
+	  information.
+
+2005-12-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/preferences-dialog.glade:
 	  Renamed from prefs-dialog.glade.
 
 2005-12-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
