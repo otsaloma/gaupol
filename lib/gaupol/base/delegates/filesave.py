@@ -186,6 +186,7 @@ class FileSaveDelegate(Delegate):
         Raise UnicodeError if encoding fails.
         """
         self._save_file(Document.MAIN, keep_changes, properties)
+        self.main_changed = 0
 
     def save_translation_file(self, keep_changes=True, properties=None):
         """
@@ -196,3 +197,5 @@ class FileSaveDelegate(Delegate):
         Raise UnicodeError if encoding fails.
         """
         self._save_file(Document.TRAN, keep_changes, properties)
+        self.tran_changed = 0
+

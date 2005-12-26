@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Text formatting."""
+"""Formatting text."""
 
 
 try:
@@ -25,16 +25,19 @@ try:
 except ImportError:
     pass
 
+import re
+
 from gaupol.base.colconstants import *
 from gaupol.base.delegates    import Delegate
 from gaupol.base.tags.classes import *
+from gaupol.base.text.parser  import TextParser
 from gaupol.base.util         import relib
-from gaupol.constants         import Document, Format
+from gaupol.constants         import Action, Document, Format
 
 
 class FormatDelegate(Delegate):
 
-    """Text formatting."""
+    """Formatting text."""
 
     def _get_format_class_name(self, document):
         """
@@ -69,3 +72,38 @@ class FormatDelegate(Delegate):
 
         regex, flags = eval(format_name).tag
         return relib.compile(regex, flags)
+
+    def toggle_dialog_lines(self, rows, document, register=Action.DO):
+        """Toggle dialog lines."""
+
+        re_tag       = self.get_regular_expression_for_tag(document)
+        re_dialog    = re.compile(r'^-\s*', re.MULTILINE)
+        re_no_dialog = re.compile(r'^([^-])', re.MULTILINE)
+        parser = TextParser(re_tag)
+
+        texts = (self.main_texts, self.tran_texts)[document]
+        new_texts = []
+
+        # Get action to be done.
+        dialogize = False
+        for row in rows:
+            lines = texts[row].split('\n')
+            for line in lines:
+                # Strip all tags from line. If leftover doesn't start with
+                # "-", dialog lines should be added.
+                tagless_line = re_tag.sub('', line)
+                if not tagless_line.startswith('-'):
+                    dialogize = True
+                    break
+
+        # Add or remove dialog lines.
+        for row in rows:
+            parser.set_text(texts[row])
+            parser.substitute(re_dialog, '')
+            if dialogize:
+                parser.substitute(re_no_dialog, r'- \1')
+            new_texts.append(parser.get_text())
+
+        self.replace_texts(rows, document, new_texts, register)
+        description = _('Toggling dialog lines')
+        self.modify_action_description(register, description)

@@ -345,9 +345,8 @@ class FileSaveDelegate(Delegate):
             return False
 
         # Save file.
-        success = self._save_file(
-            page, Document.MAIN, self.window, False, props
-        )
+        args = page, Document.MAIN, self.window, False, props
+        success = self._save_file(*args)
         if not success:
             gui.set_cursor_normal(self.window)
             return False
@@ -381,9 +380,8 @@ class FileSaveDelegate(Delegate):
             return False
 
         # Save file.
-        success = self._save_file(
-            page, Document.TRAN, self.window, False, props
-        )
+        args = page, Document.TRAN, self.window, False, props
+        success = self._save_file(*args)
         if not success:
             gui.set_cursor_normal(self.window)
             return False
@@ -436,9 +434,8 @@ class FileSaveDelegate(Delegate):
         if None in props:
             return self.save_main_document_as(page)
 
-        success = self._save_file(
-            page, Document.MAIN, self.window, True, props
-        )
+        args = page, Document.MAIN, self.window, True, props
+        success = self._save_file(*args)
         if not success:
             gui.set_cursor_normal(self.window)
             return False
@@ -470,9 +467,8 @@ class FileSaveDelegate(Delegate):
             return False
 
         # Save file.
-        success = self._save_file(
-            page, Document.MAIN, self.window, True, props
-        )
+        args = page, Document.MAIN, self.window, True, props
+        success = self._save_file(*args)
         if not success:
             gui.set_cursor_normal(self.window)
             return False
@@ -502,9 +498,8 @@ class FileSaveDelegate(Delegate):
         if None in props:
             return self.save_translation_document_as(page)
 
-        success = self._save_file(
-            page, Document.TRAN, self.window, True, props
-        )
+        args = page, Document.TRAN, self.window, True, props
+        success = self._save_file(*args)
         if not success:
             gui.set_cursor_normal(self.window)
             return False
@@ -537,9 +532,8 @@ class FileSaveDelegate(Delegate):
             return False
 
         # Save file.
-        success = self._save_file(
-            page, Document.TRAN, self.window, True, props
-        )
+        args = page, Document.TRAN, self.window, True, props
+        success = self._save_file(*args)
         if not success:
             gui.set_cursor_normal(self.window)
             return False

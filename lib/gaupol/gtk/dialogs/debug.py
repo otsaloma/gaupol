@@ -330,6 +330,10 @@ def show(exctype, value, tb):
             response = dialog.run()
             if response == gtk.RESPONSE_YES:
                 wwwlib.open_url(BUG_REPORT_URL)
+            elif response == gtk.RESPONSE_NO:
+                dialog.destroy()
+                gtk.main_quit()
+                return
             else:
                 break
 

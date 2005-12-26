@@ -1,3 +1,27 @@
+2005-12-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/debug-dialog.glade:
+	* lib/gaupol/gtk/dialogs/debug.py:
+	  Added a quit button.
+
+	* data/ui/menubar.xml:
+	* lib/gaupol/base/delegates/format.py:
+	* lib/gaupol/gtk/delegates/format.py:
+	* lib/gaupol/gtk/delegates/__init__.py:
+	  Implemented dialog line toggling.
+
+	* lib/gaupol/base/delegates/filesave.py:
+	  Set changed values to zero after saving.
+
+	* lib/gaupol/base/text/parser.py:
+	  Fixed tag shifting.
+
+	* lib/gaupol/gtk/delegates/action.py:
+	  Fixed a minor bug.
+
+	* lib/gaupol/gtk/delegates/filesave.py:
+	  Cleaned up coding style.
+
 2005-12-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/glade/preferences-dialog.glade:

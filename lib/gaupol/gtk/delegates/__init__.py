@@ -37,6 +37,7 @@ module_names = [
     'fileclose',
     'fileopen',
     'filesave',
+    'format',
     'guiinit',
     'help',
     'menuupdate',

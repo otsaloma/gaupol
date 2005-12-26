@@ -195,6 +195,8 @@ class ActionDelegate(Delegate):
             return
 
         # List all rows that have changed.
+        changed_rows = []
+
         if action.rows_inserted or action.rows_removed:
             first_row = min(action.rows_inserted + action.rows_removed)
             changed_rows = range(first_row, len(page.project.times))
