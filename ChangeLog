@@ -1,5 +1,10 @@
 2005-12-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/glade/language-dialog.glade:
+	  Adjusted tree view sizes.
+
+2005-12-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/preferences-dialog.glade:
 	  Enabled search for fallback encoding tree view.
 

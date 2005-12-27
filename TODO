@@ -20,6 +20,7 @@ Plans for 0.2.0
   [W] Examine hotshot results
   [W] Examine PyChecker results
   [?] Web forum
+  [ ] Ensure that config transition from 0.1.x works.
 
 
 Plans after 0.2.0

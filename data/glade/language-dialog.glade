@@ -448,7 +448,7 @@
 		      <child>
 			<widget class="GtkScrolledWindow" id="language_main_scrolled_window">
 			  <property name="width_request">220</property>
-			  <property name="height_request">220</property>
+			  <property name="height_request">180</property>
 			  <property name="visible">True</property>
 			  <property name="can_focus">True</property>
 			  <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
@@ -481,7 +481,7 @@
 		      <child>
 			<widget class="GtkScrolledWindow" id="language_translation_scrolled_window">
 			  <property name="width_request">220</property>
-			  <property name="height_request">220</property>
+			  <property name="height_request">180</property>
 			  <property name="visible">True</property>
 			  <property name="can_focus">True</property>
 			  <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
