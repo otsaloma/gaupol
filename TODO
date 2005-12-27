@@ -7,20 +7,18 @@ Plans for 0.2.0
   ? = Questionable
 
   [W] Implement spell-check
-        [ ] List available dictionaries
+        [D] List available dictionaries
         [ ] Test unicode handling
         [W] Revise README file and website (PyEnchant & iso-codes)
-  [W] Redesign and rewrite code
-  [W] Improve encoding handling with a list of fallback encodings
+  [D] Redesign and rewrite code
+  [D] Improve encoding handling with a list of fallback encodings
   [ ] Update (or discontinue) Finnish translation
-  [W] Adapt to PyGTK 2.8
+  [D] Adapt to PyGTK 2.8
   [D] Improve uninstallation
   [ ] Update home page and project page
   [D] Move to edit adjacent cell on Alt+Arrow key-press-event
-  [?] Start editing on alphanumeric key-press-event
-      gtk.TreeView: start-interactive-search
-  [ ] Examine hotshot results
-  [ ] Examine PyChecker results
+  [W] Examine hotshot results
+  [W] Examine PyChecker results
   [?] Web forum
 
 

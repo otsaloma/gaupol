@@ -196,16 +196,16 @@ class subtitle_insert(object):
 class spell_check(object):
 
     check_all_projects   = False
-    check_text           = True
+    check_main           = True
     check_translation    = False
-    text_language        = None
+    main_language        = None
     translation_language = None
 
     types = {
         'check_all_projects'  : Type.BOOLEAN,
-        'check_text'          : Type.BOOLEAN,
+        'check_main'          : Type.BOOLEAN,
         'check_translation'   : Type.BOOLEAN,
-        'text_language'       : Type.STRING,
+        'main_language'       : Type.STRING,
         'translation_language': Type.STRING,
     }
 

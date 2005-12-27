@@ -190,16 +190,16 @@ class PreferencesDialog(gobject.GObject):
         """Get the selected fallback encoding view row."""
 
         selection = self._encoding_view.get_selection()
-        store, source_iter = selection.get_selected()
+        store, itr = selection.get_selected()
 
-        if source_iter is None:
+        if itr is None:
             return None
 
-        source_row = store.get_path(source_iter)
-        if type(source_row) is tuple:
-            source_row = source_row[0]
-
-        return source_row
+        row = store.get_path(itr)
+        try:
+            return row[0]
+        except TypeError:
+            return row
 
     def _on_encoding_add_button_clicked(self, *args):
         """Add a new fallback encoding."""

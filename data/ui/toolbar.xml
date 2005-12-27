@@ -1,5 +1,7 @@
 <ui>
 	<toolbar>
 		<toolitem name="save" action="save_main_document"/>
+		<separator/>
+		<toolitem name="check_spelling" action="check_spelling"/>
 	</toolbar>
 </ui>

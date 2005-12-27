@@ -1,5 +1,30 @@
 2005-12-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/glade/preferences-dialog.glade:
+	  Enabled search for fallback encoding tree view.
+
+	* data/ui/menubar.xml:
+	* data/ui/toolbar.xml:
+	* lib/gaupol/gtk/delegates/__init__.py:
+	* lib/gaupol/gtk/delegates/spellcheck.py:
+	* lib/gaupol/gtk/dialogs/language.py:
+	  Implemented spell-check configuring.
+
+	* lib/gaupol/base/util/langlib.py (locales):
+	  Removed "en_EN", "eo_EO", "ur" and "ur_PK", which were not found in
+	  langs or countries lists.
+
+	* lib/gaupol/gtk/delegates/format.py:
+	  Fixed typo.
+
+	* lib/gaupol/gtk/dialogs/preferences.py:
+	  Fixed terminology.
+
+	* lib/gaupol/gtk/util/config.py (spell_check):
+	  Fixed variable names.
+
+2005-12-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/ui/menubar.xml:
 	* lib/gaupol/base/delegates/format.py:
 	* lib/gaupol/gtk/delegates/format.py:

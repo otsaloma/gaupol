@@ -156,7 +156,7 @@ class ToggleItalicizationAction(FormatAction):
     uim_paths = ['/ui/menubar/format/italic']
 
 
-class PreferencesDelegate(Delegate):
+class FormatDelegate(Delegate):
 
     """Formatting text."""
 
