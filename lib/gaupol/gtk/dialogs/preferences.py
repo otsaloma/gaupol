@@ -43,17 +43,32 @@ class PreferencesDialog(gobject.GObject):
     send signals upstream, where they can be instant-applied.
     """
 
-    STAGE = gobject.SIGNAL_RUN_LAST
-    BOOL  = gobject.TYPE_BOOLEAN
-    INT   = gobject.TYPE_INT
-    STR   = gobject.TYPE_STRING
-
     __gsignals__ = {
-        'destroyed'               : (STAGE, None, (     )),
-        'limit-undo-toggled'      : (STAGE, None, (BOOL,)),
-        'undo-levels-changed'     : (STAGE, None, (INT ,)),
-        'use-default-font-toggled': (STAGE, None, (BOOL,)),
-        'font-set'                : (STAGE, None, (STR ,)),
+        'destroyed': (
+            gobject.SIGNAL_RUN_LAST,
+            None,
+            ()
+        ),
+        'limit-undo-toggled': (
+            gobject.SIGNAL_RUN_LAST,
+            None,
+            (gobject.TYPE_BOOLEAN,)
+        ),
+        'undo-levels-changed': (
+            gobject.SIGNAL_RUN_LAST,
+            None,
+            (gobject.TYPE_INT,)
+        ),
+        'use-default-font-toggled': (
+            gobject.SIGNAL_RUN_LAST,
+            None,
+            (gobject.TYPE_BOOLEAN,)
+        ),
+        'font-set': (
+            gobject.SIGNAL_RUN_LAST,
+            None,
+            (gobject.TYPE_STRING,)
+        )
     }
 
     def __init__(self, parent):

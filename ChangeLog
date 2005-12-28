@@ -1,3 +1,23 @@
+2005-12-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/spellcheck-dialog.glade:
+	  Made dialog invisible. Fixed a typo.
+
+	* lib/gaupol/base/delegates/edit.py:
+	  (EditDelegate.replace_both_texts): New method for replacing both main
+	  and translation document texts.
+
+	* lib/gaupol/gtk/delegates/spellcheck.py:
+	* lib/gaupol/gtk/dialogs/spellcheck.py:
+	  Implemented spell-check.
+
+	* lib/gaupol/gtk/dialogs/debug.py (show):
+	  Hopefully made the terminal traceback complete.
+
+	* lib/gaupol/gtk/dialogs/preferences.py:
+	  (PreferencesDialog.__gsignals__): Removed gobject constants from
+	  class-variable position.
+
 2005-12-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/glade/language-dialog.glade:

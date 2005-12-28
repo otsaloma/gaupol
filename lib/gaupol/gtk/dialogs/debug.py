@@ -314,7 +314,7 @@ def show(exctype, value, tb):
     """Show exception in dialog."""
 
     # Output to terminal as well.
-    traceback.print_tb(tb)
+    traceback.print_exception(exctype, value, tb)
 
     if exctype is KeyboardInterrupt:
         return
@@ -340,4 +340,4 @@ def show(exctype, value, tb):
         dialog.destroy()
 
     except Exception:
-        print traceback.print_tb(sys.exc_info()[2])
+        traceback.print_exc()

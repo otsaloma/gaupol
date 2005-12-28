@@ -25,13 +25,17 @@ try:
 except ImportError:
     pass
 
+import gc
 import logging
 
 import gtk
 
-from gaupol.gtk.delegates        import Action, Delegate
-from gaupol.gtk.dialogs.language import LanguageDialog
-from gaupol.gtk.util             import config, gui
+from gaupol                        import constants
+from gaupol.gtk.delegates          import Action, Delegate
+from gaupol.gtk.dialogs.language   import LanguageDialog
+from gaupol.gtk.dialogs.spellcheck import SpellCheckDialog
+from gaupol.gtk.error              import Cancelled
+from gaupol.gtk.util               import config, gui
 
 
 logger = logging.getLogger()
@@ -119,6 +123,33 @@ class SpellCheckDelegate(Delegate):
 
     """Checking spelling."""
 
+    def _on_cell_selected(self, dialog, page, row, document):
+        """Show cell."""
+
+        page.view.set_focus(row, document + 4)
+        page.view.scroll_to_row(row)
+
+    def on_check_spelling_activated(self, *args):
+        """Check for incorrent spelling."""
+
+        # Get pages to check.
+        if config.spell_check.check_all_projects:
+            pages = self.pages
+        else:
+            pages = [self.get_current_page()]
+
+        try:
+            dialog = SpellCheckDialog(self.window, pages)
+        except Cancelled:
+            return
+
+        dialog.connect('cell-selected', self._on_cell_selected)
+        dialog.connect('destroyed'    , self._on_destroyed    )
+        dialog.connect('page-checked' , self._on_page_checked )
+        dialog.connect('page-selected', self._on_page_selected)
+
+        dialog.show()
+
     def on_configure_spell_check_activated(self, *args):
         """Configure spell-check."""
 
@@ -128,9 +159,29 @@ class SpellCheckDelegate(Delegate):
         dialog.run()
         dialog.destroy()
 
-    def on_check_spelling_activated(self, *args):
-        """Check for incorrent spelling."""
+    def _on_destroyed(self, dialog):
+        """Delete dialog."""
 
-        pass
+        del dialog
+        gc.collect()
 
+    def _on_page_checked(self, dialog, page, rows, texts):
+        """
+        Commit changes to texts.
 
+        rows: (main text rows, translation text rows)
+        texts: (main texts, translation texts)
+        """
+        if not rows[0] and not rows[1]:
+            return
+
+        page.project.replace_both_texts(rows, texts)
+        desc = _('Spell-checking')
+        page.project.modify_action_description(constants.Action.DO, desc)
+        self.set_sensitivities(page)
+
+    def _on_page_selected(self, dialog, page):
+        """Show page."""
+
+        index = self.pages.index(page)
+        self.notebook.set_current_page(index)

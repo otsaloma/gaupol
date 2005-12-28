@@ -5,7 +5,6 @@
 
 <widget class="GtkDialog" id="dialog">
   <property name="border_width">6</property>
-  <property name="visible">True</property>
   <property name="title" translatable="yes">Check Spelling</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
   <property name="window_position">GTK_WIN_POS_CENTER_ON_PARENT</property>
@@ -256,7 +255,7 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkLabel" id="entry__label">
+		<widget class="GtkLabel" id="entry_label">
 		  <property name="visible">True</property>
 		  <property name="label" translatable="yes">Replace _with:</property>
 		  <property name="use_underline">True</property>

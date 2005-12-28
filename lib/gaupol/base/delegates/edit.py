@@ -262,8 +262,46 @@ class EditDelegate(Delegate):
             rows_removed=rows,
         )
 
+    def replace_both_texts(self, rows, new_texts, register=Action.DO):
+        """
+        Replace texts in both documents' in rows with new_texts.
+
+        rows: (main_rows, tran_rows)
+        new_texts: (new_main_texts, new_tran_texts)
+        """
+        main_texts = self.main_texts
+        tran_texts = self.tran_texts
+        main_rows = rows[0]
+        tran_rows = rows[1]
+        orig_main_texts = []
+        orig_tran_texts = []
+        new_main_texts = new_texts[0]
+        new_tran_texts = new_texts[1]
+
+        for i in range(len(main_rows)):
+            row = main_rows[i]
+            orig_main_texts.append(main_texts[row])
+            main_texts[row] = new_main_texts[i]
+
+        for i in range(len(tran_rows)):
+            row = tran_rows[i]
+            orig_tran_texts.append(tran_texts[row])
+            tran_texts[row] = new_tran_texts[i]
+
+        orig_texts = (orig_main_texts, orig_tran_texts)
+
+        self.register_action(
+            register=register,
+            documents=[Document.MAIN, Document.TRAN],
+            description=_('Replacing texts'),
+            revert_method=self.replace_both_texts,
+            revert_method_args=[rows, orig_texts],
+            main_text_rows_updated=main_rows,
+            tran_text_rows_updated=tran_rows
+        )
+
     def replace_texts(self, rows, document, new_texts, register=Action.DO):
-        """Replace texts in rows with new_texts."""
+        """Replace texts in document's rows with new_texts."""
 
         if document == Document.MAIN:
             texts = self.main_texts

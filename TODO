@@ -6,21 +6,25 @@ Plans for 0.2.0
   P = Postponed
   ? = Questionable
 
-  [W] Implement spell-check
+  [D] Implement spell-check
         [D] List available dictionaries
-        [ ] Test unicode handling
-        [W] Revise README file and website (PyEnchant & iso-codes)
+        [D] Test unicode handling
+        [D] Revise README file
   [D] Redesign and rewrite code
   [D] Improve encoding handling with a list of fallback encodings
-  [ ] Update (or discontinue) Finnish translation
-  [D] Adapt to PyGTK 2.8
-  [D] Improve uninstallation
-  [ ] Update home page and project page
   [D] Move to edit adjacent cell on Alt+Arrow key-press-event
+  [D] Improve uninstallation
+  [D] Adapt to PyGTK 2.8
+
   [W] Examine hotshot results
   [W] Examine PyChecker results
-  [?] Web forum
   [ ] Ensure that config transition from 0.1.x works.
+  [ ] Bug-check
+
+  [ ] Update (or discontinue) Finnish translation
+
+  [ ] Update home page and project page
+  [ ] Web forum
 
 
 Plans after 0.2.0
