@@ -1,3 +1,8 @@
+2005-12-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* fi.po: Removed due to severe icompleteness caused by code rewrite
+	  and general poor quality.
+
 2005-08-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	RELEASE 0.1.1
