@@ -152,7 +152,6 @@ class TextFileChooserDialog(gtk.FileChooserDialog):
         for python_name, display_name in self._encodings:
             self._encoding_combo_box.append_text(display_name)
 
-        # Add "Other...".
         self._encoding_combo_box.append_text(_('Other...'))
 
         # Set active encoding.

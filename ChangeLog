@@ -1,5 +1,10 @@
 2005-12-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/dialogs/filechooser.py:
+	  Removed a comment to not have it appear in .po files.
+
+2005-12-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/spellcheck-dialog.glade:
 	  Made dialog invisible. Fixed a typo.
 
