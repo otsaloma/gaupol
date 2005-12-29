@@ -1,5 +1,15 @@
 2005-12-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/delegates/edit.py:
+	* lib/gaupol/gtk/cellrend/time.py:
+	* lib/gaupol/gtk/dialogs/language.py:
+	  Fixed typos discovered by PyChecker.
+
+	* test/pycheckrc:
+	  Added configuration file for PyChecker.
+
+2005-12-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/gtk/dialogs/filechooser.py:
 	  Removed a comment to not have it appear in .po files.
 

@@ -139,7 +139,7 @@ class LanguageDialog(object):
         # List languages by trying to create a dictionary object for them.
         for lang in langlib.locales:
             try:
-                dictionary = enchant.Dict(lang)
+                enchant.Dict(lang)
                 self._langs.append(lang)
             except enchant.Error, detail:
                 pass

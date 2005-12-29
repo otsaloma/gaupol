@@ -55,7 +55,7 @@ class CellRendererTime(CellRendererText):
         self._insert_signal    = None
         self._key_press_signal = None
 
-    def _change_to_zero(self, editor, keyval):
+    def _change_to_zero(self, editor, keyname):
         """Change numbers to zero."""
 
         editor.handler_block(self._delete_signal)

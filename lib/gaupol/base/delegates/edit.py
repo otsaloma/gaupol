@@ -105,9 +105,8 @@ class EditDelegate(Delegate):
         start_row  = min(rows)
         amount     = len(rows)
 
-        # Optimal durations
+        # Optimal duration in seconds
         opt_sec = 3
-        opt_frm = int(round(Framerate.values[self.framerate] * opt_sec, 0))
 
         # Get the first show time or frame.
         if start_row > 0:
@@ -127,10 +126,10 @@ class EditDelegate(Delegate):
                 duration = int((end - start) / amount)
         else:
             if mode == Mode.TIME:
-                duration = 3
+                duration = opt_sec
             if mode == Mode.FRAME:
                 fr_value = Framerate.values[self.framerate]
-                duration = int(round(fr_value * 3, 0))
+                duration = int(round(fr_value * opt_sec, 0))
 
         if mode == Mode.TIME:
             for i in range(amount):
@@ -158,7 +157,7 @@ class EditDelegate(Delegate):
 
                 show_time = calc.frame_to_time(show_frame)
                 hide_time = calc.frame_to_time(hide_frame)
-                durn_time = conv.get_time_duration(show_time, hide_time)
+                durn_time = calc.get_time_duration(show_time, hide_time)
 
                 row = start_row + i
                 times.insert(row, [show_time, hide_time, durn_time])

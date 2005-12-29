@@ -16,15 +16,16 @@ Plans for 0.2.0
   [D] Improve uninstallation
   [D] Adapt to PyGTK 2.8
 
-  [W] Examine hotshot results
-  [W] Examine PyChecker results
-  [ ] Ensure that config transition from 0.1.x works.
-  [ ] Bug-check
+  [D] Examine hotshot results
+  [D] Examine PyChecker results
+  [D] Ensure that config transition from 0.1.x works.
+  [ ] Bug-check all
 
-  [ ] Update (or discontinue) Finnish translation
+  [D] Update (or discontinue) Finnish translation
 
-  [ ] Update home page and project page
-  [ ] Web forum
+  [ ] Update home page
+  [ ] Update project page
+  [ ] Create web forum
 
 
 Plans after 0.2.0
