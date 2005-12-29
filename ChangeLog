@@ -1,5 +1,10 @@
 2005-12-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/text/parser.py:
+	  Fixed a typo.
+
+2005-12-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/delegates/edit.py:
 	* lib/gaupol/gtk/cellrend/time.py:
 	* lib/gaupol/gtk/dialogs/language.py:

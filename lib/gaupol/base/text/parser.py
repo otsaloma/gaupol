@@ -22,7 +22,7 @@
 
 # NOTE:
 # This parser is experimental and not thoroughly tested. Possible problems with
-# the "replace" and "substitute" methods after shiting tags include at least:
+# the "replace" and "substitute" methods after shifting tags include at least:
 # - Tags might overlap.
 # - Tags that were in the middle of a match might end up in the wrong place.
 # - Tags might be shifted further than the text length.
