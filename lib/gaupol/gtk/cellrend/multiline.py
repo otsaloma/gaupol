@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""CellRenderer for cells containing multiline text."""
+"""Cell renderer for cells containing multiline text."""
 
 
 try:
@@ -26,14 +26,15 @@ except ImportError:
     pass
 
 import gtk
-import gobject
 
-from gaupol.gui.cellrend.custom import CustomCellRenderer
+from gaupol.gtk.cellrend.text import CellRendererText
 
 
 class CellTextView(gtk.TextView, gtk.CellEditable):
 
-    """TextView that implements CellEditable."""
+    """Text view that implements gtk.CellEditable."""
+
+    __gtype_name__ = 'CellTextView'
 
     def do_editing_done(self, *args):
         """End editing by removing the editor."""
@@ -43,26 +44,27 @@ class CellTextView(gtk.TextView, gtk.CellEditable):
     def do_remove_widget(self, *args):
         """Empty method to avoid console error output."""
         pass
-    
+
     def do_start_editing(self, *args):
         """Empty method to avoid console error output."""
         pass
-    
+
     def get_text(self, *args):
         """Get the text."""
 
-        start, end = self.get_buffer().get_bounds()
+        text_buffer = self.get_buffer()
+        start, end = text_buffer.get_bounds()
         return text_buffer.get_text(start, end, True)
-        
+
     def set_text(self, text):
         """Set the text."""
 
         self.get_buffer().set_text(text)
 
 
-class CellRendererMultilineText(CustomCellRenderer):
+class CellRendererMultilineText(CellRendererText):
 
-    """CellRenderer for cells containing multiline text."""
+    """Cell renderer for cells containing multiline text."""
 
     def on_start_editing(self, event, widget, row, background_area, cell_area,
                          flags):
@@ -72,36 +74,42 @@ class CellRendererMultilineText(CustomCellRenderer):
         Return: CellTextView
         """
         editor = CellTextView()
-
         editor.set_wrap_mode(gtk.WRAP_NONE)
         editor.modify_font(self.font_description)
 
-        editor.set_text(self.text or '')
+        editor.set_text(self.text or u'')
 
         editor.connect('editing-done'   , self.on_editing_done   , row)
         editor.connect('key-press-event', self.on_key_press_event     )
 
         editor.grab_focus()
         editor.show()
-
         return editor
 
     def on_key_press_event(self, editor, event):
         """
-        End editing if Return or Keypad Enter is pressed.
-        
-        Shift or Control combined with Return or Keypad Enter can be used for
-        linebreaking.
-        """
-        mask = event.state
+        Respond to key press events.
 
-        if mask & gtk.gdk.CONTROL_MASK|gtk.gdk.SHIFT_MASK:
+        End editing if Return, Keypad Enter or Escape pressed. Shift or Control
+        combined with Return or Keypad Enter can be used for linebreaking.
+        Escape cancels editing.
+        """
+        accel_masks = (gtk.gdk.CONTROL_MASK | gtk.gdk.SHIFT_MASK)
+        keymap = gtk.gdk.keymap_get_default()
+
+        args = event.hardware_keycode, event.state, event.group
+        output = keymap.translate_keyboard_state(*args)
+        keyval, egroup, level, consumed = output
+        keyname = gtk.gdk.keyval_name(keyval)
+
+        if event.state & ~consumed & accel_masks:
             return
 
-        keyname = gtk.gdk.keyval_name(event.keyval)
-
-        if keyname in ['Return', 'KP_Enter']:
+        if keyname in ('Return', 'KP_Enter'):
             editor.emit('editing-done')
+            return True
 
-
-gobject.type_register(CellTextView)
+        if keyname == 'Escape':
+            editor.remove_widget()
+            self.emit('editing-canceled')
+            return True

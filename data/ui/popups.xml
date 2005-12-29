@@ -1,21 +1,21 @@
 <ui>
-	<popup name="column_popup">
-		<menuitem action="number"/>
-		<menuitem action="show"/>
-		<menuitem action="hide"/>
-		<menuitem action="duration"/>
-		<menuitem action="text"/>
-		<menuitem action="translation"/>
+	<popup action="view">
+		<menuitem name="value" action="edit_value"/>
+		<separator/>
+		<menuitem name="cut" action="cut_texts"/>
+		<menuitem name="copy" action="copy_texts"/>
+		<menuitem name="paste" action="paste_texts"/>
+		<menuitem name="clear" action="clear_texts"/>
+		<separator/>
+		<menuitem name="insert" action="insert_subtitles"/>
+		<menuitem name="remove" action="remove_subtitles"/>
 	</popup>
-	<popup name="tree_view_popup">
-		<menuitem action="edit_cell"/>
-		<separator/>
-		<menuitem action="cut"/>
-		<menuitem action="copy"/>
-		<menuitem action="paste"/>
-		<menuitem action="clear"/>
-		<separator/>
-		<menuitem action="insert_subtitles"/>
-		<menuitem action="remove_subtitles"/>
+	<popup action="view_header">
+		<menuitem name="number" action="toggle_number_column"/>
+		<menuitem name="show" action="toggle_show_column"/>
+		<menuitem name="hide" action="toggle_hide_column"/>
+		<menuitem name="duration" action="toggle_duration_column"/>
+		<menuitem name="main_text" action="toggle_main_text_column"/>
+		<menuitem name="translation_text" action="toggle_translation_text_column"/>
 	</popup>
 </ui>

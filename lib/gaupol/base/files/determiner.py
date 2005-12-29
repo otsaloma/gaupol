@@ -20,26 +20,30 @@
 """Subtitle file format determiner."""
 
 
-import re
-
 try:
     from psyco.classes import *
 except ImportError:
     pass
 
-from gaupol.constants import FORMAT
+import re
+
 from gaupol.base.files.classes import *
-from gaupol.base.files.subfile import SubtitleFile
+from gaupol.base.files         import SubtitleFile
+from gaupol.base.error         import FileFormatError
+from gaupol.constants          import Format
 
 
 class FileFormatDeterminer(SubtitleFile):
-    
+
     """Subtitle file format determiner."""
-    
+
+    FORMAT = None
+    MODE   = None
+
     def determine_file_format(self):
         """
         Determine the file format.
-        
+
         Read file and once an identifier assiciated with a specific subtitle
         format is found, return that format.
 
@@ -51,8 +55,8 @@ class FileFormatDeterminer(SubtitleFile):
 
         # Assemble a list of regular expressions.
         re_ids = []
-        for format in range(len(FORMAT.CLASS_NAMES)):
-            pattern = eval(FORMAT.CLASS_NAMES[format]).ID_PATTERN
+        for format in range(len(Format.class_names)):
+            pattern = eval(Format.class_names[format]).id_pattern
             try:
                 re_id = re.compile(pattern[0], pattern[1])
             except TypeError:
@@ -64,12 +68,5 @@ class FileFormatDeterminer(SubtitleFile):
             for format, re_id in re_ids:
                 if re_id.search(line) is not None:
                     return format
-            
-        raise FileFormatError(_('Unrecognized subtitle file format'))
 
-        
-class FileFormatError(Exception):
-    
-    """Bad subtitle file format."""
-    
-    pass
+        raise FileFormatError(_('Unrecognized subtitle file format'))

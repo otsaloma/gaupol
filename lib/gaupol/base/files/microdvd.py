@@ -24,38 +24,33 @@
 # http://netti.nic.fi/~temp/easydivx/help/mdvddoc
 
 
-import codecs
-import re
-
 try:
     from psyco.classes import *
 except ImportError:
     pass
 
-from gaupol.constants import EXTENSION, FORMAT, MODE
-from gaupol.base.files.subfile import SubtitleFile
+import codecs
+import re
+
+from gaupol.base.files import SubtitleFile
+from gaupol.constants  import Format, Mode
 
 
 class MicroDVD(SubtitleFile):
-    
+
     """
     MicroDVD file.
-    
+
     MicroDVD format quick reference:
     {436}{531}And that completes my final report|until we reach touchdown.
     {533}{624}We're now on full automatic,|in the hands of the computers.
     """
 
-    ID_PATTERN = r'^\{\d+\}\{\d+\}.*?$', None
-    
-    def __init__(self, *args):
+    FORMAT = Format.MICRODVD
+    MODE   = Mode.FRAME
 
-        SubtitleFile.__init__(self, *args)
-        
-        self.FORMAT    = FORMAT.MICRODVD
-        self.EXTENSION = EXTENSION.MICRODVD
-        self.MODE      = MODE.FRAME
-    
+    id_pattern = r'^\{\d+\}\{\d+\}.*?$', None
+
     def read(self):
         """
         Read MicroDVD file.
@@ -68,16 +63,14 @@ class MicroDVD(SubtitleFile):
         re_line = re.compile(r'^\{(\d+)\}\{(\d+)\}(.*?)$')
 
         lines = self._read_lines()
-        
+
         shows = []
         hides = []
         texts = []
 
         # Split lines list to components.
         for line in lines:
-        
             match = re_line.match(line)
-            
             if match is not None:
                 shows.append(match.group(1))
                 hides.append(match.group(2))

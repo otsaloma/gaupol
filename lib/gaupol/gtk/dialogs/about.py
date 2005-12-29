@@ -20,28 +20,26 @@
 """Dialog to display information about Gaupol."""
 
 
-import locale
-
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
-
 import gtk
 
-from gaupol.constants import VERSION
-from gaupol.base.util import internet
+from gaupol.base.util import wwwlib
+from gaupol           import __version__
 
 
-NAME         = 'Gaupol'
-COPYRIGHT    = u'Copyright \xa9 2005 Osmo Salomaa'
-COMMENTS     = _('Subtitle editor')
-WEBSITE      = 'http://home.gna.org/gaupol'
-AUTHORS      = ['Osmo Salomaa <otsaloma@cc.hut.fi>']
-#DOCUMENTERS = []
-#ARTISTS     = []
-TRANSLATORS = {'fi': 'Osmo Salomaa <otsaloma@cc.hut.fi>'}
-LICENSE      = \
+name     = 'Gaupol'
+copyrght = u'Copyright \xa9 2005 Osmo Salomaa'
+comments = _('Subtitle editor')
+website  = 'http://home.gna.org/gaupol'
+authors  = ['Osmo Salomaa <otsaloma@cc.hut.fi>']
+
+# Translators: This is a special message that shouldn't be translated
+# literally. It is used in the about dialog to give credits to the translators.
+# Thus, you should translate it to your name and email address.  You can also
+# include other translators who have contributed to this translation; in that
+# case, please write them on separate lines seperated by newlines (\n).
+translators = _('translator-credits')
+
+lisense = \
 '''Gaupol is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or
@@ -67,31 +65,20 @@ class AboutDialog(gtk.AboutDialog):
 
         self.set_transient_for(parent)
 
-        self.set_name(NAME)
-        self.set_version(VERSION)
-        self.set_copyright(COPYRIGHT)
-        self.set_comments(COMMENTS)
-        self.set_license(LICENSE)
+        self.set_name(name)
+        self.set_version(__version__)
+        self.set_copyright(copyrght)
+        self.set_comments(comments)
+        self.set_license(lisense)
 
         gtk.about_dialog_set_url_hook(self._on_url_clicked)
-        self.set_website_label(WEBSITE)
-        
-        self.set_authors(AUTHORS)
-        #self.set_documenters(DOCUMENTERS)
-        #self.set_artists(ARTISTS)
+        self.set_website_label(website)
 
-        lang = locale.getdefaultlocale()[0]
+        self.set_authors(authors)
+        if translators != 'translator-credits':
+            self.set_translator_credits(translators)
 
-        # lang is xx_YY. Try that first if no luck get translator for xx.
-        try:
-            self.set_translator_credits(TRANSLATORS[lang])
-        except KeyError:
-            try:
-                self.set_translator_credits(TRANSLATORS[lang[:2]])
-            except KeyError:
-                pass
-        
     def _on_url_clicked(self, *args):
         """Open website in browser when user clicks on URL."""
 
-        internet.open_url(WEBSITE)
+        wwwlib.open_url(website)

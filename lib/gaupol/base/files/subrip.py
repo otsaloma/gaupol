@@ -20,44 +20,40 @@
 """SubRip file."""
 
 
-import codecs
-import re
-
 try:
     from psyco.classes import *
 except ImportError:
     pass
 
-from gaupol.constants import EXTENSION, FORMAT, MODE
-from gaupol.base.files.subfile import SubtitleFile
+import codecs
+import re
+
+from gaupol.base.files import SubtitleFile
+from gaupol.base.util  import listlib
+from gaupol.constants  import Format, Mode
 
 
 class SubRip(SubtitleFile):
-    
+
     """
     SubRip file.
-    
+
     Subrip format quick reference:
     1
     00:00:18,176 --> 00:00:22,135
     And that completes my final report
     until we reach touchdown.
-    
+
     2
     00:00:22,247 --> 00:00:26,046
     We're now on full automatic,
     in the hands of the computers.
     """
 
-    ID_PATTERN = r'^\d\d:\d\d:\d\d,\d\d\d --> \d\d:\d\d:\d\d,\d\d\d\s*$', None
-    
-    def __init__(self, *args):
+    FORMAT = Format.SUBRIP
+    MODE   = Mode.TIME
 
-        SubtitleFile.__init__(self, *args)
-
-        self.FORMAT    = FORMAT.SUBRIP
-        self.EXTENSION = EXTENSION.SUBRIP
-        self.MODE      = MODE.TIME
+    id_pattern = r'^\d\d:\d\d:\d\d,\d\d\d --> \d\d:\d\d:\d\d,\d\d\d\s*$', None
 
     def read(self):
         """
@@ -71,13 +67,12 @@ class SubRip(SubtitleFile):
         re_blank_line = re.compile(r'^\s*$')
         time = r'\d\d:\d\d:\d\d,\d\d\d'
         re_time_line = re.compile(r'^(%s) --> (%s)\s*$' % (time, time))
-        
+
         lines = self._read_lines()
         good_lines = []
-        
+
         # Remove blank lines and unit numbers.
         for line in lines:
-
             if re_blank_line.match(line) is not None:
                 continue
             elif re_time_line.match(line) is not None:
@@ -88,12 +83,10 @@ class SubRip(SubtitleFile):
         shows = []
         hides = []
         texts = []
-        
+
         # Split to components.
         for line in good_lines:
-        
             match = re_time_line.match(line)
-            
             if match is not None:
                 shows.append(match.group(1))
                 hides.append(match.group(2))
@@ -102,7 +95,7 @@ class SubRip(SubtitleFile):
                 texts[-1] += line
 
         # Remove leading and trailing spaces.
-        self._strip_spaces(texts)
+        listlib.strip_spaces(texts)
 
         return shows, hides, texts
 
@@ -115,7 +108,7 @@ class SubRip(SubtitleFile):
         """
         newline_character = self._get_newline_character()
 
-        # Replace python internal newline characters in text with desired
+        # Replace Python internal newline characters in text with desired
         # newline characters.
         texts = [text.replace('\n', newline_character) for text in texts]
 

@@ -20,29 +20,24 @@
 """
 Application settings.
 
-Other modules can get and set variables through the grouping classes and their
-class variables.
+Other modules can get and set variables through the container classes by
+directly accessing their attributes.
 
 ConfigParser is used for reading and writing the ini-style configuration file.
-The configuration file is an .ini-style file in ~/.gaupol/gaupol.conf. Values
-"true" or "false" are used for boolean fields and pipe-separated strings for
-lists. All stored values are strings.
+The configuration file is an .ini-style file in ~/.gaupol/gaupol.gtk.conf.
+Values "true" or "false" are used for boolean fields and pipe-separated strings
+for lists. All stored values are strings.
 """
 
 
 import ConfigParser
-import inspect
 import logging
 import os
+import sys
 
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
-
-from gaupol import __version__
-from gaupol.constants import *
-from gaupol.gtk.colcons import *
+from gaupol.constants        import *
+from gaupol.gtk.colconstants import *
+from gaupol                  import __version__
 
 
 logger = logging.getLogger()
@@ -50,150 +45,177 @@ logger = logging.getLogger()
 
 # Configuration file constants
 CONFIG_DIR    = os.path.join(os.path.expanduser('~'), '.gaupol')
-CONFIG_PATH   = os.path.join(CONFIG_DIR, 'gaupol.conf')
+CONFIG_PATH   = os.path.join(CONFIG_DIR, 'gaupol.gtk.conf')
 CONFIG_HEADER = \
-'''# Gaupol configuration file
+'''# Gaupol GTK user interface configuration file
 #
 # This file is rewritten on each successful application exit. Entered values
 # are checked for correct type, but not for correct value. To return to
-# default settings, delete the corresponding entries or this entire file.
+# default settings, delete the corresponding lines or this entire file.
 
 '''
 
 
-class TYPE(object):
+class Type(object):
 
-    """Types for configuration variables."""
+    """Types of configuration variables."""
 
     STRING        = 0
     INTEGER       = 1
     BOOLEAN       = 2
     CONSTANT      = 3
-    
+
     STRING_LIST   = 4
     INTEGER_LIST  = 5
     BOOLEAN_LIST  = 6
     CONSTANT_LIST = 7
 
-    def is_list(type_):
-        """Return True if type_ is a list type."""
-        
-        return type_ in [4, 5, 6, 7]
+    @staticmethod
+    def is_list(typ):
+        """Return True if typ is a list type."""
 
-    is_list = staticmethod(is_list)
+        return typ in (4, 5, 6, 7)
+
+
+sections = [
+    'application_window',
+    'editor',
+    'encoding_dialog',
+    'file',
+    'general',
+    'subtitle_insert',
+    'spell_check',
+    'spell_check_dialog',
+]
 
 
 class application_window(object):
 
-    maximized       = False
-    _maximized_type = TYPE.BOOLEAN
-    
-    position        = [0, 0]
-    _position_type  = TYPE.INTEGER_LIST
-    
-    size            = [600, 400]
-    _size_type      = TYPE.INTEGER_LIST
+    maximized      = False
+    position       = [0, 0]
+    show_statusbar = True
+    show_toolbar   = True
+    size           = [600, 400]
+
+    types = {
+        'maximized'     : Type.BOOLEAN,
+        'position'      : Type.INTEGER_LIST,
+        'show_statusbar': Type.BOOLEAN,
+        'show_toolbar'  : Type.BOOLEAN,
+        'size'          : Type.INTEGER_LIST,
+    }
 
 class editor(object):
 
-    edit_mode         = MODE.TIME
-    _edit_mode_type   = TYPE.CONSTANT
-    _edit_mode_class  = MODE
-    
-    framerate         = FRAMERATE.FR_23_976
-    _framerate_type   = TYPE.CONSTANT
-    _framerate_class  = FRAMERATE
-    
-    limit_undo        = True
-    _limit_undo_type  = TYPE.BOOLEAN
-    
-    undo_levels       = 25
-    _undo_levels_type = TYPE.INTEGER
+    font             = None
+    framerate        = Framerate.FR_23_976
+    limit_undo       = True
+    mode             = Mode.TIME
+    undo_levels      = 50
+    use_default_font = True
+    visible_columns  = [NO, SHOW, HIDE, DURN, MTXT]
+
+    types = {
+        'font'            : Type.STRING,
+        'framerate'       : Type.CONSTANT,
+        'limit_undo'      : Type.BOOLEAN,
+        'mode'            : Type.CONSTANT,
+        'undo_levels'     : Type.INTEGER,
+        'use_default_font': Type.BOOLEAN,
+        'visible_columns' : Type.CONSTANT_LIST,
+    }
+
+    classes = {
+        'framerate'      : Framerate,
+        'mode'           : Mode,
+        'visible_columns': Column,
+    }
+
 
 class encoding_dialog(object):
 
-    size       = [400, 400]
-    _size_type = TYPE.INTEGER_LIST
+    size = [400, 400]
+
+    types = {
+        'size': Type.INTEGER_LIST,
+    }
 
 class file(object):
 
-    directory                  = os.path.expanduser('~')
-    _directory_type            = TYPE.STRING
+    directory            = os.path.expanduser('~')
+    encoding             = None
+    fallback_encodings   = ['utf_8', 'cp1252']
+    format               = Format.SUBRIP
+    maximum_recent_files = 5
+    newlines             = Newlines.UNIX
+    recent_files         = []
+    try_locale_encoding  = True
+    visible_encodings    = ['utf_8', 'cp1252']
 
-    encoding                   = None
-    _encoding_type             = TYPE.STRING
+    types = {
+        'directory'           : Type.STRING,
+        'encoding'            : Type.STRING,
+        'fallback_encodings'  : Type.STRING_LIST,
+        'format'              : Type.CONSTANT,
+        'maximum_recent_files': Type.INTEGER,
+        'newlines'            : Type.CONSTANT,
+        'recent_files'        : Type.STRING_LIST,
+        'try_locale_encoding' : Type.BOOLEAN,
+        'visible_encodings'   : Type.STRING_LIST
+    }
 
-    fallback_encodings         = ['utf8', 'windows1252']
-    _fallback_encodings_type   = TYPE.STRING_LIST
-
-    format                     = FORMAT.SUBRIP
-    _format_type               = TYPE.CONSTANT
-    _format_class              = FORMAT
-
-    maximum_recent_files       = 5
-    _maximum_recent_files_type = TYPE.INTEGER
-
-    newlines                   = NEWLINE.UNIX
-    _newlines_type             = TYPE.CONSTANT
-    _newlines_class            = NEWLINE
-
-    recent_files               = []
-    _recent_files_type         = TYPE.STRING_LIST
-
-    try_locale_encoding        = True
-    _try_locale_encoding_type  = TYPE.BOOLEAN
-
-    visible_encodings          = ['utf8', 'windows1252']
-    _visible_encodings_type    = TYPE.STRING_LIST
+    classes = {
+        'format'  : Format,
+        'newlines': Newlines,
+    }
 
 class general(object):
 
-    version       = __version__
-    _version_type = TYPE.STRING
+    editor  = 'gvim'
+    version = __version__
+
+    types = {
+        'editor' : Type.STRING,
+        'version': Type.STRING,
+    }
 
 class subtitle_insert(object):
 
-    amount          = 1
-    _amount_type    = TYPE.INTEGER
+    amount   = 1
+    position = Position.BELOW
 
-    position        = POSITION.BELOW
-    _position_type  = TYPE.CONSTANT
-    _position_class = POSITION
+    types = {
+        'amount'  : Type.INTEGER,
+        'position': Type.CONSTANT,
+    }
+
+    classes = {
+        'position': Position,
+    }
 
 class spell_check(object):
 
-    check_all_projects         = False
-    _check_all_projects_type   = TYPE.BOOLEAN
+    check_all_projects   = False
+    check_main           = True
+    check_translation    = False
+    main_language        = None
+    translation_language = None
 
-    check_text                 = True
-    _check_text_type           = TYPE.BOOLEAN
+    types = {
+        'check_all_projects'  : Type.BOOLEAN,
+        'check_main'          : Type.BOOLEAN,
+        'check_translation'   : Type.BOOLEAN,
+        'main_language'       : Type.STRING,
+        'translation_language': Type.STRING,
+    }
 
-    check_translation          = False
-    _check_translation_type    = TYPE.BOOLEAN
+class spell_check_dialog(object):
 
-    text_language              = None
-    _text_language_type        = TYPE.STRING
+    size = [460, 410]
 
-    translation_language       = None
-    _translation_language_type = TYPE.STRING
-
-class view(object):
-
-    font                   = None
-    _font_type             = TYPE.STRING
-
-    use_default_font       = True
-    _use_default_font_type = TYPE.BOOLEAN
-
-    statusbar              = True
-    _statusbar_type        = TYPE.BOOLEAN
-
-    toolbar                = True
-    _toolbar_type          = TYPE.BOOLEAN
-
-    columns                = [NO, SHOW, HIDE, DURN, TEXT]
-    _columns_type          = TYPE.CONSTANT_LIST
-    _columns_class         = COLUMN
+    types = {
+        'size': Type.INTEGER_LIST,
+    }
 
 
 def _get_boolean(arg):
@@ -204,7 +226,7 @@ def _get_boolean(arg):
     """
     booleans = [ True ,  False ]
     strings  = ['true', 'false']
-    
+
     if isinstance(arg, basestring):
         return booleans[strings.index(arg)]
     elif isinstance(arg, bool):
@@ -219,12 +241,12 @@ def _get_constant(section, option, arg):
     Raise AttributeError if some attribute not found.
     Raise ValueError if arg not convertable.
     """
-    constant_class = eval('%s._%s_class' % (section, option))
+    constant_class = eval(section).classes[option]
 
     if isinstance(arg, basestring):
-        return constant_class.ID_NAMES.index(arg)
+        return constant_class.id_names.index(arg)
     elif isinstance(arg, int):
-        return constant_class.ID_NAMES[arg]
+        return constant_class.id_names[arg]
     else:
         raise ValueError('Wrong argument type: %s.' % type(arg))
 
@@ -234,30 +256,13 @@ def get_options(section):
     options = []
 
     for name in dir(eval(section)):
-        if not name.startswith('_'):
+        if not name.startswith('_') and not name in ('types', 'classes'):
             options.append(name)
 
     return options
 
 def get_sections():
     """Get a list of sections."""
-
-    sections = []
-
-    module = inspect.getmodule(TYPE)
-    for name, value in inspect.getmembers(module):
-
-        if not inspect.isclass(value):
-            continue
-
-        # Disregard imported classes.
-        if inspect.getmodule(value) != module:
-            continue
-
-        if name == 'TYPE':
-            continue
-
-        sections.append(name)
 
     return sections
 
@@ -269,9 +274,9 @@ def read():
     # Read from file.
     result = parser.read([CONFIG_PATH])
     if not result:
-        message  = 'Failed to read settings from file "%s".' % CONFIG_PATH
-        message += ' Using default settings.'
-        logger.info(message)
+        msg  = 'Failed to read settings from file "%s".' % CONFIG_PATH
+        msg += ' Using default settings.'
+        logger.info(msg)
 
     # Set config options.
     sections = parser.sections()
@@ -282,10 +287,10 @@ def read():
 
             try:
                 _set_config_option(parser, section, option)
-            except (AttributeError, NameError, ValueError), detail:
+            except Exception:
                 path = section, option
-                message = 'Failed to load setting %s.%s from file' % path
-                logger.warning('%s: %s.' % (message, detail))
+                msg = 'Failed to load setting %s.%s.' % path
+                logger.error(msg)
 
     # Set version to current version.
     general.version = __version__
@@ -293,87 +298,85 @@ def read():
 def _set_config_option(parser, section, option):
     """
     Set value of config option from parser string.
-    
-    Raise ValueError, AttributeError or NameError if something goes wrong.
+
+    Raise Exception if something goes wrong.
     """
     string = parser.get(section, option)
-    type_  = eval('%s._%s_type' % (section, option))
+    typ    = eval(section).types[option]
 
     # Convert string to proper data type.
     if string == '':
-        if TYPE.is_list(type_):
+        if Type.is_list(typ):
             value = []
         else:
             value = None
-            
-    elif type_ == TYPE.STRING:
+
+    elif typ == Type.STRING:
         value = string
-        
-    elif type_ == TYPE.INTEGER:
+
+    elif typ == Type.INTEGER:
         value = int(string)
-        
-    elif type_ == TYPE.BOOLEAN:
+
+    elif typ == Type.BOOLEAN:
         value = _get_boolean(string)
-        
-    elif type_ == TYPE.CONSTANT:
+
+    elif typ == Type.CONSTANT:
         value = _get_constant(section, option, string)
-        
-    elif type_ == TYPE.STRING_LIST:
+
+    elif typ == Type.STRING_LIST:
         value = string.split('|')
-        
-    elif type_ == TYPE.INTEGER_LIST:
+
+    elif typ == Type.INTEGER_LIST:
         str_list = string.split('|')
         value = [int(entry) for entry in str_list]
-        
-    elif type_ == TYPE.BOOLEAN_LIST:
+
+    elif typ == Type.BOOLEAN_LIST:
         str_list = string.split('|')
         value = [_get_boolean(entry) for entry in str_list]
-        
-    elif type_ == TYPE.CONSTANT_LIST:
+
+    elif typ == Type.CONSTANT_LIST:
         str_list = string.split('|')
         value = [_get_constant(section, option, entry) for entry in str_list]
 
-    # Set value.
-    attr = eval('%s.%s' % (section, option))
-    attr = value
+    setattr(eval(section), option, value)
 
 def _set_parser_option(parser, section, option):
     """
     Set value of parser string from config option.
-    
-    Raise ValueError, AttributeError or NameError if something goes wrong.
+
+    Raise Exception if something goes wrong.
     """
-    value = eval('%s.%s'       % (section, option))
-    type_ = eval('%s._%s_type' % (section, option))
+    value = eval('%s.%s' % (section, option))
+    typ   = eval(section).types[option]
 
     # Convert data type to string.
     if value == None:
         string = ''
-        
-    elif type_ == TYPE.STRING:
+
+    elif typ == Type.STRING:
         string = value
-        
-    elif type_ == TYPE.INTEGER:
+
+    elif typ == Type.INTEGER:
         string = str(value)
-        
-    elif type_ == TYPE.BOOLEAN:
+
+    elif typ == Type.BOOLEAN:
         string = _get_boolean(value)
-        
-    elif type_ == TYPE.CONSTANT:
+
+    elif typ == Type.CONSTANT:
         string = _get_constant(section, option, value)
-        
-    elif type_ == TYPE.STRING_LIST:
+
+    elif typ == Type.STRING_LIST:
         string = '|'.join(value)
-        
-    elif type_ == TYPE.INTEGER_LIST:
+
+    elif typ == Type.INTEGER_LIST:
         str_list = [str(entry) for entry in value]
         string = '|'.join(str_list)
-        
-    elif type_ == TYPE.BOOLEAN_LIST:
+
+    elif typ == Type.BOOLEAN_LIST:
         str_list = [_get_boolean(entry) for entry in value]
         string = '|'.join(str_list)
-        
-    elif type_ == TYPE.CONSTANT_LIST:
+
+    elif typ == Type.CONSTANT_LIST:
         str_list = [_get_constant(section, option, entry) for entry in value]
         string = '|'.join(str_list)
 
@@ -395,10 +398,10 @@ def write():
 
             try:
                 _set_parser_option(parser, section, option)
-            except (AttributeError, NameError, ValueError), detail:
+            except Exception:
                 path = section, option
-                message = 'Failed to write setting %s.%s to file' % path
-                logger.error('%s: %s.' % (message, detail))
+                msg = 'Failed to write setting %s.%s.' % path
+                logger.error(msg)
 
     # Create directory ~/.gaupol if it doesn't exist.
     if not os.path.isdir(CONFIG_DIR):
@@ -406,18 +409,18 @@ def write():
             os.makedirs(CONFIG_DIR)
         except OSError, detail:
             info = CONFIG_DIR, detail
-            message = 'Failed to create profile directory "%s": %s.' % info
-            logger.error(message)
+            msg = 'Failed to create profile directory "%s": %s.' % info
+            logger.error(msg)
 
     try:
-    
+
         # Write header.
         config_file = open(CONFIG_PATH, 'w')
         try:
             config_file.write(CONFIG_HEADER)
         finally:
             config_file.close()
-        
+
         # Write settings.
         config_file = open(CONFIG_PATH, 'a')
         try:
@@ -427,5 +430,5 @@ def write():
 
     except IOError, (errno, detail):
         info = CONFIG_PATH, detail
-        message = 'Failed to write settings to file "%s": %s.' % info
-        logger.error(message)
+        msg = 'Failed to write settings to file "%s": %s.' % info
+        logger.error(msg)

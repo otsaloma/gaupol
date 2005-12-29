@@ -18,7 +18,7 @@
 
 
 """
-Language and country names and their ISO codes.
+Language, country and locale names and codes.
 
 Language codes are ISO 639 two-letter codes. Country codes are ISO 3166 codes.
 These match the codes used by most computer software to identify locales, "xx"
@@ -29,8 +29,12 @@ Translations for the language and country names are acquired from the iso-codes
 package if it is installed. That means from the "iso-codes" gettext domain.
 """
 
-# LANGS and COUNTRIES lists have been generated from iso-codes project's XML
-# files using:
+
+import gettext
+
+
+# Lists of languages and countries have been generated from iso-codes project's
+# XML files using:
 #
 # python iso639tab.py  iso_639.xml  > iso-639.txt
 # python iso3166tab.py iso_3166.xml > iso-3166.txt
@@ -39,7 +43,21 @@ package if it is installed. That means from the "iso-codes" gettext domain.
 # http://alioth.debian.org/projects/pkg-isocodes/
 
 
-LANGS = {
+# List of locales has been gathered from two sources.
+# http://www.abisource.com/lxr/source/abi/src/af/util/xp/ut_Language.cpp
+# http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries
+#
+# In addition, two-letter versions of each language have been added. At least
+# Aspell English "en" accepts all accents (e.g. "color" and "colour") and is
+# thus useful.
+#
+# Possible problems:
+# - Not all languages listed?
+# - Listing also two letter versions might cause unwanted duplication in cases
+#   where "xx" and "xx_YY" behave the same.
+
+
+langs = {
     'aa': 'Afar',
     'ab': 'Abkhazian',
     'ae': 'Avestan',
@@ -225,7 +243,7 @@ LANGS = {
     'zu': 'Zulu',
 }
 
-COUNTRIES = {
+countries = {
     'AD': 'Andorra',
     'AE': 'United Arab Emirates',
     'AF': 'Afghanistan',
@@ -468,24 +486,239 @@ COUNTRIES = {
     'ZW': 'Zimbabwe',
 }
 
+locales = (
+    'af',
+    'af_ZA',
+    'ak',
+    'ak_GH',
+    'am',
+    'am_ET',
+    'ar',
+    'ar_EG',
+    'ar_SA',
+    'as',
+    'as_IN',
+    'be',
+    'be_BY',
+    'bg',
+    'bg_BG',
+    'bn',
+    'bn_IN',
+    'br',
+    'br_FR',
+    'ca',
+    'ca_ES',
+    'co',
+    'co_FR',
+    'cs',
+    'cs_CZ',
+    'cy',
+    'cy_GB',
+    'da',
+    'da_DK',
+    'de',
+    'de_AT',
+    'de_CH',
+    'de_DE',
+    'el',
+    'el_GR',
+    'en',
+    'en_AU',
+    'en_CA',
+    'en_GB',
+    'en_IE',
+    'en_NZ',
+    'en_US',
+    'en_ZA',
+    'eo',
+    'es',
+    'es_AR',
+    'es_BO',
+    'es_CL',
+    'es_CO',
+    'es_CR',
+    'es_CU',
+    'es_DO',
+    'es_EC',
+    'es_ES',
+    'es_GT',
+    'es_HN',
+    'es_MX',
+    'es_NI',
+    'es_PA',
+    'es_PE',
+    'es_PR',
+    'es_PY',
+    'es_SV',
+    'es_UY',
+    'es_VE',
+    'et',
+    'et_EE',
+    'eu',
+    'eu_ES',
+    'fa',
+    'fa_IR',
+    'fi',
+    'fi_FI',
+    'fo',
+    'fo_FO',
+    'fr',
+    'fr_BE',
+    'fr_CA',
+    'fr_CH',
+    'fr_FR',
+    'fy',
+    'fy_NL',
+    'ga',
+    'ga_IE',
+    'gd',
+    'gd_GB',
+    'gl',
+    'gl_ES',
+    'ha',
+    'ha_NE',
+    'ha_NG',
+    'he',
+    'he_IL',
+    'hi',
+    'hi_IN',
+    'hr',
+    'hr_HR',
+    'hu',
+    'hu_HU',
+    'hy',
+    'hy_AM',
+    'ia',
+    'id',
+    'id_ID',
+    'is',
+    'is_IS',
+    'it',
+    'it_IT',
+    'iu',
+    'iu_CA',
+    'ja',
+    'ja_JP',
+    'ka',
+    'ka_GE',
+    'kn',
+    'kn_IN',
+    'ko',
+    'ko_KR',
+    'ku',
+    'ku_TR',
+    'kw',
+    'kw_GB',
+    'la',
+    'la_IT',
+    'lo',
+    'lo_LA',
+    'lt',
+    'lt_LT',
+    'lv',
+    'lv_LV',
+    'mg',
+    'mg_MG',
+    'mh',
+    'mh_MH',
+    'mh_NR',
+    'mi',
+    'mi_NZ',
+    'mk',
+    'mn',
+    'mn_MN',
+    'mr',
+    'mr_IN',
+    'ms',
+    'ms_MY',
+    'nb',
+    'nb_NO',
+    'nl',
+    'nl_BE',
+    'nl_NL',
+    'nn',
+    'nn_NO',
+    'no',
+    'no_NO',
+    'ny',
+    'ny_MW',
+    'oc',
+    'oc_FR',
+    'pa',
+    'pa_IN',
+    'pa_PK',
+    'pl',
+    'pl_PL',
+    'pt',
+    'pt_BR',
+    'pt_PT',
+    'qu',
+    'qu_BO',
+    'ro',
+    'ro_RO',
+    'ru',
+    'ru_RU',
+    'rw',
+    'rw_RW',
+    'sc',
+    'sc_IT',
+    'sk',
+    'sk_SK',
+    'sl',
+    'sl_SI',
+    'sq',
+    'sq_AL',
+    'sr',
+    'sv',
+    'sv_SE',
+    'sw',
+    'sw_KE',
+    'ta',
+    'ta_IN',
+    'te',
+    'te_IN',
+    'th',
+    'th_TH',
+    'tl',
+    'tl_PH',
+    'tn',
+    'tn_ZA',
+    'tr',
+    'tr_TR',
+    'uk',
+    'uk_UA',
+    'uz',
+    'uz_UZ',
+    'vi',
+    'vi_VN',
+    'yi',
+    'zh',
+    'zh_CN',
+    'zh_HK',
+    'zh_SG',
+    'zh_TW',
+    'zu',
+    'zu_ZA',
+)
+
 
 def get_country(code):
     """
     Get localized country name from language code.
-    
+
     code: locale language code, "xx" or "xx_YY"
     Raise KeyError if language not found.
     Return None if no country in code.
     """
     if len(code) == 5:
-        return dgettext('iso_3166', COUNTRIES[code[3:]])
+        return gettext.dgettext('iso_3166', countries[code[3:]])
     else:
         return None
-        
+
 def get_descriptive_name(code):
     """
     Get localized descriptive name for language.
-    
+
     code: locale language code, "xx" or "xx_YY"
     Raise KeyError if language or country not found.
     Return "Language (Country)".
@@ -496,14 +729,14 @@ def get_descriptive_name(code):
     if country is None:
         return lang
     else:
-        # TRANSLATORS: Language descriptive name, e.g. "English (Canada)".
+        # Translators: Language descriptive name, e.g. "English (Canada)".
         return _('%s (%s)') % (lang, country)
 
 def get_language(code):
     """
     Get language from language code.
-    
+
     code: locale language code, "xx" or "xx_YY"
     Raise KeyError is language not found.
     """
-    return dgettext('iso_639', LANGS[code[:2]])
+    return gettext.dgettext('iso_639', langs[code[:2]])

@@ -20,28 +20,32 @@
 """SubRip tag library."""
 
 
-# No documentation found for SubRip format, but according to rumors, SubRip
-# supports only style tags (bold, italic and underline).
+# No documentation found for SubRip format.
+#
+# Assumed tags:
+# <b></b>
+# <i></i>
+# <u></u>
 
-
-import re
 
 try:
     from psyco.classes import *
 except ImportError:
     pass
 
-from gaupol.base.tags.taglib import TagLibrary
+import re
 
-    
+from gaupol.base.tags import TagLibrary
+
+
 class SubRip(TagLibrary):
 
     """SubRip tag library."""
 
-    TAG    = r'</?(b|i|u)>', re.IGNORECASE
-    ITALIC = r'</?i>'      , re.IGNORECASE
-    
-    DECODE_TAGS = [
+    tag        = r'</?(b|i|u)>', re.IGNORECASE
+    italic_tag = r'</?i>'      , re.IGNORECASE
+
+    decode_tags = [
         (
             # Uppercase bold
             r'(</?)B>', None,
@@ -57,7 +61,7 @@ class SubRip(TagLibrary):
         )
     ]
 
-    ENCODE_TAGS = [
+    encode_tags = [
         (
             # Color
             r'</?color.*?>', None,
@@ -73,9 +77,8 @@ class SubRip(TagLibrary):
         )
     ]
 
+    @staticmethod
     def italicize(text):
         """Italicize text."""
-        
-        return u'<i>%s</i>' % text
 
-    italicize = staticmethod(italicize)
+        return u'<i>%s</i>' % text

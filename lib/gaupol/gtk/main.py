@@ -1,4 +1,5 @@
 # Copyright (C) 2005 Osmo Salomaa
+#
 # This file is part of Gaupol.
 #
 # Gaupol is free software; you can redistribute it and/or modify
@@ -16,43 +17,35 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Module to start Gaupol GTK+ user interface."""
+"""Starting Gaupol GTK user interface."""
 
 
-import logging
 import os
+import sys
 
 import gtk
 
-from gaupol.gui.application import Application
-
-
-logger = logging.getLogger()
+from gaupol.gtk.application import Application
+from gaupol.gtk.dialogs     import debug
 
 
 def main(args):
     """
-    Start the Gaupol GTK+ UI and open files given as arguments.
-    
-    args: sys.argv[1:]
+    Start the Gaupol GTK UI and open files given as arguments.
+
+    args: list of files to open, should be sys.argv[1:]
     """
+    sys.excepthook = debug.show
+
     application = Application()
     paths = []
 
     for arg in args:
-    
-        # Get full path.
-        basename = os.path.basename(arg)
-        dirname  = os.path.abspath(os.path.dirname(arg))
-        path     = os.path.join(dirname, basename)
-        
-        # Accept only existing files.
+        path = os.path.abspath(arg)
         if os.path.isfile(path):
             paths.append(path)
-        else:
-            logger.info('Disregarding non-existent file "%s".' % path)
-    
+
     if paths:
         application.open_main_files(paths)
-    
+
     gtk.main()

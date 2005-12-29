@@ -22,16 +22,18 @@
 
 # Documentation:
 # http://netti.nic.fi/~temp/easydivx/help/mdvddoc/#step5
+#
+# Position and coordinate tags are unimplemented.
 
-
-import re
 
 try:
     from psyco.classes import *
 except ImportError:
     pass
 
-from gaupol.base.tags.taglib import TagLibrary
+import re
+
+from gaupol.base.tags import TagLibrary
 
 
 COMMON = re.MULTILINE|re.DOTALL
@@ -41,10 +43,10 @@ class MicroDVD(TagLibrary):
 
     """MicroDVD tag library."""
 
-    TAG    = r'\{[a-z]:.*?\}', re.IGNORECASE
-    ITALIC = r'\{y:i\}'      , re.IGNORECASE
+    tag        = r'\{[a-z]:.*?\}', re.IGNORECASE
+    italic_tag = r'\{y:i\}'      , re.IGNORECASE
 
-    DECODE_TAGS = [
+    decode_tags = [
         (
             # Style x3 (single line)
             r'\{y:(b|i|u).*?(b|i|u).*?(b|i|u)\}(.*?)$', COMMON,
@@ -94,14 +96,13 @@ class MicroDVD(TagLibrary):
             r'\{S:(\d+)\}(.*?)\Z', COMMON,
             r'<size="\1">\2</size>'
         ), (
-            # Remove all other tags. Includes at least position and coordinate
-            # tags.
+            # Remove all other tags.
             r'\{[a-z]:.*?\}', re.IGNORECASE,
             r''
         )
     ]
 
-    ENCODE_TAGS = [
+    encode_tags = [
         (
             # Remove duplicate style tags (e.g. <b>foo</b><b>bar</b>).
             r'</(b|i|u)>(\n?)<\1>', COMMON,
@@ -161,9 +162,8 @@ class MicroDVD(TagLibrary):
         )
     ]
 
+    @staticmethod
     def italicize(text):
         """Italicize text."""
-        
-        return u'{Y:i}%s' % text
 
-    italicize = staticmethod(italicize)
+        return u'{Y:i}%s' % text

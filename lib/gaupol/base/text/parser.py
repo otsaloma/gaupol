@@ -20,11 +20,12 @@
 """Text parser that allows text editing while keeping tags intact."""
 
 
-# This parser is highly experimental and untested.
-#
-# Possible problems with the "replace" and "substitute" methods:
-# - Tags might overlap after shifting. (Is that a problem?)
+# NOTE:
+# This parser is experimental and not thoroughly tested. Possible problems with
+# the "replace" and "substitute" methods after shiting tags include at least:
+# - Tags might overlap.
 # - Tags that were in the middle of a match might end up in the wrong place.
+# - Tags might be shifted further than the text length.
 
 
 try:
@@ -43,48 +44,49 @@ class TextParser(object):
 
     Parser can be used by first setting text to it, then performing operations
     on the pure text and finally getting the full text back.
-    
-    full_text: Text with tags
-    pure_text: Text without tags
-    tags     : List of tags, [[tag_string, start_pos], ...]
     """
 
     def __init__(self, re_tag=None):
 
-        self.text   = None
+        # Regular expression for any tag
         self.re_tag = re_tag
+
+        # Tagless text
+        self.text = None
+
+        # List of lists [tag, position]
         self.tags   = None
 
     def get_text(self):
         """Reassemble text and return it."""
 
-        text = self.pure_text[:]
-        
+        text = self.text[:]
+
         for entry in self.tags:
             tag, start = entry
             text = text[:start] + tag + text[start:]
 
         return text
 
-    def replace(self, find, repl):
-        """Perform simple string replacement on text."""
+    def replace(self, pattern, replacement):
+        """
+        Perform simple string replacement on text.
 
+        Beware of infinite recursion caused by replacement matching pattern.
+        """
         while True:
 
-            start = self.text.find(find)
+            start = self.text.find(pattern)
             if start == -1:
                 break
 
             # Perform replace.
-            self.text = self.text.replace(find, repl)
+            len_before = len(self.text)
+            self.text = self.text.replace(pattern, replacement)
+            shift = len(self.text) - len_before
 
             # Shift tags.
-            shift = len(repl) - len(find)
-            shift_start = start + len(repl)
-
-            for i in range(len(self.tags)):
-                if self.tags[i][POS] >= shift_start:
-                    self.tags[i][POS] += shift
+            self._shift_tags(start, shift)
 
     def set_text(self, text):
         """Set text and parse it for tags."""
@@ -99,26 +101,48 @@ class TextParser(object):
             start, end = match.span()
             self.tags.append([text[start:end], start])
 
-        self.text = re_tag.sub('', text)
+        self.text = self.re_tag.sub('', text)
 
-    def substitute(self, regex, repl):
-        """Perform a regular expression substitution on text."""
+    def _shift_tags(self, start, shift):
+        """
+        Shift tags.
 
+        All tags that are positioned after start in tagless text are shifted
+        shift amount either forward or backward.
+        """
+        # Get length of tags before start.
+        len_tags = 0
+        start_with_tags = start
+        for tag, position in self.tags:
+            if position <= start_with_tags:
+                len_tags += len(tag)
+                start_with_tags += len(tag)
+
+        # Shift tags.
+        for i in range(len(self.tags)):
+            if self.tags[i][POS] > start + len_tags:
+                self.tags[i][POS] += shift
+                if self.tags[i][POS] < 0:
+                    self.tags[i][POS] = 0
+
+    def substitute(self, regex, replacement):
+        """
+        Perform a regular expression substitution on text.
+
+        Beware of infinite recursion caused by replacement matching pattern.
+        """
         while True:
 
-            match = regex.match(text)
+            match = regex.search(self.text)
             if match is None:
                 break
 
             start, end = match.span()
 
             # Perform substitution.
-            self.text = regex.sub(repl, self.text)
-            
-            # Shift tags.
-            shift = len(repl) - (end - start)
-            shift_start = start + len(repl)
+            len_before = len(self.text)
+            self.text = regex.sub(replacement, self.text, 1)
+            shift = len(self.text) - len_before
 
-            for i in range(len(self.tags)):
-                if self.tags[i][POS] >= shift_start:
-                    self.tags[i][POS] += shift
+            # Shift tags.
+            self._shift_tags(start, shift)

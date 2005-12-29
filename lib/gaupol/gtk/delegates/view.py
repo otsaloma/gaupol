@@ -1,0 +1,523 @@
+# Copyright (C) 2005 Osmo Salomaa
+#
+# This file is part of Gaupol.
+#
+# Gaupol is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# Gaupol is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Gaupol; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+
+"""Altering application and project appearance."""
+
+
+try:
+    from psyco.classes import *
+except ImportError:
+    pass
+
+import gtk
+
+from gaupol.constants        import Framerate, Mode
+from gaupol.gtk.colconstants import *
+from gaupol.gtk.delegates    import Action, Delegate
+from gaupol.gtk.util         import config, gui
+from gaupol.gtk.view         import View
+
+
+class ToggleColumnActionMenu(Action):
+
+    """Toggling the visibility of a column."""
+
+    uim_menu_item = (
+        'show_columns_menu',
+        None,
+        _('_Columns')
+    )
+
+    uim_paths = ['/ui/menubar/view/columns']
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return whether action can or cannot be done."""
+
+        return page is not None
+
+
+class ToggleColumnAction(Action):
+
+    """Toggling the visibility of a column."""
+
+    @classmethod
+    def get_uim_toggle_item_value(cls):
+        """Return value of the UI manager toggle item."""
+
+        return cls.col in config.editor.visible_columns
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return whether action can or cannot be done."""
+
+        return page is not None
+
+
+class ToggleColumnNoAction(ToggleColumnAction):
+
+    col = NO
+
+    uim_toggle_item = (
+        'toggle_number_column',
+        None,
+        _('_No.'),
+        None,
+        _('Change the visibility of the "No." column'),
+        'on_toggle_column_activated',
+        1
+    )
+
+    uim_paths = ['/ui/menubar/view/columns/%s' % Column.id_names[col]]
+
+
+class ToggleColumnShowAction(ToggleColumnAction):
+
+    col = SHOW
+
+    uim_toggle_item = (
+        'toggle_show_column',
+        None,
+        _('_Show'),
+        None,
+        _('Change the visibility of the "Show" column'),
+        'on_toggle_column_activated',
+        1
+    )
+
+    uim_paths = ['/ui/menubar/view/columns/%s' % Column.id_names[col]]
+
+
+class ToggleColumnHideAction(ToggleColumnAction):
+
+    col = HIDE
+
+    uim_toggle_item = (
+        'toggle_hide_column',
+        None,
+        _('_Hide'),
+        None,
+        _('Change the visibility of the "Hide" column'),
+        'on_toggle_column_activated',
+        1
+    )
+
+    uim_paths = ['/ui/menubar/view/columns/%s' % Column.id_names[col]]
+
+
+class ToggleColumnDurationAction(ToggleColumnAction):
+
+    col = DURN
+
+    uim_toggle_item = (
+        'toggle_duration_column',
+        None,
+        _('_Duration'),
+        None,
+        _('Change the visibility of the "Duration" column'),
+        'on_toggle_column_activated',
+        1
+    )
+
+    uim_paths = ['/ui/menubar/view/columns/%s' % Column.id_names[col]]
+
+
+class ToggleColumnMainTextAction(ToggleColumnAction):
+
+    col = MTXT
+
+    uim_toggle_item = (
+        'toggle_main_text_column',
+        None,
+        _('_Main Text'),
+        None,
+        _('Change the visibility of the "Main Text" column'),
+        'on_toggle_column_activated',
+        1
+    )
+
+    uim_paths = ['/ui/menubar/view/columns/%s' % Column.id_names[col]]
+
+
+class ToggleColumnTranslationTextAction(ToggleColumnAction):
+
+    col = TTXT
+
+    uim_toggle_item = (
+        'toggle_translation_text_column',
+        None,
+        _('_Translation Text'),
+        None,
+        _('Change the visibility of the "Translation Text" column'),
+        'on_toggle_column_activated',
+        1
+    )
+
+    uim_paths = ['/ui/menubar/view/columns/%s' % Column.id_names[col]]
+
+
+class ToggleEditModeAction(Action):
+
+    """Toggling the edit mode."""
+
+    uim_radio_items = (
+        (
+            (
+                'show_times',
+                None,
+                _('T_imes'),
+                '<control>M',
+                _('Use time units'),
+                0
+            ), (
+                'show_frames',
+                None,
+                _('F_rames'),
+                '<control>R',
+                _('Use frame units'),
+                1
+            )
+        ),
+        0,
+        'on_toggle_edit_mode_activated'
+    )
+
+    uim_paths = ['/ui/menubar/view/times', '/ui/menubar/view/frames']
+
+    @classmethod
+    def get_uim_radio_items_index(cls):
+        """Return the active index of the UI manager radio items."""
+
+        return config.editor.mode
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return whether action can or cannot be done."""
+
+        return not page is None
+
+
+class ToggleFramerateAction(Action):
+
+    """Toggling the framerate."""
+
+    uim_menu_item = (
+        'show_framerate_menu',
+        None,
+        _('_Framerate')
+    )
+
+    uim_radio_items = (
+        (
+            (
+                'view_framerate_23_976',
+                None,
+                _('2_3.976 fps'),
+                None,
+                _('Calculate unnative units with framerate 23.976 fps'),
+                0
+            ), (
+                'view_framerate_25',
+                None,
+                _('2_5 fps'),
+                None,
+                _('Calculate unnative units with framerate 25 fps'),
+                1
+            ), (
+                'view_framerate_29_97',
+                None,
+                _('2_9.97 fps'),
+                None,
+                _('Calculate unnative units with framerate 29.97 fps'),
+                2
+            )
+        ),
+        0,
+        'on_toggle_framerate_activated'
+    )
+
+    uim_paths = ['/ui/menubar/view/framerate']
+    widgets   = ['framerate_combo_box']
+
+    @classmethod
+    def get_uim_radio_items_index(cls):
+        """Return the active index of the UI manager radio items."""
+
+        return config.editor.framerate
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return whether action can or cannot be done."""
+
+        if page is None:
+            return False
+        elif page.project.main_file is None:
+            return False
+        else:
+            return True
+
+
+class ToggleStatusbarAction(Action):
+
+    """Toggling the visibility of the statusbar."""
+
+    uim_toggle_item = (
+        'toggle_statusbar',
+        None,
+        _('_Statusbar'),
+        None,
+        _('Toggle the visibility of the statusbar'),
+        'on_toggle_statusbar_activated',
+        True
+    )
+
+    uim_paths = ['/ui/menubar/view/statusbar']
+
+    @classmethod
+    def get_uim_toggle_item_value(cls):
+        """Return value of the UI manager toggle item."""
+
+        return config.application_window.show_statusbar
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return whether action can or cannot be done."""
+
+        return True
+
+
+class ToggleToolbarAction(Action):
+
+    """Toggling the visibility of the toolbar."""
+
+    uim_toggle_item = (
+        'toggle_toolbar',
+        None,
+        _('_Toolbar'),
+        None,
+        _('Toggle the visibility of the toolbar'),
+        'on_toggle_toolbar_activated',
+        True
+    )
+
+    uim_paths = ['/ui/menubar/view/toolbar']
+
+    @classmethod
+    def get_uim_toggle_item_value(cls):
+        """Return value of the UI manager toggle item."""
+
+        return config.application_window.show_toolbar
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return whether action can or cannot be done."""
+
+        return True
+
+
+class ViewDelegate(Delegate):
+
+    """Altering application and project appearance."""
+
+    def on_framerate_changed(self, *args):
+        """
+        Change framerate.
+
+        This method is called from the framerate combo box.
+        """
+        page = self.get_current_page()
+
+        # Get new framerate.
+        framerate = self.framerate_combo_box.get_active()
+
+        # Return if only refreshing widget state.
+        if framerate == page.project.framerate:
+            return
+
+        gui.set_cursor_busy(self.window)
+
+        # Set new framerate and save setting.
+        page.project.change_framerate(framerate)
+        config.editor.framerate = framerate
+
+        # Set the correct framerate menu item active.
+        name = Framerate.id_names[framerate]
+        path = '/ui/menubar/view/framerate/%s' % name
+        self.uim.get_widget(path).set_active(True)
+
+        if page.edit_mode != page.project.main_file.mode:
+            page.reload_columns([SHOW, HIDE, DURN])
+
+        gui.set_cursor_normal(self.window)
+
+    def on_toggle_column_activated(self, action):
+        """Toggle the visibility of a column."""
+
+        page = self.get_current_page()
+
+        col = [
+            'toggle_number_column',
+            'toggle_show_column',
+            'toggle_hide_column',
+            'toggle_duration_column',
+            'toggle_main_text_column',
+            'toggle_translation_text_column'
+        ].index(action.get_name())
+
+        tree_view_column = page.view.get_column(col)
+        visible = tree_view_column.get_visible()
+
+        path = '/ui/menubar/view/columns/%s' % Column.id_names[col]
+        action = self.uim.get_action(path)
+        active = action.get_active()
+
+        # Return if only refreshing widget state.
+        if active is visible:
+            return
+
+        gui.set_cursor_busy(self.window)
+        tree_view_column.set_visible(not visible)
+        visible_columns = []
+
+        for i in range(6):
+            if page.view.get_column(i).get_visible():
+                visible_columns.append(i)
+
+        config.editor.visible_columns = visible_columns
+        self.set_sensitivities()
+        gui.set_cursor_normal(self.window)
+
+    def on_toggle_edit_mode_activated(self, unknown, action):
+        """Toggle the edit mode."""
+
+        page = self.get_current_page()
+
+        # Get new edit mode.
+        if action.get_name() == 'show_times':
+            edit_mode = Mode.TIME
+        elif action.get_name() == 'show_frames':
+            edit_mode = Mode.FRAME
+
+        # Return if only refreshing widget state.
+        if edit_mode == page.edit_mode:
+            return
+
+        gui.set_cursor_busy(self.window)
+
+        page.edit_mode = edit_mode
+        config.editor.mode = edit_mode
+
+        # Get properties.
+        has_focus = page.view.props.has_focus
+        focus_row, focus_col = page.view.get_focus()
+        selected_rows = page.view.get_selected_rows()
+
+        # Remove view.
+        scrolled_window = page.view.get_parent()
+        scrolled_window.remove(page.view)
+
+        # Create a new view. This could alternatively be done with
+        # gtk.TreeView.remove_column() and gtk.TreeView.insert_column(), but
+        # rebuilding the entire view is not much slower. It would be cool to be
+        # able to replace the cell renderer of a column though.
+        page.view = View(edit_mode)
+        self.connect_view_signals(page)
+
+        # Add view.
+        scrolled_window.add(page.view)
+        scrolled_window.show_all()
+
+        page.reload_all()
+        page.view.columns_autosize()
+
+        # Restore properties.
+        try:
+            page.view.set_focus(focus_row, focus_col)
+        except TypeError:
+            pass
+
+        page.view.select_rows(selected_rows)
+
+        try:
+            page.view.scroll_to_row(focus_row)
+        except TypeError:
+            pass
+
+        page.view.props.has_focus = has_focus
+        gui.set_cursor_normal(self.window)
+
+    def on_toggle_framerate_activated(self, unknown, action):
+        """
+        Toggle the framerate.
+
+        This method is called from the menu.
+        """
+        page = self.get_current_page()
+
+        # Get new framerate.
+        name = action.get_name()
+        if name == 'view_framerate_23_976':
+            framerate = Framerate.FR_23_976
+        elif name == 'view_framerate_25':
+            framerate = Framerate.FR_25
+        elif name == 'view_framerate_29_97':
+            framerate = Framerate.FR_29_97
+
+        # Return if only refreshing widget state.
+        if framerate == page.project.framerate:
+            return
+
+        gui.set_cursor_busy(self.window)
+
+        # Set new framerate and save setting.
+        page.project.change_framerate(framerate)
+        config.editor.framerate = framerate
+
+        # Set the correct framerate combo box entry active.
+        self.framerate_combo_box.set_active(framerate)
+
+        if page.edit_mode != page.project.main_file.mode:
+            page.reload_columns([SHOW, HIDE, DURN])
+
+        gui.set_cursor_normal(self.window)
+
+    def on_toggle_statusbar_activated(self, *args):
+        """Toggle the visibility of the statusbar."""
+
+        hbox = gui.get_parent_widget(self.message_statusbar, gtk.HBox)
+        visible = hbox.props.visible
+
+        hbox.props.visible = not visible
+        config.application_window.show_statusbar = not visible
+
+    def on_toggle_toolbar_activated(self, *args):
+        """Toggle the visibility of the toolbar."""
+
+        toolbar = self.uim.get_widget('/ui/toolbar')
+        visible = toolbar.props.visible
+
+        toolbar.props.visible = not visible
+        config.application_window.show_toolbar = not visible
+
+    def on_view_headers_clicked(self, button, event):
+        """Show a popup menu when the view header is right-clicked."""
+
+        if event.button == 3:
+            menu = self.uim.get_widget('/ui/view_header')
+            menu.popup(None, None, None, event.button, event.time)

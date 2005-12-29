@@ -24,39 +24,34 @@
 # http://napisy.ussbrowarek.org/mpl2-eng.html
 
 
-import codecs
-import re
-
 try:
     from psyco.classes import *
 except ImportError:
     pass
 
-from gaupol.constants import EXTENSION, FORMAT, MODE
-from gaupol.base.files.subfile import SubtitleFile
+import codecs
+import re
+
+from gaupol.base.files       import SubtitleFile
 from gaupol.base.timing.calc import TimeFrameCalculator
+from gaupol.constants        import Format, Mode
 
 
 class MPL2(SubtitleFile):
-    
+
     """
     MPL2 file.
-    
+
     MPL2 format quick reference:
     [182][221]And that completes my final report|until we reach touchdown.
     [222][260]We're now on full automatic,|in the hands of the computers.
     """
 
-    ID_PATTERN = r'^\[\d+\]\[\d+\].*?$', None
-    
-    def __init__(self, *args):
+    FORMAT = Format.MPL2
+    MODE   = Mode.TIME
 
-        SubtitleFile.__init__(self, *args)
-        
-        self.FORMAT    = FORMAT.MPL2
-        self.EXTENSION = EXTENSION.MPL2
-        self.MODE      = MODE.TIME
-    
+    id_pattern = r'^\[\d+\]\[\d+\].*?$', None
+
     def read(self):
         """
         Read MPL2 file.
@@ -67,18 +62,16 @@ class MPL2(SubtitleFile):
         """
         # Compile regular expressions.
         re_line = re.compile(r'^\[(\d+)\]\[(\d+)\](.*?)$')
-        
+
         lines = self._read_lines()
-        
+
         shows = []
         hides = []
         texts = []
 
         # Split lines list to components.
         for line in lines:
-        
             match = re_line.match(line)
-            
             if match is not None:
                 shows.append(match.group(1))
                 hides.append(match.group(2))
@@ -87,7 +80,7 @@ class MPL2(SubtitleFile):
         calc = TimeFrameCalculator()
 
         # Convert timings from decaseconds to seconds and finally timestrings.
-        for entry in [shows, hides]:
+        for entry in (shows, hides):
             for i in range(len(entry)):
                 deca_string = entry[i]
                 seconds = float(deca_string[:-1] + '.' + deca_string[-1])
@@ -111,7 +104,7 @@ class MPL2(SubtitleFile):
         calc = TimeFrameCalculator()
 
         # Convert timings from timestrings to seconds and finally decaseconds.
-        for entry in [shows, hides]:
+        for entry in (shows, hides):
             for i in range(len(entry)):
                 decaseconds = calc.time_to_seconds(entry[i]) * 10
                 entry[i] = '%.0f' % decaseconds

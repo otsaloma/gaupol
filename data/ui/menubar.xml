@@ -1,100 +1,96 @@
 <ui>
 	<menubar>
-		<menu action="file">
-			<menuitem action="new"/>
-			<menuitem action="open"/>
-			<menuitem action="open_translation"/>
+		<menu name="file" action="show_file_menu">
+			<menuitem name="new" action="new_project"/>
+			<menuitem name="open" action="open_main_file"/>
+			<menuitem name="open_translation" action="open_translation_file"/>
 			<separator/>
-			<menuitem action="save"/>
-			<menuitem action="save_as"/>
-			<menuitem action="save_a_copy"/>
+			<menuitem name="save" action="save_main_document"/>
+			<menuitem name="save_as" action="save_main_document_as"/>
+			<menuitem name="save_a_copy" action="save_a_copy_of_main_document"/>
 			<separator/>
-			<menuitem action="save_translation"/>
-			<menuitem action="save_translation_as"/>
-			<menuitem action="save_a_copy_of_translation"/>
-			<separator/>
-			<menuitem action="revert"/>
+			<menuitem name="save_translation" action="save_translation_document"/>
+			<menuitem name="save_translation_as" action="save_translation_document_as"/>
+			<menuitem name="save_a_copy_of_translation" action="save_a_copy_of_translation_document"/>
 			<separator/>
 			<placeholder name="recent">
 			</placeholder>
 			<separator/>
-			<menuitem action="close"/>
-			<menuitem action="quit"/>
+			<menuitem name="close" action="close_project"/>
+			<menuitem name="quit" action="quit"/>
 		</menu>
-		<menu action="edit">
-			<menuitem action="undo"/>
-			<menuitem action="redo"/>
+		<menu name="edit" action="show_edit_menu">
+			<menuitem name="undo" action="undo_action"/>
+			<menuitem name="redo" action="redo_action"/>
 			<separator/>
-			<menuitem action="edit_cell"/>
+			<menuitem name="value" action="edit_value"/>
 			<separator/>
-			<menuitem action="cut"/>
-			<menuitem action="copy"/>
-			<menuitem action="paste"/>
-			<menuitem action="clear"/>
+			<menuitem name="cut" action="cut_texts"/>
+			<menuitem name="copy" action="copy_texts"/>
+			<menuitem name="paste" action="paste_texts"/>
+			<menuitem name="clear" action="clear_texts"/>
 			<separator/>
-			<menuitem action="insert_subtitles"/>
-			<menuitem action="remove_subtitles"/>
+			<menuitem name="insert" action="insert_subtitles"/>
+			<menuitem name="remove" action="remove_subtitles"/>
 			<separator/>
-			<menuitem action="select_all"/>
-			<menuitem action="unselect_all"/>
-			<menuitem action="invert_selection"/>
+			<menuitem name="select_all" action="select_all"/>
+			<menuitem name="unselect_all" action="unselect_all"/>
+			<menuitem name="invert_selection" action="invert_selection"/>
 			<separator/>
-			<menuitem action="preferences"/>
+			<menuitem name="preferences" action="edit_preferences"/>
 		</menu>
-		<menu action="view">
-			<menuitem action="toolbar"/>
-			<menuitem action="statusbar"/>
+		<menu name="view" action="show_view_menu">
+			<menuitem name="toolbar" action="toggle_toolbar"/>
+			<menuitem name="statusbar" action="toggle_statusbar"/>
 			<separator/>
-			<menuitem action="times"/>
-			<menuitem action="frames"/>
+			<menuitem name="times" action="show_times"/>
+			<menuitem name="frames" action="show_frames"/>
 			<separator/>
-			<menu action="framerate">
-				<menuitem action="23.976"/>
-				<menuitem action="25"/>
-				<menuitem action="29.97"/>
+			<menu name="framerate" action="show_framerate_menu">
+				<menuitem name="23_976" action="view_framerate_23_976"/>
+				<menuitem name="25" action="view_framerate_25"/>
+				<menuitem name="29_97" action="view_framerate_29_97"/>
 			</menu>
 			<separator/>
-			<menu action="columns">
-				<menuitem action="number"/>
-				<menuitem action="show"/>
-				<menuitem action="hide"/>
-				<menuitem action="duration"/>
-				<menuitem action="text"/>
-				<menuitem action="translation"/>
+			<menu name="columns" action="show_columns_menu">
+				<menuitem name="number" action="toggle_number_column"/>
+				<menuitem name="show" action="toggle_show_column"/>
+				<menuitem name="hide" action="toggle_hide_column"/>
+				<menuitem name="duration" action="toggle_duration_column"/>
+				<menuitem name="main_text" action="toggle_main_text_column"/>
+				<menuitem name="translation_text" action="toggle_translation_text_column"/>
 			</menu>
 		</menu>
-		<menu action="format">
-			<menuitem action="dialog"/>
-			<menuitem action="italic"/>
+		<menu name="format" action="show_format_menu">
+			<menuitem name="dialog" action="toggle_dialog_lines"/>
+			<menuitem name="italic" action="toggle_italicization"/>
 			<separator/>
-			<menu action="case">
-				<menuitem action="title"/>
-				<menuitem action="sentence"/>
-				<menuitem action="upper"/>
-				<menuitem action="lower"/>
+			<menu name="case" action="show_case_menu">
+				<menuitem name="title" action="use_title_case"/>
+				<menuitem name="sentence" action="use_sentence_case"/>
+				<menuitem name="upper" action="use_upper_case"/>
+				<menuitem name="lower" action="use_lower_case"/>
 			</menu>
 		</menu>
-		<menu action="tools">
-			<menuitem action="check_spelling"/>
-			<menuitem action="configure_spell_check"/>
-			<separator/>
+		<menu name="tools" action="show_tools_menu">
+			<menuitem name="check_spelling" action="check_spelling"/>
+			<menuitem name="configure_spell_check" action="configure_spell_check"/>
 		</menu>
-		<menu action="projects">
-			<menuitem action="save_all"/>
-			<menuitem action="close_all"/>
+		<menu name="projects" action="show_projects_menu">
+			<menuitem name="save_all" action="save_all_documents"/>
+			<menuitem name="close_all" action="close_all_projects"/>
 			<separator/>
-			<menuitem action="previous"/>
-			<menuitem action="next"/>
+			<menuitem name="previous" action="activate_previous_project"/>
+			<menuitem name="next" action="activate_next_project"/>
 			<separator/>
 			<placeholder name="open">
 			</placeholder>
 		</menu>
-		<menu action="help">
-			<menuitem action="support"/>
-			<menuitem action="report_a_bug"/>
-			<menuitem action="check_latest_version"/>
+		<menu name="help" action="show_help_menu">
+			<menuitem name="report_a_bug" action="report_a_bug"/>
+			<menuitem name="check_latest_version" action="check_latest_version"/>
 			<separator/>
-			<menuitem action="about"/>
+			<menuitem name="about" action="view_about_dialog"/>
 		</menu>
 	</menubar>
 </ui>

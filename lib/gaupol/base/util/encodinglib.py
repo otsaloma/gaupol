@@ -20,22 +20,28 @@
 """
 Encodings and encoding names.
 
-Python name     : Encoding name used in code
-Display name    : Somewhat standards compliant encoding name
-Description     : Short description of language, character set or region
+Python name: Encoding name used in code
+Display name: Somewhat standards compliant encoding name
+Description: Short description of language, character set or region
 Descriptive name: A more informative name, "Description (Display name)"
 
 Descriptions and descriptive names are translation dependent. The format of
 descriptive names is translation dependent.
 """
 
+
 # Display names mostly from
 # http://www.iana.org/assignments/character-sets
 
 
+from encodings.aliases import aliases
 import codecs
 import locale
+import re
 
+
+# Chacters illegal in encoding names
+re_illegal = re.compile(r'[^a-z0-9_]')
 
 PY_NAME, DISP_NAME, DESC = 0, 1, 2
 
@@ -43,10 +49,8 @@ PY_NAME, DISP_NAME, DESC = 0, 1, 2
 # additional modules installed to be available, e.g. on Debian Japanese and
 # Korean codecs are in separate packages. Hence the functions should be used to
 # acquire a list of available encodings.
-
-    # Python name     , Display name      , Description
-ENCODINGS = (
-    # TRANSLATORS: Most of the character encoding descriptions are copied from
+encodings = (
+    # Translators: Most of the character encoding descriptions are copied from
     # Gedit, which is translated to very many languages. Check the Gedit .po
     # files for a reference: http://cvs.gnome.org/viewcvs/gedit/po/.
     ('ascii'          , 'US-ASCII'        , _('English')),
@@ -140,10 +144,10 @@ ENCODINGS = (
 def get_description(python_name):
     """
     Get description of an encoding.
-    
+
     Raise ValueError if not found.
     """
-    for entry in ENCODINGS:
+    for entry in encodings:
         if entry[PY_NAME] == python_name:
             return entry[PY_NAME]
 
@@ -152,43 +156,46 @@ def get_description(python_name):
 def get_descriptive_name(python_name):
     """
     Get descriptive name for encoding.
-    
+
     Raise ValueError if not found.
     """
-    for entry in ENCODINGS:
+    for entry in encodings:
         if entry[PY_NAME] == python_name:
-            # TRANSLATORS: Encoding descriptive name, e.g. "Russian (KOI8-R)".
+            # Translators: Encoding descriptive name, e.g. "Russian (KOI8-R)".
             return _('%s (%s)') % (entry[DESC], entry[DISP_NAME])
 
     raise ValueError('Invalid encoding Python name "%s".' % python_name)
-                    
+
 def get_display_name(python_name):
     """
     Get display name of an encoding.
-    
+
     Raise ValueError if not found.
     """
-    for entry in ENCODINGS:
+    for entry in encodings:
         if entry[PY_NAME] == python_name:
             return entry[DISP_NAME]
-    
+
     raise ValueError('Invalid encoding Python name "%s".' % python_name)
 
 def get_locale_encoding():
     """
     Get locale encoding.
-    
+
     Return (Python name, display name, description) or None.
     """
     python_name = locale.getdefaultlocale()[1]
 
+    # Validate encoding name by replacing illegal characters and cheking the
+    # dictionary of aliases for a proper name.
+    python_name = re_illegal.sub('_', python_name)
     try:
-        locale_tuple = codecs.lookup(python_name)
-    except (TypeError, LookupError):
-        return None
+        python_name = aliases[python_name]
+    except KeyError:
+        pass
 
-    for entry in ENCODINGS:
-        if codecs.lookup(entry[PY_NAME]) == locale_tuple:
+    for entry in encodings:
+        if entry[PY_NAME] == python_name:
             return entry
 
     return None
@@ -196,7 +203,7 @@ def get_locale_encoding():
 def get_locale_descriptive_name():
     """
     Get descriptive name for locale encoding.
-    
+
     Return name or None.
     """
     locale_tuple = get_locale_encoding()
@@ -209,10 +216,10 @@ def get_locale_descriptive_name():
 def get_python_name(display_name):
     """
     Get Python name of an encoding.
-    
+
     Raise ValueError if not found.
     """
-    for entry in ENCODINGS:
+    for entry in encodings:
         if entry[DISP_NAME] == display_name:
             return entry[PY_NAME]
 
@@ -221,38 +228,38 @@ def get_python_name(display_name):
 def get_valid_encodings():
     """
     Get a list of valid encodings.
-    
+
     Return list with elements (Python name, display name, description).
     """
     valid_encodings = []
-    
-    for entry in ENCODINGS:
+
+    for entry in encodings:
         if is_valid_python_name(entry[PY_NAME]):
             valid_encodings.append(entry)
-    
+
     return valid_encodings
-    
+
 def get_valid_descriptive_names():
     """Get a list of valid descriptive names."""
-    
+
     valid_names = []
-    
-    for entry in ENCODINGS:
+
+    for entry in encodings:
         if is_valid_python_name(entry[PY_NAME]):
-            # TRANSLATORS: Encoding descriptive name, e.g. "Russian (KOI8-R)".
+            # Translators: Encoding descriptive name, e.g. "Russian (KOI8-R)".
             valid_names.append(_('%s (%s)') % (entry[DESC], entry[DISP_NAME]))
-    
+
     return valid_names
 
 def get_valid_python_names():
     """Get a list of valid encoding Python names."""
 
     valid_names = []
-    
-    for entry in ENCODINGS:
+
+    for entry in encodings:
         if is_valid_python_name(entry[PY_NAME]):
             valid_names.append(entry[PY_NAME])
-    
+
     return valid_names
 
 def is_valid_python_name(python_name):

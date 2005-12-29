@@ -17,66 +17,65 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""
-gaupol-wide constants.
-
-There are several common attributes that can be used in the constant classes.
-CLASS_NAMES correspond to the names of classes in code. ID_NAMES are lower
-case identifying names for use as e.g. parts of function names or in
-configuration files. UI_NAMES are names to be used in the user interface. If
-needed, UI_NAMES are gettext strings. VALUES are values of the attributes in
-the correct Python data type.
-"""
+"""gaupol-wide constants."""
 
 
-class FORMAT(object):
+class Action(object):
+
+    DO            = 0
+    UNDO          = 1
+    REDO          = 2
+    UNDO_MULTIPLE = 3
+    REDO_MULTIPLE = 4
+
+class Document(object):
+
+    MAIN = 0
+    TRAN = 1
+
+    id_names = ['main', 'translation']
+
+class Format(object):
 
     MICRODVD = 0
     MPL2     = 1
     SUBRIP   = 2
 
-    CLASS_NAMES   = [  'MicroDVD' ,   'MPL2' ,   'SubRip' ]
-    DISPLAY_NAMES = [_('MicroDVD'), _('MPL2'), _('SubRip')]
-    EXTENSIONS    = [  '.sub'     ,   '.txt' ,   '.srt'   ]
-    ID_NAMES      = [  'microdvd' ,   'mpl2' ,   'subrip' ]
+    class_names   = [  'MicroDVD' ,   'MPL2' ,   'SubRip' ]
+    display_names = [_('MicroDVD'), _('MPL2'), _('SubRip')]
+    extensions    = [  '.sub'     ,   '.txt' ,   '.srt'   ]
+    id_names      = [  'microdvd' ,   'mpl2' ,   'subrip' ]
 
-class FRAMERATE(object):
+class Framerate(object):
 
-    ID_NAMES = [  '23.976'     ,   '25'     ,   '29.97'     ]
-    UI_NAMES = [_('23.976 fps'), _('25 fps'), _('29.97 fps')]
-    VALUES   = [   23.976      ,    25.0    ,    29.97      ]
-    
     FR_23_976 = 0
     FR_25     = 1
     FR_29_97  = 2
 
-class MODE(object):
+    display_names = [_('23.976 fps'), _('25 fps'), _('29.97 fps')]
+    id_names      = [  '23_976'     ,   '25'     ,   '29_97'     ]
+    values        = [   23.976      ,    25.0    ,    29.97      ]
 
-    ID_NAMES     = ['time', 'frame']
-    
+class Mode(object):
+
     TIME  = 0
     FRAME = 1
 
-class NEWLINE(object):
+    id_names = ['time', 'frame']
 
-    ID_NAMES = [  'mac' ,   'unix' ,   'windows' ]
-    UI_NAMES = [_('Mac'), _('Unix'), _('Windows')]
-    VALUES   = [  '\r'  ,   '\n'   ,   '\r\n'    ]
-    
+class Newlines(object):
+
     MAC     = 0
     UNIX    = 1
     WINDOWS = 2
 
-class POSITION(object):
+    display_names = [_('Mac'), _('Unix'), _('Windows')]
+    id_names      = [  'mac' ,   'unix' ,   'windows' ]
+    values        = [  '\r'  ,   '\n'   ,   '\r\n'    ]
 
-    ID_NAMES = ['above', 'below']
-    
+class Position(object):
+
     ABOVE = 0
     BELOW = 1
 
-class TYPE(object):
-
-    ID_NAMES = ['main', 'translation']
-    
-    MAIN = 0
-    TRAN = 1
+    id_names = ['above', 'below']

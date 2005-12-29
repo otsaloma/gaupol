@@ -61,24 +61,22 @@ class InsertSubtitleDialog(object):
         """Get amount of subtitles to insert."""
 
         self._amount_spin_button.update()
-
         return self._amount_spin_button.get_value_as_int()
 
     def get_position(self):
         """
         Get position to insert subtitles to.
 
-        Return: POSITION.ABOVE or POSITION.BELOW
+        Return Position.ABOVE or Position.BELOW.
         """
         # ComboBox entry index corresponds to values of constants
-        # POSITION.ABOVE and POSITION.BELOW.
+        # Position.ABOVE and Position.BELOW.
         return self._position_combo_box.get_active()
 
     def run(self):
         """Show and run the dialog."""
 
         self._dialog.show()
-
         return self._dialog.run()
 
     def set_amount(self, value):
@@ -93,7 +91,7 @@ class InsertSubtitleDialog(object):
         position: POSITION.ABOVE or POSITION.BELOW
         """
         # ComboBox entry index corresponds to values of constants
-        # POSITION.ABOVE and POSITION.BELOW.
+        # Position.ABOVE and Position.BELOW.
         self._position_combo_box.set_active(position)
 
     def set_position_sensitive(self, sensitive):

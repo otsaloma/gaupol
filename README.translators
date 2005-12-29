@@ -18,28 +18,28 @@ Table of Contents
   This README file assumes that you are familiar with gettext and that you
   know what to do with a .po file.
 
-  To avoid doing pointless work, first check the the latest list of existing
+  To avoid doing pointless work, first check the latest list of existing
   translations at the subversion trunk:
 
      http://svn.gna.org/viewcvs/gaupol/trunk/po/
 
-  Gaupol uses the standard gettext system for translations. To automate the
-  process of creating .po and .mo files, a python script "trantool" can be
-  used. trantool relies on the following executables:
+  Gaupol uses the standard gettext system for translations. A script called
+  "trantool" has been written to perform all the necessary file manipulations
+  for the translation files. trantool relies on the following executables:
 
     - intltool-extract
     - msgfmt
     - msginit
     - msgmerge
     - xgettext
-  
-  trantool can be used to create a .po file of translatable strings in Glade
-  XML files and Python source code files. Desktop file "gaupol.desktop" needs
+
+  trantool will create the .po file by extracting strings from the Glade XML
+  files and the Python source code files. Desktop file "gaupol.desktop" needs
   to be translated separately.
 
   To print a help message on using trantool, type
-  
-    ./trantool -h
+
+    ./trantool --help
 
   The process done by trantool is modelled after PyGTK FAQ 22.2[1].
 
@@ -48,10 +48,10 @@ Table of Contents
 ==========================
 
   To create a new .po file, type
-  
-    ./trantool -c <lang>
-    
-  where lang is the language code in format "xx" or "xx_YY", e.g. "fi" or
+
+    ./trantool -p <lang>
+
+  where lang is the language code in format "ll" or "ll_CC", e.g. "fi" or
   "zh_CN". The resulting .po file is placed in the "po" directory.
 
 
@@ -60,48 +60,49 @@ Table of Contents
 
   To update an existing .po file with new strings that have been added since
   the last update, type
-  
+
     ./trantool -u <lang>
-    
+
   To update all .po files, substitute <lang> with "all".
 
 
 4. Compiling .mo files
 ======================
 
-  To compile a binary .mo file based on the .po file you have translated, type
-  
+  To compile a .mo file based on the .po file you have translated, type
+
     ./trantool -m <lang>
 
   To compile all languages, substitute <lang> with "all". The resulting .mo
-  file is placed in the "locale" directory according to standard hierarchy.
-  
-  The compilation will perform checks on header, format and domain. Correct
-  any errors encountered.
+  file is placed in the "locale" directory according to standard locale
+  directory hierarchy.
+
+  The compilation will perform checks on header, format and domain of the .po
+  file. Correct any errors encountered.
 
 
 5. Testing your translation
 ===========================
 
   After you have compiled a .mo file, the translation is available to Gaupol.
-  
-  To start gaupol without a translation, type
-  
-    ./gaupol -t
-    
+
   To start Gaupol with a translation in your current locale, type
-  
+
     ./gaupol
+
+  To start gaupol without a translation, type
+
+    ./gaupol --no-translation
 
 
 6. Submitting your translation
 ==============================
 
   All .po files should be UTF-8 encoded. If not already, convert to UTF-8
-  
+
     mv <lang>.po <lang>.po.bak
     msgconv -t UTF-8 <lang>.po.bak -o <lang>.po
-    
+
   When you are done, send the .po file and the desktop file "gaupol.desktop"
   by e-mail to otsaloma@cc.hut.fi.
 
