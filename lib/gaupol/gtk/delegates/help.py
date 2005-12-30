@@ -38,7 +38,7 @@ from gaupol                   import __version__
 
 
 BUG_REPORT_URL = 'http://gna.org/bugs/?func=additem&group=gaupol'
-DOWNLOAD_URL   = 'http://home.gna.org/gaupol/#download'
+DOWNLOAD_URL   = 'http://home.gna.org/gaupol/download.html'
 VERSION_URL    = 'http://download.gna.org/gaupol/latest.txt'
 
 

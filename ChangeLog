@@ -1,5 +1,10 @@
 2005-12-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/delegates/help.py:
+	  Fixed DOWNLOAD_URL according to renewed web site.
+
+2005-12-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/gtk/delegates/edit.py:
 	  (EditDelegate.on_view_cell_edited):
 	  Call self.set_character_status(page).
