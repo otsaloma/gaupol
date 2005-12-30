@@ -4,8 +4,9 @@ General Information
   Gaupol is a subtitle editor for text-based subtitles. Gaupol is in early
   development stage and does not yet contain any advanced features. The aim is
   to make a simple, but powerful, subtitle editor for multiple subtitle
-  formats. Currently Gaupol is useful for converting between different
-  formats, translating, spell-checking and manual editing.
+  formats.  Currently Gaupol is useful for converting between different
+  formats, manual editing, translating and spell-checking. Planned features
+  include timing manipulations and text corrections.
 
   Currently supported formats:
 
@@ -17,7 +18,7 @@ General Information
 
     - Support for a wide range of character encodings
     - Conversions between supported formats, including conversion of most tags
-    - Multiple document interface
+    - Multiple document interface that allows some amount of batch processing
     - Undo/Redo
     - Editing in either time or frame mode
     - Convenient translating

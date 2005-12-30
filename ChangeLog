@@ -1,3 +1,19 @@
+2005-12-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/gtk/delegates/edit.py:
+	  (EditDelegate.on_view_cell_edited):
+	  Call self.set_character_status(page).
+
+	* lib/gaupol/gtk/delegates/fileclose.py:
+	* lib/gaupol/gtk/dialogs/debug.py:
+	  Raise SystemExit if gtk.main_quit() raises RuntimeError.
+
+	* lib/gaupol/gtk/delegates/viewupdate.py:
+	  Made set_character_status method public.
+
+	* lib/gaupol/gtk/dialogs/spellcheck.py:
+	  Added check button sensitivity handling.
+
 2005-12-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/base/text/parser.py:

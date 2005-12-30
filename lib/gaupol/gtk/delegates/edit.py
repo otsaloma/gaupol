@@ -458,6 +458,7 @@ class EditDelegate(Delegate):
             page.project.set_text(row, col - 4, value)
             self.set_sensitivities(page)
 
+        self.set_character_status(page)
         gui.set_cursor_normal(self.window)
 
     def on_view_cell_editing_canceled(self, cell_renderer, editor):

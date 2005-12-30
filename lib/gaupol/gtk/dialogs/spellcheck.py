@@ -174,6 +174,7 @@ class SpellCheckDialog(gobject.GObject):
         self._replace_all_button.set_sensitive(False)
         self._join_back_button.set_sensitive(False)
         self._join_forward_button.set_sensitive(False)
+        self._check_button.set_sensitive(False)
 
         # Create text tag for text view.
         text_buffer = self._text_view.get_buffer()
@@ -528,6 +529,7 @@ class SpellCheckDialog(gobject.GObject):
         sensitive = bool(text)
         self._replace_button.set_sensitive(sensitive)
         self._replace_all_button.set_sensitive(sensitive)
+        self._check_button.set_sensitive(sensitive)
 
     def _on_ignore_all_button_clicked(self, *args):
         """Ignore all instances of word."""

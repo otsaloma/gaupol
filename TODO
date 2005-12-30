@@ -13,6 +13,7 @@ Plans for 0.2.0
   [D] Redesign and rewrite code
   [D] Improve encoding handling with a list of fallback encodings
   [D] Move to edit adjacent cell on Alt+Arrow key-press-event
+  [D] Debug dialog
   [D] Improve uninstallation
   [D] Adapt to PyGTK 2.8
 
@@ -23,9 +24,9 @@ Plans for 0.2.0
 
   [D] Update (or discontinue) Finnish translation
 
-  [ ] Update home page
+  [D] Update home page
   [D] Update project page
-  [ ] Create web forum
+  [D] Create web forum
 
 
 Plans after 0.2.0

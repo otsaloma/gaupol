@@ -332,7 +332,10 @@ def show(exctype, value, tb):
                 wwwlib.open_url(BUG_REPORT_URL)
             elif response == gtk.RESPONSE_NO:
                 dialog.destroy()
-                gtk.main_quit()
+                try:
+                    gtk.main_quit()
+                except RuntimeError:
+                    raise SystemExit
                 return
             else:
                 break

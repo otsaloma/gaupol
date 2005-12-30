@@ -311,7 +311,11 @@ class FileCloseDelegate(Delegate):
             config.application_window.position = self.window.get_position()
 
         config.write()
-        gtk.main_quit()
+
+        try:
+            gtk.main_quit()
+        except RuntimeError:
+            raise SystemExit
 
     def on_window_delete_event(self, *args):
         """Quit Gaupol."""

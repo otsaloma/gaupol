@@ -82,9 +82,9 @@ class ViewUpdateDelegate(Delegate):
         page = self.get_current_page()
         page.view.set_active_column()
         self.set_sensitivities(page)
-        self._set_character_status(page)
+        self.set_character_status(page)
 
-    def _set_character_status(self, page):
+    def set_character_status(self, page):
         """Set character lengths info to statusbars."""
 
         self.main_text_statusbar.pop(0)
