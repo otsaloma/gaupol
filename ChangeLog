@@ -1,6 +1,11 @@
 2005-12-31  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/base/delegates/action.py:
+	  (ActionDelegate._revert_multiple): Removed unused variable row_count.
+
+2005-12-31  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/base/delegates/action.py:
 	* lib/gaupol/gtk/dialogs/encoding.py:
 	* lib/gaupol/gtk/dialogs/multiclose.py:
 	  Fixed typos.

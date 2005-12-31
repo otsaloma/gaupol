@@ -267,7 +267,6 @@ class ActionDelegate(Delegate):
 
             # Adjust previous updates to rows now being removed.
             if action.rows_inserted:
-                row_count = len(action.rows_inserted)
                 first_row = min(action.rows_inserted)
                 for i in reversed(range(len(rows_updated))):
 
