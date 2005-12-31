@@ -101,7 +101,6 @@ class ViewUpdateDelegate(Delegate):
         row = rows[0]
 
         def set_status(statusbar, document):
-            """Set character length info from document to statusbar."""
 
             try:
                 info = page.project.get_character_count(row, document)
@@ -125,7 +124,6 @@ class ViewUpdateDelegate(Delegate):
             if statusbar.get_has_resize_grip():
                 width += statusbar.size_request()[1]
             width = max(100, width)
-
             statusbar.set_size_request(width, -1)
 
         if self.main_text_statusbar.props.visible:

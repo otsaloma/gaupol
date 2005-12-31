@@ -62,8 +62,6 @@ class GUIInitDelegate(Delegate):
         # Set active framerate.
         self.framerate_combo_box.set_active(config.editor.framerate)
 
-        self.framerate_combo_box.connect('changed', self.on_framerate_changed)
-
         # Put the framerate combo box in an event box and enable tooltip.
         event_box = gtk.EventBox()
         event_box.add(self.framerate_combo_box)
@@ -78,6 +76,8 @@ class GUIInitDelegate(Delegate):
         toolbar = self.uim.get_widget('/ui/toolbar')
         toolbar.insert(gtk.SeparatorToolItem(), 5)
         toolbar.insert(tool_item, 6)
+
+        self.framerate_combo_box.connect('changed', self.on_framerate_changed)
 
     def init_gui(self):
         """Initialize the main window and all its widgets."""
@@ -343,7 +343,6 @@ class GUIInitDelegate(Delegate):
 
         self.window.resize(*config.application_window.size)
         self.window.move(*config.application_window.position)
-
         if config.application_window.maximized:
             self.window.maximize()
 

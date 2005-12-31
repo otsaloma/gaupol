@@ -60,18 +60,12 @@ class MenuUpdateDelegate(Delegate):
         menu = gtk.Menu()
 
         def on_activate(item, filepath):
-            """Open main file."""
-
             self.open_main_files([filepath])
 
         def on_enter_notify_event(item, event, tooltip):
-            """Set item's tooltip to message statusbar."""
-
             self.set_status_message(tooltip, False)
 
         def on_leave_notify_event(item, event):
-            """Clear message statusbar."""
-
             self.set_status_message(None)
 
         for filepath in recent_files:
@@ -79,7 +73,6 @@ class MenuUpdateDelegate(Delegate):
             basename = os.path.basename(filepath)
             if len(basename) > 100:
                 basename = basename[:50] + '...' + basename[-50:]
-
             tip = _('Open main file "%s"') % basename
 
             item = gtk.MenuItem(basename, False)
@@ -306,20 +299,14 @@ class MenuUpdateDelegate(Delegate):
             revert_method = self.redo
 
         def on_activate(item, index):
-            """Revert up to item."""
-
             revert_method(index + 1)
 
         def on_enter_notify_event(item, event, index, tip):
-            """Prelight all items above item."""
-
             for i in range(0, index):
                 menu_items[i].set_state(gtk.STATE_PRELIGHT)
             self.set_status_message(tip, False)
 
         def on_leave_notify_event(item, event, index):
-            """Normalize all items above item."""
-
             for i in range(0, index):
                 menu_items[i].set_state(gtk.STATE_NORMAL)
             self.set_status_message(None)

@@ -42,7 +42,6 @@ import gettext
 # Original XML files by Alastair McKinstry and Andreas Jochens.
 # http://alioth.debian.org/projects/pkg-isocodes/
 
-
 # List of locales has been gathered from two sources.
 # http://www.abisource.com/lxr/source/abi/src/af/util/xp/ut_Language.cpp
 # http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries

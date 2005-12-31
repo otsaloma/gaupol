@@ -164,48 +164,45 @@ class HelpDelegate(Delegate):
         """Check latest version online."""
 
         gui.set_cursor_busy(self.window)
-
-        def run_dialog(dialog):
-            """Run and destroy version check dialog."""
-
-            gui.set_cursor_normal(self.window)
-            response = dialog.run()
-            dialog.destroy()
-
-            if response == gtk.RESPONSE_ACCEPT:
-                wwwlib.open_url(DOWNLOAD_URL)
+        dialog = None
 
         # Read remote file containing latest version number.
         try:
             text = wwwlib.URLDocument(VERSION_URL, 10).read()
-
         except IOError, (errno, detail):
-            detail += '.'
-            dialog = VersionCheckErrorDialog(self.window, detail)
-            run_dialog(dialog)
-            return
-
+            dialog = VersionCheckErrorDialog(self.window, detail + '.')
         except TimeoutError:
             detail = _('Operation timed out. Please try again later or '
                        'proceed to the download page.')
             dialog = VersionCheckErrorDialog(self.window, detail)
-            run_dialog(dialog)
+
+        # Show error dialog.
+        if dialog is not None:
+            gui.set_cursor_normal(self.window)
+            response = dialog.run()
+            dialog.destroy()
+            if response == gtk.RESPONSE_ACCEPT:
+                wwwlib.open_url(DOWNLOAD_URL)
             return
 
         remote_version = text.strip()
 
         # Automated HTML error message must be distinguished from the
         # expected version string.
-        if not re_version.match(remote_version):
+        if re_version.match(remote_version):
+            args = self.window, __version__, remote_version
+            dialog = VersionCheckInfoDialog(*args)
+        else:
             detail = _('No version information found at URL "%s".') \
                     % VERSION_URL
             dialog = VersionCheckErrorDialog(self.window, detail)
-            run_dialog(dialog)
-            return
 
-        args = self.window, __version__, remote_version
-        dialog = VersionCheckInfoDialog(*args)
-        run_dialog(dialog)
+        # Show info or error dialog.
+        gui.set_cursor_normal(self.window)
+        response = dialog.run()
+        dialog.destroy()
+        if response == gtk.RESPONSE_ACCEPT:
+            wwwlib.open_url(DOWNLOAD_URL)
 
     def on_report_a_bug_activated(self, *args):
         """Report a bug online."""

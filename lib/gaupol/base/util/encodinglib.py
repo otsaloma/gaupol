@@ -29,7 +29,6 @@ Descriptions and descriptive names are translation dependent. The format of
 descriptive names is translation dependent.
 """
 
-
 # Display names mostly from
 # http://www.iana.org/assignments/character-sets
 

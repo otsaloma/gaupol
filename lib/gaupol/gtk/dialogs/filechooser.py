@@ -378,7 +378,6 @@ class SaveFileDialog(TextFileChooserDialog):
             return
 
         self.unselect_filename(path)
-
         dirname  = os.path.dirname(path)
         basename = os.path.basename(path)
 
@@ -391,7 +390,6 @@ class SaveFileDialog(TextFileChooserDialog):
         # Add new extension.
         basename += Format.extensions[new_format]
         path = os.path.join(dirname, basename)
-
         self.set_current_name(basename)
         self.set_filename(path)
 

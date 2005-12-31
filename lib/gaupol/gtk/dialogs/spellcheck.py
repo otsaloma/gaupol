@@ -239,20 +239,6 @@ class SpellCheckDialog(gobject.GObject):
 
         Return (Language name, enchant.checker.SpellChecker).
         """
-        def show_error(detail):
-            """Show error dialog and exit."""
-
-            dialog = SpellCheckErrorDialog(self._dialog, detail)
-            dialog.run()
-            dialog.destroy()
-            raise Cancelled
-
-        def get_enchant_error_detail(name, detail):
-            """Get detailed error string for enchant errors."""
-
-            return _('Dictionary initialization for language "%s" returned '
-                     'error: %s') % (name, detail)
-
         not_set_msgs = (
             _('Main text language is not set. Please use the '
               '"Configure Spell-check" dialog to select a language and then '
@@ -263,32 +249,36 @@ class SpellCheckDialog(gobject.GObject):
         )
 
         if lang is None:
-            show_error(not_set_msgs[document])
+            detail = not_set_msgs[document]
+            dialog = SpellCheckErrorDialog(self._dialog, detail)
+            dialog.run()
+            dialog.destroy()
+            raise Cancelled
 
         name = langlib.get_descriptive_name(lang)
         dict_path = os.path.join(USER_DICT_DIR, lang + '.dict')
+        dialog = None
 
-        # Try to create dictionary with a personal word list.
         try:
-            dictionary = enchant.DictWithPWL(lang, dict_path)
-        except IOError, (errno, detail):
-            msg = 'Failed to create user dictionary file "%s".' % dict_path
-            logger.error(msg)
-            self._dictionary_label.set_sensitive(False)
-            self._add_button.set_sensitive(False)
-            self._add_lower_button.set_sensitive(False)
-
-            # Try to create dictionary without a personal word list.
             try:
+                dictionary = enchant.DictWithPWL(lang, dict_path)
+            except IOError, (errno, detail):
+                msg  = 'Failed to create user dictionary file '
+                msg += '"%s".' % dict_path
+                logger.error(msg)
+                self._dictionary_label.set_sensitive(False)
+                self._add_button.set_sensitive(False)
+                self._add_lower_button.set_sensitive(False)
                 dictionary = enchant.Dict(lang)
-
-        # Failed.
-            except enchant.Error, detail:
-                show_error(get_enchant_error_detail(name, detail))
         except enchant.Error, detail:
-            show_error(get_enchant_error_detail(name, detail))
+            detail = _('Dictionary initialization for language "%s" returned '
+                     'error: %s.') % (name, detail)
+            dialog = SpellCheckErrorDialog(self._dialog, detail)
+            dialog.run()
+            dialog.destroy()
+            raise Cancelled
 
-        return name, enchant.checker.SpellChecker(dictionary, u'')
+        return name, enchant.checker.SpellChecker(dictionary, '')
 
     def _init_suggestion_view(self):
         """Initialize the list of suggestions."""
@@ -539,6 +529,20 @@ class SpellCheckDialog(gobject.GObject):
         self._corrected_tran_rows  = []
         self._corrected_tran_texts = []
 
+    def _set_document(self, document):
+        """Set start position for checking document."""
+
+        self._document = document
+        self._set_language_label(document)
+        self._row = 0
+
+        if document == Document.MAIN:
+            self._texts   = self._page.project.main_texts
+            self._checker = self._main_checker
+        elif document == Document.TRAN:
+            self._texts   = self._page.project.tran_texts
+            self._checker = self._tran_checker
+
     def _set_language_label(self, document):
         """Set name in the language label."""
 
@@ -563,48 +567,18 @@ class SpellCheckDialog(gobject.GObject):
 
         Raise IndexError if there are no more texts to check.
         """
-        def set_start_position(document):
-            """Set position for starting to check document."""
-
-            self._document = document
-            self._row = 0
-            self._set_language_label(document)
-
-            if document == Document.MAIN:
-                self._texts   = self._page.project.main_texts
-                self._checker = self._main_checker
-            elif document == Document.TRAN:
-                self._texts   = self._page.project.tran_texts
-                self._checker = self._tran_checker
-
-        # Move to next row.
+        # Move to next row, document or page.
         try:
-            text = self._texts[self._row + 1]
+            self._texts[self._row + 1]
             self._row += 1
-
-        # Move from main document to translation document.
         except IndexError:
-            try:
-                if self._document == Document.TRAN:
-                    raise IndexError
-                if not config.spell_check.check_translation:
-                    raise IndexError
-                set_start_position(Document.TRAN)
-
-            # Move to next page.
-            except IndexError:
-
+            if self._document == Document.MAIN and \
+               config.spell_check.check_translation:
+                self._set_document(Document.TRAN)
+            else:
                 self._register_changes()
-
-                # Raise IndexError if done.
                 index = self._pages.index(self._page)
-                self._page = self._pages[index + 1]
-                self.emit('page-selected', self._page)
-
-                if config.spell_check.check_main:
-                    set_start_position(Document.MAIN)
-                elif config.spell_check.check_translation:
-                    set_start_position(Document.TRAN)
+                self._set_page(self.pages[index + 1])
 
         try:
             text = unicode(self._texts[self._row])
@@ -612,28 +586,24 @@ class SpellCheckDialog(gobject.GObject):
             return self._set_next_text()
         self._checker.set_text(text)
 
-    def _set_start_position(self):
-        """Set start position for spell-checking."""
+    def _set_page(self, page):
+        """Set start position for checking page."""
 
-        self._page = self._pages[0]
+        self._page = page
         self.emit('page-selected', self._page)
 
         if config.spell_check.check_main:
-            self._document = Document.MAIN
-            self._texts    = self._page.project.main_texts
-            self._checker  = self._main_checker
+            self._set_document(Document.MAIN)
         elif config.spell_check.check_translation:
-            self._document = Document.TRAN
-            self._texts    = self._page.project.tran_texts
-            self._checker  = self._tran_checker
-
-        self._set_language_label(self._document)
-        self._row = -1
-        self._set_next_text()
+            self._set_document(Document.TRAN)
 
     def show(self):
         """Show the dialog and start the spell-check."""
 
-        self._set_start_position()
+        # Set start position.
+        self._set_page(self._pages[0])
+        self._row = -1
+        self._set_next_text()
+
         self._dialog.show()
         self._advance()

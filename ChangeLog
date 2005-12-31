@@ -1,6 +1,25 @@
 2005-12-31  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* MANIFEST.in:
+	  Readded the .mo files.
+
+	* lib/gaupol/base/util/encodinglib.py:
+	* lib/gaupol/base/util/langlib.py:
+	* lib/gaupol/gtk/delegates/appupdate.py:
+	* lib/gaupol/gtk/delegates/guiinit.py:
+	* lib/gaupol/gtk/delegates/help.py:
+	* lib/gaupol/gtk/delegates/menuupdate.py:
+	* lib/gaupol/gtk/delegates/viewupdate.py:
+	* lib/gaupol/gtk/dialogs/encoding.py:
+	* lib/gaupol/gtk/dialogs/filechooser.py:
+	* lib/gaupol/gtk/dialogs/multiclose.py:
+	* lib/gaupol/gtk/dialogs/spellcheck.py:
+	* lib/gaupol/gtk/util/gui.py:
+	  Cosmetic fixes.
+
+2005-12-31  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* MANIFEST.in:
 	  Removed .mo files.
 
 	* gaupol:

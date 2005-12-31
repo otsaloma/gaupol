@@ -171,7 +171,6 @@ class ApplicationUpdateDelegate(Delegate):
 
         if message is None:
             return False
-
         self.message_statusbar.push(0, message)
 
         # Clear message after 6 seconds.

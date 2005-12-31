@@ -33,9 +33,17 @@ from gaupol.gtk.paths import GLADE_DIR
 
 logger = logging.getLogger()
 
+normal_cursor = gtk.gdk.Cursor(gtk.gdk.LEFT_PTR)
+busy_cursor   = gtk.gdk.Cursor(gtk.gdk.WATCH)
+
 
 def destroy_gobject(gobj):
     """Destroy gobject completely from memory."""
+
+    # NOTE:
+    # This is needed while PyGTK bug #320428 is unsolved.
+    # http://bugzilla.gnome.org/show_bug.cgi?id=320428
+    # http://bugzilla.gnome.org/attachment.cgi?id=18069
 
     try:
         gobj.destroy()
@@ -83,7 +91,7 @@ def set_cursor_busy(window):
 
     window: gtk.Window
     """
-    window.window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
+    window.window.set_cursor(busy_cursor)
 
 def set_cursor_normal(window):
     """
@@ -91,4 +99,4 @@ def set_cursor_normal(window):
 
     window: gtk.Window
     """
-    window.window.set_cursor(gtk.gdk.Cursor(gtk.gdk.LEFT_PTR))
+    window.window.set_cursor(normal_cursor)
