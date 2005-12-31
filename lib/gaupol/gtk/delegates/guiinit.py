@@ -32,7 +32,7 @@ import gobject
 import gtk
 
 from gaupol.constants     import Framerate, Mode
-from gaupol.gtk.delegates import Actions, Delegate
+from gaupol.gtk.delegates import Delegate, UIMActions
 from gaupol.gtk.paths     import UI_DIR, ICON_DIR
 from gaupol.gtk.util      import config, gui
 
@@ -101,7 +101,6 @@ class GUIInitDelegate(Delegate):
 
         self.set_menu_notify_events('main')
         self.set_sensitivities()
-
         self.notebook.grab_focus()
         self.window.show()
 
@@ -222,7 +221,7 @@ class GUIInitDelegate(Delegate):
 
         self.uim = gtk.UIManager()
 
-        # Name, Stock-icon, Label, (Accelerator, Tooltip, Callback)
+        # Name, Stock-icon, Label, [Accelerator, Tooltip, Callback]
         menu_items = [
             (
                 'show_file_menu',
@@ -267,7 +266,7 @@ class GUIInitDelegate(Delegate):
         # Loop through all actions and add their UI manager items after
         # evaluating methods from strings to method objects and converting
         # lists into tuples.
-        for cls in Actions.classes:
+        for cls in UIMActions.classes:
 
             if cls.uim_menu_item is not None:
                 action_group.add_actions([cls.uim_menu_item], None)

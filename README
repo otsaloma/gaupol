@@ -26,6 +26,10 @@ General Information
     - Spell-checking
     - GNOME HIG 2.0 compliant user interface
 
+  Gaupol should run on all Unix-like (Linux, BSD, etc.) operating systems.
+  Technically there is no obstacle why it couldn't run on Windows or Mac, but
+  that has not been tested.
+
   Gaupol is free software released under the GNU General Public License (GPL),
   see the file "COPYING" for details.
 
@@ -34,12 +38,8 @@ General Information
     http://home.gna.org/gaupol
 
 
-Requirements
+Dependencies
 ============
-
-  Gaupol should run on all Unix-like (Linux, BSD, etc.) operating systems.
-  Technically there is no obstacle why it couldn't run on Windows or Mac, but
-  that has not been tested.
 
   Required:
 
@@ -50,15 +50,21 @@ Requirements
 
     - Psyco, for best results >= 1.4
     - PyEnchant >= 1.1.3
-    - iso-codes (any version)
+    - iso-codes
 
   Psyco can make Gaupol run a bit faster. PyEnchant is required for
   spell-checking. iso-codes allows the spell-checker to show the language and
   country names in your locale.
 
+  To check the which versions of the dependencies you have installed, in the
+  source directory run command
+
+    test/info
+
   If you have PyEnchant installed, but spell-checking does not work, you can
   run a test to print information on your PyEnchant installation and list the
-  dictionaries available for it. To run the test, in the source directory type
+  dictionaries available for it. To run the test, in the source directory run
+  command
 
     test/pyenchant
 
@@ -69,7 +75,7 @@ Running Gaupol
   Gaupol can be run either (1) directly from the source directory or (2) it
   can be installed to a selected location.
 
-  (1) In the source directory, type
+  (1) In the source directory, run command
 
         ./gaupol
 

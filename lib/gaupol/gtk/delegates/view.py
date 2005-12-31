@@ -29,12 +29,12 @@ import gtk
 
 from gaupol.constants        import Framerate, Mode
 from gaupol.gtk.colconstants import *
-from gaupol.gtk.delegates    import Action, Delegate
+from gaupol.gtk.delegates    import Delegate, UIMAction
 from gaupol.gtk.util         import config, gui
 from gaupol.gtk.view         import View
 
 
-class ToggleColumnActionMenu(Action):
+class ToggleColumnActionMenu(UIMAction):
 
     """Toggling the visibility of a column."""
 
@@ -53,7 +53,7 @@ class ToggleColumnActionMenu(Action):
         return page is not None
 
 
-class ToggleColumnAction(Action):
+class ToggleColumnAction(UIMAction):
 
     """Toggling the visibility of a column."""
 
@@ -172,7 +172,7 @@ class ToggleColumnTranslationTextAction(ToggleColumnAction):
     uim_paths = ['/ui/menubar/view/columns/%s' % Column.id_names[col]]
 
 
-class ToggleEditModeAction(Action):
+class ToggleEditModeAction(UIMAction):
 
     """Toggling the edit mode."""
 
@@ -213,7 +213,7 @@ class ToggleEditModeAction(Action):
         return not page is None
 
 
-class ToggleFramerateAction(Action):
+class ToggleFramerateAction(UIMAction):
 
     """Toggling the framerate."""
 
@@ -273,7 +273,7 @@ class ToggleFramerateAction(Action):
             return True
 
 
-class ToggleStatusbarAction(Action):
+class ToggleStatusbarAction(UIMAction):
 
     """Toggling the visibility of the statusbar."""
 
@@ -302,7 +302,7 @@ class ToggleStatusbarAction(Action):
         return True
 
 
-class ToggleToolbarAction(Action):
+class ToggleToolbarAction(UIMAction):
 
     """Toggling the visibility of the toolbar."""
 
@@ -400,7 +400,8 @@ class ViewDelegate(Delegate):
                 visible_columns.append(i)
 
         config.editor.visible_columns = visible_columns
-        self.set_sensitivities()
+        self.set_sensitivities(page)
+        self.set_character_status(page)
         gui.set_cursor_normal(self.window)
 
     def on_toggle_edit_mode_activated(self, unknown, action):
@@ -436,7 +437,9 @@ class ViewDelegate(Delegate):
         # gtk.TreeView.remove_column() and gtk.TreeView.insert_column(), but
         # rebuilding the entire view is not much slower. It would be cool to be
         # able to replace the cell renderer of a column though.
+        old_view = page.view
         page.view = View(edit_mode)
+        gui.destroy_gobject(old_view)
         self.connect_view_signals(page)
 
         # Add view.

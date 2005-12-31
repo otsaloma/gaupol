@@ -322,7 +322,7 @@ class SpellCheckDialog(gobject.GObject):
     def _advance(self):
         """Advance to next spelling error."""
 
-        # Get next error from current text.
+        # Move to next error in current text.
         try:
             self._checker.next()
 
@@ -335,11 +335,9 @@ class SpellCheckDialog(gobject.GObject):
             if new_text != old_text:
                 self._add_correction(self._row, new_text)
 
-            # Get next text.
+            # Set next text for checker or return if done.
             try:
-                self._get_next_text()
-
-            # Done.
+                self._set_next_text()
             except IndexError:
                 self._text_view.get_buffer().set_text('')
                 self._fill_suggestion_view([])
@@ -347,8 +345,7 @@ class SpellCheckDialog(gobject.GObject):
                 return
 
             # Advance to next error.
-            self._advance()
-            return
+            return self._advance()
 
         self.emit('cell-selected', self._page, self._row, self._document)
 
@@ -403,62 +400,6 @@ class SpellCheckDialog(gobject.GObject):
         self._dialog.destroy()
         self.emit('destroyed')
 
-    def _get_next_text(self):
-        """
-        Get next text for spell-checker.
-
-        Raise IndexError if there are no more texts to check.
-        """
-        def set_position(document):
-            """Set position for starting to check document."""
-
-            self._document = document
-            self._row = 0
-            self._set_language_label(document)
-
-            if document == Document.MAIN:
-                self._texts   = self._page.project.main_texts
-                self._checker = self._main_checker
-            elif document == Document.TRAN:
-                self._texts   = self._page.project.tran_texts
-                self._checker = self._tran_checker
-
-        # Move to next row.
-        try:
-            text = self._texts[self._row + 1]
-            self._row += 1
-
-        # Move from main document to translation document.
-        except IndexError:
-            try:
-                if self._document == Document.TRAN:
-                    raise IndexError
-                if not config.spell_check.check_translation:
-                    raise IndexError
-                set_position(Document.TRAN)
-
-            # Move to next page.
-            except IndexError:
-
-                self._register_changes()
-
-                # Raises IndexError if we're done.
-                index = self._pages.index(self._page)
-                self._page = self._pages[index + 1]
-                self.emit('page-selected', self._page)
-
-                if config.spell_check.check_main:
-                    set_position(Document.MAIN)
-                elif config.spell_check.check_translation:
-                    set_position(Document.TRAN)
-
-        try:
-            text = unicode(self._texts[self._row])
-        except IndexError:
-            return self._get_next_text()
-
-        self._checker.set_text(text)
-
     def _get_selected_suggestion(self):
         """Get the selected suggestion."""
 
@@ -510,7 +451,7 @@ class SpellCheckDialog(gobject.GObject):
         dialog = TextEditDialog(self._dialog, text)
         response = dialog.run()
         text = unicode(dialog.get_text())
-        dialog.destroy()
+        gui.destroy_gobject(dialog)
 
         if response == gtk.RESPONSE_OK:
             self._checker.set_text(text)
@@ -525,8 +466,7 @@ class SpellCheckDialog(gobject.GObject):
         # between the clicks. This is probably a GTK bug. A workaround would be
         # needed, since this sensitivity setting cannot really be left out.
 
-        text = unicode(entry.get_text())
-        sensitive = bool(text)
+        sensitive = bool(entry.get_text())
         self._replace_button.set_sensitive(sensitive)
         self._replace_all_button.set_sensitive(sensitive)
         self._check_button.set_sensitive(sensitive)
@@ -566,7 +506,6 @@ class SpellCheckDialog(gobject.GObject):
 
         word = unicode(self._entry.get_text())
         self._checker.replace_always(word)
-        self._replace_all_button.realize()
         self._advance()
 
     def _on_replace_button_clicked(self, *args):
@@ -589,7 +528,8 @@ class SpellCheckDialog(gobject.GObject):
         """Register changes and empty the lists of corrections."""
 
         self.emit(
-            'page-checked', self._page,
+            'page-checked',
+            self._page,
             (self._corrected_main_rows , self._corrected_tran_rows ),
             (self._corrected_main_texts, self._corrected_tran_texts)
         )
@@ -617,6 +557,61 @@ class SpellCheckDialog(gobject.GObject):
         label = glade_xml.get_widget('suggestion_label')
         label.set_mnemonic_widget(self._suggestion_view)
 
+    def _set_next_text(self):
+        """
+        Set the next text for spell-checker.
+
+        Raise IndexError if there are no more texts to check.
+        """
+        def set_start_position(document):
+            """Set position for starting to check document."""
+
+            self._document = document
+            self._row = 0
+            self._set_language_label(document)
+
+            if document == Document.MAIN:
+                self._texts   = self._page.project.main_texts
+                self._checker = self._main_checker
+            elif document == Document.TRAN:
+                self._texts   = self._page.project.tran_texts
+                self._checker = self._tran_checker
+
+        # Move to next row.
+        try:
+            text = self._texts[self._row + 1]
+            self._row += 1
+
+        # Move from main document to translation document.
+        except IndexError:
+            try:
+                if self._document == Document.TRAN:
+                    raise IndexError
+                if not config.spell_check.check_translation:
+                    raise IndexError
+                set_start_position(Document.TRAN)
+
+            # Move to next page.
+            except IndexError:
+
+                self._register_changes()
+
+                # Raise IndexError if done.
+                index = self._pages.index(self._page)
+                self._page = self._pages[index + 1]
+                self.emit('page-selected', self._page)
+
+                if config.spell_check.check_main:
+                    set_start_position(Document.MAIN)
+                elif config.spell_check.check_translation:
+                    set_start_position(Document.TRAN)
+
+        try:
+            text = unicode(self._texts[self._row])
+        except IndexError:
+            return self._set_next_text()
+        self._checker.set_text(text)
+
     def _set_start_position(self):
         """Set start position for spell-checking."""
 
@@ -634,7 +629,7 @@ class SpellCheckDialog(gobject.GObject):
 
         self._set_language_label(self._document)
         self._row = -1
-        self._get_next_text()
+        self._set_next_text()
 
     def show(self):
         """Show the dialog and start the spell-check."""

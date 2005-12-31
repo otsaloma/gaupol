@@ -20,6 +20,7 @@
 """Functions for GTK widgets."""
 
 
+import gc
 import logging
 import os
 import sys
@@ -32,6 +33,17 @@ from gaupol.gtk.paths import GLADE_DIR
 
 logger = logging.getLogger()
 
+
+def destroy_gobject(gobj):
+    """Destroy gobject completely from memory."""
+
+    try:
+        gobj.destroy()
+    except AttributeError:
+        pass
+
+    del gobj
+    gc.collect()
 
 def get_glade_xml(basename):
     """

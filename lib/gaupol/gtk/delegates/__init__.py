@@ -77,10 +77,10 @@ class Delegate(object):
         return setattr(self.master, name, value)
 
 
-class Action(object):
+class UIMAction(object):
 
     """
-    Base class for actions.
+    Base class for UI manager actions.
 
     UI manager items:
 
@@ -162,9 +162,9 @@ class Action(object):
         raise NotImplementedError
 
 
-class Actions(object):
+class UIMActions(object):
 
-    """All actions."""
+    """All UI manager actions."""
 
     classes = []
 
@@ -193,8 +193,8 @@ def list_delegate_classes():
                 continue
 
             try:
-                if issubclass(value, Action):
-                    Actions.classes.append(value)
+                if issubclass(value, UIMAction):
+                    UIMActions.classes.append(value)
                 elif issubclass(value, Delegate):
                     Delegates.classes.append(value)
             except TypeError:
@@ -202,5 +202,5 @@ def list_delegate_classes():
 
 
 # List delegates if they have not yet been listed.
-if not Actions.classes or not Delegates.classes:
+if not UIMActions.classes or not Delegates.classes:
     list_delegate_classes()

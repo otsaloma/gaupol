@@ -31,7 +31,7 @@ import gtk
 
 from gaupol.base.error        import TimeoutError
 from gaupol.base.util         import wwwlib
-from gaupol.gtk.delegates     import Action, Delegate
+from gaupol.gtk.delegates     import Delegate, UIMAction
 from gaupol.gtk.dialogs.about import AboutDialog
 from gaupol.gtk.util          import gui
 from gaupol                   import __version__
@@ -45,7 +45,7 @@ VERSION_URL    = 'http://download.gna.org/gaupol/latest.txt'
 re_version = re.compile(r'^\d+\.\d+\.\d+$')
 
 
-class HelpAction(Action):
+class HelpAction(UIMAction):
 
     """Base class for help actions."""
 
@@ -218,3 +218,4 @@ class HelpDelegate(Delegate):
         dialog = AboutDialog(self.window)
         dialog.run()
         dialog.destroy()
+        gui.destroy_gobject(dialog)

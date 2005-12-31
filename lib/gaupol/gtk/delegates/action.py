@@ -29,11 +29,11 @@ import gtk
 
 from gaupol.base.util        import listlib
 from gaupol.gtk.colconstants import *
-from gaupol.gtk.delegates    import Action, Delegate
+from gaupol.gtk.delegates    import Delegate, UIMAction
 from gaupol.gtk.util         import gui
 
 
-class RedoAction(Action):
+class RedoAction(UIMAction):
 
     """Redoing actions."""
 
@@ -59,7 +59,7 @@ class RedoAction(Action):
         return page.project.can_redo()
 
 
-class UndoAction(Action):
+class UndoAction(UIMAction):
 
     """Undoing actions."""
 

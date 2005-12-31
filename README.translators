@@ -37,7 +37,7 @@ Table of Contents
   files and the Python source code files. Desktop file "gaupol.desktop" needs
   to be translated separately.
 
-  To print a help message on using trantool, type
+  To print a help message on using trantool, run command
 
     ./trantool --help
 
@@ -47,7 +47,7 @@ Table of Contents
 2. Creating a new .po file
 ==========================
 
-  To create a new .po file, type
+  To create a new .po file, run command
 
     ./trantool -p <lang>
 
@@ -59,7 +59,7 @@ Table of Contents
 ================================
 
   To update an existing .po file with new strings that have been added since
-  the last update, type
+  the last update, run command
 
     ./trantool -u <lang>
 
@@ -69,7 +69,7 @@ Table of Contents
 4. Compiling .mo files
 ======================
 
-  To compile a .mo file based on the .po file you have translated, type
+  To compile a .mo file based on the .po file you have translated, run command
 
     ./trantool -m <lang>
 
@@ -86,11 +86,11 @@ Table of Contents
 
   After you have compiled a .mo file, the translation is available to Gaupol.
 
-  To start Gaupol with a translation in your current locale, type
+  To start Gaupol with a translation in your current locale, run command
 
     ./gaupol
 
-  To start gaupol without a translation, type
+  To start gaupol without a translation, run command
 
    LANG=C ./gaupol --no-translation
 

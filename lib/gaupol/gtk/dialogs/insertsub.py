@@ -27,7 +27,7 @@ except ImportError:
 
 import gtk
 
-from gaupol.gtk.util import gui
+from gaupol.gtk.util import config, gui
 
 
 class InsertSubtitleDialog(object):
@@ -52,6 +52,10 @@ class InsertSubtitleDialog(object):
         amount_label = get_widget('amount_label')
         amount_label.set_mnemonic_widget(self._amount_spin_button)
 
+        # Set initial values from config.
+        self._position_combo_box.set_active(config.subtitle_insert.position)
+        self._amount_spin_button.set_value(config.subtitle_insert.amount)
+
     def destroy(self):
         """Destroy the dialog."""
 
@@ -69,8 +73,6 @@ class InsertSubtitleDialog(object):
 
         Return Position.ABOVE or Position.BELOW.
         """
-        # ComboBox entry index corresponds to values of constants
-        # Position.ABOVE and Position.BELOW.
         return self._position_combo_box.get_active()
 
     def run(self):
@@ -78,21 +80,6 @@ class InsertSubtitleDialog(object):
 
         self._dialog.show()
         return self._dialog.run()
-
-    def set_amount(self, value):
-        """Set amount of subtitles to insert."""
-
-        self._amount_spin_button.set_value(value)
-
-    def set_position(self, position):
-        """
-        Set position to insert subtitles to.
-
-        position: POSITION.ABOVE or POSITION.BELOW
-        """
-        # ComboBox entry index corresponds to values of constants
-        # Position.ABOVE and Position.BELOW.
-        self._position_combo_box.set_active(position)
 
     def set_position_sensitive(self, sensitive):
         """

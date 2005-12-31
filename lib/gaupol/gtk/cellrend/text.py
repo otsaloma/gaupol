@@ -38,22 +38,32 @@ class CellRendererText(gtk.GenericCellRenderer):
 
     __gproperties__ = {
         'font': (
-            gobject.TYPE_STRING, 'font', 'font', '',
+            gobject.TYPE_STRING,
+            'font',
+            'font',
+            '',
             gobject.PARAM_READWRITE
         ),
         'font_description': (
-            gobject.TYPE_STRING, 'font description', 'font description', '',
+            gobject.TYPE_STRING,
+            'font description',
+            'font description',
+            '',
             gobject.PARAM_READWRITE
         ),
         'text': (
-            gobject.TYPE_STRING, 'text', 'text', '',
+            gobject.TYPE_STRING,
+            'text',
+            'text',
+            '',
             gobject.PARAM_READWRITE
         ),
     }
 
     __gsignals__ = {
         'edited': (
-            gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE,
+            gobject.SIGNAL_RUN_LAST,
+            gobject.TYPE_NONE,
             (gobject.TYPE_STRING, gobject.TYPE_INT)
         )
     }
@@ -117,8 +127,8 @@ class CellRendererText(gtk.GenericCellRenderer):
         Return X offset, Y offset, width, height.
         """
         # The following size calculations have been tested so that the cell
-        # should be the same size as a CellRendererText cell with same amount
-        # of rows.
+        # should be the same size as a gtk.CellRendererText cell with same
+        # amount of rows.
 
         layout = self._get_layout(widget)
         width, height = layout.get_pixel_size()

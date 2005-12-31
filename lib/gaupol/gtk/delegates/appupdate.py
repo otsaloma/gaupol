@@ -30,11 +30,11 @@ import gtk
 
 from gaupol.constants        import Framerate, Mode
 from gaupol.gtk.colconstants import *
-from gaupol.gtk.delegates    import Action, Actions, Delegate
+from gaupol.gtk.delegates    import Delegate, UIMAction, UIMActions
 from gaupol.gtk.util         import config, gui
 
 
-class ActivateNextProjectAction(Action):
+class ActivateNextProjectAction(UIMAction):
 
     """Activate the next page in the notebook."""
 
@@ -61,7 +61,7 @@ class ActivateNextProjectAction(Action):
         return bool(index < last_index)
 
 
-class ActivatePreviousProjectAction(Action):
+class ActivatePreviousProjectAction(UIMAction):
 
     """Activate the previous page in the notebook."""
 
@@ -126,7 +126,7 @@ class ApplicationUpdateDelegate(Delegate):
     def _set_action_sensitivities(self, page):
         """Set sensitivities of all actions for page."""
 
-        for cls in Actions.classes:
+        for cls in UIMActions.classes:
             doable = cls.is_doable(self, page)
             for path in cls.uim_paths:
                 self.uim.get_action(path).set_sensitive(doable)
@@ -174,10 +174,10 @@ class ApplicationUpdateDelegate(Delegate):
 
         self.message_statusbar.push(0, message)
 
-        # Clear message after 5 seconds.
+        # Clear message after 6 seconds.
         if clear:
             method = self.set_status_message
-            self.message_tag = gobject.timeout_add(5000, method, None)
+            self.message_tag = gobject.timeout_add(6000, method, None)
 
         return False
 

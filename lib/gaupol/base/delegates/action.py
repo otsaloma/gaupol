@@ -35,6 +35,10 @@ revertable. For example insert_subtitles and remove_subtitles form a pair.
 During the "register_action" method, a signal will be emitted notifying that
 an action was done. Any possible UI can hook up to that signal and use it to
 refresh the data display.
+
+Currently, there is no ability to group actions. This makes it impossible to,
+for example, insert new rows while pasting if clipboard contents don't fit in
+the existing rows.
 """
 
 
@@ -42,6 +46,8 @@ try:
     from psyco.classes import *
 except ImportError:
     pass
+
+import bisect
 
 from gaupol.base.delegates import Delegate
 from gaupol.base.util      import listlib
@@ -76,6 +82,7 @@ class RevertableAction(object):
         revert_method: Method called to revert action
 
         *_updated arguments should preferably be called without duplication.
+        *_updated are all in sorted order.
         """
         self.register               = register
         self.documents              = documents
@@ -112,22 +119,30 @@ class RevertableAction(object):
 
         Raise ValueError if values of attributes are incorrect.
         """
-        registers = [
+        registers = (
             Action.DO,
             Action.UNDO,
             Action.REDO,
             Action.UNDO_MULTIPLE,
             Action.REDO_MULTIPLE,
-        ]
+        )
 
         if self.register not in registers:
-            msg = 'Incorrect register value: "%s".' % self.register
+            msg = 'Incorrect register: "%s".' % self.register
             raise ValueError(msg)
 
         if Document.MAIN not in self.documents and \
            Document.TRAN not in self.documents:
-               msg = 'Incorrect documents value: "%s".' % self.documents
+               msg = 'Incorrect documents: "%s".' % self.documents
                raise ValueError(msg)
+
+        # Sort all row data.
+        self.rows_inserted.sort()
+        self.rows_removed.sort()
+        self.rows_upd.sort()
+        self.timing_rows_upd.sort()
+        self.main_text_rows_upd.sort()
+        self.tran_text_rows_upd.sort()
 
 
 class ActionDelegate(Delegate):
@@ -156,8 +171,7 @@ class ActionDelegate(Delegate):
         """Redo actions."""
 
         if amount == 1:
-            action = self.redoables[0]
-            action.revert()
+            self.redoables[0].revert()
             self.redoables.pop(0)
         elif amount > 1:
             self._revert_multiple(amount, Action.REDO_MULTIPLE)
@@ -251,21 +265,27 @@ class ActionDelegate(Delegate):
             action = stack[0]
             action.revert()
 
-            # Adjust updates to new row orders.
+            # Adjust previous updates to rows now being removed.
             if action.rows_inserted:
-                length = len(action.rows_inserted)
-                last   = max(action.rows_inserted)
+                row_count = len(action.rows_inserted)
+                first_row = min(action.rows_inserted)
                 for i in reversed(range(len(rows_updated))):
+
+                    # Remove updates to rows that will no longer exist.
                     if rows_updated[i] in action.rows_inserted:
                         rows_updated.pop(i)
-                    elif rows_updated[i] > last:
-                        rows_updated[i] -= length
-            if action.rows_removed:
-                length = len(action.rows_removed)
-                first  = min(action.rows_removed)
+
+                    # Shift updates according to new row count.
+                    elif rows_updated[i] > first_row:
+                        lst = action.rows_inserted
+                        rows_above = bisect.bisect_left(lst, rows_updated[i])
+                        rows_updated[i] -= rows_above
+
+            # Adjust previous updates to rows now being inserted.
+            for row in action.rows_removed:
                 for i in range(len(rows_updated)):
-                    if rows_updated[i] >= first:
-                        rows_updated[i] += length
+                    if rows_updated[i] >= row:
+                        rows_updated += 1
 
             rows_inserted += action.rows_inserted
             rows_removed  += action.rows_removed
@@ -282,7 +302,7 @@ class ActionDelegate(Delegate):
         for data in (rows_inserted, rows_removed, rows_updated):
             data = listlib.sort_and_remove_duplicates(data)
 
-        # Create a dummy action to deliver information of reverting.
+        # Create an action to deliver information of reverting.
         action = RevertableAction(
             register=register,
             documents=[Document.MAIN, Document.TRAN],
@@ -310,8 +330,7 @@ class ActionDelegate(Delegate):
         """Undo actions."""
 
         if amount == 1:
-            action = self.undoables[0]
-            action.revert()
+            self.undoables[0].revert()
             self.undoables.pop(0)
         elif amount > 1:
             self._revert_multiple(amount, Action.UNDO_MULTIPLE)

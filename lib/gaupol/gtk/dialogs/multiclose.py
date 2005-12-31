@@ -47,6 +47,16 @@ class MultiCloseWarningDialog(object):
 
     def __init__(self, parent, pages):
 
+        glade_xml = gui.get_glade_xml('multiclose-dialog.glade')
+
+        # Widgets
+        self._dialog         = glade_xml.get_widget('dialog')
+        self._main_tree_view = glade_xml.get_widget('main_tree_view')
+        self._tran_tree_view = glade_xml.get_widget('translation_tree_view')
+
+        self._dialog.set_transient_for(parent)
+        self._dialog.set_default_response(gtk.RESPONSE_YES)
+
         # Lists of tuples (page, basename)
         self._main_data = []
         self._tran_data = []
@@ -57,16 +67,6 @@ class MultiCloseWarningDialog(object):
                 self._main_data.append((page, page.get_main_basename()))
             if page.project.tran_active and page.project.tran_changed:
                 self._tran_data.append((page, page.get_translation_basename()))
-
-        glade_xml = gui.get_glade_xml('multiclose-dialog.glade')
-
-        # Widgets
-        self._dialog         = glade_xml.get_widget('dialog')
-        self._main_tree_view = glade_xml.get_widget('main_tree_view')
-        self._tran_tree_view = glade_xml.get_widget('translation_tree_view')
-
-        self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(gtk.RESPONSE_YES)
 
         self._init_main_tree_view(glade_xml)
         self._init_translation_tree_view(glade_xml)
@@ -192,5 +192,4 @@ class MultiCloseWarningDialog(object):
 
         self._main_tree_view.grab_focus()
         self._dialog.show()
-
         return self._dialog.run()

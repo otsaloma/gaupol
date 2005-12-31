@@ -55,7 +55,7 @@ class TextParser(object):
         self.text = None
 
         # List of lists [tag, position]
-        self.tags   = None
+        self.tags = None
 
     def get_text(self):
         """Reassemble text and return it."""

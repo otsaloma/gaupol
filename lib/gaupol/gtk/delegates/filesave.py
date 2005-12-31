@@ -32,14 +32,14 @@ import gtk
 from gaupol.base.util               import encodinglib
 from gaupol.constants               import Document
 from gaupol.gtk.colconstants        import *
-from gaupol.gtk.delegates           import Action, Delegate
+from gaupol.gtk.delegates           import Delegate, UIMAction
 from gaupol.gtk.dialogs.filechooser import SaveFileDialog
 from gaupol.gtk.dialogs.message     import ErrorDialog
 from gaupol.gtk.error               import Cancelled
 from gaupol.gtk.util                import config, gui
 
 
-class SaveAction(Action):
+class SaveAction(UIMAction):
 
     """Saving a document."""
 
@@ -339,7 +339,7 @@ class FileSaveDelegate(Delegate):
 
         # Select file.
         try:
-            props = self._select_file(Document.MAIN, _('Save A Copy'), props)
+            props = self._select_file(_('Save A Copy'), props)
         except Cancelled:
             gui.set_cursor_normal(self.window)
             return False
@@ -374,7 +374,7 @@ class FileSaveDelegate(Delegate):
         # Select file.
         title = _('Save A Copy Of Translation')
         try:
-            props = self._select_file(Document.TRAN, title, props)
+            props = self._select_file(title, props)
         except Cancelled:
             gui.set_cursor_normal(self.window)
             return False
@@ -392,8 +392,7 @@ class FileSaveDelegate(Delegate):
         gui.set_cursor_normal(self.window)
         return True
 
-    def _save_file(self, page, document_type, parent, keep_changes,
-                   properties):
+    def _save_file(self, page, document, parent, keep_changes, properties):
         """
         Check if file is writeable and write it if possible.
 
@@ -404,9 +403,9 @@ class FileSaveDelegate(Delegate):
         basename = os.path.basename(path)
 
         try:
-            if document_type == Document.MAIN:
+            if document == Document.MAIN:
                 page.project.save_main_file(keep_changes, properties)
-            elif document_type == Document.TRAN:
+            elif document == Document.TRAN:
                 page.project.save_translation_file(keep_changes, properties)
 
         except IOError, (errno, detail):
@@ -461,7 +460,7 @@ class FileSaveDelegate(Delegate):
 
         # Select file.
         try:
-            props = self._select_file(Document.MAIN, _('Save As'), props)
+            props = self._select_file(_('Save As'), props)
         except Cancelled:
             gui.set_cursor_normal(self.window)
             return False
@@ -526,7 +525,7 @@ class FileSaveDelegate(Delegate):
         # Select file.
         title = _('Save Translation As')
         try:
-            props = self._select_file(Document.TRAN, title, props)
+            props = self._select_file(title, props)
         except Cancelled:
             gui.set_cursor_normal(self.window)
             return False
@@ -552,7 +551,7 @@ class FileSaveDelegate(Delegate):
         gui.set_cursor_normal(self.window)
         return True
 
-    def _select_file(self, document_type, title, properties):
+    def _select_file(self, title, properties):
         """
         Select a file with a filechooser.
 
@@ -574,7 +573,7 @@ class FileSaveDelegate(Delegate):
         gui.set_cursor_busy(self.window)
 
         if response != gtk.RESPONSE_OK:
-            chooser.destroy()
+            gui.destroy_gobject(chooser)
             raise Cancelled
 
         # Save file properties.
@@ -589,5 +588,5 @@ class FileSaveDelegate(Delegate):
         config.file.encoding  = encoding
         config.file.newlines  = newlines
 
-        chooser.destroy()
+        gui.destroy_gobject(chooser)
         return filepath, format, encoding, newlines

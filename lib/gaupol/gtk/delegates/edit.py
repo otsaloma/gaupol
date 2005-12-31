@@ -30,13 +30,13 @@ import gtk
 from gaupol.base.error            import FitError
 from gaupol.constants             import Mode, Position
 from gaupol.gtk.colconstants      import *
-from gaupol.gtk.delegates         import Action, Delegate
+from gaupol.gtk.delegates         import Delegate, UIMAction
 from gaupol.gtk.dialogs.insertsub import InsertSubtitleDialog
 from gaupol.gtk.dialogs.message   import ErrorDialog
 from gaupol.gtk.util              import config, gui
 
 
-class ClipboardAction(Action):
+class ClipboardAction(UIMAction):
 
     """Base class for clipboard actions."""
 
@@ -52,7 +52,7 @@ class ClipboardAction(Action):
         return bool(selection and focus)
 
 
-class SelectionAction(Action):
+class SelectionAction(UIMAction):
 
     """Base class for selection actions."""
 
@@ -114,7 +114,7 @@ class CutTextsAction(ClipboardAction):
     uim_paths = ['/ui/menubar/edit/cut', '/ui/view/cut']
 
 
-class EditValueAction(Action):
+class EditValueAction(UIMAction):
 
     """Editing the value of a single cell."""
 
@@ -146,7 +146,7 @@ class EditValueAction(Action):
             return True
 
 
-class InsertSubtitlesAction(Action):
+class InsertSubtitlesAction(UIMAction):
 
     """Inserting subtitles."""
 
@@ -208,7 +208,7 @@ class PasteTextsAction(ClipboardAction):
     uim_paths = ['/ui/menubar/edit/paste', '/ui/view/paste']
 
 
-class RemoveSubtitlesAction(Action):
+class RemoveSubtitlesAction(UIMAction):
 
     """Removing subtitles."""
 
@@ -249,19 +249,6 @@ class SelectAllAction(SelectionAction):
     uim_paths = ['/ui/menubar/edit/select_all']
 
 
-class PasteFitErrorDialog(ErrorDialog):
-
-    """Dialog to inform that clipboard contents did not fit."""
-
-    def __init__(self, parent):
-
-        title  = _('Not enough space available to fit clipboard contents')
-        detail = _('Please first insert new subtitles if you wish to paste at '
-                   'the current location')
-
-        ErrorDialog.__init__(self, parent, title, detail)
-
-
 class UnSelectAllAction(SelectionAction):
 
     """Unselecting all subtitles."""
@@ -276,6 +263,19 @@ class UnSelectAllAction(SelectionAction):
     )
 
     uim_paths = ['/ui/menubar/edit/unselect_all']
+
+
+class PasteFitErrorDialog(ErrorDialog):
+
+    """Dialog to inform that clipboard contents did not fit."""
+
+    def __init__(self, parent):
+
+        title  = _('Not enough space available to fit clipboard contents')
+        detail = _('Please first insert new subtitles if you wish to paste at '
+                   'the current location')
+
+        ErrorDialog.__init__(self, parent, title, detail)
 
 
 class EditDelegate(Delegate):
@@ -337,13 +337,7 @@ class EditDelegate(Delegate):
     def on_insert_subtitles_activated(self, *args):
         """Insert blank subtitles."""
 
-        position = config.subtitle_insert.position
-        amount   = config.subtitle_insert.amount
-
         dialog = InsertSubtitleDialog(self.window)
-        dialog.set_amount(amount)
-        dialog.set_position(position)
-
         page = self.get_current_page()
         if not page.project.times:
             dialog.set_position_sensitive(False)
@@ -457,8 +451,8 @@ class EditDelegate(Delegate):
         elif col in (MTXT, TTXT):
             page.project.set_text(row, col - 4, value)
             self.set_sensitivities(page)
+            self.set_character_status(page)
 
-        self.set_character_status(page)
         gui.set_cursor_normal(self.window)
 
     def on_view_cell_editing_canceled(self, cell_renderer, editor):

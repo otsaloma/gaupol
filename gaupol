@@ -78,15 +78,6 @@ def check_paths():
         prefix = os.path.abspath(os.path.join(current_dir, '..'))
         prepare_installed_run(prefix)
 
-def import_optional_modules():
-    """Import optional modules."""
-
-    try:
-        import psyco
-        psyco.profile()
-    except ImportError:
-        logger.info('Psyco not found.')
-
 def parse_options():
     """
     Parse given options and arguments.
@@ -183,7 +174,11 @@ if __name__ == '__main__':
 
     # The world is not big enough for PyChecker and Psyco.
     if not opts.pycheck:
-        import_optional_modules()
+        try:
+            import psyco
+            psyco.profile()
+        except ImportError:
+            logger.info('Psyco not found.')
 
     # Run as requested.
     if opts.pycheck:

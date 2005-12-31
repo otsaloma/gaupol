@@ -80,12 +80,10 @@ class Type(object):
 sections = [
     'application_window',
     'editor',
-    'encoding_dialog',
     'file',
     'general',
     'subtitle_insert',
     'spell_check',
-    'spell_check_dialog',
 ]
 
 
@@ -131,14 +129,6 @@ class editor(object):
         'visible_columns': Column,
     }
 
-
-class encoding_dialog(object):
-
-    size = [400, 400]
-
-    types = {
-        'size': Type.INTEGER_LIST,
-    }
 
 class file(object):
 
@@ -209,14 +199,6 @@ class spell_check(object):
         'translation_language': Type.STRING,
     }
 
-class spell_check_dialog(object):
-
-    size = [460, 410]
-
-    types = {
-        'size': Type.INTEGER_LIST,
-    }
-
 
 def _get_boolean(arg):
     """
@@ -241,12 +223,12 @@ def _get_constant(section, option, arg):
     Raise AttributeError if some attribute not found.
     Raise ValueError if arg not convertable.
     """
-    constant_class = eval(section).classes[option]
+    cls = eval(section).classes[option]
 
     if isinstance(arg, basestring):
-        return constant_class.id_names.index(arg)
+        return cls.id_names.index(arg)
     elif isinstance(arg, int):
-        return constant_class.id_names[arg]
+        return cls.id_names[arg]
     else:
         raise ValueError('Wrong argument type: %s.' % type(arg))
 

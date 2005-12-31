@@ -94,7 +94,7 @@ class CellRendererMultilineText(CellRendererText):
         combined with Return or Keypad Enter can be used for linebreaking.
         Escape cancels editing.
         """
-        accel_masks = (gtk.gdk.CONTROL_MASK | gtk.gdk.SHIFT_MASK)
+        accel_masks = (gtk.gdk.CONTROL_MASK|gtk.gdk.SHIFT_MASK)
         keymap = gtk.gdk.keymap_get_default()
 
         args = event.hardware_keycode, event.state, event.group

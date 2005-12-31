@@ -337,6 +337,7 @@ class MenuUpdateDelegate(Delegate):
             item.connect('activate'          , on_activate          , i     )
             item.connect('enter-notify-event', on_enter_notify_event, i, tip)
             item.connect('leave-notify-event', on_leave_notify_event, i     )
+
             menu_items.append(item)
             menu.append(item)
 

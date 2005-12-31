@@ -23,7 +23,7 @@
 # Documentation:
 # http://netti.nic.fi/~temp/easydivx/help/mdvddoc/#step5
 #
-# Position and coordinate tags are unimplemented.
+# Position and coordinate tags are not implemented.
 
 
 try:

@@ -2,7 +2,7 @@ Installation
 ============
 
   Gaupol uses the standard Python distutils for installation. To install
-  Gaupol, type
+  Gaupol, run command
 
     ./setup.py install [--prefix=...]
 
@@ -18,6 +18,6 @@ Uninstallation
   the same prefix and an appropriate log file will be generated.
 
   The uninstallation command is not a part of Python distutils, but instead an
-  unstable extension. To uninstall, type
+  unstable extension. To uninstall, run command
 
     ./setup.py uninstall

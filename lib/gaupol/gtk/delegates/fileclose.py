@@ -28,14 +28,14 @@ except ImportError:
 import gtk
 
 from gaupol.constants              import Document
-from gaupol.gtk.delegates          import Action, Delegate
+from gaupol.gtk.delegates          import Delegate, UIMAction
 from gaupol.gtk.dialogs.message    import WarningDialog
 from gaupol.gtk.dialogs.multiclose import MultiCloseWarningDialog
 from gaupol.gtk.error              import Cancelled
 from gaupol.gtk.util               import config, gui
 
 
-class CloseAllProjectsAction(Action):
+class CloseAllProjectsAction(UIMAction):
 
     """Closing all projects."""
 
@@ -57,7 +57,7 @@ class CloseAllProjectsAction(Action):
         return page is not None
 
 
-class CloseProjectAction(Action):
+class CloseProjectAction(UIMAction):
 
     """Closing a project."""
 
@@ -79,7 +79,7 @@ class CloseProjectAction(Action):
         return page is not None
 
 
-class QuitAction(Action):
+class QuitAction(UIMAction):
 
     """Quitting Gaupol."""
 
@@ -105,12 +105,12 @@ class CloseWarningDialog(WarningDialog):
 
     """Dialog for warning when closing a document."""
 
-    def __init__(self, parent, document_type, basename):
+    def __init__(self, parent, document, basename):
 
-        if document_type == Document.MAIN:
+        if document == Document.MAIN:
             title = _('Save changes to main document "%s" before closing?') \
                     % basename
-        elif document_type == Document.TRAN:
+        elif document == Document.TRAN:
             title = _('Save changes to translation document "%s" before '
                       'closing?') % basename
 
@@ -154,7 +154,10 @@ class FileCloseDelegate(Delegate):
         elif unsaved_count > 1:
             self._confirm_closing_multiple_documents(self.pages)
 
-        self.pages = []
+        for i in reversed(range(len(self.pages))):
+            page = self.pages.pop(i)
+            gui.destroy_gobject(page)
+
         while self.notebook.get_current_page() > -1:
             self.notebook.remove_page(0)
 
@@ -176,6 +179,7 @@ class FileCloseDelegate(Delegate):
             self.notebook.next_page()
 
         self.pages.remove(page)
+        gui.destroy_gobject(page)
         self.notebook.remove_page(this_page_index)
 
     def _confirm_closing_main_document(self, page):
@@ -307,7 +311,7 @@ class FileCloseDelegate(Delegate):
 
         # Save window geometry.
         if not config.application_window.maximized:
-            config.application_window.size = self.window.get_size()
+            config.application_window.size     = self.window.get_size()
             config.application_window.position = self.window.get_position()
 
         config.write()

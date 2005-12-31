@@ -219,7 +219,7 @@ class EditDelegate(Delegate):
         Return rows that were pasted into.
         """
         data = self.clipboard.data
-        if len(data) > len(self.times) - start_row:
+        if len(data) > (len(self.times) - start_row):
             raise FitError
 
         rows      = []
@@ -399,16 +399,16 @@ class EditDelegate(Delegate):
         """Set text."""
 
         value = unicode(value)
-        main_text_rows_updated = []
-        tran_text_rows_updated = []
 
         if document == Document.MAIN:
             orig_value = self.main_texts[row]
             self.main_texts[row] = value
             main_text_rows_updated = [row]
+            tran_text_rows_updated = []
         elif document == Document.TRAN:
             orig_value = self.tran_texts[row]
             self.tran_texts[row] = value
+            main_text_rows_updated = []
             tran_text_rows_updated = [row]
 
         if value == orig_value:
@@ -479,7 +479,7 @@ class EditDelegate(Delegate):
         data = [self.times, self.frames, self.main_texts, self.tran_texts]
 
         # Get new row.
-        lst = timings[:row] + timings[row + 1:]
+        lst  = timings[:row] + timings[row + 1:]
         item = timings[row]
         new_row = bisect.bisect_right(lst, item)
 

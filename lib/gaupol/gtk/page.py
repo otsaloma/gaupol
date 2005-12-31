@@ -42,7 +42,11 @@ class Page(gobject.GObject):
     """User interface for a single project."""
 
     __gsignals__ = {
-        'close-button-clicked': (gobject.SIGNAL_RUN_LAST, None, ()),
+        'close-button-clicked': (
+            gobject.SIGNAL_RUN_LAST,
+            None,
+            ()
+        ),
     }
 
     def __init__(self, counter=0):

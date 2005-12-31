@@ -28,10 +28,10 @@ except ImportError:
 import gtk
 
 from gaupol.gtk.colconstants import *
-from gaupol.gtk.delegates    import Action, Delegate
+from gaupol.gtk.delegates    import Delegate, UIMAction
 
 
-class FormatAction(Action):
+class FormatAction(UIMAction):
 
     """Base class for text formatting actions."""
 
@@ -184,6 +184,7 @@ class FormatDelegate(Delegate):
 
         page.project.toggle_dialog_lines(rows, doc)
         self.set_sensitivities(page)
+        self.set_character_status(page)
 
     def on_toggle_italicization_activated(self, *args):
         """Toggle italicization."""

@@ -35,7 +35,7 @@ from gaupol.base.error              import FileFormatError
 from gaupol.base.util               import encodinglib, listlib
 from gaupol.constants               import Document
 from gaupol.gtk.colconstants        import *
-from gaupol.gtk.delegates           import Action, Delegate
+from gaupol.gtk.delegates           import Delegate, UIMAction
 from gaupol.gtk.dialogs.filechooser import OpenFileDialog
 from gaupol.gtk.dialogs.message     import ErrorDialog, WarningDialog
 from gaupol.gtk.error               import Cancelled
@@ -43,7 +43,7 @@ from gaupol.gtk.page                import Page
 from gaupol.gtk.util                import config, gui
 
 
-class NewProjectAction(Action):
+class NewProjectAction(UIMAction):
 
     """Creating a new project."""
 
@@ -65,7 +65,7 @@ class NewProjectAction(Action):
         return True
 
 
-class OpenMainFileAction(Action):
+class OpenMainFileAction(UIMAction):
 
     """Opening main files."""
 
@@ -88,7 +88,7 @@ class OpenMainFileAction(Action):
         return True
 
 
-class OpenTranslationFileAction(Action):
+class OpenTranslationFileAction(UIMAction):
 
     """Opening translation files."""
 
@@ -534,7 +534,7 @@ class FileOpenDelegate(Delegate):
         gui.set_cursor_busy(self.window)
 
         if response != gtk.RESPONSE_OK:
-            chooser.destroy()
+            gui.destroy_gobject(chooser)
             gui.set_cursor_normal(self.window)
             raise Cancelled
 
@@ -545,5 +545,5 @@ class FileOpenDelegate(Delegate):
         config.file.encoding = encoding
         config.file.directory = dirpath
 
-        chooser.destroy()
+        gui.destroy_gobject(chooser)
         return filepaths, encoding

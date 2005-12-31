@@ -25,13 +25,12 @@ try:
 except ImportError:
     pass
 
-import gc
 import logging
 
 import gtk
 
 from gaupol                        import constants
-from gaupol.gtk.delegates          import Action, Delegate
+from gaupol.gtk.delegates          import Delegate, UIMAction
 from gaupol.gtk.dialogs.language   import LanguageDialog
 from gaupol.gtk.dialogs.spellcheck import SpellCheckDialog
 from gaupol.gtk.error              import Cancelled
@@ -58,7 +57,7 @@ except enchant.Error, detail:
     logger.error(msg)
 
 
-class ConfigureSpellCheckAction(Action):
+class ConfigureSpellCheckAction(UIMAction):
 
     """Configure spell-check."""
 
@@ -80,7 +79,7 @@ class ConfigureSpellCheckAction(Action):
         return enchant_available
 
 
-class SpellCheckAction(Action):
+class SpellCheckAction(UIMAction):
 
     """Check spelling."""
 
@@ -162,8 +161,7 @@ class SpellCheckDelegate(Delegate):
     def _on_destroyed(self, dialog):
         """Delete dialog."""
 
-        del dialog
-        gc.collect()
+        gui.destroy_gobject(dialog)
 
     def _on_page_checked(self, dialog, page, rows, texts):
         """

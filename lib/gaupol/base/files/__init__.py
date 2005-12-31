@@ -34,6 +34,9 @@ class SubtitleFile(object):
 
     """Base class for subtitle files."""
 
+    FORMAT = None
+    MODE   = None
+
     # Regular expression that is used to identify this file format.
     # Pattern, flags
     id_pattern = None, None

@@ -43,31 +43,26 @@ class EncodingDialog(object):
 
         glade_xml = gui.get_glade_xml('encoding-dialog.glade')
 
-        self._dialog    = glade_xml.get_widget('dialog')
-        self._tree_view = glade_xml.get_widget('tree_view')
+        self._dialog = glade_xml.get_widget('dialog')
+        self._view   = glade_xml.get_widget('tree_view')
+
+        self._dialog.set_transient_for(parent)
+        self._dialog.set_default_response(gtk.RESPONSE_OK)
 
         label = glade_xml.get_widget('label')
         label.set_mnemonic_widget(self._tree_view)
 
-        self._init_dialog(parent)
-        self._init_tree_view()
+        self._init_view()
 
-    def _init_dialog(self, parent):
-        """Initialize the dialog."""
-
-        self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(gtk.RESPONSE_OK)
-        self._dialog.resize(*config.encoding_dialog.size)
-
-    def _init_tree_view(self):
+    def _init_view(self):
         """Initialize the list of encodings."""
 
-        self._tree_view.columns_autosize()
+        self._view.columns_autosize()
 
         store = gtk.ListStore(gobject.TYPE_STRING, gobject.TYPE_STRING)
-        self._tree_view.set_model(store)
+        self._view.set_model(store)
 
-        selection = self._tree_view.get_selection()
+        selection = self._view.get_selection()
         selection.set_mode(gtk.SELECTION_SINGLE)
         selection.unselect_all()
 
@@ -80,10 +75,8 @@ class EncodingDialog(object):
 
         # Set column properties and append columns.
         for i in range(2):
-
             tree_view_column = eval('tree_view_column_%d' % i)
-            self._tree_view.append_column(tree_view_column)
-
+            self._view.append_column(tree_view_column)
             tree_view_column.set_resizable(True)
             tree_view_column.set_clickable(True)
             tree_view_column.set_sort_column_id(i)
@@ -94,10 +87,15 @@ class EncodingDialog(object):
         for entry in encodinglib.get_valid_encodings():
             store.append([entry[2], entry[1]])
 
+        # Set view size.
+        width, height = self._view.size_request()
+        width  = min(500, width  + 24)
+        height = min(400, height + 24)
+        self._view.set_size_request(width, height)
+
     def destroy(self):
         """Destroy the dialog."""
 
-        config.encoding_dialog.size = self._dialog.get_size()
         self._dialog.destroy()
 
     def get_encoding(self):
@@ -106,7 +104,7 @@ class EncodingDialog(object):
 
         Return encoding or None.
         """
-        selection = self._tree_view.get_selection()
+        selection = self._view.get_selection()
         store, rows = selection.get_selected_rows()
 
         if not rows:
@@ -121,8 +119,7 @@ class EncodingDialog(object):
         """Show and run the dialog."""
 
         self._dialog.show()
-        self._tree_view.grab_focus()
-
+        self._view.grab_focus()
         return self._dialog.run()
 
 
@@ -134,19 +131,19 @@ class AdvancedEncodingDialog(EncodingDialog):
 
         EncodingDialog.__init__(self, parent)
 
-    def _init_tree_view(self):
+    def _init_view(self):
         """Initialize the list of encodings."""
 
-        self._tree_view.columns_autosize()
+        self._view.columns_autosize()
 
         store = gtk.ListStore(
             gobject.TYPE_STRING,
             gobject.TYPE_STRING,
             gobject.TYPE_BOOLEAN
         )
-        self._tree_view.set_model(store)
+        self._view.set_model(store)
 
-        selection = self._tree_view.get_selection()
+        selection = self._view.get_selection()
         selection.set_mode(gtk.SELECTION_SINGLE)
         selection.unselect_all()
 
@@ -154,7 +151,7 @@ class AdvancedEncodingDialog(EncodingDialog):
         cell_renderer_1 = gtk.CellRendererText()
         cell_renderer_2 = gtk.CellRendererToggle()
 
-        cell_renderer_2.connect('toggled', self._on_tree_view_cell_toggled)
+        cell_renderer_2.connect('toggled', self._on_view_cell_toggled)
 
         TVC = gtk.TreeViewColumn
         tree_view_column_0 = TVC(_('Description') , cell_renderer_0, text  =0)
@@ -163,10 +160,8 @@ class AdvancedEncodingDialog(EncodingDialog):
 
         # Set column properties and append columns.
         for i in range(3):
-
             tree_view_column = eval('tree_view_column_%d' % i)
-            self._tree_view.append_column(tree_view_column)
-
+            self._view.append_column(tree_view_column)
             tree_view_column.set_resizable(True)
             tree_view_column.set_clickable(True)
             tree_view_column.set_sort_column_id(i)
@@ -178,10 +173,16 @@ class AdvancedEncodingDialog(EncodingDialog):
         for entry in encodinglib.get_valid_encodings():
             store.append([entry[2], entry[1], entry[0] in visible_encodings])
 
+        # Set view size.
+        width, height = self._view.size_request()
+        width  = min(500, width  + 24)
+        height = min(400, height + 24)
+        self._view.set_size_request(width, height)
+
     def get_visible_encodings(self):
         """Get the encodings chosen to be visible."""
 
-        store = self._tree_view.get_model()
+        store = self._view.get_model()
         visible_encodings = []
 
         for row in range(len(store)):
@@ -191,8 +192,8 @@ class AdvancedEncodingDialog(EncodingDialog):
 
         return visible_encodings
 
-    def _on_tree_view_cell_toggled(self, cell_renderer, row):
+    def _on_view_cell_toggled(self, cell_renderer, row):
         """Toggle a value in a cell in the "Show In Menu" column."""
 
-        store = self._tree_view.get_model()
+        store = self._view.get_model()
         store[row][SHOW] = not store[row][SHOW]

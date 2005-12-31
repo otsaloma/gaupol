@@ -7,9 +7,6 @@ Plans for 0.2.0
   ? = Questionable
 
   [D] Implement spell-check
-        [D] List available dictionaries
-        [D] Test unicode handling
-        [D] Revise README file
   [D] Redesign and rewrite code
   [D] Improve encoding handling with a list of fallback encodings
   [D] Move to edit adjacent cell on Alt+Arrow key-press-event
@@ -22,7 +19,7 @@ Plans for 0.2.0
   [D] Ensure that config transition from 0.1.x works.
   [ ] Bug-check all
 
-  [D] Update (or discontinue) Finnish translation
+  [D] Discontinue Finnish translation
 
   [D] Update home page
   [D] Update project page
@@ -33,10 +30,17 @@ Plans after 0.2.0
 =================
 
   - Find, find and replace
-      o Regular expressions?
+      o Regular expressions
+          * Support all Python regular expression flags
+      o Simple string search
+          * Match case
+          * Match entire word only
+      o Target
+          * Selection / current project / all open projects
+          * Main text, translation text
       o Bar (gtk.Box) or dialog?
       o gtk.CellRenderer.start_editing(...) and gtk.Editable.select_region(...)
-        on match.
+        on match
 
 
 Unscheduled

@@ -25,17 +25,15 @@ try:
 except ImportError:
     pass
 
-import gc
-
 import gtk
 import pango
 
-from gaupol.gtk.delegates           import Action, Delegate
+from gaupol.gtk.delegates           import Delegate, UIMAction
 from gaupol.gtk.dialogs.preferences import PreferencesDialog
-from gaupol.gtk.util                import config
+from gaupol.gtk.util                import config, gui
 
 
-class EditPreferencesAction(Action):
+class EditPreferencesAction(UIMAction):
 
     """Editing settings."""
 
@@ -73,7 +71,7 @@ class PreferencesDelegate(Delegate):
                 for cell_renderer in tree_view_column.get_cell_renderers():
                     cell_renderer.props.font = font
 
-        # Resize view columns and thus repaint it.
+        # Resize view columns and thus repaint the view.
         page = self.get_current_page()
         page.view.columns_autosize()
 
@@ -94,8 +92,7 @@ class PreferencesDelegate(Delegate):
     def _on_destroyed(self, dialog):
         """Delete dialog."""
 
-        del dialog
-        gc.collect()
+        gui.destroy_gobject(dialog)
 
     def _on_font_set(self, dialog, font):
         """Set custom font."""

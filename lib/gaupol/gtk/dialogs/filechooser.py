@@ -353,6 +353,7 @@ class SaveFileDialog(TextFileChooserDialog):
         """
         # The stock overwrite dialog seems to be broken. The signal however
         # works. Hence we hook up a custom dialog to the signal.
+
         filepath = self.get_filename_with_extension()
 
         if not os.path.isfile(filepath):
