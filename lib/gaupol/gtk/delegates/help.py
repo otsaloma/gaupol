@@ -163,7 +163,7 @@ class HelpDelegate(Delegate):
     def on_check_latest_version_activated(self, *args):
         """Check latest version online."""
 
-        gui.set_cursor_busy(self.window)
+        gtklib.set_cursor_busy(self.window)
         dialog = None
 
         # Read remote file containing latest version number.
@@ -178,7 +178,7 @@ class HelpDelegate(Delegate):
 
         # Show error dialog.
         if dialog is not None:
-            gui.set_cursor_normal(self.window)
+            gtklib.set_cursor_normal(self.window)
             response = dialog.run()
             dialog.destroy()
             if response == gtk.RESPONSE_ACCEPT:
@@ -198,7 +198,7 @@ class HelpDelegate(Delegate):
             dialog = VersionCheckErrorDialog(self.window, detail)
 
         # Show info or error dialog.
-        gui.set_cursor_normal(self.window)
+        gtklib.set_cursor_normal(self.window)
         response = dialog.run()
         dialog.destroy()
         if response == gtk.RESPONSE_ACCEPT:
@@ -215,4 +215,4 @@ class HelpDelegate(Delegate):
         dialog = AboutDialog(self.window)
         dialog.run()
         dialog.destroy()
-        gui.destroy_gobject(dialog)
+        gtklib.destroy_gobject(dialog)

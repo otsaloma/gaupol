@@ -1,5 +1,14 @@
 2005-12-31  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/util/gtklib.py:
+	  Renamed from lib/gaupol/gtk/util/gui.py.
+	  Fixed all references.
+
+	* lib/gaupol/gtk/delegates/spellcheck.py:
+	  Fixed Action constant importing now that namespaces don't collide.
+
+2005-12-31  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* MANIFEST.in:
 	  Readded the .mo files.
 

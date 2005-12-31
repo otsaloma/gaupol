@@ -33,7 +33,7 @@ import pango
 from gaupol.base.project     import Project
 from gaupol.constants        import Format, Mode
 from gaupol.gtk.colconstants import *
-from gaupol.gtk.util         import config, gui
+from gaupol.gtk.util         import config, gtklib
 from gaupol.gtk.view         import View
 
 
@@ -292,7 +292,7 @@ class Page(gobject.GObject):
         self.tab_label.set_text(title)
         self.tab_menu_label.set_text(title)
 
-        event_box = gui.get_event_box(self.tab_label)
+        event_box = gtklib.get_event_box(self.tab_label)
         self.tooltips.set_tip(event_box, self.get_main_filename())
 
         return title

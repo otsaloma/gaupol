@@ -119,14 +119,14 @@ class ActionDelegate(Delegate):
     def redo(self, amount):
         """Redo actions."""
 
-        gui.set_cursor_busy(self.window)
+        gtklib.set_cursor_busy(self.window)
 
         page = self.get_current_page()
         page.project.redo(amount)
 
         self.set_sensitivities()
         page.view.grab_focus()
-        gui.set_cursor_normal(self.window)
+        gtklib.set_cursor_normal(self.window)
 
     def _reload_updated_data(self, action):
         """Reload data updated by action."""
@@ -234,11 +234,11 @@ class ActionDelegate(Delegate):
     def undo(self, amount):
         """Undo actions."""
 
-        gui.set_cursor_busy(self.window)
+        gtklib.set_cursor_busy(self.window)
 
         page = self.get_current_page()
         page.project.undo(amount)
 
         self.set_sensitivities()
         page.view.grab_focus()
-        gui.set_cursor_normal(self.window)
+        gtklib.set_cursor_normal(self.window)

@@ -36,7 +36,7 @@ from gaupol.gtk.delegates           import Delegate, UIMAction
 from gaupol.gtk.dialogs.filechooser import SaveFileDialog
 from gaupol.gtk.dialogs.message     import ErrorDialog
 from gaupol.gtk.error               import Cancelled
-from gaupol.gtk.util                import config, gui
+from gaupol.gtk.util                import config, gtklib
 
 
 class SaveAction(UIMAction):
@@ -329,7 +329,7 @@ class FileSaveDelegate(Delegate):
 
         Return success (True or False).
         """
-        gui.set_cursor_busy(self.window)
+        gtklib.set_cursor_busy(self.window)
         props = self._get_main_file_properties(page)
         path, format, encoding, newlines = props
 
@@ -341,20 +341,20 @@ class FileSaveDelegate(Delegate):
         try:
             props = self._select_file(_('Save A Copy'), props)
         except Cancelled:
-            gui.set_cursor_normal(self.window)
+            gtklib.set_cursor_normal(self.window)
             return False
 
         # Save file.
         args = page, Document.MAIN, self.window, False, props
         success = self._save_file(*args)
         if not success:
-            gui.set_cursor_normal(self.window)
+            gtklib.set_cursor_normal(self.window)
             return False
 
         self.add_to_recent_files(path)
         message = _('Saved a copy main document to "%s"') % path
         self.set_status_message(message)
-        gui.set_cursor_normal(self.window)
+        gtklib.set_cursor_normal(self.window)
         return True
 
     def save_a_copy_of_translation_document(self, page):
@@ -363,7 +363,7 @@ class FileSaveDelegate(Delegate):
 
         Return success (True or False).
         """
-        gui.set_cursor_busy(self.window)
+        gtklib.set_cursor_busy(self.window)
         props = self._get_translation_file_properties(page)
         path, format, encoding, newlines = props
 
@@ -376,20 +376,20 @@ class FileSaveDelegate(Delegate):
         try:
             props = self._select_file(title, props)
         except Cancelled:
-            gui.set_cursor_normal(self.window)
+            gtklib.set_cursor_normal(self.window)
             return False
 
         # Save file.
         args = page, Document.TRAN, self.window, False, props
         success = self._save_file(*args)
         if not success:
-            gui.set_cursor_normal(self.window)
+            gtklib.set_cursor_normal(self.window)
             return False
 
         self.add_to_recent_files(path)
         message = _('Saved a copy translation document to "%s"') % path
         self.set_status_message(message)
-        gui.set_cursor_normal(self.window)
+        gtklib.set_cursor_normal(self.window)
         return True
 
     def _save_file(self, page, document, parent, keep_changes, properties):
@@ -436,7 +436,7 @@ class FileSaveDelegate(Delegate):
         args = page, Document.MAIN, self.window, True, props
         success = self._save_file(*args)
         if not success:
-            gui.set_cursor_normal(self.window)
+            gtklib.set_cursor_normal(self.window)
             return False
 
         message = _('Saved main document')
@@ -449,7 +449,7 @@ class FileSaveDelegate(Delegate):
 
         Return success (True or False).
         """
-        gui.set_cursor_busy(self.window)
+        gtklib.set_cursor_busy(self.window)
         props = self._get_main_file_properties(page)
         path, format, encoding, newlines = props
         original_format = format
@@ -462,14 +462,14 @@ class FileSaveDelegate(Delegate):
         try:
             props = self._select_file(_('Save As'), props)
         except Cancelled:
-            gui.set_cursor_normal(self.window)
+            gtklib.set_cursor_normal(self.window)
             return False
 
         # Save file.
         args = page, Document.MAIN, self.window, True, props
         success = self._save_file(*args)
         if not success:
-            gui.set_cursor_normal(self.window)
+            gtklib.set_cursor_normal(self.window)
             return False
 
         path, format, encoding, newlines = props
@@ -484,7 +484,7 @@ class FileSaveDelegate(Delegate):
         self.add_to_recent_files(path)
         message = _('Saved main document as "%s"') % path
         self.set_status_message(message)
-        gui.set_cursor_normal(self.window)
+        gtklib.set_cursor_normal(self.window)
         return True
 
     def save_translation_document(self, page):
@@ -500,7 +500,7 @@ class FileSaveDelegate(Delegate):
         args = page, Document.TRAN, self.window, True, props
         success = self._save_file(*args)
         if not success:
-            gui.set_cursor_normal(self.window)
+            gtklib.set_cursor_normal(self.window)
             return False
 
         message = _('Saved translation document')
@@ -513,7 +513,7 @@ class FileSaveDelegate(Delegate):
 
         Return success (True or False).
         """
-        gui.set_cursor_busy(self.window)
+        gtklib.set_cursor_busy(self.window)
         props = self._get_translation_file_properties(page)
         path, format, encoding, newlines = props
         original_format = format
@@ -527,14 +527,14 @@ class FileSaveDelegate(Delegate):
         try:
             props = self._select_file(title, props)
         except Cancelled:
-            gui.set_cursor_normal(self.window)
+            gtklib.set_cursor_normal(self.window)
             return False
 
         # Save file.
         args = page, Document.TRAN, self.window, True, props
         success = self._save_file(*args)
         if not success:
-            gui.set_cursor_normal(self.window)
+            gtklib.set_cursor_normal(self.window)
             return False
 
         path, format, encoding, newlines = props
@@ -548,7 +548,7 @@ class FileSaveDelegate(Delegate):
         self.add_to_recent_files(path)
         message = _('Saved translation document as "%s"') % path
         self.set_status_message(message)
-        gui.set_cursor_normal(self.window)
+        gtklib.set_cursor_normal(self.window)
         return True
 
     def _select_file(self, title, properties):
@@ -568,12 +568,12 @@ class FileSaveDelegate(Delegate):
         chooser.set_encoding(encoding)
         chooser.set_newlines(newlines)
 
-        gui.set_cursor_normal(self.window)
+        gtklib.set_cursor_normal(self.window)
         response = chooser.run()
-        gui.set_cursor_busy(self.window)
+        gtklib.set_cursor_busy(self.window)
 
         if response != gtk.RESPONSE_OK:
-            gui.destroy_gobject(chooser)
+            gtklib.destroy_gobject(chooser)
             raise Cancelled
 
         # Save file properties.
@@ -588,5 +588,5 @@ class FileSaveDelegate(Delegate):
         config.file.encoding  = encoding
         config.file.newlines  = newlines
 
-        gui.destroy_gobject(chooser)
+        gtklib.destroy_gobject(chooser)
         return filepath, format, encoding, newlines

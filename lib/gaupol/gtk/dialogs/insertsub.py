@@ -27,7 +27,7 @@ except ImportError:
 
 import gtk
 
-from gaupol.gtk.util import config, gui
+from gaupol.gtk.util import config, gtklib
 
 
 class InsertSubtitleDialog(object):
@@ -36,7 +36,7 @@ class InsertSubtitleDialog(object):
 
     def __init__(self, parent):
 
-        glade_xml = gui.get_glade_xml('insertsub-dialog.glade')
+        glade_xml = gtklib.get_glade_xml('insertsub-dialog.glade')
         get_widget = glade_xml.get_widget
 
         self._dialog             = get_widget('dialog')

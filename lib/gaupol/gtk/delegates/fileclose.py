@@ -32,7 +32,7 @@ from gaupol.gtk.delegates          import Delegate, UIMAction
 from gaupol.gtk.dialogs.message    import WarningDialog
 from gaupol.gtk.dialogs.multiclose import MultiCloseWarningDialog
 from gaupol.gtk.error              import Cancelled
-from gaupol.gtk.util               import config, gui
+from gaupol.gtk.util               import config, gtklib
 
 
 class CloseAllProjectsAction(UIMAction):
@@ -156,7 +156,7 @@ class FileCloseDelegate(Delegate):
 
         for i in reversed(range(len(self.pages))):
             page = self.pages.pop(i)
-            gui.destroy_gobject(page)
+            gtklib.destroy_gobject(page)
 
         while self.notebook.get_current_page() > -1:
             self.notebook.remove_page(0)
@@ -179,7 +179,7 @@ class FileCloseDelegate(Delegate):
             self.notebook.next_page()
 
         self.pages.remove(page)
-        gui.destroy_gobject(page)
+        gtklib.destroy_gobject(page)
         self.notebook.remove_page(this_page_index)
 
     def _confirm_closing_main_document(self, page):
@@ -223,7 +223,7 @@ class FileCloseDelegate(Delegate):
         tran_pages = dialog.get_translation_pages_to_save()
         dialog.destroy()
 
-        gui.set_cursor_busy(self.window)
+        gtklib.set_cursor_busy(self.window)
 
         for page in main_pages:
             success = self.save_main_document(page)
@@ -234,7 +234,7 @@ class FileCloseDelegate(Delegate):
             if not success:
                 raise Cancelled
 
-        gui.set_cursor_normal(self.window)
+        gtklib.set_cursor_normal(self.window)
 
     def _confirm_closing_page(self, page):
         """

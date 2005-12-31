@@ -43,7 +43,7 @@ from gaupol.base.util           import langlib
 from gaupol.constants           import Document
 from gaupol.gtk.dialogs.message import ErrorDialog
 from gaupol.gtk.error           import Cancelled
-from gaupol.gtk.util            import config, gui
+from gaupol.gtk.util            import config, gtklib
 
 
 logger = logging.getLogger()
@@ -142,7 +142,7 @@ class SpellCheckDialog(gobject.GObject):
 
         gobject.GObject.__init__(self)
 
-        glade_xml = gui.get_glade_xml('spellcheck-dialog.glade')
+        glade_xml = gtklib.get_glade_xml('spellcheck-dialog.glade')
         get = glade_xml.get_widget
 
         # Widgets
@@ -441,7 +441,7 @@ class SpellCheckDialog(gobject.GObject):
         dialog = TextEditDialog(self._dialog, text)
         response = dialog.run()
         text = unicode(dialog.get_text())
-        gui.destroy_gobject(dialog)
+        gtklib.destroy_gobject(dialog)
 
         if response == gtk.RESPONSE_OK:
             self._checker.set_text(text)

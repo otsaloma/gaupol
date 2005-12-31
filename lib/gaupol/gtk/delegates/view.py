@@ -30,7 +30,7 @@ import gtk
 from gaupol.constants        import Framerate, Mode
 from gaupol.gtk.colconstants import *
 from gaupol.gtk.delegates    import Delegate, UIMAction
-from gaupol.gtk.util         import config, gui
+from gaupol.gtk.util         import config, gtklib
 from gaupol.gtk.view         import View
 
 
@@ -350,7 +350,7 @@ class ViewDelegate(Delegate):
         if framerate == page.project.framerate:
             return
 
-        gui.set_cursor_busy(self.window)
+        gtklib.set_cursor_busy(self.window)
 
         # Set new framerate and save setting.
         page.project.change_framerate(framerate)
@@ -364,7 +364,7 @@ class ViewDelegate(Delegate):
         if page.edit_mode != page.project.main_file.mode:
             page.reload_columns([SHOW, HIDE, DURN])
 
-        gui.set_cursor_normal(self.window)
+        gtklib.set_cursor_normal(self.window)
 
     def on_toggle_column_activated(self, action):
         """Toggle the visibility of a column."""
@@ -391,7 +391,7 @@ class ViewDelegate(Delegate):
         if active is visible:
             return
 
-        gui.set_cursor_busy(self.window)
+        gtklib.set_cursor_busy(self.window)
         tree_view_column.set_visible(not visible)
         visible_columns = []
 
@@ -402,7 +402,7 @@ class ViewDelegate(Delegate):
         config.editor.visible_columns = visible_columns
         self.set_sensitivities(page)
         self.set_character_status(page)
-        gui.set_cursor_normal(self.window)
+        gtklib.set_cursor_normal(self.window)
 
     def on_toggle_edit_mode_activated(self, unknown, action):
         """Toggle the edit mode."""
@@ -419,7 +419,7 @@ class ViewDelegate(Delegate):
         if edit_mode == page.edit_mode:
             return
 
-        gui.set_cursor_busy(self.window)
+        gtklib.set_cursor_busy(self.window)
 
         page.edit_mode = edit_mode
         config.editor.mode = edit_mode
@@ -439,7 +439,7 @@ class ViewDelegate(Delegate):
         # able to replace the cell renderer of a column though.
         old_view = page.view
         page.view = View(edit_mode)
-        gui.destroy_gobject(old_view)
+        gtklib.destroy_gobject(old_view)
         self.connect_view_signals(page)
 
         # Add view.
@@ -463,7 +463,7 @@ class ViewDelegate(Delegate):
             pass
 
         page.view.props.has_focus = has_focus
-        gui.set_cursor_normal(self.window)
+        gtklib.set_cursor_normal(self.window)
 
     def on_toggle_framerate_activated(self, unknown, action):
         """
@@ -486,7 +486,7 @@ class ViewDelegate(Delegate):
         if framerate == page.project.framerate:
             return
 
-        gui.set_cursor_busy(self.window)
+        gtklib.set_cursor_busy(self.window)
 
         # Set new framerate and save setting.
         page.project.change_framerate(framerate)
@@ -498,12 +498,12 @@ class ViewDelegate(Delegate):
         if page.edit_mode != page.project.main_file.mode:
             page.reload_columns([SHOW, HIDE, DURN])
 
-        gui.set_cursor_normal(self.window)
+        gtklib.set_cursor_normal(self.window)
 
     def on_toggle_statusbar_activated(self, *args):
         """Toggle the visibility of the statusbar."""
 
-        hbox = gui.get_parent_widget(self.message_statusbar, gtk.HBox)
+        hbox = gtklib.get_parent_widget(self.message_statusbar, gtk.HBox)
         visible = hbox.props.visible
 
         hbox.props.visible = not visible

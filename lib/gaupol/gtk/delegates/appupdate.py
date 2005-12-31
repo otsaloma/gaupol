@@ -31,7 +31,7 @@ import gtk
 from gaupol.constants        import Framerate, Mode
 from gaupol.gtk.colconstants import *
 from gaupol.gtk.delegates    import Delegate, UIMAction, UIMActions
-from gaupol.gtk.util         import config, gui
+from gaupol.gtk.util         import config, gtklib
 
 
 class ActivateNextProjectAction(UIMAction):
@@ -166,7 +166,7 @@ class ApplicationUpdateDelegate(Delegate):
             gobject.source_remove(self.message_tag)
 
         # Set tooltip.
-        event_box = gui.get_event_box(self.message_statusbar)
+        event_box = gtklib.get_event_box(self.message_statusbar)
         self.tooltips.set_tip(event_box, message)
 
         if message is None:

@@ -34,7 +34,7 @@ import gtk
 from gaupol.constants     import Framerate, Mode
 from gaupol.gtk.delegates import Delegate, UIMActions
 from gaupol.gtk.paths     import UI_DIR, ICON_DIR
-from gaupol.gtk.util      import config, gui
+from gaupol.gtk.util      import config, gtklib
 
 
 logger = logging.getLogger()

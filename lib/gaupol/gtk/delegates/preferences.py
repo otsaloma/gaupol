@@ -30,7 +30,7 @@ import pango
 
 from gaupol.gtk.delegates           import Delegate, UIMAction
 from gaupol.gtk.dialogs.preferences import PreferencesDialog
-from gaupol.gtk.util                import config, gui
+from gaupol.gtk.util                import config, gtklib
 
 
 class EditPreferencesAction(UIMAction):
@@ -92,7 +92,7 @@ class PreferencesDelegate(Delegate):
     def _on_destroyed(self, dialog):
         """Delete dialog."""
 
-        gui.destroy_gobject(dialog)
+        gtklib.destroy_gobject(dialog)
 
     def _on_font_set(self, dialog, font):
         """Set custom font."""

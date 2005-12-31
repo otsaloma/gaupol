@@ -30,7 +30,7 @@ import gobject
 import gtk
 
 from gaupol.base.util import langlib
-from gaupol.gtk.util  import config, gui
+from gaupol.gtk.util  import config, gtklib
 
 
 class LanguageDialog(object):
@@ -39,7 +39,7 @@ class LanguageDialog(object):
 
     def __init__(self, parent):
 
-        glade_xml = gui.get_glade_xml('language-dialog.glade')
+        glade_xml = gtklib.get_glade_xml('language-dialog.glade')
         get = glade_xml.get_widget
 
         self._dialog                = get('dialog')

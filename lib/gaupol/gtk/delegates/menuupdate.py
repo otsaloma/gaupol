@@ -31,7 +31,7 @@ import gtk
 
 from gaupol.constants     import Action
 from gaupol.gtk.delegates import Delegate
-from gaupol.gtk.util      import config, gui
+from gaupol.gtk.util      import config, gtklib
 
 
 class MenuUpdateDelegate(Delegate):

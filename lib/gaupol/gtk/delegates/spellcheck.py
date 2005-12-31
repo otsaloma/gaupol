@@ -29,12 +29,12 @@ import logging
 
 import gtk
 
-from gaupol                        import constants
+from gaupol.constants              import Action
 from gaupol.gtk.delegates          import Delegate, UIMAction
 from gaupol.gtk.dialogs.language   import LanguageDialog
 from gaupol.gtk.dialogs.spellcheck import SpellCheckDialog
 from gaupol.gtk.error              import Cancelled
-from gaupol.gtk.util               import config, gui
+from gaupol.gtk.util               import config, gtklib
 
 
 logger = logging.getLogger()
@@ -152,16 +152,16 @@ class SpellCheckDelegate(Delegate):
     def on_configure_spell_check_activated(self, *args):
         """Configure spell-check."""
 
-        gui.set_cursor_busy(self.window)
+        gtklib.set_cursor_busy(self.window)
         dialog = LanguageDialog(self.window)
-        gui.set_cursor_normal(self.window)
+        gtklib.set_cursor_normal(self.window)
         dialog.run()
         dialog.destroy()
 
     def _on_destroyed(self, dialog):
         """Delete dialog."""
 
-        gui.destroy_gobject(dialog)
+        gtklib.destroy_gobject(dialog)
 
     def _on_page_checked(self, dialog, page, rows, texts):
         """
@@ -175,7 +175,7 @@ class SpellCheckDelegate(Delegate):
 
         page.project.replace_both_texts(rows, texts)
         desc = _('Spell-checking')
-        page.project.modify_action_description(constants.Action.DO, desc)
+        page.project.modify_action_description(Action.DO, desc)
         self.set_sensitivities(page)
 
     def _on_page_selected(self, dialog, page):

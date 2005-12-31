@@ -40,7 +40,7 @@ from gaupol.gtk.dialogs.filechooser import OpenFileDialog
 from gaupol.gtk.dialogs.message     import ErrorDialog, WarningDialog
 from gaupol.gtk.error               import Cancelled
 from gaupol.gtk.page                import Page
-from gaupol.gtk.util                import config, gui
+from gaupol.gtk.util                import config, gtklib
 
 
 class NewProjectAction(UIMAction):
@@ -303,7 +303,7 @@ class FileOpenDelegate(Delegate):
                     cell_renderer.connect(signals[i], methods[i], col)
 
             widget = tree_view_column.get_widget()
-            button = gui.get_parent_widget(widget, gtk.Button)
+            button = gtklib.get_parent_widget(widget, gtk.Button)
             button.connect('button-press-event', self.on_view_headers_clicked)
 
     def _get_tryable_encodings(self, first_encoding=None):
@@ -348,7 +348,7 @@ class FileOpenDelegate(Delegate):
     def on_new_project_activated(self, *args):
         """Start a new project."""
 
-        gui.set_cursor_busy(self.window)
+        gtklib.set_cursor_busy(self.window)
         self.counter += 1
         page = Page(self.counter)
 
@@ -359,22 +359,22 @@ class FileOpenDelegate(Delegate):
         page.project.tran_texts = [u'']
 
         self._add_new_project(page)
-        gui.set_cursor_normal(self.window)
+        gtklib.set_cursor_normal(self.window)
         self.set_status_message(_('Created a new project'))
 
     def on_open_main_file_activated(self, *args):
         """Open a main file."""
 
-        gui.set_cursor_busy(self.window)
+        gtklib.set_cursor_busy(self.window)
 
         try:
             paths, encoding = self._select_files(Document.MAIN)
         except Cancelled:
-            gui.set_cursor_normal(self.window)
+            gtklib.set_cursor_normal(self.window)
             return
 
         self.open_main_files(paths, encoding)
-        gui.set_cursor_normal(self.window)
+        gtklib.set_cursor_normal(self.window)
 
     def on_open_recent_file_activated(self, action):
         """Open a recent main file."""
@@ -402,19 +402,19 @@ class FileOpenDelegate(Delegate):
             elif response != gtk.RESPONSE_NO:
                 return
 
-        gui.set_cursor_busy(self.window)
+        gtklib.set_cursor_busy(self.window)
 
         try:
             paths, encoding = self._select_files(Document.TRAN)
         except Cancelled:
-            gui.set_cursor_normal(self.window)
+            gtklib.set_cursor_normal(self.window)
             return
 
         encodings = self._get_tryable_encodings(encoding)
         page = self._open_file(self.window, Document.TRAN, paths[0], encodings)
 
         if page is None:
-            gui.set_cursor_normal(self.window)
+            gtklib.set_cursor_normal(self.window)
             return
 
         # Show the translation column.
@@ -429,12 +429,12 @@ class FileOpenDelegate(Delegate):
         message = _('Opened translation file "%s"') % basename
         self.set_status_message(message)
 
-        gui.set_cursor_normal(self.window)
+        gtklib.set_cursor_normal(self.window)
 
     def open_main_files(self, paths, encoding=None):
         """Open main files."""
 
-        gui.set_cursor_busy(self.window)
+        gtklib.set_cursor_busy(self.window)
         paths.sort()
         encodings = self._get_tryable_encodings(encoding)
 
@@ -453,7 +453,7 @@ class FileOpenDelegate(Delegate):
             while gtk.events_pending():
                 gtk.main_iteration()
 
-        gui.set_cursor_normal(self.window)
+        gtklib.set_cursor_normal(self.window)
 
     def _open_file(self, parent, document_type, path, encodings):
         """
@@ -472,7 +472,7 @@ class FileOpenDelegate(Delegate):
         # Show a warning dialog if filesize is over 1 MB.
         if size_megabytes > 1:
             dialog = OpenBigFileWarningDialog(parent, basename, size_megabytes)
-            gui.set_cursor_normal(self.window)
+            gtklib.set_cursor_normal(self.window)
             response = dialog.run()
             dialog.destroy()
             if response != gtk.RESPONSE_YES:
@@ -494,25 +494,25 @@ class FileOpenDelegate(Delegate):
 
             except IOError, (errno, detail):
                 dialog = OpenFileErrorDialog(parent, basename, detail)
-                gui.set_cursor_normal(self.window)
+                gtklib.set_cursor_normal(self.window)
                 response = dialog.run()
                 dialog.destroy()
-                gui.set_cursor_busy(self.window)
+                gtklib.set_cursor_busy(self.window)
                 return None
 
             except FileFormatError:
                 dialog = FileFormatErrorDialog(parent, basename)
-                gui.set_cursor_normal(self.window)
+                gtklib.set_cursor_normal(self.window)
                 response = dialog.run()
                 dialog.destroy()
-                gui.set_cursor_busy(self.window)
+                gtklib.set_cursor_busy(self.window)
                 return None
 
         dialog = UnicodeDecodeErrorDialog(parent, basename)
-        gui.set_cursor_normal(self.window)
+        gtklib.set_cursor_normal(self.window)
         response = dialog.run()
         dialog.destroy()
-        gui.set_cursor_busy(self.window)
+        gtklib.set_cursor_busy(self.window)
         return None
 
     def _select_files(self, document_type):
@@ -529,13 +529,13 @@ class FileOpenDelegate(Delegate):
 
         chooser = OpenFileDialog(title, self.window)
         chooser.set_select_multiple(document_type == Document.MAIN)
-        gui.set_cursor_normal(self.window)
+        gtklib.set_cursor_normal(self.window)
         response = chooser.run()
-        gui.set_cursor_busy(self.window)
+        gtklib.set_cursor_busy(self.window)
 
         if response != gtk.RESPONSE_OK:
-            gui.destroy_gobject(chooser)
-            gui.set_cursor_normal(self.window)
+            gtklib.destroy_gobject(chooser)
+            gtklib.set_cursor_normal(self.window)
             raise Cancelled
 
         filepaths = chooser.get_filenames()
@@ -545,5 +545,5 @@ class FileOpenDelegate(Delegate):
         config.file.encoding = encoding
         config.file.directory = dirpath
 
-        gui.destroy_gobject(chooser)
+        gtklib.destroy_gobject(chooser)
         return filepaths, encoding

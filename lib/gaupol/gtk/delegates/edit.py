@@ -33,7 +33,7 @@ from gaupol.gtk.colconstants      import *
 from gaupol.gtk.delegates         import Delegate, UIMAction
 from gaupol.gtk.dialogs.insertsub import InsertSubtitleDialog
 from gaupol.gtk.dialogs.message   import ErrorDialog
-from gaupol.gtk.util              import config, gui
+from gaupol.gtk.util              import config, gtklib
 
 
 class ClipboardAction(UIMAction):
@@ -427,7 +427,7 @@ class EditDelegate(Delegate):
     def on_view_cell_edited(self, cell_renderer, value, row, col):
         """Finish editing of a cell."""
 
-        gui.set_cursor_busy(self.window)
+        gtklib.set_cursor_busy(self.window)
         self._set_sensitivities(True)
         self.set_status_message(None)
         page = self.get_current_page()
@@ -438,11 +438,11 @@ class EditDelegate(Delegate):
                 value = int(value)
             except ValueError:
                 self.set_sensitivities(page)
-                gui.set_cursor_normal(self.window)
+                gtklib.set_cursor_normal(self.window)
                 return
 
         if col in (SHOW, HIDE, DURN):
-            gui.set_cursor_busy(self.window)
+            gtklib.set_cursor_busy(self.window)
             if page.edit_mode == Mode.TIME:
                 new_row = page.project.set_time(row, col - 1, value)
             if page.edit_mode == Mode.FRAME:
@@ -453,7 +453,7 @@ class EditDelegate(Delegate):
             self.set_sensitivities(page)
             self.set_character_status(page)
 
-        gui.set_cursor_normal(self.window)
+        gtklib.set_cursor_normal(self.window)
 
     def on_view_cell_editing_canceled(self, cell_renderer, editor):
         """Set GUI properties for editing."""

@@ -31,7 +31,7 @@ import pango
 
 from gaupol.base.util            import encodinglib
 from gaupol.gtk.dialogs.encoding import EncodingDialog
-from gaupol.gtk.util             import config, gui
+from gaupol.gtk.util             import config, gtklib
 
 
 class PreferencesDialog(gobject.GObject):
@@ -75,7 +75,7 @@ class PreferencesDialog(gobject.GObject):
 
         gobject.GObject.__init__(self)
 
-        glade_xml = gui.get_glade_xml('preferences-dialog.glade')
+        glade_xml = gtklib.get_glade_xml('preferences-dialog.glade')
         get = glade_xml.get_widget
 
         # Widgets

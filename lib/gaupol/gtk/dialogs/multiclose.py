@@ -47,7 +47,7 @@ class MultiCloseWarningDialog(object):
 
     def __init__(self, parent, pages):
 
-        glade_xml = gui.get_glade_xml('multiclose-dialog.glade')
+        glade_xml = gtklib.get_glade_xml('multiclose-dialog.glade')
 
         # Widgets
         self._dialog    = glade_xml.get_widget('dialog')

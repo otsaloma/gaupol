@@ -41,7 +41,7 @@ import pango
 from gaupol.base.util           import wwwlib
 from gaupol.gtk.delegates.help  import BUG_REPORT_URL
 from gaupol.gtk.dialogs.message import ErrorDialog
-from gaupol.gtk.util            import config, gui
+from gaupol.gtk.util            import config, gtklib
 
 
 normal_cursor = gtk.gdk.Cursor(gtk.gdk.XTERM)
@@ -69,7 +69,7 @@ class DebugDialog(object):
 
     def __init__(self):
 
-        glade_xml = gui.get_glade_xml('debug-dialog.glade')
+        glade_xml = gtklib.get_glade_xml('debug-dialog.glade')
         self._dialog = glade_xml.get_widget('dialog')
         self._text_view = glade_xml.get_widget('text_view')
         self._dialog.set_default_response(gtk.RESPONSE_CLOSE)
