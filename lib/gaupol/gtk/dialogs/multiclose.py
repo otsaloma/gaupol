@@ -29,7 +29,7 @@ import gobject
 import gtk
 
 from gaupol.constants import Document
-from gaupol.gtk.util  import gui
+from gaupol.gtk.util  import gtklib
 
 
 PAGE, NAME = 0, 1
@@ -107,7 +107,7 @@ class MultiCloseWarningDialog(object):
             glade_xml.get_widget('translation_label').hide()
             glade_xml.get_widget('translation_scrolled_window').hide()
 
-    def _init_view(self, tree_view, document_type):
+    def _init_view(self, view, document_type):
         """
         Initialize a document list.
 

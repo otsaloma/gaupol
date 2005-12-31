@@ -139,10 +139,10 @@ class RevertableAction(object):
         # Sort all row data.
         self.rows_inserted.sort()
         self.rows_removed.sort()
-        self.rows_upd.sort()
-        self.timing_rows_upd.sort()
-        self.main_text_rows_upd.sort()
-        self.tran_text_rows_upd.sort()
+        self.rows_updated.sort()
+        self.timing_rows_updated.sort()
+        self.main_text_rows_updated.sort()
+        self.tran_text_rows_updated.sort()
 
 
 class ActionDelegate(Delegate):
@@ -285,7 +285,7 @@ class ActionDelegate(Delegate):
             for row in action.rows_removed:
                 for i in range(len(rows_updated)):
                     if rows_updated[i] >= row:
-                        rows_updated += 1
+                        rows_updated[i] += 1
 
             rows_inserted += action.rows_inserted
             rows_removed  += action.rows_removed

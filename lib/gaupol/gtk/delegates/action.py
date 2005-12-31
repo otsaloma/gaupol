@@ -30,7 +30,7 @@ import gtk
 from gaupol.base.util        import listlib
 from gaupol.gtk.colconstants import *
 from gaupol.gtk.delegates    import Delegate, UIMAction
-from gaupol.gtk.util         import gui
+from gaupol.gtk.util         import gtklib
 
 
 class RedoAction(UIMAction):
@@ -207,6 +207,8 @@ class ActionDelegate(Delegate):
         changed_rows += action.tran_text_rows_updated
 
         changed_rows = listlib.sort_and_remove_duplicates(changed_rows)
+        if not changed_rows:
+            return
 
         # Locate focus.
         focus_row = min(changed_rows)

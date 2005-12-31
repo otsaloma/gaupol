@@ -33,7 +33,7 @@ from gaupol.base.error        import TimeoutError
 from gaupol.base.util         import wwwlib
 from gaupol.gtk.delegates     import Delegate, UIMAction
 from gaupol.gtk.dialogs.about import AboutDialog
-from gaupol.gtk.util          import gui
+from gaupol.gtk.util          import gtklib
 from gaupol                   import __version__
 
 

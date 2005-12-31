@@ -49,7 +49,7 @@ class EncodingDialog(object):
         self._dialog.set_default_response(gtk.RESPONSE_OK)
 
         label = glade_xml.get_widget('label')
-        label.set_mnemonic_widget(self._tree_view)
+        label.set_mnemonic_widget(self._view)
 
         self._init_view()
 

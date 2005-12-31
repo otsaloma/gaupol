@@ -1,5 +1,30 @@
 2005-12-31  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/delegates/action.py:
+	* lib/gaupol/gtk/dialogs/encoding.py:
+	* lib/gaupol/gtk/dialogs/multiclose.py:
+	  Fixed typos.
+
+	* lib/gaupol/gtk/delegates/action.py:
+	* lib/gaupol/gtk/delegates/help.py:
+	* lib/gaupol/gtk/dialogs/multiclose.py:
+	  Fixed all remaining gaupol.gtk.util.gui imports.
+
+	* lib/gaupol/gtk/delegates/action.py:
+	  (ActionDelegate._show_updated_data): Return if changed_rows is a
+	  blank list.
+
+	* lib/gaupol/gtk/dialogs/debug.py:
+	  (DebugDialog._on_text_view_motion_notify_event): Call
+	  self._text_view.window_to_buffer_coords to get correct coordinates in
+	  case text view has been scrolled down.
+
+	* lib/gaupol/gtk/util/gtklib.py:
+	  Readded gtk.main_iteration() while gtk.events_pending() calls to
+	  cursor changing functions.
+
+2005-12-31  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/gtk/util/gtklib.py:
 	  Renamed from lib/gaupol/gtk/util/gui.py.
 	  Fixed all references.

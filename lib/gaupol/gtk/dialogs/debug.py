@@ -132,8 +132,11 @@ class DebugDialog(object):
     def _on_text_view_motion_notify_event(self, widget, event):
         """Set GUI properties when mouse moves over URL."""
 
+        window_type = gtk.TEXT_WINDOW_TEXT
+
         # Get a list of text tags at mouse position.
         x, y = self._text_view.get_pointer()
+        x, y = self._text_view.window_to_buffer_coords(window_type, x, y)
         tags = self._text_view.get_iter_at_location(x, y).get_tags()
 
         # Underline current URL.
@@ -144,7 +147,7 @@ class DebugDialog(object):
                 tag.props.underline = pango.UNDERLINE_NONE
 
         # Show hand cursor over URL.
-        window = self._text_view.get_window(gtk.TEXT_WINDOW_TEXT)
+        window = self._text_view.get_window(window_type)
         for tag in tags:
             if tag in self._url_tags:
                 window.set_cursor(hand_cursor)
