@@ -447,7 +447,8 @@ class EditDelegate(Delegate):
                 new_row = page.project.set_time(row, col - 1, value)
             if page.edit_mode == Mode.FRAME:
                 new_row = page.project.set_frame(row, col - 1, value)
-            page.view.set_focus(new_row, col)
+            if new_row != row:
+                page.view.set_focus(new_row, col)
         elif col in (MTXT, TTXT):
             page.project.set_text(row, col - 4, value)
             self.set_sensitivities(page)
@@ -501,6 +502,12 @@ class EditDelegate(Delegate):
                 return
             if keyname not in ('Up', 'Down', 'Left', 'Right'):
                 return
+
+            # Do not move if rows will be reordered.
+            if col == SHOW:
+                value = editor.get_text()
+                if page.project.get_needs_resort(row, value):
+                    return
 
             editor.emit('editing-done')
             next_col = col

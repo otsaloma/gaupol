@@ -9,6 +9,7 @@ Plans for 0.2.0
   [D] Implement spell-check
   [D] Redesign and rewrite code
   [D] Improve encoding handling with a list of fallback encodings
+  [D] Open multiple files at once with the open dialog
   [D] Move to edit adjacent cell on Alt+Arrow key-press-event
   [D] Debug dialog
   [D] Improve uninstallation
@@ -17,7 +18,7 @@ Plans for 0.2.0
   [D] Examine hotshot results
   [D] Examine PyChecker results
   [D] Ensure that config transition from 0.1.x works.
-  [ ] Bug-check all
+  [D] Bug-check all
 
   [D] Discontinue Finnish translation
 

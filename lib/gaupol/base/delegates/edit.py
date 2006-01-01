@@ -79,6 +79,29 @@ class EditDelegate(Delegate):
         except AttributeError:
             return Mode.TIME
 
+    def get_needs_resort(self, row, show_value):
+        """Return True if rows need resorting after changing show value."""
+
+        mode    = self.get_mode()
+        timings = self.get_timings()
+
+        # Convert show_value to same type as mode.
+        try:
+            show_value = int(show_value)
+        except ValueError:
+            if mode == Mode.FRAME:
+                show_value = self.calc.time_to_frame(show_value)
+        else:
+            if mode == Mode.TIME:
+                show_value = self.calc.frame_to_time(show_value)
+
+        # Get new row.
+        lst = timings[:row] + timings[row + 1:]
+        item = [show_value] + timings[row][1:]
+        new_row = bisect.bisect_right(lst, item)
+
+        return bool(new_row != row)
+
     def get_timings(self):
         """Return either times or frames depending on main file's mode."""
 

@@ -670,7 +670,6 @@ class SpellCheckDialog(gobject.GObject):
             self._row += 1
         except IndexError:
             if self._document == MAIN and config.spell_check.check_translation:
-                print 'moving doc'
                 self._set_document(TRAN)
             else:
                 self._register_changes()

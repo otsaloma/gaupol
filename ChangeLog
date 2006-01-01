@@ -1,3 +1,18 @@
+2006-01-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/base/delegates/edit.py:
+	  (EditDelegate.get_needs_resort): New method to tell if rows need
+	  resorting after show value is changed.
+
+	* lib/gaupol/gtk/delegates/edit.py:
+	  (EditDelegate.on_view_cell_edited): Set focus only if rows have been
+	  reordered.
+	  (EditDelegate.on_view_cell_editing_started): Do not move to an
+	  adjacent cell if rows are going to be reordered.
+
+	* lib/gaupol/gtk/dialogs/spellcheck.py:
+	  Removed a left-over print statement.
+
 2006-01-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol:
