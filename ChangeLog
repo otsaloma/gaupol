@@ -1,3 +1,13 @@
+2006-01-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/gtk/delegates/spellcheck.py:
+	  (SpellCheckDelegate._on_page_checked): Call replace_both_texts only
+	  if both texts are non-empty lists.
+
+	* lib/gaupol/gtk/dialogs/spellcheck.py:
+	  (SpellCheckDialog): Use brokers, one for main and one for translation
+	  texts. Fixed a few typos.
+
 2005-12-31  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/base/delegates/action.py:

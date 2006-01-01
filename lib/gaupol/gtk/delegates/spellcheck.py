@@ -29,7 +29,7 @@ import logging
 
 import gtk
 
-from gaupol.constants              import Action
+from gaupol.constants              import Action, Document
 from gaupol.gtk.delegates          import Delegate, UIMAction
 from gaupol.gtk.dialogs.language   import LanguageDialog
 from gaupol.gtk.dialogs.spellcheck import SpellCheckDialog
@@ -170,10 +170,21 @@ class SpellCheckDelegate(Delegate):
         rows: (main text rows, translation text rows)
         texts: (main texts, translation texts)
         """
-        if not rows[0] and not rows[1]:
+        MAIN = 0
+        TRAN = 1
+
+        if not rows[MAIN] and not rows[TRAN]:
             return
 
-        page.project.replace_both_texts(rows, texts)
+        if rows[MAIN] and rows[TRAN]:
+            page.project.replace_both_texts(rows, texts)
+        elif rows[MAIN]:
+            page.project.replace_texts(rows[MAIN], Document.MAIN, texts[MAIN])
+        elif rows[TRAN]:
+            page.project.replace_texts(rows[TRAN], Document.TRAN, texts[TRAN])
+        else:
+            return
+
         desc = _('Spell-checking')
         page.project.modify_action_description(Action.DO, desc)
         self.set_sensitivities(page)

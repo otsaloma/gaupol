@@ -20,9 +20,26 @@
 """Dialog for spell-checking."""
 
 
-# Unicoding between Python, Enchant and GTK widgets seems very unpredictable.
-# To be on the safe side, all acquired text from where-ever is always converted
-# to unicode.
+# PyEnchant problems:
+# (1) Unicoding
+# (2) User dictionaries
+# (3) Memory freeing
+#
+# (1) Unicoding between Python, Enchant and GTK widgets seems very
+# unpredictable. To be on the safe side, all acquired text from where-ever is
+# always converted to unicode.
+#
+# (2) By default PyEnchant uses a single broker for all dictionaries. This
+# seems to cause that user dictionaries (a.k.a. personal word lists) all end up
+# writing to the same file. Solution: Use a separate broker for main text and
+# translation text.
+#
+# (3) PyEnchant (or Enchant) seems to have problems freeing dictionaries after
+# the spell check dialog has been closed and properly destroyed. This seems to
+# be a problem when using PyEnchant's default way of having one module-global
+# broker object. By creating a new broker every time, we avoid AssertionErrors
+# when creating dictionaries, but the memory problems assumably remain.
+# ** (gaupol:8456): WARNING **: 1 dictionaries weren't free'd.
 
 
 try:
@@ -143,27 +160,27 @@ class SpellCheckDialog(gobject.GObject):
         gobject.GObject.__init__(self)
 
         glade_xml = gtklib.get_glade_xml('spellcheck-dialog.glade')
-        get = glade_xml.get_widget
+        get_widget = glade_xml.get_widget
 
         # Widgets
-        self._add_button          = get('add_button')
-        self._add_lower_button    = get('add_lower_button')
-        self._check_button        = get('check_button')
-        self._close_button        = get('close_button')
-        self._dialog              = get('dialog')
-        self._dictionary_label    = get('dictionary_label')
-        self._edit_button         = get('edit_button')
-        self._entry               = get('entry')
-        self._ignore_all_button   = get('ignore_all_button')
-        self._ignore_button       = get('ignore_button')
-        self._join_back_button    = get('join_back_button')
-        self._join_forward_button = get('join_forward_button')
-        self._language_label      = get('language_label')
-        self._main_vbox           = get('main_vbox')
-        self._replace_all_button  = get('replace_all_button')
-        self._replace_button      = get('replace_button')
-        self._suggestion_view     = get('suggestion_tree_view')
-        self._text_view           = get('text_view')
+        self._add_button          = get_widget('add_button')
+        self._add_lower_button    = get_widget('add_lower_button')
+        self._check_button        = get_widget('check_button')
+        self._close_button        = get_widget('close_button')
+        self._dialog              = get_widget('dialog')
+        self._dictionary_label    = get_widget('dictionary_label')
+        self._edit_button         = get_widget('edit_button')
+        self._entry               = get_widget('entry')
+        self._ignore_all_button   = get_widget('ignore_all_button')
+        self._ignore_button       = get_widget('ignore_button')
+        self._join_back_button    = get_widget('join_back_button')
+        self._join_forward_button = get_widget('join_forward_button')
+        self._language_label      = get_widget('language_label')
+        self._main_vbox           = get_widget('main_vbox')
+        self._replace_all_button  = get_widget('replace_all_button')
+        self._replace_button      = get_widget('replace_button')
+        self._suggestion_view     = get_widget('suggestion_tree_view')
+        self._text_view           = get_widget('text_view')
 
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_CLOSE)
@@ -182,6 +199,10 @@ class SpellCheckDialog(gobject.GObject):
 
         # Pages to check
         self._pages = pages
+
+        # PyEnchant brokers
+        self._main_broker = enchant.Broker()
+        self._tran_broker = enchant.Broker()
 
         # Spell-checkers
         self._main_checker = None
@@ -212,7 +233,7 @@ class SpellCheckDialog(gobject.GObject):
     def _init_checkers(self):
         """Initialize the spell-checkers to use."""
 
-        # Create personal word list directory if it doesn't exist.
+        # Create user dictionary directory if it doesn't exist.
         if not os.path.isdir(USER_DICT_DIR):
             try:
                 os.makedirs(USER_DICT_DIR)
@@ -223,17 +244,17 @@ class SpellCheckDialog(gobject.GObject):
 
         if config.spell_check.check_main:
             lang = config.spell_check.main_language
-            name, checker = self._init_checker(Document.MAIN, lang)
-            self._main_lang_name = name
-            self._main_checker = checker
+            args = Document.MAIN, lang, self._main_broker
+            output = self._init_checker(*args)
+            self._main_lang_name, self._main_checker = output
 
         if config.spell_check.check_translation:
             lang = config.spell_check.translation_language
-            name, checker = self._init_checker(Document.TRAN, lang)
-            self._tran_lang_name = name
-            self._tran_checker = checker
+            args = Document.TRAN, lang, self._tran_broker
+            output = self._init_checker(*args)
+            self._tran_lang_name, self._tran_checker = output
 
-    def _init_checker(self, document, lang):
+    def _init_checker(self, document, lang, broker):
         """
         Initialize spell-checker for document.
 
@@ -261,7 +282,7 @@ class SpellCheckDialog(gobject.GObject):
 
         try:
             try:
-                dictionary = enchant.DictWithPWL(lang, dict_path)
+                dictionary = enchant.DictWithPWL(lang, dict_path, broker)
             except IOError, (errno, detail):
                 msg  = 'Failed to create user dictionary file '
                 msg += '"%s".' % dict_path
@@ -269,7 +290,7 @@ class SpellCheckDialog(gobject.GObject):
                 self._dictionary_label.set_sensitive(False)
                 self._add_button.set_sensitive(False)
                 self._add_lower_button.set_sensitive(False)
-                dictionary = enchant.Dict(lang)
+                dictionary = enchant.Dict(lang, broker)
         except enchant.Error, detail:
             detail = _('Dictionary initialization for language "%s" returned '
                      'error: %s.') % (name, detail)
@@ -344,7 +365,7 @@ class SpellCheckDialog(gobject.GObject):
         text_buffer = self._text_view.get_buffer()
         text_buffer.set_text(text)
 
-        # Highlight mispelled word.
+        # Highlight misspelled word.
         start = self._checker.wordpos
         end = start + len(self._checker.word)
         start_iter = text_buffer.get_iter_at_offset(start)
@@ -468,7 +489,7 @@ class SpellCheckDialog(gobject.GObject):
         self._advance()
 
     def _on_ignore_button_clicked(self, *args):
-        """Ignore mispelling of word."""
+        """Ignore misspelled word."""
 
         self._advance()
 
@@ -477,7 +498,7 @@ class SpellCheckDialog(gobject.GObject):
 
         text = unicode(self._checker.get_text())
         start = self._checker.wordpos
-        text = text[:start - 1] + text [start:]
+        text = text[:start - 1] + text[start:]
         self._checker.set_text(text)
         self._advance()
 
@@ -578,7 +599,7 @@ class SpellCheckDialog(gobject.GObject):
             else:
                 self._register_changes()
                 index = self._pages.index(self._page)
-                self._set_page(self.pages[index + 1])
+                self._set_page(self._pages[index + 1])
 
         try:
             text = unicode(self._texts[self._row])
