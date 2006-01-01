@@ -98,10 +98,12 @@ def parse_options():
     parser.add_option(
         '-s',
         '--hotshot',
-        action='store_true',
+        action='store',
+        type='int',
+        metavar='<count>',
         dest='hotshot',
-        default=False,
-        help='profile with python\'s hotshot module'
+        default=0,
+        help='profile with python\'s hotshot module displaying <count> entries'
     )
 
     parser.add_option(
@@ -196,7 +198,7 @@ if __name__ == '__main__':
         profile.close()
         stats = hotshot.stats.load('gaupol-hotshot.stats')
         stats.sort_stats('time', 'calls')
-        stats.print_stats(25)
+        stats.print_stats(opts.hotshot)
         os.remove('gaupol-hotshot.stats')
 
     else:

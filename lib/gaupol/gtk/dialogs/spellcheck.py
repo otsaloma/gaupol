@@ -42,9 +42,8 @@
 # when creating dictionaries, but the memory problems assumably remain.
 # ** (gaupol:8456): WARNING **: 1 dictionaries weren't free'd.
 #
-# (4) enchant.Dict method store_replacement(self, mis, cor) seems to have no
-# effect, at least with Aspell. Replacements can be handled internally with
-# better reliability.
+# (4) enchant.Dict method store_replacement seems to have no effect, at least
+# with Aspell. Replacements can be handled internally with better reliability.
 
 
 try:
@@ -71,7 +70,11 @@ from gaupol.gtk.util            import config, gtklib
 
 logger = logging.getLogger()
 
-SC_DIR = os.path.join(os.path.expanduser('~'), '.gaupol', 'spell-check')
+SPELL_CHECK_DIR = os.path.join(
+    os.path.expanduser('~'),
+    '.gaupol',
+    'spell-check'
+)
 
 repl_sep = '|'
 
@@ -233,7 +236,7 @@ class SpellCheckDialog(gobject.GObject):
         lang   = self._langs[document]
         name   = self._lang_names[document]
         broker = self._brokers[document]
-        path   = os.path.join(SC_DIR, lang + '.dict')
+        path   = os.path.join(SPELL_CHECK_DIR, lang + '.dict')
         dialog = None
 
         try:
@@ -275,7 +278,7 @@ class SpellCheckDialog(gobject.GObject):
         """Init the list of replacements for document."""
 
         lang = self._langs[document]
-        path = os.path.join(SC_DIR, lang + '.repl')
+        path = os.path.join(SPELL_CHECK_DIR, lang + '.repl')
 
         if not os.path.isfile(path):
             return
@@ -320,12 +323,12 @@ class SpellCheckDialog(gobject.GObject):
         """Initialize the spell check objects to use."""
 
         # Create profile directory if it doesn't exist.
-        if not os.path.isdir(SC_DIR):
+        if not os.path.isdir(SPELL_CHECK_DIR):
             try:
-                os.makedirs(SC_DIR)
+                os.makedirs(SPELL_CHECK_DIR)
             except OSError, detail:
                 msg  = 'Failed to create spell-check profile directory '
-                msg += '"%s": %s.' % (SC_DIR, detail)
+                msg += '"%s": %s.' % (SPELL_CHECK_DIR, detail)
                 logger.error(msg)
 
         if config.spell_check.check_main:
@@ -418,6 +421,7 @@ class SpellCheckDialog(gobject.GObject):
         self._join_forward_button.set_sensitive(sensitive)
 
         # Add suggestions.
+        self._entry.set_text(u'')
         self._fill_suggestion_view(checker.suggest())
         self._suggestion_view.grab_focus()
 
@@ -460,7 +464,7 @@ class SpellCheckDialog(gobject.GObject):
             return None
         return store.get_value(itr, 0)
 
-    def _fill_suggestion_view(self, suggestions):
+    def _fill_suggestion_view(self, suggestions, select=True):
         """Fill the list of suggestions."""
 
         suggestions = suggestions[:]
@@ -479,14 +483,15 @@ class SpellCheckDialog(gobject.GObject):
                 except ValueError:
                     pass
 
-        # Add spell-checkers suggestions.
+        # Add spell-checker's suggestions.
         for suggestion in suggestions:
             store.append([unicode(suggestion)])
 
         if len(store) > 0:
             selection = self._suggestion_view.get_selection()
             selection.unselect_all()
-            selection.select_path(0)
+            if select:
+                selection.select_path(0)
 
     def _on_add_button_clicked(self, *args):
         """Add word to personal word list."""
@@ -510,8 +515,7 @@ class SpellCheckDialog(gobject.GObject):
         checker = self._checkers[self._document]
         word = unicode(self._entry.get_text())
         suggestions = checker.suggest(word)
-        self._fill_suggestion_view(suggestions)
-        self._suggestion_view.grab_focus()
+        self._fill_suggestion_view(suggestions, False)
 
     def _on_edit_button_clicked(self, *args):
         """Edit the text in a dialog."""
@@ -600,9 +604,7 @@ class SpellCheckDialog(gobject.GObject):
         """Copy the selected suggestion into the entry."""
 
         suggestion = self._get_selected_suggestion()
-        if suggestion is None:
-            self._entry.set_text(u'')
-        else:
+        if suggestion is not None:
             self._entry.set_text(unicode(suggestion))
 
     def _register_changes(self):
@@ -723,7 +725,7 @@ class SpellCheckDialog(gobject.GObject):
             replacements = listlib.remove_duplicates(replacements)
 
             lang = self._checkers[i].lang
-            path = os.path.join(SC_DIR, lang + '.repl')
+            path = os.path.join(SPELL_CHECK_DIR, lang + '.repl')
             try:
                 replacement_file = codecs.open(path, 'w', 'utf_8')
                 try:

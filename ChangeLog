@@ -1,5 +1,14 @@
 2006-01-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol:
+	  Added a <count> argument to --hotshot option.
+
+	* lib/gaupol/gtk/dialogs/spellcheck.py:
+	  Do not select a suggestion after clicking the check button. Cosmetic
+	  changes.
+
+2006-01-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/gtk/delegates/spellcheck.py:
 	  (SpellCheckAction.is_doable): Require language to not be None if
 	  document is to be checked.
