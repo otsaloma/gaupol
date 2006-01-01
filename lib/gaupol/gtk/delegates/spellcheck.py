@@ -107,12 +107,16 @@ class SpellCheckAction(UIMAction):
         if not enchant_available:
             return False
 
-        if config.spell_check.main_language is None and \
-           config.spell_check.translation_language is None:
-            return False
-
         if not config.spell_check.check_main and \
            not config.spell_check.check_translation:
+            return False
+
+        if config.spell_check.check_main and \
+           config.spell_check.main_language is None:
+            return False
+
+        if config.spell_check.check_translation and \
+           config.spell_check.translation_language is None:
             return False
 
         return True

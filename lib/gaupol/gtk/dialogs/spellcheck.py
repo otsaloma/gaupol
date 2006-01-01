@@ -24,6 +24,7 @@
 # (1) Unicoding
 # (2) User dictionaries
 # (3) Memory freeing
+# (4) Replacement handling
 #
 # (1) Unicoding between Python, Enchant and GTK widgets seems very
 # unpredictable. To be on the safe side, all acquired text from where-ever is
@@ -40,6 +41,10 @@
 # broker object. By creating a new broker every time, we avoid AssertionErrors
 # when creating dictionaries, but the memory problems assumably remain.
 # ** (gaupol:8456): WARNING **: 1 dictionaries weren't free'd.
+#
+# (4) enchant.Dict method store_replacement(self, mis, cor) seems to have no
+# effect, at least with Aspell. Replacements can be handled internally with
+# better reliability.
 
 
 try:
@@ -47,6 +52,7 @@ try:
 except ImportError:
     pass
 
+import codecs
 import enchant
 import enchant.checker
 import logging
@@ -56,7 +62,7 @@ import gobject
 import gtk
 import pango
 
-from gaupol.base.util           import langlib
+from gaupol.base.util           import langlib, listlib
 from gaupol.constants           import Document
 from gaupol.gtk.dialogs.message import ErrorDialog
 from gaupol.gtk.error           import Cancelled
@@ -65,8 +71,12 @@ from gaupol.gtk.util            import config, gtklib
 
 logger = logging.getLogger()
 
+SC_DIR = os.path.join(os.path.expanduser('~'), '.gaupol', 'spell-check')
 
-USER_DICT_DIR = os.path.join(os.path.expanduser('~'), '.gaupol', 'dict')
+repl_sep = '|'
+
+MAIN = Document.MAIN
+TRAN = Document.TRAN
 
 
 class SpellCheckErrorDialog(ErrorDialog):
@@ -182,110 +192,56 @@ class SpellCheckDialog(gobject.GObject):
         self._suggestion_view     = get_widget('suggestion_tree_view')
         self._text_view           = get_widget('text_view')
 
-        self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(gtk.RESPONSE_CLOSE)
-        self._dialog.connect('delete-event', self._destroy)
-
-        # Set initial button sensitivities to False.
-        self._replace_button.set_sensitive(False)
-        self._replace_all_button.set_sensitive(False)
-        self._join_back_button.set_sensitive(False)
-        self._join_forward_button.set_sensitive(False)
-        self._check_button.set_sensitive(False)
-
-        # Create text tag for text view.
-        text_buffer = self._text_view.get_buffer()
-        text_buffer.create_tag('misspelled', weight=pango.WEIGHT_BOLD)
-
         # Pages to check
         self._pages = pages
 
-        # PyEnchant brokers
-        self._main_broker = enchant.Broker()
-        self._tran_broker = enchant.Broker()
+        # PyEnchant objects
+        self._brokers  = [enchant.Broker(), enchant.Broker()]
+        self._checkers = [None, None]
 
-        # Spell-checkers
-        self._main_checker = None
-        self._tran_checker = None
-
-        # Language descriptive names
-        self._main_lang_name = None
-        self._tran_lang_name = None
+        # Language codes and descriptive names
+        self._langs = [
+            config.spell_check.main_language,
+            config.spell_check.translation_language
+        ]
+        self._lang_names = [None, None]
 
         # Current checking position
         self._page     = None
         self._document = None
         self._texts    = None
-        self._checker  = None
         self._row      = None
 
-        # Corrected data
-        self._corrected_main_rows  = []
-        self._corrected_main_texts = []
-        self._corrected_tran_rows  = []
-        self._corrected_tran_texts = []
+        # Replacement tuples (misspelled, correct)
+        self._replacements = [[], []]
 
-        self._init_checkers()
-        self._init_suggestion_view()
+        # Corrected data
+        self._corrected_rows  = [[], []]
+        self._corrected_texts = [[], []]
+
+        self._init_spell_check()
+        self._init_dialog(parent)
         self._set_mnemonics(glade_xml)
+        self._init_sensitivities()
+        self._init_text_tags()
+        self._init_suggestion_view()
         self._connect_signals()
 
-    def _init_checkers(self):
-        """Initialize the spell-checkers to use."""
+    def _init_checker(self, document):
+        """Initialize spell-checker for document."""
 
-        # Create user dictionary directory if it doesn't exist.
-        if not os.path.isdir(USER_DICT_DIR):
-            try:
-                os.makedirs(USER_DICT_DIR)
-            except OSError, detail:
-                msg  = 'Failed to create user dictionary directory '
-                msg += '"%s": %s.' % (USER_DICT_DIR, detail)
-                logger.error(msg)
-
-        if config.spell_check.check_main:
-            lang = config.spell_check.main_language
-            args = Document.MAIN, lang, self._main_broker
-            output = self._init_checker(*args)
-            self._main_lang_name, self._main_checker = output
-
-        if config.spell_check.check_translation:
-            lang = config.spell_check.translation_language
-            args = Document.TRAN, lang, self._tran_broker
-            output = self._init_checker(*args)
-            self._tran_lang_name, self._tran_checker = output
-
-    def _init_checker(self, document, lang, broker):
-        """
-        Initialize spell-checker for document.
-
-        Return (Language name, enchant.checker.SpellChecker).
-        """
-        not_set_msgs = (
-            _('Main text language is not set. Please use the '
-              '"Configure Spell-check" dialog to select a language and then '
-              'try again.'),
-            _('Translation text language is not set. Please use the '
-              '"Configure Spell-check" dialog to select a language and then '
-              'try again.')
-        )
-
-        if lang is None:
-            detail = not_set_msgs[document]
-            dialog = SpellCheckErrorDialog(self._dialog, detail)
-            dialog.run()
-            dialog.destroy()
-            raise Cancelled
-
-        name = langlib.get_descriptive_name(lang)
-        dict_path = os.path.join(USER_DICT_DIR, lang + '.dict')
+        lang   = self._langs[document]
+        name   = self._lang_names[document]
+        broker = self._brokers[document]
+        path   = os.path.join(SC_DIR, lang + '.dict')
         dialog = None
 
         try:
             try:
-                dictionary = enchant.DictWithPWL(lang, dict_path, broker)
+                dictionary = enchant.DictWithPWL(lang, path, broker)
             except IOError, (errno, detail):
                 msg  = 'Failed to create user dictionary file '
-                msg += '"%s".' % dict_path
+                msg += '"%s": %s.' % (path, detail)
                 logger.error(msg)
                 self._dictionary_label.set_sensitive(False)
                 self._add_button.set_sensitive(False)
@@ -299,7 +255,88 @@ class SpellCheckDialog(gobject.GObject):
             dialog.destroy()
             raise Cancelled
 
-        return name, enchant.checker.SpellChecker(dictionary, '')
+        self._checkers[document] = enchant.checker.SpellChecker(dictionary, '')
+
+    def _init_lang_name(self, document):
+        """Initialize language descriptive name for document."""
+
+        lang = self._langs[document]
+        name = langlib.get_descriptive_name(lang)
+        self._lang_names[document] = name
+
+    def _init_dialog(self, parent):
+        """Initialize the dialog."""
+
+        self._dialog.set_transient_for(parent)
+        self._dialog.set_default_response(gtk.RESPONSE_CLOSE)
+        self._dialog.connect('delete-event', self._destroy)
+
+    def _init_replacements(self, document):
+        """Init the list of replacements for document."""
+
+        lang = self._langs[document]
+        path = os.path.join(SC_DIR, lang + '.repl')
+
+        if not os.path.isfile(path):
+            return
+
+        # Read replacement file.
+        try:
+            replacement_file = codecs.open(path, 'r', 'utf_8')
+            try:
+                replacements = replacement_file.readlines()
+            finally:
+                replacement_file.close()
+        except IOError, (errno, detail):
+            msg  = 'Failed to read replacement file '
+            msg += '"%s": %s.' % (path, detail)
+            logger.error(msg)
+            return
+        except UnicodeDecodeError, detail:
+            msg  = 'Failed to decode replacement file '
+            msg += '"%s": %s.' % (path, detail)
+            logger.error(msg)
+            return
+
+        # Parse replacements.
+        replacements = listlib.remove_duplicates(replacements)
+        for replacement in replacements:
+            replacement = replacement.strip()
+            if replacement.find(repl_sep) == -1:
+                continue
+            entry = tuple(replacement.split(repl_sep))
+            self._replacements[document].append(entry)
+
+    def _init_sensitivities(self):
+        """Initialize widget sensitivities."""
+
+        self._replace_button.set_sensitive(False)
+        self._replace_all_button.set_sensitive(False)
+        self._join_back_button.set_sensitive(False)
+        self._join_forward_button.set_sensitive(False)
+        self._check_button.set_sensitive(False)
+
+    def _init_spell_check(self):
+        """Initialize the spell check objects to use."""
+
+        # Create profile directory if it doesn't exist.
+        if not os.path.isdir(SC_DIR):
+            try:
+                os.makedirs(SC_DIR)
+            except OSError, detail:
+                msg  = 'Failed to create spell-check profile directory '
+                msg += '"%s": %s.' % (SC_DIR, detail)
+                logger.error(msg)
+
+        if config.spell_check.check_main:
+            self._init_lang_name(MAIN)
+            self._init_checker(MAIN)
+            self._init_replacements(MAIN)
+
+        if config.spell_check.check_translation:
+            self._init_lang_name(TRAN)
+            self._init_checker(TRAN)
+            self._init_replacements(TRAN)
 
     def _init_suggestion_view(self):
         """Initialize the list of suggestions."""
@@ -320,28 +357,32 @@ class SpellCheckDialog(gobject.GObject):
         tree_view_column = gtk.TreeViewColumn('', cell_renderer, text=0)
         view.append_column(tree_view_column)
 
+    def _init_text_tags(self):
+        """Init the tags used in the text view."""
+
+        text_buffer = self._text_view.get_buffer()
+        text_buffer.create_tag('misspelled', weight=pango.WEIGHT_BOLD)
+
     def _add_correction(self, row, text):
         """Add row and text to the lists of corrections."""
 
-        if self._document == Document.MAIN:
-            self._corrected_main_rows.append(row)
-            self._corrected_main_texts.append(text)
-        elif self._document == Document.TRAN:
-            self._corrected_tran_rows.append(row)
-            self._corrected_tran_texts.append(text)
+        self._corrected_rows[self._document].append(row)
+        self._corrected_texts[self._document].append(text)
 
     def _advance(self):
         """Advance to next spelling error."""
 
+        checker = self._checkers[self._document]
+
         # Move to next error in current text.
         try:
-            self._checker.next()
+            checker.next()
 
         # Done with current text.
         except StopIteration:
 
             # Add correction.
-            new_text = unicode(self._checker.get_text())
+            new_text = unicode(checker.get_text())
             old_text = self._texts[self._row]
             if new_text != old_text:
                 self._add_correction(self._row, new_text)
@@ -350,9 +391,7 @@ class SpellCheckDialog(gobject.GObject):
             try:
                 self._set_next_text()
             except IndexError:
-                self._text_view.get_buffer().set_text('')
-                self._fill_suggestion_view([])
-                self._main_vbox.set_sensitive(False)
+                self._set_done()
                 return
 
             # Advance to next error.
@@ -361,13 +400,13 @@ class SpellCheckDialog(gobject.GObject):
         self.emit('cell-selected', self._page, self._row, self._document)
 
         # Show text.
-        text = unicode(self._checker.get_text())
+        text = unicode(checker.get_text())
         text_buffer = self._text_view.get_buffer()
         text_buffer.set_text(text)
 
         # Highlight misspelled word.
-        start = self._checker.wordpos
-        end = start + len(self._checker.word)
+        start = checker.wordpos
+        end = start + len(checker.word)
         start_iter = text_buffer.get_iter_at_offset(start)
         end_iter = text_buffer.get_iter_at_offset(end)
         text_buffer.apply_tag_by_name('misspelled', start_iter, end_iter)
@@ -379,7 +418,7 @@ class SpellCheckDialog(gobject.GObject):
         self._join_forward_button.set_sensitive(sensitive)
 
         # Add suggestions.
-        self._fill_suggestion_view(self._checker.suggest())
+        self._fill_suggestion_view(checker.suggest())
         self._suggestion_view.grab_focus()
 
     def _connect_signals(self):
@@ -408,6 +447,7 @@ class SpellCheckDialog(gobject.GObject):
         """Destroy the dialog after registering changes."""
 
         self._register_changes()
+        self._set_done()
         self._dialog.destroy()
         self.emit('destroyed')
 
@@ -423,12 +463,27 @@ class SpellCheckDialog(gobject.GObject):
     def _fill_suggestion_view(self, suggestions):
         """Fill the list of suggestions."""
 
+        suggestions = suggestions[:]
+        checker = self._checkers[self._document]
+        replacements = self._replacements[self._document]
         store = self._suggestion_view.get_model()
         store.clear()
+
+        # Add replacement matches.
+        word = unicode(checker.word)
+        for misspelled, correct in replacements:
+            if misspelled == word:
+                store.append([unicode(correct)])
+                try:
+                    suggestions.remove(correct)
+                except ValueError:
+                    pass
+
+        # Add spell-checkers suggestions.
         for suggestion in suggestions:
             store.append([unicode(suggestion)])
 
-        if suggestions:
+        if len(store) > 0:
             selection = self._suggestion_view.get_selection()
             selection.unselect_all()
             selection.select_path(0)
@@ -436,36 +491,40 @@ class SpellCheckDialog(gobject.GObject):
     def _on_add_button_clicked(self, *args):
         """Add word to personal word list."""
 
-        word = unicode(self._checker.word)
-        self._checker.dict.add_to_pwl(word)
+        checker = self._checkers[self._document]
+        word = unicode(checker.word)
+        checker.dict.add_to_pwl(word)
         self._advance()
 
     def _on_add_lower_button_clicked(self, *args):
         """Add word as lowercase to personal word list."""
 
-        word = unicode(self._checker.word).lower()
-        self._checker.dict.add_to_pwl(word)
+        checker = self._checkers[self._document]
+        word = unicode(checker.word).lower()
+        checker.dict.add_to_pwl(word)
         self._advance()
 
     def _on_check_button_clicked(self, *args):
         """Check current word in the entry."""
 
+        checker = self._checkers[self._document]
         word = unicode(self._entry.get_text())
-        suggestions = self._checker.suggest(word)
+        suggestions = checker.suggest(word)
         self._fill_suggestion_view(suggestions)
         self._suggestion_view.grab_focus()
 
     def _on_edit_button_clicked(self, *args):
         """Edit the text in a dialog."""
 
-        text = unicode(self._checker.get_text())
+        checker = self._checkers[self._document]
+        text = unicode(checker.get_text())
         dialog = TextEditDialog(self._dialog, text)
         response = dialog.run()
         text = unicode(dialog.get_text())
         gtklib.destroy_gobject(dialog)
 
         if response == gtk.RESPONSE_OK:
-            self._checker.set_text(text)
+            checker.set_text(text)
             self._advance()
 
     def _on_entry_changed(self, entry):
@@ -485,7 +544,8 @@ class SpellCheckDialog(gobject.GObject):
     def _on_ignore_all_button_clicked(self, *args):
         """Ignore all instances of word."""
 
-        self._checker.ignore_always()
+        checker = self._checkers[self._document]
+        checker.ignore_always()
         self._advance()
 
     def _on_ignore_button_clicked(self, *args):
@@ -496,18 +556,20 @@ class SpellCheckDialog(gobject.GObject):
     def _on_join_back_button_clicked(self, *args):
         """Join word with the preceding word."""
 
-        text = unicode(self._checker.get_text())
-        start = self._checker.wordpos
+        checker = self._checkers[self._document]
+        text = unicode(checker.get_text())
+        start = checker.wordpos
         text = text[:start - 1] + text[start:]
-        self._checker.set_text(text)
+        checker.set_text(text)
         self._advance()
 
     def _on_join_forward_button_clicked(self, *args):
         """Join word with the following word."""
 
-        text = unicode(self._checker.get_text())
-        start = self._checker.wordpos
-        end = start + len(self._checker.word)
+        checker = self._checkers[self._document]
+        text = unicode(checker.get_text())
+        start = checker.wordpos
+        end = start + len(checker.word)
         text = text[:end] + text [end + 1:]
         self._checker.set_text(text)
         self._advance()
@@ -515,15 +577,23 @@ class SpellCheckDialog(gobject.GObject):
     def _on_replace_all_button_clicked(self, *args):
         """Replace all instances of word with the word in the entry."""
 
-        word = unicode(self._entry.get_text())
-        self._checker.replace_always(word)
+        checker = self._checkers[self._document]
+        misspelled = unicode(checker.word)
+        correct = unicode(self._entry.get_text())
+        self._store_replacement(misspelled, correct)
+
+        checker.replace_always(correct)
         self._advance()
 
     def _on_replace_button_clicked(self, *args):
         """Replace word with the word in the entry."""
 
-        word = unicode(self._entry.get_text())
-        self._checker.replace(word)
+        checker = self._checkers[self._document]
+        misspelled = unicode(checker.word)
+        correct = unicode(self._entry.get_text())
+        self._store_replacement(misspelled, correct)
+
+        checker.replace(correct)
         self._advance()
 
     def _on_suggestion_view_selection_changed(self, *args):
@@ -541,14 +611,12 @@ class SpellCheckDialog(gobject.GObject):
         self.emit(
             'page-checked',
             self._page,
-            (self._corrected_main_rows , self._corrected_tran_rows ),
-            (self._corrected_main_texts, self._corrected_tran_texts)
+            self._corrected_rows,
+            self._corrected_texts
         )
 
-        self._corrected_main_rows  = []
-        self._corrected_main_texts = []
-        self._corrected_tran_rows  = []
-        self._corrected_tran_texts = []
+        self._corrected_rows  = [[], []]
+        self._corrected_texts = [[], []]
 
     def _set_document(self, document):
         """Set start position for checking document."""
@@ -557,22 +625,28 @@ class SpellCheckDialog(gobject.GObject):
         self._set_language_label(document)
         self._row = 0
 
-        if document == Document.MAIN:
-            self._texts   = self._page.project.main_texts
-            self._checker = self._main_checker
-        elif document == Document.TRAN:
-            self._texts   = self._page.project.tran_texts
-            self._checker = self._tran_checker
+        if document == MAIN:
+            self._texts = self._page.project.main_texts
+        elif document == TRAN:
+            self._texts = self._page.project.tran_texts
+
+    def _set_done(self):
+        """Set checking done."""
+
+        self._text_view.get_buffer().set_text('')
+        self._fill_suggestion_view([])
+        self._main_vbox.set_sensitive(False)
+        self._write_replacements()
 
     def _set_language_label(self, document):
         """Set name in the language label."""
 
-        name = (self._main_lang_name, self._tran_lang_name)[document]
+        name = self._lang_names[document]
         self._language_label.set_text('<b>%s</b>' % name)
         self._language_label.set_use_markup(True)
 
     def _set_mnemonics(self, glade_xml):
-        """Set mnemonics for widgets."""
+        """Initialize mnemonics for widgets."""
 
         # Entry
         label = glade_xml.get_widget('entry_label')
@@ -593,9 +667,9 @@ class SpellCheckDialog(gobject.GObject):
             self._texts[self._row + 1]
             self._row += 1
         except IndexError:
-            if self._document == Document.MAIN and \
-               config.spell_check.check_translation:
-                self._set_document(Document.TRAN)
+            if self._document == MAIN and config.spell_check.check_translation:
+                print 'moving doc'
+                self._set_document(TRAN)
             else:
                 self._register_changes()
                 index = self._pages.index(self._page)
@@ -605,7 +679,7 @@ class SpellCheckDialog(gobject.GObject):
             text = unicode(self._texts[self._row])
         except IndexError:
             return self._set_next_text()
-        self._checker.set_text(text)
+        self._checkers[self._document].set_text(text)
 
     def _set_page(self, page):
         """Set start position for checking page."""
@@ -614,9 +688,9 @@ class SpellCheckDialog(gobject.GObject):
         self.emit('page-selected', self._page)
 
         if config.spell_check.check_main:
-            self._set_document(Document.MAIN)
+            self._set_document(MAIN)
         elif config.spell_check.check_translation:
-            self._set_document(Document.TRAN)
+            self._set_document(TRAN)
 
     def show(self):
         """Show the dialog and start the spell-check."""
@@ -628,3 +702,41 @@ class SpellCheckDialog(gobject.GObject):
 
         self._dialog.show()
         self._advance()
+
+    def _store_replacement(self, misspelled, correct):
+        """Store replacement."""
+
+        replacements = self._replacements[self._document]
+        for entry in replacements:
+            if entry == (misspelled, correct):
+                return
+        replacements.append((misspelled, correct))
+
+    def _write_replacements(self):
+        """Write replacement info to files."""
+
+        for i in range(2):
+
+            replacements = self._replacements[i]
+            if not replacements:
+                continue
+            replacements = listlib.remove_duplicates(replacements)
+
+            lang = self._checkers[i].lang
+            path = os.path.join(SC_DIR, lang + '.repl')
+            try:
+                replacement_file = codecs.open(path, 'w', 'utf_8')
+                try:
+                    for misspelled, correct in replacements:
+                        info = misspelled, repl_sep, correct, os.linesep
+                        replacement_file.write('%s%s%s%s' % info)
+                finally:
+                    replacement_file.close()
+            except IOError, (errno, detail):
+                msg  = 'Failed to write replacement file '
+                msg += '"%s": %s.' % (path, detail)
+                logger.error(msg)
+            except UnicodeEncodeError, detail:
+                msg  = 'Failed to encode replacement file '
+                msg += '"%s": %s.' % (path, detail)
+                logger.error(msg)

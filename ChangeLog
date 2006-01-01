@@ -1,6 +1,17 @@
 2006-01-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/gtk/delegates/spellcheck.py:
+	  (SpellCheckAction.is_doable): Require language to not be None if
+	  document is to be checked.
+
+	* lib/gaupol/gtk/dialogs/spellcheck.py:
+	  Implemented replacement files. Changed profile directory to
+	  ~/.gaupol/spell-check. Assumed language to not be None if document is
+	  to be checked. Lots of cosmetic changes.
+
+2006-01-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/gtk/delegates/spellcheck.py:
 	  (SpellCheckDelegate._on_page_checked): Call replace_both_texts only
 	  if both texts are non-empty lists.
 
