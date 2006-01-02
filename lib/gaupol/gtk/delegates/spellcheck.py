@@ -161,6 +161,7 @@ class SpellCheckDelegate(Delegate):
         gtklib.set_cursor_normal(self.window)
         dialog.run()
         dialog.destroy()
+        self.set_sensitivities(page)
 
     def _on_destroyed(self, dialog):
         """Delete dialog."""

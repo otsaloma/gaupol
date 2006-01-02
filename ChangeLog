@@ -1,5 +1,11 @@
 2006-01-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/delegates/spellcheck.py:
+	  (SpellCheckDelegate.on_configure_spell_check_activated): Call
+	  self.set_sensitivities(page).
+
+2006-01-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	RELEASE 0.2.0
 
 	* lib/gaupol/__init__.py:
