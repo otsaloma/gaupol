@@ -1,4 +1,4 @@
-Plans for 0.2.0
+Plans for 0.3.0
 ===============
 
   W = Work in progress
@@ -6,62 +6,42 @@ Plans for 0.2.0
   P = Postponed
   ? = Questionable
 
-  [D] Implement spell-check
-  [D] Redesign and rewrite code
-  [D] Improve encoding handling with a list of fallback encodings
-  [D] Open multiple files at once with the open dialog
-  [D] Move to edit adjacent cell on Alt+Arrow key-press-event
-  [D] Debug dialog
-  [D] Improve uninstallation
-  [D] Adapt to PyGTK 2.8
-
-  [D] Examine hotshot results
-  [D] Examine PyChecker results
-  [D] Ensure that config transition from 0.1.x works.
-  [D] Bug-check all
-
-  [D] Discontinue Finnish translation
-
-  [D] Update home page
-  [D] Update project page
-  [D] Create web forum
-
 
 Plans after 0.2.0
 =================
 
-  - Find, find and replace
-      o Regular expressions
-          * Support all Python regular expression flags
-      o Simple string search
-          * Match case
-          * Match entire word only
-      o Target
-          * Selection / current project / all open projects
-          * Main text, translation text
-      o Bar (gtk.Box) or dialog?
-      o gtk.CellRenderer.start_editing(...) and gtk.Editable.select_region(...)
+  * Find, find and replace
+      - Regular expressions
+          o Support all Python regular expression flags
+      - Simple string search
+          o Match case
+          o Match entire word only
+      - Target
+          o Selection / current project / all open projects
+          o Main text, translation text
+      - Bar (gtk.Box) or dialog?
+      - gtk.CellRenderer.start_editing(...) and gtk.Editable.select_region(...)
         on match
 
 
 Unscheduled
 ===========
 
-  - Documentation (HTML)
+  * Documentation (HTML)
 
-  - Support for additional subtitle formats
+  * Support for additional subtitle formats
 
-      o Add support for headers
-          * Header editing?
-          * Header conversion?
+      - Add support for headers
+          o Header editing?
+          o Header conversion?
 
-      o MPlayerSub/MPSub
+      - MPlayerSub/MPSub
         http://www.mplayerhq.hu/DOCS/tech/mpsub.sub
 
-      o SubViewer & SubViewer 2.0
+      - SubViewer & SubViewer 2.0
 
-      o SubStation Alpha (SSA & ASS)
+      - SubStation Alpha (SSA & ASS)
         http://moodub.free.fr/ass-specs.doc
 
-      o SAMI
+      - SAMI
         http://msdn.microsoft.com/library/en-us/dnacc/html/atg_samiarticle.asp

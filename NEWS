@@ -1,3 +1,31 @@
+Gaupol 0.2.0
+============
+
+  New Features:
+    * Spell-check
+    * Debug dialog
+
+  Improvements:
+    * Ability to try multiple character encodings when opening a file
+    * Opening multiple files at once with the open dialog
+    * Moving to edit an adjacent cell with Alt+Arrow keys
+    * Smarter uninstallation
+
+  Dependencies:
+    * PyGTK dependency raised to 2.8
+    * Introduced PyEnchant 1.1.3 dependency
+    * Introduced optional iso-codes dependency
+
+  Translations:
+    * Finnish (fi) translation removed
+
+  Lots of code has been redesigned and rewritten. Most importantly the
+  undo/redo system, the configuration module and all GUI building and updating
+  functions have been rewritten. Separation between base and gtk modules is now
+  far more sensible and should better suit possible alternative user
+  interfaces.
+
+
 Gaupol 0.1.1
 ============
 

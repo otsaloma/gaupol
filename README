@@ -9,22 +9,20 @@ General Information
   include timing manipulations and text corrections.
 
   Currently supported formats:
-
-    - MicroDVD
-    - MPL2
-    - SubRip
+    * MicroDVD
+    * MPL2
+    * SubRip
 
   Current features:
-
-    - Support for a wide range of character encodings
-    - Conversions between supported formats, including conversion of most tags
-    - Multiple document interface that allows some amount of batch processing
-    - Undo/Redo
-    - Editing in either time or frame mode
-    - Convenient translating
-    - Text formatting: toggling of italics and dialog lines, case changing
-    - Spell-checking
-    - GNOME HIG 2.0 compliant user interface
+    * Support for a wide range of character encodings
+    * Conversions between supported formats, including conversion of most tags
+    * Multiple document interface that allows some amount of batch processing
+    * Undo/Redo
+    * Editing in either time or frame mode
+    * Convenient translating
+    * Text formatting: toggling of italics and dialog lines, case changing
+    * Spell-checking
+    * GNOME HIG 2.0 compliant user interface
 
   Gaupol should run on all Unix-like (Linux, BSD, etc.) operating systems.
   Technically there is no obstacle why it couldn't run on Windows or Mac, but
@@ -42,15 +40,13 @@ Dependencies
 ============
 
   Required:
-
-    - Python >= 2.4
-    - PyGTK (with libglade support) >= 2.8
+    * Python >= 2.4
+    * PyGTK (with libglade support) >= 2.8
 
   Optional:
-
-    - Psyco, for best results >= 1.4
-    - PyEnchant >= 1.1.3
-    - iso-codes
+    * Psyco, for best results >= 1.4
+    * PyEnchant >= 1.1.3
+    * iso-codes
 
   Psyco can make Gaupol run a bit faster. PyEnchant is required for
   spell-checking. iso-codes allows the spell-checker to show the language and

@@ -1,5 +1,12 @@
 2006-01-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	RELEASE 0.2.0
+
+	* lib/gaupol/__init__.py:
+	  Bumped version number to 0.2.0.
+
+2006-01-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/delegates/edit.py:
 	  (EditDelegate.get_needs_resort): New method to tell if rows need
 	  resorting after show value is changed.

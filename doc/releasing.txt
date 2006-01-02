@@ -15,77 +15,77 @@ Table of Contents
 1. Create branch (only for bug-fix releases)
 ============================================
 
-  - Create a brach from tagged x.y.0 if branch doesn't already exist
+  * Create a brach from tagged x.y.0 if branch doesn't already exist
 
      svn copy svn+ssh://osmo@svn.gna.org/svn/gaupol/tags/x.y.0 \
               svn+ssh://osmo@svn.gna.org/svn/gaupol/branches/x.y
 
-  - Check out branch
+  * Check out branch
 
      svn co svn+ssh://osmo@svn.gna.org/svn/gaupol/branches/x.y
 
-  - Bring all bug-fix changes from trunk to branch.
+  * Bring all bug-fix changes from trunk to branch.
 
-  - Add entry to ChangeLog and commit changes to subversion branch.
+  * Add entry to ChangeLog and commit changes to subversion branch.
 
 
 2. Get translations
 ===================
 
-  - Send word to translators, that a new release is coming.
+  * Send word to translators, that a new release is coming.
 
-  - Check received translations.
+  * Check received translations.
 
-      * Headers
+      - Headers
 
-      * UTF-8 encoding
+      - UTF-8 encoding
 
-      * Syntactical correctness
+      - Syntactical correctness
 
           msgfmt -cv <lang>.po
 
-  - Merge all translations of file "gaupol.desktop".
+  * Merge all translations of file "gaupol.desktop".
 
-  - Add entries to ChangeLogs and commit changes to subversion.
+  * Add entries to ChangeLogs and commit changes to subversion.
 
 
 3. Make sure Gaupol works
 =========================
 
-  - Check the list of open bugs and make sure all bugs scheduled for
+  * Check the list of open bugs and make sure all bugs scheduled for
     this release are fixed.
 
       http://gna.org/bugs/?func=browse&set=open&group=gaupol
 
-  - Check the "TODO" file for anything undone for this release.
+  * Check the "TODO" file for anything undone for this release.
 
-  - Search the source code for tags with regular expression "\s*# [A-Z]{3,}:"
+  * Search the source code for tags with regular expression "\s*# [A-Z]{3,}:"
     and fix anything that needs to be fixed for this release.
 
-  - Search the source code for print messages with regular expression
+  * Search the source code for print messages with regular expression
     "\s*print ". All debug printing should be removed or converted to logging.
 
-  - Run PyChecker
+  * Run PyChecker
 
       ./gaupol --pycheck | grep -v "Using is" | sort
 
-  - Make sure all files are in the subversion repository
+  * Make sure all files are in the subversion repository
 
       svn status | grep -v \.pyc
 
-  - Run Gaupol from the source directory and check that it works
+  * Run Gaupol from the source directory and check that it works
 
       ./gaupol
 
-  - Install Gaupol and check that it works
+  * Install Gaupol and check that it works
 
       ./setup.py install --prefix=/tmp/gaupol
       /tmp/gaupol/bin/gaupol
 
-  - Check the installation directory /tmp/gaupol. Make sure all files
+  * Check the installation directory /tmp/gaupol. Make sure all files
     are in right places.
 
-  - Uninstall Gaupol and make sure it works
+  * Uninstall Gaupol and make sure it works
 
       ./setup.py uninstall
 
@@ -93,32 +93,32 @@ Table of Contents
 4. Bump version number
 ======================
 
-  - Bump version number
+  * Bump version number
 
       lib/gaupol/__init__.py
 
-  - Move all items concerning this release from the "TODO" file to the
+  * Move all items concerning this release from the "TODO" file to the
     "NEWS" file.
 
-  - Add ChangeLog entries noting that a release took place
+  * Add ChangeLog entries noting that a release took place
 
       ChangeLog
       po/ChangeLog
 
-  - Commit changes to subversion.
+  * Commit changes to subversion.
 
-  - For bugfix releases, repeat the above for trunk.
+  * For bugfix releases, repeat the above for trunk.
 
 
 5. Tag subversion
 =================
 
-  - For major or minor releases
+  * For major or minor releases
 
       svn copy svn+ssh://osmo@svn.gna.org/svn/gaupol/trunk \
                svn+ssh://osmo@svn.gna.org/svn/gaupol/tags/x.y.z
 
-  - For bug-fix releases
+  * For bug-fix releases
 
       svn copy svn+ssh://osmo@svn.gna.org/svn/gaupol/branches/x.y \
                svn+ssh://osmo@svn.gna.org/svn/gaupol/tags/x.y.z
@@ -127,25 +127,25 @@ Table of Contents
 6. Prepare files for release
 ============================
 
-  - Build tarballs
+  * Build tarballs
 
       ./setup.py sdist --formats bztar,gztar
 
-  - Cut news and and changes files to relevant parts
+  * Cut news and and changes files to relevant parts
 
       dist/x.y/gaupol-x.y.z.news
       dist/x.y/gaupol-x.y.z.changes
 
-  - Move tarballs into release directory.
+  * Move tarballs into release directory.
 
-  - If making a bug-fix release, remove previous symlink.
+  * If making a bug-fix release, remove previous symlink.
 
-  - Sync release directory x.y with Gna! download area
+  * Sync release directory x.y with Gna! download area
 
       rsync --delete -avr --rsh="ssh" . \
             osmo@download.gna.org:/upload/gaupol/x.y/
 
-  - Upload latest.txt
+  * Upload latest.txt
 
       scp latest.txt     osmo@download.gna.org:/upload/gaupol/
       scp latest.txt.sig osmo@download.gna.org:/upload/gaupol/
@@ -154,17 +154,17 @@ Table of Contents
 7. Spread the word
 ==================
 
-  - Edit the download section of Gaupol website.
+  * Edit the download section of Gaupol website.
 
-  - Post a news item at the Gaupol project page
+  * Post a news item at the Gaupol project page
 
       http://gna.org/news/submit.php?group=gaupol
 
-  - Send e-mail to Gaupol-announcements mailing list
+  * Send e-mail to Gaupol-announcements mailing list
 
       gaupol-announcements@gna.org
 
-  - Update third-party sites
+  * Update third-party sites
 
       http://www.gnomefiles.com/devs/devcorner.php
       http://freshmeat.net/projects/gaupol
