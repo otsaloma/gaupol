@@ -47,5 +47,5 @@ try:
     print enchant.__version__
 except ImportError:
     print 'Not found'
-except enchant.Error, detail:
-    print detail
+except enchant.Error, message:
+    print message

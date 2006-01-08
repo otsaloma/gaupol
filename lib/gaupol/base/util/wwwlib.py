@@ -34,44 +34,47 @@ import webbrowser
 from gaupol.base.error import TimeoutError
 
 
-class URLDocument(object):
+class URLReadThread(threading.Thread):
 
-    """Reading remote documents."""
+    """Threaded reading of a remote document."""
 
-    def __init__(self, url, timeout_seconds):
+    def __init__(self, url):
 
-        self.url     = url
-        self.timeout = timeout_seconds
-        self.text    = None
+        threading.Thread.__init__(self)
 
-    # TODO:
-    # IOError doesn't get thrown far enough that it could be handled outside
-    # this class. Does the threading affect the exception handling?
+        self.url      = url
+        self.text     = None
+        self.io_error = None
 
-    def read(self):
-        """
-        Read document.
+    def run(self):
+        """Run thread."""
 
-        Raise IOError if reading fails.
-        Raise TimeoutError if reading times out.
-        """
-        thread = threading.Thread(target=self._read)
-        thread.start()
-        thread.join(self.timeout)
+        try:
+            self.text = urllib.urlopen(self.url).read()
+        except IOError:
+            self.io_error = sys.exc_info()[1]
 
-        if self.text is None:
-            raise TimeoutError
 
-        return self.text
+def read_url(url, timeout_seconds):
+    """
+    Read remote document.
 
-    def _read(self):
-        """
-        Read document.
+    Document reading is done in a thread that ends with or without success
+    after timeout has ended.
 
-        Raise IOError if reading fails.
-        """
-        self.text = urllib.urlopen(self.url).read()
+    Raise IOError if reading fails.
+    Raise TimeoutError if reading times out.
+    """
+    thread = URLReadThread(url)
+    thread.start()
+    thread.join(timeout_seconds)
 
+    if thread.io_error is not None:
+        raise thread.io_error
+    if thread.text is None:
+        raise TimeoutError
+
+    return thread.text
 
 def open_url(url):
     """Open url in web-browser."""

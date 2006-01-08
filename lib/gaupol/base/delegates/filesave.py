@@ -54,10 +54,10 @@ class FileSaveDelegate(Delegate):
         try:
             shutil.copyfile(path, bak_path)
             return True
-        except IOError, (errno, detail):
-            info = bak_path, detail
-            msg = 'Failed to create temporary backup file "%s": %s.' % info
-            logger.warning(msg)
+        except IOError, (no, message):
+            message = 'Failed to create temporary backup file "%s": %s.' \
+                      % (bak_path, message)
+            logger.warning(message)
             return False
 
     def _remove_failed_file(self, path):
@@ -65,31 +65,31 @@ class FileSaveDelegate(Delegate):
 
         try:
             os.remove(path)
-        except OSError, (errno, detail):
-            msg  = 'Failed to remove file "%s"'      % path
-            msg += ' after failing to write it: %s.' % detail
-            logger.warning(msg)
+        except OSError, (no, message):
+            message = 'Failed to remove file "%s" after failing to write ' \
+                      'it: %s.' % (path, message)
+            logger.warning(message)
 
     def _remove_backup_file(self, bak_path):
         """Remove temporary backup file after successful writing."""
 
         try:
             os.remove(bak_path)
-        except OSError, (errno, detail):
-            info = bak_path, detail
-            msg = 'Failed to remove temporary backup file "%s": %s.' % info
-            logger.warning(msg)
+        except OSError, (no, message):
+            message = 'Failed to remove temporary backup file "%s": %s.' \
+                      % (bak_path, message)
+            logger.warning(message)
 
     def _restore_original_file(self, path, bak_path):
         """Restore file from temporary backup after failing writing."""
 
         try:
             shutil.move(bak_path, path)
-        except IOError, (errno, detail):
-            msg  = 'Failed to restore file "%s" ' % path
-            msg += ' from temporary backup file "%s"' % bak_path
-            msg += ' after failing to write it: %s.' % detail
-            logger.error(msg)
+        except IOError, (no, message):
+            message = 'Failed to restore file "%s" from temporary backup ' \
+                      'file "%s" after failing to write it: %s.' \
+                      % (path, bak_path, message)
+            logger.error(message)
 
     def _save_file(self, document, keep_changes, properties):
         """

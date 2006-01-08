@@ -82,6 +82,7 @@ sections = [
     'editor',
     'file',
     'general',
+    'preview',
     'subtitle_insert',
     'spell_check',
 ]
@@ -167,6 +168,40 @@ class general(object):
     types = {
         'editor' : Type.STRING,
         'version': Type.STRING,
+    }
+
+class preview(object):
+
+    command    = 'mplayer -ss %s -osdlevel 2 -quiet'
+    extensions = [
+        '.asf',
+        '.avi',
+        '.dat',
+        '.divx',
+        '.mkv',
+        '.mov',
+        '.mpeg',
+        '.mpg',
+        '.mp4',
+        '.m2v',
+        '.ogm',
+        '.qt',
+        '.rm',
+        '.rmvb',
+        '.swf',
+        '.vob',
+        '.wmv',
+        '.3ivx',
+    ]
+    offset     = '5.0'
+    save       = True
+
+
+    types = {
+        'command'   : Type.STRING,
+        'extensions': Type.STRING_LIST,
+        'offset'    : Type.STRING,
+        'save'      : Type.BOOLEAN,
     }
 
 class subtitle_insert(object):
@@ -256,9 +291,9 @@ def read():
     # Read from file.
     result = parser.read([CONFIG_PATH])
     if not result:
-        msg  = 'Failed to read settings from file "%s".' % CONFIG_PATH
-        msg += ' Using default settings.'
-        logger.info(msg)
+        message = 'Failed to read settings from file "%s". Using default ' \
+                  'settings.' % CONFIG_PATH
+        logger.info(message)
 
     # Set config options.
     sections = parser.sections()
@@ -270,9 +305,8 @@ def read():
             try:
                 _set_config_option(parser, section, option)
             except Exception:
-                path = section, option
-                msg = 'Failed to load setting %s.%s.' % path
-                logger.error(msg)
+                message = 'Failed to load setting %s.%s.' % (section, option)
+                logger.error(message)
 
     # Set version to current version.
     general.version = __version__
@@ -381,18 +415,17 @@ def write():
             try:
                 _set_parser_option(parser, section, option)
             except Exception:
-                path = section, option
-                msg = 'Failed to write setting %s.%s.' % path
-                logger.error(msg)
+                message = 'Failed to write setting %s.%s.' % (section, option)
+                logger.error(message)
 
     # Create directory ~/.gaupol if it doesn't exist.
     if not os.path.isdir(CONFIG_DIR):
         try:
             os.makedirs(CONFIG_DIR)
-        except OSError, detail:
-            info = CONFIG_DIR, detail
-            msg = 'Failed to create profile directory "%s": %s.' % info
-            logger.error(msg)
+        except OSError, message:
+            message = 'Failed to create profile directory "%s": %s.' \
+                      % (CONFIG_DIR, message)
+            logger.error(message)
 
     try:
 
@@ -410,7 +443,7 @@ def write():
         finally:
             config_file.close()
 
-    except IOError, (errno, detail):
-        info = CONFIG_PATH, detail
-        msg = 'Failed to write settings to file "%s": %s.' % info
-        logger.error(msg)
+    except IOError, (no, message):
+        message = 'Failed to write settings to file "%s": %s.' \
+                  % (CONFIG_PATH, message)
+        logger.error(message)

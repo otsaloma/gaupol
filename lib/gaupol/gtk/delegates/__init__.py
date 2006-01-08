@@ -42,6 +42,7 @@ module_names = [
     'help',
     'menuupdate',
     'preferences',
+    'preview',
     'spellcheck',
     'view',
     'viewupdate',

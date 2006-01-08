@@ -271,11 +271,11 @@ class PasteFitErrorDialog(ErrorDialog):
 
     def __init__(self, parent):
 
-        title  = _('Not enough space available to fit clipboard contents')
-        detail = _('Please first insert new subtitles if you wish to paste at '
-                   'the current location')
+        title   = _('Not enough space available to fit clipboard contents')
+        message = _('Please first insert new subtitles if you wish to paste '
+                    'at the current location')
 
-        ErrorDialog.__init__(self, parent, title, detail)
+        ErrorDialog.__init__(self, parent, title, message)
 
 
 class EditDelegate(Delegate):
@@ -285,23 +285,23 @@ class EditDelegate(Delegate):
     def on_clear_texts_activated(self, *args):
         """Paste texts from the clipboard."""
 
-        page = self.get_current_page()
-        rows = page.view.get_selected_rows()
-        col  = page.view.get_focus()[1]
-        doc  = col - 4
+        page     = self.get_current_page()
+        rows     = page.view.get_selected_rows()
+        col      = page.view.get_focus()[1]
+        document = page.text_column_to_document(col)
 
-        page.project.clear_texts(rows, doc)
+        page.project.clear_texts(rows, document)
         self.set_sensitivities(page)
 
     def on_copy_texts_activated(self, *args):
         """Cut the selected texts to the clipboard."""
 
-        page = self.get_current_page()
-        rows = page.view.get_selected_rows()
-        col  = page.view.get_focus()[1]
-        doc  = col - 4
+        page     = self.get_current_page()
+        rows     = page.view.get_selected_rows()
+        col      = page.view.get_focus()[1]
+        document = page.text_column_to_document(col)
 
-        page.project.copy_texts(rows, doc)
+        page.project.copy_texts(rows, document)
 
         # Put a string representation of the Gaupol internal clipboard to the
         # X clipboard.
@@ -313,12 +313,12 @@ class EditDelegate(Delegate):
     def on_cut_texts_activated(self, *args):
         """Cut the selected texts to the clipboard."""
 
-        page = self.get_current_page()
-        rows = page.view.get_selected_rows()
-        col  = page.view.get_focus()[1]
-        doc  = col - 4
+        page     = self.get_current_page()
+        rows     = page.view.get_selected_rows()
+        col      = page.view.get_focus()[1]
+        document = page.text_column_to_document(col)
 
-        page.project.cut_texts(rows, doc)
+        page.project.cut_texts(rows, document)
 
         # Put a string representation of the Gaupol internal clipboard to the
         # X clipboard.
@@ -380,13 +380,13 @@ class EditDelegate(Delegate):
     def on_paste_texts_activated(self, *args):
         """Paste texts from the clipboard."""
 
-        page = self.get_current_page()
-        rows = page.view.get_selected_rows()
-        col  = page.view.get_focus()[1]
-        doc  = col - 4
+        page     = self.get_current_page()
+        rows     = page.view.get_selected_rows()
+        col      = page.view.get_focus()[1]
+        document = page.text_column_to_document(col)
 
         try:
-            rows = page.project.paste_texts(rows[0], doc)
+            rows = page.project.paste_texts(rows[0], document)
         except FitError:
             dialog = PasteFitErrorDialog(self.window)
             dialog.run()
@@ -445,7 +445,7 @@ class EditDelegate(Delegate):
             gtklib.set_cursor_busy(self.window)
             if page.edit_mode == Mode.TIME:
                 new_row = page.project.set_time(row, col - 1, value)
-            if page.edit_mode == Mode.FRAME:
+            elif page.edit_mode == Mode.FRAME:
                 new_row = page.project.set_frame(row, col - 1, value)
             if new_row != row:
                 page.view.set_focus(new_row, col)

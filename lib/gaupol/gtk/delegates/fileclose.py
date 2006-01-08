@@ -114,9 +114,9 @@ class CloseWarningDialog(WarningDialog):
             title = _('Save changes to translation document "%s" before '
                       'closing?') % basename
 
-        detail = _('If you don\'t save, changes will be permanently lost.')
+        message = _('If you don\'t save, changes will be permanently lost.')
 
-        WarningDialog.__init__(self, parent, title, detail)
+        WarningDialog.__init__(self, parent, title, message)
 
         self.add_button(_('Close _Without Saving'), gtk.RESPONSE_NO    )
         self.add_button(gtk.STOCK_CANCEL          , gtk.RESPONSE_CANCEL)
@@ -319,7 +319,7 @@ class FileCloseDelegate(Delegate):
         try:
             gtk.main_quit()
         except RuntimeError:
-            raise SystemExit
+            raise SystemExit(1)
 
     def on_window_delete_event(self, *args):
         """Quit Gaupol."""

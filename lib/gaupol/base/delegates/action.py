@@ -128,13 +128,13 @@ class RevertableAction(object):
         )
 
         if self.register not in registers:
-            msg = 'Incorrect register: "%s".' % self.register
-            raise ValueError(msg)
+            message = 'Incorrect register: "%s".' % self.register
+            raise ValueError(message)
 
         if Document.MAIN not in self.documents and \
            Document.TRAN not in self.documents:
-               msg = 'Incorrect documents: "%s".' % self.documents
-               raise ValueError(msg)
+               message = 'Incorrect documents: "%s".' % self.documents
+               raise ValueError(message)
 
         # Sort all row data.
         self.rows_inserted.sort()

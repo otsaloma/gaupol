@@ -108,7 +108,7 @@ class VersionCheckErrorDialog(gtk.MessageDialog):
 
     """Dialog to inform that version check failed."""
 
-    def __init__(self, parent, detail):
+    def __init__(self, parent, message):
 
         gtk.MessageDialog.__init__(
             self,
@@ -119,7 +119,7 @@ class VersionCheckErrorDialog(gtk.MessageDialog):
             _('Failed to check latest version')
         )
 
-        self.format_secondary_text(detail)
+        self.format_secondary_text(message)
 
         self.add_button(_('_Go to Download Page'), gtk.RESPONSE_ACCEPT)
         self.add_button(gtk.STOCK_OK             , gtk.RESPONSE_OK    )
@@ -137,8 +137,8 @@ class VersionCheckInfoDialog(gtk.MessageDialog):
         else:
             title = _('You have the latest version')
 
-        detail  = _('The latest version is %s.') % remote_version + '\n'
-        detail += _('You are using %s.') % local_version
+        message = _('The latest version is %s.\nYou are using %s.') \
+                  % (remote_version, local_version)
 
         gtk.MessageDialog.__init__(
             self,
@@ -149,7 +149,7 @@ class VersionCheckInfoDialog(gtk.MessageDialog):
             title
         )
 
-        self.format_secondary_text(detail)
+        self.format_secondary_text(message)
 
         self.add_button(_('_Go to Download Page'), gtk.RESPONSE_ACCEPT)
         self.add_button(gtk.STOCK_OK            , gtk.RESPONSE_OK    )
@@ -168,13 +168,15 @@ class HelpDelegate(Delegate):
 
         # Read remote file containing latest version number.
         try:
-            text = wwwlib.URLDocument(VERSION_URL, 10).read()
-        except IOError, (errno, detail):
-            dialog = VersionCheckErrorDialog(self.window, detail + '.')
+            text = wwwlib.read_url(VERSION_URL, 10)
+        except IOError, instance:
+            message = _('Trying to connect to URL "%s" returned error: %s.') \
+                      % (VERSION_URL, instance.args[1][1])
+            dialog = VersionCheckErrorDialog(self.window, message)
         except TimeoutError:
-            detail = _('Operation timed out. Please try again later or '
-                       'proceed to the download page.')
-            dialog = VersionCheckErrorDialog(self.window, detail)
+            message = _('Operation timed out. Please try again later or '
+                        'proceed to the download page.')
+            dialog = VersionCheckErrorDialog(self.window, message)
 
         # Show error dialog.
         if dialog is not None:
@@ -193,9 +195,9 @@ class HelpDelegate(Delegate):
             args = self.window, __version__, remote_version
             dialog = VersionCheckInfoDialog(*args)
         else:
-            detail = _('No version information found at URL "%s".') \
-                    % VERSION_URL
-            dialog = VersionCheckErrorDialog(self.window, detail)
+            message = _('No version information found at URL "%s".') \
+                      % VERSION_URL
+            dialog = VersionCheckErrorDialog(self.window, message)
 
         # Show info or error dialog.
         gtklib.set_cursor_normal(self.window)

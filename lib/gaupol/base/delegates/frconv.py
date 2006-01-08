@@ -41,11 +41,8 @@ class FramerateConverter(Delegate):
         This method only changes what is assumed to be the video framerate and
         thus affects only how non-native timing data is calculated. Native
         timings will remain unchanged.
-
-        Raise TypeError if main file does not exist.
         """
-        if self.main_file is None:
-            raise TypeError('Main file does not exist.')
+        assert self.main_file is not None
 
         self.framerate = framerate
         self.calc.set_framerate(framerate)

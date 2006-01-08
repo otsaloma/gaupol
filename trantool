@@ -61,6 +61,11 @@ h_paths  = []
 py_paths = []
 
 
+def title_print(text):
+    """Print a message that stands out from rest of the output."""
+
+    print '** %s' % text
+
 def compile_mo(lang):
     """Compile a .mo file for language lang."""
 
@@ -85,7 +90,7 @@ def create_po(lang):
     if os.path.isfile(po_path):
         print '.po file for language "%s" already exists.' % lang
         print 'Use the "-u" option to update the existing file.'
-        raise SystemExit
+        raise SystemExit(1)
 
     title_print('Creating a .po file for language "%s"...' % lang)
 
@@ -122,11 +127,6 @@ def create_pot():
 
     os.chdir(SOURCE_DIR)
     os.system('xgettext -k_ -kN_ -c -o %s %s' % (POT_PATH, ' '.join(paths)))
-
-def title_print(text):
-    """Print a message that stands out from rest of the output."""
-
-    print '** %s' % text
 
 def get_languages(lang):
     """

@@ -62,6 +62,12 @@ class LanguageDialog(object):
         self._list_languages()
         self._set_from_config()
 
+        # Set dialog size.
+        width, height = gtklib.get_tree_view_size(self._lang_main_view)
+        width  = (width * 2) + 100 + gtklib.EXTRA
+        height = height      + 267 + gtklib.EXTRA
+        gtklib.resize_dialog(self._dialog, width, height, 0.5, 0.5)
+
     def _init_views(self):
         """Init the list of languages."""
 
@@ -141,7 +147,7 @@ class LanguageDialog(object):
             try:
                 enchant.Dict(lang)
                 self._langs.append(lang)
-            except enchant.Error, detail:
+            except enchant.Error:
                 pass
 
         self._langs.sort()

@@ -111,7 +111,9 @@ class FormatDelegate(Delegate):
             for line in lines:
                 # Strip all tags from line. If leftover doesn't start with
                 # "-", dialog lines should be added.
-                tagless_line = re_tag.sub('', line)
+                tagless_line = line
+                if re_tag is not None:
+                    tagless_line = re_tag.sub('', line)
                 if not tagless_line.startswith('-'):
                     dialogize = True
                     break

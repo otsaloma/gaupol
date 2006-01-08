@@ -87,11 +87,14 @@ class PreferencesDialog(gobject.GObject):
         self._encoding_remove_button  = get('encoding_remove_button')
         self._encoding_add_button     = get('encoding_add_button')
         self._undo_limit_radio        = get('undo_limit_radio_button')
-        self._undo_levels_spin_button = get('undo_levels_spin_button')
+        self._undo_levels_spin        = get('undo_levels_spin_button')
         self._undo_unlimited_radio    = get('undo_unlimited_radio_button')
         self._font_default_check      = get('font_default_check_button')
         self._font_custom_label       = get('font_custom_label')
         self._font_button             = get('font_button')
+        self._preview_offset_spin     = get('preview_offset_spin_button')
+        self._preview_save_check      = get('preview_save_check_button')
+        self._preview_command_entry   = get('preview_command_entry')
         self._close_button            = get('close_button')
 
         self._dialog.set_transient_for(parent)
@@ -137,8 +140,8 @@ class PreferencesDialog(gobject.GObject):
         self._undo_limit_radio.connect('toggled', method)
 
         # Undo levels spin button
-        method = self._on_undo_levels_spin_button_value_changed
-        self._undo_levels_spin_button.connect('value-changed', method)
+        method = self._on_undo_levels_spin_value_changed
+        self._undo_levels_spin.connect('value-changed', method)
 
         # Font default check button
         method = self._on_font_default_check_toggled
@@ -167,11 +170,28 @@ class PreferencesDialog(gobject.GObject):
         method = self._on_encoding_add_button_clicked
         self._encoding_add_button.connect('clicked', method)
 
+    def _connect_preview_signals(self):
+        """Connect signals of the preview tab's widgets."""
+
+        # Offset spin button
+        method = self._on_preview_offset_spin_value_changed
+        self._preview_offset_spin.connect('value-changed', method)
+
+        # Save check box
+        method = self._on_preview_save_check_toggled
+        self._preview_save_check.connect('toggled', method)
+
+        # Command entry
+        method = self._on_preview_command_entry_changed
+        self._preview_command_entry.connect('changed', method)
+
+
     def _connect_signals(self):
-        """Connect signals to widgets."""
+        """Connect signals of widgets."""
 
         self._connect_editor_signals()
         self._connect_file_signals()
+        self._connect_preview_signals()
 
         # Close button
         self._close_button.connect('clicked', self._destroy)
@@ -290,7 +310,24 @@ class PreferencesDialog(gobject.GObject):
         config.editor.use_default_font = use_default
         self.emit('use-default-font-toggled', use_default)
 
-    def _on_undo_levels_spin_button_value_changed(self, spin_button):
+    def _on_preview_command_entry_changed(self, entry):
+        """Set preview command."""
+
+        config.preview.command = entry.get_text()
+
+    def _on_preview_offset_spin_value_changed(self, spin_button):
+        """Set preview offset."""
+
+        spin_button.update()
+        value = '%.1f' % spin_button.get_value()
+        config.preview.offset = value
+
+    def _on_preview_save_check_toggled(self, check_button):
+        """Set saving before preview."""
+
+        config.preview.save = check_button.get_active()
+
+    def _on_undo_levels_spin_value_changed(self, spin_button):
         """Set the amount of undo levels and send signal."""
 
         spin_button.update()
@@ -303,7 +340,7 @@ class PreferencesDialog(gobject.GObject):
         """Limit/unlimit undo and send signal."""
 
         limit = self._undo_limit_radio.get_active()
-        self._undo_levels_spin_button.set_sensitive(limit)
+        self._undo_levels_spin.set_sensitive(limit)
 
         config.editor.limit_undo = limit
         self.emit('limit-undo-toggled', limit)
@@ -353,7 +390,7 @@ class PreferencesDialog(gobject.GObject):
         self._undo_unlimited_radio.set_active(not limit)
 
         # Undo levels
-        self._undo_levels_spin_button.set_value(config.editor.undo_levels)
+        self._undo_levels_spin.set_value(config.editor.undo_levels)
 
         # Use default/custom font
         use_default = config.editor.use_default_font
@@ -361,6 +398,11 @@ class PreferencesDialog(gobject.GObject):
 
         # Font
         self._font_button.set_font_name(self._get_custom_font())
+
+        # Preview
+        self._preview_offset_spin.set_value(float(config.preview.offset))
+        self._preview_save_check.set_active(config.preview.save)
+        self._preview_command_entry.set_text(config.preview.command)
 
     def _set_mnemonics(self, glade_xml):
         """Set mnemonics for widgets."""
@@ -371,10 +413,18 @@ class PreferencesDialog(gobject.GObject):
 
         # Undo levels spin button
         label = glade_xml.get_widget('undo_levels_label')
-        label.set_mnemonic_widget(self._undo_levels_spin_button)
+        label.set_mnemonic_widget(self._undo_levels_spin)
 
         # Font button
         self._font_custom_label.set_mnemonic_widget(self._font_button)
+
+        # Preview command label
+        label = glade_xml.get_widget('preview_command_label')
+        label.set_mnemonic_widget(self._preview_command_entry)
+
+        # Preview offset label
+        label = glade_xml.get_widget('preview_offset_label')
+        label.set_mnemonic_widget(self._preview_offset_spin)
 
     def show(self):
         """Show the dialog."""

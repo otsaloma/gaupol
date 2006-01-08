@@ -9,6 +9,8 @@
 		<separator/>
 		<menuitem name="insert" action="insert_subtitles"/>
 		<menuitem name="remove" action="remove_subtitles"/>
+		<separator/>
+		<menuitem name="preview" action="preview"/>
 	</popup>
 	<popup action="view_header">
 		<menuitem name="number" action="toggle_number_column"/>

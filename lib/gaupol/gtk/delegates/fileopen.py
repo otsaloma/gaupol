@@ -121,11 +121,11 @@ class FileFormatErrorDialog(ErrorDialog):
 
     def __init__(self, parent, basename):
 
-        title  = _('Failed to recognize format of file "%s"') % basename
-        detail = _('Please check that the file you are trying to open is a '
-                   'subtitle file of a format supported by Gaupol.')
+        title   = _('Failed to recognize format of file "%s"') % basename
+        message = _('Please check that the file you are trying to open is a '
+                    'subtitle file of a format supported by Gaupol.')
 
-        ErrorDialog.__init__(self, parent, title, detail)
+        ErrorDialog.__init__(self, parent, title, message)
 
 
 class OpenBigFileWarningDialog(WarningDialog):
@@ -134,12 +134,12 @@ class OpenBigFileWarningDialog(WarningDialog):
 
     def __init__(self, parent, basename, size):
 
-        title  = _('Open abnormally large file "%s"?') % basename
-        detail = _('Size of the file is %.1f MB, which is abnormally large '
-                   'for a text-based subtitle file. Please, check that you '
-                   'are not trying to open a binary file.') % size
+        title   = _('Open abnormally large file "%s"?') % basename
+        message = _('Size of the file is %.1f MB, which is abnormally large '
+                    'for a text-based subtitle file. Please, check that you '
+                    'are not trying to open a binary file.') % size
 
-        WarningDialog.__init__(self, parent, title, detail)
+        WarningDialog.__init__(self, parent, title, message)
 
         self.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_NO )
         self.add_button(gtk.STOCK_OPEN  , gtk.RESPONSE_YES)
@@ -150,12 +150,12 @@ class OpenFileErrorDialog(ErrorDialog):
 
     """Dialog to inform that IOError occured while opening file."""
 
-    def __init__(self, parent, basename, detail):
+    def __init__(self, parent, basename, message):
 
         title   = _('Failed to open file "%s"') % basename
-        detail += '.'
+        message = _('Attempt to read file returned error: %s.') % message
 
-        ErrorDialog.__init__(self, parent, title, detail)
+        ErrorDialog.__init__(self, parent, title, message)
 
 
 class OpenTranslationWarningDialog(WarningDialog):
@@ -164,11 +164,11 @@ class OpenTranslationWarningDialog(WarningDialog):
 
     def __init__(self, parent, basename):
 
-        title  = _('Save changes to translation document "%s" before opening '
-                   'a new one?') % basename
-        detail = _('If you don\'t save, changes will be permanently lost.')
+        title   = _('Save changes to translation document "%s" before opening '
+                    'a new one?') % basename
+        message = _('If you don\'t save, changes will be permanently lost.')
 
-        WarningDialog.__init__(self, parent, title, detail)
+        WarningDialog.__init__(self, parent, title, message)
 
         self.add_button(_('Open _Without Saving'), gtk.RESPONSE_NO    )
         self.add_button(gtk.STOCK_CANCEL         , gtk.RESPONSE_CANCEL)
@@ -182,12 +182,12 @@ class UnicodeDecodeErrorDialog(ErrorDialog):
 
     def __init__(self, parent, basename):
 
-        title  = _('Failed to decode file "%s" with all attempted codecs') \
-                 % basename
-        detail = _('Please try to open the file with a different character '
-                   'encoding.')
+        title   = _('Failed to decode file "%s" with all attempted codecs') \
+                  % basename
+        message = _('Please try to open the file with a different character '
+                    'encoding.')
 
-        ErrorDialog.__init__(self, parent, title, detail)
+        ErrorDialog.__init__(self, parent, title, message)
 
 
 class FileOpenDelegate(Delegate):
@@ -492,8 +492,8 @@ class FileOpenDelegate(Delegate):
             except UnicodeError:
                 continue
 
-            except IOError, (errno, detail):
-                dialog = OpenFileErrorDialog(parent, basename, detail)
+            except IOError, (no, message):
+                dialog = OpenFileErrorDialog(parent, basename, message)
                 gtklib.set_cursor_normal(self.window)
                 response = dialog.run()
                 dialog.destroy()

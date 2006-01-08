@@ -37,6 +37,7 @@ module_names = [
     'filesave',
     'format',
     'frconv',
+    'preview',
     'stat',
 ]
 

@@ -45,10 +45,9 @@ class OverwriteQuestionDialog(QuestionDialog):
 
     def __init__(self, parent, basename):
 
-        title  = _('A file named "%s" already exists') % basename
-        detail = _('Do you want to replace it with the one you are saving?')
-
-        QuestionDialog.__init__(self, parent, title, detail)
+        title   = _('A file named "%s" already exists') % basename
+        message = _('Do you want to replace it with the one you are saving?')
+        QuestionDialog.__init__(self, parent, title, message)
 
         self.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_NO )
         self.add_button(_('_Replace')   , gtk.RESPONSE_YES)
@@ -93,8 +92,11 @@ class TextFileChooserDialog(gtk.FileChooserDialog):
             except ValueError:
                 self._encodings.pop(i)
 
+        def sort_encodings(x, y):
+            return cmp(x[DISP_NAME], y[DISP_NAME])
+
         # Sort encodings by descriptive names.
-        self._encodings.sort(lambda x, y: cmp(x[DISP_NAME], y[DISP_NAME]))
+        self._encodings.sort(sort_encodings)
 
     def _add_filters(self):
         """Add the file filters."""

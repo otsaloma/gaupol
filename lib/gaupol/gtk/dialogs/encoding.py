@@ -53,6 +53,12 @@ class EncodingDialog(object):
 
         self._init_view()
 
+        # Set dialog size.
+        width, height = gtklib.get_tree_view_size(self._view)
+        width  = width  + 52 + gtklib.EXTRA
+        height = height + 84 + gtklib.EXTRA
+        gtklib.resize_dialog(self._dialog, width, height, 0.5, 0.5)
+
     def _init_view(self):
         """Initialize the list of encodings."""
 
@@ -85,12 +91,6 @@ class EncodingDialog(object):
         # Insert data.
         for entry in encodinglib.get_valid_encodings():
             store.append([entry[2], entry[1]])
-
-        # Set view size.
-        width, height = self._view.size_request()
-        width  = min(500, width  + 24)
-        height = min(400, height + 24)
-        self._view.set_size_request(width, height)
 
     def destroy(self):
         """Destroy the dialog."""
@@ -171,12 +171,6 @@ class AdvancedEncodingDialog(EncodingDialog):
         visible_encodings = config.file.visible_encodings
         for entry in encodinglib.get_valid_encodings():
             store.append([entry[2], entry[1], entry[0] in visible_encodings])
-
-        # Set view size.
-        width, height = self._view.size_request()
-        width  = min(500, width  + 24)
-        height = min(400, height + 24)
-        self._view.set_size_request(width, height)
 
     def get_visible_encodings(self):
         """Get the encodings chosen to be visible."""

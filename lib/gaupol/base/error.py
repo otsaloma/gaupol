@@ -20,21 +20,34 @@
 """Error classes."""
 
 
-class FileFormatError(Exception):
+class GaupolBaseError(Exception):
+
+    """Base class for error of gaupol.base module."""
+
+    pass
+
+
+class ExternalError(GaupolBaseError):
+
+    """External command failed."""
+
+    pass
+
+class FileFormatError(GaupolBaseError):
 
     """Unrecognized subtitle file format."""
 
     pass
 
 
-class FitError(Exception):
+class FitError(GaupolBaseError):
 
     """Data does not fit in given space."""
 
     pass
 
 
-class TimeoutError(Exception):
+class TimeoutError(GaupolBaseError):
 
     """Connection timed out."""
 

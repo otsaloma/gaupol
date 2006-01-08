@@ -23,6 +23,7 @@
 import os
 import sys
 
+import gobject
 import gtk
 
 from gaupol.gtk.application import Application
@@ -36,6 +37,12 @@ def main(args):
     args: list of files to open, should be sys.argv[1:]
     """
     sys.excepthook = debug.show
+
+    # Initialize threading in a Windows-compatible manner.
+    # http://www.async.com.br/faq/pygtk/index.py?req=show&file=faq20.006.htp
+    # http://www.async.com.br/faq/pygtk/index.py?req=show&file=faq21.003.htp
+    # http://www.mail-archive.com/pygtk@daa.com.au/msg10338.html
+    gobject.threads_init()
 
     application = Application()
     paths = []

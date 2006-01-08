@@ -31,7 +31,7 @@ import gtk
 import pango
 
 from gaupol.base.project     import Project
-from gaupol.constants        import Format, Mode
+from gaupol.constants        import Document, Format, Mode
 from gaupol.gtk.colconstants import *
 from gaupol.gtk.util         import config, gtklib
 from gaupol.gtk.view         import View
@@ -105,6 +105,14 @@ class Page(gobject.GObject):
         self.tab_menu_label.props.xalign = 0
 
         return tab_widget
+
+    def document_to_text_column(self, document):
+        """Translate document constant to text column constant."""
+
+        if document == Document.MAIN:
+            return MTXT
+        if document == Document.TRAN:
+            return TTXT
 
     def get_main_basename(self):
         """Get basename of main document."""
@@ -276,6 +284,14 @@ class Page(gobject.GObject):
         for row in rows:
             store[row] = [row + 1] + timings[row] + \
                          [main_texts[row], tran_texts[row]]
+
+    def text_column_to_document(self, col):
+        """Translate text column constant to document constant."""
+
+        if col == MTXT:
+            return Document.MAIN
+        if col == TTXT:
+            return Document.TRAN
 
     def update_tab_labels(self):
         """

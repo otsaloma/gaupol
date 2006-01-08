@@ -86,10 +86,10 @@ class SpellCheckErrorDialog(ErrorDialog):
 
     """Dialog to inform that spell-check failed."""
 
-    def __init__(self, parent, detail):
+    def __init__(self, parent, message):
 
         title  = _('Failed to start spell-check')
-        ErrorDialog.__init__(self, parent, title, detail)
+        ErrorDialog.__init__(self, parent, title, message)
 
 
 class TextEditDialog(gtk.Dialog):
@@ -121,16 +121,14 @@ class TextEditDialog(gtk.Dialog):
         scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
         scrolled_window.set_shadow_type(gtk.SHADOW_IN)
         scrolled_window.add(self._text_view)
-
-        # Set text view size
-        label = gtk.Label(unicode(text))
-        width, height = label.size_request()
-        width  = min(400, width  + 72)
-        height = min(200, height + 36)
-        self._text_view.set_size_request(width, height)
-
         main_vbox = self.get_child()
         main_vbox.add(scrolled_window)
+
+        # Set text view width to 46 ex and height to 4 lines.
+        label = gtk.Label('\n'.join(['x' * 46] * 4))
+        width, height = label.size_request()
+        self._text_view.set_size_request(width + 4, height + 7)
+
         self.show_all()
 
     def get_text(self):
@@ -230,6 +228,16 @@ class SpellCheckDialog(gobject.GObject):
         self._init_suggestion_view()
         self._connect_signals()
 
+        # Set suggestion list width to 30 ex.
+        label = gtk.Label('x' * 30)
+        width = label.size_request()[0]
+        self._suggestion_view.set_size_request(width + 4, -1)
+
+        # Set text view width to 46 ex and height to 4 lines.
+        label = gtk.Label('\n'.join(['x' * 46] * 4))
+        width, height = label.size_request()
+        self._text_view.set_size_request(width + 4, height + 7)
+
     def _init_checker(self, document):
         """Initialize spell-checker for document."""
 
@@ -242,18 +250,18 @@ class SpellCheckDialog(gobject.GObject):
         try:
             try:
                 dictionary = enchant.DictWithPWL(lang, path, broker)
-            except IOError, (errno, detail):
-                msg  = 'Failed to create user dictionary file '
-                msg += '"%s": %s.' % (path, detail)
-                logger.error(msg)
+            except IOError, (no, message):
+                message = 'Failed to create user dictionary file "%s": %s.' \
+                          % (path, message)
+                logger.error(message)
                 self._dictionary_label.set_sensitive(False)
                 self._add_button.set_sensitive(False)
                 self._add_lower_button.set_sensitive(False)
                 dictionary = enchant.Dict(lang, broker)
-        except enchant.Error, detail:
-            detail = _('Dictionary initialization for language "%s" returned '
-                     'error: %s.') % (name, detail)
-            dialog = SpellCheckErrorDialog(self._dialog, detail)
+        except enchant.Error, message:
+            message = _('Dictionary initialization for language "%s" returned '
+                        'error: %s.') % (name, message)
+            dialog = SpellCheckErrorDialog(self._dialog, message)
             dialog.run()
             dialog.destroy()
             raise Cancelled
@@ -290,15 +298,15 @@ class SpellCheckDialog(gobject.GObject):
                 replacements = replacement_file.readlines()
             finally:
                 replacement_file.close()
-        except IOError, (errno, detail):
-            msg  = 'Failed to read replacement file '
-            msg += '"%s": %s.' % (path, detail)
-            logger.error(msg)
+        except IOError, (no, message):
+            message = 'Failed to read replacement file "%s": %s.' \
+                      % (path, message)
+            logger.error(message)
             return
-        except UnicodeDecodeError, detail:
-            msg  = 'Failed to decode replacement file '
-            msg += '"%s": %s.' % (path, detail)
-            logger.error(msg)
+        except UnicodeDecodeError, message:
+            message = 'Failed to decode replacement file "%s": %s.' \
+                      % (path, message)
+            logger.error(message)
             return
 
         # Parse replacements.
@@ -326,10 +334,10 @@ class SpellCheckDialog(gobject.GObject):
         if not os.path.isdir(SPELL_CHECK_DIR):
             try:
                 os.makedirs(SPELL_CHECK_DIR)
-            except OSError, detail:
-                msg  = 'Failed to create spell-check profile directory '
-                msg += '"%s": %s.' % (SPELL_CHECK_DIR, detail)
-                logger.error(msg)
+            except OSError, message:
+                message = 'Failed to create spell-check profile directory ' \
+                          '"%s": %s.' % (SPELL_CHECK_DIR, message)
+                logger.error(message)
 
         if config.spell_check.check_main:
             self._init_lang_name(MAIN)
@@ -733,11 +741,11 @@ class SpellCheckDialog(gobject.GObject):
                         replacement_file.write('%s%s%s%s' % info)
                 finally:
                     replacement_file.close()
-            except IOError, (errno, detail):
-                msg  = 'Failed to write replacement file '
-                msg += '"%s": %s.' % (path, detail)
-                logger.error(msg)
-            except UnicodeEncodeError, detail:
-                msg  = 'Failed to encode replacement file '
-                msg += '"%s": %s.' % (path, detail)
-                logger.error(msg)
+            except IOError, (no, message):
+                message = 'Failed to write replacement file "%s": %s.' \
+                          % (path, message)
+                logger.error(message)
+            except UnicodeEncodeError, message:
+                message = 'Failed to encode replacement file "%s": %s.' \
+                          % (path, message)
+                logger.error(message)

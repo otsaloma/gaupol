@@ -1,27 +1,49 @@
-Plans for 0.3.0
-===============
-
+Legend:
   W = Work in progress
   D = Done
   P = Postponed
   ? = Questionable
 
+Plans for 0.3.0
+===============
 
-Plans after 0.2.0
+  New Features:
+    [D] Preview function
+
+  Improvements:
+    [D] Smarter dialog sizes
+
+  Bug Fixes:
+    [D] Spell-check menu- and toolbar items grayed out when shouldn't
+    [D] Unexpected exits return value 0
+    [D] Exception not raised when version check fails on IOError
+    [D] Toggling dialog lines fails if document is unsaved
+    [D] Italicization menu item not grayed out when document is unsaved
+
+
+Plans for 0.4.0
+===============
+
+  New Features:
+    [ ] Find, find and replace
+          [ ] Regular expressions
+                * Support all Python regular expression flags
+          [ ] Simple string search
+                * Match case
+                * Match entire word only
+          [ ] Target
+                * Selection / current project / all open projects
+                * Main text, translation text
+
+
+Plans after 0.4.0
 =================
 
-  * Find, find and replace
-      - Regular expressions
-          o Support all Python regular expression flags
-      - Simple string search
-          o Match case
-          o Match entire word only
-      - Target
-          o Selection / current project / all open projects
-          o Main text, translation text
-      - Bar (gtk.Box) or dialog?
-      - gtk.CellRenderer.start_editing(...) and gtk.Editable.select_region(...)
-        on match
+  * Timing manipulations
+      - Framerate conversion (input FR, output FR)
+      - Timing shift (+/- constant)
+      - Retiming (two-point thing)
+      - Fix durations (expand/reduce)
 
 
 Unscheduled
@@ -45,3 +67,16 @@ Unscheduled
 
       - SAMI
         http://msdn.microsoft.com/library/en-us/dnacc/html/atg_samiarticle.asp
+
+
+Other
+=====
+
+  * Keep an eye on gstreamer and its Python bindings, in case it could one day
+    be considered suitable for determining video framerate and previewing,
+    possibly combined with interactive retiming by mouse-clicking a video
+    player. Currently I consider coding an entire video player for the preview
+    function too much work and gstreamer (at least 0.8 and prior) has problems
+    with playing some proprietary, but common video formats.
+
+      http://gstreamer.freedesktop.org/modules/gst-python.html

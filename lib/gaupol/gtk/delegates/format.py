@@ -140,7 +140,7 @@ class ToggleDialogLinesAction(FormatAction):
     uim_paths = ['/ui/menubar/format/dialog']
 
 
-class ToggleItalicizationAction(FormatAction):
+class ToggleItalicizationAction(UIMAction):
 
     """Toggling italicization."""
 
@@ -155,6 +155,26 @@ class ToggleItalicizationAction(FormatAction):
 
     uim_paths = ['/ui/menubar/format/italic']
 
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return whether action can or cannot be done."""
+
+        if page is None:
+            return False
+
+        if not page.view.get_selected_rows():
+            return False
+
+        col = page.view.get_focus()[1]
+        if col not in (MTXT, TTXT):
+            return False
+        if col == MTXT and page.project.main_file is None:
+            return False
+        if col == TTXT and page.project.tran_file is None:
+            return False
+
+        return True
+
 
 class FormatDelegate(Delegate):
 
@@ -166,35 +186,35 @@ class FormatDelegate(Delegate):
 
         method: "title", "capitalize", "upper" or "lower"
         """
-        page = self.get_current_page()
-        rows = page.view.get_selected_rows()
-        col  = page.view.get_focus()[1]
-        doc  = col - 4
+        page     = self.get_current_page()
+        rows     = page.view.get_selected_rows()
+        col      = page.view.get_focus()[1]
+        document = page.text_column_to_document(col)
 
-        page.project.change_case(rows, doc, method)
+        page.project.change_case(rows, document, method)
         self.set_sensitivities(page)
 
     def on_toggle_dialog_lines_activated(self, *args):
         """Toggle dialog lines."""
 
-        page = self.get_current_page()
-        rows = page.view.get_selected_rows()
-        col  = page.view.get_focus()[1]
-        doc  = col - 4
+        page     = self.get_current_page()
+        rows     = page.view.get_selected_rows()
+        col      = page.view.get_focus()[1]
+        document = page.text_column_to_document(col)
 
-        page.project.toggle_dialog_lines(rows, doc)
+        page.project.toggle_dialog_lines(rows, document)
         self.set_sensitivities(page)
         self.set_character_status(page)
 
     def on_toggle_italicization_activated(self, *args):
         """Toggle italicization."""
 
-        page = self.get_current_page()
-        rows = page.view.get_selected_rows()
-        col  = page.view.get_focus()[1]
-        doc  = col - 4
+        page     = self.get_current_page()
+        rows     = page.view.get_selected_rows()
+        col      = page.view.get_focus()[1]
+        document = page.text_column_to_document(col)
 
-        page.project.toggle_italicization(rows, doc)
+        page.project.toggle_italicization(rows, document)
         self.set_sensitivities(page)
 
     def on_use_lower_case_activated(self, *args):

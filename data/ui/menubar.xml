@@ -75,6 +75,8 @@
 		<menu name="tools" action="show_tools_menu">
 			<menuitem name="check_spelling" action="check_spelling"/>
 			<menuitem name="configure_spell_check" action="configure_spell_check"/>
+			<separator/>
+			<menuitem name="preview" action="preview"/>
 		</menu>
 		<menu name="projects" action="show_projects_menu">
 			<menuitem name="save_all" action="save_all_documents"/>

@@ -48,13 +48,13 @@ try:
         raise ImportError
     enchant_available = True
 except ImportError:
-    msg  = 'PyEnchant 1.1.3 or greater not found. '
-    msg += 'Spell-checking not possible.'
-    logger.info(msg)
-except enchant.Error, detail:
-    msg  = 'PyEnchant: %s. ' % detail
-    msg += 'Spell-checking not possible.'
-    logger.error(msg)
+    message = 'PyEnchant 1.1.3 or greater not found. Spell-checking not ' \
+              'possible.'
+    logger.info(message)
+except enchant.Error, message:
+    message = 'PyEnchant returned error: %s. Spell-checking not possible.' \
+              % message
+    logger.error(message)
 
 
 class ConfigureSpellCheckAction(UIMAction):
@@ -129,7 +129,8 @@ class SpellCheckDelegate(Delegate):
     def _on_cell_selected(self, dialog, page, row, document):
         """Show cell."""
 
-        page.view.set_focus(row, document + 4)
+        col = page.document_to_text_column(document)
+        page.view.set_focus(row, col)
         page.view.scroll_to_row(row)
 
     def on_check_spelling_activated(self, *args):
@@ -161,6 +162,8 @@ class SpellCheckDelegate(Delegate):
         gtklib.set_cursor_normal(self.window)
         dialog.run()
         dialog.destroy()
+
+        page = self.get_current_page()
         self.set_sensitivities(page)
 
     def _on_destroyed(self, dialog):

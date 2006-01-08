@@ -44,7 +44,7 @@ def check_dependencies():
     # Python
     if sys.version_info[:3] < (2, 4, 0):
         logger.critical('Python 2.4 or later is required to run Gaupol.')
-        raise SystemExit
+        raise SystemExit(1)
 
     # GTK
     try:
@@ -53,14 +53,14 @@ def check_dependencies():
             raise ImportError
     except ImportError:
         logger.critical('PyGTK 2.8.0 or later is required to run Gaupol.')
-        raise SystemExit
+        raise SystemExit(1)
 
     # Glade support in GTK
     try:
         import gtk.glade
     except ImportError:
         logger.critical('Glade support in PyGTK is required to run Gaupol')
-        raise SystemExit
+        raise SystemExit(1)
 
 def check_paths():
     """
@@ -125,8 +125,11 @@ def prepare_gettext(no_translation):
     making it available everywhere without need to import anything. Gettext
     will be available with the underscore function.
     """
+    def _(string):
+        return string
+
     if no_translation:
-        __builtins__.__dict__['_'] = lambda string: string
+        __builtins__.__dict__['_'] = _
         return
 
     import gtk.glade

@@ -70,6 +70,7 @@ class MultiCloseWarningDialog(object):
 
         self._init_main_view(glade_xml)
         self._init_translation_view(glade_xml)
+        self._set_dialog_size()
 
     def _init_main_view(self, glade_xml):
         """Initialize the list of main documents."""
@@ -79,11 +80,8 @@ class MultiCloseWarningDialog(object):
         label.set_mnemonic_widget(view)
         view, store = self._init_view(view, Document.MAIN)
 
-        # Insert data.
         for page, basename in self._main_data:
             store.append([True, basename])
-
-        self._init_view_size(view)
 
         if len(store) == 0:
             glade_xml.get_widget('main_label').hide()
@@ -97,11 +95,8 @@ class MultiCloseWarningDialog(object):
         label.set_mnemonic_widget(view)
         view, store = self._init_view(view, Document.TRAN)
 
-        # Insert data.
         for page, basename in self._tran_data:
             store.append([True, basename])
-
-        self._init_view_size(view)
 
         if len(store) == 0:
             glade_xml.get_widget('translation_label').hide()
@@ -137,15 +132,6 @@ class MultiCloseWarningDialog(object):
         view.append_column(tree_view_column_1)
 
         return view, store
-
-    def _init_view_size(self, view):
-        """Set a sensible size document list."""
-
-        # 24 pixels are added to account for possible scroll bar.
-        width, height = view.size_request()
-        width  = min(150, width  + 24)
-        height = min(126, height + 24)
-        view.set_size_request(width, height)
 
     def destroy(self):
         """Destroy the dialog."""
@@ -193,3 +179,26 @@ class MultiCloseWarningDialog(object):
         self._main_view.grab_focus()
         self._dialog.show()
         return self._dialog.run()
+
+    def _set_dialog_size(self):
+        """Set smart size for dialog."""
+
+        main_width   = 0
+        main_height  = 0
+        tran_width   = 0
+        tran_height  = 0
+        height_extra = 136
+
+        # Get desired sizes for scrolled windows.
+        size = gtklib.get_tree_view_size
+        if self._main_data:
+            main_width, main_height = size(self._main_view)
+            height_extra += 32
+        if self._tran_data:
+            tran_width, tran_height = size(self._tran_view)
+            height_extra += 32
+
+        # Get desired dialog size.
+        width  = max(main_width, tran_width) + 88 + gtklib.EXTRA
+        height = main_height + tran_height + height_extra + gtklib.EXTRA
+        gtklib.resize_message_dialog(self._dialog, width, height)

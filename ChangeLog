@@ -1,3 +1,159 @@
+2006-01-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/debug-dialog.glade:
+	  Cosmetic fixes.
+
+	* data/glade/language-dialog.glade:
+	  Put the tree views in a homogenous hbox.
+	  Removed hardcoded sizes.
+
+	* data/glade/multiclose-dialog.glade:
+	  Made dialog resizable.
+
+	* data/glade/preferences-dialog.glade:
+	  Added preview tab.
+
+	* data/glade/previewerror-dialog.glade:
+	* lib/gaupol/base/delegates/preview.py:
+	* lib/gaupol/gtk/delegates/preview.py:
+	  New files with preview implementation.
+
+	* data/glade/spellcheck-dialog.glade:
+	  Removed hardcoded tree view size.
+
+	* data/ui/menubar.xml:
+	* data/ui/popups.xml:
+	* data/ui/toolbar.xml:
+	  Added preview.
+
+	* gaupol:
+	  Raise SystemExit with error code 1.
+	  Removed lambdas in favor of nested functions.
+
+	* lib/gaupol/base/delegates/__init__.py:
+	* lib/gaupol/gtk/delegates/__init__.py:
+	  Added preview module.
+
+	* lib/gaupol/base/delegates/action.py:
+	  Cosmetic fixes.
+
+	* lib/gaupol/base/delegates/fileopen.py:
+	  (FileOpenDelegate.open_translation_file): Added an assert statement.
+
+	* lib/gaupol/base/delegates/filesave.py:
+	  Cosmetic fixes.
+
+	* lib/gaupol/base/delegates/format.py:
+	  (FormatDelegate.toggle_dialog_lines): Allow re_tag to be None.
+
+	* lib/gaupol/base/delegates/frconv.py:
+	  (FramerateConverter.change_framerate): Replaced TypeError rasing with
+	  an assert statement.
+
+	* lib/gaupol/base/error.py:
+	  (GaupolBaseError): New base class for errors.
+	  (ExternalError): New class for external errors.
+
+	* lib/gaupol/base/util/wwwlib.py:
+	  Split URLDocument class to URLReadThread class and read_url function.
+	  Fixed IOError not being passed on.
+
+	* lib/gaupol/gtk/delegates/edit.py:
+	  Cosmetic fixes.
+
+	* lib/gaupol/gtk/delegates/fileclose.py:
+	  Cosmetic fixes.
+	  Raise SystemExit with error code 1.
+
+	* lib/gaupol/gtk/delegates/fileopen.py:
+	  Cosmetic fixes.
+
+	* lib/gaupol/gtk/delegates/filesave.py:
+	  Cosmetic fixes.
+
+	* lib/gaupol/gtk/delegates/format.py:
+	  Cosmetic fixes.
+	  (ToggleItalicizationAction.is_doable): Return False if file is None.
+
+	* lib/gaupol/gtk/delegates/help.py:
+	  Adapt to changes in wwwlib.
+	  Cosmetic fixes.
+
+	* lib/gaupol/gtk/delegates/menuupdate.py:
+	  (MenuUpdateDelegate._get_action_group): Added assert statement.
+
+	* lib/gaupol/gtk/delegates/spellcheck.py:
+	  Cosmetic fixes.
+	  (SpellCheckDelegate.on_configure_spell_check_activated): Fixed usage
+	  of undefined variable page.
+
+	* lib/gaupol/gtk/dialogs/debug.py:
+	  Cosmetic fixes.
+	  Use a smarter dialog size.
+	  Raise SystemExit with error code 1.
+
+	* lib/gaupol/gtk/dialogs/encoding.py:
+	  Use a smarter dialog size.
+
+	* lib/gaupol/gtk/dialogs/filechooser.py:
+	  Cosmetic fixes.
+	  Removed lambdas in favor of nested functions.
+
+	* lib/gaupol/gtk/dialogs/language.py:
+	  Use a smarter dialog size.
+	  Cosmetic fixes.
+
+	* lib/gaupol/gtk/dialogs/message.py:
+	  Cosmetic fixes.
+
+	* lib/gaupol/gtk/dialogs/multiclose.py:
+	  Use a smarter dialog size.
+
+	* lib/gaupol/gtk/dialogs/preferences.py:
+	  Added preview tab stuff.
+	  Cosmetic fixes.
+
+	* lib/gaupol/gtk/dialogs/spellcheck.py:
+	  Cosmetic fixes.
+	  Use a smarter dialog sizes.
+
+	* lib/gaupol/gtk/error.py:
+	  (GaupolGTKError): New base class for errors.
+
+	* lib/gaupol/gtk/main.py:
+	  (main): Call gobject.threads_init().
+
+	* lib/gaupol/gtk/page.py:
+	  (Page.document_to_text_column): New method.
+	  (Page.text_column_to_document): New method.
+
+	* lib/gaupol/gtk/util/config.py:
+	  Added preview options.
+	  Cosmetic fixes.
+
+	* lib/gaupol/gtk/util/gtklib.py:
+	  (EXTRA): New vague spacing constant.
+	  (get_text_view_size): New function to get text view size.
+	  (get_tree_view_size): New function to get tree view size.
+	  (idlemethod): New decorator for threaded methods that touch the GUI.
+	  (resize_dialog): New method for smart dialog resizing.
+	  (resize_message_dialog): New method for smart message dialog
+	  resizing.
+
+	* setup.py:
+	  Raise SystemExit with error code 1.
+	  Cosmetic fixes.
+
+	* test/info:
+	  Cosmetic fixes.
+
+	* test/pyenchant:
+	  Cosmetic fixes.
+
+	* trantool:
+	  Raise SystemExit with error code 1.
+	  Cosmetic fixes.
+
 2006-01-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/gtk/delegates/spellcheck.py:

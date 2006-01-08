@@ -112,6 +112,8 @@ class FileOpenDelegate(Delegate):
         Raise UnicodeError if decoding fails.
         Raise FileFormatError if unable to detect file format.
         """
+        assert self.main_file is not None
+
         # Get format
         determiner = FileFormatDeterminer(path, encoding)
         format = determiner.determine_file_format()
@@ -147,8 +149,11 @@ class FileOpenDelegate(Delegate):
 
         Return shows, hides, texts.
         """
+        def sort_lists(x, y):
+            return cmp(x[0], y[0])
+
         data = [[shows[i], hides[i], texts[i]] for i in range(len(shows))]
-        data.sort(lambda x, y: cmp(x[0], y[0]))
+        data.sort(sort_lists)
 
         shows = [entry[0] for entry in data]
         hides = [entry[1] for entry in data]

@@ -166,12 +166,12 @@ class SaveFileErrorDialog(ErrorDialog):
 
     """Dialog to inform that IOError occured while saving file."""
 
-    def __init__(self, parent, basename, detail):
+    def __init__(self, parent, basename, message):
 
         title   = _('Failed to save file "%s"') % basename
-        detail += '.'
+        message = _('Attempt to write file returned error: %s.') % message
 
-        ErrorDialog.__init__(self, parent, title, detail)
+        ErrorDialog.__init__(self, parent, title, message)
 
 
 class UnicodeEncodeErrorDialog(ErrorDialog):
@@ -180,12 +180,12 @@ class UnicodeEncodeErrorDialog(ErrorDialog):
 
     def __init__(self, parent, basename, codec):
 
-        info   = basename, codec
-        title  = _('Failed to encode file "%s" with codec "%s"') % info
-        detail = _('Please try to save the file with a different character '
+        title   = _('Failed to encode file "%s" with codec "%s"') \
+                  % (basename, codec)
+        message = _('Please try to save the file with a different character '
                    'encoding.')
 
-        ErrorDialog.__init__(self, parent, title, detail)
+        ErrorDialog.__init__(self, parent, title, message)
 
 
 class FileSaveDelegate(Delegate):
@@ -330,22 +330,22 @@ class FileSaveDelegate(Delegate):
         Return success (True or False).
         """
         gtklib.set_cursor_busy(self.window)
-        props = self._get_main_file_properties(page)
-        path, format, encoding, newlines = props
+        properties = self._get_main_file_properties(page)
+        path, format, encoding, newlines = properties
 
         # Translators: File basename for "Save As", "<basename> (copy)".
         path = _('%s (copy)') % page.get_main_corename()
-        props = path, format, encoding, newlines
+        properties = path, format, encoding, newlines
 
         # Select file.
         try:
-            props = self._select_file(_('Save A Copy'), props)
+            properties = self._select_file(_('Save A Copy'), properties)
         except Cancelled:
             gtklib.set_cursor_normal(self.window)
             return False
 
         # Save file.
-        args = page, Document.MAIN, self.window, False, props
+        args = page, Document.MAIN, self.window, False, properties
         success = self._save_file(*args)
         if not success:
             gtklib.set_cursor_normal(self.window)
@@ -364,23 +364,23 @@ class FileSaveDelegate(Delegate):
         Return success (True or False).
         """
         gtklib.set_cursor_busy(self.window)
-        props = self._get_translation_file_properties(page)
-        path, format, encoding, newlines = props
+        properties = self._get_translation_file_properties(page)
+        path, format, encoding, newlines = properties
 
         # Translators: File basename for "Save As", "<basename> (copy)".
         path = _('%s (copy)') % page.get_translation_corename()
-        props = path, format, encoding, newlines
+        properties = path, format, encoding, newlines
 
         # Select file.
         title = _('Save A Copy Of Translation')
         try:
-            props = self._select_file(title, props)
+            properties = self._select_file(title, properties)
         except Cancelled:
             gtklib.set_cursor_normal(self.window)
             return False
 
         # Save file.
-        args = page, Document.TRAN, self.window, False, props
+        args = page, Document.TRAN, self.window, False, properties
         success = self._save_file(*args)
         if not success:
             gtklib.set_cursor_normal(self.window)
@@ -408,8 +408,8 @@ class FileSaveDelegate(Delegate):
             elif document == Document.TRAN:
                 page.project.save_translation_file(keep_changes, properties)
 
-        except IOError, (errno, detail):
-            dialog = SaveFileErrorDialog(parent, basename, detail)
+        except IOError, (no, message):
+            dialog = SaveFileErrorDialog(parent, basename, message)
             dialog.run()
             dialog.destroy()
             return False
@@ -429,11 +429,11 @@ class FileSaveDelegate(Delegate):
 
         Return success (True or False).
         """
-        props = self._get_main_file_properties(page)
-        if None in props:
+        properties = self._get_main_file_properties(page)
+        if None in properties:
             return self.save_main_document_as(page)
 
-        args = page, Document.MAIN, self.window, True, props
+        args = page, Document.MAIN, self.window, True, properties
         success = self._save_file(*args)
         if not success:
             gtklib.set_cursor_normal(self.window)
@@ -450,29 +450,29 @@ class FileSaveDelegate(Delegate):
         Return success (True or False).
         """
         gtklib.set_cursor_busy(self.window)
-        props = self._get_main_file_properties(page)
-        path, format, encoding, newlines = props
+        properties = self._get_main_file_properties(page)
+        path, format, encoding, newlines = properties
         original_format = format
 
         if path is None:
             path = page.untitle
-            props = path, format, encoding, newlines
+            properties = path, format, encoding, newlines
 
         # Select file.
         try:
-            props = self._select_file(_('Save As'), props)
+            properties = self._select_file(_('Save As'), properties)
         except Cancelled:
             gtklib.set_cursor_normal(self.window)
             return False
 
         # Save file.
-        args = page, Document.MAIN, self.window, True, props
+        args = page, Document.MAIN, self.window, True, properties
         success = self._save_file(*args)
         if not success:
             gtklib.set_cursor_normal(self.window)
             return False
 
-        path, format, encoding, newlines = props
+        path, format, encoding, newlines = properties
 
         # Reload data if saved in a different format, because tags in text
         # might have changed and timings are calculated differently resulting
@@ -493,11 +493,11 @@ class FileSaveDelegate(Delegate):
 
         Return success (True or False).
         """
-        props = self._get_translation_file_properties(page)
-        if None in props:
-            return self.save_translation_document_as(page)
+        properties = self._get_translation_file_properties(page)
+        if None in properties:
+            return self.save_translation_document_as(properties)
 
-        args = page, Document.TRAN, self.window, True, props
+        args = page, Document.TRAN, self.window, True, properties
         success = self._save_file(*args)
         if not success:
             gtklib.set_cursor_normal(self.window)
@@ -514,30 +514,30 @@ class FileSaveDelegate(Delegate):
         Return success (True or False).
         """
         gtklib.set_cursor_busy(self.window)
-        props = self._get_translation_file_properties(page)
-        path, format, encoding, newlines = props
+        properties = self._get_translation_file_properties(page)
+        path, format, encoding, newlines = properties
         original_format = format
 
         if path is None:
             path = page.get_translation_corename()
-            props = path, format, encoding, newlines
+            properties = path, format, encoding, newlines
 
         # Select file.
         title = _('Save Translation As')
         try:
-            props = self._select_file(title, props)
+            properties = self._select_file(title, properties)
         except Cancelled:
             gtklib.set_cursor_normal(self.window)
             return False
 
         # Save file.
-        args = page, Document.TRAN, self.window, True, props
+        args = page, Document.TRAN, self.window, True, properties
         success = self._save_file(*args)
         if not success:
             gtklib.set_cursor_normal(self.window)
             return False
 
-        path, format, encoding, newlines = props
+        path, format, encoding, newlines = properties
 
         # Reload text column data if saved in a different format, because tags
         # might have changed.

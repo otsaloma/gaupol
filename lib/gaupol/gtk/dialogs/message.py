@@ -30,7 +30,7 @@ class ErrorDialog(gtk.MessageDialog):
 
     """Base class for error dialogs."""
 
-    def __init__(self, parent, title, detail):
+    def __init__(self, parent, title, message):
 
         gtk.MessageDialog.__init__(
             self,
@@ -41,14 +41,14 @@ class ErrorDialog(gtk.MessageDialog):
             title
         )
 
-        self.format_secondary_text(detail)
+        self.format_secondary_text(message)
 
 
 class InfoDialog(gtk.MessageDialog):
 
     """Base class for info dialogs."""
 
-    def __init__(self, parent, title, detail):
+    def __init__(self, parent, title, message):
 
         gtk.MessageDialog.__init__(
             self,
@@ -59,14 +59,14 @@ class InfoDialog(gtk.MessageDialog):
             title
         )
 
-        self.format_secondary_text(detail)
+        self.format_secondary_text(message)
 
 
 class QuestionDialog(gtk.MessageDialog):
 
     """Base class for question dialogs."""
 
-    def __init__(self, parent, title, detail):
+    def __init__(self, parent, title, message):
 
         gtk.MessageDialog.__init__(
             self,
@@ -77,14 +77,14 @@ class QuestionDialog(gtk.MessageDialog):
             title
         )
 
-        self.format_secondary_text(detail)
+        self.format_secondary_text(message)
 
 
 class WarningDialog(gtk.MessageDialog):
 
     """Base class for warning dialogs."""
 
-    def __init__(self, parent, title, detail):
+    def __init__(self, parent, title, message):
 
         gtk.MessageDialog.__init__(
             self,
@@ -95,4 +95,4 @@ class WarningDialog(gtk.MessageDialog):
             title
         )
 
-        self.format_secondary_text(detail)
+        self.format_secondary_text(message)

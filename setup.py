@@ -231,7 +231,7 @@ class SDist(sdist):
             response = raw_input('Are all files in the tarball [Y/n]? ')
             if response.lower() == 'n':
                 info('aborted')
-                raise SystemExit
+                raise SystemExit(1)
 
             break
 
@@ -292,7 +292,7 @@ class Uninstall(Command):
             print UNINSTALL_WARNING
             response = raw_input('Continue [y/N]? ')
             if response.lower() != 'y':
-                raise SystemExit
+                raise SystemExit(1)
 
         log_path = 'installed-files.log'
 
@@ -303,9 +303,9 @@ class Uninstall(Command):
                 lines = log_file.readlines()
             finally:
                 log_file.close()
-        except IOError, (errno, detail):
-            info('failed to read file "%s": %s' % (log_path, detail))
-            raise SystemExit
+        except IOError, (no, message):
+            info('failed to read file "%s": %s' % (log_path, message))
+            raise SystemExit(1)
 
         paths = [line.strip() for line in lines]
 
@@ -320,15 +320,17 @@ class Uninstall(Command):
                 if not self.dry_run:
                     try:
                         os.remove(path)
-                    except (IOError, OSError),  (errno, detail):
-                        info('failed to remove file %s: %s' % (path, detail))
+                    except (IOError, OSError),  (no, message):
+                        info('failed to remove file %s: %s' % (path, message))
             elif os.path.isdir(path):
                 info('removing directory %s' % path)
                 if not self.dry_run:
                     try:
                         os.rmdir(path)
-                    except (IOError, OSError),  (errno, detail):
-                        info('failed to remove directory %s: %s' % (path, detail))
+                    except (IOError, OSError),  (no, message):
+                        message = 'failed to remove directory %s: %s' \
+                                  % (path, message)
+                        info(message)
             else:
                 info('file %s not found' % path)
 

@@ -36,19 +36,19 @@ print '\nImporting enchant module:',
 try:
     import enchant
     print 'success'
-except ImportError, detail:
-    print detail
+except ImportError, message:
+    print message
     raise SystemError
-except enchant.Error, detail:
-    print detail
+except enchant.Error, message:
+    print message
     raise SystemError
 
 # Print version
 print 'PyEnchant version:',
 try:
     print enchant.__version__
-except enchant.Error, detail:
-    print detail
+except enchant.Error, message:
+    print message
 
 # Test all languages.
 print '\nFound dictionaries:'
@@ -56,5 +56,5 @@ for lang in langlib.locales:
     try:
         dictionary = enchant.Dict(lang)
         print '%s (%s)' % (lang, dictionary.provider.name)
-    except enchant.Error, detail:
+    except enchant.Error:
         pass

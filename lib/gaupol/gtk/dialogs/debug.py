@@ -54,13 +54,13 @@ class OpenEditorErrorDialog(ErrorDialog):
 
     def __init__(self, parent, editor):
 
-        title  = _('Failed to open editor "%s"') % editor
-        detail = _('Currently only "gvim" and "emacs" editors are supported. '
-                   'If you don\'t like this, file a bug report. To change '
-                   'the editor, edit file "%s" under section "general".') \
-                 % config.CONFIG_PATH
+        title   = _('Failed to open editor "%s"') % editor
+        message = _('Currently only "gvim" and "emacs" editors are supported. '
+                    'If you don\'t like this, file a bug report. To change '
+                    'the editor, edit file "%s" under section "general".') \
+                    % config.CONFIG_PATH
 
-        ErrorDialog.__init__(self, parent, title, detail)
+        ErrorDialog.__init__(self, parent, title, message)
 
 
 class DebugDialog(object):
@@ -277,9 +277,9 @@ class DebugDialog(object):
         # Exception
         exception = traceback.format_exception_only(exctype, value)[0]
         try:
-            exception, detail = exception.split(' ', 1)
+            exception, message = exception.split(' ', 1)
             self._insert_text(exception, 'title')
-            self._insert_text(' %s' % detail, 'text')
+            self._insert_text(' %s' % message, 'text')
         except ValueError:
             self._insert_text(exception, 'title')
         self._insert_text('\n', 'text')
@@ -303,14 +303,10 @@ class DebugDialog(object):
         label.set_text('\n'.join(self._code_lines))
         code_width = label.size_request()[0]
 
-        # Account for left margins and possible scroll bars.
-        width  = max(text_width + 12, code_width + 24) + 48
-        height = height + 48
-
-        # Set text view size.
-        width  = min(560, width )
-        height = min(400, height)
-        self._text_view.set_size_request(width, height)
+        # Set dialog size.
+        width = max(text_width, code_width) + 150
+        height += 160
+        gtklib.resize_message_dialog(self._dialog, width, height)
 
 
 def show(exctype, value, tb):
@@ -338,7 +334,7 @@ def show(exctype, value, tb):
                 try:
                     gtk.main_quit()
                 except RuntimeError:
-                    raise SystemExit
+                    raise SystemExit(1)
                 return
             else:
                 break
