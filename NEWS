@@ -1,3 +1,20 @@
+Gaupol 0.3.0
+============
+
+  New Features:
+    * Preview function
+
+  Improvements:
+    * Smarter dialog sizes
+
+  Bug Fixes:
+    * Spell-check menu- and toolbar items grayed out when shouldn't
+    * Unexpected exits return value 0
+    * Exception not raised when version check fails on IOError
+    * Toggling dialog lines fails if document is unsaved
+    * Italicization menu item not grayed out when document is unsaved
+
+
 Gaupol 0.2.0
 ============
 

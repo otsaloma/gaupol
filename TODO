@@ -4,23 +4,6 @@ Legend:
   P = Postponed
   ? = Questionable
 
-Plans for 0.3.0
-===============
-
-  New Features:
-    [D] Preview function
-
-  Improvements:
-    [D] Smarter dialog sizes
-
-  Bug Fixes:
-    [D] Spell-check menu- and toolbar items grayed out when shouldn't
-    [D] Unexpected exits return value 0
-    [D] Exception not raised when version check fails on IOError
-    [D] Toggling dialog lines fails if document is unsaved
-    [D] Italicization menu item not grayed out when document is unsaved
-
-
 Plans for 0.4.0
 ===============
 
@@ -90,11 +73,11 @@ Unscheduled
 Other
 =====
 
-  * Keep an eye on gstreamer and its Python bindings, in case it could one day
+  * Keep an eye on GStreamer and its Python bindings, in case it could one day
     be considered suitable for determining video framerate and previewing,
-    possibly combined with interactive retiming by mouse-clicking a video
+    possibly combined with interactive retiming by mouse-clicking in a video
     player. Currently I consider coding an entire video player for the preview
     function too much work and gstreamer (at least 0.8 and prior) has problems
-    with playing some proprietary, but common video formats.
+    with playing some proprietary, but common, video formats.
 
       http://gstreamer.freedesktop.org/modules/gst-python.html
