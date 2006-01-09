@@ -26,14 +26,17 @@ Plans for 0.4.0
 
   New Features:
     [ ] Framerate conversion
-          * Input framerate
-          * Output framerate
+          * Input framerate, output framerate
+              - Combo boxes
           * Target: selection/all?
     [ ] Timing shift
           * Shift amount: seconds/frames
+              * Spin buttons
           * Target: selection/all
     [ ] Retiming
           * 2 points, for which current and desired as times/frames
+              * Frame: spin button
+              * Time: need a new widget, TimeEntry based on CellRendererTime
           * Target: selection/all
     [ ] Fix durations
           * Analysis?
@@ -43,6 +46,7 @@ Plans for 0.4.0
           * Maximum duration
           * Allow reduce (yes/no)
           * Allow expand (yes/no)
+          * No frame units for this one
 
 
 Plans after 0.4.0

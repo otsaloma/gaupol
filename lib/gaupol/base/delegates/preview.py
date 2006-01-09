@@ -26,6 +26,7 @@ except ImportError:
     pass
 
 import os
+import subprocess
 
 from gaupol.base.colconstants import *
 from gaupol.base.delegates    import Delegate
@@ -111,19 +112,22 @@ class PreviewDelegate(Delegate):
             if not extension in extensions:
                 continue
 
+            # Append double-quoted filename.
             command += ' "%s"' % filepath
 
-            # Get all output on UNIX.
-            # TODO: How do we get the *error* output on non-unices?
-            try:
-                import commands
-                return_value, output = commands.getstatusoutput(command)
-            except ImportError:
-                fobj = os.popen(command)
-                output = fobj.read()
-                return_value = fobj.close()
+            # Run video-player and wait for exit.
+            popen = subprocess.Popen(
+                command,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                shell=True,
+                universal_newlines=True,
+            )
+            return_value = popen.wait()
+            output = popen.stdout.read()
+            popen.stdout.close()
 
-            if return_value in (0, None):
+            if return_value == 0:
                 return
 
             raise ExternalError(output)
