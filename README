@@ -22,6 +22,7 @@ General Information
     * Convenient translating
     * Text formatting: toggling of italics and dialog lines, case changing
     * Spell-checking
+    * Preview in video-player
     * GNOME HIG 2.0 compliant user interface
 
   Gaupol should run on all Unix-like (Linux, BSD, etc.) operating systems.

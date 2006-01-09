@@ -172,7 +172,7 @@ class general(object):
 
 class preview(object):
 
-    command    = 'mplayer -ss %s -osdlevel 2 -quiet'
+    command    = 'mplayer -ss %s -osdlevel 2'
     extensions = [
         '.asf',
         '.avi',

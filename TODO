@@ -25,6 +25,30 @@ Plans for 0.4.0
 ===============
 
   New Features:
+    [ ] Framerate conversion
+          * Input framerate
+          * Output framerate
+          * Target: selection/all?
+    [ ] Timing shift
+          * Shift amount: seconds/frames
+          * Target: selection/all
+    [ ] Retiming
+          * 2 points, for which current and desired as times/frames
+          * Target: selection/all
+    [ ] Fix durations
+          * Analysis?
+          * Duration per character
+          * Minimum time between subs
+          * Minimum duration
+          * Maximum duration
+          * Allow reduce (yes/no)
+          * Allow expand (yes/no)
+
+
+Plans after 0.4.0
+=================
+
+  New Features:
     [ ] Find, find and replace
           [ ] Regular expressions
                 * Support all Python regular expression flags
@@ -34,16 +58,6 @@ Plans for 0.4.0
           [ ] Target
                 * Selection / current project / all open projects
                 * Main text, translation text
-
-
-Plans after 0.4.0
-=================
-
-  * Timing manipulations
-      - Framerate conversion (input FR, output FR)
-      - Timing shift (+/- constant)
-      - Retiming (two-point thing)
-      - Fix durations (expand/reduce)
 
 
 Unscheduled
