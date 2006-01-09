@@ -92,11 +92,11 @@ class TextFileChooserDialog(gtk.FileChooserDialog):
             except ValueError:
                 self._encodings.pop(i)
 
-        def sort_encodings(x, y):
+        def sort(x, y):
             return cmp(x[DISP_NAME], y[DISP_NAME])
 
         # Sort encodings by descriptive names.
-        self._encodings.sort(sort_encodings)
+        self._encodings.sort(sort)
 
     def _add_filters(self):
         """Add the file filters."""

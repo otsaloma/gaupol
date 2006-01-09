@@ -1,5 +1,11 @@
 2006-01-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/delegates/fileopen.py:
+	* lib/gaupol/gtk/dialogs/filechooser.py:
+	  Renamed nested sort functions to "sort".
+
+2006-01-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/debug-dialog.glade:
 	  Cosmetic fixes.
 

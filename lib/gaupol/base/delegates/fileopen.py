@@ -149,11 +149,11 @@ class FileOpenDelegate(Delegate):
 
         Return shows, hides, texts.
         """
-        def sort_lists(x, y):
+        def sort(x, y):
             return cmp(x[0], y[0])
 
         data = [[shows[i], hides[i], texts[i]] for i in range(len(shows))]
-        data.sort(sort_lists)
+        data.sort(sort)
 
         shows = [entry[0] for entry in data]
         hides = [entry[1] for entry in data]
