@@ -133,7 +133,6 @@ def idlemethod(function):
     def threaded_method(...):
         widget.do_something()
     """
-    # NOTE:
     # This decorator is required for Windows compatible threading.
     # http://www.async.com.br/faq/pygtk/index.py?req=show&file=faq21.003.htp
     # http://www.mail-archive.com/pygtk@daa.com.au/msg10338.html

@@ -1,5 +1,11 @@
 2006-01-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/delegates/appupdate.py:
+	* lib/gaupol/gtk/util/gtklib.py:
+	  Fixed some NOTE comments.
+
+2006-01-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/delegates/preview.py:
 	  Fixed preview to use the subprocess module.
 

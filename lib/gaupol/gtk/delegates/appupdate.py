@@ -142,8 +142,8 @@ class ApplicationUpdateDelegate(Delegate):
         """
         # NOTE:
         # This method updates pretty much all sensitivities that can be
-        # updated. If this proves to be too slow, it can be threaded or
-        # complicated so that only what really needs to be updated is updated.
+        # updated. If this proves to be too slow, it can be complicated so
+        # that only what really needs to be updated is updated.
 
         page = page or self.get_current_page()
 
