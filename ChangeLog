@@ -1,3 +1,20 @@
+2006-01-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/preferences-dialog.glade:
+	  Changed preview_save_check_button wording.
+
+	* lib/gaupol/gtk/delegates/preview.py:
+	  (PreviewDelegate.on_preview_activated): Save file only if it is
+	  changed.
+
+	* lib/gaupol/gtk/dialogs/spellcheck.py:
+	  Use config.editor.font if set to use custom font.
+	  Cosmetic fixes.
+
+	* lib/gaupol/gtk/util/gtklib.py:
+	  (set_label_font): New function.
+	  (set_widget_font): New function.
+
 2006-01-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	RELEASE 0.3.0

@@ -115,6 +115,10 @@ class TextEditDialog(gtk.Dialog):
         text_buffer = self._text_view.get_buffer()
         text_buffer.set_text(unicode(text))
 
+        # Set font.
+        if not config.editor.use_default_font:
+            gtklib.set_widget_font(self._text_view, config.editor.font)
+
         # Put text view in a scrolled window.
         scrolled_window = gtk.ScrolledWindow()
         scrolled_window.set_border_width(6)
@@ -126,6 +130,8 @@ class TextEditDialog(gtk.Dialog):
 
         # Set text view width to 46 ex and height to 4 lines.
         label = gtk.Label('\n'.join(['x' * 46] * 4))
+        if not config.editor.use_default_font:
+            gtklib.set_label_font(label, config.editor.font)
         width, height = label.size_request()
         self._text_view.set_size_request(width + 4, height + 7)
 
@@ -193,6 +199,12 @@ class SpellCheckDialog(gobject.GObject):
         self._suggestion_view     = get_widget('suggestion_tree_view')
         self._text_view           = get_widget('text_view')
 
+        # Set fonts.
+        if not config.editor.use_default_font:
+            gtklib.set_widget_font(self._text_view      , config.editor.font)
+            gtklib.set_widget_font(self._entry          , config.editor.font)
+            gtklib.set_widget_font(self._suggestion_view, config.editor.font)
+
         # Pages to check
         self._pages = pages
 
@@ -227,16 +239,7 @@ class SpellCheckDialog(gobject.GObject):
         self._init_text_tags()
         self._init_suggestion_view()
         self._connect_signals()
-
-        # Set suggestion list width to 30 ex.
-        label = gtk.Label('x' * 30)
-        width = label.size_request()[0]
-        self._suggestion_view.set_size_request(width + 4, -1)
-
-        # Set text view width to 46 ex and height to 4 lines.
-        label = gtk.Label('\n'.join(['x' * 46] * 4))
-        width, height = label.size_request()
-        self._text_view.set_size_request(width + 4, height + 7)
+        self._init_sizes()
 
     def _init_checker(self, document):
         """Initialize spell-checker for document."""
@@ -326,6 +329,23 @@ class SpellCheckDialog(gobject.GObject):
         self._join_back_button.set_sensitive(False)
         self._join_forward_button.set_sensitive(False)
         self._check_button.set_sensitive(False)
+
+    def _init_sizes(self):
+        """Initialize text-containing widget sizes."""
+
+        # Set suggestion list width to 30 ex.
+        label = gtk.Label('x' * 30)
+        if not config.editor.use_default_font:
+            gtklib.set_label_font(label, config.editor.font)
+        width = label.size_request()[0]
+        self._suggestion_view.set_size_request(width + 4, -1)
+
+        # Set text view width to 46 ex and height to 4 lines.
+        label = gtk.Label('\n'.join(['x' * 46] * 4))
+        if not config.editor.use_default_font:
+            gtklib.set_label_font(label, config.editor.font)
+        width, height = label.size_request()
+        self._text_view.set_size_request(width + 4, height + 7)
 
     def _init_spell_check(self):
         """Initialize the spell check objects to use."""

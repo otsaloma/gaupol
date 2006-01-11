@@ -28,6 +28,7 @@ import sys
 import gobject
 import gtk
 import gtk.glade
+import pango
 
 from gaupol.gtk.paths import GLADE_DIR
 
@@ -195,3 +196,36 @@ def set_cursor_normal(window):
     window.window.set_cursor(normal_cursor)
     while gtk.events_pending():
         gtk.main_iteration()
+
+def set_label_font(label, font):
+    """
+    Set custom font for label.
+
+    font: font string, e.g. "Sans 9"
+    """
+    # Get the default font description and merge the custom to that.
+    context = label.get_pango_context()
+    font_description = context.get_font_description()
+    custom_font_description = pango.FontDescription(font)
+    font_description.merge(custom_font_description, True)
+
+    # Set font via attribute list.
+    attr = pango.AttrFontDesc(font_description, 0, -1)
+    attr_list = pango.AttrList()
+    attr_list.insert(attr)
+    label.set_attributes(attr_list)
+
+def set_widget_font(widget, font):
+    """
+    Set custom font for widget.
+
+    font: font string, e.g. "Sans 9"
+    """
+    # Get the default font description and merge the custom to that.
+    context = widget.get_pango_context()
+    font_description = context.get_font_description()
+    custom_font_description = pango.FontDescription(font)
+    font_description.merge(custom_font_description, True)
+
+    # Set font.
+    widget.modify_font(font_description)

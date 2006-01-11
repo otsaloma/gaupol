@@ -149,12 +149,16 @@ class PreviewDelegate(Delegate):
         col      = page.view.get_focus()[1]
         document = max(0, col - 4)
 
+        # Save changed file.
         if config.preview.save:
             if document == Document.MAIN:
-                self.save_main_document(page)
+                if page.project.main_changed:
+                    self.save_main_document(page)
+                    self.set_sensitivities(page)
             elif document == Document.TRAN:
-                self.save_translation_document(page)
-            self.set_sensitivities(page)
+                if page.project.tran_changed and page.project.tran_active:
+                    self.save_translation_document(page)
+                    self.set_sensitivities(page)
 
         args = page, row, document
         thread = threading.Thread(target=self._preview, args=args)

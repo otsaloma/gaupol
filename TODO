@@ -4,6 +4,14 @@ Legend:
   P = Postponed
   ? = Questionable
 
+Plans for 0.3.1
+===============
+
+  Improvements:
+    [D] Save file before preview only if the file is changed
+    [D] Have the spell-check dialog use the customizable editor font
+
+
 Plans for 0.4.0
 ===============
 
