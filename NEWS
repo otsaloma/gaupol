@@ -1,3 +1,11 @@
+Gaupol 0.3.1
+============
+
+  Improvements:
+    * Save file before preview only if the file is changed
+    * Have the spell-check dialog use the customizable editor font
+
+
 Gaupol 0.3.0
 ============
 

@@ -4,22 +4,10 @@ Legend:
   P = Postponed
   ? = Questionable
 
-Plans for 0.3.1
-===============
-
-  Improvements:
-    [D] Save file before preview only if the file is changed
-    [D] Have the spell-check dialog use the customizable editor font
-
-
 Plans for 0.4.0
 ===============
 
   New Features:
-    [ ] Framerate conversion
-          * Input framerate, output framerate
-              - Combo boxes
-          * Target: selection/all?
     [ ] Timing shift
           * Shift amount: seconds/frames
               * Spin buttons
@@ -38,6 +26,10 @@ Plans for 0.4.0
           * Allow reduce (yes/no)
           * Allow expand (yes/no)
           * No frame units for this one
+    [ ] Framerate conversion
+          * Input framerate, output framerate
+              - Combo boxes
+          * Target: selection/all?
 
 
 Plans after 0.4.0
