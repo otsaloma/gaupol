@@ -27,6 +27,7 @@ except ImportError:
 
 import os
 import subprocess
+import tempfile
 
 from gaupol.base.colconstants import *
 from gaupol.base.delegates    import Delegate
@@ -100,36 +101,40 @@ class PreviewDelegate(Delegate):
         filenames = os.listdir(dirname)
 
         # Find video.
+        found = False
         for filename in filenames:
-
-            # Subtitle filename must start with video filename.
             filepath = os.path.join(dirname, filename)
             fileroot, extension = os.path.splitext(filepath)
-            if not subroot.startswith(fileroot):
-                continue
+            if subroot.startswith(fileroot) and extension in extensions:
+                found = True
+                break
+        if not found:
+            raise IOError
 
-            # File must be a video file.
-            if not extension in extensions:
-                continue
+        # Append double-quoted filename.
+        command += ' "%s"' % filepath
 
-            # Append double-quoted filename.
-            command += ' "%s"' % filepath
+        # Direct output to a temporary file.
+        file_desc, output_path = tempfile.mkstemp(prefix='gaupol.')
 
-            # Run video-player and wait for exit.
-            popen = subprocess.Popen(
-                command,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT,
-                shell=True,
-                universal_newlines=True,
-            )
-            return_value = popen.wait()
-            output = popen.stdout.read()
-            popen.stdout.close()
+        # Run video player and wait for exit.
+        popen = subprocess.Popen(
+            command,
+            stdout=file_desc,
+            stderr=subprocess.STDOUT,
+            shell=True,
+            universal_newlines=True,
+        )
+        return_value = popen.wait()
 
-            if return_value == 0:
-                return
+        # Read output.
+        fobj = file(output_path, 'r')
+        output = fobj.read()
+        fobj.close()
+        try:
+            os.remove(output_path)
+        except OSError:
+            pass
 
+        if return_value != 0:
             raise ExternalError(output)
-
-        raise IOError

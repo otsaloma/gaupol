@@ -1,5 +1,11 @@
 2006-01-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/delegates/preview.py:
+	  Fixed bug #5046 (MPlayer freezes in preview) by directing video
+	  player output to a temporary file.
+
+2006-01-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	RELEASE 0.3.1
 
 	* lib/gaupol/__init__.py:
