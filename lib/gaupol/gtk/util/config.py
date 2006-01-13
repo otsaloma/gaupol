@@ -308,9 +308,6 @@ def read():
                 message = 'Failed to load setting %s.%s.' % (section, option)
                 logger.error(message)
 
-    # Set version to current version.
-    general.version = __version__
-
 def _set_config_option(parser, section, option):
     """
     Set value of config option from parser string.
@@ -401,6 +398,9 @@ def _set_parser_option(parser, section, option):
 
 def write():
     """Assemble and write settings to file."""
+
+    # Set version to current version.
+    general.version = __version__
 
     parser = ConfigParser.RawConfigParser()
 

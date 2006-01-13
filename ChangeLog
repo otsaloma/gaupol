@@ -1,3 +1,9 @@
+2006-01-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/gtk/util/config.py:
+	  Change general.version to current version just before writing instead
+	  of just after reading.
+
 2006-01-12  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	RELEASE 0.3.2

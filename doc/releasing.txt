@@ -154,23 +154,21 @@ Table of Contents
 7. Spread the word
 ==================
 
-  * Edit the news and download sections of Gaupol website.
+  * Edit the "News" and "Download" sections of Gaupol website
+
+      index.html
+      download.html
 
   * Send e-mail to Gaupol-announcements mailing list
 
       gaupol-announcements@gna.org
-      http://mail.gna.org/public/gaupol-announcements/2006-01/msg00000.html
+      http://mail.gna.org/public/gaupol-announcements/
 
-  * Post a news item at the Gaupol project page by copy-pasting the
-    gaupol-announcements mail and cutting out the "Gaupol is..." section.
+  * Post a news item at the Gaupol project page
 
-      http://gna.org/news/submit.php?group=gaupol
+      http://gna.org/news/?group=gaupol
 
   * Update third-party sites
 
-      http://www.gnomefiles.com/devs/devcorner.php
-      Cut relevant parts from the NEWS file.
-
+      http://www.gnomefiles.com/devs/index.php
       http://freshmeat.net/projects/gaupol
-      Cut parts of the NEWS file and present them in sentences, total length
-      being one paragraph.
