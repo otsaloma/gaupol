@@ -67,6 +67,9 @@ class Application(object):
         # GObject timeout tag for message statusbar.
         self.message_tag = None
 
+        # Tooltips, which are always enabled
+        self.static_tooltips = gtk.Tooltips()
+
         # Tooltips, which are enabled when a document is open
         self.tooltips = gtk.Tooltips()
 

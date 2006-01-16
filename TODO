@@ -16,10 +16,11 @@ Plans for 0.3.3
     Bug Fixes:
       [D] File marked unchanged after saving a copy of it
       [D] Overwrite dialog not always presented when saving
-      [ ] Open button on the main toolbar missing tooltip
+      [D] Open button on the main toolbar missing tooltip
 
     Other:
       [?] Never use plural names in directory and file names
+      [ ] Update web page screenshots
 
     Run PyChecker!
 

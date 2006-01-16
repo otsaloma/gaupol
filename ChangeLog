@@ -1,5 +1,13 @@
 2006-01-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/application.py:
+	  Added instance variable "static_tooltips".
+
+	* lib/gaupol/gtk/delegates/guiinit.py:
+	  Use static_tooltips for open button.
+
+2006-01-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/gtk/dialogs/filechooser.py:
 	  (SaveDialog): Fixed overwrite confirmations by hooking up to the
 	  "response" signal rather than using the built-in overwrite

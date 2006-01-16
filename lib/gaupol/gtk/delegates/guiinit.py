@@ -143,14 +143,10 @@ class GUIInitDelegate(Delegate):
         self.open_button.connect('clicked'  , self.on_open_main_file_activated)
         self.open_button.connect('show-menu', self.on_open_button_show_menu   )
 
-        # Not self.tooltips, because the open button tooltip should always
-        # be visible, whether or not a document is open.
-        tooltips = gtk.Tooltips()
-
-        tip = _('Open a file')
-        self.open_button.set_tooltip(tooltips, tip)
-        tip = _('Open a recently used file')
-        self.open_button.set_arrow_tooltip(tooltips, tip)
+        tip = _('Open main files')
+        self.open_button.set_tooltip(self.static_tooltips, tip)
+        tip = _('Open a recently used main file')
+        self.open_button.set_arrow_tooltip(self.static_tooltips, tip)
 
         toolbar = self.uim.get_widget('/ui/main_toolbar')
         toolbar.insert(self.open_button, 0)
