@@ -94,7 +94,7 @@ class SpellCheckAction(UIMAction):
 
     uim_paths = [
         '/ui/menubar/tools/check_spelling',
-        '/ui/toolbar/check_spelling'
+        '/ui/main_toolbar/check_spelling'
     ]
 
     @classmethod

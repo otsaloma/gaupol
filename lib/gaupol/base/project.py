@@ -78,6 +78,10 @@ class Project(Model):
         # Clipboard for Gaupol internal use.
         self.clipboard = Clipboard()
 
+        # Video file path and video player output.
+        self.video_path = None
+        self.output     = None
+
         self._delegations = {}
         self._assign_delegations()
 

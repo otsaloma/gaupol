@@ -309,10 +309,15 @@ class FileCloseDelegate(Delegate):
         except Cancelled:
             return
 
-        # Save window geometry.
+        # Save application window geometry.
         if not config.application_window.maximized:
             config.application_window.size     = self.window.get_size()
             config.application_window.position = self.window.get_position()
+
+        # Save output window geometry.
+        if not config.output_window.maximized:
+            config.output_window.size     = self.output_window.get_size()
+            config.output_window.position = self.output_window.get_position()
 
         config.write()
 

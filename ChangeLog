@@ -1,3 +1,106 @@
+2006-01-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/output-window.glade:
+	  New file.
+
+	* data/glade/preferences-dialog.glade:
+	  Removed "Save changed file before preview" check button.
+	  Changed preview command format.
+
+	* data/ui/menubar.xml:
+	  Added "select_video_file", "toggle_output_window" and
+	  "toggle_video_toolbar". Renamed toolbar to main_toolbar.
+
+	* data/ui/toolbar.xml:
+	  Renamed toolbar to main_toolbar.
+
+	* lib/gaupol/base/delegates/filesave.py:
+	  (FileSaveDelegate.save_main_file,
+	  FileSaveDelegate.save_translation_file): Set changed values to zero
+	  only if keep_changes is True.
+
+	* lib/gaupol/base/delegates/preview.py:
+	  Rewritten to save to temporary file before preview.
+
+	* lib/gaupol/base/project.py:
+	  New instance variables "video_path" and "output".
+
+	* lib/gaupol/gtk/application.py:
+	  New instance variables "video_file_button", "video_file_dialog" and
+	  "output_window".
+
+	* lib/gaupol/gtk/delegates/appupdate.py:
+	  (ApplicationUpdateDelegate.on_video_filechooser_response): New
+	  method.
+	  (ApplicationUpdateDelegate._set_widget_states): Set video filechooser
+	  button's state.
+
+	* lib/gaupol/gtk/delegates/edit.py:
+	  (EditDelegate._set_sensitivities): Adapt to new toolbar names and
+	  counts.
+
+	* lib/gaupol/gtk/delegates/fileclose.py:
+	  (FileCloseDelegate.on_quit_activated): Save output window geometry.
+
+	* lib/gaupol/gtk/delegates/fileopen.py:
+	  (SelectVideoAction): New class.
+	  (FileOpenDelegate.on_notebook_drag_data_received): Renamed from
+	  "on_files_dropped".
+	  (FileOpenDelegate.on_select_video_file_activated): New method.
+	  (FileOpenDelegate.on_video_file_button_drag_data_received): New
+	  method.
+	  (FileOpenDelegate.open_main_files): Call
+	  page.project.guess_video_file_path.
+
+	* lib/gaupol/gtk/delegates/filesave.py:
+	  Renamed toolbars to main_toolbars.
+	  (FileSaveDelegate.save_main_document_as): Call
+	  page.project.guess_video_file_path with new main file name if
+	  video_path is None.
+
+	* lib/gaupol/gtk/delegates/guiinit.py:
+	  Renamed toolbars to main_toolbars. Added initialization of the video
+	  toolbar.
+
+	* lib/gaupol/gtk/delegates/preview.py:
+	  Rewritten to match changes in base. Catch IOError and UnicodeError.
+	  Send output to output window.
+
+	* lib/gaupol/gtk/delegates/spellcheck.py:
+	  Renamed toolbars to main_toolbars.
+
+	* lib/gaupol/gtk/delegates/view.py:
+	  (ToggleMainToolbarAction): Renamed from ToggleToolbarAction.
+	  (ToggleOutputWindowAction): New class.
+	  (ToggleVideoToolbarAction): New class.
+	  (ViewDelegate.on_output_window_close_button_clicked): New method.
+	  (ViewDelegate.on_toggle_main_toolbar_activated): Renamed from
+	  on_toggle_toolbar_activated.
+	  (ViewDelegate.on_toggle_output_window_activated): New method.
+	  (ViewDelegate.on_toggle_video_toolbar_activated): New method.
+
+	* lib/gaupol/gtk/dialogs/debug.py:
+	  Cosmetic changes.
+
+	* lib/gaupol/gtk/dialogs/filechooser.py:
+	  (SaveFileDialog.set_filename_or_current_name): Emit "changed" signal
+	  on the format combo box to have the full filename in the entry.
+
+	* lib/gaupol/gtk/dialogs/preferences.py:
+	  Removed stuff relating to the removed "Save changed file before
+	  preview" check button.
+
+	* lib/gaupol/gtk/output.py:
+	  New file.
+
+	* lib/gaupol/gtk/util/config.py:
+	  Renamed toolbars to main_toolbars.
+	  (output_window): New class.
+	  (preview.command): Changed for new syntax.
+	  (preview.save): Removed.
+	  (_fix_changed_options): New function.
+	  (read): Call _fix_changed_options.
+
 2006-01-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/gtk/util/config.py:

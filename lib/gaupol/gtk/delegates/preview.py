@@ -25,6 +25,7 @@ try:
 except ImportError:
     pass
 
+import tempfile
 import threading
 
 import gobject
@@ -54,7 +55,7 @@ class PreviewAction(UIMAction):
 
     uim_paths = [
         '/ui/menubar/tools/preview',
-        '/ui/toolbar/preview',
+        '/ui/main_toolbar/preview',
         '/ui/view/preview'
     ]
 
@@ -65,6 +66,8 @@ class PreviewAction(UIMAction):
         if page is None:
             return False
 
+        if page.project.video_path is None:
+            return False
         if not page.view.get_selected_rows():
             return False
 
@@ -123,17 +126,37 @@ class CommandErrorDialog(object):
         return self._dialog.run()
 
 
-class NoVideoErrorDialog(ErrorDialog):
+class IOErrorDialog(ErrorDialog):
 
-    """Dialog to inform that preview failed to find video file."""
+    """Dialog to inform that IOError occured while saving file."""
+
+    def __init__(self, parent, message):
+
+        title   = _('Failed to save subtitle file to temporary directory '
+                    '"%s"') % tempfile.gettempdir()
+        message = _('Because the subtitle document you\'re trying to preview '
+                    'is changed, it needs to be saved to a temporary file '
+                    'before previewing. Attempt to write that temporary file '
+                    'returned error: %s.') % message
+
+        ErrorDialog.__init__(self, parent, title, message)
+
+
+class UnicodeErrorDialog(ErrorDialog):
+
+    """Dialog to inform that UnicodeError occured while saving file."""
 
     def __init__(self, parent):
 
-        title   = _('Video file not found')
-        message = _('A video file must exist in the same directory as the '
-                    'subtitle file and the subtitle file\'s filename without '
-                    'extension must start with or match the video file\'s '
-                    'filename without extension.')
+        title   = _('Failed to encode subtitle file to temporary directory '
+                    '"%s"') % tempfile.gettempdir()
+        message = _('Because the subtitle document you\'re trying to preview '
+                    'is changed, it needs to be saved to a temporary file '
+                    'before previewing. The temporary file is saved in the '
+                    'same character encoding as the actual subtitle file. '
+                    'Please save the actual subtitle file with a different '
+                    'character encoding.')
+
         ErrorDialog.__init__(self, parent, title, message)
 
 
@@ -149,17 +172,6 @@ class PreviewDelegate(Delegate):
         col      = page.view.get_focus()[1]
         document = max(0, col - 4)
 
-        # Save changed file.
-        if config.preview.save:
-            if document == Document.MAIN:
-                if page.project.main_changed:
-                    self.save_main_document(page)
-                    self.set_sensitivities(page)
-            elif document == Document.TRAN:
-                if page.project.tran_changed and page.project.tran_active:
-                    self.save_translation_document(page)
-                    self.set_sensitivities(page)
-
         args = page, row, document
         thread = threading.Thread(target=self._preview, args=args)
         thread.start()
@@ -167,29 +179,46 @@ class PreviewDelegate(Delegate):
     def _preview(self, page, row, document):
         """Preview subtitles with video player."""
 
-        command    = config.preview.command
-        offset     = config.preview.offset
-        extensions = config.preview.extensions
+        command = config.preview.command
+        offset  = config.preview.offset
 
         try:
-            page.project.preview(row, document, command, offset, extensions)
-        except ExternalError, instance:
-            self._show_command_error_dialog(instance.args[0])
-        except IOError:
-            self._show_no_video_error_dialog()
+            page.project.preview(row, document, command, offset)
+        except ExternalError:
+            self._show_command_error_dialog(page)
+        except IOError, (no, message):
+            self._show_io_error_dialog(message)
+        except UnicodeError:
+            self._show_unicode_error_dialog()
+
+        self._show_output(page)
 
     @gtklib.idlemethod
-    def _show_command_error_dialog(self, output):
+    def _show_command_error_dialog(self, page):
         """Show CommandErrorDialog."""
 
-        dialog = CommandErrorDialog(self.window, output)
+        dialog = CommandErrorDialog(self.window, page.project.output)
         dialog.run()
         dialog.destroy()
 
     @gtklib.idlemethod
-    def _show_no_video_error_dialog(self):
-        """Show NoVideoErrorDialog."""
+    def _show_io_error_dialog(self, message):
+        """Show IOErrorDialog."""
 
-        dialog = NoVideoErrorDialog(self.window)
+        dialog = IOErrorDialog(self.window, message)
+        dialog.run()
+        dialog.destroy()
+
+    @gtklib.idlemethod
+    def _show_output(self, page):
+        """Show output in output window."""
+
+        self.output_window.set_output(page.project.output)
+
+    @gtklib.idlemethod
+    def _show_unicode_error_dialog(self):
+        """Show UnicodeErrorDialog."""
+
+        dialog = UnicodeErrorDialog(self.window)
         dialog.run()
         dialog.destroy()

@@ -92,7 +92,7 @@ Table of Contents
 
   To start gaupol without a translation, run command
 
-   LANG=C ./gaupol --no-translation
+    LANG=C ./gaupol --no-translation
 
 
 6. Submitting your translation

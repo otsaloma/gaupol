@@ -79,7 +79,7 @@ class SaveMainDocumentAction(SaveAction):
         'on_save_main_document_activated'
     )
 
-    uim_paths = ['/ui/menubar/file/save', '/ui/toolbar/save']
+    uim_paths = ['/ui/menubar/file/save', '/ui/main_toolbar/save']
 
 
 class SaveMainDocumentAsAction(SaveAction):
@@ -480,6 +480,12 @@ class FileSaveDelegate(Delegate):
         if original_format is not None:
             if format != original_format:
                 page.reload_all()
+
+        # Try to find a video with the new filename.
+        if page.project.video_path is None:
+            extensions = config.preview.extensions
+            video_path = page.project.guess_video_file_path(extensions)
+
 
         self.add_to_recent_files(path)
         message = _('Saved main document as "%s"') % path

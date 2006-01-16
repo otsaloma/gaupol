@@ -93,7 +93,6 @@ class PreferencesDialog(gobject.GObject):
         self._font_custom_label       = get('font_custom_label')
         self._font_button             = get('font_button')
         self._preview_offset_spin     = get('preview_offset_spin_button')
-        self._preview_save_check      = get('preview_save_check_button')
         self._preview_command_entry   = get('preview_command_entry')
         self._close_button            = get('close_button')
 
@@ -176,10 +175,6 @@ class PreferencesDialog(gobject.GObject):
         # Offset spin button
         method = self._on_preview_offset_spin_value_changed
         self._preview_offset_spin.connect('value-changed', method)
-
-        # Save check box
-        method = self._on_preview_save_check_toggled
-        self._preview_save_check.connect('toggled', method)
 
         # Command entry
         method = self._on_preview_command_entry_changed
@@ -322,11 +317,6 @@ class PreferencesDialog(gobject.GObject):
         value = '%.1f' % spin_button.get_value()
         config.preview.offset = value
 
-    def _on_preview_save_check_toggled(self, check_button):
-        """Set saving before preview."""
-
-        config.preview.save = check_button.get_active()
-
     def _on_undo_levels_spin_value_changed(self, spin_button):
         """Set the amount of undo levels and send signal."""
 
@@ -401,7 +391,6 @@ class PreferencesDialog(gobject.GObject):
 
         # Preview
         self._preview_offset_spin.set_value(float(config.preview.offset))
-        self._preview_save_check.set_active(config.preview.save)
         self._preview_command_entry.set_text(config.preview.command)
 
     def _set_mnemonics(self, glade_xml):

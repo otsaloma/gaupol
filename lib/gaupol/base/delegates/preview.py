@@ -32,6 +32,7 @@ import tempfile
 from gaupol.base.colconstants import *
 from gaupol.base.delegates    import Delegate
 from gaupol.base.error        import ExternalError
+from gaupol.constants         import Document, Format
 
 
 default_extensions = (
@@ -60,25 +61,91 @@ class PreviewDelegate(Delegate):
 
     """Previewing subtitles with video player."""
 
-    def preview(self, row, document, command, offset,
-                extensions=default_extensions):
+    def _get_subtitle_path(self, document):
+        """
+        Save subtitle data to a temporary file if needed.
+
+        Raise IOError if writing to temporary file fails.
+        Raise UnicodeError if encoding temporary file fails.
+        Return subtitle file path, is temporary file.
+        """
+        is_temp = False
+        if document == Document.MAIN:
+            sub_file = self.main_file
+            if self.main_changed:
+                extension = Format.extensions[sub_file.format]
+                sub_path = tempfile.mkstemp(extension, 'gaupol.')[1]
+                is_temp = True
+            else:
+                sub_path = self.main_file.path
+        elif document == Document.TRAN:
+            sub_file = self.tran_file
+            if self.tran_active and self.tran_changed:
+                extension = Format.extensions[sub_file.format]
+                sub_path = tempfile.mkstemp(extension, 'gaupol.')[1]
+                is_temp = True
+            else:
+                sub_path = self.tran_file.path
+
+        properties = (
+            sub_path,
+            sub_file.format,
+            sub_file.encoding,
+            sub_file.newlines
+        )
+        if document == Document.MAIN:
+            self.save_main_file(False, properties)
+        elif document == Document.TRAN:
+            self.save_translation_file(False, properties)
+
+        return sub_path, is_temp
+
+    def guess_video_file_path(self, extensions=default_extensions):
+        """
+        Guess video file path based on main file path.
+
+        Video file is searched for in the same directory as the subtitle file.
+        Subtitle file's filename without extension is assumed to start with or
+        match video file's filename without extension.
+
+        Return video file path or None.
+        """
+        assert self.main_file is not None
+
+        # Get paths.
+        subroot   = os.path.splitext(self.main_file.path)[0]
+        dirname   = os.path.dirname(self.main_file.path)
+        filenames = os.listdir(dirname)
+
+        # Find video.
+        for filename in filenames:
+            filepath = os.path.join(dirname, filename)
+            fileroot, extension = os.path.splitext(filepath)
+            if subroot.startswith(fileroot) and extension in extensions:
+                self.video_path = filepath
+                return filepath
+
+        return None
+
+    def preview(self, row, document, command, offset):
         """
         Preview subtitles with video player.
 
-        command: string, where %t = time, %f = frame and %s = seconds
+        command: string, where %s = subtitle filepath, %v = video filepath,
+        %t = time, %c = seconds and %f = frame
         offset: float-convertable, seconds before row's show time to start
-        extensions: list of acceptable video file extensions
 
-        Video file must exist in the same directory as the subtitle file.
-        Subtitle file's filename without extension must start with or match
-        video file's filename without extension. Full video filepath is
-        appended to command inside double-quotes.
+        This method first dumps the current subtitle data to a temporary file
+        if the subtitle file is changed and then launches an external video
+        player to view the video file with the subtitle file.
 
-        Raise IOError if a video file is not found.
-        Raise ExternalError with output as argument if command fails.
+        Raise IOError if writing to temporary file fails.
+        Raise UnicodeError if encoding temporary file fails.
+        Raise ExternalError if command fails.
         """
-        subfile = (self.main_file, self.tran_file)[document]
-        assert subfile is not None
+        sub_file = (self.main_file, self.tran_file)[document]
+        assert sub_file is not None
+        assert self.video_path is not None
 
         # Get offsetted time.
         time    = self.times[row][SHOW]
@@ -90,37 +157,21 @@ class PreviewDelegate(Delegate):
         frame   = str(self.calc.seconds_to_frame(seconds))
         seconds = str(seconds)
 
-        # Replace times in command.
-        command = command.replace('%t', time   )
-        command = command.replace('%f', frame  )
-        command = command.replace('%s', seconds)
+        # Get files.
+        sub_path, is_temp = self._get_subtitle_path(document)
+        output_file_desc, output_path = tempfile.mkstemp('.output', 'gaupol.')
 
-        # Get paths.
-        subroot   = os.path.splitext(subfile.path)[0]
-        dirname   = os.path.dirname(subfile.path)
-        filenames = os.listdir(dirname)
-
-        # Find video.
-        found = False
-        for filename in filenames:
-            filepath = os.path.join(dirname, filename)
-            fileroot, extension = os.path.splitext(filepath)
-            if subroot.startswith(fileroot) and extension in extensions:
-                found = True
-                break
-        if not found:
-            raise IOError
-
-        # Append double-quoted filename.
-        command += ' "%s"' % filepath
-
-        # Direct output to a temporary file.
-        file_desc, output_path = tempfile.mkstemp(prefix='gaupol.')
+        # Parse command.
+        command = command.replace('%s', sub_path       )
+        command = command.replace('%v', self.video_path)
+        command = command.replace('%t', time           )
+        command = command.replace('%c', seconds        )
+        command = command.replace('%f', frame          )
 
         # Run video player and wait for exit.
         popen = subprocess.Popen(
             command,
-            stdout=file_desc,
+            stdout=output_file_desc,
             stderr=subprocess.STDOUT,
             shell=True,
             universal_newlines=True,
@@ -129,12 +180,19 @@ class PreviewDelegate(Delegate):
 
         # Read output.
         fobj = file(output_path, 'r')
-        output = fobj.read()
+        self.output = fobj.read()
         fobj.close()
+
+        # Remove temporary files.
         try:
             os.remove(output_path)
         except OSError:
             pass
+        if is_temp:
+            try:
+                os.remove(sub_path)
+            except OSError:
+                pass
 
         if return_value != 0:
-            raise ExternalError(output)
+            raise ExternalError

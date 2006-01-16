@@ -35,6 +35,7 @@ from gaupol.constants     import Framerate, Mode
 from gaupol.gtk.delegates import Delegate, UIMActions
 from gaupol.gtk.paths     import UI_DIR, ICON_DIR
 from gaupol.gtk.util      import config, gtklib
+from gaupol.gtk.output    import OutputWindow
 
 
 logger = logging.getLogger()
@@ -50,35 +51,6 @@ class GUIInitDelegate(Delegate):
 
     """Initialization of the main window and all its widgets."""
 
-    def _init_framerate_combo_box(self):
-        """Initialize the framerate combo box in the toolbar."""
-
-        self.framerate_combo_box = gtk.combo_box_new_text()
-
-        # Add entries.
-        for i in range(len(Framerate.display_names)):
-            self.framerate_combo_box.insert_text(i, Framerate.display_names[i])
-
-        # Set active framerate.
-        self.framerate_combo_box.set_active(config.editor.framerate)
-
-        # Put the framerate combo box in an event box and enable tooltip.
-        event_box = gtk.EventBox()
-        event_box.add(self.framerate_combo_box)
-        self.tooltips.set_tip(event_box, _('Framerate'))
-
-        # Create a tool item for the framerate combo box.
-        tool_item = gtk.ToolItem()
-        tool_item.set_border_width(4)
-        tool_item.add(event_box)
-
-        # Add tool item to toolbar.
-        toolbar = self.uim.get_widget('/ui/toolbar')
-        toolbar.insert(gtk.SeparatorToolItem(), 5)
-        toolbar.insert(tool_item, 6)
-
-        self.framerate_combo_box.connect('changed', self.on_framerate_changed)
-
     def init_gui(self):
         """Initialize the main window and all its widgets."""
 
@@ -88,32 +60,42 @@ class GUIInitDelegate(Delegate):
         self.window.add(vbox)
 
         # Initialize widgets.
-        toolbar = self._init_menubar_and_toolbar(vbox)
+        main_toolbar = self._init_menubar_and_main_toolbar(vbox)
         self._init_notebook(vbox)
+        video_toolbar = self._init_video_toolbar(vbox)
         statusbar_hbox = self._init_statusbar(vbox)
 
         # Show or hide widgets.
         vbox.show_all()
-        if not config.application_window.show_toolbar:
-            toolbar.hide()
+        if not config.application_window.show_main_toolbar:
+            main_toolbar.hide()
+        if not config.application_window.show_video_toolbar:
+            video_toolbar.hide()
         if not config.application_window.show_statusbar:
             statusbar_hbox.hide()
+
+        # Initialize the output window.
+        self.output_window = OutputWindow()
+        if config.output_window.show:
+            self.output_window.show()
+        method = self.on_output_window_close_button_clicked
+        self.output_window.connect('close-button-clicked', method)
 
         self.set_menu_notify_events('main')
         self.set_sensitivities()
         self.notebook.grab_focus()
         self.window.show()
 
-    def _init_menubar_and_toolbar(self, vbox):
+    def _init_menubar_and_main_toolbar(self, vbox):
         """
-        Initialize the menubar and the toolbar.
+        Initialize the menubar and the main_toolbar.
 
         Return toolbar.
         """
         self._init_ui_manager()
 
         menubar = self.uim.get_widget('/ui/menubar')
-        toolbar = self.uim.get_widget('/ui/toolbar')
+        toolbar = self.uim.get_widget('/ui/main_toolbar')
 
         toolbar.set_show_arrow(True)
 
@@ -124,7 +106,6 @@ class GUIInitDelegate(Delegate):
         # Initialize special toolbar buttons.
         self._init_open_button()
         self._init_undo_and_redo_buttons()
-        self._init_framerate_combo_box()
 
         return toolbar
 
@@ -148,7 +129,8 @@ class GUIInitDelegate(Delegate):
             gtk.gdk.ACTION_DEFAULT|gtk.gdk.ACTION_COPY|gtk.gdk.ACTION_MOVE| \
             gtk.gdk.ACTION_LINK|gtk.gdk.ACTION_PRIVATE|gtk.gdk.ACTION_ASK
         )
-        self.notebook.connect('drag-data-received', self.on_files_dropped)
+        method = self.on_notebook_drag_data_received
+        self.notebook.connect('drag-data-received', method)
 
     def _init_open_button(self):
         """Initialize the open button in the toolbar."""
@@ -170,7 +152,7 @@ class GUIInitDelegate(Delegate):
         tip = _('Open a recently used file')
         self.open_button.set_arrow_tooltip(tooltips, tip)
 
-        toolbar = self.uim.get_widget('/ui/toolbar')
+        toolbar = self.uim.get_widget('/ui/main_toolbar')
         toolbar.insert(self.open_button, 0)
 
     def _init_statusbar(self, vbox):
@@ -331,10 +313,91 @@ class GUIInitDelegate(Delegate):
         self.redo_button.set_arrow_tooltip(self.tooltips, tip)
 
         # Pack buttons.
-        toolbar = self.uim.get_widget('/ui/toolbar')
+        toolbar = self.uim.get_widget('/ui/main_toolbar')
         toolbar.insert(gtk.SeparatorToolItem(), 2)
         toolbar.insert(self.undo_button, 3)
         toolbar.insert(self.redo_button, 4)
+
+    def _init_video_toolbar(self, vbox):
+        """
+        Initialize the video toolbar.
+
+        Return toolbar.
+        """
+        toolbar = gtk.Toolbar()
+        toolbar.set_show_arrow(True)
+        vbox.pack_start(toolbar, False, False, 0)
+
+        # Add video file label to toolbar.
+        label = gtk.Label(_('Video file:'))
+        tool_item = gtk.ToolItem()
+        tool_item.set_border_width(4)
+        tool_item.add(label)
+        toolbar.insert(tool_item, -1)
+
+        # Create video filechooser button.
+        self.video_file_dialog = gtk.FileChooserDialog(
+            _('Select Video'),
+            self.window,
+            gtk.FILE_CHOOSER_ACTION_OPEN,
+            (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+             gtk.STOCK_OK    , gtk.RESPONSE_ACCEPT),
+        )
+        self.video_file_button = gtk.FileChooserButton(self.video_file_dialog)
+        method = self.on_video_filechooser_response
+        self.video_file_dialog.connect('response', method)
+
+        file_filter = gtk.FileFilter()
+        file_filter.add_pattern('*')
+        file_filter.set_name(_('All files'))
+        self.video_file_button.add_filter(file_filter)
+        self.video_file_button.set_filter(file_filter)
+
+        file_filter = gtk.FileFilter()
+        file_filter.add_mime_type('video/*')
+        file_filter.set_name(_('Video'))
+        self.video_file_button.add_filter(file_filter)
+
+        # Set drag-and-drop for video file setting.
+        self.video_file_button.drag_dest_set(
+            gtk.DEST_DEFAULT_ALL,
+            [('text/uri-list', 0, 0)],
+            gtk.gdk.ACTION_DEFAULT|gtk.gdk.ACTION_COPY|gtk.gdk.ACTION_MOVE| \
+            gtk.gdk.ACTION_LINK|gtk.gdk.ACTION_PRIVATE|gtk.gdk.ACTION_ASK
+        )
+        method = self.on_video_file_button_drag_data_received
+        self.video_file_button.connect('drag-data-received', method)
+
+        # Add video filechooser button to toolbar.
+        event_box = gtk.EventBox()
+        event_box.add(self.video_file_button)
+        tool_item = gtk.ToolItem()
+        tool_item.set_border_width(4)
+        tool_item.set_expand(True)
+        tool_item.add(event_box)
+        toolbar.insert(tool_item, -1)
+
+        # Add video file label to toolbar.
+        label = gtk.Label(_('Framerate:'))
+        tool_item = gtk.ToolItem()
+        tool_item.set_border_width(4)
+        tool_item.add(label)
+        toolbar.insert(tool_item, -1)
+
+        # Create framerate combo box..
+        self.framerate_combo_box = gtk.combo_box_new_text()
+        for i in range(len(Framerate.display_names)):
+            self.framerate_combo_box.insert_text(i, Framerate.display_names[i])
+        self.framerate_combo_box.set_active(config.editor.framerate)
+        self.framerate_combo_box.connect('changed', self.on_framerate_changed)
+
+        # Add framerate combo box to toolbar.
+        tool_item = gtk.ToolItem()
+        tool_item.set_border_width(4)
+        tool_item.add(self.framerate_combo_box)
+        toolbar.insert(tool_item, -1)
+
+        return toolbar
 
     def _init_window(self):
         """Initialize the main window."""
@@ -351,5 +414,5 @@ class GUIInitDelegate(Delegate):
         except gobject.GError:
             logger.error('Failed to load icon file "%s".' % GAUPOL_ICON_PATH)
 
-        self.window.connect('delete_event'      , self.on_window_delete_event)
-        self.window.connect('window_state_event', self.on_window_state_event )
+        self.window.connect('delete-event'      , self.on_window_delete_event)
+        self.window.connect('window-state-event', self.on_window_state_event )

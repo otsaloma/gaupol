@@ -542,5 +542,9 @@ class EditDelegate(Delegate):
         for action_group in action_groups:
             action_group.set_sensitive(sensitive)
 
-        self.uim.get_widget('/ui/toolbar').set_sensitive(sensitive)
         self.uim.get_widget('/ui/menubar').set_sensitive(sensitive)
+        self.uim.get_widget('/ui/main_toolbar').set_sensitive(sensitive)
+
+        get_toolbar = gtklib.get_parent_widget
+        video_toolbar = get_toolbar(self.video_file_button, gtk.Toolbar)
+        video_toolbar.set_sensitive(sensitive)

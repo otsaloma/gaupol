@@ -47,13 +47,16 @@ class Application(object):
 
         # Widgets
         self.framerate_combo_box = None
+        self.main_text_statusbar = None
         self.message_statusbar   = None
         self.notebook            = None
         self.open_button         = None
         self.redo_button         = None
-        self.main_text_statusbar = None
         self.tran_text_statusbar = None
         self.undo_button         = None
+        self.video_file_button   = None
+        self.video_file_dialog   = None
+        self.output_window       = None
         self.window              = None
 
         # UI manager and merge IDs

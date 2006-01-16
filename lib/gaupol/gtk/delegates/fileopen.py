@@ -115,6 +115,29 @@ class OpenTranslationFileAction(UIMAction):
             return True
 
 
+class SelectVideoAction(UIMAction):
+
+    """Selecting a video file."""
+
+    uim_action_item = (
+        'select_video_file',
+        None,
+        _('Se_lect Video...'),
+        None,
+        _('Select a video file'),
+        'on_select_video_file_activated'
+    )
+
+    uim_paths = ['/ui/menubar/file/select_video']
+    widgets   = ['video_file_button']
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return whether action can or cannot be done."""
+
+        return not page is None
+
+
 class FileFormatErrorDialog(ErrorDialog):
 
     """Dialog to inform that filetype is not supported."""
@@ -329,22 +352,6 @@ class FileOpenDelegate(Delegate):
         encodings = listlib.remove_duplicates(encodings)
         return encodings
 
-    def on_files_dropped(self, notebook, context, x, y, selection_data, info,
-                         time):
-        """Open drag-dropped files."""
-
-        uris  = selection_data.get_uris()
-        paths = []
-
-        # Get paths from uris.
-        for uri in uris:
-            unquoted_uri = urllib.unquote(uri)
-            path = urlparse.urlsplit(unquoted_uri)[2]
-            if os.path.isfile(path):
-                paths.append(path)
-
-        self.open_main_files(paths)
-
     def on_new_project_activated(self, *args):
         """Start a new project."""
 
@@ -361,6 +368,22 @@ class FileOpenDelegate(Delegate):
         self._add_new_project(page)
         gtklib.set_cursor_normal(self.window)
         self.set_status_message(_('Created a new project'))
+
+    def on_notebook_drag_data_received(self, notebook, context, x, y,
+                                       selection_data, info, time):
+        """Open drag-dropped files."""
+
+        uris  = selection_data.get_uris()
+        paths = []
+
+        # Get paths from uris.
+        for uri in uris:
+            unquoted_uri = urllib.unquote(uri)
+            path = urlparse.urlsplit(unquoted_uri)[2]
+            if os.path.isfile(path):
+                paths.append(path)
+
+        self.open_main_files(paths)
 
     def on_open_main_file_activated(self, *args):
         """Open a main file."""
@@ -431,6 +454,24 @@ class FileOpenDelegate(Delegate):
 
         gtklib.set_cursor_normal(self.window)
 
+    def on_select_video_file_activated(self, *args):
+        """Select video file."""
+
+        self.video_file_dialog.run()
+
+    def on_video_file_button_drag_data_received(self, notebook, context, x, y,
+                                                selection_data, info, time):
+        """Set video  file."""
+
+        page = self.get_current_page()
+
+        uri = selection_data.get_uris()[0]
+        unquoted_uri = urllib.unquote(uri)
+        path = urlparse.urlsplit(unquoted_uri)[2]
+        if os.path.isfile(path):
+            page.project.video_path = path
+            self.set_sensitivities(page)
+
     def open_main_files(self, paths, encoding=None):
         """Open main files."""
 
@@ -443,6 +484,11 @@ class FileOpenDelegate(Delegate):
             page = self._open_file(self.window, Document.MAIN, path, encodings)
             if page is None:
                 continue
+
+            # Guess video file path.
+            extensions = config.preview.extensions
+            video_path = page.project.guess_video_file_path(extensions)
+
             self._add_new_project(page)
 
             basename = page.get_main_basename()

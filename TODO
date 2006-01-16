@@ -4,6 +4,28 @@ Legend:
   P = Postponed
   ? = Questionable
 
+Plans for 0.3.3
+===============
+
+    Improvements:
+      [D] Preview current data instead of saved file
+      [D] Allow selecting arbitrary video file
+            [?] Menu item activation
+      [D] New toolbar for video
+      [D] New window for video player output
+
+    Bug Fixes:
+      [D] File marked unchanged after saving a copy of it
+      [W] Overwrite dialog not always presented when saving
+            * Self typed filename without extension!
+      [ ] Open button on the main toolbar missing tooltip
+
+    Other:
+      [?] Never use plural names in directory and file names
+
+    Run PyChecker!
+
+
 Plans for 0.4.0
 ===============
 

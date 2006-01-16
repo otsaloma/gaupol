@@ -82,6 +82,7 @@ sections = [
     'editor',
     'file',
     'general',
+    'output_window',
     'preview',
     'subtitle_insert',
     'spell_check',
@@ -90,18 +91,20 @@ sections = [
 
 class application_window(object):
 
-    maximized      = False
-    position       = [0, 0]
-    show_statusbar = True
-    show_toolbar   = True
-    size           = [600, 400]
+    maximized          = False
+    position           = [0, 0]
+    show_statusbar     = True
+    show_main_toolbar  = True
+    show_video_toolbar = True
+    size               = [600, 400]
 
     types = {
-        'maximized'     : Type.BOOLEAN,
-        'position'      : Type.INTEGER_LIST,
-        'show_statusbar': Type.BOOLEAN,
-        'show_toolbar'  : Type.BOOLEAN,
-        'size'          : Type.INTEGER_LIST,
+        'maximized'         : Type.BOOLEAN,
+        'position'          : Type.INTEGER_LIST,
+        'show_statusbar'    : Type.BOOLEAN,
+        'show_main_toolbar' : Type.BOOLEAN,
+        'show_video_toolbar': Type.BOOLEAN,
+        'size'              : Type.INTEGER_LIST,
     }
 
 class editor(object):
@@ -170,9 +173,23 @@ class general(object):
         'version': Type.STRING,
     }
 
+class output_window(object):
+
+    maximized = False
+    position  = [0, 0]
+    show      = False
+    size      = [500, 300]
+
+    types = {
+        'maximized': Type.BOOLEAN,
+        'position' : Type.INTEGER_LIST,
+        'show'     : Type.BOOLEAN,
+        'size'     : Type.INTEGER_LIST,
+    }
+
 class preview(object):
 
-    command    = 'mplayer -ss %s -osdlevel 2'
+    command    = 'mplayer -ss %c -identify -osdlevel 2 -sub "%s" "%v"'
     extensions = [
         '.asf',
         '.avi',
@@ -194,14 +211,12 @@ class preview(object):
         '.3ivx',
     ]
     offset     = '5.0'
-    save       = True
 
 
     types = {
         'command'   : Type.STRING,
         'extensions': Type.STRING_LIST,
         'offset'    : Type.STRING,
-        'save'      : Type.BOOLEAN,
     }
 
 class subtitle_insert(object):
@@ -234,6 +249,19 @@ class spell_check(object):
         'translation_language': Type.STRING,
     }
 
+
+def _fix_changed_options(parser):
+    """Fix options, whose syntax has changed."""
+
+    version =  parser.get('general', 'version')
+
+    # Remove pre 0.3.3 video player command.
+    if version < '0.3.3':
+        if parser.has_option('preview', 'command'):
+            message = 'Resetting option preview.command to new default due ' \
+                      'to changed syntax.'
+            logger.info(message)
+            parser.remove_option('preview', 'command')
 
 def _get_boolean(arg):
     """
@@ -294,6 +322,9 @@ def read():
         message = 'Failed to read settings from file "%s". Using default ' \
                   'settings.' % CONFIG_PATH
         logger.info(message)
+
+    # Fix options whose type or syntax has changed.
+    _fix_changed_options(parser)
 
     # Set config options.
     sections = parser.sections()

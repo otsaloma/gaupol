@@ -273,6 +273,64 @@ class ToggleFramerateAction(UIMAction):
             return True
 
 
+class ToggleMainToolbarAction(UIMAction):
+
+    """Toggling the visibility of the main toolbar."""
+
+    uim_toggle_item = (
+        'toggle_main_toolbar',
+        None,
+        _('_Main Toolbar'),
+        None,
+        _('Toggle the visibility of the main toolbar'),
+        'on_toggle_main_toolbar_activated',
+        True
+    )
+
+    uim_paths = ['/ui/menubar/view/main_toolbar']
+
+    @classmethod
+    def get_uim_toggle_item_value(cls):
+        """Return value of the UI manager toggle item."""
+
+        return config.application_window.show_main_toolbar
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return whether action can or cannot be done."""
+
+        return True
+
+
+class ToggleOutputWindowAction(UIMAction):
+
+    """Toggling the visibility of the output window."""
+
+    uim_toggle_item = (
+        'toggle_output_window',
+        None,
+        _('_Output Window'),
+        '<control><alt>O',
+        _('Toggle the visibility of the output window'),
+        'on_toggle_output_window_activated',
+        True
+    )
+
+    uim_paths = ['/ui/menubar/view/output_window']
+
+    @classmethod
+    def get_uim_toggle_item_value(cls):
+        """Return value of the UI manager toggle item."""
+
+        return config.output_window.show
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return whether action can or cannot be done."""
+
+        return True
+
+
 class ToggleStatusbarAction(UIMAction):
 
     """Toggling the visibility of the statusbar."""
@@ -302,27 +360,27 @@ class ToggleStatusbarAction(UIMAction):
         return True
 
 
-class ToggleToolbarAction(UIMAction):
+class ToggleVideoToolbarAction(UIMAction):
 
-    """Toggling the visibility of the toolbar."""
+    """Toggling the visibility of the video toolbar."""
 
     uim_toggle_item = (
-        'toggle_toolbar',
+        'toggle_video_toolbar',
         None,
-        _('_Toolbar'),
+        _('_Video Toolbar'),
         None,
-        _('Toggle the visibility of the toolbar'),
-        'on_toggle_toolbar_activated',
+        _('Toggle the visibility of the video toolbar'),
+        'on_toggle_video_toolbar_activated',
         True
     )
 
-    uim_paths = ['/ui/menubar/view/toolbar']
+    uim_paths = ['/ui/menubar/view/video_toolbar']
 
     @classmethod
     def get_uim_toggle_item_value(cls):
         """Return value of the UI manager toggle item."""
 
-        return config.application_window.show_toolbar
+        return config.application_window.show_video_toolbar
 
     @classmethod
     def is_doable(cls, application, page):
@@ -365,6 +423,12 @@ class ViewDelegate(Delegate):
             page.reload_columns([SHOW, HIDE, DURN])
 
         gtklib.set_cursor_normal(self.window)
+
+    def on_output_window_close_button_clicked(self, *args):
+        """Synchronize output window visibility menu item."""
+
+        path = '/ui/menubar/view/output_window'
+        self.uim.get_action(path).activate()
 
     def on_toggle_column_activated(self, action):
         """Toggle the visibility of a column."""
@@ -500,6 +564,26 @@ class ViewDelegate(Delegate):
 
         gtklib.set_cursor_normal(self.window)
 
+    def on_toggle_main_toolbar_activated(self, *args):
+        """Toggle the visibility of the main toolbar."""
+
+        toolbar = self.uim.get_widget('/ui/main_toolbar')
+        visible = toolbar.props.visible
+
+        toolbar.props.visible = not visible
+        config.application_window.show_main_toolbar = not visible
+
+    def on_toggle_output_window_activated(self, *args):
+        """Toggle the visibility of the video player output window."""
+
+        visible = self.output_window.get_visible()
+
+        if visible:
+            self.output_window.hide()
+        else:
+            self.output_window.show()
+        config.output_window.show = not visible
+
     def on_toggle_statusbar_activated(self, *args):
         """Toggle the visibility of the statusbar."""
 
@@ -509,14 +593,14 @@ class ViewDelegate(Delegate):
         hbox.props.visible = not visible
         config.application_window.show_statusbar = not visible
 
-    def on_toggle_toolbar_activated(self, *args):
-        """Toggle the visibility of the toolbar."""
+    def on_toggle_video_toolbar_activated(self, *args):
+        """Toggle the visibility of the video toolbar."""
 
-        toolbar = self.uim.get_widget('/ui/toolbar')
+        toolbar = gtklib.get_parent_widget(self.video_file_button, gtk.Toolbar)
         visible = toolbar.props.visible
 
         toolbar.props.visible = not visible
-        config.application_window.show_toolbar = not visible
+        config.application_window.show_video_toolbar = not visible
 
     def on_view_headers_clicked(self, button, event):
         """Show a popup menu when the view header is right-clicked."""

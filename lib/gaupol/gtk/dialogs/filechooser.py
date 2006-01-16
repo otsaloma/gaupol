@@ -402,6 +402,7 @@ class SaveFileDialog(TextFileChooserDialog):
             self.set_filename(path)
         else:
             self.set_current_name(path)
+            self._format_combo_box.emit('changed')
 
     def set_format(self, format):
         """Set the active format."""

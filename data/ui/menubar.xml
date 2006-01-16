@@ -5,6 +5,8 @@
 			<menuitem name="open" action="open_main_file"/>
 			<menuitem name="open_translation" action="open_translation_file"/>
 			<separator/>
+			<menuitem name="select_video" action="select_video_file"/>
+			<separator/>
 			<menuitem name="save" action="save_main_document"/>
 			<menuitem name="save_as" action="save_main_document_as"/>
 			<menuitem name="save_a_copy" action="save_a_copy_of_main_document"/>
@@ -40,8 +42,11 @@
 			<menuitem name="preferences" action="edit_preferences"/>
 		</menu>
 		<menu name="view" action="show_view_menu">
-			<menuitem name="toolbar" action="toggle_toolbar"/>
+			<menuitem name="main_toolbar" action="toggle_main_toolbar"/>
+			<menuitem name="video_toolbar" action="toggle_video_toolbar"/>
+			<separator/>
 			<menuitem name="statusbar" action="toggle_statusbar"/>
+			<menuitem name="output_window" action="toggle_output_window"/>
 			<separator/>
 			<menuitem name="times" action="show_times"/>
 			<menuitem name="frames" action="show_frames"/>

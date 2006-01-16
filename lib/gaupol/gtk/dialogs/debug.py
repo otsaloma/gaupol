@@ -76,7 +76,7 @@ class DebugDialog(object):
 
         # Follow the mouse pointer.
         method = self._on_text_view_motion_notify_event
-        self._text_view.connect('motion_notify_event', method)
+        self._text_view.connect('motion-notify-event', method)
 
         # Create text tags for text view.
         tag = self._text_view.get_buffer().create_tag
