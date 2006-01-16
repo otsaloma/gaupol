@@ -239,6 +239,11 @@ class SaveFileDialog(TextFileChooserDialog):
 
     """Dialog for selecting text files to save."""
 
+    # The stock overwrite dialog seems to be broken. Furthermore, the
+    # "confirm-overwrite" signal is emitted before we get a chance to add an
+    # extension to the filename. Therefore, we do confirming manually by
+    # intercepting the "response" signal.
+
     def __init__(self, title, parent):
 
         TextFileChooserDialog.__init__(
@@ -252,10 +257,9 @@ class SaveFileDialog(TextFileChooserDialog):
         self._newline_combo_box  = None
 
         self.set_default_response(gtk.RESPONSE_OK)
-        self.set_do_overwrite_confirmation(True)
         self.set_current_folder(config.file.directory)
 
-        self.connect('confirm-overwrite', self._on_confirm_overwrite)
+        self.connect('response', self._on_response)
 
         self._init_extra_widget()
         self._fill_format_combo_box()
@@ -307,6 +311,26 @@ class SaveFileDialog(TextFileChooserDialog):
         table.show_all()
         self.set_extra_widget(table)
 
+    def _confirm_overwrite(self, *args):
+        """
+        Add extension to filename when confirming overwrite.
+
+        Return a gtk.FILE_CHOOSER_CONFIRMATION_* constant.
+        """
+        filepath = self.get_filename_with_extension()
+
+        if not os.path.isfile(filepath):
+            return gtk.FILE_CHOOSER_CONFIRMATION_ACCEPT_FILENAME
+
+        dialog = OverwriteQuestionDialog(self, os.path.basename(filepath))
+        response = dialog.run()
+        dialog.destroy()
+
+        if response == gtk.RESPONSE_YES:
+            return gtk.FILE_CHOOSER_CONFIRMATION_ACCEPT_FILENAME
+        else:
+            return gtk.FILE_CHOOSER_CONFIRMATION_SELECT_AGAIN
+
     def _fill_format_combo_box(self):
         """Fill the format combo box."""
 
@@ -324,9 +348,9 @@ class SaveFileDialog(TextFileChooserDialog):
         self._format_combo_box.set_active(config.file.newlines)
 
     def get_filename_with_extension(self):
-        """Get filename and add extension if it is lacking."""
+        """Return filename with extension."""
 
-        path = self.get_filename()
+        path = TextFileChooserDialog.get_filename(self)
 
         if path is None:
             return None
@@ -346,29 +370,6 @@ class SaveFileDialog(TextFileChooserDialog):
         """Get the selected newlines."""
 
         return self._newline_combo_box.get_active()
-
-    def _on_confirm_overwrite(self, *args):
-        """
-        Add extension to filename when confirming overwrite.
-
-        Return a gtk.FILE_CHOOSER_CONFIRMATION_* constant.
-        """
-        # The stock overwrite dialog seems to be broken. The signal however
-        # works. Hence we hook up a custom dialog to the signal.
-
-        filepath = self.get_filename_with_extension()
-
-        if not os.path.isfile(filepath):
-            return gtk.FILE_CHOOSER_CONFIRMATION_ACCEPT_FILENAME
-
-        dialog = OverwriteQuestionDialog(self, os.path.basename(filepath))
-        response = dialog.run()
-        dialog.destroy()
-
-        if response == gtk.RESPONSE_YES:
-            return gtk.FILE_CHOOSER_CONFIRMATION_ACCEPT_FILENAME
-        else:
-            return gtk.FILE_CHOOSER_CONFIRMATION_SELECT_AGAIN
 
     def _on_format_changed(self, combo_box):
         """Change extension to reflect new format."""
@@ -395,6 +396,14 @@ class SaveFileDialog(TextFileChooserDialog):
         self.set_current_name(basename)
         self.set_filename(path)
 
+    def _on_response(self, dialog, response):
+        """Add extension and confirm overwrite before emitting response."""
+
+        if response == gtk.RESPONSE_OK:
+            confirmation = self._confirm_overwrite()
+            if confirmation == gtk.FILE_CHOOSER_CONFIRMATION_SELECT_AGAIN:
+                return self.run()
+
     def set_filename_or_current_name(self, path):
         """Select file at path or set path as current name."""
 
@@ -402,7 +411,6 @@ class SaveFileDialog(TextFileChooserDialog):
             self.set_filename(path)
         else:
             self.set_current_name(path)
-            self._format_combo_box.emit('changed')
 
     def set_format(self, format):
         """Set the active format."""
