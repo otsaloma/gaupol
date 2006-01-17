@@ -1,5 +1,15 @@
 2006-01-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/delegates/fileopen.py:
+	* lib/gaupol/gtk/delegates/filesave.py:
+	  Removed saving a useless return value.
+
+	* lib/gaupol/gtk/delegates/guiinit.py:
+	* lib/gaupol/gtk/dialogs/filechooser.py:
+	  Renamed some file filters.
+
+2006-01-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/gtk/application.py:
 	  Added instance variable "static_tooltips".
 

@@ -351,7 +351,7 @@ class GUIInitDelegate(Delegate):
 
         file_filter = gtk.FileFilter()
         file_filter.add_mime_type('video/*')
-        file_filter.set_name(_('Video'))
+        file_filter.set_name(_('Video files'))
         self.video_file_button.add_filter(file_filter)
 
         # Set drag-and-drop for video file setting.

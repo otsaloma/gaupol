@@ -487,7 +487,7 @@ class FileOpenDelegate(Delegate):
 
             # Guess video file path.
             extensions = config.preview.extensions
-            video_path = page.project.guess_video_file_path(extensions)
+            page.project.guess_video_file_path(extensions)
 
             self._add_new_project(page)
 

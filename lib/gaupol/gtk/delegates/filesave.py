@@ -484,7 +484,7 @@ class FileSaveDelegate(Delegate):
         # Try to find a video with the new filename.
         if page.project.video_path is None:
             extensions = config.preview.extensions
-            video_path = page.project.guess_video_file_path(extensions)
+            page.project.guess_video_file_path(extensions)
 
 
         self.add_to_recent_files(path)
@@ -529,8 +529,8 @@ class FileSaveDelegate(Delegate):
             properties = path, format, encoding, newlines
 
         # Select file.
-        title = _('Save Translation As')
         try:
+            title = _('Save Translation As')
             properties = self._select_file(title, properties)
         except Cancelled:
             gtklib.set_cursor_normal(self.window)

@@ -103,8 +103,8 @@ class TextFileChooserDialog(gtk.FileChooserDialog):
 
         # Name , Mime-type, Pattern
         filters = [
-            (_('All files') , None        , '*' ),
-            (_('Plain text'), 'text/plain', None),
+            (_('All files')       , None        , '*' ),
+            (_('Plain text files'), 'text/plain', None),
         ]
 
         # Get format specific filters.
@@ -239,10 +239,12 @@ class SaveFileDialog(TextFileChooserDialog):
 
     """Dialog for selecting text files to save."""
 
+    # NOTE:
     # The stock overwrite dialog seems to be broken. Furthermore, the
     # "confirm-overwrite" signal is emitted before we get a chance to add an
     # extension to the filename. Therefore, we do confirming manually by
-    # intercepting the "response" signal.
+    # intercepting the "response" signal. This can be re-evaluated in future
+    # PyGTK releases.
 
     def __init__(self, title, parent):
 
