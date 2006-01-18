@@ -55,7 +55,7 @@ class Application(object):
         self.tran_text_statusbar = None
         self.undo_button         = None
         self.video_file_button   = None
-        self.video_file_dialog   = None
+        self.video_file_label    = None
         self.output_window       = None
         self.window              = None
 

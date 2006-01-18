@@ -1,5 +1,16 @@
 2006-01-18  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/application.py:
+	* lib/gaupol/gtk/delegates/appupdate.py:
+	* lib/gaupol/gtk/delegates/fileopen.py:
+	* lib/gaupol/gtk/delegates/guiinit.py:
+	* lib/gaupol/gtk/dialogs/filechooser.py:
+	  Replaced gtk.FileChooserButton with a gtk.Button that looks like a
+	  filechooser button. Created a new filechooser class OpenVideoDialog
+	  that is initialized and run when the button is clicked.
+
+2006-01-18  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/text/parser.py:
 	* lib/gaupol/gtk/dialogs/filechooser.py:
 	* setup.py:

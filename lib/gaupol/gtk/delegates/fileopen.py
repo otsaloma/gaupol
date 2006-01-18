@@ -36,7 +36,7 @@ from gaupol.base.util               import encodinglib, listlib
 from gaupol.constants               import Document
 from gaupol.gtk.colconstants        import *
 from gaupol.gtk.delegates           import Delegate, UIMAction
-from gaupol.gtk.dialogs.filechooser import OpenFileDialog
+from gaupol.gtk.dialogs.filechooser import OpenFileDialog, OpenVideoDialog
 from gaupol.gtk.dialogs.message     import ErrorDialog, WarningDialog
 from gaupol.gtk.error               import Cancelled
 from gaupol.gtk.page                import Page
@@ -457,7 +457,25 @@ class FileOpenDelegate(Delegate):
     def on_select_video_file_activated(self, *args):
         """Select video file."""
 
-        self.video_file_dialog.run()
+        page = self.get_current_page()
+        video_path = page.project.video_path
+        gtklib.set_cursor_busy(self.window)
+
+        chooser = OpenVideoDialog(self.window)
+        if video_path is not None:
+            chooser.set_filename(video_path)
+        else:
+            dirpath = os.path.dirname(page.project.main_file.path)
+            chooser.set_current_folder(dirpath)
+
+        gtklib.set_cursor_normal(self.window)
+        response = chooser.run()
+
+        if response == gtk.RESPONSE_OK:
+            page.project.video_path = chooser.get_filename()
+            self.set_sensitivities(page)
+
+        gtklib.destroy_gobject(chooser)
 
     def on_video_file_button_drag_data_received(self, notebook, context, x, y,
                                                 selection_data, info, time):

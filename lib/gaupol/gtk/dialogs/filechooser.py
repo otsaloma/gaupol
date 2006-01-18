@@ -430,3 +430,30 @@ class SaveFileDialog(TextFileChooserDialog):
             self._newline_combo_box.set_active(newlines)
         except (TypeError, ValueError):
             pass
+
+
+class OpenVideoDialog(gtk.FileChooserDialog):
+
+    """Dialog for selecting video files."""
+
+    def __init__(self, parent):
+
+        gtk.FileChooserDialog.__init__(
+            self,
+            _('Select Video'),
+            parent,
+            gtk.FILE_CHOOSER_ACTION_OPEN,
+            (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+             gtk.STOCK_OK    , gtk.RESPONSE_OK     ),
+        )
+
+        file_filter = gtk.FileFilter()
+        file_filter.add_pattern('*')
+        file_filter.set_name(_('All files'))
+        self.add_filter(file_filter)
+
+        file_filter = gtk.FileFilter()
+        file_filter.add_mime_type('video/*')
+        file_filter.set_name(_('Video files'))
+        self.add_filter(file_filter)
+        self.set_filter(file_filter)

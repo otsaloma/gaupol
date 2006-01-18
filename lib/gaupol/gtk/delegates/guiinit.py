@@ -30,6 +30,7 @@ import os
 
 import gobject
 import gtk
+import pango
 
 from gaupol.constants     import Framerate, Mode
 from gaupol.gtk.delegates import Delegate, UIMActions
@@ -331,30 +332,25 @@ class GUIInitDelegate(Delegate):
         tool_item.add(label)
         toolbar.insert(tool_item, -1)
 
-        # Create video filechooser button.
-        self.video_file_dialog = gtk.FileChooserDialog(
-            _('Select Video'),
-            self.window,
-            gtk.FILE_CHOOSER_ACTION_OPEN,
-            (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
-             gtk.STOCK_OK    , gtk.RESPONSE_ACCEPT),
-        )
-        self.video_file_button = gtk.FileChooserButton(self.video_file_dialog)
-        method = self.on_video_filechooser_response
-        self.video_file_dialog.connect('response', method)
+        # Create video file button.
+        hbox=gtk.HBox(False, 4)
+        self.video_file_button = gtk.Button()
+        self.video_file_button.add(hbox)
+        method = self.on_select_video_file_activated
+        self.video_file_button.connect('clicked', method)
 
-        file_filter = gtk.FileFilter()
-        file_filter.add_pattern('*')
-        file_filter.set_name(_('All files'))
-        self.video_file_button.add_filter(file_filter)
-        self.video_file_button.set_filter(file_filter)
+        # Pack video file button contents.
+        image = gtk.image_new_from_stock(gtk.STOCK_FILE, gtk.ICON_SIZE_MENU)
+        hbox.pack_start(image, False, False)
+        self.video_file_label = gtk.Label()
+        self.video_file_label.props.xalign = 0
+        self.video_file_label.set_ellipsize(pango.ELLIPSIZE_MIDDLE)
+        hbox.pack_start(self.video_file_label, True, True)
+        hbox.pack_start(gtk.VSeparator(), False, False)
+        image = gtk.image_new_from_stock(gtk.STOCK_OPEN, gtk.ICON_SIZE_MENU)
+        hbox.pack_start(image, False, False)
 
-        file_filter = gtk.FileFilter()
-        file_filter.add_mime_type('video/*')
-        file_filter.set_name(_('Video files'))
-        self.video_file_button.add_filter(file_filter)
-
-        # Set drag-and-drop for video file setting.
+        # Set drag-and-drop for video file button.
         self.video_file_button.drag_dest_set(
             gtk.DEST_DEFAULT_ALL,
             [('text/uri-list', 0, 0)],
@@ -365,12 +361,10 @@ class GUIInitDelegate(Delegate):
         self.video_file_button.connect('drag-data-received', method)
 
         # Add video filechooser button to toolbar.
-        event_box = gtk.EventBox()
-        event_box.add(self.video_file_button)
         tool_item = gtk.ToolItem()
         tool_item.set_border_width(4)
         tool_item.set_expand(True)
-        tool_item.add(event_box)
+        tool_item.add(self.video_file_button)
         toolbar.insert(tool_item, -1)
 
         # Add video file label to toolbar.

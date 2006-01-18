@@ -118,14 +118,6 @@ class ApplicationUpdateDelegate(Delegate):
         index = int(action.get_name().split('_')[-1])
         self.notebook.set_current_page(index)
 
-    def on_video_filechooser_response(self, filechooser, response):
-        """Set video file path."""
-
-        page = self.get_current_page()
-        if response == gtk.RESPONSE_ACCEPT:
-            page.project.video_path = filechooser.get_filename()
-        self.set_sensitivities(page)
-
     def on_window_state_event(self, window, event):
         """Remember whether window is maximized or not."""
 
@@ -253,7 +245,7 @@ class ApplicationUpdateDelegate(Delegate):
             self.tooltips.disable()
             self.set_status_message(None)
             self.window.set_title('Gaupol')
-            self.video_file_button.unselect_all()
+            self.video_file_label.set_text('')
             return
 
         # Enable tooltips.
@@ -270,14 +262,11 @@ class ApplicationUpdateDelegate(Delegate):
 
         # Set video file path.
         if page.project.video_path is not None:
-            self.video_file_button.set_filename(page.project.video_path)
+            basename = os.path.basename(page.project.video_path)
+            self.video_file_label.set_text(basename)
         else:
-            self.video_file_button.unselect_all()
-            if page.project.main_file is not None:
-                dirname = os.path.dirname(page.project.main_file.path)
-                self.video_file_button.set_current_folder(dirname)
-        event_box = gtklib.get_event_box(self.video_file_button)
-        self.tooltips.set_tip(event_box, page.project.video_path)
+            self.video_file_label.set_text('')
+        self.tooltips.set_tip(self.video_file_button, page.project.video_path)
 
         # Set framerate state.
         framerate_name = Framerate.id_names[page.project.framerate]
