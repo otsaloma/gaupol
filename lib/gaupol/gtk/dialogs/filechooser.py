@@ -243,8 +243,9 @@ class SaveFileDialog(TextFileChooserDialog):
     # The stock overwrite dialog seems to be broken. Furthermore, the
     # "confirm-overwrite" signal is emitted before we get a chance to add an
     # extension to the filename. Therefore, we do confirming manually by
-    # intercepting the "response" signal. This can be re-evaluated in future
-    # PyGTK releases.
+    # intercepting the "response" signal. These practices can be re-evaluated
+    # in future PyGTK releases if things change. Especially the stock dialog
+    # could be good HIG-wise, currently I don't even know what it looks like.
 
     def __init__(self, title, parent):
 

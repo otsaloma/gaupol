@@ -20,12 +20,12 @@
 """Text parser that allows text editing while keeping tags intact."""
 
 
-# NOTE:
-# This parser is experimental and not thoroughly tested. Possible problems with
+# TODO:
+# This parser is experimental and needs more testing. Possible problems with
 # the "replace" and "substitute" methods after shifting tags include at least:
-# - Tags might overlap.
-# - Tags that were in the middle of a match might end up in the wrong place.
-# - Tags might be shifted further than the text length.
+#   * Tags might overlap
+#   * Tags that were in the middle of a match might end up in the wrong place
+#   * Tags might be shifted further than the text length
 
 
 try:

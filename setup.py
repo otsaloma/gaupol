@@ -109,7 +109,7 @@ class InstallData(install_data):
         outputs = install_data.get_outputs(self)
         return outputs + self.__output_dirs
 
-    def mkpath (self, name, mode=0777):
+    def mkpath(self, name, mode=0777):
 
         created_dirs = dir_util.mkpath(name, mode, dry_run=self.dry_run)
 
