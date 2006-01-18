@@ -1,5 +1,10 @@
 2006-01-18  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/dialogs/filechooser.py:
+	  (OpenVideoDialog): Revert default filter back to "All files".
+
+2006-01-18  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/delegates/stat.py:
 	* lib/gaupol/base/files/microdvd.py:
 	* lib/gaupol/base/files/mpl2.py:

@@ -451,9 +451,9 @@ class OpenVideoDialog(gtk.FileChooserDialog):
         file_filter.add_pattern('*')
         file_filter.set_name(_('All files'))
         self.add_filter(file_filter)
+        self.set_filter(file_filter)
 
         file_filter = gtk.FileFilter()
         file_filter.add_mime_type('video/*')
         file_filter.set_name(_('Video files'))
         self.add_filter(file_filter)
-        self.set_filter(file_filter)
