@@ -491,6 +491,10 @@ class FileOpenDelegate(Delegate):
 
             self._add_new_project(page)
 
+            # Save last used directory.
+            dirpath = os.path.dirname(path)
+            config.file.directory = dirpath
+
             basename = page.get_main_basename()
             message = _('Opened main file "%s"') % basename
             self.set_status_message(message)

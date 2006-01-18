@@ -17,9 +17,7 @@ Plans for 0.3.3
       [D] File marked unchanged after saving a copy of it
       [D] Overwrite dialog not always presented when saving
       [D] Open button on the main toolbar missing tooltip
-
-    Other:
-      [ ] Update web page screenshots
+      [D] Open dialog not always defaulting to directory of last opened file
 
 
 Plans for 0.4.0

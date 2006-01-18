@@ -1,3 +1,9 @@
+2006-01-18  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/gtk/delegates/fileopen.py:
+	  (FileOpenDelegate.open_main_files): Set config.file.directory to
+	  directory of file opened.
+
 2006-01-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/gtk/delegates/fileopen.py:
