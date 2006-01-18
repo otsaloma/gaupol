@@ -307,7 +307,7 @@ class Uninstall(Command):
             info('failed to read file "%s": %s' % (log_path, message))
             raise SystemExit(1)
 
-        paths = [line.strip() for line in lines]
+        paths = list(line.strip() for line in lines)
 
         # Sort list to have files precede directories.
         paths.sort()

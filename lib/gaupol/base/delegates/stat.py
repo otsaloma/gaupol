@@ -45,7 +45,7 @@ class StatisticsDelegate(Delegate):
             text = re_tag.sub('', text)
 
         lines   = text.split('\n')
-        lengths = [len(line) for line in lines]
+        lengths = list(len(line) for line in lines)
         total   = len(text)
 
         return lengths, total

@@ -46,7 +46,7 @@ class MenuUpdateDelegate(Delegate):
         """
         assert name in ('main', 'recent', 'projects')
         action_groups = self.uim.get_action_groups()
-        action_group_names = [group.get_name() for group in action_groups]
+        action_group_names = list(group.get_name() for group in action_groups)
         index = action_group_names.index(name)
         return action_groups[index]
 

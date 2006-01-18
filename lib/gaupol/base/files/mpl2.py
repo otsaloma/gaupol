@@ -110,7 +110,7 @@ class MPL2(SubtitleFile):
                 entry[i] = '%.0f' % decaseconds
 
         # Replace Python internal newline characters in text with pipes.
-        texts = [text.replace('\n', '|') for text in texts]
+        texts = list(text.replace('\n', '|') for text in texts)
 
         subtitle_file = codecs.open(self.path, 'w', self.encoding)
 

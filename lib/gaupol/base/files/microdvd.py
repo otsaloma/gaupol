@@ -77,8 +77,8 @@ class MicroDVD(SubtitleFile):
                 texts.append(match.group(3))
 
         # Frames should be integers.
-        shows = [int(frame) for frame in shows]
-        hides = [int(frame) for frame in hides]
+        shows = list(int(frame) for frame in shows)
+        hides = list(int(frame) for frame in hides)
 
         # Replace pipes in texts with Python internal newline characters.
         for i in range(len(texts)):
@@ -96,7 +96,7 @@ class MicroDVD(SubtitleFile):
         newline_character = self._get_newline_character()
 
         # Replace Python internal newline characters in text with pipes.
-        texts = [text.replace('\n', '|') for text in texts]
+        texts = list(text.replace('\n', '|') for text in texts)
 
         subtitle_file = codecs.open(self.path, 'w', self.encoding)
 

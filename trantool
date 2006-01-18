@@ -123,7 +123,7 @@ def create_pot():
 
     # Cut SOURCE_DIR out of paths to have only relevant parts of the paths
     # printed in the .po file.
-    paths = [path.replace(SOURCE_DIR, '.') for path in paths]
+    paths = list(path.replace(SOURCE_DIR, '.') for path in paths)
 
     os.chdir(SOURCE_DIR)
     os.system('xgettext -k_ -kN_ -c -o %s %s' % (POT_PATH, ' '.join(paths)))

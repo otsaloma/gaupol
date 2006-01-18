@@ -110,7 +110,7 @@ class SubRip(SubtitleFile):
 
         # Replace Python internal newline characters in text with desired
         # newline characters.
-        texts = [text.replace('\n', newline_character) for text in texts]
+        texts = list(text.replace('\n', newline_character) for text in texts)
 
         subtitle_file = codecs.open(self.path, 'w', self.encoding)
 

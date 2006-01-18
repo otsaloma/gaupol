@@ -372,15 +372,16 @@ def _set_config_option(parser, section, option):
 
     elif typ == Type.INTEGER_LIST:
         str_list = string.split('|')
-        value = [int(entry) for entry in str_list]
+        value = list(int(entry) for entry in str_list)
 
     elif typ == Type.BOOLEAN_LIST:
         str_list = string.split('|')
-        value = [_get_boolean(entry) for entry in str_list]
+        value = list(_get_boolean(entry) for entry in str_list)
 
     elif typ == Type.CONSTANT_LIST:
         str_list = string.split('|')
-        value = [_get_constant(section, option, entry) for entry in str_list]
+        args = section, option, entry
+        value = list(_get_constant(args) for entry in str_list)
 
     setattr(eval(section), option, value)
 
@@ -413,15 +414,16 @@ def _set_parser_option(parser, section, option):
         string = '|'.join(value)
 
     elif typ == Type.INTEGER_LIST:
-        str_list = [str(entry) for entry in value]
+        str_list = list(str(entry) for entry in value)
         string = '|'.join(str_list)
 
     elif typ == Type.BOOLEAN_LIST:
-        str_list = [_get_boolean(entry) for entry in value]
+        str_list = list(_get_boolean(entry) for entry in value)
         string = '|'.join(str_list)
 
     elif typ == Type.CONSTANT_LIST:
-        str_list = [_get_constant(section, option, entry) for entry in value]
+        args = section, option, entry
+        str_list = list(_get_constant(args) for entry in value)
         string = '|'.join(str_list)
 
     # Set value.

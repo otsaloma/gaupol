@@ -108,7 +108,7 @@ class ViewUpdateDelegate(Delegate):
             except IndexError:
                 return
 
-            lengths = [str(length) for length in lengths]
+            lengths = list(str(length) for length in lengths)
             message = '+'.join(lengths)
             if len(lengths) > 1:
                 message += '=%d' % total
