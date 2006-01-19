@@ -135,7 +135,12 @@ class SelectVideoAction(UIMAction):
     def is_doable(cls, application, page):
         """Return whether action can or cannot be done."""
 
-        return not page is None
+        if page is None:
+            return False
+        if page.project.main_file is None:
+            return False
+
+        return True
 
 
 class FileFormatErrorDialog(ErrorDialog):

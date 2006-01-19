@@ -1,5 +1,11 @@
 2006-01-19  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/delegates/fileopen.py:
+	  (SelectVideoAction.is_doable): Return False if page.project.main_file
+	  is None.
+
+2006-01-19  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/preferences-dialog.glade:
 	  Redesigned the preview tab's video player section.
 
