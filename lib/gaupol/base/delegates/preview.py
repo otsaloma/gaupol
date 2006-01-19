@@ -69,23 +69,19 @@ class PreviewDelegate(Delegate):
         Raise UnicodeError if encoding temporary file fails.
         Return subtitle file path, is temporary file.
         """
-        is_temp = False
         if document == Document.MAIN:
-            sub_file = self.main_file
             if self.main_changed:
-                extension = Format.extensions[sub_file.format]
-                sub_path = tempfile.mkstemp(extension, 'gaupol.')[1]
-                is_temp = True
+                sub_file = self.main_file
             else:
-                sub_path = self.main_file.path
+                return self.main_file.path, False
         elif document == Document.TRAN:
-            sub_file = self.tran_file
             if self.tran_active and self.tran_changed:
-                extension = Format.extensions[sub_file.format]
-                sub_path = tempfile.mkstemp(extension, 'gaupol.')[1]
-                is_temp = True
+                sub_file = self.tran_file
             else:
-                sub_path = self.tran_file.path
+                return self.tran_file.path, False
+
+        extension = Format.extensions[sub_file.format]
+        sub_path  = tempfile.mkstemp(extension, 'gaupol.')[1]
 
         properties = (
             sub_path,
@@ -93,12 +89,13 @@ class PreviewDelegate(Delegate):
             sub_file.encoding,
             sub_file.newlines
         )
+
         if document == Document.MAIN:
             self.save_main_file(False, properties)
         elif document == Document.TRAN:
             self.save_translation_file(False, properties)
 
-        return sub_path, is_temp
+        return sub_path, True
 
     def guess_video_file_path(self, extensions=default_extensions):
         """
@@ -168,6 +165,8 @@ class PreviewDelegate(Delegate):
         command = command.replace('%c', seconds        )
         command = command.replace('%f', frame          )
 
+        self.output = command + '\n\n'
+
         # Run video player and wait for exit.
         popen = subprocess.Popen(
             command,
@@ -180,7 +179,7 @@ class PreviewDelegate(Delegate):
 
         # Read output.
         fobj = file(output_path, 'r')
-        self.output = fobj.read()
+        self.output += fobj.read()
         fobj.close()
 
         # Remove temporary files.

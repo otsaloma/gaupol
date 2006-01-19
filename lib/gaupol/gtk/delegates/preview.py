@@ -33,7 +33,7 @@ import gtk
 import pango
 
 from gaupol.base.error          import ExternalError
-from gaupol.constants           import Document
+from gaupol.constants           import Document, VideoPlayer
 from gaupol.gtk.colconstants    import *
 from gaupol.gtk.delegates       import Delegate, UIMAction
 from gaupol.gtk.dialogs.message import ErrorDialog
@@ -179,8 +179,13 @@ class PreviewDelegate(Delegate):
     def _preview(self, page, row, document):
         """Preview subtitles with video player."""
 
-        command = config.preview.command
-        offset  = config.preview.offset
+        if config.preview.use_custom:
+            command = config.preview.custom_command
+        else:
+            video_player = config.preview.video_player
+            command = VideoPlayer.commands[video_player]
+
+        offset = config.preview.offset
 
         try:
             page.project.preview(row, document, command, offset)

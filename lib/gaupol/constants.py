@@ -79,3 +79,21 @@ class Position(object):
     BELOW = 1
 
     id_names = ['above', 'below']
+
+class VideoPlayer(object):
+
+    MPLAYER = 0
+    VLC     = 1
+
+    # %v = video filename
+    # %s = subtitle filename
+    # %t = time
+    # %c = seconds
+    # %f = frame
+
+    commands    = [
+        'mplayer -identify -osdlevel 2 -ss %c -sub "%s" "%v"',
+        'vlc --start-time=%c --sub-file="%s" "%v"',
+    ]
+    display_names = ['MPlayer', 'VLC']
+    id_names      = ['mplayer', 'vlc']

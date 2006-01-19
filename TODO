@@ -12,6 +12,7 @@ Plans for 0.3.3
       [D] Allow selecting arbitrary video file
       [D] New toolbar for video
       [D] New window for video player output
+      [D] Built-in commands for more than one video player
 
     Bug Fixes:
       [D] File marked unchanged after saving a copy of it
@@ -19,7 +20,7 @@ Plans for 0.3.3
       [D] Open button on the main toolbar missing tooltip
       [D] Open dialog not always defaulting to directory of last opened file
 
-    Performance. Note in guiinit.py.
+    VLC!
 
 
 Plans for 0.4.0
@@ -86,6 +87,8 @@ Unscheduled
 
       - SAMI
         http://msdn.microsoft.com/library/en-us/dnacc/html/atg_samiarticle.asp
+
+  * py.test or some sort of testing system
 
 
 Other

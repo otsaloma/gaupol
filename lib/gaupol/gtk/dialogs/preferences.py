@@ -30,6 +30,7 @@ import gtk
 import pango
 
 from gaupol.base.util            import encodinglib
+from gaupol.constants            import VideoPlayer
 from gaupol.gtk.dialogs.encoding import EncodingDialog
 from gaupol.gtk.util             import config, gtklib
 
@@ -79,22 +80,27 @@ class PreferencesDialog(gobject.GObject):
         get = glade_xml.get_widget
 
         # Widgets
-        self._dialog                  = get('dialog')
-        self._encoding_locale_check   = get('encoding_locale_check_button')
-        self._encoding_view           = get('encoding_tree_view')
-        self._encoding_up_button      = get('encoding_move_up_button')
-        self._encoding_down_button    = get('encoding_move_down_button')
-        self._encoding_remove_button  = get('encoding_remove_button')
-        self._encoding_add_button     = get('encoding_add_button')
-        self._undo_limit_radio        = get('undo_limit_radio_button')
-        self._undo_levels_spin        = get('undo_levels_spin_button')
-        self._undo_unlimited_radio    = get('undo_unlimited_radio_button')
-        self._font_default_check      = get('font_default_check_button')
-        self._font_custom_label       = get('font_custom_label')
-        self._font_button             = get('font_button')
-        self._preview_offset_spin     = get('preview_offset_spin_button')
-        self._preview_command_entry   = get('preview_command_entry')
-        self._close_button            = get('close_button')
+        self._dialog                   = get('dialog')
+        self._encoding_locale_check    = get('encoding_locale_check_button')
+        self._encoding_view            = get('encoding_tree_view')
+        self._encoding_up_button       = get('encoding_move_up_button')
+        self._encoding_down_button     = get('encoding_move_down_button')
+        self._encoding_remove_button   = get('encoding_remove_button')
+        self._encoding_add_button      = get('encoding_add_button')
+        self._undo_limit_radio         = get('undo_limit_radio_button')
+        self._undo_levels_spin         = get('undo_levels_spin_button')
+        self._undo_unlimited_radio     = get('undo_unlimited_radio_button')
+        self._font_default_check       = get('font_default_check_button')
+        self._font_custom_label        = get('font_custom_label')
+        self._font_button              = get('font_button')
+        self._preview_offset_spin      = get('preview_offset_spin_button')
+        self._preview_command_entry    = get('preview_command_entry')
+        self._preview_command_legend   = get('preview_command_legend_table')
+        self._preview_command_radio    = get('preview_command_radio_button')
+        self._preview_customize_button = get('preview_customize_button')
+        self._preview_select_combo     = get('preview_select_combo_box')
+        self._preview_select_radio     = get('preview_select_radio_button')
+        self._close_button             = get('close_button')
 
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_CLOSE)
@@ -102,8 +108,9 @@ class PreferencesDialog(gobject.GObject):
 
         self._init_encoding_view()
         self._set_mnemonics(glade_xml)
-        self._connect_signals()
+        self._init_radio_groups()
         self._set_from_config()
+        self._connect_signals()
 
     def _init_encoding_view(self):
         """Init the list of encodings."""
@@ -123,16 +130,27 @@ class PreferencesDialog(gobject.GObject):
         tree_view_column = gtk.TreeViewColumn('', cell_renderer, text=0)
         view.append_column(tree_view_column)
 
-    def _connect_editor_signals(self):
-        """Connect signals of the editor tab's widgets."""
+    def _init_radio_groups(self):
+        """Initialize radio button groups."""
 
-        # Ensure that undo limiting radio buttons have the same group.
         # ValueError is raised if button already is in group.
+
+        # Undo limiting
         group = self._undo_limit_radio.get_group()[0]
         try:
             self._undo_unlimited_radio.set_group(group)
         except ValueError:
             pass
+
+        # Preview
+        group = self._preview_select_radio.get_group()[0]
+        try:
+            self._preview_command_radio.set_group(group)
+        except ValueError:
+            pass
+
+    def _connect_editor_signals(self):
+        """Connect signals of the editor tab's widgets."""
 
         # Undo limit radio button
         method = self._on_undo_limit_radio_toggled
@@ -176,10 +194,21 @@ class PreferencesDialog(gobject.GObject):
         method = self._on_preview_offset_spin_value_changed
         self._preview_offset_spin.connect('value-changed', method)
 
+        # Select radio button
+        method = self._on_preview_select_radio_toggled
+        self._preview_select_radio.connect('toggled', method)
+
+        # Select combo box
+        method = self._on_preview_select_combo_changed
+        self._preview_select_combo.connect('changed', method)
+
+        # Customize button
+        method = self._on_preview_customize_button_clicked
+        self._preview_customize_button.connect('clicked', method)
+
         # Command entry
         method = self._on_preview_command_entry_changed
         self._preview_command_entry.connect('changed', method)
-
 
     def _connect_signals(self):
         """Connect signals of widgets."""
@@ -308,7 +337,16 @@ class PreferencesDialog(gobject.GObject):
     def _on_preview_command_entry_changed(self, entry):
         """Set preview command."""
 
-        config.preview.command = entry.get_text()
+        config.preview.custom_command = entry.get_text() or None
+
+    def _on_preview_customize_button_clicked(self, button):
+        """Customize command."""
+
+        video_player = self._preview_select_combo.get_active()
+        command = VideoPlayer.commands[video_player]
+
+        self._preview_command_entry.set_text(command)
+        self._preview_command_radio.set_active(True)
 
     def _on_preview_offset_spin_value_changed(self, spin_button):
         """Set preview offset."""
@@ -316,6 +354,23 @@ class PreferencesDialog(gobject.GObject):
         spin_button.update()
         value = '%.1f' % spin_button.get_value()
         config.preview.offset = value
+
+    def _on_preview_select_combo_changed(self, combo_box):
+        """Select video player."""
+
+        config.preview.video_player = combo_box.get_active()
+
+    def _on_preview_select_radio_toggled(self, radio_button):
+        """Set use selected or custom video player."""
+
+        use_custom = self._preview_command_radio.get_active()
+        config.preview.use_custom = use_custom
+        self._set_preview_radio_sensitivities()
+
+        if use_custom:
+            self._preview_command_entry.grab_focus()
+        else:
+            self._preview_select_combo.grab_focus()
 
     def _on_undo_levels_spin_value_changed(self, spin_button):
         """Set the amount of undo levels and send signal."""
@@ -378,6 +433,7 @@ class PreferencesDialog(gobject.GObject):
         limit = config.editor.limit_undo
         self._undo_limit_radio.set_active(limit)
         self._undo_unlimited_radio.set_active(not limit)
+        self._undo_levels_spin.set_sensitive(limit)
 
         # Undo levels
         self._undo_levels_spin.set_value(config.editor.undo_levels)
@@ -385,13 +441,30 @@ class PreferencesDialog(gobject.GObject):
         # Use default/custom font
         use_default = config.editor.use_default_font
         self._font_default_check.set_active(use_default)
+        self._font_custom_label.set_sensitive(not use_default)
+        self._font_button.set_sensitive(not use_default)
 
         # Font
         self._font_button.set_font_name(self._get_custom_font())
 
-        # Preview
+        # Preview offset
         self._preview_offset_spin.set_value(float(config.preview.offset))
-        self._preview_command_entry.set_text(config.preview.command)
+
+        # Preview custom command
+        command = config.preview.custom_command
+        self._preview_command_entry.set_text(command or '')
+
+        # Preview video player
+        for i in range(len(VideoPlayer.display_names)):
+            name = VideoPlayer.display_names[i]
+            self._preview_select_combo.insert_text(i, name)
+        self._preview_select_combo.set_active(config.preview.video_player)
+
+        # Preview select or custom
+        use_custom = config.preview.use_custom
+        self._preview_select_radio.set_active(not use_custom)
+        self._preview_command_radio.set_active(use_custom)
+        self._set_preview_radio_sensitivities()
 
     def _set_mnemonics(self, glade_xml):
         """Set mnemonics for widgets."""
@@ -407,13 +480,23 @@ class PreferencesDialog(gobject.GObject):
         # Font button
         self._font_custom_label.set_mnemonic_widget(self._font_button)
 
-        # Preview command label
-        label = glade_xml.get_widget('preview_command_label')
-        label.set_mnemonic_widget(self._preview_command_entry)
-
         # Preview offset label
         label = glade_xml.get_widget('preview_offset_label')
         label.set_mnemonic_widget(self._preview_offset_spin)
+
+    def _set_preview_radio_sensitivities(self):
+        """Set sensitivities depending on preview radio buttons."""
+
+        if config.preview.use_custom:
+            self._preview_select_combo.set_sensitive(False)
+            self._preview_customize_button.set_sensitive(False)
+            self._preview_command_entry.set_sensitive(True)
+            self._preview_command_legend.set_sensitive(True)
+        else:
+            self._preview_select_combo.set_sensitive(True)
+            self._preview_customize_button.set_sensitive(True)
+            self._preview_command_entry.set_sensitive(False)
+            self._preview_command_legend.set_sensitive(False)
 
     def show(self):
         """Show the dialog."""

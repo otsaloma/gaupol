@@ -1,3 +1,32 @@
+2006-01-19  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/preferences-dialog.glade:
+	  Redesigned the preview tab's video player section.
+
+	* data/glade/previewerror-dialog.glade:
+	  Turned wrap on for the text view.
+
+	* lib/gaupol/base/delegates/preview.py:
+	  (PreviewDelegate._get_subtitle_path): Fixed the file saving.
+	  (PreviewDelegate.preview): Added command to output.
+
+	* lib/gaupol/constants.py:
+	  (VideoPlayer): New class.
+
+	* lib/gaupol/gtk/delegates/preview.py:
+	  Adapted to new configs and constants.
+
+	* lib/gaupol/gtk/dialogs/preferences.py:
+	  Adapted to redesigned preview tab's video player section.
+	  Cosmetic fixes on sensitivity sets and signal connections.
+
+	* lib/gaupol/gtk/util/config.py:
+	  Changed window sizes to golden ratios.
+	  (preview): Redesigned options.
+	  (_fix_changed_options): Removed as obsolete.
+	  (_set_config_option, _set_parser_option): Fixed bugs caused by
+	  earlier coding style changes.
+
 2006-01-18  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/gtk/dialogs/filechooser.py:

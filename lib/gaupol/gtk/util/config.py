@@ -96,7 +96,7 @@ class application_window(object):
     show_statusbar     = True
     show_main_toolbar  = True
     show_video_toolbar = True
-    size               = [600, 400]
+    size               = [600, 371]
 
     types = {
         'maximized'         : Type.BOOLEAN,
@@ -178,7 +178,7 @@ class output_window(object):
     maximized = False
     position  = [0, 0]
     show      = False
-    size      = [500, 300]
+    size      = [500, 309]
 
     types = {
         'maximized': Type.BOOLEAN,
@@ -189,8 +189,8 @@ class output_window(object):
 
 class preview(object):
 
-    command    = 'mplayer -ss %c -identify -osdlevel 2 -sub "%s" "%v"'
-    extensions = [
+    custom_command = None
+    extensions     = [
         '.asf',
         '.avi',
         '.dat',
@@ -210,13 +210,20 @@ class preview(object):
         '.wmv',
         '.3ivx',
     ]
-    offset     = '5.0'
-
+    offset         = '5.0'
+    use_custom     = False
+    video_player   = VideoPlayer.MPLAYER
 
     types = {
-        'command'   : Type.STRING,
-        'extensions': Type.STRING_LIST,
-        'offset'    : Type.STRING,
+        'custom_command': Type.STRING,
+        'extensions'    : Type.STRING_LIST,
+        'offset'        : Type.STRING,
+        'use_custom'    : Type.BOOLEAN,
+        'video_player'  : Type.CONSTANT,
+    }
+
+    classes = {
+        'video_player': VideoPlayer,
     }
 
 class subtitle_insert(object):
@@ -249,19 +256,6 @@ class spell_check(object):
         'translation_language': Type.STRING,
     }
 
-
-def _fix_changed_options(parser):
-    """Fix options, whose syntax has changed."""
-
-    version =  parser.get('general', 'version')
-
-    # Remove pre 0.3.3 video player command.
-    if version < '0.3.3':
-        if parser.has_option('preview', 'command'):
-            message = 'Resetting option preview.command to new default due ' \
-                      'to changed syntax.'
-            logger.info(message)
-            parser.remove_option('preview', 'command')
 
 def _get_boolean(arg):
     """
@@ -323,9 +317,6 @@ def read():
                   'settings.' % CONFIG_PATH
         logger.info(message)
 
-    # Fix options whose type or syntax has changed.
-    _fix_changed_options(parser)
-
     # Set config options.
     sections = parser.sections()
     for section in sections:
@@ -380,8 +371,9 @@ def _set_config_option(parser, section, option):
 
     elif typ == Type.CONSTANT_LIST:
         str_list = string.split('|')
-        args = section, option, entry
-        value = list(_get_constant(args) for entry in str_list)
+        value = []
+        for entry in str_list:
+            value.append(_get_constant(section, option, entry))
 
     setattr(eval(section), option, value)
 
@@ -422,8 +414,9 @@ def _set_parser_option(parser, section, option):
         string = '|'.join(str_list)
 
     elif typ == Type.CONSTANT_LIST:
-        args = section, option, entry
-        str_list = list(_get_constant(args) for entry in value)
+        str_list = []
+        for entry in value:
+            str_list.append(_get_constant(section, option, entry))
         string = '|'.join(str_list)
 
     # Set value.
