@@ -1,5 +1,17 @@
 2006-01-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol:
+	* test/info:
+	* test/pyenchant:
+	  Catch pkg_resources.DistributionNotFound when unegging enchant.
+
+	* lib/gaupol/gtk/dialogs/language.py:
+	* lib/gaupol/gtk/dialogs/spellcheck.py:
+	  Catch exceptions in enchant importing and thus allow module to be
+	  imported when enchant is not installed.
+
+2006-01-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	RELEASE 0.3.3
 
 	* lib/gaupol/__init__.py:

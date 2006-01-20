@@ -39,10 +39,14 @@ try:
 except ImportError:
     try:
         import pkg_resources
-        pkg_resources.require('pyenchant')
+        try:
+            pkg_resources.require('pyenchant')
+        except pkg_resources.DistributionNotFound:
+            print 'Not found'
+            raise SystemExit(1)
         import enchant
-    except ImportError, message:
-        print message
+    except ImportError:
+        print 'Not found.'
         raise SystemExit(1)
 except enchant.Error, message:
     print message

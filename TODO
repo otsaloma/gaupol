@@ -4,6 +4,13 @@ Legend:
   P = Postponed
   ? = Questionable
 
+Plans for 0.3.4
+===============
+
+  Bug Fixes:
+    [D] Start-up fails if PyEnchant is not installed
+
+
 Plans for 0.4.0
 ===============
 

@@ -25,7 +25,13 @@ try:
 except ImportError:
     pass
 
-import enchant
+try:
+    import enchant
+except ImportError:
+    pass
+except enchant.Error:
+    pass
+
 import gobject
 import gtk
 

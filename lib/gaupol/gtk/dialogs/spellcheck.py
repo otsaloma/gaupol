@@ -51,9 +51,15 @@ try:
 except ImportError:
     pass
 
+try:
+    import enchant
+    import enchant.checker
+except ImportError:
+    pass
+except enchant.Error:
+    pass
+
 import codecs
-import enchant
-import enchant.checker
 import logging
 import os
 
