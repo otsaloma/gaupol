@@ -20,6 +20,9 @@ Plans for 0.3.3
       [D] Open button on the main toolbar missing tooltip
       [D] Open dialog not always defaulting to directory of last opened file
 
+    Dependencies:
+      [D] Fixed for compatibility with PyEnchant 1.1.4 and 1.1.5
+
 
 Plans for 0.4.0
 ===============

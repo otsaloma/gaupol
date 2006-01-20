@@ -36,7 +36,7 @@ class OutputWindow(gobject.GObject):
     """External application output window."""
 
     __gsignals__ = {
-        'close-button-clicked': (
+        'close': (
             gobject.SIGNAL_RUN_LAST,
             None,
             ()
@@ -58,10 +58,20 @@ class OutputWindow(gobject.GObject):
         if config.output_window.maximized:
             self._window.maximize()
 
+        # Add Ctrl+W as an accelerator to close the window.
+        accel_group = gtk.AccelGroup()
+        accel_group.connect_group(
+            119,
+            gtk.gdk.CONTROL_MASK,
+            gtk.ACCEL_MASK,
+            self._on_close_requested
+        )
+        self._window.add_accel_group(accel_group)
+
         # Connect signals.
         self._window.connect('delete-event', self._on_window_delete_event)
         self._window.connect('window-state-event', self._on_window_state_event)
-        self._close_button.connect('clicked', self._on_close_button_clicked)
+        self._close_button.connect('clicked', self._on_close_requested)
 
         # Create text tags and marks.
         text_buffer = self._text_view.get_buffer()
@@ -89,15 +99,15 @@ class OutputWindow(gobject.GObject):
 
         self._window.hide()
 
-    def _on_close_button_clicked(self, *args):
-        """Emit signal that the close button has been clicked."""
+    def _on_close_requested(self, *args):
+        """Emit signal that the window needs to be closed."""
 
-        self.emit('close-button-clicked')
+        self.emit('close')
 
     def _on_window_delete_event(self, *args):
         """Emit signal that the close button has been clicked."""
 
-        self.emit('close-button-clicked')
+        self.emit('close')
 
         # Prevent window destruction.
         return True

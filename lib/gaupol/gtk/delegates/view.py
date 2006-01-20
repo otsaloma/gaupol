@@ -424,7 +424,7 @@ class ViewDelegate(Delegate):
 
         gtklib.set_cursor_normal(self.window)
 
-    def on_output_window_close_button_clicked(self, *args):
+    def on_output_window_close(self, *args):
         """Synchronize output window visibility menu item."""
 
         path = '/ui/menubar/view/output_window'

@@ -117,6 +117,22 @@ def parse_options():
 
     return parser.parse_args(sys.argv)
 
+def prepare_eggs():
+    """Move eggs to sys.path so that they are importable."""
+
+    # PyEnchant uses the evil egg detouring import-unabler system since 1.1.4.
+    # As an egg PyEnchant is called "pyenchant", as a module "enchant".
+    try:
+        import enchant
+    except ImportError:
+        try:
+            import pkg_resources
+            pkg_resources.require('pyenchant')
+        except ImportError:
+            pass
+    except enchant.Error:
+        pass
+
 def prepare_gettext(no_translation):
     """
     Prepare internationalization using gettext.
@@ -176,6 +192,7 @@ if __name__ == '__main__':
     check_dependencies()
     check_paths()
     prepare_gettext(opts.no_translation)
+    prepare_eggs()
 
     # The world is not big enough for PyChecker and Psyco.
     if not opts.pycheck:

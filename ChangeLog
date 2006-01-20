@@ -1,3 +1,20 @@
+2006-01-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol (prepare_eggs):
+	  New function to adapt to PyEnchant choice of egg distribution.
+
+	* lib/gaupol/gtk/delegates/guiinit.py:
+	* lib/gaupol/gtk/delegates/view.py:
+	  Renamed output window close signal to "close".
+
+	* lib/gaupol/gtk/output.py:
+	  Renamed output window close signal to "close".
+	  Added Ctrl+W accelerator to close the window.
+
+	* test/info:
+	* test/pyenchant:
+	  Adapted to PyEnchant's egging.
+
 2006-01-19  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/gtk/delegates/fileopen.py:

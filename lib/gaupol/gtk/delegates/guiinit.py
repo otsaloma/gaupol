@@ -79,8 +79,7 @@ class GUIInitDelegate(Delegate):
         self.output_window = OutputWindow()
         if config.output_window.show:
             self.output_window.show()
-        method = self.on_output_window_close_button_clicked
-        self.output_window.connect('close-button-clicked', method)
+        self.output_window.connect('close', self.on_output_window_close)
 
         self.set_menu_notify_events('main')
         self.set_sensitivities()

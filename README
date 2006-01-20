@@ -48,6 +48,7 @@ Dependencies
     * Psyco, for best results >= 1.4
     * PyEnchant >= 1.1.3
     * iso-codes
+    * MPlayer or VLC is recommended for preview
 
   Psyco can make Gaupol run a bit faster. PyEnchant is required for
   spell-checking. iso-codes allows the spell-checker to show the language and
