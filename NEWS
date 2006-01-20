@@ -1,3 +1,21 @@
+Gaupol 0.3.3
+============
+
+  Improvements:
+    * Preview current data instead of saved file
+    * Allow selecting arbitrary video file
+    * New toolbar for video
+    * New window for video player output
+    * Pre-configured commands for more than one video player
+
+  Bug Fixes:
+    * Spell-check not working with new PyEnchant releases 1.1.4 and 1.1.5
+    * File marked unchanged after saving a copy of it
+    * Overwrite dialog not always presented when saving
+    * Open button on the main toolbar missing tooltip
+    * Open dialog not always defaulting to directory of last opened file
+
+
 Gaupol 0.3.2
 ============
 
