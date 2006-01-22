@@ -89,7 +89,6 @@ class SubViewer2(SubtitleFile):
         """
         # Compile regular expressions.
         re_blank_line = re.compile(r'^\s*$')
-        re_header = re.compile(r'^\[[A-Z ]+\]')
         time = r'\d\d:\d\d:\d\d.\d\d'
         re_time_line = re.compile(r'^(%s),(%s)\s*$' % (time, time))
 
@@ -105,21 +104,16 @@ class SubViewer2(SubtitleFile):
             if re_blank_line.match(line) is not None:
                 continue
 
-            # Read header.
-            if not header_read:
-                if re_header.search(line) is not None:
-                    self.header += line
-                    continue
-
-            # Read subtitles.
             match = re_time_line.match(line)
             if match is not None:
                 header_read = True
                 shows.append(match.group(1))
                 hides.append(match.group(2))
                 texts.append(u'')
-            else:
+            elif header_read:
                 texts[-1] += line
+            else:
+                self.header += line
 
         # Remove leading and trailing spaces.
         self.header = self.header.strip()

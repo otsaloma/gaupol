@@ -1,5 +1,10 @@
 2006-01-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/files/subviewer2.py:
+	  Allow malformed header.
+
+2006-01-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* MANIFEST.in:
 	* setup.py:
 	  Added format documentation files.

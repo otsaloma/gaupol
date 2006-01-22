@@ -39,7 +39,7 @@ Subviewer 2.0 Subtitle File Format Specification
 
     00:02:11.61,00:02:15.25
     In the years to come...[br]I'll be given the nickname: Malicious West.
-------------------------
+    ------------------------
 
   Tags:
 
