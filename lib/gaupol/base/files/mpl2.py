@@ -20,10 +20,6 @@
 """MPL2 file."""
 
 
-# Documentation:
-# http://napisy.ussbrowarek.org/mpl2-eng.html
-
-
 try:
     from psyco.classes import *
 except ImportError:

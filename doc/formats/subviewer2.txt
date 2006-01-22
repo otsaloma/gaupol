@@ -1,0 +1,52 @@
+Subviewer 2.0 Subtitle File Format Specification
+================================================
+
+  Extension:
+
+    ".sub"
+
+  Notes:
+
+    Times are intuitive time-strings. [br] used for line-breaks. Yes header.
+
+    COLF is "&H" followed by RRGGBB. STYLE is "st" for strikeout, "ud" for
+    underline, "bd" for bold, or "it" for italics. SIZE is font size in
+    points. FONT is font name.
+
+  Sample:
+
+    ------------------------
+    [INFORMATION]
+    [TITLE]
+    [AUTHOR]
+    [SOURCE]
+    [PRG]
+    [FILEPATH]
+    [DELAY]0
+    [CD TRACK]0
+    [COMMENT]
+    [END INFORMATION]
+    [SUBTITLE]
+    [COLF]&HFFFFFF,[STYLE]bd,[SIZE]18,[FONT]Arial
+    00:01:55.60,00:02:00.74
+    It's written in the Buddhist Cannon.[br]The flags are still, no wind blows...
+
+    00:02:01.60,00:02:05.74
+    It's the heart of men that's tumult!
+
+    00:02:06.60,00:02:10.74
+    Ashes of time
+
+    00:02:11.61,00:02:15.25
+    In the years to come...[br]I'll be given the nickname: Malicious West.
+------------------------
+
+  Tags:
+
+    <b>Bold</b>
+    <i>Italics</i>
+    <u>Underline</u>
+
+  Sources:
+
+    http://forum.doom9.org/showthread.php?p=542288#post542288

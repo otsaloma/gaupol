@@ -20,10 +20,6 @@
 """MicroDVD file."""
 
 
-# Documentation:
-# http://netti.nic.fi/~temp/easydivx/help/mdvddoc
-
-
 try:
     from psyco.classes import *
 except ImportError:

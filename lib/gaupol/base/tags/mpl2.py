@@ -20,21 +20,6 @@
 """MPL2 tag library."""
 
 
-# Documentation:
-# http://napisy.ussbrowarek.org/mpl2-eng.html
-#
-# MPL exists as well, but is probably not much used. There might be MPL3 as
-# well, but documentation is poor.
-#
-# Summary:
-# / starts italics
-# \ starts bold
-# _ starts underline
-#
-# All above tags affect only a single line. In addition, all MicroDVD tags can
-# be used (hence the "2" after MPL).
-
-
 try:
     from psyco.classes import *
 except ImportError:

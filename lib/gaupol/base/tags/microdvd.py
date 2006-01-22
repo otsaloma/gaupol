@@ -20,9 +20,7 @@
 """MicroDVD tag library."""
 
 
-# Documentation:
-# http://netti.nic.fi/~temp/easydivx/help/mdvddoc/#step5
-#
+# NOTE:
 # Position and coordinate tags are not implemented.
 
 

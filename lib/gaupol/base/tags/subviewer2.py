@@ -20,15 +20,6 @@
 """SubViewer 2.0 tag library."""
 
 
-# Sigh. Again no documentation.
-# Unofficial information suggests that SubViewer 2.0 uses SubRip tags.
-# http://forum.doom9.org/showthread.php?p=542288#post542288
-#
-# <b></b>
-# <i></i>
-# <u></u>
-
-
 from gaupol.base.tags.subrip import SubRip
 
 

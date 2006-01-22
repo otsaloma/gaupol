@@ -20,14 +20,6 @@
 """SubRip tag library."""
 
 
-# No documentation found for SubRip format.
-#
-# Assumed tags:
-# <b></b>
-# <i></i>
-# <u></u>
-
-
 import re
 
 from gaupol.base.tags import TagLibrary

@@ -53,10 +53,10 @@ class SubViewer2(SubtitleFile):
     [SUBTITLE]
     [COLF]&HFFFFFF,[STYLE]bd,[SIZE]18,[FONT]Arial
     00:00:00.00,00:00:03.38
-    The Cylons Were[br]Created by Man
+    And that completes my final report[br]until we reach touchdown.
 
     00:00:03.68,00:00:05.61
-    They Evolved
+    We're now on full automatic,[br]in the hands of the computers.
     """
 
     FORMAT     = Format.SUBVIEWER2
