@@ -1,5 +1,12 @@
 2006-01-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	RELEASE 0.3.4
+
+	* lib/gaupol/__init__.py:
+	  Bumped version number to 0.3.4.
+
+2006-01-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/files/subviewer2.py:
 	  Allow malformed header.
 

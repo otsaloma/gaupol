@@ -4,17 +4,6 @@ Legend:
   P = Postponed
   ? = Questionable
 
-Plans for 0.3.4
-===============
-
-  Improvements:
-    [D] Support SubViewer 2.0 format
-
-  Bug Fixes:
-    [D] Start-up fails if PyEnchant is not installed
-    [D] Spell-check "Join Forward" button does not work
-
-
 Plans for 0.4.0
 ===============
 

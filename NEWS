@@ -1,3 +1,14 @@
+Gaupol 0.3.4
+============
+
+  Improvements:
+    * Support SubViewer 2.0 format
+
+  Bug Fixes:
+    * Start-up fails if PyEnchant is not installed
+    * Spell-check "Join Forward" button does not work
+
+
 Gaupol 0.3.3
 ============
 
