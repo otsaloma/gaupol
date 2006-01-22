@@ -37,14 +37,15 @@ class Document(object):
 
 class Format(object):
 
-    MICRODVD = 0
-    MPL2     = 1
-    SUBRIP   = 2
+    MICRODVD   = 0
+    MPL2       = 1
+    SUBRIP     = 2
+    SUBVIEWER2 = 3
 
-    class_names   = [  'MicroDVD' ,   'MPL2' ,   'SubRip' ]
-    display_names = [_('MicroDVD'), _('MPL2'), _('SubRip')]
-    extensions    = [  '.sub'     ,   '.txt' ,   '.srt'   ]
-    id_names      = [  'microdvd' ,   'mpl2' ,   'subrip' ]
+    class_names   = [  'MicroDVD' ,   'MPL2' ,   'SubRip' ,   'SubViewer2'    ]
+    display_names = [_('MicroDVD'), _('MPL2'), _('SubRip'), _('SubViewer 2.0')]
+    extensions    = [  '.sub'     ,   '.txt' ,   '.srt'   ,   '.sub'          ]
+    id_names      = [  'microdvd' ,   'mpl2' ,   'subrip' ,   'subviewer2'    ]
 
 class Framerate(object):
 

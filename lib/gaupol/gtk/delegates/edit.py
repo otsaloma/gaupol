@@ -153,7 +153,7 @@ class InsertSubtitlesAction(UIMAction):
     uim_action_item = (
         'insert_subtitles',
         gtk.STOCK_ADD,
-        _('_Insert Subtitles'),
+        _('_Insert Subtitles...'),
         '<control>Insert',
         _('Insert blank subtitles'),
         'on_insert_subtitles_activated'

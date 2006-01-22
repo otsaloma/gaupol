@@ -34,12 +34,15 @@ class SubtitleFile(object):
 
     """Base class for subtitle files."""
 
-    FORMAT = None
-    MODE   = None
+    FORMAT     = None
+    HAS_HEADER = None
+    MODE       = None
 
     # Regular expression that is used to identify this file format.
     # Pattern, flags
     id_pattern = None, None
+
+    HEADER_TEMPLATE = None
 
     def __init__(self, path, encoding, newlines=None):
         """
@@ -50,9 +53,11 @@ class SubtitleFile(object):
         self.path     = path
         self.encoding = encoding
         self.newlines = newlines
+        self.header   = ''
 
-        self.format = self.__class__.FORMAT
-        self.mode   = self.__class__.MODE
+        self.format     = self.__class__.FORMAT
+        self.has_header = self.__class__.HAS_HEADER
+        self.mode       = self.__class__.MODE
 
     def _get_newline_character(self):
         """Get character(s) used for newlines."""

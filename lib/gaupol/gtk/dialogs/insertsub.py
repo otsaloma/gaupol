@@ -39,22 +39,29 @@ class InsertSubtitleDialog(object):
         glade_xml = gtklib.get_glade_xml('insertsub-dialog.glade')
         get_widget = glade_xml.get_widget
 
-        self._dialog             = get_widget('dialog')
-        self._position_label     = get_widget('position_label')
-        self._position_combo_box = get_widget('position_combo_box')
         self._amount_spin_button = get_widget('amount_spin_button')
+        self._dialog             = get_widget('dialog')
+        self._position_combo_box = get_widget('position_combo_box')
+        self._position_label     = get_widget('position_label')
 
+        self._init_mnemonics(glade_xml)
+        self._init_data()
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_OK)
 
-        # Set mnemonics.
-        self._position_label.set_mnemonic_widget(self._position_combo_box)
-        amount_label = get_widget('amount_label')
-        amount_label.set_mnemonic_widget(self._amount_spin_button)
+    def _init_data(self):
+        """Initialize the data."""
 
-        # Set initial values from config.
         self._position_combo_box.set_active(config.subtitle_insert.position)
         self._amount_spin_button.set_value(config.subtitle_insert.amount)
+
+    def _init_mnemonics(self, glade_xml):
+        """Initialize mnemonics."""
+
+        self._position_label.set_mnemonic_widget(self._position_combo_box)
+
+        amount_label = glade_xml.get_widget('amount_label')
+        amount_label.set_mnemonic_widget(self._amount_spin_button)
 
     def destroy(self):
         """Destroy the dialog."""

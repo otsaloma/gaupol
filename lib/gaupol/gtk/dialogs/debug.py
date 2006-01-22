@@ -70,20 +70,8 @@ class DebugDialog(object):
     def __init__(self):
 
         glade_xml = gtklib.get_glade_xml('debug-dialog.glade')
-        self._dialog = glade_xml.get_widget('dialog')
+        self._dialog    = glade_xml.get_widget('dialog')
         self._text_view = glade_xml.get_widget('text_view')
-        self._dialog.set_default_response(gtk.RESPONSE_CLOSE)
-
-        # Follow the mouse pointer.
-        method = self._on_text_view_motion_notify_event
-        self._text_view.connect('motion-notify-event', method)
-
-        # Create text tags for text view.
-        tag = self._text_view.get_buffer().create_tag
-        tag('header', weight=pango.WEIGHT_BOLD, scale=pango.SCALE_LARGE)
-        tag('title' , weight=pango.WEIGHT_BOLD, left_margin=12)
-        tag('text'  , left_margin=12)
-        tag('code'  , family='monospace', left_margin=24)
 
         # Text tags for URLs. Names of the tags are integers corresponding to
         # indexes in self._files.
@@ -97,6 +85,31 @@ class DebugDialog(object):
 
         # Current working directory
         self._pwd = os.getcwd()
+
+        self._init_signals()
+        self._init_text_tags()
+        self._dialog.set_default_response(gtk.RESPONSE_CLOSE)
+
+    def _init_signals(self):
+        """Initialize signals."""
+
+        # Follow the mouse pointer.
+        method = self._on_text_view_motion_notify_event
+        self._text_view.connect('motion-notify-event', method)
+
+    def _init_text_tags(self):
+        """Initialize text tags."""
+
+        BOLD  = pango.WEIGHT_BOLD
+        LARGE = pango.SCALE_LARGE
+
+        text_buffer = self._text_view.get_buffer()
+        create_tag  = text_buffer.create_tag
+
+        create_tag('header', weight=BOLD, scale=LARGE)
+        create_tag('title', weight=BOLD, left_margin=12)
+        create_tag('text', left_margin=12)
+        create_tag('code', family='monospace', left_margin=24)
 
     def destroy(self):
         """Destroy the dialog."""

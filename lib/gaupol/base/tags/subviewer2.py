@@ -17,10 +17,23 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""All subtitle file format classes."""
+"""SubViewer 2.0 tag library."""
 
 
-from gaupol.base.files.microdvd   import MicroDVD
-from gaupol.base.files.mpl2       import MPL2
-from gaupol.base.files.subrip     import SubRip
-from gaupol.base.files.subviewer2 import SubViewer2
+# Sigh. Again no documentation.
+# Unofficial information suggests that SubViewer 2.0 uses SubRip tags.
+# http://forum.doom9.org/showthread.php?p=542288#post542288
+#
+# <b></b>
+# <i></i>
+# <u></u>
+
+
+from gaupol.base.tags.subrip import SubRip
+
+
+class SubViewer2(SubRip):
+
+    """SubViewer 2.0 tag library."""
+
+    pass

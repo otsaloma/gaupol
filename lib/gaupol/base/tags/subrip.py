@@ -28,11 +28,6 @@
 # <u></u>
 
 
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
-
 import re
 
 from gaupol.base.tags import TagLibrary

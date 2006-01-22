@@ -34,9 +34,43 @@ from gaupol.constants               import Document
 from gaupol.gtk.colconstants        import *
 from gaupol.gtk.delegates           import Delegate, UIMAction
 from gaupol.gtk.dialogs.filechooser import SaveFileDialog
+from gaupol.gtk.dialogs.header      import HeaderDialog
 from gaupol.gtk.dialogs.message     import ErrorDialog
 from gaupol.gtk.error               import Cancelled
 from gaupol.gtk.util                import config, gtklib
+
+
+class EditHeadersAction(UIMAction):
+
+    """Edit subtitle file headers."""
+
+    uim_action_item = (
+        'edit_headers',
+        gtk.STOCK_PROPERTIES,
+        _('_Headers...'),
+        '<alt>Return',
+        _('Edit file headers'),
+        'on_edit_headers_activated'
+    )
+
+    uim_paths = ['/ui/menubar/file/headers']
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return whether action can or cannot be done."""
+
+        if page is None:
+            return False
+
+        main_file = page.project.main_file
+        tran_file = page.project.tran_file
+
+        if main_file is not None and main_file.has_header:
+            return True
+        if tran_file is not None and tran_file.has_header:
+            return True
+
+        return False
 
 
 class SaveAction(UIMAction):
@@ -231,6 +265,27 @@ class FileSaveDelegate(Delegate):
 
         else:
             return None, None, None, None
+
+    def on_edit_headers_activated(self, *args):
+        """Edit subtitle file headers."""
+
+        page = self.get_current_page()
+        dialog = HeaderDialog(self.window, page)
+        response = dialog.run()
+        main_header = dialog.get_main_header()
+        tran_header = dialog.get_translation_header()
+        dialog.destroy()
+
+        if response != gtk.RESPONSE_OK:
+            return
+
+        main_file = page.project.main_file
+        tran_file = page.project.tran_file
+
+        if main_file is not None and main_file.has_header:
+            main_file.header = main_header
+        if tran_file is not None and tran_file.has_header:
+            tran_file.header = tran_header
 
     def on_save_a_copy_of_main_document_activated(self, *args):
         """

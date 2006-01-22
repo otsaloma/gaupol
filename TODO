@@ -7,12 +7,18 @@ Legend:
 Plans for 0.3.4
 ===============
 
+  Improvements:
+    [D] Support SubViewer 2.0 format
+
   Bug Fixes:
     [D] Start-up fails if PyEnchant is not installed
+    [D] Spell-check "Join Forward" button does not work
 
 
 Plans for 0.4.0
 ===============
+
+  [ ] Split editor widgets out from cell renderers
 
   New Features:
     [ ] Timing shift
@@ -61,14 +67,8 @@ Unscheduled
 
   * Support for additional subtitle formats
 
-      - Add support for headers
-          o Header editing?
-          o Header conversion?
-
       - MPlayerSub/MPSub
         http://www.mplayerhq.hu/DOCS/tech/mpsub.sub
-
-      - SubViewer & SubViewer 2.0
 
       - SubStation Alpha (SSA & ASS)
         http://moodub.free.fr/ass-specs.doc

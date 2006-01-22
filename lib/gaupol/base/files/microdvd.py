@@ -46,8 +46,9 @@ class MicroDVD(SubtitleFile):
     {533}{624}We're now on full automatic,|in the hands of the computers.
     """
 
-    FORMAT = Format.MICRODVD
-    MODE   = Mode.FRAME
+    FORMAT     = Format.MICRODVD
+    HAS_HEADER = False
+    MODE       = Mode.FRAME
 
     id_pattern = r'^\{\d+\}\{\d+\}.*?$', None
 

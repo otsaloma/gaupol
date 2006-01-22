@@ -67,11 +67,12 @@ import gobject
 import gtk
 import pango
 
-from gaupol.base.util           import langlib, listlib
-from gaupol.constants           import Document
-from gaupol.gtk.dialogs.message import ErrorDialog
-from gaupol.gtk.error           import Cancelled
-from gaupol.gtk.util            import config, gtklib
+from gaupol.base.util            import langlib, listlib
+from gaupol.constants            import Document
+from gaupol.gtk.dialogs.message  import ErrorDialog
+from gaupol.gtk.dialogs.textedit import TextEditDialog
+from gaupol.gtk.error            import Cancelled
+from gaupol.gtk.util             import config, gtklib
 
 
 logger = logging.getLogger()
@@ -96,59 +97,6 @@ class SpellCheckErrorDialog(ErrorDialog):
 
         title  = _('Failed to start spell-check')
         ErrorDialog.__init__(self, parent, title, message)
-
-
-class TextEditDialog(gtk.Dialog):
-
-    """Dialog for editing the text of a single subtitle."""
-
-    def __init__(self, parent, text):
-
-        gtk.Dialog.__init__(self)
-
-        self.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
-        self.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
-        self.set_default_response(gtk.RESPONSE_OK)
-
-        self.set_has_separator(False)
-        self.set_transient_for(parent)
-        self.set_border_width(6)
-        self.set_modal(True)
-
-        # Create text view.
-        self._text_view = gtk.TextView()
-        self._text_view.set_wrap_mode(gtk.WRAP_NONE)
-        text_buffer = self._text_view.get_buffer()
-        text_buffer.set_text(unicode(text))
-
-        # Set font.
-        if not config.editor.use_default_font:
-            gtklib.set_widget_font(self._text_view, config.editor.font)
-
-        # Put text view in a scrolled window.
-        scrolled_window = gtk.ScrolledWindow()
-        scrolled_window.set_border_width(6)
-        scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
-        scrolled_window.set_shadow_type(gtk.SHADOW_IN)
-        scrolled_window.add(self._text_view)
-        main_vbox = self.get_child()
-        main_vbox.add(scrolled_window)
-
-        # Set text view width to 46 ex and height to 4 lines.
-        label = gtk.Label('\n'.join(['x' * 46] * 4))
-        if not config.editor.use_default_font:
-            gtklib.set_label_font(label, config.editor.font)
-        width, height = label.size_request()
-        self._text_view.set_size_request(width + 4, height + 7)
-
-        self.show_all()
-
-    def get_text(self):
-        """Get the text in the text view."""
-
-        text_buffer = self._text_view.get_buffer()
-        start, end = text_buffer.get_bounds()
-        return text_buffer.get_text(start, end, True)
 
 
 class SpellCheckDialog(gobject.GObject):
@@ -205,12 +153,6 @@ class SpellCheckDialog(gobject.GObject):
         self._suggestion_view     = get_widget('suggestion_tree_view')
         self._text_view           = get_widget('text_view')
 
-        # Set fonts.
-        if not config.editor.use_default_font:
-            gtklib.set_widget_font(self._text_view      , config.editor.font)
-            gtklib.set_widget_font(self._entry          , config.editor.font)
-            gtklib.set_widget_font(self._suggestion_view, config.editor.font)
-
         # Pages to check
         self._pages = pages
 
@@ -239,13 +181,16 @@ class SpellCheckDialog(gobject.GObject):
         self._corrected_texts = [[], []]
 
         self._init_spell_check()
-        self._init_dialog(parent)
-        self._set_mnemonics(glade_xml)
+        self._init_fonts()
+        self._init_mnemonics(glade_xml)
         self._init_sensitivities()
         self._init_text_tags()
         self._init_suggestion_view()
-        self._connect_signals()
+        self._init_signals()
         self._init_sizes()
+
+        self._dialog.set_transient_for(parent)
+        self._dialog.set_default_response(gtk.RESPONSE_CLOSE)
 
     def _init_checker(self, document):
         """Initialize spell-checker for document."""
@@ -277,6 +222,14 @@ class SpellCheckDialog(gobject.GObject):
 
         self._checkers[document] = enchant.checker.SpellChecker(dictionary, '')
 
+    def _init_fonts(self):
+        """Initialize fonts."""
+
+        if not config.editor.use_default_font:
+            gtklib.set_widget_font(self._text_view      , config.editor.font)
+            gtklib.set_widget_font(self._entry          , config.editor.font)
+            gtklib.set_widget_font(self._suggestion_view, config.editor.font)
+
     def _init_lang_name(self, document):
         """Initialize language descriptive name for document."""
 
@@ -284,15 +237,19 @@ class SpellCheckDialog(gobject.GObject):
         name = langlib.get_descriptive_name(lang)
         self._lang_names[document] = name
 
-    def _init_dialog(self, parent):
-        """Initialize the dialog."""
+    def _init_mnemonics(self, glade_xml):
+        """Initialize mnemonics."""
 
-        self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(gtk.RESPONSE_CLOSE)
-        self._dialog.connect('delete-event', self._destroy)
+        # Entry
+        label = glade_xml.get_widget('entry_label')
+        label.set_mnemonic_widget(self._entry)
+
+        # Suggestion view
+        label = glade_xml.get_widget('suggestion_label')
+        label.set_mnemonic_widget(self._suggestion_view)
 
     def _init_replacements(self, document):
-        """Init the list of replacements for document."""
+        """Initialize replacements for document."""
 
         lang = self._langs[document]
         path = os.path.join(SPELL_CHECK_DIR, lang + '.repl')
@@ -328,7 +285,7 @@ class SpellCheckDialog(gobject.GObject):
             self._replacements[document].append(entry)
 
     def _init_sensitivities(self):
-        """Initialize widget sensitivities."""
+        """Initialize sensitivities."""
 
         self._replace_button.set_sensitive(False)
         self._replace_all_button.set_sensitive(False)
@@ -336,8 +293,31 @@ class SpellCheckDialog(gobject.GObject):
         self._join_forward_button.set_sensitive(False)
         self._check_button.set_sensitive(False)
 
+    def _init_signals(self):
+        """Initialize signals."""
+
+        connections = (
+            (self._add_button         , self._on_add_button_clicked         ),
+            (self._add_lower_button   , self._on_add_lower_button_clicked   ),
+            (self._close_button       , self._destroy                       ),
+            (self._check_button       , self._on_check_button_clicked       ),
+            (self._edit_button        , self._on_edit_button_clicked        ),
+            (self._ignore_all_button  , self._on_ignore_all_button_clicked  ),
+            (self._ignore_button      , self._on_ignore_button_clicked      ),
+            (self._join_back_button   , self._on_join_back_button_clicked   ),
+            (self._join_forward_button, self._on_join_forward_button_clicked),
+            (self._replace_all_button , self._on_replace_all_button_clicked ),
+            (self._replace_button     , self._on_replace_button_clicked     ),
+        )
+
+        for button, method in connections:
+            button.connect('clicked', method)
+
+        self._entry.connect('changed', self._on_entry_changed)
+        self._dialog.connect('delete-event', self._destroy)
+
     def _init_sizes(self):
-        """Initialize text-containing widget sizes."""
+        """Initialize widget sizes."""
 
         # Set suggestion list width to 30 ex.
         label = gtk.Label('x' * 30)
@@ -354,7 +334,7 @@ class SpellCheckDialog(gobject.GObject):
         self._text_view.set_size_request(width + 4, height + 7)
 
     def _init_spell_check(self):
-        """Initialize the spell check objects to use."""
+        """Initialize spell check."""
 
         # Create profile directory if it doesn't exist.
         if not os.path.isdir(SPELL_CHECK_DIR):
@@ -376,7 +356,7 @@ class SpellCheckDialog(gobject.GObject):
             self._init_replacements(TRAN)
 
     def _init_suggestion_view(self):
-        """Initialize the list of suggestions."""
+        """Initialize suggestions view."""
 
         view = self._suggestion_view
         view.columns_autosize()
@@ -395,7 +375,7 @@ class SpellCheckDialog(gobject.GObject):
         view.append_column(tree_view_column)
 
     def _init_text_tags(self):
-        """Init the tags used in the text view."""
+        """Init text tags."""
 
         text_buffer = self._text_view.get_buffer()
         text_buffer.create_tag('misspelled', weight=pango.WEIGHT_BOLD)
@@ -458,28 +438,6 @@ class SpellCheckDialog(gobject.GObject):
         self._entry.set_text(u'')
         self._fill_suggestion_view(checker.suggest())
         self._suggestion_view.grab_focus()
-
-    def _connect_signals(self):
-        """Connect signals to widgets."""
-
-        connections = (
-            (self._add_button         , self._on_add_button_clicked         ),
-            (self._add_lower_button   , self._on_add_lower_button_clicked   ),
-            (self._close_button       , self._destroy                       ),
-            (self._check_button       , self._on_check_button_clicked       ),
-            (self._edit_button        , self._on_edit_button_clicked        ),
-            (self._ignore_all_button  , self._on_ignore_all_button_clicked  ),
-            (self._ignore_button      , self._on_ignore_button_clicked      ),
-            (self._join_back_button   , self._on_join_back_button_clicked   ),
-            (self._join_forward_button, self._on_join_forward_button_clicked),
-            (self._replace_all_button , self._on_replace_all_button_clicked ),
-            (self._replace_button     , self._on_replace_button_clicked     ),
-        )
-
-        for button, method in connections:
-            button.connect('clicked', method)
-
-        self._entry.connect('changed', self._on_entry_changed)
 
     def _destroy(self, *args):
         """Destroy the dialog after registering changes."""
@@ -609,7 +567,7 @@ class SpellCheckDialog(gobject.GObject):
         start = checker.wordpos
         end = start + len(checker.word)
         text = text[:end] + text [end + 1:]
-        self._checker.set_text(text)
+        checker.set_text(text)
         self._advance()
 
     def _on_replace_all_button_clicked(self, *args):
@@ -680,17 +638,6 @@ class SpellCheckDialog(gobject.GObject):
         name = self._lang_names[document]
         self._language_label.set_text('<b>%s</b>' % name)
         self._language_label.set_use_markup(True)
-
-    def _set_mnemonics(self, glade_xml):
-        """Initialize mnemonics for widgets."""
-
-        # Entry
-        label = glade_xml.get_widget('entry_label')
-        label.set_mnemonic_widget(self._entry)
-
-        # Suggestion view
-        label = glade_xml.get_widget('suggestion_label')
-        label.set_mnemonic_widget(self._suggestion_view)
 
     def _set_next_text(self):
         """

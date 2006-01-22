@@ -26,11 +26,6 @@
 # Position and coordinate tags are not implemented.
 
 
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
-
 import re
 
 from gaupol.base.tags import TagLibrary

@@ -88,6 +88,13 @@ class TimeFrameCalculator(object):
         else:
             return '00:00:00,000'
 
+    def round_time(self, time, decimals):
+        """Round time to amount of decimals in seconds."""
+
+        seconds = self.time_to_seconds(time)
+        seconds = round(seconds, decimals)
+        return self.seconds_to_time(seconds)
+
     def seconds_to_frame(self, seconds):
         """Convert seconds to frame."""
 

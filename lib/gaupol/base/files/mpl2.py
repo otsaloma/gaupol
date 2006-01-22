@@ -47,8 +47,9 @@ class MPL2(SubtitleFile):
     [222][260]We're now on full automatic,|in the hands of the computers.
     """
 
-    FORMAT = Format.MPL2
-    MODE   = Mode.TIME
+    FORMAT     = Format.MPL2
+    HAS_HEADER = False
+    MODE       = Mode.TIME
 
     id_pattern = r'^\[\d+\]\[\d+\].*?$', None
 

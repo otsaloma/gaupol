@@ -45,22 +45,28 @@ class EncodingDialog(object):
         self._dialog = glade_xml.get_widget('dialog')
         self._view   = glade_xml.get_widget('tree_view')
 
+        self._init_mnemonics(glade_xml)
+        self._init_view()
+        self._init_sizes()
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_OK)
+
+    def _init_mnemonics(self, glade_xml):
+        """Initialize mnemonics."""
 
         label = glade_xml.get_widget('label')
         label.set_mnemonic_widget(self._view)
 
-        self._init_view()
+    def _init_sizes(self):
+        """Initialize widget sizes."""
 
-        # Set dialog size.
         width, height = gtklib.get_tree_view_size(self._view)
         width  = width  + 52 + gtklib.EXTRA
         height = height + 84 + gtklib.EXTRA
         gtklib.resize_dialog(self._dialog, width, height, 0.5, 0.5)
 
     def _init_view(self):
-        """Initialize the list of encodings."""
+        """Initialize encodings view."""
 
         self._view.columns_autosize()
 
@@ -131,7 +137,7 @@ class AdvancedEncodingDialog(EncodingDialog):
         EncodingDialog.__init__(self, parent)
 
     def _init_view(self):
-        """Initialize the list of encodings."""
+        """Initialize encoding view."""
 
         self._view.columns_autosize()
 

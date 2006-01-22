@@ -48,105 +48,29 @@ class LanguageDialog(object):
         glade_xml = gtklib.get_glade_xml('language-dialog.glade')
         get = glade_xml.get_widget
 
-        self._dialog                = get('dialog')
-        self._project_current_radio = get('project_current_radio_button')
-        self._project_all_radio     = get('project_all_radio_button')
         self._col_main_check        = get('column_main_check_button')
         self._col_tran_check        = get('column_translation_check_button')
+        self._dialog                = get('dialog')
         self._lang_main_view        = get('language_main_tree_view')
         self._lang_tran_view        = get('language_translation_tree_view')
-
-        self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(gtk.RESPONSE_CLOSE)
+        self._project_all_radio     = get('project_all_radio_button')
+        self._project_current_radio = get('project_current_radio_button')
 
         # Lists of languages
         self._langs = []
 
+        self._init_mnemonics(glade_xml)
+        self._init_radio_groups()
         self._init_views()
-        self._set_mnemonics(glade_xml)
-        self._connect_signals()
-        self._list_languages()
-        self._set_from_config()
+        self._init_signals()
+        self._init_languages()
+        self._init_values()
+        self._init_sizes()
+        self._dialog.set_transient_for(parent)
+        self._dialog.set_default_response(gtk.RESPONSE_CLOSE)
 
-        # Set dialog size.
-        width, height = gtklib.get_tree_view_size(self._lang_main_view)
-        width  = (width * 2) + 100 + gtklib.EXTRA
-        height = height      + 267 + gtklib.EXTRA
-        gtklib.resize_dialog(self._dialog, width, height, 0.5, 0.5)
-
-    def _init_views(self):
-        """Init the list of languages."""
-
-        views = (
-            self._lang_main_view,
-            self._lang_tran_view
-        )
-
-        methods = (
-            self._on_lang_main_view_selection_changed,
-            self._on_lang_tran_view_selection_changed
-        )
-
-        for i in range(len(views)):
-
-            view = views[i]
-            view.columns_autosize()
-
-            selection = view.get_selection()
-            selection.set_mode(gtk.SELECTION_SINGLE)
-            selection.unselect_all()
-            selection.connect('changed', methods[i])
-
-            store = gtk.ListStore(gobject.TYPE_STRING)
-            view.set_model(store)
-
-            cell_renderer = gtk.CellRendererText()
-            tree_view_column = gtk.TreeViewColumn('', cell_renderer, text=0)
-            view.append_column(tree_view_column)
-
-    def _connect_signals(self):
-        """Connect signals to widgets."""
-
-        # Ensure that project radio buttons have the same group.
-        # ValueError is raised if button already is in group.
-        group = self._project_current_radio.get_group()[0]
-        try:
-            self._project_all_radio.set_group(group)
-        except ValueError:
-            pass
-
-        # Project radio buttons
-        method = self._on_project_all_radio_toggled
-        self._project_all_radio.connect('toggled', method)
-
-        # Column check buttons
-        method = self._on_col_main_check_toggled
-        self._col_main_check.connect('toggled', method)
-        method = self._on_col_tran_check_toggled
-        self._col_tran_check.connect('toggled', method)
-
-    def _get_selected_language_row(self, view):
-        """Get the selected language view row."""
-
-        selection = view.get_selection()
-        store, itr = selection.get_selected()
-
-        if itr is None:
-            return None
-
-        row = store.get_path(itr)
-        try:
-            return row[0]
-        except TypeError:
-            return row
-
-    def destroy(self):
-        """Destroy the dialog."""
-
-        self._dialog.destroy()
-
-    def _list_languages(self):
-        """List available languages."""
+    def _init_languages(self):
+        """Initialize list of available languages."""
 
         # List languages by trying to create a dictionary object for them.
         for lang in langlib.locales:
@@ -167,6 +91,123 @@ class LanguageDialog(object):
             name = langlib.get_descriptive_name(lang)
             main_store.append([name])
             tran_store.append([name])
+
+    def _init_mnemonics(self, glade_xml):
+        """Initialize mnemonics."""
+
+        text_label = glade_xml.get_widget('language_main_label')
+        text_label.set_mnemonic_widget(self._lang_main_view)
+
+        tran_label = glade_xml.get_widget('language_translation_label')
+        tran_label.set_mnemonic_widget(self._lang_tran_view)
+
+    def _init_radio_groups(self):
+        """Initialize radio button groups."""
+
+        # Ensure that project radio buttons have the same group.
+        # ValueError is raised if button already is in group.
+        group = self._project_current_radio.get_group()[0]
+        try:
+            self._project_all_radio.set_group(group)
+        except ValueError:
+            pass
+
+    def _init_signals(self):
+        """Initialize signals."""
+
+        method = self._on_project_all_radio_toggled
+        self._project_all_radio.connect('toggled', method)
+
+        method = self._on_col_main_check_toggled
+        self._col_main_check.connect('toggled', method)
+
+        method = self._on_col_tran_check_toggled
+        self._col_tran_check.connect('toggled', method)
+
+        selection = self._lang_main_view.get_selection()
+        method = self._on_lang_main_view_selection_changed
+        selection.connect('changed', method)
+
+        selection = self._lang_tran_view.get_selection()
+        method = self._on_lang_tran_view_selection_changed
+        selection.connect('changed', method)
+
+    def _init_sizes(self):
+        """Initialize widget sizes."""
+
+        width, height = gtklib.get_tree_view_size(self._lang_main_view)
+        width  = (width * 2) + 100 + gtklib.EXTRA
+        height = height      + 267 + gtklib.EXTRA
+        gtklib.resize_dialog(self._dialog, width, height, 0.5, 0.5)
+
+    def _init_values(self):
+        """Initialize values."""
+
+        # Projects
+        check_all = config.spell_check.check_all_projects
+        self._project_all_radio.set_active(check_all)
+
+        # Columns
+        check_main = config.spell_check.check_main
+        check_tran = config.spell_check.check_translation
+        self._col_main_check.set_active(check_main)
+        self._col_tran_check.set_active(check_tran)
+        self._lang_main_view.set_sensitive(check_main)
+        self._lang_tran_view.set_sensitive(check_tran)
+
+        # Languages
+        main_selection = self._lang_main_view.get_selection()
+        tran_selection = self._lang_tran_view.get_selection()
+        main_lang = config.spell_check.main_language
+        tran_lang = config.spell_check.translation_language
+        try:
+            row = self._langs.index(main_lang)
+            main_selection.select_path(row)
+        except ValueError:
+            pass
+        try:
+            row = self._langs.index(tran_lang)
+            tran_selection.select_path(row)
+        except ValueError:
+            pass
+
+    def _init_views(self):
+        """Initialize language views."""
+
+        for view in (self._lang_main_view, self._lang_tran_view):
+
+            view.columns_autosize()
+
+            selection = view.get_selection()
+            selection.set_mode(gtk.SELECTION_SINGLE)
+            selection.unselect_all()
+
+            store = gtk.ListStore(gobject.TYPE_STRING)
+            view.set_model(store)
+
+            cell_renderer = gtk.CellRendererText()
+            tree_view_column = gtk.TreeViewColumn('', cell_renderer, text=0)
+            view.append_column(tree_view_column)
+
+    def _get_selected_language_row(self, view):
+        """Get the selected language view row."""
+
+        selection = view.get_selection()
+        store, itr = selection.get_selected()
+
+        if itr is None:
+            return None
+
+        row = store.get_path(itr)
+        try:
+            return row[0]
+        except TypeError:
+            return row
+
+    def destroy(self):
+        """Destroy the dialog."""
+
+        self._dialog.destroy()
 
     def _on_col_main_check_toggled(self, check_button):
         """Set checking of main texts."""
@@ -210,41 +251,5 @@ class LanguageDialog(object):
         self._dialog.show()
         return self._dialog.run()
 
-    def _set_from_config(self):
-        """Set values from config."""
 
-        # Projects
-        check_all = config.spell_check.check_all_projects
-        self._project_all_radio.set_active(check_all)
 
-        # Columns
-        check_main = config.spell_check.check_main
-        check_tran = config.spell_check.check_translation
-        self._col_main_check.set_active(check_main)
-        self._col_tran_check.set_active(check_tran)
-        self._lang_main_view.set_sensitive(check_main)
-        self._lang_tran_view.set_sensitive(check_tran)
-
-        # Languages
-        main_selection = self._lang_main_view.get_selection()
-        tran_selection = self._lang_tran_view.get_selection()
-        main_lang = config.spell_check.main_language
-        tran_lang = config.spell_check.translation_language
-        try:
-            row = self._langs.index(main_lang)
-            main_selection.select_path(row)
-        except ValueError:
-            pass
-        try:
-            row = self._langs.index(tran_lang)
-            tran_selection.select_path(row)
-        except ValueError:
-            pass
-
-    def _set_mnemonics(self, glade_xml):
-        """Set mnemonics for widgets."""
-
-        text_label = glade_xml.get_widget('language_main_label')
-        text_label.set_mnemonic_widget(self._lang_main_view)
-        tran_label = glade_xml.get_widget('language_translation_label')
-        tran_label.set_mnemonic_widget(self._lang_tran_view)

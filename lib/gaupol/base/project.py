@@ -83,10 +83,10 @@ class Project(Model):
         self.output     = None
 
         self._delegations = {}
-        self._assign_delegations()
+        self._init_delegations()
 
-    def _assign_delegations(self):
-        """Map method names to Delegate objects."""
+    def _init_delegations(self):
+        """Initialize delegate mappings."""
 
         # Loop through all delegates creating an instance of the delegate and
         # mapping all its methods that don't start with an underscore to that

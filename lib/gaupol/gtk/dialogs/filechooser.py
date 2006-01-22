@@ -72,7 +72,7 @@ class TextFileChooserDialog(gtk.FileChooserDialog):
             self._locale_encoding = None
 
         self._init_encodings()
-        self._add_filters()
+        self._init_filters()
 
     def _init_encodings(self):
         """Initialize the list of encodings."""
@@ -98,8 +98,8 @@ class TextFileChooserDialog(gtk.FileChooserDialog):
         # Sort encodings by descriptive names.
         self._encodings.sort(sort)
 
-    def _add_filters(self):
-        """Add the file filters."""
+    def _init_filters(self):
+        """Initialize the file filters."""
 
         # Name , Mime-type, Pattern
         filters = [
@@ -211,11 +211,10 @@ class OpenFileDialog(TextFileChooserDialog):
 
         self._encoding_combo_box = None
 
-        self.set_default_response(gtk.RESPONSE_OK)
-        self.set_current_folder(config.file.directory)
-
         self._init_extra_widget()
         self._fill_encoding_combo_box()
+        self.set_default_response(gtk.RESPONSE_OK)
+        self.set_current_folder(config.file.directory)
 
     def _init_extra_widget(self):
         """Initialize the filechooser extra widget area."""
@@ -259,8 +258,6 @@ class SaveFileDialog(TextFileChooserDialog):
         self._encoding_combo_box = None
         self._newline_combo_box  = None
 
-        self.set_default_response(gtk.RESPONSE_OK)
-        self.set_current_folder(config.file.directory)
 
         self.connect('response', self._on_response)
 
@@ -271,6 +268,8 @@ class SaveFileDialog(TextFileChooserDialog):
 
         self.set_format(config.file.format)
         self.set_newlines(config.file.newlines)
+        self.set_default_response(gtk.RESPONSE_OK)
+        self.set_current_folder(config.file.directory)
 
     def _init_extra_widget(self):
         """Initialize the filechooser extra widget area."""

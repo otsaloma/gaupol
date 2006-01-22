@@ -50,8 +50,9 @@ class SubRip(SubtitleFile):
     in the hands of the computers.
     """
 
-    FORMAT = Format.SUBRIP
-    MODE   = Mode.TIME
+    FORMAT     = Format.SUBRIP
+    HAS_HEADER = False
+    MODE       = Mode.TIME
 
     id_pattern = r'^\d\d:\d\d:\d\d,\d\d\d --> \d\d:\d\d:\d\d,\d\d\d\s*$', None
 

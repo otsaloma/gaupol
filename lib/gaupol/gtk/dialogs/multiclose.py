@@ -48,18 +48,23 @@ class MultiCloseWarningDialog(object):
     def __init__(self, parent, pages):
 
         glade_xml = gtklib.get_glade_xml('multiclose-dialog.glade')
-
-        # Widgets
         self._dialog    = glade_xml.get_widget('dialog')
         self._main_view = glade_xml.get_widget('main_tree_view')
         self._tran_view = glade_xml.get_widget('translation_tree_view')
 
-        self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(gtk.RESPONSE_YES)
-
         # Lists of tuples (page, basename)
         self._main_data = []
         self._tran_data = []
+
+        self._init_data(pages)
+        self._init_main_view(glade_xml)
+        self._init_translation_view(glade_xml)
+        self._init_sizes()
+        self._dialog.set_transient_for(parent)
+        self._dialog.set_default_response(gtk.RESPONSE_YES)
+
+    def _init_data(self, pages):
+        """Initialize document lists"""
 
         # List pages with unsaved changes.
         for page in pages:
@@ -67,10 +72,6 @@ class MultiCloseWarningDialog(object):
                 self._main_data.append((page, page.get_main_basename()))
             if page.project.tran_active and page.project.tran_changed:
                 self._tran_data.append((page, page.get_translation_basename()))
-
-        self._init_main_view(glade_xml)
-        self._init_translation_view(glade_xml)
-        self._set_dialog_size()
 
     def _init_main_view(self, glade_xml):
         """Initialize the list of main documents."""
@@ -86,6 +87,29 @@ class MultiCloseWarningDialog(object):
         if len(store) == 0:
             glade_xml.get_widget('main_label').hide()
             glade_xml.get_widget('main_scrolled_window').hide()
+
+    def _init_sizes(self):
+        """Initialize widget sizes."""
+
+        main_width   = 0
+        main_height  = 0
+        tran_width   = 0
+        tran_height  = 0
+        height_extra = 136
+
+        # Get desired sizes for scrolled windows.
+        size = gtklib.get_tree_view_size
+        if self._main_data:
+            main_width, main_height = size(self._main_view)
+            height_extra += 32
+        if self._tran_data:
+            tran_width, tran_height = size(self._tran_view)
+            height_extra += 32
+
+        # Get desired dialog size.
+        width  = max(main_width, tran_width) + 88 + gtklib.EXTRA
+        height = main_height + tran_height + height_extra + gtklib.EXTRA
+        gtklib.resize_message_dialog(self._dialog, width, height)
 
     def _init_translation_view(self, glade_xml):
         """Initialize the list of translation documents."""
@@ -179,26 +203,3 @@ class MultiCloseWarningDialog(object):
         self._main_view.grab_focus()
         self._dialog.show()
         return self._dialog.run()
-
-    def _set_dialog_size(self):
-        """Set smart size for dialog."""
-
-        main_width   = 0
-        main_height  = 0
-        tran_width   = 0
-        tran_height  = 0
-        height_extra = 136
-
-        # Get desired sizes for scrolled windows.
-        size = gtklib.get_tree_view_size
-        if self._main_data:
-            main_width, main_height = size(self._main_view)
-            height_extra += 32
-        if self._tran_data:
-            tran_width, tran_height = size(self._tran_view)
-            height_extra += 32
-
-        # Get desired dialog size.
-        width  = max(main_width, tran_width) + 88 + gtklib.EXTRA
-        height = main_height + tran_height + height_extra + gtklib.EXTRA
-        gtklib.resize_message_dialog(self._dialog, width, height)

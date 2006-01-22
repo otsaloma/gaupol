@@ -20,12 +20,6 @@
 """Base class for subtitle tag libraries."""
 
 
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
-
-
 class TagLibrary(object):
 
     """

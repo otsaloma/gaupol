@@ -48,15 +48,28 @@ class OutputWindow(gobject.GObject):
         gobject.GObject.__init__(self)
 
         glade_xml = gtklib.get_glade_xml('output-window.glade')
-        self._window       = glade_xml.get_widget('window')
-        self._text_view    = glade_xml.get_widget('text_view')
         self._close_button = glade_xml.get_widget('close_button')
+        self._text_view    = glade_xml.get_widget('text_view')
+        self._window       = glade_xml.get_widget('window')
 
-        # Set window geometry.
+        # Text buffer end mark
+        self._end_mark = None
+
+        self._init_sizes()
+        self._init_keys()
+        self._init_signals()
+        self._init_text_tags()
+
+    def _init_sizes(self):
+        """Initialize widget sizes."""
+
         self._window.resize(*config.output_window.size)
         self._window.move(*config.output_window.position)
         if config.output_window.maximized:
             self._window.maximize()
+
+    def _init_keys(self):
+        """Initialize keyboard shortcuts."""
 
         # Add Ctrl+W as an accelerator to close the window.
         accel_group = gtk.AccelGroup()
@@ -68,12 +81,16 @@ class OutputWindow(gobject.GObject):
         )
         self._window.add_accel_group(accel_group)
 
-        # Connect signals.
+    def _init_signals(self):
+        """Initialize signals."""
+
         self._window.connect('delete-event', self._on_window_delete_event)
         self._window.connect('window-state-event', self._on_window_state_event)
         self._close_button.connect('clicked', self._on_close_requested)
 
-        # Create text tags and marks.
+    def _init_text_tags(self):
+        """Initialize text tags."""
+
         text_buffer = self._text_view.get_buffer()
         text_buffer.create_tag('code', family='monospace')
         end_iter = text_buffer.get_end_iter()

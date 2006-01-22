@@ -89,12 +89,11 @@ class CommandErrorDialog(object):
     def __init__(self, parent, output):
 
         glade_xml = gtklib.get_glade_xml('previewerror-dialog.glade')
-        self._dialog = glade_xml.get_widget('dialog')
         output_label = glade_xml.get_widget('output_label')
-        text_view    = glade_xml.get_widget('text_view')
+        self._dialog = glade_xml.get_widget('dialog')
+        text_view  = glade_xml.get_widget('text_view')
 
-        self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(gtk.RESPONSE_OK)
+        # Set mnemonics.
         output_label.set_mnemonic_widget(text_view)
 
         # Set output.
@@ -113,6 +112,9 @@ class CommandErrorDialog(object):
         width  = width  + 112 + gtklib.EXTRA
         height = height + 148 + gtklib.EXTRA
         gtklib.resize_message_dialog(self._dialog, width, height)
+
+        self._dialog.set_transient_for(parent)
+        self._dialog.set_default_response(gtk.RESPONSE_OK)
 
     def destroy(self):
         """Destroy the dialog."""
