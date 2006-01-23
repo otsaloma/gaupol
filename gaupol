@@ -87,32 +87,43 @@ def parse_options():
     parser = optparse.OptionParser()
 
     parser.add_option(
-        '-c',
-        '--pycheck',
-        action='store_true',
-        dest='pycheck',
-        default=False,
-        help='run pychecker to check correctness of code'
-    )
-
-    parser.add_option(
-        '-s',
-        '--hotshot',
-        action='store',
-        type='int',
-        metavar='<count>',
-        dest='hotshot',
-        default=0,
-        help='profile with python\'s hotshot module displaying <count> entries'
-    )
-
-    parser.add_option(
         '-t',
         '--no-translation',
         action='store_true',
         dest='no_translation',
         default=False,
         help='ignore possible translation (use english)'
+    )
+
+    parser.add_option(
+        '-c',
+        '--pycheck',
+        action='store_true',
+        dest='pycheck',
+        default=False,
+        help='run pychecker on all code'
+    )
+
+    parser.add_option(
+        '-p',
+        '--profile',
+        action='store',
+        type='int',
+        metavar='COUNT',
+        dest='profile',
+        default=0,
+        help='profile with python\'s hotshot module and output COUNT entries'
+    )
+
+    parser.add_option(
+        '-x',
+        '--execute',
+        action='store',
+        type='str',
+        metavar='PATH',
+        dest='execute',
+        default='',
+        help='execute single gaupol module for testing'
     )
 
     return parser.parse_args(sys.argv)
@@ -212,17 +223,32 @@ if __name__ == '__main__':
         from gaupol.gtk import main
         main.main(args[1:])
 
-    if opts.hotshot:
+    elif opts.profile:
         import hotshot
         import hotshot.stats
         from gaupol.gtk import main
-        profile = hotshot.Profile('gaupol-hotshot.stats')
+        profile = hotshot.Profile('gaupol.prof')
         profile.runcall(main.main, args[1:])
         profile.close()
-        stats = hotshot.stats.load('gaupol-hotshot.stats')
+        stats = hotshot.stats.load('gaupol.prof')
         stats.sort_stats('time', 'calls')
         stats.print_stats(opts.hotshot)
-        os.remove('gaupol-hotshot.stats')
+        os.remove('gaupol.prof')
+
+    elif opts.execute:
+        if opts.execute == 'all':
+            for (dirpath, dirnames, filenames) in os.walk('lib'):
+                for filename in filenames:
+                    if filename.endswith('.py'):
+                        path = os.path.join(dirpath, filename)
+                        print '** ' + path
+                        execfile(path)
+        else:
+            path = opts.execute
+            if not os.path.isfile(path):
+                path = path.replace('.', os.sep) + '.py'
+                path = os.path.join('lib', path)
+            execfile(path)
 
     else:
         from gaupol.gtk import main

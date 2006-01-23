@@ -17,12 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Cell renderer for cells containing time in format hh:mm:ss,sss."""
-
-
-# References:
-# PyGTK FAQ 14.5
-# http://www.async.com.br/faq/pygtk/index.py?req=show&file=faq14.005.htp
+"""Cell renderer time data in format hh:mm:ss,sss."""
 
 
 try:
@@ -32,183 +27,68 @@ except ImportError:
 
 import re
 
-import gobject
 import gtk
 
 from gaupol.gtk.cellrend.text import CellRendererText
-
-
-re_time   = re.compile(r'^\d\d:[0-5]\d:[0-5]\d,\d\d\d$')
-re_number = re.compile(r'\d')
+from gaupol.gtk.entries.time  import TimeEntry
 
 
 class CellRendererTime(CellRendererText):
 
-    """Cell renderer for cells containing time in format hh:mm:ss,sss."""
+    """Cell renderer time data in format hh:mm:ss,sss."""
 
     def __init__(self, *args):
 
         CellRendererText.__init__(self, *args)
 
-        # Signal IDs
-        self._delete_signal    = None
-        self._insert_signal    = None
-        self._key_press_signal = None
+    def _on_key_press_event(self, editor, event):
+        """Cancel editing if Escape pressed."""
 
-    def _change_to_zero(self, editor, keyname):
-        """Change numbers to zero."""
-
-        editor.handler_block(self._delete_signal)
-        editor.handler_block(self._insert_signal)
-
-        position  = editor.get_position()
-        bounds    = editor.get_selection_bounds()
-        orig_text = editor.get_text()
-
-        # Change numbers in selection to zero.
-        if bounds:
-
-            start = bounds[0]
-            end   = bounds[1]
-
-            zero_text = re_number.sub('0', orig_text[start:end])
-            new_text  = orig_text[:start] + zero_text + orig_text[end:]
-
-            editor.set_text(new_text)
-            editor.set_position(start)
-
-        # Change previous number to zero if backspace pressed.
-        elif keyname == 'BackSpace':
-
-            if position > 0 and orig_text[position - 1].isdigit():
-
-                text_before = orig_text[:position - 1]
-                text_after  = orig_text[position:]
-                new_text    = text_before + '0' + text_after
-
-                editor.set_text(new_text)
-
-            editor.set_position(max(position - 1, 0))
-
-        # Change next number to zero if delete pressed.
-        elif keyname == 'Delete':
-
-            if position < 12 and orig_text[position].isdigit():
-
-                text_before = orig_text[:position]
-                text_after  = orig_text[position + 1:]
-                new_text    = text_before + '0' + text_after
-
-                editor.set_text(new_text)
-
-            editor.set_position(position)
-
-        editor.handler_unblock(self._delete_signal)
-        editor.handler_unblock(self._insert_signal)
-
-    def _insert_text(self, editor, text):
-        """
-        Insert text to editor.
-
-        This method is called after the default emission has been cancelled.
-        """
-        editor.handler_block(self._delete_signal)
-        editor.handler_block(self._insert_signal)
-
-        length   = len(text)
-        position = editor.get_position()
-
-        orig_text = editor.get_text()
-        new_text = orig_text[:position] + text + orig_text[position + length:]
-
-        if re_time.match(new_text):
-            editor.set_text(new_text)
-            new_position = position + length
-            editor.set_position(new_position)
-            if new_position in (2, 5, 8):
-                editor.set_position(new_position + 1)
-
-        editor.handler_unblock(self._delete_signal)
-        editor.handler_unblock(self._insert_signal)
-
-    def on_cut_clipboard(self, editor):
-        """Transform cut signal to a copy signal."""
-
-        editor.emit_stop_by_name('cut-clipboard')
-        editor.emit('copy-clipboard')
-
-    def on_delete_text(self, editor, start_position, end_position):
-        """Do not allow deleting text."""
-
-        editor.emit_stop_by_name('delete-text')
-        editor.set_position(start_position)
-
-    def on_insert_text(self, editor, text, length, pointer):
-        """Insert text to editor."""
-
-        editor.emit_stop_by_name('insert-text')
-        gobject.idle_add(self._insert_text, editor, text)
-
-    def on_key_press_event(self, editor, event):
-        """
-        Respond to key press events.
-
-        Change numbers to zero if BackSpace or Delete pressed. Cancel editing
-        if Escape pressed.
-        """
         keyname = gtk.gdk.keyval_name(event.keyval)
 
-        # Escape
         if keyname == 'Escape':
             editor.remove_widget()
             self.emit('editing-canceled')
             return True
 
-        # Backspace or delete
-        if keyname in ('BackSpace', 'Delete'):
-            editor.emit_stop_by_name('key-press-event')
-            gobject.idle_add(self._change_to_zero, editor, keyname)
+    def on_start_editing(self, event, widget, row, bg_area, cell_area, flags):
+        """Initialize and return editor widget."""
 
-    def on_start_editing(self, event, widget, row, background_area, cell_area,
-                         flags):
-        """
-        Initiate editing of the cell.
-
-        Return gtk.Entry.
-        """
-        editor = gtk.Entry()
+        editor = TimeEntry()
         editor.set_has_frame(False)
         editor.set_activates_default(True)
-        editor.set_width_chars(12)
-        editor.set_max_length(12)
         editor.set_size_request(-1, cell_area.height)
         editor.modify_font(self.font_description)
-
         editor.set_text(self.text or u'')
 
-        # Simple methods
-        editor.connect('cut-clipboard'   , self.on_cut_clipboard        )
-        editor.connect('editing-done'    , self.on_editing_done    , row)
-        editor.connect('toggle-overwrite', self.on_toggle_overwrite     )
-
-        # Overriding methods
-        signal = 'delete-text'
-        method = self.on_delete_text
-        self._delete_signal = editor.connect(signal, method)
-
-        signal = 'insert-text'
-        method = self.on_insert_text
-        self._insert_signal = editor.connect(signal, method)
-
-        signal = 'key-press-event'
-        method = self.on_key_press_event
-        self._key_press_signal = editor.connect(signal, method)
+        editor.connect('editing-done', self.on_editing_done, row)
+        editor.connect('key-press-event', self._on_key_press_event)
 
         editor.grab_focus()
+        editor.select_region(0, -1)
         editor.show()
         return editor
 
-    def on_toggle_overwrite(self, editor):
-        """Do not allow toggling overwrite."""
 
-        editor.emit_stop_by_name('toggle-overwrite')
+if __name__ == '__main__':
+
+    import gobject
+
+    tree_view = gtk.TreeView()
+    tree_view.set_headers_visible(False)
+    store = gtk.ListStore(gobject.TYPE_STRING)
+    store.append(['00:01:22,333'])
+    tree_view.set_model(store)
+
+    cell_renderer = CellRendererTime()
+    cell_renderer.set_editable(True)
+    tree_view_column = gtk.TreeViewColumn('', cell_renderer, text=0)
+    tree_view.append_column(tree_view_column)
+
+    window = gtk.Window()
+    window.connect('delete-event', gtk.main_quit)
+    window.set_position(gtk.WIN_POS_CENTER)
+    window.set_default_size(200, 50)
+    window.add(tree_view)
+    window.show_all()
+    gtk.main()

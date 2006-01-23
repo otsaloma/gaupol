@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Custom cell renderer for cells containing text."""
+"""Custom cell renderer for text data."""
 
 
 try:
@@ -32,7 +32,7 @@ import pango
 
 class CellRendererText(gtk.GenericCellRenderer):
 
-    """Custom cell renderer for cells containing text."""
+    """Custom cell renderer for text data."""
 
     __gtype_name__ = 'CellRendererText'
 
@@ -72,29 +72,29 @@ class CellRendererText(gtk.GenericCellRenderer):
 
     def __init__(self):
 
-        self.__gobject_init__()
+        gtk.GenericCellRenderer.__init__(self)
 
         self.font             = None
         self.font_description = None
         self.text             = None
 
-        self.x_align = 0
-        self.y_align = 0.5
+        self.x_align   = 0
+        self.y_align   = 0.5
         self.x_padding = 2
         self.y_padding = 2
 
-    def do_get_property(self, property):
+    def do_get_property(self, prop):
         """Get value of property."""
 
-        getattr(self, property.name)
+        getattr(self, prop.name)
 
-    def do_set_property(self, property, value):
+    def do_set_property(self, prop, value):
         """Set value of property."""
 
-        setattr(self, property.name, value)
+        setattr(self, prop.name, value)
 
     def _get_layout(self, widget):
-        """Get the pango layout for the cell."""
+        """Get a pango layout."""
 
         context = widget.get_pango_context()
 
@@ -107,29 +107,22 @@ class CellRendererText(gtk.GenericCellRenderer):
 
         layout = pango.Layout(context)
         layout.set_font_description(font_description)
-
-        # Do not wrap text.
-        layout.set_width(-1)
-
         layout.set_text(self.text or u'')
+
         self.font_description = font_description
         return layout
 
     def on_editing_done(self, editor, row):
-        """End editing of the cell."""
+        """End editing."""
 
         self.emit('edited', editor.get_text(), int(row))
 
     def on_get_size(self, widget, cell_area):
         """
-        Get size of the cell.
+        Get size cell size.
 
         Return X offset, Y offset, width, height.
         """
-        # The following size calculations have been tested so that the cell
-        # should be the same size as a gtk.CellRendererText cell with same
-        # amount of rows.
-
         layout = self._get_layout(widget)
         width, height = layout.get_pixel_size()
 
@@ -150,14 +143,13 @@ class CellRendererText(gtk.GenericCellRenderer):
 
         return x_offset, y_offset, width, height
 
-    def on_render(self, window, widget, background_area, cell_area,
-                  expose_area, flags):
-        """Render the cell."""
+    def on_render(self, window, widget, bg_area, cell_area, exp_area, flags):
+        """Render cell."""
 
         x_offset, y_offset, width, height = self.get_size(widget, cell_area)
         layout = self._get_layout(widget)
 
-        # Determine state of the cell.
+        # Determine cell state.
         if flags & gtk.CELL_RENDERER_SELECTED:
             if widget.props.has_focus:
                 state = gtk.STATE_SELECTED
@@ -172,7 +164,7 @@ class CellRendererText(gtk.GenericCellRenderer):
         )
 
     def set_editable(self, editable):
-        """Set editability of the cell."""
+        """Set cell editability."""
 
         if editable:
             mode = gtk.CELL_RENDERER_MODE_EDITABLE

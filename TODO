@@ -7,7 +7,9 @@ Legend:
 Plans for 0.4.0
 ===============
 
-  [ ] Split editor widgets out from cell renderers
+  [D] Split entries out from cell renderer modules
+  [W] Add some simple testing framework
+  [D] Reduce Psycoing
 
   New Features:
     [ ] Timing shift

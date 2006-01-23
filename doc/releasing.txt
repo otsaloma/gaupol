@@ -145,10 +145,9 @@ Table of Contents
       rsync --delete -avr --rsh="ssh" . \
             osmo@download.gna.org:/upload/gaupol/x.y/
 
-  * Upload latest.txt
+  * Upload latest files
 
-      scp latest.txt     osmo@download.gna.org:/upload/gaupol/
-      scp latest.txt.sig osmo@download.gna.org:/upload/gaupol/
+      scp latest.* osmo@download.gna.org:/upload/gaupol/
 
 
 7. Spread the word

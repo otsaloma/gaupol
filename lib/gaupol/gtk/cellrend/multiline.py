@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Cell renderer for cells containing multiline text."""
+"""Cell renderer for multiline text data."""
 
 
 try:
@@ -37,7 +37,7 @@ class CellTextView(gtk.TextView, gtk.CellEditable):
     __gtype_name__ = 'CellTextView'
 
     def do_editing_done(self, *args):
-        """End editing by removing the editor."""
+        """End editing by removing the widget."""
 
         self.remove_widget()
 
@@ -50,37 +50,32 @@ class CellTextView(gtk.TextView, gtk.CellEditable):
         pass
 
     def get_text(self, *args):
-        """Get the text."""
+        """Get text."""
 
         text_buffer = self.get_buffer()
         start, end = text_buffer.get_bounds()
         return text_buffer.get_text(start, end, True)
 
     def set_text(self, text):
-        """Set the text."""
+        """Set text."""
 
         self.get_buffer().set_text(text)
 
 
 class CellRendererMultilineText(CellRendererText):
 
-    """Cell renderer for cells containing multiline text."""
+    """Cell renderer for multiline text data."""
 
-    def on_start_editing(self, event, widget, row, background_area, cell_area,
-                         flags):
-        """
-        Initiate editing of the cell.
+    def on_start_editing(self, event, widget, row, bg_area, cell_area, flags):
+        """Initialize and return editor widget."""
 
-        Return: CellTextView
-        """
         editor = CellTextView()
         editor.set_wrap_mode(gtk.WRAP_NONE)
         editor.modify_font(self.font_description)
-
         editor.set_text(self.text or u'')
 
-        editor.connect('editing-done'   , self.on_editing_done   , row)
-        editor.connect('key-press-event', self.on_key_press_event     )
+        editor.connect('editing-done', self.on_editing_done, row)
+        editor.connect('key-press-event', self.on_key_press_event)
 
         editor.grab_focus()
         editor.show()
@@ -113,3 +108,28 @@ class CellRendererMultilineText(CellRendererText):
             editor.remove_widget()
             self.emit('editing-canceled')
             return True
+
+
+if __name__ == '__main__':
+
+    import gobject
+
+    tree_view = gtk.TreeView()
+    tree_view.set_headers_visible(False)
+    store = gtk.ListStore(gobject.TYPE_STRING)
+    store.append(['And I would like to think this\n' \
+                  'was only a matter of chance.'])
+    tree_view.set_model(store)
+
+    cell_renderer = CellRendererMultilineText()
+    cell_renderer.set_editable(True)
+    tree_view_column = gtk.TreeViewColumn('', cell_renderer, text=0)
+    tree_view.append_column(tree_view_column)
+
+    window = gtk.Window()
+    window.connect('delete-event', gtk.main_quit)
+    window.set_position(gtk.WIN_POS_CENTER)
+    window.set_default_size(240, 70)
+    window.add(tree_view)
+    window.show_all()
+    gtk.main()

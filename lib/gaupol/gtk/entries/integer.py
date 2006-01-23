@@ -17,31 +17,38 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Gaupol internal clipboard."""
+"""Entry for integer data."""
 
 
-class Clipboard(object):
+import gtk
 
-    """
-    Gaupol internal clipboard.
 
-    Data on the clipboard is directly available as attribute "data". Its value
-    is [] if there's nothing on the clipboard. data is a one-dimensional list
-    with multiple ranges made possible with elements having value None to
-    express that the row is skipped in the range.
-    """
+class IntegerEntry(gtk.Entry):
+
+    """Entry for integer data."""
 
     def __init__(self):
 
-        self.data = []
+        gtk.Entry.__init__(self)
 
-    def get_data_as_string(self):
-        """Get clipboard data as a single string."""
+        self.connect('insert-text', self._on_insert_text)
 
-        # Replace Nones with empty strings.
-        string_list = []
-        for element in self.data:
-            string_list.append(element or '')
+    def _on_insert_text(self, entry, text, length, position):
+        """Insert text if it is digits."""
 
-        # Separate list elements with a blank line to form a string.
-        return '\n\n'.join(string_list)
+        if not text.isdigit():
+            self.emit_stop_by_name('insert-text')
+
+
+if __name__ == '__main__':
+
+    entry = IntegerEntry()
+    entry.set_text('333')
+
+    window = gtk.Window()
+    window.connect('delete-event', gtk.main_quit)
+    window.set_position(gtk.WIN_POS_CENTER)
+    window.set_default_size(200, 50)
+    window.add(entry)
+    window.show_all()
+    gtk.main()

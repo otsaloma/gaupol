@@ -1,3 +1,26 @@
+2006-01-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol:
+	  Added option to execute modules.
+
+	* lib/gaupol/base/clipboard.py:
+	* lib/gaupol/base/util/wwwlib.py:
+	  Removed psyco imports.
+
+	* lib/gaupol/gtk/cellrend/integer.py:
+	* lib/gaupol/gtk/cellrend/multiline.py:
+	* lib/gaupol/gtk/cellrend/text.py:
+	* lib/gaupol/gtk/cellrend/time.py:
+	  Threw out entries.
+	  Added testing.
+	  Cosmetic changes.
+
+	* lib/gaupol/gtk/entries:
+	* lib/gaupol/gtk/entries/__init__.py:
+	* lib/gaupol/gtk/entries/integer.py:
+	* lib/gaupol/gtk/entries/time.py:
+	  New files.
+
 2006-01-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	RELEASE 0.3.4
