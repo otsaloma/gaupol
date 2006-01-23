@@ -151,18 +151,22 @@ def parse_options():
     Return: options, arguments
     """
     description = \
-        '<lang> should be either format "ll" or "ll_CC", e.g. "fi" or'   + \
-        ' "zh_CN". Use "all" to process all languages found in the "po"' + \
-        ' directory.'
-
-    parser = optparse.OptionParser(description=description)
+        'LANG should be a language code in either format "xx" or "xx_YY". ' \
+        'Use "all" to process all languages found in the "po" directory.'
+    usage = 'trantool [options]'
+    formatter = optparse.IndentedHelpFormatter(2, 42, None, True)
+    parser = optparse.OptionParser(
+        description=description,
+        formatter=formatter,
+        usage=usage,
+    )
 
     parser.add_option(
         '-p',
         '--create-po',
         action='store',
         type='string',
-        metavar='<lang>',
+        metavar='LANG',
         dest='create_po',
         default='',
         help='create a new .po file'
@@ -172,7 +176,7 @@ def parse_options():
         '--update-po',
         action='store',
         type='string',
-        metavar='<lang/all>',
+        metavar='LANG',
         dest='update_po',
         default='',
         help='update an existing .po file'
@@ -182,7 +186,7 @@ def parse_options():
         '--compile-mo',
         action='store',
         type='string',
-        metavar='<lang/all>',
+        metavar='LANG',
         dest='compile_mo',
         default='',
         help='compile a .mo file'

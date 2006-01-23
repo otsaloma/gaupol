@@ -78,3 +78,18 @@ class Model(object):
             self._blocked_signals.remove(signal)
         except ValueError:
             pass
+
+
+if __name__ == '__main__':
+
+    class TestModel(Model):
+        _signals = ['foo', 'bar']
+
+    def callback(arg, kwarg):
+        pass
+
+    model = TestModel()
+    model.block('foo')
+    model.connect('bar', callback)
+    model.emit('bar', 1, kwarg=1)
+    model.unblock('foo')

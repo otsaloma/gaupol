@@ -43,11 +43,11 @@ class MicroDVD(TagLibrary):
         (
             # Style x3 (single line)
             r'\{y:(b|i|u).*?(b|i|u).*?(b|i|u)\}(.*?)$', COMMON,
-            r'<\1><\2><\3>\4</\1></\2></\3>'
+            r'<\1><\2><\3>\4</\3></\2></\1>'
         ), (
             # Style x2 (single line)
             r'\{y:(b|i|u).*?(b|i|u)\}(.*?)$', COMMON,
-            r'<\1><\2></\1></\2>'
+            r'<\1><\2>\3</\2></\1>'
         ), (
             # Style x1 (single line)
             r'\{y:(b|i|u)\}(.*?)$', COMMON,
@@ -55,11 +55,11 @@ class MicroDVD(TagLibrary):
         ), (
             # Style x3 (whole subtitle unit)
             r'\{Y:(b|i|u).*?(b|i|u).*?(b|i|u)\}(.*?)\Z', COMMON,
-            r'<\1><\2><\3>\4</\1></\2></\3>'
+            r'<\1><\2><\3>\4</\3></\2></\1>'
         ), (
             # Style x2 (whole subtitle unit)
             r'\{Y:(b|i|u).*?(b|i|u)\}(.*?)\Z', COMMON,
-            r'<\1><\2></\1></\2>'
+            r'<\1><\2>\3</\2></\1>'
         ), (
             # Style x1 (whole subtitle unit)
             r'\{Y:(b|i|u)\}(.*?)\Z', COMMON,

@@ -45,3 +45,11 @@ class Clipboard(object):
 
         # Separate list elements with a blank line to form a string.
         return '\n\n'.join(string_list)
+
+
+if __name__ == '__main__':
+
+    clipboard = Clipboard()
+    clipboard.data = ['foo', None, 'bar', None]
+    string = clipboard.get_data_as_string()
+    assert string == 'foo\n\n\n\nbar\n\n'

@@ -1,5 +1,19 @@
 2006-01-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol:
+	* trantool:
+	  Improved option parser formatting.
+
+	* lib/gaupol/base/clipboard.py:
+	* lib/gaupol/base/model.py:
+	* lib/gaupol/base/tags/converter.py:
+	  Added  testing.
+
+	* lib/gaupol/base/tags/microdvd.py:
+	  (MicroDVD.decode_tags): Fixed a couple errors.
+
+2006-01-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/text/parser.py:
 	* lib/gaupol/base/timing/calc.py:
 	  Added testing.

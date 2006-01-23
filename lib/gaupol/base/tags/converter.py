@@ -88,3 +88,94 @@ class TagConverter(object):
         text = self._post_encode(text)
 
         return text
+
+
+if __name__ == '__main__':
+
+    # MicroDVD to SubRip
+    converter = TagConverter(Format.MICRODVD, Format.SUBRIP)
+
+    original = \
+'''{y:biu}Whenever there are famines,
+people will have problems.'''
+    result = \
+'''<b><i><u>Whenever there are famines,</u></i></b>
+people will have problems.'''
+    assert converter.convert_tags(original) == result
+
+    original = \
+'''{Y:i}Whenever there are famines,
+people will have problems.'''
+    result = \
+'''<i>Whenever there are famines,
+people will have problems.</i>'''
+    assert converter.convert_tags(original) == result
+
+    original = \
+'''{c:$rrggbb}Whenever there are famines,
+people will have problems.'''
+    result = \
+'''Whenever there are famines,
+people will have problems.'''
+    assert converter.convert_tags(original) == result
+
+    # SubRip to MicroDVD
+    converter = TagConverter(Format.SUBRIP, Format.MICRODVD)
+
+    original = \
+'''<i>Whenever there are famines,</i>'''
+    result = \
+'''{Y:i}Whenever there are famines,'''
+    assert converter.convert_tags(original) == result
+
+    original = \
+'''<i>Whenever</i> there are famines,'''
+    result = \
+'''{y:i}Whenever there are famines,'''
+    assert converter.convert_tags(original) == result
+
+    original = \
+'''<i>Whenever there are famines,</i>
+<i>people will have problems.</i>'''
+    result = \
+'''{Y:i}Whenever there are famines,
+people will have problems.'''
+    assert converter.convert_tags(original) == result
+
+    # MPL2 to SubRip
+    converter = TagConverter(Format.MPL2, Format.SUBRIP)
+
+    original = \
+'''/Whenever there are famines,
+/people will have problems.'''
+    result = \
+'''<i>Whenever there are famines,</i>
+<i>people will have problems.</i>'''
+    assert converter.convert_tags(original) == result
+
+    original = \
+'''_Whenever there are famines,
+people will have problems.'''
+    result = \
+'''<u>Whenever there are famines,</u>
+people will have problems.'''
+    assert converter.convert_tags(original) == result
+
+    # SubRip to MPL2
+    converter = TagConverter(Format.SUBRIP, Format.MPL2)
+
+    original = \
+'''<i>Whenever there are famines,</i>
+<i>people will have problems.</i>'''
+    result = \
+'''/Whenever there are famines,
+/people will have problems.'''
+    assert converter.convert_tags(original) == result
+
+    original = \
+'''<b>Whenever there are famines,</b>
+people will have problems.'''
+    result = \
+'''\\Whenever there are famines,
+people will have problems.'''
+    assert converter.convert_tags(original) == result

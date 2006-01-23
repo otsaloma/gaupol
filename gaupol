@@ -84,7 +84,9 @@ def parse_options():
 
     Return: options, arguments
     """
-    parser = optparse.OptionParser()
+    usage = 'gaupol [options] [files]'
+    formatter = optparse.IndentedHelpFormatter(2, 42, None, True)
+    parser = optparse.OptionParser(usage=usage, formatter=formatter)
 
     parser.add_option(
         '-t',
@@ -105,6 +107,18 @@ def parse_options():
     )
 
     parser.add_option(
+        '-x',
+        '--execute',
+        action='store',
+        type='str',
+        metavar='PATH',
+        dest='execute',
+        default='',
+        help='execute single gaupol module for testing, ' \
+             'PATH: file path, module path or "all"'
+    )
+
+    parser.add_option(
         '-p',
         '--profile',
         action='store',
@@ -113,17 +127,6 @@ def parse_options():
         dest='profile',
         default=0,
         help='profile with python\'s hotshot module and output COUNT entries'
-    )
-
-    parser.add_option(
-        '-x',
-        '--execute',
-        action='store',
-        type='str',
-        metavar='PATH',
-        dest='execute',
-        default='',
-        help='execute single gaupol module for testing'
     )
 
     return parser.parse_args(sys.argv)
