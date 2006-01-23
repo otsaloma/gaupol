@@ -760,7 +760,3 @@ if __name__ == '__main__':
 
     lang = get_language('af_ZA')
     assert lang == gettext.dgettext('iso_639', 'Afrikaans')
-
-
-
-

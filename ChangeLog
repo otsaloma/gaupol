@@ -1,5 +1,14 @@
 2006-01-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/text/parser.py:
+	* lib/gaupol/base/timing/calc.py:
+	  Added testing.
+
+	* lib/gaupol/base/util/langlib.py:
+	  Removed trailing blank lines.
+
+2006-01-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/util/encodinglib.py:
 	* lib/gaupol/base/util/langlib.py:
 	* lib/gaupol/base/util/listlib.py:

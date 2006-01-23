@@ -146,3 +146,28 @@ class TextParser(object):
 
             # Shift tags.
             self._shift_tags(start, shift)
+
+
+if __name__ == '__main__':
+
+    import re
+    re_tag = re.compile(r'<.*?>')
+    parser = TextParser(re_tag)
+
+    text = \
+'''<i>He changed shifts.</i>
+Didn't <i>he</i> tell you?'''
+
+    parser.set_text(text)
+    parser.replace('i', '*')
+    new_text = parser.get_text()
+    assert new_text == \
+'''<i>He changed sh*fts.</i>
+D*dn't <i>he</i> tell you?'''
+
+    parser.set_text(text)
+    parser.substitute(re.compile(r'[hHi]'), '*')
+    new_text = parser.get_text()
+    assert new_text == \
+'''<i>*e c*anged s**fts.</i>
+D*dn't <i>*e</i> tell you?'''
