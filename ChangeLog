@@ -1,5 +1,12 @@
 2006-01-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/cellrend/multiline.py
+	* lib/gaupol/gtk/cellrend/text.py:
+	  Removed __gtype_name__ class attributes to get testing to work
+	  without RunTimeErrors.
+
+2006-01-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol:
 	  Added option to execute modules.
 

@@ -34,8 +34,6 @@ class CellRendererText(gtk.GenericCellRenderer):
 
     """Custom cell renderer for text data."""
 
-    __gtype_name__ = 'CellRendererText'
-
     __gproperties__ = {
         'font': (
             gobject.TYPE_STRING,

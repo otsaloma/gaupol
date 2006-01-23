@@ -8,8 +8,9 @@ Plans for 0.4.0
 ===============
 
   [D] Split entries out from cell renderer modules
-  [W] Add some simple testing framework
   [D] Reduce Psycoing
+  [D] Add some simple testing framework
+  [ ] Add testing to existing modules
 
   New Features:
     [ ] Timing shift
@@ -66,8 +67,6 @@ Unscheduled
 
       - SAMI
         http://msdn.microsoft.com/library/en-us/dnacc/html/atg_samiarticle.asp
-
-  * py.test or some sort of testing system
 
 
 Other

@@ -34,7 +34,7 @@ class CellTextView(gtk.TextView, gtk.CellEditable):
 
     """Text view that implements gtk.CellEditable."""
 
-    __gtype_name__ = 'CellTextView'
+    __gsignals__ = {}
 
     def do_editing_done(self, *args):
         """End editing by removing the widget."""
