@@ -148,7 +148,7 @@ def get_description(python_name):
     """
     for entry in encodings:
         if entry[PY_NAME] == python_name:
-            return entry[PY_NAME]
+            return entry[DESC]
 
     raise ValueError('Invalid encoding Python name "%s".' % python_name)
 
@@ -273,3 +273,38 @@ def is_valid_python_name(python_name):
         return True
     except (LookupError, TypeError):
         return False
+
+
+if __name__ == '__main__':
+
+    description = get_description('johab')
+    assert description == _('Korean')
+
+    name = get_descriptive_name('johab')
+    assert name == _('%s (%s)') % (_('Korean'), 'Johab')
+
+    name = get_display_name('johab')
+    assert name == 'Johab'
+
+    entry = get_locale_encoding()
+    assert is_valid_python_name(entry[0])
+
+    name = get_locale_descriptive_name()
+    assert isinstance(name, basestring)
+
+    name = get_python_name('Johab')
+    assert name == 'johab'
+
+    entries = get_valid_encodings()
+    assert isinstance(entries[0][0], basestring)
+    assert isinstance(entries[0][1], basestring)
+    assert isinstance(entries[0][2], basestring)
+
+    names = get_valid_descriptive_names()
+    assert isinstance(names[0], basestring)
+
+    names = get_valid_python_names()
+    assert isinstance(names[0], basestring)
+
+    assert is_valid_python_name('johab') is True
+    assert is_valid_python_name('false') is False

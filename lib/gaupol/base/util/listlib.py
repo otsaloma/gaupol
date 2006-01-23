@@ -52,11 +52,26 @@ def sort_and_remove_duplicates(lst):
 
     return lst
 
-def strip_spaces(strings):
+def strip_spaces(lst):
     """
     Strip leading and trailing spaces in list of strings.
 
     Stripping is done in-place, nothing is returned.
     """
-    for i in range(len(strings)):
-        strings[i] = strings[i].strip()
+    for i in range(len(lst)):
+        lst[i] = lst[i].strip()
+
+
+if __name__ ==  '__main__':
+
+    lst = [1, 5, 5, 1, 3]
+    lst = remove_duplicates(lst)
+    assert lst == [1, 5, 3]
+
+    lst = [1, 5, 5, 1, 3]
+    lst = sort_and_remove_duplicates(lst)
+    assert lst == [1, 3, 5]
+
+    lst = [' foo', 'bar ', '\nboo\n']
+    strip_spaces(lst)
+    assert lst == ['foo', 'bar', 'boo']

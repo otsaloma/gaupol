@@ -1,5 +1,15 @@
 2006-01-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/util/encodinglib.py:
+	* lib/gaupol/base/util/langlib.py:
+	* lib/gaupol/base/util/listlib.py:
+	  Added testing.
+
+	* lib/gaupol/base/util/encodinglib.py:
+	  (get_description): Fixed to return description.
+
+2006-01-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/gtk/cellrend/multiline.py
 	* lib/gaupol/gtk/cellrend/text.py:
 	  Removed __gtype_name__ class attributes to get testing to work
