@@ -57,14 +57,12 @@ doc_files = (
     'README.translators',
     'TODO'
 )
-spec_files = glob.glob(os.path.join('doc', 'formats', '*'))
 
 data_files = [
     ('share/gaupol/glade'      , glade_files               ),
     ('share/gaupol/icons'      , icon_files                ),
     ('share/gaupol/ui'         , ui_files                  ),
     ('share/doc/gaupol'        , doc_files                 ),
-    ('share/doc/gaupol/formats', spec_files                ),
     ('share/applications'      , ['gaupol.desktop']        ),
     ('share/pixmaps'           , ['data/icons/gaupol.png'] ),
 ]

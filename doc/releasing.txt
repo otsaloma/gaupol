@@ -69,6 +69,10 @@ Table of Contents
 
       ./gaupol --pycheck | grep -v "Using is" | sort
 
+  * Run all tests
+
+      ./gaupol --execute all
+
   * Make sure all files are in the subversion repository
 
       svn status | grep -v \.pyc

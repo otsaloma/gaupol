@@ -13,7 +13,6 @@ include setup.py
 include TODO
 include trantool
 recursive-include data *.glade *.xml *.png
-recursive-include doc/formats *
 recursive-include lib *.py
 recursive-include locale *.mo
 recursive-include po *.po ChangeLog

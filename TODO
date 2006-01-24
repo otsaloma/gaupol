@@ -10,7 +10,8 @@ Plans for 0.4.0
   [D] Split entries out from cell renderer modules
   [D] Reduce Psycoing
   [D] Add some simple testing framework
-  [ ] Add testing to existing modules
+  [W] Add testing to existing modules
+  [ ] Should we include .mo files in the *source* packages?
 
   New Features:
     [ ] Timing shift

@@ -1,0 +1,36 @@
+(Advanced) Sub Station Alpha File Format Specification
+======================================================
+
+  Extension:
+
+    ".ssa", ".ass"
+
+  Notes:
+
+    We only care about the "Events" section. The "Format" line needs to be read
+    first, after which we know how to interpret the "Dialogue:" lines. Times
+    are h:mm:ss.ss. "\N" and "\n" are line-breaks.
+
+  Sample:
+
+    ------------------------
+    [Script Info]
+
+    [V4+ Styles]
+
+    [Events]
+    Format: Layer, Start, End, Style, Actor, MarginL, MarginR, MarginV, Effect, Text
+    Dialogue: 0,0:00:24.06,0:00:26.93,Default,NTP,0000,0000,0000,!Effect,It's written in the Buddhist Cannon.\nThe flags are still, no wind blows...璶硂焦胶孽
+    Dialogue: 0,0:00:27.43,0:00:29.53,Default,NTP,0000,0000,0000,!Effect,It's the heart of men that's tumult!
+    Dialogue: 0,0:00:31.86,0:00:33.83,Default,NTP,0000,0000,0000,!Effect,Ashes of time
+    Dialogue: 0,0:00:37.74,0:00:39.91,Default,NTP,0000,0000,0000,!Effect,In the years to come...\nI'll be given the nickname: Malicious West.
+    ------------------------
+
+  Tags:
+
+    This is where SSA and ASS differ in areas that concern us. See
+    ass-specs.rtf.
+
+  Source:
+
+    http://moodub.free.fr/ass-specs.doc
