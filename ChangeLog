@@ -1,3 +1,32 @@
+2006-01-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol:
+	  Cosmetic changes.
+
+	* lib/gaupol/base/clipboard.py:
+	* lib/gaupol/base/model.py:
+	* lib/gaupol/base/text/parser.py:
+	* lib/gaupol/base/timing/calc.py:
+	* lib/gaupol/base/util/encodinglib.py:
+	* lib/gaupol/base/util/langlib.py:
+	* lib/gaupol/base/util/listlib.py:
+	* lib/gaupol/gtk/cellrend/integer.py:
+	* lib/gaupol/gtk/cellrend/multiline.py:
+	* lib/gaupol/gtk/cellrend/time.py:
+	* lib/gaupol/gtk/entries/integer.py:
+	* lib/gaupol/gtk/entries/time.py:
+	  Converted to use the new Test class.
+
+	* lib/gaupol/gtk/dialogs/about.py:
+	* lib/gaupol/gtk/output.py:
+	* lib/gaupol/gtk/util/config.py:
+	* lib/gaupol/gtk/util/gtklib.py:
+	  Added testing.
+
+	* lib/gaupol/test:
+	* lib/gaupol/test/__init__.py:
+	  New module.
+
 2006-01-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* MANIFEST.in:

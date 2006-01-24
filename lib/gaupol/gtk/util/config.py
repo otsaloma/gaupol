@@ -55,6 +55,8 @@ CONFIG_HEADER = \
 
 '''
 
+LIST_SEP = '|'
+
 
 class Type(object):
 
@@ -258,8 +260,7 @@ class spell_check(object):
 
 
 def _get_boolean(arg):
-    """
-    Get boolean from string or string from boolean.
+    """Get boolean from string or string from boolean.
 
     Raise ValueError if arg not convertable.
     """
@@ -359,18 +360,18 @@ def _set_config_option(parser, section, option):
         value = _get_constant(section, option, string)
 
     elif typ == Type.STRING_LIST:
-        value = string.split('|')
+        value = string.split(LIST_SEP)
 
     elif typ == Type.INTEGER_LIST:
-        str_list = string.split('|')
+        str_list = string.split(LIST_SEP)
         value = list(int(entry) for entry in str_list)
 
     elif typ == Type.BOOLEAN_LIST:
-        str_list = string.split('|')
+        str_list = string.split(LIST_SEP)
         value = list(_get_boolean(entry) for entry in str_list)
 
     elif typ == Type.CONSTANT_LIST:
-        str_list = string.split('|')
+        str_list = string.split(LIST_SEP)
         value = []
         for entry in str_list:
             value.append(_get_constant(section, option, entry))
@@ -403,21 +404,21 @@ def _set_parser_option(parser, section, option):
         string = _get_constant(section, option, value)
 
     elif typ == Type.STRING_LIST:
-        string = '|'.join(value)
+        string = LIST_SEP.join(value)
 
     elif typ == Type.INTEGER_LIST:
         str_list = list(str(entry) for entry in value)
-        string = '|'.join(str_list)
+        string = LIST_SEP.join(str_list)
 
     elif typ == Type.BOOLEAN_LIST:
         str_list = list(_get_boolean(entry) for entry in value)
-        string = '|'.join(str_list)
+        string = LIST_SEP.join(str_list)
 
     elif typ == Type.CONSTANT_LIST:
         str_list = []
         for entry in value:
             str_list.append(_get_constant(section, option, entry))
-        string = '|'.join(str_list)
+        string = LIST_SEP.join(str_list)
 
     # Set value.
     parser.set(section, option, string)
@@ -473,3 +474,119 @@ def write():
         message = 'Failed to write settings to file "%s": %s.' \
                   % (CONFIG_PATH, message)
         logger.error(message)
+
+
+if __name__ == '__main__':
+
+    from gaupol.test import Test
+
+    class TestLib(Test):
+
+        def test_get_boolean(self):
+            assert _get_boolean('true') is True
+            assert _get_boolean(True) == 'true'
+            assert _get_boolean('false')  is False
+            assert _get_boolean(False) == 'false'
+
+        def test_get_constant(self):
+            assert _get_constant('editor', 'mode', 'time') == Mode.TIME
+            assert _get_constant('editor', 'mode', Mode.TIME) == 'time'
+
+        def test_get_options(self):
+            options = get_options('application_window')
+            assert isinstance(options[0], basestring)
+
+        def test_get_sections(self):
+            sections = get_sections()
+            assert isinstance(sections[0], basestring)
+
+        def test_read(self):
+            read()
+
+        def test_set_config_option(self):
+            parser = ConfigParser.RawConfigParser()
+            parser.read([CONFIG_PATH])
+
+            # String
+            parser.set('editor', 'font', 'foo')
+            _set_config_option(parser, 'editor', 'font')
+            assert editor.font == 'foo'
+
+            # Integer
+            parser.set('editor', 'undo_levels', 99)
+            _set_config_option(parser, 'editor', 'undo_levels')
+            assert editor.undo_levels == 99
+
+            # Boolean
+            parser.set('application_window', 'maximized', 'true')
+            _set_config_option(parser, 'application_window', 'maximized')
+            assert application_window.maximized is True
+
+            # Constant
+            parser.set('editor', 'framerate', '25')
+            _set_config_option(parser, 'editor', 'framerate')
+            assert editor.framerate == Framerate.FR_25
+
+            # String list
+            parser.set('file', 'fallback_encodings', 'foo%sbar' % LIST_SEP)
+            _set_config_option(parser, 'file', 'fallback_encodings')
+            assert file.fallback_encodings == ['foo', 'bar']
+
+            # Integer list
+            parser.set('application_window', 'position', '3%s4' % LIST_SEP)
+            _set_config_option(parser, 'application_window', 'position')
+            assert application_window.position == [3, 4]
+
+            # Constant list
+            parser.set('editor', 'visible_columns', 'show%shide' % LIST_SEP)
+            _set_config_option(parser, 'editor', 'visible_columns')
+            assert editor.visible_columns == [SHOW, HIDE]
+
+        def test_set_parser_option(self):
+            parser = ConfigParser.RawConfigParser()
+            parser.read([CONFIG_PATH])
+
+            # String
+            editor.font = 'foo'
+            _set_parser_option(parser, 'editor', 'font')
+            assert parser.get('editor', 'font') == 'foo'
+
+            # Integer
+            editor.undo_levels = 99
+            _set_parser_option(parser, 'editor', 'undo_levels')
+            assert parser.get('editor', 'undo_levels') == '99'
+
+            # Boolean
+            application_window.maximized = True
+            _set_parser_option(parser, 'application_window', 'maximized')
+            assert parser.get('application_window', 'maximized') == 'true'
+
+            # Constant
+            editor.framerate = Framerate.FR_25
+            _set_parser_option(parser, 'editor', 'framerate')
+            assert parser.get('editor', 'framerate') == '25'
+
+            # String list
+            file.fallback_encodings = ['foo', 'bar']
+            _set_parser_option(parser, 'file', 'fallback_encodings')
+            assert parser.get('file', 'fallback_encodings') \
+                   == 'foo%sbar' % LIST_SEP
+
+            # Integer list
+            application_window.position = [3, 4]
+            _set_parser_option(parser, 'application_window', 'position')
+            assert parser.get('application_window', 'position') \
+                   == '3%s4' % LIST_SEP
+
+            # Constant list
+            editor.visible_columns = [SHOW, HIDE]
+            _set_parser_option(parser, 'editor', 'visible_columns')
+            assert parser.get('editor', 'visible_columns') \
+                   == 'show%shide' % LIST_SEP
+
+        def test_write(self):
+            read()
+            write()
+
+    test = TestLib()
+    test.run()

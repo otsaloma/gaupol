@@ -151,23 +151,32 @@ class TextParser(object):
 if __name__ == '__main__':
 
     import re
+    from gaupol.test import Test
+
     re_tag = re.compile(r'<.*?>')
-    parser = TextParser(re_tag)
 
-    text = \
-'''<i>He changed shifts.</i>
-Didn't <i>he</i> tell you?'''
+    class TestTextParser(Test):
 
-    parser.set_text(text)
-    parser.replace('i', '*')
-    new_text = parser.get_text()
-    assert new_text == \
-'''<i>He changed sh*fts.</i>
-D*dn't <i>he</i> tell you?'''
+        def __init__(self):
+            self.parser = TextParser(re_tag)
 
-    parser.set_text(text)
-    parser.substitute(re.compile(r'[hHi]'), '*')
-    new_text = parser.get_text()
-    assert new_text == \
-'''<i>*e c*anged s**fts.</i>
-D*dn't <i>*e</i> tell you?'''
+        def test_replace(self):
+            text = '<i>He changed shifts.</i>\n' \
+                   'Didn\'t <i>he</i> tell you?'
+            self.parser.set_text(text)
+            self.parser.replace('i', '*')
+            text = self.parser.get_text()
+            assert text == '<i>He changed sh*fts.</i>\n' \
+                           'D*dn\'t <i>he</i> tell you?'
+
+        def test_substitute(self):
+            text = '<i>He changed shifts.</i>\n' \
+                   'Didn\'t <i>he</i> tell you?'
+            self.parser.set_text(text)
+            self.parser.substitute(re.compile(r'[hHi]'), '*')
+            text = self.parser.get_text()
+            assert text == '<i>*e c*anged s**fts.</i>\n' \
+                           'D*dn\'t <i>*e</i> tell you?'
+
+    test = TestTextParser()
+    test.run()

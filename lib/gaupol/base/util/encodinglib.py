@@ -277,34 +277,51 @@ def is_valid_python_name(python_name):
 
 if __name__ == '__main__':
 
-    description = get_description('johab')
-    assert description == _('Korean')
+    from gaupol.test import Test
 
-    name = get_descriptive_name('johab')
-    assert name == _('%s (%s)') % (_('Korean'), 'Johab')
+    class TestLib(Test):
 
-    name = get_display_name('johab')
-    assert name == 'Johab'
+        def test_get_description(self):
+            description = get_description('johab')
+            assert description == _('Korean')
 
-    entry = get_locale_encoding()
-    assert is_valid_python_name(entry[0])
+        def test_get_descriptive_name(self):
+            name = get_descriptive_name('johab')
+            assert name == _('%s (%s)') % (_('Korean'), 'Johab')
 
-    name = get_locale_descriptive_name()
-    assert isinstance(name, basestring)
+        def test_get_display_name(self):
+            name = get_display_name('johab')
+            assert name == 'Johab'
 
-    name = get_python_name('Johab')
-    assert name == 'johab'
+        def test_get_locale_encoding(self):
+            entry = get_locale_encoding()
+            assert is_valid_python_name(entry[0])
 
-    entries = get_valid_encodings()
-    assert isinstance(entries[0][0], basestring)
-    assert isinstance(entries[0][1], basestring)
-    assert isinstance(entries[0][2], basestring)
+        def test_get_locale_descriptive_name(self):
+            name = get_locale_descriptive_name()
+            assert isinstance(name, basestring)
 
-    names = get_valid_descriptive_names()
-    assert isinstance(names[0], basestring)
+        def test_get_python_name(self):
+            name = get_python_name('Johab')
+            assert name == 'johab'
 
-    names = get_valid_python_names()
-    assert isinstance(names[0], basestring)
+        def test_get_valid_encodings(self):
+            entries = get_valid_encodings()
+            assert isinstance(entries[0][0], basestring)
+            assert isinstance(entries[0][1], basestring)
+            assert isinstance(entries[0][2], basestring)
 
-    assert is_valid_python_name('johab') is True
-    assert is_valid_python_name('false') is False
+        def test_get_valid_descriptive_names(self):
+            names = get_valid_descriptive_names()
+            assert isinstance(names[0], basestring)
+
+        def test_get_valid_python_names(self):
+            names = get_valid_python_names()
+            assert isinstance(names[0], basestring)
+
+        def test_is_valid_python_name(self):
+            assert is_valid_python_name('johab') is True
+            assert is_valid_python_name('false') is False
+
+    test = TestLib()
+    test.run()

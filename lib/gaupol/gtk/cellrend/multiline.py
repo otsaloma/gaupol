@@ -113,23 +113,30 @@ class CellRendererMultilineText(CellRendererText):
 if __name__ == '__main__':
 
     import gobject
+    from gaupol.test import Test
 
-    tree_view = gtk.TreeView()
-    tree_view.set_headers_visible(False)
-    store = gtk.ListStore(gobject.TYPE_STRING)
-    store.append(['And I would like to think this\n' \
-                  'was only a matter of chance.'])
-    tree_view.set_model(store)
+    class TestCellRendererInteger(Test):
 
-    cell_renderer = CellRendererMultilineText()
-    cell_renderer.set_editable(True)
-    tree_view_column = gtk.TreeViewColumn('', cell_renderer, text=0)
-    tree_view.append_column(tree_view_column)
+        def test_init(self):
+            tree_view = gtk.TreeView()
+            tree_view.set_headers_visible(False)
+            store = gtk.ListStore(gobject.TYPE_STRING)
+            store.append(['And I would like to think this\n' \
+                          'was only a matter of chance.'])
+            tree_view.set_model(store)
 
-    window = gtk.Window()
-    window.connect('delete-event', gtk.main_quit)
-    window.set_position(gtk.WIN_POS_CENTER)
-    window.set_default_size(240, 70)
-    window.add(tree_view)
-    window.show_all()
-    gtk.main()
+            cell_renderer = CellRendererMultilineText()
+            cell_renderer.set_editable(True)
+            tree_view_column = gtk.TreeViewColumn('', cell_renderer, text=0)
+            tree_view.append_column(tree_view_column)
+
+            window = gtk.Window()
+            window.connect('delete-event', gtk.main_quit)
+            window.set_position(gtk.WIN_POS_CENTER)
+            window.set_default_size(240, 70)
+            window.add(tree_view)
+            window.show_all()
+            gtk.main()
+
+    test = TestCellRendererInteger()
+    test.run()

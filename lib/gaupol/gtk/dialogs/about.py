@@ -82,3 +82,17 @@ class AboutDialog(gtk.AboutDialog):
         """Open website in browser when user clicks on URL."""
 
         wwwlib.open_url(website)
+
+
+if __name__ == '__main__':
+
+    from gaupol.test import Test
+
+    class TestAboutDialog(Test):
+
+        def test_init(self):
+            window = gtk.Window()
+            dialog = AboutDialog(window)
+
+    test = TestAboutDialog()
+    test.run()

@@ -196,13 +196,20 @@ class TimeEntry(gtk.Entry):
 
 if __name__ == '__main__':
 
-    entry = TimeEntry()
-    entry.set_text('00:33:22,111')
+    from gaupol.test import Test
 
-    window = gtk.Window()
-    window.connect('delete-event', gtk.main_quit)
-    window.set_position(gtk.WIN_POS_CENTER)
-    window.set_default_size(200, 50)
-    window.add(entry)
-    window.show_all()
-    gtk.main()
+    class TestIntegerEntry(Test):
+
+        def test_init(self):
+            entry = TimeEntry()
+            entry.set_text('00:33:22,111')
+            window = gtk.Window()
+            window.connect('delete-event', gtk.main_quit)
+            window.set_position(gtk.WIN_POS_CENTER)
+            window.set_default_size(200, 50)
+            window.add(entry)
+            window.show_all()
+            gtk.main()
+
+    test = TestIntegerEntry()
+    test.run()

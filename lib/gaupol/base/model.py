@@ -82,14 +82,20 @@ class Model(object):
 
 if __name__ == '__main__':
 
-    class TestModel(Model):
-        _signals = ['foo', 'bar']
+    from gaupol.test import Test
 
-    def callback(arg, kwarg):
-        pass
+    class TestModel(Test):
 
-    model = TestModel()
-    model.block('foo')
-    model.connect('bar', callback)
-    model.emit('bar', 1, kwarg=1)
-    model.unblock('foo')
+        def test_all(self):
+            Model._signals = ['foo', 'bar']
+            model = Model()
+            model.block('foo')
+            model.connect('bar', self.callback)
+            model.emit('bar', 1, kwarg=1)
+            model.unblock('foo')
+
+        def callback(self, arg, kwarg):
+            pass
+
+    test = TestModel()
+    test.run()

@@ -161,3 +161,24 @@ class OutputWindow(gobject.GObject):
         self.scroll_down()
         self._close_button.grab_focus()
         self._window.show_all()
+
+
+if __name__ == '__main__':
+
+    from gaupol.test import Test
+
+    class TestOutputWindow(Test):
+
+        def test_all(self):
+            output_window = OutputWindow()
+            output_window.get_position()
+            output_window.get_size()
+            output_window.get_visible()
+            output_window.hide()
+            output_window.scroll_down()
+            output_window.set_output('foo')
+            output_window.show()
+            output_window._window.destroy()
+
+    test = TestOutputWindow()
+    test.run()

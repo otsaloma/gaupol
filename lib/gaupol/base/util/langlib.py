@@ -743,20 +743,30 @@ def get_language(code):
 
 if __name__ == '__main__':
 
-    country = get_country('af_ZA')
-    assert country == gettext.dgettext('iso_3166', 'South Africa')
+    from gaupol.test import Test
 
-    country = get_country('af')
-    assert country is None
+    class TestLib(Test):
 
-    name    = get_descriptive_name('af_ZA')
-    country = gettext.dgettext('iso_3166', 'South Africa')
-    lang    = gettext.dgettext('iso_639', 'Afrikaans')
-    assert name == _('%s (%s)') % (lang, country)
+        def test_get_country(self):
+            country = get_country('af_ZA')
+            assert country == gettext.dgettext('iso_3166', 'South Africa')
 
-    name = get_descriptive_name('af')
-    lang = gettext.dgettext('iso_639', 'Afrikaans')
-    assert name == lang
+            country = get_country('af')
+            assert country is None
 
-    lang = get_language('af_ZA')
-    assert lang == gettext.dgettext('iso_639', 'Afrikaans')
+        def test_get_descriptive_name(self):
+            name    = get_descriptive_name('af_ZA')
+            country = gettext.dgettext('iso_3166', 'South Africa')
+            lang    = gettext.dgettext('iso_639', 'Afrikaans')
+            assert name == _('%s (%s)') % (lang, country)
+
+            name = get_descriptive_name('af')
+            lang = gettext.dgettext('iso_639', 'Afrikaans')
+            assert name == lang
+
+        def test_get_language(self):
+            lang = get_language('af_ZA')
+            assert lang == gettext.dgettext('iso_639', 'Afrikaans')
+
+    test = TestLib()
+    test.run()

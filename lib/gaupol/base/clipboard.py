@@ -49,7 +49,15 @@ class Clipboard(object):
 
 if __name__ == '__main__':
 
-    clipboard = Clipboard()
-    clipboard.data = ['foo', None, 'bar', None]
-    string = clipboard.get_data_as_string()
-    assert string == 'foo\n\n\n\nbar\n\n'
+    from gaupol.test import Test
+
+    class TestClipboard(Test):
+
+        def test_get_data_as_string(self):
+            clipboard = Clipboard()
+            clipboard.data = ['foo', None, 'bar', None]
+            string = clipboard.get_data_as_string()
+            assert string == 'foo\n\n\n\nbar\n\n'
+
+    test = TestClipboard()
+    test.run()

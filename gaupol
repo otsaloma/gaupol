@@ -114,7 +114,7 @@ def parse_options():
         metavar='PATH',
         dest='execute',
         default='',
-        help='execute single gaupol module for testing, ' \
+        help='execute gaupol module(s) for testing, ' \
              'PATH: file path, module path or "all"'
     )
 
