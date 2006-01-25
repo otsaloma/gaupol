@@ -168,7 +168,7 @@ class HelpDelegate(Delegate):
 
         # Read remote file containing latest version number.
         try:
-            text = wwwlib.read_url(VERSION_URL, 10)
+            text = wwwlib.read_url(VERSION_URL, 15)
         except IOError, instance:
             message = _('Trying to connect to URL "%s" returned error: %s.') \
                       % (VERSION_URL, instance.args[1][1])

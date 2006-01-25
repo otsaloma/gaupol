@@ -1,5 +1,11 @@
 2006-01-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/delegates/help.py:
+	  (HelpDelegate.on_check_latest_version_activated): Raised timeout
+	  argument to 15 seconds.
+
+2006-01-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/clipboard.py:
 	* lib/gaupol/base/model.py:
 	* lib/gaupol/base/text/parser.py:
