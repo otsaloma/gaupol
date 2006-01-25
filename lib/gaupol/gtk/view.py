@@ -229,3 +229,44 @@ class View(gtk.TreeView):
             self._active_col = col
         except TypeError:
             pass
+
+
+if __name__ == '__main__':
+
+    from gaupol.test import Test
+
+    class TestView(Test):
+
+        def __init__(self):
+            self.view = View(Mode.TIME)
+            self.view = View(Mode.FRAME)
+            store = self.view.get_model()
+            store.append([1, 2, 3, 4, 'foo', 'bar'])
+            store.append([2, 6, 7, 8, 'foo', 'bar'])
+
+        def test_get_focus(self):
+            self.view.get_focus()
+            self.view.set_focus(1, 3)
+            assert self.view.get_focus() == (1, 3)
+
+        def test_get_selected_rows(self):
+            selection = self.view.get_selection()
+            selection.unselect_all()
+            assert self.view.get_selected_rows() == []
+            selection.select_range(0, 1)
+            assert self.view.get_selected_rows() == [0, 1]
+
+        def test_scroll_to_row(self):
+            self.view.scroll_to_row(1)
+
+        def test_select_rows(self):
+            self.view.select_rows([])
+            self.view.select_rows([0, 1])
+
+        def test_set_focus(self):
+            self.view.set_focus(0, 4)
+
+        def test_set_active_column(self):
+            self.view.set_active_column()
+
+    TestView().run()

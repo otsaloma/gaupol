@@ -178,5 +178,4 @@ if __name__ == '__main__':
             assert text == '<i>*e c*anged s**fts.</i>\n' \
                            'D*dn\'t <i>*e</i> tell you?'
 
-    test = TestTextParser()
-    test.run()
+    TestTextParser().run()

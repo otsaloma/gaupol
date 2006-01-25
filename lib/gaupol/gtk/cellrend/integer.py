@@ -91,5 +91,4 @@ if __name__ == '__main__':
             window.show_all()
             gtk.main()
 
-    test = TestCellRendererInteger()
-    test.run()
+    TestCellRendererInteger().run()

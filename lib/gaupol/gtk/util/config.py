@@ -588,5 +588,4 @@ if __name__ == '__main__':
             read()
             write()
 
-    test = TestLib()
-    test.run()
+    TestLib().run()

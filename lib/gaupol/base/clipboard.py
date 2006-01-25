@@ -59,5 +59,4 @@ if __name__ == '__main__':
             string = clipboard.get_data_as_string()
             assert string == 'foo\n\n\n\nbar\n\n'
 
-    test = TestClipboard()
-    test.run()
+    TestClipboard().run()

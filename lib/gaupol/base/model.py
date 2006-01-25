@@ -97,5 +97,4 @@ if __name__ == '__main__':
         def callback(self, arg, kwarg):
             pass
 
-    test = TestModel()
-    test.run()
+    TestModel().run()

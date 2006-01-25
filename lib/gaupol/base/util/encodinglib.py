@@ -323,5 +323,4 @@ if __name__ == '__main__':
             assert is_valid_python_name('johab') is True
             assert is_valid_python_name('false') is False
 
-    test = TestLib()
-    test.run()
+    TestLib().run()

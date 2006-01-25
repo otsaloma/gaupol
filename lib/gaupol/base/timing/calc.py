@@ -194,5 +194,4 @@ if __name__ == '__main__':
         def test_time_to_seconds(self):
             assert self.calc.time_to_seconds('00:33:33,333') == 2013.333
 
-    test = TestTimeFrameCalculator()
-    test.run()
+    TestTimeFrameCalculator().run()

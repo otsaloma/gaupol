@@ -180,5 +180,4 @@ if __name__ == '__main__':
             output_window.show()
             output_window._window.destroy()
 
-    test = TestOutputWindow()
-    test.run()
+    TestOutputWindow().run()

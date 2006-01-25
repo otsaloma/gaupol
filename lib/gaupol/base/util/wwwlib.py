@@ -91,3 +91,28 @@ def open_url(url):
             return
 
     webbrowser.open(url)
+
+
+if __name__ == '__main__':
+
+    from gaupol.test import Test
+
+    class TestLib(Test):
+
+        def test_read_url(self):
+            text = read_url('http://download.gna.org/gaupol/latest.txt', 20)
+            assert isinstance(text, basestring)
+
+            try:
+                read_url('http://download.gna.org/gaupol/latest.txt', 0.001)
+                assert True is False
+            except TimeoutError:
+                pass
+
+            try:
+                read_url('http://aaaaaaaaaaaaaaaaa.org/foo.txt', 10)
+                assert True is False
+            except IOError:
+                pass
+
+    TestLib().run()

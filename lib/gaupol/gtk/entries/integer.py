@@ -57,5 +57,4 @@ if __name__ == '__main__':
             window.show_all()
             gtk.main()
 
-    test = TestIntegerEntry()
-    test.run()
+    TestIntegerEntry().run()

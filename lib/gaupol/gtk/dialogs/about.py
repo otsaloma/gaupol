@@ -94,5 +94,4 @@ if __name__ == '__main__':
             window = gtk.Window()
             dialog = AboutDialog(window)
 
-    test = TestAboutDialog()
-    test.run()
+    TestAboutDialog().run()

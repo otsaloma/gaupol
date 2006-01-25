@@ -12,17 +12,18 @@ General Information
     * MicroDVD
     * MPL2
     * SubRip
+    * SubViewer 2.0
 
   Current features:
     * Support for a wide range of character encodings
     * Conversions between supported formats, including conversion of most tags
     * Multiple document interface that allows some amount of batch processing
     * Undo/Redo
-    * Editing in either time or frame mode
+    * Time and frame modes for editing
     * Convenient translating
-    * Text formatting: toggling of italics and dialog lines, case changing
-    * Spell-checking
-    * Preview in video player
+    * Toggling of italics and dialog lines, case changing
+    * Spell-check
+    * Preview in external video player
     * GNOME HIG 2.0 compliant user interface
 
   Gaupol should run on all Unix-like (Linux, BSD, etc.) operating systems.

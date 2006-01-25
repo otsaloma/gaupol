@@ -303,5 +303,4 @@ if __name__ == '__main__':
             label = gtk.Label('foo')
             set_widget_font(label, 'monospace 12')
 
-    test = TestLib()
-    test.run()
+    TestLib().run()

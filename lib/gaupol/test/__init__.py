@@ -22,7 +22,31 @@
 
 class Test(object):
 
-    """Base class for test classes."""
+    """
+    Base class for test classes.
+
+    Test classes should inherit from this class and prefix all test methods
+    with "test_". "__init__" acts as the set-up method and "destroy" as the
+    tear-down method. run() should be called right after the class definition.
+
+    Example:
+
+    if __name__ == '__main__':
+
+        from gaupol.test import Test
+
+        class TestFoo(Test):
+
+            test_foo(self):
+                value = foo()
+                assert foo is ...
+
+        TestFoo().run()
+    """
+
+    def destroy(self):
+        """Destroy instance variables."""
+        pass
 
     def run(self):
         """Run all tests."""
@@ -32,3 +56,5 @@ class Test(object):
             if name.startswith('test'):
                 print name
                 getattr(self, name)()
+
+        self.destroy()
