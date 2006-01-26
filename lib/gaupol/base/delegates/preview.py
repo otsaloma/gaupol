@@ -195,3 +195,32 @@ class PreviewDelegate(Delegate):
 
         if return_value != 0:
             raise ExternalError
+
+
+if __name__ == '__main__':
+
+    from gaupol.test import Test
+
+    class TestPreviewDelegate(Test):
+
+        def test_get_subtitle_path(self):
+
+            project = self.get_project()
+            delegate = PreviewDelegate(project)
+
+            data = delegate._get_subtitle_path(Document.MAIN)
+            assert data == (project.main_file.path, False)
+
+            project.clear_texts([0], Document.MAIN)
+            data = delegate._get_subtitle_path(Document.MAIN)
+            self.files.append(data[0])
+            assert data[0] != project.main_file.path
+            assert data[1] is True
+            assert project.main_changed == 1
+
+        def test_guess_video_file_path(self):
+
+            project = self.get_project()
+            project.guess_video_file_path()
+
+    TestPreviewDelegate().run()

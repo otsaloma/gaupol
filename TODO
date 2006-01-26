@@ -37,6 +37,10 @@ Plans for 0.4.0
               - Combo boxes
           * Target: selection/all?
 
+    Bug Fixes:
+      [D] Various errors in Micro DVD tag conversions
+      [D] Newline counted as a character in text length statusbar
+
 
 Plans after 0.4.0
 =================

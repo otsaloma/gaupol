@@ -334,3 +334,99 @@ class ActionDelegate(Delegate):
         elif amount > 1:
             self._revert_multiple(amount, Action.UNDO_MULTIPLE)
             return
+
+
+if __name__ == '__main__':
+
+    from gaupol.test import Test
+
+    class TestRevertableAction(Test):
+
+        def test_revert(self):
+
+            def revert_method(arg, kwarg, register):
+                assert arg      == 'foo'
+                assert kwarg    == 'bar'
+                assert register == Action.UNDO
+
+            RevertableAction(
+                Action.DO,
+                documents=[Document.MAIN],
+                description='foo',
+                revert_method=revert_method,
+                revert_method_args=['foo'],
+                revert_method_kwargs={'kwarg': 'bar'},
+            ).revert()
+
+    class TestActionDelegate(Test):
+
+        def test_modify_action_description(self):
+
+            project = self.get_project()
+            project.clear_texts([0], Document.MAIN)
+            project.modify_action_description(Action.DO, 'foo')
+            assert project.undoables[0].description == 'foo'
+
+        def test_undo_and_redo(self):
+
+            project = self.get_project()
+
+            project.clear_texts([0], Document.MAIN)
+            project.clear_texts([1], Document.MAIN)
+            assert len(project.undoables) == 2
+            assert project.main_changed == 2
+
+            project.undo()
+            assert project.main_texts[1] != ''
+            assert len(project.undoables) == 1
+            assert len(project.redoables) == 1
+            assert project.main_changed == 1
+
+            project.redo()
+            assert project.main_texts[0] == ''
+            assert len(project.undoables) == 2
+            assert len(project.redoables) == 0
+            assert project.main_changed == 2
+
+            project.undo(2)
+            assert project.main_texts[0] != ''
+            assert project.main_texts[1] != ''
+            assert len(project.undoables) == 0
+            assert len(project.redoables) == 2
+            assert project.main_changed == 0
+
+            project.redo(2)
+            assert project.main_texts[0] == ''
+            assert project.main_texts[1] == ''
+            assert len(project.undoables) == 2
+            assert len(project.redoables) == 0
+            assert project.main_changed == 2
+
+        def test_revert_multiple(self):
+
+            def on_action_undone_1(action):
+                assert action.rows_updated == [0, 2]
+
+            project = self.get_project()
+            project.connect('action_undone', on_action_undone_1)
+
+            project.clear_texts([0], Document.MAIN)
+            project.insert_subtitles([1])
+            project.clear_texts([1], Document.MAIN)
+            project.clear_texts([3], Document.MAIN)
+            project.undo(4)
+
+            def on_action_undone_2(action):
+                assert action.rows_updated == [1, 2, 3]
+
+            project = self.get_project()
+            project.connect('action_undone', on_action_undone_2)
+
+            project.clear_texts([1], Document.MAIN)
+            project.remove_subtitles([1])
+            project.clear_texts([1], Document.MAIN)
+            project.clear_texts([2], Document.MAIN)
+            project.undo(4)
+
+    TestRevertableAction().run()
+    TestActionDelegate().run()

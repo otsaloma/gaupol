@@ -1,3 +1,18 @@
+2006-01-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/base/delegates/action.py:
+	* lib/gaupol/base/delegates/frconv.py:
+	* lib/gaupol/base/delegates/preview.py:
+	* lib/gaupol/base/delegates/stat.py:
+	  Added testing.
+
+	* lib/gaupol/base/delegates/stat.py:
+	  (StatisticsDelegate.get_character_count): Do not count newline to
+	  total length.
+
+	* lib/gaupol/test/__init__.py:
+	  (Test): Redone again.
+
 2006-01-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol:

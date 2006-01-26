@@ -44,8 +44,31 @@ class StatisticsDelegate(Delegate):
         if re_tag is not None:
             text = re_tag.sub('', text)
 
-        lines   = text.split('\n')
-        lengths = list(len(line) for line in lines)
-        total   = len(text)
+        lengths = []
+        total   = 0
+
+        for line in text.split('\n'):
+            length = len(line)
+            lengths.append(length)
+            total += length
 
         return lengths, total
+
+
+if __name__ == '__main__':
+
+    from gaupol.constants import Document
+    from gaupol.test      import Test
+
+    class TestStatisticsDelegate(Test):
+
+        def test_get_character_count(self):
+
+            project = self.get_project()
+            project.main_texts[0] = '<i>This could be me\n' \
+                                    'three hours from now.</i>'
+            lengths, total = project.get_character_count(0, Document.MAIN)
+            assert lengths == [16, 21]
+            assert total   == 37
+
+    TestStatisticsDelegate().run()

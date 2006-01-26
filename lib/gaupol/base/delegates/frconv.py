@@ -30,7 +30,7 @@ from gaupol.base.delegates    import Delegate
 from gaupol.constants         import Framerate, Mode
 
 
-class FramerateConverter(Delegate):
+class FramerateDelegate(Delegate):
 
     """Framerate conversions."""
 
@@ -72,3 +72,20 @@ class FramerateConverter(Delegate):
                 times[i][SHOW] = show
                 times[i][HIDE] = hide
                 times[i][DURN] = durn
+
+
+if __name__ == '__main__':
+
+    from gaupol.test import Test
+
+    class TestFramerateDelegate(Test):
+
+        def test_change_framerate(self):
+
+            project = self.get_project()
+            frame_1 = project.frames[2][SHOW]
+            project.change_framerate(Framerate.FR_25)
+            frame_2 = project.frames[2][SHOW]
+            assert frame_2 == int(round((frame_1 / 23.976) * 25, 0))
+
+    TestFramerateDelegate().run()

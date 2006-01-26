@@ -20,8 +20,10 @@
 """Test functions and classes."""
 
 
+import os
 import tempfile
 import time
+import traceback
 
 from gaupol.base.project import Project
 
@@ -29,15 +31,15 @@ from gaupol.base.project import Project
 SUBRIP_TEXT = \
 '''1
 00:00:13,400 --> 00:00:17,400
-ENERGIA presents
+<i>ENERGIA presents</i>
 
 2
 00:00:27,480 --> 00:00:31,480
-A SAMULI TORSSONEN production
+<i>A SAMULI TORSSONEN production</i>
 
 3
 00:00:42,400 --> 00:00:45,880
-A TIMO VUORENSOLA film
+<i>A TIMO VUORENSOLA film</i>
 
 4
 00:02:36,960 --> 00:02:41,960
@@ -61,9 +63,9 @@ increasing disturbances.
 '''
 
 MICRODVD_TEXT = \
-'''{321}{417}ENERGIA presents
-{659}{755}A SAMULI TORSSONEN production
-{1017}{1100}A TIMO VUORENSOLA film
+'''{321}{417}{Y:i}ENERGIA presents
+{659}{755}{Y:i}A SAMULI TORSSONEN production
+{1017}{1100}{Y:i}A TIMO VUORENSOLA film
 {3763}{3883}I would like to suggest, Emperor,|that you reconsider your plan.
 {3885}{4005}The scientists are comparing it to|Russian roulette.
 {4008}{4128}What theories we have on phenomena|like the maggot hole -
@@ -122,10 +124,14 @@ class Test(object):
 
             test_foo(self):
                 value = foo()
-                assert foo is ...
+                assert foo is True
 
         TestFoo().run()
     """
+
+    def __init__(self):
+
+        self.files = []
 
     def destroy(self):
         """Destroy instance variables."""
@@ -140,6 +146,7 @@ class Test(object):
         sub_file.write(MICRODVD_TEXT)
         sub_file.close()
 
+        self.files.append(path)
         return path
 
     def get_project(self):
@@ -149,8 +156,11 @@ class Test(object):
 
         path = self.get_subrip_path()
         project.open_main_file(path, 'utf_8')
+        self.files.append(path)
+
         path = self.get_micro_dvd_path()
         project.open_translation_file(path, 'utf_8')
+        self.files.append(path)
 
         return project
 
@@ -163,7 +173,19 @@ class Test(object):
         sub_file.write(SUBRIP_TEXT)
         sub_file.close()
 
+        self.files.append(path)
         return path
+
+    def remove_files(self):
+        """Remove temporary files."""
+
+        for path in self.files:
+            try:
+                os.remove(path)
+            except OSError:
+                pass
+
+        self.files = []
 
     def run(self):
         """Run all tests."""
@@ -171,6 +193,11 @@ class Test(object):
         for name in dir(self):
             if name.startswith('test'):
                 print name
-                getattr(self, name)()
+                try:
+                    getattr(self, name)()
+                except:
+                    traceback.print_exc()
+                    break
 
         self.destroy()
+        self.remove_files()
