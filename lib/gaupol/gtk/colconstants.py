@@ -20,6 +20,9 @@
 """Column constants for gaupol.gtk."""
 
 
+from gettext import gettext as _
+
+
 NO   = 0
 SHOW = 1
 HIDE = 2

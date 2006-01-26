@@ -20,6 +20,9 @@
 """gaupol-wide constants."""
 
 
+from gettext import gettext as _
+
+
 class Action(object):
 
     DO            = 0

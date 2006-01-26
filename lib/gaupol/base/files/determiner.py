@@ -25,6 +25,7 @@ try:
 except ImportError:
     pass
 
+from gettext import gettext as _
 import re
 
 from gaupol.base.files.classes import *

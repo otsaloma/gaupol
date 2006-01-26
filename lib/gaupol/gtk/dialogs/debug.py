@@ -30,6 +30,7 @@ try:
 except ImportError:
     pass
 
+from gettext import gettext as _
 import linecache
 import os
 import sys
@@ -356,3 +357,27 @@ def show(exctype, value, tb):
 
     except Exception:
         traceback.print_exc()
+
+
+if __name__ == '__main__':
+
+    from gaupol.test import Test
+
+    class TestOpenEditorErrorDialog(Test):
+
+        def test_init(self):
+            OpenEditorErrorDialog(gtk.Window(), 'foo')
+
+    class TestDebugDialog(Test):
+
+        def test_all(self):
+            dialog = DebugDialog()
+            try:
+                raise IOError('testing')
+            except IOError:
+                dialog.set_text(*sys.exc_info())
+            dialog.run()
+            dialog.destroy()
+
+    TestOpenEditorErrorDialog().run()
+    TestDebugDialog().run()

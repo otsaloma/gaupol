@@ -34,6 +34,7 @@ descriptive names is translation dependent.
 
 
 from encodings.aliases import aliases
+from gettext import gettext as _
 import codecs
 import locale
 import re

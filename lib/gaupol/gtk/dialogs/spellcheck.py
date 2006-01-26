@@ -59,6 +59,7 @@ except ImportError:
 except enchant.Error:
     pass
 
+from gettext import gettext as _
 import codecs
 import logging
 import os

@@ -98,6 +98,15 @@ def parse_options():
     )
 
     parser.add_option(
+        '-d',
+        '--documentation',
+        action='store_true',
+        dest='documentation',
+        default=False,
+        help='view pydoc documentation of code'
+    )
+
+    parser.add_option(
         '-c',
         '--pycheck',
         action='store_true',
@@ -150,20 +159,8 @@ def prepare_eggs():
     except enchant.Error:
         pass
 
-def prepare_gettext(no_translation):
-    """
-    Prepare internationalization using gettext.
-
-    Gettext translation function is installed to Python's built-in namespace
-    making it available everywhere without need to import anything. Gettext
-    will be available with the underscore function.
-    """
-    def _(string):
-        return string
-
-    if no_translation:
-        __builtins__.__dict__['_'] = _
-        return
+def prepare_gettext():
+    """Prepare internationalization using gettext."""
 
     import gtk.glade
     from gaupol.gtk.paths import LOCALE_DIR
@@ -172,7 +169,6 @@ def prepare_gettext(no_translation):
 
     gettext.bindtextdomain('gaupol', LOCALE_DIR)
     gettext.textdomain('gaupol')
-    gettext.install('gaupol', LOCALE_DIR, unicode=1)
 
     gtk.glade.bindtextdomain('gaupol', LOCALE_DIR)
     gtk.glade.textdomain('gaupol')
@@ -208,7 +204,8 @@ if __name__ == '__main__':
 
     check_dependencies()
     check_paths()
-    prepare_gettext(opts.no_translation)
+    if not opts.no_translation:
+        prepare_gettext()
     prepare_eggs()
 
     # The world is not big enough for PyChecker and Psyco.
@@ -220,8 +217,16 @@ if __name__ == '__main__':
             logger.info('Psyco not found.')
 
     # Run as requested.
-    if opts.pycheck:
-        os.environ['PYCHECKER'] = '--config=test/pycheckrc'
+    if opts.documentation:
+        import pydoc
+        import threading
+        from gaupol.base.util import wwwlib
+        os.putenv('PYTHONPATH', 'lib')
+        threading.Thread(target=pydoc.gui).start()
+        wwwlib.open_url('http://localhost:7464/gaupol.html')
+
+    elif opts.pycheck:
+        os.putenv('PYCHECKER', '--config=test/pycheckrc')
         import pychecker.checker
         from gaupol.gtk import main
         main.main(args[1:])

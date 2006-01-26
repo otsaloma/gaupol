@@ -1,5 +1,51 @@
 2006-01-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol:
+	  Added option to view documentation.
+	  (prepare_gettext): Removed gettext.install call.
+
+	* lib/gaupol/base/delegates/edit.py:
+	* lib/gaupol/base/delegates/format.py:
+	* lib/gaupol/base/files/determiner.py:
+	* lib/gaupol/base/project.py:
+	* lib/gaupol/base/tags/converter.py:
+	* lib/gaupol/base/util/encodinglib.py:
+	* lib/gaupol/base/util/langlib.py:
+	* lib/gaupol/constants.py:
+	* lib/gaupol/gtk/colconstants.py:
+	* lib/gaupol/gtk/delegates/action.py:
+	* lib/gaupol/gtk/delegates/appupdate.py:
+	* lib/gaupol/gtk/delegates/edit.py:
+	* lib/gaupol/gtk/delegates/fileclose.py:
+	* lib/gaupol/gtk/delegates/fileopen.py:
+	* lib/gaupol/gtk/delegates/filesave.py:
+	* lib/gaupol/gtk/delegates/format.py:
+	* lib/gaupol/gtk/delegates/guiinit.py:
+	* lib/gaupol/gtk/delegates/help.py:
+	* lib/gaupol/gtk/delegates/menuupdate.py:
+	* lib/gaupol/gtk/delegates/preferences.py:
+	* lib/gaupol/gtk/delegates/preview.py:
+	* lib/gaupol/gtk/delegates/spellcheck.py:
+	* lib/gaupol/gtk/delegates/view.py:
+	* lib/gaupol/gtk/dialogs/about.py:
+	* lib/gaupol/gtk/dialogs/debug.py:
+	* lib/gaupol/gtk/dialogs/encoding.py:
+	* lib/gaupol/gtk/dialogs/filechooser.py:
+	* lib/gaupol/gtk/dialogs/language.py:
+	* lib/gaupol/gtk/dialogs/message.py:
+	* lib/gaupol/gtk/dialogs/preferences.py:
+	* lib/gaupol/gtk/dialogs/spellcheck.py:
+	* lib/gaupol/gtk/dialogs/textedit.py:
+	* lib/gaupol/gtk/output.py:
+	* lib/gaupol/gtk/page.py:
+	  Added gettext import.
+	  Added or edited testing.
+
+	* lib/gaupol/test/__init__.py:
+	  (Test.get_project): New method.
+
+2006-01-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/test/__init__.py:
 	  (timefunction, timemethod): New decorators.
 

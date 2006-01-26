@@ -31,6 +31,7 @@ package if it is installed. That means from the "iso-codes" gettext domain.
 
 
 import gettext
+from gettext import gettext as _
 
 
 # Lists of languages and countries have been generated from iso-codes project's

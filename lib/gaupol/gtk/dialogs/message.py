@@ -96,3 +96,19 @@ class WarningDialog(gtk.MessageDialog):
         )
 
         self.format_secondary_text(message)
+
+
+if __name__ == '__main__':
+
+    from gaupol.test import Test
+
+    class TestDialog(Test):
+
+        def test_init(self):
+            args = gtk.Window(), 'foo', 'bar'
+            ErrorDialog(*args)
+            InfoDialog(*args)
+            QuestionDialog(*args)
+            WarningDialog(*args)
+
+    TestDialog().run()

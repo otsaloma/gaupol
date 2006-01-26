@@ -107,3 +107,17 @@ class Project(Model):
         """Delegate method calls to delegate objects."""
 
         return self._delegations[name].__getattribute__(name)
+
+
+if __name__ == '__main__':
+
+    from gaupol.test import Test
+
+    class TestProject(Test):
+
+        def test_init(self):
+            project = Project(0, 10)
+            project = Project(0)
+
+    TestProject().run()
+

@@ -17,11 +17,13 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Base class for test classes."""
+"""Test functions and classes."""
 
 
 import tempfile
 import time
+
+from gaupol.base.project import Project
 
 
 SUBRIP_TEXT = \
@@ -140,6 +142,18 @@ class Test(object):
 
         return path
 
+    def get_project(self):
+        """Initialize a project and return it."""
+
+        project = Project(0)
+
+        path = self.get_subrip_path()
+        project.open_main_file(path, 'utf_8')
+        path = self.get_micro_dvd_path()
+        project.open_translation_file(path, 'utf_8')
+
+        return project
+
     def get_subrip_path(self):
         """Write data to a temporary file and return its path."""
 
@@ -154,7 +168,6 @@ class Test(object):
     def run(self):
         """Run all tests."""
 
-        print 'Testing...'
         for name in dir(self):
             if name.startswith('test'):
                 print name

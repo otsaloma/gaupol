@@ -90,3 +90,17 @@ class TextEditDialog(gtk.Dialog):
         text_buffer = self._text_view.get_buffer()
         start, end = text_buffer.get_bounds()
         return text_buffer.get_text(start, end, True)
+
+
+if __name__ == '__main__':
+
+    from gaupol.test import Test
+
+    class TestTextEditDialog(Test):
+
+        def test_all(self):
+            dialog = TextEditDialog(gtk.Window(), 'foo')
+            assert dialog.get_text() == 'foo'
+            dialog.destroy()
+
+    TestTextEditDialog().run()

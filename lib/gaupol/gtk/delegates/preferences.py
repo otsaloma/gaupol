@@ -25,6 +25,8 @@ try:
 except ImportError:
     pass
 
+from gettext import gettext as _
+
 import gtk
 import pango
 

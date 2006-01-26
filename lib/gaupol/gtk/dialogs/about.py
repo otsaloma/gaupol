@@ -20,6 +20,8 @@
 """Dialog to display information about Gaupol."""
 
 
+from gettext import gettext as _
+
 import gtk
 
 from gaupol.base.util import wwwlib

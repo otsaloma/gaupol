@@ -25,6 +25,8 @@ try:
 except ImportError:
     pass
 
+from gettext import gettext as _
+
 import gobject
 import gtk
 
@@ -196,3 +198,46 @@ class AdvancedEncodingDialog(EncodingDialog):
 
         store = self._view.get_model()
         store[row][SHOW] = not store[row][SHOW]
+
+
+if __name__ == '__main__':
+
+    from gaupol.test import Test
+
+    class TestEncodingDialog(Test):
+
+        def __init__(self):
+            self.dialog = EncodingDialog(gtk.Window())
+
+        def destroy(self):
+            self.dialog.destroy()
+
+        def test_get_selection(self):
+            get_encoding = self.dialog.get_encoding
+            selection = self.dialog._view.get_selection()
+            selection.unselect_all()
+            assert get_encoding() is None
+            selection.select_path(0)
+            assert isinstance(get_encoding(), basestring)
+
+    class TestAdvancedEncodingDialog(Test):
+
+        def __init__(self):
+            self.dialog = AdvancedEncodingDialog(gtk.Window())
+
+        def destroy(self):
+            self.dialog.destroy()
+
+        def test_get_visible_encodings(self):
+            get_visible = self.dialog.get_visible_encodings
+            store = self.dialog._view.get_model()
+            for row in range(len(store)):
+                store[row][SHOW] = False
+            assert get_visible() ==  []
+            store[1][SHOW] = True
+            store[3][SHOW] = True
+            assert isinstance(get_visible()[0], basestring)
+            assert isinstance(get_visible()[1], basestring)
+
+    TestEncodingDialog().run()
+    TestAdvancedEncodingDialog().run()
