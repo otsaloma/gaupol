@@ -1,5 +1,17 @@
 2006-01-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/glade/output-window.glade:
+	  Removed.
+
+	* gaupol:
+	  Fixed profiling bug.
+
+	* lib/gaupol/gtk/output.py:
+	  Switched from Glade to manual GUI construction for faster start-up
+	  time.
+
+2006-01-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/files/determiner.py:
 	* lib/gaupol/base/files/microdvd.py:
 	* lib/gaupol/base/files/mpl2.py:

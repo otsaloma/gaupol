@@ -235,7 +235,7 @@ if __name__ == '__main__':
         profile.close()
         stats = hotshot.stats.load('gaupol.prof')
         stats.sort_stats('time', 'calls')
-        stats.print_stats(opts.hotshot)
+        stats.print_stats(opts.profile)
         os.remove('gaupol.prof')
 
     elif opts.execute:

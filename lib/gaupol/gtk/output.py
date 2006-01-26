@@ -28,7 +28,7 @@ except ImportError:
 import gobject
 import gtk
 
-from gaupol.gtk.util import config, gtklib
+from gaupol.gtk.util import config
 
 
 class OutputWindow(gobject.GObject):
@@ -47,18 +47,42 @@ class OutputWindow(gobject.GObject):
 
         gobject.GObject.__init__(self)
 
-        glade_xml = gtklib.get_glade_xml('output-window.glade')
-        self._close_button = glade_xml.get_widget('close_button')
-        self._text_view    = glade_xml.get_widget('text_view')
-        self._window       = glade_xml.get_widget('window')
+        self._close_button = None
+        self._text_view    = None
+        self._window       = None
 
         # Text buffer end mark
         self._end_mark = None
 
+        self._init_gui()
         self._init_sizes()
         self._init_keys()
         self._init_signals()
         self._init_text_tags()
+
+    def _init_gui(self):
+        """Initialize GUI widgets."""
+
+        self._close_button = gtk.Button(stock=gtk.STOCK_CLOSE)
+        button_box = gtk.HButtonBox()
+        button_box.set_layout(gtk.BUTTONBOX_END)
+        button_box.pack_start(self._close_button, False, False)
+
+        self._text_view = gtk.TextView()
+        self._text_view.set_wrap_mode(gtk.WRAP_WORD)
+        scrolled_window = gtk.ScrolledWindow()
+        scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+        scrolled_window.set_shadow_type(gtk.SHADOW_ETCHED_IN)
+        scrolled_window.add(self._text_view)
+
+        vbox = gtk.VBox(spacing=12)
+        vbox.pack_start(scrolled_window, True, True)
+        vbox.pack_start(button_box, False, False)
+
+        self._window = gtk.Window()
+        self._window.set_border_width(12)
+        self._window.set_title(_('Output'))
+        self._window.add(vbox)
 
     def _init_sizes(self):
         """Initialize widget sizes."""
