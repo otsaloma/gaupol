@@ -107,6 +107,8 @@ class SubRip(SubtitleFile):
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
+        texts = texts[:]
+
         newline_character = self._get_newline_character()
 
         # Replace Python internal newline characters in text with desired
@@ -124,3 +126,21 @@ class SubRip(SubtitleFile):
                 ))
         finally:
             subtitle_file.close()
+
+
+if __name__ == '__main__':
+
+    from gaupol.test import Test
+
+    class TestSubRip(Test):
+
+        def test_all(self):
+            path = self.get_subrip_path()
+            subrip_file = SubRip(path, 'utf_8')
+            data_1 = subrip_file.read()
+            subrip_file.write(*data_1)
+            data_2 = subrip_file.read()
+            assert data_2 == data_1
+            os.remove(path)
+
+    TestSubRip().run()

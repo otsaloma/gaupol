@@ -90,6 +90,8 @@ class MicroDVD(SubtitleFile):
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
+        texts = texts[:]
+
         newline_character = self._get_newline_character()
 
         # Replace Python internal newline characters in text with pipes.
@@ -104,3 +106,21 @@ class MicroDVD(SubtitleFile):
                 ))
         finally:
             subtitle_file.close()
+
+
+if __name__ == '__main__':
+
+    from gaupol.test import Test
+
+    class TestMicroDVD(Test):
+
+        def test_all(self):
+            path = self.get_micro_dvd_path()
+            micro_dvd_file = MicroDVD(path, 'utf_8')
+            data_1 = micro_dvd_file.read()
+            micro_dvd_file.write(*data_1)
+            data_2 = micro_dvd_file.read()
+            assert data_2 == data_1
+            os.remove(path)
+
+    TestMicroDVD().run()

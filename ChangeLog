@@ -1,5 +1,20 @@
 2006-01-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/files/determiner.py:
+	* lib/gaupol/base/files/microdvd.py:
+	* lib/gaupol/base/files/mpl2.py:
+	* lib/gaupol/base/files/subrip.py:
+	* lib/gaupol/base/files/subviewer2.py:
+	  Added testing.
+	  (*.write): Make copies of shows, hides and texts if they're to be
+	  altered.
+
+	* lib/gaupol/test/__init__.py:
+	  (Test.get_micro_dvd_path):  New method.
+	  (Test.get_subrip_path): New method.
+
+2006-01-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/gtk/delegates/help.py:
 	  (HelpDelegate.on_check_latest_version_activated): Raised timeout
 	  argument to 15 seconds.

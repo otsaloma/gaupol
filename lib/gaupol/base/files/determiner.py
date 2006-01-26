@@ -70,3 +70,25 @@ class FileFormatDeterminer(SubtitleFile):
                     return format
 
         raise FileFormatError(_('Unrecognized subtitle file format'))
+
+
+if __name__ == '__main__':
+
+    from gaupol.test import Test
+
+    class TestFileFormatDeterminer(Test):
+
+        def test_determine_file_format(self):
+            path = self.get_subrip_path()
+            determiner = FileFormatDeterminer(path, 'utf_8')
+            format = determiner.determine_file_format()
+            assert format == Format.SUBRIP
+            os.remove(path)
+
+            path = self.get_micro_dvd_path()
+            determiner = FileFormatDeterminer(path, 'utf_8')
+            format = determiner.determine_file_format()
+            assert format == Format.MICRODVD
+            os.remove(path)
+
+    TestFileFormatDeterminer().run()

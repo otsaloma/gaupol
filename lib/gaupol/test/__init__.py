@@ -20,6 +20,54 @@
 """Base class for test classes."""
 
 
+import tempfile
+
+
+SUBRIP_TEXT = \
+'''1
+00:00:13,400 --> 00:00:17,400
+ENERGIA presents
+
+2
+00:00:27,480 --> 00:00:31,480
+A SAMULI TORSSONEN production
+
+3
+00:00:42,400 --> 00:00:45,880
+A TIMO VUORENSOLA film
+
+4
+00:02:36,960 --> 00:02:41,960
+I would like to suggest, Emperor,
+that you reconsider your plan.
+
+5
+00:02:42,040 --> 00:02:47,040
+The scientists are comparing it to
+Russian roulette.
+
+6
+00:02:47,160 --> 00:02:52,160
+What theories we have on phenomena
+like the maggot hole -
+
+7
+00:02:52,840 --> 00:02:57,840
+indicate a tendency for continually
+increasing disturbances.
+'''
+
+MICRODVD_TEXT = \
+'''{321}{417}ENERGIA presents
+{659}{755}A SAMULI TORSSONEN production
+{1017}{1100}A TIMO VUORENSOLA film
+{3763}{3883}I would like to suggest, Emperor,|that you reconsider your plan.
+{3885}{4005}The scientists are comparing it to|Russian roulette.
+{4008}{4128}What theories we have on phenomena|like the maggot hole -
+{4144}{4264}indicate a tendency for continually|increasing disturbances.
+'''
+
+
 class Test(object):
 
     """
@@ -47,6 +95,28 @@ class Test(object):
     def destroy(self):
         """Destroy instance variables."""
         pass
+
+    def get_micro_dvd_path(self):
+        """Write data to a temporary file and return its path."""
+
+        path = tempfile.mkstemp()[1]
+
+        sub_file = open(path, 'w')
+        sub_file.write(MICRODVD_TEXT)
+        sub_file.close()
+
+        return path
+
+    def get_subrip_path(self):
+        """Write data to a temporary file and return its path."""
+
+        path = tempfile.mkstemp()[1]
+
+        sub_file = open(path, 'w')
+        sub_file.write(SUBRIP_TEXT)
+        sub_file.close()
+
+        return path
 
     def run(self):
         """Run all tests."""

@@ -96,6 +96,10 @@ class MPL2(SubtitleFile):
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
+        shows = shows[:]
+        hides = hides[:]
+        texts = texts[:]
+
         newline_character = self._get_newline_character()
 
         calc = TimeFrameCalculator()
@@ -118,3 +122,27 @@ class MPL2(SubtitleFile):
                 ))
         finally:
             subtitle_file.close()
+
+
+if __name__ == '__main__':
+
+    from gaupol.base.files.subrip import SubRip
+    from gaupol.test              import Test
+
+    class TestMPL2(Test):
+
+        def test_all(self):
+            path = self.get_subrip_path()
+            subrip_file = SubRip(path, 'utf_8')
+            data = subrip_file.read()
+
+            mpl2_file = MPL2(path, 'utf_8', subrip_file.newlines)
+            mpl2_file.write(*data)
+            data_1 = mpl2_file.read()
+            mpl2_file.write(*data_1)
+            data_2 = mpl2_file.read()
+
+            assert data_2 == data_1
+            os.remove(path)
+
+    TestMPL2().run()
