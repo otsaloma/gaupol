@@ -21,6 +21,7 @@
 
 
 import tempfile
+import time
 
 
 SUBRIP_TEXT = \
@@ -66,6 +67,38 @@ MICRODVD_TEXT = \
 {4008}{4128}What theories we have on phenomena|like the maggot hole -
 {4144}{4264}indicate a tendency for continually|increasing disturbances.
 '''
+
+
+def timefunction(function):
+    """Decorator for functions to be timed."""
+
+    def wrapper(*args, **kwargs):
+
+        start = time.time()
+        function(*args, **kwargs)
+        end = time.time()
+
+        print '%.3f %s' % (end - start, function.__name__)
+
+    return wrapper
+
+def timemethod(function):
+    """Decorator for methods to be timed."""
+
+    def wrapper(*args, **kwargs):
+
+        start = time.time()
+        function(*args, **kwargs)
+        end = time.time()
+
+        print '%.3f %s.%s.%s' % (
+            end - start,
+            args[0].__class__.__module__,
+            args[0].__class__.__name__,
+            function.__name__
+        )
+
+    return wrapper
 
 
 class Test(object):
