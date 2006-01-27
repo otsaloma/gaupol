@@ -203,24 +203,26 @@ if __name__ == '__main__':
 
     class TestPreviewDelegate(Test):
 
+        def __init__(self):
+
+            Test.__init__(self)
+            self.project = self.get_project()
+
         def test_get_subtitle_path(self):
 
-            project = self.get_project()
-            delegate = PreviewDelegate(project)
-
+            delegate = PreviewDelegate(self.project)
             data = delegate._get_subtitle_path(Document.MAIN)
-            assert data == (project.main_file.path, False)
+            assert data == (self.project.main_file.path, False)
 
-            project.clear_texts([0], Document.MAIN)
+            self.project.clear_texts([0], Document.MAIN)
             data = delegate._get_subtitle_path(Document.MAIN)
             self.files.append(data[0])
-            assert data[0] != project.main_file.path
+            assert data[0] != self.project.main_file.path
             assert data[1] is True
-            assert project.main_changed == 1
+            assert self.project.main_changed == 1
 
         def test_guess_video_file_path(self):
 
-            project = self.get_project()
-            project.guess_video_file_path()
+            self.project.guess_video_file_path()
 
     TestPreviewDelegate().run()

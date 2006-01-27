@@ -114,6 +114,9 @@ class Test(object):
     with "test_". "__init__" acts as the set-up method and "destroy" as the
     tear-down method. run() should be called right after the class definition.
 
+    All temporary file creations should also add the temporary file path to
+    self.files. These files will be deleted at the end of the run() method.
+
     Example:
 
     if __name__ == '__main__':
@@ -122,7 +125,8 @@ class Test(object):
 
         class TestFoo(Test):
 
-            test_foo(self):
+            def test_foo(self):
+
                 value = foo()
                 assert foo is True
 
@@ -134,11 +138,11 @@ class Test(object):
         self.files = []
 
     def destroy(self):
-        """Destroy instance variables."""
+        """Destroy instance variables (teardown)."""
         pass
 
     def get_micro_dvd_path(self):
-        """Write data to a temporary file and return its path."""
+        """Write data to a temporary Micro DVD file and return its path."""
 
         path = tempfile.mkstemp()[1]
 
@@ -165,7 +169,7 @@ class Test(object):
         return project
 
     def get_subrip_path(self):
-        """Write data to a temporary file and return its path."""
+        """Write data to a temporary SubRip file and return its path."""
 
         path = tempfile.mkstemp()[1]
 
@@ -188,7 +192,7 @@ class Test(object):
         self.files = []
 
     def run(self):
-        """Run all tests."""
+        """Run all tests and do clean-up."""
 
         for name in dir(self):
             if name.startswith('test'):

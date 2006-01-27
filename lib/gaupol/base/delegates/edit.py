@@ -197,7 +197,8 @@ class EditDelegate(Delegate):
         length. subtitles are inserted in ascending order by simply inserting
         elements of data in positions defined by elements of rows. This means
         that the addition of subtitles must be taken into account beforehand in
-        the "rows" argument.
+        the "rows" argument. Data is not resorted, so this method must be
+        called with ordered show times.
         """
         for i in range(len(rows)):
             row = rows[i]
@@ -513,3 +514,197 @@ class EditDelegate(Delegate):
                 entry.insert(new_row, entry.pop(row))
 
         return new_row
+
+
+if __name__ == '__main__':
+
+    import copy
+    from gaupol.test import Test
+
+    class TestEditDelegate(Test):
+
+        def __init__(self):
+
+            Test.__init__(self)
+            self.project = self.get_project()
+
+        def test_clear_texts(self):
+
+            orig_texts = self.project.main_texts[0:2]
+            self.project.clear_texts([0, 1], Document.MAIN)
+            assert self.project.main_texts[0] == ''
+            assert self.project.main_texts[1] == ''
+
+            self.project.undo()
+            assert self.project.main_texts[0:2] == orig_texts
+
+        def test_copy_texts(self):
+
+            orig_0 = self.project.main_texts[0]
+            orig_2 = self.project.main_texts[2]
+            self.project.copy_texts([0, 2], Document.MAIN)
+            assert self.project.clipboard.data == [orig_0, None, orig_2]
+
+        def test_cut_texts(self):
+
+            orig_0 = self.project.main_texts[0]
+            orig_2 = self.project.main_texts[2]
+            self.project.cut_texts([0, 2], Document.MAIN)
+            assert self.project.main_texts[0] == ''
+            assert self.project.main_texts[2] == ''
+            assert self.project.clipboard.data == [orig_0, None, orig_2]
+
+            self.project.undo()
+            assert self.project.main_texts[0] == orig_0
+            assert self.project.main_texts[2] == orig_2
+
+        def test_get_mode(self):
+
+            assert self.project.get_mode() in (Mode.TIME, Mode.FRAME)
+
+        def test_get_needs_resort(self):
+
+            assert self.project.get_needs_resort(0, '99:00:00,000')
+            assert not self.project.get_needs_resort(0, '00:00:00,000')
+
+        def test_get_timings(self):
+
+            timings = self.project.get_timings()
+            assert timings in (self.project.times, self.project.frames)
+
+        def test_insert_subtitles(self):
+
+            orig_1 = self.project.main_texts[1]
+            orig_2 = self.project.main_texts[2]
+            self.project.insert_subtitles([1, 2])
+            assert self.project.main_texts[1] == ''
+            assert self.project.main_texts[2] == ''
+
+            self.project.undo()
+            assert self.project.main_texts[1] == orig_1
+            assert self.project.main_texts[2] == orig_2
+
+            orig_0 = self.project.main_texts[0]
+            orig_1 = self.project.main_texts[1]
+            self.project.insert_subtitles(
+                [0, 1],
+                ['00:00:00:001', '00:00:00:002'],
+                [0, 1],
+                ['main_foo', 'main_bar'],
+                ['tran_foo', 'tran_bar']
+
+            )
+            assert self.project.main_texts[0] == 'main_foo'
+            assert self.project.main_texts[1] == 'main_bar'
+
+            self.project.undo()
+            assert self.project.main_texts[0] == orig_0
+            assert self.project.main_texts[1] == orig_1
+
+        def test_paste_texts(self):
+
+            self.project.copy_texts([2, 3], Document.TRAN)
+            orig_0 = self.project.main_texts[0]
+            orig_1 = self.project.main_texts[1]
+            self.project.paste_texts(0, Document.MAIN)
+            assert self.project.main_texts[0] == self.project.tran_texts[2]
+            assert self.project.main_texts[1] == self.project.tran_texts[3]
+
+            self.project.undo()
+            assert self.project.main_texts[0] == orig_0
+            assert self.project.main_texts[1] == orig_1
+
+        def test_remove_subtitles(self):
+
+            orig_length = len(self.project.times)
+            orig_2 = self.project.main_texts[2]
+            orig_3 = self.project.main_texts[3]
+            self.project.remove_subtitles([2, 3])
+            assert len(self.project.times) == orig_length - 2
+
+            self.project.undo()
+            assert len(self.project.times) == orig_length
+            assert self.project.main_texts[2] == orig_2
+            assert self.project.main_texts[3] == orig_3
+
+        def test_replace_both_texts(self):
+
+            orig_main_1 = self.project.main_texts[1]
+            orig_tran_1 = self.project.tran_texts[1]
+            self.project.replace_both_texts([[1], [1]], [['foo'], ['bar']])
+            assert self.project.main_texts[1] == 'foo'
+            assert self.project.tran_texts[1] == 'bar'
+
+            self.project.undo()
+            assert self.project.main_texts[1] == orig_main_1
+            assert self.project.tran_texts[1] == orig_tran_1
+
+        def test_replace_texts(self):
+
+            orig_main_1 = self.project.main_texts[1]
+            orig_main_2 = self.project.main_texts[2]
+            self.project.replace_texts([1, 2], Document.MAIN, ['foo', 'bar'])
+            assert self.project.main_texts[1] == 'foo'
+            assert self.project.main_texts[2] == 'bar'
+
+            self.project.undo()
+            assert self.project.main_texts[1] == orig_main_1
+            assert self.project.main_texts[2] == orig_main_2
+
+        def test_set_frame(self):
+
+            orig_hide_frame = self.project.frames[3][HIDE]
+            orig_durn_frame = self.project.frames[3][DURN]
+            orig_hide_time  = self.project.times[3][HIDE]
+            orig_durn_time  = self.project.times[3][DURN]
+
+            self.project.set_frame(3, HIDE, 8888888)
+            assert self.project.frames[3][HIDE] == 8888888
+            assert self.project.frames[3][DURN] != orig_hide_frame
+            assert self.project.times[3][HIDE]  != orig_hide_time
+            assert self.project.times[3][DURN]  != orig_durn_time
+
+            self.project.undo()
+            assert self.project.frames[3][HIDE] == orig_hide_frame
+            assert self.project.frames[3][DURN] == orig_durn_frame
+
+        def test_set_text(self):
+
+            orig_text = self.project.tran_texts[2]
+            self.project.set_text(2, Document.TRAN, 'foo')
+            assert self.project.tran_texts[2] == 'foo'
+
+            self.project.undo()
+            assert self.project.tran_texts[2] == orig_text
+
+        def test_set_time(self):
+
+            orig_hide_time  = self.project.times[3][HIDE]
+            orig_durn_time  = self.project.times[3][DURN]
+            orig_hide_frame = self.project.frames[3][HIDE]
+            orig_durn_frame = self.project.frames[3][DURN]
+
+            self.project.set_time(3, DURN, '33:33:33,333')
+            assert self.project.times[3][HIDE]  != orig_hide_time
+            assert self.project.times[3][DURN]  == '33:33:33,333'
+            assert self.project.frames[3][HIDE] != orig_hide_frame
+            assert self.project.frames[3][DURN] != orig_hide_frame
+
+            self.project.undo()
+            assert self.project.times[3][HIDE] == orig_hide_time
+            assert self.project.times[3][DURN] == orig_durn_time
+
+        def test_sort_data(self):
+
+            last = len(self.project.times) - 1
+            orig_times  = copy.deepcopy(self.project.times)
+            orig_text_0 = self.project.main_texts[0]
+            self.project.set_frame(0, SHOW, 9999999999)
+            assert self.project.times[:last] == orig_times[1:]
+            assert self.project.main_texts[last] == orig_text_0
+
+            self.project.undo()
+            assert self.project.times[1:] == orig_times[1:]
+            assert self.project.main_texts[0] == orig_text_0
+
+    TestEditDelegate().run()

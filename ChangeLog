@@ -1,5 +1,17 @@
 2006-01-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/delegates/edit.py:
+	* lib/gaupol/base/delegates/fileopen.py:
+	* lib/gaupol/base/delegates/filesave.py:
+	* lib/gaupol/base/delegates/format.py:
+	* lib/gaupol/base/delegates/preview.py:
+	  Added testing.
+
+	* lib/gaupol/test/__init__.py:
+	  Cosmetic changes.
+
+2006-01-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/delegates/action.py:
 	* lib/gaupol/base/delegates/frconv.py:
 	* lib/gaupol/base/delegates/preview.py:

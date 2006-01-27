@@ -171,3 +171,59 @@ class FormatDelegate(Delegate):
         self.replace_texts(rows, document, new_texts, register)
         description = _('Toggling italicization')
         self.modify_action_description(register, description)
+
+
+if __name__ == '__main__':
+
+    from gaupol.test import Test
+
+    class TestFormatDelegate(Test):
+
+        def __init__(self):
+
+            Test.__init__(self)
+            self.project = self.get_project()
+
+        def test_change_case(self):
+
+            self.project.main_texts[1] = 'foo'
+            self.project.change_case([1], Document.MAIN, 'upper')
+            assert self.project.main_texts[1] == 'FOO'
+
+            self.project.undo()
+            assert self.project.main_texts[1] == 'foo'
+
+        def test_get_format_class_name(self):
+
+            delegate = FormatDelegate(self.project)
+            name = delegate._get_format_class_name(Document.MAIN)
+            assert name in Format.class_names or name is None
+
+        def test_get_regular_expression_for_tag(self):
+
+            regex = self.project.get_regular_expression_for_tag(Document.MAIN)
+            assert hasattr(regex, 'match') or regex is None
+
+        def test_toggle_dialog_lines(self):
+
+            self.project.main_texts[1] = 'foo\nbar'
+            self.project.toggle_dialog_lines([1], Document.MAIN)
+            assert self.project.main_texts[1] == '- foo\n- bar'
+            self.project.toggle_dialog_lines([1], Document.MAIN)
+            assert self.project.main_texts[1] == 'foo\nbar'
+
+            self.project.undo(2)
+            assert self.project.main_texts[1] == 'foo\nbar'
+
+        def test_toggle_italicization(self):
+
+            self.project.main_texts[1] = 'foo'
+            self.project.toggle_italicization([1], Document.MAIN)
+            assert self.project.main_texts[1] == '<i>foo</i>'
+            self.project.toggle_italicization([1], Document.MAIN)
+            assert self.project.main_texts[1] == 'foo'
+
+            self.project.undo(2)
+            assert self.project.main_texts[1] == 'foo'
+
+    TestFormatDelegate().run()

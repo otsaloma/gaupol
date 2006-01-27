@@ -209,3 +209,37 @@ class FileSaveDelegate(Delegate):
             self.tran_active  = True
             self.tran_changed = 0
 
+
+if __name__ == '__main__':
+
+    from gaupol.constants import Newlines
+    from gaupol.test      import Test
+
+    class TestFileSaveDelegate(Test):
+
+        def test_save_file(self):
+
+            project = self.get_project()
+
+            project.save_main_file()
+            project.save_translation_file()
+
+            properties = [
+                project.main_file.path,
+                Format.MPL2,
+                'utf_8',
+                Newlines.UNIX
+            ]
+            project.save_main_file(properties=properties)
+            properties[1] = Format.MICRODVD
+            project.save_main_file(properties=properties)
+            properties[1] = Format.SUBVIEWER2
+            project.save_main_file(properties=properties)
+
+            project.insert_subtitles([0])
+            project.save_main_file(keep_changes=False)
+            assert project.main_changed
+            project.save_main_file(keep_changes=True)
+            assert not project.main_changed
+
+    TestFileSaveDelegate().run()

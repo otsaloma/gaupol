@@ -160,3 +160,53 @@ class FileOpenDelegate(Delegate):
         texts = [entry[2] for entry in data]
 
         return shows, hides, texts
+
+
+if __name__ == '__main__':
+
+    from gaupol.test import Test
+
+    class TestFileOpenDelegate(Test):
+
+        def __init__(self):
+
+            Test.__init__(self)
+            self.project = self.get_project()
+
+        def test_open_main_file(self):
+
+            path = self.get_subrip_path()
+            self.project.open_main_file(path, 'utf_8')
+            assert bool(self.project.times)
+            assert bool(self.project.frames)
+            assert bool(self.project.main_texts)
+            assert bool(self.project.tran_texts)
+
+        def test_open_translation_file(self):
+
+            self.project.remove_subtitles([1, 2])
+            path = self.get_micro_dvd_path()
+            self.project.open_translation_file(path, 'utf_8')
+            assert bool(self.project.tran_texts[0])
+
+        def test_sort_data(self):
+
+            delegate = FileOpenDelegate(self.project)
+
+            shows = [ 2 ,  3 ,  1 ]
+            hides = [ 3 ,  4 ,  2 ]
+            texts = ['2', '3', '1']
+            shows, hides, texts = delegate._sort_data(shows, hides, texts)
+            assert shows == [ 1 ,  2 ,  3 ]
+            assert hides == [ 2 ,  3 ,  4 ]
+            assert texts == ['1', '2', '3']
+
+            shows = ['00:00:00,300', '00:00:00,200', '00:00:00,100']
+            hides = ['00:00:00,400', '00:00:00,300', '00:00:00,200']
+            texts = ['00:00:00,300', '00:00:00,200', '00:00:00,100']
+            shows, hides, texts = delegate._sort_data(shows, hides, texts)
+            assert shows == ['00:00:00,100', '00:00:00,200', '00:00:00,300']
+            assert hides == ['00:00:00,200', '00:00:00,300', '00:00:00,400']
+            assert texts == ['00:00:00,100', '00:00:00,200', '00:00:00,300']
+
+    TestFileOpenDelegate().run()
