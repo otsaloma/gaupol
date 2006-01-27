@@ -238,30 +238,36 @@ if __name__ == '__main__':
     class TestLib(Test):
 
         def test_destroy_gobject(self):
+
             destroy_gobject(gtk.Label())
 
         def test_get_glade_xml(self):
+
             get_glade_xml('debug-dialog.glade')
 
         def test_get_event_box(self):
+
             event_box = gtk.EventBox()
             label = gtk.Label()
             event_box.add(label)
             get_event_box(label)
 
         def test_get_parent_widget(self):
+
             event_box = gtk.EventBox()
             label = gtk.Label()
             event_box.add(label)
             get_parent_widget(label, gtk.EventBox)
 
         def test_get_text_view_size(self):
+
             text_view = gtk.TextView(gtk.TextBuffer())
             size = get_text_view_size(text_view)
             assert isinstance(size[0], int)
             assert isinstance(size[1], int)
 
         def test_get_text_view_size(self):
+
             tree_view = gtk.TreeView()
             scrolled_window = gtk.ScrolledWindow()
             scrolled_window.add(tree_view)
@@ -270,36 +276,43 @@ if __name__ == '__main__':
             assert isinstance(size[1], int)
 
         def test_idlemethod(self):
+
             @idlemethod
             def foo():
                 pass
             foo()
 
         def test_resize_dialog(self):
+
             dialog = gtk.Dialog()
             resize_dialog(dialog, 600, 600, 0.4, 0.4)
 
         def test_resize_message_dialog(self):
+
             dialog = gtk.Dialog()
             resize_message_dialog(dialog, 600, 600, 0.4, 0.4)
 
         def test_set_cursor_busy(self):
+
             window = gtk.Window()
             window.show_all()
             set_cursor_busy(window)
             window.destroy()
 
         def test_set_cursor_normal(self):
+
             window = gtk.Window()
             window.show_all()
             set_cursor_normal(window)
             window.destroy()
 
         def test_set_label_font(self):
+
             label = gtk.Label('foo')
             set_label_font(label, 'monospace 12')
 
         def test_set_widget_font(self):
+
             label = gtk.Label('foo')
             set_widget_font(label, 'monospace 12')
 

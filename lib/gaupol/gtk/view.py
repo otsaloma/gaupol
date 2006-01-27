@@ -238,6 +238,8 @@ if __name__ == '__main__':
     class TestView(Test):
 
         def __init__(self):
+
+            Test.__init__(self)
             self.view = View(Mode.TIME)
             self.view = View(Mode.FRAME)
             store = self.view.get_model()
@@ -245,11 +247,13 @@ if __name__ == '__main__':
             store.append([2, 6, 7, 8, 'foo', 'bar'])
 
         def test_get_focus(self):
+
             self.view.get_focus()
             self.view.set_focus(1, 3)
             assert self.view.get_focus() == (1, 3)
 
         def test_get_selected_rows(self):
+
             selection = self.view.get_selection()
             selection.unselect_all()
             assert self.view.get_selected_rows() == []
@@ -257,16 +261,20 @@ if __name__ == '__main__':
             assert self.view.get_selected_rows() == [0, 1]
 
         def test_scroll_to_row(self):
+
             self.view.scroll_to_row(1)
 
         def test_select_rows(self):
+
             self.view.select_rows([])
             self.view.select_rows([0, 1])
 
         def test_set_focus(self):
+
             self.view.set_focus(0, 4)
 
         def test_set_active_column(self):
+
             self.view.set_active_column()
 
     TestView().run()

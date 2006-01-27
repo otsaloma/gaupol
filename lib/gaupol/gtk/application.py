@@ -115,3 +115,16 @@ class Application(object):
             return self.pages[self.notebook.get_current_page()]
         except IndexError:
             return None
+
+
+if __name__ == '__main__':
+
+    from gaupol.test import Test
+
+    class TestApplication(Test):
+
+        def test_init(self):
+
+            Application()
+
+    TestApplication().run()

@@ -483,27 +483,33 @@ if __name__ == '__main__':
     class TestLib(Test):
 
         def test_get_boolean(self):
+
             assert _get_boolean('true') is True
             assert _get_boolean(True) == 'true'
             assert _get_boolean('false')  is False
             assert _get_boolean(False) == 'false'
 
         def test_get_constant(self):
+
             assert _get_constant('editor', 'mode', 'time') == Mode.TIME
             assert _get_constant('editor', 'mode', Mode.TIME) == 'time'
 
         def test_get_options(self):
+
             options = get_options('application_window')
             assert isinstance(options[0], basestring)
 
         def test_get_sections(self):
+
             sections = get_sections()
             assert isinstance(sections[0], basestring)
 
         def test_read(self):
+
             read()
 
         def test_set_config_option(self):
+
             parser = ConfigParser.RawConfigParser()
             parser.read([CONFIG_PATH])
 
@@ -543,6 +549,7 @@ if __name__ == '__main__':
             assert editor.visible_columns == [SHOW, HIDE]
 
         def test_set_parser_option(self):
+
             parser = ConfigParser.RawConfigParser()
             parser.read([CONFIG_PATH])
 
@@ -585,6 +592,7 @@ if __name__ == '__main__':
                    == 'show%shide' % LIST_SEP
 
         def test_write(self):
+
             read()
             write()
 

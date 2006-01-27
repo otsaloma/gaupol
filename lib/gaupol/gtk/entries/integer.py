@@ -47,6 +47,7 @@ if __name__ == '__main__':
     class TestIntegerEntry(Test):
 
         def test_init(self):
+
             entry = IntegerEntry()
             entry.set_text('333')
             window = gtk.Window()

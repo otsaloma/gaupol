@@ -26,6 +26,7 @@ import time
 import traceback
 
 from gaupol.base.project import Project
+from gaupol.constants    import Mode
 
 
 SUBRIP_TEXT = \
@@ -136,6 +137,24 @@ class Test(object):
     def __init__(self):
 
         self.files = []
+
+    def assert_store(self, page):
+        """Assert that list store's data matches project's."""
+
+        if page.edit_mode == Mode.TIME:
+            timings = page.project.times
+        elif page.edit_mode == Mode.FRAME:
+            timings = page.project.frames
+
+        store = page.view.get_model()
+
+        for row in range(len(store)):
+            assert store[row][0] == row + 1
+            assert store[row][1] == timings[row][0]
+            assert store[row][2] == timings[row][1]
+            assert store[row][3] == timings[row][2]
+            assert store[row][4] == page.project.main_texts[row]
+            assert store[row][5] == page.project.tran_texts[row]
 
     def destroy(self):
         """Destroy instance variables (teardown)."""

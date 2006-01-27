@@ -117,8 +117,8 @@ if __name__ == '__main__':
 
         def test_init(self):
 
-            project = Project(0, 10)
-            project = Project(0)
+            Project(0, 10)
+            Project(0)
 
     TestProject().run()
 

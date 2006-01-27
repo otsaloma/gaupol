@@ -201,6 +201,7 @@ if __name__ == '__main__':
     class TestIntegerEntry(Test):
 
         def test_init(self):
+
             entry = TimeEntry()
             entry.set_text('00:33:22,111')
             window = gtk.Window()

@@ -72,6 +72,7 @@ if __name__ == '__main__':
     class TestCellRendererInteger(Test):
 
         def test_init(self):
+
             tree_view = gtk.TreeView()
             tree_view.set_headers_visible(False)
             store = gtk.ListStore(gobject.TYPE_INT)

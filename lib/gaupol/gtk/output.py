@@ -196,6 +196,7 @@ if __name__ == '__main__':
     class TestOutputWindow(Test):
 
         def test_all(self):
+
             output_window = OutputWindow()
             output_window.get_position()
             output_window.get_size()

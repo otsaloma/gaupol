@@ -1,5 +1,24 @@
 2006-01-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/project.py:
+	* lib/gaupol/gtk/application.py:
+	* lib/gaupol/gtk/cellrend/integer.py:
+	* lib/gaupol/gtk/cellrend/multiline.py:
+	* lib/gaupol/gtk/cellrend/time.py:
+	* lib/gaupol/gtk/entries/integer.py:
+	* lib/gaupol/gtk/entries/time.py:
+	* lib/gaupol/gtk/output.py:
+	* lib/gaupol/gtk/page.py:
+	* lib/gaupol/gtk/util/config.py:
+	* lib/gaupol/gtk/util/gtklib.py:
+	* lib/gaupol/gtk/view.py:
+	  Added or fixed testing.
+
+	* lib/gaupol/test/__init__.py:
+	  (Test.assert_store): New method.
+
+2006-01-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/clipboard.py:
 	* lib/gaupol/base/files/determiner.py:
 	* lib/gaupol/base/files/microdvd.py:

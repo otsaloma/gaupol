@@ -313,3 +313,111 @@ class Page(gobject.GObject):
         self.tooltips.set_tip(event_box, self.get_main_filename())
 
         return title
+
+
+if __name__ == '__main__':
+
+    from gaupol.test import Test
+
+    class TestPage(Test):
+
+        def __init__(self):
+
+            Test.__init__(self)
+            config.editor.mode == Mode.TIME
+            self.page = Page(99)
+            self.page = Page()
+            self.page.project = self.get_project()
+            self.page.reload_all()
+
+        def test_init_tab_widget(self):
+
+            widget = self.page.init_tab_widget()
+            assert isinstance(widget, gtk.HBox)
+
+        def test_document_to_text_column(self):
+
+            assert self.page.document_to_text_column(Document.MAIN) == MTXT
+            assert self.page.document_to_text_column(Document.TRAN) == TTXT
+
+        def test_get_filenames(self):
+
+            orig_main_path = self.page.project.main_file.path
+            orig_tran_path = self.page.project.tran_file.path
+
+            self.page.project.main_file.path = '/tmp/root.srt'
+            assert self.page.get_main_basename() == 'root.srt'
+            assert self.page.get_main_corename() == 'root'
+            assert self.page.get_main_filename() == '/tmp/root.srt'
+
+            self.page.project.tran_file.path = '/tmp/root.sub'
+            assert self.page.get_translation_basename() == 'root.sub'
+            assert self.page.get_translation_corename() == 'root'
+
+            self.page.project.main_file.path = orig_main_path
+            self.page.project.tran_file.path = orig_tran_path
+
+        def test_get_timings(self):
+
+            assert self.page._get_timings() == self.page.project.times
+
+        def test_reload_after_row(self):
+
+            self.page.project.remove_subtitles([3])
+            self.page.reload_after_row(3)
+            self.assert_store(self.page)
+
+            self.page.project.insert_subtitles([3])
+            self.page.reload_after_row(3)
+            self.assert_store(self.page)
+
+        def test_reload_all(self):
+
+            self.page.reload_all()
+            self.assert_store(self.page)
+
+        def test_reload_between_rows(self):
+
+            self.page.project.set_text(1, Document.MAIN, 'foo')
+            self.page.project.set_text(2, Document.MAIN, 'foo')
+            self.page.project.set_text(3, Document.MAIN, 'foo')
+            self.page.reload_between_rows(1, 3)
+            self.assert_store(self.page)
+
+        def test_reload_columns(self):
+
+            self.page.project.set_text(1, Document.MAIN, 'bar')
+            self.page.project.set_text(2, Document.MAIN, 'bar')
+            self.page.project.set_text(3, Document.MAIN, 'bar')
+            self.page.reload_columns([MTXT], [1, 2, 3])
+            self.assert_store(self.page)
+
+        def  test_reload_row(self):
+
+            self.page.project.set_text(2, Document.TRAN, 'foo')
+            self.page.reload_row(2)
+            self.assert_store(self.page)
+
+        def  test_reload_rows(self):
+
+            self.page.project.set_text(3, Document.TRAN, 'foo')
+            self.page.reload_rows([3])
+            self.assert_store(self.page)
+
+        def test_text_column_to_document(self):
+
+            assert self.page.text_column_to_document(MTXT) == Document.MAIN
+            assert self.page.text_column_to_document(TTXT) == Document.TRAN
+
+        def test_update_labels(self):
+
+            self.page.project.save_main_file()
+            self.page.project.save_translation_file()
+            title = self.page.update_tab_labels()
+            assert title == self.page.get_main_basename()
+
+            self.page.project.set_text(4, Document.MAIN, 'foo')
+            title = self.page.update_tab_labels()
+            assert title == '*' + self.page.get_main_basename()
+
+    TestPage().run()
