@@ -1,5 +1,12 @@
 2006-01-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/page.py:
+	* lib/gaupol/test/__init__.py:
+	  Moved assert_store method from gaupol.test.Test to
+	  gaupol.gtk.page.Page and corrected all references.
+
+2006-01-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/project.py:
 	* lib/gaupol/gtk/application.py:
 	* lib/gaupol/gtk/cellrend/integer.py:

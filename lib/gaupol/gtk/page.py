@@ -107,6 +107,20 @@ class Page(gobject.GObject):
 
         return tab_widget
 
+    def assert_store(self):
+        """Assert that list store's data matches project's."""
+
+        store   = self.view.get_model()
+        timings = self._get_timings()
+
+        for row in range(len(store)):
+            assert store[row][0] == row + 1
+            assert store[row][1] == timings[row][0]
+            assert store[row][2] == timings[row][1]
+            assert store[row][3] == timings[row][2]
+            assert store[row][4] == self.project.main_texts[row]
+            assert store[row][5] == self.project.tran_texts[row]
+
     def document_to_text_column(self, document):
         """Translate document constant to text column constant."""
 
@@ -365,16 +379,16 @@ if __name__ == '__main__':
 
             self.page.project.remove_subtitles([3])
             self.page.reload_after_row(3)
-            self.assert_store(self.page)
+            self.page.assert_store()
 
             self.page.project.insert_subtitles([3])
             self.page.reload_after_row(3)
-            self.assert_store(self.page)
+            self.page.assert_store()
 
         def test_reload_all(self):
 
             self.page.reload_all()
-            self.assert_store(self.page)
+            self.page.assert_store()
 
         def test_reload_between_rows(self):
 
@@ -382,7 +396,7 @@ if __name__ == '__main__':
             self.page.project.set_text(2, Document.MAIN, 'foo')
             self.page.project.set_text(3, Document.MAIN, 'foo')
             self.page.reload_between_rows(1, 3)
-            self.assert_store(self.page)
+            self.page.assert_store()
 
         def test_reload_columns(self):
 
@@ -390,19 +404,19 @@ if __name__ == '__main__':
             self.page.project.set_text(2, Document.MAIN, 'bar')
             self.page.project.set_text(3, Document.MAIN, 'bar')
             self.page.reload_columns([MTXT], [1, 2, 3])
-            self.assert_store(self.page)
+            self.page.assert_store()
 
         def  test_reload_row(self):
 
             self.page.project.set_text(2, Document.TRAN, 'foo')
             self.page.reload_row(2)
-            self.assert_store(self.page)
+            self.page.assert_store()
 
         def  test_reload_rows(self):
 
             self.page.project.set_text(3, Document.TRAN, 'foo')
             self.page.reload_rows([3])
-            self.assert_store(self.page)
+            self.page.assert_store()
 
         def test_text_column_to_document(self):
 
