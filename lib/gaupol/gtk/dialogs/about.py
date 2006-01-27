@@ -93,7 +93,7 @@ if __name__ == '__main__':
     class TestAboutDialog(Test):
 
         def test_init(self):
-            window = gtk.Window()
-            dialog = AboutDialog(window)
+
+            AboutDialog(gtk.Window())
 
     TestAboutDialog().run()

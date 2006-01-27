@@ -19,6 +19,7 @@
 
 """Debug dialog."""
 
+
 # This file has been adpated from Gazpacho's debugwindow.py by Lorenzo Gil
 # Sanchez and Johan Dahlin. URLs in text view has been adapted from Porthole's
 # summary.py by Fredrik Arnerup, Daniel G. Taylor, Brian Dolbec and
@@ -366,11 +367,13 @@ if __name__ == '__main__':
     class TestOpenEditorErrorDialog(Test):
 
         def test_init(self):
+
             OpenEditorErrorDialog(gtk.Window(), 'foo')
 
     class TestDebugDialog(Test):
 
         def test_all(self):
+
             dialog = DebugDialog()
             try:
                 raise IOError('testing')

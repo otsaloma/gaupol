@@ -457,3 +457,82 @@ class OpenVideoDialog(gtk.FileChooserDialog):
         file_filter.add_mime_type('video/*')
         file_filter.set_name(_('Video files'))
         self.add_filter(file_filter)
+
+
+if __name__ == '__main__':
+
+    from gaupol.test import Test
+
+    class TestOverwriteQuestionDialog(Test):
+
+        def test_init(self):
+
+            OverwriteQuestionDialog(gtk.Window(), 'foo')
+
+    class TestOpenFileDialog(Test):
+
+        def test_set_and_get_encoding(self):
+
+            dialog = OpenFileDialog('foo', gtk.Window())
+            dialog.set_encoding('utf_8')
+            assert dialog.get_encoding() == 'utf_8'
+
+    class TestSaveFileDialog(Test):
+
+        def __init__(self):
+
+            Test.__init__(self)
+            self.dialog = SaveFileDialog('foo', gtk.Window())
+
+        def test_confirm_overwrite(self):
+
+            self.dialog.set_current_name('foo')
+            self.dialog.emit('response', gtk.RESPONSE_OK)
+
+            self.dialog.set_format(Format.SUBRIP)
+            path = self.get_subrip_path()
+            self.dialog.set_filename(path)
+            self.dialog.set_current_name(os.path.basename(path))
+            self.dialog.emit('response', gtk.RESPONSE_OK)
+
+        def test_get_and_set_format(self):
+
+            self.dialog.set_current_name('foo')
+            self.dialog.set_format(Format.MPL2)
+            self.dialog.set_format(Format.SUBRIP)
+            name = os.path.basename(self.dialog.get_filename())
+            assert name == 'foo.srt'
+            self.dialog.set_format(Format.MICRODVD)
+            name = os.path.basename(self.dialog.get_filename())
+            assert name == 'foo.sub'
+
+            self.dialog.set_format(1)
+            assert self.dialog.get_format() == 1
+
+        def test_get_and_set_newlines(self):
+
+            self.dialog.set_newlines(1)
+            assert self.dialog.get_newlines() == 1
+
+        def test_get_filename_with_extension(self):
+
+            self.dialog.set_current_name('foo')
+            self.dialog.set_format(Format.SUBRIP)
+            get_name = self.dialog.get_filename_with_extension
+            assert get_name().endswith('foo.srt')
+
+        def test_set_filename_or_current_name(self):
+
+            self.dialog.set_filename_or_current_name(self.get_subrip_path())
+            self.dialog.set_filename_or_current_name('foo')
+
+    class TestOpenVideoDialog(Test):
+
+        def test_init(self):
+
+            OpenVideoDialog(gtk.Window())
+
+    TestOverwriteQuestionDialog().run()
+    TestOpenFileDialog().run()
+    TestSaveFileDialog().run()
+    TestOpenVideoDialog().run()

@@ -206,31 +206,24 @@ if __name__ == '__main__':
 
     class TestEncodingDialog(Test):
 
-        def __init__(self):
-            self.dialog = EncodingDialog(gtk.Window())
-
-        def destroy(self):
-            self.dialog.destroy()
-
         def test_get_selection(self):
-            get_encoding = self.dialog.get_encoding
-            selection = self.dialog._view.get_selection()
+
+            dialog = EncodingDialog(gtk.Window())
+            get_encoding = dialog.get_encoding
+            selection = dialog._view.get_selection()
             selection.unselect_all()
             assert get_encoding() is None
             selection.select_path(0)
             assert isinstance(get_encoding(), basestring)
+            dialog.destroy()
 
     class TestAdvancedEncodingDialog(Test):
 
-        def __init__(self):
-            self.dialog = AdvancedEncodingDialog(gtk.Window())
-
-        def destroy(self):
-            self.dialog.destroy()
-
         def test_get_visible_encodings(self):
-            get_visible = self.dialog.get_visible_encodings
-            store = self.dialog._view.get_model()
+
+            dialog = AdvancedEncodingDialog(gtk.Window())
+            get_visible = dialog.get_visible_encodings
+            store = dialog._view.get_model()
             for row in range(len(store)):
                 store[row][SHOW] = False
             assert get_visible() ==  []
@@ -238,6 +231,7 @@ if __name__ == '__main__':
             store[3][SHOW] = True
             assert isinstance(get_visible()[0], basestring)
             assert isinstance(get_visible()[1], basestring)
+            dialog.destroy()
 
     TestEncodingDialog().run()
     TestAdvancedEncodingDialog().run()

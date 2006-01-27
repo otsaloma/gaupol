@@ -85,8 +85,15 @@ def parse_options():
     Return: options, arguments
     """
     usage = 'gaupol [options] [files]'
+    description = 'The options below, except --help, are mostly intended ' \
+                  'for developer use. Some of the options will only work ' \
+                  '(properly) when run in the source directory.'
     formatter = optparse.IndentedHelpFormatter(2, 42, None, True)
-    parser = optparse.OptionParser(usage=usage, formatter=formatter)
+    parser = optparse.OptionParser(
+        description=description,
+        usage=usage,
+        formatter=formatter
+    )
 
     parser.add_option(
         '-t',
@@ -249,7 +256,7 @@ if __name__ == '__main__':
                 for filename in filenames:
                     if filename.endswith('.py'):
                         path = os.path.join(dirpath, filename)
-                        print '** ' + path
+                        print path
                         execfile(path)
         else:
             path = opts.execute

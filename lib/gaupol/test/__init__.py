@@ -20,6 +20,7 @@
 """Test functions and classes."""
 
 
+import inspect
 import os
 import tempfile
 import time
@@ -145,7 +146,7 @@ class Test(object):
     def get_micro_dvd_path(self):
         """Write data to a temporary Micro DVD file and return its path."""
 
-        path = tempfile.mkstemp()[1]
+        path = tempfile.mkstemp(prefix='gaupol.', suffix='.sub')[1]
 
         sub_file = open(path, 'w')
         sub_file.write(MICRODVD_TEXT)
@@ -172,7 +173,7 @@ class Test(object):
     def get_subrip_path(self):
         """Write data to a temporary SubRip file and return its path."""
 
-        path = tempfile.mkstemp()[1]
+        path = tempfile.mkstemp(prefix='gaupol.', suffix='.srt')[1]
 
         sub_file = open(path, 'w')
         sub_file.write(SUBRIP_TEXT)
@@ -195,14 +196,18 @@ class Test(object):
     def run(self):
         """Run all tests and do clean-up."""
 
-        for name in dir(self):
-            if name.startswith('test'):
-                print name
-                try:
-                    getattr(self, name)()
-                except:
-                    traceback.print_exc()
-                    break
+        print '  ' + self.__class__.__name__
+        for name, value in inspect.getmembers(self):
+            if not name.startswith('test'):
+                continue
+            if not inspect.ismethod(value):
+                continue
+            print '    ' + name
+            try:
+                value()
+            except:
+                traceback.print_exc()
+                break
 
         self.destroy()
         self.remove_files()
