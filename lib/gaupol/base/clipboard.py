@@ -54,6 +54,7 @@ if __name__ == '__main__':
     class TestClipboard(Test):
 
         def test_get_data_as_string(self):
+
             clipboard = Clipboard()
             clipboard.data = ['foo', None, 'bar', None]
             string = clipboard.get_data_as_string()

@@ -87,14 +87,15 @@ if __name__ == '__main__':
     class TestModel(Test):
 
         def test_all(self):
+
+            def callback(arg, kwarg):
+                pass
+
             Model._signals = ['foo', 'bar']
             model = Model()
             model.block('foo')
-            model.connect('bar', self.callback)
+            model.connect('bar', callback)
             model.emit('bar', 1, kwarg=1)
             model.unblock('foo')
-
-        def callback(self, arg, kwarg):
-            pass
 
     TestModel().run()

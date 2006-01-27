@@ -69,16 +69,19 @@ if __name__ ==  '__main__':
     class TestLib(Test):
 
         def test_remove_duplicates(self):
+
             lst = [1, 5, 5, 1, 3]
             lst = remove_duplicates(lst)
             assert lst == [1, 5, 3]
 
         def test_sort_and_remove_duplicates(self):
+
             lst = [1, 5, 5, 1, 3]
             lst = sort_and_remove_duplicates(lst)
             assert lst == [1, 3, 5]
 
         def test_strip_spaces(self):
+
             lst = [' foo', 'bar ', '\nboo\n']
             strip_spaces(lst)
             assert lst == ['foo', 'bar', 'boo']

@@ -155,43 +155,22 @@ if __name__ == '__main__':
 
     class TestTimeFrameCalculator(Test):
 
-        def __init__(self):
+        def test_all(self):
+
             self.calc = TimeFrameCalculator()
+            self.calc.set_framerate(0)
             self.calc = TimeFrameCalculator(0)
 
-        def test_add_times(self):
             times = '00:00:00,100', '33:33:00,000'
             assert self.calc.add_times(*times) == '33:33:00,100'
-
-        def test_frame_to_seconds(self):
             assert self.calc.frame_to_seconds(400) == 400 / 23.976
-
-        def test_frame_to_time(self):
             assert self.calc.frame_to_time(400) == '00:00:16,683'
-
-        def test_get_frame_duration(self):
             assert self.calc.get_frame_duration(5, 8) == 3
-
-        def test_get_time_duration(self):
-            times = '00:00:00,100', '33:33:00,000'
             assert self.calc.get_time_duration(*times) == '33:32:59,900'
-
-        def test_round_time(self):
             assert self.calc.round_time('02:33:44,666', 1) == '02:33:44,700'
-
-        def test_seconds_to_frame(self):
             assert self.calc.seconds_to_frame(500) == 11988
-
-        def test_seconds_to_time(self):
             assert self.calc.seconds_to_time(877.999) == '00:14:37,999'
-
-        def test_set_framerate(self):
-            self.calc.set_framerate(0)
-
-        def test_time_to_frame(self):
             assert self.calc.time_to_frame('00:00:33,333') == 799
-
-        def test_time_to_seconds(self):
             assert self.calc.time_to_seconds('00:33:33,333') == 2013.333
 
     TestTimeFrameCalculator().run()

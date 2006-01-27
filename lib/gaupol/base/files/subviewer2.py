@@ -175,6 +175,7 @@ if __name__ == '__main__':
     class TestSubViewer2(Test):
 
         def test_all(self):
+
             path = self.get_subrip_path()
             subrip_file = SubRip(path, 'utf_8')
             data = subrip_file.read()
@@ -184,8 +185,6 @@ if __name__ == '__main__':
             data_1 = subviewer_2_file.read()
             subviewer_2_file.write(*data_1)
             data_2 = subviewer_2_file.read()
-
             assert data_2 == data_1
-            os.remove(path)
 
     TestSubViewer2().run()

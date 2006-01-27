@@ -135,12 +135,12 @@ if __name__ == '__main__':
     class TestSubRip(Test):
 
         def test_all(self):
+
             path = self.get_subrip_path()
             subrip_file = SubRip(path, 'utf_8')
             data_1 = subrip_file.read()
             subrip_file.write(*data_1)
             data_2 = subrip_file.read()
             assert data_2 == data_1
-            os.remove(path)
 
     TestSubRip().run()

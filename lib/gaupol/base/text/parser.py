@@ -158,9 +158,12 @@ if __name__ == '__main__':
     class TestTextParser(Test):
 
         def __init__(self):
+
+            Test.__init__(self)
             self.parser = TextParser(re_tag)
 
         def test_replace(self):
+
             text = '<i>He changed shifts.</i>\n' \
                    'Didn\'t <i>he</i> tell you?'
             self.parser.set_text(text)
@@ -170,6 +173,7 @@ if __name__ == '__main__':
                            'D*dn\'t <i>he</i> tell you?'
 
         def test_substitute(self):
+
             text = '<i>He changed shifts.</i>\n' \
                    'Didn\'t <i>he</i> tell you?'
             self.parser.set_text(text)

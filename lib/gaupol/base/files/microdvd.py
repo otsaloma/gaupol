@@ -115,12 +115,12 @@ if __name__ == '__main__':
     class TestMicroDVD(Test):
 
         def test_all(self):
+
             path = self.get_micro_dvd_path()
             micro_dvd_file = MicroDVD(path, 'utf_8')
             data_1 = micro_dvd_file.read()
             micro_dvd_file.write(*data_1)
             data_2 = micro_dvd_file.read()
             assert data_2 == data_1
-            os.remove(path)
 
     TestMicroDVD().run()

@@ -116,6 +116,7 @@ if __name__ == '__main__':
     class TestProject(Test):
 
         def test_init(self):
+
             project = Project(0, 10)
             project = Project(0)
 

@@ -80,16 +80,15 @@ if __name__ == '__main__':
     class TestFileFormatDeterminer(Test):
 
         def test_determine_file_format(self):
+
             path = self.get_subrip_path()
             determiner = FileFormatDeterminer(path, 'utf_8')
             format = determiner.determine_file_format()
             assert format == Format.SUBRIP
-            os.remove(path)
 
             path = self.get_micro_dvd_path()
             determiner = FileFormatDeterminer(path, 'utf_8')
             format = determiner.determine_file_format()
             assert format == Format.MICRODVD
-            os.remove(path)
 
     TestFileFormatDeterminer().run()

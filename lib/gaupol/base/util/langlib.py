@@ -749,6 +749,7 @@ if __name__ == '__main__':
     class TestLib(Test):
 
         def test_get_country(self):
+
             country = get_country('af_ZA')
             assert country == gettext.dgettext('iso_3166', 'South Africa')
 
@@ -756,6 +757,7 @@ if __name__ == '__main__':
             assert country is None
 
         def test_get_descriptive_name(self):
+
             name    = get_descriptive_name('af_ZA')
             country = gettext.dgettext('iso_3166', 'South Africa')
             lang    = gettext.dgettext('iso_639', 'Afrikaans')
@@ -766,6 +768,7 @@ if __name__ == '__main__':
             assert name == lang
 
         def test_get_language(self):
+
             lang = get_language('af_ZA')
             assert lang == gettext.dgettext('iso_639', 'Afrikaans')
 

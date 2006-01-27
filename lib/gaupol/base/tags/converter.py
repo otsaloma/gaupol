@@ -97,6 +97,7 @@ if __name__ == '__main__':
     class TestTagConverter(Test):
 
         def test_micro_dvd_to_subrip(self):
+
             converter = TagConverter(Format.MICRODVD, Format.SUBRIP)
 
             original = '{y:biu}Whenever there are famines,\n' \
@@ -118,6 +119,7 @@ if __name__ == '__main__':
             assert converter.convert_tags(original) == result
 
         def test_subrip_to_micro_dvd(self):
+
             converter = TagConverter(Format.SUBRIP, Format.MICRODVD)
 
             original = '<i>Whenever there are famines,</i>'
@@ -135,6 +137,7 @@ if __name__ == '__main__':
             assert converter.convert_tags(original) == result
 
         def test_mpl2_to_subrip(self):
+
             converter = TagConverter(Format.MPL2, Format.SUBRIP)
 
             original = '/Whenever there are famines,\n' \
@@ -150,6 +153,7 @@ if __name__ == '__main__':
             assert converter.convert_tags(original) == result
 
         def test_subrip_to_mpl2(self):
+
             converter = TagConverter(Format.SUBRIP, Format.MPL2)
 
             original = '<i>Whenever there are famines,</i>\n' \

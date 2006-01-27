@@ -1,5 +1,25 @@
 2006-01-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/clipboard.py:
+	* lib/gaupol/base/files/determiner.py:
+	* lib/gaupol/base/files/microdvd.py:
+	* lib/gaupol/base/files/mpl2.py:
+	* lib/gaupol/base/files/subrip.py:
+	* lib/gaupol/base/files/subviewer2.py:
+	* lib/gaupol/base/model.py:
+	* lib/gaupol/base/project.py:
+	* lib/gaupol/base/tags/converter.py:
+	* lib/gaupol/base/text/parser.py:
+	* lib/gaupol/base/timing/calc.py:
+	* lib/gaupol/base/util/encodinglib.py:
+	* lib/gaupol/base/util/langlib.py:
+	* lib/gaupol/base/util/listlib.py:
+	* lib/gaupol/base/util/wwwlib.py:
+	  Adapted testing to changes in gaupol.test.Test class and made some
+	  cosmetic changes.
+
+2006-01-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/delegates/edit.py:
 	* lib/gaupol/base/delegates/fileopen.py:
 	* lib/gaupol/base/delegates/filesave.py:
