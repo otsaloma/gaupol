@@ -250,8 +250,7 @@ class PreferencesDialog(gobject.GObject):
         self._set_preview_radio_sensitivities()
 
         # Video player
-        for i in range(len(VideoPlayer.display_names)):
-            name = VideoPlayer.display_names[i]
+        for i, name in enumerate(VideoPlayer.display_names):
             self._preview_select_combo.insert_text(i, name)
         self._preview_select_combo.set_active(config.preview.video_player)
 

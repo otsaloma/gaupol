@@ -271,10 +271,9 @@ class FileOpenDelegate(Delegate):
         If the file is already open, select that page in the notebook.
         Return True if file is open, otherwise False.
         """
-        for i in range(len(self.pages)):
+        for i, page in enumerate(self.pages):
 
-            project = self.pages[i].project
-            for sub_file in (project.main_file, project.tran_file):
+            for sub_file in (page.project.main_file, page.project.tran_file):
 
                 if sub_file is None or sub_file.path != path:
                     continue

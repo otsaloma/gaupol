@@ -313,9 +313,9 @@ class MenuUpdateDelegate(Delegate):
                 menu_items[i].set_state(gtk.STATE_NORMAL)
             self.set_status_message(None)
 
-        for i in range(len(stack)):
+        for i, action in enumerate(stack):
 
-            desc = stack[i].description
+            desc = action.description
 
             if register == Action.UNDO:
                 tip = _('Undo up to %s') % desc[0].lower() + desc[1:]

@@ -200,8 +200,7 @@ class EditDelegate(Delegate):
         the "rows" argument. Data is not resorted, so this method must be
         called with ordered show times.
         """
-        for i in range(len(rows)):
-            row = rows[i]
+        for i, row in enumerate(rows):
             self.times.insert(row, times[i])
             self.frames.insert(row, frames[i])
             self.main_texts.insert(row, main_texts[i])
@@ -249,10 +248,10 @@ class EditDelegate(Delegate):
         rows      = []
         new_texts = []
 
-        for i in range(len(data)):
-            if data[i] is not None:
+        for i, value in enumerate(data):
+            if value is not None:
                 rows.append(start_row + i)
-                new_texts.append(data[i])
+                new_texts.append(value)
 
         self.replace_texts(rows, document, new_texts, register)
         self.modify_action_description(register, _('Pasting texts'))
@@ -300,13 +299,11 @@ class EditDelegate(Delegate):
         new_main_texts = new_texts[0]
         new_tran_texts = new_texts[1]
 
-        for i in range(len(main_rows)):
-            row = main_rows[i]
+        for i, row in enumerate(main_rows):
             orig_main_texts.append(main_texts[row])
             main_texts[row] = new_main_texts[i]
 
-        for i in range(len(tran_rows)):
-            row = tran_rows[i]
+        for i, row in enumerate(tran_rows):
             orig_tran_texts.append(tran_texts[row])
             tran_texts[row] = new_tran_texts[i]
 

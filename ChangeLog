@@ -1,5 +1,19 @@
 2006-01-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/delegates/action.py:
+	* lib/gaupol/base/delegates/edit.py:
+	* lib/gaupol/base/files/mpl2.py:
+	* lib/gaupol/base/tags/mpl2.py:
+	* lib/gaupol/gtk/delegates/fileopen.py:
+	* lib/gaupol/gtk/delegates/menuupdate.py:
+	* lib/gaupol/gtk/dialogs/filechooser.py:
+	* lib/gaupol/gtk/dialogs/preferences.py:
+	* lib/gaupol/gtk/dialogs/spellcheck.py:
+	  Use enumerate() for looping.
+	  Fixed a few nested double-loopings both with index "i".
+
+2006-01-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/delegates/__init__.py:
 	* lib/gaupol/gtk/delegates/__init__.py:
 	* lib/gaupol/test/__init__.py:

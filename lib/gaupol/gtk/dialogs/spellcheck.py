@@ -698,9 +698,8 @@ class SpellCheckDialog(gobject.GObject):
     def _write_replacements(self):
         """Write replacement info to files."""
 
-        for i in range(2):
+        for i, replacements in enumerate(self._replacements):
 
-            replacements = self._replacements[i]
             if not replacements:
                 continue
             replacements = listlib.remove_duplicates(replacements)

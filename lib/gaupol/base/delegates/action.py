@@ -268,23 +268,23 @@ class ActionDelegate(Delegate):
             # Adjust previous updates to rows now being removed.
             if action.rows_inserted:
                 first_row = min(action.rows_inserted)
-                for i in reversed(range(len(rows_updated))):
+                for k in reversed(range(len(rows_updated))):
 
                     # Remove updates to rows that will no longer exist.
-                    if rows_updated[i] in action.rows_inserted:
-                        rows_updated.pop(i)
+                    if rows_updated[k] in action.rows_inserted:
+                        rows_updated.pop(k)
 
                     # Shift updates according to new row count.
-                    elif rows_updated[i] > first_row:
+                    elif rows_updated[k] > first_row:
                         lst = action.rows_inserted
-                        rows_above = bisect.bisect_left(lst, rows_updated[i])
-                        rows_updated[i] -= rows_above
+                        rows_above = bisect.bisect_left(lst, rows_updated[k])
+                        rows_updated[k] -= rows_above
 
             # Adjust previous updates to rows now being inserted.
             for row in action.rows_removed:
-                for i in range(len(rows_updated)):
-                    if rows_updated[i] >= row:
-                        rows_updated[i] += 1
+                for k in range(len(rows_updated)):
+                    if rows_updated[k] >= row:
+                        rows_updated[k] += 1
 
             rows_inserted += action.rows_inserted
             rows_removed  += action.rows_removed

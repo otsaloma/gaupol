@@ -78,9 +78,8 @@ class MPL2(SubtitleFile):
 
         # Convert timings from decaseconds to seconds and finally timestrings.
         for entry in (shows, hides):
-            for i in range(len(entry)):
-                deca_string = entry[i]
-                seconds = float(deca_string[:-1] + '.' + deca_string[-1])
+            for i, value in enumerate(entry):
+                seconds = float(value[:-1] + '.' + value[-1])
                 entry[i] = calc.seconds_to_time(seconds)
 
         # Replace pipes in texts with Python internal newline characters.

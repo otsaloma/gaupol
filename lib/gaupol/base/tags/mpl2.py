@@ -69,9 +69,7 @@ class MPL2(TagLibrary):
             ('<u>', '</u>', '_' ),
         ]
 
-        for i in range(len(style_tags)):
-
-            opening, closing, replacement = style_tags[i]
+        for (opening, closing, replacement) in style_tags:
 
             opening_lenght = len(opening)
             closing_length = len(closing)

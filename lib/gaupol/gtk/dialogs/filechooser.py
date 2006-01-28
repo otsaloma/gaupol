@@ -109,8 +109,7 @@ class TextFileChooserDialog(gtk.FileChooserDialog):
         ]
 
         # Get format specific filters.
-        for i in range(len(Format.display_names)):
-            format_name = Format.display_names[i]
+        for i, format_name in enumerate(Format.display_names):
             pattern = '*' + Format.extensions[i]
             # Translators: File filters, e.g. "SubRip (*.srt)".
             name = _('%s (%s)') % (format_name, pattern)
