@@ -1,5 +1,17 @@
 2006-01-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/glade/language-dialog.glade:
+	  Made dialog invisible.
+
+	* lib/gaupol/gtk/dialogs/header.py:
+	* lib/gaupol/gtk/dialogs/insertsub.py:
+	* lib/gaupol/gtk/dialogs/language.py:
+	* lib/gaupol/gtk/dialogs/message.py:
+	* lib/gaupol/gtk/dialogs/textedit.py:
+	  Added or fixed testing.
+
+2006-01-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/test/__init__.py:
 	  Moved project import to "get_project" method to avoid circular
 	  import-loops.

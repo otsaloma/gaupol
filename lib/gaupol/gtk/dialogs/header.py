@@ -225,3 +225,76 @@ class HeaderDialog(object):
 
         text_buffer = self._tran_text_view.get_buffer()
         text_buffer.set_text(header)
+
+
+if __name__ == '__main__':
+
+    from gaupol.constants import Format
+    from gaupol.gtk.page  import Page
+    from gaupol.test      import Test
+
+    class TestHeaderDialog(Test):
+
+        def __init__(self):
+
+            Test.__init__(self)
+
+            page = Page()
+            page.project = self.get_project()
+
+            properties = [
+                page.project.main_file.path,
+                Format.SUBVIEWER2,
+                'utf_8',
+                page.project.main_file.newlines
+            ]
+            page.project.save_main_file(True, properties)
+            properties[0] = page.project.tran_file.path
+            page.project.save_translation_file(True, properties)
+
+            self.dialog = HeaderDialog(gtk.Window(), page)
+
+            self.main_header = page.project.main_file.header
+            self.tran_header = page.project.main_file.header
+
+        def test_get_headers(self):
+
+            assert self.dialog.get_main_header()        == self.main_header
+            assert self.dialog.get_translation_header() == self.tran_header
+
+        def test_signals(self):
+
+            get_main = self.dialog.get_main_header
+            get_tran = self.dialog.get_translation_header
+
+            self.dialog._main_clear_button.emit('clicked')
+            self.dialog._copy_down_button.emit('clicked')
+            assert get_tran() == ''
+            assert get_main() == get_tran()
+
+            self.dialog._tran_template_button.emit('clicked')
+            self.dialog._copy_up_button.emit('clicked')
+            assert get_main() != ''
+            assert get_main() == get_tran()
+
+            self.dialog._main_clear_button.emit('clicked')
+            assert get_main() == ''
+
+            self.dialog._main_template_button.emit('clicked')
+            assert get_main() != ''
+
+            self.dialog._main_clear_button.emit('clicked')
+            self.dialog._main_revert_button.emit('clicked')
+            assert get_main() == self.main_header
+
+            self.dialog._tran_clear_button.emit('clicked')
+            assert get_tran() == ''
+
+            self.dialog._tran_template_button.emit('clicked')
+            assert get_tran() != ''
+
+            self.dialog._tran_clear_button.emit('clicked')
+            self.dialog._tran_revert_button.emit('clicked')
+            assert get_tran() == self.tran_header
+
+    TestHeaderDialog().run()

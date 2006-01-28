@@ -99,6 +99,7 @@ if __name__ == '__main__':
     class TestTextEditDialog(Test):
 
         def test_all(self):
+
             dialog = TextEditDialog(gtk.Window(), 'foo')
             assert dialog.get_text() == 'foo'
             dialog.destroy()

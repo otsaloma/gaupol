@@ -97,3 +97,20 @@ class InsertSubtitleDialog(object):
         """
         self._position_label.set_sensitive(sensitive)
         self._position_combo_box.set_sensitive(sensitive)
+
+
+if __name__ == '__main__':
+
+    from gaupol.test import Test
+
+    class TestInsertSubtitleDialog(Test):
+
+        def test_all(self):
+
+            dialog = InsertSubtitleDialog(gtk.Window())
+            assert isinstance(dialog.get_amount(), int)
+            assert isinstance(dialog.get_position(), int)
+            dialog.set_position_sensitive(True)
+            dialog.set_position_sensitive(False)
+
+    TestInsertSubtitleDialog().run()

@@ -259,12 +259,12 @@ if __name__ == '__main__':
     class TestLanguageDialog(Test):
 
         def __init__(self):
+
+            Test.__init__(self)
             self.dialog = LanguageDialog(gtk.Window())
 
-        def destroy(self):
-            self.dialog.destroy()
-
         def test_get_selected_language_row(self):
+
             view = self.dialog._lang_main_view
             selection = view.get_selection()
             selection.unselect_all()
@@ -273,11 +273,14 @@ if __name__ == '__main__':
             assert self.dialog._get_selected_language_row(view) == 0
 
         def test_signals(self):
+
             self.dialog._project_all_radio.emit('toggled')
             self.dialog._col_main_check.emit('toggled')
             self.dialog._col_tran_check.emit('toggled')
+
             selection = self.dialog._lang_main_view.get_selection()
             selection.emit('changed')
+            selection = self.dialog._lang_tran_view.get_selection()
             selection.emit('changed')
 
-    #TestLanguageDialog().run()
+    TestLanguageDialog().run()
