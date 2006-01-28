@@ -1,5 +1,12 @@
 2006-01-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/delegates/__init__.py:
+	* lib/gaupol/gtk/delegates/__init__.py:
+	* lib/gaupol/test/__init__.py:
+	  Use dir() instead of inspect.getmembers().
+
+2006-01-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/delegates/edit.py:
 	* lib/gaupol/base/util/listlib.py:
 	  Use built-in sorted function.

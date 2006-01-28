@@ -87,10 +87,12 @@ def list_delegate_classes():
         path = 'gaupol.base.delegates.' + module_name
         module = __import__(path, None, None, [''])
 
-        for name, value in inspect.getmembers(module):
+        for name in dir(module):
 
             if name.startswith('_'):
                 continue
+
+            value = getattr(module, name)
             if inspect.getmodule(value) != module:
                 continue
 

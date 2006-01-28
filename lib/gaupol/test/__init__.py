@@ -20,7 +20,6 @@
 """Test functions and classes."""
 
 
-import inspect
 import os
 import tempfile
 import time
@@ -197,11 +196,15 @@ class Test(object):
         """Run all tests and do clean-up."""
 
         print '  ' + self.__class__.__name__
-        for name, value in inspect.getmembers(self):
+        for name in dir(self):
+
             if not name.startswith('test'):
                 continue
-            if not inspect.ismethod(value):
+
+            value = getattr(self, name)
+            if not callable(value):
                 continue
+
             print '    ' + name
             try:
                 value()
