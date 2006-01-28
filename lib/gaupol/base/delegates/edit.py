@@ -218,8 +218,7 @@ class EditDelegate(Delegate):
         that the addition of subtitles must be taken into account beforehand in
         the "rows" argument.
         """
-        rows = rows[:]
-        rows.sort()
+        rows = sorted(rows)
 
         if None in (times, frames, main_texts, tran_texts):
             self._insert_blank(rows)
@@ -268,8 +267,7 @@ class EditDelegate(Delegate):
         main_texts = []
         tran_texts = []
 
-        rows = rows[:]
-        rows.sort()
+        rows = sorted(rows)
 
         for row in reversed(rows):
             times.insert(0, self.times.pop(row))

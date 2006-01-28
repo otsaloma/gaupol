@@ -43,8 +43,7 @@ def sort_and_remove_duplicates(lst):
 
     Return a copy of the original list with sorted and with duplicates removed.
     """
-    lst = lst[:]
-    lst.sort()
+    lst = sorted(lst)
 
     for i in reversed(range(1, len(lst))):
         if lst[i] == lst[i - 1]:

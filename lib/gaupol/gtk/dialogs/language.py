@@ -280,4 +280,4 @@ if __name__ == '__main__':
             selection.emit('changed')
             selection.emit('changed')
 
-    TestLanguageDialog().run()
+    #TestLanguageDialog().run()

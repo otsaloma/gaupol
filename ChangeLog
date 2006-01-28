@@ -1,5 +1,18 @@
 2006-01-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/delegates/edit.py:
+	* lib/gaupol/base/util/listlib.py:
+	  Use built-in sorted function.
+
+	* lib/gaupol/gtk/application.py:
+	  Fixed testing.
+
+	* lib/gaupol/gtk/dialogs/language.py:
+	* lib/gaupol/gtk/dialogs/preferences.py:
+	  Commented testing out for now.
+
+2006-01-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol:
 	  Indented testing output.
 	  (parse_options): Added description for parser.

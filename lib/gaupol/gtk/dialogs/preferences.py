@@ -571,4 +571,4 @@ if __name__ == '__main__':
             self.dialog._preview_customize_button.emit('clicked')
             self.dialog._preview_command_entry.emit('changed')
 
-    TestPreferencesDialog().run()
+    #TestPreferencesDialog().run()

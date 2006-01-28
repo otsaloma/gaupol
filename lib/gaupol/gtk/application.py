@@ -125,6 +125,7 @@ if __name__ == '__main__':
 
         def test_init(self):
 
-            Application()
+            application = Application()
+            application.window.destroy()
 
     TestApplication().run()
