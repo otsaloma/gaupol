@@ -219,3 +219,28 @@ class HelpDelegate(Delegate):
         dialog.run()
         dialog.destroy()
         gtklib.destroy_gobject(dialog)
+
+
+if __name__ == '__main__':
+
+    from gaupol.gtk.application import Application
+    from gaupol.test            import Test
+
+    class TestDialog(Test):
+
+        def test_init(self):
+
+            VersionCheckErrorDialog(gtk.Window(), 'test')
+            VersionCheckInfoDialog(gtk.Window(), '0.0.1', '0.0.2')
+
+    class TestHelpDelegate(Test):
+
+        def test_all(self):
+
+            application = Application()
+            application.on_check_latest_version_activated()
+            application.on_view_about_dialog_activated()
+            application.window.destroy()
+
+    TestDialog().run()
+    TestHelpDelegate().run()

@@ -722,3 +722,88 @@ class SpellCheckDialog(gobject.GObject):
                 message = 'Failed to encode replacement file "%s": %s.' \
                           % (path, message)
                 logger.error(message)
+
+
+if __name__ == '__main__':
+
+    from gaupol.gtk.page import Page
+    from gaupol.test     import Test
+
+    class TestSpellCheckErrorDialog(Test):
+
+        def test_init(self):
+
+            SpellCheckErrorDialog(gtk.Window(), 'foo')
+
+    class TestSpellCheckDialog(Test):
+
+        def __init__(self):
+
+            Test.__init__(self)
+
+            page_1 = Page()
+            page_1.project = self.get_project()
+            page_1.project.remove_subtitles([1])
+            page_2 = Page()
+            page_2.project = self.get_project()
+            page_2.project.remove_subtitles([1])
+            pages  = [page_1, page_2]
+
+            config.spell_check.main_language        = 'en_CA'
+            config.spell_check.translation_language = 'en_CA'
+            config.spell_check.check_main           = True
+            config.spell_check.check_translation    = True
+
+            self.repl_path = os.path.join(SPELL_CHECK_DIR, 'en_CA.repl')
+            self.dict_path = os.path.join(SPELL_CHECK_DIR, 'en_CA.dict')
+
+            self.remove_repl = True
+            self.remove_dict = True
+
+            if os.path.isfile(self.repl_path):
+                self.remove_repl = False
+            if os.path.isfile(self.dict_path):
+                self.remove_dict = False
+
+            self.dialog = SpellCheckDialog(gtk.Window(), pages)
+
+        def destroy(self):
+
+            if self.remove_repl:
+                try:
+                    os.remove(self.repl_path)
+                except OSError:
+                    pass
+            if self.remove_dict:
+                try:
+                    os.remove(self.dict_path)
+                except OSError:
+                    pass
+
+        def test_all(self):
+
+            self.dialog.show()
+            self._test_get_selected_suggestion()
+            self._test_signals()
+            self.dialog._destroy()
+
+        def _test_get_selected_suggestion(self):
+
+            suggestion = self.dialog._get_selected_suggestion()
+            assert isinstance(suggestion, basestring)
+
+        def _test_signals(self):
+
+            self.dialog._add_button.emit('clicked')
+            self.dialog._add_lower_button.emit('clicked')
+            self.dialog._check_button.emit('clicked')
+            self.dialog._edit_button.emit('clicked')
+            self.dialog._ignore_all_button.emit('clicked')
+            self.dialog._ignore_button.emit('clicked')
+            self.dialog._join_back_button.emit('clicked')
+            self.dialog._join_forward_button.emit('clicked')
+            self.dialog._replace_all_button.emit('clicked')
+            self.dialog._replace_button.emit('clicked')
+
+    TestSpellCheckErrorDialog().run()
+    TestSpellCheckDialog().run()
