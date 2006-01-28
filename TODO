@@ -11,7 +11,8 @@ Plans for 0.4.0
   [D] Reduce Psycoing
   [D] Add some simple testing framework
   [W] Add testing to existing modules
-  [ ] Should we include .mo files in the *source* packages?
+  [ ] Should we include .mo files in the *source* packages? YES
+  [ ] Should we include the test module in installation? NO
 
   New Features:
     [ ] Timing shift
@@ -40,6 +41,9 @@ Plans for 0.4.0
     Bug Fixes:
       [D] Various errors in Micro DVD tag conversions
       [D] Newline counted as a character in text length statusbar
+
+    Added Translations:
+      [D] Gil Forcada: Catalan (ca)
 
 
 Plans after 0.4.0

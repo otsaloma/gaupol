@@ -528,17 +528,22 @@ if __name__ == '__main__':
     class TestPreferencesDialog(Test):
 
         def __init__(self):
+
+            Test.__init__(self)
             self.dialog = PreferencesDialog(gtk.Window())
             self.dialog.show()
 
         def destroy(self):
+
             self.dialog._close_button.emit('clicked')
 
         def test_get_custom_font(self):
+
             font = self.dialog._get_custom_font()
             assert isinstance(font, basestring)
 
         def test_get_selected_encoding(self):
+
             selection = self.dialog._encoding_view.get_selection()
             selection.unselect_all()
             assert self.dialog._get_selected_encoding_row() is None
@@ -546,12 +551,14 @@ if __name__ == '__main__':
             assert self.dialog._get_selected_encoding_row() == 0
 
         def test_editor_signals(self):
+
             self.dialog._undo_limit_radio.emit('toggled')
             self.dialog._undo_levels_spin.emit('value-changed')
             self.dialog._font_default_check.emit('toggled')
             self.dialog._font_button.emit('font-set')
 
         def test_file_signals(self):
+
             self.dialog._encoding_locale_check.emit('toggled')
             self.dialog._encoding_add_button.emit('clicked')
             selection =  self.dialog._encoding_view.get_selection()
@@ -564,10 +571,11 @@ if __name__ == '__main__':
             self.dialog._encoding_remove_button.emit('clicked')
 
         def test_preview_signals(self):
+
             self.dialog._preview_offset_spin.emit('value-changed')
             self.dialog._preview_select_radio.emit('toggled')
             self.dialog._preview_select_combo.emit('changed')
             self.dialog._preview_customize_button.emit('clicked')
             self.dialog._preview_command_entry.emit('changed')
 
-    #TestPreferencesDialog().run()
+    TestPreferencesDialog().run()

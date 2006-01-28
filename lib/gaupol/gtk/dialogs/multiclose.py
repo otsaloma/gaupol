@@ -203,3 +203,50 @@ class MultiCloseWarningDialog(object):
         self._main_view.grab_focus()
         self._dialog.show()
         return self._dialog.run()
+
+
+if __name__ == '__main__':
+
+    from gaupol.gtk.page import Page
+    from gaupol.test     import Test
+
+    class TestMultiCloseWarningDialog(Test):
+
+        def __init__(self):
+
+            Test.__init__(self)
+
+            page_1 = Page()
+            page_1.project = self.get_project()
+            page_1.project.remove_subtitles([1])
+
+            page_2 = Page()
+            page_2.project = self.get_project()
+            page_2.project.remove_subtitles([1])
+
+            self.pages  = [page_1, page_2]
+            self.dialog = MultiCloseWarningDialog(gtk.Window(), self.pages)
+
+        def test_get_main_pages_to_save(self):
+
+            pages = self.dialog.get_main_pages_to_save()
+            assert pages == self.pages
+
+        def test_get_translation_pages_to_save(self):
+
+            pages = self.dialog.get_translation_pages_to_save()
+            assert pages == self.pages
+
+        def test_signals(self):
+
+            selection = self.dialog._main_view.get_selection()
+            selection.unselect_all()
+            selection.select_path(0)
+            selection.select_path(1)
+
+            selection = self.dialog._tran_view.get_selection()
+            selection.unselect_all()
+            selection.select_path(0)
+            selection.select_path(1)
+
+    TestMultiCloseWarningDialog().run()
