@@ -25,8 +25,7 @@ import tempfile
 import time
 import traceback
 
-from gaupol.base.project import Project
-from gaupol.constants    import Mode
+from gaupol.constants import Mode
 
 
 SUBRIP_TEXT = \
@@ -156,6 +155,9 @@ class Test(object):
 
     def get_project(self):
         """Initialize a project and return it."""
+
+        # Import here to avoid circular import-loops.
+        from gaupol.base.project import Project
 
         project = Project(0)
 

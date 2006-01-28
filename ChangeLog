@@ -1,5 +1,11 @@
 2006-01-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/test/__init__.py:
+	  Moved project import to "get_project" method to avoid circular
+	  import-loops.
+
+2006-01-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/delegates/action.py:
 	* lib/gaupol/base/delegates/edit.py:
 	* lib/gaupol/base/files/mpl2.py:
