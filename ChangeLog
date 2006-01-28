@@ -1,5 +1,10 @@
 2006-01-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* setup.py:
+	  Do not include gaupol.test in packages to install.
+
+2006-01-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/gtk/dialogs/multiclose.py:
 	* lib/gaupol/gtk/dialogs/preferences.py:
 	  Added or fixed testing.

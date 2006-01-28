@@ -40,7 +40,8 @@ for (dirpath, dirnames, filenames) in os.walk('lib'):
     if os.path.isfile(os.path.join(dirpath, '__init__.py')):
         path = dirpath.replace(os.sep, '.')
         path = path[path.find('gaupol'):]
-        packages.append(path)
+        if not path.startswith('gaupol.test'):
+            packages.append(path)
 
 scripts = ['gaupol']
 

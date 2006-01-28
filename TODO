@@ -11,15 +11,13 @@ Plans for 0.4.0
   [D] Reduce Psycoing
   [D] Add some simple testing framework
   [W] Add testing to existing modules
-  [ ] Should we include .mo files in the *source* packages? YES
-  [ ] Should we include the test module in installation? NO
 
   New Features:
     [ ] Timing shift
           * Shift amount: seconds/frames
               * Spin buttons
           * Target: selection/all
-    [ ] Retiming
+    [ ] Timing adjust
           * 2 points, for which current and desired as times/frames
               * Frame: spin button
               * Time: need a new widget, TimeEntry based on CellRendererTime
@@ -38,12 +36,12 @@ Plans for 0.4.0
               - Combo boxes
           * Target: selection/all?
 
-    Bug Fixes:
-      [D] Various errors in Micro DVD tag conversions
-      [D] Newline counted as a character in text length statusbar
+  Bug Fixes:
+    [D] Various errors in Micro DVD tag conversions
+    [D] Newline counted as a character in text length statusbar
 
-    Added Translations:
-      [D] Gil Forcada: Catalan (ca)
+  Added Translations:
+    [D] Gil Forcada: Catalan (ca)
 
 
 Plans after 0.4.0
