@@ -168,9 +168,13 @@ class ApplicationUpdateDelegate(Delegate):
         if self.message_tag is not None:
             gobject.source_remove(self.message_tag)
 
-        # Set tooltip.
-        event_box = gtklib.get_event_box(self.message_statusbar)
-        self.tooltips.set_tip(event_box, message)
+        # Set tooltip. AttributeError is raised if the application window has
+        # already been destroyed, but the timer still calls this method.
+        try:
+            event_box = gtklib.get_event_box(self.message_statusbar)
+            self.tooltips.set_tip(event_box, message)
+        except AttributeError:
+            pass
 
         if message is None:
             return False

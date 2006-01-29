@@ -238,3 +238,88 @@ class FormatDelegate(Delegate):
         """Use upper case."""
 
         self._change_case('upper')
+
+
+if __name__ == '__main__':
+
+    from gaupol.gtk.application import Application
+    from gaupol.test            import Test
+
+    class TestFormatDelegate(Test):
+
+        def __init__(self):
+
+            Test.__init__(self)
+            self.application = Application()
+            self.application.open_main_files([self.get_subrip_path()])
+
+        def destroy(self):
+
+            self.application.window.destroy()
+
+        def test_on_toggle_dialog_lines_activated(self):
+
+            page = self.application.get_current_page()
+            page.project.main_texts[0] = 'test\ntest'
+            page.reload_all()
+            page.view.set_focus(0, MTXT)
+
+            self.application.on_toggle_dialog_lines_activated()
+            assert page.project.main_texts[0] == '- test\n- test'
+            page.assert_store()
+
+            self.application.on_toggle_dialog_lines_activated()
+            assert page.project.main_texts[0] == 'test\ntest'
+            page.assert_store()
+
+            self.application.undo(2)
+            assert page.project.main_texts[0] == 'test\ntest'
+            page.assert_store()
+
+        def test_on_toggle_italicization_activated(self):
+
+            page = self.application.get_current_page()
+            page.project.main_texts[0] = 'test\ntest'
+            page.reload_all()
+            page.view.set_focus(0, MTXT)
+
+            self.application.on_toggle_italicization_activated()
+            assert page.project.main_texts[0] == '<i>test\ntest</i>'
+            page.assert_store()
+
+            self.application.on_toggle_italicization_activated()
+            assert page.project.main_texts[0] == 'test\ntest'
+            page.assert_store()
+
+            self.application.undo(2)
+            assert page.project.main_texts[0] == 'test\ntest'
+            page.assert_store()
+
+        def test_on_case_activated(self):
+
+            page = self.application.get_current_page()
+            page.project.main_texts[0] = 'test\ntest'
+            page.reload_all()
+            page.view.set_focus(0, MTXT)
+
+            self.application.on_use_upper_case_activated()
+            assert page.project.main_texts[0] == 'TEST\nTEST'
+            page.assert_store()
+
+            self.application.on_use_lower_case_activated()
+            assert page.project.main_texts[0] == 'test\ntest'
+            page.assert_store()
+
+            self.application.on_use_sentence_case_activated()
+            assert page.project.main_texts[0] == 'Test\ntest'
+            page.assert_store()
+
+            self.application.on_use_title_case_activated()
+            assert page.project.main_texts[0] == 'Test\nTest'
+            page.assert_store()
+
+            self.application.undo(4)
+            assert page.project.main_texts[0] == 'test\ntest'
+            page.assert_store()
+
+    TestFormatDelegate().run()

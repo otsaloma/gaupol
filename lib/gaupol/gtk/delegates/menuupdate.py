@@ -332,3 +332,48 @@ class MenuUpdateDelegate(Delegate):
 
         menu.show_all()
         button.set_menu(menu)
+
+
+if __name__ == '__main__':
+
+    from gaupol.gtk.application import Application
+    from gaupol.test            import Test
+
+    class TestMenuUpdateDelegate(Test):
+
+        def __init__(self):
+
+            Test.__init__(self)
+            self.application = Application()
+            self.application.open_main_files([self.get_subrip_path()])
+            self.delegate = MenuUpdateDelegate(self.application)
+
+            page = self.application.get_current_page()
+            page.project.remove_subtitles([0])
+            page.project.remove_subtitles([0])
+            self.application.undo(1)
+
+        def destroy(self):
+
+            self.application.window.destroy()
+
+        def test_get_action_group(self):
+
+            for name in ('main', 'recent', 'projects'):
+                group = self.delegate._get_action_group(name)
+                assert isinstance(group, gtk.ActionGroup)
+
+        def test_set_menu_notify_events(self):
+
+            for name in ('main', 'recent', 'projects'):
+                self.application.set_menu_notify_events(name)
+
+        def test_show_menus(self):
+
+            self.application.on_open_button_show_menu()
+            self.application.on_redo_button_show_menu()
+            self.application.on_show_file_menu_activated()
+            self.application.on_show_projects_menu_activated()
+            self.application.on_undo_button_show_menu()
+
+    TestMenuUpdateDelegate().run()

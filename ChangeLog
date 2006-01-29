@@ -1,5 +1,18 @@
 2006-01-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol:
+	  Cosmetic changes.
+
+	* lib/gaupol/gtk/delegates/appupdate.py:
+	  (ApplicationUpdateDelegate.set_status_message): Catch AttributeError
+	  on event box acquisition.
+
+	* lib/gaupol/gtk/delegates/format.py:
+	* lib/gaupol/gtk/delegates/menuupdate.py:
+	  Added testing.
+
+2006-01-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/gtk/delegates/help.py:
 	* lib/gaupol/gtk/dialogs/spellcheck.py:
 	  Added testing.

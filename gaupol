@@ -21,6 +21,7 @@
 
 """Gaupol start script"""
 
+
 # Determination of correct paths for running from source directory vs. running
 # installed adapted from Gazpacho by Lorenzo Gil Sanchez.
 
@@ -223,7 +224,7 @@ if __name__ == '__main__':
         except ImportError:
             logger.info('Psyco not found.')
 
-    # Run as requested.
+    # View documentation.
     if opts.documentation:
         import pydoc
         import threading
@@ -232,12 +233,14 @@ if __name__ == '__main__':
         threading.Thread(target=pydoc.gui).start()
         wwwlib.open_url('http://localhost:7464/gaupol.html')
 
+    # Run PyChecker.
     elif opts.pycheck:
         os.putenv('PYCHECKER', '--config=test/pycheckrc')
         import pychecker.checker
         from gaupol.gtk import main
         main.main(args[1:])
 
+    # Profile.
     elif opts.profile:
         import hotshot
         import hotshot.stats
@@ -250,6 +253,7 @@ if __name__ == '__main__':
         stats.print_stats(opts.profile)
         os.remove('gaupol.prof')
 
+    # Run tests.
     elif opts.execute:
         if opts.execute == 'all':
             for (dirpath, dirnames, filenames) in os.walk('lib'):
@@ -265,6 +269,7 @@ if __name__ == '__main__':
                 path = os.path.join('lib', path)
             execfile(path)
 
+    # Run normal.
     else:
         from gaupol.gtk import main
         main.main(args[1:])
