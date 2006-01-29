@@ -285,3 +285,47 @@ class ApplicationUpdateDelegate(Delegate):
             visible = tree_view_column.props.visible
             path = '/ui/menubar/view/columns/%s' % Column.id_names[i]
             self.uim.get_action(path).set_active(visible)
+
+
+if __name__ == '__main__':
+
+    from gaupol.gtk.application import Application
+    from gaupol.test            import Test
+
+    class TestApplicationUpdateDelegate(Test):
+
+        def __init__(self):
+
+            Test.__init__(self)
+            self.application = Application()
+            self.application.open_main_files([
+                self.get_subrip_path(),
+                self.get_micro_dvd_path()
+            ])
+
+        def destroy(self):
+
+            self.application.window.destroy()
+
+        def test_notebook_page_switches(self):
+
+            self.application.on_activate_next_project_activated()
+            self.application.on_activate_previous_project_activated()
+            self.application.on_notebook_page_switched(None, None, 1)
+            self.application.on_notebook_page_switched(None, None, 0)
+
+        def test_set_sensitivities(self):
+
+            self.application.set_sensitivities()
+
+        def test_set_status_message(self):
+
+            self.application.set_status_message('test')
+            self.application.set_status_message(None, False)
+
+        def test_on_window_state_event(self):
+
+            self.application.window.maximize()
+            self.application.window.unmaximize()
+
+    TestApplicationUpdateDelegate().run()

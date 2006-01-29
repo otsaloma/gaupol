@@ -1,5 +1,12 @@
 2006-01-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/delegates/appupdate.py:
+	* lib/gaupol/gtk/delegates/preferences.py:
+	* lib/gaupol/gtk/delegates/preview.py:
+	  Added testing.
+
+2006-01-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol:
 	  Cosmetic changes.
 

@@ -230,3 +230,35 @@ class PreviewDelegate(Delegate):
         dialog = UnicodeErrorDialog(self.window)
         dialog.run()
         dialog.destroy()
+
+
+if __name__ == '__main__':
+
+    from gaupol.gtk.application import Application
+    from gaupol.test            import Test
+
+    class TestPreviewDelegate(Test):
+
+        def __init__(self):
+
+            Test.__init__(self)
+            self.application = Application()
+            self.application.open_main_files([self.get_subrip_path()])
+            self.delegate = PreviewDelegate(self.application)
+
+        def destroy(self):
+
+            self.application.window.destroy()
+
+        def test_dialogs(self):
+
+            page = self.application.get_current_page()
+            page.project.output = 'test'
+
+            self.delegate._show_command_error_dialog(page)
+            self.delegate._show_io_error_dialog('test')
+            self.delegate._show_output(page)
+            self.delegate._show_unicode_error_dialog()
+
+    TestPreviewDelegate().run()
+

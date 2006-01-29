@@ -96,19 +96,6 @@ class PreferencesDelegate(Delegate):
 
         gtklib.destroy_gobject(dialog)
 
-    def _on_font_set(self, dialog, font):
-        """Set custom font."""
-
-        if not config.editor.use_default_font:
-            self._enforce_new_font(font)
-
-    def _on_limit_undo_toggled(self, dialog, limit):
-        """Limit or unlimit undoing."""
-
-        if limit:
-            levels = config.editor.undo_levels
-            self._enforce_new_undo_levels(levels)
-
     def on_edit_preferences_activated(self, *args):
         """Show the preferences dialog."""
 
@@ -122,6 +109,19 @@ class PreferencesDelegate(Delegate):
         connect('font-set'                , self._on_font_set                )
 
         dialog.show()
+
+    def _on_font_set(self, dialog, font):
+        """Set custom font."""
+
+        if not config.editor.use_default_font:
+            self._enforce_new_font(font)
+
+    def _on_limit_undo_toggled(self, dialog, limit):
+        """Limit or unlimit undoing."""
+
+        if limit:
+            levels = config.editor.undo_levels
+            self._enforce_new_undo_levels(levels)
 
     def _on_undo_levels_changed(self, dialog, levels):
         """Change amount of undo levels."""
@@ -138,3 +138,37 @@ class PreferencesDelegate(Delegate):
             font = config.editor.font
 
         self._enforce_new_font(font)
+
+
+if __name__ == '__main__':
+
+    from gaupol.gtk.application import Application
+    from gaupol.test            import Test
+
+    class TestPreferencesDelegate(Test):
+
+        def __init__(self):
+
+            Test.__init__(self)
+            self.application = Application()
+            self.application.open_main_files([self.get_subrip_path()])
+            self.delegate = PreferencesDelegate(self.application)
+
+        def destroy(self):
+
+            self.application.window.destroy()
+
+        def test_all(self):
+
+            dialog = ''
+            self.delegate._enforce_new_font('monospace 10')
+            self.delegate._enforce_new_undo_levels(2)
+            self.delegate._on_font_set(dialog, 'monospace 9')
+            self.delegate._on_limit_undo_toggled(dialog, True)
+            self.delegate._on_undo_levels_changed(dialog, 1)
+            self.delegate._on_use_default_font_toggled(dialog, False)
+
+            self.application.on_edit_preferences_activated()
+
+    TestPreferencesDelegate().run()
+
