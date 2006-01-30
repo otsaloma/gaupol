@@ -392,29 +392,29 @@ if __name__ == '__main__':
 
         def test_reload_between_rows(self):
 
-            self.page.project.set_text(1, Document.MAIN, 'foo')
-            self.page.project.set_text(2, Document.MAIN, 'foo')
-            self.page.project.set_text(3, Document.MAIN, 'foo')
+            self.page.project.set_text(1, Document.MAIN, 'test')
+            self.page.project.set_text(2, Document.MAIN, 'test')
+            self.page.project.set_text(3, Document.MAIN, 'test')
             self.page.reload_between_rows(1, 3)
             self.page.assert_store()
 
         def test_reload_columns(self):
 
-            self.page.project.set_text(1, Document.MAIN, 'bar')
-            self.page.project.set_text(2, Document.MAIN, 'bar')
-            self.page.project.set_text(3, Document.MAIN, 'bar')
+            self.page.project.set_text(1, Document.MAIN, 'test')
+            self.page.project.set_text(2, Document.MAIN, 'test')
+            self.page.project.set_text(3, Document.MAIN, 'test')
             self.page.reload_columns([MTXT], [1, 2, 3])
             self.page.assert_store()
 
         def  test_reload_row(self):
 
-            self.page.project.set_text(2, Document.TRAN, 'foo')
+            self.page.project.set_text(2, Document.TRAN, 'test')
             self.page.reload_row(2)
             self.page.assert_store()
 
         def  test_reload_rows(self):
 
-            self.page.project.set_text(3, Document.TRAN, 'foo')
+            self.page.project.set_text(3, Document.TRAN, 'test')
             self.page.reload_rows([3])
             self.page.assert_store()
 
@@ -430,7 +430,7 @@ if __name__ == '__main__':
             title = self.page.update_tab_labels()
             assert title == self.page.get_main_basename()
 
-            self.page.project.set_text(4, Document.MAIN, 'foo')
+            self.page.project.set_text(4, Document.MAIN, 'test')
             title = self.page.update_tab_labels()
             assert title == '*' + self.page.get_main_basename()
 

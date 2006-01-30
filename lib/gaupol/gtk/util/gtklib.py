@@ -266,7 +266,7 @@ if __name__ == '__main__':
             assert isinstance(size[0], int)
             assert isinstance(size[1], int)
 
-        def test_get_text_view_size(self):
+        def test_get_tree_view_size(self):
 
             tree_view = gtk.TreeView()
             scrolled_window = gtk.ScrolledWindow()
@@ -282,38 +282,24 @@ if __name__ == '__main__':
                 pass
             foo()
 
-        def test_resize_dialog(self):
+        def test_resize_dialogs(self):
 
             dialog = gtk.Dialog()
             resize_dialog(dialog, 600, 600, 0.4, 0.4)
-
-        def test_resize_message_dialog(self):
-
-            dialog = gtk.Dialog()
             resize_message_dialog(dialog, 600, 600, 0.4, 0.4)
 
-        def test_set_cursor_busy(self):
+        def test_set_cursors(self):
 
             window = gtk.Window()
             window.show_all()
             set_cursor_busy(window)
-            window.destroy()
-
-        def test_set_cursor_normal(self):
-
-            window = gtk.Window()
-            window.show_all()
             set_cursor_normal(window)
             window.destroy()
 
-        def test_set_label_font(self):
+        def test_set_fonts(self):
 
-            label = gtk.Label('foo')
+            label = gtk.Label('test')
             set_label_font(label, 'monospace 12')
-
-        def test_set_widget_font(self):
-
-            label = gtk.Label('foo')
-            set_widget_font(label, 'monospace 12')
+            set_widget_font(label, 'monospace 14')
 
     TestLib().run()

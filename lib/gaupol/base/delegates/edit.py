@@ -559,8 +559,8 @@ if __name__ == '__main__':
 
         def test_get_needs_resort(self):
 
-            assert self.project.get_needs_resort(0, '99:00:00,000')
-            assert not self.project.get_needs_resort(0, '00:00:00,000')
+            assert self.project.get_needs_resort(0, '99:00:00,000') is True
+            assert self.project.get_needs_resort(0, '00:00:00,000') is False
 
         def test_get_timings(self):
 
@@ -585,12 +585,12 @@ if __name__ == '__main__':
                 [0, 1],
                 ['00:00:00:001', '00:00:00:002'],
                 [0, 1],
-                ['main_foo', 'main_bar'],
-                ['tran_foo', 'tran_bar']
+                ['1', '2'],
+                ['1', '2']
 
             )
-            assert self.project.main_texts[0] == 'main_foo'
-            assert self.project.main_texts[1] == 'main_bar'
+            assert self.project.main_texts[0] == '1'
+            assert self.project.main_texts[1] == '2'
 
             self.project.undo()
             assert self.project.main_texts[0] == orig_0
@@ -626,9 +626,9 @@ if __name__ == '__main__':
 
             orig_main_1 = self.project.main_texts[1]
             orig_tran_1 = self.project.tran_texts[1]
-            self.project.replace_both_texts([[1], [1]], [['foo'], ['bar']])
-            assert self.project.main_texts[1] == 'foo'
-            assert self.project.tran_texts[1] == 'bar'
+            self.project.replace_both_texts([[1], [1]], [['test'], ['test']])
+            assert self.project.main_texts[1] == 'test'
+            assert self.project.tran_texts[1] == 'test'
 
             self.project.undo()
             assert self.project.main_texts[1] == orig_main_1
@@ -638,9 +638,9 @@ if __name__ == '__main__':
 
             orig_main_1 = self.project.main_texts[1]
             orig_main_2 = self.project.main_texts[2]
-            self.project.replace_texts([1, 2], Document.MAIN, ['foo', 'bar'])
-            assert self.project.main_texts[1] == 'foo'
-            assert self.project.main_texts[2] == 'bar'
+            self.project.replace_texts([1, 2], Document.MAIN, ['1', '2'])
+            assert self.project.main_texts[1] == '1'
+            assert self.project.main_texts[2] == '2'
 
             self.project.undo()
             assert self.project.main_texts[1] == orig_main_1

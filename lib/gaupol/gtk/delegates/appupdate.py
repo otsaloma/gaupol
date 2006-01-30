@@ -162,8 +162,6 @@ class ApplicationUpdateDelegate(Delegate):
         If message is None, statusbar will be cleared.
         Return False (to avoid iteration with gobject.timeout_add).
         """
-        self.message_statusbar.pop(0)
-
         # Stop previous timeout event from affecting this new entry.
         if self.message_tag is not None:
             gobject.source_remove(self.message_tag)
@@ -172,6 +170,7 @@ class ApplicationUpdateDelegate(Delegate):
         # already been destroyed, but the timer still calls this method.
         try:
             event_box = gtklib.get_event_box(self.message_statusbar)
+            self.message_statusbar.pop(0)
             self.tooltips.set_tip(event_box, message)
         except AttributeError:
             pass

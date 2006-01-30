@@ -56,8 +56,8 @@ if __name__ == '__main__':
         def test_get_data_as_string(self):
 
             clipboard = Clipboard()
-            clipboard.data = ['foo', None, 'bar', None]
+            clipboard.data = ['test', None, 'test', None]
             string = clipboard.get_data_as_string()
-            assert string == 'foo\n\n\n\nbar\n\n'
+            assert string == 'test\n\n\n\ntest\n\n'
 
     TestClipboard().run()

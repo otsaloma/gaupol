@@ -203,7 +203,7 @@ if __name__ == '__main__':
             output_window.get_visible()
             output_window.hide()
             output_window.scroll_down()
-            output_window.set_output('foo')
+            output_window.set_output('test')
             output_window.show()
             output_window._window.destroy()
 

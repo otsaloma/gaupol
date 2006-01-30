@@ -186,12 +186,12 @@ if __name__ == '__main__':
 
         def test_change_case(self):
 
-            self.project.main_texts[1] = 'foo'
+            self.project.main_texts[1] = 'test'
             self.project.change_case([1], Document.MAIN, 'upper')
-            assert self.project.main_texts[1] == 'FOO'
+            assert self.project.main_texts[1] == 'TEST'
 
             self.project.undo()
-            assert self.project.main_texts[1] == 'foo'
+            assert self.project.main_texts[1] == 'test'
 
         def test_get_format_class_name(self):
 
@@ -206,24 +206,24 @@ if __name__ == '__main__':
 
         def test_toggle_dialog_lines(self):
 
-            self.project.main_texts[1] = 'foo\nbar'
+            self.project.main_texts[1] = 'test\ntest'
             self.project.toggle_dialog_lines([1], Document.MAIN)
-            assert self.project.main_texts[1] == '- foo\n- bar'
+            assert self.project.main_texts[1] == '- test\n- test'
             self.project.toggle_dialog_lines([1], Document.MAIN)
-            assert self.project.main_texts[1] == 'foo\nbar'
+            assert self.project.main_texts[1] == 'test\ntest'
 
             self.project.undo(2)
-            assert self.project.main_texts[1] == 'foo\nbar'
+            assert self.project.main_texts[1] == 'test\ntest'
 
         def test_toggle_italicization(self):
 
-            self.project.main_texts[1] = 'foo'
+            self.project.main_texts[1] = 'test'
             self.project.toggle_italicization([1], Document.MAIN)
-            assert self.project.main_texts[1] == '<i>foo</i>'
+            assert self.project.main_texts[1] == '<i>test</i>'
             self.project.toggle_italicization([1], Document.MAIN)
-            assert self.project.main_texts[1] == 'foo'
+            assert self.project.main_texts[1] == 'test'
 
             self.project.undo(2)
-            assert self.project.main_texts[1] == 'foo'
+            assert self.project.main_texts[1] == 'test'
 
     TestFormatDelegate().run()

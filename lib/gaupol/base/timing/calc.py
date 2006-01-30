@@ -157,20 +157,20 @@ if __name__ == '__main__':
 
         def test_all(self):
 
-            self.calc = TimeFrameCalculator()
-            self.calc.set_framerate(0)
-            self.calc = TimeFrameCalculator(0)
+            calc = TimeFrameCalculator()
+            calc.set_framerate(0)
+            calc = TimeFrameCalculator(0)
 
             times = '00:00:00,100', '33:33:00,000'
-            assert self.calc.add_times(*times) == '33:33:00,100'
-            assert self.calc.frame_to_seconds(400) == 400 / 23.976
-            assert self.calc.frame_to_time(400) == '00:00:16,683'
-            assert self.calc.get_frame_duration(5, 8) == 3
-            assert self.calc.get_time_duration(*times) == '33:32:59,900'
-            assert self.calc.round_time('02:33:44,666', 1) == '02:33:44,700'
-            assert self.calc.seconds_to_frame(500) == 11988
-            assert self.calc.seconds_to_time(877.999) == '00:14:37,999'
-            assert self.calc.time_to_frame('00:00:33,333') == 799
-            assert self.calc.time_to_seconds('00:33:33,333') == 2013.333
+            assert calc.add_times(*times) == '33:33:00,100'
+            assert calc.frame_to_seconds(400) == 400 / 23.976
+            assert calc.frame_to_time(400) == '00:00:16,683'
+            assert calc.get_frame_duration(5, 8) == 3
+            assert calc.get_time_duration(*times) == '33:32:59,900'
+            assert calc.round_time('02:33:44,666', 1) == '02:33:44,700'
+            assert calc.seconds_to_frame(500) == 11988
+            assert calc.seconds_to_time(877.999) == '00:14:37,999'
+            assert calc.time_to_frame('00:00:33,333') == 799
+            assert calc.time_to_seconds('00:33:33,333') == 2013.333
 
     TestTimeFrameCalculator().run()

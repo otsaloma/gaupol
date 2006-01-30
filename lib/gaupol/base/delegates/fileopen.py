@@ -172,6 +172,7 @@ if __name__ == '__main__':
 
             Test.__init__(self)
             self.project = self.get_project()
+            self.delegate = FileOpenDelegate(self.project)
 
         def test_open_main_file(self):
 
@@ -191,12 +192,10 @@ if __name__ == '__main__':
 
         def test_sort_data(self):
 
-            delegate = FileOpenDelegate(self.project)
-
             shows = [ 2 ,  3 ,  1 ]
             hides = [ 3 ,  4 ,  2 ]
             texts = ['2', '3', '1']
-            shows, hides, texts = delegate._sort_data(shows, hides, texts)
+            shows, hides, texts = self.delegate._sort_data(shows, hides, texts)
             assert shows == [ 1 ,  2 ,  3 ]
             assert hides == [ 2 ,  3 ,  4 ]
             assert texts == ['1', '2', '3']
@@ -204,7 +203,7 @@ if __name__ == '__main__':
             shows = ['00:00:00,300', '00:00:00,200', '00:00:00,100']
             hides = ['00:00:00,400', '00:00:00,300', '00:00:00,200']
             texts = ['00:00:00,300', '00:00:00,200', '00:00:00,100']
-            shows, hides, texts = delegate._sort_data(shows, hides, texts)
+            shows, hides, texts = self.delegate._sort_data(shows, hides, texts)
             assert shows == ['00:00:00,100', '00:00:00,200', '00:00:00,300']
             assert hides == ['00:00:00,200', '00:00:00,300', '00:00:00,400']
             assert texts == ['00:00:00,100', '00:00:00,200', '00:00:00,300']

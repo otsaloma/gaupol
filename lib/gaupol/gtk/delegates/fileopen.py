@@ -655,7 +655,7 @@ if __name__ == '__main__':
 
         def test_check_file_open(self):
 
-            assert self.delegate._check_file_open('/test') is False
+            assert self.delegate._check_file_open('/test/not.open') is False
 
             path = self.get_subrip_path()
             self.application.open_main_files([path])

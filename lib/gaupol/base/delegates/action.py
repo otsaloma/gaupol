@@ -345,17 +345,17 @@ if __name__ == '__main__':
         def test_revert(self):
 
             def revert_method(arg, kwarg, register):
-                assert arg      == 'foo'
-                assert kwarg    == 'bar'
+                assert arg      == 'argument'
+                assert kwarg    == 'keyword'
                 assert register == Action.UNDO
 
             RevertableAction(
                 Action.DO,
                 documents=[Document.MAIN],
-                description='foo',
+                description='test',
                 revert_method=revert_method,
-                revert_method_args=['foo'],
-                revert_method_kwargs={'kwarg': 'bar'},
+                revert_method_args=['argument'],
+                revert_method_kwargs={'kwarg': 'keyword'},
             ).revert()
 
     class TestActionDelegate(Test):
@@ -364,8 +364,8 @@ if __name__ == '__main__':
 
             project = self.get_project()
             project.clear_texts([0], Document.MAIN)
-            project.modify_action_description(Action.DO, 'foo')
-            assert project.undoables[0].description == 'foo'
+            project.modify_action_description(Action.DO, 'test')
+            assert project.undoables[0].description == 'test'
 
         def test_undo_and_redo(self):
 

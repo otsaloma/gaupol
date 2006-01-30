@@ -106,7 +106,7 @@ if __name__ == '__main__':
 
         def test_init(self):
 
-            args = gtk.Window(), 'foo', 'bar'
+            args = gtk.Window(), 'test', 'test'
             ErrorDialog(*args)
             InfoDialog(*args)
             QuestionDialog(*args)

@@ -160,7 +160,7 @@ if __name__ == '__main__':
 
         def test_all(self):
 
-            dialog = ''
+            dialog = None
             self.delegate._enforce_new_font('monospace 10')
             self.delegate._enforce_new_undo_levels(2)
             self.delegate._on_font_set(dialog, 'monospace 9')

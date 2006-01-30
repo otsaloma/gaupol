@@ -1,5 +1,30 @@
 2006-01-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/clipboard.py:
+	* lib/gaupol/base/delegates/action.py:
+	* lib/gaupol/base/delegates/edit.py:
+	* lib/gaupol/base/delegates/fileopen.py:
+	* lib/gaupol/base/delegates/format.py:
+	* lib/gaupol/base/model.py:
+	* lib/gaupol/base/timing/calc.py:
+	* lib/gaupol/base/util/wwwlib.py:
+	* lib/gaupol/gtk/delegates/fileopen.py:
+	* lib/gaupol/gtk/delegates/preferences.py:
+	* lib/gaupol/gtk/delegates/spellcheck.py:
+	* lib/gaupol/gtk/dialogs/filechooser.py:
+	* lib/gaupol/gtk/dialogs/message.py:
+	* lib/gaupol/gtk/output.py:
+	* lib/gaupol/gtk/page.py:
+	* lib/gaupol/gtk/util/gtklib.py:
+	* lib/gaupol/gtk/view.py:
+	  Cosmetic changes to testing.
+
+	* lib/gaupol/gtk/delegates/appupdate.py:
+	  (ApplicationUpdateDelegate.set_status_message): Moved statusbar
+	  popping inside the try-except clause to avoid  GtkWarnings.
+
+2006-01-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/gtk/delegates/action.py:
 	* lib/gaupol/gtk/delegates/edit.py:
 	* lib/gaupol/gtk/delegates/fileclose.py:

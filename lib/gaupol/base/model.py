@@ -89,13 +89,14 @@ if __name__ == '__main__':
         def test_all(self):
 
             def callback(arg, kwarg):
-                pass
+                assert arg   == 1
+                assert kwarg == 2
 
-            Model._signals = ['foo', 'bar']
+            Model._signals = ['done', 'undone']
             model = Model()
-            model.block('foo')
-            model.connect('bar', callback)
-            model.emit('bar', 1, kwarg=1)
-            model.unblock('foo')
+            model.block('done')
+            model.connect('undone', callback)
+            model.emit('undone', 1, kwarg=2)
+            model.unblock('undone')
 
     TestModel().run()

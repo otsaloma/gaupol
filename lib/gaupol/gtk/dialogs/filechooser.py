@@ -483,6 +483,10 @@ if __name__ == '__main__':
             Test.__init__(self)
             self.dialog = SaveFileDialog('foo', gtk.Window())
 
+        def destroy(self):
+
+            self.dialog.destroy()
+
         def test_confirm_overwrite(self):
 
             self.dialog.set_current_name('foo')

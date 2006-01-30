@@ -224,11 +224,15 @@ if __name__ == '__main__':
 
             self.application.window.destroy()
 
-        def test_signal_callbacks(self):
+        def test_on_selecteds(self):
 
             page  = self.application.get_current_page()
-
             self.delegate._on_cell_selected(None, page, 1, Document.MAIN)
+            self.delegate._on_page_selected(None, page)
+
+        def test_on_page_checked(self):
+
+            page  = self.application.get_current_page()
 
             rows  = [[], []]
             texts = [[], []]
@@ -240,9 +244,7 @@ if __name__ == '__main__':
             texts = [['test', 'test'], ['test', 'test']]
             self.delegate._on_page_checked(None, page, rows, texts)
 
-            self.delegate._on_page_selected(None, page)
-
-        def test_actions(self):
+        def test_on_configure_spell_check_activated(self):
 
             self.application.on_configure_spell_check_activated()
 
