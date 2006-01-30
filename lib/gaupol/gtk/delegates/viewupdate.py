@@ -76,7 +76,7 @@ class ViewUpdateDelegate(Delegate):
         page.view.set_active_column()
         self.set_sensitivities(page)
 
-    def on_view_selection_changed_event(self, view, *args):
+    def on_view_selection_changed_event(self, *args):
         """Update GUI after the view's selection has changed."""
 
         page = self.get_current_page()
@@ -130,3 +130,33 @@ class ViewUpdateDelegate(Delegate):
             set_status(self.main_text_statusbar, Document.MAIN)
         if self.tran_text_statusbar.props.visible:
             set_status(self.tran_text_statusbar, Document.TRAN)
+
+
+if __name__ == '__main__':
+
+    from gaupol.gtk.application  import Application
+    from gaupol.gtk.colconstants import *
+    from gaupol.test             import Test
+
+    class TestViewUpdateDelegate(Test):
+
+        def __init__(self):
+
+            Test.__init__(self)
+            self.application = Application()
+            self.application.open_main_files([self.get_subrip_path()])
+
+        def destroy(self):
+
+            self.application.window.destroy()
+
+        def test_actions(self):
+
+            page = self.application.get_current_page()
+            page.view.set_focus(1, MTXT)
+
+            self.application.on_view_move_cursor_event()
+            self.application.on_view_selection_changed_event()
+            self.application.set_character_status(page)
+
+    TestViewUpdateDelegate().run()

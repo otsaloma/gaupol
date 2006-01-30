@@ -652,3 +652,82 @@ class FileSaveDelegate(Delegate):
 
         gtklib.destroy_gobject(chooser)
         return filepath, format, encoding, newlines
+
+
+if __name__ == '__main__':
+
+    from gaupol.constants       import Format
+    from gaupol.gtk.application import Application
+    from gaupol.test            import Test
+
+    class TestDialog(Test):
+
+        def test_init(self):
+
+            SaveFileErrorDialog(gtk.Window(), 'test', 'test')
+            UnicodeEncodeErrorDialog(gtk.Window(), 'test', 'utf_8')
+
+    class TestFileSaveDelegate(Test):
+
+        def __init__(self):
+
+            Test.__init__(self)
+            self.application = Application()
+            self.delegate = FileSaveDelegate(self.application)
+
+        def destroy(self):
+
+            self.application.window.destroy()
+
+        def test_get_properties(self):
+
+            self.application.on_new_project_activated()
+            page = self.application.get_current_page()
+            properties = self.delegate._get_main_file_properties(page)
+            assert properties == (None, None, None, None)
+            properties = self.delegate._get_translation_file_properties(page)
+            assert properties == (None, None, None, None)
+
+            self.application.open_main_files([self.get_subrip_path()])
+            page = self.application.get_current_page()
+            properties = self.delegate._get_main_file_properties(page)
+            assert properties == (
+                page.project.main_file.path,
+                page.project.main_file.format,
+                page.project.main_file.encoding,
+                page.project.main_file.newlines
+            )
+
+        def test_on_edit_headers_activated(self):
+
+            self.application.open_main_files([self.get_subrip_path()])
+            page = self.application.get_current_page()
+            properties = (
+                page.project.main_file.path,
+                Format.SUBVIEWER2,
+                page.project.main_file.encoding,
+                page.project.main_file.newlines
+            )
+            page.project.save_main_file(True, properties)
+
+            self.application.on_edit_headers_activated()
+
+        def test_save_files(self):
+
+            self.application.open_main_files([self.get_subrip_path()])
+            page = self.application.get_current_page()
+            properties = list(self.delegate._get_main_file_properties(page))
+            properties[0] = self.get_subrip_path()
+            page.project.save_translation_file(True, properties)
+
+            self.application.on_save_a_copy_of_main_document_activated()
+            self.application.on_save_a_copy_of_translation_document_activated()
+            self.application.on_save_all_documents_activated()
+            self.application.on_save_main_document_activated()
+            self.application.on_save_main_document_as_activated()
+            self.application.on_save_translation_document_activated()
+            self.application.on_save_translation_document_as_activated()
+
+    TestDialog().run()
+    TestFileSaveDelegate().run()
+

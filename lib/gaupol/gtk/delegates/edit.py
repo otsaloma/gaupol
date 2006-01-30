@@ -550,3 +550,44 @@ class EditDelegate(Delegate):
         get_toolbar = gtklib.get_parent_widget
         video_toolbar = get_toolbar(self.video_file_button, gtk.Toolbar)
         video_toolbar.set_sensitive(sensitive)
+
+
+if __name__ == '__main__':
+
+    from gaupol.gtk.application import Application
+    from gaupol.test            import Test
+
+    class TestEditDelegate(Test):
+
+        def __init__(self):
+
+            Test.__init__(self)
+            self.application = Application()
+            self.application.open_main_files([self.get_subrip_path()])
+
+        def destroy(self):
+
+            self.application.window.destroy()
+
+        def test_action(self):
+
+            page = self.application.get_current_page()
+
+            def test(name):
+                page.view.set_focus(2, MTXT)
+                page.view.select_rows([2, 3])
+                getattr(self.application, name)()
+
+            test('on_clear_texts_activated')
+            test('on_copy_texts_activated')
+            test('on_cut_texts_activated')
+            test('on_edit_value_activated')
+            test('on_insert_subtitles_activated')
+            test('on_invert_selection_activated')
+            test('on_paste_texts_activated')
+            test('on_remove_subtitles_activated')
+            test('on_select_all_activated')
+            test('on_unselect_all_activated')
+
+    TestEditDelegate().run()
+

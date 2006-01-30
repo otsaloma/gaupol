@@ -203,3 +203,48 @@ class SpellCheckDelegate(Delegate):
 
         index = self.pages.index(page)
         self.notebook.set_current_page(index)
+
+
+if __name__ == '__main__':
+
+    from gaupol.gtk.dialogs.spellcheck import SPELL_CHECK_DIR
+    from gaupol.gtk.application        import Application
+    from gaupol.test                   import Test
+
+    class TestSpellCheckDelegate(Test):
+
+        def __init__(self):
+
+            Test.__init__(self)
+            self.application = Application()
+            self.application.open_main_files([self.get_subrip_path()])
+            self.delegate = SpellCheckDelegate(self.application)
+
+        def destroy(self):
+
+            self.application.window.destroy()
+
+        def test_signal_callbacks(self):
+
+            page  = self.application.get_current_page()
+
+            self.delegate._on_cell_selected(None, page, 1, Document.MAIN)
+
+            rows  = [[], []]
+            texts = [[], []]
+            self.delegate._on_page_checked(None, page, rows, texts)
+            rows  = [[1, 2], []]
+            texts = [['test', 'test'], []]
+            self.delegate._on_page_checked(None, page, rows, texts)
+            rows  = [[1, 2], [2, 3]]
+            texts = [['test', 'test'], ['test', 'test']]
+            self.delegate._on_page_checked(None, page, rows, texts)
+
+            self.delegate._on_page_selected(None, page)
+
+        def test_actions(self):
+
+            self.application.on_configure_spell_check_activated()
+
+    TestSpellCheckDelegate().run()
+

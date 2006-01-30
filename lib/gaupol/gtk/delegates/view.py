@@ -609,3 +609,58 @@ class ViewDelegate(Delegate):
         if event.button == 3:
             menu = self.uim.get_widget('/ui/view_header')
             menu.popup(None, None, None, event.button, event.time)
+
+
+if __name__ == '__main__':
+
+    from gaupol.gtk.application import Application
+    from gaupol.test            import Test
+
+    class TestViewDelegate(Test):
+
+        def __init__(self):
+
+            Test.__init__(self)
+            self.application = Application()
+            self.application.open_main_files([self.get_subrip_path()])
+
+        def destroy(self):
+
+            self.application.window.destroy()
+
+        def test_actions(self):
+
+            uim = self.application.uim
+
+            action = uim.get_action('/ui/menubar/view/columns/show')
+            self.application.on_toggle_column_activated(action)
+            self.application.on_toggle_column_activated(action)
+
+            action = uim.get_action('/ui/menubar/view/times')
+            self.application.on_toggle_edit_mode_activated(None, action)
+            self.application.on_toggle_edit_mode_activated(None, action)
+
+            self.application.on_framerate_changed()
+            action = uim.get_action('/ui/menubar/view/framerate/23_976')
+            self.application.on_toggle_framerate_activated(None, action)
+            self.application.on_toggle_framerate_activated(None, action)
+
+            self.application.on_toggle_main_toolbar_activated()
+            self.application.on_toggle_main_toolbar_activated()
+
+            self.application.on_toggle_output_window_activated()
+            self.application.on_toggle_output_window_activated()
+
+            if self.application.output_window.get_visible():
+                self.application.on_output_window_close()
+            else:
+                self.application.on_toggle_output_window_activated()
+                self.application.on_output_window_close()
+
+            self.application.on_toggle_statusbar_activated()
+            self.application.on_toggle_statusbar_activated()
+
+            self.application.on_toggle_video_toolbar_activated()
+            self.application.on_toggle_video_toolbar_activated()
+
+    TestViewDelegate().run()

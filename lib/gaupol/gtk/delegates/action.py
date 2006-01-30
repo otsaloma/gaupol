@@ -111,14 +111,14 @@ class ActionDelegate(Delegate):
     def on_redo_action_activated(self, *args):
         """Redo the last undone action."""
 
-        self.redo(1)
+        self.redo()
 
     def on_undo_action_activated(self, *args):
         """Undo the last redone action."""
 
-        self.undo(1)
+        self.undo()
 
-    def redo(self, amount):
+    def redo(self, amount=1):
         """Redo actions."""
 
         gtklib.set_cursor_busy(self.window)
@@ -235,7 +235,7 @@ class ActionDelegate(Delegate):
         except TypeError:
             pass
 
-    def undo(self, amount):
+    def undo(self, amount=1):
         """Undo actions."""
 
         gtklib.set_cursor_busy(self.window)
@@ -246,3 +246,74 @@ class ActionDelegate(Delegate):
         self.set_sensitivities()
         page.view.grab_focus()
         gtklib.set_cursor_normal(self.window)
+
+
+if __name__ == '__main__':
+
+    from gaupol.constants       import Document
+    from gaupol.gtk.application import Application
+    from gaupol.test            import Test
+
+    class TestActionDelegate(Test):
+
+        def __init__(self):
+
+            Test.__init__(self)
+            self.application = Application()
+            self.application.open_main_files([self.get_subrip_path()])
+
+        def destroy(self):
+
+            self.application.window.destroy()
+
+        def test_undo_and_redo(self):
+
+            application = self.application
+            page = application.get_current_page()
+            project = page.project
+
+            project.set_text(0, Document.MAIN, 'test')
+            page.assert_store()
+            application.undo()
+            page.assert_store()
+            application.redo()
+            page.assert_store()
+
+            project.remove_subtitles([1])
+            page.assert_store()
+            application.undo()
+            page.assert_store()
+            application.redo()
+            page.assert_store()
+
+            project.insert_subtitles([1])
+            page.assert_store()
+            application.undo()
+            page.assert_store()
+            application.redo()
+            page.assert_store()
+
+            project.set_text(0, Document.MAIN, 'test')
+            project.set_text(1, Document.MAIN, 'test')
+            project.insert_subtitles([1])
+            project.set_text(1, Document.MAIN, 'test')
+            project.set_text(3, Document.MAIN, 'test')
+            project.insert_subtitles([4])
+            project.set_text(4, Document.MAIN, 'test')
+            project.remove_subtitles([3])
+            project.set_text(3, Document.MAIN, 'test')
+            page.assert_store()
+            application.undo(9)
+            page.assert_store()
+            application.redo(9)
+            page.assert_store()
+
+            while project.can_undo():
+                application.undo()
+                page.assert_store()
+
+            while project.can_redo():
+                application.redo()
+                page.assert_store()
+
+    TestActionDelegate().run()

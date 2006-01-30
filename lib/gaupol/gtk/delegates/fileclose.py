@@ -335,3 +335,67 @@ class FileCloseDelegate(Delegate):
 
         # Return True to stop other handlers.
         return True
+
+
+if __name__ == '__main__':
+
+    from gaupol.gtk.application import Application
+    from gaupol.test            import Test
+
+    class TestCloseWarningDialog(Test):
+
+        def test_init(self):
+
+            CloseWarningDialog(gtk.Window(), Document.MAIN, 'test')
+
+    class TestFileCloseDelegate(Test):
+
+        def __init__(self):
+
+            Test.__init__(self)
+            self.application = Application()
+
+        def destroy(self):
+
+            self.application.window.destroy()
+
+        def test_close_page(self):
+
+            self.application.open_main_files([self.get_subrip_path()])
+            page = self.application.get_current_page()
+            self.application.on_close_button_clicked(page)
+
+            self.application.open_main_files([self.get_subrip_path()])
+            project = self.application.get_current_page().project
+            project.remove_subtitles([0])
+            self.application.on_close_project_activated()
+
+            self.application.open_main_files([self.get_subrip_path()])
+            project = self.application.get_current_page().project
+            project.set_text(0, Document.MAIN, 'test')
+            project.set_text(0, Document.TRAN, 'test')
+            self.application.on_close_project_activated()
+
+        def test_close_all_pages(self):
+
+            self.application.open_main_files([self.get_subrip_path()])
+            self.application.open_main_files([self.get_subrip_path()])
+            self.application.on_close_all_projects_activated()
+
+            self.application.open_main_files([self.get_subrip_path()])
+            self.application.open_main_files([self.get_subrip_path()])
+            project = self.application.get_current_page().project
+            project.set_text(0, Document.MAIN, 'test')
+            self.application.on_close_all_projects_activated()
+
+            self.application.open_main_files([self.get_subrip_path()])
+            self.application.open_main_files([self.get_subrip_path()])
+            page = self.application.pages[0]
+            page.project.set_text(0, Document.MAIN, 'test')
+            page = self.application.pages[1]
+            page.project.set_text(0, Document.MAIN, 'test')
+            self.application.on_close_all_projects_activated()
+
+    TestCloseWarningDialog().run()
+    TestFileCloseDelegate().run()
+

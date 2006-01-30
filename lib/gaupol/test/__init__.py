@@ -200,7 +200,7 @@ class Test(object):
         print '  ' + self.__class__.__name__
         for name in dir(self):
 
-            if not name.startswith('test'):
+            if not name.startswith('test_'):
                 continue
 
             value = getattr(self, name)

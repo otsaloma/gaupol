@@ -620,3 +620,64 @@ class FileOpenDelegate(Delegate):
 
         gtklib.destroy_gobject(chooser)
         return filepaths, encoding
+
+
+if __name__ == '__main__':
+
+    from gaupol.gtk.application import Application
+    from gaupol.test            import Test
+
+    class TestDialog(Test):
+
+        def test_init(self):
+
+            parent   = gtk.Window()
+            basename = 'test'
+            message  = 'test'
+            size     = 1
+
+            OpenBigFileWarningDialog(parent, basename, size)
+            OpenFileErrorDialog(parent, basename, message)
+            OpenTranslationWarningDialog(parent, basename)
+            UnicodeDecodeErrorDialog(parent, basename)
+
+    class TestFileOpenDelegate(Test):
+
+        def __init__(self):
+
+            Test.__init__(self)
+            self.application = Application()
+            self.delegate = FileOpenDelegate(self.application)
+
+        def destroy(self):
+
+            self.application.window.destroy()
+
+        def test_check_file_open(self):
+
+            assert self.delegate._check_file_open('/test') is False
+
+            path = self.get_subrip_path()
+            self.application.open_main_files([path])
+            assert self.delegate._check_file_open(path) is True
+
+        def test_get_tryable_encodings(self):
+
+            encodings = self.delegate._get_tryable_encodings()
+            assert isinstance(encodings[0], basestring)
+
+            encodings = self.delegate._get_tryable_encodings('johab')
+            assert encodings[0] == 'johab'
+
+        def test_file_openings(self):
+
+            self.application.on_new_project_activated()
+            self.application.on_open_main_file_activated()
+            self.application.on_open_translation_file_activated()
+
+            self.application.open_main_files([self.get_subrip_path()])
+            self.application.on_select_video_file_activated()
+
+    TestDialog().run()
+    TestFileOpenDelegate().run()
+
