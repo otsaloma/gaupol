@@ -168,4 +168,22 @@ if __name__ == '__main__':
                        'people will have problems.'
             assert converter.convert_tags(original) == result
 
+        def test_subrip_to_ssa(self):
+
+            converter = TagConverter(Format.SUBRIP, Format.SSA)
+
+            original = '<i>Whenever there are famines,</i>\n' \
+                       '<i>people will have problems.</i>'
+            result   = '{\\i1}Whenever there are famines,\n' \
+                       'people will have problems.'
+            assert converter.convert_tags(original) == result
+
+            converter = TagConverter(Format.SUBRIP, Format.ASS)
+
+            original = '<i>Whenever</i> there are famines,\n' \
+                       'people will have problems.'
+            result   = '{\\i1}Whenever{\\i0} there are famines,\n' \
+                       'people will have problems.'
+            assert converter.convert_tags(original) == result
+
     TestTagConverter().run()

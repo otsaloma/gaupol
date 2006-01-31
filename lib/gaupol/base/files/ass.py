@@ -93,9 +93,8 @@ Style: Default,Arial,18,&H00ffffff,&H0000ffff,&H00000000,&H00000000,0,0,0,0,100,
 
         try:
 
-            if self.header:
-                subtitle_file.write(self.header)
-                subtitle_file.write(newline_character * 2)
+            subtitle_file.write(self.header or self.__class__.HEADER_TEMPLATE)
+            subtitle_file.write(newline_character * 2)
 
             subtitle_file.write('[Events]')
             subtitle_file.write(newline_character)

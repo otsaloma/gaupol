@@ -1,5 +1,20 @@
 2006-01-31  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/files/ass.py:
+	* lib/gaupol/base/files/ssa.py:
+	* lib/gaupol/base/files/subviewer2.py:
+	  Write TEMPLATE_HEADER if self.header is None.
+
+	* lib/gaupol/base/tags/ass.py:
+	* lib/gaupol/base/tags/converter.py:
+	* lib/gaupol/base/tags/ssa.py:
+	  Implemented SSA and ASS encode tags and testing.
+
+	* lib/gaupol/base/tags/internal.py:
+	  New file for internal tag regular expressions and whatever.
+
+2006-01-31  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/gtk/delegates/fileopen.py:
 	  Added a dialog to warn when opening an SSA or ASS file.
 

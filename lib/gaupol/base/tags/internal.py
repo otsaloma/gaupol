@@ -17,25 +17,10 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Advanced Sub Station Alpha tag library."""
+"""Internal tags."""
 
 
-from gaupol.base.tags.ssa import SubStationAlpha
+import re
 
 
-class AdvancedSubStationAlpha(SubStationAlpha):
-
-    """Advanced Sub Station Alpha tag library."""
-
-    encode_tags = [
-        (
-            # Underline
-            r'<u>', None,
-            r'{\\u1}'
-        ), (
-            # Underline
-            r'</u>', None,
-            r'{\\u0}'
-        )
-    ] + SubStationAlpha.encode_tags
-
+re_closing_end = re.compile(r'</.*?>\Z')

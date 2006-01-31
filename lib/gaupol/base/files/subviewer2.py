@@ -135,8 +135,8 @@ class SubViewer2(SubtitleFile):
         subtitle_file = codecs.open(self.path, 'w', self.encoding)
 
         try:
-            if self.header:
-                subtitle_file.write(self.header + newline_character)
+            subtitle_file.write(self.header or self.__class__.HEADER_TEMPLATE)
+            subtitle_file.write(newline_character * 2)
             for i in range(len(shows)):
                 subtitle_file.write('%s,%s' % (shows[i], hides[i]))
                 subtitle_file.write(newline_character)

@@ -20,11 +20,83 @@
 """Sub Station Alpha tag library."""
 
 
-from gaupol.base.tags import TagLibrary
+import re
+
+from gaupol.base.tags import internal, TagLibrary
+
+
+COMMON = re.MULTILINE|re.DOTALL
 
 
 class SubStationAlpha(TagLibrary):
 
     """Sub Station Alpha tag library."""
 
-    pass
+    tag        = r'\{.*?\}'    , None
+    italic_tag = r'\{\\i[01]\}', re.IGNORECASE
+
+    encode_tags = [
+        (
+            # Remove duplicate style tags (e.g. <b>foo</b><b>bar</b>).
+            r'</(b|i|u)>(\n?)<\1>', COMMON,
+            r'\2'
+        ), (
+            # Remove other duplicate tags.
+            r'<(.*?)=(.*?)>(.*?)</\1>(\n?)<\1=\2>', COMMON,
+            r'<\1=\2>\3\4'
+        ), (
+            # Bold and italics
+            # \061 = 1
+            r'<(b|i)>', None,
+            r'{\\\1\061}'
+        ), (
+            # Bold and italics
+            # \060 = 0
+            r'</(b|i)>', None,
+            r'{\\\1\060}'
+        ), (
+            # Color
+            r'<color="(.*?)">', None,
+            r'{\\c&H\1}'
+        ), (
+            # Color
+            r'</color.*?>', None,
+            r'{\\r}'
+        ), (
+            # Font
+            r'<font="(.*?)">', None,
+            r'{\\fn\1}'
+        ), (
+            # Font
+            r'</font.*?>', None,
+            r'{\\r}'
+        ), (
+            # Size
+            r'<size="(.*?)">', None,
+            r'{\\fs\1}'
+        ), (
+            # Size
+            r'</size.*?>', None,
+            r'{\\r}'
+        ), (
+            # Remove underline
+            r'</?u>', None,
+            r''
+        )
+    ]
+
+    @staticmethod
+    def pre_encode(text):
+        """Remove pointless closing tags at the end of the text."""
+
+        while internal.re_closing_end.search(text):
+            text = internal.re_closing_end.sub('', text)
+
+        return text
+
+    @staticmethod
+    def italicize(text):
+        """Italicize text."""
+
+        return u'{\\i1}%s' % text
+

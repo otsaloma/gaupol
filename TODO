@@ -9,13 +9,13 @@ Plans for 0.4.0
 
   New Features:
     [ ] Support SSA & ASS
-          [ ] Reading
-          [ ] Writing
-          [ ] Warning dialog on open
+          [D] Reading
+          [D] Writing
+          [D] Warning dialog on open
           [ ] Tags
                 [ ] Decode
-                      * Use parser for decoding?
-                [ ] Encode
+                      * Closing tags
+                [D] Encode
           [ ] Close bug
           [ ] Update README and web page
     [ ] Timing shift F2
@@ -45,6 +45,7 @@ Plans for 0.4.0
     [D] Various errors in Micro DVD tag conversions
     [D] Newline counted as a character in text length statusbar
     [D] Rounding errors when undoing after editing in unnative units
+    [D] Template header not written when converting to SubViewer 2.0
 
   New Translations:
     [D] Gil Forcada: Catalan (ca)
