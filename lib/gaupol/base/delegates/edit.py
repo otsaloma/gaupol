@@ -369,6 +369,14 @@ class EditDelegate(Delegate):
         if value == orig_value:
             return row
 
+        # Avoid rounding errors by mode-dependent revert.
+        if self.get_mode() == Mode.TIME:
+            orig_value = self.times[row][col]
+            revert_method = self.set_time
+        elif self.get_mode() == Mode.FRAME:
+            orig_value = self.frames[row][col]
+            revert_method = self.set_frame
+
         rows_updated = []
         timing_rows_updated = [row]
         revert_row = row
@@ -396,7 +404,7 @@ class EditDelegate(Delegate):
             register=register,
             documents=[Document.MAIN],
             description=_('Editing frame'),
-            revert_method=self.set_frame,
+            revert_method=revert_method,
             revert_method_args=[revert_row, col, orig_value],
             rows_updated=rows_updated,
             timing_rows_updated=timing_rows_updated,
@@ -454,6 +462,14 @@ class EditDelegate(Delegate):
         if value == orig_value:
             return row
 
+        # Avoid rounding errors by mode-dependent revert.
+        if self.get_mode() == Mode.TIME:
+            orig_value = self.times[row][col]
+            revert_method = self.set_time
+        elif self.get_mode() == Mode.FRAME:
+            orig_value = self.frames[row][col]
+            revert_method = self.set_frame
+
         rows_updated = []
         timing_rows_updated = [row]
         revert_row = row
@@ -481,7 +497,7 @@ class EditDelegate(Delegate):
             register=register,
             documents=[Document.MAIN],
             description=_('Editing time'),
-            revert_method=self.set_time,
+            revert_method=revert_method,
             revert_method_args=[revert_row, col, orig_value],
             rows_updated=rows_updated,
             timing_rows_updated=timing_rows_updated,
@@ -662,6 +678,8 @@ if __name__ == '__main__':
             self.project.undo()
             assert self.project.frames[3][HIDE] == orig_hide_frame
             assert self.project.frames[3][DURN] == orig_durn_frame
+            assert self.project.times[3][HIDE]  == orig_hide_time
+            assert self.project.times[3][DURN]  == orig_durn_time
 
         def test_set_text(self):
 
@@ -683,11 +701,13 @@ if __name__ == '__main__':
             assert self.project.times[3][HIDE]  != orig_hide_time
             assert self.project.times[3][DURN]  == '33:33:33,333'
             assert self.project.frames[3][HIDE] != orig_hide_frame
-            assert self.project.frames[3][DURN] != orig_hide_frame
+            assert self.project.frames[3][DURN] != orig_durn_frame
 
             self.project.undo()
-            assert self.project.times[3][HIDE] == orig_hide_time
-            assert self.project.times[3][DURN] == orig_durn_time
+            assert self.project.times[3][HIDE]  == orig_hide_time
+            assert self.project.times[3][DURN]  == orig_durn_time
+            assert self.project.frames[3][HIDE] == orig_hide_frame
+            assert self.project.frames[3][DURN] == orig_durn_frame
 
         def test_sort_data(self):
 

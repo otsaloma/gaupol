@@ -1,3 +1,9 @@
+2006-01-31  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/base/delegates/edit.py:
+	  (EditDelegate.set_time, EditDelegate.set_frame): Use native mode
+	  method for revert to avoid rounding errors.
+
 2006-01-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/base/clipboard.py:
