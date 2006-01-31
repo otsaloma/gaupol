@@ -147,6 +147,7 @@ class file(object):
     recent_files         = []
     try_locale_encoding  = True
     visible_encodings    = ['utf_8', 'cp1252']
+    warn_opening_ssa     = True
 
     types = {
         'directory'           : Type.STRING,
@@ -157,7 +158,8 @@ class file(object):
         'newlines'            : Type.CONSTANT,
         'recent_files'        : Type.STRING_LIST,
         'try_locale_encoding' : Type.BOOLEAN,
-        'visible_encodings'   : Type.STRING_LIST
+        'visible_encodings'   : Type.STRING_LIST,
+        'warn_opening_ssa'    : Type.BOOLEAN,
     }
 
     classes = {

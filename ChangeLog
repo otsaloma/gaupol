@@ -1,5 +1,13 @@
 2006-01-31  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/delegates/fileopen.py:
+	  Added a dialog to warn when opening an SSA or ASS file.
+
+	* lib/gaupol/gtk/util/config.py:
+	  Added preference file.warn_opening_ssa.
+
+2006-01-31  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/gtk/cellrend/integer.py:
 	* lib/gaupol/gtk/cellrend/text.py:
 	* lib/gaupol/gtk/cellrend/time.py:

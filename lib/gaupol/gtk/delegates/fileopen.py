@@ -34,7 +34,7 @@ import gtk
 
 from gaupol.base.error              import FileFormatError
 from gaupol.base.util               import encodinglib, listlib
-from gaupol.constants               import Document
+from gaupol.constants               import Document, Format
 from gaupol.gtk.colconstants        import *
 from gaupol.gtk.delegates           import Delegate, UIMAction
 from gaupol.gtk.dialogs.filechooser import OpenFileDialog, OpenVideoDialog
@@ -203,6 +203,27 @@ class OpenTranslationWarningDialog(WarningDialog):
         self.add_button(gtk.STOCK_CANCEL         , gtk.RESPONSE_CANCEL)
         self.add_button(gtk.STOCK_SAVE           , gtk.RESPONSE_YES   )
         self.set_default_response(gtk.RESPONSE_YES)
+
+
+class SSAWarningDialog(WarningDialog):
+
+    """Dialog to warn when opening an SSA or ASS file."""
+
+    def __init__(self, parent):
+
+        title   = _('Open only partially supported file?')
+        message = _('Sub Station Alpha and Advanced Sub Station Alpha formats '
+                    'are not fully supported. Only the header and fields '
+                    '"Start", "End" and "Text" of the dialogue are read, '
+                    'while the file contains much more data. If you open the '
+                    'file and then save it, the unread data will be '
+                    'overwritten with blank or default values.')
+
+        WarningDialog.__init__(self, parent, title, message)
+
+        self.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_NO )
+        self.add_button(gtk.STOCK_OPEN  , gtk.RESPONSE_YES)
+        self.set_default_response(gtk.RESPONSE_NO)
 
 
 class UnicodeDecodeErrorDialog(ErrorDialog):
@@ -557,10 +578,11 @@ class FileOpenDelegate(Delegate):
                 if document_type == Document.MAIN:
                     page = Page()
                     page.project.open_main_file(path, encoding)
+                    format = page.project.main_file.format
                 elif document_type == Document.TRAN:
                     page = self.get_current_page()
                     page.project.open_translation_file(path, encoding)
-                return page
+                    format = page.project.tran_file.format
 
             except UnicodeError:
                 continue
@@ -580,6 +602,19 @@ class FileOpenDelegate(Delegate):
                 dialog.destroy()
                 gtklib.set_cursor_busy(self.window)
                 return None
+
+            else:
+                if format in (Format.SSA, Format.ASS) and \
+                   config.file.warn_opening_ssa:
+                    dialog = SSAWarningDialog(self.window)
+                    gtklib.set_cursor_normal(self.window)
+                    response = dialog.run()
+                    dialog.destroy()
+                    if response != gtk.RESPONSE_YES:
+                        return None
+
+                return page
+
 
         dialog = UnicodeDecodeErrorDialog(parent, basename)
         gtklib.set_cursor_normal(self.window)
@@ -639,6 +674,7 @@ if __name__ == '__main__':
             OpenBigFileWarningDialog(parent, basename, size)
             OpenFileErrorDialog(parent, basename, message)
             OpenTranslationWarningDialog(parent, basename)
+            SSAWarningDialog(parent)
             UnicodeDecodeErrorDialog(parent, basename)
 
     class TestFileOpenDelegate(Test):
