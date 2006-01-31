@@ -124,22 +124,12 @@ class CellRendererText(gtk.GenericCellRenderer):
         layout = self._get_layout(widget)
         width, height = layout.get_pixel_size()
 
-        # With cell contents being left aligned, x-offset should equal
-        # x-padding.
-        x_offset = self.x_padding
-
-        # With cell contents being center aligned vertically, the y-offset
-        # needs to be calculated based on the actual content height.
-        if cell_area is not None:
-            y_offset = self.y_align * (cell_area.height - height)
-            y_offset = max(int(round(y_offset, 0)), self.y_padding)
-        else:
-            y_offset = self.y_padding
-
         width  = width  + (self.x_padding * 2)
         height = height + (self.y_padding * 2)
 
-        return x_offset, y_offset, width, height
+        # With cell contents being left and top aligned,
+        # offsets should equal paddings.
+        return self.x_padding, self.y_padding, width, height
 
     def on_render(self, window, widget, bg_area, cell_area, exp_area, flags):
         """Render cell."""

@@ -41,7 +41,6 @@ class CellRendererInteger(CellRendererText):
         editor = IntegerEntry()
         editor.set_has_frame(False)
         editor.set_activates_default(True)
-        editor.set_size_request(-1, cell_area.height)
         editor.modify_font(self.font_description)
         editor.set_text(self.text or u'')
 
