@@ -35,20 +35,7 @@ from gaupol.constants  import Format, Mode
 
 class SubRip(SubtitleFile):
 
-    """
-    SubRip file.
-
-    Subrip format quick reference:
-    1
-    00:00:18,176 --> 00:00:22,135
-    And that completes my final report
-    until we reach touchdown.
-
-    2
-    00:00:22,247 --> 00:00:26,046
-    We're now on full automatic,
-    in the hands of the computers.
-    """
+    """SubRip file."""
 
     FORMAT     = Format.SUBRIP
     HAS_HEADER = False

@@ -10,10 +10,14 @@ Plans for 0.4.0
   New Features:
     [ ] Support SSA & ASS
           [ ] Reading
-          [ ] Writing (warning!)
+          [ ] Writing
+          [ ] Warning dialog on open
           [ ] Tags
-                * Use parser for decoding?
-                * Encoding should be trivial
+                [ ] Decode
+                      * Use parser for decoding?
+                [ ] Encode
+          [ ] Close bug
+          [ ] Update README and web page
     [ ] Timing shift F2
           * Shift amount: seconds/frames
               * Spin buttons

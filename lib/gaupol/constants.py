@@ -40,15 +40,45 @@ class Document(object):
 
 class Format(object):
 
-    MICRODVD   = 0
-    MPL2       = 1
-    SUBRIP     = 2
-    SUBVIEWER2 = 3
+    ASS        = 0
+    MICRODVD   = 1
+    MPL2       = 2
+    SUBRIP     = 3
+    SSA        = 4
+    SUBVIEWER2 = 5
 
-    class_names   = [  'MicroDVD' ,   'MPL2' ,   'SubRip' ,   'SubViewer2'    ]
-    display_names = [_('MicroDVD'), _('MPL2'), _('SubRip'), _('SubViewer 2.0')]
-    extensions    = [  '.sub'     ,   '.txt' ,   '.srt'   ,   '.sub'          ]
-    id_names      = [  'microdvd' ,   'mpl2' ,   'subrip' ,   'subviewer2'    ]
+    class_names = [
+        'AdvancedSubStationAlpha',
+        'MicroDVD',
+        'MPL2',
+        'SubRip',
+        'SubStationAlpha',
+        'SubViewer2'
+    ]
+    display_names = [
+        _('Advanced Sub Station Alpha'),
+        _('MicroDVD'),
+        _('MPL2'),
+        _('SubRip'),
+        _('Sub Station Alpha'),
+        _('SubViewer 2.0')
+    ]
+    extensions = [
+        '.ass',
+        '.sub',
+        '.txt',
+        '.srt',
+        '.ssa',
+        '.sub'
+    ]
+    id_names = [
+        'ass'
+        'microdvd',
+        'mpl2',
+        'subrip',
+        'ssa'
+        'subviewer2'
+    ]
 
 class Framerate(object):
 

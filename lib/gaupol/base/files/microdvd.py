@@ -34,13 +34,7 @@ from gaupol.constants  import Format, Mode
 
 class MicroDVD(SubtitleFile):
 
-    """
-    MicroDVD file.
-
-    MicroDVD format quick reference:
-    {436}{531}And that completes my final report|until we reach touchdown.
-    {533}{624}We're now on full automatic,|in the hands of the computers.
-    """
+    """MicroDVD file."""
 
     FORMAT     = Format.MICRODVD
     HAS_HEADER = False

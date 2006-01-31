@@ -35,13 +35,7 @@ from gaupol.constants        import Format, Mode
 
 class MPL2(SubtitleFile):
 
-    """
-    MPL2 file.
-
-    MPL2 format quick reference:
-    [182][221]And that completes my final report|until we reach touchdown.
-    [222][260]We're now on full automatic,|in the hands of the computers.
-    """
+    """MPL2 file."""
 
     FORMAT     = Format.MPL2
     HAS_HEADER = False

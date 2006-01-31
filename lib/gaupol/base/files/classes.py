@@ -20,7 +20,10 @@
 """All subtitle file format classes."""
 
 
+from gaupol.base.files.ass        import AdvancedSubStationAlpha
 from gaupol.base.files.microdvd   import MicroDVD
 from gaupol.base.files.mpl2       import MPL2
+from gaupol.base.files.ssa        import SubStationAlpha
 from gaupol.base.files.subrip     import SubRip
 from gaupol.base.files.subviewer2 import SubViewer2
+

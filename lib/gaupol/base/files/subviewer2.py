@@ -36,28 +36,7 @@ from gaupol.constants        import Format, Mode
 
 class SubViewer2(SubtitleFile):
 
-    """
-    SubViewer 2.0 file.
-
-    SubViewer 2.0 format quick reference:
-    [INFORMATION]
-    [TITLE]
-    [AUTHOR]
-    [SOURCE]
-    [PRG]
-    [FILEPATH]
-    [DELAY]0
-    [CD TRACK]0
-    [COMMENT]
-    [END INFORMATION]
-    [SUBTITLE]
-    [COLF]&HFFFFFF,[STYLE]bd,[SIZE]18,[FONT]Arial
-    00:00:00.00,00:00:03.38
-    And that completes my final report[br]until we reach touchdown.
-
-    00:00:03.68,00:00:05.61
-    We're now on full automatic,[br]in the hands of the computers.
-    """
+    """SubViewer 2.0 file."""
 
     FORMAT     = Format.SUBVIEWER2
     HAS_HEADER = True
