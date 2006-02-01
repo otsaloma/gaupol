@@ -1,5 +1,22 @@
 2006-02-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol:
+	  Fixed setting of PyChecker environment variable.
+
+	* lib/gaupol/base/files/ssa.py:
+	  Removed unused regular expression.
+
+	* lib/gaupol/base/tags/converter.py:
+	  Fixed errors in testing code.
+
+	* lib/gaupol/gtk/cellrend/time.py:
+	  Removed unused re import.
+
+	* lib/gaupol/gtk/dialogs/header.py:
+	  Removed a double import.
+
+2006-02-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/files/__init__.py:
 	* lib/gaupol/base/files/ass.py:
 	* lib/gaupol/base/files/ssa.py:

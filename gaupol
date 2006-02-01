@@ -235,7 +235,7 @@ if __name__ == '__main__':
 
     # Run PyChecker.
     elif opts.pycheck:
-        os.putenv('PYCHECKER', '--config=test/pycheckrc')
+        os.environ['PYCHECKER'] = '--config=test/pycheckrc'
         import pychecker.checker
         from gaupol.gtk import main
         main.main(args[1:])

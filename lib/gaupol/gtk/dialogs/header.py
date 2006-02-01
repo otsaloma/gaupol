@@ -229,9 +229,8 @@ class HeaderDialog(object):
 
 if __name__ == '__main__':
 
-    from gaupol.constants import Format
-    from gaupol.gtk.page  import Page
-    from gaupol.test      import Test
+    from gaupol.gtk.page import Page
+    from gaupol.test     import Test
 
     class TestHeaderDialog(Test):
 

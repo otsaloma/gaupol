@@ -74,7 +74,6 @@ Style: Default,Arial,18,&Hffffff,&H00ffff,&H000000,&H000000,0,0,1,2,2,2,30,30,10
         Return show times, hide times, texts.
         """
         # Compile regular expressions.
-        re_blank_line = re.compile(r'^\s*$')
         re_comma = re.compile(r',\s*')
 
         shows  = []

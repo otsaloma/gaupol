@@ -168,7 +168,7 @@ if __name__ == '__main__':
             converter = TagConverter(Format.SSA, Format.MICRODVD)
 
             original = '{\\i1}Whenever{\\r} there are famines,\n' \
-                       '{\\c&Hffffff}people will have problems.'
+                       '{\\c&Hffffff&}people will have problems.'
             result   = '{y:i}Whenever there are famines,\n' \
                        '{c:$ffffff}people will have problems.'
             assert converter.convert_tags(original) == result
@@ -184,7 +184,7 @@ if __name__ == '__main__':
             converter = TagConverter(Format.SSA, Format.SUBRIP)
 
             original = '{\\i1}Whenever{\\r} there are famines,\n' \
-                       '{\\c&Hffffff}people will have problems.'
+                       '{\\c&Hffffff&}people will have problems.'
             result   = '<i>Whenever</i> there are famines,\n' \
                        'people will have problems.'
             assert converter.convert_tags(original) == result

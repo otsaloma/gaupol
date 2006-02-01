@@ -25,8 +25,6 @@ try:
 except ImportError:
     pass
 
-import re
-
 import gtk
 
 from gaupol.gtk.cellrend.text import CellRendererText
