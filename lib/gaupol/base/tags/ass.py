@@ -20,6 +20,8 @@
 """Advanced Sub Station Alpha tag library."""
 
 
+import re
+
 from gaupol.base.tags.ssa import SubStationAlpha
 
 
@@ -27,15 +29,26 @@ class AdvancedSubStationAlpha(SubStationAlpha):
 
     """Advanced Sub Station Alpha tag library."""
 
+    decode_tags = [
+        (
+            # Underline opening
+            r'\{\\u1\}', re.IGNORECASE,
+            r'<u>'
+        ), (
+            # Underline closing
+            r'\{\\u0\}', re.IGNORECASE,
+            r'</u>'
+        )
+    ] + SubStationAlpha.decode_tags
+
     encode_tags = [
         (
-            # Underline
-            r'<u>', None,
+            # Underline opening
+            r'<u>', re.IGNORECASE,
             r'{\\u1}'
         ), (
-            # Underline
-            r'</u>', None,
+            # Underline closing
+            r'</u>', re.IGNORECASE,
             r'{\\u0}'
         )
     ] + SubStationAlpha.encode_tags
-

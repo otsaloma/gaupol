@@ -35,48 +35,133 @@ class SubStationAlpha(TagLibrary):
     tag        = r'\{.*?\}'    , None
     italic_tag = r'\{\\i[01]\}', re.IGNORECASE
 
+    @staticmethod
+    def pre_decode(text):
+        """Break combined tags, e.g. {\\b1i1} to {\\b1}{\\i1}."""
+
+        parts = text.split('\\')
+        for i in range(1, len(parts)):
+            text_so_far = '\\'.join(parts[:i])
+            if text_so_far.endswith('{'):
+                continue
+            opening_index = text_so_far.rfind('{')
+            closing_index = text_so_far.rfind('}')
+            if opening_index > closing_index:
+                parts[i - 1] += '}{'
+
+        return '\\'.join(parts)
+
+    # These decode tags will leave </> for reset and a lot of tags unclosed.
+    decode_tags = [
+        (
+            # Bold opening
+            r'\{\\b[1-9]\d*\}', re.IGNORECASE,
+            r'<b>'
+        ), (
+            # Italic opening
+            r'\{\\i1\}', re.IGNORECASE,
+            r'<i>'
+        ), (
+            # Bold, Italic closing
+            r'\{\\(b|i)0\}', re.IGNORECASE,
+            r'</\1>'
+        ), (
+            # Color
+            r'\{\\c&H([a-zA-Z0-9]{6})&\}', re.IGNORECASE,
+            r'<color="#\1">'
+        ), (
+            # Font
+            r'\{\\fn(.*?)\}', re.IGNORECASE,
+            r'<font="\1">'
+        ), (
+            # Size
+            r'\{\\fs(.*?)\}', re.IGNORECASE,
+            r'<size="\1">'
+        ), (
+            # Reset
+            r'\{\\r\}', re.IGNORECASE,
+            r'</>'
+        ), (
+            # Remove all else
+            r'\{.*?\}', re.IGNORECASE,
+            r''
+        )
+    ]
+
+    @staticmethod
+    def post_decode(text):
+        """Fix/add closing tags."""
+
+        parts = text.split('</>')
+        for i, part in enumerate(parts):
+
+            suffix       = ''
+            opening_tags = internal.re_opening_tag.findall(part)
+            closing_tags = internal.re_closing_tag.findall(part)
+
+            # Find out which tags have already been closed.
+            for k in reversed(range(len(closing_tags))):
+                closing_core = closing_tags[k][2:-1]
+                for q in range(len(opening_tags)):
+                    opening_core = opening_tags[q][1:-1].split('=')[0]
+                    if opening_core == closing_core:
+                        opening_tags.pop(q)
+                        break
+
+            # Assemble suffix string to close remaining tags.
+            for k in reversed(range(len(opening_tags))):
+                tag = '</' + opening_tags[k][1:-1].split('=')[0] + '>'
+                suffix += tag
+
+            parts[i] = part + suffix
+
+        return ''.join(parts)
+
+    @staticmethod
+    def pre_encode(text):
+        """Remove pointless closing tags at the end of the text."""
+
+        while internal.re_closing_tag_end.search(text):
+            text = internal.re_closing_tag_end.sub('', text)
+
+        return text
+
     encode_tags = [
         (
             # Remove duplicate style tags (e.g. <b>foo</b><b>bar</b>).
             r'</(b|i|u)>(\n?)<\1>', COMMON,
-            r'\2'
+            r'\2',
+            3
         ), (
             # Remove other duplicate tags.
             r'<(.*?)=(.*?)>(.*?)</\1>(\n?)<\1=\2>', COMMON,
-            r'<\1=\2>\3\4'
+            r'<\1=\2>\3\4',
+            3
         ), (
-            # Bold and italics
+            # Bold and italic
             # \061 = 1
             r'<(b|i)>', None,
             r'{\\\1\061}'
         ), (
-            # Bold and italics
+            # Bold and italic
             # \060 = 0
             r'</(b|i)>', None,
             r'{\\\1\060}'
         ), (
-            # Color
+            # Color opening
             r'<color="(.*?)">', None,
-            r'{\\c&H\1}'
+            r'{\\c&H\1&}'
         ), (
-            # Color
-            r'</color.*?>', None,
-            r'{\\r}'
-        ), (
-            # Font
+            # Font opening
             r'<font="(.*?)">', None,
             r'{\\fn\1}'
         ), (
-            # Font
-            r'</font.*?>', None,
-            r'{\\r}'
-        ), (
-            # Size
+            # Size opening
             r'<size="(.*?)">', None,
             r'{\\fs\1}'
         ), (
-            # Size
-            r'</size.*?>', None,
+            # Color, font or size closing
+            r'</[a-z]{3,}>', None,
             r'{\\r}'
         ), (
             # Remove underline
@@ -86,17 +171,7 @@ class SubStationAlpha(TagLibrary):
     ]
 
     @staticmethod
-    def pre_encode(text):
-        """Remove pointless closing tags at the end of the text."""
-
-        while internal.re_closing_end.search(text):
-            text = internal.re_closing_end.sub('', text)
-
-        return text
-
-    @staticmethod
     def italicize(text):
         """Italicize text."""
 
         return u'{\\i1}%s' % text
-

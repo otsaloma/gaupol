@@ -50,16 +50,8 @@ class SubRip(TagLibrary):
 
     encode_tags = [
         (
-            # Color
-            r'</?color.*?>', None,
-            r''
-        ), (
-            # Font
-            r'</?font.*?>', None,
-            r''
-        ), (
-            # Size
-            r'</?size.*?>', None,
+            # Color, font and size
+            r'<[^>]{3,}>', None,
             r''
         )
     ]

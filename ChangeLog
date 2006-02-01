@@ -1,3 +1,33 @@
+2006-02-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/base/files/__init__.py:
+	* lib/gaupol/base/files/ass.py:
+	* lib/gaupol/base/files/ssa.py:
+	* lib/gaupol/base/files/subviewer2.py:
+	  Set header to template during file initilization.
+
+	* lib/gaupol/base/tags/__init__.py:
+	* lib/gaupol/base/tags/converter.py:
+	* lib/gaupol/base/tags/microdvd.py:
+	  Added count item to decode_tags and encode_tags tuples.
+
+	* lib/gaupol/base/tags/ass.py:
+	* lib/gaupol/base/tags/ssa.py:
+	  Implemented decode tags and made some adjustments.
+
+	* lib/gaupol/base/tags/converter.py:
+	  Added more testing.
+
+	* lib/gaupol/base/tags/internal.py:
+	  Added regular expressions and docstring.
+
+	* lib/gaupol/base/tags/mpl2.py:
+	* lib/gaupol/base/tags/subrip.py:
+	  Cosmetic changes.
+
+	* lib/gaupol/constants.py:
+	  (Format):Added missing commas to lists.
+
 2006-01-31  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/base/files/ass.py:

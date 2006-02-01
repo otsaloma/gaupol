@@ -74,6 +74,7 @@ class SubViewer2(SubtitleFile):
         shows  = []
         hides  = []
         texts  = []
+        header = ''
 
         lines = self._read_lines()
         header_read = False
@@ -92,10 +93,11 @@ class SubViewer2(SubtitleFile):
             elif header_read:
                 texts[-1] += line
             else:
-                self.header += line
+                header += line
 
         # Remove leading and trailing spaces.
-        self.header = self.header.strip()
+        if header:
+            self.header = header.strip()
         listlib.strip_spaces(texts)
 
         # Replace decimal character and add milliseconds.
@@ -135,7 +137,7 @@ class SubViewer2(SubtitleFile):
         subtitle_file = codecs.open(self.path, 'w', self.encoding)
 
         try:
-            subtitle_file.write(self.header or self.__class__.HEADER_TEMPLATE)
+            subtitle_file.write(self.header)
             subtitle_file.write(newline_character * 2)
             for i in range(len(shows)):
                 subtitle_file.write('%s,%s' % (shows[i], hides[i]))

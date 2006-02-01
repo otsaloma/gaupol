@@ -80,14 +80,15 @@ Style: Default,Arial,18,&Hffffff,&H00ffff,&H000000,&H000000,0,0,1,2,2,2,30,30,10
         shows  = []
         hides  = []
         texts  = []
+        header = ''
 
-        # Indexes on dialog lines.
+        # Indexes of data on dialog lines.
         show_index = None
         hide_index = None
         text_index = None
 
-        # Field count minus one.
-        max_split  = None
+        # Amount of dialog fields minus one.
+        max_split = None
 
         lines = self._read_lines()
         header_read = False
@@ -113,10 +114,11 @@ Style: Default,Arial,18,&Hffffff,&H00ffff,&H000000,&H000000,0,0,1,2,2,2,30,30,10
                 max_split  = len(fields) - 1
 
             elif not header_read:
-                self.header += line
+                header += line
 
         # Remove leading and trailing spaces.
-        self.header = self.header.strip()
+        if header:
+            self.header = header.strip()
         listlib.strip_spaces(texts)
 
         # Replace decimal character and add zeros.
@@ -157,22 +159,18 @@ Style: Default,Arial,18,&Hffffff,&H00ffff,&H000000,&H000000,0,0,1,2,2,2,30,30,10
         subtitle_file = codecs.open(self.path, 'w', self.encoding)
 
         try:
-
-            subtitle_file.write(self.header or self.__class__.HEADER_TEMPLATE)
+            subtitle_file.write(self.header)
             subtitle_file.write(newline_character * 2)
-
             subtitle_file.write('[Events]')
             subtitle_file.write(newline_character)
             subtitle_file.write('Format: Marked, Start, End, Style, Name, ')
             subtitle_file.write('MarginL, MarginR, MarginV, Effect, Text')
             subtitle_file.write(newline_character)
-
             for i in range(len(shows)):
                 subtitle_file.write(
                     'Dialogue: 0,%s,%s,Default,,0000,0000,0000,,%s%s' % \
                     (shows[i], hides[i], texts[i], newline_character)
                 )
-
         finally:
             subtitle_file.close()
 

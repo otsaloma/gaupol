@@ -17,10 +17,22 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Internal tags."""
+"""
+Internal tags.
+
+Gaupol internal tags are:
+<b></b>
+<i></i>
+<u></u>
+<color="#RRGGBB"></color>
+<font="name"></font>
+<size="int"></size>
+"""
 
 
 import re
 
 
-re_closing_end = re.compile(r'</.*?>\Z')
+re_opening_tag     = re.compile(r'<[^/].*?>')
+re_closing_tag     = re.compile(r'</.*?>')
+re_closing_tag_end = re.compile(r'</.*?>\Z')

@@ -12,10 +12,7 @@ Plans for 0.4.0
           [D] Reading
           [D] Writing
           [D] Warning dialog on open
-          [ ] Tags
-                [ ] Decode
-                      * Closing tags
-                [D] Encode
+          [D] Tags
           [ ] Close bug
           [ ] Update README and web page
     [ ] Timing shift F2
@@ -44,7 +41,7 @@ Plans for 0.4.0
   Bug Fixes:
     [D] Various errors in Micro DVD tag conversions
     [D] Newline counted as a character in text length statusbar
-    [D] Rounding errors when undoing after editing in unnative units
+    [D] Rounding errors when undoing after editing in unnative timing units
     [D] Template header not written when converting to SubViewer 2.0
 
   New Translations:

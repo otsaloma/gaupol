@@ -92,22 +92,18 @@ Style: Default,Arial,18,&H00ffffff,&H0000ffff,&H00000000,&H00000000,0,0,0,0,100,
         subtitle_file = codecs.open(self.path, 'w', self.encoding)
 
         try:
-
-            subtitle_file.write(self.header or self.__class__.HEADER_TEMPLATE)
+            subtitle_file.write(self.header)
             subtitle_file.write(newline_character * 2)
-
             subtitle_file.write('[Events]')
             subtitle_file.write(newline_character)
             subtitle_file.write('Format: Layer, Start, End, Style, Name, ')
             subtitle_file.write('MarginL, MarginR, MarginV, Effect, Text')
             subtitle_file.write(newline_character)
-
             for i in range(len(shows)):
                 subtitle_file.write(
                     'Dialogue: 0,%s,%s,Default,,0000,0000,0000,,%s%s' % \
                     (shows[i], hides[i], texts[i], newline_character)
                 )
-
         finally:
             subtitle_file.close()
 

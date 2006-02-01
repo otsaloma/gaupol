@@ -59,6 +59,9 @@ class SubtitleFile(object):
         self.has_header = self.__class__.HAS_HEADER
         self.mode       = self.__class__.MODE
 
+        if self.has_header:
+            self.header = self.__class__.HEADER_TEMPLATE
+
     def _get_newline_character(self):
         """Get character(s) used for newlines."""
 

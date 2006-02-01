@@ -45,21 +45,30 @@ class TagConverter(object):
         self._from_regexs = []
         self._to_regexs   = []
 
-        # Regular expression patterns
         from_format_name = Format.class_names[from_format]
         to_format_name   = Format.class_names[  to_format]
+
+        # Regular expression patterns
         from_tags = eval(from_format_name).decode_tags
         to_tags   = eval(  to_format_name).encode_tags
 
-        PATTERN, FLAGS, REPL = 0, 1, 2
+        PATTERN, FLAGS, REPL, COUNT = 0, 1, 2, 3
 
         # Compile regular expressions.
         for entry in from_tags:
             regex = relib.compile(entry[PATTERN], entry[FLAGS])
-            self._from_regexs.append([regex, entry[REPL]])
+            try:
+                count = entry[COUNT]
+            except IndexError:
+                count = 1
+            self._from_regexs.append([regex, entry[REPL], count])
         for entry in to_tags:
             regex = relib.compile(entry[PATTERN], entry[FLAGS])
-            self._to_regexs.append([regex, entry[REPL]])
+            try:
+                count = entry[COUNT]
+            except IndexError:
+                count = 1
+            self._to_regexs.append([regex, entry[REPL], count])
 
         # Arbitrary functions
         self._pre_decode  = eval(from_format_name).pre_decode
@@ -73,18 +82,20 @@ class TagConverter(object):
         if not text:
             return text
 
-        REGEX, REPL = 0, 1
+        REGEX, REPL, COUNT = 0, 1, 2
 
         # Convert to internal format ("decode").
         text = self._pre_decode(text)
         for entry in self._from_regexs:
-            text = entry[REGEX].sub(entry[REPL], text)
+            for i in range(entry[COUNT]):
+                text = entry[REGEX].sub(entry[REPL], text)
         text = self._post_decode(text)
 
         # Convert to desired format ("encode").
         text = self._pre_encode(text)
         for entry in self._to_regexs:
-            text = entry[REGEX].sub(entry[REPL], text)
+            for i in range(entry[COUNT]):
+                text = entry[REGEX].sub(entry[REPL], text)
         text = self._post_encode(text)
 
         return text
@@ -149,6 +160,38 @@ if __name__ == '__main__':
             original = '_Whenever there are famines,\n' \
                        'people will have problems.'
             result   = '<u>Whenever there are famines,</u>\n' \
+                       'people will have problems.'
+            assert converter.convert_tags(original) == result
+
+        def test_ssa_to_micro_dvd(self):
+
+            converter = TagConverter(Format.SSA, Format.MICRODVD)
+
+            original = '{\\i1}Whenever{\\r} there are famines,\n' \
+                       '{\\c&Hffffff}people will have problems.'
+            result   = '{y:i}Whenever there are famines,\n' \
+                       '{c:$ffffff}people will have problems.'
+            assert converter.convert_tags(original) == result
+
+            original = '{\\i1\\b1\\fs12}Whenever{\\r} there are famines,\n' \
+                       'people will have problems.'
+            result   = '{y:i}{y:b}{s:12}Whenever there are famines,\n' \
+                       'people will have problems.'
+            assert converter.convert_tags(original) == result
+
+        def test_ssa_to_subrip(self):
+
+            converter = TagConverter(Format.SSA, Format.SUBRIP)
+
+            original = '{\\i1}Whenever{\\r} there are famines,\n' \
+                       '{\\c&Hffffff}people will have problems.'
+            result   = '<i>Whenever</i> there are famines,\n' \
+                       'people will have problems.'
+            assert converter.convert_tags(original) == result
+
+            original = '{\\b200}Whenever there{\\b0} are famines,\n' \
+                       'people will have problems.'
+            result   = '<b>Whenever there</b> are famines,\n' \
                        'people will have problems.'
             assert converter.convert_tags(original) == result
 

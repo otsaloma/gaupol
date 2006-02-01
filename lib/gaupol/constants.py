@@ -53,7 +53,7 @@ class Format(object):
         'MPL2',
         'SubRip',
         'SubStationAlpha',
-        'SubViewer2'
+        'SubViewer2',
     ]
     display_names = [
         _('Advanced Sub Station Alpha'),
@@ -61,7 +61,7 @@ class Format(object):
         _('MPL2'),
         _('SubRip'),
         _('Sub Station Alpha'),
-        _('SubViewer 2.0')
+        _('SubViewer 2.0'),
     ]
     extensions = [
         '.ass',
@@ -69,15 +69,15 @@ class Format(object):
         '.txt',
         '.srt',
         '.ssa',
-        '.sub'
+        '.sub',
     ]
     id_names = [
-        'ass'
+        'ass',
         'microdvd',
         'mpl2',
         'subrip',
-        'ssa'
-        'subviewer2'
+        'ssa',
+        'subviewer2',
     ]
 
 class Framerate(object):

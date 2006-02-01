@@ -57,19 +57,17 @@ class MPL2(TagLibrary):
         )
     ] + MicroDVD.decode_tags
 
-    encode_tags = MicroDVD.encode_tags
+    style_tags = [
+        ('<i>', '</i>', '/' ),
+        ('<b>', '</b>', '\\'),
+        ('<u>', '</u>', '_' ),
+    ]
 
-    @staticmethod
-    def pre_encode(text):
+    @classmethod
+    def pre_encode(cls, text):
         """Convert style tags to native MPL2 style tags."""
 
-        style_tags = [
-            ('<i>', '</i>', '/' ),
-            ('<b>', '</b>', '\\'),
-            ('<u>', '</u>', '_' ),
-        ]
-
-        for (opening, closing, replacement) in style_tags:
+        for (opening, closing, replacement) in cls.style_tags:
 
             opening_lenght = len(opening)
             closing_length = len(closing)
@@ -102,6 +100,8 @@ class MPL2(TagLibrary):
                 text = before + replacement + middle + after
 
         return text
+
+    encode_tags = MicroDVD.encode_tags
 
     @staticmethod
     def italicize(text):
