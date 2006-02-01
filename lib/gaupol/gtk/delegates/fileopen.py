@@ -214,7 +214,7 @@ class SSAWarningDialog(WarningDialog):
         title   = _('Open only partially supported file?')
         message = _('Sub Station Alpha and Advanced Sub Station Alpha formats '
                     'are not fully supported. Only the header and fields '
-                    '"Start", "End" and "Text" of the dialogue are read, '
+                    '"Start", "End" and "Text" of the dialog are read, '
                     'while the file contains much more data. If you open the '
                     'file and then save it, the unread data will be '
                     'overwritten with blank or default values.')

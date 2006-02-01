@@ -1,5 +1,10 @@
 2006-02-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/delegates/fileopen.py:
+	  Fixed typo.
+
+2006-02-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol:
 	  Fixed setting of PyChecker environment variable.
 
