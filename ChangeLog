@@ -1,5 +1,19 @@
 2006-02-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/delegates/__init__.py:
+	  Added timing delegate module.
+
+	* lib/gaupol/base/delegates/edit.py:
+	  Fixed one loop to use enumerate().
+
+	* lib/gaupol/base/delegates/timing.py:
+	  New file. Implemented timing shifts.
+
+	* lib/gaupol/base/timing/calc.py:
+	  (add_seconds_to_time): New function.
+
+2006-02-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/gtk/delegates/fileopen.py:
 	  Fixed typo.
 

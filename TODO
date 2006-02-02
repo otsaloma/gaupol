@@ -8,13 +8,7 @@ Plans for 0.4.0
 ===============
 
   New Features:
-    [ ] Support SSA & ASS
-          [D] Reading
-          [D] Writing
-          [D] Warning dialog on open
-          [D] Tags
-          [ ] Close bug
-          [ ] Update README and web page
+    [D] Partial support for SSA & ASS formats
     [ ] Timing shift F2
           * Shift amount: seconds/frames
               * Spin buttons

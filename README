@@ -8,13 +8,17 @@ General Information
   formats, manual editing, translating and spell-checking. Planned features
   include timing manipulations and text corrections.
 
-  Currently supported formats:
+  Supported formats:
     * Micro DVD
     * MPL2
     * SubRip
     * SubViewer 2.0
 
-  Current features:
+  Partially supported formats:
+    * Advanced Sub Station Alpha
+    * Sub Station Alpha
+
+  Features:
     * Support for a wide range of character encodings
     * Conversions between supported formats, including conversion of most tags
     * Multiple document interface that allows some amount of batch processing

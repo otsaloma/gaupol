@@ -39,6 +39,7 @@ module_names = [
     'frconv',
     'preview',
     'stat',
+    'timing',
 ]
 
 

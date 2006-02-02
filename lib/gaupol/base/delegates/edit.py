@@ -333,8 +333,7 @@ class EditDelegate(Delegate):
 
         orig_texts = []
 
-        for i in range(len(rows)):
-            row = rows[i]
+        for i, row in enumerate(rows):
             orig_texts.append(texts[row])
             texts[row] = new_texts[i]
 
