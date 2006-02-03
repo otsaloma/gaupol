@@ -70,16 +70,22 @@ class PreviewDelegate(Delegate):
         Return subtitle file path, is temporary file.
         """
         if document == Document.MAIN:
-            if self.main_changed:
-                sub_file = self.main_file
-            else:
+            if not self.main_changed:
                 return self.main_file.path, False
         elif document == Document.TRAN:
-            if self.tran_active and self.tran_changed:
-                sub_file = self.tran_file
-            else:
+            if not self.tran_active and not self.tran_changed:
                 return self.tran_file.path, False
 
+        return self.get_temp_file_path(document), True
+
+    def get_temp_file_path(self, document):
+        """
+        Save data to a temporary file and return path.
+
+        Raise IOError if writing to temporary file fails.
+        Raise UnicodeError if encoding temporary file fails.
+        """
+        sub_file  = (self.main_file, self.tran_file)[document]
         extension = Format.extensions[sub_file.format]
         sub_path  = tempfile.mkstemp(extension, 'gaupol.')[1]
 
@@ -95,7 +101,7 @@ class PreviewDelegate(Delegate):
         elif document == Document.TRAN:
             self.save_translation_file(False, properties)
 
-        return sub_path, True
+        return sub_path
 
     def guess_video_file_path(self, extensions=default_extensions):
         """
@@ -124,13 +130,14 @@ class PreviewDelegate(Delegate):
 
         return None
 
-    def preview(self, row, document, command, offset):
+    def preview(self, row, document, command, offset, temp_path=None):
         """
         Preview subtitles with video player.
 
         command: string, where %s = subtitle filepath, %v = video filepath,
         %t = time, %c = seconds and %f = frame
         offset: float-convertable, seconds before row's show time to start
+        temp_path: temporary subtitle file path if already written
 
         This method first dumps the current subtitle data to a temporary file
         if the subtitle file is changed and then launches an external video
@@ -155,7 +162,11 @@ class PreviewDelegate(Delegate):
         seconds = str(seconds)
 
         # Get files.
-        sub_path, is_temp = self._get_subtitle_path(document)
+        if temp_path is not None:
+            sub_path = temp_path
+            is_temp  = True
+        else:
+            sub_path, is_temp = self._get_subtitle_path(document)
         output_file_desc, output_path = tempfile.mkstemp('.output', 'gaupol.')
 
         # Parse command.
@@ -220,6 +231,16 @@ if __name__ == '__main__':
             assert data[0] != self.project.main_file.path
             assert data[1] is True
             assert self.project.main_changed == 1
+
+        def test_get_temp_file_path(self):
+
+            path = self.project.get_temp_file_path(Document.MAIN)
+            self.files.append(path)
+            assert os.path.isfile(path)
+
+            path = self.project.get_temp_file_path(Document.TRAN)
+            self.files.append(path)
+            assert os.path.isfile(path)
 
         def test_guess_video_file_path(self):
 

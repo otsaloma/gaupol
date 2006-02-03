@@ -88,6 +88,7 @@ sections = [
     'preview',
     'subtitle_insert',
     'spell_check',
+    'timing_shift',
 ]
 
 
@@ -260,9 +261,22 @@ class spell_check(object):
         'translation_language': Type.STRING,
     }
 
+class timing_shift(object):
+
+    frames    = 0
+    seconds   = '0'
+    shift_all = True
+
+    types = {
+        'frames'   : Type.INTEGER,
+        'seconds'  : Type.STRING,
+        'shift_all': Type.BOOLEAN,
+    }
+
 
 def _get_boolean(arg):
-    """Get boolean from string or string from boolean.
+    """
+    Get boolean from string or string from boolean.
 
     Raise ValueError if arg not convertable.
     """

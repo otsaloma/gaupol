@@ -83,6 +83,8 @@
 			<menuitem name="check_spelling" action="check_spelling"/>
 			<menuitem name="configure_spell_check" action="configure_spell_check"/>
 			<separator/>
+			<menuitem name="shift_timings" action="shift_timings"/>
+			<separator/>
 			<menuitem name="preview" action="preview"/>
 		</menu>
 		<menu name="projects" action="show_projects_menu">

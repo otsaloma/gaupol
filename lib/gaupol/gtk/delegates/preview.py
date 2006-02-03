@@ -26,6 +26,7 @@ except ImportError:
     pass
 
 from gettext import gettext as _
+import copy
 import tempfile
 import threading
 
@@ -137,9 +138,7 @@ class IOErrorDialog(ErrorDialog):
 
         title   = _('Failed to save subtitle file to temporary directory '
                     '"%s"') % tempfile.gettempdir()
-        message = _('Because the subtitle document you\'re trying to preview '
-                    'is changed, it needs to be saved to a temporary file '
-                    'before previewing. Attempt to write that temporary file '
+        message = _('Attempt to write temporary subtitle file for preview '
                     'returned error: %s.') % message
 
         ErrorDialog.__init__(self, parent, title, message)
@@ -153,11 +152,9 @@ class UnicodeErrorDialog(ErrorDialog):
 
         title   = _('Failed to encode subtitle file to temporary directory '
                     '"%s"') % tempfile.gettempdir()
-        message = _('Because the subtitle document you\'re trying to preview '
-                    'is changed, it needs to be saved to a temporary file '
-                    'before previewing. The temporary file is saved in the '
-                    'same character encoding as the actual subtitle file. '
-                    'Please save the actual subtitle file with a different '
+        message = _('Current data cannot be encoded to a temporary subtitle '
+                    'file for preview with the current character encoding. '
+                    'Please first save the subtitle file with a different '
                     'character encoding.')
 
         ErrorDialog.__init__(self, parent, title, message)
@@ -170,17 +167,40 @@ class PreviewDelegate(Delegate):
     def on_preview_activated(self, *args):
         """Preview subtitles with video player."""
 
-        page     = self.get_current_page()
-        row      = page.view.get_selected_rows()[0]
-        col      = page.view.get_focus()[1]
+        page = self.get_current_page()
+        row = page.view.get_selected_rows()[0]
+        col = page.view.get_focus()[1]
         document = max(0, col - 4)
 
         args = page, row, document
-        thread = threading.Thread(target=self._preview, args=args)
+        thread = threading.Thread(target=self._run_preview, args=args)
         thread.start()
 
-    def _preview(self, page, row, document):
-        """Preview subtitles with video player."""
+    def preview_changes(self, page, row, document, method, args=[], kwargs={}):
+        """Start threaded preview with video player."""
+
+        # Backup original data.
+        times = copy.deepcopy(page.project.times)
+        frames = copy.deepcopy(page.project.frames)
+        main_texts = copy.deepcopy(page.project.main_texts)
+
+        # Change data.
+        kwargs['register'] = None
+        method(*args, **kwargs)
+        path = page.project.get_temp_file_path(document)
+
+        # Restore original data.
+        page.project.times = times
+        page.project.frames = frames
+        page.project.main_texts = main_texts
+
+        # Preview temporary file with changed data.
+        args = page, row, document, path
+        thread = threading.Thread(target=self._run_preview, args=args)
+        thread.start()
+
+    def _run_preview(self, page, row, document, path=None):
+        """Run preview with video player."""
 
         if config.preview.use_custom:
             command = config.preview.custom_command
@@ -191,7 +211,7 @@ class PreviewDelegate(Delegate):
         offset = config.preview.offset
 
         try:
-            page.project.preview(row, document, command, offset)
+            page.project.preview(row, document, command, offset, path)
         except ExternalError:
             self._show_command_error_dialog(page)
         except IOError, (no, message):

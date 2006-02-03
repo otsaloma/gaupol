@@ -7,6 +7,8 @@ Legend:
 Plans for 0.4.0
 ===============
 
+  [ ] Review dialog glade file, module, and class names
+
   New Features:
     [D] Partial support for SSA & ASS formats
     [ ] Timing shift F2

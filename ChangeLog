@@ -1,3 +1,35 @@
+2006-02-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/shift-dialog.glade:
+	* lib/gaupol/gtk/delegates/timing.py:
+	* lib/gaupol/gtk/dialogs/shift.py:
+	  New files for timing shifting gtk implementation.
+
+	* data/ui/menubar.xml:
+	  Added "Shift Timings" menu item.
+
+	* lib/gaupol/base/delegates/preview.py:
+	  (PreviewDelegate._get_subtitle_path): Use get_temp_file_path().
+	  (PreviewDelegate.get_temp_file_path): New method.
+	  (PreviewDelegate.preview): Added temp_path as last argument
+	  defaulting to None.
+
+	* lib/gaupol/base/delegates/timing.py:
+	* lib/gaupol/base/timing/calc.py:
+	  Cosmetic changes.
+
+	* lib/gaupol/gtk/delegates/__init__.py:
+	  Added timing module.
+
+	* lib/gaupol/gtk/delegates/fileopen.py:
+	  (SSAWarningDialog): Changed message wording.
+
+	* lib/gaupol/gtk/delegates/preview.py:
+	  (IOErrorDialog, UnicodeErrorDialog): Changed message wording.
+
+	* lib/gaupol/gtk/util/config.py:
+	  (timing_shift): New class.
+
 2006-02-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/base/delegates/__init__.py:

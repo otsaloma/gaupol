@@ -52,10 +52,10 @@ class TimeFrameCalculator(object):
 
         return self.seconds_to_time(x + y)
 
-    def add_seconds_to_time(self, time, shift):
-        """Add shift amount of seconds to time."""
+    def add_seconds_to_time(self, time, amount):
+        """Add amount of seconds to time."""
 
-        seconds = max(0, self.time_to_seconds(time) + shift)
+        seconds = max(0, self.time_to_seconds(time) + amount)
 
         return self.seconds_to_time(seconds)
 

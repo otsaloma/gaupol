@@ -64,11 +64,11 @@ class TimingDelegate(Delegate):
             timing_rows_updated=rows,
         )
 
-    def shift_frames(self, rows, shift, register=Action.DO):
+    def shift_frames(self, rows, amount, register=Action.DO):
         """
-        Shift timings shift amount of frames.
+        Shift timings by amount of frames.
 
-        rows can be None to process all rows.
+        rows: None to process all rows
         """
         rows = rows or range(len(self.times))
 
@@ -80,8 +80,8 @@ class TimingDelegate(Delegate):
 
         for row in rows:
 
-            show_frame = max(0, frames[row][SHOW] + shift)
-            hide_frame = max(0, frames[row][HIDE] + shift)
+            show_frame = max(0, frames[row][SHOW] + amount)
+            hide_frame = max(0, frames[row][HIDE] + amount)
             durn_frame = calc.get_frame_duration(show_frame, hide_frame)
             new_frames.append([show_frame, hide_frame, durn_frame])
 
@@ -93,11 +93,11 @@ class TimingDelegate(Delegate):
         self.replace_timings(rows, new_times, new_frames, register)
         self.modify_action_description(register, _('Shifting frames'))
 
-    def shift_seconds(self, rows, shift, register=Action.DO):
+    def shift_seconds(self, rows, amount, register=Action.DO):
         """
-        Shift timings shift amount of seconds.
+        Shift timings by amount of seconds.
 
-        rows can be None to process all rows.
+        rows: None to process all rows
         """
         rows = rows or range(len(self.times))
 
@@ -109,8 +109,8 @@ class TimingDelegate(Delegate):
 
         for row in rows:
 
-            show_time = calc.add_seconds_to_time(times[row][SHOW], shift)
-            hide_time = calc.add_seconds_to_time(times[row][HIDE], shift)
+            show_time = calc.add_seconds_to_time(times[row][SHOW], amount)
+            hide_time = calc.add_seconds_to_time(times[row][HIDE], amount)
             durn_time = calc.get_time_duration(show_time, hide_time)
             new_times.append([show_time, hide_time, durn_time])
 
