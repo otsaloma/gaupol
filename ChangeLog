@@ -1,3 +1,11 @@
+2006-02-04  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/subinsert-dialog.glade:
+	  Renamed from insertsub-dialog.glade.
+
+	* lib/gaupol/gtk/dialogs/subinsert.py:
+	  Renamed from insertsub.py.
+
 2006-02-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/glade/shift-dialog.glade:
