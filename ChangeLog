@@ -1,5 +1,10 @@
 2006-02-04  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/delegates/timing.py:
+	  (TimingShiftAction): Added F2 as keybinding.
+
+2006-02-04  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/gtk/delegates/edit.py:
 	* lib/gaupol/gtk/delegates/timing.py:
 	* lib/gaupol/gtk/dialogs/shift.py:

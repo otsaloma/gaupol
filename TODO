@@ -7,14 +7,9 @@ Legend:
 Plans for 0.4.0
 ===============
 
-  [ ] Review dialog glade file, module, and class names
-
   New Features:
     [D] Partial support for SSA & ASS formats
-    [ ] Timing shift F2
-          * Shift amount: seconds/frames
-              * Spin buttons
-          * Target: selection/all
+    [D] Timing shift F2
     [ ] Timing adjust F3
           * 2 points, for which current and desired as times/frames
               * Frame: spin button

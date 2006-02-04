@@ -35,15 +35,15 @@ from gaupol.gtk.dialogs.shift import TimingShiftDialog
 from gaupol.gtk.util          import config, gtklib
 
 
-class ShiftTimingsAction(UIMAction):
+class TimingShiftAction(UIMAction):
 
-    """Shift timings."""
+    """Shifting timings."""
 
     uim_action_item = (
         'shift_timings',
         None,
         _('_Shift Timings'),
-        None,
+        'F2',
         _('Shift timings a constant amount'),
         'on_shift_timings_activated'
     )
