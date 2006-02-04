@@ -33,7 +33,7 @@ from gaupol.base.error            import FitError
 from gaupol.constants             import Mode, Position
 from gaupol.gtk.colconstants      import *
 from gaupol.gtk.delegates         import Delegate, UIMAction
-from gaupol.gtk.dialogs.insertsub import InsertSubtitleDialog
+from gaupol.gtk.dialogs.subinsert import SubtitleInsertDialog
 from gaupol.gtk.dialogs.message   import ErrorDialog
 from gaupol.gtk.util              import config, gtklib
 
@@ -339,7 +339,7 @@ class EditDelegate(Delegate):
     def on_insert_subtitles_activated(self, *args):
         """Insert blank subtitles."""
 
-        dialog = InsertSubtitleDialog(self.window)
+        dialog = SubtitleInsertDialog(self.window)
         page = self.get_current_page()
         if not page.project.times:
             dialog.set_position_sensitive(False)

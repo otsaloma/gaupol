@@ -1,5 +1,13 @@
 2006-02-04  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/delegates/edit.py:
+	* lib/gaupol/gtk/delegates/timing.py:
+	* lib/gaupol/gtk/dialogs/shift.py:
+	* lib/gaupol/gtk/dialogs/subinsert.py:
+	  Corrected all references after previous renamings.
+
+2006-02-04  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/subinsert-dialog.glade:
 	  Renamed from insertsub-dialog.glade.
 

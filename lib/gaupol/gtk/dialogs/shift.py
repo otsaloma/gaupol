@@ -34,7 +34,7 @@ from gaupol.constants import Mode
 from gaupol.gtk.util  import config, gtklib
 
 
-class ShiftTimingDialog(gobject.GObject):
+class TimingShiftDialog(gobject.GObject):
 
     """Dialog for shifting timings."""
 
@@ -193,7 +193,7 @@ if __name__ == '__main__':
     from gaupol.gtk.application import Application
     from gaupol.test            import Test
 
-    class TestShiftTimingDialog(Test):
+    class TestTimingShiftDialog(Test):
 
         def __init__(self):
 
@@ -201,7 +201,7 @@ if __name__ == '__main__':
             self.application = Application()
             self.application.open_main_files([self.get_subrip_path()])
             self.page = self.application.get_current_page()
-            self.dialog = ShiftTimingDialog(gtk.Window(), self.page)
+            self.dialog = TimingShiftDialog(gtk.Window(), self.page)
 
         def destroy(self):
 
@@ -224,4 +224,4 @@ if __name__ == '__main__':
             self.dialog._all_radio.set_active(True)
             self.dialog._all_radio.set_active(False)
 
-    TestShiftTimingDialog().run()
+    TestTimingShiftDialog().run()

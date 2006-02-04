@@ -31,7 +31,7 @@ import gtk
 
 from gaupol.constants         import Document, Mode
 from gaupol.gtk.delegates     import Delegate, UIMAction
-from gaupol.gtk.dialogs.shift import ShiftTimingDialog
+from gaupol.gtk.dialogs.shift import TimingShiftDialog
 from gaupol.gtk.util          import config, gtklib
 
 
@@ -84,7 +84,7 @@ class TimingDelegate(Delegate):
             args = rows, amount
             self.preview_changes(page, row, Document.MAIN, method, args)
 
-        dialog = ShiftTimingDialog(self.window, page)
+        dialog = TimingShiftDialog(self.window, page)
         dialog.connect('preview', on_preview)
         response  = dialog.run()
         amount    = dialog.get_amount()

@@ -30,13 +30,13 @@ import gtk
 from gaupol.gtk.util import config, gtklib
 
 
-class InsertSubtitleDialog(object):
+class SubtitleInsertDialog(object):
 
     """Dialog for inserting new subtitles."""
 
     def __init__(self, parent):
 
-        glade_xml = gtklib.get_glade_xml('insertsub-dialog.glade')
+        glade_xml = gtklib.get_glade_xml('subinsert-dialog.glade')
         get_widget = glade_xml.get_widget
 
         self._amount_spin_button = get_widget('amount_spin_button')
@@ -103,14 +103,14 @@ if __name__ == '__main__':
 
     from gaupol.test import Test
 
-    class TestInsertSubtitleDialog(Test):
+    class TestSubtitleInsertDialog(Test):
 
         def test_all(self):
 
-            dialog = InsertSubtitleDialog(gtk.Window())
+            dialog = SubtitleInsertDialog(gtk.Window())
             assert isinstance(dialog.get_amount(), int)
             assert isinstance(dialog.get_position(), int)
             dialog.set_position_sensitive(True)
             dialog.set_position_sensitive(False)
 
-    TestInsertSubtitleDialog().run()
+    TestSubtitleInsertDialog().run()
