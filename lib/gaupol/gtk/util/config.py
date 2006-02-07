@@ -88,6 +88,7 @@ sections = [
     'preview',
     'subtitle_insert',
     'spell_check',
+    'timing_adjust',
     'timing_shift',
 ]
 
@@ -259,6 +260,14 @@ class spell_check(object):
         'check_translation'   : Type.BOOLEAN,
         'main_language'       : Type.STRING,
         'translation_language': Type.STRING,
+    }
+
+class timing_adjust(object):
+
+    shift_all = True
+
+    types = {
+        'shift_all': Type.BOOLEAN,
     }
 
 class timing_shift(object):

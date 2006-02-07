@@ -68,7 +68,7 @@
 	      <property name="border_width">12</property>
 	      <property name="visible">True</property>
 	      <property name="homogeneous">False</property>
-	      <property name="spacing">12</property>
+	      <property name="spacing">18</property>
 
 	      <child>
 		<widget class="GtkVBox" id="encoding_vbox">
@@ -677,7 +677,7 @@
 	      <property name="border_width">12</property>
 	      <property name="visible">True</property>
 	      <property name="homogeneous">False</property>
-	      <property name="spacing">12</property>
+	      <property name="spacing">18</property>
 
 	      <child>
 		<widget class="GtkVBox" id="undo_vbox">
@@ -1064,7 +1064,7 @@
 	      <property name="border_width">12</property>
 	      <property name="visible">True</property>
 	      <property name="homogeneous">False</property>
-	      <property name="spacing">12</property>
+	      <property name="spacing">18</property>
 
 	      <child>
 		<widget class="GtkVBox" id="preview_start_vbox">

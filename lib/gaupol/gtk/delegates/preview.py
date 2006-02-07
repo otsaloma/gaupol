@@ -168,11 +168,13 @@ class PreviewDelegate(Delegate):
         """Preview subtitles with video player."""
 
         page = self.get_current_page()
-        row = page.view.get_selected_rows()[0]
-        col = page.view.get_focus()[1]
+
+        row  = page.view.get_selected_rows()[0]
+        time = page.project.times[row][0]
+        col  = page.view.get_focus()[1]
         document = max(0, col - 4)
 
-        args = page, row, document
+        args = page, time, document
         thread = threading.Thread(target=self._run_preview, args=args)
         thread.start()
 
@@ -180,26 +182,27 @@ class PreviewDelegate(Delegate):
         """Start threaded preview with video player."""
 
         # Backup original data.
-        times = copy.deepcopy(page.project.times)
-        frames = copy.deepcopy(page.project.frames)
+        times      = copy.deepcopy(page.project.times)
+        frames     = copy.deepcopy(page.project.frames)
         main_texts = copy.deepcopy(page.project.main_texts)
 
         # Change data.
         kwargs['register'] = None
         method(*args, **kwargs)
         path = page.project.get_temp_file_path(document)
+        time = page.project.times[row][0]
 
         # Restore original data.
-        page.project.times = times
-        page.project.frames = frames
+        page.project.times      = times
+        page.project.frames     = frames
         page.project.main_texts = main_texts
 
         # Preview temporary file with changed data.
-        args = page, row, document, path
+        args = page, time, document, path
         thread = threading.Thread(target=self._run_preview, args=args)
         thread.start()
 
-    def _run_preview(self, page, row, document, path=None):
+    def _run_preview(self, page, time, document, path=None):
         """Run preview with video player."""
 
         if config.preview.use_custom:
@@ -211,7 +214,7 @@ class PreviewDelegate(Delegate):
         offset = config.preview.offset
 
         try:
-            page.project.preview(row, document, command, offset, path)
+            page.project.preview_time(time, document, command, offset, path)
         except ExternalError:
             self._show_command_error_dialog(page)
         except IOError, (no, message):

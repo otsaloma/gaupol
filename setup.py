@@ -190,15 +190,15 @@ class SDist(sdist):
         test_dir = os.path.join(temp_dir, basename)
 
         # Remove leftover directories.
-        for dir in ('build', 'dist', 'locale', test_dir):
-            info('removing %s' % dir)
-            for root, dirs, files in os.walk(dir, topdown=False):
+        for directory in ('build', 'dist', 'locale', test_dir):
+            info('removing %s' % directory)
+            for root, dirs, files in os.walk(directory, topdown=False):
                 for entry in files:
                     os.remove(os.path.join(root, entry))
                 for entry in dirs:
                     os.rmdir(os.path.join(root, entry))
-            if os.path.isdir(dir):
-                os.rmdir(dir)
+            if os.path.isdir(directory):
+                os.rmdir(directory)
 
         # Remove leftover files.
         for name in ('installed-files.log', 'MANIFEST'):

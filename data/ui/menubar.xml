@@ -84,6 +84,7 @@
 			<menuitem name="configure_spell_check" action="configure_spell_check"/>
 			<separator/>
 			<menuitem name="shift_timings" action="shift_timings"/>
+			<menuitem name="adjust_timings" action="adjust_timings"/>
 			<separator/>
 			<menuitem name="preview" action="preview"/>
 		</menu>

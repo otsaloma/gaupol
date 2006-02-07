@@ -132,7 +132,7 @@
 	  <property name="border_width">6</property>
 	  <property name="visible">True</property>
 	  <property name="homogeneous">False</property>
-	  <property name="spacing">12</property>
+	  <property name="spacing">18</property>
 
 	  <child>
 	    <widget class="GtkVBox" id="shift_vbox">
@@ -399,15 +399,15 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkVBox" id="target_vbox">
+	    <widget class="GtkVBox" id="subtitles_vbox">
 	      <property name="visible">True</property>
 	      <property name="homogeneous">False</property>
 	      <property name="spacing">6</property>
 
 	      <child>
-		<widget class="GtkLabel" id="target_label">
+		<widget class="GtkLabel" id="subtitles_label">
 		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">&lt;b&gt;Target&lt;/b&gt;</property>
+		  <property name="label" translatable="yes">&lt;b&gt;subtitles&lt;/b&gt;</property>
 		  <property name="use_underline">False</property>
 		  <property name="use_markup">True</property>
 		  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -430,13 +430,13 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkHBox" id="target_hbox">
+		<widget class="GtkHBox" id="subtitles_hbox">
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">0</property>
 
 		  <child>
-		    <widget class="GtkLabel" id="target_indentation_label">
+		    <widget class="GtkLabel" id="subtitles_indentation_label">
 		      <property name="width_request">12</property>
 		      <property name="visible">True</property>
 		      <property name="label"></property>
@@ -462,7 +462,7 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkVBox" id="target_settings_vbox">
+		    <widget class="GtkVBox" id="subtitles_settings_vbox">
 		      <property name="visible">True</property>
 		      <property name="homogeneous">False</property>
 		      <property name="spacing">6</property>

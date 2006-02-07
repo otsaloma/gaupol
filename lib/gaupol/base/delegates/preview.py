@@ -130,9 +130,15 @@ class PreviewDelegate(Delegate):
 
         return None
 
-    def preview(self, row, document, command, offset, temp_path=None):
+    def preview_row(self, row, document, command, offset, temp_path=None):
+        """Preview subtitles at row with video player."""
+
+        time = self.times[row][SHOW]
+        self.preview_time(time, document, command, offset, temp_path)
+
+    def preview_time(self, time, document, command, offset, temp_path=None):
         """
-        Preview subtitles with video player.
+        Preview subtitles at time with video player.
 
         command: string, where %s = subtitle filepath, %v = video filepath,
         %t = time, %c = seconds and %f = frame
@@ -152,7 +158,6 @@ class PreviewDelegate(Delegate):
         assert self.video_path is not None
 
         # Get offsetted time.
-        time    = self.times[row][SHOW]
         seconds = self.calc.time_to_seconds(time)
         seconds = max(0.0, seconds - float(offset))
 

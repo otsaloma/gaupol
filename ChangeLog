@@ -1,3 +1,43 @@
+2006-02-07  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/adjust-dialog.glade:
+	  New file.
+
+	* data/glade/language-dialog.glade:
+	* data/glade/preferences-dialog.glade:
+	  Changed section spacing to 18 pixels.
+
+	* data/glade/shift-dialog.glade:
+	  Changed section spacing to 18 pixels.
+	  Renamed Target to Subtitles.
+
+	* data/ui/menubar.xml:
+	  Added Adjust Timings menu item.
+
+	* lib/gaupol/base/delegates/preview.py:
+	  Split preview method to preview_row and preview_time.
+
+	* lib/gaupol/base/delegates/timing.py:
+	  (TimingDelegate.adjust_frames, TimingDelegate.adjust_times): New
+	  methods.
+
+	* lib/gaupol/gtk/delegates/preview.py:
+	  Adapted to changes in base preview method.
+
+	* lib/gaupol/gtk/delegates/timing.py:
+	  Added timing adjustment stuff.
+	  Cosmetic fixes to timing shift stuff.
+
+	* lib/gaupol/gtk/dialogs/adjust.py:
+	  New file.
+
+	* lib/gaupol/gtk/util/config.py:
+	  (timing_adjust): New class.
+
+	* setup.py:
+	  (SDist.run): Renamed dir to directory to avoid conflict with built-in
+	  dir method.
+
 2006-02-04  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/gtk/delegates/timing.py:
