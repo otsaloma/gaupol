@@ -1,5 +1,12 @@
 2006-02-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/delegates/frconv.py:
+	* lib/gaupol/base/delegates/timing.py:
+	  Moved all stuff from frconv.py to timing.py.
+	  Removed file frconv.py.
+
+2006-02-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/frconvert-dialog.glade:
 	  New file.
 

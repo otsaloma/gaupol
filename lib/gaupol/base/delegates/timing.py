@@ -29,7 +29,7 @@ from gettext import gettext as _
 
 from gaupol.base.colconstants import *
 from gaupol.base.delegates    import Delegate
-from gaupol.constants         import Action, Document
+from gaupol.constants         import Action, Document, Framerate, Mode
 
 
 class TimingDelegate(Delegate):
@@ -123,6 +123,45 @@ class TimingDelegate(Delegate):
 
         self.replace_timings(rows, new_times, new_frames, register)
         self.modify_action_description(register, _('Adjusting times'))
+
+    def change_framerate(self, framerate):
+        """
+        Change the framerate and update data.
+
+        This method only changes what is assumed to be the video framerate and
+        thus affects only how non-native timing data is calculated. Native
+        timings will remain unchanged.
+        """
+        assert self.main_file is not None
+
+        self.framerate = framerate
+        self.calc.set_framerate(framerate)
+
+        calc   = self.calc
+        times  = self.times
+        frames = self.frames
+
+        if self.main_file.mode == Mode.TIME:
+            for i in range(len(times)):
+
+                show = calc.time_to_frame(times[i][SHOW])
+                hide = calc.time_to_frame(times[i][HIDE])
+                durn = calc.get_frame_duration(show, hide)
+
+                frames[i][SHOW] = show
+                frames[i][HIDE] = hide
+                frames[i][DURN] = durn
+
+        elif self.main_file.mode == Mode.FRAME:
+            for i in range(len(times)):
+
+                show = calc.frame_to_time(frames[i][SHOW])
+                hide = calc.frame_to_time(frames[i][HIDE])
+                durn = calc.get_time_duration(show, hide)
+
+                times[i][SHOW] = show
+                times[i][HIDE] = hide
+                times[i][DURN] = durn
 
     def replace_timings(self, rows, new_times, new_frames, register=Action.DO):
         """
@@ -259,6 +298,14 @@ if __name__ == '__main__':
             assert times[0] == ['00:00:01,000', '00:00:02,000', '00:00:01,000']
             assert times[1] == ['00:00:03,000', '00:00:04,000', '00:00:01,000']
             assert times[2] == ['00:00:05,000', '00:00:06,000', '00:00:01,000']
+
+        def test_change_framerate(self):
+
+            self.project.change_framerate(Framerate.FR_23_976)
+            frame_1 = self.project.frames[5][SHOW]
+            self.project.change_framerate(Framerate.FR_25)
+            frame_2 = self.project.frames[5][SHOW]
+            assert frame_2 == int(round((frame_1 / 23.976) * 25, 0))
 
         def test_shift_frames(self):
 
