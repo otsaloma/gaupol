@@ -1,3 +1,16 @@
+2006-02-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/shift-dialog.glade:
+	  Fixed typo.
+
+	* lib/gaupol/gtk/dialogs/adjust.py:
+	* lib/gaupol/gtk/dialogs/shift.py:
+	  Call grab_focus() in run method.
+
+	* lib/gaupol/gtk/entries/time.py:
+	  (TimeEntry._insert_text): Do not select region when inserting
+	  multiple characters.
+
 2006-02-07  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/glade/adjust-dialog.glade:

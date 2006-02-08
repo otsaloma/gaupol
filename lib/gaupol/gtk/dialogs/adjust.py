@@ -312,6 +312,7 @@ class TimingAdjustDialog(gobject.GObject):
     def run(self):
         """Show and run the dialog."""
 
+        self._subtitle_spin_1.grab_focus()
         self._dialog.show()
         return self._dialog.run()
 

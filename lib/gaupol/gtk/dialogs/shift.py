@@ -184,6 +184,7 @@ class TimingShiftDialog(gobject.GObject):
     def run(self):
         """Show and run the dialog."""
 
+        self._amount_spin.grab_focus()
         self._dialog.show()
         return self._dialog.run()
 

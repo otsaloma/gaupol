@@ -97,9 +97,6 @@ class TimeEntry(gtk.Entry):
             self.set_position(new_position)
             if new_position in (2, 5, 8):
                 self.set_position(new_position + 1)
-        else:
-            self.select_region(position, position + length)
-            return
 
     @blockedmethod
     def _change_next_to_zero(self):
