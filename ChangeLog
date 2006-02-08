@@ -1,5 +1,16 @@
 2006-02-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/glade/adjust-dialog.glade:
+	  Made dialog more vertical.
+
+	* lib/gaupol/base/delegates/__init__.py:
+	  Removed frconv from list of modules.
+
+	* lib/gaupol/base/delegates/timing.py:
+	  Implemented framerate conversion.
+
+2006-02-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/delegates/frconv.py:
 	* lib/gaupol/base/delegates/timing.py:
 	  Moved all stuff from frconv.py to timing.py.

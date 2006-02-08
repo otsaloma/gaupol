@@ -163,6 +163,47 @@ class TimingDelegate(Delegate):
                 times[i][HIDE] = hide
                 times[i][DURN] = durn
 
+    def convert_framerate(self, current_fr, correct_fr, register=Action.DO):
+        """Convert and set framerate."""
+
+        self.framerate = correct_fr
+        self.calc.set_framerate(correct_fr)
+
+        rows = range(len(self.times))
+
+        orig_times  = []
+        orig_frames = []
+        times  = self.times
+        frames = self.frames
+        calc   = self.calc
+
+        values = Framerate.values
+        coefficient = values[correct_fr] / values[current_fr]
+
+        for row in rows:
+
+            orig_frames.append(frames[row])
+            orig_times.append(times[row])
+
+            show_frame = int(round(coefficient * frames[row][SHOW], 0))
+            hide_frame = int(round(coefficient * frames[row][HIDE], 0))
+            durn_frame = calc.get_frame_duration(show_frame, hide_frame)
+            frames[row] = [show_frame, hide_frame, durn_frame]
+
+            show_time = calc.frame_to_time(show_frame)
+            hide_time = calc.frame_to_time(hide_frame)
+            durn_time = calc.get_time_duration(show_time, hide_time)
+            times[row] = [show_time, hide_time, durn_time]
+
+        self.register_action(
+            register=register,
+            documents=[Document.MAIN, Document.TRAN],
+            description=_('Converting framerate'),
+            revert_method=self.revert_framerate_conversion,
+            revert_method_args=[current_fr, rows, orig_times, orig_frames],
+            timing_rows_updated=rows,
+        )
+
     def replace_timings(self, rows, new_times, new_frames, register=Action.DO):
         """
         Replace timings in rows with new_times and new_frames.
@@ -179,7 +220,7 @@ class TimingDelegate(Delegate):
         for i, row in enumerate(rows):
             orig_times.append(times[row])
             orig_frames.append(frames[row])
-            times[row] = new_times[i]
+            times[row]  = new_times[i]
             frames[row] = new_frames[i]
 
         self.register_action(
@@ -190,6 +231,16 @@ class TimingDelegate(Delegate):
             revert_method_args=[rows, orig_times, orig_frames],
             timing_rows_updated=rows,
         )
+
+    def revert_framerate_conversion(self, framerate, *args, **kwargs):
+        """
+        Revert framerate and data after conversion.
+
+        *args, **kwargs are passed to replace_timings().
+        """
+        self.framerate = framerate
+        self.calc.set_framerate(framerate)
+        self.replace_timings(*args, **kwargs)
 
     def shift_frames(self, rows, amount, register=Action.DO):
         """
@@ -306,6 +357,28 @@ if __name__ == '__main__':
             self.project.change_framerate(Framerate.FR_25)
             frame_2 = self.project.frames[5][SHOW]
             assert frame_2 == int(round((frame_1 / 23.976) * 25, 0))
+
+        def test_convert_framerate(self):
+
+            frames = self.project.frames
+            times  = self.project.times
+
+            frames[0][0] = 100
+            frames[1][0] = 500
+
+            self.project.convert_framerate(Framerate.FR_25, Framerate.FR_29_97)
+            assert self.project.framerate == Framerate.FR_29_97
+            assert self.project.calc.framerate == 29.97
+            assert frames[0][0] == 120
+            assert frames[1][0] == 599
+            assert  times[0][0] == '00:00:04,004'
+            assert  times[1][0] == '00:00:19,987'
+
+            self.project.undo()
+            assert self.project.framerate == Framerate.FR_25
+            assert self.project.calc.framerate == 25.00
+            assert frames[0][0] == 100
+            assert frames[1][0] == 500
 
         def test_shift_frames(self):
 

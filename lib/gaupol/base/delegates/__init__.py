@@ -36,7 +36,6 @@ module_names = [
     'fileopen',
     'filesave',
     'format',
-    'frconv',
     'preview',
     'stat',
     'timing',
