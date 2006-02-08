@@ -172,7 +172,7 @@ class PreviewDelegate(Delegate):
             is_temp  = True
         else:
             sub_path, is_temp = self._get_subtitle_path(document)
-        output_file_desc, output_path = tempfile.mkstemp('.output', 'gaupol.')
+        output_fd, output_path = tempfile.mkstemp('.output', 'gaupol.')
 
         # Parse command.
         command = command.replace('%s', sub_path       )
@@ -186,7 +186,7 @@ class PreviewDelegate(Delegate):
         # Run video player and wait for exit.
         popen = subprocess.Popen(
             command,
-            stdout=output_file_desc,
+            stdout=output_fd,
             stderr=subprocess.STDOUT,
             shell=True,
             universal_newlines=True,

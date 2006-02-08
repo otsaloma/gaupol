@@ -144,9 +144,9 @@ class Test(object):
     def get_micro_dvd_path(self):
         """Write data to a temporary Micro DVD file and return its path."""
 
-        path = tempfile.mkstemp(prefix='gaupol.', suffix='.sub')[1]
+        fd, path = tempfile.mkstemp(prefix='gaupol.', suffix='.sub')
 
-        sub_file = open(path, 'w')
+        sub_file = os.fdopen(fd, 'w')
         sub_file.write(MICRODVD_TEXT)
         sub_file.close()
 
@@ -174,9 +174,9 @@ class Test(object):
     def get_subrip_path(self):
         """Write data to a temporary SubRip file and return its path."""
 
-        path = tempfile.mkstemp(prefix='gaupol.', suffix='.srt')[1]
+        fd, path = tempfile.mkstemp(prefix='gaupol.', suffix='.srt')
 
-        sub_file = open(path, 'w')
+        sub_file = os.fdopen(fd, 'w')
         sub_file.write(SUBRIP_TEXT)
         sub_file.close()
 

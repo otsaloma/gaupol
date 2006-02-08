@@ -75,10 +75,8 @@ class FileSaveDelegate(Delegate):
 
         try:
             os.remove(bak_path)
-        except OSError, (no, message):
-            message = 'Failed to remove temporary backup file "%s": %s.' \
-                      % (bak_path, message)
-            logger.warning(message)
+        except OSError:
+            pass
 
     def _restore_original_file(self, path, bak_path):
         """Restore file from temporary backup after failing writing."""
@@ -153,9 +151,7 @@ class FileSaveDelegate(Delegate):
 
         # Create backup.
         if file_existed:
-            temp_dir = tempfile.gettempdir()
-            basename = os.path.basename(path)
-            bak_path = os.path.join(temp_dir, basename + '.gaupol~')
+            bak_path = tempfile.mkstemp('.bak', 'gaupol.')[1]
             bak_success = self._create_backup_file(path, bak_path)
 
         # Write file.

@@ -1,5 +1,19 @@
 2006-02-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/delegates/filesave.py:
+	  (FileSaveDelegate._remove_backup_file): Removed failure logging.
+	  (FileSaveDelegate._save_file): Use tempfile.mkstemp to create backup
+	  file.
+
+	* lib/gaupol/base/delegates/preview.py:
+	  Cosmetic changes.
+
+	* lib/gaupol/test/__init__.py:
+	  (Test.get_micro_dvd_path, Test.get_subrip_path): Use os.fdopen after
+	  tempfile.mkstemp.
+
+2006-02-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/shift-dialog.glade:
 	  Fixed typo.
 
