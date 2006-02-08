@@ -7,14 +7,14 @@ Legend:
 Plans for 0.4.0
 ===============
 
+  * Rename frconv to frconvert?
+  * Move frconv to timing (base)?
+
   New Features:
     [D] Partial support for SSA & ASS formats
-    [D] Timing shift F2
-    [D] Timing adjust F3
-    [ ] Framerate conversion F5
-          * Input framerate, output framerate
-              - Combo boxes
-          * Target: selection/all?
+    [D] Timing shift
+    [D] Timing adjust
+    [ ] Framerate conversion
     [ ] Fix durations F4
           * Analysis?
           * Duration per character
