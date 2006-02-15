@@ -27,11 +27,11 @@ Table of Contents
   "trantool" has been written to perform all the necessary file manipulations
   for the translation files. trantool relies on the following executables:
 
-    - intltool-extract
-    - msgfmt
-    - msginit
-    - msgmerge
-    - xgettext
+    * intltool-extract
+    * msgfmt
+    * msginit
+    * msgmerge
+    * xgettext
 
   trantool will create the .po file by extracting strings from the Glade XML
   files and the Python source code files. Desktop file "gaupol.desktop" needs
@@ -49,10 +49,10 @@ Table of Contents
 
   To create a new .po file, run command
 
-    ./trantool -p <lang>
+    ./trantool -p LANG
 
-  where lang is the language code in format "ll" or "ll_CC", e.g. "fi" or
-  "zh_CN". The resulting .po file is placed in the "po" directory.
+  where LANG is the language code in format "xx" or "xx_YY". The resulting .po
+  file is placed in the "po" directory.
 
 
 3. Updating an existing .po file
@@ -61,9 +61,9 @@ Table of Contents
   To update an existing .po file with new strings that have been added since
   the last update, run command
 
-    ./trantool -u <lang>
+    ./trantool -u LANG
 
-  To update all .po files, substitute <lang> with "all".
+  To update all .po files, substitute LANG with "all".
 
 
 4. Compiling .mo files
@@ -71,9 +71,9 @@ Table of Contents
 
   To compile a .mo file based on the .po file you have translated, run command
 
-    ./trantool -m <lang>
+    ./trantool -m LANG
 
-  To compile all languages, substitute <lang> with "all". The resulting .mo
+  To compile all languages, substitute LANG with "all". The resulting .mo
   file is placed in the "locale" directory according to standard locale
   directory hierarchy.
 
@@ -100,8 +100,8 @@ Table of Contents
 
   All .po files should be UTF-8 encoded. If not already, convert to UTF-8
 
-    mv <lang>.po <lang>.po.bak
-    msgconv -t UTF-8 <lang>.po.bak -o <lang>.po
+    mv xx.po xx.po.bak
+    msgconv -t UTF-8 xx.po.bak -o xx.po
 
   When you are done, send the .po file and the desktop file "gaupol.desktop"
   by e-mail to otsaloma@cc.hut.fi.

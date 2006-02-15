@@ -29,12 +29,34 @@ from gettext import gettext as _
 
 import gtk
 
-from gaupol.constants          import Document, Mode
-from gaupol.gtk.delegates      import Delegate, UIMAction
-from gaupol.gtk.dialogs.adjust import TimingAdjustDialog
-from gaupol.gtk.dialogs.shift  import TimingShiftDialog
-from gaupol.gtk.util           import config, gtklib
+from gaupol.constants             import Document, Mode
+from gaupol.gtk.delegates         import Delegate, UIMAction
+from gaupol.gtk.dialogs.adjust    import TimingAdjustDialog
+from gaupol.gtk.dialogs.frconvert import FramerateConvertDialog
+from gaupol.gtk.dialogs.shift     import TimingShiftDialog
+from gaupol.gtk.util              import config, gtklib
 
+
+class FramerateConvertAction(UIMAction):
+
+    """Converting framerate."""
+
+    uim_action_item = (
+        'convert_framerate',
+        gtk.STOCK_CONVERT,
+        _('Con_vert Framerate'),
+        'F5',
+        _('Convert framerate'),
+        'on_convert_framerate_activated'
+    )
+
+    uim_paths = ['/ui/menubar/tools/convert_framerate']
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return whether action can or cannot be done."""
+
+        return page is not None
 
 class TimingAdjustAction(UIMAction):
 
@@ -122,6 +144,38 @@ class TimingDelegate(Delegate):
         method(rows, point_1, point_2)
         self.set_sensitivities(page)
 
+    def on_convert_framerate_activated(self, *args):
+        """Convert framerate."""
+
+        page = self.get_current_page()
+        method = page.project.convert_framerate
+
+        def on_preview(dialog):
+            current = dialog.get_current_framerate()
+            correct = dialog.get_correct_framerate()
+            args = current, correct
+            self.preview_changes(page, 0, Document.MAIN, method, args)
+
+        dialog = FramerateConvertDialog(self.window, page)
+        dialog.connect('preview', on_preview)
+        response = dialog.run()
+        all_projects = dialog.get_convert_all_projects()
+        current = dialog.get_current_framerate()
+        correct = dialog.get_correct_framerate()
+        gtklib.destroy_gobject(dialog)
+
+        if response != gtk.RESPONSE_OK:
+            return
+
+        if all_projects:
+            pages = self.pages
+        else:
+            pages = [page]
+
+        for entry in pages:
+            entry.project.convert_framerate(current, correct)
+        self.set_sensitivities(page)
+
     def on_shift_timings_activated(self, *args):
         """Shift timings a constant amount."""
 
@@ -181,6 +235,7 @@ if __name__ == '__main__':
         def test_callbacks(self):
 
             self.application.on_adjust_timings_activated()
+            self.application.on_convert_framerate_activated()
             self.application.on_shift_timings_activated()
 
     TestTimingDelegate().run()

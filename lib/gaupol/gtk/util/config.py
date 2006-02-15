@@ -83,6 +83,7 @@ sections = [
     'application_window',
     'editor',
     'file',
+    'framerate_convert',
     'general',
     'output_window',
     'preview',
@@ -167,6 +168,14 @@ class file(object):
     classes = {
         'format'  : Format,
         'newlines': Newlines,
+    }
+
+class framerate_convert(object):
+
+    convert_all = True
+
+    types = {
+        'convert_all': Type.BOOLEAN,
     }
 
 class general(object):

@@ -200,7 +200,7 @@ class TimingDelegate(Delegate):
             documents=[Document.MAIN, Document.TRAN],
             description=_('Converting framerate'),
             revert_method=self.revert_framerate_conversion,
-            revert_method_args=[current_fr, rows, orig_times, orig_frames],
+            revert_method_args=[current_fr, orig_times, orig_frames],
             timing_rows_updated=rows,
         )
 
@@ -232,15 +232,38 @@ class TimingDelegate(Delegate):
             timing_rows_updated=rows,
         )
 
-    def revert_framerate_conversion(self, framerate, *args, **kwargs):
+    def revert_framerate_conversion(self, framerate, new_times, new_frames,
+                                    register=Action.DO):
         """
         Revert framerate and data after conversion.
 
         *args, **kwargs are passed to replace_timings().
         """
+        orig_framerate = self.framerate
         self.framerate = framerate
         self.calc.set_framerate(framerate)
-        self.replace_timings(*args, **kwargs)
+
+        rows = range(len(self.times))
+
+        orig_times  = []
+        orig_frames = []
+        times  = self.times
+        frames = self.frames
+
+        for i, row in enumerate(rows):
+            orig_times.append(times[row])
+            orig_frames.append(frames[row])
+            times[row]  = new_times[i]
+            frames[row] = new_frames[i]
+
+        self.register_action(
+            register=register,
+            documents=[Document.MAIN, Document.TRAN],
+            description=_('Converting framerate'),
+            revert_method=self.revert_framerate_conversion,
+            revert_method_args=[orig_framerate, orig_times, orig_frames],
+            timing_rows_updated=rows,
+        )
 
     def shift_frames(self, rows, amount, register=Action.DO):
         """

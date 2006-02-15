@@ -1,3 +1,31 @@
+2006-02-15  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/frconvert-dialog.glade:
+	  Changed convert_button's response to gtk.RESPONSE_OK.
+
+	* data/glade/shift-dialog.glade:
+	  Removed icon from shift_button.
+
+	* data/ui/menubar.xml:
+	  Added convert_framerate menu item.
+
+	* gaupol:
+	* trantool:
+	  Cosmetic changes to option parser.
+
+	* lib/gaupol/base/delegates/timing.py:
+	  (TimingDelegate.revert_framerate_conversion): Modified to be more
+	  independent and non-broken. Fixed references.
+
+	* lib/gaupol/gtk/delegates/timing.py:
+	  Added framerate conversion.
+
+	* lib/gaupol/gtk/util/config.py:
+	  (framerate_convert): New class.
+
+	* setup.py:
+	  Fixed description capitalization.
+
 2006-02-12  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* setup.py:

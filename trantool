@@ -151,8 +151,9 @@ def parse_options():
     Return: options, arguments
     """
     description = \
-        'LANG should be a language code in either format "xx" or "xx_YY". ' \
-        'Use "all" to process all languages found in the "po" directory.'
+        'Create or update Gaupol translation files. LANG should be a ' \
+        'language code in either format "xx" or "xx_YY". Use "all" to ' \
+        'process all languages found in the "po" directory.'
     usage = 'trantool [options]'
     formatter = optparse.IndentedHelpFormatter(2, 42, None, True)
     parser = optparse.OptionParser(

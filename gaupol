@@ -86,9 +86,10 @@ def parse_options():
     Return: options, arguments
     """
     usage = 'gaupol [options] [files]'
-    description = 'The options below, except --help, are mostly intended ' \
-                  'for developer use. Some of the options will only work ' \
-                  '(properly) when run in the source directory.'
+    description = \
+        'Start Gaupol and open files. Options, except --help, are mostly ' \
+        'useful only for developers and will only work (properly) when run ' \
+        'in the source directory.'
     formatter = optparse.IndentedHelpFormatter(2, 42, None, True)
     parser = optparse.OptionParser(
         description=description,
@@ -116,11 +117,22 @@ def parse_options():
 
     parser.add_option(
         '-c',
-        '--pycheck',
+        '--check',
         action='store_true',
         dest='pycheck',
         default=False,
         help='run pychecker on all code'
+    )
+
+    parser.add_option(
+        '-p',
+        '--profile',
+        action='store',
+        type='int',
+        metavar='AMOUNT',
+        dest='profile',
+        default=0,
+        help='profile with hotshot and output AMOUNT entries'
     )
 
     parser.add_option(
@@ -133,17 +145,6 @@ def parse_options():
         default='',
         help='execute gaupol module(s) for testing, ' \
              'PATH: file path, module path or "all"'
-    )
-
-    parser.add_option(
-        '-p',
-        '--profile',
-        action='store',
-        type='int',
-        metavar='COUNT',
-        dest='profile',
-        default=0,
-        help='profile with python\'s hotshot module and output COUNT entries'
     )
 
     return parser.parse_args(sys.argv)

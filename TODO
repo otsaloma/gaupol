@@ -7,11 +7,29 @@ Legend:
 Plans for 0.4.0
 ===============
 
+  * Current/Correct
+      -> Input/Output
+      -> Current/New
+  * config
+      - shift_all -> all_subtitles
+      - check_all_projects -> all_projects
+      - adjust_all -> ...
+  * Dialogs using page directly?
+  * Remove preview button from framerate conversion dialog?
+  * Adjust, shift, convert button sensitivity
+  * call set_sensitivities at the end of on_undo, on_redo
+  * undo action grouping
+  * Test & review all timing manipulations
+  * Update README and webpage
+      - SSA & ASS
+      - Timing manipulations
+      - Description: Gaupol contains advanced features!
+
   New Features:
     [D] Partial support for SSA & ASS formats
     [D] Timing shift
     [D] Timing adjust
-    [ ] Framerate conversion
+    [D] Framerate conversion
     [ ] Fix durations F4
           * Analysis?
           * Duration per character

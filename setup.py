@@ -339,7 +339,7 @@ class Uninstall(Command):
 setup(
     name='gaupol',
     version=__version__,
-    description='Subtitle Editor',
+    description='Subtitle editor',
     author='Osmo Salomaa',
     author_email='otsaloma@cc.hut.fi',
     url='http://home.gna.org/gaupol',
