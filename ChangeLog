@@ -1,5 +1,10 @@
 2006-02-15  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/dialogs/frconvert.py:
+	  New file.
+
+2006-02-15  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/frconvert-dialog.glade:
 	  Changed convert_button's response to gtk.RESPONSE_OK.
 
