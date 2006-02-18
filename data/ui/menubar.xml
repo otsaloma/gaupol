@@ -85,6 +85,7 @@
 			<separator/>
 			<menuitem name="shift_timings" action="shift_timings"/>
 			<menuitem name="adjust_timings" action="adjust_timings"/>
+			<menuitem name="adjust_durations" action="adjust_durations"/>
 			<menuitem name="convert_framerate" action="convert_framerate"/>
 			<separator/>
 			<menuitem name="preview" action="preview"/>

@@ -1,3 +1,22 @@
+2006-02-18  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/duration-dialog.glade:
+	* lib/gaupol/gtk/dialogs/duration.py:
+	  New files.
+
+	* data/ui/menubar.xml:
+	  Added adjust_timings menu item.
+
+	* lib/gaupol/base/delegates/timing.py:
+	  (TimingDelegate.adjust_durations): New method.
+
+	* lib/gaupol/gtk/delegates/timing.py:
+	  (DurationAdjustAction): New class.
+	  (TimingDelegate.on_adjust_durations_activated): New method.
+
+	* lib/gaupol/gtk/util/config.py:
+	  (duration_adjust): New class.
+
 2006-02-15  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/gtk/dialogs/frconvert.py:

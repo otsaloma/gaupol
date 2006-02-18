@@ -81,6 +81,7 @@ class Type(object):
 
 sections = [
     'application_window',
+    'duration_adjust',
     'editor',
     'file',
     'framerate_convert',
@@ -110,6 +111,28 @@ class application_window(object):
         'show_main_toolbar' : Type.BOOLEAN,
         'show_video_toolbar': Type.BOOLEAN,
         'size'              : Type.INTEGER_LIST,
+    }
+
+class duration_adjust(object):
+
+    all_projects  = False
+    all_subtitles = True
+    gap           = '0.050'
+    lengthen      = True
+    maximum       = '6.000'
+    minimum       = '0.700'
+    optimal       = '0.060'
+    shorten       = True
+
+    types = {
+        'all_projects' : Type.BOOLEAN,
+        'all_subtitles': Type.BOOLEAN,
+        'gap'          : Type.STRING,
+        'lengthen'     : Type.BOOLEAN,
+        'maximum'      : Type.STRING,
+        'minimum'      : Type.STRING,
+        'optimal'      : Type.STRING,
+        'shorten'      : Type.BOOLEAN,
     }
 
 class editor(object):

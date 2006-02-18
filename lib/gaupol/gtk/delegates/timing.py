@@ -34,7 +34,30 @@ from gaupol.gtk.delegates         import Delegate, UIMAction
 from gaupol.gtk.dialogs.adjust    import TimingAdjustDialog
 from gaupol.gtk.dialogs.frconvert import FramerateConvertDialog
 from gaupol.gtk.dialogs.shift     import TimingShiftDialog
+from gaupol.gtk.dialogs.duration  import DurationAdjustDialog
 from gaupol.gtk.util              import config, gtklib
+
+
+class DurationAdjustAction(UIMAction):
+
+    """Adjusting durations."""
+
+    uim_action_item = (
+        'adjust_durations',
+        None,
+        _('A_djust Durations'),
+        'F4',
+        _('Adjust duration lengths'),
+        'on_adjust_durations_activated'
+    )
+
+    uim_paths = ['/ui/menubar/tools/adjust_durations']
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return whether action can or cannot be done."""
+
+        return page is not None
 
 
 class FramerateConvertAction(UIMAction):
@@ -105,6 +128,20 @@ class TimingShiftAction(UIMAction):
 class TimingDelegate(Delegate):
 
     """Shifting, adjusting and fixing timings."""
+
+    def on_adjust_durations_activated(self, *args):
+        """Adjust duration lengths."""
+
+        page = self.get_current_page()
+
+        dialog = DurationAdjustDialog(self.window, page)
+        response = dialog.run()
+        dialog.destroy()
+
+        if response != gtk.RESPONSE_OK:
+            return
+
+        self.set_sensitivities(page)
 
     def on_adjust_timings_activated(self, *args):
         """Adjust timings by two-point correction"""

@@ -15,6 +15,17 @@ Plans for 0.4.0
       - check_all_projects -> all_projects
       - adjust_all -> ...
   * Dialogs using page directly?
+  * unify Dialog naming
+      - modules/glade files
+      - methods
+      - glade widgets and instance widgets
+  * Rename:
+      - duration-dialog -> duradjust-dialog
+      - adjust-dialog   -> tmgadjust-dialog
+  * No Keyboard shortcut for framerate conversion?
+  * Feedback from adjust durations
+  * Is calc.framerate updated when on_framerate_changed?
+  * Convert framerate only available when editing a frame-based file?
   * Remove preview button from framerate conversion dialog?
   * Adjust, shift, convert button sensitivity
   * call set_sensitivities at the end of on_undo, on_redo
@@ -29,16 +40,8 @@ Plans for 0.4.0
     [D] Partial support for SSA & ASS formats
     [D] Timing shift
     [D] Timing adjust
+    [W] Duration adjust F4
     [D] Framerate conversion
-    [ ] Fix durations F4
-          * Analysis?
-          * Duration per character
-          * Minimum time between subs
-          * Minimum duration
-          * Maximum duration
-          * Allow reduce (yes/no)
-          * Allow expand (yes/no)
-          * No frame units for this one
 
   Bug Fixes:
     [D] Various errors in Micro DVD tag conversions

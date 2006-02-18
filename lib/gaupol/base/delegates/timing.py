@@ -36,6 +36,69 @@ class TimingDelegate(Delegate):
 
     """Shifting, adjusting and fixing timings."""
 
+    def adjust_durations(self, rows, optimal=None, lengthen=False,
+                        shorten=False, maximum=None, minimum=None, gap=None,
+                        register=Action.DO):
+        """
+        Adjust durations.
+
+        All timings are in seconds.
+        rows can be None to process all rows.
+        """
+        rows = rows or range(len(self.times))
+
+        new_times  = []
+        new_frames = []
+        times  = self.times
+        frames = self.frames
+        calc   = self.calc
+
+        for row in rows:
+
+            show_seconds = calc.time_to_seconds(times[row][SHOW])
+            hide_seconds = calc.time_to_seconds(times[row][HIDE])
+            durn_seconds = calc.time_to_seconds(times[row][DURN])
+
+            try:
+                hide_limit = calc.time_to_seconds(times[row + 1][SHOW])
+            except IndexError:
+                hide_limit = 999999
+
+            # Optimal
+            if optimal is not None:
+                length = self.get_character_count(row, Document.MAIN)[1]
+                durn_optimal = optimal * length
+                if durn_seconds < durn_optimal and lengthen:
+                    hide_seconds = min(hide_limit, show_seconds + durn_optimal)
+                if durn_seconds > durn_optimal and shorten:
+                    hide_seconds = show_seconds + durn_optimal
+                durn_seconds = hide_seconds - show_seconds
+
+            # Min/Max
+            if minimum is not None and durn_seconds < minimum:
+                hide_seconds = min(hide_limit, show_seconds + minimum)
+            if maximum is not None and durn_seconds > maximum:
+                hide_seconds = min(show_seconds + maximum)
+            durn_seconds = hide_seconds - show_seconds
+
+            # Gap
+            if gap is not None and hide_limit - hide_seconds < gap:
+                hide_seconds = max(show_seconds, hide_limit - gap)
+                durn_seconds = hide_seconds - show_seconds
+
+            show_time = calc.seconds_to_time(show_seconds)
+            hide_time = calc.seconds_to_time(hide_seconds)
+            durn_time = calc.get_time_duration(show_time, hide_time)
+            new_times.append([show_time, hide_time, durn_time])
+
+            show_frame = calc.time_to_frame(show_time)
+            hide_frame = calc.time_to_frame(hide_time)
+            durn_frame = calc.get_frame_duration(show_frame, hide_frame)
+            new_frames.append([show_frame, hide_frame, durn_frame])
+
+        self.replace_timings(rows, new_times, new_frames, register)
+        self.modify_action_description(register, _('Adjusting durations'))
+
     def adjust_frames(self, rows, point_1, point_2, register=Action.DO):
         """
         Adjust timings in rows.
@@ -334,6 +397,49 @@ if __name__ == '__main__':
 
             Test.__init__(self)
             self.project = self.get_project()
+
+        def test_adjust_durations(self):
+
+            times = self.project.times
+            texts = self.project.main_texts
+
+            times[0] = ['00:00:00,000', '00:00:01,000', '00:00:01,000']
+            times[1] = ['00:00:10,000', '00:00:11,000', '00:00:01,000']
+            times[2] = ['00:00:20,000', '00:00:21,000', '00:00:01,000']
+
+            texts[0] = 'x'
+            texts[1] = 'xx'
+            texts[2] = 'xxx'
+
+            self.project.adjust_durations(None, minimum=2)
+            assert times[0] == ['00:00:00,000', '00:00:02,000', '00:00:02,000']
+            assert times[1] == ['00:00:10,000', '00:00:12,000', '00:00:02,000']
+            assert times[2] == ['00:00:20,000', '00:00:22,000', '00:00:02,000']
+
+            self.project.undo()
+            assert times[0] == ['00:00:00,000', '00:00:01,000', '00:00:01,000']
+            assert times[1] == ['00:00:10,000', '00:00:11,000', '00:00:01,000']
+            assert times[2] == ['00:00:20,000', '00:00:21,000', '00:00:01,000']
+
+            self.project.adjust_durations(None, optimal=1, lengthen=True)
+            assert times[0] == ['00:00:00,000', '00:00:01,000', '00:00:01,000']
+            assert times[1] == ['00:00:10,000', '00:00:12,000', '00:00:02,000']
+            assert times[2] == ['00:00:20,000', '00:00:23,000', '00:00:03,000']
+
+            self.project.undo()
+            assert times[0] == ['00:00:00,000', '00:00:01,000', '00:00:01,000']
+            assert times[1] == ['00:00:10,000', '00:00:11,000', '00:00:01,000']
+            assert times[2] == ['00:00:20,000', '00:00:21,000', '00:00:01,000']
+
+            self.project.adjust_durations(None, gap=9.5)
+            assert times[0] == ['00:00:00,000', '00:00:00,500', '00:00:00,500']
+            assert times[1] == ['00:00:10,000', '00:00:10,500', '00:00:00,500']
+            assert times[2] == ['00:00:20,000', '00:00:21,000', '00:00:01,000']
+
+            self.project.undo()
+            assert times[0] == ['00:00:00,000', '00:00:01,000', '00:00:01,000']
+            assert times[1] == ['00:00:10,000', '00:00:11,000', '00:00:01,000']
+            assert times[2] == ['00:00:20,000', '00:00:21,000', '00:00:01,000']
 
         def test_adjust_frames(self):
 
