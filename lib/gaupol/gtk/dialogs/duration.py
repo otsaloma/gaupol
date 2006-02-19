@@ -38,13 +38,26 @@ class DurationAdjustDialog(object):
     def __init__(self, parent, page):
 
         glade_xml = gtklib.get_glade_xml('duration-dialog.glade')
-        get_widget = glade_xml.get_widget
+        get = glade_xml.get_widget
 
-        self._dialog = get_widget('dialog')
+        self._adjust_button      = get('adjust_button')
+        self._dialog             = get('dialog')
+        self._gap_check          = get('gap_check_button')
+        self._gap_spin           = get('gap_spin_button')
+        self._lengthen_check     = get('lengthen_check_button')
+        self._max_check          = get('maximum_check_button')
+        self._max_spin           = get('maximum_spin_button')
+        self._min_check          = get('minimum_check_button')
+        self._min_spin           = get('minimum_spin_button')
+        self._optimal_spin       = get('optimal_spin_button')
+        self._prj_all_radio      = get('projects_all_radio_button')
+        self._prj_current_radio  = get('projects_current_radio_button')
+        self._shorten_check      = get('shorten_check_button')
+        self._sub_all_radio      = get('subtitles_all_radio_button')
+        self._sub_selected_radio = get('subtitles_selected_radio_button')
 
-        self._init_radio_groups()
         self._init_mnemonics(glade_xml)
-        self._init_sensitivities()
+        self._init_sensitivities(page)
         self._init_signals()
         self._init_data()
 
@@ -54,38 +67,200 @@ class DurationAdjustDialog(object):
     def _init_data(self):
         """Initialize default values."""
 
-        pass
+        self._optimal_spin.set_value(float(config.duration_adjust.optimal))
+        self._lengthen_check.set_active(config.duration_adjust.lengthen)
+        self._shorten_check.set_active(config.duration_adjust.shorten)
+        self._min_check.set_active(config.duration_adjust.use_minimum)
+        self._min_spin.set_value(float(config.duration_adjust.minimum))
+        self._max_check.set_active(config.duration_adjust.use_maximum)
+        self._max_spin.set_value(float(config.duration_adjust.maximum))
+        self._gap_check.set_active(config.duration_adjust.use_gap)
+        self._gap_spin.set_value(float(config.duration_adjust.gap))
+        self._prj_all_radio.set_active(config.duration_adjust.all_projects)
+        self._sub_all_radio.set_active(config.duration_adjust.all_subtitles)
 
     def _init_mnemonics(self, glade_xml):
         """Initialize mnemonics."""
 
-        pass
+        label = glade_xml.get_widget('gap_unit_label')
+        label.set_mnemonic_widget(self._gap_spin)
 
-    def _init_radio_groups(self):
-        """Initialize radio button groups."""
+        label = glade_xml.get_widget('maximum_unit_label')
+        label.set_mnemonic_widget(self._max_spin)
 
-        pass
+        label = glade_xml.get_widget('minimum_unit_label')
+        label.set_mnemonic_widget(self._min_spin)
 
-    def _init_sensitivities(self):
+        label = glade_xml.get_widget('optimal_label')
+        label.set_mnemonic_widget(self._optimal_spin)
+
+    def _init_sensitivities(self, page):
         """Initialize widget sensitivities."""
 
-        pass
+        if not page.view.get_selected_rows():
+            self._sub_all_radio.set_active(True)
+            self._sub_selected_radio.set_sensitive(False)
 
     def _init_signals(self):
         """Initialize signals."""
 
-        pass
+        connections = (
+            ('_gap_check'     , 'toggled'),
+            ('_gap_spin'      , 'value-changed'),
+            ('_lengthen_check', 'toggled'),
+            ('_max_check'     , 'toggled'),
+            ('_max_spin'      , 'value-changed'),
+            ('_min_check'     , 'toggled'),
+            ('_min_spin'      , 'value-changed'),
+            ('_optimal_spin'  , 'value-changed'),
+            ('_prj_all_radio' , 'toggled'),
+            ('_shorten_check' , 'toggled'),
+            ('_sub_all_radio' , 'toggled'),
+        )
+
+        for widget, signal in connections:
+            method = '_on' + widget + '_' + signal.replace('-', '_')
+            widget = getattr(self, widget)
+            method = getattr(self, method)
+            widget.connect(signal, method)
 
     def destroy(self):
         """Destroy the dialog."""
 
         self._dialog.destroy()
 
+    def get_all_projects(self):
+        """Get all projects setting."""
+
+        return self._prj_all_radio.get_active()
+
+    def get_all_subtitles(self):
+        """Get all subtitles setting."""
+
+        return self._sub_all_radio.get_active()
+
+    def get_gap(self):
+        """Get gap setting."""
+
+        return self._gap_spin.get_value()
+
+    def get_lengthen(self):
+        """Get lengthen setting."""
+
+        return self._lengthen_check.get_active()
+
+    def get_maximum(self):
+        """Get maximum setting."""
+
+        return self._max_spin.get_value()
+
+    def get_minimum(self):
+        """Get minimum setting."""
+
+        return self._min_spin.get_value()
+
+    def get_optimal(self):
+        """Get optimal setting."""
+
+        return self._optimal_spin.get_value()
+
+    def get_shorten(self):
+        """Get shorten setting."""
+
+        return self._shorten_check.get_active()
+
+    def get_use_gap(self):
+        """Get use gap setting."""
+
+        return self._gap_check.get_active()
+
+    def get_use_maximum(self):
+        """Get use maximum setting."""
+
+        return self._max_check.get_active()
+
+    def get_use_minimum(self):
+        """Get use minimum setting."""
+
+        return self._min_check.get_active()
+
+    def _on_gap_check_toggled(self, check_button):
+        """Save use gap setting."""
+
+        config.duration_adjust.use_gap = check_button.get_active()
+        self._set_adjust_button_sensitivity()
+
+    def _on_gap_spin_value_changed(self, spin_button):
+        """Save gap setting."""
+
+        config.duration_adjust.gap = '%.3f' % spin_button.get_value()
+
+    def _on_lengthen_check_toggled(self, check_button):
+        """Save lengthen setting."""
+
+        config.duration_adjust.lengthen = check_button.get_active()
+        self._set_adjust_button_sensitivity()
+
+    def _on_max_check_toggled(self, check_button):
+        """Save use maximum setting."""
+
+        config.duration_adjust.use_maximum = check_button.get_active()
+        self._set_adjust_button_sensitivity()
+
+    def _on_max_spin_value_changed(self, spin_button):
+        """Save maximum setting."""
+
+        config.duration_adjust.maximum = '%.3f' % spin_button.get_value()
+
+    def _on_min_check_toggled(self, check_button):
+        """Save use minimum setting."""
+
+        config.duration_adjust.use_minimum = check_button.get_active()
+        self._set_adjust_button_sensitivity()
+
+    def _on_min_spin_value_changed(self, spin_button):
+        """Save minimum setting."""
+
+        config.duration_adjust.minimum = '%.3f' % spin_button.get_value()
+
+    def _on_optimal_spin_value_changed(self, spin_button):
+        """Save optimal setting."""
+
+        config.duration_adjust.optimal = '%.3f' % spin_button.get_value()
+
+    def _on_prj_all_radio_toggled(self, radio_button):
+        """Save all projects setting."""
+
+        config.duration_adjust.all_projects = radio_button.get_active()
+
+    def _on_shorten_check_toggled(self, check_button):
+        """Save shorten setting."""
+
+        config.duration_adjust.shorten = check_button.get_active()
+        self._set_adjust_button_sensitivity()
+
+    def _on_sub_all_radio_toggled(self, radio_button):
+        """Save all subtitles setting."""
+
+        config.duration_adjust.all_subtitles = radio_button.get_active()
+
     def run(self):
         """Show and run the dialog."""
 
         self._dialog.show()
         return self._dialog.run()
+
+    def _set_adjust_button_sensitivity(self):
+        """Set sensitivity of the adjust button."""
+
+        if self._lengthen_check.get_active() or \
+           self._shorten_check.get_active()  or \
+           self._min_check.get_active()      or \
+           self._max_check.get_active()      or \
+           self._gap_check.get_active():
+            self._adjust_button.set_sensitive(True)
+        else:
+            self._adjust_button.set_sensitive(False)
 
 
 if __name__ == '__main__':
@@ -109,10 +284,43 @@ if __name__ == '__main__':
 
         def test_gets(self):
 
-            pass
+            gets = (
+                ('get_all_projects' , bool),
+                ('get_all_subtitles', bool),
+                ('get_gap'          , float),
+                ('get_lengthen'     , bool),
+                ('get_maximum'      , float),
+                ('get_minimum'      , float),
+                ('get_optimal'      , float),
+                ('get_shorten'      , bool),
+                ('get_use_gap'      , bool),
+                ('get_use_maximum'  , bool),
+                ('get_use_minimum'  , bool),
+            )
+
+            for method, type_ in gets:
+                method = getattr(self.dialog, method)
+                assert isinstance(method(), type_)
 
         def test_signals(self):
 
-            pass
+            self.dialog._optimal_spin.set_value(3.333)
+            self.dialog._lengthen_check.set_active(True)
+            self.dialog._lengthen_check.set_active(False)
+            self.dialog._shorten_check.set_active(True)
+            self.dialog._shorten_check.set_active(False)
+            self.dialog._min_check.set_active(True)
+            self.dialog._min_check.set_active(False)
+            self.dialog._min_spin.set_value(3.333)
+            self.dialog._max_check.set_active(True)
+            self.dialog._max_check.set_active(False)
+            self.dialog._max_spin.set_value(3.333)
+            self.dialog._gap_check.set_active(True)
+            self.dialog._gap_check.set_active(False)
+            self.dialog._gap_spin.set_value(3.333)
+            self.dialog._prj_all_radio.set_active(True)
+            self.dialog._prj_all_radio.set_active(False)
+            self.dialog._sub_all_radio.set_active(True)
+            self.dialog._sub_all_radio.set_active(False)
 
     TestDurationAdjustDialog().run()

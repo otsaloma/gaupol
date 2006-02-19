@@ -7,6 +7,8 @@ Legend:
 Plans for 0.4.0
 ===============
 
+  * Set mnemonics in Glade files!!!
+  * Set radio groups in Glade files!!!
   * Current/Correct
       -> Input/Output
       -> Current/New
@@ -30,6 +32,7 @@ Plans for 0.4.0
   * Adjust, shift, convert button sensitivity
   * call set_sensitivities at the end of on_undo, on_redo
   * undo action grouping
+  * do some all round review
   * Test & review all timing manipulations
   * Update README and webpage
       - SSA & ASS
@@ -40,7 +43,7 @@ Plans for 0.4.0
     [D] Partial support for SSA & ASS formats
     [D] Timing shift
     [D] Timing adjust
-    [W] Duration adjust F4
+    [D] Duration adjust
     [D] Framerate conversion
 
   Bug Fixes:

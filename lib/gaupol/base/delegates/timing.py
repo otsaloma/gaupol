@@ -36,7 +36,7 @@ class TimingDelegate(Delegate):
 
     """Shifting, adjusting and fixing timings."""
 
-    def adjust_durations(self, rows, optimal=None, lengthen=False,
+    def adjust_durations(self, rows=None, optimal=None, lengthen=False,
                         shorten=False, maximum=None, minimum=None, gap=None,
                         register=Action.DO):
         """
@@ -44,9 +44,11 @@ class TimingDelegate(Delegate):
 
         All timings are in seconds.
         rows can be None to process all rows.
+        Return adjusted rows.
         """
         rows = rows or range(len(self.times))
 
+        new_rows   = []
         new_times  = []
         new_frames = []
         times  = self.times
@@ -54,6 +56,8 @@ class TimingDelegate(Delegate):
         calc   = self.calc
 
         for row in rows:
+
+            orig_hide_time = times[row][HIDE]
 
             show_seconds = calc.time_to_seconds(times[row][SHOW])
             hide_seconds = calc.time_to_seconds(times[row][HIDE])
@@ -88,6 +92,10 @@ class TimingDelegate(Delegate):
 
             show_time = calc.seconds_to_time(show_seconds)
             hide_time = calc.seconds_to_time(hide_seconds)
+
+            if hide_time == orig_hide_time:
+                continue
+
             durn_time = calc.get_time_duration(show_time, hide_time)
             new_times.append([show_time, hide_time, durn_time])
 
@@ -96,8 +104,14 @@ class TimingDelegate(Delegate):
             durn_frame = calc.get_frame_duration(show_frame, hide_frame)
             new_frames.append([show_frame, hide_frame, durn_frame])
 
-        self.replace_timings(rows, new_times, new_frames, register)
+            new_rows.append(row)
+
+        if not new_rows:
+            return new_rows
+
+        self.replace_timings(new_rows, new_times, new_frames, register)
         self.modify_action_description(register, _('Adjusting durations'))
+        return new_rows
 
     def adjust_frames(self, rows, point_1, point_2, register=Action.DO):
         """

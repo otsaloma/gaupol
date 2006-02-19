@@ -136,12 +136,38 @@ class TimingDelegate(Delegate):
 
         dialog = DurationAdjustDialog(self.window, page)
         response = dialog.run()
+
+        kwargs = {}
+
+        if dialog.get_all_projects():
+            pages = self.pages
+        else:
+            pages = [page]
+
+        if not dialog.get_all_subtitles():
+            kwargs['rows'] = page.view.get_selected_rows()
+
+        kwargs['optimal']  = dialog.get_optimal()
+        kwargs['lengthen'] = dialog.get_lengthen()
+        kwargs['shorten']  = dialog.get_shorten()
+
+        if dialog.get_use_maximum():
+            kwargs['maximum'] = dialog.get_maximum()
+        if dialog.get_use_minimum():
+            kwargs['minimum'] = dialog.get_minimum()
+        if dialog.get_use_gap():
+            kwargs['gap'] = dialog.get_gap()
+
         dialog.destroy()
 
         if response != gtk.RESPONSE_OK:
             return
 
-        self.set_sensitivities(page)
+        for entry in pages:
+            self.notebook.set_current_page(self.pages.index(entry))
+            rows = entry.project.adjust_durations(**kwargs)
+            entry.view.select_rows(rows)
+            self.set_sensitivities(entry)
 
     def on_adjust_timings_activated(self, *args):
         """Adjust timings by two-point correction"""
@@ -271,9 +297,9 @@ if __name__ == '__main__':
 
         def test_callbacks(self):
 
+            self.application.on_adjust_durations_activated()
             self.application.on_adjust_timings_activated()
             self.application.on_convert_framerate_activated()
             self.application.on_shift_timings_activated()
 
     TestTimingDelegate().run()
-

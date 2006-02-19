@@ -1,3 +1,24 @@
+2006-02-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/duration-dialog.glade:
+	  Fixed radio button groups.
+
+	* lib/gaupol/base/delegates/timing.py:
+	  (TimingDelegate.adjust_durations): Return changed rows.
+
+	* lib/gaupol/gtk/cellrend/text.py:
+	  Cosmetic changes.
+
+	* lib/gaupol/gtk/delegates/timing.py:
+	  (TimingDelegate.on_adjust_durations_activated): Written.
+
+	* lib/gaupol/gtk/dialogs/duration.py:
+	  Completed.
+
+	* lib/gaupol/gtk/util/config.py:
+	  (duration_adjust): Added use_* variables and fine-tuned default
+	  values.
+
 2006-02-18  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/glade/duration-dialog.glade:

@@ -128,7 +128,7 @@ class CellRendererText(gtk.GenericCellRenderer):
         height = height + (self.y_padding * 2)
 
         # With cell contents being left and top aligned,
-        # offsets should equal paddings.
+        # x- and y-offsets equal paddings.
         return self.x_padding, self.y_padding, width, height
 
     def on_render(self, window, widget, bg_area, cell_area, exp_area, flags):

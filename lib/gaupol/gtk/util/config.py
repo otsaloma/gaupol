@@ -120,9 +120,12 @@ class duration_adjust(object):
     gap           = '0.050'
     lengthen      = True
     maximum       = '6.000'
-    minimum       = '0.700'
-    optimal       = '0.060'
+    minimum       = '0.900'
+    optimal       = '0.065'
     shorten       = True
+    use_gap       = True
+    use_maximum   = True
+    use_minimum   = True
 
     types = {
         'all_projects' : Type.BOOLEAN,
@@ -133,6 +136,10 @@ class duration_adjust(object):
         'minimum'      : Type.STRING,
         'optimal'      : Type.STRING,
         'shorten'      : Type.BOOLEAN,
+        'use_gap'      : Type.BOOLEAN,
+        'use_maximum'  : Type.BOOLEAN,
+        'use_minimum'  : Type.BOOLEAN,
+
     }
 
 class editor(object):
