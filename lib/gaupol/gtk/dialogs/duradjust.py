@@ -37,7 +37,7 @@ class DurationAdjustDialog(object):
 
     def __init__(self, parent, page):
 
-        glade_xml = gtklib.get_glade_xml('duration-dialog.glade')
+        glade_xml = gtklib.get_glade_xml('duradjust-dialog.glade')
         get = glade_xml.get_widget
 
         self._adjust_button      = get('adjust_button')

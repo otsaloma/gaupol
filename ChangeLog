@@ -1,5 +1,13 @@
 2006-02-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/delegates/timing.py:
+	* lib/gaupol/gtk/dialogs/duradjust.py:
+	* lib/gaupol/gtk/dialogs/tmgadjust.py:
+	* lib/gaupol/gtk/dialogs/tmgshift.py:
+	  Fixed references to previous renamings.
+
+2006-02-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/duradjust-dialog.glade:
 	* data/glade/tmgadjust-dialog.glade:
 	* data/glade/tmgshift-dialog.glade:

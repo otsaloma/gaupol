@@ -31,10 +31,10 @@ import gtk
 
 from gaupol.constants             import Document, Mode
 from gaupol.gtk.delegates         import Delegate, UIMAction
-from gaupol.gtk.dialogs.adjust    import TimingAdjustDialog
+from gaupol.gtk.dialogs.tmgadjust import TimingAdjustDialog
 from gaupol.gtk.dialogs.frconvert import FramerateConvertDialog
-from gaupol.gtk.dialogs.shift     import TimingShiftDialog
-from gaupol.gtk.dialogs.duration  import DurationAdjustDialog
+from gaupol.gtk.dialogs.tmgshift  import TimingShiftDialog
+from gaupol.gtk.dialogs.duradjust import DurationAdjustDialog
 from gaupol.gtk.util              import config, gtklib
 
 
