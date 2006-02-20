@@ -1,5 +1,23 @@
 2006-02-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/glade/duradjust-dialog.glade:
+	* data/glade/tmgadjust-dialog.glade:
+	* data/glade/tmgshift-dialog.glade:
+	* lib/gaupol/gtk/dialogs/duradjust.py:
+	* lib/gaupol/gtk/dialogs/tmgadjust.py:
+	* lib/gaupol/gtk/dialogs/tmgshift.py:
+
+	* data/glade/adjust-dialog.glade:
+	* data/glade/duration-dialog.glade:
+	* data/glade/shift-dialog.glade:
+	* lib/gaupol/gtk/dialogs/adjust.py:
+	* lib/gaupol/gtk/dialogs/duration.py:
+	* lib/gaupol/gtk/dialogs/shift.py:
+
+	  Renamed ones below to ones above.
+
+2006-02-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/duration-dialog.glade:
 	  Fixed radio button groups.
 

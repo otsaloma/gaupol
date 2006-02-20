@@ -7,37 +7,41 @@ Legend:
 Plans for 0.4.0
 ===============
 
-  * Set mnemonics in Glade files!!!
-  * Set radio groups in Glade files!!!
-  * Current/Correct
-      -> Input/Output
-      -> Current/New
+  * Glade XML file and dialog module names
+      - duration-dialog -> duradjust-dialog
+      - adjust-dialog   -> tmgadjust-dialog
+  * Glade XML files
+      - Set mnemonics
+      - Set radio groups
+      - Current/Correct
+          -> Input/Output
+          -> Current/New
+      - "Check all subtitles" or "All subtitles"
+      - Widget names
+      - Remove preview button from framerate conversion dialog
   * config
       - shift_all -> all_subtitles
       - check_all_projects -> all_projects
       - adjust_all -> ...
-  * Dialogs using page directly?
-  * unify Dialog naming
-      - modules/glade files
-      - methods
-      - glade widgets and instance widgets
-  * Rename:
-      - duration-dialog -> duradjust-dialog
-      - adjust-dialog   -> tmgadjust-dialog
-  * No Keyboard shortcut for framerate conversion?
-  * Feedback from adjust durations
-  * Is calc.framerate updated when on_framerate_changed?
-  * Convert framerate only available when editing a frame-based file?
-  * Remove preview button from framerate conversion dialog?
-  * Adjust, shift, convert button sensitivity
-  * call set_sensitivities at the end of on_undo, on_redo
-  * undo action grouping
-  * do some all round review
-  * Test & review all timing manipulations
+  * Dialogs
+      - Fix any remaining dialogs afraid of using page directly
+      - Unify method structure and naming
+      - Unify widget naming
+      - Adjust, shift, convert and preview button sensitivities
+  * Framerate comversion
+      - Remove keyboard shortcut
+      - Make only available when editing a frame-based file
+  * base
+      - Is calc.framerate updated when on_framerate_changed?
+      - Undo action grouping
+  * gtk
+      - Call set_sensitivities() at the end of on_undo, on_redo
+  * All round review
+  * Test all timing manipulations
   * Update README and webpage
       - SSA & ASS
       - Timing manipulations
-      - Description: Gaupol contains advanced features!
+      - Description
 
   New Features:
     [D] Partial support for SSA & ASS formats
@@ -80,9 +84,6 @@ Unscheduled
 
       - MPlayerSub/MPSub
         http://www.mplayerhq.hu/DOCS/tech/mpsub.sub
-
-      - SubStation Alpha (SSA & ASS)
-        http://moodub.free.fr/ass-specs.doc
 
       - SAMI
         http://msdn.microsoft.com/library/en-us/dnacc/html/atg_samiarticle.asp
