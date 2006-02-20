@@ -72,6 +72,7 @@ class DebugDialog(object):
     def __init__(self):
 
         glade_xml = gtklib.get_glade_xml('debug-dialog.glade')
+
         self._dialog    = glade_xml.get_widget('dialog')
         self._text_view = glade_xml.get_widget('text_view')
 
@@ -90,23 +91,23 @@ class DebugDialog(object):
 
         self._init_signals()
         self._init_text_tags()
+
         self._dialog.set_default_response(gtk.RESPONSE_CLOSE)
 
     def _init_signals(self):
         """Initialize signals."""
 
-        # Follow the mouse pointer.
         method = self._on_text_view_motion_notify_event
         self._text_view.connect('motion-notify-event', method)
 
     def _init_text_tags(self):
         """Initialize text tags."""
 
-        BOLD  = pango.WEIGHT_BOLD
-        LARGE = pango.SCALE_LARGE
-
         text_buffer = self._text_view.get_buffer()
         create_tag  = text_buffer.create_tag
+
+        BOLD  = pango.WEIGHT_BOLD
+        LARGE = pango.SCALE_LARGE
 
         create_tag('header', weight=BOLD, scale=LARGE)
         create_tag('title', weight=BOLD, left_margin=12)
@@ -119,7 +120,7 @@ class DebugDialog(object):
         self._dialog.destroy()
 
     def _insert_text(self, text, *tags):
-        """Insert text to text view."""
+        """Insert text with tags to text view."""
 
         text_buffer = self._text_view.get_buffer()
         end_iter = text_buffer.get_end_iter()
@@ -138,14 +139,13 @@ class DebugDialog(object):
         self._url_tags.append(tag)
         self._files.append((url, lineno))
 
-        # Shorten URL for display.
-        text = url
+        # Insert shortened URL.
         if url.startswith(self._pwd):
-            text = url.replace(self._pwd, '')[1:]
-        self._insert_text(text, name)
+            url = url.replace(self._pwd, '')[len(os.sep):]
+        self._insert_text(url, name)
 
     def _on_text_view_motion_notify_event(self, widget, event):
-        """Set GUI properties when mouse moves over URL."""
+        """Change mouse pointer when hovering over an URL."""
 
         window_type = gtk.TEXT_WINDOW_TEXT
 
@@ -155,11 +155,11 @@ class DebugDialog(object):
         tags = self._text_view.get_iter_at_location(x, y).get_tags()
 
         # Underline current URL.
-        for tag in self._url_tags:
-            if tag in tags:
-                tag.props.underline = pango.UNDERLINE_SINGLE
+        for url_tag in self._url_tags:
+            if url_tag in tags:
+                url_tag.props.underline = pango.UNDERLINE_SINGLE
             else:
-                tag.props.underline = pango.UNDERLINE_NONE
+                url_tag.props.underline = pango.UNDERLINE_NONE
 
         # Show hand cursor over URL.
         window = self._text_view.get_window(window_type)
@@ -238,7 +238,7 @@ class DebugDialog(object):
         self._insert_text('\n', 'text')
 
     def _print_traceback(self, tb, limit=None):
-        """Print up to limit stack trace entries from the traceback."""
+        """Print up to limit stack trace entries from traceback."""
 
         if limit is None:
             if hasattr(sys, 'tracebacklimit'):
@@ -265,12 +265,12 @@ class DebugDialog(object):
 
             # Insert one line of code.
             line = linecache.getline(filename, lineno)
-            line = line.lstrip()
+            line = line.strip()
             if line:
-                self._code_lines.append(line.strip())
-                self._insert_text('\n', 'code')
-                self._insert_text(line, 'code')
-                self._insert_text('\n', 'code')
+                self._code_lines.append(line)
+                self._insert_text('\n'  , 'code')
+                self._insert_text(line  , 'code')
+                self._insert_text('\n\n', 'code')
 
             tb = tb.tb_next
             n += 1
@@ -334,7 +334,7 @@ def show(exctype, value, tb):
         return
 
     # Wrap all of this debug-dialoging in a try-except wrapper to avoid
-    # spawning a new debug dialog if this raises an exception.
+    # spawning a new debug dialog if this one raises an exception.
     try:
         dialog = DebugDialog()
         dialog.set_text(exctype, value, tb)

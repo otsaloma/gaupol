@@ -65,8 +65,6 @@ class AboutDialog(gtk.AboutDialog):
 
         gtk.AboutDialog.__init__(self)
 
-        self.set_transient_for(parent)
-
         self.set_name(name)
         self.set_version(__version__)
         self.set_copyright(copyrght)
@@ -79,6 +77,8 @@ class AboutDialog(gtk.AboutDialog):
         self.set_authors(authors)
         if translators != 'translator-credits':
             self.set_translator_credits(translators)
+
+        self.set_transient_for(parent)
 
     def _on_url_clicked(self, *args):
         """Open website in browser when user clicks on URL."""

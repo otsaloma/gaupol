@@ -25,14 +25,13 @@
 import os
 import sys
 
-testpath = os.path.dirname(os.path.abspath(__file__))
-libpath = os.path.join(testpath, '..', 'lib')
-sys.path.insert(0, libpath)
+test_path = os.path.dirname(os.path.abspath(__file__))
+lib_path = os.path.join(test_path, '..', 'lib')
+sys.path.insert(0, lib_path)
 from gaupol.base.util import langlib
 
 
-# Try importing enchant.
-print '\nImporting enchant module:',
+print 'Importing enchant module:',
 try:
     import enchant
     print 'success'
@@ -45,6 +44,7 @@ except ImportError:
             print 'Not found'
             raise SystemExit(1)
         import enchant
+        print 'success'
     except ImportError:
         print 'Not found.'
         raise SystemExit(1)
@@ -52,18 +52,16 @@ except enchant.Error, message:
     print message
     raise SystemExit(1)
 
-# Print version
 print 'PyEnchant version:',
 try:
     print enchant.__version__
 except enchant.Error, message:
     print message
 
-# Test all languages.
-print '\nFound dictionaries:'
+print 'Found dictionaries:'
 for lang in langlib.locales:
     try:
         dictionary = enchant.Dict(lang)
-        print '%s (%s)' % (lang, dictionary.provider.name)
+        print '  %s (%s)' % (lang, dictionary.provider.name)
     except enchant.Error:
         pass

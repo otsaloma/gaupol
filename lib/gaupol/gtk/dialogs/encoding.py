@@ -44,20 +44,15 @@ class EncodingDialog(object):
     def __init__(self, parent):
 
         glade_xml = gtklib.get_glade_xml('encoding-dialog.glade')
+
         self._dialog = glade_xml.get_widget('dialog')
         self._view   = glade_xml.get_widget('tree_view')
 
-        self._init_mnemonics(glade_xml)
         self._init_view()
         self._init_sizes()
+
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_OK)
-
-    def _init_mnemonics(self, glade_xml):
-        """Initialize mnemonics."""
-
-        label = glade_xml.get_widget('label')
-        label.set_mnemonic_widget(self._view)
 
     def _init_sizes(self):
         """Initialize widget sizes."""
@@ -194,7 +189,7 @@ class AdvancedEncodingDialog(EncodingDialog):
         return visible_encodings
 
     def _on_view_cell_toggled(self, cell_renderer, row):
-        """Toggle a value in a cell in the "Show In Menu" column."""
+        """Toggle "Show In Menu" value."""
 
         store = self._view.get_model()
         store[row][SHOW] = not store[row][SHOW]
@@ -206,32 +201,42 @@ if __name__ == '__main__':
 
     class TestEncodingDialog(Test):
 
+        def __init__(self):
+
+            Test.__init__(self)
+            self.dialog = EncodingDialog(gtk.Window())
+
         def test_get_selection(self):
 
-            dialog = EncodingDialog(gtk.Window())
-            get_encoding = dialog.get_encoding
-            selection = dialog._view.get_selection()
+            get_encoding = self.dialog.get_encoding
+            selection = self.dialog._view.get_selection()
+
             selection.unselect_all()
             assert get_encoding() is None
+
             selection.select_path(0)
             assert isinstance(get_encoding(), basestring)
-            dialog.destroy()
 
     class TestAdvancedEncodingDialog(Test):
 
+        def __init__(self):
+
+            Test.__init__(self)
+            self.dialog = AdvancedEncodingDialog(gtk.Window())
+
         def test_get_visible_encodings(self):
 
-            dialog = AdvancedEncodingDialog(gtk.Window())
-            get_visible = dialog.get_visible_encodings
-            store = dialog._view.get_model()
+            get_visible = self.dialog.get_visible_encodings
+            store = self.dialog._view.get_model()
+
             for row in range(len(store)):
                 store[row][SHOW] = False
             assert get_visible() ==  []
+
             store[1][SHOW] = True
             store[3][SHOW] = True
             assert isinstance(get_visible()[0], basestring)
             assert isinstance(get_visible()[1], basestring)
-            dialog.destroy()
 
     TestEncodingDialog().run()
     TestAdvancedEncodingDialog().run()

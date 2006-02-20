@@ -1,5 +1,21 @@
 2006-02-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/glade/debug-dialog.glade:
+	* data/glade/duradjust-dialog.glade:
+	* data/glade/encoding-dialog.glade:
+	* lib/gaupol/gtk/dialogs/debug.py:
+	* lib/gaupol/gtk/dialogs/duradjust.py:
+	* lib/gaupol/gtk/dialogs/encoding.py:
+	  Moved mnemonic definitions to Glade XML files.
+	  Cosmetic changes.
+
+	* lib/gaupol/gtk/dialogs/about.py:
+	* test/info:
+	* test/pyenchant:
+	  Cosmetic changes.
+
+2006-02-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/gtk/delegates/timing.py:
 	* lib/gaupol/gtk/dialogs/duradjust.py:
 	* lib/gaupol/gtk/dialogs/tmgadjust.py:

@@ -19,13 +19,14 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Print some system info."""
+"""Print dependency versions."""
 
 
 import sys
 
 
-print 'Python version: %d.%d.%d' % sys.version_info[:3]
+print 'Python version:',
+print '%d.%d.%d' % sys.version_info[:3]
 
 print 'GTK version:',
 try:
