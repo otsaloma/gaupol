@@ -1,5 +1,5 @@
-Sub Station Alpha File Format Specification
-===========================================
+Advanced Sub Station Alpha
+==========================
 
   Extension:
 
@@ -13,7 +13,6 @@ Sub Station Alpha File Format Specification
 
   Sample:
 
-    ------------------------
     [Script Info]
     Title:
     Original Script:
@@ -41,7 +40,6 @@ Sub Station Alpha File Format Specification
     Dialogue: 0,0:00:27.43,0:00:29.53,Default,,0000,0000,0000,,It's the heart of men that's tumult!
     Dialogue: 0,0:00:31.86,0:00:33.83,Default,,0000,0000,0000,,Ashes of time
     Dialogue: 0,0:00:37.74,0:00:39.91,Default,,0000,0000,0000,,In the years to come...\nI'll be given the nickname: Malicious West.
-    ------------------------
 
   Tags:
 

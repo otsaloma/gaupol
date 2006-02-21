@@ -30,7 +30,6 @@ class IntegerEntry(gtk.Entry):
     def __init__(self):
 
         gtk.Entry.__init__(self)
-
         self.connect('insert-text', self._on_insert_text)
 
     def _on_insert_text(self, entry, text, length, position):

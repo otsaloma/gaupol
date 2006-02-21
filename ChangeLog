@@ -1,5 +1,13 @@
 2006-02-21  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/cellrend/text.py:
+	* lib/gaupol/gtk/dialogs/textedit.py:
+	* lib/gaupol/gtk/entries/integer.py:
+	* lib/gaupol/test/__init__.py:
+	  Cosmetic changes.
+
+2006-02-21  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/frconvert-dialog.glade:
 	* data/glade/header-dialog.glade:
 	* data/glade/language-dialog.glade:

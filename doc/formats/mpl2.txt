@@ -1,5 +1,5 @@
-MPL2 Subtitle File Format Specification
-=======================================
+MPL2
+====
 
   Extension:
 
@@ -10,17 +10,15 @@ MPL2 Subtitle File Format Specification
     There's at least MPL, MPL2 and MPL3, but MPL2 is apparently the popular
     one. The differences between versions are probably in the tags.
 
-    Times are in decaseconds (0.1 s). Pipe (|) is used for line-break.
+    Times are decaseconds (0.1 s). Pipe (|) is used for line-break.
     Probably no headers.
 
   Sample:
 
-    ------------------------
     [1156][1207]It's written in the Buddhist Cannon.|The flags are still, no wind blows...
     [1216][1257]It's the heart of men that's tumult!
     [1266][1307]Ashes of time
     [1316][1352]In the years to come...|I'll be given the nickname: Malicious West.
-    ------------------------
 
   Tags:
 

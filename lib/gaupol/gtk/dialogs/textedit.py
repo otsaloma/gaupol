@@ -38,6 +38,17 @@ class TextEditDialog(gtk.Dialog):
 
         gtk.Dialog.__init__(self)
 
+        self._text_view = None
+
+        self._init_dialog(parent)
+        self._init_text_view(text)
+        self._init_sizes()
+
+        self.show_all()
+
+    def _init_dialog(self, parent):
+        """Initialize dialog."""
+
         self.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
         self.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
         self.set_default_response(gtk.RESPONSE_OK)
@@ -46,12 +57,6 @@ class TextEditDialog(gtk.Dialog):
         self.set_transient_for(parent)
         self.set_border_width(6)
         self.set_modal(True)
-
-        self._text_view = None
-
-        self._init_text_view(text)
-        self._init_sizes()
-        self.show_all()
 
     def _init_text_view(self, text):
         """Initialize text view."""
@@ -100,8 +105,8 @@ if __name__ == '__main__':
 
         def test_all(self):
 
-            dialog = TextEditDialog(gtk.Window(), 'foo')
-            assert dialog.get_text() == 'foo'
+            dialog = TextEditDialog(gtk.Window(), 'test')
+            assert dialog.get_text() == 'test'
             dialog.destroy()
 
     TestTextEditDialog().run()

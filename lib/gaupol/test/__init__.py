@@ -123,14 +123,14 @@ class Test(object):
 
         from gaupol.test import Test
 
-        class TestFoo(Test):
+        class TestSomeClass(Test):
 
-            def test_foo(self):
+            def test_some_method(self):
 
-                value = foo()
-                assert foo is True
+                value = some_method()
+                assert value is ...
 
-        TestFoo().run()
+        TestSomeClass().run()
     """
 
     def __init__(self):
@@ -212,7 +212,6 @@ class Test(object):
                 value()
             except:
                 traceback.print_exc()
-                break
 
         self.destroy()
         self.remove_files()

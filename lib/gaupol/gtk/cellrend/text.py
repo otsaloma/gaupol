@@ -76,11 +76,6 @@ class CellRendererText(gtk.GenericCellRenderer):
         self.font_description = None
         self.text             = None
 
-        self.x_align   = 0
-        self.y_align   = 0.5
-        self.x_padding = 2
-        self.y_padding = 2
-
     def do_get_property(self, prop):
         """Get value of property."""
 
@@ -124,12 +119,9 @@ class CellRendererText(gtk.GenericCellRenderer):
         layout = self._get_layout(widget)
         width, height = layout.get_pixel_size()
 
-        width  = width  + (self.x_padding * 2)
-        height = height + (self.y_padding * 2)
-
-        # With cell contents being left and top aligned,
-        # x- and y-offsets equal paddings.
-        return self.x_padding, self.y_padding, width, height
+        # Add two pixels of padding on all sides. With cell contents being left
+        # and top aligned, x- and y-offsets equal paddings.
+        return 2, 2, width + 4, height + 4
 
     def on_render(self, window, widget, bg_area, cell_area, exp_area, flags):
         """Render cell."""

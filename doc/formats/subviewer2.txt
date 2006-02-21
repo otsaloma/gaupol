@@ -1,5 +1,5 @@
-Subviewer 2.0 Subtitle File Format Specification
-================================================
+Subviewer 2.0
+=============
 
   Extension:
 
@@ -7,7 +7,7 @@ Subviewer 2.0 Subtitle File Format Specification
 
   Notes:
 
-    Times are intuitive time-strings. [br] used for line-breaks. Yes header.
+    Times are hh:mm:ss.ss. [br] used for line-breaks. Has header.
 
     COLF is "&H" followed by RRGGBB. STYLE is "st" for strikeout, "ud" for
     underline, "bd" for bold, or "it" for italics. SIZE is font size in
@@ -15,7 +15,6 @@ Subviewer 2.0 Subtitle File Format Specification
 
   Sample:
 
-    ------------------------
     [INFORMATION]
     [TITLE]
     [AUTHOR]
@@ -39,7 +38,6 @@ Subviewer 2.0 Subtitle File Format Specification
 
     00:02:11.61,00:02:15.25
     In the years to come...[br]I'll be given the nickname: Malicious West.
-    ------------------------
 
   Tags:
 
