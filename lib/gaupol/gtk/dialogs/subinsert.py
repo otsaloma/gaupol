@@ -34,34 +34,44 @@ class SubtitleInsertDialog(object):
 
     """Dialog for inserting new subtitles."""
 
-    def __init__(self, parent):
+    def __init__(self, parent, page):
 
         glade_xml = gtklib.get_glade_xml('subinsert-dialog.glade')
         get_widget = glade_xml.get_widget
 
-        self._amount_spin_button = get_widget('amount_spin_button')
-        self._dialog             = get_widget('dialog')
-        self._position_combo_box = get_widget('position_combo_box')
-        self._position_label     = get_widget('position_label')
+        self._amount_spin    = get_widget('amount_spin_button')
+        self._dialog         = get_widget('dialog')
+        self._position_combo = get_widget('position_combo_box')
+        self._position_label = get_widget('position_label')
 
-        self._init_mnemonics(glade_xml)
+        self._init_sensitivities(page)
         self._init_data()
+        self._init_signals()
+
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_OK)
 
     def _init_data(self):
         """Initialize the data."""
 
-        self._position_combo_box.set_active(config.subtitle_insert.position)
-        self._amount_spin_button.set_value(config.subtitle_insert.amount)
+        self._position_combo.set_active(config.subtitle_insert.position)
+        self._amount_spin.set_value(config.subtitle_insert.amount)
 
-    def _init_mnemonics(self, glade_xml):
-        """Initialize mnemonics."""
+    def _init_sensitivities(self, page):
+        """Initialize widget sensitivities."""
 
-        self._position_label.set_mnemonic_widget(self._position_combo_box)
+        if not page.project.times:
+            self._position_label.set_sensitive(False)
+            self._position_combo.set_sensitive(False)
 
-        amount_label = glade_xml.get_widget('amount_label')
-        amount_label.set_mnemonic_widget(self._amount_spin_button)
+    def _init_signals(self):
+        """Initialize signals."""
+
+        method = self._on_position_combo_changed
+        self._position_combo.connect('changed', method)
+
+        method = self._on_amount_spin_value_changed
+        self._amount_spin.connect('value-changed', method)
 
     def destroy(self):
         """Destroy the dialog."""
@@ -71,8 +81,8 @@ class SubtitleInsertDialog(object):
     def get_amount(self):
         """Get amount of subtitles to insert."""
 
-        self._amount_spin_button.update()
-        return self._amount_spin_button.get_value_as_int()
+        self._amount_spin.update()
+        return self._amount_spin.get_value_as_int()
 
     def get_position(self):
         """
@@ -80,7 +90,17 @@ class SubtitleInsertDialog(object):
 
         Return Position.ABOVE or Position.BELOW.
         """
-        return self._position_combo_box.get_active()
+        return self._position_combo.get_active()
+
+    def _on_amount_spin_value_changed(self, spin_button):
+        """Save amount setting."""
+
+        config.subtitle_insert.amount = spin_button.get_value_as_int()
+
+    def _on_position_combo_changed(self, combo_box):
+        """Save position setting."""
+
+        config.subtitle_insert.position = combo_box.get_active()
 
     def run(self):
         """Show and run the dialog."""
@@ -88,29 +108,30 @@ class SubtitleInsertDialog(object):
         self._dialog.show()
         return self._dialog.run()
 
-    def set_position_sensitive(self, sensitive):
-        """
-        Set sensitivity of position-selecting.
-
-        If no subtitles exist, the position-selecting becomes pointless and
-        can be disabled.
-        """
-        self._position_label.set_sensitive(sensitive)
-        self._position_combo_box.set_sensitive(sensitive)
-
 
 if __name__ == '__main__':
 
-    from gaupol.test import Test
+    from gaupol.gtk.page import Page
+    from gaupol.test     import Test
 
     class TestSubtitleInsertDialog(Test):
 
-        def test_all(self):
+        def __init__(self):
 
-            dialog = SubtitleInsertDialog(gtk.Window())
-            assert isinstance(dialog.get_amount(), int)
-            assert isinstance(dialog.get_position(), int)
-            dialog.set_position_sensitive(True)
-            dialog.set_position_sensitive(False)
+            Test.__init__(self)
+            page = Page()
+            page.project = self.get_project()
+            self.dialog = SubtitleInsertDialog(gtk.Window(), page)
+
+        def test_gets(self):
+
+            assert isinstance(self.dialog.get_amount(), int)
+            assert isinstance(self.dialog.get_position(), int)
+
+        def test_signals(self):
+
+            self.dialog._position_combo.set_active(0)
+            self.dialog._position_combo.set_active(1)
+            self.dialog._amount_spin.set_value(33)
 
     TestSubtitleInsertDialog().run()

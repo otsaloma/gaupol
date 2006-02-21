@@ -124,6 +124,9 @@ class TimingShiftAction(UIMAction):
 
         return page is not None
 
+############################################################
+# SET CURSORS NORMAL AFTER DIALOG INITIALIZATION.
+#############################################################
 
 class TimingDelegate(Delegate):
 
@@ -213,14 +216,7 @@ class TimingDelegate(Delegate):
         page = self.get_current_page()
         method = page.project.convert_framerate
 
-        def on_preview(dialog):
-            current = dialog.get_current_framerate()
-            correct = dialog.get_correct_framerate()
-            args = current, correct
-            self.preview_changes(page, 0, Document.MAIN, method, args)
-
-        dialog = FramerateConvertDialog(self.window, page)
-        dialog.connect('preview', on_preview)
+        dialog = FramerateConvertDialog(self.window)
         response = dialog.run()
         all_projects = dialog.get_convert_all_projects()
         current = dialog.get_current_framerate()

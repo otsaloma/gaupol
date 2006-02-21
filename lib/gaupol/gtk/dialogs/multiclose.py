@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Warning dialog for warning when trying to close multiple documents."""
+"""Dialog for warning when trying to close multiple documents."""
 
 
 try:
@@ -39,7 +39,7 @@ SAVE       = 0
 class MultiCloseWarningDialog(object):
 
     """
-    Warning dialog for warning when trying to close multiple documents.
+    Dialog for warning when trying to close multiple documents.
 
     Will be displayed when quitting, or when closing a tab with at least two
     documents open with unsaved changes.
@@ -48,6 +48,7 @@ class MultiCloseWarningDialog(object):
     def __init__(self, parent, pages):
 
         glade_xml = gtklib.get_glade_xml('multiclose-dialog.glade')
+
         self._dialog    = glade_xml.get_widget('dialog')
         self._main_view = glade_xml.get_widget('main_tree_view')
         self._tran_view = glade_xml.get_widget('translation_tree_view')
@@ -58,8 +59,9 @@ class MultiCloseWarningDialog(object):
 
         self._init_data(pages)
         self._init_main_view(glade_xml)
-        self._init_translation_view(glade_xml)
+        self._init_tran_view(glade_xml)
         self._init_sizes()
+
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_YES)
 
@@ -76,11 +78,7 @@ class MultiCloseWarningDialog(object):
     def _init_main_view(self, glade_xml):
         """Initialize the list of main documents."""
 
-        view = self._main_view
-        label = glade_xml.get_widget('main_label')
-        label.set_mnemonic_widget(view)
-        view, store = self._init_view(view, Document.MAIN)
-
+        view, store = self._init_view(self._main_view)
         for page, basename in self._main_data:
             store.append([True, basename])
 
@@ -111,14 +109,10 @@ class MultiCloseWarningDialog(object):
         height = main_height + tran_height + height_extra + gtklib.EXTRA
         gtklib.resize_message_dialog(self._dialog, width, height)
 
-    def _init_translation_view(self, glade_xml):
+    def _init_tran_view(self, glade_xml):
         """Initialize the list of translation documents."""
 
-        view = self._tran_view
-        label = glade_xml.get_widget('translation_label')
-        label.set_mnemonic_widget(view)
-        view, store = self._init_view(view, Document.TRAN)
-
+        view, store = self._init_view(self._tran_view)
         for page, basename in self._tran_data:
             store.append([True, basename])
 
@@ -126,7 +120,7 @@ class MultiCloseWarningDialog(object):
             glade_xml.get_widget('translation_label').hide()
             glade_xml.get_widget('translation_scrolled_window').hide()
 
-    def _init_view(self, view, document_type):
+    def _init_view(self, view):
         """
         Initialize a document list.
 
@@ -134,7 +128,6 @@ class MultiCloseWarningDialog(object):
         """
         view.columns_autosize()
         view.set_headers_visible(False)
-
         store = gtk.ListStore(gobject.TYPE_BOOLEAN, gobject.TYPE_STRING)
         view.set_model(store)
 
@@ -143,15 +136,12 @@ class MultiCloseWarningDialog(object):
         selection.unselect_all()
 
         cell_renderer_0 = gtk.CellRendererToggle()
-        cell_renderer_1 = gtk.CellRendererText()
-
         cell_renderer_0.props.activatable = True
-        method = self._on_view_cell_toggled
-        cell_renderer_0.connect('toggled', method, store)
+        cell_renderer_0.connect('toggled', self._on_view_cell_toggled, store)
+        cell_renderer_1 = gtk.CellRendererText()
 
         tree_view_column_0 = gtk.TreeViewColumn('', cell_renderer_0, active=0)
         tree_view_column_1 = gtk.TreeViewColumn('', cell_renderer_1,   text=1)
-
         view.append_column(tree_view_column_0)
         view.append_column(tree_view_column_1)
 
@@ -193,7 +183,6 @@ class MultiCloseWarningDialog(object):
 
         mains = self.get_main_pages_to_save()
         trans = self.get_translation_pages_to_save()
-
         sensitive = bool(mains or trans)
         self._dialog.set_response_sensitive(gtk.RESPONSE_YES, sensitive)
 

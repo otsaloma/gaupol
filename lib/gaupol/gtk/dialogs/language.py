@@ -48,28 +48,58 @@ class LanguageDialog(object):
         glade_xml = gtklib.get_glade_xml('language-dialog.glade')
         get = glade_xml.get_widget
 
-        self._col_main_check        = get('column_main_check_button')
-        self._col_tran_check        = get('column_translation_check_button')
-        self._dialog                = get('dialog')
-        self._lang_main_view        = get('language_main_tree_view')
-        self._lang_tran_view        = get('language_translation_tree_view')
-        self._project_all_radio     = get('project_all_radio_button')
-        self._project_current_radio = get('project_current_radio_button')
+        self._col_main_check    = get('columns_main_check_button')
+        self._col_tran_check    = get('columns_translation_check_button')
+        self._dialog            = get('dialog')
+        self._lang_main_view    = get('languages_main_tree_view')
+        self._lang_tran_view    = get('languages_translation_tree_view')
+        self._prj_all_radio     = get('projects_all_radio_button')
+        self._prj_current_radio = get('projects_current_radio_button')
 
-        # Lists of languages
+        # List of languages
         self._langs = []
 
-        self._init_mnemonics(glade_xml)
-        self._init_radio_groups()
         self._init_views()
         self._init_signals()
-        self._init_languages()
-        self._init_values()
+        self._init_langs()
+        self._init_data()
         self._init_sizes()
+
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_CLOSE)
 
-    def _init_languages(self):
+    def _init_data(self):
+        """Initialize data."""
+
+        # Languages
+        main_selection = self._lang_main_view.get_selection()
+        tran_selection = self._lang_tran_view.get_selection()
+        main_lang = config.spell_check.main_language
+        tran_lang = config.spell_check.translation_language
+        try:
+            row = self._langs.index(main_lang)
+            main_selection.select_path(row)
+        except ValueError:
+            pass
+        try:
+            row = self._langs.index(tran_lang)
+            tran_selection.select_path(row)
+        except ValueError:
+            pass
+
+        # Projects
+        check_all = config.spell_check.check_all_projects
+        self._prj_all_radio.set_active(check_all)
+
+        # Columns
+        check_main = config.spell_check.check_main
+        check_tran = config.spell_check.check_translation
+        self._col_main_check.set_active(check_main)
+        self._col_tran_check.set_active(check_tran)
+        self._lang_main_view.set_sensitive(check_main)
+        self._lang_tran_view.set_sensitive(check_tran)
+
+    def _init_langs(self):
         """Initialize list of available languages."""
 
         # List languages by trying to create a dictionary object for them.
@@ -92,42 +122,19 @@ class LanguageDialog(object):
             main_store.append([name])
             tran_store.append([name])
 
-    def _init_mnemonics(self, glade_xml):
-        """Initialize mnemonics."""
-
-        text_label = glade_xml.get_widget('language_main_label')
-        text_label.set_mnemonic_widget(self._lang_main_view)
-
-        tran_label = glade_xml.get_widget('language_translation_label')
-        tran_label.set_mnemonic_widget(self._lang_tran_view)
-
-    def _init_radio_groups(self):
-        """Initialize radio button groups."""
-
-        # Ensure that project radio buttons have the same group.
-        # ValueError is raised if button already is in group.
-        group = self._project_current_radio.get_group()[0]
-        try:
-            self._project_all_radio.set_group(group)
-        except ValueError:
-            pass
-
     def _init_signals(self):
         """Initialize signals."""
 
-        method = self._on_project_all_radio_toggled
-        self._project_all_radio.connect('toggled', method)
-
+        method = self._on_prj_all_radio_toggled
+        self._prj_all_radio.connect('toggled', method)
         method = self._on_col_main_check_toggled
         self._col_main_check.connect('toggled', method)
-
         method = self._on_col_tran_check_toggled
         self._col_tran_check.connect('toggled', method)
 
         selection = self._lang_main_view.get_selection()
         method = self._on_lang_main_view_selection_changed
         selection.connect('changed', method)
-
         selection = self._lang_tran_view.get_selection()
         method = self._on_lang_tran_view_selection_changed
         selection.connect('changed', method)
@@ -140,51 +147,16 @@ class LanguageDialog(object):
         height = height      + 267 + gtklib.EXTRA
         gtklib.resize_dialog(self._dialog, width, height, 0.5, 0.5)
 
-    def _init_values(self):
-        """Initialize values."""
-
-        # Projects
-        check_all = config.spell_check.check_all_projects
-        self._project_all_radio.set_active(check_all)
-
-        # Columns
-        check_main = config.spell_check.check_main
-        check_tran = config.spell_check.check_translation
-        self._col_main_check.set_active(check_main)
-        self._col_tran_check.set_active(check_tran)
-        self._lang_main_view.set_sensitive(check_main)
-        self._lang_tran_view.set_sensitive(check_tran)
-
-        # Languages
-        main_selection = self._lang_main_view.get_selection()
-        tran_selection = self._lang_tran_view.get_selection()
-        main_lang = config.spell_check.main_language
-        tran_lang = config.spell_check.translation_language
-        try:
-            row = self._langs.index(main_lang)
-            main_selection.select_path(row)
-        except ValueError:
-            pass
-        try:
-            row = self._langs.index(tran_lang)
-            tran_selection.select_path(row)
-        except ValueError:
-            pass
-
     def _init_views(self):
         """Initialize language views."""
 
         for view in (self._lang_main_view, self._lang_tran_view):
-
             view.columns_autosize()
-
             selection = view.get_selection()
             selection.set_mode(gtk.SELECTION_SINGLE)
             selection.unselect_all()
-
             store = gtk.ListStore(gobject.TYPE_STRING)
             view.set_model(store)
-
             cell_renderer = gtk.CellRendererText()
             tree_view_column = gtk.TreeViewColumn('', cell_renderer, text=0)
             view.append_column(tree_view_column)
@@ -227,19 +199,17 @@ class LanguageDialog(object):
         """Set main text language."""
 
         row = self._get_selected_language_row(self._lang_main_view)
-        if row is None:
-            return
-        config.spell_check.main_language = self._langs[row]
+        if row is not None:
+            config.spell_check.main_language = self._langs[row]
 
     def _on_lang_tran_view_selection_changed(self, *args):
         """Set translation text language."""
 
         row = self._get_selected_language_row(self._lang_tran_view)
-        if row is None:
-            return
-        config.spell_check.translation_language = self._langs[row]
+        if row is not None:
+            config.spell_check.translation_language = self._langs[row]
 
-    def _on_project_all_radio_toggled(self, radio_button):
+    def _on_prj_all_radio_toggled(self, radio_button):
         """Set project to check."""
 
         check_all = radio_button.get_active()
@@ -267,14 +237,16 @@ if __name__ == '__main__':
 
             view = self.dialog._lang_main_view
             selection = view.get_selection()
+
             selection.unselect_all()
             assert self.dialog._get_selected_language_row(view) is None
+
             selection.select_path(0)
             assert self.dialog._get_selected_language_row(view) == 0
 
         def test_signals(self):
 
-            self.dialog._project_all_radio.emit('toggled')
+            self.dialog._prj_all_radio.emit('toggled')
             self.dialog._col_main_check.emit('toggled')
             self.dialog._col_tran_check.emit('toggled')
 

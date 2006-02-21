@@ -271,20 +271,6 @@ class preview(object):
         'video_player': VideoPlayer,
     }
 
-class subtitle_insert(object):
-
-    amount   = 1
-    position = Position.BELOW
-
-    types = {
-        'amount'  : Type.INTEGER,
-        'position': Type.CONSTANT,
-    }
-
-    classes = {
-        'position': Position,
-    }
-
 class spell_check(object):
 
     check_all_projects   = False
@@ -299,6 +285,20 @@ class spell_check(object):
         'check_translation'   : Type.BOOLEAN,
         'main_language'       : Type.STRING,
         'translation_language': Type.STRING,
+    }
+
+class subtitle_insert(object):
+
+    amount   = 1
+    position = Position.BELOW
+
+    types = {
+        'amount'  : Type.INTEGER,
+        'position': Type.CONSTANT,
+    }
+
+    classes = {
+        'position': Position,
     }
 
 class timing_adjust(object):

@@ -60,13 +60,13 @@
 	  <property name="spacing">18</property>
 
 	  <child>
-	    <widget class="GtkVBox" id="language_vbox">
+	    <widget class="GtkVBox" id="languages_vbox">
 	      <property name="visible">True</property>
 	      <property name="homogeneous">False</property>
 	      <property name="spacing">6</property>
 
 	      <child>
-		<widget class="GtkLabel" id="language_label">
+		<widget class="GtkLabel" id="languages_title_label">
 		  <property name="visible">True</property>
 		  <property name="label" translatable="yes">&lt;b&gt;Languages&lt;/b&gt;</property>
 		  <property name="use_underline">False</property>
@@ -91,13 +91,13 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkHBox" id="language_hbox">
+		<widget class="GtkHBox" id="languages_hbox">
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">0</property>
 
 		  <child>
-		    <widget class="GtkLabel" id="language_indentation_label">
+		    <widget class="GtkLabel" id="languages_indentation_label">
 		      <property name="width_request">12</property>
 		      <property name="visible">True</property>
 		      <property name="label"></property>
@@ -123,19 +123,19 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkHBox" id="language_settings_hbox">
+		    <widget class="GtkHBox" id="languages_settings_hbox">
 		      <property name="visible">True</property>
 		      <property name="homogeneous">True</property>
 		      <property name="spacing">12</property>
 
 		      <child>
-			<widget class="GtkVBox" id="language_main_vbox">
+			<widget class="GtkVBox" id="languages_main_vbox">
 			  <property name="visible">True</property>
 			  <property name="homogeneous">False</property>
 			  <property name="spacing">6</property>
 
 			  <child>
-			    <widget class="GtkLabel" id="language_main_label">
+			    <widget class="GtkLabel" id="languages_main_label">
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">Mai_n text:</property>
 			      <property name="use_underline">True</property>
@@ -147,6 +147,7 @@
 			      <property name="yalign">0.5</property>
 			      <property name="xpad">0</property>
 			      <property name="ypad">0</property>
+			      <property name="mnemonic_widget">languages_main_tree_view</property>
 			      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
 			      <property name="width_chars">-1</property>
 			      <property name="single_line_mode">False</property>
@@ -160,7 +161,7 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkScrolledWindow" id="language_main_scrolled_window">
+			    <widget class="GtkScrolledWindow" id="languages_main_scrolled_window">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
 			      <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
@@ -169,7 +170,7 @@
 			      <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
 
 			      <child>
-				<widget class="GtkTreeView" id="language_main_tree_view">
+				<widget class="GtkTreeView" id="languages_main_tree_view">
 				  <property name="visible">True</property>
 				  <property name="can_focus">True</property>
 				  <property name="headers_visible">False</property>
@@ -197,13 +198,13 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkVBox" id="language_translation_vbox">
+			<widget class="GtkVBox" id="languages_translation_vbox">
 			  <property name="visible">True</property>
 			  <property name="homogeneous">False</property>
 			  <property name="spacing">6</property>
 
 			  <child>
-			    <widget class="GtkLabel" id="language_translation_label">
+			    <widget class="GtkLabel" id="languages_translation_label">
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">T_ranslation text:</property>
 			      <property name="use_underline">True</property>
@@ -215,6 +216,7 @@
 			      <property name="yalign">0.5</property>
 			      <property name="xpad">0</property>
 			      <property name="ypad">0</property>
+			      <property name="mnemonic_widget">languages_translation_tree_view</property>
 			      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
 			      <property name="width_chars">-1</property>
 			      <property name="single_line_mode">False</property>
@@ -228,7 +230,7 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkScrolledWindow" id="language_translation_scrolled_window">
+			    <widget class="GtkScrolledWindow" id="languages_translation_scrolled_window">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
 			      <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
@@ -237,7 +239,7 @@
 			      <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
 
 			      <child>
-				<widget class="GtkTreeView" id="language_translation_tree_view">
+				<widget class="GtkTreeView" id="languages_translation_tree_view">
 				  <property name="visible">True</property>
 				  <property name="can_focus">True</property>
 				  <property name="headers_visible">False</property>
@@ -286,13 +288,13 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkVBox" id="project_vbox">
+	    <widget class="GtkVBox" id="projects_vbox">
 	      <property name="visible">True</property>
 	      <property name="homogeneous">False</property>
 	      <property name="spacing">6</property>
 
 	      <child>
-		<widget class="GtkLabel" id="project_label">
+		<widget class="GtkLabel" id="projects_title_label">
 		  <property name="visible">True</property>
 		  <property name="label" translatable="yes">&lt;b&gt;Projects&lt;/b&gt;</property>
 		  <property name="use_underline">False</property>
@@ -317,13 +319,13 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkHBox" id="project_hbox">
+		<widget class="GtkHBox" id="projects_hbox">
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">0</property>
 
 		  <child>
-		    <widget class="GtkLabel" id="project_indentation_label">
+		    <widget class="GtkLabel" id="projects_indentation_label">
 		      <property name="width_request">12</property>
 		      <property name="visible">True</property>
 		      <property name="label"></property>
@@ -349,13 +351,13 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkVBox" id="project_setting_vbox">
+		    <widget class="GtkVBox" id="projects_setting_vbox">
 		      <property name="visible">True</property>
 		      <property name="homogeneous">False</property>
 		      <property name="spacing">6</property>
 
 		      <child>
-			<widget class="GtkRadioButton" id="project_current_radio_button">
+			<widget class="GtkRadioButton" id="projects_current_radio_button">
 			  <property name="visible">True</property>
 			  <property name="can_focus">True</property>
 			  <property name="label" translatable="yes">Check c_urrent project</property>
@@ -374,7 +376,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkRadioButton" id="project_all_radio_button">
+			<widget class="GtkRadioButton" id="projects_all_radio_button">
 			  <property name="visible">True</property>
 			  <property name="can_focus">True</property>
 			  <property name="label" translatable="yes">Check _all open projects</property>
@@ -384,7 +386,7 @@
 			  <property name="active">False</property>
 			  <property name="inconsistent">False</property>
 			  <property name="draw_indicator">True</property>
-			  <property name="group">project_current_radio_button</property>
+			  <property name="group">projects_current_radio_button</property>
 			</widget>
 			<packing>
 			  <property name="padding">0</property>
@@ -415,13 +417,13 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkVBox" id="column_vbox">
+	    <widget class="GtkVBox" id="columns_vbox">
 	      <property name="visible">True</property>
 	      <property name="homogeneous">False</property>
 	      <property name="spacing">6</property>
 
 	      <child>
-		<widget class="GtkLabel" id="column_label">
+		<widget class="GtkLabel" id="columns_title_label">
 		  <property name="visible">True</property>
 		  <property name="label">&lt;b&gt;Columns&lt;/b&gt;</property>
 		  <property name="use_underline">False</property>
@@ -446,13 +448,13 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkHBox" id="column_hbox">
+		<widget class="GtkHBox" id="columns_hbox">
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">0</property>
 
 		  <child>
-		    <widget class="GtkLabel" id="column_indentation_label">
+		    <widget class="GtkLabel" id="columns_indentation_label">
 		      <property name="width_request">12</property>
 		      <property name="visible">True</property>
 		      <property name="label"></property>
@@ -478,13 +480,13 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkVBox" id="column_setting_vbox">
+		    <widget class="GtkVBox" id="columns_setting_vbox">
 		      <property name="visible">True</property>
 		      <property name="homogeneous">False</property>
 		      <property name="spacing">0</property>
 
 		      <child>
-			<widget class="GtkCheckButton" id="column_main_check_button">
+			<widget class="GtkCheckButton" id="columns_main_check_button">
 			  <property name="visible">True</property>
 			  <property name="can_focus">True</property>
 			  <property name="label" translatable="yes">Check _main text column</property>
@@ -503,7 +505,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkCheckButton" id="column_translation_check_button">
+			<widget class="GtkCheckButton" id="columns_translation_check_button">
 			  <property name="visible">True</property>
 			  <property name="can_focus">True</property>
 			  <property name="label" translatable="yes">Check _translation text column</property>

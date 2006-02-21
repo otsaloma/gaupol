@@ -77,8 +77,6 @@ class TimingAdjustDialog(gobject.GObject):
         self._page = page
 
         self._init_widgets(glade_xml)
-        self._init_radio_groups()
-        self._init_mnemonics(glade_xml)
         self._init_sizes()
         self._init_sensitivities()
         self._init_signals()
@@ -97,30 +95,6 @@ class TimingAdjustDialog(gobject.GObject):
         self._subtitle_spin_2.emit('value-changed')
 
         self._all_radio.set_active(config.timing_shift.shift_all)
-
-    def _init_mnemonics(self, glade_xml):
-        """Initialize mnemonics."""
-
-        label = glade_xml.get_widget('subtitle_label_1')
-        label.set_mnemonic_widget(self._subtitle_spin_1)
-        label = glade_xml.get_widget('subtitle_label_2')
-        label.set_mnemonic_widget(self._subtitle_spin_2)
-
-        label = glade_xml.get_widget('text_label_1')
-        label.set_mnemonic_widget(self._text_view_1)
-        label = glade_xml.get_widget('text_label_2')
-        label.set_mnemonic_widget(self._text_view_2)
-
-    def _init_radio_groups(self):
-        """Initialize radio button groups."""
-
-        # Ensure that target radio buttons have the same group.
-        # ValueError is raised if button already is in group.
-        group = self._all_radio.get_group()[0]
-        try:
-            self._selected_radio.set_group(group)
-        except ValueError:
-            pass
 
     def _init_sensitivities(self):
         """Initialize widget sensitivities."""
@@ -185,11 +159,13 @@ class TimingAdjustDialog(gobject.GObject):
             table_1.attach(self._correct_entry_1, 1, 2, 2, 3, FILL, FILL)
             table_2.attach(self._correct_entry_2, 1, 2, 2, 3, FILL, FILL)
 
-            # Labels
+            # Current labels
             label = glade_xml.get_widget('current_label_1')
             label.set_text(_('Current time:'))
             label = glade_xml.get_widget('current_label_2')
             label.set_text(_('Current time:'))
+
+            # Correct labels
             label = glade_xml.get_widget('correct_label_1')
             label.set_text(_('C_orrect time:'))
             label.set_use_underline(True)
@@ -207,11 +183,13 @@ class TimingAdjustDialog(gobject.GObject):
             table_1.attach(self._correct_spin_1, 1, 2, 2, 3, FILL, FILL)
             table_2.attach(self._correct_spin_2, 1, 2, 2, 3, FILL, FILL)
 
-            # Labels
+            # Current labels
             label = glade_xml.get_widget('current_label_1')
             label.set_text(_('Current frame:'))
             label = glade_xml.get_widget('current_label_2')
             label.set_text(_('Current frame:'))
+
+            # Correct labels
             label = glade_xml.get_widget('correct_label_1')
             label.set_text(_('C_orrect frame:'))
             label.set_use_underline(True)
@@ -312,7 +290,6 @@ class TimingAdjustDialog(gobject.GObject):
     def run(self):
         """Show and run the dialog."""
 
-        self._subtitle_spin_1.grab_focus()
         self._dialog.show()
         return self._dialog.run()
 

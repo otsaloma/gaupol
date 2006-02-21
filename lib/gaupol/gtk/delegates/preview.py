@@ -34,12 +34,13 @@ import gobject
 import gtk
 import pango
 
-from gaupol.base.error          import ExternalError
-from gaupol.constants           import Document, VideoPlayer
-from gaupol.gtk.colconstants    import *
-from gaupol.gtk.delegates       import Delegate, UIMAction
-from gaupol.gtk.dialogs.message import ErrorDialog
-from gaupol.gtk.util            import config, gtklib
+from gaupol.base.error               import ExternalError
+from gaupol.constants                import Document, VideoPlayer
+from gaupol.gtk.colconstants         import *
+from gaupol.gtk.delegates            import Delegate, UIMAction
+from gaupol.gtk.dialogs.message      import ErrorDialog
+from gaupol.gtk.dialogs.previewerror import PreviewErrorDialog
+from gaupol.gtk.util                 import config, gtklib
 
 
 class PreviewAction(UIMAction):
@@ -82,52 +83,6 @@ class PreviewAction(UIMAction):
                 return False
 
         return True
-
-
-class CommandErrorDialog(object):
-
-    """Dialog to inform that preview command failed."""
-
-    def __init__(self, parent, output):
-
-        glade_xml = gtklib.get_glade_xml('previewerror-dialog.glade')
-        output_label = glade_xml.get_widget('output_label')
-        self._dialog = glade_xml.get_widget('dialog')
-        text_view  = glade_xml.get_widget('text_view')
-
-        # Set mnemonics.
-        output_label.set_mnemonic_widget(text_view)
-
-        # Set output.
-        text_buffer = text_view.get_buffer()
-        text_buffer.create_tag('code', family='monospace')
-        end_iter = text_buffer.get_end_iter()
-        text_buffer.insert_with_tags_by_name(end_iter, output, 'code')
-
-        # Set dialog size.
-        label = gtk.Label()
-        attrs = pango.AttrList()
-        attrs.insert(pango.AttrFamily('monospace', 0, -1))
-        label.set_attributes(attrs)
-        label.set_text(output)
-        width, height = label.size_request()
-        width  = width  + 112 + gtklib.EXTRA
-        height = height + 148 + gtklib.EXTRA
-        gtklib.resize_message_dialog(self._dialog, width, height)
-
-        self._dialog.set_transient_for(parent)
-        self._dialog.set_default_response(gtk.RESPONSE_OK)
-
-    def destroy(self):
-        """Destroy the dialog."""
-
-        self._dialog.destroy()
-
-    def run(self):
-        """Show and run the dialog."""
-
-        self._dialog.show()
-        return self._dialog.run()
 
 
 class IOErrorDialog(ErrorDialog):
@@ -228,7 +183,7 @@ class PreviewDelegate(Delegate):
     def _show_command_error_dialog(self, page):
         """Show CommandErrorDialog."""
 
-        dialog = CommandErrorDialog(self.window, page.project.output)
+        dialog = PreviewErrorDialog(self.window, page.project.output)
         dialog.run()
         dialog.destroy()
 

@@ -39,8 +39,7 @@
 # the spell check dialog has been closed and properly destroyed. This seems to
 # be a problem when using PyEnchant's default way of having one module-global
 # broker object. By creating a new broker every time, we avoid AssertionErrors
-# when creating dictionaries, but the memory problems assumably remain.
-# ** (gaupol:8456): WARNING **: 1 dictionaries weren't free'd.
+# when creating dictionaries, but the memory problems remain.
 #
 # (4) enchant.Dict method store_replacement seems to have no effect, at least
 # with Aspell. Replacements can be handled internally with better reliability.
@@ -183,7 +182,6 @@ class SpellCheckDialog(gobject.GObject):
 
         self._init_spell_check()
         self._init_fonts()
-        self._init_mnemonics(glade_xml)
         self._init_sensitivities()
         self._init_text_tags()
         self._init_suggestion_view()
@@ -237,17 +235,6 @@ class SpellCheckDialog(gobject.GObject):
         lang = self._langs[document]
         name = langlib.get_descriptive_name(lang)
         self._lang_names[document] = name
-
-    def _init_mnemonics(self, glade_xml):
-        """Initialize mnemonics."""
-
-        # Entry
-        label = glade_xml.get_widget('entry_label')
-        label.set_mnemonic_widget(self._entry)
-
-        # Suggestion view
-        label = glade_xml.get_widget('suggestion_label')
-        label.set_mnemonic_widget(self._suggestion_view)
 
     def _init_replacements(self, document):
         """Initialize replacements for document."""
@@ -361,16 +348,13 @@ class SpellCheckDialog(gobject.GObject):
 
         view = self._suggestion_view
         view.columns_autosize()
-
         selection = view.get_selection()
         selection.set_mode(gtk.SELECTION_SINGLE)
         selection.unselect_all()
         method = self._on_suggestion_view_selection_changed
         self._handler = selection.connect('changed', method)
-
         store = gtk.ListStore(gobject.TYPE_STRING)
         view.set_model(store)
-
         cell_renderer = gtk.CellRendererText()
         tree_view_column = gtk.TreeViewColumn('', cell_renderer, text=0)
         view.append_column(tree_view_column)
@@ -429,7 +413,7 @@ class SpellCheckDialog(gobject.GObject):
         end_iter = text_buffer.get_iter_at_offset(end)
         text_buffer.apply_tag_by_name('misspelled', start_iter, end_iter)
 
-        # Set sensitivity join buttons.
+        # Set sensitivities of join buttons.
         sensitive = text[max(0, start - 1):start].isspace()
         self._join_back_button.set_sensitive(sensitive)
         sensitive = text[end:min(len(text), end + 1)].isspace()
@@ -530,8 +514,7 @@ class SpellCheckDialog(gobject.GObject):
         # BUG:
         # The sensitivity setting in this method causes inability to click the
         # same replace button twice without moving the mouse outside the button
-        # between the clicks. This is probably a GTK bug. A workaround would be
-        # needed, since this sensitivity setting cannot really be left out.
+        # between the clicks. This is probably a GTK bug.
 
         sensitive = bool(entry.get_text())
         self._replace_button.set_sensitive(sensitive)
@@ -578,7 +561,6 @@ class SpellCheckDialog(gobject.GObject):
         misspelled = unicode(checker.word)
         correct = unicode(self._entry.get_text())
         self._store_replacement(misspelled, correct)
-
         checker.replace_always(correct)
         self._advance()
 
@@ -589,7 +571,6 @@ class SpellCheckDialog(gobject.GObject):
         misspelled = unicode(checker.word)
         correct = unicode(self._entry.get_text())
         self._store_replacement(misspelled, correct)
-
         checker.replace(correct)
         self._advance()
 
@@ -733,7 +714,7 @@ if __name__ == '__main__':
 
         def test_init(self):
 
-            SpellCheckErrorDialog(gtk.Window(), 'foo')
+            SpellCheckErrorDialog(gtk.Window(), 'test')
 
     class TestSpellCheckDialog(Test):
 

@@ -63,8 +63,6 @@ class TimingShiftDialog(gobject.GObject):
         self._page = page
 
         self._init_widgets()
-        self._init_radio_groups()
-        self._init_mnemonics(glade_xml)
         self._init_data()
         self._init_sensitivities()
         self._init_signals()
@@ -82,23 +80,6 @@ class TimingShiftDialog(gobject.GObject):
         elif self._page.edit_mode == Mode.FRAME:
             value = config.timing_shift.frames
         self._amount_spin.set_value(value)
-
-    def _init_mnemonics(self, glade_xml):
-        """Initialize mnemonics."""
-
-        label = glade_xml.get_widget('amount_label')
-        label.set_mnemonic_widget(self._amount_spin)
-
-    def _init_radio_groups(self):
-        """Initialize radio button groups."""
-
-        # Ensure that target radio buttons have the same group.
-        # ValueError is raised if button already is in group.
-        group = self._all_radio.get_group()[0]
-        try:
-            self._selected_radio.set_group(group)
-        except ValueError:
-            pass
 
     def _init_sensitivities(self):
         """Initialize widget sensitivities."""
@@ -184,7 +165,6 @@ class TimingShiftDialog(gobject.GObject):
     def run(self):
         """Show and run the dialog."""
 
-        self._amount_spin.grab_focus()
         self._dialog.show()
         return self._dialog.run()
 
@@ -221,7 +201,7 @@ if __name__ == '__main__':
 
         def test_signals(self):
 
-            self.dialog._amount_spin.set_value(1)
+            self.dialog._amount_spin.set_value(33)
             self.dialog._all_radio.set_active(True)
             self.dialog._all_radio.set_active(False)
 

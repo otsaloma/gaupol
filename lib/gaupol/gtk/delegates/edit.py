@@ -339,8 +339,8 @@ class EditDelegate(Delegate):
     def on_insert_subtitles_activated(self, *args):
         """Insert blank subtitles."""
 
-        dialog = SubtitleInsertDialog(self.window)
         page = self.get_current_page()
+        dialog = SubtitleInsertDialog(self.window, page)
         if not page.project.times:
             dialog.set_position_sensitive(False)
 
@@ -351,9 +351,6 @@ class EditDelegate(Delegate):
 
         if response != gtk.RESPONSE_OK:
             return
-
-        config.subtitle_insert.position = position
-        config.subtitle_insert.amount   = amount
 
         if page.project.times:
             start_row = page.view.get_selected_rows()[0]

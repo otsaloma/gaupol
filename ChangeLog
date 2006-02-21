@@ -1,3 +1,36 @@
+2006-02-21  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/frconvert-dialog.glade:
+	* data/glade/header-dialog.glade:
+	* data/glade/language-dialog.glade:
+	* data/glade/multiclose-dialog.glade:
+	* data/glade/preferences-dialog.glade:
+	* data/glade/previewerror-dialog.glade:
+	* data/glade/spellcheck-dialog.glade:
+	* data/glade/subinsert-dialog.glade:
+	* data/glade/tmgadjust-dialog.glade:
+	* data/glade/tmgshift-dialog.glade:
+	* lib/gaupol/gtk/delegates/edit.py:
+	* lib/gaupol/gtk/delegates/preview.py:
+	* lib/gaupol/gtk/delegates/timing.py:
+	* lib/gaupol/gtk/dialogs/frconvert.py:
+	* lib/gaupol/gtk/dialogs/header.py:
+	* lib/gaupol/gtk/dialogs/language.py:
+	* lib/gaupol/gtk/dialogs/multiclose.py:
+	* lib/gaupol/gtk/dialogs/preferences.py:
+	* lib/gaupol/gtk/dialogs/spellcheck.py:
+	* lib/gaupol/gtk/dialogs/subinsert.py:
+	* lib/gaupol/gtk/dialogs/tmgadjust.py:
+	* lib/gaupol/gtk/dialogs/tmgshift.py:
+	* lib/gaupol/gtk/util/config.py:
+	  Moved mnemonic and radio group definitions to Glade XML files.
+	  Unified structure and funtionality of dialogs.
+	  Cleaned up new timing dialogs.
+	  Cosmetic changes.
+
+	* lib/gaupol/gtk/dialogs/previewerror.py:
+	  New file split from lib/gaupol/gtk/delegates/preview.py.
+
 2006-02-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/glade/debug-dialog.glade:

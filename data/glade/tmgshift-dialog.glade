@@ -79,7 +79,7 @@
 	      <property name="spacing">6</property>
 
 	      <child>
-		<widget class="GtkLabel" id="shift_label">
+		<widget class="GtkLabel" id="shift_title_label">
 		  <property name="visible">True</property>
 		  <property name="label" translatable="yes">&lt;b&gt;Shift&lt;/b&gt;</property>
 		  <property name="use_underline">False</property>
@@ -343,7 +343,7 @@
 	      <property name="spacing">6</property>
 
 	      <child>
-		<widget class="GtkLabel" id="subtitles_label">
+		<widget class="GtkLabel" id="subtitles_title_label">
 		  <property name="visible">True</property>
 		  <property name="label" translatable="yes">&lt;b&gt;Subtitles&lt;/b&gt;</property>
 		  <property name="use_underline">False</property>
@@ -409,7 +409,7 @@
 			<widget class="GtkRadioButton" id="selected_radio_button">
 			  <property name="visible">True</property>
 			  <property name="can_focus">True</property>
-			  <property name="label" translatable="yes">S_elected subtitles</property>
+			  <property name="label" translatable="yes">Shift s_elected subtitles</property>
 			  <property name="use_underline">True</property>
 			  <property name="relief">GTK_RELIEF_NORMAL</property>
 			  <property name="focus_on_click">True</property>
@@ -428,7 +428,7 @@
 			<widget class="GtkRadioButton" id="all_radio_button">
 			  <property name="visible">True</property>
 			  <property name="can_focus">True</property>
-			  <property name="label" translatable="yes">_All subtitles</property>
+			  <property name="label" translatable="yes">Shift _all subtitles</property>
 			  <property name="use_underline">True</property>
 			  <property name="relief">GTK_RELIEF_NORMAL</property>
 			  <property name="focus_on_click">True</property>

@@ -68,7 +68,6 @@ class HeaderDialog(object):
         self.main_header_tmpl = None
         self.tran_header_tmpl = None
 
-        self._init_mnemonics()
         self._init_signals()
         self._init_data()
         self._init_sizes(parent)
@@ -100,12 +99,6 @@ class HeaderDialog(object):
             self._tran_label.props.visible = False
             self._tran_vbox.props.visible  = False
             self._copy_hbox.props.visible  = False
-
-    def _init_mnemonics(self):
-        """Initialize mnemonics."""
-
-        self._main_label.set_mnemonic_widget(self._main_text_view)
-        self._tran_label.set_mnemonic_widget(self._tran_text_view)
 
     def _init_signals(self):
         """Initialize signals."""
@@ -252,14 +245,16 @@ if __name__ == '__main__':
             page.project.save_translation_file(True, properties)
 
             self.dialog = HeaderDialog(gtk.Window(), page)
-
             self.main_header = page.project.main_file.header
             self.tran_header = page.project.main_file.header
 
         def test_get_headers(self):
 
-            assert self.dialog.get_main_header()        == self.main_header
-            assert self.dialog.get_translation_header() == self.tran_header
+            get_main = self.dialog.get_main_header
+            get_tran = self.dialog.get_translation_header
+
+            assert get_main() == self.main_header
+            assert get_tran() == self.tran_header
 
         def test_signals(self):
 

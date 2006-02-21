@@ -32,36 +32,22 @@ from gaupol.constants import Framerate
 from gaupol.gtk.util  import config, gtklib
 
 
-class FramerateConvertDialog(gobject.GObject):
+class FramerateConvertDialog(object):
 
     """Dialog for shifting timings."""
 
-    __gsignals__ = {
-        'preview': (
-            gobject.SIGNAL_RUN_LAST,
-            None,
-            ()
-        ),
-    }
-
-    def __init__(self, parent, page):
-
-        gobject.GObject.__init__(self)
+    def __init__(self, parent):
 
         glade_xml = gtklib.get_glade_xml('frconvert-dialog.glade')
         get_widget = glade_xml.get_widget
 
-        self._all_radio      = get_widget('project_all_radio_button')
+        self._all_radio      = get_widget('projects_all_radio_button')
         self._convert_button = get_widget('convert_button')
         self._correct_combo  = get_widget('correct_combo_box')
         self._current_combo  = get_widget('current_combo_box')
-        self._current_radio  = get_widget('project_current_radio_button')
+        self._current_radio  = get_widget('projects_current_radio_button')
         self._dialog         = get_widget('dialog')
-        self._preview_button = get_widget('preview_button')
 
-        self._init_radio_groups()
-        self._init_mnemonics(glade_xml)
-        self._init_sensitivities(page)
         self._init_signals()
         self._init_data()
 
@@ -81,33 +67,6 @@ class FramerateConvertDialog(gobject.GObject):
                 store.append([Framerate.display_names[i]])
             combo_box.set_active(config.editor.framerate)
 
-    def _init_mnemonics(self, glade_xml):
-        """Initialize mnemonics."""
-
-        label = glade_xml.get_widget('current_label')
-        label.set_mnemonic_widget(self._current_combo)
-        label = glade_xml.get_widget('correct_label')
-        label.set_mnemonic_widget(self._correct_combo)
-
-    def _init_radio_groups(self):
-        """Initialize radio button groups."""
-
-        # Ensure that target radio buttons have the same group.
-        # ValueError is raised if button already is in group.
-        group = self._all_radio.get_group()[0]
-        try:
-            self._current_radio.set_group(group)
-        except ValueError:
-            pass
-
-    def _init_sensitivities(self, page):
-        """Initialize widget sensitivities."""
-
-        if page.project.video_path is None:
-            self._preview_button.set_sensitive(False)
-        if page.project.main_file is None:
-            self._preview_button.set_sensitive(False)
-
     def _init_signals(self):
         """Initialize signals."""
 
@@ -115,9 +74,6 @@ class FramerateConvertDialog(gobject.GObject):
         self._current_combo.connect('changed', method)
         method = self._on_correct_combo_changed
         self._correct_combo.connect('changed', method)
-
-        method = self._on_preview_button_clicked
-        self._preview_button.connect('clicked', method)
 
         method = self._on_all_radio_toggled
         self._all_radio.connect('toggled', method)
@@ -150,29 +106,25 @@ class FramerateConvertDialog(gobject.GObject):
     def _on_correct_combo_changed(self, combo_box):
         """Set convert button sensitivity."""
 
-        if combo_box.get_active() == self._current_combo.get_active():
-            self._convert_button.set_sensitive(False)
-        else:
-            self._convert_button.set_sensitive(True)
+        self._set_convert_button_sensitivity()
 
     def _on_current_combo_changed(self, combo_box):
         """Set convert button sensitivity."""
 
-        if combo_box.get_active() == self._correct_combo.get_active():
-            self._convert_button.set_sensitive(False)
-        else:
-            self._convert_button.set_sensitive(True)
-
-    def _on_preview_button_clicked(self, *args):
-        """Preview changes."""
-
-        self.emit('preview')
+        self._set_convert_button_sensitivity()
 
     def run(self):
         """Show and run the dialog."""
 
         self._dialog.show()
         return self._dialog.run()
+
+    def _set_convert_button_sensitivity(self):
+        """Set sensitivity of the convert button."""
+
+        current = self._current_combo.get_active()
+        correct = self._correct_combo.get_active()
+        self._convert_button.set_sensitive(not current == correct)
 
 
 if __name__ == '__main__':
@@ -187,8 +139,7 @@ if __name__ == '__main__':
             Test.__init__(self)
             self.application = Application()
             self.application.open_main_files([self.get_subrip_path()])
-            self.page = self.application.get_current_page()
-            self.dialog = FramerateConvertDialog(gtk.Window(), self.page)
+            self.dialog = FramerateConvertDialog(gtk.Window())
 
         def destroy(self):
 
@@ -206,5 +157,10 @@ if __name__ == '__main__':
             self.dialog._correct_combo.set_active(1)
             self.dialog._current_combo.set_active(0)
             self.dialog._current_combo.set_active(1)
+
+            self.dialog._all_radio.set_active(True)
+            self.dialog._all_radio.set_active(False)
+            self.dialog._current_radio.set_active(True)
+            self.dialog._current_radio.set_active(False)
 
     TestFramerateConvertDialog().run()
