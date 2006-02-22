@@ -638,17 +638,10 @@ class FileSaveDelegate(Delegate):
             gtklib.destroy_gobject(chooser)
             raise Cancelled
 
-        # Save file properties.
         filepath = chooser.get_filename_with_extension()
-        dirpath  = os.path.dirname(filepath)
         format   = chooser.get_format()
         encoding = chooser.get_encoding()
         newlines = chooser.get_newlines()
-
-        config.file.directory = dirpath
-        config.file.format    = format
-        config.file.encoding  = encoding
-        config.file.newlines  = newlines
 
         gtklib.destroy_gobject(chooser)
         return filepath, format, encoding, newlines

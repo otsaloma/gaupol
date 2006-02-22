@@ -645,11 +645,7 @@ class FileOpenDelegate(Delegate):
             raise Cancelled
 
         filepaths = chooser.get_filenames()
-        dirpath   = chooser.get_current_folder()
         encoding  = chooser.get_encoding()
-
-        config.file.encoding = encoding
-        config.file.directory = dirpath
 
         gtklib.destroy_gobject(chooser)
         return filepaths, encoding

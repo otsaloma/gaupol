@@ -1,3 +1,13 @@
+2006-02-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/gtk/dialogs/filechooser.py:
+	  Changed to use config directly.
+	  Cleaned up code.
+
+	* lib/gaupol/gtk/delegates/fileopen.py:
+	* lib/gaupol/gtk/delegates/filesave.py:
+	  Adapted to changes in filechooser.py.
+
 2006-02-21  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/gtk/cellrend/text.py:
