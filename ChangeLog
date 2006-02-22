@@ -1,6 +1,11 @@
 2006-02-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/gtk/dialogs/filechooser.py:
+	  Fixed encoding combo box behaviour.
+
+2006-02-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/gtk/dialogs/filechooser.py:
 	  Changed to use config directly.
 	  Cleaned up code.
 

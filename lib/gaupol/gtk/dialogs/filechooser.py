@@ -89,8 +89,12 @@ class TextFileChooserDialog(gtk.FileChooserDialog):
                     found = True
                     break
             if not found:
-                name = encodinglib.get_descriptive_name(config.file.encoding)
-                self._encodings.insert(0, (config.file.encoding, name))
+                try:
+                    encoding = config.file.encoding
+                    name = encodinglib.get_descriptive_name(encoding)
+                    self._encodings.insert(0, (encoding, name))
+                except ValueError:
+                    pass
 
         def sort(x, y):
             return cmp(x[1], y[1])
@@ -113,7 +117,6 @@ class TextFileChooserDialog(gtk.FileChooserDialog):
             self._encoding_combo.append_text(name)
         self._encoding_combo.append_text(_('Other...'))
 
-        self._encoding_combo.set_active(0)
         self.set_encoding(config.file.encoding)
 
     def _init_filters(self):
@@ -193,7 +196,11 @@ class TextFileChooserDialog(gtk.FileChooserDialog):
         for i, entry in enumerate(self._encodings):
             if entry[0] == encoding:
                 self._encoding_combo.set_active(i)
-                break
+                return
+
+        index = self._encoding_combo.get_active()
+        if index not in range(len(self._encodings)):
+            self._encoding_combo.set_active(0)
 
 
 class OpenFileDialog(TextFileChooserDialog):
