@@ -56,35 +56,11 @@ class OutputWindow(gobject.GObject):
         # Text buffer end mark
         self._end_mark = None
 
-        self._init_gui()
+        self._init_widgets()
         self._init_sizes()
         self._init_keys()
         self._init_signals()
         self._init_text_tags()
-
-    def _init_gui(self):
-        """Initialize GUI widgets."""
-
-        self._close_button = gtk.Button(stock=gtk.STOCK_CLOSE)
-        button_box = gtk.HButtonBox()
-        button_box.set_layout(gtk.BUTTONBOX_END)
-        button_box.pack_start(self._close_button, False, False)
-
-        self._text_view = gtk.TextView()
-        self._text_view.set_wrap_mode(gtk.WRAP_WORD)
-        scrolled_window = gtk.ScrolledWindow()
-        scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
-        scrolled_window.set_shadow_type(gtk.SHADOW_ETCHED_IN)
-        scrolled_window.add(self._text_view)
-
-        vbox = gtk.VBox(spacing=12)
-        vbox.pack_start(scrolled_window, True, True)
-        vbox.pack_start(button_box, False, False)
-
-        self._window = gtk.Window()
-        self._window.set_border_width(12)
-        self._window.set_title(_('Output'))
-        self._window.add(vbox)
 
     def _init_sizes(self):
         """Initialize widget sizes."""
@@ -110,9 +86,13 @@ class OutputWindow(gobject.GObject):
     def _init_signals(self):
         """Initialize signals."""
 
-        self._window.connect('delete-event', self._on_window_delete_event)
-        self._window.connect('window-state-event', self._on_window_state_event)
-        self._close_button.connect('clicked', self._on_close_requested)
+        method = self._on_window_delete_event
+        self._window.connect('delete-event', method)
+        method = self._on_window_state_event
+        self._window.connect('window-state-event', method)
+
+        method = self._on_close_requested
+        self._close_button.connect('clicked', method)
 
     def _init_text_tags(self):
         """Initialize text tags."""
@@ -121,6 +101,30 @@ class OutputWindow(gobject.GObject):
         text_buffer.create_tag('code', family='monospace')
         end_iter = text_buffer.get_end_iter()
         self._end_mark = text_buffer.create_mark('end', end_iter, True)
+
+    def _init_widgets(self):
+        """Initialize widgets."""
+
+        self._text_view = gtk.TextView()
+        self._text_view.set_wrap_mode(gtk.WRAP_WORD)
+        scrolled_window = gtk.ScrolledWindow()
+        scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+        scrolled_window.set_shadow_type(gtk.SHADOW_ETCHED_IN)
+        scrolled_window.add(self._text_view)
+
+        self._close_button = gtk.Button(stock=gtk.STOCK_CLOSE)
+        button_box = gtk.HButtonBox()
+        button_box.set_layout(gtk.BUTTONBOX_END)
+        button_box.pack_start(self._close_button, False, False)
+
+        vbox = gtk.VBox(spacing=12)
+        vbox.pack_start(scrolled_window, True, True)
+        vbox.pack_start(button_box, False, False)
+
+        self._window = gtk.Window()
+        self._window.set_border_width(12)
+        self._window.set_title(_('Output'))
+        self._window.add(vbox)
 
     def get_position(self):
         """Return the window position."""

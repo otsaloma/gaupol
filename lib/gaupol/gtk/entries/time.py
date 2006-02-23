@@ -117,7 +117,7 @@ class TimeEntry(gtk.Entry):
 
     @blockedmethod
     def _change_previous_to_zero(self):
-        """Change next number to zero."""
+        """Change previous number to zero."""
 
         position  = self.get_position()
         orig_text = self.get_text()
@@ -195,7 +195,7 @@ if __name__ == '__main__':
 
     from gaupol.test import Test
 
-    class TestIntegerEntry(Test):
+    class TestTimeEntry(Test):
 
         def test_init(self):
 
@@ -209,4 +209,4 @@ if __name__ == '__main__':
             window.show_all()
             gtk.main()
 
-    TestIntegerEntry().run()
+    TestTimeEntry().run()

@@ -39,7 +39,6 @@ class Application(object):
 
     def __init__(self):
 
-        # List of project displays (type gaupol.gtk.page.Page)
         self.pages = []
 
         # Counter for naming unsaved projects
@@ -89,19 +88,16 @@ class Application(object):
         # mapping all its methods that don't start with an underscore to that
         # instance.
         for cls in Delegates.classes:
-
             delegate = cls(self)
             for name in dir(delegate):
-
                 if name.startswith('_'):
                     continue
-
                 value = getattr(delegate, name)
                 if type(value) == types.MethodType:
                     self._delegations[name] = delegate
 
     def __getattr__(self, name):
-        """Delegate method calls to Handler objects."""
+        """Delegate method calls to delegate objects."""
 
         return self._delegations[name].__getattribute__(name)
 

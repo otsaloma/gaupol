@@ -36,6 +36,7 @@ def main(args):
 
     args: list of files to open, should be sys.argv[1:]
     """
+    # Catch exceptions to the debug dialog.
     sys.excepthook = debug.show
 
     # Initialize threading in a Windows-compatible manner.
@@ -45,13 +46,12 @@ def main(args):
     gobject.threads_init()
 
     application = Application()
-    paths = []
 
+    paths = []
     for arg in args:
         path = os.path.abspath(arg)
         if os.path.isfile(path):
             paths.append(path)
-
     if paths:
         application.open_main_files(paths)
 

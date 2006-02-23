@@ -31,12 +31,12 @@ class Action(object):
     UNDO_MULTIPLE = 3
     REDO_MULTIPLE = 4
 
+
 class Document(object):
 
     MAIN = 0
     TRAN = 1
 
-    id_names = ['main', 'translation']
 
 class Format(object):
 
@@ -55,6 +55,7 @@ class Format(object):
         'SubStationAlpha',
         'SubViewer2',
     ]
+
     display_names = [
         _('Advanced Sub Station Alpha'),
         _('MicroDVD'),
@@ -63,6 +64,7 @@ class Format(object):
         _('Sub Station Alpha'),
         _('SubViewer 2.0'),
     ]
+
     extensions = [
         '.ass',
         '.sub',
@@ -71,6 +73,7 @@ class Format(object):
         '.ssa',
         '.sub',
     ]
+
     id_names = [
         'ass',
         'microdvd',
@@ -80,22 +83,42 @@ class Format(object):
         'subviewer2',
     ]
 
+
 class Framerate(object):
 
     FR_23_976 = 0
     FR_25     = 1
     FR_29_97  = 2
 
-    display_names = [_('23.976 fps'), _('25 fps'), _('29.97 fps')]
-    id_names      = [  '23_976'     ,   '25'     ,   '29_97'     ]
-    values        = [   23.976      ,    25.0    ,    29.97      ]
+    display_names = [
+        _('23.976 fps'),
+        _('25 fps'),
+        _('29.97 fps'),
+    ]
+
+    id_names = [
+        '23_976',
+        '25',
+        '29_97',
+    ]
+
+    values = [
+        23.976,
+        25.0,
+        29.97,
+    ]
+
 
 class Mode(object):
 
     TIME  = 0
     FRAME = 1
 
-    id_names = ['time', 'frame']
+    id_names = [
+        'time',
+        'frame',
+    ]
+
 
 class Newlines(object):
 
@@ -103,21 +126,50 @@ class Newlines(object):
     UNIX    = 1
     WINDOWS = 2
 
-    display_names = [_('Mac'), _('Unix'), _('Windows')]
-    id_names      = [  'mac' ,   'unix' ,   'windows' ]
-    values        = [  '\r'  ,   '\n'   ,   '\r\n'    ]
+    display_names = [
+        _('Mac'),
+        _('Unix'),
+        _('Windows'),
+    ]
+
+    id_names = [
+        'mac',
+        'unix',
+        'windows',
+    ]
+
+    values = [
+        '\r',
+        '\n',
+        '\r\n',
+    ]
+
 
 class Position(object):
 
     ABOVE = 0
     BELOW = 1
 
-    id_names = ['above', 'below']
+    id_names = [
+        'above',
+        'below',
+    ]
+
 
 class VideoPlayer(object):
 
     MPLAYER = 0
     VLC     = 1
+
+    display_names = [
+        _('MPlayer'),
+        _('VLC'),
+    ]
+
+    id_names = [
+        'mplayer',
+        'vlc',
+    ]
 
     # %v = video filename
     # %s = subtitle filename
@@ -129,5 +181,3 @@ class VideoPlayer(object):
         'mplayer -identify -osdlevel 2 -ss %c -sub "%s" "%v"',
         'vlc --start-time=%c --sub-file="%s" "%v"',
     ]
-    display_names = ['MPlayer', 'VLC']
-    id_names      = ['mplayer', 'vlc']
