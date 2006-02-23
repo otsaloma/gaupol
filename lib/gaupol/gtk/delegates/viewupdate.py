@@ -87,8 +87,8 @@ class ViewUpdateDelegate(Delegate):
     def set_character_status(self, page):
         """Set character lengths info to statusbars."""
 
-        self.main_text_statusbar.pop(0)
-        self.tran_text_statusbar.pop(0)
+        self.main_statusbar.pop(0)
+        self.tran_statusbar.pop(0)
 
         if page is None:
             return
@@ -126,10 +126,10 @@ class ViewUpdateDelegate(Delegate):
             width = max(100, width)
             statusbar.set_size_request(width, -1)
 
-        if self.main_text_statusbar.props.visible:
-            set_status(self.main_text_statusbar, Document.MAIN)
-        if self.tran_text_statusbar.props.visible:
-            set_status(self.tran_text_statusbar, Document.TRAN)
+        if self.main_statusbar.props.visible:
+            set_status(self.main_statusbar, Document.MAIN)
+        if self.tran_statusbar.props.visible:
+            set_status(self.tran_statusbar, Document.TRAN)
 
 
 if __name__ == '__main__':

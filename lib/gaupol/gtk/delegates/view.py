@@ -254,7 +254,7 @@ class ToggleFramerateAction(UIMAction):
     )
 
     uim_paths = ['/ui/menubar/view/framerate']
-    widgets   = ['framerate_combo_box']
+    widgets   = ['framerate_combo']
 
     @classmethod
     def get_uim_radio_items_index(cls):
@@ -403,7 +403,7 @@ class ViewDelegate(Delegate):
         page = self.get_current_page()
 
         # Get new framerate.
-        framerate = self.framerate_combo_box.get_active()
+        framerate = self.framerate_combo.get_active()
 
         # Return if only refreshing widget state.
         if framerate == page.project.framerate:
@@ -558,7 +558,7 @@ class ViewDelegate(Delegate):
         config.editor.framerate = framerate
 
         # Set the correct framerate combo box entry active.
-        self.framerate_combo_box.set_active(framerate)
+        self.framerate_combo.set_active(framerate)
 
         if page.edit_mode != page.project.main_file.mode:
             page.reload_columns([SHOW, HIDE, DURN])
@@ -588,7 +588,7 @@ class ViewDelegate(Delegate):
     def on_toggle_statusbar_activated(self, *args):
         """Toggle the visibility of the statusbar."""
 
-        hbox = gtklib.get_parent_widget(self.message_statusbar, gtk.HBox)
+        hbox = gtklib.get_parent_widget(self.msg_statusbar, gtk.HBox)
         visible = hbox.props.visible
 
         hbox.props.visible = not visible
@@ -597,7 +597,7 @@ class ViewDelegate(Delegate):
     def on_toggle_video_toolbar_activated(self, *args):
         """Toggle the visibility of the video toolbar."""
 
-        toolbar = gtklib.get_parent_widget(self.video_file_button, gtk.Toolbar)
+        toolbar = gtklib.get_parent_widget(self.video_button, gtk.Toolbar)
         visible = toolbar.props.visible
 
         toolbar.props.visible = not visible

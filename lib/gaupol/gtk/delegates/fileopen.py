@@ -130,7 +130,7 @@ class SelectVideoAction(UIMAction):
     )
 
     uim_paths = ['/ui/menubar/file/select_video']
-    widgets   = ['video_file_button']
+    widgets   = ['video_button']
 
     @classmethod
     def is_doable(cls, application, page):

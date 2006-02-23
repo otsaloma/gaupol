@@ -180,18 +180,18 @@ class GUIInitDelegate(Delegate):
         hbox.pack_start(tran_event_box   , False, False, 0)
 
         # Create statusbars.
-        self.message_statusbar   = gtk.Statusbar()
-        self.main_text_statusbar = gtk.Statusbar()
-        self.tran_text_statusbar = gtk.Statusbar()
+        self.msg_statusbar   = gtk.Statusbar()
+        self.main_statusbar = gtk.Statusbar()
+        self.tran_statusbar = gtk.Statusbar()
 
         # Set an initial width for statusbars.
-        self.main_text_statusbar.set_size_request(100, -1)
-        self.tran_text_statusbar.set_size_request(100, -1)
+        self.main_statusbar.set_size_request(100, -1)
+        self.tran_statusbar.set_size_request(100, -1)
 
         # Pack statusbars.
-        message_event_box.add(self.message_statusbar)
-        text_event_box.add(self.main_text_statusbar)
-        tran_event_box.add(self.tran_text_statusbar)
+        message_event_box.add(self.msg_statusbar)
+        text_event_box.add(self.main_statusbar)
+        tran_event_box.add(self.tran_statusbar)
 
         return hbox
 
@@ -334,37 +334,37 @@ class GUIInitDelegate(Delegate):
 
         # Create video file button.
         hbox=gtk.HBox(False, 4)
-        self.video_file_button = gtk.Button()
-        self.video_file_button.add(hbox)
+        self.video_button = gtk.Button()
+        self.video_button.add(hbox)
         method = self.on_select_video_file_activated
-        self.video_file_button.connect('clicked', method)
+        self.video_button.connect('clicked', method)
 
         # Pack video file button contents.
         image = gtk.image_new_from_stock(gtk.STOCK_FILE, gtk.ICON_SIZE_MENU)
         hbox.pack_start(image, False, False)
-        self.video_file_label = gtk.Label()
-        self.video_file_label.props.xalign = 0
-        self.video_file_label.set_ellipsize(pango.ELLIPSIZE_MIDDLE)
-        hbox.pack_start(self.video_file_label, True, True)
+        self.video_label = gtk.Label()
+        self.video_label.props.xalign = 0
+        self.video_label.set_ellipsize(pango.ELLIPSIZE_MIDDLE)
+        hbox.pack_start(self.video_label, True, True)
         hbox.pack_start(gtk.VSeparator(), False, False)
         image = gtk.image_new_from_stock(gtk.STOCK_OPEN, gtk.ICON_SIZE_MENU)
         hbox.pack_start(image, False, False)
 
         # Set drag-and-drop for video file button.
-        self.video_file_button.drag_dest_set(
+        self.video_button.drag_dest_set(
             gtk.DEST_DEFAULT_ALL,
             [('text/uri-list', 0, 0)],
             gtk.gdk.ACTION_DEFAULT|gtk.gdk.ACTION_COPY|gtk.gdk.ACTION_MOVE| \
             gtk.gdk.ACTION_LINK|gtk.gdk.ACTION_PRIVATE|gtk.gdk.ACTION_ASK
         )
         method = self.on_video_file_button_drag_data_received
-        self.video_file_button.connect('drag-data-received', method)
+        self.video_button.connect('drag-data-received', method)
 
         # Add video filechooser button to toolbar.
         tool_item = gtk.ToolItem()
         tool_item.set_border_width(4)
         tool_item.set_expand(True)
-        tool_item.add(self.video_file_button)
+        tool_item.add(self.video_button)
         toolbar.insert(tool_item, -1)
 
         # Add video file label to toolbar.
@@ -375,16 +375,16 @@ class GUIInitDelegate(Delegate):
         toolbar.insert(tool_item, -1)
 
         # Create framerate combo box..
-        self.framerate_combo_box = gtk.combo_box_new_text()
+        self.framerate_combo = gtk.combo_box_new_text()
         for i in range(len(Framerate.display_names)):
-            self.framerate_combo_box.insert_text(i, Framerate.display_names[i])
-        self.framerate_combo_box.set_active(config.editor.framerate)
-        self.framerate_combo_box.connect('changed', self.on_framerate_changed)
+            self.framerate_combo.insert_text(i, Framerate.display_names[i])
+        self.framerate_combo.set_active(config.editor.framerate)
+        self.framerate_combo.connect('changed', self.on_framerate_changed)
 
         # Add framerate combo box to toolbar.
         tool_item = gtk.ToolItem()
         tool_item.set_border_width(4)
-        tool_item.add(self.framerate_combo_box)
+        tool_item.add(self.framerate_combo)
         toolbar.insert(tool_item, -1)
 
         return toolbar

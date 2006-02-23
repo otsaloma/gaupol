@@ -169,15 +169,15 @@ class ApplicationUpdateDelegate(Delegate):
         # Set tooltip. AttributeError is raised if the application window has
         # already been destroyed, but the timer still calls this method.
         try:
-            event_box = gtklib.get_event_box(self.message_statusbar)
-            self.message_statusbar.pop(0)
+            event_box = gtklib.get_event_box(self.msg_statusbar)
+            self.msg_statusbar.pop(0)
             self.tooltips.set_tip(event_box, message)
         except AttributeError:
             pass
 
         if message is None:
             return False
-        self.message_statusbar.push(0, message)
+        self.msg_statusbar.push(0, message)
 
         # Clear message after 6 seconds.
         if clear:
@@ -209,9 +209,9 @@ class ApplicationUpdateDelegate(Delegate):
 
         # Show only the message statusbar if no projects are open.
         if page is None:
-            self.main_text_statusbar.hide()
-            self.tran_text_statusbar.hide()
-            self.message_statusbar.set_has_resize_grip(True)
+            self.main_statusbar.hide()
+            self.tran_statusbar.hide()
+            self.msg_statusbar.set_has_resize_grip(True)
             return
 
         # Get column visibility.
@@ -219,28 +219,28 @@ class ApplicationUpdateDelegate(Delegate):
         tran_visible = page.view.get_column(TTXT).get_visible()
 
         # Assume everything is correct if visibilities match.
-        if text_visible == self.main_text_statusbar.props.visible and \
-           tran_visible == self.tran_text_statusbar.props.visible:
+        if text_visible == self.main_statusbar.props.visible and \
+           tran_visible == self.tran_statusbar.props.visible:
             return
 
         # Set statusbar visibilities.
-        self.main_text_statusbar.props.visible = text_visible
-        self.tran_text_statusbar.props.visible = tran_visible
+        self.main_statusbar.props.visible = text_visible
+        self.tran_statusbar.props.visible = tran_visible
 
         # Show the resize grip only in the right-most statusbar.
         if tran_visible:
-            self.message_statusbar.set_has_resize_grip(False)
-            self.main_text_statusbar.set_has_resize_grip(False)
-            self.tran_text_statusbar.set_has_resize_grip(True)
+            self.msg_statusbar.set_has_resize_grip(False)
+            self.main_statusbar.set_has_resize_grip(False)
+            self.tran_statusbar.set_has_resize_grip(True)
         else:
             if text_visible:
-                self.message_statusbar.set_has_resize_grip(False)
-                self.main_text_statusbar.set_has_resize_grip(True)
-                self.tran_text_statusbar.set_has_resize_grip(False)
+                self.msg_statusbar.set_has_resize_grip(False)
+                self.main_statusbar.set_has_resize_grip(True)
+                self.tran_statusbar.set_has_resize_grip(False)
             else:
-                self.message_statusbar.set_has_resize_grip(True)
-                self.main_text_statusbar.set_has_resize_grip(False)
-                self.tran_text_statusbar.set_has_resize_grip(False)
+                self.msg_statusbar.set_has_resize_grip(True)
+                self.main_statusbar.set_has_resize_grip(False)
+                self.tran_statusbar.set_has_resize_grip(False)
 
     def _set_widget_states(self, page):
         """Set the states of widgets."""
@@ -249,7 +249,7 @@ class ApplicationUpdateDelegate(Delegate):
             self.tooltips.disable()
             self.set_status_message(None)
             self.window.set_title('Gaupol')
-            self.video_file_label.set_text('')
+            self.video_label.set_text('')
             return
 
         # Enable tooltips.
@@ -267,16 +267,16 @@ class ApplicationUpdateDelegate(Delegate):
         # Set video file path.
         if page.project.video_path is not None:
             basename = os.path.basename(page.project.video_path)
-            self.video_file_label.set_text(basename)
+            self.video_label.set_text(basename)
         else:
-            self.video_file_label.set_text('')
-        self.tooltips.set_tip(self.video_file_button, page.project.video_path)
+            self.video_label.set_text('')
+        self.tooltips.set_tip(self.video_button, page.project.video_path)
 
         # Set framerate state.
         framerate_name = Framerate.id_names[page.project.framerate]
         path = '/ui/menubar/view/framerate/%s' % framerate_name
         self.uim.get_action(path).set_active(True)
-        self.framerate_combo_box.set_active(page.project.framerate)
+        self.framerate_combo.set_active(page.project.framerate)
 
         # Set column visibility states.
         for i in range(len(Column.id_names)):

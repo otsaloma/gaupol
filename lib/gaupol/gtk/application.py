@@ -45,18 +45,18 @@ class Application(object):
         self.counter = 0
 
         # Widgets
-        self.framerate_combo_box = None
-        self.main_text_statusbar = None
-        self.message_statusbar   = None
-        self.notebook            = None
-        self.open_button         = None
-        self.redo_button         = None
-        self.tran_text_statusbar = None
-        self.undo_button         = None
-        self.video_file_button   = None
-        self.video_file_label    = None
-        self.output_window       = None
-        self.window              = None
+        self.framerate_combo = None
+        self.main_statusbar  = None
+        self.msg_statusbar   = None
+        self.notebook        = None
+        self.open_button     = None
+        self.output_window   = None
+        self.redo_button     = None
+        self.tran_statusbar  = None
+        self.undo_button     = None
+        self.video_button    = None
+        self.video_label     = None
+        self.window          = None
 
         # UI manager and merge IDs
         self.uim             = None
