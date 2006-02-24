@@ -23,16 +23,16 @@
 Translation related tasks for Gaupol.
 
 Tasks handled by this script:
-- Creating a new .po file
-- Updating an existing .po file
-- Compiling .mo files
+* Creating a new .po file
+* Updating an existing .po file
+* Compiling .mo files
 
 Needed executables in path:
-- intltool-extract
-- msgfmt
-- msginit
-- msgmerge
-- xgettext
+* intltool-extract
+* msgfmt
+* msginit
+* msgmerge
+* xgettext
 
 Translatable strings are extracted from Glade XML files and Python source
 code files.
@@ -213,9 +213,7 @@ def update_po(lang):
     """Update an existing .po file with new strings."""
 
     for lang in get_languages(lang):
-
         title_print('Updating .po file for language "%s"...' % lang)
-
         po_path = os.path.join(PO_DIR, '%s.po' % lang)
         os.system('msgmerge -U %s %s' % (po_path, POT_PATH))
 
@@ -228,15 +226,13 @@ if __name__ == '__main__':
         create_pot()
         create_po(opts.create_po)
         remove_temporary_files()
-
     elif opts.update_po:
         create_pot()
         update_po(opts.update_po)
         remove_temporary_files()
-
     elif opts.compile_mo:
         compile_mo(opts.compile_mo)
 
     else:
-        print 'usage: trantool [options]'
-        print 'type "./trantool --help" for details'
+        print 'Usage: trantool [options]'
+        print 'See "./trantool --help" for details.'

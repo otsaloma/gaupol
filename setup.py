@@ -30,8 +30,7 @@ from gaupol import __version__
 
 UNINSTALL_WARNING = '''
 If you choose to continue, all files listed in the "installed-files.log" will
-be permanently removed.
-'''
+be permanently removed.'''
 
 packages = []
 
@@ -98,7 +97,6 @@ class InstallData(install_data):
 
             info('compiling %s' % mo_path)
             os.system('msgfmt -cv %s -o %s' % (po_path, mo_path))
-
             if os.path.isfile(mo_path):
                 mo_files.append((destination, [mo_path]))
 
@@ -156,7 +154,7 @@ class InstallLib(install_lib):
         data_dir   = os.path.join(prefix, 'share', 'gaupol')
         glade_dir  = os.path.join(data_dir, 'glade')
         icon_dir   = os.path.join(data_dir, 'icons')
-        ui_dir     = os.path.join(data_dir, 'ui'   )
+        ui_dir     = os.path.join(data_dir, 'ui')
         locale_dir = os.path.join(prefix, 'share', 'locale')
 
         paths_file = open(paths_path, 'a')
@@ -293,7 +291,7 @@ class Uninstall(Command):
             print UNINSTALL_WARNING
             response = raw_input('Continue [y/N]? ')
             if response.lower() != 'y':
-                raise SystemExit(1)
+                raise SystemExit(0)
 
         log_path = 'installed-files.log'
 

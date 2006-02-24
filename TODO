@@ -7,30 +7,16 @@ Legend:
 Plans for 0.4.0
 ===============
 
-  * Glade XML files
-      - Set mnemonics
-      - Set radio groups
-      - Current/Correct
-          -> Input/Output
-          -> Current/New
-      - "Check all subtitles" or "All subtitles"
-      - Widget names
-      - Remove preview button from framerate conversion dialog
   * config
       - shift_all -> all_subtitles
       - check_all_projects -> all_projects
       - adjust_all -> ...
-  * Dialogs
-      - Fix any remaining dialogs afraid of using page directly
-      - Unify method structure and naming
-      - Unify widget naming
-      - Adjust, shift, convert and preview button sensitivities
-  * Framerate comversion
+  * Framerate conversion
       - Remove keyboard shortcut
-      - Make only available when editing a frame-based file
+      - Make only available when editing a frame-based file?
   * base
       - Is calc.framerate updated when on_framerate_changed?
-      - Undo action grouping
+      - Undo action grouping?
   * gtk
       - Call set_sensitivities() at the end of on_undo, on_redo
   * All round review
@@ -90,10 +76,6 @@ Other
 =====
 
   * Keep an eye on GStreamer and its Python bindings, in case it could one day
-    be considered suitable for determining video framerate and previewing,
-    possibly combined with interactive retiming by mouse-clicking in a video
-    player. Currently I consider coding an entire video player for the preview
-    function too much work and gstreamer (at least 0.8 and prior) has problems
-    with playing some proprietary, but common, video formats.
+    be considered suitable for determining video framerate and previewing.
 
       http://gstreamer.freedesktop.org/modules/gst-python.html

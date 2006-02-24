@@ -195,7 +195,6 @@ def prepare_source_run(prefix):
     """Prepare path information for running from source directory."""
 
     lib_dir = os.path.join(prefix, 'lib')
-
     if lib_dir not in sys.path:
         sys.path.insert(0, lib_dir)
 

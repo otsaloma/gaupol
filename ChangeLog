@@ -1,5 +1,12 @@
 2006-02-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol:
+	* setup.py:
+	* trantool:
+	  Cosmetic changes.
+
+2006-02-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/gtk/application.py:
 	* lib/gaupol/gtk/delegates/appupdate.py:
 	* lib/gaupol/gtk/delegates/edit.py:
