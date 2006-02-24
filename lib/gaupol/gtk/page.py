@@ -19,6 +19,7 @@
 
 """User interface for a single project."""
 
+
 try:
     from psyco.classes import *
 except ImportError:
@@ -43,7 +44,7 @@ class Page(gobject.GObject):
     """User interface for a single project."""
 
     __gsignals__ = {
-        'close-button-clicked': (
+        'closed': (
             gobject.SIGNAL_RUN_LAST,
             None,
             ()
@@ -73,35 +74,29 @@ class Page(gobject.GObject):
 
         title = self.get_main_basename()
 
-        # Tab label
         self.tab_label = gtk.Label(title)
         self.tab_label.props.xalign = 0
         self.tab_label.set_ellipsize(pango.ELLIPSIZE_MIDDLE)
         self.tab_label.set_max_width_chars(24)
 
-        # Event box for tooltip
         event_box = gtk.EventBox()
         event_box.add(self.tab_label)
         self.tooltips.set_tip(event_box, self.get_main_filename())
 
-        # Tab close image
         image = gtk.image_new_from_stock(gtk.STOCK_CLOSE, gtk.ICON_SIZE_MENU)
         width, height = image.size_request()
 
-        # Tab close button
         button = gtk.Button()
         button.add(image)
         button.set_relief(gtk.RELIEF_NONE)
         button.set_size_request(width + 2, height + 2)
         button.connect('clicked', self._on_close_button_clicked)
 
-        # Tab horizontal box
         tab_widget = gtk.HBox(False, 4)
         tab_widget.pack_start(event_box, True , True , 0)
         tab_widget.pack_start(button   , False, False, 0)
         tab_widget.show_all()
 
-        # Tab menu label
         self.tab_menu_label = gtk.Label(title)
         self.tab_menu_label.props.xalign = 0
 
@@ -198,9 +193,9 @@ class Page(gobject.GObject):
             return basename
 
     def _on_close_button_clicked(self, *args):
-        """Emit signal that the notebook tab close button has been clicked."""
+        """Emit closed signal."""
 
-        self.emit('close-button-clicked')
+        self.emit('closed')
 
     def reload_after_row(self, row):
         """Reload view after row."""
@@ -262,22 +257,18 @@ class Page(gobject.GObject):
         rows  = rows or range(len(store))
 
         for col in cols:
-
             if col == NO:
                 for row in rows:
                     store[row][col] = row + 1
-
             elif col in (SHOW, HIDE, DURN):
                 timings  = self._get_timings()
                 base_col = col - 1
                 for row in rows:
                     store[row][col] = timings[row][base_col]
-
             elif col == MTXT:
                 main_texts = self.project.main_texts
                 for row in rows:
                     store[row][col] = main_texts[row]
-
             elif col == TTXT:
                 tran_texts = self.project.tran_texts
                 for row in rows:
@@ -322,7 +313,6 @@ class Page(gobject.GObject):
 
         self.tab_label.set_text(title)
         self.tab_menu_label.set_text(title)
-
         event_box = gtklib.get_event_box(self.tab_label)
         self.tooltips.set_tip(event_box, self.get_main_filename())
 
@@ -400,22 +390,22 @@ if __name__ == '__main__':
 
         def test_reload_columns(self):
 
-            self.page.project.set_text(1, Document.MAIN, 'test')
-            self.page.project.set_text(2, Document.MAIN, 'test')
-            self.page.project.set_text(3, Document.MAIN, 'test')
-            self.page.reload_columns([MTXT], [1, 2, 3])
+            self.page.project.set_text(1, Document.TRAN, 'test')
+            self.page.project.set_text(2, Document.TRAN, 'test')
+            self.page.project.set_text(3, Document.TRAN, 'test')
+            self.page.reload_columns([TTXT], [1, 2, 3])
             self.page.assert_store()
 
         def  test_reload_row(self):
 
-            self.page.project.set_text(2, Document.TRAN, 'test')
-            self.page.reload_row(2)
+            self.page.project.set_text(4, Document.TRAN, 'test')
+            self.page.reload_row(4)
             self.page.assert_store()
 
         def  test_reload_rows(self):
 
-            self.page.project.set_text(3, Document.TRAN, 'test')
-            self.page.reload_rows([3])
+            self.page.project.set_text(5, Document.TRAN, 'test')
+            self.page.reload_rows([5])
             self.page.assert_store()
 
         def test_text_column_to_document(self):
@@ -430,7 +420,7 @@ if __name__ == '__main__':
             title = self.page.update_tab_labels()
             assert title == self.page.get_main_basename()
 
-            self.page.project.set_text(4, Document.MAIN, 'test')
+            self.page.project.set_text(6, Document.MAIN, 'test')
             title = self.page.update_tab_labels()
             assert title == '*' + self.page.get_main_basename()
 

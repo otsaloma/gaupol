@@ -1,5 +1,13 @@
 2006-02-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/delegates/fileopen.py:
+	* lib/gaupol/gtk/page.py:
+	* lib/gaupol/gtk/view.py:
+	* setup.py:
+	  Cosmetic changes.
+
+2006-02-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol:
 	* setup.py:
 	* trantool:

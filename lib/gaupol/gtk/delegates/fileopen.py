@@ -316,7 +316,7 @@ class FileOpenDelegate(Delegate):
         page.project.connect('action_undone', self.on_project_action_undone)
 
         # Page
-        page.connect('close-button-clicked', self.on_close_button_clicked)
+        page.connect('closed', self.on_close_button_clicked)
 
     def connect_view_signals(self, page):
         """Connect GObject signals emitted by view."""

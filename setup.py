@@ -7,6 +7,7 @@
 # next distutils will have uninstallation routines of it's own, in which case
 # exercising backspace and delete will fix this file.
 
+
 import glob
 import os
 import shutil

@@ -56,29 +56,24 @@ class View(gtk.TreeView):
         # should be the same as the column that has focus, but not always.
         self._active_col = None
 
-        # Set general properties.
         self.set_headers_visible(True)
         self.set_rules_hint(True)
         self.columns_autosize()
 
-        # Set selection.
         selection = self.get_selection()
         selection.set_mode(gtk.SELECTION_MULTIPLE)
         selection.unselect_all()
 
-        # Create cell renderers.
         if edit_mode == Mode.TIME:
             columns = [gobject.TYPE_INT] + [gobject.TYPE_STRING] * 5
             cell_renderer_1 = CellRendererTime()
             cell_renderer_2 = CellRendererTime()
             cell_renderer_3 = CellRendererTime()
-
         elif edit_mode == Mode.FRAME:
             columns = [gobject.TYPE_INT] * 4 + [gobject.TYPE_STRING] * 2
             cell_renderer_1 = CellRendererInteger()
             cell_renderer_2 = CellRendererInteger()
             cell_renderer_3 = CellRendererInteger()
-
         cell_renderer_0 = CellRendererInteger()
         cell_renderer_4 = CellRendererMultilineText()
         cell_renderer_5 = CellRendererMultilineText()
@@ -88,21 +83,17 @@ class View(gtk.TreeView):
         else:
             font = config.editor.font
 
-        # Set cell renderer properties.
         for i in range(6):
             cell_renderer = eval('cell_renderer_%d' % i)
             if i != 0:
                 cell_renderer.set_editable(True)
             cell_renderer.props.font = font
 
-        # Set list store as model.
         store = gtk.ListStore(*columns)
         self.set_model(store)
 
-        # Create columns.
         TVC   = gtk.TreeViewColumn
         names = Column.display_names
-
         tree_view_column_0 = TVC(names[0], cell_renderer_0, text=0)
         tree_view_column_1 = TVC(names[1], cell_renderer_1, text=1)
         tree_view_column_2 = TVC(names[2], cell_renderer_2, text=2)
@@ -110,15 +101,12 @@ class View(gtk.TreeView):
         tree_view_column_4 = TVC(names[4], cell_renderer_4, text=4)
         tree_view_column_5 = TVC(names[5], cell_renderer_5, text=5)
 
-        # Set tree_view_column properties and append them.
         for i in range(6):
 
             tree_view_column = eval('tree_view_column_%d' % i)
             self.append_column(tree_view_column)
-
             tree_view_column.set_clickable(True)
             tree_view_column.set_resizable(True)
-
             if not i in config.editor.visible_columns:
                 tree_view_column.set_visible(False)
 
@@ -134,13 +122,13 @@ class View(gtk.TreeView):
             label.set_size_request(width, -1)
             label.set_attributes(norm_attr)
 
-        # Enable search for number column.
+        # Enable type-ahead search for number column.
         self.set_enable_search(True)
         self.set_search_column(NO)
 
     def get_focus(self):
         """
-        Get the location of the current focus.
+        Get location of current focus.
 
         Return row, column.
         """
@@ -167,7 +155,7 @@ class View(gtk.TreeView):
         selected_rows = selection.get_selected_rows()[1]
 
         # Get an integers from the row one-tuples.
-        return [row[0] for row in selected_rows]
+        return list(row[0] for row in selected_rows)
 
     def scroll_to_row(self, row):
         """Scroll to row."""
@@ -185,9 +173,7 @@ class View(gtk.TreeView):
 
         if not rows:
             return
-
-        rows = rows[:]
-        rows.sort()
+        rows = sorted(rows)
 
         # To avoid sending "changed" signal on the selection for every single
         # row, the list of rows needs to be broken down into ranges and
@@ -213,7 +199,6 @@ class View(gtk.TreeView):
         """Emphasize the active column title."""
 
         col = self.get_focus()[1]
-
         if col == self._active_col:
             return
 
@@ -222,7 +207,6 @@ class View(gtk.TreeView):
             label.set_attributes(norm_attr)
         except TypeError:
             pass
-
         try:
             label = self.get_column(col).get_widget()
             label.set_attributes(emph_attr)
@@ -243,12 +227,11 @@ if __name__ == '__main__':
             self.view = View(Mode.TIME)
             self.view = View(Mode.FRAME)
             store = self.view.get_model()
-            store.append([1, 2, 3, 4, 'test', 'test'])
-            store.append([2, 6, 7, 8, 'test', 'test'])
+            store.append([1, 2, 3, 1, 'test', 'test'])
+            store.append([2, 6, 7, 1, 'test', 'test'])
 
         def test_get_focus(self):
 
-            self.view.get_focus()
             self.view.set_focus(1, 3)
             assert self.view.get_focus() == (1, 3)
 
@@ -260,7 +243,7 @@ if __name__ == '__main__':
             selection.select_range(0, 1)
             assert self.view.get_selected_rows() == [0, 1]
 
-        def test_set_methods(self):
+        def test_sets(self):
 
             self.view.scroll_to_row(1)
             self.view.select_rows([])
