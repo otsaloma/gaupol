@@ -211,7 +211,9 @@ class Test(object):
             try:
                 value()
             except:
+                print '*' * 72
                 traceback.print_exc()
+                print '*' * 72
 
         self.destroy()
         self.remove_files()

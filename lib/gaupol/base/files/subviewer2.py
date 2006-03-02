@@ -80,10 +80,8 @@ class SubViewer2(SubtitleFile):
         header_read = False
 
         for line in lines:
-
             if re_blank_line.match(line) is not None:
                 continue
-
             match = re_time_line.match(line)
             if match is not None:
                 header_read = True

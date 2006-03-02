@@ -101,12 +101,16 @@ class PreferencesDelegate(Delegate):
 
         dialog = PreferencesDialog(self.window)
 
-        connect = dialog.connect
-        connect('destroyed'               , self._on_destroyed               )
-        connect('limit-undo-toggled'      , self._on_limit_undo_toggled      )
-        connect('undo-levels-changed'     , self._on_undo_levels_changed     )
-        connect('use-default-font-toggled', self._on_use_default_font_toggled)
-        connect('font-set'                , self._on_font_set                )
+        connections = (
+            ('destroyed'               , '_on_destroyed'               ),
+            ('limit-undo-toggled'      , '_on_limit_undo_toggled'      ),
+            ('undo-levels-changed'     , '_on_undo_levels_changed'     ),
+            ('use-default-font-toggled', '_on_use_default_font_toggled'),
+            ('font-set'                , '_on_font_set'                ),
+        )
+        for signal, method in connections:
+            method = getattr(self, method)
+            dialog.connect(signal, method)
 
         dialog.show()
 
@@ -136,7 +140,6 @@ class PreferencesDelegate(Delegate):
             font = ''
         else:
             font = config.editor.font
-
         self._enforce_new_font(font)
 
 
@@ -167,7 +170,6 @@ if __name__ == '__main__':
             self.delegate._on_limit_undo_toggled(dialog, True)
             self.delegate._on_undo_levels_changed(dialog, 1)
             self.delegate._on_use_default_font_toggled(dialog, False)
-
             self.application.on_edit_preferences_activated()
 
     TestPreferencesDelegate().run()

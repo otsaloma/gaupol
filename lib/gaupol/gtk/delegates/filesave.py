@@ -205,7 +205,6 @@ class SaveFileErrorDialog(ErrorDialog):
 
         title   = _('Failed to save file "%s"') % basename
         message = _('Attempt to write file returned error: %s.') % message
-
         ErrorDialog.__init__(self, parent, title, message)
 
 
@@ -219,7 +218,6 @@ class UnicodeEncodeErrorDialog(ErrorDialog):
                   % (basename, codec)
         message = _('Please try to save the file with a different character '
                    'encoding.')
-
         ErrorDialog.__init__(self, parent, title, message)
 
 
@@ -326,7 +324,6 @@ class FileSaveDelegate(Delegate):
         """
         page = self.get_current_page()
         success = self.save_main_document(page)
-
         if not success:
             return False
 
@@ -341,7 +338,6 @@ class FileSaveDelegate(Delegate):
         """
         page = self.get_current_page()
         success = self.save_main_document_as(page)
-
         if not success:
             return False
 
@@ -355,9 +351,7 @@ class FileSaveDelegate(Delegate):
         Return success (True or False).
         """
         page = self.get_current_page()
-
         success = self.save_translation_document(page)
-
         if not success:
             return False
 
@@ -372,7 +366,6 @@ class FileSaveDelegate(Delegate):
         """
         page = self.get_current_page()
         success = self.save_translation_document_as(page)
-
         if not success:
             return False
 
@@ -393,14 +386,12 @@ class FileSaveDelegate(Delegate):
         path = _('%s (copy)') % page.get_main_corename()
         properties = path, format, encoding, newlines
 
-        # Select file.
         try:
             properties = self._select_file(_('Save A Copy'), properties)
         except Cancelled:
             gtklib.set_cursor_normal(self.window)
             return False
 
-        # Save file.
         args = page, Document.MAIN, self.window, False, properties
         success = self._save_file(*args)
         if not success:
@@ -427,7 +418,6 @@ class FileSaveDelegate(Delegate):
         path = _('%s (copy)') % page.get_translation_corename()
         properties = path, format, encoding, newlines
 
-        # Select file.
         title = _('Save A Copy Of Translation')
         try:
             properties = self._select_file(title, properties)
@@ -435,7 +425,6 @@ class FileSaveDelegate(Delegate):
             gtklib.set_cursor_normal(self.window)
             return False
 
-        # Save file.
         args = page, Document.TRAN, self.window, False, properties
         success = self._save_file(*args)
         if not success:
@@ -509,19 +498,16 @@ class FileSaveDelegate(Delegate):
         properties = self._get_main_file_properties(page)
         path, format, encoding, newlines = properties
         original_format = format
-
         if path is None:
             path = page.untitle
             properties = path, format, encoding, newlines
 
-        # Select file.
         try:
             properties = self._select_file(_('Save As'), properties)
         except Cancelled:
             gtklib.set_cursor_normal(self.window)
             return False
 
-        # Save file.
         args = page, Document.MAIN, self.window, True, properties
         success = self._save_file(*args)
         if not success:
@@ -541,7 +527,6 @@ class FileSaveDelegate(Delegate):
         if page.project.video_path is None:
             extensions = config.preview.extensions
             page.project.guess_video_file_path(extensions)
-
 
         self.add_to_recent_files(path)
         message = _('Saved main document as "%s"') % path
@@ -579,12 +564,10 @@ class FileSaveDelegate(Delegate):
         properties = self._get_translation_file_properties(page)
         path, format, encoding, newlines = properties
         original_format = format
-
         if path is None:
             path = page.get_translation_corename()
             properties = path, format, encoding, newlines
 
-        # Select file.
         try:
             title = _('Save Translation As')
             properties = self._select_file(title, properties)
@@ -592,7 +575,6 @@ class FileSaveDelegate(Delegate):
             gtklib.set_cursor_normal(self.window)
             return False
 
-        # Save file.
         args = page, Document.TRAN, self.window, True, properties
         success = self._save_file(*args)
         if not success:
@@ -621,10 +603,8 @@ class FileSaveDelegate(Delegate):
         Raise Cancelled if cancelled.
         Return path, format, encoding, newlines.
         """
-        chooser = SaveFileDialog(title, self.window)
-
-        # Set properties for the file to be saved.
         path, format, encoding, newlines = properties
+        chooser = SaveFileDialog(title, self.window)
         chooser.set_filename_or_current_name(path)
         chooser.set_format(format)
         chooser.set_encoding(encoding)
@@ -633,7 +613,6 @@ class FileSaveDelegate(Delegate):
         gtklib.set_cursor_normal(self.window)
         response = chooser.run()
         gtklib.set_cursor_busy(self.window)
-
         if response != gtk.RESPONSE_OK:
             gtklib.destroy_gobject(chooser)
             raise Cancelled

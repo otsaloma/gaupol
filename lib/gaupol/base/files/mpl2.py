@@ -94,7 +94,6 @@ class MPL2(SubtitleFile):
         texts = texts[:]
 
         newline_character = self._get_newline_character()
-
         calc = TimeFrameCalculator()
 
         # Convert timings from timestrings to seconds and finally decaseconds.

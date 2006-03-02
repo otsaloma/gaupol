@@ -7,19 +7,7 @@ Legend:
 Plans for 0.4.0
 ===============
 
-  * config
-      - shift_all -> all_subtitles
-      - check_all_projects -> all_projects
-      - adjust_all -> ...
-  * Framerate conversion
-      - Remove keyboard shortcut
-      - Make only available when editing a frame-based file?
-  * base
-      - Is calc.framerate updated when on_framerate_changed?
-      - Undo action grouping?
-  * gtk
-      - Call set_sensitivities() at the end of on_undo, on_redo
-  * All round review
+  * "returned error:"
   * Test all timing manipulations
   * Update README and webpage
       - SSA & ASS
@@ -56,6 +44,10 @@ Plans after 0.4.0
           [ ] Target
                 * Selection / current project / all open projects
                 * Main text, translation text
+    [ ] Error correction
+    [ ] Capitalization
+    [ ] Line reformat
+    [ ] Hearing impaired removal
 
 
 Unscheduled

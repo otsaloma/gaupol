@@ -30,7 +30,7 @@ import inspect
 
 # List of all delegate module names. Methods of listed modules will be imported
 # into the delegation system.
-module_names = [
+module_names = (
     'action',
     'edit',
     'fileopen',
@@ -39,7 +39,7 @@ module_names = [
     'preview',
     'stat',
     'timing',
-]
+)
 
 
 class Delegate(object):
@@ -83,19 +83,14 @@ def list_delegate_classes():
     """List all delegate classes."""
 
     for module_name in Delegates.module_names:
-
         path = 'gaupol.base.delegates.' + module_name
         module = __import__(path, None, None, [''])
-
         for name in dir(module):
-
             if name.startswith('_'):
                 continue
-
             value = getattr(module, name)
             if inspect.getmodule(value) != module:
                 continue
-
             try:
                 if issubclass(value, Delegate):
                     Delegates.classes.append(value)

@@ -23,10 +23,10 @@ Application settings.
 Other modules can get and set variables through the container classes by
 directly accessing their attributes.
 
-ConfigParser is used for reading and writing the ini-style configuration file.
-The configuration file is an .ini-style file in ~/.gaupol/gaupol.gtk.conf.
-Values "true" or "false" are used for boolean fields and pipe-separated strings
-for lists. All stored values are strings.
+ConfigParser is used for reading and writing the configuration file.  The
+configuration file is an .ini-style file in ~/.gaupol/gaupol.gtk.conf.  Values
+"true" or "false" are used for boolean fields and pipe-separated strings for
+lists. All stored values are strings.
 """
 
 
@@ -35,15 +35,15 @@ import logging
 import os
 import sys
 
-from gaupol.constants        import *
-from gaupol.gtk.colconstants import *
-from gaupol                  import __version__
+from gaupol.base.delegates.preview import default_extensions
+from gaupol.constants              import *
+from gaupol.gtk.colconstants       import *
+from gaupol                        import __version__
 
 
 logger = logging.getLogger()
 
 
-# Configuration file constants
 CONFIG_DIR    = os.path.join(os.path.expanduser('~'), '.gaupol')
 CONFIG_PATH   = os.path.join(CONFIG_DIR, 'gaupol.gtk.conf')
 CONFIG_HEADER = \
@@ -62,10 +62,10 @@ class Type(object):
 
     """Types of configuration variables."""
 
-    STRING        = 0
-    INTEGER       = 1
-    BOOLEAN       = 2
-    CONSTANT      = 3
+    STRING   = 0
+    INTEGER  = 1
+    BOOLEAN  = 2
+    CONSTANT = 3
 
     STRING_LIST   = 4
     INTEGER_LIST  = 5
@@ -73,13 +73,13 @@ class Type(object):
     CONSTANT_LIST = 7
 
     @staticmethod
-    def is_list(typ):
-        """Return True if typ is a list type."""
+    def is_list(type_):
+        """Return True if type is a list type."""
 
-        return typ in (4, 5, 6, 7)
+        return type_ in (4, 5, 6, 7)
 
 
-sections = [
+sections = (
     'application_window',
     'duration_adjust',
     'editor',
@@ -88,27 +88,27 @@ sections = [
     'general',
     'output_window',
     'preview',
-    'subtitle_insert',
     'spell_check',
+    'subtitle_insert',
     'timing_adjust',
     'timing_shift',
-]
+)
 
 
 class application_window(object):
 
     maximized          = False
     position           = [0, 0]
-    show_statusbar     = True
     show_main_toolbar  = True
+    show_statusbar     = True
     show_video_toolbar = True
     size               = [600, 371]
 
     types = {
         'maximized'         : Type.BOOLEAN,
         'position'          : Type.INTEGER_LIST,
-        'show_statusbar'    : Type.BOOLEAN,
         'show_main_toolbar' : Type.BOOLEAN,
+        'show_statusbar'    : Type.BOOLEAN,
         'show_video_toolbar': Type.BOOLEAN,
         'size'              : Type.INTEGER_LIST,
     }
@@ -120,7 +120,7 @@ class duration_adjust(object):
     gap           = '0.050'
     lengthen      = True
     maximum       = '6.000'
-    minimum       = '0.900'
+    minimum       = '1.000'
     optimal       = '0.065'
     shorten       = True
     use_gap       = True
@@ -202,10 +202,10 @@ class file(object):
 
 class framerate_convert(object):
 
-    convert_all = True
+    all_projects = True
 
     types = {
-        'convert_all': Type.BOOLEAN,
+        'all_projects': Type.BOOLEAN,
     }
 
 class general(object):
@@ -235,26 +235,7 @@ class output_window(object):
 class preview(object):
 
     custom_command = None
-    extensions     = [
-        '.asf',
-        '.avi',
-        '.dat',
-        '.divx',
-        '.mkv',
-        '.mov',
-        '.mpeg',
-        '.mpg',
-        '.mp4',
-        '.m2v',
-        '.ogm',
-        '.qt',
-        '.rm',
-        '.rmvb',
-        '.swf',
-        '.vob',
-        '.wmv',
-        '.3ivx',
-    ]
+    extensions     = list(default_extensions)
     offset         = '5.0'
     use_custom     = False
     video_player   = VideoPlayer.MPLAYER
@@ -273,18 +254,18 @@ class preview(object):
 
 class spell_check(object):
 
-    check_all_projects   = False
-    check_main           = True
-    check_translation    = False
+    all_projects         = False
     main_language        = None
+    main                 = True
+    translation          = False
     translation_language = None
 
     types = {
-        'check_all_projects'  : Type.BOOLEAN,
-        'check_main'          : Type.BOOLEAN,
-        'check_translation'   : Type.BOOLEAN,
+        'all_projects'        : Type.BOOLEAN,
         'main_language'       : Type.STRING,
+        'main'                : Type.BOOLEAN,
         'translation_language': Type.STRING,
+        'translation'         : Type.BOOLEAN,
     }
 
 class subtitle_insert(object):
@@ -303,22 +284,22 @@ class subtitle_insert(object):
 
 class timing_adjust(object):
 
-    shift_all = True
+    all_subtitles = True
 
     types = {
-        'shift_all': Type.BOOLEAN,
+        'all_subtitles': Type.BOOLEAN,
     }
 
 class timing_shift(object):
 
-    frames    = 0
-    seconds   = '0'
-    shift_all = True
+    all_subtitles = True
+    frames        = 0
+    seconds       = '0'
 
     types = {
-        'frames'   : Type.INTEGER,
-        'seconds'  : Type.STRING,
-        'shift_all': Type.BOOLEAN,
+        'all_subtitles': Type.BOOLEAN,
+        'frames'       : Type.INTEGER,
+        'seconds'      : Type.STRING,
     }
 
 
@@ -358,17 +339,11 @@ def get_options(section):
     """Get a list of all options in section."""
 
     options = []
-
     for name in dir(eval(section)):
         if not name.startswith('_') and not name in ('types', 'classes'):
             options.append(name)
 
     return options
-
-def get_sections():
-    """Get a list of sections."""
-
-    return sections
 
 def read():
     """Read and parse settings from file."""
@@ -385,10 +360,8 @@ def read():
     # Set config options.
     sections = parser.sections()
     for section in sections:
-
         options = parser.options(section)
         for option in options:
-
             try:
                 _set_config_option(parser, section, option)
             except Exception:
@@ -402,39 +375,39 @@ def _set_config_option(parser, section, option):
     Raise Exception if something goes wrong.
     """
     string = parser.get(section, option)
-    typ    = eval(section).types[option]
+    type_  = eval(section).types[option]
 
     # Convert string to proper data type.
     if string == '':
-        if Type.is_list(typ):
+        if Type.is_list(type_):
             value = []
         else:
             value = None
 
-    elif typ == Type.STRING:
+    elif type_ == Type.STRING:
         value = string
 
-    elif typ == Type.INTEGER:
+    elif type_ == Type.INTEGER:
         value = int(string)
 
-    elif typ == Type.BOOLEAN:
+    elif type_ == Type.BOOLEAN:
         value = _get_boolean(string)
 
-    elif typ == Type.CONSTANT:
+    elif type_ == Type.CONSTANT:
         value = _get_constant(section, option, string)
 
-    elif typ == Type.STRING_LIST:
+    elif type_ == Type.STRING_LIST:
         value = string.split(LIST_SEP)
 
-    elif typ == Type.INTEGER_LIST:
+    elif type_ == Type.INTEGER_LIST:
         str_list = string.split(LIST_SEP)
         value = list(int(entry) for entry in str_list)
 
-    elif typ == Type.BOOLEAN_LIST:
+    elif type_ == Type.BOOLEAN_LIST:
         str_list = string.split(LIST_SEP)
         value = list(_get_boolean(entry) for entry in str_list)
 
-    elif typ == Type.CONSTANT_LIST:
+    elif type_ == Type.CONSTANT_LIST:
         str_list = string.split(LIST_SEP)
         value = []
         for entry in str_list:
@@ -449,36 +422,36 @@ def _set_parser_option(parser, section, option):
     Raise Exception if something goes wrong.
     """
     value = eval('%s.%s' % (section, option))
-    typ   = eval(section).types[option]
+    type_ = eval(section).types[option]
 
     # Convert data type to string.
     if value == None:
         string = ''
 
-    elif typ == Type.STRING:
+    elif type_ == Type.STRING:
         string = value
 
-    elif typ == Type.INTEGER:
+    elif type_ == Type.INTEGER:
         string = str(value)
 
-    elif typ == Type.BOOLEAN:
+    elif type_ == Type.BOOLEAN:
         string = _get_boolean(value)
 
-    elif typ == Type.CONSTANT:
+    elif type_ == Type.CONSTANT:
         string = _get_constant(section, option, value)
 
-    elif typ == Type.STRING_LIST:
+    elif type_ == Type.STRING_LIST:
         string = LIST_SEP.join(value)
 
-    elif typ == Type.INTEGER_LIST:
+    elif type_ == Type.INTEGER_LIST:
         str_list = list(str(entry) for entry in value)
         string = LIST_SEP.join(str_list)
 
-    elif typ == Type.BOOLEAN_LIST:
+    elif type_ == Type.BOOLEAN_LIST:
         str_list = list(_get_boolean(entry) for entry in value)
         string = LIST_SEP.join(str_list)
 
-    elif typ == Type.CONSTANT_LIST:
+    elif type_ == Type.CONSTANT_LIST:
         str_list = []
         for entry in value:
             str_list.append(_get_constant(section, option, entry))
@@ -496,13 +469,10 @@ def write():
     parser = ConfigParser.RawConfigParser()
 
     # Set parser options.
-    sections = get_sections()
     for section in sections:
         parser.add_section(section)
-
         options = get_options(section)
         for option in options:
-
             try:
                 _set_parser_option(parser, section, option)
             except Exception:
@@ -563,11 +533,6 @@ if __name__ == '__main__':
             options = get_options('application_window')
             assert isinstance(options[0], basestring)
 
-        def test_get_sections(self):
-
-            sections = get_sections()
-            assert isinstance(sections[0], basestring)
-
         def test_read(self):
 
             read()
@@ -578,9 +543,9 @@ if __name__ == '__main__':
             parser.read([CONFIG_PATH])
 
             # String
-            parser.set('editor', 'font', 'foo')
+            parser.set('editor', 'font', 'test')
             _set_config_option(parser, 'editor', 'font')
-            assert editor.font == 'foo'
+            assert editor.font == 'test'
 
             # Integer
             parser.set('editor', 'undo_levels', 99)
@@ -598,9 +563,9 @@ if __name__ == '__main__':
             assert editor.framerate == Framerate.FR_25
 
             # String list
-            parser.set('file', 'fallback_encodings', 'foo%sbar' % LIST_SEP)
+            parser.set('file', 'fallback_encodings', 'test%stset' % LIST_SEP)
             _set_config_option(parser, 'file', 'fallback_encodings')
-            assert file.fallback_encodings == ['foo', 'bar']
+            assert file.fallback_encodings == ['test', 'tset']
 
             # Integer list
             parser.set('application_window', 'position', '3%s4' % LIST_SEP)
@@ -618,9 +583,9 @@ if __name__ == '__main__':
             parser.read([CONFIG_PATH])
 
             # String
-            editor.font = 'foo'
+            editor.font = 'test'
             _set_parser_option(parser, 'editor', 'font')
-            assert parser.get('editor', 'font') == 'foo'
+            assert parser.get('editor', 'font') == 'test'
 
             # Integer
             editor.undo_levels = 99
@@ -638,10 +603,10 @@ if __name__ == '__main__':
             assert parser.get('editor', 'framerate') == '25'
 
             # String list
-            file.fallback_encodings = ['foo', 'bar']
+            file.fallback_encodings = ['test', 'tset']
             _set_parser_option(parser, 'file', 'fallback_encodings')
             assert parser.get('file', 'fallback_encodings') \
-                   == 'foo%sbar' % LIST_SEP
+                   == 'test%stset' % LIST_SEP
 
             # Integer list
             application_window.position = [3, 4]

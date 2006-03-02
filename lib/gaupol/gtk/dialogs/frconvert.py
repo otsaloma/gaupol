@@ -101,7 +101,7 @@ class FramerateConvertDialog(object):
     def _on_all_radio_toggled(self, radio_button):
         """Save radio button value."""
 
-        config.framerate_convert.convert_all = radio_button.get_active()
+        config.framerate_convert.all_projects = radio_button.get_active()
 
     def _on_correct_combo_changed(self, combo_box):
         """Set convert button sensitivity."""

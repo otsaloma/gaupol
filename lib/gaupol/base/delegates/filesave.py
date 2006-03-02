@@ -97,15 +97,15 @@ class FileSaveDelegate(Delegate):
         Raise IOError if reading fails.
         Raise UnicodeError if encoding fails.
         """
-        current_file  = [self.main_file  , self.tran_file  ][document]
-        current_texts = [self.main_texts , self.tran_texts ][document]
+        current_file  = [self.main_file , self.tran_file ][document]
+        current_texts = [self.main_texts, self.tran_texts][document]
         path, format, encoding, newlines = properties or [None] * 4
 
         # Create a copy of texts, because possible tag conversions might be
         # only temporary.
         new_texts = copy.deepcopy(current_texts)
 
-        # Convert tags and blanken header if saving in different format.
+        # Convert tags if saving in different format.
         if current_file is not None and format is not None:
             if current_file.format != format:
                 conv = TagConverter(current_file.format, format)
@@ -119,24 +119,20 @@ class FileSaveDelegate(Delegate):
         else:
             format_name = Format.class_names[format]
             subtitle_file = eval(format_name)(path, encoding, newlines)
-
             # Copy header if saving in same format.
             if current_file is not None:
                 if current_file.format == format:
                     subtitle_file.header = current_file.header
 
-        # Prepare data for writing.
         shows  = []
         hides  = []
         texts  = []
-
         if subtitle_file.mode == Mode.TIME:
             times = self.times
             for i in range(len(times)):
                 shows.append(times[i][SHOW])
                 hides.append(times[i][HIDE])
                 texts.append(new_texts[i])
-
         elif subtitle_file.mode == Mode.FRAME:
             frames = self.frames
             for i in range(len(frames)):
@@ -187,7 +183,6 @@ class FileSaveDelegate(Delegate):
         Raise UnicodeError if encoding fails.
         """
         self._save_file(Document.MAIN, keep_changes, properties)
-
         if keep_changes:
             self.main_changed = 0
 
@@ -200,7 +195,6 @@ class FileSaveDelegate(Delegate):
         Raise UnicodeError if encoding fails.
         """
         self._save_file(Document.TRAN, keep_changes, properties)
-
         if keep_changes:
             self.tran_active  = True
             self.tran_changed = 0
@@ -213,7 +207,7 @@ if __name__ == '__main__':
 
     class TestFileSaveDelegate(Test):
 
-        def test_save_file(self):
+        def test_save_files(self):
 
             project = self.get_project()
 

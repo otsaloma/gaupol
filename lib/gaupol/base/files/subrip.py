@@ -95,7 +95,6 @@ class SubRip(SubtitleFile):
         Raise UnicodeError if encoding fails.
         """
         texts = texts[:]
-
         newline_character = self._get_newline_character()
 
         # Replace Python internal newline characters in text with desired

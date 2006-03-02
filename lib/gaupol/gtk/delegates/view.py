@@ -401,8 +401,6 @@ class ViewDelegate(Delegate):
         This method is called from the framerate combo box.
         """
         page = self.get_current_page()
-
-        # Get new framerate.
         framerate = self.framerate_combo.get_active()
 
         # Return if only refreshing widget state.
@@ -411,11 +409,9 @@ class ViewDelegate(Delegate):
 
         gtklib.set_cursor_busy(self.window)
 
-        # Set new framerate and save setting.
         page.project.change_framerate(framerate)
         config.editor.framerate = framerate
 
-        # Set the correct framerate menu item active.
         name = Framerate.id_names[framerate]
         path = '/ui/menubar/view/framerate/%s' % name
         self.uim.get_widget(path).set_active(True)
@@ -473,8 +469,6 @@ class ViewDelegate(Delegate):
         """Toggle the edit mode."""
 
         page = self.get_current_page()
-
-        # Get new edit mode.
         if action.get_name() == 'show_times':
             edit_mode = Mode.TIME
         elif action.get_name() == 'show_frames':
@@ -485,7 +479,6 @@ class ViewDelegate(Delegate):
             return
 
         gtklib.set_cursor_busy(self.window)
-
         page.edit_mode = edit_mode
         config.editor.mode = edit_mode
 
@@ -500,8 +493,7 @@ class ViewDelegate(Delegate):
 
         # Create a new view. This could alternatively be done with
         # gtk.TreeView.remove_column() and gtk.TreeView.insert_column(), but
-        # rebuilding the entire view is not much slower. It would be cool to be
-        # able to replace the cell renderer of a column though.
+        # rebuilding the entire view is not much slower.
         old_view = page.view
         page.view = View(edit_mode)
         gtklib.destroy_gobject(old_view)
@@ -510,7 +502,6 @@ class ViewDelegate(Delegate):
         # Add view.
         scrolled_window.add(page.view)
         scrolled_window.show_all()
-
         page.reload_all()
         page.view.columns_autosize()
 
@@ -519,14 +510,11 @@ class ViewDelegate(Delegate):
             page.view.set_focus(focus_row, focus_col)
         except TypeError:
             pass
-
         page.view.select_rows(selected_rows)
-
         try:
             page.view.scroll_to_row(focus_row)
         except TypeError:
             pass
-
         page.view.props.has_focus = has_focus
         gtklib.set_cursor_normal(self.window)
 
@@ -537,8 +525,6 @@ class ViewDelegate(Delegate):
         This method is called from the menu.
         """
         page = self.get_current_page()
-
-        # Get new framerate.
         name = action.get_name()
         if name == 'view_framerate_23_976':
             framerate = Framerate.FR_23_976
@@ -553,16 +539,12 @@ class ViewDelegate(Delegate):
 
         gtklib.set_cursor_busy(self.window)
 
-        # Set new framerate and save setting.
         page.project.change_framerate(framerate)
         config.editor.framerate = framerate
-
-        # Set the correct framerate combo box entry active.
         self.framerate_combo.set_active(framerate)
 
         if page.edit_mode != page.project.main_file.mode:
             page.reload_columns([SHOW, HIDE, DURN])
-
         gtklib.set_cursor_normal(self.window)
 
     def on_toggle_main_toolbar_activated(self, *args):

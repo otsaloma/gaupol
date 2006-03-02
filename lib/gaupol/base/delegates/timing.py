@@ -36,13 +36,14 @@ class TimingDelegate(Delegate):
 
     """Shifting, adjusting and fixing timings."""
 
-    def adjust_durations(self, rows=None, optimal=None, lengthen=False,
-                        shorten=False, maximum=None, minimum=None, gap=None,
-                        register=Action.DO):
+    def adjust_durations(
+        self, rows=None, optimal=None, lengthen=False, shorten=False,
+        maximum=None, minimum=None, gap=None, register=Action.DO
+    ):
         """
         Adjust durations.
 
-        All timings are in seconds.
+        optimal and gap are in seconds.
         rows can be None to process all rows.
         Return adjusted rows.
         """
@@ -68,7 +69,12 @@ class TimingDelegate(Delegate):
             except IndexError:
                 hide_limit = 999999
 
-            # Optimal
+            # Remove overlap.
+            if hide_seconds > hide_limit:
+                hide_seconds = min(hide_limit, hide_seconds)
+                durn_seconds = hide_seconds - show_seconds
+
+            # Adjust to optimal.
             if optimal is not None:
                 length = self.get_character_count(row, Document.MAIN)[1]
                 durn_optimal = optimal * length
@@ -78,36 +84,35 @@ class TimingDelegate(Delegate):
                     hide_seconds = show_seconds + durn_optimal
                 durn_seconds = hide_seconds - show_seconds
 
-            # Min/Max
+            # Limit to minimum and maximum.
             if minimum is not None and durn_seconds < minimum:
                 hide_seconds = min(hide_limit, show_seconds + minimum)
+                durn_seconds = hide_seconds - show_seconds
             if maximum is not None and durn_seconds > maximum:
-                hide_seconds = min(show_seconds + maximum)
-            durn_seconds = hide_seconds - show_seconds
+                hide_seconds = show_seconds + maximum
+                durn_seconds = hide_seconds - show_seconds
 
-            # Gap
+            # Add gap before next subtitle.
             if gap is not None and hide_limit - hide_seconds < gap:
                 hide_seconds = max(show_seconds, hide_limit - gap)
                 durn_seconds = hide_seconds - show_seconds
 
             show_time = calc.seconds_to_time(show_seconds)
             hide_time = calc.seconds_to_time(hide_seconds)
-
             if hide_time == orig_hide_time:
                 continue
 
-            durn_time = calc.get_time_duration(show_time, hide_time)
-            new_times.append([show_time, hide_time, durn_time])
-
+            durn_time  = calc.get_time_duration(show_time, hide_time)
             show_frame = calc.time_to_frame(show_time)
             hide_frame = calc.time_to_frame(hide_time)
             durn_frame = calc.get_frame_duration(show_frame, hide_frame)
-            new_frames.append([show_frame, hide_frame, durn_frame])
 
+            new_times.append([show_time, hide_time, durn_time])
+            new_frames.append([show_frame, hide_frame, durn_frame])
             new_rows.append(row)
 
         if not new_rows:
-            return new_rows
+            return []
 
         self.replace_timings(new_rows, new_times, new_frames, register)
         self.modify_action_description(register, _('Adjusting durations'))
@@ -117,7 +122,7 @@ class TimingDelegate(Delegate):
         """
         Adjust timings in rows.
 
-        point_1 and point_2 are two tuples of row and new show frame.
+        point_1 and point_2 are two-tuples of row and new show frame.
         rows can be None to process all rows.
         """
         rows = rows or range(len(self.times))
@@ -210,9 +215,7 @@ class TimingDelegate(Delegate):
         timings will remain unchanged.
         """
         assert self.main_file is not None
-
-        self.framerate = framerate
-        self.calc.set_framerate(framerate)
+        self.set_framerate(framerate, register=None)
 
         calc   = self.calc
         times  = self.times
@@ -220,36 +223,27 @@ class TimingDelegate(Delegate):
 
         if self.main_file.mode == Mode.TIME:
             for i in range(len(times)):
-
-                show = calc.time_to_frame(times[i][SHOW])
-                hide = calc.time_to_frame(times[i][HIDE])
-                durn = calc.get_frame_duration(show, hide)
-
-                frames[i][SHOW] = show
-                frames[i][HIDE] = hide
-                frames[i][DURN] = durn
-
+                frames[i][SHOW] = calc.time_to_frame(times[i][SHOW])
+                frames[i][HIDE] = calc.time_to_frame(times[i][HIDE])
+                self.set_durations(i)
         elif self.main_file.mode == Mode.FRAME:
             for i in range(len(times)):
-
-                show = calc.frame_to_time(frames[i][SHOW])
-                hide = calc.frame_to_time(frames[i][HIDE])
-                durn = calc.get_time_duration(show, hide)
-
-                times[i][SHOW] = show
-                times[i][HIDE] = hide
-                times[i][DURN] = durn
+                times[i][SHOW] = calc.frame_to_time(frames[i][SHOW])
+                times[i][HIDE] = calc.frame_to_time(frames[i][HIDE])
+                self.set_durations(i)
 
     def convert_framerate(self, current_fr, correct_fr, register=Action.DO):
         """Convert and set framerate."""
 
-        self.framerate = correct_fr
-        self.calc.set_framerate(correct_fr)
+        signal = self.get_signal(register)
+        self.block(signal)
+        self.set_framerate(current_fr, register=None)
+        self.set_framerate(correct_fr)
 
         rows = range(len(self.times))
 
-        orig_times  = []
-        orig_frames = []
+        new_times  = []
+        new_frames = []
         times  = self.times
         frames = self.frames
         calc   = self.calc
@@ -259,27 +253,19 @@ class TimingDelegate(Delegate):
 
         for row in rows:
 
-            orig_frames.append(frames[row])
-            orig_times.append(times[row])
-
             show_frame = int(round(coefficient * frames[row][SHOW], 0))
             hide_frame = int(round(coefficient * frames[row][HIDE], 0))
             durn_frame = calc.get_frame_duration(show_frame, hide_frame)
-            frames[row] = [show_frame, hide_frame, durn_frame]
+            new_frames.append([show_frame, hide_frame, durn_frame])
 
             show_time = calc.frame_to_time(show_frame)
             hide_time = calc.frame_to_time(hide_frame)
             durn_time = calc.get_time_duration(show_time, hide_time)
-            times[row] = [show_time, hide_time, durn_time]
+            new_times.append([show_time, hide_time, durn_time])
 
-        self.register_action(
-            register=register,
-            documents=[Document.MAIN, Document.TRAN],
-            description=_('Converting framerate'),
-            revert_method=self.revert_framerate_conversion,
-            revert_method_args=[current_fr, orig_times, orig_frames],
-            timing_rows_updated=rows,
-        )
+        self.replace_timings(rows, new_times, new_frames, register)
+        self.unblock(signal)
+        self.group_actions(register, 2, _('Converting framerate'))
 
     def replace_timings(self, rows, new_times, new_frames, register=Action.DO):
         """
@@ -309,37 +295,19 @@ class TimingDelegate(Delegate):
             timing_rows_updated=rows,
         )
 
-    def revert_framerate_conversion(self, framerate, new_times, new_frames,
-                                    register=Action.DO):
-        """
-        Revert framerate and data after conversion.
+    def set_framerate(self, framerate, register=Action.DO):
+        """Set framerate variables."""
 
-        *args, **kwargs are passed to replace_timings().
-        """
         orig_framerate = self.framerate
         self.framerate = framerate
         self.calc.set_framerate(framerate)
 
-        rows = range(len(self.times))
-
-        orig_times  = []
-        orig_frames = []
-        times  = self.times
-        frames = self.frames
-
-        for i, row in enumerate(rows):
-            orig_times.append(times[row])
-            orig_frames.append(frames[row])
-            times[row]  = new_times[i]
-            frames[row] = new_frames[i]
-
         self.register_action(
             register=register,
             documents=[Document.MAIN, Document.TRAN],
-            description=_('Converting framerate'),
-            revert_method=self.revert_framerate_conversion,
-            revert_method_args=[orig_framerate, orig_times, orig_frames],
-            timing_rows_updated=rows,
+            description=_('Setting framerate'),
+            revert_method=self.set_framerate,
+            revert_method_args=[orig_framerate],
         )
 
     def shift_frames(self, rows, amount, register=Action.DO):

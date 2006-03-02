@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Additional functions for manipulating lists."""
+"""Functions for manipulating lists."""
 
 
 def remove_duplicates(lst):
@@ -81,8 +81,8 @@ if __name__ ==  '__main__':
 
         def test_strip_spaces(self):
 
-            lst = [' foo', 'bar ', '\nboo\n']
+            lst = [' 1', '2 ', '\n3\n']
             strip_spaces(lst)
-            assert lst == ['foo', 'bar', 'boo']
+            assert lst == ['1', '2', '3']
 
     TestLib().run()

@@ -40,7 +40,6 @@ class DurationAdjustDialog(object):
         glade_xml = gtklib.get_glade_xml('duradjust-dialog.glade')
         get = glade_xml.get_widget
 
-        self._adjust_button      = get('adjust_button')
         self._dialog             = get('dialog')
         self._gap_check          = get('gap_check_button')
         self._gap_spin           = get('gap_spin_button')
@@ -85,6 +84,11 @@ class DurationAdjustDialog(object):
         if not page.view.get_selected_rows():
             self._sub_all_radio.set_active(True)
             self._sub_selected_radio.set_sensitive(False)
+
+        self._optimal_spin.set_sensitive(False)
+        self._min_spin.set_sensitive(False)
+        self._max_spin.set_sensitive(False)
+        self._gap_spin.set_sensitive(False)
 
     def _init_signals(self):
         """Initialize signals."""
@@ -172,8 +176,9 @@ class DurationAdjustDialog(object):
     def _on_gap_check_toggled(self, check_button):
         """Save use gap setting."""
 
-        config.duration_adjust.use_gap = check_button.get_active()
-        self._set_adjust_button_sensitivity()
+        use = check_button.get_active()
+        config.duration_adjust.use_gap = use
+        self._gap_spin.set_sensitive(use)
 
     def _on_gap_spin_value_changed(self, spin_button):
         """Save gap setting."""
@@ -184,13 +189,14 @@ class DurationAdjustDialog(object):
         """Save lengthen setting."""
 
         config.duration_adjust.lengthen = check_button.get_active()
-        self._set_adjust_button_sensitivity()
+        self._set_optimal_spin_sensitivity()
 
     def _on_max_check_toggled(self, check_button):
         """Save use maximum setting."""
 
-        config.duration_adjust.use_maximum = check_button.get_active()
-        self._set_adjust_button_sensitivity()
+        use = check_button.get_active()
+        config.duration_adjust.use_maximum = use
+        self._max_spin.set_sensitive(use)
 
     def _on_max_spin_value_changed(self, spin_button):
         """Save maximum setting."""
@@ -200,8 +206,9 @@ class DurationAdjustDialog(object):
     def _on_min_check_toggled(self, check_button):
         """Save use minimum setting."""
 
-        config.duration_adjust.use_minimum = check_button.get_active()
-        self._set_adjust_button_sensitivity()
+        use = check_button.get_active()
+        config.duration_adjust.use_minimum = use
+        self._min_spin.set_sensitive(use)
 
     def _on_min_spin_value_changed(self, spin_button):
         """Save minimum setting."""
@@ -222,7 +229,7 @@ class DurationAdjustDialog(object):
         """Save shorten setting."""
 
         config.duration_adjust.shorten = check_button.get_active()
-        self._set_adjust_button_sensitivity()
+        self._set_optimal_spin_sensitivity()
 
     def _on_sub_all_radio_toggled(self, radio_button):
         """Save all subtitles setting."""
@@ -235,18 +242,15 @@ class DurationAdjustDialog(object):
         self._dialog.show()
         return self._dialog.run()
 
-    def _set_adjust_button_sensitivity(self):
-        """Set sensitivity of the adjust button."""
+    def _set_optimal_spin_sensitivity(self):
+        """Set sensitivity of optimal spin button."""
 
         actions = (
             self.get_lengthen(),
             self.get_shorten(),
-            self.get_use_gap(),
-            self.get_use_maximum(),
-            self.get_use_minimum(),
         )
 
-        self._adjust_button.set_sensitive(True in actions)
+        self._optimal_spin.set_sensitive(True in actions)
 
 
 if __name__ == '__main__':

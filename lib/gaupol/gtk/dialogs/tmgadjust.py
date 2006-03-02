@@ -94,7 +94,7 @@ class TimingAdjustDialog(gobject.GObject):
         self._subtitle_spin_2.set_value(last_subtitle)
         self._subtitle_spin_2.emit('value-changed')
 
-        self._all_radio.set_active(config.timing_shift.shift_all)
+        self._all_radio.set_active(config.timing_adjust.all_subtitles)
 
     def _init_sensitivities(self):
         """Initialize widget sensitivities."""
@@ -237,7 +237,7 @@ class TimingAdjustDialog(gobject.GObject):
     def _on_all_radio_toggled(self, radio_button):
         """Save radio button value."""
 
-        config.timing_shift.shift_all = radio_button.get_active()
+        config.timing_adjust.all_subtitles = radio_button.get_active()
 
     def _on_preview_button_1_clicked(self, button):
         """Preview changes."""

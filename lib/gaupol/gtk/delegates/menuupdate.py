@@ -162,7 +162,6 @@ class MenuUpdateDelegate(Delegate):
         for i in range(len(recent_files)):
             ui_middle += '<menuitem name="%d" action="open_recent_file_%d"/>' \
                          % (i, i)
-
         ui = ui_start + ui_middle + ui_end
         self.recent_uim_id = self.uim.add_ui_from_string(ui)
 
@@ -316,7 +315,6 @@ class MenuUpdateDelegate(Delegate):
         for i, action in enumerate(stack):
 
             desc = action.description
-
             if register == Action.UNDO:
                 tip = _('Undo up to %s') % desc[0].lower() + desc[1:]
             elif register == Action.REDO:

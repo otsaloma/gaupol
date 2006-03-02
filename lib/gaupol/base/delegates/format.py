@@ -48,10 +48,9 @@ class FormatDelegate(Delegate):
         """
         re_tag = self.get_regular_expression_for_tag(document)
         parser = TextParser(re_tag)
+        texts  = (self.main_texts, self.tran_texts)[document]
 
-        texts = (self.main_texts, self.tran_texts)[document]
         new_texts = []
-
         for row in rows:
             parser.set_text(texts[row])
             parser.text = eval('parser.text.%s()' % method)
@@ -73,7 +72,6 @@ class FormatDelegate(Delegate):
                 return Format.class_names[self.main_file.format]
             except AttributeError:
                 return None
-
         elif document == Document.TRAN:
             try:
                 return Format.class_names[self.tran_file.format]
@@ -82,12 +80,11 @@ class FormatDelegate(Delegate):
 
     def get_regular_expression_for_tag(self, document):
         """
-        Get the regular expression for a text tag for document.
+        Get regular expression for a text tag for document.
 
-        Return re pattern or None.
+        Return re object or None.
         """
         format_name = self._get_format_class_name(document)
-
         if format_name is None:
             return None
 
@@ -98,7 +95,7 @@ class FormatDelegate(Delegate):
         """Toggle dialog lines."""
 
         re_tag       = self.get_regular_expression_for_tag(document)
-        re_dialog    = re.compile(r'^-\s*', re.MULTILINE)
+        re_dialog    = re.compile(r'^-\s*'  , re.MULTILINE)
         re_no_dialog = re.compile(r'^([^-])', re.MULTILINE)
         parser = TextParser(re_tag)
 
@@ -134,9 +131,9 @@ class FormatDelegate(Delegate):
     def toggle_italicization(self, rows, document, register=Action.DO):
         """Toggle italicization."""
 
-        format_name = self._get_format_class_name(document)
-        re_tag = self.get_regular_expression_for_tag(document)
-        regex, flags = eval(format_name).italic_tag
+        format_name   = self._get_format_class_name(document)
+        re_tag        = self.get_regular_expression_for_tag(document)
+        regex, flags  = eval(format_name).italic_tag
         re_italic_tag = relib.compile(regex, flags)
 
         texts = (self.main_texts, self.tran_texts)[document]
@@ -145,7 +142,6 @@ class FormatDelegate(Delegate):
         # Get action to be done.
         italicize = False
         for row in rows:
-
             # Remove tags from the start of the text, ending after all
             # tags are removed or when an italic tag is found.
             tagless_text = texts[row][:]
@@ -153,14 +149,13 @@ class FormatDelegate(Delegate):
                 if re_italic_tag.match(tagless_text):
                     break
                 tagless_text = re_tag.sub('', tagless_text, 1)
-
             # If there is no italic tag at the start of the text,
             # texts should be italicized.
             if re_italic_tag.match(tagless_text) is None:
                 italicize = True
                 break
 
-        # Remove existing italic tags and italicize or unitalicize.
+        # Italicize or unitalicize.
         for row in rows:
             text = texts[row][:]
             text = re_italic_tag.sub('', text)

@@ -42,7 +42,7 @@ class TimingShiftDialog(gobject.GObject):
         'preview': (
             gobject.SIGNAL_RUN_LAST,
             None,
-            ()
+            (int,)
         ),
     }
 
@@ -73,7 +73,7 @@ class TimingShiftDialog(gobject.GObject):
     def _init_data(self):
         """Initialize default values."""
 
-        self._all_radio.set_active(config.timing_shift.shift_all)
+        self._all_radio.set_active(config.timing_shift.all_subtitles)
 
         if self._page.edit_mode == Mode.TIME:
             value = float(config.timing_shift.seconds)
@@ -147,7 +147,7 @@ class TimingShiftDialog(gobject.GObject):
     def _on_all_radio_toggled(self, radio_button):
         """Save radio button value."""
 
-        config.timing_shift.shift_all = radio_button.get_active()
+        config.timing_shift.all_subtitles = radio_button.get_active()
 
     def _on_amount_spin_value_changed(self, spin_button):
         """Save spin button value."""
@@ -160,7 +160,12 @@ class TimingShiftDialog(gobject.GObject):
     def _on_preview_button_clicked(self, *args):
         """Preview changes."""
 
-        self.emit('preview')
+        if self.get_shift_all():
+            row = 0
+        else:
+            row = self._page.view.get_selected_rows()[0]
+
+        self.emit('preview', row)
 
     def run(self):
         """Show and run the dialog."""

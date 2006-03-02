@@ -153,7 +153,6 @@ class FileFormatErrorDialog(ErrorDialog):
         title   = _('Failed to recognize format of file "%s"') % basename
         message = _('Please check that the file you are trying to open is a '
                     'subtitle file of a format supported by Gaupol.')
-
         ErrorDialog.__init__(self, parent, title, message)
 
 
@@ -167,7 +166,6 @@ class OpenBigFileWarningDialog(WarningDialog):
         message = _('Size of the file is %.1f MB, which is abnormally large '
                     'for a text-based subtitle file. Please, check that you '
                     'are not trying to open a binary file.') % size
-
         WarningDialog.__init__(self, parent, title, message)
 
         self.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_NO )
@@ -183,7 +181,6 @@ class OpenFileErrorDialog(ErrorDialog):
 
         title   = _('Failed to open file "%s"') % basename
         message = _('Attempt to read file returned error: %s.') % message
-
         ErrorDialog.__init__(self, parent, title, message)
 
 
@@ -196,7 +193,6 @@ class OpenTranslationWarningDialog(WarningDialog):
         title   = _('Save changes to translation document "%s" before opening '
                     'a new one?') % basename
         message = _('If you don\'t save, changes will be permanently lost.')
-
         WarningDialog.__init__(self, parent, title, message)
 
         self.add_button(_('Open _Without Saving'), gtk.RESPONSE_NO    )
@@ -216,7 +212,6 @@ class SSAWarningDialog(WarningDialog):
                     'are not fully supported. Only the header and fields '
                     '"Start", "End" and "Text" of the dialog are read. Saving '
                     'the file will cause you to lose all other data.')
-
         WarningDialog.__init__(self, parent, title, message)
 
         self.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_NO )
@@ -234,7 +229,6 @@ class UnicodeDecodeErrorDialog(ErrorDialog):
                   % basename
         message = _('Please try to open the file with a different character '
                     'encoding.')
-
         ErrorDialog.__init__(self, parent, title, message)
 
 
@@ -254,30 +248,24 @@ class FileOpenDelegate(Delegate):
         except AttributeError:
             pass
 
-        # Put the view in a scrolled window.
         scrolled_window = gtk.ScrolledWindow()
         scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
         scrolled_window.add(page.view)
-
-        # Put the scrolled window in the notebook.
         tab_widget = page.init_tab_widget()
         label = page.tab_menu_label
         self.notebook.append_page_menu(scrolled_window, tab_widget, label)
         self.notebook.show_all()
         self.notebook.set_current_page(self.pages.index(page))
-
         page.reload_all()
 
     def add_to_recent_files(self, path):
         """Add path to list of recent files."""
 
         recent_files = config.file.recent_files
-
         try:
             recent_files.remove(path)
         except ValueError:
             pass
-
         recent_files.insert(0, path)
 
         while len(recent_files) > config.file.maximum_recent_files:
@@ -291,18 +279,13 @@ class FileOpenDelegate(Delegate):
         Return True if file is open, otherwise False.
         """
         for i, page in enumerate(self.pages):
-
             for sub_file in (page.project.main_file, page.project.tran_file):
-
                 if sub_file is None or sub_file.path != path:
                     continue
-
                 self.notebook.set_current_page(i)
-
                 basename = os.path.basename(path)
                 message = _('File "%s" is already open') % basename
                 self.set_status_message(message)
-
                 return True
 
         return False
@@ -310,28 +293,21 @@ class FileOpenDelegate(Delegate):
     def _connect_page_signals(self, page):
         """Connect GObject signals emitted by page view."""
 
-        # Project
         page.project.connect('action_done'  , self.on_project_action_done  )
         page.project.connect('action_redone', self.on_project_action_redone)
         page.project.connect('action_undone', self.on_project_action_undone)
 
-        # Page
         page.connect('closed', self.on_close_button_clicked)
 
     def connect_view_signals(self, page):
         """Connect GObject signals emitted by view."""
 
         view = page.view
-
-        # View
         view.connect_after('move-cursor', self.on_view_move_cursor_event)
         view.connect('button-press-event', self.on_view_button_press_event)
-
-        # Selection
         selection = view.get_selection()
         selection.connect('changed', self.on_view_selection_changed_event)
 
-        # Cell renderers and column header widgets
         signals = (
             'editing-started',
             'editing-canceled',
@@ -343,12 +319,10 @@ class FileOpenDelegate(Delegate):
             self.on_view_cell_edited
         )
         for col in range(6):
-
             tree_view_column = view.get_column(col)
             for cell_renderer in tree_view_column.get_cell_renderers():
                 for i in range(len(signals)):
                     cell_renderer.connect(signals[i], methods[i], col)
-
             widget = tree_view_column.get_widget()
             button = gtklib.get_parent_widget(widget, gtk.Button)
             button.connect('button-press-event', self.on_view_headers_clicked)
@@ -383,7 +357,6 @@ class FileOpenDelegate(Delegate):
         self.counter += 1
         page = Page(self.counter)
 
-        # Start with a single blank subtitle.
         page.project.times      = [['00:00:00,000'] * 3]
         page.project.frames     = [[0, 0, 0]]
         page.project.main_texts = [u'']
@@ -399,8 +372,6 @@ class FileOpenDelegate(Delegate):
 
         uris  = selection_data.get_uris()
         paths = []
-
-        # Get paths from uris.
         for uri in uris:
             unquoted_uri = urllib.unquote(uri)
             path = urlparse.urlsplit(unquoted_uri)[2]
@@ -437,12 +408,10 @@ class FileOpenDelegate(Delegate):
 
         # Warn if current translation is unsaved.
         if page.project.tran_active and page.project.tran_changed:
-
             basename = page.get_translation_basename()
             dialog = OpenTranslationWarningDialog(self.window, basename)
             response = dialog.run()
             dialog.destroy()
-
             if response == gtk.RESPONSE_YES:
                 self.save_translation_document(page)
                 self.set_sensitivities()
@@ -459,7 +428,6 @@ class FileOpenDelegate(Delegate):
 
         encodings = self._get_tryable_encodings(encoding)
         page = self._open_file(self.window, Document.TRAN, paths[0], encodings)
-
         if page is None:
             gtklib.set_cursor_normal(self.window)
             return
@@ -471,11 +439,9 @@ class FileOpenDelegate(Delegate):
 
         self.set_sensitivities()
         page.reload_all()
-
         basename = page.get_translation_basename()
         message = _('Opened translation file "%s"') % basename
         self.set_status_message(message)
-
         gtklib.set_cursor_normal(self.window)
 
     def on_select_video_file_activated(self, *args):
@@ -494,7 +460,6 @@ class FileOpenDelegate(Delegate):
 
         gtklib.set_cursor_normal(self.window)
         response = chooser.run()
-
         if response == gtk.RESPONSE_OK:
             page.project.video_path = chooser.get_filename()
             self.set_sensitivities(page)
@@ -506,7 +471,6 @@ class FileOpenDelegate(Delegate):
         """Set video  file."""
 
         page = self.get_current_page()
-
         uri = selection_data.get_uris()[0]
         unquoted_uri = urllib.unquote(uri)
         path = urlparse.urlsplit(unquoted_uri)[2]
@@ -610,7 +574,6 @@ class FileOpenDelegate(Delegate):
                     dialog.destroy()
                     if response != gtk.RESPONSE_YES:
                         return None
-
                 return page
 
 
@@ -646,7 +609,6 @@ class FileOpenDelegate(Delegate):
 
         filepaths = chooser.get_filenames()
         encoding  = chooser.get_encoding()
-
         gtklib.destroy_gobject(chooser)
         return filepaths, encoding
 

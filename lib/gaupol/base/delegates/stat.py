@@ -40,13 +40,11 @@ class StatisticsDelegate(Delegate):
         """
         text = [self.main_texts, self.tran_texts][document][row]
         re_tag = self.get_regular_expression_for_tag(document)
-
         if re_tag is not None:
             text = re_tag.sub('', text)
 
         lengths = []
         total   = 0
-
         for line in text.split('\n'):
             length = len(line)
             lengths.append(length)
@@ -65,10 +63,9 @@ if __name__ == '__main__':
         def test_get_character_count(self):
 
             project = self.get_project()
-            project.main_texts[0] = '<i>This could be me\n' \
-                                    'three hours from now.</i>'
+            project.main_texts[0] = '<i>test\ntest.</i>'
             lengths, total = project.get_character_count(0, Document.MAIN)
-            assert lengths == [16, 21]
-            assert total   == 37
+            assert lengths == [4, 5]
+            assert total   == 9
 
     TestStatisticsDelegate().run()

@@ -88,12 +88,12 @@ class LanguageDialog(object):
             pass
 
         # Projects
-        check_all = config.spell_check.check_all_projects
+        check_all = config.spell_check.all_projects
         self._prj_all_radio.set_active(check_all)
 
         # Columns
-        check_main = config.spell_check.check_main
-        check_tran = config.spell_check.check_translation
+        check_main = config.spell_check.main
+        check_tran = config.spell_check.translation
         self._col_main_check.set_active(check_main)
         self._col_tran_check.set_active(check_tran)
         self._lang_main_view.set_sensitive(check_main)
@@ -185,14 +185,14 @@ class LanguageDialog(object):
         """Set checking of main texts."""
 
         check = check_button.get_active()
-        config.spell_check.check_main = check
+        config.spell_check.main = check
         self._lang_main_view.set_sensitive(check)
 
     def _on_col_tran_check_toggled(self, check_button):
         """Set checking of translation texts."""
 
         check = check_button.get_active()
-        config.spell_check.check_translation = check
+        config.spell_check.translation = check
         self._lang_tran_view.set_sensitive(check)
 
     def _on_lang_main_view_selection_changed(self, *args):
@@ -213,7 +213,7 @@ class LanguageDialog(object):
         """Set project to check."""
 
         check_all = radio_button.get_active()
-        config.spell_check.check_all_projects = check_all
+        config.spell_check.all_projects = check_all
 
     def run(self):
         """Show and run the dialog."""

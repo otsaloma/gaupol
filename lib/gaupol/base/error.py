@@ -22,7 +22,7 @@
 
 class GaupolBaseError(Exception):
 
-    """Base class for error of gaupol.base module."""
+    """Base class for errors of gaupol.base module."""
 
     pass
 
@@ -33,16 +33,10 @@ class ExternalError(GaupolBaseError):
 
     pass
 
+
 class FileFormatError(GaupolBaseError):
 
     """Unrecognized subtitle file format."""
-
-    pass
-
-
-class FitError(GaupolBaseError):
-
-    """Data does not fit in given space."""
 
     pass
 

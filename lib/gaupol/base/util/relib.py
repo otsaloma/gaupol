@@ -30,3 +30,17 @@ def compile(pattern, flags=None):
         return re.compile(pattern, flags)
     except TypeError:
         return re.compile(pattern)
+
+
+if __name__ == '__main__':
+
+    from gaupol.test import Test
+
+    class TestLib(Test):
+
+        def test_compile(self):
+
+            regex = compile(r'test')
+            assert regex.search(' test ') is not None
+
+    TestLib().run()

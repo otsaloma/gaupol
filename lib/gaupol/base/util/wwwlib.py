@@ -111,7 +111,7 @@ if __name__ == '__main__':
                 pass
 
             try:
-                read_url('http://aaaaaaaaaaaaaaaaaaaaaaaaa.org/test.txt', 10)
+                read_url('http://aaaaaaaaaaaa.aaaaaaaaaaaaa.org/test.txt', 10)
                 raise AssertionError
             except IOError:
                 pass

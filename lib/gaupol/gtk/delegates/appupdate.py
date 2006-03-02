@@ -120,7 +120,7 @@ class ApplicationUpdateDelegate(Delegate):
         self.notebook.set_current_page(index)
 
     def on_window_state_event(self, window, event):
-        """Remember whether window is maximized or not."""
+        """Save window maximized setting."""
 
         state = event.new_window_state
         maximized = bool(state & gtk.gdk.WINDOW_STATE_MAXIMIZED)
@@ -183,7 +183,6 @@ class ApplicationUpdateDelegate(Delegate):
         if clear:
             method = self.set_status_message
             self.message_tag = gobject.timeout_add(6000, method, None)
-
         return False
 
     def _set_undo_and_redo_tooltips(self, page):
@@ -207,27 +206,21 @@ class ApplicationUpdateDelegate(Delegate):
     def _set_visibility_of_statusbars(self, page):
         """Set the visibility of the statusbars based on visible columns."""
 
-        # Show only the message statusbar if no projects are open.
         if page is None:
             self.main_statusbar.hide()
             self.tran_statusbar.hide()
             self.msg_statusbar.set_has_resize_grip(True)
             return
 
-        # Get column visibility.
         text_visible = page.view.get_column(MTXT).get_visible()
         tran_visible = page.view.get_column(TTXT).get_visible()
-
-        # Assume everything is correct if visibilities match.
         if text_visible == self.main_statusbar.props.visible and \
            tran_visible == self.tran_statusbar.props.visible:
             return
 
-        # Set statusbar visibilities.
         self.main_statusbar.props.visible = text_visible
         self.tran_statusbar.props.visible = tran_visible
 
-        # Show the resize grip only in the right-most statusbar.
         if tran_visible:
             self.msg_statusbar.set_has_resize_grip(False)
             self.main_statusbar.set_has_resize_grip(False)

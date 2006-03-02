@@ -108,15 +108,13 @@ class SpellCheckAction(UIMAction):
         if not enchant_available:
             return False
 
-        if not config.spell_check.check_main and \
-           not config.spell_check.check_translation:
+        if not config.spell_check.main and \
+           not config.spell_check.translation:
             return False
-
-        if config.spell_check.check_main and \
+        if config.spell_check.main and \
            config.spell_check.main_language is None:
             return False
-
-        if config.spell_check.check_translation and \
+        if config.spell_check.translation and \
            config.spell_check.translation_language is None:
             return False
 
@@ -137,8 +135,7 @@ class SpellCheckDelegate(Delegate):
     def on_check_spelling_activated(self, *args):
         """Check for incorrent spelling."""
 
-        # Get pages to check.
-        if config.spell_check.check_all_projects:
+        if config.spell_check.all_projects:
             pages = self.pages
         else:
             pages = [self.get_current_page()]
@@ -194,8 +191,7 @@ class SpellCheckDelegate(Delegate):
         else:
             return
 
-        desc = _('Spell-checking')
-        page.project.modify_action_description(Action.DO, desc)
+        page.project.modify_action_description(Action.DO, _('Spell-checking'))
         self.set_sensitivities(page)
 
     def _on_page_selected(self, dialog, page):
@@ -224,11 +220,9 @@ if __name__ == '__main__':
 
             self.application.window.destroy()
 
-        def test_on_selecteds(self):
+        def test_on_configure_spell_check_activated(self):
 
-            page  = self.application.get_current_page()
-            self.delegate._on_cell_selected(None, page, 1, Document.MAIN)
-            self.delegate._on_page_selected(None, page)
+            self.application.on_configure_spell_check_activated()
 
         def test_on_page_checked(self):
 
@@ -244,9 +238,11 @@ if __name__ == '__main__':
             texts = [['test', 'test'], ['test', 'test']]
             self.delegate._on_page_checked(None, page, rows, texts)
 
-        def test_on_configure_spell_check_activated(self):
+        def test_on_selecteds(self):
 
-            self.application.on_configure_spell_check_activated()
+            page  = self.application.get_current_page()
+            self.delegate._on_cell_selected(None, page, 1, Document.MAIN)
+            self.delegate._on_page_selected(None, page)
 
     TestSpellCheckDelegate().run()
 

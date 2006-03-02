@@ -30,7 +30,6 @@ import bisect
 
 from gaupol.base.colconstants import *
 from gaupol.base.delegates    import Delegate
-from gaupol.base.error        import FitError
 from gaupol.constants         import Action, Document, Framerate, Mode
 
 
@@ -50,9 +49,9 @@ class EditDelegate(Delegate):
 
         start_row = min(rows)
         end_row   = max(rows)
-        texts     = (self.main_texts, self.tran_texts)[document]
-        data      = []
+        texts = (self.main_texts, self.tran_texts)[document]
 
+        data = []
         for row in range(start_row, end_row + 1):
             if row in rows:
                 data.append(texts[row])
@@ -100,14 +99,12 @@ class EditDelegate(Delegate):
         lst = timings[:row] + timings[row + 1:]
         item = [show_value] + timings[row][1:]
         new_row = bisect.bisect_right(lst, item)
-
         return bool(new_row != row)
 
     def get_timings(self):
         """Return either times or frames depending on main file's mode."""
 
         mode = self.get_mode()
-
         if mode == Mode.TIME:
             return self.times
         elif mode == Mode.FRAME:
@@ -238,36 +235,46 @@ class EditDelegate(Delegate):
         """
         Paste texts from the clipboard.
 
-        Raise FitError if clipboard contents don't fit.
         Return rows that were pasted into.
         """
         data = self.clipboard.data
-        if len(data) > (len(self.times) - start_row):
-            raise FitError
 
-        rows      = []
+        # Add rows if needed.
+        current_length = len(self.times)
+        amount = len(data) - (current_length - start_row)
+        if amount > 0:
+            signal = self.get_signal(register)
+            self.block(signal)
+            rows = range(current_length, current_length + amount)
+            self.insert_subtitles(rows, register=register)
+
+        rows = []
         new_texts = []
-
         for i, value in enumerate(data):
             if value is not None:
                 rows.append(start_row + i)
                 new_texts.append(value)
-
         self.replace_texts(rows, document, new_texts, register)
-        self.modify_action_description(register, _('Pasting texts'))
+
+        # Group actions if needed.
+        description = _('Pasting texts')
+        if amount > 0:
+            self.unblock(signal)
+            self.group_actions(register, 2, description)
+        else:
+            self.modify_action_description(register, description)
+
         return rows
 
     def remove_subtitles(self, rows, register=Action.DO):
         """Remove subtitles."""
 
-        # Removed data.
         times      = []
         frames     = []
         main_texts = []
         tran_texts = []
 
         rows = sorted(rows)
-
         for row in reversed(rows):
             times.insert(0, self.times.pop(row))
             frames.insert(0, self.frames.pop(row))
@@ -302,7 +309,6 @@ class EditDelegate(Delegate):
         for i, row in enumerate(main_rows):
             orig_main_texts.append(main_texts[row])
             main_texts[row] = new_main_texts[i]
-
         for i, row in enumerate(tran_rows):
             orig_tran_texts.append(tran_texts[row])
             tran_texts[row] = new_tran_texts[i]
@@ -347,7 +353,7 @@ class EditDelegate(Delegate):
             tran_text_rows_updated=tran_text_rows_updated
         )
 
-    def _set_durations(self, row):
+    def set_durations(self, row):
         """Set durations for row based on shows and hides."""
 
         show = self.times[row][SHOW]
@@ -385,9 +391,9 @@ class EditDelegate(Delegate):
 
         # Calculate affected data.
         if col in (SHOW, HIDE):
-            self._set_durations(row)
+            self.set_durations(row)
         elif col == DURN:
-            self._set_hides(row)
+            self.set_hides(row)
 
         # Resort if show frame changed.
         if col == SHOW:
@@ -411,7 +417,7 @@ class EditDelegate(Delegate):
 
         return revert_row
 
-    def _set_hides(self, row):
+    def set_hides(self, row):
         """Set hides for row based on shows and durations."""
 
         show = self.times[row][SHOW]
@@ -478,9 +484,9 @@ class EditDelegate(Delegate):
 
         # Calculate affected data.
         if col in (SHOW, HIDE):
-            self._set_durations(row)
+            self.set_durations(row)
         elif col == DURN:
-            self._set_hides(row)
+            self.set_hides(row)
 
         # Resort if show frame changed.
         if col == SHOW:
@@ -511,7 +517,6 @@ class EditDelegate(Delegate):
         Return new index of row.
         """
         timings = self.get_timings()
-        data = [self.times, self.frames, self.main_texts, self.tran_texts]
 
         # Get new row.
         lst  = timings[:row] + timings[row + 1:]
@@ -520,6 +525,12 @@ class EditDelegate(Delegate):
 
         # Move data.
         if new_row != row:
+            data = [
+                self.times,
+                self.frames,
+                self.main_texts,
+                self.tran_texts
+            ]
             for entry in data:
                 entry.insert(new_row, entry.pop(row))
 
@@ -619,6 +630,16 @@ if __name__ == '__main__':
             self.project.paste_texts(0, Document.MAIN)
             assert self.project.main_texts[0] == self.project.tran_texts[2]
             assert self.project.main_texts[1] == self.project.tran_texts[3]
+
+            self.project.undo()
+            assert self.project.main_texts[0] == orig_0
+            assert self.project.main_texts[1] == orig_1
+
+            self.project.clipboard.data = ['test'] * 999
+            self.project.paste_texts(0, Document.MAIN)
+            assert len(self.project.times) == 999
+            for i in range(999):
+                assert self.project.main_texts[i] == 'test'
 
             self.project.undo()
             assert self.project.main_texts[0] == orig_0

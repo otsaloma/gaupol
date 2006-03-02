@@ -163,7 +163,6 @@ class ToggleItalicizationAction(UIMAction):
 
         if page is None:
             return False
-
         if not page.view.get_selected_rows():
             return False
 

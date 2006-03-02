@@ -29,7 +29,6 @@ from gettext import gettext as _
 
 import gtk
 
-from gaupol.base.error            import FitError
 from gaupol.constants             import Mode, Position
 from gaupol.gtk.colconstants      import *
 from gaupol.gtk.delegates         import Delegate, UIMAction
@@ -267,19 +266,6 @@ class UnSelectAllAction(SelectionAction):
     uim_paths = ['/ui/menubar/edit/unselect_all']
 
 
-class PasteFitErrorDialog(ErrorDialog):
-
-    """Dialog to inform that clipboard contents did not fit."""
-
-    def __init__(self, parent):
-
-        title   = _('Not enough space available to fit clipboard contents')
-        message = _('Please first insert new subtitles if you wish to paste '
-                    'at the current location')
-
-        ErrorDialog.__init__(self, parent, title, message)
-
-
 class EditDelegate(Delegate):
 
     """Editing subtitle data."""
@@ -304,12 +290,8 @@ class EditDelegate(Delegate):
         document = page.text_column_to_document(col)
 
         page.project.copy_texts(rows, document)
-
-        # Put a string representation of the Gaupol internal clipboard to the
-        # X clipboard.
         text = page.project.clipboard.get_data_as_string()
         self.clipboard.set_text(text)
-
         self.set_sensitivities(page)
 
     def on_cut_texts_activated(self, *args):
@@ -321,12 +303,8 @@ class EditDelegate(Delegate):
         document = page.text_column_to_document(col)
 
         page.project.cut_texts(rows, document)
-
-        # Put a string representation of the Gaupol internal clipboard to the
-        # X clipboard.
         text = page.project.clipboard.get_data_as_string()
         self.clipboard.set_text(text)
-
         self.set_sensitivities(page)
 
     def on_edit_value_activated(self, *args):
@@ -341,14 +319,10 @@ class EditDelegate(Delegate):
 
         page = self.get_current_page()
         dialog = SubtitleInsertDialog(self.window, page)
-        if not page.project.times:
-            dialog.set_position_sensitive(False)
-
         response = dialog.run()
         position = dialog.get_position()
         amount   = dialog.get_amount()
         dialog.destroy()
-
         if response != gtk.RESPONSE_OK:
             return
 
@@ -359,7 +333,6 @@ class EditDelegate(Delegate):
         else:
             start_row = 0
         rows = range(start_row, start_row + amount)
-
         page.project.insert_subtitles(rows)
         page.view.select_rows(rows)
 
@@ -384,15 +357,14 @@ class EditDelegate(Delegate):
         col      = page.view.get_focus()[1]
         document = page.text_column_to_document(col)
 
-        try:
-            rows = page.project.paste_texts(rows[0], document)
-        except FitError:
-            dialog = PasteFitErrorDialog(self.window)
-            dialog.run()
-            dialog.destroy()
-            return
-
+        length_before = len(page.project.times)
+        rows = page.project.paste_texts(rows[0], document)
         page.view.select_rows(rows)
+        length_after = len(page.project.times)
+        if length_after > length_before:
+            amount = length_after - length_before
+            msg = _('Inserted %d subtitles to fit clipboard contents') % amount
+            self.set_status_message(msg)
 
     def on_remove_subtitles_activated(self, *args):
         """Remove selected subtitles."""
@@ -402,7 +374,6 @@ class EditDelegate(Delegate):
         rows = page.view.get_selected_rows()
 
         page.project.remove_subtitles(rows)
-
         if page.project.times:
             row = min(rows[0], len(page.project.times) - 1)
             page.view.set_focus(row, col)
@@ -431,7 +402,7 @@ class EditDelegate(Delegate):
         self.set_status_message(None)
         page = self.get_current_page()
 
-        # value is by default a string, which cannot be empty to be a frame.
+        # value is by default a string, which cannot be empty.
         if page.edit_mode == Mode.FRAME and col in (SHOW, HIDE, DURN):
             try:
                 value = int(value)
@@ -467,7 +438,7 @@ class EditDelegate(Delegate):
         self._set_sensitivities(False)
         page = self.get_current_page()
         view = page.view
-        row = int(row)
+        row  = int(row)
 
         # Put a help message in the statusbar.
         message = _('Use Alt+Arrow for moving to edit an adjacent cell')
@@ -509,10 +480,9 @@ class EditDelegate(Delegate):
                     return
 
             editor.emit('editing-done')
+
             next_col = col
             next_row = row
-
-            # Determine next row or column.
             if keyname == 'Left':
                 for i in reversed(range(min_col, col)):
                     if i in visible_cols:

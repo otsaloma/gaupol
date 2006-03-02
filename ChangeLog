@@ -1,3 +1,71 @@
+2006-03-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/base/delegates/__init__.py:
+	* lib/gaupol/base/delegates/fileopen.py:
+	* lib/gaupol/base/delegates/filesave.py:
+	* lib/gaupol/base/delegates/format.py:
+	* lib/gaupol/base/delegates/preview.py:
+	* lib/gaupol/base/delegates/stat.py:
+	* lib/gaupol/base/files/microdvd.py:
+	* lib/gaupol/base/files/mpl2.py:
+	* lib/gaupol/base/files/subrip.py:
+	* lib/gaupol/base/files/subviewer2.py:
+	* lib/gaupol/base/project.py:
+	* lib/gaupol/base/timing/calc.py:
+	* lib/gaupol/base/util/encodinglib.py:
+	* lib/gaupol/base/util/listlib.py:
+	* lib/gaupol/base/util/relib.py:
+	* lib/gaupol/base/util/wwwlib.py:
+	* lib/gaupol/gtk/delegates/__init__.py:
+	* lib/gaupol/gtk/delegates/action.py:
+	* lib/gaupol/gtk/delegates/appupdate.py:
+	* lib/gaupol/gtk/delegates/fileclose.py:
+	* lib/gaupol/gtk/delegates/fileopen.py:
+	* lib/gaupol/gtk/delegates/filesave.py:
+	* lib/gaupol/gtk/delegates/format.py:
+	* lib/gaupol/gtk/delegates/guiinit.py:
+	* lib/gaupol/gtk/delegates/help.py:
+	* lib/gaupol/gtk/delegates/menuupdate.py:
+	* lib/gaupol/gtk/delegates/preferences.py:
+	* lib/gaupol/gtk/delegates/preview.py:
+	* lib/gaupol/gtk/delegates/spellcheck.py:
+	* lib/gaupol/gtk/delegates/timing.py:
+	* lib/gaupol/gtk/delegates/view.py:
+	* lib/gaupol/gtk/delegates/viewupdate.py:
+	* lib/gaupol/gtk/dialogs/frconvert.py:
+	* lib/gaupol/gtk/dialogs/language.py:
+	* lib/gaupol/gtk/dialogs/spellcheck.py:
+	* lib/gaupol/gtk/dialogs/tmgadjust.py:
+	* lib/gaupol/gtk/dialogs/tmgshift.py:
+	* lib/gaupol/gtk/output.py:
+	* lib/gaupol/test/__init__.py:
+	  Cosmetic or minor changes.
+
+	* lib/gaupol/base/delegates/action.py:
+	  Implemented and applied grouping of revertable actions.
+
+	* lib/gaupol/base/delegates/edit.py:
+	* lib/gaupol/base/error.py:
+	  Use action grouping for insert-requiring paste eliminating need for
+	  FitError.
+
+	* lib/gaupol/base/delegates/timing.py:
+	  (TimingDelegate.adjust_durations): Always fix overlaps.
+	  (TimingDelegate.convert_framerate): Use action grouping.
+
+	* lib/gaupol/constants.py:
+	  (Action.DO_MULTIPLE): New constant.
+
+	* lib/gaupol/gtk/delegates/edit.py:
+	  Removed PasteFitErrorDialog and added feedback for pasting.
+
+	* lib/gaupol/gtk/dialogs/duradjust.py:
+	  Never set adjust button insensitive because of overlap fix.
+
+	* lib/gaupol/gtk/util/config.py:
+	  Renamed some config variables, especially timing manipulation dialog
+	  target variables.
+
 2006-02-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/gtk/delegates/fileopen.py:

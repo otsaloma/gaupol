@@ -137,17 +137,13 @@ class FileCloseDelegate(Delegate):
         Raise Cancelled if cancelled.
         """
         unsaved_count = 0
-
-        # Get amount of unsaved documents.
         for page in self.pages:
-
             if page.project.main_changed:
                 unsaved_page = page
                 unsaved_count += 1
             if page.project.tran_changed and page.project.tran_active:
                 unsaved_page = page
                 unsaved_count += 1
-
             if unsaved_count > 1:
                 break
 
@@ -176,7 +172,6 @@ class FileCloseDelegate(Delegate):
         # to the next page if we're closing the current page.
         current_page_index = self.notebook.get_current_page()
         this_page_index    = self.pages.index(page)
-
         if current_page_index == this_page_index:
             self.notebook.next_page()
 
@@ -197,8 +192,6 @@ class FileCloseDelegate(Delegate):
 
         if response not in (gtk.RESPONSE_YES, gtk.RESPONSE_NO):
             raise Cancelled
-
-        # Save document.
         if response == gtk.RESPONSE_YES:
             success = self.save_main_document(page)
             if not success:
@@ -220,13 +213,11 @@ class FileCloseDelegate(Delegate):
             dialog.destroy()
             return
 
-        # Save documents.
         main_pages = dialog.get_main_pages_to_save()
         tran_pages = dialog.get_translation_pages_to_save()
         dialog.destroy()
 
         gtklib.set_cursor_busy(self.window)
-
         for page in main_pages:
             success = self.save_main_document(page)
             if not success:
@@ -235,7 +226,6 @@ class FileCloseDelegate(Delegate):
             success = self.save_translation_document(page)
             if not success:
                 raise Cancelled
-
         gtklib.set_cursor_normal(self.window)
 
     def _confirm_closing_page(self, page):
@@ -267,8 +257,6 @@ class FileCloseDelegate(Delegate):
 
         if response not in (gtk.RESPONSE_YES, gtk.RESPONSE_NO):
             raise Cancelled
-
-        # Save document.
         if response == gtk.RESPONSE_YES:
             success = self.save_translation_document(page)
             if not success:
@@ -296,7 +284,6 @@ class FileCloseDelegate(Delegate):
         """Close the current page."""
 
         page = self.get_current_page()
-
         try:
             self._close_page(page)
             self.set_sensitivities()
@@ -315,7 +302,6 @@ class FileCloseDelegate(Delegate):
         if not config.application_window.maximized:
             config.application_window.size     = self.window.get_size()
             config.application_window.position = self.window.get_position()
-
         # Save output window geometry.
         if not config.output_window.maximized:
             config.output_window.size     = self.output_window.get_size()

@@ -28,8 +28,9 @@ class Action(object):
     DO            = 0
     UNDO          = 1
     REDO          = 2
-    UNDO_MULTIPLE = 3
-    REDO_MULTIPLE = 4
+    DO_MULTIPLE   = 3
+    UNDO_MULTIPLE = 4
+    REDO_MULTIPLE = 5
 
 
 class Document(object):

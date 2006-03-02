@@ -122,10 +122,8 @@ class ActionDelegate(Delegate):
         """Redo actions."""
 
         gtklib.set_cursor_busy(self.window)
-
         page = self.get_current_page()
         page.project.redo(amount)
-
         self.set_sensitivities()
         page.view.grab_focus()
         gtklib.set_cursor_normal(self.window)
@@ -135,11 +133,6 @@ class ActionDelegate(Delegate):
 
         page = self.get_current_page()
 
-        # Updating is done in an incremental manner. First all rows starting
-        # with the first row added or removed are updated. After that data by
-        # data rows that need updating, but were not already updated, are
-        # updated.
-
         rows_inserted          = action.rows_inserted[:]
         rows_removed           = action.rows_removed[:]
         rows_updated           = action.rows_updated[:]
@@ -148,39 +141,33 @@ class ActionDelegate(Delegate):
         tran_text_rows_updated = action.tran_text_rows_updated[:]
 
         if rows_inserted or rows_removed:
-
             first_row = min(rows_inserted + rows_removed)
             page.reload_after_row(first_row)
-
             lists = [
                 rows_updated,
                 timing_rows_updated,
                 main_text_rows_updated,
                 tran_text_rows_updated,
             ]
-
             for data in lists:
                 for i in reversed(range(len(data))):
                     if data[i] >= first_row:
                         data.pop(i)
 
         if rows_updated:
-
             page.reload_rows(rows_updated)
-
             lists = [
                 timing_rows_updated,
                 main_text_rows_updated,
                 tran_text_rows_updated,
             ]
-
             for data in lists:
                 for i in reversed(range(len(data))):
                     if data[i] in rows_updated:
                         data.pop(i)
 
         if timing_rows_updated:
-            page.reload_rows(timing_rows_updated)
+            page.reload_columns([SHOW, HIDE, DURN], timing_rows_updated)
 
         if main_text_rows_updated:
             page.reload_columns([MTXT], main_text_rows_updated)
@@ -192,13 +179,10 @@ class ActionDelegate(Delegate):
         """Focus, select and scroll to data updated by action."""
 
         page = self.get_current_page()
-
         if not page.project.times:
             return
 
-        # List all rows that have changed.
         changed_rows = []
-
         if action.rows_inserted or action.rows_removed:
             first_row = min(action.rows_inserted + action.rows_removed)
             changed_rows = range(first_row, len(page.project.times))
@@ -212,7 +196,6 @@ class ActionDelegate(Delegate):
         if not changed_rows:
             return
 
-        # Locate focus.
         focus_row = min(changed_rows)
         if action.timing_rows_updated:
             focus_col = SHOW
@@ -227,9 +210,7 @@ class ActionDelegate(Delegate):
             page.view.set_focus(focus_row, focus_col)
         except (TypeError, ValueError):
             pass
-
         page.view.select_rows(changed_rows)
-
         try:
             page.view.scroll_to_row(focus_row)
         except TypeError:
@@ -239,10 +220,8 @@ class ActionDelegate(Delegate):
         """Undo actions."""
 
         gtklib.set_cursor_busy(self.window)
-
         page = self.get_current_page()
         page.project.undo(amount)
-
         self.set_sensitivities()
         page.view.grab_focus()
         gtklib.set_cursor_normal(self.window)

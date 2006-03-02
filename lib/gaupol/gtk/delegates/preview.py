@@ -68,7 +68,6 @@ class PreviewAction(UIMAction):
 
         if page is None:
             return False
-
         if page.project.video_path is None:
             return False
         if not page.view.get_selected_rows():
@@ -95,7 +94,6 @@ class IOErrorDialog(ErrorDialog):
                     '"%s"') % tempfile.gettempdir()
         message = _('Attempt to write temporary subtitle file for preview '
                     'returned error: %s.') % message
-
         ErrorDialog.__init__(self, parent, title, message)
 
 
@@ -111,7 +109,6 @@ class UnicodeErrorDialog(ErrorDialog):
                     'file for preview with the current character encoding. '
                     'Please first save the subtitle file with a different '
                     'character encoding.')
-
         ErrorDialog.__init__(self, parent, title, message)
 
 
@@ -123,7 +120,6 @@ class PreviewDelegate(Delegate):
         """Preview subtitles with video player."""
 
         page = self.get_current_page()
-
         row  = page.view.get_selected_rows()[0]
         time = page.project.times[row][0]
         col  = page.view.get_focus()[1]
@@ -165,7 +161,6 @@ class PreviewDelegate(Delegate):
         else:
             video_player = config.preview.video_player
             command = VideoPlayer.commands[video_player]
-
         offset = config.preview.offset
 
         try:

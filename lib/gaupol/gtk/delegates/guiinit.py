@@ -42,7 +42,6 @@ from gaupol.gtk.output    import OutputWindow
 
 logger = logging.getLogger()
 
-
 MENUBAR_XML_PATH = os.path.join(UI_DIR  , 'menubar.xml')
 TOOLBAR_XML_PATH = os.path.join(UI_DIR  , 'toolbar.xml')
 POPUPS_XML_PATH  = os.path.join(UI_DIR  , 'popups.xml' )
@@ -57,7 +56,6 @@ class GUIInitDelegate(Delegate):
         """Initialize the main window and all its widgets."""
 
         self._init_window()
-
         vbox = gtk.VBox()
         self.window.add(vbox)
 
@@ -76,7 +74,7 @@ class GUIInitDelegate(Delegate):
         if not config.application_window.show_statusbar:
             statusbar_hbox.hide()
 
-        # Initialize the output window.
+        # Initialize output window.
         self.output_window = OutputWindow()
         if config.output_window.show:
             self.output_window.show()
@@ -94,10 +92,8 @@ class GUIInitDelegate(Delegate):
         Return toolbar.
         """
         self._init_ui_manager()
-
         menubar = self.uim.get_widget('/ui/menubar')
         toolbar = self.uim.get_widget('/ui/main_toolbar')
-
         toolbar.set_show_arrow(True)
 
         # Pack menubar and toolbar.
@@ -115,13 +111,11 @@ class GUIInitDelegate(Delegate):
 
         self.notebook = gtk.Notebook()
         vbox.pack_start(self.notebook, True, True, 0)
-
         self.notebook.set_scrollable(True)
         self.notebook.popup_enable()
 
-        signal = 'switch-page'
         method = self.on_notebook_page_switched
-        self.notebook.connect_after(signal, method)
+        self.notebook.connect_after('switch-page', method)
 
         # Set drag-and-drop for file opening.
         self.notebook.drag_dest_set(
@@ -161,12 +155,10 @@ class GUIInitDelegate(Delegate):
         hbox = gtk.HBox()
         vbox.pack_start(hbox, False, False, 0)
 
-        # Create statusbar event boxes.
         message_event_box = gtk.EventBox()
         text_event_box    = gtk.EventBox()
         tran_event_box    = gtk.EventBox()
 
-        # Set tooltips.
         tip = _('Amount of characters in the main text of the selected '
                 'subtitle')
         self.tooltips.set_tip(text_event_box, tip)
@@ -174,13 +166,11 @@ class GUIInitDelegate(Delegate):
                 'subtitle')
         self.tooltips.set_tip(tran_event_box, tip)
 
-        # Pack event boxes.
         hbox.pack_start(message_event_box, True , True , 0)
         hbox.pack_start(text_event_box   , False, False, 0)
         hbox.pack_start(tran_event_box   , False, False, 0)
 
-        # Create statusbars.
-        self.msg_statusbar   = gtk.Statusbar()
+        self.msg_statusbar  = gtk.Statusbar()
         self.main_statusbar = gtk.Statusbar()
         self.tran_statusbar = gtk.Statusbar()
 
@@ -188,7 +178,6 @@ class GUIInitDelegate(Delegate):
         self.main_statusbar.set_size_request(100, -1)
         self.tran_statusbar.set_size_request(100, -1)
 
-        # Pack statusbars.
         message_event_box.add(self.msg_statusbar)
         text_event_box.add(self.main_statusbar)
         tran_event_box.add(self.tran_statusbar)
@@ -268,12 +257,10 @@ class GUIInitDelegate(Delegate):
                     getattr(self, cls.uim_radio_items[2])
                 )
 
-        # Add action groups to UI manager.
         self.uim.insert_action_group(action_group               ,  0)
         self.uim.insert_action_group(gtk.ActionGroup('recent')  , -1)
         self.uim.insert_action_group(gtk.ActionGroup('projects'), -1)
 
-        # Add menubar, toolbar and popup entries.
         self.uim.add_ui_from_file(MENUBAR_XML_PATH)
         self.uim.add_ui_from_file(TOOLBAR_XML_PATH)
         self.uim.add_ui_from_file(POPUPS_XML_PATH )
@@ -287,7 +274,6 @@ class GUIInitDelegate(Delegate):
         self.undo_button.set_label(_('Undo'))
         self.undo_button.set_is_important(True)
         self.undo_button.set_menu(gtk.Menu())
-
         self.undo_button.connect('clicked'  , self.on_undo_action_activated)
         self.undo_button.connect('show-menu', self.on_undo_button_show_menu)
 
@@ -300,7 +286,6 @@ class GUIInitDelegate(Delegate):
         self.redo_button.set_label(_('Redo'))
         self.redo_button.set_is_important(False)
         self.redo_button.set_menu(gtk.Menu())
-
         self.redo_button.connect('clicked'  , self.on_redo_action_activated)
         self.redo_button.connect('show-menu', self.on_redo_button_show_menu)
 
@@ -309,7 +294,6 @@ class GUIInitDelegate(Delegate):
         tip = _('Redo several undone actions')
         self.redo_button.set_arrow_tooltip(self.tooltips, tip)
 
-        # Pack buttons.
         toolbar = self.uim.get_widget('/ui/main_toolbar')
         toolbar.insert(gtk.SeparatorToolItem(), 2)
         toolbar.insert(self.undo_button, 3)
@@ -360,7 +344,7 @@ class GUIInitDelegate(Delegate):
         method = self.on_video_file_button_drag_data_received
         self.video_button.connect('drag-data-received', method)
 
-        # Add video filechooser button to toolbar.
+        # Add video file button to toolbar.
         tool_item = gtk.ToolItem()
         tool_item.set_border_width(4)
         tool_item.set_expand(True)
@@ -393,7 +377,6 @@ class GUIInitDelegate(Delegate):
         """Initialize the main window."""
 
         self.window = gtk.Window()
-
         self.window.resize(*config.application_window.size)
         self.window.move(*config.application_window.position)
         if config.application_window.maximized:

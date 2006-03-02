@@ -333,12 +333,12 @@ class SpellCheckDialog(gobject.GObject):
                           '"%s": %s.' % (SPELL_CHECK_DIR, message)
                 logger.error(message)
 
-        if config.spell_check.check_main:
+        if config.spell_check.main:
             self._init_lang_name(MAIN)
             self._init_checker(MAIN)
             self._init_replacements(MAIN)
 
-        if config.spell_check.check_translation:
+        if config.spell_check.translation:
             self._init_lang_name(TRAN)
             self._init_checker(TRAN)
             self._init_replacements(TRAN)
@@ -632,7 +632,7 @@ class SpellCheckDialog(gobject.GObject):
             self._texts[self._row + 1]
             self._row += 1
         except IndexError:
-            if self._document == MAIN and config.spell_check.check_translation:
+            if self._document == MAIN and config.spell_check.translation:
                 self._set_document(TRAN)
             else:
                 self._register_changes()
@@ -651,9 +651,9 @@ class SpellCheckDialog(gobject.GObject):
         self._page = page
         self.emit('page-selected', self._page)
 
-        if config.spell_check.check_main:
+        if config.spell_check.main:
             self._set_document(MAIN)
-        elif config.spell_check.check_translation:
+        elif config.spell_check.translation:
             self._set_document(TRAN)
 
     def show(self):
@@ -732,8 +732,8 @@ if __name__ == '__main__':
 
             config.spell_check.main_language        = 'en_CA'
             config.spell_check.translation_language = 'en_CA'
-            config.spell_check.check_main           = True
-            config.spell_check.check_translation    = True
+            config.spell_check.main        = True
+            config.spell_check.translation = True
 
             self.repl_path = os.path.join(SPELL_CHECK_DIR, 'en_CA.repl')
             self.dict_path = os.path.join(SPELL_CHECK_DIR, 'en_CA.dict')

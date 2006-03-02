@@ -73,12 +73,11 @@ class FileOpenDelegate(Delegate):
                 show_time = shows[i]
                 hide_time = hides[i]
                 durn_time = calc.get_time_duration(show_time, hide_time)
+                times.append([show_time, hide_time, durn_time])
 
                 show_frame = calc.time_to_frame(show_time)
                 hide_frame = calc.time_to_frame(hide_time)
                 durn_frame = calc.get_frame_duration(show_frame, hide_frame)
-
-                times.append([show_time, hide_time, durn_time])
                 frames.append([show_frame, hide_frame, durn_frame])
 
         elif self.main_file.mode == Mode.FRAME:
@@ -87,16 +86,14 @@ class FileOpenDelegate(Delegate):
                 show_frame = shows[i]
                 hide_frame = hides[i]
                 durn_frame = calc.get_frame_duration(show_frame, hide_frame)
-
-                show_time  = calc.frame_to_time(show_frame)
-                hide_time  = calc.frame_to_time(hide_frame)
-                durn_time  = calc.get_time_duration(show_time, hide_time)
-
-                times.append([show_time, hide_time, durn_time])
                 frames.append([show_frame, hide_frame, durn_frame])
 
-        for text in texts:
+                show_time = calc.frame_to_time(show_frame)
+                hide_time = calc.frame_to_time(hide_frame)
+                durn_time = calc.get_time_duration(show_time, hide_time)
+                times.append([show_time, hide_time, durn_time])
 
+        for text in texts:
             main_texts.append(text)
             tran_texts.append(u'')
 
@@ -131,8 +128,8 @@ class FileOpenDelegate(Delegate):
         for i in range(len(self.main_texts)):
             tran_texts[i] = u''
 
-        # If translation file is longer than main file, new subtitles need to
-        # be added.
+        # If translation file is longer than main file,
+        # new subtitles need to be added.
         difference = len(texts) - len(self.times)
         if difference > 0:
             rows = range(len(self.times), len(self.times) + difference)
@@ -152,12 +149,14 @@ class FileOpenDelegate(Delegate):
         def sort(x, y):
             return cmp(x[0], y[0])
 
-        data = [[shows[i], hides[i], texts[i]] for i in range(len(shows))]
+        data = []
+        for i in range(len(shows)):
+            data.append([shows[i], hides[i], texts[i]])
         data.sort(sort)
 
-        shows = [entry[0] for entry in data]
-        hides = [entry[1] for entry in data]
-        texts = [entry[2] for entry in data]
+        shows = list(entry[0] for entry in data)
+        hides = list(entry[1] for entry in data)
+        texts = list(entry[2] for entry in data)
 
         return shows, hides, texts
 

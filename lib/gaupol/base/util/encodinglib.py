@@ -186,7 +186,7 @@ def get_locale_encoding():
     """
     python_name = locale.getdefaultlocale()[1]
 
-    # Validate encoding name by replacing illegal characters and cheking the
+    # Validate encoding name by replacing illegal characters and checking the
     # dictionary of aliases for a proper name.
     python_name = re_illegal.sub('_', python_name)
     try:
@@ -207,7 +207,6 @@ def get_locale_descriptive_name():
     Return name or None.
     """
     locale_tuple = get_locale_encoding()
-
     if locale_tuple is None:
         return None
 
@@ -232,7 +231,6 @@ def get_valid_encodings():
     Return list with elements (Python name, display name, description).
     """
     valid_encodings = []
-
     for entry in encodings:
         if is_valid_python_name(entry[PY_NAME]):
             valid_encodings.append(entry)
@@ -243,7 +241,6 @@ def get_valid_descriptive_names():
     """Get a list of valid descriptive names."""
 
     valid_names = []
-
     for entry in encodings:
         if is_valid_python_name(entry[PY_NAME]):
             # Translators: Encoding descriptive name, e.g. "Russian (KOI8-R)".
@@ -255,7 +252,6 @@ def get_valid_python_names():
     """Get a list of valid encoding Python names."""
 
     valid_names = []
-
     for entry in encodings:
         if is_valid_python_name(entry[PY_NAME]):
             valid_names.append(entry[PY_NAME])

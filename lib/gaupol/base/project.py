@@ -92,13 +92,10 @@ class Project(Model):
         # mapping all its methods that don't start with an underscore to that
         # instance.
         for cls in Delegates.classes:
-
             delegate = cls(self)
             for name in dir(delegate):
-
                 if name.startswith('_'):
                     continue
-
                 value = getattr(delegate, name)
                 if type(value) is types.MethodType:
                     self._delegations[name] = delegate

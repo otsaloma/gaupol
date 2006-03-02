@@ -46,6 +46,7 @@ default_extensions = (
     '.mpg',
     '.mp4',
     '.m2v',
+    '.ogg',
     '.ogm',
     '.qt',
     '.rm',
@@ -115,12 +116,10 @@ class PreviewDelegate(Delegate):
         """
         assert self.main_file is not None
 
-        # Get paths.
         subroot   = os.path.splitext(self.main_file.path)[0]
         dirname   = os.path.dirname(self.main_file.path)
         filenames = os.listdir(dirname)
 
-        # Find video.
         for filename in filenames:
             filepath = os.path.join(dirname, filename)
             fileroot, extension = os.path.splitext(filepath)
@@ -145,9 +144,9 @@ class PreviewDelegate(Delegate):
         offset: float-convertable, seconds before row's show time to start
         temp_path: temporary subtitle file path if already written
 
-        This method first dumps the current subtitle data to a temporary file
-        if the subtitle file is changed and then launches an external video
-        player to view the video file with the subtitle file.
+        First dump the current subtitle data to a temporary file if the
+        subtitle file is changed and then launch an external video player to
+        view the video file with the subtitle file.
 
         Raise IOError if writing to temporary file fails.
         Raise UnicodeError if encoding temporary file fails.
@@ -157,16 +156,13 @@ class PreviewDelegate(Delegate):
         assert sub_file is not None
         assert self.video_path is not None
 
-        # Get offsetted time.
         seconds = self.calc.time_to_seconds(time)
         seconds = max(0.0, seconds - float(offset))
 
-        # Get time strings.
         time    = str(self.calc.seconds_to_time(seconds))
         frame   = str(self.calc.seconds_to_frame(seconds))
         seconds = str(seconds)
 
-        # Get files.
         if temp_path is not None:
             sub_path = temp_path
             is_temp  = True
@@ -174,14 +170,13 @@ class PreviewDelegate(Delegate):
             sub_path, is_temp = self._get_subtitle_path(document)
         output_fd, output_path = tempfile.mkstemp('.output', 'gaupol.')
 
-        # Parse command.
         command = command.replace('%s', sub_path       )
         command = command.replace('%v', self.video_path)
         command = command.replace('%t', time           )
         command = command.replace('%c', seconds        )
         command = command.replace('%f', frame          )
 
-        self.output = command + '\n\n'
+        self.output = '$ %s\n' % command
 
         # Run video player and wait for exit.
         popen = subprocess.Popen(
@@ -193,12 +188,10 @@ class PreviewDelegate(Delegate):
         )
         return_value = popen.wait()
 
-        # Read output.
         fobj = file(output_path, 'r')
         self.output += fobj.read()
         fobj.close()
 
-        # Remove temporary files.
         try:
             os.remove(output_path)
         except OSError:

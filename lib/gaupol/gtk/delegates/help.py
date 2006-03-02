@@ -38,12 +38,11 @@ from gaupol.gtk.util          import gtklib
 from gaupol                   import __version__
 
 
+re_version = re.compile(r'^\d+\.\d+\.\d+$')
+
 BUG_REPORT_URL = 'http://gna.org/bugs/?func=additem&group=gaupol'
 DOWNLOAD_URL   = 'http://home.gna.org/gaupol/download.html'
 VERSION_URL    = 'http://download.gna.org/gaupol/latest.txt'
-
-
-re_version = re.compile(r'^\d+\.\d+\.\d+$')
 
 
 class HelpAction(UIMAction):
@@ -115,13 +114,12 @@ class VersionCheckErrorDialog(gtk.MessageDialog):
             self,
             parent,
             gtk.DIALOG_MODAL|gtk.DIALOG_DESTROY_WITH_PARENT,
-            gtk.MESSAGE_INFO,
+            gtk.MESSAGE_ERROR,
             gtk.BUTTONS_NONE,
             _('Failed to check latest version')
         )
 
         self.format_secondary_text(message)
-
         self.add_button(_('_Go to Download Page'), gtk.RESPONSE_ACCEPT)
         self.add_button(gtk.STOCK_OK             , gtk.RESPONSE_OK    )
         self.set_default_response(gtk.RESPONSE_OK)
@@ -137,7 +135,6 @@ class VersionCheckInfoDialog(gtk.MessageDialog):
             title = _('A newer version is available')
         else:
             title = _('You have the latest version')
-
         message = _('The latest version is %s.\nYou are using %s.') \
                   % (remote_version, local_version)
 
@@ -151,7 +148,6 @@ class VersionCheckInfoDialog(gtk.MessageDialog):
         )
 
         self.format_secondary_text(message)
-
         self.add_button(_('_Go to Download Page'), gtk.RESPONSE_ACCEPT)
         self.add_button(gtk.STOCK_OK            , gtk.RESPONSE_OK    )
         self.set_default_response(gtk.RESPONSE_OK)
@@ -171,12 +167,12 @@ class HelpDelegate(Delegate):
         try:
             text = wwwlib.read_url(VERSION_URL, 15)
         except IOError, instance:
-            message = _('Trying to connect to URL "%s" returned error: %s.') \
+            message = _('Failed to connect to URL "%s": %s.') \
                       % (VERSION_URL, instance.args[1][1])
             dialog = VersionCheckErrorDialog(self.window, message)
         except TimeoutError:
-            message = _('Operation timed out. Please try again later or '
-                        'proceed to the download page.')
+            message = _('Connection timed out. Please try again later or '
+                        'check the download page.')
             dialog = VersionCheckErrorDialog(self.window, message)
 
         # Show error dialog.
@@ -189,9 +185,6 @@ class HelpDelegate(Delegate):
             return
 
         remote_version = text.strip()
-
-        # Automated HTML error message must be distinguished from the
-        # expected version string.
         if re_version.match(remote_version):
             args = self.window, __version__, remote_version
             dialog = VersionCheckInfoDialog(*args)

@@ -107,6 +107,8 @@ class OutputWindow(gobject.GObject):
 
         self._text_view = gtk.TextView()
         self._text_view.set_wrap_mode(gtk.WRAP_WORD)
+        self._text_view.set_cursor_visible(False)
+        self._text_view.set_editable(False)
         scrolled_window = gtk.ScrolledWindow()
         scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
         scrolled_window.set_shadow_type(gtk.SHADOW_ETCHED_IN)

@@ -49,14 +49,12 @@ class TimeFrameCalculator(object):
 
         x = self.time_to_seconds(x)
         y = self.time_to_seconds(y)
-
         return self.seconds_to_time(x + y)
 
     def add_seconds_to_time(self, time, amount):
         """Add amount of seconds to time."""
 
         seconds = max(0, self.time_to_seconds(time) + amount)
-
         return self.seconds_to_time(seconds)
 
     def frame_to_seconds(self, frame):
@@ -68,7 +66,6 @@ class TimeFrameCalculator(object):
         """Convert frame to time."""
 
         seconds = self.frame_to_seconds(frame)
-
         return self.seconds_to_time(seconds)
 
     def get_frame_duration(self, x, y):
@@ -89,7 +86,6 @@ class TimeFrameCalculator(object):
         y = self.time_to_seconds(y)
 
         duration = y - x
-
         if duration > 0:
             return self.seconds_to_time(duration)
         else:
@@ -141,7 +137,6 @@ class TimeFrameCalculator(object):
         """Convert time to frame."""
 
         seconds = self.time_to_seconds(time)
-
         return self.seconds_to_frame(seconds)
 
     def time_to_seconds(self, time):
@@ -169,15 +164,15 @@ if __name__ == '__main__':
             calc = TimeFrameCalculator(0)
 
             times = '00:00:00,100', '33:33:00,000'
-            assert calc.add_times(*times) == '33:33:00,100'
-            assert calc.frame_to_seconds(400) == 400 / 23.976
-            assert calc.frame_to_time(400) == '00:00:16,683'
-            assert calc.get_frame_duration(5, 8) == 3
-            assert calc.get_time_duration(*times) == '33:32:59,900'
-            assert calc.round_time('02:33:44,666', 1) == '02:33:44,700'
-            assert calc.seconds_to_frame(500) == 11988
-            assert calc.seconds_to_time(877.999) == '00:14:37,999'
-            assert calc.time_to_frame('00:00:33,333') == 799
+            assert calc.add_times(*times)               == '33:33:00,100'
+            assert calc.frame_to_seconds(400)           == 400 / 23.976
+            assert calc.frame_to_time(400)              == '00:00:16,683'
+            assert calc.get_frame_duration(5, 8)        == 3
+            assert calc.get_time_duration(*times)       == '33:32:59,900'
+            assert calc.round_time('02:33:44,666', 1)   == '02:33:44,700'
+            assert calc.seconds_to_frame(500)           == 11988
+            assert calc.seconds_to_time(877.999)        == '00:14:37,999'
+            assert calc.time_to_frame('00:00:33,333')   == 799
             assert calc.time_to_seconds('00:33:33,333') == 2013.333
 
     TestTimeFrameCalculator().run()

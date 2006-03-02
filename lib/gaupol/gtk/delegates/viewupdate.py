@@ -49,7 +49,6 @@ class ViewUpdateDelegate(Delegate):
 
         x = int(event.x)
         y = int(event.y)
-
         try:
             row, tree_view_column, x, y = view.get_path_at_pos(x, y)
         except TypeError:
@@ -60,7 +59,6 @@ class ViewUpdateDelegate(Delegate):
             view.set_cursor(row, tree_view_column)
             view.grab_focus()
             view.set_active_column()
-
         # If user right-clicked in the selection, the focus cannot be moved,
         # because moving focus always changes selection as well and rebuilding
         # a lost selection would be far too slow and awkward.
@@ -89,7 +87,6 @@ class ViewUpdateDelegate(Delegate):
 
         self.main_statusbar.pop(0)
         self.tran_statusbar.pop(0)
-
         if page is None:
             return
 
@@ -97,7 +94,6 @@ class ViewUpdateDelegate(Delegate):
         rows = page.view.get_selected_rows()
         if len(rows) != 1:
             return
-
         row = rows[0]
 
         def set_status(statusbar, document):
@@ -114,13 +110,8 @@ class ViewUpdateDelegate(Delegate):
                 message += '=%d' % total
             statusbar.push(0, message)
 
-            # Get width required to display message.
             test_label.set_text(message)
-            width = test_label.size_request()[0]
-
-            # Account 12 pixels for general extra (paddings, borders, etc)
-            # and height for resize grip.
-            width += 12
+            width = test_label.size_request()[0] + 12
             if statusbar.get_has_resize_grip():
                 width += statusbar.size_request()[1]
             width = max(100, width)

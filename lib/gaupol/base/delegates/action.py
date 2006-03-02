@@ -18,7 +18,7 @@
 
 
 """
-Managing actions.
+Managing revertable actions.
 
 To hook some method up with the undo-redo system the following needs to be done
 (1) The last argument to the function should be a keyword argument "register"
@@ -29,16 +29,18 @@ keyword arguments specified in RevertableAction.__init__.
 To do some action without possibility of reverting, None can be given as a
 value to the "register" keyword argument.
 
-All data-changing methods need to come in pairs as each action needs to be
-revertable. For example insert_subtitles and remove_subtitles form a pair.
-
 During the "register_action" method, a signal will be emitted notifying that
 an action was done. Any possible UI can hook up to that signal and use it to
 refresh the data display.
 
-Currently, there is no ability to group actions. This makes it impossible to,
-for example, insert new rows while pasting if clipboard contents don't fit in
-the existing rows.
+When grouping actions, only one signal should be sent. For example
+
+    self.register_action(..., emit_signal=False)
+    self.register_action(..., emit_signal=False)
+    self.group_actions(Action.DO, 2, description)
+
+Alternatively methods self.block(signal) and self.unblock(signal) can be used
+directly to avoid sending unwanted signals.
 """
 
 
@@ -71,18 +73,19 @@ class RevertableAction(object):
         rows_updated=[],
         timing_rows_updated=[],
         main_text_rows_updated=[],
-        tran_text_rows_updated=[]
+        tran_text_rows_updated=[],
+        emit_signal=True,
     ):
         """
         Initialize a RevertableAction object.
 
-        register: Action.DO, Action.UNDO or Action.REDO
-        documents: list of document constants (Document.MAIN, Document.TRAN)
+        register: Action.* constant
+        documents: list of Document.* constants
         description: Short one line description of action
-        revert_method: Method called to revert action
+        emit_signal: True if signal is to be sent on do, undo and redo events
 
         *_updated arguments should preferably be called without duplication.
-        *_updated are all in sorted order.
+        *_updated are all sorted on initialization.
         """
         self.register               = register
         self.documents              = documents
@@ -96,6 +99,7 @@ class RevertableAction(object):
         self.timing_rows_updated    = timing_rows_updated
         self.main_text_rows_updated = main_text_rows_updated
         self.tran_text_rows_updated = tran_text_rows_updated
+        self.emit_signal            = emit_signal
 
         self._validate_input()
 
@@ -123,6 +127,7 @@ class RevertableAction(object):
             Action.DO,
             Action.UNDO,
             Action.REDO,
+            Action.DO_MULTIPLE,
             Action.UNDO_MULTIPLE,
             Action.REDO_MULTIPLE,
         )
@@ -131,12 +136,12 @@ class RevertableAction(object):
             message = 'Incorrect register: "%s".' % self.register
             raise ValueError(message)
 
-        if Document.MAIN not in self.documents and \
-           Document.TRAN not in self.documents:
-               message = 'Incorrect documents: "%s".' % self.documents
-               raise ValueError(message)
+        main_in = Document.MAIN in self.documents
+        tran_in = Document.TRAN in self.documents
+        if not main_in and not tran_in:
+            message = 'Incorrect documents: "%s".' % self.documents
+            raise ValueError(message)
 
-        # Sort all row data.
         self.rows_inserted.sort()
         self.rows_removed.sort()
         self.rows_updated.sort()
@@ -145,9 +150,31 @@ class RevertableAction(object):
         self.tran_text_rows_updated.sort()
 
 
+class ActionGroup(object):
+
+    """Group of revertable actions."""
+
+    def __init__(self, actions, description):
+
+        self.actions     = actions
+        self.description = description
+
+
 class ActionDelegate(Delegate):
 
-    """Managing actions."""
+    """Managing revertable actions."""
+
+    def break_action_group(self, stack, index=0):
+        """
+        Break action group in stack into individual actions.
+
+        Return amount of actions broken into.
+        """
+        action_group = stack.pop(index)
+        for action in reversed(action_group.actions):
+            stack.insert(0, action)
+
+        return len(action_group.actions)
 
     def can_redo(self):
         """Return True if there's something that can be redone."""
@@ -159,47 +186,175 @@ class ActionDelegate(Delegate):
 
         return bool(self.undoables)
 
+    def _emit_notification(self, actions, register):
+        """Emit signal with a notification action."""
+
+        action = self._get_notification_action(actions, register)
+        signal = self.get_signal(register)
+        self.emit(signal, action)
+
+    def _get_destination_stack(self, register):
+        """Get stack where registered action will be placed."""
+
+        if register in (Action.DO, Action.DO_MULTIPLE):
+            return self.undoables
+        if register in (Action.UNDO, Action.UNDO_MULTIPLE):
+            return self.redoables
+        if register in (Action.REDO, Action.REDO_MULTIPLE):
+            return self.undoables
+
+    def _get_source_stack(self, register):
+        """Get stack where action to register is."""
+
+        if register in (Action.UNDO, Action.UNDO_MULTIPLE):
+            return self.undoables
+        if register in (Action.REDO, Action.REDO_MULTIPLE):
+            return self.redoables
+
+    def _get_notification_action(self, actions, register):
+        """
+        Get an action to notify of changes made by actions.
+
+        Get an action that lists all changes that would be made if actions were
+        registered (done or reverted) in the order given.
+        """
+        revert = False
+        if register != Action.DO:
+            revert = True
+
+        rows_inserted          = []
+        rows_removed           = []
+        rows_updated           = []
+        timing_rows_updated    = []
+        main_text_rows_updated = []
+        tran_text_rows_updated = []
+
+        all_updated_rows = [
+            rows_updated,
+            timing_rows_updated,
+            main_text_rows_updated,
+            tran_text_rows_updated
+        ]
+
+        for action in actions:
+
+            if revert:
+                inserted = action.rows_removed
+                removed  = action.rows_inserted
+            else:
+                inserted = action.rows_inserted
+                removed  = action.rows_removed
+
+            # Adjust previous updates due to rows being removed.
+            if removed:
+                first_removed_row = min(removed)
+                for i in range(len(all_updated_rows)):
+                    for k in reversed(range(len(all_updated_rows[i]))):
+                        updated_row = all_updated_rows[i][k]
+                        # Remove updates to rows being removed.
+                        if updated_row in removed:
+                            all_updated_rows[i].pop(k)
+                        # Shift updates to rows being moved.
+                        elif updated_row > first_removed_row:
+                            args = removed, updated_row
+                            rows_above = bisect.bisect_left(*args)
+                            all_updated_rows[i][k] -= rows_above
+
+            # Adjust previous updates due to rows being inserted.
+            for inserted_row in inserted:
+                for i in range(len(all_updated_rows)):
+                    # Shift updates to rows being moved.
+                    for k, updated_row in enumerate(all_updated_rows[i]):
+                        if updated_row >= inserted_row:
+                            all_updated_rows[i][k] += 1
+
+            rows_inserted          += inserted
+            rows_removed           += removed
+            rows_updated           += action.rows_updated
+            timing_rows_updated    += action.timing_rows_updated
+            main_text_rows_updated += action.main_text_rows_updated
+            tran_text_rows_updated += action.tran_text_rows_updated
+
+        clean_up = listlib.sort_and_remove_duplicates
+
+        return RevertableAction(
+            register=register,
+            documents=[Document.MAIN, Document.TRAN],
+            description='',
+            revert_method=None,
+            rows_inserted=clean_up(rows_inserted),
+            rows_removed=clean_up(rows_removed),
+            rows_updated=clean_up(rows_updated),
+            timing_rows_updated=clean_up(timing_rows_updated),
+            main_text_rows_updated=clean_up(main_text_rows_updated),
+            tran_text_rows_updated=clean_up(tran_text_rows_updated),
+        )
+
+    def get_signal(self, register):
+        """Get signal matching register."""
+
+        if register in (Action.DO, Action.DO_MULTIPLE):
+            return 'action_done'
+        if register in (Action.UNDO, Action.UNDO_MULTIPLE):
+            return 'action_undone'
+        if register in (Action.REDO, Action.REDO_MULTIPLE):
+            return 'action_redone'
+
+    def group_actions(self, register, amount, description, emit_signal=True):
+        """Group amount of registered actions as one entity."""
+
+        stack  = self._get_destination_stack(register)
+        signal = self.get_signal(register)
+
+        actions = []
+        for i in range(amount):
+            actions.append(stack.pop(0))
+        action_group = ActionGroup(actions, description)
+        stack.insert(0, action_group)
+
+        if emit_signal:
+            self._emit_notification(reversed(actions), register)
+
     def modify_action_description(self, register, description):
         """Modify the description of the most recent action."""
 
-        if register in (Action.DO, Action.REDO):
-            self.undoables[0].description = description
-        if register == Action.UNDO:
-            self.redoables[0].description = description
+        if register is None:
+            return
+
+        stack = self._get_destination_stack(register)
+        stack[0].description = description
 
     def redo(self, amount=1):
         """Redo actions."""
 
         if amount == 1:
-            self.redoables[0].revert()
-            self.redoables.pop(0)
-        elif amount > 1:
-            self._revert_multiple(amount, Action.REDO_MULTIPLE)
+            if not isinstance(self.redoables[0], ActionGroup):
+                self.redoables[0].revert()
+                self.redoables.pop(0)
+                return
+
+        self._revert_multiple(amount, Action.REDO_MULTIPLE)
 
     def register_action(self, *args, **kwargs):
         """
         Register action done, undone or redone.
 
         See RevertableAction.__init__ for arguments as they're passed directly
-        for there for the action instatiation.
+        for the action instantiation.
         """
         if kwargs['register'] is None:
             return
 
         action = RevertableAction(*args, **kwargs)
 
-        # Restore action's original "DO" description.
-        if action.register == Action.UNDO:
-            action.description = self.undoables[0].description
-        elif action.register == Action.REDO:
-            action.description = self.redoables[0].description
-
-        # Register action.
+        # Restore action's original "DO" description if reverting.
         if action.register == Action.DO:
             self._register_action_done(action)
         elif action.register == Action.UNDO:
+            action.description = self.undoables[0].description
             self._register_action_undone(action)
         elif action.register == Action.REDO:
+            action.description = self.redoables[0].description
             self._register_action_redone(action)
 
     def _register_action_done(self, action):
@@ -214,7 +369,8 @@ class ActionDelegate(Delegate):
 
         self.redoables = []
         self._shift_changed_value(action, 1)
-        self.emit('action_done', action)
+        if action.emit_signal:
+            self.emit('action_done', action)
 
     def _register_action_redone(self, action):
         """Register action redone."""
@@ -227,7 +383,8 @@ class ActionDelegate(Delegate):
                 self.undoables.pop()
 
         self._shift_changed_value(action, 1)
-        self.emit('action_redone', action)
+        if action.emit_signal:
+            self.emit('action_redone', action)
 
     def _register_action_undone(self, action):
         """Register action undone."""
@@ -240,79 +397,32 @@ class ActionDelegate(Delegate):
                 self.redoables.pop()
 
         self._shift_changed_value(action, -1)
-        self.emit('action_undone', action)
+        if action.emit_signal:
+            self.emit('action_undone', action)
 
     def _revert_multiple(self, amount, register):
         """Revert multiple actions."""
 
-        if register == Action.UNDO_MULTIPLE:
-            signal = 'action_undone'
-            stack  = self.undoables
-        elif register == Action.REDO_MULTIPLE:
-            signal = 'action_redone'
-            stack  = self.redoables
+        signal = self.get_signal(register)
+        stack  = self._get_source_stack(register)
 
-        # For simplicity log updates only for full rows.
-        rows_inserted = []
-        rows_removed  = []
-        rows_updated  = []
-
-        # Block signals of individual actions.
         self.block(signal)
-
+        actions = []
         for i in range(amount):
-
-            action = stack[0]
-            action.revert()
-
-            # Adjust previous updates to rows now being removed.
-            if action.rows_inserted:
-                first_row = min(action.rows_inserted)
-                for k in reversed(range(len(rows_updated))):
-
-                    # Remove updates to rows that will no longer exist.
-                    if rows_updated[k] in action.rows_inserted:
-                        rows_updated.pop(k)
-
-                    # Shift updates according to new row count.
-                    elif rows_updated[k] > first_row:
-                        lst = action.rows_inserted
-                        rows_above = bisect.bisect_left(lst, rows_updated[k])
-                        rows_updated[k] -= rows_above
-
-            # Adjust previous updates to rows now being inserted.
-            for row in action.rows_removed:
-                for k in range(len(rows_updated)):
-                    if rows_updated[k] >= row:
-                        rows_updated[k] += 1
-
-            rows_inserted += action.rows_inserted
-            rows_removed  += action.rows_removed
-            rows_updated  += action.rows_updated
-            rows_updated  += action.timing_rows_updated
-            rows_updated  += action.main_text_rows_updated
-            rows_updated  += action.tran_text_rows_updated
-
-            stack.pop(0)
-
+            sub_amount = 1
+            if isinstance(stack[0], ActionGroup):
+                description = stack[0].description
+                sub_amount  = self.break_action_group(stack)
+            for k in range(sub_amount):
+                action = stack[0]
+                actions.append(action)
+                action.revert()
+                stack.pop(0)
+            if sub_amount > 1:
+                self.group_actions(register, sub_amount, description, False)
         self.unblock(signal)
 
-        # Sort and remove duplicates from lists of updates.
-        for data in (rows_inserted, rows_removed, rows_updated):
-            data = listlib.sort_and_remove_duplicates(data)
-
-        # Create an action to deliver information of reverting.
-        action = RevertableAction(
-            register=register,
-            documents=[Document.MAIN, Document.TRAN],
-            description='',
-            revert_method=None,
-            rows_inserted=rows_inserted,
-            rows_removed=rows_removed,
-            rows_updated=rows_updated,
-        )
-
-        self.emit(signal, action)
+        self._emit_notification(actions, register)
 
     def _shift_changed_value(self, action, shift):
         """Shift value(s) of project's changed attributes."""
@@ -321,7 +431,6 @@ class ActionDelegate(Delegate):
             self.main_changed += shift
         if Document.TRAN in action.documents:
             self.tran_changed += shift
-
         if action.documents == [Document.TRAN]:
             self.tran_active = True
 
@@ -329,11 +438,12 @@ class ActionDelegate(Delegate):
         """Undo actions."""
 
         if amount == 1:
-            self.undoables[0].revert()
-            self.undoables.pop(0)
-        elif amount > 1:
-            self._revert_multiple(amount, Action.UNDO_MULTIPLE)
-            return
+            if not isinstance(self.undoables[0], ActionGroup):
+                self.undoables[0].revert()
+                self.undoables.pop(0)
+                return
+
+        self._revert_multiple(amount, Action.UNDO_MULTIPLE)
 
 
 if __name__ == '__main__':
@@ -358,7 +468,143 @@ if __name__ == '__main__':
                 revert_method_kwargs={'kwarg': 'keyword'},
             ).revert()
 
+    class TestActionGroup(Test):
+
+        def test_init(self):
+
+            ActionGroup([], 'test')
+
     class TestActionDelegate(Test):
+
+        def test_action_grouping(self):
+
+            project = self.get_project()
+            project.clear_texts([0], Document.MAIN)
+            project.clear_texts([1], Document.MAIN)
+            project.clear_texts([2], Document.MAIN)
+
+            project.group_actions(Action.DO, 2, 'test')
+            assert len(project.undoables) == 2
+            assert project.undoables[0].description == 'test'
+            assert len(project.undoables[0].actions) == 2
+
+            project.break_action_group(project.undoables)
+            assert len(project.undoables) == 3
+            project.group_actions(Action.DO, 2, 'test')
+
+            project.undo(1)
+            assert len(project.undoables) == 1
+            assert len(project.redoables) == 1
+            assert project.redoables[0].description == 'test'
+            assert len(project.redoables[0].actions) == 2
+
+            project.redo(1)
+            project.undo(2)
+
+        def test_emit_notification(self):
+
+            def on_action_done(action):
+                assert isinstance(action, RevertableAction)
+
+            project = self.get_project()
+            delegate = ActionDelegate(project)
+            project.clear_texts([0], Document.MAIN)
+            project.clear_texts([1], Document.MAIN)
+            project.connect('action_done', on_action_done)
+            actions = reversed(project.undoables)
+            delegate._emit_notification(actions, Action.DO)
+
+        def test_get_notification_action(self):
+
+            # 1
+            project = self.get_project()
+            delegate = ActionDelegate(project)
+            project.clear_texts([0], Document.MAIN)
+            project.insert_subtitles([0, 3])
+            project.clear_texts([2], Document.MAIN)
+
+            # Do
+            actions = reversed(project.undoables)
+            action = delegate._get_notification_action(actions, False)
+            assert action.rows_inserted          == [0, 3]
+            assert action.rows_removed           == []
+            assert action.main_text_rows_updated == [1, 2]
+
+            # Revert
+            actions = project.undoables
+            action = delegate._get_notification_action(actions, True)
+            assert action.rows_inserted          == []
+            assert action.rows_removed           == [0, 3]
+            assert action.main_text_rows_updated == [0, 1]
+
+            # 2
+            project = self.get_project()
+            delegate = ActionDelegate(project)
+            project.clear_texts([0], Document.MAIN)
+            project.remove_subtitles([0, 3])
+            project.clear_texts([3], Document.MAIN)
+
+            # Do
+            actions = reversed(project.undoables)
+            action = delegate._get_notification_action(actions, False)
+            assert action.rows_inserted          == []
+            assert action.rows_removed           == [0, 3]
+            assert action.main_text_rows_updated == [3]
+
+            # Revert
+            actions = project.undoables
+            action = delegate._get_notification_action(actions, True)
+            assert action.rows_inserted          == [0, 3]
+            assert action.rows_removed           == []
+            assert action.main_text_rows_updated == [0, 5]
+
+        def test_get_destination_stack(self):
+
+            project = self.get_project()
+            delegate = ActionDelegate(project)
+
+            stacks = (
+                (Action.DO           , project.undoables),
+                (Action.UNDO         , project.redoables),
+                (Action.REDO         , project.undoables),
+                (Action.DO_MULTIPLE  , project.undoables),
+                (Action.UNDO_MULTIPLE, project.redoables),
+                (Action.REDO_MULTIPLE, project.undoables),
+            )
+
+            for register, stack in stacks:
+                assert delegate._get_destination_stack(register) == stack
+
+        def test_get_source_stack(self):
+
+            project = self.get_project()
+            delegate = ActionDelegate(project)
+
+            stacks = (
+                (Action.UNDO         , project.undoables),
+                (Action.REDO         , project.redoables),
+                (Action.UNDO_MULTIPLE, project.undoables),
+                (Action.REDO_MULTIPLE, project.redoables),
+            )
+
+            for register, stack in stacks:
+                assert delegate._get_source_stack(register) == stack
+
+        def test_get_signal(self):
+
+            project = self.get_project()
+
+            signal = (
+                (Action.DO           , 'action_done'  ),
+                (Action.UNDO         , 'action_undone'),
+                (Action.REDO         , 'action_redone'),
+                (Action.DO_MULTIPLE  , 'action_done'  ),
+                (Action.UNDO_MULTIPLE, 'action_undone'),
+                (Action.REDO_MULTIPLE, 'action_redone'),
+            )
+
+            for register, signal in signal:
+                assert project.get_signal(register) == signal
 
         def test_modify_action_description(self):
 
@@ -366,6 +612,32 @@ if __name__ == '__main__':
             project.clear_texts([0], Document.MAIN)
             project.modify_action_description(Action.DO, 'test')
             assert project.undoables[0].description == 'test'
+
+        def test_revert_multiple(self):
+
+            def on_action_undone_1(action):
+                assert action.main_text_rows_updated == [0, 2]
+
+            project = self.get_project()
+            project.connect('action_undone', on_action_undone_1)
+
+            project.clear_texts([0], Document.MAIN)
+            project.insert_subtitles([1])
+            project.clear_texts([1], Document.MAIN)
+            project.clear_texts([3], Document.MAIN)
+            project.undo(4)
+
+            def on_action_undone_2(action):
+                assert action.main_text_rows_updated == [1, 2, 3]
+
+            project = self.get_project()
+            project.connect('action_undone', on_action_undone_2)
+
+            project.clear_texts([1], Document.MAIN)
+            project.remove_subtitles([1])
+            project.clear_texts([1], Document.MAIN)
+            project.clear_texts([2], Document.MAIN)
+            project.undo(4)
 
         def test_undo_and_redo(self):
 
@@ -402,31 +674,6 @@ if __name__ == '__main__':
             assert len(project.redoables) == 0
             assert project.main_changed == 2
 
-        def test_revert_multiple(self):
-
-            def on_action_undone_1(action):
-                assert action.rows_updated == [0, 2]
-
-            project = self.get_project()
-            project.connect('action_undone', on_action_undone_1)
-
-            project.clear_texts([0], Document.MAIN)
-            project.insert_subtitles([1])
-            project.clear_texts([1], Document.MAIN)
-            project.clear_texts([3], Document.MAIN)
-            project.undo(4)
-
-            def on_action_undone_2(action):
-                assert action.rows_updated == [1, 2, 3]
-
-            project = self.get_project()
-            project.connect('action_undone', on_action_undone_2)
-
-            project.clear_texts([1], Document.MAIN)
-            project.remove_subtitles([1])
-            project.clear_texts([1], Document.MAIN)
-            project.clear_texts([2], Document.MAIN)
-            project.undo(4)
-
     TestRevertableAction().run()
+    TestActionGroup().run()
     TestActionDelegate().run()
