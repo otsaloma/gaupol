@@ -91,11 +91,13 @@ TRAN = Document.TRAN
 
 class SpellCheckErrorDialog(ErrorDialog):
 
-    """Dialog to inform that spell-check failed."""
+    """Dialog to inform that spell-check initialization failed."""
 
-    def __init__(self, parent, message):
+    def __init__(self, parent, language, message):
 
-        title  = _('Failed to start spell-check')
+        title   = _('Failed to initialize dictionary for language "%s"') \
+                  % language
+        message = _('%s.') % message
         ErrorDialog.__init__(self, parent, title, message)
 
 
@@ -212,9 +214,7 @@ class SpellCheckDialog(gobject.GObject):
                 self._add_lower_button.set_sensitive(False)
                 dictionary = enchant.Dict(lang, broker)
         except enchant.Error, message:
-            message = _('Dictionary initialization for language "%s" returned '
-                        'error: %s.') % (name, message)
-            dialog = SpellCheckErrorDialog(self._dialog, message)
+            dialog = SpellCheckErrorDialog(self._dialog, name, message)
             dialog.run()
             dialog.destroy()
             raise Cancelled

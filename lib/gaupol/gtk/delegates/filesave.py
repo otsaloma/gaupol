@@ -204,7 +204,7 @@ class SaveFileErrorDialog(ErrorDialog):
     def __init__(self, parent, basename, message):
 
         title   = _('Failed to save file "%s"') % basename
-        message = _('Attempt to write file returned error: %s.') % message
+        message = _('%s.') % message
         ErrorDialog.__init__(self, parent, title, message)
 
 

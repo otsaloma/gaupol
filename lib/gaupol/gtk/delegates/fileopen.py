@@ -180,7 +180,7 @@ class OpenFileErrorDialog(ErrorDialog):
     def __init__(self, parent, basename, message):
 
         title   = _('Failed to open file "%s"') % basename
-        message = _('Attempt to read file returned error: %s.') % message
+        message = _('%s.') % message
         ErrorDialog.__init__(self, parent, title, message)
 
 

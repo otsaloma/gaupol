@@ -92,8 +92,7 @@ class IOErrorDialog(ErrorDialog):
 
         title   = _('Failed to save subtitle file to temporary directory '
                     '"%s"') % tempfile.gettempdir()
-        message = _('Attempt to write temporary subtitle file for preview '
-                    'returned error: %s.') % message
+        message = _('%s.') % message
         ErrorDialog.__init__(self, parent, title, message)
 
 

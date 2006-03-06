@@ -1,3 +1,11 @@
+2006-03-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/gtk/delegates/fileopen.py:
+	* lib/gaupol/gtk/delegates/filesave.py:
+	* lib/gaupol/gtk/delegates/preview.py:
+	* lib/gaupol/gtk/dialogs/spellcheck.py:
+	  Changed message dialog texts.
+
 2006-03-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/base/delegates/__init__.py:
