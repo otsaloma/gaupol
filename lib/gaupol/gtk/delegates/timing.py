@@ -26,6 +26,7 @@ except ImportError:
     pass
 
 from gettext import gettext as _
+from gettext import ngettext
 
 import gtk
 
@@ -168,7 +169,12 @@ class TimingDelegate(Delegate):
             self.notebook.set_current_page(self.pages.index(page))
             rows = page.project.adjust_durations(**kwargs)
             page.view.select_rows(rows)
-            message = _('Adjusted durations of %d subtitles') % len(rows)
+            length = len(rows)
+            message = ngettext(
+                'Adjusted duration of %d subtitle',
+                'Adjusted durations of %d subtitles',
+                length
+            ) % length
             self.set_status_message(message)
             self.set_sensitivities(page)
 

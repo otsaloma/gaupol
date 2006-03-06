@@ -1,3 +1,16 @@
+2006-03-07  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/base/util/langlib.py:
+	  Cosmetic changes.
+
+	* lib/gaupol/gtk/delegates/edit.py:
+	* lib/gaupol/gtk/delegates/timing.py:
+	  Use ngettext for plural statusbar messages.
+
+	* lib/gaupol/gtk/dialogs/duradjust.py:
+	  Changed selected subtitles radio button insensitive when adjusting
+	  all projects.
+
 2006-03-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/gtk/delegates/filesave.py:

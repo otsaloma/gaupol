@@ -54,7 +54,9 @@ class DurationAdjustDialog(object):
         self._sub_all_radio      = get('subtitles_all_radio_button')
         self._sub_selected_radio = get('subtitles_selected_radio_button')
 
-        self._init_sensitivities(page)
+        self._selection_exists = bool(page.view.get_selected_rows())
+
+        self._init_sensitivities()
         self._init_signals()
         self._init_data()
 
@@ -77,10 +79,10 @@ class DurationAdjustDialog(object):
         self._prj_all_radio.set_active(config.duration_adjust.all_projects)
         self._sub_all_radio.set_active(config.duration_adjust.all_subtitles)
 
-    def _init_sensitivities(self, page):
+    def _init_sensitivities(self):
         """Initialize widget sensitivities."""
 
-        if not page.view.get_selected_rows():
+        if not self._selection_exists:
             self._sub_all_radio.set_active(True)
             self._sub_selected_radio.set_sensitive(False)
 
@@ -222,7 +224,14 @@ class DurationAdjustDialog(object):
     def _on_prj_all_radio_toggled(self, radio_button):
         """Save all projects setting."""
 
-        config.duration_adjust.all_projects = radio_button.get_active()
+        all_projects = radio_button.get_active()
+        config.duration_adjust.all_projects = all_projects
+
+        if all_projects:
+            self._sub_all_radio.set_active(True)
+            self._sub_selected_radio.set_sensitive(False)
+        elif self._selection_exists:
+            self._sub_selected_radio.set_sensitive(True)
 
     def _on_shorten_check_toggled(self, check_button):
         """Save shorten setting."""

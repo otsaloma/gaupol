@@ -30,7 +30,7 @@ package if it is installed. That means from the "iso-codes" gettext domain.
 """
 
 
-import gettext
+from gettext import dgettext
 from gettext import gettext as _
 
 
@@ -711,7 +711,7 @@ def get_country(code):
     Return None if no country in code.
     """
     if len(code) == 5:
-        return gettext.dgettext('iso_3166', countries[code[3:]])
+        return dgettext('iso_3166', countries[code[3:]])
     else:
         return None
 
@@ -739,7 +739,7 @@ def get_language(code):
     code: locale language code, "xx" or "xx_YY"
     Raise KeyError is language not found.
     """
-    return gettext.dgettext('iso_639', langs[code[:2]])
+    return dgettext('iso_639', langs[code[:2]])
 
 
 if __name__ == '__main__':
@@ -751,7 +751,7 @@ if __name__ == '__main__':
         def test_get_country(self):
 
             country = get_country('af_ZA')
-            assert country == gettext.dgettext('iso_3166', 'South Africa')
+            assert country == dgettext('iso_3166', 'South Africa')
 
             country = get_country('af')
             assert country is None
@@ -759,17 +759,17 @@ if __name__ == '__main__':
         def test_get_descriptive_name(self):
 
             name    = get_descriptive_name('af_ZA')
-            country = gettext.dgettext('iso_3166', 'South Africa')
-            lang    = gettext.dgettext('iso_639', 'Afrikaans')
+            country = dgettext('iso_3166', 'South Africa')
+            lang    = dgettext('iso_639', 'Afrikaans')
             assert name == _('%s (%s)') % (lang, country)
 
             name = get_descriptive_name('af')
-            lang = gettext.dgettext('iso_639', 'Afrikaans')
+            lang = dgettext('iso_639', 'Afrikaans')
             assert name == lang
 
         def test_get_language(self):
 
             lang = get_language('af_ZA')
-            assert lang == gettext.dgettext('iso_639', 'Afrikaans')
+            assert lang == dgettext('iso_639', 'Afrikaans')
 
     TestLib().run()

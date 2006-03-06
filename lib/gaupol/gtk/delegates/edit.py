@@ -26,6 +26,7 @@ except ImportError:
     pass
 
 from gettext import gettext as _
+from gettext import ngettext
 
 import gtk
 
@@ -363,8 +364,12 @@ class EditDelegate(Delegate):
         length_after = len(page.project.times)
         if length_after > length_before:
             amount = length_after - length_before
-            msg = _('Inserted %d subtitles to fit clipboard contents') % amount
-            self.set_status_message(msg)
+            message = ngettext(
+                'Inserted %d subtitle to fit clipboard contents',
+                'Inserted %d subtitles to fit clipboard contents',
+                amount
+            ) % amount
+            self.set_status_message(message)
 
     def on_remove_subtitles_activated(self, *args):
         """Remove selected subtitles."""
