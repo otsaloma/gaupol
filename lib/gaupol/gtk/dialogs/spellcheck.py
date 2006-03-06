@@ -714,7 +714,7 @@ if __name__ == '__main__':
 
         def test_init(self):
 
-            SpellCheckErrorDialog(gtk.Window(), 'test')
+            SpellCheckErrorDialog(gtk.Window(), 'test', 'test')
 
     class TestSpellCheckDialog(Test):
 

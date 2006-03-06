@@ -25,7 +25,6 @@ try:
 except ImportError:
     pass
 
-import gobject
 import gtk
 
 from gaupol.gtk.util  import config, gtklib

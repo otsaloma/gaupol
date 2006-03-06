@@ -542,7 +542,7 @@ class FileSaveDelegate(Delegate):
         """
         properties = self._get_translation_file_properties(page)
         if None in properties:
-            return self.save_translation_document_as(properties)
+            return self.save_translation_document_as(page)
 
         args = page, Document.TRAN, self.window, True, properties
         success = self._save_file(*args)

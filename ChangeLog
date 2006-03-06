@@ -1,5 +1,17 @@
 2006-03-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/delegates/filesave.py:
+	  (FileSaveDelegate.save_translation_document): Fixed wrong argument in
+	  call to save_translation_document_as.
+
+	* lib/gaupol/gtk/dialogs/duradjust.py:
+	  Removed unused gobject import.
+
+	* lib/gaupol/gtk/dialogs/spellcheck.py:
+	  Corrected test code to adapt to changes in previous update.
+
+2006-03-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/gtk/delegates/fileopen.py:
 	* lib/gaupol/gtk/delegates/filesave.py:
 	* lib/gaupol/gtk/delegates/preview.py:
