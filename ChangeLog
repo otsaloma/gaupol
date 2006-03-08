@@ -1,3 +1,9 @@
+2006-03-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* setup.py:
+	  (SDist, SDistGna): Moved all custom stuff from SDist to SDistGna, so
+	  that the sdist command now works in the basic standard manner.
+
 2006-03-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* README:

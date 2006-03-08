@@ -86,8 +86,7 @@ class InstallData(install_data):
 
         for po_path in glob.glob(os.path.join('po', '*.po')):
 
-            lang = os.path.basename(po_path[:-3])
-
+            lang    = os.path.basename(po_path[:-3])
             mo_dir  = os.path.join('locale', lang, 'LC_MESSAGES')
             mo_path = os.path.join(mo_dir, 'gaupol.mo')
             destination = os.path.dirname(os.path.join('share', mo_path))
@@ -174,6 +173,20 @@ class InstallLib(install_lib):
 class SDist(sdist):
 
     """Building of source distribution."""
+
+    def run(self):
+
+        # Compile all translations.
+        os.system('./trantool -m all')
+
+        sdist.run(self)
+
+
+class SDistGna(sdist):
+
+    """Building of source distribution to be uploaded to Gna!."""
+
+    description  = 'create an official source distribution for Gna!'
 
     def finalize_options(self):
 
@@ -350,6 +363,7 @@ setup(
     cmdclass={
         'install_data': InstallData,
         'install_lib' : InstallLib,
+        'sdist_gna'   : SDistGna,
         'sdist'       : SDist,
         'uninstall'   : Uninstall
     }
