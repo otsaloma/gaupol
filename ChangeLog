@@ -1,3 +1,8 @@
+2006-03-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* README:
+	* TODO:
+
 2006-03-07  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/base/util/langlib.py:

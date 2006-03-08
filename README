@@ -3,12 +3,13 @@ General Information
 
   Gaupol is a subtitle editor for text-based subtitles. Gaupol supports
   multiple subtitle file formats and provides means of text corrections and
-  timing manipulations in a multiple-document translator-friendly GTK user
-  interface.
+  timing manipulations. Gaupol's user interface is designed with attention to
+  batch processing of multiple documents and convenient translating.
 
-  Gaupol should run on all Unix-like (Linux, BSD, etc.) operating systems.
+  Gaupol should run on all Unix-like (GNU/Linux, BSD, etc.) operating systems.
   Technically there is no obstacle why it couldn't run on Windows or Mac, but
-  that has not been tested.
+  that has not been tested. Gaupol's user interface is based on the GTK toolkit
+  and has been designed to best fit the desktop environment.
 
   Gaupol is free software released under the GNU General Public License (GPL),
   see the file "COPYING" for details.
