@@ -157,7 +157,7 @@ class InstallLib(install_lib):
         ui_dir     = os.path.join(data_dir, 'ui')
         locale_dir = os.path.join(prefix, 'share', 'locale')
 
-        paths_file = open(paths_path, 'a')
+        paths_file = open(paths_path, 'w')
 
         paths_file.write('DATA_DIR   = %r\n' % data_dir  )
         paths_file.write('GLADE_DIR  = %r\n' % glade_dir )

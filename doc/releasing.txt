@@ -133,7 +133,7 @@ Table of Contents
 
   * Build tarballs
 
-      ./setup.py sdist --formats bztar,gztar
+      ./setup.py sdist_gna --formats bztar,gztar
 
   * Cut news and and changes files to relevant parts
 

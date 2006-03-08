@@ -1,6 +1,13 @@
 2006-03-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* setup.py:
+	  (InstallLib.install): Write paths.py file instead of appending to it
+	  to avoid numerous appendings if no clean-up is done between
+	  different prefix bdists or installs.
+
+2006-03-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* setup.py:
 	  (SDist, SDistGna): Moved all custom stuff from SDist to SDistGna, so
 	  that the sdist command now works in the basic standard manner.
 

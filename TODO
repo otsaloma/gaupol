@@ -19,6 +19,7 @@ Plans for 0.4.0
     [D] Newline counted as a character in text length statusbar
     [D] Rounding errors when undoing after editing in unnative timing units
     [D] Template header not written when converting to SubViewer 2.0 format
+    [D] Fixed broken distutils commands (sdist and bdist_*)
 
   New Translations:
     [D] Gil Forcada: Catalan (ca)
