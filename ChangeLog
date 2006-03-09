@@ -1,5 +1,13 @@
 2006-03-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* test/pycheckrc:
+	  Removed file.
+
+	* gaupol:
+	  Do not specify pycheckrc.
+
+2006-03-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* po/README.translators:
 	  Moved translator README file under po directory.
 
