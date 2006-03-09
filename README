@@ -55,7 +55,11 @@ Running Gaupol
   Gaupol can be run either (1) directly from the source directory or (2) it
   can be installed to a selected location.
 
-  (1) In the source directory, run command
+  (1) If you want to use translations, compile them with command
+
+        ./trantool -m all
+
+      Run Gaupol with command
 
         ./gaupol
 

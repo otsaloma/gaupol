@@ -170,18 +170,6 @@ class InstallLib(install_lib):
         return install_lib.install(self)
 
 
-class SDist(sdist):
-
-    """Building of source distribution."""
-
-    def run(self):
-
-        # Compile all translations.
-        os.system('./trantool -m all')
-
-        sdist.run(self)
-
-
 class SDistGna(sdist):
 
     """Building of source distribution to be uploaded to Gna!."""
@@ -217,9 +205,6 @@ class SDistGna(sdist):
             if os.path.isfile(name):
                 info('removing %s' % name)
                 os.remove(name)
-
-        # Compile all translations.
-        os.system('./trantool -m all')
 
         # Create tarballs.
         sdist.run(self)
@@ -364,7 +349,6 @@ setup(
         'install_data': InstallData,
         'install_lib' : InstallLib,
         'sdist_gna'   : SDistGna,
-        'sdist'       : SDist,
         'uninstall'   : Uninstall
     }
 )
