@@ -1,5 +1,17 @@
 2006-03-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/glade/tfadjust-dialog.glade:
+	* data/glade/tfshift-dialog.glade:
+	* lib/gaupol/base/delegates/timeframe.py:
+	* lib/gaupol/base/timeframe:
+	* lib/gaupol/gtk/delegates/timeframe.py:
+	* lib/gaupol/gtk/dialogs/tfadjust.py:
+	* lib/gaupol/gtk/dialogs/tfshift.py:
+	  Renamed tmg-prefixes to tf.
+	  Renamed timings to timeframes.
+
+2006-03-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* MANIFEST.in:
 	* gaupol:
 	* data/gaupol.desktop:
