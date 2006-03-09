@@ -48,7 +48,7 @@ class DurationAdjustAction(UIMAction):
         None,
         _('A_djust Durations'),
         'F4',
-        _('Adjust durations'),
+        _('Lengthen or shorten durations'),
         'on_adjust_durations_activated'
     )
 
@@ -97,7 +97,7 @@ class TimeFrameAdjustAction(UIMAction):
         None,
         _('_Adjust Times'),
         'F3',
-        _('Adjust times by two-point correction'),
+        _('Adjust times by linear two-point correction'),
         'on_adjust_timeframes_activated'
     )
 
@@ -119,7 +119,7 @@ class TimeFrameShiftAction(UIMAction):
         None,
         _('_Shift Times'),
         'F2',
-        _('Shift times a constant amount'),
+        _('Make subtitles appear earlier or later'),
         'on_shift_timeframes_activated'
     )
 
