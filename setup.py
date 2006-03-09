@@ -55,7 +55,7 @@ doc_files = (
     'COPYING',
     'NEWS',
     'README',
-    'README.translators',
+    os.path.join('po', 'README.translators'),
     'TODO'
 )
 
@@ -158,13 +158,11 @@ class InstallLib(install_lib):
         locale_dir = os.path.join(prefix, 'share', 'locale')
 
         paths_file = open(paths_path, 'w')
-
         paths_file.write('DATA_DIR   = %r\n' % data_dir  )
         paths_file.write('GLADE_DIR  = %r\n' % glade_dir )
         paths_file.write('ICON_DIR   = %r\n' % icon_dir  )
         paths_file.write('UI_DIR     = %r\n' % ui_dir    )
         paths_file.write('LOCALE_DIR = %r\n' % locale_dir)
-
         paths_file.close()
 
         return install_lib.install(self)
@@ -172,7 +170,7 @@ class InstallLib(install_lib):
 
 class SDistGna(sdist):
 
-    """Building of source distribution to be uploaded to Gna!."""
+    """Building of an official source distribution for Gna!."""
 
     description  = 'create an official source distribution for Gna!'
 

@@ -1,5 +1,10 @@
 2006-03-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* setup.py:
+	  Fixed location of README.translators file.
+
+2006-03-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/gtk/delegates/timeframe.py:
 	  Select changed rows after timing manipulations.
 
