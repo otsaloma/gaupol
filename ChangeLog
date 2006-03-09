@@ -1,5 +1,10 @@
 2006-03-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/delegates/timeframe.py:
+	  Select changed rows after timing manipulations.
+
+2006-03-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/tfadjust-dialog.glade:
 	* data/glade/tfshift-dialog.glade:
 	* data/ui/menubar.xml:
