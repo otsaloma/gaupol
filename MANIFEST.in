@@ -7,13 +7,11 @@ include INSTALL
 include MANIFEST.in
 include NEWS
 include README
-include README.translators
 include setup.cfg
 include setup.py
 include TODO
 include trantool
 recursive-include data *.glade *.xml *.png
 recursive-include lib *.py
-recursive-include locale *.mo
-recursive-include po *.po ChangeLog
+recursive-include po *.po ChangeLog README.translators
 recursive-include test *
