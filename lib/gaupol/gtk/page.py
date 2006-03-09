@@ -105,14 +105,14 @@ class Page(gobject.GObject):
     def assert_store(self):
         """Assert that list store's data matches project's."""
 
-        store   = self.view.get_model()
-        timings = self._get_timings()
+        store      = self.view.get_model()
+        timeframes = self._get_timeframes()
 
         for row in range(len(store)):
             assert store[row][0] == row + 1
-            assert store[row][1] == timings[row][0]
-            assert store[row][2] == timings[row][1]
-            assert store[row][3] == timings[row][2]
+            assert store[row][1] == timeframes[row][0]
+            assert store[row][2] == timeframes[row][1]
+            assert store[row][3] == timeframes[row][2]
             assert store[row][4] == self.project.main_texts[row]
             assert store[row][5] == self.project.tran_texts[row]
 
@@ -155,7 +155,7 @@ class Page(gobject.GObject):
         except AttributeError:
             return self.untitle
 
-    def _get_timings(self):
+    def _get_timeframes(self):
         """Get project.times or project.frames depending on edit mode."""
 
         if self.edit_mode == Mode.TIME:
@@ -201,7 +201,7 @@ class Page(gobject.GObject):
         """Reload view after row."""
 
         store      = self.view.get_model()
-        timings    = self._get_timings()
+        timeframes = self._get_timeframes()
         main_texts = self.project.main_texts
         tran_texts = self.project.tran_texts
 
@@ -214,7 +214,8 @@ class Page(gobject.GObject):
         while len(store) > row:
             store.remove(store.get_iter(row))
         for i in range(row, len(self.project.times)):
-            store.append([i + 1] + timings[i] + [main_texts[i], tran_texts[i]])
+            store.append([i + 1] + timeframes[i] + \
+                         [main_texts[i], tran_texts[i]])
 
         # Reselect all rows that still exist.
         for i in reversed(range(len(selected_rows))):
@@ -232,12 +233,13 @@ class Page(gobject.GObject):
         self.view.set_model(None)
         store.clear()
 
-        timings    = self._get_timings()
+        timeframes = self._get_timeframes()
         main_texts = self.project.main_texts
         tran_texts = self.project.tran_texts
 
         for i in range(len(self.project.times)):
-            store.append([i + 1] + timings[i] + [main_texts[i], tran_texts[i]])
+            store.append([i + 1] + timeframes[i] + \
+                         [main_texts[i], tran_texts[i]])
 
         self.view.set_model(store)
 
@@ -261,10 +263,10 @@ class Page(gobject.GObject):
                 for row in rows:
                     store[row][col] = row + 1
             elif col in (SHOW, HIDE, DURN):
-                timings  = self._get_timings()
+                timeframes = self._get_timeframes()
                 base_col = col - 1
                 for row in rows:
-                    store[row][col] = timings[row][base_col]
+                    store[row][col] = timeframes[row][base_col]
             elif col == MTXT:
                 main_texts = self.project.main_texts
                 for row in rows:
@@ -283,12 +285,12 @@ class Page(gobject.GObject):
         """Reload view by full rows."""
 
         store      = self.view.get_model()
-        timings    = self._get_timings()
+        timeframes = self._get_timeframes()
         main_texts = self.project.main_texts
         tran_texts = self.project.tran_texts
 
         for row in rows:
-            store[row] = [row + 1] + timings[row] + \
+            store[row] = [row + 1] + timeframes[row] + \
                          [main_texts[row], tran_texts[row]]
 
     def text_column_to_document(self, col):
@@ -361,9 +363,9 @@ if __name__ == '__main__':
             self.page.project.main_file.path = orig_main_path
             self.page.project.tran_file.path = orig_tran_path
 
-        def test_get_timings(self):
+        def test_get_timeframes(self):
 
-            assert self.page._get_timings() == self.page.project.times
+            assert self.page._get_timeframes() == self.page.project.times
 
         def test_reload_after_row(self):
 

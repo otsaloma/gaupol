@@ -136,7 +136,7 @@ class ActionDelegate(Delegate):
         rows_inserted          = action.rows_inserted[:]
         rows_removed           = action.rows_removed[:]
         rows_updated           = action.rows_updated[:]
-        timing_rows_updated    = action.timing_rows_updated[:]
+        timeframe_rows_updated = action.timeframe_rows_updated[:]
         main_text_rows_updated = action.main_text_rows_updated[:]
         tran_text_rows_updated = action.tran_text_rows_updated[:]
 
@@ -145,7 +145,7 @@ class ActionDelegate(Delegate):
             page.reload_after_row(first_row)
             lists = [
                 rows_updated,
-                timing_rows_updated,
+                timeframe_rows_updated,
                 main_text_rows_updated,
                 tran_text_rows_updated,
             ]
@@ -157,7 +157,7 @@ class ActionDelegate(Delegate):
         if rows_updated:
             page.reload_rows(rows_updated)
             lists = [
-                timing_rows_updated,
+                timeframe_rows_updated,
                 main_text_rows_updated,
                 tran_text_rows_updated,
             ]
@@ -166,8 +166,8 @@ class ActionDelegate(Delegate):
                     if data[i] in rows_updated:
                         data.pop(i)
 
-        if timing_rows_updated:
-            page.reload_columns([SHOW, HIDE, DURN], timing_rows_updated)
+        if timeframe_rows_updated:
+            page.reload_columns([SHOW, HIDE, DURN], timeframe_rows_updated)
 
         if main_text_rows_updated:
             page.reload_columns([MTXT], main_text_rows_updated)
@@ -188,7 +188,7 @@ class ActionDelegate(Delegate):
             changed_rows = range(first_row, len(page.project.times))
 
         changed_rows += action.rows_updated
-        changed_rows += action.timing_rows_updated
+        changed_rows += action.timeframe_rows_updated
         changed_rows += action.main_text_rows_updated
         changed_rows += action.tran_text_rows_updated
 
@@ -197,7 +197,7 @@ class ActionDelegate(Delegate):
             return
 
         focus_row = min(changed_rows)
-        if action.timing_rows_updated:
+        if action.timeframe_rows_updated:
             focus_col = SHOW
         elif action.main_text_rows_updated:
             focus_col = MTXT

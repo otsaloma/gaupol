@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Shifting, adjusting and fixing timings."""
+"""Shifting, adjusting and fixing mings."""
 
 
 try:
@@ -34,8 +34,8 @@ from gaupol.constants             import Document, Format, Mode
 from gaupol.gtk.delegates         import Delegate, UIMAction
 from gaupol.gtk.dialogs.duradjust import DurationAdjustDialog
 from gaupol.gtk.dialogs.frconvert import FramerateConvertDialog
-from gaupol.gtk.dialogs.tmgadjust import TimingAdjustDialog
-from gaupol.gtk.dialogs.tmgshift  import TimingShiftDialog
+from gaupol.gtk.dialogs.tfadjust  import TimeFrameAdjustDialog
+from gaupol.gtk.dialogs.tfshift   import TimeFrameShiftDialog
 from gaupol.gtk.util              import config, gtklib
 
 
@@ -88,20 +88,20 @@ class FramerateConvertAction(UIMAction):
         return bool(page.project.main_file.format == Format.MICRODVD)
 
 
-class TimingAdjustAction(UIMAction):
+class TimeFrameAdjustAction(UIMAction):
 
-    """Adjusting timings."""
+    """Adjusting timeframes."""
 
     uim_action_item = (
-        'adjust_timings',
+        'adjust_timeframes',
         None,
-        _('_Adjust Timings'),
+        _('_Adjust Times'),
         'F3',
-        _('Adjust timings by two-point correction'),
-        'on_adjust_timings_activated'
+        _('Adjust times by two-point correction'),
+        'on_adjust_timeframes_activated'
     )
 
-    uim_paths = ['/ui/menubar/tools/adjust_timings']
+    uim_paths = ['/ui/menubar/tools/adjust_timeframes']
 
     @classmethod
     def is_doable(cls, application, page):
@@ -110,20 +110,20 @@ class TimingAdjustAction(UIMAction):
         return page is not None
 
 
-class TimingShiftAction(UIMAction):
+class TimeFrameShiftAction(UIMAction):
 
-    """Shifting timings."""
+    """Shifting timeframes."""
 
     uim_action_item = (
-        'shift_timings',
+        'shift_timeframes',
         None,
-        _('_Shift Timings'),
+        _('_Shift Times'),
         'F2',
-        _('Shift timings a constant amount'),
-        'on_shift_timings_activated'
+        _('Shift times a constant amount'),
+        'on_shift_timeframes_activated'
     )
 
-    uim_paths = ['/ui/menubar/tools/shift_timings']
+    uim_paths = ['/ui/menubar/tools/shift_timeframes']
 
     @classmethod
     def is_doable(cls, application, page):
@@ -132,9 +132,9 @@ class TimingShiftAction(UIMAction):
         return page is not None
 
 
-class TimingDelegate(Delegate):
+class TimeFrameDelegate(Delegate):
 
-    """Shifting, adjusting and fixing timings."""
+    """Shifting, adjusting and fixing timeframes."""
 
     def on_adjust_durations_activated(self, *args):
         """Adjust duration lengths."""
@@ -178,8 +178,8 @@ class TimingDelegate(Delegate):
             self.set_status_message(message)
             self.set_sensitivities(page)
 
-    def on_adjust_timings_activated(self, *args):
-        """Adjust timings by two-point correction"""
+    def on_adjust_timeframes_activated(self, *args):
+        """Adjust timeframes by two-point correction"""
 
         page = self.get_current_page()
         if page.edit_mode == Mode.TIME:
@@ -200,7 +200,7 @@ class TimingDelegate(Delegate):
             args = rows, point_1, point_2
             self.preview_changes(page, row, Document.MAIN, method, args)
 
-        dialog = TimingAdjustDialog(self.window, page)
+        dialog = TimeFrameAdjustDialog(self.window, page)
         dialog.connect('preview', on_preview)
         response = dialog.run()
         if response != gtk.RESPONSE_OK:
@@ -239,8 +239,8 @@ class TimingDelegate(Delegate):
             page.project.convert_framerate(current_fr, correct_fr)
             self.set_sensitivities(page)
 
-    def on_shift_timings_activated(self, *args):
-        """Shift timings a constant amount."""
+    def on_shift_timeframes_activated(self, *args):
+        """Shift timeframes a constant amount."""
 
         page = self.get_current_page()
         if page.edit_mode == Mode.TIME:
@@ -260,7 +260,7 @@ class TimingDelegate(Delegate):
             args = rows, amount
             self.preview_changes(page, row, Document.MAIN, method, args)
 
-        dialog = TimingShiftDialog(self.window, page)
+        dialog = TimeFrameShiftDialog(self.window, page)
         dialog.connect('preview', on_preview)
         response = dialog.run()
         if response != gtk.RESPONSE_OK:
@@ -280,7 +280,7 @@ if __name__ == '__main__':
     from gaupol.gtk.application import Application
     from gaupol.test            import Test
 
-    class TestTimingDelegate(Test):
+    class TestTimeFrameDelegate(Test):
 
         def __init__(self):
 
@@ -295,8 +295,8 @@ if __name__ == '__main__':
         def test_callbacks(self):
 
             self.application.on_adjust_durations_activated()
-            self.application.on_adjust_timings_activated()
+            self.application.on_adjust_timeframes_activated()
             self.application.on_convert_framerate_activated()
-            self.application.on_shift_timings_activated()
+            self.application.on_shift_timeframes_activated()
 
-    TestTimingDelegate().run()
+    TestTimeFrameDelegate().run()

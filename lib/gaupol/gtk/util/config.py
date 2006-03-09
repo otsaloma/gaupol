@@ -90,8 +90,8 @@ sections = (
     'preview',
     'spell_check',
     'subtitle_insert',
-    'timing_adjust',
-    'timing_shift',
+    'timeframe_adjust',
+    'timeframe_shift',
 )
 
 
@@ -282,7 +282,7 @@ class subtitle_insert(object):
         'position': Position,
     }
 
-class timing_adjust(object):
+class timeframe_adjust(object):
 
     all_subtitles = True
 
@@ -290,7 +290,7 @@ class timing_adjust(object):
         'all_subtitles': Type.BOOLEAN,
     }
 
-class timing_shift(object):
+class timeframe_shift(object):
 
     all_subtitles = True
     frames        = 0

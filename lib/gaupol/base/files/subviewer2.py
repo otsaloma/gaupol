@@ -28,10 +28,10 @@ except ImportError:
 import codecs
 import re
 
-from gaupol.base.files       import SubtitleFile
-from gaupol.base.timing.calc import TimeFrameCalculator
-from gaupol.base.util        import listlib
-from gaupol.constants        import Format, Mode
+from gaupol.base.files          import SubtitleFile
+from gaupol.base.timeframe.calc import TimeFrameCalculator
+from gaupol.base.util           import listlib
+from gaupol.constants           import Format, Mode
 
 
 class SubViewer2(SubtitleFile):

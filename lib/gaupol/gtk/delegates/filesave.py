@@ -517,8 +517,8 @@ class FileSaveDelegate(Delegate):
         path, format, encoding, newlines = properties
 
         # Reload data if saved in a different format, because tags in text
-        # might have changed and timings are calculated differently resulting
-        # from changing native timings.
+        # might have changed and times/frames are calculated differently
+        # resulting from changing mode.
         if original_format is not None:
             if format != original_format:
                 page.reload_all()

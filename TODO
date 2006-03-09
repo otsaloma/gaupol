@@ -9,15 +9,15 @@ Plans for 0.4.0
 
   New Features:
     [D] Partial support for SSA & ASS formats
-    [D] Timing shift
-    [D] Timing adjust
+    [D] Time shift
+    [D] Time adjust
     [D] Duration adjust
     [D] Framerate conversion
 
   Bug Fixes:
     [D] Various errors in Micro DVD tag conversions
     [D] Newline counted as a character in text length statusbar
-    [D] Rounding errors when undoing after editing in unnative timing units
+    [D] Rounding errors when undoing after editing in unnative mode
     [D] Template header not written when converting to SubViewer 2.0 format
     [D] Fixed broken distutils commands (sdist and bdist_*)
 

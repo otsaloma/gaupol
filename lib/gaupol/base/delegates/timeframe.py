@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Shifting, adjusting and fixing timings."""
+"""Shifting, adjusting and fixing times and frames."""
 
 
 try:
@@ -32,9 +32,9 @@ from gaupol.base.delegates    import Delegate
 from gaupol.constants         import Action, Document, Framerate, Mode
 
 
-class TimingDelegate(Delegate):
+class TimeFrameDelegate(Delegate):
 
-    """Shifting, adjusting and fixing timings."""
+    """Shifting, adjusting and fixing times and frames."""
 
     def adjust_durations(
         self, rows=None, optimal=None, lengthen=False, shorten=False,
@@ -114,13 +114,13 @@ class TimingDelegate(Delegate):
         if not new_rows:
             return []
 
-        self.replace_timings(new_rows, new_times, new_frames, register)
+        self.replace_timeframes(new_rows, new_times, new_frames, register)
         self.modify_action_description(register, _('Adjusting durations'))
         return new_rows
 
     def adjust_frames(self, rows, point_1, point_2, register=Action.DO):
         """
-        Adjust timings in rows.
+        Adjust times and frames in rows.
 
         point_1 and point_2 are two-tuples of row and new show frame.
         rows can be None to process all rows.
@@ -158,12 +158,12 @@ class TimingDelegate(Delegate):
             durn_time = calc.get_time_duration(show_time, hide_time)
             new_times.append([show_time, hide_time, durn_time])
 
-        self.replace_timings(rows, new_times, new_frames, register)
+        self.replace_timeframes(rows, new_times, new_frames, register)
         self.modify_action_description(register, _('Adjusting frames'))
 
     def adjust_times(self, rows, point_1, point_2, register=Action.DO):
         """
-        Adjust timings in rows.
+        Adjust times and frames in rows.
 
         point_1 and point_2 are two tuples of row and new show time.
         rows can be None to process all rows.
@@ -203,7 +203,7 @@ class TimingDelegate(Delegate):
             durn_frame = calc.get_frame_duration(show_frame, hide_frame)
             new_frames.append([show_frame, hide_frame, durn_frame])
 
-        self.replace_timings(rows, new_times, new_frames, register)
+        self.replace_timeframes(rows, new_times, new_frames, register)
         self.modify_action_description(register, _('Adjusting times'))
 
     def change_framerate(self, framerate):
@@ -211,8 +211,8 @@ class TimingDelegate(Delegate):
         Change the framerate and update data.
 
         This method only changes what is assumed to be the video framerate and
-        thus affects only how non-native timing data is calculated. Native
-        timings will remain unchanged.
+        thus affects only how non-native time/frame data is calculated. Native
+        times/frames will remain unchanged.
         """
         assert self.main_file is not None
         self.set_framerate(framerate, register=None)
@@ -263,13 +263,14 @@ class TimingDelegate(Delegate):
             durn_time = calc.get_time_duration(show_time, hide_time)
             new_times.append([show_time, hide_time, durn_time])
 
-        self.replace_timings(rows, new_times, new_frames, register)
+        self.replace_timeframes(rows, new_times, new_frames, register)
         self.unblock(signal)
         self.group_actions(register, 2, _('Converting framerate'))
 
-    def replace_timings(self, rows, new_times, new_frames, register=Action.DO):
+    def replace_timeframes(self, rows, new_times, new_frames,
+                           register=Action.DO):
         """
-        Replace timings in rows with new_times and new_frames.
+        Replace times and frames in rows with new_times and new_frames.
 
         rows can be None to process all rows.
         """
@@ -289,10 +290,10 @@ class TimingDelegate(Delegate):
         self.register_action(
             register=register,
             documents=[Document.MAIN, Document.TRAN],
-            description=_('Replacing timings'),
-            revert_method=self.replace_timings,
+            description=_('Replacing times'),
+            revert_method=self.replace_timeframes,
             revert_method_args=[rows, orig_times, orig_frames],
-            timing_rows_updated=rows,
+            timeframe_rows_updated=rows,
         )
 
     def set_framerate(self, framerate, register=Action.DO):
@@ -312,7 +313,7 @@ class TimingDelegate(Delegate):
 
     def shift_frames(self, rows, amount, register=Action.DO):
         """
-        Shift timings by amount of frames.
+        Shift times and frames by amount of frames.
 
         rows: None to process all rows
         """
@@ -336,12 +337,12 @@ class TimingDelegate(Delegate):
             durn_time = calc.get_time_duration(show_time, hide_time)
             new_times.append([show_time, hide_time, durn_time])
 
-        self.replace_timings(rows, new_times, new_frames, register)
+        self.replace_timeframes(rows, new_times, new_frames, register)
         self.modify_action_description(register, _('Shifting frames'))
 
     def shift_seconds(self, rows, amount, register=Action.DO):
         """
-        Shift timings by amount of seconds.
+        Shift times and frames by amount of seconds.
 
         rows: None to process all rows
         """
@@ -365,7 +366,7 @@ class TimingDelegate(Delegate):
             durn_frame = calc.get_frame_duration(show_frame, hide_frame)
             new_frames.append([show_frame, hide_frame, durn_frame])
 
-        self.replace_timings(rows, new_times, new_frames, register)
+        self.replace_timeframes(rows, new_times, new_frames, register)
         self.modify_action_description(register, _('Shifting times'))
 
 
@@ -373,7 +374,7 @@ if __name__ == '__main__':
 
     from gaupol.test import Test
 
-    class TestTimingDelegate(Test):
+    class TestTimeFrameDelegate(Test):
 
         def __init__(self):
 
@@ -547,4 +548,4 @@ if __name__ == '__main__':
             assert times[1] == ['00:00:03,000', '00:00:04,000', '00:00:01,000']
             assert times[2] == ['00:00:05,000', '00:00:06,000', '00:00:01,000']
 
-    TestTimingDelegate().run()
+    TestTimeFrameDelegate().run()

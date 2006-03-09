@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Dialog for shifting timings."""
+"""Dialog for shifting timeframes."""
 
 
 try:
@@ -34,9 +34,9 @@ from gaupol.constants import Mode
 from gaupol.gtk.util  import config, gtklib
 
 
-class TimingShiftDialog(gobject.GObject):
+class TimeFrameShiftDialog(gobject.GObject):
 
-    """Dialog for shifting timings."""
+    """Dialog for shifting timeframes."""
 
     __gsignals__ = {
         'preview': (
@@ -50,7 +50,7 @@ class TimingShiftDialog(gobject.GObject):
 
         gobject.GObject.__init__(self)
 
-        glade_xml = gtklib.get_glade_xml('tmgshift-dialog.glade')
+        glade_xml = gtklib.get_glade_xml('tfshift-dialog.glade')
         get_widget = glade_xml.get_widget
 
         self._all_radio         = get_widget('all_radio_button')
@@ -73,12 +73,12 @@ class TimingShiftDialog(gobject.GObject):
     def _init_data(self):
         """Initialize default values."""
 
-        self._all_radio.set_active(config.timing_shift.all_subtitles)
+        self._all_radio.set_active(config.timeframe_shift.all_subtitles)
 
         if self._page.edit_mode == Mode.TIME:
-            value = float(config.timing_shift.seconds)
+            value = float(config.timeframe_shift.seconds)
         elif self._page.edit_mode == Mode.FRAME:
-            value = config.timing_shift.frames
+            value = config.timeframe_shift.frames
         self._amount_spin.set_value(value)
 
     def _init_sensitivities(self):
@@ -147,15 +147,15 @@ class TimingShiftDialog(gobject.GObject):
     def _on_all_radio_toggled(self, radio_button):
         """Save radio button value."""
 
-        config.timing_shift.all_subtitles = radio_button.get_active()
+        config.timeframe_shift.all_subtitles = radio_button.get_active()
 
     def _on_amount_spin_value_changed(self, spin_button):
         """Save spin button value."""
 
         if self._page.edit_mode == Mode.TIME:
-            config.timing_shift.seconds = '%.3f' % spin_button.get_value()
+            config.timeframe_shift.seconds = '%.3f' % spin_button.get_value()
         elif self._page.edit_mode == Mode.FRAME:
-            config.timing_shift.frames = spin_button.get_value_as_int()
+            config.timeframe_shift.frames = spin_button.get_value_as_int()
 
     def _on_preview_button_clicked(self, *args):
         """Preview changes."""
@@ -179,7 +179,7 @@ if __name__ == '__main__':
     from gaupol.gtk.application import Application
     from gaupol.test            import Test
 
-    class TestTimingShiftDialog(Test):
+    class TestTimeFrameShiftDialog(Test):
 
         def __init__(self):
 
@@ -187,7 +187,7 @@ if __name__ == '__main__':
             self.application = Application()
             self.application.open_main_files([self.get_subrip_path()])
             self.page = self.application.get_current_page()
-            self.dialog = TimingShiftDialog(gtk.Window(), self.page)
+            self.dialog = TimeFrameShiftDialog(gtk.Window(), self.page)
 
         def destroy(self):
 
@@ -210,4 +210,4 @@ if __name__ == '__main__':
             self.dialog._all_radio.set_active(True)
             self.dialog._all_radio.set_active(False)
 
-    TestTimingShiftDialog().run()
+    TestTimeFrameShiftDialog().run()

@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Dialog for adjusting timings."""
+"""Dialog for adjusting timeframes."""
 
 
 try:
@@ -35,9 +35,9 @@ from gaupol.gtk.entries.time import TimeEntry
 from gaupol.gtk.util         import config, gtklib
 
 
-class TimingAdjustDialog(gobject.GObject):
+class TimeFrameAdjustDialog(gobject.GObject):
 
-    """Dialog for shifting timings."""
+    """Dialog for shifting timeframes."""
 
     __gsignals__ = {
         'preview': (
@@ -51,7 +51,7 @@ class TimingAdjustDialog(gobject.GObject):
 
         gobject.GObject.__init__(self)
 
-        glade_xml = gtklib.get_glade_xml('tmgadjust-dialog.glade')
+        glade_xml = gtklib.get_glade_xml('tfadjust-dialog.glade')
         get_widget = glade_xml.get_widget
 
         self._all_radio        = get_widget('all_radio_button')
@@ -94,7 +94,7 @@ class TimingAdjustDialog(gobject.GObject):
         self._subtitle_spin_2.set_value(last_subtitle)
         self._subtitle_spin_2.emit('value-changed')
 
-        self._all_radio.set_active(config.timing_adjust.all_subtitles)
+        self._all_radio.set_active(config.timeframe_adjust.all_subtitles)
 
     def _init_sensitivities(self):
         """Initialize widget sensitivities."""
@@ -237,7 +237,7 @@ class TimingAdjustDialog(gobject.GObject):
     def _on_all_radio_toggled(self, radio_button):
         """Save radio button value."""
 
-        config.timing_adjust.all_subtitles = radio_button.get_active()
+        config.timeframe_adjust.all_subtitles = radio_button.get_active()
 
     def _on_preview_button_1_clicked(self, button):
         """Preview changes."""
@@ -299,7 +299,7 @@ if __name__ == '__main__':
     from gaupol.gtk.application import Application
     from gaupol.test            import Test
 
-    class TestTimingAdjustDialog(Test):
+    class TestTimeFrameAdjustDialog(Test):
 
         def __init__(self):
 
@@ -307,7 +307,7 @@ if __name__ == '__main__':
             self.application = Application()
             self.application.open_main_files([self.get_subrip_path()])
             self.page = self.application.get_current_page()
-            self.dialog = TimingAdjustDialog(gtk.Window(), self.page)
+            self.dialog = TimeFrameAdjustDialog(gtk.Window(), self.page)
 
         def destroy(self):
 
@@ -340,4 +340,4 @@ if __name__ == '__main__':
             self.dialog._all_radio.set_active(True)
             self.dialog._all_radio.set_active(False)
 
-    TestTimingAdjustDialog().run()
+    TestTimeFrameAdjustDialog().run()

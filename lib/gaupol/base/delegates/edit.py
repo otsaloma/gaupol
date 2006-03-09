@@ -82,8 +82,8 @@ class EditDelegate(Delegate):
     def get_needs_resort(self, row, show_value):
         """Return True if rows need resorting after changing show value."""
 
-        mode    = self.get_mode()
-        timings = self.get_timings()
+        mode       = self.get_mode()
+        timeframes = self.get_timeframes()
 
         # Convert show_value to same type as mode.
         try:
@@ -96,12 +96,12 @@ class EditDelegate(Delegate):
                 show_value = self.calc.frame_to_time(show_value)
 
         # Get new row.
-        lst = timings[:row] + timings[row + 1:]
-        item = [show_value] + timings[row][1:]
+        lst = timeframes[:row] + timeframes[row + 1:]
+        item = [show_value] + timeframes[row][1:]
         new_row = bisect.bisect_right(lst, item)
         return bool(new_row != row)
 
-    def get_timings(self):
+    def get_timeframes(self):
         """Return either times or frames depending on main file's mode."""
 
         mode = self.get_mode()
@@ -122,7 +122,7 @@ class EditDelegate(Delegate):
         tran_texts = self.tran_texts
         calc       = self.calc
         mode       = self.get_mode()
-        timings    = self.get_timings()
+        timeframes = self.get_timeframes()
         start_row  = min(rows)
         amount     = len(rows)
 
@@ -131,7 +131,7 @@ class EditDelegate(Delegate):
 
         # Get the first show time or frame.
         if start_row > 0:
-            start = timings[start_row - 1][HIDE]
+            start = timeframes[start_row - 1][HIDE]
             if mode == Mode.TIME:
                 start = calc.time_to_seconds(start)
         else:
@@ -139,7 +139,7 @@ class EditDelegate(Delegate):
 
         # Get duration.
         if start_row < len(self.times):
-            end = timings[start_row][SHOW]
+            end = timeframes[start_row][SHOW]
             if mode == Mode.TIME:
                 end = calc.time_to_seconds(end)
                 duration = float(end - start) / float(amount)
@@ -383,7 +383,7 @@ class EditDelegate(Delegate):
             revert_method = self.set_frame
 
         rows_updated = []
-        timing_rows_updated = [row]
+        timeframe_rows_updated = [row]
         revert_row = row
 
         self.frames[row][col] = value
@@ -403,7 +403,7 @@ class EditDelegate(Delegate):
                 last_row  = max(row, new_row)
                 rows_updated = range(first_row, last_row + 1)
                 revert_row = new_row
-                timing_rows_updated = []
+                timeframe_rows_updated = []
 
         self.register_action(
             register=register,
@@ -412,7 +412,7 @@ class EditDelegate(Delegate):
             revert_method=revert_method,
             revert_method_args=[revert_row, col, orig_value],
             rows_updated=rows_updated,
-            timing_rows_updated=timing_rows_updated,
+            timeframe_rows_updated=timeframe_rows_updated,
         )
 
         return revert_row
@@ -476,7 +476,7 @@ class EditDelegate(Delegate):
             revert_method = self.set_frame
 
         rows_updated = []
-        timing_rows_updated = [row]
+        timeframe_rows_updated = [row]
         revert_row = row
 
         self.times[row][col]  = value
@@ -496,7 +496,7 @@ class EditDelegate(Delegate):
                 last_row  = max(row, new_row)
                 rows_updated = range(first_row, last_row + 1)
                 revert_row = new_row
-                timing_rows_updated = []
+                timeframe_rows_updated = []
 
         self.register_action(
             register=register,
@@ -505,7 +505,7 @@ class EditDelegate(Delegate):
             revert_method=revert_method,
             revert_method_args=[revert_row, col, orig_value],
             rows_updated=rows_updated,
-            timing_rows_updated=timing_rows_updated,
+            timeframe_rows_updated=timeframe_rows_updated,
         )
 
         return revert_row
@@ -516,11 +516,11 @@ class EditDelegate(Delegate):
 
         Return new index of row.
         """
-        timings = self.get_timings()
+        timeframes = self.get_timeframes()
 
         # Get new row.
-        lst  = timings[:row] + timings[row + 1:]
-        item = timings[row]
+        lst  = timeframes[:row] + timeframes[row + 1:]
+        item = timeframes[row]
         new_row = bisect.bisect_right(lst, item)
 
         # Move data.
@@ -588,10 +588,10 @@ if __name__ == '__main__':
             assert self.project.get_needs_resort(0, '99:00:00,000') is True
             assert self.project.get_needs_resort(0, '00:00:00,000') is False
 
-        def test_get_timings(self):
+        def test_get_timeframes(self):
 
-            timings = self.project.get_timings()
-            assert timings in (self.project.times, self.project.frames)
+            timeframes = self.project.get_timeframes()
+            assert timeframes in (self.project.times, self.project.frames)
 
         def test_insert_subtitles(self):
 

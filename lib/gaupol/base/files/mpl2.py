@@ -28,9 +28,9 @@ except ImportError:
 import codecs
 import re
 
-from gaupol.base.files       import SubtitleFile
-from gaupol.base.timing.calc import TimeFrameCalculator
-from gaupol.constants        import Format, Mode
+from gaupol.base.files          import SubtitleFile
+from gaupol.base.timeframe.calc import TimeFrameCalculator
+from gaupol.constants           import Format, Mode
 
 
 class MPL2(SubtitleFile):
@@ -70,7 +70,7 @@ class MPL2(SubtitleFile):
 
         calc = TimeFrameCalculator()
 
-        # Convert timings from decaseconds to seconds and finally timestrings.
+        # Convert times from decaseconds to seconds and finally timestrings.
         for entry in (shows, hides):
             for i, value in enumerate(entry):
                 seconds = float(value[:-1] + '.' + value[-1])
@@ -96,7 +96,7 @@ class MPL2(SubtitleFile):
         newline_character = self._get_newline_character()
         calc = TimeFrameCalculator()
 
-        # Convert timings from timestrings to seconds and finally decaseconds.
+        # Convert times from timestrings to seconds and finally decaseconds.
         for entry in (shows, hides):
             for i in range(len(entry)):
                 decaseconds = calc.time_to_seconds(entry[i]) * 10

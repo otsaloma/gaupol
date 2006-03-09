@@ -71,7 +71,7 @@ class RevertableAction(object):
         rows_inserted=[],
         rows_removed=[],
         rows_updated=[],
-        timing_rows_updated=[],
+        timeframe_rows_updated=[],
         main_text_rows_updated=[],
         tran_text_rows_updated=[],
         emit_signal=True,
@@ -96,7 +96,7 @@ class RevertableAction(object):
         self.rows_inserted          = rows_inserted
         self.rows_removed           = rows_removed
         self.rows_updated           = rows_updated
-        self.timing_rows_updated    = timing_rows_updated
+        self.timeframe_rows_updated = timeframe_rows_updated
         self.main_text_rows_updated = main_text_rows_updated
         self.tran_text_rows_updated = tran_text_rows_updated
         self.emit_signal            = emit_signal
@@ -145,7 +145,7 @@ class RevertableAction(object):
         self.rows_inserted.sort()
         self.rows_removed.sort()
         self.rows_updated.sort()
-        self.timing_rows_updated.sort()
+        self.timeframe_rows_updated.sort()
         self.main_text_rows_updated.sort()
         self.tran_text_rows_updated.sort()
 
@@ -225,13 +225,13 @@ class ActionDelegate(Delegate):
         rows_inserted          = []
         rows_removed           = []
         rows_updated           = []
-        timing_rows_updated    = []
+        timeframe_rows_updated = []
         main_text_rows_updated = []
         tran_text_rows_updated = []
 
         all_updated_rows = [
             rows_updated,
-            timing_rows_updated,
+            timeframe_rows_updated,
             main_text_rows_updated,
             tran_text_rows_updated
         ]
@@ -271,7 +271,7 @@ class ActionDelegate(Delegate):
             rows_inserted          += inserted
             rows_removed           += removed
             rows_updated           += action.rows_updated
-            timing_rows_updated    += action.timing_rows_updated
+            timeframe_rows_updated += action.timeframe_rows_updated
             main_text_rows_updated += action.main_text_rows_updated
             tran_text_rows_updated += action.tran_text_rows_updated
 
@@ -285,7 +285,7 @@ class ActionDelegate(Delegate):
             rows_inserted=clean_up(rows_inserted),
             rows_removed=clean_up(rows_removed),
             rows_updated=clean_up(rows_updated),
-            timing_rows_updated=clean_up(timing_rows_updated),
+            timeframe_rows_updated=clean_up(timeframe_rows_updated),
             main_text_rows_updated=clean_up(main_text_rows_updated),
             tran_text_rows_updated=clean_up(tran_text_rows_updated),
         )

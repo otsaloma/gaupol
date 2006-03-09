@@ -2,6 +2,34 @@
 
 	* data/glade/tfadjust-dialog.glade:
 	* data/glade/tfshift-dialog.glade:
+	* data/ui/menubar.xml:
+	* lib/gaupol/base/delegates/__init__.py:
+	* lib/gaupol/base/delegates/action.py:
+	* lib/gaupol/base/delegates/edit.py:
+	* lib/gaupol/base/delegates/timeframe.py:
+	* lib/gaupol/base/files/ass.py:
+	* lib/gaupol/base/files/mpl2.py:
+	* lib/gaupol/base/files/ssa.py:
+	* lib/gaupol/base/files/subviewer2.py:
+	* lib/gaupol/base/project.py:
+	* lib/gaupol/gtk/delegates/action.py:
+	* lib/gaupol/gtk/delegates/filesave.py:
+	* lib/gaupol/gtk/delegates/__init__.py:
+	* lib/gaupol/gtk/delegates/timeframe.py:
+	* lib/gaupol/gtk/dialogs/duradjust.py:
+	* lib/gaupol/gtk/dialogs/frconvert.py:
+	* lib/gaupol/gtk/dialogs/tfadjust.py:
+	* lib/gaupol/gtk/dialogs/tfshift.py:
+	* lib/gaupol/gtk/page.py:
+	* lib/gaupol/gtk/util/config.py:
+	  Renamed timings to timeframes in code.
+	  Renamed tmgs to tfs in code.
+	  Renamed timings to times in GUI.
+
+2006-03-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/tfadjust-dialog.glade:
+	* data/glade/tfshift-dialog.glade:
 	* lib/gaupol/base/delegates/timeframe.py:
 	* lib/gaupol/base/timeframe:
 	* lib/gaupol/gtk/delegates/timeframe.py:

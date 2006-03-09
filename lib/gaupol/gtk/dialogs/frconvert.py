@@ -34,7 +34,7 @@ from gaupol.gtk.util  import config, gtklib
 
 class FramerateConvertDialog(object):
 
-    """Dialog for shifting timings."""
+    """Dialog for shifting timeframes."""
 
     def __init__(self, parent):
 

@@ -27,10 +27,10 @@ except ImportError:
 
 import types
 
-from gaupol.base.clipboard   import Clipboard
-from gaupol.base.delegates   import Delegates
-from gaupol.base.model       import Model
-from gaupol.base.timing.calc import TimeFrameCalculator
+from gaupol.base.clipboard      import Clipboard
+from gaupol.base.delegates      import Delegates
+from gaupol.base.model          import Model
+from gaupol.base.timeframe.calc import TimeFrameCalculator
 
 
 class Project(Model):
