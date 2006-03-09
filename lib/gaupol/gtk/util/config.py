@@ -122,9 +122,9 @@ class duration_adjust(object):
     maximum       = '6.000'
     minimum       = '1.000'
     optimal       = '0.065'
-    shorten       = True
+    shorten       = False
     use_gap       = True
-    use_maximum   = True
+    use_maximum   = False
     use_minimum   = True
 
     types = {
