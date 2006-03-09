@@ -2,7 +2,6 @@ include AUTHORS
 include ChangeLog
 include COPYING
 include gaupol
-include gaupol.desktop
 include INSTALL
 include MANIFEST.in
 include NEWS
@@ -11,7 +10,7 @@ include setup.cfg
 include setup.py
 include TODO
 include trantool
-recursive-include data *.glade *.xml *.png
+recursive-include data *.glade *.xml *.png gaupol.desktop
 recursive-include lib *.py
 recursive-include po *.po ChangeLog README.translators
 recursive-include test *

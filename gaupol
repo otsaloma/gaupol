@@ -73,7 +73,7 @@ def check_paths():
     """
     current_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
 
-    if os.path.isfile(os.path.join(current_dir, 'gaupol.desktop')):
+    if os.path.isfile(os.path.join(current_dir, 'data', 'gaupol.desktop')):
         prepare_source_run(current_dir)
     else:
         prefix = os.path.abspath(os.path.join(current_dir, '..'))

@@ -1,6 +1,14 @@
 2006-03-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* MANIFEST.in:
+	* gaupol:
+	* data/gaupol.desktop:
+	* setup.py:
+	  Moved gaupol.desktop under data directory.
+
+2006-03-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* MANIFEST.in:
 	  Do not include translations for source tarballs.
 	  Updated README.translators location.
 
