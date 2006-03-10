@@ -4,40 +4,18 @@ Legend:
   P = Postponed
   ? = Questionable
 
-Plans for 0.4.0
-===============
-
-  New Features:
-    [D] Partial support for SSA & ASS formats
-    [D] Time shift
-    [D] Time adjust
-    [D] Duration adjust
-    [D] Framerate conversion
-
-  Bug Fixes:
-    [D] Various errors in Micro DVD tag conversions
-    [D] Newline counted as a character in text length statusbar
-    [D] Rounding errors when undoing after editing in unnative mode
-    [D] Template header not written when converting to SubViewer 2.0 format
-    [D] Fixed broken distutils commands (sdist and bdist_*)
-
-  New Translations:
-    [D] Gil Forcada: Catalan (ca)
-
-
 Plans after 0.4.0
 =================
 
   New Features:
     [ ] Find, find and replace
-          [ ] Regular expressions
-                * Support all Python regular expression flags
-          [ ] Simple string search
-                * Match case
-                * Match entire word only
-          [ ] Target
-                * Selection / current project / all open projects
-                * Main text, translation text
+          * Regular expressions only?
+              - Ignore case
+              - Multiline
+              - Dot matches newline
+          * Target
+              - Selection / current project / all open projects
+              - Main text, translation text
     [ ] Error correction
     [ ] Capitalization
     [ ] Line reformat

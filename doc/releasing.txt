@@ -71,7 +71,7 @@ Table of Contents
 
   * Run all tests
 
-      ./gaupol --execute all
+      ./gaupol -x all
 
   * Make sure all files are in the subversion repository
 

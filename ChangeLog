@@ -1,5 +1,12 @@
 2006-03-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	RELEASE 0.4.0
+
+	* lib/gaupol/__init__.py:
+	  Bumped version number to 0.4.0.
+
+2006-03-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/gtk/delegates/timeframe.py:
 	  Finetuned menu items' tooltips.
 
