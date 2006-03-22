@@ -124,8 +124,11 @@ class Finder(object):
         return count
 
     def set_regex(self, pattern, flags=0):
-        """Set and use regular expression."""
+        """
+        Set and use regular expression.
 
+        re.UNICODE is automatically added to flags.
+        """
         self.is_regex = True
         self.pattern = pattern
         self.regex = re.compile(pattern, flags|re.UNICODE)
