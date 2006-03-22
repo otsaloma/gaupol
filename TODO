@@ -4,28 +4,62 @@ Legend:
   P = Postponed
   ? = Questionable
 
-Plans after 0.4.0
-=================
+Plans for 0.5.0
+===============
+
+  * Use action grouping in replace_both_texts(...)
+  * Raise exceptions instead of returning None or False
+  * Get rid of logger?
+  * Redirect/copy sys.stdout to output window?
+      - stdout: file-like object with a write(string) method
+      - stdout.write(string): insert to text_buffer and scroll
+      - http://diveintopython.org/scripts_and_streams/stdin_stdout_stderr.html
+  * yield: any use for this?
+      - http://www.python.org/doc/peps/pep-0255/
+      - finder
+      - parser
+      - no previous() method
+  * Do setup.py install options work? Do they need to work?
+      --prefix
+      --exec-prefix
+      --home
+      --install-base
+      --install-platbase
+      --root
+      --install-purelib
+      --install-lib
+      --install-scripts
+      --install-data
 
   New Features:
-    [ ] Find, find and replace
-          * Regular expressions only?
-              - Ignore case
-              - Multiline
-              - Dot matches newline
-          * Target
-              - Selection / current project / all open projects
-              - Main text, translation text
-    [ ] Error correction
-    [ ] Capitalization
-    [ ] Line reformat
-    [ ] Hearing impaired removal
+    [?] Encoding autodetection
+          * http://chardet.feedparser.org/
+    [W] Find and replace
+
+  Bug Fixes:
+    [ ] Spell-check suggestion list does not scroll to top with new word
+
+  New Translations:
+    [D] Miguel Latorre: Spanish (es)
+
+
+Plans after 0.5.0
+=================
+
+  * Correction overview dialog
+
+  New Features:
+    [ ] Common error correction
+    [ ] Capitalization correction
+    [ ] Line reformatting
+    [ ] Hearing impaired subtitle removal
 
 
 Unscheduled
 ===========
 
   * Documentation (HTML)
+      - Before 1.0.0
 
   * Support for additional subtitle formats
 
@@ -35,11 +69,5 @@ Unscheduled
       - SAMI
         http://msdn.microsoft.com/library/en-us/dnacc/html/atg_samiarticle.asp
 
-
-Other
-=====
-
-  * Keep an eye on GStreamer and its Python bindings, in case it could one day
-    be considered suitable for determining video framerate and previewing.
-
-      http://gstreamer.freedesktop.org/modules/gst-python.html
+  * Built-in GStreamer preview?
+      - http://gstreamer.freedesktop.org/modules/gst-python.html

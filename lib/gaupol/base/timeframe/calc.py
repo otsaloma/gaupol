@@ -109,24 +109,18 @@ class TimeFrameCalculator(object):
 
         Do not return a time greater that 99:59:59,999.
         """
-        seconds_left = round(seconds, 3)
-
-        hours = seconds_left // 3600
-        seconds_left = seconds_left % 3600
-
-        if hours > 99:
+        seconds = round(seconds, 3)
+        if seconds > 359999.999:
             return '99:59:59,999'
 
-        minutes = seconds_left // 60
-        seconds_left = seconds_left % 60
+        time = '%02.0f:%02.0f:%02.0f,%03.0f' % (
+            seconds // 3600,
+            (seconds % 3600) // 60,
+            int(seconds % 60),
+            (seconds % 1) * 1000
+        )
 
-        seconds = seconds_left // 1
-        seconds_left = seconds_left % 1
-
-        milliseconds = seconds_left * 1000
-
-        return '%02.0f:%02.0f:%02.0f,%03.0f' \
-               % (hours, minutes, seconds, milliseconds)
+        return time
 
     def set_framerate(self, framerate):
         """Set the framerate."""

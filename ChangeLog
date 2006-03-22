@@ -1,3 +1,14 @@
+2006-03-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/gaupol.desktop:
+	  Added Spanish (es) translations from Miguel Latorre.
+
+	* lib/gaupol/base/text/finder.py:
+	  New untested finder implementation.
+
+	* lib/gaupol/base/timeframe/calc.py:
+	  (TimeFrameCalculator.seconds_to_time): Simplified.
+
 2006-03-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	RELEASE 0.4.0
