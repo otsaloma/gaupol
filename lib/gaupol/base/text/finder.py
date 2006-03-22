@@ -25,6 +25,8 @@ try:
 except ImportError:
     pass
 
+import re
+
 
 class Finder(object):
 
@@ -44,10 +46,11 @@ class Finder(object):
         """
         Get next match of pattern.
 
+        Raise StopIteration if no next match found.
         Return two-tuple: match start position, match end position.
         """
         if self.is_regex:
-            match = self.regex.search(text, self.position)
+            match = self.regex.search(self.text, self.position)
             if not match:
                 raise StopIteration
             self.match_span = match.span()
@@ -56,7 +59,7 @@ class Finder(object):
                 index = self.text.index(self.pattern, self.position)
             except ValueError:
                 raise StopIteration
-            self.match_span = (index, index + len(pattern))
+            self.match_span = (index, index + len(self.pattern))
 
         self.position = self.match_span[1]
         return self.match_span
@@ -65,24 +68,30 @@ class Finder(object):
         """
         Get previous match of pattern.
 
+        Raise StopIteration if no previous match found.
         Return two-tuple: match start position, match end position.
         """
         if self.is_regex:
-            matches = self.regex.findall(self.pattern)
-            found = False
-            for match in reversed(matches):
-                if match.end() <= self.position:
-                    self.match_span = match.span()
-                    found = True
+            iterator = self.regex.finditer(self.text)
+            match = None
+            while True:
+                try:
+                    candidate_match = iterator.next()
+                    if candidate_match.end() <= self.position:
+                        match = candidate_match
+                    else:
+                        break
+                except StopIteration:
                     break
-            if not found:
+            if match is None:
                 raise StopIteration
+            self.match_span = match.span()
         else:
             try:
-                index = self.text.rindex(self.pattern, self.position)
+                index = self.text.rindex(self.pattern, 0, self.position)
             except ValueError:
                 raise StopIteration
-            self.match_span = (index - len(pattern), index)
+            self.match_span = (index, index + len(self.pattern))
 
         self.position = self.match_span[0]
         return self.match_span
@@ -128,24 +137,133 @@ if __name__ == '__main__':
 
     class TestFinder(Test):
 
+        def get_finder(self):
+
+            finder = Finder()
+            finder.text = \
+                'One only risks it, because\n' \
+                'one\'s survival depends on it.'
+
+            return finder
+
         def test_next(self):
 
-            pass
+            finder = self.get_finder()
+            finder.pattern = 'it'
+            assert finder.next() == (15, 17)
+            assert finder.match_span == (15, 17)
+            assert finder.position == 17
+            assert finder.next() == (53, 55)
+            assert finder.match_span == (53, 55)
+            assert finder.position == 55
+            try:
+                finder.next()
+                raise AssertionError
+            except StopIteration:
+                pass
+
+            finder = self.get_finder()
+            finder.set_regex(r'\bit\b', re.MULTILINE)
+            assert finder.next() == (15, 17)
+            assert finder.match_span == (15, 17)
+            assert finder.position == 17
+            assert finder.next() == (53, 55)
+            assert finder.match_span == (53, 55)
+            assert finder.position == 55
+            try:
+                finder.next()
+                raise AssertionError
+            except StopIteration:
+                pass
 
         def test_previous(self):
 
-            pass
+            finder = self.get_finder()
+            finder.pattern = 'it'
+            finder.position = len(finder.text)
+            assert finder.previous() == (53, 55)
+            assert finder.match_span == (53, 55)
+            assert finder.position == 53
+            assert finder.previous() == (15, 17)
+            assert finder.match_span == (15, 17)
+            assert finder.position == 15
+            try:
+                finder.previous()
+                raise AssertionError
+            except StopIteration:
+                pass
+
+            finder = self.get_finder()
+            finder.set_regex(r'\bit\b', re.MULTILINE)
+            finder.position = len(finder.text)
+            assert finder.previous() == (53, 55)
+            assert finder.match_span == (53, 55)
+            assert finder.position == 53
+            assert finder.previous() == (15, 17)
+            assert finder.match_span == (15, 17)
+            assert finder.position == 15
+            try:
+                finder.previous()
+                raise AssertionError
+            except StopIteration:
+                pass
 
         def test_replace(self):
 
-            pass
+            finder = self.get_finder()
+            finder.pattern = 'it'
+            finder.replacement = 'xx'
+            finder.next()
+            finder.replace()
+            assert finder.text == \
+                'One only risks xx, because\n' \
+                'one\'s survival depends on it.'
+            finder.next()
+            finder.replace()
+            assert finder.text == \
+                'One only risks xx, because\n' \
+                'one\'s survival depends on xx.'
+
+            finder = self.get_finder()
+            finder.set_regex(r'\bit\b', re.MULTILINE)
+            finder.replacement = 'xx'
+            finder.position = len(finder.text)
+            finder.previous()
+            finder.replace()
+            assert finder.text == \
+                'One only risks it, because\n' \
+                'one\'s survival depends on xx.'
+            finder.previous()
+            finder.replace()
+            assert finder.text == \
+                'One only risks xx, because\n' \
+                'one\'s survival depends on xx.'
 
         def test_replace_all(self):
 
-            pass
+            finder = self.get_finder()
+            finder.pattern = 'it'
+            finder.replacement = 'xx'
+            assert finder.replace_all() == 2
+            assert finder.text == \
+                'One only risks xx, because\n' \
+                'one\'s survival depends on xx.'
+
+            finder = self.get_finder()
+            finder.set_regex(r'\bit\b', re.MULTILINE)
+            finder.replacement = 'xx'
+            assert finder.replace_all() == 2
+            assert finder.text == \
+                'One only risks xx, because\n' \
+                'one\'s survival depends on xx.'
 
         def test_set_regex(self):
 
-            pass
+            finder = self.get_finder()
+            finder.set_regex('test', re.DOTALL)
+            assert finder.is_regex == True
+            assert finder.pattern == 'test'
+            assert finder.regex.pattern == 'test'
+            assert finder.regex.flags == re.UNICODE|re.DOTALL
 
     TestFinder().run()

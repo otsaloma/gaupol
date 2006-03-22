@@ -1,5 +1,10 @@
 2006-03-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/text/finder.py:
+	  Added testing and fixed all errors.
+
+2006-03-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/gaupol.desktop:
 	  Added Spanish (es) translations from Miguel Latorre.
 
