@@ -10,17 +10,28 @@ Plans for 0.5.0
   * Use action grouping in replace_both_texts(...)
   * Raise exceptions instead of returning None or False
   * Get rid of logger?
+  * Use relib.NONE instead of None in flags?
+  * Spell-check dialog mnemonics
+      - Join _Back
+      - Join _Forward
+  * psyco.profile() vs. psyco.classes: benchmark
+  * psyco.classes
+      - from psyco.classes import psyobj, class Example(psyobj)
+      - Psyco will call psyco.bind for you on all methods
   * Redirect/copy sys.stdout to output window?
       - stdout: file-like object with a write(string) method
       - stdout.write(string): insert to text_buffer and scroll
+      - sys.__stdout__.write(...)
       - http://diveintopython.org/scripts_and_streams/stdin_stdout_stderr.html
   * yield: any use for this?
       - http://www.python.org/doc/peps/pep-0255/
-      - finder
       - parser
       - no previous() method
+  * Move trantool to po directory... NO!
+  * setup.py: clean command?
+  * setup.py optimization flag: O1/O2/?
   * Do setup.py install options work? Do they need to work?
-      --prefix
+      --prefix           OK
       --exec-prefix
       --home
       --install-base
@@ -34,6 +45,7 @@ Plans for 0.5.0
   New Features:
     [?] Encoding autodetection
           * http://chardet.feedparser.org/
+          * Last resort?
     [W] Find and replace
 
   Bug Fixes:

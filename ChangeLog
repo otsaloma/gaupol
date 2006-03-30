@@ -1,3 +1,14 @@
+2006-03-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/base/delegates/__init__.py:
+	  Added find delegate to the list of delegate modules.
+
+	* lib/gaupol/base/delegates/find.py:
+	  New module for find and replace functionality.
+
+	* lib/gaupol/base/project.py:
+	  Added a finder instance variable.
+
 2006-03-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/base/text/finder.py:

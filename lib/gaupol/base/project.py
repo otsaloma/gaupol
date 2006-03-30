@@ -30,6 +30,7 @@ import types
 from gaupol.base.clipboard      import Clipboard
 from gaupol.base.delegates      import Delegates
 from gaupol.base.model          import Model
+from gaupol.base.text.finder    import Finder
 from gaupol.base.timeframe.calc import TimeFrameCalculator
 
 
@@ -81,6 +82,8 @@ class Project(Model):
         # Video file path and video player output.
         self.video_path = None
         self.output     = None
+
+        self.finder = Finder()
 
         self._delegations = {}
         self._init_delegations()

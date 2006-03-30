@@ -35,6 +35,7 @@ module_names = (
     'edit',
     'fileopen',
     'filesave',
+    'find',
     'format',
     'preview',
     'stat',
