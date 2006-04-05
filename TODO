@@ -82,10 +82,8 @@ Unscheduled
       - Before 1.0.0
 
   * Support for additional subtitle formats
-
       - MPlayerSub/MPSub
         http://www.mplayerhq.hu/DOCS/tech/mpsub.sub
-
       - SAMI
         http://msdn.microsoft.com/library/en-us/dnacc/html/atg_samiarticle.asp
 
@@ -96,3 +94,6 @@ Unscheduled
 
   * PyGTK 2.10
       - http://live.gnome.org/PyGTK/WhatsNew210
+
+  * Python 2.5
+      - http://www.python.org/download/releases/2.5/
