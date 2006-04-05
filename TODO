@@ -28,6 +28,13 @@ Plans for 0.5.0
       - parser
       - no previous() method
   * Move trantool to po directory... NO!
+  * Adjust Durations dialog: Target
+  * Menu item locations:
+      - Framerate
+      - Select Video
+      - Headers
+  * Remove Unselect All menu item?
+  * Add exception handling for preview command being a blank string
   * setup.py: clean command?
   * setup.py optimization flag: O1/O2/?
   * Do setup.py install options work? Do they need to work?
@@ -49,6 +56,7 @@ Plans for 0.5.0
     [W] Find and replace
 
   Bug Fixes:
+    [ ] Video selection dialog's file filter should default to video
     [ ] Spell-check suggestion list does not scroll to top with new word
 
   New Translations:
@@ -83,3 +91,8 @@ Unscheduled
 
   * Built-in GStreamer preview?
       - http://gstreamer.freedesktop.org/modules/gst-python.html
+      - http://pygstdocs.berlios.de/
+      - http://pitivi.sourceforge.net/
+
+  * PyGTK 2.10
+      - http://live.gnome.org/PyGTK/WhatsNew210

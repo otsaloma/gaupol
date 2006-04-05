@@ -34,13 +34,14 @@ class Finder(object):
 
     def __init__(self):
 
-        self.is_regex    = False
-        self.match_span  = None
-        self.pattern     = None
+        self.text        = None
         self.position    = 0
+        self.match_span  = None
+
+        self.pattern     = None
+        self.is_regex    = False
         self.regex       = None
         self.replacement = None
-        self.text        = None
 
     def next(self):
         """
@@ -109,6 +110,8 @@ class Finder(object):
         else:
             self.text = self.text[:start] + self.replacement + self.text[end:]
 
+        self.position = min(self.position, len(self.text))
+
     def replace_all(self):
         """
         Replace all occurences of pattern.
@@ -121,6 +124,7 @@ class Finder(object):
             count = self.text.count(self.pattern)
             self.text = self.text.replace(self.pattern, self.replacement)
 
+        self.position = min(self.position, len(self.text))
         return count
 
     def set_regex(self, pattern, flags=0):
@@ -129,8 +133,8 @@ class Finder(object):
 
         re.UNICODE is automatically added to flags.
         """
-        self.is_regex = True
         self.pattern = pattern
+        self.is_regex = True
         self.regex = re.compile(pattern, flags|re.UNICODE)
 
 
