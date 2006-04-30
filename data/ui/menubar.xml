@@ -79,6 +79,12 @@
 				<menuitem name="lower" action="use_lower_case"/>
 			</menu>
 		</menu>
+		<menu name="search" action="show_search_menu">
+			<menuitem name="find" action="find"/>
+			<menuitem name="next" action="find_next"/>
+			<menuitem name="previous" action="find_previous"/>
+			<menuitem name="replace" action="replace"/>
+		</menu>
 		<menu name="tools" action="show_tools_menu">
 			<menuitem name="check_spelling" action="check_spelling"/>
 			<menuitem name="configure_spell_check" action="configure_spell_check"/>

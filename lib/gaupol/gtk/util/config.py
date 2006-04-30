@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -84,6 +84,7 @@ sections = (
     'duration_adjust',
     'editor',
     'file',
+    'find',
     'framerate_convert',
     'general',
     'output_window',
@@ -198,6 +199,32 @@ class file(object):
     classes = {
         'format'  : Format,
         'newlines': Newlines,
+    }
+
+class find(object):
+
+    all_projects = False
+    dot_all      = True
+    ignore_case  = False
+    main_col     = True
+    multiline    = True
+    pattern      = ''
+    patterns     = []
+    regex        = False
+    replacements = []
+    tran_col     = True
+
+    types = {
+        'all_projects': Type.BOOLEAN,
+        'dot_all'     : Type.BOOLEAN,
+        'ignore_case' : Type.BOOLEAN,
+        'main_col'    : Type.BOOLEAN,
+        'multiline'   : Type.BOOLEAN,
+        'pattern'     : Type.STRING,
+        'patterns'    : Type.STRING_LIST,
+        'regex'       : Type.BOOLEAN,
+        'replacements': Type.STRING_LIST,
+        'tran_col'    : Type.BOOLEAN,
     }
 
 class framerate_convert(object):
@@ -473,6 +500,10 @@ def write():
         parser.add_section(section)
         options = get_options(section)
         for option in options:
+            # FIX:
+            # Better solution, should not read either.
+            if section == 'find' and option == 'pattern':
+                continue
             try:
                 _set_parser_option(parser, section, option)
             except Exception:

@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -37,6 +37,7 @@ module_names = (
     'fileclose',
     'fileopen',
     'filesave',
+    'find',
     'format',
     'guiinit',
     'help',

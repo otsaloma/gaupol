@@ -1,3 +1,36 @@
+2006-05-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/find-dialog.glade:
+	* lib/gaupol/gtk/delegates/find.py:
+	* lib/gaupol/gtk/dialogs/find.py:
+	  New files for search functionality.
+
+	* data/glade/replace-dialog.glade:
+	  Redesigned, but still outdated.
+
+	* data/ui/menubar.xml:
+	* data/ui/toolbar.xml:
+	  Added find and replace items.
+
+	* lib/gaupol/base/delegates/find.py:
+	* lib/gaupol/base/text/finder.py:
+	  Lots of fixes based on testing.
+
+	* lib/gaupol/gtk/application.py:
+	  New methods for page handling.
+
+	* lib/gaupol/gtk/delegates/__init__.py:
+	  Added find module.
+
+	* lib/gaupol/gtk/delegates/guiinit.py:
+	  Added search menu.
+
+	* lib/gaupol/gtk/util/config.py:
+	  Added find class.
+
+	* setup.py:
+	  Fixed paths.py file data-prefix to install_data.
+
 2006-04-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/glade/find-dialog.glade:

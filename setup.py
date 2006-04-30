@@ -149,13 +149,14 @@ class InstallLib(install_lib):
 
         # Write path information to file "paths.py".
         paths_path = os.path.join(self.build_dir, 'gaupol', 'gtk', 'paths.py')
-        prefix = self.distribution.get_command_obj('install').prefix
+        parent = self.distribution.get_command_obj('install').install_data
+        print parent
 
-        data_dir   = os.path.join(prefix, 'share', 'gaupol')
+        data_dir   = os.path.join(parent, 'share', 'gaupol')
         glade_dir  = os.path.join(data_dir, 'glade')
         icon_dir   = os.path.join(data_dir, 'icons')
         ui_dir     = os.path.join(data_dir, 'ui')
-        locale_dir = os.path.join(prefix, 'share', 'locale')
+        locale_dir = os.path.join(parent, 'share', 'locale')
 
         paths_file = open(paths_path, 'w')
         paths_file.write('DATA_DIR   = %r\n' % data_dir  )
@@ -334,10 +335,10 @@ class Uninstall(Command):
 setup(
     name='gaupol',
     version=__version__,
-    description='Subtitle editor',
     author='Osmo Salomaa',
     author_email='otsaloma@cc.hut.fi',
     url='http://home.gna.org/gaupol',
+    description='Subtitle editor',
     license='GNU GPL',
     package_dir={'': 'lib'},
     packages=packages,

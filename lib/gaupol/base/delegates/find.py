@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -38,6 +38,8 @@ class FindDelegate(Delegate):
         self.__last_match_doc = None
         self.__last_match_passed = False
 
+        self.__wrap = False
+
     def _find(self, row, doc, docs, pos, next):
         """
         Find pattern starting from given position.
@@ -60,6 +62,8 @@ class FindDelegate(Delegate):
                 return find_in_document(row, doc, pos)
             except ValueError:
                 pass
+            if doc == Document.TRAN and not self.__wrap:
+                raise StopIteration
             row = 0
             try:
                 doc = self._get_other_document(doc, docs)
@@ -199,19 +203,26 @@ class FindDelegate(Delegate):
         self.modify_action_description(register, _('Replacing all'))
         return count
 
-    def set_find_pattern(self, pattern, is_regex=False, flags=0):
-        """Set pattern to find."""
+    def set_find_regex(self, pattern, flags=0):
+        """Set regular expression pattern to find."""
 
-        if is_regex:
-            self.finder.set_regex(pattern, flags)
-        else:
-            self.finder.pattern = pattern
-            self.finder.is_regex = False
+        self.finder.set_regex(pattern, flags)
 
     def set_find_replacement(self, replacement):
         """Set replacement."""
 
         self.finder.replacement = replacement
+
+    def set_find_string(self, pattern, ignore_case=False):
+        """Set string pattern to find."""
+
+        self.finder.pattern = pattern
+        self.finder.ignore_case = ignore_case
+        self.finder.is_regex = False
+
+    def set_find_wrap(self, wrap):
+
+        self.__wrap = wrap
 
 
 if __name__ == '__main__':
@@ -243,7 +254,7 @@ if __name__ == '__main__':
         def test_find_next(self):
 
             project = self.get_blank_project()
-            project.set_find_pattern('test', False)
+            project.set_find_string('test')
             docs = [Document.MAIN, Document.TRAN]
             try:
                 project.find_next(0, docs[0], docs)
@@ -252,7 +263,7 @@ if __name__ == '__main__':
                 pass
 
             project = self.get_uniform_project()
-            project.set_find_pattern(r'pin\.', True)
+            project.set_find_regex(r'pin\.')
             docs = [Document.MAIN, Document.TRAN]
             args = 2, docs[1], [docs[1]], 40
             row, doc, match_span = project.find_next(*args)
@@ -273,7 +284,7 @@ if __name__ == '__main__':
         def test_find_previous(self):
 
             project = self.get_blank_project()
-            project.set_find_pattern('test', False)
+            project.set_find_string('test')
             docs = [Document.MAIN, Document.TRAN]
             try:
                 project.find_previous(0, docs[0], docs)
@@ -282,7 +293,7 @@ if __name__ == '__main__':
                 pass
 
             project = self.get_uniform_project()
-            project.set_find_pattern(r'pin\.', True)
+            project.set_find_regex(r'pin\.')
             docs = [Document.MAIN, Document.TRAN]
             args = 2, docs[1], [docs[1]], 40
             row, doc, match_span = project.find_previous(*args)
@@ -317,14 +328,14 @@ if __name__ == '__main__':
                     'He\'s convalescing at home.'
 
             project = self.get_uniform_project()
-            project.set_find_pattern('was', False)
+            project.set_find_string('WAS', True)
             project.set_find_replacement('xxx')
             docs = [Document.MAIN, Document.TRAN]
             project.find_next(0, docs[0], docs)
             replace_and_assert(project)
 
             project = self.get_uniform_project()
-            project.set_find_pattern(r'\bwas\b', True, re.DOTALL)
+            project.set_find_regex(r'\bwas\b', re.DOTALL)
             project.set_find_replacement('xxx')
             docs = [Document.MAIN, Document.TRAN]
             project.find_next(0, docs[0], docs)
@@ -353,25 +364,21 @@ if __name__ == '__main__':
                             'He\'s convalescing at home.'
 
             project = self.get_uniform_project()
-            project.set_find_pattern('was', False)
+            project.set_find_string('was')
             project.set_find_replacement('xxx')
             docs = [Document.MAIN, Document.TRAN]
             replace_all_and_assert(project)
 
             project = self.get_uniform_project()
-            project.set_find_pattern(r'\bwas\b', True, re.DOTALL)
+            project.set_find_regex(r'\bwas\b', re.DOTALL)
             project.set_find_replacement('xxx')
             docs = [Document.MAIN, Document.TRAN]
             replace_all_and_assert(project)
 
-        def test_set_find_pattern(self):
+        def test_set_find_regex(self):
 
             project = self.get_blank_project()
-            project.set_find_pattern('test')
-            assert project.finder.pattern == 'test'
-
-            project = self.get_blank_project()
-            project.set_find_pattern(r'^test', True, re.DOTALL)
+            project.set_find_regex(r'^test', re.DOTALL)
             assert project.finder.pattern == r'^test'
             assert project.finder.is_regex == True
             assert project.finder.regex.pattern == r'^test'
@@ -382,5 +389,11 @@ if __name__ == '__main__':
             project = self.get_blank_project()
             project.set_find_replacement('test')
             assert project.finder.replacement == 'test'
+
+        def test_set_find_string(self):
+
+            project = self.get_blank_project()
+            project.set_find_string('test')
+            assert project.finder.pattern == 'test'
 
     TestFindDelegate().run()

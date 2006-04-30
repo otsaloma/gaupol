@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -40,6 +40,7 @@ class Finder(object):
 
         self.pattern     = None
         self.is_regex    = False
+        self.ignore_case = False
         self.regex       = None
         self.replacement = None
 
@@ -50,17 +51,28 @@ class Finder(object):
         Raise StopIteration if no next match found.
         Return two-tuple: match start position, match end position.
         """
+        if self.position == len(self.text):
+            raise StopIteration
         if self.is_regex:
             match = self.regex.search(self.text, self.position)
             if not match:
                 raise StopIteration
+            if match.span() == self.match_span and \
+               match.span() == (self.position, self.position):
+                self.position = min(len(self.text), self.position + 1)
+                return self.next()
             self.match_span = match.span()
         else:
+            text = self.text
+            pattern = self.pattern
+            if self.ignore_case:
+                text = self.text.lower()
+                pattern = self.pattern.lower()
             try:
-                index = self.text.index(self.pattern, self.position)
+                index = text.index(pattern, self.position)
             except ValueError:
                 raise StopIteration
-            self.match_span = (index, index + len(self.pattern))
+            self.match_span = (index, index + len(pattern))
 
         self.position = self.match_span[1]
         return self.match_span
@@ -72,6 +84,8 @@ class Finder(object):
         Raise StopIteration if no previous match found.
         Return two-tuple: match start position, match end position.
         """
+        if self.position == 0:
+            raise StopIteration
         if self.is_regex:
             iterator = self.regex.finditer(self.text)
             match = None
@@ -86,13 +100,22 @@ class Finder(object):
                     break
             if match is None:
                 raise StopIteration
+            if match.span() == self.match_span and \
+               match.span() == (self.position, self.position):
+                self.position = max(0, self.position - 1)
+                return self.previous()
             self.match_span = match.span()
         else:
+            text = self.text
+            pattern = self.pattern
+            if self.ignore_case:
+                text = self.text.lower()
+                pattern = self.pattern.lower()
             try:
-                index = self.text.rindex(self.pattern, 0, self.position)
+                index = text.rindex(pattern, 0, self.position)
             except ValueError:
                 raise StopIteration
-            self.match_span = (index, index + len(self.pattern))
+            self.match_span = (index, index + len(pattern))
 
         self.position = self.match_span[0]
         return self.match_span
@@ -118,14 +141,16 @@ class Finder(object):
 
         Return amount of substitutions made.
         """
-        if self.is_regex:
-            self.text, count = self.regex.subn(self.replacement, self.text)
-        else:
-            count = self.text.count(self.pattern)
-            self.text = self.text.replace(self.pattern, self.replacement)
-
-        self.position = min(self.position, len(self.text))
-        return count
+        self.position = 0
+        count = 0
+        try:
+            while True:
+                self.next()
+                self.replace()
+                count += 1
+        except StopIteration:
+            self.position = min(self.position, len(self.text))
+            return count
 
     def set_regex(self, pattern, flags=0):
         """

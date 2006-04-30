@@ -7,57 +7,86 @@ Legend:
 Plans for 0.5.0
 ===============
 
-  * Use action grouping in replace_both_texts(...)
-  * Raise exceptions instead of returning None or False
-  * Get rid of logger?
-  * Use relib.NONE instead of None in flags?
-  * Spell-check dialog mnemonics
-      - Join _Back
-      - Join _Forward
-  * psyco.profile() vs. psyco.classes: benchmark
-  * psyco.classes
-      - from psyco.classes import psyobj, class Example(psyobj)
-      - Psyco will call psyco.bind for you on all methods
-  * Redirect/copy sys.stdout to output window?
-      - stdout: file-like object with a write(string) method
-      - stdout.write(string): insert to text_buffer and scroll
-      - sys.__stdout__.write(...)
-      - http://diveintopython.org/scripts_and_streams/stdin_stdout_stderr.html
-  * yield: any use for this?
-      - http://www.python.org/doc/peps/pep-0255/
-      - parser
-      - no previous() method
-  * Move trantool to po directory... NO!
-  * Adjust Durations dialog: Target
-  * Menu item locations:
-      - Framerate
-      - Select Video
-      - Headers
-  * Remove Unselect All menu item?
-  * Add exception handling for preview command being a blank string
-  * setup.py: clean command?
-  * setup.py optimization flag: O1/O2/?
-  * Do setup.py install options work? Do they need to work?
-      --prefix           OK
-      --exec-prefix
-      --home
-      --install-base
-      --install-platbase
-      --root
-      --install-purelib
-      --install-lib
-      --install-scripts
-      --install-data
+  * General
+      - Use "." as decimal for time
+      - Try pylint and maybe others
+      - py.test http://codespeak.net/py/current/doc/test.html
+      - Move developer specific options to under test dir?
+      - Move variables from application and project to delegates
+      - Raise exceptions instead of returning None or False
+      - Get rid of logger?
+      - Use class variables and refer to them as self.var
+          - gaupol.base.files
+      - Use relib.NONE instead of None in flags?
+      - Test code under a test directories?
+      - never use plural names in directory and file names???
+      - psyco.profile() vs. psyco.classes: benchmark
+      - psyco.classes
+          - from psyco.classes import psyobj, class Example(psyobj)
+          - Psyco will call psyco.bind for you on all methods
+      - Update copyright notices to -2006
+
+  * setup.py / setup.cfg
+      - python 2.5 uninstall?
+      - Benchmark O1, O2, O0
+      - setup.py: destination vs. configure (Arch)
+         - Add a destdir option to install
+         - finalize_options: x = os.path.join(destdir, x)
+         - paths.py: if destdir: ...
+      - Use intltool-merge for gaupol.desktop file translations?
+          - See alacarte source code
+      - setup.py: clean command?
+      - Do setup.py install options work? Do they need to work?
+          --prefix           OK
+          --exec-prefix
+          --home
+          --install-base
+          --install-platbase
+          --root
+          --install-purelib
+          --install-lib
+          --install-scripts
+          --install-data
+
+  * base
+      - Use datetime.timedelta in calc
+      - Version check timeout
+         - http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/483752
+      - Use action grouping in replace_both_texts(...)
+      - Add exception handling for preview command being a blank string
+
+  * gtk
+      - Limit spell-check replacement file size
+      - default paths.py relative source dirs os.path.dirname(__file__)
+      - http://live.gnome.org/GnomeGoals/AppIcon
+      - No need to check if translator-credits is translated
+      - Unlimited undo by default
+      - UIM name: /ui/menubar/edit/edit
+      - Spell-check dialog mnemonics
+          - Join _Back
+          - Join _Forward
+      - Redirect/copy sys.stdout to output window?
+          - stdout: file-like object with a write(string) method
+          - stdout.write(string): insert to text_buffer and scroll
+          - sys.__stdout__.write(...)
+          - http://diveintopython.org/scripts_and_streams/stdin_stdout_stderr.html
+      - Adjust Durations dialog: Target
+      - Menu item locations:
+          - Framerate
+          - Select Video
+          - Headers
+      - Remove Unselect All menu item?
+
+  * Other
+      - Check out Subtitle Editor's built-in preview
 
   New Features:
-    [?] Encoding autodetection
-          * http://chardet.feedparser.org/
-          * Last resort?
     [W] Find and replace
 
   Bug Fixes:
     [ ] Video selection dialog's file filter should default to video
     [ ] Spell-check suggestion list does not scroll to top with new word
+    [ ] Icon field in the desktop file should not include .png extension
 
   New Translations:
     [D] Miguel Latorre: Spanish (es)
@@ -78,6 +107,14 @@ Plans after 0.5.0
 Unscheduled
 ===========
 
+  * Encoding autodetection
+      - http://chardet.feedparser.org/
+
+  * Built-in GStreamer preview?
+      - http://gstreamer.freedesktop.org/modules/gst-python.html
+      - http://pygstdocs.berlios.de/
+      - http://pitivi.sourceforge.net/
+
   * Documentation (HTML)
       - Before 1.0.0
 
@@ -86,11 +123,6 @@ Unscheduled
         http://www.mplayerhq.hu/DOCS/tech/mpsub.sub
       - SAMI
         http://msdn.microsoft.com/library/en-us/dnacc/html/atg_samiarticle.asp
-
-  * Built-in GStreamer preview?
-      - http://gstreamer.freedesktop.org/modules/gst-python.html
-      - http://pygstdocs.berlios.de/
-      - http://pitivi.sourceforge.net/
 
   * PyGTK 2.10
       - http://live.gnome.org/PyGTK/WhatsNew210

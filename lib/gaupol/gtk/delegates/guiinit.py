@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -210,6 +210,10 @@ class GUIInitDelegate(Delegate):
                 'show_format_menu',
                 None,
                 _('F_ormat')
+            ), (
+                'show_search_menu',
+                None,
+                _('_Search')
             ), (
                 'show_tools_menu',
                 None,

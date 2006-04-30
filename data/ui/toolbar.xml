@@ -2,6 +2,9 @@
 	<toolbar name="main_toolbar">
 		<toolitem name="save" action="save_main_document"/>
 		<separator/>
+		<toolitem name="find" action="find"/>
+		<toolitem name="replace" action="replace"/>
+		<separator/>
 		<toolitem name="check_spelling" action="check_spelling"/>
 		<toolitem name="preview" action="preview"/>
 	</toolbar>

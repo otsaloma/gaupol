@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -75,6 +75,8 @@ class Application(object):
         # X clipboard
         self.clipboard = gtk.Clipboard()
 
+        self.find_active = False
+
         self._delegations = {}
         self._init_delegations()
 
@@ -111,6 +113,29 @@ class Application(object):
             return self.pages[self.notebook.get_current_page()]
         except IndexError:
             return None
+
+    def get_next_page(self, wrap=True):
+
+        current_page = self.get_current_page()
+        if current_page is None:
+            return None
+
+        index = self.pages.index(current_page)
+        if index == len(self.pages) - 1:
+            if not wrap:
+                raise StopIteration
+            return self.pages[0]
+        else:
+            return self.pages[index + 1]
+
+    def get_page_count(self):
+
+        return len(self.pages)
+
+    def set_active_page(self, page):
+
+        index = self.pages.index(page)
+        self.notebook.set_current_page(index)
 
 
 if __name__ == '__main__':
