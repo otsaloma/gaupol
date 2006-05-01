@@ -1,5 +1,11 @@
 2006-05-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* tools/add-changelog:
+	* tools/status:
+	  New files.
+
+2006-05-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* tools/py.test:
 	* tools/pyenchant:
 	* tools/pylint:

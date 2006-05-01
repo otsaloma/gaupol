@@ -1,0 +1,43 @@
+#!/usr/bin/env python
+
+"""Add a ChangeLog entry."""
+
+import os
+import shutil
+import time
+
+NAME  = os.getenv('NAME')  or 'Osmo Salomaa'
+EMAIL = os.getenv('EMAIL') or 'otsaloma@cc.hut.fi'
+DATE  = time.strftime('%Y-%m-%d')
+
+test_dir  = os.path.dirname(os.path.abspath(__file__))
+trunk_dir = os.path.join(test_dir, '..')
+
+os.chdir(trunk_dir)
+
+fobj = os.popen('svn status -q')
+output = fobj.read()
+fobj.close()
+if not output:
+    raise SystemExit('No files changed.')
+
+files = output.split('\n')
+for i in reversed(range(len(files))):
+    files[i] = files[i][2:].strip()
+    if not files[i]:
+        files.pop(i)
+files.sort()
+
+new_entry = '%s  %s  <%s>\n\n' % (DATE, NAME, EMAIL)
+for path in files:
+    print 'Adding %s.' % path
+    new_entry += '\t* %s:\n\n' % path
+
+fobj = file('ChangeLog', 'r')
+old_entries = fobj.read()
+fobj.close()
+
+entries = new_entry + old_entries
+fobj = file('ChangeLog', 'w')
+fobj.write(entries)
+fobj.close()

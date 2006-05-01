@@ -1,0 +1,11 @@
+#!/usr/bin/env python
+
+"""Run svn status."""
+
+import os
+
+test_dir  = os.path.dirname(os.path.abspath(__file__))
+trunk_dir = os.path.join(test_dir, '..')
+
+os.chdir(trunk_dir)
+os.system('svn status | grep -v \.pyc | sort')
