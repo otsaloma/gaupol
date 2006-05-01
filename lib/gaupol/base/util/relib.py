@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -17,19 +17,19 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Additional functions for manipulating regular expressions"""
+"""Additional functions for manipulating regular expressions."""
 
 
 import re
 
 
-def compile(pattern, flags=None):
+NONE = 0
+
+
+def compile(pattern, flags=0):
     """Compile regular expression."""
 
-    try:
-        return re.compile(pattern, flags)
-    except TypeError:
-        return re.compile(pattern)
+    return re.compile(pattern, flags)
 
 
 if __name__ == '__main__':

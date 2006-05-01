@@ -1,0 +1,23 @@
+#!/usr/bin/env python
+
+import os
+import sys
+import tempfile
+
+test_dir = os.path.dirname(os.path.abspath(__file__))
+lib_dir  = os.path.join(test_dir, '..', 'lib')
+sys.path.insert(0, lib_dir)
+
+from gaupol.base.util import wwwlib
+
+temp_dir = tempfile.gettempdir()
+report_path = os.path.join(temp_dir, 'gaupol.pylint')
+
+fobj = os.popen('pylint %s' % sys.argv[1])
+output = fobj.read()
+fobj.close()
+fobj = open(report_path, 'w')
+fobj.write(output)
+fobj.close()
+
+wwwlib.open_url(report_path)

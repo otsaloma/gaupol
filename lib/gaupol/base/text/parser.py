@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -137,7 +137,7 @@ class TextParser(object):
             if match is None:
                 break
 
-            start, end = match.span()
+            start = match.span()[0]
 
             # Perform substitution.
             len_before = len(self.text)

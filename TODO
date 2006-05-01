@@ -9,8 +9,12 @@ Plans for 0.5.0
 
   * General
       - Use "." as decimal for time
-      - Try pylint and maybe others
-      - py.test http://codespeak.net/py/current/doc/test.html
+1     - py.test http://codespeak.net/py/current/doc/test.html
+2     - Test code under a test directories?
+3     - psyco.profile() vs. psyco.classes: benchmark
+4     - psyco.classes
+          - from psyco.classes import psyobj, class Example(psyobj)
+          - Psyco will call psyco.bind for you on all methods
       - Move developer specific options to under test dir?
       - Move variables from application and project to delegates
       - Raise exceptions instead of returning None or False
@@ -18,13 +22,9 @@ Plans for 0.5.0
       - Use class variables and refer to them as self.var
           - gaupol.base.files
       - Use relib.NONE instead of None in flags?
-      - Test code under a test directories?
       - never use plural names in directory and file names???
-      - psyco.profile() vs. psyco.classes: benchmark
-      - psyco.classes
-          - from psyco.classes import psyobj, class Example(psyobj)
-          - Psyco will call psyco.bind for you on all methods
       - Update copyright notices to -2006
+      - string.Template for preview command
 
   * setup.py / setup.cfg
       - python 2.5 uninstall?
@@ -82,6 +82,9 @@ Plans for 0.5.0
 
   New Features:
     [W] Find and replace
+
+  Improvements:
+    [W] Developer specific options to gaupol moved to test directory
 
   Bug Fixes:
     [ ] Video selection dialog's file filter should default to video

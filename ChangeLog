@@ -1,5 +1,19 @@
 2006-05-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol:
+	  Removed PyChecker option.
+
+	* lib/gaupol/base/text/parser.py:
+	  Removed an unused local variable.
+
+	* lib/gaupol/base/util/relib.py:
+	  (NONE): New attribute.
+
+	* test/pylint:
+	  New file.
+
+2006-05-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/find-dialog.glade:
 	* lib/gaupol/gtk/delegates/find.py:
 	* lib/gaupol/gtk/dialogs/find.py:

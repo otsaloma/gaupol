@@ -116,15 +116,6 @@ def parse_options():
     )
 
     parser.add_option(
-        '-c',
-        '--check',
-        action='store_true',
-        dest='pycheck',
-        default=False,
-        help='run pychecker on all code'
-    )
-
-    parser.add_option(
         '-p',
         '--profile',
         action='store',
@@ -217,12 +208,11 @@ if __name__ == '__main__':
     prepare_eggs()
 
     # The world is not big enough for PyChecker and Psyco.
-    if not opts.pycheck:
-        try:
-            import psyco
-            psyco.profile()
-        except ImportError:
-            logger.info('Psyco not found.')
+    try:
+        import psyco
+        psyco.profile()
+    except ImportError:
+        logger.info('Psyco not found.')
 
     # View documentation.
     if opts.documentation:
@@ -232,12 +222,6 @@ if __name__ == '__main__':
         os.putenv('PYTHONPATH', 'lib')
         threading.Thread(target=pydoc.gui).start()
         wwwlib.open_url('http://localhost:7464/gaupol.html')
-
-    # Run PyChecker.
-    elif opts.pycheck:
-        import pychecker.checker
-        from gaupol.gtk import main
-        main.main(args[1:])
 
     # Profile.
     elif opts.profile:
