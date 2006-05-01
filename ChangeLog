@@ -1,5 +1,13 @@
 2006-05-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* tools/versions:
+	  Renamed from tools/info.
+
+	* tools/run:
+	  Removed.
+
+2006-05-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* tools:
 	  Renamed test directory to tools.
 
