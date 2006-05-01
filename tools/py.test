@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 
 """
-Run py.test.
+Run py.test with correct PYTHONPATH.
 
-USAGE: py.test [OPTIONS] [QUERY] [FILENAMES OF TESTS]
+USAGE: See py.test --help.
 """
 
 import os
 import sys
-import tempfile
 
 test_dir = os.path.dirname(os.path.abspath(__file__))
 lib_dir  = os.path.join(test_dir, '..', 'lib')

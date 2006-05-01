@@ -1,5 +1,13 @@
 2006-05-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* tools/py.test:
+	* tools/pyenchant:
+	* tools/pylint:
+	* tools/versions:
+	  Minor fixes.
+
+2006-05-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* tools/versions:
 	  Renamed from tools/info.
 

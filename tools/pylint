@@ -3,8 +3,7 @@
 """
 Run PyLint and view HTML output.
 
-USAGE: pylint [OPTIONS] PATH
-OPTIONS, PATH: See PyLint help or man pages
+USAGE: See pylint --help.
 """
 
 import os
