@@ -27,6 +27,7 @@ Plans for 0.5.0
       - string.Template for preview command
 
   * setup.py / setup.cfg
+      - Add test module to manifest
       - python 2.5 uninstall?
       - Benchmark O1, O2, O0
       - setup.py: destination vs. configure (Arch)

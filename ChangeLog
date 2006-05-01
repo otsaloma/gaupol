@@ -1,6 +1,17 @@
 2006-05-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol:
+	  Removed --execute option.
+
+	* test/pylint:
+	  Added docstring.
+
+	* test/run:
+	  New file for running tests.
+
+2006-05-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol:
 	  Removed PyChecker option.
 
 	* lib/gaupol/base/text/parser.py:

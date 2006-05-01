@@ -1,0 +1,29 @@
+#!/usr/bin/env python
+
+"""
+Execute Python modules given as arguments.
+
+USAGE: run PATH
+PATH: module path, file path or "all"
+"""
+
+import os
+import sys
+
+test_dir = os.path.dirname(os.path.abspath(__file__))
+lib_dir  = os.path.join(test_dir, '..', 'lib')
+sys.path.insert(0, lib_dir)
+
+if sys.argv[1] == 'all':
+    for (dirpath, dirnames, filenames) in os.walk(lib_dir):
+        for filename in filenames:
+            if filename.endswith('.py'):
+                path = os.path.join(dirpath, filename)
+                print path
+                execfile(path)
+else:
+    path = sys.argv[1]
+    if not os.path.isfile(path):
+        path = path.replace('.', os.sep) + '.py'
+        path = os.path.join('lib', path)
+    execfile(path)

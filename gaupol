@@ -126,18 +126,6 @@ def parse_options():
         help='profile with hotshot and output AMOUNT entries'
     )
 
-    parser.add_option(
-        '-x',
-        '--execute',
-        action='store',
-        type='str',
-        metavar='PATH',
-        dest='execute',
-        default='',
-        help='execute gaupol module(s) for testing, ' \
-             'PATH: file path, module path or "all"'
-    )
-
     return parser.parse_args(sys.argv)
 
 def prepare_eggs():
@@ -235,22 +223,6 @@ if __name__ == '__main__':
         stats.sort_stats('time', 'calls')
         stats.print_stats(opts.profile)
         os.remove('gaupol.prof')
-
-    # Run tests.
-    elif opts.execute:
-        if opts.execute == 'all':
-            for (dirpath, dirnames, filenames) in os.walk('lib'):
-                for filename in filenames:
-                    if filename.endswith('.py'):
-                        path = os.path.join(dirpath, filename)
-                        print path
-                        execfile(path)
-        else:
-            path = opts.execute
-            if not os.path.isfile(path):
-                path = path.replace('.', os.sep) + '.py'
-                path = os.path.join('lib', path)
-            execfile(path)
 
     # Run normal.
     else:
