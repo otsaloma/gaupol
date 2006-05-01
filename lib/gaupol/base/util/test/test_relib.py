@@ -17,16 +17,11 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Additional functions for manipulating regular expressions."""
+from gaupol.base.util import relib
+from gaupol.test      import Test
 
 
-import re
+def test_compile(self):
 
-
-NONE = 0
-
-
-def compile(pattern, flags=0):
-    """Compile regular expression."""
-
-    return re.compile(pattern, flags)
+    regex = relib.compile(r't.st')
+    assert regex.search('.txst') is not None

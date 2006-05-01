@@ -1,5 +1,18 @@
 2006-05-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/util/relib.py:
+	* lib/gaupol/base/util/test:
+	* lib/gaupol/base/util/test/test_relib.py:
+	  Moved testing under test directory.
+
+	* test/py.test:
+	  New file.
+
+	* test/pylint:
+	  Fixed argument passing.
+
+2006-05-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol:
 	  Removed --execute option.
 

@@ -9,12 +9,6 @@ Plans for 0.5.0
 
   * General
       - Use "." as decimal for time
-1     - py.test http://codespeak.net/py/current/doc/test.html
-2     - Test code under a test directories?
-3     - psyco.profile() vs. psyco.classes: benchmark
-4     - psyco.classes
-          - from psyco.classes import psyobj, class Example(psyobj)
-          - Psyco will call psyco.bind for you on all methods
       - Move developer specific options to under test dir?
       - Move variables from application and project to delegates
       - Raise exceptions instead of returning None or False
@@ -31,6 +25,7 @@ Plans for 0.5.0
       - python 2.5 uninstall?
       - Benchmark O1, O2, O0
       - setup.py: destination vs. configure (Arch)
+         - setup.py install --prefix=/usr --root=tmp/pkg
          - Add a destdir option to install
          - finalize_options: x = os.path.join(destdir, x)
          - paths.py: if destdir: ...
@@ -86,11 +81,15 @@ Plans for 0.5.0
 
   Improvements:
     [W] Developer specific options to gaupol moved to test directory
+    [ ] Testing framework moved to py.test
 
   Bug Fixes:
     [ ] Video selection dialog's file filter should default to video
     [ ] Spell-check suggestion list does not scroll to top with new word
     [ ] Icon field in the desktop file should not include .png extension
+
+  Dependencies:
+    [ ] Psyco no longer used
 
   New Translations:
     [D] Miguel Latorre: Spanish (es)

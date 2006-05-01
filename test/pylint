@@ -20,7 +20,7 @@ from gaupol.base.util import wwwlib
 temp_dir = tempfile.gettempdir()
 report_path = os.path.join(temp_dir, 'gaupol.pylint')
 
-fobj = os.popen('pylint %s' % sys.argv[1:])
+fobj = os.popen('pylint %s' % ' '.join(sys.argv[1:]))
 output = fobj.read()
 fobj.close()
 fobj = open(report_path, 'w')
