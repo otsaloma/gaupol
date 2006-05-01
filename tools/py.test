@@ -9,8 +9,8 @@ USAGE: See py.test --help.
 import os
 import sys
 
-test_dir = os.path.dirname(os.path.abspath(__file__))
-lib_dir  = os.path.join(test_dir, '..', 'lib')
+tool_dir = os.path.dirname(os.path.abspath(__file__))
+lib_dir  = os.path.join(tool_dir, '..', 'lib')
 os.environ['PYTHONPATH'] = lib_dir + ':' + os.environ['PYTHONPATH']
 
 os.system('py.test %s' % ' '.join(sys.argv[1:]))

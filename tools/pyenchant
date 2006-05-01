@@ -5,9 +5,9 @@
 import os
 import sys
 
-test_path = os.path.dirname(os.path.abspath(__file__))
-lib_path = os.path.join(test_path, '..', 'lib')
-sys.path.insert(0, lib_path)
+tool_dir = os.path.dirname(os.path.abspath(__file__))
+lib_dir  = os.path.join(tool_dir, '..', 'lib')
+sys.path.insert(0, lib_dir)
 
 from gaupol.base.util import langlib
 

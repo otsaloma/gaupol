@@ -1,5 +1,19 @@
 2006-05-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* tools/add-changelog:
+	* tools/profile:
+	* tools/py.test:
+	* tools/pydoc:
+	* tools/pyenchant:
+	* tools/pylint:
+	* tools/status:
+	  Cosmetic changes.
+
+	* tools/translate:
+	  Fixed paths.
+
+2006-05-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* tools/translate:
 	  Renamed from trantool.
 

@@ -10,10 +10,9 @@ NAME  = os.getenv('NAME')  or 'Osmo Salomaa'
 EMAIL = os.getenv('EMAIL') or 'otsaloma@cc.hut.fi'
 DATE  = time.strftime('%Y-%m-%d')
 
-test_dir  = os.path.dirname(os.path.abspath(__file__))
-trunk_dir = os.path.join(test_dir, '..')
-
-os.chdir(trunk_dir)
+tool_dir   = os.path.dirname(os.path.abspath(__file__))
+source_dir = os.path.join(tool_dir, '..')
+os.chdir(source_dir)
 
 fobj = os.popen('svn status -q')
 output = fobj.read()
