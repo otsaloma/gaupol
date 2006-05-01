@@ -1,0 +1,24 @@
+#!/usr/bin/env python
+
+"""View PyDoc documentation of gaupol."""
+
+import os
+import pydoc
+import sys
+import threading
+
+test_dir = os.path.dirname(os.path.abspath(__file__))
+lib_dir  = os.path.join(test_dir, '..', 'lib')
+sys.path.insert(0, lib_dir)
+
+# For some reason the .pyc files need to be recreated.
+for (dirpath, dirnames, filenames) in os.walk(lib_dir):
+    os.chdir(dirpath)
+    for filename in filenames:
+        if filename.endswith('.pyc'):
+            os.remove(filename)
+
+from gaupol.base.util import wwwlib
+
+threading.Thread(target=pydoc.gui).start()
+wwwlib.open_url('http://localhost:7464/gaupol.html')

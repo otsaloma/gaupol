@@ -86,13 +86,8 @@ def parse_options():
     Return: options, arguments
     """
     usage = 'gaupol [options] [files]'
-    description = \
-        'Start Gaupol and open files. Options, except --help, are mostly ' \
-        'useful only for developers and will only work (properly) when run ' \
-        'in the source directory.'
     formatter = optparse.IndentedHelpFormatter(2, 42, None, True)
     parser = optparse.OptionParser(
-        description=description,
         usage=usage,
         formatter=formatter
     )
@@ -104,26 +99,6 @@ def parse_options():
         dest='no_translation',
         default=False,
         help='ignore possible translation (use english)'
-    )
-
-    parser.add_option(
-        '-d',
-        '--documentation',
-        action='store_true',
-        dest='documentation',
-        default=False,
-        help='view pydoc documentation of code'
-    )
-
-    parser.add_option(
-        '-p',
-        '--profile',
-        action='store',
-        type='int',
-        metavar='AMOUNT',
-        dest='profile',
-        default=0,
-        help='profile with hotshot and output AMOUNT entries'
     )
 
     return parser.parse_args(sys.argv)
@@ -177,13 +152,6 @@ def prepare_source_run(prefix):
     if lib_dir not in sys.path:
         sys.path.insert(0, lib_dir)
 
-    from gaupol.gtk import paths
-
-    paths.DATA_DIR   = os.path.join(prefix, 'data'           )
-    paths.GLADE_DIR  = os.path.join(prefix, 'data'  , 'glade')
-    paths.ICON_DIR   = os.path.join(prefix, 'data'  , 'icons')
-    paths.UI_DIR     = os.path.join(prefix, 'data'  , 'ui'   )
-    paths.LOCALE_DIR = os.path.join(prefix, 'locale'         )
 
 if __name__ == '__main__':
 
@@ -195,36 +163,5 @@ if __name__ == '__main__':
         prepare_gettext()
     prepare_eggs()
 
-    # The world is not big enough for PyChecker and Psyco.
-    try:
-        import psyco
-        psyco.profile()
-    except ImportError:
-        logger.info('Psyco not found.')
-
-    # View documentation.
-    if opts.documentation:
-        import pydoc
-        import threading
-        from gaupol.base.util import wwwlib
-        os.putenv('PYTHONPATH', 'lib')
-        threading.Thread(target=pydoc.gui).start()
-        wwwlib.open_url('http://localhost:7464/gaupol.html')
-
-    # Profile.
-    elif opts.profile:
-        import hotshot
-        import hotshot.stats
-        from gaupol.gtk import main
-        profile = hotshot.Profile('gaupol.prof')
-        profile.runcall(main.main, args[1:])
-        profile.close()
-        stats = hotshot.stats.load('gaupol.prof')
-        stats.sort_stats('time', 'calls')
-        stats.print_stats(opts.profile)
-        os.remove('gaupol.prof')
-
-    # Run normal.
-    else:
-        from gaupol.gtk import main
-        main.main(args[1:])
+    from gaupol.gtk import main
+    main.main(args[1:])

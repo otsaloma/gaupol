@@ -1,0 +1,29 @@
+#!/usr/bin/env python
+
+"""
+Profile with hotshot module.
+
+USAGE: profile ENTRIES [OPTIONS] [ARGUMENTS]
+ENTRIES: Amount of entries to show
+OPTIONS: Passed to Gaupol
+ARGUMENTS: Passed to Gaupol
+"""
+
+import hotshot
+import hotshot.stats
+import os
+import sys
+
+test_dir = os.path.dirname(os.path.abspath(__file__))
+lib_dir  = os.path.join(test_dir, '..', 'lib')
+sys.path.insert(0, lib_dir)
+
+from gaupol.gtk import main
+
+profile = hotshot.Profile('gaupol.profile')
+profile.runcall(main.main, sys.argv[2:])
+profile.close()
+stats = hotshot.stats.load('gaupol.profile')
+stats.sort_stats('time', 'calls')
+stats.print_stats(sys.argv[1])
+os.remove('gaupol.profile')

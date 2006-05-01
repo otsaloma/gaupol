@@ -1,5 +1,19 @@
 2006-05-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol:
+	  Removed profile and pydoc options.
+	  Removed psyco.
+	  Removed paths module configuration.
+
+	* lib/gaupol/gtk/paths.py:
+	  Use relative paths by default.
+
+	* tools/profile:
+	* tools/pydoc:
+	  New files.
+
+2006-05-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* tools/add-changelog:
 	* tools/status:
 	  New files.

@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -20,15 +20,28 @@
 """
 Paths used by Gaupol.
 
-When running from source, path constants will be added to this module as module
-attributes upon start-up. When installing, path constants will be written to
-this file during the installation process.
-
-Paths available:
-DATA_DIR
-GLADE_DIR
-ICON_DIR
-UI_DIR
-LOCALE_DIR
+The values of the paths default to their values in the source distribution.
+When installing, this file should be overwritten with the correct paths during
+installation process.
 """
 
+
+import os
+
+
+__all__ = [
+    'DATA_DIR',
+    'GLADE_DIR',
+    'ICON_DIR',
+    'UI_DIR',
+    'LOCALE_DIR',
+]
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+prefix = os.path.join(current_dir, '..', '..', '..')
+
+DATA_DIR   = os.path.join(prefix  , 'data'  )
+GLADE_DIR  = os.path.join(DATA_DIR, 'glade' )
+ICON_DIR   = os.path.join(DATA_DIR, 'icons' )
+UI_DIR     = os.path.join(DATA_DIR, 'ui'    )
+LOCALE_DIR = os.path.join(prefix  , 'locale')
