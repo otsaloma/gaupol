@@ -21,7 +21,7 @@ sys.path.insert(0, lib_dir)
 from gaupol.gtk import main
 
 profile = hotshot.Profile('gaupol.profile')
-profile.runcall(main.main, sys.argv[2:])
+profile.runcall(main.main, sys.argv)
 profile.close()
 stats = hotshot.stats.load('gaupol.profile')
 stats.sort_stats('time', 'calls')

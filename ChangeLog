@@ -1,3 +1,12 @@
+2006-05-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol:
+	* lib/gaupol/gtk/main.py:
+	  Cleaned up start-stuff and moved most of stuff to main.py.
+
+	* tools/profile:
+	  Adapted to changes in lib/gaupol/gtk/main.py.
+
 2006-05-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol:

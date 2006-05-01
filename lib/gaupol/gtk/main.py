@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -20,39 +20,109 @@
 """Starting Gaupol GTK user interface."""
 
 
+import gettext
+import locale
+import optparse
 import os
 import sys
 
-import gobject
-import gtk
 
-from gaupol.gtk.application import Application
-from gaupol.gtk.dialogs     import debug
+def _check_dependencies():
+    """Check existance and versions of dependencies."""
 
+    if sys.version_info[:3] < (2, 4, 0):
+        print 'Python 2.4 or later is required to run Gaupol.'
+        raise SystemExit(1)
+
+    try:
+        import gtk
+        if gtk.pygtk_version < (2, 8, 0):
+            raise ImportError
+    except ImportError:
+        print 'PyGTK 2.8.0 or later is required to run Gaupol.'
+        raise SystemExit(1)
+
+    try:
+        import gtk.glade
+    except ImportError:
+        print 'Glade support in PyGTK is required to run Gaupol.'
+        raise SystemExit(1)
+
+def _move_eggs():
+    """Move eggs to sys.path so that they are importable."""
+
+    try:
+        import enchant
+    except ImportError:
+        try:
+            import pkg_resources
+            try:
+                pkg_resources.require('pyenchant')
+            except pkg_resources.DistributionNotFound:
+                pass
+        except ImportError:
+            pass
+    except enchant.Error:
+        pass
+
+def _parse_args(args):
+    """
+    Parse arguments.
+
+    Return: options, arguments
+    """
+    usage = 'gaupol [options] [files]'
+    formatter = optparse.IndentedHelpFormatter(2, 42, None, True)
+    parser = optparse.OptionParser(usage=usage, formatter=formatter)
+
+    parser.add_option(
+        '-t',
+        '--no-translation',
+        action='store_false',
+        dest='translate',
+        default=True,
+        help='ignore possible translation (use english)'
+    )
+
+    return parser.parse_args(args)
+
+def _prepare_gettext():
+    """Assign gettext domains."""
+
+    import gtk.glade
+    from gaupol.gtk.paths import LOCALE_DIR
+
+    locale.setlocale(locale.LC_ALL, '')
+    gettext.bindtextdomain('gaupol', LOCALE_DIR)
+    gettext.textdomain('gaupol')
+    gtk.glade.bindtextdomain('gaupol', LOCALE_DIR)
+    gtk.glade.textdomain('gaupol')
 
 def main(args):
-    """
-    Start the Gaupol GTK UI and open files given as arguments.
+    """Start Gaupol and open files given as arguments."""
 
-    args: list of files to open, should be sys.argv[1:]
-    """
-    # Catch exceptions to the debug dialog.
+    opts, args = _parse_args(args)
+    _check_dependencies()
+    _move_eggs()
+    if opts.translate:
+        _prepare_gettext()
+
+    from gaupol.gtk.dialogs import debug
     sys.excepthook = debug.show
 
-    # Initialize threading in a Windows-compatible manner.
-    # http://www.async.com.br/faq/pygtk/index.py?req=show&file=faq20.006.htp
-    # http://www.async.com.br/faq/pygtk/index.py?req=show&file=faq21.003.htp
-    # http://www.mail-archive.com/pygtk@daa.com.au/msg10338.html
+    import gobject
     gobject.threads_init()
 
+    from gaupol.gtk.application import Application
     application = Application()
 
     paths = []
-    for arg in args:
+    for arg in args[1:]:
         path = os.path.abspath(arg)
         if os.path.isfile(path):
             paths.append(path)
     if paths:
         application.open_main_files(paths)
 
+    import gtk
     gtk.main()
