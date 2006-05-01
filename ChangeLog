@@ -1,5 +1,10 @@
 2006-05-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* tools:
+	  Renamed test directory to tools.
+
+2006-05-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/util/relib.py:
 	* lib/gaupol/base/util/test:
 	* lib/gaupol/base/util/test/test_relib.py:
