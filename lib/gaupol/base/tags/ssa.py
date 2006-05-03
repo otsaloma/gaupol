@@ -32,7 +32,7 @@ class SubStationAlpha(TagLibrary):
 
     """Sub Station Alpha tag library."""
 
-    tag        = r'\{.*?\}'    , None
+    tag        = r'\{.*?\}'    , 0
     italic_tag = r'\{\\i[01]\}', re.IGNORECASE
 
     @staticmethod
@@ -140,32 +140,32 @@ class SubStationAlpha(TagLibrary):
         ), (
             # Bold and italic
             # \061 = 1
-            r'<(b|i)>', None,
+            r'<(b|i)>', 0,
             r'{\\\1\061}'
         ), (
             # Bold and italic
             # \060 = 0
-            r'</(b|i)>', None,
+            r'</(b|i)>', 0,
             r'{\\\1\060}'
         ), (
             # Color opening
-            r'<color="(.*?)">', None,
+            r'<color="(.*?)">', 0,
             r'{\\c&H\1&}'
         ), (
             # Font opening
-            r'<font="(.*?)">', None,
+            r'<font="(.*?)">', 0,
             r'{\\fn\1}'
         ), (
             # Size opening
-            r'<size="(.*?)">', None,
+            r'<size="(.*?)">', 0,
             r'{\\fs\1}'
         ), (
             # Color, font or size closing
-            r'</[a-z]{3,}>', None,
+            r'</[a-z]{3,}>', 0,
             r'{\\r}'
         ), (
             # Remove underline
-            r'</?u>', None,
+            r'</?u>', 0,
             r''
         )
     ]

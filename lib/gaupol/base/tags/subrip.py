@@ -35,15 +35,15 @@ class SubRip(TagLibrary):
     decode_tags = [
         (
             # Uppercase bold
-            r'(</?)B>', None,
+            r'(</?)B>', 0,
             r'\1b>'
         ), (
             # Uppercase italic
-            r'(</?)I>', None,
+            r'(</?)I>', 0,
             r'\1i>'
         ), (
             # Uppercase underline
-            r'(</?)U>', None,
+            r'(</?)U>', 0,
             r'\1u>'
         )
     ]
@@ -51,7 +51,7 @@ class SubRip(TagLibrary):
     encode_tags = [
         (
             # Color, font and size
-            r'<[^>]{3,}>', None,
+            r'<[^>]{3,}>', 0,
             r''
         )
     ]

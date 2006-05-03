@@ -40,8 +40,8 @@ class TagLibrary(object):
     """
 
     # Pattern, Flags
-    tag        = '', None
-    italic_tag = '', None
+    tag        = '', 0
+    italic_tag = '', 0
 
     @staticmethod
     def pre_decode(text):

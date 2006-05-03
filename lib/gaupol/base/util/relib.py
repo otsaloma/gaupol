@@ -22,9 +22,7 @@
 
 import re
 
-
-NONE = 0
-
+# THIS MODULE IS NO LONGER NEEDED!
 
 def compile(pattern, flags=0):
     """Compile regular expression."""

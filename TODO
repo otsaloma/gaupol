@@ -9,7 +9,6 @@ Plans for 0.5.0
 
   * General
       - Use "." as decimal for time
-      - Move developer specific options to under test dir?
       - Move variables from application and project to delegates
       - Raise exceptions instead of returning None or False
       - Get rid of logger?
@@ -80,16 +79,17 @@ Plans for 0.5.0
     [W] Find and replace
 
   Improvements:
-    [W] Developer specific options to gaupol moved to test directory
-    [ ] Testing framework moved to py.test
+    [D] Developer specific options to gaupol moved to tools directory
+    [W] Testing framework moved to py.test
 
   Bug Fixes:
     [ ] Video selection dialog's file filter should default to video
     [ ] Spell-check suggestion list does not scroll to top with new word
     [ ] Icon field in the desktop file should not include .png extension
+    [D] #5880: Framerate conversion fails
 
   Dependencies:
-    [ ] Psyco no longer used
+    [W] Psyco no longer used
 
   New Translations:
     [D] Miguel Latorre: Spanish (es)
