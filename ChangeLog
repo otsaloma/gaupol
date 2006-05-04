@@ -1,3 +1,8 @@
+2006-05-04  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/__init__.py:
+	  Bumped version number to 0.4.1 due to branch release.
+
 2006-05-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/base/tags/__init__.py:

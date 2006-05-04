@@ -86,13 +86,9 @@ Plans for 0.5.0
     [ ] Video selection dialog's file filter should default to video
     [ ] Spell-check suggestion list does not scroll to top with new word
     [ ] Icon field in the desktop file should not include .png extension
-    [D] #5880: Framerate conversion fails
 
   Dependencies:
     [W] Psyco no longer used
-
-  New Translations:
-    [D] Miguel Latorre: Spanish (es)
 
 
 Plans after 0.5.0
