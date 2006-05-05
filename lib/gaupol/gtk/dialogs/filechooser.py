@@ -115,7 +115,13 @@ class TextFileChooserDialog(gtk.FileChooserDialog):
 
         for encoding, name in self._encodings:
             self._encoding_combo.append_text(name)
+        self._encoding_combo.append_text('--')
         self._encoding_combo.append_text(_('Other...'))
+
+        def func(store, iter):
+            row = store.get_path(iter)[0]
+            return row == len(store) - 2
+        self._encoding_combo.set_row_separator_func(func)
 
         self.set_encoding(config.file.encoding)
 

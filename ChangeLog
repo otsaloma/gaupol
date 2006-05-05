@@ -1,3 +1,8 @@
+2006-05-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/gtk/dialogs/filechooser.py:
+	  Added a separator in the encoding combo box.
+
 2006-05-04  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/__init__.py:
