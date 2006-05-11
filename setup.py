@@ -46,7 +46,6 @@ for (dirpath, dirnames, filenames) in os.walk('lib'):
 scripts = ['gaupol']
 
 glade_files = glob.glob(os.path.join('data', 'glade', '*.glade'))
-icon_files  = glob.glob(os.path.join('data', 'icons', '*.png'  ))
 ui_files    = glob.glob(os.path.join('data', 'ui'   , '*.xml'  ))
 
 doc_files = (
@@ -60,12 +59,13 @@ doc_files = (
 )
 
 data_files = [
-    ('share/gaupol/glade', glade_files              ),
-    ('share/gaupol/icons', icon_files               ),
-    ('share/gaupol/ui'   , ui_files                 ),
-    ('share/doc/gaupol'  , doc_files                ),
-    ('share/applications', ['data/gaupol.desktop']  ),
-    ('share/pixmaps'     , ['data/icons/gaupol.png']),
+    ('share/applications'               , ['data/gaupol.desktop']  ),
+    ('share/doc/gaupol'                 , doc_files                ),
+    ('share/gaupol/glade'               , glade_files              ),
+    ('share/gaupol/icons'               , ['data/icons/gaupol.png']),
+    ('share/gaupol/ui'                  , ui_files                 ),
+    ('share/icons/hicolor/48x48/apps'   , ['data/icons/gaupol.png']),
+    ('share/icons/hicolor/scalable/apps', ['data/icons/gaupol.svg']),
 ]
 
 

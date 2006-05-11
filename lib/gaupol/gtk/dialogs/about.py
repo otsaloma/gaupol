@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -27,12 +27,6 @@ import gtk
 from gaupol.base.util import wwwlib
 from gaupol           import __version__
 
-
-name     = 'Gaupol'
-copyrght = u'Copyright \xa9 2005 Osmo Salomaa'
-comments = _('Subtitle editor')
-website  = 'http://home.gna.org/gaupol'
-authors  = ['Osmo Salomaa <otsaloma@cc.hut.fi>']
 
 # Translators: This is a special message that shouldn't be translated
 # literally. It is used in the about dialog to give credits to the translators.
@@ -65,18 +59,23 @@ class AboutDialog(gtk.AboutDialog):
 
         gtk.AboutDialog.__init__(self)
 
-        self.set_name(name)
+        self.set_name('Gaupol')
         self.set_version(__version__)
-        self.set_copyright(copyrght)
-        self.set_comments(comments)
+        self.set_copyright(u'Copyright \xa9 2005-2006 Osmo Salomaa')
+        self.set_comments(_('Subtitle editor'))
         self.set_license(lisense)
 
         gtk.about_dialog_set_url_hook(self._on_url_clicked)
-        self.set_website_label(website)
+        self.set_website_label('http://home.gna.org/gaupol')
 
-        self.set_authors(authors)
+        self.set_authors(['Osmo Salomaa <otsaloma@cc.hut.fi>'])
+        self.set_artists(['Osmo Salomaa <otsaloma@cc.hut.fi>'])
         if translators != 'translator-credits':
             self.set_translator_credits(translators)
+
+        icon_theme = gtk.icon_theme_get_default()
+        if icon_theme.has_icon('gaupol'):
+            self.set_logo_icon_name('gaupol')
 
         self.set_transient_for(parent)
 

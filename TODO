@@ -9,18 +9,20 @@ Plans for 0.5.0
 
   * General
       - Use "." as decimal for time
-      - Move variables from application and project to delegates
+      - Move variables from application and project to delegates?
       - Raise exceptions instead of returning None or False
       - Get rid of logger?
-      - Use class variables and refer to them as self.var
+      - Use class variables and refer to them as self.var?
           - gaupol.base.files
-      - Use relib.NONE instead of None in flags?
+      - Use relib.NONE instead of None in flags? Or 0?
       - never use plural names in directory and file names???
       - Update copyright notices to -2006
-      - string.Template for preview command
+      - string.Template for preview command?
+      - Framerate conversion available for time-based subs
+      - Put a .pot file in the trunk
 
   * setup.py / setup.cfg
-      - Add test module to manifest
+      - Add test module to MANIFEST.in
       - python 2.5 uninstall?
       - Benchmark O1, O2, O0
       - setup.py: destination vs. configure (Arch)
@@ -30,8 +32,8 @@ Plans for 0.5.0
          - paths.py: if destdir: ...
       - Use intltool-merge for gaupol.desktop file translations?
           - See alacarte source code
-      - setup.py: clean command?
-      - Do setup.py install options work? Do they need to work?
+      - clean command
+      - Do setup.py install options work?
           --prefix           OK
           --exec-prefix
           --home
@@ -44,18 +46,17 @@ Plans for 0.5.0
           --install-data
 
   * base
-      - Use datetime.timedelta in calc
-      - Version check timeout
+      - Use datetime.timedelta in calc?
+      - Version check timeout?
          - http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/483752
       - Use action grouping in replace_both_texts(...)
       - Add exception handling for preview command being a blank string
 
   * gtk
-      - Limit spell-check replacement file size
+      - Limit spell-check replacement file size?
       - default paths.py relative source dirs os.path.dirname(__file__)
-      - http://live.gnome.org/GnomeGoals/AppIcon
       - No need to check if translator-credits is translated
-      - Unlimited undo by default
+      - Unlimited undo by default?
       - UIM name: /ui/menubar/edit/edit
       - Spell-check dialog mnemonics
           - Join _Back
@@ -71,21 +72,26 @@ Plans for 0.5.0
           - Select Video
           - Headers
       - Remove Unselect All menu item?
-
-  * Other
-      - Check out Subtitle Editor's built-in preview
+      - Toolbar style in View menu
+          - gtk.toolbar.props.style =
+              gtk.TOOLBAR_ICONS,
+              gtk.TOOLBAR_TEXT,
+              gtk.TOOLBAR_BOTH,
+              gtk.TOOLBAR_BOTH_HORIZ
 
   New Features:
     [W] Find and replace
 
   Improvements:
     [D] Developer specific options to gaupol moved to tools directory
-    [W] Testing framework moved to py.test
+    [W] Testing framework made compatible with py.test
+    [D] New icon
+    [D] Applied GNOME Goal 2.1: Install theme-friendly icons
 
   Bug Fixes:
     [ ] Video selection dialog's file filter should default to video
     [ ] Spell-check suggestion list does not scroll to top with new word
-    [ ] Icon field in the desktop file should not include .png extension
+    [D] Icon field in the desktop file should not include extension
 
   Dependencies:
     [W] Psyco no longer used
@@ -116,6 +122,9 @@ Unscheduled
 
   * Documentation (HTML)
       - Before 1.0.0
+
+  * Windows testing and installer
+      - http://trac.gajim.org/wiki/DevWindows
 
   * Support for additional subtitle formats
       - MPlayerSub/MPSub

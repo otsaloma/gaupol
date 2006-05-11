@@ -42,10 +42,10 @@ from gaupol.gtk.output    import OutputWindow
 
 logger = logging.getLogger()
 
-MENUBAR_XML_PATH = os.path.join(UI_DIR  , 'menubar.xml')
-TOOLBAR_XML_PATH = os.path.join(UI_DIR  , 'toolbar.xml')
-POPUPS_XML_PATH  = os.path.join(UI_DIR  , 'popups.xml' )
-GAUPOL_ICON_PATH = os.path.join(ICON_DIR, 'gaupol.png' )
+MENUBAR_XML_PATH = os.path.join(UI_DIR, 'menubar.xml')
+TOOLBAR_XML_PATH = os.path.join(UI_DIR, 'toolbar.xml')
+POPUPS_XML_PATH  = os.path.join(UI_DIR, 'popups.xml' )
+GAUPOL_ICON      = os.path.join(ICON_DIR, 'gaupol.png')
 
 
 class GUIInitDelegate(Delegate):
@@ -386,10 +386,15 @@ class GUIInitDelegate(Delegate):
         if config.application_window.maximized:
             self.window.maximize()
 
-        try:
-            gtk.window_set_default_icon_from_file(GAUPOL_ICON_PATH)
-        except gobject.GError:
-            logger.error('Failed to load icon file "%s".' % GAUPOL_ICON_PATH)
+        icon_theme = gtk.icon_theme_get_default()
+        if icon_theme.has_icon('gaupol'):
+            self.window.set_icon_name('gaupol')
+            gtk.window_set_default_icon_name('gaupol')
+        else:
+            try:
+                gtk.window_set_default_icon_from_file(GAUPOL_ICON)
+            except gobject.GError:
+                logger.error('Failed to load icon file "%s".' % GAUPOL_ICON)
 
         self.window.connect('delete-event'      , self.on_window_delete_event)
         self.window.connect('window-state-event', self.on_window_state_event )

@@ -1,3 +1,22 @@
+2006-05-12  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* MANIFEST.in:
+	  Fixed to include everything from data dir.
+
+	* data/gaupol.desktop:
+	  Removed icon extension.
+
+	* data/icons/gaupol.png:
+	* data/icons/gaupol.svg:
+	  New icons.
+
+	* lib/gaupol/gtk/delegates/guiinit.py:
+	* lib/gaupol/gtk/dialogs/about.py:
+	  Get icon from theme.
+
+	* setup.py:
+	  Install icons to hicolor theme.
+
 2006-05-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/gtk/dialogs/filechooser.py:

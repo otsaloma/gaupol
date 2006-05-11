@@ -13,5 +13,5 @@ Exec=gaupol
 Terminal=false
 Type=Application
 StartupNotify=true
-Icon=gaupol.png
+Icon=gaupol
 Categories=Application;AudioVideo;
