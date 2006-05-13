@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -24,14 +24,13 @@ def remove_duplicates(lst):
     """
     Remove duplicates from list.
 
-    If duplicates exist, the first one will be kept and others removed.
-    Return a copy of the original list with duplicates removed.
+    If duplicates exist, the first one will be kept and rest removed.
+    Return list with duplicates removed.
     """
     lst = lst[:]
-
     for i in reversed(range(len(lst))):
-        for k in range(0, i):
-            if lst[i] == lst[k]:
+        for j in range(0, i):
+            if lst[j] == lst[i]:
                 lst.pop(i)
                 break
 
@@ -41,48 +40,23 @@ def sort_and_remove_duplicates(lst):
     """
     Sort list and remove duplicates from it.
 
-    Return a copy of the original list with sorted and with duplicates removed.
+    Return sorted list with duplicates removed.
     """
     lst = sorted(lst)
-
     for i in reversed(range(1, len(lst))):
         if lst[i] == lst[i - 1]:
             lst.pop(i)
 
     return lst
 
-def strip_spaces(lst):
+def strip(lst):
     """
-    Strip leading and trailing spaces in list of strings.
+    Strip leading and trailing spaces from strings in list.
 
-    Stripping is done in-place, nothing is returned.
+    Return list with leading and trailing spaces stripped.
     """
+    lst = lst[:]
     for i in range(len(lst)):
         lst[i] = lst[i].strip()
 
-
-if __name__ ==  '__main__':
-
-    from gaupol.test import Test
-
-    class TestLib(Test):
-
-        def test_remove_duplicates(self):
-
-            lst = [1, 5, 5, 1, 3]
-            lst = remove_duplicates(lst)
-            assert lst == [1, 5, 3]
-
-        def test_sort_and_remove_duplicates(self):
-
-            lst = [1, 5, 5, 1, 3]
-            lst = sort_and_remove_duplicates(lst)
-            assert lst == [1, 3, 5]
-
-        def test_strip_spaces(self):
-
-            lst = [' 1', '2 ', '\n3\n']
-            strip_spaces(lst)
-            assert lst == ['1', '2', '3']
-
-    TestLib().run()
+    return lst

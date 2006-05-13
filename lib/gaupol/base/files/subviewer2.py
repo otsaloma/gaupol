@@ -96,7 +96,7 @@ class SubViewer2(SubtitleFile):
         # Remove leading and trailing spaces.
         if header:
             self.header = header.strip()
-        listlib.strip_spaces(texts)
+        texts = listlib.strip(texts)
 
         # Replace decimal character and add milliseconds.
         shows = list(time.replace('.', ',') + '0' for time in shows)

@@ -83,7 +83,7 @@ class SubRip(SubtitleFile):
                 texts[-1] += line
 
         # Remove leading and trailing spaces.
-        listlib.strip_spaces(texts)
+        texts = listlib.strip(texts)
 
         return shows, hides, texts
 

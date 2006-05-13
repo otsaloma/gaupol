@@ -118,7 +118,7 @@ Style: Default,Arial,18,&Hffffff,&H00ffff,&H000000,&H000000,0,0,1,2,2,2,30,30,10
         # Remove leading and trailing spaces.
         if header:
             self.header = header.strip()
-        listlib.strip_spaces(texts)
+        texts = listlib.strip(texts)
 
         # Replace decimal character and add zeros.
         shows = list('0' + time.replace('.', ',') + '0' for time in shows)

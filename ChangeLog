@@ -1,5 +1,19 @@
 2006-05-13  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/util/listlib.py:
+	  (strip): Renamed and made non-in-place.
+
+	* lib/gaupol/base/files/ssa.py:
+	* lib/gaupol/base/files/subrip.py:
+	* lib/gaupol/base/files/subviewer2.py:
+	  Adapted to listlib changes.
+
+	* lib/gaupol/base/util/test/__init__.py:
+	* lib/gaupol/base/util/test/test_listlib.py:
+	  New files.
+
+2006-05-13  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/delegates/format.py:
 	* lib/gaupol/base/tags/converter.py:
 	* lib/gaupol/base/util/relib.py:
