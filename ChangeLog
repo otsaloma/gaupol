@@ -1,3 +1,11 @@
+2006-05-13  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/base/delegates/format.py:
+	* lib/gaupol/base/tags/converter.py:
+	* lib/gaupol/base/util/relib.py:
+	* lib/gaupol/base/util/test/test_relib.py:
+	  Removed relib.
+
 2006-05-12  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* MANIFEST.in:

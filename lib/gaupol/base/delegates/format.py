@@ -32,7 +32,6 @@ from gaupol.base.colconstants import *
 from gaupol.base.delegates    import Delegate
 from gaupol.base.tags.classes import *
 from gaupol.base.text.parser  import TextParser
-from gaupol.base.util         import relib
 from gaupol.constants         import Action, Document, Format
 
 
@@ -89,7 +88,7 @@ class FormatDelegate(Delegate):
             return None
 
         regex, flags = eval(format_name).tag
-        return relib.compile(regex, flags)
+        return re.compile(regex, flags or 0)
 
     def toggle_dialog_lines(self, rows, document, register=Action.DO):
         """Toggle dialog lines."""
@@ -134,7 +133,7 @@ class FormatDelegate(Delegate):
         format_name   = self._get_format_class_name(document)
         re_tag        = self.get_regular_expression_for_tag(document)
         regex, flags  = eval(format_name).italic_tag
-        re_italic_tag = relib.compile(regex, flags)
+        re_italic_tag = re.compile(regex, flags or 0)
 
         texts = (self.main_texts, self.tran_texts)[document]
         new_texts = []

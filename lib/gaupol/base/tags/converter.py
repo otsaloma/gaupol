@@ -25,8 +25,9 @@ try:
 except ImportError:
     pass
 
+import re
+
 from gaupol.base.tags.classes import *
-from gaupol.base.util         import relib
 from gaupol.constants         import Format
 
 
@@ -56,14 +57,14 @@ class TagConverter(object):
 
         # Compile regular expressions.
         for entry in from_tags:
-            regex = relib.compile(entry[PATTERN], entry[FLAGS])
+            regex = re.compile(entry[PATTERN], entry[FLAGS])
             try:
                 count = entry[COUNT]
             except IndexError:
                 count = 1
             self._from_regexs.append([regex, entry[REPL], count])
         for entry in to_tags:
-            regex = relib.compile(entry[PATTERN], entry[FLAGS])
+            regex = re.compile(entry[PATTERN], entry[FLAGS])
             try:
                 count = entry[COUNT]
             except IndexError:
