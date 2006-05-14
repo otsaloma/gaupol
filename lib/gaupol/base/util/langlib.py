@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -18,43 +18,26 @@
 
 
 """
-Language, country and locale names and codes.
+Names and codes for languages, countries and locales.
 
 Language codes are ISO 639 two-letter codes. Country codes are ISO 3166 codes.
-These match the codes used by most computer software to identify locales, "xx"
-or "xx_YY". For example, "en_US" has the ISO 639 language code for English and
-the ISO 3166 country code for United States.
+These combined with an underscore form locale codes. Translations for the
+language and country names are acquired from the "iso-codes" gettext domain if
+it exists.
 
-Translations for the language and country names are acquired from the iso-codes
-package if it is installed. That means from the "iso-codes" gettext domain.
+Lists of languages and countries have been generated from iso-codes project's
+XML files. Original XML files by Alastair McKinstry and Andreas Jochens.
+http://alioth.debian.org/projects/pkg-isocodes/
+
+List of locales has been gathered from two sources. Additionally, two-letter
+versions of each language have been added.
+http://www.abisource.com/lxr/source/abi/src/af/util/xp/ut_Language.cpp
+http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries
 """
 
 
 from gettext import dgettext
 from gettext import gettext as _
-
-
-# Lists of languages and countries have been generated from iso-codes project's
-# XML files using:
-#
-# python iso639tab.py  iso_639.xml  > iso-639.txt
-# python iso3166tab.py iso_3166.xml > iso-3166.txt
-#
-# Original XML files by Alastair McKinstry and Andreas Jochens.
-# http://alioth.debian.org/projects/pkg-isocodes/
-
-# List of locales has been gathered from two sources.
-# http://www.abisource.com/lxr/source/abi/src/af/util/xp/ut_Language.cpp
-# http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries
-#
-# In addition, two-letter versions of each language have been added. At least
-# Aspell English "en" accepts all accents (e.g. "color" and "colour") and is
-# thus useful.
-#
-# Possible problems:
-# - Not all languages listed?
-# - Listing also two letter versions might cause unwanted duplication in cases
-#   where "xx" and "xx_YY" behave the same.
 
 
 langs = {
@@ -702,74 +685,35 @@ locales = (
 )
 
 
-def get_country(code):
+def get_country(locale):
     """
-    Get localized country name from language code.
+    Get localized country name from locale code.
 
-    code: locale language code, "xx" or "xx_YY"
     Raise KeyError if language not found.
     Return None if no country in code.
     """
-    if len(code) == 5:
-        return dgettext('iso_3166', countries[code[3:]])
-    else:
-        return None
+    if len(locale) == 5:
+        return dgettext('iso_3166', countries[locale[3:]])
+    return None
 
-def get_descriptive_name(code):
+def get_descriptive_name(locale):
     """
-    Get localized descriptive name for language.
+    Get localized descriptive name from locale code.
 
-    code: locale language code, "xx" or "xx_YY"
     Raise KeyError if language or country not found.
     Return "Language (Country)".
     """
-    lang    = get_language(code)
-    country = get_country(code)
-
-    if country is None:
-        return lang
-    else:
+    lang = get_language(locale)
+    if len(locale) == 5:
+        country = get_country(locale)
         # Translators: Language descriptive name, e.g. "English (Canada)".
         return _('%s (%s)') % (lang, country)
+    return lang
 
-def get_language(code):
+def get_language(locale):
     """
-    Get language from language code.
+    Get localized language name from locale code.
 
-    code: locale language code, "xx" or "xx_YY"
     Raise KeyError is language not found.
     """
-    return dgettext('iso_639', langs[code[:2]])
-
-
-if __name__ == '__main__':
-
-    from gaupol.test import Test
-
-    class TestLib(Test):
-
-        def test_get_country(self):
-
-            country = get_country('af_ZA')
-            assert country == dgettext('iso_3166', 'South Africa')
-
-            country = get_country('af')
-            assert country is None
-
-        def test_get_descriptive_name(self):
-
-            name    = get_descriptive_name('af_ZA')
-            country = dgettext('iso_3166', 'South Africa')
-            lang    = dgettext('iso_639', 'Afrikaans')
-            assert name == _('%s (%s)') % (lang, country)
-
-            name = get_descriptive_name('af')
-            lang = dgettext('iso_639', 'Afrikaans')
-            assert name == lang
-
-        def test_get_language(self):
-
-            lang = get_language('af_ZA')
-            assert lang == dgettext('iso_639', 'Afrikaans')
-
-    TestLib().run()
+    return dgettext('iso_639', langs[locale[:2]])

@@ -154,10 +154,8 @@ class TextFileChooserDialog(gtk.FileChooserDialog):
         try:
             encoding = encodinglib.get_locale_encoding()[0]
             name = encodinglib.get_locale_descriptive_name()
-            if None in (encoding, name):
-                raise TypeError
             self._locale_encoding = encoding, name
-        except (TypeError, ValueError):
+        except ValueError:
             pass
 
     def get_encoding(self):

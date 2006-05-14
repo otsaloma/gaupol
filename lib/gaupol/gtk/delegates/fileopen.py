@@ -336,7 +336,7 @@ class FileOpenDelegate(Delegate):
         if config.file.try_locale_encoding:
             try:
                 encodings.insert(0, encodinglib.get_locale_encoding()[0])
-            except TypeError:
+            except ValueError:
                 pass
 
         # Add desired first-try encoding.

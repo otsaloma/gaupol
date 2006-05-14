@@ -49,8 +49,6 @@ Plans for 0.5.0
 
   * base
       - Use datetime.timedelta in calc?
-      - Version check timeout?
-         - http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/483752
       - Use action grouping in replace_both_texts(...)
       - Add exception handling for preview command being a blank string
 

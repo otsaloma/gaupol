@@ -1,3 +1,20 @@
+2006-05-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/base/util/encodinglib.py:
+	* lib/gaupol/base/util/langlib.py:
+	* lib/gaupol/base/util/test/test_encodinglib.py:
+	* lib/gaupol/base/util/test/test_langlib.py:
+	* lib/gaupol/base/util/test/test_wwwlib.py:
+	* lib/gaupol/base/util/wwwlib.py:
+	  Minor fixes. Separated testing.
+
+	* lib/gaupol/gtk/delegates/fileopen.py:
+	* lib/gaupol/gtk/dialogs/filechooser.py:
+	  Adapted to above changes.
+
+	* tools/pylint:
+	  Replaced sys.path use with PYTHONPATH.
+
 2006-05-13  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/base/util/listlib.py:

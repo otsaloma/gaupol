@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -23,7 +23,7 @@
 import os
 import sys
 import threading
-import urllib
+import urllib2
 import webbrowser
 
 from gaupol.base.error import TimeoutError
@@ -37,83 +37,54 @@ class URLReadThread(threading.Thread):
 
         threading.Thread.__init__(self)
 
-        self.url      = url
-        self.text     = None
-        self.io_error = None
+        self.url   = url
+        self.text  = None
+        self.error = None
 
     def run(self):
         """Run thread."""
 
         try:
-            self.text = urllib.urlopen(self.url).read()
-        except IOError:
-            self.io_error = sys.exc_info()[1]
+            self.text = urllib2.urlopen(self.url).read()
+        except urllib2.URLError:
+            self.error = sys.exc_info()[1]
 
 
-def read_url(url, timeout_seconds):
+def read_url(url, timeout):
     """
-    Read remote document.
+    Read remote document specified by url.
 
     Document reading is done in a thread that ends with or without success
-    after timeout has ended.
+    after amount of seconds specified by timeout has ended.
 
-    Raise IOError if reading fails.
+    Raise urllib2.URLError if reading fails.
     Raise TimeoutError if reading times out.
     """
     thread = URLReadThread(url)
     thread.start()
-    thread.join(timeout_seconds)
+    thread.join(timeout)
 
-    if thread.io_error is not None:
-        raise thread.io_error
+    if thread.error is not None:
+        raise thread.error
     if thread.text is None:
         raise TimeoutError
 
     return thread.text
 
-def open_url(url):
-    """Open url in web-browser."""
+def open_url(url, browser=None):
+    """Open url in browser."""
 
-    # TODO:
-    # The Python webbrowser module is not very good. It will open some browser,
-    # but not the default browser. Add detection and start commands for other
-    # OSs and DEs if such exist.
+    if browser is not None:
+        os.system(browser + ' ' + url)
+        return
 
-    # Windows
     if sys.platform == 'win32':
         os.startfile(url)
         return
 
-    # GNOME
     if os.getenv('GNOME_DESKTOP_SESSION_ID') is not None:
-        return_value = os.system('gnome-open "%s"' % url)
+        return_value = os.system('gnome-open %s' % url)
         if return_value == 0:
             return
 
     webbrowser.open(url)
-
-
-if __name__ == '__main__':
-
-    from gaupol.test import Test
-
-    class TestLib(Test):
-
-        def test_read_url(self):
-
-            text = read_url('http://download.gna.org/gaupol/latest.txt', 20)
-            assert isinstance(text, basestring)
-
-            try:
-                read_url('http://download.gna.org/gaupol/latest.txt', 0.001)
-                raise AssertionError
-            except TimeoutError:
-                pass
-
-            try:
-                read_url('http://aaaaaaaaaaaa.aaaaaaaaaaaaa.org/test.txt', 10)
-                raise AssertionError
-            except IOError:
-                pass
-
-    TestLib().run()
