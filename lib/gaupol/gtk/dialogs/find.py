@@ -186,7 +186,7 @@ class FindDialog(gobject.GObject):
     def _on_dialog_response(self, dialog, response):
 
         if response == gtk.RESPONSE_HELP:
-            wwwlib.open_url('http://docs.python.org/lib/re-syntax.html')
+            wwwlib.browse_url('http://docs.python.org/lib/re-syntax.html')
             return
 
         self.emit('destroyed')

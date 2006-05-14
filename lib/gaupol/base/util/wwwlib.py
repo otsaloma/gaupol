@@ -50,6 +50,24 @@ class URLReadThread(threading.Thread):
             self.error = sys.exc_info()[1]
 
 
+def browse_url(url, browser=None):
+    """Open url in browser."""
+
+    if browser is not None:
+        os.system(browser + ' ' + url)
+        return
+
+    if sys.platform == 'win32':
+        os.startfile(url)
+        return
+
+    if os.getenv('GNOME_DESKTOP_SESSION_ID') is not None:
+        return_value = os.system('gnome-open %s' % url)
+        if return_value == 0:
+            return
+
+    webbrowser.open(url)
+
 def read_url(url, timeout):
     """
     Read remote document specified by url.
@@ -70,21 +88,3 @@ def read_url(url, timeout):
         raise TimeoutError
 
     return thread.text
-
-def open_url(url, browser=None):
-    """Open url in browser."""
-
-    if browser is not None:
-        os.system(browser + ' ' + url)
-        return
-
-    if sys.platform == 'win32':
-        os.startfile(url)
-        return
-
-    if os.getenv('GNOME_DESKTOP_SESSION_ID') is not None:
-        return_value = os.system('gnome-open %s' % url)
-        if return_value == 0:
-            return
-
-    webbrowser.open(url)

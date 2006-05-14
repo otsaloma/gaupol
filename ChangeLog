@@ -1,5 +1,18 @@
 2006-05-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/util/wwwlib.py:
+	  (browse_url): Renamed from open_url.
+
+	* lib/gaupol/gtk/delegates/help.py:
+	* lib/gaupol/gtk/dialogs/about.py:
+	* lib/gaupol/gtk/dialogs/debug.py:
+	* lib/gaupol/gtk/dialogs/find.py:
+	* tools/pydoc:
+	* tools/pylint:
+	  Adapted to above changes.
+
+2006-05-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/test/__init__.py:
 	  Made setup/teardown py.test compatible and method-specific.
 

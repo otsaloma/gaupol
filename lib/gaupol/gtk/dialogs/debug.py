@@ -343,7 +343,7 @@ def show(exctype, value, tb):
         while True:
             response = dialog.run()
             if response == gtk.RESPONSE_YES:
-                wwwlib.open_url(BUG_REPORT_URL)
+                wwwlib.browse_url(BUG_REPORT_URL)
             elif response == gtk.RESPONSE_NO:
                 dialog.destroy()
                 try:

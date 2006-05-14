@@ -26,4 +26,4 @@ fobj = open(report_path, 'w')
 fobj.write(output)
 fobj.close()
 
-wwwlib.open_url(report_path)
+wwwlib.browse_url(report_path)

@@ -21,4 +21,4 @@ for (dirpath, dirnames, filenames) in os.walk(lib_dir):
 from gaupol.base.util import wwwlib
 
 threading.Thread(target=pydoc.gui).start()
-wwwlib.open_url('http://localhost:7464/gaupol.html')
+wwwlib.browse_url('http://localhost:7464/gaupol.html')

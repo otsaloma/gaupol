@@ -181,7 +181,7 @@ class HelpDelegate(Delegate):
             response = dialog.run()
             dialog.destroy()
             if response == gtk.RESPONSE_ACCEPT:
-                wwwlib.open_url(DOWNLOAD_URL)
+                wwwlib.browse_url(DOWNLOAD_URL)
             return
 
         remote_version = text.strip()
@@ -198,12 +198,12 @@ class HelpDelegate(Delegate):
         response = dialog.run()
         dialog.destroy()
         if response == gtk.RESPONSE_ACCEPT:
-            wwwlib.open_url(DOWNLOAD_URL)
+            wwwlib.browse_url(DOWNLOAD_URL)
 
     def on_report_a_bug_activated(self, *args):
         """Report a bug online."""
 
-        wwwlib.open_url(BUG_REPORT_URL)
+        wwwlib.browse_url(BUG_REPORT_URL)
 
     def on_view_about_dialog_activated(self, *args):
         """Display the about dialog."""
