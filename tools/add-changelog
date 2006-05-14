@@ -6,8 +6,8 @@ import os
 import shutil
 import time
 
-NAME  = os.getenv('NAME')  or 'Osmo Salomaa'
-EMAIL = os.getenv('EMAIL') or 'otsaloma@cc.hut.fi'
+NAME  = 'Osmo Salomaa'
+EMAIL = 'otsaloma@cc.hut.fi'
 DATE  = time.strftime('%Y-%m-%d')
 
 tool_dir   = os.path.dirname(os.path.abspath(__file__))

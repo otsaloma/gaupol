@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -17,18 +17,22 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Test functions and classes."""
+"""
+Base class for test classes.
+
+All testing is to remain compatible with, but not dependent on py.test. All
+test module names should be prefixed with "test_", class names with "Test",
+function and method names with "test_".
+"""
 
 
 import os
 import tempfile
-import time
-import traceback
 
-from gaupol.constants import Mode
+from gaupol.constants import Framerate, Mode
 
 
-SUBRIP_TEXT = \
+TEXT_SUBRIP = \
 '''1
 00:00:13,400 --> 00:00:17,400
 <i>ENERGIA presents</i>
@@ -62,7 +66,7 @@ indicate a tendency for continually
 increasing disturbances.
 '''
 
-MICRODVD_TEXT = \
+TEXT_MICRODVD = \
 '''{321}{417}{Y:i}ENERGIA presents
 {659}{755}{Y:i}A SAMULI TORSSONEN production
 {1017}{1100}{Y:i}A TIMO VUORENSOLA film
@@ -73,147 +77,68 @@ MICRODVD_TEXT = \
 '''
 
 
-def timefunction(function):
-    """Decorator for functions to be timed."""
-
-    def wrapper(*args, **kwargs):
-
-        start = time.time()
-        function(*args, **kwargs)
-        end = time.time()
-
-        print '%.3f %s' % (end - start, function.__name__)
-
-    return wrapper
-
-def timemethod(function):
-    """Decorator for methods to be timed."""
-
-    def wrapper(*args, **kwargs):
-
-        start = time.time()
-        function(*args, **kwargs)
-        end = time.time()
-
-        print '%.3f %s.%s.%s' % (
-            end - start,
-            args[0].__class__.__module__,
-            args[0].__class__.__name__,
-            function.__name__
-        )
-
-    return wrapper
-
-
 class Test(object):
 
     """
     Base class for test classes.
 
-    Test classes should inherit from this class and prefix all test methods
-    with "test_". "__init__" acts as the set-up method and "destroy" as the
-    tear-down method. run() should be called right after the class definition.
-
-    All temporary file creations should also add the temporary file path to
-    self.files. These files will be deleted at the end of the run() method.
-
-    Example:
-
-    if __name__ == '__main__':
-
-        from gaupol.test import Test
-
-        class TestSomeClass(Test):
-
-            def test_some_method(self):
-
-                value = some_method()
-                assert value is ...
-
-        TestSomeClass().run()
+    All temporary file creations should add the temporary file path to
+    self.files. These files will be deleted at the end of the test run.
     """
 
     def __init__(self):
 
         self.files = []
 
-    def destroy(self):
-        """Destroy instance variables (teardown)."""
-        pass
-
-    def get_micro_dvd_path(self):
-        """Write data to a temporary Micro DVD file and return its path."""
+    def get_microdvd_path(self):
+        """Get path to a temporary MicroDVD file."""
 
         fd, path = tempfile.mkstemp(prefix='gaupol.', suffix='.sub')
-
-        sub_file = os.fdopen(fd, 'w')
-        sub_file.write(MICRODVD_TEXT)
-        sub_file.close()
+        fobj = os.fdopen(fd, 'w')
+        fobj.write(TEXT_MICRODVD)
+        fobj.close()
 
         self.files.append(path)
         return path
 
     def get_project(self):
-        """Initialize a project and return it."""
+        """Get a new project."""
 
-        # Import here to avoid circular import-loops.
         from gaupol.base.project import Project
-
-        project = Project(0)
+        project = Project(Framerate.FR_23_976)
 
         path = self.get_subrip_path()
         project.open_main_file(path, 'utf_8')
         self.files.append(path)
 
-        path = self.get_micro_dvd_path()
+        path = self.get_microdvd_path()
         project.open_translation_file(path, 'utf_8')
         self.files.append(path)
 
         return project
 
     def get_subrip_path(self):
-        """Write data to a temporary SubRip file and return its path."""
+        """Get path to a temporary SubRip file."""
 
         fd, path = tempfile.mkstemp(prefix='gaupol.', suffix='.srt')
-
-        sub_file = os.fdopen(fd, 'w')
-        sub_file.write(SUBRIP_TEXT)
-        sub_file.close()
+        fobj = os.fdopen(fd, 'w')
+        fobj.write(TEXT_SUBRIP)
+        fobj.close()
 
         self.files.append(path)
         return path
 
-    def remove_files(self):
-        """Remove temporary files."""
+    def setup_method(self, method):
+        """Set proper state for executing tests in method."""
+        pass
+
+    def teardown_method(self, method):
+        """Remove state set for executing tests in method."""
 
         for path in self.files:
             try:
                 os.remove(path)
             except OSError:
                 pass
-
         self.files = []
 
-    def run(self):
-        """Run all tests and do clean-up."""
-
-        print '  ' + self.__class__.__name__
-        for name in dir(self):
-
-            if not name.startswith('test_'):
-                continue
-
-            value = getattr(self, name)
-            if not callable(value):
-                continue
-
-            print '    ' + name
-            try:
-                value()
-            except:
-                print '*' * 72
-                traceback.print_exc()
-                print '*' * 72
-
-        self.destroy()
-        self.remove_files()

@@ -1,5 +1,16 @@
 2006-05-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/test/__init__.py:
+	  Made setup/teardown py.test compatible and method-specific.
+
+	* lib/gaupol/test/decor.py:
+	  New file split from test/__init__.py.
+
+	* tools/add-changelog:
+	  Minor changes.
+
+2006-05-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/util/encodinglib.py:
 	* lib/gaupol/base/util/langlib.py:
 	* lib/gaupol/base/util/test/test_encodinglib.py:
