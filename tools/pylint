@@ -12,6 +12,7 @@ import tempfile
 
 tool_dir = os.path.dirname(os.path.abspath(__file__))
 lib_dir  = os.path.join(tool_dir, '..', 'lib')
+sys.path.insert(0, lib_dir)
 os.environ['PYTHONPATH'] = lib_dir + ':' + os.environ['PYTHONPATH']
 
 from gaupol.base.util import wwwlib

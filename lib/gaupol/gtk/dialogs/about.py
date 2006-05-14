@@ -82,7 +82,7 @@ class AboutDialog(gtk.AboutDialog):
     def _on_url_clicked(self, *args):
         """Open website in browser when user clicks on URL."""
 
-        wwwlib.browse_url(website)
+        wwwlib.browse_url('http://home.gna.org/gaupol')
 
 
 if __name__ == '__main__':

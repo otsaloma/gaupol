@@ -39,7 +39,7 @@ except enchant.Error, message:
     print message
 
 print 'Found dictionaries:'
-for locale in langlib.locales:
+for locale in langlib.LOCALES:
     try:
         dictionary = enchant.Dict(locale)
         print '  * %s (using %s)' % (locale, dictionary.provider.name)

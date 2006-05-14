@@ -1,5 +1,18 @@
 2006-05-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/util/encodinglib.py:
+	* lib/gaupol/base/util/langlib.py:
+	  Cosmetic naming changes.
+
+	* lib/gaupol/gtk/dialogs/about.py:
+	  Fixed website url.
+
+	* tools/pyenchant:
+	* tools/pylint:
+	  Adapted to above changes.
+
+2006-05-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/util/wwwlib.py:
 	  (browse_url): Renamed from open_url.
 
