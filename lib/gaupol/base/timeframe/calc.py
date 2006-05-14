@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -20,11 +20,6 @@
 """Time and frame calculations."""
 
 
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
-
 from gaupol.constants import Framerate
 
 
@@ -44,18 +39,18 @@ class TimeFrameCalculator(object):
         if framerate is not None:
             self.set_framerate(framerate)
 
+    def add_seconds_to_time(self, time, seconds):
+        """Add amount of seconds to time."""
+
+        seconds = max(0, self.time_to_seconds(time) + seconds)
+        return self.seconds_to_time(seconds)
+
     def add_times(self, x, y):
         """Add time y to time x."""
 
         x = self.time_to_seconds(x)
         y = self.time_to_seconds(y)
         return self.seconds_to_time(x + y)
-
-    def add_seconds_to_time(self, time, amount):
-        """Add amount of seconds to time."""
-
-        seconds = max(0, self.time_to_seconds(time) + amount)
-        return self.seconds_to_time(seconds)
 
     def frame_to_seconds(self, frame):
         """Convert frame to seconds."""
@@ -74,7 +69,7 @@ class TimeFrameCalculator(object):
 
         For negative durations, return zero (0).
         """
-        return max(y - x, 0)
+        return max(0, y - x)
 
     def get_time_duration(self, x, y):
         """
@@ -85,11 +80,9 @@ class TimeFrameCalculator(object):
         x = self.time_to_seconds(x)
         y = self.time_to_seconds(y)
 
-        duration = y - x
-        if duration > 0:
-            return self.seconds_to_time(duration)
-        else:
+        if x > y:
             return '00:00:00,000'
+        return self.seconds_to_time(y - x)
 
     def round_time(self, time, decimals):
         """Round time to amount of decimals in seconds."""
@@ -113,17 +106,15 @@ class TimeFrameCalculator(object):
         if seconds > 359999.999:
             return '99:59:59,999'
 
-        time = '%02.0f:%02.0f:%02.0f,%03.0f' % (
+        return '%02.0f:%02.0f:%02.0f,%03.0f' % (
             seconds // 3600,
             (seconds % 3600) // 60,
             int(seconds % 60),
             (seconds % 1) * 1000
         )
 
-        return time
-
     def set_framerate(self, framerate):
-        """Set the framerate."""
+        """Set framerate."""
 
         self.framerate = Framerate.values[framerate]
 
@@ -136,37 +127,9 @@ class TimeFrameCalculator(object):
     def time_to_seconds(self, time):
         """Convert time to seconds."""
 
-        hours        = float(time[ :2])
-        minutes      = float(time[3:5])
-        seconds      = float(time[6:8])
-        milliseconds = float(time[9: ])
-
-        return (hours * 3600) + (minutes * 60) + seconds \
-               + (milliseconds / 1000)
-
-
-if __name__ == '__main__':
-
-    from gaupol.test import Test
-
-    class TestTimeFrameCalculator(Test):
-
-        def test_all(self):
-
-            calc = TimeFrameCalculator()
-            calc.set_framerate(0)
-            calc = TimeFrameCalculator(0)
-
-            times = '00:00:00,100', '33:33:00,000'
-            assert calc.add_times(*times)               == '33:33:00,100'
-            assert calc.frame_to_seconds(400)           == 400 / 23.976
-            assert calc.frame_to_time(400)              == '00:00:16,683'
-            assert calc.get_frame_duration(5, 8)        == 3
-            assert calc.get_time_duration(*times)       == '33:32:59,900'
-            assert calc.round_time('02:33:44,666', 1)   == '02:33:44,700'
-            assert calc.seconds_to_frame(500)           == 11988
-            assert calc.seconds_to_time(877.999)        == '00:14:37,999'
-            assert calc.time_to_frame('00:00:33,333')   == 799
-            assert calc.time_to_seconds('00:33:33,333') == 2013.333
-
-    TestTimeFrameCalculator().run()
+        return sum((
+            float(time[ :2]) * 3600,
+            float(time[3:5]) *   60,
+            float(time[6:8])       ,
+            float(time[9: ]) / 1000,
+        ))

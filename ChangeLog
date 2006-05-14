@@ -1,3 +1,11 @@
+2006-05-15  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/base/timeframe/calc.py:
+	* lib/gaupol/base/timeframe/test:
+	* lib/gaupol/base/timeframe/test/__init__.py:
+	* lib/gaupol/base/timeframe/test/test_calc.py:
+	  Cleaned up code and separated testing.
+
 2006-05-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/base/util/encodinglib.py:

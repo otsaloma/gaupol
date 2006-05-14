@@ -11,10 +11,9 @@ Plans for 0.5.0
       - Use "." as decimal for time
       - Move variables from application and project to delegates?
       - Raise exceptions instead of returning None or False
-      - Get rid of logger?
+      - Get rid of logger
       - Use class variables and refer to them as self.var?
           - gaupol.base.files
-      - Use relib.NONE instead of None in flags? Or 0?
       - never use plural names in directory and file names???
       - Update copyright notices to -2006
       - string.Template for preview command?
@@ -22,11 +21,12 @@ Plans for 0.5.0
       - Put a .pot file in the trunk
       - Mime-type registration?
       - Remove --no-translation option?
+      - C:\Program Files\VideoLAN\vlc\vlc.exe + MPlayer
 
   * setup.py / setup.cfg
-      - Add test module to MANIFEST.in
+      - Don't install any testing
       - python 2.5 uninstall?
-      - Benchmark O1, O2, O0
+      - Remove setup.cfg?
       - setup.py: destination vs. configure (Arch)
          - setup.py install --prefix=/usr --root=tmp/pkg
          - Add a destdir option to install
@@ -48,13 +48,12 @@ Plans for 0.5.0
           --install-data
 
   * base
-      - Use datetime.timedelta in calc?
+      - Gaupol hangs if video player not closed before exit
       - Use action grouping in replace_both_texts(...)
       - Add exception handling for preview command being a blank string
 
   * gtk
       - Limit spell-check replacement file size?
-      - default paths.py relative source dirs os.path.dirname(__file__)
       - No need to check if translator-credits is translated
       - Unlimited undo by default?
       - UIM name: /ui/menubar/edit/edit
@@ -120,11 +119,11 @@ Unscheduled
       - http://pygstdocs.berlios.de/
       - http://pitivi.sourceforge.net/
 
+  * Windows installer
+      - http://trac.gajim.org/wiki/DevWindows
+
   * Documentation (HTML)
       - Before 1.0.0
-
-  * Windows testing and installer
-      - http://trac.gajim.org/wiki/DevWindows
 
   * Support for additional subtitle formats
       - MPlayerSub/MPSub
