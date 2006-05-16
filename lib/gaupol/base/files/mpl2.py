@@ -29,7 +29,7 @@ import codecs
 import re
 
 from gaupol.base.files          import SubtitleFile
-from gaupol.base.timeframe.calc import TimeFrameCalculator
+from gaupol.base.position.calc import TimeFrameCalculator
 from gaupol.constants           import Format, Mode
 
 

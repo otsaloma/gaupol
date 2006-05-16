@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Dialog for shifting timeframes."""
+"""Dialog for shifting positions."""
 
 
 try:
@@ -36,7 +36,7 @@ from gaupol.gtk.util  import config, gtklib
 
 class TimeFrameShiftDialog(gobject.GObject):
 
-    """Dialog for shifting timeframes."""
+    """Dialog for shifting positions."""
 
     __gsignals__ = {
         'preview': (
@@ -50,7 +50,7 @@ class TimeFrameShiftDialog(gobject.GObject):
 
         gobject.GObject.__init__(self)
 
-        glade_xml = gtklib.get_glade_xml('tfshift-dialog.glade')
+        glade_xml = gtklib.get_glade_xml('posshift-dialog.glade')
         get_widget = glade_xml.get_widget
 
         self._all_radio         = get_widget('all_radio_button')
@@ -73,12 +73,12 @@ class TimeFrameShiftDialog(gobject.GObject):
     def _init_data(self):
         """Initialize default values."""
 
-        self._all_radio.set_active(config.timeframe_shift.all_subtitles)
+        self._all_radio.set_active(config.position_shift.all_subtitles)
 
         if self._page.edit_mode == Mode.TIME:
-            value = float(config.timeframe_shift.seconds)
+            value = float(config.position_shift.seconds)
         elif self._page.edit_mode == Mode.FRAME:
-            value = config.timeframe_shift.frames
+            value = config.position_shift.frames
         self._amount_spin.set_value(value)
 
     def _init_sensitivities(self):
@@ -147,15 +147,15 @@ class TimeFrameShiftDialog(gobject.GObject):
     def _on_all_radio_toggled(self, radio_button):
         """Save radio button value."""
 
-        config.timeframe_shift.all_subtitles = radio_button.get_active()
+        config.position_shift.all_subtitles = radio_button.get_active()
 
     def _on_amount_spin_value_changed(self, spin_button):
         """Save spin button value."""
 
         if self._page.edit_mode == Mode.TIME:
-            config.timeframe_shift.seconds = '%.3f' % spin_button.get_value()
+            config.position_shift.seconds = '%.3f' % spin_button.get_value()
         elif self._page.edit_mode == Mode.FRAME:
-            config.timeframe_shift.frames = spin_button.get_value_as_int()
+            config.position_shift.frames = spin_button.get_value_as_int()
 
     def _on_preview_button_clicked(self, *args):
         """Preview changes."""

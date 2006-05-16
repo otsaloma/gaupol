@@ -17,7 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Dialog for adjusting timeframes."""
+"""Dialog for adjusting positions."""
 
 
 try:
@@ -37,7 +37,7 @@ from gaupol.gtk.util         import config, gtklib
 
 class TimeFrameAdjustDialog(gobject.GObject):
 
-    """Dialog for shifting timeframes."""
+    """Dialog for shifting positions."""
 
     __gsignals__ = {
         'preview': (
@@ -51,7 +51,7 @@ class TimeFrameAdjustDialog(gobject.GObject):
 
         gobject.GObject.__init__(self)
 
-        glade_xml = gtklib.get_glade_xml('tfadjust-dialog.glade')
+        glade_xml = gtklib.get_glade_xml('posadjust-dialog.glade')
         get_widget = glade_xml.get_widget
 
         self._all_radio        = get_widget('all_radio_button')
@@ -94,7 +94,7 @@ class TimeFrameAdjustDialog(gobject.GObject):
         self._subtitle_spin_2.set_value(last_subtitle)
         self._subtitle_spin_2.emit('value-changed')
 
-        self._all_radio.set_active(config.timeframe_adjust.all_subtitles)
+        self._all_radio.set_active(config.position_adjust.all_subtitles)
 
     def _init_sensitivities(self):
         """Initialize widget sensitivities."""
@@ -237,7 +237,7 @@ class TimeFrameAdjustDialog(gobject.GObject):
     def _on_all_radio_toggled(self, radio_button):
         """Save radio button value."""
 
-        config.timeframe_adjust.all_subtitles = radio_button.get_active()
+        config.position_adjust.all_subtitles = radio_button.get_active()
 
     def _on_preview_button_1_clicked(self, button):
         """Preview changes."""

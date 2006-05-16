@@ -31,7 +31,7 @@ from gaupol.base.clipboard      import Clipboard
 from gaupol.base.delegates      import Delegates
 from gaupol.base.model          import Model
 from gaupol.base.text.finder    import Finder
-from gaupol.base.timeframe.calc import TimeFrameCalculator
+from gaupol.base.position.calc import TimeFrameCalculator
 
 
 class Project(Model):

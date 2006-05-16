@@ -114,7 +114,7 @@ class TimeFrameDelegate(Delegate):
         if not new_rows:
             return []
 
-        self.replace_timeframes(new_rows, new_times, new_frames, register)
+        self.replace_positions(new_rows, new_times, new_frames, register)
         self.modify_action_description(register, _('Adjusting durations'))
         return new_rows
 
@@ -158,7 +158,7 @@ class TimeFrameDelegate(Delegate):
             durn_time = calc.get_time_duration(show_time, hide_time)
             new_times.append([show_time, hide_time, durn_time])
 
-        self.replace_timeframes(rows, new_times, new_frames, register)
+        self.replace_positions(rows, new_times, new_frames, register)
         self.modify_action_description(register, _('Adjusting frames'))
 
     def adjust_times(self, rows, point_1, point_2, register=Action.DO):
@@ -203,7 +203,7 @@ class TimeFrameDelegate(Delegate):
             durn_frame = calc.get_frame_duration(show_frame, hide_frame)
             new_frames.append([show_frame, hide_frame, durn_frame])
 
-        self.replace_timeframes(rows, new_times, new_frames, register)
+        self.replace_positions(rows, new_times, new_frames, register)
         self.modify_action_description(register, _('Adjusting times'))
 
     def change_framerate(self, framerate):
@@ -263,11 +263,11 @@ class TimeFrameDelegate(Delegate):
             durn_time = calc.get_time_duration(show_time, hide_time)
             new_times.append([show_time, hide_time, durn_time])
 
-        self.replace_timeframes(rows, new_times, new_frames, register)
+        self.replace_positions(rows, new_times, new_frames, register)
         self.unblock(signal)
         self.group_actions(register, 2, _('Converting framerate'))
 
-    def replace_timeframes(self, rows, new_times, new_frames,
+    def replace_positions(self, rows, new_times, new_frames,
                            register=Action.DO):
         """
         Replace times and frames in rows with new_times and new_frames.
@@ -291,9 +291,9 @@ class TimeFrameDelegate(Delegate):
             register=register,
             documents=[Document.MAIN, Document.TRAN],
             description=_('Replacing times'),
-            revert_method=self.replace_timeframes,
+            revert_method=self.replace_positions,
             revert_method_args=[rows, orig_times, orig_frames],
-            timeframe_rows_updated=rows,
+            position_rows_updated=rows,
         )
 
     def set_framerate(self, framerate, register=Action.DO):
@@ -337,7 +337,7 @@ class TimeFrameDelegate(Delegate):
             durn_time = calc.get_time_duration(show_time, hide_time)
             new_times.append([show_time, hide_time, durn_time])
 
-        self.replace_timeframes(rows, new_times, new_frames, register)
+        self.replace_positions(rows, new_times, new_frames, register)
         self.modify_action_description(register, _('Shifting frames'))
 
     def shift_seconds(self, rows, amount, register=Action.DO):
@@ -366,7 +366,7 @@ class TimeFrameDelegate(Delegate):
             durn_frame = calc.get_frame_duration(show_frame, hide_frame)
             new_frames.append([show_frame, hide_frame, durn_frame])
 
-        self.replace_timeframes(rows, new_times, new_frames, register)
+        self.replace_positions(rows, new_times, new_frames, register)
         self.modify_action_description(register, _('Shifting times'))
 
 

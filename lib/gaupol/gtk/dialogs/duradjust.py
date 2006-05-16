@@ -32,7 +32,7 @@ from gaupol.gtk.util  import config, gtklib
 
 class DurationAdjustDialog(object):
 
-    """Dialog for adjusting timeframes."""
+    """Dialog for adjusting positions."""
 
     def __init__(self, parent, page):
 

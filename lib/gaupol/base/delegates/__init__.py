@@ -39,7 +39,7 @@ module_names = (
     'format',
     'preview',
     'stat',
-    'timeframe',
+    'position',
 )
 
 

@@ -34,8 +34,8 @@ from gaupol.constants             import Document, Format, Mode
 from gaupol.gtk.delegates         import Delegate, UIMAction
 from gaupol.gtk.dialogs.duradjust import DurationAdjustDialog
 from gaupol.gtk.dialogs.frconvert import FramerateConvertDialog
-from gaupol.gtk.dialogs.tfadjust  import TimeFrameAdjustDialog
-from gaupol.gtk.dialogs.tfshift   import TimeFrameShiftDialog
+from gaupol.gtk.dialogs.posadjust  import TimeFrameAdjustDialog
+from gaupol.gtk.dialogs.posshift   import TimeFrameShiftDialog
 from gaupol.gtk.util              import config, gtklib
 
 
@@ -90,18 +90,18 @@ class FramerateConvertAction(UIMAction):
 
 class TimeFrameAdjustAction(UIMAction):
 
-    """Adjusting timeframes."""
+    """Adjusting positions."""
 
     uim_action_item = (
-        'adjust_timeframes',
+        'adjust_positions',
         None,
         _('_Adjust Times'),
         'F3',
         _('Adjust times by linear two-point correction'),
-        'on_adjust_timeframes_activated'
+        'on_adjust_positions_activated'
     )
 
-    uim_paths = ['/ui/menubar/tools/adjust_timeframes']
+    uim_paths = ['/ui/menubar/tools/adjust_positions']
 
     @classmethod
     def is_doable(cls, application, page):
@@ -112,18 +112,18 @@ class TimeFrameAdjustAction(UIMAction):
 
 class TimeFrameShiftAction(UIMAction):
 
-    """Shifting timeframes."""
+    """Shifting positions."""
 
     uim_action_item = (
-        'shift_timeframes',
+        'shift_positions',
         None,
         _('_Shift Times'),
         'F2',
         _('Make subtitles appear earlier or later'),
-        'on_shift_timeframes_activated'
+        'on_shift_positions_activated'
     )
 
-    uim_paths = ['/ui/menubar/tools/shift_timeframes']
+    uim_paths = ['/ui/menubar/tools/shift_positions']
 
     @classmethod
     def is_doable(cls, application, page):
@@ -134,7 +134,7 @@ class TimeFrameShiftAction(UIMAction):
 
 class TimeFrameDelegate(Delegate):
 
-    """Shifting, adjusting and fixing timeframes."""
+    """Shifting, adjusting and fixing positions."""
 
     def on_adjust_durations_activated(self, *args):
         """Adjust duration lengths."""
@@ -178,8 +178,8 @@ class TimeFrameDelegate(Delegate):
             self.set_status_message(message)
             self.set_sensitivities(page)
 
-    def on_adjust_timeframes_activated(self, *args):
-        """Adjust timeframes by two-point correction"""
+    def on_adjust_positions_activated(self, *args):
+        """Adjust positions by two-point correction"""
 
         page = self.get_current_page()
         if page.edit_mode == Mode.TIME:
@@ -241,8 +241,8 @@ class TimeFrameDelegate(Delegate):
             page.view.select_rows(range(len(page.project.times)))
             self.set_sensitivities(page)
 
-    def on_shift_timeframes_activated(self, *args):
-        """Shift timeframes a constant amount."""
+    def on_shift_positions_activated(self, *args):
+        """Shift positions a constant amount."""
 
         page = self.get_current_page()
         if page.edit_mode == Mode.TIME:
@@ -298,8 +298,8 @@ if __name__ == '__main__':
         def test_callbacks(self):
 
             self.application.on_adjust_durations_activated()
-            self.application.on_adjust_timeframes_activated()
+            self.application.on_adjust_positions_activated()
             self.application.on_convert_framerate_activated()
-            self.application.on_shift_timeframes_activated()
+            self.application.on_shift_positions_activated()
 
     TestTimeFrameDelegate().run()

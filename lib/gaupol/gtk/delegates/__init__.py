@@ -45,7 +45,7 @@ module_names = (
     'preferences',
     'preview',
     'spellcheck',
-    'timeframe',
+    'position',
     'view',
     'viewupdate',
 )

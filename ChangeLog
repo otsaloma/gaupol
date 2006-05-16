@@ -1,5 +1,29 @@
 2006-05-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/ui/menubar.xml:
+	* lib/gaupol/base/delegates/__init__.py:
+	* lib/gaupol/base/delegates/action.py:
+	* lib/gaupol/base/delegates/edit.py:
+	* lib/gaupol/base/delegates/position.py:
+	* lib/gaupol/base/files/ass.py:
+	* lib/gaupol/base/files/mpl2.py:
+	* lib/gaupol/base/files/ssa.py:
+	* lib/gaupol/base/files/subviewer2.py:
+	* lib/gaupol/base/position/test/test_calc.py:
+	* lib/gaupol/base/project.py:
+	* lib/gaupol/gtk/delegates/__init__.py:
+	* lib/gaupol/gtk/delegates/action.py:
+	* lib/gaupol/gtk/delegates/position.py:
+	* lib/gaupol/gtk/dialogs/duradjust.py:
+	* lib/gaupol/gtk/dialogs/frconvert.py:
+	* lib/gaupol/gtk/dialogs/posadjust.py:
+	* lib/gaupol/gtk/dialogs/posshift.py:
+	* lib/gaupol/gtk/page.py:
+	* lib/gaupol/gtk/util/config.py:
+	  Renamed all timeframes to positions.
+
+2006-05-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/posadjust-dialog.glade:
 	* data/glade/posshift-dialog.glade:
 	* lib/gaupol/base/delegates/position.py:
