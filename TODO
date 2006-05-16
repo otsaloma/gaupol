@@ -51,33 +51,20 @@ Plans for 0.5.0
       - Gaupol hangs if video player not closed before exit
       - Use action grouping in replace_both_texts(...)
       - Add exception handling for preview command being a blank string
-      - FileOpenDelegate._sort_data: return amot of sorts made
+      - FileOpenDelegate._sort_data: return amount of sorts made
 
   * gtk
-      - Limit spell-check replacement file size?
       - No need to check if translator-credits is translated
       - Unlimited undo by default?
       - UIM name: /ui/menubar/edit/edit
-      - Spell-check dialog mnemonics
-          - Join _Back
-          - Join _Forward
+      - Spell-check dialog mnemonics: Join _Back, Join _Forward
       - Redirect/copy sys.stdout to output window?
-          - stdout: file-like object with a write(string) method
-          - stdout.write(string): insert to text_buffer and scroll
-          - sys.__stdout__.write(...)
-          - http://diveintopython.org/scripts_and_streams/stdin_stdout_stderr.html
       - Adjust Durations dialog: Target
       - Menu item locations:
           - Framerate
           - Select Video
           - Headers
       - Remove Unselect All menu item?
-      - Toolbar style in View menu
-          - gtk.toolbar.props.style =
-              gtk.TOOLBAR_ICONS,
-              gtk.TOOLBAR_TEXT,
-              gtk.TOOLBAR_BOTH,
-              gtk.TOOLBAR_BOTH_HORIZ
 
   New Features:
     [W] Find and replace
@@ -87,6 +74,7 @@ Plans for 0.5.0
     [W] Testing framework made compatible with py.test
     [D] New icon
     [D] Applied GNOME Goal 2.1: Install theme-friendly icons
+    [D] Support default browsers on KDE and Mac OSX as well
 
   Bug Fixes:
     [ ] Video selection dialog's file filter should default to video

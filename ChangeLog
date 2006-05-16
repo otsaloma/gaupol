@@ -1,3 +1,11 @@
+2006-05-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/base/position/test/test_calc.py:
+	  Fixed whitespace.
+
+	* lib/gaupol/base/util/wwwlib.py:
+	  (browse_url): Added support for KDE and Mac OSX defaults.
+
 2006-05-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/ui/menubar.xml:
