@@ -1,3 +1,14 @@
+2006-05-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/posadjust-dialog.glade:
+	* data/glade/posshift-dialog.glade:
+	* lib/gaupol/base/delegates/position.py:
+	* lib/gaupol/base/position:
+	* lib/gaupol/gtk/delegates/position.py:
+	* lib/gaupol/gtk/dialogs/posadjust.py:
+	* lib/gaupol/gtk/dialogs/posshift.py:
+	  Renamed all timeframes to positions in filenames.
+
 2006-05-15  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/base/timeframe/calc.py:

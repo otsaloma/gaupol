@@ -51,6 +51,7 @@ Plans for 0.5.0
       - Gaupol hangs if video player not closed before exit
       - Use action grouping in replace_both_texts(...)
       - Add exception handling for preview command being a blank string
+      - FileOpenDelegate._sort_data: return amot of sorts made
 
   * gtk
       - Limit spell-check replacement file size?
@@ -113,6 +114,8 @@ Unscheduled
 
   * Encoding autodetection
       - http://chardet.feedparser.org/
+
+  * Subtitle file join/split
 
   * Built-in GStreamer preview?
       - http://gstreamer.freedesktop.org/modules/gst-python.html
