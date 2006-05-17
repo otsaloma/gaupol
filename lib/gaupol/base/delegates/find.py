@@ -90,7 +90,7 @@ class FindDelegate(Delegate):
         texts = (self.main_texts, self.tran_texts)[doc]
         for row in range(row, len(texts)):
             self.finder.text = texts[row]
-            self.finder.position = pos or 0
+            self.finder.pos = pos or 0
             try:
                 match_span = self.finder.next()
             except StopIteration:
@@ -126,7 +126,7 @@ class FindDelegate(Delegate):
         texts = (self.main_texts, self.tran_texts)[doc]
         for row in reversed(range(0, row + 1)):
             self.finder.text = texts[row]
-            self.finder.position = pos or len(self.finder.text)
+            self.finder.pos = pos or len(self.finder.text)
             try:
                 match_span = self.finder.previous()
             except StopIteration:

@@ -31,7 +31,7 @@ import re
 from gaupol.base.colconstants import *
 from gaupol.base.delegates    import Delegate
 from gaupol.base.tags.classes import *
-from gaupol.base.text.parser  import TextParser
+from gaupol.base.text.parser  import Parser
 from gaupol.constants         import Action, Document, Format
 
 
@@ -46,7 +46,7 @@ class FormatDelegate(Delegate):
         method: "title", "capitalize", "upper" or "lower"
         """
         re_tag = self.get_regular_expression_for_tag(document)
-        parser = TextParser(re_tag)
+        parser = Parser(re_tag)
         texts  = (self.main_texts, self.tran_texts)[document]
 
         new_texts = []
@@ -96,7 +96,6 @@ class FormatDelegate(Delegate):
         re_tag       = self.get_regular_expression_for_tag(document)
         re_dialog    = re.compile(r'^-\s*'  , re.MULTILINE)
         re_no_dialog = re.compile(r'^([^-])', re.MULTILINE)
-        parser = TextParser(re_tag)
 
         texts = (self.main_texts, self.tran_texts)[document]
         new_texts = []
@@ -115,12 +114,18 @@ class FormatDelegate(Delegate):
                     dialogize = True
                     break
 
+        parser = Parser(re_tag)
+
         # Add or remove dialog lines.
         for row in rows:
             parser.set_text(texts[row])
-            parser.substitute(re_dialog, '')
+            parser.set_regex(r'^-\s*', re.MULTILINE)
+            parser.replacement = ''
+            parser.replace_all()
             if dialogize:
-                parser.substitute(re_no_dialog, r'- \1')
+                parser.set_regex(r'^([^-])', re.MULTILINE)
+                parser.replacement = r'- \1'
+                parser.replace_all()
             new_texts.append(parser.get_text())
 
         self.replace_texts(rows, document, new_texts, register)

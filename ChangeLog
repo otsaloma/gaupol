@@ -1,5 +1,21 @@
 2006-05-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/text/finder.py:
+	* lib/gaupol/base/text/parser.py:
+	* lib/gaupol/base/text/test:
+	* lib/gaupol/base/text/test/__init__.py:
+	* lib/gaupol/base/text/test/test_finder.py:
+	* lib/gaupol/base/text/test/test_parser.py:
+	  Made Parser a subclass of Finder.
+	  Cleaned up code and separated testing.
+	  Fixed all errors encountered while testing.
+
+	* lib/gaupol/base/delegates/find.py:
+	* lib/gaupol/base/delegates/format.py:
+	  Adapted to above changes.
+
+2006-05-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/position/test/test_calc.py:
 	  Fixed whitespace.
 
