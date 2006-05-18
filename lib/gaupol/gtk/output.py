@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -17,25 +17,20 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""External application output window."""
+"""Output window."""
 
-
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
 
 from gettext import gettext as _
 
 import gobject
 import gtk
 
-from gaupol.gtk.util import config
+from gaupol.gtk.util import config, gtklib
 
 
 class OutputWindow(gobject.GObject):
 
-    """External application output window."""
+    """Output window."""
 
     __gsignals__ = {
         'close': (
@@ -53,14 +48,10 @@ class OutputWindow(gobject.GObject):
         self._text_view    = None
         self._window       = None
 
-        # Text buffer end mark
-        self._end_mark = None
-
         self._init_widgets()
         self._init_sizes()
-        self._init_keys()
         self._init_signals()
-        self._init_text_tags()
+        self._init_keys()
 
     def _init_sizes(self):
         """Initialize widget sizes."""
@@ -88,19 +79,12 @@ class OutputWindow(gobject.GObject):
 
         method = self._on_window_delete_event
         self._window.connect('delete-event', method)
+
         method = self._on_window_state_event
         self._window.connect('window-state-event', method)
 
         method = self._on_close_requested
         self._close_button.connect('clicked', method)
-
-    def _init_text_tags(self):
-        """Initialize text tags."""
-
-        text_buffer = self._text_view.get_buffer()
-        text_buffer.create_tag('code', family='monospace')
-        end_iter = text_buffer.get_end_iter()
-        self._end_mark = text_buffer.create_mark('end', end_iter, True)
 
     def _init_widgets(self):
         """Initialize widgets."""
@@ -109,6 +93,8 @@ class OutputWindow(gobject.GObject):
         self._text_view.set_wrap_mode(gtk.WRAP_WORD)
         self._text_view.set_cursor_visible(False)
         self._text_view.set_editable(False)
+        gtklib.set_widget_font(self._text_view, 'monospace')
+
         scrolled_window = gtk.ScrolledWindow()
         scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
         scrolled_window.set_shadow_type(gtk.SHADOW_ETCHED_IN)
@@ -129,32 +115,32 @@ class OutputWindow(gobject.GObject):
         self._window.add(vbox)
 
     def get_position(self):
-        """Return the window position."""
+        """Return window position."""
 
         return self._window.get_position()
 
     def get_size(self):
-        """Return the window size."""
+        """Return window size."""
 
         return self._window.get_size()
 
     def get_visible(self):
-        """Return True if window is visible."""
+        """Return window visibility."""
 
         return self._window.props.visible
 
     def hide(self, *args):
-        """Hide the window."""
+        """Hide window."""
 
         self._window.hide()
 
     def _on_close_requested(self, *args):
-        """Emit signal that the window needs to be closed."""
+        """Emit signal that window needs to be closed."""
 
         self.emit('close')
 
     def _on_window_delete_event(self, *args):
-        """Emit signal that the close button has been clicked."""
+        """Emit signal that close button has been clicked."""
 
         self.emit('close')
 
@@ -162,55 +148,22 @@ class OutputWindow(gobject.GObject):
         return True
 
     def _on_window_state_event(self, window, event):
-        """Remember whether window is maximized or not."""
+        """Remember window maximization."""
 
         state = event.new_window_state
         maximized = bool(state & gtk.gdk.WINDOW_STATE_MAXIMIZED)
         config.output_window.maximized = maximized
 
-    def scroll_down(self):
-        """Scroll to the bottom of the text view."""
-
-        text_buffer = self._text_view.get_buffer()
-        end_iter = text_buffer.get_end_iter()
-        text_buffer.move_mark(self._end_mark, end_iter)
-        self._text_view.scroll_mark_onscreen(self._end_mark)
-
-    def set_output(self, output):
-        """Set output to the text view."""
-
-        text_buffer = self._text_view.get_buffer()
-        text_buffer.set_text('')
-        end_iter = text_buffer.get_end_iter()
-        text_buffer.insert_with_tags_by_name(end_iter, output, 'code')
-
-        self.scroll_down()
-        self._close_button.grab_focus()
-
     def show(self):
-        """Show the window."""
+        """Show window."""
 
-        self.scroll_down()
-        self._close_button.grab_focus()
+        self._text_view.grab_focus()
         self._window.show_all()
 
+    def set_output(self, output):
+        """Set output to text view."""
 
-if __name__ == '__main__':
-
-    from gaupol.test import Test
-
-    class TestOutputWindow(Test):
-
-        def test_all(self):
-
-            output_window = OutputWindow()
-            output_window.get_position()
-            output_window.get_size()
-            output_window.get_visible()
-            output_window.hide()
-            output_window.scroll_down()
-            output_window.set_output('test')
-            output_window.show()
-            output_window._window.destroy()
-
-    TestOutputWindow().run()
+        text_buffer = self._text_view.get_buffer()
+        text_buffer.set_text(output)
+        self._text_view.scroll_to_mark(text_buffer.get_insert(), 0)
+        self._text_view.queue_draw()

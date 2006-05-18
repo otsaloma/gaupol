@@ -8,8 +8,7 @@ import sys
 current_dir = os.path.dirname(os.path.abspath(__file__))
 if os.path.isfile(os.path.join(current_dir, 'data', 'gaupol.desktop')):
     lib_dir = os.path.join(current_dir, 'lib')
-    if lib_dir not in sys.path:
-        sys.path.insert(0, lib_dir)
+    sys.path.insert(0, lib_dir)
 
 from gaupol.gtk import main
 main.main(sys.argv)

@@ -27,7 +27,7 @@ import os
 import sys
 
 
-def _check_dependencies():
+def check_dependencies():
     """Check existance and versions of dependencies."""
 
     if sys.version_info[:3] < (2, 4, 0):
@@ -69,7 +69,7 @@ def _parse_args(args):
     """
     Parse arguments.
 
-    Return: options, arguments
+    Return options, arguments.
     """
     usage = 'gaupol [options] [files]'
     formatter = optparse.IndentedHelpFormatter(2, 42, None, True)
@@ -86,8 +86,12 @@ def _parse_args(args):
 
     return parser.parse_args(args)
 
-def _prepare_gettext():
+def _prepare_gettext(translate):
     """Assign gettext domains."""
+
+    if not translate:
+        locale.setlocale(locale.LC_ALL, 'C')
+        return
 
     import gtk.glade
     from gaupol.gtk.paths import LOCALE_DIR
@@ -101,17 +105,16 @@ def _prepare_gettext():
 def main(args):
     """Start Gaupol and open files given as arguments."""
 
+    check_dependencies()
     opts, args = _parse_args(args)
-    _check_dependencies()
     _move_eggs()
-    if opts.translate:
-        _prepare_gettext()
-
-    from gaupol.gtk.dialogs import debug
-    sys.excepthook = debug.show
+    _prepare_gettext(opts.translate)
 
     import gobject
     gobject.threads_init()
+
+    from gaupol.gtk.dialogs import debug
+    sys.excepthook = debug.show
 
     from gaupol.gtk.application import Application
     application = Application()

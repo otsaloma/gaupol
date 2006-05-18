@@ -1,3 +1,21 @@
+2006-05-19  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol:
+	  Always call sys.path.insert on source run.
+
+	* lib/gaupol/gtk/main.py:
+	  Fixed --no-translation option.
+	  Minor changes.
+
+	* lib/gaupol/gtk/output.py:
+	* lib/gaupol/gtk/test:
+	* lib/gaupol/gtk/test/__init__.py:
+	* lib/gaupol/gtk/test/test_output.py:
+	  Cleaned up code and separated testing.
+
+	* tools/py.test:
+	  Fixed docstring.
+
 2006-05-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/base/text/finder.py:
