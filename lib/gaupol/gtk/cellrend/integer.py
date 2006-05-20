@@ -28,7 +28,7 @@ except ImportError:
 import gtk
 
 from gaupol.gtk.cellrend.text   import CellRendererText
-from gaupol.gtk.entries.integer import IntegerEntry
+from gaupol.gtk.entry.integer import EntryInteger
 
 
 class CellRendererInteger(CellRendererText):
@@ -38,7 +38,7 @@ class CellRendererInteger(CellRendererText):
     def on_start_editing(self, event, widget, row, bg_area, cell_area, flags):
         """Initialize and return editor widget."""
 
-        editor = IntegerEntry()
+        editor = EntryInteger()
         editor.set_has_frame(False)
         editor.set_activates_default(True)
         editor.modify_font(self.font_description)

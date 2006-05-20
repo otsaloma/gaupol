@@ -28,7 +28,7 @@ except ImportError:
 import gtk
 
 from gaupol.gtk.cellrend.text import CellRendererText
-from gaupol.gtk.entries.time  import TimeEntry
+from gaupol.gtk.entry.time  import EntryTime
 
 
 class CellRendererTime(CellRendererText):
@@ -52,7 +52,7 @@ class CellRendererTime(CellRendererText):
     def on_start_editing(self, event, widget, row, bg_area, cell_area, flags):
         """Initialize and return editor widget."""
 
-        editor = TimeEntry()
+        editor = EntryTime()
         editor.set_has_frame(False)
         editor.set_activates_default(True)
         editor.modify_font(self.font_description)

@@ -17,8 +17,8 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-from gaupol.gtk.entries.time import EntryTime
-from gaupol.test             import Test
+from gaupol.gtk.entry.time import EntryTime
+from gaupol.test           import Test
 
 
 # Cannot automate tests, because gobject.idle_add(method) requires a running

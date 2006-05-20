@@ -31,7 +31,7 @@ import gobject
 import gtk
 
 from gaupol.constants        import Mode
-from gaupol.gtk.entries.time import TimeEntry
+from gaupol.gtk.entry.time import EntryTime
 from gaupol.gtk.util         import config, gtklib
 
 
@@ -154,8 +154,8 @@ class TimeFrameAdjustDialog(gobject.GObject):
         if self._page.edit_mode == Mode.TIME:
 
             # Entries
-            self._correct_entry_1 = TimeEntry()
-            self._correct_entry_2 = TimeEntry()
+            self._correct_entry_1 = EntryTime()
+            self._correct_entry_2 = EntryTime()
             table_1.attach(self._correct_entry_1, 1, 2, 2, 3, FILL, FILL)
             table_2.attach(self._correct_entry_2, 1, 2, 2, 3, FILL, FILL)
 

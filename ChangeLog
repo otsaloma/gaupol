@@ -1,5 +1,14 @@
 2006-05-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/cellrend/integer.py:
+	* lib/gaupol/gtk/cellrend/time.py:
+	* lib/gaupol/gtk/dialogs/posadjust.py:
+	* lib/gaupol/gtk/entry/test/test_integer.py:
+	* lib/gaupol/gtk/entry/test/test_time.py:
+	  Adjusted entry renamings.
+
+2006-05-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/gtk/entry:
 	  Renamed from lib/gaupol/gtk/entries.
 
