@@ -94,7 +94,7 @@ class TextEditDialog(gtk.Dialog):
 
         text_buffer = self._text_view.get_buffer()
         start, end = text_buffer.get_bounds()
-        return text_buffer.get_text(start, end, True)
+        return text_buffer.get_text(start, end)
 
 
 if __name__ == '__main__':

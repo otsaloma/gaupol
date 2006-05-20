@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -21,9 +21,7 @@
 
 
 import gc
-import logging
 import os
-import sys
 
 import gobject
 import gtk
@@ -40,13 +38,10 @@ from gaupol.gtk.paths import GLADE_DIR
 EXTRA = 36
 
 
-logger = logging.getLogger()
-
-normal_cursor = gtk.gdk.Cursor(gtk.gdk.LEFT_PTR)
-busy_cursor   = gtk.gdk.Cursor(gtk.gdk.WATCH)
-
-screen_width  = gtk.gdk.screen_width()
-screen_height = gtk.gdk.screen_height()
+CURSOR_BUSY   = gtk.gdk.Cursor(gtk.gdk.WATCH)
+CURSOR_NORMAL = gtk.gdk.Cursor(gtk.gdk.LEFT_PTR)
+SCREEN_HEIGHT = gtk.gdk.screen_height()
+SCREEN_WIDTH  = gtk.gdk.screen_width()
 
 
 def destroy_gobject(gobj):
@@ -65,18 +60,18 @@ def destroy_gobject(gobj):
     del gobj
     gc.collect()
 
-def get_glade_xml(basename):
+def get_glade_xml(name):
     """
-    Get gtk.glade.XML object from basename in Glade directory.
+    Get gtk.glade.XML object from file in Glade directory.
 
+    name is Glade XML file's basename without extension.
     Raise RuntimeError if unable to load Glade XML file.
     """
-    path = os.path.join(GLADE_DIR, basename)
-
+    path = os.path.join(GLADE_DIR, name + '.glade')
     try:
         return gtk.glade.XML(path)
     except RuntimeError:
-        logger.error('Failed to load Glade XML file "%s".' % path)
+        print 'Failed to load Glade XML file "%s".' % path
         raise
 
 def get_event_box(widget):
@@ -85,7 +80,6 @@ def get_event_box(widget):
     event_box = widget.get_parent()
     while not isinstance(event_box, gtk.EventBox):
         event_box = event_box.get_parent()
-
     return event_box
 
 def get_parent_widget(child, parent_type):
@@ -94,7 +88,6 @@ def get_parent_widget(child, parent_type):
     parent = child.get_parent()
     while not isinstance(parent, parent_type):
         parent = parent.get_parent()
-
     return parent
 
 def get_text_view_size(text_view):
@@ -105,7 +98,7 @@ def get_text_view_size(text_view):
     """
     text_buffer = text_view.get_buffer()
     start, end = text_buffer.get_bounds()
-    text = text_buffer.get_text(start, end, True)
+    text = text_buffer.get_text(start, end)
     label = gtk.Label(text)
     return label.size_request()
 
@@ -124,20 +117,12 @@ def get_tree_view_size(tree_view):
 
 def idlemethod(function):
     """
-    Decorator for doing a GUI operation while idle.
+    Decorator for functions to be run in main loop while idle.
 
-    This is a decorator that threads doing GUI operations should use, so that
-    GUI operations get done in the main loop.
-
-    Usage:
-    @gtklib.idlemethod
-    def threaded_method(...):
-        widget.do_something()
+    Threads doing GUI operations should use this decorator so that all GUI
+    operations get done in the main loop keeping the threading
+    Windows-compatible.
     """
-    # This decorator is required for Windows compatible threading.
-    # http://www.async.com.br/faq/pygtk/index.py?req=show&file=faq21.003.htp
-    # http://www.mail-archive.com/pygtk@daa.com.au/msg10338.html
-
     def do_idle(args, kwargs):
         function(*args, **kwargs)
         return False
@@ -154,21 +139,20 @@ def resize_dialog(dialog, width, height, max_width=0.65, max_height=0.65):
     width and height are desired sizes in pixels. max_width and max_height are
     between 0 and 1 representing maximum screen space taken.
     """
-    # Dialog should not take more screen space than defined.
-    max_width  = int(max_width  * screen_width )
-    max_height = int(max_height * screen_height)
-    width  = min(width , max_width )
-    height = min(height, max_height)
+    # Set maximum based on percentage of screen space.
+    width  = min(width , int(max_width  * SCREEN_WIDTH ))
+    height = min(height, int(max_height * SCREEN_HEIGHT))
 
-    # Dialog must be able fit its contents.
-    current_width, current_height = dialog.size_request()
-    width  = max(current_width , width )
-    height = max(current_height, height)
+    # Set minimum based on dialog content.
+    size = dialog.size_request()
+    width  = max(size[0], width )
+    height = max(size[1], height)
 
     dialog.set_size_request(width, height)
 
-def resize_message_dialog(dialog, width, height, max_width=0.55,
-                          max_height=0.55):
+def resize_message_dialog(
+    dialog, width, height, max_width=0.55, max_height=0.55
+):
     """
     Resize message dialog in a smart manner.
 
@@ -178,128 +162,43 @@ def resize_message_dialog(dialog, width, height, max_width=0.55,
     resize_dialog(dialog, width, height, max_width, max_height)
 
 def set_cursor_busy(window):
-    """
-    Set cursor busy when above window.
+    """Set cursor busy when above window."""
 
-    window: gtk.Window
-    """
-    window.window.set_cursor(busy_cursor)
+    window.window.set_cursor(CURSOR_BUSY)
     while gtk.events_pending():
         gtk.main_iteration()
 
 def set_cursor_normal(window):
-    """
-    Set cursor normal when above window.
+    """Set cursor normal when above window."""
 
-    window: gtk.Window
-    """
-    window.window.set_cursor(normal_cursor)
+    window.window.set_cursor(CURSOR_NORMAL)
     while gtk.events_pending():
         gtk.main_iteration()
 
 def set_label_font(label, font):
     """
-    Set custom font for label.
+    Set label font.
 
-    font: font string, e.g. "Sans 9"
+    font is a string, e.g. "Sans 9".
     """
-    # Get the default font description and merge the custom to that.
     context = label.get_pango_context()
-    font_description = context.get_font_description()
-    custom_font_description = pango.FontDescription(font)
-    font_description.merge(custom_font_description, True)
+    font_desc = context.get_font_description()
+    custom_font_desc = pango.FontDescription(font)
+    font_desc.merge(custom_font_desc, True)
 
-    # Set font via attribute list.
-    attr = pango.AttrFontDesc(font_description, 0, -1)
+    attr = pango.AttrFontDesc(font_desc, 0, -1)
     attr_list = pango.AttrList()
     attr_list.insert(attr)
     label.set_attributes(attr_list)
 
 def set_widget_font(widget, font):
     """
-    Set custom font for widget.
+    Set widget font.
 
-    font: font string, e.g. "Sans 9"
+    font is a string, e.g. "Sans 9".
     """
-    # Get the default font description and merge the custom to that.
     context = widget.get_pango_context()
-    font_description = context.get_font_description()
-    custom_font_description = pango.FontDescription(font)
-    font_description.merge(custom_font_description, True)
-
-    # Set font.
-    widget.modify_font(font_description)
-
-
-if __name__ == '__main__':
-
-    from gaupol.test import Test
-
-    class TestLib(Test):
-
-        def test_destroy_gobject(self):
-
-            destroy_gobject(gtk.Label())
-
-        def test_get_glade_xml(self):
-
-            get_glade_xml('debug-dialog.glade')
-
-        def test_get_event_box(self):
-
-            event_box = gtk.EventBox()
-            label = gtk.Label()
-            event_box.add(label)
-            get_event_box(label)
-
-        def test_get_parent_widget(self):
-
-            event_box = gtk.EventBox()
-            label = gtk.Label()
-            event_box.add(label)
-            get_parent_widget(label, gtk.EventBox)
-
-        def test_get_text_view_size(self):
-
-            text_view = gtk.TextView(gtk.TextBuffer())
-            size = get_text_view_size(text_view)
-            assert isinstance(size[0], int)
-            assert isinstance(size[1], int)
-
-        def test_get_tree_view_size(self):
-
-            tree_view = gtk.TreeView()
-            scrolled_window = gtk.ScrolledWindow()
-            scrolled_window.add(tree_view)
-            size = get_tree_view_size(tree_view)
-            assert isinstance(size[0], int)
-            assert isinstance(size[1], int)
-
-        def test_idlemethod(self):
-
-            @idlemethod
-            def foo():
-                pass
-            foo()
-
-        def test_resize_dialogs(self):
-
-            dialog = gtk.Dialog()
-            resize_dialog(dialog, 600, 600, 0.4, 0.4)
-            resize_message_dialog(dialog, 600, 600, 0.4, 0.4)
-
-        def test_set_cursors(self):
-
-            window = gtk.Window()
-            window.show_all()
-            set_cursor_busy(window)
-            set_cursor_normal(window)
-            window.destroy()
-
-        def test_set_fonts(self):
-
-            label = gtk.Label('test')
-            set_label_font(label, 'monospace 12')
-            set_widget_font(label, 'monospace 14')
-
-    TestLib().run()
+    font_desc = context.get_font_description()
+    custom_font_desc = pango.FontDescription(font)
+    font_desc.merge(custom_font_desc, True)
+    widget.modify_font(font_desc)

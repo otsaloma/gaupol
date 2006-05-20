@@ -49,7 +49,7 @@ class TextViewCell(gtk.TextView, gtk.CellEditable):
 
         text_buffer = self.get_buffer()
         start, end = text_buffer.get_bounds()
-        return text_buffer.get_text(start, end, True)
+        return text_buffer.get_text(start, end)
 
     def set_text(self, text):
         """Set text."""

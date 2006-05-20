@@ -37,7 +37,7 @@ class PreviewErrorDialog(object):
 
     def __init__(self, parent, output):
 
-        glade_xml = gtklib.get_glade_xml('previewerror-dialog.glade')
+        glade_xml = gtklib.get_glade_xml('previewerror-dialog')
 
         self._dialog    = glade_xml.get_widget('dialog')
         self._text_view = glade_xml.get_widget('text_view')

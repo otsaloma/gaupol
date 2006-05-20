@@ -43,7 +43,7 @@ class EncodingDialog(object):
 
     def __init__(self, parent):
 
-        glade_xml = gtklib.get_glade_xml('encoding-dialog.glade')
+        glade_xml = gtklib.get_glade_xml('encoding-dialog')
 
         self._dialog = glade_xml.get_widget('dialog')
         self._view   = glade_xml.get_widget('tree_view')

@@ -45,7 +45,7 @@ class LanguageDialog(object):
 
     def __init__(self, parent):
 
-        glade_xml = gtklib.get_glade_xml('language-dialog.glade')
+        glade_xml = gtklib.get_glade_xml('language-dialog')
         get = glade_xml.get_widget
 
         self._col_main_check    = get('columns_main_check_button')

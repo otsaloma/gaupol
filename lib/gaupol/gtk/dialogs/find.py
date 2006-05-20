@@ -65,7 +65,7 @@ class FindDialog(gobject.GObject):
             'regex_check',
             'text_view',
         )
-        glade_xml = gtklib.get_glade_xml('find-dialog.glade')
+        glade_xml = gtklib.get_glade_xml('find-dialog')
         for name in widgets:
             setattr(self, '_' + name, glade_xml.get_widget(name))
 

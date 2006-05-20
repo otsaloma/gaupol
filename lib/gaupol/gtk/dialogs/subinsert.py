@@ -36,7 +36,7 @@ class SubtitleInsertDialog(object):
 
     def __init__(self, parent, page):
 
-        glade_xml = gtklib.get_glade_xml('subinsert-dialog.glade')
+        glade_xml = gtklib.get_glade_xml('subinsert-dialog')
         get_widget = glade_xml.get_widget
 
         self._amount_spin    = get_widget('amount_spin_button')

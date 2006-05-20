@@ -50,7 +50,7 @@ class TimeFrameShiftDialog(gobject.GObject):
 
         gobject.GObject.__init__(self)
 
-        glade_xml = gtklib.get_glade_xml('posshift-dialog.glade')
+        glade_xml = gtklib.get_glade_xml('posshift-dialog')
         get_widget = glade_xml.get_widget
 
         self._all_radio         = get_widget('all_radio_button')

@@ -132,7 +132,7 @@ class SpellCheckDialog(gobject.GObject):
 
         gobject.GObject.__init__(self)
 
-        glade_xml = gtklib.get_glade_xml('spellcheck-dialog.glade')
+        glade_xml = gtklib.get_glade_xml('spellcheck-dialog')
         get_widget = glade_xml.get_widget
 
         # Widgets

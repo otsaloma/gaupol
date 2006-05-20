@@ -38,7 +38,7 @@ class FramerateConvertDialog(object):
 
     def __init__(self, parent):
 
-        glade_xml = gtklib.get_glade_xml('frconvert-dialog.glade')
+        glade_xml = gtklib.get_glade_xml('frconvert-dialog')
         get_widget = glade_xml.get_widget
 
         self._all_radio      = get_widget('projects_all_radio_button')

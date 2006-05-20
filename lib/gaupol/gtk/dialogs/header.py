@@ -38,7 +38,7 @@ class HeaderDialog(object):
 
     def __init__(self, parent, page):
 
-        glade_xml = gtklib.get_glade_xml('header-dialog.glade')
+        glade_xml = gtklib.get_glade_xml('header-dialog')
         get_widget = glade_xml.get_widget
 
         self._copy_down_button     = get_widget('copy_down_button')
@@ -150,14 +150,14 @@ class HeaderDialog(object):
 
         text_buffer = self._main_text_view.get_buffer()
         start, end = text_buffer.get_bounds()
-        return text_buffer.get_text(start, end, True)
+        return text_buffer.get_text(start, end)
 
     def get_translation_header(self):
         """Get translation header."""
 
         text_buffer = self._tran_text_view.get_buffer()
         start, end = text_buffer.get_bounds()
-        return text_buffer.get_text(start, end, True)
+        return text_buffer.get_text(start, end)
 
     def _on_copy_down_button_clicked(self, button):
         """Copy main header to translation header."""

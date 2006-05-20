@@ -1,3 +1,29 @@
+2006-05-21  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/gtk/util/gtklib.py:
+	* lib/gaupol/gtk/util/test:
+	* lib/gaupol/gtk/util/test/__init__.py:
+	* lib/gaupol/gtk/util/test/test_gtklib.py:
+	  Cleaned up code and separated testing.
+
+	* lib/gaupol/gtk/cellrend/multiline.py:
+	* lib/gaupol/gtk/dialogs/debug.py:
+	* lib/gaupol/gtk/dialogs/duradjust.py:
+	* lib/gaupol/gtk/dialogs/encoding.py:
+	* lib/gaupol/gtk/dialogs/find.py:
+	* lib/gaupol/gtk/dialogs/frconvert.py:
+	* lib/gaupol/gtk/dialogs/header.py:
+	* lib/gaupol/gtk/dialogs/language.py:
+	* lib/gaupol/gtk/dialogs/multiclose.py:
+	* lib/gaupol/gtk/dialogs/posadjust.py:
+	* lib/gaupol/gtk/dialogs/posshift.py:
+	* lib/gaupol/gtk/dialogs/preferences.py:
+	* lib/gaupol/gtk/dialogs/previewerror.py:
+	* lib/gaupol/gtk/dialogs/spellcheck.py:
+	* lib/gaupol/gtk/dialogs/subinsert.py:
+	* lib/gaupol/gtk/dialogs/textedit.py:
+	  Adapted to above changes.
+
 2006-05-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/base/position/test/test_calc.py:

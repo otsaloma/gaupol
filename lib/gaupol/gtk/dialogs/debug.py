@@ -71,7 +71,7 @@ class DebugDialog(object):
 
     def __init__(self):
 
-        glade_xml = gtklib.get_glade_xml('debug-dialog.glade')
+        glade_xml = gtklib.get_glade_xml('debug-dialog')
 
         self._dialog    = glade_xml.get_widget('dialog')
         self._text_view = glade_xml.get_widget('text_view')
@@ -307,7 +307,7 @@ class DebugDialog(object):
         # Get required width and height to display text.
         text_buffer = self._text_view.get_buffer()
         start, end = text_buffer.get_bounds()
-        text = text_buffer.get_text(start, end, True)
+        text = text_buffer.get_text(start, end)
         label = gtk.Label(text)
         text_width, height = label.size_request()
 
