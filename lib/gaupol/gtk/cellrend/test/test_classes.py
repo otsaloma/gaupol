@@ -17,37 +17,15 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-from gaupol.gtk.entry.integer import EntryInteger
-from gaupol.test              import Test
+from gaupol.gtk.cellrend.classes import *
+from gaupol.test                 import Test
 
 
-class TestEntryInteger(Test):
+class TestModule(Test):
 
-    def setup_method(self, method):
+    def test_imports(self):
 
-        self.entry = EntryInteger()
+        CellRendererInteger()
+        CellRendererMultilineText()
+        CellRendererTime()
 
-    def test_insert_text(self):
-
-        self.entry.set_text('test')
-        text = self.entry.get_text()
-        assert text == ''
-
-        self.entry.set_text('123')
-        text = self.entry.get_text()
-        assert text == '123'
-
-
-if __name__ == '__main__':
-
-    import gtk
-
-    entry = EntryInteger()
-    entry.set_text('123')
-    window = gtk.Window()
-    window.connect('delete-event', gtk.main_quit)
-    window.set_position(gtk.WIN_POS_CENTER)
-    window.set_default_size(200, 50)
-    window.add(entry)
-    window.show_all()
-    gtk.main()

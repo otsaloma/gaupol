@@ -36,10 +36,6 @@ class TestFinder(Test):
         finder.text = TEXT
         return finder
 
-    def test_init(self):
-
-        Finder()
-
     def test_next(self):
 
         finder = self.get_finder()

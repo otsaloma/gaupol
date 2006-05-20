@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -20,17 +20,12 @@
 """Cell renderer for multiline text data."""
 
 
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
-
 import gtk
 
 from gaupol.gtk.cellrend.text import CellRendererText
 
 
-class CellTextView(gtk.TextView, gtk.CellEditable):
+class TextViewCell(gtk.TextView, gtk.CellEditable):
 
     """Text view that implements gtk.CellEditable."""
 
@@ -42,11 +37,11 @@ class CellTextView(gtk.TextView, gtk.CellEditable):
         self.remove_widget()
 
     def do_remove_widget(self, *args):
-        """Empty method to avoid console error output."""
+        """Empty method to avoid error output."""
         pass
 
     def do_start_editing(self, *args):
-        """Empty method to avoid console error output."""
+        """Empty method to avoid error output."""
         pass
 
     def get_text(self, *args):
@@ -66,12 +61,38 @@ class CellRendererMultilineText(CellRendererText):
 
     """Cell renderer for multiline text data."""
 
+    def on_key_press_event(self, editor, event):
+        """
+        End or cancel editing.
+
+        End editing if Return or Keypad Enter pressed. Shift or Control
+        combined with Return or Keypad Enter can be used for linebreaking.
+        Cancel editing if Escape pressed.
+        """
+        accel_masks = gtk.gdk.CONTROL_MASK|gtk.gdk.SHIFT_MASK
+        keymap = gtk.gdk.keymap_get_default()
+
+        state = event.hardware_keycode, event.state, event.group
+        output = keymap.translate_keyboard_state(*state)
+        keyval, egroup, level, consumed = output
+        keyname = gtk.gdk.keyval_name(keyval)
+
+        if event.state & ~consumed & accel_masks:
+            return
+        if keyname in ('Return', 'KP_Enter'):
+            editor.emit('editing-done')
+            return True
+        if keyname == 'Escape':
+            editor.remove_widget()
+            self.emit('editing-canceled')
+            return True
+
     def on_start_editing(self, event, widget, row, bg_area, cell_area, flags):
         """Initialize and return editor widget."""
 
-        editor = CellTextView()
+        editor = TextViewCell()
         editor.set_wrap_mode(gtk.WRAP_NONE)
-        editor.modify_font(self.font_description)
+        editor.modify_font(self.font_desc)
         editor.set_text(self.text or u'')
 
         editor.connect('editing-done', self.on_editing_done, row)
@@ -80,63 +101,3 @@ class CellRendererMultilineText(CellRendererText):
         editor.grab_focus()
         editor.show()
         return editor
-
-    def on_key_press_event(self, editor, event):
-        """
-        Respond to key press events.
-
-        End editing if Return, Keypad Enter or Escape pressed. Shift or Control
-        combined with Return or Keypad Enter can be used for linebreaking.
-        Escape cancels editing.
-        """
-        accel_masks = (gtk.gdk.CONTROL_MASK|gtk.gdk.SHIFT_MASK)
-        keymap = gtk.gdk.keymap_get_default()
-
-        args = event.hardware_keycode, event.state, event.group
-        output = keymap.translate_keyboard_state(*args)
-        keyval, egroup, level, consumed = output
-        keyname = gtk.gdk.keyval_name(keyval)
-
-        if event.state & ~consumed & accel_masks:
-            return
-
-        if keyname in ('Return', 'KP_Enter'):
-            editor.emit('editing-done')
-            return True
-
-        if keyname == 'Escape':
-            editor.remove_widget()
-            self.emit('editing-canceled')
-            return True
-
-
-if __name__ == '__main__':
-
-    import gobject
-    from gaupol.test import Test
-
-    class TestCellRendererInteger(Test):
-
-        def test_init(self):
-
-            tree_view = gtk.TreeView()
-            tree_view.set_headers_visible(False)
-            store = gtk.ListStore(gobject.TYPE_STRING)
-            store.append(['And I would like to think this\n' \
-                          'was only a matter of chance.'])
-            tree_view.set_model(store)
-
-            cell_renderer = CellRendererMultilineText()
-            cell_renderer.set_editable(True)
-            tree_view_column = gtk.TreeViewColumn('', cell_renderer, text=0)
-            tree_view.append_column(tree_view_column)
-
-            window = gtk.Window()
-            window.connect('delete-event', gtk.main_quit)
-            window.set_position(gtk.WIN_POS_CENTER)
-            window.set_default_size(240, 70)
-            window.add(tree_view)
-            window.show_all()
-            gtk.main()
-
-    TestCellRendererInteger().run()

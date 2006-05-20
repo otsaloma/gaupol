@@ -70,7 +70,8 @@ class TestOutputWindow(Test):
 
         self.output_window.set_output('test')
         text_buffer = self.output_window._text_view.get_buffer()
-        output = text_buffer.get_text(*text_buffer.get_bounds())
+        start, end = text_buffer.get_bounds()
+        output = text_buffer.get_text(start, end)
         assert output == 'test'
 
     def test_signals(self):

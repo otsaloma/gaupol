@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -23,3 +23,10 @@
 from gaupol.gtk.cellrend.integer   import CellRendererInteger
 from gaupol.gtk.cellrend.multiline import CellRendererMultilineText
 from gaupol.gtk.cellrend.time      import CellRendererTime
+
+
+__all__ = [
+    'CellRendererInteger',
+    'CellRendererMultilineText',
+    'CellRendererTime'
+]

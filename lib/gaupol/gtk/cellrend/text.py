@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -17,13 +17,8 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Custom cell renderer for text data."""
+"""Base class for cell renderers for text data."""
 
-
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
 
 import gobject
 import gtk
@@ -32,7 +27,7 @@ import pango
 
 class CellRendererText(gtk.GenericCellRenderer):
 
-    """Custom cell renderer for text data."""
+    """Base class for cell renderers for text data."""
 
     __gproperties__ = {
         'font': (
@@ -42,7 +37,7 @@ class CellRendererText(gtk.GenericCellRenderer):
             '',
             gobject.PARAM_READWRITE
         ),
-        'font_description': (
+        'font_desc': (
             gobject.TYPE_STRING,
             'font description',
             'font description',
@@ -66,15 +61,13 @@ class CellRendererText(gtk.GenericCellRenderer):
         )
     }
 
-    property_names = __gproperties__.keys()
-
     def __init__(self):
 
         gtk.GenericCellRenderer.__init__(self)
 
-        self.font             = None
-        self.font_description = None
-        self.text             = None
+        self.font      = None
+        self.font_desc = None
+        self.text      = None
 
     def do_get_property(self, prop):
         """Get value of property."""
@@ -87,22 +80,17 @@ class CellRendererText(gtk.GenericCellRenderer):
         setattr(self, prop.name, value)
 
     def _get_layout(self, widget):
-        """Get a pango layout."""
+        """Get Pango layout."""
 
         context = widget.get_pango_context()
-
-        # Get the default font description.
-        font_description = context.get_font_description()
-
-        # Create custom font description and merge that with the default.
-        custom_font_description = pango.FontDescription(self.font)
-        font_description.merge(custom_font_description, True)
+        font_desc = context.get_font_description()
+        custom_font_desc = pango.FontDescription(self.font)
+        font_desc.merge(custom_font_desc, True)
+        self.font_desc = font_desc
 
         layout = pango.Layout(context)
-        layout.set_font_description(font_description)
+        layout.set_font_description(font_desc)
         layout.set_text(self.text or u'')
-
-        self.font_description = font_description
         return layout
 
     def on_editing_done(self, editor, row):
@@ -112,24 +100,20 @@ class CellRendererText(gtk.GenericCellRenderer):
 
     def on_get_size(self, widget, cell_area):
         """
-        Get size cell size.
+        Get cell size.
 
+        Size calculation assumes left- and top-aligned content.
         Return X offset, Y offset, width, height.
         """
         layout = self._get_layout(widget)
         width, height = layout.get_pixel_size()
-
-        # Add two pixels of padding on all sides. With cell contents being left
-        # and top aligned, x- and y-offsets equal paddings.
         return 2, 2, width + 4, height + 4
 
     def on_render(self, window, widget, bg_area, cell_area, exp_area, flags):
         """Render cell."""
 
-        x_offset, y_offset, width, height = self.get_size(widget, cell_area)
-        layout = self._get_layout(widget)
+        x_offset, y_offset = self.get_size(widget, cell_area)[:2]
 
-        # Determine cell state.
         if flags & gtk.CELL_RENDERER_SELECTED:
             if widget.props.has_focus:
                 state = gtk.STATE_SELECTED
@@ -139,16 +123,26 @@ class CellRendererText(gtk.GenericCellRenderer):
             state = gtk.STATE_NORMAL
 
         widget.style.paint_layout(
-            window, state, True, cell_area, widget, 'custom cell',
-            cell_area.x + x_offset, cell_area.y + y_offset, layout
+            window,
+            state,
+            True,
+            cell_area,
+            widget,
+            'text cell',
+            cell_area.x + x_offset,
+            cell_area.y + y_offset,
+            self._get_layout(widget)
         )
+
+    def on_start_editing(self, event, widget, row, bg_area, cell_area, flags):
+        """Initialize and return editor widget."""
+
+        raise NotImplementedError
 
     def set_editable(self, editable):
         """Set cell editability."""
 
         if editable:
-            mode = gtk.CELL_RENDERER_MODE_EDITABLE
+            self.props.mode = gtk.CELL_RENDERER_MODE_EDITABLE
         else:
-            mode = gtk.CELL_RENDERER_MODE_ACTIVATABLE
-
-        self.props.mode = mode
+            self.props.mode = gtk.CELL_RENDERER_MODE_ACTIVATABLE

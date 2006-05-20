@@ -33,6 +33,8 @@ class TestTimeFrameCalculator(Test):
 
         TimeFrameCalculator()
         TimeFrameCalculator(Framerate.FR_23_976)
+        TimeFrameCalculator(Framerate.FR_25)
+        TimeFrameCalculator(Framerate.FR_29_97)
 
     def test_add_seconds_to_time(self):
 

@@ -17,37 +17,38 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-from gaupol.gtk.entry.integer import EntryInteger
+
+from gaupol.gtk.cellrend.time import CellRendererTime
 from gaupol.test              import Test
 
 
-class TestEntryInteger(Test):
+class TestCellRendererTime(Test):
 
-    def setup_method(self, method):
+    def test_init(self):
 
-        self.entry = EntryInteger()
-
-    def test_insert_text(self):
-
-        self.entry.set_text('test')
-        text = self.entry.get_text()
-        assert text == ''
-
-        self.entry.set_text('123')
-        text = self.entry.get_text()
-        assert text == '123'
+        CellRendererTime()
 
 
 if __name__ == '__main__':
 
+    import gobject
     import gtk
 
-    entry = EntryInteger()
-    entry.set_text('123')
+    tree_view = gtk.TreeView()
+    tree_view.set_headers_visible(False)
+    store = gtk.ListStore(gobject.TYPE_STRING)
+    store.append(['12:34:56,789'])
+    tree_view.set_model(store)
+
+    cell_renderer = CellRendererTime()
+    cell_renderer.set_editable(True)
+    tree_view_column = gtk.TreeViewColumn('', cell_renderer, text=0)
+    tree_view.append_column(tree_view_column)
+
     window = gtk.Window()
     window.connect('delete-event', gtk.main_quit)
     window.set_position(gtk.WIN_POS_CENTER)
     window.set_default_size(200, 50)
-    window.add(entry)
+    window.add(tree_view)
     window.show_all()
     gtk.main()

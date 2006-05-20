@@ -1,5 +1,27 @@
 2006-05-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/position/test/test_calc.py:
+	* lib/gaupol/base/text/test/test_finder.py:
+	* lib/gaupol/gtk/entry/test/test_integer.py:
+	* lib/gaupol/gtk/test/test_output.py:
+	  Minor fixes.
+
+	* lib/gaupol/gtk/cellrend/classes.py:
+	* lib/gaupol/gtk/cellrend/integer.py:
+	* lib/gaupol/gtk/cellrend/multiline.py:
+	* lib/gaupol/gtk/cellrend/test:
+	* lib/gaupol/gtk/cellrend/test/__init__.py:
+	* lib/gaupol/gtk/cellrend/test/test_classes.py:
+	* lib/gaupol/gtk/cellrend/test/test_integer.py:
+	* lib/gaupol/gtk/cellrend/test/test_multiline.py:
+	* lib/gaupol/gtk/cellrend/test/test_text.py:
+	* lib/gaupol/gtk/cellrend/test/test_time.py:
+	* lib/gaupol/gtk/cellrend/text.py:
+	* lib/gaupol/gtk/cellrend/time.py:
+	  Cleaned up code and separated testing.
+
+2006-05-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/gtk/cellrend/integer.py:
 	* lib/gaupol/gtk/cellrend/time.py:
 	* lib/gaupol/gtk/dialogs/posadjust.py:
