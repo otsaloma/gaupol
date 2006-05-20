@@ -17,23 +17,32 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Entry for integer data."""
+from gaupol.gtk.entries.time import EntryTime
+from gaupol.test             import Test
 
 
-import gtk
+# Cannot automate tests, because gobject.idle_add(method) requires a running
+# main loop, without which the specified method will never get run.
 
 
-class EntryInteger(gtk.Entry):
+class TestEntryTime(Test):
 
-    """Entry for integer data."""
+    def test_init(self):
 
-    def __init__(self):
+        EntryTime()
 
-        gtk.Entry.__init__(self)
-        self.connect('insert-text', self._on_insert_text)
 
-    def _on_insert_text(self, entry, text, length, pos):
-        """Insert text if it is digits."""
+if __name__ == '__main__':
 
-        if not text.isdigit():
-            self.stop_emission('insert-text')
+    import gtk
+
+    entry = EntryTime()
+    entry.set_text('12:34:56,789')
+    window = gtk.Window()
+    window.connect('delete-event', gtk.main_quit)
+    window.set_position(gtk.WIN_POS_CENTER)
+    window.set_default_size(200, 50)
+    window.add(entry)
+    window.show_all()
+    gtk.main()
+

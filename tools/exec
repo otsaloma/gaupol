@@ -1,0 +1,16 @@
+#!/usr/bin/env python
+
+"""
+Execute Python file.
+
+USAGE: exec PATH
+"""
+
+import os
+import sys
+
+tool_dir = os.path.dirname(os.path.abspath(__file__))
+lib_dir  = os.path.join(tool_dir, '..', 'lib')
+sys.path.insert(0, lib_dir)
+
+execfile(sys.argv[1])
