@@ -1,5 +1,10 @@
 2006-05-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/entry:
+	  Renamed from lib/gaupol/gtk/entries.
+
+2006-05-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/gtk/entries/integer.py:
 	* lib/gaupol/gtk/entries/test:
 	* lib/gaupol/gtk/entries/test/__init__.py:
