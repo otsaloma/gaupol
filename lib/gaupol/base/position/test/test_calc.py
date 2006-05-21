@@ -27,7 +27,7 @@ class TestTimeFrameCalculator(Test):
     def setup_method(self, method):
 
         self.calc = TimeFrameCalculator(Framerate.FR_23_976)
-        self.framerate = Framerate.values[Framerate.FR_23_976]
+        self.framerate = Framerate.VALUES[Framerate.FR_23_976]
 
     def test_init(self):
 

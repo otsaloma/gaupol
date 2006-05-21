@@ -149,7 +149,7 @@ class EditDelegate(Delegate):
             if mode == Mode.TIME:
                 duration = opt_sec
             if mode == Mode.FRAME:
-                fr_value = Framerate.values[self.framerate]
+                fr_value = Framerate.VALUES[self.framerate]
                 duration = int(round(fr_value * opt_sec, 0))
 
         if mode == Mode.TIME:

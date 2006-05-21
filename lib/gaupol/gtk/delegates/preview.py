@@ -159,7 +159,7 @@ class PreviewDelegate(Delegate):
             command = config.preview.custom_command
         else:
             video_player = config.preview.video_player
-            command = VideoPlayer.commands[video_player]
+            command = VideoPlayer.COMMANDS[video_player]
         offset = config.preview.offset
 
         try:

@@ -46,8 +46,8 @@ class TagConverter(object):
         self._from_regexs = []
         self._to_regexs   = []
 
-        from_format_name = Format.class_names[from_format]
-        to_format_name   = Format.class_names[  to_format]
+        from_format_name = Format.CLASS_NAMES[from_format]
+        to_format_name   = Format.CLASS_NAMES[  to_format]
 
         # Regular expression patterns
         from_tags = eval(from_format_name).decode_tags

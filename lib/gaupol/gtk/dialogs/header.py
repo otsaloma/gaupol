@@ -82,7 +82,7 @@ class HeaderDialog(object):
         if main_file is not None and main_file.has_header:
             self.main_header_orig = main_file.header
             self._set_main_header(self.main_header_orig)
-            class_name = Format.class_names[main_file.format]
+            class_name = Format.CLASS_NAMES[main_file.format]
             self.main_header_tmpl = eval(class_name).HEADER_TEMPLATE
         else:
             self._main_label.props.visible = False
@@ -93,7 +93,7 @@ class HeaderDialog(object):
         if tran_file is not None and tran_file.has_header:
             self.tran_header_orig = tran_file.header
             self._set_translation_header(self.tran_header_orig)
-            class_name = Format.class_names[tran_file.format]
+            class_name = Format.CLASS_NAMES[tran_file.format]
             self.tran_header_tmpl = eval(class_name).HEADER_TEMPLATE
         else:
             self._tran_label.props.visible = False

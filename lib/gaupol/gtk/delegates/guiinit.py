@@ -364,8 +364,8 @@ class GUIInitDelegate(Delegate):
 
         # Create framerate combo box..
         self.framerate_combo = gtk.combo_box_new_text()
-        for i in range(len(Framerate.display_names)):
-            self.framerate_combo.insert_text(i, Framerate.display_names[i])
+        for i in range(len(Framerate.DISPLAY_NAMES)):
+            self.framerate_combo.insert_text(i, Framerate.DISPLAY_NAMES[i])
         self.framerate_combo.set_active(config.editor.framerate)
         self.framerate_combo.connect('changed', self.on_framerate_changed)
 

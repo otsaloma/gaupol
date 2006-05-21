@@ -32,6 +32,7 @@ lists. All stored values are strings.
 
 import ConfigParser
 import os
+import sys
 
 from gaupol                  import __version__
 from gaupol.constants        import *
@@ -50,6 +51,10 @@ CONFIG_HEADER = \
 '''
 
 LIST_SEP = '|'
+
+VIDEO_PLAYER = VideoPlayer.MPLAYER
+if sys.platform == 'win32':
+    VIDEO_PLAYER = VideoPlayer.VLC
 
 
 class Type(object):
@@ -270,12 +275,34 @@ class output_window(Section):
     }
 
 
+class position_adjust(Section):
+
+    all_subtitles = True
+
+    types = {
+        'all_subtitles': Type.BOOLEAN,
+    }
+
+
+class position_shift(Section):
+
+    all_subtitles = True
+    frames        = 0
+    seconds       = '0'
+
+    types = {
+        'all_subtitles': Type.BOOLEAN,
+        'frames'       : Type.INTEGER,
+        'seconds'      : Type.STRING,
+    }
+
+
 class preview(Section):
 
     custom_command = None
     offset         = '5.0'
     use_custom     = False
-    video_player   = VideoPlayer.MPLAYER
+    video_player   = VIDEO_PLAYER
 
     types = {
         'custom_command': Type.STRING,
@@ -308,38 +335,12 @@ class spell_check(Section):
 
 class subtitle_insert(Section):
 
-    amount   = 1
-    position = Position.BELOW
+    amount = 1
+    below  = True
 
     types = {
-        'amount'  : Type.INTEGER,
-        'position': Type.CONSTANT,
-    }
-
-    classes = {
-        'position': Position,
-    }
-
-
-class position_adjust(Section):
-
-    all_subtitles = True
-
-    types = {
-        'all_subtitles': Type.BOOLEAN,
-    }
-
-
-class position_shift(Section):
-
-    all_subtitles = True
-    frames        = 0
-    seconds       = '0'
-
-    types = {
-        'all_subtitles': Type.BOOLEAN,
-        'frames'       : Type.INTEGER,
-        'seconds'      : Type.STRING,
+        'amount': Type.INTEGER,
+        'below' : Type.BOOLEAN,
     }
 
 
@@ -368,9 +369,9 @@ def _get_constant(section, option, arg):
     cls = eval(section).classes[option]
 
     if isinstance(arg, basestring):
-        return cls.id_names.index(arg)
+        return cls.ID_NAMES.index(arg)
     if isinstance(arg, int):
-        return cls.id_names[arg]
+        return cls.ID_NAMES[arg]
     raise ValueError
 
 def get_options(section):

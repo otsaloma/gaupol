@@ -133,8 +133,8 @@ class TextFileChooserDialog(gtk.FileChooserDialog):
             (_('Plain text files'), 'text/plain', None),
         ]
 
-        for i, format_name in enumerate(Format.display_names):
-            pattern = '*' + Format.extensions[i]
+        for i, format_name in enumerate(Format.DISPLAY_NAMES):
+            pattern = '*' + Format.EXTENSIONS[i]
             # Translators: File filters, e.g. "SubRip (*.srt)".
             name = _('%s (%s)') % (format_name, pattern)
             filters.append((name, None, pattern))
@@ -331,14 +331,14 @@ class SaveFileDialog(TextFileChooserDialog):
     def _init_format_data(self):
         """Initialize format combo box data."""
 
-        for name in Format.display_names:
+        for name in Format.DISPLAY_NAMES:
             self._format_combo.append_text(name)
         self._format_combo.set_active(0)
 
     def _init_newline_data(self):
         """Initialize newline combo box data."""
 
-        for name in Newlines.display_names:
+        for name in Newlines.DISPLAY_NAMES:
             self._newline_combo.append_text(name)
         self._format_combo.set_active(0)
 
@@ -384,7 +384,7 @@ class SaveFileDialog(TextFileChooserDialog):
         if path is None:
             return None
 
-        extension = Format.extensions[self.get_format()]
+        extension = Format.EXTENSIONS[self.get_format()]
         if not path.endswith(extension):
             path += extension
         return path
@@ -414,13 +414,13 @@ class SaveFileDialog(TextFileChooserDialog):
         basename = os.path.basename(path)
 
         # Remove possible existing extension.
-        for extension in Format.extensions:
+        for extension in Format.EXTENSIONS:
             if basename.endswith(extension):
                 basename = basename[:-len(extension)]
                 break
 
         # Add new extension.
-        basename += Format.extensions[new_format]
+        basename += Format.EXTENSIONS[new_format]
         path = os.path.join(dirname, basename)
         self.set_current_name(basename)
         self.set_filename(path)

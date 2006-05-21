@@ -85,7 +85,7 @@ class ToggleColumnNoAction(ToggleColumnAction):
         1
     )
 
-    uim_paths = ['/ui/menubar/view/columns/%s' % Column.id_names[col]]
+    uim_paths = ['/ui/menubar/view/columns/%s' % Column.ID_NAMES[col]]
 
 
 class ToggleColumnShowAction(ToggleColumnAction):
@@ -102,7 +102,7 @@ class ToggleColumnShowAction(ToggleColumnAction):
         1
     )
 
-    uim_paths = ['/ui/menubar/view/columns/%s' % Column.id_names[col]]
+    uim_paths = ['/ui/menubar/view/columns/%s' % Column.ID_NAMES[col]]
 
 
 class ToggleColumnHideAction(ToggleColumnAction):
@@ -119,7 +119,7 @@ class ToggleColumnHideAction(ToggleColumnAction):
         1
     )
 
-    uim_paths = ['/ui/menubar/view/columns/%s' % Column.id_names[col]]
+    uim_paths = ['/ui/menubar/view/columns/%s' % Column.ID_NAMES[col]]
 
 
 class ToggleColumnDurationAction(ToggleColumnAction):
@@ -136,7 +136,7 @@ class ToggleColumnDurationAction(ToggleColumnAction):
         1
     )
 
-    uim_paths = ['/ui/menubar/view/columns/%s' % Column.id_names[col]]
+    uim_paths = ['/ui/menubar/view/columns/%s' % Column.ID_NAMES[col]]
 
 
 class ToggleColumnMainTextAction(ToggleColumnAction):
@@ -153,7 +153,7 @@ class ToggleColumnMainTextAction(ToggleColumnAction):
         1
     )
 
-    uim_paths = ['/ui/menubar/view/columns/%s' % Column.id_names[col]]
+    uim_paths = ['/ui/menubar/view/columns/%s' % Column.ID_NAMES[col]]
 
 
 class ToggleColumnTranslationTextAction(ToggleColumnAction):
@@ -170,7 +170,7 @@ class ToggleColumnTranslationTextAction(ToggleColumnAction):
         1
     )
 
-    uim_paths = ['/ui/menubar/view/columns/%s' % Column.id_names[col]]
+    uim_paths = ['/ui/menubar/view/columns/%s' % Column.ID_NAMES[col]]
 
 
 class ToggleEditModeAction(UIMAction):
@@ -412,7 +412,7 @@ class ViewDelegate(Delegate):
         page.project.change_framerate(framerate)
         config.editor.framerate = framerate
 
-        name = Framerate.id_names[framerate]
+        name = Framerate.ID_NAMES[framerate]
         path = '/ui/menubar/view/framerate/%s' % name
         self.uim.get_widget(path).set_active(True)
 
@@ -444,7 +444,7 @@ class ViewDelegate(Delegate):
         tree_view_column = page.view.get_column(col)
         visible = tree_view_column.get_visible()
 
-        path = '/ui/menubar/view/columns/%s' % Column.id_names[col]
+        path = '/ui/menubar/view/columns/%s' % Column.ID_NAMES[col]
         action = self.uim.get_action(path)
         active = action.get_active()
 

@@ -63,8 +63,8 @@ class FramerateConvertDialog(object):
             combo_box.pack_start(cell_renderer, True)
             combo_box.add_attribute(cell_renderer, 'text', 0)
             combo_box.set_model(store)
-            for i in range(len(Framerate.display_names)):
-                store.append([Framerate.display_names[i]])
+            for i in range(len(Framerate.DISPLAY_NAMES)):
+                store.append([Framerate.DISPLAY_NAMES[i]])
             combo_box.set_active(config.editor.framerate)
 
     def _init_signals(self):

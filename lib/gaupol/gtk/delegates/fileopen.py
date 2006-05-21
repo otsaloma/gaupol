@@ -434,7 +434,7 @@ class FileOpenDelegate(Delegate):
 
         # Show the translation column.
         if not page.view.get_column(TTXT).get_visible():
-            path = '/ui/menubar/view/columns/%s' % Column.id_names[TTXT]
+            path = '/ui/menubar/view/columns/%s' % Column.ID_NAMES[TTXT]
             self.uim.get_action(path).activate()
 
         self.set_sensitivities()

@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -19,6 +19,8 @@
 
 """gaupol-wide constants."""
 
+
+import sys
 
 from gettext import gettext as _
 
@@ -48,7 +50,7 @@ class Format(object):
     SSA        = 4
     SUBVIEWER2 = 5
 
-    class_names = [
+    CLASS_NAMES = [
         'AdvancedSubStationAlpha',
         'MicroDVD',
         'MPL2',
@@ -57,7 +59,7 @@ class Format(object):
         'SubViewer2',
     ]
 
-    display_names = [
+    DISPLAY_NAMES = [
         _('Advanced Sub Station Alpha'),
         _('MicroDVD'),
         _('MPL2'),
@@ -66,7 +68,7 @@ class Format(object):
         _('SubViewer 2.0'),
     ]
 
-    extensions = [
+    EXTENSIONS = [
         '.ass',
         '.sub',
         '.txt',
@@ -75,7 +77,7 @@ class Format(object):
         '.sub',
     ]
 
-    id_names = [
+    ID_NAMES = [
         'ass',
         'microdvd',
         'mpl2',
@@ -91,19 +93,19 @@ class Framerate(object):
     FR_25     = 1
     FR_29_97  = 2
 
-    display_names = [
+    DISPLAY_NAMES = [
         _('23.976 fps'),
         _('25 fps'),
         _('29.97 fps'),
     ]
 
-    id_names = [
+    ID_NAMES = [
         '23_976',
         '25',
         '29_97',
     ]
 
-    values = [
+    VALUES = [
         23.976,
         25.0,
         29.97,
@@ -115,7 +117,7 @@ class Mode(object):
     TIME  = 0
     FRAME = 1
 
-    id_names = [
+    ID_NAMES = [
         'time',
         'frame',
     ]
@@ -127,33 +129,22 @@ class Newlines(object):
     UNIX    = 1
     WINDOWS = 2
 
-    display_names = [
+    DISPLAY_NAMES = [
         _('Mac'),
         _('Unix'),
         _('Windows'),
     ]
 
-    id_names = [
+    ID_NAMES = [
         'mac',
         'unix',
         'windows',
     ]
 
-    values = [
+    VALUES = [
         '\r',
         '\n',
         '\r\n',
-    ]
-
-
-class Position(object):
-
-    ABOVE = 0
-    BELOW = 1
-
-    id_names = [
-        'above',
-        'below',
     ]
 
 
@@ -162,23 +153,30 @@ class VideoPlayer(object):
     MPLAYER = 0
     VLC     = 1
 
-    display_names = [
+    DISPLAY_NAMES = [
         _('MPlayer'),
         _('VLC'),
     ]
 
-    id_names = [
+    ID_NAMES = [
         'mplayer',
         'vlc',
     ]
 
-    # %v = video filename
-    # %s = subtitle filename
-    # %t = time
-    # %c = seconds
-    # %f = frame
+    # %v = Video filename
+    # %s = Subtitle filename
+    # %t = Time
+    # %c = Seconds
+    # %f = Frame
 
-    commands    = [
+    COMMANDS = [
         'mplayer -identify -osdlevel 2 -ss %c -sub "%s" "%v"',
         'vlc --start-time=%c --sub-file="%s" "%v"',
     ]
+    if sys.platform == 'win32':
+        COMMANDS = [
+            r'%ProgramFiles%\mplayer\mplayer.exe ' \
+                '-identify -osdlevel 2 -ss %c -sub "%s" "%v"',
+            r'%ProgramFiles%\VideoLAN\vlc\vlc.exe ' \
+                '--start-time=%c --sub-file="%s" "%v"',
+        ]

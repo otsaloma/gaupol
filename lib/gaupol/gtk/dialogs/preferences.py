@@ -209,7 +209,7 @@ class PreferencesDialog(gobject.GObject):
         self._preview_command_radio.set_active(use_custom)
         self._set_preview_radio_sensitivities()
 
-        for i, name in enumerate(VideoPlayer.display_names):
+        for i, name in enumerate(VideoPlayer.DISPLAY_NAMES):
             self._preview_select_combo.insert_text(i, name)
         self._preview_select_combo.set_active(config.preview.video_player)
 
@@ -349,7 +349,7 @@ class PreferencesDialog(gobject.GObject):
         """Edit command."""
 
         video_player = self._preview_select_combo.get_active()
-        command = VideoPlayer.commands[video_player]
+        command = VideoPlayer.COMMANDS[video_player]
 
         self._preview_command_entry.set_text(command)
         self._preview_command_radio.set_active(True)

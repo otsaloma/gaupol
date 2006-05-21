@@ -117,7 +117,7 @@ class FileSaveDelegate(Delegate):
             subtitle_file = current_file
             path = current_file.path
         else:
-            format_name = Format.class_names[format]
+            format_name = Format.CLASS_NAMES[format]
             subtitle_file = eval(format_name)(path, encoding, newlines)
             # Copy header if saving in same format.
             if current_file is not None:

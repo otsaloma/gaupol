@@ -30,7 +30,7 @@ from gettext import ngettext
 
 import gtk
 
-from gaupol.constants             import Mode, Position
+from gaupol.constants             import Mode
 from gaupol.gtk.colconstants      import *
 from gaupol.gtk.delegates         import Delegate, UIMAction
 from gaupol.gtk.dialogs.subinsert import SubtitleInsertDialog
@@ -321,7 +321,7 @@ class EditDelegate(Delegate):
         page = self.get_current_page()
         dialog = SubtitleInsertDialog(self.window, page)
         response = dialog.run()
-        position = dialog.get_position()
+        is_below = dialog.get_position()
         amount   = dialog.get_amount()
         dialog.destroy()
         if response != gtk.RESPONSE_OK:
@@ -329,7 +329,7 @@ class EditDelegate(Delegate):
 
         if page.project.times:
             start_row = page.view.get_selected_rows()[0]
-            if position == Position.BELOW:
+            if is_below:
                 start_row += 1
         else:
             start_row = 0

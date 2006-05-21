@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -32,7 +32,7 @@ TTXT = 5
 
 class Column(object):
 
-    id_names = [
+    ID_NAMES = [
         'number',
         'show',
         'hide',
@@ -41,7 +41,7 @@ class Column(object):
         'translation_text'
     ]
 
-    display_names = [
+    DISPLAY_NAMES = [
         _('No.'),
         _('Show'),
         _('Hide'),

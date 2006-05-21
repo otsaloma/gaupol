@@ -13,11 +13,10 @@ Plans for 0.5.0
     - Raise exceptions instead of returning None or False
     - Use class variables and refer to them as self.var?
       - gaupol.base.files
-    - string.Template for preview command?
+    - string.Template for preview command? Or just %var%.
     - Framerate conversion available for time-based subs
     - Put a .pot file in the trunk?
     - Mime-type registration?
-    - C:\Program Files\VideoLAN\vlc\vlc.exe + MPlayer
 
   * base
     - Use action grouping in replace_both_texts(...)

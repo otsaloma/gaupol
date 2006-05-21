@@ -141,7 +141,7 @@ class Page(gobject.GObject):
         except AttributeError:
             return self.untitle
 
-        extension = Format.extensions[format]
+        extension = Format.EXTENSIONS[format]
         if basename.endswith(extension):
             return basename[0:-len(extension)]
         else:
@@ -186,7 +186,7 @@ class Page(gobject.GObject):
         except AttributeError:
             return self.get_translation_basename()
 
-        extension = Format.extensions[format]
+        extension = Format.EXTENSIONS[format]
         if basename.endswith(extension):
             return basename[0:-len(extension)]
         else:
