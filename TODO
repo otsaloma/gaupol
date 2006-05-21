@@ -26,7 +26,6 @@ Plans for 0.5.0
 
   * gtk
     - No need to check if translator-credits is translated
-    - Unlimited undo by default?
     - UIM name: /ui/menubar/edit/edit
     - Spell-check dialog mnemonics: Join _Back, Join _Forward
     - Adjust Durations dialog: Target

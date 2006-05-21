@@ -261,14 +261,14 @@ class FileOpenDelegate(Delegate):
     def add_to_recent_files(self, path):
         """Add path to list of recent files."""
 
-        recent_files = config.file.recent_files
+        recent_files = config.file.recent
         try:
             recent_files.remove(path)
         except ValueError:
             pass
         recent_files.insert(0, path)
 
-        while len(recent_files) > config.file.maximum_recent_files:
+        while len(recent_files) > config.file.max_recent:
             recent_files.pop()
 
     def _check_file_open(self, path):
@@ -398,7 +398,7 @@ class FileOpenDelegate(Delegate):
         """Open a recent main file."""
 
         index = int(action.get_name().split('_')[-1])
-        path = config.file.recent_files[index]
+        path = config.file.recent[index]
         self.open_main_files([path])
 
     def on_open_translation_file_activated(self, *args):
@@ -492,8 +492,7 @@ class FileOpenDelegate(Delegate):
                 continue
 
             # Guess video file path.
-            extensions = config.preview.extensions
-            page.project.guess_video_file_path(extensions)
+            page.project.guess_video_file_path()
 
             self._add_new_project(page)
 

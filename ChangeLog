@@ -1,5 +1,25 @@
 2006-05-21  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/util/config.py:
+	* lib/gaupol/gtk/util/test/test_config.py:
+	  Cleaned up code and separated testing.
+
+	* lib/gaupol/gtk/delegates/fileopen.py:
+	* lib/gaupol/gtk/delegates/filesave.py:
+	* lib/gaupol/gtk/delegates/menuupdate.py:
+	* lib/gaupol/gtk/delegates/spellcheck.py:
+	* lib/gaupol/gtk/delegates/view.py:
+	* lib/gaupol/gtk/dialogs/language.py:
+	* lib/gaupol/gtk/dialogs/spellcheck.py:
+	* lib/gaupol/gtk/view.py:
+	  Adapted to above changes.
+
+	* lib/gaupol/gtk/dialogs/filechooser.py:
+	  (OpenFileDialog.__init__): Check if config.file.directory is None
+	  before calling self.set_current_folder(...).
+
+2006-05-21  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/gtk/util/gtklib.py:
 	* lib/gaupol/gtk/util/test:
 	* lib/gaupol/gtk/util/test/__init__.py:

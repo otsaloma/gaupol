@@ -74,8 +74,8 @@ class LanguageDialog(object):
         # Languages
         main_selection = self._lang_main_view.get_selection()
         tran_selection = self._lang_tran_view.get_selection()
-        main_lang = config.spell_check.main_language
-        tran_lang = config.spell_check.translation_language
+        main_lang = config.spell_check.main_lang
+        tran_lang = config.spell_check.tran_lang
         try:
             row = self._langs.index(main_lang)
             main_selection.select_path(row)
@@ -93,7 +93,7 @@ class LanguageDialog(object):
 
         # Columns
         check_main = config.spell_check.main
-        check_tran = config.spell_check.translation
+        check_tran = config.spell_check.tran
         self._col_main_check.set_active(check_main)
         self._col_tran_check.set_active(check_tran)
         self._lang_main_view.set_sensitive(check_main)
@@ -192,7 +192,7 @@ class LanguageDialog(object):
         """Set checking of translation texts."""
 
         check = check_button.get_active()
-        config.spell_check.translation = check
+        config.spell_check.tran = check
         self._lang_tran_view.set_sensitive(check)
 
     def _on_lang_main_view_selection_changed(self, *args):
@@ -200,14 +200,14 @@ class LanguageDialog(object):
 
         row = self._get_selected_language_row(self._lang_main_view)
         if row is not None:
-            config.spell_check.main_language = self._langs[row]
+            config.spell_check.main_lang = self._langs[row]
 
     def _on_lang_tran_view_selection_changed(self, *args):
         """Set translation text language."""
 
         row = self._get_selected_language_row(self._lang_tran_view)
         if row is not None:
-            config.spell_check.translation_language = self._langs[row]
+            config.spell_check.tran_lang = self._langs[row]
 
     def _on_prj_all_radio_toggled(self, radio_button):
         """Set project to check."""

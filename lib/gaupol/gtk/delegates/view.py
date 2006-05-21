@@ -62,7 +62,7 @@ class ToggleColumnAction(UIMAction):
     def get_uim_toggle_item_value(cls):
         """Return value of the UI manager toggle item."""
 
-        return cls.col in config.editor.visible_columns
+        return cls.col in config.editor.visible_cols
 
     @classmethod
     def is_doable(cls, application, page):
@@ -460,7 +460,7 @@ class ViewDelegate(Delegate):
             if page.view.get_column(i).get_visible():
                 visible_columns.append(i)
 
-        config.editor.visible_columns = visible_columns
+        config.editor.visible_cols = visible_columns
         self.set_sensitivities(page)
         self.set_character_status(page)
         gtklib.set_cursor_normal(self.window)

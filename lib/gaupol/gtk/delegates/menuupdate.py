@@ -54,7 +54,7 @@ class MenuUpdateDelegate(Delegate):
     def on_open_button_show_menu(self, *args):
         """Build the recent files menu."""
 
-        recent_files = config.file.recent_files
+        recent_files = config.file.recent
         for i in reversed(range(len(recent_files))):
             if not os.path.isfile(recent_files[i]):
                 recent_files.pop(i)
@@ -106,7 +106,7 @@ class MenuUpdateDelegate(Delegate):
         Build the file menu by adding all open projects.
 
         Project action name fields are integers matching the file's index in
-        config.file.recent_files and action fields are "open_recent_file_N".
+        config.file.recent and action fields are "open_recent_file_N".
         """
         # Remove old actions.
         action_group = self._get_action_group('recent')
@@ -117,7 +117,7 @@ class MenuUpdateDelegate(Delegate):
         if self.recent_uim_id is not None:
             self.uim.remove_ui(self.recent_uim_id)
 
-        recent_files = config.file.recent_files
+        recent_files = config.file.recent
         for i in reversed(range(len(recent_files))):
             if not os.path.isfile(recent_files[i]):
                 recent_files.pop(i)

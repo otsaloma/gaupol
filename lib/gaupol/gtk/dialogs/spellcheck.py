@@ -164,8 +164,8 @@ class SpellCheckDialog(gobject.GObject):
 
         # Language codes and descriptive names
         self._langs = [
-            config.spell_check.main_language,
-            config.spell_check.translation_language
+            config.spell_check.main_lang,
+            config.spell_check.tran_lang
         ]
         self._lang_names = [None, None]
 
@@ -338,7 +338,7 @@ class SpellCheckDialog(gobject.GObject):
             self._init_checker(MAIN)
             self._init_replacements(MAIN)
 
-        if config.spell_check.translation:
+        if config.spell_check.tran:
             self._init_lang_name(TRAN)
             self._init_checker(TRAN)
             self._init_replacements(TRAN)
@@ -632,7 +632,7 @@ class SpellCheckDialog(gobject.GObject):
             self._texts[self._row + 1]
             self._row += 1
         except IndexError:
-            if self._document == MAIN and config.spell_check.translation:
+            if self._document == MAIN and config.spell_check.tran:
                 self._set_document(TRAN)
             else:
                 self._register_changes()
@@ -653,7 +653,7 @@ class SpellCheckDialog(gobject.GObject):
 
         if config.spell_check.main:
             self._set_document(MAIN)
-        elif config.spell_check.translation:
+        elif config.spell_check.tran:
             self._set_document(TRAN)
 
     def show(self):
@@ -730,10 +730,10 @@ if __name__ == '__main__':
             page_2.project.remove_subtitles([1])
             pages  = [page_1, page_2]
 
-            config.spell_check.main_language        = 'en_CA'
-            config.spell_check.translation_language = 'en_CA'
+            config.spell_check.main_lang        = 'en_CA'
+            config.spell_check.tran_lang = 'en_CA'
             config.spell_check.main        = True
-            config.spell_check.translation = True
+            config.spell_check.tran = True
 
             self.repl_path = os.path.join(SPELL_CHECK_DIR, 'en_CA.repl')
             self.dict_path = os.path.join(SPELL_CHECK_DIR, 'en_CA.dict')

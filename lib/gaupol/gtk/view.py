@@ -107,7 +107,7 @@ class View(gtk.TreeView):
             self.append_column(tree_view_column)
             tree_view_column.set_clickable(True)
             tree_view_column.set_resizable(True)
-            if not i in config.editor.visible_columns:
+            if not i in config.editor.visible_cols:
                 tree_view_column.set_visible(False)
 
             # Set a label widget as the tree_view_column title.

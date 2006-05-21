@@ -109,13 +109,13 @@ class SpellCheckAction(UIMAction):
             return False
 
         if not config.spell_check.main and \
-           not config.spell_check.translation:
+           not config.spell_check.tran:
             return False
         if config.spell_check.main and \
-           config.spell_check.main_language is None:
+           config.spell_check.main_lang is None:
             return False
-        if config.spell_check.translation and \
-           config.spell_check.translation_language is None:
+        if config.spell_check.tran and \
+           config.spell_check.tran_lang is None:
             return False
 
         return True

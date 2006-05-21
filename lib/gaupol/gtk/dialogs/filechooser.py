@@ -225,7 +225,8 @@ class OpenFileDialog(TextFileChooserDialog):
         self._init_encoding_data()
         self._init_signals()
 
-        self.set_current_folder(config.file.directory)
+        if config.file.directory is not None:
+            self.set_current_folder(config.file.directory)
         self.set_default_response(gtk.RESPONSE_OK)
 
     def _init_extra_widget(self):
