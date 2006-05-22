@@ -1,5 +1,15 @@
 2006-05-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* - lib/gaupol/constants.py:
+	* + lib/gaupol/base/cons.py:
+	  Renamed file.
+
+	* - lib/gaupol/gtk/colconstants.py:
+	* + lib/gaupol/gtk/colcons.py:
+	  Renamed file.
+
+2006-05-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/__init__.py:
 	* lib/gaupol/gtk/colconstants.py:
 	* lib/gaupol/constants.py:
