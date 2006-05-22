@@ -20,7 +20,7 @@
 import ConfigParser
 
 from gaupol.base.cons   import *
-from gaupol.gtk.colcons import *
+from gaupol.gtk.cons import *
 from gaupol.gtk.util    import config
 from gaupol.test        import Test
 

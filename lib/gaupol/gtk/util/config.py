@@ -36,7 +36,7 @@ import sys
 
 from gaupol             import __version__
 from gaupol.base.cons   import *
-from gaupol.gtk.colcons import *
+from gaupol.gtk.cons import *
 
 
 CONFIG_DIR    = os.path.join(os.path.expanduser('~'), '.gaupol')

@@ -1,5 +1,39 @@
 2006-05-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* - lib/gaupol/gtk/colcons.py:
+	* + lib/gaupol/gtk/cons.py:
+	  Renamed file.
+
+	* lib/gaupol/base/colcons.py:
+	  Removed file.
+
+	* lib/gaupol/base/cons.py:
+	  Added column constants.
+
+	* lib/gaupol/base/delegates/edit.py:
+	* lib/gaupol/base/delegates/fileopen.py:
+	* lib/gaupol/base/delegates/filesave.py:
+	* lib/gaupol/base/delegates/format.py:
+	* lib/gaupol/base/delegates/position.py:
+	* lib/gaupol/base/delegates/preview.py:
+	* lib/gaupol/gtk/delegates/action.py:
+	* lib/gaupol/gtk/delegates/appupdate.py:
+	* lib/gaupol/gtk/delegates/edit.py:
+	* lib/gaupol/gtk/delegates/fileopen.py:
+	* lib/gaupol/gtk/delegates/filesave.py:
+	* lib/gaupol/gtk/delegates/format.py:
+	* lib/gaupol/gtk/delegates/preview.py:
+	* lib/gaupol/gtk/delegates/view.py:
+	* lib/gaupol/gtk/delegates/viewupdate.py:
+	* lib/gaupol/gtk/dialogs/find.py:
+	* lib/gaupol/gtk/page.py:
+	* lib/gaupol/gtk/util/config.py:
+	* lib/gaupol/gtk/util/test/test_config.py:
+	* lib/gaupol/gtk/view.py:
+	  Adjusted to all constant renamings.
+
+2006-05-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* + lib/gaupol/base/colcons.py:
 	* - lib/gaupol/base/colconstants.py:
 	  Renamed file.

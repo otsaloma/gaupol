@@ -32,7 +32,7 @@ import gobject
 import gtk
 
 from gaupol.base.cons        import Framerate, Mode
-from gaupol.gtk.colcons import *
+from gaupol.gtk.cons import *
 from gaupol.gtk.delegates    import Delegate, UIMAction, UIMActions
 from gaupol.gtk.util         import config, gtklib
 

@@ -17,12 +17,17 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""gaupol-wide constants."""
+"""Constants."""
 
 
 import sys
 
 from gettext import gettext as _
+
+
+SHOW = 0
+HIDE = 1
+DURN = 2
 
 
 class Action(object):
@@ -150,6 +155,14 @@ class Newlines(object):
 
 class VideoPlayer(object):
 
+    """
+    %v = Video filename
+    %s = Subtitle filename
+    %t = Time
+    %c = Seconds
+    %f = Frame
+    """
+
     MPLAYER = 0
     VLC     = 1
 
@@ -163,20 +176,18 @@ class VideoPlayer(object):
         'vlc',
     ]
 
-    # %v = Video filename
-    # %s = Subtitle filename
-    # %t = Time
-    # %c = Seconds
-    # %f = Frame
+    ARGS = [
+        '-identify -osdlevel 2 -ss %c -sub "%s" "%v"',
+        '--start-time=%c --sub-file="%s" "%v"',
+    ]
 
     COMMANDS = [
-        'mplayer -identify -osdlevel 2 -ss %c -sub "%s" "%v"',
-        'vlc --start-time=%c --sub-file="%s" "%v"',
+        'mplayer ' + ARGS[0],
+        'vlc '     + ARGS[1],
     ]
+
     if sys.platform == 'win32':
         COMMANDS = [
-            r'%ProgramFiles%\mplayer\mplayer.exe ' \
-                '-identify -osdlevel 2 -ss %c -sub "%s" "%v"',
-            r'%ProgramFiles%\VideoLAN\vlc\vlc.exe ' \
-                '--start-time=%c --sub-file="%s" "%v"',
+            r'%ProgramFiles%\mplayer\mplayer.exe '  + ARGS[0],
+            r'%ProgramFiles%\VideoLAN\vlc\vlc.exe ' + ARGS[1],
         ]

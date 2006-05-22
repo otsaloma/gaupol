@@ -31,7 +31,7 @@ import os
 import shutil
 import tempfile
 
-from gaupol.base.colcons   import *
+from gaupol.base.cons import SHOW, HIDE, DURN
 from gaupol.base.delegates      import Delegate
 from gaupol.base.files.classes  import *
 from gaupol.base.tags.converter import TagConverter
