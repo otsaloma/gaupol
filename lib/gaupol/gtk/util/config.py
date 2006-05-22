@@ -34,9 +34,9 @@ import ConfigParser
 import os
 import sys
 
-from gaupol                  import __version__
-from gaupol.constants        import *
-from gaupol.gtk.colconstants import *
+from gaupol             import __version__
+from gaupol.base.cons   import *
+from gaupol.gtk.colcons import *
 
 
 CONFIG_DIR    = os.path.join(os.path.expanduser('~'), '.gaupol')

@@ -28,8 +28,8 @@ except ImportError:
 from gettext import gettext as _
 import gtk
 
-from gaupol.constants        import Framerate, Mode
-from gaupol.gtk.colconstants import *
+from gaupol.base.cons        import Framerate, Mode
+from gaupol.gtk.colcons import *
 from gaupol.gtk.delegates    import Delegate, UIMAction
 from gaupol.gtk.util         import config, gtklib
 from gaupol.gtk.view         import View

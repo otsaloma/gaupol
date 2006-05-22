@@ -18,7 +18,7 @@
 
 
 from gaupol.base.position.calc import TimeFrameCalculator
-from gaupol.constants          import Framerate
+from gaupol.base.cons          import Framerate
 from gaupol.test               import Test
 
 

@@ -31,7 +31,7 @@ import os
 import gtk
 
 from gaupol.base.util            import encodinglib
-from gaupol.constants            import Format, Newlines
+from gaupol.base.cons            import Format, Newlines
 from gaupol.gtk.dialogs.encoding import AdvancedEncodingDialog
 from gaupol.gtk.dialogs.message  import QuestionDialog
 from gaupol.gtk.util             import config

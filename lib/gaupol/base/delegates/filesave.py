@@ -31,11 +31,11 @@ import os
 import shutil
 import tempfile
 
-from gaupol.base.colconstants   import *
+from gaupol.base.colcons   import *
 from gaupol.base.delegates      import Delegate
 from gaupol.base.files.classes  import *
 from gaupol.base.tags.converter import TagConverter
-from gaupol.constants           import Document, Format, Mode
+from gaupol.base.cons           import Document, Format, Mode
 
 
 logger = logging.getLogger()
@@ -202,7 +202,7 @@ class FileSaveDelegate(Delegate):
 
 if __name__ == '__main__':
 
-    from gaupol.constants import Newlines
+    from gaupol.base.cons import Newlines
     from gaupol.test      import Test
 
     class TestFileSaveDelegate(Test):

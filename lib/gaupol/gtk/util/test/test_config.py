@@ -19,10 +19,10 @@
 
 import ConfigParser
 
-from gaupol.constants        import *
-from gaupol.gtk.colconstants import *
-from gaupol.gtk.util         import config
-from gaupol.test             import Test
+from gaupol.base.cons   import *
+from gaupol.gtk.colcons import *
+from gaupol.gtk.util    import config
+from gaupol.test        import Test
 
 
 class TestType(Test):

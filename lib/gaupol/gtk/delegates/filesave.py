@@ -31,8 +31,8 @@ import os
 import gtk
 
 from gaupol.base.util               import encodinglib
-from gaupol.constants               import Document
-from gaupol.gtk.colconstants        import *
+from gaupol.base.cons               import Document
+from gaupol.gtk.colcons        import *
 from gaupol.gtk.delegates           import Delegate, UIMAction
 from gaupol.gtk.dialogs.filechooser import SaveFileDialog
 from gaupol.gtk.dialogs.header      import HeaderDialog
@@ -627,7 +627,7 @@ class FileSaveDelegate(Delegate):
 
 if __name__ == '__main__':
 
-    from gaupol.constants       import Format
+    from gaupol.base.cons       import Format
     from gaupol.gtk.application import Application
     from gaupol.test            import Test
 

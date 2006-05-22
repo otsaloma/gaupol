@@ -28,7 +28,7 @@ except ImportError:
 import gobject
 import gtk
 
-from gaupol.constants import Framerate
+from gaupol.base.cons import Framerate
 from gaupol.gtk.util  import config, gtklib
 
 

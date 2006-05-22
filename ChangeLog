@@ -1,5 +1,61 @@
 2006-05-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* + lib/gaupol/base/colcons.py:
+	* - lib/gaupol/base/colconstants.py:
+	  Renamed file.
+
+	* lib/gaupol/base/delegates/action.py:
+	* lib/gaupol/base/delegates/edit.py:
+	* lib/gaupol/base/delegates/fileopen.py:
+	* lib/gaupol/base/delegates/filesave.py:
+	* lib/gaupol/base/delegates/find.py:
+	* lib/gaupol/base/delegates/format.py:
+	* lib/gaupol/base/delegates/position.py:
+	* lib/gaupol/base/delegates/preview.py:
+	* lib/gaupol/base/delegates/stat.py:
+	* lib/gaupol/base/files/__init__.py:
+	* lib/gaupol/base/files/ass.py:
+	* lib/gaupol/base/files/determiner.py:
+	* lib/gaupol/base/files/microdvd.py:
+	* lib/gaupol/base/files/mpl2.py:
+	* lib/gaupol/base/files/ssa.py:
+	* lib/gaupol/base/files/subrip.py:
+	* lib/gaupol/base/files/subviewer2.py:
+	* lib/gaupol/base/position/calc.py:
+	* lib/gaupol/base/position/test/test_calc.py:
+	* lib/gaupol/base/tags/converter.py:
+	* lib/gaupol/gtk/delegates/action.py:
+	* lib/gaupol/gtk/delegates/appupdate.py:
+	* lib/gaupol/gtk/delegates/edit.py:
+	* lib/gaupol/gtk/delegates/fileclose.py:
+	* lib/gaupol/gtk/delegates/fileopen.py:
+	* lib/gaupol/gtk/delegates/filesave.py:
+	* lib/gaupol/gtk/delegates/format.py:
+	* lib/gaupol/gtk/delegates/guiinit.py:
+	* lib/gaupol/gtk/delegates/menuupdate.py:
+	* lib/gaupol/gtk/delegates/position.py:
+	* lib/gaupol/gtk/delegates/preview.py:
+	* lib/gaupol/gtk/delegates/spellcheck.py:
+	* lib/gaupol/gtk/delegates/view.py:
+	* lib/gaupol/gtk/delegates/viewupdate.py:
+	* lib/gaupol/gtk/dialogs/filechooser.py:
+	* lib/gaupol/gtk/dialogs/find.py:
+	* lib/gaupol/gtk/dialogs/frconvert.py:
+	* lib/gaupol/gtk/dialogs/header.py:
+	* lib/gaupol/gtk/dialogs/multiclose.py:
+	* lib/gaupol/gtk/dialogs/posadjust.py:
+	* lib/gaupol/gtk/dialogs/posshift.py:
+	* lib/gaupol/gtk/dialogs/preferences.py:
+	* lib/gaupol/gtk/dialogs/spellcheck.py:
+	* lib/gaupol/gtk/page.py:
+	* lib/gaupol/gtk/util/config.py:
+	* lib/gaupol/gtk/util/test/test_config.py:
+	* lib/gaupol/gtk/view.py:
+	* lib/gaupol/test/__init__.py:
+	  Adjusted to all constant renamings.
+
+2006-05-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* - lib/gaupol/constants.py:
 	* + lib/gaupol/base/cons.py:
 	  Renamed file.

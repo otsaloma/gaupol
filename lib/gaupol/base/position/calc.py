@@ -20,7 +20,7 @@
 """Time and frame calculations."""
 
 
-from gaupol.constants import Framerate
+from gaupol.base.cons import Framerate
 
 
 class TimeFrameCalculator(object):

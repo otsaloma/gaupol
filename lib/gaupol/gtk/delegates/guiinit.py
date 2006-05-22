@@ -33,7 +33,7 @@ import gobject
 import gtk
 import pango
 
-from gaupol.constants     import Framerate, Mode
+from gaupol.base.cons     import Framerate, Mode
 from gaupol.gtk.delegates import Delegate, UIMActions
 from gaupol.gtk.paths     import UI_DIR, ICON_DIR
 from gaupol.gtk.util      import config, gtklib

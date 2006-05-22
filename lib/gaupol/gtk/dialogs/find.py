@@ -22,9 +22,9 @@ import re
 import gtk
 import gobject
 
-from gaupol.constants        import Document
+from gaupol.base.cons        import Document
 from gaupol.base.util        import listlib, wwwlib
-from gaupol.gtk.colconstants import *
+from gaupol.gtk.colcons import *
 from gaupol.gtk.util         import config, gtklib
 from gaupol.gtk.dialogs.message import InfoDialog
 

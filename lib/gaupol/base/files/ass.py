@@ -30,7 +30,7 @@ import codecs
 from gaupol.base.files.ssa      import SubStationAlpha
 from gaupol.base.position.calc import TimeFrameCalculator
 from gaupol.base.util           import listlib
-from gaupol.constants           import Format, Mode
+from gaupol.base.cons           import Format, Mode
 
 
 

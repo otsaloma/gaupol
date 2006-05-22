@@ -30,7 +30,7 @@ import gtk
 import pango
 
 from gaupol.base.util            import encodinglib
-from gaupol.constants            import VideoPlayer
+from gaupol.base.cons            import VideoPlayer
 from gaupol.gtk.dialogs.encoding import EncodingDialog
 from gaupol.gtk.util             import config, gtklib
 

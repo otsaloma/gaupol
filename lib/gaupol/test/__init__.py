@@ -29,7 +29,7 @@ function and method names with "test_".
 import os
 import tempfile
 
-from gaupol.constants import Framerate, Mode
+from gaupol.base.cons import Framerate, Mode
 
 
 TEXT_SUBRIP = \

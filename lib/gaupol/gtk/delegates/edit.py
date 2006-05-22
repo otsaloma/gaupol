@@ -30,8 +30,8 @@ from gettext import ngettext
 
 import gtk
 
-from gaupol.constants             import Mode
-from gaupol.gtk.colconstants      import *
+from gaupol.base.cons             import Mode
+from gaupol.gtk.colcons      import *
 from gaupol.gtk.delegates         import Delegate, UIMAction
 from gaupol.gtk.dialogs.subinsert import SubtitleInsertDialog
 from gaupol.gtk.dialogs.message   import ErrorDialog

@@ -27,7 +27,7 @@ except ImportError:
 
 import codecs
 
-from gaupol.constants import Newlines
+from gaupol.base.cons import Newlines
 
 
 class SubtitleFile(object):

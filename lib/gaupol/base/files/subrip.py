@@ -30,7 +30,7 @@ import re
 
 from gaupol.base.files import SubtitleFile
 from gaupol.base.util  import listlib
-from gaupol.constants  import Format, Mode
+from gaupol.base.cons  import Format, Mode
 
 
 class SubRip(SubtitleFile):

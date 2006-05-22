@@ -23,7 +23,7 @@
 from gettext import gettext as _
 
 from gaupol.base.delegates import Delegate
-from gaupol.constants      import Action, Document
+from gaupol.base.cons      import Action, Document
 
 
 class FindDelegate(Delegate):

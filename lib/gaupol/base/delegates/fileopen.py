@@ -25,11 +25,11 @@ try:
 except ImportError:
     pass
 
-from gaupol.base.colconstants     import *
+from gaupol.base.colcons     import *
 from gaupol.base.delegates        import Delegate
 from gaupol.base.files.classes    import *
 from gaupol.base.files.determiner import FileFormatDeterminer
-from gaupol.constants             import Format, Mode
+from gaupol.base.cons             import Format, Mode
 
 
 class FileOpenDelegate(Delegate):

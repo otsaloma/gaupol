@@ -31,7 +31,7 @@ import re
 from gaupol.base.files.classes import *
 from gaupol.base.files         import SubtitleFile
 from gaupol.base.error         import FileFormatError
-from gaupol.constants          import Format
+from gaupol.base.cons          import Format
 
 
 class FileFormatDeterminer(SubtitleFile):

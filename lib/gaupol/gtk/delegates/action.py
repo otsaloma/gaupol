@@ -30,7 +30,7 @@ from gettext import gettext as _
 import gtk
 
 from gaupol.base.util        import listlib
-from gaupol.gtk.colconstants import *
+from gaupol.gtk.colcons import *
 from gaupol.gtk.delegates    import Delegate, UIMAction
 from gaupol.gtk.util         import gtklib
 
@@ -229,7 +229,7 @@ class ActionDelegate(Delegate):
 
 if __name__ == '__main__':
 
-    from gaupol.constants       import Document
+    from gaupol.base.cons       import Document
     from gaupol.gtk.application import Application
     from gaupol.test            import Test
 

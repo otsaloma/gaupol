@@ -53,7 +53,7 @@ import bisect
 
 from gaupol.base.delegates import Delegate
 from gaupol.base.util      import listlib
-from gaupol.constants      import Action, Document
+from gaupol.base.cons      import Action, Document
 
 
 class RevertableAction(object):

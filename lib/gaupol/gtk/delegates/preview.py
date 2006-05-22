@@ -35,8 +35,8 @@ import gtk
 import pango
 
 from gaupol.base.error               import ExternalError
-from gaupol.constants                import Document, VideoPlayer
-from gaupol.gtk.colconstants         import *
+from gaupol.base.cons                import Document, VideoPlayer
+from gaupol.gtk.colcons         import *
 from gaupol.gtk.delegates            import Delegate, UIMAction
 from gaupol.gtk.dialogs.message      import ErrorDialog
 from gaupol.gtk.dialogs.previewerror import PreviewErrorDialog

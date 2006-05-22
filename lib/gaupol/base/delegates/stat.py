@@ -55,7 +55,7 @@ class StatisticsDelegate(Delegate):
 
 if __name__ == '__main__':
 
-    from gaupol.constants import Document
+    from gaupol.base.cons import Document
     from gaupol.test      import Test
 
     class TestStatisticsDelegate(Test):

@@ -28,11 +28,11 @@ except ImportError:
 from gettext import gettext as _
 import re
 
-from gaupol.base.colconstants import *
+from gaupol.base.colcons import *
 from gaupol.base.delegates    import Delegate
 from gaupol.base.tags.classes import *
 from gaupol.base.text.parser  import Parser
-from gaupol.constants         import Action, Document, Format
+from gaupol.base.cons         import Action, Document, Format
 
 
 class FormatDelegate(Delegate):

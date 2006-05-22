@@ -29,7 +29,7 @@ import codecs
 import re
 
 from gaupol.base.files import SubtitleFile
-from gaupol.constants  import Format, Mode
+from gaupol.base.cons  import Format, Mode
 
 
 class MicroDVD(SubtitleFile):

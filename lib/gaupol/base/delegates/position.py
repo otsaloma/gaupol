@@ -27,9 +27,9 @@ except ImportError:
 
 from gettext import gettext as _
 
-from gaupol.base.colconstants import *
+from gaupol.base.colcons import *
 from gaupol.base.delegates    import Delegate
-from gaupol.constants         import Action, Document, Framerate, Mode
+from gaupol.base.cons         import Action, Document, Framerate, Mode
 
 
 class TimeFrameDelegate(Delegate):

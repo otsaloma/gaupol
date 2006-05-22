@@ -30,7 +30,7 @@ from gettext import gettext as _
 import gobject
 import gtk
 
-from gaupol.constants        import Mode
+from gaupol.base.cons        import Mode
 from gaupol.gtk.entry.time import EntryTime
 from gaupol.gtk.util         import config, gtklib
 

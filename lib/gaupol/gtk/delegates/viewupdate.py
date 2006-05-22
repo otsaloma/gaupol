@@ -27,7 +27,7 @@ except ImportError:
 
 import gtk
 
-from gaupol.constants     import Document
+from gaupol.base.cons     import Document
 from gaupol.gtk.delegates import Delegate
 
 
@@ -126,7 +126,7 @@ class ViewUpdateDelegate(Delegate):
 if __name__ == '__main__':
 
     from gaupol.gtk.application  import Application
-    from gaupol.gtk.colconstants import *
+    from gaupol.gtk.colcons import *
     from gaupol.test             import Test
 
     class TestViewUpdateDelegate(Test):

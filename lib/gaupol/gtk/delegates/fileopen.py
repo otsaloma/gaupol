@@ -34,8 +34,8 @@ import gtk
 
 from gaupol.base.error              import FileFormatError
 from gaupol.base.util               import encodinglib, listlib
-from gaupol.constants               import Document, Format
-from gaupol.gtk.colconstants        import *
+from gaupol.base.cons               import Document, Format
+from gaupol.gtk.colcons        import *
 from gaupol.gtk.delegates           import Delegate, UIMAction
 from gaupol.gtk.dialogs.filechooser import OpenFileDialog, OpenVideoDialog
 from gaupol.gtk.dialogs.message     import ErrorDialog, WarningDialog

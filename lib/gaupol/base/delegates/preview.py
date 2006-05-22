@@ -29,10 +29,10 @@ import os
 import subprocess
 import tempfile
 
-from gaupol.base.colconstants import *
+from gaupol.base.colcons import *
 from gaupol.base.delegates    import Delegate
 from gaupol.base.error        import ExternalError
-from gaupol.constants         import Document, Format
+from gaupol.base.cons         import Document, Format
 
 
 default_extensions = (

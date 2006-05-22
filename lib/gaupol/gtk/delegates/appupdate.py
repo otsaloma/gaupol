@@ -31,8 +31,8 @@ import os
 import gobject
 import gtk
 
-from gaupol.constants        import Framerate, Mode
-from gaupol.gtk.colconstants import *
+from gaupol.base.cons        import Framerate, Mode
+from gaupol.gtk.colcons import *
 from gaupol.gtk.delegates    import Delegate, UIMAction, UIMActions
 from gaupol.gtk.util         import config, gtklib
 
