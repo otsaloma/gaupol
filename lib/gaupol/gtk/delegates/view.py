@@ -85,7 +85,7 @@ class ToggleColumnNoAction(ToggleColumnAction):
         1
     )
 
-    uim_paths = ['/ui/menubar/view/columns/%s' % Column.ID_NAMES[col]]
+    uim_paths = ['/ui/menubar/view/columns/%s' % Column.id_names[col]]
 
 
 class ToggleColumnShowAction(ToggleColumnAction):
@@ -102,7 +102,7 @@ class ToggleColumnShowAction(ToggleColumnAction):
         1
     )
 
-    uim_paths = ['/ui/menubar/view/columns/%s' % Column.ID_NAMES[col]]
+    uim_paths = ['/ui/menubar/view/columns/%s' % Column.id_names[col]]
 
 
 class ToggleColumnHideAction(ToggleColumnAction):
@@ -119,7 +119,7 @@ class ToggleColumnHideAction(ToggleColumnAction):
         1
     )
 
-    uim_paths = ['/ui/menubar/view/columns/%s' % Column.ID_NAMES[col]]
+    uim_paths = ['/ui/menubar/view/columns/%s' % Column.id_names[col]]
 
 
 class ToggleColumnDurationAction(ToggleColumnAction):
@@ -136,7 +136,7 @@ class ToggleColumnDurationAction(ToggleColumnAction):
         1
     )
 
-    uim_paths = ['/ui/menubar/view/columns/%s' % Column.ID_NAMES[col]]
+    uim_paths = ['/ui/menubar/view/columns/%s' % Column.id_names[col]]
 
 
 class ToggleColumnMainTextAction(ToggleColumnAction):
@@ -153,7 +153,7 @@ class ToggleColumnMainTextAction(ToggleColumnAction):
         1
     )
 
-    uim_paths = ['/ui/menubar/view/columns/%s' % Column.ID_NAMES[col]]
+    uim_paths = ['/ui/menubar/view/columns/%s' % Column.id_names[col]]
 
 
 class ToggleColumnTranslationTextAction(ToggleColumnAction):
@@ -161,7 +161,7 @@ class ToggleColumnTranslationTextAction(ToggleColumnAction):
     col = TTXT
 
     uim_toggle_item = (
-        'toggle_translation_text_column',
+        'toggle_tran_text_column',
         None,
         _('_Translation Text'),
         None,
@@ -170,7 +170,7 @@ class ToggleColumnTranslationTextAction(ToggleColumnAction):
         1
     )
 
-    uim_paths = ['/ui/menubar/view/columns/%s' % Column.ID_NAMES[col]]
+    uim_paths = ['/ui/menubar/view/columns/%s' % Column.id_names[col]]
 
 
 class ToggleEditModeAction(UIMAction):
@@ -294,7 +294,7 @@ class ToggleMainToolbarAction(UIMAction):
     def get_uim_toggle_item_value(cls):
         """Return value of the UI manager toggle item."""
 
-        return config.application_window.show_main_toolbar
+        return config.app_window.show_main_toolbar
 
     @classmethod
     def is_doable(cls, application, page):
@@ -352,7 +352,7 @@ class ToggleStatusbarAction(UIMAction):
     def get_uim_toggle_item_value(cls):
         """Return value of the UI manager toggle item."""
 
-        return config.application_window.show_statusbar
+        return config.app_window.show_statusbar
 
     @classmethod
     def is_doable(cls, application, page):
@@ -381,7 +381,7 @@ class ToggleVideoToolbarAction(UIMAction):
     def get_uim_toggle_item_value(cls):
         """Return value of the UI manager toggle item."""
 
-        return config.application_window.show_video_toolbar
+        return config.app_window.show_video_toolbar
 
     @classmethod
     def is_doable(cls, application, page):
@@ -412,7 +412,7 @@ class ViewDelegate(Delegate):
         page.project.change_framerate(framerate)
         config.editor.framerate = framerate
 
-        name = Framerate.ID_NAMES[framerate]
+        name = Framerate.id_names[framerate]
         path = '/ui/menubar/view/framerate/%s' % name
         self.uim.get_widget(path).set_active(True)
 
@@ -438,13 +438,13 @@ class ViewDelegate(Delegate):
             'toggle_hide_column',
             'toggle_duration_column',
             'toggle_main_text_column',
-            'toggle_translation_text_column'
+            'toggle_tran_text_column'
         ].index(action.get_name())
 
         tree_view_column = page.view.get_column(col)
         visible = tree_view_column.get_visible()
 
-        path = '/ui/menubar/view/columns/%s' % Column.ID_NAMES[col]
+        path = '/ui/menubar/view/columns/%s' % Column.id_names[col]
         action = self.uim.get_action(path)
         active = action.get_active()
 
@@ -554,7 +554,7 @@ class ViewDelegate(Delegate):
         visible = toolbar.props.visible
 
         toolbar.props.visible = not visible
-        config.application_window.show_main_toolbar = not visible
+        config.app_window.show_main_toolbar = not visible
 
     def on_toggle_output_window_activated(self, *args):
         """Toggle the visibility of the video player output window."""
@@ -574,7 +574,7 @@ class ViewDelegate(Delegate):
         visible = hbox.props.visible
 
         hbox.props.visible = not visible
-        config.application_window.show_statusbar = not visible
+        config.app_window.show_statusbar = not visible
 
     def on_toggle_video_toolbar_activated(self, *args):
         """Toggle the visibility of the video toolbar."""
@@ -583,7 +583,7 @@ class ViewDelegate(Delegate):
         visible = toolbar.props.visible
 
         toolbar.props.visible = not visible
-        config.application_window.show_video_toolbar = not visible
+        config.app_window.show_video_toolbar = not visible
 
     def on_view_headers_clicked(self, button, event):
         """Show a popup menu when the view header is right-clicked."""

@@ -25,6 +25,19 @@ import sys
 from gettext import gettext as _
 
 
+__all__ = [
+    'SHOW',
+    'HIDE',
+    'DURN',
+    'Action',
+    'Document',
+    'Format',
+    'Framerate',
+    'Mode',
+    'Newlines',
+    'VideoPlayer',
+]
+
 SHOW = 0
 HIDE = 1
 DURN = 2
@@ -55,7 +68,7 @@ class Format(object):
     SSA        = 4
     SUBVIEWER2 = 5
 
-    CLASS_NAMES = [
+    class_names = [
         'AdvancedSubStationAlpha',
         'MicroDVD',
         'MPL2',
@@ -64,7 +77,7 @@ class Format(object):
         'SubViewer2',
     ]
 
-    DISPLAY_NAMES = [
+    display_names = [
         _('Advanced Sub Station Alpha'),
         _('MicroDVD'),
         _('MPL2'),
@@ -73,7 +86,7 @@ class Format(object):
         _('SubViewer 2.0'),
     ]
 
-    EXTENSIONS = [
+    extensions = [
         '.ass',
         '.sub',
         '.txt',
@@ -82,7 +95,7 @@ class Format(object):
         '.sub',
     ]
 
-    ID_NAMES = [
+    id_names = [
         'ass',
         'microdvd',
         'mpl2',
@@ -98,19 +111,19 @@ class Framerate(object):
     FR_25     = 1
     FR_29_97  = 2
 
-    DISPLAY_NAMES = [
+    display_names = [
         _('23.976 fps'),
         _('25 fps'),
         _('29.97 fps'),
     ]
 
-    ID_NAMES = [
+    id_names = [
         '23_976',
         '25',
         '29_97',
     ]
 
-    VALUES = [
+    values = [
         23.976,
         25.0,
         29.97,
@@ -122,7 +135,7 @@ class Mode(object):
     TIME  = 0
     FRAME = 1
 
-    ID_NAMES = [
+    id_names = [
         'time',
         'frame',
     ]
@@ -134,19 +147,19 @@ class Newlines(object):
     UNIX    = 1
     WINDOWS = 2
 
-    DISPLAY_NAMES = [
+    display_names = [
         _('Mac'),
         _('Unix'),
         _('Windows'),
     ]
 
-    ID_NAMES = [
+    id_names = [
         'mac',
         'unix',
         'windows',
     ]
 
-    VALUES = [
+    values = [
         '\r',
         '\n',
         '\r\n',
@@ -166,28 +179,27 @@ class VideoPlayer(object):
     MPLAYER = 0
     VLC     = 1
 
-    DISPLAY_NAMES = [
+    display_names = [
         _('MPlayer'),
         _('VLC'),
     ]
 
-    ID_NAMES = [
+    id_names = [
         'mplayer',
         'vlc',
     ]
 
-    ARGS = [
+    args = [
         '-identify -osdlevel 2 -ss %c -sub "%s" "%v"',
         '--start-time=%c --sub-file="%s" "%v"',
     ]
 
-    COMMANDS = [
-        'mplayer ' + ARGS[0],
-        'vlc '     + ARGS[1],
+    commands = [
+        'mplayer ' + args[0],
+        'vlc '     + args[1],
     ]
-
     if sys.platform == 'win32':
-        COMMANDS = [
-            r'%ProgramFiles%\mplayer\mplayer.exe '  + ARGS[0],
-            r'%ProgramFiles%\VideoLAN\vlc\vlc.exe ' + ARGS[1],
+        commands = [
+            r'%ProgramFiles%\mplayer\mplayer.exe '  + args[0],
+            r'%ProgramFiles%\VideoLAN\vlc\vlc.exe ' + args[1],
         ]

@@ -93,7 +93,7 @@ class View(gtk.TreeView):
         self.set_model(store)
 
         TVC   = gtk.TreeViewColumn
-        names = Column.DISPLAY_NAMES
+        names = Column.display_names
         tree_view_column_0 = TVC(names[0], cell_renderer_0, text=0)
         tree_view_column_1 = TVC(names[1], cell_renderer_1, text=1)
         tree_view_column_2 = TVC(names[2], cell_renderer_2, text=2)

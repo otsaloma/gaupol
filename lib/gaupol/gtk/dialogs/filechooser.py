@@ -75,7 +75,7 @@ class TextFileChooserDialog(gtk.FileChooserDialog):
 
         self._encodings = []
 
-        for encoding in config.file.visible_encodings:
+        for encoding in config.encoding.visibles:
             try:
                 name = encodinglib.get_descriptive_name(encoding)
                 self._encodings.append((encoding, name))
@@ -133,8 +133,8 @@ class TextFileChooserDialog(gtk.FileChooserDialog):
             (_('Plain text files'), 'text/plain', None),
         ]
 
-        for i, format_name in enumerate(Format.DISPLAY_NAMES):
-            pattern = '*' + Format.EXTENSIONS[i]
+        for i, format_name in enumerate(Format.display_names):
+            pattern = '*' + Format.extensions[i]
             # Translators: File filters, e.g. "SubRip (*.srt)".
             name = _('%s (%s)') % (format_name, pattern)
             filters.append((name, None, pattern))
@@ -188,7 +188,7 @@ class TextFileChooserDialog(gtk.FileChooserDialog):
             encoding = dialog.get_encoding()
             if encoding is not None:
                 config.file.encoding = encoding
-            config.file.visible_encodings = dialog.get_visible_encodings()
+            config.encoding.visibles = dialog.get_visible_encodings()
         dialog.destroy()
 
         self._init_encodings()
@@ -331,14 +331,14 @@ class SaveFileDialog(TextFileChooserDialog):
     def _init_format_data(self):
         """Initialize format combo box data."""
 
-        for name in Format.DISPLAY_NAMES:
+        for name in Format.display_names:
             self._format_combo.append_text(name)
         self._format_combo.set_active(0)
 
     def _init_newline_data(self):
         """Initialize newline combo box data."""
 
-        for name in Newlines.DISPLAY_NAMES:
+        for name in Newlines.display_names:
             self._newline_combo.append_text(name)
         self._format_combo.set_active(0)
 
@@ -384,7 +384,7 @@ class SaveFileDialog(TextFileChooserDialog):
         if path is None:
             return None
 
-        extension = Format.EXTENSIONS[self.get_format()]
+        extension = Format.extensions[self.get_format()]
         if not path.endswith(extension):
             path += extension
         return path
@@ -414,13 +414,13 @@ class SaveFileDialog(TextFileChooserDialog):
         basename = os.path.basename(path)
 
         # Remove possible existing extension.
-        for extension in Format.EXTENSIONS:
+        for extension in Format.extensions:
             if basename.endswith(extension):
                 basename = basename[:-len(extension)]
                 break
 
         # Add new extension.
-        basename += Format.EXTENSIONS[new_format]
+        basename += Format.extensions[new_format]
         path = os.path.join(dirname, basename)
         self.set_current_name(basename)
         self.set_filename(path)

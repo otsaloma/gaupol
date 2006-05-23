@@ -6,9 +6,9 @@ import os
 import shutil
 import time
 
-NAME  = 'Osmo Salomaa'
-EMAIL = 'otsaloma@cc.hut.fi'
-DATE  = time.strftime('%Y-%m-%d')
+name  = 'Osmo Salomaa'
+email = 'otsaloma@cc.hut.fi'
+date  = time.strftime('%Y-%m-%d')
 
 tool_dir   = os.path.dirname(os.path.abspath(__file__))
 source_dir = os.path.join(tool_dir, '..')
@@ -27,7 +27,7 @@ for i in reversed(range(len(files))):
         files.pop(i)
 files.sort()
 
-new_entry = '%s  %s  <%s>\n\n' % (DATE, NAME, EMAIL)
+new_entry = '%s  %s  <%s>\n\n' % (date, name, email)
 for path in files:
     print 'Adding %s.' % path
     new_entry += '\t* %s:\n\n' % path

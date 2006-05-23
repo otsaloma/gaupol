@@ -330,10 +330,10 @@ class FileOpenDelegate(Delegate):
     def _get_tryable_encodings(self, first_encoding=None):
         """Get a list of encodings to try."""
 
-        encodings = config.file.fallback_encodings[:]
+        encodings = config.encoding.fallbacks[:]
 
         # Add locale encoding.
-        if config.file.try_locale_encoding:
+        if config.encoding.try_locale:
             try:
                 encodings.insert(0, encodinglib.get_locale_encoding()[0])
             except ValueError:
@@ -434,7 +434,7 @@ class FileOpenDelegate(Delegate):
 
         # Show the translation column.
         if not page.view.get_column(TTXT).get_visible():
-            path = '/ui/menubar/view/columns/%s' % Column.ID_NAMES[TTXT]
+            path = '/ui/menubar/view/columns/%s' % Column.id_names[TTXT]
             self.uim.get_action(path).activate()
 
         self.set_sensitivities()
@@ -566,7 +566,7 @@ class FileOpenDelegate(Delegate):
 
             else:
                 if format in (Format.SSA, Format.ASS) and \
-                   config.file.warn_opening_ssa:
+                   config.file.warn_ssa:
                     dialog = SSAWarningDialog(self.window)
                     gtklib.set_cursor_normal(self.window)
                     response = dialog.run()

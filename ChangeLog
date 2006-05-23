@@ -1,3 +1,48 @@
+2006-05-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/ui/menubar.xml:
+	* data/ui/popups.xml:
+	* lib/gaupol/base/cons.py:
+	* lib/gaupol/base/delegates/edit.py:
+	* lib/gaupol/base/delegates/fileopen.py:
+	* lib/gaupol/base/delegates/filesave.py:
+	* lib/gaupol/base/delegates/format.py:
+	* lib/gaupol/base/delegates/position.py:
+	* lib/gaupol/base/delegates/preview.py:
+	* lib/gaupol/base/files/__init__.py:
+	* lib/gaupol/base/files/determiner.py:
+	* lib/gaupol/base/position/calc.py:
+	* lib/gaupol/base/position/test/test_calc.py:
+	* lib/gaupol/base/tags/converter.py:
+	* lib/gaupol/base/text/test/test_finder.py:
+	* lib/gaupol/base/text/test/test_parser.py:
+	* lib/gaupol/base/util/encodinglib.py:
+	* lib/gaupol/base/util/langlib.py:
+	* lib/gaupol/base/util/wwwlib.py:
+	* lib/gaupol/gtk/cons.py:
+	* lib/gaupol/gtk/delegates/appupdate.py:
+	* lib/gaupol/gtk/delegates/fileclose.py:
+	* lib/gaupol/gtk/delegates/fileopen.py:
+	* lib/gaupol/gtk/delegates/guiinit.py:
+	* lib/gaupol/gtk/delegates/preview.py:
+	* lib/gaupol/gtk/delegates/view.py:
+	* lib/gaupol/gtk/dialogs/encoding.py:
+	* lib/gaupol/gtk/dialogs/filechooser.py:
+	* lib/gaupol/gtk/dialogs/frconvert.py:
+	* lib/gaupol/gtk/dialogs/header.py:
+	* lib/gaupol/gtk/dialogs/preferences.py:
+	* lib/gaupol/gtk/entry/time.py:
+	* lib/gaupol/gtk/page.py:
+	* lib/gaupol/gtk/util/config.py:
+	* lib/gaupol/gtk/util/gtklib.py:
+	* lib/gaupol/gtk/util/test/test_config.py:
+	* lib/gaupol/gtk/view.py:
+	* lib/gaupol/test/__init__.py:
+	* tools/add-changelog:
+	* tools/pyenchant:
+	* tools/translate:
+	  Renamed config variables.
+
 2006-05-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* - lib/gaupol/gtk/colcons.py:

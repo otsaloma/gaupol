@@ -78,7 +78,7 @@ def browse_url(url, browser=None):
 
     webbrowser.open(url)
 
-def read_url(url, timeout):
+def read_url(url, timeout=10):
     """
     Read remote document specified by url.
 

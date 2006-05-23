@@ -23,7 +23,7 @@ from gaupol.base.text.parser import Parser
 from gaupol.test             import Test
 
 
-TEXT = '''\
+orig_text = '''\
 <i>He changed shifts.</i>
 Didn\'t <i>he</i> tell you?'''
 
@@ -38,14 +38,14 @@ class TestParser(Test):
     def test_get_and_set_text(self):
 
         parser = Parser(re.compile(r'<.*?>'))
-        parser.set_text(TEXT)
-        assert parser.get_text() == TEXT
+        parser.set_text(orig_text)
+        assert parser.get_text() == orig_text
 
     def test_replace(self):
 
         def get_text(pattern, replacement):
             parser = Parser(re.compile(r'<.*?>'))
-            parser.set_text(TEXT)
+            parser.set_text(orig_text)
             parser.pattern = pattern
             parser.replacement = replacement
             parser.next()
@@ -69,7 +69,7 @@ class TestParser(Test):
 
         def get_text(pattern, flags, replacement):
             parser = Parser(re.compile(r'<.*?>'))
-            parser.set_text(TEXT)
+            parser.set_text(orig_text)
             parser.set_regex(pattern, flags)
             parser.replacement = replacement
             parser.next()
@@ -95,7 +95,7 @@ class TestParser(Test):
 
         def get_text(pattern, replacement):
             parser = Parser(re.compile(r'<.*?>'))
-            parser.set_text(TEXT)
+            parser.set_text(orig_text)
             parser.pattern = pattern
             parser.replacement = replacement
             parser.replace_all()
@@ -127,11 +127,11 @@ class TestParser(Test):
             'Didn\'t <i>he</i> tell you'
 
         text = get_text('e', 'e')
-        assert text == TEXT
+        assert text == orig_text
 
         def get_text(pattern, flags, replacement):
             parser = Parser(re.compile(r'<.*?>'))
-            parser.set_text(TEXT)
+            parser.set_text(orig_text)
             parser.set_regex(pattern, flags)
             parser.replacement = replacement
             parser.replace_all()

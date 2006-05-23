@@ -19,10 +19,10 @@
 
 import ConfigParser
 
-from gaupol.base.cons   import *
-from gaupol.gtk.cons import *
-from gaupol.gtk.util    import config
-from gaupol.test        import Test
+from gaupol.base.cons import *
+from gaupol.gtk.cons  import *
+from gaupol.gtk.util  import config
+from gaupol.test      import Test
 
 
 class TestType(Test):
@@ -95,9 +95,9 @@ class TestModule(Test):
         assert config.editor.undo_levels == 99
 
         # Boolean
-        parser.set('application_window', 'maximized', 'true')
-        config._set_config_option(parser, 'application_window', 'maximized')
-        assert config.application_window.maximized is True
+        parser.set('app_window', 'maximized', 'true')
+        config._set_config_option(parser, 'app_window', 'maximized')
+        assert config.app_window.maximized is True
 
         # Constant
         parser.set('editor', 'framerate', '25')
@@ -105,14 +105,14 @@ class TestModule(Test):
         assert config.editor.framerate == Framerate.FR_25
 
         # String list
-        parser.set('file', 'fallback_encodings', 'test%stset' % LIST_SEP)
-        config._set_config_option(parser, 'file', 'fallback_encodings')
-        assert config.file.fallback_encodings == ['test', 'tset']
+        parser.set('encoding', 'fallbacks', 'test%stset' % LIST_SEP)
+        config._set_config_option(parser, 'encoding', 'fallbacks')
+        assert config.encoding.fallbacks == ['test', 'tset']
 
         # Integer list
-        parser.set('application_window', 'position', '3%s4' % LIST_SEP)
-        config._set_config_option(parser, 'application_window', 'position')
-        assert config.application_window.position == [3, 4]
+        parser.set('app_window', 'position', '3%s4' % LIST_SEP)
+        config._set_config_option(parser, 'app_window', 'position')
+        assert config.app_window.position == [3, 4]
 
         # Constant list
         parser.set('editor', 'visible_cols', 'show%shide' % LIST_SEP)
@@ -140,9 +140,9 @@ class TestModule(Test):
         assert value == '99'
 
         # Boolean
-        config.application_window.maximized = True
-        config._set_parser_option(parser, 'application_window', 'maximized')
-        value = parser.get('application_window', 'maximized')
+        config.app_window.maximized = True
+        config._set_parser_option(parser, 'app_window', 'maximized')
+        value = parser.get('app_window', 'maximized')
         assert value == 'true'
 
         # Constant
@@ -152,15 +152,15 @@ class TestModule(Test):
         assert value == '25'
 
         # String list
-        config.file.fallback_encodings = ['test', 'tset']
-        config._set_parser_option(parser, 'file', 'fallback_encodings')
-        value = parser.get('file', 'fallback_encodings')
+        config.encoding.fallbacks = ['test', 'tset']
+        config._set_parser_option(parser, 'encoding', 'fallbacks')
+        value = parser.get('encoding', 'fallbacks')
         assert value == 'test%stset' % LIST_SEP
 
         # Integer list
-        config.application_window.position = [3, 4]
-        config._set_parser_option(parser, 'application_window', 'position')
-        value = parser.get('application_window', 'position')
+        config.app_window.position = [3, 4]
+        config._set_parser_option(parser, 'app_window', 'position')
+        value = parser.get('app_window', 'position')
         assert value == '3%s4' % LIST_SEP
 
         # Constant list

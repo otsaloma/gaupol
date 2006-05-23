@@ -155,11 +155,11 @@ class PreviewDelegate(Delegate):
     def _run_preview(self, page, time, document, path=None):
         """Run preview with video player."""
 
-        if config.preview.use_custom:
-            command = config.preview.custom_command
+        if not config.preview.use_predefined:
+            command = config.preview.command
         else:
             video_player = config.preview.video_player
-            command = VideoPlayer.COMMANDS[video_player]
+            command = VideoPlayer.commands[video_player]
         offset = config.preview.offset
 
         try:

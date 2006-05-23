@@ -65,7 +65,7 @@ class SubtitleFile(object):
     def _get_newline_character(self):
         """Get character(s) used for newlines."""
 
-        return Newlines.VALUES[self.newlines]
+        return Newlines.values[self.newlines]
 
     def read(self):
         """Read file."""
@@ -90,9 +90,9 @@ class SubtitleFile(object):
 
         # Save newline format.
         if isinstance(newline_characters, tuple):
-            self.newlines = Newlines.VALUES.index(newline_characters[0])
+            self.newlines = Newlines.values.index(newline_characters[0])
         elif isinstance(newline_characters, basestring):
-            self.newlines = Newlines.VALUES.index(newline_characters)
+            self.newlines = Newlines.values.index(newline_characters)
 
         return lines
 

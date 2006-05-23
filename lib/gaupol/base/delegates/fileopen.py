@@ -49,7 +49,7 @@ class FileOpenDelegate(Delegate):
         format = determiner.determine_file_format()
 
         # Read file.
-        main_file = eval(Format.CLASS_NAMES[format])(path, encoding)
+        main_file = eval(Format.class_names[format])(path, encoding)
         shows, hides, texts = self._sort_data(*main_file.read())
 
         # After successful reading, instance variable can be set.
@@ -116,7 +116,7 @@ class FileOpenDelegate(Delegate):
         format = determiner.determine_file_format()
 
         # Read file.
-        tran_file = eval(Format.CLASS_NAMES[format])(path, encoding)
+        tran_file = eval(Format.class_names[format])(path, encoding)
         shows, hides, texts = self._sort_data(*tran_file.read())
 
         # After successful reading, instance variable can be set.

@@ -87,7 +87,7 @@ class PreviewDelegate(Delegate):
         Raise UnicodeError if encoding temporary file fails.
         """
         sub_file  = (self.main_file, self.tran_file)[document]
-        extension = Format.EXTENSIONS[sub_file.format]
+        extension = Format.extensions[sub_file.format]
         sub_path  = tempfile.mkstemp(extension, 'gaupol.')[1]
 
         properties = (

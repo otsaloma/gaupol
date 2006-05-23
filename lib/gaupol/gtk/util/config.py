@@ -34,14 +34,16 @@ import ConfigParser
 import os
 import sys
 
-from gaupol             import __version__
-from gaupol.base.cons   import *
-from gaupol.gtk.cons import *
+from gaupol           import __version__
+from gaupol.base.cons import *
+from gaupol.gtk.cons  import *
 
 
-CONFIG_DIR    = os.path.join(os.path.expanduser('~'), '.gaupol')
-CONFIG_FILE   = os.path.join(CONFIG_DIR, 'gaupol.gtk.conf')
-CONFIG_HEADER = \
+CONFIG_DIR  = os.path.join(os.path.expanduser('~'), '.gaupol')
+CONFIG_FILE = os.path.join(CONFIG_DIR, 'gaupol.gtk.conf')
+LIST_SEP    = '|'
+
+config_header = \
 '''# Gaupol GTK user interface configuration file
 #
 # This file is rewritten on each successful application exit. Entered values
@@ -49,12 +51,6 @@ CONFIG_HEADER = \
 # default settings, delete the corresponding lines or this entire file.
 
 '''
-
-LIST_SEP = '|'
-
-VIDEO_PLAYER = VideoPlayer.MPLAYER
-if sys.platform == 'win32':
-    VIDEO_PLAYER = VideoPlayer.VLC
 
 
 class Type(object):
@@ -79,9 +75,10 @@ class Type(object):
 
 
 sections = (
-    'application_window',
+    'app_window',
     'duration_adjust',
     'editor',
+    'encoding',
     'file',
     'find',
     'framerate_convert',
@@ -102,7 +99,7 @@ class Section(object):
     run_time_only = ()
 
 
-class application_window(Section):
+class app_window(Section):
 
     maximized          = False
     position           = [0, 0]
@@ -177,30 +174,37 @@ class editor(Section):
     }
 
 
-class file(Section):
+class encoding(Section):
 
-    directory           = os.path.expanduser('~')
-    encoding            = None
-    fallback_encodings  = ['utf_8', 'cp1252']
-    format              = Format.SUBRIP
-    max_recent          = 5
-    newlines            = Newlines.UNIX
-    recent              = []
-    try_locale_encoding = True
-    visible_encodings   = ['utf_8', 'cp1252']
-    warn_opening_ssa    = True
+    fallbacks  = ['utf_8', 'cp1252']
+    try_locale = True
+    visibles   = ['utf_8', 'cp1252']
 
     types = {
-        'directory'           : Type.STRING,
-        'encoding'            : Type.STRING,
-        'fallback_encodings'  : Type.STRING_LIST,
-        'format'              : Type.CONSTANT,
-        'max_recent'          : Type.INTEGER,
-        'newlines'            : Type.CONSTANT,
-        'recent'              : Type.STRING_LIST,
-        'try_locale_encoding' : Type.BOOLEAN,
-        'visible_encodings'   : Type.STRING_LIST,
-        'warn_opening_ssa'    : Type.BOOLEAN,
+        'fallbacks' : Type.STRING_LIST,
+        'try_locale': Type.BOOLEAN,
+        'visibles'  : Type.STRING_LIST,
+    }
+
+
+class file(Section):
+
+    directory  = os.path.expanduser('~')
+    encoding   = None
+    format     = Format.SUBRIP
+    max_recent = 5
+    newlines   = Newlines.UNIX
+    recent     = []
+    warn_ssa   = True
+
+    types = {
+        'directory' : Type.STRING,
+        'encoding'  : Type.STRING,
+        'format'    : Type.CONSTANT,
+        'max_recent': Type.INTEGER,
+        'newlines'  : Type.CONSTANT,
+        'recent'    : Type.STRING_LIST,
+        'warn_ssa'  : Type.BOOLEAN,
     }
 
     classes = {
@@ -299,15 +303,18 @@ class position_shift(Section):
 
 class preview(Section):
 
-    custom_command = None
+    command        = None
     offset         = '5.0'
-    use_custom     = False
-    video_player   = VIDEO_PLAYER
+    use_predefined = True
+    video_player   = VideoPlayer.MPLAYER
+
+    if sys.platform == 'win32':
+        video_player = VideoPlayer.VLC
 
     types = {
-        'custom_command': Type.STRING,
+        'command'       : Type.STRING,
         'offset'        : Type.STRING,
-        'use_custom'    : Type.BOOLEAN,
+        'use_predefined': Type.BOOLEAN,
         'video_player'  : Type.CONSTANT,
     }
 
@@ -369,9 +376,9 @@ def _get_constant(section, option, arg):
     cls = eval(section).classes[option]
 
     if isinstance(arg, basestring):
-        return cls.ID_NAMES.index(arg)
+        return cls.id_names.index(arg)
     if isinstance(arg, int):
-        return cls.ID_NAMES[arg]
+        return cls.id_names[arg]
     raise ValueError
 
 def get_options(section):
@@ -506,7 +513,7 @@ def write():
     try:
         fobj = open(CONFIG_FILE, 'w')
         try:
-            fobj.write(CONFIG_HEADER)
+            fobj.write(config_header)
         finally:
             fobj.close()
         fobj = open(CONFIG_FILE, 'a')

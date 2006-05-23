@@ -177,7 +177,7 @@ class PreferencesDialog(gobject.GObject):
     def _init_file_data(self):
         """Initialize file tab data."""
 
-        try_locale = config.file.try_locale_encoding
+        try_locale = config.encoding.try_locale
         self._encoding_locale_check.set_active(try_locale)
         self._reload_encoding_view()
 
@@ -204,16 +204,16 @@ class PreferencesDialog(gobject.GObject):
 
         self._preview_offset_spin.set_value(float(config.preview.offset))
 
-        use_custom = config.preview.use_custom
-        self._preview_select_radio.set_active(not use_custom)
-        self._preview_command_radio.set_active(use_custom)
+        use_predefined = config.preview.use_predefined
+        self._preview_select_radio.set_active(use_predefined)
+        self._preview_command_radio.set_active(not use_predefined)
         self._set_preview_radio_sensitivities()
 
-        for i, name in enumerate(VideoPlayer.DISPLAY_NAMES):
+        for i, name in enumerate(VideoPlayer.display_names):
             self._preview_select_combo.insert_text(i, name)
         self._preview_select_combo.set_active(config.preview.video_player)
 
-        command = config.preview.custom_command
+        command = config.preview.command
         self._preview_command_entry.set_text(command or '')
 
     def _init_signals(self):
@@ -279,14 +279,14 @@ class PreferencesDialog(gobject.GObject):
         if encoding is None:
             return
 
-        config.file.fallback_encodings.append(encoding)
+        config.encoding.fallbacks.append(encoding)
         self._reload_encoding_view()
 
     def _on_encoding_down_button_clicked(self, *args):
         """Move the selected encoding down in the list."""
 
         source_row = self._get_selected_encoding_row()
-        encodings = config.file.fallback_encodings
+        encodings = config.encoding.fallbacks
         encodings.insert(source_row + 1, encodings.pop(source_row))
         self._reload_encoding_view()
 
@@ -297,20 +297,20 @@ class PreferencesDialog(gobject.GObject):
     def _on_encoding_locale_check_toggled(self, check_button):
         """Save use locale encoding setting."""
 
-        config.file.try_locale_encoding = check_button.get_active()
+        config.encoding.try_locale = check_button.get_active()
 
     def _on_encoding_remove_button_clicked(self, *args):
         """Remove the selected encoding."""
 
         row = self._get_selected_encoding_row()
-        config.file.fallback_encodings.pop(row)
+        config.encoding.fallbacks.pop(row)
         self._reload_encoding_view()
 
     def _on_encoding_up_button_clicked(self, *args):
         """Move the selected encoding up in the list."""
 
         source_row = self._get_selected_encoding_row()
-        encodings = config.file.fallback_encodings
+        encodings = config.encoding.fallbacks
         encodings.insert(source_row - 1, encodings.pop(source_row))
         self._reload_encoding_view()
 
@@ -343,13 +343,13 @@ class PreferencesDialog(gobject.GObject):
     def _on_preview_command_entry_changed(self, entry):
         """Save custom preview command."""
 
-        config.preview.custom_command = entry.get_text() or None
+        config.preview.command = entry.get_text() or None
 
     def _on_preview_edit_button_clicked(self, button):
         """Edit command."""
 
         video_player = self._preview_select_combo.get_active()
-        command = VideoPlayer.COMMANDS[video_player]
+        command = VideoPlayer.commands[video_player]
 
         self._preview_command_entry.set_text(command)
         self._preview_command_radio.set_active(True)
@@ -369,8 +369,8 @@ class PreferencesDialog(gobject.GObject):
     def _on_preview_select_radio_toggled(self, radio_button):
         """Save video player setting."""
 
-        use_custom = self._preview_command_radio.get_active()
-        config.preview.use_custom = use_custom
+        use_predefined = not self._preview_command_radio.get_active()
+        config.preview.use_predefined = use_predefined
         self._set_preview_radio_sensitivities()
 
         if use_custom:
@@ -399,7 +399,7 @@ class PreferencesDialog(gobject.GObject):
 
         store = self._encoding_view.get_model()
         store.clear()
-        for encoding in config.file.fallback_encodings:
+        for encoding in config.encoding.fallbacks:
             name = encodinglib.get_descriptive_name(encoding)
             store.append([name])
 
@@ -426,11 +426,11 @@ class PreferencesDialog(gobject.GObject):
     def _set_preview_radio_sensitivities(self):
         """Set sensitivities depending on preview radio buttons."""
 
-        use_custom = config.preview.use_custom
-        self._preview_select_combo.set_sensitive(not use_custom)
-        self._preview_edit_button.set_sensitive(not use_custom)
-        self._preview_command_entry.set_sensitive(use_custom)
-        self._preview_command_legend.set_sensitive(use_custom)
+        use_predefined = config.preview.use_predefined
+        self._preview_select_combo.set_sensitive(use_predefined)
+        self._preview_edit_button.set_sensitive(use_predefined)
+        self._preview_command_entry.set_sensitive(not use_predefined)
+        self._preview_command_legend.set_sensitive(not use_predefined)
 
     def show(self):
         """Show the dialog."""

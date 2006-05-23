@@ -248,7 +248,7 @@ class TimeFrameDelegate(Delegate):
         frames = self.frames
         calc   = self.calc
 
-        values = Framerate.VALUES
+        values = Framerate.values
         coefficient = values[correct_fr] / values[current_fr]
 
         for row in rows:

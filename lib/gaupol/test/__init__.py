@@ -32,7 +32,17 @@ import tempfile
 from gaupol.base.cons import Framerate, Mode
 
 
-TEXT_SUBRIP = \
+microdvd_text = \
+'''{321}{417}{Y:i}ENERGIA presents
+{659}{755}{Y:i}A SAMULI TORSSONEN production
+{1017}{1100}{Y:i}A TIMO VUORENSOLA film
+{3763}{3883}I would like to suggest, Emperor,|that you reconsider your plan.
+{3885}{4005}The scientists are comparing it to|Russian roulette.
+{4008}{4128}What theories we have on phenomena|like the maggot hole -
+{4144}{4264}indicate a tendency for continually|increasing disturbances.
+'''
+
+subrip_text = \
 '''1
 00:00:13,400 --> 00:00:17,400
 <i>ENERGIA presents</i>
@@ -66,16 +76,6 @@ indicate a tendency for continually
 increasing disturbances.
 '''
 
-TEXT_MICRODVD = \
-'''{321}{417}{Y:i}ENERGIA presents
-{659}{755}{Y:i}A SAMULI TORSSONEN production
-{1017}{1100}{Y:i}A TIMO VUORENSOLA film
-{3763}{3883}I would like to suggest, Emperor,|that you reconsider your plan.
-{3885}{4005}The scientists are comparing it to|Russian roulette.
-{4008}{4128}What theories we have on phenomena|like the maggot hole -
-{4144}{4264}indicate a tendency for continually|increasing disturbances.
-'''
-
 
 class Test(object):
 
@@ -95,7 +95,7 @@ class Test(object):
 
         fd, path = tempfile.mkstemp(prefix='gaupol.', suffix='.sub')
         fobj = os.fdopen(fd, 'w')
-        fobj.write(TEXT_MICRODVD)
+        fobj.write(microdvd_text)
         fobj.close()
 
         self.files.append(path)
@@ -122,7 +122,7 @@ class Test(object):
 
         fd, path = tempfile.mkstemp(prefix='gaupol.', suffix='.srt')
         fobj = os.fdopen(fd, 'w')
-        fobj.write(TEXT_SUBRIP)
+        fobj.write(subrip_text)
         fobj.close()
 
         self.files.append(path)

@@ -171,7 +171,7 @@ class AdvancedEncodingDialog(EncodingDialog):
         store.set_sort_column_id(DESC, gtk.SORT_ASCENDING)
 
         # Insert data.
-        visible_encodings = config.file.visible_encodings
+        visible_encodings = config.encoding.visibles
         for entry in encodinglib.get_valid_encodings():
             store.append([entry[2], entry[1], entry[0] in visible_encodings])
 

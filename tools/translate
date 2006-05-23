@@ -16,17 +16,16 @@ import optparse
 import os
 import sys
 
-tool_dir   = os.path.dirname(os.path.abspath(__file__))
-source_dir = os.path.join(tool_dir, '..')
+TOOL_DIR   = os.path.dirname(os.path.abspath(__file__))
+SOURCE_DIR = os.path.join(TOOL_DIR, '..')
+GLADE_DIR  = os.path.join(SOURCE_DIR, 'data'  , 'glade')
+LIB_DIR    = os.path.join(SOURCE_DIR, 'lib')
+LOCALE_DIR = os.path.join(SOURCE_DIR, 'locale')
+PO_DIR     = os.path.join(SOURCE_DIR, 'po')
+POT_FILE   = os.path.join(PO_DIR, 'gaupol.pot')
 
-glade_dir  = os.path.join(source_dir, 'data'  , 'glade')
-lib_dir    = os.path.join(source_dir, 'lib'            )
-locale_dir = os.path.join(source_dir, 'locale'         )
-po_dir     = os.path.join(source_dir, 'po'             )
-
-pot_path = os.path.join(po_dir, 'gaupol.pot')
-h_paths  = []
-py_paths = []
+h_files  = []
+py_files = []
 
 def title_print(text):
     """Print a message that stands out from rest of the output."""
@@ -38,46 +37,46 @@ def compile_mo(lang):
 
     for lang in get_languages(lang):
         title_print('Compiling .mo file for language "%s"...' % lang)
-        po_path = os.path.join(po_dir, '%s.po' % lang)
-        mo_dir  = os.path.join(locale_dir, lang, 'LC_MESSAGES')
-        mo_path = os.path.join(mo_dir, 'gaupol.mo')
+        po_file = os.path.join(PO_DIR, '%s.po' % lang)
+        mo_dir  = os.path.join(LOCALE_DIR, lang, 'LC_MESSAGES')
+        mo_file = os.path.join(mo_dir, 'gaupol.mo')
         if not os.path.isdir(mo_dir):
             os.makedirs(mo_dir)
-        os.system('msgfmt -cv %s -o %s' % (po_path, mo_path))
+        os.system('msgfmt -cv %s -o %s' % (po_file, mo_file))
 
 def create_po(lang):
     """Create a .po file for a new language lang."""
 
-    po_path = os.path.join(po_dir, '%s.po' % lang)
-    if os.path.isfile(po_path):
+    po_file = os.path.join(PO_DIR, '%s.po' % lang)
+    if os.path.isfile(po_file):
         print '.po file for language "%s" already exists.' % lang
         raise SystemExit(1)
 
     title_print('Creating a .po file for language "%s"...' % lang)
-    os.system('msginit -l %s -i %s -o %s' % (lang, pot_path, po_path))
+    os.system('msginit -l %s -i %s -o %s' % (lang, POT_FILE, po_file))
 
 def create_pot():
     """Create a .pot file."""
 
     title_print('Extracting strings from Glade XML files...')
-    for (dirpath, dirnames, filenames) in os.walk(glade_dir):
+    for (dirpath, dirnames, filenames) in os.walk(GLADE_DIR):
         os.chdir(dirpath)
         for filename in filenames:
             if not filename.endswith('.glade'):
                 continue
             os.system('intltool-extract --type=gettext/glade %s' % filename)
-            h_paths.append(os.path.join(dirpath, '%s.h' % filename))
+            h_files.append(os.path.join(dirpath, '%s.h' % filename))
 
-    for (dirpath, dirnames, filenames) in os.walk(lib_dir):
+    for (dirpath, dirnames, filenames) in os.walk(LIB_DIR):
         for filename in filenames:
             if filename.endswith('.py'):
-                py_paths.append(os.path.join(dirpath, filename))
+                py_files.append(os.path.join(dirpath, filename))
 
     title_print('Creating a .pot file from source files...')
-    paths = h_paths + py_paths
-    paths = list(path.replace(source_dir, '.') for path in paths)
-    os.chdir(source_dir)
-    os.system('xgettext -k_ -kN_ -c -o %s %s' % (pot_path, ' '.join(paths)))
+    files = h_files + py_files
+    files = list(path.replace(SOURCE_DIR, '.') for path in files)
+    os.chdir(SOURCE_DIR)
+    os.system('xgettext -k_ -kN_ -c -o %s %s' % (POT_FILE, ' '.join(files)))
 
 def get_languages(lang):
     """
@@ -87,7 +86,7 @@ def get_languages(lang):
     """
     langs = []
     if lang == 'all':
-        paths = glob.glob(os.path.join(po_dir, '*.po'))
+        paths = glob.glob(os.path.join(PO_DIR, '*.po'))
         for path in paths:
             langs.append(os.path.basename(path)[:-3])
     else:
@@ -150,8 +149,8 @@ def remove_temporary_files():
     """Remove temporary files created during operations."""
 
     title_print('Removing temporary files...')
-    for path in h_paths:
-        print path.replace(source_dir, '.')
+    for path in h_files:
+        print path.replace(SOURCE_DIR, '.')
         os.remove(path)
 
 def update_po(lang):
@@ -159,8 +158,8 @@ def update_po(lang):
 
     for lang in get_languages(lang):
         title_print('Updating .po file for language "%s"...' % lang)
-        po_path = os.path.join(po_dir, '%s.po' % lang)
-        os.system('msgmerge -U %s %s' % (po_path, pot_path))
+        po_file = os.path.join(PO_DIR, '%s.po' % lang)
+        os.system('msgmerge -U %s %s' % (po_file, POT_FILE))
 
 opts, args = parse_args()
 

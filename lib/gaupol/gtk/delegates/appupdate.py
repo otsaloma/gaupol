@@ -124,7 +124,7 @@ class ApplicationUpdateDelegate(Delegate):
 
         state = event.new_window_state
         maximized = bool(state & gtk.gdk.WINDOW_STATE_MAXIMIZED)
-        config.application_window.maximized = maximized
+        config.app_window.maximized = maximized
 
     def _set_action_sensitivities(self, page):
         """Set sensitivities of all actions for page."""
@@ -253,7 +253,7 @@ class ApplicationUpdateDelegate(Delegate):
         self.window.set_title(title)
 
         # Set edit mode state.
-        edit_mode_name = Mode.ID_NAMES[page.edit_mode]
+        edit_mode_name = Mode.id_names[page.edit_mode]
         path = '/ui/menubar/view/%ss' % edit_mode_name
         self.uim.get_action(path).set_active(True)
 
@@ -266,16 +266,16 @@ class ApplicationUpdateDelegate(Delegate):
         self.tooltips.set_tip(self.video_button, page.project.video_path)
 
         # Set framerate state.
-        framerate_name = Framerate.ID_NAMES[page.project.framerate]
+        framerate_name = Framerate.id_names[page.project.framerate]
         path = '/ui/menubar/view/framerate/%s' % framerate_name
         self.uim.get_action(path).set_active(True)
         self.framerate_combo.set_active(page.project.framerate)
 
         # Set column visibility states.
-        for i in range(len(Column.ID_NAMES)):
+        for i in range(len(Column.id_names)):
             tree_view_column = page.view.get_column(i)
             visible = tree_view_column.props.visible
-            path = '/ui/menubar/view/columns/%s' % Column.ID_NAMES[i]
+            path = '/ui/menubar/view/columns/%s' % Column.id_names[i]
             self.uim.get_action(path).set_active(visible)
 
 

@@ -68,12 +68,12 @@ class FormatDelegate(Delegate):
         """
         if document == Document.MAIN:
             try:
-                return Format.CLASS_NAMES[self.main_file.format]
+                return Format.class_names[self.main_file.format]
             except AttributeError:
                 return None
         elif document == Document.TRAN:
             try:
-                return Format.CLASS_NAMES[self.tran_file.format]
+                return Format.class_names[self.tran_file.format]
             except AttributeError:
                 return self._get_format_class_name(Document.MAIN)
 
@@ -196,7 +196,7 @@ if __name__ == '__main__':
 
             delegate = FormatDelegate(self.project)
             name = delegate._get_format_class_name(Document.MAIN)
-            assert name in Format.CLASS_NAMES or name is None
+            assert name in Format.class_names or name is None
 
         def test_get_regular_expression_for_tag(self):
 

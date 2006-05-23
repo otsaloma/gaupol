@@ -56,8 +56,8 @@ class FileFormatDeterminer(SubtitleFile):
 
         # Assemble a list of regular expressions.
         re_ids = []
-        for format in range(len(Format.CLASS_NAMES)):
-            pattern = eval(Format.CLASS_NAMES[format]).id_pattern
+        for format in range(len(Format.class_names)):
+            pattern = eval(Format.class_names[format]).id_pattern
             try:
                 re_id = re.compile(pattern[0], pattern[1])
             except TypeError:
