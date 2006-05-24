@@ -1,5 +1,10 @@
 2006-05-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/icons/gaupol.svg:
+	  Edited XML path data.
+
+2006-05-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/icons/gaupol.png:
 	* data/icons/gaupol.svg:
 	  Added shadow.
