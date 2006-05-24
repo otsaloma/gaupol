@@ -1,5 +1,11 @@
 2006-05-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/icons/gaupol.png:
+	* data/icons/gaupol.svg:
+	  Added shadow.
+
+2006-05-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/ui/menubar.xml:
 	* data/ui/popups.xml:
 	* lib/gaupol/base/cons.py:

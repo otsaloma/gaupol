@@ -17,7 +17,7 @@
    inkscape:export-filename="/home/osmo/tmp/gaupol.png"
    inkscape:export-xdpi="90.000000"
    inkscape:export-ydpi="90.000000"
-   sodipodi:docbase="/home/osmo/tmp"
+   sodipodi:docbase="/home/osmo/Documents/Ohjelmointi/Gaupol/trunk/data/icons"
    sodipodi:docname="gaupol.svg">
   <defs
      id="defs4">
@@ -618,7 +618,7 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="15.839192"
+     inkscape:zoom="11.2"
      inkscape:cx="25.055249"
      inkscape:cy="24.733536"
      inkscape:document-units="px"
@@ -670,6 +670,46 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
+    <path
+       sodipodi:type="arc"
+       style="fill:#000000;fill-opacity:0.11764706;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="path1402"
+       sodipodi:cx="20.5"
+       sodipodi:cy="44.5"
+       sodipodi:rx="18.5"
+       sodipodi:ry="2.5"
+       d="M 39 44.5 A 18.5 2.5 0 1 1  2,44.5 A 18.5 2.5 0 1 1  39 44.5 z"
+       transform="matrix(1.243243,0,0,1.6,-1.486486,-28.2)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#000000;fill-opacity:0.11764706;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="path3150"
+       sodipodi:cx="20.5"
+       sodipodi:cy="44.5"
+       sodipodi:rx="18.5"
+       sodipodi:ry="2.5"
+       d="M 39 44.5 A 18.5 2.5 0 1 1  2,44.5 A 18.5 2.5 0 1 1  39 44.5 z"
+       transform="matrix(1.135135,0,0,1.2,0.72973,-10.4)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#000000;fill-opacity:0.11764706;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="path4898"
+       sodipodi:cx="20.5"
+       sodipodi:cy="44.5"
+       sodipodi:rx="18.5"
+       sodipodi:ry="2.5"
+       d="M 39 44.5 A 18.5 2.5 0 1 1  2,44.5 A 18.5 2.5 0 1 1  39 44.5 z"
+       transform="matrix(1.027027,0,0,0.8,2.945946,7.4)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#000000;fill-opacity:0.11764706;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="path4900"
+       sodipodi:cx="20.5"
+       sodipodi:cy="44.5"
+       sodipodi:rx="18.5"
+       sodipodi:ry="2.5"
+       d="M 39 44.5 A 18.5 2.5 0 1 1  2,44.5 A 18.5 2.5 0 1 1  39 44.5 z"
+       transform="matrix(0.918919,0,0,0.4,5.162161,25.2)" />
     <path
        style="opacity:1;color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.15806293;stroke-linecap:butt;stroke-linejoin:bevel;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:10;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible"
        d="M 46,5 L 46,43 C 44,43 4,43 2,43 L 2,5 C 4,5 44,5 46,5 z "
