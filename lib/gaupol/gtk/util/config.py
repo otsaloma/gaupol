@@ -35,8 +35,8 @@ import os
 import sys
 
 from gaupol           import __version__
-from gaupol.base.cons import *
-from gaupol.gtk.cons  import *
+from gaupol.base.cons import Framerate, Format, Mode, Newlines, VideoPlayer
+from gaupol.gtk.cons  import NO, SHOW, HIDE, DURN, MTXT, TTXT, Column
 
 
 CONFIG_DIR  = os.path.join(os.path.expanduser('~'), '.gaupol')

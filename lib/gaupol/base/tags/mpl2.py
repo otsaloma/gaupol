@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -19,11 +19,6 @@
 
 """MPL2 tag library."""
 
-
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
 
 import re
 
@@ -54,10 +49,15 @@ class MPL2(TagLibrary):
             # Underline (single line)
             r'_(.*?)$', COMMON,
             r'<u>\1</u>'
+        ), (
+            # Remove duplicate style tags (e.g. <b>test</b><b>test</b>).
+            r'</(b|i|u)>(\n?)<\1>', COMMON,
+            r'\2',
+            3
         )
     ] + MicroDVD.decode_tags
 
-    style_tags = [
+    _style_tags = [
         ('<i>', '</i>', '/' ),
         ('<b>', '</b>', '\\'),
         ('<u>', '</u>', '_' ),
@@ -67,36 +67,26 @@ class MPL2(TagLibrary):
     def pre_encode(cls, text):
         """Convert style tags to native MPL2 style tags."""
 
-        for (opening, closing, replacement) in cls.style_tags:
-
+        for (opening, closing, replacement) in cls._style_tags:
             opening_lenght = len(opening)
             closing_length = len(closing)
-
             while True:
-
-                start = text.find(opening)
-                if start == -1:
+                try:
+                    start = text.index(opening)
+                except ValueError:
                     break
-
-                # Get start and end positions of tag.
                 try:
                     end = text.index(closing)
                 except ValueError:
                     end = len(text)
-
-                # Divide text into parts.
                 before = text[:start]
                 middle = text[start + opening_lenght:end]
                 after  = text[end + closing_length:]
-
-                # Add new style tags to beginning of each line.
                 lines = middle.split('\n')
                 for i in range(1, len(lines)):
                     if not lines[i].startswith(replacement):
                         lines[i] = replacement + lines[i]
                 middle = '\n'.join(lines)
-
-                # Reconstruct line.
                 text = before + replacement + middle + after
 
         return text

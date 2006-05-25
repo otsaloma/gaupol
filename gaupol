@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 
-"""Start Gaupol."""
-
 import os
 import sys
 

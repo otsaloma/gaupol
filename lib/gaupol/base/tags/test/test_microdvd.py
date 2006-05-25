@@ -17,47 +17,18 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""SubRip tag library."""
-
-
 import re
 
-from gaupol.base.tags import TagLibrary
+from gaupol.base.tags.microdvd       import MicroDVD
+from gaupol.base.tags.test.test_init import TestTagLibrary
+from gaupol.test                     import Test
 
 
-class SubRip(TagLibrary):
+class TestMicroDVD(TestTagLibrary):
 
-    """SubRip tag library."""
+    cls = MicroDVD
 
-    tag        = r'</?(b|i|u)>', re.IGNORECASE
-    italic_tag = r'</?i>'      , re.IGNORECASE
+    def test_italicize(self):
 
-    decode_tags = [
-        (
-            # Uppercase bold
-            r'(</?)B>', 0,
-            r'\1b>'
-        ), (
-            # Uppercase italic
-            r'(</?)I>', 0,
-            r'\1i>'
-        ), (
-            # Uppercase underline
-            r'(</?)U>', 0,
-            r'\1u>'
-        )
-    ]
-
-    encode_tags = [
-        (
-            # All unsupported tags
-            r'</?[^>]{3,}>', 0,
-            r''
-        )
-    ]
-
-    @staticmethod
-    def italicize(text):
-        """Italicize text."""
-
-        return u'<i>%s</i>' % text
+        text = MicroDVD.italicize('test')
+        assert text == '{Y:i}test'

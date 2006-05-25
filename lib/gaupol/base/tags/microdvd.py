@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -35,9 +35,9 @@ class MicroDVD(TagLibrary):
     tag        = r'\{[a-z]:.*?\}', re.IGNORECASE
     italic_tag = r'\{y:i\}'      , re.IGNORECASE
 
-    # decode_tags and encode_tags require multiple entries of the same tags to
-    # cover overlapping matches. e.g. <b><i>test</i></b>, would require two
-    # substitutions of pattern "<[bi]>.*?</[bi]>" to fully convert.
+    # decode_tags and encode_tags require multiple runs to concert overlapping
+    # matches. e.g. <b><i>test</i></b>, would require two substitutions of
+    # pattern "<[bi]>.*?</[bi]>" to fully convert.
 
     decode_tags = [
         (
@@ -101,7 +101,7 @@ class MicroDVD(TagLibrary):
 
     encode_tags = [
         (
-            # Remove duplicate style tags (e.g. <b>foo</b><b>bar</b>).
+            # Remove duplicate style tags (e.g. <b>test</b><b>test</b>).
             r'</(b|i|u)>(\n?)<\1>', COMMON,
             r'\2',
             3

@@ -44,6 +44,13 @@ TTXT = 5
 
 class Column(object):
 
+    NO   = 0
+    SHOW = 1
+    HIDE = 2
+    DURN = 3
+    MTXT = 4
+    TTXT = 5
+
     id_names = [
         'number',
         'show',

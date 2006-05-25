@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -17,22 +17,18 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""
-Internal tags.
-
-Gaupol internal tags are:
-<b></b>
-<i></i>
-<u></u>
-<color="#RRGGBB"></color>
-<font="name"></font>
-<size="int"></size>
-"""
-
-
 import re
 
+from gaupol.base.tags.test.test_init import TestTagLibrary
+from gaupol.base.tags.ssa            import SubStationAlpha
+from gaupol.test                     import Test
 
-re_opening_tag     = re.compile(r'<[^/].*?>')
-re_closing_tag     = re.compile(r'</.*?>')
-re_closing_tag_end = re.compile(r'</.*?>\Z')
+
+class TestSubStationAlpha(TestTagLibrary):
+
+    cls = SubStationAlpha
+
+    def test_italicize(self):
+
+        text = SubStationAlpha.italicize('test')
+        assert text == r'{\i1}test'

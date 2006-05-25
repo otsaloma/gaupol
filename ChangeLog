@@ -1,3 +1,33 @@
+2006-05-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/base/tags/internal.py:
+	  Removed file.
+
+	* gaupol:
+	* lib/gaupol/base/cons.py:
+	* lib/gaupol/base/tags/__init__.py:
+	* lib/gaupol/base/tags/classes.py:
+	* lib/gaupol/base/tags/converter.py:
+	* lib/gaupol/base/tags/microdvd.py:
+	* lib/gaupol/base/tags/mpl2.py:
+	* lib/gaupol/base/tags/ssa.py:
+	* lib/gaupol/base/tags/subrip.py:
+	* lib/gaupol/base/tags/test:
+	* lib/gaupol/base/tags/test/__init__.py:
+	* lib/gaupol/base/tags/test/test_ass.py:
+	* lib/gaupol/base/tags/test/test_classes.py:
+	* lib/gaupol/base/tags/test/test_converter.py:
+	* lib/gaupol/base/tags/test/test_init.py:
+	* lib/gaupol/base/tags/test/test_microdvd.py:
+	* lib/gaupol/base/tags/test/test_mpl2.py:
+	* lib/gaupol/base/tags/test/test_ssa.py:
+	* lib/gaupol/base/tags/test/test_subrip.py:
+	* lib/gaupol/base/tags/test/test_subviewer2.py:
+	* lib/gaupol/gtk/cons.py:
+	* lib/gaupol/gtk/util/config.py:
+	* lib/gaupol/gtk/util/test/test_config.py:
+	  Cleaned up code and separated testing.
+
 2006-05-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/icons/gaupol.png:

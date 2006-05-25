@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -22,7 +22,7 @@
 
 import re
 
-from gaupol.base.tags import internal, TagLibrary
+from gaupol.base.tags import Internal, TagLibrary
 
 
 COMMON = re.MULTILINE|re.DOTALL
@@ -51,7 +51,7 @@ class SubStationAlpha(TagLibrary):
 
         return '\\'.join(parts)
 
-    # These decode tags will leave </> for reset and a lot of tags unclosed.
+    # Decode tags leave </> for reset and a lot of tags unclosed.
     decode_tags = [
         (
             # Bold opening
@@ -92,25 +92,28 @@ class SubStationAlpha(TagLibrary):
     def post_decode(text):
         """Fix/add closing tags."""
 
+        re_opening_tag = re.compile(*Internal.opening_tag)
+        re_closing_tag = re.compile(*Internal.closing_tag)
+
         parts = text.split('</>')
         for i, part in enumerate(parts):
 
             suffix       = ''
-            opening_tags = internal.re_opening_tag.findall(part)
-            closing_tags = internal.re_closing_tag.findall(part)
+            opening_tags = re_opening_tag.findall(part)
+            closing_tags = re_closing_tag.findall(part)
 
             # Find out which tags have already been closed.
-            for k in reversed(range(len(closing_tags))):
-                closing_core = closing_tags[k][2:-1]
-                for q in range(len(opening_tags)):
-                    opening_core = opening_tags[q][1:-1].split('=')[0]
+            for j in reversed(range(len(closing_tags))):
+                closing_core = closing_tags[j][2:-1]
+                for k in range(len(opening_tags)):
+                    opening_core = opening_tags[k][1:-1].split('=')[0]
                     if opening_core == closing_core:
-                        opening_tags.pop(q)
+                        opening_tags.pop(k)
                         break
 
             # Assemble suffix string to close remaining tags.
-            for k in reversed(range(len(opening_tags))):
-                tag = '</' + opening_tags[k][1:-1].split('=')[0] + '>'
+            for j in reversed(range(len(opening_tags))):
+                tag = '</' + opening_tags[j][1:-1].split('=')[0] + '>'
                 suffix += tag
 
             parts[i] = part + suffix
@@ -121,8 +124,9 @@ class SubStationAlpha(TagLibrary):
     def pre_encode(text):
         """Remove pointless closing tags at the end of the text."""
 
-        while internal.re_closing_tag_end.search(text):
-            text = internal.re_closing_tag_end.sub('', text)
+        re_closing_tag_end = re.compile(*Internal.closing_tag_end)
+        while re_closing_tag_end.search(text):
+            text = re_closing_tag_end.sub('', text)
 
         return text
 
@@ -149,7 +153,7 @@ class SubStationAlpha(TagLibrary):
             r'{\\\1\060}'
         ), (
             # Color opening
-            r'<color="(.*?)">', 0,
+            r'<color="#(.*?)">', 0,
             r'{\\c&H\1&}'
         ), (
             # Font opening

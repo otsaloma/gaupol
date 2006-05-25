@@ -19,8 +19,8 @@
 
 import ConfigParser
 
-from gaupol.base.cons import *
-from gaupol.gtk.cons  import *
+from gaupol.base.cons import Framerate, Format, Mode, Newlines, VideoPlayer
+from gaupol.gtk.cons  import NO, SHOW, HIDE, DURN, MTXT, TTXT, Column
 from gaupol.gtk.util  import config
 from gaupol.test      import Test
 

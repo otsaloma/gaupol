@@ -30,6 +30,7 @@ __all__ = [
     'HIDE',
     'DURN',
     'Action',
+    'Column',
     'Document',
     'Format',
     'Framerate',
@@ -51,6 +52,13 @@ class Action(object):
     DO_MULTIPLE   = 3
     UNDO_MULTIPLE = 4
     REDO_MULTIPLE = 5
+
+
+class Column(object):
+
+    SHOW = 0
+    HIDE = 1
+    DURN = 2
 
 
 class Document(object):
@@ -77,6 +85,15 @@ class Format(object):
         'SubViewer2',
     ]
 
+    id_names = [
+        'ass',
+        'microdvd',
+        'mpl2',
+        'subrip',
+        'ssa',
+        'subviewer2',
+    ]
+
     display_names = [
         _('Advanced Sub Station Alpha'),
         _('MicroDVD'),
@@ -85,6 +102,7 @@ class Format(object):
         _('Sub Station Alpha'),
         _('SubViewer 2.0'),
     ]
+
 
     extensions = [
         '.ass',
@@ -95,15 +113,6 @@ class Format(object):
         '.sub',
     ]
 
-    id_names = [
-        'ass',
-        'microdvd',
-        'mpl2',
-        'subrip',
-        'ssa',
-        'subviewer2',
-    ]
-
 
 class Framerate(object):
 
@@ -111,16 +120,16 @@ class Framerate(object):
     FR_25     = 1
     FR_29_97  = 2
 
-    display_names = [
-        _('23.976 fps'),
-        _('25 fps'),
-        _('29.97 fps'),
-    ]
-
     id_names = [
         '23_976',
         '25',
         '29_97',
+    ]
+
+    display_names = [
+        _('23.976 fps'),
+        _('25 fps'),
+        _('29.97 fps'),
     ]
 
     values = [
@@ -147,16 +156,16 @@ class Newlines(object):
     UNIX    = 1
     WINDOWS = 2
 
-    display_names = [
-        _('Mac'),
-        _('Unix'),
-        _('Windows'),
-    ]
-
     id_names = [
         'mac',
         'unix',
         'windows',
+    ]
+
+    display_names = [
+        _('Mac'),
+        _('Unix'),
+        _('Windows'),
     ]
 
     values = [
@@ -168,38 +177,27 @@ class Newlines(object):
 
 class VideoPlayer(object):
 
-    """
-    %v = Video filename
-    %s = Subtitle filename
-    %t = Time
-    %c = Seconds
-    %f = Frame
-    """
-
     MPLAYER = 0
     VLC     = 1
-
-    display_names = [
-        _('MPlayer'),
-        _('VLC'),
-    ]
 
     id_names = [
         'mplayer',
         'vlc',
     ]
 
-    args = [
-        '-identify -osdlevel 2 -ss %c -sub "%s" "%v"',
-        '--start-time=%c --sub-file="%s" "%v"',
+    display_names = [
+        _('MPlayer'),
+        _('VLC'),
     ]
 
     commands = [
-        'mplayer ' + args[0],
-        'vlc '     + args[1],
+        'mplayer -identify -osdlevel 2 -ss %c -sub "%s" "%v"',
+        'vlc --start-time=%c --sub-file="%s" "%v"',
     ]
     if sys.platform == 'win32':
         commands = [
-            r'%ProgramFiles%\mplayer\mplayer.exe '  + args[0],
-            r'%ProgramFiles%\VideoLAN\vlc\vlc.exe ' + args[1],
+            r'%ProgramFiles%\mplayer\mplayer.exe '  \
+             '-identify -osdlevel 2 -ss %c -sub "%s" "%v"',
+            r'%ProgramFiles%\VideoLAN\vlc\vlc.exe ' \
+             '--start-time=%c --sub-file="%s" "%v"',
         ]
