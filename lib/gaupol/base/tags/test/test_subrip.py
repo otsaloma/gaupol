@@ -19,14 +19,11 @@
 
 import re
 
-from gaupol.base.tags.subrip         import SubRip
-from gaupol.base.tags.test.test_init import TestTagLibrary
-from gaupol.test                     import Test
+from gaupol.base.tags.subrip import SubRip
+from gaupol.test             import Test
 
 
-class TestSubRip(TestTagLibrary):
-
-    cls = SubRip
+class TestSubRip(Test):
 
     def test_italicize(self):
 

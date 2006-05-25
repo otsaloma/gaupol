@@ -19,14 +19,11 @@
 
 import re
 
-from gaupol.base.tags.test.test_init import TestTagLibrary
-from gaupol.base.tags.subviewer2     import SubViewer2
-from gaupol.test                     import Test
+from gaupol.base.tags.subviewer2 import SubViewer2
+from gaupol.test                 import Test
 
 
-class TestSubViewer2(TestTagLibrary):
-
-    cls = SubViewer2
+class TestSubViewer2(Test):
 
     def test_italicize(self):
 

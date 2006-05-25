@@ -17,12 +17,26 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-from gaupol.base.cons import Newlines
-from gaupol.base.file import SubtitleFile
-from gaupol.test      import Test
+import re
+
+from gaupol.base.cons         import Format, Newlines
+from gaupol.base.file         import SubtitleFile
+from gaupol.base.file.classes import *
+from gaupol.test              import Test
 
 
 class TestSubtitleFile(Test):
+
+    def test_attr(self):
+
+        for name in Format.class_names:
+            cls = eval(name)
+            assert isinstance(cls.format, int)
+            assert isinstance(cls.mode, int)
+            assert isinstance(cls.has_header, bool)
+            if cls.has_header:
+                assert isinstance(cls.header_template, str)
+            re.compile(*cls.identifier)
 
     def test_init(self):
 
@@ -35,6 +49,28 @@ class TestSubtitleFile(Test):
             sub_file = SubtitleFile('test', 'utf_8', i)
             chars = sub_file._get_newline_character()
             assert chars == value
+
+    def test_read_and_write(self):
+
+        for name in Format.class_names:
+            if name == 'MicroDVD':
+                continue
+            path = self.get_subrip_path()
+            sub_file = SubRip(path, 'utf_8')
+            data = sub_file.read()
+            sub_file = eval(name)(path, 'utf_8', sub_file.newlines)
+            sub_file.write(*data)
+            data_1 = sub_file.read()
+            sub_file.write(*data_1)
+            data_2 = sub_file.read()
+            assert data_2 == data_1
+
+        path = self.get_microdvd_path()
+        sub_file = MicroDVD(path, 'utf_8')
+        data_1 = sub_file.read()
+        sub_file.write(*data_1)
+        data_2 = sub_file.read()
+        assert data_2 == data_1
 
     def test_read_lines(self):
 

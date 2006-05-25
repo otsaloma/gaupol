@@ -19,14 +19,11 @@
 
 import re
 
-from gaupol.base.tags.microdvd       import MicroDVD
-from gaupol.base.tags.test.test_init import TestTagLibrary
-from gaupol.test                     import Test
+from gaupol.base.tags.microdvd import MicroDVD
+from gaupol.test               import Test
 
 
-class TestMicroDVD(TestTagLibrary):
-
-    cls = MicroDVD
+class TestMicroDVD(Test):
 
     def test_italicize(self):
 

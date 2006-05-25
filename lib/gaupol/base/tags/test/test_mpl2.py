@@ -19,14 +19,11 @@
 
 import re
 
-from gaupol.base.tags.mpl2           import MPL2
-from gaupol.base.tags.test.test_init import TestTagLibrary
-from gaupol.test                     import Test
+from gaupol.base.tags.mpl2 import MPL2
+from gaupol.test           import Test
 
 
-class TestMPL2(TestTagLibrary):
-
-    cls = MPL2
+class TestMPL2(Test):
 
     def test_italicize(self):
 

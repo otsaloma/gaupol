@@ -19,14 +19,11 @@
 
 import re
 
-from gaupol.base.tags.test.test_init import TestTagLibrary
-from gaupol.base.tags.ass            import AdvancedSubStationAlpha
-from gaupol.test                     import Test
+from gaupol.base.tags.ass import AdvancedSubStationAlpha
+from gaupol.test          import Test
 
 
-class TestAdvancedSubStationAlpha(TestTagLibrary):
-
-    cls = AdvancedSubStationAlpha
+class TestAdvancedSubStationAlpha(Test):
 
     def test_italicize(self):
 

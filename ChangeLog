@@ -1,5 +1,23 @@
 2006-05-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/file/test/test_ass.py:
+	* lib/gaupol/base/file/test/test_init.py:
+	* lib/gaupol/base/file/test/test_microdvd.py:
+	* lib/gaupol/base/file/test/test_mpl2.py:
+	* lib/gaupol/base/file/test/test_ssa.py:
+	* lib/gaupol/base/file/test/test_subrip.py:
+	* lib/gaupol/base/file/test/test_subviewer2.py:
+	* lib/gaupol/base/tags/test/test_ass.py:
+	* lib/gaupol/base/tags/test/test_init.py:
+	* lib/gaupol/base/tags/test/test_microdvd.py:
+	* lib/gaupol/base/tags/test/test_mpl2.py:
+	* lib/gaupol/base/tags/test/test_ssa.py:
+	* lib/gaupol/base/tags/test/test_subrip.py:
+	* lib/gaupol/base/tags/test/test_subviewer2.py:
+	  Restuctured testing.
+
+2006-05-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/file/__init__.py:
 	* lib/gaupol/base/file/ass.py:
 	* lib/gaupol/base/file/classes.py:

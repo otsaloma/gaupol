@@ -19,8 +19,10 @@
 
 import re
 
-from gaupol.base.tags import Internal, TagLibrary
-from gaupol.test      import Test
+from gaupol.base.cons         import Format
+from gaupol.base.tags         import Internal, TagLibrary
+from gaupol.base.tags.classes import *
+from gaupol.test              import Test
 
 
 class TestInternal(Test):
@@ -34,41 +36,49 @@ class TestInternal(Test):
 
 class TestTagLibrary(Test):
 
-    cls = TagLibrary
-
     def test_attributes(self):
 
-        re.compile(*self.cls.tag)
-        re.compile(*self.cls.italic_tag)
-
-        for lst in (self.cls.decode_tags, self.cls.encode_tags):
-            for entry in lst:
-                re.compile(entry[0], entry[1])
-                assert isinstance(entry[2], basestring)
-                if len(entry) == 4:
-                    assert isinstance(entry[3], int)
+        for name in Format.class_names:
+            cls = eval(name)
+            re.compile(*cls.tag)
+            re.compile(*cls.italic_tag)
+            for lst in (cls.decode_tags, cls.encode_tags):
+                for entry in lst:
+                    re.compile(entry[0], entry[1])
+                    assert isinstance(entry[2], basestring)
+                    if len(entry) == 4:
+                        assert isinstance(entry[3], int)
 
     def test_italicize(self):
 
-        text = self.cls.italicize('test')
-        assert isinstance(text, basestring)
+        for name in Format.class_names:
+            cls = eval(name)
+            text = cls.italicize('test')
+            assert isinstance(text, basestring)
 
     def test_post_decode(self):
-
-        text = self.cls.post_decode('test')
-        assert isinstance(text, basestring)
+        for name in Format.class_names:
+            cls = eval(name)
+            text = cls.post_decode('test')
+            assert isinstance(text, basestring)
 
     def test_post_encode(self):
 
-        text = self.cls.post_encode('test')
-        assert isinstance(text, basestring)
+        for name in Format.class_names:
+            cls = eval(name)
+            text = cls.post_encode('test')
+            assert isinstance(text, basestring)
 
     def test_pre_decode(self):
 
-        text = self.cls.pre_decode('test')
-        assert isinstance(text, basestring)
+        for name in Format.class_names:
+            cls = eval(name)
+            text = cls.pre_decode('test')
+            assert isinstance(text, basestring)
 
     def test_pre_encode(self):
 
-        text = self.cls.pre_encode('test')
-        assert isinstance(text, basestring)
+        for name in Format.class_names:
+            cls = eval(name)
+            text = cls.pre_encode('test')
+            assert isinstance(text, basestring)
