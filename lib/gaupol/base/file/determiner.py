@@ -28,8 +28,8 @@ except ImportError:
 from gettext import gettext as _
 import re
 
-from gaupol.base.files.classes import *
-from gaupol.base.files         import SubtitleFile
+from gaupol.base.file.classes import *
+from gaupol.base.file         import SubtitleFile
 from gaupol.base.error         import FileFormatError
 from gaupol.base.cons          import Format
 

@@ -28,7 +28,7 @@ except ImportError:
 import codecs
 import re
 
-from gaupol.base.files          import SubtitleFile
+from gaupol.base.file          import SubtitleFile
 from gaupol.base.position.calc import TimeFrameCalculator
 from gaupol.base.cons           import Format, Mode
 
@@ -118,7 +118,7 @@ class MPL2(SubtitleFile):
 
 if __name__ == '__main__':
 
-    from gaupol.base.files.subrip import SubRip
+    from gaupol.base.file.subrip import SubRip
     from gaupol.test              import Test
 
     class TestMPL2(Test):

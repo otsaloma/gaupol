@@ -27,8 +27,8 @@ except ImportError:
 
 from gaupol.base.cons import SHOW, HIDE, DURN
 from gaupol.base.delegates        import Delegate
-from gaupol.base.files.classes    import *
-from gaupol.base.files.determiner import FileFormatDeterminer
+from gaupol.base.file.classes    import *
+from gaupol.base.file.determiner import FileFormatDeterminer
 from gaupol.base.cons             import Format, Mode
 
 

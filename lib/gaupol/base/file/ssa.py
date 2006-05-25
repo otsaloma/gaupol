@@ -28,7 +28,7 @@ except ImportError:
 import codecs
 import re
 
-from gaupol.base.files          import SubtitleFile
+from gaupol.base.file          import SubtitleFile
 from gaupol.base.position.calc import TimeFrameCalculator
 from gaupol.base.util           import listlib
 from gaupol.base.cons           import Format, Mode
@@ -176,7 +176,7 @@ Style: Default,Arial,18,&Hffffff,&H00ffff,&H000000,&H000000,0,0,1,2,2,2,30,30,10
 
 if __name__ == '__main__':
 
-    from gaupol.base.files.subrip import SubRip
+    from gaupol.base.file.subrip import SubRip
     from gaupol.test              import Test
 
     class TestSubStationAlpha(Test):

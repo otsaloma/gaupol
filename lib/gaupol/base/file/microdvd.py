@@ -28,7 +28,7 @@ except ImportError:
 import codecs
 import re
 
-from gaupol.base.files import SubtitleFile
+from gaupol.base.file import SubtitleFile
 from gaupol.base.cons  import Format, Mode
 
 

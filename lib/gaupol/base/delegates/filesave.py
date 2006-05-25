@@ -33,7 +33,7 @@ import tempfile
 
 from gaupol.base.cons import SHOW, HIDE, DURN
 from gaupol.base.delegates      import Delegate
-from gaupol.base.files.classes  import *
+from gaupol.base.file.classes  import *
 from gaupol.base.tags.converter import TagConverter
 from gaupol.base.cons           import Document, Format, Mode
 
