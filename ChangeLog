@@ -1,5 +1,11 @@
 2006-05-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* - lib/gaupol/base/files:
+	* + lib/gaupol/base/file:
+	  Renamed.
+
+2006-05-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/tags/internal.py:
 	  Removed file.
 
