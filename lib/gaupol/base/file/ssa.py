@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -20,31 +20,24 @@
 """Sub Station Alpha file."""
 
 
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
-
 import codecs
 import re
 
+from gaupol.base.cons          import Format, Mode
 from gaupol.base.file          import SubtitleFile
 from gaupol.base.position.calc import TimeFrameCalculator
-from gaupol.base.util           import listlib
-from gaupol.base.cons           import Format, Mode
 
 
 class SubStationAlpha(SubtitleFile):
 
     """Sub Station Alpha file."""
 
-    FORMAT     = Format.SSA
-    HAS_HEADER = True
-    MODE       = Mode.TIME
+    format     = Format.SSA
+    mode       = Mode.TIME
+    has_header = True
+    identifier = r'^ScriptType: v4.00\s*$', 0
 
-    id_pattern = r'^ScriptType: v4.00\s*$', None
-
-    HEADER_TEMPLATE = \
+    header_template = \
 '''[Script Info]
 Title:
 Original Script:
@@ -65,6 +58,19 @@ Timer: 100.0000
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, TertiaryColour, BackColour, Bold, Italic, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, AlphaLevel, Encoding
 Style: Default,Arial,18,&Hffffff,&H00ffff,&H000000,&H000000,0,0,1,2,2,2,30,30,10,0,0'''
 
+    event_format_fields = (
+        'Marked',
+        'Start',
+        'End',
+        'Style',
+        'Name',
+        'MarginL',
+        'MarginR',
+        'MarginV',
+        'Effect',
+        'Text'
+    )
+
     def read(self):
         """
         Read Sub Station Alpha file.
@@ -73,37 +79,31 @@ Style: Default,Arial,18,&Hffffff,&H00ffff,&H000000,&H000000,0,0,1,2,2,2,30,30,10
         Raise UnicodeError if decoding fails.
         Return show times, hide times, texts.
         """
-        # Compile regular expressions.
         re_comma = re.compile(r',\s*')
+
+        # Indexes of data on dialog lines
+        show_index = None
+        hide_index = None
+        text_index = None
+
+        # Amount of dialog fields minus one
+        max_split = None
 
         shows  = []
         hides  = []
         texts  = []
         header = ''
-
-        # Indexes of data on dialog lines.
-        show_index = None
-        hide_index = None
-        text_index = None
-
-        # Amount of dialog fields minus one.
-        max_split = None
-
-        lines = self._read_lines()
         header_read = False
-
+        lines = self._read_lines()
         for line in lines:
-
             if header_read and line.startswith('Dialogue:'):
                 line = line.replace('Dialogue:', '').strip()
                 fields = re_comma.split(line, max_split)
                 shows.append(fields[show_index])
                 hides.append(fields[hide_index])
-                texts.append(fields[text_index])
-
+                texts.append(fields[text_index].strip())
             elif line.startswith('[Events]'):
                 header_read = True
-
             elif header_read and line.startswith('Format:'):
                 line = line.replace('Format:', '').strip()
                 fields = re_comma.split(line)
@@ -111,22 +111,15 @@ Style: Default,Arial,18,&Hffffff,&H00ffff,&H000000,&H000000,0,0,1,2,2,2,30,30,10
                 hide_index = fields.index('End')
                 text_index = fields.index('Text')
                 max_split  = len(fields) - 1
-
             elif not header_read:
                 header += line
-
-        # Remove leading and trailing spaces.
         if header:
             self.header = header.strip()
-        texts = listlib.strip(texts)
 
-        # Replace decimal character and add zeros.
         shows = list('0' + time.replace('.', ',') + '0' for time in shows)
         hides = list('0' + time.replace('.', ',') + '0' for time in hides)
-
-        # Replace \ns and \Ns with newlines.
-        texts = list(text.replace('\\n', '\n') for text in texts)
-        texts = list(text.replace('\\N', '\n') for text in texts)
+        texts = list(text.replace('\\n', '\n')          for text in texts)
+        texts = list(text.replace('\\N', '\n')          for text in texts)
 
         return shows, hides, texts
 
@@ -140,58 +133,26 @@ Style: Default,Arial,18,&Hffffff,&H00ffff,&H000000,&H000000,0,0,1,2,2,2,30,30,10
         shows = shows[:]
         hides = hides[:]
         texts = texts[:]
-
-        newline_character = self._get_newline_character()
+        newline_char = self._get_newline_character()
         calc = TimeFrameCalculator()
 
-        # Replace Python internal newline characters in text with \ns.
-        texts = list(text.replace('\n', '\\n') for text in texts)
-
-        # Round times to centiseconds.
-        shows = list(calc.round_time(time, 2) for time in shows)
-        hides = list(calc.round_time(time, 2) for time in hides)
-
-        # Replace decimal character and remove extra digits.
+        texts = list(text.replace('\n', '\\n')    for text in texts)
+        shows = list(calc.round_time(time, 2)     for time in shows)
+        hides = list(calc.round_time(time, 2)     for time in hides)
         shows = list(time[1:11].replace(',', '.') for time in shows)
         hides = list(time[1:11].replace(',', '.') for time in hides)
 
-        subtitle_file = codecs.open(self.path, 'w', self.encoding)
-
+        fobj = codecs.open(self.path, 'w', self.encoding)
         try:
-            subtitle_file.write(self.header)
-            subtitle_file.write(newline_character * 2)
-            subtitle_file.write('[Events]')
-            subtitle_file.write(newline_character)
-            subtitle_file.write('Format: Marked, Start, End, Style, Name, ')
-            subtitle_file.write('MarginL, MarginR, MarginV, Effect, Text')
-            subtitle_file.write(newline_character)
+            fobj.write(self.header)
+            fobj.write(newline_char * 2)
+            fobj.write('[Events]')
+            fobj.write(newline_char)
+            fobj.write('Format: ' + ', '.join(self.event_format_fields))
+            fobj.write(newline_char)
             for i in range(len(shows)):
-                subtitle_file.write(
-                    'Dialogue: 0,%s,%s,Default,,0000,0000,0000,,%s%s' % \
-                    (shows[i], hides[i], texts[i], newline_character)
-                )
+                fobj.write('Dialogue: 0,%s,%s,Default,,0000,0000,0000,,%s%s' %(
+                    shows[i], hides[i], texts[i], newline_char
+                ))
         finally:
-            subtitle_file.close()
-
-
-if __name__ == '__main__':
-
-    from gaupol.base.file.subrip import SubRip
-    from gaupol.test              import Test
-
-    class TestSubStationAlpha(Test):
-
-        def test_all(self):
-
-            path = self.get_subrip_path()
-            subrip_file = SubRip(path, 'utf_8')
-            data = subrip_file.read()
-
-            ssa_file = SubStationAlpha(path, 'utf_8', subrip_file.newlines)
-            ssa_file.write(*data)
-            data_1 = ssa_file.read()
-            ssa_file.write(*data_1)
-            data_2 = ssa_file.read()
-            assert data_2 == data_1
-
-    TestSubStationAlpha().run()
+            fobj.close()

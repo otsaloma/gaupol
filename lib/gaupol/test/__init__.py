@@ -33,47 +33,51 @@ from gaupol.base.cons import Framerate, Mode
 
 
 microdvd_text = \
-'''{321}{417}{Y:i}ENERGIA presents
-{659}{755}{Y:i}A SAMULI TORSSONEN production
-{1017}{1100}{Y:i}A TIMO VUORENSOLA film
-{3763}{3883}I would like to suggest, Emperor,|that you reconsider your plan.
-{3885}{4005}The scientists are comparing it to|Russian roulette.
-{4008}{4128}What theories we have on phenomena|like the maggot hole -
-{4144}{4264}indicate a tendency for continually|increasing disturbances.
+'''{2525}{2629}{Y:i}Every day there's more to tell
+{2721}{2848}{Y:i}Dreaming, I'm little now
+{2933}{3044}{Y:i}Fading away every passing day
+{3110}{3245}{Y:i}And I just have|One thing to tell you
+{3309}{3447}{Y:i}You're further and further away
+{3552}{3601}I need more vocals.|I can't hear myself.
+{3606}{3683}I have eight bands to balance.|The competition starts in two hours.
+{3690}{3724}Clear the stage.
 '''
 
 subrip_text = \
 '''1
-00:00:13,400 --> 00:00:17,400
-<i>ENERGIA presents</i>
+00:01:45,305 --> 00:01:49,639
+<i>Every day there's more to tell</i>
 
 2
-00:00:27,480 --> 00:00:31,480
-<i>A SAMULI TORSSONEN production</i>
+00:01:53,480 --> 00:01:58,782
+<i>Dreaming, I'm little now</i>
 
 3
-00:00:42,400 --> 00:00:45,880
-<i>A TIMO VUORENSOLA film</i>
+00:02:02,322 --> 00:02:06,952
+<i>Fading away every passing day</i>
 
 4
-00:02:36,960 --> 00:02:41,960
-I would like to suggest, Emperor,
-that you reconsider your plan.
+00:02:09,696 --> 00:02:15,328
+<i>And I just have</i>
+<i>One thing to tell you</i>
 
 5
-00:02:42,040 --> 00:02:47,040
-The scientists are comparing it to
-Russian roulette.
+00:02:18,004 --> 00:02:23,772
+<i>You're further and further away</i>
 
 6
-00:02:47,160 --> 00:02:52,160
-What theories we have on phenomena
-like the maggot hole -
+00:02:28,148 --> 00:02:30,207
+I need more vocals.
+I can't hear myself.
 
 7
-00:02:52,840 --> 00:02:57,840
-indicate a tendency for continually
-increasing disturbances.
+00:02:30,383 --> 00:02:33,614
+I have eight bands to balance.
+The competition starts in two hours.
+
+8
+00:02:33,920 --> 00:02:35,319
+Clear the stage.
 '''
 
 
@@ -141,4 +145,3 @@ class Test(object):
             except OSError:
                 pass
         self.files = []
-

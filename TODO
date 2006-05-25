@@ -8,67 +8,62 @@ Plans for 0.5.0
 ===============
 
   * General
-    - Use "." as decimal for time
-    - Move variables from application and project to delegates?
-    - Raise exceptions instead of returning None or False
-    - Use class variables and refer to them as self.var?
-      - gaupol.base.files
-    - string.Template for preview command? Or just %var%.
-    - Framerate conversion available for time-based subs
-    - Put a .pot file in the trunk?
-    - Mime-type registration?
+      - Use "." as decimal for time
+      - Move variables from application and project to delegates?
+      - string.Template for preview command? Or just %var%.
+      - Framerate conversion available for time-based subs
+      - Put a .pot file in the trunk?
+      - Mime-type registration?
 
   * base
-    - Use action grouping in replace_both_texts(...)
-    - Add exception handling for preview command being a blank string
-    - FileOpenDelegate._sort_data: return amount of sorts made
+      - Use action grouping in replace_both_texts(...)
+      - Add exception handling for preview command being a blank string
+      - FileOpenDelegate._sort_data: return amount of sorts made
 
   * gtk
-    - No need to check if translator-credits is translated
-    - UIM name: /ui/menubar/edit/edit
-    - Spell-check dialog mnemonics: Join _Back, Join _Forward
-    - Targets
-    - Menu item locations:
-      - Framerate
-      - Select Video
-      - Headers
-    - Remove Unselect All menu item?
-    - Output window not Ctrl+Alt+O
+      - No need to check if translator-credits is translated
+      - UIM name: /ui/menubar/edit/edit
+      - Spell-check dialog mnemonics: Join _Back, Join _Forward
+      - Targets! The fucking targets!
+      - Menu item locations: Framerate, Select Video, Headers
+      - Remove Unselect All menu item?
+      - Output window not Ctrl+Alt+O?
 
   * setup.py / setup.cfg
-    - Don't install any testing
-    - python 2.5 uninstall?
-    - Remove setup.cfg?
-    - setup.py: destination vs. configure (Arch)
-      - setup.py install --prefix=/usr --root=tmp/pkg
-      - Add a destdir option to install
-      - finalize_options: x = os.path.join(destdir, x)
-      - paths.py: if destdir: ...
-    - Use intltool-merge for gaupol.desktop file translations?
-      - See alacarte source code
-    - clean command
-    - Do setup.py install options work?
-      --prefix           OK
-      --exec-prefix
-      --home
-      --install-base
-      --install-platbase
-      --root
-      --install-purelib
-      --install-lib
-      --install-scripts
-      --install-data
+      - Don't install any testing
+      - python 2.5 uninstall?
+      - Remove setup.cfg?
+      - setup.py: destination vs. configure (Arch)
+          - setup.py install --prefix=/usr --root=tmp/pkg
+          - Add a destdir option to install
+          - finalize_options: x = os.path.join(destdir, x)
+          - paths.py: if destdir: ...
+      - Use intltool-merge for gaupol.desktop file translations?
+          - See alacarte source code
+      - clean command
+      - Do setup.py install options work?
+          --prefix           OK
+          --exec-prefix
+          --home
+          --install-base
+          --install-platbase
+          --root
+          --install-purelib
+          --install-lib
+          --install-scripts
+          --install-data
 
   New Features:
     [W] Find and replace
     [?] Encoding autodetection: http://chardet.feedparser.org/
 
   Improvements:
-    [D] Developer specific options to gaupol moved to tools directory
-    [W] Testing framework made compatible with py.test
     [D] New icon
     [D] Applied GNOME Goal 2.1: Install theme-friendly icons
     [D] Support default browsers on KDE and Mac OSX as well
+    [D] Better video player defaults on Windows
+    [D] Developer-specific options to gaupol made into separate scripts
+    [W] Testing framework made compatible with py.test
 
   Bug Fixes:
     [ ] Video selection dialog's file filter should default to video
@@ -95,31 +90,31 @@ Plans after 0.5.0
 Unscheduled
 ===========
 
+  * Windows installer
+      - http://trac.gajim.org/wiki/DevWindows
+
   * Subtitle file join/split
 
   * Built-in GStreamer preview?
-    - http://gstreamer.freedesktop.org/modules/gst-python.html
-    - http://pygstdocs.berlios.de/
-    - http://pitivi.sourceforge.net/
-
-  * Windows installer
-    - http://trac.gajim.org/wiki/DevWindows
+      - http://gstreamer.freedesktop.org/modules/gst-python.html
+      - http://pygstdocs.berlios.de/
+      - http://pitivi.sourceforge.net/
 
   * Documentation (HTML)
-    - Before 1.0.0
+      - Before 1.0.0
 
   * Support for additional subtitle formats
-    - MPlayerSub/MPSub
-      http://www.mplayerhq.hu/DOCS/tech/mpsub.sub
-    - SAMI
-      http://msdn.microsoft.com/library/en-us/dnacc/html/atg_samiarticle.asp
+      - MPlayerSub/MPSub
+        http://www.mplayerhq.hu/DOCS/tech/mpsub.sub
+      - SAMI
+        http://msdn.microsoft.com/library/en-us/dnacc/html/atg_samiarticle.asp
 
   * PyGTK 2.10
-    - http://live.gnome.org/PyGTK/WhatsNew210
-    - GNOME Goal #1: Move from popt to GOption
-      - http://live.gnome.org/GnomeGoals/PoptGOption
-      - http://bugzilla.gnome.org/show_bug.cgi?id=163645
-      - http://bugzilla.gnome.org/attachment.cgi?id=63515&action=view
+      - http://live.gnome.org/PyGTK/WhatsNew210
+      - GNOME Goal #1: Move from popt to GOption
+          - http://live.gnome.org/GnomeGoals/PoptGOption
+          - http://bugzilla.gnome.org/show_bug.cgi?id=163645
+          - http://bugzilla.gnome.org/attachment.cgi?id=63515&action=view
 
   * Python 2.5
-    - http://www.python.org/download/releases/2.5/
+      - http://www.python.org/download/releases/2.5/

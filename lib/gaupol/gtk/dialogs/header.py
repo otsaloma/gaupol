@@ -83,7 +83,7 @@ class HeaderDialog(object):
             self.main_header_orig = main_file.header
             self._set_main_header(self.main_header_orig)
             class_name = Format.class_names[main_file.format]
-            self.main_header_tmpl = eval(class_name).HEADER_TEMPLATE
+            self.main_header_tmpl = eval(class_name).header_template
         else:
             self._main_label.props.visible = False
             self._main_vbox.props.visible  = False
@@ -94,7 +94,7 @@ class HeaderDialog(object):
             self.tran_header_orig = tran_file.header
             self._set_translation_header(self.tran_header_orig)
             class_name = Format.class_names[tran_file.format]
-            self.tran_header_tmpl = eval(class_name).HEADER_TEMPLATE
+            self.tran_header_tmpl = eval(class_name).header_template
         else:
             self._tran_label.props.visible = False
             self._tran_vbox.props.visible  = False

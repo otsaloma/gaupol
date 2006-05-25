@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -20,27 +20,21 @@
 """MicroDVD file."""
 
 
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
-
 import codecs
 import re
 
+from gaupol.base.cons import Format, Mode
 from gaupol.base.file import SubtitleFile
-from gaupol.base.cons  import Format, Mode
 
 
 class MicroDVD(SubtitleFile):
 
     """MicroDVD file."""
 
-    FORMAT     = Format.MICRODVD
-    HAS_HEADER = False
-    MODE       = Mode.FRAME
-
-    id_pattern = r'^\{\d+\}\{\d+\}.*?$', None
+    format     = Format.MICRODVD
+    mode       = Mode.FRAME
+    has_header = False
+    identifier = r'^\{\d+\}\{\d+\}.*?$', 0
 
     def read(self):
         """
@@ -50,16 +44,13 @@ class MicroDVD(SubtitleFile):
         Raise UnicodeError if decoding fails.
         Return show frames, hide frames, texts.
         """
-        # Compile regular expressions.
         re_line = re.compile(r'^\{(\d+)\}\{(\d+)\}(.*?)$')
 
-        lines = self._read_lines()
-
+        # Split to components.
         shows = []
         hides = []
         texts = []
-
-        # Split lines list to components.
+        lines = self._read_lines()
         for line in lines:
             match = re_line.match(line)
             if match is not None:
@@ -67,13 +58,9 @@ class MicroDVD(SubtitleFile):
                 hides.append(match.group(2))
                 texts.append(match.group(3))
 
-        # Frames should be integers.
-        shows = list(int(frame) for frame in shows)
-        hides = list(int(frame) for frame in hides)
-
-        # Replace pipes in texts with Python internal newline characters.
-        for i in range(len(texts)):
-            texts[i] = texts[i].replace('|', '\n')
+        shows = list(int(frame)              for frame in shows)
+        hides = list(int(frame)              for frame in hides)
+        texts = list(text.replace('|', '\n') for text  in texts)
 
         return shows, hides, texts
 
@@ -85,35 +72,14 @@ class MicroDVD(SubtitleFile):
         Raise UnicodeError if encoding fails.
         """
         texts = texts[:]
-        newline_character = self._get_newline_character()
-
-        # Replace Python internal newline characters in text with pipes.
+        newline_char = self._get_newline_character()
         texts = list(text.replace('\n', '|') for text in texts)
 
-        subtitle_file = codecs.open(self.path, 'w', self.encoding)
-
+        fobj = codecs.open(self.path, 'w', self.encoding)
         try:
             for i in range(len(shows)):
-                subtitle_file.write('{%.0f}{%.0f}%s%s' % (
-                    shows[i], hides[i], texts[i], newline_character
+                fobj.write('{%.0f}{%.0f}%s%s' % (
+                    shows[i], hides[i], texts[i], newline_char
                 ))
         finally:
-            subtitle_file.close()
-
-
-if __name__ == '__main__':
-
-    from gaupol.test import Test
-
-    class TestMicroDVD(Test):
-
-        def test_all(self):
-
-            path = self.get_micro_dvd_path()
-            micro_dvd_file = MicroDVD(path, 'utf_8')
-            data_1 = micro_dvd_file.read()
-            micro_dvd_file.write(*data_1)
-            data_2 = micro_dvd_file.read()
-            assert data_2 == data_1
-
-    TestMicroDVD().run()
+            fobj.close()

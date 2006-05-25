@@ -1,5 +1,36 @@
 2006-05-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/file/__init__.py:
+	* lib/gaupol/base/file/ass.py:
+	* lib/gaupol/base/file/classes.py:
+	* lib/gaupol/base/file/determiner.py:
+	* lib/gaupol/base/file/microdvd.py:
+	* lib/gaupol/base/file/mpl2.py:
+	* lib/gaupol/base/file/ssa.py:
+	* lib/gaupol/base/file/subrip.py:
+	* lib/gaupol/base/file/subviewer2.py:
+	* lib/gaupol/base/file/test:
+	* lib/gaupol/base/file/test/__init__.py:
+	* lib/gaupol/base/file/test/test_ass.py:
+	* lib/gaupol/base/file/test/test_classes.py:
+	* lib/gaupol/base/file/test/test_determiner.py:
+	* lib/gaupol/base/file/test/test_init.py:
+	* lib/gaupol/base/file/test/test_microdvd.py:
+	* lib/gaupol/base/file/test/test_mpl2.py:
+	* lib/gaupol/base/file/test/test_ssa.py:
+	* lib/gaupol/base/file/test/test_subrip.py:
+	* lib/gaupol/base/file/test/test_subviewer2.py:
+	  Cleaned up code and separated testing.
+
+	* lib/gaupol/base/delegates/fileopen.py:
+	* lib/gaupol/gtk/dialogs/header.py:
+	  Adjusted to above changes.
+
+	* lib/gaupol/test/__init__.py:
+	  Cosmetic changes.
+
+2006-05-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/delegates/fileopen.py:
 	* lib/gaupol/base/delegates/filesave.py:
 	* lib/gaupol/base/file/ass.py:

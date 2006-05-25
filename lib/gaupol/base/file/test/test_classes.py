@@ -17,12 +17,14 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""All file format classes."""
+from gaupol.base.cons         import Format
+from gaupol.base.file.classes import *
+from gaupol.test              import Test
 
 
-from gaupol.base.file.ass        import AdvancedSubStationAlpha
-from gaupol.base.file.microdvd   import MicroDVD
-from gaupol.base.file.mpl2       import MPL2
-from gaupol.base.file.ssa        import SubStationAlpha
-from gaupol.base.file.subrip     import SubRip
-from gaupol.base.file.subviewer2 import SubViewer2
+class TestModule(Test):
+
+    def test_imports(self):
+
+        for name in Format.class_names:
+            eval(name)('test', 'utf_8')

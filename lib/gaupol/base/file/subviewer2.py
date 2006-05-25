@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -20,31 +20,24 @@
 """SubViewer 2.0 file."""
 
 
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
-
 import codecs
 import re
 
+from gaupol.base.cons          import Format, Mode
 from gaupol.base.file          import SubtitleFile
 from gaupol.base.position.calc import TimeFrameCalculator
-from gaupol.base.util           import listlib
-from gaupol.base.cons           import Format, Mode
 
 
 class SubViewer2(SubtitleFile):
 
     """SubViewer 2.0 file."""
 
-    FORMAT     = Format.SUBVIEWER2
-    HAS_HEADER = True
-    MODE       = Mode.TIME
+    format     = Format.SUBVIEWER2
+    mode       = Mode.TIME
+    has_header = True
+    identifier = r'^\d\d:\d\d:\d\d.\d\d,\d\d:\d\d:\d\d.\d\d\s*$', 0
 
-    id_pattern = r'^\d\d:\d\d:\d\d.\d\d,\d\d:\d\d:\d\d.\d\d\s*$', None
-
-    HEADER_TEMPLATE = \
+    header_template = \
 '''[INFORMATION]
 [TITLE]
 [AUTHOR]
@@ -66,8 +59,6 @@ class SubViewer2(SubtitleFile):
         Raise UnicodeError if decoding fails.
         Return show times, hide times, texts.
         """
-        # Compile regular expressions.
-        re_blank_line = re.compile(r'^\s*$')
         time = r'\d\d:\d\d:\d\d.\d\d'
         re_time_line = re.compile(r'^(%s),(%s)\s*$' % (time, time))
 
@@ -75,12 +66,10 @@ class SubViewer2(SubtitleFile):
         hides  = []
         texts  = []
         header = ''
-
-        lines = self._read_lines()
         header_read = False
-
+        lines = self._read_lines()
         for line in lines:
-            if re_blank_line.match(line) is not None:
+            if not line.strip():
                 continue
             match = re_time_line.match(line)
             if match is not None:
@@ -89,21 +78,15 @@ class SubViewer2(SubtitleFile):
                 hides.append(match.group(2))
                 texts.append(u'')
             elif header_read:
-                texts[-1] += line
+                texts[-1] += line.strip()
             else:
                 header += line
-
-        # Remove leading and trailing spaces.
         if header:
             self.header = header.strip()
-        texts = listlib.strip(texts)
 
-        # Replace decimal character and add milliseconds.
         shows = list(time.replace('.', ',') + '0' for time in shows)
         hides = list(time.replace('.', ',') + '0' for time in hides)
-
-        # Replace [br]s with newlines.
-        texts = list(text.replace('[br]', '\n') for text in texts)
+        texts = list(text.replace('[br]', '\n')   for text in texts)
 
         return shows, hides, texts
 
@@ -117,53 +100,23 @@ class SubViewer2(SubtitleFile):
         shows = shows[:]
         hides = hides[:]
         texts = texts[:]
-
-        newline_character = self._get_newline_character()
         calc = TimeFrameCalculator()
+        newline_char = self._get_newline_character()
 
-        # Replace Python internal newline characters in text with [br]s.
-        texts = list(text.replace('\n', '[br]') for text in texts)
-
-        # Round times to centiseconds.
-        shows = list(calc.round_time(time, 2) for time in shows)
-        hides = list(calc.round_time(time, 2) for time in hides)
-
-        # Replace decimal character and remove milliseconds.
+        texts = list(text.replace('\n', '[br]')  for text in texts)
+        shows = list(calc.round_time(time, 2)    for time in shows)
+        hides = list(calc.round_time(time, 2)    for time in hides)
         shows = list(time[:11].replace(',', '.') for time in shows)
         hides = list(time[:11].replace(',', '.') for time in hides)
 
-        subtitle_file = codecs.open(self.path, 'w', self.encoding)
-
+        fobj = codecs.open(self.path, 'w', self.encoding)
         try:
-            subtitle_file.write(self.header)
-            subtitle_file.write(newline_character * 2)
+            fobj.write(self.header + newline_char * 2)
             for i in range(len(shows)):
-                subtitle_file.write('%s,%s' % (shows[i], hides[i]))
-                subtitle_file.write(newline_character)
-                subtitle_file.write(texts[i])
-                subtitle_file.write(newline_character * 2)
+                fobj.write('%s,%s%s%s%s%s' % (
+                    shows[i], hides[i], newline_char,
+                    texts[i], newline_char,
+                    newline_char
+                ))
         finally:
-            subtitle_file.close()
-
-
-if __name__ == '__main__':
-
-    from gaupol.base.file.subrip import SubRip
-    from gaupol.test              import Test
-
-    class TestSubViewer2(Test):
-
-        def test_all(self):
-
-            path = self.get_subrip_path()
-            subrip_file = SubRip(path, 'utf_8')
-            data = subrip_file.read()
-
-            subviewer_2_file = SubViewer2(path, 'utf_8', subrip_file.newlines)
-            subviewer_2_file.write(*data)
-            data_1 = subviewer_2_file.read()
-            subviewer_2_file.write(*data_1)
-            data_2 = subviewer_2_file.read()
-            assert data_2 == data_1
-
-    TestSubViewer2().run()
+            fobj.close()

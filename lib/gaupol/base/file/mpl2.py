@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -20,28 +20,22 @@
 """MPL2 file."""
 
 
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
-
 import codecs
 import re
 
+from gaupol.base.cons          import Format, Mode
 from gaupol.base.file          import SubtitleFile
 from gaupol.base.position.calc import TimeFrameCalculator
-from gaupol.base.cons           import Format, Mode
 
 
 class MPL2(SubtitleFile):
 
     """MPL2 file."""
 
-    FORMAT     = Format.MPL2
-    HAS_HEADER = False
-    MODE       = Mode.TIME
-
-    id_pattern = r'^\[\d+\]\[\d+\].*?$', None
+    format     = Format.MPL2
+    mode       = Mode.TIME
+    has_header = False
+    identifier = r'^\[\d+\]\[\d+\].*?$', 0
 
     def read(self):
         """
@@ -51,16 +45,13 @@ class MPL2(SubtitleFile):
         Raise UnicodeError if decoding fails.
         Return show times, hide times, texts.
         """
-        # Compile regular expressions.
         re_line = re.compile(r'^\[(\d+)\]\[(\d+)\](.*?)$')
-
-        lines = self._read_lines()
+        calc = TimeFrameCalculator()
 
         shows = []
         hides = []
         texts = []
-
-        # Split lines list to components.
+        lines = self._read_lines()
         for line in lines:
             match = re_line.match(line)
             if match is not None:
@@ -68,17 +59,11 @@ class MPL2(SubtitleFile):
                 hides.append(match.group(2))
                 texts.append(match.group(3))
 
-        calc = TimeFrameCalculator()
-
-        # Convert times from decaseconds to seconds and finally timestrings.
-        for entry in (shows, hides):
-            for i, value in enumerate(entry):
+        for data in (shows, hides):
+            for i, value in enumerate(data):
                 seconds = float(value[:-1] + '.' + value[-1])
-                entry[i] = calc.seconds_to_time(seconds)
-
-        # Replace pipes in texts with Python internal newline characters.
-        for i in range(len(texts)):
-            texts[i] = texts[i].replace('|', '\n')
+                data[i] = calc.seconds_to_time(seconds)
+        texts = list(text.replace('|', '\n') for text  in texts)
 
         return shows, hides, texts
 
@@ -92,48 +77,20 @@ class MPL2(SubtitleFile):
         shows = shows[:]
         hides = hides[:]
         texts = texts[:]
-
-        newline_character = self._get_newline_character()
+        newline_char = self._get_newline_character()
         calc = TimeFrameCalculator()
 
-        # Convert times from timestrings to seconds and finally decaseconds.
-        for entry in (shows, hides):
-            for i in range(len(entry)):
-                decaseconds = calc.time_to_seconds(entry[i]) * 10
-                entry[i] = '%.0f' % decaseconds
-
-        # Replace Python internal newline characters in text with pipes.
+        for data in (shows, hides):
+            for i in range(len(data)):
+                decaseconds = calc.time_to_seconds(data[i]) * 10
+                data[i] = '%.0f' % decaseconds
         texts = list(text.replace('\n', '|') for text in texts)
 
-        subtitle_file = codecs.open(self.path, 'w', self.encoding)
-
+        fobj = codecs.open(self.path, 'w', self.encoding)
         try:
             for i in range(len(shows)):
-                subtitle_file.write('[%s][%s]%s%s' % (
-                    shows[i], hides[i], texts[i], newline_character
+                fobj.write('[%s][%s]%s%s' % (
+                    shows[i], hides[i], texts[i], newline_char
                 ))
         finally:
-            subtitle_file.close()
-
-
-if __name__ == '__main__':
-
-    from gaupol.base.file.subrip import SubRip
-    from gaupol.test              import Test
-
-    class TestMPL2(Test):
-
-        def test_all(self):
-
-            path = self.get_subrip_path()
-            subrip_file = SubRip(path, 'utf_8')
-            data = subrip_file.read()
-
-            mpl2_file = MPL2(path, 'utf_8', subrip_file.newlines)
-            mpl2_file.write(*data)
-            data_1 = mpl2_file.read()
-            mpl2_file.write(*data_1)
-            data_2 = mpl2_file.read()
-            assert data_2 == data_1
-
-    TestMPL2().run()
+            fobj.close()

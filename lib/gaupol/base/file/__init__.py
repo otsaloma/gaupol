@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -17,13 +17,8 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Base class for subtitle files."""
+"""Base class for subtitle file classes."""
 
-
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
 
 import codecs
 
@@ -32,35 +27,28 @@ from gaupol.base.cons import Newlines
 
 class SubtitleFile(object):
 
-    """Base class for subtitle files."""
+    """Base class for subtitle file classes."""
 
-    FORMAT     = None
-    HAS_HEADER = None
-    MODE       = None
-
-    # Regular expression that is used to identify this file format.
-    # Pattern, flags
-    id_pattern = None, None
-
-    HEADER_TEMPLATE = None
+    format          = None
+    mode            = None
+    has_header      = None
+    header_template = None
+    identifier      = None, None
 
     def __init__(self, path, encoding, newlines=None):
-        """
-        Initialize a SubtitleFile object.
 
-        newlines can be omitted if creating an instance only for reading.
-        """
         self.path     = path
         self.encoding = encoding
         self.newlines = newlines
-        self.header   = ''
+        self.header   = self.header_template
 
-        self.format     = self.__class__.FORMAT
-        self.has_header = self.__class__.HAS_HEADER
-        self.mode       = self.__class__.MODE
+    def __setattr__(self, name, value):
+        """Set value of attribute"""
 
-        if self.has_header:
-            self.header = self.__class__.HEADER_TEMPLATE
+        if name in ('format', 'mode', 'has_header', 'header_template'):
+            raise ValueError
+
+        object.__setattr__(self, name, value)
 
     def _get_newline_character(self):
         """Get character(s) used for newlines."""
@@ -74,25 +62,22 @@ class SubtitleFile(object):
 
     def _read_lines(self):
         """
-        Read subtitle file to a unicoded list containing the lines of the file.
+        Read file to a unicoded list of lines.
 
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
         """
-        subtitle_file = codecs.open(self.path, 'rU', self.encoding)
-
-        # Read.
+        fobj = codecs.open(self.path, 'rU', self.encoding)
         try:
-            lines = subtitle_file.readlines()
-            newline_characters = subtitle_file.newlines
+            lines = fobj.readlines()
+            newline_chars = fobj.newlines
         finally:
-            subtitle_file.close()
+            fobj.close()
 
-        # Save newline format.
-        if isinstance(newline_characters, tuple):
-            self.newlines = Newlines.values.index(newline_characters[0])
-        elif isinstance(newline_characters, basestring):
-            self.newlines = Newlines.values.index(newline_characters)
+        if isinstance(newline_chars, tuple):
+            self.newlines = Newlines.values.index(newline_chars[0])
+        elif isinstance(newline_chars, basestring):
+            self.newlines = Newlines.values.index(newline_chars)
 
         return lines
 

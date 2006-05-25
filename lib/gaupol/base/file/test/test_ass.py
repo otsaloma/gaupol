@@ -17,12 +17,22 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""All file format classes."""
+from gaupol.base.file.subrip import SubRip
+from gaupol.base.file.ass    import AdvancedSubStationAlpha
+from gaupol.test             import Test
 
 
-from gaupol.base.file.ass        import AdvancedSubStationAlpha
-from gaupol.base.file.microdvd   import MicroDVD
-from gaupol.base.file.mpl2       import MPL2
-from gaupol.base.file.ssa        import SubStationAlpha
-from gaupol.base.file.subrip     import SubRip
-from gaupol.base.file.subviewer2 import SubViewer2
+class TestAdvancedSubStationAlpha(Test):
+
+    def test_read_and_write(self):
+
+        path = self.get_subrip_path()
+        sub_file = SubRip(path, 'utf_8')
+        data = sub_file.read()
+
+        sub_file = AdvancedSubStationAlpha(path, 'utf_8', sub_file.newlines)
+        sub_file.write(*data)
+        data_1 = sub_file.read()
+        sub_file.write(*data_1)
+        data_2 = sub_file.read()
+        assert data_2 == data_1

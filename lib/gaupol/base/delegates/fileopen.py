@@ -46,7 +46,7 @@ class FileOpenDelegate(Delegate):
         """
         # Get format.
         determiner = FileFormatDeterminer(path, encoding)
-        format = determiner.determine_file_format()
+        format = determiner.determine()
 
         # Read file.
         main_file = eval(Format.class_names[format])(path, encoding)
@@ -113,7 +113,7 @@ class FileOpenDelegate(Delegate):
 
         # Get format
         determiner = FileFormatDeterminer(path, encoding)
-        format = determiner.determine_file_format()
+        format = determiner.determine()
 
         # Read file.
         tran_file = eval(Format.class_names[format])(path, encoding)
