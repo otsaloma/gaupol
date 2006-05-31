@@ -68,7 +68,7 @@ import gtk
 import pango
 
 from gaupol.base.util            import langlib, listlib
-from gaupol.base.cons            import Document
+from gaupol.gtk.cons import *
 from gaupol.gtk.dialogs.message  import ErrorDialog
 from gaupol.gtk.dialogs.textedit import TextEditDialog
 from gaupol.gtk.error            import Cancelled

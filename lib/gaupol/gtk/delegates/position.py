@@ -30,7 +30,7 @@ from gettext import ngettext
 
 import gtk
 
-from gaupol.base.cons             import Document, Format, Mode
+from gaupol.gtk.cons import *
 from gaupol.gtk.delegates         import Delegate, UIMAction
 from gaupol.gtk.dialogs.duradjust import DurationAdjustDialog
 from gaupol.gtk.dialogs.frconvert import FramerateConvertDialog

@@ -33,7 +33,6 @@ import gtk
 import pango
 
 from gaupol.base.project     import Project
-from gaupol.base.cons        import Document, Format, Mode
 from gaupol.gtk.cons import *
 from gaupol.gtk.util         import config, gtklib
 from gaupol.gtk.view         import View

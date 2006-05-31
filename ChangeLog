@@ -1,3 +1,85 @@
+2006-05-31  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/base/clipboard.py:
+	* lib/gaupol/base/cons.py:
+	* lib/gaupol/base/error.py:
+	* lib/gaupol/base/file/__init__.py:
+	* lib/gaupol/base/file/ass.py:
+	* lib/gaupol/base/file/microdvd.py:
+	* lib/gaupol/base/file/mpl2.py:
+	* lib/gaupol/base/file/ssa.py:
+	* lib/gaupol/base/file/subrip.py:
+	* lib/gaupol/base/file/subviewer2.py:
+	* lib/gaupol/base/file/test/test_determiner.py:
+	* lib/gaupol/base/file/test/test_init.py:
+	* lib/gaupol/base/model.py:
+	* lib/gaupol/base/position/calc.py:
+	* lib/gaupol/base/position/test/test_calc.py:
+	* lib/gaupol/base/tags/__init__.py:
+	* lib/gaupol/base/tags/converter.py:
+	* lib/gaupol/base/tags/internal.py:
+	* lib/gaupol/base/tags/microdvd.py:
+	* lib/gaupol/base/tags/ssa.py:
+	* lib/gaupol/base/tags/test/test_ass.py:
+	* lib/gaupol/base/tags/test/test_init.py:
+	* lib/gaupol/base/tags/test/test_internal.py:
+	* lib/gaupol/base/tags/test/test_microdvd.py:
+	* lib/gaupol/base/tags/test/test_mpl2.py:
+	* lib/gaupol/base/tags/test/test_ssa.py:
+	* lib/gaupol/base/tags/test/test_subrip.py:
+	* lib/gaupol/base/tags/test/test_subviewer2.py:
+	* lib/gaupol/base/test/__init__.py:
+	* lib/gaupol/base/test/test_clipboard.py:
+	* lib/gaupol/base/test/test_cons.py:
+	* lib/gaupol/base/test/test_model.py:
+	* lib/gaupol/base/test:
+	* lib/gaupol/base/text/test/test_parser.py:
+	* lib/gaupol/base/util/encodinglib.py:
+	* lib/gaupol/base/util/langlib.py:
+	* lib/gaupol/base/util/listlib.py:
+	* lib/gaupol/base/util/test/test_listlib.py:
+	* lib/gaupol/base/util/wwwlib.py:
+	* lib/gaupol/gtk/cellrend/test/test_time.py:
+	* lib/gaupol/gtk/cons.py:
+	* lib/gaupol/gtk/delegates/appupdate.py:
+	* lib/gaupol/gtk/delegates/edit.py:
+	* lib/gaupol/gtk/delegates/fileclose.py:
+	* lib/gaupol/gtk/delegates/fileopen.py:
+	* lib/gaupol/gtk/delegates/filesave.py:
+	* lib/gaupol/gtk/delegates/guiinit.py:
+	* lib/gaupol/gtk/delegates/menuupdate.py:
+	* lib/gaupol/gtk/delegates/position.py:
+	* lib/gaupol/gtk/delegates/preview.py:
+	* lib/gaupol/gtk/delegates/spellcheck.py:
+	* lib/gaupol/gtk/delegates/view.py:
+	* lib/gaupol/gtk/delegates/viewupdate.py:
+	* lib/gaupol/gtk/dialogs/debug.py:
+	* lib/gaupol/gtk/dialogs/filechooser.py:
+	* lib/gaupol/gtk/dialogs/find.py:
+	* lib/gaupol/gtk/dialogs/frconvert.py:
+	* lib/gaupol/gtk/dialogs/header.py:
+	* lib/gaupol/gtk/dialogs/multiclose.py:
+	* lib/gaupol/gtk/dialogs/posadjust.py:
+	* lib/gaupol/gtk/dialogs/posshift.py:
+	* lib/gaupol/gtk/dialogs/preferences.py:
+	* lib/gaupol/gtk/dialogs/spellcheck.py:
+	* lib/gaupol/gtk/entry/test/test_time.py:
+	* lib/gaupol/gtk/entry/time.py:
+	* lib/gaupol/gtk/error.py:
+	* lib/gaupol/gtk/main.py:
+	* lib/gaupol/gtk/output.py:
+	* lib/gaupol/gtk/page.py:
+	* lib/gaupol/gtk/paths.py:
+	* lib/gaupol/gtk/test/test_output.py:
+	* lib/gaupol/gtk/util/config.py:
+	* lib/gaupol/gtk/util/gtklib.py:
+	* lib/gaupol/gtk/util/test/test_config.py:
+	* lib/gaupol/gtk/view.py:
+	  Separated testing.
+	  Cleaned up code.
+	  Rewrote parts of config module.
+	  Rewrote parts of constant modules.
+
 2006-05-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/base/file/test/test_ass.py:

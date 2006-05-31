@@ -17,13 +17,24 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-from gaupol.base.tags.subrip import SubRip
-from gaupol.test             import Test
+"""Internal tags."""
 
 
-class TestSubRip(Test):
+class Internal(object):
 
-    def test_italicize(self):
+    """
+    Internal tags.
 
-        text = SubRip.italicize('test')
-        assert text == '<i>test</i>'
+    Gaupol internal tags are:
+    <b></b>
+    <i></i>
+    <u></u>
+    <color="#RRGGBB"></color>
+    <font="NAME"></font>
+    <size="INT"></size>
+    """
+
+    # Pattern, Flags
+    opening_tag     = r'<[^/].*?>', 0
+    closing_tag     = r'</.*?>'   , 0
+    closing_tag_end = r'</.*?>\Z' , 0

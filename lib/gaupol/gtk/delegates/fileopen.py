@@ -34,7 +34,6 @@ import gtk
 
 from gaupol.base.error              import FileFormatError
 from gaupol.base.util               import encodinglib, listlib
-from gaupol.base.cons               import Document, Format
 from gaupol.gtk.cons        import *
 from gaupol.gtk.delegates           import Delegate, UIMAction
 from gaupol.gtk.dialogs.filechooser import OpenFileDialog, OpenVideoDialog
@@ -434,7 +433,7 @@ class FileOpenDelegate(Delegate):
 
         # Show the translation column.
         if not page.view.get_column(TTXT).get_visible():
-            path = '/ui/menubar/view/columns/%s' % Column.id_names[TTXT]
+            path = Column.uim_paths[TTXT]
             self.uim.get_action(path).activate()
 
         self.set_sensitivities()

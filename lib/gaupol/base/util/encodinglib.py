@@ -37,7 +37,7 @@ import locale
 import re
 
 
-# Characters illegal in encoding names
+# Illegal characters in encoding names
 re_illegal = re.compile(r'[^a-z0-9_]')
 
 encodings = (

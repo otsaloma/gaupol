@@ -150,8 +150,7 @@ def resize_dialog(dialog, width, height, max_width=0.65, max_height=0.65):
     dialog.set_size_request(width, height)
 
 def resize_message_dialog(
-    dialog, width, height, max_width=0.55, max_height=0.55
-):
+    dialog, width, height, max_width=0.55, max_height=0.55):
     """
     Resize message dialog in a smart manner.
 

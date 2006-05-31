@@ -63,7 +63,7 @@ class MPL2(SubtitleFile):
             for i, value in enumerate(data):
                 seconds = float(value[:-1] + '.' + value[-1])
                 data[i] = calc.seconds_to_time(seconds)
-        texts = list(text.replace('|', '\n') for text  in texts)
+        texts = list(x.replace('|', '\n') for x in texts)
 
         return shows, hides, texts
 
@@ -84,13 +84,12 @@ class MPL2(SubtitleFile):
             for i in range(len(data)):
                 decaseconds = calc.time_to_seconds(data[i]) * 10
                 data[i] = '%.0f' % decaseconds
-        texts = list(text.replace('\n', '|') for text in texts)
+        texts = list(x.replace('\n', '|') for x in texts)
 
         fobj = codecs.open(self.path, 'w', self.encoding)
         try:
             for i in range(len(shows)):
                 fobj.write('[%s][%s]%s%s' % (
-                    shows[i], hides[i], texts[i], newline_char
-                ))
+                    shows[i], hides[i], texts[i], newline_char))
         finally:
             fobj.close()

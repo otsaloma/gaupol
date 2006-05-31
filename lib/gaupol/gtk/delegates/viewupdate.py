@@ -27,7 +27,7 @@ except ImportError:
 
 import gtk
 
-from gaupol.base.cons     import Document
+from gaupol.gtk.cons import *
 from gaupol.gtk.delegates import Delegate
 
 

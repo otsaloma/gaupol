@@ -22,7 +22,8 @@
 
 import re
 
-from gaupol.base.tags import Internal, TagLibrary
+from gaupol.base.tags          import TagLibrary
+from gaupol.base.tags.internal import Internal
 
 
 COMMON = re.MULTILINE|re.DOTALL

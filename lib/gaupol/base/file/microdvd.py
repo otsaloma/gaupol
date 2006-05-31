@@ -46,7 +46,6 @@ class MicroDVD(SubtitleFile):
         """
         re_line = re.compile(r'^\{(\d+)\}\{(\d+)\}(.*?)$')
 
-        # Split to components.
         shows = []
         hides = []
         texts = []
@@ -58,9 +57,9 @@ class MicroDVD(SubtitleFile):
                 hides.append(match.group(2))
                 texts.append(match.group(3))
 
-        shows = list(int(frame)              for frame in shows)
-        hides = list(int(frame)              for frame in hides)
-        texts = list(text.replace('|', '\n') for text  in texts)
+        shows = list(int(x)               for x in shows)
+        hides = list(int(x)               for x in hides)
+        texts = list(x.replace('|', '\n') for x in texts)
 
         return shows, hides, texts
 
@@ -73,13 +72,12 @@ class MicroDVD(SubtitleFile):
         """
         texts = texts[:]
         newline_char = self._get_newline_character()
-        texts = list(text.replace('\n', '|') for text in texts)
+        texts = list(x.replace('\n', '|') for x in texts)
 
         fobj = codecs.open(self.path, 'w', self.encoding)
         try:
             for i in range(len(shows)):
                 fobj.write('{%.0f}{%.0f}%s%s' % (
-                    shows[i], hides[i], texts[i], newline_char
-                ))
+                    shows[i], hides[i], texts[i], newline_char))
         finally:
             fobj.close()

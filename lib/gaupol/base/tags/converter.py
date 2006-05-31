@@ -22,8 +22,8 @@
 
 import re
 
-from gaupol.base.tags.classes import *
 from gaupol.base.cons         import Format
+from gaupol.base.tags.classes import *
 
 
 class TagConverter(object):
@@ -46,7 +46,6 @@ class TagConverter(object):
         from_tags = eval(from_name).decode_tags
         to_tags   = eval(  to_name).encode_tags
 
-        # Compile regular expressions.
         for entry in from_tags:
             regex = re.compile(entry[0], entry[1])
             try:

@@ -22,7 +22,6 @@ import re
 import gtk
 import gobject
 
-from gaupol.base.cons        import Document
 from gaupol.base.util        import listlib, wwwlib
 from gaupol.gtk.cons import *
 from gaupol.gtk.util         import config, gtklib

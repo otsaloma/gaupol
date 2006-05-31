@@ -30,7 +30,7 @@ import logging
 
 import gtk
 
-from gaupol.base.cons              import Action, Document
+from gaupol.gtk.cons import *
 from gaupol.gtk.delegates          import Delegate, UIMAction
 from gaupol.gtk.dialogs.language   import LanguageDialog
 from gaupol.gtk.dialogs.spellcheck import SpellCheckDialog

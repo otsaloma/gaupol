@@ -17,13 +17,15 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-from gaupol.base.tags.subrip import SubRip
-from gaupol.test             import Test
+from gaupol.base.clipboard import Clipboard
+from gaupol.test           import Test
 
 
-class TestSubRip(Test):
+class TestClipboard(Test):
 
-    def test_italicize(self):
+    def test_get_data_as_string(self):
 
-        text = SubRip.italicize('test')
-        assert text == '<i>test</i>'
+        clipboard = Clipboard()
+        clipboard.data = ['test', None, 'test', None]
+        string = clipboard.get_data_as_string()
+        assert string == 'test\n\n\n\ntest\n\n'

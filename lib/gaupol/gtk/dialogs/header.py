@@ -28,7 +28,7 @@ except ImportError:
 import gtk
 
 from gaupol.base.file.classes import *
-from gaupol.base.cons          import Format
+from gaupol.gtk.cons import *
 from gaupol.gtk.util           import config, gtklib
 
 

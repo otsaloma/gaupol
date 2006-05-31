@@ -17,8 +17,8 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-from gaupol.base.position.calc import TimeFrameCalculator
 from gaupol.base.cons          import Framerate
+from gaupol.base.position.calc import TimeFrameCalculator
 from gaupol.test               import Test
 
 
@@ -32,9 +32,8 @@ class TestTimeFrameCalculator(Test):
     def test_init(self):
 
         TimeFrameCalculator()
-        TimeFrameCalculator(Framerate.FR_23_976)
-        TimeFrameCalculator(Framerate.FR_25)
-        TimeFrameCalculator(Framerate.FR_29_97)
+        for i in range(len(Framerate.values)):
+            TimeFrameCalculator(i)
 
     def test_add_seconds_to_time(self):
 

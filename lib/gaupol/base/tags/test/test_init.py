@@ -20,18 +20,9 @@
 import re
 
 from gaupol.base.cons         import Format
-from gaupol.base.tags         import Internal, TagLibrary
+from gaupol.base.tags         import TagLibrary
 from gaupol.base.tags.classes import *
 from gaupol.test              import Test
-
-
-class TestInternal(Test):
-
-    def test_attributes(self):
-
-        re.compile(*Internal.opening_tag)
-        re.compile(*Internal.closing_tag)
-        re.compile(*Internal.closing_tag_end)
 
 
 class TestTagLibrary(Test):

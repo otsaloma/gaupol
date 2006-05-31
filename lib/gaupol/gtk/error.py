@@ -20,13 +20,13 @@
 """Error classes."""
 
 
-class GaupolGTKError(Exception):
+class GTKError(Exception):
 
-    """Base class for gaupol.gtk module errors."""
+    """Base class for error classes."""
 
     pass
 
-class Cancelled(GaupolGTKError):
+class Cancelled(GTKError):
 
     """Cancel or close button clicked."""
 

@@ -29,7 +29,7 @@ from gettext import gettext as _
 
 import gtk
 
-from gaupol.base.cons              import Document
+from gaupol.gtk.cons import *
 from gaupol.gtk.delegates          import Delegate, UIMAction
 from gaupol.gtk.dialogs.message    import WarningDialog
 from gaupol.gtk.dialogs.multiclose import MultiCloseWarningDialog

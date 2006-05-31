@@ -27,7 +27,7 @@ from gaupol.test              import Test
 
 class TestSubtitleFile(Test):
 
-    def test_attr(self):
+    def test_attributes(self):
 
         for name in Format.class_names:
             cls = eval(name)

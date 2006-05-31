@@ -48,15 +48,3 @@ def sort_and_remove_duplicates(lst):
             lst.pop(i)
 
     return lst
-
-def strip(lst):
-    """
-    Strip leading and trailing spaces from strings in list.
-
-    Return list with leading and trailing spaces stripped.
-    """
-    lst = lst[:]
-    for i in range(len(lst)):
-        lst[i] = lst[i].strip()
-
-    return lst

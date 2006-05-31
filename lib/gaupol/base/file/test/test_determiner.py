@@ -18,8 +18,8 @@
 
 
 from gaupol.base.cons            import Format
-from gaupol.base.file.determiner import FileFormatDeterminer
 from gaupol.base.file.classes    import *
+from gaupol.base.file.determiner import FileFormatDeterminer
 from gaupol.test                 import Test
 
 

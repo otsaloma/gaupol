@@ -21,10 +21,6 @@ from gaupol.gtk.entry.time import EntryTime
 from gaupol.test           import Test
 
 
-# Cannot automate tests, because gobject.idle_add(method) requires a running
-# main loop, without which the specified method will never get run.
-
-
 class TestEntryTime(Test):
 
     def test_init(self):
@@ -45,4 +41,3 @@ if __name__ == '__main__':
     window.add(entry)
     window.show_all()
     gtk.main()
-

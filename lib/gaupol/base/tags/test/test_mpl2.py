@@ -17,8 +17,6 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-import re
-
 from gaupol.base.tags.mpl2 import MPL2
 from gaupol.test           import Test
 

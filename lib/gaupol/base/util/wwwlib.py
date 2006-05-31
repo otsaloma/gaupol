@@ -85,7 +85,7 @@ def read_url(url, timeout=10):
     Document reading is done in a thread that ends with or without success
     after amount of seconds specified by timeout has ended.
 
-    Raise urllib2.URLError if reading fails.
+    Raise urllib2.URLError (IOError) if reading fails.
     Raise TimeoutError if reading times out.
     """
     thread = URLReadThread(url)

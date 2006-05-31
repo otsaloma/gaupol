@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -17,19 +17,13 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Application data container."""
-
-
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
+"""Base class for model classes."""
 
 
 class Model(object):
 
     """
-    Application data container.
+    Base class for model classes.
 
     Model is meant in the sense of model in Model/View/Controller design.
     Model's purpose is to contain the data edited by the application and send
@@ -59,7 +53,7 @@ class Model(object):
     def connect(self, signal, method):
         """Register to receive notifications of signal."""
 
-        if method not in self._notifications[signal]:
+        if not method in self._notifications[signal]:
             self._notifications[signal].append(method)
 
     def emit(self, signal, *args, **kwargs):
@@ -78,25 +72,3 @@ class Model(object):
             self._blocked_signals.remove(signal)
         except ValueError:
             pass
-
-
-if __name__ == '__main__':
-
-    from gaupol.test import Test
-
-    class TestModel(Test):
-
-        def test_all(self):
-
-            def callback(arg, kwarg):
-                assert arg   == 1
-                assert kwarg == 2
-
-            Model._signals = ['done', 'undone']
-            model = Model()
-            model.block('done')
-            model.connect('undone', callback)
-            model.emit('undone', 1, kwarg=2)
-            model.unblock('undone')
-
-    TestModel().run()

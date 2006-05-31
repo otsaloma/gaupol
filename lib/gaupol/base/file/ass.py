@@ -28,7 +28,7 @@ class AdvancedSubStationAlpha(SubStationAlpha):
 
     """Advanced Sub Station Alpha file."""
 
-    format    = Format.ASS
+    format     = Format.ASS
     identifier = r'^ScriptType: v4.00\+\s*$', 0
 
     header_template = \
@@ -53,7 +53,7 @@ WrapStyle:
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
 Style: Default,Arial,18,&H00ffffff,&H0000ffff,&H00000000,&H00000000,0,0,0,0,100,100,0,0.00,1,2,2,2,30,30,10,0'''
 
-    event_format_fields = (
+    event_fields = (
         'Layer',
         'Start',
         'End',

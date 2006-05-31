@@ -20,10 +20,6 @@
 """Entry for time data in format hh:mm:ss,sss."""
 
 
-# Blocking model from PyGTK FAQ 14.5.
-# http://www.async.com.br/faq/pygtk/index.py?req=show&file=faq14.005.htp
-
-
 import re
 
 import gobject
@@ -120,8 +116,8 @@ class EntryTime(gtk.Entry):
 
         orig_text = self.get_text()
         text_before = orig_text[:pos - 1]
-        text_after  = orig_text[pos:]
-        full_text   = text_before + '0' + text_after
+        text_after = orig_text[pos:]
+        full_text = text_before + '0' + text_after
 
         self.set_text(full_text)
         self.set_position(pos - 1)

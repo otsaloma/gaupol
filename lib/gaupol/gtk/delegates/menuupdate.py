@@ -30,7 +30,7 @@ import os
 
 import gtk
 
-from gaupol.base.cons     import Action
+from gaupol.gtk.cons import *
 from gaupol.gtk.delegates import Delegate
 from gaupol.gtk.util      import config, gtklib
 

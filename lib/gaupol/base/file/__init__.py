@@ -45,7 +45,13 @@ class SubtitleFile(object):
     def __setattr__(self, name, value):
         """Set value of attribute"""
 
-        if name in ('format', 'mode', 'has_header', 'header_template'):
+        if name in (
+            'format',
+            'mode',
+            'has_header',
+            'header_template'
+            'identifier'
+        ):
             raise ValueError
 
         object.__setattr__(self, name, value)

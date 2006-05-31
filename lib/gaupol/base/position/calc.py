@@ -36,6 +36,7 @@ class TimeFrameCalculator(object):
 
     def __init__(self, framerate=None):
 
+        self.framerate = None
         if framerate is not None:
             self.set_framerate(framerate)
 

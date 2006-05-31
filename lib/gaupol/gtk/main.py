@@ -119,12 +119,8 @@ def main(args):
     from gaupol.gtk.application import Application
     application = Application()
 
-    paths = []
-    for arg in args[1:]:
-        path = os.path.abspath(arg)
-        if os.path.isfile(path):
-            paths.append(path)
-    if paths:
+    if args[1:]:
+        paths = list(os.path.abspath(x) for x in args[1:])
         application.open_main_files(paths)
 
     import gtk

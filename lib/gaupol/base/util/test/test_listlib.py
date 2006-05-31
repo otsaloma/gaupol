@@ -34,9 +34,3 @@ class TestModule(Test):
         lst = [4, 1, 5, 5, 1, 3, 6, 4, 4]
         lst = listlib.sort_and_remove_duplicates(lst)
         assert lst == [1, 3, 4, 5, 6]
-
-    def test_strip(self):
-
-        lst = ['a', ' b', 'c ', ' \n\t d \n\t ']
-        lst = listlib.strip(lst)
-        assert lst == ['a', 'b', 'c', 'd']

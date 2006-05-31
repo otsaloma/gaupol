@@ -35,10 +35,6 @@ class TestOutputWindow(Test):
 
         self.output_window._window.destroy()
 
-    def test_init(self):
-
-        OutputWindow()
-
     def test_get_position(self):
 
         position = self.output_window.get_position()

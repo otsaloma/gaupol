@@ -35,7 +35,7 @@ class MicroDVD(TagLibrary):
     tag        = r'\{[a-z]:.*?\}', re.IGNORECASE
     italic_tag = r'\{y:i\}'      , re.IGNORECASE
 
-    # decode_tags and encode_tags require multiple runs to concert overlapping
+    # decode_tags and encode_tags require multiple runs to convert overlapping
     # matches. e.g. <b><i>test</i></b>, would require two substitutions of
     # pattern "<[bi]>.*?</[bi]>" to fully convert.
 

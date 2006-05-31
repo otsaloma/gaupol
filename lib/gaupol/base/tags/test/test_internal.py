@@ -17,13 +17,16 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-from gaupol.base.tags.subrip import SubRip
-from gaupol.test             import Test
+import re
+
+from gaupol.base.tags.internal import Internal
+from gaupol.test               import Test
 
 
-class TestSubRip(Test):
+class TestInternal(Test):
 
-    def test_italicize(self):
+    def test_attributes(self):
 
-        text = SubRip.italicize('test')
-        assert text == '<i>test</i>'
+        re.compile(*Internal.opening_tag)
+        re.compile(*Internal.closing_tag)
+        re.compile(*Internal.closing_tag_end)

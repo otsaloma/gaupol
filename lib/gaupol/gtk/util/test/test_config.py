@@ -19,21 +19,28 @@
 
 import ConfigParser
 
-from gaupol.base.cons import Framerate, Format, Mode, Newlines, VideoPlayer
-from gaupol.gtk.cons  import NO, SHOW, HIDE, DURN, MTXT, TTXT, Column
-from gaupol.gtk.util  import config
-from gaupol.test      import Test
+from gaupol.gtk.cons import *
+from gaupol.gtk.cons import NO, SHOW, HIDE, DURN, MTXT, TTXT
+from gaupol.gtk.cons import Column, Format, Framerate, Mode, Newlines
+from gaupol.gtk.cons import VideoPlayer
+from gaupol.gtk.util import config
+from gaupol.test     import Test
 
 
-class TestType(Test):
+class TestSection(Test):
 
-    def test_is_list(self):
+    def test_attributes(self):
 
-        for i in range(0, 4):
-            assert config.Type.is_list(i) is False
-        for i in range(5, 8):
-            assert config.Type.is_list(i) is True
-
+        for section in config._get_sections():
+            cls = getattr(config, section)
+            assert hasattr(cls, 'types')
+            assert hasattr(cls, 'classes')
+            assert hasattr(cls, 'run_time_only')
+            options = cls.get_options()
+            assert isinstance(options, list)
+            assert options
+            for option in options:
+                assert isinstance(option, basestring)
 
 class TestModule(Test):
 
@@ -49,14 +56,13 @@ class TestModule(Test):
         assert config._get_constant('editor', 'mode', 'time') == Mode.TIME
         assert config._get_constant('editor', 'mode', Mode.TIME) == 'time'
 
-    def test_get_options(self):
+    def test_get_sections(self):
 
-        assert config.sections
-        for section in config.sections:
-            options = config.get_options(section)
-            assert options
-            for option in options:
-                assert isinstance(option, basestring)
+        sections = config._get_sections()
+        assert isinstance(sections, list)
+        assert sections
+        for section in sections:
+            assert hasattr(config, section)
 
     def test_read_and_write(self):
 
@@ -66,17 +72,7 @@ class TestModule(Test):
         config.write()
         config.read()
 
-    def test_sections(self):
-
-        assert config.sections
-        for section in config.sections:
-            cls = getattr(config, section)
-            assert issubclass(cls, config.Section)
-            assert hasattr(cls, 'types')
-            assert hasattr(cls, 'classes')
-            assert hasattr(cls, 'run_time_only')
-
-    def test_set_config_option(self):
+    def _test_set_config_option(self):
 
         config.read()
         config.write()
@@ -119,7 +115,7 @@ class TestModule(Test):
         config._set_config_option(parser, 'editor', 'visible_cols')
         assert config.editor.visible_cols == [SHOW, HIDE]
 
-    def test_set_parser_option(self):
+    def _test_set_parser_option(self):
 
         config.read()
         config.write()

@@ -58,7 +58,7 @@ Timer: 100.0000
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, TertiaryColour, BackColour, Bold, Italic, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, AlphaLevel, Encoding
 Style: Default,Arial,18,&Hffffff,&H00ffff,&H000000,&H000000,0,0,1,2,2,2,30,30,10,0,0'''
 
-    event_format_fields = (
+    event_fields = (
         'Marked',
         'Start',
         'End',
@@ -116,10 +116,10 @@ Style: Default,Arial,18,&Hffffff,&H00ffff,&H000000,&H000000,0,0,1,2,2,2,30,30,10
         if header:
             self.header = header.strip()
 
-        shows = list('0' + time.replace('.', ',') + '0' for time in shows)
-        hides = list('0' + time.replace('.', ',') + '0' for time in hides)
-        texts = list(text.replace('\\n', '\n')          for text in texts)
-        texts = list(text.replace('\\N', '\n')          for text in texts)
+        shows = list('0' + x.replace('.', ',') + '0' for x in shows)
+        hides = list('0' + x.replace('.', ',') + '0' for x in hides)
+        texts = list(x.replace('\\n', '\n')          for x in texts)
+        texts = list(x.replace('\\N', '\n')          for x in texts)
 
         return shows, hides, texts
 
@@ -136,11 +136,11 @@ Style: Default,Arial,18,&Hffffff,&H00ffff,&H000000,&H000000,0,0,1,2,2,2,30,30,10
         newline_char = self._get_newline_character()
         calc = TimeFrameCalculator()
 
-        texts = list(text.replace('\n', '\\n')    for text in texts)
-        shows = list(calc.round_time(time, 2)     for time in shows)
-        hides = list(calc.round_time(time, 2)     for time in hides)
-        shows = list(time[1:11].replace(',', '.') for time in shows)
-        hides = list(time[1:11].replace(',', '.') for time in hides)
+        texts = list(x.replace('\n', '\\n')    for x in texts)
+        shows = list(calc.round_time(x, 2)     for x in shows)
+        hides = list(calc.round_time(x, 2)     for x in hides)
+        shows = list(x[1:11].replace(',', '.') for x in shows)
+        hides = list(x[1:11].replace(',', '.') for x in hides)
 
         fobj = codecs.open(self.path, 'w', self.encoding)
         try:
@@ -148,11 +148,10 @@ Style: Default,Arial,18,&Hffffff,&H00ffff,&H000000,&H000000,0,0,1,2,2,2,30,30,10
             fobj.write(newline_char * 2)
             fobj.write('[Events]')
             fobj.write(newline_char)
-            fobj.write('Format: ' + ', '.join(self.event_format_fields))
+            fobj.write('Format: ' + ', '.join(self.event_fields))
             fobj.write(newline_char)
             for i in range(len(shows)):
                 fobj.write('Dialogue: 0,%s,%s,Default,,0000,0000,0000,,%s%s' %(
-                    shows[i], hides[i], texts[i], newline_char
-                ))
+                    shows[i], hides[i], texts[i], newline_char))
         finally:
             fobj.close()

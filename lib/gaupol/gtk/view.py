@@ -29,7 +29,6 @@ import gobject
 import gtk
 import pango
 
-from gaupol.base.cons            import Mode
 from gaupol.gtk.cellrend.classes import *
 from gaupol.gtk.cons     import *
 from gaupol.gtk.util             import config

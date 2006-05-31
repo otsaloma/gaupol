@@ -129,7 +129,7 @@ class OutputWindow(gobject.GObject):
 
         return self._window.props.visible
 
-    def hide(self, *args):
+    def hide(self):
         """Hide window."""
 
         self._window.hide()
@@ -143,8 +143,6 @@ class OutputWindow(gobject.GObject):
         """Emit signal that close button has been clicked."""
 
         self.emit('close')
-
-        # Prevent window destruction.
         return True
 
     def _on_window_state_event(self, window, event):
@@ -165,5 +163,5 @@ class OutputWindow(gobject.GObject):
 
         text_buffer = self._text_view.get_buffer()
         text_buffer.set_text(output)
-        self._text_view.scroll_to_mark(text_buffer.get_insert(), 0)
-        self._text_view.queue_draw()
+        mark = text_buffer.get_insert()
+        self._text_view.scroll_to_mark(mark, 0)

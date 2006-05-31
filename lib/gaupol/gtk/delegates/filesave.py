@@ -31,7 +31,6 @@ import os
 import gtk
 
 from gaupol.base.util               import encodinglib
-from gaupol.base.cons               import Document
 from gaupol.gtk.cons        import *
 from gaupol.gtk.delegates           import Delegate, UIMAction
 from gaupol.gtk.dialogs.filechooser import SaveFileDialog

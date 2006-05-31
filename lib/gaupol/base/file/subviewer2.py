@@ -84,9 +84,9 @@ class SubViewer2(SubtitleFile):
         if header:
             self.header = header.strip()
 
-        shows = list(time.replace('.', ',') + '0' for time in shows)
-        hides = list(time.replace('.', ',') + '0' for time in hides)
-        texts = list(text.replace('[br]', '\n')   for text in texts)
+        shows = list(x.replace('.', ',') + '0' for x in shows)
+        hides = list(x.replace('.', ',') + '0' for x in hides)
+        texts = list(x.replace('[br]', '\n')   for x in texts)
 
         return shows, hides, texts
 
@@ -103,11 +103,11 @@ class SubViewer2(SubtitleFile):
         calc = TimeFrameCalculator()
         newline_char = self._get_newline_character()
 
-        texts = list(text.replace('\n', '[br]')  for text in texts)
-        shows = list(calc.round_time(time, 2)    for time in shows)
-        hides = list(calc.round_time(time, 2)    for time in hides)
-        shows = list(time[:11].replace(',', '.') for time in shows)
-        hides = list(time[:11].replace(',', '.') for time in hides)
+        texts = list(x.replace('\n', '[br]')  for x in texts)
+        shows = list(calc.round_time(x, 2)    for x in shows)
+        hides = list(calc.round_time(x, 2)    for x in hides)
+        shows = list(x[:11].replace(',', '.') for x in shows)
+        hides = list(x[:11].replace(',', '.') for x in hides)
 
         fobj = codecs.open(self.path, 'w', self.encoding)
         try:

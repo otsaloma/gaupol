@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -20,30 +20,29 @@
 """Error classes."""
 
 
-class GaupolBaseError(Exception):
+class BaseError(Exception):
 
-    """Base class for errors of gaupol.base module."""
+    """Base class for error classes."""
 
     pass
 
 
-class ExternalError(GaupolBaseError):
+class ExternalError(BaseError):
 
     """External command failed."""
 
     pass
 
 
-class FileFormatError(GaupolBaseError):
+class FileFormatError(BaseError):
 
     """Unrecognized subtitle file format."""
 
     pass
 
 
-class TimeoutError(GaupolBaseError):
+class TimeoutError(BaseError):
 
     """Connection timed out."""
 
     pass
-

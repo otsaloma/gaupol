@@ -30,7 +30,7 @@ XML files. Original XML files by Alastair McKinstry and Andreas Jochens.
 http://alioth.debian.org/projects/pkg-isocodes/
 
 List of locales has been gathered from two sources. Additionally, two-letter
-versions of each language have been added.
+versions of each locale have been added.
 http://www.abisource.com/lxr/source/abi/src/af/util/xp/ut_Language.cpp
 http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries
 """

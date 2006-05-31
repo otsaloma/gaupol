@@ -25,26 +25,46 @@ import sys
 from gettext import gettext as _
 
 
-__all__ = [
-    'SHOW',
-    'HIDE',
-    'DURN',
-    'Action',
-    'Column',
-    'Document',
-    'Format',
-    'Framerate',
-    'Mode',
-    'Newlines',
-    'VideoPlayer',
-]
-
 SHOW = 0
 HIDE = 1
 DURN = 2
 
 
-class Action(object):
+class Section(object):
+
+    """Base class for constant classes."""
+
+    @classmethod
+    def get_names(cls):
+        """Get names of attributes."""
+
+        def sort(x, y):
+            return cmp(getattr(cls, x), getattr(cls, y))
+
+        names = []
+        for name in dir(cls):
+            if not name.startswith('_'):
+                if name.isupper():
+                    names.append(name)
+        names.sort(sort)
+        return names
+
+    @classmethod
+    def get_name(cls, value):
+        """
+        Get name of attribute with value.
+
+        Raise ValueError if not found.
+        """
+        for name in cls.get_names():
+            if getattr(cls, name) == value:
+                return name
+        raise ValueError
+
+
+class Action(Section):
+
+    """Revertable actions."""
 
     DO            = 0
     UNDO          = 1
@@ -54,77 +74,69 @@ class Action(object):
     REDO_MULTIPLE = 5
 
 
-class Column(object):
+class Column(Section):
+
+    """Position data columns."""
 
     SHOW = 0
     HIDE = 1
     DURN = 2
 
 
-class Document(object):
+class Document(Section):
+
+    """Document types."""
 
     MAIN = 0
     TRAN = 1
 
 
-class Format(object):
+class Format(Section):
+
+    """Subtitle file formats."""
 
     ASS        = 0
     MICRODVD   = 1
     MPL2       = 2
-    SUBRIP     = 3
-    SSA        = 4
+    SSA        = 3
+    SUBRIP     = 4
     SUBVIEWER2 = 5
 
     class_names = [
         'AdvancedSubStationAlpha',
         'MicroDVD',
         'MPL2',
-        'SubRip',
         'SubStationAlpha',
+        'SubRip',
         'SubViewer2',
-    ]
-
-    id_names = [
-        'ass',
-        'microdvd',
-        'mpl2',
-        'subrip',
-        'ssa',
-        'subviewer2',
     ]
 
     display_names = [
         _('Advanced Sub Station Alpha'),
         _('MicroDVD'),
         _('MPL2'),
-        _('SubRip'),
         _('Sub Station Alpha'),
+        _('SubRip'),
         _('SubViewer 2.0'),
     ]
-
 
     extensions = [
         '.ass',
         '.sub',
         '.txt',
-        '.srt',
         '.ssa',
+        '.srt',
         '.sub',
     ]
 
 
-class Framerate(object):
+class Framerate(Section):
+
+    """Valid framerates."""
 
     FR_23_976 = 0
     FR_25     = 1
     FR_29_97  = 2
-
-    id_names = [
-        '23_976',
-        '25',
-        '29_97',
-    ]
 
     display_names = [
         _('23.976 fps'),
@@ -139,28 +151,21 @@ class Framerate(object):
     ]
 
 
-class Mode(object):
+class Mode(Section):
+
+    """Position modes."""
 
     TIME  = 0
     FRAME = 1
 
-    id_names = [
-        'time',
-        'frame',
-    ]
 
+class Newlines(Section):
 
-class Newlines(object):
+    """Newlines."""
 
     MAC     = 0
     UNIX    = 1
     WINDOWS = 2
-
-    id_names = [
-        'mac',
-        'unix',
-        'windows',
-    ]
 
     display_names = [
         _('Mac'),
@@ -175,29 +180,29 @@ class Newlines(object):
     ]
 
 
-class VideoPlayer(object):
+class VideoPlayer(Section):
+
+    """Video players."""
 
     MPLAYER = 0
     VLC     = 1
-
-    id_names = [
-        'mplayer',
-        'vlc',
-    ]
 
     display_names = [
         _('MPlayer'),
         _('VLC'),
     ]
 
+    _args = [
+        '-identify -osdlevel 2 -ss %c -sub "%s" "%v"',
+        '--start-time=%c --sub-file="%s" "%v"',
+    ]
+
     commands = [
-        'mplayer -identify -osdlevel 2 -ss %c -sub "%s" "%v"',
-        'vlc --start-time=%c --sub-file="%s" "%v"',
+        'mplayer ' + _args[0],
+        'vlc '     + _args[1],
     ]
     if sys.platform == 'win32':
         commands = [
-            r'%ProgramFiles%\mplayer\mplayer.exe '  \
-             '-identify -osdlevel 2 -ss %c -sub "%s" "%v"',
-            r'%ProgramFiles%\VideoLAN\vlc\vlc.exe ' \
-             '--start-time=%c --sub-file="%s" "%v"',
+            r'%ProgramFiles%\mplayer\mplayer.exe '  + _args[0],
+            r'%ProgramFiles%\VideoLAN\vlc\vlc.exe ' + _args[1],
         ]

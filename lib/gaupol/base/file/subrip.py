@@ -25,7 +25,6 @@ import re
 
 from gaupol.base.cons import Format, Mode
 from gaupol.base.file import SubtitleFile
-from gaupol.base.util import listlib
 
 
 class SubRip(SubtitleFile):
@@ -70,7 +69,7 @@ class SubRip(SubtitleFile):
                 texts.append(u'')
             else:
                 texts[-1] += line
-        texts = listlib.strip(texts)
+        texts = list(x.strip() for x in texts)
 
         return shows, hides, texts
 
@@ -83,7 +82,7 @@ class SubRip(SubtitleFile):
         """
         texts = texts[:]
         newline_char = self._get_newline_character()
-        texts = list(text.replace('\n', newline_char) for text in texts)
+        texts = list(x.replace('\n', newline_char) for x in texts)
 
         fobj = codecs.open(self.path, 'w', self.encoding)
         try:

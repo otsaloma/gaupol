@@ -41,31 +41,7 @@ class TestParser(Test):
         parser.set_text(orig_text)
         assert parser.get_text() == orig_text
 
-    def test_replace(self):
-
-        def get_text(pattern, replacement):
-            parser = Parser(re.compile(r'<.*?>'))
-            parser.set_text(orig_text)
-            parser.pattern = pattern
-            parser.replacement = replacement
-            parser.next()
-            parser.replace()
-            return parser.get_text()
-
-        text = get_text('i', '_')
-        assert text == \
-            '<i>He changed sh_fts.</i>\n' \
-            'Didn\'t <i>he</i> tell you?'
-
-        text = get_text('e', '__')
-        assert text == \
-            '<i>H__ changed shifts.</i>\n' \
-            'Didn\'t <i>he</i> tell you?'
-
-        text = get_text('e', '')
-        assert text == \
-            '<i>H changed shifts.</i>\n' \
-            'Didn\'t <i>he</i> tell you?'
+    def test_replace_regex(self):
 
         def get_text(pattern, flags, replacement):
             parser = Parser(re.compile(r'<.*?>'))
@@ -91,43 +67,33 @@ class TestParser(Test):
             '<i>Hechanged shifts.</i>\n' \
             'Didn\'t <i>he</i> tell you?'
 
-    def test_replace_all(self):
+    def test_replace_string(self):
 
         def get_text(pattern, replacement):
             parser = Parser(re.compile(r'<.*?>'))
             parser.set_text(orig_text)
             parser.pattern = pattern
             parser.replacement = replacement
-            parser.replace_all()
+            parser.next()
+            parser.replace()
             return parser.get_text()
 
         text = get_text('i', '_')
         assert text == \
             '<i>He changed sh_fts.</i>\n' \
-            'D_dn\'t <i>he</i> tell you?'
+            'Didn\'t <i>he</i> tell you?'
 
         text = get_text('e', '__')
         assert text == \
-            '<i>H__ chang__d shifts.</i>\n' \
-            'Didn\'t <i>h__</i> t__ll you?'
-
-        text = get_text('H', '')
-        assert text == \
-            '<i>e changed shifts.</i>\n' \
+            '<i>H__ changed shifts.</i>\n' \
             'Didn\'t <i>he</i> tell you?'
 
-        text = get_text('?', '__')
+        text = get_text('e', '')
         assert text == \
-            '<i>He changed shifts.</i>\n' \
-            'Didn\'t <i>he</i> tell you__'
+            '<i>H changed shifts.</i>\n' \
+            'Didn\'t <i>he</i> tell you?'
 
-        text = get_text('?', '')
-        assert text == \
-            '<i>He changed shifts.</i>\n' \
-            'Didn\'t <i>he</i> tell you'
-
-        text = get_text('e', 'e')
-        assert text == orig_text
+    def test_replace_all_regex(self):
 
         def get_text(pattern, flags, replacement):
             parser = Parser(re.compile(r'<.*?>'))
@@ -171,3 +137,41 @@ class TestParser(Test):
         assert text == \
             '<i>xx xxxxxxx xxxxxx.</i>\n' \
             'xxxx\'x <i>xx</i> xxxx xxx?'
+
+    def test_replace_all_string(self):
+
+        def get_text(pattern, replacement):
+            parser = Parser(re.compile(r'<.*?>'))
+            parser.set_text(orig_text)
+            parser.pattern = pattern
+            parser.replacement = replacement
+            parser.replace_all()
+            return parser.get_text()
+
+        text = get_text('i', '_')
+        assert text == \
+            '<i>He changed sh_fts.</i>\n' \
+            'D_dn\'t <i>he</i> tell you?'
+
+        text = get_text('e', '__')
+        assert text == \
+            '<i>H__ chang__d shifts.</i>\n' \
+            'Didn\'t <i>h__</i> t__ll you?'
+
+        text = get_text('H', '')
+        assert text == \
+            '<i>e changed shifts.</i>\n' \
+            'Didn\'t <i>he</i> tell you?'
+
+        text = get_text('?', '__')
+        assert text == \
+            '<i>He changed shifts.</i>\n' \
+            'Didn\'t <i>he</i> tell you__'
+
+        text = get_text('?', '')
+        assert text == \
+            '<i>He changed shifts.</i>\n' \
+            'Didn\'t <i>he</i> tell you'
+
+        text = get_text('e', 'e')
+        assert text == orig_text

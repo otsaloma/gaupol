@@ -28,7 +28,7 @@ except ImportError:
 import gobject
 import gtk
 
-from gaupol.base.cons import Document
+from gaupol.gtk.cons import *
 from gaupol.gtk.util  import gtklib
 
 

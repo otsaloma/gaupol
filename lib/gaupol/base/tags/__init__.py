@@ -17,27 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 
-"""Tag libraries."""
-
-
-class Internal(object):
-
-    """
-    Internal tags.
-
-    Gaupol internal tags are:
-    <b></b>
-    <i></i>
-    <u></u>
-    <color="#RRGGBB"></color>
-    <font="NAME"></font>
-    <size="INT"></size>
-    """
-
-    # Pattern, Flags
-    opening_tag     = r'<[^/].*?>', 0
-    closing_tag     = r'</.*?>'   , 0
-    closing_tag_end = r'</.*?>\Z' , 0
+"""Base class for subtitle tag libraries."""
 
 
 class TagLibrary(object):
@@ -46,7 +26,7 @@ class TagLibrary(object):
     Base class for subtitle tag libraries.
 
     In the special case that a format does not contain any tags, this class can
-    simply be subclassed with a pass statement.
+    simply be subclassed with a pass statement. Or not.
 
     decode_tags is a list of regular expressions that convert tags to the
     internal format. encode_tags convert from the internal format to the
@@ -65,7 +45,6 @@ class TagLibrary(object):
 
     @staticmethod
     def pre_decode(text):
-
         return text
 
     # List of tuples (pattern, flags, replacement, [count])
@@ -73,12 +52,10 @@ class TagLibrary(object):
 
     @staticmethod
     def post_decode(text):
-
         return text
 
     @staticmethod
     def pre_encode(text):
-
         return text
 
     # List of tuples (pattern, flags, replacement, [count])
@@ -92,11 +69,9 @@ class TagLibrary(object):
 
     @staticmethod
     def post_encode(text):
-
         return text
 
     @staticmethod
     def italicize(text):
         """Italicize text."""
-
         return text

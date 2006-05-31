@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -26,9 +26,9 @@ class Clipboard(object):
     Gaupol internal clipboard.
 
     Data on the clipboard is directly available as attribute "data". Its value
-    is [] if there's nothing on the clipboard. data is a one-dimensional list
-    with multiple ranges made possible with elements having value None to
-    express that the row is skipped in the range.
+    is an empty list if there's nothing on the clipboard. data is a
+    one-dimensional list with multiple ranges made possible with elements
+    having value None to express that the row is skipped in the range.
     """
 
     def __init__(self):
@@ -43,21 +43,4 @@ class Clipboard(object):
         for element in self.data:
             string_list.append(element or '')
 
-        # Separate list elements with a blank line to form a string.
         return '\n\n'.join(string_list)
-
-
-if __name__ == '__main__':
-
-    from gaupol.test import Test
-
-    class TestClipboard(Test):
-
-        def test_get_data_as_string(self):
-
-            clipboard = Clipboard()
-            clipboard.data = ['test', None, 'test', None]
-            string = clipboard.get_data_as_string()
-            assert string == 'test\n\n\n\ntest\n\n'
-
-    TestClipboard().run()

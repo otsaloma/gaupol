@@ -22,20 +22,12 @@ Paths used by Gaupol.
 
 The values of the paths default to their values in the source distribution.
 When installing, this file should be overwritten with the correct paths during
-installation process.
+the installation process.
 """
 
 
 import os
 
-
-__all__ = [
-    'DATA_DIR',
-    'GLADE_DIR',
-    'ICON_DIR',
-    'UI_DIR',
-    'LOCALE_DIR',
-]
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 prefix = os.path.join(current_dir, '..', '..', '..')
