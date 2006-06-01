@@ -65,7 +65,7 @@
 				<menuitem name="hide" action="toggle_hide_column"/>
 				<menuitem name="duration" action="toggle_duration_column"/>
 				<menuitem name="main_text" action="toggle_main_text_column"/>
-				<menuitem name="tran_text" action="toggle_tran_text_column"/>
+				<menuitem name="translation_text" action="toggle_tran_text_column"/>
 			</menu>
 		</menu>
 		<menu name="format" action="show_format_menu">

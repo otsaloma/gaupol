@@ -107,14 +107,14 @@ class SpellCheckAction(UIMAction):
         if not enchant_available:
             return False
 
-        if not config.spell_check.main and \
-           not config.spell_check.tran:
+        if not config.SpellCheck.main and \
+           not config.SpellCheck.tran:
             return False
-        if config.spell_check.main and \
-           config.spell_check.main_lang is None:
+        if config.SpellCheck.main and \
+           config.SpellCheck.main_lang is None:
             return False
-        if config.spell_check.tran and \
-           config.spell_check.tran_lang is None:
+        if config.SpellCheck.tran and \
+           config.SpellCheck.tran_lang is None:
             return False
 
         return True
@@ -134,7 +134,7 @@ class SpellCheckDelegate(Delegate):
     def on_check_spelling_activated(self, *args):
         """Check for incorrent spelling."""
 
-        if config.spell_check.all_projects:
+        if config.SpellCheck.all_projects:
             pages = self.pages
         else:
             pages = [self.get_current_page()]

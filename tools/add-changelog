@@ -3,23 +3,21 @@
 """Add a ChangeLog entry."""
 
 import os
-import shutil
 import time
 
-name  = 'Osmo Salomaa'
-email = 'otsaloma@cc.hut.fi'
-date  = time.strftime('%Y-%m-%d')
+NAME  = 'Osmo Salomaa'
+EMAIL = 'otsaloma@cc.hut.fi'
+DATE  = time.strftime('%Y-%m-%d')
 
-tool_dir   = os.path.dirname(os.path.abspath(__file__))
-source_dir = os.path.join(tool_dir, '..')
-os.chdir(source_dir)
+TOOL_DIR   = os.path.dirname(os.path.abspath(__file__))
+SOURCE_DIR = os.path.join(TOOL_DIR, '..')
 
+os.chdir(SOURCE_DIR)
 fobj = os.popen('svn status -q')
 output = fobj.read()
 fobj.close()
 if not output:
     raise SystemExit('No files changed.')
-
 files = output.split('\n')
 for i in reversed(range(len(files))):
     files[i] = files[i][2:].strip()
@@ -27,15 +25,13 @@ for i in reversed(range(len(files))):
         files.pop(i)
 files.sort()
 
-new_entry = '%s  %s  <%s>\n\n' % (date, name, email)
+new_entry = '%s  %s  <%s>\n\n' % (DATE, NAME, EMAIL)
 for path in files:
     print 'Adding %s.' % path
     new_entry += '\t* %s:\n\n' % path
-
 fobj = file('ChangeLog', 'r')
 old_entries = fobj.read()
 fobj.close()
-
 entries = new_entry + old_entries
 fobj = file('ChangeLog', 'w')
 fobj.write(entries)

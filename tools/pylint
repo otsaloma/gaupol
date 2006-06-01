@@ -10,21 +10,18 @@ import os
 import sys
 import tempfile
 
-tool_dir = os.path.dirname(os.path.abspath(__file__))
-lib_dir  = os.path.join(tool_dir, '..', 'lib')
-sys.path.insert(0, lib_dir)
-os.environ['PYTHONPATH'] = lib_dir + ':' + os.environ['PYTHONPATH']
+TOOL_DIR = os.path.dirname(os.path.abspath(__file__))
+LIB_DIR  = os.path.join(TOOL_DIR, '..', 'lib')
+os.environ['PYTHONPATH'] = LIB_DIR + ':' + os.environ['PYTHONPATH']
+sys.path.insert(0, LIB_DIR)
 
 from gaupol.base.util import wwwlib
-
 temp_dir = tempfile.gettempdir()
 report_path = os.path.join(temp_dir, 'gaupol.pylint')
-
 fobj = os.popen('pylint %s' % ' '.join(sys.argv[1:]))
 output = fobj.read()
 fobj.close()
 fobj = open(report_path, 'w')
 fobj.write(output)
 fobj.close()
-
 wwwlib.browse_url(report_path)

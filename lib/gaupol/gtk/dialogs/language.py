@@ -73,8 +73,8 @@ class LanguageDialog(object):
         # Languages
         main_selection = self._lang_main_view.get_selection()
         tran_selection = self._lang_tran_view.get_selection()
-        main_lang = config.spell_check.main_lang
-        tran_lang = config.spell_check.tran_lang
+        main_lang = config.SpellCheck.main_lang
+        tran_lang = config.SpellCheck.tran_lang
         try:
             row = self._langs.index(main_lang)
             main_selection.select_path(row)
@@ -87,12 +87,12 @@ class LanguageDialog(object):
             pass
 
         # Projects
-        check_all = config.spell_check.all_projects
+        check_all = config.SpellCheck.all_projects
         self._prj_all_radio.set_active(check_all)
 
         # Columns
-        check_main = config.spell_check.main
-        check_tran = config.spell_check.tran
+        check_main = config.SpellCheck.main
+        check_tran = config.SpellCheck.tran
         self._col_main_check.set_active(check_main)
         self._col_tran_check.set_active(check_tran)
         self._lang_main_view.set_sensitive(check_main)
@@ -102,7 +102,7 @@ class LanguageDialog(object):
         """Initialize list of available languages."""
 
         # List languages by trying to create a dictionary object for them.
-        for lang in langlib.locales:
+        for lang in langlib.LOCALES:
             try:
                 enchant.Dict(lang)
                 self._langs.append(lang)
@@ -184,14 +184,14 @@ class LanguageDialog(object):
         """Set checking of main texts."""
 
         check = check_button.get_active()
-        config.spell_check.main = check
+        config.SpellCheck.main = check
         self._lang_main_view.set_sensitive(check)
 
     def _on_col_tran_check_toggled(self, check_button):
         """Set checking of translation texts."""
 
         check = check_button.get_active()
-        config.spell_check.tran = check
+        config.SpellCheck.tran = check
         self._lang_tran_view.set_sensitive(check)
 
     def _on_lang_main_view_selection_changed(self, *args):
@@ -199,20 +199,20 @@ class LanguageDialog(object):
 
         row = self._get_selected_language_row(self._lang_main_view)
         if row is not None:
-            config.spell_check.main_lang = self._langs[row]
+            config.SpellCheck.main_lang = self._langs[row]
 
     def _on_lang_tran_view_selection_changed(self, *args):
         """Set translation text language."""
 
         row = self._get_selected_language_row(self._lang_tran_view)
         if row is not None:
-            config.spell_check.tran_lang = self._langs[row]
+            config.SpellCheck.tran_lang = self._langs[row]
 
     def _on_prj_all_radio_toggled(self, radio_button):
         """Set project to check."""
 
         check_all = radio_button.get_active()
-        config.spell_check.all_projects = check_all
+        config.SpellCheck.all_projects = check_all
 
     def run(self):
         """Show and run the dialog."""

@@ -22,7 +22,7 @@
 import codecs
 import re
 
-from gaupol.base.cons          import Format, Mode
+from gaupol.base               import cons
 from gaupol.base.file          import SubtitleFile
 from gaupol.base.position.calc import TimeFrameCalculator
 
@@ -31,8 +31,8 @@ class SubStationAlpha(SubtitleFile):
 
     """Sub Station Alpha file."""
 
-    format     = Format.SSA
-    mode       = Mode.TIME
+    format     = cons.Format.SSA
+    mode       = cons.Mode.TIME
     has_header = True
     identifier = r'^ScriptType: v4.00\s*$', 0
 

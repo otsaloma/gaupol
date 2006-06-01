@@ -18,7 +18,7 @@
 
 import re
 
-from gaupol.base.cons         import Format, Newlines
+from gaupol.base              import cons
 from gaupol.base.file         import SubtitleFile
 from gaupol.base.file.classes import *
 from gaupol.test              import Test
@@ -28,7 +28,7 @@ class TestSubtitleFile(Test):
 
     def test_attributes(self):
 
-        for name in Format.class_names:
+        for name in cons.Format.class_names:
             cls = eval(name)
             assert isinstance(cls.format, int)
             assert isinstance(cls.mode, int)
@@ -44,14 +44,14 @@ class TestSubtitleFile(Test):
 
     def test_get_newline_character(self):
 
-        for i, value in enumerate(Newlines.values):
+        for i, value in enumerate(cons.Newlines.values):
             sub_file = SubtitleFile('test', 'utf_8', i)
             chars = sub_file._get_newline_character()
             assert chars == value
 
     def test_read_and_write(self):
 
-        for name in Format.class_names:
+        for name in cons.Format.class_names:
             if name == 'MicroDVD':
                 continue
             path = self.get_subrip_path()

@@ -37,9 +37,9 @@ import re
 
 
 # Illegal characters in encoding names
-re_illegal = re.compile(r'[^a-z0-9_]')
+RE_ILLEGAL = re.compile(r'[^a-z0-9_]')
 
-encodings = (
+ENCODINGS = (
     # Translators: Most of the character encoding descriptions are copied from
     # Gedit, which is translated to very many languages. Check the Gedit .po
     # files for a reference: http://cvs.gnome.org/viewcvs/gedit/po/.
@@ -137,7 +137,7 @@ def get_descriptive_name(python_name):
 
     Raise ValueError if not found.
     """
-    for entry in encodings:
+    for entry in ENCODINGS:
         if entry[0] == python_name:
             # Translators: Encoding descriptive name, e.g. "Russian (KOI8-R)".
             return _('%s (%s)') % (entry[2], entry[1])
@@ -150,7 +150,7 @@ def get_display_name(python_name):
 
     Raise ValueError if not found.
     """
-    for entry in encodings:
+    for entry in ENCODINGS:
         if entry[0] == python_name:
             return entry[1]
 
@@ -164,13 +164,13 @@ def get_locale_encoding():
     Return (Python name, display name, description).
     """
     python_name = locale.getdefaultlocale()[1]
-    python_name = re_illegal.sub('_', python_name)
+    python_name = RE_ILLEGAL.sub('_', python_name)
     try:
         python_name = aliases[python_name]
     except KeyError:
         pass
 
-    for entry in encodings:
+    for entry in ENCODINGS:
         if entry[0] == python_name:
             return entry
 
@@ -190,7 +190,7 @@ def get_python_name(display_name):
 
     Raise ValueError if not found.
     """
-    for entry in encodings:
+    for entry in ENCODINGS:
         if entry[1] == display_name:
             return entry[0]
 
@@ -202,7 +202,7 @@ def get_valid_encodings():
 
     Return list of tuples (Python name, display name, description).
     """
-    valid_encodings = list(encodings)
+    valid_encodings = list(ENCODINGS)
     for i, entry in enumerate(reversed(valid_encodings)):
         if not is_valid(entry[0]):
             valid_encodings.pop(i)

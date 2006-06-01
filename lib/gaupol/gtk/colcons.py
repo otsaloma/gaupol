@@ -16,28 +16,17 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol.base.error import TimeoutError
-from gaupol.base.util  import wwwlib
-from gaupol.test       import Test
+"""Data column constants."""
 
 
-class TestModule(Test):
+from gaupol.gtk import cons
 
-    def test_read_url(self):
 
-        url = 'http://download.gna.org/gaupol/latest.txt'
+__all__ = ['NUMB', 'SHOW', 'HIDE', 'DURN', 'MTXT', 'TTXT']
 
-        text = wwwlib.read_url(url, 10)
-        assert isinstance(text, basestring)
-
-        try:
-            wwwlib.read_url(url, 0.001)
-            raise AssertionError
-        except TimeoutError:
-            pass
-
-        try:
-            wwwlib.read_url(url + 'x', 10)
-            raise AssertionError
-        except IOError:
-            pass
+NUMB = cons.Column.NUMB
+SHOW = cons.Column.SHOW
+HIDE = cons.Column.HIDE
+DURN = cons.Column.DURN
+MTXT = cons.Column.MTXT
+TTXT = cons.Column.TTXT

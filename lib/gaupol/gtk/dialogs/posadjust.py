@@ -93,7 +93,7 @@ class TimeFrameAdjustDialog(gobject.GObject):
         self._subtitle_spin_2.set_value(last_subtitle)
         self._subtitle_spin_2.emit('value-changed')
 
-        self._all_radio.set_active(config.position_adjust.all_subtitles)
+        self._all_radio.set_active(config.PositionAdjust.all_subtitles)
 
     def _init_sensitivities(self):
         """Initialize widget sensitivities."""
@@ -236,7 +236,7 @@ class TimeFrameAdjustDialog(gobject.GObject):
     def _on_all_radio_toggled(self, radio_button):
         """Save radio button value."""
 
-        config.position_adjust.all_subtitles = radio_button.get_active()
+        config.PositionAdjust.all_subtitles = radio_button.get_active()
 
     def _on_preview_button_1_clicked(self, button):
         """Preview changes."""

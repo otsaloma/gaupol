@@ -31,6 +31,7 @@ import urlparse
 
 import gtk
 
+from gaupol.gtk.colcons import *
 from gaupol.base.error              import FileFormatError
 from gaupol.base.util               import encodinglib, listlib
 from gaupol.gtk.cons        import *
@@ -259,15 +260,15 @@ class FileOpenDelegate(Delegate):
     def add_to_recent_files(self, path):
         """Add path to list of recent files."""
 
-        recent_files = config.file.recent
+        url = urllib.pathname2url(path)
         try:
-            recent_files.remove(path)
+            config.File.recent.remove(url)
         except ValueError:
             pass
-        recent_files.insert(0, path)
+        config.File.recent.insert(0, url)
 
-        while len(recent_files) > config.file.max_recent:
-            recent_files.pop()
+        while len(config.File.recent) > config.File.max_recent:
+            config.File.recent.pop()
 
     def _check_file_open(self, path):
         """
@@ -328,10 +329,10 @@ class FileOpenDelegate(Delegate):
     def _get_tryable_encodings(self, first_encoding=None):
         """Get a list of encodings to try."""
 
-        encodings = config.encoding.fallbacks[:]
+        encodings = config.Encoding.fallback[:]
 
         # Add locale encoding.
-        if config.encoding.try_locale:
+        if config.Encoding.try_locale:
             try:
                 encodings.insert(0, encodinglib.get_locale_encoding()[0])
             except ValueError:
@@ -396,7 +397,8 @@ class FileOpenDelegate(Delegate):
         """Open a recent main file."""
 
         index = int(action.get_name().split('_')[-1])
-        path = config.file.recent[index]
+        url = config.File.recent[index]
+        path = urllib.url2pathname(url)
         self.open_main_files([path])
 
     def on_open_translation_file_activated(self, *args):
@@ -496,7 +498,7 @@ class FileOpenDelegate(Delegate):
 
             # Save last used directory.
             dirpath = os.path.dirname(path)
-            config.file.directory = dirpath
+            config.File.directory = dirpath
 
             basename = page.get_main_basename()
             message = _('Opened main file "%s"') % basename
@@ -564,7 +566,7 @@ class FileOpenDelegate(Delegate):
 
             else:
                 if format in (Format.SSA, Format.ASS) and \
-                   config.file.warn_ssa:
+                   config.File.warn_ssa:
                     dialog = SSAWarningDialog(self.window)
                     gtklib.set_cursor_normal(self.window)
                     response = dialog.run()

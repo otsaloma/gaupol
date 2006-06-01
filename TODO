@@ -13,7 +13,6 @@ Plans for 0.5.0
       - Framerate conversion available for time-based subs
       - Put a .pot file in the trunk?
       - Mime-type registration?
-      - Module-wide variables uppercase?
       - count vs. amount
 
   * base

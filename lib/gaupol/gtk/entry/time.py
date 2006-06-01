@@ -25,8 +25,8 @@ import gobject
 import gtk
 
 
-re_time   = re.compile(r'^\d\d:[0-5]\d:[0-5]\d,\d\d\d$')
-re_number = re.compile(r'\d')
+RE_TIME   = re.compile(r'^\d\d:[0-5]\d:[0-5]\d,\d\d\d$')
+RE_NUMBER = re.compile(r'\d')
 
 
 def blockedmethod(function):
@@ -77,7 +77,7 @@ class EntryTime(gtk.Entry):
         orig_text = self.get_text()
         new_text = orig_text[:pos] + text + orig_text[pos + length:]
 
-        if not re_time.match(new_text):
+        if not RE_TIME.match(new_text):
             return
         self.set_text(new_text)
 
@@ -130,7 +130,7 @@ class EntryTime(gtk.Entry):
 
         start, end = self.get_selection_bounds()
         orig_text = self.get_text()
-        zero_text = re_number.sub('0', orig_text[start:end])
+        zero_text = RE_NUMBER.sub('0', orig_text[start:end])
         full_text = orig_text[:start] + zero_text + orig_text[end:]
 
         self.set_text(full_text)

@@ -21,6 +21,7 @@ import re
 import gtk
 import gobject
 
+from gaupol.gtk.colcons import *
 from gaupol.base.util        import listlib, wwwlib
 from gaupol.gtk.cons import *
 from gaupol.gtk.util         import config, gtklib
@@ -91,16 +92,16 @@ class FindDialog(gobject.GObject):
     def _init_data(self):
         """Initialize default values."""
 
-        self._prj_all_radio.set_active(config.find.all_projects)
-        self._col_main_check.set_active(config.find.main_col)
-        self._col_tran_check.set_active(config.find.tran_col)
+        self._prj_all_radio.set_active(config.Find.all_projects)
+        self._col_main_check.set_active(config.Find.main_col)
+        self._col_tran_check.set_active(config.Find.tran_col)
 
-        self._dot_all_check.set_active(config.find.dot_all)
-        self._ignore_case_check.set_active(config.find.ignore_case)
-        self._multiline_check.set_active(config.find.multiline)
-        self._regex_check.set_active(config.find.regex)
+        self._dot_all_check.set_active(config.Find.dot_all)
+        self._ignore_case_check.set_active(config.Find.ignore_case)
+        self._multiline_check.set_active(config.Find.multiline)
+        self._regex_check.set_active(config.Find.regex)
 
-        self._pattern_entry.set_text(config.find.pattern)
+        self._pattern_entry.set_text(config.Find.pattern)
         self._set_patterns()
         self._set_action_sensitivities()
         self._set_option_sensitivities()
@@ -108,9 +109,9 @@ class FindDialog(gobject.GObject):
     def _init_fonts(self):
         """Initialize fonts."""
 
-        if not config.editor.use_default_font:
-            gtklib.set_widget_font(self._text_view    , config.editor.font)
-            gtklib.set_widget_font(self._pattern_entry, config.editor.font)
+        if not config.Editor.use_default_font:
+            gtklib.set_widget_font(self._text_view    , config.Editor.font)
+            gtklib.set_widget_font(self._pattern_entry, config.Editor.font)
 
     def _init_signals(self):
         """Initialize signals."""
@@ -141,8 +142,8 @@ class FindDialog(gobject.GObject):
 
         # Set text view width to 46 ex and height to 4 lines.
         label = gtk.Label('\n'.join(['x' * 46] * 4))
-        if not config.editor.use_default_font:
-            gtklib.set_label_font(label, config.editor.font)
+        if not config.Editor.use_default_font:
+            gtklib.set_label_font(label, config.Editor.font)
         width, height = label.size_request()
         self._text_view.set_size_request(width + 4, height + 7)
 
@@ -154,9 +155,9 @@ class FindDialog(gobject.GObject):
     def _get_documents(self):
 
         docs = []
-        if config.find.main_col:
+        if config.Find.main_col:
             docs.append(Document.MAIN)
-        if config.find.tran_col:
+        if config.Find.tran_col:
             docs.append(Document.TRAN)
 
         return docs
@@ -164,22 +165,22 @@ class FindDialog(gobject.GObject):
     def _get_flags(self):
 
         flags = 0
-        if config.find.dot_all:
+        if config.Find.dot_all:
             flags = flags|re.DOTALL
-        if config.find.ignore_case:
+        if config.Find.ignore_case:
             flags = flags|re.IGNORECASE
-        if config.find.multiline:
+        if config.Find.multiline:
             flags = flags|re.MULTILINE
 
         return flags
 
     def _on_col_main_check_toggled(self, check_button):
 
-        config.find.main_col = check_button.get_active()
+        config.Find.main_col = check_button.get_active()
 
     def _on_col_tran_check_toggled(self, check_button):
 
-        config.find.tran_col = check_button.get_active()
+        config.Find.tran_col = check_button.get_active()
 
     def _on_dialog_response(self, dialog, response):
 
@@ -191,15 +192,15 @@ class FindDialog(gobject.GObject):
 
     def _on_dot_all_check_toggled(self, check_button):
 
-        config.find.dot_all = check_button.get_active()
+        config.Find.dot_all = check_button.get_active()
 
     def _on_ignore_case_check_toggled(self, check_button):
 
-        config.find.ignore_case = check_button.get_active()
+        config.Find.ignore_case = check_button.get_active()
 
     def _on_multiline_check_toggled(self, check_button):
 
-        config.find.multiline = check_button.get_active()
+        config.Find.multiline = check_button.get_active()
 
     def _on_next_button_clicked(self, *args):
 
@@ -226,18 +227,18 @@ class FindDialog(gobject.GObject):
         regex = self._regex_check.get_active()
         pattern = self._pattern_entry.get_text()
 
-        config.find.pattern = pattern
-        config.find.patterns.insert(0, pattern)
-        config.find.patterns = listlib.remove_duplicates(config.find.patterns)
-        while len(config.find.patterns) > 10:
-            config.find.patterns.pop()
+        config.Find.pattern = pattern
+        config.Find.patterns.insert(0, pattern)
+        config.Find.patterns = listlib.remove_duplicates(config.Find.patterns)
+        while len(config.Find.patterns) > 10:
+            config.Find.patterns.pop()
         self._set_patterns()
 
-        page.project.set_find_wrap(not config.find.all_projects)
+        page.project.set_find_wrap(not config.Find.all_projects)
         if regex:
             page.project.set_find_regex(pattern, self._get_flags())
         else:
-            page.project.set_find_string(pattern, config.find.ignore_case)
+            page.project.set_find_string(pattern, config.Find.ignore_case)
 
         #print '-----'
         #print 'Page:', page
@@ -294,11 +295,11 @@ class FindDialog(gobject.GObject):
 
     def _on_prj_all_radio_toggled(self, radio_button):
 
-        config.find.all_projects = radio_button.get_active()
+        config.Find.all_projects = radio_button.get_active()
 
     def _on_regex_check_toggled(self, check_button):
 
-        config.find.regex = check_button.get_active()
+        config.Find.regex = check_button.get_active()
         self._set_option_sensitivities()
 
     def _on_text_view_focus_out_event(self, *args):
@@ -323,7 +324,7 @@ class FindDialog(gobject.GObject):
 
     def _set_option_sensitivities(self):
 
-        sensitive = config.find.regex
+        sensitive = config.Find.regex
         self._dot_all_check.set_sensitive(sensitive)
         self._multiline_check.set_sensitive(sensitive)
         self._dialog.set_response_sensitive(gtk.RESPONSE_HELP, sensitive)
@@ -332,7 +333,7 @@ class FindDialog(gobject.GObject):
 
         store = self._pattern_combo.get_model()
         store.clear()
-        for pattern in config.find.patterns:
+        for pattern in config.Find.patterns:
             store.append([pattern])
 
     def show(self):

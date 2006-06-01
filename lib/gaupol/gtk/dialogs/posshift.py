@@ -72,12 +72,12 @@ class TimeFrameShiftDialog(gobject.GObject):
     def _init_data(self):
         """Initialize default values."""
 
-        self._all_radio.set_active(config.position_shift.all_subtitles)
+        self._all_radio.set_active(config.PositionShift.all_subtitles)
 
         if self._page.edit_mode == Mode.TIME:
-            value = float(config.position_shift.seconds)
+            value = float(config.PositionShift.seconds)
         elif self._page.edit_mode == Mode.FRAME:
-            value = config.position_shift.frames
+            value = config.PositionShift.frames
         self._amount_spin.set_value(value)
 
     def _init_sensitivities(self):
@@ -146,15 +146,15 @@ class TimeFrameShiftDialog(gobject.GObject):
     def _on_all_radio_toggled(self, radio_button):
         """Save radio button value."""
 
-        config.position_shift.all_subtitles = radio_button.get_active()
+        config.PositionShift.all_subtitles = radio_button.get_active()
 
     def _on_amount_spin_value_changed(self, spin_button):
         """Save spin button value."""
 
         if self._page.edit_mode == Mode.TIME:
-            config.position_shift.seconds = '%.3f' % spin_button.get_value()
+            config.PositionShift.seconds = '%.3f' % spin_button.get_value()
         elif self._page.edit_mode == Mode.FRAME:
-            config.position_shift.frames = spin_button.get_value_as_int()
+            config.PositionShift.frames = spin_button.get_value_as_int()
 
     def _on_preview_button_clicked(self, *args):
         """Preview changes."""

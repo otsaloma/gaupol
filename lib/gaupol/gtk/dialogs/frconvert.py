@@ -64,7 +64,7 @@ class FramerateConvertDialog(object):
             combo_box.set_model(store)
             for i in range(len(Framerate.display_names)):
                 store.append([Framerate.display_names[i]])
-            combo_box.set_active(config.editor.framerate)
+            combo_box.set_active(config.Editor.framerate)
 
     def _init_signals(self):
         """Initialize signals."""
@@ -100,7 +100,7 @@ class FramerateConvertDialog(object):
     def _on_all_radio_toggled(self, radio_button):
         """Save radio button value."""
 
-        config.framerate_convert.all_projects = radio_button.get_active()
+        config.FramerateConvert.all_projects = radio_button.get_active()
 
     def _on_correct_combo_changed(self, combo_box):
         """Set convert button sensitivity."""

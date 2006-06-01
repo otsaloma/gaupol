@@ -9,8 +9,9 @@ USAGE: exec PATH
 import os
 import sys
 
-tool_dir = os.path.dirname(os.path.abspath(__file__))
-lib_dir  = os.path.join(tool_dir, '..', 'lib')
-sys.path.insert(0, lib_dir)
+TOOL_DIR = os.path.dirname(os.path.abspath(__file__))
+LIB_DIR  = os.path.join(TOOL_DIR, '..', 'lib')
+os.environ['PYTHONPATH'] = LIB_DIR + ':' + os.environ['PYTHONPATH']
+sys.path.insert(0, LIB_DIR)
 
 execfile(sys.argv[1])

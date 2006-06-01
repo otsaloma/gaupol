@@ -163,8 +163,8 @@ class SpellCheckDialog(gobject.GObject):
 
         # Language codes and descriptive names
         self._langs = [
-            config.spell_check.main_lang,
-            config.spell_check.tran_lang
+            config.SpellCheck.main_lang,
+            config.SpellCheck.tran_lang
         ]
         self._lang_names = [None, None]
 
@@ -223,10 +223,10 @@ class SpellCheckDialog(gobject.GObject):
     def _init_fonts(self):
         """Initialize fonts."""
 
-        if not config.editor.use_default_font:
-            gtklib.set_widget_font(self._text_view      , config.editor.font)
-            gtklib.set_widget_font(self._entry          , config.editor.font)
-            gtklib.set_widget_font(self._suggestion_view, config.editor.font)
+        if not config.Editor.use_default_font:
+            gtklib.set_widget_font(self._text_view      , config.Editor.font)
+            gtklib.set_widget_font(self._entry          , config.Editor.font)
+            gtklib.set_widget_font(self._suggestion_view, config.Editor.font)
 
     def _init_lang_name(self, document):
         """Initialize language descriptive name for document."""
@@ -308,15 +308,15 @@ class SpellCheckDialog(gobject.GObject):
 
         # Set suggestion list width to 30 ex.
         label = gtk.Label('x' * 30)
-        if not config.editor.use_default_font:
-            gtklib.set_label_font(label, config.editor.font)
+        if not config.Editor.use_default_font:
+            gtklib.set_label_font(label, config.Editor.font)
         width = label.size_request()[0]
         self._suggestion_view.set_size_request(width + 4, -1)
 
         # Set text view width to 46 ex and height to 4 lines.
         label = gtk.Label('\n'.join(['x' * 46] * 4))
-        if not config.editor.use_default_font:
-            gtklib.set_label_font(label, config.editor.font)
+        if not config.Editor.use_default_font:
+            gtklib.set_label_font(label, config.Editor.font)
         width, height = label.size_request()
         self._text_view.set_size_request(width + 4, height + 7)
 
@@ -332,12 +332,12 @@ class SpellCheckDialog(gobject.GObject):
                           '"%s": %s.' % (SPELL_CHECK_DIR, message)
                 logger.error(message)
 
-        if config.spell_check.main:
+        if config.SpellCheck.main:
             self._init_lang_name(MAIN)
             self._init_checker(MAIN)
             self._init_replacements(MAIN)
 
-        if config.spell_check.tran:
+        if config.SpellCheck.tran:
             self._init_lang_name(TRAN)
             self._init_checker(TRAN)
             self._init_replacements(TRAN)
@@ -631,7 +631,7 @@ class SpellCheckDialog(gobject.GObject):
             self._texts[self._row + 1]
             self._row += 1
         except IndexError:
-            if self._document == MAIN and config.spell_check.tran:
+            if self._document == MAIN and config.SpellCheck.tran:
                 self._set_document(TRAN)
             else:
                 self._register_changes()
@@ -650,9 +650,9 @@ class SpellCheckDialog(gobject.GObject):
         self._page = page
         self.emit('page-selected', self._page)
 
-        if config.spell_check.main:
+        if config.SpellCheck.main:
             self._set_document(MAIN)
-        elif config.spell_check.tran:
+        elif config.SpellCheck.tran:
             self._set_document(TRAN)
 
     def show(self):
@@ -729,10 +729,10 @@ if __name__ == '__main__':
             page_2.project.remove_subtitles([1])
             pages  = [page_1, page_2]
 
-            config.spell_check.main_lang        = 'en_CA'
-            config.spell_check.tran_lang = 'en_CA'
-            config.spell_check.main        = True
-            config.spell_check.tran = True
+            config.SpellCheck.main_lang        = 'en_CA'
+            config.SpellCheck.tran_lang = 'en_CA'
+            config.SpellCheck.main        = True
+            config.SpellCheck.tran = True
 
             self.repl_path = os.path.join(SPELL_CHECK_DIR, 'en_CA.repl')
             self.dict_path = os.path.join(SPELL_CHECK_DIR, 'en_CA.dict')

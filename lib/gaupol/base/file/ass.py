@@ -19,7 +19,7 @@
 """Advanced Sub Station Alpha file."""
 
 
-from gaupol.base.cons     import Format
+from gaupol.base          import cons
 from gaupol.base.file.ssa import SubStationAlpha
 
 
@@ -27,7 +27,7 @@ class AdvancedSubStationAlpha(SubStationAlpha):
 
     """Advanced Sub Station Alpha file."""
 
-    format     = Format.ASS
+    format     = cons.Format.ASS
     identifier = r'^ScriptType: v4.00\+\s*$', 0
 
     header_template = \

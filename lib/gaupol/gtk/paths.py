@@ -28,11 +28,11 @@ the installation process.
 import os
 
 
-current_dir = os.path.dirname(os.path.abspath(__file__))
-prefix = os.path.join(current_dir, '..', '..', '..')
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+PREFIX = os.path.join(CURRENT_DIR, '..', '..', '..')
 
-DATA_DIR   = os.path.join(prefix  , 'data'  )
+DATA_DIR   = os.path.join(PREFIX  , 'data'  )
 GLADE_DIR  = os.path.join(DATA_DIR, 'glade' )
 ICON_DIR   = os.path.join(DATA_DIR, 'icons' )
 UI_DIR     = os.path.join(DATA_DIR, 'ui'    )
-LOCALE_DIR = os.path.join(prefix  , 'locale')
+LOCALE_DIR = os.path.join(PREFIX  , 'locale')

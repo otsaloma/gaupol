@@ -26,6 +26,7 @@ except ImportError:
 
 from gettext import gettext as _
 import os
+import urllib
 
 import gtk
 
@@ -53,9 +54,10 @@ class MenuUpdateDelegate(Delegate):
     def on_open_button_show_menu(self, *args):
         """Build the recent files menu."""
 
-        recent_files = config.file.recent
+        recent_files = config.File.recent
         for i in reversed(range(len(recent_files))):
-            if not os.path.isfile(recent_files[i]):
+            path = urllib.url2pathname(recent_files[i])
+            if not os.path.isfile(path):
                 recent_files.pop(i)
 
         menu = gtk.Menu()
@@ -69,8 +71,9 @@ class MenuUpdateDelegate(Delegate):
         def on_leave_notify_event(item, event):
             self.set_status_message(None)
 
-        for filepath in recent_files:
+        for url in recent_files:
 
+            filepath = urllib.url2pathname(url)
             basename = os.path.basename(filepath)
             if len(basename) > 100:
                 basename = basename[:50] + '...' + basename[-50:]
@@ -105,7 +108,7 @@ class MenuUpdateDelegate(Delegate):
         Build the file menu by adding all open projects.
 
         Project action name fields are integers matching the file's index in
-        config.file.recent and action fields are "open_recent_file_N".
+        config.File.recent and action fields are "open_recent_file_N".
         """
         # Remove old actions.
         action_group = self._get_action_group('recent')
@@ -116,9 +119,10 @@ class MenuUpdateDelegate(Delegate):
         if self.recent_uim_id is not None:
             self.uim.remove_ui(self.recent_uim_id)
 
-        recent_files = config.file.recent
+        recent_files = config.File.recent
         for i in reversed(range(len(recent_files))):
-            if not os.path.isfile(recent_files[i]):
+            path = urllib.url2pathname(recent_files[i])
+            if not os.path.isfile(path):
                 recent_files.pop(i)
 
         actions  = []
@@ -127,7 +131,8 @@ class MenuUpdateDelegate(Delegate):
         # Create actions.
         for i in range(len(recent_files)):
 
-            basename = os.path.basename(recent_files[i])
+            path = urllib.url2pathname(recent_files[i])
+            basename = os.path.basename(path)
             name     = 'open_recent_file_%d' % i
             label    = '%d. %s' % (i + 1, basename)
             tooltip  = _('Open main file "%s"') % basename

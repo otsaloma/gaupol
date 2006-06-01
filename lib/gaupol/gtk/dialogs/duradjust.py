@@ -65,18 +65,18 @@ class DurationAdjustDialog(object):
     def _init_data(self):
         """Initialize default values."""
 
-        self._optimal_spin.set_value(float(config.duration_adjust.optimal))
-        self._min_spin.set_value(float(config.duration_adjust.minimum))
-        self._max_spin.set_value(float(config.duration_adjust.maximum))
-        self._gap_spin.set_value(float(config.duration_adjust.gap))
+        self._optimal_spin.set_value(float(config.DurationAdjust.optimal))
+        self._min_spin.set_value(float(config.DurationAdjust.minimum))
+        self._max_spin.set_value(float(config.DurationAdjust.maximum))
+        self._gap_spin.set_value(float(config.DurationAdjust.gap))
 
-        self._lengthen_check.set_active(config.duration_adjust.lengthen)
-        self._shorten_check.set_active(config.duration_adjust.shorten)
-        self._min_check.set_active(config.duration_adjust.use_minimum)
-        self._max_check.set_active(config.duration_adjust.use_maximum)
-        self._gap_check.set_active(config.duration_adjust.use_gap)
-        self._prj_all_radio.set_active(config.duration_adjust.all_projects)
-        self._sub_all_radio.set_active(config.duration_adjust.all_subtitles)
+        self._lengthen_check.set_active(config.DurationAdjust.lengthen)
+        self._shorten_check.set_active(config.DurationAdjust.shorten)
+        self._min_check.set_active(config.DurationAdjust.use_minimum)
+        self._max_check.set_active(config.DurationAdjust.use_maximum)
+        self._gap_check.set_active(config.DurationAdjust.use_gap)
+        self._prj_all_radio.set_active(config.DurationAdjust.all_projects)
+        self._sub_all_radio.set_active(config.DurationAdjust.all_subtitles)
 
     def _init_sensitivities(self):
         """Initialize widget sensitivities."""
@@ -177,54 +177,54 @@ class DurationAdjustDialog(object):
         """Save use gap setting."""
 
         use = check_button.get_active()
-        config.duration_adjust.use_gap = use
+        config.DurationAdjust.use_gap = use
         self._gap_spin.set_sensitive(use)
 
     def _on_gap_spin_value_changed(self, spin_button):
         """Save gap setting."""
 
-        config.duration_adjust.gap = '%.3f' % spin_button.get_value()
+        config.DurationAdjust.gap = '%.3f' % spin_button.get_value()
 
     def _on_lengthen_check_toggled(self, check_button):
         """Save lengthen setting."""
 
-        config.duration_adjust.lengthen = check_button.get_active()
+        config.DurationAdjust.lengthen = check_button.get_active()
         self._set_optimal_spin_sensitivity()
 
     def _on_max_check_toggled(self, check_button):
         """Save use maximum setting."""
 
         use = check_button.get_active()
-        config.duration_adjust.use_maximum = use
+        config.DurationAdjust.use_maximum = use
         self._max_spin.set_sensitive(use)
 
     def _on_max_spin_value_changed(self, spin_button):
         """Save maximum setting."""
 
-        config.duration_adjust.maximum = '%.3f' % spin_button.get_value()
+        config.DurationAdjust.maximum = '%.3f' % spin_button.get_value()
 
     def _on_min_check_toggled(self, check_button):
         """Save use minimum setting."""
 
         use = check_button.get_active()
-        config.duration_adjust.use_minimum = use
+        config.DurationAdjust.use_minimum = use
         self._min_spin.set_sensitive(use)
 
     def _on_min_spin_value_changed(self, spin_button):
         """Save minimum setting."""
 
-        config.duration_adjust.minimum = '%.3f' % spin_button.get_value()
+        config.DurationAdjust.minimum = '%.3f' % spin_button.get_value()
 
     def _on_optimal_spin_value_changed(self, spin_button):
         """Save optimal setting."""
 
-        config.duration_adjust.optimal = '%.3f' % spin_button.get_value()
+        config.DurationAdjust.optimal = '%.3f' % spin_button.get_value()
 
     def _on_prj_all_radio_toggled(self, radio_button):
         """Save all projects setting."""
 
         all_projects = radio_button.get_active()
-        config.duration_adjust.all_projects = all_projects
+        config.DurationAdjust.all_projects = all_projects
 
         if all_projects:
             self._sub_all_radio.set_active(True)
@@ -235,13 +235,13 @@ class DurationAdjustDialog(object):
     def _on_shorten_check_toggled(self, check_button):
         """Save shorten setting."""
 
-        config.duration_adjust.shorten = check_button.get_active()
+        config.DurationAdjust.shorten = check_button.get_active()
         self._set_optimal_spin_sensitivity()
 
     def _on_sub_all_radio_toggled(self, radio_button):
         """Save all subtitles setting."""
 
-        config.duration_adjust.all_subtitles = radio_button.get_active()
+        config.DurationAdjust.all_subtitles = radio_button.get_active()
 
     def run(self):
         """Show and run the dialog."""

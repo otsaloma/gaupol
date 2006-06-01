@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol.base.cons            import Format
+from gaupol.base                 import cons
 from gaupol.base.file.classes    import *
 from gaupol.base.file.determiner import FileFormatDeterminer
 from gaupol.test                 import Test
@@ -26,7 +26,7 @@ class TestFileFormatDeterminer(Test):
 
     def test_determine(self):
 
-        for format, name in enumerate(Format.class_names):
+        for format, name in enumerate(cons.Format.class_names):
             if name == 'MicroDVD':
                 continue
             path = self.get_subrip_path()

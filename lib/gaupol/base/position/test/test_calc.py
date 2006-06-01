@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol.base.cons          import Framerate
+from gaupol.base               import cons
 from gaupol.base.position.calc import TimeFrameCalculator
 from gaupol.test               import Test
 
@@ -25,8 +25,8 @@ class TestTimeFrameCalculator(Test):
 
     def setup_method(self, method):
 
-        self.calc = TimeFrameCalculator(Framerate.FR_23_976)
-        self.framerate = Framerate.values[Framerate.FR_23_976]
+        self.calc = TimeFrameCalculator(cons.Framerate.FR_23_976)
+        self.framerate = Framerate.values[cons.Framerate.FR_23_976]
 
     def test_init(self):
 

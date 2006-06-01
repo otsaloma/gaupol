@@ -29,6 +29,7 @@ from gettext import ngettext
 
 import gtk
 
+from gaupol.gtk.colcons import *
 from gaupol.gtk.cons      import *
 from gaupol.gtk.delegates         import Delegate, UIMAction
 from gaupol.gtk.dialogs.subinsert import SubtitleInsertDialog
@@ -140,7 +141,7 @@ class EditValueAction(UIMAction):
 
         if None in (row, col):
             return False
-        elif col == NO:
+        elif col == NUMB:
             return False
         else:
             return True

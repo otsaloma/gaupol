@@ -4,8 +4,8 @@
 
 import os
 
-tool_dir   = os.path.dirname(os.path.abspath(__file__))
-source_dir = os.path.join(tool_dir, '..')
+TOOL_DIR   = os.path.dirname(os.path.abspath(__file__))
+SOURCE_DIR = os.path.join(TOOL_DIR, '..')
 
-os.chdir(source_dir)
+os.chdir(SOURCE_DIR)
 os.system('svn status | grep -v \.pyc | sort')

@@ -24,11 +24,6 @@ import sys
 from gettext import gettext as _
 
 
-SHOW = 0
-HIDE = 1
-DURN = 2
-
-
 class Section(object):
 
     """Base class for constant classes."""
@@ -63,8 +58,6 @@ class Section(object):
 
 class Action(Section):
 
-    """Revertable actions."""
-
     DO            = 0
     UNDO          = 1
     REDO          = 2
@@ -75,8 +68,6 @@ class Action(Section):
 
 class Column(Section):
 
-    """Position data columns."""
-
     SHOW = 0
     HIDE = 1
     DURN = 2
@@ -84,15 +75,11 @@ class Column(Section):
 
 class Document(Section):
 
-    """Document types."""
-
     MAIN = 0
     TRAN = 1
 
 
 class Format(Section):
-
-    """Subtitle file formats."""
 
     ASS        = 0
     MICRODVD   = 1
@@ -131,8 +118,6 @@ class Format(Section):
 
 class Framerate(Section):
 
-    """Valid framerates."""
-
     FR_23_976 = 0
     FR_25     = 1
     FR_29_97  = 2
@@ -152,15 +137,11 @@ class Framerate(Section):
 
 class Mode(Section):
 
-    """Position modes."""
-
     TIME  = 0
     FRAME = 1
 
 
 class Newlines(Section):
-
-    """Newlines."""
 
     MAC     = 0
     UNIX    = 1
@@ -181,8 +162,6 @@ class Newlines(Section):
 
 class VideoPlayer(Section):
 
-    """Video players."""
-
     MPLAYER = 0
     VLC     = 1
 
@@ -191,17 +170,10 @@ class VideoPlayer(Section):
         _('VLC'),
     ]
 
-    _args = [
-        '-identify -osdlevel 2 -ss %c -sub "%s" "%v"',
-        '--start-time=%c --sub-file="%s" "%v"',
-    ]
-
     commands = [
-        'mplayer ' + _args[0],
-        'vlc '     + _args[1],
+        'mplayer -identify -osdlevel 2 -ss %c -sub "%s" "%v"',
+        'vlc --start-time=%c --sub-file="%s" "%v"',
     ]
     if sys.platform == 'win32':
-        commands = [
-            r'%ProgramFiles%\mplayer\mplayer.exe '  + _args[0],
-            r'%ProgramFiles%\VideoLAN\vlc\vlc.exe ' + _args[1],
-        ]
+        commands[0] = r'%ProgramFiles%\mplayer\mplayer.exe'  + commands[0][7:]
+        commands[1] = r'%ProgramFiles%\VideoLAN\vlc\vlc.exe' + commands[1][3:]

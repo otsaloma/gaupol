@@ -74,22 +74,22 @@ class TextFileChooserDialog(gtk.FileChooserDialog):
 
         self._encodings = []
 
-        for encoding in config.encoding.visibles:
+        for encoding in config.Encoding.visible:
             try:
                 name = encodinglib.get_descriptive_name(encoding)
                 self._encodings.append((encoding, name))
             except ValueError:
                 pass
 
-        if config.file.encoding is not None:
+        if config.File.encoding is not None:
             found = False
             for encoding, name in self._encodings:
-                if encoding == config.file.encoding:
+                if encoding == config.File.encoding:
                     found = True
                     break
             if not found:
                 try:
-                    encoding = config.file.encoding
+                    encoding = config.File.encoding
                     name = encodinglib.get_descriptive_name(encoding)
                     self._encodings.insert(0, (encoding, name))
                 except ValueError:
@@ -122,7 +122,7 @@ class TextFileChooserDialog(gtk.FileChooserDialog):
             return row == len(store) - 2
         self._encoding_combo.set_row_separator_func(func)
 
-        self.set_encoding(config.file.encoding)
+        self.set_encoding(config.File.encoding)
 
     def _init_filters(self):
         """Initialize file filters."""
@@ -169,14 +169,14 @@ class TextFileChooserDialog(gtk.FileChooserDialog):
     def _on_current_folder_changed(self, *args):
         """Save directory setting."""
 
-        config.file.directory = self.get_current_folder()
+        config.File.directory = self.get_current_folder()
 
     def _on_encoding_combo_changed(self, combo_box):
         """Save encoding setting or show encoding dialog."""
 
         encoding = self.get_encoding()
         if encoding is not None:
-            config.file.encoding = encoding
+            config.File.encoding = encoding
 
         if combo_box.get_active() != len(combo_box.props.model) - 1:
             return
@@ -186,8 +186,8 @@ class TextFileChooserDialog(gtk.FileChooserDialog):
         if response == gtk.RESPONSE_OK:
             encoding = dialog.get_encoding()
             if encoding is not None:
-                config.file.encoding = encoding
-            config.encoding.visibles = dialog.get_visible_encodings()
+                config.File.encoding = encoding
+            config.Encoding.visible = dialog.get_visible_encodings()
         dialog.destroy()
 
         self._init_encodings()
@@ -224,8 +224,8 @@ class OpenFileDialog(TextFileChooserDialog):
         self._init_encoding_data()
         self._init_signals()
 
-        if config.file.directory is not None:
-            self.set_current_folder(config.file.directory)
+        if config.File.directory is not None:
+            self.set_current_folder(config.File.directory)
         self.set_default_response(gtk.RESPONSE_OK)
 
     def _init_extra_widget(self):
@@ -282,10 +282,10 @@ class SaveFileDialog(TextFileChooserDialog):
         self._init_newline_data()
         self._init_signals()
 
-        self.set_format(config.file.format)
-        self.set_newlines(config.file.newlines)
+        self.set_format(config.File.format)
+        self.set_newlines(config.File.newlines)
 
-        self.set_current_folder(config.file.directory)
+        self.set_current_folder(config.File.directory)
         self.set_default_response(gtk.RESPONSE_OK)
 
     def _init_extra_widget(self):
@@ -402,7 +402,7 @@ class SaveFileDialog(TextFileChooserDialog):
         """Save format setting and change extension."""
 
         new_format = combo_box.get_active()
-        config.file.format = new_format
+        config.File.format = new_format
 
         path = self.get_filename()
         if path is None:
@@ -427,7 +427,7 @@ class SaveFileDialog(TextFileChooserDialog):
     def _on_newline_combo_changed(self, combo_box):
         """Save newline setting."""
 
-        config.file.newlines = combo_box.get_active()
+        config.File.newlines = combo_box.get_active()
 
     def _on_response(self, dialog, response):
         """Add extension and confirm overwrite before emitting response."""

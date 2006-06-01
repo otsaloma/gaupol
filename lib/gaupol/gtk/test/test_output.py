@@ -16,11 +16,10 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
+import gtk
+
 from gaupol.gtk.output import OutputWindow
 from gaupol.test       import Test
-
-
-import gtk
 
 
 class TestOutputWindow(Test):

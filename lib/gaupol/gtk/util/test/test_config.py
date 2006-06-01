@@ -18,12 +18,10 @@
 
 import ConfigParser
 
-from gaupol.gtk.cons import *
-from gaupol.gtk.cons import NO, SHOW, HIDE, DURN, MTXT, TTXT
-from gaupol.gtk.cons import Column, Format, Framerate, Mode, Newlines
-from gaupol.gtk.cons import VideoPlayer
-from gaupol.gtk.util import config
-from gaupol.test     import Test
+from gaupol.gtk         import cons
+from gaupol.gtk.colcons import *
+from gaupol.gtk.util    import config
+from gaupol.test        import Test
 
 
 class TestSection(Test):
@@ -52,8 +50,8 @@ class TestModule(Test):
 
     def test_get_constant(self):
 
-        assert config._get_constant('editor', 'mode', 'time') == Mode.TIME
-        assert config._get_constant('editor', 'mode', Mode.TIME) == 'time'
+        assert config._get_constant('Editor', 'mode', 'TIME') == cons.Mode.TIME
+        assert config._get_constant('Editor', 'mode', cons.Mode.TIME) == 'time'
 
     def test_get_sections(self):
 
@@ -71,95 +69,93 @@ class TestModule(Test):
         config.write()
         config.read()
 
-    def _test_set_config_option(self):
+    def test_set_config_option(self):
 
         config.read()
         config.write()
         parser = ConfigParser.RawConfigParser()
         parser.read([config.CONFIG_FILE])
-        LIST_SEP = config.LIST_SEP
 
         # String
-        parser.set('editor', 'font', 'test')
-        config._set_config_option(parser, 'editor', 'font')
-        assert config.editor.font == 'test'
+        parser.set('Editor', 'font', 'test')
+        config._set_config_option(parser, 'Editor', 'font')
+        assert config.Editor.font == 'test'
 
         # Integer
-        parser.set('editor', 'undo_levels', 99)
-        config._set_config_option(parser, 'editor', 'undo_levels')
-        assert config.editor.undo_levels == 99
+        parser.set('Editor', 'undo_levels', 99)
+        config._set_config_option(parser, 'Editor', 'undo_levels')
+        assert config.Editor.undo_levels == 99
 
         # Boolean
-        parser.set('app_window', 'maximized', 'true')
-        config._set_config_option(parser, 'app_window', 'maximized')
-        assert config.app_window.maximized is True
+        parser.set('AppWindow', 'maximized', 'true')
+        config._set_config_option(parser, 'AppWindow', 'maximized')
+        assert config.AppWindow.maximized is True
 
         # Constant
-        parser.set('editor', 'framerate', '25')
-        config._set_config_option(parser, 'editor', 'framerate')
-        assert config.editor.framerate == Framerate.FR_25
+        parser.set('Editor', 'framerate', 'fr_25')
+        config._set_config_option(parser, 'Editor', 'framerate')
+        assert config.Editor.framerate == cons.Framerate.FR_25
 
         # String list
-        parser.set('encoding', 'fallbacks', 'test%stset' % LIST_SEP)
-        config._set_config_option(parser, 'encoding', 'fallbacks')
-        assert config.encoding.fallbacks == ['test', 'tset']
+        parser.set('Encoding', 'fallback', '[test,tset]')
+        config._set_config_option(parser, 'Encoding', 'fallback')
+        assert config.Encoding.fallback == ['test', 'tset']
 
         # Integer list
-        parser.set('app_window', 'position', '3%s4' % LIST_SEP)
-        config._set_config_option(parser, 'app_window', 'position')
-        assert config.app_window.position == [3, 4]
+        parser.set('AppWindow', 'position', '[3,4]')
+        config._set_config_option(parser, 'AppWindow', 'position')
+        assert config.AppWindow.position == [3, 4]
 
         # Constant list
-        parser.set('editor', 'visible_cols', 'show%shide' % LIST_SEP)
-        config._set_config_option(parser, 'editor', 'visible_cols')
-        assert config.editor.visible_cols == [SHOW, HIDE]
+        parser.set('Editor', 'visible_cols', '[show,hide]')
+        config._set_config_option(parser, 'Editor', 'visible_cols')
+        assert config.Editor.visible_cols == [SHOW, HIDE]
 
-    def _test_set_parser_option(self):
+    def test_set_parser_option(self):
 
         config.read()
         config.write()
         parser = ConfigParser.RawConfigParser()
         parser.read([config.CONFIG_FILE])
-        LIST_SEP = config.LIST_SEP
 
         # String
-        config.editor.font = 'test'
-        config._set_parser_option(parser, 'editor', 'font')
-        value = parser.get('editor', 'font')
+        config.Editor.font = 'test'
+        config._set_parser_option(parser, 'Editor', 'font')
+        value = parser.get('Editor', 'font')
         assert value == 'test'
 
         # Integer
-        config.editor.undo_levels = 99
-        config._set_parser_option(parser, 'editor', 'undo_levels')
-        value = parser.get('editor', 'undo_levels')
+        config.Editor.undo_levels = 99
+        config._set_parser_option(parser, 'Editor', 'undo_levels')
+        value = parser.get('Editor', 'undo_levels')
         assert value == '99'
 
         # Boolean
-        config.app_window.maximized = True
-        config._set_parser_option(parser, 'app_window', 'maximized')
-        value = parser.get('app_window', 'maximized')
+        config.AppWindow.maximized = True
+        config._set_parser_option(parser, 'AppWindow', 'maximized')
+        value = parser.get('AppWindow', 'maximized')
         assert value == 'true'
 
         # Constant
-        config.editor.framerate = Framerate.FR_25
-        config._set_parser_option(parser, 'editor', 'framerate')
-        value = parser.get('editor', 'framerate')
-        assert value == '25'
+        config.Editor.framerate = cons.Framerate.FR_25
+        config._set_parser_option(parser, 'Editor', 'framerate')
+        value = parser.get('Editor', 'framerate')
+        assert value == 'fr_25'
 
         # String list
-        config.encoding.fallbacks = ['test', 'tset']
-        config._set_parser_option(parser, 'encoding', 'fallbacks')
-        value = parser.get('encoding', 'fallbacks')
-        assert value == 'test%stset' % LIST_SEP
+        config.Encoding.fallback = ['test', 'tset']
+        config._set_parser_option(parser, 'Encoding', 'fallback')
+        value = parser.get('Encoding', 'fallback')
+        assert value == '[test,tset]'
 
         # Integer list
-        config.app_window.position = [3, 4]
-        config._set_parser_option(parser, 'app_window', 'position')
-        value = parser.get('app_window', 'position')
-        assert value == '3%s4' % LIST_SEP
+        config.AppWindow.position = [3, 4]
+        config._set_parser_option(parser, 'AppWindow', 'position')
+        value = parser.get('AppWindow', 'position')
+        assert value == '[3,4]'
 
         # Constant list
-        config.editor.visible_cols = [SHOW, HIDE]
-        config._set_parser_option(parser, 'editor', 'visible_cols')
-        value = parser.get('editor', 'visible_cols')
-        assert value == 'show%shide' % LIST_SEP
+        config.Editor.visible_cols = [SHOW, HIDE]
+        config._set_parser_option(parser, 'Editor', 'visible_cols')
+        value = parser.get('Editor', 'visible_cols')
+        assert value == '[show,hide]'

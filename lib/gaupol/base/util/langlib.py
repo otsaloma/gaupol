@@ -39,7 +39,7 @@ from gettext import dgettext
 from gettext import gettext as _
 
 
-langs = {
+LANGS = {
     'aa': 'Afar',
     'ab': 'Abkhazian',
     'ae': 'Avestan',
@@ -225,7 +225,7 @@ langs = {
     'zu': 'Zulu',
 }
 
-countries = {
+COUNTRIES = {
     'AD': 'Andorra',
     'AE': 'United Arab Emirates',
     'AF': 'Afghanistan',
@@ -468,7 +468,7 @@ countries = {
     'ZW': 'Zimbabwe',
 }
 
-locales = (
+LOCALES = (
     'af',
     'af_ZA',
     'ak',
@@ -692,7 +692,7 @@ def get_country(locale):
     Return None if no country in code.
     """
     if len(locale) == 5:
-        return dgettext('iso_3166', countries[locale[3:]])
+        return dgettext('iso_3166', COUNTRIES[locale[3:]])
     return None
 
 def get_descriptive_name(locale):
@@ -715,4 +715,4 @@ def get_language(locale):
 
     Raise KeyError is language not found.
     """
-    return dgettext('iso_639', langs[locale[:2]])
+    return dgettext('iso_639', LANGS[locale[:2]])

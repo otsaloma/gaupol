@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol.base.cons           import Format
+from gaupol.base                import cons
 from gaupol.base.tags.converter import TagConverter
 from gaupol.test                import Test
 
@@ -25,7 +25,7 @@ class TestTagConverter(Test):
 
     def test_ass_to_microdvd(self):
 
-        converter = TagConverter(Format.ASS, Format.MICRODVD)
+        converter = TagConverter(cons.Format.ASS, cons.Format.MICRODVD)
 
         orig = \
             '{\\i1\\b1}All{\\r} that {\\i1}because{\\r} I wasn\'t\n' \
@@ -45,7 +45,7 @@ class TestTagConverter(Test):
 
     def test_ass_to_subrip(self):
 
-        converter = TagConverter(Format.ASS, Format.SUBRIP)
+        converter = TagConverter(cons.Format.ASS, cons.Format.SUBRIP)
 
         orig = \
             '{\\i1\\b1}All{\\r} that {\\i1}because{\\r} I wasn\'t\n' \
@@ -65,7 +65,7 @@ class TestTagConverter(Test):
 
     def test_microdvd_to_ass(self):
 
-        converter = TagConverter(Format.MICRODVD, Format.ASS)
+        converter = TagConverter(cons.Format.MICRODVD, cons.Format.ASS)
 
         orig = \
             '{y:i}{y:b}All that because I wasn\'t\n' \
@@ -85,7 +85,7 @@ class TestTagConverter(Test):
 
     def test_microdvd_to_subrip(self):
 
-        converter = TagConverter(Format.MICRODVD, Format.SUBRIP)
+        converter = TagConverter(cons.Format.MICRODVD, cons.Format.SUBRIP)
 
         orig = \
             '{y:i}{y:b}All that because I wasn\'t\n' \
@@ -105,7 +105,7 @@ class TestTagConverter(Test):
 
     def test_mpl2_to_ass(self):
 
-        converter = TagConverter(Format.MPL2, Format.ASS)
+        converter = TagConverter(cons.Format.MPL2, cons.Format.ASS)
 
         orig = \
             '/\\All that because I wasn\'t\n' \
@@ -125,7 +125,7 @@ class TestTagConverter(Test):
 
     def test_mpl2_to_subrip(self):
 
-        converter = TagConverter(Format.MPL2, Format.SUBRIP)
+        converter = TagConverter(cons.Format.MPL2, cons.Format.SUBRIP)
 
         orig = \
             '/\\All that because I wasn\'t\n' \
@@ -145,7 +145,7 @@ class TestTagConverter(Test):
 
     def test_subrip_to_ass(self):
 
-        converter = TagConverter(Format.SUBRIP, Format.ASS)
+        converter = TagConverter(cons.Format.SUBRIP, cons.Format.ASS)
 
         orig = \
             '<i><b>All</b></i> that because I wasn\'t\n' \
@@ -165,7 +165,7 @@ class TestTagConverter(Test):
 
     def test_subrip_to_microdvd(self):
 
-        converter = TagConverter(Format.SUBRIP, Format.MICRODVD)
+        converter = TagConverter(cons.Format.SUBRIP, cons.Format.MICRODVD)
 
         orig = \
             '<i><b>All</b></i> that because I wasn\'t\n' \

@@ -177,7 +177,7 @@ class DebugDialog(object):
 
         path, lineno = self._files[int(tag.props.name)]
 
-        editor = config.debug.editor
+        editor = config.Debug.editor
         if editor in ('gvim', 'emacs'):
             retval = os.system('%s +%d "%s"' % (editor, lineno, path))
             if retval == 0:

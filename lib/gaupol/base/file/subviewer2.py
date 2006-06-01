@@ -22,7 +22,7 @@
 import codecs
 import re
 
-from gaupol.base.cons          import Format, Mode
+from gaupol.base               import cons
 from gaupol.base.file          import SubtitleFile
 from gaupol.base.position.calc import TimeFrameCalculator
 
@@ -31,8 +31,8 @@ class SubViewer2(SubtitleFile):
 
     """SubViewer 2.0 file."""
 
-    format     = Format.SUBVIEWER2
-    mode       = Mode.TIME
+    format     = cons.Format.SUBVIEWER2
+    mode       = cons.Mode.TIME
     has_header = True
     identifier = r'^\d\d:\d\d:\d\d.\d\d,\d\d:\d\d:\d\d.\d\d\s*$', 0
 

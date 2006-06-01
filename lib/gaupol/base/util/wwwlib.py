@@ -22,7 +22,7 @@
 import os
 import sys
 import threading
-import urllib2
+import urllib
 import webbrowser
 
 from gaupol.base.error import TimeoutError
@@ -44,8 +44,8 @@ class URLReadThread(threading.Thread):
         """Run thread."""
 
         try:
-            self.text = urllib2.urlopen(self.url).read()
-        except urllib2.URLError:
+            self.text = urllib.urlopen(self.url).read()
+        except IOError:
             self.error = sys.exc_info()[1]
 
 
@@ -84,7 +84,7 @@ def read_url(url, timeout=10):
     Document reading is done in a thread that ends with or without success
     after amount of seconds specified by timeout has ended.
 
-    Raise urllib2.URLError (IOError) if reading fails.
+    Raise IOError if reading fails.
     Raise TimeoutError if reading times out.
     """
     thread = URLReadThread(url)

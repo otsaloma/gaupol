@@ -21,29 +21,17 @@
 
 from gettext import gettext as _
 
-from gaupol.base.cons import Section
-from gaupol.base.cons import Action
-from gaupol.base.cons import Document
-from gaupol.base.cons import Format
-from gaupol.base.cons import Framerate   as BaseFramerate
-from gaupol.base.cons import Mode        as BaseMode
-from gaupol.base.cons import Newlines
-from gaupol.base.cons import VideoPlayer
+from gaupol.base import cons
 
 
-NO   = 0
-SHOW = 1
-HIDE = 2
-DURN = 3
-MTXT = 4
-TTXT = 5
+class Action(cons.Action):
+
+    pass
 
 
-class Column(Section):
+class Column(cons.Section):
 
-    """Data columns."""
-
-    NO   = 0
+    NUMB = 0
     SHOW = 1
     HIDE = 2
     DURN = 3
@@ -65,13 +53,21 @@ class Column(Section):
         '/ui/menubar/view/columns/hide',
         '/ui/menubar/view/columns/duration',
         '/ui/menubar/view/columns/main_text',
-        '/ui/menubar/view/columns/tran_text',
+        '/ui/menubar/view/columns/translation_text'
     ]
 
 
-class Framerate(BaseFramerate):
+class Document(cons.Document):
 
-    """Valid framerates."""
+    pass
+
+
+class Format(cons.Format):
+
+    pass
+
+
+class Framerate(cons.Framerate):
 
     uim_paths = [
         '/ui/menubar/view/framerate/23_976',
@@ -80,9 +76,7 @@ class Framerate(BaseFramerate):
     ]
 
 
-class Mode(BaseMode):
-
-    """Position modes."""
+class Mode(cons.Mode):
 
     uim_paths = [
         '/ui/menubar/view/times',
@@ -90,10 +84,18 @@ class Mode(BaseMode):
     ]
 
 
-class Target(Section):
+class Newlines(cons.Newlines):
 
-    """Targets where actions can be applied."""
+    pass
+
+
+class Target(cons.Section):
 
     ALL_PROJECTS       = 0
     CURRENT_PROJECT    = 1
     SELECTED_SUBTITLES = 2
+
+
+class VideoPlayer(cons.VideoPlayer):
+
+    pass

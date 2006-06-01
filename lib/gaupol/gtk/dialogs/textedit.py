@@ -66,8 +66,8 @@ class TextEditDialog(gtk.Dialog):
         text_buffer.set_text(unicode(text))
 
         # Set font.
-        if not config.editor.use_default_font:
-            gtklib.set_widget_font(self._text_view, config.editor.font)
+        if not config.Editor.use_default_font:
+            gtklib.set_widget_font(self._text_view, config.Editor.font)
 
         # Put text view in a scrolled window.
         scrolled_window = gtk.ScrolledWindow()
@@ -83,8 +83,8 @@ class TextEditDialog(gtk.Dialog):
 
         # Set text view width to 46 ex and height to 4 lines.
         label = gtk.Label('\n'.join(['x' * 46] * 4))
-        if not config.editor.use_default_font:
-            gtklib.set_label_font(label, config.editor.font)
+        if not config.Editor.use_default_font:
+            gtklib.set_label_font(label, config.Editor.font)
         width, height = label.size_request()
         self._text_view.set_size_request(width + 4, height + 7)
 

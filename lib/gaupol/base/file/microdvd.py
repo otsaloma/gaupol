@@ -22,7 +22,7 @@
 import codecs
 import re
 
-from gaupol.base.cons import Format, Mode
+from gaupol.base      import cons
 from gaupol.base.file import SubtitleFile
 
 
@@ -30,8 +30,8 @@ class MicroDVD(SubtitleFile):
 
     """MicroDVD file."""
 
-    format     = Format.MICRODVD
-    mode       = Mode.FRAME
+    format     = cons.Format.MICRODVD
+    mode       = cons.Mode.FRAME
     has_header = False
     identifier = r'^\{\d+\}\{\d+\}.*?$', 0
 

@@ -16,11 +16,11 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol.gtk.util import gtklib
-from gaupol.test     import Test
-
 import gtk
 import gtk.glade
+
+from gaupol.gtk.util import gtklib
+from gaupol.test     import Test
 
 
 class TestModule(Test):

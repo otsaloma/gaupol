@@ -21,7 +21,7 @@
 
 import codecs
 
-from gaupol.base.cons import Newlines
+from gaupol.base import cons
 
 
 class SubtitleFile(object):
@@ -58,7 +58,7 @@ class SubtitleFile(object):
     def _get_newline_character(self):
         """Get character(s) used for newlines."""
 
-        return Newlines.values[self.newlines]
+        return cons.Newlines.values[self.newlines]
 
     def read(self):
         """Read file."""
@@ -80,9 +80,9 @@ class SubtitleFile(object):
             fobj.close()
 
         if isinstance(newline_chars, tuple):
-            self.newlines = Newlines.values.index(newline_chars[0])
+            self.newlines = cons.Newlines.values.index(newline_chars[0])
         elif isinstance(newline_chars, basestring):
-            self.newlines = Newlines.values.index(newline_chars)
+            self.newlines = cons.Newlines.values.index(newline_chars)
 
         return lines
 

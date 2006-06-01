@@ -22,7 +22,7 @@ from gaupol.base.text.finder import Finder
 from gaupol.test             import Test
 
 
-orig_text = '''\
+ORIG_TEXT = '''\
 One only risks it, because
 one\'s survival depends on it.'''
 
@@ -32,7 +32,7 @@ class TestFinder(Test):
     def get_finder(self):
 
         finder = Finder()
-        finder.text = orig_text
+        finder.text = ORIG_TEXT
         return finder
 
     def test_next(self):
@@ -102,7 +102,7 @@ class TestFinder(Test):
     def test_previous(self):
 
         finder = self.get_finder()
-        finder.pos = len(orig_text)
+        finder.pos = len(ORIG_TEXT)
         finder.pattern = 'it'
         assert finder.previous() == (53, 55)
         assert finder.match_span == (53, 55)
@@ -117,7 +117,7 @@ class TestFinder(Test):
             pass
 
         finder = self.get_finder()
-        finder.pos = len(orig_text)
+        finder.pos = len(ORIG_TEXT)
         finder.ignore_case = True
         finder.pattern = 'O'
         assert finder.previous() == (50, 51)
@@ -125,14 +125,14 @@ class TestFinder(Test):
         assert finder.pos == 50
 
         finder = self.get_finder()
-        finder.pos = len(orig_text)
+        finder.pos = len(ORIG_TEXT)
         finder.pattern = '.'
         assert finder.previous() == (55, 56)
         assert finder.match_span == (55, 56)
         assert finder.pos == 55
 
         finder = self.get_finder()
-        finder.pos = len(orig_text)
+        finder.pos = len(ORIG_TEXT)
         finder.set_regex(r'\bit\b', re.MULTILINE)
         assert finder.previous() == (53, 55)
         assert finder.match_span == (53, 55)
@@ -147,14 +147,14 @@ class TestFinder(Test):
             pass
 
         finder = self.get_finder()
-        finder.pos = len(orig_text)
+        finder.pos = len(ORIG_TEXT)
         finder.set_regex(r'o', re.MULTILINE|re.IGNORECASE)
         assert finder.previous() == (50, 51)
         assert finder.match_span == (50, 51)
         assert finder.pos == 50
 
         finder = self.get_finder()
-        finder.pos = len(orig_text)
+        finder.pos = len(ORIG_TEXT)
         finder.set_regex(r'\.', re.MULTILINE)
         assert finder.previous() == (55, 56)
         assert finder.match_span == (55, 56)

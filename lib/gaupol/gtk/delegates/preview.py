@@ -33,6 +33,7 @@ import gobject
 import gtk
 import pango
 
+from gaupol.gtk.colcons import *
 from gaupol.base.error               import ExternalError
 from gaupol.gtk.cons         import *
 from gaupol.gtk.delegates            import Delegate, UIMAction
@@ -153,12 +154,12 @@ class PreviewDelegate(Delegate):
     def _run_preview(self, page, time, document, path=None):
         """Run preview with video player."""
 
-        if not config.preview.use_predefined:
-            command = config.preview.command
+        if not config.Preview.use_predefined:
+            command = config.Preview.command
         else:
-            video_player = config.preview.video_player
+            video_player = config.Preview.video_player
             command = VideoPlayer.commands[video_player]
-        offset = config.preview.offset
+        offset = config.Preview.offset
 
         try:
             page.project.preview_time(time, document, command, offset, path)

@@ -28,7 +28,7 @@ import os
 import subprocess
 import tempfile
 
-from gaupol.base.cons import SHOW, HIDE, DURN
+from gaupol.base.colcons import *
 from gaupol.base.delegates    import Delegate
 from gaupol.base.error        import ExternalError
 from gaupol.base.cons         import Document, Format

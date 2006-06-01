@@ -27,7 +27,7 @@ except ImportError:
 from gettext import gettext as _
 import re
 
-from gaupol.base.cons import SHOW, HIDE, DURN
+from gaupol.base.colcons import *
 from gaupol.base.delegates    import Delegate
 from gaupol.base.tags.classes import *
 from gaupol.base.text.parser  import Parser

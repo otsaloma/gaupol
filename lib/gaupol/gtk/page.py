@@ -31,6 +31,7 @@ import gobject
 import gtk
 import pango
 
+from gaupol.gtk.colcons import *
 from gaupol.base.project     import Project
 from gaupol.gtk.cons import *
 from gaupol.gtk.util         import config, gtklib
@@ -53,14 +54,14 @@ class Page(gobject.GObject):
 
         gobject.GObject.__init__(self)
 
-        if config.editor.limit_undo:
-            undo_limit = config.editor.undo_levels
+        if config.Editor.limit_undo:
+            undo_limit = config.Editor.undo_levels
         else:
             undo_limit = None
 
-        self.project   = Project(config.editor.framerate, undo_limit)
+        self.project   = Project(config.Editor.framerate, undo_limit)
         self.untitle   = _('Untitled %d') % counter
-        self.edit_mode = config.editor.mode
+        self.edit_mode = config.Editor.mode
 
         self.view           = View(self.edit_mode)
         self.tab_label      = None
@@ -257,7 +258,7 @@ class Page(gobject.GObject):
         rows  = rows or range(len(store))
 
         for col in cols:
-            if col == NO:
+            if col == NUMB:
                 for row in rows:
                     store[row][col] = row + 1
             elif col in (SHOW, HIDE, DURN):
@@ -328,7 +329,7 @@ if __name__ == '__main__':
         def __init__(self):
 
             Test.__init__(self)
-            config.editor.mode == Mode.TIME
+            config.Editor.mode == Mode.TIME
             self.page = Page(99)
             self.page = Page()
             self.page.project = self.get_project()

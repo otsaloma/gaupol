@@ -22,7 +22,7 @@ from gaupol.base.text.parser import Parser
 from gaupol.test             import Test
 
 
-orig_text = '''\
+ORIG_TEXT = '''\
 <i>He changed shifts.</i>
 Didn\'t <i>he</i> tell you?'''
 
@@ -37,14 +37,14 @@ class TestParser(Test):
     def test_get_and_set_text(self):
 
         parser = Parser(re.compile(r'<.*?>'))
-        parser.set_text(orig_text)
-        assert parser.get_text() == orig_text
+        parser.set_text(ORIG_TEXT)
+        assert parser.get_text() == ORIG_TEXT
 
     def test_replace_regex(self):
 
         def get_text(pattern, flags, replacement):
             parser = Parser(re.compile(r'<.*?>'))
-            parser.set_text(orig_text)
+            parser.set_text(ORIG_TEXT)
             parser.set_regex(pattern, flags)
             parser.replacement = replacement
             parser.next()
@@ -70,7 +70,7 @@ class TestParser(Test):
 
         def get_text(pattern, replacement):
             parser = Parser(re.compile(r'<.*?>'))
-            parser.set_text(orig_text)
+            parser.set_text(ORIG_TEXT)
             parser.pattern = pattern
             parser.replacement = replacement
             parser.next()
@@ -96,7 +96,7 @@ class TestParser(Test):
 
         def get_text(pattern, flags, replacement):
             parser = Parser(re.compile(r'<.*?>'))
-            parser.set_text(orig_text)
+            parser.set_text(ORIG_TEXT)
             parser.set_regex(pattern, flags)
             parser.replacement = replacement
             parser.replace_all()
@@ -141,7 +141,7 @@ class TestParser(Test):
 
         def get_text(pattern, replacement):
             parser = Parser(re.compile(r'<.*?>'))
-            parser.set_text(orig_text)
+            parser.set_text(ORIG_TEXT)
             parser.pattern = pattern
             parser.replacement = replacement
             parser.replace_all()
@@ -173,4 +173,4 @@ class TestParser(Test):
             'Didn\'t <i>he</i> tell you'
 
         text = get_text('e', 'e')
-        assert text == orig_text
+        assert text == ORIG_TEXT

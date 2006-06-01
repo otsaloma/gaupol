@@ -53,8 +53,8 @@ class SubtitleInsertDialog(object):
     def _init_data(self):
         """Initialize the data."""
 
-        self._position_combo.set_active(int(config.subtitle_insert.below))
-        self._amount_spin.set_value(config.subtitle_insert.amount)
+        self._position_combo.set_active(int(config.SubtitleInsert.below))
+        self._amount_spin.set_value(config.SubtitleInsert.amount)
 
     def _init_sensitivities(self, page):
         """Initialize widget sensitivities."""
@@ -93,12 +93,12 @@ class SubtitleInsertDialog(object):
     def _on_amount_spin_value_changed(self, spin_button):
         """Save amount setting."""
 
-        config.subtitle_insert.amount = spin_button.get_value_as_int()
+        config.SubtitleInsert.amount = spin_button.get_value_as_int()
 
     def _on_position_combo_changed(self, combo_box):
         """Save position setting."""
 
-        config.subtitle_insert.below = bool(combo_box.get_active())
+        config.SubtitleInsert.below = bool(combo_box.get_active())
 
     def run(self):
         """Show and run the dialog."""

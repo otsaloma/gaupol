@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol.base.cons         import Format
+from gaupol.base              import cons
 from gaupol.base.tags.classes import *
 from gaupol.test              import Test
 
@@ -25,5 +25,5 @@ class TestModule(Test):
 
     def test_imports(self):
 
-        for name in Format.class_names:
+        for name in cons.Format.class_names:
             eval(name)()

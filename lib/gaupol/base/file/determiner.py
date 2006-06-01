@@ -21,7 +21,7 @@
 
 import re
 
-from gaupol.base.cons         import Format
+from gaupol.base              import cons
 from gaupol.base.error        import FileFormatError
 from gaupol.base.file         import SubtitleFile
 from gaupol.base.file.classes import *
@@ -40,7 +40,7 @@ class FileFormatDeterminer(SubtitleFile):
         Raise FileFormatError if unable to detect file format.
         """
         re_ids = []
-        for format, name in enumerate(Format.class_names):
+        for format, name in enumerate(cons.Format.class_names):
             re_id = re.compile(*eval(name).identifier)
             re_ids.append((format, re_id))
 

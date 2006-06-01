@@ -55,9 +55,9 @@ class OutputWindow(gobject.GObject):
     def _init_sizes(self):
         """Initialize widget sizes."""
 
-        self._window.resize(*config.output_window.size)
-        self._window.move(*config.output_window.position)
-        if config.output_window.maximized:
+        self._window.resize(*config.OutputWindow.size)
+        self._window.move(*config.OutputWindow.position)
+        if config.OutputWindow.maximized:
             self._window.maximize()
 
     def _init_keys(self):
@@ -149,7 +149,7 @@ class OutputWindow(gobject.GObject):
 
         state = event.new_window_state
         maximized = bool(state & gtk.gdk.WINDOW_STATE_MAXIMIZED)
-        config.output_window.maximized = maximized
+        config.OutputWindow.maximized = maximized
 
     def show(self):
         """Show window."""

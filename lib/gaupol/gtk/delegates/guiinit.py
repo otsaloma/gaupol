@@ -66,16 +66,16 @@ class GUIInitDelegate(Delegate):
 
         # Show or hide widgets.
         vbox.show_all()
-        if not config.app_window.show_main_toolbar:
+        if not config.AppWindow.show_main_toolbar:
             main_toolbar.hide()
-        if not config.app_window.show_video_toolbar:
+        if not config.AppWindow.show_video_toolbar:
             video_toolbar.hide()
-        if not config.app_window.show_statusbar:
+        if not config.AppWindow.show_statusbar:
             statusbar_hbox.hide()
 
         # Initialize output window.
         self.output_window = OutputWindow()
-        if config.output_window.show:
+        if config.OutputWindow.show:
             self.output_window.show()
         self.output_window.connect('close', self.on_output_window_close)
 
@@ -365,7 +365,7 @@ class GUIInitDelegate(Delegate):
         self.framerate_combo = gtk.combo_box_new_text()
         for i in range(len(Framerate.display_names)):
             self.framerate_combo.insert_text(i, Framerate.display_names[i])
-        self.framerate_combo.set_active(config.editor.framerate)
+        self.framerate_combo.set_active(config.Editor.framerate)
         self.framerate_combo.connect('changed', self.on_framerate_changed)
 
         # Add framerate combo box to toolbar.
@@ -380,9 +380,9 @@ class GUIInitDelegate(Delegate):
         """Initialize the main window."""
 
         self.window = gtk.Window()
-        self.window.resize(*config.app_window.size)
-        self.window.move(*config.app_window.position)
-        if config.app_window.maximized:
+        self.window.resize(*config.AppWindow.size)
+        self.window.move(*config.AppWindow.position)
+        if config.AppWindow.maximized:
             self.window.maximize()
 
         icon_theme = gtk.icon_theme_get_default()

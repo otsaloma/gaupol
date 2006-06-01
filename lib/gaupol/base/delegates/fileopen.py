@@ -24,7 +24,7 @@ try:
 except ImportError:
     pass
 
-from gaupol.base.cons import SHOW, HIDE, DURN
+from gaupol.base.colcons import *
 from gaupol.base.delegates        import Delegate
 from gaupol.base.file.classes    import *
 from gaupol.base.file.determiner import FileFormatDeterminer

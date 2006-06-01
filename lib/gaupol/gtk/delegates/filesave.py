@@ -29,6 +29,7 @@ import os
 
 import gtk
 
+from gaupol.gtk.colcons import *
 from gaupol.base.util               import encodinglib
 from gaupol.gtk.cons        import *
 from gaupol.gtk.delegates           import Delegate, UIMAction

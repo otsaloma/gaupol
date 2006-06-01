@@ -21,7 +21,7 @@
 
 import re
 
-from gaupol.base.cons         import Format
+from gaupol.base              import cons
 from gaupol.base.tags.classes import *
 
 
@@ -40,8 +40,8 @@ class TagConverter(object):
         self._from_regexs = []
         self._to_regexs   = []
 
-        from_name = Format.class_names[from_format]
-        to_name   = Format.class_names[  to_format]
+        from_name = cons.Format.class_names[from_format]
+        to_name   = cons.Format.class_names[  to_format]
         from_tags = eval(from_name).decode_tags
         to_tags   = eval(  to_name).encode_tags
 

@@ -18,14 +18,18 @@ import sys
 
 TOOL_DIR   = os.path.dirname(os.path.abspath(__file__))
 SOURCE_DIR = os.path.join(TOOL_DIR, '..')
-GLADE_DIR  = os.path.join(SOURCE_DIR, 'data'  , 'glade')
+GLADE_DIR  = os.path.join(SOURCE_DIR, 'data', 'glade')
 LIB_DIR    = os.path.join(SOURCE_DIR, 'lib')
 LOCALE_DIR = os.path.join(SOURCE_DIR, 'locale')
 PO_DIR     = os.path.join(SOURCE_DIR, 'po')
 POT_FILE   = os.path.join(PO_DIR, 'gaupol.pot')
 
-h_files  = []
-py_files = []
+class Files(object):
+
+    """Files with translatable strings."""
+
+    h  = []
+    py = []
 
 def title_print(text):
     """Print a message that stands out from rest of the output."""
@@ -65,15 +69,15 @@ def create_pot():
             if not filename.endswith('.glade'):
                 continue
             os.system('intltool-extract --type=gettext/glade %s' % filename)
-            h_files.append(os.path.join(dirpath, '%s.h' % filename))
+            Files.h.append(os.path.join(dirpath, '%s.h' % filename))
 
     for (dirpath, dirnames, filenames) in os.walk(LIB_DIR):
         for filename in filenames:
             if filename.endswith('.py'):
-                py_files.append(os.path.join(dirpath, filename))
+                Files.py.append(os.path.join(dirpath, filename))
 
     title_print('Creating a .pot file from source files...')
-    files = h_files + py_files
+    files = Files.h + Files.py
     files = list(path.replace(SOURCE_DIR, '.') for path in files)
     os.chdir(SOURCE_DIR)
     os.system('xgettext -k_ -kN_ -c -o %s %s' % (POT_FILE, ' '.join(files)))
@@ -149,7 +153,7 @@ def remove_temporary_files():
     """Remove temporary files created during operations."""
 
     title_print('Removing temporary files...')
-    for path in h_files:
+    for path in Files.h:
         print path.replace(SOURCE_DIR, '.')
         os.remove(path)
 

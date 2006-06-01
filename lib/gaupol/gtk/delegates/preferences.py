@@ -116,20 +116,20 @@ class PreferencesDelegate(Delegate):
     def _on_font_set(self, dialog, font):
         """Set custom font."""
 
-        if not config.editor.use_default_font:
+        if not config.Editor.use_default_font:
             self._enforce_new_font(font)
 
     def _on_limit_undo_toggled(self, dialog, limit):
         """Limit or unlimit undoing."""
 
         if limit:
-            levels = config.editor.undo_levels
+            levels = config.Editor.undo_levels
             self._enforce_new_undo_levels(levels)
 
     def _on_undo_levels_changed(self, dialog, levels):
         """Change amount of undo levels."""
 
-        if config.editor.limit_undo:
+        if config.Editor.limit_undo:
             self._enforce_new_undo_levels(levels)
 
     def _on_use_default_font_toggled(self, dialog, use_default):
@@ -138,7 +138,7 @@ class PreferencesDelegate(Delegate):
         if use_default:
             font = ''
         else:
-            font = config.editor.font
+            font = config.Editor.font
         self._enforce_new_font(font)
 
 

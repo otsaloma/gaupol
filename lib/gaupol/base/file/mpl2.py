@@ -22,7 +22,7 @@
 import codecs
 import re
 
-from gaupol.base.cons          import Format, Mode
+from gaupol.base               import cons
 from gaupol.base.file          import SubtitleFile
 from gaupol.base.position.calc import TimeFrameCalculator
 
@@ -31,8 +31,8 @@ class MPL2(SubtitleFile):
 
     """MPL2 file."""
 
-    format     = Format.MPL2
-    mode       = Mode.TIME
+    format     = cons.Format.MPL2
+    mode       = cons.Mode.TIME
     has_header = False
     identifier = r'^\[\d+\]\[\d+\].*?$', 0
 

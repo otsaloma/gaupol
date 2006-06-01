@@ -22,7 +22,7 @@
 import codecs
 import re
 
-from gaupol.base.cons import Format, Mode
+from gaupol.base      import cons
 from gaupol.base.file import SubtitleFile
 
 
@@ -30,8 +30,8 @@ class SubRip(SubtitleFile):
 
     """SubRip file."""
 
-    format     = Format.SUBRIP
-    mode       = Mode.TIME
+    format     = cons.Format.SUBRIP
+    mode       = cons.Mode.TIME
     has_header = False
     identifier = r'^\d\d:\d\d:\d\d,\d\d\d --> \d\d:\d\d:\d\d,\d\d\d\s*$', 0
 

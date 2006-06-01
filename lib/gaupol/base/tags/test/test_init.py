@@ -18,7 +18,7 @@
 
 import re
 
-from gaupol.base.cons         import Format
+from gaupol.base              import cons
 from gaupol.base.tags         import TagLibrary
 from gaupol.base.tags.classes import *
 from gaupol.test              import Test
@@ -28,7 +28,7 @@ class TestTagLibrary(Test):
 
     def test_attributes(self):
 
-        for name in Format.class_names:
+        for name in cons.Format.class_names:
             cls = eval(name)
             re.compile(*cls.tag)
             re.compile(*cls.italic_tag)
@@ -41,34 +41,34 @@ class TestTagLibrary(Test):
 
     def test_italicize(self):
 
-        for name in Format.class_names:
+        for name in cons.Format.class_names:
             cls = eval(name)
             text = cls.italicize('test')
             assert isinstance(text, basestring)
 
     def test_post_decode(self):
-        for name in Format.class_names:
+        for name in cons.Format.class_names:
             cls = eval(name)
             text = cls.post_decode('test')
             assert isinstance(text, basestring)
 
     def test_post_encode(self):
 
-        for name in Format.class_names:
+        for name in cons.Format.class_names:
             cls = eval(name)
             text = cls.post_encode('test')
             assert isinstance(text, basestring)
 
     def test_pre_decode(self):
 
-        for name in Format.class_names:
+        for name in cons.Format.class_names:
             cls = eval(name)
             text = cls.pre_decode('test')
             assert isinstance(text, basestring)
 
     def test_pre_encode(self):
 
-        for name in Format.class_names:
+        for name in cons.Format.class_names:
             cls = eval(name)
             text = cls.pre_encode('test')
             assert isinstance(text, basestring)

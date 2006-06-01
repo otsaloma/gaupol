@@ -19,7 +19,7 @@
 """Time and frame calculations."""
 
 
-from gaupol.base.cons import Framerate
+from gaupol.base import cons
 
 
 class TimeFrameCalculator(object):
@@ -116,7 +116,7 @@ class TimeFrameCalculator(object):
     def set_framerate(self, framerate):
         """Set framerate."""
 
-        self.framerate = Framerate.values[framerate]
+        self.framerate = cons.Framerate.values[framerate]
 
     def time_to_frame(self, time):
         """Convert time to frame."""

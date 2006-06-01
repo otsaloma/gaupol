@@ -28,6 +28,7 @@ import gobject
 import gtk
 import pango
 
+from gaupol.gtk.colcons import *
 from gaupol.gtk.cellrend.classes import *
 from gaupol.gtk.cons     import *
 from gaupol.gtk.util             import config
@@ -76,10 +77,10 @@ class View(gtk.TreeView):
         cell_renderer_4 = CellRendererMultilineText()
         cell_renderer_5 = CellRendererMultilineText()
 
-        if config.editor.use_default_font:
+        if config.Editor.use_default_font:
             font = ''
         else:
-            font = config.editor.font
+            font = config.Editor.font
 
         for i in range(6):
             cell_renderer = eval('cell_renderer_%d' % i)
@@ -105,7 +106,7 @@ class View(gtk.TreeView):
             self.append_column(tree_view_column)
             tree_view_column.set_clickable(True)
             tree_view_column.set_resizable(True)
-            if not i in config.editor.visible_cols:
+            if not i in config.Editor.visible_cols:
                 tree_view_column.set_visible(False)
 
             # Set a label widget as the tree_view_column title.
@@ -122,7 +123,7 @@ class View(gtk.TreeView):
 
         # Enable type-ahead search for number column.
         self.set_enable_search(True)
-        self.set_search_column(NO)
+        self.set_search_column(NUMB)
 
     def get_focus(self):
         """

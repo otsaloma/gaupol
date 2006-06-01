@@ -28,6 +28,7 @@ from gettext import gettext as _
 import gtk
 
 from gaupol.gtk.cons import *
+from gaupol.gtk.colcons import *
 from gaupol.gtk.delegates    import Delegate, UIMAction
 from gaupol.gtk.util         import config, gtklib
 from gaupol.gtk.view         import View
@@ -60,7 +61,7 @@ class ToggleColumnAction(UIMAction):
     def get_uim_toggle_item_value(cls):
         """Return value of the UI manager toggle item."""
 
-        return cls.col in config.editor.visible_cols
+        return cls.col in config.Editor.visible_cols
 
     @classmethod
     def is_doable(cls, application, page):
@@ -71,7 +72,7 @@ class ToggleColumnAction(UIMAction):
 
 class ToggleColumnNoAction(ToggleColumnAction):
 
-    col = NO
+    col = NUMB
 
     uim_toggle_item = (
         'toggle_number_column',
@@ -203,7 +204,7 @@ class ToggleEditModeAction(UIMAction):
     def get_uim_radio_items_index(cls):
         """Return the active index of the UI manager radio items."""
 
-        return config.editor.mode
+        return config.Editor.mode
 
     @classmethod
     def is_doable(cls, application, page):
@@ -258,7 +259,7 @@ class ToggleFramerateAction(UIMAction):
     def get_uim_radio_items_index(cls):
         """Return the active index of the UI manager radio items."""
 
-        return config.editor.framerate
+        return config.Editor.framerate
 
     @classmethod
     def is_doable(cls, application, page):
@@ -292,7 +293,7 @@ class ToggleMainToolbarAction(UIMAction):
     def get_uim_toggle_item_value(cls):
         """Return value of the UI manager toggle item."""
 
-        return config.app_window.show_main_toolbar
+        return config.AppWindow.show_main_toolbar
 
     @classmethod
     def is_doable(cls, application, page):
@@ -321,7 +322,7 @@ class ToggleOutputWindowAction(UIMAction):
     def get_uim_toggle_item_value(cls):
         """Return value of the UI manager toggle item."""
 
-        return config.output_window.show
+        return config.OutputWindow.show
 
     @classmethod
     def is_doable(cls, application, page):
@@ -350,7 +351,7 @@ class ToggleStatusbarAction(UIMAction):
     def get_uim_toggle_item_value(cls):
         """Return value of the UI manager toggle item."""
 
-        return config.app_window.show_statusbar
+        return config.AppWindow.show_statusbar
 
     @classmethod
     def is_doable(cls, application, page):
@@ -379,7 +380,7 @@ class ToggleVideoToolbarAction(UIMAction):
     def get_uim_toggle_item_value(cls):
         """Return value of the UI manager toggle item."""
 
-        return config.app_window.show_video_toolbar
+        return config.AppWindow.show_video_toolbar
 
     @classmethod
     def is_doable(cls, application, page):
@@ -408,7 +409,7 @@ class ViewDelegate(Delegate):
         gtklib.set_cursor_busy(self.window)
 
         page.project.change_framerate(framerate)
-        config.editor.framerate = framerate
+        config.Editor.framerate = framerate
 
         path = Framerate.uim_paths[framerate]
         self.uim.get_widget(path).set_active(True)
@@ -457,7 +458,7 @@ class ViewDelegate(Delegate):
             if page.view.get_column(i).get_visible():
                 visible_columns.append(i)
 
-        config.editor.visible_cols = visible_columns
+        config.Editor.visible_cols = visible_columns
         self.set_sensitivities(page)
         self.set_character_status(page)
         gtklib.set_cursor_normal(self.window)
@@ -477,7 +478,7 @@ class ViewDelegate(Delegate):
 
         gtklib.set_cursor_busy(self.window)
         page.edit_mode = edit_mode
-        config.editor.mode = edit_mode
+        config.Editor.mode = edit_mode
 
         # Get properties.
         has_focus = page.view.props.has_focus
@@ -537,7 +538,7 @@ class ViewDelegate(Delegate):
         gtklib.set_cursor_busy(self.window)
 
         page.project.change_framerate(framerate)
-        config.editor.framerate = framerate
+        config.Editor.framerate = framerate
         self.framerate_combo.set_active(framerate)
 
         if page.edit_mode != page.project.main_file.mode:
@@ -551,7 +552,7 @@ class ViewDelegate(Delegate):
         visible = toolbar.props.visible
 
         toolbar.props.visible = not visible
-        config.app_window.show_main_toolbar = not visible
+        config.AppWindow.show_main_toolbar = not visible
 
     def on_toggle_output_window_activated(self, *args):
         """Toggle the visibility of the video player output window."""
@@ -562,7 +563,7 @@ class ViewDelegate(Delegate):
             self.output_window.hide()
         else:
             self.output_window.show()
-        config.output_window.show = not visible
+        config.OutputWindow.show = not visible
 
     def on_toggle_statusbar_activated(self, *args):
         """Toggle the visibility of the statusbar."""
@@ -571,7 +572,7 @@ class ViewDelegate(Delegate):
         visible = hbox.props.visible
 
         hbox.props.visible = not visible
-        config.app_window.show_statusbar = not visible
+        config.AppWindow.show_statusbar = not visible
 
     def on_toggle_video_toolbar_activated(self, *args):
         """Toggle the visibility of the video toolbar."""
@@ -580,7 +581,7 @@ class ViewDelegate(Delegate):
         visible = toolbar.props.visible
 
         toolbar.props.visible = not visible
-        config.app_window.show_video_toolbar = not visible
+        config.AppWindow.show_video_toolbar = not visible
 
     def on_view_headers_clicked(self, button, event):
         """Show a popup menu when the view header is right-clicked."""

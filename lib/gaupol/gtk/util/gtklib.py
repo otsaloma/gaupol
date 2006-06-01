@@ -36,10 +36,10 @@ from gaupol.gtk.paths import GLADE_DIR
 # sizes in different themes. Let this constant vaguely account for that extra.
 EXTRA = 36
 
-cursor_busy   = gtk.gdk.Cursor(gtk.gdk.WATCH)
-cursor_normal = gtk.gdk.Cursor(gtk.gdk.LEFT_PTR)
-screen_height = gtk.gdk.screen_height()
-screen_width  = gtk.gdk.screen_width()
+CURSOR_BUSY   = gtk.gdk.Cursor(gtk.gdk.WATCH)
+CURSOR_NORMAL = gtk.gdk.Cursor(gtk.gdk.LEFT_PTR)
+SCREEN_HEIGHT = gtk.gdk.screen_height()
+SCREEN_WIDTH  = gtk.gdk.screen_width()
 
 
 def destroy_gobject(gobj):
@@ -138,8 +138,8 @@ def resize_dialog(dialog, width, height, max_width=0.65, max_height=0.65):
     between 0 and 1 representing maximum screen space taken.
     """
     # Set maximum based on percentage of screen space.
-    width  = min(width , int(max_width  * screen_width ))
-    height = min(height, int(max_height * screen_height))
+    width  = min(width , int(max_width  * SCREEN_WIDTH ))
+    height = min(height, int(max_height * SCREEN_HEIGHT))
 
     # Set minimum based on dialog content.
     size = dialog.size_request()
@@ -161,14 +161,14 @@ def resize_message_dialog(
 def set_cursor_busy(window):
     """Set cursor busy when above window."""
 
-    window.window.set_cursor(cursor_busy)
+    window.window.set_cursor(CURSOR_BUSY)
     while gtk.events_pending():
         gtk.main_iteration()
 
 def set_cursor_normal(window):
     """Set cursor normal when above window."""
 
-    window.window.set_cursor(cursor_normal)
+    window.window.set_cursor(CURSOR_NORMAL)
     while gtk.events_pending():
         gtk.main_iteration()
 

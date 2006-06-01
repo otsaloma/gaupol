@@ -28,6 +28,7 @@ from gettext import gettext as _
 
 import gtk
 
+from gaupol.gtk.colcons import *
 from gaupol.gtk.cons import *
 from gaupol.gtk.delegates    import Delegate, UIMAction
 

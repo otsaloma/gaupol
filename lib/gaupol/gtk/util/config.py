@@ -21,18 +21,17 @@
 
 import ConfigParser
 import os
+import shutil
 import sys
 
-from gaupol          import __version__
-from gaupol.gtk.cons import NO, SHOW, HIDE, DURN, MTXT, TTXT
-from gaupol.gtk.cons import Column, Format, Framerate, Mode, Newlines
-from gaupol.gtk.cons import VideoPlayer
+from gaupol             import __version__
+from gaupol.gtk         import cons
+from gaupol.gtk.colcons import *
 
 
-CONFIG_DIR  = os.path.join(os.path.expanduser('~'), '.gaupol')
-CONFIG_FILE = os.path.join(CONFIG_DIR, 'gaupol.gtk.conf')
-
-config_header = \
+CONFIG_DIR    = os.path.join(os.path.expanduser('~'), '.gaupol')
+CONFIG_FILE   = os.path.join(CONFIG_DIR, 'gaupol.gtk.conf')
+CONFIG_HEADER = \
 '''# Gaupol GTK user interface configuration file
 #
 # This file is rewritten on each successful application exit. You may edit the
@@ -41,7 +40,9 @@ config_header = \
 
 '''
 
-LIST_SEP    = '|'
+LIST_START = '['
+LIST_SEP   = ','
+LIST_END   = ']'
 
 
 class Type(object):
@@ -93,9 +94,7 @@ class Section(object):
         return options
 
 
-class app_window(Section):
-
-    """Application window configurations."""
+class AppWindow(Section):
 
     maximized          = False
     position           = [0, 0]
@@ -114,9 +113,7 @@ class app_window(Section):
     }
 
 
-class debug(Section):
-
-    """Debug configurations."""
+class Debug(Section):
 
     editor = 'emacs'
 
@@ -125,9 +122,7 @@ class debug(Section):
     }
 
 
-class duration_adjust(Section):
-
-    """Duration adjust configurations."""
+class DurationAdjust(Section):
 
     all_projects  = False
     all_subtitles = True
@@ -156,17 +151,15 @@ class duration_adjust(Section):
     }
 
 
-class editor(Section):
-
-    """Editor configurations."""
+class Editor(Section):
 
     font             = ''
-    framerate        = Framerate.FR_23_976
+    framerate        = cons.Framerate.FR_23_976
     limit_undo       = True
-    mode             = Mode.TIME
+    mode             = cons.Mode.TIME
     undo_levels      = 50
     use_default_font = True
-    visible_cols     = [NO, SHOW, HIDE, DURN, MTXT]
+    visible_cols     = [NUMB, SHOW, HIDE, DURN, MTXT]
 
     types = {
         'font'            : Type.STRING,
@@ -179,36 +172,32 @@ class editor(Section):
     }
 
     classes = {
-        'framerate'   : Framerate,
-        'mode'        : Mode,
-        'visible_cols': Column,
+        'framerate'   : cons.Framerate,
+        'mode'        : cons.Mode,
+        'visible_cols': cons.Column,
     }
 
 
-class encoding(Section):
+class Encoding(Section):
 
-    """Character encoding configurations."""
-
-    fallbacks  = ['utf_8', 'cp1252']
+    fallback   = ['utf_8', 'cp1252']
     try_locale = True
-    visibles   = ['utf_8', 'cp1252']
+    visible    = ['utf_8', 'cp1252']
 
     types = {
-        'fallbacks' : Type.STRING_LIST,
+        'fallback'  : Type.STRING_LIST,
         'try_locale': Type.BOOLEAN,
-        'visibles'  : Type.STRING_LIST,
+        'visible'   : Type.STRING_LIST,
     }
 
 
-class file(Section):
-
-    """File configurations."""
+class File(Section):
 
     directory  = os.path.expanduser('~')
     encoding   = ''
-    format     = Format.SUBRIP
+    format     = cons.Format.SUBRIP
     max_recent = 5
-    newlines   = Newlines.UNIX
+    newlines   = cons.Newlines.UNIX
     recent     = []
     warn_ssa   = True
 
@@ -223,14 +212,12 @@ class file(Section):
     }
 
     classes = {
-        'format'  : Format,
-        'newlines': Newlines,
+        'format'  : cons.Format,
+        'newlines': cons.Newlines,
     }
 
 
-class find(Section):
-
-    """Find and replace configurations."""
+class Find(Section):
 
     all_projects = False
     dot_all      = True
@@ -264,9 +251,7 @@ class find(Section):
     )
 
 
-class framerate_convert(Section):
-
-    """Framerate convert configurations."""
+class FramerateConvert(Section):
 
     all_projects = True
 
@@ -275,9 +260,7 @@ class framerate_convert(Section):
     }
 
 
-class general(Section):
-
-    """General configurations."""
+class General(Section):
 
     version = __version__
 
@@ -286,9 +269,7 @@ class general(Section):
     }
 
 
-class output_window(Section):
-
-    """Output window configurations."""
+class OutputWindow(Section):
 
     maximized = False
     position  = [0, 0]
@@ -303,9 +284,7 @@ class output_window(Section):
     }
 
 
-class position_adjust(Section):
-
-    """Position adjust configurations."""
+class PositionAdjust(Section):
 
     all_subtitles = True
 
@@ -314,9 +293,7 @@ class position_adjust(Section):
     }
 
 
-class position_shift(Section):
-
-    """Position shift configurations."""
+class PositionShift(Section):
 
     all_subtitles = True
     frames        = 0
@@ -329,17 +306,15 @@ class position_shift(Section):
     }
 
 
-class preview(Section):
-
-    """Preview configurations."""
+class Preview(Section):
 
     command        = ''
     offset         = '5.0'
     use_predefined = True
-    video_player   = VideoPlayer.MPLAYER
+    video_player   = cons.VideoPlayer.MPLAYER
 
     if sys.platform == 'win32':
-        video_player = VideoPlayer.VLC
+        video_player = cons.VideoPlayer.VLC
 
     types = {
         'command'       : Type.STRING,
@@ -349,13 +324,11 @@ class preview(Section):
     }
 
     classes = {
-        'video_player': VideoPlayer,
+        'video_player': cons.VideoPlayer,
     }
 
 
-class spell_check(Section):
-
-    """Spell-check configurations."""
+class SpellCheck(Section):
 
     all_projects = False
     main         = True
@@ -372,9 +345,7 @@ class spell_check(Section):
     }
 
 
-class subtitle_insert(Section):
-
-    """Subtitle insert configurations."""
+class SubtitleInsert(Section):
 
     amount = 1
     below  = True
@@ -423,7 +394,6 @@ def make_profile_directory():
     """
     if os.path.isdir(CONFIG_DIR):
         return
-
     try:
         os.makedirs(CONFIG_DIR)
     except OSError, message:
@@ -454,6 +424,17 @@ def read():
     if not result:
         if os.path.isfile(CONFIG_FILE):
             print 'Failed to read configuration file "%s".' % CONFIG_FILE
+        return
+
+    args = 'General', 'version'
+    if not parser.has_option(*args) or parser.get(*args) != __version__:
+        message = 'Making a backup copy of current configuration file... '
+        sys.stdout.write(message)
+        try:
+            shutil.copyfile(CONFIG_FILE, CONFIG_FILE + '.bak')
+            sys.stdout.write('done.\n')
+        except IOError, (no, message):
+            sys.stdout.write('failed: %s.\n' % message)
 
     sections = _get_sections()
     for section in parser.sections():
@@ -482,7 +463,11 @@ def _set_config_option(parser, section, option):
     type_  = eval(section).types[option]
 
     if Type.is_list(type_):
-        str_list = string.split(LIST_SEP)
+        if not string.startswith(LIST_START):
+            raise ValueError
+        if not string.endswith(LIST_END):
+            raise ValueError
+        str_list = string[1:-1].split(LIST_SEP)
 
     if type_ == Type.STRING:
         value = string
@@ -534,14 +519,14 @@ def _set_parser_option(parser, section, option):
         str_list = list(_get_constant(section, option, x) for x in value)
 
     if Type.is_list(type_):
-        string = LIST_SEP.join(str_list)
+        string = LIST_START + LIST_SEP.join(str_list) + LIST_END
 
     parser.set(section, option, string)
 
 def write():
     """Write configurations to file."""
 
-    general.version = __version__
+    General.version = __version__
     parser = ConfigParser.RawConfigParser()
 
     for section in _get_sections():
@@ -559,11 +544,10 @@ def write():
         make_profile_directory()
     except OSError:
         return
-
     try:
         fobj = open(CONFIG_FILE, 'w')
         try:
-            fobj.write(config_header)
+            fobj.write(CONFIG_HEADER)
         finally:
             fobj.close()
         fobj = open(CONFIG_FILE, 'a')

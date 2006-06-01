@@ -30,6 +30,7 @@ import os
 import gobject
 import gtk
 
+from gaupol.gtk.colcons import *
 from gaupol.gtk.cons import *
 from gaupol.gtk.delegates    import Delegate, UIMAction, UIMActions
 from gaupol.gtk.util         import config, gtklib
@@ -122,7 +123,7 @@ class ApplicationUpdateDelegate(Delegate):
 
         state = event.new_window_state
         maximized = bool(state & gtk.gdk.WINDOW_STATE_MAXIMIZED)
-        config.app_window.maximized = maximized
+        config.AppWindow.maximized = maximized
 
     def _set_action_sensitivities(self, page):
         """Set sensitivities of all actions for page."""
