@@ -28,7 +28,7 @@ import gobject
 import gtk
 import pango
 
-from gaupol.base.util            import encodinglib
+from gaupol.base.util            import enclib
 from gaupol.gtk.cons import *
 from gaupol.gtk.dialogs.encoding import EncodingDialog
 from gaupol.gtk.util             import config, gtklib
@@ -399,7 +399,7 @@ class PreferencesDialog(gobject.GObject):
         store = self._encoding_view.get_model()
         store.clear()
         for encoding in config.Encoding.fallback:
-            name = encodinglib.get_long_name(encoding)
+            name = enclib.get_long_name(encoding)
             store.append([name])
 
         self._set_encoding_button_sensitivities()

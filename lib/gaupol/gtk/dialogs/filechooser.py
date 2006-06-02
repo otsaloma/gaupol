@@ -29,7 +29,7 @@ import os
 
 import gtk
 
-from gaupol.base.util            import encodinglib
+from gaupol.base.util            import enclib
 from gaupol.gtk.cons import *
 from gaupol.gtk.dialogs.encoding import AdvancedEncodingDialog
 from gaupol.gtk.dialogs.message  import QuestionDialog
@@ -76,7 +76,7 @@ class TextFileChooserDialog(gtk.FileChooserDialog):
 
         for encoding in config.Encoding.visible:
             try:
-                name = encodinglib.get_long_name(encoding)
+                name = enclib.get_long_name(encoding)
                 self._encodings.append((encoding, name))
             except ValueError:
                 pass
@@ -90,7 +90,7 @@ class TextFileChooserDialog(gtk.FileChooserDialog):
             if not found:
                 try:
                     encoding = config.File.encoding
-                    name = encodinglib.get_long_name(encoding)
+                    name = enclib.get_long_name(encoding)
                     self._encodings.insert(0, (encoding, name))
                 except ValueError:
                     pass
@@ -151,8 +151,8 @@ class TextFileChooserDialog(gtk.FileChooserDialog):
         """Initialize locale encoding."""
 
         try:
-            encoding = encodinglib.get_locale_encoding()[0]
-            name = encodinglib.get_locale_long_name()
+            encoding = enclib.get_locale_encoding()[0]
+            name = enclib.get_locale_long_name()
             self._locale_encoding = encoding, name
         except ValueError:
             pass

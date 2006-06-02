@@ -1,5 +1,15 @@
 2006-06-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/util/test/test_enclib.py:
+	* lib/gaupol/gtk/delegates/fileopen.py:
+	* lib/gaupol/gtk/delegates/filesave.py:
+	* lib/gaupol/gtk/dialogs/encoding.py:
+	* lib/gaupol/gtk/dialogs/filechooser.py:
+	* lib/gaupol/gtk/dialogs/preferences.py:
+	  Changed all references of encodinglib to enclib.
+
+2006-06-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/util/enclib.py:
 	* lib/gaupol/base/util/test/test_enclib.py:
 	  Renamed from encodinglib.

@@ -33,7 +33,7 @@ import gtk
 
 from gaupol.gtk.colcons import *
 from gaupol.base.error              import FileFormatError
-from gaupol.base.util               import encodinglib, listlib
+from gaupol.base.util               import enclib, listlib
 from gaupol.gtk.cons        import *
 from gaupol.gtk.delegates           import Delegate, UIMAction
 from gaupol.gtk.dialogs.filechooser import OpenFileDialog, OpenVideoDialog
@@ -334,7 +334,7 @@ class FileOpenDelegate(Delegate):
         # Add locale encoding.
         if config.Encoding.try_locale:
             try:
-                encodings.insert(0, encodinglib.get_locale_encoding()[0])
+                encodings.insert(0, enclib.get_locale_encoding()[0])
             except ValueError:
                 pass
 

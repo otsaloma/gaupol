@@ -29,7 +29,7 @@ from gettext import gettext as _
 import gobject
 import gtk
 
-from gaupol.base.util import encodinglib
+from gaupol.base.util import enclib
 from gaupol.gtk.util  import config, gtklib
 
 
@@ -91,7 +91,7 @@ class EncodingDialog(object):
         store.set_sort_column_id(DESC, gtk.SORT_ASCENDING)
 
         # Insert data.
-        for entry in encodinglib.get_valid_encodings():
+        for entry in enclib.get_valid_encodings():
             store.append([entry[2], entry[1]])
 
     def destroy(self):
@@ -114,7 +114,7 @@ class EncodingDialog(object):
             row = rows[0]
 
         display_name = store[row][NAME]
-        return encodinglib.get_python_name(display_name)
+        return enclib.get_python_name(display_name)
 
     def run(self):
         """Show and run the dialog."""
@@ -171,7 +171,7 @@ class AdvancedEncodingDialog(EncodingDialog):
 
         # Insert data.
         visible_encodings = config.Encoding.visible
-        for entry in encodinglib.get_valid_encodings():
+        for entry in enclib.get_valid_encodings():
             store.append([entry[2], entry[1], entry[0] in visible_encodings])
 
     def get_visible_encodings(self):
@@ -182,7 +182,7 @@ class AdvancedEncodingDialog(EncodingDialog):
 
         for row in range(len(store)):
             if store[row][SHOW]:
-                encoding = encodinglib.get_python_name(store[row][NAME])
+                encoding = enclib.get_python_name(store[row][NAME])
                 visible_encodings.append(encoding)
 
         return visible_encodings

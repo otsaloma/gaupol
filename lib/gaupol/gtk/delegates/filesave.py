@@ -30,7 +30,7 @@ import os
 import gtk
 
 from gaupol.gtk.colcons import *
-from gaupol.base.util               import encodinglib
+from gaupol.base.util               import enclib
 from gaupol.gtk.cons        import *
 from gaupol.gtk.delegates           import Delegate, UIMAction
 from gaupol.gtk.dialogs.filechooser import SaveFileDialog
@@ -459,7 +459,7 @@ class FileSaveDelegate(Delegate):
             return False
 
         except UnicodeError:
-            codec = encodinglib.get_display_name(encoding)
+            codec = enclib.get_display_name(encoding)
             dialog = UnicodeEncodeErrorDialog(parent, basename, codec)
             dialog.run()
             dialog.destroy()
