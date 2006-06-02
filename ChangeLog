@@ -1,5 +1,11 @@
 2006-06-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/util/enclib.py:
+	* lib/gaupol/base/util/test/test_enclib.py:
+	  Renamed from encodinglib.
+
+2006-06-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/delegates/__init__.py:
 	* lib/gaupol/base/delegates/action.py:
 	* lib/gaupol/base/delegates/edit.py:
