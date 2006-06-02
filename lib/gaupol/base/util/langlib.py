@@ -695,20 +695,6 @@ def get_country(locale):
         return dgettext('iso_3166', COUNTRIES[locale[3:]])
     return None
 
-def get_descriptive_name(locale):
-    """
-    Get localized descriptive name from locale code.
-
-    Raise KeyError if language or country not found.
-    Return "Language (Country)".
-    """
-    lang = get_language(locale)
-    if len(locale) == 5:
-        country = get_country(locale)
-        # Translators: Language descriptive name, e.g. "English (Canada)".
-        return _('%s (%s)') % (lang, country)
-    return lang
-
 def get_language(locale):
     """
     Get localized language name from locale code.
@@ -716,3 +702,17 @@ def get_language(locale):
     Raise KeyError is language not found.
     """
     return dgettext('iso_639', LANGS[locale[:2]])
+
+def get_long_name(locale):
+    """
+    Get localized long name from locale code.
+
+    Raise KeyError if language or country not found.
+    Return "Language (Country)".
+    """
+    lang = get_language(locale)
+    if len(locale) == 5:
+        country = get_country(locale)
+        # Translators: Long language name, e.g. "English (Canada)".
+        return _('%s (%s)') % (lang, country)
+    return lang

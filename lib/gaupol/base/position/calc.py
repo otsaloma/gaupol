@@ -22,7 +22,7 @@
 from gaupol.base import cons
 
 
-class TimeFrameCalculator(object):
+class Calculator(object):
 
     """
     Time and frame calculations.

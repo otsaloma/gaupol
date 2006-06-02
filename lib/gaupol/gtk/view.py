@@ -74,8 +74,8 @@ class View(gtk.TreeView):
             cell_renderer_2 = CellRendererInteger()
             cell_renderer_3 = CellRendererInteger()
         cell_renderer_0 = CellRendererInteger()
-        cell_renderer_4 = CellRendererMultilineText()
-        cell_renderer_5 = CellRendererMultilineText()
+        cell_renderer_4 = CellRendererMultiline()
+        cell_renderer_5 = CellRendererMultiline()
 
         if config.Editor.use_default_font:
             font = ''

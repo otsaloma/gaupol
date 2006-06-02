@@ -87,55 +87,6 @@ class EntryTime(gtk.Entry):
             if new_pos in (2, 5, 8):
                 self.set_position(new_pos + 1)
 
-    @blockedmethod
-    def _change_next_to_zero(self):
-        """Change next number to zero."""
-
-        pos = self.get_position()
-        if pos in (2, 5, 8, 12):
-            return
-
-        orig_text = self.get_text()
-        text_before = orig_text[:pos]
-        text_after = orig_text[pos + 1:]
-        full_text = text_before + '0' + text_after
-
-        self.set_text(full_text)
-        self.set_position(pos)
-
-    @blockedmethod
-    def _change_previous_to_zero(self):
-        """Change previous number to zero."""
-
-        pos = self.get_position()
-        if pos in (0, 3, 6, 9):
-            if pos in (3, 6, 9):
-                self.set_position(pos - 1)
-            return
-
-        orig_text = self.get_text()
-        text_before = orig_text[:pos - 1]
-        text_after = orig_text[pos:]
-        full_text = text_before + '0' + text_after
-
-        self.set_text(full_text)
-        self.set_position(pos - 1)
-
-    @blockedmethod
-    def _change_selection_to_zero(self):
-        """Change numbers in selection to zero."""
-
-        if not self.get_selection_bounds():
-            return
-
-        start, end = self.get_selection_bounds()
-        orig_text = self.get_text()
-        zero_text = RE_NUMBER.sub('0', orig_text[start:end])
-        full_text = orig_text[:start] + zero_text + orig_text[end:]
-
-        self.set_text(full_text)
-        self.set_position(start)
-
     def _on_cut_clipboard(self, entry):
         """Transform cut signal to a copy signal."""
 
@@ -157,11 +108,11 @@ class EntryTime(gtk.Entry):
 
         self.stop_emission('key-press-event')
         if self.get_selection_bounds():
-            gobject.idle_add(self._change_selection_to_zero)
+            gobject.idle_add(self._zero_selection)
         elif keyname == 'BackSpace':
-            gobject.idle_add(self._change_previous_to_zero)
+            gobject.idle_add(self._zero_previous)
         elif keyname == 'Delete':
-            gobject.idle_add(self._change_next_to_zero)
+            gobject.idle_add(self._zero_next)
 
     def _on_insert_text(self, entry, text, length, pos):
         """Insert text if it is proper."""
@@ -173,3 +124,52 @@ class EntryTime(gtk.Entry):
         """Do not allow toggling overwrite."""
 
         self.stop_emission('toggle-overwrite')
+
+    @blockedmethod
+    def _zero_next(self):
+        """Change next number to zero."""
+
+        pos = self.get_position()
+        if pos in (2, 5, 8, 12):
+            return
+
+        orig_text = self.get_text()
+        text_before = orig_text[:pos]
+        text_after = orig_text[pos + 1:]
+        full_text = text_before + '0' + text_after
+
+        self.set_text(full_text)
+        self.set_position(pos)
+
+    @blockedmethod
+    def _zero_previous(self):
+        """Change previous number to zero."""
+
+        pos = self.get_position()
+        if pos in (0, 3, 6, 9):
+            if pos in (3, 6, 9):
+                self.set_position(pos - 1)
+            return
+
+        orig_text = self.get_text()
+        text_before = orig_text[:pos - 1]
+        text_after = orig_text[pos:]
+        full_text = text_before + '0' + text_after
+
+        self.set_text(full_text)
+        self.set_position(pos - 1)
+
+    @blockedmethod
+    def _zero_selection(self):
+        """Change numbers in selection to zero."""
+
+        if not self.get_selection_bounds():
+            return
+
+        start, end = self.get_selection_bounds()
+        orig_text = self.get_text()
+        zero_text = RE_NUMBER.sub('0', orig_text[start:end])
+        full_text = orig_text[:start] + zero_text + orig_text[end:]
+
+        self.set_text(full_text)
+        self.set_position(start)

@@ -24,7 +24,7 @@ import re
 
 from gaupol.base               import cons
 from gaupol.base.file          import SubtitleFile
-from gaupol.base.position.calc import TimeFrameCalculator
+from gaupol.base.position.calc import Calculator
 
 
 class SubViewer2(SubtitleFile):
@@ -99,7 +99,7 @@ class SubViewer2(SubtitleFile):
         shows = shows[:]
         hides = hides[:]
         texts = texts[:]
-        calc = TimeFrameCalculator()
+        calc = Calculator()
         newline_char = self._get_newline_character()
 
         texts = list(x.replace('\n', '[br]')  for x in texts)

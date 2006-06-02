@@ -17,22 +17,22 @@
 
 
 from gaupol.base               import cons
-from gaupol.base.position.calc import TimeFrameCalculator
+from gaupol.base.position.calc import Calculator
 from gaupol.test               import Test
 
 
-class TestTimeFrameCalculator(Test):
+class TestCalculator(Test):
 
     def setup_method(self, method):
 
-        self.calc = TimeFrameCalculator(cons.Framerate.FR_23_976)
-        self.framerate = Framerate.values[cons.Framerate.FR_23_976]
+        self.calc = Calculator(cons.Framerate.FR_23_976)
+        self.framerate = cons.Framerate.values[cons.Framerate.FR_23_976]
 
     def test_init(self):
 
-        TimeFrameCalculator()
-        for i in range(len(Framerate.values)):
-            TimeFrameCalculator(i)
+        Calculator()
+        for i in range(len(cons.Framerate.values)):
+            Calculator(i)
 
     def test_add_seconds_to_time(self):
 
@@ -90,7 +90,7 @@ class TestTimeFrameCalculator(Test):
 
     def test_set_framerate(self):
 
-        self.calc.set_framerate(Framerate.FR_25)
+        self.calc.set_framerate(cons.Framerate.FR_25)
         assert self.calc.framerate == 25.000
 
     def test_time_to_frame(self):

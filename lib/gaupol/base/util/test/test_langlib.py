@@ -36,20 +36,6 @@ class TestModule(Test):
         except KeyError:
             pass
 
-    def test_get_descriptive_name(self):
-
-        name = langlib.get_descriptive_name('af_ZA')
-        assert isinstance(name, basestring)
-
-        name = langlib.get_descriptive_name('af')
-        assert isinstance(name, basestring)
-
-        try:
-            langlib.get_descriptive_name('xx')
-            raise AssertionError
-        except KeyError:
-            pass
-
     def test_get_language(self):
 
         lang = langlib.get_language('af_ZA')
@@ -57,6 +43,20 @@ class TestModule(Test):
 
         try:
             langlib.get_language('xx')
+            raise AssertionError
+        except KeyError:
+            pass
+
+    def test_get_long_name(self):
+
+        name = langlib.get_long_name('af_ZA')
+        assert isinstance(name, basestring)
+
+        name = langlib.get_long_name('af')
+        assert isinstance(name, basestring)
+
+        try:
+            langlib.get_long_name('xx')
             raise AssertionError
         except KeyError:
             pass

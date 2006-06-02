@@ -75,7 +75,7 @@ class TimeFrameDelegate(Delegate):
 
             # Adjust to optimal.
             if optimal is not None:
-                length = self.get_character_count(row, Document.MAIN)[1]
+                length = sum(self.get_line_lengths(row, Document.MAIN))
                 durn_optimal = optimal * length
                 if durn_seconds < durn_optimal and lengthen:
                     hide_seconds = min(hide_limit, show_seconds + durn_optimal)
@@ -114,7 +114,7 @@ class TimeFrameDelegate(Delegate):
             return []
 
         self.replace_positions(new_rows, new_times, new_frames, register)
-        self.modify_action_description(register, _('Adjusting durations'))
+        self.set_action_description(register, _('Adjusting durations'))
         return new_rows
 
     def adjust_frames(self, rows, point_1, point_2, register=Action.DO):
@@ -158,7 +158,7 @@ class TimeFrameDelegate(Delegate):
             new_times.append([show_time, hide_time, durn_time])
 
         self.replace_positions(rows, new_times, new_frames, register)
-        self.modify_action_description(register, _('Adjusting frames'))
+        self.set_action_description(register, _('Adjusting frames'))
 
     def adjust_times(self, rows, point_1, point_2, register=Action.DO):
         """
@@ -203,7 +203,7 @@ class TimeFrameDelegate(Delegate):
             new_frames.append([show_frame, hide_frame, durn_frame])
 
         self.replace_positions(rows, new_times, new_frames, register)
-        self.modify_action_description(register, _('Adjusting times'))
+        self.set_action_description(register, _('Adjusting times'))
 
     def change_framerate(self, framerate):
         """
@@ -288,11 +288,11 @@ class TimeFrameDelegate(Delegate):
 
         self.register_action(
             register=register,
-            documents=[Document.MAIN, Document.TRAN],
+            docs=[Document.MAIN, Document.TRAN],
             description=_('Replacing times'),
             revert_method=self.replace_positions,
-            revert_method_args=[rows, orig_times, orig_frames],
-            position_rows_updated=rows,
+            revert_args=[rows, orig_times, orig_frames],
+            updated_positions=rows,
         )
 
     def set_framerate(self, framerate, register=Action.DO):
@@ -304,10 +304,10 @@ class TimeFrameDelegate(Delegate):
 
         self.register_action(
             register=register,
-            documents=[Document.MAIN, Document.TRAN],
+            docs=[Document.MAIN, Document.TRAN],
             description=_('Setting framerate'),
             revert_method=self.set_framerate,
-            revert_method_args=[orig_framerate],
+            revert_args=[orig_framerate],
         )
 
     def shift_frames(self, rows, amount, register=Action.DO):
@@ -337,7 +337,7 @@ class TimeFrameDelegate(Delegate):
             new_times.append([show_time, hide_time, durn_time])
 
         self.replace_positions(rows, new_times, new_frames, register)
-        self.modify_action_description(register, _('Shifting frames'))
+        self.set_action_description(register, _('Shifting frames'))
 
     def shift_seconds(self, rows, amount, register=Action.DO):
         """
@@ -366,7 +366,7 @@ class TimeFrameDelegate(Delegate):
             new_frames.append([show_frame, hide_frame, durn_frame])
 
         self.replace_positions(rows, new_times, new_frames, register)
-        self.modify_action_description(register, _('Shifting times'))
+        self.set_action_description(register, _('Shifting times'))
 
 
 if __name__ == '__main__':

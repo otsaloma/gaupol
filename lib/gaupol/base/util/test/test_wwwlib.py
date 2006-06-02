@@ -37,7 +37,7 @@ class TestModule(Test):
             pass
 
         try:
-            wwwlib.read_url(url + 'x', 10)
+            wwwlib.read_url('http://xxx.yyy.zzz', 10)
             raise AssertionError
         except IOError:
             pass

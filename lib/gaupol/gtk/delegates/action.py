@@ -133,47 +133,47 @@ class ActionDelegate(Delegate):
 
         page = self.get_current_page()
 
-        rows_inserted          = action.rows_inserted[:]
-        rows_removed           = action.rows_removed[:]
-        rows_updated           = action.rows_updated[:]
-        position_rows_updated = action.position_rows_updated[:]
-        main_text_rows_updated = action.main_text_rows_updated[:]
-        tran_text_rows_updated = action.tran_text_rows_updated[:]
+        inserted_rows          = action.inserted_rows[:]
+        removed_rows           = action.removed_rows[:]
+        updated_rows           = action.updated_rows[:]
+        updated_positions = action.updated_positions[:]
+        updated_main_texts = action.updated_main_texts[:]
+        updated_tran_texts = action.updated_tran_texts[:]
 
-        if rows_inserted or rows_removed:
-            first_row = min(rows_inserted + rows_removed)
+        if inserted_rows or removed_rows:
+            first_row = min(inserted_rows + removed_rows)
             page.reload_after_row(first_row)
             lists = [
-                rows_updated,
-                position_rows_updated,
-                main_text_rows_updated,
-                tran_text_rows_updated,
+                updated_rows,
+                updated_positions,
+                updated_main_texts,
+                updated_tran_texts,
             ]
             for data in lists:
                 for i in reversed(range(len(data))):
                     if data[i] >= first_row:
                         data.pop(i)
 
-        if rows_updated:
-            page.reload_rows(rows_updated)
+        if updated_rows:
+            page.reload_rows(updated_rows)
             lists = [
-                position_rows_updated,
-                main_text_rows_updated,
-                tran_text_rows_updated,
+                updated_positions,
+                updated_main_texts,
+                updated_tran_texts,
             ]
             for data in lists:
                 for i in reversed(range(len(data))):
-                    if data[i] in rows_updated:
+                    if data[i] in updated_rows:
                         data.pop(i)
 
-        if position_rows_updated:
-            page.reload_columns([SHOW, HIDE, DURN], position_rows_updated)
+        if updated_positions:
+            page.reload_columns([SHOW, HIDE, DURN], updated_positions)
 
-        if main_text_rows_updated:
-            page.reload_columns([MTXT], main_text_rows_updated)
+        if updated_main_texts:
+            page.reload_columns([MTXT], updated_main_texts)
 
-        if tran_text_rows_updated:
-            page.reload_columns([TTXT], tran_text_rows_updated)
+        if updated_tran_texts:
+            page.reload_columns([TTXT], updated_tran_texts)
 
     def _show_updated_data(self, action):
         """Focus, select and scroll to data updated by action."""
@@ -183,25 +183,25 @@ class ActionDelegate(Delegate):
             return
 
         changed_rows = []
-        if action.rows_inserted or action.rows_removed:
-            first_row = min(action.rows_inserted + action.rows_removed)
+        if action.inserted_rows or action.removed_rows:
+            first_row = min(action.inserted_rows + action.removed_rows)
             changed_rows = range(first_row, len(page.project.times))
 
-        changed_rows += action.rows_updated
-        changed_rows += action.position_rows_updated
-        changed_rows += action.main_text_rows_updated
-        changed_rows += action.tran_text_rows_updated
+        changed_rows += action.updated_rows
+        changed_rows += action.updated_positions
+        changed_rows += action.updated_main_texts
+        changed_rows += action.updated_tran_texts
 
-        changed_rows = listlib.sort_and_remove_duplicates(changed_rows)
+        changed_rows = listlib.sorted_unique(changed_rows)
         if not changed_rows:
             return
 
         focus_row = min(changed_rows)
-        if action.position_rows_updated:
+        if action.updated_positions:
             focus_col = SHOW
-        elif action.main_text_rows_updated:
+        elif action.updated_main_texts:
             focus_col = MTXT
-        elif action.tran_text_rows_updated:
+        elif action.updated_tran_texts:
             focus_col = TTXT
         else:
             focus_col = MTXT

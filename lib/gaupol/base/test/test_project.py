@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2005 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,27 +16,16 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Functions for manipulating lists."""
+from gaupol.base         import cons
+from gaupol.base.project import Project
+from gaupol.test         import Test
 
 
-def sorted_unique(lst):
-    """Return sorted list with duplicates removed."""
+class TestProject(Test):
 
-    lst = sorted(lst)
-    for i in reversed(range(1, len(lst))):
-        if lst[i] == lst[i - 1]:
-            lst.pop(i)
+    def test_init(self):
 
-    return lst
-
-def unique(lst):
-    """Return list with duplicates removed."""
-
-    lst = lst[:]
-    for i in reversed(range(len(lst))):
-        for j in range(0, i):
-            if lst[j] == lst[i]:
-                lst.pop(i)
-                break
-
-    return lst
+        Project(cons.Framerate.FR_23_976, 10)
+        Project(cons.Framerate.FR_23_976)
+        Project(undo_limit=10)
+        Project()

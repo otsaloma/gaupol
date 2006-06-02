@@ -232,7 +232,7 @@ class SpellCheckDialog(gobject.GObject):
         """Initialize language descriptive name for document."""
 
         lang = self._langs[document]
-        name = langlib.get_descriptive_name(lang)
+        name = langlib.get_long_name(lang)
         self._lang_names[document] = name
 
     def _init_replacements(self, document):
@@ -263,7 +263,7 @@ class SpellCheckDialog(gobject.GObject):
             return
 
         # Parse replacements.
-        replacements = listlib.remove_duplicates(replacements)
+        replacements = listlib.unique(replacements)
         for replacement in replacements:
             replacement = replacement.strip()
             if replacement.find(repl_sep) == -1:
@@ -682,7 +682,7 @@ class SpellCheckDialog(gobject.GObject):
 
             if not replacements:
                 continue
-            replacements = listlib.remove_duplicates(replacements)
+            replacements = listlib.unique(replacements)
 
             lang = self._checkers[i].lang
             path = os.path.join(SPELL_CHECK_DIR, lang + '.repl')

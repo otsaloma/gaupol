@@ -22,17 +22,6 @@ from gaupol.test      import Test
 
 class TestModule(Test):
 
-    def test_get_descriptive_name(self):
-
-        name = encodinglib.get_descriptive_name('johab')
-        assert isinstance(name, basestring)
-
-        try:
-            encodinglib.get_descriptive_name('xxxxx')
-            raise AssertionError
-        except ValueError:
-            pass
-
     def test_get_display_name(self):
 
         name = encodinglib.get_display_name('johab')
@@ -50,10 +39,21 @@ class TestModule(Test):
         assert len(entry) == 3
         assert encodinglib.is_valid(entry[0])
 
-    def test_get_locale_descriptive_name(self):
+    def test_get_locale_long_name(self):
 
-        name = encodinglib.get_locale_descriptive_name()
+        name = encodinglib.get_locale_long_name()
         assert isinstance(name, basestring)
+
+    def test_get_long_name(self):
+
+        name = encodinglib.get_long_name('johab')
+        assert isinstance(name, basestring)
+
+        try:
+            encodinglib.get_long_name('xxxxx')
+            raise AssertionError
+        except ValueError:
+            pass
 
     def test_get_python_name(self):
 

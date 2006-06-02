@@ -19,33 +19,23 @@
 """Common delegate affairs."""
 
 
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
-
-import inspect
-
-
-# List of all delegate module names. Methods of listed modules will be imported
-# into the delegation system.
-module_names = (
+MODULES = (
     'action',
     'edit',
     'fileopen',
     'filesave',
     'find',
     'format',
+    'position',
     'preview',
     'stat',
-    'position',
 )
 
 
 class Delegate(object):
 
     """
-    Base class for delegates.
+    Base class for delegate classes.
 
     The purpose of the methods in this class is to provide direct access to
     the master class's attributes by redirecting all self.attribute calls not
@@ -75,29 +65,24 @@ class Delegates(object):
 
     """All delegates."""
 
-    module_names = module_names
     classes = []
 
 
 def list_delegate_classes():
     """List all delegate classes."""
 
-    for module_name in Delegates.module_names:
+    for module_name in MODULES:
         path = 'gaupol.base.delegates.' + module_name
         module = __import__(path, None, None, [''])
         for name in dir(module):
             if name.startswith('_'):
                 continue
             value = getattr(module, name)
-            if inspect.getmodule(value) != module:
-                continue
             try:
                 if issubclass(value, Delegate):
                     Delegates.classes.append(value)
             except TypeError:
                 continue
 
-
-# List delegates if they have not yet been listed.
 if not Delegates.classes:
     list_delegate_classes()

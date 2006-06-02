@@ -117,7 +117,7 @@ class LanguageDialog(object):
         tran_store.clear()
 
         for lang in self._langs:
-            name = langlib.get_descriptive_name(lang)
+            name = langlib.get_long_name(lang)
             main_store.append([name])
             tran_store.append([name])
 

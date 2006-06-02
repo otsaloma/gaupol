@@ -17,7 +17,7 @@
 
 
 from gaupol.gtk.cellrend.multiline import TextViewCell
-from gaupol.gtk.cellrend.multiline import CellRendererMultilineText
+from gaupol.gtk.cellrend.multiline import CellRendererMultiline
 from gaupol.test                   import Test
 
 
@@ -38,11 +38,11 @@ class TestTextViewCell(Test):
         assert text == 'test'
 
 
-class TestCellRendererMultilineText(Test):
+class TestCellRendererMultiline(Test):
 
     def test_init(self):
 
-        CellRendererMultilineText()
+        CellRendererMultiline()
 
 
 if __name__ == '__main__':
@@ -56,7 +56,7 @@ if __name__ == '__main__':
     store.append(['test\ntest'])
     tree_view.set_model(store)
 
-    cell_renderer = CellRendererMultilineText()
+    cell_renderer = CellRendererMultiline()
     cell_renderer.set_editable(True)
     tree_view_column = gtk.TreeViewColumn('', cell_renderer, text=0)
     tree_view.append_column(tree_view_column)

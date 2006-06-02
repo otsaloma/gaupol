@@ -229,7 +229,7 @@ class FindDialog(gobject.GObject):
 
         config.Find.pattern = pattern
         config.Find.patterns.insert(0, pattern)
-        config.Find.patterns = listlib.remove_duplicates(config.Find.patterns)
+        config.Find.patterns = listlib.unique(config.Find.patterns)
         while len(config.Find.patterns) > 10:
             config.Find.patterns.pop()
         self._set_patterns()

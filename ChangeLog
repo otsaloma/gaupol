@@ -1,3 +1,54 @@
+2006-06-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/base/delegates/__init__.py:
+	* lib/gaupol/base/delegates/action.py:
+	* lib/gaupol/base/delegates/edit.py:
+	* lib/gaupol/base/delegates/find.py:
+	* lib/gaupol/base/delegates/format.py:
+	* lib/gaupol/base/delegates/position.py:
+	* lib/gaupol/base/delegates/stat.py:
+	* lib/gaupol/base/delegates/test/__init__.py:
+	* lib/gaupol/base/delegates/test/test_action.py:
+	* lib/gaupol/base/delegates/test/test_stat.py:
+	* lib/gaupol/base/delegates/test:
+	* lib/gaupol/base/file/mpl2.py:
+	* lib/gaupol/base/file/ssa.py:
+	* lib/gaupol/base/file/subviewer2.py:
+	* lib/gaupol/base/file/test/test_determiner.py:
+	* lib/gaupol/base/file/test/test_init.py:
+	* lib/gaupol/base/position/calc.py:
+	* lib/gaupol/base/position/test/test_calc.py:
+	* lib/gaupol/base/project.py:
+	* lib/gaupol/base/test/test_cons.py:
+	* lib/gaupol/base/test/test_project.py:
+	* lib/gaupol/base/util/encodinglib.py:
+	* lib/gaupol/base/util/langlib.py:
+	* lib/gaupol/base/util/listlib.py:
+	* lib/gaupol/base/util/test/test_encodinglib.py:
+	* lib/gaupol/base/util/test/test_langlib.py:
+	* lib/gaupol/base/util/test/test_listlib.py:
+	* lib/gaupol/base/util/test/test_wwwlib.py:
+	* lib/gaupol/gtk/cellrend/classes.py:
+	* lib/gaupol/gtk/cellrend/multiline.py:
+	* lib/gaupol/gtk/cellrend/test/test_classes.py:
+	* lib/gaupol/gtk/cellrend/test/test_multiline.py:
+	* lib/gaupol/gtk/delegates/action.py:
+	* lib/gaupol/gtk/delegates/fileopen.py:
+	* lib/gaupol/gtk/delegates/spellcheck.py:
+	* lib/gaupol/gtk/delegates/viewupdate.py:
+	* lib/gaupol/gtk/dialogs/filechooser.py:
+	* lib/gaupol/gtk/dialogs/find.py:
+	* lib/gaupol/gtk/dialogs/language.py:
+	* lib/gaupol/gtk/dialogs/preferences.py:
+	* lib/gaupol/gtk/dialogs/spellcheck.py:
+	* lib/gaupol/gtk/entry/time.py:
+	* lib/gaupol/gtk/view.py:
+	* lib/gaupol/test/__init__.py:
+	* tools/pylint:
+	* tools/translate:
+	  Cleaned up code.
+	  Separated testing.
+
 2006-06-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/ui/menubar.xml:

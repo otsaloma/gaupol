@@ -20,12 +20,12 @@
 
 
 from gaupol.gtk.cellrend.integer   import CellRendererInteger
-from gaupol.gtk.cellrend.multiline import CellRendererMultilineText
+from gaupol.gtk.cellrend.multiline import CellRendererMultiline
 from gaupol.gtk.cellrend.time      import CellRendererTime
 
 
 __all__ = [
     'CellRendererInteger',
-    'CellRendererMultilineText',
+    'CellRendererMultiline',
     'CellRendererTime'
 ]

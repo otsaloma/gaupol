@@ -131,19 +131,6 @@ ENCODINGS = (
 )
 
 
-def get_descriptive_name(python_name):
-    """
-    Get descriptive name for encoding.
-
-    Raise ValueError if not found.
-    """
-    for entry in ENCODINGS:
-        if entry[0] == python_name:
-            # Translators: Encoding descriptive name, e.g. "Russian (KOI8-R)".
-            return _('%s (%s)') % (entry[2], entry[1])
-
-    raise ValueError
-
 def get_display_name(python_name):
     """
     Get display name for encoding.
@@ -176,13 +163,26 @@ def get_locale_encoding():
 
     raise ValueError
 
-def get_locale_descriptive_name():
+def get_locale_long_name():
     """
-    Get descriptive name for locale encoding.
+    Get long name for locale encoding.
 
     Raise ValueError if not found.
     """
     return _('Current locale (%s)') % get_locale_encoding()[1]
+
+def get_long_name(python_name):
+    """
+    Get long name for encoding.
+
+    Raise ValueError if not found.
+    """
+    for entry in ENCODINGS:
+        if entry[0] == python_name:
+            # Translators: Long encoding name, e.g. "Russian (KOI8-R)".
+            return _('%s (%s)') % (entry[2], entry[1])
+
+    raise ValueError
 
 def get_python_name(display_name):
     """

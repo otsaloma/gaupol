@@ -78,7 +78,7 @@ def create_pot():
 
     title_print('Creating a .pot file from source files...')
     files = Files.h + Files.py
-    files = list(path.replace(SOURCE_DIR, '.') for path in files)
+    files = list(x.replace(SOURCE_DIR, '.') for x in files)
     os.chdir(SOURCE_DIR)
     os.system('xgettext -k_ -kN_ -c -o %s %s' % (POT_FILE, ' '.join(files)))
 

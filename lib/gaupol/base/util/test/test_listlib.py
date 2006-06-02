@@ -22,14 +22,14 @@ from gaupol.test      import Test
 
 class TestModule(Test):
 
-    def test_remove_duplicates(self):
+    def test_sorted_unique(self):
 
         lst = [4, 1, 5, 5, 1, 3, 6, 4, 4]
-        lst = listlib.remove_duplicates(lst)
-        assert lst == [4, 1, 5, 3, 6]
-
-    def test_sort_and_remove_duplicates(self):
-
-        lst = [4, 1, 5, 5, 1, 3, 6, 4, 4]
-        lst = listlib.sort_and_remove_duplicates(lst)
+        lst = listlib.sorted_unique(lst)
         assert lst == [1, 3, 4, 5, 6]
+
+    def test_unique(self):
+
+        lst = [4, 1, 5, 5, 1, 3, 6, 4, 4]
+        lst = listlib.unique(lst)
+        assert lst == [4, 1, 5, 3, 6]

@@ -190,7 +190,7 @@ class SpellCheckDelegate(Delegate):
         else:
             return
 
-        page.project.modify_action_description(Action.DO, _('Spell-checking'))
+        page.project.set_action_description(Action.DO, _('Spell-checking'))
         self.set_sensitivities(page)
 
     def _on_page_selected(self, dialog, page):

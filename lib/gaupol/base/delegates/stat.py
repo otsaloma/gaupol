@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -19,11 +19,6 @@
 """Statistics and information."""
 
 
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
-
 from gaupol.base.delegates import Delegate
 
 
@@ -31,40 +26,14 @@ class StatisticsDelegate(Delegate):
 
     """Statistics and information."""
 
-    def get_character_count(self, row, document):
-        """
-        Get character count of text.
+    def get_line_lengths(self, row, doc):
+        """Get list of line lengths."""
 
-        Return list of row lengths, total length.
-        """
-        text = [self.main_texts, self.tran_texts][document][row]
-        re_tag = self.get_regular_expression_for_tag(document)
-        if re_tag is not None:
+        text = [self.main_texts, self.tran_texts][doc][row]
+        try:
+            re_tag = self.get_tag_regex(doc)
             text = re_tag.sub('', text)
+        except ValueError:
+            pass
 
-        lengths = []
-        total   = 0
-        for line in text.split('\n'):
-            length = len(line)
-            lengths.append(length)
-            total += length
-
-        return lengths, total
-
-
-if __name__ == '__main__':
-
-    from gaupol.base.cons import Document
-    from gaupol.test      import Test
-
-    class TestStatisticsDelegate(Test):
-
-        def test_get_character_count(self):
-
-            project = self.get_project()
-            project.main_texts[0] = '<i>test\ntest.</i>'
-            lengths, total = project.get_character_count(0, Document.MAIN)
-            assert lengths == [4, 5]
-            assert total   == 9
-
-    TestStatisticsDelegate().run()
+        return list(len(x) for x in text.split('\n'))

@@ -44,8 +44,11 @@ class FormatDelegate(Delegate):
 
         method: "title", "capitalize", "upper" or "lower"
         """
-        re_tag = self.get_regular_expression_for_tag(document)
-        parser = Parser(re_tag)
+        try:
+            re_tag = self.get_tag_regex(document)
+            parser = Parser(re_tag)
+        except ValueError:
+            parser = Parser(None)
         texts  = (self.main_texts, self.tran_texts)[document]
 
         new_texts = []
@@ -55,7 +58,7 @@ class FormatDelegate(Delegate):
             new_texts.append(parser.get_text())
 
         self.replace_texts(rows, document, new_texts, register)
-        self.modify_action_description(register, _('Changing case'))
+        self.set_action_description(register, _('Changing case'))
 
     def _get_format_class_name(self, document):
         """
@@ -76,7 +79,7 @@ class FormatDelegate(Delegate):
             except AttributeError:
                 return self._get_format_class_name(Document.MAIN)
 
-    def get_regular_expression_for_tag(self, document):
+    def get_tag_regex(self, document):
         """
         Get regular expression for a text tag for document.
 
@@ -84,7 +87,7 @@ class FormatDelegate(Delegate):
         """
         format_name = self._get_format_class_name(document)
         if format_name is None:
-            return None
+            raise ValueError
 
         regex, flags = eval(format_name).tag
         return re.compile(regex, flags or 0)
@@ -92,7 +95,11 @@ class FormatDelegate(Delegate):
     def toggle_dialog_lines(self, rows, document, register=Action.DO):
         """Toggle dialog lines."""
 
-        re_tag       = self.get_regular_expression_for_tag(document)
+        try:
+            re_tag = self.get_tag_regex(document)
+            parser = Parser(re_tag)
+        except ValueError:
+            parser = Parser(None)
         re_dialog    = re.compile(r'^-\s*'  , re.MULTILINE)
         re_no_dialog = re.compile(r'^([^-])', re.MULTILINE)
 
@@ -113,8 +120,6 @@ class FormatDelegate(Delegate):
                     dialogize = True
                     break
 
-        parser = Parser(re_tag)
-
         # Add or remove dialog lines.
         for row in rows:
             parser.set_text(texts[row])
@@ -129,13 +134,16 @@ class FormatDelegate(Delegate):
 
         self.replace_texts(rows, document, new_texts, register)
         description = _('Toggling dialog lines')
-        self.modify_action_description(register, description)
+        self.set_action_description(register, description)
 
     def toggle_italicization(self, rows, document, register=Action.DO):
         """Toggle italicization."""
 
         format_name   = self._get_format_class_name(document)
-        re_tag        = self.get_regular_expression_for_tag(document)
+        try:
+            re_tag = self.get_tag_regex(document)
+        except ValueError:
+            re_tag = None
         regex, flags  = eval(format_name).italic_tag
         re_italic_tag = re.compile(regex, flags or 0)
 
@@ -148,10 +156,11 @@ class FormatDelegate(Delegate):
             # Remove tags from the start of the text, ending after all
             # tags are removed or when an italic tag is found.
             tagless_text = texts[row][:]
-            while re_tag.match(tagless_text):
-                if re_italic_tag.match(tagless_text):
-                    break
-                tagless_text = re_tag.sub('', tagless_text, 1)
+            if re_tag is not None:
+                while re_tag.match(tagless_text):
+                    if re_italic_tag.match(tagless_text):
+                        break
+                    tagless_text = re_tag.sub('', tagless_text, 1)
             # If there is no italic tag at the start of the text,
             # texts should be italicized.
             if re_italic_tag.match(tagless_text) is None:
@@ -168,7 +177,7 @@ class FormatDelegate(Delegate):
 
         self.replace_texts(rows, document, new_texts, register)
         description = _('Toggling italicization')
-        self.modify_action_description(register, description)
+        self.set_action_description(register, description)
 
 
 if __name__ == '__main__':
@@ -197,9 +206,9 @@ if __name__ == '__main__':
             name = delegate._get_format_class_name(Document.MAIN)
             assert name in Format.class_names or name is None
 
-        def test_get_regular_expression_for_tag(self):
+        def test_get_tag_regex(self):
 
-            regex = self.project.get_regular_expression_for_tag(Document.MAIN)
+            regex = self.project.get_tag_regex(Document.MAIN)
             assert hasattr(regex, 'match') or regex is None
 
         def test_toggle_dialog_lines(self):

@@ -164,7 +164,7 @@ class FindDelegate(Delegate):
         row = self.__last_match_row
         self.finder.replace()
         self.set_text(row, doc, self.finder.text, register)
-        self.modify_action_description(register, _('Replacing'))
+        self.set_action_description(register, _('Replacing'))
 
     def replace_all(self, docs, register=Action.DO):
         """
@@ -199,7 +199,7 @@ class FindDelegate(Delegate):
             self.replace_texts(new_rows[MAIN], TRAN, new_texts[MAIN], register)
         else:
             self.replace_both_texts(new_rows, new_texts, register)
-        self.modify_action_description(register, _('Replacing all'))
+        self.set_action_description(register, _('Replacing all'))
         return count
 
     def set_find_regex(self, pattern, flags=0):

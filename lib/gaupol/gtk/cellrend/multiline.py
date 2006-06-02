@@ -56,7 +56,7 @@ class TextViewCell(gtk.TextView, gtk.CellEditable):
         self.get_buffer().set_text(text)
 
 
-class CellRendererMultilineText(CellRendererText):
+class CellRendererMultiline(CellRendererText):
 
     """Cell renderer for multiline text data."""
 

@@ -24,7 +24,7 @@ import re
 
 from gaupol.base               import cons
 from gaupol.base.file          import SubtitleFile
-from gaupol.base.position.calc import TimeFrameCalculator
+from gaupol.base.position.calc import Calculator
 
 
 class MPL2(SubtitleFile):
@@ -45,7 +45,7 @@ class MPL2(SubtitleFile):
         Return show times, hide times, texts.
         """
         re_line = re.compile(r'^\[(\d+)\]\[(\d+)\](.*?)$')
-        calc = TimeFrameCalculator()
+        calc = Calculator()
 
         shows = []
         hides = []
@@ -77,7 +77,7 @@ class MPL2(SubtitleFile):
         hides = hides[:]
         texts = texts[:]
         newline_char = self._get_newline_character()
-        calc = TimeFrameCalculator()
+        calc = Calculator()
 
         for data in (shows, hides):
             for i in range(len(data)):

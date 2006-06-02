@@ -39,4 +39,4 @@ class TestFileFormatDeterminer(Test):
 
         path = self.get_microdvd_path()
         determiner = FileFormatDeterminer(path, 'utf_8')
-        assert determiner.determine() == Format.MICRODVD
+        assert determiner.determine() == cons.Format.MICRODVD

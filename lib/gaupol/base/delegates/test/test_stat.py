@@ -16,36 +16,15 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol.base.cons import Action
-from gaupol.base.cons import Column
-from gaupol.base.cons import Document
-from gaupol.base.cons import Format
-from gaupol.base.cons import Framerate
-from gaupol.base.cons import Mode
-from gaupol.base.cons import Newlines
-from gaupol.base.cons import VideoPlayer
-from gaupol.test      import Test
+from gaupol.base import cons
+from gaupol.test import Test
 
 
-CLASSES = [
-    Action,
-    Column,
-    Document,
-    Format,
-    Framerate,
-    Mode,
-    Newlines,
-    VideoPlayer,
-]
+class TestStatisticsDelegate(Test):
 
+    def test_get_line_lengths(self):
 
-class TestSection(Test):
-
-    def test_get_names(self):
-
-        for cls in CLASSES:
-            names = cls.get_names()
-            assert names
-            for i, name in enumerate(names):
-                assert getattr(cls, name) == i
-                assert cls.get_name(i) == name
+        project = self.get_project()
+        project.main_texts[0] = '<i>test\ntest.</i>'
+        lengths = project.get_line_lengths(0, cons.Document.MAIN)
+        assert lengths == [4, 5]

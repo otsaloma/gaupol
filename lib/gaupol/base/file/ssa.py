@@ -24,7 +24,7 @@ import re
 
 from gaupol.base               import cons
 from gaupol.base.file          import SubtitleFile
-from gaupol.base.position.calc import TimeFrameCalculator
+from gaupol.base.position.calc import Calculator
 
 
 class SubStationAlpha(SubtitleFile):
@@ -133,7 +133,7 @@ Style: Default,Arial,18,&Hffffff,&H00ffff,&H000000,&H000000,0,0,1,2,2,2,30,30,10
         hides = hides[:]
         texts = texts[:]
         newline_char = self._get_newline_character()
-        calc = TimeFrameCalculator()
+        calc = Calculator()
 
         texts = list(x.replace('\n', '\\n')    for x in texts)
         shows = list(calc.round_time(x, 2)     for x in shows)

@@ -31,7 +31,7 @@ import tempfile
 from gaupol.base.cons import Framerate, Mode
 
 
-microdvd_text = \
+MICRODVD_TEXT = \
 '''{2525}{2629}{Y:i}Every day there's more to tell
 {2721}{2848}{Y:i}Dreaming, I'm little now
 {2933}{3044}{Y:i}Fading away every passing day
@@ -42,7 +42,7 @@ microdvd_text = \
 {3690}{3724}Clear the stage.
 '''
 
-subrip_text = \
+SUBRIP_TEXT = \
 '''1
 00:01:45,305 --> 00:01:49,639
 <i>Every day there's more to tell</i>
@@ -98,7 +98,7 @@ class Test(object):
 
         fd, path = tempfile.mkstemp(prefix='gaupol.', suffix='.sub')
         fobj = os.fdopen(fd, 'w')
-        fobj.write(microdvd_text)
+        fobj.write(MICRODVD_TEXT)
         fobj.close()
 
         self.files.append(path)
@@ -125,7 +125,7 @@ class Test(object):
 
         fd, path = tempfile.mkstemp(prefix='gaupol.', suffix='.srt')
         fobj = os.fdopen(fd, 'w')
-        fobj.write(subrip_text)
+        fobj.write(SUBRIP_TEXT)
         fobj.close()
 
         self.files.append(path)

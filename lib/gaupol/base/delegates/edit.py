@@ -41,7 +41,7 @@ class EditDelegate(Delegate):
 
         new_texts = [u''] * len(rows)
         self.replace_texts(rows, document, new_texts, register)
-        self.modify_action_description(register, _('Clearing texts'))
+        self.set_action_description(register, _('Clearing texts'))
 
     def copy_texts(self, rows, document):
         """Copy texts to the clipboard."""
@@ -64,7 +64,7 @@ class EditDelegate(Delegate):
 
         self.copy_texts(rows, document)
         self.clear_texts(rows, document, register)
-        self.modify_action_description(register, _('Cutting texts'))
+        self.set_action_description(register, _('Cutting texts'))
 
     def get_mode(self):
         """
@@ -223,11 +223,11 @@ class EditDelegate(Delegate):
 
         self.register_action(
             register=register,
-            documents=[Document.MAIN, Document.TRAN],
+            docs=[Document.MAIN, Document.TRAN],
             description=_('Inserting subtitles'),
             revert_method=self.remove_subtitles,
-            revert_method_args=[rows],
-            rows_inserted=rows,
+            revert_args=[rows],
+            inserted_rows=rows,
         )
 
     def paste_texts(self, start_row, document, register=Action.DO):
@@ -261,7 +261,7 @@ class EditDelegate(Delegate):
             self.unblock(signal)
             self.group_actions(register, 2, description)
         else:
-            self.modify_action_description(register, description)
+            self.set_action_description(register, description)
 
         return rows
 
@@ -282,11 +282,11 @@ class EditDelegate(Delegate):
 
         self.register_action(
             register=register,
-            documents=[Document.MAIN, Document.TRAN],
+            docs=[Document.MAIN, Document.TRAN],
             description=_('Removing subtitles'),
             revert_method=self.insert_subtitles,
-            revert_method_args=[rows, times, frames, main_texts, tran_texts],
-            rows_removed=rows,
+            revert_args=[rows, times, frames, main_texts, tran_texts],
+            removed_rows=rows,
         )
 
     def replace_both_texts(self, rows, new_texts, register=Action.DO):
@@ -316,12 +316,12 @@ class EditDelegate(Delegate):
 
         self.register_action(
             register=register,
-            documents=[Document.MAIN, Document.TRAN],
+            docs=[Document.MAIN, Document.TRAN],
             description=_('Replacing texts'),
             revert_method=self.replace_both_texts,
-            revert_method_args=[rows, orig_texts],
-            main_text_rows_updated=main_rows,
-            tran_text_rows_updated=tran_rows
+            revert_args=[rows, orig_texts],
+            updated_main_texts=main_rows,
+            updated_tran_texts=tran_rows
         )
 
     def replace_texts(self, rows, document, new_texts, register=Action.DO):
@@ -329,12 +329,12 @@ class EditDelegate(Delegate):
 
         if document == Document.MAIN:
             texts = self.main_texts
-            main_text_rows_updated = rows
-            tran_text_rows_updated = []
+            updated_main_texts = rows
+            updated_tran_texts = []
         elif document == Document.TRAN:
             texts = self.tran_texts
-            main_text_rows_updated = []
-            tran_text_rows_updated = rows
+            updated_main_texts = []
+            updated_tran_texts = rows
 
         orig_texts = []
 
@@ -344,12 +344,12 @@ class EditDelegate(Delegate):
 
         self.register_action(
             register=register,
-            documents=[document],
+            docs=[document],
             description=_('Replacing texts'),
             revert_method=self.replace_texts,
-            revert_method_args=[rows, document, orig_texts],
-            main_text_rows_updated=main_text_rows_updated,
-            tran_text_rows_updated=tran_text_rows_updated
+            revert_args=[rows, document, orig_texts],
+            updated_main_texts=updated_main_texts,
+            updated_tran_texts=updated_tran_texts
         )
 
     def set_durations(self, row):
@@ -381,8 +381,8 @@ class EditDelegate(Delegate):
             orig_value = self.frames[row][col]
             revert_method = self.set_frame
 
-        rows_updated = []
-        position_rows_updated = [row]
+        updated_rows = []
+        updated_positions = [row]
         revert_row = row
 
         self.frames[row][col] = value
@@ -400,18 +400,18 @@ class EditDelegate(Delegate):
             if new_row != row:
                 first_row = min(row, new_row)
                 last_row  = max(row, new_row)
-                rows_updated = range(first_row, last_row + 1)
+                updated_rows = range(first_row, last_row + 1)
                 revert_row = new_row
-                position_rows_updated = []
+                updated_positions = []
 
         self.register_action(
             register=register,
-            documents=[Document.MAIN],
+            docs=[Document.MAIN],
             description=_('Editing frame'),
             revert_method=revert_method,
-            revert_method_args=[revert_row, col, orig_value],
-            rows_updated=rows_updated,
-            position_rows_updated=position_rows_updated,
+            revert_args=[revert_row, col, orig_value],
+            updated_rows=updated_rows,
+            updated_positions=updated_positions,
         )
 
         return revert_row
@@ -435,25 +435,25 @@ class EditDelegate(Delegate):
         if document == Document.MAIN:
             orig_value = self.main_texts[row]
             self.main_texts[row] = value
-            main_text_rows_updated = [row]
-            tran_text_rows_updated = []
+            updated_main_texts = [row]
+            updated_tran_texts = []
         elif document == Document.TRAN:
             orig_value = self.tran_texts[row]
             self.tran_texts[row] = value
-            main_text_rows_updated = []
-            tran_text_rows_updated = [row]
+            updated_main_texts = []
+            updated_tran_texts = [row]
 
         if value == orig_value:
             return
 
         self.register_action(
             register=register,
-            documents=[document],
+            docs=[document],
             description=_('Editing text'),
             revert_method=self.set_text,
-            revert_method_args=[row, document, orig_value],
-            main_text_rows_updated=main_text_rows_updated,
-            tran_text_rows_updated=tran_text_rows_updated
+            revert_args=[row, document, orig_value],
+            updated_main_texts=updated_main_texts,
+            updated_tran_texts=updated_tran_texts
         )
 
     def set_time(self, row, col, value, register=Action.DO):
@@ -474,8 +474,8 @@ class EditDelegate(Delegate):
             orig_value = self.frames[row][col]
             revert_method = self.set_frame
 
-        rows_updated = []
-        position_rows_updated = [row]
+        updated_rows = []
+        updated_positions = [row]
         revert_row = row
 
         self.times[row][col]  = value
@@ -493,18 +493,18 @@ class EditDelegate(Delegate):
             if new_row != row:
                 first_row = min(row, new_row)
                 last_row  = max(row, new_row)
-                rows_updated = range(first_row, last_row + 1)
+                updated_rows = range(first_row, last_row + 1)
                 revert_row = new_row
-                position_rows_updated = []
+                updated_positions = []
 
         self.register_action(
             register=register,
-            documents=[Document.MAIN],
+            docs=[Document.MAIN],
             description=_('Editing time'),
             revert_method=revert_method,
-            revert_method_args=[revert_row, col, orig_value],
-            rows_updated=rows_updated,
-            position_rows_updated=position_rows_updated,
+            revert_args=[revert_row, col, orig_value],
+            updated_rows=updated_rows,
+            updated_positions=updated_positions,
         )
 
         return revert_row

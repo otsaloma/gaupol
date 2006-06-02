@@ -346,7 +346,7 @@ class FileOpenDelegate(Delegate):
         if not encodings:
             encodings.append('utf_8')
 
-        encodings = listlib.remove_duplicates(encodings)
+        encodings = listlib.unique(encodings)
         return encodings
 
     def on_new_project_activated(self, *args):

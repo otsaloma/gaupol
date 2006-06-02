@@ -99,8 +99,8 @@ class ViewUpdateDelegate(Delegate):
         def set_status(statusbar, document):
 
             try:
-                info = page.project.get_character_count(row, document)
-                lengths, total = info
+                lengths = page.project.get_line_lengths(row, document)
+                total = sum(lengths)
             except IndexError:
                 return
 

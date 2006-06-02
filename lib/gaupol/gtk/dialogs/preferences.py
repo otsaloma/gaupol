@@ -399,7 +399,7 @@ class PreferencesDialog(gobject.GObject):
         store = self._encoding_view.get_model()
         store.clear()
         for encoding in config.Encoding.fallback:
-            name = encodinglib.get_descriptive_name(encoding)
+            name = encodinglib.get_long_name(encoding)
             store.append([name])
 
         self._set_encoding_button_sensitivities()

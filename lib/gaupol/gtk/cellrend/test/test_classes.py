@@ -25,6 +25,6 @@ class TestModule(Test):
     def test_imports(self):
 
         CellRendererInteger()
-        CellRendererMultilineText()
+        CellRendererMultiline()
         CellRendererTime()
 

@@ -40,7 +40,7 @@ class TestSubtitleFile(Test):
     def test_init(self):
 
         SubtitleFile('test', 'utf_8')
-        SubtitleFile('test', 'utf_8', Newlines.UNIX)
+        SubtitleFile('test', 'utf_8', cons.Newlines.UNIX)
 
     def test_get_newline_character(self):
 
