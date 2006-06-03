@@ -1,5 +1,19 @@
 2006-06-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/glade/preferences-dialog.glade:
+	* lib/gaupol/base/cons.py:
+	* lib/gaupol/base/delegates/preview.py:
+	* lib/gaupol/base/delegates/test/test_preview.py:
+	* lib/gaupol/gtk/delegates/fileopen.py:
+	* lib/gaupol/gtk/delegates/filesave.py:
+	* lib/gaupol/gtk/delegates/preview.py:
+	* lib/gaupol/gtk/dialogs/preferences.py:
+	  Cleaned up code.
+	  Separated testing.
+	  Use string.Template with preview command.
+
+2006-06-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/util/test/test_enclib.py:
 	* lib/gaupol/gtk/delegates/fileopen.py:
 	* lib/gaupol/gtk/delegates/filesave.py:

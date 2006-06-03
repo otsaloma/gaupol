@@ -492,7 +492,7 @@ class FileOpenDelegate(Delegate):
                 continue
 
             # Guess video file path.
-            page.project.guess_video_file_path()
+            page.project.guess_video_path()
 
             self._add_new_project(page)
 

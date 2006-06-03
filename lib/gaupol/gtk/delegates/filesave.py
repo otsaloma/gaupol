@@ -524,7 +524,7 @@ class FileSaveDelegate(Delegate):
 
         # Try to find a video with the new filename.
         if page.project.video_path is None:
-            page.project.guess_video_file_path()
+            page.project.guess_video_path()
 
         self.add_to_recent_files(path)
         message = _('Saved main document as "%s"') % path

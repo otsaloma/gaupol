@@ -372,7 +372,7 @@ class PreferencesDialog(gobject.GObject):
         config.Preview.use_predefined = use_predefined
         self._set_preview_radio_sensitivities()
 
-        if use_custom:
+        if not use_predefined:
             self._preview_command_entry.grab_focus()
         else:
             self._preview_select_combo.grab_focus()

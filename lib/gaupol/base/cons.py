@@ -171,8 +171,20 @@ class VideoPlayer(Section):
     ]
 
     commands = [
-        'mplayer -identify -osdlevel 2 -ss %c -sub "%s" "%v"',
-        'vlc --start-time=%c --sub-file="%s" "%v"',
+        ' '.join([
+            'mplayer',
+            '-identify',
+            '-osdlevel 2',
+            '-ss ${seconds}',
+            '-sub "${subfile}"',
+            '"${videofile}"',
+        ]),
+        ' '.join([
+            'vlc',
+            '--start-time=${seconds}',
+            '--sub-file="${subfile}"',
+            '"${videofile}"',
+        ]),
     ]
     if sys.platform == 'win32':
         commands[0] = r'%ProgramFiles%\mplayer\mplayer.exe'  + commands[0][7:]

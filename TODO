@@ -9,15 +9,14 @@ Plans for 0.5.0
 
   * General
       - Use "." as decimal for time
-      - string.Template for preview command? Or just %var%.
       - Framerate conversion available for time-based subs
       - Put a .pot file in the trunk?
       - Mime-type registration?
       - count vs. amount
+      - Commas in search patterns (config)
 
   * base
       - Use action grouping in replace_both_texts(...)
-      - Add exception handling for preview command being a blank string
       - FileOpenDelegate._sort_data: return amount of sorts made
 
   * gtk

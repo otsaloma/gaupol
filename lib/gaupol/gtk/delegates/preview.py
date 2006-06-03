@@ -162,13 +162,16 @@ class PreviewDelegate(Delegate):
         offset = config.Preview.offset
 
         try:
-            page.project.preview_time(time, document, command, offset, path)
+            page.project.preview(time, document, command, offset, path)
         except ExternalError:
             self._show_command_error_dialog(page)
         except IOError, (no, message):
             self._show_io_error_dialog(message)
         except UnicodeError:
             self._show_unicode_error_dialog()
+        except ValueError:
+            # command was a blank string
+            pass
 
         self._show_output(page)
 
