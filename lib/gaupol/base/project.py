@@ -22,7 +22,7 @@
 import types
 
 from gaupol.base.clipboard     import Clipboard
-from gaupol.base.delegates     import Delegates
+from gaupol.base.delegate      import Delegates
 from gaupol.base.model         import Model
 from gaupol.base.position.calc import Calculator
 

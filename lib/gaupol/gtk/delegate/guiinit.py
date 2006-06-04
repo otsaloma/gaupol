@@ -33,7 +33,7 @@ import gtk
 import pango
 
 from gaupol.gtk.cons import *
-from gaupol.gtk.delegates import Delegate, UIMActions
+from gaupol.gtk.delegate  import Delegate, UIMActions
 from gaupol.gtk.paths     import UI_DIR, ICON_DIR
 from gaupol.gtk.util      import config, gtklib
 from gaupol.gtk.output    import OutputWindow

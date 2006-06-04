@@ -72,7 +72,7 @@ def list_delegate_classes():
     """List all delegate classes."""
 
     for module_name in MODULES:
-        path = 'gaupol.base.delegates.' + module_name
+        path = 'gaupol.base.delegate.' + module_name
         module = __import__(path, None, None, [''])
         for name in dir(module):
             if name.startswith('_'):

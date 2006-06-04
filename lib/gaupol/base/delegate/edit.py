@@ -28,7 +28,7 @@ from gettext import gettext as _
 import bisect
 
 from gaupol.base.colcons import *
-from gaupol.base.delegates    import Delegate
+from gaupol.base.delegate    import Delegate
 from gaupol.base.cons         import Action, Document, Framerate, Mode
 
 

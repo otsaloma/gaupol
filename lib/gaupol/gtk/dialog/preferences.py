@@ -30,7 +30,7 @@ import pango
 
 from gaupol.base.util            import enclib
 from gaupol.gtk.cons import *
-from gaupol.gtk.dialogs.encoding import EncodingDialog
+from gaupol.gtk.dialog.encoding import EncodingDialog
 from gaupol.gtk.util             import config, gtklib
 
 

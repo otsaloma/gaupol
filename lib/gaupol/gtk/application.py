@@ -28,8 +28,8 @@ import types
 
 import gtk
 
-from gaupol.gtk.delegates import Delegates
-from gaupol.gtk.util      import config
+from gaupol.gtk.delegate import Delegates
+from gaupol.gtk.util     import config
 
 
 class Application(object):

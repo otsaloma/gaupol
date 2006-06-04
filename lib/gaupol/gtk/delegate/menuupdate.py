@@ -31,7 +31,7 @@ import urllib
 import gtk
 
 from gaupol.gtk.cons import *
-from gaupol.gtk.delegates import Delegate
+from gaupol.gtk.delegate  import Delegate
 from gaupol.gtk.util      import config, gtklib
 
 

@@ -40,8 +40,8 @@ import gtk
 import pango
 
 from gaupol.base.util           import wwwlib
-from gaupol.gtk.delegates.help  import BUG_REPORT_URL
-from gaupol.gtk.dialogs.message import ErrorDialog
+from gaupol.gtk.delegate .help  import BUG_REPORT_URL
+from gaupol.gtk.dialog.message import ErrorDialog
 from gaupol.gtk.util            import config, gtklib
 
 

@@ -36,9 +36,9 @@ import pango
 from gaupol.gtk.colcons import *
 from gaupol.base.error               import ExternalError
 from gaupol.gtk.cons         import *
-from gaupol.gtk.delegates            import Delegate, UIMAction
-from gaupol.gtk.dialogs.message      import ErrorDialog
-from gaupol.gtk.dialogs.previewerror import PreviewErrorDialog
+from gaupol.gtk.delegate             import Delegate, UIMAction
+from gaupol.gtk.dialog.message      import ErrorDialog
+from gaupol.gtk.dialog.previewerror import PreviewErrorDialog
 from gaupol.gtk.util                 import config, gtklib
 
 

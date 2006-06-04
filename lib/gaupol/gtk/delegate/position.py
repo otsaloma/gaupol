@@ -30,11 +30,11 @@ from gettext import ngettext
 import gtk
 
 from gaupol.gtk.cons import *
-from gaupol.gtk.delegates         import Delegate, UIMAction
-from gaupol.gtk.dialogs.duradjust import DurationAdjustDialog
-from gaupol.gtk.dialogs.frconvert import FramerateConvertDialog
-from gaupol.gtk.dialogs.posadjust  import TimeFrameAdjustDialog
-from gaupol.gtk.dialogs.posshift   import TimeFrameShiftDialog
+from gaupol.gtk.delegate          import Delegate, UIMAction
+from gaupol.gtk.dialog.duradjust import DurationAdjustDialog
+from gaupol.gtk.dialog.frconvert import FramerateConvertDialog
+from gaupol.gtk.dialog.posadjust  import TimeFrameAdjustDialog
+from gaupol.gtk.dialog.posshift   import TimeFrameShiftDialog
 from gaupol.gtk.util              import config, gtklib
 
 

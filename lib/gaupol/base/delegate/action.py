@@ -44,9 +44,9 @@ directly to avoid sending unwanted signals.
 
 import bisect
 
-from gaupol.base           import cons
-from gaupol.base.delegates import Delegate
-from gaupol.base.util      import listlib
+from gaupol.base          import cons
+from gaupol.base.delegate import Delegate
+from gaupol.base.util     import listlib
 
 
 class RevertableAction(object):

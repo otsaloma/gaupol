@@ -23,8 +23,8 @@ from gettext import gettext as _
 
 import gtk
 
-from gaupol.gtk.delegates    import Delegate, UIMAction
-from gaupol.gtk.dialogs.find import FindDialog
+from gaupol.gtk.delegate     import Delegate, UIMAction
+from gaupol.gtk.dialog.find import FindDialog
 from gaupol.gtk.util         import gtklib
 
 

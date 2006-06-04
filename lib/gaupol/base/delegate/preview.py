@@ -24,10 +24,10 @@ import string
 import subprocess
 import tempfile
 
-from gaupol.base              import cons
-from gaupol.base.colcons      import *
-from gaupol.base.delegates    import Delegate
-from gaupol.base.error        import ExternalError
+from gaupol.base          import cons
+from gaupol.base.colcons  import *
+from gaupol.base.delegate import Delegate
+from gaupol.base.error    import ExternalError
 
 
 EXTENSIONS = (

@@ -28,7 +28,7 @@ import gtk
 
 from gaupol.gtk.colcons import *
 from gaupol.gtk.cons import *
-from gaupol.gtk.delegates import Delegate
+from gaupol.gtk.delegate  import Delegate
 
 
 test_label = gtk.Label()

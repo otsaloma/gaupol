@@ -19,11 +19,11 @@
 """Opening subtitle files."""
 
 
-from gaupol.base                  import cons
-from gaupol.base.colcons          import *
-from gaupol.base.delegates        import Delegate
-from gaupol.base.file.classes     import *
-from gaupol.base.file.determiner  import FileFormatDeterminer
+from gaupol.base                 import cons
+from gaupol.base.colcons         import *
+from gaupol.base.delegate        import Delegate
+from gaupol.base.file.classes    import *
+from gaupol.base.file.determiner import FileFormatDeterminer
 
 
 class FileOpenDelegate(Delegate):

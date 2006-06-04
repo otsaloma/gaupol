@@ -1,5 +1,49 @@
 2006-06-04  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/delegate/__init__.py:
+	* lib/gaupol/base/delegate/action.py:
+	* lib/gaupol/base/delegate/edit.py:
+	* lib/gaupol/base/delegate/fileopen.py:
+	* lib/gaupol/base/delegate/filesave.py:
+	* lib/gaupol/base/delegate/find.py:
+	* lib/gaupol/base/delegate/format.py:
+	* lib/gaupol/base/delegate/position.py:
+	* lib/gaupol/base/delegate/preview.py:
+	* lib/gaupol/base/delegate/stat.py:
+	* lib/gaupol/base/delegate/test/test_action.py:
+	* lib/gaupol/base/delegate/test/test_fileopen.py:
+	* lib/gaupol/base/delegate/test/test_filesave.py:
+	* lib/gaupol/base/delegate/test/test_preview.py:
+	* lib/gaupol/base/project.py:
+	* lib/gaupol/gtk/application.py:
+	* lib/gaupol/gtk/delegate/__init__.py:
+	* lib/gaupol/gtk/delegate/action.py:
+	* lib/gaupol/gtk/delegate/appupdate.py:
+	* lib/gaupol/gtk/delegate/edit.py:
+	* lib/gaupol/gtk/delegate/fileclose.py:
+	* lib/gaupol/gtk/delegate/fileopen.py:
+	* lib/gaupol/gtk/delegate/filesave.py:
+	* lib/gaupol/gtk/delegate/find.py:
+	* lib/gaupol/gtk/delegate/format.py:
+	* lib/gaupol/gtk/delegate/guiinit.py:
+	* lib/gaupol/gtk/delegate/help.py:
+	* lib/gaupol/gtk/delegate/menuupdate.py:
+	* lib/gaupol/gtk/delegate/position.py:
+	* lib/gaupol/gtk/delegate/preferences.py:
+	* lib/gaupol/gtk/delegate/preview.py:
+	* lib/gaupol/gtk/delegate/spellcheck.py:
+	* lib/gaupol/gtk/delegate/view.py:
+	* lib/gaupol/gtk/delegate/viewupdate.py:
+	* lib/gaupol/gtk/dialog/debug.py:
+	* lib/gaupol/gtk/dialog/filechooser.py:
+	* lib/gaupol/gtk/dialog/find.py:
+	* lib/gaupol/gtk/dialog/preferences.py:
+	* lib/gaupol/gtk/dialog/spellcheck.py:
+	* lib/gaupol/gtk/main.py:
+	  Adjusted to renamings.
+
+2006-06-04  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/delegate:
 	* lib/gaupol/gtk/delegate:
 	* lib/gaupol/gtk/dialog:

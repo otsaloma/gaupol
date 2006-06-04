@@ -112,7 +112,7 @@ def main(args):
     import gobject
     gobject.threads_init()
 
-    from gaupol.gtk.dialogs import debug
+    from gaupol.gtk.dialog import debug
     sys.excepthook = debug.show
 
     from gaupol.gtk.application import Application

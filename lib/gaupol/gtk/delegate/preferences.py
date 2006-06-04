@@ -29,8 +29,8 @@ from gettext import gettext as _
 import gtk
 import pango
 
-from gaupol.gtk.delegates           import Delegate, UIMAction
-from gaupol.gtk.dialogs.preferences import PreferencesDialog
+from gaupol.gtk.delegate            import Delegate, UIMAction
+from gaupol.gtk.dialog.preferences import PreferencesDialog
 from gaupol.gtk.util                import config, gtklib
 
 

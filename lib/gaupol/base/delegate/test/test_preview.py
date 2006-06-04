@@ -18,9 +18,9 @@
 
 import os
 
-from gaupol.base                   import cons
-from gaupol.base.delegates.preview import PreviewDelegate
-from gaupol.test                   import Test
+from gaupol.base                  import cons
+from gaupol.base.delegate.preview import PreviewDelegate
+from gaupol.test                  import Test
 
 
 class TestPreviewDelegate(Test):

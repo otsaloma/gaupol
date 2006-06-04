@@ -181,7 +181,7 @@ def list_delegate_classes():
     """List all delegate classes."""
 
     for module_name in Delegates.module_names:
-        path = 'gaupol.gtk.delegates.' + module_name
+        path = 'gaupol.gtk.delegate.' + module_name
         module = __import__(path, None, None, [''])
         for name in dir(module):
             if name.startswith('_'):

@@ -22,7 +22,7 @@
 from gettext import gettext as _
 
 from gaupol.base             import cons
-from gaupol.base.delegates   import Delegate
+from gaupol.base.delegate    import Delegate
 from gaupol.base.text.finder import Finder
 
 

@@ -30,9 +30,9 @@ import logging
 import gtk
 
 from gaupol.gtk.cons import *
-from gaupol.gtk.delegates          import Delegate, UIMAction
-from gaupol.gtk.dialogs.language   import LanguageDialog
-from gaupol.gtk.dialogs.spellcheck import SpellCheckDialog
+from gaupol.gtk.delegate           import Delegate, UIMAction
+from gaupol.gtk.dialog.language   import LanguageDialog
+from gaupol.gtk.dialog.spellcheck import SpellCheckDialog
 from gaupol.gtk.error              import Cancelled
 from gaupol.gtk.util               import config, gtklib
 
@@ -202,7 +202,7 @@ class SpellCheckDelegate(Delegate):
 
 if __name__ == '__main__':
 
-    from gaupol.gtk.dialogs.spellcheck import SPELL_CHECK_DIR
+    from gaupol.gtk.dialog.spellcheck import SPELL_CHECK_DIR
     from gaupol.gtk.application        import Application
     from gaupol.test                   import Test
 

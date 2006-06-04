@@ -29,9 +29,9 @@ from gettext import gettext as _
 import gtk
 
 from gaupol.gtk.cons import *
-from gaupol.gtk.delegates          import Delegate, UIMAction
-from gaupol.gtk.dialogs.message    import WarningDialog
-from gaupol.gtk.dialogs.multiclose import MultiCloseWarningDialog
+from gaupol.gtk.delegate           import Delegate, UIMAction
+from gaupol.gtk.dialog.message    import WarningDialog
+from gaupol.gtk.dialog.multiclose import MultiCloseWarningDialog
 from gaupol.gtk.error              import Cancelled
 from gaupol.gtk.util               import config, gtklib
 

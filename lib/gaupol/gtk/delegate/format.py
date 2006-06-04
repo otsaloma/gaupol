@@ -30,7 +30,7 @@ import gtk
 
 from gaupol.gtk.colcons import *
 from gaupol.gtk.cons import *
-from gaupol.gtk.delegates    import Delegate, UIMAction
+from gaupol.gtk.delegate     import Delegate, UIMAction
 
 
 class FormatAction(UIMAction):

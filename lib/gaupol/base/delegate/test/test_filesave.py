@@ -18,9 +18,9 @@
 
 import os
 
-from gaupol.base           import cons
-from gaupol.base.delegates import filesave
-from gaupol.test           import Test
+from gaupol.base          import cons
+from gaupol.base.delegate import filesave
+from gaupol.test          import Test
 
 
 class TestModule(Test):

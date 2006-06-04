@@ -31,8 +31,8 @@ import gtk
 
 from gaupol.base.util            import enclib
 from gaupol.gtk.cons import *
-from gaupol.gtk.dialogs.encoding import AdvancedEncodingDialog
-from gaupol.gtk.dialogs.message  import QuestionDialog
+from gaupol.gtk.dialog.encoding import AdvancedEncodingDialog
+from gaupol.gtk.dialog.message  import QuestionDialog
 from gaupol.gtk.util             import config
 
 

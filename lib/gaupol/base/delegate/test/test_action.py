@@ -16,11 +16,11 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol.base                  import cons
-from gaupol.base.delegates.action import RevertableAction
-from gaupol.base.delegates.action import RevertableActionDelegate
-from gaupol.base.delegates.action import RevertableActionGroup
-from gaupol.test                  import Test
+from gaupol.base                 import cons
+from gaupol.base.delegate.action import RevertableAction
+from gaupol.base.delegate.action import RevertableActionDelegate
+from gaupol.base.delegate.action import RevertableActionGroup
+from gaupol.test                 import Test
 
 
 class TestRevertableAction(Test):

@@ -19,7 +19,7 @@
 """Statistics and information."""
 
 
-from gaupol.base.delegates import Delegate
+from gaupol.base.delegate import Delegate
 
 
 class StatisticsDelegate(Delegate):

@@ -16,8 +16,8 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol.base.delegates.fileopen import FileOpenDelegate
-from gaupol.test                    import Test
+from gaupol.base.delegate.fileopen import FileOpenDelegate
+from gaupol.test                   import Test
 
 
 class TestFileOpenDelegate(Test):
