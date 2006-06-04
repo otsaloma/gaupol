@@ -1,5 +1,12 @@
 2006-06-04  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/delegate:
+	* lib/gaupol/gtk/delegate:
+	* lib/gaupol/gtk/dialog:
+	  Renamed.
+
+2006-06-04  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/gaupol.desktop:
 	  Added Polish translations.
 
