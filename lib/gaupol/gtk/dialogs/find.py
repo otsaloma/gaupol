@@ -234,7 +234,9 @@ class FindDialog(gobject.GObject):
             config.Find.patterns.pop()
         self._set_patterns()
 
-        page.project.set_find_wrap(not config.Find.all_projects)
+        # FIX:
+        wrap = not config.Find.all_projects
+        page.project.set_find_target(wrap=wrap)
         if regex:
             page.project.set_find_regex(pattern, self._get_flags())
         else:
@@ -248,7 +250,8 @@ class FindDialog(gobject.GObject):
 
         docs = self._get_documents()
         try:
-            row, doc, match_span = page.project.find_next(row, doc, docs, pos)
+            # FIX:
+            row, doc, match_span = page.project.find_next(row, doc, pos)
         except StopIteration:
             self._misses += 1
             #print 'Misses:', self._misses

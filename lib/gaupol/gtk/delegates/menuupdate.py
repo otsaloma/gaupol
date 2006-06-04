@@ -56,7 +56,7 @@ class MenuUpdateDelegate(Delegate):
 
         recent_files = config.File.recent
         for i in reversed(range(len(recent_files))):
-            path = urllib.url2pathname(recent_files[i])
+            path = recent_files[i]
             if not os.path.isfile(path):
                 recent_files.pop(i)
 
@@ -71,9 +71,8 @@ class MenuUpdateDelegate(Delegate):
         def on_leave_notify_event(item, event):
             self.set_status_message(None)
 
-        for url in recent_files:
+        for filepath in recent_files:
 
-            filepath = urllib.url2pathname(url)
             basename = os.path.basename(filepath)
             if len(basename) > 100:
                 basename = basename[:50] + '...' + basename[-50:]
@@ -121,7 +120,7 @@ class MenuUpdateDelegate(Delegate):
 
         recent_files = config.File.recent
         for i in reversed(range(len(recent_files))):
-            path = urllib.url2pathname(recent_files[i])
+            path = recent_files[i]
             if not os.path.isfile(path):
                 recent_files.pop(i)
 
@@ -131,7 +130,7 @@ class MenuUpdateDelegate(Delegate):
         # Create actions.
         for i in range(len(recent_files)):
 
-            path = urllib.url2pathname(recent_files[i])
+            path = recent_files[i]
             basename = os.path.basename(path)
             name     = 'open_recent_file_%d' % i
             label    = '%d. %s' % (i + 1, basename)

@@ -65,11 +65,12 @@ class TagConverter(object):
         self._pre_encode  = eval(to_name).pre_encode
         self._post_encode = eval(to_name).post_encode
 
-    def convert_tags(self, text):
+    def convert(self, text):
         """Convert tags in text."""
 
         if not text:
             return text
+        text = text[:]
 
         # Convert to internal format ("decode").
         text = self._pre_decode(text)

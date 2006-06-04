@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Base class for subtitle tag libraries."""
+"""Style tags for different subtitle file formats."""
 
 
 class TagLibrary(object):

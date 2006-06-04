@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -19,16 +19,11 @@
 """Opening subtitle files."""
 
 
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
-
-from gaupol.base.colcons import *
+from gaupol.base                  import cons
+from gaupol.base.colcons          import *
 from gaupol.base.delegates        import Delegate
-from gaupol.base.file.classes    import *
-from gaupol.base.file.determiner import FileFormatDeterminer
-from gaupol.base.cons             import Format, Mode
+from gaupol.base.file.classes     import *
+from gaupol.base.file.determiner  import FileFormatDeterminer
 
 
 class FileOpenDelegate(Delegate):
@@ -37,173 +32,92 @@ class FileOpenDelegate(Delegate):
 
     def open_main_file(self, path, encoding):
         """
-        Open a main file reading times/frames and texts.
+        Open main file reading times/frames and texts.
 
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
         Raise FileFormatError if unable to detect file format.
+        Return amount of resort operations done.
         """
-        # Get format.
-        determiner = FileFormatDeterminer(path, encoding)
-        format = determiner.determine()
-
-        # Read file.
-        main_file = eval(Format.class_names[format])(path, encoding)
-        shows, hides, texts = self._sort_data(*main_file.read())
-
-        # After successful reading, instance variable can be set.
+        format = FileFormatDeterminer(path, encoding).determine()
+        main_file = eval(cons.Format.class_names[format])(path, encoding)
+        shows, hides, texts, resorts = self._sort_data(*main_file.read())
         self.main_file = main_file
 
-        # Blank possible existing data.
         self.times      = []
         self.frames     = []
         self.main_texts = []
         self.tran_texts = []
 
-        times      = self.times
-        frames     = self.frames
-        main_texts = self.main_texts
-        tran_texts = self.tran_texts
-        calc       = self.calc
-
-        if self.main_file.mode == Mode.TIME:
+        if self.main_file.mode == cons.Mode.TIME:
             for i in range(len(shows)):
-
-                show_time = shows[i]
-                hide_time = hides[i]
-                durn_time = calc.get_time_duration(show_time, hide_time)
-                times.append([show_time, hide_time, durn_time])
-
-                show_frame = calc.time_to_frame(show_time)
-                hide_frame = calc.time_to_frame(hide_time)
-                durn_frame = calc.get_frame_duration(show_frame, hide_frame)
-                frames.append([show_frame, hide_frame, durn_frame])
-
-        elif self.main_file.mode == Mode.FRAME:
+                self.times.append([shows[i], hides[i], '00:00:00,000'])
+                self.frames.append([
+                    self.calc.time_to_frame(shows[i]),
+                    self.calc.time_to_frame(hides[i]),
+                    0
+                ])
+                self.set_durations(i)
+        elif self.main_file.mode == cons.Mode.FRAME:
             for i in range(len(shows)):
-
-                show_frame = shows[i]
-                hide_frame = hides[i]
-                durn_frame = calc.get_frame_duration(show_frame, hide_frame)
-                frames.append([show_frame, hide_frame, durn_frame])
-
-                show_time = calc.frame_to_time(show_frame)
-                hide_time = calc.frame_to_time(hide_frame)
-                durn_time = calc.get_time_duration(show_time, hide_time)
-                times.append([show_time, hide_time, durn_time])
-
+                self.times.append([
+                    self.calc.frame_to_time(shows[i]),
+                    self.calc.frame_to_time(hides[i]),
+                    '00:00:00,000'
+                ])
+                self.frames.append([shows[i], hides[i], 0])
+                self.set_durations(i)
         for text in texts:
-            main_texts.append(text)
-            tran_texts.append(u'')
+            self.main_texts.append(text)
+            self.tran_texts.append(u'')
 
         self.main_changed = 0
         self.tran_changed = 0
+        return resorts
 
     def open_translation_file(self, path, encoding):
         """
-        Open a translation file reading texts.
+        Open translation file reading texts.
 
-        Main file should always exist before reading translation file.
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
         Raise FileFormatError if unable to detect file format.
         """
-        assert self.main_file is not None
-
-        # Get format
-        determiner = FileFormatDeterminer(path, encoding)
-        format = determiner.determine()
-
-        # Read file.
-        tran_file = eval(Format.class_names[format])(path, encoding)
-        shows, hides, texts = self._sort_data(*tran_file.read())
-
-        # After successful reading, instance variable can be set.
+        format = FileFormatDeterminer(path, encoding).determine()
+        tran_file = eval(cons.Format.class_names[format])(path, encoding)
+        texts, resorts = self._sort_data(*tran_file.read())[2:]
         self.tran_file = tran_file
 
-        tran_texts = self.tran_texts
-
-        # Blank possible existing translations.
-        for i in range(len(self.main_texts)):
-            tran_texts[i] = u''
-
-        # If translation file is longer than main file,
-        # new subtitles need to be added.
-        difference = len(texts) - len(self.times)
-        if difference > 0:
-            rows = range(len(self.times), len(self.times) + difference)
+        self.tran_texts = [u''] * len(self.tran_texts)
+        excess = len(texts) - len(self.main_texts)
+        if excess > 0:
+            rows = range(len(self.times), len(self.times) + excess)
             self.insert_subtitles(rows, register=None)
+        self.tran_texts[:len(texts)] = texts
 
-        tran_texts[:len(texts)] = texts
-
-        self.tran_active  = True
+        self.tran_active = True
         self.tran_changed = 0
+        return resorts
 
     def _sort_data(self, shows, hides, texts):
         """
         Sort data based on show times/frames.
 
-        Return shows, hides, texts.
+        Return shows, hides, texts, resorts.
         """
+        class Count(object):
+            resorts = 0
+
         def sort(x, y):
-            return cmp(x[0], y[0])
+            value = cmp(x[0], y[0])
+            if value == -1:
+                Count.resorts += 1
+            return value
 
-        data = []
-        for i in range(len(shows)):
-            data.append([shows[i], hides[i], texts[i]])
+        data = list([shows[i], hides[i], texts[i]] for i in range(len(shows)))
         data.sort(sort)
+        shows = list(x[0] for x in data)
+        hides = list(x[1] for x in data)
+        texts = list(x[2] for x in data)
 
-        shows = list(entry[0] for entry in data)
-        hides = list(entry[1] for entry in data)
-        texts = list(entry[2] for entry in data)
-
-        return shows, hides, texts
-
-
-if __name__ == '__main__':
-
-    from gaupol.test import Test
-
-    class TestFileOpenDelegate(Test):
-
-        def __init__(self):
-
-            Test.__init__(self)
-            self.project = self.get_project()
-            self.delegate = FileOpenDelegate(self.project)
-
-        def test_open_main_file(self):
-
-            path = self.get_subrip_path()
-            self.project.open_main_file(path, 'utf_8')
-            assert bool(self.project.times)
-            assert bool(self.project.frames)
-            assert bool(self.project.main_texts)
-            assert bool(self.project.tran_texts)
-
-        def test_open_translation_file(self):
-
-            self.project.remove_subtitles([1, 2])
-            path = self.get_micro_dvd_path()
-            self.project.open_translation_file(path, 'utf_8')
-            assert bool(self.project.tran_texts[0])
-
-        def test_sort_data(self):
-
-            shows = [ 2 ,  3 ,  1 ]
-            hides = [ 3 ,  4 ,  2 ]
-            texts = ['2', '3', '1']
-            shows, hides, texts = self.delegate._sort_data(shows, hides, texts)
-            assert shows == [ 1 ,  2 ,  3 ]
-            assert hides == [ 2 ,  3 ,  4 ]
-            assert texts == ['1', '2', '3']
-
-            shows = ['00:00:00,300', '00:00:00,200', '00:00:00,100']
-            hides = ['00:00:00,400', '00:00:00,300', '00:00:00,200']
-            texts = ['00:00:00,300', '00:00:00,200', '00:00:00,100']
-            shows, hides, texts = self.delegate._sort_data(shows, hides, texts)
-            assert shows == ['00:00:00,100', '00:00:00,200', '00:00:00,300']
-            assert hides == ['00:00:00,200', '00:00:00,300', '00:00:00,400']
-            assert texts == ['00:00:00,100', '00:00:00,200', '00:00:00,300']
-
-    TestFileOpenDelegate().run()
+        return shows, hides, texts, Count.resorts

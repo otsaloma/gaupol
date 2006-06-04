@@ -17,7 +17,7 @@
 
 
 """
-Base class for test classes.
+Testing framework.
 
 All testing is to remain compatible with, but not dependent on py.test. All
 test module names should be prefixed with "test_", class names with "Test",

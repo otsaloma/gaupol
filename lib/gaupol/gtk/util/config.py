@@ -23,6 +23,7 @@ import ConfigParser
 import os
 import shutil
 import sys
+import urllib
 
 from gaupol             import __version__
 from gaupol.gtk         import cons
@@ -468,6 +469,7 @@ def _set_config_option(parser, section, option):
         if not string.endswith(LIST_END):
             raise ValueError
         str_list = string[1:-1].split(LIST_SEP)
+        str_list = list(urllib.unquote(x) for x in str_list)
 
     if type_ == Type.STRING:
         value = string
@@ -519,6 +521,7 @@ def _set_parser_option(parser, section, option):
         str_list = list(_get_constant(section, option, x) for x in value)
 
     if Type.is_list(type_):
+        str_list = list(urllib.quote(x) for x in str_list)
         string = LIST_START + LIST_SEP.join(str_list) + LIST_END
 
     parser.set(section, option, string)

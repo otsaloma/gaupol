@@ -296,6 +296,7 @@ class EditDelegate(Delegate):
         rows: (main_rows, tran_rows)
         new_texts: (new_main_texts, new_tran_texts)
         """
+        # FIX: Check if either is empty (or does it matter?)
         main_texts = self.main_texts
         tran_texts = self.tran_texts
         main_rows = rows[0]

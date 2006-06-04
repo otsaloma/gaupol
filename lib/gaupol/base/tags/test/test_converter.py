@@ -33,7 +33,7 @@ class TestTagConverter(Test):
         new = \
             '{y:i}{y:b}All that {y:i}because I wasn\'t\n' \
             'in {s:12}their shoes, {c:$0000ff}but mine.'
-        assert converter.convert_tags(orig) == new
+        assert converter.convert(orig) == new
 
         orig = \
             '{\\i1}All that because I wasn\'t\n' \
@@ -41,7 +41,7 @@ class TestTagConverter(Test):
         new = \
             '{Y:i}All that because I wasn\'t\n' \
             'in their shoes, but mine.'
-        assert converter.convert_tags(orig) == new
+        assert converter.convert(orig) == new
 
     def test_ass_to_subrip(self):
 
@@ -53,7 +53,7 @@ class TestTagConverter(Test):
         new = \
             '<i><b>All</b></i> that <i>because</i> I wasn\'t\n' \
             'in their shoes, but mine.'
-        assert converter.convert_tags(orig) == new
+        assert converter.convert(orig) == new
 
         orig = \
             '{\\i1}All that because I wasn\'t\n' \
@@ -61,7 +61,7 @@ class TestTagConverter(Test):
         new = \
             '<i>All that because I wasn\'t\n' \
             'in their shoes, but mine.</i>'
-        assert converter.convert_tags(orig) == new
+        assert converter.convert(orig) == new
 
     def test_microdvd_to_ass(self):
 
@@ -73,7 +73,7 @@ class TestTagConverter(Test):
         new = \
             '{\\i1}{\\b1}All that because I wasn\'t{\\b0}{\\i0}\n' \
             'in {\\fs12}their shoes, {\\c&H0000ff&}but mine.'
-        assert converter.convert_tags(orig) == new
+        assert converter.convert(orig) == new
 
         orig = \
             '{Y:i}All that because I wasn\'t\n' \
@@ -81,7 +81,7 @@ class TestTagConverter(Test):
         new = \
             '{\\i1}All that because I wasn\'t\n' \
             'in their shoes, but mine.'
-        assert converter.convert_tags(orig) == new
+        assert converter.convert(orig) == new
 
     def test_microdvd_to_subrip(self):
 
@@ -93,7 +93,7 @@ class TestTagConverter(Test):
         new = \
             '<i><b>All that because I wasn\'t</b></i>\n' \
             'in their shoes, but mine.'
-        assert converter.convert_tags(orig) == new
+        assert converter.convert(orig) == new
 
         orig = \
                 '{Y:i}All that because I wasn\'t\n' \
@@ -101,7 +101,7 @@ class TestTagConverter(Test):
         new = \
             '<i>All that because I wasn\'t\n' \
             'in their shoes, but mine.</i>'
-        assert converter.convert_tags(orig) == new
+        assert converter.convert(orig) == new
 
     def test_mpl2_to_ass(self):
 
@@ -113,7 +113,7 @@ class TestTagConverter(Test):
         new = \
             '{\\i1}{\\b1}All that because I wasn\'t{\\i0}{\\b0}\n' \
             'in {\\fs12}their shoes, {\\c&H0000ff&}but mine.'
-        assert converter.convert_tags(orig) == new
+        assert converter.convert(orig) == new
 
         orig = \
             '/All that because I wasn\'t\n' \
@@ -121,7 +121,7 @@ class TestTagConverter(Test):
         new = \
             '{\\i1}All that because I wasn\'t\n' \
             'in their shoes, but mine.'
-        assert converter.convert_tags(orig) == new
+        assert converter.convert(orig) == new
 
     def test_mpl2_to_subrip(self):
 
@@ -133,7 +133,7 @@ class TestTagConverter(Test):
         new = \
             '<i><b>All that because I wasn\'t</i></b>\n' \
             'in their shoes, but mine.'
-        assert converter.convert_tags(orig) == new
+        assert converter.convert(orig) == new
 
         orig = \
             '/All that because I wasn\'t\n' \
@@ -141,7 +141,7 @@ class TestTagConverter(Test):
         new = \
             '<i>All that because I wasn\'t\n' \
             'in their shoes, but mine.</i>'
-        assert converter.convert_tags(orig) == new
+        assert converter.convert(orig) == new
 
     def test_subrip_to_ass(self):
 
@@ -153,7 +153,7 @@ class TestTagConverter(Test):
         new = \
             '{\\i1}{\\b1}All{\\b0}{\\i0} that because I wasn\'t\n' \
             '{\\i1}in their shoes, but mine.'
-        assert converter.convert_tags(orig) == new
+        assert converter.convert(orig) == new
 
         orig = \
             '<i>All that because I wasn\'t\n' \
@@ -161,7 +161,7 @@ class TestTagConverter(Test):
         new = \
             '{\\i1}All that because I wasn\'t\n' \
             'in their shoes, but mine.'
-        assert converter.convert_tags(orig) == new
+        assert converter.convert(orig) == new
 
     def test_subrip_to_microdvd(self):
 
@@ -173,7 +173,7 @@ class TestTagConverter(Test):
         new = \
             '{y:i}{y:b}All that because I wasn\'t\n' \
             '{y:i}in their shoes, but mine.'
-        assert converter.convert_tags(orig) == new
+        assert converter.convert(orig) == new
 
         orig = \
             '<i>All that because I wasn\'t\n' \
@@ -181,4 +181,4 @@ class TestTagConverter(Test):
         new = \
             '{Y:i}All that because I wasn\'t\n' \
             'in their shoes, but mine.'
-        assert converter.convert_tags(orig) == new
+        assert converter.convert(orig) == new

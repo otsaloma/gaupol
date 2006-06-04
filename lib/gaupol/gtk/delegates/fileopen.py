@@ -260,12 +260,11 @@ class FileOpenDelegate(Delegate):
     def add_to_recent_files(self, path):
         """Add path to list of recent files."""
 
-        url = urllib.pathname2url(path)
         try:
-            config.File.recent.remove(url)
+            config.File.recent.remove(path)
         except ValueError:
             pass
-        config.File.recent.insert(0, url)
+        config.File.recent.insert(0, path)
 
         while len(config.File.recent) > config.File.max_recent:
             config.File.recent.pop()
@@ -397,8 +396,7 @@ class FileOpenDelegate(Delegate):
         """Open a recent main file."""
 
         index = int(action.get_name().split('_')[-1])
-        url = config.File.recent[index]
-        path = urllib.url2pathname(url)
+        path = config.File.recent[index]
         self.open_main_files([path])
 
     def on_open_translation_file_activated(self, *args):
@@ -538,11 +536,11 @@ class FileOpenDelegate(Delegate):
             try:
                 if document_type == Document.MAIN:
                     page = Page()
-                    page.project.open_main_file(path, encoding)
+                    RESORTS = page.project.open_main_file(path, encoding)
                     format = page.project.main_file.format
                 elif document_type == Document.TRAN:
                     page = self.get_current_page()
-                    page.project.open_translation_file(path, encoding)
+                    RESORTS = page.project.open_translation_file(path, encoding)
                     format = page.project.tran_file.format
 
             except UnicodeError:

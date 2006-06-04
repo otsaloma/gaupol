@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Base class for subtitle file classes."""
+"""Subtitle files."""
 
 
 import codecs
@@ -42,7 +42,6 @@ class SubtitleFile(object):
         self.header   = self.header_template
 
     def __setattr__(self, name, value):
-        """Set value of attribute"""
 
         if name in (
             'format',

@@ -13,7 +13,6 @@ Plans for 0.5.0
       - Put a .pot file in the trunk?
       - Mime-type registration?
       - count vs. amount
-      - Commas in search patterns (config)
 
   * base
       - Use action grouping in replace_both_texts(...)

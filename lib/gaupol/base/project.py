@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -25,7 +25,6 @@ from gaupol.base.clipboard     import Clipboard
 from gaupol.base.delegates     import Delegates
 from gaupol.base.model         import Model
 from gaupol.base.position.calc import Calculator
-from gaupol.base.text.finder   import Finder
 
 
 class Project(Model):
@@ -62,7 +61,6 @@ class Project(Model):
 
         self.calc = Calculator(framerate)
         self.clipboard = Clipboard()
-        self.finder = Finder()
 
         self._delegations = {}
         self._init_delegations()
@@ -80,6 +78,5 @@ class Project(Model):
                     self._delegations[name] = delegate
 
     def __getattr__(self, name):
-        """Delegate method calls to delegate objects."""
 
         return self._delegations[name].__getattribute__(name)

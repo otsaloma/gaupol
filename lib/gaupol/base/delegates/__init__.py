@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Common delegate affairs."""
+"""Extensions for gaupol.base.project.Project."""
 
 
 MODULES = (
@@ -51,14 +51,14 @@ class Delegate(object):
         self.__dict__['master'] = master
 
     def __getattr__(self, name):
-        """Get value of master object's attribute."""
 
         return getattr(self.master, name)
 
     def __setattr__(self, name, value):
-        """Set value of master object's attribute."""
 
-        return setattr(self.master, name, value)
+        if hasattr(self.master, name):
+            return setattr(self.master, name, value)
+        return object.__setattr__(self, name, value)
 
 
 class Delegates(object):

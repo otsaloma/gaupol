@@ -1,3 +1,44 @@
+2006-06-04  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/gaupol.desktop:
+	  Added Polish translations.
+
+	* lib/gaupol/__init__.py:
+	* lib/gaupol/base/__init__.py:
+	* lib/gaupol/base/delegates/__init__.py:
+	* lib/gaupol/base/delegates/edit.py:
+	* lib/gaupol/base/delegates/fileopen.py:
+	* lib/gaupol/base/delegates/filesave.py:
+	* lib/gaupol/base/delegates/find.py:
+	* lib/gaupol/base/delegates/test/test_fileopen.py:
+	* lib/gaupol/base/delegates/test/test_filesave.py:
+	* lib/gaupol/base/delegates/test/test_find.py:
+	* lib/gaupol/base/file/__init__.py:
+	* lib/gaupol/base/position/__init__.py:
+	* lib/gaupol/base/project.py:
+	* lib/gaupol/base/tags/__init__.py:
+	* lib/gaupol/base/tags/converter.py:
+	* lib/gaupol/base/tags/test/test_converter.py:
+	* lib/gaupol/base/test/test_project.py:
+	* lib/gaupol/base/text/__init__.py:
+	* lib/gaupol/base/util/__init__.py:
+	* lib/gaupol/gtk/__init__.py:
+	* lib/gaupol/gtk/application.py:
+	* lib/gaupol/gtk/cellrend/__init__.py:
+	* lib/gaupol/gtk/delegates/__init__.py:
+	* lib/gaupol/gtk/delegates/fileopen.py:
+	* lib/gaupol/gtk/delegates/menuupdate.py:
+	* lib/gaupol/gtk/dialogs/__init__.py:
+	* lib/gaupol/gtk/dialogs/find.py:
+	* lib/gaupol/gtk/entry/__init__.py:
+	* lib/gaupol/gtk/util/__init__.py:
+	* lib/gaupol/gtk/util/config.py:
+	* lib/gaupol/test/__init__.py:
+	* tools/pydoc:
+	  Cleaned up code.
+	  Separated testing.
+	  Added package docstrings.
+
 2006-06-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/glade/preferences-dialog.glade:

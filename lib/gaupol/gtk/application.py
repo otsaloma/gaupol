@@ -98,7 +98,6 @@ class Application(object):
                     self._delegations[name] = delegate
 
     def __getattr__(self, name):
-        """Delegate method calls to delegate objects."""
 
         return self._delegations[name].__getattribute__(name)
 
