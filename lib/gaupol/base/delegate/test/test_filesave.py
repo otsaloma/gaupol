@@ -31,9 +31,6 @@ class TestModule(Test):
         self.path_2 = self.get_subrip_path()
         self.paths = [self.path_1, self.path_2]
 
-        self.files.append(self.path_1)
-        self.files.append(self.path_2)
-
     def test_create_backup(self):
 
         success = filesave._create_backup(*self.paths)
@@ -85,7 +82,7 @@ class TestFileSaveDelegate(Test):
             cons.Newlines.UNIX
         ]
 
-        for i in range(len(cons.Format.class_names)):
-            props[1] = i
+        for format in range(len(cons.Format.class_names)):
+            props[1] = format
             self.project.save_main_file(props=props)
             self.project.save_translation_file(props=props)

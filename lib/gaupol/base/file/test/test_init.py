@@ -45,8 +45,8 @@ class TestSubtitleFile(Test):
     def test_get_newline_character(self):
 
         for i, value in enumerate(cons.Newlines.values):
-            sub_file = SubtitleFile('test', 'utf_8', i)
-            chars = sub_file._get_newline_character()
+            file_ = SubtitleFile('test', 'utf_8', i)
+            chars = file_._get_newline_character()
             assert chars == value
 
     def test_read_and_write(self):
@@ -55,28 +55,28 @@ class TestSubtitleFile(Test):
             if name == 'MicroDVD':
                 continue
             path = self.get_subrip_path()
-            sub_file = SubRip(path, 'utf_8')
-            data = sub_file.read()
-            sub_file = eval(name)(path, 'utf_8', sub_file.newlines)
-            sub_file.write(*data)
-            data_1 = sub_file.read()
-            sub_file.write(*data_1)
-            data_2 = sub_file.read()
+            file_ = SubRip(path, 'utf_8')
+            data = file_.read()
+            file_ = eval(name)(path, 'utf_8', file_.newlines)
+            file_.write(*data)
+            data_1 = file_.read()
+            file_.write(*data_1)
+            data_2 = file_.read()
             assert data_2 == data_1
 
         path = self.get_microdvd_path()
-        sub_file = MicroDVD(path, 'utf_8')
-        data_1 = sub_file.read()
-        sub_file.write(*data_1)
-        data_2 = sub_file.read()
+        file_ = MicroDVD(path, 'utf_8')
+        data_1 = file_.read()
+        file_.write(*data_1)
+        data_2 = file_.read()
         assert data_2 == data_1
 
     def test_read_lines(self):
 
         path = self.get_subrip_path()
-        sub_file = SubtitleFile(path, 'utf_8')
-        lines = sub_file._read_lines()
-        assert sub_file.newlines in range(3)
+        file_ = SubtitleFile(path, 'utf_8')
+        lines = file_._read_lines()
+        assert file_.newlines in range(3)
         assert len(lines) > 0
         for line in lines:
             assert isinstance(line, basestring)

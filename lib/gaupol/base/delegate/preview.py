@@ -81,11 +81,11 @@ class PreviewDelegate(Delegate):
         Raise IOError if writing to temporary file fails.
         Raise UnicodeError if encoding temporary file fails.
         """
-        sub_file = (self.main_file, self.tran_file)[doc]
-        extension = cons.Format.extensions[sub_file.format]
+        file_ = (self.main_file, self.tran_file)[doc]
+        extension = cons.Format.extensions[file_.format]
         path = tempfile.mkstemp(extension, 'gaupol.')[1]
 
-        props = (path, sub_file.format, sub_file.encoding, sub_file.newlines)
+        props = (path, file_.format, file_.encoding, file_.newlines)
         if doc == cons.Document.MAIN:
             self.save_main_file(False, props)
         elif doc == cons.Document.TRAN:

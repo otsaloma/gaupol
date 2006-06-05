@@ -1,3 +1,22 @@
+2006-06-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/base/delegate/edit.py:
+	* lib/gaupol/base/delegate/fileopen.py:
+	* lib/gaupol/base/delegate/find.py:
+	* lib/gaupol/base/delegate/format.py:
+	* lib/gaupol/base/delegate/preview.py:
+	* lib/gaupol/base/delegate/test/test_edit.py:
+	* lib/gaupol/base/delegate/test/test_filesave.py:
+	* lib/gaupol/base/delegate/test/test_find.py:
+	* lib/gaupol/base/delegate/test/test_format.py:
+	* lib/gaupol/base/file/test/test_determiner.py:
+	* lib/gaupol/base/file/test/test_init.py:
+	* lib/gaupol/gtk/delegate/edit.py:
+	* lib/gaupol/gtk/delegate/fileopen.py:
+	* lib/gaupol/gtk/util/test/test_config.py:
+	  Cleaned up code.
+	  Separated testing.
+
 2006-06-04  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/base/delegate/__init__.py:

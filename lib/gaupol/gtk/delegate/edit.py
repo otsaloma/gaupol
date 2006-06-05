@@ -480,7 +480,7 @@ class EditDelegate(Delegate):
             # Do not move if rows will be reordered.
             if col == SHOW:
                 value = editor.get_text()
-                if page.project.get_needs_resort(row, value):
+                if page.project.needs_resort(row, value):
                     return
 
             editor.emit('editing-done')

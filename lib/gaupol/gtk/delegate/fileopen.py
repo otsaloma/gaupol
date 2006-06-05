@@ -277,8 +277,8 @@ class FileOpenDelegate(Delegate):
         Return True if file is open, otherwise False.
         """
         for i, page in enumerate(self.pages):
-            for sub_file in (page.project.main_file, page.project.tran_file):
-                if sub_file is None or sub_file.path != path:
+            for file_ in (page.project.main_file, page.project.tran_file):
+                if file_ is None or file_.path != path:
                     continue
                 self.notebook.set_current_page(i)
                 basename = os.path.basename(path)

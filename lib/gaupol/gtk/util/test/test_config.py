@@ -61,6 +61,10 @@ class TestModule(Test):
         for section in sections:
             assert hasattr(config, section)
 
+    def test_make_profile_directory(self):
+
+        config.make_profile_directory()
+
     def test_read_and_write(self):
 
         config.read()

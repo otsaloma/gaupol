@@ -66,13 +66,19 @@ class FindDelegate(Delegate):
                 return find_in_document(row, doc, pos)
             except ValueError:
                 pass
-            if doc == max(self._docs) and not self._wrap:
-                raise StopIteration
+            if not self._wrap:
+                if next and doc == max(self._docs):
+                    raise StopIteration
+                if not next and doc == min(self._docs):
+                    raise StopIteration
+            if next:
+                row = min(rows)
+            else:
+                row = max(rows)
             try:
                 doc = self._get_other_document(doc)
             except ValueError:
                 pass
-            row = min(rows)
             pos = None
 
     def find_next(self, row, doc, pos=0):
@@ -84,10 +90,11 @@ class FindDelegate(Delegate):
         """
         return self._find(row, doc, pos, True)
 
-    def _find_next_in_document(self, row, doc, pos):
+    def _find_next_in_document(self, row, doc, pos=None):
         """
         Find next pattern in document starting from position.
 
+        pos can be None to start from beginning.
         Raise ValueError if no matches after position.
         Raise StopIteration if no matches at all.
         Return three-tuple: row, document, match span.
@@ -97,6 +104,10 @@ class FindDelegate(Delegate):
         for row in range(row, max(rows)):
             self._finder.text = texts[row]
             self._finder.pos = pos or 0
+            if pos is not None:
+                self._finder.pos = pos
+            else:
+                self._finder.pos = 0
             try:
                 match_span = self._finder.next()
             except StopIteration:
@@ -122,10 +133,11 @@ class FindDelegate(Delegate):
         """
         return self._find(row, doc, pos, False)
 
-    def _find_previous_in_document(self, row, doc, pos):
+    def _find_previous_in_document(self, row, doc, pos=None):
         """
         Find previous pattern in document starting from position.
 
+        pos can be None to start from end.
         Raise ValueError if no matches after position.
         Raise StopIteration if no matches at all.
         Return three-tuple: row, document, match span.
@@ -134,7 +146,10 @@ class FindDelegate(Delegate):
         texts = (self.main_texts, self.tran_texts)[doc]
         for row in reversed(range(min(rows), row + 1)):
             self._finder.text = texts[row]
-            self._finder.pos = pos or len(self._finder.text)
+            if pos is not None:
+                self._finder.pos = pos
+            else:
+                self._finder.pos = len(self._finder.text)
             try:
                 match_span = self._finder.previous()
             except StopIteration:

@@ -13,10 +13,7 @@ Plans for 0.5.0
       - Put a .pot file in the trunk?
       - Mime-type registration?
       - count vs. amount
-
-  * base
-      - Use action grouping in replace_both_texts(...)
-      - FileOpenDelegate._sort_data: return amount of sorts made
+      - Profile!
 
   * gtk
       - No need to check if translator-credits is translated

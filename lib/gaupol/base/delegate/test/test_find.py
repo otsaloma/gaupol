@@ -65,7 +65,6 @@ class TestFindDelegate(Test):
 
         project = self.get_uniform_project()
         project.set_find_regex(r'pin\.')
-
         for docs in (DOCS_ALL, DOCS_MAIN, DOCS_TRAN):
             project.set_find_target(docs=docs)
             row = 0
@@ -112,14 +111,11 @@ class TestFindDelegate(Test):
 
         project = self.get_blank_project()
         project.set_find_string('test')
-
-        for docs in (DOCS_ALL, DOCS_MAIN, DOCS_TRAN):
-            project.set_find_target(docs=docs)
-            try:
-                project.find_next(0, docs[0])
-                raise AssertionError
-            except StopIteration:
-                pass
+        try:
+            project.find_next(0, cons.Document.MAIN)
+            raise AssertionError
+        except StopIteration:
+            pass
 
     def test_find_previous_match(self):
 
@@ -137,7 +133,6 @@ class TestFindDelegate(Test):
 
         project = self.get_uniform_project()
         project.set_find_regex(r'pin\.')
-
         for docs in (DOCS_ALL, DOCS_MAIN, DOCS_TRAN):
             project.set_find_target(docs=docs)
             row = 5
@@ -184,28 +179,24 @@ class TestFindDelegate(Test):
 
         project = self.get_blank_project()
         project.set_find_string('test')
-
-        for docs in (DOCS_ALL, DOCS_MAIN, DOCS_TRAN):
-            project.set_find_target(docs=docs)
-            try:
-                project.find_previous(0, docs[0])
-                raise AssertionError
-            except StopIteration:
-                pass
+        try:
+            project.find_previous(5, cons.Document.TRAN)
+            raise AssertionError
+        except StopIteration:
+            pass
 
     def test_replace(self):
 
         def replace_and_assert(project):
-            project.replace()
-            assert project.main_texts[0] == \
+            new_text = \
                 'Said he xxx wounded by a pin.\n' \
                 'He\'s convalescing at home.'
+            project.replace()
+            assert project.main_texts[0] == new_text
             project.undo()
             assert project.main_texts[0] == TEXT
             project.redo()
-            assert project.main_texts[0] == \
-                'Said he xxx wounded by a pin.\n' \
-                'He\'s convalescing at home.'
+            assert project.main_texts[0] == new_text
 
         project = self.get_uniform_project()
         project.set_find_string('WAS', True)
@@ -222,12 +213,13 @@ class TestFindDelegate(Test):
     def test_replace_all(self):
 
         def replace_all_and_assert(project):
+            new_text = \
+                'Said he xxx wounded by a pin.\n' \
+                'He\'s convalescing at home.'
             project.replace_all()
             for texts in (project.main_texts, project.tran_texts):
                 for text in texts:
-                    assert text == \
-                        'Said he xxx wounded by a pin.\n' \
-                        'He\'s convalescing at home.'
+                    assert text == new_text
             project.undo()
             for texts in (project.main_texts, project.tran_texts):
                 for text in texts:
@@ -235,9 +227,7 @@ class TestFindDelegate(Test):
             project.redo()
             for texts in (project.main_texts, project.tran_texts):
                 for text in texts:
-                    assert text == \
-                        'Said he xxx wounded by a pin.\n' \
-                        'He\'s convalescing at home.'
+                    assert text == new_text
 
         project = self.get_uniform_project()
         project.set_find_string('was')

@@ -49,26 +49,11 @@ class FileOpenDelegate(Delegate):
         self.main_texts = []
         self.tran_texts = []
 
-        if self.main_file.mode == cons.Mode.TIME:
-            for i in range(len(shows)):
-                self.times.append([shows[i], hides[i], '00:00:00,000'])
-                self.frames.append([
-                    self.calc.time_to_frame(shows[i]),
-                    self.calc.time_to_frame(hides[i]),
-                    0
-                ])
-                self.set_durations(i)
-        elif self.main_file.mode == cons.Mode.FRAME:
-            for i in range(len(shows)):
-                self.times.append([
-                    self.calc.frame_to_time(shows[i]),
-                    self.calc.frame_to_time(hides[i]),
-                    '00:00:00,000'
-                ])
-                self.frames.append([shows[i], hides[i], 0])
-                self.set_durations(i)
-        for text in texts:
-            self.main_texts.append(text)
+        for i in range(len(shows)):
+            time, frame = self.expand_positions(shows[i], hides[i])
+            self.times.append(time)
+            self.frames.append(frame)
+            self.main_texts.append(texts[i])
             self.tran_texts.append(u'')
 
         self.main_changed = 0

@@ -30,10 +30,10 @@ class TestFileFormatDeterminer(Test):
             if name == 'MicroDVD':
                 continue
             path = self.get_subrip_path()
-            sub_file = SubRip(path, 'utf_8')
-            data = sub_file.read()
-            sub_file = eval(name)(path, 'utf_8', sub_file.newlines)
-            sub_file.write(*data)
+            file_ = SubRip(path, 'utf_8')
+            data = file_.read()
+            file_ = eval(name)(path, 'utf_8', file_.newlines)
+            file_.write(*data)
             determiner = FileFormatDeterminer(path, 'utf_8')
             assert determiner.determine() == format
 
