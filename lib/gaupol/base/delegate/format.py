@@ -79,7 +79,6 @@ class FormatDelegate(Delegate):
         Get regular expression for tag in document.
 
         Raise ValueError if no tag (no format).
-        Return re object.
         """
         name = self._get_format_class_name(document)
         if name is None:

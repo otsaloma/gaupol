@@ -9,13 +9,13 @@ Plans for 0.5.0
 
   * General
       - Use "." as decimal for time
-      - Framerate conversion available for time-based subs
       - Put a .pot file in the trunk?
       - Mime-type registration?
       - count vs. amount
       - Profile!
 
   * gtk
+      - Framerate conversion available for time-based subs
       - No need to check if translator-credits is translated
       - UIM name: /ui/menubar/edit/edit
       - Spell-check dialog mnemonics: Join _Back, Join _Forward
@@ -70,6 +70,8 @@ Plans for 0.5.0
   Dependencies:
     [W] Psyco no longer used
 
+  New Translations:
+    * Polish (po)
 
 Plans after 0.5.0
 =================

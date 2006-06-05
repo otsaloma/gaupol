@@ -236,7 +236,7 @@ class TimeFrameDelegate(Delegate):
 
         for page in pages:
             self.notebook.set_current_page(self.pages.index(page))
-            page.project.convert_framerate(current_fr, correct_fr)
+            page.project.convert_framerate(None, current_fr, correct_fr)
             page.view.select_rows(range(len(page.project.times)))
             self.set_sensitivities(page)
 

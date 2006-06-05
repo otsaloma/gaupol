@@ -1,6 +1,17 @@
 2006-06-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/base/delegate/edit.py:
+	* lib/gaupol/base/delegate/format.py:
+	* lib/gaupol/base/delegate/position.py:
+	* lib/gaupol/base/delegate/test/test_edit.py:
+	* lib/gaupol/base/delegate/test/test_position.py:
+	* lib/gaupol/gtk/delegate/position.py:
+	  Cleaned up code.
+	  Separated testing.
+
+2006-06-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/base/delegate/edit.py:
 	* lib/gaupol/base/delegate/fileopen.py:
 	* lib/gaupol/base/delegate/find.py:
 	* lib/gaupol/base/delegate/format.py:

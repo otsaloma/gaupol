@@ -217,6 +217,22 @@ class TestEditDelegate(Test):
         assert self.project.main_texts[1] == 'r'
         assert self.project.tran_texts[1] == 'r'
 
+    def test_replace_positions(self):
+
+        orig_time  = self.project.times[0]
+        orig_frame = self.project.frames[0]
+        self.project.replace_positions([0], ['00:00:00,000'], [0])
+        assert self.project.times[0]  == '00:00:00,000'
+        assert self.project.frames[0] == 0
+
+        self.project.undo()
+        assert self.project.times[0]  == orig_time
+        assert self.project.frames[0] == orig_frame
+
+        self.project.redo()
+        assert self.project.times[0]  == '00:00:00,000'
+        assert self.project.frames[0] == 0
+
     def test_replace_texts(self):
 
         self.project.replace_texts([1, 2], TRAN, ['r', 'r'])

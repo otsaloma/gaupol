@@ -27,6 +27,7 @@ from gaupol.base.colcons     import *
 from gaupol.base.delegate    import Delegate
 
 
+DO   = cons.Action.DO
 MAIN = cons.Document.MAIN
 TRAN = cons.Document.TRAN
 
@@ -35,7 +36,7 @@ class EditDelegate(Delegate):
 
     """Basic subtitle data editing."""
 
-    def clear_texts(self, rows, doc, register=cons.Action.DO):
+    def clear_texts(self, rows, doc, register=DO):
         """Clear texts."""
 
         new_texts = [u''] * len(rows)
@@ -55,7 +56,7 @@ class EditDelegate(Delegate):
 
         self.clipboard.data = data
 
-    def cut_texts(self, rows, doc, register=cons.Action.DO):
+    def cut_texts(self, rows, doc, register=DO):
         """Cut texts to clipboard."""
 
         self.copy_texts(rows, doc)
@@ -183,7 +184,7 @@ class EditDelegate(Delegate):
         frames=None,
         main_texts=None,
         tran_texts=None,
-        register=cons.Action.DO
+        register=DO
     ):
         """
         Insert subtitles.
@@ -226,7 +227,7 @@ class EditDelegate(Delegate):
         new_row = bisect.bisect_right(lst, item)
         return bool(new_row != row)
 
-    def paste_texts(self, row, doc, register=cons.Action.DO):
+    def paste_texts(self, row, doc, register=DO):
         """
         Paste texts from clipboard.
 
@@ -255,7 +256,7 @@ class EditDelegate(Delegate):
 
         return rows
 
-    def remove_subtitles(self, rows, register=cons.Action.DO):
+    def remove_subtitles(self, rows, register=DO):
         """Remove subtitles."""
 
         times      = []
@@ -278,7 +279,7 @@ class EditDelegate(Delegate):
             removed_rows=rows,
         )
 
-    def replace_both_texts(self, rows, new_texts, register=cons.Action.DO):
+    def replace_both_texts(self, rows, new_texts, register=DO):
         """
         Replace texts in both documents' rows with new_texts.
 
@@ -299,7 +300,27 @@ class EditDelegate(Delegate):
         self.unblock(signal)
         self.group_actions(register, 2, _('Replacing texts'))
 
-    def replace_texts(self, rows, doc, new_texts, register=cons.Action.DO):
+    def replace_positions(self, rows, new_times, new_frames, register=DO):
+        """Replace times and frames in rows with new_times and new_frames."""
+
+        orig_times  = []
+        orig_frames = []
+        for i, row in enumerate(rows):
+            orig_times.append(self.times[row])
+            orig_frames.append(self.frames[row])
+            self.times[row] = new_times[i]
+            self.frames[row] = new_frames[i]
+
+        self.register_action(
+            register=register,
+            docs=[MAIN, TRAN],
+            description=_('Replacing positions'),
+            revert_method=self.replace_positions,
+            revert_args=[rows, orig_times, orig_frames],
+            updated_positions=rows,
+        )
+
+    def replace_texts(self, rows, doc, new_texts, register=DO):
         """Replace texts in document's rows with new_texts."""
 
         if doc == MAIN:
@@ -335,7 +356,7 @@ class EditDelegate(Delegate):
         self.frames[row][DURN] = self.calc.get_frame_duration(
             self.frames[row][SHOW], self.frames[row][HIDE])
 
-    def set_frame(self, row, col, value, register=cons.Action.DO):
+    def set_frame(self, row, col, value, register=DO):
         """
         Set frame.
 
@@ -392,7 +413,7 @@ class EditDelegate(Delegate):
         self.frames[row][HIDE] = \
             self.frames[row][SHOW] + self.frames[row][DURN]
 
-    def set_text(self, row, doc, value, register=cons.Action.DO):
+    def set_text(self, row, doc, value, register=DO):
         """Set text."""
 
         value = unicode(value)
@@ -419,7 +440,7 @@ class EditDelegate(Delegate):
             updated_tran_texts=updated_tran_texts
         )
 
-    def set_time(self, row, col, value, register=cons.Action.DO):
+    def set_time(self, row, col, value, register=DO):
         """
         Set time.
 
@@ -474,7 +495,7 @@ class EditDelegate(Delegate):
         Return new row.
         """
         positions = self.get_positions()
-        lst  = positions[:row] + positions[row + 1:]
+        lst = positions[:row] + positions[row + 1:]
         item = positions[row]
         new_row = bisect.bisect_right(lst, item)
 
