@@ -1,3 +1,15 @@
+2006-06-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/debug-dialog.glade:
+	* lib/gaupol/base/util/wwwlib.py:
+	* lib/gaupol/gtk/dialog/debug.py:
+	* lib/gaupol/gtk/dialog/test:
+	* lib/gaupol/gtk/dialog/test/__init__.py:
+	* lib/gaupol/gtk/dialog/test/test_debug.py:
+	  Cleaned up code.
+	  Separated testing.
+	  Fixed debug dialog depending on enchant bug.
+
 2006-06-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/base/delegate/edit.py:

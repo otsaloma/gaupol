@@ -53,21 +53,21 @@ def browse_url(url, browser=None):
     """Open url in browser."""
 
     if browser is not None:
-        os.system(browser + ' ' + url)
+        os.system(browser + ' "%s"' % url)
         return
 
     if os.getenv('GNOME_DESKTOP_SESSION_ID') is not None:
-        return_value = os.system('gnome-open ' + url)
+        return_value = os.system('gnome-open' + ' "%s"' % url)
         if return_value == 0:
             return
 
     if os.getenv('KDE_FULL_SESSION') is not None:
-        return_value = os.system('kfmclient exec ' + url)
+        return_value = os.system('kfmclient exec' + ' "%s"' % url)
         if return_value == 0:
             return
 
     if sys.platform == 'darwin':
-        return_value = os.system('open ' + url)
+        return_value = os.system('open' + ' "%s"' % url)
         if return_value == 0:
             return
 

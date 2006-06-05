@@ -23,7 +23,6 @@ Plans for 0.5.0
       - Menu item locations: Framerate, Select Video, Headers
       - Remove Unselect All menu item?
       - Output window not Ctrl+Alt+O?
-      - Debug dialog should not crash if no enchant
 
   * setup.py / setup.cfg
       - Don't install any testing
@@ -66,12 +65,13 @@ Plans for 0.5.0
     [ ] Gaupol hangs if video player not closed before exit
     [ ] Spell-check suggestion list does not scroll to top with new word
     [D] Icon field in the desktop file should not include extension
+    [D] Debug dialog fails to start if PyEnchant not installed
 
   Dependencies:
     [W] Psyco no longer used
 
   New Translations:
-    * Polish (po)
+    [D] Polish (po)
 
 Plans after 0.5.0
 =================
