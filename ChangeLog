@@ -1,5 +1,12 @@
 2006-06-07  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/delegate/fileopen.py:
+	* lib/gaupol/gtk/delegate/filesave.py:
+	* lib/gaupol/gtk/dialog/test/test_file.py:
+	  Adjusted to renamings.
+
+2006-06-07  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/gtk/dialog/file.py:
 	* lib/gaupol/gtk/dialog/test/test_file.py:
 	  Renamed from filechooser.

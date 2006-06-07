@@ -20,13 +20,13 @@ import os
 
 import gtk
 
-from gaupol.gtk                    import cons
-from gaupol.gtk.dialog.filechooser import OverwriteQuestionDialog
-from gaupol.gtk.dialog.filechooser import TextFileChooserDialog
-from gaupol.gtk.dialog.filechooser import OpenFileDialog
-from gaupol.gtk.dialog.filechooser import SaveFileDialog
-from gaupol.gtk.dialog.filechooser import OpenVideoDialog
-from gaupol.test                   import Test
+from gaupol.gtk             import cons
+from gaupol.gtk.dialog.file import OverwriteQuestionDialog
+from gaupol.gtk.dialog.file import TextFileChooserDialog
+from gaupol.gtk.dialog.file import OpenFileDialog
+from gaupol.gtk.dialog.file import SaveFileDialog
+from gaupol.gtk.dialog.file import OpenVideoDialog
+from gaupol.test            import Test
 
 
 class TestOverwriteQuestionDialog(Test):

@@ -33,7 +33,7 @@ from gaupol.gtk.colcons import *
 from gaupol.base.util               import enclib
 from gaupol.gtk.cons        import *
 from gaupol.gtk.delegate            import Delegate, UIMAction
-from gaupol.gtk.dialog.filechooser import SaveFileDialog
+from gaupol.gtk.dialog.file import SaveFileDialog
 from gaupol.gtk.dialog.header      import HeaderDialog
 from gaupol.gtk.dialog.message     import ErrorDialog
 from gaupol.gtk.error               import Cancelled

@@ -36,7 +36,7 @@ from gaupol.base.error              import FileFormatError
 from gaupol.base.util               import enclib, listlib
 from gaupol.gtk.cons        import *
 from gaupol.gtk.delegate            import Delegate, UIMAction
-from gaupol.gtk.dialog.filechooser import OpenFileDialog, OpenVideoDialog
+from gaupol.gtk.dialog.file import OpenFileDialog, OpenVideoDialog
 from gaupol.gtk.dialog.message     import ErrorDialog, WarningDialog
 from gaupol.gtk.error               import Cancelled
 from gaupol.gtk.page                import Page
