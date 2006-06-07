@@ -1,5 +1,10 @@
 2006-06-07  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/app.py:
+	  Renamed from application.py.
+
+2006-06-07  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/gtk/application.py:
 	* lib/gaupol/gtk/delegate/__init__.py:
 	* lib/gaupol/gtk/delegate/action.py:
