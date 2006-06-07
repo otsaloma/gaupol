@@ -1,5 +1,11 @@
 2006-06-07  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/dialog/file.py:
+	* lib/gaupol/gtk/dialog/test/test_file.py:
+	  Renamed from filechooser.
+
+2006-06-07  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/encoding-dialog.glade:
 	* lib/gaupol/gtk/dialog/about.py:
 	* lib/gaupol/gtk/dialog/encoding.py:
