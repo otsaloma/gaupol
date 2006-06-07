@@ -1,3 +1,17 @@
+2006-06-07  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/encoding-dialog.glade:
+	* lib/gaupol/gtk/dialog/about.py:
+	* lib/gaupol/gtk/dialog/encoding.py:
+	* lib/gaupol/gtk/dialog/filechooser.py:
+	* lib/gaupol/gtk/dialog/message.py:
+	* lib/gaupol/gtk/dialog/test/test_about.py:
+	* lib/gaupol/gtk/dialog/test/test_encoding.py:
+	* lib/gaupol/gtk/dialog/test/test_filechooser.py:
+	* lib/gaupol/gtk/dialog/test/test_message.py:
+	  Cleaned up code.
+	  Separated testing.
+
 2006-06-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/glade/debug-dialog.glade:
