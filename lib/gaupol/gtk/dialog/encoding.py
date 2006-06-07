@@ -90,10 +90,8 @@ class EncodingDialog(object):
         selection = self._tree_view.get_selection()
         store, rows = selection.get_selected_rows()
         if rows:
-            row = rows[0]
-        else:
-            return None
-        return enclib.get_python_name(store[row][1])
+            return enclib.get_python_name(store[rows[0]][1])
+        return None
 
     def run(self):
         """Show and run dialog."""

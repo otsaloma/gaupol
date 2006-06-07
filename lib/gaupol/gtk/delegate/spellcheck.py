@@ -203,7 +203,7 @@ class SpellCheckDelegate(Delegate):
 if __name__ == '__main__':
 
     from gaupol.gtk.dialog.spellcheck import SPELL_CHECK_DIR
-    from gaupol.gtk.application        import Application
+    from gaupol.gtk.app        import Application
     from gaupol.test                   import Test
 
     class TestSpellCheckDelegate(Test):

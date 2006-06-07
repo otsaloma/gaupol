@@ -125,7 +125,7 @@ class ViewUpdateDelegate(Delegate):
 
 if __name__ == '__main__':
 
-    from gaupol.gtk.application  import Application
+    from gaupol.gtk.app  import Application
     from gaupol.gtk.cons import *
     from gaupol.test             import Test
 

@@ -39,6 +39,13 @@ class MenuUpdateDelegate(Delegate):
 
     """Menu updating."""
 
+    def __init__(self, *args, **kwargs):
+
+        Delegate.__init__(self, *args, **kwargs)
+
+        self.projects_uim_id = None
+        self.recent_uim_id   = None
+
     def _get_action_group(self, name):
         """
         Get action group from UI manager.
@@ -337,7 +344,7 @@ class MenuUpdateDelegate(Delegate):
 
 if __name__ == '__main__':
 
-    from gaupol.gtk.application import Application
+    from gaupol.gtk.app import Application
     from gaupol.test            import Test
 
     class TestMenuUpdateDelegate(Test):

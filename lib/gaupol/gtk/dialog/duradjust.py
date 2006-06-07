@@ -262,7 +262,7 @@ class DurationAdjustDialog(object):
 
 if __name__ == '__main__':
 
-    from gaupol.gtk.application import Application
+    from gaupol.gtk.app import Application
     from gaupol.test            import Test
 
     class TestDurationAdjustDialog(Test):

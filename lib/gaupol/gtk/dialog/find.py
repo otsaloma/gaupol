@@ -70,10 +70,10 @@ class FindDialog(gobject.GObject):
 
         self._pattern_entry = self._pattern_combo.child
 
-        self._get_current_page = app.get_current_page
-        self._get_next_page    = app.get_next_page
-        self._get_page_count   = app.get_page_count
-        self._set_active_page  = app.set_active_page
+#         self._get_current_page = app.get_current_page
+#         self._get_next_page    = app.get_next_page
+#         self._get_page_count   = app.get_page_count
+#         self._set_active_page  = app.set_active_page
 
         self._page = None
         self._row  = None
@@ -204,91 +204,91 @@ class FindDialog(gobject.GObject):
 
     def _on_next_button_clicked(self, *args):
 
-        page = self._get_current_page()
-        try:
-            row = page.view.get_selected_rows()[0]
-        except IndexError:
-            row = 0
-        col = page.view.get_focus()[1]
-        if not col in (MTXT, TTXT):
-            col = MTXT
-        doc = page.text_column_to_document(col)
+          page = self._get_current_page()
+#         try:
+#             row = page.view.get_selected_rows()[0]
+#         except IndexError:
+#             row = 0
+#         col = page.view.get_focus()[1]
+#         if not col in (MTXT, TTXT):
+#             col = MTXT
+#         doc = page.text_column_to_document(col)
 
-        pos = 0
-        if page == self._page and row == self._row and doc == self._doc:
-            text_buffer = self._text_view.get_buffer()
-            bounds = text_buffer.get_selection_bounds()
-            if bounds:
-                pos = bounds[1].get_offset()
-            else:
-                mark = text_buffer.get_insert()
-                pos = text_buffer.get_iter_at_mark(mark).get_offset()
+#         pos = 0
+#         if page == self._page and row == self._row and doc == self._doc:
+#             text_buffer = self._text_view.get_buffer()
+#             bounds = text_buffer.get_selection_bounds()
+#             if bounds:
+#                 pos = bounds[1].get_offset()
+#             else:
+#                 mark = text_buffer.get_insert()
+#                 pos = text_buffer.get_iter_at_mark(mark).get_offset()
 
-        regex = self._regex_check.get_active()
-        pattern = self._pattern_entry.get_text()
+#         regex = self._regex_check.get_active()
+#         pattern = self._pattern_entry.get_text()
 
-        config.Find.pattern = pattern
-        config.Find.patterns.insert(0, pattern)
-        config.Find.patterns = listlib.unique(config.Find.patterns)
-        while len(config.Find.patterns) > 10:
-            config.Find.patterns.pop()
-        self._set_patterns()
+#         config.Find.pattern = pattern
+#         config.Find.patterns.insert(0, pattern)
+#         config.Find.patterns = listlib.unique(config.Find.patterns)
+#         while len(config.Find.patterns) > 10:
+#             config.Find.patterns.pop()
+#         self._set_patterns()
 
-        # FIX:
-        wrap = not config.Find.all_projects
-        page.project.set_find_target(wrap=wrap)
-        if regex:
-            page.project.set_find_regex(pattern, self._get_flags())
-        else:
-            page.project.set_find_string(pattern, config.Find.ignore_case)
+#         # FIX:
+#         wrap = not config.Find.all_projects
+#         page.project.set_find_target(wrap=wrap)
+#         if regex:
+#             page.project.set_find_regex(pattern, self._get_flags())
+#         else:
+#             page.project.set_find_string(pattern, config.Find.ignore_case)
 
-        #print '-----'
-        #print 'Page:', page
-        #print 'Row:', row
-        #print 'Doc:', doc
-        #print 'Pos:', pos
+#         #print '-----'
+#         #print 'Page:', page
+#         #print 'Row:', row
+#         #print 'Doc:', doc
+#         #print 'Pos:', pos
 
-        docs = self._get_documents()
-        try:
-            # FIX:
-            row, doc, match_span = page.project.find_next(row, doc, pos)
-        except StopIteration:
-            self._misses += 1
-            #print 'Misses:', self._misses
-            if self._misses < self._get_page_count():
-                page = self._get_next_page()
-                # FIX: more elegant way of starting from row 0.
-                page.view.select_rows([0])
-                self._set_active_page(page)
-                self._row  = 0
-                self._doc  = docs[0]
-                return self._on_next_button_clicked()
-            self._misses = 0
-            dialog = NotFoundDialog(self._dialog, pattern)
-            dialog.run()
-            dialog.destroy()
-            return
+#         docs = self._get_documents()
+#         try:
+#             # FIX:
+#             row, doc, match_span = page.project.find_next(row, doc, pos)
+#         except StopIteration:
+#             self._misses += 1
+#             #print 'Misses:', self._misses
+#             if self._misses < self._get_page_count():
+#                 page = self._get_next_page()
+#                 # FIX: more elegant way of starting from row 0.
+#                 page.view.select_rows([0])
+#                 self._set_active_page(page)
+#                 self._row  = 0
+#                 self._doc  = docs[0]
+#                 return self._on_next_button_clicked()
+#             self._misses = 0
+#             dialog = NotFoundDialog(self._dialog, pattern)
+#             dialog.run()
+#             dialog.destroy()
+#             return
 
-        if doc == Document.MAIN:
-            text = page.project.main_texts[row]
-        elif doc == Document.TRAN:
-            text = page.project.tran_texts[row]
+#         if doc == Document.MAIN:
+#             text = page.project.main_texts[row]
+#         elif doc == Document.TRAN:
+#             text = page.project.tran_texts[row]
 
-        text_buffer = self._text_view.get_buffer()
-        text_buffer.set_text(text)
-        ins = text_buffer.get_iter_at_offset(match_span[0])
-        bound = text_buffer.get_iter_at_offset(match_span[1])
-        text_buffer.select_range(ins, bound)
-        self._text_view.grab_focus()
+#         text_buffer = self._text_view.get_buffer()
+#         text_buffer.set_text(text)
+#         ins = text_buffer.get_iter_at_offset(match_span[0])
+#         bound = text_buffer.get_iter_at_offset(match_span[1])
+#         text_buffer.select_range(ins, bound)
+#         self._text_view.grab_focus()
 
-        self._misses = 0
-        self._page = page
-        self._row  = row
-        self._doc  = doc
+#         self._misses = 0
+#         self._page = page
+#         self._row  = row
+#         self._doc  = doc
 
-        col = page.document_to_text_column(doc)
-        page.view.set_focus(row, col)
-        page.view.scroll_to_row(row)
+#         col = page.document_to_text_column(doc)
+#         page.view.set_focus(row, col)
+#         page.view.scroll_to_row(row)
 
     def _on_pattern_entry_changed(self, *args):
 
@@ -345,14 +345,3 @@ class FindDialog(gobject.GObject):
         self._pattern_entry.select_region(0, -1)
         self._pattern_entry.grab_focus()
         self._dialog.show()
-
-
-if __name__ == '__main__':
-
-    from gaupol.test import Test
-
-    class TestFindDialog(Test):
-
-        pass
-
-    TestFindDialog().run()

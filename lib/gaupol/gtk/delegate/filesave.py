@@ -603,7 +603,7 @@ class FileSaveDelegate(Delegate):
         """
         path, format, encoding, newlines = properties
         chooser = SaveFileDialog(title, self.window)
-        chooser.set_filename_or_current_name(path)
+        chooser.set_name(path)
         chooser.set_format(format)
         chooser.set_encoding(encoding)
         chooser.set_newlines(newlines)
@@ -615,7 +615,7 @@ class FileSaveDelegate(Delegate):
             gtklib.destroy_gobject(chooser)
             raise Cancelled
 
-        filepath = chooser.get_filename_with_extension()
+        filepath = chooser.get_full_filename()
         format   = chooser.get_format()
         encoding = chooser.get_encoding()
         newlines = chooser.get_newlines()
@@ -627,7 +627,7 @@ class FileSaveDelegate(Delegate):
 if __name__ == '__main__':
 
     from gaupol.base.cons       import Format
-    from gaupol.gtk.application import Application
+    from gaupol.gtk.app import Application
     from gaupol.test            import Test
 
     class TestDialog(Test):

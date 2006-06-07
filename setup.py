@@ -15,6 +15,7 @@ import sys
 import tarfile
 import tempfile
 
+from distutils.command.clean        import clean
 from distutils.command.install_data import install_data
 from distutils.command.install_lib  import install_lib
 from distutils.command.sdist        import sdist
@@ -67,6 +68,20 @@ data_files = [
     ('share/icons/hicolor/48x48/apps'   , ['data/icons/gaupol.png']),
     ('share/icons/hicolor/scalable/apps', ['data/icons/gaupol.svg']),
 ]
+
+
+class Clean(clean):
+
+    def run(self):
+
+        clean.run(self)
+
+        lib_dir = os.path.abspath('lib')
+        for (dirpath, dirnames, filenames) in os.walk(lib_dir):
+            os.chdir(dirpath)
+            for filename in filenames:
+                if filename.endswith('.pyc'):
+                    os.remove(filename)
 
 
 class InstallData(install_data):
@@ -345,6 +360,7 @@ setup(
     scripts=scripts,
     data_files=data_files,
     cmdclass={
+        'clean'       : Clean,
         'install_data': InstallData,
         'install_lib' : InstallLib,
         'sdist_gna'   : SDistGna,

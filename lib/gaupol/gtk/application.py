@@ -16,13 +16,8 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Gaupol GTK user interface controller."""
+"""GTK user interface controller."""
 
-
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
 
 import types
 
@@ -34,117 +29,84 @@ from gaupol.gtk.util     import config
 
 class Application(object):
 
-    """Gaupol GTK user interface controller."""
+    """
+    GTK user interface controller.
+
+    Instance variables:
+
+        _delegations    -- Dictionary mapping method names to Delegates
+        clipboard       -- gtk.Clipboard (X clipboard)
+        counter         -- Integer for naming unsaved projects
+        find_active     -- True if a pattern set for find
+        framerate_combo -- gtk.ComboBox
+        main_statusbar  -- gtk.Statusbar
+        msg_statusbar   -- gtk.Statusbar
+        notebook        -- gtk.Notebook
+        open_button     -- gtk.MenuToolButton
+        output_window   -- OutputWindow
+        pages           -- List of Pages
+        redo_button     -- gtk.MenuToolButton
+        static_tooltips -- gtk.Tooltips, enabled always
+        tooltips        -- gtk.Tooltips, enbaled if a document is open
+        tran_statusbar  -- gtk.Statusbar
+        uim             -- gtk.UIManager
+        undo_button     -- gtk.MenuToolButton
+        video_button    -- gtk.Button
+        video_label     -- gtk.Label
+        window          -- gtk.Window
+
+    """
+
+    def __getattr__(self, name):
+
+        return self._delegations[name].__getattribute__(name)
 
     def __init__(self):
 
-        self.pages = []
-
-        # Counter for naming unsaved projects
-        self.counter = 0
-
-        # Widgets
+        self._delegations    = {}
+        self.clipboard       = gtk.Clipboard()
+        self.counter         = 0
+        self.find_active     = False
         self.framerate_combo = None
         self.main_statusbar  = None
         self.msg_statusbar   = None
         self.notebook        = None
         self.open_button     = None
         self.output_window   = None
+        self.pages           = []
         self.redo_button     = None
+        self.static_tooltips = gtk.Tooltips()
+        self.tooltips        = gtk.Tooltips()
         self.tran_statusbar  = None
+        self.uim             = None
         self.undo_button     = None
         self.video_button    = None
         self.video_label     = None
         self.window          = None
 
-        # UI manager and merge IDs
-        self.uim             = None
-        self.projects_uim_id = None
-        self.recent_uim_id   = None
-
-        # GObject timeout tag for message statusbar.
-        self.message_tag = None
-
-        # Tooltips, which are always enabled
-        self.static_tooltips = gtk.Tooltips()
-
-        # Tooltips, which are enabled when a document is open
-        self.tooltips = gtk.Tooltips()
-
-        # X clipboard
-        self.clipboard = gtk.Clipboard()
-
-        self.find_active = False
-
-        self._delegations = {}
-        self._init_delegations()
-
+        self.__init_delegations()
         config.read()
         self.init_gui()
 
-    def _init_delegations(self):
+    def __init_delegations(self):
         """Initialize delegate mappings."""
 
-        # Loop through all delegates creating an instance of the delegate and
-        # mapping all its methods that don't start with an underscore to that
-        # instance.
         for cls in Delegates.classes:
             delegate = cls(self)
             for name in dir(delegate):
                 if name.startswith('_'):
                     continue
                 value = getattr(delegate, name)
-                if type(value) == types.MethodType:
+                if type(value) is types.MethodType:
                     self._delegations[name] = delegate
-
-    def __getattr__(self, name):
-
-        return self._delegations[name].__getattribute__(name)
 
     def get_current_page(self):
         """
         Get currently active page.
 
-        Return Page or None if no pages exist.
+        Return Page or None.
         """
-        try:
-            return self.pages[self.notebook.get_current_page()]
-        except IndexError:
+        index = self.notebook.get_current_page()
+        if index == -1:
             return None
-
-    def get_next_page(self, wrap=True):
-
-        current_page = self.get_current_page()
-        if current_page is None:
-            return None
-
-        index = self.pages.index(current_page)
-        if index == len(self.pages) - 1:
-            if not wrap:
-                raise StopIteration
-            return self.pages[0]
-        else:
-            return self.pages[index + 1]
-
-    def get_page_count(self):
-
-        return len(self.pages)
-
-    def set_active_page(self, page):
-
-        index = self.pages.index(page)
-        self.notebook.set_current_page(index)
-
-
-if __name__ == '__main__':
-
-    from gaupol.test import Test
-
-    class TestApplication(Test):
-
-        def test_init(self):
-
-            application = Application()
-            application.window.destroy()
-
-    TestApplication().run()
+        return self.pages[index]

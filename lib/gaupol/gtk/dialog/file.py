@@ -150,13 +150,13 @@ class TextFileChooserDialog(gtk.FileChooserDialog):
         """
         Get selected encoding.
 
+        Raise IndexError if "Other..." selected.
         Return name or None.
         """
         index = self._encoding_combo.get_active()
-        try:
-            return self._encodings[index][0]
-        except IndexError:
+        if index == -1:
             return None
+        return self._encodings[index][0]
 
     def _on_current_folder_changed(self, *args):
         """Save directory."""
@@ -166,9 +166,13 @@ class TextFileChooserDialog(gtk.FileChooserDialog):
     def _on_encoding_combo_changed(self, combo_box):
         """Save encoding or show encoding dialog."""
 
-        encoding = self.get_encoding()
-        if encoding is not None:
-            config.File.encoding = encoding
+        try:
+            encoding = self.get_encoding()
+        except IndexError:
+            pass
+        else:
+            if encoding is not None:
+                config.File.encoding = encoding
             return
 
         dialog = AdvancedEncodingDialog(self)
@@ -334,7 +338,7 @@ class SaveFileDialog(TextFileChooserDialog):
 
         Return gtk.FILE_CHOOSER_CONFIRMATION constant.
         """
-        filepath = self.get_filename_with_extension()
+        filepath = self.get_full_filename()
         if not os.path.isfile(filepath):
             return gtk.FILE_CHOOSER_CONFIRMATION_ACCEPT_FILENAME
 
@@ -346,7 +350,7 @@ class SaveFileDialog(TextFileChooserDialog):
         else:
             return gtk.FILE_CHOOSER_CONFIRMATION_SELECT_AGAIN
 
-    def get_filename_with_extension(self):
+    def get_full_filename(self):
         """Get selected filename with extension."""
 
         path = self.get_filename()
@@ -404,7 +408,7 @@ class SaveFileDialog(TextFileChooserDialog):
             if confirmation == gtk.FILE_CHOOSER_CONFIRMATION_SELECT_AGAIN:
                 return self.run()
 
-    def set_filename_or_current_name(self, path):
+    def set_name(self, path):
         """Select file or set current name."""
 
         if os.path.isfile(path):

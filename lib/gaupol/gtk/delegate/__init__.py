@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Extensions for gaupol.gtk.application.Application."""
+"""Extensions for gaupol.gtk.app.Application."""
 
 
 try:

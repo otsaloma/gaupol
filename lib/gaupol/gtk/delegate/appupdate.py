@@ -92,6 +92,12 @@ class ApplicationUpdateDelegate(Delegate):
 
     """Updating of application GUI."""
 
+    def __init__(self, *args, **kwargs):
+
+        Delegate.__init__(self, *args, **kwargs)
+
+        self.message_tag = None
+
     def on_activate_next_project_activated(self, *args):
         """Switch to the next page in the notebook."""
 
@@ -278,7 +284,7 @@ class ApplicationUpdateDelegate(Delegate):
 
 if __name__ == '__main__':
 
-    from gaupol.gtk.application import Application
+    from gaupol.gtk.app import Application
     from gaupol.test            import Test
 
     class TestApplicationUpdateDelegate(Test):

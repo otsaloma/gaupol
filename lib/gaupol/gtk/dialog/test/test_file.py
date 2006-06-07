@@ -83,11 +83,11 @@ class TestSaveFileDialog(_TestTextFileChooserDialog):
             gtk.FILE_CHOOSER_CONFIRMATION_SELECT_AGAIN
         )
 
-    def test_get_filename_with_extension(self):
+    def test_get_full_filename(self):
 
         self.dialog.set_current_name('test')
         self.dialog.set_format(cons.Format.SUBRIP)
-        name = self.dialog.get_filename_with_extension()
+        name = self.dialog.get_full_filename()
         assert name.endswith('test.srt')
 
     def test_get_and_set_format(self):
@@ -112,11 +112,11 @@ class TestSaveFileDialog(_TestTextFileChooserDialog):
             newlines = self.dialog.get_newlines()
             assert newlines == i
 
-    def test_set_filename_or_current_name(self):
+    def test_set_name(self):
 
         path = self.get_subrip_path()
-        self.dialog.set_filename_or_current_name(path)
-        self.dialog.set_filename_or_current_name('test')
+        self.dialog.set_name(path)
+        self.dialog.set_name('test')
 
 
 class TestOpenVideoDialog(Test):

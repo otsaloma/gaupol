@@ -115,7 +115,7 @@ def main(args):
     from gaupol.gtk.dialog import debug
     sys.excepthook = debug.show
 
-    from gaupol.gtk.application import Application
+    from gaupol.gtk.app import Application
     application = Application()
 
     if args[1:]:

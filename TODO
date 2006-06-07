@@ -11,6 +11,7 @@ Plans for 0.5.0
       - Use "." as decimal for time
       - prefix vs. suffix
       - amount vs. count
+      - Class docstrings
       - Put a .pot file in the trunk?
       - Mime-type registration?
       - Profile

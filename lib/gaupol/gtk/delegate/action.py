@@ -230,7 +230,7 @@ class ActionDelegate(Delegate):
 if __name__ == '__main__':
 
     from gaupol.base.cons       import Document
-    from gaupol.gtk.application import Application
+    from gaupol.gtk.app import Application
     from gaupol.test            import Test
 
     class TestActionDelegate(Test):
