@@ -27,7 +27,7 @@ from gaupol.gtk.delegate.fileopen import _SSAWarningDialog
 from gaupol.gtk.delegate.fileopen import _SortWarningDialog
 from gaupol.gtk.delegate.fileopen import _TranslateWarningDialog
 from gaupol.gtk.delegate.fileopen import _UnicodeErrorDialog
-from gaupol.gtk.util              import config, gtklib
+from gaupol.gtk.util              import conf, gtklib
 from gaupol.test                  import Test
 
 
@@ -129,7 +129,7 @@ class TestFileOpenDelegate(Test):
 
         path = self.get_subrip_path()
         self.app.add_to_recent_files(path)
-        assert path in config.file.recent
+        assert path in conf.file.recents
 
     def test_validate_recent(self):
 

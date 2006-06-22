@@ -24,7 +24,7 @@ from gettext import gettext as _
 import gtk
 
 from gaupol.base.util    import listlib
-from gaupol.gtk.colcons  import *
+from gaupol.gtk.icons    import *
 from gaupol.gtk.delegate import Delegate, UIMAction
 from gaupol.gtk.util     import gtklib
 

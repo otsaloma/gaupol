@@ -25,7 +25,7 @@ import gobject
 import gtk
 
 from gaupol.base.util import enclib
-from gaupol.gtk.util  import config, gtklib
+from gaupol.gtk.util  import conf, gtklib
 
 
 class EncodingDialog(object):
@@ -131,7 +131,7 @@ class AdvancedEncodingDialog(EncodingDialog):
         store.set_sort_column_id(0, gtk.SORT_ASCENDING)
         self._tree_view.columns_autosize()
 
-        visible = config.encoding.visibles
+        visible = conf.encoding.visibles
         for entry in enclib.get_valid_encodings():
             store.append([entry[2], entry[1], entry[0] in visible])
 

@@ -20,7 +20,7 @@ import gtk
 
 from gaupol.gtk                  import cons
 from gaupol.gtk.dialog.duradjust import DurationAdjustDialog
-from gaupol.gtk.util             import config, gtklib
+from gaupol.gtk.util             import conf, gtklib
 from gaupol.test                 import Test
 
 

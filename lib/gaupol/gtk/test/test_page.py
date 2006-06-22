@@ -18,10 +18,10 @@
 
 import gtk
 
-from gaupol.gtk         import cons
-from gaupol.gtk.colcons import *
-from gaupol.gtk.page    import Page
-from gaupol.test        import Test
+from gaupol.gtk       import cons
+from gaupol.gtk.icons import *
+from gaupol.gtk.page  import Page
+from gaupol.test      import Test
 
 
 class TestPage(Test):

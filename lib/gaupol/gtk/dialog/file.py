@@ -28,7 +28,7 @@ from gaupol.base.util            import enclib, listlib
 from gaupol.gtk                  import cons
 from gaupol.gtk.dialog.encoding  import AdvancedEncodingDialog
 from gaupol.gtk.dialog.message   import QuestionDialog
-from gaupol.gtk.util             import config, gtklib
+from gaupol.gtk.util             import conf, gtklib
 
 try:
     import chardet
@@ -96,7 +96,7 @@ class _TextFileDialog(gtk.FileChooserDialog):
 
         self._encodings = []
 
-        encodings = config.encoding.visibles[:]
+        encodings = conf.encoding.visibles[:]
         if custom is not None:
             encodings.append(custom)
         for encoding in encodings:
@@ -167,7 +167,7 @@ class _TextFileDialog(gtk.FileChooserDialog):
         response = dialog.run()
         if response == gtk.RESPONSE_OK:
             encoding = dialog.get_encoding()
-            config.encoding.visibles = dialog.get_visible_encodings()
+            conf.encoding.visibles = dialog.get_visible_encodings()
         dialog.destroy()
         self.set_encoding(encoding)
 
@@ -216,9 +216,9 @@ class OpenFileDialog(_TextFileDialog):
         self._init_encoding_data()
         self._init_signals()
 
-        self.set_encoding(config.file.encoding)
-        if config.file.directory is not None:
-            self.set_current_folder(config.file.directory)
+        self.set_encoding(conf.file.encoding)
+        if conf.file.directory is not None:
+            self.set_current_folder(conf.file.directory)
         self.set_default_response(gtk.RESPONSE_OK)
 
     def _init_extra_widget(self):
@@ -254,8 +254,8 @@ class OpenFileDialog(_TextFileDialog):
         if response != gtk.RESPONSE_OK:
             return
 
-        config.file.encoding  = self.get_encoding()
-        config.file.directory = self.get_current_folder()
+        conf.file.encoding  = self.get_encoding()
+        conf.file.directory = self.get_current_folder()
 
 
 class SaveFileDialog(_TextFileDialog):
@@ -280,11 +280,11 @@ class SaveFileDialog(_TextFileDialog):
         self._init_newline_data()
         self._init_signals()
 
-        self.set_encoding(config.file.encoding)
-        self.set_format(config.file.format)
-        self.set_newlines(config.file.newlines)
-        if config.file.directory is not None:
-            self.set_current_folder(config.file.directory)
+        self.set_encoding(conf.file.encoding)
+        self.set_format(conf.file.format)
+        self.set_newlines(conf.file.newlines)
+        if conf.file.directory is not None:
+            self.set_current_folder(conf.file.directory)
         self.set_default_response(gtk.RESPONSE_OK)
 
     def _confirm_overwrite(self):
@@ -394,10 +394,10 @@ class SaveFileDialog(_TextFileDialog):
         if confirmation == gtk.FILE_CHOOSER_CONFIRMATION_SELECT_AGAIN:
             return self.run()
 
-        config.file.directory = self.get_current_folder()
-        config.file.format    = self.get_format()
-        config.file.encoding  = self.get_encoding()
-        config.file.newlines  = self.get_newlines()
+        conf.file.directory = self.get_current_folder()
+        conf.file.format    = self.get_format()
+        conf.file.encoding  = self.get_encoding()
+        conf.file.newlines  = self.get_newlines()
 
     def get_full_filename(self):
         """Get filename with extension."""

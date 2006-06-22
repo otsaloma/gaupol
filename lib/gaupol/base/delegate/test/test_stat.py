@@ -16,9 +16,9 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol.base          import cons
-from gaupol.base.colcons  import *
-from gaupol.test          import Test
+from gaupol.base       import cons
+from gaupol.base.icons import *
+from gaupol.test       import Test
 
 
 class TestStatisticsDelegate(Test):

@@ -21,9 +21,9 @@
 
 from gettext import gettext as _
 
-from gaupol.base              import cons
-from gaupol.base.colcons      import *
-from gaupol.base.delegate     import Delegate
+from gaupol.base          import cons
+from gaupol.base.icons    import *
+from gaupol.base.delegate import Delegate
 
 
 _DO = cons.Action.DO

@@ -16,8 +16,8 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol.gtk.dialog.preferences import PreferencesDialog
-from gaupol.test                   import Test
+from gaupol.gtk.dialog.pref import PreferencesDialog
+from gaupol.test            import Test
 
 
 class TestPreferencesDialog(Test):

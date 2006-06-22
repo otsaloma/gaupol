@@ -22,7 +22,7 @@
 import gtk
 
 from gaupol.gtk      import cons
-from gaupol.gtk.util import config, gtklib
+from gaupol.gtk.util import conf, gtklib
 
 
 class DurationAdjustDialog(object):
@@ -55,17 +55,17 @@ class DurationAdjustDialog(object):
     def _init_data(self):
         """Initialize default values."""
 
-        self._gap_check.set_active(config.duration_adjust.use_gap)
-        self._gap_spin.set_value(config.duration_adjust.gap)
-        self._lengthen_check.set_active(config.duration_adjust.lengthen)
-        self._max_check.set_active(config.duration_adjust.use_max)
-        self._max_spin.set_value(config.duration_adjust.max)
-        self._min_check.set_active(config.duration_adjust.use_min)
-        self._min_spin.set_value(config.duration_adjust.min)
-        self._optimal_spin.set_value(config.duration_adjust.optimal)
-        self._shorten_check.set_active(config.duration_adjust.shorten)
+        self._gap_check.set_active(conf.duration_adjust.use_gap)
+        self._gap_spin.set_value(conf.duration_adjust.gap)
+        self._lengthen_check.set_active(conf.duration_adjust.lengthen)
+        self._max_check.set_active(conf.duration_adjust.use_max)
+        self._max_spin.set_value(conf.duration_adjust.max)
+        self._min_check.set_active(conf.duration_adjust.use_min)
+        self._min_spin.set_value(conf.duration_adjust.min)
+        self._optimal_spin.set_value(conf.duration_adjust.optimal)
+        self._shorten_check.set_active(conf.duration_adjust.shorten)
 
-        target = config.duration_adjust.target
+        target = conf.duration_adjust.target
         self._all_radio.set_active(target == cons.Target.ALL)
         self._current_radio.set_active(target == cons.Target.CURRENT)
         self._selected_radio.set_active(target == cons.Target.SELECTED)
@@ -95,16 +95,16 @@ class DurationAdjustDialog(object):
         if response != gtk.RESPONSE_OK:
             return
 
-        config.duration_adjust.gap      = self.get_gap()
-        config.duration_adjust.lengthen = self.get_lengthen()
-        config.duration_adjust.max      = self.get_maximum()
-        config.duration_adjust.min      = self.get_minimum()
-        config.duration_adjust.optimal  = self.get_optimal()
-        config.duration_adjust.shorten  = self.get_shorten()
-        config.duration_adjust.target   = self.get_target()
-        config.duration_adjust.use_gap  = self.get_use_gap()
-        config.duration_adjust.use_max  = self.get_use_maximum()
-        config.duration_adjust.use_min  = self.get_use_minimum()
+        conf.duration_adjust.gap      = self.get_gap()
+        conf.duration_adjust.lengthen = self.get_lengthen()
+        conf.duration_adjust.max      = self.get_maximum()
+        conf.duration_adjust.min      = self.get_minimum()
+        conf.duration_adjust.optimal  = self.get_optimal()
+        conf.duration_adjust.shorten  = self.get_shorten()
+        conf.duration_adjust.target   = self.get_target()
+        conf.duration_adjust.use_gap  = self.get_use_gap()
+        conf.duration_adjust.use_max  = self.get_use_maximum()
+        conf.duration_adjust.use_min  = self.get_use_minimum()
 
     def _on_gap_check_toggled(self, check_button):
         """Set gap spin button sensitivity."""

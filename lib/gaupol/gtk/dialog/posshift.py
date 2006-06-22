@@ -25,7 +25,7 @@ import gobject
 import gtk
 
 from gaupol.gtk      import cons
-from gaupol.gtk.util import config, gtklib
+from gaupol.gtk.util import conf, gtklib
 
 
 class _PositionShiftDialog(gobject.GObject):
@@ -125,9 +125,9 @@ class FrameShiftDialog(_PositionShiftDialog):
     def _init_data(self):
         """Initialize default values."""
 
-        self._amount_spin.set_value(config.position_shift.frames)
+        self._amount_spin.set_value(conf.position_shift.frames)
 
-        target = config.position_shift.target
+        target = conf.position_shift.target
         self._current_radio.set_active(target == cons.Target.CURRENT)
         self._selected_radio.set_active(target == cons.Target.SELECTED)
 
@@ -135,8 +135,8 @@ class FrameShiftDialog(_PositionShiftDialog):
         """Save settings."""
 
         if response == gtk.RESPONSE_OK:
-            config.position_shift.frames = self.get_amount()
-            config.position_shift.target = self.get_target()
+            conf.position_shift.frames = self.get_amount()
+            conf.position_shift.target = self.get_target()
 
     def get_amount(self):
         """Get frames."""
@@ -160,9 +160,9 @@ class TimeShiftDialog(_PositionShiftDialog):
     def _init_data(self):
         """Initialize default values."""
 
-        self._amount_spin.set_value(config.position_shift.seconds)
+        self._amount_spin.set_value(conf.position_shift.seconds)
 
-        target = config.position_shift.target
+        target = conf.position_shift.target
         self._current_radio.set_active(target == cons.Target.CURRENT)
         self._selected_radio.set_active(target == cons.Target.SELECTED)
 
@@ -170,8 +170,8 @@ class TimeShiftDialog(_PositionShiftDialog):
         """Save settings."""
 
         if response == gtk.RESPONSE_OK:
-            config.position_shift.seconds = self.get_amount()
-            config.position_shift.target  = self.get_target()
+            conf.position_shift.seconds = self.get_amount()
+            conf.position_shift.target  = self.get_target()
 
     def get_amount(self):
         """Get seconds."""

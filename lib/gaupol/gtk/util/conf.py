@@ -24,11 +24,11 @@ import os
 import sys
 import urllib
 
-from gaupol             import __version__
-from gaupol.base.paths  import PROFILE_DIR
-from gaupol.base.util   import filelib
-from gaupol.gtk         import cons
-from gaupol.gtk.colcons import *
+from gaupol            import __version__
+from gaupol.base.paths import PROFILE_DIR
+from gaupol.base.util  import filelib
+from gaupol.gtk        import cons
+from gaupol.gtk.icons  import *
 
 
 _CONFIG_FILE = os.path.join(PROFILE_DIR, 'gaupol.gtk.conf')
@@ -144,7 +144,7 @@ class file(_Section):
     format     = cons.Format.SUBRIP
     max_recent = 5
     newlines   = cons.Newlines.UNIX
-    recent     = []
+    recents    = []
     warn_ssa   = True
 
     constants = {
@@ -153,7 +153,7 @@ class file(_Section):
     }
 
     types = {
-        'recent': _Type.STRING_LIST,
+        'recents': _Type.STRING_LIST,
     }
 
 
@@ -341,9 +341,9 @@ def _get_type(section, option):
         return _Type.FLOAT_LIST
 
 
-def _set_config_option(parser, section, option):
+def _set_conf_option(parser, section, option):
     """
-    Set value of config option from parser string.
+    Set value of conf option from parser string.
 
     Raise Exception if something goes wrong.
     """
@@ -385,7 +385,7 @@ def _set_config_option(parser, section, option):
 
 def _set_parser_option(parser, section, option):
     """
-    Set value of parser string from config option.
+    Set value of parser string from conf option.
 
     Raise Exception if something goes wrong.
     """
@@ -443,7 +443,7 @@ def read():
                     section, option)
                 continue
             try:
-                _set_config_option(parser, section, option)
+                _set_conf_option(parser, section, option)
             except Exception:
                 print 'Failed to load configuration option "%s.%s".' % (
                     section, option)

@@ -18,18 +18,18 @@
 
 import ConfigParser
 
-from gaupol.gtk         import cons
-from gaupol.gtk.colcons import *
-from gaupol.gtk.util    import config
-from gaupol.test        import Test
+from gaupol.gtk       import cons
+from gaupol.gtk.icons import *
+from gaupol.gtk.util  import conf
+from gaupol.test      import Test
 
 
 class TestSection(Test):
 
     def test_attributes(self):
 
-        for section in config._get_sections():
-            cls = getattr(config, section)
+        for section in conf._get_sections():
+            cls = getattr(conf, section)
             assert hasattr(cls, 'constants')
             assert hasattr(cls, 'types')
             assert hasattr(cls, 'privates')
@@ -43,119 +43,119 @@ class TestModule(Test):
 
     def test_get_boolean(self):
 
-        assert config._get_boolean(True)    == 'true'
-        assert config._get_boolean(False)   == 'false'
-        assert config._get_boolean('true')  is True
-        assert config._get_boolean('false') is False
+        assert conf._get_boolean(True)    == 'true'
+        assert conf._get_boolean(False)   == 'false'
+        assert conf._get_boolean('true')  is True
+        assert conf._get_boolean('false') is False
 
     def test_get_constant(self):
 
-        assert config._get_constant('editor', 'mode', 'TIME') == cons.Mode.TIME
-        assert config._get_constant('editor', 'mode', cons.Mode.TIME) == 'time'
+        assert conf._get_constant('editor', 'mode', 'TIME') == cons.Mode.TIME
+        assert conf._get_constant('editor', 'mode', cons.Mode.TIME) == 'time'
 
     def test_get_sections(self):
 
-        sections = config._get_sections()
+        sections = conf._get_sections()
         assert isinstance(sections, list)
         assert sections
         for section in sections:
-            assert hasattr(config, section)
+            assert hasattr(conf, section)
 
     def test_set_config_option(self):
 
-        config.read()
-        config.write()
+        conf.read()
+        conf.write()
         parser = ConfigParser.RawConfigParser()
-        parser.read([config._CONFIG_FILE])
+        parser.read([conf._CONFIG_FILE])
 
         # String
         parser.set('editor', 'font', 'test')
-        config._set_config_option(parser, 'editor', 'font')
-        assert config.editor.font == 'test'
+        conf._set_config_option(parser, 'editor', 'font')
+        assert conf.editor.font == 'test'
 
         # Integer
         parser.set('editor', 'undo_levels', 99)
-        config._set_config_option(parser, 'editor', 'undo_levels')
-        assert config.editor.undo_levels == 99
+        conf._set_config_option(parser, 'editor', 'undo_levels')
+        assert conf.editor.undo_levels == 99
 
         # Boolean
         parser.set('application_window', 'maximized', 'true')
-        config._set_config_option(parser, 'application_window', 'maximized')
-        assert config.application_window.maximized is True
+        conf._set_config_option(parser, 'application_window', 'maximized')
+        assert conf.application_window.maximized is True
 
         # Constant
         parser.set('editor', 'framerate', 'fr_25')
-        config._set_config_option(parser, 'editor', 'framerate')
-        assert config.editor.framerate == cons.Framerate.FR_25
+        conf._set_config_option(parser, 'editor', 'framerate')
+        assert conf.editor.framerate == cons.Framerate.FR_25
 
         # String list
         parser.set('encoding', 'fallbacks', '[test,rest]')
-        config._set_config_option(parser, 'encoding', 'fallbacks')
-        assert config.encoding.fallbacks == ['test', 'rest']
+        conf._set_config_option(parser, 'encoding', 'fallbacks')
+        assert conf.encoding.fallbacks == ['test', 'rest']
 
         # Integer list
         parser.set('application_window', 'position', '[3,4]')
-        config._set_config_option(parser, 'application_window', 'position')
-        assert config.application_window.position == [3, 4]
+        conf._set_config_option(parser, 'application_window', 'position')
+        assert conf.application_window.position == [3, 4]
 
         # Constant list
         parser.set('editor', 'visible_cols', '[show,hide]')
-        config._set_config_option(parser, 'editor', 'visible_cols')
-        assert config.editor.visible_cols == [SHOW, HIDE]
+        conf._set_config_option(parser, 'editor', 'visible_cols')
+        assert conf.editor.visible_cols == [SHOW, HIDE]
 
     def test_set_parser_option(self):
 
-        config.read()
-        config.write()
+        conf.read()
+        conf.write()
         parser = ConfigParser.RawConfigParser()
-        parser.read([config._CONFIG_FILE])
+        parser.read([conf._CONFIG_FILE])
 
         # String
-        config.editor.font = 'test'
-        config._set_parser_option(parser, 'editor', 'font')
+        conf.editor.font = 'test'
+        conf._set_parser_option(parser, 'editor', 'font')
         value = parser.get('editor', 'font')
         assert value == 'test'
 
         # Integer
-        config.editor.undo_levels = 99
-        config._set_parser_option(parser, 'editor', 'undo_levels')
+        conf.editor.undo_levels = 99
+        conf._set_parser_option(parser, 'editor', 'undo_levels')
         value = parser.get('editor', 'undo_levels')
         assert value == '99'
 
         # Boolean
-        config.application_window.maximized = True
-        config._set_parser_option(parser, 'application_window', 'maximized')
+        conf.application_window.maximized = True
+        conf._set_parser_option(parser, 'application_window', 'maximized')
         value = parser.get('application_window', 'maximized')
         assert value == 'true'
 
         # Constant
-        config.editor.framerate = cons.Framerate.FR_25
-        config._set_parser_option(parser, 'editor', 'framerate')
+        conf.editor.framerate = cons.Framerate.FR_25
+        conf._set_parser_option(parser, 'editor', 'framerate')
         value = parser.get('editor', 'framerate')
         assert value == 'fr_25'
 
         # String list
-        config.encoding.fallbacks = ['test', 'rest']
-        config._set_parser_option(parser, 'encoding', 'fallbacks')
+        conf.encoding.fallbacks = ['test', 'rest']
+        conf._set_parser_option(parser, 'encoding', 'fallbacks')
         value = parser.get('encoding', 'fallbacks')
         assert value == '[test,rest]'
 
         # Integer list
-        config.application_window.position = [3, 4]
-        config._set_parser_option(parser, 'application_window', 'position')
+        conf.application_window.position = [3, 4]
+        conf._set_parser_option(parser, 'application_window', 'position')
         value = parser.get('application_window', 'position')
         assert value == '[3,4]'
 
         # Constant list
-        config.editor.visible_cols = [SHOW, HIDE]
-        config._set_parser_option(parser, 'editor', 'visible_cols')
+        conf.editor.visible_cols = [SHOW, HIDE]
+        conf._set_parser_option(parser, 'editor', 'visible_cols')
         value = parser.get('editor', 'visible_cols')
         assert value == '[show,hide]'
 
     def test_read_and_write(self):
 
-        config.read()
-        config.write()
-        config.read()
-        config.write()
-        config.read()
+        conf.read()
+        conf.write()
+        conf.read()
+        conf.write()
+        conf.read()

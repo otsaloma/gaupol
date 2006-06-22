@@ -21,7 +21,7 @@
 
 import gtk
 
-from gaupol.gtk.util import config, gtklib
+from gaupol.gtk.util import conf, gtklib
 
 
 class TextEditDialog(gtk.Dialog):
@@ -58,8 +58,8 @@ class TextEditDialog(gtk.Dialog):
         self._text_view.set_accepts_tab(False)
         text_buffer = self._text_view.get_buffer()
         text_buffer.set_text(text)
-        if not config.editor.use_default_font:
-            gtklib.set_widget_font(self._text_view, config.editor.font)
+        if not conf.editor.use_default_font:
+            gtklib.set_widget_font(self._text_view, conf.editor.font)
 
         scrolled_window = gtk.ScrolledWindow()
         scrolled_window.set_border_width(6)
@@ -73,8 +73,8 @@ class TextEditDialog(gtk.Dialog):
         """Initialize widget sizes."""
 
         label = gtk.Label('\n'.join(['x' * 46] * 4))
-        if not config.editor.use_default_font:
-            gtklib.set_label_font(label, config.editor.font)
+        if not conf.editor.use_default_font:
+            gtklib.set_label_font(label, conf.editor.font)
         width, height = label.size_request()
         self._text_view.set_size_request(width + 4, height + 7)
 

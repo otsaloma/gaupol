@@ -51,11 +51,11 @@ import pango
 from gaupol.base.paths          import PROFILE_DIR
 from gaupol.base.util           import langlib, listlib
 from gaupol.gtk                 import cons
-from gaupol.gtk.colcons         import *
+from gaupol.gtk.icons           import *
 from gaupol.gtk.dialog.message  import ErrorDialog
 from gaupol.gtk.dialog.textedit import TextEditDialog
 from gaupol.gtk.error           import Default
-from gaupol.gtk.util            import config, gtklib
+from gaupol.gtk.util            import conf, gtklib
 
 try:
     import enchant
@@ -113,7 +113,7 @@ class SpellCheckDialog(gobject.GObject):
         """
         gobject.GObject.__init__(self)
 
-        domain = config.spell_check
+        domain = conf.spell_check
         self._brokers      = [enchant.Broker(), enchant.Broker()]
         self._checker      = None
         self._checkers     = [None, None]
@@ -241,10 +241,10 @@ class SpellCheckDialog(gobject.GObject):
     def _init_fonts(self):
         """Initialize fonts and text tags."""
 
-        if not config.editor.use_default_font:
-            gtklib.set_widget_font(self._entry    , config.editor.font)
-            gtklib.set_widget_font(self._text_view, config.editor.font)
-            gtklib.set_widget_font(self._tree_view, config.editor.font)
+        if not conf.editor.use_default_font:
+            gtklib.set_widget_font(self._entry    , conf.editor.font)
+            gtklib.set_widget_font(self._text_view, conf.editor.font)
+            gtklib.set_widget_font(self._tree_view, conf.editor.font)
 
         text_buffer = self._text_view.get_buffer()
         text_buffer.create_tag('misspelled', weight=pango.WEIGHT_BOLD)
@@ -305,14 +305,14 @@ class SpellCheckDialog(gobject.GObject):
         """Initialize widget sizes."""
 
         label = gtk.Label('x' * 30)
-        if not config.editor.use_default_font:
-            gtklib.set_label_font(label, config.editor.font)
+        if not conf.editor.use_default_font:
+            gtklib.set_label_font(label, conf.editor.font)
         width = label.size_request()[0]
         self._tree_view.set_size_request(width + 4, -1)
 
         label = gtk.Label('\n'.join(['x' * 46] * 4))
-        if not config.editor.use_default_font:
-            gtklib.set_label_font(label, config.editor.font)
+        if not conf.editor.use_default_font:
+            gtklib.set_label_font(label, conf.editor.font)
         width, height = label.size_request()
         self._text_view.set_size_request(width + 4, height + 7)
 
@@ -329,10 +329,10 @@ class SpellCheckDialog(gobject.GObject):
                 print 'Failed to create spell-check profile directory "%s": ' \
                       '%s.' % (_SPELL_CHECK_DIR, message)
 
-        if MTXT in config.spell_check.cols:
+        if MTXT in conf.spell_check.cols:
             self._init_checker(MAIN)
             self._init_replacements(MAIN)
-        if TTXT in config.spell_check.cols:
+        if TTXT in conf.spell_check.cols:
             self._init_checker(TRAN)
             self._init_replacements(TRAN)
 
@@ -491,7 +491,7 @@ class SpellCheckDialog(gobject.GObject):
             self._texts[self._row + 1]
             self._row += 1
         except IndexError:
-            if self._doc == MAIN and TTXT in config.spell_check.cols:
+            if self._doc == MAIN and TTXT in conf.spell_check.cols:
                 self._set_document(TRAN)
             else:
                 self._register_changes()
@@ -508,9 +508,9 @@ class SpellCheckDialog(gobject.GObject):
 
         self._page = page
         self.emit('page-selected', page)
-        if MTXT in config.spell_check.cols:
+        if MTXT in conf.spell_check.cols:
             self._set_document(MAIN)
-        elif TTXT in config.spell_check.cols:
+        elif TTXT in conf.spell_check.cols:
             self._set_document(TRAN)
 
     def _store_replacement(self, misspelled, correct):

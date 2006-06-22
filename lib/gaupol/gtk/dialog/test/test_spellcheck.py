@@ -19,12 +19,12 @@
 import gtk
 import os
 
-from gaupol.gtk.colcons           import *
+from gaupol.gtk.icons             import *
 from gaupol.gtk.dialog.spellcheck import SpellCheckDialog
 from gaupol.gtk.dialog.spellcheck import _ErrorDialog
 from gaupol.gtk.dialog.spellcheck import _SPELL_CHECK_DIR
 from gaupol.gtk.page              import Page
-from gaupol.gtk.util              import config, gtklib
+from gaupol.gtk.util              import conf, gtklib
 from gaupol.test                  import Test
 
 
@@ -39,9 +39,9 @@ class TestSpellCheckDialog(Test):
 
     def setup_method(self, method):
 
-        config.spell_check.main_lang = 'en_CA'
-        config.spell_check.tran_lang = 'en_CA'
-        config.spell_check.cols = [MTXT, TTXT]
+        conf.spell_check.main_lang = 'en_CA'
+        conf.spell_check.tran_lang = 'en_CA'
+        conf.spell_check.cols = [MTXT, TTXT]
 
         self.repl_path = os.path.join(_SPELL_CHECK_DIR, 'en_CA.repl')
         self.dict_path = os.path.join(_SPELL_CHECK_DIR, 'en_CA.dict')

@@ -20,7 +20,7 @@ import gtk
 
 from gaupol.gtk                    import cons
 from gaupol.gtk.app                import Application
-from gaupol.gtk.colcons            import *
+from gaupol.gtk.icons              import *
 from gaupol.gtk.delegate.fileclose import _CloseWarningDialog
 from gaupol.gtk.util               import gtklib
 from gaupol.test                   import Test

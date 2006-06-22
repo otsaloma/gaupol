@@ -17,7 +17,7 @@
 
 
 from gaupol.gtk.app           import Application
-from gaupol.gtk.colcons       import *
+from gaupol.gtk.icons         import *
 from gaupol.gtk.delegate.find import FindDelegate
 from gaupol.test              import Test
 

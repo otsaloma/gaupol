@@ -24,12 +24,12 @@ from gettext import gettext as _
 import gtk
 
 from gaupol.gtk                   import cons
-from gaupol.gtk.colcons           import *
+from gaupol.gtk.icons             import *
 from gaupol.gtk.delegate          import Delegate, UIMAction
 from gaupol.gtk.dialog.language   import LanguageDialog
 from gaupol.gtk.dialog.spellcheck import SpellCheckDialog
 from gaupol.gtk.error             import Default
-from gaupol.gtk.util              import config, gtklib
+from gaupol.gtk.util              import conf, gtklib
 
 
 _ENCHANT_AVAILABLE = False
@@ -71,13 +71,13 @@ class CheckSpellingAction(UIMAction):
         if not _ENCHANT_AVAILABLE:
             return False
 
-        if not config.spell_check.cols:
+        if not conf.spell_check.cols:
             return False
-        if MTXT in config.spell_check.cols:
-            if not config.spell_check.main_lang:
+        if MTXT in conf.spell_check.cols:
+            if not conf.spell_check.main_lang:
                 return False
-        if TTXT in config.spell_check.cols:
-            if not config.spell_check.tran_lang:
+        if TTXT in conf.spell_check.cols:
+            if not conf.spell_check.tran_lang:
                 return False
 
         return True
@@ -128,7 +128,7 @@ class SpellCheckDelegate(Delegate):
     def on_check_spelling_activate(self, *args):
         """Check spelling."""
 
-        pages = self.get_target_pages(config.spell_check.target)
+        pages = self.get_target_pages(conf.spell_check.target)
         try:
             dialog = SpellCheckDialog(self._window, pages)
         except Default:

@@ -26,7 +26,7 @@ import gtk
 
 from gaupol.gtk            import cons
 from gaupol.gtk.entry.time import EntryTime
-from gaupol.gtk.util       import config, gtklib
+from gaupol.gtk.util       import conf, gtklib
 
 
 class _PositionAdjustDialog(gobject.GObject):
@@ -80,7 +80,7 @@ class _PositionAdjustDialog(gobject.GObject):
         self._sub_spin_1.emit('value-changed')
         self._sub_spin_2.emit('value-changed')
 
-        target = config.position_adjust.target
+        target = conf.position_adjust.target
         self._current_radio.set_active(target == cons.Target.CURRENT)
         self._selected_radio.set_active(target == cons.Target.SELECTED)
 
@@ -119,7 +119,7 @@ class _PositionAdjustDialog(gobject.GObject):
         """Save settings."""
 
         if response == gtk.RESPONSE_OK:
-            config.position_adjust.target = self.get_target()
+            conf.position_adjust.target = self.get_target()
 
     def _on_preview_button_1_clicked(self, *args):
         """Emit preview."""

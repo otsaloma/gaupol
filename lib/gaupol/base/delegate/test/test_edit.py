@@ -19,7 +19,7 @@
 import copy
 
 from gaupol.base               import cons
-from gaupol.base.colcons       import *
+from gaupol.base.icons         import *
 from gaupol.base.delegate.edit import EditDelegate
 from gaupol.test               import Test
 

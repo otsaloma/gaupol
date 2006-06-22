@@ -18,9 +18,9 @@
 
 import re
 
-from gaupol.base         import cons
-from gaupol.base.colcons import *
-from gaupol.test         import Test
+from gaupol.base       import cons
+from gaupol.base.icons import *
+from gaupol.test       import Test
 
 
 TEXT = \

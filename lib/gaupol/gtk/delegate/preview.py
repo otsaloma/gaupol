@@ -27,12 +27,12 @@ import tempfile
 import gobject
 import gtk
 
-from gaupol.gtk                      import cons
-from gaupol.gtk.colcons              import *
-from gaupol.gtk.delegate             import Delegate, UIMAction
-from gaupol.gtk.dialog.message       import ErrorDialog
-from gaupol.gtk.dialog.previewerror  import PreviewErrorDialog
-from gaupol.gtk.util                 import config, gtklib
+from gaupol.gtk                   import cons
+from gaupol.gtk.icons             import *
+from gaupol.gtk.delegate          import Delegate, UIMAction
+from gaupol.gtk.dialog.message    import ErrorDialog
+from gaupol.gtk.dialog.previewerr import PreviewErrorDialog
+from gaupol.gtk.util              import conf, gtklib
 
 
 class PreviewAction(UIMAction):
@@ -64,8 +64,8 @@ class PreviewAction(UIMAction):
             return False
         if not page.view.get_selected_rows():
             return False
-        if not config.preview.use_predefined:
-            if not config.preview.custom_command:
+        if not conf.preview.use_predefined:
+            if not conf.preview.custom_command:
                 return False
 
         if page.view.get_focus()[1] == TTXT:
@@ -134,11 +134,11 @@ class PreviewDelegate(Delegate):
     def _run_preview(self, page, time, doc, path=None):
         """Run preview with video player."""
 
-        if config.preview.use_predefined:
-            command = cons.VideoPlayer.commands[config.preview.video_player]
+        if conf.preview.use_predefined:
+            command = cons.VideoPlayer.commands[conf.preview.video_player]
         else:
-            command = config.preview.custom_command
-        offset = config.preview.offset
+            command = conf.preview.custom_command
+        offset = conf.preview.offset
 
         try:
             output = page.project.preview(time, doc, command, offset, path)

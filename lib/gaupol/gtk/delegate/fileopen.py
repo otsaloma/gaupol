@@ -29,13 +29,13 @@ import gtk
 from gaupol.base.error         import FileFormatError
 from gaupol.base.util          import enclib, listlib
 from gaupol.gtk                import cons
-from gaupol.gtk.colcons        import *
+from gaupol.gtk.icons          import *
 from gaupol.gtk.delegate       import Delegate, UIMAction
 from gaupol.gtk.dialog.file    import OpenFileDialog, OpenVideoDialog
 from gaupol.gtk.dialog.message import ErrorDialog, WarningDialog
 from gaupol.gtk.error          import Default
 from gaupol.gtk.page           import Page
-from gaupol.gtk.util           import config, gtklib
+from gaupol.gtk.util           import conf, gtklib
 
 try:
     import chardet
@@ -315,13 +315,13 @@ class FileOpenDelegate(Delegate):
         encodings = []
         if first is not None:
             encodings.append(first)
-        if config.encoding.try_locale:
+        if conf.encoding.try_locale:
             try:
                 encodings.append(enclib.get_locale_encoding()[0])
             except ValueError:
                 pass
-        encodings += config.encoding.fallbacks[:]
-        if config.encoding.try_auto and _CHARDET_AVAILABLE:
+        encodings += conf.encoding.fallbacks[:]
+        if conf.encoding.try_auto and _CHARDET_AVAILABLE:
             encodings.append('auto')
         if not encodings:
             encodings.append('utf_8')
@@ -378,7 +378,7 @@ class FileOpenDelegate(Delegate):
         Raise Default if file is no good.
         """
         if format in (cons.Format.SSA, cons.Format.ASS):
-            if config.file.warn_ssa:
+            if conf.file.warn_ssa:
                 dialog = _SSAWarningDialog(self._window)
                 response = self._run_dialog(dialog)
                 if response != gtk.RESPONSE_YES:
@@ -451,10 +451,10 @@ class FileOpenDelegate(Delegate):
         """Add path to recent files."""
 
         try:
-            config.file.recent.remove(path)
+            conf.file.recents.remove(path)
         except ValueError:
             pass
-        config.file.recent.insert(0, path)
+        conf.file.recents.insert(0, path)
         self.validate_recent()
 
     def connect_view_signals(self, page):
@@ -528,7 +528,7 @@ class FileOpenDelegate(Delegate):
         """Open recent main file."""
 
         index = int(action.get_name().split('_')[-1])
-        self.open_main_files([config.file.recent[index]])
+        self.open_main_files([conf.file.recents[index]])
 
     def on_open_translation_file_activate(self, *args):
         """Open translation file."""
@@ -617,7 +617,7 @@ class FileOpenDelegate(Delegate):
                 continue
             page.project.guess_video_path()
             self._add_new_project(page)
-            config.file.directory = os.path.dirname(path)
+            conf.file.directory = os.path.dirname(path)
             self.set_status_message(
                 _('Opened main file "%s"') % page.get_main_basename())
             while gtk.events_pending():
@@ -628,9 +628,9 @@ class FileOpenDelegate(Delegate):
     def validate_recent(self):
         """Remove non-existent and excess recent files."""
 
-        for i in reversed(range(len(config.file.recent))):
-            if not os.path.isfile(config.file.recent[i]):
-                config.file.recent.pop(i)
+        for i in reversed(range(len(conf.file.recents))):
+            if not os.path.isfile(conf.file.recents[i]):
+                conf.file.recents.pop(i)
 
-        while len(config.file.recent) > config.file.max_recent:
-            config.file.recent.pop()
+        while len(conf.file.recents) > conf.file.max_recent:
+            conf.file.recents.pop()

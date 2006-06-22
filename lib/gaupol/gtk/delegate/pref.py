@@ -23,9 +23,9 @@ from gettext import gettext as _
 
 import gtk
 
-from gaupol.gtk.delegate           import Delegate, UIMAction
-from gaupol.gtk.dialog.preferences import PreferencesDialog
-from gaupol.gtk.util               import config, gtklib
+from gaupol.gtk.delegate    import Delegate, UIMAction
+from gaupol.gtk.dialog.pref import PreferencesDialog
+from gaupol.gtk.util        import conf, gtklib
 
 
 class EditPreferencesAction(UIMAction):
@@ -92,19 +92,19 @@ class PreferencesDelegate(Delegate):
     def _on_dialog_font_set(self, dialog, font):
         """Set custom font."""
 
-        if not config.editor.use_default_font:
+        if not conf.editor.use_default_font:
             self._enforce_font(font)
 
     def _on_dialog_limit_undo_toggled(self, dialog, limit):
         """Limit or unlimit undo levels."""
 
         if limit:
-            self._enforce_undo_levels(config.editor.undo_levels)
+            self._enforce_undo_levels(conf.editor.undo_levels)
 
     def _on_dialog_undo_levels_changed(self, dialog, levels):
         """Change amount of undo levels."""
 
-        if config.editor.limit_undo:
+        if conf.editor.limit_undo:
             self._enforce_undo_levels(levels)
 
     def _on_dialog_use_default_font_toggled(self, dialog, use_default):
@@ -113,7 +113,7 @@ class PreferencesDelegate(Delegate):
         if use_default:
             self._enforce_font('')
         else:
-            self._enforce_font(config.editor.font)
+            self._enforce_font(conf.editor.font)
 
     def _on_dialog_video_player_set(self, dialog):
         """Set sensitivities."""

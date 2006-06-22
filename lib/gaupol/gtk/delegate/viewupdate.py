@@ -21,7 +21,7 @@
 
 import gtk
 
-from gaupol.gtk.colcons  import *
+from gaupol.gtk.icons    import *
 from gaupol.gtk.delegate import Delegate
 
 

@@ -17,7 +17,7 @@
 
 
 from gaupol.base                 import cons
-from gaupol.base.colcons         import *
+from gaupol.base.icons           import *
 from gaupol.base.delegate.action import RevertableAction
 from gaupol.base.delegate.action import RevertableActionDelegate
 from gaupol.base.delegate.action import RevertableActionGroup

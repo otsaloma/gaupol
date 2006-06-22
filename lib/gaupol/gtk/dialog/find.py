@@ -27,11 +27,11 @@ import gtk
 
 from gaupol.base.util          import listlib, wwwlib
 from gaupol.gtk                import cons
-from gaupol.gtk.colcons        import *
+from gaupol.gtk.icons          import *
 from gaupol.gtk.dialog.message import InfoDialog
 from gaupol.gtk.error          import Default
 from gaupol.gtk.urls           import REGEX_HELP_URL
-from gaupol.gtk.util           import config, gtklib
+from gaupol.gtk.util           import conf, gtklib
 
 
 class _NotFoundInfoDialog(InfoDialog):
@@ -129,51 +129,51 @@ class FindDialog(gobject.GObject):
         """Add current pattern to combo box."""
 
         pattern = self._pattern_entry.get_text()
-        config.find.pattern = pattern
+        conf.find.pattern = pattern
         store = self._pattern_combo.get_model()
         try:
             if store[0] == pattern:
                 return
         except IndexError:
             pass
-        config.find.patterns.insert(0, pattern)
-        config.find.patterns = listlib.unique(config.find.patterns)
-        while len(config.find.patterns) > config.find.max_history:
-            config.find.patterns.pop()
+        conf.find.patterns.insert(0, pattern)
+        conf.find.patterns = listlib.unique(conf.find.patterns)
+        while len(conf.find.patterns) > conf.find.max_history:
+            conf.find.patterns.pop()
 
         store.clear()
-        for pattern in config.find.patterns:
+        for pattern in conf.find.patterns:
             store.append([pattern])
 
     def _init_data(self):
         """Initialize default values."""
 
-        self._dot_all_check.set_active(config.find.dot_all)
-        self._ignore_case_check.set_active(config.find.ignore_case)
-        self._multiline_check.set_active(config.find.multiline)
-        self._pattern_entry.set_text(config.find.pattern)
+        self._dot_all_check.set_active(conf.find.dot_all)
+        self._ignore_case_check.set_active(conf.find.ignore_case)
+        self._multiline_check.set_active(conf.find.multiline)
+        self._pattern_entry.set_text(conf.find.pattern)
         self._pattern_entry.emit('changed')
-        self._regex_check.set_active(config.find.regex)
+        self._regex_check.set_active(conf.find.regex)
         self._regex_check.emit('toggled')
 
-        target = config.find.target
+        target = conf.find.target
         self._all_radio.set_active(target == cons.Target.ALL)
         self._current_radio.set_active(target == cons.Target.CURRENT)
         self._selected_radio.set_active(target == cons.Target.SELECTED)
-        self._main_check.set_active(MTXT in config.find.cols)
-        self._tran_check.set_active(TTXT in config.find.cols)
+        self._main_check.set_active(MTXT in conf.find.cols)
+        self._tran_check.set_active(TTXT in conf.find.cols)
 
         store = self._pattern_combo.get_model()
         store.clear()
-        for pattern in config.find.patterns:
+        for pattern in conf.find.patterns:
             store.append([pattern])
 
     def _init_fonts(self):
         """Initialize fonts."""
 
-        if not config.editor.use_default_font:
-            gtklib.set_widget_font(self._text_view    , config.editor.font)
-            gtklib.set_widget_font(self._pattern_entry, config.editor.font)
+        if not conf.editor.use_default_font:
+            gtklib.set_widget_font(self._text_view    , conf.editor.font)
+            gtklib.set_widget_font(self._pattern_entry, conf.editor.font)
 
     def _init_sensitivities(self):
         """Initialize sensitivities."""
@@ -204,8 +204,8 @@ class FindDialog(gobject.GObject):
         """Initialize widget sizes."""
 
         label = gtk.Label('\n'.join(['x' * 46] * 4))
-        if not config.editor.use_default_font:
-            gtklib.set_label_font(label, config.editor.font)
+        if not conf.editor.use_default_font:
+            gtklib.set_label_font(label, conf.editor.font)
         width, height = label.size_request()
         self._text_view.set_size_request(width + 4, height + 7)
 
@@ -245,11 +245,11 @@ class FindDialog(gobject.GObject):
         """Get regular expression flags."""
 
         flags = 0
-        if config.find.dot_all:
+        if conf.find.dot_all:
             flags = flags|re.DOTALL
-        if config.find.ignore_case:
+        if conf.find.ignore_case:
             flags = flags|re.IGNORECASE
-        if config.find.multiline:
+        if conf.find.multiline:
             flags = flags|re.MULTILINE
         return flags
 
@@ -299,12 +299,12 @@ class FindDialog(gobject.GObject):
     def _on_all_radio_toggled(self, *args):
         """Save target."""
 
-        config.find.target = self._get_target()
+        conf.find.target = self._get_target()
 
     def _on_current_radio_toggled(self, *args):
         """Save target."""
 
-        config.find.target = self._get_target()
+        conf.find.target = self._get_target()
 
     def _on_dialog_response(self, dialog, response):
         """Browse help or destroy dialog."""
@@ -319,22 +319,22 @@ class FindDialog(gobject.GObject):
     def _on_dot_all_check_toggled(self, check_button):
         """Save setting."""
 
-        config.find.dot_all = check_button.get_active()
+        conf.find.dot_all = check_button.get_active()
 
     def _on_ignore_case_check_toggled(self, check_button):
         """Save setting."""
 
-        config.find.ignore_case = check_button.get_active()
+        conf.find.ignore_case = check_button.get_active()
 
     def _on_main_check_toggled(self, *args):
         """Save target columns."""
 
-        config.find.cols = self._get_columns()
+        conf.find.cols = self._get_columns()
 
     def _on_multiline_check_toggled(self, check_button):
         """Save setting."""
 
-        config.find.multiline = check_button.get_active()
+        conf.find.multiline = check_button.get_active()
 
     def _on_next_button_clicked(self, *args):
         """Find next."""
@@ -365,7 +365,7 @@ class FindDialog(gobject.GObject):
         """Save setting and set sensitivities."""
 
         active = check_button.get_active()
-        config.find.regex = active
+        conf.find.regex = active
         self._dot_all_check.set_sensitive(active)
         self._multiline_check.set_sensitive(active)
         self._dialog.set_response_sensitive(gtk.RESPONSE_HELP, active)
@@ -373,7 +373,7 @@ class FindDialog(gobject.GObject):
     def _on_selected_radio_toggled(self, *args):
         """Save target."""
 
-        config.find.target = self._get_target()
+        conf.find.target = self._get_target()
 
     def _on_text_view_focus_out_event(self, text_view, event):
         """Register changes."""
@@ -394,7 +394,7 @@ class FindDialog(gobject.GObject):
     def _on_tran_check_toggled(self, *args):
         """Save target columns."""
 
-        config.find.cols = self._get_columns()
+        conf.find.cols = self._get_columns()
 
     def _prepare(self, next):
         """
@@ -571,20 +571,20 @@ class ReplaceDialog(FindDialog):
         """Add current replacement to combo box."""
 
         replacement = self._replacement_entry.get_text()
-        config.find.replacement = replacement
+        conf.find.replacement = replacement
         store = self._replacement_combo.get_model()
         try:
             if store[0] == replacement:
                 return
         except IndexError:
             pass
-        config.find.replacements.insert(0, replacement)
-        config.find.replacements = listlib.unique(config.find.replacements)
-        while len(config.find.replacements) > config.find.max_history:
-            config.find.replacements.pop()
+        conf.find.replacements.insert(0, replacement)
+        conf.find.replacements = listlib.unique(conf.find.replacements)
+        while len(conf.find.replacements) > conf.find.max_history:
+            conf.find.replacements.pop()
 
         store.clear()
-        for replacement in config.find.replacements:
+        for replacement in conf.find.replacements:
             store.append([replacement])
 
     def _init_data(self):
@@ -592,12 +592,12 @@ class ReplaceDialog(FindDialog):
 
         FindDialog._init_data(self)
 
-        self._replacement_entry.set_text(config.find.replacement)
+        self._replacement_entry.set_text(conf.find.replacement)
         self._replacement_entry.emit('changed')
 
         store = self._replacement_combo.get_model()
         store.clear()
-        for replacement in config.find.replacements:
+        for replacement in conf.find.replacements:
             store.append([replacement])
 
     def _init_fonts(self):
@@ -605,8 +605,8 @@ class ReplaceDialog(FindDialog):
 
         FindDialog._init_fonts(self)
 
-        if not config.editor.use_default_font:
-            gtklib.set_widget_font(self._replacement_entry, config.editor.font)
+        if not conf.editor.use_default_font:
+            gtklib.set_widget_font(self._replacement_entry, conf.editor.font)
 
     def _init_sensitivities(self):
         """Initialize sensitivities."""

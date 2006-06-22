@@ -108,7 +108,7 @@ class UIMAction(object):
     configuration file is read, toggle and radio items need some arbitrary
     value. A proper value is obtained through methods "get_toggle_value" and
     "get_radio_index", which can be defined to return a value based on the
-    config module.
+    conf module.
     """
 
     action_item = None

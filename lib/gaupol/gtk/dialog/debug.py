@@ -38,7 +38,7 @@ from gaupol.base.paths         import PROFILE_DIR
 from gaupol.base.util          import wwwlib
 from gaupol.gtk.dialog.message import ErrorDialog
 from gaupol.gtk.urls           import BUG_REPORT_URL
-from gaupol.gtk.util           import config, gtklib
+from gaupol.gtk.util           import conf, gtklib
 
 
 _CONFIG_FILE = os.path.join(PROFILE_DIR, 'gaupol.gtk.conf')
@@ -170,7 +170,7 @@ class DebugDialog(object):
         if not event.type == gtk.gdk.BUTTON_RELEASE:
             return
 
-        editor = config.debug.editor
+        editor = conf.debug.editor
         path, lineno = self._files[int(tag.props.name)]
         return_value = os.system('%s +%d "%s" &' % (editor, lineno, path))
         if return_value != 0:

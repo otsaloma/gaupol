@@ -25,7 +25,7 @@ from gettext import ngettext
 import gtk
 
 from gaupol.gtk                  import cons
-from gaupol.gtk.colcons          import *
+from gaupol.gtk.icons            import *
 from gaupol.gtk.delegate         import Delegate, UIMAction
 from gaupol.gtk.dialog.subinsert import SubtitleInsertDialog
 from gaupol.gtk.util             import gtklib

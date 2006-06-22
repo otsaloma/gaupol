@@ -22,7 +22,7 @@
 import gtk
 
 from gaupol.gtk      import cons
-from gaupol.gtk.util import config, gtklib
+from gaupol.gtk.util import conf, gtklib
 
 
 class FramerateConvertDialog(object):
@@ -51,9 +51,9 @@ class FramerateConvertDialog(object):
             store.clear()
             for name in cons.Framerate.display_names:
                 store.append([name])
-            combo_box.set_active(config.editor.framerate)
+            combo_box.set_active(conf.editor.framerate)
 
-        target = config.framerate_convert.target
+        target = conf.framerate_convert.target
         self._all_radio.set_active(target == cons.Target.ALL)
         self._current_radio.set_active(target == cons.Target.CURRENT)
 
@@ -84,7 +84,7 @@ class FramerateConvertDialog(object):
         """Save settings."""
 
         if response == gtk.RESPONSE_OK:
-            config.framerate_convert.target = self.get_target()
+            conf.framerate_convert.target = self.get_target()
 
     def destroy(self):
         """Destroy dialog."""

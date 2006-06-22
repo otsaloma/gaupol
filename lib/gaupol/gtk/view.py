@@ -25,8 +25,8 @@ import pango
 
 from gaupol.gtk                  import cons
 from gaupol.gtk.cellrend.classes import *
-from gaupol.gtk.colcons          import *
-from gaupol.gtk.util             import config
+from gaupol.gtk.icons            import *
+from gaupol.gtk.util             import conf
 
 
 _NORMAL_ATTR = pango.AttrList()
@@ -69,8 +69,8 @@ class View(gtk.TreeView):
 
         names = cons.Column.display_names
         font = ''
-        if not config.editor.use_default_font:
-            font = config.editor.font
+        if not conf.editor.use_default_font:
+            font = conf.editor.font
 
         for i, column in enumerate([
             gtk.TreeViewColumn(names[0], CellRendererInteger()  , text=0),
@@ -83,7 +83,7 @@ class View(gtk.TreeView):
             self.append_column(column)
             column.set_clickable(True)
             column.set_resizable(True)
-            if not i in config.editor.visible_cols:
+            if not i in conf.editor.visible_cols:
                 column.set_visible(False)
 
             renderer = column.get_cell_renderers()[0]

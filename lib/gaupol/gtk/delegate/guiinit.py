@@ -30,7 +30,7 @@ from gaupol.base.paths   import DATA_DIR
 from gaupol.gtk          import cons
 from gaupol.gtk.delegate import Delegate, UIMActions
 from gaupol.gtk.output   import OutputWindow
-from gaupol.gtk.util     import config, gtklib
+from gaupol.gtk.util     import conf, gtklib
 
 
 _GAUPOL_ICON = os.path.join(DATA_DIR, 'icons', 'gaupol.png' )
@@ -73,7 +73,7 @@ class GUIInitDelegate(Delegate):
         """Initialize output window."""
 
         self._output_window = OutputWindow()
-        if config.output_window.show:
+        if conf.output_window.show:
             self._output_window.show()
 
         gtklib.connect(self, '_output_window', 'closed', False)
@@ -252,7 +252,7 @@ class GUIInitDelegate(Delegate):
         for i in range(len(cons.Framerate.display_names)):
             self._framerate_combo.insert_text(
                 i, cons.Framerate.display_names[i])
-        self._framerate_combo.set_active(config.editor.framerate)
+        self._framerate_combo.set_active(conf.editor.framerate)
         gtklib.connect(self, '_framerate_combo', 'changed', False)
 
         tool_item = gtk.ToolItem()
@@ -266,9 +266,9 @@ class GUIInitDelegate(Delegate):
         """Initialize window."""
 
         self._window = gtk.Window()
-        self._window.resize(*config.application_window.size)
-        self._window.move(*config.application_window.position)
-        if config.application_window.maximized:
+        self._window.resize(*conf.application_window.size)
+        self._window.move(*conf.application_window.position)
+        if conf.application_window.maximized:
             self._window.maximize()
 
         icon_theme = gtk.icon_theme_get_default()
@@ -307,11 +307,11 @@ class GUIInitDelegate(Delegate):
         vbox.pack_start(statusbar     , False, False, 0)
 
         vbox.show_all()
-        if not config.application_window.show_main_toolbar:
+        if not conf.application_window.show_main_toolbar:
             main_toolbar.hide()
-        if not config.application_window.show_video_toolbar:
+        if not conf.application_window.show_video_toolbar:
             video_toolbar.hide()
-        if not config.application_window.show_statusbar:
+        if not conf.application_window.show_statusbar:
             statusbar.hide()
 
         self.set_menu_notify_events('main')

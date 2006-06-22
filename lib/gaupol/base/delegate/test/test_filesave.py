@@ -19,7 +19,7 @@
 import os
 
 from gaupol.base          import cons
-from gaupol.base.colcons  import *
+from gaupol.base.icons    import *
 from gaupol.base.delegate import filesave
 from gaupol.test          import Test
 

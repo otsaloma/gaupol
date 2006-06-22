@@ -21,7 +21,7 @@
 
 import gtk
 
-from gaupol.gtk.util import config, gtklib
+from gaupol.gtk.util import conf, gtklib
 
 
 _ABOVE = 0
@@ -49,9 +49,9 @@ class SubtitleInsertDialog(object):
     def _init_data(self):
         """Initialize default values."""
 
-        self._amount_spin.set_value(config.subtitle_insert.amount)
+        self._amount_spin.set_value(conf.subtitle_insert.amount)
 
-        if config.subtitle_insert.above:
+        if conf.subtitle_insert.above:
             self._position_combo.set_active(_ABOVE)
         else:
             self._position_combo.set_active(_BELOW)
@@ -73,8 +73,8 @@ class SubtitleInsertDialog(object):
         """Save settings."""
 
         if response == gtk.RESPONSE_OK:
-            config.subtitle_insert.amount = self.get_amount()
-            config.subtitle_insert.above  = self.get_above()
+            conf.subtitle_insert.amount = self.get_amount()
+            conf.subtitle_insert.above  = self.get_above()
 
     def destroy(self):
         """Destroy dialog."""

@@ -26,9 +26,9 @@ import gobject
 import gtk
 
 from gaupol.gtk          import cons
-from gaupol.gtk.colcons  import *
+from gaupol.gtk.icons    import *
 from gaupol.gtk.delegate import Delegate, UIMAction, UIMActions
-from gaupol.gtk.util     import config, gtklib
+from gaupol.gtk.util     import conf, gtklib
 
 
 class ActivateNextProjectAction(UIMAction):
@@ -223,7 +223,7 @@ class AppUpdateDelegate(Delegate):
 
         state = event.new_window_state
         maximized = bool(state & gtk.gdk.WINDOW_STATE_MAXIMIZED)
-        config.application_window.maximized = maximized
+        conf.application_window.maximized = maximized
 
     def set_sensitivities(self, page=None):
         """Set sensitivities and visibilities of actions and widgets."""

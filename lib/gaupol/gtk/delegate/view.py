@@ -23,9 +23,9 @@ from gettext import gettext as _
 import gtk
 
 from gaupol.gtk          import cons
-from gaupol.gtk.colcons  import *
+from gaupol.gtk.icons    import *
 from gaupol.gtk.delegate import Delegate, UIMAction
-from gaupol.gtk.util     import config, gtklib
+from gaupol.gtk.util     import conf, gtklib
 from gaupol.gtk.view     import View
 
 
@@ -39,7 +39,7 @@ class _ToggleColumnAction(UIMAction):
     def get_toggle_value(cls):
         """Get value of toggle item."""
 
-        return cls.col in config.editor.visible_cols
+        return cls.col in conf.editor.visible_cols
 
     @classmethod
     def is_doable(cls, app, page):
@@ -99,7 +99,7 @@ class ToggleEditModeAction(UIMAction):
     def get_radio_index(cls):
         """Get active index of radio items."""
 
-        return config.editor.mode
+        return conf.editor.mode
 
     @classmethod
     def is_doable(cls, app, page):
@@ -150,7 +150,7 @@ class ToggleFramerateAction(UIMAction):
     def get_radio_index(cls):
         """Get active index of radio items."""
 
-        return config.editor.framerate
+        return conf.editor.framerate
 
     @classmethod
     def is_doable(cls, app, page):
@@ -221,7 +221,7 @@ class ToggleMainToolbarAction(UIMAction):
     def get_toggle_value(cls):
         """Get value of toggle item."""
 
-        return config.application_window.show_main_toolbar
+        return conf.application_window.show_main_toolbar
 
     @classmethod
     def is_doable(cls, app, page):
@@ -269,7 +269,7 @@ class ToggleOutputWindowAction(UIMAction):
     def get_toggle_value(cls):
         """Get value of toggle item."""
 
-        return config.output_window.show
+        return conf.output_window.show
 
     @classmethod
     def is_doable(cls, app, page):
@@ -317,7 +317,7 @@ class ToggleStatusbarAction(UIMAction):
     def get_toggle_value(cls):
         """Get value of toggle item."""
 
-        return config.application_window.show_statusbar
+        return conf.application_window.show_statusbar
 
     @classmethod
     def is_doable(cls, app, page):
@@ -365,7 +365,7 @@ class ToggleVideoToolbarAction(UIMAction):
     def get_toggle_value(cls):
         """Get value of toggle item."""
 
-        return config.application_window.show_video_toolbar
+        return conf.application_window.show_video_toolbar
 
     @classmethod
     def is_doable(cls, app, page):
@@ -402,7 +402,7 @@ class ViewDelegate(Delegate):
 
         gtklib.set_cursor_busy(self._window)
         page.project.change_framerate(framerate)
-        config.editor.framerate = framerate
+        conf.editor.framerate = framerate
         path = cons.Framerate.uim_paths[framerate]
         self._uim.get_widget(path).set_active(True)
         if page.edit_mode != page.project.main_file.mode:
@@ -432,7 +432,7 @@ class ViewDelegate(Delegate):
         for i in range(6):
             if page.view.get_column(i).get_visible():
                 visible_columns.append(i)
-        config.editor.visible_cols = visible_columns
+        conf.editor.visible_cols = visible_columns
         self.set_sensitivities(page)
         self.set_character_status(page)
         gtklib.set_cursor_normal(self._window)
@@ -447,7 +447,7 @@ class ViewDelegate(Delegate):
 
         gtklib.set_cursor_busy(self._window)
         page.edit_mode = edit_mode
-        config.editor.mode = edit_mode
+        conf.editor.mode = edit_mode
 
         has_focus = page.view.props.has_focus
         focus_row, focus_col = page.view.get_focus()
@@ -486,7 +486,7 @@ class ViewDelegate(Delegate):
 
         gtklib.set_cursor_busy(self._window)
         page.project.change_framerate(framerate)
-        config.editor.framerate = framerate
+        conf.editor.framerate = framerate
         self._framerate_combo.set_active(framerate)
         if page.edit_mode != page.project.main_file.mode:
             page.reload_columns([SHOW, HIDE, DURN])
@@ -498,7 +498,7 @@ class ViewDelegate(Delegate):
         toolbar = self._uim.get_widget('/ui/main_toolbar')
         visible = toolbar.props.visible
         toolbar.props.visible = not visible
-        config.application_window.show_main_toolbar = not visible
+        conf.application_window.show_main_toolbar = not visible
 
     def on_toggle_output_window_activate(self, *args):
         """Toggle output window visibility."""
@@ -508,7 +508,7 @@ class ViewDelegate(Delegate):
             self._output_window.hide()
         else:
             self._output_window.show()
-        config.output_window.show = not visible
+        conf.output_window.show = not visible
 
     def on_toggle_statusbar_activate(self, *args):
         """Toggle statusbar visibility."""
@@ -516,7 +516,7 @@ class ViewDelegate(Delegate):
         hbox = gtklib.get_parent_widget(self._msg_statusbar, gtk.HBox)
         visible = hbox.props.visible
         hbox.props.visible = not visible
-        config.application_window.show_statusbar = not visible
+        conf.application_window.show_statusbar = not visible
 
     def on_toggle_video_toolbar_activate(self, *args):
         """Toggle video toolbar visibility."""
@@ -524,7 +524,7 @@ class ViewDelegate(Delegate):
         toolbar = gtklib.get_parent_widget(self._video_button, gtk.Toolbar)
         visible = toolbar.props.visible
         toolbar.props.visible = not visible
-        config.application_window.show_video_toolbar = not visible
+        conf.application_window.show_video_toolbar = not visible
 
     def on_view_header_button_press_event(self, button, event):
         """Display column pop-up menu."""

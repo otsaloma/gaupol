@@ -24,7 +24,7 @@ import types
 import gtk
 
 from gaupol.gtk.delegate import Delegates
-from gaupol.gtk.util     import config
+from gaupol.gtk.util     import conf
 
 
 class Application(object):
@@ -83,7 +83,7 @@ class Application(object):
         self.pages            = []
 
         self._init_delegations()
-        config.read()
+        conf.read()
         self.init_gui()
 
     def _init_delegations(self):

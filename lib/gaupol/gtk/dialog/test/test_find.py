@@ -21,14 +21,14 @@ import re
 import gtk
 
 from gaupol.gtk             import cons
-from gaupol.gtk.colcons     import *
+from gaupol.gtk.icons       import *
 from gaupol.gtk.dialog.find import FindDialog
 from gaupol.gtk.dialog.find import ReplaceDialog
 from gaupol.gtk.dialog.find import _NotFoundInfoDialog
 from gaupol.gtk.dialog.find import _ReplaceAllInfoDialog
 from gaupol.gtk.error       import Default
 from gaupol.gtk.page        import Page
-from gaupol.gtk.util        import config, gtklib
+from gaupol.gtk.util        import conf, gtklib
 from gaupol.test            import Test
 
 
@@ -54,7 +54,7 @@ class TestFindDialog(Test):
 
     def setup_method(self, method):
 
-        reload(config)
+        reload(conf)
 
         self.page = Page()
         self.page.project = self.get_project()
@@ -69,8 +69,8 @@ class TestFindDialog(Test):
 
         self.dialog._pattern_entry.set_text('test')
         self.dialog._add_pattern()
-        assert config.find.pattern == 'test'
-        assert config.find.patterns[0] == 'test'
+        assert conf.find.pattern == 'test'
+        assert conf.find.patterns[0] == 'test'
 
     def test_fail(self):
 
@@ -242,7 +242,7 @@ class TestReplaceDialog(TestFindDialog):
 
     def setup_method(self, method):
 
-        reload(config)
+        reload(conf)
 
         self.page = Page()
         self.page.project = self.get_project()
@@ -257,8 +257,8 @@ class TestReplaceDialog(TestFindDialog):
 
         self.dialog._replacement_entry.set_text('test')
         self.dialog._add_replacement()
-        assert config.find.replacement == 'test'
-        assert config.find.replacements[0] == 'test'
+        assert conf.find.replacement == 'test'
+        assert conf.find.replacements[0] == 'test'
 
     def test_replace_signals(self):
 

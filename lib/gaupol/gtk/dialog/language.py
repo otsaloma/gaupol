@@ -22,10 +22,10 @@
 import gobject
 import gtk
 
-from gaupol.base.util   import langlib
-from gaupol.gtk         import cons
-from gaupol.gtk.colcons import *
-from gaupol.gtk.util    import config, gtklib
+from gaupol.base.util import langlib
+from gaupol.gtk       import cons
+from gaupol.gtk.icons import *
+from gaupol.gtk.util  import conf, gtklib
 
 try:
     import enchant
@@ -64,21 +64,21 @@ class LanguageDialog(object):
         """Initialize default values."""
 
         try:
-            row = self._langs.index(config.spell_check.main_lang)
+            row = self._langs.index(conf.spell_check.main_lang)
             self._main_tree_view.get_selection().select_path(row)
         except ValueError:
             pass
         try:
-            row = self._langs.index(config.spell_check.tran_lang)
+            row = self._langs.index(conf.spell_check.tran_lang)
             self._tran_tree_view.get_selection().select_path(row)
         except ValueError:
             pass
 
-        target = config.spell_check.target
+        target = conf.spell_check.target
         self._all_radio.set_active(target == cons.Target.ALL)
         self._current_radio.set_active(target == cons.Target.CURRENT)
 
-        cols = config.spell_check.cols
+        cols = conf.spell_check.cols
         self._main_check.set_active(MTXT in cols)
         self._tran_check.set_active(TTXT in cols)
 
@@ -137,34 +137,34 @@ class LanguageDialog(object):
         """Save target."""
 
         if radio_button.get_active():
-            config.spell_check.target = cons.Target.ALL
+            conf.spell_check.target = cons.Target.ALL
         else:
-            config.spell_check.target = cons.Target.CURRENT
+            conf.spell_check.target = cons.Target.CURRENT
 
     def _on_current_radio_toggled(self, radio_button):
         """Save target."""
 
         if radio_button.get_active():
-            config.spell_check.target = cons.Target.CURRENT
+            conf.spell_check.target = cons.Target.CURRENT
         else:
-            config.spell_check.target = cons.Target.ALL
+            conf.spell_check.target = cons.Target.ALL
 
     def _on_main_check_toggled(self, check_button):
         """Save columns."""
 
         if check_button.get_active():
-            if not MTXT in config.spell_check.cols:
-                config.spell_check.cols.append(MTXT)
+            if not MTXT in conf.spell_check.cols:
+                conf.spell_check.cols.append(MTXT)
         else:
-            if MTXT in config.spell_check.cols:
-                config.spell_check.cols.remove(MTXT)
+            if MTXT in conf.spell_check.cols:
+                conf.spell_check.cols.remove(MTXT)
 
     def _on_main_selection_changed(self, selection):
         """Save main language."""
 
         try:
             row = selection.get_selected_rows()[1][0][0]
-            config.spell_check.main_lang = self._langs[row]
+            conf.spell_check.main_lang = self._langs[row]
         except IndexError:
             pass
 
@@ -172,18 +172,18 @@ class LanguageDialog(object):
         """Save columns."""
 
         if check_button.get_active():
-            if not TTXT in config.spell_check.cols:
-                config.spell_check.cols.append(TTXT)
+            if not TTXT in conf.spell_check.cols:
+                conf.spell_check.cols.append(TTXT)
         else:
-            if TTXT in config.spell_check.cols:
-                config.spell_check.cols.remove(TTXT)
+            if TTXT in conf.spell_check.cols:
+                conf.spell_check.cols.remove(TTXT)
 
     def _on_tran_selection_changed(self, selection):
         """Save translation language."""
 
         try:
             row = selection.get_selected_rows()[1][0][0]
-            config.spell_check.tran_lang = self._langs[row]
+            conf.spell_check.tran_lang = self._langs[row]
         except IndexError:
             pass
 

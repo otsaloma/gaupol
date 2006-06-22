@@ -23,12 +23,12 @@ from gettext import gettext as _
 
 import gtk
 
-from gaupol.gtk.colcons           import *
+from gaupol.gtk.icons             import *
 from gaupol.gtk.delegate          import Delegate, UIMAction
 from gaupol.gtk.dialog.message    import WarningDialog
 from gaupol.gtk.dialog.multiclose import MultiCloseWarningDialog
 from gaupol.gtk.error             import Default
-from gaupol.gtk.util              import config, gtklib
+from gaupol.gtk.util              import conf, gtklib
 
 
 class CloseAllProjectsAction(UIMAction):
@@ -270,16 +270,16 @@ class FileCloseDelegate(Delegate):
         except Default:
             return
 
-        if not config.application_window.maximized:
-            domain = config.application_window
+        if not conf.application_window.maximized:
+            domain = conf.application_window
             domain.size = list(self._window.get_size())
             domain.position = list(self._window.get_position())
-        if not config.output_window.maximized:
-            domain = config.output_window
+        if not conf.output_window.maximized:
+            domain = conf.output_window
             domain.size = list(self._output_window.get_size())
             domain.position = list(self._output_window.get_position())
 
-        config.write()
+        conf.write()
 
         try:
             gtk.main_quit()

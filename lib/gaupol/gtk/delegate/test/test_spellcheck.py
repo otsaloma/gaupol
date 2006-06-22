@@ -19,10 +19,10 @@
 import os
 
 from gaupol.gtk.app                 import Application
-from gaupol.gtk.colcons             import *
+from gaupol.gtk.icons               import *
 from gaupol.gtk.delegate.spellcheck import SpellCheckDelegate
 from gaupol.gtk.dialog.spellcheck   import _SPELL_CHECK_DIR
-from gaupol.gtk.util                import config
+from gaupol.gtk.util                import conf
 from gaupol.test                    import Test
 
 
@@ -34,9 +34,9 @@ class TestSpellCheckDelegate(Test):
         self.app.open_main_files([self.get_subrip_path()])
         self.delegate = SpellCheckDelegate(self.app)
 
-        config.spell_check.main_lang = 'en_CA'
-        config.spell_check.tran_lang = 'en_CA'
-        config.spell_check.cols = [MTXT, TTXT]
+        conf.spell_check.main_lang = 'en_CA'
+        conf.spell_check.tran_lang = 'en_CA'
+        conf.spell_check.cols = [MTXT, TTXT]
 
         self.repl_path = os.path.join(_SPELL_CHECK_DIR, 'en_CA.repl')
         self.dict_path = os.path.join(_SPELL_CHECK_DIR, 'en_CA.dict')

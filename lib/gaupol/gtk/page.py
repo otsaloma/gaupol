@@ -28,8 +28,8 @@ import pango
 
 from gaupol.base.project     import Project
 from gaupol.gtk              import cons
-from gaupol.gtk.colcons      import *
-from gaupol.gtk.util         import config, gtklib
+from gaupol.gtk.icons        import *
+from gaupol.gtk.util         import conf, gtklib
 from gaupol.gtk.view         import View
 
 
@@ -63,16 +63,16 @@ class Page(gobject.GObject):
         gobject.GObject.__init__(self)
 
         undo_limit = None
-        if config.editor.limit_undo:
-            undo_limit = config.editor.undo_levels
+        if conf.editor.limit_undo:
+            undo_limit = conf.editor.undo_levels
 
-        self.edit_mode      = config.editor.mode
-        self.project        = Project(config.editor.framerate, undo_limit)
+        self.edit_mode      = conf.editor.mode
+        self.project        = Project(conf.editor.framerate, undo_limit)
         self.tab_label      = None
         self.tab_menu_label = None
         self.tooltips       = gtk.Tooltips()
         self.untitle        = _('Untitled %d') % counter
-        self.view           = View(config.editor.mode)
+        self.view           = View(conf.editor.mode)
 
     def _on_close_button_clicked(self, *args):
         """Emit closed signal."""

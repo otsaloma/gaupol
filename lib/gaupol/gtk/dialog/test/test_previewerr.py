@@ -18,9 +18,9 @@
 
 import gtk
 
-from gaupol.gtk.dialog.previewerror import PreviewErrorDialog
-from gaupol.gtk.util                import gtklib
-from gaupol.test                    import Test
+from gaupol.gtk.dialog.previewerr import PreviewErrorDialog
+from gaupol.gtk.util              import gtklib
+from gaupol.test                  import Test
 
 
 class TestPreviewErrorDialog(Test):

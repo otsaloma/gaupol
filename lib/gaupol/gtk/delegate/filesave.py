@@ -25,7 +25,7 @@ import os
 import gtk
 
 from gaupol.base.util          import enclib
-from gaupol.gtk.colcons        import *
+from gaupol.gtk.icons          import *
 from gaupol.gtk.delegate       import Delegate, UIMAction
 from gaupol.gtk.dialog.file    import SaveFileDialog
 from gaupol.gtk.dialog.header  import HeaderDialog

@@ -10,7 +10,7 @@ test_format.pyc
 test_help.pyc
 test_menuupdate.pyc
 test_position.pyc
-test_preferences.pyc
+test_pref.pyc
 test_preview.pyc
 test_spellcheck.pyc
 test_view.pyc

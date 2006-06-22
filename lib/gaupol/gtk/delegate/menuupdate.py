@@ -26,7 +26,7 @@ import gtk
 
 from gaupol.gtk          import cons
 from gaupol.gtk.delegate import Delegate
-from gaupol.gtk.util     import config
+from gaupol.gtk.util     import conf
 
 
 class MenuUpdateDelegate(Delegate):
@@ -118,7 +118,7 @@ class MenuUpdateDelegate(Delegate):
 
         menu = gtk.Menu()
         self.validate_recent()
-        for path in config.file.recent:
+        for path in conf.file.recents:
             basename = os.path.basename(path)
             if len(basename) > 100:
                 basename = basename[:50] + '...' + basename[-50:]
@@ -142,7 +142,7 @@ class MenuUpdateDelegate(Delegate):
         Show file menu adding recent files.
 
         File action name fields are integers matching the file's index in
-        config.file.recent and action fields are "open_recent_file_N".
+        conf.file.recents and action fields are "open_recent_file_N".
         """
         action_group = self._get_action_group('recent')
         for action in action_group.list_actions():
@@ -152,7 +152,7 @@ class MenuUpdateDelegate(Delegate):
 
         actions = []
         self.validate_recent()
-        for i, path in enumerate(config.file.recent):
+        for i, path in enumerate(conf.file.recents):
             basename = os.path.basename(path)
             label = '%d. %s' % (i + 1, basename)
             if len(label) > 40:
@@ -171,7 +171,7 @@ class MenuUpdateDelegate(Delegate):
         action_group.add_actions(actions)
 
         ui = ''
-        for i in range(len(config.file.recent)):
+        for i in range(len(conf.file.recents)):
             ui += '<menuitem name="%d" action="open_recent_file_%d"/>' % (i, i)
         ui = '''
         <ui><menubar><menu name="file" action="show_file_menu">
@@ -179,7 +179,7 @@ class MenuUpdateDelegate(Delegate):
         </menu></menubar></ui>''' % ui
         self._recent_id = self._uim.add_ui_from_string(ui)
 
-        for i in range(len(config.file.recent)):
+        for i in range(len(conf.file.recents)):
             path = '/ui/menubar/file/recent/%d' % i
             action = self._uim.get_action(path)
             widget = self._uim.get_widget(path)

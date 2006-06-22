@@ -24,7 +24,7 @@ from gettext import gettext as _
 import gobject
 import gtk
 
-from gaupol.gtk.util import config, gtklib
+from gaupol.gtk.util import conf, gtklib
 
 
 class OutputWindow(gobject.GObject):
@@ -55,9 +55,9 @@ class OutputWindow(gobject.GObject):
     def _init_sizes(self):
         """Initialize widget sizes."""
 
-        self._window.resize(*config.output_window.size)
-        self._window.move(*config.output_window.position)
-        if config.output_window.maximized:
+        self._window.resize(*conf.output_window.size)
+        self._window.move(*conf.output_window.position)
+        if conf.output_window.maximized:
             self._window.maximize()
 
     def _init_keys(self):
@@ -129,7 +129,7 @@ class OutputWindow(gobject.GObject):
 
         state = event.new_window_state
         maximized = bool(state & gtk.gdk.WINDOW_STATE_MAXIMIZED)
-        config.output_window.maximized = maximized
+        conf.output_window.maximized = maximized
 
     def get_position(self):
         """Get window position."""

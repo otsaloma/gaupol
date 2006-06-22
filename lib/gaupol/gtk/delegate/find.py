@@ -25,7 +25,7 @@ import gtk
 
 from gaupol.gtk.delegate    import Delegate, UIMAction
 from gaupol.gtk.dialog.find import FindDialog, ReplaceDialog
-from gaupol.gtk.util        import config, gtklib
+from gaupol.gtk.util        import conf, gtklib
 
 
 class FindAction(UIMAction):
@@ -71,7 +71,7 @@ class FindNextAction(UIMAction):
 
         if page is None:
             return False
-        return bool(config.find.pattern)
+        return bool(conf.find.pattern)
 
 
 class FindPreviousAction(UIMAction):
@@ -95,7 +95,7 @@ class FindPreviousAction(UIMAction):
 
         if page is None:
             return False
-        return bool(config.find.pattern)
+        return bool(conf.find.pattern)
 
 
 class ReplaceAction(UIMAction):

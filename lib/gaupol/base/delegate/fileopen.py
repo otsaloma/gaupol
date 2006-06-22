@@ -20,7 +20,7 @@
 
 
 from gaupol.base                 import cons
-from gaupol.base.colcons         import *
+from gaupol.base.icons           import *
 from gaupol.base.delegate        import Delegate
 from gaupol.base.file.classes    import *
 from gaupol.base.file.determiner import FileFormatDeterminer
