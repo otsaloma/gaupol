@@ -24,40 +24,47 @@ class TagLibrary(object):
     """
     Base class for subtitle tag libraries.
 
-    In the special case that a format does not contain any tags, this class can
-    simply be subclassed with a pass statement. Or not.
+    Class variables:
+
+        tag:         Regular expression pattern, flags
+        italic_tag:  Regular expression pattern, flags
+        decode_tags: List of tuples: pattern, flags, replacement[, count]
+        encode_tags: List of tuples: pattern, flags, replacement[, count]
 
     decode_tags is a list of regular expressions that convert tags to the
     internal format. encode_tags convert from the internal format to the
     class's format. The fourth item in the decode_tags and encode_tags tuple is
-    an optional integer that describes how many times the substitution should
-    be performed (default is one).
+    an optional integer that tells how many times the substitution should be
+    performed (default is one).
 
     pre- and post, -decode and -encode functions can be used to perform
     arbitrary tasks in tag conversion. pre-methods are run before regular
     exressions and post-methods after.
     """
 
-    # Pattern, Flags
     tag        = '', 0
     italic_tag = '', 0
 
-    @staticmethod
-    def pre_decode(text):
+    @classmethod
+    def pre_decode(cls, text):
+        """Convert tags."""
+
         return text
 
-    # List of tuples (pattern, flags, replacement, [count])
     decode_tags = []
 
-    @staticmethod
-    def post_decode(text):
+    @classmethod
+    def post_decode(cls, text):
+        """Convert tags."""
+
         return text
 
-    @staticmethod
-    def pre_encode(text):
+    @classmethod
+    def pre_encode(cls, text):
+        """Convert tags."""
+
         return text
 
-    # List of tuples (pattern, flags, replacement, [count])
     encode_tags = [
         (
             # Remove all tags.
@@ -66,11 +73,14 @@ class TagLibrary(object):
         )
     ]
 
-    @staticmethod
-    def post_encode(text):
+    @classmethod
+    def post_encode(cls, text):
+        """Convert tags."""
+
         return text
 
-    @staticmethod
-    def italicize(text):
+    @classmethod
+    def italicize(cls, text):
         """Italicize text."""
+
         return text

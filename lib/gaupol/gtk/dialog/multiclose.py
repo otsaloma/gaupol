@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,74 +16,53 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Dialog for warning when trying to close multiple documents."""
+"""Dialog for warning when closing multiple documents."""
 
-
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
 
 import gobject
 import gtk
 
-from gaupol.gtk.cons import *
-from gaupol.gtk.util  import gtklib
-
-
-PAGE, NAME = 0, 1
-SAVE       = 0
+from gaupol.gtk.util import gtklib
 
 
 class MultiCloseWarningDialog(object):
 
-    """
-    Dialog for warning when trying to close multiple documents.
-
-    Will be displayed when quitting, or when closing a tab with at least two
-    documents open with unsaved changes.
-    """
+    """Dialog for warning when closing multiple documents."""
 
     def __init__(self, parent, pages):
 
+        self._main_pages = []
+        self._tran_pages = []
+
         glade_xml = gtklib.get_glade_xml('multiclose-dialog')
-
-        self._dialog    = glade_xml.get_widget('dialog')
-        self._main_view = glade_xml.get_widget('main_tree_view')
-        self._tran_view = glade_xml.get_widget('translation_tree_view')
-
-        # Lists of tuples (page, basename)
-        self._main_data = []
-        self._tran_data = []
+        self._dialog         = glade_xml.get_widget('dialog')
+        self._main_tree_view = glade_xml.get_widget('main_tree_view')
+        self._tran_tree_view = glade_xml.get_widget('tran_tree_view')
 
         self._init_data(pages)
-        self._init_main_view(glade_xml)
-        self._init_tran_view(glade_xml)
+        self._init_main_tree_view(glade_xml)
+        self._init_tran_tree_view(glade_xml)
         self._init_sizes()
-
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_YES)
 
     def _init_data(self, pages):
-        """Initialize document lists"""
+        """Initialize page lists"""
 
-        # List pages with unsaved changes.
         for page in pages:
             if page.project.main_changed:
-                self._main_data.append((page, page.get_main_basename()))
+                self._main_pages.append(page)
             if page.project.tran_active and page.project.tran_changed:
-                self._tran_data.append((page, page.get_translation_basename()))
+                self._tran_pages.append(page)
 
-    def _init_main_view(self, glade_xml):
-        """Initialize the list of main documents."""
+    def _init_main_tree_view(self, glade_xml):
+        """Initialize main tree view."""
 
-        view, store = self._init_view(self._main_view)
-        for page, basename in self._main_data:
-            store.append([True, basename])
-
+        store = self._init_tree_view(self._main_tree_view)
+        for page in self._main_pages:
+            store.append([True, page.get_main_basename()])
         if len(store) == 0:
-            glade_xml.get_widget('main_label').hide()
-            glade_xml.get_widget('main_scrolled_window').hide()
+            glade_xml.get_widget('main_vbox').hide()
 
     def _init_sizes(self):
         """Initialize widget sizes."""
@@ -94,147 +73,88 @@ class MultiCloseWarningDialog(object):
         tran_height  = 0
         height_extra = 136
 
-        # Get desired sizes for scrolled windows.
-        size = gtklib.get_tree_view_size
-        if self._main_data:
-            main_width, main_height = size(self._main_view)
+        get_size = gtklib.get_tree_view_size
+        if self._main_pages:
+            main_width, main_height = get_size(self._main_tree_view)
             height_extra += 32
-        if self._tran_data:
-            tran_width, tran_height = size(self._tran_view)
+        if self._tran_pages:
+            tran_width, tran_height = get_size(self._tran_tree_view)
             height_extra += 32
 
-        # Get desired dialog size.
-        width  = max(main_width, tran_width) + 88 + gtklib.EXTRA
-        height = main_height + tran_height + height_extra + gtklib.EXTRA
+        width = max(main_width, tran_width) + 88 + gtklib.EXTRA
+        height = main_height + tran_height + 136 + gtklib.EXTRA
         gtklib.resize_message_dialog(self._dialog, width, height)
 
-    def _init_tran_view(self, glade_xml):
-        """Initialize the list of translation documents."""
+    def _init_tran_tree_view(self, glade_xml):
+        """Initialize translation tree view."""
 
-        view, store = self._init_view(self._tran_view)
-        for page, basename in self._tran_data:
-            store.append([True, basename])
-
+        store = self._init_tree_view(self._tran_tree_view)
+        for page in self._tran_pages:
+            store.append([True, page.get_translation_basename()])
         if len(store) == 0:
-            glade_xml.get_widget('translation_label').hide()
-            glade_xml.get_widget('translation_scrolled_window').hide()
+            glade_xml.get_widget('tran_vbox').hide()
 
-    def _init_view(self, view):
+    def _init_tree_view(self, tree_view):
         """
-        Initialize a document list.
+        Initialize tree view.
 
-        Return view, store.
+        Return store.
         """
-        view.columns_autosize()
-        view.set_headers_visible(False)
+        tree_view.columns_autosize()
+        tree_view.set_headers_visible(False)
         store = gtk.ListStore(gobject.TYPE_BOOLEAN, gobject.TYPE_STRING)
-        view.set_model(store)
+        tree_view.set_model(store)
 
-        selection = view.get_selection()
+        selection = tree_view.get_selection()
         selection.set_mode(gtk.SELECTION_SINGLE)
         selection.unselect_all()
 
-        cell_renderer_0 = gtk.CellRendererToggle()
-        cell_renderer_0.props.activatable = True
-        cell_renderer_0.connect('toggled', self._on_view_cell_toggled, store)
-        cell_renderer_1 = gtk.CellRendererText()
+        cr_toggle = gtk.CellRendererToggle()
+        cr_toggle.props.activatable = True
+        cr_toggle.connect('toggled', self._on_tree_view_cell_toggled, store)
+        column = gtk.TreeViewColumn('', cr_toggle, active=0)
+        tree_view.append_column(column)
+        column = gtk.TreeViewColumn('', gtk.CellRendererText(), text=1)
+        tree_view.append_column(column)
 
-        tree_view_column_0 = gtk.TreeViewColumn('', cell_renderer_0, active=0)
-        tree_view_column_1 = gtk.TreeViewColumn('', cell_renderer_1,   text=1)
-        view.append_column(tree_view_column_0)
-        view.append_column(tree_view_column_1)
+        return store
 
-        return view, store
+    def _on_tree_view_cell_toggled(self, cell_renderer, row, store):
+        """Toggle check value."""
 
-    def destroy(self):
-        """Destroy the dialog."""
-
-        self._dialog.destroy()
-
-    def get_main_pages_to_save(self):
-        """Get pages, whose main files were chosen to be saved."""
-
-        store = self._main_view.get_model()
-        pages = []
-
-        for i in range(len(store)):
-            if store[i][SAVE]:
-                pages.append(self._main_data[i][PAGE])
-
-        return pages
-
-    def get_translation_pages_to_save(self):
-        """Get pages, whose translation files were chosen to be saved."""
-
-        store = self._tran_view.get_model()
-        pages = []
-
-        for i in range(len(store)):
-            if store[i][SAVE]:
-                pages.append(self._tran_data[i][PAGE])
-
-        return pages
-
-    def _on_view_cell_toggled(self, cell_renderer, row, store):
-        """Toggle the value on the check button column."""
-
-        store[row][SAVE] = not store[row][SAVE]
-
-        mains = self.get_main_pages_to_save()
-        trans = self.get_translation_pages_to_save()
+        store[row][0] = not store[row][0]
+        mains = self.get_main_pages()
+        trans = self.get_translation_pages()
         sensitive = bool(mains or trans)
         self._dialog.set_response_sensitive(gtk.RESPONSE_YES, sensitive)
 
-    def run(self):
-        """Run the dialog."""
+    def destroy(self):
+        """Destroy dialog."""
 
-        self._main_view.grab_focus()
+        self._dialog.destroy()
+
+    def get_main_pages(self):
+        """Get pages, with main files to save."""
+
+        pages = []
+        store = self._main_tree_view.get_model()
+        for i in range(len(store)):
+            if store[i][0]:
+                pages.append(self._main_pages[i])
+        return pages
+
+    def get_translation_pages(self):
+        """Get pages, with translation files to save."""
+
+        pages = []
+        store = self._tran_tree_view.get_model()
+        for i in range(len(store)):
+            if store[i][0]:
+                pages.append(self._tran_pages[i])
+        return pages
+
+    def run(self):
+        """Run dialog."""
+
         self._dialog.show()
         return self._dialog.run()
-
-
-if __name__ == '__main__':
-
-    from gaupol.gtk.page import Page
-    from gaupol.test     import Test
-
-    class TestMultiCloseWarningDialog(Test):
-
-        def __init__(self):
-
-            Test.__init__(self)
-
-            page_1 = Page()
-            page_1.project = self.get_project()
-            page_1.project.remove_subtitles([1])
-
-            page_2 = Page()
-            page_2.project = self.get_project()
-            page_2.project.remove_subtitles([1])
-
-            self.pages  = [page_1, page_2]
-            self.dialog = MultiCloseWarningDialog(gtk.Window(), self.pages)
-
-        def test_get_main_pages_to_save(self):
-
-            pages = self.dialog.get_main_pages_to_save()
-            assert pages == self.pages
-
-        def test_get_translation_pages_to_save(self):
-
-            pages = self.dialog.get_translation_pages_to_save()
-            assert pages == self.pages
-
-        def test_signals(self):
-
-            selection = self.dialog._main_view.get_selection()
-            selection.unselect_all()
-            selection.select_path(0)
-            selection.select_path(1)
-
-            selection = self.dialog._tran_view.get_selection()
-            selection.unselect_all()
-            selection.select_path(0)
-            selection.select_path(1)
-
-    TestMultiCloseWarningDialog().run()

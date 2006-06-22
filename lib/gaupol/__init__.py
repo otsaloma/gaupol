@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Subtitle editor for text-based subtitle files."""
+"""Editor for text-based subtitle files."""
 
 
 __version__ = '0.4.1'

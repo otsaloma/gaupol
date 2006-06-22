@@ -25,7 +25,7 @@ from gaupol.base.tags          import TagLibrary
 from gaupol.base.tags.internal import Internal
 
 
-COMMON = re.MULTILINE|re.DOTALL
+_COMMON = re.MULTILINE|re.DOTALL
 
 
 class SubStationAlpha(TagLibrary):
@@ -35,8 +35,8 @@ class SubStationAlpha(TagLibrary):
     tag        = r'\{.*?\}'    , 0
     italic_tag = r'\{\\i[01]\}', re.IGNORECASE
 
-    @staticmethod
-    def pre_decode(text):
+    @classmethod
+    def pre_decode(cls, text):
         """Break combined tags, e.g. {\\b1i1} to {\\b1}{\\i1}."""
 
         parts = text.split('\\')
@@ -48,7 +48,6 @@ class SubStationAlpha(TagLibrary):
             closing_index = text_so_far.rfind('}')
             if opening_index > closing_index:
                 parts[i - 1] += '}{'
-
         return '\\'.join(parts)
 
     # Decode tags leave </> for reset and a lot of tags unclosed.
@@ -88,8 +87,8 @@ class SubStationAlpha(TagLibrary):
         )
     ]
 
-    @staticmethod
-    def post_decode(text):
+    @classmethod
+    def post_decode(cls, text):
         """Fix/add closing tags."""
 
         re_opening_tag = re.compile(*Internal.opening_tag)
@@ -120,25 +119,24 @@ class SubStationAlpha(TagLibrary):
 
         return ''.join(parts)
 
-    @staticmethod
-    def pre_encode(text):
+    @classmethod
+    def pre_encode(cls, text):
         """Remove pointless closing tags at the end of the text."""
 
         re_closing_tag_end = re.compile(*Internal.closing_tag_end)
         while re_closing_tag_end.search(text):
             text = re_closing_tag_end.sub('', text)
-
         return text
 
     encode_tags = [
         (
             # Remove duplicate style tags (e.g. <b>foo</b><b>bar</b>).
-            r'</(b|i|u)>(\n?)<\1>', COMMON,
+            r'</(b|i|u)>(\n?)<\1>', _COMMON,
             r'\2',
             3
         ), (
             # Remove other duplicate tags.
-            r'<(.*?)=(.*?)>(.*?)</\1>(\n?)<\1=\2>', COMMON,
+            r'<(.*?)=(.*?)>(.*?)</\1>(\n?)<\1=\2>', _COMMON,
             r'<\1=\2>\3\4',
             3
         ), (
@@ -174,8 +172,8 @@ class SubStationAlpha(TagLibrary):
         )
     ]
 
-    @staticmethod
-    def italicize(text):
+    @classmethod
+    def italicize(cls, text):
         """Italicize text."""
 
         return u'{\\i1}%s' % text

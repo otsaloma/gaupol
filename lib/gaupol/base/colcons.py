@@ -16,14 +16,17 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Position column constants."""
+"""Column index constants."""
 
 
 from gaupol.base import cons
 
 
-__all__ = ['SHOW', 'HIDE', 'DURN']
+__all__ = ['SHOW', 'HIDE', 'DURN', 'MAIN', 'TRAN']
 
 SHOW = cons.Column.SHOW
 HIDE = cons.Column.HIDE
 DURN = cons.Column.DURN
+
+MAIN = cons.Document.MAIN
+TRAN = cons.Document.TRAN

@@ -30,6 +30,29 @@ class FileOpenDelegate(Delegate):
 
     """Opening subtitle files."""
 
+    def _sort_data(self, shows, hides, texts):
+        """
+        Sort data based on show times/frames.
+
+        Return shows, hides, texts, resorts.
+        """
+        class Count(object):
+            resorts = 0
+
+        def sort(x, y):
+            value = cmp(x[0], y[0])
+            if value == -1:
+                Count.resorts += 1
+            return value
+
+        data = list([shows[i], hides[i], texts[i]] for i in range(len(shows)))
+        data.sort(sort)
+        shows = list(x[0] for x in data)
+        hides = list(x[1] for x in data)
+        texts = list(x[2] for x in data)
+
+        return shows, hides, texts, Count.resorts
+
     def open_main_file(self, path, encoding):
         """
         Open main file reading times/frames and texts.
@@ -83,26 +106,3 @@ class FileOpenDelegate(Delegate):
         self.tran_active = True
         self.tran_changed = 0
         return resorts
-
-    def _sort_data(self, shows, hides, texts):
-        """
-        Sort data based on show times/frames.
-
-        Return shows, hides, texts, resorts.
-        """
-        class Count(object):
-            resorts = 0
-
-        def sort(x, y):
-            value = cmp(x[0], y[0])
-            if value == -1:
-                Count.resorts += 1
-            return value
-
-        data = list([shows[i], hides[i], texts[i]] for i in range(len(shows)))
-        data.sort(sort)
-        shows = list(x[0] for x in data)
-        hides = list(x[1] for x in data)
-        texts = list(x[2] for x in data)
-
-        return shows, hides, texts, Count.resorts

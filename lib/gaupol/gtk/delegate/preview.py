@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -19,26 +19,19 @@
 """Previewing subtitles with video player."""
 
 
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
-
 from gettext import gettext as _
 import copy
+import os
 import tempfile
-import threading
 
 import gobject
 import gtk
-import pango
 
-from gaupol.gtk.colcons import *
-from gaupol.base.error               import ExternalError
-from gaupol.gtk.cons         import *
+from gaupol.gtk                      import cons
+from gaupol.gtk.colcons              import *
 from gaupol.gtk.delegate             import Delegate, UIMAction
-from gaupol.gtk.dialog.message      import ErrorDialog
-from gaupol.gtk.dialog.previewerror import PreviewErrorDialog
+from gaupol.gtk.dialog.message       import ErrorDialog
+from gaupol.gtk.dialog.previewerror  import PreviewErrorDialog
 from gaupol.gtk.util                 import config, gtklib
 
 
@@ -46,24 +39,24 @@ class PreviewAction(UIMAction):
 
     """Previewing subtitles with video player."""
 
-    uim_action_item = (
+    action_item = (
         'preview',
         gtk.STOCK_MEDIA_PLAY,
         _('_Preview'),
         'F6',
         _('Preview from selected position with a video player'),
-        'on_preview_activated'
+        'on_preview_activate'
     )
 
-    uim_paths = [
+    paths = [
         '/ui/menubar/tools/preview',
         '/ui/main_toolbar/preview',
         '/ui/view/preview'
     ]
 
     @classmethod
-    def is_doable(cls, application, page):
-        """Return whether action can or cannot be done."""
+    def is_doable(cls, app, page):
+        """Return action doability."""
 
         if page is None:
             return False
@@ -71,9 +64,11 @@ class PreviewAction(UIMAction):
             return False
         if not page.view.get_selected_rows():
             return False
+        if not config.preview.use_predefined:
+            if not config.preview.custom_command:
+                return False
 
-        focus_col = page.view.get_focus()[1]
-        if focus_col == TTXT:
+        if page.view.get_focus()[1] == TTXT:
             if page.project.tran_file is None:
                 return False
         else:
@@ -83,156 +78,103 @@ class PreviewAction(UIMAction):
         return True
 
 
-class IOErrorDialog(ErrorDialog):
+class _IOErrorDialog(ErrorDialog):
 
-    """Dialog to inform that IOError occured while saving file."""
+    """Dialog for informing that IOError occured while saving file."""
 
     def __init__(self, parent, message):
 
-        title   = _('Failed to save subtitle file to temporary directory '
-                    '"%s"') % tempfile.gettempdir()
-        message = _('%s.') % message
-        ErrorDialog.__init__(self, parent, title, message)
+        ErrorDialog.__init__(
+            self, parent,
+            _('Failed to save subtitle file to temporary directory "%s"') \
+            % tempfile.gettempdir(),
+            _('%s.') % message
+        )
 
 
-class UnicodeErrorDialog(ErrorDialog):
+class _UnicodeErrorDialog(ErrorDialog):
 
-    """Dialog to inform that UnicodeError occured while saving file."""
+    """Dialog for informing that UnicodeError occured while saving file."""
 
     def __init__(self, parent):
 
-        title   = _('Failed to encode subtitle file to temporary directory '
-                    '"%s"') % tempfile.gettempdir()
-        message = _('Current data cannot be encoded to a temporary subtitle '
-                    'file for preview with the current character encoding. '
-                    'Please first save the subtitle file with a different '
-                    'character encoding.')
-        ErrorDialog.__init__(self, parent, title, message)
+        ErrorDialog.__init__(
+            self, parent,
+            _('Failed to encode subtitle file to temporary directory "%s"') \
+            % tempfile.gettempdir(),
+            _('Current data could not be encoded to a temporary subtitle file '
+              'for preview with the current character encoding. Please first '
+              'save the subtitle file with a different character encoding.')
+        )
 
 
 class PreviewDelegate(Delegate):
 
     """Previewing subtitles with video player."""
 
-    def on_preview_activated(self, *args):
+    def _post_process(self, pid, return_value, data):
+        """Process finished preview data."""
+
+        command, output_path, temp_path = data
+        fobj = open(output_path, 'r')
+        output = fobj.read()
+        fobj.close()
+
+        for path in (output_path, temp_path):
+            try:
+                os.remove(path)
+            except (OSError, TypeError):
+                pass
+
+        output = '$ ' + command + '\n\n' + output
+        self._output_window.set_output(output)
+        if return_value != 0:
+            gtklib.run(PreviewErrorDialog(self._window, output))
+
+    def _run_preview(self, page, time, doc, path=None):
+        """Run preview with video player."""
+
+        if config.preview.use_predefined:
+            command = cons.VideoPlayer.commands[config.preview.video_player]
+        else:
+            command = config.preview.custom_command
+        offset = config.preview.offset
+
+        try:
+            output = page.project.preview(time, doc, command, offset, path)
+            pid, command, output_path, temp_path = output
+        except IOError, (no, message):
+            gtklib.run(_IOErrorDialog(self._window, message))
+        except UnicodeError:
+            gtklib.run(_UnicodeErrorDialog(self._window))
+        else:
+            data = [command, output_path, temp_path]
+            gobject.child_watch_add(pid, self._post_process, data)
+
+    def on_preview_activate(self, *args):
         """Preview subtitles with video player."""
 
         page = self.get_current_page()
         row  = page.view.get_selected_rows()[0]
         time = page.project.times[row][0]
         col  = page.view.get_focus()[1]
-        document = max(0, col - 4)
+        doc  = max(0, col - 4)
 
-        args = page, time, document
-        thread = threading.Thread(target=self._run_preview, args=args)
-        thread.start()
+        self._run_preview(page, time, doc)
 
-    def preview_changes(self, page, row, document, method, args=[], kwargs={}):
-        """Start threaded preview with video player."""
+    def preview_changes(self, page, row, doc, method, args=[], kwargs={}):
+        """Preview changes caused by method with video player."""
 
-        # Backup original data.
-        times      = copy.deepcopy(page.project.times)
-        frames     = copy.deepcopy(page.project.frames)
+        times = copy.deepcopy(page.project.times)
+        frames = copy.deepcopy(page.project.frames)
         main_texts = copy.deepcopy(page.project.main_texts)
 
-        # Change data.
         kwargs['register'] = None
         method(*args, **kwargs)
-        path = page.project.get_temp_file_path(document)
+        path = page.project.get_temp_file_path(doc)
         time = page.project.times[row][0]
 
-        # Restore original data.
-        page.project.times      = times
-        page.project.frames     = frames
+        page.project.times = times
+        page.project.frames = frames
         page.project.main_texts = main_texts
-
-        # Preview temporary file with changed data.
-        args = page, time, document, path
-        thread = threading.Thread(target=self._run_preview, args=args)
-        thread.start()
-
-    def _run_preview(self, page, time, document, path=None):
-        """Run preview with video player."""
-
-        if not config.Preview.use_predefined:
-            command = config.Preview.command
-        else:
-            video_player = config.Preview.video_player
-            command = VideoPlayer.commands[video_player]
-        offset = config.Preview.offset
-
-        try:
-            page.project.preview(time, document, command, offset, path)
-        except ExternalError:
-            self._show_command_error_dialog(page)
-        except IOError, (no, message):
-            self._show_io_error_dialog(message)
-        except UnicodeError:
-            self._show_unicode_error_dialog()
-        except ValueError:
-            # command was a blank string
-            pass
-
-        self._show_output(page)
-
-    @gtklib.idlemethod
-    def _show_command_error_dialog(self, page):
-        """Show CommandErrorDialog."""
-
-        dialog = PreviewErrorDialog(self.window, page.project.output)
-        dialog.run()
-        dialog.destroy()
-
-    @gtklib.idlemethod
-    def _show_io_error_dialog(self, message):
-        """Show IOErrorDialog."""
-
-        dialog = IOErrorDialog(self.window, message)
-        dialog.run()
-        dialog.destroy()
-
-    @gtklib.idlemethod
-    def _show_output(self, page):
-        """Show output in output window."""
-
-        self.output_window.set_output(page.project.output)
-
-    @gtklib.idlemethod
-    def _show_unicode_error_dialog(self):
-        """Show UnicodeErrorDialog."""
-
-        dialog = UnicodeErrorDialog(self.window)
-        dialog.run()
-        dialog.destroy()
-
-
-if __name__ == '__main__':
-
-    from gaupol.gtk.app import Application
-    from gaupol.test            import Test
-
-    class TestPreviewDelegate(Test):
-
-        def __init__(self):
-
-            Test.__init__(self)
-            self.application = Application()
-            self.application.open_main_files([self.get_subrip_path()])
-            self.delegate = PreviewDelegate(self.application)
-
-        def destroy(self):
-
-            self.application.window.destroy()
-
-        def test_dialogs(self):
-
-            page = self.application.get_current_page()
-            page.project.output = 'test'
-
-            self.delegate._show_command_error_dialog(page)
-            self.delegate._show_io_error_dialog('test')
-            self.delegate._show_output(page)
-            self.delegate._show_unicode_error_dialog()
-
-    TestPreviewDelegate().run()
-
+        self._run_preview(page, time, doc, path)

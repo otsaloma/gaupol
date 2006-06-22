@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -19,7 +19,7 @@
 """Extensions for gaupol.base.project.Project."""
 
 
-MODULES = (
+_MODULES = (
     'action',
     'edit',
     'fileopen',
@@ -37,6 +37,10 @@ class Delegate(object):
     """
     Base class for delegate classes.
 
+    Instance variables:
+
+        master: Master instance
+
     The purpose of the methods in this class is to provide direct access to
     the master class's attributes by redirecting all self.attribute calls not
     found in the delegate class.
@@ -46,13 +50,13 @@ class Delegate(object):
     # "Automatic delegation as an alternative to inheritance" by Alex Martelli
     # http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52295
 
-    def __init__(self, master):
-
-        self.__dict__['master'] = master
-
     def __getattr__(self, name):
 
         return getattr(self.master, name)
+
+    def __init__(self, master):
+
+        self.__dict__['master'] = master
 
     def __setattr__(self, name, value):
 
@@ -68,10 +72,10 @@ class Delegates(object):
     classes = []
 
 
-def list_delegate_classes():
+def list_classes():
     """List all delegate classes."""
 
-    for module_name in MODULES:
+    for module_name in _MODULES:
         path = 'gaupol.base.delegate.' + module_name
         module = __import__(path, None, None, [''])
         for name in dir(module):
@@ -85,4 +89,4 @@ def list_delegate_classes():
                 continue
 
 if not Delegates.classes:
-    list_delegate_classes()
+    list_classes()

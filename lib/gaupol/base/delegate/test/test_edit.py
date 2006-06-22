@@ -24,10 +24,6 @@ from gaupol.base.delegate.edit import EditDelegate
 from gaupol.test               import Test
 
 
-MAIN = cons.Document.MAIN
-TRAN = cons.Document.TRAN
-
-
 class TestEditDelegate(Test):
 
     def setup_method(self, method):
@@ -38,6 +34,58 @@ class TestEditDelegate(Test):
         for i in range(len(self.project.main_texts)):
             self.project.main_texts[i] = 'test'
             self.project.tran_texts[i] = 'test'
+
+    def test_insert_blank(self):
+
+        self.project.insert_subtitles([1, 2])
+        assert self.project.main_texts[1] == ''
+        assert self.project.main_texts[2] == ''
+
+        self.project.undo()
+        assert self.project.main_texts[1] == 'test'
+        assert self.project.main_texts[2] == 'test'
+
+        self.project.redo()
+        assert self.project.main_texts[1] == ''
+        assert self.project.main_texts[2] == ''
+
+    def test_insert_data(self):
+
+        self.project.insert_subtitles(
+            [0, 1],
+            ['00:00:00:000', '00:00:00:100'],
+            [0, 1],
+            ['0', '1'],
+            ['0', '1']
+
+        )
+        assert self.project.main_texts[0] == '0'
+        assert self.project.main_texts[1] == '1'
+
+        self.project.undo()
+        assert self.project.main_texts[0] == 'test'
+        assert self.project.main_texts[1] == 'test'
+
+        self.project.redo()
+        assert self.project.main_texts[0] == '0'
+        assert self.project.main_texts[1] == '1'
+
+    def test_sort_data(self):
+
+        last = len(self.project.times) - 1
+        orig_times = copy.deepcopy(self.project.times)
+        self.project.main_texts[0] = 'first'
+        self.project.set_frame(0, SHOW, 999999999999)
+        assert self.project.times[:last] == orig_times[1:]
+        assert self.project.main_texts[last] == 'first'
+
+        self.project.undo()
+        assert self.project.times[1:] == orig_times[1:]
+        assert self.project.main_texts[0] == 'first'
+
+        self.project.redo()
+        assert self.project.times[:last] == orig_times[1:]
+        assert self.project.main_texts[last] == 'first'
 
     def test_clear_texts(self):
 
@@ -89,19 +137,19 @@ class TestEditDelegate(Test):
         assert frames == [10, 100, 90]
         assert times  == list(calc.frame_to_time(x) for x in frames)
 
-        show = '00:00:01,000'
-        hide = '00:01:00,000'
+        show = '00:00:01.000'
+        hide = '00:01:00.000'
         times, frames = self.project.expand_positions(show, hide)
-        assert times  == [show, hide, '00:00:59,000']
+        assert times  == [show, hide, '00:00:59.000']
         assert frames == list(calc.time_to_frame(x) for x in times)
 
     def test_expand_times(self):
 
         calc = self.project.calc
-        show = '00:00:01,000'
-        hide = '00:01:00,000'
+        show = '00:00:01.000'
+        hide = '00:01:00.000'
         times, frames = self.project.expand_times(show, hide)
-        assert times  == [show, hide, '00:00:59,000']
+        assert times  == [show, hide, '00:00:59.000']
         assert frames == list(calc.time_to_frame(x) for x in times)
 
     def test_get_mode(self):
@@ -114,45 +162,10 @@ class TestEditDelegate(Test):
         positions = self.project.get_positions()
         assert positions in (self.project.times, self.project.frames)
 
-    def test_insert_blank(self):
-
-        self.project.insert_subtitles([1, 2])
-        assert self.project.main_texts[1] == ''
-        assert self.project.main_texts[2] == ''
-
-        self.project.undo()
-        assert self.project.main_texts[1] == 'test'
-        assert self.project.main_texts[2] == 'test'
-
-        self.project.redo()
-        assert self.project.main_texts[1] == ''
-        assert self.project.main_texts[2] == ''
-
-    def test_insert_data(self):
-
-        self.project.insert_subtitles(
-            [0, 1],
-            ['00:00:00:000', '00:00:00:100'],
-            [0, 1],
-            ['0', '1'],
-            ['0', '1']
-
-        )
-        assert self.project.main_texts[0] == '0'
-        assert self.project.main_texts[1] == '1'
-
-        self.project.undo()
-        assert self.project.main_texts[0] == 'test'
-        assert self.project.main_texts[1] == 'test'
-
-        self.project.redo()
-        assert self.project.main_texts[0] == '0'
-        assert self.project.main_texts[1] == '1'
-
     def test_needs_resort(self):
 
-        assert self.project.needs_resort(0, '99:59:59,999') is True
-        assert self.project.needs_resort(0, '00:00:00,000') is False
+        assert self.project.needs_resort(0, '99:59:59.999') is True
+        assert self.project.needs_resort(0, '00:00:00.000') is False
 
     def test_paste_texts(self):
 
@@ -221,8 +234,8 @@ class TestEditDelegate(Test):
 
         orig_time  = self.project.times[0]
         orig_frame = self.project.frames[0]
-        self.project.replace_positions([0], ['00:00:00,000'], [0])
-        assert self.project.times[0]  == '00:00:00,000'
+        self.project.replace_positions([0], ['00:00:00.000'], [0])
+        assert self.project.times[0]  == '00:00:00.000'
         assert self.project.frames[0] == 0
 
         self.project.undo()
@@ -230,7 +243,7 @@ class TestEditDelegate(Test):
         assert self.project.frames[0] == orig_frame
 
         self.project.redo()
-        assert self.project.times[0]  == '00:00:00,000'
+        assert self.project.times[0]  == '00:00:00.000'
         assert self.project.frames[0] == 0
 
     def test_replace_texts(self):
@@ -290,9 +303,9 @@ class TestEditDelegate(Test):
         orig_hide_frame = self.project.frames[3][HIDE]
         orig_durn_frame = self.project.frames[3][DURN]
 
-        self.project.set_time(3, DURN, '33:33:33,333')
+        self.project.set_time(3, DURN, '33:33:33.333')
         assert self.project.times[3][HIDE]  >  orig_hide_time
-        assert self.project.times[3][DURN]  == '33:33:33,333'
+        assert self.project.times[3][DURN]  == '33:33:33.333'
         assert self.project.frames[3][HIDE] >  orig_hide_frame
         assert self.project.frames[3][DURN] >  orig_durn_frame
 
@@ -304,23 +317,6 @@ class TestEditDelegate(Test):
 
         self.project.redo()
         assert self.project.times[3][HIDE]  >  orig_hide_time
-        assert self.project.times[3][DURN]  == '33:33:33,333'
+        assert self.project.times[3][DURN]  == '33:33:33.333'
         assert self.project.frames[3][HIDE] >  orig_hide_frame
         assert self.project.frames[3][DURN] >  orig_durn_frame
-
-    def test_sort_data(self):
-
-        last = len(self.project.times) - 1
-        orig_times = copy.deepcopy(self.project.times)
-        self.project.main_texts[0] = 'first'
-        self.project.set_frame(0, SHOW, 999999999999)
-        assert self.project.times[:last] == orig_times[1:]
-        assert self.project.main_texts[last] == 'first'
-
-        self.project.undo()
-        assert self.project.times[1:] == orig_times[1:]
-        assert self.project.main_texts[0] == 'first'
-
-        self.project.redo()
-        assert self.project.times[:last] == orig_times[1:]
-        assert self.project.main_texts[last] == 'first'

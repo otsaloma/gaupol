@@ -27,22 +27,6 @@ class TestFileOpenDelegate(Test):
         self.project = self.get_project()
         self.delegate = FileOpenDelegate(self.project)
 
-    def test_open_main_file(self):
-
-        path = self.get_subrip_path()
-        self.project.open_main_file(path, 'utf_8')
-        assert self.project.times
-        assert self.project.frames
-        assert self.project.main_texts
-        assert self.project.tran_texts
-
-    def test_open_translation_file(self):
-
-        self.project.remove_subtitles([0, 1])
-        path = self.get_microdvd_path()
-        self.project.open_translation_file(path, 'utf_8')
-        assert self.project.tran_texts[0]
-
     def test_sort_data(self):
 
         sort = self.delegate._sort_data
@@ -64,3 +48,19 @@ class TestFileOpenDelegate(Test):
         assert hides == [ 2 ,  3 ,  4 ]
         assert texts == ['1', '2', '3']
         assert resorts > 0
+
+    def test_open_main_file(self):
+
+        path = self.get_subrip_path()
+        self.project.open_main_file(path, 'utf_8')
+        assert self.project.times
+        assert self.project.frames
+        assert self.project.main_texts
+        assert self.project.tran_texts
+
+    def test_open_translation_file(self):
+
+        self.project.remove_subtitles([0, 1])
+        path = self.get_microdvd_path()
+        self.project.open_translation_file(path, 'utf_8')
+        assert self.project.tran_texts[0]

@@ -22,6 +22,16 @@ from gaupol.test      import Test
 
 class TestModule(Test):
 
+    def test_translate(self):
+
+        entry = enclib._translate('ISO-8859-1')
+        assert entry[0] == 'latin_1'
+
+    def test_detect(self):
+
+        name = enclib.detect(self.get_subrip_path())
+        assert enclib.is_valid(name) is True
+
     def test_get_display_name(self):
 
         name = enclib.get_display_name('johab')
@@ -37,7 +47,7 @@ class TestModule(Test):
 
         entry = enclib.get_locale_encoding()
         assert len(entry) == 3
-        assert enclib.is_valid(entry[0])
+        assert enclib.is_valid(entry[0]) is True
 
     def test_get_locale_long_name(self):
 
@@ -72,7 +82,7 @@ class TestModule(Test):
         assert len(entries) > 10
         for entry in entries:
             assert len(entry) == 3
-            assert enclib.is_valid(entry[0])
+            assert enclib.is_valid(entry[0]) is True
 
     def test_is_valid(self):
 

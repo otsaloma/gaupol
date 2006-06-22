@@ -27,10 +27,17 @@ class Calculator(object):
     """
     Time and frame calculations.
 
-    time: string in format hh:mm:ss,sss
-    frame: integer
-    seconds: float
-    framerate: float
+    Formats:
+
+        frame:   Integer
+        seconds: Float
+        time:    String in format HH:MM:SS.SSS
+
+    Instance variables:
+
+        framerate: Float
+
+    All values must be positive. Time cannot exceed 99:59:59.999.
     """
 
     def __init__(self, framerate=None):
@@ -42,7 +49,7 @@ class Calculator(object):
     def add_seconds_to_time(self, time, seconds):
         """Add amount of seconds to time."""
 
-        seconds = max(0, self.time_to_seconds(time) + seconds)
+        seconds = max(self.time_to_seconds(time) + seconds, 0)
         return self.seconds_to_time(seconds)
 
     def add_times(self, x, y):
@@ -50,7 +57,7 @@ class Calculator(object):
 
         x = self.time_to_seconds(x)
         y = self.time_to_seconds(y)
-        return self.seconds_to_time(x + y)
+        return self.seconds_to_time(max(x + y, 0))
 
     def frame_to_seconds(self, frame):
         """Convert frame to seconds."""
@@ -64,24 +71,17 @@ class Calculator(object):
         return self.seconds_to_time(seconds)
 
     def get_frame_duration(self, x, y):
-        """
-        Get duration from frame x to frame y.
+        """Get duration from frame x to frame y."""
 
-        For negative durations, return zero (0).
-        """
-        return max(0, y - x)
+        return max(y - x, 0)
 
     def get_time_duration(self, x, y):
-        """
-        Get duration from time x to time y.
+        """Get duration from time x to time y."""
 
-        For negative durations, return zero (00:00:00,000).
-        """
         x = self.time_to_seconds(x)
         y = self.time_to_seconds(y)
-
         if x > y:
-            return '00:00:00,000'
+            return '00:00:00.000'
         return self.seconds_to_time(y - x)
 
     def round_time(self, time, decimals):
@@ -97,16 +97,13 @@ class Calculator(object):
         return int(round(seconds * self.framerate, 0))
 
     def seconds_to_time(self, seconds):
-        """
-        Convert seconds to time.
+        """Convert seconds to time."""
 
-        Do not return a time greater that 99:59:59,999.
-        """
         seconds = round(seconds, 3)
         if seconds > 359999.999:
-            return '99:59:59,999'
+            return '99:59:59.999'
 
-        return '%02.0f:%02.0f:%02.0f,%03.0f' % (
+        return '%02.0f:%02.0f:%02.0f.%03.0f' % (
             seconds // 3600,
             (seconds % 3600) // 60,
             int(seconds % 60),

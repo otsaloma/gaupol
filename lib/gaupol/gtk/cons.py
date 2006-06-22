@@ -47,6 +47,15 @@ class Column(cons.Section):
         _('Translation Text'),
     ]
 
+    uim_action_names = [
+        'toggle_number_column',
+        'toggle_show_column',
+        'toggle_hide_column',
+        'toggle_duration_column',
+        'toggle_main_text_column',
+        'toggle_translation_text_column',
+    ]
+
     uim_paths = [
         '/ui/menubar/view/columns/number',
         '/ui/menubar/view/columns/show',
@@ -69,6 +78,12 @@ class Format(cons.Format):
 
 class Framerate(cons.Framerate):
 
+    uim_action_names = [
+        'view_framerate_23_976',
+        'view_framerate_25',
+        'view_framerate_29_97',
+    ]
+
     uim_paths = [
         '/ui/menubar/view/framerate/23_976',
         '/ui/menubar/view/framerate/25',
@@ -77,6 +92,11 @@ class Framerate(cons.Framerate):
 
 
 class Mode(cons.Mode):
+
+    uim_action_names = [
+        'show_times',
+        'show_frames',
+    ]
 
     uim_paths = [
         '/ui/menubar/view/times',
@@ -91,9 +111,9 @@ class Newlines(cons.Newlines):
 
 class Target(cons.Section):
 
-    ALL_PROJECTS       = 0
-    CURRENT_PROJECT    = 1
-    SELECTED_SUBTITLES = 2
+    ALL      = 0
+    CURRENT  = 1
+    SELECTED = 2
 
 
 class VideoPlayer(cons.VideoPlayer):

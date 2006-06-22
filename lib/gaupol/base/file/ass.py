@@ -28,29 +28,7 @@ class AdvancedSubStationAlpha(SubStationAlpha):
     """Advanced Sub Station Alpha file."""
 
     format     = cons.Format.ASS
-    identifier = r'^ScriptType: v4.00\+\s*$', 0
-
-    header_template = \
-'''[Script Info]
-Title:
-Original Script:
-Original Translation:
-Original Editing:
-Original Timing:
-Synch Point:
-Script Updated By:
-Update Details:
-ScriptType: v4.00+
-Collisions: Normal
-PlayResY:
-PlayResX:
-PlayDepth:
-Timer: 100.0000
-WrapStyle:
-
-[V4+ Styles]
-Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Default,Arial,18,&H00ffffff,&H0000ffff,&H00000000,&H00000000,0,0,0,0,100,100,0,0.00,1,2,2,2,30,30,10,0'''
+    identifier = r'^ScriptType:\s+v4.00\+\s*$', 0
 
     event_fields = (
         'Layer',

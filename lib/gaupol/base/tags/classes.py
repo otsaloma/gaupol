@@ -29,9 +29,9 @@ from gaupol.base.tags.subviewer2 import SubViewer2
 
 __all__ = [
     'AdvancedSubStationAlpha',
-    'MicroDVD',
     'MPL2',
-    'SubStationAlpha',
+    'MicroDVD',
     'SubRip',
+    'SubStationAlpha',
     'SubViewer2',
 ]

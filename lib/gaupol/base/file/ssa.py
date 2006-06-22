@@ -29,33 +29,19 @@ from gaupol.base.position.calc import Calculator
 
 class SubStationAlpha(SubtitleFile):
 
-    """Sub Station Alpha file."""
+    """
+    Sub Station Alpha file.
+
+    Class variables:
+
+        event_fields: Tuple of names under "Events" section
+
+    """
 
     format     = cons.Format.SSA
-    mode       = cons.Mode.TIME
     has_header = True
     identifier = r'^ScriptType: v4.00\s*$', 0
-
-    header_template = \
-'''[Script Info]
-Title:
-Original Script:
-Original Translation:
-Original Editing:
-Original Timing:
-Synch Point:
-Script Updated By:
-Update Details:
-ScriptType: v4.00
-Collisions: Normal
-PlayResY:
-PlayResX:
-PlayDepth:
-Timer: 100.0000
-
-[V4 Styles]
-Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, TertiaryColour, BackColour, Bold, Italic, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, AlphaLevel, Encoding
-Style: Default,Arial,18,&Hffffff,&H00ffff,&H000000,&H000000,0,0,1,2,2,2,30,30,10,0,0'''
+    mode       = cons.Mode.TIME
 
     event_fields = (
         'Marked',
@@ -72,7 +58,7 @@ Style: Default,Arial,18,&Hffffff,&H00ffff,&H000000,&H000000,0,0,1,2,2,2,30,30,10
 
     def read(self):
         """
-        Read Sub Station Alpha file.
+        Read file.
 
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
@@ -115,16 +101,16 @@ Style: Default,Arial,18,&Hffffff,&H00ffff,&H000000,&H000000,0,0,1,2,2,2,30,30,10
         if header:
             self.header = header.strip()
 
-        shows = list('0' + x.replace('.', ',') + '0' for x in shows)
-        hides = list('0' + x.replace('.', ',') + '0' for x in hides)
-        texts = list(x.replace('\\n', '\n')          for x in texts)
-        texts = list(x.replace('\\N', '\n')          for x in texts)
+        shows = list('0' + x + '0' for x in shows)
+        hides = list('0' + x + '0' for x in hides)
+        texts = list(x.replace('\\n', '\n') for x in texts)
+        texts = list(x.replace('\\N', '\n') for x in texts)
 
         return shows, hides, texts
 
     def write(self, shows, hides, texts):
         """
-        Write Sub Station Alpha file.
+        Write file.
 
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
@@ -135,11 +121,11 @@ Style: Default,Arial,18,&Hffffff,&H00ffff,&H000000,&H000000,0,0,1,2,2,2,30,30,10
         newline_char = self._get_newline_character()
         calc = Calculator()
 
-        texts = list(x.replace('\n', '\\n')    for x in texts)
-        shows = list(calc.round_time(x, 2)     for x in shows)
-        hides = list(calc.round_time(x, 2)     for x in hides)
-        shows = list(x[1:11].replace(',', '.') for x in shows)
-        hides = list(x[1:11].replace(',', '.') for x in hides)
+        texts = list(x.replace('\n', '\\n') for x in texts)
+        shows = list(calc.round_time(x, 2) for x in shows)
+        hides = list(calc.round_time(x, 2) for x in hides)
+        shows = list(x[1:11] for x in shows)
+        hides = list(x[1:11] for x in hides)
 
         fobj = codecs.open(self.path, 'w', self.encoding)
         try:

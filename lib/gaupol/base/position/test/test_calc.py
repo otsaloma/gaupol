@@ -26,33 +26,26 @@ class TestCalculator(Test):
     def setup_method(self, method):
 
         self.calc = Calculator(cons.Framerate.FR_23_976)
-        self.framerate = cons.Framerate.values[cons.Framerate.FR_23_976]
-
-    def test_init(self):
-
-        Calculator()
-        for i in range(len(cons.Framerate.values)):
-            Calculator(i)
 
     def test_add_seconds_to_time(self):
 
-        time = self.calc.add_seconds_to_time('33:33:33,333', 5)
-        assert time == '33:33:38,333'
+        time = self.calc.add_seconds_to_time('33:33:33.333', 5)
+        assert time == '33:33:38.333'
 
     def test_add_times(self):
 
-        time = self.calc.add_times('33:33:33,333', '44:44:44,444')
-        assert time == '78:18:17,777'
+        time = self.calc.add_times('33:33:33.333', '44:44:44.444')
+        assert time == '78:18:17.777'
 
     def test_frame_to_seconds(self):
 
         seconds = self.calc.frame_to_seconds(333)
-        assert seconds == 333 / self.framerate
+        assert seconds == 333 / self.calc.framerate
 
     def test_frame_to_time(self):
 
         time = self.calc.frame_to_time(333333)
-        assert time == '03:51:42,778'
+        assert time == '03:51:42.778'
 
     def test_get_frame_duration(self):
 
@@ -64,16 +57,16 @@ class TestCalculator(Test):
 
     def test_get_time_duration(self):
 
-        duration = self.calc.get_time_duration('33:33:33,333', '44:44:44,444')
-        assert duration == '11:11:11,111'
+        duration = self.calc.get_time_duration('33:33:33.333', '44:44:44.444')
+        assert duration == '11:11:11.111'
 
-        duration = self.calc.get_time_duration('44:44:44,444', '33:33:33,333')
-        assert duration == '00:00:00,000'
+        duration = self.calc.get_time_duration('44:44:44.444', '33:33:33.333')
+        assert duration == '00:00:00.000'
 
     def test_round_time(self):
 
-        time = self.calc.round_time('33:33:33,333', 1)
-        assert time == '33:33:33,300'
+        time = self.calc.round_time('33:33:33.333', 1)
+        assert time == '33:33:33.300'
 
     def test_seconds_to_frame(self):
 
@@ -83,10 +76,10 @@ class TestCalculator(Test):
     def test_seconds_to_time(self):
 
         time = self.calc.seconds_to_time(33333.33)
-        assert time == '09:15:33,330'
+        assert time == '09:15:33.330'
 
         time = self.calc.seconds_to_time(999999)
-        assert time == '99:59:59,999'
+        assert time == '99:59:59.999'
 
     def test_set_framerate(self):
 
@@ -95,10 +88,10 @@ class TestCalculator(Test):
 
     def test_time_to_frame(self):
 
-        frame = self.calc.time_to_frame('33:33:33,333')
-        assert frame == int(round(120813.333 * self.framerate, 0))
+        frame = self.calc.time_to_frame('33:33:33.333')
+        assert frame == int(round(120813.333 * self.calc.framerate, 0))
 
     def test_time_to_seconds(self):
 
-        seconds = self.calc.time_to_seconds('33:33:33,333')
+        seconds = self.calc.time_to_seconds('33:33:33.333')
         assert seconds == 120813.333

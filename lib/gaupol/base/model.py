@@ -16,13 +16,22 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Base class for model classes."""
+"""Base class for models."""
 
 
 class Model(object):
 
     """
-    Base class for model classes.
+    Base class for models.
+
+    Class variables:
+
+        _signals: List of signals
+
+    Instance variables:
+
+        _notifications:   Dictionary mapping signals to callback methods
+        _blocked_signals: List of signals currently blocked
 
     Model is meant in the sense of model in Model/View/Controller design.
     Model's purpose is to contain the data edited by the application and send
@@ -40,7 +49,7 @@ class Model(object):
         self._notifications = {}
         self._blocked_signals = []
 
-        for signal in self.__class__._signals:
+        for signal in self._signals:
             self._notifications[signal] = []
 
     def block(self, signal):

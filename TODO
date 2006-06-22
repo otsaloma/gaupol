@@ -7,39 +7,30 @@ Legend:
 Plans for 0.5.0
 ===============
 
-  * General
-      - Use "." as decimal for time
-      - prefix vs. suffix
-      - amount vs. count
-      - Class docstrings
-      - Put a .pot file in the trunk?
-      - Mime-type registration?
-      - Profile
-      - Test all
-
-  * gtk
-      - UIM name: /ui/menubar/edit/edit
-      - Spell-check dialog mnemonics: Join _Back, Join _Forward
-      - Targets! The fucking targets!
-      - Remove Unselect All menu item?
-      - Output window not Ctrl+Alt+O?
-
-  * setup.py / setup.cfg
+  * Test without chardet & enchant
+  * Test start witn 0.4.1 config file
+  * Test all stuff
+  * Profile
+  * PyLint, py.test
+  * Put a .pot file in the trunk?
+  * Mime-type registration?
+  * Non-lib stuff
+  * setup.py:
       - Don't install any testing
       - python 2.5 uninstall?
       - Remove setup.cfg?
-      - setup.py: destination vs. configure (Arch)
+      - Destination vs. configure (e.g. Arch)
           - setup.py install --prefix=/usr --root=tmp/pkg
-      - Use intltool-merge for gaupol.desktop file translations?
+      - Use intltool-merge for gaupol.desktop file translations
           - See alacarte source code
       - clean command
       - Do setup.py install options work?
 
-  New Features:
+  New:
     [W] Find and replace
-    [?] Encoding autodetection: http://chardet.feedparser.org/
+    [D] Encoding autodetection: http://chardet.feedparser.org/
 
-  Improvements:
+  Changes:
     [D] New icon
     [D] Applied GNOME Goal 2.1: Install theme-friendly icons
     [D] Support default browsers on KDE and Mac OSX as well
@@ -47,19 +38,30 @@ Plans for 0.5.0
     [W] Framerate conversion available for time-based subs as well
     [D] Developer-specific options to gaupol made into separate scripts
     [W] Testing framework made compatible with py.test
-
-  Bug Fixes:
+    [D] Desktop file strings are now extracted to .po files
+    [D] Time decimal changed from "," to "."
     [D] Video selection dialog's file filter should default to video
-    [ ] Gaupol hangs if video player not closed before exit
-    [ ] Spell-check suggestion list does not scroll to top with new word
+    [D] Gaupol hangs if video player not closed before exit
+    [D] Spell-check suggestion list does not scroll to top with new word
     [D] Icon field in the desktop file should not include extension
     [D] Debug dialog fails to start if PyEnchant not installed
+    [D] Dialog sizes smallerable
+    [D] Remove Unselect All menu item?
+    [D] Sort on open feedback
+    [D] Save a copy removed
+    [D] Spell-check dialog mnemonics: Join _Back, Join _Forward
+    [D] Dialog targets
+    [D] Fixed menu ellipses
+    [D] General polish here and there
+    [D] Separate header template files
 
   Dependencies:
     [W] Psyco no longer used
+    [D] Universal Encoding Detector >= 1.0
 
   New Translations:
     [D] Polish (po)
+
 
 Plans after 0.5.0
 =================

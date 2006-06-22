@@ -19,6 +19,7 @@
 import os
 
 from gaupol.base          import cons
+from gaupol.base.colcons  import *
 from gaupol.base.delegate import filesave
 from gaupol.test          import Test
 
@@ -65,11 +66,11 @@ class TestFileSaveDelegate(Test):
 
     def test_save_files_changed(self):
 
-        self.project.clear_texts([0], cons.Document.MAIN)
+        self.project.clear_texts([0], MAIN)
         self.project.save_main_file()
         assert self.project.main_changed == 0
 
-        self.project.clear_texts([0], cons.Document.TRAN)
+        self.project.clear_texts([0], TRAN)
         self.project.save_translation_file()
         assert self.project.tran_changed == 0
 
@@ -84,5 +85,5 @@ class TestFileSaveDelegate(Test):
 
         for format in range(len(cons.Format.class_names)):
             props[1] = format
-            self.project.save_main_file(props=props)
-            self.project.save_translation_file(props=props)
+            self.project.save_main_file(props)
+            self.project.save_translation_file(props)

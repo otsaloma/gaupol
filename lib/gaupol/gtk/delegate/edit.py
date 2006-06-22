@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,129 +16,120 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Editing subtitle data."""
+"""Basic subtitle data editing."""
 
-
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
 
 from gettext import gettext as _
 from gettext import ngettext
 
 import gtk
 
-from gaupol.gtk.colcons import *
-from gaupol.gtk.cons      import *
-from gaupol.gtk.delegate          import Delegate, UIMAction
+from gaupol.gtk                  import cons
+from gaupol.gtk.colcons          import *
+from gaupol.gtk.delegate         import Delegate, UIMAction
 from gaupol.gtk.dialog.subinsert import SubtitleInsertDialog
-from gaupol.gtk.dialog.message   import ErrorDialog
-from gaupol.gtk.util              import config, gtklib
+from gaupol.gtk.util             import gtklib
 
 
-class ClipboardAction(UIMAction):
+class _ClipboardAction(UIMAction):
 
     """Base class for clipboard actions."""
 
     @classmethod
-    def is_doable(cls, application, page):
-        """Return whether action can or cannot be done."""
+    def is_doable(cls, app, page):
+        """Return action doability."""
 
         if page is None:
             return False
-
         selection = bool(page.view.get_selected_rows())
         focus = page.view.get_focus()[1] in (MTXT, TTXT)
         return bool(selection and focus)
 
 
-class SelectionAction(UIMAction):
+class _SelectionAction(UIMAction):
 
     """Base class for selection actions."""
 
     @classmethod
-    def is_doable(cls, application, page):
-        """Return whether action can or cannot be done."""
+    def is_doable(cls, app, page):
+        """Return action doability."""
 
         if page is None:
             return False
-
         return bool(page.project.times)
 
 
-class ClearTextsAction(ClipboardAction):
+class ClearTextsAction(_ClipboardAction):
 
     """Clearing texts."""
 
-    uim_action_item = (
+    action_item = (
         'clear_texts',
         gtk.STOCK_CLEAR,
         _('C_lear'),
         'Delete',
         _('Clear the selected texts'),
-        'on_clear_texts_activated'
+        'on_clear_texts_activate'
     )
 
-    uim_paths = ['/ui/menubar/edit/clear', '/ui/view/clear']
+    paths = ['/ui/menubar/edit/clear', '/ui/view/clear']
 
 
-class CopyTextsAction(ClipboardAction):
+class CopyTextsAction(_ClipboardAction):
 
-    """Copying texts to the clipboard."""
+    """Copying texts to clipboard."""
 
-    uim_action_item = (
+    action_item = (
         'copy_texts',
         gtk.STOCK_COPY,
         _('_Copy'),
         '<control>C',
         _('Copy the selected texts to the clipboard'),
-        'on_copy_texts_activated'
+        'on_copy_texts_activate'
     )
 
-    uim_paths = ['/ui/menubar/edit/copy', '/ui/view/copy']
+    paths = ['/ui/menubar/edit/copy', '/ui/view/copy']
 
 
-class CutTextsAction(ClipboardAction):
+class CutTextsAction(_ClipboardAction):
 
-    """Cutting texts to the clipboard."""
+    """Cutting texts to clipboard."""
 
-    uim_action_item = (
+    action_item = (
         'cut_texts',
         gtk.STOCK_CUT,
         _('Cu_t'),
         '<control>X',
         _('Cut the selected texts to the clipboard'),
-        'on_cut_texts_activated'
+        'on_cut_texts_activate'
     )
 
-    uim_paths = ['/ui/menubar/edit/cut', '/ui/view/cut']
+    paths = ['/ui/menubar/edit/cut', '/ui/view/cut']
 
 
 class EditValueAction(UIMAction):
 
-    """Editing the value of a single cell."""
+    """Editing value of a single cell."""
 
-    uim_action_item = (
+    action_item = (
         'edit_value',
         gtk.STOCK_EDIT,
         _('_Edit'),
         'Return',
         _('Edit the focused cell'),
-        'on_edit_value_activated'
+        'on_edit_value_activate'
     )
 
-    uim_paths = ['/ui/menubar/edit/value', '/ui/view/value']
+    paths = ['/ui/menubar/edit/edit', '/ui/view/edit']
 
     @classmethod
-    def is_doable(cls, application, page):
-        """Return whether action can or cannot be done."""
+    def is_doable(cls, app, page):
+        """Return action doability."""
 
         if page is None:
             return False
 
         row, col = page.view.get_focus()
-
         if None in (row, col):
             return False
         elif col == NUMB:
@@ -151,226 +142,245 @@ class InsertSubtitlesAction(UIMAction):
 
     """Inserting subtitles."""
 
-    uim_action_item = (
+    action_item = (
         'insert_subtitles',
         gtk.STOCK_ADD,
         _('_Insert Subtitles...'),
         '<control>Insert',
         _('Insert blank subtitles'),
-        'on_insert_subtitles_activated'
+        'on_insert_subtitles_activate'
     )
 
-    uim_paths = ['/ui/menubar/edit/insert', '/ui/view/insert']
+    paths = ['/ui/menubar/edit/insert', '/ui/view/insert']
 
     @classmethod
-    def is_doable(cls, application, page):
-        """Return whether action can or cannot be done."""
+    def is_doable(cls, app, page):
+        """Return action doability."""
 
         if page is None:
             return False
-
         if page.view.get_selected_rows():
             return True
         if not page.project.times:
             return True
-
         return False
 
 
-class InvertSelectionAction(SelectionAction):
+class InvertSelectionAction(_SelectionAction):
 
     """Inverting selection."""
 
-    uim_action_item = (
+    action_item = (
         'invert_selection',
         None,
         _('In_vert Selection'),
-        None,
+        '<shift><control>A',
         _('Invert the current selection'),
-        'on_invert_selection_activated'
+        'on_invert_selection_activate'
     )
 
-    uim_paths = ['/ui/menubar/edit/invert_selection']
+    paths = ['/ui/menubar/edit/invert_selection']
 
 
-class PasteTextsAction(ClipboardAction):
+class PasteTextsAction(_ClipboardAction):
 
-    """Pasting texts from the clipboard."""
+    """Pasting texts from clipboard."""
 
-    uim_action_item = (
+    action_item = (
         'paste_texts',
         gtk.STOCK_PASTE,
         _('_Paste'),
         '<control>V',
         _('Paste texts from the clipboard'),
-        'on_paste_texts_activated'
+        'on_paste_texts_activate'
     )
 
-    uim_paths = ['/ui/menubar/edit/paste', '/ui/view/paste']
+    paths = ['/ui/menubar/edit/paste', '/ui/view/paste']
 
 
 class RemoveSubtitlesAction(UIMAction):
 
     """Removing subtitles."""
 
-    uim_action_item = (
+    action_item = (
         'remove_subtitles',
         gtk.STOCK_REMOVE,
         _('Re_move Subtitles'),
         '<control>Delete',
         _('Remove the selected subtitles'),
-        'on_remove_subtitles_activated'
+        'on_remove_subtitles_activate'
     )
 
-    uim_paths = ['/ui/menubar/edit/remove', '/ui/view/remove']
+    paths = ['/ui/menubar/edit/remove', '/ui/view/remove']
 
     @classmethod
-    def is_doable(cls, application, page):
-        """Return whether action can or cannot be done."""
+    def is_doable(cls, app, page):
+        """Return action doability."""
 
         if page is None:
             return False
-
         return bool(page.view.get_selected_rows())
 
 
-class SelectAllAction(SelectionAction):
+class SelectAllAction(_SelectionAction):
 
     """Selecting all subtitles."""
 
-    uim_action_item = (
+    action_item = (
         'select_all',
         None,
         _('_Select All'),
         '<control>A',
         _('Select all subtitles'),
-        'on_select_all_activated'
+        'on_select_all_activate'
     )
 
-    uim_paths = ['/ui/menubar/edit/select_all']
-
-
-class UnSelectAllAction(SelectionAction):
-
-    """Unselecting all subtitles."""
-
-    uim_action_item = (
-        'unselect_all',
-        None,
-        _('U_nselect All'),
-        '<shift><control>A',
-        _('Unselect all subtitles'),
-        'on_unselect_all_activated'
-    )
-
-    uim_paths = ['/ui/menubar/edit/unselect_all']
+    paths = ['/ui/menubar/edit/select_all']
 
 
 class EditDelegate(Delegate):
 
-    """Editing subtitle data."""
+    """Basic subtitle data editing."""
 
-    def on_clear_texts_activated(self, *args):
-        """Paste texts from the clipboard."""
+    def _get_next_cell(self, page, row, col, keyname):
+        """Get adjacent cell to move to."""
 
-        page     = self.get_current_page()
-        rows     = page.view.get_selected_rows()
-        col      = page.view.get_focus()[1]
-        document = page.text_column_to_document(col)
+        min_row = 0
+        max_row = len(page.project.times) - 1
+        visible_cols = []
+        for i in range(1, 6):
+            if page.view.get_column(i).get_visible():
+                visible_cols.append(i)
+        min_col = min(visible_cols)
+        max_col = max(visible_cols)
 
-        page.project.clear_texts(rows, document)
-        self.set_sensitivities(page)
+        next_col = col
+        next_row = row
+        if keyname == 'Left':
+            for i in reversed(range(min_col, col)):
+                if i in visible_cols:
+                    next_col = i
+                    break
+        elif keyname == 'Up':
+            next_row = max(min_row, row - 1)
+        elif keyname == 'Right':
+            for i in range(col + 1, max_col + 1):
+                if i in visible_cols:
+                    next_col = i
+                    break
+        elif keyname == 'Down':
+            next_row = min(row + 1, max_row)
 
-    def on_copy_texts_activated(self, *args):
-        """Cut the selected texts to the clipboard."""
+        return next_row, next_col
 
-        page     = self.get_current_page()
-        rows     = page.view.get_selected_rows()
-        col      = page.view.get_focus()[1]
-        document = page.text_column_to_document(col)
+    def _set_sensitivities(self, sensitive):
+        """Set menubar and toolbar sensitivities."""
 
-        page.project.copy_texts(rows, document)
+        for group in self._uim.get_action_groups():
+            group.set_sensitive(sensitive)
+        self._uim.get_widget('/ui/menubar').set_sensitive(sensitive)
+        self._uim.get_widget('/ui/main_toolbar').set_sensitive(sensitive)
+        video_toolbar = gtklib.get_parent_widget(
+            self._video_button, gtk.Toolbar)
+        video_toolbar.set_sensitive(sensitive)
+
+    def on_clear_texts_activate(self, *args):
+        """Clear selected texts"""
+
+        page = self.get_current_page()
+        rows = page.view.get_selected_rows()
+        col  = page.view.get_focus()[1]
+        doc  = page.text_column_to_document(col)
+
+        page.project.clear_texts(rows, doc)
+
+    def on_copy_texts_activate(self, *args):
+        """Copy selected texts to clipboard."""
+
+        page = self.get_current_page()
+        rows = page.view.get_selected_rows()
+        col  = page.view.get_focus()[1]
+        doc  = page.text_column_to_document(col)
+
+        page.project.copy_texts(rows, doc)
         text = page.project.clipboard.get_data_as_string()
-        self.clipboard.set_text(text)
+        self._clipboard.set_text(text)
         self.set_sensitivities(page)
 
-    def on_cut_texts_activated(self, *args):
-        """Cut the selected texts to the clipboard."""
+    def on_cut_texts_activate(self, *args):
+        """Cut selected texts to clipboard."""
 
-        page     = self.get_current_page()
-        rows     = page.view.get_selected_rows()
-        col      = page.view.get_focus()[1]
-        document = page.text_column_to_document(col)
+        page = self.get_current_page()
+        rows = page.view.get_selected_rows()
+        col  = page.view.get_focus()[1]
+        doc  = page.text_column_to_document(col)
 
-        page.project.cut_texts(rows, document)
+        page.project.cut_texts(rows, doc)
         text = page.project.clipboard.get_data_as_string()
-        self.clipboard.set_text(text)
-        self.set_sensitivities(page)
+        self._clipboard.set_text(text)
 
-    def on_edit_value_activated(self, *args):
-        """Edit the focused cell."""
+    def on_edit_value_activate(self, *args):
+        """Edit focused cell."""
 
         view = self.get_current_page().view
-        row, tree_view_column = view.get_cursor()
-        view.set_cursor(row, tree_view_column, True)
+        row, column = view.get_cursor()
+        view.set_cursor(row, column, True)
 
-    def on_insert_subtitles_activated(self, *args):
+    def on_insert_subtitles_activate(self, *args):
         """Insert blank subtitles."""
 
         page = self.get_current_page()
-        dialog = SubtitleInsertDialog(self.window, page)
+        dialog = SubtitleInsertDialog(self._window, page.project)
         response = dialog.run()
-        is_below = dialog.get_position()
+        above    = dialog.get_above()
         amount   = dialog.get_amount()
         dialog.destroy()
         if response != gtk.RESPONSE_OK:
             return
 
+        start_row = 0
         if page.project.times:
             start_row = page.view.get_selected_rows()[0]
-            if is_below:
+            if not above:
                 start_row += 1
-        else:
-            start_row = 0
+
         rows = range(start_row, start_row + amount)
         page.project.insert_subtitles(rows)
         page.view.select_rows(rows)
 
-    def on_invert_selection_activated(self, *args):
-        """Invert the current selection."""
+    def on_invert_selection_activate(self, *args):
+        """Invert selection."""
 
         page = self.get_current_page()
-
         selected_rows = page.view.get_selected_rows()
         rows = range(0, len(page.project.times))
         for row in selected_rows:
             rows.remove(row)
-
         page.view.select_rows(rows)
         page.view.grab_focus()
 
-    def on_paste_texts_activated(self, *args):
+    def on_paste_texts_activate(self, *args):
         """Paste texts from the clipboard."""
 
-        page     = self.get_current_page()
-        rows     = page.view.get_selected_rows()
-        col      = page.view.get_focus()[1]
-        document = page.text_column_to_document(col)
+        page = self.get_current_page()
+        rows = page.view.get_selected_rows()
+        col  = page.view.get_focus()[1]
+        doc  = page.text_column_to_document(col)
 
-        length_before = len(page.project.times)
-        rows = page.project.paste_texts(rows[0], document)
+        orig_length = len(page.project.times)
+        rows = page.project.paste_texts(rows[0], doc)
         page.view.select_rows(rows)
-        length_after = len(page.project.times)
-        if length_after > length_before:
-            amount = length_after - length_before
+        new_length = len(page.project.times)
+        if new_length > orig_length:
+            count = new_length - orig_length
             message = ngettext(
                 'Inserted %d subtitle to fit clipboard contents',
                 'Inserted %d subtitles to fit clipboard contents',
-                amount
-            ) % amount
+                count
+            ) % count
             self.set_status_message(message)
 
-    def on_remove_subtitles_activated(self, *args):
+    def on_remove_subtitles_activate(self, *args):
         """Remove selected subtitles."""
 
         page = self.get_current_page()
@@ -382,7 +392,7 @@ class EditDelegate(Delegate):
             row = min(rows[0], len(page.project.times) - 1)
             page.view.set_focus(row, col)
 
-    def on_select_all_activated(self, *args):
+    def on_select_all_activate(self, *args):
         """Select all subtitles."""
 
         page = self.get_current_page()
@@ -390,175 +400,68 @@ class EditDelegate(Delegate):
         selection.select_all()
         page.view.grab_focus()
 
-    def on_unselect_all_activated(self, *args):
-        """Unselect all subtitles."""
-
-        page = self.get_current_page()
-        selection = page.view.get_selection()
-        selection.unselect_all()
-        page.view.grab_focus()
-
     def on_view_cell_edited(self, cell_renderer, value, row, col):
-        """Finish editing of a cell."""
+        """Finish editing cell."""
 
-        gtklib.set_cursor_busy(self.window)
+        gtklib.set_cursor_busy(self._window)
         self._set_sensitivities(True)
         self.set_status_message(None)
         page = self.get_current_page()
 
-        # value is by default a string, which cannot be empty.
-        if page.edit_mode == Mode.FRAME and col in (SHOW, HIDE, DURN):
-            try:
-                value = int(value)
-            except ValueError:
-                self.set_sensitivities(page)
-                gtklib.set_cursor_normal(self.window)
-                return
-
         if col in (SHOW, HIDE, DURN):
-            gtklib.set_cursor_busy(self.window)
-            if page.edit_mode == Mode.TIME:
+            gtklib.set_cursor_busy(self._window)
+            if page.edit_mode == cons.Mode.TIME:
                 new_row = page.project.set_time(row, col - 1, value)
-            elif page.edit_mode == Mode.FRAME:
+            elif page.edit_mode == cons.Mode.FRAME:
+                try:
+                    value = int(value)
+                except ValueError:
+                    self.set_sensitivities(page)
+                    gtklib.set_cursor_normal(self._window)
+                    return
                 new_row = page.project.set_frame(row, col - 1, value)
             if new_row != row:
                 page.view.set_focus(new_row, col)
         elif col in (MTXT, TTXT):
             page.project.set_text(row, col - 4, value)
-            self.set_sensitivities(page)
             self.set_character_status(page)
 
-        gtklib.set_cursor_normal(self.window)
+        gtklib.set_cursor_normal(self._window)
 
-    def on_view_cell_editing_canceled(self, cell_renderer, editor):
-        """Set GUI properties for editing."""
+    def on_view_cell_editing_canceled(self, *args):
+        """Cancel editing cell."""
 
         self._set_sensitivities(True)
         self.set_status_message(None)
 
     def on_view_cell_editing_started(self, cell_renderer, editor, row, col):
-        """Set GUI properties for editing."""
+        """Start editing cell."""
 
         self._set_sensitivities(False)
         page = self.get_current_page()
-        view = page.view
-        row  = int(row)
-
-        # Put a help message in the statusbar.
+        row = int(row)
         message = _('Use Alt+Arrow for moving to edit an adjacent cell')
         if col in (MTXT, TTXT):
-            message = _('Use Ctrl+Return for line-break')
+            message = _('Use Shift+Return for line-break')
         self.set_status_message(message, False)
 
-        min_row = 0
-        max_row = len(page.project.times) - 1
-
-        # Determine the visible columns.
-        visible_cols = []
-        for i in range(1, 6):
-            if view.get_column(i).get_visible():
-                visible_cols.append(i)
-        min_col = min(visible_cols)
-        max_col = max(visible_cols)
-
         def on_key_press_event(editor, event):
-            """Move to edit an adjacent cell on Alt+Arrow key press."""
-
-            accel_masks = gtk.gdk.MOD1_MASK
             keymap = gtk.gdk.keymap_get_default()
-
-            args = event.hardware_keycode, event.state, event.group
-            output = keymap.translate_keyboard_state(*args)
-            keyval, egroup, level, consumed = output
+            keyval, egroup, level, consumed = keymap.translate_keyboard_state(
+                event.hardware_keycode, event.state, event.group)
             keyname = gtk.gdk.keyval_name(keyval)
-
-            if not event.state & ~consumed & accel_masks:
+            if not event.state & ~consumed & gtk.gdk.MOD1_MASK:
                 return
             if keyname not in ('Up', 'Down', 'Left', 'Right'):
                 return
-
-            # Do not move if rows will be reordered.
             if col == SHOW:
-                value = editor.get_text()
-                if page.project.needs_resort(row, value):
+                if page.project.needs_resort(row, editor.get_text()):
                     return
-
+            next_row, next_col = self._get_next_cell(page, row, col, keyname)
+            next_column = page.view.get_column(next_col)
             editor.emit('editing-done')
-
-            next_col = col
-            next_row = row
-            if keyname == 'Left':
-                for i in reversed(range(min_col, col)):
-                    if i in visible_cols:
-                        next_col = i
-                        break
-            elif keyname == 'Up':
-                next_row = max(min_row, row - 1)
-            elif keyname == 'Right':
-                for i in range(col + 1, max_col + 1):
-                    if i in visible_cols:
-                        next_col = i
-                        break
-            elif keyname == 'Down':
-                next_row = min(row + 1, max_row)
-
             while gtk.events_pending():
                 gtk.main_iteration()
-            view.set_cursor(next_row, view.get_column(next_col), True)
+            page.view.set_cursor(next_row, next_column, True)
 
         editor.connect('key-press-event', on_key_press_event)
-
-    def _set_sensitivities(self, sensitive):
-        """Set sensitivity of menubar and toolbar actions."""
-
-        action_groups = self.uim.get_action_groups()
-        for action_group in action_groups:
-            action_group.set_sensitive(sensitive)
-
-        self.uim.get_widget('/ui/menubar').set_sensitive(sensitive)
-        self.uim.get_widget('/ui/main_toolbar').set_sensitive(sensitive)
-
-        get_toolbar = gtklib.get_parent_widget
-        video_toolbar = get_toolbar(self.video_button, gtk.Toolbar)
-        video_toolbar.set_sensitive(sensitive)
-
-
-if __name__ == '__main__':
-
-    from gaupol.gtk.app import Application
-    from gaupol.test            import Test
-
-    class TestEditDelegate(Test):
-
-        def __init__(self):
-
-            Test.__init__(self)
-            self.application = Application()
-            self.application.open_main_files([self.get_subrip_path()])
-
-        def destroy(self):
-
-            self.application.window.destroy()
-
-        def test_action(self):
-
-            page = self.application.get_current_page()
-
-            def test(name):
-                page.view.set_focus(2, MTXT)
-                page.view.select_rows([2, 3])
-                getattr(self.application, name)()
-
-            test('on_clear_texts_activated')
-            test('on_copy_texts_activated')
-            test('on_cut_texts_activated')
-            test('on_edit_value_activated')
-            test('on_insert_subtitles_activated')
-            test('on_invert_selection_activated')
-            test('on_paste_texts_activated')
-            test('on_remove_subtitles_activated')
-            test('on_select_all_activated')
-            test('on_unselect_all_activated')
-
-    TestEditDelegate().run()
-

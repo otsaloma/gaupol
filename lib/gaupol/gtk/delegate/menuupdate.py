@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -19,32 +19,34 @@
 """Menu updating."""
 
 
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
-
 from gettext import gettext as _
 import os
-import urllib
 
 import gtk
 
-from gaupol.gtk.cons import *
-from gaupol.gtk.delegate  import Delegate
-from gaupol.gtk.util      import config, gtklib
+from gaupol.gtk          import cons
+from gaupol.gtk.delegate import Delegate
+from gaupol.gtk.util     import config
 
 
 class MenuUpdateDelegate(Delegate):
 
-    """Menu updating."""
+    """
+    Menu updating.
+
+    Instance variables:
+
+        _projects_id: UI manager merge ID for projects menu
+        _recent_id:   UI manager merge ID for recent files
+
+    """
 
     def __init__(self, *args, **kwargs):
 
         Delegate.__init__(self, *args, **kwargs)
 
-        self.projects_uim_id = None
-        self.recent_uim_id   = None
+        self._projects_id = None
+        self._recent_id   = None
 
     def _get_action_group(self, name):
         """
@@ -52,336 +54,216 @@ class MenuUpdateDelegate(Delegate):
 
         name: "main", "recent" or "projects"
         """
-        assert name in ('main', 'recent', 'projects')
-        action_groups = self.uim.get_action_groups()
-        action_group_names = list(group.get_name() for group in action_groups)
-        index = action_group_names.index(name)
-        return action_groups[index]
-
-    def on_open_button_show_menu(self, *args):
-        """Build the recent files menu."""
-
-        recent_files = config.File.recent
-        for i in reversed(range(len(recent_files))):
-            path = recent_files[i]
-            if not os.path.isfile(path):
-                recent_files.pop(i)
-
-        menu = gtk.Menu()
-
-        def on_activate(item, filepath):
-            self.open_main_files([filepath])
-
-        def on_enter_notify_event(item, event, tooltip):
-            self.set_status_message(tooltip, False)
-
-        def on_leave_notify_event(item, event):
-            self.set_status_message(None)
-
-        for filepath in recent_files:
-
-            basename = os.path.basename(filepath)
-            if len(basename) > 100:
-                basename = basename[:50] + '...' + basename[-50:]
-            tip = _('Open main file "%s"') % basename
-
-            item = gtk.MenuItem(basename, False)
-            item.connect('activate'          , on_activate, filepath     )
-            item.connect('enter-notify-event', on_enter_notify_event, tip)
-            item.connect('leave-notify-event', on_leave_notify_event     )
-            menu.append(item)
-
-        menu.show_all()
-        self.open_button.set_menu(menu)
-
-    def _on_menu_item_enter_notify_event(self, item, event, action):
-        """Set item's tooltips to statusbar."""
-
-        self.set_status_message(action.props.tooltip, False)
-
-    def _on_menu_item_leave_notify_event(self, item, event, action):
-        """Clear item's tooltip from statusbar."""
-
-        self.set_status_message(None)
-
-    def on_redo_button_show_menu(self, *args):
-        """Build the redo menu."""
-
-        self._show_revert_button_menu(Action.REDO)
-
-    def on_show_file_menu_activated(self, *args):
-        """
-        Build the file menu by adding all open projects.
-
-        Project action name fields are integers matching the file's index in
-        config.File.recent and action fields are "open_recent_file_N".
-        """
-        # Remove old actions.
-        action_group = self._get_action_group('recent')
-        for action in action_group.list_actions():
-            action_group.remove_action(action)
-
-        # Remove old menu items.
-        if self.recent_uim_id is not None:
-            self.uim.remove_ui(self.recent_uim_id)
-
-        recent_files = config.File.recent
-        for i in reversed(range(len(recent_files))):
-            path = recent_files[i]
-            if not os.path.isfile(path):
-                recent_files.pop(i)
-
-        actions  = []
-        callback = self.on_open_recent_file_activated
-
-        # Create actions.
-        for i in range(len(recent_files)):
-
-            path = recent_files[i]
-            basename = os.path.basename(path)
-            name     = 'open_recent_file_%d' % i
-            label    = '%d. %s' % (i + 1, basename)
-            tooltip  = _('Open main file "%s"') % basename
-
-            # Fix labels by ellipsizing too long names, unaccelerating
-            # underscores and adding an accelerator to the first 9 items.
-            if len(label) > 50:
-                label = label[:25] + '...' + label[-25:]
-            label = label.replace('_', '__')
-            if i < 9:
-                label = '_' + label
-
-            actions.append((name, None, label, None, tooltip, callback))
-
-        # Add actions to action group.
-        action_group.add_actions(actions)
-
-        # Add menu items.
-        ui_start  = '''
-        <ui>
-            <menubar>
-                <menu name="file" action="show_file_menu">
-                    <placeholder name="recent">'''
-        ui_middle = ''
-        ui_end    = '''
-                    </placeholder>
-                </menu>
-            </menubar>
-        </ui>'''
-
-        for i in range(len(recent_files)):
-            ui_middle += '<menuitem name="%d" action="open_recent_file_%d"/>' \
-                         % (i, i)
-        ui = ui_start + ui_middle + ui_end
-        self.recent_uim_id = self.uim.add_ui_from_string(ui)
-
-        # Connect proxies to get the message statusbar tooltips working.
-        for i in range(len(recent_files)):
-            path = '/ui/menubar/file/recent/%d' % i
-            action = self.uim.get_action(path)
-            widget = self.uim.get_widget(path)
-            action.connect_proxy(widget)
-
-        self.set_menu_notify_events('recent')
-
-    def on_show_projects_menu_activated(self, *args):
-        """
-        Build the projects menu by adding all open projects.
-
-        Project action name fields are integers matching the page's index in
-        self.pages and action fields are "activate_project_N".
-        """
-        page = self.get_current_page()
-
-        # Remove old actions.
-        action_group = self._get_action_group('projects')
-        for action in action_group.list_actions():
-            action_group.remove_action(action)
-
-        # Remove old menu items.
-        if self.projects_uim_id is not None:
-            self.uim.remove_ui(self.projects_uim_id)
-
-        if page is None:
-            return
-
-        radio_actions = []
-
-        # Create actions.
-        for i in range(len(self.pages)):
-
-            basename  = self.pages[i].get_main_basename()
-            tab_label = self.pages[i].tab_label.get_text()
-            name      = 'activate_project_%d' % i
-            label     = '%d. %s' % (i + 1, tab_label)
-
-            # Translators: Activate a project, "Activate <basename>".
-            tooltip  = _('Activate "%s"') % basename
-
-            # Fix labels by ellipsizing too long names, unaccelerating
-            # underscores and adding an accelerator to the first 9 items.
-            if len(label) > 50:
-                label = label[:25] + '...' + label[-25:]
-            label = label.replace('_', '__')
-            if i < 9:
-                label = '_' + label
-
-            radio_actions.append((name, None, label, None, tooltip, i))
-
-        # Add actions to action group.
-        action_group.add_radio_actions(
-            radio_actions,
-            self.notebook.get_current_page(),
-            self.on_project_toggled
-        )
-
-        # Add menu items.
-        ui_start  = '''
-        <ui>
-            <menubar>
-                <menu name="projects" action="show_projects_menu">
-                    <placeholder name="open">'''
-        ui_middle = ''
-        ui_end    = '''
-                    </placeholder>
-                </menu>
-            </menubar>
-        </ui>'''
-
-        for i in range(len(self.pages)):
-            ui_middle += '<menuitem name="%d" action="activate_project_%d"/>' \
-                         % (i, i)
-
-        ui = ui_start + ui_middle + ui_end
-        self.projects_uim_id = self.uim.add_ui_from_string(ui)
-
-        # Connect proxies to get the message statusbar tooltips working.
-        for i in range(len(self.pages)):
-            path = '/ui/menubar/projects/open/%d' % i
-            action = self.uim.get_action(path)
-            widget = self.uim.get_widget(path)
-            action.connect_proxy(widget)
-
-        self.set_menu_notify_events('projects')
-
-    def on_undo_button_show_menu(self, *args):
-        """Build the undo menu."""
-
-        self._show_revert_button_menu(Action.UNDO)
-
-    def set_menu_notify_events(self, action_group_name):
-        """
-        Set GUI properties when mouse hovers over a menu item.
-
-        action_group_name: "main", "recent" or "projects"
-        """
-        action_group = self._get_action_group(action_group_name)
-
-        signals = (
-            'enter-notify-event',
-            'leave-notify-event'
-        )
-        methods = (
-            self._on_menu_item_enter_notify_event,
-            self._on_menu_item_leave_notify_event
-        )
-
-        actions = action_group.list_actions()
-        for action in actions:
-            widgets = action.get_proxies()
-            for widget in widgets:
-                widget.connect(signals[0], methods[0], action)
-                widget.connect(signals[1], methods[1], action)
+        for group in self._uim.get_action_groups():
+            if group.get_name() == name:
+                return group
+        raise ValueError
 
     def _show_revert_button_menu(self, register):
-        """Show undo or redo button's menu."""
+        """Show undo or redo button menu."""
 
         page = self.get_current_page()
         menu = gtk.Menu()
         menu_items = []
 
-        if register == Action.UNDO:
+        if register == cons.Action.UNDO:
             stack = page.project.undoables
-            button = self.undo_button
+            button = self._undo_button
             revert_method = self.undo
-        elif register == Action.REDO:
+        elif register == cons.Action.REDO:
             stack = page.project.redoables
-            button = self.redo_button
+            button = self._redo_button
             revert_method = self.redo
 
         def on_activate(item, index):
             revert_method(index + 1)
 
-        def on_enter_notify_event(item, event, index, tip):
-            for i in range(0, index):
+        def on_enter(menu_item, event, index, tip):
+            for i in range(index):
                 menu_items[i].set_state(gtk.STATE_PRELIGHT)
             self.set_status_message(tip, False)
 
-        def on_leave_notify_event(item, event, index):
-            for i in range(0, index):
+        def on_leave(menu_item, event, index):
+            for i in range(index):
                 menu_items[i].set_state(gtk.STATE_NORMAL)
             self.set_status_message(None)
 
         for i, action in enumerate(stack):
-
             desc = action.description
-            if register == Action.UNDO:
+            if register == cons.Action.UNDO:
                 tip = _('Undo up to %s') % desc[0].lower() + desc[1:]
-            elif register == Action.REDO:
+            elif register == cons.Action.REDO:
                 tip = _('Redo up to %s') % desc[0].lower() + desc[1:]
-
-            item = gtk.MenuItem(desc, False)
-            item.connect('activate'          , on_activate          , i     )
-            item.connect('enter-notify-event', on_enter_notify_event, i, tip)
-            item.connect('leave-notify-event', on_leave_notify_event, i     )
-
-            menu_items.append(item)
-            menu.append(item)
+            menu_item = gtk.MenuItem(desc, False)
+            menu_item.connect('activate', on_activate, i)
+            menu_item.connect('enter-notify-event', on_enter, i, tip)
+            menu_item.connect('leave-notify-event', on_leave, i)
+            menu_items.append(menu_item)
+            menu.append(menu_item)
 
         menu.show_all()
         button.set_menu(menu)
 
+    def on_open_button_show_menu(self, *args):
+        """Show open button menu."""
 
-if __name__ == '__main__':
+        def on_activate(menu_item, filepath):
+            self.open_main_files([filepath])
 
-    from gaupol.gtk.app import Application
-    from gaupol.test            import Test
+        def on_enter(menu_item, event, tip):
+            self.set_status_message(tip, False)
 
-    class TestMenuUpdateDelegate(Test):
+        def on_leave(menu_item, event):
+            self.set_status_message(None)
 
-        def __init__(self):
+        menu = gtk.Menu()
+        self.validate_recent()
+        for path in config.file.recent:
+            basename = os.path.basename(path)
+            if len(basename) > 100:
+                basename = basename[:50] + '...' + basename[-50:]
+            tip = _('Open main file "%s"') % basename
+            menu_item = gtk.MenuItem(basename, False)
+            menu_item.connect('activate', on_activate, path)
+            menu_item.connect('enter-notify-event', on_enter, tip)
+            menu_item.connect('leave-notify-event', on_leave)
+            menu.append(menu_item)
 
-            Test.__init__(self)
-            self.application = Application()
-            self.application.open_main_files([self.get_subrip_path()])
-            self.delegate = MenuUpdateDelegate(self.application)
+        menu.show_all()
+        self._open_button.set_menu(menu)
 
-            page = self.application.get_current_page()
-            page.project.remove_subtitles([0])
-            page.project.remove_subtitles([0])
-            self.application.undo(1)
+    def on_redo_button_show_menu(self, *args):
+        """Show redo button menu."""
 
-        def destroy(self):
+        self._show_revert_button_menu(cons.Action.REDO)
 
-            self.application.window.destroy()
+    def on_show_file_menu_activate(self, *args):
+        """
+        Show file menu adding recent files.
 
-        def test_get_action_group(self):
+        File action name fields are integers matching the file's index in
+        config.file.recent and action fields are "open_recent_file_N".
+        """
+        action_group = self._get_action_group('recent')
+        for action in action_group.list_actions():
+            action_group.remove_action(action)
+        if self._recent_id is not None:
+            self._uim.remove_ui(self._recent_id)
 
-            for name in ('main', 'recent', 'projects'):
-                group = self.delegate._get_action_group(name)
-                assert isinstance(group, gtk.ActionGroup)
+        actions = []
+        self.validate_recent()
+        for i, path in enumerate(config.file.recent):
+            basename = os.path.basename(path)
+            label = '%d. %s' % (i + 1, basename)
+            if len(label) > 40:
+                label = label[:20] + '...' + label[-20:]
+            label = label.replace('_', '__')
+            if i < 9:
+                label = '_' + label
+            actions.append((
+                'open_recent_file_%d' % i,
+                None,
+                label,
+                None,
+                _('Open main file "%s"') % basename,
+                self.on_open_recent_file_activate
+            ))
+        action_group.add_actions(actions)
 
-        def test_set_menu_notify_events(self):
+        ui = ''
+        for i in range(len(config.file.recent)):
+            ui += '<menuitem name="%d" action="open_recent_file_%d"/>' % (i, i)
+        ui = '''
+        <ui><menubar><menu name="file" action="show_file_menu">
+            <placeholder name="recent">%s</placeholder>
+        </menu></menubar></ui>''' % ui
+        self._recent_id = self._uim.add_ui_from_string(ui)
 
-            for name in ('main', 'recent', 'projects'):
-                self.application.set_menu_notify_events(name)
+        for i in range(len(config.file.recent)):
+            path = '/ui/menubar/file/recent/%d' % i
+            action = self._uim.get_action(path)
+            widget = self._uim.get_widget(path)
+            action.connect_proxy(widget)
 
-        def test_show_menus(self):
+        self.set_menu_notify_events('recent')
 
-            self.application.on_open_button_show_menu()
-            self.application.on_redo_button_show_menu()
-            self.application.on_show_file_menu_activated()
-            self.application.on_show_projects_menu_activated()
-            self.application.on_undo_button_show_menu()
+    def on_show_projects_menu_activate(self, *args):
+        """
+        Show projects menu adding all open projects.
 
-    TestMenuUpdateDelegate().run()
+        Project action name fields are integers matching the page's index in
+        self.pages and action fields are "activate_project_N".
+        """
+        action_group = self._get_action_group('projects')
+        for action in action_group.list_actions():
+            action_group.remove_action(action)
+        if self._projects_id is not None:
+            self._uim.remove_ui(self._projects_id)
+
+        page = self.get_current_page()
+        if page is None:
+            return
+
+        radio_actions = []
+        for i in range(len(self.pages)):
+            basename  = self.pages[i].get_main_basename()
+            label = self.pages[i].tab_label.get_text()
+            label = '%d. %s' % (i + 1, label)
+            if len(label) > 60:
+                label = label[:30] + '...' + label[-30:]
+            label = label.replace('_', '__')
+            if i < 9:
+                label = '_' + label
+            radio_actions.append((
+                'activate_project_%d' % i,
+                None,
+                label,
+                None,
+                _('Activate "%s"') % basename,
+                i
+            ))
+        action_group.add_radio_actions(
+            radio_actions,
+            self._notebook.get_current_page(),
+            self.on_project_toggled
+        )
+
+        ui = ''
+        for i in range(len(self.pages)):
+            ui += '<menuitem name="%d" action="activate_project_%d"/>' % (i, i)
+        ui = '''
+        <ui><menubar><menu name="projects" action="show_projects_menu">
+        <placeholder name="open">%s</placeholder>
+        </menu></menubar></ui>''' % ui
+        self._projects_id = self._uim.add_ui_from_string(ui)
+
+        for i in range(len(self.pages)):
+            path = '/ui/menubar/projects/open/%d' % i
+            action = self._uim.get_action(path)
+            widget = self._uim.get_widget(path)
+            action.connect_proxy(widget)
+
+        self.set_menu_notify_events('projects')
+
+    def on_undo_button_show_menu(self, *args):
+        """Show undo button menu."""
+
+        self._show_revert_button_menu(cons.Action.UNDO)
+
+    def set_menu_notify_events(self, name):
+        """
+        Set statusbar tooltips for menu items.
+
+        name: "main", "recent" or "projects"
+        """
+        def on_enter(menu_item, event, action):
+            self.set_status_message(action.props.tooltip, False)
+
+        def on_leave(menu_item, event, action):
+            self.set_status_message(None)
+
+        action_group = self._get_action_group(name)
+        for action in action_group.list_actions():
+            for widget in action.get_proxies():
+                widget.connect('enter-notify-event', on_enter, action)
+                widget.connect('leave-notify-event', on_leave, action)

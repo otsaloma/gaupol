@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Constants."""
+"""Base constants."""
 
 
 import sys
@@ -26,7 +26,7 @@ from gettext import gettext as _
 
 class Section(object):
 
-    """Base class for constant classes."""
+    """Base class for constant sections."""
 
     @classmethod
     def get_names(cls):
@@ -130,8 +130,8 @@ class Framerate(Section):
 
     values = [
         23.976,
-        25.0,
-        29.97,
+        25.000,
+        29.970,
     ]
 
 

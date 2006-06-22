@@ -33,7 +33,7 @@ class FileFormatDeterminer(SubtitleFile):
 
     def determine(self):
         """
-        Determine the file format.
+        Determine file format.
 
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.

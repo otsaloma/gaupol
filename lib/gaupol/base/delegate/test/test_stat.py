@@ -16,8 +16,9 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol.base import cons
-from gaupol.test import Test
+from gaupol.base          import cons
+from gaupol.base.colcons  import *
+from gaupol.test          import Test
 
 
 class TestStatisticsDelegate(Test):
@@ -26,5 +27,5 @@ class TestStatisticsDelegate(Test):
 
         project = self.get_project()
         project.main_texts[0] = '<i>test\ntest.</i>'
-        lengths = project.get_line_lengths(0, cons.Document.MAIN)
+        lengths = project.get_line_lengths(0, MAIN)
         assert lengths == [4, 5]

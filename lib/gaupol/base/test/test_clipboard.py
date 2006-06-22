@@ -22,9 +22,12 @@ from gaupol.test           import Test
 
 class TestClipboard(Test):
 
+    def setup_method(self, method):
+
+        self.clipboard = Clipboard()
+
     def test_get_data_as_string(self):
 
-        clipboard = Clipboard()
-        clipboard.data = ['test', None, 'test', None]
-        string = clipboard.get_data_as_string()
+        self.clipboard.data = ['test', None, 'test', None]
+        string = self.clipboard.get_data_as_string()
         assert string == 'test\n\n\n\ntest\n\n'

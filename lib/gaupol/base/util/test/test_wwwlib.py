@@ -23,6 +23,10 @@ from gaupol.test       import Test
 
 class TestModule(Test):
 
+    def test_browse_url(self):
+
+        wwwlib.browse_url('http://home.gna.org/gaupol')
+
     def test_read_url(self):
 
         url = 'http://download.gna.org/gaupol/latest.txt'

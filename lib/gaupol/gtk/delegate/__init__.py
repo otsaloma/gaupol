@@ -19,17 +19,12 @@
 """Extensions for gaupol.gtk.app.Application."""
 
 
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
-
 import inspect
 
+from gaupol.base.delegate import Delegate
 
-# List of all delegate module names. Methods of listed modules will be imported
-# into the delegation system.
-module_names = (
+
+_MODULES = (
     'action',
     'appupdate',
     'edit',
@@ -41,40 +36,20 @@ module_names = (
     'guiinit',
     'help',
     'menuupdate',
+    'position',
     'preferences',
     'preview',
     'spellcheck',
-    'position',
     'view',
     'viewupdate',
 )
 
 
-class Delegate(object):
+class Delegate(Delegate):
 
-    """
-    Base class for delegates.
+    """Base class for delegates."""
 
-    The purpose of the methods in this class is to provide direct access to
-    the master class's attributes by redirecting all self.attribute calls not
-    found in the delegate class.
-    """
-
-    # Code borrowed from
-    # "Automatic delegation as an alternative to inheritance" by Alex Martelli
-    # http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52295
-
-    def __init__(self, master):
-
-        self.__dict__['master'] = master
-
-    def __getattr__(self, name):
-
-        return getattr(self.master, name)
-
-    def __setattr__(self, name, value):
-
-        return setattr(self.master, name, value)
+    pass
 
 
 class UIMAction(object):
@@ -82,84 +57,91 @@ class UIMAction(object):
     """
     Base class for UI manager actions.
 
-    UI manager items:
+    Class variables:
 
-    Callback methods and widgets are defined as strings without self, e.g.
-    "on_quit_activated" and "open_button".
+        action_item = (
+            name,
+            stock-icon,
+            label,
+            accelerator,
+            tooltip,
+            callback
+        )
 
-    uim_menu_item = (
-      name,
-      stock-icon,
-      label
-    )
+        toggle_item = (
+            name,
+            stock-icon,
+            label,
+            accelerator,
+            tooltip,
+            callback,
+            state
+        )
 
-    uim_action_item = (
-      name,
-      stock-icon,
-      label,
-      accelerator,
-      tooltip,
-      callback
-    )
+        menu_item = (
+            name,
+            stock-icon,
+            label
+        )
 
-    uim_toggle_items = (
-      name,
-      stock-icon,
-      label,
-      accelerator,
-      tooltip,
-      callback,
-      state
-    )
+        radio_items = (
+            (
+                (
+                    name,
+                    stock-icon,
+                    label,
+                    accelerator,
+                    tooltip,
+                    index
+                ), (
+                    ...
+                )
+            ),
+            active,
+            callback
+        )
 
-    uim_radio_items = (
-      (
-          (
-              name,
-              stock-icon,
-              label,
-              accelerator,
-              tooltip,
-              index
-          ), (
-              ...
-          )
-      ),
-      active,
-      callback
-    )
+        paths:   List of UI manager paths for action
+        widgets: List of widget names for action
 
-    Additionally a list of custom toolbar widgets can be given.
-    widgets = []
-
-    Because the lists of UI manager items are evaluated on import before the
-    settings are available, toggle and radio items need some arbitrary value. A
-    better value is obtained through methods "get_uim_toggle_item_value" and
-    "get_uim_radio_items_index", which can be defined to return a value based
-    on the config module.
+    Because the lists of UI manager items are evaluated on import before
+    configuration file is read, toggle and radio items need some arbitrary
+    value. A proper value is obtained through methods "get_toggle_value" and
+    "get_radio_index", which can be defined to return a value based on the
+    config module.
     """
 
-    uim_menu_item   = None
-    uim_action_item = None
-    uim_toggle_item = None
-    uim_radio_items = None
-    uim_paths       = []
-    widgets         = []
+    action_item = None
+    menu_item   = None
+    radio_items = None
+    toggle_item = None
+    paths       = []
+    widgets     = []
 
     @classmethod
-    def get_uim_toggle_item_value(cls):
-        """Return value of the UI manager toggle item."""
+    def get_radio_index(cls):
+        """Get active index of radio items."""
+
         raise NotImplementedError
 
     @classmethod
-    def get_uim_radio_items_index(cls):
-        """Return the active index of the UI manager radio items."""
+    def get_toggle_value(cls):
+        """Get value of toggle item."""
+
         raise NotImplementedError
 
     @classmethod
-    def is_doable(cls, application, page):
-        """Return whether action can or cannot be done."""
+    def is_doable(cls, app, page):
+        """Return action doability."""
+
         raise NotImplementedError
+
+
+class Delegates(object):
+
+    """All delegates."""
+
+    classes = []
 
 
 class UIMActions(object):
@@ -169,18 +151,10 @@ class UIMActions(object):
     classes = []
 
 
-class Delegates(object):
+def list_classes():
+    """List all delegate and action classes."""
 
-    """All delegates."""
-
-    module_names = module_names
-    classes = []
-
-
-def list_delegate_classes():
-    """List all delegate classes."""
-
-    for module_name in Delegates.module_names:
+    for module_name in _MODULES:
         path = 'gaupol.gtk.delegate.' + module_name
         module = __import__(path, None, None, [''])
         for name in dir(module):
@@ -190,14 +164,12 @@ def list_delegate_classes():
             if inspect.getmodule(value) != module:
                 continue
             try:
-                if issubclass(value, UIMAction):
-                    UIMActions.classes.append(value)
-                elif issubclass(value, Delegate):
+                if issubclass(value, Delegate):
                     Delegates.classes.append(value)
+                elif issubclass(value, UIMAction):
+                    UIMActions.classes.append(value)
             except TypeError:
                 continue
 
-
-# List delegates if they have not yet been listed.
-if not UIMActions.classes or not Delegates.classes:
-    list_delegate_classes()
+if not Delegates.classes or not UIMActions.classes:
+    list_classes()

@@ -1,11 +1,6 @@
-#!/usr/bin/env python
+#!/bin/bash
 
-"""Run svn status."""
+# Show svn status.
 
-import os
-
-TOOL_DIR   = os.path.dirname(os.path.abspath(__file__))
-SOURCE_DIR = os.path.join(TOOL_DIR, '..')
-
-os.chdir(SOURCE_DIR)
-os.system('svn status | grep -v \.pyc | sort')
+cd $(dirname $0)/..
+svn status | egrep -v \.pyc$ | egrep -v \.hidden$ | sort

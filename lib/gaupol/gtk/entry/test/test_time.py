@@ -32,7 +32,7 @@ if __name__ == '__main__':
     import gtk
 
     entry = EntryTime()
-    entry.set_text('12:34:56,789')
+    entry.set_text('12:34:56.789')
     window = gtk.Window()
     window.connect('delete-event', gtk.main_quit)
     window.set_position(gtk.WIN_POS_CENTER)

@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,26 +16,21 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Dialog for shifting positions."""
+"""Dialogs for shifting positions."""
 
-
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
 
 from gettext import gettext as _
 
 import gobject
 import gtk
 
-from gaupol.gtk.cons import *
-from gaupol.gtk.util  import config, gtklib
+from gaupol.gtk      import cons
+from gaupol.gtk.util import config, gtklib
 
 
-class TimeFrameShiftDialog(gobject.GObject):
+class _PositionShiftDialog(gobject.GObject):
 
-    """Dialog for shifting positions."""
+    """Base class for dialogs for shifting positions."""
 
     __gsignals__ = {
         'preview': (
@@ -49,36 +44,22 @@ class TimeFrameShiftDialog(gobject.GObject):
 
         gobject.GObject.__init__(self)
 
-        glade_xml = gtklib.get_glade_xml('posshift-dialog')
-        get_widget = glade_xml.get_widget
-
-        self._all_radio         = get_widget('all_radio_button')
-        self._amount_spin       = get_widget('amount_spin_button')
-        self._amount_unit_label = get_widget('amount_unit_label')
-        self._dialog            = get_widget('dialog')
-        self._preview_button    = get_widget('preview_button')
-        self._selected_radio    = get_widget('selected_radio_button')
-
         self._page = page
+
+        glade_xml = gtklib.get_glade_xml('posshift-dialog')
+        self._amount_spin    = glade_xml.get_widget('amount_spin')
+        self._current_radio  = glade_xml.get_widget('current_radio')
+        self._dialog         = glade_xml.get_widget('dialog')
+        self._preview_button = glade_xml.get_widget('preview_button')
+        self._selected_radio = glade_xml.get_widget('selected_radio')
+        self._unit_label     = glade_xml.get_widget('unit_label')
 
         self._init_widgets()
         self._init_data()
         self._init_sensitivities()
         self._init_signals()
-
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_OK)
-
-    def _init_data(self):
-        """Initialize default values."""
-
-        self._all_radio.set_active(config.PositionShift.all_subtitles)
-
-        if self._page.edit_mode == Mode.TIME:
-            value = float(config.PositionShift.seconds)
-        elif self._page.edit_mode == Mode.FRAME:
-            value = config.PositionShift.frames
-        self._amount_spin.set_value(value)
 
     def _init_sensitivities(self):
         """Initialize widget sensitivities."""
@@ -89,124 +70,110 @@ class TimeFrameShiftDialog(gobject.GObject):
             self._preview_button.set_sensitive(False)
 
         if not self._page.view.get_selected_rows():
-            self._all_radio.set_active(True)
+            self._current_radio.set_active(True)
             self._selected_radio.set_sensitive(False)
 
     def _init_signals(self):
         """Initialize signals."""
 
-        method = self._on_amount_spin_value_changed
-        self._amount_spin.connect('value-changed', method)
-
-        method = self._on_preview_button_clicked
-        self._preview_button.connect('clicked', method)
-
-        method = self._on_all_radio_toggled
-        self._all_radio.connect('toggled', method)
-
-    def _init_widgets(self):
-        """Initialize widgets."""
-
-        self._amount_spin.set_numeric(True)
-
-        if self._page.edit_mode == Mode.TIME:
-            self._amount_unit_label.set_text(_('seconds'))
-            self._amount_spin.set_digits(3)
-            self._amount_spin.set_increments(0.1, 1)
-            self._amount_spin.set_range(-99999, 99999)
-
-        elif self._page.edit_mode == Mode.FRAME:
-            self._amount_unit_label.set_text(_('frames'))
-            self._amount_spin.set_digits(0)
-            self._amount_spin.set_increments(1, 10)
-            self._amount_spin.set_range(-9999999, 9999999)
-
-    def destroy(self):
-        """Destroy the dialog."""
-
-        self._dialog.destroy()
-
-    def get_amount(self):
-        """
-        Get shift amount.
-
-        Return seconds or frames depending on edit mode.
-        """
-        self._amount_spin.update()
-        if self._page.edit_mode == Mode.TIME:
-            return self._amount_spin.get_value()
-        elif self._page.edit_mode == Mode.FRAME:
-            return self._amount_spin.get_value_as_int()
-
-    def get_shift_all(self):
-        """Get shift all setting."""
-
-        return self._all_radio.get_active()
-
-    def _on_all_radio_toggled(self, radio_button):
-        """Save radio button value."""
-
-        config.PositionShift.all_subtitles = radio_button.get_active()
-
-    def _on_amount_spin_value_changed(self, spin_button):
-        """Save spin button value."""
-
-        if self._page.edit_mode == Mode.TIME:
-            config.PositionShift.seconds = '%.3f' % spin_button.get_value()
-        elif self._page.edit_mode == Mode.FRAME:
-            config.PositionShift.frames = spin_button.get_value_as_int()
+        gtklib.connect(self, '_dialog'        , 'response')
+        gtklib.connect(self, '_preview_button', 'clicked' )
 
     def _on_preview_button_clicked(self, *args):
         """Preview changes."""
 
-        if self.get_shift_all():
+        target = self.get_target()
+        if target == cons.Target.CURRENT:
             row = 0
-        else:
+        elif target == cons.Target.SELECTED:
             row = self._page.view.get_selected_rows()[0]
-
         self.emit('preview', row)
 
+    def destroy(self):
+        """Destroy dialog."""
+
+        self._dialog.destroy()
+
+    def get_target(self):
+        """Get target."""
+
+        if self._current_radio.get_active():
+            return cons.Target.CURRENT
+        elif self._selected_radio.get_active():
+            return cons.Target.SELECTED
+
     def run(self):
-        """Show and run the dialog."""
+        """Run dialog."""
 
         self._dialog.show()
         return self._dialog.run()
 
 
-if __name__ == '__main__':
+class FrameShiftDialog(_PositionShiftDialog):
 
-    from gaupol.gtk.app import Application
-    from gaupol.test            import Test
+    """Dialog for shifting frames."""
 
-    class TestTimeFrameShiftDialog(Test):
+    def _init_widgets(self):
+        """Initialize widgets."""
 
-        def __init__(self):
+        self._amount_spin.set_numeric(True)
+        self._amount_spin.set_digits(0)
+        self._amount_spin.set_increments(1, 10)
+        self._amount_spin.set_range(-9999999, 9999999)
+        self._unit_label.set_text(_('frames'))
 
-            Test.__init__(self)
-            self.application = Application()
-            self.application.open_main_files([self.get_subrip_path()])
-            self.page = self.application.get_current_page()
-            self.dialog = TimeFrameShiftDialog(gtk.Window(), self.page)
+    def _init_data(self):
+        """Initialize default values."""
 
-        def destroy(self):
+        self._amount_spin.set_value(config.position_shift.frames)
 
-            self.application.window.destroy()
+        target = config.position_shift.target
+        self._current_radio.set_active(target == cons.Target.CURRENT)
+        self._selected_radio.set_active(target == cons.Target.SELECTED)
 
-        def test_get_amount(self):
+    def _on_dialog_response(self, dialog, response):
+        """Save settings."""
 
-            if self.page.edit_mode == Mode.TIME:
-                assert isinstance(self.dialog.get_amount(), float)
-            elif self.page.edit_mode == Mode.FRAME:
-                assert isinstance(self.dialog.get_amount(), int)
+        if response == gtk.RESPONSE_OK:
+            config.position_shift.frames = self.get_amount()
+            config.position_shift.target = self.get_target()
 
-        def test_get_shift_all(self):
+    def get_amount(self):
+        """Get frames."""
 
-            assert isinstance(self.dialog.get_shift_all(), bool)
+        return self._amount_spin.get_value_as_int()
 
-        def test_signals(self):
 
-            self.dialog._amount_spin.set_value(33)
-            self.dialog._all_radio.set_active(True)
-            self.dialog._all_radio.set_active(False)
+class TimeShiftDialog(_PositionShiftDialog):
 
-    TestTimeFrameShiftDialog().run()
+    """Dialog for shifting times."""
+
+    def _init_widgets(self):
+        """Initialize widgets."""
+
+        self._amount_spin.set_numeric(True)
+        self._amount_spin.set_digits(3)
+        self._amount_spin.set_increments(0.1, 1)
+        self._amount_spin.set_range(-99999, 99999)
+        self._unit_label.set_text(_('seconds'))
+
+    def _init_data(self):
+        """Initialize default values."""
+
+        self._amount_spin.set_value(config.position_shift.seconds)
+
+        target = config.position_shift.target
+        self._current_radio.set_active(target == cons.Target.CURRENT)
+        self._selected_radio.set_active(target == cons.Target.SELECTED)
+
+    def _on_dialog_response(self, dialog, response):
+        """Save settings."""
+
+        if response == gtk.RESPONSE_OK:
+            config.position_shift.seconds = self.get_amount()
+            config.position_shift.target  = self.get_target()
+
+    def get_amount(self):
+        """Get seconds."""
+
+        return self._amount_spin.get_value()

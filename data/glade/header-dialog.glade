@@ -21,18 +21,18 @@
   <property name="has_separator">False</property>
 
   <child internal-child="vbox">
-    <widget class="GtkVBox" id="dialog_vbox">
+    <widget class="GtkVBox" id="vbox1">
       <property name="visible">True</property>
       <property name="homogeneous">False</property>
       <property name="spacing">0</property>
 
       <child internal-child="action_area">
-	<widget class="GtkHButtonBox" id="dialog_action_area">
+	<widget class="GtkHButtonBox" id="hbuttonbox1">
 	  <property name="visible">True</property>
 	  <property name="layout_style">GTK_BUTTONBOX_END</property>
 
 	  <child>
-	    <widget class="GtkButton" id="cancel_button">
+	    <widget class="GtkButton" id="button1">
 	      <property name="visible">True</property>
 	      <property name="can_default">True</property>
 	      <property name="can_focus">True</property>
@@ -45,7 +45,7 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkButton" id="ok_button">
+	    <widget class="GtkButton" id="button2">
 	      <property name="visible">True</property>
 	      <property name="can_default">True</property>
 	      <property name="can_focus">True</property>
@@ -66,7 +66,7 @@
       </child>
 
       <child>
-	<widget class="GtkVBox" id="vbox">
+	<widget class="GtkVBox" id="vbox2">
 	  <property name="border_width">6</property>
 	  <property name="visible">True</property>
 	  <property name="homogeneous">False</property>
@@ -79,7 +79,7 @@
 	      <property name="spacing">6</property>
 
 	      <child>
-		<widget class="GtkLabel" id="main_label">
+		<widget class="GtkLabel" id="label33">
 		  <property name="visible">True</property>
 		  <property name="label" translatable="yes">_Main file:</property>
 		  <property name="use_underline">True</property>
@@ -105,13 +105,13 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkHBox" id="main_hbox">
+		<widget class="GtkHBox" id="hbox24">
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">12</property>
 
 		  <child>
-		    <widget class="GtkScrolledWindow" id="main_scrolled_window">
+		    <widget class="GtkScrolledWindow" id="scrolledwindow1">
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
 		      <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
@@ -125,7 +125,7 @@
 			  <property name="can_focus">True</property>
 			  <property name="editable">True</property>
 			  <property name="overwrite">False</property>
-			  <property name="accepts_tab">True</property>
+			  <property name="accepts_tab">False</property>
 			  <property name="justification">GTK_JUSTIFY_LEFT</property>
 			  <property name="wrap_mode">GTK_WRAP_WORD</property>
 			  <property name="cursor_visible">True</property>
@@ -147,7 +147,7 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkVBox" id="main_button_vbox">
+		    <widget class="GtkVBox" id="vbox4">
 		      <property name="visible">True</property>
 		      <property name="homogeneous">False</property>
 		      <property name="spacing">6</property>
@@ -161,7 +161,7 @@
 			  <property name="focus_on_click">True</property>
 
 			  <child>
-			    <widget class="GtkAlignment" id="alignment11">
+			    <widget class="GtkAlignment" id="alignment18">
 			      <property name="visible">True</property>
 			      <property name="xalign">0.5</property>
 			      <property name="yalign">0.5</property>
@@ -173,13 +173,13 @@
 			      <property name="right_padding">0</property>
 
 			      <child>
-				<widget class="GtkHBox" id="hbox17">
+				<widget class="GtkHBox" id="hbox25">
 				  <property name="visible">True</property>
 				  <property name="homogeneous">False</property>
 				  <property name="spacing">2</property>
 
 				  <child>
-				    <widget class="GtkImage" id="image16">
+				    <widget class="GtkImage" id="image23">
 				      <property name="visible">True</property>
 				      <property name="stock">gtk-revert-to-saved</property>
 				      <property name="icon_size">4</property>
@@ -196,7 +196,7 @@
 				  </child>
 
 				  <child>
-				    <widget class="GtkLabel" id="label26">
+				    <widget class="GtkLabel" id="label34">
 				      <property name="visible">True</property>
 				      <property name="label" translatable="yes">_Revert</property>
 				      <property name="use_underline">True</property>
@@ -232,7 +232,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkButton" id="main_template_button">
+			<widget class="GtkButton" id="main_temp_button">
 			  <property name="visible">True</property>
 			  <property name="can_default">True</property>
 			  <property name="can_focus">True</property>
@@ -240,7 +240,7 @@
 			  <property name="focus_on_click">True</property>
 
 			  <child>
-			    <widget class="GtkAlignment" id="alignment12">
+			    <widget class="GtkAlignment" id="alignment19">
 			      <property name="visible">True</property>
 			      <property name="xalign">0.5</property>
 			      <property name="yalign">0.5</property>
@@ -252,13 +252,13 @@
 			      <property name="right_padding">0</property>
 
 			      <child>
-				<widget class="GtkHBox" id="hbox18">
+				<widget class="GtkHBox" id="hbox26">
 				  <property name="visible">True</property>
 				  <property name="homogeneous">False</property>
 				  <property name="spacing">2</property>
 
 				  <child>
-				    <widget class="GtkImage" id="image17">
+				    <widget class="GtkImage" id="image24">
 				      <property name="visible">True</property>
 				      <property name="stock">gtk-add</property>
 				      <property name="icon_size">4</property>
@@ -275,7 +275,7 @@
 				  </child>
 
 				  <child>
-				    <widget class="GtkLabel" id="label27">
+				    <widget class="GtkLabel" id="label35">
 				      <property name="visible">True</property>
 				      <property name="label" translatable="yes">_Insert Template</property>
 				      <property name="use_underline">True</property>
@@ -319,7 +319,7 @@
 			  <property name="focus_on_click">True</property>
 
 			  <child>
-			    <widget class="GtkAlignment" id="alignment13">
+			    <widget class="GtkAlignment" id="alignment20">
 			      <property name="visible">True</property>
 			      <property name="xalign">0.5</property>
 			      <property name="yalign">0.5</property>
@@ -331,13 +331,13 @@
 			      <property name="right_padding">0</property>
 
 			      <child>
-				<widget class="GtkHBox" id="hbox19">
+				<widget class="GtkHBox" id="hbox27">
 				  <property name="visible">True</property>
 				  <property name="homogeneous">False</property>
 				  <property name="spacing">2</property>
 
 				  <child>
-				    <widget class="GtkImage" id="image18">
+				    <widget class="GtkImage" id="image25">
 				      <property name="visible">True</property>
 				      <property name="stock">gtk-clear</property>
 				      <property name="icon_size">4</property>
@@ -354,9 +354,9 @@
 				  </child>
 
 				  <child>
-				    <widget class="GtkLabel" id="label28">
+				    <widget class="GtkLabel" id="label36">
 				      <property name="visible">True</property>
-				      <property name="label" translatable="yes">_Clear</property>
+				      <property name="label" translatable="yes">C_lear</property>
 				      <property name="use_underline">True</property>
 				      <property name="use_markup">False</property>
 				      <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -424,14 +424,66 @@
 		  <property name="focus_on_click">True</property>
 
 		  <child>
-		    <widget class="GtkImage" id="image12">
+		    <widget class="GtkAlignment" id="alignment21">
 		      <property name="visible">True</property>
-		      <property name="stock">gtk-go-down</property>
-		      <property name="icon_size">4</property>
 		      <property name="xalign">0.5</property>
 		      <property name="yalign">0.5</property>
-		      <property name="xpad">0</property>
-		      <property name="ypad">0</property>
+		      <property name="xscale">0</property>
+		      <property name="yscale">0</property>
+		      <property name="top_padding">0</property>
+		      <property name="bottom_padding">0</property>
+		      <property name="left_padding">0</property>
+		      <property name="right_padding">0</property>
+
+		      <child>
+			<widget class="GtkHBox" id="hbox29">
+			  <property name="visible">True</property>
+			  <property name="homogeneous">False</property>
+			  <property name="spacing">2</property>
+
+			  <child>
+			    <widget class="GtkImage" id="image26">
+			      <property name="visible">True</property>
+			      <property name="stock">gtk-go-down</property>
+			      <property name="icon_size">4</property>
+			      <property name="xalign">0.5</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			    </widget>
+			    <packing>
+			      <property name="padding">0</property>
+			      <property name="expand">False</property>
+			      <property name="fill">False</property>
+			    </packing>
+			  </child>
+
+			  <child>
+			    <widget class="GtkLabel" id="label37">
+			      <property name="visible">True</property>
+			      <property name="label" translatable="yes">Copy _Down</property>
+			      <property name="use_underline">True</property>
+			      <property name="use_markup">False</property>
+			      <property name="justify">GTK_JUSTIFY_LEFT</property>
+			      <property name="wrap">False</property>
+			      <property name="selectable">False</property>
+			      <property name="xalign">0.5</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+			      <property name="width_chars">-1</property>
+			      <property name="single_line_mode">False</property>
+			      <property name="angle">0</property>
+			    </widget>
+			    <packing>
+			      <property name="padding">0</property>
+			      <property name="expand">False</property>
+			      <property name="fill">False</property>
+			    </packing>
+			  </child>
+			</widget>
+		      </child>
 		    </widget>
 		  </child>
 		</widget>
@@ -450,14 +502,66 @@
 		  <property name="focus_on_click">True</property>
 
 		  <child>
-		    <widget class="GtkImage" id="image13">
+		    <widget class="GtkAlignment" id="alignment22">
 		      <property name="visible">True</property>
-		      <property name="stock">gtk-go-up</property>
-		      <property name="icon_size">4</property>
 		      <property name="xalign">0.5</property>
 		      <property name="yalign">0.5</property>
-		      <property name="xpad">0</property>
-		      <property name="ypad">0</property>
+		      <property name="xscale">0</property>
+		      <property name="yscale">0</property>
+		      <property name="top_padding">0</property>
+		      <property name="bottom_padding">0</property>
+		      <property name="left_padding">0</property>
+		      <property name="right_padding">0</property>
+
+		      <child>
+			<widget class="GtkHBox" id="hbox30">
+			  <property name="visible">True</property>
+			  <property name="homogeneous">False</property>
+			  <property name="spacing">2</property>
+
+			  <child>
+			    <widget class="GtkImage" id="image27">
+			      <property name="visible">True</property>
+			      <property name="stock">gtk-go-up</property>
+			      <property name="icon_size">4</property>
+			      <property name="xalign">0.5</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			    </widget>
+			    <packing>
+			      <property name="padding">0</property>
+			      <property name="expand">False</property>
+			      <property name="fill">False</property>
+			    </packing>
+			  </child>
+
+			  <child>
+			    <widget class="GtkLabel" id="label38">
+			      <property name="visible">True</property>
+			      <property name="label" translatable="yes">Copy _Up</property>
+			      <property name="use_underline">True</property>
+			      <property name="use_markup">False</property>
+			      <property name="justify">GTK_JUSTIFY_LEFT</property>
+			      <property name="wrap">False</property>
+			      <property name="selectable">False</property>
+			      <property name="xalign">0.5</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+			      <property name="width_chars">-1</property>
+			      <property name="single_line_mode">False</property>
+			      <property name="angle">0</property>
+			    </widget>
+			    <packing>
+			      <property name="padding">0</property>
+			      <property name="expand">False</property>
+			      <property name="fill">False</property>
+			    </packing>
+			  </child>
+			</widget>
+		      </child>
 		    </widget>
 		  </child>
 		</widget>
@@ -476,13 +580,13 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkVBox" id="translation_vbox">
+	    <widget class="GtkVBox" id="tran_vbox">
 	      <property name="visible">True</property>
 	      <property name="homogeneous">False</property>
 	      <property name="spacing">6</property>
 
 	      <child>
-		<widget class="GtkLabel" id="translation_label">
+		<widget class="GtkLabel" id="label39">
 		  <property name="visible">True</property>
 		  <property name="label" translatable="yes">_Translation file:</property>
 		  <property name="use_underline">True</property>
@@ -494,7 +598,7 @@
 		  <property name="yalign">0.5</property>
 		  <property name="xpad">0</property>
 		  <property name="ypad">0</property>
-		  <property name="mnemonic_widget">translation_text_view</property>
+		  <property name="mnemonic_widget">tran_text_view</property>
 		  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
 		  <property name="width_chars">-1</property>
 		  <property name="single_line_mode">False</property>
@@ -508,13 +612,13 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkHBox" id="translation_hbox">
+		<widget class="GtkHBox" id="hbox31">
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">12</property>
 
 		  <child>
-		    <widget class="GtkScrolledWindow" id="translation_scrolled_window">
+		    <widget class="GtkScrolledWindow" id="scrolledwindow2">
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
 		      <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
@@ -523,12 +627,12 @@
 		      <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
 
 		      <child>
-			<widget class="GtkTextView" id="translation_text_view">
+			<widget class="GtkTextView" id="tran_text_view">
 			  <property name="visible">True</property>
 			  <property name="can_focus">True</property>
 			  <property name="editable">True</property>
 			  <property name="overwrite">False</property>
-			  <property name="accepts_tab">True</property>
+			  <property name="accepts_tab">False</property>
 			  <property name="justification">GTK_JUSTIFY_LEFT</property>
 			  <property name="wrap_mode">GTK_WRAP_WORD</property>
 			  <property name="cursor_visible">True</property>
@@ -550,13 +654,13 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkVBox" id="translation_button_vbox">
+		    <widget class="GtkVBox" id="vbox6">
 		      <property name="visible">True</property>
 		      <property name="homogeneous">False</property>
 		      <property name="spacing">6</property>
 
 		      <child>
-			<widget class="GtkButton" id="translation_revert_button">
+			<widget class="GtkButton" id="tran_revert_button">
 			  <property name="visible">True</property>
 			  <property name="can_default">True</property>
 			  <property name="can_focus">True</property>
@@ -564,7 +668,7 @@
 			  <property name="focus_on_click">True</property>
 
 			  <child>
-			    <widget class="GtkAlignment" id="alignment14">
+			    <widget class="GtkAlignment" id="alignment23">
 			      <property name="visible">True</property>
 			      <property name="xalign">0.5</property>
 			      <property name="yalign">0.5</property>
@@ -576,13 +680,13 @@
 			      <property name="right_padding">0</property>
 
 			      <child>
-				<widget class="GtkHBox" id="hbox20">
+				<widget class="GtkHBox" id="hbox32">
 				  <property name="visible">True</property>
 				  <property name="homogeneous">False</property>
 				  <property name="spacing">2</property>
 
 				  <child>
-				    <widget class="GtkImage" id="image19">
+				    <widget class="GtkImage" id="image28">
 				      <property name="visible">True</property>
 				      <property name="stock">gtk-revert-to-saved</property>
 				      <property name="icon_size">4</property>
@@ -599,7 +703,7 @@
 				  </child>
 
 				  <child>
-				    <widget class="GtkLabel" id="label29">
+				    <widget class="GtkLabel" id="label40">
 				      <property name="visible">True</property>
 				      <property name="label" translatable="yes">R_evert</property>
 				      <property name="use_underline">True</property>
@@ -635,7 +739,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkButton" id="translation_template_button">
+			<widget class="GtkButton" id="tran_temp_button">
 			  <property name="visible">True</property>
 			  <property name="can_default">True</property>
 			  <property name="can_focus">True</property>
@@ -643,7 +747,7 @@
 			  <property name="focus_on_click">True</property>
 
 			  <child>
-			    <widget class="GtkAlignment" id="alignment15">
+			    <widget class="GtkAlignment" id="alignment24">
 			      <property name="visible">True</property>
 			      <property name="xalign">0.5</property>
 			      <property name="yalign">0.5</property>
@@ -655,13 +759,13 @@
 			      <property name="right_padding">0</property>
 
 			      <child>
-				<widget class="GtkHBox" id="hbox21">
+				<widget class="GtkHBox" id="hbox33">
 				  <property name="visible">True</property>
 				  <property name="homogeneous">False</property>
 				  <property name="spacing">2</property>
 
 				  <child>
-				    <widget class="GtkImage" id="image20">
+				    <widget class="GtkImage" id="image29">
 				      <property name="visible">True</property>
 				      <property name="stock">gtk-add</property>
 				      <property name="icon_size">4</property>
@@ -678,7 +782,7 @@
 				  </child>
 
 				  <child>
-				    <widget class="GtkLabel" id="label30">
+				    <widget class="GtkLabel" id="label41">
 				      <property name="visible">True</property>
 				      <property name="label" translatable="yes">I_nsert Template</property>
 				      <property name="use_underline">True</property>
@@ -714,7 +818,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkButton" id="translation_clear_button">
+			<widget class="GtkButton" id="tran_clear_button">
 			  <property name="visible">True</property>
 			  <property name="can_default">True</property>
 			  <property name="can_focus">True</property>
@@ -722,7 +826,7 @@
 			  <property name="focus_on_click">True</property>
 
 			  <child>
-			    <widget class="GtkAlignment" id="alignment16">
+			    <widget class="GtkAlignment" id="alignment25">
 			      <property name="visible">True</property>
 			      <property name="xalign">0.5</property>
 			      <property name="yalign">0.5</property>
@@ -734,13 +838,13 @@
 			      <property name="right_padding">0</property>
 
 			      <child>
-				<widget class="GtkHBox" id="hbox22">
+				<widget class="GtkHBox" id="hbox34">
 				  <property name="visible">True</property>
 				  <property name="homogeneous">False</property>
 				  <property name="spacing">2</property>
 
 				  <child>
-				    <widget class="GtkImage" id="image21">
+				    <widget class="GtkImage" id="image30">
 				      <property name="visible">True</property>
 				      <property name="stock">gtk-clear</property>
 				      <property name="icon_size">4</property>
@@ -757,9 +861,9 @@
 				  </child>
 
 				  <child>
-				    <widget class="GtkLabel" id="label31">
+				    <widget class="GtkLabel" id="label42">
 				      <property name="visible">True</property>
-				      <property name="label" translatable="yes">C_lear</property>
+				      <property name="label" translatable="yes">Cle_ar</property>
 				      <property name="use_underline">True</property>
 				      <property name="use_markup">False</property>
 				      <property name="justify">GTK_JUSTIFY_LEFT</property>

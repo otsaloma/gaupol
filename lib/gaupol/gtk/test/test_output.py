@@ -26,61 +26,53 @@ class TestOutputWindow(Test):
 
     def setup_method(self, method):
 
-        self.output_window = OutputWindow()
-        self.output_window.show()
+        self.window = OutputWindow()
+        self.window.show()
 
     def teardown_method(self, method):
 
-        self.output_window._window.destroy()
+        self.window._window.destroy()
 
     def test_get_position(self):
 
-        position = self.output_window.get_position()
+        position = self.window.get_position()
         assert isinstance(position[0], int)
         assert isinstance(position[1], int)
 
     def test_get_size(self):
 
-        position = self.output_window.get_size()
+        position = self.window.get_size()
         assert isinstance(position[0], int)
         assert isinstance(position[1], int)
 
     def test_get_visible(self):
 
-        visible = self.output_window.get_visible()
+        visible = self.window.get_visible()
         assert isinstance(visible, bool)
 
     def test_hide_and_show(self):
 
-        self.output_window.hide()
-        visible = self.output_window.get_visible()
+        self.window.hide()
+        visible = self.window.get_visible()
         assert visible is False
 
-        self.output_window.show()
-        visible = self.output_window.get_visible()
+        self.window.show()
+        visible = self.window.get_visible()
         assert visible is True
 
     def test_set_output(self):
 
-        self.output_window.set_output('test')
-        text_buffer = self.output_window._text_view.get_buffer()
+        self.window.set_output('test')
+        text_buffer = self.window._text_view.get_buffer()
         start, end = text_buffer.get_bounds()
         output = text_buffer.get_text(start, end)
         assert output == 'test'
 
     def test_signals(self):
 
-        self.count = 0
-        def on_close(output_window):
-            assert isinstance(output_window, OutputWindow)
-            self.count += 1
+        self.window._on_close_button_clicked()
+        self.window._on_close_key_pressed()
+        self.window._on_window_delete_event()
 
-        self.output_window.connect('close', on_close)
-        self.output_window._close_button.emit('clicked')
-
-        event = gtk.gdk.Event(gtk.gdk.NOTHING)
-        self.output_window._window.emit('delete-event', event)
-        assert self.count == 2
-
-        self.output_window._window.maximize()
-        self.output_window._window.unmaximize()
+        self.window._window.maximize()
+        self.window._window.unmaximize()

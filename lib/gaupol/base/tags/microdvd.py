@@ -24,7 +24,7 @@ import re
 from gaupol.base.tags import TagLibrary
 
 
-COMMON = re.MULTILINE|re.DOTALL
+_COMMON = re.MULTILINE|re.DOTALL
 
 
 class MicroDVD(TagLibrary):
@@ -35,61 +35,61 @@ class MicroDVD(TagLibrary):
     italic_tag = r'\{y:i\}'      , re.IGNORECASE
 
     # decode_tags and encode_tags require multiple runs to convert overlapping
-    # matches. e.g. <b><i>test</i></b>, would require two substitutions of
+    # matches. e.g. <b><i>test</i></b> would require two substitutions of
     # pattern "<[bi]>.*?</[bi]>" to fully convert.
 
     decode_tags = [
         (
             # Style x3 (single line)
-            r'\{y:(b|i|u).*?(b|i|u).*?(b|i|u)\}(.*?)$', COMMON,
+            r'\{y:(b|i|u).*?(b|i|u).*?(b|i|u)\}(.*?)$', _COMMON,
             r'<\1><\2><\3>\4</\3></\2></\1>'
         ), (
             # Style x2 (single line)
-            r'\{y:(b|i|u).*?(b|i|u)\}(.*?)$', COMMON,
+            r'\{y:(b|i|u).*?(b|i|u)\}(.*?)$', _COMMON,
             r'<\1><\2>\3</\2></\1>',
             2
         ), (
             # Style x1 (single line)
-            r'\{y:(b|i|u)\}(.*?)$', COMMON,
+            r'\{y:(b|i|u)\}(.*?)$', _COMMON,
             r'<\1>\2</\1>',
             3
         ), (
             # Style x3 (whole subtitle unit)
-            r'\{Y:(b|i|u).*?(b|i|u).*?(b|i|u)\}(.*?)\Z', COMMON,
+            r'\{Y:(b|i|u).*?(b|i|u).*?(b|i|u)\}(.*?)\Z', _COMMON,
             r'<\1><\2><\3>\4</\3></\2></\1>'
         ), (
             # Style x2 (whole subtitle unit)
-            r'\{Y:(b|i|u).*?(b|i|u)\}(.*?)\Z', COMMON,
+            r'\{Y:(b|i|u).*?(b|i|u)\}(.*?)\Z', _COMMON,
             r'<\1><\2>\3</\2></\1>',
             2
         ), (
             # Style x1 (whole subtitle unit)
-            r'\{Y:(b|i|u)\}(.*?)\Z', COMMON,
+            r'\{Y:(b|i|u)\}(.*?)\Z', _COMMON,
             r'<\1>\2</\1>',
             3
         ), (
             # Color (single line)
-            r'\{c:\$([a-zA-Z0-9]{6})\}(.*?)$', COMMON,
+            r'\{c:\$([a-zA-Z0-9]{6})\}(.*?)$', _COMMON,
             r'<color="#\1">\2</color>'
         ), (
             # Color (whole subtitle unit)
-            r'\{C:\$([a-zA-Z0-9]{6})\}(.*?)\Z', COMMON,
+            r'\{C:\$([a-zA-Z0-9]{6})\}(.*?)\Z', _COMMON,
             r'<color="#\1">\2</color>'
         ), (
             # Font (single line)
-            r'\{f:(.*?)\}(.*?)$', COMMON,
+            r'\{f:(.*?)\}(.*?)$', _COMMON,
             r'<font="\1">\2</font>'
         ), (
             # Font (whole subtitle unit)
-            r'\{F:(.*?)\}(.*?)\Z', COMMON,
+            r'\{F:(.*?)\}(.*?)\Z', _COMMON,
             r'<font="\1">\2</font>'
         ), (
             # Size (single line)
-            r'\{s:(\d+)\}(.*?)$', COMMON,
+            r'\{s:(\d+)\}(.*?)$', _COMMON,
             r'<size="\1">\2</size>'
         ), (
             # Size (whole subtitle unit)
-            r'\{S:(\d+)\}(.*?)\Z', COMMON,
+            r'\{S:(\d+)\}(.*?)\Z', _COMMON,
             r'<size="\1">\2</size>'
         ), (
             # Remove all other tags.
@@ -101,12 +101,12 @@ class MicroDVD(TagLibrary):
     encode_tags = [
         (
             # Remove duplicate style tags (e.g. <b>test</b><b>test</b>).
-            r'</(b|i|u)>(\n?)<\1>', COMMON,
+            r'</(b|i|u)>(\n?)<\1>', _COMMON,
             r'\2',
             3
         ), (
             # Remove other duplicate tags.
-            r'<(.*?)=(.*?)>(.*?)</\1>(\n?)<\1=\2>', COMMON,
+            r'<(.*?)=(.*?)>(.*?)</\1>(\n?)<\1=\2>', _COMMON,
             r'<\1=\2>\3\4',
             3
         ), (
@@ -121,7 +121,7 @@ class MicroDVD(TagLibrary):
             3
         ), (
             # Style (affecting whole subtitle unit)
-            r'<(b|i|u)>(.*?)</\1>', COMMON,
+            r'<(b|i|u)>(.*?)</\1>', _COMMON,
             r'{Y:\1}\2',
             3
         ), (
@@ -134,7 +134,7 @@ class MicroDVD(TagLibrary):
             r'{c:$\1}\2'
         ), (
             # Color (affecting whole subtitle unit)
-            r'<color="#(.{6})">(.*?)</color>', COMMON,
+            r'<color="#(.{6})">(.*?)</color>', _COMMON,
             r'{C:$\1}\2'
         ), (
             # Font (affecting a single line subtitle fully)
@@ -146,7 +146,7 @@ class MicroDVD(TagLibrary):
             r'{f:\1}\2'
         ), (
             # Font (affecting whole subtitle unit)
-            r'<font="(.*?)">(.*?)</font>', COMMON,
+            r'<font="(.*?)">(.*?)</font>', _COMMON,
             r'{F:\1}\2'
         ), (
             # Size (affecting a single line subtitle fully)
@@ -158,13 +158,13 @@ class MicroDVD(TagLibrary):
             r'{s:\1}\2'
         ), (
             # Size (affecting whole subtitle unit)
-            r'<size="(.*?)">(.*?)</size>', COMMON,
+            r'<size="(.*?)">(.*?)</size>', _COMMON,
             r'{S:\1}\2'
         )
     ]
 
-    @staticmethod
-    def italicize(text):
+    @classmethod
+    def italicize(cls, text):
         """Italicize text."""
 
         return u'{Y:i}%s' % text

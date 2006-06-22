@@ -21,14 +21,7 @@
 
 class BaseError(Exception):
 
-    """Base class for error classes."""
-
-    pass
-
-
-class ExternalError(BaseError):
-
-    """External command failed."""
+    """Base class for errors."""
 
     pass
 

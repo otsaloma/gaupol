@@ -24,95 +24,110 @@ import os
 
 import gtk
 
-from gaupol.base.util            import enclib
+from gaupol.base.util            import enclib, listlib
 from gaupol.gtk                  import cons
 from gaupol.gtk.dialog.encoding  import AdvancedEncodingDialog
 from gaupol.gtk.dialog.message   import QuestionDialog
-from gaupol.gtk.util             import config
+from gaupol.gtk.util             import config, gtklib
+
+try:
+    import chardet
+    _CHARDET_AVAILABLE = True
+except ImportError:
+    _CHARDET_AVAILABLE = False
 
 
-class OverwriteQuestionDialog(QuestionDialog):
+class _OverwriteQuestionDialog(QuestionDialog):
 
-    """Dialog to ask whether to overwrite existing file or not."""
+    """Dialog for confirming overwrite."""
 
     def __init__(self, parent, basename):
 
-        title = _('A file named "%s" already exists') % basename
-        message = _('Do you want to replace it with the one you are saving?')
-        QuestionDialog.__init__(self, parent, title, message)
-        self.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_NO )
-        self.add_button(_('_Replace')   , gtk.RESPONSE_YES)
+        QuestionDialog.__init__(
+            self, parent,
+            _('A file named "%s" already exists') % basename,
+            _('Do you want to replace it with the one you are saving?')
+        )
+        self.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_NO)
+        self.add_button(gtk.STOCK_SAVE_AS, gtk.RESPONSE_YES)
         self.set_default_response(gtk.RESPONSE_NO)
 
+        button = self.action_area.get_children()[0]
+        alignment = button.get_children()[0]
+        hbox = alignment.get_children()[0]
+        label = hbox.get_children()[1]
+        label.set_text(_('_Replace'))
+        label.set_use_underline(True)
 
-class TextFileChooserDialog(gtk.FileChooserDialog):
 
-    """Base class for dialogs for selecting text files."""
+class _TextFileDialog(gtk.FileChooserDialog):
+
+    """
+    Base class for dialogs for selecting text files.
+
+    Instance variables:
+
+        _encodings: List of tuples: Python name, display name
+
+    """
 
     def __init__(self, *args, **kwargs):
 
         gtk.FileChooserDialog.__init__(self, *args, **kwargs)
 
-        self._encodings       = None
-        self._locale_encoding = None
+        self._encodings = None
 
-        self._init_locale_encoding()
         self._init_encodings()
         self._init_filters()
 
-    def _init_encodings(self):
+    def _init_encoding_data(self):
+        """Initialize encoding combo box data."""
+
+        model = self._encoding_combo.get_model()
+        while len(model) > 0:
+            self._encoding_combo.remove_text(0)
+        for entry in self._encodings:
+            self._encoding_combo.append_text(entry[1])
+
+        self._encoding_combo.set_row_separator_func(gtklib.separate)
+
+    def _init_encodings(self, custom=None):
         """Initialize encodings."""
 
         self._encodings = []
-        for encoding in config.Encoding.visible:
+
+        encodings = config.encoding.visibles[:]
+        if custom is not None:
+            encodings.append(custom)
+        for encoding in encodings:
             try:
                 name = enclib.get_long_name(encoding)
                 self._encodings.append((encoding, name))
             except ValueError:
                 pass
 
-        if config.File.encoding is not None:
-            found = False
-            for encoding, name in self._encodings:
-                if encoding == config.File.encoding:
-                    found = True
-                    break
-            if not found:
-                try:
-                    encoding = config.File.encoding
-                    name = enclib.get_long_name(encoding)
-                    self._encodings.append((encoding, name))
-                except ValueError:
-                    pass
-
         def sort(x, y):
             return cmp(x[1], y[1])
         self._encodings.sort(sort)
+        self._encodings = listlib.unique(self._encodings)
+        if not self._encodings:
+            self._encodings.append(('utf_8', enclib.get_long_name('utf_8')))
 
-        if self._locale_encoding is not None:
+        try:
+            encoding = enclib.get_locale_encoding()[0]
+            name = enclib.get_locale_long_name()
+        except ValueError:
+            pass
+        else:
             for i, entry in enumerate(self._encodings):
-                if entry[0] == self._locale_encoding[0]:
+                if entry[0] == encoding:
                     self._encodings.pop(i)
                     break
-            self._encodings.insert(0, self._locale_encoding)
+            self._encodings.insert(0, (encoding, name))
 
-    def _init_encoding_data(self):
-        """Initialize encoding combo box data."""
-
-        while self._encoding_combo.get_active_text() is not None:
-            self._encoding_combo.remove_text(0)
-
-        for entry in self._encodings:
-            self._encoding_combo.append_text(entry[1])
-        self._encoding_combo.append_text('--')
-        self._encoding_combo.append_text(_('Other...'))
-
-        def set_row_separator(store, iter_):
-            row = store.get_path(iter_)[0]
-            return row == len(store) - 2
-        self._encoding_combo.set_row_separator_func(set_row_separator)
-
-        self.set_encoding(config.File.encoding)
+        self._init_special_encodings()
+        self._encodings.append((gtklib.COMBO_SEP, gtklib.COMBO_SEP))
+        self._encodings.append(('other', _('Other...')))
 
     def _init_filters(self):
         """Initialize file filters."""
@@ -136,78 +151,60 @@ class TextFileChooserDialog(gtk.FileChooserDialog):
             file_filter.add_pattern(pattern)
             self.add_filter(file_filter)
 
-    def _init_locale_encoding(self):
-        """Initialize locale encoding."""
+    def _init_special_encodings(self):
+        """Initialize special encodings."""
 
-        try:
-            encoding = enclib.get_locale_encoding()[0]
-            name = enclib.get_locale_long_name()
-            self._locale_encoding = (encoding, name)
-        except ValueError:
-            pass
+        pass
 
-    def get_encoding(self):
-        """
-        Get selected encoding.
+    def _on_encoding_combo_changed(self, *args):
+        """Show encoding selection dialog."""
 
-        Raise IndexError if "Other..." selected.
-        Return name or None.
-        """
-        index = self._encoding_combo.get_active()
-        if index == -1:
-            return None
-        return self._encodings[index][0]
-
-    def _on_current_folder_changed(self, *args):
-        """Save directory."""
-
-        config.File.directory = self.get_current_folder()
-
-    def _on_encoding_combo_changed(self, combo_box):
-        """Save encoding or show encoding dialog."""
-
-        try:
-            encoding = self.get_encoding()
-        except IndexError:
-            pass
-        else:
-            if encoding is not None:
-                config.File.encoding = encoding
+        if self.get_encoding() != 'other':
             return
 
+        encoding = None
         dialog = AdvancedEncodingDialog(self)
         response = dialog.run()
         if response == gtk.RESPONSE_OK:
-            try:
-                config.File.encoding = dialog.get_encoding()
-            except ValueError:
-                pass
-            config.Encoding.visible = dialog.get_visible_encodings()
+            encoding = dialog.get_encoding()
+            config.encoding.visibles = dialog.get_visible_encodings()
         dialog.destroy()
+        self.set_encoding(encoding)
 
-        self._init_encodings()
-        self._init_encoding_data()
+    def get_encoding(self):
+        """
+        Get encoding.
+
+        Return name or None.
+        """
+        index = self._encoding_combo.get_active()
+        if index < 0:
+            return None
+        return self._encodings[index][0]
 
     def set_encoding(self, encoding):
-        """Set active encoding."""
+        """Set encoding."""
 
         for i, entry in enumerate(self._encodings):
             if entry[0] == encoding:
                 self._encoding_combo.set_active(i)
                 return
 
-        index = self._encoding_combo.get_active()
-        if index not in range(len(self._encodings)):
-            self._encoding_combo.set_active(0)
+        if encoding is not None and enclib.is_valid(encoding):
+            self._init_encodings(encoding)
+            self._init_encoding_data()
+            return self.set_encoding(encoding)
+
+        self._encoding_combo.set_active(0)
 
 
-class OpenFileDialog(TextFileChooserDialog):
+class OpenFileDialog(_TextFileDialog):
 
     """Dialog for selecting text files to open."""
 
     def __init__(self, title, parent):
 
-        TextFileChooserDialog.__init__(
+        _TextFileDialog.__init__(
             self, title, parent, gtk.FILE_CHOOSER_ACTION_OPEN,
             (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
              gtk.STOCK_OPEN  , gtk.RESPONSE_OK     )
@@ -219,8 +216,9 @@ class OpenFileDialog(TextFileChooserDialog):
         self._init_encoding_data()
         self._init_signals()
 
-        if config.File.directory is not None:
-            self.set_current_folder(config.File.directory)
+        self.set_encoding(config.file.encoding)
+        if config.file.directory is not None:
+            self.set_current_folder(config.file.directory)
         self.set_default_response(gtk.RESPONSE_OK)
 
     def _init_extra_widget(self):
@@ -240,18 +238,33 @@ class OpenFileDialog(TextFileChooserDialog):
     def _init_signals(self):
         """Initialize signals."""
 
-        self.connect('current-folder-changed', self._on_current_folder_changed)
-        self._encoding_combo.connect(
-            'changed', self._on_encoding_combo_changed)
+        gtklib.connect(self, self, 'response')
+        gtklib.connect(self, '_encoding_combo', 'changed')
+
+    def _init_special_encodings(self):
+        """Initialize special encodings."""
+
+        if _CHARDET_AVAILABLE:
+            self._encodings.append((gtklib.COMBO_SEP, gtklib.COMBO_SEP))
+            self._encodings.append(('auto', _('Auto-detected')))
+
+    def _on_response(self, dialog, response):
+        """Save settings."""
+
+        if response != gtk.RESPONSE_OK:
+            return
+
+        config.file.encoding  = self.get_encoding()
+        config.file.directory = self.get_current_folder()
 
 
-class SaveFileDialog(TextFileChooserDialog):
+class SaveFileDialog(_TextFileDialog):
 
     """Dialog for selecting text files to save."""
 
     def __init__(self, title, parent):
 
-        TextFileChooserDialog.__init__(
+        _TextFileDialog.__init__(
             self, title, parent, gtk.FILE_CHOOSER_ACTION_SAVE,
             (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
              gtk.STOCK_SAVE  , gtk.RESPONSE_OK     )
@@ -267,11 +280,28 @@ class SaveFileDialog(TextFileChooserDialog):
         self._init_newline_data()
         self._init_signals()
 
-        self.set_format(config.File.format)
-        self.set_newlines(config.File.newlines)
-        if config.File.directory is not None:
-            self.set_current_folder(config.File.directory)
+        self.set_encoding(config.file.encoding)
+        self.set_format(config.file.format)
+        self.set_newlines(config.file.newlines)
+        if config.file.directory is not None:
+            self.set_current_folder(config.file.directory)
         self.set_default_response(gtk.RESPONSE_OK)
+
+    def _confirm_overwrite(self):
+        """
+        Add extension to filename and confirm overwrite.
+
+        Return gtk.FILE_CHOOSER_CONFIRMATION constant.
+        """
+        path = self.get_full_filename()
+        if not os.path.isfile(path):
+            return gtk.FILE_CHOOSER_CONFIRMATION_ACCEPT_FILENAME
+
+        basename = os.path.basename(path)
+        response = gtklib.run(_OverwriteQuestionDialog(self, basename))
+        if response == gtk.RESPONSE_YES:
+            return gtk.FILE_CHOOSER_CONFIRMATION_ACCEPT_FILENAME
+        return gtk.FILE_CHOOSER_CONFIRMATION_SELECT_AGAIN
 
     def _init_extra_widget(self):
         """Initialize extra widget."""
@@ -284,10 +314,12 @@ class SaveFileDialog(TextFileChooserDialog):
         format_label.props.xalign = 0
         format_label.set_markup_with_mnemonic(_('Fo_rmat:'))
         format_label.set_mnemonic_widget(self._format_combo)
+
         encoding_label = gtk.Label()
         encoding_label.props.xalign = 0
         encoding_label.set_markup_with_mnemonic(_('C_haracter encoding:'))
         encoding_label.set_mnemonic_widget(self._encoding_combo)
+
         newline_label = gtk.Label()
         newline_label.props.xalign = 0
         newline_label.set_markup_with_mnemonic(_('Ne_wlines:'))
@@ -296,14 +328,17 @@ class SaveFileDialog(TextFileChooserDialog):
         table = gtk.Table(3, 2)
         table.set_row_spacings(6)
         table.set_col_spacings(12)
+
         options = gtk.FILL
         table.attach(format_label  , 0, 1, 0, 1, options, options)
         table.attach(encoding_label, 0, 1, 1, 2, options, options)
         table.attach(newline_label , 0, 1, 2, 3, options, options)
+
         options = gtk.EXPAND|gtk.FILL
         table.attach(self._format_combo  , 1, 2, 0, 1, options, options)
         table.attach(self._encoding_combo, 1, 2, 1, 2, options, options)
         table.attach(self._newline_combo , 1, 2, 2, 3, options, options)
+
         table.show_all()
         self.set_extra_widget(table)
 
@@ -324,34 +359,48 @@ class SaveFileDialog(TextFileChooserDialog):
     def _init_signals(self):
         """Initialize signals."""
 
-        self.connect('current-folder-changed', self._on_current_folder_changed)
-        self.connect('response', self._on_response)
+        gtklib.connect(self, self, 'response')
+        gtklib.connect(self, '_format_combo', 'changed')
+        gtklib.connect(self, '_encoding_combo', 'changed')
 
-        self._format_combo.connect('changed', self._on_format_combo_changed)
-        self._encoding_combo.connect(
-            'changed', self._on_encoding_combo_changed)
-        self._newline_combo.connect('changed', self._on_newline_combo_changed)
+    def _on_format_combo_changed(self, combo_box):
+        """Change extension."""
 
-    def _confirm_overwrite(self):
-        """
-        Add extension to filename for confirming overwrite.
+        path = self.get_filename()
+        if path is None:
+            return
+        self.unselect_filename(path)
+        dirname = os.path.dirname(path)
+        basename = os.path.basename(path)
 
-        Return gtk.FILE_CHOOSER_CONFIRMATION constant.
-        """
-        filepath = self.get_full_filename()
-        if not os.path.isfile(filepath):
-            return gtk.FILE_CHOOSER_CONFIRMATION_ACCEPT_FILENAME
+        for extension in cons.Format.extensions:
+            if basename.endswith(extension):
+                basename = basename[:-len(extension)]
+                break
 
-        dialog = OverwriteQuestionDialog(self, os.path.basename(filepath))
-        response = dialog.run()
-        dialog.destroy()
-        if response == gtk.RESPONSE_YES:
-            return gtk.FILE_CHOOSER_CONFIRMATION_ACCEPT_FILENAME
-        else:
-            return gtk.FILE_CHOOSER_CONFIRMATION_SELECT_AGAIN
+        format = combo_box.get_active()
+        basename += cons.Format.extensions[format]
+        path = os.path.join(dirname, basename)
+        self.set_current_name(basename)
+        self.set_filename(path)
+
+    def _on_response(self, dialog, response):
+        """Confirm overwrite and save settings."""
+
+        if response != gtk.RESPONSE_OK:
+            return
+
+        confirmation = self._confirm_overwrite()
+        if confirmation == gtk.FILE_CHOOSER_CONFIRMATION_SELECT_AGAIN:
+            return self.run()
+
+        config.file.directory = self.get_current_folder()
+        config.file.format    = self.get_format()
+        config.file.encoding  = self.get_encoding()
+        config.file.newlines  = self.get_newlines()
 
     def get_full_filename(self):
-        """Get selected filename with extension."""
+        """Get filename with extension."""
 
         path = self.get_filename()
         if path is None:
@@ -363,60 +412,24 @@ class SaveFileDialog(TextFileChooserDialog):
         return path
 
     def get_format(self):
-        """Get selected format."""
+        """Get format."""
 
         return self._format_combo.get_active()
 
     def get_newlines(self):
-        """Get selected newlines."""
+        """Get newlines."""
 
         return self._newline_combo.get_active()
 
-    def _on_format_combo_changed(self, combo_box):
-        """Save format and change extension."""
-
-        format = combo_box.get_active()
-        config.File.format = format
-        path = self.get_filename()
-        if path is None:
-            return
-
-        self.unselect_filename(path)
-        dirname = os.path.dirname(path)
-        basename = os.path.basename(path)
-
-        for extension in cons.Format.extensions:
-            if basename.endswith(extension):
-                basename = basename[:-len(extension)]
-                break
-
-        basename += cons.Format.extensions[format]
-        path = os.path.join(dirname, basename)
-        self.set_current_name(basename)
-        self.set_filename(path)
-
-    def _on_newline_combo_changed(self, combo_box):
-        """Save newlines."""
-
-        config.File.newlines = combo_box.get_active()
-
-    def _on_response(self, dialog, response):
-        """Add extension and confirm overwrite."""
-
-        if response == gtk.RESPONSE_OK:
-            confirmation = self._confirm_overwrite()
-            if confirmation == gtk.FILE_CHOOSER_CONFIRMATION_SELECT_AGAIN:
-                return self.run()
-
     def set_name(self, path):
-        """Select file or set current name."""
+        """Set filename or set current name."""
 
         if os.path.isfile(path):
             return self.set_filename(path)
         return self.set_current_name(path)
 
     def set_format(self, format):
-        """Set active format."""
+        """Set format."""
 
         try:
             self._format_combo.set_active(format)
@@ -424,7 +437,7 @@ class SaveFileDialog(TextFileChooserDialog):
             pass
 
     def set_newlines(self, newlines):
-        """Set active newlines."""
+        """Set newlines."""
 
         try:
             self._newline_combo.set_active(newlines)

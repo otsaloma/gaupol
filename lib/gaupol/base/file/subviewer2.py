@@ -32,27 +32,13 @@ class SubViewer2(SubtitleFile):
     """SubViewer 2.0 file."""
 
     format     = cons.Format.SUBVIEWER2
-    mode       = cons.Mode.TIME
     has_header = True
     identifier = r'^\d\d:\d\d:\d\d.\d\d,\d\d:\d\d:\d\d.\d\d\s*$', 0
-
-    header_template = \
-'''[INFORMATION]
-[TITLE]
-[AUTHOR]
-[SOURCE]
-[PRG]
-[FILEPATH]
-[DELAY]0
-[CD TRACK]0
-[COMMENT]
-[END INFORMATION]
-[SUBTITLE]
-[COLF]&HFFFFFF,[STYLE]bd,[SIZE]18,[FONT]Arial'''
+    mode       = cons.Mode.TIME
 
     def read(self):
         """
-        Read SubViewer 2.0 file.
+        Read file.
 
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
@@ -83,15 +69,15 @@ class SubViewer2(SubtitleFile):
         if header:
             self.header = header.strip()
 
-        shows = list(x.replace('.', ',') + '0' for x in shows)
-        hides = list(x.replace('.', ',') + '0' for x in hides)
-        texts = list(x.replace('[br]', '\n')   for x in texts)
+        shows = list(x + '0' for x in shows)
+        hides = list(x + '0' for x in hides)
+        texts = list(x.replace('[br]', '\n') for x in texts)
 
         return shows, hides, texts
 
     def write(self, shows, hides, texts):
         """
-        Write SubViewer 2.0 file.
+        Write file.
 
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
@@ -102,11 +88,11 @@ class SubViewer2(SubtitleFile):
         calc = Calculator()
         newline_char = self._get_newline_character()
 
-        texts = list(x.replace('\n', '[br]')  for x in texts)
-        shows = list(calc.round_time(x, 2)    for x in shows)
-        hides = list(calc.round_time(x, 2)    for x in hides)
-        shows = list(x[:11].replace(',', '.') for x in shows)
-        hides = list(x[:11].replace(',', '.') for x in hides)
+        texts = list(x.replace('\n', '[br]') for x in texts)
+        shows = list(calc.round_time(x, 2) for x in shows)
+        hides = list(calc.round_time(x, 2) for x in hides)
+        shows = list(x[:11] for x in shows)
+        hides = list(x[:11] for x in hides)
 
         fobj = codecs.open(self.path, 'w', self.encoding)
         try:

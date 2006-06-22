@@ -33,6 +33,26 @@ class FormatDelegate(Delegate):
 
     """Formatting text."""
 
+    def _get_format_class_name(self, doc):
+        """
+        Get class name of document's file format.
+
+        Translation document will inherit main document's format if translation
+        file does not exist.
+
+        Return name or None.
+        """
+        if doc == MAIN:
+            try:
+                return cons.Format.class_names[self.main_file.format]
+            except AttributeError:
+                return None
+        elif doc == TRAN:
+            try:
+                return cons.Format.class_names[self.tran_file.format]
+            except AttributeError:
+                return self._get_format_class_name(MAIN)
+
     def change_case(self, rows, doc, method, register=cons.Action.DO):
         """
         Change case of text.
@@ -54,25 +74,6 @@ class FormatDelegate(Delegate):
 
         self.replace_texts(rows, doc, new_texts, register)
         self.set_action_description(register, _('Changing case'))
-
-    def _get_format_class_name(self, doc):
-        """
-        Get class name of document's file format.
-
-        Translation document will inherit main document's format if translation
-        file does not exist.
-        Return name or None.
-        """
-        if doc == cons.Document.MAIN:
-            try:
-                return cons.Format.class_names[self.main_file.format]
-            except AttributeError:
-                return None
-        elif doc == cons.Document.TRAN:
-            try:
-                return cons.Format.class_names[self.tran_file.format]
-            except AttributeError:
-                return self._get_format_class_name(cons.Document.MAIN)
 
     def get_tag_regex(self, document):
         """

@@ -32,7 +32,7 @@ class TestModel(Test):
             assert arg == 1
             Count.test += 1
 
-        def on_rest(kwarg=9):
+        def on_rest(kwarg=None):
             assert kwarg == 2
             Count.rest += 1
 

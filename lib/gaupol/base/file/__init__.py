@@ -20,49 +20,63 @@
 
 
 import codecs
+import os
 
-from gaupol.base import cons
+from gaupol.base       import cons
+from gaupol.base.paths import DATA_DIR, PROFILE_DIR
+from gaupol.base.util  import enclib, filelib
+
+
+_GLOBAL_HEADER_DIR = os.path.join(DATA_DIR   , 'headers')
+_LOCAL_HEADER_DIR  = os.path.join(PROFILE_DIR, 'headers')
 
 
 class SubtitleFile(object):
 
-    """Base class for subtitle file classes."""
+    """
+    Base class for subtitle file classes.
 
-    format          = None
-    mode            = None
-    has_header      = None
-    header_template = None
-    identifier      = None, None
+    Class variables:
+
+        format:     Format constant
+        has_header: True if file has a header
+        identifier: Regular expression pattern, flags
+        mode:       Mode constant
+
+    Instance variables:
+
+        encoding: String
+        header:   String
+        newlines: Newlines constant
+        path:     File path
+
+    """
+
+    format     = None
+    has_header = None
+    identifier = None, None
+    mode       = None
 
     def __init__(self, path, encoding, newlines=None):
 
-        self.path     = path
         self.encoding = encoding
+        self.header   = ''
         self.newlines = newlines
-        self.header   = self.header_template
+        self.path     = path
+
+        if self.has_header:
+            self.header = self.get_template_header()
 
     def __setattr__(self, name, value):
 
-        if name in (
-            'format',
-            'mode',
-            'has_header',
-            'header_template'
-            'identifier'
-        ):
+        if name in ('format', 'has_header', 'identifier', 'mode'):
             raise ValueError
-
         object.__setattr__(self, name, value)
 
     def _get_newline_character(self):
         """Get character(s) used for newlines."""
 
         return cons.Newlines.values[self.newlines]
-
-    def read(self):
-        """Read file."""
-
-        raise NotImplementedError
 
     def _read_lines(self):
         """
@@ -84,6 +98,35 @@ class SubtitleFile(object):
             self.newlines = cons.Newlines.values.index(newline_chars)
 
         return lines
+
+    def read(self):
+        """Read file."""
+
+        raise NotImplementedError
+
+    def get_template_header(self):
+        """Read and return header from template file."""
+
+        basename = cons.Format.get_name(self.format).lower() + '.txt'
+
+        try:
+            encoding = enclib.get_locale_encoding()[0]
+        except ValueError:
+            encoding = 'utf_8'
+        path = os.path.join(_LOCAL_HEADER_DIR, basename)
+        if os.path.isfile(path):
+            try:
+                return filelib.read(path, encoding)
+            except (IOError, UnicodeError):
+                pass
+
+        path = os.path.join(_GLOBAL_HEADER_DIR, basename)
+        try:
+            return filelib.read(path, 'utf_8')
+        except (IOError, UnicodeError):
+            pass
+
+        return ''
 
     def write(self, shows, hides, texts):
         """Write file."""

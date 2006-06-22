@@ -19,6 +19,12 @@
 """
 Names and codes for languages, countries and locales.
 
+Module variables:
+
+    LANGS:     Dictionary mapping ISO 639 codes to language names
+    COUNTRIES: Dictionary magging ISO 3166 codes to country names
+    LOCALES:   Tuple of locale codes
+
 Language codes are ISO 639 two-letter codes. Country codes are ISO 3166 codes.
 These combined with an underscore form locale codes. Translations for the
 language and country names are acquired from the "iso-codes" gettext domain if

@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,13 +16,8 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Opening and creating new projects."""
+"""Opening files and creating new projects."""
 
-
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
 
 from gettext import gettext as _
 import os
@@ -31,36 +26,43 @@ import urlparse
 
 import gtk
 
-from gaupol.gtk.colcons import *
-from gaupol.base.error              import FileFormatError
-from gaupol.base.util               import enclib, listlib
-from gaupol.gtk.cons        import *
-from gaupol.gtk.delegate            import Delegate, UIMAction
-from gaupol.gtk.dialog.file import OpenFileDialog, OpenVideoDialog
-from gaupol.gtk.dialog.message     import ErrorDialog, WarningDialog
-from gaupol.gtk.error               import Cancelled
-from gaupol.gtk.page                import Page
-from gaupol.gtk.util                import config, gtklib
+from gaupol.base.error         import FileFormatError
+from gaupol.base.util          import enclib, listlib
+from gaupol.gtk                import cons
+from gaupol.gtk.colcons        import *
+from gaupol.gtk.delegate       import Delegate, UIMAction
+from gaupol.gtk.dialog.file    import OpenFileDialog, OpenVideoDialog
+from gaupol.gtk.dialog.message import ErrorDialog, WarningDialog
+from gaupol.gtk.error          import Default
+from gaupol.gtk.page           import Page
+from gaupol.gtk.util           import config, gtklib
+
+try:
+    import chardet
+    _CHARDET_AVAILABLE = True
+except ImportError:
+    print 'chardet not found. Encoding auto-detection not possible.'
+    _CHARDET_AVAILABLE = False
 
 
 class NewProjectAction(UIMAction):
 
     """Creating a new project."""
 
-    uim_action_item = (
+    action_item = (
         'new_project',
         gtk.STOCK_NEW,
         _('_New'),
         '<control>N',
         _('Create a new project'),
-        'on_new_project_activated'
+        'on_new_project_activate'
     )
 
-    uim_paths = ['/ui/menubar/file/new']
+    paths = ['/ui/menubar/file/new']
 
     @classmethod
-    def is_doable(cls, application, page):
-        """Return whether action can or cannot be done."""
+    def is_doable(cls, app, page):
+        """Return action doability."""
 
         return True
 
@@ -69,21 +71,21 @@ class OpenMainFileAction(UIMAction):
 
     """Opening main files."""
 
-    uim_action_item = (
+    action_item = (
         'open_main_file',
         gtk.STOCK_OPEN,
         _('_Open...'),
         '<control>O',
         _('Open main files'),
-        'on_open_main_file_activated'
+        'on_open_main_file_activate'
     )
 
-    uim_paths = ['/ui/menubar/file/open']
-    widgets   = ['open_button']
+    paths = ['/ui/menubar/file/open']
+    widgets = ['_open_button']
 
     @classmethod
-    def is_doable(cls, application, page):
-        """Return whether action can or cannot be done."""
+    def is_doable(cls, app, page):
+        """Return action doability."""
 
         return True
 
@@ -92,156 +94,180 @@ class OpenTranslationFileAction(UIMAction):
 
     """Opening translation files."""
 
-    uim_action_item = (
+    action_item = (
         'open_translation_file',
         gtk.STOCK_OPEN,
         _('O_pen Translation...'),
         '',
         _('Open a translation file'),
-        'on_open_translation_file_activated'
+        'on_open_translation_file_activate'
     )
 
-    uim_paths = ['/ui/menubar/file/open_translation']
+    paths = ['/ui/menubar/file/open_translation']
 
     @classmethod
-    def is_doable(cls, application, page):
-        """Return whether action can or cannot be done."""
-
-        if page is None:
-            return False
-        elif page.project.main_file is None:
-            return False
-        else:
-            return True
-
-
-class SelectVideoAction(UIMAction):
-
-    """Selecting a video file."""
-
-    uim_action_item = (
-        'select_video_file',
-        None,
-        _('Se_lect Video...'),
-        None,
-        _('Select a video file'),
-        'on_select_video_file_activated'
-    )
-
-    uim_paths = ['/ui/menubar/file/select_video']
-    widgets   = ['video_button']
-
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return whether action can or cannot be done."""
+    def is_doable(cls, app, page):
+        """Return action doability."""
 
         if page is None:
             return False
         if page.project.main_file is None:
             return False
-
         return True
 
 
-class FileFormatErrorDialog(ErrorDialog):
+class SelectVideoFileAction(UIMAction):
+
+    """Selecting a video file."""
+
+    action_item = (
+        'select_video_file',
+        None,
+        _('Se_lect Video...'),
+        None,
+        _('Select a video file'),
+        'on_select_video_file_activate'
+    )
+
+    paths = ['/ui/menubar/file/select_video']
+    widgets = ['_video_button']
+
+    @classmethod
+    def is_doable(cls, app, page):
+        """Return action doability."""
+
+        if page is None:
+            return False
+        if page.project.main_file is None:
+            return False
+        return True
+
+
+class _BigFileWarningDialog(WarningDialog):
+
+    """Dialog to warn when opening a big file."""
+
+    def __init__(self, parent, basename, size):
+
+        WarningDialog.__init__(
+            self, parent,
+            _('Open abnormally large file "%s"?') % basename,
+            _('Size of the file is %.1f MB, which is abnormally large for a '
+              'text-based subtitle file. Please, check that you are not '
+              'trying to open a binary file.') % size
+        )
+        self.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_NO)
+        self.add_button(gtk.STOCK_OPEN, gtk.RESPONSE_YES)
+        self.set_default_response(gtk.RESPONSE_NO)
+
+
+class _FormatErrorDialog(ErrorDialog):
 
     """Dialog to inform that filetype is not supported."""
 
     def __init__(self, parent, basename):
 
-        title   = _('Failed to recognize format of file "%s"') % basename
-        message = _('Please check that the file you are trying to open is a '
-                    'subtitle file of a format supported by Gaupol.')
-        ErrorDialog.__init__(self, parent, title, message)
+        ErrorDialog.__init__(
+            self, parent,
+            _('Failed to recognize format of file "%s"') % basename,
+            _('Please check that the file you are trying to open is a '
+              'subtitle file of a format supported by Gaupol.')
+        )
 
 
-class OpenBigFileWarningDialog(WarningDialog):
-
-    """Dialog to warn when opening a file over 1 MB."""
-
-    def __init__(self, parent, basename, size):
-
-        title   = _('Open abnormally large file "%s"?') % basename
-        message = _('Size of the file is %.1f MB, which is abnormally large '
-                    'for a text-based subtitle file. Please, check that you '
-                    'are not trying to open a binary file.') % size
-        WarningDialog.__init__(self, parent, title, message)
-
-        self.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_NO )
-        self.add_button(gtk.STOCK_OPEN  , gtk.RESPONSE_YES)
-        self.set_default_response(gtk.RESPONSE_NO)
-
-
-class OpenFileErrorDialog(ErrorDialog):
+class _IOErrorDialog(ErrorDialog):
 
     """Dialog to inform that IOError occured while opening file."""
 
     def __init__(self, parent, basename, message):
 
-        title   = _('Failed to open file "%s"') % basename
-        message = _('%s.') % message
-        ErrorDialog.__init__(self, parent, title, message)
+        ErrorDialog.__init__(
+            self, parent,
+            _('Failed to open file "%s"') % basename,
+            _('%s.') % message
+        )
 
 
-class OpenTranslationWarningDialog(WarningDialog):
+class _SortWarningDialog(WarningDialog):
 
-    """Dialog to warn when opening a translation file."""
+    """Dialog to warn that subtitles were resorted."""
 
-    def __init__(self, parent, basename):
+    def __init__(self, parent, count):
 
-        title   = _('Save changes to translation document "%s" before opening '
-                    'a new one?') % basename
-        message = _('If you don\'t save, changes will be permanently lost.')
-        WarningDialog.__init__(self, parent, title, message)
-
-        self.add_button(_('Open _Without Saving'), gtk.RESPONSE_NO    )
-        self.add_button(gtk.STOCK_CANCEL         , gtk.RESPONSE_CANCEL)
-        self.add_button(gtk.STOCK_SAVE           , gtk.RESPONSE_YES   )
+        WarningDialog.__init__(
+            self, parent,
+            _('%d subtitles will be moved') % count,
+            _('The file you are trying to open is not in sorted order and may '
+              'thus be faulty. If you open the file, all subtitles will be '
+              'arranged in sorted order.')
+        )
+        self.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_NO)
+        self.add_button(gtk.STOCK_OPEN, gtk.RESPONSE_YES)
         self.set_default_response(gtk.RESPONSE_YES)
 
 
-class SSAWarningDialog(WarningDialog):
+class _SSAWarningDialog(WarningDialog):
 
     """Dialog to warn when opening an SSA or ASS file."""
 
     def __init__(self, parent):
 
-        title   = _('Open only partially supported file?')
-        message = _('Sub Station Alpha and Advanced Sub Station Alpha formats '
-                    'are not fully supported. Only the header and fields '
-                    '"Start", "End" and "Text" of the dialog are read. Saving '
-                    'the file will cause you to lose all other data.')
-        WarningDialog.__init__(self, parent, title, message)
-
-        self.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_NO )
-        self.add_button(gtk.STOCK_OPEN  , gtk.RESPONSE_YES)
+        WarningDialog.__init__(
+            self, parent,
+            _('Open only partially supported file?'),
+            _('Sub Station Alpha and Advanced Sub Station Alpha formats are '
+              'not fully supported. Only the header and fields "Start", "End" '
+              'and "Text" of the dialogue are read. Saving the file will '
+              'cause you to lose all other data.')
+        )
+        self.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_NO)
+        self.add_button(gtk.STOCK_OPEN, gtk.RESPONSE_YES)
         self.set_default_response(gtk.RESPONSE_NO)
 
 
-class UnicodeDecodeErrorDialog(ErrorDialog):
+class _TranslateWarningDialog(WarningDialog):
+
+    """Dialog to warn when opening a translation file."""
+
+    def __init__(self, parent, basename):
+
+        WarningDialog.__init__(
+            self, parent,
+            _('Save changes to translation document "%s" before opening a new '
+              'one?') % basename,
+            _('If you don\'t save, changes will be permanently lost.')
+        )
+        self.add_button(_('Open _Without Saving'), gtk.RESPONSE_NO)
+        self.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
+        self.add_button(gtk.STOCK_SAVE, gtk.RESPONSE_YES)
+        self.set_default_response(gtk.RESPONSE_YES)
+
+
+class _UnicodeErrorDialog(ErrorDialog):
 
     """Dialog to inform that UnicodeError occured while opening file."""
 
     def __init__(self, parent, basename):
 
-        title   = _('Failed to decode file "%s" with all attempted codecs') \
-                  % basename
-        message = _('Please try to open the file with a different character '
-                    'encoding.')
-        ErrorDialog.__init__(self, parent, title, message)
+        ErrorDialog.__init__(
+            self, parent,
+            _('Failed to decode file "%s" with all attempted codecs') \
+            % basename,
+            _('Please try to open the file with a different character '
+              'encoding.')
+        )
 
 
 class FileOpenDelegate(Delegate):
 
-    """Opening and creating new projects."""
+    """Opening files and creating new projects."""
 
     def _add_new_project(self, page):
-        """Add a new project and a page for it."""
+        """Add new project."""
 
         self.pages.append(page)
         self._connect_page_signals(page)
         self.connect_view_signals(page)
-
         try:
             self.add_to_recent_files(page.project.main_file.path)
         except AttributeError:
@@ -250,24 +276,11 @@ class FileOpenDelegate(Delegate):
         scrolled_window = gtk.ScrolledWindow()
         scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
         scrolled_window.add(page.view)
-        tab_widget = page.init_tab_widget()
-        label = page.tab_menu_label
-        self.notebook.append_page_menu(scrolled_window, tab_widget, label)
-        self.notebook.show_all()
-        self.notebook.set_current_page(self.pages.index(page))
+        self._notebook.append_page_menu(
+            scrolled_window, page.init_tab_widget(), page.tab_menu_label)
+        self._notebook.show_all()
+        self._notebook.set_current_page(self.pages.index(page))
         page.reload_all()
-
-    def add_to_recent_files(self, path):
-        """Add path to list of recent files."""
-
-        try:
-            config.File.recent.remove(path)
-        except ValueError:
-            pass
-        config.File.recent.insert(0, path)
-
-        while len(config.File.recent) > config.File.max_recent:
-            config.File.recent.pop()
 
     def _check_file_open(self, path):
         """
@@ -278,200 +291,315 @@ class FileOpenDelegate(Delegate):
         """
         for i, page in enumerate(self.pages):
             for file_ in (page.project.main_file, page.project.tran_file):
-                if file_ is None or file_.path != path:
+                if file_ is None:
                     continue
-                self.notebook.set_current_page(i)
-                basename = os.path.basename(path)
-                message = _('File "%s" is already open') % basename
-                self.set_status_message(message)
+                if file_.path != path:
+                    continue
+                self._notebook.set_current_page(i)
+                self.set_status_message(
+                    _('File "%s" is already open') % os.path.basename(path))
                 return True
-
         return False
 
     def _connect_page_signals(self, page):
-        """Connect GObject signals emitted by page view."""
+        """Connect page signals."""
 
-        page.project.connect('action_done'  , self.on_project_action_done  )
+        page.project.connect('action_done', self.on_project_action_done)
         page.project.connect('action_redone', self.on_project_action_redone)
         page.project.connect('action_undone', self.on_project_action_undone)
+        page.connect('closed', self.on_page_closed)
 
-        page.connect('closed', self.on_close_button_clicked)
+    def _get_encodings(self, first=None):
+        """Get list of encodings to try."""
 
-    def connect_view_signals(self, page):
-        """Connect GObject signals emitted by view."""
-
-        view = page.view
-        view.connect_after('move-cursor', self.on_view_move_cursor_event)
-        view.connect('button-press-event', self.on_view_button_press_event)
-        selection = view.get_selection()
-        selection.connect('changed', self.on_view_selection_changed_event)
-
-        signals = (
-            'editing-started',
-            'editing-canceled',
-            'edited'
-        )
-        methods = (
-            self.on_view_cell_editing_started,
-            self.on_view_cell_editing_canceled,
-            self.on_view_cell_edited
-        )
-        for col in range(6):
-            tree_view_column = view.get_column(col)
-            for cell_renderer in tree_view_column.get_cell_renderers():
-                for i in range(len(signals)):
-                    cell_renderer.connect(signals[i], methods[i], col)
-            widget = tree_view_column.get_widget()
-            button = gtklib.get_parent_widget(widget, gtk.Button)
-            button.connect('button-press-event', self.on_view_headers_clicked)
-
-    def _get_tryable_encodings(self, first_encoding=None):
-        """Get a list of encodings to try."""
-
-        encodings = config.Encoding.fallback[:]
-
-        # Add locale encoding.
-        if config.Encoding.try_locale:
+        encodings = []
+        if first is not None:
+            encodings.append(first)
+        if config.encoding.try_locale:
             try:
-                encodings.insert(0, enclib.get_locale_encoding()[0])
+                encodings.append(enclib.get_locale_encoding()[0])
             except ValueError:
                 pass
-
-        # Add desired first-try encoding.
-        if first_encoding is not None:
-            encodings.insert(0, first_encoding)
-
-        # If encodings list is empty, add UTF-8.
+        encodings += config.encoding.fallbacks[:]
+        if config.encoding.try_auto and _CHARDET_AVAILABLE:
+            encodings.append('auto')
         if not encodings:
             encodings.append('utf_8')
 
-        encodings = listlib.unique(encodings)
-        return encodings
+        return listlib.unique(encodings)
 
-    def on_new_project_activated(self, *args):
+    def _open_file(self, doc, path, encodings):
+        """
+        Open file.
+
+        Raise Default if unsuccessful.
+        Return page.
+        """
+        resorts = 0
+        self._pre_check(path)
+        basename = os.path.basename(path)
+        for encoding in encodings:
+            try:
+                if encoding == 'auto':
+                    encoding = enclib.detect(path)
+                args = path, encoding
+                if doc == MAIN:
+                    page = Page()
+                    resorts = page.project.open_main_file(*args)
+                    format = page.project.main_file.format
+                elif doc == TRAN:
+                    page = self.get_current_page()
+                    resorts = page.project.open_translation_file(*args)
+                    format = page.project.tran_file.format
+            except FileFormatError:
+                dialog = _FormatErrorDialog(self._window, basename)
+                self._run_dialog(dialog)
+                raise Default
+            except IOError, (no, message):
+                dialog = _IOErrorDialog(self._window, basename, message)
+                self._run_dialog(dialog)
+                raise Default
+            except UnicodeError:
+                continue
+            except ValueError:
+                continue
+            else:
+                self._post_check(format, resorts)
+                return page
+
+        dialog = _UnicodeErrorDialog(self._window, basename)
+        self._run_dialog(dialog)
+        raise Default
+
+    def _post_check(self, format, resorts):
+        """
+        Check file before opening.
+
+        Raise Default if file is no good.
+        """
+        if format in (cons.Format.SSA, cons.Format.ASS):
+            if config.file.warn_ssa:
+                dialog = _SSAWarningDialog(self._window)
+                response = self._run_dialog(dialog)
+                if response != gtk.RESPONSE_YES:
+                    raise Default
+
+        if resorts > 0:
+            dialog = _SortWarningDialog(self._window, resorts)
+            response = self._run_dialog(dialog)
+            if response != gtk.RESPONSE_YES:
+                raise Default
+
+    def _pre_check(self, path):
+        """
+        Check file before opening.
+
+        Raise Default if file is no good.
+        """
+        if not os.path.isfile(path):
+            raise Default
+        if self._check_file_open(path):
+            raise Default
+
+        basename = os.path.basename(path)
+        size = float(os.stat(path)[6]) / 1048576.0
+        if size > 1:
+            dialog = _BigFileWarningDialog(self._window, basename, size)
+            response = self._run_dialog(dialog)
+            if response != gtk.RESPONSE_YES:
+                raise Default
+
+    def _run_dialog(self, dialog):
+        """
+        Run message dialog.
+
+        Return response.
+        """
+        gtklib.set_cursor_normal(self._window)
+        response = gtklib.run(dialog)
+        gtklib.set_cursor_busy(self._window)
+        return response
+
+    def _select_files(self, doc):
+        """
+        Select files with filechooser.
+
+        Raise Default if cancelled.
+        Return paths, encoding.
+        """
+        if doc == MAIN:
+            title = _('Open')
+        elif doc == TRAN:
+            title = _('Open Translation')
+
+        dialog = OpenFileDialog(title, self._window)
+        dialog.set_select_multiple(doc == MAIN)
+        gtklib.set_cursor_normal(self._window)
+        response = dialog.run()
+        gtklib.set_cursor_busy(self._window)
+        if response != gtk.RESPONSE_OK:
+            gtklib.destroy_gobject(dialog)
+            gtklib.set_cursor_normal(self._window)
+            raise Default
+
+        paths = dialog.get_filenames()
+        encoding = dialog.get_encoding()
+        gtklib.destroy_gobject(dialog)
+        return paths, encoding
+
+    def add_to_recent_files(self, path):
+        """Add path to recent files."""
+
+        try:
+            config.file.recent.remove(path)
+        except ValueError:
+            pass
+        config.file.recent.insert(0, path)
+        self.validate_recent()
+
+    def connect_view_signals(self, page):
+        """Connect view signals."""
+
+        view = page.view
+        view.connect_after('move-cursor', self.on_view_move_cursor)
+        view.connect('button-press-event', self.on_view_button_press_event)
+        selection = view.get_selection()
+        selection.connect('changed', self.on_view_selection_changed)
+
+        connections = (
+            ('edited'          , self.on_view_cell_edited          ),
+            ('editing-canceled', self.on_view_cell_editing_canceled),
+            ('editing-started' , self.on_view_cell_editing_started ),
+        )
+        for i, column in enumerate(view.get_columns()):
+            for renderer in column.get_cell_renderers():
+                for signal, method in connections:
+                    renderer.connect(signal, method, i)
+            widget = column.get_widget()
+            button = gtklib.get_parent_widget(widget, gtk.Button)
+            button.connect(
+                'button-press-event', self.on_view_header_button_press_event)
+
+    def on_new_project_activate(self, *args):
         """Start a new project."""
 
-        gtklib.set_cursor_busy(self.window)
-        self.counter += 1
-        page = Page(self.counter)
-
-        page.project.times      = [['00:00:00,000'] * 3]
-        page.project.frames     = [[0, 0, 0]]
+        gtklib.set_cursor_busy(self._window)
+        self._counter += 1
+        page = Page(self._counter)
+        page.project.times = [['00:00:00.000'] * 3]
+        page.project.frames = [[0, 0, 0]]
         page.project.main_texts = [u'']
         page.project.tran_texts = [u'']
-
         self._add_new_project(page)
-        gtklib.set_cursor_normal(self.window)
+        gtklib.set_cursor_normal(self._window)
         self.set_status_message(_('Created a new project'))
 
-    def on_notebook_drag_data_received(self, notebook, context, x, y,
-                                       selection_data, info, time):
+    def on_notebook_drag_data_received(
+        self, notebook, context, x, y, selection_data, info, time):
         """Open drag-dropped files."""
 
-        uris  = selection_data.get_uris()
         paths = []
+        uris = selection_data.get_uris()
         for uri in uris:
-            unquoted_uri = urllib.unquote(uri)
-            path = urlparse.urlsplit(unquoted_uri)[2]
+            path = urlparse.urlsplit(urllib.unquote(uri))[2]
             if os.path.isfile(path):
                 paths.append(path)
 
         self.open_main_files(paths)
 
-    def on_open_main_file_activated(self, *args):
-        """Open a main file."""
+    def on_open_button_clicked(self, *args):
+        """Open main file."""
 
-        gtklib.set_cursor_busy(self.window)
+        self.on_open_main_file_activate()
 
+    def on_open_main_file_activate(self, *args):
+        """Open main file."""
+
+        gtklib.set_cursor_busy(self._window)
         try:
-            paths, encoding = self._select_files(Document.MAIN)
-        except Cancelled:
-            gtklib.set_cursor_normal(self.window)
+            paths, encoding = self._select_files(MAIN)
+        except Default:
+            gtklib.set_cursor_normal(self._window)
             return
-
         self.open_main_files(paths, encoding)
-        gtklib.set_cursor_normal(self.window)
+        gtklib.set_cursor_normal(self._window)
 
-    def on_open_recent_file_activated(self, action):
-        """Open a recent main file."""
+    def on_open_recent_file_activate(self, action):
+        """Open recent main file."""
 
         index = int(action.get_name().split('_')[-1])
-        path = config.File.recent[index]
-        self.open_main_files([path])
+        self.open_main_files([config.file.recent[index]])
 
-    def on_open_translation_file_activated(self, *args):
-        """Open a translation file."""
+    def on_open_translation_file_activate(self, *args):
+        """Open translation file."""
 
         page = self.get_current_page()
-
-        # Warn if current translation is unsaved.
         if page.project.tran_active and page.project.tran_changed:
             basename = page.get_translation_basename()
-            dialog = OpenTranslationWarningDialog(self.window, basename)
-            response = dialog.run()
-            dialog.destroy()
+            dialog = _TranslateWarningDialog(self._window, basename)
+            response = gtklib.run(dialog)
             if response == gtk.RESPONSE_YES:
-                self.save_translation_document(page)
+                try:
+                    self.save_translation(page)
+                except Default:
+                    return
                 self.set_sensitivities()
             elif response != gtk.RESPONSE_NO:
                 return
 
-        gtklib.set_cursor_busy(self.window)
-
+        gtklib.set_cursor_busy(self._window)
         try:
-            paths, encoding = self._select_files(Document.TRAN)
-        except Cancelled:
-            gtklib.set_cursor_normal(self.window)
+            paths, encoding = self._select_files(TRAN)
+        except Default:
+            gtklib.set_cursor_normal(self._window)
+            return
+        encodings = self._get_encodings(encoding)
+        try:
+            page = self._open_file(TRAN, paths[0], encodings)
+        except Default:
+            gtklib.set_cursor_normal(self._window)
             return
 
-        encodings = self._get_tryable_encodings(encoding)
-        page = self._open_file(self.window, Document.TRAN, paths[0], encodings)
-        if page is None:
-            gtklib.set_cursor_normal(self.window)
-            return
-
-        # Show the translation column.
         if not page.view.get_column(TTXT).get_visible():
-            path = Column.uim_paths[TTXT]
-            self.uim.get_action(path).activate()
-
+            path = cons.Column.uim_paths[TTXT]
+            self._uim.get_action(path).activate()
         self.set_sensitivities()
         page.reload_all()
-        basename = page.get_translation_basename()
-        message = _('Opened translation file "%s"') % basename
-        self.set_status_message(message)
-        gtklib.set_cursor_normal(self.window)
+        self.set_status_message(_('Opened translation file "%s"') \
+            % page.get_translation_basename())
+        gtklib.set_cursor_normal(self._window)
 
-    def on_select_video_file_activated(self, *args):
+    def on_select_video_file_activate(self, *args):
         """Select video file."""
 
         page = self.get_current_page()
-        video_path = page.project.video_path
-        gtklib.set_cursor_busy(self.window)
-
-        chooser = OpenVideoDialog(self.window)
-        if video_path is not None:
-            chooser.set_filename(video_path)
+        path = page.project.video_path
+        gtklib.set_cursor_busy(self._window)
+        dialog = OpenVideoDialog(self._window)
+        if path is not None:
+            dialog.set_filename(path)
         else:
             dirpath = os.path.dirname(page.project.main_file.path)
-            chooser.set_current_folder(dirpath)
-
-        gtklib.set_cursor_normal(self.window)
-        response = chooser.run()
+            dialog.set_current_folder(dirpath)
+        gtklib.set_cursor_normal(self._window)
+        response = dialog.run()
         if response == gtk.RESPONSE_OK:
-            page.project.video_path = chooser.get_filename()
+            page.project.video_path = dialog.get_filename()
             self.set_sensitivities(page)
+        gtklib.destroy_gobject(dialog)
 
-        gtklib.destroy_gobject(chooser)
+    def on_video_button_clicked(self, *args):
+        """Select video file."""
 
-    def on_video_file_button_drag_data_received(self, notebook, context, x, y,
-                                                selection_data, info, time):
+        self.on_select_video_file_activate()
+
+    def on_video_button_drag_data_received(
+        self, notebook, context, x, y, selection_data, info, time):
         """Set video  file."""
 
         page = self.get_current_page()
         uri = selection_data.get_uris()[0]
-        unquoted_uri = urllib.unquote(uri)
-        path = urlparse.urlsplit(unquoted_uri)[2]
+        path = urlparse.urlsplit(urllib.unquote(uri))[2]
         if os.path.isfile(path):
             page.project.video_path = path
             self.set_sensitivities(page)
@@ -479,194 +607,30 @@ class FileOpenDelegate(Delegate):
     def open_main_files(self, paths, encoding=None):
         """Open main files."""
 
-        gtklib.set_cursor_busy(self.window)
         paths.sort()
-        encodings = self._get_tryable_encodings(encoding)
-
+        gtklib.set_cursor_busy(self._window)
+        encodings = self._get_encodings(encoding)
         for path in paths:
-
-            page = self._open_file(self.window, Document.MAIN, path, encodings)
-            if page is None:
+            try:
+                page = self._open_file(MAIN, path, encodings)
+            except Default:
                 continue
-
-            # Guess video file path.
             page.project.guess_video_path()
-
             self._add_new_project(page)
-
-            # Save last used directory.
-            dirpath = os.path.dirname(path)
-            config.File.directory = dirpath
-
-            basename = page.get_main_basename()
-            message = _('Opened main file "%s"') % basename
-            self.set_status_message(message)
-
-            # Show the new notebook page right away.
+            config.file.directory = os.path.dirname(path)
+            self.set_status_message(
+                _('Opened main file "%s"') % page.get_main_basename())
             while gtk.events_pending():
                 gtk.main_iteration()
 
-        gtklib.set_cursor_normal(self.window)
+        gtklib.set_cursor_normal(self._window)
 
-    def _open_file(self, parent, document_type, path, encodings):
-        """
-        Open file.
+    def validate_recent(self):
+        """Remove non-existent and excess recent files."""
 
-        Return Page or None if unsuccessful.
-        """
-        # Make sure file is not already open.
-        if self._check_file_open(path):
-            return None
+        for i in reversed(range(len(config.file.recent))):
+            if not os.path.isfile(config.file.recent[i]):
+                config.file.recent.pop(i)
 
-        basename = os.path.basename(path)
-        size_bytes = os.stat(path)[6]
-        size_megabytes = float(size_bytes) / 1048576.0
-
-        # Show a warning dialog if filesize is over 1 MB.
-        if size_megabytes > 1:
-            dialog = OpenBigFileWarningDialog(parent, basename, size_megabytes)
-            gtklib.set_cursor_normal(self.window)
-            response = dialog.run()
-            dialog.destroy()
-            if response != gtk.RESPONSE_YES:
-                return None
-
-        for encoding in encodings:
-
-            try:
-                if document_type == Document.MAIN:
-                    page = Page()
-                    RESORTS = page.project.open_main_file(path, encoding)
-                    format = page.project.main_file.format
-                elif document_type == Document.TRAN:
-                    page = self.get_current_page()
-                    RESORTS = page.project.open_translation_file(path, encoding)
-                    format = page.project.tran_file.format
-
-            except UnicodeError:
-                continue
-
-            except IOError, (no, message):
-                dialog = OpenFileErrorDialog(parent, basename, message)
-                gtklib.set_cursor_normal(self.window)
-                response = dialog.run()
-                dialog.destroy()
-                gtklib.set_cursor_busy(self.window)
-                return None
-
-            except FileFormatError:
-                dialog = FileFormatErrorDialog(parent, basename)
-                gtklib.set_cursor_normal(self.window)
-                response = dialog.run()
-                dialog.destroy()
-                gtklib.set_cursor_busy(self.window)
-                return None
-
-            else:
-                if format in (Format.SSA, Format.ASS) and \
-                   config.File.warn_ssa:
-                    dialog = SSAWarningDialog(self.window)
-                    gtklib.set_cursor_normal(self.window)
-                    response = dialog.run()
-                    dialog.destroy()
-                    if response != gtk.RESPONSE_YES:
-                        return None
-                return page
-
-
-        dialog = UnicodeDecodeErrorDialog(parent, basename)
-        gtklib.set_cursor_normal(self.window)
-        response = dialog.run()
-        dialog.destroy()
-        gtklib.set_cursor_busy(self.window)
-        return None
-
-    def _select_files(self, document_type):
-        """
-        Select files with a filechooser.
-
-        Raise Cancelled if cancelled.
-        Return paths, encoding.
-        """
-        if document_type == Document.MAIN:
-            title = _('Open')
-        elif document_type == Document.TRAN:
-            title = _('Open Translation')
-
-        chooser = OpenFileDialog(title, self.window)
-        chooser.set_select_multiple(document_type == Document.MAIN)
-        gtklib.set_cursor_normal(self.window)
-        response = chooser.run()
-        gtklib.set_cursor_busy(self.window)
-
-        if response != gtk.RESPONSE_OK:
-            gtklib.destroy_gobject(chooser)
-            gtklib.set_cursor_normal(self.window)
-            raise Cancelled
-
-        filepaths = chooser.get_filenames()
-        encoding  = chooser.get_encoding()
-        gtklib.destroy_gobject(chooser)
-        return filepaths, encoding
-
-
-if __name__ == '__main__':
-
-    from gaupol.gtk.app import Application
-    from gaupol.test            import Test
-
-    class TestDialog(Test):
-
-        def test_init(self):
-
-            parent   = gtk.Window()
-            basename = 'test'
-            message  = 'test'
-            size     = 1
-
-            OpenBigFileWarningDialog(parent, basename, size)
-            OpenFileErrorDialog(parent, basename, message)
-            OpenTranslationWarningDialog(parent, basename)
-            SSAWarningDialog(parent)
-            UnicodeDecodeErrorDialog(parent, basename)
-
-    class TestFileOpenDelegate(Test):
-
-        def __init__(self):
-
-            Test.__init__(self)
-            self.application = Application()
-            self.delegate = FileOpenDelegate(self.application)
-
-        def destroy(self):
-
-            self.application.window.destroy()
-
-        def test_check_file_open(self):
-
-            assert self.delegate._check_file_open('/test/not.open') is False
-
-            path = self.get_subrip_path()
-            self.application.open_main_files([path])
-            assert self.delegate._check_file_open(path) is True
-
-        def test_get_tryable_encodings(self):
-
-            encodings = self.delegate._get_tryable_encodings()
-            assert isinstance(encodings[0], basestring)
-
-            encodings = self.delegate._get_tryable_encodings('johab')
-            assert encodings[0] == 'johab'
-
-        def test_file_openings(self):
-
-            self.application.on_new_project_activated()
-            self.application.on_open_main_file_activated()
-            self.application.on_open_translation_file_activated()
-
-            self.application.open_main_files([self.get_subrip_path()])
-            self.application.on_select_video_file_activated()
-
-    TestDialog().run()
-    TestFileOpenDelegate().run()
-
+        while len(config.file.recent) > config.file.max_recent:
+            config.file.recent.pop()

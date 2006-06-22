@@ -4,37 +4,39 @@
 Manipulate translation files.
 
 Needed executables in path:
-* intltool-extract
-* msgfmt
-* msginit
-* msgmerge
-* xgettext
+
+    * intltool-extract
+    * msgfmt
+    * msginit
+    * msgmerge
+    * xgettext
+
 """
+
 
 import glob
 import optparse
 import os
 import sys
 
+
 TOOL_DIR   = os.path.dirname(os.path.abspath(__file__))
-SOURCE_DIR = os.path.join(TOOL_DIR, '..')
-GLADE_DIR  = os.path.join(SOURCE_DIR, 'data', 'glade')
+SOURCE_DIR = os.path.abspath(os.path.join(TOOL_DIR, '..'))
+DATA_DIR   = os.path.join(SOURCE_DIR, 'data')
+GLADE_DIR  = os.path.join(DATA_DIR, 'glade')
 LIB_DIR    = os.path.join(SOURCE_DIR, 'lib')
 LOCALE_DIR = os.path.join(SOURCE_DIR, 'locale')
 PO_DIR     = os.path.join(SOURCE_DIR, 'po')
 POT_FILE   = os.path.join(PO_DIR, 'gaupol.pot')
 
+
 class Files(object):
 
     """Files with translatable strings."""
 
-    h  = []
-    py = []
+    header = []
+    python = []
 
-def title_print(text):
-    """Print a message that stands out from rest of the output."""
-
-    print '** %s' % text
 
 def compile_mo(lang):
     """Compile a .mo file for language lang."""
@@ -54,37 +56,41 @@ def create_po(lang):
     po_file = os.path.join(PO_DIR, '%s.po' % lang)
     if os.path.isfile(po_file):
         print '.po file for language "%s" already exists.' % lang
-        raise SystemExit(1)
+        return
 
+    create_pot()
     title_print('Creating a .po file for language "%s"...' % lang)
     os.system('msginit -l %s -i %s -o %s' % (lang, POT_FILE, po_file))
 
 def create_pot():
     """Create a .pot file."""
 
-    title_print('Extracting strings from Glade XML files...')
-    for (dirpath, dirnames, filenames) in os.walk(GLADE_DIR):
-        os.chdir(dirpath)
-        for filename in filenames:
-            if not filename.endswith('.glade'):
-                continue
-            os.system('intltool-extract --type=gettext/glade %s' % filename)
-            Files.h.append(os.path.join(dirpath, '%s.h' % filename))
+    os.chdir(DATA_DIR)
+    title_print('Extracting strings from desktop file...')
+    os.system('intltool-extract --type=gettext/ini gaupol.desktop.in')
+    Files.header.append(os.path.abspath('gaupol.desktop.in' + '.h'))
 
-    for (dirpath, dirnames, filenames) in os.walk(LIB_DIR):
+    os.chdir(GLADE_DIR)
+    title_print('Extracting strings from Glade XML files...')
+    for filename in glob.glob('*.glade'):
+        os.system('intltool-extract --type=gettext/glade %s' % filename)
+        Files.header.append(os.path.abspath(filename + '.h'))
+
+    os.chdir(SOURCE_DIR)
+    for (dirpath, dirnames, filenames) in os.walk('lib'):
         for filename in filenames:
             if filename.endswith('.py'):
-                Files.py.append(os.path.join(dirpath, filename))
+                Files.python.append(os.path.join(dirpath, filename))
 
     title_print('Creating a .pot file from source files...')
-    files = Files.h + Files.py
+    files = Files.header + Files.python
     files = list(x.replace(SOURCE_DIR, '.') for x in files)
-    os.chdir(SOURCE_DIR)
     os.system('xgettext -k_ -kN_ -c -o %s %s' % (POT_FILE, ' '.join(files)))
+    remove_temporary_files()
 
 def get_languages(lang):
     """
-    Get a list of languages.
+    Get list of languages.
 
     lang = xx_YY or "all"
     """
@@ -153,28 +159,30 @@ def remove_temporary_files():
     """Remove temporary files created during operations."""
 
     title_print('Removing temporary files...')
-    for path in Files.h:
+    for path in Files.header:
         print path.replace(SOURCE_DIR, '.')
         os.remove(path)
+
+def title_print(text):
+    """Print a message that stands out from rest of the output."""
+
+    print '** %s' % text
 
 def update_po(lang):
     """Update an existing .po file with new strings."""
 
+    create_pot()
     for lang in get_languages(lang):
         title_print('Updating .po file for language "%s"...' % lang)
         po_file = os.path.join(PO_DIR, '%s.po' % lang)
         os.system('msgmerge -U %s %s' % (po_file, POT_FILE))
 
-opts, args = parse_args()
 
+opts, args = parse_args()
 if opts.create_po:
-    create_pot()
     create_po(opts.create_po)
-    remove_temporary_files()
 elif opts.update_po:
-    create_pot()
     update_po(opts.update_po)
-    remove_temporary_files()
 elif opts.compile_mo:
     compile_mo(opts.compile_mo)
 else:

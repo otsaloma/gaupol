@@ -29,11 +29,6 @@ Didn\'t <i>he</i> tell you?'''
 
 class TestParser(Test):
 
-    def test_init(self):
-
-        Parser()
-        Parser(re.compile(r'x'))
-
     def test_get_and_set_text(self):
 
         parser = Parser(re.compile(r'<.*?>'))

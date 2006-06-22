@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -19,117 +19,80 @@
 """Dialog for inserting new subtitles."""
 
 
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
-
 import gtk
 
 from gaupol.gtk.util import config, gtklib
+
+
+_ABOVE = 0
+_BELOW = 1
 
 
 class SubtitleInsertDialog(object):
 
     """Dialog for inserting new subtitles."""
 
-    def __init__(self, parent, page):
+    def __init__(self, parent, project):
 
         glade_xml = gtklib.get_glade_xml('subinsert-dialog')
-        get_widget = glade_xml.get_widget
+        self._amount_spin    = glade_xml.get_widget('amount_spin')
+        self._dialog         = glade_xml.get_widget('dialog')
+        self._position_combo = glade_xml.get_widget('position_combo')
+        self._position_label = glade_xml.get_widget('position_label')
 
-        self._amount_spin    = get_widget('amount_spin_button')
-        self._dialog         = get_widget('dialog')
-        self._position_combo = get_widget('position_combo_box')
-        self._position_label = get_widget('position_label')
-
-        self._init_sensitivities(page)
+        self._init_sensitivities(project)
         self._init_data()
-        self._init_signals()
-
+        gtklib.connect(self, '_dialog', 'response')
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_OK)
 
     def _init_data(self):
-        """Initialize the data."""
+        """Initialize default values."""
 
-        self._position_combo.set_active(int(config.SubtitleInsert.below))
-        self._amount_spin.set_value(config.SubtitleInsert.amount)
+        self._amount_spin.set_value(config.subtitle_insert.amount)
 
-    def _init_sensitivities(self, page):
+        if config.subtitle_insert.above:
+            self._position_combo.set_active(_ABOVE)
+        else:
+            self._position_combo.set_active(_BELOW)
+
+    def _init_sensitivities(self, project):
         """Initialize widget sensitivities."""
 
-        if not page.project.times:
+        if not project.times:
             self._position_label.set_sensitive(False)
             self._position_combo.set_sensitive(False)
 
     def _init_signals(self):
         """Initialize signals."""
 
-        method = self._on_position_combo_changed
-        self._position_combo.connect('changed', method)
+        gtklib.connect(self, '_amount_spin'   , 'value-changed')
+        gtklib.connect(self, '_position_combo', 'changed'      )
 
-        method = self._on_amount_spin_value_changed
-        self._amount_spin.connect('value-changed', method)
+    def _on_dialog_response(self, dialog, response):
+        """Save settings."""
+
+        if response == gtk.RESPONSE_OK:
+            config.subtitle_insert.amount = self.get_amount()
+            config.subtitle_insert.above  = self.get_above()
 
     def destroy(self):
-        """Destroy the dialog."""
+        """Destroy dialog."""
 
         self._dialog.destroy()
 
-    def get_amount(self):
-        """Get amount of subtitles to insert."""
+    def get_above(self):
+        """Return True if insert above selection."""
 
-        self._amount_spin.update()
+        return self._position_combo.get_active() == _ABOVE
+
+    def get_amount(self):
+        """Get amount of subtitles."""
+
         return self._amount_spin.get_value_as_int()
 
-    def get_position(self):
-        """
-        Get position to insert subtitles to.
-        """
-        # FIX: this returns is_below
-        return bool(self._position_combo.get_active())
-
-    def _on_amount_spin_value_changed(self, spin_button):
-        """Save amount setting."""
-
-        config.SubtitleInsert.amount = spin_button.get_value_as_int()
-
-    def _on_position_combo_changed(self, combo_box):
-        """Save position setting."""
-
-        config.SubtitleInsert.below = bool(combo_box.get_active())
-
     def run(self):
-        """Show and run the dialog."""
+        """Run dialog."""
 
         self._dialog.show()
         return self._dialog.run()
-
-
-if __name__ == '__main__':
-
-    from gaupol.gtk.page import Page
-    from gaupol.test     import Test
-
-    class TestSubtitleInsertDialog(Test):
-
-        def __init__(self):
-
-            Test.__init__(self)
-            page = Page()
-            page.project = self.get_project()
-            self.dialog = SubtitleInsertDialog(gtk.Window(), page)
-
-        def test_gets(self):
-
-            assert isinstance(self.dialog.get_amount(), int)
-            assert isinstance(self.dialog.get_position(), int)
-
-        def test_signals(self):
-
-            self.dialog._position_combo.set_active(0)
-            self.dialog._position_combo.set_active(1)
-            self.dialog._amount_spin.set_value(33)
-
-    TestSubtitleInsertDialog().run()

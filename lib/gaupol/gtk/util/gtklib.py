@@ -16,7 +16,22 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Functions for GTK widgets."""
+"""
+Functions for GTK widgets.
+
+Module variables:
+
+    COMBO_SEP:     String rendered as a separator in combo boxes
+    EXTRA:         Extra width to add to size calculations
+    BUSY_CURSOR:   gtk.gdk.Cursor
+    HAND_CURSOR:   gtk.gdk.Cursor
+    NORMAL_CURSOR: gtk.gdk.Cursor
+
+When setting dialog sizes based on their content, we get the size request of
+the scrolled window component and add the surroundings to that. For this to
+work neatly we should add some extra to adapt to different widget sizes in
+different themes. Let the EXTRA constant vaguely account for that.
+"""
 
 
 import gc
@@ -27,20 +42,35 @@ import gtk
 import gtk.glade
 import pango
 
-from gaupol.gtk.paths import GLADE_DIR
+from gaupol.base.paths import DATA_DIR
 
 
-# When setting dialog sizes based on their content, we get the size request of
-# the scrolled window component and add the surroundings to that. For this to
-# work neatly we should add some extra to adapt to different widget and font
-# sizes in different themes. Let this constant vaguely account for that extra.
-EXTRA = 36
+COMBO_SEP      = '--'
+EXTRA          = 36
+BUSY_CURSOR    = gtk.gdk.Cursor(gtk.gdk.WATCH)
+HAND_CURSOR    = gtk.gdk.Cursor(gtk.gdk.HAND2)
+NORMAL_CURSOR  = gtk.gdk.Cursor(gtk.gdk.LEFT_PTR)
 
-CURSOR_BUSY   = gtk.gdk.Cursor(gtk.gdk.WATCH)
-CURSOR_NORMAL = gtk.gdk.Cursor(gtk.gdk.LEFT_PTR)
-SCREEN_HEIGHT = gtk.gdk.screen_height()
-SCREEN_WIDTH  = gtk.gdk.screen_width()
+_GLADE_DIR     = os.path.join(DATA_DIR, 'glade')
+_SCREEN_HEIGHT = gtk.gdk.screen_height()
+_SCREEN_WIDTH  = gtk.gdk.screen_width()
 
+
+def connect(obj, widget, signal, private=True):
+    """Connect widget's signal to object's callback method."""
+
+    prefix = ('', '_')[private]
+
+    if obj is widget:
+        method = prefix + 'on_' + signal.replace('-', '_')
+        method = getattr(obj, method)
+        return obj.connect(signal, method)
+
+    method = prefix + 'on_' + widget + '_' + signal.replace('-', '_')
+    method = method.replace('__', '_')
+    widget = getattr(obj, widget)
+    method = getattr(obj, method)
+    return widget.connect(signal, method)
 
 def destroy_gobject(gobj):
     """Destroy gobject completely from memory."""
@@ -62,10 +92,10 @@ def get_glade_xml(name):
     """
     Get gtk.glade.XML object from file in Glade directory.
 
-    name is Glade XML file's basename without extension.
+    name: Glade XML file's basename without extension
     Raise RuntimeError if unable to load Glade XML file.
     """
-    path = os.path.join(GLADE_DIR, name + '.glade')
+    path = os.path.join(_GLADE_DIR, name + '.glade')
     try:
         return gtk.glade.XML(path)
     except RuntimeError:
@@ -130,7 +160,7 @@ def idlemethod(function):
 
     return wrapper
 
-def resize_dialog(dialog, width, height, max_width=0.65, max_height=0.65):
+def resize_dialog(dialog, width, height, max_width=0.6, max_height=0.6):
     """
     Resize dialog in a smart manner.
 
@@ -138,18 +168,18 @@ def resize_dialog(dialog, width, height, max_width=0.65, max_height=0.65):
     between 0 and 1 representing maximum screen space taken.
     """
     # Set maximum based on percentage of screen space.
-    width  = min(width , int(max_width  * SCREEN_WIDTH ))
-    height = min(height, int(max_height * SCREEN_HEIGHT))
+    width  = min(width , int(max_width  * _SCREEN_WIDTH ))
+    height = min(height, int(max_height * _SCREEN_HEIGHT))
 
     # Set minimum based on dialog content.
     size = dialog.size_request()
     width  = max(size[0], width )
     height = max(size[1], height)
 
-    dialog.set_size_request(width, height)
+    dialog.set_default_size(width, height)
 
 def resize_message_dialog(
-    dialog, width, height, max_width=0.55, max_height=0.55):
+    dialog, width, height, max_width=0.5, max_height=0.5):
     """
     Resize message dialog in a smart manner.
 
@@ -158,17 +188,29 @@ def resize_message_dialog(
     """
     resize_dialog(dialog, width, height, max_width, max_height)
 
+def run(dialog):
+    """Run dialog and return response."""
+
+    response = dialog.run()
+    destroy_gobject(dialog)
+    return response
+
+def separate(store, iter_):
+    """Separator function for combo boxes."""
+
+    return store.get_value(iter_, 0) == COMBO_SEP
+
 def set_cursor_busy(window):
     """Set cursor busy when above window."""
 
-    window.window.set_cursor(CURSOR_BUSY)
+    window.window.set_cursor(BUSY_CURSOR)
     while gtk.events_pending():
         gtk.main_iteration()
 
 def set_cursor_normal(window):
     """Set cursor normal when above window."""
 
-    window.window.set_cursor(CURSOR_NORMAL)
+    window.window.set_cursor(NORMAL_CURSOR)
     while gtk.events_pending():
         gtk.main_iteration()
 
@@ -176,7 +218,7 @@ def set_label_font(label, font):
     """
     Set label font.
 
-    font is a string, e.g. "Sans 9".
+    font: String, e.g. "Sans 9"
     """
     context = label.get_pango_context()
     font_desc = context.get_font_description()
@@ -192,7 +234,7 @@ def set_widget_font(widget, font):
     """
     Set widget font.
 
-    font is a string, e.g. "Sans 9".
+    font: String, e.g. "Sans 9"
     """
     context = widget.get_pango_context()
     font_desc = context.get_font_description()

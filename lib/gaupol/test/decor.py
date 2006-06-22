@@ -26,11 +26,9 @@ def timefunction(function):
     """Decorator for timing functions."""
 
     def wrapper(*args, **kwargs):
-
         start = time.time()
         function(*args, **kwargs)
         end = time.time()
-
         print '%.3f %s' % (end - start, function.__name__)
 
     return wrapper
@@ -39,11 +37,9 @@ def timemethod(function):
     """Decorator for timing methods."""
 
     def wrapper(*args, **kwargs):
-
         start = time.time()
         function(*args, **kwargs)
         end = time.time()
-
         print '%.3f %s.%s.%s' % (
             end - start,
             args[0].__class__.__module__,

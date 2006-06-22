@@ -31,13 +31,13 @@ class MicroDVD(SubtitleFile):
     """MicroDVD file."""
 
     format     = cons.Format.MICRODVD
-    mode       = cons.Mode.FRAME
     has_header = False
     identifier = r'^\{\d+\}\{\d+\}.*?$', 0
+    mode       = cons.Mode.FRAME
 
     def read(self):
         """
-        Read MicroDVD file.
+        Read file.
 
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
@@ -56,15 +56,15 @@ class MicroDVD(SubtitleFile):
                 hides.append(match.group(2))
                 texts.append(match.group(3))
 
-        shows = list(int(x)               for x in shows)
-        hides = list(int(x)               for x in hides)
+        shows = list(int(x) for x in shows)
+        hides = list(int(x) for x in hides)
         texts = list(x.replace('|', '\n') for x in texts)
 
         return shows, hides, texts
 
     def write(self, shows, hides, texts):
         """
-        Write MicroDVD file.
+        Write file.
 
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.

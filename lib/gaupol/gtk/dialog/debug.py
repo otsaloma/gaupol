@@ -16,10 +16,10 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Debug dialog."""
+"""Dialog for dislaying a traceback in case of an unhandled exception."""
 
 
-# This file has been adpated from Gazpacho's debugwindow.py by Lorenzo Gil
+# This file has been adapted from Gazpacho's debugwindow.py, by Lorenzo Gil
 # Sanchez and Johan Dahlin. URLs in text view has been adapted from Porthole's
 # summary.py by Fredrik Arnerup, Daniel G. Taylor, Brian Dolbec and
 # Wm. F. Wheeler.
@@ -34,51 +34,62 @@ import traceback
 import gtk
 import pango
 
+from gaupol.base.paths         import PROFILE_DIR
 from gaupol.base.util          import wwwlib
-from gaupol.gtk.delegate.help  import BUG_REPORT_URL
 from gaupol.gtk.dialog.message import ErrorDialog
+from gaupol.gtk.urls           import BUG_REPORT_URL
 from gaupol.gtk.util           import config, gtklib
 
 
-CURSOR_NORMAL = gtk.gdk.Cursor(gtk.gdk.XTERM)
-CURSOR_HAND   = gtk.gdk.Cursor(gtk.gdk.HAND2)
+_CONFIG_FILE = os.path.join(PROFILE_DIR, 'gaupol.gtk.conf')
 
 
-class EditorErrorDialog(ErrorDialog):
+class _EditorErrorDialog(ErrorDialog):
 
-    """Dialog to inform that editor was not successfully opened."""
+    """Dialog for informing that editor failed to open."""
 
     def __init__(self, parent, editor):
 
-        title   = _('Failed to open editor "%s"') % editor
-        message = _('To change the editor, edit configuration file "%s" under '
-                    'section "debug".') % config.CONFIG_FILE
-        ErrorDialog.__init__(self, parent, title, message)
+        ErrorDialog.__init__(
+            self, parent,
+            _('Failed to open editor "%s"') % editor,
+            _('To change the editor, edit configuration file "%s" under '
+              'section "debug".') % _CONFIG_FILE
+        )
 
 
 class DebugDialog(object):
 
-    """Debug dialog."""
+    """
+    Dialog for dislaying a traceback in case of an unhandled exception.
+
+    Instance variables:
+
+        _code_lines: List of lines of code displayed
+        _files:      List of tuples: URL, line number
+        _url_tags:   List of gtk.TextTags named by indexes in _files
+
+    """
 
     def __init__(self):
 
-        glade_xml = gtklib.get_glade_xml('debug-dialog')
-        self._dialog    = glade_xml.get_widget('dialog')
-        self._text_view = glade_xml.get_widget('text_view')
-
-        self._url_tags   = []
-        self._files      = []
         self._code_lines = []
+        self._files      = []
+        self._url_tags   = []
 
-        self._init_signals()
+        glade_xml = gtklib.get_glade_xml('debug-dialog')
+        self._dialog     = glade_xml.get_widget('dialog')
+        self._text_view  = glade_xml.get_widget('text_view')
+
         self._init_text_tags()
+        self._init_signals()
         self._dialog.set_default_response(gtk.RESPONSE_CLOSE)
 
     def _init_signals(self):
         """Initialize signals."""
 
-        self._text_view.connect(
-            'motion-notify-event', self._on_text_view_motion_notify_event)
+        gtklib.connect(self, '_dialog'   , 'response'           )
+        gtklib.connect(self, '_text_view', 'motion-notify-event')
 
     def _init_text_tags(self):
         """Initialize text tags."""
@@ -104,11 +115,6 @@ class DebugDialog(object):
             left_margin=24
         )
 
-    def destroy(self):
-        """Destroy dialog."""
-
-        self._dialog.destroy()
-
     def _insert_text(self, text, *tags):
         """Insert text with tags to text view."""
 
@@ -130,6 +136,13 @@ class DebugDialog(object):
             url = url.replace(os.getcwd(), '')[len(os.sep):]
         self._insert_text(url, name)
 
+    def _on_dialog_response(self, dialog, response):
+        """Rerun dialog if reporting bug."""
+
+        if response == gtk.RESPONSE_YES:
+            wwwlib.browse_url(BUG_REPORT_URL)
+            return dialog.run()
+
     def _on_text_view_motion_notify_event(self, widget, event):
         """Change mouse pointer when hovering over an URL."""
 
@@ -147,9 +160,9 @@ class DebugDialog(object):
         window = self._text_view.get_window(window_type)
         for tag in tags:
             if tag in self._url_tags:
-                window.set_cursor(CURSOR_HAND)
+                window.set_cursor(gtklib.HAND_CURSOR)
                 return
-        window.set_cursor(CURSOR_NORMAL)
+        window.set_cursor(gtklib.NORMAL_CURSOR)
 
     def _on_url_event(self, tag, widget, event, iter_):
         """Open URL in editor."""
@@ -157,13 +170,12 @@ class DebugDialog(object):
         if not event.type == gtk.gdk.BUTTON_RELEASE:
             return
 
-        editor = config.Debug.editor
+        editor = config.debug.editor
         path, lineno = self._files[int(tag.props.name)]
-        return_value = os.system('%s +%d "%s"' % (editor, lineno, path))
+        return_value = os.system('%s +%d "%s" &' % (editor, lineno, path))
         if return_value != 0:
-            dialog = EditorErrorDialog(self._dialog, editor)
-            dialog.run()
-            dialog.destroy()
+            gtklib.run(_EditorErrorDialog(self._dialog, editor))
+        tag.props.foreground = 'purple'
 
     def _print_platform(self):
         """Print platform information."""
@@ -176,7 +188,7 @@ class DebugDialog(object):
         elif os.getenv('KDE_FULL_SESSION') is not None:
             self._insert_text('KDE\n', 'text')
         else:
-            self._insert_text('?\n', 'text')
+            self._insert_text('n/a\n', 'text')
 
     def _print_versions(self):
         """Print version information."""
@@ -191,16 +203,20 @@ class DebugDialog(object):
         try:
             import enchant
             self._insert_text(enchant.__version__ + '\n', 'text')
-        except ImportError:
-            self._insert_text('-\n', 'text')
-        except enchant.Error:
-            self._insert_text('-\n', 'text')
+        except:
+            self._insert_text('n/a\n', 'text')
+        self._insert_text('Universal Encoding Detector: ', 'title')
+        try:
+            import chardet
+            self._insert_text(chardet.__version__ + '\n', 'text')
+        except:
+            self._insert_text('n/a\n', 'text')
 
     def _print_traceback(self, tb, limit=None):
         """Print up to limit stack trace entries from traceback."""
 
-        n = 0
-        while tb is not None and (limit is None or n < limit):
+        i = 0
+        while tb is not None and (limit is None or i < limit):
 
             frame    = tb.tb_frame
             lineno   = tb.tb_lineno
@@ -216,16 +232,21 @@ class DebugDialog(object):
             self._insert_text('In: ', 'title')
             self._insert_text(name + '\n', 'text')
 
-            line = linecache.getline(code.co_filename, tb.tb_lineno).strip()
+            line = linecache.getline(filename, lineno).strip()
             if line:
                 self._code_lines.append(line)
                 self._insert_text('\n%s\n\n' % line, 'code')
 
             tb = tb.tb_next
-            n += 1
+            i += 1
+
+    def destroy(self):
+        """Destroy dialog."""
+
+        self._dialog.destroy()
 
     def run(self):
-        """Show and run dialog."""
+        """Run dialog."""
 
         self._dialog.show()
         return self._dialog.run()
@@ -239,8 +260,8 @@ class DebugDialog(object):
         exception = traceback.format_exception_only(exctype, value)[0]
         try:
             exception, message = exception.split(' ', 1)
-            self._insert_text(exception, 'title')
-            self._insert_text(' %s\n' % message, 'text')
+            self._insert_text(exception + ' ', 'title')
+            self._insert_text(message + '\n', 'text')
         except ValueError:
             self._insert_text(exception + '\n', 'title')
 
@@ -267,36 +288,26 @@ class DebugDialog(object):
         code_width = label.size_request()[0]
 
         # Set dialog size.
-        width = max(text_width, code_width) + 150
-        height += 160
+        width = max(text_width, code_width) + 150 + gtklib.EXTRA
+        height = height + 160 + gtklib.EXTRA
         gtklib.resize_message_dialog(self._dialog, width, height)
 
 
 def show(exctype, value, tb):
-    """Show exception in dialog."""
+    """Show exception traceback in dialog."""
 
-    # Always print to stdout and stderr.
     traceback.print_exception(exctype, value, tb)
     if exctype is KeyboardInterrupt:
         return
 
-    # Avoid spawning a new dialog if this one raises an exception.
     try:
         dialog = DebugDialog()
         dialog.set_text(exctype, value, tb)
-        while True:
-            response = dialog.run()
-            if response == gtk.RESPONSE_YES:
-                wwwlib.browse_url(BUG_REPORT_URL)
-            elif response == gtk.RESPONSE_NO:
-                dialog.destroy()
-                try:
-                    gtk.main_quit()
-                except RuntimeError:
-                    raise SystemExit(1)
-                return
-            else:
-                break
-        dialog.destroy()
-    except Exception:
+        response = gtklib.run(dialog)
+        if response == gtk.RESPONSE_NO:
+            try:
+                gtk.main_quit()
+            except RuntimeError:
+                raise SystemExit(1)
+    except:
         traceback.print_exc()

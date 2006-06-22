@@ -24,20 +24,32 @@ import re
 
 class Finder(object):
 
-    """String and regular expression finder and replacer."""
+    """
+    String and regular expression finder and replacer.
+
+    Instance variables:
+
+        ignore_case: True to ignore case
+        match_span:  Tuple: start position, end position
+        pattern:     String or regular expression object
+        pos:         Current position
+        replacement: String
+        text:        Text
+
+    """
 
     def __init__(self):
 
-        self.text        = None
-        self.pos         = 0
+        self.ignore_case = False
         self.match_span  = None
         self.pattern     = None
-        self.ignore_case = False
+        self.pos         = 0
         self.replacement = None
+        self.text        = None
 
     def next(self):
         """
-        Get next match of pattern.
+        Find next match of pattern.
 
         Raise StopIteration if no next match found.
         Return two-tuple: match start position, match end position.
@@ -71,7 +83,7 @@ class Finder(object):
 
     def previous(self):
         """
-        Get previous match of pattern.
+        Find previous match of pattern.
 
         Raise StopIteration if no previous match found.
         Return two-tuple: match start position, match end position.
@@ -116,14 +128,14 @@ class Finder(object):
     def replace(self):
         """Replace current match."""
 
-        start, end = self.match_span
+        a, z = self.match_span
 
         if isinstance(self.pattern, basestring):
-            self.text = self.text[:start] + self.replacement + self.text[end:]
+            self.text = self.text[:a] + self.replacement + self.text[z:]
         else:
-            text_body = self.text[start:]
+            text_body = self.text[a:]
             text_body = self.pattern.sub(self.replacement, text_body, 1)
-            self.text = self.text[:start] + text_body
+            self.text = self.text[:a] + text_body
 
         self.pos = min(self.pos, len(self.text))
 

@@ -24,16 +24,23 @@ class Internal(object):
     """
     Internal tags.
 
-    Gaupol internal tags are:
-    <b></b>
-    <i></i>
-    <u></u>
-    <color="#RRGGBB"></color>
-    <font="NAME"></font>
-    <size="INT"></size>
+    Internal tags:
+
+        <b></b>
+        <i></i>
+        <u></u>
+        <color="#RRGGBB"></color>
+        <font="NAME"></font>
+        <size="INT"></size>
+
+    Class variables:
+
+        opening_tag:     Regular expression pattern, flags
+        closing_tag:     Regular expression pattern, flags
+        closing_tag_end: Regular expression pattern, flags
+
     """
 
-    # Pattern, Flags
     opening_tag     = r'<[^/].*?>', 0
     closing_tag     = r'</.*?>'   , 0
     closing_tag_end = r'</.*?>\Z' , 0

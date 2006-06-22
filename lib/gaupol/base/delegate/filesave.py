@@ -76,11 +76,11 @@ class FileSaveDelegate(Delegate):
 
     """Saving subtitle files."""
 
-    def _save_file(self, doc, keep_changes, props):
+    def _save_file(self, doc, props, keep_changes):
         """
         Save subtitle file.
 
-        props: Path, format, encoding, newlines
+        props: path, format, encoding, newlines
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
@@ -105,37 +105,12 @@ class FileSaveDelegate(Delegate):
         self._write_file(file_, texts)
 
         if keep_changes:
-            if doc == cons.Document.MAIN:
+            if doc == MAIN:
                 self.main_file = file_
                 self.main_texts = texts
-            elif doc == cons.Document.TRAN:
+            elif doc == TRAN:
                 self.tran_file = file_
                 self.tran_texts = texts
-
-    def save_main_file(self, keep_changes=True, props=None):
-        """
-        Save main file.
-
-        props: Path, format, encoding, newlines
-        Raise IOError if writing fails.
-        Raise UnicodeError if encoding fails.
-        """
-        self._save_file(cons.Document.MAIN, keep_changes, props)
-        if keep_changes:
-            self.main_changed = 0
-
-    def save_translation_file(self, keep_changes=True, props=None):
-        """
-        Save translation file.
-
-        props: Path, format, encoding, newlines
-        Raise IOError if writing fails.
-        Raise UnicodeError if encoding fails.
-        """
-        self._save_file(cons.Document.TRAN, keep_changes, props)
-        if keep_changes:
-            self.tran_active = True
-            self.tran_changed = 0
 
     def _write_file(self, file_, texts):
         """
@@ -168,3 +143,28 @@ class FileSaveDelegate(Delegate):
                 else:
                     if not write_success:
                         _remove_failed(file_.path)
+
+    def save_main_file(self, props=None, keep_changes=True):
+        """
+        Save main file.
+
+        props: path, format, encoding, newlines
+        Raise IOError if writing fails.
+        Raise UnicodeError if encoding fails.
+        """
+        self._save_file(MAIN, props, keep_changes)
+        if keep_changes:
+            self.main_changed = 0
+
+    def save_translation_file(self, props=None, keep_changes=True):
+        """
+        Save translation file.
+
+        props: path, format, encoding, newlines
+        Raise IOError if writing fails.
+        Raise UnicodeError if encoding fails.
+        """
+        self._save_file(TRAN, props, keep_changes)
+        if keep_changes:
+            self.tran_active = True
+            self.tran_changed = 0

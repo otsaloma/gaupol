@@ -25,19 +25,19 @@ class TestApplication(Test):
 
     def setup_method(self, method):
 
-        self.application = Application()
+        self.app = Application()
 
     def teardown_method(self, method):
 
         Test.teardown_method(self, method)
-        self.application.window.destroy()
+        self.app._window.destroy()
 
     def test_get_current_page(self):
 
-        page = self.application.get_current_page()
+        page = self.app.get_current_page()
         assert page is None
 
         path = self.get_subrip_path()
-        self.application.open_main_files([path])
-        page = self.application.get_current_page()
+        self.app.open_main_files([path])
+        page = self.app.get_current_page()
         assert isinstance(page, Page)

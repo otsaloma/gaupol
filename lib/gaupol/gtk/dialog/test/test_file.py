@@ -20,48 +20,56 @@ import os
 
 import gtk
 
+from gaupol.base.util       import enclib
 from gaupol.gtk             import cons
-from gaupol.gtk.dialog.file import OverwriteQuestionDialog
-from gaupol.gtk.dialog.file import TextFileChooserDialog
 from gaupol.gtk.dialog.file import OpenFileDialog
-from gaupol.gtk.dialog.file import SaveFileDialog
 from gaupol.gtk.dialog.file import OpenVideoDialog
+from gaupol.gtk.dialog.file import SaveFileDialog
+from gaupol.gtk.dialog.file import _OverwriteQuestionDialog
+from gaupol.gtk.dialog.file import _TextFileDialog
+from gaupol.gtk.util        import gtklib
 from gaupol.test            import Test
 
 
 class TestOverwriteQuestionDialog(Test):
 
-    def test_init(self):
+    def test_run(self):
 
-        OverwriteQuestionDialog(gtk.Window(), 'test')
+        gtklib.run(_OverwriteQuestionDialog(gtk.Window(), 'test'))
 
 
-class _TestTextFileChooserDialog(Test):
+class _TestTextFileDialog(Test):
 
     def test_get_and_set_encoding(self):
 
         for entry in self.dialog._encodings:
-            self.dialog.set_encoding(entry[0])
-            encoding = self.dialog.get_encoding()
-            assert encoding == entry[0]
+            if enclib.is_valid(entry[0]):
+                self.dialog.set_encoding(entry[0])
+                encoding = self.dialog.get_encoding()
+                assert encoding == entry[0]
 
-    def test_on_current_folder_changed(self):
-
-        self.dialog.set_current_folder(os.getcwd())
+        self.dialog.set_encoding('johab')
+        encoding = self.dialog.get_encoding()
+        assert encoding == 'johab'
 
     def test_on_encoding_combo_changed(self):
 
         model = self.dialog._encoding_combo.get_model()
         self.dialog._encoding_combo.set_active(len(model) - 1)
 
+    def test_run(self):
 
-class TestOpenFileDialog(_TestTextFileChooserDialog):
+        gtklib.run(self.dialog)
+
+
+class TestOpenFileDialog(_TestTextFileDialog):
 
     def setup_method(self, method):
 
         self.dialog = OpenFileDialog('test', gtk.Window())
 
-class TestSaveFileDialog(_TestTextFileChooserDialog):
+
+class TestSaveFileDialog(_TestTextFileDialog):
 
     def setup_method(self, method):
 
@@ -121,6 +129,6 @@ class TestSaveFileDialog(_TestTextFileChooserDialog):
 
 class TestOpenVideoDialog(Test):
 
-    def test_init(self):
+    def test_run(self):
 
-        OpenVideoDialog(gtk.Window())
+        gtklib.run(OpenVideoDialog(gtk.Window()))

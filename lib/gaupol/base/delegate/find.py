@@ -22,40 +22,53 @@
 from gettext import gettext as _
 
 from gaupol.base             import cons
+from gaupol.base.colcons     import *
 from gaupol.base.delegate    import Delegate
 from gaupol.base.text.finder import Finder
 
 
 class FindDelegate(Delegate):
 
-    """Finding and replacing text."""
+    """
+    Finding and replacing text.
+
+    Instance variables:
+
+        _docs:              List of target documents
+        _finder:            Finder
+        _last_match_doc:    Document of last match
+        _last_match_passed: True if passed position of last match
+        _last_match_row:    Row of last match
+        _rows:              Target rows
+        _wrap:              True to wrap search
+
+    """
 
     def __init__(self, *args, **kwargs):
 
         Delegate.__init__(self, *args, **kwargs)
 
-        self._finder = Finder()
-
-        self._rows = None
-        self._docs = [cons.Document.MAIN, cons.Document.TRAN]
-        self._wrap = True
-
-        self._last_match_row = None
-        self._last_match_doc = None
+        self._docs              = [MAIN, TRAN]
+        self._finder            = Finder()
+        self._last_match_doc    = None
         self._last_match_passed = False
+        self._last_match_row    = None
+        self._rows              = None
+        self._wrap              = True
 
     def _find(self, row, doc, pos, next):
         """
         Find pattern starting from position.
 
-        next: True to find next, False to find previous.
+        pos: None for beginning or end
+        next: True to find next, False to find previous
         Raise StopIteration if no matches exist.
         Return three-tuple: row, document, match span.
         """
         if next:
-            find_in_document = self._find_next_in_document
+            find_in_document = self._next_in_document
         else:
-            find_in_document = self._find_previous_in_document
+            find_in_document = self._previous_in_document
         self._last_match_row = row
         self._last_match_doc = doc
         self._last_match_passed = False
@@ -81,20 +94,22 @@ class FindDelegate(Delegate):
                 pass
             pos = None
 
-    def find_next(self, row, doc, pos=0):
+    def _get_other_document(self, doc):
         """
-        Find next pattern starting from position.
+        Get other document included in target.
 
-        Raise StopIteration if no matches exist.
-        Return three-tuple: row, document, match span.
+        Raise ValueError if no other document.
         """
-        return self._find(row, doc, pos, True)
+        for candidate in self._docs:
+            if candidate != doc:
+                return candidate
+        raise ValueError
 
-    def _find_next_in_document(self, row, doc, pos=None):
+    def _next_in_document(self, row, doc, pos=None):
         """
         Find next pattern in document starting from position.
 
-        pos can be None to start from beginning.
+        pos: None to start from beginning
         Raise ValueError if no matches after position.
         Raise StopIteration if no matches at all.
         Return three-tuple: row, document, match span.
@@ -124,20 +139,11 @@ class FindDelegate(Delegate):
                 return row, doc, match_span
         raise ValueError
 
-    def find_previous(self, row, doc, pos=0):
-        """
-        Find previous pattern starting from position.
-
-        Raise StopIteration if no matches exist.
-        Return three-tuple: row, document, match span.
-        """
-        return self._find(row, doc, pos, False)
-
-    def _find_previous_in_document(self, row, doc, pos=None):
+    def _previous_in_document(self, row, doc, pos=None):
         """
         Find previous pattern in document starting from position.
 
-        pos can be None to start from end.
+        pos: None to start from end
         Raise ValueError if no matches after position.
         Raise StopIteration if no matches at all.
         Return three-tuple: row, document, match span.
@@ -166,16 +172,25 @@ class FindDelegate(Delegate):
                 return row, doc, match_span
         raise ValueError
 
-    def _get_other_document(self, doc):
+    def find_next(self, row, doc, pos=None):
         """
-        Get other document included in target.
+        Find next pattern starting from position.
 
-        Raise ValueError if no other document.
+        pos: None for beginning
+        Raise StopIteration if no matches exist.
+        Return three-tuple: row, document, match span.
         """
-        for candidate in self._docs:
-            if candidate != doc:
-                return candidate
-        raise ValueError
+        return self._find(row, doc, pos, True)
+
+    def find_previous(self, row, doc, pos=None):
+        """
+        Find previous pattern starting from position.
+
+        pos: None for end
+        Raise StopIteration if no matches exist.
+        Return three-tuple: row, document, match span.
+        """
+        return self._find(row, doc, pos, False)
 
     def replace(self, register=cons.Action.DO):
         """Replace current match."""
@@ -231,8 +246,9 @@ class FindDelegate(Delegate):
         """
         Set target to find in.
 
-        Use None in rows and docs for all.
+        rows: None for all rows
+        docs: None for all documents
         """
         self._rows = rows
-        self._docs = docs or [cons.Document.MAIN, cons.Document.TRAN]
+        self._docs = docs or [MAIN, TRAN]
         self._wrap = wrap

@@ -55,8 +55,8 @@ class SubRip(TagLibrary):
         )
     ]
 
-    @staticmethod
-    def italicize(text):
+    @classmethod
+    def italicize(cls, text):
         """Italicize text."""
 
         return u'<i>%s</i>' % text

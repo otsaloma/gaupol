@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Cell renderer time data in format hh:mm:ss,sss."""
+"""Cell renderer time data in format HH:MM:SS,SSS."""
 
 
 import gtk
@@ -27,7 +27,7 @@ from gaupol.gtk.entry.time    import EntryTime
 
 class CellRendererTime(CellRendererText):
 
-    """Cell renderer time data in format hh:mm:ss,sss."""
+    """Cell renderer time data in format HH:MM:SS.SSS."""
 
     def on_key_press_event(self, editor, event):
         """Cancel editing if Escape pressed."""

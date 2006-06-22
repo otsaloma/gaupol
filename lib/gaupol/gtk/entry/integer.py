@@ -21,6 +21,8 @@
 
 import gtk
 
+from gaupol.gtk.util import gtklib
+
 
 class EntryInteger(gtk.Entry):
 
@@ -29,7 +31,7 @@ class EntryInteger(gtk.Entry):
     def __init__(self):
 
         gtk.Entry.__init__(self)
-        self.connect('insert-text', self._on_insert_text)
+        gtklib.connect(self, self, 'insert-text')
 
     def _on_insert_text(self, entry, text, length, pos):
         """Insert text if it is digits."""

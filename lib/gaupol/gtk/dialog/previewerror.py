@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,34 +16,27 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Dialog to inform that preview command failed."""
+"""Dialog for informing that preview failed."""
 
-
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
 
 import gtk
 import pango
 
-from gaupol.gtk.util import config, gtklib
+from gaupol.gtk.util import gtklib
 
 
 class PreviewErrorDialog(object):
 
-    """Dialog to inform that preview command failed."""
+    """Dialog for informing that preview failed."""
 
     def __init__(self, parent, output):
 
         glade_xml = gtklib.get_glade_xml('previewerror-dialog')
-
         self._dialog    = glade_xml.get_widget('dialog')
         self._text_view = glade_xml.get_widget('text_view')
 
         self._init_data(output)
         self._init_sizes(output)
-
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_OK)
 
@@ -56,7 +49,7 @@ class PreviewErrorDialog(object):
         text_buffer.insert_with_tags_by_name(end_iter, output, 'code')
 
     def _init_sizes(self, output):
-        """Initialize dialog size."""
+        """Initialize widget sizes."""
 
         label = gtk.Label()
         attrs = pango.AttrList()
@@ -69,25 +62,12 @@ class PreviewErrorDialog(object):
         gtklib.resize_message_dialog(self._dialog, width, height)
 
     def destroy(self):
-        """Destroy the dialog."""
+        """Destroy dialog."""
 
         self._dialog.destroy()
 
     def run(self):
-        """Show and run the dialog."""
+        """Run dialog."""
 
         self._dialog.show()
         return self._dialog.run()
-
-
-if __name__ == '__main__':
-
-    from gaupol.test import Test
-
-    class TestPreviewErrorDialog(Test):
-
-        def test_init(self):
-
-            dialog = PreviewErrorDialog(gtk.Window(), 'test')
-
-    TestPreviewErrorDialog().run()

@@ -20,6 +20,7 @@
 
 
 import os
+import subprocess
 import sys
 import threading
 import urllib
@@ -28,7 +29,7 @@ import webbrowser
 from gaupol.base.error import TimeoutError
 
 
-class URLReadThread(threading.Thread):
+class _URLReadThread(threading.Thread):
 
     """Threaded reading of a remote document."""
 
@@ -53,33 +54,26 @@ def browse_url(url, browser=None):
     """Open url in browser."""
 
     if browser is not None:
-        os.system(browser + ' "%s"' % url)
-        return
+        subprocess.Popen('%s "%s"' % (browser, url), shell=True)
 
-    if os.getenv('GNOME_DESKTOP_SESSION_ID') is not None:
-        return_value = os.system('gnome-open' + ' "%s"' % url)
-        if return_value == 0:
-            return
+    elif os.getenv('GNOME_DESKTOP_SESSION_ID') is not None:
+        subprocess.Popen('gnome-open "%s"' % url, shell=True)
 
-    if os.getenv('KDE_FULL_SESSION') is not None:
-        return_value = os.system('kfmclient exec' + ' "%s"' % url)
-        if return_value == 0:
-            return
+    elif os.getenv('KDE_FULL_SESSION') is not None:
+        subprocess.Popen('kfmclient exec "%s"' % url, shell=True)
 
-    if sys.platform == 'darwin':
-        return_value = os.system('open' + ' "%s"' % url)
-        if return_value == 0:
-            return
+    elif sys.platform == 'darwin':
+        subprocess.Popen('open "%s"' % url, shell=True)
 
-    if sys.platform == 'win32':
+    elif sys.platform == 'win32':
         os.startfile(url)
-        return
 
-    webbrowser.open(url)
+    else:
+        webbrowser.open(url)
 
 def read_url(url, timeout=10):
     """
-    Read remote document specified by url.
+    Read remote document.
 
     Document reading is done in a thread that ends with or without success
     after amount of seconds specified by timeout has ended.
@@ -87,7 +81,7 @@ def read_url(url, timeout=10):
     Raise IOError if reading fails.
     Raise TimeoutError if reading times out.
     """
-    thread = URLReadThread(url)
+    thread = _URLReadThread(url)
     thread.start()
     thread.join(timeout)
 

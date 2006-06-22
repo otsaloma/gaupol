@@ -26,7 +26,6 @@ def sorted_unique(lst):
     for i in reversed(range(1, len(lst))):
         if lst[i] == lst[i - 1]:
             lst.pop(i)
-
     return lst
 
 def unique(lst):
@@ -38,5 +37,4 @@ def unique(lst):
             if lst[j] == lst[i]:
                 lst.pop(i)
                 break
-
     return lst

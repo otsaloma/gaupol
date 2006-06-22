@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Text parser to allow tag-aware editing."""
+"""Text parser for tag-aware editing."""
 
 
 from gaupol.base.text.finder import Finder
@@ -25,12 +25,17 @@ from gaupol.base.text.finder import Finder
 class Parser(Finder):
 
     """
-    Text parser to allow tag-aware editing.
+    Text parser for tag-aware editing.
+
+    Instance variables:
+
+        re_tag: Regular expression for tag
+        tags:   List of lists: position, tag
 
     Purpose of the Parser is to split text to the actual text and its tags,
     allowing the text to be edited while keeping the tags separate and intact.
     Parser can be used by first setting text to it, then performing operations
-    on the pure text and finally getting the full text back.
+    via defined methods and finally getting the full text back.
     """
 
     def __init__(self, re_tag=None):
@@ -38,9 +43,23 @@ class Parser(Finder):
         Finder.__init__(self)
 
         self.re_tag = re_tag
+        self.tags   = None
 
-        # List of lists: [position, tag]
-        self.tags = None
+    def _shift_tags(self, pos, shift):
+        """Shift all tags at position or later."""
+
+        # Get length of tags before position.
+        pos_with_tags = pos
+        for pos, tag in self.tags:
+            if pos <= pos_with_tags:
+                pos_with_tags += len(tag)
+
+        # Shift tags.
+        for i in range(len(self.tags)):
+            if self.tags[i][0] > pos_with_tags:
+                self.tags[i][0] += shift
+                if self.tags[i][0] < 0:
+                    self.tags[i][0] = 0
 
     def get_text(self):
         """Reassemble text and return it."""
@@ -48,7 +67,6 @@ class Parser(Finder):
         text = self.text[:]
         for pos, tag in self.tags:
             text = text[:pos] + tag + text[pos:]
-
         return text
 
     def replace(self):
@@ -74,19 +92,3 @@ class Parser(Finder):
             self.tags.append([start, text[start:end]])
 
         self.text = self.re_tag.sub('', text)
-
-    def _shift_tags(self, pos, shift):
-        """Shift all tags at position or later."""
-
-        # Get length of tags before position.
-        pos_with_tags = pos
-        for pos, tag in self.tags:
-            if pos <= pos_with_tags:
-                pos_with_tags += len(tag)
-
-        # Shift tags.
-        for i in range(len(self.tags)):
-            if self.tags[i][0] > pos_with_tags:
-                self.tags[i][0] += shift
-                if self.tags[i][0] < 0:
-                    self.tags[i][0] = 0

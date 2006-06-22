@@ -18,7 +18,9 @@
 
 import gtk
 
-from gaupol.gtk.dialog.encoding import EncodingDialog, AdvancedEncodingDialog
+from gaupol.gtk.dialog.encoding import AdvancedEncodingDialog
+from gaupol.gtk.dialog.encoding import EncodingDialog
+from gaupol.gtk.util            import gtklib
 from gaupol.test                import Test
 
 
@@ -41,8 +43,7 @@ class TestEncodingDialog(Test):
 
     def test_run(self):
 
-        self.dialog.run()
-        self.dialog.destroy()
+        gtklib.run(self.dialog)
 
 
 class TestAdvancedEncodingDialog(TestEncodingDialog):

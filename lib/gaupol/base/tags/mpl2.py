@@ -25,7 +25,7 @@ from gaupol.base.tags          import TagLibrary
 from gaupol.base.tags.microdvd import MicroDVD
 
 
-COMMON = re.MULTILINE|re.DOTALL
+_COMMON = re.MULTILINE|re.DOTALL
 
 
 class MPL2(TagLibrary):
@@ -38,19 +38,19 @@ class MPL2(TagLibrary):
     decode_tags = [
         (
             # Italic (single line)
-            r'/(.*?)$', COMMON,
+            r'/(.*?)$', _COMMON,
             r'<i>\1</i>'
         ), (
             # Bold (single line)
-            r'\\(.*?)$', COMMON,
+            r'\\(.*?)$', _COMMON,
             r'<b>\1</b>'
         ), (
             # Underline (single line)
-            r'_(.*?)$', COMMON,
+            r'_(.*?)$', _COMMON,
             r'<u>\1</u>'
         ), (
             # Remove duplicate style tags (e.g. <b>test</b><b>test</b>).
-            r'</(b|i|u)>(\n?)<\1>', COMMON,
+            r'</(b|i|u)>(\n?)<\1>', _COMMON,
             r'\2',
             3
         )
@@ -92,8 +92,8 @@ class MPL2(TagLibrary):
 
     encode_tags = MicroDVD.encode_tags
 
-    @staticmethod
-    def italicize(text):
+    @classmethod
+    def italicize(cls, text):
         """Italicize text."""
 
         return '/' + text.replace('\n', '\n/')

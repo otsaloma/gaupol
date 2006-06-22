@@ -5,12 +5,12 @@
 import os
 import time
 
+TOOL_DIR   = os.path.dirname(os.path.abspath(__file__))
+SOURCE_DIR = os.path.join(TOOL_DIR, '..')
+
 NAME  = 'Osmo Salomaa'
 EMAIL = 'otsaloma@cc.hut.fi'
 DATE  = time.strftime('%Y-%m-%d')
-
-TOOL_DIR   = os.path.dirname(os.path.abspath(__file__))
-SOURCE_DIR = os.path.join(TOOL_DIR, '..')
 
 os.chdir(SOURCE_DIR)
 fobj = os.popen('svn status -q')

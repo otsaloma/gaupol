@@ -24,10 +24,12 @@ class Clipboard(object):
     """
     Gaupol internal clipboard.
 
-    Data on the clipboard is directly available as attribute "data". Its value
-    is an empty list if there's nothing on the clipboard. data is a
-    one-dimensional list with multiple ranges made possible with elements
-    having value None to express that the row is skipped in the range.
+    Instance variables:
+
+        data: List of clipboard contents
+
+    data is a one-dimensional list with multiple ranges made possible with
+    elements having value None to express that the row is skipped in the range.
     """
 
     def __init__(self):
@@ -35,7 +37,7 @@ class Clipboard(object):
         self.data = []
 
     def get_data_as_string(self):
-        """Get clipboard data as a single string."""
+        """Get clipboard data as a string."""
 
         # Replace Nones with empty strings.
         string_list = []

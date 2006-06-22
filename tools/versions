@@ -39,3 +39,10 @@ except ImportError:
         print 'Not found'
 except enchant.Error, message:
     print message
+
+print 'Universal Encoding Detector:',
+try:
+    import chardet
+    print chardet.__version__
+except ImportError:
+    print 'Not found.'

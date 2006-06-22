@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -19,35 +19,358 @@
 """Dialog for editing preferences."""
 
 
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
+from gettext import gettext as _
 
 import gobject
 import gtk
 import pango
 
 from gaupol.base.util            import enclib
-from gaupol.gtk.cons import *
-from gaupol.gtk.dialog.encoding import EncodingDialog
+from gaupol.gtk                  import cons
+from gaupol.gtk.dialog.encoding  import EncodingDialog
 from gaupol.gtk.util             import config, gtklib
+
+try:
+    import chardet
+    _CHARDET_AVAILABLE = True
+except ImportError:
+    _CHARDET_AVAILABLE = False
+
+
+class _Editor(object):
+
+    """Editor preferences."""
+
+    def __init__(self, master, parent, glade_xml):
+
+        self._master = master
+
+        get_widget = glade_xml.get_widget
+        self._default_font_check = get_widget('editor_default_font_check')
+        self._font_button        = get_widget('editor_font_button')
+        self._font_hbox          = get_widget('editor_font_hbox')
+        self._parent             = parent
+        self._undo_limit_hbox    = get_widget('editor_undo_limit_hbox')
+        self._undo_limit_spin    = get_widget('editor_undo_limit_spin')
+        self._unlimit_undo_check = get_widget('editor_unlimit_undo_check')
+
+        self._init_data()
+        self._init_signals()
+
+    def _get_custom_font(self):
+        """Get custom font as string."""
+
+        context = gtk.Label().get_pango_context()
+        font_desc = context.get_font_description()
+        custom_font_desc = pango.FontDescription(config.editor.font)
+        font_desc.merge(custom_font_desc, True)
+        return font_desc.to_string()
+
+    def _init_data(self):
+        """Initialize default values."""
+
+        use_default = config.editor.use_default_font
+        self._default_font_check.set_active(use_default)
+        self._font_hbox.set_sensitive(not use_default)
+        self._font_button.set_font_name(self._get_custom_font())
+
+        limit = config.editor.limit_undo
+        self._unlimit_undo_check.set_active(not limit)
+        self._undo_limit_hbox.set_sensitive(limit)
+        self._undo_limit_spin.set_value(config.editor.undo_levels)
+
+    def _init_signals(self):
+        """Initialize signals."""
+
+        gtklib.connect(self, '_default_font_check', 'toggled'      )
+        gtklib.connect(self, '_font_button'       , 'font-set'     )
+        gtklib.connect(self, '_undo_limit_spin'   , 'value-changed')
+        gtklib.connect(self, '_unlimit_undo_check', 'toggled'      )
+
+    def _on_default_font_check_toggled(self, check_button):
+        """Save default font usage and emit signal."""
+
+        use_default = check_button.get_active()
+        config.editor.use_default_font = use_default
+        self._master.emit('use-default-font-toggled', use_default)
+        self._font_hbox.set_sensitive(not use_default)
+
+    def _on_font_button_font_set(self, font_button):
+        """Save custom font and emit signal."""
+
+        font = font_button.get_font_name()
+        config.editor.font = font
+        self._master.emit('font-set', font)
+
+    def _on_undo_limit_spin_value_changed(self, spin_button):
+        """Save undo limit and emit signal."""
+
+        levels = spin_button.get_value_as_int()
+        config.editor.undo_levels = levels
+        self._master.emit('undo-levels-changed', levels)
+
+    def _on_unlimit_undo_check_toggled(self, check_button):
+        """Save undo limiting and emit signal."""
+
+        limit = not check_button.get_active()
+        config.editor.limit_undo = limit
+        self._master.emit('limit-undo-toggled', limit)
+        self._undo_limit_hbox.set_sensitive(limit)
+
+
+class _File(object):
+
+    """File preferences."""
+
+    def __init__(self, master, parent, glade_xml):
+
+        self._master = master
+
+        get_widget = glade_xml.get_widget
+        self._add_button    = get_widget('file_add_button')
+        self._auto_check    = get_widget('file_auto_check')
+        self._down_button   = get_widget('file_down_button')
+        self._tree_view     = get_widget('file_tree_view')
+        self._locale_check  = get_widget('file_locale_check')
+        self._parent        = parent
+        self._remove_button = get_widget('file_remove_button')
+        self._up_button     = get_widget('file_up_button')
+
+        self._init_widgets()
+        self._init_data()
+        self._init_signals()
+
+    def _get_selected_row(self):
+        """Return selected fallback encoding or None."""
+
+        selection = self._tree_view.get_selection()
+        try:
+            return selection.get_selected_rows()[1][0][0]
+        except IndexError:
+            return None
+
+    def _init_data(self):
+        """Initialize default values."""
+
+        self._auto_check.set_active(config.encoding.try_auto)
+        self._auto_check.set_sensitive(_CHARDET_AVAILABLE)
+        self._locale_check.set_active(config.encoding.try_locale)
+        self._reload_tree_view()
+
+    def _init_signals(self):
+        """Initialize signals."""
+
+        gtklib.connect(self, '_add_button'   , 'clicked')
+        gtklib.connect(self, '_auto_check'   , 'toggled')
+        gtklib.connect(self, '_down_button'  , 'clicked')
+        gtklib.connect(self, '_locale_check' , 'toggled')
+        gtklib.connect(self, '_remove_button', 'clicked')
+        gtklib.connect(self, '_up_button'    , 'clicked')
+
+        selection = self._tree_view.get_selection()
+        selection.connect('changed', self._on_selection_changed)
+
+    def _init_widgets(self):
+        """Initialize widgets."""
+
+        self._tree_view.columns_autosize()
+        selection = self._tree_view.get_selection()
+        selection.set_mode(gtk.SELECTION_SINGLE)
+        selection.unselect_all()
+        store = gtk.ListStore(gobject.TYPE_STRING)
+        self._tree_view.set_model(store)
+        column = gtk.TreeViewColumn('', gtk.CellRendererText(), text=0)
+        self._tree_view.append_column(column)
+
+    def _on_add_button_clicked(self, *args):
+        """Add new fallback encoding."""
+
+        dialog = EncodingDialog(self._parent)
+        response = dialog.run()
+        encoding = dialog.get_encoding()
+        dialog.destroy()
+        if response != gtk.RESPONSE_OK or encoding is None:
+            return
+        if encoding not in config.encoding.fallbacks:
+            config.encoding.fallbacks.append(encoding)
+
+        self._reload_tree_view()
+        self._tree_view.grab_focus()
+        store = self._tree_view.get_model()
+        self._tree_view.set_cursor(len(store) - 1)
+
+    def _on_auto_check_toggled(self, check_button):
+        """Save auto-detect encoding usage."""
+
+        config.encoding.try_auto = check_button.get_active()
+
+    def _on_down_button_clicked(self, *args):
+        """Move selected encoding down."""
+
+        row = self._get_selected_row()
+        encodings = config.encoding.fallbacks
+        encodings.insert(row + 1, encodings.pop(row))
+
+        self._reload_tree_view()
+        self._tree_view.grab_focus()
+        self._tree_view.set_cursor(row + 1)
+
+    def _on_locale_check_toggled(self, check_button):
+        """Save locale encoding usage."""
+
+        config.encoding.try_locale = check_button.get_active()
+
+    def _on_remove_button_clicked(self, *args):
+        """Remove selected encoding."""
+
+        row = self._get_selected_row()
+        config.encoding.fallbacks.pop(row)
+
+        self._reload_tree_view()
+        self._tree_view.grab_focus()
+        store = self._tree_view.get_model()
+        if len(store) > 0:
+            self._tree_view.set_cursor(max(row - 1, 0))
+
+    def _on_selection_changed(self, *args):
+        """Set fallback tree view button sensitivities."""
+
+        self._set_sensitivities()
+
+    def _on_up_button_clicked(self, *args):
+        """Move selected encoding up."""
+
+        row = self._get_selected_row()
+        encodings = config.encoding.fallbacks
+        encodings.insert(row - 1, encodings.pop(row))
+
+        self._reload_tree_view()
+        self._tree_view.grab_focus()
+        self._tree_view.set_cursor(row - 1)
+
+    def _reload_tree_view(self):
+        """Reload fallback tree view data."""
+
+        store = self._tree_view.get_model()
+        store.clear()
+        for encoding in config.encoding.fallbacks:
+            store.append([enclib.get_long_name(encoding)])
+
+        self._set_sensitivities()
+
+    def _set_sensitivities(self):
+        """Set fallback tree view button sensitivities."""
+
+        def set_sensitive(remove, up, down):
+            self._remove_button.set_sensitive(remove)
+            self._up_button.set_sensitive(up)
+            self._down_button.set_sensitive(down)
+
+        try:
+            row = int(self._get_selected_row())
+            store = self._tree_view.get_model()
+            set_sensitive(True, row > 0, row < len(store) - 1)
+        except (IndexError, TypeError):
+            set_sensitive(False, False, False)
+
+
+class _Preview(object):
+
+    """Preview preferences."""
+
+    def __init__(self, master, parent, glade_xml):
+
+        self._master = master
+
+        get_widget = glade_xml.get_widget
+        self._app_combo     = get_widget('preview_app_combo')
+        self._command_entry = get_widget('preview_command_entry')
+        self._offset_spin   = get_widget('preview_offset_spin')
+        self._parent        = parent
+
+        self._init_widgets()
+        self._init_data()
+        self._init_signals()
+
+    def _init_data(self):
+        """Initialize default values."""
+
+        if config.preview.use_predefined:
+            self._app_combo.set_active(config.preview.video_player)
+            command = cons.VideoPlayer.commands[config.preview.video_player]
+            self._command_entry.set_text(command)
+            self._command_entry.set_editable(False)
+        else:
+            store = self._app_combo.get_model()
+            self._app_combo.set_active(len(store) - 1)
+            self._command_entry.set_text(config.preview.custom_command)
+            self._command_entry.set_editable(True)
+
+        self._offset_spin.set_value(config.preview.offset)
+
+    def _init_signals(self):
+        """Initialize signals."""
+
+        gtklib.connect(self, '_app_combo'    , 'changed'      )
+        gtklib.connect(self, '_command_entry', 'changed'      )
+        gtklib.connect(self, '_offset_spin'  , 'value-changed')
+
+    def _init_widgets(self):
+        """Initialize application combo box."""
+
+        store = gtk.ListStore(gobject.TYPE_STRING)
+        renderer = gtk.CellRendererText()
+        self._app_combo.pack_start(renderer, True)
+        self._app_combo.add_attribute(renderer, 'text', 0)
+        self._app_combo.set_model(store)
+        for name in cons.VideoPlayer.display_names:
+            store.append([name])
+        store.append([gtklib.COMBO_SEP])
+        store.append([_('Custom')])
+        self._app_combo.set_row_separator_func(gtklib.separate)
+
+    def _on_app_combo_changed(self, combo_box):
+        """Save video player and show command."""
+
+        index = combo_box.get_active()
+        if index in range(len(cons.VideoPlayer.display_names)):
+            config.preview.use_predefined = True
+            config.preview.video_player = index
+            self._command_entry.set_text(cons.VideoPlayer.commands[index])
+            self._command_entry.set_editable(False)
+        else:
+            config.preview.use_predefined = False
+            self._command_entry.set_text(config.preview.custom_command)
+            self._command_entry.set_editable(True)
+
+        self._master.emit('video-player-set')
+
+    def _on_command_entry_changed(self, entry):
+        """Save custom command."""
+
+        if not config.preview.use_predefined:
+            config.preview.custom_command = entry.get_text()
+
+    def _on_offset_spin_value_changed(self, spin_button):
+        """Save offset."""
+
+        config.preview.offset = spin_button.get_value()
 
 
 class PreferencesDialog(gobject.GObject):
 
-    """
-    Dialog for changing settings.
-
-    This class is implemented as a GObject. All setting-changing events will
-    send signals upstream, where they can be instant-applied.
-    """
+    """Dialog for changing preferences."""
 
     __gsignals__ = {
         'destroyed': (
             gobject.SIGNAL_RUN_LAST,
             None,
             ()
+        ),
+        'font-set': (
+            gobject.SIGNAL_RUN_LAST,
+            None,
+            (gobject.TYPE_STRING,)
         ),
         'limit-undo-toggled': (
             gobject.SIGNAL_RUN_LAST,
@@ -64,436 +387,41 @@ class PreferencesDialog(gobject.GObject):
             None,
             (gobject.TYPE_BOOLEAN,)
         ),
-        'font-set': (
+        'video-player-set': (
             gobject.SIGNAL_RUN_LAST,
             None,
-            (gobject.TYPE_STRING,)
-        )
+            ()
+        ),
     }
 
-    def __init__(self, parent):
+    def __init__(self):
 
         gobject.GObject.__init__(self)
 
         glade_xml = gtklib.get_glade_xml('preferences-dialog')
-        get = glade_xml.get_widget
+        self._dialog = glade_xml.get_widget('dialog')
 
-        self._close_button             = get('close_button')
-        self._dialog                   = get('dialog')
-        self._encoding_add_button      = get('encoding_add_button')
-        self._encoding_down_button     = get('encoding_move_down_button')
-        self._encoding_locale_check    = get('encoding_locale_check_button')
-        self._encoding_remove_button   = get('encoding_remove_button')
-        self._encoding_up_button       = get('encoding_move_up_button')
-        self._encoding_view            = get('encoding_tree_view')
-        self._font_button              = get('font_button')
-        self._font_custom_label        = get('font_custom_label')
-        self._font_default_check       = get('font_default_check_button')
-        self._preview_command_entry    = get('preview_command_entry')
-        self._preview_command_legend   = get('preview_command_legend_table')
-        self._preview_command_radio    = get('preview_command_radio_button')
-        self._preview_edit_button      = get('preview_edit_button')
-        self._preview_offset_spin      = get('preview_offset_spin_button')
-        self._preview_select_combo     = get('preview_select_combo_box')
-        self._preview_select_radio     = get('preview_select_radio_button')
-        self._undo_levels_spin         = get('undo_levels_spin_button')
-        self._undo_limit_radio         = get('undo_limit_radio_button')
-        self._undo_unlimited_radio     = get('undo_unlimited_radio_button')
+        self._editor  = _Editor(self, self._dialog, glade_xml)
+        self._file    = _File(self, self._dialog, glade_xml)
+        self._preview = _Preview(self, self._dialog, glade_xml)
 
-        self._init_encoding_view()
-        self._init_data()
-        self._init_signals()
-
-        self._dialog.set_transient_for(parent)
+        gtklib.connect(self, '_dialog', 'response')
+        self._dialog.set_transient_for(None)
+        self._dialog.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_NORMAL)
         self._dialog.set_default_response(gtk.RESPONSE_CLOSE)
 
-    def _init_data(self):
-        """Initialize data."""
-
-        self._init_file_data()
-        self._init_editor_data()
-        self._init_preview_data()
-
-    def _init_editor_signals(self):
-        """Initialize editor tab signals."""
-
-        method = self._on_undo_limit_radio_toggled
-        self._undo_limit_radio.connect('toggled', method)
-
-        method = self._on_undo_levels_spin_value_changed
-        self._undo_levels_spin.connect('value-changed', method)
-
-        method = self._on_font_default_check_toggled
-        self._font_default_check.connect('toggled', method)
-
-        method = self._on_font_button_font_set
-        self._font_button.connect('font-set', method)
-
-    def _init_editor_data(self):
-        """Initialize editor tab data."""
-
-        limit = config.Editor.limit_undo
-        self._undo_limit_radio.set_active(limit)
-        self._undo_unlimited_radio.set_active(not limit)
-        self._undo_levels_spin.set_sensitive(limit)
-        self._undo_levels_spin.set_value(config.Editor.undo_levels)
-
-        use_default = config.Editor.use_default_font
-        self._font_default_check.set_active(use_default)
-        self._font_custom_label.set_sensitive(not use_default)
-        self._font_button.set_sensitive(not use_default)
-        self._font_button.set_font_name(self._get_custom_font())
-
-    def _init_encoding_view(self):
-        """Initialize encoding view."""
-
-        view = self._encoding_view
-        view.columns_autosize()
-        selection = view.get_selection()
-        selection.set_mode(gtk.SELECTION_SINGLE)
-        selection.unselect_all()
-        store = gtk.ListStore(gobject.TYPE_STRING)
-        view.set_model(store)
-        cell_renderer = gtk.CellRendererText()
-        tree_view_column = gtk.TreeViewColumn('', cell_renderer, text=0)
-        view.append_column(tree_view_column)
-
-    def _init_file_signals(self):
-        """Initialize file tab signals."""
-
-        method = self._on_encoding_locale_check_toggled
-        self._encoding_locale_check.connect('toggled', method)
-
-        method = self._on_encoding_up_button_clicked
-        self._encoding_up_button.connect('clicked', method)
-        method = self._on_encoding_down_button_clicked
-        self._encoding_down_button.connect('clicked', method)
-        method = self._on_encoding_remove_button_clicked
-        self._encoding_remove_button.connect('clicked', method)
-        method = self._on_encoding_add_button_clicked
-        self._encoding_add_button.connect('clicked', method)
-
-    def _init_file_data(self):
-        """Initialize file tab data."""
-
-        try_locale = config.Encoding.try_locale
-        self._encoding_locale_check.set_active(try_locale)
-        self._reload_encoding_view()
-
-    def _init_preview_signals(self):
-        """Initialize preview tab signals."""
-
-        method = self._on_preview_offset_spin_value_changed
-        self._preview_offset_spin.connect('value-changed', method)
-
-        method = self._on_preview_select_radio_toggled
-        self._preview_select_radio.connect('toggled', method)
-
-        method = self._on_preview_select_combo_changed
-        self._preview_select_combo.connect('changed', method)
-
-        method = self._on_preview_edit_button_clicked
-        self._preview_edit_button.connect('clicked', method)
-
-        method = self._on_preview_command_entry_changed
-        self._preview_command_entry.connect('changed', method)
-
-    def _init_preview_data(self):
-        """Initialize preview tab data."""
-
-        self._preview_offset_spin.set_value(float(config.Preview.offset))
-
-        use_predefined = config.Preview.use_predefined
-        self._preview_select_radio.set_active(use_predefined)
-        self._preview_command_radio.set_active(not use_predefined)
-        self._set_preview_radio_sensitivities()
-
-        for i, name in enumerate(VideoPlayer.display_names):
-            self._preview_select_combo.insert_text(i, name)
-        self._preview_select_combo.set_active(config.Preview.video_player)
-
-        command = config.Preview.command
-        self._preview_command_entry.set_text(command or '')
-
-    def _init_signals(self):
-        """Initialize signals."""
-
-        self._init_editor_signals()
-        self._init_file_signals()
-        self._init_preview_signals()
-
-        selection =  self._encoding_view.get_selection()
-        method = self._on_encoding_view_selection_changed
-        selection.connect('changed', method)
-
-        self._close_button.connect('clicked', self._destroy)
-        self._dialog.connect('delete-event', self._destroy)
-
-    def _destroy(self, *args):
-        """Destroy the dialog."""
+    def _on_dialog_response(self, dialog, response):
+        """Emit destroyed signal."""
 
         self._dialog.destroy()
         self.emit('destroyed')
 
-    def _get_custom_font(self):
-        """
-        Get custom font.
+    def present(self):
+        """Present dialog."""
 
-        Merge the custom font setting with the default font taken from a
-        random widget to create to complete font description string.
-        Return font description as a string.
-        """
-        context = self._font_custom_label.get_pango_context()
-        font_description = context.get_font_description()
-
-        custom_font_description = pango.FontDescription(config.Editor.font)
-        font_description.merge(custom_font_description, True)
-
-        return font_description.to_string()
-
-    def _get_selected_encoding_row(self):
-        """Get the selected fallback encoding view row."""
-
-        selection = self._encoding_view.get_selection()
-        store, itr = selection.get_selected()
-        if itr is None:
-            return None
-
-        row = store.get_path(itr)
-        try:
-            return row[0]
-        except TypeError:
-            return row
-
-    def _on_encoding_add_button_clicked(self, *args):
-        """Add a new fallback encoding."""
-
-        dialog = EncodingDialog(self._dialog)
-        response = dialog.run()
-        encoding = dialog.get_encoding()
-        dialog.destroy()
-
-        if response != gtk.RESPONSE_OK:
-            return
-        if encoding is None:
-            return
-
-        config.Encoding.fallback.append(encoding)
-        self._reload_encoding_view()
-
-    def _on_encoding_down_button_clicked(self, *args):
-        """Move the selected encoding down in the list."""
-
-        source_row = self._get_selected_encoding_row()
-        encodings = config.Encoding.fallback
-        encodings.insert(source_row + 1, encodings.pop(source_row))
-        self._reload_encoding_view()
-
-        self._encoding_view.grab_focus()
-        selection = self._encoding_view.get_selection()
-        selection.select_path(source_row + 1)
-
-    def _on_encoding_locale_check_toggled(self, check_button):
-        """Save use locale encoding setting."""
-
-        config.Encoding.try_locale = check_button.get_active()
-
-    def _on_encoding_remove_button_clicked(self, *args):
-        """Remove the selected encoding."""
-
-        row = self._get_selected_encoding_row()
-        config.Encoding.fallback.pop(row)
-        self._reload_encoding_view()
-
-    def _on_encoding_up_button_clicked(self, *args):
-        """Move the selected encoding up in the list."""
-
-        source_row = self._get_selected_encoding_row()
-        encodings = config.Encoding.fallback
-        encodings.insert(source_row - 1, encodings.pop(source_row))
-        self._reload_encoding_view()
-
-        self._encoding_view.grab_focus()
-        selection = self._encoding_view.get_selection()
-        selection.select_path(source_row - 1)
-
-    def _on_encoding_view_selection_changed(self, *args):
-        """Set sensitivities based on current selection."""
-
-        self._set_encoding_button_sensitivities()
-
-    def _on_font_button_font_set(self, font_button):
-        """Save custom font setting and emit signal."""
-
-        font = font_button.get_font_name()
-        config.Editor.font = font
-        self.emit('font-set', font)
-
-    def _on_font_default_check_toggled(self, check_button):
-        """Save use default font setting and emit signal."""
-
-        use_default = check_button.get_active()
-        self._font_custom_label.set_sensitive(not use_default)
-        self._font_button.set_sensitive(not use_default)
-
-        config.Editor.use_default_font = use_default
-        self.emit('use-default-font-toggled', use_default)
-
-    def _on_preview_command_entry_changed(self, entry):
-        """Save custom preview command."""
-
-        config.Preview.command = entry.get_text() or None
-
-    def _on_preview_edit_button_clicked(self, button):
-        """Edit command."""
-
-        video_player = self._preview_select_combo.get_active()
-        command = VideoPlayer.commands[video_player]
-
-        self._preview_command_entry.set_text(command)
-        self._preview_command_radio.set_active(True)
-
-    def _on_preview_offset_spin_value_changed(self, spin_button):
-        """Save preview offset setting."""
-
-        spin_button.update()
-        value = '%.1f' % spin_button.get_value()
-        config.Preview.offset = value
-
-    def _on_preview_select_combo_changed(self, combo_box):
-        """Save selected video player setting."""
-
-        config.Preview.video_player = combo_box.get_active()
-
-    def _on_preview_select_radio_toggled(self, radio_button):
-        """Save video player setting."""
-
-        use_predefined = not self._preview_command_radio.get_active()
-        config.Preview.use_predefined = use_predefined
-        self._set_preview_radio_sensitivities()
-
-        if not use_predefined:
-            self._preview_command_entry.grab_focus()
-        else:
-            self._preview_select_combo.grab_focus()
-
-    def _on_undo_levels_spin_value_changed(self, spin_button):
-        """Save undo level setting and emit signal."""
-
-        spin_button.update()
-        levels = spin_button.get_value_as_int()
-        config.Editor.undo_levels = levels
-        self.emit('undo-levels-changed', levels)
-
-    def _on_undo_limit_radio_toggled(self, radio_button):
-        """Save limit undo setting and emit signal."""
-
-        limit = self._undo_limit_radio.get_active()
-        self._undo_levels_spin.set_sensitive(limit)
-        config.Editor.limit_undo = limit
-        self.emit('limit-undo-toggled', limit)
-
-    def _reload_encoding_view(self):
-        """Reload the list of fallback encodings."""
-
-        store = self._encoding_view.get_model()
-        store.clear()
-        for encoding in config.Encoding.fallback:
-            name = enclib.get_long_name(encoding)
-            store.append([name])
-
-        self._set_encoding_button_sensitivities()
-
-    def _set_encoding_button_sensitivities(self):
-        """Set sensitivities of the fallback encoding view buttons."""
-
-        store = self._encoding_view.get_model()
-
-        if len(store) == 0:
-            self._encoding_up_button.set_sensitive(False)
-            self._encoding_down_button.set_sensitive(False)
-            self._encoding_remove_button.set_sensitive(False)
-            return
-
-        row = self._get_selected_encoding_row()
-        last_row = len(store) - 1
-
-        self._encoding_up_button.set_sensitive(not row == 0)
-        self._encoding_down_button.set_sensitive(not row == last_row)
-        self._encoding_remove_button.set_sensitive(not row is None)
-
-    def _set_preview_radio_sensitivities(self):
-        """Set sensitivities depending on preview radio buttons."""
-
-        use_predefined = config.Preview.use_predefined
-        self._preview_select_combo.set_sensitive(use_predefined)
-        self._preview_edit_button.set_sensitive(use_predefined)
-        self._preview_command_entry.set_sensitive(not use_predefined)
-        self._preview_command_legend.set_sensitive(not use_predefined)
+        self._dialog.present()
 
     def show(self):
-        """Show the dialog."""
+        """Show dialog."""
 
         self._dialog.show()
-
-
-if __name__ == '__main__':
-
-    from gaupol.test import Test
-
-    class TestPreferencesDialog(Test):
-
-        def __init__(self):
-
-            Test.__init__(self)
-            self.dialog = PreferencesDialog(gtk.Window())
-            self.dialog.show()
-
-        def destroy(self):
-
-            self.dialog._close_button.emit('clicked')
-
-        def test_get_custom_font(self):
-
-            font = self.dialog._get_custom_font()
-            assert isinstance(font, basestring)
-
-        def test_get_selected_encoding(self):
-
-            selection = self.dialog._encoding_view.get_selection()
-            selection.unselect_all()
-            assert self.dialog._get_selected_encoding_row() is None
-            selection.select_path(0)
-            assert self.dialog._get_selected_encoding_row() == 0
-
-        def test_editor_signals(self):
-
-            self.dialog._undo_limit_radio.emit('toggled')
-            self.dialog._undo_levels_spin.emit('value-changed')
-            self.dialog._font_default_check.emit('toggled')
-            self.dialog._font_button.emit('font-set')
-
-        def test_file_signals(self):
-
-            self.dialog._encoding_locale_check.emit('toggled')
-            self.dialog._encoding_add_button.emit('clicked')
-
-            selection =  self.dialog._encoding_view.get_selection()
-            selection.unselect_all()
-            selection.select_path(1)
-            self.dialog._encoding_up_button.emit('clicked')
-
-            selection.unselect_all()
-            selection.select_path(0)
-            self.dialog._encoding_down_button.emit('clicked')
-            self.dialog._encoding_remove_button.emit('clicked')
-
-        def test_preview_signals(self):
-
-            self.dialog._preview_offset_spin.emit('value-changed')
-            self.dialog._preview_select_radio.emit('toggled')
-            self.dialog._preview_select_combo.emit('changed')
-            self.dialog._preview_edit_button.emit('clicked')
-            self.dialog._preview_command_entry.emit('changed')
-
-    TestPreferencesDialog().run()

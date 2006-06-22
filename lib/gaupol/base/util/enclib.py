@@ -35,11 +35,16 @@ import codecs
 import locale
 import re
 
+try:
+    from chardet.universaldetector import UniversalDetector
+except ImportError:
+    pass
+
 
 # Illegal characters in encoding names
-RE_ILLEGAL = re.compile(r'[^a-z0-9_]')
+_RE_ILLEGAL = re.compile(r'[^a-z0-9_]')
 
-ENCODINGS = (
+_ENCODINGS = (
     # Translators: Most of the character encoding descriptions are copied from
     # Gedit, which is translated to very many languages. Check the Gedit .po
     # files for a reference: http://cvs.gnome.org/viewcvs/gedit/po/.
@@ -131,16 +136,53 @@ ENCODINGS = (
 )
 
 
+def _translate(name):
+    """
+    Translate weird encoding name.
+
+    Raise ValueError if not found.
+    """
+    name = _RE_ILLEGAL.sub('_', name.lower())
+    try:
+        name = aliases[name]
+    except KeyError:
+        pass
+
+    for entry in _ENCODINGS:
+        if entry[0] == name:
+            return entry
+    raise ValueError
+
+def detect(path):
+    """
+    Detect character encoding.
+
+    Raise IOError if reading fails.
+    Raise ValueError if not found.
+    Return Python name.
+    """
+    fobj = open(path, 'r')
+    detector = UniversalDetector()
+    try:
+        for line in fobj.readlines():
+            detector.feed(line)
+            if detector.done:
+                break
+    finally:
+        detector.close()
+        fobj.close()
+
+    return _translate(detector.result['encoding'])[0]
+
 def get_display_name(python_name):
     """
     Get display name for encoding.
 
     Raise ValueError if not found.
     """
-    for entry in ENCODINGS:
+    for entry in _ENCODINGS:
         if entry[0] == python_name:
             return entry[1]
-
     raise ValueError
 
 def get_locale_encoding():
@@ -148,20 +190,9 @@ def get_locale_encoding():
     Get locale encoding.
 
     Raise ValueError if not found.
-    Return (Python name, display name, description).
+    Return tuple: Python name, display name, description.
     """
-    python_name = locale.getdefaultlocale()[1]
-    python_name = RE_ILLEGAL.sub('_', python_name)
-    try:
-        python_name = aliases[python_name]
-    except KeyError:
-        pass
-
-    for entry in ENCODINGS:
-        if entry[0] == python_name:
-            return entry
-
-    raise ValueError
+    return _translate(locale.getdefaultlocale()[1])
 
 def get_locale_long_name():
     """
@@ -177,11 +208,10 @@ def get_long_name(python_name):
 
     Raise ValueError if not found.
     """
-    for entry in ENCODINGS:
+    for entry in _ENCODINGS:
         if entry[0] == python_name:
             # Translators: Long encoding name, e.g. "Russian (KOI8-R)".
             return _('%s (%s)') % (entry[2], entry[1])
-
     raise ValueError
 
 def get_python_name(display_name):
@@ -190,23 +220,21 @@ def get_python_name(display_name):
 
     Raise ValueError if not found.
     """
-    for entry in ENCODINGS:
+    for entry in _ENCODINGS:
         if entry[1] == display_name:
             return entry[0]
-
     raise ValueError
 
 def get_valid_encodings():
     """
-    Get a list of valid encodings.
+    Get list of valid encodings.
 
-    Return list of tuples (Python name, display name, description).
+    Return list of tuples: Python name, display name, description.
     """
-    valid_encodings = list(ENCODINGS)
+    valid_encodings = list(_ENCODINGS)
     for i, entry in enumerate(reversed(valid_encodings)):
         if not is_valid(entry[0]):
             valid_encodings.pop(i)
-
     return valid_encodings
 
 def is_valid(python_name):

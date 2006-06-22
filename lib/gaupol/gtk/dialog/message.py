@@ -22,7 +22,7 @@
 import gtk
 
 
-FLAGS = gtk.DIALOG_MODAL|gtk.DIALOG_DESTROY_WITH_PARENT
+_FLAGS = gtk.DIALOG_MODAL|gtk.DIALOG_DESTROY_WITH_PARENT
 
 
 class ErrorDialog(gtk.MessageDialog):
@@ -34,7 +34,7 @@ class ErrorDialog(gtk.MessageDialog):
         gtk.MessageDialog.__init__(
             self,
             parent,
-            FLAGS,
+            _FLAGS,
             gtk.MESSAGE_ERROR,
             gtk.BUTTONS_OK,
             title
@@ -52,7 +52,7 @@ class InfoDialog(gtk.MessageDialog):
         gtk.MessageDialog.__init__(
             self,
             parent,
-            FLAGS,
+            _FLAGS,
             gtk.MESSAGE_INFO,
             gtk.BUTTONS_OK,
             title
@@ -70,7 +70,7 @@ class QuestionDialog(gtk.MessageDialog):
         gtk.MessageDialog.__init__(
             self,
             parent,
-            FLAGS,
+            _FLAGS,
             gtk.MESSAGE_QUESTION,
             gtk.BUTTONS_NONE,
             title
@@ -88,7 +88,7 @@ class WarningDialog(gtk.MessageDialog):
         gtk.MessageDialog.__init__(
             self,
             parent,
-            FLAGS,
+            _FLAGS,
             gtk.MESSAGE_WARNING,
             gtk.BUTTONS_NONE,
             title

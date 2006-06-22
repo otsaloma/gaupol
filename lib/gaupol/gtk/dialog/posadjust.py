@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,27 +16,22 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Dialog for adjusting positions."""
+"""Dialogs for adjusting positions."""
 
-
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
 
 from gettext import gettext as _
 
 import gobject
 import gtk
 
-from gaupol.gtk.cons import *
+from gaupol.gtk            import cons
 from gaupol.gtk.entry.time import EntryTime
-from gaupol.gtk.util         import config, gtklib
+from gaupol.gtk.util       import config, gtklib
 
 
-class TimeFrameAdjustDialog(gobject.GObject):
+class _PositionAdjustDialog(gobject.GObject):
 
-    """Dialog for shifting positions."""
+    """Base class for dialogs for adjusting positions."""
 
     __gsignals__ = {
         'preview': (
@@ -50,50 +45,44 @@ class TimeFrameAdjustDialog(gobject.GObject):
 
         gobject.GObject.__init__(self)
 
-        glade_xml = gtklib.get_glade_xml('posadjust-dialog')
-        get_widget = glade_xml.get_widget
-
-        self._all_radio        = get_widget('all_radio_button')
-        self._current_entry_1  = get_widget('current_entry_1')
-        self._current_entry_2  = get_widget('current_entry_2')
-        self._dialog           = get_widget('dialog')
-        self._preview_button_1 = get_widget('preview_button_1')
-        self._preview_button_2 = get_widget('preview_button_2')
-        self._selected_radio   = get_widget('selected_radio_button')
-        self._subtitle_spin_1  = get_widget('subtitle_spin_button_1')
-        self._subtitle_spin_2  = get_widget('subtitle_spin_button_2')
-        self._text_view_1      = get_widget('text_view_1')
-        self._text_view_2      = get_widget('text_view_2')
-
-        # Time entries
-        self._correct_entry_1 = None
-        self._correct_entry_2 = None
-
-        # Frame spin buttons
-        self._correct_spin_1  = None
-        self._correct_spin_2  = None
-
         self._page = page
 
-        self._init_widgets(glade_xml)
+        glade_xml = gtklib.get_glade_xml('posadjust-dialog')
+        self._correct_label_1  = glade_xml.get_widget('correct_label_1')
+        self._correct_label_2  = glade_xml.get_widget('correct_label_2')
+        self._current_entry_1  = glade_xml.get_widget('current_entry_1')
+        self._current_entry_2  = glade_xml.get_widget('current_entry_2')
+        self._current_label_1  = glade_xml.get_widget('current_label_1')
+        self._current_label_2  = glade_xml.get_widget('current_label_2')
+        self._current_radio    = glade_xml.get_widget('current_radio')
+        self._dialog           = glade_xml.get_widget('dialog')
+        self._preview_button_1 = glade_xml.get_widget('preview_button_1')
+        self._preview_button_2 = glade_xml.get_widget('preview_button_2')
+        self._selected_radio   = glade_xml.get_widget('selected_radio')
+        self._sub_spin_1       = glade_xml.get_widget('sub_spin_1')
+        self._sub_spin_2       = glade_xml.get_widget('sub_spin_2')
+        self._table_1          = glade_xml.get_widget('table_1')
+        self._table_2          = glade_xml.get_widget('table_2')
+        self._text_view_1      = glade_xml.get_widget('text_view_1')
+        self._text_view_2      = glade_xml.get_widget('text_view_2')
+
         self._init_sizes()
         self._init_sensitivities()
         self._init_signals()
-        self._init_data()
-
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_OK)
 
     def _init_data(self):
         """Initialize default values."""
 
-        last_subtitle = len(self._page.project.times)
-        self._subtitle_spin_1.set_value(1)
-        self._subtitle_spin_1.emit('value-changed')
-        self._subtitle_spin_2.set_value(last_subtitle)
-        self._subtitle_spin_2.emit('value-changed')
+        self._sub_spin_1.set_value(1)
+        self._sub_spin_2.set_value(len(self._page.project.times))
+        self._sub_spin_1.emit('value-changed')
+        self._sub_spin_2.emit('value-changed')
 
-        self._all_radio.set_active(config.PositionAdjust.all_subtitles)
+        target = config.position_adjust.target
+        self._current_radio.set_active(target == cons.Target.CURRENT)
+        self._selected_radio.set_active(target == cons.Target.SELECTED)
 
     def _init_sensitivities(self):
         """Initialize widget sensitivities."""
@@ -106,237 +95,204 @@ class TimeFrameAdjustDialog(gobject.GObject):
             self._preview_button_2.set_sensitive(False)
 
         if not self._page.view.get_selected_rows():
-            self._all_radio.set_active(True)
+            self._current_radio.set_active(True)
             self._selected_radio.set_sensitive(False)
 
     def _init_signals(self):
         """Initialize signals."""
 
-        method = self._on_subtitle_spin_1_value_changed
-        self._subtitle_spin_1.connect('value-changed', method)
-        method = self._on_subtitle_spin_2_value_changed
-        self._subtitle_spin_2.connect('value-changed', method)
-
-        method = self._on_preview_button_1_clicked
-        self._preview_button_1.connect('clicked', method)
-        method = self._on_preview_button_2_clicked
-        self._preview_button_2.connect('clicked', method)
-
-        method = self._on_all_radio_toggled
-        self._all_radio.connect('toggled', method)
+        gtklib.connect(self, '_dialog'          , 'response'     )
+        gtklib.connect(self, '_preview_button_1', 'clicked'      )
+        gtklib.connect(self, '_preview_button_2', 'clicked'      )
+        gtklib.connect(self, '_sub_spin_1'      , 'value-changed')
+        gtklib.connect(self, '_sub_spin_2'      , 'value-changed')
 
     def _init_sizes(self):
         """Initialize widget sizes."""
 
-        # Set text view width to 42 ex and height to 3 lines.
-        label = gtk.Label('\n'.join(['x' * 42] * 3))
+        label = gtk.Label('\n'.join(['x' * 44] * 3))
         width, height = label.size_request()
-
         self._text_view_1.set_size_request(width + 4, height + 7)
         self._text_view_2.set_size_request(width + 4, height + 7)
 
-    def _init_widgets(self, glade_xml):
-        """Initialize widgets."""
+    def _on_dialog_response(self, dialog, response):
+        """Save settings."""
 
-        FILL = gtk.FILL
+        if response == gtk.RESPONSE_OK:
+            config.position_adjust.target = self.get_target()
 
-        table_1 = glade_xml.get_widget('table_1')
-        table_2 = glade_xml.get_widget('table_2')
+    def _on_preview_button_1_clicked(self, *args):
+        """Emit preview."""
 
-        def get_frame_spin_button():
-            spin_button =  gtk.SpinButton()
-            spin_button.set_digits(0)
-            spin_button.set_increments(1, 10)
-            spin_button.set_range(0, 9999999)
-            return spin_button
+        self.emit('preview', self.get_first_point()[0])
 
-        if self._page.edit_mode == Mode.TIME:
+    def _on_preview_button_2_clicked(self, *args):
+        """Emit preview."""
 
-            # Entries
-            self._correct_entry_1 = EntryTime()
-            self._correct_entry_2 = EntryTime()
-            table_1.attach(self._correct_entry_1, 1, 2, 2, 3, FILL, FILL)
-            table_2.attach(self._correct_entry_2, 1, 2, 2, 3, FILL, FILL)
-
-            # Current labels
-            label = glade_xml.get_widget('current_label_1')
-            label.set_text(_('Current time:'))
-            label = glade_xml.get_widget('current_label_2')
-            label.set_text(_('Current time:'))
-
-            # Correct labels
-            label = glade_xml.get_widget('correct_label_1')
-            label.set_text(_('C_orrect time:'))
-            label.set_use_underline(True)
-            label.set_mnemonic_widget(self._correct_entry_1)
-            label = glade_xml.get_widget('correct_label_2')
-            label.set_text(_('Co_rrect time:'))
-            label.set_use_underline(True)
-            label.set_mnemonic_widget(self._correct_entry_2)
-
-        elif self._page.edit_mode == Mode.FRAME:
-
-            # Spin buttons
-            self._correct_spin_1 = get_frame_spin_button()
-            self._correct_spin_2 = get_frame_spin_button()
-            table_1.attach(self._correct_spin_1, 1, 2, 2, 3, FILL, FILL)
-            table_2.attach(self._correct_spin_2, 1, 2, 2, 3, FILL, FILL)
-
-            # Current labels
-            label = glade_xml.get_widget('current_label_1')
-            label.set_text(_('Current frame:'))
-            label = glade_xml.get_widget('current_label_2')
-            label.set_text(_('Current frame:'))
-
-            # Correct labels
-            label = glade_xml.get_widget('correct_label_1')
-            label.set_text(_('C_orrect frame:'))
-            label.set_use_underline(True)
-            label.set_mnemonic_widget(self._correct_spin_1)
-            label = glade_xml.get_widget('correct_label_2')
-            label.set_text(_('Co_rrect frame:'))
-            label.set_use_underline(True)
-            label.set_mnemonic_widget(self._correct_spin_2)
-
-        table_1.show_all()
-        table_2.show_all()
-
-        last_subtitle = len(self._page.project.times)
-        self._subtitle_spin_1.set_range(1, last_subtitle)
-        self._subtitle_spin_2.set_range(1, last_subtitle)
+        self.emit('preview', self.get_second_point()[0])
 
     def destroy(self):
-        """Destroy the dialog."""
+        """Destroy dialog."""
 
         self._dialog.destroy()
 
-    def get_adjust_all(self):
-        """Get adjust all setting."""
+    def get_target(self):
+        """Get target."""
 
-        return self._all_radio.get_active()
-
-    def get_first_point(self):
-        """Return two-tuple of row, correct time/frame."""
-
-        row = self._subtitle_spin_1.get_value_as_int() - 1
-        if self._page.edit_mode == Mode.TIME:
-            return row, self._correct_entry_1.get_text()
-        elif self._page.edit_mode == Mode.FRAME:
-            return row, self._correct_spin_1.get_value_as_int()
-
-    def get_second_point(self):
-        """Return two-tuple of row, correct time/frame."""
-
-        row = self._subtitle_spin_2.get_value_as_int() - 1
-        if self._page.edit_mode == Mode.TIME:
-            return row, self._correct_entry_2.get_text()
-        elif self._page.edit_mode == Mode.FRAME:
-            return row, self._correct_spin_2.get_value_as_int()
-
-    def _on_all_radio_toggled(self, radio_button):
-        """Save radio button value."""
-
-        config.PositionAdjust.all_subtitles = radio_button.get_active()
-
-    def _on_preview_button_1_clicked(self, button):
-        """Preview changes."""
-
-        row = self.get_first_point()[0]
-        self.emit('preview', row)
-
-    def _on_preview_button_2_clicked(self, button):
-        """Preview changes."""
-
-        row = self.get_second_point()[0]
-        self.emit('preview', row)
-
-    def _on_subtitle_spin_1_value_changed(self, spin_button):
-        """Update data."""
-
-        project = self._page.project
-        row = spin_button.get_value_as_int() - 1
-
-        if self._page.edit_mode == Mode.TIME:
-            self._current_entry_1.set_text(project.times[row][0])
-            self._correct_entry_1.set_text(project.times[row][0])
-        elif self._page.edit_mode == Mode.FRAME:
-            self._current_entry_1.set_text(str(project.frames[row][0]))
-            self._correct_spin_1.set_value(project.frames[row][0])
-
-        text_buffer = self._text_view_1.get_buffer()
-        text_buffer.set_text(project.main_texts[row])
-
-        self._subtitle_spin_2.props.adjustment.props.lower = row + 2
-
-    def _on_subtitle_spin_2_value_changed(self, spin_button):
-        """Update data."""
-
-        project = self._page.project
-        row = spin_button.get_value_as_int() - 1
-
-        if self._page.edit_mode == Mode.TIME:
-            self._current_entry_2.set_text(project.times[row][0])
-            self._correct_entry_2.set_text(project.times[row][0])
-        elif self._page.edit_mode == Mode.FRAME:
-            self._current_entry_2.set_text(str(project.frames[row][0]))
-            self._correct_spin_2.set_value(project.frames[row][0])
-
-        text_buffer = self._text_view_2.get_buffer()
-        text_buffer.set_text(project.main_texts[row])
-
-        self._subtitle_spin_1.props.adjustment.props.upper = row
+        if self._current_radio.get_active():
+            return cons.Target.CURRENT
+        elif self._selected_radio.get_active():
+            return cons.Target.SELECTED
 
     def run(self):
-        """Show and run the dialog."""
+        """Run dialog."""
 
         self._dialog.show()
         return self._dialog.run()
 
 
-if __name__ == '__main__':
+class FrameAdjustDialog(_PositionAdjustDialog):
 
-    from gaupol.gtk.app import Application
-    from gaupol.test            import Test
+    """Dialog for adjusting times."""
 
-    class TestTimeFrameAdjustDialog(Test):
+    def __init__(self, parent, page):
 
-        def __init__(self):
+        _PositionAdjustDialog.__init__(self, parent, page)
 
-            Test.__init__(self)
-            self.application = Application()
-            self.application.open_main_files([self.get_subrip_path()])
-            self.page = self.application.get_current_page()
-            self.dialog = TimeFrameAdjustDialog(gtk.Window(), self.page)
+        self._correct_spin_1 = gtk.SpinButton()
+        self._correct_spin_2 = gtk.SpinButton()
 
-        def destroy(self):
+        self._init_widgets()
+        self._init_data()
 
-            self.application.window.destroy()
+    def _init_widgets(self):
+        """Initialize widgets."""
 
-        def test_get_adjust_all(self):
+        last_sub = len(self._page.project.times)
+        self._sub_spin_1.set_range(1, last_sub)
+        self._sub_spin_2.set_range(1, last_sub)
 
-            assert isinstance(self.dialog.get_adjust_all(), bool)
+        self._current_label_1.set_text(_('Current frame:'))
+        self._correct_label_1.set_text(_('C_orrect frame:'))
+        self._correct_label_1.set_use_underline(True)
+        self._correct_label_1.set_mnemonic_widget(self._correct_spin_1)
+        self._current_label_2.set_text(_('Current frame:'))
+        self._correct_label_2.set_text(_('Co_rrect frame:'))
+        self._correct_label_2.set_use_underline(True)
+        self._correct_label_2.set_mnemonic_widget(self._correct_spin_2)
 
-        def test_get_points(self):
+        for spin_button in (self._correct_spin_1, self._correct_spin_2):
+            spin_button.set_digits(0)
+            spin_button.set_increments(1, 10)
+            spin_button.set_range(0, 999999)
 
-            row_1, value_1 = self.dialog.get_first_point()
-            row_2, value_2 = self.dialog.get_second_point()
+        opts = gtk.FILL
+        self._table_1.attach(self._correct_spin_1, 1, 2, 2, 3, opts, opts)
+        self._table_2.attach(self._correct_spin_2, 1, 2, 2, 3, opts, opts)
+        self._table_1.show_all()
+        self._table_2.show_all()
 
-            assert isinstance(row_1, int)
-            assert isinstance(row_2, int)
+    def _on_sub_spin_1_value_changed(self, spin_button):
+        """Update data."""
 
-            if self.page.edit_mode == Mode.TIME:
-                assert isinstance(value_1, str)
-                assert isinstance(value_2, str)
-            elif self.page.edit_mode == Mode.FRAME:
-                assert isinstance(value_1, int)
-                assert isinstance(value_2, int)
+        project = self._page.project
+        row = spin_button.get_value_as_int() - 1
+        self._current_entry_1.set_text(str(project.frames[row][0]))
+        self._correct_spin_1.set_value(project.frames[row][0])
+        text_buffer = self._text_view_1.get_buffer()
+        text_buffer.set_text(project.main_texts[row])
+        self._sub_spin_2.props.adjustment.props.lower = row + 2
 
-        def test_signals(self):
+    def _on_sub_spin_2_value_changed(self, spin_button):
+        """Update data."""
 
-            self.dialog._subtitle_spin_1.set_value(3)
-            self.dialog._subtitle_spin_2.set_value(4)
+        project = self._page.project
+        row = spin_button.get_value_as_int() - 1
+        self._current_entry_2.set_text(str(project.frames[row][0]))
+        self._correct_spin_2.set_value(project.frames[row][0])
+        text_buffer = self._text_view_2.get_buffer()
+        text_buffer.set_text(project.main_texts[row])
+        self._sub_spin_1.props.adjustment.props.upper = row
 
-            self.dialog._all_radio.set_active(True)
-            self.dialog._all_radio.set_active(False)
+    def get_first_point(self):
+        """Return two-tuple: row, correct frame."""
 
-    TestTimeFrameAdjustDialog().run()
+        row = self._sub_spin_1.get_value_as_int() - 1
+        return row, self._correct_spin_1.get_value_as_int()
+
+    def get_second_point(self):
+        """Return two-tuple: row, correct frame."""
+
+        row = self._sub_spin_2.get_value_as_int() - 1
+        return row, self._correct_spin_2.get_value_as_int()
+
+
+class TimeAdjustDialog(_PositionAdjustDialog):
+
+    """Dialog for adjusting frames."""
+
+    def __init__(self, parent, page):
+
+        _PositionAdjustDialog.__init__(self, parent, page)
+
+        self._correct_entry_1 = EntryTime()
+        self._correct_entry_2 = EntryTime()
+
+        self._init_widgets()
+        self._init_data()
+
+    def _init_widgets(self):
+        """Initialize widgets."""
+
+        last_sub = len(self._page.project.times)
+        self._sub_spin_1.set_range(1, last_sub)
+        self._sub_spin_2.set_range(1, last_sub)
+
+        self._current_label_1.set_text(_('Current time:'))
+        self._correct_label_1.set_text(_('C_orrect time:'))
+        self._correct_label_1.set_use_underline(True)
+        self._correct_label_1.set_mnemonic_widget(self._correct_entry_1)
+        self._current_label_2.set_text(_('Current time:'))
+        self._correct_label_2.set_text(_('Co_rrect time:'))
+        self._correct_label_2.set_use_underline(True)
+        self._correct_label_2.set_mnemonic_widget(self._correct_entry_2)
+
+        opts = gtk.FILL
+        self._table_1.attach(self._correct_entry_1, 1, 2, 2, 3, opts, opts)
+        self._table_2.attach(self._correct_entry_2, 1, 2, 2, 3, opts, opts)
+        self._table_1.show_all()
+        self._table_2.show_all()
+
+    def _on_sub_spin_1_value_changed(self, spin_button):
+        """Update data."""
+
+        project = self._page.project
+        row = spin_button.get_value_as_int() - 1
+        self._current_entry_1.set_text(project.times[row][0])
+        self._correct_entry_1.set_text(project.times[row][0])
+        text_buffer = self._text_view_1.get_buffer()
+        text_buffer.set_text(project.main_texts[row])
+        self._sub_spin_2.props.adjustment.props.lower = row + 2
+
+    def _on_sub_spin_2_value_changed(self, spin_button):
+        """Update data."""
+
+        project = self._page.project
+        row = spin_button.get_value_as_int() - 1
+        self._current_entry_2.set_text(project.times[row][0])
+        self._correct_entry_2.set_text(project.times[row][0])
+        text_buffer = self._text_view_2.get_buffer()
+        text_buffer.set_text(project.main_texts[row])
+        self._sub_spin_1.props.adjustment.props.upper = row
+
+    def get_first_point(self):
+        """Return two-tuple: row, correct time."""
+
+        row = self._sub_spin_1.get_value_as_int() - 1
+        return row, self._correct_entry_1.get_text()
+
+    def get_second_point(self):
+        """Return two-tuple: row, correct time."""
+
+        row = self._sub_spin_2.get_value_as_int() - 1
+        return row, self._correct_entry_2.get_text()

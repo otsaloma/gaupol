@@ -16,13 +16,13 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Data column constants."""
+"""Column index constants."""
 
 
 from gaupol.gtk import cons
 
 
-__all__ = ['NUMB', 'SHOW', 'HIDE', 'DURN', 'MTXT', 'TTXT']
+__all__ = ['NUMB', 'SHOW', 'HIDE', 'DURN', 'MTXT', 'TTXT', 'MAIN', 'TRAN']
 
 NUMB = cons.Column.NUMB
 SHOW = cons.Column.SHOW
@@ -30,3 +30,6 @@ HIDE = cons.Column.HIDE
 DURN = cons.Column.DURN
 MTXT = cons.Column.MTXT
 TTXT = cons.Column.TTXT
+
+MAIN = cons.Document.MAIN
+TRAN = cons.Document.TRAN

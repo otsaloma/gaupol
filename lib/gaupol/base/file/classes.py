@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""All file format classes."""
+"""All subtitle file format classes."""
 
 
 from gaupol.base.file.ass        import AdvancedSubStationAlpha
@@ -25,3 +25,13 @@ from gaupol.base.file.mpl2       import MPL2
 from gaupol.base.file.ssa        import SubStationAlpha
 from gaupol.base.file.subrip     import SubRip
 from gaupol.base.file.subviewer2 import SubViewer2
+
+
+__all__ = [
+    'AdvancedSubStationAlpha',
+    'MPL2',
+    'MicroDVD',
+    'SubRip',
+    'SubStationAlpha',
+    'SubViewer2',
+]

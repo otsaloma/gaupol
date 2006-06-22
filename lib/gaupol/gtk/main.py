@@ -26,7 +26,7 @@ import os
 import sys
 
 
-def check_dependencies():
+def _check_dependencies():
     """Check existance and versions of dependencies."""
 
     if sys.version_info[:3] < (2, 4, 0):
@@ -93,7 +93,7 @@ def _prepare_gettext(translate):
         return
 
     import gtk.glade
-    from gaupol.gtk.paths import LOCALE_DIR
+    from gaupol.base.paths import LOCALE_DIR
 
     locale.setlocale(locale.LC_ALL, '')
     gettext.bindtextdomain('gaupol', LOCALE_DIR)
@@ -104,7 +104,7 @@ def _prepare_gettext(translate):
 def main(args):
     """Start Gaupol and open files given as arguments."""
 
-    check_dependencies()
+    _check_dependencies()
     opts, args = _parse_args(args)
     _move_eggs()
     _prepare_gettext(opts.translate)
@@ -116,11 +116,11 @@ def main(args):
     sys.excepthook = debug.show
 
     from gaupol.gtk.app import Application
-    application = Application()
+    app = Application()
 
     if args[1:]:
         paths = list(os.path.abspath(x) for x in args[1:])
-        application.open_main_files(paths)
+        app.open_main_files(paths)
 
     import gtk
     gtk.main()

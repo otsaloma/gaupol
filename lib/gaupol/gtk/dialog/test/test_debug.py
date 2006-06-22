@@ -20,25 +20,26 @@ import sys
 
 import gtk
 
-from gaupol.gtk.dialog import debug
-from gaupol.test       import Test
+from gaupol.gtk.dialog.debug import DebugDialog
+from gaupol.gtk.dialog.debug import _EditorErrorDialog
+from gaupol.gtk.util         import gtklib
+from gaupol.test             import Test
 
 
 class TestEditorErrorDialog(Test):
 
-    def test_init(self):
+    def test_run(self):
 
-        debug.EditorErrorDialog(gtk.Window(), 'test')
+        gtklib.run(_EditorErrorDialog(gtk.Window(), 'test'))
 
 
 class TestModule(Test):
 
-    def test_show(self):
+    def test_run(self):
 
-        dialog = debug.DebugDialog()
+        dialog = DebugDialog()
         try:
-            raise Exception('testing')
-        except Exception:
+            raise Exception('Errors should never pass silently.')
+        except:
             dialog.set_text(*sys.exc_info())
-        dialog.run()
-        dialog.destroy()
+        gtklib.run(dialog)

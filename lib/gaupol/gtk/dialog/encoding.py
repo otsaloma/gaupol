@@ -61,10 +61,10 @@ class EncodingDialog(object):
         selection.set_mode(gtk.SELECTION_SINGLE)
         selection.unselect_all()
 
-        Column = gtk.TreeViewColumn
+        tree_col = gtk.TreeViewColumn
         for i, column in enumerate([
-            Column(_('Description'), gtk.CellRendererText(), text=0),
-            Column(_('Encoding')   , gtk.CellRendererText(), text=1),
+            tree_col(_('Description'), gtk.CellRendererText(), text=0),
+            tree_col(_('Encoding')   , gtk.CellRendererText(), text=1),
         ]):
             self._tree_view.append_column(column)
             column.set_resizable(True)
@@ -94,7 +94,7 @@ class EncodingDialog(object):
         return None
 
     def run(self):
-        """Show and run dialog."""
+        """Run dialog."""
 
         self._dialog.show()
         self._tree_view.grab_focus()
@@ -109,20 +109,20 @@ class AdvancedEncodingDialog(EncodingDialog):
         """Initialize tree view."""
 
         store = gtk.ListStore(
-            gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_BOOLEAN)
+            gobject.TYPE_STRING,gobject.TYPE_STRING, gobject.TYPE_BOOLEAN)
         self._tree_view.set_model(store)
 
         selection = self._tree_view.get_selection()
         selection.set_mode(gtk.SELECTION_SINGLE)
         selection.unselect_all()
 
-        Column = gtk.TreeViewColumn
+        tree_col = gtk.TreeViewColumn
         cr_toggle = gtk.CellRendererToggle()
         cr_toggle.connect('toggled', self._on_tree_view_cell_toggled)
         for i, column in enumerate([
-            Column(_('Description') , gtk.CellRendererText(), text  =0),
-            Column(_('Encoding')    , gtk.CellRendererText(), text  =1),
-            Column(_('Show In Menu'), cr_toggle             , active=2),
+            tree_col(_('Description') , gtk.CellRendererText(), text  =0),
+            tree_col(_('Encoding')    , gtk.CellRendererText(), text  =1),
+            tree_col(_('Show In Menu'), cr_toggle             , active=2),
         ]):
             self._tree_view.append_column(column)
             column.set_resizable(True)
@@ -131,9 +131,15 @@ class AdvancedEncodingDialog(EncodingDialog):
         store.set_sort_column_id(0, gtk.SORT_ASCENDING)
         self._tree_view.columns_autosize()
 
-        visible = config.Encoding.visible
+        visible = config.encoding.visibles
         for entry in enclib.get_valid_encodings():
             store.append([entry[2], entry[1], entry[0] in visible])
+
+    def _on_tree_view_cell_toggled(self, cell_renderer, row):
+        """Toggle visibility value."""
+
+        store = self._tree_view.get_model()
+        store[row][2] = not store[row][2]
 
     def get_visible_encodings(self):
         """Get encodings chosen to be visible."""
@@ -142,13 +148,5 @@ class AdvancedEncodingDialog(EncodingDialog):
         store = self._tree_view.get_model()
         for row in range(len(store)):
             if store[row][2]:
-                encoding = enclib.get_python_name(store[row][1])
-                visible.append(encoding)
-
+                visible.append(enclib.get_python_name(store[row][1]))
         return visible
-
-    def _on_tree_view_cell_toggled(self, cell_renderer, row):
-        """Toggle visibility value."""
-
-        store = self._tree_view.get_model()
-        store[row][2] = not store[row][2]

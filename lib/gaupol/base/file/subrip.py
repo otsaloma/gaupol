@@ -31,13 +31,13 @@ class SubRip(SubtitleFile):
     """SubRip file."""
 
     format     = cons.Format.SUBRIP
-    mode       = cons.Mode.TIME
     has_header = False
     identifier = r'^\d\d:\d\d:\d\d,\d\d\d --> \d\d:\d\d:\d\d,\d\d\d\s*$', 0
+    mode       = cons.Mode.TIME
 
     def read(self):
         """
-        Read Subrip file.
+        Read file.
 
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
@@ -63,8 +63,8 @@ class SubRip(SubtitleFile):
         for line in lines:
             match = re_time_line.match(line)
             if match is not None:
-                shows.append(match.group(1))
-                hides.append(match.group(2))
+                shows.append(match.group(1).replace(',', '.'))
+                hides.append(match.group(2).replace(',', '.'))
                 texts.append(u'')
             else:
                 texts[-1] += line
@@ -74,13 +74,15 @@ class SubRip(SubtitleFile):
 
     def write(self, shows, hides, texts):
         """
-        Write SubRip file.
+        Write file.
 
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
         texts = texts[:]
         newline_char = self._get_newline_character()
+        shows = list(x.replace('.', ',') for x in shows)
+        hides = list(x.replace('.', ',') for x in hides)
         texts = list(x.replace('\n', newline_char) for x in texts)
 
         fobj = codecs.open(self.path, 'w', self.encoding)

@@ -18,17 +18,18 @@
 
 import re
 
-from gaupol.base import cons
-from gaupol.test import Test
+from gaupol.base         import cons
+from gaupol.base.colcons import *
+from gaupol.test         import Test
 
 
 TEXT = \
 '''Said he was wounded by a pin.
 He\'s convalescing at home.'''
 
-DOCS_ALL  = [cons.Document.MAIN, cons.Document.TRAN]
-DOCS_MAIN = [cons.Document.MAIN]
-DOCS_TRAN = [cons.Document.TRAN]
+DOCS_ALL  = [MAIN, TRAN]
+DOCS_MAIN = [MAIN]
+DOCS_TRAN = [TRAN]
 
 
 class TestFindDelegate(Test):
@@ -37,8 +38,8 @@ class TestFindDelegate(Test):
 
         project = self.get_project()
         rows = range(len(project.times))
-        project.clear_texts(rows, cons.Document.MAIN)
-        project.clear_texts(rows, cons.Document.TRAN)
+        project.clear_texts(rows, MAIN)
+        project.clear_texts(rows, TRAN)
         return project
 
     def get_uniform_project(self):
@@ -54,7 +55,7 @@ class TestFindDelegate(Test):
         project = self.get_uniform_project()
         project.set_find_regex(r'pin\.')
         row = 0
-        doc = cons.Document.MAIN
+        doc = MAIN
         pos = 0
         for i in range(100):
             row, doc, match_span = project.find_next(row, doc, pos)
@@ -84,7 +85,7 @@ class TestFindDelegate(Test):
         project.set_find_regex(r'pin\.')
         project.set_find_target(rows=[0, 1])
         row = 0
-        doc = cons.Document.MAIN
+        doc = MAIN
         pos = 0
         for i in range(100):
             row, doc, match_span = project.find_next(row, doc, pos)
@@ -97,7 +98,7 @@ class TestFindDelegate(Test):
         project.set_find_regex(r'pin\.')
         project.set_find_target(wrap=False)
         row = 0
-        doc = cons.Document.MAIN
+        doc = MAIN
         pos = 0
         try:
             for i in range(100):
@@ -112,7 +113,7 @@ class TestFindDelegate(Test):
         project = self.get_blank_project()
         project.set_find_string('test')
         try:
-            project.find_next(0, cons.Document.MAIN)
+            project.find_next(0, MAIN)
             raise AssertionError
         except StopIteration:
             pass
@@ -122,7 +123,7 @@ class TestFindDelegate(Test):
         project = self.get_uniform_project()
         project.set_find_regex(r'pin\.')
         row = 5
-        doc = cons.Document.MAIN
+        doc = MAIN
         pos = 5
         for i in range(100):
             row, doc, match_span = project.find_previous(row, doc, pos)
@@ -152,7 +153,7 @@ class TestFindDelegate(Test):
         project.set_find_regex(r'pin\.')
         project.set_find_target(rows=[0, 1])
         row = 1
-        doc = cons.Document.MAIN
+        doc = MAIN
         pos = 5
         for i in range(100):
             row, doc, match_span = project.find_previous(row, doc, pos)
@@ -165,7 +166,7 @@ class TestFindDelegate(Test):
         project.set_find_regex(r'pin\.')
         project.set_find_target(wrap=False)
         row = 5
-        doc = cons.Document.MAIN
+        doc = MAIN
         pos = 5
         try:
             for i in range(100):
@@ -180,7 +181,7 @@ class TestFindDelegate(Test):
         project = self.get_blank_project()
         project.set_find_string('test')
         try:
-            project.find_previous(5, cons.Document.TRAN)
+            project.find_previous(5, TRAN)
             raise AssertionError
         except StopIteration:
             pass
@@ -201,13 +202,13 @@ class TestFindDelegate(Test):
         project = self.get_uniform_project()
         project.set_find_string('WAS', True)
         project.set_find_replacement('xxx')
-        project.find_next(0, cons.Document.MAIN)
+        project.find_next(0, MAIN)
         replace_and_assert(project)
 
         project = self.get_uniform_project()
         project.set_find_regex(r'\bwas\b', re.DOTALL)
         project.set_find_replacement('xxx')
-        project.find_next(0, cons.Document.MAIN)
+        project.find_next(0, MAIN)
         replace_and_assert(project)
 
     def test_replace_all(self):

@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,96 +16,88 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Support and information."""
+"""Help and information."""
 
-
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
 
 from gettext import gettext as _
 import re
 
 import gtk
 
-from gaupol.base.error        import TimeoutError
-from gaupol.base.util         import wwwlib
-from gaupol.gtk.delegate      import Delegate, UIMAction
+from gaupol                  import __version__
+from gaupol.base.error       import TimeoutError
+from gaupol.base.util        import wwwlib
+from gaupol.gtk.delegate     import Delegate, UIMAction
 from gaupol.gtk.dialog.about import AboutDialog
-from gaupol.gtk.util          import gtklib
-from gaupol                   import __version__
+from gaupol.gtk.urls         import BUG_REPORT_URL, DOWNLOAD_URL, VERSION_URL
+from gaupol.gtk.util         import gtklib
 
 
-re_version = re.compile(r'^\d+\.\d+\.\d+$')
-
-BUG_REPORT_URL = 'http://gna.org/bugs/?func=additem&group=gaupol'
-DOWNLOAD_URL   = 'http://home.gna.org/gaupol/download.html'
-VERSION_URL    = 'http://download.gna.org/gaupol/latest.txt'
+_RE_VERSION = re.compile(r'^\d+\.\d+\.\d+$')
 
 
-class HelpAction(UIMAction):
+class _HelpAction(UIMAction):
 
     """Base class for help actions."""
 
     @classmethod
-    def is_doable(cls, application, page):
-        """Return whether action can or cannot be done."""
+    def is_doable(cls, app, page):
+        """Return action doability."""
 
         return True
 
 
-class CheckLatestVersionAction(HelpAction):
+class CheckLatestVersionAction(_HelpAction):
 
-    """Checking latest version online."""
+    """Checking latest version."""
 
-    uim_action_item = (
+    action_item = (
         'check_latest_version',
         None,
         _('_Check Latest Version'),
         None,
         _('Check if you have the latest version'),
-        'on_check_latest_version_activated'
+        'on_check_latest_version_activate'
     )
 
-    uim_paths = ['/ui/menubar/help/check_latest_version']
+    paths = ['/ui/menubar/help/check_latest_version']
 
 
-class ReportABugAction(HelpAction):
+class ReportABugAction(_HelpAction):
 
-    """Reporting a bug online."""
+    """Reporting a bug."""
 
-    uim_action_item = (
+    action_item = (
         'report_a_bug',
         None,
         _('_Report A Bug'),
         None,
-        _('Submit a bug report online'),
-        'on_report_a_bug_activated'
+        _('Submit a bug report'),
+        'on_report_a_bug_activate'
     )
 
-    uim_paths = ['/ui/menubar/help/report_a_bug']
+    paths = ['/ui/menubar/help/report_a_bug']
 
 
-class ViewAboutDialogAction(HelpAction):
+class ViewAboutDialogAction(_HelpAction):
 
-    """Displaying the about dialog."""
+    """Viewing about dialog."""
 
-    uim_action_item = (
+    action_item = (
         'view_about_dialog',
         gtk.STOCK_ABOUT,
         _('_About'),
         None,
         _('Information about Gaupol'),
-        'on_view_about_dialog_activated'
+        'on_view_about_dialog_activate'
     )
 
-    uim_paths = ['/ui/menubar/help/about']
+    paths = ['/ui/menubar/help/about']
 
 
-class VersionCheckErrorDialog(gtk.MessageDialog):
+class _VersionErrorDialog(gtk.MessageDialog):
 
-    """Dialog to inform that version check failed."""
+    """Dialog for informing that version check failed."""
 
     def __init__(self, parent, message):
 
@@ -117,25 +109,24 @@ class VersionCheckErrorDialog(gtk.MessageDialog):
             gtk.BUTTONS_NONE,
             _('Failed to check latest version')
         )
-
         self.format_secondary_text(message)
         self.add_button(_('_Go to Download Page'), gtk.RESPONSE_ACCEPT)
-        self.add_button(gtk.STOCK_OK             , gtk.RESPONSE_OK    )
+        self.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
         self.set_default_response(gtk.RESPONSE_OK)
 
 
-class VersionCheckInfoDialog(gtk.MessageDialog):
+class _VersionInfoDialog(gtk.MessageDialog):
 
-    """Dialog to inform whether user has the latest version or not."""
+    """Dialog for informing whether user has the latest version or not."""
 
-    def __init__(self, parent, local_version, remote_version):
+    def __init__(self, parent, local, remote):
 
-        if remote_version > local_version:
-            title = _('A newer version is available')
+        if remote > local:
+            title = _('Version %s is available') % remote
+            message = _('You are currently using %s.') % local
         else:
             title = _('You have the latest version')
-        message = _('The latest version is %s.\nYou are using %s.') \
-                  % (remote_version, local_version)
+            message = ''
 
         gtk.MessageDialog.__init__(
             self,
@@ -145,94 +136,54 @@ class VersionCheckInfoDialog(gtk.MessageDialog):
             gtk.BUTTONS_NONE,
             title
         )
-
         self.format_secondary_text(message)
         self.add_button(_('_Go to Download Page'), gtk.RESPONSE_ACCEPT)
-        self.add_button(gtk.STOCK_OK            , gtk.RESPONSE_OK    )
+        self.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
         self.set_default_response(gtk.RESPONSE_OK)
 
 
 class HelpDelegate(Delegate):
 
-    """Support and information."""
+    """Help and information."""
 
-    def on_check_latest_version_activated(self, *args):
+    def on_check_latest_version_activate(self, *args):
         """Check latest version online."""
 
-        gtklib.set_cursor_busy(self.window)
-        dialog = None
+        gtklib.set_cursor_busy(self._window)
 
-        # Read remote file containing latest version number.
-        try:
-            text = wwwlib.read_url(VERSION_URL, 15)
-        except IOError, instance:
-            message = _('Failed to connect to URL "%s": %s.') \
-                      % (VERSION_URL, instance.args[1][1])
-            dialog = VersionCheckErrorDialog(self.window, message)
-        except TimeoutError:
-            message = _('Connection timed out. Please try again later or '
-                        'check the download page.')
-            dialog = VersionCheckErrorDialog(self.window, message)
-
-        # Show error dialog.
-        if dialog is not None:
-            gtklib.set_cursor_normal(self.window)
-            response = dialog.run()
-            dialog.destroy()
+        def show_error(message):
+            dialog = _VersionErrorDialog(self._window, message)
+            gtklib.set_cursor_normal(self._window)
+            response = gtklib.run(dialog)
             if response == gtk.RESPONSE_ACCEPT:
                 wwwlib.browse_url(DOWNLOAD_URL)
+
+        try:
+            version = wwwlib.read_url(VERSION_URL, 12).strip()
+        except IOError, instance:
+            show_error(_('Failed to connect to URL "%s": %s.') % (
+                VERSION_URL, instance.args[1][1]))
+            return
+        except TimeoutError:
+            show_error(_('Connection timed out.'))
+            return
+        if not _RE_VERSION.match(version):
+            show_error(_('No version information found at URL "%s".') \
+                % VERSION_URL)
             return
 
-        remote_version = text.strip()
-        if re_version.match(remote_version):
-            args = self.window, __version__, remote_version
-            dialog = VersionCheckInfoDialog(*args)
-        else:
-            message = _('No version information found at URL "%s".') \
-                      % VERSION_URL
-            dialog = VersionCheckErrorDialog(self.window, message)
-
-        # Show info or error dialog.
-        gtklib.set_cursor_normal(self.window)
-        response = dialog.run()
-        dialog.destroy()
+        dialog = _VersionInfoDialog(self._window, __version__, version)
+        gtklib.set_cursor_normal(self._window)
+        response = gtklib.run(dialog)
         if response == gtk.RESPONSE_ACCEPT:
             wwwlib.browse_url(DOWNLOAD_URL)
 
-    def on_report_a_bug_activated(self, *args):
-        """Report a bug online."""
+    def on_report_a_bug_activate(self, *args):
+        """Report a bug."""
 
         wwwlib.browse_url(BUG_REPORT_URL)
 
-    def on_view_about_dialog_activated(self, *args):
-        """Display the about dialog."""
+    def on_view_about_dialog_activate(self, *args):
+        """View about dialog."""
 
-        dialog = AboutDialog(self.window)
-        dialog.run()
-        dialog.destroy()
-        gtklib.destroy_gobject(dialog)
-
-
-if __name__ == '__main__':
-
-    from gaupol.gtk.app import Application
-    from gaupol.test            import Test
-
-    class TestDialog(Test):
-
-        def test_init(self):
-
-            VersionCheckErrorDialog(gtk.Window(), 'test')
-            VersionCheckInfoDialog(gtk.Window(), '0.0.1', '0.0.2')
-
-    class TestHelpDelegate(Test):
-
-        def test_all(self):
-
-            application = Application()
-            application.on_check_latest_version_activated()
-            application.on_view_about_dialog_activated()
-            application.window.destroy()
-
-    TestDialog().run()
-    TestHelpDelegate().run()
+        gtklib.run(AboutDialog(self._window))

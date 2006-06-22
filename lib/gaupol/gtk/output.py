@@ -32,7 +32,7 @@ class OutputWindow(gobject.GObject):
     """Output window."""
 
     __gsignals__ = {
-        'close': (
+        'closed': (
             gobject.SIGNAL_RUN_LAST,
             None,
             ()
@@ -55,9 +55,9 @@ class OutputWindow(gobject.GObject):
     def _init_sizes(self):
         """Initialize widget sizes."""
 
-        self._window.resize(*config.OutputWindow.size)
-        self._window.move(*config.OutputWindow.position)
-        if config.OutputWindow.maximized:
+        self._window.resize(*config.output_window.size)
+        self._window.move(*config.output_window.position)
+        if config.output_window.maximized:
             self._window.maximize()
 
     def _init_keys(self):
@@ -69,21 +69,16 @@ class OutputWindow(gobject.GObject):
             119,
             gtk.gdk.CONTROL_MASK,
             gtk.ACCEL_MASK,
-            self._on_close_requested
+            self._on_close_key_pressed
         )
         self._window.add_accel_group(accel_group)
 
     def _init_signals(self):
         """Initialize signals."""
 
-        method = self._on_window_delete_event
-        self._window.connect('delete-event', method)
-
-        method = self._on_window_state_event
-        self._window.connect('window-state-event', method)
-
-        method = self._on_close_requested
-        self._close_button.connect('clicked', method)
+        gtklib.connect(self, '_close_button', 'clicked'           )
+        gtklib.connect(self, '_window'      , 'delete-event'      )
+        gtklib.connect(self, '_window'      , 'window-state-event')
 
     def _init_widgets(self):
         """Initialize widgets."""
@@ -113,18 +108,41 @@ class OutputWindow(gobject.GObject):
         self._window.set_title(_('Output'))
         self._window.add(vbox)
 
+    def _on_close_button_clicked(self, *args):
+        """Emit closed signal."""
+
+        self.emit('closed')
+
+    def _on_close_key_pressed(self, *args):
+        """Emit closed signal."""
+
+        self.emit('closed')
+
+    def _on_window_delete_event(self, *args):
+        """Emit closed signal."""
+
+        self.emit('closed')
+        return True
+
+    def _on_window_window_state_event(self, window, event):
+        """Remember window maximization."""
+
+        state = event.new_window_state
+        maximized = bool(state & gtk.gdk.WINDOW_STATE_MAXIMIZED)
+        config.output_window.maximized = maximized
+
     def get_position(self):
-        """Return window position."""
+        """Get window position."""
 
         return self._window.get_position()
 
     def get_size(self):
-        """Return window size."""
+        """Get window size."""
 
         return self._window.get_size()
 
     def get_visible(self):
-        """Return window visibility."""
+        """Get window visibility."""
 
         return self._window.props.visible
 
@@ -132,24 +150,6 @@ class OutputWindow(gobject.GObject):
         """Hide window."""
 
         self._window.hide()
-
-    def _on_close_requested(self, *args):
-        """Emit signal that window needs to be closed."""
-
-        self.emit('close')
-
-    def _on_window_delete_event(self, *args):
-        """Emit signal that close button has been clicked."""
-
-        self.emit('close')
-        return True
-
-    def _on_window_state_event(self, window, event):
-        """Remember window maximization."""
-
-        state = event.new_window_state
-        maximized = bool(state & gtk.gdk.WINDOW_STATE_MAXIMIZED)
-        config.OutputWindow.maximized = maximized
 
     def show(self):
         """Show window."""

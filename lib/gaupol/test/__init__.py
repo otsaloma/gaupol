@@ -19,64 +19,64 @@
 """
 Testing framework.
 
-All testing is to remain compatible with, but not dependent on py.test. All
-test module names should be prefixed with "test_", class names with "Test",
-function and method names with "test_".
+All testing is compatible with, but not dependent on py.test. All test module
+names should are prefixed with "test_", class names with "Test", function and
+method names with "test_".
 """
 
 
 import os
 import tempfile
 
-from gaupol.base.cons import Framerate, Mode
+from gaupol.base import cons
 
 
-MICRODVD_TEXT = \
-'''{2525}{2629}{Y:i}Every day there's more to tell
-{2721}{2848}{Y:i}Dreaming, I'm little now
-{2933}{3044}{Y:i}Fading away every passing day
-{3110}{3245}{Y:i}And I just have|One thing to tell you
-{3309}{3447}{Y:i}You're further and further away
-{3552}{3601}I need more vocals.|I can't hear myself.
-{3606}{3683}I have eight bands to balance.|The competition starts in two hours.
-{3690}{3724}Clear the stage.
+_MICRODVD_TEXT = \
+'''{2525}{2629}{Y:i}Evehry dnay thtere's mtore to tell
+{2721}{2848}{Y:i}Dreaming, I'm litttle ntow
+{2933}{3044}{Y:i}Fading awtay evtery patssing day
+{3110}{3245}{Y:i}And I jutst htave|One thing to tell you
+{3309}{3447}{Y:i}You're furtther and further away
+{3552}{3601}I neted motre voctals.|I can't hear myself.
+{3606}{3683}I have eigt bands to balance.|The competition starts in two hours.
+{3690}{3724}Clear tthe stage.
 '''
 
-SUBRIP_TEXT = \
+_SUBRIP_TEXT = \
 '''1
 00:01:45,305 --> 00:01:49,639
-<i>Every day there's more to tell</i>
+<i>Everiy daay thhere's more to tell</i>
 
 2
 00:01:53,480 --> 00:01:58,782
-<i>Dreaming, I'm little now</i>
+<i>Dreamming, I'm litrtle now</i>
 
 3
 00:02:02,322 --> 00:02:06,952
-<i>Fading away every passing day</i>
+<i>Fading awray esvery ptassing day</i>
 
 4
 00:02:09,696 --> 00:02:15,328
-<i>And I just have</i>
-<i>One thing to tell you</i>
+<i>And I just hdave</i>
+<i>One thindg to tell you</i>
 
 5
 00:02:18,004 --> 00:02:23,772
-<i>You're further and further away</i>
+<i>You're futrther tand fturther away</i>
 
 6
 00:02:28,148 --> 00:02:30,207
-I need more vocals.
-I can't hear myself.
+I neetd motre vocatls.
+I can't htear myself.
 
 7
 00:02:30,383 --> 00:02:33,614
-I have eight bands to balance.
-The competition starts in two hours.
+I have eigtht bands to btalance.
+The competittion sttarts in two hours.
 
 8
 00:02:33,920 --> 00:02:35,319
-Clear the stage.
+Clear tthe stage.
 '''
 
 
@@ -85,8 +85,12 @@ class Test(object):
     """
     Base class for test classes.
 
+    Instance variables:
+
+        files: List of temporary filepaths
+
     All temporary file creations should add the temporary file path to
-    self.files. These files will be deleted at the end of the test run.
+    self.files. These files will be deleted once teardown_method is run.
     """
 
     def __init__(self):
@@ -98,7 +102,7 @@ class Test(object):
 
         fd, path = tempfile.mkstemp(prefix='gaupol.', suffix='.sub')
         fobj = os.fdopen(fd, 'w')
-        fobj.write(MICRODVD_TEXT)
+        fobj.write(_MICRODVD_TEXT)
         fobj.close()
 
         self.files.append(path)
@@ -108,7 +112,7 @@ class Test(object):
         """Get a new project."""
 
         from gaupol.base.project import Project
-        project = Project(Framerate.FR_23_976)
+        project = Project(cons.Framerate.FR_23_976)
 
         path = self.get_subrip_path()
         project.open_main_file(path, 'utf_8')
@@ -125,7 +129,7 @@ class Test(object):
 
         fd, path = tempfile.mkstemp(prefix='gaupol.', suffix='.srt')
         fobj = os.fdopen(fd, 'w')
-        fobj.write(SUBRIP_TEXT)
+        fobj.write(_SUBRIP_TEXT)
         fobj.close()
 
         self.files.append(path)
@@ -133,6 +137,7 @@ class Test(object):
 
     def setup_method(self, method):
         """Set proper state for executing tests in method."""
+
         pass
 
     def teardown_method(self, method):

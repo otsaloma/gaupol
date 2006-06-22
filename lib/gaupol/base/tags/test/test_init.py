@@ -47,6 +47,7 @@ class TestTagLibrary(Test):
             assert isinstance(text, basestring)
 
     def test_post_decode(self):
+
         for name in cons.Format.class_names:
             cls = eval(name)
             text = cls.post_decode('test')

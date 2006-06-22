@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,190 +16,196 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Shifting, adjusting and fixing mings."""
+"""Advanced editing of positions."""
 
-
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
 
 from gettext import gettext as _
 from gettext import ngettext
 
 import gtk
 
-from gaupol.gtk.cons import *
-from gaupol.gtk.delegate          import Delegate, UIMAction
+from gaupol.gtk                  import cons
+from gaupol.gtk.colcons          import *
+from gaupol.gtk.delegate         import Delegate, UIMAction
 from gaupol.gtk.dialog.duradjust import DurationAdjustDialog
 from gaupol.gtk.dialog.frconvert import FramerateConvertDialog
-from gaupol.gtk.dialog.posadjust  import TimeFrameAdjustDialog
-from gaupol.gtk.dialog.posshift   import TimeFrameShiftDialog
-from gaupol.gtk.util              import config, gtklib
+from gaupol.gtk.dialog.posadjust import FrameAdjustDialog, TimeAdjustDialog
+from gaupol.gtk.dialog.posshift  import FrameShiftDialog, TimeShiftDialog
+from gaupol.gtk.util             import gtklib
 
 
-class DurationAdjustAction(UIMAction):
+class AdjustDurationsAction(UIMAction):
 
     """Adjusting durations."""
 
-    uim_action_item = (
+    action_item = (
         'adjust_durations',
         None,
-        _('A_djust Durations'),
+        _('A_djust Durations...'),
         'F4',
         _('Lengthen or shorten durations'),
-        'on_adjust_durations_activated'
+        'on_adjust_durations_activate'
     )
 
-    uim_paths = ['/ui/menubar/tools/adjust_durations']
+    paths = ['/ui/menubar/tools/adjust_durations']
 
     @classmethod
-    def is_doable(cls, application, page):
-        """Return whether action can or cannot be done."""
+    def is_doable(cls, app, page):
+        """Return action doability."""
 
         return page is not None
 
 
-class FramerateConvertAction(UIMAction):
+class AdjustPositionsAction(UIMAction):
+
+    """Adjusting positions."""
+
+    action_item = (
+        'adjust_positions',
+        None,
+        _('_Adjust Positions...'),
+        'F3',
+        _('Adjust positions by linear two-point correction'),
+        'on_adjust_positions_activate'
+    )
+
+    paths = ['/ui/menubar/tools/adjust_positions']
+
+    @classmethod
+    def is_doable(cls, app, page):
+        """Return action doability."""
+
+        return page is not None
+
+
+class ConvertFramerateAction(UIMAction):
 
     """Converting framerate."""
 
-    uim_action_item = (
+    action_item = (
         'convert_framerate',
         gtk.STOCK_CONVERT,
-        _('Con_vert Framerate'),
+        _('Con_vert Framerate...'),
         None,
         _('Convert framerate'),
-        'on_convert_framerate_activated'
+        'on_convert_framerate_activate'
     )
 
-    uim_paths = ['/ui/menubar/tools/convert_framerate']
+    paths = ['/ui/menubar/tools/convert_framerate']
 
     @classmethod
-    def is_doable(cls, application, page):
-        """Return whether action can or cannot be done."""
+    def is_doable(cls, app, page):
+        """Return action doability."""
 
         if page is None:
             return False
         if page.project.main_file is None:
             return False
-
-        return bool(page.project.main_file.format == Format.MICRODVD)
-
-
-class TimeFrameAdjustAction(UIMAction):
-
-    """Adjusting positions."""
-
-    uim_action_item = (
-        'adjust_positions',
-        None,
-        _('_Adjust Times'),
-        'F3',
-        _('Adjust times by linear two-point correction'),
-        'on_adjust_positions_activated'
-    )
-
-    uim_paths = ['/ui/menubar/tools/adjust_positions']
-
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return whether action can or cannot be done."""
-
-        return page is not None
+        return True
 
 
-class TimeFrameShiftAction(UIMAction):
+class ShiftPositionsAction(UIMAction):
 
     """Shifting positions."""
 
-    uim_action_item = (
+    action_item = (
         'shift_positions',
         None,
-        _('_Shift Times'),
+        _('_Shift Positions...'),
         'F2',
         _('Make subtitles appear earlier or later'),
-        'on_shift_positions_activated'
+        'on_shift_positions_activate'
     )
 
-    uim_paths = ['/ui/menubar/tools/shift_positions']
+    paths = ['/ui/menubar/tools/shift_positions']
 
     @classmethod
-    def is_doable(cls, application, page):
-        """Return whether action can or cannot be done."""
+    def is_doable(cls, app, page):
+        """Return action doability."""
 
         return page is not None
 
 
-class TimeFrameDelegate(Delegate):
+class PositionDelegate(Delegate):
 
-    """Shifting, adjusting and fixing positions."""
+    """Advanced editing of positions."""
 
-    def on_adjust_durations_activated(self, *args):
-        """Adjust duration lengths."""
+    def get_target_pages(self, target):
+        """Get list of pages corresponding to target."""
+
+        if target == cons.Target.ALL:
+            return self.pages
+        if target == cons.Target.CURRENT:
+            return [self.get_current_page()]
+        if target == cons.Target.SELECTED:
+            return [self.get_current_page()]
+
+    def get_target_rows(self, target):
+        """Get rows corresponding to target."""
+
+        if target == cons.Target.ALL:
+            return None
+        if target == cons.Target.CURRENT:
+            return None
+        if target == cons.Target.SELECTED:
+            page = self.get_current_page()
+            return page.view.get_selected_rows()
+
+    def on_adjust_durations_activate(self, *args):
+        """Adjust durations."""
 
         page = self.get_current_page()
-        dialog = DurationAdjustDialog(self.window, page)
+        has_selection = bool(page.view.get_selected_rows())
+        dialog = DurationAdjustDialog(self._window, has_selection)
         response = dialog.run()
         if response != gtk.RESPONSE_OK:
             dialog.destroy()
             return
 
         kwargs = {}
-        if not dialog.get_all_subtitles():
-            kwargs['rows'] = page.view.get_selected_rows()
-        kwargs['optimal']  = dialog.get_optimal()
+        kwargs['optimal'] = dialog.get_optimal()
         kwargs['lengthen'] = dialog.get_lengthen()
-        kwargs['shorten']  = dialog.get_shorten()
+        kwargs['shorten'] = dialog.get_shorten()
         if dialog.get_use_maximum():
             kwargs['maximum'] = dialog.get_maximum()
         if dialog.get_use_minimum():
             kwargs['minimum'] = dialog.get_minimum()
         if dialog.get_use_gap():
             kwargs['gap'] = dialog.get_gap()
-
-        if dialog.get_all_projects():
-            pages = self.pages
-        else:
-            pages = [page]
+        target = dialog.get_target()
+        pages = self.get_target_pages(target)
+        kwargs['rows'] = self.get_target_rows(target)
         dialog.destroy()
 
         for page in pages:
-            self.notebook.set_current_page(self.pages.index(page))
+            self._notebook.set_current_page(self.pages.index(page))
             rows = page.project.adjust_durations(**kwargs)
             page.view.select_rows(rows)
-            length = len(rows)
             message = ngettext(
                 'Adjusted duration of %d subtitle',
                 'Adjusted durations of %d subtitles',
-                length
-            ) % length
+                len(rows)
+            ) % len(rows)
             self.set_status_message(message)
-            self.set_sensitivities(page)
 
-    def on_adjust_positions_activated(self, *args):
-        """Adjust positions by two-point correction"""
+    def on_adjust_positions_activate(self, *args):
+        """Adjust positions by linear two-point correction"""
 
         page = self.get_current_page()
-        if page.edit_mode == Mode.TIME:
+        if page.edit_mode == cons.Mode.TIME:
+            dialog = TimeAdjustDialog(self._window, page)
             method = page.project.adjust_times
-        elif page.edit_mode == Mode.FRAME:
+        elif page.edit_mode == cons.Mode.FRAME:
+            dialog = FrameAdjustDialog(self._window, page)
             method = page.project.adjust_frames
-
-        def get_rows(dialog):
-            if dialog.get_adjust_all():
-                return None
-            else:
-                return page.view.get_selected_rows()
 
         def on_preview(dialog, row):
             point_1 = dialog.get_first_point()
             point_2 = dialog.get_second_point()
-            rows = get_rows(dialog)
-            args = rows, point_1, point_2
-            self.preview_changes(page, row, Document.MAIN, method, args)
+            rows = self.get_target_rows(dialog.get_target())
+            args = [rows, point_1, point_2]
+            self.preview_changes(page, row, MAIN, method, args)
 
-        dialog = TimeFrameAdjustDialog(self.window, page)
         dialog.connect('preview', on_preview)
         response = dialog.run()
         if response != gtk.RESPONSE_OK:
@@ -208,60 +214,49 @@ class TimeFrameDelegate(Delegate):
 
         point_1 = dialog.get_first_point()
         point_2 = dialog.get_second_point()
-        rows = get_rows(dialog)
+        rows = self.get_target_rows(dialog.get_target())
         gtklib.destroy_gobject(dialog)
-
         method(rows, point_1, point_2)
         page.view.select_rows(rows or range(len(page.project.times)))
-        self.set_sensitivities(page)
 
-    def on_convert_framerate_activated(self, *args):
+    def on_convert_framerate_activate(self, *args):
         """Convert framerate."""
 
-        dialog = FramerateConvertDialog(self.window)
+        dialog = FramerateConvertDialog(self._window)
         response = dialog.run()
         if response != gtk.RESPONSE_OK:
             gtklib.destroy_gobject(dialog)
             return
 
-        all_projects = dialog.get_convert_all_projects()
-        current_fr = dialog.get_current_framerate()
-        correct_fr = dialog.get_correct_framerate()
+        target = dialog.get_target()
+        pages = self.get_target_pages(target)
+        rows = self.get_target_rows(target)
+        current = dialog.get_current()
+        correct = dialog.get_correct()
         gtklib.destroy_gobject(dialog)
 
-        if all_projects:
-            pages = self.pages
-        else:
-            pages = [self.get_current_page()]
-
         for page in pages:
-            self.notebook.set_current_page(self.pages.index(page))
-            page.project.convert_framerate(None, current_fr, correct_fr)
-            page.view.select_rows(range(len(page.project.times)))
-            self.set_sensitivities(page)
+            self._notebook.set_current_page(self.pages.index(page))
+            page.project.convert_framerate(rows, current, correct)
+            page.view.select_rows(rows or range(len(page.project.times)))
 
-    def on_shift_positions_activated(self, *args):
+    def on_shift_positions_activate(self, *args):
         """Shift positions a constant amount."""
 
         page = self.get_current_page()
-        if page.edit_mode == Mode.TIME:
+        if page.edit_mode == cons.Mode.TIME:
+            dialog = TimeShiftDialog(self._window, page)
             method = page.project.shift_seconds
-        elif page.edit_mode == Mode.FRAME:
+        elif page.edit_mode == cons.Mode.FRAME:
+            dialog = FrameShiftDialog(self._window, page)
             method = page.project.shift_frames
-
-        def get_rows(dialog):
-            if dialog.get_shift_all():
-                return None
-            else:
-                return page.view.get_selected_rows()
 
         def on_preview(dialog, row):
             amount = dialog.get_amount()
-            rows = get_rows(dialog)
-            args = rows, amount
-            self.preview_changes(page, row, Document.MAIN, method, args)
+            rows = self.get_target_rows(dialog.get_target())
+            args = [rows, amount]
+            self.preview_changes(page, row, MAIN, method, args)
 
-        dialog = TimeFrameShiftDialog(self.window, page)
         dialog.connect('preview', on_preview)
         response = dialog.run()
         if response != gtk.RESPONSE_OK:
@@ -269,36 +264,7 @@ class TimeFrameDelegate(Delegate):
             return
 
         amount = dialog.get_amount()
-        rows = get_rows(dialog)
+        rows = self.get_target_rows(dialog.get_target())
         gtklib.destroy_gobject(dialog)
-
         method(rows, amount)
         page.view.select_rows(rows or range(len(page.project.times)))
-        self.set_sensitivities(page)
-
-
-if __name__ == '__main__':
-
-    from gaupol.gtk.app import Application
-    from gaupol.test            import Test
-
-    class TestTimeFrameDelegate(Test):
-
-        def __init__(self):
-
-            Test.__init__(self)
-            self.application = Application()
-            self.application.open_main_files([self.get_micro_dvd_path()])
-
-        def destroy(self):
-
-            self.application.window.destroy()
-
-        def test_callbacks(self):
-
-            self.application.on_adjust_durations_activated()
-            self.application.on_adjust_positions_activated()
-            self.application.on_convert_framerate_activated()
-            self.application.on_shift_positions_activated()
-
-    TestTimeFrameDelegate().run()

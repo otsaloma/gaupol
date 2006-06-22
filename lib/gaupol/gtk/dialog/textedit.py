@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,13 +16,8 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Dialog for editing the text of a single subtitle."""
+"""Dialog for editing text of a single subtitle."""
 
-
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
 
 import gtk
 
@@ -31,7 +26,7 @@ from gaupol.gtk.util import config, gtklib
 
 class TextEditDialog(gtk.Dialog):
 
-    """Dialog for editing the text of a single subtitle."""
+    """Dialog for editing text of a single subtitle."""
 
     def __init__(self, parent, text):
 
@@ -42,7 +37,6 @@ class TextEditDialog(gtk.Dialog):
         self._init_dialog(parent)
         self._init_text_view(text)
         self._init_sizes()
-
         self.show_all()
 
     def _init_dialog(self, parent):
@@ -51,7 +45,6 @@ class TextEditDialog(gtk.Dialog):
         self.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
         self.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
         self.set_default_response(gtk.RESPONSE_OK)
-
         self.set_has_separator(False)
         self.set_transient_for(parent)
         self.set_border_width(6)
@@ -62,14 +55,12 @@ class TextEditDialog(gtk.Dialog):
 
         self._text_view = gtk.TextView()
         self._text_view.set_wrap_mode(gtk.WRAP_NONE)
+        self._text_view.set_accepts_tab(False)
         text_buffer = self._text_view.get_buffer()
-        text_buffer.set_text(unicode(text))
+        text_buffer.set_text(text)
+        if not config.editor.use_default_font:
+            gtklib.set_widget_font(self._text_view, config.editor.font)
 
-        # Set font.
-        if not config.Editor.use_default_font:
-            gtklib.set_widget_font(self._text_view, config.Editor.font)
-
-        # Put text view in a scrolled window.
         scrolled_window = gtk.ScrolledWindow()
         scrolled_window.set_border_width(6)
         scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
@@ -81,31 +72,15 @@ class TextEditDialog(gtk.Dialog):
     def _init_sizes(self):
         """Initialize widget sizes."""
 
-        # Set text view width to 46 ex and height to 4 lines.
         label = gtk.Label('\n'.join(['x' * 46] * 4))
-        if not config.Editor.use_default_font:
-            gtklib.set_label_font(label, config.Editor.font)
+        if not config.editor.use_default_font:
+            gtklib.set_label_font(label, config.editor.font)
         width, height = label.size_request()
         self._text_view.set_size_request(width + 4, height + 7)
 
     def get_text(self):
-        """Get the text in the text view."""
+        """Get text."""
 
         text_buffer = self._text_view.get_buffer()
         start, end = text_buffer.get_bounds()
         return text_buffer.get_text(start, end)
-
-
-if __name__ == '__main__':
-
-    from gaupol.test import Test
-
-    class TestTextEditDialog(Test):
-
-        def test_all(self):
-
-            dialog = TextEditDialog(gtk.Window(), 'test')
-            assert dialog.get_text() == 'test'
-            dialog.destroy()
-
-    TestTextEditDialog().run()

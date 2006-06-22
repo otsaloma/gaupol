@@ -37,10 +37,12 @@ class TextViewCell(gtk.TextView, gtk.CellEditable):
 
     def do_remove_widget(self, *args):
         """Empty method to avoid error output."""
+
         pass
 
     def do_start_editing(self, *args):
         """Empty method to avoid error output."""
+
         pass
 
     def get_text(self, *args):

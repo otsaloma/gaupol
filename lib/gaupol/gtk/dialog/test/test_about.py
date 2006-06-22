@@ -19,11 +19,20 @@
 import gtk
 
 from gaupol.gtk.dialog.about import AboutDialog
+from gaupol.gtk.util         import gtklib
 from gaupol.test             import Test
 
 
 class TestAboutDialog(Test):
 
-    def test_init(self):
+    def setup_method(self, method):
 
-        AboutDialog(gtk.Window())
+        self.dialog = AboutDialog(gtk.Window())
+
+    def test_on_url_clicked(self):
+
+        self.dialog._on_url_clicked()
+
+    def test_run(self):
+
+        gtklib.run(self.dialog)

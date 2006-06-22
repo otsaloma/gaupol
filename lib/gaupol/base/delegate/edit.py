@@ -22,103 +22,23 @@
 from gettext import gettext as _
 import bisect
 
-from gaupol.base             import cons
-from gaupol.base.colcons     import *
-from gaupol.base.delegate    import Delegate
+from gaupol.base          import cons
+from gaupol.base.colcons  import *
+from gaupol.base.delegate import Delegate
 
 
-DO   = cons.Action.DO
-MAIN = cons.Document.MAIN
-TRAN = cons.Document.TRAN
+_DO = cons.Action.DO
 
 
 class EditDelegate(Delegate):
 
     """Basic subtitle data editing."""
 
-    def clear_texts(self, rows, doc, register=DO):
-        """Clear texts."""
-
-        new_texts = [u''] * len(rows)
-        self.replace_texts(rows, doc, new_texts, register)
-        self.set_action_description(register, _('Clearing texts'))
-
-    def copy_texts(self, rows, doc):
-        """Copy texts to clipboard."""
-
-        data = []
-        texts = (self.main_texts, self.tran_texts)[doc]
-        for row in range(min(rows), max(rows) + 1):
-            if row in rows:
-                data.append(texts[row])
-            else:
-                data.append(None)
-
-        self.clipboard.data = data
-
-    def cut_texts(self, rows, doc, register=DO):
-        """Cut texts to clipboard."""
-
-        self.copy_texts(rows, doc)
-        self.clear_texts(rows, doc, register)
-        self.set_action_description(register, _('Cutting texts'))
-
-    def expand_frames(self, show, hide):
-        """
-        Expand single subtitle position data to all quantities.
-
-        Return times, frames.
-        """
-        frames = [show, hide, self.calc.get_frame_duration(show, hide)]
-        times = [self.calc.frame_to_time(x) for x in (show, hide)]
-        times.append(self.calc.get_time_duration(times[0], times[1]))
-        return times, frames
-
-    def expand_positions(self, show, hide):
-        """
-        Expand single subtitle position data to all quantities.
-
-        Return times, frames.
-        """
-        if isinstance(show, basestring):
-            return self.expand_times(show, hide)
-        if isinstance(show, int):
-            return self.expand_frames(show, hide)
-        raise ValueError
-
-    def expand_times(self, show, hide):
-        """
-        Expand single subtitle position data to all quantities.
-
-        Return times, frames.
-        """
-        times = [show, hide, self.calc.get_time_duration(show, hide)]
-        frames = [self.calc.time_to_frame(x) for x in (show, hide)]
-        frames.append(self.calc.get_frame_duration(frames[0], frames[1]))
-        return times, frames
-
-    def get_mode(self):
-        """Get mode of main file or default."""
-
-        try:
-            return self.main_file.mode
-        except AttributeError:
-            return cons.Mode.TIME
-
-    def get_positions(self):
-        """Return either times or frames depending mode."""
-
-        mode = self.get_mode()
-        if mode == cons. Mode.TIME:
-            return self.times
-        if mode == cons.Mode.FRAME:
-            return self.frames
-
     def _insert_blank(self, rows):
         """
         Insert blank subtitles.
 
-        rows must be a single range.
+        rows: Single range
         """
         mode = self.get_mode()
         positions = self.get_positions()
@@ -153,9 +73,7 @@ class EditDelegate(Delegate):
                 )
             elif mode == cons.Mode.FRAME:
                 time, frame = self.expand_frames(
-                    show_frame = start + ( i      * duration),
-                    hide_frame = start + ((i + 1) * duration)
-                )
+                    start + (i * duration), start + ((i + 1) * duration))
             self.times.insert(row, time)
             self.frames.insert(row, frame)
             self.main_texts.insert(row, u'')
@@ -177,6 +95,105 @@ class EditDelegate(Delegate):
             self.main_texts.insert(row, main_texts[i])
             self.tran_texts.insert(row, tran_texts[i])
 
+    def _sort_data(self, row):
+        """
+        Sort data based on shows.
+
+        Return new row.
+        """
+        positions = self.get_positions()
+        lst = positions[:row] + positions[row + 1:]
+        item = positions[row]
+        new_row = bisect.bisect_right(lst, item)
+
+        if new_row != row:
+            for data in (
+                self.times,
+                self.frames,
+                self.main_texts,
+                self.tran_texts
+            ):
+                data.insert(new_row, data.pop(row))
+
+        return new_row
+
+    def clear_texts(self, rows, doc, register=_DO):
+        """Clear texts."""
+
+        new_texts = [u''] * len(rows)
+        self.replace_texts(rows, doc, new_texts, register)
+        self.set_action_description(register, _('Clearing texts'))
+
+    def copy_texts(self, rows, doc):
+        """Copy texts to clipboard."""
+
+        data = []
+        texts = (self.main_texts, self.tran_texts)[doc]
+        for row in range(min(rows), max(rows) + 1):
+            if row in rows:
+                data.append(texts[row])
+            else:
+                data.append(None)
+        self.clipboard.data = data
+
+    def cut_texts(self, rows, doc, register=_DO):
+        """Cut texts to clipboard."""
+
+        self.copy_texts(rows, doc)
+        self.clear_texts(rows, doc, register)
+        self.set_action_description(register, _('Cutting texts'))
+
+    def expand_frames(self, show, hide):
+        """
+        Expand single subtitle position data to all quantities.
+
+        Return times, frames.
+        """
+        frames = [show, hide, self.calc.get_frame_duration(show, hide)]
+        times = list(self.calc.frame_to_time(x) for x in (show, hide))
+        times.append(self.calc.get_time_duration(times[0], times[1]))
+        return times, frames
+
+    def expand_positions(self, show, hide):
+        """
+        Expand single subtitle position data to all quantities.
+
+        Return times, frames.
+        """
+        if isinstance(show, basestring):
+            return self.expand_times(show, hide)
+        if isinstance(show, int):
+            return self.expand_frames(show, hide)
+        raise ValueError
+
+    def expand_times(self, show, hide):
+        """
+        Expand single subtitle position data to all quantities.
+
+        Return times, frames.
+        """
+        times = [show, hide, self.calc.get_time_duration(show, hide)]
+        frames = list(self.calc.time_to_frame(x) for x in (show, hide))
+        frames.append(self.calc.get_frame_duration(frames[0], frames[1]))
+        return times, frames
+
+    def get_mode(self):
+        """Get mode of main file or default."""
+
+        try:
+            return self.main_file.mode
+        except AttributeError:
+            return cons.Mode.TIME
+
+    def get_positions(self):
+        """Get either times or frames depending mode."""
+
+        mode = self.get_mode()
+        if mode == cons. Mode.TIME:
+            return self.times
+        if mode == cons.Mode.FRAME:
+            return self.frames
+
     def insert_subtitles(
         self,
         rows,
@@ -184,7 +201,7 @@ class EditDelegate(Delegate):
         frames=None,
         main_texts=None,
         tran_texts=None,
-        register=DO
+        register=_DO
     ):
         """
         Insert subtitles.
@@ -227,7 +244,7 @@ class EditDelegate(Delegate):
         new_row = bisect.bisect_right(lst, item)
         return bool(new_row != row)
 
-    def paste_texts(self, row, doc, register=DO):
+    def paste_texts(self, row, doc, register=_DO):
         """
         Paste texts from clipboard.
 
@@ -256,7 +273,7 @@ class EditDelegate(Delegate):
 
         return rows
 
-    def remove_subtitles(self, rows, register=DO):
+    def remove_subtitles(self, rows, register=_DO):
         """Remove subtitles."""
 
         times      = []
@@ -279,12 +296,12 @@ class EditDelegate(Delegate):
             removed_rows=rows,
         )
 
-    def replace_both_texts(self, rows, new_texts, register=DO):
+    def replace_both_texts(self, rows, new_texts, register=_DO):
         """
         Replace texts in both documents' rows with new_texts.
 
-        rows: (main_rows, tran_rows)
-        new_texts: (new_main_texts, new_tran_texts)
+        rows: Main rows, tran rows
+        new_texts: New main texts, new tran texts
         """
         if not rows[0] and not rows[1]:
             return
@@ -300,7 +317,7 @@ class EditDelegate(Delegate):
         self.unblock(signal)
         self.group_actions(register, 2, _('Replacing texts'))
 
-    def replace_positions(self, rows, new_times, new_frames, register=DO):
+    def replace_positions(self, rows, new_times, new_frames, register=_DO):
         """Replace times and frames in rows with new_times and new_frames."""
 
         orig_times  = []
@@ -320,7 +337,7 @@ class EditDelegate(Delegate):
             updated_positions=rows,
         )
 
-    def replace_texts(self, rows, doc, new_texts, register=DO):
+    def replace_texts(self, rows, doc, new_texts, register=_DO):
         """Replace texts in document's rows with new_texts."""
 
         if doc == MAIN:
@@ -356,7 +373,7 @@ class EditDelegate(Delegate):
         self.frames[row][DURN] = self.calc.get_frame_duration(
             self.frames[row][SHOW], self.frames[row][HIDE])
 
-    def set_frame(self, row, col, value, register=DO):
+    def set_frame(self, row, col, value, register=_DO):
         """
         Set frame.
 
@@ -413,7 +430,7 @@ class EditDelegate(Delegate):
         self.frames[row][HIDE] = \
             self.frames[row][SHOW] + self.frames[row][DURN]
 
-    def set_text(self, row, doc, value, register=DO):
+    def set_text(self, row, doc, value, register=_DO):
         """Set text."""
 
         value = unicode(value)
@@ -440,7 +457,7 @@ class EditDelegate(Delegate):
             updated_tran_texts=updated_tran_texts
         )
 
-    def set_time(self, row, col, value, register=DO):
+    def set_time(self, row, col, value, register=_DO):
         """
         Set time.
 
@@ -487,25 +504,3 @@ class EditDelegate(Delegate):
         )
 
         return revert_row
-
-    def _sort_data(self, row):
-        """
-        Sort data based on shows.
-
-        Return new row.
-        """
-        positions = self.get_positions()
-        lst = positions[:row] + positions[row + 1:]
-        item = positions[row]
-        new_row = bisect.bisect_right(lst, item)
-
-        if new_row != row:
-            for data in (
-                self.times,
-                self.frames,
-                self.main_texts,
-                self.tran_texts
-            ):
-                data.insert(new_row, data.pop(row))
-
-        return new_row

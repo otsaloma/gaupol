@@ -34,26 +34,25 @@ class Application(object):
 
     Instance variables:
 
-        _delegations    -- Dictionary mapping method names to Delegates
-        clipboard       -- gtk.Clipboard (X clipboard)
-        counter         -- Integer for naming unsaved projects
-        find_active     -- True if a pattern set for find
-        framerate_combo -- gtk.ComboBox
-        main_statusbar  -- gtk.Statusbar
-        msg_statusbar   -- gtk.Statusbar
-        notebook        -- gtk.Notebook
-        open_button     -- gtk.MenuToolButton
-        output_window   -- OutputWindow
-        pages           -- List of Pages
-        redo_button     -- gtk.MenuToolButton
-        static_tooltips -- gtk.Tooltips, enabled always
-        tooltips        -- gtk.Tooltips, enbaled if a document is open
-        tran_statusbar  -- gtk.Statusbar
-        uim             -- gtk.UIManager
-        undo_button     -- gtk.MenuToolButton
-        video_button    -- gtk.Button
-        video_label     -- gtk.Label
-        window          -- gtk.Window
+        _clipboard:       gtk.Clipboard (X clipboard)
+        _counter:         Integer for naming unsaved projects
+        _delegations:     Dictionary mapping method names to Delegates
+        _framerate_combo: gtk.ComboBox
+        _main_statusbar:  gtk.Statusbar
+        _msg_statusbar:   gtk.Statusbar
+        _notebook:        gtk.Notebook
+        _open_button:     gtk.MenuToolButton
+        _output_window:   OutputWindow
+        _redo_button:     gtk.MenuToolButton
+        _static_tooltips: gtk.Tooltips, enabled always
+        _tooltips:        gtk.Tooltips, enbaled if a document is open
+        _tran_statusbar:  gtk.Statusbar
+        _uim:             gtk.UIManager
+        _undo_button:     gtk.MenuToolButton
+        _video_button:    gtk.Button
+        _video_label:     gtk.Label
+        _window:          gtk.Window
+        pages:            List of Pages
 
     """
 
@@ -63,32 +62,31 @@ class Application(object):
 
     def __init__(self):
 
-        self._delegations    = {}
-        self.clipboard       = gtk.Clipboard()
-        self.counter         = 0
-        self.find_active     = False
-        self.framerate_combo = None
-        self.main_statusbar  = None
-        self.msg_statusbar   = None
-        self.notebook        = None
-        self.open_button     = None
-        self.output_window   = None
-        self.pages           = []
-        self.redo_button     = None
-        self.static_tooltips = gtk.Tooltips()
-        self.tooltips        = gtk.Tooltips()
-        self.tran_statusbar  = None
-        self.uim             = None
-        self.undo_button     = None
-        self.video_button    = None
-        self.video_label     = None
-        self.window          = None
+        self._clipboard       = gtk.Clipboard()
+        self._counter         = 0
+        self._delegations     = {}
+        self._framerate_combo = None
+        self._main_statusbar  = None
+        self._msg_statusbar   = None
+        self._notebook        = None
+        self._open_button     = None
+        self._output_window   = None
+        self._redo_button     = None
+        self._static_tooltips = gtk.Tooltips()
+        self._tooltips        = gtk.Tooltips()
+        self._tran_statusbar  = None
+        self._uim             = None
+        self._undo_button     = None
+        self._video_button    = None
+        self._video_label     = None
+        self._window          = None
+        self.pages            = []
 
-        self.__init_delegations()
+        self._init_delegations()
         config.read()
         self.init_gui()
 
-    def __init_delegations(self):
+    def _init_delegations(self):
         """Initialize delegate mappings."""
 
         for cls in Delegates.classes:
@@ -106,7 +104,7 @@ class Application(object):
 
         Return Page or None.
         """
-        index = self.notebook.get_current_page()
+        index = self._notebook.get_current_page()
         if index == -1:
             return None
         return self.pages[index]

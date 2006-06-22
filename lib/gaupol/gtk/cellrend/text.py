@@ -26,7 +26,16 @@ import pango
 
 class CellRendererText(gtk.GenericCellRenderer):
 
-    """Base class for cell renderers for text data."""
+    """
+    Base class for cell renderers for text data.
+
+    Instance variables:
+
+        font:      Font string, e.g. "Sans 9"
+        font_desc: pango.FontDescription
+        text:      String
+
+    """
 
     __gproperties__ = {
         'font': (
@@ -68,16 +77,6 @@ class CellRendererText(gtk.GenericCellRenderer):
         self.font_desc = None
         self.text      = None
 
-    def do_get_property(self, prop):
-        """Get value of property."""
-
-        getattr(self, prop.name)
-
-    def do_set_property(self, prop, value):
-        """Set value of property."""
-
-        setattr(self, prop.name, value)
-
     def _get_layout(self, widget):
         """Get Pango layout."""
 
@@ -91,6 +90,16 @@ class CellRendererText(gtk.GenericCellRenderer):
         layout.set_font_description(font_desc)
         layout.set_text(self.text or u'')
         return layout
+
+    def do_get_property(self, prop):
+        """Get value of property."""
+
+        getattr(self, prop.name)
+
+    def do_set_property(self, prop, value):
+        """Set value of property."""
+
+        setattr(self, prop.name, value)
 
     def on_editing_done(self, editor, row):
         """End editing."""

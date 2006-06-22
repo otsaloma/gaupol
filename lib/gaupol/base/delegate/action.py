@@ -45,13 +45,33 @@ directly to avoid sending unwanted signals.
 import bisect
 
 from gaupol.base          import cons
+from gaupol.base.colcons  import *
 from gaupol.base.delegate import Delegate
 from gaupol.base.util     import listlib
 
 
 class RevertableAction(object):
 
-    """Action that can be reverted (undone or redone)."""
+    """
+    Action that can be reverted (undone or redone).
+
+    Instance variables:
+
+        description:        Short one line description
+        docs:               List of Document constants
+        emit_signal:        True to emit signal
+        inserted_rows:      List of rows inserted
+        register:           Action constant
+        removed_rows:       List of rows removed
+        revert_args:        Arguments passed to revert method
+        revert_kwargs:      Keyword arguments passed to revert method
+        revert_method:      Method called to revert action
+        updated_main_texts: List of rows with main texts updated
+        updated_positions:  List of rows with positions updated
+        updated_rows:       List of rows updated
+        updated_tran_texts: List of rows with translation texts updated
+
+    """
 
     def __init__(
         self,
@@ -69,28 +89,20 @@ class RevertableAction(object):
         updated_tran_texts=[],
         emit_signal=True,
     ):
-        """
-        Initialize a RevertableAction object.
 
-        register: Action constant
-        documents: List of Document constants
-        description: Short one line description of action
-        """
-        self.register           = register
-        self.docs               = docs
         self.description        = description
-        self.revert_method      = revert_method
+        self.docs               = docs
+        self.emit_signal        = emit_signal
+        self.inserted_rows      = sorted(inserted_rows)
+        self.register           = register
+        self.removed_rows       = sorted(removed_rows)
         self.revert_args        = revert_args
         self.revert_kwargs      = revert_kwargs
-        self.inserted_rows      = inserted_rows
-        self.removed_rows       = removed_rows
-        self.updated_rows       = updated_rows
-        self.updated_positions  = updated_positions
-        self.updated_main_texts = updated_main_texts
-        self.updated_tran_texts = updated_tran_texts
-        self.emit_signal        = emit_signal
-
-        self._validate_input()
+        self.revert_method      = revert_method
+        self.updated_main_texts = sorted(updated_main_texts)
+        self.updated_positions  = sorted(updated_positions)
+        self.updated_rows       = sorted(updated_rows)
+        self.updated_tran_texts = sorted(updated_tran_texts)
 
     def revert(self):
         """Revert action."""
@@ -103,42 +115,22 @@ class RevertableAction(object):
 
         self.revert_method(*self.revert_args, **self.revert_kwargs)
 
-    def _validate_input(self):
-        """
-        Validate given attribute values.
-
-        Raise ValueError if values of attributes are incorrect.
-        """
-        if not self.register in (
-            cons.Action.DO,
-            cons.Action.UNDO,
-            cons.Action.REDO,
-            cons.Action.DO_MULTIPLE,
-            cons.Action.UNDO_MULTIPLE,
-            cons.Action.REDO_MULTIPLE,
-        ):
-            raise ValueError
-
-        main_in = cons.Document.MAIN in self.docs
-        tran_in = cons.Document.TRAN in self.docs
-        if not main_in and not tran_in:
-            raise ValueError
-
-        self.inserted_rows.sort()
-        self.removed_rows.sort()
-        self.updated_rows.sort()
-        self.updated_positions.sort()
-        self.updated_main_texts.sort()
-        self.updated_tran_texts.sort()
-
 
 class RevertableActionGroup(object):
 
-    """Group of revertable actions."""
+    """
+    Group of revertable actions.
+
+    Instance variables:
+
+        actions:     List of RevertableActions
+        description: Short one line description
+
+    """
 
     def __init__(self, actions, description):
 
-        self.actions = actions
+        self.actions     = actions
         self.description = description
 
 
@@ -155,18 +147,7 @@ class RevertableActionDelegate(Delegate):
         action_group = stack.pop(index)
         for action in reversed(action_group.actions):
             stack.insert(index, action)
-
         return len(action_group.actions)
-
-    def can_redo(self):
-        """Return True if something can be redone."""
-
-        return bool(self.redoables)
-
-    def can_undo(self):
-        """Return True if something can be undone."""
-
-        return bool(self.undoables)
 
     def _emit_notification(self, actions, register):
         """Emit signal with a notification action."""
@@ -184,21 +165,20 @@ class RevertableActionDelegate(Delegate):
             return self.redoables
         if register in (cons.Action.REDO, cons.Action.REDO_MULTIPLE):
             return self.undoables
-
         raise ValueError
 
     def _get_notification_action(self, actions, register):
         """
-        Get a dummy action to notify of changes.
+        Get dummy action to notify of changes.
 
         Return a RevertableAction that lists all changes that would be made if
         actions were registered (done or reverted) in the order given.
         """
         revert = bool(register != cons.Action.DO)
 
-        inserted_rows = []
-        removed_rows  = []
-        updated_rows  = []
+        inserted_rows      = []
+        removed_rows       = []
+        updated_rows       = []
         updated_positions  = []
         updated_main_texts = []
         updated_tran_texts = []
@@ -212,10 +192,10 @@ class RevertableActionDelegate(Delegate):
         for action in actions:
             if revert:
                 inserted = action.removed_rows
-                removed  = action.inserted_rows
+                removed = action.inserted_rows
             else:
                 inserted = action.inserted_rows
-                removed  = action.removed_rows
+                removed = action.removed_rows
 
             # Adjust previous updates due to rows being removed.
             if removed:
@@ -240,16 +220,16 @@ class RevertableActionDelegate(Delegate):
                         if updated_row >= inserted_row:
                             all_updated_rows[i][j] += 1
 
-            inserted_rows += inserted
-            removed_rows  += removed
-            updated_rows  += action.updated_rows
+            inserted_rows      += inserted
+            removed_rows       += removed
+            updated_rows       += action.updated_rows
             updated_positions  += action.updated_positions
             updated_main_texts += action.updated_main_texts
             updated_tran_texts += action.updated_tran_texts
 
         return RevertableAction(
             register=register,
-            docs=[cons.Document.MAIN, cons.Document.TRAN],
+            docs=[MAIN, TRAN],
             description='',
             revert_method=None,
             inserted_rows=listlib.sorted_unique(inserted_rows),
@@ -260,16 +240,6 @@ class RevertableActionDelegate(Delegate):
             updated_tran_texts=listlib.sorted_unique(updated_tran_texts),
         )
 
-    def get_signal(self, register):
-        """Get signal matching register."""
-
-        if register in (cons.Action.DO, cons.Action.DO_MULTIPLE):
-            return 'action_done'
-        if register in (cons.Action.UNDO, cons.Action.UNDO_MULTIPLE):
-            return 'action_undone'
-        if register in (cons.Action.REDO, cons.Action.REDO_MULTIPLE):
-            return 'action_redone'
-
     def _get_source_stack(self, register):
         """Get stack where action to register is."""
 
@@ -277,54 +247,7 @@ class RevertableActionDelegate(Delegate):
             return self.undoables
         if register in (cons.Action.REDO, cons.Action.REDO_MULTIPLE):
             return self.redoables
-
         raise ValueError
-
-    def group_actions(self, register, amount, description, emit_signal=True):
-        """Group registered actions as one entity."""
-
-        stack = self._get_destination_stack(register)
-        actions = []
-        for i in range(amount):
-            actions.append(stack.pop(0))
-            action_group = RevertableActionGroup(actions, description)
-        stack.insert(0, action_group)
-
-        if emit_signal:
-            self._emit_notification(reversed(actions), register)
-
-    def redo(self, amount=1):
-        """Redo actions."""
-
-        if amount == 1:
-            if not isinstance(self.redoables[0], RevertableActionGroup):
-                self.redoables[0].revert()
-                self.redoables.pop(0)
-                return
-
-        self._revert_multiple(amount, cons.Action.REDO_MULTIPLE)
-
-    def register_action(self, *args, **kwargs):
-        """
-        Register action done, undone or redone.
-
-        See RevertableAction.__init__ for arguments as they're passed directly
-        for the RevertableAction initialization.
-        """
-        if kwargs['register'] is None:
-            return
-
-        action = RevertableAction(*args, **kwargs)
-
-        # Restore action's original "DO" description if reverting.
-        if action.register == cons.Action.DO:
-            self._register_action_done(action)
-        elif action.register == cons.Action.UNDO:
-            action.description = self.undoables[0].description
-            self._register_action_undone(action)
-        elif action.register == cons.Action.REDO:
-            action.description = self.redoables[0].description
-            self._register_action_redone(action)
 
     def _register_action_done(self, action):
         """Register action done."""
@@ -363,7 +286,7 @@ class RevertableActionDelegate(Delegate):
         if action.emit_signal:
             self.emit('action_undone', action)
 
-    def _revert_multiple(self, amount, register):
+    def _revert_multiple(self, count, register):
         """Revert multiple actions."""
 
         signal = self.get_signal(register)
@@ -371,20 +294,95 @@ class RevertableActionDelegate(Delegate):
 
         self.block(signal)
         actions = []
-        for i in range(amount):
-            sub_amount = 1
+        for i in range(count):
+            sub_count = 1
             if isinstance(stack[0], RevertableActionGroup):
                 description = stack[0].description
-                sub_amount = self._break_action_group(stack)
-            for j in range(sub_amount):
+                sub_count = self._break_action_group(stack)
+            for j in range(sub_count):
                 action = stack[0]
                 actions.append(action)
                 action.revert()
                 stack.pop(0)
-            if sub_amount > 1:
-                self.group_actions(register, sub_amount, description, False)
+            if sub_count > 1:
+                self.group_actions(register, sub_count, description, False)
         self.unblock(signal)
         self._emit_notification(actions, register)
+
+    def _shift_changed_value(self, action, shift):
+        """Shift values of changed attributes."""
+
+        if MAIN in action.docs:
+            self.main_changed += shift
+        if TRAN in action.docs:
+            self.tran_changed += shift
+        if action.docs == [TRAN]:
+            self.tran_active = True
+
+    def can_redo(self):
+        """Return True if something can be redone."""
+
+        return bool(self.redoables)
+
+    def can_undo(self):
+        """Return True if something can be undone."""
+
+        return bool(self.undoables)
+
+    def get_signal(self, register):
+        """Get signal matching register."""
+
+        if register in (cons.Action.DO, cons.Action.DO_MULTIPLE):
+            return 'action_done'
+        if register in (cons.Action.UNDO, cons.Action.UNDO_MULTIPLE):
+            return 'action_undone'
+        if register in (cons.Action.REDO, cons.Action.REDO_MULTIPLE):
+            return 'action_redone'
+
+    def group_actions(self, register, count, description, emit_signal=True):
+        """Group registered actions as one entity."""
+
+        stack = self._get_destination_stack(register)
+        actions = []
+        for i in range(count):
+            actions.append(stack.pop(0))
+            action_group = RevertableActionGroup(actions, description)
+        stack.insert(0, action_group)
+
+        if emit_signal:
+            self._emit_notification(reversed(actions), register)
+
+    def redo(self, count=1):
+        """Redo actions."""
+
+        if count == 1:
+            if not isinstance(self.redoables[0], RevertableActionGroup):
+                self.redoables[0].revert()
+                self.redoables.pop(0)
+                return
+        self._revert_multiple(count, cons.Action.REDO_MULTIPLE)
+
+    def register_action(self, *args, **kwargs):
+        """
+        Register action done, undone or redone.
+
+        See RevertableAction.__init__ for arguments as they're passed directly
+        for the RevertableAction initialization.
+        """
+        if kwargs['register'] is None:
+            return
+
+        action = RevertableAction(*args, **kwargs)
+
+        # Restore action's original "DO" description if reverting.
+        if action.register == cons.Action.DO:
+            self._register_action_done(action)
+        elif action.register == cons.Action.UNDO:
+            action.description = self.undoables[0].description
+            self._register_action_undone(action)
+        elif action.register == cons.Action.REDO:
+            action.description = self.redoables[0].description
+            self._register_action_redone(action)
 
     def set_action_description(self, register, description):
         """Set description of the most recent action."""
@@ -394,23 +392,12 @@ class RevertableActionDelegate(Delegate):
         stack = self._get_destination_stack(register)
         stack[0].description = description
 
-    def _shift_changed_value(self, action, shift):
-        """Shift values of changed attributes."""
-
-        if cons.Document.MAIN in action.docs:
-            self.main_changed += shift
-        if cons.Document.TRAN in action.docs:
-            self.tran_changed += shift
-        if action.docs == [cons.Document.TRAN]:
-            self.tran_active = True
-
-    def undo(self, amount=1):
+    def undo(self, count=1):
         """Undo actions."""
 
-        if amount == 1:
+        if count == 1:
             if not isinstance(self.undoables[0], RevertableActionGroup):
                 self.undoables[0].revert()
                 self.undoables.pop(0)
                 return
-
-        self._revert_multiple(amount, cons.Action.UNDO_MULTIPLE)
+        self._revert_multiple(count, cons.Action.UNDO_MULTIPLE)

@@ -26,6 +26,13 @@ from gaupol.test              import Test
 
 class TestSubtitleFile(Test):
 
+    def test_get_newline_character(self):
+
+        for i, value in enumerate(cons.Newlines.values):
+            file_ = SubtitleFile('test', 'utf_8', i)
+            chars = file_._get_newline_character()
+            assert chars == value
+
     def test_attributes(self):
 
         for name in cons.Format.class_names:
@@ -33,21 +40,28 @@ class TestSubtitleFile(Test):
             assert isinstance(cls.format, int)
             assert isinstance(cls.mode, int)
             assert isinstance(cls.has_header, bool)
-            if cls.has_header:
-                assert isinstance(cls.header_template, str)
             re.compile(*cls.identifier)
 
-    def test_init(self):
+    def test_read_lines(self):
 
-        SubtitleFile('test', 'utf_8')
-        SubtitleFile('test', 'utf_8', cons.Newlines.UNIX)
+        path = self.get_subrip_path()
+        file_ = SubtitleFile(path, 'utf_8')
+        lines = file_._read_lines()
+        assert file_.newlines in range(3)
+        assert len(lines) > 0
+        for line in lines:
+            assert isinstance(line, basestring)
 
-    def test_get_newline_character(self):
+    def test_get_template_header(self):
 
-        for i, value in enumerate(cons.Newlines.values):
-            file_ = SubtitleFile('test', 'utf_8', i)
-            chars = file_._get_newline_character()
-            assert chars == value
+        path = self.get_subrip_path()
+        for name in cons.Format.class_names:
+            cls = eval(name)
+            if cls.has_header:
+                file_ = cls(path, 'utf_8')
+                header = file_.get_template_header()
+                assert isinstance(header, basestring)
+                assert header != ''
 
     def test_read_and_write(self):
 
@@ -70,13 +84,3 @@ class TestSubtitleFile(Test):
         file_.write(*data_1)
         data_2 = file_.read()
         assert data_2 == data_1
-
-    def test_read_lines(self):
-
-        path = self.get_subrip_path()
-        file_ = SubtitleFile(path, 'utf_8')
-        lines = file_._read_lines()
-        assert file_.newlines in range(3)
-        assert len(lines) > 0
-        for line in lines:
-            assert isinstance(line, basestring)

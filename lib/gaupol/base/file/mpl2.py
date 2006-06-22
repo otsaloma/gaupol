@@ -32,13 +32,13 @@ class MPL2(SubtitleFile):
     """MPL2 file."""
 
     format     = cons.Format.MPL2
-    mode       = cons.Mode.TIME
     has_header = False
     identifier = r'^\[\d+\]\[\d+\].*?$', 0
+    mode       = cons.Mode.TIME
 
     def read(self):
         """
-        Read MPL2 file.
+        Read file.
 
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
@@ -68,7 +68,7 @@ class MPL2(SubtitleFile):
 
     def write(self, shows, hides, texts):
         """
-        Write MPL2 file.
+        Write file.
 
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.

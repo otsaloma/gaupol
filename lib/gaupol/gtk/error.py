@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -21,12 +21,13 @@
 
 class GTKError(Exception):
 
-    """Base class for error classes."""
+    """Base class for errors."""
 
     pass
 
-class Cancelled(GTKError):
 
-    """Cancel or close button clicked."""
+class Default(GTKError):
+
+    """Operation not followed through with."""
 
     pass

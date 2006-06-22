@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -26,7 +26,7 @@ from gaupol.base.colcons      import *
 from gaupol.base.delegate     import Delegate
 
 
-DO = cons.Action.DO
+_DO = cons.Action.DO
 
 
 class PositionDelegate(Delegate):
@@ -42,13 +42,14 @@ class PositionDelegate(Delegate):
         maximum=None,
         minimum=None,
         gap=None,
-        register=DO
+        register=_DO
     ):
         """
         Adjust durations.
 
-        optimal and gap are seconds.
-        rows can be None to process all rows.
+        optimal: Seconds
+        gap: Seconds
+        rows: None to process all rows
         Return adjusted rows.
         """
         new_rows   = []
@@ -71,7 +72,7 @@ class PositionDelegate(Delegate):
 
             # Adjust to optimal.
             if optimal is not None:
-                length = sum(self.get_line_lengths(row, cons.Document.MAIN))
+                length = sum(self.get_line_lengths(row, MAIN))
                 durn_optimal = optimal * length
                 if durn < durn_optimal and lengthen:
                     hide = min(hide_max, show + durn_optimal)
@@ -107,12 +108,12 @@ class PositionDelegate(Delegate):
             self.set_action_description(register, _('Adjusting durations'))
         return new_rows
 
-    def adjust_frames(self, rows, point_1, point_2, register=DO):
+    def adjust_frames(self, rows, point_1, point_2, register=_DO):
         """
         Adjust times and frames in rows.
 
-        point_1 and point_2 are two-tuples of row and new show frame.
-        rows can be None to process all rows.
+        point_N: Tuples of row and new show frame
+        rows: None to process all rows
         """
         # Think of this as a linear transformation where current times are
         # located on the x-axis and correct times on the y-axis.
@@ -140,12 +141,12 @@ class PositionDelegate(Delegate):
         self.replace_positions(rows, new_times, new_frames, register)
         self.set_action_description(register, _('Adjusting frames'))
 
-    def adjust_times(self, rows, point_1, point_2, register=DO):
+    def adjust_times(self, rows, point_1, point_2, register=_DO):
         """
         Adjust times and frames in rows.
 
-        point_1 and point_2 are two tuples of row and new show time.
-        rows can be None to process all rows.
+        point_N: Tuples of row and new show time
+        rows: None to process all rows
         """
         # Think of this as a linear transformation where current times are
         # located on the x-axis and correct times on the y-axis.
@@ -198,11 +199,11 @@ class PositionDelegate(Delegate):
                 self.times[i][HIDE] = convert(self.frames[i][HIDE])
                 self.set_durations(i)
 
-    def convert_framerate(self, rows, current, correct, register=DO):
+    def convert_framerate(self, rows, current, correct, register=_DO):
         """
         Convert and set framerate.
 
-        rows can be None to process all rows.
+        rows: None to process all rows
         """
         signal = self.get_signal(register)
         self.block(signal)
@@ -234,7 +235,7 @@ class PositionDelegate(Delegate):
         self.unblock(signal)
         self.group_actions(register, 2, _('Converting framerate'))
 
-    def set_framerate(self, framerate, register=DO):
+    def set_framerate(self, framerate, register=_DO):
         """Set framerate variables."""
 
         orig_framerate = self.framerate
@@ -243,25 +244,25 @@ class PositionDelegate(Delegate):
 
         self.register_action(
             register=register,
-            docs=[cons.Document.MAIN, cons.Document.TRAN],
+            docs=[MAIN, TRAN],
             description=_('Setting framerate'),
             revert_method=self.set_framerate,
             revert_args=[orig_framerate],
         )
 
-    def shift_frames(self, rows, amount, register=DO):
+    def shift_frames(self, rows, count, register=_DO):
         """
         Shift times and frames by amount of frames.
 
-        rows can be None to process all rows.
+        rows: None to process all rows
         """
         new_times  = []
         new_frames = []
         rows = rows or range(len(self.times))
         for row in rows:
             time, frame = self.expand_frames(
-                max(0, self.frames[row][SHOW] + amount),
-                max(0, self.frames[row][HIDE] + amount)
+                max(0, self.frames[row][SHOW] + count),
+                max(0, self.frames[row][HIDE] + count)
             )
             new_times.append(time)
             new_frames.append(frame)
@@ -269,19 +270,19 @@ class PositionDelegate(Delegate):
         self.replace_positions(rows, new_times, new_frames, register)
         self.set_action_description(register, _('Shifting frames'))
 
-    def shift_seconds(self, rows, amount, register=DO):
+    def shift_seconds(self, rows, count, register=_DO):
         """
         Shift times and frames by amount of seconds.
 
-        rows can be None to process all rows.
+        rows: None to process all rows
         """
         new_times  = []
         new_frames = []
         rows = rows or range(len(self.times))
         for row in rows:
             time, frame = self.expand_times(
-                self.calc.add_seconds_to_time(self.times[row][SHOW], amount),
-                self.calc.add_seconds_to_time(self.times[row][HIDE], amount)
+                self.calc.add_seconds_to_time(self.times[row][SHOW], count),
+                self.calc.add_seconds_to_time(self.times[row][HIDE], count)
             )
             new_times.append(time)
             new_frames.append(frame)

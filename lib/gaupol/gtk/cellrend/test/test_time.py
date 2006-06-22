@@ -35,7 +35,7 @@ if __name__ == '__main__':
     tree_view = gtk.TreeView()
     tree_view.set_headers_visible(False)
     store = gtk.ListStore(gobject.TYPE_STRING)
-    store.append(['12:34:56,789'])
+    store.append(['12:34:56.789'])
     tree_view.set_model(store)
 
     cell_renderer = CellRendererTime()

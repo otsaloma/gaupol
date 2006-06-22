@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Entry for time data in format hh:mm:ss,sss."""
+"""Entry for time data in format HH:MM:SS.SSS."""
 
 
 import re
@@ -24,9 +24,11 @@ import re
 import gobject
 import gtk
 
+from gaupol.gtk.util import gtklib
 
-RE_TIME   = re.compile(r'^\d\d:[0-5]\d:[0-5]\d,\d\d\d$')
-RE_NUMBER = re.compile(r'\d')
+
+_RE_TIME   = re.compile(r'^\d\d:[0-5]\d:[0-5]\d.\d\d\d$')
+_RE_NUMBER = re.compile(r'\d')
 
 
 def blockedmethod(function):
@@ -45,7 +47,15 @@ def blockedmethod(function):
 
 class EntryTime(gtk.Entry):
 
-    """Entry for time data in format hh:mm:ss,sss."""
+    """
+    Entry for time data in format HH:MM:SS.SSS.
+
+    Instance variables:
+
+        _delete_signal: Delete signal to block
+        _insert_signal: Insert signal to block
+
+    """
 
     def __init__(self):
 
@@ -61,12 +71,12 @@ class EntryTime(gtk.Entry):
     def _init_signals(self):
         """Initialize signals."""
 
-        self.connect('cut-clipboard'   , self._on_cut_clipboard   )
-        self.connect('key-press-event' , self._on_key_press_event )
-        self.connect('toggle-overwrite', self._on_toggle_overwrite)
+        gtklib.connect(self, self, 'cut-clipboard')
+        gtklib.connect(self, self, 'key-press-event')
+        gtklib.connect(self, self, 'toggle-overwrite')
 
-        self._delete_signal = self.connect('delete-text', self._on_delete_text)
-        self._insert_signal = self.connect('insert-text', self._on_insert_text)
+        self._delete_signal = gtklib.connect(self, self, 'delete-text')
+        self._insert_signal = gtklib.connect(self, self, 'insert-text')
 
     @blockedmethod
     def _insert_text(self, text):
@@ -77,7 +87,7 @@ class EntryTime(gtk.Entry):
         orig_text = self.get_text()
         new_text = orig_text[:pos] + text + orig_text[pos + length:]
 
-        if not RE_TIME.match(new_text):
+        if not _RE_TIME.match(new_text):
             return
         self.set_text(new_text)
 
@@ -168,7 +178,7 @@ class EntryTime(gtk.Entry):
 
         start, end = self.get_selection_bounds()
         orig_text = self.get_text()
-        zero_text = RE_NUMBER.sub('0', orig_text[start:end])
+        zero_text = _RE_NUMBER.sub('0', orig_text[start:end])
         full_text = orig_text[:start] + zero_text + orig_text[end:]
 
         self.set_text(full_text)

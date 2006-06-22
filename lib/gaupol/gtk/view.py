@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,44 +16,39 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""A list widget to display subtitle data."""
+"""List widget to display subtitle data."""
 
-
-try:
-    from psyco.classes import *
-except ImportError:
-    pass
 
 import gobject
 import gtk
 import pango
 
-from gaupol.gtk.colcons import *
+from gaupol.gtk                  import cons
 from gaupol.gtk.cellrend.classes import *
-from gaupol.gtk.cons     import *
+from gaupol.gtk.colcons          import *
 from gaupol.gtk.util             import config
 
 
-# Normal column header
-norm_attr = pango.AttrList()
-norm_attr.insert(pango.AttrWeight(pango.WEIGHT_NORMAL, 0, -1))
-
-# Focused column header
-emph_attr = pango.AttrList()
-emph_attr.insert(pango.AttrWeight(pango.WEIGHT_BOLD, 0, -1))
+_NORMAL_ATTR = pango.AttrList()
+_NORMAL_ATTR.insert(pango.AttrWeight(pango.WEIGHT_NORMAL, 0, -1))
+_FOCUS_ATTR = pango.AttrList()
+_FOCUS_ATTR.insert(pango.AttrWeight(pango.WEIGHT_BOLD, 0, -1))
 
 
 class View(gtk.TreeView):
 
-    """A list widget to display subtitle data."""
+    """List widget to display subtitle data."""
 
     def __init__(self, edit_mode):
 
         gtk.TreeView.__init__(self)
 
-        # Column whose header is currently emphasized. 99 % of the time this
-        # should be the same as the column that has focus, but not always.
         self._active_col = None
+
+        self._init_widget(edit_mode)
+
+    def _init_widget(self, edit_mode):
+        """Initialize tree view."""
 
         self.set_headers_visible(True)
         self.set_rules_hint(True)
@@ -63,65 +58,49 @@ class View(gtk.TreeView):
         selection.set_mode(gtk.SELECTION_MULTIPLE)
         selection.unselect_all()
 
-        if edit_mode == Mode.TIME:
+        if edit_mode == cons.Mode.TIME:
             columns = [gobject.TYPE_INT] + [gobject.TYPE_STRING] * 5
-            cell_renderer_1 = CellRendererTime()
-            cell_renderer_2 = CellRendererTime()
-            cell_renderer_3 = CellRendererTime()
-        elif edit_mode == Mode.FRAME:
+            pos_renderer = CellRendererTime
+        elif edit_mode == cons.Mode.FRAME:
             columns = [gobject.TYPE_INT] * 4 + [gobject.TYPE_STRING] * 2
-            cell_renderer_1 = CellRendererInteger()
-            cell_renderer_2 = CellRendererInteger()
-            cell_renderer_3 = CellRendererInteger()
-        cell_renderer_0 = CellRendererInteger()
-        cell_renderer_4 = CellRendererMultiline()
-        cell_renderer_5 = CellRendererMultiline()
-
-        if config.Editor.use_default_font:
-            font = ''
-        else:
-            font = config.Editor.font
-
-        for i in range(6):
-            cell_renderer = eval('cell_renderer_%d' % i)
-            if i != 0:
-                cell_renderer.set_editable(True)
-            cell_renderer.props.font = font
-
+            pos_renderer = CellRendererInteger
         store = gtk.ListStore(*columns)
         self.set_model(store)
 
-        TVC   = gtk.TreeViewColumn
-        names = Column.display_names
-        tree_view_column_0 = TVC(names[0], cell_renderer_0, text=0)
-        tree_view_column_1 = TVC(names[1], cell_renderer_1, text=1)
-        tree_view_column_2 = TVC(names[2], cell_renderer_2, text=2)
-        tree_view_column_3 = TVC(names[3], cell_renderer_3, text=3)
-        tree_view_column_4 = TVC(names[4], cell_renderer_4, text=4)
-        tree_view_column_5 = TVC(names[5], cell_renderer_5, text=5)
+        names = cons.Column.display_names
+        font = ''
+        if not config.editor.use_default_font:
+            font = config.editor.font
 
-        for i in range(6):
+        for i, column in enumerate([
+            gtk.TreeViewColumn(names[0], CellRendererInteger()  , text=0),
+            gtk.TreeViewColumn(names[1], pos_renderer()         , text=1),
+            gtk.TreeViewColumn(names[2], pos_renderer()         , text=2),
+            gtk.TreeViewColumn(names[3], pos_renderer()         , text=3),
+            gtk.TreeViewColumn(names[4], CellRendererMultiline(), text=4),
+            gtk.TreeViewColumn(names[5], CellRendererMultiline(), text=5),
+        ]):
+            self.append_column(column)
+            column.set_clickable(True)
+            column.set_resizable(True)
+            if not i in config.editor.visible_cols:
+                column.set_visible(False)
 
-            tree_view_column = eval('tree_view_column_%d' % i)
-            self.append_column(tree_view_column)
-            tree_view_column.set_clickable(True)
-            tree_view_column.set_resizable(True)
-            if not i in config.Editor.visible_cols:
-                tree_view_column.set_visible(False)
+            renderer = column.get_cell_renderers()[0]
+            if i != 0:
+                renderer.set_editable(True)
+            renderer.props.font = font
 
-            # Set a label widget as the tree_view_column title.
-            label = gtk.Label(tree_view_column.get_title())
-            tree_view_column.set_widget(label)
+            # Set column label widget wide enough that it fits the focused
+            # title without having to grow wider.
+            label = gtk.Label(column.get_title())
+            column.set_widget(label)
             label.show()
-
-            # Set the label wide enough that it fits the emphasized title
-            # without having to grow wider.
-            label.set_attributes(emph_attr)
+            label.set_attributes(_FOCUS_ATTR)
             width = label.size_request()[0]
             label.set_size_request(width, -1)
-            label.set_attributes(norm_attr)
+            label.set_attributes(_NORMAL_ATTR)
 
-        # Enable type-ahead search for number column.
         self.set_enable_search(True)
         self.set_search_column(NUMB)
 
@@ -131,30 +110,23 @@ class View(gtk.TreeView):
 
         Return row, column.
         """
-        row, tree_view_column = self.get_cursor()
-
-        # Get an integer if row is a one-tuple.
+        row, column = self.get_cursor()
         try:
             row = row[0]
         except TypeError:
             pass
-
-        if tree_view_column is None:
-            col = None
+        if column is not None:
+            col = self.get_columns().index(column)
         else:
-            tree_view_columns = self.get_columns()
-            col = tree_view_columns.index(tree_view_column)
+            col = None
 
         return row, col
 
     def get_selected_rows(self):
         """Get selected rows."""
 
-        selection = self.get_selection()
-        selected_rows = selection.get_selected_rows()[1]
-
-        # Get an integers from the row one-tuples.
-        return list(row[0] for row in selected_rows)
+        selected_rows = self.get_selection().get_selected_rows()[1]
+        return list(x[0] for x in selected_rows)
 
     def scroll_to_row(self, row):
         """Scroll to row."""
@@ -163,13 +135,12 @@ class View(gtk.TreeView):
 
     def select_rows(self, rows):
         """
-        Select rows clearing previous selection.
+        Select rows, clearing previous selection.
 
-        rows can be an empty list to unselect all.
+        rows: Empty list or to unselect all.
         """
         selection = self.get_selection()
         selection.unselect_all()
-
         if not rows:
             return
         rows = sorted(rows)
@@ -190,12 +161,16 @@ class View(gtk.TreeView):
             selection.select_range(entry[0], entry[-1])
 
     def set_focus(self, row, col):
-        """Move focus to row, col."""
+        """Set focus to row, col."""
 
-        self.set_cursor(row, self.get_column(col))
+        try:
+            column = self.get_column(col)
+        except TypeError:
+            column = None
+        self.set_cursor(row, column)
 
-    def set_active_column(self):
-        """Emphasize the active column title."""
+    def set_focus_column(self):
+        """Emphasize focused column title."""
 
         col = self.get_focus()[1]
         if col == self._active_col:
@@ -203,51 +178,12 @@ class View(gtk.TreeView):
 
         try:
             label = self.get_column(self._active_col).get_widget()
-            label.set_attributes(norm_attr)
+            label.set_attributes(_NORMAL_ATTR)
         except TypeError:
             pass
         try:
             label = self.get_column(col).get_widget()
-            label.set_attributes(emph_attr)
+            label.set_attributes(_FOCUS_ATTR)
             self._active_col = col
         except TypeError:
             pass
-
-
-if __name__ == '__main__':
-
-    from gaupol.test import Test
-
-    class TestView(Test):
-
-        def __init__(self):
-
-            Test.__init__(self)
-            self.view = View(Mode.TIME)
-            self.view = View(Mode.FRAME)
-            store = self.view.get_model()
-            store.append([1, 2, 3, 1, 'test', 'test'])
-            store.append([2, 6, 7, 1, 'test', 'test'])
-
-        def test_get_focus(self):
-
-            self.view.set_focus(1, 3)
-            assert self.view.get_focus() == (1, 3)
-
-        def test_get_selected_rows(self):
-
-            selection = self.view.get_selection()
-            selection.unselect_all()
-            assert self.view.get_selected_rows() == []
-            selection.select_range(0, 1)
-            assert self.view.get_selected_rows() == [0, 1]
-
-        def test_sets(self):
-
-            self.view.scroll_to_row(1)
-            self.view.select_rows([])
-            self.view.select_rows([0, 1])
-            self.view.set_focus(0, 4)
-            self.view.set_active_column()
-
-    TestView().run()

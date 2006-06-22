@@ -30,20 +30,24 @@ class TagConverter(object):
     """
     Conversions between tags of different formats.
 
+    Instance variables:
+
+        _from_regexs: List of regex, replacement, count
+        _to_regexs:   List of regex, replacement, count
+
     Tag conversions are done via an internal format, which has a HTML style
     syntax. All essential tags are converted and rest removed.
     """
 
     def __init__(self, from_format, to_format):
 
-        # Lists of lists: [regex, replacement, count]
         self._from_regexs = []
         self._to_regexs   = []
 
         from_name = cons.Format.class_names[from_format]
-        to_name   = cons.Format.class_names[  to_format]
+        to_name   = cons.Format.class_names[to_format]
         from_tags = eval(from_name).decode_tags
-        to_tags   = eval(  to_name).encode_tags
+        to_tags   = eval(to_name).encode_tags
 
         for entry in from_tags:
             regex = re.compile(entry[0], entry[1])

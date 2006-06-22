@@ -19,6 +19,7 @@
 import os
 
 from gaupol.base                  import cons
+from gaupol.base.colcons          import *
 from gaupol.base.delegate.preview import PreviewDelegate
 from gaupol.test                  import Test
 
@@ -32,22 +33,22 @@ class TestPreviewDelegate(Test):
 
     def test_get_subtitle_path(self):
 
-        value = self.delegate._get_subtitle_path(cons.Document.MAIN)
+        value = self.delegate._get_subtitle_path(MAIN)
         assert value == (self.project.main_file.path, False)
 
-        self.project.clear_texts([0], cons.Document.MAIN)
-        value = self.delegate._get_subtitle_path(cons.Document.MAIN)
+        self.project.clear_texts([0], MAIN)
+        value = self.delegate._get_subtitle_path(MAIN)
         assert value[0] != self.project.main_file.path
         assert value[1] is True
         self.files.append(value[0])
 
     def test_get_temp_file_path(self):
 
-        path = self.project.get_temp_file_path(cons.Document.MAIN)
+        path = self.project.get_temp_file_path(MAIN)
         assert os.path.isfile(path)
         self.files.append(path)
 
-        path = self.project.get_temp_file_path(cons.Document.TRAN)
+        path = self.project.get_temp_file_path(TRAN)
         assert os.path.isfile(path)
         self.files.append(path)
 

@@ -17,12 +17,9 @@
 
 
 from gaupol.base                 import cons
+from gaupol.base.colcons         import *
 from gaupol.base.delegate.format import FormatDelegate
 from gaupol.test                 import Test
-
-
-MAIN = cons.Document.MAIN
-TRAN = cons.Document.TRAN
 
 
 class TestFormatDelegate(Test):
@@ -35,6 +32,11 @@ class TestFormatDelegate(Test):
         for i in range(len(self.project.main_texts)):
             self.project.main_texts[i] = 'test\ntest'
             self.project.tran_texts[i] = 'test\ntest'
+
+    def test_get_format_class_name(self):
+
+        name = self.delegate._get_format_class_name(MAIN)
+        assert name in cons.Format.class_names
 
     def test_change_case(self):
 
@@ -49,11 +51,6 @@ class TestFormatDelegate(Test):
         self.project.redo()
         assert self.project.main_texts[1] == 'TEST\nTEST'
         assert self.project.main_texts[3] == 'TEST\nTEST'
-
-    def test_get_format_class_name(self):
-
-        name = self.delegate._get_format_class_name(MAIN)
-        assert name in cons.Format.class_names
 
     def test_get_tag_regex(self):
 

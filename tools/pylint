@@ -16,8 +16,7 @@ os.environ['PYTHONPATH'] = LIB_DIR + ':' + os.environ['PYTHONPATH']
 sys.path.insert(0, LIB_DIR)
 
 from gaupol.base.util import wwwlib
-temp_dir = tempfile.gettempdir()
-report = os.path.join(temp_dir, 'gaupol.pylint')
+report = os.path.join(tempfile.gettempdir(), 'gaupol.pylint')
 fobj = os.popen('pylint %s' % ' '.join(sys.argv[1:]))
 output = fobj.read()
 fobj.close()
