@@ -1,3 +1,21 @@
+2006-06-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/gaupol.desktop.in:
+	* data/glade/pref-dialog.glade:
+	* data/glade/previewerr-dialog.glade:
+	* lib/gaupol/base/icons.py:
+	* lib/gaupol/gtk/delegate/pref.py:
+	* lib/gaupol/gtk/delegate/test/test_pref.py:
+	* lib/gaupol/gtk/dialog/pref.py:
+	* lib/gaupol/gtk/dialog/previewerr.py:
+	* lib/gaupol/gtk/dialog/test/test_pref.py:
+	* lib/gaupol/gtk/dialog/test/test_previewerr.py:
+	* lib/gaupol/gtk/icons.py:
+	* lib/gaupol/gtk/test/test_app.py:
+	* lib/gaupol/gtk/util/conf.py:
+	* lib/gaupol/gtk/util/test/test_conf.py:
+	  Renamed.
+
 2006-06-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/gaupol.desktop:

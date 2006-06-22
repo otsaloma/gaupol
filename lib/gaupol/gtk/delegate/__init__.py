@@ -37,7 +37,7 @@ _MODULES = (
     'help',
     'menuupdate',
     'position',
-    'preferences',
+    'pref',
     'preview',
     'spellcheck',
     'view',
