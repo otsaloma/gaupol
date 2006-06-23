@@ -1,5 +1,10 @@
 2006-06-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/dialog/find.py:
+	  Fixed bugs.
+
+2006-06-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/find-dialog.glade:
 	* data/glade/replace-dialog.glade:
 	  Removed selected rows targets.

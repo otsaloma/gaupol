@@ -607,6 +607,7 @@ class ReplaceDialog(FindDialog):
 
         self._replace_all_button.set_sensitive(False)
         self._replace_button.set_sensitive(False)
+        self._pattern_entry.emit('changed')
         self._replacement_entry.emit('changed')
 
     def _init_signals(self):
@@ -627,7 +628,6 @@ class ReplaceDialog(FindDialog):
 
         sensitive = bool(entry.get_text())
         self._replace_all_button.set_sensitive(sensitive)
-        self._replace_button.set_sensitive(sensitive)
 
     def _on_replace_all_button_clicked(self, *args):
         """Replace all."""
@@ -670,11 +670,18 @@ class ReplaceDialog(FindDialog):
     def _on_replace_button_clicked(self, *args):
         """Replace current match."""
 
+        orig_len = len(self._get_text(self._page, self._row, self._doc))
+
         self._replace_button.grab_focus()
         self._set_replacement(self._page)
         self._page.project.replace()
         self.emit('update')
         self._add_replacement()
+
+        new_len = len(self._get_text(self._page, self._row, self._doc))
+        if self._last_is_next:
+            shift = new_len - orig_len
+            self._pos += shift
 
         try:
             (self.previous, self.next)[self._last_is_next]()
@@ -693,9 +700,6 @@ class ReplaceDialog(FindDialog):
         Raise Default if no replacement.
         """
         replacement = self._replacement_entry.get_text()
-        if not replacement:
-            raise Default
-
         page.project.set_find_replacement(replacement)
 
     def _succeed(self, page, row, doc, match_span, next):

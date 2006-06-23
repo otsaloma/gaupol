@@ -7,7 +7,6 @@ Legend:
 Plans for 0.5.0
 ===============
 
-  * Test all stuff
   * Print set_sensitivities
   * Profile
   * PyLint, py.test
