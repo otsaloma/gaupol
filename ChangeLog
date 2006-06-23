@@ -1,5 +1,10 @@
 2006-06-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/glade/posadjust-dialog.glade:
+	  Changed current entry sensitivities back to true.
+
+2006-06-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/gtk/delegate/action.py:
 	* lib/gaupol/gtk/delegate/appupdate.py:
 	* lib/gaupol/gtk/delegate/edit.py:

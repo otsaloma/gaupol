@@ -322,7 +322,6 @@
 			  <child>
 			    <widget class="GtkEntry" id="current_entry_1">
 			      <property name="visible">True</property>
-			      <property name="sensitive">False</property>
 			      <property name="editable">False</property>
 			      <property name="visibility">True</property>
 			      <property name="max_length">12</property>
@@ -714,7 +713,6 @@
 			  <child>
 			    <widget class="GtkEntry" id="current_entry_2">
 			      <property name="visible">True</property>
-			      <property name="sensitive">False</property>
 			      <property name="editable">False</property>
 			      <property name="visibility">True</property>
 			      <property name="max_length">12</property>
