@@ -168,21 +168,18 @@ class ActionDelegate(Delegate):
         """Update view after doing action."""
 
         self._reload_updated_data(action)
-        self.set_sensitivities()
 
     def on_project_action_redone(self, action):
         """Update view after redoing action."""
 
         self._reload_updated_data(action)
         self._show_updated_data(action)
-        self.set_sensitivities()
 
     def on_project_action_undone(self, action):
         """Update view after undoing action."""
 
         self._reload_updated_data(action)
         self._show_updated_data(action)
-        self.set_sensitivities()
 
     def on_redo_action_activate(self, *args):
         """Redo the last undone action."""
@@ -211,6 +208,7 @@ class ActionDelegate(Delegate):
         page = self.get_current_page()
         page.project.redo(count)
         page.view.grab_focus()
+        self.set_sensitivities(page)
         gtklib.set_cursor_normal(self._window)
 
     def undo(self, count=1):
@@ -220,4 +218,5 @@ class ActionDelegate(Delegate):
         page = self.get_current_page()
         page.project.undo(count)
         page.view.grab_focus()
+        self.set_sensitivities(page)
         gtklib.set_cursor_normal(self._window)

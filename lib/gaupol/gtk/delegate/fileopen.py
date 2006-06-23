@@ -41,7 +41,8 @@ try:
     import chardet
     _CHARDET_AVAILABLE = True
 except ImportError:
-    print 'chardet not found. Encoding auto-detection not possible.'
+    print 'Universal Encoding Detector not found.'
+    print 'Encoding auto-detection not possible.'
     _CHARDET_AVAILABLE = False
 
 

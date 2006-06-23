@@ -66,8 +66,9 @@ class GUIInitDelegate(Delegate):
             gtk.gdk.ACTION_LINK|gtk.gdk.ACTION_PRIVATE|gtk.gdk.ACTION_ASK
         )
 
-        gtklib.connect(self, '_notebook', 'switch-page'       , False)
         gtklib.connect(self, '_notebook', 'drag-data-received', False)
+        self._notebook.connect_after(
+            'switch-page', self.on_notebook_switch_page)
 
     def _init_output_window(self):
         """Initialize output window."""

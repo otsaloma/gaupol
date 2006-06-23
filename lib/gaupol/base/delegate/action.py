@@ -138,6 +138,11 @@ class RevertableActionDelegate(Delegate):
 
     """Managing revertable actions."""
 
+    def __init__(self, *args, **kwargs):
+
+        Delegate.__init__(self, *args, **kwargs)
+        self._revert_desc = None
+
     def _break_action_group(self, stack, index=0):
         """
         Break action group in stack into individual actions.
@@ -300,10 +305,10 @@ class RevertableActionDelegate(Delegate):
                 description = stack[0].description
                 sub_count = self._break_action_group(stack)
             for j in range(sub_count):
-                action = stack[0]
+                self._revert_desc = stack[0].description
+                action = stack.pop(0)
                 actions.append(action)
                 action.revert()
-                stack.pop(0)
             if sub_count > 1:
                 self.group_actions(register, sub_count, description, False)
         self.unblock(signal)
@@ -357,8 +362,8 @@ class RevertableActionDelegate(Delegate):
 
         if count == 1:
             if not isinstance(self.redoables[0], RevertableActionGroup):
-                self.redoables[0].revert()
-                self.redoables.pop(0)
+                self._revert_desc = self.redoables[0].description
+                self.redoables.pop(0).revert()
                 return
         self._revert_multiple(count, cons.Action.REDO_MULTIPLE)
 
@@ -378,10 +383,10 @@ class RevertableActionDelegate(Delegate):
         if action.register == cons.Action.DO:
             self._register_action_done(action)
         elif action.register == cons.Action.UNDO:
-            action.description = self.undoables[0].description
+            action.description = self._revert_desc
             self._register_action_undone(action)
         elif action.register == cons.Action.REDO:
-            action.description = self.redoables[0].description
+            action.description = self._revert_desc
             self._register_action_redone(action)
 
     def set_action_description(self, register, description):
@@ -397,7 +402,7 @@ class RevertableActionDelegate(Delegate):
 
         if count == 1:
             if not isinstance(self.undoables[0], RevertableActionGroup):
-                self.undoables[0].revert()
-                self.undoables.pop(0)
+                self._revert_desc = self.undoables[0].description
+                self.undoables.pop(0).revert()
                 return
         self._revert_multiple(count, cons.Action.UNDO_MULTIPLE)

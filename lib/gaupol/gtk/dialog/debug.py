@@ -256,7 +256,7 @@ class DebugDialog(object):
 
         self._insert_text('Traceback', 'header')
         self._insert_text('\n\n', 'text')
-        self._print_traceback(tb)
+        self._print_traceback(tb, 100)
         exception = traceback.format_exception_only(exctype, value)[0]
         try:
             exception, message = exception.split(' ', 1)

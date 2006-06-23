@@ -268,7 +268,7 @@ class EditDelegate(Delegate):
 
         if excess > 0:
             self.unblock(signal)
-            self.group_actions(register, 2, '')
+            self.group_actions(register, 2, _('Pasting texts'))
         self.set_action_description(register, _('Pasting texts'))
 
         return rows

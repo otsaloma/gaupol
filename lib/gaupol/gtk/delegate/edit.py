@@ -293,6 +293,7 @@ class EditDelegate(Delegate):
         doc  = page.text_column_to_document(col)
 
         page.project.clear_texts(rows, doc)
+        self.set_sensitivities(page)
 
     def on_copy_texts_activate(self, *args):
         """Copy selected texts to clipboard."""
@@ -318,6 +319,7 @@ class EditDelegate(Delegate):
         page.project.cut_texts(rows, doc)
         text = page.project.clipboard.get_data_as_string()
         self._clipboard.set_text(text)
+        self.set_sensitivities(page)
 
     def on_edit_value_activate(self, *args):
         """Edit focused cell."""
@@ -347,6 +349,7 @@ class EditDelegate(Delegate):
         rows = range(start_row, start_row + amount)
         page.project.insert_subtitles(rows)
         page.view.select_rows(rows)
+        self.set_sensitivities(page)
 
     def on_invert_selection_activate(self, *args):
         """Invert selection."""
@@ -358,6 +361,7 @@ class EditDelegate(Delegate):
             rows.remove(row)
         page.view.select_rows(rows)
         page.view.grab_focus()
+        self.set_sensitivities(page)
 
     def on_paste_texts_activate(self, *args):
         """Paste texts from the clipboard."""
@@ -379,6 +383,7 @@ class EditDelegate(Delegate):
                 count
             ) % count
             self.set_status_message(message)
+        self.set_sensitivities(page)
 
     def on_remove_subtitles_activate(self, *args):
         """Remove selected subtitles."""
@@ -391,6 +396,7 @@ class EditDelegate(Delegate):
         if page.project.times:
             row = min(rows[0], len(page.project.times) - 1)
             page.view.set_focus(row, col)
+        self.set_sensitivities(page)
 
     def on_select_all_activate(self, *args):
         """Select all subtitles."""
@@ -399,6 +405,7 @@ class EditDelegate(Delegate):
         selection = page.view.get_selection()
         selection.select_all()
         page.view.grab_focus()
+        self.set_sensitivities(page)
 
     def on_view_cell_edited(self, cell_renderer, value, row, col):
         """Finish editing cell."""
@@ -426,6 +433,7 @@ class EditDelegate(Delegate):
             page.project.set_text(row, col - 4, value)
             self.set_character_status(page)
 
+        self.set_sensitivities(page)
         gtklib.set_cursor_normal(self._window)
 
     def on_view_cell_editing_canceled(self, *args):

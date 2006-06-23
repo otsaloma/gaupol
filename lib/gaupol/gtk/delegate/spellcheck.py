@@ -39,9 +39,11 @@ try:
         raise ImportError
     _ENCHANT_AVAILABLE = True
 except ImportError:
-    print 'PyEnchant 1.1.3 or greater not found. Spell-checking not possible.'
+    print 'PyEnchant 1.1.3 or greater not found.'
+    print 'Spell-checking not possible.'
 except enchant.Error, message:
-    print 'PyEnchant error: %s. Spell-checking not possible.' % message
+    print 'PyEnchant error: %s.' % message
+    print 'Spell-checking not possible.'
 
 
 class CheckSpellingAction(UIMAction):
@@ -118,6 +120,7 @@ class SpellCheckDelegate(Delegate):
         page.project.replace_both_texts(rows, texts)
         page.project.set_action_description(
             cons.Action.DO, _('Spell-checking'))
+        self.set_sensitivities(page)
 
     def _on_page_selected(self, dialog, page):
         """Select page."""

@@ -1,5 +1,24 @@
 2006-06-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/delegate/action.py:
+	* lib/gaupol/base/delegate/edit.py:
+	* lib/gaupol/gtk/delegate/action.py:
+	* lib/gaupol/gtk/delegate/edit.py:
+	* lib/gaupol/gtk/delegate/fileopen.py:
+	* lib/gaupol/gtk/delegate/filesave.py:
+	* lib/gaupol/gtk/delegate/find.py:
+	* lib/gaupol/gtk/delegate/format.py:
+	* lib/gaupol/gtk/delegate/guiinit.py:
+	* lib/gaupol/gtk/delegate/position.py:
+	* lib/gaupol/gtk/delegate/spellcheck.py:
+	* lib/gaupol/gtk/delegate/test/test_find.py:
+	* lib/gaupol/gtk/dialog/debug.py:
+	* lib/gaupol/gtk/dialog/find.py:
+	* lib/gaupol/gtk/dialog/spellcheck.py:
+	  Fixed bugs.
+
+2006-06-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol:
 	* lib/gaupol/base/delegate/action.py:
 	* lib/gaupol/base/delegate/edit.py:

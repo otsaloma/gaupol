@@ -182,6 +182,7 @@ class FormatDelegate(Delegate):
         doc  = page.text_column_to_document(col)
 
         page.project.change_case(rows, doc, method)
+        self.set_sensitivities(page)
 
     def on_toggle_dialog_lines_activate(self, *args):
         """Toggle dialog lines."""
@@ -193,6 +194,7 @@ class FormatDelegate(Delegate):
 
         page.project.toggle_dialog_lines(rows, doc)
         self.set_character_status(page)
+        self.set_sensitivities(page)
 
     def on_toggle_italicization_activate(self, *args):
         """Toggle italicization."""
@@ -203,6 +205,7 @@ class FormatDelegate(Delegate):
         doc  = page.text_column_to_document(col)
 
         page.project.toggle_italicization(rows, doc)
+        self.set_sensitivities(page)
 
     def on_use_lower_case_activate(self, *args):
         """Use lower case."""

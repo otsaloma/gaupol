@@ -19,7 +19,7 @@
 """Dialog for checking spelling."""
 
 
-# PyEnchant problems:
+# Known problems:
 # (1) Unicoding
 # (2) User dictionaries
 # (3) Memory freeing
@@ -158,6 +158,16 @@ class SpellCheckDialog(gobject.GObject):
     def _advance(self):
         """Advance to next spelling error."""
 
+        loop = True
+        while loop:
+            loop = self._advance_current()
+
+    def _advance_current(self):
+        """
+        Advance to next spelling error in current text.
+
+        Return True if needed to be called again.
+        """
         try:
             self._checker.next()
         except StopIteration:
@@ -170,8 +180,8 @@ class SpellCheckDialog(gobject.GObject):
                 self._set_next_text()
             except IndexError:
                 self._set_done()
-                return
-            return self._advance()
+                return False
+            return True
 
         col = self._page.document_to_text_column(self._doc)
         self._page.view.set_focus(self._row, col)
@@ -194,6 +204,7 @@ class SpellCheckDialog(gobject.GObject):
         self._entry.set_text(u'')
         self._fill_tree_view(self._checker.suggest())
         self._tree_view.grab_focus()
+        return False
 
     def _fill_tree_view(self, suggestions, select=True):
         """Fill tree view with suggestions."""
@@ -488,8 +499,10 @@ class SpellCheckDialog(gobject.GObject):
         Raise IndexError if done.
         """
         try:
-            self._texts[self._row + 1]
-            self._row += 1
+            while True:
+                self._row += 1
+                if self._texts[self._row]:
+                    break
         except IndexError:
             if self._doc == MAIN and TTXT in conf.spell_check.cols:
                 self._set_document(TRAN)
@@ -555,4 +568,5 @@ class SpellCheckDialog(gobject.GObject):
         self._set_next_text()
         self._dialog.show()
         self._advance()
+
         return self._dialog.run()

@@ -86,6 +86,11 @@ class FindDialog(gobject.GObject):
             None,
             ()
         ),
+        'update': (
+            gobject.SIGNAL_RUN_LAST,
+            None,
+            ()
+        ),
     }
 
     def __init__(self):
@@ -389,6 +394,7 @@ class FindDialog(gobject.GObject):
         orig_text = self._get_text(self._page, self._row, self._doc)
         if new_text != orig_text:
             self._page.project.set_text(self._row, self._doc, new_text)
+            self.emit('update')
         return False
 
     def _on_tran_check_toggled(self, *args):
@@ -648,6 +654,7 @@ class ReplaceDialog(FindDialog):
             self._set_pattern(page)
             self._set_replacement(page)
             count += page.project.replace_all()
+            self.emit('update')
             if wrap or page == self._first_passed_page:
                 break
             if self._first_passed_page is None:
@@ -679,6 +686,7 @@ class ReplaceDialog(FindDialog):
         self._replace_button.grab_focus()
         self._set_replacement(self._page)
         self._page.project.replace()
+        self.emit('update')
         self._add_replacement()
 
         try:

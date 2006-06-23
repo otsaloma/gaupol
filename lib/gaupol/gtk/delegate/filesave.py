@@ -222,7 +222,7 @@ class FileSaveDelegate(Delegate):
             )
         elif page.project.main_file is not None:
             return (
-                page.project.main_file.path,
+                None,
                 page.project.main_file.format,
                 page.project.main_file.encoding,
                 page.project.main_file.newlines,
@@ -248,7 +248,6 @@ class FileSaveDelegate(Delegate):
             gtklib.run(_IOErrorDialog(parent, basename, message))
             raise Default
         except UnicodeError:
-            encoding = enclib.get_display_name(encoding)
             gtklib.run(_UnicodeErrorDialog(parent, basename, encoding))
             raise Default
 
@@ -415,7 +414,7 @@ class FileSaveDelegate(Delegate):
             props = path, format, encoding, newlines
         try:
             props = self._select_file(_('Save Translation As'), props)
-            self._save_file(page, MAIN, self._window, props)
+            self._save_file(page, TRAN, self._window, props)
         except Default:
             gtklib.set_cursor_normal(self._window)
             raise

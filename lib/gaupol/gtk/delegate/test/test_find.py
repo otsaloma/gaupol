@@ -52,6 +52,10 @@ class TestFindDelegate(Test):
 
         self.delegate._on_dialog_previous_page(None)
 
+    def test_on_dialog_update(self):
+
+        self.delegate._on_dialog_update(None)
+
     def test_actions(self):
 
         self.app.on_find_activate()

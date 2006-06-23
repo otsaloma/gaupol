@@ -7,9 +7,8 @@ Legend:
 Plans for 0.5.0
 ===============
 
-  * Test without chardet & enchant
-  * Test start witn 0.4.1 config file
   * Test all stuff
+  * Print set_sensitivities
   * Profile
   * PyLint, py.test
   * Put a .pot file in the trunk?
@@ -54,6 +53,7 @@ Plans for 0.5.0
     [D] Fixed menu ellipses
     [D] General polish here and there
     [D] Separate header template files
+    [D] Fixed spell-check recursion bugs
 
   Dependencies:
     [W] Psyco no longer used

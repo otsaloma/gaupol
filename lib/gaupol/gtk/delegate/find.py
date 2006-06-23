@@ -137,6 +137,7 @@ class FindDelegate(Delegate):
         gtklib.connect(self, '_dialog', 'destroyed'         )
         gtklib.connect(self, '_dialog', 'next-page'         )
         gtklib.connect(self, '_dialog', 'previous-page'     )
+        gtklib.connect(self, '_dialog', 'update'            )
 
     def _on_dialog_coordinate_request(self, dialog):
         """Return page, row, document."""
@@ -189,6 +190,11 @@ class FindDelegate(Delegate):
         self._notebook.set_current_page(index)
         page.view.select_rows([])
         page.view.set_focus(0, None)
+
+    def _on_dialog_update(self, dialog):
+        """Set sensitivities."""
+
+        self.set_sensitivities()
 
     def on_find_activate(self, *args):
         """Find text."""
