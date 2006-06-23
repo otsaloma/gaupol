@@ -132,10 +132,6 @@ class TestFindDialog(Test):
         wrap = self.dialog._get_wrap()
         assert wrap is True
 
-        self.dialog._selected_radio.set_active(True)
-        wrap = self.dialog._get_wrap()
-        assert wrap is True
-
     def test_prepare(self):
 
         page, row, doc, pos, docs, wrap = self.dialog._prepare(True)
@@ -250,12 +246,4 @@ class TestReplaceDialog(TestFindDialog):
 
     def test_set_replacement(self):
 
-        self.dialog._replacement_entry.set_text('a')
         self.dialog._set_replacement(self.page)
-
-        self.dialog._replacement_entry.set_text('')
-        try:
-            self.dialog._set_replacement(self.page)
-            raise AssertionError
-        except Default:
-            pass

@@ -61,7 +61,7 @@ class TestModule(Test):
         for section in sections:
             assert hasattr(conf, section)
 
-    def test_set_config_option(self):
+    def test_set_conf_option(self):
 
         conf.read()
         conf.write()
@@ -70,37 +70,37 @@ class TestModule(Test):
 
         # String
         parser.set('editor', 'font', 'test')
-        conf._set_config_option(parser, 'editor', 'font')
+        conf._set_conf_option(parser, 'editor', 'font')
         assert conf.editor.font == 'test'
 
         # Integer
         parser.set('editor', 'undo_levels', 99)
-        conf._set_config_option(parser, 'editor', 'undo_levels')
+        conf._set_conf_option(parser, 'editor', 'undo_levels')
         assert conf.editor.undo_levels == 99
 
         # Boolean
         parser.set('application_window', 'maximized', 'true')
-        conf._set_config_option(parser, 'application_window', 'maximized')
+        conf._set_conf_option(parser, 'application_window', 'maximized')
         assert conf.application_window.maximized is True
 
         # Constant
         parser.set('editor', 'framerate', 'fr_25')
-        conf._set_config_option(parser, 'editor', 'framerate')
+        conf._set_conf_option(parser, 'editor', 'framerate')
         assert conf.editor.framerate == cons.Framerate.FR_25
 
         # String list
         parser.set('encoding', 'fallbacks', '[test,rest]')
-        conf._set_config_option(parser, 'encoding', 'fallbacks')
+        conf._set_conf_option(parser, 'encoding', 'fallbacks')
         assert conf.encoding.fallbacks == ['test', 'rest']
 
         # Integer list
         parser.set('application_window', 'position', '[3,4]')
-        conf._set_config_option(parser, 'application_window', 'position')
+        conf._set_conf_option(parser, 'application_window', 'position')
         assert conf.application_window.position == [3, 4]
 
         # Constant list
         parser.set('editor', 'visible_cols', '[show,hide]')
-        conf._set_config_option(parser, 'editor', 'visible_cols')
+        conf._set_conf_option(parser, 'editor', 'visible_cols')
         assert conf.editor.visible_cols == [SHOW, HIDE]
 
     def test_set_parser_option(self):

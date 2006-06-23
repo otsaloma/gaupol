@@ -1,5 +1,16 @@
 2006-06-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/text/test/test_finder.py:
+	* lib/gaupol/gtk/delegate/test/test_filesave.py:
+	* lib/gaupol/gtk/dialog/find.py:
+	* lib/gaupol/gtk/dialog/spellcheck.py:
+	* lib/gaupol/gtk/dialog/test/test_find.py:
+	* lib/gaupol/gtk/util/test/test_conf.py:
+	* tools/profile:
+	  Fixed bugs.
+
+2006-06-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/gtk/dialog/find.py:
 	  Fixed bugs.
 

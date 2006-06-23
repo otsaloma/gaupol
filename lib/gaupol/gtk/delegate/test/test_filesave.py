@@ -73,7 +73,7 @@ class TestFileSaveDelegate(Test):
         )
         props = self.delegate._get_translation_props(page)
         assert props == (
-            page.project.main_file.path,
+            None,
             page.project.main_file.format,
             page.project.main_file.encoding,
             page.project.main_file.newlines

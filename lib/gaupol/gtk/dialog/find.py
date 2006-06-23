@@ -143,6 +143,7 @@ class FindDialog(gobject.GObject):
                 return
         except IndexError:
             pass
+        conf.find.pattern = pattern
         conf.find.patterns.insert(0, pattern)
         conf.find.patterns = listlib.unique(conf.find.patterns)
         while len(conf.find.patterns) > conf.find.max_history:

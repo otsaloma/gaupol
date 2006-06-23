@@ -22,8 +22,8 @@ from gaupol.base.text.finder import Finder
 from gaupol.test             import Test
 
 
-ORIG_TEXT = '''\
-One only risks it, because
+ORIG_TEXT = \
+'''One only risks it, because
 one\'s survival depends on it.'''
 
 
@@ -220,7 +220,7 @@ class TestFinder(Test):
     def test_set_text(self):
 
         finder = self.get_finder()
-        findef.set_text('test')
+        finder.set_text('test')
         assert finder.text == 'test'
-        assert finder.match_span = None
-        assert finder.pos = 0
+        assert finder.match_span == None
+        assert finder.pos == 0

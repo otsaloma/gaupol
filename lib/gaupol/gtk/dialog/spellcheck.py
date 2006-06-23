@@ -50,7 +50,6 @@ import pango
 
 from gaupol.base.paths          import PROFILE_DIR
 from gaupol.base.util           import langlib, listlib
-from gaupol.gtk                 import cons
 from gaupol.gtk.icons           import *
 from gaupol.gtk.dialog.message  import ErrorDialog
 from gaupol.gtk.dialog.textedit import TextEditDialog

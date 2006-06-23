@@ -7,9 +7,6 @@ Legend:
 Plans for 0.5.0
 ===============
 
-  * Print set_sensitivities
-  * Profile
-  * PyLint, py.test
   * Put a .pot file in the trunk?
   * Mime-type registration?
   * Non-lib stuff
