@@ -55,7 +55,7 @@ class _ReplaceAllInfoDialog(InfoDialog):
 
         InfoDialog.__init__(
             self, parent,
-            _('Replaced %d entries of "%s" with "%s"') % (
+            _('Replaced %d occurences of "%s" with "%s"') % (
                 count, pattern, replacement),
             ''
         )
@@ -117,13 +117,12 @@ class FindDialog(gobject.GObject):
         self._pattern_entry     = self._pattern_combo.child
         self._previous_button   = glade_xml.get_widget('previous_button')
         self._regex_check       = glade_xml.get_widget('regex_check')
-        self._selected_radio    = glade_xml.get_widget('selected_radio')
         self._text_view         = glade_xml.get_widget('text_view')
         self._tran_check        = glade_xml.get_widget('tran_check')
 
-        self._init_sensitivities()
-        self._init_signals()
         self._init_data()
+        self._init_signals()
+        self._init_sensitivities()
         self._init_fonts()
         self._init_sizes()
         self._dialog.set_transient_for(None)
@@ -134,10 +133,13 @@ class FindDialog(gobject.GObject):
         """Add current pattern to combo box."""
 
         pattern = self._pattern_entry.get_text()
-        conf.find.pattern = pattern
         store = self._pattern_combo.get_model()
         try:
-            if store[0] == pattern:
+            if store[0][0] == pattern:
+                if conf.find.pattern == pattern:
+                    return
+                conf.find.pattern = pattern
+                self.emit('update')
                 return
         except IndexError:
             pass
@@ -150,6 +152,8 @@ class FindDialog(gobject.GObject):
         for pattern in conf.find.patterns:
             store.append([pattern])
 
+        self.emit('update')
+
     def _init_data(self):
         """Initialize default values."""
 
@@ -157,14 +161,11 @@ class FindDialog(gobject.GObject):
         self._ignore_case_check.set_active(conf.find.ignore_case)
         self._multiline_check.set_active(conf.find.multiline)
         self._pattern_entry.set_text(conf.find.pattern)
-        self._pattern_entry.emit('changed')
         self._regex_check.set_active(conf.find.regex)
-        self._regex_check.emit('toggled')
 
         target = conf.find.target
         self._all_radio.set_active(target == cons.Target.ALL)
         self._current_radio.set_active(target == cons.Target.CURRENT)
-        self._selected_radio.set_active(target == cons.Target.SELECTED)
         self._main_check.set_active(MTXT in conf.find.cols)
         self._tran_check.set_active(TTXT in conf.find.cols)
 
@@ -187,6 +188,9 @@ class FindDialog(gobject.GObject):
         self._previous_button.set_sensitive(False)
         self._text_view.set_sensitive(False)
 
+        self._pattern_entry.emit('changed')
+        self._regex_check.emit('toggled')
+
     def _init_signals(self):
         """Initialize signals."""
 
@@ -201,7 +205,6 @@ class FindDialog(gobject.GObject):
         gtklib.connect(self, '_pattern_entry'    , 'changed'        )
         gtklib.connect(self, '_previous_button'  , 'clicked'        )
         gtklib.connect(self, '_regex_check'      , 'toggled'        )
-        gtklib.connect(self, '_selected_radio'   , 'toggled'        )
         gtklib.connect(self, '_text_view'        , 'focus-out-event')
         gtklib.connect(self, '_tran_check'       , 'toggled'        )
 
@@ -267,13 +270,6 @@ class FindDialog(gobject.GObject):
                     return self._pos
         return None
 
-    def _get_rows(self, page):
-        """Return selected rows or None."""
-
-        if self._get_target() == cons.Target.SELECTED:
-            return page.view.get_selected_rows()
-        return None
-
     def _get_target(self):
         """Get target."""
 
@@ -281,8 +277,6 @@ class FindDialog(gobject.GObject):
             return cons.Target.ALL
         elif self._current_radio.get_active():
             return cons.Target.CURRENT
-        elif self._selected_radio.get_active():
-            return cons.Target.SELECTED
         raise ValueError
 
     def _get_text(self, page, row, doc):
@@ -375,17 +369,12 @@ class FindDialog(gobject.GObject):
         self._multiline_check.set_sensitive(active)
         self._dialog.set_response_sensitive(gtk.RESPONSE_HELP, active)
 
-    def _on_selected_radio_toggled(self, *args):
-        """Save target."""
-
-        conf.find.target = self._get_target()
-
     def _on_text_view_focus_out_event(self, text_view, event):
         """Register changes."""
 
         if None in (self._page, self._row, self._doc):
             return False
-        if not self._text_view.get_sensitive():
+        if not self._text_view.props.sensitive:
             return False
 
         text_buffer = text_view.get_buffer()
@@ -407,23 +396,22 @@ class FindDialog(gobject.GObject):
         Prepare find.
 
         Raise Default if no pages open.
-        Return page, row, document, position, rows, documents, wrap.
+        Return page, row, document, position, documents, wrap.
         """
         page, row, doc = self.emit('coordinate-request')
         if page is None:
             raise Default
 
         pos  = self._get_position(page, row, doc)
-        rows = self._get_rows(page)
         docs = self._get_documents(page)
         wrap = self._get_wrap()
 
         if row is None:
             row = (len(page.project.times) - 1, 0)[next]
-        if doc is None:
+        if doc is None or doc not in docs:
             doc = (docs[-1], docs[0])[next]
 
-        return page, row, doc, pos, rows, docs, wrap
+        return page, row, doc, pos, docs, wrap
 
     def _set_pattern(self, page):
         """
@@ -481,8 +469,8 @@ class FindDialog(gobject.GObject):
 
         Raise Default if no pages or no pattern.
         """
-        page, row, doc, pos, rows, docs, wrap = self._prepare(True)
-        page.project.set_find_target(rows, docs, wrap)
+        page, row, doc, pos, docs, wrap = self._prepare(True)
+        page.project.set_find_target(None, docs, wrap)
         self._set_pattern(page)
         try:
             row, doc, match_span = page.project.find_next(row, doc, pos)
@@ -508,8 +496,8 @@ class FindDialog(gobject.GObject):
 
         Raise Default if no pages or no pattern.
         """
-        page, row, doc, pos, rows, docs, wrap = self._prepare(False)
-        page.project.set_find_target(rows, docs, wrap)
+        page, row, doc, pos, docs, wrap = self._prepare(False)
+        page.project.set_find_target(None, docs, wrap)
         self._set_pattern(page)
         try:
             row, doc, match_span = page.project.find_previous(row, doc, pos)
@@ -560,13 +548,12 @@ class ReplaceDialog(FindDialog):
         self._replace_button     = glade_xml.get_widget('replace_button')
         self._replacement_combo  = glade_xml.get_widget('replacement_combo')
         self._replacement_entry  = self._replacement_combo.child
-        self._selected_radio     = glade_xml.get_widget('selected_radio')
         self._text_view          = glade_xml.get_widget('text_view')
         self._tran_check         = glade_xml.get_widget('tran_check')
 
-        self._init_sensitivities()
-        self._init_signals()
         self._init_data()
+        self._init_signals()
+        self._init_sensitivities()
         self._init_fonts()
         self._init_sizes()
         self._dialog.set_transient_for(None)
@@ -599,7 +586,6 @@ class ReplaceDialog(FindDialog):
         FindDialog._init_data(self)
 
         self._replacement_entry.set_text(conf.find.replacement)
-        self._replacement_entry.emit('changed')
 
         store = self._replacement_combo.get_model()
         store.clear()
@@ -621,6 +607,7 @@ class ReplaceDialog(FindDialog):
 
         self._replace_all_button.set_sensitive(False)
         self._replace_button.set_sensitive(False)
+        self._replacement_entry.emit('changed')
 
     def _init_signals(self):
         """Initialize signals."""
@@ -648,9 +635,9 @@ class ReplaceDialog(FindDialog):
         self._replace_all_button.grab_focus()
 
         count = 0
-        page, row, doc, pos, rows, docs, wrap = self._prepare(True)
+        page, row, doc, pos, docs, wrap = self._prepare(True)
         while True:
-            page.project.set_find_target(rows, docs, wrap)
+            page.project.set_find_target(None, docs, wrap)
             self._set_pattern(page)
             self._set_replacement(page)
             count += page.project.replace_all()

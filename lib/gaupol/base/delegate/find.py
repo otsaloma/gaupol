@@ -116,8 +116,9 @@ class FindDelegate(Delegate):
         """
         rows = self._rows or range(len(self.times))
         texts = (self.main_texts, self.tran_texts)[doc]
-        for row in range(row, max(rows)):
-            self._finder.text = texts[row]
+        for row in range(row, max(rows) + 1):
+            if texts[row] != self._finder.text:
+                self._finder.set_text(texts[row])
             self._finder.pos = pos or 0
             if pos is not None:
                 self._finder.pos = pos
@@ -132,26 +133,28 @@ class FindDelegate(Delegate):
                         if self._last_match_passed:
                             raise StopIteration
                         self._last_match_passed = True
+                if row == max(rows):
+                    raise ValueError
             else:
                 self._last_match_row = row
                 self._last_match_doc = doc
                 self._last_match_passed = False
                 return row, doc, match_span
-        raise ValueError
 
     def _previous_in_document(self, row, doc, pos=None):
         """
         Find previous pattern in document starting from position.
 
         pos: None to start from end
-        Raise ValueError if no matches after position.
+        Raise ValueError if no matches before position.
         Raise StopIteration if no matches at all.
         Return three-tuple: row, document, match span.
         """
         rows = self._rows or range(len(self.times))
         texts = (self.main_texts, self.tran_texts)[doc]
         for row in reversed(range(min(rows), row + 1)):
-            self._finder.text = texts[row]
+            if texts[row] != self._finder.text:
+                self._finder.set_text(texts[row])
             if pos is not None:
                 self._finder.pos = pos
             else:
@@ -165,12 +168,13 @@ class FindDelegate(Delegate):
                         if self._last_match_passed:
                             raise StopIteration
                         self._last_match_passed = True
+                if row == min(rows):
+                    raise ValueError
             else:
                 self._last_match_row = row
                 self._last_match_doc = doc
                 self._last_match_passed = False
                 return row, doc, match_span
-        raise ValueError
 
     def find_next(self, row, doc, pos=None):
         """
@@ -213,7 +217,7 @@ class FindDelegate(Delegate):
         for doc in self._docs:
             texts = (self.main_texts, self.tran_texts)[doc]
             for row, text in enumerate(texts):
-                self._finder.text = text
+                self._finder.set_text(text)
                 this_count = self._finder.replace_all()
                 if this_count > 0:
                     new_rows[doc].append(row)

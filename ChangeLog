@@ -1,5 +1,20 @@
 2006-06-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/glade/find-dialog.glade:
+	* data/glade/replace-dialog.glade:
+	  Removed selected rows targets.
+
+	* lib/gaupol/base/delegate/find.py:
+	* lib/gaupol/base/delegate/format.py:
+	* lib/gaupol/base/text/finder.py:
+	* lib/gaupol/base/text/test/test_finder.py:
+	* lib/gaupol/gtk/delegate/find.py:
+	* lib/gaupol/gtk/dialog/find.py:
+	* lib/gaupol/gtk/dialog/test/test_find.py:
+	  Fixed bugs.
+
+2006-06-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/posadjust-dialog.glade:
 	  Changed current entry sensitivities back to true.
 

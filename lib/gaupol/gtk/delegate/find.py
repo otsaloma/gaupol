@@ -189,7 +189,7 @@ class FindDelegate(Delegate):
 
         self._notebook.set_current_page(index)
         page.view.select_rows([])
-        page.view.set_focus(0, None)
+        page.view.set_focus(len(page.project.times) - 1, None)
 
     def _on_dialog_update(self, dialog):
         """Set sensitivities."""

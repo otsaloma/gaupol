@@ -163,3 +163,10 @@ class Finder(object):
         re.UNICODE is automatically added to flags.
         """
         self.pattern = re.compile(pattern, flags|re.UNICODE)
+
+    def set_text(self, text):
+        """Set text."""
+
+        self.text = text
+        self.match_span = None
+        self.pos = 0

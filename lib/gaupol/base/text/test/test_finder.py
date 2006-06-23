@@ -32,7 +32,7 @@ class TestFinder(Test):
     def get_finder(self):
 
         finder = Finder()
-        finder.text = ORIG_TEXT
+        finder.set_text(ORIG_TEXT)
         return finder
 
     def test_next(self):
@@ -216,3 +216,11 @@ class TestFinder(Test):
         finder.set_regex('test', re.DOTALL)
         assert finder.pattern.pattern == 'test'
         assert finder.pattern.flags == re.DOTALL|re.UNICODE
+
+    def test_set_text(self):
+
+        finder = self.get_finder()
+        findef.set_text('test')
+        assert finder.text == 'test'
+        assert finder.match_span = None
+        assert finder.pos = 0

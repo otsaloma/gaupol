@@ -104,20 +104,6 @@ class TestFindDialog(Test):
         pos = self.dialog._get_position(self.page, 3, TRAN)
         assert pos is None
 
-    def test_get_rows(self):
-
-        self.dialog._all_radio.set_active(True)
-        rows = self.dialog._get_rows(self.page)
-        assert rows is None
-
-        self.dialog._current_radio.set_active(True)
-        rows = self.dialog._get_rows(self.page)
-        assert rows is None
-
-        self.dialog._selected_radio.set_active(True)
-        rows = self.dialog._get_rows(self.page)
-        assert rows == [1, 2, 3]
-
     def test_get_target(self):
 
         self.dialog._all_radio.set_active(True)
@@ -127,10 +113,6 @@ class TestFindDialog(Test):
         self.dialog._current_radio.set_active(True)
         target = self.dialog._get_target()
         assert target == cons.Target.CURRENT
-
-        self.dialog._selected_radio.set_active(True)
-        target = self.dialog._get_target()
-        assert target == cons.Target.SELECTED
 
     def test_get_text(self):
 
@@ -156,21 +138,19 @@ class TestFindDialog(Test):
 
     def test_prepare(self):
 
-        page, row, doc, pos, rows, docs, wrap = self.dialog._prepare(True)
+        page, row, doc, pos, docs, wrap = self.dialog._prepare(True)
         assert isinstance(page, Page)
         assert isinstance(row, int)
         assert isinstance(doc, int)
         assert isinstance(pos, int) or pos is None
-        assert isinstance(rows, list) or rows is None
         assert isinstance(docs, list) or docs is None
         assert isinstance(wrap, bool)
 
-        page, row, doc, pos, rows, docs, wrap = self.dialog._prepare(False)
+        page, row, doc, pos, docs, wrap = self.dialog._prepare(False)
         assert isinstance(page, Page)
         assert isinstance(row, int)
         assert isinstance(doc, int)
         assert isinstance(pos, int) or pos is None
-        assert isinstance(rows, list) or rows is None
         assert isinstance(docs, list) or docs is None
         assert isinstance(wrap, bool)
 
@@ -222,7 +202,6 @@ class TestFindDialog(Test):
             '_main_check',
             '_multiline_check',
             '_regex_check',
-            '_selected_radio',
             '_tran_check',
         ):
             widget = getattr(self.dialog, name)
