@@ -53,7 +53,6 @@ class ViewUpdateDelegate(Delegate):
         # selection would be far too slow and awkward.
         if row[0] not in view.get_selected_rows():
             view.set_cursor(row, column)
-            view.grab_focus()
             view.set_focus_column()
 
         menu = self._uim.get_widget('/ui/view')

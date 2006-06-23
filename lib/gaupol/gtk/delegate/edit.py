@@ -360,7 +360,6 @@ class EditDelegate(Delegate):
         for row in selected_rows:
             rows.remove(row)
         page.view.select_rows(rows)
-        page.view.grab_focus()
         self.set_sensitivities(page)
 
     def on_paste_texts_activate(self, *args):
@@ -404,7 +403,6 @@ class EditDelegate(Delegate):
         page = self.get_current_page()
         selection = page.view.get_selection()
         selection.select_all()
-        page.view.grab_focus()
         self.set_sensitivities(page)
 
     def on_view_cell_edited(self, cell_renderer, value, row, col):

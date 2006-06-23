@@ -1,5 +1,13 @@
 2006-06-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/delegate/action.py:
+	* lib/gaupol/gtk/delegate/appupdate.py:
+	* lib/gaupol/gtk/delegate/edit.py:
+	* lib/gaupol/gtk/delegate/viewupdate.py:
+	  Removed all page.view.grab_focus() calls.
+
+2006-06-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/delegate/action.py:
 	* lib/gaupol/base/delegate/edit.py:
 	* lib/gaupol/gtk/delegate/action.py:

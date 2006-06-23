@@ -207,7 +207,6 @@ class ActionDelegate(Delegate):
         gtklib.set_cursor_busy(self._window)
         page = self.get_current_page()
         page.project.redo(count)
-        page.view.grab_focus()
         self.set_sensitivities(page)
         gtklib.set_cursor_normal(self._window)
 
@@ -217,6 +216,5 @@ class ActionDelegate(Delegate):
         gtklib.set_cursor_busy(self._window)
         page = self.get_current_page()
         page.project.undo(count)
-        page.view.grab_focus()
         self.set_sensitivities(page)
         gtklib.set_cursor_normal(self._window)

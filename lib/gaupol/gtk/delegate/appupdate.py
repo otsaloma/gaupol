@@ -210,7 +210,6 @@ class AppUpdateDelegate(Delegate):
             return
         page = self.pages[pageno]
         self.set_sensitivities(page)
-        page.view.grab_focus()
 
     def on_project_toggled(self, unknown, action):
         """Switch page in notebook."""
