@@ -97,12 +97,12 @@ class FindDialog(gobject.GObject):
 
         gobject.GObject.__init__(self)
 
-        self._page = None
-        self._row  = None
-        self._doc  = None
-        self._pos  = None
+        self._page              = None
+        self._row               = None
+        self._doc               = None
+        self._match_span        = None
         self._first_passed_page = None
-        self._last_is_next = None
+        self._last_is_next      = None
 
         glade_xml = gtklib.get_glade_xml('find-dialog')
         self._all_radio         = glade_xml.get_widget('all_radio')
@@ -224,7 +224,7 @@ class FindDialog(gobject.GObject):
         self._page = None
         self._row  = None
         self._doc  = None
-        self._pos  = None
+        self._match_span = None
         self._first_passed_page = None
 
         text_buffer = self._text_view.get_buffer()
@@ -262,13 +262,13 @@ class FindDialog(gobject.GObject):
             flags = flags|re.MULTILINE
         return flags
 
-    def _get_position(self, page, row, doc):
+    def _get_position(self, page, row, doc, next):
         """Return position or None."""
 
         if page == self._page:
             if row == self._row:
                 if doc == self._doc:
-                    return self._pos
+                    return self._match_span[next]
         return None
 
     def _get_target(self):
@@ -403,7 +403,7 @@ class FindDialog(gobject.GObject):
         if page is None:
             raise Default
 
-        pos  = self._get_position(page, row, doc)
+        pos  = self._get_position(page, row, doc, next)
         docs = self._get_documents(page)
         wrap = self._get_wrap()
 
@@ -452,7 +452,7 @@ class FindDialog(gobject.GObject):
         self._page = page
         self._row  = row
         self._doc  = doc
-        self._pos  = match_span[next]
+        self._match_span = list(match_span[:])
         self._first_passed_page = None
         self._last_is_next = next
 
@@ -525,12 +525,12 @@ class ReplaceDialog(FindDialog):
 
         gobject.GObject.__init__(self)
 
-        self._page = None
-        self._row  = None
-        self._doc  = None
-        self._pos  = None
+        self._page              = None
+        self._row               = None
+        self._doc               = None
+        self._match_span        = None
         self._first_passed_page = None
-        self._last_is_next = None
+        self._last_is_next      = None
 
         glade_xml = gtklib.get_glade_xml('replace-dialog')
         self._all_radio          = glade_xml.get_widget('all_radio')
@@ -653,7 +653,7 @@ class ReplaceDialog(FindDialog):
         self._page = None
         self._row  = None
         self._doc  = None
-        self._pos  = None
+        self._match_span = None
         self._first_passed_page = None
         self._last_is_next = None
 
@@ -680,9 +680,8 @@ class ReplaceDialog(FindDialog):
         self._add_replacement()
 
         new_len = len(self._get_text(self._page, self._row, self._doc))
-        if self._last_is_next:
-            shift = new_len - orig_len
-            self._pos += shift
+        shift = new_len - orig_len
+        self._match_span[1] += shift
 
         try:
             (self.previous, self.next)[self._last_is_next]()

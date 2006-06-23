@@ -101,7 +101,7 @@ class TestFindDialog(Test):
 
     def test_get_position(self):
 
-        pos = self.dialog._get_position(self.page, 3, TRAN)
+        pos = self.dialog._get_position(self.page, 3, TRAN, True)
         assert pos is None
 
     def test_get_target(self):

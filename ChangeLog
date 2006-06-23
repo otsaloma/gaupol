@@ -1,5 +1,11 @@
 2006-06-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/dialog/find.py:
+	* lib/gaupol/gtk/dialog/test/test_find.py:
+	  Replaced self._pos with self._match_span.
+
+2006-06-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/text/test/test_finder.py:
 	* lib/gaupol/gtk/delegate/test/test_filesave.py:
 	* lib/gaupol/gtk/dialog/find.py:
