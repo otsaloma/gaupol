@@ -31,7 +31,7 @@ class MicroDVD(SubtitleFile):
     """MicroDVD file."""
 
     format     = cons.Format.MICRODVD
-    has_header = False
+    has_header = True
     identifier = r'^\{\d+\}\{\d+\}.*?$', 0
     mode       = cons.Mode.FRAME
 
@@ -55,6 +55,8 @@ class MicroDVD(SubtitleFile):
                 shows.append(match.group(1))
                 hides.append(match.group(2))
                 texts.append(match.group(3))
+            elif line.startswith('{DEFAULT}'):
+                self.header = line.strip()
 
         shows = list(int(x) for x in shows)
         hides = list(int(x) for x in hides)
@@ -75,6 +77,8 @@ class MicroDVD(SubtitleFile):
 
         fobj = codecs.open(self.path, 'w', self.encoding)
         try:
+            if self.header:
+                fobj.write(self.header + newline_char)
             for i in range(len(shows)):
                 fobj.write('{%.0f}{%.0f}%s%s' % (
                     shows[i], hides[i], texts[i], newline_char))

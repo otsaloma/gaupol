@@ -61,7 +61,6 @@ class TestSubtitleFile(Test):
                 file_ = cls(path, 'utf_8')
                 header = file_.get_template_header()
                 assert isinstance(header, basestring)
-                assert header != ''
 
     def test_read_and_write(self):
 

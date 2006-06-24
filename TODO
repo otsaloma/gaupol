@@ -50,6 +50,7 @@ Plans for 0.5.0
     [D] General polish here and there
     [D] Separate header template files
     [D] Fixed spell-check recursion bugs
+    [ ] MicroDVD header
 
   Dependencies:
     [D] Psyco no longer used
