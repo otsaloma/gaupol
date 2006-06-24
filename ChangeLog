@@ -1,5 +1,16 @@
 2006-06-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* doc/formats/ass.notes:
+	* doc/formats/mdvddoc.html:
+	* doc/formats/microdvd.notes:
+	* doc/formats/mpl2.notes:
+	* doc/formats/ssa.notes:
+	* doc/formats/subrip.notes:
+	* doc/formats/subviewer2.notes:
+	  Renamed.
+
+2006-06-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* doc/formats/COPYING:
 	* doc/formats/README:
 	* doc/formats/ass.sample:
