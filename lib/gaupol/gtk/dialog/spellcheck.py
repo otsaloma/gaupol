@@ -285,6 +285,8 @@ class SpellCheckDialog(gobject.GObject):
                 continue
             entry = tuple(line.strip().split(_REPL_SEP))
             self._replacements[doc].append(entry)
+        while len(self._replacements[doc]) > conf.spell_check.max_repl:
+            self._replacements[doc].pop(0)
 
     def _init_sensitivities(self):
         """Initialize sensitivities."""
@@ -530,7 +532,10 @@ class SpellCheckDialog(gobject.GObject):
 
         replacements = self._replacements[self._doc]
         replacements.append((misspelled, correct))
-        self._replacements[self._doc] = listlib.unique(replacements)
+        replacements = listlib.unique(replacements)
+        while len(replacements) > conf.spell_check.max_repl:
+            replacements.pop(0)
+        self._replacements[self._doc] = replacements
 
     def _write_replacements(self):
         """Write replacement files."""

@@ -248,6 +248,7 @@ class spell_check(_Section):
 
     cols      = [MTXT]
     main_lang = 'en'
+    max_repl  = 1000
     target    = cons.Target.CURRENT
     tran_lang = 'en'
 

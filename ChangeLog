@@ -1,5 +1,13 @@
 2006-06-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/dialog/spellcheck.py:
+	  Don't let amount of replacements exceed conf.spell_check.max_repl.
+
+	* lib/gaupol/gtk/util/conf.py:
+	  New option: spell_check.max_repl.
+
+2006-06-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* doc/releasing.txt:
 	* po/README.translators:
 	  Updated.
