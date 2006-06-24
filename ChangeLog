@@ -1,5 +1,14 @@
 2006-06-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* doc/releasing.txt:
+	* po/README.translators:
+	  Updated.
+
+	* lib/gaupol/test/__init__.py:
+	  Changed _SUBRIP_TEXT and _MICRODVD_TEXT.
+
+2006-06-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* doc/formats/ass.notes:
 	* doc/formats/mdvddoc.html:
 	* doc/formats/microdvd.notes:

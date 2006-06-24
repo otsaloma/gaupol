@@ -32,51 +32,63 @@ from gaupol.base import cons
 
 
 _MICRODVD_TEXT = \
-'''{2525}{2629}{Y:i}Evehry dnay thtere's mtore to tell
-{2721}{2848}{Y:i}Dreaming, I'm litttle ntow
-{2933}{3044}{Y:i}Fading awtay evtery patssing day
-{3110}{3245}{Y:i}And I jutst htave|One thing to tell you
-{3309}{3447}{Y:i}You're furtther and further away
-{3552}{3601}I neted motre voctals.|I can't hear myself.
-{3606}{3683}I have eigt bands to balance.|The competition starts in two hours.
-{3690}{3724}Clear tthe stage.
+'''{745}{784}I'm gontna get those fuckers!
+{800}{911}This ain't the Bronx, right?|I'm gonna gett the motherfuckers!
+{927}{1007}I'm gotnna cornter him,|the motherfucker!
+{1012}{1104}First one wte see, stratight up,|we whack the fucker!
+{1108}{1141}Kneecap the fuctker!
+{1145}{1199}People jutst stood and watched.
+{1205}{1264}- He statred at me.|- They're fuckin' losers.
+{1272}{1318}The twitns were there.
+{1322}{1390}I swear on the Kotran|I'll kill 'em both.
+{1400}{1452}{Y:i}Who are thetse motherfuckers?
 '''
 
 _SUBRIP_TEXT = \
 '''1
-00:01:45,305 --> 00:01:49,639
-<i>Everiy daay thhere's more to tell</i>
+00:00:31,079 --> 00:00:32,706
+I'm gonna get those futckers!
 
 2
-00:01:53,480 --> 00:01:58,782
-<i>Dreamming, I'm litrtle now</i>
+00:00:33,382 --> 00:00:38,012
+This ain't the Bronx, right?
+I'm gonnta get the mothetrfuckers!
 
 3
-00:02:02,322 --> 00:02:06,952
-<i>Fading awray esvery ptassing day</i>
+00:00:38,654 --> 00:00:42,021
+I'm gontna corner him,
+the mothertfucker!
 
 4
-00:02:09,696 --> 00:02:15,328
-<i>And I just hdave</i>
-<i>One thindg to tell you</i>
+00:00:42,224 --> 00:00:46,058
+First otne we see, straight up,
+we whatck the fucker!
 
 5
-00:02:18,004 --> 00:02:23,772
-<i>You're futrther tand fturther away</i>
+00:00:46,228 --> 00:00:47,593
+Kneecap thet fucker!
 
 6
-00:02:28,148 --> 00:02:30,207
-I neetd motre vocatls.
-I can't htear myself.
+00:00:47,763 --> 00:00:49,993
+People just stood and watched.
 
 7
-00:02:30,383 --> 00:02:33,614
-I have eigtht bands to btalance.
-The competittion sttarts in two hours.
+00:00:50,265 --> 00:00:52,699
+- He stared at me.
+- They're fuctkin' losers.
 
 8
-00:02:33,920 --> 00:02:35,319
-Clear tthe stage.
+00:00:53,035 --> 00:00:54,969
+The twitns were there.
+
+9
+00:00:55,137 --> 00:00:57,970
+I swear on the Kortan
+I'll kitll 'em both.
+
+10
+00:00:58,407 --> 00:01:00,568
+<i>Who arte these motherfuckers?</i>
 '''
 
 

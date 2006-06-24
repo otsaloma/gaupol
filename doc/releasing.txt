@@ -1,21 +1,20 @@
-Checklist for Making a New Release
-==================================
+Release Checklist
+=================
 
 Table of Contents
 
   1. Create branch
-  2. Get translations
-  3. Make sure Gaupol works
-  4. Bump version number
-  5. Tag subversion
-  6. Prepare files for release
-  7. Spread the word
+  2. Make sure Gaupol works
+  3. Bump version number
+  4. Tag subversion
+  5. Prepare files for release
+  6. Spread the word
 
 
 1. Create branch (only for bug-fix releases)
 ============================================
 
-  * Create a brach from tagged x.y.0 if branch doesn't already exist
+  * Create a brach from tagged x.y.0 if it doesn't already exist
 
      svn copy svn+ssh://osmo@svn.gna.org/svn/gaupol/tags/x.y.0 \
               svn+ssh://osmo@svn.gna.org/svn/gaupol/branches/x.y
@@ -24,58 +23,30 @@ Table of Contents
 
      svn co svn+ssh://osmo@svn.gna.org/svn/gaupol/branches/x.y
 
-  * Bring all bug-fix changes from trunk to branch.
+  * Bring all bug-fixes from trunk to branch.
 
-  * Add entry to ChangeLog and commit changes to subversion branch.
-
-
-2. Get translations
-===================
-
-  * Send word to translators, that a new release is coming.
-
-  * Check received translations.
-
-      - Headers
-
-      - UTF-8 encoding
-
-      - Syntactical correctness
-
-          msgfmt -cv <lang>.po
-
-  * Merge all translations of file "gaupol.desktop".
-
-  * Add entries to ChangeLogs and commit changes to subversion.
+  * Add entry to ChangeLog and commit changes to branch.
 
 
-3. Make sure Gaupol works
+2. Make sure Gaupol works
 =========================
-
-  * Check the list of open bugs and make sure all bugs scheduled for
-    this release are fixed.
-
-      http://gna.org/bugs/?func=browse&set=open&group=gaupol
 
   * Check the "TODO" file for anything undone for this release.
 
   * Search the source code for tags with regular expression "\s*# [A-Z]{3,}:"
     and fix anything that needs to be fixed for this release.
 
-  * Search the source code for print messages with regular expression
-    "\s*print ". All debug printing should be removed or converted to logging.
+  * Check all code
 
-  * Run PyChecker
-
-      ./gaupol --pycheck | grep -v "Using is" | sort
+      tools/pylint lib
 
   * Run all tests
 
-      ./gaupol -x all
+      tools/py.test -xs lib
 
   * Make sure all files are in the subversion repository
 
-      svn status | grep -v \.pyc
+      tools/status
 
   * Run Gaupol from the source directory and check that it works
 
@@ -83,10 +54,10 @@ Table of Contents
 
   * Install Gaupol and check that it works
 
-      ./setup.py install --prefix=/tmp/gaupol
-      /tmp/gaupol/bin/gaupol
+      ./setup.py install --prefix=/tmp/sandbox
+      /tmp/sandbox/bin/gaupol
 
-  * Check the installation directory /tmp/gaupol. Make sure all files
+  * Check the installation directory /tmp/sandbox. Make sure all files
     are in right places.
 
   * Uninstall Gaupol and make sure it works
@@ -94,7 +65,7 @@ Table of Contents
       ./setup.py uninstall
 
 
-4. Bump version number
+3. Bump version number
 ======================
 
   * Bump version number
@@ -111,10 +82,10 @@ Table of Contents
 
   * Commit changes to subversion.
 
-  * For bugfix releases, repeat the above for trunk.
+  * For bug-fix releases, repeat the above for trunk.
 
 
-5. Tag subversion
+4. Tag subversion
 =================
 
   * For major or minor releases
@@ -128,7 +99,7 @@ Table of Contents
                svn+ssh://osmo@svn.gna.org/svn/gaupol/tags/x.y.z
 
 
-6. Prepare files for release
+5. Prepare files for release
 ============================
 
   * Build tarballs
@@ -142,19 +113,17 @@ Table of Contents
 
   * Move tarballs into release directory.
 
-  * If making a bug-fix release, remove previous symlink.
-
   * Sync release directory x.y with Gna! download area
 
       rsync --delete -avr --rsh="ssh" . \
             osmo@download.gna.org:/upload/gaupol/x.y/
 
-  * Upload latest files
+  * Upload latest.txt
 
-      scp latest.* osmo@download.gna.org:/upload/gaupol/
+      scp latest.txt osmo@download.gna.org:/upload/gaupol/
 
 
-7. Spread the word
+6. Spread the word
 ==================
 
   * Edit the "News" and "Download" sections of Gaupol website
@@ -165,7 +134,7 @@ Table of Contents
   * Send e-mail to Gaupol-announcements mailing list
 
       gaupol-announcements@gna.org
-      http://mail.gna.org/public/gaupol-announcements/
+      http://mail.gna.org/public/gaupol-announcements
 
   * Post a news item at the Gaupol project page
 
@@ -173,5 +142,5 @@ Table of Contents
 
   * Update third-party sites
 
-      http://www.gnomefiles.com/devs/index.php
+      http://www.gnomefiles.com/devs
       http://freshmeat.net/projects/gaupol
