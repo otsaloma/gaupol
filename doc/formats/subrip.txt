@@ -5,33 +5,13 @@ SubRip
 
     ".srt"
 
-  Notes:
-
-    Times are hh:mm:ss,sss. Line-breaks used for line-breaks.
-    Subtitle numbers serve no purpose for machine parsing. No header.
-
-  Sample:
-
-    1
-    00:01:55,600 --> 00:02:00,743
-    It's written in the Buddhist Cannon.
-    The flags are still, no wind blows...
-
-    2
-    00:02:01,600 --> 00:02:05,743
-    It's the heart of men that's tumult!
-
-    3
-    00:02:06,600 --> 00:02:10,743
-    Ashes of time
-
-    4
-    00:02:11,614 --> 00:02:15,245
-    In the years to come...
-    I'll be given the nickname: Malicious West.
-
   Tags:
 
-    <b>Bold</b>
-    <i>Italics</i>
-    <u>Underline</u>
+    <b>bold</b>
+    <i>italic</i>
+    <u>underline</u>
+
+  Notes:
+
+    No documentation available, above list of tags is a generally accepted
+    assumption.

@@ -671,15 +671,14 @@ class ReplaceDialog(FindDialog):
     def _on_replace_button_clicked(self, *args):
         """Replace current match."""
 
-        orig_len = len(self._get_text(self._page, self._row, self._doc))
-
         self._replace_button.grab_focus()
         self._set_replacement(self._page)
+        orig_len = len(self._get_text(self._page, self._row, self._doc))
         self._page.project.replace()
+        new_len = len(self._get_text(self._page, self._row, self._doc))
         self.emit('update')
         self._add_replacement()
 
-        new_len = len(self._get_text(self._page, self._row, self._doc))
         shift = new_len - orig_len
         self._match_span[1] += shift
 

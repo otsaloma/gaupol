@@ -1,10 +1,11 @@
 Subtitle File Format Specifications
 ===================================
 
-  The subtitle file format specifications stored in this directory are by no
-  means official. Most of them are gathered from various unofficial sources as
-  no official specification has been found.
+  This directory contains notes, samples and specifications of all supported
+  subtitle file formats. In the cases where official specifications are not
+  available, the notes file contains merely assumptions and observations. All
+  samples have geen generated with Gaupol and are therefore victims of any
+  possible incorrect implementation.
 
-  Sources have not been listed for all information, as I haven't found the web
-  sites anymore. The main reason to have these files here is because web pages
-  tend to vanish or change hosting.
+  See the file COPYING for license information specific to the contents of this
+  directory.

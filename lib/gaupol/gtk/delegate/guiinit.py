@@ -97,12 +97,11 @@ class GUIInitDelegate(Delegate):
 
         self._tooltips.set_tip(
             main_event_box,
-            _('Amount of characters in the main text of the selected '
-              'subtitle')
+            _('Length of lines in the main text of the selected subtitle')
         )
         self._tooltips.set_tip(
             tran_event_box,
-            _('Amount of characters in the translation text of the selected '
+            _('Length of lines in the translation text of the selected '
               'subtitle')
         )
 

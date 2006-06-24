@@ -1,3 +1,27 @@
+2006-06-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* doc/formats/COPYING:
+	* doc/formats/README:
+	* doc/formats/ass.sample:
+	* doc/formats/ass.txt:
+	* doc/formats/microdvd.html:
+	* doc/formats/microdvd.sample:
+	* doc/formats/microdvd.txt:
+	* doc/formats/mpl2-eng.html:
+	* doc/formats/mpl2.sample:
+	* doc/formats/mpl2.txt:
+	* doc/formats/ssa.sample:
+	* doc/formats/ssa.txt:
+	* doc/formats/subrip.sample:
+	* doc/formats/subrip.txt:
+	* doc/formats/subviewer2.sample:
+	* doc/formats/subviewer2.txt:
+	  Added samples. Reviewed notes.
+
+	* lib/gaupol/gtk/delegate/guiinit.py:
+	* lib/gaupol/gtk/dialog/find.py:
+	  Minor fixes.
+
 2006-06-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/gtk/dialog/find.py:

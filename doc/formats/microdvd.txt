@@ -1,0 +1,10 @@
+MicroDVD
+========
+
+  Extension:
+
+    ".sub"
+
+  Source:
+
+    http://netti.nic.fi/~temp/easydivx/help/mdvddoc
