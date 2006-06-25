@@ -1,0 +1,18 @@
+#!/usr/bin/env python
+
+"""Generate .hidden files to hide .pyc files."""
+
+import glob
+import os
+
+TOOL_DIR = os.path.dirname(os.path.abspath(__file__))
+LIB_DIR  = os.path.join(TOOL_DIR, '..', 'lib')
+
+for (dirpath, dirnames, filenames) in os.walk(LIB_DIR):
+    if dirpath.find('.svn') != -1:
+        continue
+    os.chdir(dirpath)
+    files = sorted(list(x + 'c' for x in glob.glob('*.py')))
+    fobj = open('.hidden', 'w')
+    fobj.write('\n'.join(files) + '\n')
+    fobj.close()

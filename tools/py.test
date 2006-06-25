@@ -1,17 +1,7 @@
-#!/usr/bin/env python
+#!/bin/bash
 
-"""
-Run py.test.
+# Run tests with py.test.
+# Usage: See py.test --help.
 
-USAGE: See py.test --help.
-"""
-
-import os
-import sys
-
-TOOL_DIR = os.path.dirname(os.path.abspath(__file__))
-LIB_DIR  = os.path.join(TOOL_DIR, '..', 'lib')
-os.environ['PYTHONPATH'] = LIB_DIR + ':' + os.environ['PYTHONPATH']
-sys.path.insert(0, LIB_DIR)
-
-os.system('py.test %s' % ' '.join(sys.argv[1:]))
+export PYTHONPATH=$(dirname "$0")/../lib:$PYTHONPATH
+py.test $@

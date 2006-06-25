@@ -2,9 +2,8 @@
 
 """Print version numbers of dependencies."""
 
-import sys
-
 print 'Python:',
+import sys
 print '%d.%d.%d' % sys.version_info[:3]
 
 print 'GTK:',

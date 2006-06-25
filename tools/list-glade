@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# List widgets with custom names in Glade XML files.
+# Usage: list-glade PATH
+
+cat "$1" \
+    | grep id= \
+    | sed -e "s/.*id=\"//" \
+    | sed -e "s/\">//" \
+    | egrep -v [a-z][0-9] \
+    | sort

@@ -13,9 +13,9 @@ Subviewer 2.0
 
   Notes:
 
-    COLF is "&H" followed by RRGGBB. STYLE is "st" for strikeout, "ud" for
-    underline, "bd" for bold, or "it" for italic. SIZE is font size in
-    points. FONT is font name.
+    In the header: COLF is "&H" followed by RRGGBB; STYLE is "st" for
+    strikeout, "ud" for underline, "bd" for bold, or "it" for italic; SIZE is
+    font size in points; FONT is font name.
 
   Source:
 

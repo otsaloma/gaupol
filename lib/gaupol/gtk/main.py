@@ -70,7 +70,7 @@ def _parse_args(args):
 
     Return options, arguments.
     """
-    usage = 'gaupol [options] [files]'
+    usage = 'gaupol [OPTIONS] [FILES]'
     formatter = optparse.IndentedHelpFormatter(2, 42, None, True)
     parser = optparse.OptionParser(usage=usage, formatter=formatter)
 
@@ -119,7 +119,7 @@ def main(args):
     app = Application()
 
     if args[1:]:
-        paths = list(os.path.abspath(x) for x in args[1:])
+        paths = [os.path.abspath(x) for x in args[1:]]
         app.open_main_files(paths)
 
     import gtk

@@ -3,10 +3,8 @@
 """
 Profile with hotshot module.
 
-USAGE: profile ENTRIES [OPTIONS] [ARGUMENTS]
-ENTRIES: Amount of entries to show
-OPTIONS: Passed to Gaupol
-ARGUMENTS: Passed to Gaupol
+Usage: profile [OPTIONS] [ARGUMENTS]
+OPTIONS and ARGUMENTS are passed to Gaupol.
 """
 
 import hotshot
@@ -16,7 +14,6 @@ import sys
 
 TOOL_DIR = os.path.dirname(os.path.abspath(__file__))
 LIB_DIR  = os.path.join(TOOL_DIR, '..', 'lib')
-os.environ['PYTHONPATH'] = LIB_DIR + ':' + os.environ['PYTHONPATH']
 sys.path.insert(0, LIB_DIR)
 
 from gaupol.gtk import main
@@ -25,5 +22,5 @@ profile.runcall(main.main, sys.argv)
 profile.close()
 stats = hotshot.stats.load('gaupol.profile')
 stats.sort_stats('time', 'calls')
-stats.print_stats('.*gaupol.*', .5)
+stats.print_stats('gaupol', .2)
 os.remove('gaupol.profile')

@@ -50,7 +50,8 @@ Plans for 0.5.0
     [D] General polish here and there
     [D] Separate header template files
     [D] Fixed spell-check recursion bugs
-    [ ] MicroDVD header
+    [D] MicroDVD header
+    [D] Pot file in trunk
 
   Dependencies:
     [D] Psyco no longer used
@@ -78,9 +79,9 @@ Unscheduled
   * Subtitle file join/split
 
   * Support for additional subtitle formats
-      - MPlayerSub/MPSub
+      - MPsub
         http://www.mplayerhq.hu/DOCS/tech/mpsub.sub
-      - SAMI
+      - SAMI (Even more disgusting than Substation Alpha)
         http://msdn.microsoft.com/library/en-us/dnacc/html/atg_samiarticle.asp
 
   * Windows installer

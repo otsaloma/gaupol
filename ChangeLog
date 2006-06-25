@@ -1,3 +1,25 @@
+2006-06-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/gtk/main.py:
+	  Do not fail on SyntaxError with Python 2.3.
+
+	* tools/hide:
+	* tools/list-glade:
+	* tools/list-py:
+	  New files.
+
+	* tools/add-changelog:
+	* tools/exec:
+	* tools/profile:
+	* tools/py.test:
+	* tools/pydoc:
+	* tools/pyenchant:
+	* tools/pylint:
+	* tools/status:
+	* tools/translate:
+	* tools/versions:
+	  Revised.
+
 2006-06-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/headers/microdvd.txt:

@@ -11,8 +11,8 @@ Table of Contents
   6. Spread the word
 
 
-1. Create branch (only for bug-fix releases)
-============================================
+1. Create branch (only for x.y.1 bug-fix releases)
+==================================================
 
   * Create a brach from tagged x.y.0 if it doesn't already exist
 
@@ -33,7 +33,7 @@ Table of Contents
 
   * Check the "TODO" file for anything undone for this release.
 
-  * Search the source code for tags with regular expression "\s*# [A-Z]{3,}:"
+  * Search the source code for tags with regular expression "\s*#\s*[A-Z]{3,}:"
     and fix anything that needs to be fixed for this release.
 
   * Check all code
@@ -71,6 +71,10 @@ Table of Contents
   * Bump version number
 
       lib/gaupol/__init__.py
+
+  * Update .pot file
+
+      tools/translate -t
 
   * Move all items concerning this release from the "TODO" file to the
     "NEWS" file.

@@ -4,12 +4,13 @@ Translating Gaupol
 Table of Contents
 
   1. Introduction
-  2. Creating a new .po file
-  3. Updating an existing .po file
-  4. Compiling .mo files
-  5. Testing your translation
-  6. Submitting your translation
-  7. References
+  2. Creating a new .pot file
+  3. Creating a new .po file
+  4. Updating an existing .po file
+  5. Compiling .mo files
+  6. Testing your translation
+  7. Submitting your translation
+  8. References
 
 
 1. Introduction
@@ -38,7 +39,16 @@ Table of Contents
   The process done by "translate" is modelled after PyGTK FAQ 22.2[1].
 
 
-2. Creating a new .po file
+2. Creating a new .pot file
+===========================
+
+  A .pot file for the latest version is provided in the "po" directory.
+  However, if for some reason, you need to (re)create it, run command
+
+    tools/translate -t
+
+
+3. Creating a new .po file
 ==========================
 
   To create a new .po file, run command
@@ -49,7 +59,7 @@ Table of Contents
   file is placed in the "po" directory.
 
 
-3. Updating an existing .po file
+4. Updating an existing .po file
 ================================
 
   To update an existing .po file with new strings that have been added since
@@ -60,7 +70,7 @@ Table of Contents
   To update all .po files, substitute LANG with "all".
 
 
-4. Compiling .mo files
+5. Compiling .mo files
 ======================
 
   To compile a .mo file based on the .po file you have translated, run command
@@ -75,7 +85,7 @@ Table of Contents
   file. Correct any errors encountered.
 
 
-5. Testing your translation
+6. Testing your translation
 ===========================
 
   After you have compiled a .mo file, the translation is available to Gaupol.
@@ -89,7 +99,7 @@ Table of Contents
     ./gaupol -t
 
 
-6. Submitting your translation
+7. Submitting your translation
 ==============================
 
   All .po files should be UTF-8 encoded. If not already, convert to UTF-8
@@ -97,13 +107,13 @@ Table of Contents
     mv xx.po xx.po.bak
     msgconv -t UTF-8 xx.po.bak -o xx.po
 
-  When you are done, send the .po file by e-mail to otsaloma@cc.hut.fi, or post
+  When you are done, send the .po file by e-mail to otsaloma@cc.hut.fi or post
   it as a bug on the bug tracker
 
     http://gna.org/bugs/?func=additem&group=gaupol
 
 
-7. References
+8. References
 =============
 
   [1] http://www.async.com.br/faq/pygtk/index.py?req=show&file=faq22.002.htp

@@ -1,6 +1,9 @@
 #!/bin/bash
 
-# Show svn status.
+# Show subversion status.
 
 cd $(dirname $0)/..
-svn status | egrep -v \.pyc$ | egrep -v \.hidden$ | sort
+svn status \
+    | egrep -v \.pyc$ \
+    | egrep -v \.hidden$ \
+    | sort

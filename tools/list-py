@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# List classes, functions and methods defined in Python file.
+# Usage: list-py FILE
+
+cat "$1" | egrep "(^class|^ {0,4}def)"
