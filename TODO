@@ -7,7 +7,6 @@ Legend:
 Plans for 0.5.0
 ===============
 
-  * Mime-type registration?
   * setup.py:
       - Don't install any testing
       - python 2.5 uninstall?
@@ -51,10 +50,11 @@ Plans for 0.5.0
     [D] Fixed spell-check recursion bugs
     [D] MicroDVD header
     [D] Pot file in trunk
+    [D] bug #6235 overview: double-click on subtitle item cause exception
 
   Dependencies:
     [D] Psyco no longer used
-    [D] Universal Encoding Detector >= 1.0
+    [D] Universal Encoding Detector
 
   New Translations:
     [D] Polish (po)
@@ -63,13 +63,10 @@ Plans for 0.5.0
 Plans after 0.5.0
 =================
 
-  * Correction wizard
-
-  New Features:
-    [ ] Common error correction
-    [ ] Capitalization correction
-    [ ] Line reformatting
-    [ ] Hearing impaired subtitle removal
+  * Common error correction
+  * Capitalization correction
+  * Line reformatting
+  * Hearing impaired subtitle removal
 
 
 Unscheduled
@@ -77,14 +74,12 @@ Unscheduled
 
   * Subtitle file join/split
 
-  * Support for additional subtitle formats
-      - MPsub
-        http://www.mplayerhq.hu/DOCS/tech/mpsub.sub
-      - SAMI (Even more disgusting than Substation Alpha)
-        http://msdn.microsoft.com/library/en-us/dnacc/html/atg_samiarticle.asp
-
   * Windows installer
       - http://trac.gajim.org/wiki/DevWindows
+
+  * Support for additional subtitle formats
+      - SAMI (Even more disgusting than Substation Alpha)
+        http://msdn.microsoft.com/library/en-us/dnacc/html/atg_samiarticle.asp
 
   * Documentation (HTML)
 

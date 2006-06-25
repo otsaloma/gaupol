@@ -49,7 +49,7 @@ import gtk
 import pango
 
 from gaupol.base.paths          import PROFILE_DIR
-from gaupol.base.util           import langlib, listlib
+from gaupol.base.util           import filelib, langlib, listlib
 from gaupol.gtk.icons           import *
 from gaupol.gtk.dialog.message  import ErrorDialog
 from gaupol.gtk.dialog.textedit import TextEditDialog
@@ -266,17 +266,8 @@ class SpellCheckDialog(gobject.GObject):
         if not os.path.isfile(path):
             return
         try:
-            fobj = codecs.open(path, 'r', 'utf_8')
-            try:
-                lines = fobj.readlines()
-            finally:
-                fobj.close()
-        except IOError, (no, message):
-            print 'Failed to read replacement file "%s": %s.' % (path, message)
-            return
-        except UnicodeDecodeError, message:
-            print 'Failed to decode replacement file "%s": %s.' % (
-                path, message)
+            lines = filelib.readlines(path, 'utf_8')
+        except (IOError, UnicodeError):
             return
 
         lines = listlib.unique(lines)
@@ -544,20 +535,14 @@ class SpellCheckDialog(gobject.GObject):
             if not replacements:
                 continue
             path = os.path.join(_SPELL_CHECK_DIR, self._langs[doc] + '.repl')
+            text = ''
+            for misspelled, correct in replacements:
+                text += '%s%s%s%s' % (
+                    misspelled, _REPL_SEP, correct, os.linesep))
             try:
-                fobj = codecs.open(path, 'w', 'utf_8')
-                try:
-                    for misspelled, correct in replacements:
-                        fobj.write('%s%s%s%s' % (
-                            misspelled, _REPL_SEP, correct, os.linesep))
-                finally:
-                    fobj.close()
-            except IOError, (no, message):
-                print 'Failed to write replacement file "%s": %s.' % (
-                    path, message)
-            except UnicodeEncodeError, message:
-                print 'Failed to encode replacement file "%s": %s.' % (
-                    path, message)
+                filelib.write(path, 'utf_8', text)
+            except (IOError, UnicodeError):
+                pass
 
     def destroy(self):
         """Destroy dialog."""

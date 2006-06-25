@@ -13,11 +13,11 @@ LIB_DIR  = os.path.join(TOOL_DIR, '..', 'lib')
 sys.path.insert(0, LIB_DIR)
 
 # For some reason the .pyc files need to be recreated.
-for (dirpath, dirnames, filenames) in os.walk(LIB_DIR):
-    os.chdir(dirpath)
-    for filename in filenames:
-        if filename.endswith('.pyc'):
-            os.remove(filename)
+for (root, dirs, files) in os.walk(LIB_DIR):
+    os.chdir(root)
+    for name in files:
+        if name.endswith('.pyc'):
+            os.remove(name)
 
 from gaupol.base.util import wwwlib
 threading.Thread(target=pydoc.gui).start()

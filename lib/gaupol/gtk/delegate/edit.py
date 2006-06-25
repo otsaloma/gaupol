@@ -414,6 +414,10 @@ class EditDelegate(Delegate):
         page = self.get_current_page()
 
         if col in (SHOW, HIDE, DURN):
+            if value == '':
+                self.set_sensitivities(page)
+                gtklib.set_cursor_normal(self._window)
+                return
             gtklib.set_cursor_busy(self._window)
             if page.edit_mode == cons.Mode.TIME:
                 new_row = page.project.set_time(row, col - 1, value)

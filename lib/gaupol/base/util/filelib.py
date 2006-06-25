@@ -63,6 +63,15 @@ def read(path, encoding, verbose=True):
                 path, encoding, message)
         raise
 
+def readlines(*args, **kwargs):
+    """
+    Read file and return lines.
+
+    Raise IOError if reading fails.
+    Raise UnicodeError if decoding fails.
+    """
+    return read(*args, **kwargs).split('\n')
+
 def write(path, encoding, text, verbose=True):
     """
     Write text to file.

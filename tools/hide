@@ -8,11 +8,11 @@ import os
 TOOL_DIR = os.path.dirname(os.path.abspath(__file__))
 LIB_DIR  = os.path.join(TOOL_DIR, '..', 'lib')
 
-for (dirpath, dirnames, filenames) in os.walk(LIB_DIR):
-    if dirpath.find('.svn') != -1:
+for (root, dirs, files) in os.walk(LIB_DIR):
+    if root.find('.svn') != -1:
         continue
-    os.chdir(dirpath)
-    files = sorted(list(x + 'c' for x in glob.glob('*.py')))
+    os.chdir(root)
+    pyc_files = sorted(list(x + 'c' for x in glob.glob('*.py')))
     fobj = open('.hidden', 'w')
-    fobj.write('\n'.join(files) + '\n')
+    fobj.write('\n'.join(pyc_files) + '\n')
     fobj.close()

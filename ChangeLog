@@ -1,3 +1,25 @@
+2006-06-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/base/util/filelib.py:
+	  Added readlines function.
+
+	* lib/gaupol/gtk/delegate/edit.py:
+	  Fixed fast man's double-click bug #6235.
+
+	* lib/gaupol/gtk/dialog/spellcheck.py:
+	  Use filelib.
+
+	* setup.cfg:
+	  Removed optimize.
+
+	* setup.py:
+	  Preliminary fixes.
+
+	* tools/hide:
+	* tools/pydoc:
+	* tools/translate:
+	  Cosmetic changes.
+
 2006-06-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/base/cons.py:
