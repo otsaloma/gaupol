@@ -27,13 +27,6 @@ from gaupol.base.file          import SubtitleFile
 from gaupol.base.position.calc import Calculator
 
 
-_FRAMERATES = {
-    '23.98': cons.Framerate.FR_23_976,
-    '25.00': cons.Framerate.FR_25,
-    '29.97': cons.Framerate.FR_29_97,
-}
-
-
 class MPsub(SubtitleFile):
 
     """MPsub file."""
@@ -43,6 +36,46 @@ class MPsub(SubtitleFile):
     has_header = True
     identifier = r'^FORMAT=(TIME|[\d\.]+)\s*$', 0
     mode       = cons.Mode.TIME
+
+    def _get_mpsub_frames(self, shows, hides):
+        """
+        Get MPsub style frames.
+
+        Return shows, hides.
+        """
+        shows = shows[:]
+        hides = hides[:]
+        for i in reversed(range(len(shows))):
+            hides[i] = str(hides[i] - shows[i])
+            if i > 0:
+                shows[i] = str(shows[i] - hides[i - 1])
+
+        return shows, hides
+
+    def _get_mpsub_times(self, shows, hides):
+        """Get MPsub style times."""
+
+        shows = list(calc.time_to_seconds(x) for x in shows)
+        hides = list(calc.time_to_seconds(x) for x in hides)
+        for i in reversed(range(len(shows))):
+            hides[i] -= shows[i]
+            if i > 0:
+                shows[i] -= hides[i - 1]
+
+        # Avoid cumulation of rounding errors.
+        bank = 0
+        for i in range(len(shows)):
+            orig_show = shows[i]
+            shows[i] = round(shows[i] - bank, 2)
+            bank = bank + shows[i] - orig_show
+            orig_hide = hides[i]
+            hides[i] = round(hides[i] - bank, 2)
+            bank = bank + hides[i] - orig_hide
+
+        shows = list('%.2f' % x for x in shows)
+        hides = list('%.2f' % x for x in hides)
+
+        return shows, hides
 
     def read(self):
         """
@@ -108,8 +141,8 @@ class MPsub(SubtitleFile):
             self.mode = cons.Mode.TIME
             self.header = header
             return
-        if mode in _FRAMERATES.keys():
-            self.framerate = _FRAMERATES[mode]
+        if mode in cons.Framerate.mpsub_names:
+            self.framerate = cons.Framerate.mpsub_names.index(mode)
             self.mode = cons.Mode.FRAME
             self.header = header
             return
@@ -126,31 +159,16 @@ class MPsub(SubtitleFile):
         newline_char = self._get_newline_character()
 
         if self.mode == cons.Mode.TIME:
-            shows = list(calc.time_to_seconds(x) for x in shows)
-            hides = list(calc.time_to_seconds(x) for x in hides)
-        for i in reversed(range(len(shows))):
-            hides[i] -= shows[i]
-            if i > 0:
-                shows[i] -= hides[i - 1]
-
-        # Avoid cumulation of rounding errors.
-        if self.mode == cons.Mode.TIME:
-            bank = 0
-            for i in range(len(shows)):
-                orig_show = shows[i]
-                shows[i] = round(shows[i] - bank, 2)
-                bank = bank + shows[i] - orig_show
-                orig_hide = hides[i]
-                hides[i] = round(hides[i] - bank, 2)
-                bank = bank + hides[i] - orig_hide
-
+            shows, hides = self._get_mpsub_times(shows, hides)
+        elif self.mode == cons.Mode.FRAME:
+            shows, hides = self._get_mpsub_frames(shows, hides)
         texts = list(x.replace('\n', newline_char) for x in texts)
 
         fobj = codecs.open(self.path, 'w', self.encoding)
         try:
             fobj.write(self.header + newline_char * 2)
             for i in range(len(shows)):
-                fobj.write('%.2f %.2f%s%s%s%s' % (
+                fobj.write('%s %s%s%s%s%s' % (
                     shows[i], hides[i], newline_char,
                     texts[i], newline_char,
                     newline_char

@@ -132,6 +132,12 @@ class Framerate(Section):
         _('29.97 fps'),
     ]
 
+    mpsub_names = [
+        '23.98',
+        '25.00',
+        '29.97',
+    ]
+
     values = [
         23.976,
         25.000,

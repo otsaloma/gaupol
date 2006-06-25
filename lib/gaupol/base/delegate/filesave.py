@@ -98,8 +98,12 @@ class FileSaveDelegate(Delegate):
         if not None in (path, format, encoding, newlines):
             format_name = cons.Format.class_names[format]
             new_file = eval(format_name)(path, encoding, newlines)
-            if file_ is not None and file_.format == format:
-                new_file.header = file_.header
+            if file_ is not None:
+                if file_.format == format:
+                    new_file.header = file_.header
+                if file_.format == cons.Format.MPSUB:
+                    if format == cons.Format.MPSUB:
+                        new_file.mode = file_.mode
             file_ = new_file
 
         self._write_file(file_, texts)

@@ -1,5 +1,12 @@
 2006-06-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/cons.py:
+	* lib/gaupol/base/delegate/filesave.py:
+	* lib/gaupol/base/file/mpsub.py:
+	  Fixed MPsub support.
+
+2006-06-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/headers/mpsub.txt:
 	* lib/gaupol/base/cons.py:
 	* lib/gaupol/base/delegate/fileopen.py:
