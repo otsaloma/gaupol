@@ -1,5 +1,10 @@
 2006-06-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/cons.py:
+	  Unmarked some names translatable.
+
+2006-06-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/gtk/main.py:
 	  Do not fail on SyntaxError with Python 2.3.
 

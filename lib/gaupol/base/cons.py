@@ -98,12 +98,12 @@ class Format(Section):
     ]
 
     display_names = [
-        _('Advanced Sub Station Alpha'),
-        _('MicroDVD'),
-        _('MPL2'),
-        _('Sub Station Alpha'),
-        _('SubRip'),
-        _('SubViewer 2.0'),
+        'Advanced Sub Station Alpha',
+        'MicroDVD',
+        'MPL2',
+        'Sub Station Alpha',
+        'SubRip',
+        'SubViewer 2.0',
     ]
 
     extensions = [
@@ -148,9 +148,9 @@ class Newlines(Section):
     WINDOWS = 2
 
     display_names = [
-        _('Mac'),
-        _('Unix'),
-        _('Windows'),
+        'Mac',
+        'Unix',
+        'Windows',
     ]
 
     values = [
@@ -166,8 +166,8 @@ class VideoPlayer(Section):
     VLC     = 1
 
     display_names = [
-        _('MPlayer'),
-        _('VLC'),
+        'MPlayer',
+        'VLC',
     ]
 
     commands = [
