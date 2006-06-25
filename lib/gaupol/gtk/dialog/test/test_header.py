@@ -21,8 +21,16 @@ import gtk
 from gaupol.base.file.classes import *
 from gaupol.gtk               import cons
 from gaupol.gtk.dialog.header import HeaderDialog
+from gaupol.gtk.dialog.header import _MPsubErrorDialog
 from gaupol.gtk.util          import gtklib
 from gaupol.test              import Test
+
+
+class TestMPsubErrorDialog(Test):
+
+    def test_run(self):
+
+        gtklib.run(_MPsubErrorDialog(gtk.Window()))
 
 
 class TestHeaderDialog(Test):

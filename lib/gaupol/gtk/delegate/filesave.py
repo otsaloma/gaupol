@@ -286,6 +286,7 @@ class FileSaveDelegate(Delegate):
 
         page = self.get_current_page()
         gtklib.run(HeaderDialog(self._window, page.project))
+        self.set_sensitivities(page)
 
     def on_save_all_documents_activate(self, *args):
         """Save all documents."""

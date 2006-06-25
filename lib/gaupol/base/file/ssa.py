@@ -115,9 +115,6 @@ class SubStationAlpha(SubtitleFile):
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
-        shows = shows[:]
-        hides = hides[:]
-        texts = texts[:]
         newline_char = self._get_newline_character()
         calc = Calculator()
 

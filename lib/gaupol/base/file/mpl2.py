@@ -73,12 +73,11 @@ class MPL2(SubtitleFile):
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
-        shows = shows[:]
-        hides = hides[:]
-        texts = texts[:]
         newline_char = self._get_newline_character()
         calc = Calculator()
 
+        shows = shows[:]
+        hides = hides[:]
         for data in (shows, hides):
             for i in range(len(data)):
                 decaseconds = calc.time_to_seconds(data[i]) * 10

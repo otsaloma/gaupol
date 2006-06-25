@@ -7,8 +7,7 @@ Legend:
 Plans for 0.5.0
 ===============
 
-  * Non-lib stuff
-  * Put a .pot file in the trunk? Yes!
+  * Mime-type registration?
   * setup.py:
       - Don't install any testing
       - python 2.5 uninstall?
@@ -19,11 +18,11 @@ Plans for 0.5.0
           - See alacarte source code
       - clean command
       - Do setup.py install options work?
-  * Mime-type registration?
 
   New:
     [D] Find and replace
     [D] Encoding autodetection: http://chardet.feedparser.org/
+    [D] MPsub
 
   Changes:
     [D] New icon

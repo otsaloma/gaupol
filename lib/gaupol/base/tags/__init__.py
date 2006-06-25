@@ -42,8 +42,8 @@ class TagLibrary(object):
     exressions and post-methods after.
     """
 
-    tag        = '', 0
-    italic_tag = '', 0
+    tag        = None
+    italic_tag = None
 
     @classmethod
     def pre_decode(cls, text):

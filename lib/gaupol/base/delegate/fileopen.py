@@ -79,6 +79,10 @@ class FileOpenDelegate(Delegate):
             self.main_texts.append(texts[i])
             self.tran_texts.append(u'')
 
+        if self.main_file.format == cons.Format.MPSUB:
+            if self.main_file.framerate is not None:
+                self.set_framerate(self.main_file.framerate, register=None)
+
         self.main_changed = 0
         self.tran_changed = 0
         return resorts

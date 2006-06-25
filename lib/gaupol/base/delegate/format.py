@@ -59,11 +59,8 @@ class FormatDelegate(Delegate):
 
         method: "title", "capitalize", "upper" or "lower"
         """
-        try:
-            re_tag = self.get_tag_regex(doc)
-            parser = Parser(re_tag)
-        except ValueError:
-            parser = Parser(None)
+        re_tag = self.get_tag_regex(doc)
+        parser = Parser(re_tag)
 
         new_texts = []
         texts = (self.main_texts, self.tran_texts)[doc]
@@ -76,25 +73,21 @@ class FormatDelegate(Delegate):
         self.set_action_description(register, _('Changing case'))
 
     def get_tag_regex(self, document):
-        """
-        Get regular expression for tag in document.
+        """Get regular expression for tag in document or None."""
 
-        Raise ValueError if no tag (no format).
-        """
         name = self._get_format_class_name(document)
         if name is None:
-            raise ValueError
+            return None
+        if eval(name).tag is None:
+            return None
 
         return re.compile(*eval(name).tag)
 
     def toggle_dialog_lines(self, rows, doc, register=cons.Action.DO):
         """Toggle dialog lines on text."""
 
-        try:
-            re_tag = self.get_tag_regex(doc)
-            parser = Parser(re_tag)
-        except ValueError:
-            parser = Parser(None)
+        re_tag = self.get_tag_regex(doc)
+        parser = Parser(re_tag)
         texts = (self.main_texts, self.tran_texts)[doc]
 
         # Get action to be done.
@@ -129,10 +122,7 @@ class FormatDelegate(Delegate):
     def toggle_italicization(self, rows, doc, register=cons.Action.DO):
         """Toggle italicization of text."""
 
-        try:
-            re_tag = self.get_tag_regex(doc)
-        except ValueError:
-            re_tag = None
+        re_tag = self.get_tag_regex(doc)
         format_name = self._get_format_class_name(doc)
         re_italic_tag = re.compile(*eval(format_name).italic_tag)
         texts = (self.main_texts, self.tran_texts)[doc]

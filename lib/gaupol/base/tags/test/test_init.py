@@ -30,8 +30,10 @@ class TestTagLibrary(Test):
 
         for name in cons.Format.class_names:
             cls = eval(name)
-            re.compile(*cls.tag)
-            re.compile(*cls.italic_tag)
+            if cls.tag is not None:
+                re.compile(*cls.tag)
+            if cls.italic_tag is not None:            
+                re.compile(*cls.italic_tag)
             for lst in (cls.decode_tags, cls.encode_tags):
                 for entry in lst:
                     re.compile(entry[0], entry[1])

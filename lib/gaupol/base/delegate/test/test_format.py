@@ -54,8 +54,9 @@ class TestFormatDelegate(Test):
 
     def test_get_tag_regex(self):
 
-        regex = self.project.get_tag_regex(MAIN)
-        assert hasattr(regex, 'match')
+        re_tag = self.project.get_tag_regex(MAIN)
+        if re_tag is not None:
+            assert hasattr(re_tag, 'match')
 
     def test_toggle_dialog_lines(self):
 

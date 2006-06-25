@@ -82,9 +82,6 @@ class SubViewer2(SubtitleFile):
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
-        shows = shows[:]
-        hides = hides[:]
-        texts = texts[:]
         calc = Calculator()
         newline_char = self._get_newline_character()
 

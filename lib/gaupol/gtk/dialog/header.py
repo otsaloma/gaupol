@@ -19,10 +19,28 @@
 """Dialog for editing subtitle file headers."""
 
 
+from gettext import gettext as _
+
 import gtk
 
-from gaupol.base.file.classes import *
-from gaupol.gtk.util          import gtklib
+from gaupol.base.file.classes  import *
+from gaupol.gtk                import cons
+from gaupol.gtk.dialog.message import ErrorDialog
+from gaupol.gtk.util           import gtklib
+
+
+class _MPsubErrorDialog(ErrorDialog):
+
+    """Dialog to inform that MPsub header is invalid."""
+
+    def __init__(self, parent):
+
+        ErrorDialog.__init__(
+            self, parent,
+            _('Invalid header'),
+            _('MPsub header must contain a FORMAT line with a value of '
+              '"TIME", "23.98", "25.00" or "29.97".')
+        )
 
 
 class HeaderDialog(object):
@@ -144,10 +162,23 @@ class HeaderDialog(object):
 
         main_file = self._project.main_file
         tran_file = self._project.tran_file
-        if main_file is not None and main_file.has_header:
-            main_file.header = self._get_main_header()
-        if tran_file is not None and tran_file.has_header:
-            tran_file.header = self._get_translation_header()
+
+        for file_, header in (
+            (self._project.main_file, self._get_main_header()       ),
+            (self._project.tran_file, self._get_translation_header()),
+        ):
+            if file_ is None or not file_.has_header:
+                continue
+            if file_.format == cons.Format.MPSUB:
+                try:
+                    file_.set_header(header)
+                except ValueError:
+                    gtklib.run(_MPsubErrorDialog(self._dialog))
+                    return self._dialog.run()
+                if file_.framerate is not None:
+                    self._project.set_framerate(file_.framerate, register=None)
+            else:
+                file_.header = header
 
     def _on_main_clear_button_clicked(self, *args):
         """Clear main header."""

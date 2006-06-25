@@ -13,6 +13,7 @@ import tempfile
 TOOL_DIR = os.path.dirname(os.path.abspath(__file__))
 LIB_DIR  = os.path.join(TOOL_DIR, '..', 'lib')
 os.environ['PYTHONPATH'] = LIB_DIR + ':' + os.environ['PYTHONPATH']
+sys.path.insert(0, LIB_DIR)
 
 from gaupol.base.util import wwwlib
 report = os.path.join(tempfile.gettempdir(), 'gaupol.pylint')

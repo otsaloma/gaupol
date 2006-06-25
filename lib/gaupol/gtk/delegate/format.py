@@ -23,8 +23,10 @@ from gettext import gettext as _
 
 import gtk
 
-from gaupol.gtk.icons    import *
-from gaupol.gtk.delegate import Delegate, UIMAction
+from gaupol.base.tags.classes import *
+from gaupol.gtk               import cons
+from gaupol.gtk.icons         import *
+from gaupol.gtk.delegate      import Delegate, UIMAction
 
 
 class _FormatAction(UIMAction):
@@ -94,10 +96,18 @@ class ToggleItalicizationAction(UIMAction):
         col = page.view.get_focus()[1]
         if col not in (MTXT, TTXT):
             return False
-        if col == MTXT and page.project.main_file is None:
-            return False
-        if col == TTXT and page.project.tran_file is None:
-            return False
+        if col == MTXT:
+            if page.project.main_file is None:
+                return False
+            format = page.project.main_file.format
+            if eval(cons.Format.class_names[format]).italic_tag is None:
+                return False
+        if col == TTXT:
+            if page.project.tran_file is None:
+                return False
+            format = page.project.tran_file.format
+            if eval(cons.Format.class_names[format]).italic_tag is None:
+                return False
 
         return True
 

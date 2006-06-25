@@ -1,5 +1,30 @@
 2006-06-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/headers/mpsub.txt:
+	* lib/gaupol/base/cons.py:
+	* lib/gaupol/base/delegate/fileopen.py:
+	* lib/gaupol/base/delegate/format.py:
+	* lib/gaupol/base/delegate/stat.py:
+	* lib/gaupol/base/delegate/test/test_format.py:
+	* lib/gaupol/base/file/__init__.py:
+	* lib/gaupol/base/file/classes.py:
+	* lib/gaupol/base/file/mpl2.py:
+	* lib/gaupol/base/file/mpsub.py:
+	* lib/gaupol/base/file/ssa.py:
+	* lib/gaupol/base/file/subviewer2.py:
+	* lib/gaupol/base/tags/__init__.py:
+	* lib/gaupol/base/tags/classes.py:
+	* lib/gaupol/base/tags/mpsub.py:
+	* lib/gaupol/base/tags/test/test_init.py:
+	* lib/gaupol/gtk/delegate/filesave.py:
+	* lib/gaupol/gtk/delegate/format.py:
+	* lib/gaupol/gtk/dialog/header.py:
+	* lib/gaupol/gtk/dialog/test/test_header.py:
+	* tools/pylint:
+	  Added support for MPsub.
+
+2006-06-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/cons.py:
 	  Unmarked some names translatable.
 

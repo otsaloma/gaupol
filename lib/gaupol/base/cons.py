@@ -84,14 +84,16 @@ class Format(Section):
     ASS        = 0
     MICRODVD   = 1
     MPL2       = 2
-    SSA        = 3
-    SUBRIP     = 4
-    SUBVIEWER2 = 5
+    MPSUB      = 3
+    SSA        = 4
+    SUBRIP     = 5
+    SUBVIEWER2 = 6
 
     class_names = [
         'AdvancedSubStationAlpha',
         'MicroDVD',
         'MPL2',
+        'MPsub',
         'SubStationAlpha',
         'SubRip',
         'SubViewer2',
@@ -101,6 +103,7 @@ class Format(Section):
         'Advanced Sub Station Alpha',
         'MicroDVD',
         'MPL2',
+        'MPsub',
         'Sub Station Alpha',
         'SubRip',
         'SubViewer 2.0',
@@ -110,6 +113,7 @@ class Format(Section):
         '.ass',
         '.sub',
         '.txt',
+        '.sub',
         '.ssa',
         '.srt',
         '.sub',

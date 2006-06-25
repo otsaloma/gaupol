@@ -69,7 +69,7 @@ class SubtitleFile(object):
 
     def __setattr__(self, name, value):
 
-        if name in ('format', 'has_header', 'identifier', 'mode'):
+        if name in ('format', 'has_header', 'identifier'):
             raise ValueError
         object.__setattr__(self, name, value)
 

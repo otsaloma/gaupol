@@ -30,10 +30,8 @@ class StatisticsDelegate(Delegate):
         """Get list of line lengths."""
 
         text = [self.main_texts, self.tran_texts][doc][row]
-        try:
-            re_tag = self.get_tag_regex(doc)
+        re_tag = self.get_tag_regex(doc)
+        if re_tag is not None:
             text = re_tag.sub('', text)
-        except ValueError:
-            pass
 
         return list(len(x) for x in text.split('\n'))
