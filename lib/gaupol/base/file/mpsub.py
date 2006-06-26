@@ -55,6 +55,7 @@ class MPsub(SubtitleFile):
     def _get_mpsub_times(self, shows, hides):
         """Get MPsub style times."""
 
+        calc = Calculator()
         shows = list(calc.time_to_seconds(x) for x in shows)
         hides = list(calc.time_to_seconds(x) for x in hides)
         for i in reversed(range(len(shows))):
@@ -155,7 +156,6 @@ class MPsub(SubtitleFile):
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
-        calc = Calculator()
         newline_char = self._get_newline_character()
 
         if self.mode == cons.Mode.TIME:

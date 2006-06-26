@@ -1,5 +1,10 @@
 2006-06-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/file/mpsub.py:
+	  Fixed lack of calc.
+
+2006-06-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* INSTALL:
 	* README:
 	* TODO:
