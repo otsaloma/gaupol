@@ -538,7 +538,7 @@ class SpellCheckDialog(gobject.GObject):
             text = ''
             for misspelled, correct in replacements:
                 text += '%s%s%s%s' % (
-                    misspelled, _REPL_SEP, correct, os.linesep))
+                    misspelled, _REPL_SEP, correct, os.linesep)
             try:
                 filelib.write(path, 'utf_8', text)
             except (IOError, UnicodeError):

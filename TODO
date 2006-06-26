@@ -51,6 +51,8 @@ Plans for 0.5.0
     [D] MicroDVD header
     [D] Pot file in trunk
     [D] bug #6235 overview: double-click on subtitle item cause exception
+    [D] setup.cfg: emptier
+    [D] setup.py: clean & insstall
 
   Dependencies:
     [D] Psyco no longer used

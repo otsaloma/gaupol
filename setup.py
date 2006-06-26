@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+# UGH!
+# ...
+
 import glob
 import os
 import shutil
@@ -49,20 +52,25 @@ class Clean(clean):
 
         desktop_file = os.path.join('data', 'gaupol.desktop')
         if os.path.isfile(desktop_file):
+            info("removing '%s'" % desktop_file)
             os.remove(desktop_file)
 
         for name in ('installed-files.log', 'MANIFEST'):
             if os.path.isfile(name):
+                info("removing '%s'" % name)
                 os.remove(name)
 
         lib_dir = os.path.abspath('lib')
         for (root, dirs, files) in os.walk(lib_dir):
-            os.chdir(root)
             for name in files:
                 if name.endswith('.pyc'):
-                    os.remove(name)
+                    path = os.path.join(root, name)
+                    info("removing '%s'" % path.replace(os.getcwd(), '.'))
+                    os.remove(path)
 
-        dir_util.remove_tree('locale')
+        for name in ('build', 'dist', 'locale'):
+            if os.path.isdir(name):
+                dir_util.remove_tree(name)
 
 
 class InstallData(install_data):
@@ -72,7 +80,7 @@ class InstallData(install_data):
         desktop_file = 'data/gaupol.desktop'
         os.system('intltool-merge -d po %s.in %s' % (
             desktop_file, desktop_file))
-        return ('share/applications', [desktop_file])
+        return [('share/applications', [desktop_file])]
 
     def _get_mo_files(self):
 
@@ -85,8 +93,8 @@ class InstallData(install_data):
             if not os.path.isdir(mo_dir):
                 info('creating %s' % mo_dir)
                 os.makedirs(mo_dir)
-            info('compiling %s' % mo_file)
-            os.system('msgfmt -cv %s -o %s' % (po_file, mo_file))
+            info("compiling '%s'" % mo_file)
+            os.system('msgfmt %s -o %s' % (po_file, mo_file))
             if os.path.isfile(mo_file):
                 mo_files.append((dest_dir, [mo_file]))
         return mo_files
@@ -104,9 +112,9 @@ class InstallData(install_data):
         outputs = install_data.get_outputs(self)
         return outputs + self.__output_dirs
 
-    def mkpath(self, *args, **kwargs):
+    def mkpath(self, name, mode=0777):
 
-        created_dirs = dir_util.mkpath(self, *args, **kwargs)
+        created_dirs = dir_util.mkpath(name, mode, dry_run=self.dry_run)
 
         # List created directories.
         for entry in created_dirs:
@@ -140,18 +148,22 @@ class InstallLib(install_lib):
 
     def install(self):
 
-        # Write path information to file "paths.py".
-        paths_file = os.path.join(self.build_dir, 'gaupol', 'base', 'paths.py')
+        # Allow --root to be used as a destination directory.
+        root   = self.distribution.get_command_obj('install').root
         parent = self.distribution.get_command_obj('install').install_data
-        data_dir    = os.path.join(parent, 'data')
-        locale_dir  = os.path.join(parent, share, 'locale')
+        if root is not None:
+            parent = parent.replace(root, '')
+        data_dir    = os.path.join(parent, 'share', 'gaupol')
+        locale_dir  = os.path.join(parent, 'share', 'locale')
         profile_dir = "os.path.join(os.path.expanduser('~'), '.gaupol')"
 
-        fobj = open(paths_file, 'w')
+        # Write gaupol.base.paths module.
+        path = os.path.join(self.build_dir, 'gaupol', 'base', 'paths.py')
+        fobj = open(path, 'w')
         fobj.write('import os\n\n')
         fobj.write('DATA_DIR    = %r\n' % data_dir   )
         fobj.write('LOCALE_DIR  = %r\n' % locale_dir )
-        fobj.write('PROFILE_DIR = %r\n' % profile_dir)
+        fobj.write('PROFILE_DIR = %s\n' % profile_dir)
         fobj.close()
 
         return install_lib.install(self)
@@ -174,7 +186,6 @@ class SDistGna(sdist):
         temp_dir = tempfile.gettempdir()
         test_dir = os.path.join(temp_dir, basename)
 
-        Clean().run()
         sdist.run(self)
         tarballs = os.listdir(self.dist_dir)
 
@@ -186,7 +197,7 @@ class SDistGna(sdist):
             tarobj = tarfile.open(tarball_file, 'r')
             for member in tarobj.getmembers():
                 tarobj.extract(member, temp_dir)
-            info('comparing tarball (tmp) with working copy (.)')
+            info("comparing tarball 'tmp' with working copy '.'")
             os.system('diff -r -x *.pyc -x .svn -x .hidden . %s' % test_dir)
             response = raw_input('Are all files in the tarball [Y/n]? ')
             if response.lower() == 'n':
@@ -197,19 +208,19 @@ class SDistGna(sdist):
         os.chdir(self.dist_dir)
         info('calculating md5sums')
         os.system('md5sum * > %s.md5sum' % basename)
-        info('creating %s.changes' % basename)
+        info("creating '%s.changes'" % basename)
         path = os.path.join('..', '..', 'ChangeLog')
         shutil.copyfile(path, '%s.changes' % basename)
-        info('creating %s.news' % basename)
+        info("creating '%s.news'" % basename)
         path = os.path.join('..', '..', 'NEWS')
         shutil.copyfile(path, '%s.news' % basename)
         for tarball in tarballs:
-            info('signing %s' % tarball)
+            info("signing '%s'" % tarball)
             os.system('gpg --detach %s' % tarball)
 
         # Create latest.txt.
         os.chdir('..')
-        info('creating latest.txt')
+        info("creating 'latest.txt'")
         fobj = open('latest.txt', 'w')
         fobj.write('%s\n' % __version__)
         fobj.close()
@@ -243,7 +254,7 @@ class Uninstall(Command):
             finally:
                 fobj.close()
         except IOError, (no, message):
-            info('failed to read file "%s": %s' % (log_file, message))
+            info("failed to read '%s': %s" % (log_file, message))
             raise SystemExit(1)
 
         # Sort list so that files precede directories.
@@ -253,22 +264,21 @@ class Uninstall(Command):
 
         for path in paths:
             if os.path.isfile(path):
-                info('removing file %s' % path)
+                info("removing '%s'" % path)
                 if not self.dry_run:
                     try:
                         os.remove(path)
                     except (IOError, OSError), (no, message):
-                        info('failed to remove file %s: %s' % (path, message))
+                        info('failed: %s' % message)
             elif os.path.isdir(path):
-                info('removing directory %s' % path)
+                info("removing '%s'" % path)
                 if not self.dry_run:
                     try:
                         os.rmdir(path)
                     except (IOError, OSError), (no, message):
-                        info('failed to remove directory %s: %s' % (
-                            path, message))
+                        info('failed: %s' % message)
             else:
-                info('file %s not found' % path)
+                info("'%s' not found" % path)
 
 
 setup(

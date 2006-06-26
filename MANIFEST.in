@@ -9,8 +9,8 @@ include README
 include setup.cfg
 include setup.py
 include TODO
-include trantool
 recursive-include data *
+recursive-include doc *
 recursive-include lib *.py
-recursive-include po *.po ChangeLog README.translators
-recursive-include test *
+recursive-include po *
+recursive-include tools *

@@ -1,5 +1,22 @@
 2006-06-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* MANIFEST.in:
+	  Updated.
+
+	* lib/gaupol/gtk/dialog/spellcheck.py:
+	  Fixed SyntaxError.
+
+	* setup.cfg:
+	  Keep only the record line.
+
+	* setup.py:
+	  Updated.
+	  Improved clean command.
+	  Fixed errors.
+	  Fixed paths.py generation.
+
+2006-06-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/util/filelib.py:
 	  Added readlines function.
 

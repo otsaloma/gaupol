@@ -54,6 +54,7 @@ Table of Contents
 
   * Install Gaupol and check that it works
 
+       export PYTHONPATH=/tmp/sandbox/lib/python2.4/site-packages:$PYTHONPATH
       ./setup.py install --prefix=/tmp/sandbox
       /tmp/sandbox/bin/gaupol
 
@@ -108,6 +109,7 @@ Table of Contents
 
   * Build tarballs
 
+      ./setup.py clean
       ./setup.py sdist_gna --formats bztar,gztar
 
   * Cut news and and changes files to relevant parts
