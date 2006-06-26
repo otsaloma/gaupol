@@ -285,7 +285,7 @@ class EditDelegate(Delegate):
         video_toolbar.set_sensitive(sensitive)
 
     def on_clear_texts_activate(self, *args):
-        """Clear selected texts"""
+        """Clear selected texts."""
 
         page = self.get_current_page()
         rows = page.view.get_selected_rows()

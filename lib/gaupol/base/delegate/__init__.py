@@ -47,7 +47,7 @@ class Delegate(object):
     """
 
     # Code borrowed from
-    # "Automatic delegation as an alternative to inheritance" by Alex Martelli
+    # 'Automatic delegation as an alternative to inheritance' by Alex Martelli
     # http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52295
 
     def __getattr__(self, name):

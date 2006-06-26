@@ -7,56 +7,43 @@ Legend:
 Plans for 0.5.0
 ===============
 
-  * setup.py:
-      - Don't install any testing
-      - python 2.5 uninstall?
-      - Remove setup.cfg?
-      - Destination vs. configure (e.g. Arch)
-          - setup.py install --prefix=/usr --root=tmp/pkg
-      - Use intltool-merge for gaupol.desktop file translations
-          - See alacarte source code
-      - clean command
-      - Do setup.py install options work?
-
   New:
-    [D] Find and replace
-    [D] Encoding autodetection: http://chardet.feedparser.org/
-    [D] MPsub
+    [D] Find and replace, including regular expressions
+    [D] Character encoding auto-detection
+    [D] Support MPlayer's MPsub subtitle file format
 
   Changes:
-    [D] New icon
+    [D] New icon, as both PNG and SVG
     [D] Applied GNOME Goal 2.1: Install theme-friendly icons
+    [D] Icon field in the desktop file no longer contains extension
+    [D] Warning dialog displayed if opening unsorted file
+    [D] Separate, locally overridable, header template files
+    [D] Support MicroDVD headers ("{DEFAULT}{}{...}" lines)
+    [D] Time decimal changed from comma (",") to period (".")
+    [D] Framerate conversion available for time-based subs as well
+    [D] Dialogs are again resizable to be smaller
+    [D] Fixed spell-check recursion bugs
+    [D] Fixed bug #6235: double-click on subtitle item cause exception
+    [D] "Unselect All" menu item removed
+    [D] "Save A Copy..." menu items removed
+    [D] Unified target specifications in dialogs
+    [D] Spell-check suggestion list now scrolls to top with new word
+    [D] Gaupol no longer hangs if video player not closed before exit
+    [D] Debug dialog no longer fails to start if PyEnchant not installed
+    [D] Video selection dialog's file filter now defaults to video
     [D] Support default browsers on KDE and Mac OSX as well
     [D] Better video player defaults on Windows
-    [D] Framerate conversion available for time-based subs as well
-    [D] Developer-specific options to gaupol made into separate scripts
     [D] Testing framework made compatible with py.test
-    [D] Desktop file strings are now extracted to .po files
-    [D] Time decimal changed from "," to "."
-    [D] Video selection dialog's file filter should default to video
-    [D] Gaupol hangs if video player not closed before exit
-    [D] Spell-check suggestion list does not scroll to top with new word
-    [D] Icon field in the desktop file should not include extension
-    [D] Debug dialog fails to start if PyEnchant not installed
-    [D] Dialog sizes smallerable
-    [D] Remove Unselect All menu item?
-    [D] Sort on open feedback
-    [D] Save a copy removed
-    [D] Spell-check dialog mnemonics: Join _Back, Join _Forward
-    [D] Dialog targets
-    [D] Fixed menu ellipses
+    [D] Desktop file strings are now translated in .po files
+    [D] Developer-specific options to gaupol made into separate scripts
+    [D] Included documentation for supported subtitle file formats
+    [D] setup.cfg no longer specifies prefix or optimization
+    [D] Added clean command to setup.py
     [D] General polish here and there
-    [D] Separate header template files
-    [D] Fixed spell-check recursion bugs
-    [D] MicroDVD header
-    [D] Pot file in trunk
-    [D] bug #6235 overview: double-click on subtitle item cause exception
-    [D] setup.cfg: emptier
-    [D] setup.py: clean & insstall
 
   Dependencies:
     [D] Psyco no longer used
-    [D] Universal Encoding Detector
+    [D] New optional dependency of Universal Encoding Detector (chardet)
 
   New Translations:
     [D] Polish (po)

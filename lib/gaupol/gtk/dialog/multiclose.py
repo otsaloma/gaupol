@@ -47,7 +47,7 @@ class MultiCloseWarningDialog(object):
         self._dialog.set_default_response(gtk.RESPONSE_YES)
 
     def _init_data(self, pages):
-        """Initialize page lists"""
+        """Initialize page lists."""
 
         for page in pages:
             if page.project.main_changed:

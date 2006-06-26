@@ -20,24 +20,25 @@
 
 
 # Known problems:
-# (1) Unicoding
-# (2) User dictionaries
-# (3) Memory freeing
+#   (1) Unicoding
+#   (2) User dictionaries
+#   (3) Memory freeing
 #
 # (1) Unicoding between Python, Enchant and GTK widgets seems very
-# unpredictable. To be on the safe side, all acquired text from where-ever is
-# always converted to unicode.
+#     unpredictable. To be on the safe side, all acquired text from where-ever
+#     is always converted to unicode.
 #
 # (2) By default PyEnchant uses a single broker for all dictionaries. This
-# seems to cause that user dictionaries (a.k.a. personal word lists) all end up
-# writing to the same file. Solution: Use a separate broker for main text and
-# translation text.
+#     seems to cause that user dictionaries (a.k.a. personal word lists) all
+#     end up writing to the same file. Solution: Use a separate broker for main
+#     text and translation text.
 #
 # (3) PyEnchant (or Enchant) seems to have problems freeing dictionaries after
-# the spell check dialog has been closed and properly destroyed. This seems to
-# be a problem when using PyEnchant's default way of having one module-global
-# broker object. By creating a new broker every time, we avoid AssertionErrors
-# when creating dictionaries, but the memory problems remain.
+#     the spell check dialog has been closed and properly destroyed. This seems
+#     to be a problem when using PyEnchant's default way of having one
+#     module-global broker object. By creating a new broker every time, we
+#     avoid AssertionErrors when creating dictionaries, but the memory problems
+#     remain.
 
 
 from gettext import gettext as _

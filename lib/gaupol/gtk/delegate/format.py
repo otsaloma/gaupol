@@ -184,7 +184,7 @@ class FormatDelegate(Delegate):
         """
         Change case.
 
-        method: "title", "capitalize", "upper" or "lower"
+        method: 'title', 'capitalize', 'upper' or 'lower'
         """
         page = self.get_current_page()
         rows = page.view.get_selected_rows()

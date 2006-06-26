@@ -1,7 +1,30 @@
 #!/usr/bin/env python
 
-# UGH!
-# ...
+"""
+Relevant customizations in this file
+  (1) gaupol.base.paths module
+  (2) Translations
+  (3) Uninstallation
+
+(1) Gaupol finds non-Python files based on the paths written in module
+    gaupol.base.paths. In lib/gaupol/base/paths.py the paths default to the
+    ones in the source directory. During installation the file gets rewritten
+    to build/gaupol/base/paths.py with the installation paths and that file
+    will be installed. The paths are based on variable 'install_data' with the
+    'root' variable stripped if it is given. If doing distro-packaging, make
+    sure this file gets correctly written.
+
+(2) During installation, the .po files are compiled and the desktop file is
+    translated. This requires executables 'msgfmt' and 'intltool-merge' in
+    $PATH.
+
+(3) Uninstallation is implemented via the '--record' option, which is turned on
+    by default in setup.cfg. By default directories don't get listed in the
+    record file and to change that some distutils method have been
+    overridden. That's not very cool, but they're all public methods, so as
+    long the API does not change there should be no problem.
+"""
+
 
 import glob
 import os
@@ -46,6 +69,13 @@ data_files = [
 
 class Clean(clean):
 
+    def finalize_options(self):
+
+        clean.finalize_options(self)
+
+        if self.dry_run:
+            raise SystemExit('--dry-run not supported')
+
     def run(self):
 
         clean.run(self)
@@ -77,7 +107,7 @@ class InstallData(install_data):
 
     def _get_desktop_file(self):
 
-        desktop_file = 'data/gaupol.desktop'
+        desktop_file = os.path.join('data', 'gaupol.desktop')
         os.system('intltool-merge -d po %s.in %s' % (
             desktop_file, desktop_file))
         return [('share/applications', [desktop_file])]
@@ -237,7 +267,8 @@ class Uninstall(Command):
 
     def finalize_options(self):
 
-        pass
+        if self.dry_run:
+            raise SystemExit('--dry-run not supported')
 
     def run (self):
 
@@ -265,18 +296,16 @@ class Uninstall(Command):
         for path in paths:
             if os.path.isfile(path):
                 info("removing '%s'" % path)
-                if not self.dry_run:
-                    try:
-                        os.remove(path)
-                    except (IOError, OSError), (no, message):
-                        info('failed: %s' % message)
+                try:
+                    os.remove(path)
+                except (IOError, OSError), (no, message):
+                    info('failed: %s' % message)
             elif os.path.isdir(path):
                 info("removing '%s'" % path)
-                if not self.dry_run:
-                    try:
-                        os.rmdir(path)
-                    except (IOError, OSError), (no, message):
-                        info('failed: %s' % message)
+                try:
+                    os.rmdir(path)
+                except (IOError, OSError), (no, message):
+                    info('failed: %s' % message)
             else:
                 info("'%s' not found" % path)
 

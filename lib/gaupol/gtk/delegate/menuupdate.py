@@ -52,7 +52,7 @@ class MenuUpdateDelegate(Delegate):
         """
         Get action group from UI manager.
 
-        name: "main", "recent" or "projects"
+        name: 'main', 'recent' or 'projects'
         """
         for group in self._uim.get_action_groups():
             if group.get_name() == name:
@@ -142,7 +142,7 @@ class MenuUpdateDelegate(Delegate):
         Show file menu adding recent files.
 
         File action name fields are integers matching the file's index in
-        conf.file.recents and action fields are "open_recent_file_N".
+        conf.file.recents and action fields are 'open_recent_file_N'.
         """
         action_group = self._get_action_group('recent')
         for action in action_group.list_actions():
@@ -192,7 +192,7 @@ class MenuUpdateDelegate(Delegate):
         Show projects menu adding all open projects.
 
         Project action name fields are integers matching the page's index in
-        self.pages and action fields are "activate_project_N".
+        self.pages and action fields are 'activate_project_N'.
         """
         action_group = self._get_action_group('projects')
         for action in action_group.list_actions():
@@ -254,7 +254,7 @@ class MenuUpdateDelegate(Delegate):
         """
         Set statusbar tooltips for menu items.
 
-        name: "main", "recent" or "projects"
+        name: 'main', 'recent' or 'projects'
         """
         def on_enter(menu_item, event, action):
             self.set_status_message(action.props.tooltip, False)

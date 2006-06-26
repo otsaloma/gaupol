@@ -38,7 +38,7 @@ class Model(object):
     signals to the user interface when the data is changed.
 
     For an instance to be informed of changes, it needs to connect to a signal
-    using the "connect" method. When the model emits a signal, the provided
+    using the 'connect' method. When the model emits a signal, the provided
     method will be called.
     """
 

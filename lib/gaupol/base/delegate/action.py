@@ -20,14 +20,14 @@
 Managing revertable actions.
 
 To hook some method up with the undo/redo system, the last argument to the
-method should be a keyword argument "register" with a default value of
+method should be a keyword argument 'register' with a default value of
 Action.DO. At the end of the method, self.register_action(...) should be called
 with keyword arguments specified in RevertableAction.__init__.
 
 To do some revertable action without the possibility of reverting, None can be
-given as a value to the "register" keyword argument.
+given as a value to the 'register' keyword argument.
 
-During the "register_action" method, a signal will be emitted notifying that an
+During the 'register_action' method, a signal will be emitted notifying that an
 action was done. Any possible UI can hook up to that signal and use it to
 refresh the data display.
 
@@ -379,7 +379,7 @@ class RevertableActionDelegate(Delegate):
 
         action = RevertableAction(*args, **kwargs)
 
-        # Restore action's original "DO" description if reverting.
+        # Restore action's original 'DO' description if reverting.
         if action.register == cons.Action.DO:
             self._register_action_done(action)
         elif action.register == cons.Action.UNDO:

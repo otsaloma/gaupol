@@ -20,8 +20,8 @@
 Testing framework.
 
 All testing is compatible with, but not dependent on py.test. All test module
-names should are prefixed with "test_", class names with "Test", function and
-method names with "test_".
+names should are prefixed with 'test_', class names with 'Test', function and
+method names with 'test_'.
 """
 
 

@@ -145,9 +145,9 @@ class View(gtk.TreeView):
             return
         rows = sorted(rows)
 
-        # To avoid sending "changed" signal on the selection for every single
+        # To avoid sending 'changed' signal on the selection for every single
         # row, the list of rows needs to be broken down into ranges and
-        # selected with the "select_range" method.
+        # selected with the 'select_range' method.
         ranges = [[rows[0]]]
         rindex = 0
         for i in range(1, len(rows)):

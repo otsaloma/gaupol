@@ -1,15 +1,15 @@
 General Information
 ===================
 
-  Gaupol is a subtitle editor for text-based subtitles. Gaupol supports
+  Gaupol is a subtitle editor for text-based subtitle files. Gaupol supports
   multiple subtitle file formats and provides means of text corrections and
-  time manipulations. Gaupol's user interface is designed with attention to
+  time manipulations. The user interface is designed with attention to
   batch processing of multiple documents and convenient translating.
 
   Gaupol should run on all Unix-like (GNU/Linux, BSD, etc.) operating systems.
   Technically there is no obstacle why it couldn't run on Windows or Mac, but
   that has not been tested. Gaupol's user interface is based on the GTK toolkit
-  and has been designed to best fit the desktop environment.
+  and has been designed to best fit the GNOME desktop environment.
 
   Gaupol is free software released under the GNU General Public License (GPL),
   see the file "COPYING" for details.
@@ -23,30 +23,31 @@ Dependencies
 ============
 
   Required:
-    * Python >= 2.4
-    * PyGTK (with libglade support) >= 2.8
+    * Python >= 2.4 (http://www.python.org/)
+    * PyGTK, with libglade support >= 2.8 (http://www.pygtk.org/)
 
   Optional:
-    * Psyco, for best results >= 1.4
-    * PyEnchant >= 1.1.3
-    * iso-codes
-    * MPlayer or VLC is recommended for preview
+    * PyEnchant >= 1.1.3 (http://pyenchant.sourceforge.net/)
+    * iso-codes (http://alioth.debian.org/projects/pkg-isocodes/)
+    * Universal Encoding Detector (http://chardet.feedparser.org/)
+    * MPlayer (http://www.mplayerhq.hu/) or VLC (http://www.videolan.org/vlc/)
+      is recommended for preview
 
-  Psyco can make Gaupol run a bit faster. PyEnchant is required for
-  spell-checking. iso-codes allows the spell-checker to show the language and
-  country names in your locale.
+  PyEnchant is required for spell-checking. iso-codes allows the spell-checker
+  to show the language and country names in your locale. Universal Encoding
+  Detector provides character encoding auto-detection.
 
   To check the which versions of the dependencies you have installed, in the
   source directory run command
 
-    test/info
+    tools/versions
 
   If you have PyEnchant installed, but spell-checking does not work, you can
   run a test to print information on your PyEnchant installation and list the
   dictionaries available for it. To run the test, in the source directory run
   command
 
-    test/pyenchant
+    tools/pyenchant
 
 
 Running Gaupol
@@ -57,7 +58,7 @@ Running Gaupol
 
   (1) If you want to use translations, compile them with command
 
-        ./trantool -m all
+        tools/translate -m all
 
       Run Gaupol with command
 

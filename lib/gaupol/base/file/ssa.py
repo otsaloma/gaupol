@@ -34,7 +34,7 @@ class SubStationAlpha(SubtitleFile):
 
     Class variables:
 
-        event_fields: Tuple of names under "Events" section
+        event_fields: Tuple of names under 'Events' section
 
     """
 

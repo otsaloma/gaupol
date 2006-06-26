@@ -31,7 +31,7 @@ class CellRendererText(gtk.GenericCellRenderer):
 
     Instance variables:
 
-        font:      Font string, e.g. "Sans 9"
+        font:      Font string, e.g. 'Sans 9'
         font_desc: pango.FontDescription
         text:      String
 

@@ -6,8 +6,6 @@ Installation
 
     ./setup.py install [--prefix=...]
 
-  By default the prefix is /usr/local.
-
 
 Uninstallation
 ==============

@@ -86,7 +86,7 @@ class EditDelegate(Delegate):
         Subtitles are inserted in ascending order by simply inserting elements
         of data in positions defined by elements of rows. This means that the
         addition of subtitles must be taken into account beforehand in the
-        "rows" argument. Data is not resorted, so this method must be called
+        'rows' argument. Data is not resorted, so this method must be called
         with ordered positions.
         """
         for i, row in enumerate(rows):
@@ -209,7 +209,7 @@ class EditDelegate(Delegate):
         Subtitles are inserted in ascending order by simply inserting elements
         of data in positions defined by elements of rows. This means that the
         addition of subtitles must be taken into account beforehand in the
-        "rows" argument.
+        'rows' argument.
         """
         rows = sorted(rows)
         if None in (times, frames, main_texts, tran_texts):

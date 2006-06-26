@@ -1,5 +1,36 @@
 2006-06-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* INSTALL:
+	* README:
+	* TODO:
+	  Updated.
+
+	* lib/gaupol/base/delegate/__init__.py:
+	* lib/gaupol/base/delegate/action.py:
+	* lib/gaupol/base/delegate/edit.py:
+	* lib/gaupol/base/delegate/format.py:
+	* lib/gaupol/base/file/ssa.py:
+	* lib/gaupol/base/model.py:
+	* lib/gaupol/base/tags/converter.py:
+	* lib/gaupol/gtk/cellrend/text.py:
+	* lib/gaupol/gtk/delegate/__init__.py:
+	* lib/gaupol/gtk/delegate/edit.py:
+	* lib/gaupol/gtk/delegate/format.py:
+	* lib/gaupol/gtk/delegate/menuupdate.py:
+	* lib/gaupol/gtk/dialog/multiclose.py:
+	* lib/gaupol/gtk/dialog/spellcheck.py:
+	* lib/gaupol/gtk/page.py:
+	* lib/gaupol/gtk/util/gtklib.py:
+	* lib/gaupol/gtk/view.py:
+	* lib/gaupol/test/__init__.py:
+	  Cosmetic changes.
+
+	* setup.py:
+	  Added comments.
+	  Added --dry-run checks.
+
+2006-06-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* MANIFEST.in:
 	  Updated.
 

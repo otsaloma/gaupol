@@ -1,7 +1,7 @@
 Release Checklist
 =================
 
-Table of Contents
+Contents
 
   1. Create branch
   2. Make sure Gaupol works

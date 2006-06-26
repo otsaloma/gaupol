@@ -106,8 +106,8 @@ class UIMAction(object):
 
     Because the lists of UI manager items are evaluated on import before
     configuration file is read, toggle and radio items need some arbitrary
-    value. A proper value is obtained through methods "get_toggle_value" and
-    "get_radio_index", which can be defined to return a value based on the
+    value. A proper value is obtained through methods 'get_toggle_value' and
+    'get_radio_index', which can be defined to return a value based on the
     conf module.
     """
 

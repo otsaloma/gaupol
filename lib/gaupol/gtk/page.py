@@ -151,7 +151,7 @@ class Page(gobject.GObject):
             basename = self.untitle
 
         # Translators: Suggested translation file basename,
-        # "MAIN BASENAME translation".
+        # 'MAIN BASENAME translation'.
         return _('%s translation') % basename
 
     def get_translation_corename(self):
@@ -208,7 +208,7 @@ class Page(gobject.GObject):
         tran_texts = self.project.tran_texts
 
         # Selection must be cleared before removing rows to avoid selection
-        # constantly changing and emitting the "changed" signal if the row
+        # constantly changing and emitting the 'changed' signal if the row
         # being removed was selected.
         selected_rows = self.view.get_selected_rows()
         self.view.select_rows([])

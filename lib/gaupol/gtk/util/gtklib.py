@@ -218,7 +218,7 @@ def set_label_font(label, font):
     """
     Set label font.
 
-    font: String, e.g. "Sans 9"
+    font: String, e.g. 'Sans 9'
     """
     context = label.get_pango_context()
     font_desc = context.get_font_description()
@@ -234,7 +234,7 @@ def set_widget_font(widget, font):
     """
     Set widget font.
 
-    font: String, e.g. "Sans 9"
+    font: String, e.g. 'Sans 9'
     """
     context = widget.get_pango_context()
     font_desc = context.get_font_description()

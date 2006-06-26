@@ -76,14 +76,14 @@ class TagConverter(object):
             return text
         text = text[:]
 
-        # Convert to internal format ("decode").
+        # Convert to internal format ('decode').
         text = self._pre_decode(text)
         for entry in self._from_regexs:
             for i in range(entry[2]):
                 text = entry[0].sub(entry[1], text)
         text = self._post_decode(text)
 
-        # Convert to desired format ("encode").
+        # Convert to desired format ('encode').
         text = self._pre_encode(text)
         for entry in self._to_regexs:
             for i in range(entry[2]):

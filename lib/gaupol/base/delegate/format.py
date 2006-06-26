@@ -57,7 +57,7 @@ class FormatDelegate(Delegate):
         """
         Change case of text.
 
-        method: "title", "capitalize", "upper" or "lower"
+        method: 'title', 'capitalize', 'upper' or 'lower'
         """
         re_tag = self.get_tag_regex(doc)
         parser = Parser(re_tag)
