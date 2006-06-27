@@ -1,3 +1,47 @@
+Gaupol 0.5.0
+============
+
+  New:
+    * Find and replace, including regular expressions
+    * Character encoding auto-detection
+    * Support MPlayer's MPsub subtitle file format
+
+  Changes:
+    * New icon, as both PNG and SVG
+    * Applied GNOME Goal 2.1: Install theme-friendly icons
+    * Icon field in the desktop file no longer contains extension
+    * Warning dialog displayed if opening unsorted file
+    * Separate, locally overridable, header template files
+    * Support MicroDVD headers ("{DEFAULT}{}{...}" lines)
+    * Time decimal changed from comma (",") to period (".")
+    * Framerate conversion available for time-based subs as well
+    * Dialogs are again resizable to be smaller
+    * Fixed spell-check recursion bugs
+    * Fixed bug #6235: double-click on subtitle item cause exception
+    * "Unselect All" menu item removed
+    * "Save A Copy..." menu items removed
+    * Unified target specifications in dialogs
+    * Spell-check suggestion list now scrolls to top with new word
+    * Gaupol no longer hangs if video player not closed before exit
+    * Debug dialog no longer fails to start if PyEnchant not installed
+    * Video selection dialog's file filter now defaults to video
+    * Support default browsers on KDE and Mac OSX as well
+    * Better video player defaults on Windows
+    * Testing framework made compatible with py.test
+    * Desktop file strings are now translated in .po files
+    * Developer-specific options to gaupol made into separate scripts
+    * setup.cfg no longer specifies prefix or optimization
+    * Added clean command to setup.py
+    * General polish here and there
+
+  Dependencies:
+    * Psyco no longer used
+    * New optional dependency of Universal Encoding Detector (chardet)
+
+  New Translations:
+    * Polish (pl)
+
+
 Gaupol 0.4.1
 ============
 

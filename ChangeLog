@@ -1,5 +1,12 @@
 2006-06-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/__init__.py:
+	  Bumped version number to 0.5.0.
+
+	RELEASE 0.5.0.
+
+2006-06-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/gtk/dialog/header.py:
 	  Removed unused variables.
 

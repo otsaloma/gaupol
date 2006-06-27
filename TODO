@@ -4,50 +4,6 @@ Legend:
   P = Postponed
   ? = Questionable
 
-Plans for 0.5.0
-===============
-
-  New:
-    [D] Find and replace, including regular expressions
-    [D] Character encoding auto-detection
-    [D] Support MPlayer's MPsub subtitle file format
-
-  Changes:
-    [D] New icon, as both PNG and SVG
-    [D] Applied GNOME Goal 2.1: Install theme-friendly icons
-    [D] Icon field in the desktop file no longer contains extension
-    [D] Warning dialog displayed if opening unsorted file
-    [D] Separate, locally overridable, header template files
-    [D] Support MicroDVD headers ("{DEFAULT}{}{...}" lines)
-    [D] Time decimal changed from comma (",") to period (".")
-    [D] Framerate conversion available for time-based subs as well
-    [D] Dialogs are again resizable to be smaller
-    [D] Fixed spell-check recursion bugs
-    [D] Fixed bug #6235: double-click on subtitle item cause exception
-    [D] "Unselect All" menu item removed
-    [D] "Save A Copy..." menu items removed
-    [D] Unified target specifications in dialogs
-    [D] Spell-check suggestion list now scrolls to top with new word
-    [D] Gaupol no longer hangs if video player not closed before exit
-    [D] Debug dialog no longer fails to start if PyEnchant not installed
-    [D] Video selection dialog's file filter now defaults to video
-    [D] Support default browsers on KDE and Mac OSX as well
-    [D] Better video player defaults on Windows
-    [D] Testing framework made compatible with py.test
-    [D] Desktop file strings are now translated in .po files
-    [D] Developer-specific options to gaupol made into separate scripts
-    [D] setup.cfg no longer specifies prefix or optimization
-    [D] Added clean command to setup.py
-    [D] General polish here and there
-
-  Dependencies:
-    [D] Psyco no longer used
-    [D] New optional dependency of Universal Encoding Detector (chardet)
-
-  New Translations:
-    [D] Polish (po)
-
-
 Plans for 0.6.0
 ===============
 
@@ -74,7 +30,7 @@ Unscheduled
   * Windows installer
       - http://trac.gajim.org/wiki/DevWindows
 
-  * Support for additional subtitle formats
+  * Support for additional subtitle file formats
       - SAMI (Even more disgusting than Substation Alpha)
         http://msdn.microsoft.com/library/en-us/dnacc/html/atg_samiarticle.asp
 
@@ -96,7 +52,6 @@ Unscheduled
           o 7 PEP 342: New Generator Features
           o 8 PEP 343: The 'with' statement
           o 12 Other Language Changes
-
 
   * Built-in GStreamer preview
       - http://gstreamer.freedesktop.org/modules/gst-python.html

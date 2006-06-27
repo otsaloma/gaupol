@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-25 03:50+0300\n"
+"POT-Creation-Date: 2006-06-28 00:26+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -614,7 +614,7 @@ msgid "Untitled %d"
 msgstr ""
 
 #. Translators: Suggested translation file basename,
-#. "MAIN BASENAME translation".
+#. 'MAIN BASENAME translation'.
 #: lib/gaupol/gtk/page.py:155
 #, python-format
 msgid "%s translation"
@@ -624,55 +624,55 @@ msgstr ""
 msgid "Output"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/format.py:49
+#: lib/gaupol/gtk/delegate/format.py:51
 msgid "_Case"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/format.py:61
+#: lib/gaupol/gtk/delegate/format.py:63
 msgid "_Dialog"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/format.py:63
+#: lib/gaupol/gtk/delegate/format.py:65
 msgid "Toggle dialog lines on the selected texts"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/format.py:77
+#: lib/gaupol/gtk/delegate/format.py:79
 msgid "_Italic"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/format.py:79
+#: lib/gaupol/gtk/delegate/format.py:81
 msgid "Toggle italicization of the selected texts"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/format.py:112
+#: lib/gaupol/gtk/delegate/format.py:122
 msgid "_Lower"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/format.py:114
+#: lib/gaupol/gtk/delegate/format.py:124
 msgid "Change the selected texts to lower case"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/format.py:128
+#: lib/gaupol/gtk/delegate/format.py:138
 msgid "_Sentence"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/format.py:130
+#: lib/gaupol/gtk/delegate/format.py:140
 msgid "Change the selected texts to Sentence case"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/format.py:144
+#: lib/gaupol/gtk/delegate/format.py:154
 msgid "_Title"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/format.py:146
+#: lib/gaupol/gtk/delegate/format.py:156
 msgid "Change the selected texts to Title Case"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/format.py:160
+#: lib/gaupol/gtk/delegate/format.py:170
 msgid "_Upper"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/format.py:162
+#: lib/gaupol/gtk/delegate/format.py:172
 msgid "Change the selected texts to UPPER CASE"
 msgstr ""
 
@@ -813,7 +813,7 @@ msgstr ""
 #: lib/gaupol/gtk/delegate/filesave.py:171
 #: lib/gaupol/gtk/delegate/fileopen.py:188
 #: lib/gaupol/gtk/delegate/preview.py:91
-#: lib/gaupol/gtk/dialog/spellcheck.py:86
+#: lib/gaupol/gtk/dialog/spellcheck.py:87
 #, python-format
 msgid "%s."
 msgstr ""
@@ -827,32 +827,32 @@ msgstr ""
 msgid "Please try to save the file with a different character encoding."
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/filesave.py:305
+#: lib/gaupol/gtk/delegate/filesave.py:306
 msgid "Saved all open documents"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/filesave.py:357
+#: lib/gaupol/gtk/delegate/filesave.py:358
 msgid "Saved main document"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/filesave.py:372
+#: lib/gaupol/gtk/delegate/filesave.py:373
 msgid "Save As"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/filesave.py:387
+#: lib/gaupol/gtk/delegate/filesave.py:388
 #, python-format
 msgid "Saved main document as \"%s\""
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/filesave.py:400
+#: lib/gaupol/gtk/delegate/filesave.py:401
 msgid "Saved translation document"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/filesave.py:416
+#: lib/gaupol/gtk/delegate/filesave.py:417
 msgid "Save Translation As"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/filesave.py:431
+#: lib/gaupol/gtk/delegate/filesave.py:432
 #, python-format
 msgid "Saved translation document as \"%s\""
 msgstr ""
@@ -1402,11 +1402,11 @@ msgid_plural "Inserted %d subtitles to fit clipboard contents"
 msgstr[0] ""
 msgstr[1] ""
 
-#: lib/gaupol/gtk/delegate/edit.py:449
+#: lib/gaupol/gtk/delegate/edit.py:453
 msgid "Use Alt+Arrow for moving to edit an adjacent cell"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/edit.py:451
+#: lib/gaupol/gtk/delegate/edit.py:455
 msgid "Use Shift+Return for line-break"
 msgstr ""
 
@@ -1461,6 +1461,16 @@ msgstr ""
 msgid "Custom"
 msgstr ""
 
+#: lib/gaupol/gtk/dialog/header.py:40
+msgid "Invalid header"
+msgstr ""
+
+#: lib/gaupol/gtk/dialog/header.py:41
+msgid ""
+"MPsub header must contain a FORMAT line with a value of \"TIME\", \"23.98\", "
+"\"25.00\" or \"29.97\"."
+msgstr ""
+
 #. Translators: This is a special message that shouldn't be translated
 #. literally. It is used in the about dialog to give credits to the translators.
 #. Thus, you should translate it to your name and email address.  You can also
@@ -1474,7 +1484,7 @@ msgstr ""
 msgid "Subtitle editor"
 msgstr ""
 
-#: lib/gaupol/gtk/dialog/spellcheck.py:85
+#: lib/gaupol/gtk/dialog/spellcheck.py:86
 #, python-format
 msgid "Failed to load dictionary for language \"%s\""
 msgstr ""
@@ -1600,71 +1610,27 @@ msgstr ""
 msgid "Video files"
 msgstr ""
 
-#: lib/gaupol/base/cons.py:101
-msgid "Advanced Sub Station Alpha"
-msgstr ""
-
-#: lib/gaupol/base/cons.py:102
-msgid "MicroDVD"
-msgstr ""
-
-#: lib/gaupol/base/cons.py:103
-msgid "MPL2"
-msgstr ""
-
-#: lib/gaupol/base/cons.py:104
-msgid "Sub Station Alpha"
-msgstr ""
-
-#: lib/gaupol/base/cons.py:105
-msgid "SubRip"
-msgstr ""
-
-#: lib/gaupol/base/cons.py:106
-msgid "SubViewer 2.0"
-msgstr ""
-
-#: lib/gaupol/base/cons.py:126
+#: lib/gaupol/base/cons.py:130
 msgid "23.976 fps"
 msgstr ""
 
-#: lib/gaupol/base/cons.py:127
+#: lib/gaupol/base/cons.py:131
 msgid "25 fps"
 msgstr ""
 
-#: lib/gaupol/base/cons.py:128
+#: lib/gaupol/base/cons.py:132
 msgid "29.97 fps"
 msgstr ""
 
-#: lib/gaupol/base/cons.py:151
-msgid "Mac"
-msgstr ""
-
-#: lib/gaupol/base/cons.py:152
-msgid "Unix"
-msgstr ""
-
-#: lib/gaupol/base/cons.py:153
-msgid "Windows"
-msgstr ""
-
-#: lib/gaupol/base/cons.py:169
-msgid "MPlayer"
-msgstr ""
-
-#: lib/gaupol/base/cons.py:170
-msgid "VLC"
-msgstr ""
-
-#: lib/gaupol/base/delegate/format.py:76
+#: lib/gaupol/base/delegate/format.py:73
 msgid "Changing case"
 msgstr ""
 
-#: lib/gaupol/base/delegate/format.py:127
+#: lib/gaupol/base/delegate/format.py:120
 msgid "Toggling dialog lines"
 msgstr ""
 
-#: lib/gaupol/base/delegate/format.py:165
+#: lib/gaupol/base/delegate/format.py:155
 msgid "Toggling italicization"
 msgstr ""
 
