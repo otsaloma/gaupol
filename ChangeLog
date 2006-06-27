@@ -1,3 +1,11 @@
+2006-06-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* MANIFEST.in:
+	  Removed docs.
+
+	* lib/gaupol/gtk/dialog/find.py:
+	  Require self._page to match current page on focus-out and replace.
+
 2006-06-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/base/file/mpsub.py:

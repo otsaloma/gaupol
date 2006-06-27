@@ -36,7 +36,6 @@ Plans for 0.5.0
     [D] Testing framework made compatible with py.test
     [D] Desktop file strings are now translated in .po files
     [D] Developer-specific options to gaupol made into separate scripts
-    [D] Included documentation for supported subtitle file formats
     [D] setup.cfg no longer specifies prefix or optimization
     [D] Added clean command to setup.py
     [D] General polish here and there
@@ -49,7 +48,16 @@ Plans for 0.5.0
     [D] Polish (po)
 
 
-Plans after 0.5.0
+Plans for 0.6.0
+===============
+
+  New:
+    [ ] Subtitle merge/split (bug #6246)
+    [ ] Smarter translation file opening (bug #6245)
+    [?] Support .srtx format (bug #6244)
+
+
+Plans after 0.6.0
 =================
 
   * Common error correction

@@ -377,6 +377,9 @@ class FindDialog(gobject.GObject):
             return False
         if not self._text_view.props.sensitive:
             return False
+        page = self.emit('coordinate-request')[0]
+        if page != self._page:
+            return False
 
         text_buffer = text_view.get_buffer()
         start, end = text_buffer.get_bounds()
@@ -670,6 +673,10 @@ class ReplaceDialog(FindDialog):
 
     def _on_replace_button_clicked(self, *args):
         """Replace current match."""
+
+        page = self.emit('coordinate-request')[0]
+        if page != self._page:
+            return
 
         self._replace_button.grab_focus()
         self._set_replacement(self._page)
