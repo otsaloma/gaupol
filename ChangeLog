@@ -1,5 +1,10 @@
 2006-06-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/dialog/header.py:
+	  Removed unused variables.
+
+2006-06-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* MANIFEST.in:
 	  Removed docs.
 

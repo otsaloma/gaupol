@@ -38,7 +38,7 @@ Contents
 
   * Check all code
 
-      tools/pylint lib
+      tools/pylint lib/gaupol
 
   * Run all tests
 
@@ -54,7 +54,7 @@ Contents
 
   * Install Gaupol and check that it works
 
-       export PYTHONPATH=/tmp/sandbox/lib/python2.4/site-packages:$PYTHONPATH
+      export PYTHONPATH=/tmp/sandbox/lib/python2.4/site-packages:$PYTHONPATH
       ./setup.py install --prefix=/tmp/sandbox
       /tmp/sandbox/bin/gaupol
 
@@ -64,6 +64,10 @@ Contents
   * Uninstall Gaupol and make sure it works
 
       ./setup.py uninstall
+      
+  * Clean and make sure it works
+  
+      ./setup.py clean
 
 
 3. Bump version number

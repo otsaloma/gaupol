@@ -160,9 +160,6 @@ class HeaderDialog(object):
         if response != gtk.RESPONSE_OK:
             return
 
-        main_file = self._project.main_file
-        tran_file = self._project.tran_file
-
         for file_, header in (
             (self._project.main_file, self._get_main_header()       ),
             (self._project.tran_file, self._get_translation_header()),
