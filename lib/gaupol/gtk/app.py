@@ -23,8 +23,9 @@ import types
 
 import gtk
 
-from gaupol.gtk.delegate import Delegates
-from gaupol.gtk.util     import conf
+from gaupol.base.clipboard import Clipboard
+from gaupol.gtk.delegate   import Delegates
+from gaupol.gtk.util       import conf
 
 
 class Application(object):
@@ -34,7 +35,7 @@ class Application(object):
 
     Instance variables:
 
-        _clipboard:       gtk.Clipboard (X clipboard)
+        _clipboard        Clipboard
         _counter:         Integer for naming unsaved projects
         _delegations:     Dictionary mapping method names to Delegates
         _framerate_combo: gtk.ComboBox
@@ -52,6 +53,7 @@ class Application(object):
         _video_button:    gtk.Button
         _video_label:     gtk.Label
         _window:          gtk.Window
+        _x_clipboard:     gtk.Clipboard (X clipboard)
         pages:            List of Pages
 
     """
@@ -62,7 +64,7 @@ class Application(object):
 
     def __init__(self):
 
-        self._clipboard       = gtk.Clipboard()
+        self._clipboard       = Clipboard()
         self._counter         = 0
         self._delegations     = {}
         self._framerate_combo = None
@@ -80,6 +82,7 @@ class Application(object):
         self._video_button    = None
         self._video_label     = None
         self._window          = None
+        self._x_clipboard     = gtk.Clipboard()
         self.pages            = []
 
         self._init_delegations()

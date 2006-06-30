@@ -273,6 +273,7 @@ class FileOpenDelegate(Delegate):
             self.add_to_recent_files(page.project.main_file.path)
         except AttributeError:
             pass
+        page.project.clipboard.data = self._clipboard.data
 
         scrolled_window = gtk.ScrolledWindow()
         scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)

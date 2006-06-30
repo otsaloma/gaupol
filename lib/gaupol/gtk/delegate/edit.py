@@ -182,7 +182,7 @@ class InvertSelectionAction(_SelectionAction):
     paths = ['/ui/menubar/edit/invert_selection']
 
 
-class PasteTextsAction(_ClipboardAction):
+class PasteTextsAction(UIMAction):
 
     """Pasting texts from clipboard."""
 
@@ -196,6 +196,18 @@ class PasteTextsAction(_ClipboardAction):
     )
 
     paths = ['/ui/menubar/edit/paste', '/ui/view/paste']
+
+    @classmethod
+    def is_doable(cls, app, page):
+        """Return action doability."""
+
+        if page is None:
+            return False
+        if not app._clipboard.data:
+            return False
+        selection = bool(page.view.get_selected_rows())
+        focus = page.view.get_focus()[1] in (MTXT, TTXT)
+        return bool(selection and focus)
 
 
 class RemoveSubtitlesAction(UIMAction):
@@ -304,8 +316,12 @@ class EditDelegate(Delegate):
         doc  = page.text_column_to_document(col)
 
         page.project.copy_texts(rows, doc)
+        data = page.project.clipboard.data
+        self._clipboard.data = data
+        for entry in self.pages:
+            entry.project.clipboard.data = data
         text = page.project.clipboard.get_data_as_string()
-        self._clipboard.set_text(text)
+        self._x_clipboard.set_text(text)
         self.set_sensitivities(page)
 
     def on_cut_texts_activate(self, *args):
@@ -317,8 +333,12 @@ class EditDelegate(Delegate):
         doc  = page.text_column_to_document(col)
 
         page.project.cut_texts(rows, doc)
+        data = page.project.clipboard.data
+        self._clipboard.data = data
+        for entry in self.pages:
+            entry.project.clipboard.data = data
         text = page.project.clipboard.get_data_as_string()
-        self._clipboard.set_text(text)
+        self._x_clipboard.set_text(text)
         self.set_sensitivities(page)
 
     def on_edit_value_activate(self, *args):

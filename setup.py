@@ -20,7 +20,7 @@ Relevant customizations in this file
 
 (3) Uninstallation is implemented via the '--record' option, which is turned on
     by default in setup.cfg. By default directories don't get listed in the
-    record file and to change that some distutils method have been
+    record file and to change that some distutils methods have been
     overridden. That's not very cool, but they're all public methods, so as
     long the API does not change there should be no problem.
 """

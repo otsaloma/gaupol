@@ -1,3 +1,13 @@
+2006-06-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/gtk/app.py:
+	* lib/gaupol/gtk/delegate/edit.py:
+	* lib/gaupol/gtk/delegate/fileopen.py:
+	  Implemented global clipboard in Application class.
+
+	* setup.py:
+	  Fixed typo.
+
 2006-06-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/__init__.py:
