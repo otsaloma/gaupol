@@ -13,6 +13,8 @@ Plans for 0.6.0
     [?] Support .srtx format (bug #6244)
 
   Changes:
+    [D] setup.py: Fixed paths module generation in case --root option given
+        with a trailing directory separator
     [D] Copy-paste now works from one project to another
 
 

@@ -1,3 +1,8 @@
+2006-07-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* setup.py:
+	  Fixed paths module generation.
+
 2006-06-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/gtk/app.py:

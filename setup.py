@@ -182,6 +182,8 @@ class InstallLib(install_lib):
         root   = self.distribution.get_command_obj('install').root
         parent = self.distribution.get_command_obj('install').install_data
         if root is not None:
+            root = os.path.abspath(root)
+            parent = os.path.abspath(parent)
             parent = parent.replace(root, '')
         data_dir    = os.path.join(parent, 'share', 'gaupol')
         locale_dir  = os.path.join(parent, 'share', 'locale')
