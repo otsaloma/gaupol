@@ -258,6 +258,16 @@ class spell_check(_Section):
     }
 
 
+class srtx(_Section):
+
+    directory = ''
+    max_width = 400
+
+    privates = (
+        'directory',
+    )
+
+
 class subtitle_insert(_Section):
 
     above  = False

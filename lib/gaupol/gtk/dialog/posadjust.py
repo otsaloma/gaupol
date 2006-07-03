@@ -67,7 +67,6 @@ class _PositionAdjustDialog(gobject.GObject):
         self._text_view_2      = glade_xml.get_widget('text_view_2')
 
         self._init_sizes()
-        self._init_sensitivities()
         self._init_signals()
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_OK)
@@ -164,6 +163,7 @@ class FrameAdjustDialog(_PositionAdjustDialog):
 
         self._init_widgets()
         self._init_data()
+        self._init_sensitivities()
 
     def _init_widgets(self):
         """Initialize widgets."""
@@ -240,6 +240,7 @@ class TimeAdjustDialog(_PositionAdjustDialog):
 
         self._init_widgets()
         self._init_data()
+        self._init_sensitivities()
 
     def _init_widgets(self):
         """Initialize widgets."""

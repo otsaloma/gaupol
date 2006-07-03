@@ -8,14 +8,17 @@ Plans for 0.6.0
 ===============
 
   New:
-    [ ] Subtitle merge/split (bug #6246)
+    [D] Show .srtx files as images (bug #6244)
     [ ] Smarter translation file opening (bug #6245)
-    [?] Support .srtx format (bug #6244)
+    [ ] Subtitle split and merge (bug #6246)
+    [ ] Support TMPlayer subtitle file format
+          - http://gaupol.mypunbb.com/viewtopic.php?pid=81
 
   Changes:
+    [D] Copy-paste now works from one project to another
+    [D] Fixed target radio button defaults in case of no selection
     [D] setup.py: Fixed paths module generation in case --root option given
         with a trailing directory separator
-    [D] Copy-paste now works from one project to another
 
 
 Plans after 0.6.0

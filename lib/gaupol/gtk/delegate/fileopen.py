@@ -340,13 +340,16 @@ class FileOpenDelegate(Delegate):
         resorts = 0
         self._pre_check(path)
         basename = os.path.basename(path)
+        if path.endswith('.srtx'):
+            conf.srtx.directory = os.path.dirname(path)
+
         for encoding in encodings:
             try:
                 if encoding == 'auto':
                     encoding = enclib.detect(path)
                 args = path, encoding
                 if doc == MAIN:
-                    page = Page()
+                    page = Page(srtx=path.endswith('.srtx'))
                     resorts = page.project.open_main_file(*args)
                     format = page.project.main_file.format
                 elif doc == TRAN:

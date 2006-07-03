@@ -26,5 +26,5 @@ class TestModule(Test):
 
         CellRendererInteger()
         CellRendererMultiline()
+        CellRendererPixbuf()
         CellRendererTime()
-

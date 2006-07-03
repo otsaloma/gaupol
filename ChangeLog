@@ -1,3 +1,19 @@
+2006-07-04  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/gtk/cellrend/classes.py:
+	* lib/gaupol/gtk/cellrend/pixbuf.py:
+	* lib/gaupol/gtk/cellrend/test/test_classes.py:
+	* lib/gaupol/gtk/cellrend/test/test_pixbuf.py:
+	* lib/gaupol/gtk/delegate/fileopen.py:
+	* lib/gaupol/gtk/page.py:
+	* lib/gaupol/gtk/util/conf.py:
+	* lib/gaupol/gtk/view.py:
+	  Implemented showing .srtx files as images.
+
+	* lib/gaupol/gtk/dialog/duradjust.py:
+	* lib/gaupol/gtk/dialog/posadjust.py:
+	  Fixed target radio button defaults in case of no selection.
+
 2006-07-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* setup.py:

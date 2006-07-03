@@ -39,15 +39,15 @@ class View(gtk.TreeView):
 
     """List widget to display subtitle data."""
 
-    def __init__(self, edit_mode):
+    def __init__(self, edit_mode, srtx=False):
 
         gtk.TreeView.__init__(self)
 
         self._active_col = None
 
-        self._init_widget(edit_mode)
+        self._init_widget(edit_mode, srtx)
 
-    def _init_widget(self, edit_mode):
+    def _init_widget(self, edit_mode, srtx):
         """Initialize tree view."""
 
         self.set_headers_visible(True)
@@ -58,6 +58,7 @@ class View(gtk.TreeView):
         selection.set_mode(gtk.SELECTION_MULTIPLE)
         selection.unselect_all()
 
+        main_renderer = (CellRendererMultiline, CellRendererPixbuf)[srtx]
         if edit_mode == cons.Mode.TIME:
             columns = [gobject.TYPE_INT] + [gobject.TYPE_STRING] * 5
             pos_renderer = CellRendererTime
@@ -77,7 +78,7 @@ class View(gtk.TreeView):
             gtk.TreeViewColumn(names[1], pos_renderer()         , text=1),
             gtk.TreeViewColumn(names[2], pos_renderer()         , text=2),
             gtk.TreeViewColumn(names[3], pos_renderer()         , text=3),
-            gtk.TreeViewColumn(names[4], CellRendererMultiline(), text=4),
+            gtk.TreeViewColumn(names[4], main_renderer()        , text=4),
             gtk.TreeViewColumn(names[5], CellRendererMultiline(), text=5),
         ]):
             self.append_column(column)

@@ -58,7 +58,7 @@ class Page(gobject.GObject):
         ),
     }
 
-    def __init__(self, counter=0):
+    def __init__(self, counter=0, srtx=False):
 
         gobject.GObject.__init__(self)
 
@@ -72,7 +72,7 @@ class Page(gobject.GObject):
         self.tab_menu_label = None
         self.tooltips       = gtk.Tooltips()
         self.untitle        = _('Untitled %d') % counter
-        self.view           = View(conf.editor.mode)
+        self.view           = View(conf.editor.mode, srtx)
 
     def _on_close_button_clicked(self, *args):
         """Emit closed signal."""

@@ -46,9 +46,9 @@ class DurationAdjustDialog(object):
         self._selected_radio = glade_xml.get_widget('selected_radio')
         self._shorten_check  = glade_xml.get_widget('shorten_check')
 
-        self._init_sensitivities(has_selection)
         self._init_signals()
         self._init_data()
+        self._init_sensitivities(has_selection)
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_OK)
 
@@ -77,7 +77,11 @@ class DurationAdjustDialog(object):
         self._max_spin.set_sensitive(False)
         self._min_spin.set_sensitive(False)
         self._optimal_spin.set_sensitive(False)
+
         self._selected_radio.set_sensitive(has_selection)
+        if conf.duration_adjust.target == cons.Target.SELECTED:
+            if not has_selection:
+                self._current_radio.set_active(True)
 
     def _init_signals(self):
         """Initialize signals."""

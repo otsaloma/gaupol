@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,18 +16,12 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""All cell renderer classes."""
+from gaupol.gtk.cellrend.pixbuf import CellRendererPixbuf
+from gaupol.test                import Test
 
 
-from gaupol.gtk.cellrend.integer   import CellRendererInteger
-from gaupol.gtk.cellrend.multiline import CellRendererMultiline
-from gaupol.gtk.cellrend.pixbuf    import CellRendererPixbuf
-from gaupol.gtk.cellrend.time      import CellRendererTime
+class TestCellRendererPixbuf(Test):
 
+    def test_init(self):
 
-__all__ = [
-    'CellRendererInteger',
-    'CellRendererMultiline',
-    'CellRendererPixbuf',
-    'CellRendererTime'
-]
+        CellRendererPixbuf()
