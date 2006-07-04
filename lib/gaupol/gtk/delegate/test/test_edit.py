@@ -72,6 +72,8 @@ class TestEditDelegate(Test):
         test('on_edit_value_activate')
         test('on_insert_subtitles_activate')
         test('on_invert_selection_activate')
+        test('on_merge_subtitles_activate')
         test('on_paste_texts_activate')
         test('on_remove_subtitles_activate')
         test('on_select_all_activate')
+        test('on_split_subtitle_activate')

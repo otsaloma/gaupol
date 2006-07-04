@@ -162,6 +162,55 @@ class TestEditDelegate(Test):
         positions = self.project.get_positions()
         assert positions in (self.project.times, self.project.frames)
 
+    def test_merge_subtitles(self):
+
+        orig_len = len(self.project.times)
+        orig_times_1 = self.project.times[1]
+        orig_times_2 = self.project.times[2]
+        orig_frames_1 = self.project.frames[1]
+        orig_frames_2 = self.project.frames[2]
+        orig_main_1 = self.project.main_texts[1]
+        orig_main_2 = self.project.main_texts[2]
+        orig_tran_1 = self.project.tran_texts[1]
+        orig_tran_2 = self.project.tran_texts[2]
+
+        self.project.merge_subtitles([1, 2])
+        assert len(self.project.times) == orig_len - 1
+        assert self.project.times[1][SHOW] == orig_times_1[SHOW]
+        assert self.project.times[1][HIDE] == orig_times_2[HIDE]
+        assert self.project.frames[1][SHOW] == orig_frames_1[SHOW]
+        assert self.project.frames[1][HIDE] == orig_frames_2[HIDE]
+        assert self.project.main_texts[1] == \
+               str(orig_main_1 + '\n' + orig_main_2).strip()
+        assert self.project.tran_texts[1] == \
+               str(orig_tran_1 + '\n' + orig_tran_2).strip()
+
+        self.project.undo()
+        assert len(self.project.times) == orig_len
+        assert self.project.times[1] == orig_times_1
+        assert self.project.times[2] == orig_times_2
+        assert self.project.frames[1] == orig_frames_1
+        assert self.project.frames[2] == orig_frames_2
+        assert self.project.main_texts[1] == orig_main_1
+        assert self.project.main_texts[2] == orig_main_2
+        assert self.project.tran_texts[1] == orig_tran_1
+        assert self.project.tran_texts[2] == orig_tran_2
+
+        self.project.redo()
+        assert len(self.project.times) == orig_len - 1
+        assert self.project.times[1][SHOW] == orig_times_1[SHOW]
+        assert self.project.times[1][HIDE] == orig_times_2[HIDE]
+        assert self.project.frames[1][SHOW] == orig_frames_1[SHOW]
+        assert self.project.frames[1][HIDE] == orig_frames_2[HIDE]
+        assert self.project.main_texts[1] == \
+               str(orig_main_1 + '\n' + orig_main_2).strip()
+        assert self.project.tran_texts[1] == \
+               str(orig_tran_1 + '\n' + orig_tran_2).strip()
+
+        self.project.merge_subtitles([1, 2, 3, 4])
+        self.project.undo()
+        self.project.redo()
+
     def test_needs_resort(self):
 
         assert self.project.needs_resort(0, '99:59:59.999') is True
@@ -320,3 +369,30 @@ class TestEditDelegate(Test):
         assert self.project.times[3][DURN]  == '33:33:33.333'
         assert self.project.frames[3][HIDE] >  orig_hide_frame
         assert self.project.frames[3][DURN] >  orig_durn_frame
+
+    def test_split_subtitle(self):
+
+        orig_len = len(self.project.times)
+        orig_times = self.project.times[1]
+        orig_frames = self.project.frames[1]
+        orig_main = self.project.main_texts[1]
+        orig_tran = self.project.tran_texts[1]
+
+        self.project.split_subtitle(1)
+        assert len(self.project.times) == orig_len + 1
+        assert self.project.times[2][HIDE] == orig_times[HIDE]
+        assert self.project.frames[2][HIDE] == orig_frames[HIDE]
+        assert self.project.main_texts[2] == orig_main
+        assert self.project.tran_texts[2] == orig_tran
+
+        self.project.undo()
+        assert len(self.project.times) == orig_len
+        assert self.project.times[1][HIDE] == orig_times[HIDE]
+        assert self.project.frames[1][HIDE] == orig_frames[HIDE]
+
+        self.project.redo()
+        assert len(self.project.times) == orig_len + 1
+        assert self.project.times[2][HIDE] == orig_times[HIDE]
+        assert self.project.frames[2][HIDE] == orig_frames[HIDE]
+        assert self.project.main_texts[2] == orig_main
+        assert self.project.tran_texts[2] == orig_tran

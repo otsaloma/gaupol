@@ -1,3 +1,24 @@
+2006-07-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/ui/menubar.xml:
+	* data/ui/popups.xml:
+	* lib/gaupol/base/delegate/edit.py:
+	* lib/gaupol/base/delegate/test/test_edit.py:
+	* lib/gaupol/base/position/calc.py:
+	* lib/gaupol/base/position/test/test_calc.py:
+	* lib/gaupol/gtk/delegate/edit.py:
+	* lib/gaupol/gtk/delegate/format.py:
+	* lib/gaupol/gtk/delegate/test/test_edit.py:
+	* lib/gaupol/gtk/delegate/view.py:
+	  Implemented subtitle split and merge.
+	  Changed some keybindings.
+
+	* lib/gaupol/gtk/delegate/viewupdate.py:
+	  Set 200 as maximum size for character statusbar.
+
+	* lib/gaupol/gtk/dialog/find.py:
+	  Swapped ins and bound on text buffer selection.
+
 2006-07-04  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* doc/formats/tmplayer.notes:

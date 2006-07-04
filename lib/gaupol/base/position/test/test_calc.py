@@ -55,6 +55,14 @@ class TestCalculator(Test):
         duration = self.calc.get_frame_duration(444, 333)
         assert duration == 0
 
+    def test_get_middle(self):
+
+        middle = self.calc.get_middle('33:33:33.333', '33:33:33.555')
+        assert middle == '33:33:33.444'
+
+        middle = self.calc.get_middle(100, 200)
+        assert middle == 150
+
     def test_get_time_duration(self):
 
         duration = self.calc.get_time_duration('33:33:33.333', '44:44:44.444')

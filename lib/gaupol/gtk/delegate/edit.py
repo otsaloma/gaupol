@@ -182,6 +182,35 @@ class InvertSelectionAction(_SelectionAction):
     paths = ['/ui/menubar/edit/invert_selection']
 
 
+class MergeSubtitlesAction(UIMAction):
+
+    """Merging selected subtitles."""
+
+    action_item = (
+        'merge_subtitles',
+        None,
+        _('_Merge Subtitles'),
+        '<shift><control>P',
+        _('Merge the selected subtitles'),
+        'on_merge_subtitles_activate'
+    )
+
+    paths = ['/ui/menubar/edit/merge', '/ui/view/merge']
+
+    @classmethod
+    def is_doable(cls, app, page):
+        """Return action doability."""
+
+        if page is None:
+            return False
+
+        rows = page.view.get_selected_rows()
+        if not rows:
+            return False
+        if not rows == range(rows[0], rows[-1] + 1):
+            return False
+        return True
+
 class PasteTextsAction(UIMAction):
 
     """Pasting texts from clipboard."""
@@ -217,7 +246,7 @@ class RemoveSubtitlesAction(UIMAction):
     action_item = (
         'remove_subtitles',
         gtk.STOCK_REMOVE,
-        _('Re_move Subtitles'),
+        _('Rem_ove Subtitles'),
         '<control>Delete',
         _('Remove the selected subtitles'),
         'on_remove_subtitles_activate'
@@ -241,13 +270,38 @@ class SelectAllAction(_SelectionAction):
     action_item = (
         'select_all',
         None,
-        _('_Select All'),
+        _('Select _All'),
         '<control>A',
         _('Select all subtitles'),
         'on_select_all_activate'
     )
 
     paths = ['/ui/menubar/edit/select_all']
+
+
+class SplitSubtitlesAction(UIMAction):
+
+    """Splitting selected subtitle."""
+
+    action_item = (
+        'split_subtitle',
+        None,
+        _('_Split Subtitle'),
+        '<control>P',
+        _('Split the selected subtitle in two'),
+        'on_split_subtitle_activate'
+    )
+
+    paths = ['/ui/menubar/edit/split', '/ui/view/split']
+
+    @classmethod
+    def is_doable(cls, app, page):
+        """Return action doability."""
+
+        if page is None:
+            return False
+        rows = page.view.get_selected_rows()
+        return len(rows) == 1
 
 
 class EditDelegate(Delegate):
@@ -382,6 +436,15 @@ class EditDelegate(Delegate):
         page.view.select_rows(rows)
         self.set_sensitivities(page)
 
+    def on_merge_subtitles_activate(self, *args):
+        """Merge selected subtitles."""
+
+        page = self.get_current_page()
+        rows = page.view.get_selected_rows()
+        page.project.merge_subtitles(rows)
+        page.view.select_rows([rows[0]])
+        self.set_sensitivities(page)
+
     def on_paste_texts_activate(self, *args):
         """Paste texts from the clipboard."""
 
@@ -423,6 +486,15 @@ class EditDelegate(Delegate):
         page = self.get_current_page()
         selection = page.view.get_selection()
         selection.select_all()
+        self.set_sensitivities(page)
+
+    def on_split_subtitle_activate(self, *args):
+        """Split selected subtitle."""
+
+        page = self.get_current_page()
+        row = page.view.get_selected_rows()[0]
+        page.project.split_subtitle(row)
+        page.view.select_rows([row, row + 1])
         self.set_sensitivities(page)
 
     def on_view_cell_edited(self, cell_renderer, value, row, col):

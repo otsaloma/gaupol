@@ -31,6 +31,9 @@
       <menuitem name="paste" action="paste_texts"/>
       <menuitem name="clear" action="clear_texts"/>
       <separator/>
+      <menuitem name="split" action="split_subtitle"/>
+      <menuitem name="merge" action="merge_subtitles"/>
+      <separator/>
       <menuitem name="insert" action="insert_subtitles"/>
       <menuitem name="remove" action="remove_subtitles"/>
       <separator/>

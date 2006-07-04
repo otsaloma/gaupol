@@ -98,7 +98,7 @@ class ViewUpdateDelegate(Delegate):
             width = _TEST_LABEL.size_request()[0] + 12
             if statusbar.get_has_resize_grip():
                 width += statusbar.size_request()[1]
-            statusbar.set_size_request(max(60, width), -1)
+            statusbar.set_size_request(min(200, max(60, width)), -1)
 
         if self._main_statusbar.props.visible:
             set_status(self._main_statusbar, MAIN)

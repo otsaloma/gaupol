@@ -120,7 +120,7 @@ class UseLowerCaseAction(_FormatAction):
         'use_lower_case',
         None,
         _('_Lower'),
-        '<control>L',
+        '<shift><control>U',
         _('Change the selected texts to lower case'),
         'on_use_lower_case_activate'
     )
@@ -136,7 +136,7 @@ class UseSentenceCaseAction(_FormatAction):
         'use_sentence_case',
         None,
         _('_Sentence'),
-        '<control>E',
+        '<shift><control>Y',
         _('Change the selected texts to Sentence case'),
         'on_use_sentence_case_activate'
     )

@@ -226,6 +226,29 @@ class EditDelegate(Delegate):
             inserted_rows=rows,
         )
 
+    def merge_subtitles(self, rows, register=_DO):
+        """Merge subtitles."""
+
+        positions = self.get_positions()
+        show = positions[rows[0]][SHOW]
+        hide = positions[rows[-1]][HIDE]
+        time, frame = self.expand_positions(show, hide)
+        main_text = self.main_texts[rows[0]]
+        tran_text = self.tran_texts[rows[0]]
+        for row in rows[1:]:
+            if self.main_texts[row]:
+                main_text = main_text + '\n' + self.main_texts[row]
+            if self.tran_texts[row]:
+                tran_text = tran_text + '\n' + self.tran_texts[row]
+
+        signal = self.get_signal(register)
+        self.block(signal)
+        self.remove_subtitles(rows, register)
+        self.insert_subtitles(
+            [rows[0]], [time], [frame], [main_text], [tran_text], register)
+        self.unblock(signal)
+        self.group_actions(register, 2, _('Merging subtitles'))
+
     def needs_resort(self, row, show):
         """Return True if resorting is needed after changing show value."""
 
@@ -504,3 +527,29 @@ class EditDelegate(Delegate):
         )
 
         return revert_row
+
+    def split_subtitle(self, row, register=_DO):
+        """Split subtitle in two."""
+
+        positions = self.get_positions()
+        show = positions[row][SHOW]
+        hide = positions[row][HIDE]
+        middle = self.calc.get_middle(show, hide)
+        time_1, frame_1 = self.expand_positions(show, middle)
+        time_2, frame_2 = self.expand_positions(middle, hide)
+        main_text = self.main_texts[row]
+        tran_text = self.tran_texts[row]
+
+        signal = self.get_signal(register)
+        self.block(signal)
+        self.remove_subtitles([row], register)
+        self.insert_subtitles(
+            [row, row + 1],
+            [time_1, time_2],
+            [frame_1, frame_2],
+            [main_text, main_text],
+            [tran_text, tran_text],
+            register
+        )
+        self.unblock(signal)
+        self.group_actions(register, 2, _('Splitting subtitle'))

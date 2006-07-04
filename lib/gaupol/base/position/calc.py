@@ -75,6 +75,16 @@ class Calculator(object):
 
         return max(y - x, 0)
 
+    def get_middle(self, start, end):
+        """Get time or frame halfway between start and end."""
+
+        if isinstance(start, basestring):
+            start = self.time_to_seconds(start)
+            end   = self.time_to_seconds(end)
+            return self.seconds_to_time((end + start) / 2)
+        if isinstance(start, int):
+            return int(round((end + start) / 2.0, 0))
+
     def get_time_duration(self, x, y):
         """Get duration from time x to time y."""
 

@@ -10,12 +10,13 @@ Plans for 0.6.0
   New:
     [D] Show .srtx files as images (bug #6244)
     [ ] Smarter translation file opening (bug #6245)
-    [ ] Subtitle split and merge (bug #6246)
+    [D] Subtitle split and merge
     [D] Support TMPlayer subtitle file format
 
   Changes:
     [D] Copy-paste now works from one project to another
     [D] Fixed target radio button defaults in case of no selection
+    [D] Changed some keybindings
     [D] setup.py: Fixed paths module generation in case --root option given
         with a trailing directory separator
 

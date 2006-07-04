@@ -439,8 +439,8 @@ class FindDialog(gobject.GObject):
 
         text_buffer = self._text_view.get_buffer()
         text_buffer.set_text(self._get_text(page, row, doc))
-        ins = text_buffer.get_iter_at_offset(match_span[0])
-        bound = text_buffer.get_iter_at_offset(match_span[1])
+        ins = text_buffer.get_iter_at_offset(match_span[1])
+        bound = text_buffer.get_iter_at_offset(match_span[0])
         text_buffer.select_range(ins, bound)
         self._text_view.set_sensitive(True)
         self._text_view.grab_focus()

@@ -77,14 +77,14 @@ class ToggleEditModeAction(UIMAction):
                 'show_times',
                 None,
                 _('T_imes'),
-                '<control>M',
+                '<control>R',
                 _('Show positions as times'),
                 0
             ), (
                 'show_frames',
                 None,
                 _('F_rames'),
-                '<shift><control>M',
+                '<shift><control>R',
                 _('Show positions as frames'),
                 1
             )
@@ -257,7 +257,7 @@ class ToggleOutputWindowAction(UIMAction):
         'toggle_output_window',
         None,
         _('_Output Window'),
-        '<control>P',
+        None,
         _('Toggle the visibility of the output window'),
         'on_toggle_output_window_activate',
         True
