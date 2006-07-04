@@ -1,5 +1,19 @@
 2006-07-04  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* doc/formats/tmplayer.notes:
+	* doc/formats/tmplayer.sample:
+	* lib/gaupol/base/cons.py:
+	* lib/gaupol/base/file/classes.py:
+	* lib/gaupol/base/file/tmplayer.py:
+	* lib/gaupol/base/tags/classes.py:
+	* lib/gaupol/base/tags/tmplayer.py:
+	  Added support for TMPlayer format.
+
+	* lib/gaupol/base/file/microdvd.py:
+	  Removed unnecessary list duplication.
+
+2006-07-04  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/gtk/cellrend/classes.py:
 	* lib/gaupol/gtk/cellrend/pixbuf.py:
 	* lib/gaupol/gtk/cellrend/test/test_classes.py:

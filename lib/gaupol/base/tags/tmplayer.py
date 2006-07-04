@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,26 +16,14 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""All subtitle tag library classes."""
+"""TMPlayer tag library."""
 
 
-from gaupol.base.tags.ass        import AdvancedSubStationAlpha
-from gaupol.base.tags.microdvd   import MicroDVD
-from gaupol.base.tags.mpl2       import MPL2
-from gaupol.base.tags.mpsub      import MPsub
-from gaupol.base.tags.ssa        import SubStationAlpha
-from gaupol.base.tags.subrip     import SubRip
-from gaupol.base.tags.subviewer2 import SubViewer2
-from gaupol.base.tags.tmplayer   import TMPlayer
+from gaupol.base.tags import TagLibrary
 
 
-__all__ = [
-    'AdvancedSubStationAlpha',
-    'MPL2',
-    'MPsub',
-    'MicroDVD',
-    'SubRip',
-    'SubStationAlpha',
-    'SubViewer2',
-    'TMPlayer',
-]
+class TMPlayer(TagLibrary):
+
+    """TMPlayer tag library."""
+
+    pass

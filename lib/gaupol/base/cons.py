@@ -88,6 +88,7 @@ class Format(Section):
     SSA        = 4
     SUBRIP     = 5
     SUBVIEWER2 = 6
+    TMPLAYER   = 7
 
     class_names = [
         'AdvancedSubStationAlpha',
@@ -97,6 +98,7 @@ class Format(Section):
         'SubStationAlpha',
         'SubRip',
         'SubViewer2',
+        'TMPlayer',
     ]
 
     display_names = [
@@ -107,6 +109,7 @@ class Format(Section):
         'Sub Station Alpha',
         'SubRip',
         'SubViewer 2.0',
+        'TMPlayer',
     ]
 
     extensions = [
@@ -117,6 +120,7 @@ class Format(Section):
         '.ssa',
         '.srt',
         '.sub',
+        '.txt',
     ]
 
 

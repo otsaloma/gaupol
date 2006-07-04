@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,24 +16,24 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""MicroDVD file."""
+"""TMPlayer file."""
 
 
 import codecs
-import re
 
-from gaupol.base      import cons
-from gaupol.base.file import SubtitleFile
+from gaupol.base               import cons
+from gaupol.base.file          import SubtitleFile
+from gaupol.base.position.calc import Calculator
 
 
-class MicroDVD(SubtitleFile):
+class TMPlayer(SubtitleFile):
 
-    """MicroDVD file."""
+    """TMPlayer file."""
 
-    format     = cons.Format.MICRODVD
-    has_header = True
-    identifier = r'^\{\d+\}\{\d+\}.*?$', 0
-    mode       = cons.Mode.FRAME
+    format     = cons.Format.TMPLAYER
+    has_header = False
+    identifier = r'^\d\d:\d\d:\d\d:.*$', 0
+    mode       = cons.Mode.TIME
 
     def read(self):
         """
@@ -41,25 +41,22 @@ class MicroDVD(SubtitleFile):
 
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
-        Return show frames, hide frames, texts.
+        Return show times, hide times, texts.
         """
-        re_line = re.compile(r'^\{(\d+)\}\{(\d+)\}(.*?)$')
-
         shows = []
         hides = []
         texts = []
         lines = self._read_lines()
         for line in lines:
-            match = re_line.match(line)
-            if match is not None:
-                shows.append(match.group(1))
-                hides.append(match.group(2))
-                texts.append(match.group(3))
-            elif line.startswith('{DEFAULT}'):
-                self.header = line.strip()
+            line = line.strip()
+            if len(line) >= 9:
+                shows.append(line[:8] + '.000')
+                texts.append(line[9:])
 
-        shows = list(int(x) for x in shows)
-        hides = list(int(x) for x in hides)
+        calc = Calculator()
+        for i in range(1, len(shows)):
+            hides.append(shows[i])
+        hides.append(calc.add_seconds_to_time(shows[-1], 3.000))
         texts = list(x.replace('|', '\n') for x in texts)
 
         return shows, hides, texts
@@ -71,15 +68,14 @@ class MicroDVD(SubtitleFile):
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
+        calc = Calculator()
         newline_char = self._get_newline_character()
+        shows = list(calc.round_time(x, 0)[:8] + ':' for x in shows)
         texts = list(x.replace('\n', '|') for x in texts)
 
         fobj = codecs.open(self.path, 'w', self.encoding)
         try:
-            if self.header:
-                fobj.write(self.header + newline_char)
             for i in range(len(shows)):
-                fobj.write('{%.0f}{%.0f}%s%s' % (
-                    shows[i], hides[i], texts[i], newline_char))
+                fobj.write('%s%s%s' % (shows[i], texts[i], newline_char))
         finally:
             fobj.close()

@@ -11,8 +11,7 @@ Plans for 0.6.0
     [D] Show .srtx files as images (bug #6244)
     [ ] Smarter translation file opening (bug #6245)
     [ ] Subtitle split and merge (bug #6246)
-    [ ] Support TMPlayer subtitle file format
-          - http://gaupol.mypunbb.com/viewtopic.php?pid=81
+    [D] Support TMPlayer subtitle file format
 
   Changes:
     [D] Copy-paste now works from one project to another
@@ -23,6 +22,8 @@ Plans for 0.6.0
 
 Plans after 0.6.0
 =================
+
+  * Action notifications and sensitivity settings
 
   * Wizards (wait for GTK 2.10?)
      - Common error correction

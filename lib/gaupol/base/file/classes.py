@@ -26,6 +26,7 @@ from gaupol.base.file.mpsub      import MPsub
 from gaupol.base.file.ssa        import SubStationAlpha
 from gaupol.base.file.subrip     import SubRip
 from gaupol.base.file.subviewer2 import SubViewer2
+from gaupol.base.file.tmplayer   import TMPlayer
 
 
 __all__ = [
@@ -36,4 +37,5 @@ __all__ = [
     'SubRip',
     'SubStationAlpha',
     'SubViewer2',
+    'TMPlayer',
 ]
