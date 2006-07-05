@@ -47,12 +47,11 @@ class DurationAdjustDialog(object):
         self._shorten_check  = glade_xml.get_widget('shorten_check')
 
         self._init_signals()
-        self._init_data()
-        self._init_sensitivities(has_selection)
+        self._init_data(has_selection)
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_OK)
 
-    def _init_data(self):
+    def _init_data(self, has_selection):
         """Initialize default values."""
 
         self._gap_check.set_active(conf.duration_adjust.use_gap)
@@ -69,19 +68,22 @@ class DurationAdjustDialog(object):
         self._all_radio.set_active(target == cons.Target.ALL)
         self._current_radio.set_active(target == cons.Target.CURRENT)
         self._selected_radio.set_active(target == cons.Target.SELECTED)
+        if target == cons.Target.SELECTED and not has_selection:
+            self._current_radio.set_active(True)
+            self._selected_radio.set_sensitive(False)
 
-    def _init_sensitivities(self, has_selection):
-        """Initialize widget sensitivities."""
-
-        self._gap_spin.set_sensitive(False)
-        self._max_spin.set_sensitive(False)
-        self._min_spin.set_sensitive(False)
-        self._optimal_spin.set_sensitive(False)
-
-        self._selected_radio.set_sensitive(has_selection)
-        if conf.duration_adjust.target == cons.Target.SELECTED:
-            if not has_selection:
-                self._current_radio.set_active(True)
+        self._all_radio.emit('toggled')
+        self._current_radio.emit('toggled')
+        self._gap_check.emit('toggled')
+        self._gap_spin.emit('value-changed')
+        self._lengthen_check.emit('toggled')
+        self._max_check.emit('toggled')
+        self._max_spin.emit('value-changed')
+        self._min_check.emit('toggled')
+        self._min_spin.emit('value-changed')
+        self._optimal_spin.emit('value-changed')
+        self._selected_radio.emit('toggled')
+        self._shorten_check.emit('toggled')
 
     def _init_signals(self):
         """Initialize signals."""

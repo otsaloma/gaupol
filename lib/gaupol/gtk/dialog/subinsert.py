@@ -40,13 +40,12 @@ class SubtitleInsertDialog(object):
         self._position_combo = glade_xml.get_widget('position_combo')
         self._position_label = glade_xml.get_widget('position_label')
 
-        self._init_sensitivities(project)
-        self._init_data()
+        self._init_data(project)
         gtklib.connect(self, '_dialog', 'response')
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_OK)
 
-    def _init_data(self):
+    def _init_data(self, project):
         """Initialize default values."""
 
         self._amount_spin.set_value(conf.subtitle_insert.amount)
@@ -55,9 +54,6 @@ class SubtitleInsertDialog(object):
             self._position_combo.set_active(_ABOVE)
         else:
             self._position_combo.set_active(_BELOW)
-
-    def _init_sensitivities(self, project):
-        """Initialize widget sensitivities."""
 
         if not project.times:
             self._position_label.set_sensitive(False)

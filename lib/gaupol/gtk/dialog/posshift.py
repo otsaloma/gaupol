@@ -55,23 +55,26 @@ class _PositionShiftDialog(gobject.GObject):
         self._unit_label     = glade_xml.get_widget('unit_label')
 
         self._init_widgets()
-        self._init_data()
-        self._init_sensitivities()
         self._init_signals()
+        self._init_data()
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_OK)
 
-    def _init_sensitivities(self):
-        """Initialize widget sensitivities."""
+    def _init_data(self):
+        """Intialize default values."""
+
+        target = conf.position_shift.target
+        self._current_radio.set_active(target == cons.Target.CURRENT)
+        self._selected_radio.set_active(target == cons.Target.SELECTED)
+        if target == cons.Target.SELECTED:
+            if not self._page.view.get_selected_rows():
+                self._current_radio.set_active(True)
+                self._selected_radio.set_sensitive(False)
 
         if self._page.project.video_path is None:
             self._preview_button.set_sensitive(False)
         if self._page.project.main_file is None:
             self._preview_button.set_sensitive(False)
-
-        if not self._page.view.get_selected_rows():
-            self._current_radio.set_active(True)
-            self._selected_radio.set_sensitive(False)
 
     def _init_signals(self):
         """Initialize signals."""
@@ -125,11 +128,8 @@ class FrameShiftDialog(_PositionShiftDialog):
     def _init_data(self):
         """Initialize default values."""
 
+        _PositionShiftDialog._init_data(self)
         self._amount_spin.set_value(conf.position_shift.frames)
-
-        target = conf.position_shift.target
-        self._current_radio.set_active(target == cons.Target.CURRENT)
-        self._selected_radio.set_active(target == cons.Target.SELECTED)
 
     def _on_dialog_response(self, dialog, response):
         """Save settings."""
@@ -160,11 +160,8 @@ class TimeShiftDialog(_PositionShiftDialog):
     def _init_data(self):
         """Initialize default values."""
 
+        _PositionShiftDialog._init_data(self)
         self._amount_spin.set_value(conf.position_shift.seconds)
-
-        target = conf.position_shift.target
-        self._current_radio.set_active(target == cons.Target.CURRENT)
-        self._selected_radio.set_active(target == cons.Target.SELECTED)
 
     def _on_dialog_response(self, dialog, response):
         """Save settings."""

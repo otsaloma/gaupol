@@ -188,7 +188,6 @@ class FindDialog(gobject.GObject):
         self._next_button.set_sensitive(False)
         self._previous_button.set_sensitive(False)
         self._text_view.set_sensitive(False)
-
         self._pattern_entry.emit('changed')
         self._regex_check.emit('toggled')
 

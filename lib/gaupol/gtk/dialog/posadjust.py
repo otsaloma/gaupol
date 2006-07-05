@@ -76,15 +76,17 @@ class _PositionAdjustDialog(gobject.GObject):
 
         self._sub_spin_1.set_value(1)
         self._sub_spin_2.set_value(len(self._page.project.times))
-        self._sub_spin_1.emit('value-changed')
-        self._sub_spin_2.emit('value-changed')
 
         target = conf.position_adjust.target
         self._current_radio.set_active(target == cons.Target.CURRENT)
         self._selected_radio.set_active(target == cons.Target.SELECTED)
+        if target == cons.Target.SELECTED:
+            if not self._page.view.get_selected_rows():
+                self._current_radio.set_active(True)
+                self._selected_radio.set_sensitive(False)
 
-    def _init_sensitivities(self):
-        """Initialize widget sensitivities."""
+        self._sub_spin_1.emit('value-changed')
+        self._sub_spin_2.emit('value-changed')
 
         if self._page.project.video_path is None:
             self._preview_button_1.set_sensitive(False)
@@ -92,10 +94,6 @@ class _PositionAdjustDialog(gobject.GObject):
         if self._page.project.main_file is None:
             self._preview_button_1.set_sensitive(False)
             self._preview_button_2.set_sensitive(False)
-
-        if not self._page.view.get_selected_rows():
-            self._current_radio.set_active(True)
-            self._selected_radio.set_sensitive(False)
 
     def _init_signals(self):
         """Initialize signals."""
@@ -163,7 +161,6 @@ class FrameAdjustDialog(_PositionAdjustDialog):
 
         self._init_widgets()
         self._init_data()
-        self._init_sensitivities()
 
     def _init_widgets(self):
         """Initialize widgets."""
@@ -240,7 +237,6 @@ class TimeAdjustDialog(_PositionAdjustDialog):
 
         self._init_widgets()
         self._init_data()
-        self._init_sensitivities()
 
     def _init_widgets(self):
         """Initialize widgets."""

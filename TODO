@@ -8,9 +8,9 @@ Plans for 0.6.0
 ===============
 
   New:
-    [D] Show .srtx files as images (bug #6244)
-    [ ] Smarter translation file opening (bug #6245)
     [D] Subtitle split and merge
+    [ ] Smarter translation file opening
+    [D] Show .srtx files as images
     [D] Support TMPlayer subtitle file format
 
   Changes:
@@ -53,6 +53,10 @@ Unscheduled
           o http://live.gnome.org/GnomeGoals/PoptGOption
           o http://bugzilla.gnome.org/show_bug.cgi?id=163645
           o http://bugzilla.gnome.org/attachment.cgi?id=63515&action=view
+      - Recent files support
+      - GtkAssistant
+      - GtkCellRendererSpin
+      - TreeView grid lines
 
   * Python 2.5
       - http://www.python.org/download/releases/2.5/

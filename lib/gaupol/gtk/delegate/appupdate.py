@@ -195,13 +195,11 @@ class AppUpdateDelegate(Delegate):
         """Switch to next page in notebook."""
 
         self._notebook.next_page()
-        self._notebook.grab_focus()
 
     def on_activate_previous_project_activate(self, *args):
         """Switch to previous page in notebook."""
 
         self._notebook.prev_page()
-        self._notebook.grab_focus()
 
     def on_notebook_switch_page(self, notebook, pointer, pageno):
         """Set GUI properties for page switched to."""
@@ -210,6 +208,7 @@ class AppUpdateDelegate(Delegate):
             return
         page = self.pages[pageno]
         self.set_sensitivities(page)
+        page.view.grab_focus()
 
     def on_project_toggled(self, unknown, action):
         """Switch page in notebook."""

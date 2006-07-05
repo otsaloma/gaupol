@@ -1,3 +1,17 @@
+2006-07-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/gtk/delegate/appupdate.py:
+	  Removed bizarre notebook focus grabbing when next or previous
+	  page activated.
+
+	* lib/gaupol/gtk/dialog/duradjust.py:
+	* lib/gaupol/gtk/dialog/find.py:
+	* lib/gaupol/gtk/dialog/posadjust.py:
+	* lib/gaupol/gtk/dialog/posshift.py:
+	* lib/gaupol/gtk/dialog/subinsert.py:
+	  Fixed sensitivity initializations and selected target radios
+	  being both active and insensitive.
+
 2006-07-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/ui/menubar.xml:

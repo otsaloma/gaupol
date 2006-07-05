@@ -3,6 +3,7 @@ Release Checklist
 
 Contents
 
+  0. Preparations
   1. Create branch
   2. Make sure Gaupol works
   3. Bump version number
@@ -11,17 +12,28 @@ Contents
   6. Spread the word
 
 
+0. Preparations
+===============
+
+  * Set version number variables
+
+      $ export $x=0
+      $ export $y=6
+      $ export $z=0
+
+
 1. Create branch (only for x.y.1 bug-fix releases)
 ==================================================
 
   * Create a brach from tagged x.y.0 if it doesn't already exist
 
-     svn copy svn+ssh://osmo@svn.gna.org/svn/gaupol/tags/x.y.0 \
-              svn+ssh://osmo@svn.gna.org/svn/gaupol/branches/x.y
+     $ svn copy svn+ssh://osmo@svn.gna.org/svn/gaupol/tags/$x.$y.0   \
+                svn+ssh://osmo@svn.gna.org/svn/gaupol/branches/$x.$y \
+                -m "Created branch $x.$y."
 
   * Check out branch
 
-     svn co svn+ssh://osmo@svn.gna.org/svn/gaupol/branches/x.y
+     $ svn co svn+ssh://osmo@svn.gna.org/svn/gaupol/branches/$x.$y
 
   * Bring all bug-fixes from trunk to branch.
 
@@ -38,36 +50,31 @@ Contents
 
   * Check all code
 
-      tools/pylint lib/gaupol
+      $ tools/pylint lib/gaupol
 
   * Run all tests
 
-      tools/py.test -xs lib
+      $ tools/py.test -xs lib
 
   * Make sure all files are in the subversion repository
 
-      tools/status
+      $ tools/status
 
   * Run Gaupol from the source directory and check that it works
 
-      ./gaupol
-
   * Install Gaupol and check that it works
 
-      export PYTHONPATH=/tmp/sandbox/lib/python2.4/site-packages:$PYTHONPATH
-      ./setup.py install --prefix=/tmp/sandbox
-      /tmp/sandbox/bin/gaupol
+      $ export PYTHONPATH=/tmp/sandbox/lib/python2.4/site-packages:$PYTHONPATH
+      $ ./setup.py install --prefix=/tmp/sandbox
+      $ /tmp/sandbox/bin/gaupol
 
-  * Check the installation directory /tmp/sandbox. Make sure all files
-    are in right places.
+  * Check the installation directory /tmp/sandbox. Make sure all files are in
+    right places.
 
   * Uninstall Gaupol and make sure it works
 
-      ./setup.py uninstall
-      
-  * Clean and make sure it works
-  
-      ./setup.py clean
+      $ ./setup.py uninstall
+      $ ./setup.py clean
 
 
 3. Bump version number
@@ -79,15 +86,11 @@ Contents
 
   * Update .pot file
 
-      tools/translate -t
+      $ tools/translate -t
 
-  * Move all items concerning this release from the "TODO" file to the
-    "NEWS" file.
+  * Move items from TODO to NEWS
 
   * Add ChangeLog entries noting that a release took place
-
-      ChangeLog
-      po/ChangeLog
 
   * Commit changes to subversion.
 
@@ -99,13 +102,15 @@ Contents
 
   * For major or minor releases
 
-      svn copy svn+ssh://osmo@svn.gna.org/svn/gaupol/trunk \
-               svn+ssh://osmo@svn.gna.org/svn/gaupol/tags/x.y.z
+      $ svn copy svn+ssh://osmo@svn.gna.org/svn/gaupol/trunk         \
+                 svn+ssh://osmo@svn.gna.org/svn/gaupol/tags/$x.$y.$z \
+                 -m "Tagged release $x.$y.$z."
 
   * For bug-fix releases
 
-      svn copy svn+ssh://osmo@svn.gna.org/svn/gaupol/branches/x.y \
-               svn+ssh://osmo@svn.gna.org/svn/gaupol/tags/x.y.z
+      $ svn copy svn+ssh://osmo@svn.gna.org/svn/gaupol/branches/$x.$y \
+                 svn+ssh://osmo@svn.gna.org/svn/gaupol/tags/$x.$y.$z
+                 -m "Tagged release $x.$y.$z."
 
 
 5. Prepare files for release
@@ -113,40 +118,37 @@ Contents
 
   * Build tarballs
 
-      ./setup.py clean
-      ./setup.py sdist_gna --formats bztar,gztar
+      $ ./setup.py clean
+      $ ./setup.py sdist_gna --formats bztar,gztar
 
   * Cut news and and changes files to relevant parts
-
-      dist/x.y/gaupol-x.y.z.news
-      dist/x.y/gaupol-x.y.z.changes
 
   * Move tarballs into release directory.
 
   * Sync release directory x.y with Gna! download area
 
-      rsync --delete -avr --rsh="ssh" . \
-            osmo@download.gna.org:/upload/gaupol/x.y/
+      $ rsync --delete -avr --rsh="ssh" . \
+              osmo@download.gna.org:/upload/gaupol/$x.$y/
 
   * Upload latest.txt
 
-      scp latest.txt osmo@download.gna.org:/upload/gaupol/
+      $ scp latest.txt osmo@download.gna.org:/upload/gaupol/
 
 
 6. Spread the word
 ==================
 
-  * Edit the "News" and "Download" sections of Gaupol website
+  * Edit homepage "News" and "Download" sections
 
       index.html
       download.html
 
-  * Send e-mail to Gaupol-announcements mailing list
+  * Send e-mail to gaupol-announcements mailing list
 
       gaupol-announcements@gna.org
       http://mail.gna.org/public/gaupol-announcements
 
-  * Post a news item at the Gaupol project page
+  * Post a news item at the project page
 
       http://gna.org/news/?group=gaupol
 
