@@ -87,25 +87,55 @@ class FileOpenDelegate(Delegate):
         self.tran_changed = 0
         return resorts
 
-    def open_translation_file(self, path, encoding):
+    def open_translation_file(self, path, encoding, smart=True):
         """
         Open translation file reading texts.
 
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
         Raise FileFormatError if unable to detect file format.
+        Return amount of resort operations done.
         """
         format = FileFormatDeterminer(path, encoding).determine()
         tran_file = eval(cons.Format.class_names[format])(path, encoding)
-        texts, resorts = self._sort_data(*tran_file.read())[2:]
+        shows, hides, texts, resorts = self._sort_data(*tran_file.read())
         self.tran_file = tran_file
 
         self.tran_texts = [u''] * len(self.tran_texts)
-        excess = len(texts) - len(self.main_texts)
-        if excess > 0:
-            rows = range(len(self.times), len(self.times) + excess)
-            self.insert_subtitles(rows, register=None)
-        self.tran_texts[:len(texts)] = texts
+        if smart:
+            if self.tran_file.mode == cons.Mode.TIME:
+                positions = self.times
+            elif self.tran_file.mode == cons.Mode.FRAME:
+                positions = self.frames
+            m = 0
+            t = 0
+            while t < len(shows):
+                middle = self.calc.get_middle(shows[t], hides[t])
+                time, frame = self.expand_positions(shows[t], hides[t])
+                if m == len(self.times):
+                    self.insert_subtitles(
+                        [m], [time], [frame], [u''], [texts[t]], register=None)
+                    m += 1
+                    t += 1
+                    continue
+                if middle < positions[m][SHOW]:
+                    self.insert_subtitles(
+                        [m], [time], [frame], [u''], [texts[t]], register=None)
+                    m += 1
+                    t += 1
+                    continue
+                if middle > positions[m][HIDE]:
+                    m += 1
+                    continue
+                self.tran_texts[m] = texts[t]
+                m += 1
+                t += 1
+        else:
+            excess = len(texts) - len(self.main_texts)
+            if excess > 0:
+                rows = range(len(self.times), len(self.times) + excess)
+                self.insert_subtitles(rows, register=None)
+            self.tran_texts[:len(texts)] = texts
 
         self.tran_active = True
         self.tran_changed = 0

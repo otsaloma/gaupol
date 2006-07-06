@@ -145,6 +145,7 @@ class file(_Section):
     max_recent = 5
     newlines   = cons.Newlines.UNIX
     recents    = []
+    smart_tran = True
     warn_ssa   = True
 
     constants = {

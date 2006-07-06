@@ -347,12 +347,13 @@ class FileOpenDelegate(Delegate):
             try:
                 if encoding == 'auto':
                     encoding = enclib.detect(path)
-                args = path, encoding
                 if doc == MAIN:
+                    args = path, encoding
                     page = Page(srtx=path.endswith('.srtx'))
                     resorts = page.project.open_main_file(*args)
                     format = page.project.main_file.format
                 elif doc == TRAN:
+                    args = path, encoding, conf.file.smart_tran
                     page = self.get_current_page()
                     resorts = page.project.open_translation_file(*args)
                     format = page.project.tran_file.format
@@ -437,7 +438,7 @@ class FileOpenDelegate(Delegate):
         elif doc == TRAN:
             title = _('Open Translation')
 
-        dialog = OpenFileDialog(title, self._window)
+        dialog = OpenFileDialog(title, doc == TRAN, self._window)
         dialog.set_select_multiple(doc == MAIN)
         gtklib.set_cursor_normal(self._window)
         response = dialog.run()

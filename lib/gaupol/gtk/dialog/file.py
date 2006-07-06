@@ -202,7 +202,7 @@ class OpenFileDialog(_TextFileDialog):
 
     """Dialog for selecting text files to open."""
 
-    def __init__(self, title, parent):
+    def __init__(self, title, tran, parent):
 
         _TextFileDialog.__init__(
             self, title, parent, gtk.FILE_CHOOSER_ACTION_OPEN,
@@ -210,7 +210,10 @@ class OpenFileDialog(_TextFileDialog):
              gtk.STOCK_OPEN  , gtk.RESPONSE_OK     )
         )
 
+        self.tran = tran
+
         self._encoding_combo = None
+        self._smart_check    = None
 
         self._init_extra_widget()
         self._init_encoding_data()
@@ -228,12 +231,21 @@ class OpenFileDialog(_TextFileDialog):
         label = gtk.Label()
         label.set_markup_with_mnemonic(_('C_haracter encoding:'))
         label.set_mnemonic_widget(self._encoding_combo)
-
         hbox = gtk.HBox(False, 12)
         hbox.pack_start(label, False, True, 0)
         hbox.pack_start(self._encoding_combo, True , True, 0)
-        hbox.show_all()
-        self.set_extra_widget(hbox)
+
+        vbox = gtk.VBox(False, 6)
+        vbox.pack_start(hbox, False, False, 0)
+        if self.tran:
+            self._smart_check = gtk.CheckButton(
+                _('_Adapt to differences between main and translation '
+                  'documents'))
+            self._smart_check.set_active(conf.file.smart_tran)
+            vbox.pack_start(self._smart_check, False, False, 0)
+
+        vbox.show_all()
+        self.set_extra_widget(vbox)
 
     def _init_signals(self):
         """Initialize signals."""
@@ -256,6 +268,8 @@ class OpenFileDialog(_TextFileDialog):
 
         conf.file.encoding  = self.get_encoding()
         conf.file.directory = self.get_current_folder()
+        if self.tran:
+            conf.file.smart_tran = self._smart_check.get_active()
 
 
 class SaveFileDialog(_TextFileDialog):

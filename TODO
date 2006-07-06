@@ -9,7 +9,7 @@ Plans for 0.6.0
 
   New:
     [D] Subtitle split and merge
-    [ ] Smarter translation file opening
+    [D] Smarter translation file opening
     [D] Show .srtx files as images
     [D] Support TMPlayer subtitle file format
 
@@ -21,12 +21,19 @@ Plans for 0.6.0
         with a trailing directory separator
 
 
-Plans after 0.6.0
+Plans for 0.7.0
+===============
+
+  * Append file
+  * Split project
+
+
+Plans after 0.7.0
 =================
 
   * Action notifications and sensitivity settings
 
-  * Wizards (wait for GTK 2.10?)
+  * Text correction assistants (wait for GTK 2.10?)
      - Common error correction
      - Capitalization correction
      - Line reformatting
@@ -36,16 +43,13 @@ Plans after 0.6.0
 Unscheduled
 ===========
 
-  * Subtitle file join/split
-
   * Windows installer
       - http://trac.gajim.org/wiki/DevWindows
 
-  * Support for additional subtitle file formats
-      - SAMI (Even more disgusting than Substation Alpha)
-        http://msdn.microsoft.com/library/en-us/dnacc/html/atg_samiarticle.asp
-
-  * Documentation (HTML)
+  * Support for horrible SAMI subtitle file format
+      - http://msdn.microsoft.com/library/en-us/dnacc/html/atg_samiarticle.asp
+      - Multilanguage
+      - Paragraph tags
 
   * PyGTK 2.10
       - http://live.gnome.org/PyGTK/WhatsNew210

@@ -1,3 +1,12 @@
+2006-07-07  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/base/delegate/fileopen.py:
+	* lib/gaupol/gtk/delegate/fileopen.py:
+	* lib/gaupol/gtk/dialog/file.py:
+	* lib/gaupol/gtk/dialog/test/test_file.py:
+	* lib/gaupol/gtk/util/conf.py:
+	  Implemented smart translation file opening.
+
 2006-07-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/gtk/delegate/appupdate.py:

@@ -66,7 +66,7 @@ class TestOpenFileDialog(_TestTextFileDialog):
 
     def setup_method(self, method):
 
-        self.dialog = OpenFileDialog('test', gtk.Window())
+        self.dialog = OpenFileDialog('test', True, gtk.Window())
 
 
 class TestSaveFileDialog(_TestTextFileDialog):
