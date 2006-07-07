@@ -91,11 +91,11 @@ class Clean(clean):
                 os.remove(name)
 
         lib_dir = os.path.abspath('lib')
+        info("removing .pyc and .pyo files in 'lib'")
         for (root, dirs, files) in os.walk(lib_dir):
             for name in files:
-                if name.endswith('.pyc'):
+                if name.endswith('.pyc') or name.endswith('.pyo'):
                     path = os.path.join(root, name)
-                    info("removing '%s'" % path.replace(os.getcwd(), '.'))
                     os.remove(path)
 
         for name in ('build', 'dist', 'locale'):

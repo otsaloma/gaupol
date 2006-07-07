@@ -1,5 +1,10 @@
 2006-07-07  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* setup.py:
+	  Clean .pyo files as well if such exist.
+
+2006-07-07  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/delegate/fileopen.py:
 	* lib/gaupol/gtk/delegate/fileopen.py:
 	* lib/gaupol/gtk/dialog/file.py:

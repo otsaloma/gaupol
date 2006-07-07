@@ -61,6 +61,7 @@ Unscheduled
       - GtkAssistant
       - GtkCellRendererSpin
       - TreeView grid lines
+      - Notebook tab reordering
 
   * Python 2.5
       - http://www.python.org/download/releases/2.5/

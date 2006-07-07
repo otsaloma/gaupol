@@ -17,9 +17,7 @@ Contents
 
   * Set version number variables
 
-      $ export $x=0
-      $ export $y=6
-      $ export $z=0
+      $ export x=0 && export y=6 && export z=0
 
 
 1. Create branch (only for x.y.1 bug-fix releases)
