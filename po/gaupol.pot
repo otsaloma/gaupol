@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-28 00:26+0300\n"
+"POT-Creation-Date: 2006-07-07 19:08+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -978,30 +978,30 @@ msgstr ""
 msgid "Please try to open the file with a different character encoding."
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/fileopen.py:301
+#: lib/gaupol/gtk/delegate/fileopen.py:302
 #, python-format
 msgid "File \"%s\" is already open"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/fileopen.py:432
+#: lib/gaupol/gtk/delegate/fileopen.py:437
 #: lib/gaupol/gtk/delegate/guiinit.py:119
 msgid "Open"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/fileopen.py:434
+#: lib/gaupol/gtk/delegate/fileopen.py:439
 msgid "Open Translation"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/fileopen.py:496
+#: lib/gaupol/gtk/delegate/fileopen.py:501
 msgid "Created a new project"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/fileopen.py:569
+#: lib/gaupol/gtk/delegate/fileopen.py:574
 #, python-format
 msgid "Opened translation file \"%s\""
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/fileopen.py:623
+#: lib/gaupol/gtk/delegate/fileopen.py:628
 #, python-format
 msgid "Opened main file \"%s\""
 msgstr ""
@@ -1372,41 +1372,57 @@ msgid "Invert the current selection"
 msgstr ""
 
 #: lib/gaupol/gtk/delegate/edit.py:192
-msgid "_Paste"
+msgid "_Merge Subtitles"
 msgstr ""
 
 #: lib/gaupol/gtk/delegate/edit.py:194
+msgid "Merge the selected subtitles"
+msgstr ""
+
+#: lib/gaupol/gtk/delegate/edit.py:221
+msgid "_Paste"
+msgstr ""
+
+#: lib/gaupol/gtk/delegate/edit.py:223
 msgid "Paste texts from the clipboard"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/edit.py:208
-msgid "Re_move Subtitles"
+#: lib/gaupol/gtk/delegate/edit.py:249
+msgid "Rem_ove Subtitles"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/edit.py:210
+#: lib/gaupol/gtk/delegate/edit.py:251
 msgid "Remove the selected subtitles"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/edit.py:232
-msgid "_Select All"
+#: lib/gaupol/gtk/delegate/edit.py:273
+msgid "Select _All"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/edit.py:234
+#: lib/gaupol/gtk/delegate/edit.py:275
 msgid "Select all subtitles"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/edit.py:380
+#: lib/gaupol/gtk/delegate/edit.py:289
+msgid "_Split Subtitle"
+msgstr ""
+
+#: lib/gaupol/gtk/delegate/edit.py:291
+msgid "Split the selected subtitle in two"
+msgstr ""
+
+#: lib/gaupol/gtk/delegate/edit.py:463
 #, python-format
 msgid "Inserted %d subtitle to fit clipboard contents"
 msgid_plural "Inserted %d subtitles to fit clipboard contents"
 msgstr[0] ""
 msgstr[1] ""
 
-#: lib/gaupol/gtk/delegate/edit.py:453
+#: lib/gaupol/gtk/delegate/edit.py:545
 msgid "Use Alt+Arrow for moving to edit an adjacent cell"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/edit.py:455
+#: lib/gaupol/gtk/delegate/edit.py:547
 msgid "Use Shift+Return for line-break"
 msgstr ""
 
@@ -1499,7 +1515,7 @@ msgstr ""
 msgid "Replaced %d occurences of \"%s\" with \"%s\""
 msgstr ""
 
-#: lib/gaupol/gtk/dialog/posshift.py:123
+#: lib/gaupol/gtk/dialog/posshift.py:126
 msgid "frames"
 msgstr ""
 
@@ -1530,29 +1546,29 @@ msgid ""
 "To change the editor, edit configuration file \"%s\" under section \"debug\"."
 msgstr ""
 
-#: lib/gaupol/gtk/dialog/posadjust.py:175
-#: lib/gaupol/gtk/dialog/posadjust.py:179
+#: lib/gaupol/gtk/dialog/posadjust.py:172
+#: lib/gaupol/gtk/dialog/posadjust.py:176
 msgid "Current frame:"
 msgstr ""
 
-#: lib/gaupol/gtk/dialog/posadjust.py:176
+#: lib/gaupol/gtk/dialog/posadjust.py:173
 msgid "C_orrect frame:"
 msgstr ""
 
-#: lib/gaupol/gtk/dialog/posadjust.py:180
+#: lib/gaupol/gtk/dialog/posadjust.py:177
 msgid "Co_rrect frame:"
 msgstr ""
 
-#: lib/gaupol/gtk/dialog/posadjust.py:251
-#: lib/gaupol/gtk/dialog/posadjust.py:255
+#: lib/gaupol/gtk/dialog/posadjust.py:248
+#: lib/gaupol/gtk/dialog/posadjust.py:252
 msgid "Current time:"
 msgstr ""
 
-#: lib/gaupol/gtk/dialog/posadjust.py:252
+#: lib/gaupol/gtk/dialog/posadjust.py:249
 msgid "C_orrect time:"
 msgstr ""
 
-#: lib/gaupol/gtk/dialog/posadjust.py:256
+#: lib/gaupol/gtk/dialog/posadjust.py:253
 msgid "Co_rrect time:"
 msgstr ""
 
@@ -1569,7 +1585,7 @@ msgstr ""
 msgid "Other..."
 msgstr ""
 
-#: lib/gaupol/gtk/dialog/file.py:136 lib/gaupol/gtk/dialog/file.py:468
+#: lib/gaupol/gtk/dialog/file.py:136 lib/gaupol/gtk/dialog/file.py:482
 msgid "All files"
 msgstr ""
 
@@ -1586,39 +1602,43 @@ msgstr ""
 msgid "%s (%s)"
 msgstr ""
 
-#: lib/gaupol/gtk/dialog/file.py:229 lib/gaupol/gtk/dialog/file.py:320
+#: lib/gaupol/gtk/dialog/file.py:232 lib/gaupol/gtk/dialog/file.py:334
 msgid "C_haracter encoding:"
 msgstr ""
 
-#: lib/gaupol/gtk/dialog/file.py:249
+#: lib/gaupol/gtk/dialog/file.py:242
+msgid "_Adapt to differences between main and translation documents"
+msgstr ""
+
+#: lib/gaupol/gtk/dialog/file.py:261
 msgid "Auto-detected"
 msgstr ""
 
-#: lib/gaupol/gtk/dialog/file.py:315
+#: lib/gaupol/gtk/dialog/file.py:329
 msgid "Fo_rmat:"
 msgstr ""
 
-#: lib/gaupol/gtk/dialog/file.py:325
+#: lib/gaupol/gtk/dialog/file.py:339
 msgid "Ne_wlines:"
 msgstr ""
 
-#: lib/gaupol/gtk/dialog/file.py:455
+#: lib/gaupol/gtk/dialog/file.py:469
 msgid "Select Video"
 msgstr ""
 
-#: lib/gaupol/gtk/dialog/file.py:473
+#: lib/gaupol/gtk/dialog/file.py:487
 msgid "Video files"
 msgstr ""
 
-#: lib/gaupol/base/cons.py:130
+#: lib/gaupol/base/cons.py:134
 msgid "23.976 fps"
 msgstr ""
 
-#: lib/gaupol/base/cons.py:131
+#: lib/gaupol/base/cons.py:135
 msgid "25 fps"
 msgstr ""
 
-#: lib/gaupol/base/cons.py:132
+#: lib/gaupol/base/cons.py:136
 msgid "29.97 fps"
 msgstr ""
 
@@ -1654,32 +1674,40 @@ msgstr ""
 msgid "Inserting subtitles"
 msgstr ""
 
-#: lib/gaupol/base/delegate/edit.py:271 lib/gaupol/base/delegate/edit.py:272
+#: lib/gaupol/base/delegate/edit.py:250
+msgid "Merging subtitles"
+msgstr ""
+
+#: lib/gaupol/base/delegate/edit.py:294 lib/gaupol/base/delegate/edit.py:295
 msgid "Pasting texts"
 msgstr ""
 
-#: lib/gaupol/base/delegate/edit.py:293
+#: lib/gaupol/base/delegate/edit.py:316
 msgid "Removing subtitles"
 msgstr ""
 
-#: lib/gaupol/base/delegate/edit.py:318 lib/gaupol/base/delegate/edit.py:360
+#: lib/gaupol/base/delegate/edit.py:341 lib/gaupol/base/delegate/edit.py:383
 msgid "Replacing texts"
 msgstr ""
 
-#: lib/gaupol/base/delegate/edit.py:334
+#: lib/gaupol/base/delegate/edit.py:357
 msgid "Replacing positions"
 msgstr ""
 
-#: lib/gaupol/base/delegate/edit.py:415
+#: lib/gaupol/base/delegate/edit.py:438
 msgid "Editing frame"
 msgstr ""
 
-#: lib/gaupol/base/delegate/edit.py:453
+#: lib/gaupol/base/delegate/edit.py:476
 msgid "Editing text"
 msgstr ""
 
-#: lib/gaupol/base/delegate/edit.py:499
+#: lib/gaupol/base/delegate/edit.py:522
 msgid "Editing time"
+msgstr ""
+
+#: lib/gaupol/base/delegate/edit.py:555
+msgid "Splitting subtitle"
 msgstr ""
 
 #: lib/gaupol/base/delegate/position.py:108

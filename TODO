@@ -4,28 +4,11 @@ Legend:
   P = Postponed
   ? = Questionable
 
-Plans for 0.6.0
-===============
-
-  New:
-    [D] Subtitle split and merge
-    [D] Smarter translation file opening
-    [D] Show .srtx files as images
-    [D] Support TMPlayer subtitle file format
-
-  Changes:
-    [D] Copy-paste now works from one project to another
-    [D] Fixed target radio button defaults in case of no selection
-    [D] Changed some keybindings
-    [D] setup.py: Fixed paths module generation in case --root option given
-        with a trailing directory separator
-
-
 Plans for 0.7.0
 ===============
 
-  * Append file
-  * Split project
+  [ ] Append file
+  [ ] Split project
 
 
 Plans after 0.7.0

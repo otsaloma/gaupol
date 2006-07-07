@@ -1,3 +1,20 @@
+Gaupol 0.6.0
+============
+
+  New:
+    * Subtitle split and merge
+    * Smarter translation file opening
+    * Show .srtx files as images
+    * Support TMPlayer subtitle file format
+
+  Changes:
+    * Copy-paste now works from one project to another
+    * Fixed target radio button defaults in case of no selection
+    * Changed some keybindings
+    * setup.py: Fixed paths module generation in case --root option given with
+      a trailing directory separator
+
+
 Gaupol 0.5.0
 ============
 
