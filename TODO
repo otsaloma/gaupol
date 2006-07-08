@@ -7,14 +7,12 @@ Legend:
 Plans for 0.7.0
 ===============
 
-  [ ] Append file
+  [D] Append file
   [ ] Split project
 
 
 Plans after 0.7.0
 =================
-
-  * Action notifications and sensitivity settings
 
   * Text correction assistants (wait for GTK 2.10?)
      - Common error correction

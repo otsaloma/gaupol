@@ -1,5 +1,10 @@
 2006-07-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/delegate/filesave.py:
+	  (_restore_original): Catch OSError as well.
+
+2006-07-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/ui/menubar.xml:
 	* lib/gaupol/gtk/delegate/edit.py:
 	* lib/gaupol/gtk/delegate/fileopen.py:

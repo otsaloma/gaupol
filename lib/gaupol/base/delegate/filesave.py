@@ -67,7 +67,7 @@ def _restore_original(path, bak_path):
 
     try:
         shutil.move(bak_path, path)
-    except IOError, (no, message):
+    except (IOError, OSError), (no, message):
         print 'Failed to restore file "%s" from temporary backup file "%s" ' \
               'after failing to write it: %s.' % (path, bak_path, message)
 
