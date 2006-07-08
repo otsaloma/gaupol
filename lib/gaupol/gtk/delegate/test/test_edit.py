@@ -77,3 +77,16 @@ class TestEditDelegate(Test):
         test('on_remove_subtitles_activate')
         test('on_select_all_activate')
         test('on_split_subtitle_activate')
+
+    def test_on_edit_headers_activate(self):
+
+        self.app.open_main_files([self.get_subrip_path()])
+        page = self.app.get_current_page()
+        props = (
+            page.project.main_file.path,
+            cons.Format.SUBVIEWER2,
+            page.project.main_file.encoding,
+            page.project.main_file.newlines
+        )
+        page.project.save_main_file(props)
+        self.app.on_edit_headers_activate()

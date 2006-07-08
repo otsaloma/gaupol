@@ -25,9 +25,10 @@ from gettext import ngettext
 import gtk
 
 from gaupol.gtk                  import cons
-from gaupol.gtk.icons            import *
 from gaupol.gtk.delegate         import Delegate, UIMAction
+from gaupol.gtk.dialog.header    import HeaderDialog
 from gaupol.gtk.dialog.subinsert import SubtitleInsertDialog
+from gaupol.gtk.icons            import *
 from gaupol.gtk.util             import gtklib
 
 
@@ -105,6 +106,40 @@ class CutTextsAction(_ClipboardAction):
     )
 
     paths = ['/ui/menubar/edit/cut', '/ui/view/cut']
+
+
+class EditHeadersAction(UIMAction):
+
+    """Edit subtitle file headers."""
+
+    action_item = (
+        'edit_headers',
+        gtk.STOCK_PROPERTIES,
+        _('_Headers'),
+        '<alt>Return',
+        _('Edit file headers'),
+        'on_edit_headers_activate'
+    )
+
+    paths = ['/ui/menubar/file/headers']
+
+    @classmethod
+    def is_doable(cls, app, page):
+        """Return action doability."""
+
+        if page is None:
+            return False
+
+        main_file = page.project.main_file
+        tran_file = page.project.tran_file
+        if main_file is not None:
+            if main_file.has_header:
+                return True
+        if tran_file is not None:
+            if tran_file.has_header:
+                return True
+
+        return False
 
 
 class EditValueAction(UIMAction):
@@ -393,6 +428,13 @@ class EditDelegate(Delegate):
             entry.project.clipboard.data = data
         text = page.project.clipboard.get_data_as_string()
         self._x_clipboard.set_text(text)
+        self.set_sensitivities(page)
+
+    def on_edit_headers_activate(self, *args):
+        """Edit subtitle file headers."""
+
+        page = self.get_current_page()
+        gtklib.run(HeaderDialog(self._window, page.project))
         self.set_sensitivities(page)
 
     def on_edit_value_activate(self, *args):

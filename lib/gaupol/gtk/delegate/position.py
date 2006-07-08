@@ -41,7 +41,7 @@ class AdjustDurationsAction(UIMAction):
     action_item = (
         'adjust_durations',
         None,
-        _('A_djust Durations...'),
+        _('Ad_just Durations...'),
         'F4',
         _('Lengthen or shorten durations'),
         'on_adjust_durations_activate'
@@ -63,7 +63,7 @@ class AdjustPositionsAction(UIMAction):
     action_item = (
         'adjust_positions',
         None,
-        _('_Adjust Positions...'),
+        _('A_djust Positions...'),
         'F3',
         _('Adjust positions by linear two-point correction'),
         'on_adjust_positions_activate'
@@ -111,7 +111,7 @@ class ShiftPositionsAction(UIMAction):
     action_item = (
         'shift_positions',
         None,
-        _('_Shift Positions...'),
+        _('S_hift Positions...'),
         'F2',
         _('Make subtitles appear earlier or later'),
         'on_shift_positions_activate'

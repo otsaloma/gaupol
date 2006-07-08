@@ -68,6 +68,10 @@ class TestOpenFileDialog(_TestTextFileDialog):
 
         self.dialog = OpenFileDialog('test', True, gtk.Window())
 
+    def test_set_open_button(self):
+
+        self.dialog.set_open_button(gtk.STOCK_SELECT_COLOR, 'Test')
+
 
 class TestSaveFileDialog(_TestTextFileDialog):
 

@@ -88,6 +88,9 @@
       <menuitem name="check_spelling" action="check_spelling"/>
       <menuitem name="configure_spell_check" action="configure_spell_check"/>
       <separator/>
+      <menuitem name="append_file" action="append_file"/>
+      <menuitem name="split_project" action="split_project"/>
+      <separator/>
       <menuitem name="shift_positions" action="shift_positions"/>
       <menuitem name="adjust_positions" action="adjust_positions"/>
       <menuitem name="adjust_durations" action="adjust_durations"/>

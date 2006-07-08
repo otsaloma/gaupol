@@ -1,3 +1,18 @@
+2006-07-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/ui/menubar.xml:
+	* lib/gaupol/gtk/delegate/edit.py:
+	* lib/gaupol/gtk/delegate/fileopen.py:
+	* lib/gaupol/gtk/delegate/filesave.py:
+	* lib/gaupol/gtk/delegate/position.py:
+	* lib/gaupol/gtk/delegate/test/test_edit.py:
+	* lib/gaupol/gtk/delegate/test/test_fileopen.py:
+	* lib/gaupol/gtk/delegate/test/test_filesave.py:
+	* lib/gaupol/gtk/dialog/file.py:
+	* lib/gaupol/gtk/dialog/test/test_file.py:
+	  Implemented file appending.
+	  Moved some stuff around.
+
 2006-07-07  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/__init__.py:

@@ -117,13 +117,15 @@ class TestFileOpenDelegate(Test):
 
     def test_actions(self):
 
+        self.app.on_append_file_activate()
         self.app.on_new_project_activate()
         self.app.on_open_button_clicked()
         self.app.on_open_main_file_activate()
         self.app.on_open_translation_file_activate()
-        self.app.open_main_files([self.get_subrip_path()])
         self.app.on_select_video_file_activate()
+        self.app.on_split_project_activate()
         self.app.on_video_button_clicked()
+        self.app.open_main_files([self.get_subrip_path()])
 
     def test_add_to_recent_files(self):
 

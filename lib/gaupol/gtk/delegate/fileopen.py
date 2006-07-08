@@ -46,6 +46,28 @@ except ImportError:
     _CHARDET_AVAILABLE = False
 
 
+class AppendFileAction(UIMAction):
+
+    """Appending subtitles from a file to current project."""
+
+    action_item = (
+        'append_file',
+        None,
+        _('_Append File...'),
+        None,
+        _('Append subtitles from file to the current project'),
+        'on_append_file_activate'
+    )
+
+    paths = ['/ui/menubar/tools/append_file']
+
+    @classmethod
+    def is_doable(cls, app, page):
+        """Return action doability."""
+
+        return page is not None
+
+
 class NewProjectAction(UIMAction):
 
     """Creating a new project."""
@@ -142,6 +164,28 @@ class SelectVideoFileAction(UIMAction):
         if page.project.main_file is None:
             return False
         return True
+
+
+class SplitProjectAction(UIMAction):
+
+    """Splitting a project in two."""
+
+    action_item = (
+        'split_project',
+        None,
+        _('_Split Project...'),
+        None,
+        _('Split the current project in two'),
+        'on_split_project_activate'
+    )
+
+    paths = ['/ui/menubar/tools/split_project']
+
+    @classmethod
+    def is_doable(cls, app, page):
+        """Return action doability."""
+
+        return page is not None
 
 
 class _BigFileWarningDialog(WarningDialog):
@@ -330,7 +374,7 @@ class FileOpenDelegate(Delegate):
 
         return listlib.unique(encodings)
 
-    def _open_file(self, doc, path, encodings):
+    def _open_file(self, doc, path, encodings, check_open=True):
         """
         Open file.
 
@@ -338,7 +382,7 @@ class FileOpenDelegate(Delegate):
         Return page.
         """
         resorts = 0
-        self._pre_check(path)
+        self._pre_check(path, check_open)
         basename = os.path.basename(path)
         if path.endswith('.srtx'):
             conf.srtx.directory = os.path.dirname(path)
@@ -396,7 +440,7 @@ class FileOpenDelegate(Delegate):
             if response != gtk.RESPONSE_YES:
                 raise Default
 
-    def _pre_check(self, path):
+    def _pre_check(self, path, check_open):
         """
         Check file before opening.
 
@@ -404,7 +448,7 @@ class FileOpenDelegate(Delegate):
         """
         if not os.path.isfile(path):
             raise Default
-        if self._check_file_open(path):
+        if check_open and self._check_file_open(path):
             raise Default
 
         basename = os.path.basename(path)
@@ -426,20 +470,17 @@ class FileOpenDelegate(Delegate):
         gtklib.set_cursor_busy(self._window)
         return response
 
-    def _select_files(self, doc):
+    def _select_files(self, title, tran, multiple, open_button=None):
         """
         Select files with filechooser.
 
         Raise Default if cancelled.
         Return paths, encoding.
         """
-        if doc == MAIN:
-            title = _('Open')
-        elif doc == TRAN:
-            title = _('Open Translation')
-
-        dialog = OpenFileDialog(title, doc == TRAN, self._window)
-        dialog.set_select_multiple(doc == MAIN)
+        dialog = OpenFileDialog(title, tran, self._window)
+        dialog.set_select_multiple(multiple)
+        if open_button is not None:
+            dialog.set_open_button(*open_button)
         gtklib.set_cursor_normal(self._window)
         response = dialog.run()
         gtklib.set_cursor_busy(self._window)
@@ -486,6 +527,53 @@ class FileOpenDelegate(Delegate):
             button.connect(
                 'button-press-event', self.on_view_header_button_press_event)
 
+    def on_append_file_activate(self, *args):
+        """Append subtitles from a file to current project."""
+
+        gtklib.set_cursor_busy(self._window)
+        try:
+            paths, encoding = self._select_files(
+                _('Append File'), False, False, (gtk.STOCK_ADD, _('Append')))
+            temp_page = self._open_file(
+                MAIN, paths[0], self._get_encodings(encoding), False)
+        except Default:
+            gtklib.set_cursor_normal(self._window)
+            return
+
+        mode = temp_page.project.get_mode()
+        if mode == cons.Mode.TIME:
+            count = temp_page.project.times[-1][1]
+            count = temp_page.project.calc.time_to_seconds(count)
+            temp_page.project.shift_seconds(None, count, None)
+        elif mode == cons.Mode.FRAME:
+            count = temp_page.project.frames[-1][1]
+            temp_page.project.shift_frames(None, count, None)
+
+        page = self.get_current_page()
+        current_length = len(page.project.times)
+        append_length = len(temp_page.project.times)
+        rows = range(current_length, current_length + append_length)
+        page.project.insert_subtitles(
+            rows,
+            temp_page.project.times,
+            temp_page.project.frames,
+            temp_page.project.main_texts,
+            temp_page.project.tran_texts
+        )
+
+        page.project.set_action_description(
+            cons.Action.DO, _('Appending file'))
+        page.view.set_focus(current_length, None)
+        page.view.select_rows(rows)
+        page.view.scroll_to_row(current_length)
+        self.set_status_message(
+            _('Appended file starting from subtitle %d') \
+            % (current_length + 1)
+        )
+        self.set_sensitivities(page)
+        gtklib.destroy_gobject(temp_page)
+        gtklib.set_cursor_normal(self._window)
+
     def on_new_project_activate(self, *args):
         """Start a new project."""
 
@@ -523,7 +611,7 @@ class FileOpenDelegate(Delegate):
 
         gtklib.set_cursor_busy(self._window)
         try:
-            paths, encoding = self._select_files(MAIN)
+            paths, encoding = self._select_files(_('Open'), False, True)
         except Default:
             gtklib.set_cursor_normal(self._window)
             return
@@ -555,7 +643,8 @@ class FileOpenDelegate(Delegate):
 
         gtklib.set_cursor_busy(self._window)
         try:
-            paths, encoding = self._select_files(TRAN)
+            paths, encoding = self._select_files(
+                _('Open Translation'), True, False)
         except Default:
             gtklib.set_cursor_normal(self._window)
             return
@@ -593,6 +682,11 @@ class FileOpenDelegate(Delegate):
             page.project.video_path = dialog.get_filename()
             self.set_sensitivities(page)
         gtklib.destroy_gobject(dialog)
+
+    def on_split_project_activate(self, *args):
+        """Split current project in two."""
+
+        pass
 
     def on_video_button_clicked(self, *args):
         """Select video file."""

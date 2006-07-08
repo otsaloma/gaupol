@@ -271,6 +271,20 @@ class OpenFileDialog(_TextFileDialog):
         if self.tran:
             conf.file.smart_tran = self._smart_check.get_active()
 
+    def set_open_button(self, stock, text):
+        """Set open button's icon and text."""
+
+        button = self.action_area.get_children()[0]
+        self.action_area.remove(button)
+
+        self.add_buttons(stock, gtk.RESPONSE_OK)
+        button = self.action_area.get_children()[0]
+        alignment = button.get_children()[0]
+        hbox = alignment.get_children()[0]
+        label = hbox.get_children()[1]
+        label.set_text(text)
+        label.set_use_underline(True)
+
 
 class SaveFileDialog(_TextFileDialog):
 
