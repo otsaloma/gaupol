@@ -192,7 +192,10 @@ def get_locale_encoding():
     Raise ValueError if not found.
     Return tuple: Python name, display name, description.
     """
-    return _translate(locale.getdefaultlocale()[1])
+    name = locale.getdefaultlocale()[1]
+    if name is None:
+        raise ValueError
+    return _translate(name)
 
 def get_locale_long_name():
     """

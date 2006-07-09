@@ -12,6 +12,7 @@ Plans for 0.7.0
     [D] Split project
 
   Changes:
+    [D] Fixed error opening file if no locale encoding set (bug #6319)
     [D] Catch OSError in case saving file fails and temporary backup copy is
         restored (bug #6316)
 

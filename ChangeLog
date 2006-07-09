@@ -1,5 +1,11 @@
 2006-07-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/util/enclib.py:
+	  (get_locale_encoding): Do not call _translate on None but
+	  instead raise ValueError. (Closes bug #6319)
+
+2006-07-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/projsplit-dialog.glade:
 	* lib/gaupol/gtk/delegate/fileopen.py:
 	* lib/gaupol/gtk/dialog/projsplit.py:
