@@ -1,5 +1,13 @@
 2006-07-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/delegate/edit.py:
+	  (merge_subtitles): lstrip texts.
+
+	* lib/gaupol/gtk/delegate/preview.py:
+	  (on_preview_activate): Handle None value of col.
+
+2006-07-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/util/enclib.py:
 	  (get_locale_encoding): Do not call _translate on None but
 	  instead raise ValueError. (Closes bug #6319)

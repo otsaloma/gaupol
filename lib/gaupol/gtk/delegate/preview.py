@@ -158,7 +158,9 @@ class PreviewDelegate(Delegate):
         row  = page.view.get_selected_rows()[0]
         time = page.project.times[row][0]
         col  = page.view.get_focus()[1]
-        doc  = max(0, col - 4)
+        doc  = 0
+        if col is not None:
+            doc  = max(0, col - 4)
 
         self._run_preview(page, time, doc)
 

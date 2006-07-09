@@ -240,6 +240,8 @@ class EditDelegate(Delegate):
                 main_text = main_text + '\n' + self.main_texts[row]
             if self.tran_texts[row]:
                 tran_text = tran_text + '\n' + self.tran_texts[row]
+        main_text = main_text.lstrip()
+        tran_text = tran_text.lstrip()
 
         signal = self.get_signal(register)
         self.block(signal)
