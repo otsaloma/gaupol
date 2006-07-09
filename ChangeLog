@@ -1,3 +1,9 @@
+2006-07-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/gtk/delegate/fileopen.py:
+	  (on_append_file_activate): Call gtk.main_iteration() while
+	  gtk.events_pending() to immediately destroy the dialog.
+
 2006-07-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/base/delegate/edit.py:

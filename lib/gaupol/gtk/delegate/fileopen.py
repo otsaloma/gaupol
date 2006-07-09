@@ -535,6 +535,8 @@ class FileOpenDelegate(Delegate):
         try:
             paths, encoding = self._select_files(
                 _('Append File'), False, False, (gtk.STOCK_ADD, _('Append')))
+            while gtk.events_pending():
+                gtk.main_iteration()
             temp_page = self._open_file(
                 MAIN, paths[0], self._get_encodings(encoding), False)
         except Default:
