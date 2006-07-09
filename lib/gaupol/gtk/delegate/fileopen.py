@@ -26,16 +26,17 @@ import urlparse
 
 import gtk
 
-from gaupol.base.error         import FileFormatError
-from gaupol.base.util          import enclib, listlib
-from gaupol.gtk                import cons
-from gaupol.gtk.icons          import *
-from gaupol.gtk.delegate       import Delegate, UIMAction
-from gaupol.gtk.dialog.file    import OpenFileDialog, OpenVideoDialog
-from gaupol.gtk.dialog.message import ErrorDialog, WarningDialog
-from gaupol.gtk.error          import Default
-from gaupol.gtk.page           import Page
-from gaupol.gtk.util           import conf, gtklib
+from gaupol.base.error           import FileFormatError
+from gaupol.base.util            import enclib, listlib
+from gaupol.gtk                  import cons
+from gaupol.gtk.delegate         import Delegate, UIMAction
+from gaupol.gtk.dialog.file      import OpenFileDialog, OpenVideoDialog
+from gaupol.gtk.dialog.message   import ErrorDialog, WarningDialog
+from gaupol.gtk.dialog.projsplit import ProjectSplitDialog
+from gaupol.gtk.error            import Default
+from gaupol.gtk.icons            import *
+from gaupol.gtk.page             import Page
+from gaupol.gtk.util             import conf, gtklib
 
 try:
     import chardet
@@ -686,7 +687,45 @@ class FileOpenDelegate(Delegate):
     def on_split_project_activate(self, *args):
         """Split current project in two."""
 
-        pass
+        page = self.get_current_page()
+        dialog = ProjectSplitDialog(self._window, page)
+        response = dialog.run()
+        subtitle = dialog.get_subtitle()
+        dialog.destroy()
+        if response != gtk.RESPONSE_OK:
+            return
+
+        gtklib.set_cursor_busy(self._window)
+        row = subtitle - 1
+        times = page.project.times[row:]
+        frames = page.project.frames[row:]
+        main_texts = page.project.main_texts[row:]
+        tran_texts = page.project.tran_texts[row:]
+        page.project.remove_subtitles(range(row, len(page.project.times)))
+        page.project.set_action_description(
+            cons.Action.DO, _('Splitting project'))
+        self.set_sensitivities(page)
+        first_page = page
+
+        self._counter += 1
+        page = Page(self._counter)
+        page.project.times = times
+        page.project.frames = frames
+        page.project.main_texts = main_texts
+        page.project.tran_texts = tran_texts
+        mode = page.project.get_mode()
+        if mode == cons.Mode.TIME:
+            count = first_page.project.times[-1][1]
+            count = -1 * page.project.calc.time_to_seconds(count)
+            page.project.shift_seconds(None, count, None)
+        elif mode == cons.Mode.FRAME:
+            count = -1 * first_page.project.frames[-1][1]
+            page.project.shift_frames(None, count, None)
+        self._add_new_project(page)
+        self.set_status_message(_('Split %d subtitles to project "%s"') % (
+            len(page.project.times), page.untitle))
+        self.set_sensitivities(page)
+        gtklib.set_cursor_normal(self._window)
 
     def on_video_button_clicked(self, *args):
         """Select video file."""

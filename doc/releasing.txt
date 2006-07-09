@@ -136,10 +136,11 @@ Contents
 6. Spread the word
 ==================
 
-  * Edit homepage "News" and "Download" sections
+  * Edit homepage
 
       index.html
       download.html
+      features.html
 
   * Send e-mail to gaupol-announcements mailing list
 

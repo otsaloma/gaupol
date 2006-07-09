@@ -1,3 +1,11 @@
+2006-07-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/projsplit-dialog.glade:
+	* lib/gaupol/gtk/delegate/fileopen.py:
+	* lib/gaupol/gtk/dialog/projsplit.py:
+	* lib/gaupol/gtk/dialog/test/test_projsplit.py:
+	  Implemented project splitting.
+
 2006-07-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/base/delegate/filesave.py:

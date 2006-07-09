@@ -7,8 +7,13 @@ Legend:
 Plans for 0.7.0
 ===============
 
-  [D] Append file
-  [ ] Split project
+  New:
+    [D] Append file
+    [D] Split project
+
+  Changes:
+    [D] Catch OSError in case saving file fails and temporary backup copy is
+        restored (bug #6316)
 
 
 Plans after 0.7.0
@@ -27,7 +32,7 @@ Unscheduled
   * Windows installer
       - http://trac.gajim.org/wiki/DevWindows
 
-  * Support for horrible SAMI subtitle file format
+  * Support for SAMI subtitle file format
       - http://msdn.microsoft.com/library/en-us/dnacc/html/atg_samiarticle.asp
       - Multilanguage
       - Paragraph tags
