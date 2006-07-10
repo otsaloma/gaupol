@@ -1,6 +1,11 @@
 2006-07-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/gtk/delegate/fileopen.py:
+	  (on_append_file_activate): Fixed temp_page and page confusion.
+
+2006-07-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/gtk/delegate/fileopen.py:
 	  (SplitProjectAction.is_doable): Check that there's more than one
 	  subtitle.
 

@@ -545,16 +545,16 @@ class FileOpenDelegate(Delegate):
             gtklib.set_cursor_normal(self._window)
             return
 
+        page = self.get_current_page()
         mode = temp_page.project.get_mode()
         if mode == cons.Mode.TIME:
-            count = temp_page.project.times[-1][1]
-            count = temp_page.project.calc.time_to_seconds(count)
+            count = page.project.times[-1][1]
+            count = page.project.calc.time_to_seconds(count)
             temp_page.project.shift_seconds(None, count, None)
         elif mode == cons.Mode.FRAME:
-            count = temp_page.project.frames[-1][1]
+            count = page.project.frames[-1][1]
             temp_page.project.shift_frames(None, count, None)
 
-        page = self.get_current_page()
         current_length = len(page.project.times)
         append_length = len(temp_page.project.times)
         rows = range(current_length, current_length + append_length)
