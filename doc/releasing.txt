@@ -17,7 +17,7 @@ Contents
 
   * Set version number variables
 
-      $ export x=0 && export y=6 && export z=0
+      $ export x=0 && export y=7 && export z=0
 
 
 1. Create branch (only for x.y.1 bug-fix releases)
@@ -25,13 +25,13 @@ Contents
 
   * Create a brach from tagged x.y.0 if it doesn't already exist
 
-     $ svn copy svn+ssh://osmo@svn.gna.org/svn/gaupol/tags/$x.$y.0   \
-                svn+ssh://osmo@svn.gna.org/svn/gaupol/branches/$x.$y \
-                -m "Created branch $x.$y."
+      $ svn copy svn+ssh://osmo@svn.gna.org/svn/gaupol/tags/$x.$y.0   \
+                 svn+ssh://osmo@svn.gna.org/svn/gaupol/branches/$x.$y \
+                 -m "Created branch $x.$y."
 
   * Check out branch
 
-     $ svn co svn+ssh://osmo@svn.gna.org/svn/gaupol/branches/$x.$y
+      $ svn co svn+ssh://osmo@svn.gna.org/svn/gaupol/branches/$x.$y
 
   * Bring all bug-fixes from trunk to branch.
 

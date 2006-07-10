@@ -86,6 +86,7 @@ class TestFileOpenDelegate(Test):
 
         self.app = Application()
         self.delegate = FileOpenDelegate(self.app)
+        self.app.open_main_files([self.get_subrip_path()])
 
     def teardown_method(self, method):
 
@@ -115,23 +116,43 @@ class TestFileOpenDelegate(Test):
         for encoding in encodings:
             assert isinstance(encoding, basestring)
 
-    def test_actions(self):
-
-        self.app.on_append_file_activate()
-        self.app.on_new_project_activate()
-        self.app.on_open_button_clicked()
-        self.app.on_open_main_file_activate()
-        self.app.on_open_translation_file_activate()
-        self.app.on_select_video_file_activate()
-        self.app.on_split_project_activate()
-        self.app.on_video_button_clicked()
-        self.app.open_main_files([self.get_subrip_path()])
-
     def test_add_to_recent_files(self):
 
         path = self.get_subrip_path()
         self.app.add_to_recent_files(path)
         assert path in conf.file.recents
+
+    def test_on_append_file_activate(self):
+
+        self.app.on_append_file_activate()
+
+    def test_on_new_project_activate(self):
+
+        self.app.on_new_project_activate()
+
+    def test_on_open_button_clicked(self):
+
+        self.app.on_open_button_clicked()
+
+    def test_on_open_main_file_activate(self):
+
+        self.app.on_open_main_file_activate()
+
+    def test_on_open_translation_file_activate(self):
+
+        self.app.on_open_translation_file_activate()
+
+    def test_on_select_video_file_activate(self):
+
+        self.app.on_select_video_file_activate()
+
+    def test_on_split_project_activate(self):
+
+        self.app.on_split_project_activate()
+
+    def test_on_video_button_clicked(self):
+
+        self.app.on_video_button_clicked()
 
     def test_validate_recent(self):
 

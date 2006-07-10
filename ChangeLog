@@ -1,6 +1,20 @@
 2006-07-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/gtk/delegate/fileopen.py:
+	  (SplitProjectAction.is_doable): Check that there's more than one
+	  subtitle.
+
+	* lib/gaupol/gtk/delegate/test/test_edit.py:
+	* lib/gaupol/gtk/delegate/test/test_fileopen.py:
+	  Fixed test code.
+
+	* data/glade/projsplit-dialog.glade:
+	* lib/gaupol/gtk/dialog/projsplit.py:
+	  Set minimum split point to 2.
+
+2006-07-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/gtk/delegate/fileopen.py:
 	  (on_append_file_activate): Call gtk.main_iteration() while
 	  gtk.events_pending() to immediately destroy the dialog.
 

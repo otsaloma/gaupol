@@ -41,7 +41,7 @@ class ProjectSplitDialog(object):
     def _init_spin_button(self, page):
         """Initialize spin button."""
 
-        self._spin_button.set_range(1, len(page.project.times))
+        self._spin_button.set_range(2, len(page.project.times))
         try:
             self._spin_button.set_value(page.view.get_selected_rows()[0] + 1)
         except IndexError:

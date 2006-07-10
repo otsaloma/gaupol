@@ -186,7 +186,9 @@ class SplitProjectAction(UIMAction):
     def is_doable(cls, app, page):
         """Return action doability."""
 
-        return page is not None
+        if page is None:
+            return False
+        return len(page.project.times) > 1
 
 
 class _BigFileWarningDialog(WarningDialog):
