@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-07 19:08+0300\n"
+"POT-Creation-Date: 2006-07-11 01:37+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -191,7 +191,7 @@ msgstr ""
 msgid "_Text:"
 msgstr ""
 
-#: data/glade/header-dialog.glade.h:1 lib/gaupol/gtk/delegate/edit.py:69
+#: data/glade/header-dialog.glade.h:1 lib/gaupol/gtk/delegate/edit.py:70
 msgid "C_lear"
 msgstr ""
 
@@ -378,7 +378,7 @@ msgid "Close _Without Saving"
 msgstr ""
 
 #: data/glade/multiclose-dialog.glade.h:3
-#: lib/gaupol/gtk/delegate/fileopen.py:239
+#: lib/gaupol/gtk/delegate/fileopen.py:286
 #: lib/gaupol/gtk/delegate/fileclose.py:112
 msgid "If you don't save, changes will be permanently lost."
 msgstr ""
@@ -584,6 +584,18 @@ msgstr ""
 msgid "O_utput:"
 msgstr ""
 
+#: data/glade/projsplit-dialog.glade.h:1
+msgid "Split Project"
+msgstr ""
+
+#: data/glade/projsplit-dialog.glade.h:2
+msgid "_First subtitle of new project:"
+msgstr ""
+
+#: data/glade/projsplit-dialog.glade.h:3
+msgid "_Split"
+msgstr ""
+
 #: lib/gaupol/gtk/cons.py:42
 msgid "No."
 msgstr ""
@@ -757,102 +769,94 @@ msgstr ""
 msgid "Activate \"%s\""
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/filesave.py:44
-msgid "_Headers"
-msgstr ""
-
-#: lib/gaupol/gtk/delegate/filesave.py:46
-msgid "Edit file headers"
-msgstr ""
-
-#: lib/gaupol/gtk/delegate/filesave.py:89
+#: lib/gaupol/gtk/delegate/filesave.py:54
 msgid "_Save All"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/filesave.py:91
+#: lib/gaupol/gtk/delegate/filesave.py:56
 msgid "Save all open documents"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/filesave.py:105
+#: lib/gaupol/gtk/delegate/filesave.py:70
 msgid "_Save"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/filesave.py:107
+#: lib/gaupol/gtk/delegate/filesave.py:72
 msgid "Save the current main document"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/filesave.py:121
+#: lib/gaupol/gtk/delegate/filesave.py:86
 msgid "Save _As..."
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/filesave.py:123
+#: lib/gaupol/gtk/delegate/filesave.py:88
 msgid "Save the current main document with a different name"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/filesave.py:137
+#: lib/gaupol/gtk/delegate/filesave.py:102
 msgid "Sav_e Translation"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/filesave.py:139
+#: lib/gaupol/gtk/delegate/filesave.py:104
 msgid "Save the current translation document"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/filesave.py:153
+#: lib/gaupol/gtk/delegate/filesave.py:118
 msgid "Save _Translation As..."
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/filesave.py:155
+#: lib/gaupol/gtk/delegate/filesave.py:120
 msgid "Save the current translation document with a different name"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/filesave.py:170
+#: lib/gaupol/gtk/delegate/filesave.py:135
 #, python-format
 msgid "Failed to save file \"%s\""
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/filesave.py:171
-#: lib/gaupol/gtk/delegate/fileopen.py:188
+#: lib/gaupol/gtk/delegate/filesave.py:136
+#: lib/gaupol/gtk/delegate/fileopen.py:235
 #: lib/gaupol/gtk/delegate/preview.py:91
 #: lib/gaupol/gtk/dialog/spellcheck.py:87
 #, python-format
 msgid "%s."
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/filesave.py:183
+#: lib/gaupol/gtk/delegate/filesave.py:148
 #, python-format
 msgid "Failed to encode file \"%s\" with codec \"%s\""
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/filesave.py:185
+#: lib/gaupol/gtk/delegate/filesave.py:150
 msgid "Please try to save the file with a different character encoding."
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/filesave.py:306
+#: lib/gaupol/gtk/delegate/filesave.py:264
 msgid "Saved all open documents"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/filesave.py:358
+#: lib/gaupol/gtk/delegate/filesave.py:316
 msgid "Saved main document"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/filesave.py:373
+#: lib/gaupol/gtk/delegate/filesave.py:331
 msgid "Save As"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/filesave.py:388
+#: lib/gaupol/gtk/delegate/filesave.py:346
 #, python-format
 msgid "Saved main document as \"%s\""
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/filesave.py:401
+#: lib/gaupol/gtk/delegate/filesave.py:359
 msgid "Saved translation document"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/filesave.py:417
+#: lib/gaupol/gtk/delegate/filesave.py:375
 msgid "Save Translation As"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/filesave.py:432
+#: lib/gaupol/gtk/delegate/filesave.py:390
 #, python-format
 msgid "Saved translation document as \"%s\""
 msgstr ""
@@ -877,131 +881,173 @@ msgstr ""
 msgid "Spell-checking"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/fileopen.py:56
+#: lib/gaupol/gtk/delegate/fileopen.py:57
+msgid "_Append File..."
+msgstr ""
+
+#: lib/gaupol/gtk/delegate/fileopen.py:59
+msgid "Append subtitles from file to the current project"
+msgstr ""
+
+#: lib/gaupol/gtk/delegate/fileopen.py:79
 msgid "_New"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/fileopen.py:58
+#: lib/gaupol/gtk/delegate/fileopen.py:81
 msgid "Create a new project"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/fileopen.py:78
+#: lib/gaupol/gtk/delegate/fileopen.py:101
 msgid "_Open..."
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/fileopen.py:80
+#: lib/gaupol/gtk/delegate/fileopen.py:103
 #: lib/gaupol/gtk/delegate/guiinit.py:123
 msgid "Open main files"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/fileopen.py:101
+#: lib/gaupol/gtk/delegate/fileopen.py:124
 msgid "O_pen Translation..."
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/fileopen.py:103
+#: lib/gaupol/gtk/delegate/fileopen.py:126
 msgid "Open a translation file"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/fileopen.py:127
+#: lib/gaupol/gtk/delegate/fileopen.py:150
 msgid "Se_lect Video..."
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/fileopen.py:129
+#: lib/gaupol/gtk/delegate/fileopen.py:152
 msgid "Select a video file"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/fileopen.py:155
+#: lib/gaupol/gtk/delegate/fileopen.py:177
+msgid "_Split Project..."
+msgstr ""
+
+#: lib/gaupol/gtk/delegate/fileopen.py:179
+msgid "Split the current project in two"
+msgstr ""
+
+#: lib/gaupol/gtk/delegate/fileopen.py:202
 #, python-format
 msgid "Open abnormally large file \"%s\"?"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/fileopen.py:156
+#: lib/gaupol/gtk/delegate/fileopen.py:203
 #, python-format
 msgid ""
 "Size of the file is %.1f MB, which is abnormally large for a text-based "
 "subtitle file. Please, check that you are not trying to open a binary file."
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/fileopen.py:173
+#: lib/gaupol/gtk/delegate/fileopen.py:220
 #, python-format
 msgid "Failed to recognize format of file \"%s\""
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/fileopen.py:174
+#: lib/gaupol/gtk/delegate/fileopen.py:221
 msgid ""
 "Please check that the file you are trying to open is a subtitle file of a "
 "format supported by Gaupol."
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/fileopen.py:187
+#: lib/gaupol/gtk/delegate/fileopen.py:234
 #, python-format
 msgid "Failed to open file \"%s\""
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/fileopen.py:200
+#: lib/gaupol/gtk/delegate/fileopen.py:247
 #, python-format
 msgid "%d subtitles will be moved"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/fileopen.py:201
+#: lib/gaupol/gtk/delegate/fileopen.py:248
 msgid ""
 "The file you are trying to open is not in sorted order and may thus be "
 "faulty. If you open the file, all subtitles will be arranged in sorted order."
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/fileopen.py:218
+#: lib/gaupol/gtk/delegate/fileopen.py:265
 msgid "Open only partially supported file?"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/fileopen.py:219
+#: lib/gaupol/gtk/delegate/fileopen.py:266
 msgid ""
 "Sub Station Alpha and Advanced Sub Station Alpha formats are not fully "
 "supported. Only the header and fields \"Start\", \"End\" and \"Text\" of the "
 "dialogue are read. Saving the file will cause you to lose all other data."
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/fileopen.py:237
+#: lib/gaupol/gtk/delegate/fileopen.py:284
 #, python-format
 msgid "Save changes to translation document \"%s\" before opening a new one?"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/fileopen.py:241
+#: lib/gaupol/gtk/delegate/fileopen.py:288
 msgid "Open _Without Saving"
-msgstr ""
-
-#: lib/gaupol/gtk/delegate/fileopen.py:255
-#, python-format
-msgid "Failed to decode file \"%s\" with all attempted codecs"
-msgstr ""
-
-#: lib/gaupol/gtk/delegate/fileopen.py:257
-msgid "Please try to open the file with a different character encoding."
 msgstr ""
 
 #: lib/gaupol/gtk/delegate/fileopen.py:302
 #, python-format
+msgid "Failed to decode file \"%s\" with all attempted codecs"
+msgstr ""
+
+#: lib/gaupol/gtk/delegate/fileopen.py:304
+msgid "Please try to open the file with a different character encoding."
+msgstr ""
+
+#: lib/gaupol/gtk/delegate/fileopen.py:349
+#, python-format
 msgid "File \"%s\" is already open"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/fileopen.py:437
+#: lib/gaupol/gtk/delegate/fileopen.py:539
+msgid "Append File"
+msgstr ""
+
+#: lib/gaupol/gtk/delegate/fileopen.py:539
+msgid "Append"
+msgstr ""
+
+#: lib/gaupol/gtk/delegate/fileopen.py:570
+msgid "Appending file"
+msgstr ""
+
+#: lib/gaupol/gtk/delegate/fileopen.py:575
+#, python-format
+msgid "Appended file starting from subtitle %d"
+msgstr ""
+
+#: lib/gaupol/gtk/delegate/fileopen.py:594
+msgid "Created a new project"
+msgstr ""
+
+#: lib/gaupol/gtk/delegate/fileopen.py:619
 #: lib/gaupol/gtk/delegate/guiinit.py:119
 msgid "Open"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/fileopen.py:439
+#: lib/gaupol/gtk/delegate/fileopen.py:652
 msgid "Open Translation"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/fileopen.py:501
-msgid "Created a new project"
-msgstr ""
-
-#: lib/gaupol/gtk/delegate/fileopen.py:574
+#: lib/gaupol/gtk/delegate/fileopen.py:668
 #, python-format
 msgid "Opened translation file \"%s\""
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/fileopen.py:628
+#: lib/gaupol/gtk/delegate/fileopen.py:710
+msgid "Splitting project"
+msgstr ""
+
+#: lib/gaupol/gtk/delegate/fileopen.py:729
+#, python-format
+msgid "Split %d subtitles to project \"%s\""
+msgstr ""
+
+#: lib/gaupol/gtk/delegate/fileopen.py:765
 #, python-format
 msgid "Opened main file \"%s\""
 msgstr ""
@@ -1080,7 +1126,7 @@ msgstr ""
 msgid "_File"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/guiinit.py:161 lib/gaupol/gtk/delegate/edit.py:117
+#: lib/gaupol/gtk/delegate/guiinit.py:161 lib/gaupol/gtk/delegate/edit.py:152
 msgid "_Edit"
 msgstr ""
 
@@ -1331,103 +1377,111 @@ msgstr ""
 msgid "Redo %s"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/edit.py:71
+#: lib/gaupol/gtk/delegate/edit.py:72
 msgid "Clear the selected texts"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/edit.py:85
+#: lib/gaupol/gtk/delegate/edit.py:86
 msgid "_Copy"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/edit.py:87
+#: lib/gaupol/gtk/delegate/edit.py:88
 msgid "Copy the selected texts to the clipboard"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/edit.py:101
+#: lib/gaupol/gtk/delegate/edit.py:102
 msgid "Cu_t"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/edit.py:103
+#: lib/gaupol/gtk/delegate/edit.py:104
 msgid "Cut the selected texts to the clipboard"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/edit.py:119
+#: lib/gaupol/gtk/delegate/edit.py:118
+msgid "_Headers"
+msgstr ""
+
+#: lib/gaupol/gtk/delegate/edit.py:120
+msgid "Edit file headers"
+msgstr ""
+
+#: lib/gaupol/gtk/delegate/edit.py:154
 msgid "Edit the focused cell"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/edit.py:148
+#: lib/gaupol/gtk/delegate/edit.py:183
 msgid "_Insert Subtitles..."
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/edit.py:150
+#: lib/gaupol/gtk/delegate/edit.py:185
 msgid "Insert blank subtitles"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/edit.py:176
+#: lib/gaupol/gtk/delegate/edit.py:211
 msgid "In_vert Selection"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/edit.py:178
+#: lib/gaupol/gtk/delegate/edit.py:213
 msgid "Invert the current selection"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/edit.py:192
+#: lib/gaupol/gtk/delegate/edit.py:227
 msgid "_Merge Subtitles"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/edit.py:194
+#: lib/gaupol/gtk/delegate/edit.py:229
 msgid "Merge the selected subtitles"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/edit.py:221
+#: lib/gaupol/gtk/delegate/edit.py:256
 msgid "_Paste"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/edit.py:223
+#: lib/gaupol/gtk/delegate/edit.py:258
 msgid "Paste texts from the clipboard"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/edit.py:249
+#: lib/gaupol/gtk/delegate/edit.py:284
 msgid "Rem_ove Subtitles"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/edit.py:251
+#: lib/gaupol/gtk/delegate/edit.py:286
 msgid "Remove the selected subtitles"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/edit.py:273
+#: lib/gaupol/gtk/delegate/edit.py:308
 msgid "Select _All"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/edit.py:275
+#: lib/gaupol/gtk/delegate/edit.py:310
 msgid "Select all subtitles"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/edit.py:289
+#: lib/gaupol/gtk/delegate/edit.py:324
 msgid "_Split Subtitle"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/edit.py:291
+#: lib/gaupol/gtk/delegate/edit.py:326
 msgid "Split the selected subtitle in two"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/edit.py:463
+#: lib/gaupol/gtk/delegate/edit.py:505
 #, python-format
 msgid "Inserted %d subtitle to fit clipboard contents"
 msgid_plural "Inserted %d subtitles to fit clipboard contents"
 msgstr[0] ""
 msgstr[1] ""
 
-#: lib/gaupol/gtk/delegate/edit.py:545
+#: lib/gaupol/gtk/delegate/edit.py:587
 msgid "Use Alt+Arrow for moving to edit an adjacent cell"
 msgstr ""
 
-#: lib/gaupol/gtk/delegate/edit.py:547
+#: lib/gaupol/gtk/delegate/edit.py:589
 msgid "Use Shift+Return for line-break"
 msgstr ""
 
 #: lib/gaupol/gtk/delegate/position.py:44
-msgid "A_djust Durations..."
+msgid "Ad_just Durations..."
 msgstr ""
 
 #: lib/gaupol/gtk/delegate/position.py:46
@@ -1435,7 +1489,7 @@ msgid "Lengthen or shorten durations"
 msgstr ""
 
 #: lib/gaupol/gtk/delegate/position.py:66
-msgid "_Adjust Positions..."
+msgid "A_djust Positions..."
 msgstr ""
 
 #: lib/gaupol/gtk/delegate/position.py:68
@@ -1451,7 +1505,7 @@ msgid "Convert framerate"
 msgstr ""
 
 #: lib/gaupol/gtk/delegate/position.py:114
-msgid "_Shift Positions..."
+msgid "S_hift Positions..."
 msgstr ""
 
 #: lib/gaupol/gtk/delegate/position.py:116
@@ -1585,7 +1639,7 @@ msgstr ""
 msgid "Other..."
 msgstr ""
 
-#: lib/gaupol/gtk/dialog/file.py:136 lib/gaupol/gtk/dialog/file.py:482
+#: lib/gaupol/gtk/dialog/file.py:136 lib/gaupol/gtk/dialog/file.py:496
 msgid "All files"
 msgstr ""
 
@@ -1597,12 +1651,12 @@ msgstr ""
 #. Translators: Long language name, e.g. "English (Canada)".
 #. Translators: Long encoding name, e.g. "Russian (KOI8-R)".
 #: lib/gaupol/gtk/dialog/file.py:148 lib/gaupol/base/util/langlib.py:723
-#: lib/gaupol/base/util/enclib.py:214
+#: lib/gaupol/base/util/enclib.py:217
 #, python-format
 msgid "%s (%s)"
 msgstr ""
 
-#: lib/gaupol/gtk/dialog/file.py:232 lib/gaupol/gtk/dialog/file.py:334
+#: lib/gaupol/gtk/dialog/file.py:232 lib/gaupol/gtk/dialog/file.py:348
 msgid "C_haracter encoding:"
 msgstr ""
 
@@ -1614,19 +1668,19 @@ msgstr ""
 msgid "Auto-detected"
 msgstr ""
 
-#: lib/gaupol/gtk/dialog/file.py:329
+#: lib/gaupol/gtk/dialog/file.py:343
 msgid "Fo_rmat:"
 msgstr ""
 
-#: lib/gaupol/gtk/dialog/file.py:339
+#: lib/gaupol/gtk/dialog/file.py:353
 msgid "Ne_wlines:"
 msgstr ""
 
-#: lib/gaupol/gtk/dialog/file.py:469
+#: lib/gaupol/gtk/dialog/file.py:483
 msgid "Select Video"
 msgstr ""
 
-#: lib/gaupol/gtk/dialog/file.py:487
+#: lib/gaupol/gtk/dialog/file.py:501
 msgid "Video files"
 msgstr ""
 
@@ -1674,39 +1728,39 @@ msgstr ""
 msgid "Inserting subtitles"
 msgstr ""
 
-#: lib/gaupol/base/delegate/edit.py:250
+#: lib/gaupol/base/delegate/edit.py:252
 msgid "Merging subtitles"
 msgstr ""
 
-#: lib/gaupol/base/delegate/edit.py:294 lib/gaupol/base/delegate/edit.py:295
+#: lib/gaupol/base/delegate/edit.py:296 lib/gaupol/base/delegate/edit.py:297
 msgid "Pasting texts"
 msgstr ""
 
-#: lib/gaupol/base/delegate/edit.py:316
+#: lib/gaupol/base/delegate/edit.py:318
 msgid "Removing subtitles"
 msgstr ""
 
-#: lib/gaupol/base/delegate/edit.py:341 lib/gaupol/base/delegate/edit.py:383
+#: lib/gaupol/base/delegate/edit.py:343 lib/gaupol/base/delegate/edit.py:385
 msgid "Replacing texts"
 msgstr ""
 
-#: lib/gaupol/base/delegate/edit.py:357
+#: lib/gaupol/base/delegate/edit.py:359
 msgid "Replacing positions"
 msgstr ""
 
-#: lib/gaupol/base/delegate/edit.py:438
+#: lib/gaupol/base/delegate/edit.py:440
 msgid "Editing frame"
 msgstr ""
 
-#: lib/gaupol/base/delegate/edit.py:476
+#: lib/gaupol/base/delegate/edit.py:478
 msgid "Editing text"
 msgstr ""
 
-#: lib/gaupol/base/delegate/edit.py:522
+#: lib/gaupol/base/delegate/edit.py:524
 msgid "Editing time"
 msgstr ""
 
-#: lib/gaupol/base/delegate/edit.py:555
+#: lib/gaupol/base/delegate/edit.py:557
 msgid "Splitting subtitle"
 msgstr ""
 
@@ -1873,7 +1927,7 @@ msgstr ""
 msgid "Unicode"
 msgstr ""
 
-#: lib/gaupol/base/util/enclib.py:203
+#: lib/gaupol/base/util/enclib.py:206
 #, python-format
 msgid "Current locale (%s)"
 msgstr ""

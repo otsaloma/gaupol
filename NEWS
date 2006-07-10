@@ -1,3 +1,19 @@
+Gaupol 0.7.0
+============
+
+  New:
+    * Append file
+    * Split project
+
+  Changes:
+    * Fixed error opening file if no locale encoding set (bug #6319)
+    * Catch OSError in case saving file fails and temporary backup copy is
+      restored (bug #6316)
+    * Fixed error launching preview if no column focused
+    * Improved blank line handling of subtitle merge
+    * setup.py: AUTHORS, COPYING and README files no longer installed
+
+
 Gaupol 0.6.0
 ============
 

@@ -1,5 +1,12 @@
 2006-07-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/__init__.py:
+	  Bumped version number to 0.7.0.
+
+	RELEASE 0.7.0
+
+2006-07-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* setup.py:
 	  Don't include AUTHORS, COPYING and README in data_files.
 
