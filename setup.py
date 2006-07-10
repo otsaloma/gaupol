@@ -57,7 +57,6 @@ for (root, dirs, files) in os.walk('lib'):
 scripts = ['gaupol']
 
 data_files = [
-    ('share/doc/gaupol'                 , ['AUTHORS', 'COPYING', 'README']),
     ('share/gaupol/glade'               , glob.glob('data/glade/*.glade') ),
     ('share/gaupol/headers'             , glob.glob('data/headers/*.txt') ),
     ('share/gaupol/icons'               , ['data/icons/gaupol.png']       ),

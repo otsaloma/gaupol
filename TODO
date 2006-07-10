@@ -17,6 +17,7 @@ Plans for 0.7.0
         restored (bug #6316)
     [D] Fixed error launching preview if no column focused
     [D] Improved blank line handling of subtitle merge
+    [D] setup.py: AUTHORS, COPYING and README files no longer installed
 
 
 Plans after 0.7.0
