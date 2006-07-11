@@ -201,6 +201,11 @@ class GUIInitDelegate(Delegate):
         action = self._uim.get_action('/ui/menubar/projects')
         action.connect('activate', self.on_show_projects_menu_activate)
 
+        widget = self._uim.get_widget('/ui/main_toolbar/find')
+        widget.set_label(_('Find'))
+        widget = self._uim.get_widget('/ui/main_toolbar/replace')
+        widget.set_label(_('Replace'))
+
         self._window.add_accel_group(self._uim.get_accel_group())
 
     def _init_video_toolbar(self):

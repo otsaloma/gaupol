@@ -1,5 +1,10 @@
 2006-07-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/delegate/guiinit.py:
+	  Remove ellipses from tool item labels.
+
+2006-07-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/__init__.py:
 	  Bumped version number to 0.7.0.
 
