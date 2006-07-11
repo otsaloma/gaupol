@@ -96,10 +96,10 @@ class debug(_Section):
 
 class duration_adjust(_Section):
 
-    gap      = 0.050
+    gap      = 0.200
     lengthen = True
     max      = 6.000
-    min      = 1.000
+    min      = 1.500
     optimal  = 0.065
     shorten  = False
     target   = cons.Target.CURRENT
