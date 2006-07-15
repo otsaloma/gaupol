@@ -111,16 +111,19 @@ class OutputWindow(gobject.GObject):
     def _on_close_button_clicked(self, *args):
         """Emit closed signal."""
 
+        self._save_geometry()
         self.emit('closed')
 
     def _on_close_key_pressed(self, *args):
         """Emit closed signal."""
 
+        self._save_geometry()
         self.emit('closed')
 
     def _on_window_delete_event(self, *args):
         """Emit closed signal."""
 
+        self._save_geometry()
         self.emit('closed')
         return True
 
@@ -130,6 +133,13 @@ class OutputWindow(gobject.GObject):
         state = event.new_window_state
         maximized = bool(state & gtk.gdk.WINDOW_STATE_MAXIMIZED)
         conf.output_window.maximized = maximized
+
+    def _save_geometry(self):
+        """Save window geometry."""
+
+        if not conf.output_window.maximized:
+            conf.output_window.size = list(self.get_size())
+            conf.output_window.position = list(self.get_position())
 
     def get_position(self):
         """Get window position."""
