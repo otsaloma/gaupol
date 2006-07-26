@@ -1,3 +1,8 @@
+2006-07-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/multiclose-dialog.glade:
+	  Fixed lacks of expanding.
+
 2006-07-15  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/gtk/output.py:
