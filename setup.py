@@ -15,8 +15,8 @@ Relevant customizations in this file
     sure this file gets correctly written.
 
 (2) During installation, the .po files are compiled and the desktop file is
-    translated. This requires executables 'msgfmt' and 'intltool-merge' in
-    $PATH.
+    translated. This requires gettext and intltool, more specifically,
+    executables 'msgfmt' and 'intltool-merge' in $PATH.
 
 (3) Uninstallation is implemented via the '--record' option, which is turned on
     by default in setup.cfg. By default directories don't get listed in the

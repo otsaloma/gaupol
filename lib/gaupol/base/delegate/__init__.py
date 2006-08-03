@@ -29,6 +29,7 @@ _MODULES = (
     'position',
     'preview',
     'stat',
+    'text',
 )
 
 

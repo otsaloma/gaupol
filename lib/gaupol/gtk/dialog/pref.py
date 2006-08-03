@@ -37,7 +37,7 @@ except ImportError:
     _CHARDET_AVAILABLE = False
 
 
-class _Editor(object):
+class _EditorPage(object):
 
     """Editor preferences."""
 
@@ -118,7 +118,7 @@ class _Editor(object):
         self._undo_limit_hbox.set_sensitive(limit)
 
 
-class _File(object):
+class _FilePage(object):
 
     """File preferences."""
 
@@ -274,7 +274,7 @@ class _File(object):
             set_sensitive(False, False, False)
 
 
-class _Preview(object):
+class _PreviewPage(object):
 
     """Preview preferences."""
 
@@ -401,9 +401,9 @@ class PreferencesDialog(gobject.GObject):
         glade_xml = gtklib.get_glade_xml('pref-dialog')
         self._dialog = glade_xml.get_widget('dialog')
 
-        self._editor  = _Editor(self, self._dialog, glade_xml)
-        self._file    = _File(self, self._dialog, glade_xml)
-        self._preview = _Preview(self, self._dialog, glade_xml)
+        self._editor  = _EditorPage(self, self._dialog, glade_xml)
+        self._file    = _FilePage(self, self._dialog, glade_xml)
+        self._preview = _PreviewPage(self, self._dialog, glade_xml)
 
         gtklib.connect(self, '_dialog', 'response')
         self._dialog.set_transient_for(None)

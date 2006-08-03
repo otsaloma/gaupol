@@ -1,3 +1,28 @@
+2006-08-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/find-dialog.glade:
+	* data/glade/replace-dialog.glade:
+	  Replace find icons with arrows.
+
+	* lib/gaupol/base/delegate/__init__.py:
+	* lib/gaupol/base/delegate/test/test_text.py:
+	* lib/gaupol/base/delegate/text.py:
+	  Implemented capitalization and not-really-doing.
+
+	* lib/gaupol/base/util/scriptlib.py:
+	* lib/gaupol/base/util/test/test_scriptlib.py:
+	  New file for writing system script dependent data.
+	  Added regular expressions to capitalize after.
+
+	* lib/gaupol/gtk/delegate/preview.py:
+	  (preview_changes): Added tran_texts for future compatibility.
+
+	* lib/gaupol/gtk/dialog/pref.py:
+	  Just callin' 'em pages.
+
+	* setup.py:
+	  Clarified docstring.
+
 2006-07-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/glade/multiclose-dialog.glade:

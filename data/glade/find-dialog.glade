@@ -337,7 +337,7 @@ store</property>
 			      <property name="focus_on_click">True</property>
 
 			      <child>
-				<widget class="GtkAlignment" id="alignment5">
+				<widget class="GtkAlignment" id="alignment7">
 				  <property name="visible">True</property>
 				  <property name="xalign">0.5</property>
 				  <property name="yalign">0.5</property>
@@ -349,15 +349,15 @@ store</property>
 				  <property name="right_padding">0</property>
 
 				  <child>
-				    <widget class="GtkHBox" id="hbox6">
+				    <widget class="GtkHBox" id="hbox11">
 				      <property name="visible">True</property>
 				      <property name="homogeneous">False</property>
 				      <property name="spacing">2</property>
 
 				      <child>
-					<widget class="GtkImage" id="image3">
+					<widget class="GtkImage" id="image5">
 					  <property name="visible">True</property>
-					  <property name="stock">gtk-find</property>
+					  <property name="stock">gtk-go-back</property>
 					  <property name="icon_size">4</property>
 					  <property name="xalign">0.5</property>
 					  <property name="yalign">0.5</property>
@@ -372,7 +372,7 @@ store</property>
 				      </child>
 
 				      <child>
-					<widget class="GtkLabel" id="label11">
+					<widget class="GtkLabel" id="label20">
 					  <property name="visible">True</property>
 					  <property name="label" translatable="yes">Find _Previous</property>
 					  <property name="use_underline">True</property>
@@ -430,7 +430,7 @@ store</property>
 				  <property name="right_padding">0</property>
 
 				  <child>
-				    <widget class="GtkHBox" id="hbox7">
+				    <widget class="GtkHBox" id="hbox10">
 				      <property name="visible">True</property>
 				      <property name="homogeneous">False</property>
 				      <property name="spacing">2</property>
@@ -438,7 +438,7 @@ store</property>
 				      <child>
 					<widget class="GtkImage" id="image4">
 					  <property name="visible">True</property>
-					  <property name="stock">gtk-find</property>
+					  <property name="stock">gtk-go-forward</property>
 					  <property name="icon_size">4</property>
 					  <property name="xalign">0.5</property>
 					  <property name="yalign">0.5</property>
@@ -453,7 +453,7 @@ store</property>
 				      </child>
 
 				      <child>
-					<widget class="GtkLabel" id="label12">
+					<widget class="GtkLabel" id="label19">
 					  <property name="visible">True</property>
 					  <property name="label" translatable="yes">Find _Next</property>
 					  <property name="use_underline">True</property>

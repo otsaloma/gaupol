@@ -6,10 +6,10 @@ General Information
   time manipulations. The user interface is designed with attention to
   batch processing of multiple documents and convenient translating.
 
-  Gaupol should run on all Unix-like (GNU/Linux, BSD, etc.) operating systems.
-  Technically there is no obstacle why it couldn't run on Windows or Mac, but
-  that has not been tested. Gaupol's user interface is based on the GTK toolkit
-  and has been designed to best fit the GNOME desktop environment.
+  Gaupol should run on all Unix-like (GNU/Linux, *BSD, etc.) operating systems.
+  Technically it should be able to run on Windows and Mac as well, but that has
+  not been tested nor made convenient. Gaupol's user interface is based on the
+  GTK toolkit and has been designed to best fit the GNOME desktop environment.
 
   Gaupol is free software released under the GNU General Public License (GPL),
   see the file "COPYING" for details.
@@ -23,15 +23,14 @@ Dependencies
 ============
 
   Required:
-    * Python >= 2.4 (http://www.python.org/)
-    * PyGTK, with libglade support >= 2.8 (http://www.pygtk.org/)
+    * Python >= 2.4
+    * PyGTK, with libglade support >= 2.8
 
   Optional:
-    * PyEnchant >= 1.1.3 (http://pyenchant.sourceforge.net/)
-    * iso-codes (http://alioth.debian.org/projects/pkg-isocodes/)
-    * Universal Encoding Detector (http://chardet.feedparser.org/)
-    * MPlayer (http://www.mplayerhq.hu/) or VLC (http://www.videolan.org/vlc/)
-      is recommended for preview
+    * PyEnchant >= 1.1.3
+    * iso-codes
+    * Universal Encoding Detector
+    * MPlayer or VLC is recommended for preview
 
   PyEnchant is required for spell-checking. iso-codes allows the spell-checker
   to show the language and country names in your locale. Universal Encoding
@@ -56,7 +55,8 @@ Running Gaupol
   Gaupol can be run either (1) directly from the source directory or (2) it
   can be installed to a selected location.
 
-  (1) If you want to use translations, compile them with command
+  (1) If you want to use translations, you need to have intltool installed,
+      after which you can compile them with command
 
         tools/translate -m all
 

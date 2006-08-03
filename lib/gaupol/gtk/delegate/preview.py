@@ -170,6 +170,7 @@ class PreviewDelegate(Delegate):
         times = copy.deepcopy(page.project.times)
         frames = copy.deepcopy(page.project.frames)
         main_texts = copy.deepcopy(page.project.main_texts)
+        tran_texts = copy.deepcopy(page.project.tran_texts)
 
         kwargs['register'] = None
         method(*args, **kwargs)
@@ -179,4 +180,6 @@ class PreviewDelegate(Delegate):
         page.project.times = times
         page.project.frames = frames
         page.project.main_texts = main_texts
+        page.project.tran_texts = tran_texts
+
         self._run_preview(page, time, doc, path)
