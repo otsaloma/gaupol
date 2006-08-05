@@ -1,5 +1,10 @@
 2006-08-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/gtk/delegate/preview.py:
+	  Press P for preview.
+
+2006-08-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/base/delegate/format.py:
 	  (change_case): Tags disappear no more.
 

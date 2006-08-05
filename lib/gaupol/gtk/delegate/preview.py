@@ -43,7 +43,7 @@ class PreviewAction(UIMAction):
         'preview',
         gtk.STOCK_MEDIA_PLAY,
         _('_Preview'),
-        'F6',
+        'P',
         _('Preview from selected position with a video player'),
         'on_preview_activate'
     )
