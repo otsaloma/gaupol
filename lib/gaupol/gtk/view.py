@@ -26,7 +26,7 @@ import pango
 from gaupol.gtk                  import cons
 from gaupol.gtk.cellrend.classes import *
 from gaupol.gtk.icons            import *
-from gaupol.gtk.util             import conf
+from gaupol.gtk.util             import conf, gtklib
 
 
 _NORMAL_ATTR = pango.AttrList()
@@ -104,6 +104,7 @@ class View(gtk.TreeView):
 
         self.set_enable_search(True)
         self.set_search_column(NUMB)
+        gtklib.connect(self, self, 'key-press-event')
 
     def get_focus(self):
         """
@@ -128,6 +129,14 @@ class View(gtk.TreeView):
 
         selected_rows = self.get_selection().get_selected_rows()[1]
         return list(x[0] for x in selected_rows)
+
+    def _on_key_press_event(self, widget, event):
+        """Allow interactive search only for numeric key-presses."""
+
+        self.set_enable_search(False)
+        if event.string.isdigit():
+            self.set_enable_search(True)
+        return False
 
     def scroll_to_row(self, row):
         """Scroll to row."""

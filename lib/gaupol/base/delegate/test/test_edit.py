@@ -382,8 +382,8 @@ class TestEditDelegate(Test):
         assert len(self.project.times) == orig_len + 1
         assert self.project.times[2][HIDE] == orig_times[HIDE]
         assert self.project.frames[2][HIDE] == orig_frames[HIDE]
-        assert self.project.main_texts[2] == orig_main
-        assert self.project.tran_texts[2] == orig_tran
+        assert self.project.main_texts[2] == ''
+        assert self.project.tran_texts[2] == ''
 
         self.project.undo()
         assert len(self.project.times) == orig_len
@@ -394,5 +394,5 @@ class TestEditDelegate(Test):
         assert len(self.project.times) == orig_len + 1
         assert self.project.times[2][HIDE] == orig_times[HIDE]
         assert self.project.frames[2][HIDE] == orig_frames[HIDE]
-        assert self.project.main_texts[2] == orig_main
-        assert self.project.tran_texts[2] == orig_tran
+        assert self.project.main_texts[2] == ''
+        assert self.project.tran_texts[2] == ''

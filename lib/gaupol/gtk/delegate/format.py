@@ -61,7 +61,7 @@ class ToggleDialogLinesAction(_FormatAction):
         'toggle_dialog_lines',
         None,
         _('_Dialog'),
-        '<control>D',
+        'D',
         _('Toggle dialog lines on the selected texts'),
         'on_toggle_dialog_lines_activate'
     )
@@ -77,7 +77,7 @@ class ToggleItalicizationAction(UIMAction):
         'toggle_italicization',
         gtk.STOCK_ITALIC,
         _('_Italic'),
-        '<control>I',
+        'I',
         _('Toggle italicization of the selected texts'),
         'on_toggle_italicization_activate'
     )
@@ -120,7 +120,7 @@ class UseLowerCaseAction(_FormatAction):
         'use_lower_case',
         None,
         _('_Lower'),
-        '<shift><control>U',
+        '<shift>U',
         _('Change the selected texts to lower case'),
         'on_use_lower_case_activate'
     )
@@ -136,7 +136,7 @@ class UseSentenceCaseAction(_FormatAction):
         'use_sentence_case',
         None,
         _('_Sentence'),
-        '<shift><control>Y',
+        '<shift>T',
         _('Change the selected texts to Sentence case'),
         'on_use_sentence_case_activate'
     )
@@ -152,7 +152,7 @@ class UseTitleCaseAction(_FormatAction):
         'use_title_case',
         None,
         _('_Title'),
-        '<control>Y',
+        'T',
         _('Change the selected texts to Title Case'),
         'on_use_title_case_activate'
     )
@@ -168,7 +168,7 @@ class UseUpperCaseAction(_FormatAction):
         'use_upper_case',
         None,
         _('_Upper'),
-        '<control>U',
+        'U',
         _('Change the selected texts to UPPER CASE'),
         'on_use_upper_case_activate'
     )

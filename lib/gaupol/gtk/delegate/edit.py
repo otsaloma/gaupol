@@ -68,7 +68,7 @@ class ClearTextsAction(_ClipboardAction):
         'clear_texts',
         gtk.STOCK_CLEAR,
         _('C_lear'),
-        'Delete',
+        'C',
         _('Clear the selected texts'),
         'on_clear_texts_activate'
     )
@@ -181,7 +181,7 @@ class InsertSubtitlesAction(UIMAction):
         'insert_subtitles',
         gtk.STOCK_ADD,
         _('_Insert Subtitles...'),
-        '<control>Insert',
+        'Insert',
         _('Insert blank subtitles'),
         'on_insert_subtitles_activate'
     )
@@ -225,7 +225,7 @@ class MergeSubtitlesAction(UIMAction):
         'merge_subtitles',
         None,
         _('_Merge Subtitles'),
-        '<shift><control>P',
+        'M',
         _('Merge the selected subtitles'),
         'on_merge_subtitles_activate'
     )
@@ -240,7 +240,7 @@ class MergeSubtitlesAction(UIMAction):
             return False
 
         rows = page.view.get_selected_rows()
-        if not rows:
+        if len(rows) < 2:
             return False
         if not rows == range(rows[0], rows[-1] + 1):
             return False
@@ -282,7 +282,7 @@ class RemoveSubtitlesAction(UIMAction):
         'remove_subtitles',
         gtk.STOCK_REMOVE,
         _('Rem_ove Subtitles'),
-        '<control>Delete',
+        'Delete',
         _('Remove the selected subtitles'),
         'on_remove_subtitles_activate'
     )
@@ -322,7 +322,7 @@ class SplitSubtitlesAction(UIMAction):
         'split_subtitle',
         None,
         _('_Split Subtitle'),
-        '<control>P',
+        'S',
         _('Split the selected subtitle in two'),
         'on_split_subtitle_activate'
     )

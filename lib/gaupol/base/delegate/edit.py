@@ -549,8 +549,8 @@ class EditDelegate(Delegate):
             [row, row + 1],
             [time_1, time_2],
             [frame_1, frame_2],
-            [main_text, main_text],
-            [tran_text, tran_text],
+            [main_text, u''],
+            [tran_text, u''],
             register
         )
         self.unblock(signal)

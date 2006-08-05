@@ -1,3 +1,16 @@
+2006-08-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* lib/gaupol/base/delegate/edit.py:
+	* lib/gaupol/base/delegate/test/test_edit.py:
+	  (split_subtitle): Don't duplicate texts.
+
+	* lib/gaupol/gtk/delegate/edit.py:
+	* lib/gaupol/gtk/delegate/format.py:
+	  Changed keycombos.
+
+	* lib/gaupol/gtk/view.py:
+	  Use built-in search only for numeric key-presses.
+
 2006-08-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/glade/find-dialog.glade:

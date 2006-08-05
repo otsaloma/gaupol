@@ -4,19 +4,26 @@ Legend:
   P = Postponed
   ? = Questionable
 
-Plans for 0.7.1/0.8.0
-=====================
+Plans for 0.8.0
+===============
+
+  New:
+    [W] Capitalization correction
+
+  Changes:
+    [D] Simplified and changed several keycombos
+    [D] Subtitle number search now starts only on numeric key-presses
+    [D] Splitting subtitle no longer duplicates texts
 
   Updated translations:
     [D] Polish (pl)
 
 
-Plans after 0.7.0
+Plans after 0.8.0
 =================
 
   * Text correction assistants
      - Common error correction
-     - Capitalization correction
      - Line reformatting
      - Hearing impaired subtitle removal
 
