@@ -14,6 +14,7 @@ Plans for 0.8.0
     [D] Simplified and changed several keycombos
     [D] Subtitle number search now starts only on numeric key-presses
     [D] Splitting subtitle no longer duplicates texts
+    [D] Fixed issue of disappearing tags when converting case
 
   Updated translations:
     [D] Polish (pl)

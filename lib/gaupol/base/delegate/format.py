@@ -66,7 +66,7 @@ class FormatDelegate(Delegate):
         texts = (self.main_texts, self.tran_texts)[doc]
         for row in rows:
             parser.set_text(texts[row])
-            parser.set_text(eval('parser.text.%s()' % method))
+            parser.text = eval('parser.text.%s()' % method)
             new_texts.append(parser.get_text())
 
         self.replace_texts(rows, doc, new_texts, register)
