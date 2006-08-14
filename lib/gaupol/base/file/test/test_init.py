@@ -66,6 +66,12 @@ class TestSubtitleFile(Test):
 
         for name in cons.Format.class_names:
             if name == 'MicroDVD':
+                path = self.get_microdvd_path()
+                file_ = eval(name)(path, 'utf_8')
+                data_1 = file_.read()
+                file_.write(*data_1)
+                data_2 = file_.read()
+                assert data_2 == data_1
                 continue
             path = self.get_subrip_path()
             file_ = SubRip(path, 'utf_8')
@@ -76,10 +82,3 @@ class TestSubtitleFile(Test):
             file_.write(*data_1)
             data_2 = file_.read()
             assert data_2 == data_1
-
-        path = self.get_microdvd_path()
-        file_ = MicroDVD(path, 'utf_8')
-        data_1 = file_.read()
-        file_.write(*data_1)
-        data_2 = file_.read()
-        assert data_2 == data_1

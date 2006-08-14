@@ -8,7 +8,7 @@ Plans for 0.8.0
 ===============
 
   New:
-    [W] Capitalization correction
+    [W] Text capitalization assistant
 
   Changes:
     [D] Simplified and changed several keycombos
@@ -34,6 +34,8 @@ Unscheduled
 
   * Windows installer
       - http://trac.gajim.org/wiki/DevWindows
+      - http://svn.berlios.de/svnroot/repos/griffith/griffith
+      - http://www.async.com.br/faq/pygtk/index.py?req=show&file=faq21.005.htp
 
   * Support for SAMI subtitle file format
       - http://msdn.microsoft.com/library/en-us/dnacc/html/atg_samiarticle.asp

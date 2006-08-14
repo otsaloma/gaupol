@@ -28,6 +28,7 @@
 from gettext import gettext as _
 import linecache
 import os
+import platform
 import sys
 import traceback
 
@@ -180,8 +181,8 @@ class DebugDialog(object):
     def _print_platform(self):
         """Print platform information."""
 
-        self._insert_text('Operating system: ', 'title')
-        self._insert_text(sys.platform + '\n', 'text')
+        self._insert_text('System: ', 'title')
+        self._insert_text(platform.system() + '\n', 'text')
         self._insert_text('Desktop environment: ', 'title')
         if os.getenv('GNOME_DESKTOP_SESSION_ID') is not None:
             self._insert_text('GNOME\n', 'text')

@@ -394,7 +394,6 @@ class EditDelegate(Delegate):
         doc  = page.text_column_to_document(col)
 
         page.project.clear_texts(rows, doc)
-        self.set_sensitivities(page)
 
     def on_copy_texts_activate(self, *args):
         """Copy selected texts to clipboard."""
@@ -465,7 +464,6 @@ class EditDelegate(Delegate):
         rows = range(start_row, start_row + amount)
         page.project.insert_subtitles(rows)
         page.view.select_rows(rows)
-        self.set_sensitivities(page)
 
     def on_invert_selection_activate(self, *args):
         """Invert selection."""
@@ -476,7 +474,6 @@ class EditDelegate(Delegate):
         for row in selected_rows:
             rows.remove(row)
         page.view.select_rows(rows)
-        self.set_sensitivities(page)
 
     def on_merge_subtitles_activate(self, *args):
         """Merge selected subtitles."""
@@ -485,7 +482,6 @@ class EditDelegate(Delegate):
         rows = page.view.get_selected_rows()
         page.project.merge_subtitles(rows)
         page.view.select_rows([rows[0]])
-        self.set_sensitivities(page)
 
     def on_paste_texts_activate(self, *args):
         """Paste texts from the clipboard."""
@@ -507,7 +503,6 @@ class EditDelegate(Delegate):
                 count
             ) % count
             self.set_status_message(message)
-        self.set_sensitivities(page)
 
     def on_remove_subtitles_activate(self, *args):
         """Remove selected subtitles."""
@@ -520,7 +515,6 @@ class EditDelegate(Delegate):
         if page.project.times:
             row = min(rows[0], len(page.project.times) - 1)
             page.view.set_focus(row, col)
-        self.set_sensitivities(page)
 
     def on_select_all_activate(self, *args):
         """Select all subtitles."""
@@ -528,7 +522,6 @@ class EditDelegate(Delegate):
         page = self.get_current_page()
         selection = page.view.get_selection()
         selection.select_all()
-        self.set_sensitivities(page)
 
     def on_split_subtitle_activate(self, *args):
         """Split selected subtitle."""
@@ -537,7 +530,6 @@ class EditDelegate(Delegate):
         row = page.view.get_selected_rows()[0]
         page.project.split_subtitle(row)
         page.view.select_rows([row, row + 1])
-        self.set_sensitivities(page)
 
     def on_view_cell_edited(self, cell_renderer, value, row, col):
         """Finish editing cell."""
@@ -568,8 +560,6 @@ class EditDelegate(Delegate):
         elif col in (MTXT, TTXT):
             page.project.set_text(row, col - 4, value)
             self.set_character_status(page)
-
-        self.set_sensitivities(page)
         gtklib.set_cursor_normal(self._window)
 
     def on_view_cell_editing_canceled(self, *args):

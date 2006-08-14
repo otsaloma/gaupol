@@ -16,7 +16,6 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol.base         import cons
 from gaupol.base.project import Project
 from gaupol.test         import Test
 
@@ -25,7 +24,4 @@ class TestProject(Test):
 
     def test_init(self):
 
-        Project(cons.Framerate.FR_23_976, 10)
-        Project(cons.Framerate.FR_23_976)
-        Project(undo_limit=10)
         Project()

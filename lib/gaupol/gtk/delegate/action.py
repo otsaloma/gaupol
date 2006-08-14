@@ -145,14 +145,13 @@ class ActionDelegate(Delegate):
             return
 
         focus_row = min(changed_rows)
+        focus_col = MTXT
         if action.updated_positions:
             focus_col = SHOW
         elif action.updated_main_texts:
             focus_col = MTXT
         elif action.updated_tran_texts:
             focus_col = TTXT
-        else:
-            focus_col = MTXT
 
         try:
             page.view.set_focus(focus_row, focus_col)
@@ -168,18 +167,21 @@ class ActionDelegate(Delegate):
         """Update view after doing action."""
 
         self._reload_updated_data(action)
+        self.set_sensitivities()
 
     def on_project_action_redone(self, action):
         """Update view after redoing action."""
 
         self._reload_updated_data(action)
         self._show_updated_data(action)
+        self.set_sensitivities()
 
     def on_project_action_undone(self, action):
         """Update view after undoing action."""
 
         self._reload_updated_data(action)
         self._show_updated_data(action)
+        self.set_sensitivities()
 
     def on_redo_action_activate(self, *args):
         """Redo the last undone action."""
@@ -207,7 +209,6 @@ class ActionDelegate(Delegate):
         gtklib.set_cursor_busy(self._window)
         page = self.get_current_page()
         page.project.redo(count)
-        self.set_sensitivities(page)
         gtklib.set_cursor_normal(self._window)
 
     def undo(self, count=1):
@@ -216,5 +217,4 @@ class ActionDelegate(Delegate):
         gtklib.set_cursor_busy(self._window)
         page = self.get_current_page()
         page.project.undo(count)
-        self.set_sensitivities(page)
         gtklib.set_cursor_normal(self._window)

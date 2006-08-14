@@ -53,10 +53,15 @@ class Model(object):
             self._notifications[signal] = []
 
     def block(self, signal):
-        """Block all emissions of signal."""
+        """
+        Block all emissions of signal.
 
+        Return False if already blocked, otherwise True.
+        """
         if not signal in self._blocked_signals:
             self._blocked_signals.append(signal)
+            return True
+        return False
 
     def connect(self, signal, method):
         """Register to receive notifications of signal."""
@@ -74,9 +79,13 @@ class Model(object):
             method(*args, **kwargs)
 
     def unblock(self, signal):
-        """Unblock all emissions of signal."""
+        """
+        Unblock all emissions of signal.
 
+        Return False if already unblocked, otherwise True.
+        """
         try:
             self._blocked_signals.remove(signal)
+            return True
         except ValueError:
-            pass
+            return False

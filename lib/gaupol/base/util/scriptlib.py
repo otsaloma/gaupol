@@ -16,7 +16,14 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Script specific regular expression patterns."""
+"""
+Script specific regular expression patterns.
+
+Module variables:
+
+    CAPITALIZE_AFTERS: Tuple of tuples: script name, pattern, flags
+
+"""
 
 
 from gettext import gettext as _
@@ -30,7 +37,7 @@ CAPITALIZE_AFTERS = (
 
 def get_capitalize_after(script):
     """
-    Get regular expression for to capitalize after using script.
+    Get regular expression to capitalize after for script.
 
     Return pattern, flags.
     """

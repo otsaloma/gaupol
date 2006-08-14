@@ -33,11 +33,6 @@ class TestFormatDelegate(Test):
             self.project.main_texts[i] = 'test\ntest'
             self.project.tran_texts[i] = 'test\ntest'
 
-    def test_get_format_class_name(self):
-
-        name = self.delegate._get_format_class_name(MAIN)
-        assert name in cons.Format.class_names
-
     def test_change_case(self):
 
         self.project.change_case([1, 3], MAIN, 'upper')
@@ -51,12 +46,6 @@ class TestFormatDelegate(Test):
         self.project.redo()
         assert self.project.main_texts[1] == 'TEST\nTEST'
         assert self.project.main_texts[3] == 'TEST\nTEST'
-
-    def test_get_tag_regex(self):
-
-        re_tag = self.project.get_tag_regex(MAIN)
-        if re_tag is not None:
-            assert hasattr(re_tag, 'match')
 
     def test_toggle_dialog_lines(self):
 

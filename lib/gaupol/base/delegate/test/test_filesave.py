@@ -61,11 +61,6 @@ class TestFileSaveDelegate(Test):
 
     def test_save_files(self):
 
-        self.project.save_main_file()
-        self.project.save_translation_file()
-
-    def test_save_files_changed(self):
-
         self.project.clear_texts([0], MAIN)
         self.project.save_main_file()
         assert self.project.main_changed == 0
@@ -82,7 +77,6 @@ class TestFileSaveDelegate(Test):
             'utf_8',
             cons.Newlines.UNIX
         ]
-
         for format in range(len(cons.Format.class_names)):
             props[1] = format
             self.project.save_main_file(props)

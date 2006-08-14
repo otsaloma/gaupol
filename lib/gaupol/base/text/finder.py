@@ -129,7 +129,6 @@ class Finder(object):
         """Replace current match."""
 
         a, z = self.match_span
-
         if isinstance(self.pattern, basestring):
             self.text = self.text[:a] + self.replacement + self.text[z:]
         else:

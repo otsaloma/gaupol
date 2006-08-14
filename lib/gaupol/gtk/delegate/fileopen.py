@@ -550,10 +550,10 @@ class FileOpenDelegate(Delegate):
         if mode == cons.Mode.TIME:
             count = page.project.times[-1][1]
             count = page.project.calc.time_to_seconds(count)
-            temp_page.project.shift_seconds(None, count, None)
+            temp_page.project.shift_seconds(None, count, register=None)
         elif mode == cons.Mode.FRAME:
             count = page.project.frames[-1][1]
-            temp_page.project.shift_frames(None, count, None)
+            temp_page.project.shift_frames(None, count, register=None)
 
         current_length = len(page.project.times)
         append_length = len(temp_page.project.times)
@@ -575,7 +575,6 @@ class FileOpenDelegate(Delegate):
             _('Appended file starting from subtitle %d') \
             % (current_length + 1)
         )
-        self.set_sensitivities(page)
         gtklib.destroy_gobject(temp_page)
         gtklib.set_cursor_normal(self._window)
 
@@ -721,10 +720,10 @@ class FileOpenDelegate(Delegate):
         if mode == cons.Mode.TIME:
             count = first_page.project.times[-1][1]
             count = -1 * page.project.calc.time_to_seconds(count)
-            page.project.shift_seconds(None, count, None)
+            page.project.shift_seconds(None, count, register=None)
         elif mode == cons.Mode.FRAME:
             count = -1 * first_page.project.frames[-1][1]
-            page.project.shift_frames(None, count, None)
+            page.project.shift_frames(None, count, register=None)
         self._add_new_project(page)
         self.set_status_message(_('Split %d subtitles to project "%s"') % (
             len(page.project.times), page.untitle))

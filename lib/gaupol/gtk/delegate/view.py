@@ -77,14 +77,14 @@ class ToggleEditModeAction(UIMAction):
                 'show_times',
                 None,
                 _('T_imes'),
-                '<control>R',
+                'R',
                 _('Show positions as times'),
                 0
             ), (
                 'show_frames',
                 None,
                 _('F_rames'),
-                '<shift><control>R',
+                '<shift>R',
                 _('Show positions as frames'),
                 1
             )

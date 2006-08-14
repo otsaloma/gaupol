@@ -23,204 +23,200 @@ from gaupol.test             import Test
 
 
 ORIG_TEXT = \
-'''One only risks it, because
-one\'s survival depends on it.'''
+"""One only risks it, because
+one's survival depends on it."""
 
 
 class TestFinder(Test):
 
-    def get_finder(self):
+    def setup_method(self, method):
 
-        finder = Finder()
-        finder.set_text(ORIG_TEXT)
-        return finder
+        self.finder = Finder()
+        self.finder.set_text(ORIG_TEXT)
 
-    def test_next(self):
+    def test_next_regex_basic(self):
 
-        finder = self.get_finder()
-        finder.pattern = 'it'
-        assert finder.next() == (15, 17)
-        assert finder.match_span == (15, 17)
-        assert finder.pos == 17
-        assert finder.next() == (53, 55)
-        assert finder.match_span == (53, 55)
-        assert finder.pos == 55
+        self.finder.set_regex(r'\bit\b', re.MULTILINE)
+        assert self.finder.next() == (15, 17)
+        assert self.finder.match_span == (15, 17)
+        assert self.finder.pos == 17
+        assert self.finder.next() == (53, 55)
+        assert self.finder.match_span == (53, 55)
+        assert self.finder.pos == 55
         try:
-            finder.next()
+            self.finder.next()
             raise AssertionError
         except StopIteration:
             pass
 
-        finder = self.get_finder()
-        finder.ignore_case = True
-        finder.pattern = 'o'
-        assert finder.next() == (0, 1)
-        assert finder.match_span == (0, 1)
-        assert finder.pos == 1
+    def test_next_regex_ignore_case(self):
 
-        finder = self.get_finder()
-        finder.pattern = '.'
-        assert finder.next() == (55, 56)
-        assert finder.match_span == (55, 56)
-        assert finder.pos == 56
+        self.finder.set_regex(r'o', re.MULTILINE|re.IGNORECASE)
+        assert self.finder.next() == (0, 1)
+        assert self.finder.match_span == (0, 1)
+        assert self.finder.pos == 1
 
-        finder = self.get_finder()
-        finder.set_regex(r'\bit\b', re.MULTILINE)
-        assert finder.next() == (15, 17)
-        assert finder.match_span == (15, 17)
-        assert finder.pos == 17
-        assert finder.next() == (53, 55)
-        assert finder.match_span == (53, 55)
-        assert finder.pos == 55
+    def test_next_regex_last(self):
+
+        self.finder.set_regex(r'\.', re.MULTILINE)
+        assert self.finder.next() == (55, 56)
+        assert self.finder.match_span == (55, 56)
+        assert self.finder.pos == 56
+
+    def test_next_string_basic(self):
+
+        self.finder.pattern = 'it'
+        assert self.finder.next() == (15, 17)
+        assert self.finder.match_span == (15, 17)
+        assert self.finder.pos == 17
+        assert self.finder.next() == (53, 55)
+        assert self.finder.match_span == (53, 55)
+        assert self.finder.pos == 55
         try:
-            finder.next()
+            self.finder.next()
             raise AssertionError
         except StopIteration:
             pass
 
-        finder = self.get_finder()
-        finder.set_regex(r'o', re.MULTILINE|re.IGNORECASE)
-        assert finder.next() == (0, 1)
-        assert finder.match_span == (0, 1)
-        assert finder.pos == 1
+    def test_next_string_ignore_case(self):
 
-        finder = self.get_finder()
-        finder.set_regex(r'\.', re.MULTILINE)
-        assert finder.next() == (55, 56)
-        assert finder.match_span == (55, 56)
-        assert finder.pos == 56
+        self.finder.ignore_case = True
+        self.finder.pattern = 'o'
+        assert self.finder.next() == (0, 1)
+        assert self.finder.match_span == (0, 1)
+        assert self.finder.pos == 1
 
-        finder = self.get_finder()
-        finder.set_regex(r'\W', re.MULTILINE)
-        assert finder.next() == (3, 4)
-        assert finder.match_span == (3, 4)
-        assert finder.pos == 4
-        assert finder.next() == (8, 9)
-        assert finder.match_span == (8, 9)
-        assert finder.pos == 9
+    def test_next_string_last(self):
 
-    def test_previous(self):
+        self.finder.pattern = '.'
+        assert self.finder.next() == (55, 56)
+        assert self.finder.match_span == (55, 56)
+        assert self.finder.pos == 56
 
-        finder = self.get_finder()
-        finder.pos = len(ORIG_TEXT)
-        finder.pattern = 'it'
-        assert finder.previous() == (53, 55)
-        assert finder.match_span == (53, 55)
-        assert finder.pos == 53
-        assert finder.previous() == (15, 17)
-        assert finder.match_span == (15, 17)
-        assert finder.pos == 15
+    def test_previous_regex_basic(self):
+
+        self.finder.pos = len(ORIG_TEXT)
+        self.finder.set_regex(r'\bit\b', re.MULTILINE)
+        assert self.finder.previous() == (53, 55)
+        assert self.finder.match_span == (53, 55)
+        assert self.finder.pos == 53
+        assert self.finder.previous() == (15, 17)
+        assert self.finder.match_span == (15, 17)
+        assert self.finder.pos == 15
         try:
-            finder.previous()
+            self.finder.previous()
             raise AssertionError
         except StopIteration:
             pass
 
-        finder = self.get_finder()
-        finder.pos = len(ORIG_TEXT)
-        finder.ignore_case = True
-        finder.pattern = 'O'
-        assert finder.previous() == (50, 51)
-        assert finder.match_span == (50, 51)
-        assert finder.pos == 50
+    def test_previous_regex_ignore_case(self):
 
-        finder = self.get_finder()
-        finder.pos = len(ORIG_TEXT)
-        finder.pattern = '.'
-        assert finder.previous() == (55, 56)
-        assert finder.match_span == (55, 56)
-        assert finder.pos == 55
+        self.finder.pos = len(ORIG_TEXT)
+        self.finder.set_regex(r'o', re.MULTILINE|re.IGNORECASE)
+        assert self.finder.previous() == (50, 51)
+        assert self.finder.match_span == (50, 51)
+        assert self.finder.pos == 50
 
-        finder = self.get_finder()
-        finder.pos = len(ORIG_TEXT)
-        finder.set_regex(r'\bit\b', re.MULTILINE)
-        assert finder.previous() == (53, 55)
-        assert finder.match_span == (53, 55)
-        assert finder.pos == 53
-        assert finder.previous() == (15, 17)
-        assert finder.match_span == (15, 17)
-        assert finder.pos == 15
+    def test_previous_regex_last(self):
+
+        self.finder.pos = len(ORIG_TEXT)
+        self.finder.set_regex(r'\.', re.MULTILINE)
+        assert self.finder.previous() == (55, 56)
+        assert self.finder.match_span == (55, 56)
+        assert self.finder.pos == 55
+
+    def test_previous_string_basic(self):
+
+        self.finder.pos = len(ORIG_TEXT)
+        self.finder.pattern = 'it'
+        assert self.finder.previous() == (53, 55)
+        assert self.finder.match_span == (53, 55)
+        assert self.finder.pos == 53
+        assert self.finder.previous() == (15, 17)
+        assert self.finder.match_span == (15, 17)
+        assert self.finder.pos == 15
         try:
-            finder.previous()
+            self.finder.previous()
             raise AssertionError
         except StopIteration:
             pass
 
-        finder = self.get_finder()
-        finder.pos = len(ORIG_TEXT)
-        finder.set_regex(r'o', re.MULTILINE|re.IGNORECASE)
-        assert finder.previous() == (50, 51)
-        assert finder.match_span == (50, 51)
-        assert finder.pos == 50
+    def test_previous_string_ignore_case(self):
 
-        finder = self.get_finder()
-        finder.pos = len(ORIG_TEXT)
-        finder.set_regex(r'\.', re.MULTILINE)
-        assert finder.previous() == (55, 56)
-        assert finder.match_span == (55, 56)
-        assert finder.pos == 55
+        self.finder.pos = len(ORIG_TEXT)
+        self.finder.ignore_case = True
+        self.finder.pattern = 'O'
+        assert self.finder.previous() == (50, 51)
+        assert self.finder.match_span == (50, 51)
+        assert self.finder.pos == 50
 
-    def test_replace(self):
+    def test_previous_string_last(self):
 
-        finder = self.get_finder()
-        finder.pattern = 'it'
-        finder.replacement = '__'
-        finder.next()
-        finder.replace()
-        assert finder.text == \
-            'One only risks __, because\n' \
-            'one\'s survival depends on it.'
-        finder.next()
-        finder.replace()
-        assert finder.text == \
-            'One only risks __, because\n' \
-            'one\'s survival depends on __.'
+        self.finder.pos = len(ORIG_TEXT)
+        self.finder.pattern = '.'
+        assert self.finder.previous() == (55, 56)
+        assert self.finder.match_span == (55, 56)
+        assert self.finder.pos == 55
 
-        finder = self.get_finder()
-        finder.set_regex(r'\w', re.MULTILINE)
-        finder.replacement = '_'
-        finder.pos = len(finder.text)
-        finder.previous()
-        finder.replace()
-        assert finder.text == \
-            'One only risks it, because\n' \
-            'one\'s survival depends on i_.'
-        finder.previous()
-        finder.replace()
-        assert finder.text == \
-            'One only risks it, because\n' \
-            'one\'s survival depends on __.'
+    def test_replace_regex(self):
 
-    def test_replace_all(self):
+        self.finder.set_regex(r'\w', re.MULTILINE)
+        self.finder.replacement = '_'
+        self.finder.pos = len(self.finder.text)
+        self.finder.previous()
+        self.finder.replace()
+        assert self.finder.text == \
+            "One only risks it, because\n" \
+            "one's survival depends on i_."
+        self.finder.previous()
+        self.finder.replace()
+        assert self.finder.text == \
+            "One only risks it, because\n" \
+            "one's survival depends on __."
 
-        finder = self.get_finder()
-        finder.ignore_case = True
-        finder.pattern = 'o'
-        finder.replacement = '__'
-        assert finder.replace_all() == 4
-        assert finder.text == \
-            '__ne __nly risks it, because\n' \
-            '__ne\'s survival depends __n it.'
+    def test_replace_string(self):
 
-        finder = self.get_finder()
-        finder.set_regex(r'\W', re.MULTILINE)
-        finder.replacement = '_'
-        assert finder.replace_all() == 12
-        assert finder.text == \
-            'One_only_risks_it__because_' \
-            'one_s_survival_depends_on_it_'
+        self.finder.pattern = 'it'
+        self.finder.replacement = '__'
+        self.finder.next()
+        self.finder.replace()
+        assert self.finder.text == \
+            "One only risks __, because\n" \
+            "one's survival depends on it."
+        self.finder.next()
+        self.finder.replace()
+        assert self.finder.text == \
+            "One only risks __, because\n" \
+            "one's survival depends on __."
+
+    def test_replace_all_regex(self):
+
+        self.finder.set_regex(r'\W', re.MULTILINE)
+        self.finder.replacement = '_'
+        assert self.finder.replace_all() == 12
+        assert self.finder.text == \
+            "One_only_risks_it__because_" \
+            "one_s_survival_depends_on_it_"
+
+    def test_replace_all_string(self):
+
+        self.finder.ignore_case = True
+        self.finder.pattern = 'o'
+        self.finder.replacement = '__'
+        assert self.finder.replace_all() == 4
+        assert self.finder.text == \
+            "__ne __nly risks it, because\n" \
+            "__ne's survival depends __n it."
 
     def test_set_regex(self):
 
-        finder = self.get_finder()
-        finder.set_regex('test', re.DOTALL)
-        assert finder.pattern.pattern == 'test'
-        assert finder.pattern.flags == re.DOTALL|re.UNICODE
+        self.finder.set_regex('test', re.DOTALL)
+        assert self.finder.pattern.pattern == 'test'
+        assert self.finder.pattern.flags == re.DOTALL|re.UNICODE
 
     def test_set_text(self):
 
-        finder = self.get_finder()
-        finder.set_text('test')
-        assert finder.text == 'test'
-        assert finder.match_span == None
-        assert finder.pos == 0
+        self.finder.set_text('test')
+        assert self.finder.text == 'test'
+        assert self.finder.match_span == None
+        assert self.finder.pos == 0

@@ -22,34 +22,22 @@ from gaupol.test       import Test
 
 class TestModel(Test):
 
-    def test_signals(self):
+    def setup_method(self, method):
 
-        class Count(object):
-            test = 0
-            rest = 0
+        Model._signals = ['test']
+        self.model = Model()
+
+    def test_signals(self):
 
         def on_test(arg):
             assert arg == 1
-            Count.test += 1
+            self.count += 1
 
-        def on_rest(kwarg=None):
-            assert kwarg == 2
-            Count.rest += 1
-
-        Model._signals = ['test', 'rest']
-        model = Model()
-        model.connect('test', on_test)
-        model.connect('rest', on_rest)
-        model.emit('test', 1)
-        model.emit('rest', kwarg=2)
-        model.block('test')
-        model.block('rest')
-        model.emit('test', 1)
-        model.emit('rest', kwarg=2)
-        model.unblock('test')
-        model.unblock('rest')
-        model.emit('test', 1)
-        model.emit('rest', kwarg=2)
-
-        assert Count.test == 2
-        assert Count.rest == 2
+        self.count = 0
+        self.model.connect('test', on_test)
+        self.model.emit('test', 1)
+        self.model.block('test')
+        self.model.emit('test', 1)
+        self.model.unblock('test')
+        self.model.emit('test', 1)
+        assert self.count == 2

@@ -32,8 +32,8 @@ class TagConverter(object):
 
     Instance variables:
 
-        _from_regexs: List of regex, replacement, count
-        _to_regexs:   List of regex, replacement, count
+        _from_regexs: List of lists: regex, replacement, count
+        _to_regexs:   List of lists: regex, replacement, count
 
     Tag conversions are done via an internal format, which has a HTML style
     syntax. All essential tags are converted and rest removed.

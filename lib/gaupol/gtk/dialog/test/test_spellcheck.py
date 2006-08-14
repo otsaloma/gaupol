@@ -53,6 +53,10 @@ class TestSpellCheckDialog(Test):
         pages = [Page(), Page()]
         for page in pages:
             page.project = self.get_project()
+            for i, text in enumerate(page.project.main_texts):
+                page.project.main_texts[i] = text.replace('a', 'x')
+            for i, text in enumerate(page.project.main_texts):
+                page.project.main_texts[i] = text.replace('i', 'z')
             page.reload_all()
         self.dialog = SpellCheckDialog(gtk.Window(), pages)
         self.dialog._set_page(self.dialog._pages[0])

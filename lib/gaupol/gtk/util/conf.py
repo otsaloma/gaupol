@@ -352,7 +352,6 @@ def _get_type(section, option):
     if isinstance(value[0], float):
         return _Type.FLOAT_LIST
 
-
 def _set_conf_option(parser, section, option):
     """
     Set value of conf option from parser string.

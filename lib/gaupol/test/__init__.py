@@ -32,41 +32,41 @@ from gaupol.base import cons
 
 
 _MICRODVD_TEXT = \
-'''{745}{784}I'm gontna get those fuckers!
-{800}{911}This ain't the Bronx, right?|I'm gonna gett the motherfuckers!
-{927}{1007}I'm gotnna cornter him,|the motherfucker!
-{1012}{1104}First one wte see, stratight up,|we whack the fucker!
-{1108}{1141}Kneecap the fuctker!
-{1145}{1199}People jutst stood and watched.
-{1205}{1264}- He statred at me.|- They're fuckin' losers.
-{1272}{1318}The twitns were there.
-{1322}{1390}I swear on the Kotran|I'll kill 'em both.
-{1400}{1452}{Y:i}Who are thetse motherfuckers?
-'''
+"""{745}{784}I'm gonna get those fuckers!
+{800}{911}This ain't the Bronx, right?|I'm gonna get the motherfuckers!
+{927}{1007}I'm gonna corner him,|the motherfucker!
+{1012}{1104}First one we see, straight up,|we whack the fucker!
+{1108}{1141}Kneecap the fucker!
+{1145}{1199}People just stood and watched.
+{1205}{1264}- He stared at me.|- They're fuckin' losers.
+{1272}{1318}The twins were there.
+{1322}{1390}I swear on the Koran|I'll kill 'em both.
+{1400}{1452}Who are these motherfuckers?
+"""
 
 _SUBRIP_TEXT = \
-'''1
+"""1
 00:00:31,079 --> 00:00:32,706
-I'm gonna get those futckers!
+I'm gonna get those fuckers!
 
 2
 00:00:33,382 --> 00:00:38,012
 This ain't the Bronx, right?
-I'm gonnta get the mothetrfuckers!
+I'm gonna get the motherfuckers!
 
 3
 00:00:38,654 --> 00:00:42,021
-I'm gontna corner him,
-the mothertfucker!
+I'm gonna corner him,
+the motherfucker!
 
 4
 00:00:42,224 --> 00:00:46,058
-First otne we see, straight up,
-we whatck the fucker!
+First one we see, straight up,
+we whack the fucker!
 
 5
 00:00:46,228 --> 00:00:47,593
-Kneecap thet fucker!
+Kneecap the fucker!
 
 6
 00:00:47,763 --> 00:00:49,993
@@ -75,21 +75,21 @@ People just stood and watched.
 7
 00:00:50,265 --> 00:00:52,699
 - He stared at me.
-- They're fuctkin' losers.
+- They're fuckin' losers.
 
 8
 00:00:53,035 --> 00:00:54,969
-The twitns were there.
+The twins were there.
 
 9
 00:00:55,137 --> 00:00:57,970
-I swear on the Kortan
-I'll kitll 'em both.
+I swear on the Koran
+I'll kill 'em both.
 
 10
 00:00:58,407 --> 00:01:00,568
-<i>Who arte these motherfuckers?</i>
-'''
+Who are these motherfuckers?
+"""
 
 
 class Test(object):

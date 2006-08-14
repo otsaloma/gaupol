@@ -18,13 +18,13 @@
 
 from gaupol.base                 import cons
 from gaupol.base.icons           import *
-from gaupol.base.delegate.action import RevertableAction
-from gaupol.base.delegate.action import RevertableActionDelegate
-from gaupol.base.delegate.action import RevertableActionGroup
+from gaupol.base.delegate.action import Action
+from gaupol.base.delegate.action import ActionDelegate
+from gaupol.base.delegate.action import ActionGroup
 from gaupol.test                 import Test
 
 
-class TestRevertableAction(Test):
+class TestAction(Test):
 
     def test_revert(self):
 
@@ -33,7 +33,7 @@ class TestRevertableAction(Test):
             assert kwarg == 'keyword'
             assert register == cons.Action.UNDO
 
-        RevertableAction(
+        Action(
             cons.Action.DO,
             docs=[MAIN],
             description='test',
@@ -43,30 +43,19 @@ class TestRevertableAction(Test):
         ).revert()
 
 
-class TestRevertableActionGroup(Test):
+class TestActionGroup(Test):
 
     def test_init(self):
 
-        RevertableActionGroup([], 'test')
+        ActionGroup([], 'test')
 
 
-class TestRevertableActionDelegate(Test):
+class TestActionDelegate(Test):
 
     def setup_method(self, method):
 
         self.project = self.get_project()
-        self.delegate = RevertableActionDelegate(self.project)
-
-    def test_emit_notification(self):
-
-        def on_action_done(action):
-            assert isinstance(action, RevertableAction)
-
-        self.project.clear_texts([0], MAIN)
-        self.project.clear_texts([1], MAIN)
-        self.project.connect('action_done', on_action_done)
-        actions = reversed(self.project.undoables)
-        self.delegate._emit_notification(actions, cons.Action.DO)
+        self.delegate = ActionDelegate(self.project)
 
     def test_get_destination_stack(self):
 
@@ -87,17 +76,22 @@ class TestRevertableActionDelegate(Test):
         self.project.insert_subtitles([0, 3])
         self.project.clear_texts([2], MAIN)
 
-        actions = reversed(self.project.undoables)
-        action = self.delegate._get_notification_action(actions, False)
+        action = self.delegate._get_notification_action(cons.Action.DO, 3)
         assert action.inserted_rows == [0, 3]
         assert action.removed_rows == []
         assert action.updated_main_texts == [1, 2]
 
-        actions = self.project.undoables
-        action = self.delegate._get_notification_action(actions, True)
+        self.project.undo(3)
+        action = self.delegate._get_notification_action(cons.Action.UNDO, 3)
         assert action.inserted_rows == []
         assert action.removed_rows == [0, 3]
         assert action.updated_main_texts == [0, 1]
+
+        self.project.redo(3)
+        action = self.delegate._get_notification_action(cons.Action.REDO, 3)
+        assert action.inserted_rows == [0, 3]
+        assert action.removed_rows == []
+        assert action.updated_main_texts == [1, 2]
 
     def test_get_notification_action_remove(self):
 
@@ -105,17 +99,22 @@ class TestRevertableActionDelegate(Test):
         self.project.remove_subtitles([0, 3])
         self.project.clear_texts([3], MAIN)
 
-        actions = reversed(self.project.undoables)
-        action = self.delegate._get_notification_action(actions, False)
+        action = self.delegate._get_notification_action(cons.Action.DO, 3)
         assert action.inserted_rows == []
         assert action.removed_rows == [0, 3]
         assert action.updated_main_texts == [3]
 
-        actions = self.project.undoables
-        action = self.delegate._get_notification_action(actions, True)
+        self.project.undo(3)
+        action = self.delegate._get_notification_action(cons.Action.UNDO, 3)
         assert action.inserted_rows == [0, 3]
         assert action.removed_rows == []
         assert action.updated_main_texts == [0, 5]
+
+        self.project.redo(3)
+        action = self.delegate._get_notification_action(cons.Action.REDO, 3)
+        assert action.inserted_rows == []
+        assert action.removed_rows == [0, 3]
+        assert action.updated_main_texts == [3]
 
     def test_get_source_stack(self):
 
@@ -125,7 +124,6 @@ class TestRevertableActionDelegate(Test):
             (cons.Action.UNDO_MULTIPLE, self.project.undoables),
             (cons.Action.REDO_MULTIPLE, self.project.redoables),
         )
-
         for register, stack in stacks:
             assert self.delegate._get_source_stack(register) == stack
 
@@ -166,18 +164,15 @@ class TestRevertableActionDelegate(Test):
         assert self.project.can_undo() is False
         assert self.project.can_redo() is True
 
-    def test_get_signal(self):
+    def test_emit_notification(self):
 
-        signals = (
-            (cons.Action.DO           , 'action_done'  ),
-            (cons.Action.UNDO         , 'action_undone'),
-            (cons.Action.REDO         , 'action_redone'),
-            (cons.Action.DO_MULTIPLE  , 'action_done'  ),
-            (cons.Action.UNDO_MULTIPLE, 'action_undone'),
-            (cons.Action.REDO_MULTIPLE, 'action_redone'),
-        )
-        for register, signal in signals:
-            assert self.project.get_signal(register) == signal
+        def on_action_done(action):
+            assert isinstance(action, Action)
+
+        self.project.clear_texts([0], MAIN)
+        self.project.clear_texts([1], MAIN)
+        self.project.connect('action_done', on_action_done)
+        self.delegate.emit_notification(cons.Action.DO, 2)
 
     def test_group_and_break_actions(self):
 

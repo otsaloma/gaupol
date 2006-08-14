@@ -65,6 +65,15 @@ class Action(Section):
     UNDO_MULTIPLE = 4
     REDO_MULTIPLE = 5
 
+    signals = [
+        'action_done',
+        'action_undone',
+        'action_redone',
+        'action_done',
+        'action_undone',
+        'action_redone',
+    ]
+
 
 class Column(Section):
 

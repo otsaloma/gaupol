@@ -2,9 +2,9 @@
 Encoding=UTF-8
 _Name=Gaupol Subtitle Editor
 _Comment=Edit subtitle files
-Exec=gaupol
+Exec=gaupol %F
 Terminal=false
 Type=Application
 StartupNotify=true
 Icon=gaupol
-Categories=Application;AudioVideo;
+Categories=GTK;Application;AudioVideo;

@@ -23,8 +23,8 @@ from gettext import gettext as _
 import re
 
 from gaupol.base              import cons
+from gaupol.base.delegate     import Delegate, revertablemethod
 from gaupol.base.icons        import *
-from gaupol.base.delegate     import Delegate
 from gaupol.base.tags.classes import *
 from gaupol.base.text.parser  import Parser
 
@@ -33,27 +33,8 @@ class FormatDelegate(Delegate):
 
     """Formatting text."""
 
-    def _get_format_class_name(self, doc):
-        """
-        Get class name of document's file format.
-
-        Translation document will inherit main document's format if translation
-        file does not exist.
-
-        Return name or None.
-        """
-        if doc == MAIN:
-            try:
-                return cons.Format.class_names[self.main_file.format]
-            except AttributeError:
-                return None
-        elif doc == TRAN:
-            try:
-                return cons.Format.class_names[self.tran_file.format]
-            except AttributeError:
-                return self._get_format_class_name(MAIN)
-
-    def change_case(self, rows, doc, method, register=cons.Action.DO):
+    @revertablemethod
+    def change_case(self, rows, doc, method, register=-1):
         """
         Change case of text.
 
@@ -69,21 +50,11 @@ class FormatDelegate(Delegate):
             parser.text = eval('parser.text.%s()' % method)
             new_texts.append(parser.get_text())
 
-        self.replace_texts(rows, doc, new_texts, register)
+        self.replace_texts(rows, doc, new_texts, register=register)
         self.set_action_description(register, _('Changing case'))
 
-    def get_tag_regex(self, document):
-        """Get regular expression for tag in document or None."""
-
-        name = self._get_format_class_name(document)
-        if name is None:
-            return None
-        if eval(name).tag is None:
-            return None
-
-        return re.compile(*eval(name).tag)
-
-    def toggle_dialog_lines(self, rows, doc, register=cons.Action.DO):
+    @revertablemethod
+    def toggle_dialog_lines(self, rows, doc, register=-1):
         """Toggle dialog lines on text."""
 
         re_tag = self.get_tag_regex(doc)
@@ -116,14 +87,15 @@ class FormatDelegate(Delegate):
                 parser.replace_all()
             new_texts.append(parser.get_text())
 
-        self.replace_texts(rows, doc, new_texts, register)
+        self.replace_texts(rows, doc, new_texts, register=register)
         self.set_action_description(register, _('Toggling dialog lines'))
 
-    def toggle_italicization(self, rows, doc, register=cons.Action.DO):
+    @revertablemethod
+    def toggle_italicization(self, rows, doc, register=-1):
         """Toggle italicization of text."""
 
         re_tag = self.get_tag_regex(doc)
-        format_name = self._get_format_class_name(doc)
+        format_name = self.get_format_class_name(doc)
         re_italic_tag = re.compile(*eval(format_name).italic_tag)
         texts = (self.main_texts, self.tran_texts)[doc]
 
@@ -151,5 +123,5 @@ class FormatDelegate(Delegate):
                 text = eval(format_name).italicize(text)
             new_texts.append(text)
 
-        self.replace_texts(rows, doc, new_texts, register)
+        self.replace_texts(rows, doc, new_texts, register=register)
         self.set_action_description(register, _('Toggling italicization'))

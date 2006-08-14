@@ -705,7 +705,7 @@ def get_language(locale):
     """
     Get localized language name from locale code.
 
-    Raise KeyError is language not found.
+    Raise KeyError if language not found.
     """
     return dgettext('iso_639', LANGS[locale[:2]])
 

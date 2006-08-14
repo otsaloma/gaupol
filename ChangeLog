@@ -1,3 +1,54 @@
+2006-08-15  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/gaupol.desktop.in:
+	* lib/gaupol/base/cons.py:
+	* lib/gaupol/base/delegate/__init__.py:
+	* lib/gaupol/base/delegate/action.py:
+	* lib/gaupol/base/delegate/edit.py:
+	* lib/gaupol/base/delegate/filesave.py:
+	* lib/gaupol/base/delegate/find.py:
+	* lib/gaupol/base/delegate/format.py:
+	* lib/gaupol/base/delegate/position.py:
+	* lib/gaupol/base/delegate/set.py:
+	* lib/gaupol/base/delegate/support.py:
+	* lib/gaupol/base/delegate/test/test_action.py:
+	* lib/gaupol/base/delegate/test/test_edit.py:
+	* lib/gaupol/base/delegate/test/test_filesave.py:
+	* lib/gaupol/base/delegate/test/test_find.py:
+	* lib/gaupol/base/delegate/test/test_format.py:
+	* lib/gaupol/base/delegate/test/test_set.py:
+	* lib/gaupol/base/delegate/test/test_support.py:
+	* lib/gaupol/base/delegate/test/test_text.py:
+	* lib/gaupol/base/delegate/text.py:
+	* lib/gaupol/base/file/mpsub.py:
+	* lib/gaupol/base/file/test/test_determiner.py:
+	* lib/gaupol/base/file/test/test_init.py:
+	* lib/gaupol/base/model.py:
+	* lib/gaupol/base/tags/converter.py:
+	* lib/gaupol/base/tags/test/test_converter.py:
+	* lib/gaupol/base/tags/test/test_init.py:
+	* lib/gaupol/base/test/test_model.py:
+	* lib/gaupol/base/test/test_project.py:
+	* lib/gaupol/base/text/finder.py:
+	* lib/gaupol/base/text/test/test_finder.py:
+	* lib/gaupol/base/text/test/test_parser.py:
+	* lib/gaupol/base/util/langlib.py:
+	* lib/gaupol/base/util/scriptlib.py:
+	* lib/gaupol/base/util/test/test_filelib.py:
+	* lib/gaupol/gtk/delegate/action.py:
+	* lib/gaupol/gtk/delegate/appupdate.py:
+	* lib/gaupol/gtk/delegate/edit.py:
+	* lib/gaupol/gtk/delegate/fileopen.py:
+	* lib/gaupol/gtk/delegate/format.py:
+	* lib/gaupol/gtk/delegate/position.py:
+	* lib/gaupol/gtk/delegate/view.py:
+	* lib/gaupol/gtk/dialog/debug.py:
+	* lib/gaupol/gtk/dialog/test/test_spellcheck.py:
+	* lib/gaupol/gtk/util/conf.py:
+	* lib/gaupol/test/__init__.py:
+	  Rewrote revertable action notification system. (Decorators!)
+	  Some minor fixes and cosmetic changes.
+
 2006-08-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* lib/gaupol/gtk/delegate/preview.py:

@@ -19,6 +19,9 @@
 """Extensions for gaupol.base.project.Project."""
 
 
+from gaupol.base import cons
+
+
 _MODULES = (
     'action',
     'edit',
@@ -28,9 +31,37 @@ _MODULES = (
     'format',
     'position',
     'preview',
+    'set',
     'stat',
+    'support',
     'text',
 )
+
+
+def revertablemethod(function):
+    """Decorator to handle notifications for revertable methods."""
+
+    def wrapper(*args, **kwargs):
+        self = args[0]
+        main_changed = self.main_changed
+        tran_changed = self.tran_changed
+        if kwargs.has_key('register'):
+            if kwargs['register'] is None:
+                return function(*args, **kwargs)
+        else:
+            kwargs['register'] = cons.Action.DO
+        register = kwargs['register']
+        signal = cons.Action.signals[register]
+        changed = self.block(signal)
+        value = function(*args, **kwargs)
+        if changed:
+            self.unblock(signal)
+            if self.main_changed != main_changed or \
+               self.tran_changed != tran_changed:
+                self.emit_notification(register)
+        return value
+
+    return wrapper
 
 
 class Delegate(object):

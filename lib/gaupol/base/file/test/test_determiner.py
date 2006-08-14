@@ -28,6 +28,9 @@ class TestFileFormatDeterminer(Test):
 
         for format, name in enumerate(cons.Format.class_names):
             if name == 'MicroDVD':
+                path = self.get_microdvd_path()
+                determiner = FileFormatDeterminer(path, 'utf_8')
+                assert determiner.determine() == format
                 continue
             path = self.get_subrip_path()
             file_ = SubRip(path, 'utf_8')
@@ -36,7 +39,3 @@ class TestFileFormatDeterminer(Test):
             file_.write(*data)
             determiner = FileFormatDeterminer(path, 'utf_8')
             assert determiner.determine() == format
-
-        path = self.get_microdvd_path()
-        determiner = FileFormatDeterminer(path, 'utf_8')
-        assert determiner.determine() == cons.Format.MICRODVD

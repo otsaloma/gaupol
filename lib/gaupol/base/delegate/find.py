@@ -23,7 +23,7 @@ from gettext import gettext as _
 
 from gaupol.base             import cons
 from gaupol.base.icons       import *
-from gaupol.base.delegate    import Delegate
+from gaupol.base.delegate    import Delegate, revertablemethod
 from gaupol.base.text.finder import Finder
 
 
@@ -196,16 +196,18 @@ class FindDelegate(Delegate):
         """
         return self._find(row, doc, pos, False)
 
-    def replace(self, register=cons.Action.DO):
+    @revertablemethod
+    def replace(self, register=-1):
         """Replace current match."""
 
         row = self._last_match_row
         doc = self._last_match_doc
         self._finder.replace()
-        self.set_text(row, doc, self._finder.text, register)
+        self.set_text(row, doc, self._finder.text, register=register)
         self.set_action_description(register, _('Replacing'))
 
-    def replace_all(self, register=cons.Action.DO):
+    @revertablemethod
+    def replace_all(self, register=-1):
         """
         Replace all matches.
 
@@ -225,7 +227,7 @@ class FindDelegate(Delegate):
                     count += this_count
         if count == 0:
             return count
-        self.replace_both_texts(new_rows, new_texts, register)
+        self.replace_both_texts(new_rows, new_texts, register=register)
         self.set_action_description(register, _('Replacing all'))
         return count
 

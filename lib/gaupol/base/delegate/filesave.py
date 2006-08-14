@@ -144,9 +144,8 @@ class FileSaveDelegate(Delegate):
                 if file_existed:
                     if bak_success:
                         _restore_original(file_.path, bak_path)
-                else:
-                    if not write_success:
-                        _remove_failed(file_.path)
+                elif not write_success:
+                    _remove_failed(file_.path)
 
     def save_main_file(self, props=None, keep_changes=True):
         """

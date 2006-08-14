@@ -24,8 +24,8 @@ from gaupol.test       import Test
 
 
 TEXT = \
-'''Said he was wounded by a pin.
-He\'s convalescing at home.'''
+"""Said he was wounded by a pin.
+He's convalescing at home."""
 
 DOCS_ALL  = [MAIN, TRAN]
 DOCS_MAIN = [MAIN]
@@ -190,8 +190,8 @@ class TestFindDelegate(Test):
 
         def replace_and_assert(project):
             new_text = \
-                'Said he xxx wounded by a pin.\n' \
-                'He\'s convalescing at home.'
+                "Said he xxx wounded by a pin.\n" \
+                "He's convalescing at home."
             project.replace()
             assert project.main_texts[0] == new_text
             project.undo()
@@ -215,8 +215,8 @@ class TestFindDelegate(Test):
 
         def replace_all_and_assert(project):
             new_text = \
-                'Said he xxx wounded by a pin.\n' \
-                'He\'s convalescing at home.'
+                "Said he xxx wounded by a pin.\n" \
+                "He's convalescing at home."
             project.replace_all()
             for texts in (project.main_texts, project.tran_texts):
                 for text in texts:

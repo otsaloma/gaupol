@@ -23,16 +23,14 @@ from gettext import gettext as _
 
 from gaupol.base          import cons
 from gaupol.base.icons    import *
-from gaupol.base.delegate import Delegate
-
-
-_DO = cons.Action.DO
+from gaupol.base.delegate import Delegate, revertablemethod
 
 
 class PositionDelegate(Delegate):
 
     """Shifting and adjusting times and frames."""
 
+    @revertablemethod
     def adjust_durations(
         self,
         rows=None,
@@ -42,7 +40,7 @@ class PositionDelegate(Delegate):
         maximum=None,
         minimum=None,
         gap=None,
-        register=_DO
+        register=-1
     ):
         """
         Adjust durations.
@@ -104,11 +102,13 @@ class PositionDelegate(Delegate):
             new_frames.append(frame)
 
         if new_rows:
-            self.replace_positions(new_rows, new_times, new_frames, register)
+            self.replace_positions(
+                new_rows, new_times, new_frames, register=register)
             self.set_action_description(register, _('Adjusting durations'))
         return new_rows
 
-    def adjust_frames(self, rows, point_1, point_2, register=_DO):
+    @revertablemethod
+    def adjust_frames(self, rows, point_1, point_2, register=-1):
         """
         Adjust times and frames in rows.
 
@@ -138,10 +138,11 @@ class PositionDelegate(Delegate):
             new_times.append(time)
             new_frames.append(frame)
 
-        self.replace_positions(rows, new_times, new_frames, register)
+        self.replace_positions(rows, new_times, new_frames, register=register)
         self.set_action_description(register, _('Adjusting frames'))
 
-    def adjust_times(self, rows, point_1, point_2, register=_DO):
+    @revertablemethod
+    def adjust_times(self, rows, point_1, point_2, register=-1):
         """
         Adjust times and frames in rows.
 
@@ -173,7 +174,7 @@ class PositionDelegate(Delegate):
             new_times.append(time)
             new_frames.append(frame)
 
-        self.replace_positions(rows, new_times, new_frames, register)
+        self.replace_positions(rows, new_times, new_frames, register=register)
         self.set_action_description(register, _('Adjusting times'))
 
     def change_framerate(self, framerate):
@@ -199,14 +200,13 @@ class PositionDelegate(Delegate):
                 self.times[i][HIDE] = convert(self.frames[i][HIDE])
                 self.set_durations(i)
 
-    def convert_framerate(self, rows, current, correct, register=_DO):
+    @revertablemethod
+    def convert_framerate(self, rows, current, correct, register=-1):
         """
         Convert and set framerate.
 
         rows: None to process all rows
         """
-        signal = self.get_signal(register)
-        self.block(signal)
         self.set_framerate(current, register=None)
         self.set_framerate(correct)
 
@@ -231,11 +231,11 @@ class PositionDelegate(Delegate):
             new_times.append(time)
             new_frames.append(frame)
 
-        self.replace_positions(rows, new_times, new_frames, register)
-        self.unblock(signal)
+        self.replace_positions(rows, new_times, new_frames, register=register)
         self.group_actions(register, 2, _('Converting framerate'))
 
-    def set_framerate(self, framerate, register=_DO):
+    @revertablemethod
+    def set_framerate(self, framerate, register=-1):
         """Set framerate variables."""
 
         orig_framerate = self.framerate
@@ -250,7 +250,8 @@ class PositionDelegate(Delegate):
             revert_args=[orig_framerate],
         )
 
-    def shift_frames(self, rows, count, register=_DO):
+    @revertablemethod
+    def shift_frames(self, rows, count, register=-1):
         """
         Shift times and frames by amount of frames.
 
@@ -267,10 +268,11 @@ class PositionDelegate(Delegate):
             new_times.append(time)
             new_frames.append(frame)
 
-        self.replace_positions(rows, new_times, new_frames, register)
+        self.replace_positions(rows, new_times, new_frames, register=register)
         self.set_action_description(register, _('Shifting frames'))
 
-    def shift_seconds(self, rows, count, register=_DO):
+    @revertablemethod
+    def shift_seconds(self, rows, count, register=-1):
         """
         Shift times and frames by amount of seconds.
 
@@ -287,5 +289,5 @@ class PositionDelegate(Delegate):
             new_times.append(time)
             new_frames.append(frame)
 
-        self.replace_positions(rows, new_times, new_frames, register)
+        self.replace_positions(rows, new_times, new_frames, register=register)
         self.set_action_description(register, _('Shifting times'))

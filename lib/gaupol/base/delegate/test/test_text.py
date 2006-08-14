@@ -59,25 +59,3 @@ class TestTextDelegate(Test):
 
         self.project.undo()
         self.project.redo()
-
-    def test_not_really_do(self):
-
-        orig_times = copy.deepcopy(self.project.times)
-        orig_frames = copy.deepcopy(self.project.frames)
-        orig_main_texts = copy.deepcopy(self.project.main_texts)
-        orig_tran_texts = copy.deepcopy(self.project.tran_texts)
-
-        method = self.project.remove_subtitles
-        args = [[0, 1, 2]]
-        data = self.project.not_really_do(method, args)
-        assert len(self.project.undoables) == 0
-
-        assert data[0] != self.project.times
-        assert data[1] != self.project.frames
-        assert data[2] != self.project.main_texts
-        assert data[3] != self.project.tran_texts
-
-        assert self.project.times == orig_times
-        assert self.project.frames == orig_frames
-        assert self.project.main_texts == orig_main_texts
-        assert self.project.tran_texts == orig_tran_texts

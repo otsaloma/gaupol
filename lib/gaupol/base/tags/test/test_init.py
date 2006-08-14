@@ -32,7 +32,7 @@ class TestTagLibrary(Test):
             cls = eval(name)
             if cls.tag is not None:
                 re.compile(*cls.tag)
-            if cls.italic_tag is not None:            
+            if cls.italic_tag is not None:
                 re.compile(*cls.italic_tag)
             for lst in (cls.decode_tags, cls.encode_tags):
                 for entry in lst:

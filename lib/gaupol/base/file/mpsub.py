@@ -95,8 +95,7 @@ class MPsub(SubtitleFile):
         texts  = []
         header = ''
         header_read = False
-        lines = self._read_lines()
-        for line in lines:
+        for line in self._read_lines():
             if not line.strip():
                 continue
             match = re_time_line.match(line)

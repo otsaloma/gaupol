@@ -32,3 +32,4 @@ class TestModule(Test):
         text = 'test\ntest'
         filelib.write(path, 'utf_8', text)
         assert filelib.read(path, 'utf_8') == text
+        assert filelib.readlines(path, 'utf_8') == ['test', 'test']

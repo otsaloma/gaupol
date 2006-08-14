@@ -147,17 +147,15 @@ class AppUpdateDelegate(Delegate):
         self._main_statusbar.props.visible = main_visible
         self._tran_statusbar.props.visible = tran_visible
 
-        def set_resize_grip(msg, main, tran):
-            self._msg_statusbar.set_has_resize_grip(msg)
-            self._main_statusbar.set_has_resize_grip(main)
-            self._tran_statusbar.set_has_resize_grip(tran)
-
         if tran_visible:
-            set_resize_grip(False, False, True)
+            grips = [False, False, True]
         elif main_visible:
-            set_resize_grip(False, True, False)
+            grips = [False, True, False]
         else:
-            set_resize_grip(True, False, False)
+            grips = [True, False, False]
+        self._msg_statusbar.set_has_resize_grip(grips[0])
+        self._main_statusbar.set_has_resize_grip(grips[1])
+        self._tran_statusbar.set_has_resize_grip(grips[2])
 
     def _update_widgets(self, page):
         """Set the states of various widgets."""

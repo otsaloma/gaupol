@@ -42,7 +42,7 @@ class AdjustDurationsAction(UIMAction):
         'adjust_durations',
         None,
         _('Ad_just Durations...'),
-        'F4',
+        '',
         _('Lengthen or shorten durations'),
         'on_adjust_durations_activate'
     )
@@ -187,7 +187,6 @@ class PositionDelegate(Delegate):
                 len(rows)
             ) % len(rows)
             self.set_status_message(message)
-            self.set_sensitivities(page)
 
     def on_adjust_positions_activate(self, *args):
         """Adjust positions by linear two-point correction"""
@@ -219,7 +218,6 @@ class PositionDelegate(Delegate):
         gtklib.destroy_gobject(dialog)
         method(rows, point_1, point_2)
         page.view.select_rows(rows or range(len(page.project.times)))
-        self.set_sensitivities(page)
 
     def on_convert_framerate_activate(self, *args):
         """Convert framerate."""
@@ -241,7 +239,6 @@ class PositionDelegate(Delegate):
             self._notebook.set_current_page(self.pages.index(page))
             page.project.convert_framerate(rows, current, correct)
             page.view.select_rows(rows or range(len(page.project.times)))
-            self.set_sensitivities(page)
 
     def on_shift_positions_activate(self, *args):
         """Shift positions a constant amount."""
@@ -271,4 +268,3 @@ class PositionDelegate(Delegate):
         gtklib.destroy_gobject(dialog)
         method(rows, amount)
         page.view.select_rows(rows or range(len(page.project.times)))
-        self.set_sensitivities(page)
