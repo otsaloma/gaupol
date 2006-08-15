@@ -22,6 +22,8 @@ Plans for 0.8.0
     [D] Find and replace notifications moved to main window's statusbar
     [D] Find and replace now notifies of wrapping
     [D] Toolbar style is now configurable in ~/.gaupol/gaupol.gtk.conf
+    [D] Fixed "Replace all" replacing patterns twice
+    [D] Fixed "Replace all" hanging when replacement matches pattern
 
   Updated translations:
     [D] Polish (pl)

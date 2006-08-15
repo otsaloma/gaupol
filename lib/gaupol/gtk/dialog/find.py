@@ -621,13 +621,15 @@ class ReplaceDialog(FindDialog):
             self._set_pattern(page)
             self._set_replacement(page)
             count += page.project.replace_all()
-            self.emit('update')
-            if wrap or page == self._first_passed_page:
+            if wrap:
                 break
+            self.emit('update')
             if self._first_passed_page is None:
                 self._first_passed_page = page
             self.emit('next-page')
             page = self.emit('coordinate-request')[0]
+            if page == self._first_passed_page:
+                break
 
         self._page = None
         self._row  = None

@@ -1,5 +1,11 @@
 2006-08-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/base/text/finder.py:
+	* lib/gaupol/gtk/dialog/find.py:
+	  Fixed replacing bugs.
+
+2006-08-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/cap-dialog.glade:
 	  New file.
 

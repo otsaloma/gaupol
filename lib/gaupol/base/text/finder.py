@@ -136,7 +136,7 @@ class Finder(object):
             text_body = self.pattern.sub(self.replacement, text_body, 1)
             self.text = self.text[:a] + text_body
 
-        self.pos = min(self.pos, len(self.text))
+        self.pos = z + len(self.replacement) - (z - a)
 
     def replace_all(self):
         """
