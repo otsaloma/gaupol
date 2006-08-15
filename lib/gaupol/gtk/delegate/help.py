@@ -121,12 +121,15 @@ class _VersionInfoDialog(gtk.MessageDialog):
 
     def __init__(self, parent, local, remote):
 
-        if remote > local:
+        parsed_remote = list(int(x) for x in remote.split('.'))
+        parsed_local  = list(int(x) for x in  local.split('.'))
+
+        if parsed_remote > parsed_local:
             title = _('Version %s is available') % remote
             message = _('You are currently using %s.') % local
         else:
             title = _('You have the latest version')
-            message = ''
+            message = _('Which is %s.') % local
 
         gtk.MessageDialog.__init__(
             self,

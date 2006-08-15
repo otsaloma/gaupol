@@ -1,3 +1,25 @@
+2006-08-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/cap-dialog.glade:
+	  New file.
+
+	* data/ui/menubar.xml:
+	  Removed a separator.
+
+	* lib/gaupol/gtk/cons.py:
+	* lib/gaupol/gtk/util/conf.py:
+	* lib/gaupol/gtk/delegate/guiinit.py:
+	  Implemented toolbar style customization.
+
+	* lib/gaupol/gtk/delegate/find.py:
+	* lib/gaupol/gtk/dialog/find.py:
+	* lib/gaupol/gtk/dialog/test/test_find.py:
+	  Moved notifications to statusbar.
+	  Added notification of wrapping.
+
+	* lib/gaupol/gtk/delegate/help.py:
+	  (VersionInfoDialog): Fixed version number parsing (for now).
+
 2006-08-15  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/gaupol.desktop.in:

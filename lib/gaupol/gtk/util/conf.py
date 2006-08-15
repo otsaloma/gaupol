@@ -87,6 +87,11 @@ class application_window(_Section):
     show_statusbar     = True
     show_video_toolbar = True
     size               = [600, 371]
+    toolbar_style      = cons.Toolbar.DEFAULT
+
+    constants = {
+        'toolbar_style': cons.Toolbar,
+    }
 
 
 class debug(_Section):
@@ -326,6 +331,9 @@ def _get_type(section, option):
     cls = eval(section)
     value = getattr(cls, option)
 
+    if cls.types.has_key(option):
+        return cls.types[option]
+
     if not isinstance(value, list):
         if isinstance(value, basestring):
             return _Type.STRING
@@ -339,8 +347,6 @@ def _get_type(section, option):
             return _Type.FLOAT
         raise ValueError
 
-    if not value:
-        return cls.types[option]
     if isinstance(value[0], basestring):
         return _Type.STRING_LIST
     if isinstance(value[0], bool):

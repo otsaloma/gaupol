@@ -25,40 +25,12 @@ import re
 import gobject
 import gtk
 
-from gaupol.base.util          import listlib, wwwlib
-from gaupol.gtk                import cons
-from gaupol.gtk.icons          import *
-from gaupol.gtk.dialog.message import InfoDialog
-from gaupol.gtk.error          import Default
-from gaupol.gtk.urls           import REGEX_HELP_URL
-from gaupol.gtk.util           import conf, gtklib
-
-
-class _NotFoundInfoDialog(InfoDialog):
-
-    """Dialog for informing that pattern was not found."""
-
-    def __init__(self, parent, pattern):
-
-        InfoDialog.__init__(
-            self, parent,
-            _('Pattern "%s" not found') % pattern,
-            ''
-        )
-
-
-class _ReplaceAllInfoDialog(InfoDialog):
-
-    """Dialog for informing results of replacing all."""
-
-    def __init__(self, parent, pattern, replacement, count):
-
-        InfoDialog.__init__(
-            self, parent,
-            _('Replaced %d occurences of "%s" with "%s"') % (
-                count, pattern, replacement),
-            ''
-        )
+from gaupol.base.util import listlib, wwwlib
+from gaupol.gtk       import cons
+from gaupol.gtk.icons import *
+from gaupol.gtk.error import Default
+from gaupol.gtk.urls  import REGEX_HELP_URL
+from gaupol.gtk.util  import conf, gtklib
 
 
 class FindDialog(gobject.GObject):
@@ -75,6 +47,11 @@ class FindDialog(gobject.GObject):
             gobject.SIGNAL_RUN_LAST,
             None,
             ()
+        ),
+        'message': (
+            gobject.SIGNAL_RUN_LAST,
+            None,
+            (str,)
         ),
         'next-page': (
             gobject.SIGNAL_RUN_LAST,
@@ -231,7 +208,7 @@ class FindDialog(gobject.GObject):
         self._text_view.set_sensitive(False)
 
         pattern = self._pattern_entry.get_text()
-        gtklib.run(_NotFoundInfoDialog(self._dialog, pattern))
+        self.emit('message', _('Pattern "%s" not found') % pattern)
 
     def _get_columns(self):
         """Get target columns."""
@@ -667,8 +644,8 @@ class ReplaceDialog(FindDialog):
 
         pattern = self._pattern_entry.get_text()
         replacement = self._replacement_entry.get_text()
-        gtklib.run(_ReplaceAllInfoDialog(
-            self._dialog, pattern, replacement, count))
+        self.emit('message', _('Replaced %d occurences of "%s" with "%s"') % (
+            count, pattern, replacement))
 
     def _on_replace_button_clicked(self, *args):
         """Replace current match."""

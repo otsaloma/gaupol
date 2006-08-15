@@ -22,19 +22,13 @@ General Information
 Dependencies
 ============
 
-  Required:
-    * Python >= 2.4
-    * PyGTK, with libglade support >= 2.8
-
-  Optional:
-    * PyEnchant >= 1.1.3
-    * iso-codes
-    * Universal Encoding Detector
-    * MPlayer or VLC is recommended for preview
-
-  PyEnchant is required for spell-checking. iso-codes allows the spell-checker
-  to show the language and country names in your locale. Universal Encoding
-  Detector provides character encoding auto-detection.
+  Gaupol requires Python 2.4 or greater and PyGTK 2.8 or greater. PyEnchant
+  1.1.3 or greater is required for spell-checking. iso-codes, if available,
+  will be used to translate language and country names used by the
+  spell-checker. Additionally, spell-checking requires a dictionary, any of
+  Aspell/Pspell, Ispell, MySpell, Uspell, Hspell or AppleSpell. Universal
+  Encoding Detector is required for character encoding auto-detection. MPlayer
+  or VLC is recommended for preview.
 
   To check the which versions of the dependencies you have installed, in the
   source directory run command
@@ -55,13 +49,13 @@ Running Gaupol
   Gaupol can be run either (1) directly from the source directory or (2) it
   can be installed to a selected location.
 
-  (1) If you want to use translations, you need to have intltool installed,
+  (1) In the source directory run Gaupol with command
+
+        ./gaupol
+
+      If you want to use translations, you need to have intltool installed,
       after which you can compile them with command
 
         tools/translate -m all
-
-      Run Gaupol with command
-
-        ./gaupol
 
   (2) See the file "INSTALL".

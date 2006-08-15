@@ -111,7 +111,6 @@
     <menu name="help" action="show_help_menu">
       <menuitem name="report_a_bug" action="report_a_bug"/>
       <menuitem name="check_latest_version" action="check_latest_version"/>
-      <separator/>
       <menuitem name="about" action="view_about_dialog"/>
     </menu>
   </menubar>

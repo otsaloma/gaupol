@@ -7,6 +7,10 @@ Legend:
 Plans for 0.8.0
 ===============
 
+  * Finder
+      - ^$
+      - . -> ...
+
   New:
     [W] Text capitalization assistant
 
@@ -15,6 +19,9 @@ Plans for 0.8.0
     [D] Subtitle number search now starts only on numeric key-presses
     [D] Splitting subtitle no longer duplicates texts
     [D] Fixed issue of disappearing tags when converting case
+    [D] Find and replace notifications moved to main window's statusbar
+    [D] Find and replace now notifies of wrapping
+    [D] Toolbar style is now configurable in ~/.gaupol/gaupol.gtk.conf
 
   Updated translations:
     [D] Polish (pl)
@@ -33,8 +40,8 @@ Unscheduled
 ===========
 
   * Windows installer
-      - http://trac.gajim.org/wiki/DevWindows
       - http://svn.berlios.de/svnroot/repos/griffith/griffith
+      - http://trac.gajim.org/wiki/DevWindows
       - http://www.async.com.br/faq/pygtk/index.py?req=show&file=faq21.005.htp
 
   * Support for SAMI subtitle file format

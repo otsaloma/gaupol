@@ -21,6 +21,8 @@
 
 from gettext import gettext as _
 
+import gtk
+
 from gaupol.base import cons
 
 
@@ -114,6 +116,23 @@ class Target(cons.Section):
     ALL      = 0
     CURRENT  = 1
     SELECTED = 2
+
+
+class Toolbar(cons.Section):
+
+    DEFAULT    = 0
+    ICONS      = 1
+    TEXT       = 2
+    BOTH       = 3
+    BOTH_HORIZ = 4
+
+    values = [
+        -1,
+        int(gtk.TOOLBAR_ICONS),
+        int(gtk.TOOLBAR_TEXT),
+        int(gtk.TOOLBAR_BOTH),
+        int(gtk.TOOLBAR_BOTH_HORIZ),
+    ]
 
 
 class VideoPlayer(cons.VideoPlayer):

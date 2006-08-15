@@ -21,29 +21,13 @@ import re
 import gtk
 
 from gaupol.gtk             import cons
-from gaupol.gtk.icons       import *
 from gaupol.gtk.dialog.find import FindDialog
 from gaupol.gtk.dialog.find import ReplaceDialog
-from gaupol.gtk.dialog.find import _NotFoundInfoDialog
-from gaupol.gtk.dialog.find import _ReplaceAllInfoDialog
 from gaupol.gtk.error       import Default
+from gaupol.gtk.icons       import *
 from gaupol.gtk.page        import Page
 from gaupol.gtk.util        import conf, gtklib
 from gaupol.test            import Test
-
-
-class TestNotFoundInfoDialog(Test):
-
-    def test_run(self):
-
-        gtklib.run(_NotFoundInfoDialog(gtk.Window(), 'test'))
-
-
-class TestReplaceAllInfoDialog(Test):
-
-    def test_run(self):
-
-        gtklib.run(_ReplaceAllInfoDialog(gtk.Window(), 'test', 'rest', 333))
 
 
 class TestFindDialog(Test):

@@ -23,6 +23,7 @@ from gettext import gettext as _
 
 import gtk
 
+from gaupol.gtk             import cons
 from gaupol.gtk.delegate    import Delegate, UIMAction
 from gaupol.gtk.dialog.find import FindDialog, ReplaceDialog
 from gaupol.gtk.util        import conf, gtklib
@@ -135,6 +136,7 @@ class FindDelegate(Delegate):
 
         gtklib.connect(self, '_dialog', 'coordinate-request')
         gtklib.connect(self, '_dialog', 'destroyed'         )
+        gtklib.connect(self, '_dialog', 'message'           )
         gtklib.connect(self, '_dialog', 'next-page'         )
         gtklib.connect(self, '_dialog', 'previous-page'     )
         gtklib.connect(self, '_dialog', 'update'            )
@@ -164,6 +166,11 @@ class FindDelegate(Delegate):
         gtklib.destroy_gobject(dialog)
         self._dialog = None
 
+    def _on_dialog_message(self, dialog, message):
+        """Set message to statusbar."""
+
+        self.set_status_message(message)
+
     def _on_dialog_next_page(self, dialog):
         """Activate next page."""
 
@@ -179,6 +186,11 @@ class FindDelegate(Delegate):
         page.view.select_rows([])
         page.view.set_focus(0, None)
 
+        if conf.find.target == cons.Target.CURRENT:
+            self.set_status_message(_('Wrapped search'))
+        elif conf.find.target == cons.Target.ALL and index == 0:
+            self.set_status_message(_('Wrapped search'))
+
     def _on_dialog_previous_page(self, dialog):
         """Activate previous page."""
 
@@ -190,6 +202,12 @@ class FindDelegate(Delegate):
         self._notebook.set_current_page(index)
         page.view.select_rows([])
         page.view.set_focus(len(page.project.times) - 1, None)
+
+        max_index = len(self.pages) - 1
+        if conf.find.target == cons.Target.CURRENT:
+            self.set_status_message(_('Wrapped search'))
+        elif conf.find.target == cons.Target.ALL and index == max_index:
+            self.set_status_message(_('Wrapped search'))
 
     def _on_dialog_update(self, dialog):
         """Set sensitivities."""

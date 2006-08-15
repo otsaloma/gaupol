@@ -54,6 +54,12 @@ class GUIInitDelegate(Delegate):
         toolbar.insert(self._undo_button, 3)
         toolbar.insert(self._redo_button, 4)
 
+        item = self._uim.get_widget('/ui/main_toolbar/save')
+        item.set_is_important(True)
+        style = cons.Toolbar.values[conf.application_window.toolbar_style]
+        if style > -1:
+            toolbar.set_style(style)
+
     def _init_notebook(self):
         """Initialize notebook."""
 
