@@ -327,5 +327,4 @@ class GUIInitDelegate(Delegate):
 
         self.set_menu_notify_events('main')
         self.set_sensitivities()
-        self._notebook.grab_focus()
         self._window.show()
