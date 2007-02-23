@@ -1,0 +1,274 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>API docs for &ldquo;gaupol.parser.Parser&rdquo;</title>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <link href="apidocs.css" type="text/css" rel="stylesheet" />
+    
+    
+  </head>
+  <body>
+    <h1 class="class">Class g.p.Parser(<a href="gaupol.finder.Finder.html">Finder</a>):</h1>
+    <p>
+      <span id="part">Part of <a href="gaupol.html">gaupol</a>.<a href="gaupol.parser.html">parser</a></span>
+      <a href="gaupol/parser.py.html#L25">View Source</a>
+      <a href="classIndex.html#gaupol.parser.Parser">View In Hierarchy</a>
+    </p>
+    <div>
+      <p>Known subclasses: <a href="gaupol.liner.Liner.html">gaupol.liner.Liner</a></p>
+    </div>
+    <div><pre class="literalblock">
+Text parser for tag-aware editing.
+
+Instance variables:
+
+    re_tag:  Regular expression object to match any tag
+    margins: Start tag, end tag that every line is wrapped in
+    tags:    List of lists of tag, position
+
+The purpose of the Parser is to split text to the actual text and its tags,
+allowing the text to be edited while keeping the tags separate and intact.
+Parser can be used by first setting text to it, then performing operations
+via defined methods and finally getting the full text back.
+
+The margin system is only used if no other tags are found in the text and
+if the text has at least two lines. Either margins or tags will always be
+empty.
+</pre>
+<table class="fieldTable"></table></div>
+    
+    
+    <div id="splitTables">
+      <table class="children sortable" id="id55">
+  
+  
+  
+  
+  <tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.parser.Parser.html#__init__">__init__</a></td>
+    <td><span><pre class="literalblock">
+Initialize Parser.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.parser.Parser.html#_set_margins">_set_margins</a></td>
+    <td><span><pre class="literalblock">
+Find the margin tags in text if such exist.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.parser.Parser.html#_shift_tags">_shift_tags</a></td>
+    <td><span><pre class="literalblock">
+Shift all the tags after position.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.parser.Parser.html#get_text">get_text</a></td>
+    <td><span><pre class="literalblock">
+Reassemble the text and return it.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.parser.Parser.html#replace">replace</a></td>
+    <td><span><pre class="literalblock">
+Replace the current match.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.parser.Parser.html#set_text">set_text</a></td>
+    <td><span><pre class="literalblock">
+Set the text and parse it.
+</pre>
+</span></td>
+  </tr>
+  
+</table>
+      
+        <p>
+          Inherited from <a href="gaupol.finder.Finder.html">Finder</a>:
+        </p>
+        <table class="children sortable" id="id56">
+  
+  
+  
+  
+  <tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.finder.Finder.html#next">next</a></td>
+    <td><span><pre class="literalblock">
+Find the next match of pattern.
+</pre>
+</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.finder.Finder.html#previous">previous</a></td>
+    <td><span><pre class="literalblock">
+Find the previous match of pattern.
+</pre>
+</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.finder.Finder.html#replace_all">replace_all</a></td>
+    <td><span><pre class="literalblock">
+Replace all occurences of pattern.
+</pre>
+</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.finder.Finder.html#set_regex">set_regex</a></td>
+    <td><span><pre class="literalblock">
+Set and use regular expression.
+</pre>
+</span></td>
+  </tr>
+  
+</table>
+      
+      
+    </div>
+    
+    
+    
+    <div class="function">
+        <a name="gaupol.parser.Parser.__init__"></a>
+        <a name="__init__"></a>
+        <div class="functionHeader">
+        def __init__(self, re_tag=None):
+        <a href="gaupol/parser.py.html#L45" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          <div class="interfaceinfo">overrides <a href="gaupol.finder.Finder.html#__init__">gaupol.finder.Finder.__init__</a></div><div class="interfaceinfo">overridden in <a href="gaupol.liner.Liner.html">gaupol.liner.Liner</a></div>
+          <div><pre class="literalblock">
+Initialize Parser.
+
+re_tag should be a regular expression object.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.parser.Parser._set_margins"></a>
+        <a name="_set_margins"></a>
+        <div class="functionHeader">
+        def _set_margins(self, text):
+        <a href="gaupol/parser.py.html#L56" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Find the margin tags in text if such exist.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.parser.Parser._shift_tags"></a>
+        <a name="_shift_tags"></a>
+        <div class="functionHeader">
+        def _shift_tags(self, pos, shift, orig_text):
+        <a href="gaupol/parser.py.html#L93" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Shift all the tags after position.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.parser.Parser.get_text"></a>
+        <a name="get_text"></a>
+        <div class="functionHeader">
+        def get_text(self):
+        <a href="gaupol/parser.py.html#L127" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Reassemble the text and return it.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.parser.Parser.replace"></a>
+        <a name="replace"></a>
+        <div class="functionHeader">
+        def replace(self, next=True):
+        <a href="gaupol/parser.py.html#L138" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          <div class="interfaceinfo">overrides <a href="gaupol.finder.Finder.html#replace">gaupol.finder.Finder.replace</a></div>
+          <div><pre class="literalblock">
+Replace the current match.
+
+next should be True to finish at end of match, False for beginning.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.parser.Parser.set_text"></a>
+        <a name="set_text"></a>
+        <div class="functionHeader">
+        def set_text(self, text, next=True):
+        <a href="gaupol/parser.py.html#L149" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          <div class="interfaceinfo">overrides <a href="gaupol.finder.Finder.html#set_text">gaupol.finder.Finder.set_text</a></div><div class="interfaceinfo">overridden in <a href="gaupol.liner.Liner.html">gaupol.liner.Liner</a></div>
+          <div><pre class="literalblock">
+Set the text and parse it.
+
+next should be True to start at beginning, False for end.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div>
+    
+    <address>
+      <a href="index.html">API Documentation</a> for <a href="http://home.gna.org/gaupol/">Gaupol</a>, generated by <a href="http://codespeak.net/~mwh/pydoctor/">pydoctor</a>.
+    </address>
+  </body>
+</html>

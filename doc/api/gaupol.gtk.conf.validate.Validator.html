@@ -1,0 +1,265 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>API docs for &ldquo;gaupol.gtk.conf.validate.Validator&rdquo;</title>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <link href="apidocs.css" type="text/css" rel="stylesheet" />
+    
+    
+  </head>
+  <body>
+    <h1 class="class">Class g.g.c.v.Validator(object):</h1>
+    <p>
+      <span id="part">Part of <a href="gaupol.html">gaupol</a>.<a href="gaupol.gtk.html">gtk</a>.<a href="gaupol.gtk.conf.html">conf</a>.<a href="gaupol.gtk.conf.validate.html">validate</a></span>
+      <a href="gaupol/gtk/conf/validate.py.html#L452">View Source</a>
+      <a href="classIndex.html#gaupol.gtk.conf.validate.Validator">View In Hierarchy</a>
+    </p>
+    <div>
+      
+    </div>
+    <div><pre class="literalblock">
+Validator is an object that allows you to register a set of 'checks'.
+These checks take input and test that it conforms to the check.
+
+This can also involve converting the value from a string into
+the correct datatype.
+
+The ``check`` method takes an input string which configures which
+check is to be used and applies that check to a supplied value.
+
+An example input string would be:
+'int_range(param1, param2)'
+
+You would then provide something like:
+
+&gt;&gt;&gt; def int_range_check(value, min, max):
+...     # turn min and max from strings to integers
+...     min = int(min)
+...     max = int(max)
+...     # check that value is of the correct type.
+...     # possible valid inputs are integers or strings
+...     # that represent integers
+...     if not isinstance(value, (int, long, StringTypes)):
+...         raise VdtTypeError(value)
+...     elif isinstance(value, StringTypes):
+...         # if we are given a string
+...         # attempt to convert to an integer
+...         try:
+...             value = int(value)
+...         except ValueError:
+...             raise VdtValueError(value)
+...     # check the value is between our constraints
+...     if not min &lt;= value:
+...          raise VdtValueTooSmallError(value)
+...     if not value &lt;= max:
+...          raise VdtValueTooBigError(value)
+...     return value
+
+&gt;&gt;&gt; fdict = {'int_range': int_range_check}
+&gt;&gt;&gt; vtr1 = Validator(fdict)
+&gt;&gt;&gt; vtr1.check('int_range(20, 40)', '30')
+30
+&gt;&gt;&gt; vtr1.check('int_range(20, 40)', '60')
+Traceback (most recent call last):
+VdtValueTooBigError: the value &quot;60&quot; is too big.
+
+New functions can be added with : ::
+
+&gt;&gt;&gt; vtr2 = Validator()       
+&gt;&gt;&gt; vtr2.functions['int_range'] = int_range_check
+
+Or by passing in a dictionary of functions when Validator 
+is instantiated.
+
+Your functions *can* use keyword arguments,
+but the first argument should always be 'value'.
+
+If the function doesn't take additional arguments,
+the parentheses are optional in the check.
+It can be written with either of : ::
+
+    keyword = function_name
+    keyword = function_name()
+
+The first program to utilise Validator() was Michael Foord's
+ConfigObj, an alternative to ConfigParser which supports lists and
+can validate a config file using a config schema.
+For more details on using Validator with ConfigObj see:
+http://www.voidspace.org.uk/python/configobj.html
+</pre>
+<table class="fieldTable"></table></div>
+    
+    
+    <div id="splitTables">
+      <table class="children sortable" id="id269">
+  
+  
+  
+  
+  <tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.validate.Validator.html#__init__">__init__</a></td>
+    <td><span><pre class="literalblock">
+&gt;&gt;&gt; vtri = Validator()
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.validate.Validator.html#check">check</a></td>
+    <td><span><pre class="literalblock">
+Usage: check(check, value)
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.validate.Validator.html#_unquote">_unquote</a></td>
+    <td><span><pre class="literalblock">
+Unquote a value if necessary.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.validate.Validator.html#_list_handle">_list_handle</a></td>
+    <td><span><pre class="literalblock">
+Take apart a ``keyword=list('val, 'val')`` type string.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.validate.Validator.html#_pass">_pass</a></td>
+    <td><span><pre class="literalblock">
+Dummy check that always passes
+</pre>
+</span></td>
+  </tr>
+  
+</table>
+      
+      
+    </div>
+    
+    
+    
+    <div class="function">
+        <a name="gaupol.gtk.conf.validate.Validator.__init__"></a>
+        <a name="__init__"></a>
+        <div class="functionHeader">
+        def __init__(self, functions=None):
+        <a href="gaupol/gtk/conf/validate.py.html#L543" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+&gt;&gt;&gt; vtri = Validator()
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.conf.validate.Validator.check"></a>
+        <a name="check"></a>
+        <div class="functionHeader">
+        def check(self, check, value, missing=False):
+        <a href="gaupol/gtk/conf/validate.py.html#L569" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Usage: check(check, value)
+
+Arguments:
+    check: string representing check to apply (including arguments)
+    value: object to be checked
+Returns value, converted to correct type if necessary
+
+If the check fails, raises a ``ValidateError`` subclass.
+
+&gt;&gt;&gt; vtor.check('yoda', '')
+Traceback (most recent call last):
+VdtUnknownCheckError: the check &quot;yoda&quot; is unknown.
+&gt;&gt;&gt; vtor.check('yoda()', '')
+Traceback (most recent call last):
+VdtUnknownCheckError: the check &quot;yoda&quot; is unknown.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.conf.validate.Validator._unquote"></a>
+        <a name="_unquote"></a>
+        <div class="functionHeader">
+        def _unquote(self, val):
+        <a href="gaupol/gtk/conf/validate.py.html#L641" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Unquote a value if necessary.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.conf.validate.Validator._list_handle"></a>
+        <a name="_list_handle"></a>
+        <div class="functionHeader">
+        def _list_handle(self, listmatch):
+        <a href="gaupol/gtk/conf/validate.py.html#L647" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Take apart a ``keyword=list('val, 'val')`` type string.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.conf.validate.Validator._pass"></a>
+        <a name="_pass"></a>
+        <div class="functionHeader">
+        def _pass(self, value):
+        <a href="gaupol/gtk/conf/validate.py.html#L656" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Dummy check that always passes
+
+&gt;&gt;&gt; vtor.check('', 0)
+0
+&gt;&gt;&gt; vtor.check('', '0')
+'0'
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div>
+    
+    <address>
+      <a href="index.html">API Documentation</a> for <a href="http://home.gna.org/gaupol/">Gaupol</a>, generated by <a href="http://codespeak.net/~mwh/pydoctor/">pydoctor</a>.
+    </address>
+  </body>
+</html>

@@ -1,0 +1,681 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>API docs for &ldquo;gaupol.gtk.page.Page&rdquo;</title>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <link href="apidocs.css" type="text/css" rel="stylesheet" />
+    
+    
+  </head>
+  <body>
+    <h1 class="class">Class g.g.p.Page(Observable):</h1>
+    <p>
+      <span id="part">Part of <a href="gaupol.html">gaupol</a>.<a href="gaupol.gtk.html">gtk</a>.<a href="gaupol.gtk.page.html">page</a></span>
+      <a href="gaupol/gtk/page.py.html#L50">View Source</a>
+      <a href="classIndex.html#gaupol.gtk.page.Page">View In Hierarchy</a>
+    </p>
+    <div>
+      
+    </div>
+    <div><pre class="literalblock">
+User interface for a single project.
+
+Instance variables:
+
+    edit_mode:  MODE constant, currently used in the view
+    project:    The associated Project
+    tab_label:  gtk.Label used in the tab_widget
+    tab_widget: Widget to use in a notebook tab
+    tooltips:   Markup-enabled gtk.Tooltips
+    untitle:    Title used if the main document is unsaved
+    view:       The associated View
+
+Signals:
+
+    close-request (page)
+</pre>
+<table class="fieldTable"></table></div>
+    
+    
+    <div id="splitTables">
+      <table class="children sortable" id="id109">
+  
+  
+  
+  
+  <tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.page.Page.html#__init__">__init__</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.page.Page.html#_get_positions">_get_positions</a></td>
+    <td><span><pre class="literalblock">
+Return times or frames depending on edit mode.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.page.Page.html#_init_signal_handlers">_init_signal_handlers</a></td>
+    <td><span><pre class="literalblock">
+Initialize signal handlers.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.page.Page.html#_init_tooltips">_init_tooltips</a></td>
+    <td><span><pre class="literalblock">
+Initialize the markup-enabled tooltips.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.page.Page.html#_init_widgets">_init_widgets</a></td>
+    <td><span><pre class="literalblock">
+Initialize the widgets to use in a notebook tab.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.page.Page.html#_on_project_main_file_opened">_on_project_main_file_opened</a></td>
+    <td><span><pre class="literalblock">
+Reload the entire view.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.page.Page.html#_on_project_main_texts_changed">_on_project_main_texts_changed</a></td>
+    <td><span><pre class="literalblock">
+Reload main texts in rows.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.page.Page.html#_on_project_positions_changed">_on_project_positions_changed</a></td>
+    <td><span><pre class="literalblock">
+Reload positions in rows.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.page.Page.html#_on_project_subtitles_changed">_on_project_subtitles_changed</a></td>
+    <td><span><pre class="literalblock">
+Reload subtitles in rows.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.page.Page.html#_on_project_subtitles_inserted">_on_project_subtitles_inserted</a></td>
+    <td><span><pre class="literalblock">
+Insert rows to the list store.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.page.Page.html#_on_project_subtitles_removed">_on_project_subtitles_removed</a></td>
+    <td><span><pre class="literalblock">
+Remove rows from the list store.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.page.Page.html#_on_project_translation_file_opened">_on_project_translation_file_opened</a></td>
+    <td><span><pre class="literalblock">
+Reload the entire view.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.page.Page.html#_on_project_translation_texts_changed">_on_project_translation_texts_changed</a></td>
+    <td><span><pre class="literalblock">
+Reload translation texts in rows.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.page.Page.html#_on_tab_event_box_enter_notify_event">_on_tab_event_box_enter_notify_event</a></td>
+    <td><span><pre class="literalblock">
+Update the text in the tooltip.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.page.Page.html#assert_store">assert_store</a></td>
+    <td><span><pre class="literalblock">
+Assert that store's data matches project's.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.page.Page.html#document_to_text_column">document_to_text_column</a></td>
+    <td><span><pre class="literalblock">
+Translate document index to text column index.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.page.Page.html#get_main_basename">get_main_basename</a></td>
+    <td><span><pre class="literalblock">
+Get the basename of the main document.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.page.Page.html#get_main_corename">get_main_corename</a></td>
+    <td><span><pre class="literalblock">
+Get the basename of the main document without extension.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.page.Page.html#get_translation_basename">get_translation_basename</a></td>
+    <td><span><pre class="literalblock">
+Get the basename of the translation document.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.page.Page.html#get_translation_corename">get_translation_corename</a></td>
+    <td><span><pre class="literalblock">
+Get basename of translation document without extension.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.page.Page.html#reload_view">reload_view</a></td>
+    <td><span><pre class="literalblock">
+Reload the view in columns and rows.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.page.Page.html#reload_view_all">reload_view_all</a></td>
+    <td><span><pre class="literalblock">
+Clear and repopulate the entire view.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.page.Page.html#text_column_to_document">text_column_to_document</a></td>
+    <td><span><pre class="literalblock">
+Translate text column constant to document constant.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.page.Page.html#update_tab_label">update_tab_label</a></td>
+    <td><span><pre class="literalblock">
+Update the notebook tab label and return the title.
+</pre>
+</span></td>
+  </tr>
+  
+</table>
+      
+      
+    </div>
+    
+    
+    
+    <div class="function">
+        <a name="gaupol.gtk.page.Page.__init__"></a>
+        <a name="__init__"></a>
+        <div class="functionHeader">
+        def __init__(self, counter=0):
+        <a href="gaupol/gtk/page.py.html#L71" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div class="undocumented">Undocumented</div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.page.Page._get_positions"></a>
+        <a name="_get_positions"></a>
+        <div class="functionHeader">
+        def _get_positions(self):
+        <a href="gaupol/gtk/page.py.html#L92" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Return times or frames depending on edit mode.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.page.Page._init_signal_handlers"></a>
+        <a name="_init_signal_handlers"></a>
+        <div class="functionHeader">
+        def _init_signal_handlers(self):
+        <a href="gaupol/gtk/page.py.html#L101" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Initialize signal handlers.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.page.Page._init_tooltips"></a>
+        <a name="_init_tooltips"></a>
+        <div class="functionHeader">
+        def _init_tooltips(self):
+        <a href="gaupol/gtk/page.py.html#L128" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Initialize the markup-enabled tooltips.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.page.Page._init_widgets"></a>
+        <a name="_init_widgets"></a>
+        <div class="functionHeader">
+        def _init_widgets(self):
+        <a href="gaupol/gtk/page.py.html#L141" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Initialize the widgets to use in a notebook tab.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.page.Page._on_project_main_file_opened"></a>
+        <a name="_on_project_main_file_opened"></a>
+        <div class="functionHeader">
+        def _on_project_main_file_opened(self, project, main_file):
+        <a href="gaupol/gtk/page.py.html#L174" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Reload the entire view.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.page.Page._on_project_main_texts_changed"></a>
+        <a name="_on_project_main_texts_changed"></a>
+        <div class="functionHeader">
+        def _on_project_main_texts_changed(self, project, rows):
+        <a href="gaupol/gtk/page.py.html#L179" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Reload main texts in rows.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.page.Page._on_project_positions_changed"></a>
+        <a name="_on_project_positions_changed"></a>
+        <div class="functionHeader">
+        def _on_project_positions_changed(self, project, rows):
+        <a href="gaupol/gtk/page.py.html#L185" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Reload positions in rows.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.page.Page._on_project_subtitles_changed"></a>
+        <a name="_on_project_subtitles_changed"></a>
+        <div class="functionHeader">
+        def _on_project_subtitles_changed(self, project, rows):
+        <a href="gaupol/gtk/page.py.html#L191" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Reload subtitles in rows.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.page.Page._on_project_subtitles_inserted"></a>
+        <a name="_on_project_subtitles_inserted"></a>
+        <div class="functionHeader">
+        def _on_project_subtitles_inserted(self, project, rows):
+        <a href="gaupol/gtk/page.py.html#L197" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Insert rows to the list store.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.page.Page._on_project_subtitles_removed"></a>
+        <a name="_on_project_subtitles_removed"></a>
+        <div class="functionHeader">
+        def _on_project_subtitles_removed(self, project, rows):
+        <a href="gaupol/gtk/page.py.html#L210" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Remove rows from the list store.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.page.Page._on_project_translation_file_opened"></a>
+        <a name="_on_project_translation_file_opened"></a>
+        <div class="functionHeader">
+        def _on_project_translation_file_opened(self, project, tran_file):
+        <a href="gaupol/gtk/page.py.html#L221" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Reload the entire view.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.page.Page._on_project_translation_texts_changed"></a>
+        <a name="_on_project_translation_texts_changed"></a>
+        <div class="functionHeader">
+        def _on_project_translation_texts_changed(self, project, rows):
+        <a href="gaupol/gtk/page.py.html#L226" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Reload translation texts in rows.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.page.Page._on_tab_event_box_enter_notify_event"></a>
+        <a name="_on_tab_event_box_enter_notify_event"></a>
+        <div class="functionHeader">
+        def _on_tab_event_box_enter_notify_event(self, *args):
+        <a href="gaupol/gtk/page.py.html#L232" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Update the text in the tooltip.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.page.Page.assert_store"></a>
+        <a name="assert_store"></a>
+        <div class="functionHeader">
+        def assert_store(self):
+        <a href="gaupol/gtk/page.py.html#L245" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Assert that store's data matches project's.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.page.Page.document_to_text_column"></a>
+        <a name="document_to_text_column"></a>
+        <div class="functionHeader">
+        def document_to_text_column(self, document):
+        <a href="gaupol/gtk/page.py.html#L259" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Translate document index to text column index.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.page.Page.get_main_basename"></a>
+        <a name="get_main_basename"></a>
+        <div class="functionHeader">
+        def get_main_basename(self):
+        <a href="gaupol/gtk/page.py.html#L268" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Get the basename of the main document.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.page.Page.get_main_corename"></a>
+        <a name="get_main_corename"></a>
+        <div class="functionHeader">
+        def get_main_corename(self):
+        <a href="gaupol/gtk/page.py.html#L276" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Get the basename of the main document without extension.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.page.Page.get_translation_basename"></a>
+        <a name="get_translation_basename"></a>
+        <div class="functionHeader">
+        def get_translation_basename(self):
+        <a href="gaupol/gtk/page.py.html#L288" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Get the basename of the translation document.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.page.Page.get_translation_corename"></a>
+        <a name="get_translation_corename"></a>
+        <div class="functionHeader">
+        def get_translation_corename(self):
+        <a href="gaupol/gtk/page.py.html#L297" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Get basename of translation document without extension.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.page.Page.reload_view"></a>
+        <a name="reload_view"></a>
+        <div class="functionHeader">
+        def reload_view(self, rows, cols):
+        <a href="gaupol/gtk/page.py.html#L309" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Reload the view in columns and rows.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.page.Page.reload_view_all"></a>
+        <a name="reload_view_all"></a>
+        <div class="functionHeader">
+        def reload_view_all(self):
+        <a href="gaupol/gtk/page.py.html#L328" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Clear and repopulate the entire view.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.page.Page.text_column_to_document"></a>
+        <a name="text_column_to_document"></a>
+        <div class="functionHeader">
+        def text_column_to_document(self, col):
+        <a href="gaupol/gtk/page.py.html#L344" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Translate text column constant to document constant.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.page.Page.update_tab_label"></a>
+        <a name="update_tab_label"></a>
+        <div class="functionHeader">
+        def update_tab_label(self):
+        <a href="gaupol/gtk/page.py.html#L353" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Update the notebook tab label and return the title.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div>
+    
+    <address>
+      <a href="index.html">API Documentation</a> for <a href="http://home.gna.org/gaupol/">Gaupol</a>, generated by <a href="http://codespeak.net/~mwh/pydoctor/">pydoctor</a>.
+    </address>
+  </body>
+</html>

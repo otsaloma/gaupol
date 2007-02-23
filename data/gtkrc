@@ -1,0 +1,7 @@
+style "gaupol-tab-close-button-style"
+{
+  xthickness = 0
+  ythickness = 0
+}
+
+widget "*.gaupol-tab-close-button" style "gaupol-tab-close-button-style"

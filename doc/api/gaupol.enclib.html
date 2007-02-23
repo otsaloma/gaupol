@@ -1,0 +1,307 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>API docs for &ldquo;gaupol.enclib&rdquo;</title>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <link href="apidocs.css" type="text/css" rel="stylesheet" />
+    
+    
+  </head>
+  <body>
+    <h1 class="module">Module g.enclib</h1>
+    <p>
+      <span id="part">Part of <a href="gaupol.html">gaupol</a></span>
+      <a href="gaupol/enclib.py.html">View Source</a>
+      
+    </p>
+    <div>
+      
+    </div>
+    <div><pre class="literalblock">
+Encodings and encoding names.
+
+Module variables:
+
+    _ENCODINGS:  Tuple of tuples of python name, display name, description
+    _RE_ILLEGAL: Regular expression for illegal characters in encoding names
+</pre>
+<table class="fieldTable"></table></div>
+    
+    
+    <div id="splitTables">
+      <table class="children sortable" id="id53">
+  
+  
+  
+  
+  <tr class="function">
+    
+    
+    <td>Function</td>
+    <td><a href="gaupol.enclib.html#_translate">_translate</a></td>
+    <td><span><pre class="literalblock">
+Translate weird encoding name.
+</pre>
+</span></td>
+  </tr><tr class="function">
+    
+    
+    <td>Function</td>
+    <td><a href="gaupol.enclib.html#detect">detect</a></td>
+    <td><span><pre class="literalblock">
+Detect the character encoding in file.
+</pre>
+</span></td>
+  </tr><tr class="function">
+    
+    
+    <td>Function</td>
+    <td><a href="gaupol.enclib.html#get_display_name">get_display_name</a></td>
+    <td><span><pre class="literalblock">
+Get the display name for encoding.
+</pre>
+</span></td>
+  </tr><tr class="function">
+    
+    
+    <td>Function</td>
+    <td><a href="gaupol.enclib.html#get_locale_long_name">get_locale_long_name</a></td>
+    <td><span><pre class="literalblock">
+Get the long name for locale encoding.
+</pre>
+</span></td>
+  </tr><tr class="function">
+    
+    
+    <td>Function</td>
+    <td><a href="gaupol.enclib.html#get_locale_python_name">get_locale_python_name</a></td>
+    <td><span><pre class="literalblock">
+Get the python name of the locale encoding or None.
+</pre>
+</span></td>
+  </tr><tr class="function">
+    
+    
+    <td>Function</td>
+    <td><a href="gaupol.enclib.html#get_long_name">get_long_name</a></td>
+    <td><span><pre class="literalblock">
+Get the long name for encoding.
+</pre>
+</span></td>
+  </tr><tr class="function">
+    
+    
+    <td>Function</td>
+    <td><a href="gaupol.enclib.html#get_python_name">get_python_name</a></td>
+    <td><span><pre class="literalblock">
+Get the python name for encoding.
+</pre>
+</span></td>
+  </tr><tr class="function">
+    
+    
+    <td>Function</td>
+    <td><a href="gaupol.enclib.html#get_valid_encodings">get_valid_encodings</a></td>
+    <td><span><pre class="literalblock">
+Get a list of valid encodings.
+</pre>
+</span></td>
+  </tr><tr class="function">
+    
+    
+    <td>Function</td>
+    <td><a href="gaupol.enclib.html#is_valid">is_valid</a></td>
+    <td><span><pre class="literalblock">
+Return True is encoding is valid.
+</pre>
+</span></td>
+  </tr>
+  
+</table>
+      
+      
+    </div>
+    
+    
+    
+    <div class="function">
+        <a name="gaupol.enclib._translate"></a>
+        <a name="_translate"></a>
+        <div class="functionHeader">
+        def _translate(name):
+        <a href="gaupol/enclib.py.html#L140" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Translate weird encoding name.
+
+Raise ValueError if not found.
+Return python name, display name, description.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.enclib.detect"></a>
+        <a name="detect"></a>
+        <div class="functionHeader">
+        def detect(path):
+        <a href="gaupol/enclib.py.html#L155" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Detect the character encoding in file.
+
+Raise IOError if reading fails.
+Raise ValueError if not found.
+Return python name.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.enclib.get_display_name"></a>
+        <a name="get_display_name"></a>
+        <div class="functionHeader">
+        def get_display_name(python_name):
+        <a href="gaupol/enclib.py.html#L178" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Get the display name for encoding.
+
+Raise ValueError if not found.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.enclib.get_locale_long_name"></a>
+        <a name="get_locale_long_name"></a>
+        <div class="functionHeader">
+        def get_locale_long_name():
+        <a href="gaupol/enclib.py.html#L188" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Get the long name for locale encoding.
+
+Raise ValueError if not found.
+Return 'Current locale (Display name)'.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.enclib.get_locale_python_name"></a>
+        <a name="get_locale_python_name"></a>
+        <div class="functionHeader">
+        def get_locale_python_name():
+        <a href="gaupol/enclib.py.html#L197" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Get the python name of the locale encoding or None.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.enclib.get_long_name"></a>
+        <a name="get_long_name"></a>
+        <div class="functionHeader">
+        def get_long_name(python_name):
+        <a href="gaupol/enclib.py.html#L207" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Get the long name for encoding.
+
+Raise ValueError if not found.
+Return 'Description (Display name)'.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.enclib.get_python_name"></a>
+        <a name="get_python_name"></a>
+        <div class="functionHeader">
+        def get_python_name(display_name):
+        <a href="gaupol/enclib.py.html#L219" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Get the python name for encoding.
+
+Raise ValueError if not found.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.enclib.get_valid_encodings"></a>
+        <a name="get_valid_encodings"></a>
+        <div class="functionHeader">
+        def get_valid_encodings():
+        <a href="gaupol/enclib.py.html#L229" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Get a list of valid encodings.
+
+Return list of tuples of python name, display name, description.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.enclib.is_valid"></a>
+        <a name="is_valid"></a>
+        <div class="functionHeader">
+        def is_valid(python_name):
+        <a href="gaupol/enclib.py.html#L240" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Return True is encoding is valid.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div>
+    
+    <address>
+      <a href="index.html">API Documentation</a> for <a href="http://home.gna.org/gaupol/">Gaupol</a>, generated by <a href="http://codespeak.net/~mwh/pydoctor/">pydoctor</a>.
+    </address>
+  </body>
+</html>

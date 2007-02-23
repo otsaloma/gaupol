@@ -1,0 +1,55 @@
+Translating Gaupol
+==================
+
+Contents
+ 1. Introduction
+ 2. Managing files
+ 3. Testing your translation
+ 4. Submitting your translation
+
+
+1. Introduction
+===============
+
+To avoid doing pointless work, first check the latest list of existing
+translations at the subversion trunk
+
+    http://svn.gna.org/viewcvs/gaupol/trunk/po/
+
+Gaupol uses the standard gettext system for translations. A .pot file
+for the latest version is provided in the "po" directory. When run
+from the source directory, Gaupol loads translations from the "locale"
+directory (which does not exist by default).
+
+A script called "translate" (in the "tools" directory) has been
+written to perform all the necessary file manipulations for the
+translation files. "translate" requires packages intltool and gettext.
+
+
+2. Managing Files
+=================
+
+You can use "translate" to create, update and compile translation
+files. For details on the commands, see
+
+    tools/translate --help
+
+Created .po files are placed in the "po" directory and compiled .mo
+files in the "locale" directory.
+
+
+3. Testing Your Translation
+===========================
+
+After you have compiled a .mo file, the translation is available to
+Gaupol. To start Gaupol with a translation in your current locale, run
+command "bin/gaupol". To start Gaupol without a translation, run
+command "LANG=C bin/gaupol".
+
+
+4. Submitting Your Translation
+==============================
+
+All .po files should be UTF-8 encoded. If not already, use msgconv to
+convert the .po file to UTF-8. When you are done, send the .po file by
+email to Osmo Salomaa <otsaloma@cc.hut.fi>.

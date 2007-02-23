@@ -1,0 +1,10 @@
+Subviewer 2.0
+=============
+
+In the header: COLF is "&H" followed by RRGGBB; STYLE is "st" for
+strikeout, "ud" for underline, "bd" for bold, or "it" for italic; SIZE
+is font size in points; FONT is font name.
+
+Tags: <b></b>, <i></i>, <u></u>
+Extension: .sub
+Source: http://forum.doom9.org/showthread.php?p=542288#post542288

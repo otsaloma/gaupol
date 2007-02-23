@@ -1,0 +1,570 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>API docs for &ldquo;gaupol.liner.Liner&rdquo;</title>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <link href="apidocs.css" type="text/css" rel="stylesheet" />
+    
+    
+  </head>
+  <body>
+    <h1 class="class">Class g.l.Liner(<a href="gaupol.parser.Parser.html">Parser</a>):</h1>
+    <p>
+      <span id="part">Part of <a href="gaupol.html">gaupol</a>.<a href="gaupol.liner.html">liner</a></span>
+      <a href="gaupol/liner.py.html#L38">View Source</a>
+      <a href="classIndex.html#gaupol.liner.Liner">View In Hierarchy</a>
+    </p>
+    <div>
+      
+    </div>
+    <div><pre class="literalblock">
+Splitter and merger of lines.
+
+Instance variables:
+
+    _length_func:  A function that returns the length of its argument
+    _space_length: Length of a space according to length_func
+    max_length:    Maximum length of a line in units of _length_func
+    ok_clauses:    Amount of clause lines that need not be joined
+    ok_dialogue:   Amount of dialogue lines that need not be joined
+    re_clause:     Regular expression for a clause separator
+    re_dialogue:   Regular expression for a dialogue separator
+
+re_clause and re_dialogue are required to have groups 'before' and 'after'
+surrounding a single space that acts as the separator.
+</pre>
+<table class="fieldTable"></table></div>
+    
+    
+    <div id="splitTables">
+      <table class="children sortable" id="id60">
+  
+  
+  
+  
+  <tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.liner.Liner.html#__init__">__init__</a></td>
+    <td><span><pre class="literalblock">
+Initialize Liner.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.liner.Liner.html#_get_length">_get_length</a></td>
+    <td><span><pre class="literalblock">
+Get the length of units joined by spaces.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.liner.Liner.html#_get_split">_get_split</a></td>
+    <td><span><pre class="literalblock">
+Get index of split in two for units.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.liner.Liner.html#_get_splits">_get_splits</a></td>
+    <td><span><pre class="literalblock">
+Get indexes of splits for units.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.liner.Liner.html#_get_splits_brute">_get_splits_brute</a></td>
+    <td><span><pre class="literalblock">
+Get brute forced indexes of splits for units.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.liner.Liner.html#_get_splits_ugly">_get_splits_ugly</a></td>
+    <td><span><pre class="literalblock">
+Get unoptimal indexes of splits for units.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.liner.Liner.html#_get_start_index">_get_start_index</a></td>
+    <td><span><pre class="literalblock">
+Get the index for the first split candidate for units.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.liner.Liner.html#_join_even">_join_even</a></td>
+    <td><span><pre class="literalblock">
+Join the lines, each containing a logical unit, evenly.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.liner.Liner.html#_split_on_clauses">_split_on_clauses</a></td>
+    <td><span><pre class="literalblock">
+Split the text to lines based on clauses.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.liner.Liner.html#_split_on_dialogue">_split_on_dialogue</a></td>
+    <td><span><pre class="literalblock">
+Split the text to lines based on dialogue.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.liner.Liner.html#_split_on_words">_split_on_words</a></td>
+    <td><span><pre class="literalblock">
+Split the text to lines based on words.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.liner.Liner.html#format">format</a></td>
+    <td><span><pre class="literalblock">
+Format lines and return text.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.liner.Liner.html#is_legal">is_legal</a></td>
+    <td><span><pre class="literalblock">
+Return True if the text is legal.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.liner.Liner.html#set_length_function">set_length_function</a></td>
+    <td><span><pre class="literalblock">
+Set the length function to use.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.liner.Liner.html#set_text">set_text</a></td>
+    <td><span><pre class="literalblock">
+Set the text and parse it.
+</pre>
+</span></td>
+  </tr>
+  
+</table>
+      
+        <p>
+          Inherited from <a href="gaupol.parser.Parser.html">Parser</a>:
+        </p>
+        <table class="children sortable" id="id61">
+  
+  
+  
+  
+  <tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.parser.Parser.html#_set_margins">_set_margins</a></td>
+    <td><span><pre class="literalblock">
+Find the margin tags in text if such exist.
+</pre>
+</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.parser.Parser.html#_shift_tags">_shift_tags</a></td>
+    <td><span><pre class="literalblock">
+Shift all the tags after position.
+</pre>
+</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.parser.Parser.html#get_text">get_text</a></td>
+    <td><span><pre class="literalblock">
+Reassemble the text and return it.
+</pre>
+</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.parser.Parser.html#replace">replace</a></td>
+    <td><span><pre class="literalblock">
+Replace the current match.
+</pre>
+</span></td>
+  </tr>
+  
+</table>
+      
+        <p>
+          Inherited from <a href="gaupol.finder.Finder.html">Finder</a> (via <a href="gaupol.parser.Parser.html">Parser</a>):
+        </p>
+        <table class="children sortable" id="id62">
+  
+  
+  
+  
+  <tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.finder.Finder.html#next">next</a></td>
+    <td><span><pre class="literalblock">
+Find the next match of pattern.
+</pre>
+</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.finder.Finder.html#previous">previous</a></td>
+    <td><span><pre class="literalblock">
+Find the previous match of pattern.
+</pre>
+</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.finder.Finder.html#replace_all">replace_all</a></td>
+    <td><span><pre class="literalblock">
+Replace all occurences of pattern.
+</pre>
+</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.finder.Finder.html#set_regex">set_regex</a></td>
+    <td><span><pre class="literalblock">
+Set and use regular expression.
+</pre>
+</span></td>
+  </tr>
+  
+</table>
+      
+      
+    </div>
+    
+    
+    
+    <div class="function">
+        <a name="gaupol.liner.Liner.__init__"></a>
+        <a name="__init__"></a>
+        <div class="functionHeader">
+        def __init__(self, re_tag=None):
+        <a href="gaupol/liner.py.html#L56" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          <div class="interfaceinfo">overrides <a href="gaupol.parser.Parser.html#__init__">gaupol.parser.Parser.__init__</a></div>
+          <div><pre class="literalblock">
+Initialize Liner.
+
+re_tag should be a regular expression object.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.liner.Liner._get_length"></a>
+        <a name="_get_length"></a>
+        <div class="functionHeader">
+        def _get_length(self, lengths):
+        <a href="gaupol/liner.py.html#L77" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Get the length of units joined by spaces.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.liner.Liner._get_split"></a>
+        <a name="_get_split"></a>
+        <div class="functionHeader">
+        def _get_split(self, lengths):
+        <a href="gaupol/liner.py.html#L82" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Get index of split in two for units.
+
+Indexes are brute forced within reason and the result is optimal.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.liner.Liner._get_splits"></a>
+        <a name="_get_splits"></a>
+        <div class="functionHeader">
+        def _get_splits(self, lengths, max_lines):
+        <a href="gaupol/liner.py.html#L102" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Get indexes of splits for units.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.liner.Liner._get_splits_brute"></a>
+        <a name="_get_splits_brute"></a>
+        <div class="functionHeader">
+        def _get_splits_brute(self, lengths, max_lines):
+        <a href="gaupol/liner.py.html#L111" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Get brute forced indexes of splits for units.
+
+Indexes are brute forced within reason and the result is optimal.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.liner.Liner._get_splits_ugly"></a>
+        <a name="_get_splits_ugly"></a>
+        <div class="functionHeader">
+        def _get_splits_ugly(self, lengths, max_lines):
+        <a href="gaupol/liner.py.html#L139" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Get unoptimal indexes of splits for units.
+
+Units are first split to groups of two, which are then split
+internally. The result is not optimal, but is obtained fast.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.liner.Liner._get_start_index"></a>
+        <a name="_get_start_index"></a>
+        <div class="functionHeader">
+        def _get_start_index(self, lengths, max_lines):
+        <a href="gaupol/liner.py.html#L157" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Get the index for the first split candidate for units.
+
+The start index is determined based on the line length mean with the
+purpose to avoid brute forcing insane indexes.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.liner.Liner._join_even"></a>
+        <a name="_join_even"></a>
+        <div class="functionHeader">
+        def _join_even(self, max_lines):
+        <a href="gaupol/liner.py.html#L171" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Join the lines, each containing a logical unit, evenly.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.liner.Liner._split_on_clauses"></a>
+        <a name="_split_on_clauses"></a>
+        <div class="functionHeader">
+        def _split_on_clauses(self, max_lines):
+        <a href="gaupol/liner.py.html#L186" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Split the text to lines based on clauses.
+
+Return True if one or more splits made.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.liner.Liner._split_on_dialogue"></a>
+        <a name="_split_on_dialogue"></a>
+        <div class="functionHeader">
+        def _split_on_dialogue(self, max_lines):
+        <a href="gaupol/liner.py.html#L202" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Split the text to lines based on dialogue.
+
+Return True if one or more splits made.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.liner.Liner._split_on_words"></a>
+        <a name="_split_on_words"></a>
+        <div class="functionHeader">
+        def _split_on_words(self, max_lines):
+        <a href="gaupol/liner.py.html#L218" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Split the text to lines based on words.
+
+Return True.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.liner.Liner.format"></a>
+        <a name="format"></a>
+        <div class="functionHeader">
+        def format(self):
+        <a href="gaupol/liner.py.html#L230" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Format lines and return text.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.liner.Liner.is_legal"></a>
+        <a name="is_legal"></a>
+        <div class="functionHeader">
+        def is_legal(self):
+        <a href="gaupol/liner.py.html#L249" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Return True if the text is legal.
+
+The text is legal if it does not break self.max_length.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.liner.Liner.set_length_function"></a>
+        <a name="set_length_function"></a>
+        <div class="functionHeader">
+        def set_length_function(self, func):
+        <a href="gaupol/liner.py.html#L259" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Set the length function to use.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.liner.Liner.set_text"></a>
+        <a name="set_text"></a>
+        <div class="functionHeader">
+        def set_text(self, text, next=True):
+        <a href="gaupol/liner.py.html#L265" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          <div class="interfaceinfo">overrides <a href="gaupol.parser.Parser.html#set_text">gaupol.parser.Parser.set_text</a></div>
+          <div><pre class="literalblock">
+Set the text and parse it.
+
+next should be True to start at beginning, False for end.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div>
+    
+    <address>
+      <a href="index.html">API Documentation</a> for <a href="http://home.gna.org/gaupol/">Gaupol</a>, generated by <a href="http://codespeak.net/~mwh/pydoctor/">pydoctor</a>.
+    </address>
+  </body>
+</html>

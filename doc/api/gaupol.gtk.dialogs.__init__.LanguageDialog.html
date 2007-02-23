@@ -1,0 +1,337 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>API docs for &ldquo;gaupol.gtk.dialogs.__init__.LanguageDialog&rdquo;</title>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <link href="apidocs.css" type="text/css" rel="stylesheet" />
+    
+    
+  </head>
+  <body>
+    <h1 class="class">Class g.g.d._.LanguageDialog(<a href="gaupol.gtk.dialogs.__init__.GladeDialog.html">GladeDialog</a>):</h1>
+    <p>
+      <span id="part">Part of <a href="gaupol.html">gaupol</a>.<a href="gaupol.gtk.html">gtk</a>.<a href="gaupol.gtk.dialogs.html">dialogs</a></span>
+      <a href="gaupol/gtk/dialogs/language.py.html#L36">View Source</a>
+      <a href="classIndex.html#gaupol.gtk.dialogs.__init__.LanguageDialog">View In Hierarchy</a>
+    </p>
+    <div>
+      
+    </div>
+    <div><pre class="literalblock">
+Dialog for configuring spell-check.
+
+Instance variables:
+
+    _all_radio:     gtk.RadioButton, target all documents
+    _current_radio: gtk.RadioButton, target current document
+    _langs:         List of languages, er... locales
+    _main_radio:    gtk.RadioButton, target main text column
+    _tran_radio:    gtk.RadioButton, target translation text column
+    _tree_view:     gtk.TreeView, languages
+</pre>
+<table class="fieldTable"></table></div>
+    
+    
+    <div id="splitTables">
+      <table class="children sortable" id="id235">
+  
+  
+  
+  
+  <tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.dialogs.__init__.LanguageDialog.html#__init__">__init__</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.dialogs.__init__.LanguageDialog.html#_init_data">_init_data</a></td>
+    <td><span><pre class="literalblock">
+Initialize default values for widgets.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.dialogs.__init__.LanguageDialog.html#_init_langs">_init_langs</a></td>
+    <td><span><pre class="literalblock">
+Initialize the list of available languages.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.dialogs.__init__.LanguageDialog.html#_init_signal_handlers">_init_signal_handlers</a></td>
+    <td><span><pre class="literalblock">
+Initialize signal handlers.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.dialogs.__init__.LanguageDialog.html#_init_sizes">_init_sizes</a></td>
+    <td><span><pre class="literalblock">
+Initialize widget sizes.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.dialogs.__init__.LanguageDialog.html#_init_tree_view">_init_tree_view</a></td>
+    <td><span><pre class="literalblock">
+Initialize the tree view.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.dialogs.__init__.LanguageDialog.html#_on_tree_view_selection_changed">_on_tree_view_selection_changed</a></td>
+    <td><span><pre class="literalblock">
+Save the language.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.dialogs.__init__.LanguageDialog.html#_save_column">_save_column</a></td>
+    <td><span><pre class="literalblock">
+Save the column.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.dialogs.__init__.LanguageDialog.html#_save_target">_save_target</a></td>
+    <td><span><pre class="literalblock">
+Save the target.
+</pre>
+</span></td>
+  </tr>
+  
+</table>
+      
+        <p>
+          Inherited from <a href="gaupol.gtk.dialogs.__init__.GladeDialog.html">GladeDialog</a>:
+        </p>
+        <table class="children sortable" id="id236">
+  
+  
+  
+  
+  <tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.dialogs.__init__.GladeDialog.html#run">run</a></td>
+    <td><span><pre class="literalblock">
+Show the dialog, run it and return response.
+</pre>
+</span></td>
+  </tr>
+  
+</table>
+      
+        <p>
+          Inherited from <a href="gaupol.gtk.runner.Runner.html">Runner</a> (via <a href="gaupol.gtk.dialogs.__init__.GladeDialog.html">GladeDialog</a>):
+        </p>
+        <table class="children sortable" id="id237">
+  
+  
+  
+  
+  <tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.runner.Runner.html#flash_dialog">flash_dialog</a></td>
+    <td><span><pre class="literalblock">
+Run dialog, destroy it and return response.
+</pre>
+</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.runner.Runner.html#run_dialog">run_dialog</a></td>
+    <td><span><pre class="literalblock">
+Run dialog and return response.
+</pre>
+</span></td>
+  </tr>
+  
+</table>
+      
+      
+    </div>
+    
+    
+    
+    <div class="function">
+        <a name="gaupol.gtk.dialogs.language.LanguageDialog.__init__"></a>
+        <a name="__init__"></a>
+        <div class="functionHeader">
+        def __init__(self, parent):
+        <a href="gaupol/gtk/dialogs/language.py.html#L50" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          <div class="interfaceinfo">overrides <a href="gaupol.gtk.dialogs.__init__.GladeDialog.html#__init__">gaupol.gtk.dialogs.glade.GladeDialog.__init__</a></div>
+          <div class="undocumented">Undocumented</div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.dialogs.language.LanguageDialog._init_data"></a>
+        <a name="_init_data"></a>
+        <div class="functionHeader">
+        def _init_data(self):
+        <a href="gaupol/gtk/dialogs/language.py.html#L70" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Initialize default values for widgets.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.dialogs.language.LanguageDialog._init_langs"></a>
+        <a name="_init_langs"></a>
+        <div class="functionHeader">
+        def _init_langs(self):
+        <a href="gaupol/gtk/dialogs/language.py.html#L85" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Initialize the list of available languages.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.dialogs.language.LanguageDialog._init_signal_handlers"></a>
+        <a name="_init_signal_handlers"></a>
+        <div class="functionHeader">
+        def _init_signal_handlers(self):
+        <a href="gaupol/gtk/dialogs/language.py.html#L96" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Initialize signal handlers.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.dialogs.language.LanguageDialog._init_sizes"></a>
+        <a name="_init_sizes"></a>
+        <div class="functionHeader">
+        def _init_sizes(self):
+        <a href="gaupol/gtk/dialogs/language.py.html#L112" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Initialize widget sizes.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.dialogs.language.LanguageDialog._init_tree_view"></a>
+        <a name="_init_tree_view"></a>
+        <div class="functionHeader">
+        def _init_tree_view(self):
+        <a href="gaupol/gtk/dialogs/language.py.html#L120" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Initialize the tree view.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.dialogs.language.LanguageDialog._on_tree_view_selection_changed"></a>
+        <a name="_on_tree_view_selection_changed"></a>
+        <div class="functionHeader">
+        def _on_tree_view_selection_changed(self, selection):
+        <a href="gaupol/gtk/dialogs/language.py.html#L133" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Save the language.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.dialogs.language.LanguageDialog._save_column"></a>
+        <a name="_save_column"></a>
+        <div class="functionHeader">
+        def _save_column(self):
+        <a href="gaupol/gtk/dialogs/language.py.html#L141" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Save the column.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.dialogs.language.LanguageDialog._save_target"></a>
+        <a name="_save_target"></a>
+        <div class="functionHeader">
+        def _save_target(self):
+        <a href="gaupol/gtk/dialogs/language.py.html#L148" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Save the target.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div>
+    
+    <address>
+      <a href="index.html">API Documentation</a> for <a href="http://home.gna.org/gaupol/">Gaupol</a>, generated by <a href="http://codespeak.net/~mwh/pydoctor/">pydoctor</a>.
+    </address>
+  </body>
+</html>

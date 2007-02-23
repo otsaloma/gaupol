@@ -1,0 +1,657 @@
+# Copyright (C) 2005-2007 Osmo Salomaa
+#
+# This file is part of Gaupol.
+#
+# Gaupol is free software; you can redistribute it and/or modify it under the
+# terms of the GNU General Public License as published by the Free Software
+# Foundation; either version 2 of the License, or (at your option) any later
+# version.
+#
+# Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# Gaupol; if not, write to the Free Software Foundation, Inc., 51 Franklin
+# Street, Fifth Floor, Boston, MA 02110-1301, USA.
+
+
+import re
+
+from gaupol.unittest import TestCase
+from .. import finder
+
+
+ORIG_TEXT = \
+"""One only risks it, because
+one's survival depends on it."""
+
+
+class TestFinder(TestCase):
+
+    def loop_find_cases(self, cases, regex, next):
+
+        advance = (self.finder.next if next else self.finder.previous)
+        for pattern, matches in cases:
+            self.finder.set_text(ORIG_TEXT, next)
+            self.finder.pattern = pattern
+            if regex:
+                self.finder.set_regex(pattern, re.DOTALL)
+            for match in matches:
+                assert advance() == match
+                assert self.finder.pos == match[next]
+            try:
+                advance()
+                raise AssertionError
+            except StopIteration:
+                pass
+
+    def setup_method(self, method):
+
+        self.finder = finder.Finder()
+
+    def test_next_regex(self):
+
+        cases = (
+            (r"a", (
+                (22, 23),
+                (39, 40),)),
+            (r"it", (
+                (15, 17),
+                (53, 55),)),
+            (r"^", (
+                ( 0,  0),
+                (27, 27),)),
+            (r"\A", (
+                ( 0,  0),)),
+            (r"$", (
+                (26, 26),
+                (56, 56),)),
+            (r"\Z", (
+                (56, 56),)),
+            (r"\b", (
+                ( 0,  0),
+                ( 3,  3),
+                ( 4,  4),
+                ( 8,  8),
+                ( 9,  9),
+                (14, 14),
+                (15, 15),
+                (17, 17),
+                (19, 19),
+                (26, 26),
+                (27, 27),
+                (30, 30),
+                (31, 31),
+                (32, 32),
+                (33, 33),
+                (41, 41),
+                (42, 42),
+                (49, 49),
+                (50, 50),
+                (52, 52),
+                (53, 53),
+                (55, 55),)),
+            (r"\s", (
+                ( 3,  4),
+                ( 8,  9),
+                (14, 15),
+                (18, 19),
+                (26, 27),
+                (32, 33),
+                (41, 42),
+                (49, 50),
+                (52, 53),)),
+            (r"\w+", (
+                ( 0,  3),
+                ( 4,  8),
+                ( 9, 14),
+                (15, 17),
+                (19, 26),
+                (27, 30),
+                (31, 32),
+                (33, 41),
+                (42, 49),
+                (50, 52),
+                (53, 55),)),
+            (r"\W{2}", (
+                (17, 19),)))
+
+        self.loop_find_cases(cases, True, True)
+
+    def test_next_regex_ignore_case(self):
+
+        cases = (
+            (r"O" , (
+                ( 0,  1),
+                ( 4,  5),
+                (27, 28),
+                (50, 51),)),
+            (r"D", (
+                (42, 43),
+                (47, 48),)))
+
+        self.finder.ignore_case = True
+        self.loop_find_cases(cases, True, True)
+
+    def test_next_string(self):
+
+        cases = (
+            ("a" , (
+                (22, 23),
+                (39, 40),)),
+            ("it", (
+                (15, 17),
+                (53, 55),)),
+            ("O" , (
+                ( 0,  1),)),
+            (" ", (
+                ( 3,  4),
+                ( 8,  9),
+                (14, 15),
+                (18, 19),
+                (32, 33),
+                (41, 42),
+                (49, 50),
+                (52, 53),)),
+            ("\n", (
+                (26, 27),)),
+            ("." , (
+                (55, 56),)))
+
+        self.loop_find_cases(cases, False, True)
+
+    def test_next_string_ignore_case(self):
+
+        cases = (
+            ("o" , (
+                ( 0,  1),
+                ( 4,  5),
+                (27, 28),
+                (50, 51),)),
+            ("k", (
+                (12, 13),)))
+
+        self.finder.ignore_case = True
+        self.loop_find_cases(cases, False, True)
+
+    def test_previous_regex(self):
+
+        cases = (
+            (r"a" , (
+                (39, 40),
+                (22, 23),)),
+            (r"it", (
+                (53, 55),
+                (15, 17),)),
+            (r"^", (
+                (27, 27),
+                ( 0,  0),)),
+            (r"\A", (
+                ( 0,  0),)),
+            (r"$", (
+                (56, 56),
+                (26, 26),)),
+            (r"\Z", (
+                (56, 56),)),
+            (r"\b", (
+                (55, 55),
+                (53, 53),
+                (52, 52),
+                (50, 50),
+                (49, 49),
+                (42, 42),
+                (41, 41),
+                (33, 33),
+                (32, 32),
+                (31, 31),
+                (30, 30),
+                (27, 27),
+                (26, 26),
+                (19, 19),
+                (17, 17),
+                (15, 15),
+                (14, 14),
+                ( 9,  9),
+                ( 8,  8),
+                ( 4,  4),
+                ( 3,  3),
+                ( 0,  0),)),
+            (r"\s", (
+                (52, 53),
+                (49, 50),
+                (41, 42),
+                (32, 33),
+                (26, 27),
+                (18, 19),
+                (14, 15),
+                ( 8,  9),
+                ( 3,  4),)),
+            (r"\w+", (
+                (53, 55),
+                (50, 52),
+                (42, 49),
+                (33, 41),
+                (31, 32),
+                (27, 30),
+                (19, 26),
+                (15, 17),
+                ( 9, 14),
+                ( 4,  8),
+                ( 0,  3),)),
+            (r"\W{2}", (
+                (17, 19),)))
+
+        self.loop_find_cases(cases, True, False)
+
+    def test_previous_regex_ignore_case(self):
+
+        cases = (
+            (r"O" , (
+                (50, 51),
+                (27, 28),
+                ( 4,  5),
+                ( 0,  1),)),
+            (r"D", (
+                (47, 48),
+                (42, 43),)))
+
+        self.finder.ignore_case = True
+        self.loop_find_cases(cases, True, False)
+
+    def test_previous_string(self):
+
+        cases = (
+            ("a" , (
+                (39, 40),
+                (22, 23),)),
+            ("it", (
+                (53, 55),
+                (15, 17),)),
+            ("O" , (
+                (0, 1),)),
+            (" ", (
+                (52, 53),
+                (49, 50),
+                (41, 42),
+                (32, 33),
+                (18, 19),
+                (14, 15),
+                ( 8,  9),
+                ( 3,  4),)),
+            ("\n", (
+                (26, 27),)),
+            ("." , (
+                (55, 56),)))
+
+        self.loop_find_cases(cases, False, False)
+
+    def test_previous_string_ignore_case(self):
+
+        cases = (
+            ("o" , (
+                (50, 51),
+                (27, 28),
+                ( 4,  5),
+                ( 0,  1),)),
+            ("k", (
+                (12, 13),)))
+
+        self.finder.ignore_case = True
+        self.loop_find_cases(cases, False, False)
+
+    def test_replace_equal_next(self):
+
+        self.finder.set_text(ORIG_TEXT)
+        self.finder.pattern = "ne"
+        self.finder.replacement = "--"
+
+        self.finder.next()
+        self.finder.replace()
+        assert self.finder.text == \
+            "O-- only risks it, because\n" + \
+            "one's survival depends on it."
+        assert self.finder.pos == 3
+
+        self.finder.next()
+        self.finder.replace()
+        assert self.finder.text == \
+            "O-- only risks it, because\n" + \
+            "o--'s survival depends on it."
+        assert self.finder.pos == 30
+
+        try:
+            self.finder.next()
+            raise AssertionError
+        except StopIteration:
+            pass
+
+    def test_replace_equal_previous(self):
+
+        self.finder.set_text(ORIG_TEXT, False)
+        self.finder.pattern = "ne"
+        self.finder.replacement = "--"
+
+        self.finder.previous()
+        self.finder.replace(False)
+        assert self.finder.text == \
+            "One only risks it, because\n" + \
+            "o--'s survival depends on it."
+        assert self.finder.pos == 28
+
+        self.finder.previous()
+        self.finder.replace(False)
+        assert self.finder.text == \
+            "O-- only risks it, because\n" + \
+            "o--'s survival depends on it."
+        assert self.finder.pos == 1
+
+        try:
+            self.finder.previous()
+            raise AssertionError
+        except StopIteration:
+            pass
+
+    def test_replace_lengthen_regex_dollar_next(self):
+
+        self.finder.set_text(ORIG_TEXT)
+        self.finder.set_regex(r"$")
+        self.finder.replacement = "--"
+
+        self.finder.next()
+        self.finder.replace()
+        assert self.finder.text == \
+            "One only risks it, because--\n" + \
+            "one's survival depends on it."
+        assert self.finder.pos == 28
+
+        self.finder.next()
+        self.finder.replace()
+        assert self.finder.text == \
+            "One only risks it, because--\n" + \
+            "one's survival depends on it.--"
+        assert self.finder.pos == 60
+
+        try:
+            self.finder.next()
+            raise AssertionError
+        except StopIteration:
+            pass
+
+    def test_replace_lengthen_regex_dollar_previous(self):
+
+        self.finder.set_text(ORIG_TEXT, False)
+        self.finder.set_regex(r"$")
+        self.finder.replacement = "--"
+
+        self.finder.previous()
+        self.finder.replace(False)
+        assert self.finder.text == \
+            "One only risks it, because\n" + \
+            "one's survival depends on it.--"
+        assert self.finder.pos == 56
+
+        self.finder.previous()
+        self.finder.replace(False)
+        assert self.finder.text == \
+            "One only risks it, because--\n" + \
+            "one's survival depends on it.--"
+        assert self.finder.pos == 26
+
+        try:
+            self.finder.previous()
+            raise AssertionError
+        except StopIteration:
+            pass
+
+    def test_replace_lengthen_regex_hat_next(self):
+
+        self.finder.set_text(ORIG_TEXT)
+        self.finder.set_regex(r"^")
+        self.finder.replacement = "--"
+
+        self.finder.next()
+        self.finder.replace()
+        assert self.finder.text == \
+            "--One only risks it, because\n" + \
+            "one's survival depends on it."
+        assert self.finder.pos == 2
+
+        self.finder.next()
+        self.finder.replace()
+        assert self.finder.text == \
+            "--One only risks it, because\n" + \
+            "--one's survival depends on it."
+        assert self.finder.pos == 31
+
+        try:
+            self.finder.next()
+            raise AssertionError
+        except StopIteration:
+            pass
+
+    def test_replace_lengthen_regex_hat_previous(self):
+
+        self.finder.set_text(ORIG_TEXT, False)
+        self.finder.set_regex(r"^")
+        self.finder.replacement = "--"
+
+        self.finder.previous()
+        self.finder.replace(False)
+        assert self.finder.text == \
+            "One only risks it, because\n" + \
+            "--one's survival depends on it."
+        assert self.finder.pos == 27
+
+        self.finder.previous()
+        self.finder.replace(False)
+        assert self.finder.text == \
+            "--One only risks it, because\n" + \
+            "--one's survival depends on it."
+        assert self.finder.pos == 0
+
+        try:
+            self.finder.previous()
+            raise AssertionError
+        except StopIteration:
+            pass
+
+    def test_replace_lengthen_string_match_next(self):
+
+        self.finder.set_text(ORIG_TEXT)
+        self.finder.pattern = "v"
+        self.finder.replacement = "vv"
+
+        self.finder.next()
+        self.finder.replace()
+        assert self.finder.text == \
+            "One only risks it, because\n" + \
+            "one's survvival depends on it."
+        assert self.finder.pos == 38
+
+        self.finder.next()
+        self.finder.replace()
+        assert self.finder.text == \
+            "One only risks it, because\n" + \
+            "one's survvivval depends on it."
+        assert self.finder.pos == 41
+
+        try:
+            self.finder.next()
+            raise AssertionError
+        except StopIteration:
+            pass
+
+    def test_replace_lengthen_string_match_previous(self):
+
+        self.finder.set_text(ORIG_TEXT, False)
+        self.finder.pattern = "v"
+        self.finder.replacement = "vv"
+
+        self.finder.previous()
+        self.finder.replace(False)
+        assert self.finder.text == \
+            "One only risks it, because\n" + \
+            "one's survivval depends on it."
+        assert self.finder.pos == 38
+
+        self.finder.previous()
+        self.finder.replace(False)
+        assert self.finder.text == \
+            "One only risks it, because\n" + \
+            "one's survvivval depends on it."
+        assert self.finder.pos == 36
+
+        try:
+            self.finder.previous()
+            raise AssertionError
+        except StopIteration:
+            pass
+
+    def test_replace_shorten_regex_next(self):
+
+        self.finder.set_text(ORIG_TEXT)
+        self.finder.set_regex(r"[\.,]")
+        self.finder.replacement = ""
+
+        self.finder.next()
+        self.finder.replace()
+        assert self.finder.text == \
+            "One only risks it because\n" + \
+            "one's survival depends on it."
+        assert self.finder.pos == 17
+
+        self.finder.next()
+        self.finder.replace()
+        assert self.finder.text == \
+            "One only risks it because\n" + \
+            "one's survival depends on it"
+        assert self.finder.pos == 54
+
+        try:
+            self.finder.next()
+            raise AssertionError
+        except StopIteration:
+            pass
+
+    def test_replace_shorten_regex_previous(self):
+
+        self.finder.set_text(ORIG_TEXT, False)
+        self.finder.set_regex(r"[\.,]")
+        self.finder.replacement = ""
+
+        self.finder.previous()
+        self.finder.replace(False)
+        assert self.finder.text == \
+            "One only risks it, because\n" + \
+            "one's survival depends on it"
+        assert self.finder.pos == 55
+
+        self.finder.previous()
+        self.finder.replace(False)
+        assert self.finder.text == \
+            "One only risks it because\n" + \
+            "one's survival depends on it"
+        assert self.finder.pos == 17
+
+        try:
+            self.finder.previous()
+            raise AssertionError
+        except StopIteration:
+            pass
+
+    def test_replace_all_regex(self):
+
+        cases = (
+            (r"e", r"-", 6,
+                "On- only risks it, b-caus-\n" + \
+                "on-'s survival d-p-nds on it."),
+            (r"\b", r"-", 22,
+                "-One- -only- -risks- -it-, -because-\n" + \
+                "-one-'-s- -survival- -depends- -on- -it-."),
+            (r"\s", r"", 9,
+                "Oneonlyrisksit,because" + \
+                "one'ssurvivaldependsonit."),
+            (r"^", r"-", 2,
+                "-One only risks it, because\n" + \
+                "-one's survival depends on it."),
+            (r"\A", r"-", 1,
+                "-One only risks it, because\n" + \
+                "one's survival depends on it."),
+            (r"$", r"-", 2,
+                "One only risks it, because-\n" + \
+                "one's survival depends on it.-"),
+            (r"\Z", r"-", 1,
+                "One only risks it, because\n" + \
+                "one's survival depends on it.-"),
+            (r".", r"-", 56,
+                "---------------------------" + \
+                "-----------------------------"),
+            (r".", r"..", 56,
+                "......................................................" + \
+                ".........................................................."),
+            (r"\W", r"-", 12,
+                "One-only-risks-it--because-" + \
+                "one-s-survival-depends-on-it-"))
+
+        for pattern, replacement, count, text in cases:
+            self.finder.set_text(ORIG_TEXT)
+            self.finder.set_regex(pattern, re.DOTALL)
+            self.finder.replacement = replacement
+            assert self.finder.replace_all() == count
+            assert self.finder.text == text
+
+    def test_replace_all_string(self):
+
+        cases = (
+            ("i", "-", 4,
+                "One only r-sks -t, because\n" + \
+                "one's surv-val depends on -t."),
+            (" ", "-", 8,
+                "One-only-risks-it,-because\n" + \
+                "one's-survival-depends-on-it."),
+            ("o", "oo", 3,
+                "One oonly risks it, because\n" + \
+                "oone's survival depends oon it."),
+            ("e", "" , 6,
+                "On only risks it, bcaus\n" + \
+                "on's survival dpnds on it."),
+            ("n", "n", 5,
+                "One only risks it, because\n" + \
+                "one's survival depends on it."))
+
+        for pattern, replacement, count, text in cases:
+            self.finder.set_text(ORIG_TEXT)
+            self.finder.pattern = pattern
+            self.finder.replacement = replacement
+            assert self.finder.replace_all() == count
+            assert self.finder.text == text
+
+    def test_set_regex(self):
+
+        flags = re.DOTALL | re.MULTILINE | re.UNICODE
+        self.finder.set_regex("test")
+        assert self.finder.pattern.pattern == "test"
+        assert self.finder.pattern.flags == flags
+
+        self.finder.set_regex("test", re.IGNORECASE)
+        assert self.finder.pattern.pattern == "test"
+        assert self.finder.pattern.flags == flags | re.IGNORECASE
+
+        try:
+            self.finder.set_regex(r"*(")
+            raise AssertionError
+        except re.error:
+            pass
+
+    def test_set_text(self):
+
+        self.finder.set_text("test")
+        assert self.finder.text == "test"
+        assert self.finder.match_span == None
+        assert self.finder.pos == 0
+
+        self.finder.set_text("test", False)
+        assert self.finder.text == "test"
+        assert self.finder.match_span == None
+        assert self.finder.pos == 4

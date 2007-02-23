@@ -1,0 +1,11 @@
+#!/usr/bin/env python
+
+import os
+import sys
+
+cwd = os.path.dirname(os.path.abspath(__file__))
+if os.path.isfile(os.path.join(cwd, '..', 'data', 'gaupol.desktop.in')):
+    sys.path.insert(0, os.path.join(cwd, '..'))
+
+from gaupol.gtk import main
+main.main(sys.argv[1:])

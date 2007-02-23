@@ -1,0 +1,112 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>API docs for &ldquo;gaupol.gtk._actions._action.UIMAction&rdquo;</title>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <link href="apidocs.css" type="text/css" rel="stylesheet" />
+    
+    
+  </head>
+  <body>
+    <h1 class="class">Class g.g._._.UIMAction(object):</h1>
+    <p>
+      <span id="part">Part of <a href="gaupol.html">gaupol</a>.<a href="gaupol.gtk.html">gtk</a>.<a href="gaupol.gtk._actions.html">_actions</a>.<a href="gaupol.gtk._actions._action.html">_action</a></span>
+      <a href="gaupol/gtk/_actions/_action.py.html#L22">View Source</a>
+      <a href="classIndex.html#gaupol.gtk._actions._action.UIMAction">View In Hierarchy</a>
+    </p>
+    <div>
+      <p>Known subclasses: <a href="gaupol.gtk._actions.edit.ClearTextsAction.html">gaupol.gtk._actions.edit.ClearTextsAction</a>, <a href="gaupol.gtk._actions.edit.CopyTextsAction.html">gaupol.gtk._actions.edit.CopyTextsAction</a>, <a href="gaupol.gtk._actions.edit.CutTextsAction.html">gaupol.gtk._actions.edit.CutTextsAction</a>, <a href="gaupol.gtk._actions.edit.EditPreferencesAction.html">gaupol.gtk._actions.edit.EditPreferencesAction</a>, <a href="gaupol.gtk._actions.edit.EditValueAction.html">gaupol.gtk._actions.edit.EditValueAction</a>, <a href="gaupol.gtk._actions.edit.InsertSubtitlesAction.html">gaupol.gtk._actions.edit.InsertSubtitlesAction</a>, <a href="gaupol.gtk._actions.edit.InvertSelectionAction.html">gaupol.gtk._actions.edit.InvertSelectionAction</a>, <a href="gaupol.gtk._actions.edit.MergeSubtitlesAction.html">gaupol.gtk._actions.edit.MergeSubtitlesAction</a>, <a href="gaupol.gtk._actions.edit.PasteTextsAction.html">gaupol.gtk._actions.edit.PasteTextsAction</a>, <a href="gaupol.gtk._actions.edit.RedoActionAction.html">gaupol.gtk._actions.edit.RedoActionAction</a>, <a href="gaupol.gtk._actions.edit.RemoveSubtitlesAction.html">gaupol.gtk._actions.edit.RemoveSubtitlesAction</a>, <a href="gaupol.gtk._actions.edit.SelectAllAction.html">gaupol.gtk._actions.edit.SelectAllAction</a>, <a href="gaupol.gtk._actions.edit.SplitSubtitlesAction.html">gaupol.gtk._actions.edit.SplitSubtitlesAction</a>, <a href="gaupol.gtk._actions.edit.UndoActionAction.html">gaupol.gtk._actions.edit.UndoActionAction</a>, <a href="gaupol.gtk._actions.file.CloseProjectAction.html">gaupol.gtk._actions.file.CloseProjectAction</a>, <a href="gaupol.gtk._actions.file.EditHeadersAction.html">gaupol.gtk._actions.file.EditHeadersAction</a>, <a href="gaupol.gtk._actions.file.NewProjectAction.html">gaupol.gtk._actions.file.NewProjectAction</a>, <a href="gaupol.gtk._actions.file.OpenMainFileAction.html">gaupol.gtk._actions.file.OpenMainFileAction</a>, <a href="gaupol.gtk._actions.file.OpenTranslationFileAction.html">gaupol.gtk._actions.file.OpenTranslationFileAction</a>, <a href="gaupol.gtk._actions.file.QuitAction.html">gaupol.gtk._actions.file.QuitAction</a>, <a href="gaupol.gtk._actions.file.SaveMainDocumentAction.html">gaupol.gtk._actions.file.SaveMainDocumentAction</a>, <a href="gaupol.gtk._actions.file.SaveMainDocumentAsAction.html">gaupol.gtk._actions.file.SaveMainDocumentAsAction</a>, <a href="gaupol.gtk._actions.file.SaveTranslationDocumentAction.html">gaupol.gtk._actions.file.SaveTranslationDocumentAction</a>, <a href="gaupol.gtk._actions.file.SaveTranslationDocumentAsAction.html">gaupol.gtk._actions.file.SaveTranslationDocumentAsAction</a>, <a href="gaupol.gtk._actions.file.SelectVideoFileAction.html">gaupol.gtk._actions.file.SelectVideoFileAction</a>, <a href="gaupol.gtk._actions.file.ShowRecentMainMenuAction.html">gaupol.gtk._actions.file.ShowRecentMainMenuAction</a>, <a href="gaupol.gtk._actions.file.ShowRecentTranslationMenuAction.html">gaupol.gtk._actions.file.ShowRecentTranslationMenuAction</a>, <a href="gaupol.gtk._actions.help.ReportABugAction.html">gaupol.gtk._actions.help.ReportABugAction</a>, <a href="gaupol.gtk._actions.help.ViewAboutDialogAction.html">gaupol.gtk._actions.help.ViewAboutDialogAction</a>, <a href="gaupol.gtk._actions.projects.ActivateNextProjectAction.html">gaupol.gtk._actions.projects.ActivateNextProjectAction</a>, <a href="gaupol.gtk._actions.projects.ActivatePreviousProjectAction.html">gaupol.gtk._actions.projects.ActivatePreviousProjectAction</a>, <a href="gaupol.gtk._actions.projects.CloseAllProjectsAction.html">gaupol.gtk._actions.projects.CloseAllProjectsAction</a>, <a href="gaupol.gtk._actions.projects.MoveTabLeftAction.html">gaupol.gtk._actions.projects.MoveTabLeftAction</a>, <a href="gaupol.gtk._actions.projects.MoveTabRightAction.html">gaupol.gtk._actions.projects.MoveTabRightAction</a>, <a href="gaupol.gtk._actions.projects.SaveAllDocumentsAction.html">gaupol.gtk._actions.projects.SaveAllDocumentsAction</a>, <a href="gaupol.gtk._actions.tools.AppendFileAction.html">gaupol.gtk._actions.tools.AppendFileAction</a>, <a href="gaupol.gtk._actions.tools.SplitProjectAction.html">gaupol.gtk._actions.tools.SplitProjectAction</a>, <a href="gaupol.gtk._actions.view.ShowColumnsMenuAction.html">gaupol.gtk._actions.view.ShowColumnsMenuAction</a>, <a href="gaupol.gtk._actions.view.ShowFramerate23976Action.html">gaupol.gtk._actions.view.ShowFramerate23976Action</a>, <a href="gaupol.gtk._actions.view.ShowFramerateMenuAction.html">gaupol.gtk._actions.view.ShowFramerateMenuAction</a>, <a href="gaupol.gtk._actions.view.ShowTimesAction.html">gaupol.gtk._actions.view.ShowTimesAction</a>, <a href="gaupol.gtk._actions.view.ToggleDurationColumnAction.html">gaupol.gtk._actions.view.ToggleDurationColumnAction</a>, <a href="gaupol.gtk._actions.view.ToggleHideColumnAction.html">gaupol.gtk._actions.view.ToggleHideColumnAction</a>, <a href="gaupol.gtk._actions.view.ToggleMainTextColumnAction.html">gaupol.gtk._actions.view.ToggleMainTextColumnAction</a>, <a href="gaupol.gtk._actions.view.ToggleMainToolbarAction.html">gaupol.gtk._actions.view.ToggleMainToolbarAction</a>, <a href="gaupol.gtk._actions.view.ToggleNumberColumnAction.html">gaupol.gtk._actions.view.ToggleNumberColumnAction</a>, <a href="gaupol.gtk._actions.view.ToggleOutputWindowAction.html">gaupol.gtk._actions.view.ToggleOutputWindowAction</a>, <a href="gaupol.gtk._actions.view.ToggleShowColumnAction.html">gaupol.gtk._actions.view.ToggleShowColumnAction</a>, <a href="gaupol.gtk._actions.view.ToggleStatusbarAction.html">gaupol.gtk._actions.view.ToggleStatusbarAction</a>, <a href="gaupol.gtk._actions.view.ToggleTranslationTextColumnAction.html">gaupol.gtk._actions.view.ToggleTranslationTextColumnAction</a>, <a href="gaupol.gtk._actions.view.ToggleVideoToolbarAction.html">gaupol.gtk._actions.view.ToggleVideoToolbarAction</a></p>
+    </div>
+    <div><pre class="literalblock">
+Base class for UI manager actions.
+
+Class variables:
+
+    action_item = (
+        name,
+        stock-id,
+        label,
+        accelerator,
+        tooltip,)
+
+    menu_item = (
+        name,
+        stock-id,
+        label,
+        accelerator,
+        tooltip,)
+
+    radio_items = (
+        [(name,
+          stock-id,
+          label,
+          accelerator,
+          tooltip,
+          index),
+         (...),],
+        value)
+
+    toggle_item = (
+        name,
+        stock-id,
+        label,
+        accelerator,
+        tooltip,
+        active)
+
+    paths:   List of UI manager paths for action
+    widgets: List of attribute widget names for action
+</pre>
+<table class="fieldTable"></table></div>
+    
+    
+    <div id="splitTables">
+      <table class="children sortable" id="id155">
+  
+  
+  
+  
+  <tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk._actions._action.UIMAction.html#is_doable">is_doable</a></td>
+    <td><span><pre class="literalblock">
+Return True if action can be done.
+</pre>
+</span></td>
+  </tr>
+  
+</table>
+      
+      
+    </div>
+    
+    
+    
+    <div class="function">
+        <a name="gaupol.gtk._actions._action.UIMAction.is_doable"></a>
+        <a name="is_doable"></a>
+        <div class="functionHeader">
+        def is_doable(cls, application, page):
+        <a href="gaupol/gtk/_actions/_action.py.html#L72" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          <div class="interfaceinfo">overridden in <a href="gaupol.gtk._actions.edit.ClearTextsAction.html">gaupol.gtk._actions.edit.ClearTextsAction</a>, <a href="gaupol.gtk._actions.edit.CopyTextsAction.html">gaupol.gtk._actions.edit.CopyTextsAction</a>, <a href="gaupol.gtk._actions.edit.CutTextsAction.html">gaupol.gtk._actions.edit.CutTextsAction</a>, <a href="gaupol.gtk._actions.edit.EditValueAction.html">gaupol.gtk._actions.edit.EditValueAction</a>, <a href="gaupol.gtk._actions.edit.InsertSubtitlesAction.html">gaupol.gtk._actions.edit.InsertSubtitlesAction</a>, <a href="gaupol.gtk._actions.edit.InvertSelectionAction.html">gaupol.gtk._actions.edit.InvertSelectionAction</a>, <a href="gaupol.gtk._actions.edit.MergeSubtitlesAction.html">gaupol.gtk._actions.edit.MergeSubtitlesAction</a>, <a href="gaupol.gtk._actions.edit.PasteTextsAction.html">gaupol.gtk._actions.edit.PasteTextsAction</a>, <a href="gaupol.gtk._actions.edit.RedoActionAction.html">gaupol.gtk._actions.edit.RedoActionAction</a>, <a href="gaupol.gtk._actions.edit.RemoveSubtitlesAction.html">gaupol.gtk._actions.edit.RemoveSubtitlesAction</a>, <a href="gaupol.gtk._actions.edit.SelectAllAction.html">gaupol.gtk._actions.edit.SelectAllAction</a>, <a href="gaupol.gtk._actions.edit.SplitSubtitlesAction.html">gaupol.gtk._actions.edit.SplitSubtitlesAction</a>, <a href="gaupol.gtk._actions.edit.UndoActionAction.html">gaupol.gtk._actions.edit.UndoActionAction</a>, <a href="gaupol.gtk._actions.file.CloseProjectAction.html">gaupol.gtk._actions.file.CloseProjectAction</a>, <a href="gaupol.gtk._actions.file.EditHeadersAction.html">gaupol.gtk._actions.file.EditHeadersAction</a>, <a href="gaupol.gtk._actions.file.OpenTranslationFileAction.html">gaupol.gtk._actions.file.OpenTranslationFileAction</a>, <a href="gaupol.gtk._actions.file.SaveMainDocumentAction.html">gaupol.gtk._actions.file.SaveMainDocumentAction</a>, <a href="gaupol.gtk._actions.file.SaveMainDocumentAsAction.html">gaupol.gtk._actions.file.SaveMainDocumentAsAction</a>, <a href="gaupol.gtk._actions.file.SaveTranslationDocumentAction.html">gaupol.gtk._actions.file.SaveTranslationDocumentAction</a>, <a href="gaupol.gtk._actions.file.SaveTranslationDocumentAsAction.html">gaupol.gtk._actions.file.SaveTranslationDocumentAsAction</a>, <a href="gaupol.gtk._actions.file.SelectVideoFileAction.html">gaupol.gtk._actions.file.SelectVideoFileAction</a>, <a href="gaupol.gtk._actions.file.ShowRecentTranslationMenuAction.html">gaupol.gtk._actions.file.ShowRecentTranslationMenuAction</a>, <a href="gaupol.gtk._actions.projects.ActivateNextProjectAction.html">gaupol.gtk._actions.projects.ActivateNextProjectAction</a>, <a href="gaupol.gtk._actions.projects.ActivatePreviousProjectAction.html">gaupol.gtk._actions.projects.ActivatePreviousProjectAction</a>, <a href="gaupol.gtk._actions.projects.CloseAllProjectsAction.html">gaupol.gtk._actions.projects.CloseAllProjectsAction</a>, <a href="gaupol.gtk._actions.projects.MoveTabLeftAction.html">gaupol.gtk._actions.projects.MoveTabLeftAction</a>, <a href="gaupol.gtk._actions.projects.MoveTabRightAction.html">gaupol.gtk._actions.projects.MoveTabRightAction</a>, <a href="gaupol.gtk._actions.projects.SaveAllDocumentsAction.html">gaupol.gtk._actions.projects.SaveAllDocumentsAction</a>, <a href="gaupol.gtk._actions.tools.AppendFileAction.html">gaupol.gtk._actions.tools.AppendFileAction</a>, <a href="gaupol.gtk._actions.tools.SplitProjectAction.html">gaupol.gtk._actions.tools.SplitProjectAction</a>, <a href="gaupol.gtk._actions.view.ShowColumnsMenuAction.html">gaupol.gtk._actions.view.ShowColumnsMenuAction</a>, <a href="gaupol.gtk._actions.view.ShowFramerate23976Action.html">gaupol.gtk._actions.view.ShowFramerate23976Action</a>, <a href="gaupol.gtk._actions.view.ShowFramerateMenuAction.html">gaupol.gtk._actions.view.ShowFramerateMenuAction</a>, <a href="gaupol.gtk._actions.view.ShowTimesAction.html">gaupol.gtk._actions.view.ShowTimesAction</a>, <a href="gaupol.gtk._actions.view.ToggleDurationColumnAction.html">gaupol.gtk._actions.view.ToggleDurationColumnAction</a>, <a href="gaupol.gtk._actions.view.ToggleHideColumnAction.html">gaupol.gtk._actions.view.ToggleHideColumnAction</a>, <a href="gaupol.gtk._actions.view.ToggleMainTextColumnAction.html">gaupol.gtk._actions.view.ToggleMainTextColumnAction</a>, <a href="gaupol.gtk._actions.view.ToggleNumberColumnAction.html">gaupol.gtk._actions.view.ToggleNumberColumnAction</a>, <a href="gaupol.gtk._actions.view.ToggleShowColumnAction.html">gaupol.gtk._actions.view.ToggleShowColumnAction</a>, <a href="gaupol.gtk._actions.view.ToggleTranslationTextColumnAction.html">gaupol.gtk._actions.view.ToggleTranslationTextColumnAction</a></div>
+          <div><pre class="literalblock">
+Return True if action can be done.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div>
+    
+    <address>
+      <a href="index.html">API Documentation</a> for <a href="http://home.gna.org/gaupol/">Gaupol</a>, generated by <a href="http://codespeak.net/~mwh/pydoctor/">pydoctor</a>.
+    </address>
+  </body>
+</html>

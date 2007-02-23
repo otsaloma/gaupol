@@ -1,0 +1,251 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>API docs for &ldquo;gaupol.finder.Finder&rdquo;</title>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <link href="apidocs.css" type="text/css" rel="stylesheet" />
+    
+    
+  </head>
+  <body>
+    <h1 class="class">Class g.f.Finder(object):</h1>
+    <p>
+      <span id="part">Part of <a href="gaupol.html">gaupol</a>.<a href="gaupol.finder.html">finder</a></span>
+      <a href="gaupol/finder.py.html#L25">View Source</a>
+      <a href="classIndex.html#gaupol.finder.Finder">View In Hierarchy</a>
+    </p>
+    <div>
+      <p>Known subclasses: <a href="gaupol.parser.Parser.html">gaupol.parser.Parser</a></p>
+    </div>
+    <div><pre class="literalblock">
+String and regular expression finder and replacer.
+
+Instance variables:
+
+    ignore_case: True to ignore case
+    match:       Regular expression match object
+    match_span:  Tuple of start and end position
+    pattern:     String or regular expression object to find
+    pos:         Current offset in text
+    replacement: Replacement string
+    text:        Target text
+</pre>
+<table class="fieldTable"></table></div>
+    
+    
+    <div id="splitTables">
+      <table class="children sortable" id="id64">
+  
+  
+  
+  
+  <tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.finder.Finder.html#__init__">__init__</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.finder.Finder.html#next">next</a></td>
+    <td><span><pre class="literalblock">
+Find the next match of pattern.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.finder.Finder.html#previous">previous</a></td>
+    <td><span><pre class="literalblock">
+Find the previous match of pattern.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.finder.Finder.html#replace">replace</a></td>
+    <td><span><pre class="literalblock">
+Replace the current match.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.finder.Finder.html#replace_all">replace_all</a></td>
+    <td><span><pre class="literalblock">
+Replace all occurences of pattern.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.finder.Finder.html#set_regex">set_regex</a></td>
+    <td><span><pre class="literalblock">
+Set and use regular expression.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.finder.Finder.html#set_text">set_text</a></td>
+    <td><span><pre class="literalblock">
+Set the text.
+</pre>
+</span></td>
+  </tr>
+  
+</table>
+      
+      
+    </div>
+    
+    
+    
+    <div class="function">
+        <a name="gaupol.finder.Finder.__init__"></a>
+        <a name="__init__"></a>
+        <div class="functionHeader">
+        def __init__(self):
+        <a href="gaupol/finder.py.html#L40" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          <div class="interfaceinfo">overridden in <a href="gaupol.parser.Parser.html">gaupol.parser.Parser</a></div>
+          <div class="undocumented">Undocumented</div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.finder.Finder.next"></a>
+        <a name="next"></a>
+        <div class="functionHeader">
+        def next(self):
+        <a href="gaupol/finder.py.html#L50" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Find the next match of pattern.
+
+Raise StopIteration if no next match found.
+Return tuple of match start, end position.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.finder.Finder.previous"></a>
+        <a name="previous"></a>
+        <div class="functionHeader">
+        def previous(self):
+        <a href="gaupol/finder.py.html#L83" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Find the previous match of pattern.
+
+Raise StopIteration if no previous match found.
+Return tuple of match start, end position.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.finder.Finder.replace"></a>
+        <a name="replace"></a>
+        <div class="functionHeader">
+        def replace(self, next=True):
+        <a href="gaupol/finder.py.html#L125" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          <div class="interfaceinfo">overridden in <a href="gaupol.parser.Parser.html">gaupol.parser.Parser</a></div>
+          <div><pre class="literalblock">
+Replace the current match.
+
+next should be True to finish at end of match, False for beginning.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.finder.Finder.replace_all"></a>
+        <a name="replace_all"></a>
+        <div class="functionHeader">
+        def replace_all(self):
+        <a href="gaupol/finder.py.html#L145" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Replace all occurences of pattern.
+
+Return the amount of substitutions made.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.finder.Finder.set_regex"></a>
+        <a name="set_regex"></a>
+        <div class="functionHeader">
+        def set_regex(self, pattern, flags=0):
+        <a href="gaupol/finder.py.html#L165" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Set and use regular expression.
+
+DOTALL, MULTILINE and UNICODE are automatically added to flags.
+IGNORECASE is automatically added to flags if self.ignore_case is True.
+Raise re.error if pattern sucks.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.finder.Finder.set_text"></a>
+        <a name="set_text"></a>
+        <div class="functionHeader">
+        def set_text(self, text, next=True):
+        <a href="gaupol/finder.py.html#L177" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          <div class="interfaceinfo">overridden in <a href="gaupol.parser.Parser.html">gaupol.parser.Parser</a></div>
+          <div><pre class="literalblock">
+Set the text.
+
+next should be True to start at beginning, False for end.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div>
+    
+    <address>
+      <a href="index.html">API Documentation</a> for <a href="http://home.gna.org/gaupol/">Gaupol</a>, generated by <a href="http://codespeak.net/~mwh/pydoctor/">pydoctor</a>.
+    </address>
+  </body>
+</html>

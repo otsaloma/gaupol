@@ -1,0 +1,467 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>API docs for &ldquo;gaupol._agents.register.RegisterAgent&rdquo;</title>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <link href="apidocs.css" type="text/css" rel="stylesheet" />
+    
+    
+  </head>
+  <body>
+    <h1 class="class">Class g._.r.RegisterAgent(Delegate):</h1>
+    <p>
+      <span id="part">Part of <a href="gaupol.html">gaupol</a>.<a href="gaupol._agents.html">_agents</a>.<a href="gaupol._agents.register.html">register</a></span>
+      <a href="gaupol/_agents/register.py.html#L134">View Source</a>
+      <a href="classIndex.html#gaupol._agents.register.RegisterAgent">View In Hierarchy</a>
+    </p>
+    <div>
+      
+    </div>
+    <div><pre class="literalblock">
+Managing revertable actions.
+
+Instance variables:
+
+    _do_description: The original description of the reverted action
+</pre>
+<table class="fieldTable"></table></div>
+    
+    
+    <div id="splitTables">
+      <table class="children sortable" id="id103">
+  
+  
+  
+  
+  <tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol._agents.register.RegisterAgent.html#__init__">__init__</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol._agents.register.RegisterAgent.html#_break_action_group">_break_action_group</a></td>
+    <td><span><pre class="literalblock">
+Break the action group in stack into individual actions.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol._agents.register.RegisterAgent.html#_get_destination_stack">_get_destination_stack</a></td>
+    <td><span><pre class="literalblock">
+Get the stack where the registered action will be placed.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol._agents.register.RegisterAgent.html#_get_source_stack">_get_source_stack</a></td>
+    <td><span><pre class="literalblock">
+Get the stack where the action to register is.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol._agents.register.RegisterAgent.html#_on_notify_undo_limit">_on_notify_undo_limit</a></td>
+    <td><span><pre class="literalblock">
+Cut reversion stacks if limit set.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol._agents.register.RegisterAgent.html#_revert_multiple">_revert_multiple</a></td>
+    <td><span><pre class="literalblock">
+Revert multiple actions.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol._agents.register.RegisterAgent.html#_shift_changed_value">_shift_changed_value</a></td>
+    <td><span><pre class="literalblock">
+Shift the values of the changed attributes.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol._agents.register.RegisterAgent.html#can_redo">can_redo</a></td>
+    <td><span><pre class="literalblock">
+Return True if something can be redone.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol._agents.register.RegisterAgent.html#can_undo">can_undo</a></td>
+    <td><span><pre class="literalblock">
+Return True if something can be undone.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol._agents.register.RegisterAgent.html#cut_reversion_stacks">cut_reversion_stacks</a></td>
+    <td><span><pre class="literalblock">
+Cut the undo and redo stacks to their maximum lengths.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol._agents.register.RegisterAgent.html#emit_action_signal">emit_action_signal</a></td>
+    <td><span><pre class="literalblock">
+Emit an action signal for register.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol._agents.register.RegisterAgent.html#group_actions">group_actions</a></td>
+    <td><span><pre class="literalblock">
+Group the registered actions as one item in the stack.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol._agents.register.RegisterAgent.html#redo">redo</a></td>
+    <td><span><pre class="literalblock">
+Redo actions.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol._agents.register.RegisterAgent.html#register_action">register_action</a></td>
+    <td><span><pre class="literalblock">
+Register action done, undone or redone.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol._agents.register.RegisterAgent.html#set_action_description">set_action_description</a></td>
+    <td><span><pre class="literalblock">
+Set the description of the most recent action.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol._agents.register.RegisterAgent.html#undo">undo</a></td>
+    <td><span><pre class="literalblock">
+Undo actions.
+</pre>
+</span></td>
+  </tr>
+  
+</table>
+      
+      
+    </div>
+    
+    
+    
+    <div class="function">
+        <a name="gaupol._agents.register.RegisterAgent.__init__"></a>
+        <a name="__init__"></a>
+        <div class="functionHeader">
+        def __init__(self, master):
+        <a href="gaupol/_agents/register.py.html#L145" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div class="undocumented">Undocumented</div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol._agents.register.RegisterAgent._break_action_group"></a>
+        <a name="_break_action_group"></a>
+        <div class="functionHeader">
+        def _break_action_group(self, stack, index=0):
+        <a href="gaupol/_agents/register.py.html#L153" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Break the action group in stack into individual actions.
+
+Return the amount of actions broken into.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol._agents.register.RegisterAgent._get_destination_stack"></a>
+        <a name="_get_destination_stack"></a>
+        <div class="functionHeader">
+        def _get_destination_stack(self, register):
+        <a href="gaupol/_agents/register.py.html#L163" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Get the stack where the registered action will be placed.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol._agents.register.RegisterAgent._get_source_stack"></a>
+        <a name="_get_source_stack"></a>
+        <div class="functionHeader">
+        def _get_source_stack(self, register):
+        <a href="gaupol/_agents/register.py.html#L172" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Get the stack where the action to register is.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol._agents.register.RegisterAgent._on_notify_undo_limit"></a>
+        <a name="_on_notify_undo_limit"></a>
+        <div class="functionHeader">
+        def _on_notify_undo_limit(self, *args):
+        <a href="gaupol/_agents/register.py.html#L181" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Cut reversion stacks if limit set.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol._agents.register.RegisterAgent._revert_multiple"></a>
+        <a name="_revert_multiple"></a>
+        <div class="functionHeader">
+        def _revert_multiple(self, count, register):
+        <a href="gaupol/_agents/register.py.html#L187" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Revert multiple actions.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol._agents.register.RegisterAgent._shift_changed_value"></a>
+        <a name="_shift_changed_value"></a>
+        <div class="functionHeader">
+        def _shift_changed_value(self, action, shift):
+        <a href="gaupol/_agents/register.py.html#L206" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Shift the values of the changed attributes.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol._agents.register.RegisterAgent.can_redo"></a>
+        <a name="can_redo"></a>
+        <div class="functionHeader">
+        def can_redo(self):
+        <a href="gaupol/_agents/register.py.html#L217" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Return True if something can be redone.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol._agents.register.RegisterAgent.can_undo"></a>
+        <a name="can_undo"></a>
+        <div class="functionHeader">
+        def can_undo(self):
+        <a href="gaupol/_agents/register.py.html#L222" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Return True if something can be undone.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol._agents.register.RegisterAgent.cut_reversion_stacks"></a>
+        <a name="cut_reversion_stacks"></a>
+        <div class="functionHeader">
+        def cut_reversion_stacks(self):
+        <a href="gaupol/_agents/register.py.html#L227" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Cut the undo and redo stacks to their maximum lengths.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol._agents.register.RegisterAgent.emit_action_signal"></a>
+        <a name="emit_action_signal"></a>
+        <div class="functionHeader">
+        def emit_action_signal(self, register, count=1):
+        <a href="gaupol/_agents/register.py.html#L234" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Emit an action signal for register.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol._agents.register.RegisterAgent.group_actions"></a>
+        <a name="group_actions"></a>
+        <div class="functionHeader">
+        def group_actions(self, register, count, description):
+        <a href="gaupol/_agents/register.py.html#L241" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Group the registered actions as one item in the stack.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol._agents.register.RegisterAgent.redo"></a>
+        <a name="redo"></a>
+        <div class="functionHeader">
+        def redo(self, count=1):
+        <a href="gaupol/_agents/register.py.html#L252" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Redo actions.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol._agents.register.RegisterAgent.register_action"></a>
+        <a name="register_action"></a>
+        <div class="functionHeader">
+        def register_action(self, *args, **kwargs):
+        <a href="gaupol/_agents/register.py.html#L260" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Register action done, undone or redone.
+
+See RevertableAction.__init__ for arguments.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol._agents.register.RegisterAgent.set_action_description"></a>
+        <a name="set_action_description"></a>
+        <div class="functionHeader">
+        def set_action_description(self, register, description):
+        <a href="gaupol/_agents/register.py.html#L279" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Set the description of the most recent action.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol._agents.register.RegisterAgent.undo"></a>
+        <a name="undo"></a>
+        <div class="functionHeader">
+        def undo(self, count=1):
+        <a href="gaupol/_agents/register.py.html#L286" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Undo actions.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div>
+    
+    <address>
+      <a href="index.html">API Documentation</a> for <a href="http://home.gna.org/gaupol/">Gaupol</a>, generated by <a href="http://codespeak.net/~mwh/pydoctor/">pydoctor</a>.
+    </address>
+  </body>
+</html>

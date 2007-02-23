@@ -1,0 +1,170 @@
+#!/usr/bin/env python
+
+"""Manipulate translation files.
+
+Needs gettext and intltool.
+"""
+
+import glob
+import optparse
+import os
+
+TOOL_DIR   = os.path.dirname(os.path.abspath(__file__))
+SOURCE_DIR = os.path.abspath(os.path.join(TOOL_DIR, ".."))
+DATA_DIR   = os.path.join(SOURCE_DIR, "data")
+GLADE_DIR  = os.path.join(DATA_DIR, "glade")
+PY_DIR     = os.path.join(SOURCE_DIR, "gaupol")
+LOCALE_DIR = os.path.join(SOURCE_DIR, "locale")
+PO_DIR     = os.path.join(SOURCE_DIR, "po")
+POT_FILE   = os.path.join(PO_DIR, "gaupol.pot")
+
+def compile_mo(lang):
+    """Compile a .mo file for language."""
+
+    for lang in get_languages(lang):
+        title_print("Compiling .mo file for language '%s'..." % lang)
+        po_file = os.path.join(PO_DIR, "%s.po" % lang)
+        mo_dir = os.path.join(LOCALE_DIR, lang, "LC_MESSAGES")
+        mo_file = os.path.join(mo_dir, "gaupol.mo")
+        if not os.path.isdir(mo_dir):
+            os.makedirs(mo_dir)
+        os.system("msgfmt -cv %s -o %s" % (po_file, mo_file))
+
+def create_po(lang):
+    """Create a .po file for a new language."""
+
+    po_file = os.path.join(PO_DIR, "%s.po" % lang)
+    if os.path.isfile(po_file):
+        print ".po file for language '%s' already exists." % lang
+        raise SystemExit(1)
+    if not os.path.isfile(POT_FILE):
+        create_pot()
+    title_print("Creating .po file for language '%s'..." % lang)
+    os.system("msginit -l %s -i %s -o %s" % (lang, POT_FILE, po_file))
+
+def create_pot():
+    """Create a .pot file."""
+
+    header_files = []
+    python_files = []
+
+    os.chdir(DATA_DIR)
+    title_print("Extracting strings from .desktop file...")
+    os.system("intltool-extract --type=gettext/ini gaupol.desktop.in")
+    header_files.append(os.path.abspath("gaupol.desktop.in.h"))
+
+    os.chdir(GLADE_DIR)
+    title_print("Extracting strings from Glade XML files...")
+    for filename in glob.glob("*.glade"):
+        os.system("intltool-extract --type=gettext/glade %s" % filename)
+        header_files.append(os.path.abspath(filename + ".h"))
+
+    os.chdir(PY_DIR)
+    for (root, dirs, files) in os.walk("."):
+        if root.endswith("/test"):
+            continue
+        for name in (x for x in files if x.endswith(".py")):
+            path = os.path.abspath(os.path.join(root, name))
+            python_files.append(path)
+
+    os.chdir(SOURCE_DIR)
+    title_print("Creating .pot file from source files...")
+    files = header_files + python_files
+    files = list(x.replace(SOURCE_DIR, ".") for x in files)
+    args = (POT_FILE, " ".join(files))
+    os.system("xgettext --from-code=utf-8 -k_ -kN_ -c -o %s %s" % args)
+
+    title_print("Removing temporary files...")
+    for path in header_files:
+        print path.replace(SOURCE_DIR, ".")
+        os.remove(path)
+
+def get_languages(lang):
+    """Get a list of languages."""
+
+    if lang != "all":
+        return [lang]
+    paths = glob.glob(os.path.join(PO_DIR, "*.po"))
+    return sorted(list(os.path.basename(x)[:-3] for x in paths))
+
+def main():
+    """Parse arguments and run commands."""
+
+    opts = parse_args()[0]
+    if opts.create_pot:
+        return create_pot()
+    if opts.create_po:
+        return create_po(opts.create_po)
+    if opts.update_po:
+        return update_po(opts.update_po)
+    if opts.compile_mo:
+        return compile_mo(opts.compile_mo)
+    print "No option given."
+    print "Try 'translate --help' for more information."
+
+def parse_args():
+    """Parse and return options and arguments."""
+
+    epilog = \
+        "LANG should be a language code in either format 'xx' or 'xx_YY'. " \
+        "Use 'all' to  process all languages found in the 'po' directory."
+
+    parser = optparse.OptionParser(
+        description="Create or update translation files.",
+        epilog=epilog,
+        formatter=optparse.IndentedHelpFormatter(2, 42, None, True),
+        usage="translate OPTION")
+
+    parser.add_option(
+        "-m", "--compile-mo",
+        action="store",
+        type="string",
+        metavar="LANG",
+        dest="compile_mo",
+        default="",
+        help="compile a .mo file")
+
+    parser.add_option(
+        "-p", "--create-po",
+        action="store",
+        type="string",
+        metavar="LANG",
+        dest="create_po",
+        default="",
+        help="create a new .po file")
+
+    parser.add_option(
+        "-t", "--create-pot",
+        action="store_true",
+        dest="create_pot",
+        default=False,
+        help="create a new .pot file")
+
+    parser.add_option(
+        "-u", "--update-po",
+        action="store",
+        type="string",
+        metavar="LANG",
+        dest="update_po",
+        default="",
+        help="update an existing .po file")
+
+    return parser.parse_args()
+
+def title_print(text):
+    """Print a message that stands out from rest of the output."""
+
+    print "\n** %s" % text
+
+def update_po(lang):
+    """Update an existing .po files with new strings."""
+
+    if not os.path.isfile(POT_FILE):
+        create_pot()
+
+    for lang in get_languages(lang):
+        title_print("Updating .po file for language '%s'..." % lang)
+        po_file = os.path.join(PO_DIR, "%s.po" % lang)
+        os.system("msgmerge -U %s %s" % (po_file, POT_FILE))
+
+main()

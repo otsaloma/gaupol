@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>gaupol.gtk.runner</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="code.css" />
+</head>
+<body>
+<pre>
+<a name="L1" class="line-number">   1 </a><span class="python-comment"># Copyright (C) 2007 Osmo Salomaa</span>
+<a name="L2" class="line-number">   2 </a><span class="python-comment">#</span>
+<a name="L3" class="line-number">   3 </a><span class="python-comment"># This file is part of Gaupol.</span>
+<a name="L4" class="line-number">   4 </a><span class="python-comment">#</span>
+<a name="L5" class="line-number">   5 </a><span class="python-comment"># Gaupol is free software; you can redistribute it and/or modify it under the</span>
+<a name="L6" class="line-number">   6 </a><span class="python-comment"># terms of the GNU General Public License as published by the Free Software</span>
+<a name="L7" class="line-number">   7 </a><span class="python-comment"># Foundation; either version 2 of the License, or (at your option) any later</span>
+<a name="L8" class="line-number">   8 </a><span class="python-comment"># version.</span>
+<a name="L9" class="line-number">   9 </a><span class="python-comment">#</span>
+<a name="L10" class="line-number">  10 </a><span class="python-comment"># Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY</span>
+<a name="L11" class="line-number">  11 </a><span class="python-comment"># WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR</span>
+<a name="L12" class="line-number">  12 </a><span class="python-comment"># A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</span>
+<a name="L13" class="line-number">  13 </a><span class="python-comment">#</span>
+<a name="L14" class="line-number">  14 </a><span class="python-comment"># You should have received a copy of the GNU General Public License along with</span>
+<a name="L15" class="line-number">  15 </a><span class="python-comment"># Gaupol; if not, write to the Free Software Foundation, Inc., 51 Franklin</span>
+<a name="L16" class="line-number">  16 </a><span class="python-comment"># Street, Fifth Floor, Boston, MA 02110-1301, USA.</span>
+<a name="L17" class="line-number">  17 </a>
+<a name="L18" class="line-number">  18 </a>
+<a name="L19" class="line-number">  19 </a><span class="python-string">"""Base class for dialog-running classes."""</span>
+<a name="L20" class="line-number">  20 </a>
+<a name="L21" class="line-number">  21 </a>
+<a name="L22" class="line-number">  22 </a><span class="python-keyword">from</span> <span class="python-name">gaupol</span> <span class="python-keyword">import</span> <span class="python-name">util</span>
+<a name="L23" class="line-number">  23 </a>
+<a name="L24" class="line-number">  24 </a>
+<a name="L25" class="line-number">  25 </a><span class="python-keyword">class</span> <span class="python-name">Runner</span><span class="python-operator">(</span><span class="python-name">object</span><span class="python-operator">)</span><span class="python-operator">:</span>
+<a name="L26" class="line-number">  26 </a>
+<a name="L27" class="line-number">  27 </a>    <span class="python-string">"""Base class for dialog-running classes."""</span>
+<a name="L28" class="line-number">  28 </a>
+<a name="L29" class="line-number">  29 </a>    <span class="python-operator">@</span><span class="python-name">util</span><span class="python-operator">.</span><span class="python-name">gc_collected</span>
+<a name="L30" class="line-number">  30 </a>    <span class="python-keyword">def</span> <span class="python-name">flash_dialog</span><span class="python-operator">(</span><span class="python-name">self</span><span class="python-operator">,</span> <span class="python-name">dialog</span><span class="python-operator">)</span><span class="python-operator">:</span>
+<a name="L31" class="line-number">  31 </a>        <span class="python-string">"""Run dialog, destroy it and return response."""</span>
+<a name="L32" class="line-number">  32 </a>
+<a name="L33" class="line-number">  33 </a>        <span class="python-name">response</span> <span class="python-operator">=</span> <span class="python-name">dialog</span><span class="python-operator">.</span><span class="python-name">run</span><span class="python-operator">(</span><span class="python-operator">)</span>
+<a name="L34" class="line-number">  34 </a>        <span class="python-name">dialog</span><span class="python-operator">.</span><span class="python-name">destroy</span><span class="python-operator">(</span><span class="python-operator">)</span>
+<a name="L35" class="line-number">  35 </a>        <span class="python-keyword">return</span> <span class="python-name">response</span>
+<a name="L36" class="line-number">  36 </a>
+<a name="L37" class="line-number">  37 </a>    <span class="python-keyword">def</span> <span class="python-name">run_dialog</span><span class="python-operator">(</span><span class="python-name">self</span><span class="python-operator">,</span> <span class="python-name">dialog</span><span class="python-operator">)</span><span class="python-operator">:</span>
+<a name="L38" class="line-number">  38 </a>        <span class="python-string">"""Run dialog and return response."""</span>
+<a name="L39" class="line-number">  39 </a>
+<a name="L40" class="line-number">  40 </a>        <span class="python-keyword">return</span> <span class="python-name">dialog</span><span class="python-operator">.</span><span class="python-name">run</span><span class="python-operator">(</span><span class="python-operator">)</span><span class="python-text"></span>
+</pre>
+</body>
+</html>

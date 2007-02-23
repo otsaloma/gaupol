@@ -1,0 +1,470 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>API docs for &ldquo;gaupol.gtk.util&rdquo;</title>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <link href="apidocs.css" type="text/css" rel="stylesheet" />
+    
+    
+  </head>
+  <body>
+    <h1 class="module">Module g.g.util</h1>
+    <p>
+      <span id="part">Part of <a href="gaupol.html">gaupol</a>.<a href="gaupol.gtk.html">gtk</a></span>
+      <a href="gaupol/gtk/util.py.html">View Source</a>
+      
+    </p>
+    <div>
+      
+    </div>
+    <div><pre class="literalblock">
+Miscellaneous functions for GTK widgets.
+
+Module variables:
+
+    COMBO_SEP:     String rendered as a separator in combo boxes
+    EXTRA:         Extra width to add to size calculations
+    BUSY_CURSOR:   gtk.gdk.Cursor
+    HAND_CURSOR:   gtk.gdk.Cursor
+    INSERT_CURSOR: gtk.gdk.Cursor
+    NORMAL_CURSOR: gtk.gdk.Cursor
+
+When setting dialog sizes based on their content, we get the size request of
+the scrolled window component and add the surroundings to that. For this to
+work neatly we should add some extra to adapt to different widget sizes in
+different themes. Let the EXTRA constant very vaguely account for that.
+</pre>
+<table class="fieldTable"></table></div>
+    
+    
+    <div id="splitTables">
+      <table class="children sortable" id="id194">
+  
+  
+  
+  
+  <tr class="function">
+    
+    
+    <td>Function</td>
+    <td><a href="gaupol.gtk.util.html#get_glade_xml">get_glade_xml</a></td>
+    <td><span><pre class="literalblock">
+Get gtk.glade.XML object from Glade file path.
+</pre>
+</span></td>
+  </tr><tr class="function">
+    
+    
+    <td>Function</td>
+    <td><a href="gaupol.gtk.util.html#get_event_box">get_event_box</a></td>
+    <td><span><pre class="literalblock">
+Get an event box if it is a parent of widget.
+</pre>
+</span></td>
+  </tr><tr class="function">
+    
+    
+    <td>Function</td>
+    <td><a href="gaupol.gtk.util.html#get_parent">get_parent</a></td>
+    <td><span><pre class="literalblock">
+Get the first parent of widget that is of given type.
+</pre>
+</span></td>
+  </tr><tr class="function">
+    
+    
+    <td>Function</td>
+    <td><a href="gaupol.gtk.util.html#get_text_view_size">get_text_view_size</a></td>
+    <td><span><pre class="literalblock">
+Get the size desired by text view.
+</pre>
+</span></td>
+  </tr><tr class="function">
+    
+    
+    <td>Function</td>
+    <td><a href="gaupol.gtk.util.html#get_tree_view_size">get_tree_view_size</a></td>
+    <td><span><pre class="literalblock">
+Get the size desired by tree view.
+</pre>
+</span></td>
+  </tr><tr class="function">
+    
+    
+    <td>Function</td>
+    <td><a href="gaupol.gtk.util.html#idle_method">idle_method</a></td>
+    <td><span><pre class="literalblock">
+Decorator for functions to be run in main loop while idle.
+</pre>
+</span></td>
+  </tr><tr class="function">
+    
+    
+    <td>Function</td>
+    <td><a href="gaupol.gtk.util.html#prepare_text_view">prepare_text_view</a></td>
+    <td><span><pre class="literalblock">
+Connect text view to font and length margin updates.
+</pre>
+</span></td>
+  </tr><tr class="function">
+    
+    
+    <td>Function</td>
+    <td><a href="gaupol.gtk.util.html#resize_dialog">resize_dialog</a></td>
+    <td><span><pre class="literalblock">
+Resize dialog in a smart manner.
+</pre>
+</span></td>
+  </tr><tr class="function">
+    
+    
+    <td>Function</td>
+    <td><a href="gaupol.gtk.util.html#resize_message_dialog">resize_message_dialog</a></td>
+    <td><span><pre class="literalblock">
+Resize message dialog in a smart manner.
+</pre>
+</span></td>
+  </tr><tr class="function">
+    
+    
+    <td>Function</td>
+    <td><a href="gaupol.gtk.util.html#separate_combo">separate_combo</a></td>
+    <td><span><pre class="literalblock">
+Separator function for combo box models.
+</pre>
+</span></td>
+  </tr><tr class="function">
+    
+    
+    <td>Function</td>
+    <td><a href="gaupol.gtk.util.html#set_button">set_button</a></td>
+    <td><span><pre class="literalblock">
+Set the label and the image on button.
+</pre>
+</span></td>
+  </tr><tr class="function">
+    
+    
+    <td>Function</td>
+    <td><a href="gaupol.gtk.util.html#set_cursor_busy">set_cursor_busy</a></td>
+    <td><span><pre class="literalblock">
+Set cursor busy when above window.
+</pre>
+</span></td>
+  </tr><tr class="function">
+    
+    
+    <td>Function</td>
+    <td><a href="gaupol.gtk.util.html#set_cursor_normal">set_cursor_normal</a></td>
+    <td><span><pre class="literalblock">
+Set cursor normal when above window.
+</pre>
+</span></td>
+  </tr><tr class="function">
+    
+    
+    <td>Function</td>
+    <td><a href="gaupol.gtk.util.html#set_label_font">set_label_font</a></td>
+    <td><span><pre class="literalblock">
+Set label font.
+</pre>
+</span></td>
+  </tr><tr class="function">
+    
+    
+    <td>Function</td>
+    <td><a href="gaupol.gtk.util.html#set_widget_font">set_widget_font</a></td>
+    <td><span><pre class="literalblock">
+Set widget font.
+</pre>
+</span></td>
+  </tr>
+  
+</table>
+      
+      
+    </div>
+    
+    
+    
+    <div class="function">
+        <a name="gaupol.gtk.util.get_glade_xml"></a>
+        <a name="get_glade_xml"></a>
+        <div class="functionHeader">
+        def get_glade_xml(name, root=None, directory=None):
+        <a href="gaupol/gtk/util.py.html#L59" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Get gtk.glade.XML object from Glade file path.
+
+name should be Glade XML file's basename without extension.
+directory can be None for the default global directory.
+Raise RuntimeError if unable to load Glade XML file.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.util.get_event_box"></a>
+        <a name="get_event_box"></a>
+        <div class="functionHeader">
+        def get_event_box(widget):
+        <a href="gaupol/gtk/util.py.html#L75" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Get an event box if it is a parent of widget.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.util.get_parent"></a>
+        <a name="get_parent"></a>
+        <div class="functionHeader">
+        def get_parent(child, parent_type):
+        <a href="gaupol/gtk/util.py.html#L80" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Get the first parent of widget that is of given type.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.util.get_text_view_size"></a>
+        <a name="get_text_view_size"></a>
+        <div class="functionHeader">
+        def get_text_view_size(text_view):
+        <a href="gaupol/gtk/util.py.html#L88" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Get the size desired by text view.
+
+Return width, height.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.util.get_tree_view_size"></a>
+        <a name="get_tree_view_size"></a>
+        <div class="functionHeader">
+        def get_tree_view_size(tree_view):
+        <a href="gaupol/gtk/util.py.html#L99" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Get the size desired by tree view.
+
+Return width, height.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.util.idle_method"></a>
+        <a name="idle_method"></a>
+        <div class="functionHeader">
+        def idle_method(function):
+        <a href="gaupol/gtk/util.py.html#L111" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Decorator for functions to be run in main loop while idle.
+
+Threads doing GUI operations should use this decorator so that all GUI
+operations get done in the main loop.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.util.prepare_text_view"></a>
+        <a name="prepare_text_view"></a>
+        <div class="functionHeader">
+        def prepare_text_view(text_view):
+        <a href="gaupol/gtk/util.py.html#L127" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Connect text view to font and length margin updates.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.util.resize_dialog"></a>
+        <a name="resize_dialog"></a>
+        <div class="functionHeader">
+        def resize_dialog(dialog, width, height, max_width=0.59999999999999998, max_height=0.59999999999999998):
+        <a href="gaupol/gtk/util.py.html#L145" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Resize dialog in a smart manner.
+
+width and height should be desired sizes in pixels.
+max_width and max_height should be between 0 and 1.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.util.resize_message_dialog"></a>
+        <a name="resize_message_dialog"></a>
+        <div class="functionHeader">
+        def resize_message_dialog(dialog, width, height, max_width=0.5, max_height=0.5):
+        <a href="gaupol/gtk/util.py.html#L162" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Resize message dialog in a smart manner.
+
+width and height should be desired sizes in pixels.
+max_width and max_height should be between 0 and 1.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.util.separate_combo"></a>
+        <a name="separate_combo"></a>
+        <div class="functionHeader">
+        def separate_combo(store, itr):
+        <a href="gaupol/gtk/util.py.html#L171" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Separator function for combo box models.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.util.set_button"></a>
+        <a name="set_button"></a>
+        <div class="functionHeader">
+        def set_button(button, text, stock=None):
+        <a href="gaupol/gtk/util.py.html#L176" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Set the label and the image on button.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.util.set_cursor_busy"></a>
+        <a name="set_cursor_busy"></a>
+        <div class="functionHeader">
+        def set_cursor_busy(window):
+        <a href="gaupol/gtk/util.py.html#L190" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Set cursor busy when above window.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.util.set_cursor_normal"></a>
+        <a name="set_cursor_normal"></a>
+        <div class="functionHeader">
+        def set_cursor_normal(window):
+        <a href="gaupol/gtk/util.py.html#L199" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Set cursor normal when above window.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.util.set_label_font"></a>
+        <a name="set_label_font"></a>
+        <div class="functionHeader">
+        def set_label_font(label, font):
+        <a href="gaupol/gtk/util.py.html#L208" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Set label font.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.util.set_widget_font"></a>
+        <a name="set_widget_font"></a>
+        <div class="functionHeader">
+        def set_widget_font(widget, font):
+        <a href="gaupol/gtk/util.py.html#L221" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Set widget font.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div>
+    
+    <address>
+      <a href="index.html">API Documentation</a> for <a href="http://home.gna.org/gaupol/">Gaupol</a>, generated by <a href="http://codespeak.net/~mwh/pydoctor/">pydoctor</a>.
+    </address>
+  </body>
+</html>

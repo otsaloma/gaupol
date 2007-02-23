@@ -1,0 +1,423 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>API docs for &ldquo;gaupol.calculator.Calculator&rdquo;</title>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <link href="apidocs.css" type="text/css" rel="stylesheet" />
+    
+    
+  </head>
+  <body>
+    <h1 class="class">Class g.c.Calculator(object):</h1>
+    <p>
+      <span id="part">Part of <a href="gaupol.html">gaupol</a>.<a href="gaupol.calculator.html">calculator</a></span>
+      <a href="gaupol/calculator.py.html#L25">View Source</a>
+      <a href="classIndex.html#gaupol.calculator.Calculator">View In Hierarchy</a>
+    </p>
+    <div>
+      
+    </div>
+    <div><pre class="literalblock">
+Time and frame calculator.
+
+Instance variables:
+
+    framerate: Video framerate as float
+
+Times are handled as strings, frames as integers and seconds as floats.
+</pre>
+<table class="fieldTable"></table></div>
+    
+    
+    <div id="splitTables">
+      <table class="children sortable" id="id66">
+  
+  
+  
+  
+  <tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.calculator.Calculator.html#__init__">__init__</a></td>
+    <td><span><pre class="literalblock">
+Initialize Calculator.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.calculator.Calculator.html#add_seconds_to_time">add_seconds_to_time</a></td>
+    <td><span><pre class="literalblock">
+Add amount of seconds to time.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.calculator.Calculator.html#add_times">add_times</a></td>
+    <td><span><pre class="literalblock">
+Add time y to time x.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.calculator.Calculator.html#frame_to_seconds">frame_to_seconds</a></td>
+    <td><span><pre class="literalblock">
+Convert frame to seconds.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.calculator.Calculator.html#frame_to_time">frame_to_time</a></td>
+    <td><span><pre class="literalblock">
+Convert frame to time.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.calculator.Calculator.html#get_frame_duration">get_frame_duration</a></td>
+    <td><span><pre class="literalblock">
+Get duration from frame x to frame y.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.calculator.Calculator.html#get_middle">get_middle</a></td>
+    <td><span><pre class="literalblock">
+Get time or frame halfway between start and end.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.calculator.Calculator.html#get_time_duration">get_time_duration</a></td>
+    <td><span><pre class="literalblock">
+Get duration from time x to time y.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.calculator.Calculator.html#round_time">round_time</a></td>
+    <td><span><pre class="literalblock">
+Round time to amount of decimals in seconds.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.calculator.Calculator.html#seconds_to_frame">seconds_to_frame</a></td>
+    <td><span><pre class="literalblock">
+Convert seconds to frame.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.calculator.Calculator.html#seconds_to_time">seconds_to_time</a></td>
+    <td><span><pre class="literalblock">
+Convert seconds to time.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.calculator.Calculator.html#set_framerate">set_framerate</a></td>
+    <td><span><pre class="literalblock">
+Set the framerate.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.calculator.Calculator.html#time_to_frame">time_to_frame</a></td>
+    <td><span><pre class="literalblock">
+Convert time to frame.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.calculator.Calculator.html#time_to_seconds">time_to_seconds</a></td>
+    <td><span><pre class="literalblock">
+Convert time to seconds.
+</pre>
+</span></td>
+  </tr>
+  
+</table>
+      
+      
+    </div>
+    
+    
+    
+    <div class="function">
+        <a name="gaupol.calculator.Calculator.__init__"></a>
+        <a name="__init__"></a>
+        <div class="functionHeader">
+        def __init__(self, framerate=None):
+        <a href="gaupol/calculator.py.html#L36" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Initialize Calculator.
+
+framerate should be a FRAMERATE constant.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.calculator.Calculator.add_seconds_to_time"></a>
+        <a name="add_seconds_to_time"></a>
+        <div class="functionHeader">
+        def add_seconds_to_time(self, time, seconds):
+        <a href="gaupol/calculator.py.html#L45" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Add amount of seconds to time.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.calculator.Calculator.add_times"></a>
+        <a name="add_times"></a>
+        <div class="functionHeader">
+        def add_times(self, x, y):
+        <a href="gaupol/calculator.py.html#L51" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Add time y to time x.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.calculator.Calculator.frame_to_seconds"></a>
+        <a name="frame_to_seconds"></a>
+        <div class="functionHeader">
+        def frame_to_seconds(self, frame):
+        <a href="gaupol/calculator.py.html#L58" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Convert frame to seconds.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.calculator.Calculator.frame_to_time"></a>
+        <a name="frame_to_time"></a>
+        <div class="functionHeader">
+        def frame_to_time(self, frame):
+        <a href="gaupol/calculator.py.html#L63" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Convert frame to time.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.calculator.Calculator.get_frame_duration"></a>
+        <a name="get_frame_duration"></a>
+        <div class="functionHeader">
+        def get_frame_duration(self, x, y):
+        <a href="gaupol/calculator.py.html#L69" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Get duration from frame x to frame y.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.calculator.Calculator.get_middle"></a>
+        <a name="get_middle"></a>
+        <div class="functionHeader">
+        def get_middle(self, x, y):
+        <a href="gaupol/calculator.py.html#L74" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Get time or frame halfway between start and end.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.calculator.Calculator.get_time_duration"></a>
+        <a name="get_time_duration"></a>
+        <div class="functionHeader">
+        def get_time_duration(self, x, y):
+        <a href="gaupol/calculator.py.html#L84" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Get duration from time x to time y.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.calculator.Calculator.round_time"></a>
+        <a name="round_time"></a>
+        <div class="functionHeader">
+        def round_time(self, time, decimals):
+        <a href="gaupol/calculator.py.html#L93" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Round time to amount of decimals in seconds.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.calculator.Calculator.seconds_to_frame"></a>
+        <a name="seconds_to_frame"></a>
+        <div class="functionHeader">
+        def seconds_to_frame(self, seconds):
+        <a href="gaupol/calculator.py.html#L100" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Convert seconds to frame.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.calculator.Calculator.seconds_to_time"></a>
+        <a name="seconds_to_time"></a>
+        <div class="functionHeader">
+        def seconds_to_time(self, seconds):
+        <a href="gaupol/calculator.py.html#L105" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Convert seconds to time.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.calculator.Calculator.set_framerate"></a>
+        <a name="set_framerate"></a>
+        <div class="functionHeader">
+        def set_framerate(self, framerate):
+        <a href="gaupol/calculator.py.html#L118" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Set the framerate.
+
+framerate should be a FRAMERATE constant.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.calculator.Calculator.time_to_frame"></a>
+        <a name="time_to_frame"></a>
+        <div class="functionHeader">
+        def time_to_frame(self, time):
+        <a href="gaupol/calculator.py.html#L125" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Convert time to frame.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.calculator.Calculator.time_to_seconds"></a>
+        <a name="time_to_seconds"></a>
+        <div class="functionHeader">
+        def time_to_seconds(self, time):
+        <a href="gaupol/calculator.py.html#L131" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Convert time to seconds.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div>
+    
+    <address>
+      <a href="index.html">API Documentation</a> for <a href="http://home.gna.org/gaupol/">Gaupol</a>, generated by <a href="http://codespeak.net/~mwh/pydoctor/">pydoctor</a>.
+    </address>
+  </body>
+</html>

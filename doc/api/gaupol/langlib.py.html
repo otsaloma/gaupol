@@ -1,0 +1,737 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>gaupol.langlib</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="code.css" />
+</head>
+<body>
+<pre>
+<a name="L1" class="line-number">   1 </a><span class="python-comment"># Copyright (C) 2005-2006 Osmo Salomaa</span>
+<a name="L2" class="line-number">   2 </a><span class="python-comment">#</span>
+<a name="L3" class="line-number">   3 </a><span class="python-comment"># This file is part of Gaupol.</span>
+<a name="L4" class="line-number">   4 </a><span class="python-comment">#</span>
+<a name="L5" class="line-number">   5 </a><span class="python-comment"># Gaupol is free software; you can redistribute it and/or modify it under the</span>
+<a name="L6" class="line-number">   6 </a><span class="python-comment"># terms of the GNU General Public License as published by the Free Software</span>
+<a name="L7" class="line-number">   7 </a><span class="python-comment"># Foundation; either version 2 of the License, or (at your option) any later</span>
+<a name="L8" class="line-number">   8 </a><span class="python-comment"># version.</span>
+<a name="L9" class="line-number">   9 </a><span class="python-comment">#</span>
+<a name="L10" class="line-number">  10 </a><span class="python-comment"># Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY</span>
+<a name="L11" class="line-number">  11 </a><span class="python-comment"># WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR</span>
+<a name="L12" class="line-number">  12 </a><span class="python-comment"># A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</span>
+<a name="L13" class="line-number">  13 </a><span class="python-comment">#</span>
+<a name="L14" class="line-number">  14 </a><span class="python-comment"># You should have received a copy of the GNU General Public License along with</span>
+<a name="L15" class="line-number">  15 </a><span class="python-comment"># Gaupol; if not, write to the Free Software Foundation, Inc., 51 Franklin</span>
+<a name="L16" class="line-number">  16 </a><span class="python-comment"># Street, Fifth Floor, Boston, MA 02110-1301, USA.</span>
+<a name="L17" class="line-number">  17 </a>
+<a name="L18" class="line-number">  18 </a>
+<a name="L19" class="line-number">  19 </a><span class="python-string">"""Names and codes for languages, countries and locales.
+<a name="L20" class="line-number">  20 </a>
+<a name="L21" class="line-number">  21 </a>Module variables:
+<a name="L22" class="line-number">  22 </a>
+<a name="L23" class="line-number">  23 </a>    COUNTRIES: Dictionary mapping ISO 3166 codes to country names
+<a name="L24" class="line-number">  24 </a>    LANGS:     Dictionary mapping ISO 639 codes to language names
+<a name="L25" class="line-number">  25 </a>    LOCALES:   Frozen set of locale codes
+<a name="L26" class="line-number">  26 </a>
+<a name="L27" class="line-number">  27 </a>Language codes are ISO 639 two-letter codes. Country codes are ISO 3166 codes.
+<a name="L28" class="line-number">  28 </a>These combined with an underscore form locale codes. Translations for the
+<a name="L29" class="line-number">  29 </a>language and country names are acquired from the 'iso-codes' gettext domain if
+<a name="L30" class="line-number">  30 </a>it exists.
+<a name="L31" class="line-number">  31 </a>"""</span>
+<a name="L32" class="line-number">  32 </a>
+<a name="L33" class="line-number">  33 </a><span class="python-comment"># Lists of languages and countries have been generated from iso-codes [1]</span>
+<a name="L34" class="line-number">  34 </a><span class="python-comment"># project's XML files iso_639.xml and iso_3166.xml with copyrights</span>
+<a name="L35" class="line-number">  35 </a><span class="python-comment">#</span>
+<a name="L36" class="line-number">  36 </a><span class="python-comment"># Copyright (C) 2005 Alastair McKinstry &lt;mckinstry@computer.org&gt;</span>
+<a name="L37" class="line-number">  37 </a><span class="python-comment"># Copyright (C) 2002,2006 Alastair McKinstry &lt;mckinstry@debian.org&gt;</span>
+<a name="L38" class="line-number">  38 </a><span class="python-comment">#</span>
+<a name="L39" class="line-number">  39 </a><span class="python-comment"># List of locales has been gathered from lists by AbiWord [2] and</span>
+<a name="L40" class="line-number">  40 </a><span class="python-comment"># OpenOffice [3]. Additionally, two-letter versions of each locale have been</span>
+<a name="L41" class="line-number">  41 </a><span class="python-comment"># added.</span>
+<a name="L42" class="line-number">  42 </a><span class="python-comment">#</span>
+<a name="L43" class="line-number">  43 </a><span class="python-comment"># [1] http://pkg-isocodes.alioth.debian.org/</span>
+<a name="L44" class="line-number">  44 </a><span class="python-comment"># [2] http://www.abisource.com/lxr/source/abi/src/af/util/xp/ut_Language.cpp</span>
+<a name="L45" class="line-number">  45 </a><span class="python-comment"># [3] http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/available.lst</span>
+<a name="L46" class="line-number">  46 </a>
+<a name="L47" class="line-number">  47 </a><span class="python-comment"># pylint: disable-msg=C0301</span>
+<a name="L48" class="line-number">  48 </a>
+<a name="L49" class="line-number">  49 </a>
+<a name="L50" class="line-number">  50 </a><span class="python-keyword">from</span> <span class="python-name">gettext</span> <span class="python-keyword">import</span> <span class="python-name">dgettext</span>
+<a name="L51" class="line-number">  51 </a><span class="python-keyword">from</span> <span class="python-name">gettext</span> <span class="python-keyword">import</span> <span class="python-name">gettext</span> <span class="python-keyword">as</span> <span class="python-name">_</span>
+<a name="L52" class="line-number">  52 </a>
+<a name="L53" class="line-number">  53 </a>
+<a name="L54" class="line-number">  54 </a><span class="python-name">COUNTRIES</span> <span class="python-operator">=</span> <span class="python-operator">{</span>
+<a name="L55" class="line-number">  55 </a>    <span class="python-string">"AD"</span><span class="python-operator">:</span> <span class="python-string">"Andorra"</span><span class="python-operator">,</span>
+<a name="L56" class="line-number">  56 </a>    <span class="python-string">"AE"</span><span class="python-operator">:</span> <span class="python-string">"United Arab Emirates"</span><span class="python-operator">,</span>
+<a name="L57" class="line-number">  57 </a>    <span class="python-string">"AF"</span><span class="python-operator">:</span> <span class="python-string">"Afghanistan"</span><span class="python-operator">,</span>
+<a name="L58" class="line-number">  58 </a>    <span class="python-string">"AG"</span><span class="python-operator">:</span> <span class="python-string">"Antigua and Barbuda"</span><span class="python-operator">,</span>
+<a name="L59" class="line-number">  59 </a>    <span class="python-string">"AI"</span><span class="python-operator">:</span> <span class="python-string">"Anguilla"</span><span class="python-operator">,</span>
+<a name="L60" class="line-number">  60 </a>    <span class="python-string">"AL"</span><span class="python-operator">:</span> <span class="python-string">"Albania"</span><span class="python-operator">,</span>
+<a name="L61" class="line-number">  61 </a>    <span class="python-string">"AM"</span><span class="python-operator">:</span> <span class="python-string">"Armenia"</span><span class="python-operator">,</span>
+<a name="L62" class="line-number">  62 </a>    <span class="python-string">"AN"</span><span class="python-operator">:</span> <span class="python-string">"Netherlands Antilles"</span><span class="python-operator">,</span>
+<a name="L63" class="line-number">  63 </a>    <span class="python-string">"AO"</span><span class="python-operator">:</span> <span class="python-string">"Angola"</span><span class="python-operator">,</span>
+<a name="L64" class="line-number">  64 </a>    <span class="python-string">"AQ"</span><span class="python-operator">:</span> <span class="python-string">"Antarctica"</span><span class="python-operator">,</span>
+<a name="L65" class="line-number">  65 </a>    <span class="python-string">"AR"</span><span class="python-operator">:</span> <span class="python-string">"Argentina"</span><span class="python-operator">,</span>
+<a name="L66" class="line-number">  66 </a>    <span class="python-string">"AS"</span><span class="python-operator">:</span> <span class="python-string">"American Samoa"</span><span class="python-operator">,</span>
+<a name="L67" class="line-number">  67 </a>    <span class="python-string">"AT"</span><span class="python-operator">:</span> <span class="python-string">"Austria"</span><span class="python-operator">,</span>
+<a name="L68" class="line-number">  68 </a>    <span class="python-string">"AU"</span><span class="python-operator">:</span> <span class="python-string">"Australia"</span><span class="python-operator">,</span>
+<a name="L69" class="line-number">  69 </a>    <span class="python-string">"AW"</span><span class="python-operator">:</span> <span class="python-string">"Aruba"</span><span class="python-operator">,</span>
+<a name="L70" class="line-number">  70 </a>    <span class="python-string">"AX"</span><span class="python-operator">:</span> <span class="python-string">"\303\205land Islands"</span><span class="python-operator">,</span>
+<a name="L71" class="line-number">  71 </a>    <span class="python-string">"AZ"</span><span class="python-operator">:</span> <span class="python-string">"Azerbaijan"</span><span class="python-operator">,</span>
+<a name="L72" class="line-number">  72 </a>    <span class="python-string">"BA"</span><span class="python-operator">:</span> <span class="python-string">"Bosnia and Herzegovina"</span><span class="python-operator">,</span>
+<a name="L73" class="line-number">  73 </a>    <span class="python-string">"BB"</span><span class="python-operator">:</span> <span class="python-string">"Barbados"</span><span class="python-operator">,</span>
+<a name="L74" class="line-number">  74 </a>    <span class="python-string">"BD"</span><span class="python-operator">:</span> <span class="python-string">"Bangladesh"</span><span class="python-operator">,</span>
+<a name="L75" class="line-number">  75 </a>    <span class="python-string">"BE"</span><span class="python-operator">:</span> <span class="python-string">"Belgium"</span><span class="python-operator">,</span>
+<a name="L76" class="line-number">  76 </a>    <span class="python-string">"BF"</span><span class="python-operator">:</span> <span class="python-string">"Burkina Faso"</span><span class="python-operator">,</span>
+<a name="L77" class="line-number">  77 </a>    <span class="python-string">"BG"</span><span class="python-operator">:</span> <span class="python-string">"Bulgaria"</span><span class="python-operator">,</span>
+<a name="L78" class="line-number">  78 </a>    <span class="python-string">"BH"</span><span class="python-operator">:</span> <span class="python-string">"Bahrain"</span><span class="python-operator">,</span>
+<a name="L79" class="line-number">  79 </a>    <span class="python-string">"BI"</span><span class="python-operator">:</span> <span class="python-string">"Burundi"</span><span class="python-operator">,</span>
+<a name="L80" class="line-number">  80 </a>    <span class="python-string">"BJ"</span><span class="python-operator">:</span> <span class="python-string">"Benin"</span><span class="python-operator">,</span>
+<a name="L81" class="line-number">  81 </a>    <span class="python-string">"BM"</span><span class="python-operator">:</span> <span class="python-string">"Bermuda"</span><span class="python-operator">,</span>
+<a name="L82" class="line-number">  82 </a>    <span class="python-string">"BN"</span><span class="python-operator">:</span> <span class="python-string">"Brunei Darussalam"</span><span class="python-operator">,</span>
+<a name="L83" class="line-number">  83 </a>    <span class="python-string">"BO"</span><span class="python-operator">:</span> <span class="python-string">"Bolivia"</span><span class="python-operator">,</span>
+<a name="L84" class="line-number">  84 </a>    <span class="python-string">"BR"</span><span class="python-operator">:</span> <span class="python-string">"Brazil"</span><span class="python-operator">,</span>
+<a name="L85" class="line-number">  85 </a>    <span class="python-string">"BS"</span><span class="python-operator">:</span> <span class="python-string">"Bahamas"</span><span class="python-operator">,</span>
+<a name="L86" class="line-number">  86 </a>    <span class="python-string">"BT"</span><span class="python-operator">:</span> <span class="python-string">"Bhutan"</span><span class="python-operator">,</span>
+<a name="L87" class="line-number">  87 </a>    <span class="python-string">"BV"</span><span class="python-operator">:</span> <span class="python-string">"Bouvet Island"</span><span class="python-operator">,</span>
+<a name="L88" class="line-number">  88 </a>    <span class="python-string">"BW"</span><span class="python-operator">:</span> <span class="python-string">"Botswana"</span><span class="python-operator">,</span>
+<a name="L89" class="line-number">  89 </a>    <span class="python-string">"BY"</span><span class="python-operator">:</span> <span class="python-string">"Belarus"</span><span class="python-operator">,</span>
+<a name="L90" class="line-number">  90 </a>    <span class="python-string">"BZ"</span><span class="python-operator">:</span> <span class="python-string">"Belize"</span><span class="python-operator">,</span>
+<a name="L91" class="line-number">  91 </a>    <span class="python-string">"CA"</span><span class="python-operator">:</span> <span class="python-string">"Canada"</span><span class="python-operator">,</span>
+<a name="L92" class="line-number">  92 </a>    <span class="python-string">"CC"</span><span class="python-operator">:</span> <span class="python-string">"Cocos (Keeling) Islands"</span><span class="python-operator">,</span>
+<a name="L93" class="line-number">  93 </a>    <span class="python-string">"CD"</span><span class="python-operator">:</span> <span class="python-string">"Congo, The Democratic Republic of the"</span><span class="python-operator">,</span>
+<a name="L94" class="line-number">  94 </a>    <span class="python-string">"CF"</span><span class="python-operator">:</span> <span class="python-string">"Central African Republic"</span><span class="python-operator">,</span>
+<a name="L95" class="line-number">  95 </a>    <span class="python-string">"CG"</span><span class="python-operator">:</span> <span class="python-string">"Congo"</span><span class="python-operator">,</span>
+<a name="L96" class="line-number">  96 </a>    <span class="python-string">"CH"</span><span class="python-operator">:</span> <span class="python-string">"Switzerland"</span><span class="python-operator">,</span>
+<a name="L97" class="line-number">  97 </a>    <span class="python-string">"CI"</span><span class="python-operator">:</span> <span class="python-string">"C\303\264te d'Ivoire"</span><span class="python-operator">,</span>
+<a name="L98" class="line-number">  98 </a>    <span class="python-string">"CK"</span><span class="python-operator">:</span> <span class="python-string">"Cook Islands"</span><span class="python-operator">,</span>
+<a name="L99" class="line-number">  99 </a>    <span class="python-string">"CL"</span><span class="python-operator">:</span> <span class="python-string">"Chile"</span><span class="python-operator">,</span>
+<a name="L100" class="line-number"> 100 </a>    <span class="python-string">"CM"</span><span class="python-operator">:</span> <span class="python-string">"Cameroon"</span><span class="python-operator">,</span>
+<a name="L101" class="line-number"> 101 </a>    <span class="python-string">"CN"</span><span class="python-operator">:</span> <span class="python-string">"China"</span><span class="python-operator">,</span>
+<a name="L102" class="line-number"> 102 </a>    <span class="python-string">"CO"</span><span class="python-operator">:</span> <span class="python-string">"Colombia"</span><span class="python-operator">,</span>
+<a name="L103" class="line-number"> 103 </a>    <span class="python-string">"CR"</span><span class="python-operator">:</span> <span class="python-string">"Costa Rica"</span><span class="python-operator">,</span>
+<a name="L104" class="line-number"> 104 </a>    <span class="python-string">"CS"</span><span class="python-operator">:</span> <span class="python-string">"Serbia and Montenegro"</span><span class="python-operator">,</span>
+<a name="L105" class="line-number"> 105 </a>    <span class="python-string">"CU"</span><span class="python-operator">:</span> <span class="python-string">"Cuba"</span><span class="python-operator">,</span>
+<a name="L106" class="line-number"> 106 </a>    <span class="python-string">"CV"</span><span class="python-operator">:</span> <span class="python-string">"Cape Verde"</span><span class="python-operator">,</span>
+<a name="L107" class="line-number"> 107 </a>    <span class="python-string">"CX"</span><span class="python-operator">:</span> <span class="python-string">"Christmas Island"</span><span class="python-operator">,</span>
+<a name="L108" class="line-number"> 108 </a>    <span class="python-string">"CY"</span><span class="python-operator">:</span> <span class="python-string">"Cyprus"</span><span class="python-operator">,</span>
+<a name="L109" class="line-number"> 109 </a>    <span class="python-string">"CZ"</span><span class="python-operator">:</span> <span class="python-string">"Czech Republic"</span><span class="python-operator">,</span>
+<a name="L110" class="line-number"> 110 </a>    <span class="python-string">"DE"</span><span class="python-operator">:</span> <span class="python-string">"Germany"</span><span class="python-operator">,</span>
+<a name="L111" class="line-number"> 111 </a>    <span class="python-string">"DJ"</span><span class="python-operator">:</span> <span class="python-string">"Djibouti"</span><span class="python-operator">,</span>
+<a name="L112" class="line-number"> 112 </a>    <span class="python-string">"DK"</span><span class="python-operator">:</span> <span class="python-string">"Denmark"</span><span class="python-operator">,</span>
+<a name="L113" class="line-number"> 113 </a>    <span class="python-string">"DM"</span><span class="python-operator">:</span> <span class="python-string">"Dominica"</span><span class="python-operator">,</span>
+<a name="L114" class="line-number"> 114 </a>    <span class="python-string">"DO"</span><span class="python-operator">:</span> <span class="python-string">"Dominican Republic"</span><span class="python-operator">,</span>
+<a name="L115" class="line-number"> 115 </a>    <span class="python-string">"DZ"</span><span class="python-operator">:</span> <span class="python-string">"Algeria"</span><span class="python-operator">,</span>
+<a name="L116" class="line-number"> 116 </a>    <span class="python-string">"EC"</span><span class="python-operator">:</span> <span class="python-string">"Ecuador"</span><span class="python-operator">,</span>
+<a name="L117" class="line-number"> 117 </a>    <span class="python-string">"EE"</span><span class="python-operator">:</span> <span class="python-string">"Estonia"</span><span class="python-operator">,</span>
+<a name="L118" class="line-number"> 118 </a>    <span class="python-string">"EG"</span><span class="python-operator">:</span> <span class="python-string">"Egypt"</span><span class="python-operator">,</span>
+<a name="L119" class="line-number"> 119 </a>    <span class="python-string">"EH"</span><span class="python-operator">:</span> <span class="python-string">"Western Sahara"</span><span class="python-operator">,</span>
+<a name="L120" class="line-number"> 120 </a>    <span class="python-string">"ER"</span><span class="python-operator">:</span> <span class="python-string">"Eritrea"</span><span class="python-operator">,</span>
+<a name="L121" class="line-number"> 121 </a>    <span class="python-string">"ES"</span><span class="python-operator">:</span> <span class="python-string">"Spain"</span><span class="python-operator">,</span>
+<a name="L122" class="line-number"> 122 </a>    <span class="python-string">"ET"</span><span class="python-operator">:</span> <span class="python-string">"Ethiopia"</span><span class="python-operator">,</span>
+<a name="L123" class="line-number"> 123 </a>    <span class="python-string">"FI"</span><span class="python-operator">:</span> <span class="python-string">"Finland"</span><span class="python-operator">,</span>
+<a name="L124" class="line-number"> 124 </a>    <span class="python-string">"FJ"</span><span class="python-operator">:</span> <span class="python-string">"Fiji"</span><span class="python-operator">,</span>
+<a name="L125" class="line-number"> 125 </a>    <span class="python-string">"FK"</span><span class="python-operator">:</span> <span class="python-string">"Falkland Islands (Malvinas)"</span><span class="python-operator">,</span>
+<a name="L126" class="line-number"> 126 </a>    <span class="python-string">"FM"</span><span class="python-operator">:</span> <span class="python-string">"Micronesia, Federated States of"</span><span class="python-operator">,</span>
+<a name="L127" class="line-number"> 127 </a>    <span class="python-string">"FO"</span><span class="python-operator">:</span> <span class="python-string">"Faroe Islands"</span><span class="python-operator">,</span>
+<a name="L128" class="line-number"> 128 </a>    <span class="python-string">"FR"</span><span class="python-operator">:</span> <span class="python-string">"France"</span><span class="python-operator">,</span>
+<a name="L129" class="line-number"> 129 </a>    <span class="python-string">"GA"</span><span class="python-operator">:</span> <span class="python-string">"Gabon"</span><span class="python-operator">,</span>
+<a name="L130" class="line-number"> 130 </a>    <span class="python-string">"GB"</span><span class="python-operator">:</span> <span class="python-string">"United Kingdom"</span><span class="python-operator">,</span>
+<a name="L131" class="line-number"> 131 </a>    <span class="python-string">"GD"</span><span class="python-operator">:</span> <span class="python-string">"Grenada"</span><span class="python-operator">,</span>
+<a name="L132" class="line-number"> 132 </a>    <span class="python-string">"GE"</span><span class="python-operator">:</span> <span class="python-string">"Georgia"</span><span class="python-operator">,</span>
+<a name="L133" class="line-number"> 133 </a>    <span class="python-string">"GF"</span><span class="python-operator">:</span> <span class="python-string">"French Guiana"</span><span class="python-operator">,</span>
+<a name="L134" class="line-number"> 134 </a>    <span class="python-string">"GH"</span><span class="python-operator">:</span> <span class="python-string">"Ghana"</span><span class="python-operator">,</span>
+<a name="L135" class="line-number"> 135 </a>    <span class="python-string">"GI"</span><span class="python-operator">:</span> <span class="python-string">"Gibraltar"</span><span class="python-operator">,</span>
+<a name="L136" class="line-number"> 136 </a>    <span class="python-string">"GL"</span><span class="python-operator">:</span> <span class="python-string">"Greenland"</span><span class="python-operator">,</span>
+<a name="L137" class="line-number"> 137 </a>    <span class="python-string">"GM"</span><span class="python-operator">:</span> <span class="python-string">"Gambia"</span><span class="python-operator">,</span>
+<a name="L138" class="line-number"> 138 </a>    <span class="python-string">"GN"</span><span class="python-operator">:</span> <span class="python-string">"Guinea"</span><span class="python-operator">,</span>
+<a name="L139" class="line-number"> 139 </a>    <span class="python-string">"GP"</span><span class="python-operator">:</span> <span class="python-string">"Guadeloupe"</span><span class="python-operator">,</span>
+<a name="L140" class="line-number"> 140 </a>    <span class="python-string">"GQ"</span><span class="python-operator">:</span> <span class="python-string">"Equatorial Guinea"</span><span class="python-operator">,</span>
+<a name="L141" class="line-number"> 141 </a>    <span class="python-string">"GR"</span><span class="python-operator">:</span> <span class="python-string">"Greece"</span><span class="python-operator">,</span>
+<a name="L142" class="line-number"> 142 </a>    <span class="python-string">"GS"</span><span class="python-operator">:</span> <span class="python-string">"South Georgia and the South Sandwich Islands"</span><span class="python-operator">,</span>
+<a name="L143" class="line-number"> 143 </a>    <span class="python-string">"GT"</span><span class="python-operator">:</span> <span class="python-string">"Guatemala"</span><span class="python-operator">,</span>
+<a name="L144" class="line-number"> 144 </a>    <span class="python-string">"GU"</span><span class="python-operator">:</span> <span class="python-string">"Guam"</span><span class="python-operator">,</span>
+<a name="L145" class="line-number"> 145 </a>    <span class="python-string">"GW"</span><span class="python-operator">:</span> <span class="python-string">"Guinea-Bissau"</span><span class="python-operator">,</span>
+<a name="L146" class="line-number"> 146 </a>    <span class="python-string">"GY"</span><span class="python-operator">:</span> <span class="python-string">"Guyana"</span><span class="python-operator">,</span>
+<a name="L147" class="line-number"> 147 </a>    <span class="python-string">"HK"</span><span class="python-operator">:</span> <span class="python-string">"Hong Kong"</span><span class="python-operator">,</span>
+<a name="L148" class="line-number"> 148 </a>    <span class="python-string">"HM"</span><span class="python-operator">:</span> <span class="python-string">"Heard Island and McDonald Islands"</span><span class="python-operator">,</span>
+<a name="L149" class="line-number"> 149 </a>    <span class="python-string">"HN"</span><span class="python-operator">:</span> <span class="python-string">"Honduras"</span><span class="python-operator">,</span>
+<a name="L150" class="line-number"> 150 </a>    <span class="python-string">"HR"</span><span class="python-operator">:</span> <span class="python-string">"Croatia"</span><span class="python-operator">,</span>
+<a name="L151" class="line-number"> 151 </a>    <span class="python-string">"HT"</span><span class="python-operator">:</span> <span class="python-string">"Haiti"</span><span class="python-operator">,</span>
+<a name="L152" class="line-number"> 152 </a>    <span class="python-string">"HU"</span><span class="python-operator">:</span> <span class="python-string">"Hungary"</span><span class="python-operator">,</span>
+<a name="L153" class="line-number"> 153 </a>    <span class="python-string">"ID"</span><span class="python-operator">:</span> <span class="python-string">"Indonesia"</span><span class="python-operator">,</span>
+<a name="L154" class="line-number"> 154 </a>    <span class="python-string">"IE"</span><span class="python-operator">:</span> <span class="python-string">"Ireland"</span><span class="python-operator">,</span>
+<a name="L155" class="line-number"> 155 </a>    <span class="python-string">"IL"</span><span class="python-operator">:</span> <span class="python-string">"Israel"</span><span class="python-operator">,</span>
+<a name="L156" class="line-number"> 156 </a>    <span class="python-string">"IN"</span><span class="python-operator">:</span> <span class="python-string">"India"</span><span class="python-operator">,</span>
+<a name="L157" class="line-number"> 157 </a>    <span class="python-string">"IO"</span><span class="python-operator">:</span> <span class="python-string">"British Indian Ocean Territory"</span><span class="python-operator">,</span>
+<a name="L158" class="line-number"> 158 </a>    <span class="python-string">"IQ"</span><span class="python-operator">:</span> <span class="python-string">"Iraq"</span><span class="python-operator">,</span>
+<a name="L159" class="line-number"> 159 </a>    <span class="python-string">"IR"</span><span class="python-operator">:</span> <span class="python-string">"Iran, Islamic Republic of"</span><span class="python-operator">,</span>
+<a name="L160" class="line-number"> 160 </a>    <span class="python-string">"IS"</span><span class="python-operator">:</span> <span class="python-string">"Iceland"</span><span class="python-operator">,</span>
+<a name="L161" class="line-number"> 161 </a>    <span class="python-string">"IT"</span><span class="python-operator">:</span> <span class="python-string">"Italy"</span><span class="python-operator">,</span>
+<a name="L162" class="line-number"> 162 </a>    <span class="python-string">"JM"</span><span class="python-operator">:</span> <span class="python-string">"Jamaica"</span><span class="python-operator">,</span>
+<a name="L163" class="line-number"> 163 </a>    <span class="python-string">"JO"</span><span class="python-operator">:</span> <span class="python-string">"Jordan"</span><span class="python-operator">,</span>
+<a name="L164" class="line-number"> 164 </a>    <span class="python-string">"JP"</span><span class="python-operator">:</span> <span class="python-string">"Japan"</span><span class="python-operator">,</span>
+<a name="L165" class="line-number"> 165 </a>    <span class="python-string">"KE"</span><span class="python-operator">:</span> <span class="python-string">"Kenya"</span><span class="python-operator">,</span>
+<a name="L166" class="line-number"> 166 </a>    <span class="python-string">"KG"</span><span class="python-operator">:</span> <span class="python-string">"Kyrgyzstan"</span><span class="python-operator">,</span>
+<a name="L167" class="line-number"> 167 </a>    <span class="python-string">"KH"</span><span class="python-operator">:</span> <span class="python-string">"Cambodia"</span><span class="python-operator">,</span>
+<a name="L168" class="line-number"> 168 </a>    <span class="python-string">"KI"</span><span class="python-operator">:</span> <span class="python-string">"Kiribati"</span><span class="python-operator">,</span>
+<a name="L169" class="line-number"> 169 </a>    <span class="python-string">"KM"</span><span class="python-operator">:</span> <span class="python-string">"Comoros"</span><span class="python-operator">,</span>
+<a name="L170" class="line-number"> 170 </a>    <span class="python-string">"KN"</span><span class="python-operator">:</span> <span class="python-string">"Saint Kitts and Nevis"</span><span class="python-operator">,</span>
+<a name="L171" class="line-number"> 171 </a>    <span class="python-string">"KP"</span><span class="python-operator">:</span> <span class="python-string">"Korea, Democratic People's Republic of"</span><span class="python-operator">,</span>
+<a name="L172" class="line-number"> 172 </a>    <span class="python-string">"KR"</span><span class="python-operator">:</span> <span class="python-string">"Korea, Republic of"</span><span class="python-operator">,</span>
+<a name="L173" class="line-number"> 173 </a>    <span class="python-string">"KW"</span><span class="python-operator">:</span> <span class="python-string">"Kuwait"</span><span class="python-operator">,</span>
+<a name="L174" class="line-number"> 174 </a>    <span class="python-string">"KY"</span><span class="python-operator">:</span> <span class="python-string">"Cayman Islands"</span><span class="python-operator">,</span>
+<a name="L175" class="line-number"> 175 </a>    <span class="python-string">"KZ"</span><span class="python-operator">:</span> <span class="python-string">"Kazakhstan"</span><span class="python-operator">,</span>
+<a name="L176" class="line-number"> 176 </a>    <span class="python-string">"LA"</span><span class="python-operator">:</span> <span class="python-string">"Lao People's Democratic Republic"</span><span class="python-operator">,</span>
+<a name="L177" class="line-number"> 177 </a>    <span class="python-string">"LB"</span><span class="python-operator">:</span> <span class="python-string">"Lebanon"</span><span class="python-operator">,</span>
+<a name="L178" class="line-number"> 178 </a>    <span class="python-string">"LC"</span><span class="python-operator">:</span> <span class="python-string">"Saint Lucia"</span><span class="python-operator">,</span>
+<a name="L179" class="line-number"> 179 </a>    <span class="python-string">"LI"</span><span class="python-operator">:</span> <span class="python-string">"Liechtenstein"</span><span class="python-operator">,</span>
+<a name="L180" class="line-number"> 180 </a>    <span class="python-string">"LK"</span><span class="python-operator">:</span> <span class="python-string">"Sri Lanka"</span><span class="python-operator">,</span>
+<a name="L181" class="line-number"> 181 </a>    <span class="python-string">"LR"</span><span class="python-operator">:</span> <span class="python-string">"Liberia"</span><span class="python-operator">,</span>
+<a name="L182" class="line-number"> 182 </a>    <span class="python-string">"LS"</span><span class="python-operator">:</span> <span class="python-string">"Lesotho"</span><span class="python-operator">,</span>
+<a name="L183" class="line-number"> 183 </a>    <span class="python-string">"LT"</span><span class="python-operator">:</span> <span class="python-string">"Lithuania"</span><span class="python-operator">,</span>
+<a name="L184" class="line-number"> 184 </a>    <span class="python-string">"LU"</span><span class="python-operator">:</span> <span class="python-string">"Luxembourg"</span><span class="python-operator">,</span>
+<a name="L185" class="line-number"> 185 </a>    <span class="python-string">"LV"</span><span class="python-operator">:</span> <span class="python-string">"Latvia"</span><span class="python-operator">,</span>
+<a name="L186" class="line-number"> 186 </a>    <span class="python-string">"LY"</span><span class="python-operator">:</span> <span class="python-string">"Libyan Arab Jamahiriya"</span><span class="python-operator">,</span>
+<a name="L187" class="line-number"> 187 </a>    <span class="python-string">"MA"</span><span class="python-operator">:</span> <span class="python-string">"Morocco"</span><span class="python-operator">,</span>
+<a name="L188" class="line-number"> 188 </a>    <span class="python-string">"MC"</span><span class="python-operator">:</span> <span class="python-string">"Monaco"</span><span class="python-operator">,</span>
+<a name="L189" class="line-number"> 189 </a>    <span class="python-string">"MD"</span><span class="python-operator">:</span> <span class="python-string">"Moldova, Republic of"</span><span class="python-operator">,</span>
+<a name="L190" class="line-number"> 190 </a>    <span class="python-string">"MG"</span><span class="python-operator">:</span> <span class="python-string">"Madagascar"</span><span class="python-operator">,</span>
+<a name="L191" class="line-number"> 191 </a>    <span class="python-string">"MH"</span><span class="python-operator">:</span> <span class="python-string">"Marshall Islands"</span><span class="python-operator">,</span>
+<a name="L192" class="line-number"> 192 </a>    <span class="python-string">"MK"</span><span class="python-operator">:</span> <span class="python-string">"Macedonia, Republic of"</span><span class="python-operator">,</span>
+<a name="L193" class="line-number"> 193 </a>    <span class="python-string">"ML"</span><span class="python-operator">:</span> <span class="python-string">"Mali"</span><span class="python-operator">,</span>
+<a name="L194" class="line-number"> 194 </a>    <span class="python-string">"MM"</span><span class="python-operator">:</span> <span class="python-string">"Myanmar"</span><span class="python-operator">,</span>
+<a name="L195" class="line-number"> 195 </a>    <span class="python-string">"MN"</span><span class="python-operator">:</span> <span class="python-string">"Mongolia"</span><span class="python-operator">,</span>
+<a name="L196" class="line-number"> 196 </a>    <span class="python-string">"MO"</span><span class="python-operator">:</span> <span class="python-string">"Macao"</span><span class="python-operator">,</span>
+<a name="L197" class="line-number"> 197 </a>    <span class="python-string">"MP"</span><span class="python-operator">:</span> <span class="python-string">"Northern Mariana Islands"</span><span class="python-operator">,</span>
+<a name="L198" class="line-number"> 198 </a>    <span class="python-string">"MQ"</span><span class="python-operator">:</span> <span class="python-string">"Martinique"</span><span class="python-operator">,</span>
+<a name="L199" class="line-number"> 199 </a>    <span class="python-string">"MR"</span><span class="python-operator">:</span> <span class="python-string">"Mauritania"</span><span class="python-operator">,</span>
+<a name="L200" class="line-number"> 200 </a>    <span class="python-string">"MS"</span><span class="python-operator">:</span> <span class="python-string">"Montserrat"</span><span class="python-operator">,</span>
+<a name="L201" class="line-number"> 201 </a>    <span class="python-string">"MT"</span><span class="python-operator">:</span> <span class="python-string">"Malta"</span><span class="python-operator">,</span>
+<a name="L202" class="line-number"> 202 </a>    <span class="python-string">"MU"</span><span class="python-operator">:</span> <span class="python-string">"Mauritius"</span><span class="python-operator">,</span>
+<a name="L203" class="line-number"> 203 </a>    <span class="python-string">"MV"</span><span class="python-operator">:</span> <span class="python-string">"Maldives"</span><span class="python-operator">,</span>
+<a name="L204" class="line-number"> 204 </a>    <span class="python-string">"MW"</span><span class="python-operator">:</span> <span class="python-string">"Malawi"</span><span class="python-operator">,</span>
+<a name="L205" class="line-number"> 205 </a>    <span class="python-string">"MX"</span><span class="python-operator">:</span> <span class="python-string">"Mexico"</span><span class="python-operator">,</span>
+<a name="L206" class="line-number"> 206 </a>    <span class="python-string">"MY"</span><span class="python-operator">:</span> <span class="python-string">"Malaysia"</span><span class="python-operator">,</span>
+<a name="L207" class="line-number"> 207 </a>    <span class="python-string">"MZ"</span><span class="python-operator">:</span> <span class="python-string">"Mozambique"</span><span class="python-operator">,</span>
+<a name="L208" class="line-number"> 208 </a>    <span class="python-string">"NA"</span><span class="python-operator">:</span> <span class="python-string">"Namibia"</span><span class="python-operator">,</span>
+<a name="L209" class="line-number"> 209 </a>    <span class="python-string">"NC"</span><span class="python-operator">:</span> <span class="python-string">"New Caledonia"</span><span class="python-operator">,</span>
+<a name="L210" class="line-number"> 210 </a>    <span class="python-string">"NE"</span><span class="python-operator">:</span> <span class="python-string">"Niger"</span><span class="python-operator">,</span>
+<a name="L211" class="line-number"> 211 </a>    <span class="python-string">"NF"</span><span class="python-operator">:</span> <span class="python-string">"Norfolk Island"</span><span class="python-operator">,</span>
+<a name="L212" class="line-number"> 212 </a>    <span class="python-string">"NG"</span><span class="python-operator">:</span> <span class="python-string">"Nigeria"</span><span class="python-operator">,</span>
+<a name="L213" class="line-number"> 213 </a>    <span class="python-string">"NI"</span><span class="python-operator">:</span> <span class="python-string">"Nicaragua"</span><span class="python-operator">,</span>
+<a name="L214" class="line-number"> 214 </a>    <span class="python-string">"NL"</span><span class="python-operator">:</span> <span class="python-string">"Netherlands"</span><span class="python-operator">,</span>
+<a name="L215" class="line-number"> 215 </a>    <span class="python-string">"NO"</span><span class="python-operator">:</span> <span class="python-string">"Norway"</span><span class="python-operator">,</span>
+<a name="L216" class="line-number"> 216 </a>    <span class="python-string">"NP"</span><span class="python-operator">:</span> <span class="python-string">"Nepal"</span><span class="python-operator">,</span>
+<a name="L217" class="line-number"> 217 </a>    <span class="python-string">"NR"</span><span class="python-operator">:</span> <span class="python-string">"Nauru"</span><span class="python-operator">,</span>
+<a name="L218" class="line-number"> 218 </a>    <span class="python-string">"NU"</span><span class="python-operator">:</span> <span class="python-string">"Niue"</span><span class="python-operator">,</span>
+<a name="L219" class="line-number"> 219 </a>    <span class="python-string">"NZ"</span><span class="python-operator">:</span> <span class="python-string">"New Zealand"</span><span class="python-operator">,</span>
+<a name="L220" class="line-number"> 220 </a>    <span class="python-string">"OM"</span><span class="python-operator">:</span> <span class="python-string">"Oman"</span><span class="python-operator">,</span>
+<a name="L221" class="line-number"> 221 </a>    <span class="python-string">"PA"</span><span class="python-operator">:</span> <span class="python-string">"Panama"</span><span class="python-operator">,</span>
+<a name="L222" class="line-number"> 222 </a>    <span class="python-string">"PE"</span><span class="python-operator">:</span> <span class="python-string">"Peru"</span><span class="python-operator">,</span>
+<a name="L223" class="line-number"> 223 </a>    <span class="python-string">"PF"</span><span class="python-operator">:</span> <span class="python-string">"French Polynesia"</span><span class="python-operator">,</span>
+<a name="L224" class="line-number"> 224 </a>    <span class="python-string">"PG"</span><span class="python-operator">:</span> <span class="python-string">"Papua New Guinea"</span><span class="python-operator">,</span>
+<a name="L225" class="line-number"> 225 </a>    <span class="python-string">"PH"</span><span class="python-operator">:</span> <span class="python-string">"Philippines"</span><span class="python-operator">,</span>
+<a name="L226" class="line-number"> 226 </a>    <span class="python-string">"PK"</span><span class="python-operator">:</span> <span class="python-string">"Pakistan"</span><span class="python-operator">,</span>
+<a name="L227" class="line-number"> 227 </a>    <span class="python-string">"PL"</span><span class="python-operator">:</span> <span class="python-string">"Poland"</span><span class="python-operator">,</span>
+<a name="L228" class="line-number"> 228 </a>    <span class="python-string">"PM"</span><span class="python-operator">:</span> <span class="python-string">"Saint Pierre and Miquelon"</span><span class="python-operator">,</span>
+<a name="L229" class="line-number"> 229 </a>    <span class="python-string">"PN"</span><span class="python-operator">:</span> <span class="python-string">"Pitcairn"</span><span class="python-operator">,</span>
+<a name="L230" class="line-number"> 230 </a>    <span class="python-string">"PR"</span><span class="python-operator">:</span> <span class="python-string">"Puerto Rico"</span><span class="python-operator">,</span>
+<a name="L231" class="line-number"> 231 </a>    <span class="python-string">"PS"</span><span class="python-operator">:</span> <span class="python-string">"Palestinian Territory, Occupied"</span><span class="python-operator">,</span>
+<a name="L232" class="line-number"> 232 </a>    <span class="python-string">"PT"</span><span class="python-operator">:</span> <span class="python-string">"Portugal"</span><span class="python-operator">,</span>
+<a name="L233" class="line-number"> 233 </a>    <span class="python-string">"PW"</span><span class="python-operator">:</span> <span class="python-string">"Palau"</span><span class="python-operator">,</span>
+<a name="L234" class="line-number"> 234 </a>    <span class="python-string">"PY"</span><span class="python-operator">:</span> <span class="python-string">"Paraguay"</span><span class="python-operator">,</span>
+<a name="L235" class="line-number"> 235 </a>    <span class="python-string">"QA"</span><span class="python-operator">:</span> <span class="python-string">"Qatar"</span><span class="python-operator">,</span>
+<a name="L236" class="line-number"> 236 </a>    <span class="python-string">"RE"</span><span class="python-operator">:</span> <span class="python-string">"Reunion"</span><span class="python-operator">,</span>
+<a name="L237" class="line-number"> 237 </a>    <span class="python-string">"RO"</span><span class="python-operator">:</span> <span class="python-string">"Romania"</span><span class="python-operator">,</span>
+<a name="L238" class="line-number"> 238 </a>    <span class="python-string">"RU"</span><span class="python-operator">:</span> <span class="python-string">"Russian Federation"</span><span class="python-operator">,</span>
+<a name="L239" class="line-number"> 239 </a>    <span class="python-string">"RW"</span><span class="python-operator">:</span> <span class="python-string">"Rwanda"</span><span class="python-operator">,</span>
+<a name="L240" class="line-number"> 240 </a>    <span class="python-string">"SA"</span><span class="python-operator">:</span> <span class="python-string">"Saudi Arabia"</span><span class="python-operator">,</span>
+<a name="L241" class="line-number"> 241 </a>    <span class="python-string">"SB"</span><span class="python-operator">:</span> <span class="python-string">"Solomon Islands"</span><span class="python-operator">,</span>
+<a name="L242" class="line-number"> 242 </a>    <span class="python-string">"SC"</span><span class="python-operator">:</span> <span class="python-string">"Seychelles"</span><span class="python-operator">,</span>
+<a name="L243" class="line-number"> 243 </a>    <span class="python-string">"SD"</span><span class="python-operator">:</span> <span class="python-string">"Sudan"</span><span class="python-operator">,</span>
+<a name="L244" class="line-number"> 244 </a>    <span class="python-string">"SE"</span><span class="python-operator">:</span> <span class="python-string">"Sweden"</span><span class="python-operator">,</span>
+<a name="L245" class="line-number"> 245 </a>    <span class="python-string">"SG"</span><span class="python-operator">:</span> <span class="python-string">"Singapore"</span><span class="python-operator">,</span>
+<a name="L246" class="line-number"> 246 </a>    <span class="python-string">"SH"</span><span class="python-operator">:</span> <span class="python-string">"Saint Helena"</span><span class="python-operator">,</span>
+<a name="L247" class="line-number"> 247 </a>    <span class="python-string">"SI"</span><span class="python-operator">:</span> <span class="python-string">"Slovenia"</span><span class="python-operator">,</span>
+<a name="L248" class="line-number"> 248 </a>    <span class="python-string">"SJ"</span><span class="python-operator">:</span> <span class="python-string">"Svalbard and Jan Mayen"</span><span class="python-operator">,</span>
+<a name="L249" class="line-number"> 249 </a>    <span class="python-string">"SK"</span><span class="python-operator">:</span> <span class="python-string">"Slovakia"</span><span class="python-operator">,</span>
+<a name="L250" class="line-number"> 250 </a>    <span class="python-string">"SL"</span><span class="python-operator">:</span> <span class="python-string">"Sierra Leone"</span><span class="python-operator">,</span>
+<a name="L251" class="line-number"> 251 </a>    <span class="python-string">"SM"</span><span class="python-operator">:</span> <span class="python-string">"San Marino"</span><span class="python-operator">,</span>
+<a name="L252" class="line-number"> 252 </a>    <span class="python-string">"SN"</span><span class="python-operator">:</span> <span class="python-string">"Senegal"</span><span class="python-operator">,</span>
+<a name="L253" class="line-number"> 253 </a>    <span class="python-string">"SO"</span><span class="python-operator">:</span> <span class="python-string">"Somalia"</span><span class="python-operator">,</span>
+<a name="L254" class="line-number"> 254 </a>    <span class="python-string">"SR"</span><span class="python-operator">:</span> <span class="python-string">"Suriname"</span><span class="python-operator">,</span>
+<a name="L255" class="line-number"> 255 </a>    <span class="python-string">"ST"</span><span class="python-operator">:</span> <span class="python-string">"Sao Tome and Principe"</span><span class="python-operator">,</span>
+<a name="L256" class="line-number"> 256 </a>    <span class="python-string">"SV"</span><span class="python-operator">:</span> <span class="python-string">"El Salvador"</span><span class="python-operator">,</span>
+<a name="L257" class="line-number"> 257 </a>    <span class="python-string">"SY"</span><span class="python-operator">:</span> <span class="python-string">"Syrian Arab Republic"</span><span class="python-operator">,</span>
+<a name="L258" class="line-number"> 258 </a>    <span class="python-string">"SZ"</span><span class="python-operator">:</span> <span class="python-string">"Swaziland"</span><span class="python-operator">,</span>
+<a name="L259" class="line-number"> 259 </a>    <span class="python-string">"TC"</span><span class="python-operator">:</span> <span class="python-string">"Turks and Caicos Islands"</span><span class="python-operator">,</span>
+<a name="L260" class="line-number"> 260 </a>    <span class="python-string">"TD"</span><span class="python-operator">:</span> <span class="python-string">"Chad"</span><span class="python-operator">,</span>
+<a name="L261" class="line-number"> 261 </a>    <span class="python-string">"TF"</span><span class="python-operator">:</span> <span class="python-string">"French Southern Territories"</span><span class="python-operator">,</span>
+<a name="L262" class="line-number"> 262 </a>    <span class="python-string">"TG"</span><span class="python-operator">:</span> <span class="python-string">"Togo"</span><span class="python-operator">,</span>
+<a name="L263" class="line-number"> 263 </a>    <span class="python-string">"TH"</span><span class="python-operator">:</span> <span class="python-string">"Thailand"</span><span class="python-operator">,</span>
+<a name="L264" class="line-number"> 264 </a>    <span class="python-string">"TJ"</span><span class="python-operator">:</span> <span class="python-string">"Tajikistan"</span><span class="python-operator">,</span>
+<a name="L265" class="line-number"> 265 </a>    <span class="python-string">"TK"</span><span class="python-operator">:</span> <span class="python-string">"Tokelau"</span><span class="python-operator">,</span>
+<a name="L266" class="line-number"> 266 </a>    <span class="python-string">"TL"</span><span class="python-operator">:</span> <span class="python-string">"Timor-Leste"</span><span class="python-operator">,</span>
+<a name="L267" class="line-number"> 267 </a>    <span class="python-string">"TM"</span><span class="python-operator">:</span> <span class="python-string">"Turkmenistan"</span><span class="python-operator">,</span>
+<a name="L268" class="line-number"> 268 </a>    <span class="python-string">"TN"</span><span class="python-operator">:</span> <span class="python-string">"Tunisia"</span><span class="python-operator">,</span>
+<a name="L269" class="line-number"> 269 </a>    <span class="python-string">"TO"</span><span class="python-operator">:</span> <span class="python-string">"Tonga"</span><span class="python-operator">,</span>
+<a name="L270" class="line-number"> 270 </a>    <span class="python-string">"TR"</span><span class="python-operator">:</span> <span class="python-string">"Turkey"</span><span class="python-operator">,</span>
+<a name="L271" class="line-number"> 271 </a>    <span class="python-string">"TT"</span><span class="python-operator">:</span> <span class="python-string">"Trinidad and Tobago"</span><span class="python-operator">,</span>
+<a name="L272" class="line-number"> 272 </a>    <span class="python-string">"TV"</span><span class="python-operator">:</span> <span class="python-string">"Tuvalu"</span><span class="python-operator">,</span>
+<a name="L273" class="line-number"> 273 </a>    <span class="python-string">"TW"</span><span class="python-operator">:</span> <span class="python-string">"Taiwan"</span><span class="python-operator">,</span>
+<a name="L274" class="line-number"> 274 </a>    <span class="python-string">"TZ"</span><span class="python-operator">:</span> <span class="python-string">"Tanzania, United Republic of"</span><span class="python-operator">,</span>
+<a name="L275" class="line-number"> 275 </a>    <span class="python-string">"UA"</span><span class="python-operator">:</span> <span class="python-string">"Ukraine"</span><span class="python-operator">,</span>
+<a name="L276" class="line-number"> 276 </a>    <span class="python-string">"UG"</span><span class="python-operator">:</span> <span class="python-string">"Uganda"</span><span class="python-operator">,</span>
+<a name="L277" class="line-number"> 277 </a>    <span class="python-string">"UM"</span><span class="python-operator">:</span> <span class="python-string">"United States Minor Outlying Islands"</span><span class="python-operator">,</span>
+<a name="L278" class="line-number"> 278 </a>    <span class="python-string">"US"</span><span class="python-operator">:</span> <span class="python-string">"United States"</span><span class="python-operator">,</span>
+<a name="L279" class="line-number"> 279 </a>    <span class="python-string">"UY"</span><span class="python-operator">:</span> <span class="python-string">"Uruguay"</span><span class="python-operator">,</span>
+<a name="L280" class="line-number"> 280 </a>    <span class="python-string">"UZ"</span><span class="python-operator">:</span> <span class="python-string">"Uzbekistan"</span><span class="python-operator">,</span>
+<a name="L281" class="line-number"> 281 </a>    <span class="python-string">"VA"</span><span class="python-operator">:</span> <span class="python-string">"Holy See (Vatican City State)"</span><span class="python-operator">,</span>
+<a name="L282" class="line-number"> 282 </a>    <span class="python-string">"VC"</span><span class="python-operator">:</span> <span class="python-string">"Saint Vincent and the Grenadines"</span><span class="python-operator">,</span>
+<a name="L283" class="line-number"> 283 </a>    <span class="python-string">"VE"</span><span class="python-operator">:</span> <span class="python-string">"Venezuela"</span><span class="python-operator">,</span>
+<a name="L284" class="line-number"> 284 </a>    <span class="python-string">"VG"</span><span class="python-operator">:</span> <span class="python-string">"Virgin Islands, British"</span><span class="python-operator">,</span>
+<a name="L285" class="line-number"> 285 </a>    <span class="python-string">"VI"</span><span class="python-operator">:</span> <span class="python-string">"Virgin Islands, U.S."</span><span class="python-operator">,</span>
+<a name="L286" class="line-number"> 286 </a>    <span class="python-string">"VN"</span><span class="python-operator">:</span> <span class="python-string">"Viet Nam"</span><span class="python-operator">,</span>
+<a name="L287" class="line-number"> 287 </a>    <span class="python-string">"VU"</span><span class="python-operator">:</span> <span class="python-string">"Vanuatu"</span><span class="python-operator">,</span>
+<a name="L288" class="line-number"> 288 </a>    <span class="python-string">"WF"</span><span class="python-operator">:</span> <span class="python-string">"Wallis and Futuna"</span><span class="python-operator">,</span>
+<a name="L289" class="line-number"> 289 </a>    <span class="python-string">"WS"</span><span class="python-operator">:</span> <span class="python-string">"Samoa"</span><span class="python-operator">,</span>
+<a name="L290" class="line-number"> 290 </a>    <span class="python-string">"YE"</span><span class="python-operator">:</span> <span class="python-string">"Yemen"</span><span class="python-operator">,</span>
+<a name="L291" class="line-number"> 291 </a>    <span class="python-string">"YT"</span><span class="python-operator">:</span> <span class="python-string">"Mayotte"</span><span class="python-operator">,</span>
+<a name="L292" class="line-number"> 292 </a>    <span class="python-string">"ZA"</span><span class="python-operator">:</span> <span class="python-string">"South Africa"</span><span class="python-operator">,</span>
+<a name="L293" class="line-number"> 293 </a>    <span class="python-string">"ZM"</span><span class="python-operator">:</span> <span class="python-string">"Zambia"</span><span class="python-operator">,</span>
+<a name="L294" class="line-number"> 294 </a>    <span class="python-string">"ZW"</span><span class="python-operator">:</span> <span class="python-string">"Zimbabwe"</span><span class="python-operator">,</span><span class="python-operator">}</span>
+<a name="L295" class="line-number"> 295 </a>
+<a name="L296" class="line-number"> 296 </a><span class="python-name">LANGS</span> <span class="python-operator">=</span> <span class="python-operator">{</span>
+<a name="L297" class="line-number"> 297 </a>    <span class="python-string">"aa"</span><span class="python-operator">:</span> <span class="python-string">"Afar"</span><span class="python-operator">,</span>
+<a name="L298" class="line-number"> 298 </a>    <span class="python-string">"ab"</span><span class="python-operator">:</span> <span class="python-string">"Abkhazian"</span><span class="python-operator">,</span>
+<a name="L299" class="line-number"> 299 </a>    <span class="python-string">"ae"</span><span class="python-operator">:</span> <span class="python-string">"Avestan"</span><span class="python-operator">,</span>
+<a name="L300" class="line-number"> 300 </a>    <span class="python-string">"af"</span><span class="python-operator">:</span> <span class="python-string">"Afrikaans"</span><span class="python-operator">,</span>
+<a name="L301" class="line-number"> 301 </a>    <span class="python-string">"ak"</span><span class="python-operator">:</span> <span class="python-string">"Akan"</span><span class="python-operator">,</span>
+<a name="L302" class="line-number"> 302 </a>    <span class="python-string">"am"</span><span class="python-operator">:</span> <span class="python-string">"Amharic"</span><span class="python-operator">,</span>
+<a name="L303" class="line-number"> 303 </a>    <span class="python-string">"an"</span><span class="python-operator">:</span> <span class="python-string">"Aragonese"</span><span class="python-operator">,</span>
+<a name="L304" class="line-number"> 304 </a>    <span class="python-string">"ar"</span><span class="python-operator">:</span> <span class="python-string">"Arabic"</span><span class="python-operator">,</span>
+<a name="L305" class="line-number"> 305 </a>    <span class="python-string">"as"</span><span class="python-operator">:</span> <span class="python-string">"Assamese"</span><span class="python-operator">,</span>
+<a name="L306" class="line-number"> 306 </a>    <span class="python-string">"av"</span><span class="python-operator">:</span> <span class="python-string">"Avaric"</span><span class="python-operator">,</span>
+<a name="L307" class="line-number"> 307 </a>    <span class="python-string">"ay"</span><span class="python-operator">:</span> <span class="python-string">"Aymara"</span><span class="python-operator">,</span>
+<a name="L308" class="line-number"> 308 </a>    <span class="python-string">"az"</span><span class="python-operator">:</span> <span class="python-string">"Azerbaijani"</span><span class="python-operator">,</span>
+<a name="L309" class="line-number"> 309 </a>    <span class="python-string">"ba"</span><span class="python-operator">:</span> <span class="python-string">"Bashkir"</span><span class="python-operator">,</span>
+<a name="L310" class="line-number"> 310 </a>    <span class="python-string">"be"</span><span class="python-operator">:</span> <span class="python-string">"Belarusian"</span><span class="python-operator">,</span>
+<a name="L311" class="line-number"> 311 </a>    <span class="python-string">"bg"</span><span class="python-operator">:</span> <span class="python-string">"Bulgarian"</span><span class="python-operator">,</span>
+<a name="L312" class="line-number"> 312 </a>    <span class="python-string">"bh"</span><span class="python-operator">:</span> <span class="python-string">"Bihari"</span><span class="python-operator">,</span>
+<a name="L313" class="line-number"> 313 </a>    <span class="python-string">"bi"</span><span class="python-operator">:</span> <span class="python-string">"Bislama"</span><span class="python-operator">,</span>
+<a name="L314" class="line-number"> 314 </a>    <span class="python-string">"bm"</span><span class="python-operator">:</span> <span class="python-string">"Bambara"</span><span class="python-operator">,</span>
+<a name="L315" class="line-number"> 315 </a>    <span class="python-string">"bn"</span><span class="python-operator">:</span> <span class="python-string">"Bengali"</span><span class="python-operator">,</span>
+<a name="L316" class="line-number"> 316 </a>    <span class="python-string">"bo"</span><span class="python-operator">:</span> <span class="python-string">"Tibetan"</span><span class="python-operator">,</span>
+<a name="L317" class="line-number"> 317 </a>    <span class="python-string">"br"</span><span class="python-operator">:</span> <span class="python-string">"Breton"</span><span class="python-operator">,</span>
+<a name="L318" class="line-number"> 318 </a>    <span class="python-string">"bs"</span><span class="python-operator">:</span> <span class="python-string">"Bosnian"</span><span class="python-operator">,</span>
+<a name="L319" class="line-number"> 319 </a>    <span class="python-string">"ca"</span><span class="python-operator">:</span> <span class="python-string">"Catalan"</span><span class="python-operator">,</span>
+<a name="L320" class="line-number"> 320 </a>    <span class="python-string">"ce"</span><span class="python-operator">:</span> <span class="python-string">"Chechen"</span><span class="python-operator">,</span>
+<a name="L321" class="line-number"> 321 </a>    <span class="python-string">"ch"</span><span class="python-operator">:</span> <span class="python-string">"Chamorro"</span><span class="python-operator">,</span>
+<a name="L322" class="line-number"> 322 </a>    <span class="python-string">"co"</span><span class="python-operator">:</span> <span class="python-string">"Corsican"</span><span class="python-operator">,</span>
+<a name="L323" class="line-number"> 323 </a>    <span class="python-string">"cr"</span><span class="python-operator">:</span> <span class="python-string">"Cree"</span><span class="python-operator">,</span>
+<a name="L324" class="line-number"> 324 </a>    <span class="python-string">"cs"</span><span class="python-operator">:</span> <span class="python-string">"Czech"</span><span class="python-operator">,</span>
+<a name="L325" class="line-number"> 325 </a>    <span class="python-string">"cv"</span><span class="python-operator">:</span> <span class="python-string">"Chuvash"</span><span class="python-operator">,</span>
+<a name="L326" class="line-number"> 326 </a>    <span class="python-string">"cy"</span><span class="python-operator">:</span> <span class="python-string">"Welsh"</span><span class="python-operator">,</span>
+<a name="L327" class="line-number"> 327 </a>    <span class="python-string">"da"</span><span class="python-operator">:</span> <span class="python-string">"Danish"</span><span class="python-operator">,</span>
+<a name="L328" class="line-number"> 328 </a>    <span class="python-string">"de"</span><span class="python-operator">:</span> <span class="python-string">"German"</span><span class="python-operator">,</span>
+<a name="L329" class="line-number"> 329 </a>    <span class="python-string">"dv"</span><span class="python-operator">:</span> <span class="python-string">"Divehi"</span><span class="python-operator">,</span>
+<a name="L330" class="line-number"> 330 </a>    <span class="python-string">"dz"</span><span class="python-operator">:</span> <span class="python-string">"Dzongkha"</span><span class="python-operator">,</span>
+<a name="L331" class="line-number"> 331 </a>    <span class="python-string">"ee"</span><span class="python-operator">:</span> <span class="python-string">"Ewe"</span><span class="python-operator">,</span>
+<a name="L332" class="line-number"> 332 </a>    <span class="python-string">"el"</span><span class="python-operator">:</span> <span class="python-string">"Greek, Modern (1453-)"</span><span class="python-operator">,</span>
+<a name="L333" class="line-number"> 333 </a>    <span class="python-string">"en"</span><span class="python-operator">:</span> <span class="python-string">"English"</span><span class="python-operator">,</span>
+<a name="L334" class="line-number"> 334 </a>    <span class="python-string">"eo"</span><span class="python-operator">:</span> <span class="python-string">"Esperanto"</span><span class="python-operator">,</span>
+<a name="L335" class="line-number"> 335 </a>    <span class="python-string">"es"</span><span class="python-operator">:</span> <span class="python-string">"Spanish"</span><span class="python-operator">,</span>
+<a name="L336" class="line-number"> 336 </a>    <span class="python-string">"et"</span><span class="python-operator">:</span> <span class="python-string">"Estonian"</span><span class="python-operator">,</span>
+<a name="L337" class="line-number"> 337 </a>    <span class="python-string">"eu"</span><span class="python-operator">:</span> <span class="python-string">"Basque"</span><span class="python-operator">,</span>
+<a name="L338" class="line-number"> 338 </a>    <span class="python-string">"fa"</span><span class="python-operator">:</span> <span class="python-string">"Persian"</span><span class="python-operator">,</span>
+<a name="L339" class="line-number"> 339 </a>    <span class="python-string">"ff"</span><span class="python-operator">:</span> <span class="python-string">"Fulah"</span><span class="python-operator">,</span>
+<a name="L340" class="line-number"> 340 </a>    <span class="python-string">"fi"</span><span class="python-operator">:</span> <span class="python-string">"Finnish"</span><span class="python-operator">,</span>
+<a name="L341" class="line-number"> 341 </a>    <span class="python-string">"fj"</span><span class="python-operator">:</span> <span class="python-string">"Fijian"</span><span class="python-operator">,</span>
+<a name="L342" class="line-number"> 342 </a>    <span class="python-string">"fo"</span><span class="python-operator">:</span> <span class="python-string">"Faroese"</span><span class="python-operator">,</span>
+<a name="L343" class="line-number"> 343 </a>    <span class="python-string">"fr"</span><span class="python-operator">:</span> <span class="python-string">"French"</span><span class="python-operator">,</span>
+<a name="L344" class="line-number"> 344 </a>    <span class="python-string">"fy"</span><span class="python-operator">:</span> <span class="python-string">"Frisian"</span><span class="python-operator">,</span>
+<a name="L345" class="line-number"> 345 </a>    <span class="python-string">"ga"</span><span class="python-operator">:</span> <span class="python-string">"Irish"</span><span class="python-operator">,</span>
+<a name="L346" class="line-number"> 346 </a>    <span class="python-string">"gd"</span><span class="python-operator">:</span> <span class="python-string">"Gaelic; Scottish"</span><span class="python-operator">,</span>
+<a name="L347" class="line-number"> 347 </a>    <span class="python-string">"gl"</span><span class="python-operator">:</span> <span class="python-string">"Gallegan"</span><span class="python-operator">,</span>
+<a name="L348" class="line-number"> 348 </a>    <span class="python-string">"gn"</span><span class="python-operator">:</span> <span class="python-string">"Guarani"</span><span class="python-operator">,</span>
+<a name="L349" class="line-number"> 349 </a>    <span class="python-string">"gu"</span><span class="python-operator">:</span> <span class="python-string">"Gujarati"</span><span class="python-operator">,</span>
+<a name="L350" class="line-number"> 350 </a>    <span class="python-string">"gv"</span><span class="python-operator">:</span> <span class="python-string">"Manx"</span><span class="python-operator">,</span>
+<a name="L351" class="line-number"> 351 </a>    <span class="python-string">"ha"</span><span class="python-operator">:</span> <span class="python-string">"Hausa"</span><span class="python-operator">,</span>
+<a name="L352" class="line-number"> 352 </a>    <span class="python-string">"he"</span><span class="python-operator">:</span> <span class="python-string">"Hebrew"</span><span class="python-operator">,</span>
+<a name="L353" class="line-number"> 353 </a>    <span class="python-string">"hi"</span><span class="python-operator">:</span> <span class="python-string">"Hindi"</span><span class="python-operator">,</span>
+<a name="L354" class="line-number"> 354 </a>    <span class="python-string">"ho"</span><span class="python-operator">:</span> <span class="python-string">"Hiri"</span><span class="python-operator">,</span>
+<a name="L355" class="line-number"> 355 </a>    <span class="python-string">"hr"</span><span class="python-operator">:</span> <span class="python-string">"Croatian"</span><span class="python-operator">,</span>
+<a name="L356" class="line-number"> 356 </a>    <span class="python-string">"ht"</span><span class="python-operator">:</span> <span class="python-string">"Haitian; Haitian Creole"</span><span class="python-operator">,</span>
+<a name="L357" class="line-number"> 357 </a>    <span class="python-string">"hu"</span><span class="python-operator">:</span> <span class="python-string">"Hungarian"</span><span class="python-operator">,</span>
+<a name="L358" class="line-number"> 358 </a>    <span class="python-string">"hy"</span><span class="python-operator">:</span> <span class="python-string">"Armenian"</span><span class="python-operator">,</span>
+<a name="L359" class="line-number"> 359 </a>    <span class="python-string">"hz"</span><span class="python-operator">:</span> <span class="python-string">"Herero"</span><span class="python-operator">,</span>
+<a name="L360" class="line-number"> 360 </a>    <span class="python-string">"ia"</span><span class="python-operator">:</span> <span class="python-string">"Interlingua"</span><span class="python-operator">,</span>
+<a name="L361" class="line-number"> 361 </a>    <span class="python-string">"id"</span><span class="python-operator">:</span> <span class="python-string">"Indonesian"</span><span class="python-operator">,</span>
+<a name="L362" class="line-number"> 362 </a>    <span class="python-string">"ie"</span><span class="python-operator">:</span> <span class="python-string">"Interlingue"</span><span class="python-operator">,</span>
+<a name="L363" class="line-number"> 363 </a>    <span class="python-string">"ig"</span><span class="python-operator">:</span> <span class="python-string">"Igbo"</span><span class="python-operator">,</span>
+<a name="L364" class="line-number"> 364 </a>    <span class="python-string">"ii"</span><span class="python-operator">:</span> <span class="python-string">"Sichuan Yi"</span><span class="python-operator">,</span>
+<a name="L365" class="line-number"> 365 </a>    <span class="python-string">"ik"</span><span class="python-operator">:</span> <span class="python-string">"Inupiaq"</span><span class="python-operator">,</span>
+<a name="L366" class="line-number"> 366 </a>    <span class="python-string">"io"</span><span class="python-operator">:</span> <span class="python-string">"Ido"</span><span class="python-operator">,</span>
+<a name="L367" class="line-number"> 367 </a>    <span class="python-string">"is"</span><span class="python-operator">:</span> <span class="python-string">"Icelandic"</span><span class="python-operator">,</span>
+<a name="L368" class="line-number"> 368 </a>    <span class="python-string">"it"</span><span class="python-operator">:</span> <span class="python-string">"Italian"</span><span class="python-operator">,</span>
+<a name="L369" class="line-number"> 369 </a>    <span class="python-string">"iu"</span><span class="python-operator">:</span> <span class="python-string">"Inuktitut"</span><span class="python-operator">,</span>
+<a name="L370" class="line-number"> 370 </a>    <span class="python-string">"ja"</span><span class="python-operator">:</span> <span class="python-string">"Japanese"</span><span class="python-operator">,</span>
+<a name="L371" class="line-number"> 371 </a>    <span class="python-string">"jv"</span><span class="python-operator">:</span> <span class="python-string">"Javanese"</span><span class="python-operator">,</span>
+<a name="L372" class="line-number"> 372 </a>    <span class="python-string">"ka"</span><span class="python-operator">:</span> <span class="python-string">"Georgian"</span><span class="python-operator">,</span>
+<a name="L373" class="line-number"> 373 </a>    <span class="python-string">"kg"</span><span class="python-operator">:</span> <span class="python-string">"Kongo"</span><span class="python-operator">,</span>
+<a name="L374" class="line-number"> 374 </a>    <span class="python-string">"ki"</span><span class="python-operator">:</span> <span class="python-string">"Kikuyu"</span><span class="python-operator">,</span>
+<a name="L375" class="line-number"> 375 </a>    <span class="python-string">"kj"</span><span class="python-operator">:</span> <span class="python-string">"Kuanyama"</span><span class="python-operator">,</span>
+<a name="L376" class="line-number"> 376 </a>    <span class="python-string">"kk"</span><span class="python-operator">:</span> <span class="python-string">"Kazakh"</span><span class="python-operator">,</span>
+<a name="L377" class="line-number"> 377 </a>    <span class="python-string">"kl"</span><span class="python-operator">:</span> <span class="python-string">"Greenlandic (Kalaallisut)"</span><span class="python-operator">,</span>
+<a name="L378" class="line-number"> 378 </a>    <span class="python-string">"km"</span><span class="python-operator">:</span> <span class="python-string">"Khmer"</span><span class="python-operator">,</span>
+<a name="L379" class="line-number"> 379 </a>    <span class="python-string">"kn"</span><span class="python-operator">:</span> <span class="python-string">"Kannada"</span><span class="python-operator">,</span>
+<a name="L380" class="line-number"> 380 </a>    <span class="python-string">"ko"</span><span class="python-operator">:</span> <span class="python-string">"Korean"</span><span class="python-operator">,</span>
+<a name="L381" class="line-number"> 381 </a>    <span class="python-string">"kr"</span><span class="python-operator">:</span> <span class="python-string">"Kanuri"</span><span class="python-operator">,</span>
+<a name="L382" class="line-number"> 382 </a>    <span class="python-string">"ks"</span><span class="python-operator">:</span> <span class="python-string">"Kashmiri"</span><span class="python-operator">,</span>
+<a name="L383" class="line-number"> 383 </a>    <span class="python-string">"ku"</span><span class="python-operator">:</span> <span class="python-string">"Kurdish"</span><span class="python-operator">,</span>
+<a name="L384" class="line-number"> 384 </a>    <span class="python-string">"kv"</span><span class="python-operator">:</span> <span class="python-string">"Komi"</span><span class="python-operator">,</span>
+<a name="L385" class="line-number"> 385 </a>    <span class="python-string">"kw"</span><span class="python-operator">:</span> <span class="python-string">"Cornish"</span><span class="python-operator">,</span>
+<a name="L386" class="line-number"> 386 </a>    <span class="python-string">"ky"</span><span class="python-operator">:</span> <span class="python-string">"Kirghiz"</span><span class="python-operator">,</span>
+<a name="L387" class="line-number"> 387 </a>    <span class="python-string">"la"</span><span class="python-operator">:</span> <span class="python-string">"Latin"</span><span class="python-operator">,</span>
+<a name="L388" class="line-number"> 388 </a>    <span class="python-string">"lb"</span><span class="python-operator">:</span> <span class="python-string">"Luxembourgish"</span><span class="python-operator">,</span>
+<a name="L389" class="line-number"> 389 </a>    <span class="python-string">"lg"</span><span class="python-operator">:</span> <span class="python-string">"Ganda"</span><span class="python-operator">,</span>
+<a name="L390" class="line-number"> 390 </a>    <span class="python-string">"li"</span><span class="python-operator">:</span> <span class="python-string">"Limburgian"</span><span class="python-operator">,</span>
+<a name="L391" class="line-number"> 391 </a>    <span class="python-string">"ln"</span><span class="python-operator">:</span> <span class="python-string">"Lingala"</span><span class="python-operator">,</span>
+<a name="L392" class="line-number"> 392 </a>    <span class="python-string">"lo"</span><span class="python-operator">:</span> <span class="python-string">"Lao"</span><span class="python-operator">,</span>
+<a name="L393" class="line-number"> 393 </a>    <span class="python-string">"lt"</span><span class="python-operator">:</span> <span class="python-string">"Lithuanian"</span><span class="python-operator">,</span>
+<a name="L394" class="line-number"> 394 </a>    <span class="python-string">"lu"</span><span class="python-operator">:</span> <span class="python-string">"Luba-Katanga"</span><span class="python-operator">,</span>
+<a name="L395" class="line-number"> 395 </a>    <span class="python-string">"lv"</span><span class="python-operator">:</span> <span class="python-string">"Latvian"</span><span class="python-operator">,</span>
+<a name="L396" class="line-number"> 396 </a>    <span class="python-string">"mg"</span><span class="python-operator">:</span> <span class="python-string">"Malagasy"</span><span class="python-operator">,</span>
+<a name="L397" class="line-number"> 397 </a>    <span class="python-string">"mh"</span><span class="python-operator">:</span> <span class="python-string">"Marshallese"</span><span class="python-operator">,</span>
+<a name="L398" class="line-number"> 398 </a>    <span class="python-string">"mi"</span><span class="python-operator">:</span> <span class="python-string">"Maori"</span><span class="python-operator">,</span>
+<a name="L399" class="line-number"> 399 </a>    <span class="python-string">"mk"</span><span class="python-operator">:</span> <span class="python-string">"Macedonian"</span><span class="python-operator">,</span>
+<a name="L400" class="line-number"> 400 </a>    <span class="python-string">"ml"</span><span class="python-operator">:</span> <span class="python-string">"Malayalam"</span><span class="python-operator">,</span>
+<a name="L401" class="line-number"> 401 </a>    <span class="python-string">"mn"</span><span class="python-operator">:</span> <span class="python-string">"Mongolian"</span><span class="python-operator">,</span>
+<a name="L402" class="line-number"> 402 </a>    <span class="python-string">"mo"</span><span class="python-operator">:</span> <span class="python-string">"Moldavian"</span><span class="python-operator">,</span>
+<a name="L403" class="line-number"> 403 </a>    <span class="python-string">"mr"</span><span class="python-operator">:</span> <span class="python-string">"Marathi"</span><span class="python-operator">,</span>
+<a name="L404" class="line-number"> 404 </a>    <span class="python-string">"ms"</span><span class="python-operator">:</span> <span class="python-string">"Malay"</span><span class="python-operator">,</span>
+<a name="L405" class="line-number"> 405 </a>    <span class="python-string">"mt"</span><span class="python-operator">:</span> <span class="python-string">"Maltese"</span><span class="python-operator">,</span>
+<a name="L406" class="line-number"> 406 </a>    <span class="python-string">"my"</span><span class="python-operator">:</span> <span class="python-string">"Burmese"</span><span class="python-operator">,</span>
+<a name="L407" class="line-number"> 407 </a>    <span class="python-string">"na"</span><span class="python-operator">:</span> <span class="python-string">"Nauru"</span><span class="python-operator">,</span>
+<a name="L408" class="line-number"> 408 </a>    <span class="python-string">"nb"</span><span class="python-operator">:</span> <span class="python-string">"Bokm\303\245l, Norwegian"</span><span class="python-operator">,</span>
+<a name="L409" class="line-number"> 409 </a>    <span class="python-string">"nd"</span><span class="python-operator">:</span> <span class="python-string">"Ndebele, North"</span><span class="python-operator">,</span>
+<a name="L410" class="line-number"> 410 </a>    <span class="python-string">"ne"</span><span class="python-operator">:</span> <span class="python-string">"Nepali"</span><span class="python-operator">,</span>
+<a name="L411" class="line-number"> 411 </a>    <span class="python-string">"ng"</span><span class="python-operator">:</span> <span class="python-string">"Ndonga"</span><span class="python-operator">,</span>
+<a name="L412" class="line-number"> 412 </a>    <span class="python-string">"nl"</span><span class="python-operator">:</span> <span class="python-string">"Dutch"</span><span class="python-operator">,</span>
+<a name="L413" class="line-number"> 413 </a>    <span class="python-string">"nn"</span><span class="python-operator">:</span> <span class="python-string">"Norwegian Nynorsk"</span><span class="python-operator">,</span>
+<a name="L414" class="line-number"> 414 </a>    <span class="python-string">"no"</span><span class="python-operator">:</span> <span class="python-string">"Norwegian"</span><span class="python-operator">,</span>
+<a name="L415" class="line-number"> 415 </a>    <span class="python-string">"nr"</span><span class="python-operator">:</span> <span class="python-string">"Ndebele, South"</span><span class="python-operator">,</span>
+<a name="L416" class="line-number"> 416 </a>    <span class="python-string">"nv"</span><span class="python-operator">:</span> <span class="python-string">"Navaho"</span><span class="python-operator">,</span>
+<a name="L417" class="line-number"> 417 </a>    <span class="python-string">"ny"</span><span class="python-operator">:</span> <span class="python-string">"Chewa; Chichewa; Nyanja"</span><span class="python-operator">,</span>
+<a name="L418" class="line-number"> 418 </a>    <span class="python-string">"oc"</span><span class="python-operator">:</span> <span class="python-string">"Occitan (post 1500)"</span><span class="python-operator">,</span>
+<a name="L419" class="line-number"> 419 </a>    <span class="python-string">"oj"</span><span class="python-operator">:</span> <span class="python-string">"Ojibwa"</span><span class="python-operator">,</span>
+<a name="L420" class="line-number"> 420 </a>    <span class="python-string">"om"</span><span class="python-operator">:</span> <span class="python-string">"Oromo"</span><span class="python-operator">,</span>
+<a name="L421" class="line-number"> 421 </a>    <span class="python-string">"or"</span><span class="python-operator">:</span> <span class="python-string">"Oriya"</span><span class="python-operator">,</span>
+<a name="L422" class="line-number"> 422 </a>    <span class="python-string">"os"</span><span class="python-operator">:</span> <span class="python-string">"Ossetian"</span><span class="python-operator">,</span>
+<a name="L423" class="line-number"> 423 </a>    <span class="python-string">"pa"</span><span class="python-operator">:</span> <span class="python-string">"Punjabi"</span><span class="python-operator">,</span>
+<a name="L424" class="line-number"> 424 </a>    <span class="python-string">"pi"</span><span class="python-operator">:</span> <span class="python-string">"Pali"</span><span class="python-operator">,</span>
+<a name="L425" class="line-number"> 425 </a>    <span class="python-string">"pl"</span><span class="python-operator">:</span> <span class="python-string">"Polish"</span><span class="python-operator">,</span>
+<a name="L426" class="line-number"> 426 </a>    <span class="python-string">"ps"</span><span class="python-operator">:</span> <span class="python-string">"Pushto"</span><span class="python-operator">,</span>
+<a name="L427" class="line-number"> 427 </a>    <span class="python-string">"pt"</span><span class="python-operator">:</span> <span class="python-string">"Portuguese"</span><span class="python-operator">,</span>
+<a name="L428" class="line-number"> 428 </a>    <span class="python-string">"qu"</span><span class="python-operator">:</span> <span class="python-string">"Quechua"</span><span class="python-operator">,</span>
+<a name="L429" class="line-number"> 429 </a>    <span class="python-string">"rm"</span><span class="python-operator">:</span> <span class="python-string">"Raeto-Romance"</span><span class="python-operator">,</span>
+<a name="L430" class="line-number"> 430 </a>    <span class="python-string">"rn"</span><span class="python-operator">:</span> <span class="python-string">"Rundi"</span><span class="python-operator">,</span>
+<a name="L431" class="line-number"> 431 </a>    <span class="python-string">"ro"</span><span class="python-operator">:</span> <span class="python-string">"Romanian"</span><span class="python-operator">,</span>
+<a name="L432" class="line-number"> 432 </a>    <span class="python-string">"ru"</span><span class="python-operator">:</span> <span class="python-string">"Russian"</span><span class="python-operator">,</span>
+<a name="L433" class="line-number"> 433 </a>    <span class="python-string">"rw"</span><span class="python-operator">:</span> <span class="python-string">"Kinyarwanda"</span><span class="python-operator">,</span>
+<a name="L434" class="line-number"> 434 </a>    <span class="python-string">"sa"</span><span class="python-operator">:</span> <span class="python-string">"Sanskrit"</span><span class="python-operator">,</span>
+<a name="L435" class="line-number"> 435 </a>    <span class="python-string">"sc"</span><span class="python-operator">:</span> <span class="python-string">"Sardinian"</span><span class="python-operator">,</span>
+<a name="L436" class="line-number"> 436 </a>    <span class="python-string">"sd"</span><span class="python-operator">:</span> <span class="python-string">"Sindhi"</span><span class="python-operator">,</span>
+<a name="L437" class="line-number"> 437 </a>    <span class="python-string">"se"</span><span class="python-operator">:</span> <span class="python-string">"Northern Sami"</span><span class="python-operator">,</span>
+<a name="L438" class="line-number"> 438 </a>    <span class="python-string">"sg"</span><span class="python-operator">:</span> <span class="python-string">"Sango"</span><span class="python-operator">,</span>
+<a name="L439" class="line-number"> 439 </a>    <span class="python-string">"si"</span><span class="python-operator">:</span> <span class="python-string">"Sinhala; Sinhalese"</span><span class="python-operator">,</span>
+<a name="L440" class="line-number"> 440 </a>    <span class="python-string">"sk"</span><span class="python-operator">:</span> <span class="python-string">"Slovak"</span><span class="python-operator">,</span>
+<a name="L441" class="line-number"> 441 </a>    <span class="python-string">"sl"</span><span class="python-operator">:</span> <span class="python-string">"Slovenian"</span><span class="python-operator">,</span>
+<a name="L442" class="line-number"> 442 </a>    <span class="python-string">"sm"</span><span class="python-operator">:</span> <span class="python-string">"Samoan"</span><span class="python-operator">,</span>
+<a name="L443" class="line-number"> 443 </a>    <span class="python-string">"sn"</span><span class="python-operator">:</span> <span class="python-string">"Shona"</span><span class="python-operator">,</span>
+<a name="L444" class="line-number"> 444 </a>    <span class="python-string">"so"</span><span class="python-operator">:</span> <span class="python-string">"Somali"</span><span class="python-operator">,</span>
+<a name="L445" class="line-number"> 445 </a>    <span class="python-string">"sq"</span><span class="python-operator">:</span> <span class="python-string">"Albanian"</span><span class="python-operator">,</span>
+<a name="L446" class="line-number"> 446 </a>    <span class="python-string">"sr"</span><span class="python-operator">:</span> <span class="python-string">"Serbian"</span><span class="python-operator">,</span>
+<a name="L447" class="line-number"> 447 </a>    <span class="python-string">"ss"</span><span class="python-operator">:</span> <span class="python-string">"Swati"</span><span class="python-operator">,</span>
+<a name="L448" class="line-number"> 448 </a>    <span class="python-string">"st"</span><span class="python-operator">:</span> <span class="python-string">"Sotho, Southern"</span><span class="python-operator">,</span>
+<a name="L449" class="line-number"> 449 </a>    <span class="python-string">"su"</span><span class="python-operator">:</span> <span class="python-string">"Sundanese"</span><span class="python-operator">,</span>
+<a name="L450" class="line-number"> 450 </a>    <span class="python-string">"sv"</span><span class="python-operator">:</span> <span class="python-string">"Swedish"</span><span class="python-operator">,</span>
+<a name="L451" class="line-number"> 451 </a>    <span class="python-string">"sw"</span><span class="python-operator">:</span> <span class="python-string">"Swahili"</span><span class="python-operator">,</span>
+<a name="L452" class="line-number"> 452 </a>    <span class="python-string">"ta"</span><span class="python-operator">:</span> <span class="python-string">"Tamil"</span><span class="python-operator">,</span>
+<a name="L453" class="line-number"> 453 </a>    <span class="python-string">"te"</span><span class="python-operator">:</span> <span class="python-string">"Telugu"</span><span class="python-operator">,</span>
+<a name="L454" class="line-number"> 454 </a>    <span class="python-string">"tg"</span><span class="python-operator">:</span> <span class="python-string">"Tajik"</span><span class="python-operator">,</span>
+<a name="L455" class="line-number"> 455 </a>    <span class="python-string">"th"</span><span class="python-operator">:</span> <span class="python-string">"Thai"</span><span class="python-operator">,</span>
+<a name="L456" class="line-number"> 456 </a>    <span class="python-string">"ti"</span><span class="python-operator">:</span> <span class="python-string">"Tigrinya"</span><span class="python-operator">,</span>
+<a name="L457" class="line-number"> 457 </a>    <span class="python-string">"tk"</span><span class="python-operator">:</span> <span class="python-string">"Turkmen"</span><span class="python-operator">,</span>
+<a name="L458" class="line-number"> 458 </a>    <span class="python-string">"tl"</span><span class="python-operator">:</span> <span class="python-string">"Tagalog"</span><span class="python-operator">,</span>
+<a name="L459" class="line-number"> 459 </a>    <span class="python-string">"tn"</span><span class="python-operator">:</span> <span class="python-string">"Tswana"</span><span class="python-operator">,</span>
+<a name="L460" class="line-number"> 460 </a>    <span class="python-string">"to"</span><span class="python-operator">:</span> <span class="python-string">"Tonga (Tonga Islands)"</span><span class="python-operator">,</span>
+<a name="L461" class="line-number"> 461 </a>    <span class="python-string">"tr"</span><span class="python-operator">:</span> <span class="python-string">"Turkish"</span><span class="python-operator">,</span>
+<a name="L462" class="line-number"> 462 </a>    <span class="python-string">"ts"</span><span class="python-operator">:</span> <span class="python-string">"Tsonga"</span><span class="python-operator">,</span>
+<a name="L463" class="line-number"> 463 </a>    <span class="python-string">"tt"</span><span class="python-operator">:</span> <span class="python-string">"Tatar"</span><span class="python-operator">,</span>
+<a name="L464" class="line-number"> 464 </a>    <span class="python-string">"tw"</span><span class="python-operator">:</span> <span class="python-string">"Twi"</span><span class="python-operator">,</span>
+<a name="L465" class="line-number"> 465 </a>    <span class="python-string">"ty"</span><span class="python-operator">:</span> <span class="python-string">"Tahitian"</span><span class="python-operator">,</span>
+<a name="L466" class="line-number"> 466 </a>    <span class="python-string">"ug"</span><span class="python-operator">:</span> <span class="python-string">"Uighur"</span><span class="python-operator">,</span>
+<a name="L467" class="line-number"> 467 </a>    <span class="python-string">"uk"</span><span class="python-operator">:</span> <span class="python-string">"Ukrainian"</span><span class="python-operator">,</span>
+<a name="L468" class="line-number"> 468 </a>    <span class="python-string">"uz"</span><span class="python-operator">:</span> <span class="python-string">"Uzbek"</span><span class="python-operator">,</span>
+<a name="L469" class="line-number"> 469 </a>    <span class="python-string">"ve"</span><span class="python-operator">:</span> <span class="python-string">"Venda"</span><span class="python-operator">,</span>
+<a name="L470" class="line-number"> 470 </a>    <span class="python-string">"vi"</span><span class="python-operator">:</span> <span class="python-string">"Vietnamese"</span><span class="python-operator">,</span>
+<a name="L471" class="line-number"> 471 </a>    <span class="python-string">"vo"</span><span class="python-operator">:</span> <span class="python-string">"Volapuk"</span><span class="python-operator">,</span>
+<a name="L472" class="line-number"> 472 </a>    <span class="python-string">"wa"</span><span class="python-operator">:</span> <span class="python-string">"Walloon"</span><span class="python-operator">,</span>
+<a name="L473" class="line-number"> 473 </a>    <span class="python-string">"wo"</span><span class="python-operator">:</span> <span class="python-string">"Wolof"</span><span class="python-operator">,</span>
+<a name="L474" class="line-number"> 474 </a>    <span class="python-string">"xh"</span><span class="python-operator">:</span> <span class="python-string">"Xhosa"</span><span class="python-operator">,</span>
+<a name="L475" class="line-number"> 475 </a>    <span class="python-string">"yi"</span><span class="python-operator">:</span> <span class="python-string">"Yiddish"</span><span class="python-operator">,</span>
+<a name="L476" class="line-number"> 476 </a>    <span class="python-string">"yo"</span><span class="python-operator">:</span> <span class="python-string">"Yoruba"</span><span class="python-operator">,</span>
+<a name="L477" class="line-number"> 477 </a>    <span class="python-string">"za"</span><span class="python-operator">:</span> <span class="python-string">"Chuang; Zhuang"</span><span class="python-operator">,</span>
+<a name="L478" class="line-number"> 478 </a>    <span class="python-string">"zh"</span><span class="python-operator">:</span> <span class="python-string">"Chinese"</span><span class="python-operator">,</span>
+<a name="L479" class="line-number"> 479 </a>    <span class="python-string">"zu"</span><span class="python-operator">:</span> <span class="python-string">"Zulu"</span><span class="python-operator">,</span><span class="python-operator">}</span>
+<a name="L480" class="line-number"> 480 </a>
+<a name="L481" class="line-number"> 481 </a><span class="python-name">LOCALES</span> <span class="python-operator">=</span> <span class="python-name">frozenset</span><span class="python-operator">(</span><span class="python-operator">(</span>
+<a name="L482" class="line-number"> 482 </a>    <span class="python-string">"af"</span><span class="python-operator">,</span>
+<a name="L483" class="line-number"> 483 </a>    <span class="python-string">"af_ZA"</span><span class="python-operator">,</span>
+<a name="L484" class="line-number"> 484 </a>    <span class="python-string">"ak"</span><span class="python-operator">,</span>
+<a name="L485" class="line-number"> 485 </a>    <span class="python-string">"ak_GH"</span><span class="python-operator">,</span>
+<a name="L486" class="line-number"> 486 </a>    <span class="python-string">"am"</span><span class="python-operator">,</span>
+<a name="L487" class="line-number"> 487 </a>    <span class="python-string">"am_ET"</span><span class="python-operator">,</span>
+<a name="L488" class="line-number"> 488 </a>    <span class="python-string">"ar"</span><span class="python-operator">,</span>
+<a name="L489" class="line-number"> 489 </a>    <span class="python-string">"ar_EG"</span><span class="python-operator">,</span>
+<a name="L490" class="line-number"> 490 </a>    <span class="python-string">"ar_SA"</span><span class="python-operator">,</span>
+<a name="L491" class="line-number"> 491 </a>    <span class="python-string">"as"</span><span class="python-operator">,</span>
+<a name="L492" class="line-number"> 492 </a>    <span class="python-string">"as_IN"</span><span class="python-operator">,</span>
+<a name="L493" class="line-number"> 493 </a>    <span class="python-string">"be"</span><span class="python-operator">,</span>
+<a name="L494" class="line-number"> 494 </a>    <span class="python-string">"be_BY"</span><span class="python-operator">,</span>
+<a name="L495" class="line-number"> 495 </a>    <span class="python-string">"bg"</span><span class="python-operator">,</span>
+<a name="L496" class="line-number"> 496 </a>    <span class="python-string">"bg_BG"</span><span class="python-operator">,</span>
+<a name="L497" class="line-number"> 497 </a>    <span class="python-string">"bn"</span><span class="python-operator">,</span>
+<a name="L498" class="line-number"> 498 </a>    <span class="python-string">"bn_IN"</span><span class="python-operator">,</span>
+<a name="L499" class="line-number"> 499 </a>    <span class="python-string">"br"</span><span class="python-operator">,</span>
+<a name="L500" class="line-number"> 500 </a>    <span class="python-string">"br_FR"</span><span class="python-operator">,</span>
+<a name="L501" class="line-number"> 501 </a>    <span class="python-string">"ca"</span><span class="python-operator">,</span>
+<a name="L502" class="line-number"> 502 </a>    <span class="python-string">"ca_ES"</span><span class="python-operator">,</span>
+<a name="L503" class="line-number"> 503 </a>    <span class="python-string">"co"</span><span class="python-operator">,</span>
+<a name="L504" class="line-number"> 504 </a>    <span class="python-string">"co_FR"</span><span class="python-operator">,</span>
+<a name="L505" class="line-number"> 505 </a>    <span class="python-string">"cs"</span><span class="python-operator">,</span>
+<a name="L506" class="line-number"> 506 </a>    <span class="python-string">"cs_CZ"</span><span class="python-operator">,</span>
+<a name="L507" class="line-number"> 507 </a>    <span class="python-string">"cy"</span><span class="python-operator">,</span>
+<a name="L508" class="line-number"> 508 </a>    <span class="python-string">"cy_GB"</span><span class="python-operator">,</span>
+<a name="L509" class="line-number"> 509 </a>    <span class="python-string">"da"</span><span class="python-operator">,</span>
+<a name="L510" class="line-number"> 510 </a>    <span class="python-string">"da_DK"</span><span class="python-operator">,</span>
+<a name="L511" class="line-number"> 511 </a>    <span class="python-string">"de"</span><span class="python-operator">,</span>
+<a name="L512" class="line-number"> 512 </a>    <span class="python-string">"de_AT"</span><span class="python-operator">,</span>
+<a name="L513" class="line-number"> 513 </a>    <span class="python-string">"de_CH"</span><span class="python-operator">,</span>
+<a name="L514" class="line-number"> 514 </a>    <span class="python-string">"de_DE"</span><span class="python-operator">,</span>
+<a name="L515" class="line-number"> 515 </a>    <span class="python-string">"el"</span><span class="python-operator">,</span>
+<a name="L516" class="line-number"> 516 </a>    <span class="python-string">"el_GR"</span><span class="python-operator">,</span>
+<a name="L517" class="line-number"> 517 </a>    <span class="python-string">"en"</span><span class="python-operator">,</span>
+<a name="L518" class="line-number"> 518 </a>    <span class="python-string">"en_AU"</span><span class="python-operator">,</span>
+<a name="L519" class="line-number"> 519 </a>    <span class="python-string">"en_CA"</span><span class="python-operator">,</span>
+<a name="L520" class="line-number"> 520 </a>    <span class="python-string">"en_GB"</span><span class="python-operator">,</span>
+<a name="L521" class="line-number"> 521 </a>    <span class="python-string">"en_IE"</span><span class="python-operator">,</span>
+<a name="L522" class="line-number"> 522 </a>    <span class="python-string">"en_NZ"</span><span class="python-operator">,</span>
+<a name="L523" class="line-number"> 523 </a>    <span class="python-string">"en_US"</span><span class="python-operator">,</span>
+<a name="L524" class="line-number"> 524 </a>    <span class="python-string">"en_ZA"</span><span class="python-operator">,</span>
+<a name="L525" class="line-number"> 525 </a>    <span class="python-string">"eo"</span><span class="python-operator">,</span>
+<a name="L526" class="line-number"> 526 </a>    <span class="python-string">"es"</span><span class="python-operator">,</span>
+<a name="L527" class="line-number"> 527 </a>    <span class="python-string">"es_AR"</span><span class="python-operator">,</span>
+<a name="L528" class="line-number"> 528 </a>    <span class="python-string">"es_BO"</span><span class="python-operator">,</span>
+<a name="L529" class="line-number"> 529 </a>    <span class="python-string">"es_CL"</span><span class="python-operator">,</span>
+<a name="L530" class="line-number"> 530 </a>    <span class="python-string">"es_CO"</span><span class="python-operator">,</span>
+<a name="L531" class="line-number"> 531 </a>    <span class="python-string">"es_CR"</span><span class="python-operator">,</span>
+<a name="L532" class="line-number"> 532 </a>    <span class="python-string">"es_CU"</span><span class="python-operator">,</span>
+<a name="L533" class="line-number"> 533 </a>    <span class="python-string">"es_DO"</span><span class="python-operator">,</span>
+<a name="L534" class="line-number"> 534 </a>    <span class="python-string">"es_EC"</span><span class="python-operator">,</span>
+<a name="L535" class="line-number"> 535 </a>    <span class="python-string">"es_ES"</span><span class="python-operator">,</span>
+<a name="L536" class="line-number"> 536 </a>    <span class="python-string">"es_GT"</span><span class="python-operator">,</span>
+<a name="L537" class="line-number"> 537 </a>    <span class="python-string">"es_HN"</span><span class="python-operator">,</span>
+<a name="L538" class="line-number"> 538 </a>    <span class="python-string">"es_MX"</span><span class="python-operator">,</span>
+<a name="L539" class="line-number"> 539 </a>    <span class="python-string">"es_NI"</span><span class="python-operator">,</span>
+<a name="L540" class="line-number"> 540 </a>    <span class="python-string">"es_PA"</span><span class="python-operator">,</span>
+<a name="L541" class="line-number"> 541 </a>    <span class="python-string">"es_PE"</span><span class="python-operator">,</span>
+<a name="L542" class="line-number"> 542 </a>    <span class="python-string">"es_PR"</span><span class="python-operator">,</span>
+<a name="L543" class="line-number"> 543 </a>    <span class="python-string">"es_PY"</span><span class="python-operator">,</span>
+<a name="L544" class="line-number"> 544 </a>    <span class="python-string">"es_SV"</span><span class="python-operator">,</span>
+<a name="L545" class="line-number"> 545 </a>    <span class="python-string">"es_UY"</span><span class="python-operator">,</span>
+<a name="L546" class="line-number"> 546 </a>    <span class="python-string">"es_VE"</span><span class="python-operator">,</span>
+<a name="L547" class="line-number"> 547 </a>    <span class="python-string">"et"</span><span class="python-operator">,</span>
+<a name="L548" class="line-number"> 548 </a>    <span class="python-string">"et_EE"</span><span class="python-operator">,</span>
+<a name="L549" class="line-number"> 549 </a>    <span class="python-string">"eu"</span><span class="python-operator">,</span>
+<a name="L550" class="line-number"> 550 </a>    <span class="python-string">"eu_ES"</span><span class="python-operator">,</span>
+<a name="L551" class="line-number"> 551 </a>    <span class="python-string">"fa"</span><span class="python-operator">,</span>
+<a name="L552" class="line-number"> 552 </a>    <span class="python-string">"fa_IR"</span><span class="python-operator">,</span>
+<a name="L553" class="line-number"> 553 </a>    <span class="python-string">"fi"</span><span class="python-operator">,</span>
+<a name="L554" class="line-number"> 554 </a>    <span class="python-string">"fi_FI"</span><span class="python-operator">,</span>
+<a name="L555" class="line-number"> 555 </a>    <span class="python-string">"fo"</span><span class="python-operator">,</span>
+<a name="L556" class="line-number"> 556 </a>    <span class="python-string">"fo_FO"</span><span class="python-operator">,</span>
+<a name="L557" class="line-number"> 557 </a>    <span class="python-string">"fr"</span><span class="python-operator">,</span>
+<a name="L558" class="line-number"> 558 </a>    <span class="python-string">"fr_BE"</span><span class="python-operator">,</span>
+<a name="L559" class="line-number"> 559 </a>    <span class="python-string">"fr_CA"</span><span class="python-operator">,</span>
+<a name="L560" class="line-number"> 560 </a>    <span class="python-string">"fr_CH"</span><span class="python-operator">,</span>
+<a name="L561" class="line-number"> 561 </a>    <span class="python-string">"fr_FR"</span><span class="python-operator">,</span>
+<a name="L562" class="line-number"> 562 </a>    <span class="python-string">"fy"</span><span class="python-operator">,</span>
+<a name="L563" class="line-number"> 563 </a>    <span class="python-string">"fy_NL"</span><span class="python-operator">,</span>
+<a name="L564" class="line-number"> 564 </a>    <span class="python-string">"ga"</span><span class="python-operator">,</span>
+<a name="L565" class="line-number"> 565 </a>    <span class="python-string">"ga_IE"</span><span class="python-operator">,</span>
+<a name="L566" class="line-number"> 566 </a>    <span class="python-string">"gd"</span><span class="python-operator">,</span>
+<a name="L567" class="line-number"> 567 </a>    <span class="python-string">"gd_GB"</span><span class="python-operator">,</span>
+<a name="L568" class="line-number"> 568 </a>    <span class="python-string">"gl"</span><span class="python-operator">,</span>
+<a name="L569" class="line-number"> 569 </a>    <span class="python-string">"gl_ES"</span><span class="python-operator">,</span>
+<a name="L570" class="line-number"> 570 </a>    <span class="python-string">"ha"</span><span class="python-operator">,</span>
+<a name="L571" class="line-number"> 571 </a>    <span class="python-string">"ha_NE"</span><span class="python-operator">,</span>
+<a name="L572" class="line-number"> 572 </a>    <span class="python-string">"ha_NG"</span><span class="python-operator">,</span>
+<a name="L573" class="line-number"> 573 </a>    <span class="python-string">"he"</span><span class="python-operator">,</span>
+<a name="L574" class="line-number"> 574 </a>    <span class="python-string">"he_IL"</span><span class="python-operator">,</span>
+<a name="L575" class="line-number"> 575 </a>    <span class="python-string">"hi"</span><span class="python-operator">,</span>
+<a name="L576" class="line-number"> 576 </a>    <span class="python-string">"hi_IN"</span><span class="python-operator">,</span>
+<a name="L577" class="line-number"> 577 </a>    <span class="python-string">"hr"</span><span class="python-operator">,</span>
+<a name="L578" class="line-number"> 578 </a>    <span class="python-string">"hr_HR"</span><span class="python-operator">,</span>
+<a name="L579" class="line-number"> 579 </a>    <span class="python-string">"hu"</span><span class="python-operator">,</span>
+<a name="L580" class="line-number"> 580 </a>    <span class="python-string">"hu_HU"</span><span class="python-operator">,</span>
+<a name="L581" class="line-number"> 581 </a>    <span class="python-string">"hy"</span><span class="python-operator">,</span>
+<a name="L582" class="line-number"> 582 </a>    <span class="python-string">"hy_AM"</span><span class="python-operator">,</span>
+<a name="L583" class="line-number"> 583 </a>    <span class="python-string">"ia"</span><span class="python-operator">,</span>
+<a name="L584" class="line-number"> 584 </a>    <span class="python-string">"id"</span><span class="python-operator">,</span>
+<a name="L585" class="line-number"> 585 </a>    <span class="python-string">"id_ID"</span><span class="python-operator">,</span>
+<a name="L586" class="line-number"> 586 </a>    <span class="python-string">"is"</span><span class="python-operator">,</span>
+<a name="L587" class="line-number"> 587 </a>    <span class="python-string">"is_IS"</span><span class="python-operator">,</span>
+<a name="L588" class="line-number"> 588 </a>    <span class="python-string">"it"</span><span class="python-operator">,</span>
+<a name="L589" class="line-number"> 589 </a>    <span class="python-string">"it_IT"</span><span class="python-operator">,</span>
+<a name="L590" class="line-number"> 590 </a>    <span class="python-string">"iu"</span><span class="python-operator">,</span>
+<a name="L591" class="line-number"> 591 </a>    <span class="python-string">"iu_CA"</span><span class="python-operator">,</span>
+<a name="L592" class="line-number"> 592 </a>    <span class="python-string">"ja"</span><span class="python-operator">,</span>
+<a name="L593" class="line-number"> 593 </a>    <span class="python-string">"ja_JP"</span><span class="python-operator">,</span>
+<a name="L594" class="line-number"> 594 </a>    <span class="python-string">"ka"</span><span class="python-operator">,</span>
+<a name="L595" class="line-number"> 595 </a>    <span class="python-string">"ka_GE"</span><span class="python-operator">,</span>
+<a name="L596" class="line-number"> 596 </a>    <span class="python-string">"kn"</span><span class="python-operator">,</span>
+<a name="L597" class="line-number"> 597 </a>    <span class="python-string">"kn_IN"</span><span class="python-operator">,</span>
+<a name="L598" class="line-number"> 598 </a>    <span class="python-string">"ko"</span><span class="python-operator">,</span>
+<a name="L599" class="line-number"> 599 </a>    <span class="python-string">"ko_KR"</span><span class="python-operator">,</span>
+<a name="L600" class="line-number"> 600 </a>    <span class="python-string">"ku"</span><span class="python-operator">,</span>
+<a name="L601" class="line-number"> 601 </a>    <span class="python-string">"ku_TR"</span><span class="python-operator">,</span>
+<a name="L602" class="line-number"> 602 </a>    <span class="python-string">"kw"</span><span class="python-operator">,</span>
+<a name="L603" class="line-number"> 603 </a>    <span class="python-string">"kw_GB"</span><span class="python-operator">,</span>
+<a name="L604" class="line-number"> 604 </a>    <span class="python-string">"la"</span><span class="python-operator">,</span>
+<a name="L605" class="line-number"> 605 </a>    <span class="python-string">"la_IT"</span><span class="python-operator">,</span>
+<a name="L606" class="line-number"> 606 </a>    <span class="python-string">"lo"</span><span class="python-operator">,</span>
+<a name="L607" class="line-number"> 607 </a>    <span class="python-string">"lo_LA"</span><span class="python-operator">,</span>
+<a name="L608" class="line-number"> 608 </a>    <span class="python-string">"lt"</span><span class="python-operator">,</span>
+<a name="L609" class="line-number"> 609 </a>    <span class="python-string">"lt_LT"</span><span class="python-operator">,</span>
+<a name="L610" class="line-number"> 610 </a>    <span class="python-string">"lv"</span><span class="python-operator">,</span>
+<a name="L611" class="line-number"> 611 </a>    <span class="python-string">"lv_LV"</span><span class="python-operator">,</span>
+<a name="L612" class="line-number"> 612 </a>    <span class="python-string">"mg"</span><span class="python-operator">,</span>
+<a name="L613" class="line-number"> 613 </a>    <span class="python-string">"mg_MG"</span><span class="python-operator">,</span>
+<a name="L614" class="line-number"> 614 </a>    <span class="python-string">"mh"</span><span class="python-operator">,</span>
+<a name="L615" class="line-number"> 615 </a>    <span class="python-string">"mh_MH"</span><span class="python-operator">,</span>
+<a name="L616" class="line-number"> 616 </a>    <span class="python-string">"mh_NR"</span><span class="python-operator">,</span>
+<a name="L617" class="line-number"> 617 </a>    <span class="python-string">"mi"</span><span class="python-operator">,</span>
+<a name="L618" class="line-number"> 618 </a>    <span class="python-string">"mi_NZ"</span><span class="python-operator">,</span>
+<a name="L619" class="line-number"> 619 </a>    <span class="python-string">"mk"</span><span class="python-operator">,</span>
+<a name="L620" class="line-number"> 620 </a>    <span class="python-string">"mn"</span><span class="python-operator">,</span>
+<a name="L621" class="line-number"> 621 </a>    <span class="python-string">"mn_MN"</span><span class="python-operator">,</span>
+<a name="L622" class="line-number"> 622 </a>    <span class="python-string">"mr"</span><span class="python-operator">,</span>
+<a name="L623" class="line-number"> 623 </a>    <span class="python-string">"mr_IN"</span><span class="python-operator">,</span>
+<a name="L624" class="line-number"> 624 </a>    <span class="python-string">"ms"</span><span class="python-operator">,</span>
+<a name="L625" class="line-number"> 625 </a>    <span class="python-string">"ms_MY"</span><span class="python-operator">,</span>
+<a name="L626" class="line-number"> 626 </a>    <span class="python-string">"nb"</span><span class="python-operator">,</span>
+<a name="L627" class="line-number"> 627 </a>    <span class="python-string">"nb_NO"</span><span class="python-operator">,</span>
+<a name="L628" class="line-number"> 628 </a>    <span class="python-string">"nl"</span><span class="python-operator">,</span>
+<a name="L629" class="line-number"> 629 </a>    <span class="python-string">"nl_BE"</span><span class="python-operator">,</span>
+<a name="L630" class="line-number"> 630 </a>    <span class="python-string">"nl_NL"</span><span class="python-operator">,</span>
+<a name="L631" class="line-number"> 631 </a>    <span class="python-string">"nn"</span><span class="python-operator">,</span>
+<a name="L632" class="line-number"> 632 </a>    <span class="python-string">"nn_NO"</span><span class="python-operator">,</span>
+<a name="L633" class="line-number"> 633 </a>    <span class="python-string">"no"</span><span class="python-operator">,</span>
+<a name="L634" class="line-number"> 634 </a>    <span class="python-string">"no_NO"</span><span class="python-operator">,</span>
+<a name="L635" class="line-number"> 635 </a>    <span class="python-string">"ny"</span><span class="python-operator">,</span>
+<a name="L636" class="line-number"> 636 </a>    <span class="python-string">"ny_MW"</span><span class="python-operator">,</span>
+<a name="L637" class="line-number"> 637 </a>    <span class="python-string">"oc"</span><span class="python-operator">,</span>
+<a name="L638" class="line-number"> 638 </a>    <span class="python-string">"oc_FR"</span><span class="python-operator">,</span>
+<a name="L639" class="line-number"> 639 </a>    <span class="python-string">"pa"</span><span class="python-operator">,</span>
+<a name="L640" class="line-number"> 640 </a>    <span class="python-string">"pa_IN"</span><span class="python-operator">,</span>
+<a name="L641" class="line-number"> 641 </a>    <span class="python-string">"pa_PK"</span><span class="python-operator">,</span>
+<a name="L642" class="line-number"> 642 </a>    <span class="python-string">"pl"</span><span class="python-operator">,</span>
+<a name="L643" class="line-number"> 643 </a>    <span class="python-string">"pl_PL"</span><span class="python-operator">,</span>
+<a name="L644" class="line-number"> 644 </a>    <span class="python-string">"pt"</span><span class="python-operator">,</span>
+<a name="L645" class="line-number"> 645 </a>    <span class="python-string">"pt_BR"</span><span class="python-operator">,</span>
+<a name="L646" class="line-number"> 646 </a>    <span class="python-string">"pt_PT"</span><span class="python-operator">,</span>
+<a name="L647" class="line-number"> 647 </a>    <span class="python-string">"qu"</span><span class="python-operator">,</span>
+<a name="L648" class="line-number"> 648 </a>    <span class="python-string">"qu_BO"</span><span class="python-operator">,</span>
+<a name="L649" class="line-number"> 649 </a>    <span class="python-string">"ro"</span><span class="python-operator">,</span>
+<a name="L650" class="line-number"> 650 </a>    <span class="python-string">"ro_RO"</span><span class="python-operator">,</span>
+<a name="L651" class="line-number"> 651 </a>    <span class="python-string">"ru"</span><span class="python-operator">,</span>
+<a name="L652" class="line-number"> 652 </a>    <span class="python-string">"ru_RU"</span><span class="python-operator">,</span>
+<a name="L653" class="line-number"> 653 </a>    <span class="python-string">"rw"</span><span class="python-operator">,</span>
+<a name="L654" class="line-number"> 654 </a>    <span class="python-string">"rw_RW"</span><span class="python-operator">,</span>
+<a name="L655" class="line-number"> 655 </a>    <span class="python-string">"sc"</span><span class="python-operator">,</span>
+<a name="L656" class="line-number"> 656 </a>    <span class="python-string">"sc_IT"</span><span class="python-operator">,</span>
+<a name="L657" class="line-number"> 657 </a>    <span class="python-string">"sk"</span><span class="python-operator">,</span>
+<a name="L658" class="line-number"> 658 </a>    <span class="python-string">"sk_SK"</span><span class="python-operator">,</span>
+<a name="L659" class="line-number"> 659 </a>    <span class="python-string">"sl"</span><span class="python-operator">,</span>
+<a name="L660" class="line-number"> 660 </a>    <span class="python-string">"sl_SI"</span><span class="python-operator">,</span>
+<a name="L661" class="line-number"> 661 </a>    <span class="python-string">"sq"</span><span class="python-operator">,</span>
+<a name="L662" class="line-number"> 662 </a>    <span class="python-string">"sq_AL"</span><span class="python-operator">,</span>
+<a name="L663" class="line-number"> 663 </a>    <span class="python-string">"sr"</span><span class="python-operator">,</span>
+<a name="L664" class="line-number"> 664 </a>    <span class="python-string">"sv"</span><span class="python-operator">,</span>
+<a name="L665" class="line-number"> 665 </a>    <span class="python-string">"sv_SE"</span><span class="python-operator">,</span>
+<a name="L666" class="line-number"> 666 </a>    <span class="python-string">"sw"</span><span class="python-operator">,</span>
+<a name="L667" class="line-number"> 667 </a>    <span class="python-string">"sw_KE"</span><span class="python-operator">,</span>
+<a name="L668" class="line-number"> 668 </a>    <span class="python-string">"ta"</span><span class="python-operator">,</span>
+<a name="L669" class="line-number"> 669 </a>    <span class="python-string">"ta_IN"</span><span class="python-operator">,</span>
+<a name="L670" class="line-number"> 670 </a>    <span class="python-string">"te"</span><span class="python-operator">,</span>
+<a name="L671" class="line-number"> 671 </a>    <span class="python-string">"te_IN"</span><span class="python-operator">,</span>
+<a name="L672" class="line-number"> 672 </a>    <span class="python-string">"th"</span><span class="python-operator">,</span>
+<a name="L673" class="line-number"> 673 </a>    <span class="python-string">"th_TH"</span><span class="python-operator">,</span>
+<a name="L674" class="line-number"> 674 </a>    <span class="python-string">"tl"</span><span class="python-operator">,</span>
+<a name="L675" class="line-number"> 675 </a>    <span class="python-string">"tl_PH"</span><span class="python-operator">,</span>
+<a name="L676" class="line-number"> 676 </a>    <span class="python-string">"tn"</span><span class="python-operator">,</span>
+<a name="L677" class="line-number"> 677 </a>    <span class="python-string">"tn_ZA"</span><span class="python-operator">,</span>
+<a name="L678" class="line-number"> 678 </a>    <span class="python-string">"tr"</span><span class="python-operator">,</span>
+<a name="L679" class="line-number"> 679 </a>    <span class="python-string">"tr_TR"</span><span class="python-operator">,</span>
+<a name="L680" class="line-number"> 680 </a>    <span class="python-string">"uk"</span><span class="python-operator">,</span>
+<a name="L681" class="line-number"> 681 </a>    <span class="python-string">"uk_UA"</span><span class="python-operator">,</span>
+<a name="L682" class="line-number"> 682 </a>    <span class="python-string">"uz"</span><span class="python-operator">,</span>
+<a name="L683" class="line-number"> 683 </a>    <span class="python-string">"uz_UZ"</span><span class="python-operator">,</span>
+<a name="L684" class="line-number"> 684 </a>    <span class="python-string">"vi"</span><span class="python-operator">,</span>
+<a name="L685" class="line-number"> 685 </a>    <span class="python-string">"vi_VN"</span><span class="python-operator">,</span>
+<a name="L686" class="line-number"> 686 </a>    <span class="python-string">"yi"</span><span class="python-operator">,</span>
+<a name="L687" class="line-number"> 687 </a>    <span class="python-string">"zh"</span><span class="python-operator">,</span>
+<a name="L688" class="line-number"> 688 </a>    <span class="python-string">"zh_CN"</span><span class="python-operator">,</span>
+<a name="L689" class="line-number"> 689 </a>    <span class="python-string">"zh_HK"</span><span class="python-operator">,</span>
+<a name="L690" class="line-number"> 690 </a>    <span class="python-string">"zh_SG"</span><span class="python-operator">,</span>
+<a name="L691" class="line-number"> 691 </a>    <span class="python-string">"zh_TW"</span><span class="python-operator">,</span>
+<a name="L692" class="line-number"> 692 </a>    <span class="python-string">"zu"</span><span class="python-operator">,</span>
+<a name="L693" class="line-number"> 693 </a>    <span class="python-string">"zu_ZA"</span><span class="python-operator">,</span><span class="python-operator">)</span><span class="python-operator">)</span>
+<a name="L694" class="line-number"> 694 </a>
+<a name="L695" class="line-number"> 695 </a>
+<a name="L696" class="line-number"> 696 </a><span class="python-keyword">def</span> <span class="python-name">get_country</span><span class="python-operator">(</span><span class="python-name">locale</span><span class="python-operator">)</span><span class="python-operator">:</span>
+<a name="L697" class="line-number"> 697 </a>    <span class="python-string">"""Get the localized country name from locale code or None.
+<a name="L698" class="line-number"> 698 </a>
+<a name="L699" class="line-number"> 699 </a>    Raise KeyError if language not found.
+<a name="L700" class="line-number"> 700 </a>    """</span>
+<a name="L701" class="line-number"> 701 </a>    <span class="python-keyword">if</span> <span class="python-name">len</span><span class="python-operator">(</span><span class="python-name">locale</span><span class="python-operator">)</span> <span class="python-operator">==</span> <span class="python-number">5</span><span class="python-operator">:</span>
+<a name="L702" class="line-number"> 702 </a>        <span class="python-keyword">return</span> <span class="python-name">dgettext</span><span class="python-operator">(</span><span class="python-string">"iso_3166"</span><span class="python-operator">,</span> <span class="python-name">COUNTRIES</span><span class="python-operator">[</span><span class="python-name">locale</span><span class="python-operator">[</span><span class="python-number">3</span><span class="python-operator">:</span><span class="python-operator">]</span><span class="python-operator">]</span><span class="python-operator">)</span>
+<a name="L703" class="line-number"> 703 </a>    <span class="python-keyword">return</span> <span class="python-name">None</span>
+<a name="L704" class="line-number"> 704 </a>
+<a name="L705" class="line-number"> 705 </a><span class="python-keyword">def</span> <span class="python-name">get_language</span><span class="python-operator">(</span><span class="python-name">locale</span><span class="python-operator">)</span><span class="python-operator">:</span>
+<a name="L706" class="line-number"> 706 </a>    <span class="python-string">"""Get the localized language name from locale code.
+<a name="L707" class="line-number"> 707 </a>
+<a name="L708" class="line-number"> 708 </a>    Raise KeyError if language not found.
+<a name="L709" class="line-number"> 709 </a>    """</span>
+<a name="L710" class="line-number"> 710 </a>    <span class="python-keyword">return</span> <span class="python-name">dgettext</span><span class="python-operator">(</span><span class="python-string">"iso_639"</span><span class="python-operator">,</span> <span class="python-name">LANGS</span><span class="python-operator">[</span><span class="python-name">locale</span><span class="python-operator">[</span><span class="python-operator">:</span><span class="python-number">2</span><span class="python-operator">]</span><span class="python-operator">]</span><span class="python-operator">)</span>
+<a name="L711" class="line-number"> 711 </a>
+<a name="L712" class="line-number"> 712 </a><span class="python-keyword">def</span> <span class="python-name">get_long_name</span><span class="python-operator">(</span><span class="python-name">locale</span><span class="python-operator">)</span><span class="python-operator">:</span>
+<a name="L713" class="line-number"> 713 </a>    <span class="python-string">"""Get the localized long name from locale code.
+<a name="L714" class="line-number"> 714 </a>
+<a name="L715" class="line-number"> 715 </a>    Raise KeyError if language not found.
+<a name="L716" class="line-number"> 716 </a>    Return 'Language (Country)'.
+<a name="L717" class="line-number"> 717 </a>    """</span>
+<a name="L718" class="line-number"> 718 </a>    <span class="python-name">lang</span> <span class="python-operator">=</span> <span class="python-name">get_language</span><span class="python-operator">(</span><span class="python-name">locale</span><span class="python-operator">)</span>
+<a name="L719" class="line-number"> 719 </a>    <span class="python-name">country</span> <span class="python-operator">=</span> <span class="python-name">get_country</span><span class="python-operator">(</span><span class="python-name">locale</span><span class="python-operator">)</span>
+<a name="L720" class="line-number"> 720 </a>    <span class="python-keyword">if</span> <span class="python-name">country</span> <span class="python-keyword">is</span> <span class="python-keyword">not</span> <span class="python-name">None</span><span class="python-operator">:</span>
+<a name="L721" class="line-number"> 721 </a>        <span class="python-name">fields</span> <span class="python-operator">=</span> <span class="python-operator">{</span><span class="python-string">'language'</span><span class="python-operator">:</span> <span class="python-name">lang</span><span class="python-operator">,</span> <span class="python-string">'country'</span><span class="python-operator">:</span> <span class="python-name">country</span><span class="python-operator">}</span>
+<a name="L722" class="line-number"> 722 </a>        <span class="python-keyword">return</span> <span class="python-name">_</span><span class="python-operator">(</span><span class="python-string">"%(language)s (%(country)s)"</span><span class="python-operator">)</span> <span class="python-operator">%</span> <span class="python-name">fields</span>
+<a name="L723" class="line-number"> 723 </a>    <span class="python-keyword">return</span> <span class="python-name">lang</span><span class="python-text"></span>
+</pre>
+</body>
+</html>

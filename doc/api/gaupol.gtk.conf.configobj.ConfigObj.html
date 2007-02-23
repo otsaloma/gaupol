@@ -1,0 +1,925 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>API docs for &ldquo;gaupol.gtk.conf.configobj.ConfigObj&rdquo;</title>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <link href="apidocs.css" type="text/css" rel="stylesheet" />
+    
+    
+  </head>
+  <body>
+    <h1 class="class">Class g.g.c.c.ConfigObj(<a href="gaupol.gtk.conf.configobj.Section.html">Section</a>):</h1>
+    <p>
+      <span id="part">Part of <a href="gaupol.html">gaupol</a>.<a href="gaupol.gtk.html">gtk</a>.<a href="gaupol.gtk.conf.html">conf</a>.<a href="gaupol.gtk.conf.configobj.html">configobj</a></span>
+      <a href="gaupol/gtk/conf/configobj.py.html#L1027">View Source</a>
+      <a href="classIndex.html#gaupol.gtk.conf.configobj.ConfigObj">View In Hierarchy</a>
+    </p>
+    <div>
+      
+    </div>
+    <div><pre class="literalblock">
+An object to read, create, and write config files.
+</pre>
+<table class="fieldTable"></table></div>
+    
+    
+    <div id="splitTables">
+      <table class="children sortable" id="id281">
+  
+  
+  
+  
+  <tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.ConfigObj.html#__init__">__init__</a></td>
+    <td><span><pre class="literalblock">
+Parse or create a config file object.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.ConfigObj.html#__repr__">__repr__</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.ConfigObj.html#_handle_bom">_handle_bom</a></td>
+    <td><span><pre class="literalblock">
+Handle any BOM, and decode if necessary.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.ConfigObj.html#_a_to_u">_a_to_u</a></td>
+    <td><span><pre class="literalblock">
+Decode ASCII strings to unicode if a self.encoding is specified.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.ConfigObj.html#_decode">_decode</a></td>
+    <td><span><pre class="literalblock">
+Decode infile to unicode. Using the specified encoding.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.ConfigObj.html#_decode_element">_decode_element</a></td>
+    <td><span><pre class="literalblock">
+Decode element to unicode if necessary.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.ConfigObj.html#_str">_str</a></td>
+    <td><span><pre class="literalblock">
+Used by ``stringify`` within validate, to turn non-string values
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.ConfigObj.html#_parse">_parse</a></td>
+    <td><span><pre class="literalblock">
+Actually parse the config file.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.ConfigObj.html#_match_depth">_match_depth</a></td>
+    <td><span><pre class="literalblock">
+Given a section and a depth level, walk back through the sections
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.ConfigObj.html#_handle_error">_handle_error</a></td>
+    <td><span><pre class="literalblock">
+Handle an error according to the error settings.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.ConfigObj.html#_unquote">_unquote</a></td>
+    <td><span><pre class="literalblock">
+Return an unquoted version of a value
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.ConfigObj.html#_quote">_quote</a></td>
+    <td><span><pre class="literalblock">
+Return a safely quoted version of a value.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.ConfigObj.html#_handle_value">_handle_value</a></td>
+    <td><span><pre class="literalblock">
+Given a value string, unquote, remove comment,
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.ConfigObj.html#_multiline">_multiline</a></td>
+    <td><span><pre class="literalblock">
+Extract the value, where we are in a multiline situation.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.ConfigObj.html#_handle_configspec">_handle_configspec</a></td>
+    <td><span><pre class="literalblock">
+Parse the configspec.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.ConfigObj.html#_set_configspec_value">_set_configspec_value</a></td>
+    <td><span><pre class="literalblock">
+Used to recursively set configspec values.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.ConfigObj.html#_handle_repeat">_handle_repeat</a></td>
+    <td><span><pre class="literalblock">
+Dynamically assign configspec for repeated section.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.ConfigObj.html#_write_line">_write_line</a></td>
+    <td><span><pre class="literalblock">
+Write an individual line, for the write method
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.ConfigObj.html#_write_marker">_write_marker</a></td>
+    <td><span><pre class="literalblock">
+Write a section marker line
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.ConfigObj.html#_handle_comment">_handle_comment</a></td>
+    <td><span><pre class="literalblock">
+Deal with a comment.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.ConfigObj.html#write">write</a></td>
+    <td><span><pre class="literalblock">
+Write the current ConfigObj as a file
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.ConfigObj.html#validate">validate</a></td>
+    <td><span><pre class="literalblock">
+Test the ConfigObj against a configspec.
+</pre>
+</span></td>
+  </tr>
+  
+</table>
+      
+        <p>
+          Inherited from <a href="gaupol.gtk.conf.configobj.Section.html">Section</a>:
+        </p>
+        <table class="children sortable" id="id282">
+  
+  
+  
+  
+  <tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.Section.html#_interpolate">_interpolate</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.Section.html#__getitem__">__getitem__</a></td>
+    <td><span><pre class="literalblock">
+Fetch the item and do string interpolation.
+</pre>
+</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.Section.html#__setitem__">__setitem__</a></td>
+    <td><span><pre class="literalblock">
+Correctly set a value.
+</pre>
+</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.Section.html#__delitem__">__delitem__</a></td>
+    <td><span><pre class="literalblock">
+Remove items from the sequence when deleting.
+</pre>
+</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.Section.html#get">get</a></td>
+    <td><span><pre class="literalblock">
+A version of ``get`` that doesn't bypass string interpolation.
+</pre>
+</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.Section.html#update">update</a></td>
+    <td><span><pre class="literalblock">
+A version of update that uses our ``__setitem__``.
+</pre>
+</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.Section.html#pop">pop</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.Section.html#popitem">popitem</a></td>
+    <td><span><pre class="literalblock">
+Pops the first (key,val)
+</pre>
+</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.Section.html#clear">clear</a></td>
+    <td><span><pre class="literalblock">
+A version of clear that also affects scalars/sections
+</pre>
+</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.Section.html#setdefault">setdefault</a></td>
+    <td><span><pre class="literalblock">
+A version of setdefault that sets sequence if appropriate.
+</pre>
+</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.Section.html#items">items</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.Section.html#keys">keys</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.Section.html#values">values</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.Section.html#iteritems">iteritems</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.Section.html#iterkeys">iterkeys</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.Section.html#itervalues">itervalues</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.Section.html#dict">dict</a></td>
+    <td><span><pre class="literalblock">
+Return a deepcopy of self as a dictionary.
+</pre>
+</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.Section.html#merge">merge</a></td>
+    <td><span><pre class="literalblock">
+A recursive update - useful for merging config files.
+</pre>
+</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.Section.html#rename">rename</a></td>
+    <td><span><pre class="literalblock">
+Change a keyname to another, without changing position in sequence.
+</pre>
+</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.Section.html#walk">walk</a></td>
+    <td><span><pre class="literalblock">
+Walk every member and call a function on the keyword and value.
+</pre>
+</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.Section.html#decode">decode</a></td>
+    <td><span><pre class="literalblock">
+Decode all strings and values to unicode, using the specified encoding.
+</pre>
+</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.Section.html#encode">encode</a></td>
+    <td><span><pre class="literalblock">
+Encode all strings and values from unicode,
+</pre>
+</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.Section.html#istrue">istrue</a></td>
+    <td><span><pre class="literalblock">
+A deprecated version of ``as_bool``.
+</pre>
+</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.Section.html#as_bool">as_bool</a></td>
+    <td><span><pre class="literalblock">
+Accepts a key as input. The corresponding value must be a string or
+</pre>
+</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.Section.html#as_int">as_int</a></td>
+    <td><span><pre class="literalblock">
+A convenience method which coerces the specified value to an integer.
+</pre>
+</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.conf.configobj.Section.html#as_float">as_float</a></td>
+    <td><span><pre class="literalblock">
+A convenience method which coerces the specified value to a float.
+</pre>
+</span></td>
+  </tr>
+  
+</table>
+      
+      
+    </div>
+    
+    
+    
+    <div class="function">
+        <a name="gaupol.gtk.conf.configobj.ConfigObj.__init__"></a>
+        <a name="__init__"></a>
+        <div class="functionHeader">
+        def __init__(self, infile=None, options=None, **kwargs):
+        <a href="gaupol/gtk/conf/configobj.py.html#L1129" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          <div class="interfaceinfo">overrides <a href="gaupol.gtk.conf.configobj.Section.html#__init__">gaupol.gtk.conf.configobj.Section.__init__</a></div>
+          <div><pre class="literalblock">
+Parse or create a config file object.
+
+``ConfigObj(infile=None, options=None, **kwargs)``
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.conf.configobj.ConfigObj.__repr__"></a>
+        <a name="__repr__"></a>
+        <div class="functionHeader">
+        def __repr__(self):
+        <a href="gaupol/gtk/conf/configobj.py.html#L1261" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          <div class="interfaceinfo">overrides <a href="gaupol.gtk.conf.configobj.Section.html#__repr__">gaupol.gtk.conf.configobj.Section.__repr__</a></div>
+          <div class="undocumented">Undocumented</div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.conf.configobj.ConfigObj._handle_bom"></a>
+        <a name="_handle_bom"></a>
+        <div class="functionHeader">
+        def _handle_bom(self, infile):
+        <a href="gaupol/gtk/conf/configobj.py.html#L1266" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Handle any BOM, and decode if necessary.
+
+If an encoding is specified, that *must* be used - but the BOM should
+still be removed (and the BOM attribute set).
+
+(If the encoding is wrongly specified, then a BOM for an alternative
+encoding won't be discovered or removed.)
+
+If an encoding is not specified, UTF8 or UTF16 BOM will be detected and
+removed. The BOM attribute will be set. UTF16 will be decoded to
+unicode.
+
+NOTE: This method must not be called with an empty ``infile``.
+
+Specifying the *wrong* encoding is likely to cause a
+``UnicodeDecodeError``.
+
+``infile`` must always be returned as a list of lines, but may be
+passed in as a single string.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.conf.configobj.ConfigObj._a_to_u"></a>
+        <a name="_a_to_u"></a>
+        <div class="functionHeader">
+        def _a_to_u(self, aString):
+        <a href="gaupol/gtk/conf/configobj.py.html#L1367" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Decode ASCII strings to unicode if a self.encoding is specified.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.conf.configobj.ConfigObj._decode"></a>
+        <a name="_decode"></a>
+        <div class="functionHeader">
+        def _decode(self, infile, encoding):
+        <a href="gaupol/gtk/conf/configobj.py.html#L1374" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Decode infile to unicode. Using the specified encoding.
+
+if is a string, it also needs converting to a list.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.conf.configobj.ConfigObj._decode_element"></a>
+        <a name="_decode_element"></a>
+        <div class="functionHeader">
+        def _decode_element(self, line):
+        <a href="gaupol/gtk/conf/configobj.py.html#L1392" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Decode element to unicode if necessary.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.conf.configobj.ConfigObj._str"></a>
+        <a name="_str"></a>
+        <div class="functionHeader">
+        def _str(self, value):
+        <a href="gaupol/gtk/conf/configobj.py.html#L1400" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Used by ``stringify`` within validate, to turn non-string values
+into strings.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.conf.configobj.ConfigObj._parse"></a>
+        <a name="_parse"></a>
+        <div class="functionHeader">
+        def _parse(self, infile):
+        <a href="gaupol/gtk/conf/configobj.py.html#L1410" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Actually parse the config file.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.conf.configobj.ConfigObj._match_depth"></a>
+        <a name="_match_depth"></a>
+        <div class="functionHeader">
+        def _match_depth(self, sect, depth):
+        <a href="gaupol/gtk/conf/configobj.py.html#L1580" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Given a section and a depth level, walk back through the sections
+parents to see if the depth level matches a previous section.
+
+Return a reference to the right section,
+or raise a SyntaxError.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.conf.configobj.ConfigObj._handle_error"></a>
+        <a name="_handle_error"></a>
+        <div class="functionHeader">
+        def _handle_error(self, text, ErrorClass, infile, cur_index):
+        <a href="gaupol/gtk/conf/configobj.py.html#L1598" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Handle an error according to the error settings.
+
+Either raise the error or store it.
+The error will have occured at ``cur_index``
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.conf.configobj.ConfigObj._unquote"></a>
+        <a name="_unquote"></a>
+        <div class="functionHeader">
+        def _unquote(self, value):
+        <a href="gaupol/gtk/conf/configobj.py.html#L1616" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Return an unquoted version of a value
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.conf.configobj.ConfigObj._quote"></a>
+        <a name="_quote"></a>
+        <div class="functionHeader">
+        def _quote(self, value, multiline=True):
+        <a href="gaupol/gtk/conf/configobj.py.html#L1622" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+        Return a safely quoted version of a value.
+        
+        Raise a ConfigObjError if the value cannot be safely quoted.
+        If multiline is ``True`` (default) then use triple quotes
+        if necessary.
+        
+        Don't quote values that don't need it.
+        Recursively quote members of a list and return a comma joined list.
+        Multiline is ``False`` for lists.
+        Obey list syntax for empty and single member lists.
+        
+        If ``list_values=False`` then the value is only quoted if it contains
+        a ``
+`` (is multiline).
+        
+        If ``write_empty_values`` is set, and the value is an empty string, it
+        won't be quoted.
+        
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.conf.configobj.ConfigObj._handle_value"></a>
+        <a name="_handle_value"></a>
+        <div class="functionHeader">
+        def _handle_value(self, value):
+        <a href="gaupol/gtk/conf/configobj.py.html#L1698" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Given a value string, unquote, remove comment,
+handle lists. (including empty and single member lists)
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.conf.configobj.ConfigObj._multiline"></a>
+        <a name="_multiline"></a>
+        <div class="functionHeader">
+        def _multiline(self, value, infile, cur_index, maxline):
+        <a href="gaupol/gtk/conf/configobj.py.html#L1743" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Extract the value, where we are in a multiline situation.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.conf.configobj.ConfigObj._handle_configspec"></a>
+        <a name="_handle_configspec"></a>
+        <div class="functionHeader">
+        def _handle_configspec(self, configspec):
+        <a href="gaupol/gtk/conf/configobj.py.html#L1777" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Parse the configspec.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.conf.configobj.ConfigObj._set_configspec_value"></a>
+        <a name="_set_configspec_value"></a>
+        <div class="functionHeader">
+        def _set_configspec_value(self, configspec, section):
+        <a href="gaupol/gtk/conf/configobj.py.html#L1796" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Used to recursively set configspec values.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.conf.configobj.ConfigObj._handle_repeat"></a>
+        <a name="_handle_repeat"></a>
+        <div class="functionHeader">
+        def _handle_repeat(self, section, configspec):
+        <a href="gaupol/gtk/conf/configobj.py.html#L1826" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Dynamically assign configspec for repeated section.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.conf.configobj.ConfigObj._write_line"></a>
+        <a name="_write_line"></a>
+        <div class="functionHeader">
+        def _write_line(self, indent_string, entry, this_entry, comment):
+        <a href="gaupol/gtk/conf/configobj.py.html#L1857" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Write an individual line, for the write method
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.conf.configobj.ConfigObj._write_marker"></a>
+        <a name="_write_marker"></a>
+        <div class="functionHeader">
+        def _write_marker(self, indent_string, depth, entry, comment):
+        <a href="gaupol/gtk/conf/configobj.py.html#L1871" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Write a section marker line
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.conf.configobj.ConfigObj._handle_comment"></a>
+        <a name="_handle_comment"></a>
+        <div class="functionHeader">
+        def _handle_comment(self, comment):
+        <a href="gaupol/gtk/conf/configobj.py.html#L1880" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Deal with a comment.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.conf.configobj.ConfigObj.write"></a>
+        <a name="write"></a>
+        <div class="functionHeader">
+        def write(self, outfile=None, section=None):
+        <a href="gaupol/gtk/conf/configobj.py.html#L1891" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Write the current ConfigObj as a file
+
+tekNico: FIXME: use StringIO instead of real files
+
+&gt;&gt;&gt; filename = a.filename
+&gt;&gt;&gt; a.filename = 'test.ini'
+&gt;&gt;&gt; a.write()
+&gt;&gt;&gt; a.filename = filename
+&gt;&gt;&gt; a == ConfigObj('test.ini', raise_errors=True)
+1
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.conf.configobj.ConfigObj.validate"></a>
+        <a name="validate"></a>
+        <div class="functionHeader">
+        def validate(self, validator, preserve_errors=False, copy=False, section=None):
+        <a href="gaupol/gtk/conf/configobj.py.html#L1992" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Test the ConfigObj against a configspec.
+
+It uses the ``validator`` object from *validate.py*.
+
+To run ``validate`` on the current ConfigObj, call: ::
+
+    test = config.validate(validator)
+
+(Normally having previously passed in the configspec when the ConfigObj
+was created - you can dynamically assign a dictionary of checks to the
+``configspec`` attribute of a section though).
+
+It returns ``True`` if everything passes, or a dictionary of
+pass/fails (True/False). If every member of a subsection passes, it
+will just have the value ``True``. (It also returns ``False`` if all
+members fail).
+
+In addition, it converts the values from strings to their native
+types if their checks pass (and ``stringify`` is set).
+
+If ``preserve_errors`` is ``True`` (``False`` is default) then instead
+of a marking a fail with a ``False``, it will preserve the actual
+exception object. This can contain info about the reason for failure.
+For example the ``VdtValueTooSmallError`` indeicates that the value
+supplied was too small. If a value (or section) is missing it will
+still be marked as ``False``.
+
+You must have the validate module to use ``preserve_errors=True``.
+
+You can then use the ``flatten_errors`` function to turn your nested
+results dictionary into a flattened list of failures - useful for
+displaying meaningful error messages.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div>
+    
+    <address>
+      <a href="index.html">API Documentation</a> for <a href="http://home.gna.org/gaupol/">Gaupol</a>, generated by <a href="http://codespeak.net/~mwh/pydoctor/">pydoctor</a>.
+    </address>
+  </body>
+</html>

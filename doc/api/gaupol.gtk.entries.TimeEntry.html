@@ -1,0 +1,334 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>API docs for &ldquo;gaupol.gtk.entries.TimeEntry&rdquo;</title>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <link href="apidocs.css" type="text/css" rel="stylesheet" />
+    
+    
+  </head>
+  <body>
+    <h1 class="class">Class g.g.e.TimeEntry(gtk.Entry):</h1>
+    <p>
+      <span id="part">Part of <a href="gaupol.html">gaupol</a>.<a href="gaupol.gtk.html">gtk</a>.<a href="gaupol.gtk.entries.html">entries</a></span>
+      <a href="gaupol/gtk/entries.py.html#L57">View Source</a>
+      <a href="classIndex.html#gaupol.gtk.entries.TimeEntry">View In Hierarchy</a>
+    </p>
+    <div>
+      
+    </div>
+    <div><pre class="literalblock">
+Entry for time data in format HH:MM:SS.SSS.
+
+Instance variables:
+
+    _delete_handler: Handler for 'delete-text' signal
+    _insert_handler: Handler for 'insert-text' signal
+</pre>
+<table class="fieldTable"></table></div>
+    
+    
+    <div id="splitTables">
+      <table class="children sortable" id="id294">
+  
+  
+  
+  
+  <tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.entries.TimeEntry.html#__init__">__init__</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.entries.TimeEntry.html#_init_signal_handlers">_init_signal_handlers</a></td>
+    <td><span><pre class="literalblock">
+Initialize signal handlers.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.entries.TimeEntry.html#_insert_text">_insert_text</a></td>
+    <td><span><pre class="literalblock">
+Insert text.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.entries.TimeEntry.html#_on_cut_clipboard">_on_cut_clipboard</a></td>
+    <td><span><pre class="literalblock">
+Transform cut signal to a copy signal.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.entries.TimeEntry.html#_on_delete_text">_on_delete_text</a></td>
+    <td><span><pre class="literalblock">
+Do not allow deleting text.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.entries.TimeEntry.html#_on_key_press_event">_on_key_press_event</a></td>
+    <td><span><pre class="literalblock">
+Change numbers to zero if BackSpace or Delete pressed.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.entries.TimeEntry.html#_on_insert_text">_on_insert_text</a></td>
+    <td><span><pre class="literalblock">
+Insert text if it is proper.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.entries.TimeEntry.html#_on_toggle_overwrite">_on_toggle_overwrite</a></td>
+    <td><span><pre class="literalblock">
+Do not allow toggling overwrite.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.entries.TimeEntry.html#_zero_next">_zero_next</a></td>
+    <td><span><pre class="literalblock">
+Change next digit to zero.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.entries.TimeEntry.html#_zero_previous">_zero_previous</a></td>
+    <td><span><pre class="literalblock">
+Change previous digit to zero.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.gtk.entries.TimeEntry.html#_zero_selection">_zero_selection</a></td>
+    <td><span><pre class="literalblock">
+Change digits in selection to zero.
+</pre>
+</span></td>
+  </tr>
+  
+</table>
+      
+      
+    </div>
+    
+    
+    
+    <div class="function">
+        <a name="gaupol.gtk.entries.TimeEntry.__init__"></a>
+        <a name="__init__"></a>
+        <div class="functionHeader">
+        def __init__(self):
+        <a href="gaupol/gtk/entries.py.html#L67" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div class="undocumented">Undocumented</div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.entries.TimeEntry._init_signal_handlers"></a>
+        <a name="_init_signal_handlers"></a>
+        <div class="functionHeader">
+        def _init_signal_handlers(self):
+        <a href="gaupol/gtk/entries.py.html#L78" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Initialize signal handlers.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.entries.TimeEntry._insert_text"></a>
+        <a name="_insert_text"></a>
+        <div class="functionHeader">
+        def _insert_text(self, text):
+        <a href="gaupol/gtk/entries.py.html#L89" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Insert text.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.entries.TimeEntry._on_cut_clipboard"></a>
+        <a name="_on_cut_clipboard"></a>
+        <div class="functionHeader">
+        def _on_cut_clipboard(self, entry):
+        <a href="gaupol/gtk/entries.py.html#L105" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Transform cut signal to a copy signal.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.entries.TimeEntry._on_delete_text"></a>
+        <a name="_on_delete_text"></a>
+        <div class="functionHeader">
+        def _on_delete_text(self, entry, start_pos, end_pos):
+        <a href="gaupol/gtk/entries.py.html#L111" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Do not allow deleting text.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.entries.TimeEntry._on_key_press_event"></a>
+        <a name="_on_key_press_event"></a>
+        <div class="functionHeader">
+        def _on_key_press_event(self, entry, event):
+        <a href="gaupol/gtk/entries.py.html#L117" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Change numbers to zero if BackSpace or Delete pressed.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.entries.TimeEntry._on_insert_text"></a>
+        <a name="_on_insert_text"></a>
+        <div class="functionHeader">
+        def _on_insert_text(self, entry, text, length, pos):
+        <a href="gaupol/gtk/entries.py.html#L130" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Insert text if it is proper.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.entries.TimeEntry._on_toggle_overwrite"></a>
+        <a name="_on_toggle_overwrite"></a>
+        <div class="functionHeader">
+        def _on_toggle_overwrite(self, entry):
+        <a href="gaupol/gtk/entries.py.html#L136" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Do not allow toggling overwrite.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.entries.TimeEntry._zero_next"></a>
+        <a name="_zero_next"></a>
+        <div class="functionHeader">
+        def _zero_next(self):
+        <a href="gaupol/gtk/entries.py.html#L142" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Change next digit to zero.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.entries.TimeEntry._zero_previous"></a>
+        <a name="_zero_previous"></a>
+        <div class="functionHeader">
+        def _zero_previous(self):
+        <a href="gaupol/gtk/entries.py.html#L156" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Change previous digit to zero.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.gtk.entries.TimeEntry._zero_selection"></a>
+        <a name="_zero_selection"></a>
+        <div class="functionHeader">
+        def _zero_selection(self):
+        <a href="gaupol/gtk/entries.py.html#L171" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Change digits in selection to zero.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div>
+    
+    <address>
+      <a href="index.html">API Documentation</a> for <a href="http://home.gna.org/gaupol/">Gaupol</a>, generated by <a href="http://codespeak.net/~mwh/pydoctor/">pydoctor</a>.
+    </address>
+  </body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>API docs for &ldquo;gaupol._agents.preview.PreviewAgent&rdquo;</title>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <link href="apidocs.css" type="text/css" rel="stylesheet" />
+    
+    
+  </head>
+  <body>
+    <h1 class="class">Class g._.p.PreviewAgent(Delegate):</h1>
+    <p>
+      <span id="part">Part of <a href="gaupol.html">gaupol</a>.<a href="gaupol._agents.html">_agents</a>.<a href="gaupol._agents.preview.html">preview</a></span>
+      <a href="gaupol/_agents/preview.py.html#L42">View Source</a>
+      <a href="classIndex.html#gaupol._agents.preview.PreviewAgent">View In Hierarchy</a>
+    </p>
+    <div>
+      
+    </div>
+    <div><pre class="literalblock">
+Previewing subtitles with a video player.
+</pre>
+<table class="fieldTable"></table></div>
+    
+    
+    <div id="splitTables">
+      <table class="children sortable" id="id95">
+  
+  
+  
+  
+  <tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol._agents.preview.PreviewAgent.html#__init__">__init__</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol._agents.preview.PreviewAgent.html#_get_subtitle_path">_get_subtitle_path</a></td>
+    <td><span><pre class="literalblock">
+Save the subtitle data to a temporary file if needed.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol._agents.preview.PreviewAgent.html#_on_notify_main_file">_on_notify_main_file</a></td>
+    <td><span><pre class="literalblock">
+Guess the video file path if it is unset.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol._agents.preview.PreviewAgent.html#get_temp_file_path">get_temp_file_path</a></td>
+    <td><span><pre class="literalblock">
+Save the subtitle data to a temporary file and return path.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol._agents.preview.PreviewAgent.html#guess_video_path">guess_video_path</a></td>
+    <td><span><pre class="literalblock">
+Guess the video file path based on main file's path.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol._agents.preview.PreviewAgent.html#preview">preview</a></td>
+    <td><span><pre class="literalblock">
+Preview subtitles with a video player.
+</pre>
+</span></td>
+  </tr>
+  
+</table>
+      
+      
+    </div>
+    
+    
+    
+    <div class="function">
+        <a name="gaupol._agents.preview.PreviewAgent.__init__"></a>
+        <a name="__init__"></a>
+        <div class="functionHeader">
+        def __init__(self, master):
+        <a href="gaupol/_agents/preview.py.html#L48" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div class="undocumented">Undocumented</div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol._agents.preview.PreviewAgent._get_subtitle_path"></a>
+        <a name="_get_subtitle_path"></a>
+        <div class="functionHeader">
+        def _get_subtitle_path(self, doc):
+        <a href="gaupol/_agents/preview.py.html#L54" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Save the subtitle data to a temporary file if needed.
+
+Raise IOError if writing to temporary file fails.
+Raise UnicodeError if encoding temporary file fails.
+Return subtitle file path, True if file is temporary.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol._agents.preview.PreviewAgent._on_notify_main_file"></a>
+        <a name="_on_notify_main_file"></a>
+        <div class="functionHeader">
+        def _on_notify_main_file(self, *args):
+        <a href="gaupol/_agents/preview.py.html#L69" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Guess the video file path if it is unset.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol._agents.preview.PreviewAgent.get_temp_file_path"></a>
+        <a name="get_temp_file_path"></a>
+        <div class="functionHeader">
+        def get_temp_file_path(self, doc):
+        <a href="gaupol/_agents/preview.py.html#L75" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Save the subtitle data to a temporary file and return path.
+
+Raise IOError if writing to temporary file fails.
+Raise UnicodeError if encoding temporary file fails.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol._agents.preview.PreviewAgent.guess_video_path"></a>
+        <a name="guess_video_path"></a>
+        <div class="functionHeader">
+        def guess_video_path(self, extensions=_EXTENSIONS):
+        <a href="gaupol/_agents/preview.py.html#L88" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Guess the video file path based on main file's path.
+
+Video file is searched for in the same directory as the subtitle file.
+Subtitle file's filename without extension is assumed to start with or
+match video file's filename without extension.
+Return the video file path or None.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol._agents.preview.PreviewAgent.preview"></a>
+        <a name="preview"></a>
+        <div class="functionHeader">
+        def preview(self, time, doc, command, offset, temp_path=None):
+        <a href="gaupol/_agents/preview.py.html#L108" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Preview subtitles with a video player.
+
+command should have variables $SECONDS, $SUBFILE and $VIDEOFILE.
+offset is the amount of seconds before time to start.
+temp_path should be a temporary subtitle file path if already written.
+
+Raise IOError if writing to temporary file fails.
+Raise UnicodeError if encoding temporary file fails.
+Return PID, command, path to output file, path to temporary file.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div>
+    
+    <address>
+      <a href="index.html">API Documentation</a> for <a href="http://home.gna.org/gaupol/">Gaupol</a>, generated by <a href="http://codespeak.net/~mwh/pydoctor/">pydoctor</a>.
+    </address>
+  </body>
+</html>

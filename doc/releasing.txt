@@ -1,0 +1,61 @@
+Release Checklist
+=================
+
+Set some useful variables.
+
+    export VERSION=0.8
+    export BRANCH=0.8
+    export USERNAME=osmo
+    export SVN_ROOT=svn+ssh://$USERNAME@svn.gna.org/svn/gaupol
+    export SVN_SOURCE=$SVN_ROOT/trunk
+    export DOWNLOAD_ROOT=$USERNAME@download.gna.org:/upload/gaupol
+
+Search for unfinished code.
+
+    PATHS=$(find . -name "*.py" -print)
+    egrep -A 2 -B 2 -n "(FIX|TODO):" $PATHS | grep -v configobj
+
+Run (all) automatic checks.
+
+    tools/check gaupol
+    tools/check $(file tools/* | grep python | sed "s|:.*$||")
+    tools/test --tb=no gaupol
+    tools/run gaupol
+
+Make final edits to files and commit changes.
+
+    $EDITOR lib/gaupol/__init__.py
+    tools/generate-api-docs
+    tools/translate -t
+    $EDITOR NEWS
+    tools/add-changelog
+    $EDITOR ChangeLog
+    tools/commit
+
+Tag source.
+
+    svn copy $SVN_SOURCE $SVN_ROOT/tags/$VERSION \
+        -m "Tagged release $VERSION."
+
+Build and upload tarballs.
+
+    ./setup.py clean
+    ./setup.py sdist_gna --formats bztar,gztar
+    cd dist
+    $EDITOR $BRANCH/*.news
+    $EDITOR $BRANCH/*.changes
+    rsync -avr --delete --rsh="ssh" $BRANCH $DOWNLOAD_ROOT/$BRANCH/
+    scp latest.txt $DOWNLOAD_ROOT
+
+Edit homepage.
+
+Send announcement mail.
+
+    gaupol-announcements@gna.org
+    http://mail.gna.org/public/gaupol-announcements
+
+Update web sites.
+
+    http://gna.org/news/?group=gaupol
+    http://www.gnomefiles.com/devs
+    http://freshmeat.net/projects/gaupol

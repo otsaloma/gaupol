@@ -1,0 +1,10 @@
+Sub Station Alpha
+=================
+
+We only care about the "Events" section. The "Format" line needs to be
+read first, after which we know how to interpret the "Dialogue:"
+lines. Both "\N" and "\n" are line-breaks, the difference between
+which we cannot respect.
+
+Extension: .ssa
+Source: http://moodub.free.fr/ass-specs.doc (dead)

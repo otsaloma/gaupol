@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Add a ChangeLog entry.
+# Usage: add-changelog [PATH...]
+# Needs environement variables $NAME and $EMAIL.
+
+cd $(dirname "$0")/.. || exit
+DATE=$(date --utc +%Y-%m-%d) || exit
+svn status -q $@ | egrep "\w" || exit
+PATHS=$(svn status -q $@ | sed "s|^. *||" | egrep -v "test_")
+
+mv ChangeLog ChangeLog.old
+echo -e "$DATE  $NAME  <$EMAIL>\n" > ChangeLog
+for path in $PATHS; do
+    echo "Adding $path..."
+    echo -e "\t* $path" >> ChangeLog
+done
+echo >> ChangeLog
+cat ChangeLog.old >> ChangeLog
+rm ChangeLog.old

@@ -1,0 +1,1978 @@
+# Swedish translation for gaupol.
+# Copyright (C) 2006 Free Software Foundation, Inc.
+# This file is distributed under the same license as the gaupol package.
+# Daniel Nylander <po@danielnylander.se>, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gaupol\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-07-11 01:37+0300\n"
+"PO-Revision-Date: 2007-01-13 18:52+0100\n"
+"Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
+"Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: data/gaupol.desktop.in.h:1
+msgid "Edit subtitle files"
+msgstr "Redigera undertextfiler"
+
+#: data/gaupol.desktop.in.h:2
+msgid "Gaupol Subtitle Editor"
+msgstr "Undertextredigeraren Gaupol"
+
+#: data/glade/frconvert-dialog.glade.h:1
+msgid "<b>Framerate</b>"
+msgstr "<b>Bildhastighet</b>"
+
+#: data/glade/frconvert-dialog.glade.h:2
+#: data/glade/replace-dialog.glade.h:2
+#: data/glade/find-dialog.glade.h:2
+#: data/glade/posadjust-dialog.glade.h:3
+#: data/glade/language-dialog.glade.h:2
+#: data/glade/posshift-dialog.glade.h:2
+#: data/glade/duradjust-dialog.glade.h:3
+msgid "<b>Subtitles</b>"
+msgstr "<b>Undertexter</b>"
+
+#: data/glade/frconvert-dialog.glade.h:3
+msgid "C_orrect:"
+msgstr "K_orrekt:"
+
+#: data/glade/frconvert-dialog.glade.h:4
+msgid "C_urrent:"
+msgstr "A_ktuell:"
+
+#: data/glade/frconvert-dialog.glade.h:5
+msgid "Co_nvert"
+msgstr "Ko_nvertera"
+
+#: data/glade/frconvert-dialog.glade.h:6
+msgid "Convert Framerate"
+msgstr "Aktuell bildhastighet"
+
+#: data/glade/frconvert-dialog.glade.h:7
+msgid "Convert _all open projects"
+msgstr "Konvertera _alla öppna projekt"
+
+#: data/glade/frconvert-dialog.glade.h:8
+msgid "Convert cu_rrent project"
+msgstr "Konvertera ak_tuellt projekt"
+
+#: data/glade/spellcheck-dialog.glade.h:1
+msgid "Add _Lower"
+msgstr "Lägg till _gemen"
+
+#: data/glade/spellcheck-dialog.glade.h:2
+msgid "C_heck"
+msgstr "K_ontrollera"
+
+#: data/glade/spellcheck-dialog.glade.h:3
+msgid "Check Spelling"
+msgstr "Kontrollera stavning"
+
+#: data/glade/spellcheck-dialog.glade.h:4
+msgid "I_gnore All"
+msgstr "I_gnorera alla"
+
+#: data/glade/spellcheck-dialog.glade.h:5
+msgid "Join _Back"
+msgstr "Sätt ihop _bakåt"
+
+#: data/glade/spellcheck-dialog.glade.h:6
+msgid "Join _Forward"
+msgstr "Sätt ihop _framåt"
+
+#: data/glade/spellcheck-dialog.glade.h:7
+msgid "Language:"
+msgstr "Språk:"
+
+#: data/glade/spellcheck-dialog.glade.h:8
+msgid "Re_place All"
+msgstr "Ersä_tt alla"
+
+#: data/glade/spellcheck-dialog.glade.h:9
+msgid "Replace _with:"
+msgstr "Ersätt _med:"
+
+#: data/glade/spellcheck-dialog.glade.h:10
+msgid "User dictionary:"
+msgstr "Användarordbok:"
+
+#: data/glade/spellcheck-dialog.glade.h:11
+#: data/glade/pref-dialog.glade.h:18
+msgid "_Add"
+msgstr "_Lägg till"
+
+#: data/glade/spellcheck-dialog.glade.h:12
+msgid "_Ignore"
+msgstr "_Ignorera"
+
+#: data/glade/spellcheck-dialog.glade.h:13
+#: data/glade/replace-dialog.glade.h:19
+#: lib/gaupol/gtk/dialog/file.py:59
+msgid "_Replace"
+msgstr "_Ersätt"
+
+#: data/glade/spellcheck-dialog.glade.h:14
+msgid "_Suggestions:"
+msgstr "_Förslag:"
+
+#: data/glade/replace-dialog.glade.h:1
+#: data/glade/find-dialog.glade.h:1
+msgid "<b>Columns</b>"
+msgstr "<b>Kolumner</b>"
+
+#: data/glade/replace-dialog.glade.h:3
+#: data/glade/find-dialog.glade.h:3
+msgid "Find"
+msgstr "Sök"
+
+#: data/glade/replace-dialog.glade.h:4
+#: data/glade/find-dialog.glade.h:4
+#: lib/gaupol/gtk/delegate/find.py:60
+msgid "Find _Next"
+msgstr "Sök _nästa"
+
+#: data/glade/replace-dialog.glade.h:5
+#: data/glade/find-dialog.glade.h:5
+#: lib/gaupol/gtk/delegate/find.py:84
+msgid "Find _Previous"
+msgstr "Sök _föregående"
+
+#: data/glade/replace-dialog.glade.h:6
+#: data/glade/find-dialog.glade.h:6
+msgid "Find in _all open projects"
+msgstr "Sök i _alla öppna projekt"
+
+#: data/glade/replace-dialog.glade.h:7
+#: data/glade/find-dialog.glade.h:7
+msgid "Find in _main text column"
+msgstr "Sök i _huvudtexten"
+
+#: data/glade/replace-dialog.glade.h:8
+#: data/glade/find-dialog.glade.h:8
+msgid "Find in _translation text column"
+msgstr "Sök i _översättningstexten"
+
+#: data/glade/replace-dialog.glade.h:9
+#: data/glade/find-dialog.glade.h:9
+msgid "Find in c_urrent project"
+msgstr "Sök i a_ktuellt projekt"
+
+#: data/glade/replace-dialog.glade.h:10
+msgid "Patt_ern:"
+msgstr "Mön_ster:"
+
+#: data/glade/replace-dialog.glade.h:11
+#: data/glade/find-dialog.glade.h:11
+msgid "Re_gular expression"
+msgstr "Re_guljärt uttryck"
+
+#: data/glade/replace-dialog.glade.h:12
+msgid "Rep_lacement:"
+msgstr "Ersä_ttning:"
+
+#: data/glade/replace-dialog.glade.h:13
+msgid "Replace"
+msgstr "Ersätt"
+
+#: data/glade/replace-dialog.glade.h:14
+msgid "Replace _All"
+msgstr "Ersätt _alla"
+
+#: data/glade/replace-dialog.glade.h:15
+#: data/glade/find-dialog.glade.h:12
+msgid "Target"
+msgstr "Mål"
+
+#: data/glade/replace-dialog.glade.h:16
+#: data/glade/find-dialog.glade.h:13
+msgid "_Dot matches newline"
+msgstr "_Punkt matchar ny rad"
+
+#: data/glade/replace-dialog.glade.h:17
+#: data/glade/find-dialog.glade.h:14
+msgid "_Ignore case"
+msgstr "_Ignorera skiftläge"
+
+#: data/glade/replace-dialog.glade.h:18
+#: data/glade/find-dialog.glade.h:15
+msgid "_Multiline"
+msgstr "_Flerraders"
+
+#: data/glade/replace-dialog.glade.h:20
+#: data/glade/find-dialog.glade.h:16
+msgid "_Text:"
+msgstr "_Text:"
+
+#: data/glade/header-dialog.glade.h:1
+#: lib/gaupol/gtk/delegate/edit.py:70
+msgid "C_lear"
+msgstr "Tö_m"
+
+#: data/glade/header-dialog.glade.h:2
+msgid "Cle_ar"
+msgstr "T_öm"
+
+#: data/glade/header-dialog.glade.h:3
+msgid "Copy _Down"
+msgstr "Kopiera _nedåt"
+
+#: data/glade/header-dialog.glade.h:4
+msgid "Copy _Up"
+msgstr "Kopiera _uppåt"
+
+#: data/glade/header-dialog.glade.h:5
+msgid "Headers"
+msgstr "Huvuden"
+
+#: data/glade/header-dialog.glade.h:6
+msgid "I_nsert Template"
+msgstr "I_nfoga mall"
+
+#: data/glade/header-dialog.glade.h:7
+msgid "R_evert"
+msgstr "Å_tergå"
+
+#: data/glade/header-dialog.glade.h:8
+msgid "_Insert Template"
+msgstr "_Infoga mall"
+
+#: data/glade/header-dialog.glade.h:9
+msgid "_Main file:"
+msgstr "_Huvudfil:"
+
+#: data/glade/header-dialog.glade.h:10
+msgid "_Revert"
+msgstr "_Återgå"
+
+#: data/glade/header-dialog.glade.h:11
+msgid "_Translation file:"
+msgstr "_Översättningsfil:"
+
+#: data/glade/subinsert-dialog.glade.h:1
+msgid ""
+"Above selection\n"
+"Below selection"
+msgstr ""
+"Ovanför markering\n"
+"Nedanför markering"
+
+#: data/glade/subinsert-dialog.glade.h:3
+msgid "Insert Subtitles"
+msgstr "Infoga undertexter"
+
+#: data/glade/subinsert-dialog.glade.h:4
+msgid "_Amount:"
+msgstr "_Antal:"
+
+#: data/glade/subinsert-dialog.glade.h:5
+msgid "_Position:"
+msgstr "_Position:"
+
+#: data/glade/pref-dialog.glade.h:1
+msgid "<b>Character Encodings</b>"
+msgstr "<b>Teckenkodningar</b>"
+
+#: data/glade/pref-dialog.glade.h:2
+msgid "<b>Font</b>"
+msgstr "<b>Typsnitt</b>"
+
+#: data/glade/pref-dialog.glade.h:3
+msgid "<b>Start Position</b>"
+msgstr "<b>Startposition</b>"
+
+#: data/glade/pref-dialog.glade.h:4
+msgid "<b>Undo</b>"
+msgstr "<b>Ångra</b>"
+
+#: data/glade/pref-dialog.glade.h:5
+msgid "<b>Video Player</b>"
+msgstr "<b>Videospelare</b>"
+
+#: data/glade/pref-dialog.glade.h:6
+msgid "<i>Encoding specified in the open dialog will always be tried first.</i>"
+msgstr "<i>Kodning angiven i filöppningsdialogen kommer alltid att provas först.</i>"
+
+#: data/glade/pref-dialog.glade.h:7
+msgid "<i>Fields: $seconds, $subfile, $videofile</i>"
+msgstr "<i>Fält: $seconds, $subfile, $videofile</i>"
+
+#: data/glade/pref-dialog.glade.h:8
+msgid "<i>When opening files, try encodings in the following order:</i>"
+msgstr "<i>När filer öppnas, prova kodningar i följande ordning:</i>"
+
+#: data/glade/pref-dialog.glade.h:9
+msgid "Au_to-detection"
+msgstr "Detektera au_tomatiskt"
+
+#: data/glade/pref-dialog.glade.h:10
+msgid "Co_mmand:"
+msgstr "Ko_mmando:"
+
+#: data/glade/pref-dialog.glade.h:11
+msgid "Curr_ent locale encoding"
+msgstr "Akt_uell lokalkodning"
+
+#: data/glade/pref-dialog.glade.h:12
+msgid "Editor"
+msgstr "Redigerare"
+
+#: data/glade/pref-dialog.glade.h:13
+msgid "File"
+msgstr "Fil"
+
+#: data/glade/pref-dialog.glade.h:14
+msgid "Pick the Editor Font"
+msgstr "Välj redigerartypsnitt"
+
+#: data/glade/pref-dialog.glade.h:15
+msgid "Preferences"
+msgstr "Inställningar"
+
+#: data/glade/pref-dialog.glade.h:16
+msgid "Preview"
+msgstr "Förhandsvisa"
+
+#: data/glade/pref-dialog.glade.h:17
+msgid "Use _default theme font"
+msgstr "Använd _standardtematypsnittet"
+
+#: data/glade/pref-dialog.glade.h:19
+msgid "_Application:"
+msgstr "_Program:"
+
+#: data/glade/pref-dialog.glade.h:20
+msgid "_Down"
+msgstr "_Ner"
+
+#: data/glade/pref-dialog.glade.h:21
+msgid "_Editor font:"
+msgstr "_Redigerartypsnitt:"
+
+#: data/glade/pref-dialog.glade.h:22
+msgid "_Fallback encodings:"
+msgstr "_Kodningar att falla tillbaka på:"
+
+#: data/glade/pref-dialog.glade.h:23
+msgid "_Limit:"
+msgstr "_Gräns:"
+
+#: data/glade/pref-dialog.glade.h:24
+msgid "_Offset:"
+msgstr "_Position:"
+
+#: data/glade/pref-dialog.glade.h:25
+msgid "_Remove"
+msgstr "_Ta bort"
+
+#: data/glade/pref-dialog.glade.h:26
+msgid "_Unlimited undo"
+msgstr "Å_ngra obegränsat"
+
+#: data/glade/pref-dialog.glade.h:27
+msgid "_Up"
+msgstr "_Upp"
+
+#: data/glade/pref-dialog.glade.h:28
+msgid "seconds before selection"
+msgstr "sekunder innan markering"
+
+#: data/glade/find-dialog.glade.h:10
+msgid "P_attern:"
+msgstr "M_önster:"
+
+#: data/glade/multiclose-dialog.glade.h:1
+msgid "<span weight=\"bold\" size=\"larger\">Save changes to documents before closing?</span>"
+msgstr "<span weight=\"bold\" size=\"larger\">Spara ändringar till dokumenten innan stängning?</span>"
+
+#: data/glade/multiclose-dialog.glade.h:2
+#: lib/gaupol/gtk/delegate/fileclose.py:114
+msgid "Close _Without Saving"
+msgstr "Stäng _utan att spara"
+
+#: data/glade/multiclose-dialog.glade.h:3
+#: lib/gaupol/gtk/delegate/fileopen.py:286
+#: lib/gaupol/gtk/delegate/fileclose.py:112
+msgid "If you don't save, changes will be permanently lost."
+msgstr "Om du inte sparar kommer ändringarna att permanent förloras."
+
+#: data/glade/multiclose-dialog.glade.h:4
+msgid "Select the _main documents you want to save:"
+msgstr "Välj de _huvuddokument som du vill spara."
+
+#: data/glade/multiclose-dialog.glade.h:5
+msgid "Select the _translation documents you want to save:"
+msgstr "Välj de _översättningsdokument som du vill spara."
+
+#: data/glade/posadjust-dialog.glade.h:1
+msgid "<b>First Point</b>"
+msgstr "<b>Första punkten</b>"
+
+#: data/glade/posadjust-dialog.glade.h:2
+msgid "<b>Second Point</b>"
+msgstr "<b>Andra punkten</b>"
+
+#: data/glade/posadjust-dialog.glade.h:4
+msgid "Adjust Positions"
+msgstr "Justera positioner"
+
+#: data/glade/posadjust-dialog.glade.h:5
+msgid "Adjust c_urrent project"
+msgstr "Justera a_ktuellt projekt"
+
+#: data/glade/posadjust-dialog.glade.h:6
+msgid "Adjust se_lected subtitles"
+msgstr "Justera _markerade undertexter"
+
+#: data/glade/posadjust-dialog.glade.h:7
+msgid "Pre_view Changes"
+msgstr "Förhandsvisa _ändringar"
+
+#: data/glade/posadjust-dialog.glade.h:8
+msgid "Su_btitle:"
+msgstr "Und_ertext:"
+
+#: data/glade/posadjust-dialog.glade.h:9
+msgid "Text:"
+msgstr "Text:"
+
+#: data/glade/posadjust-dialog.glade.h:10
+#: data/glade/duradjust-dialog.glade.h:11
+msgid "_Adjust"
+msgstr "_Justera"
+
+#: data/glade/posadjust-dialog.glade.h:11
+#: data/glade/posshift-dialog.glade.h:7
+msgid "_Preview Changes"
+msgstr "_Förhandsvisa ändringar"
+
+#: data/glade/posadjust-dialog.glade.h:12
+msgid "_Subtitle:"
+msgstr "_Undertext:"
+
+#: data/glade/language-dialog.glade.h:1
+msgid "<b>Languages</b>"
+msgstr "<b>Språk</b>"
+
+#: data/glade/language-dialog.glade.h:3
+msgid "Check _all open projects"
+msgstr "Kontrollera _alla öppna projekt"
+
+#: data/glade/language-dialog.glade.h:4
+msgid "Check c_urrent project"
+msgstr "Kontrollera a_ktuellt projekt"
+
+#: data/glade/language-dialog.glade.h:5
+msgid "Check mai_n text column"
+msgstr "Kontrollera huv_udtexten"
+
+#: data/glade/language-dialog.glade.h:6
+msgid "Check t_ranslation text column"
+msgstr "Kontrollera ö_versättningstexten"
+
+#: data/glade/language-dialog.glade.h:7
+msgid "Configure Spell-check"
+msgstr "Konfigurera stavningskontroll"
+
+#: data/glade/language-dialog.glade.h:8
+msgid "_Main text:"
+msgstr "_Huvudtext:"
+
+#: data/glade/language-dialog.glade.h:9
+msgid "_Translation text:"
+msgstr "_Översättningstext:"
+
+#: data/glade/posshift-dialog.glade.h:1
+msgid "<b>Shift</b>"
+msgstr "<b>Växla</b>"
+
+#: data/glade/posshift-dialog.glade.h:3
+msgid "A_mount:"
+msgstr "A_ntal:"
+
+#: data/glade/posshift-dialog.glade.h:4
+msgid "Shift Positions"
+msgstr "Växla positioner"
+
+#: data/glade/posshift-dialog.glade.h:5
+msgid "Shift c_urrent project"
+msgstr "Växla ak_tuellt projekt"
+
+#: data/glade/posshift-dialog.glade.h:6
+msgid "Shift s_elected subtitles"
+msgstr "Växla _markerade undertexter"
+
+#: data/glade/posshift-dialog.glade.h:8
+msgid "_Shift"
+msgstr "_Växla"
+
+#: data/glade/duradjust-dialog.glade.h:1
+msgid "<b>Limits</b>"
+msgstr "<b>Gränser</b>"
+
+#: data/glade/duradjust-dialog.glade.h:2
+msgid "<b>Optimal</b>"
+msgstr "<b>Optimal</b>"
+
+#: data/glade/duradjust-dialog.glade.h:4
+msgid "Ad_just all open projects"
+msgstr "Jus_tera alla öppna projekt"
+
+#: data/glade/duradjust-dialog.glade.h:5
+msgid "Adj_ust current project"
+msgstr "Ju_stera aktuellt projekt"
+
+#: data/glade/duradjust-dialog.glade.h:6
+msgid "Adjus_t selected subtitles"
+msgstr "Just_era markerad undertext"
+
+#: data/glade/duradjust-dialog.glade.h:7
+msgid "Adjust Durations"
+msgstr "Juster längder"
+
+#: data/glade/duradjust-dialog.glade.h:8
+msgid "Allow _lengthening"
+msgstr "Tillåt _längdändring"
+
+#: data/glade/duradjust-dialog.glade.h:9
+msgid "Allow _shortening"
+msgstr "Tillåt _förkortning"
+
+#: data/glade/duradjust-dialog.glade.h:10
+msgid "Ma_ximum duration:"
+msgstr "Ma_ximal längd:"
+
+#: data/glade/duradjust-dialog.glade.h:12
+msgid "_Gap between subtitles:"
+msgstr "_Mellanrum mellan undertexter:"
+
+#: data/glade/duradjust-dialog.glade.h:13
+msgid "_Minimum duration:"
+msgstr "_Minimal längd:"
+
+#: data/glade/duradjust-dialog.glade.h:14
+msgid "_Optimal duration:"
+msgstr "_Optimal längd:"
+
+#: data/glade/duradjust-dialog.glade.h:15
+msgid "s_econds"
+msgstr "s_ekunder"
+
+#: data/glade/duradjust-dialog.glade.h:16
+msgid "seco_nds"
+msgstr "seku_nder"
+
+#: data/glade/duradjust-dialog.glade.h:17
+msgid "secon_ds"
+msgstr "sekun_der"
+
+#: data/glade/duradjust-dialog.glade.h:18
+msgid "seconds per character"
+msgstr "sekunder per tecken"
+
+#: data/glade/debug-dialog.glade.h:1
+msgid "<span weight=\"bold\" size=\"larger\">An unhandled exception occured</span>\n"
+msgstr "<span weight=\"bold\" size=\"larger\">Ett ohanterat undantag inträffade</span>\n"
+
+#: data/glade/debug-dialog.glade.h:3
+msgid "You have probably discovered a bug. Please report it by providing the above information."
+msgstr "Du har antagligen påträffat ett fel. Rapportera det genom att ange ovanstående information."
+
+#: data/glade/encoding-dialog.glade.h:1
+msgid "C_haracter encodings:"
+msgstr "T_eckenkodningar:"
+
+#: data/glade/encoding-dialog.glade.h:2
+msgid "Character Encodings"
+msgstr "Teckenkodningar"
+
+#: data/glade/previewerr-dialog.glade.h:1
+msgid "<span weight=\"bold\" size=\"larger\">Preview in video player failed</span>"
+msgstr "<span weight=\"bold\" size=\"larger\">Förhandsvisning i videospelare misslyckades</span>"
+
+#: data/glade/previewerr-dialog.glade.h:2
+msgid "O_utput:"
+msgstr "U_tdata:"
+
+#: data/glade/projsplit-dialog.glade.h:1
+msgid "Split Project"
+msgstr "Dela upp projekt"
+
+#: data/glade/projsplit-dialog.glade.h:2
+msgid "_First subtitle of new project:"
+msgstr "_Första undertexten för nytt projekt:"
+
+#: data/glade/projsplit-dialog.glade.h:3
+msgid "_Split"
+msgstr "_Dela upp"
+
+#: lib/gaupol/gtk/cons.py:42
+msgid "No."
+msgstr "Nr"
+
+#: lib/gaupol/gtk/cons.py:43
+msgid "Show"
+msgstr "Visa"
+
+#: lib/gaupol/gtk/cons.py:44
+msgid "Hide"
+msgstr "Dölj"
+
+#: lib/gaupol/gtk/cons.py:45
+msgid "Duration"
+msgstr "Längd"
+
+#: lib/gaupol/gtk/cons.py:46
+msgid "Main Text"
+msgstr "Huvudtext"
+
+#: lib/gaupol/gtk/cons.py:47
+msgid "Translation Text"
+msgstr "Översättningstext"
+
+#: lib/gaupol/gtk/page.py:74
+#, python-format
+msgid "Untitled %d"
+msgstr "Namnlös %d"
+
+#. Translators: Suggested translation file basename,
+#. 'MAIN BASENAME translation'.
+#: lib/gaupol/gtk/page.py:155
+#, python-format
+msgid "%s translation"
+msgstr "Översättning av %s"
+
+#: lib/gaupol/gtk/output.py:108
+msgid "Output"
+msgstr "Utdata"
+
+#: lib/gaupol/gtk/delegate/format.py:51
+msgid "_Case"
+msgstr "_Skiftläge"
+
+#: lib/gaupol/gtk/delegate/format.py:63
+msgid "_Dialog"
+msgstr "_Dialog"
+
+#: lib/gaupol/gtk/delegate/format.py:65
+msgid "Toggle dialog lines on the selected texts"
+msgstr "Växla dialograder på den markerade texten"
+
+#: lib/gaupol/gtk/delegate/format.py:79
+msgid "_Italic"
+msgstr "_Kursiv"
+
+#: lib/gaupol/gtk/delegate/format.py:81
+msgid "Toggle italicization of the selected texts"
+msgstr "Växla kursivering på den markerade texten"
+
+#: lib/gaupol/gtk/delegate/format.py:122
+msgid "_Lower"
+msgstr "_Gemen"
+
+#: lib/gaupol/gtk/delegate/format.py:124
+msgid "Change the selected texts to lower case"
+msgstr "Ändra den markerade texten till gemener"
+
+#: lib/gaupol/gtk/delegate/format.py:138
+msgid "_Sentence"
+msgstr "_Mening"
+
+#: lib/gaupol/gtk/delegate/format.py:140
+msgid "Change the selected texts to Sentence case"
+msgstr "Ändra den markerade texten till meningsläge"
+
+#: lib/gaupol/gtk/delegate/format.py:154
+msgid "_Title"
+msgstr "_Titel"
+
+#: lib/gaupol/gtk/delegate/format.py:156
+msgid "Change the selected texts to Title Case"
+msgstr "Ändra den markerade texten till titelläge"
+
+#: lib/gaupol/gtk/delegate/format.py:170
+msgid "_Upper"
+msgstr "_Versal"
+
+#: lib/gaupol/gtk/delegate/format.py:172
+msgid "Change the selected texts to UPPER CASE"
+msgstr "Ändra den markerade texten till versaler"
+
+#: lib/gaupol/gtk/delegate/help.py:57
+msgid "_Check Latest Version"
+msgstr "_Leta efter senaste versionen"
+
+#: lib/gaupol/gtk/delegate/help.py:59
+msgid "Check if you have the latest version"
+msgstr "Kontrollera om du har den senaste versionen"
+
+#: lib/gaupol/gtk/delegate/help.py:73
+msgid "_Report A Bug"
+msgstr "_Rapportera ett fel"
+
+#: lib/gaupol/gtk/delegate/help.py:75
+msgid "Submit a bug report"
+msgstr "Skicka in en felrapport"
+
+#: lib/gaupol/gtk/delegate/help.py:89
+msgid "_About"
+msgstr "_Om"
+
+#: lib/gaupol/gtk/delegate/help.py:91
+msgid "Information about Gaupol"
+msgstr "Information om Gaupol"
+
+#: lib/gaupol/gtk/delegate/help.py:110
+msgid "Failed to check latest version"
+msgstr "Misslyckades med att kontrollera senaste version"
+
+#: lib/gaupol/gtk/delegate/help.py:113
+#: lib/gaupol/gtk/delegate/help.py:140
+msgid "_Go to Download Page"
+msgstr "_Gå till hämtningssidan"
+
+#: lib/gaupol/gtk/delegate/help.py:125
+#, python-format
+msgid "Version %s is available"
+msgstr "Version %s finns tillgänglig"
+
+#: lib/gaupol/gtk/delegate/help.py:126
+#, python-format
+msgid "You are currently using %s."
+msgstr "Du använder för närvarande %s."
+
+#: lib/gaupol/gtk/delegate/help.py:128
+msgid "You have the latest version"
+msgstr "Du har den senaste versionen"
+
+#: lib/gaupol/gtk/delegate/help.py:164
+#, python-format
+msgid "Failed to connect to URL \"%s\": %s."
+msgstr "Misslyckades med att anslut till URL:en \"%s\": %s."
+
+#: lib/gaupol/gtk/delegate/help.py:168
+msgid "Connection timed out."
+msgstr "Tidsgräns för anslutning överstegs."
+
+#: lib/gaupol/gtk/delegate/help.py:171
+#, python-format
+msgid "No version information found at URL \"%s\"."
+msgstr "Ingen versionsinformation hittades på URL:en \"%s\"."
+
+#: lib/gaupol/gtk/delegate/menuupdate.py:94
+#, python-format
+msgid "Undo up to %s"
+msgstr "Ångra upp till %s"
+
+#: lib/gaupol/gtk/delegate/menuupdate.py:96
+#, python-format
+msgid "Redo up to %s"
+msgstr "Gör om upp till %s"
+
+#: lib/gaupol/gtk/delegate/menuupdate.py:125
+#: lib/gaupol/gtk/delegate/menuupdate.py:168
+#, python-format
+msgid "Open main file \"%s\""
+msgstr "Öppna huvudfilen \"%s\""
+
+#: lib/gaupol/gtk/delegate/menuupdate.py:222
+#, python-format
+msgid "Activate \"%s\""
+msgstr "Aktivera \"%s\""
+
+#: lib/gaupol/gtk/delegate/filesave.py:54
+msgid "_Save All"
+msgstr "_Spara alla"
+
+#: lib/gaupol/gtk/delegate/filesave.py:56
+msgid "Save all open documents"
+msgstr "Spara alla öppna dokument"
+
+#: lib/gaupol/gtk/delegate/filesave.py:70
+msgid "_Save"
+msgstr "_Spara"
+
+#: lib/gaupol/gtk/delegate/filesave.py:72
+msgid "Save the current main document"
+msgstr "Spara det aktuella huvuddokumentet"
+
+#: lib/gaupol/gtk/delegate/filesave.py:86
+msgid "Save _As..."
+msgstr "Spara _som..."
+
+#: lib/gaupol/gtk/delegate/filesave.py:88
+msgid "Save the current main document with a different name"
+msgstr "Spara aktuellt huvuddokument med ett annat namn"
+
+#: lib/gaupol/gtk/delegate/filesave.py:102
+msgid "Sav_e Translation"
+msgstr "Spa_ra översättning"
+
+#: lib/gaupol/gtk/delegate/filesave.py:104
+msgid "Save the current translation document"
+msgstr "Spara det aktuella översättningsdokumentet"
+
+#: lib/gaupol/gtk/delegate/filesave.py:118
+msgid "Save _Translation As..."
+msgstr "Spara _översättning som..."
+
+#: lib/gaupol/gtk/delegate/filesave.py:120
+msgid "Save the current translation document with a different name"
+msgstr "Spara det aktuella översättningsdokumentet med ett annat namn"
+
+#: lib/gaupol/gtk/delegate/filesave.py:135
+#, python-format
+msgid "Failed to save file \"%s\""
+msgstr "Misslyckades med att spara filen \"%s\""
+
+#: lib/gaupol/gtk/delegate/filesave.py:136
+#: lib/gaupol/gtk/delegate/fileopen.py:235
+#: lib/gaupol/gtk/delegate/preview.py:91
+#: lib/gaupol/gtk/dialog/spellcheck.py:87
+#, python-format
+msgid "%s."
+msgstr "%s."
+
+#: lib/gaupol/gtk/delegate/filesave.py:148
+#, python-format
+msgid "Failed to encode file \"%s\" with codec \"%s\""
+msgstr "Misslyckades med att koda filen \"%s\" med kodeken \"%s\""
+
+#: lib/gaupol/gtk/delegate/filesave.py:150
+msgid "Please try to save the file with a different character encoding."
+msgstr "Försök att spara filen med en annan teckenkodning."
+
+#: lib/gaupol/gtk/delegate/filesave.py:264
+msgid "Saved all open documents"
+msgstr "Sparade alla öppna dokument"
+
+#: lib/gaupol/gtk/delegate/filesave.py:316
+msgid "Saved main document"
+msgstr "Sparade huvuddokumentet"
+
+#: lib/gaupol/gtk/delegate/filesave.py:331
+msgid "Save As"
+msgstr "Spara som"
+
+#: lib/gaupol/gtk/delegate/filesave.py:346
+#, python-format
+msgid "Saved main document as \"%s\""
+msgstr "Sparade huvuddokumentet som \"%s\""
+
+#: lib/gaupol/gtk/delegate/filesave.py:359
+msgid "Saved translation document"
+msgstr "Sparade översättningsdokumentet"
+
+#: lib/gaupol/gtk/delegate/filesave.py:375
+msgid "Save Translation As"
+msgstr "Spara översättning som"
+
+#: lib/gaupol/gtk/delegate/filesave.py:390
+#, python-format
+msgid "Saved translation document as \"%s\""
+msgstr "Sparade översättningsdokumentet som \"%s\""
+
+#: lib/gaupol/gtk/delegate/spellcheck.py:56
+msgid "_Check Spelling"
+msgstr "_Kontrollera stavning"
+
+#: lib/gaupol/gtk/delegate/spellcheck.py:58
+msgid "Check for incorrect spelling"
+msgstr "Kontrollera efter felaktiga stavningar"
+
+#: lib/gaupol/gtk/delegate/spellcheck.py:95
+msgid "Co_nfigure Spell-check..."
+msgstr "Ko_nfigurera stavningskontroll..."
+
+#: lib/gaupol/gtk/delegate/spellcheck.py:97
+msgid "Set languages and spell-check targets"
+msgstr "Ställ in språk och stavningskontroll"
+
+#: lib/gaupol/gtk/delegate/spellcheck.py:122
+msgid "Spell-checking"
+msgstr "Stavningskontroll"
+
+#: lib/gaupol/gtk/delegate/fileopen.py:57
+msgid "_Append File..."
+msgstr "_Lägg till fil..."
+
+#: lib/gaupol/gtk/delegate/fileopen.py:59
+msgid "Append subtitles from file to the current project"
+msgstr "Lägg till undertexter från fil till det aktuella projektet"
+
+#: lib/gaupol/gtk/delegate/fileopen.py:79
+msgid "_New"
+msgstr "_Nytt"
+
+#: lib/gaupol/gtk/delegate/fileopen.py:81
+msgid "Create a new project"
+msgstr "Skapa ett nytt projekt"
+
+#: lib/gaupol/gtk/delegate/fileopen.py:101
+msgid "_Open..."
+msgstr "_Öppna..."
+
+#: lib/gaupol/gtk/delegate/fileopen.py:103
+#: lib/gaupol/gtk/delegate/guiinit.py:123
+msgid "Open main files"
+msgstr "Öppna huvudfiler"
+
+#: lib/gaupol/gtk/delegate/fileopen.py:124
+msgid "O_pen Translation..."
+msgstr "Ö_ppna översättning..."
+
+#: lib/gaupol/gtk/delegate/fileopen.py:126
+msgid "Open a translation file"
+msgstr "Öppna en översättningsfil"
+
+#: lib/gaupol/gtk/delegate/fileopen.py:150
+msgid "Se_lect Video..."
+msgstr "Vä_lj video..."
+
+#: lib/gaupol/gtk/delegate/fileopen.py:152
+msgid "Select a video file"
+msgstr "Välj en videofil"
+
+#: lib/gaupol/gtk/delegate/fileopen.py:177
+msgid "_Split Project..."
+msgstr "_Dela upp projekt..."
+
+#: lib/gaupol/gtk/delegate/fileopen.py:179
+msgid "Split the current project in two"
+msgstr "Dela upp aktuellt projekt i två delar"
+
+#: lib/gaupol/gtk/delegate/fileopen.py:202
+#, python-format
+msgid "Open abnormally large file \"%s\"?"
+msgstr "Öppna den onormalt stora filen \"%s\"?"
+
+#: lib/gaupol/gtk/delegate/fileopen.py:203
+#, python-format
+msgid "Size of the file is %.1f MB, which is abnormally large for a text-based subtitle file. Please, check that you are not trying to open a binary file."
+msgstr "Storleken på filen är %.1f MB, vilket är onormalt stor för att vara en textbaserad undertextfil. Kontrollera att du inte försöker att öppna en binärfil."
+
+#: lib/gaupol/gtk/delegate/fileopen.py:220
+#, python-format
+msgid "Failed to recognize format of file \"%s\""
+msgstr "Misslyckades med att känna igen formatet för filen \"%s\""
+
+#: lib/gaupol/gtk/delegate/fileopen.py:221
+msgid "Please check that the file you are trying to open is a subtitle file of a format supported by Gaupol."
+msgstr "Kontrollera att filen som du försöker att öppna är en undertextfil i ett format som Gaupol har stöd för."
+
+#: lib/gaupol/gtk/delegate/fileopen.py:234
+#, python-format
+msgid "Failed to open file \"%s\""
+msgstr "Misslyckades med att öppna filen \"%s\""
+
+#: lib/gaupol/gtk/delegate/fileopen.py:247
+#, python-format
+msgid "%d subtitles will be moved"
+msgstr "%d undertexter kommer att flyttas"
+
+#: lib/gaupol/gtk/delegate/fileopen.py:248
+msgid "The file you are trying to open is not in sorted order and may thus be faulty. If you open the file, all subtitles will be arranged in sorted order."
+msgstr "Filen som du försöker att öppna är inte sorterad och kan därför vara felaktig. Om du öppnar filen, kommer alla undertexter i den att sorteras."
+
+#: lib/gaupol/gtk/delegate/fileopen.py:265
+msgid "Open only partially supported file?"
+msgstr "Öppna endast delvis stödd fil?"
+
+#: lib/gaupol/gtk/delegate/fileopen.py:266
+msgid "Sub Station Alpha and Advanced Sub Station Alpha formats are not fully supported. Only the header and fields \"Start\", \"End\" and \"Text\" of the dialogue are read. Saving the file will cause you to lose all other data."
+msgstr "Formaten Sub Station Alpha och Advanced Sub Station Alpha stöds inte fullständigt. Endast huvudet och fälten \"Start\", \"End\" och \"Text\" för dialogen läses in. Spara filen kommer att orsaka att du förlorar all annan data."
+
+#: lib/gaupol/gtk/delegate/fileopen.py:284
+#, python-format
+msgid "Save changes to translation document \"%s\" before opening a new one?"
+msgstr "Spara ändringar i översättningsdokumentet \"%s\" innan ett nytt öppnas?"
+
+#: lib/gaupol/gtk/delegate/fileopen.py:288
+msgid "Open _Without Saving"
+msgstr "Öppna _utan att spara"
+
+#: lib/gaupol/gtk/delegate/fileopen.py:302
+#, python-format
+msgid "Failed to decode file \"%s\" with all attempted codecs"
+msgstr "Misslyckades med att avkoda filen \"%s\" med alla möjliga kodekar"
+
+#: lib/gaupol/gtk/delegate/fileopen.py:304
+msgid "Please try to open the file with a different character encoding."
+msgstr "Försök att öppna filen med en annan teckenkodning."
+
+#: lib/gaupol/gtk/delegate/fileopen.py:349
+#, python-format
+msgid "File \"%s\" is already open"
+msgstr "Filen \"%s\" är redan öppnad"
+
+#: lib/gaupol/gtk/delegate/fileopen.py:539
+msgid "Append File"
+msgstr "Lägg till fil"
+
+#: lib/gaupol/gtk/delegate/fileopen.py:539
+msgid "Append"
+msgstr "Lägg till"
+
+#: lib/gaupol/gtk/delegate/fileopen.py:570
+msgid "Appending file"
+msgstr "Lägger till fil"
+
+#: lib/gaupol/gtk/delegate/fileopen.py:575
+#, python-format
+msgid "Appended file starting from subtitle %d"
+msgstr "Lade till fil från och med undertexten %d"
+
+#: lib/gaupol/gtk/delegate/fileopen.py:594
+msgid "Created a new project"
+msgstr "Skapade ett nytt projekt"
+
+#: lib/gaupol/gtk/delegate/fileopen.py:619
+#: lib/gaupol/gtk/delegate/guiinit.py:119
+msgid "Open"
+msgstr "Öppna"
+
+#: lib/gaupol/gtk/delegate/fileopen.py:652
+msgid "Open Translation"
+msgstr "Öppna översättning"
+
+#: lib/gaupol/gtk/delegate/fileopen.py:668
+#, python-format
+msgid "Opened translation file \"%s\""
+msgstr "Öppnade översättningsfilen \"%s\""
+
+#: lib/gaupol/gtk/delegate/fileopen.py:710
+msgid "Splitting project"
+msgstr "Delar upp projekt"
+
+#: lib/gaupol/gtk/delegate/fileopen.py:729
+#, python-format
+msgid "Split %d subtitles to project \"%s\""
+msgstr "Dela upp %d undertexter till projektet \"%s\""
+
+#: lib/gaupol/gtk/delegate/fileopen.py:765
+#, python-format
+msgid "Opened main file \"%s\""
+msgstr "Öppnade huvudfilen \"%s\""
+
+#: lib/gaupol/gtk/delegate/fileclose.py:41
+msgid "_Close All"
+msgstr "_Stäng alla"
+
+#: lib/gaupol/gtk/delegate/fileclose.py:43
+msgid "Close all open projects"
+msgstr "Stäng alla öppnade projekt"
+
+#: lib/gaupol/gtk/delegate/fileclose.py:63
+msgid "_Close"
+msgstr "_Stäng"
+
+#: lib/gaupol/gtk/delegate/fileclose.py:65
+msgid "Close the current project"
+msgstr "Stäng det aktuella projektet"
+
+#: lib/gaupol/gtk/delegate/fileclose.py:85
+msgid "_Quit"
+msgstr "_Avsluta"
+
+#: lib/gaupol/gtk/delegate/fileclose.py:87
+msgid "Quit Gaupol"
+msgstr "Avsluta Gaupol"
+
+#: lib/gaupol/gtk/delegate/fileclose.py:107
+#, python-format
+msgid "Save changes to main document \"%s\" before closing?"
+msgstr "Spara ändringar i huvuddokumentet \"%s\" innan stängning?"
+
+#: lib/gaupol/gtk/delegate/fileclose.py:110
+#, python-format
+msgid "Save changes to translation document \"%s\" before closing?"
+msgstr "Spara ändringar i översättningsdokumentet \"%s\" innan stängning?"
+
+#: lib/gaupol/gtk/delegate/guiinit.py:100
+msgid "Length of lines in the main text of the selected subtitle"
+msgstr "Längd på rader i huvudtexten för den markerade undertexten"
+
+#: lib/gaupol/gtk/delegate/guiinit.py:104
+msgid "Length of lines in the translation text of the selected subtitle"
+msgstr "Längd på rader i översättningstexten för den markerade undertexten"
+
+#: lib/gaupol/gtk/delegate/guiinit.py:125
+msgid "Open a recently used main file"
+msgstr "Öppna en tidigare använd huvudfil"
+
+#: lib/gaupol/gtk/delegate/guiinit.py:131
+msgid "Undo"
+msgstr "Ångra"
+
+#: lib/gaupol/gtk/delegate/guiinit.py:135
+msgid "Undo the last action"
+msgstr "Ångra senaste åtgärden"
+
+#: lib/gaupol/gtk/delegate/guiinit.py:137
+msgid "Undo several actions"
+msgstr "Ångra flera åtgärder"
+
+#: lib/gaupol/gtk/delegate/guiinit.py:143
+msgid "Redo"
+msgstr "Gör om"
+
+#: lib/gaupol/gtk/delegate/guiinit.py:147
+#: lib/gaupol/gtk/delegate/action.py:41
+msgid "Redo the last undone action"
+msgstr "Gör om senaste ångrade åtgärden"
+
+#: lib/gaupol/gtk/delegate/guiinit.py:149
+msgid "Redo several undone actions"
+msgstr "Gör om flera ångrade åtgärder"
+
+#: lib/gaupol/gtk/delegate/guiinit.py:160
+msgid "_File"
+msgstr "_Arkiv"
+
+#: lib/gaupol/gtk/delegate/guiinit.py:161
+#: lib/gaupol/gtk/delegate/edit.py:152
+msgid "_Edit"
+msgstr "R_edigera"
+
+#: lib/gaupol/gtk/delegate/guiinit.py:162
+msgid "_View"
+msgstr "_Visa"
+
+#: lib/gaupol/gtk/delegate/guiinit.py:163
+msgid "F_ormat"
+msgstr "F_ormat"
+
+#: lib/gaupol/gtk/delegate/guiinit.py:164
+msgid "_Search"
+msgstr "_Sök"
+
+#: lib/gaupol/gtk/delegate/guiinit.py:165
+msgid "_Tools"
+msgstr "_Verktyg"
+
+#: lib/gaupol/gtk/delegate/guiinit.py:166
+msgid "_Projects"
+msgstr "_Projekt"
+
+#: lib/gaupol/gtk/delegate/guiinit.py:167
+msgid "_Help"
+msgstr "_Hjälp"
+
+#: lib/gaupol/gtk/delegate/guiinit.py:212
+msgid "Video file:"
+msgstr "Videofil:"
+
+#: lib/gaupol/gtk/delegate/guiinit.py:245
+msgid "Framerate:"
+msgstr "Bildhastighet:"
+
+#: lib/gaupol/gtk/delegate/view.py:60
+msgid "_Duration"
+msgstr "_Speltid"
+
+#: lib/gaupol/gtk/delegate/view.py:62
+msgid "Change the visibility of the \"Duration\" column"
+msgstr "Ändra synligheten för kolumnen \"Längd\""
+
+#: lib/gaupol/gtk/delegate/view.py:79
+msgid "T_imes"
+msgstr "T_ider"
+
+#: lib/gaupol/gtk/delegate/view.py:81
+msgid "Show positions as times"
+msgstr "Visa positioner som tider"
+
+#: lib/gaupol/gtk/delegate/view.py:86
+msgid "F_rames"
+msgstr "B_ildrutor"
+
+#: lib/gaupol/gtk/delegate/view.py:88
+msgid "Show positions as frames"
+msgstr "Visa positioner som bildrutor"
+
+#: lib/gaupol/gtk/delegate/view.py:115
+msgid "_Framerate"
+msgstr "_Bildhastighet"
+
+#: lib/gaupol/gtk/delegate/view.py:122
+msgid "2_3.976 fps"
+msgstr "2_3.976 bilder/s"
+
+#: lib/gaupol/gtk/delegate/view.py:124
+msgid "Calculate unnative units with framerate 23.976 fps"
+msgstr "Beräkna ej ursprungliga enheter med bildhastigheten 23,976 bilder/s"
+
+#: lib/gaupol/gtk/delegate/view.py:129
+msgid "2_5 fps"
+msgstr "2_5 bilder/s"
+
+#: lib/gaupol/gtk/delegate/view.py:131
+msgid "Calculate unnative units with framerate 25 fps"
+msgstr "Beräkna ej ursprungliga enheter med bildhastigheten 25 bilder/s"
+
+#: lib/gaupol/gtk/delegate/view.py:136
+msgid "2_9.97 fps"
+msgstr "2_9.97 bilder/s"
+
+#: lib/gaupol/gtk/delegate/view.py:138
+msgid "Calculate unnative units with framerate 29.97 fps"
+msgstr "Beräkna ej ursprungliga enheter med bildhastigheten 29,97 bilder/s"
+
+#: lib/gaupol/gtk/delegate/view.py:175
+msgid "_Hide"
+msgstr "_Dölj"
+
+#: lib/gaupol/gtk/delegate/view.py:177
+msgid "Change the visibility of the \"Hide\" column"
+msgstr "Ändra synligheten för kolumnen \"Dölj\""
+
+#: lib/gaupol/gtk/delegate/view.py:194
+msgid "_Main Text"
+msgstr "_Huvudtext"
+
+#: lib/gaupol/gtk/delegate/view.py:196
+msgid "Change the visibility of the \"Main Text\" column"
+msgstr "Ändra synligheten för kolumnen \"Huvudtext\""
+
+#: lib/gaupol/gtk/delegate/view.py:211
+msgid "_Main Toolbar"
+msgstr "_Huvudverktygsrad"
+
+#: lib/gaupol/gtk/delegate/view.py:213
+msgid "Toggle the visibility of the main toolbar"
+msgstr "Växla synligheten för huvudverktygsraden"
+
+#: lib/gaupol/gtk/delegate/view.py:242
+msgid "_No."
+msgstr "_Nr"
+
+#: lib/gaupol/gtk/delegate/view.py:244
+msgid "Change the visibility of the \"No.\" column"
+msgstr "Ändra synligheten för kolumnen \"Nr\""
+
+#: lib/gaupol/gtk/delegate/view.py:259
+msgid "_Output Window"
+msgstr "_Utdatafönster"
+
+#: lib/gaupol/gtk/delegate/view.py:261
+msgid "Toggle the visibility of the output window"
+msgstr "Växla synligheten för utdatafönstret"
+
+#: lib/gaupol/gtk/delegate/view.py:290
+msgid "_Show"
+msgstr "_Visa"
+
+#: lib/gaupol/gtk/delegate/view.py:292
+msgid "Change the visibility of the \"Show\" column"
+msgstr "Ändra synligheten för kolumnen \"Visa\""
+
+#: lib/gaupol/gtk/delegate/view.py:307
+msgid "_Statusbar"
+msgstr "_Statusrad"
+
+#: lib/gaupol/gtk/delegate/view.py:309
+msgid "Toggle the visibility of the statusbar"
+msgstr "Växla synligheten för statusraden"
+
+#: lib/gaupol/gtk/delegate/view.py:338
+msgid "_Translation Text"
+msgstr "_Översättningstext"
+
+#: lib/gaupol/gtk/delegate/view.py:340
+msgid "Change the visibility of the \"Translation Text\" column"
+msgstr "Ändra synligheten för kolumnen \"Översättningstext\""
+
+#: lib/gaupol/gtk/delegate/view.py:355
+msgid "_Video Toolbar"
+msgstr "_Videoverktygsrad"
+
+#: lib/gaupol/gtk/delegate/view.py:357
+msgid "Toggle the visibility of the video toolbar"
+msgstr "Växla synligheten för videoverktygsraden"
+
+#: lib/gaupol/gtk/delegate/view.py:381
+msgid "_Columns"
+msgstr "_Kolumner"
+
+#: lib/gaupol/gtk/delegate/action.py:39
+msgid "_Redo"
+msgstr "_Gör om"
+
+#: lib/gaupol/gtk/delegate/action.py:64
+msgid "_Undo"
+msgstr "_Ångra"
+
+#: lib/gaupol/gtk/delegate/action.py:66
+msgid "Undo the last done action"
+msgstr "Ångra den senaste åtgärden"
+
+#: lib/gaupol/gtk/delegate/preview.py:45
+msgid "_Preview"
+msgstr "_Förhandsvisa"
+
+#: lib/gaupol/gtk/delegate/preview.py:47
+msgid "Preview from selected position with a video player"
+msgstr "Förhandsvisa med en videospelare från markerad position"
+
+#: lib/gaupol/gtk/delegate/preview.py:89
+#, python-format
+msgid "Failed to save subtitle file to temporary directory \"%s\""
+msgstr "Misslyckades med att spara undertextfilen till temporärkatalogen \"%s\""
+
+#: lib/gaupol/gtk/delegate/preview.py:103
+#, python-format
+msgid "Failed to encode subtitle file to temporary directory \"%s\""
+msgstr "Misslyckades med att koda undertextfilen till temporärkatalogen \"%s\""
+
+#: lib/gaupol/gtk/delegate/preview.py:105
+msgid "Current data could not be encoded to a temporary subtitle file for preview with the current character encoding. Please first save the subtitle file with a different character encoding."
+msgstr "Aktuell data kunde inte kodas till en temporär undertextfil för förhandsvisning med den aktuella teckenkodningen. Spara först undertextfilen med en annan teckenkodning."
+
+#: lib/gaupol/gtk/delegate/find.py:38
+msgid "_Find..."
+msgstr "_Sök..."
+
+#: lib/gaupol/gtk/delegate/find.py:40
+msgid "Search for text"
+msgstr "Sök efter text"
+
+#: lib/gaupol/gtk/delegate/find.py:62
+msgid "Search forwards for same text"
+msgstr "Sök framåt efter samma text"
+
+#: lib/gaupol/gtk/delegate/find.py:86
+msgid "Search backwards for same text"
+msgstr "Sök bakåt efter samma text"
+
+#: lib/gaupol/gtk/delegate/find.py:108
+msgid "_Replace..."
+msgstr "_Ersätt..."
+
+#: lib/gaupol/gtk/delegate/find.py:110
+msgid "Search for and replace text"
+msgstr "Sök efter och ersätt text"
+
+#: lib/gaupol/gtk/delegate/appupdate.py:41
+msgid "_Next"
+msgstr "_Nästa"
+
+#: lib/gaupol/gtk/delegate/appupdate.py:43
+msgid "Activate the project in the next tab"
+msgstr "Aktivera projektet i nästa flik"
+
+#: lib/gaupol/gtk/delegate/appupdate.py:69
+msgid "_Previous"
+msgstr "_Föregående"
+
+#: lib/gaupol/gtk/delegate/appupdate.py:71
+msgid "Activate the project in the previous tab"
+msgstr "Aktivera projektet i föregående flik"
+
+#: lib/gaupol/gtk/delegate/appupdate.py:123
+#, python-format
+msgid "Undo %s"
+msgstr "Ångra %s"
+
+#: lib/gaupol/gtk/delegate/appupdate.py:129
+#, python-format
+msgid "Redo %s"
+msgstr "Gör om %s"
+
+#: lib/gaupol/gtk/delegate/edit.py:72
+msgid "Clear the selected texts"
+msgstr "Töm den markerade texten"
+
+#: lib/gaupol/gtk/delegate/edit.py:86
+msgid "_Copy"
+msgstr "_Kopiera"
+
+#: lib/gaupol/gtk/delegate/edit.py:88
+msgid "Copy the selected texts to the clipboard"
+msgstr "Kopiera den markerade texten till urklipp"
+
+#: lib/gaupol/gtk/delegate/edit.py:102
+msgid "Cu_t"
+msgstr "Klipp _ut"
+
+#: lib/gaupol/gtk/delegate/edit.py:104
+msgid "Cut the selected texts to the clipboard"
+msgstr "Klipp ut den markerade texten till urklipp"
+
+#: lib/gaupol/gtk/delegate/edit.py:118
+msgid "_Headers"
+msgstr "_Huvuden"
+
+#: lib/gaupol/gtk/delegate/edit.py:120
+msgid "Edit file headers"
+msgstr "Redigera filhuvuden"
+
+#: lib/gaupol/gtk/delegate/edit.py:154
+msgid "Edit the focused cell"
+msgstr "Redigera den fokuserade cellen"
+
+#: lib/gaupol/gtk/delegate/edit.py:183
+msgid "_Insert Subtitles..."
+msgstr "_Infoga undertext..."
+
+#: lib/gaupol/gtk/delegate/edit.py:185
+msgid "Insert blank subtitles"
+msgstr "Infoga tom undertext"
+
+#: lib/gaupol/gtk/delegate/edit.py:211
+msgid "In_vert Selection"
+msgstr "In_vertera markering"
+
+#: lib/gaupol/gtk/delegate/edit.py:213
+msgid "Invert the current selection"
+msgstr "Invertera den aktuella markeringen"
+
+#: lib/gaupol/gtk/delegate/edit.py:227
+msgid "_Merge Subtitles"
+msgstr "_Sammanfoga undertext"
+
+#: lib/gaupol/gtk/delegate/edit.py:229
+msgid "Merge the selected subtitles"
+msgstr "Sammanfoga den markerade undertexten"
+
+#: lib/gaupol/gtk/delegate/edit.py:256
+msgid "_Paste"
+msgstr "_Klistra in"
+
+#: lib/gaupol/gtk/delegate/edit.py:258
+msgid "Paste texts from the clipboard"
+msgstr "Klistra in text från urklipp"
+
+#: lib/gaupol/gtk/delegate/edit.py:284
+msgid "Rem_ove Subtitles"
+msgstr "Ta _bort undertext"
+
+#: lib/gaupol/gtk/delegate/edit.py:286
+msgid "Remove the selected subtitles"
+msgstr "Ta bort den markerade undertexten"
+
+#: lib/gaupol/gtk/delegate/edit.py:308
+msgid "Select _All"
+msgstr "Markera _allt"
+
+#: lib/gaupol/gtk/delegate/edit.py:310
+msgid "Select all subtitles"
+msgstr "Markera alla undertexter"
+
+#: lib/gaupol/gtk/delegate/edit.py:324
+msgid "_Split Subtitle"
+msgstr "_Dela upp undertext"
+
+#: lib/gaupol/gtk/delegate/edit.py:326
+msgid "Split the selected subtitle in two"
+msgstr "Dela upp den markerade undertexten i två delar"
+
+#: lib/gaupol/gtk/delegate/edit.py:505
+#, python-format
+msgid "Inserted %d subtitle to fit clipboard contents"
+msgid_plural "Inserted %d subtitles to fit clipboard contents"
+msgstr[0] "Infogade en undertext för att passa urklippets innehåll"
+msgstr[1] "Infogade %d undertexter för att passa urklippets innehåll"
+
+#: lib/gaupol/gtk/delegate/edit.py:587
+msgid "Use Alt+Arrow for moving to edit an adjacent cell"
+msgstr "Använd Alt+Arrow för att flytta till och redigera en angränsande cell"
+
+#: lib/gaupol/gtk/delegate/edit.py:589
+msgid "Use Shift+Return for line-break"
+msgstr "Använd Shift+Return för radbrytning"
+
+#: lib/gaupol/gtk/delegate/position.py:44
+msgid "Ad_just Durations..."
+msgstr "Just_era längder..."
+
+#: lib/gaupol/gtk/delegate/position.py:46
+msgid "Lengthen or shorten durations"
+msgstr "Förläng eller förkorta längder"
+
+#: lib/gaupol/gtk/delegate/position.py:66
+msgid "A_djust Positions..."
+msgstr "Jus_tera positioner..."
+
+#: lib/gaupol/gtk/delegate/position.py:68
+msgid "Adjust positions by linear two-point correction"
+msgstr "Justera positioner genom linjär tvåpunktskorrigering"
+
+#: lib/gaupol/gtk/delegate/position.py:88
+msgid "Con_vert Framerate..."
+msgstr "Kon_vertera bildhastighet..."
+
+#: lib/gaupol/gtk/delegate/position.py:90
+msgid "Convert framerate"
+msgstr "Konvertera bildhastighet"
+
+#: lib/gaupol/gtk/delegate/position.py:114
+msgid "S_hift Positions..."
+msgstr "Vä_xla positioner..."
+
+#: lib/gaupol/gtk/delegate/position.py:116
+msgid "Make subtitles appear earlier or later"
+msgstr "Gör att undertexter visas tidigare eller senare"
+
+#: lib/gaupol/gtk/delegate/position.py:185
+#, python-format
+msgid "Adjusted duration of %d subtitle"
+msgid_plural "Adjusted durations of %d subtitles"
+msgstr[0] "Justerar längden för en undertext"
+msgstr[1] "Justerar längden för %d undertexter"
+
+#: lib/gaupol/gtk/delegate/pref.py:38
+msgid "Pre_ferences"
+msgstr "Instä_llningar"
+
+#: lib/gaupol/gtk/delegate/pref.py:40
+msgid "Configure Gaupol"
+msgstr "Konfigurera Gaupol"
+
+#: lib/gaupol/gtk/dialog/pref.py:329
+msgid "Custom"
+msgstr "Anpassad"
+
+#: lib/gaupol/gtk/dialog/header.py:40
+msgid "Invalid header"
+msgstr "Ogiltigt filhuvud"
+
+#: lib/gaupol/gtk/dialog/header.py:41
+msgid "MPsub header must contain a FORMAT line with a value of \"TIME\", \"23.98\", \"25.00\" or \"29.97\"."
+msgstr "MPsub-huvud måste innehålla en FORMAT-rad med ett värde av \"TIME\", \"23.98\", \"25.00\" eller \"29.97\"."
+
+#. Translators: This is a special message that shouldn't be translated
+#. literally. It is used in the about dialog to give credits to the translators.
+#. Thus, you should translate it to your name and email address.  You can also
+#. include other translators who have contributed to this translation; in that
+#. case, please write them on separate lines seperated by newlines (\n).
+#: lib/gaupol/gtk/dialog/about.py:36
+msgid "translator-credits"
+msgstr "Daniel Nylander <po@danielnylander.se>"
+
+#: lib/gaupol/gtk/dialog/about.py:63
+msgid "Subtitle editor"
+msgstr "Undertextredigerare"
+
+#: lib/gaupol/gtk/dialog/spellcheck.py:86
+#, python-format
+msgid "Failed to load dictionary for language \"%s\""
+msgstr "Misslyckades med att läsa in ordbok för språket \"%s\""
+
+#: lib/gaupol/gtk/dialog/find.py:45
+#, python-format
+msgid "Pattern \"%s\" not found"
+msgstr "Mönstret \"%s\" hittades inte"
+
+#: lib/gaupol/gtk/dialog/find.py:58
+#, python-format
+msgid "Replaced %d occurences of \"%s\" with \"%s\""
+msgstr "Ersatte %d förekomster av \"%s\" med \"%s\""
+
+#: lib/gaupol/gtk/dialog/posshift.py:126
+msgid "frames"
+msgstr "bildrutor"
+
+#: lib/gaupol/gtk/dialog/posshift.py:158
+msgid "seconds"
+msgstr "sekunder"
+
+#: lib/gaupol/gtk/dialog/encoding.py:66
+#: lib/gaupol/gtk/dialog/encoding.py:123
+msgid "Description"
+msgstr "Beskrivning"
+
+#: lib/gaupol/gtk/dialog/encoding.py:67
+#: lib/gaupol/gtk/dialog/encoding.py:124
+msgid "Encoding"
+msgstr "Kodning"
+
+#: lib/gaupol/gtk/dialog/encoding.py:125
+msgid "Show In Menu"
+msgstr "Visa i meny"
+
+#: lib/gaupol/gtk/dialog/debug.py:55
+#, python-format
+msgid "Failed to open editor \"%s\""
+msgstr "Misslyckades med att öppna redigeraren \"%s\""
+
+#: lib/gaupol/gtk/dialog/debug.py:56
+#, python-format
+msgid "To change the editor, edit configuration file \"%s\" under section \"debug\"."
+msgstr "För att ändra redigeraren, redigera konfigurationsfilen \"%s\" under sektionen \"debug\"."
+
+#: lib/gaupol/gtk/dialog/posadjust.py:172
+#: lib/gaupol/gtk/dialog/posadjust.py:176
+msgid "Current frame:"
+msgstr "Aktuell bildruta:"
+
+#: lib/gaupol/gtk/dialog/posadjust.py:173
+msgid "C_orrect frame:"
+msgstr "K_orrekt bildruta:"
+
+#: lib/gaupol/gtk/dialog/posadjust.py:177
+msgid "Co_rrect frame:"
+msgstr "Ko_rrekt bildruta:"
+
+#: lib/gaupol/gtk/dialog/posadjust.py:248
+#: lib/gaupol/gtk/dialog/posadjust.py:252
+msgid "Current time:"
+msgstr "Aktuell tid:"
+
+#: lib/gaupol/gtk/dialog/posadjust.py:249
+msgid "C_orrect time:"
+msgstr "K_orrekt tid:"
+
+#: lib/gaupol/gtk/dialog/posadjust.py:253
+msgid "Co_rrect time:"
+msgstr "Ko_rrekt tid:"
+
+#: lib/gaupol/gtk/dialog/file.py:48
+#, python-format
+msgid "A file named \"%s\" already exists"
+msgstr "En fil med namnet \"%s\" finns redan"
+
+#: lib/gaupol/gtk/dialog/file.py:49
+msgid "Do you want to replace it with the one you are saving?"
+msgstr "Vill du ersätta den med den som du sparar?"
+
+#: lib/gaupol/gtk/dialog/file.py:130
+msgid "Other..."
+msgstr "Annat..."
+
+#: lib/gaupol/gtk/dialog/file.py:136
+#: lib/gaupol/gtk/dialog/file.py:496
+msgid "All files"
+msgstr "Alla filer"
+
+#: lib/gaupol/gtk/dialog/file.py:141
+msgid "Plain text files"
+msgstr "Vanliga textfiler"
+
+#. Translators: File filters, e.g. "SubRip (*.srt)".
+#. Translators: Long language name, e.g. "English (Canada)".
+#. Translators: Long encoding name, e.g. "Russian (KOI8-R)".
+#: lib/gaupol/gtk/dialog/file.py:148
+#: lib/gaupol/base/util/langlib.py:723
+#: lib/gaupol/base/util/enclib.py:217
+#, python-format
+msgid "%s (%s)"
+msgstr "%s (%s)"
+
+#: lib/gaupol/gtk/dialog/file.py:232
+#: lib/gaupol/gtk/dialog/file.py:348
+msgid "C_haracter encoding:"
+msgstr "T_eckenkodning:"
+
+#: lib/gaupol/gtk/dialog/file.py:242
+msgid "_Adapt to differences between main and translation documents"
+msgstr "_Adaptera skillnader mellan huvud- och översättningsdokument"
+
+#: lib/gaupol/gtk/dialog/file.py:261
+msgid "Auto-detected"
+msgstr "Detektera automatiskt"
+
+#: lib/gaupol/gtk/dialog/file.py:343
+msgid "Fo_rmat:"
+msgstr "Fo_rmat:"
+
+#: lib/gaupol/gtk/dialog/file.py:353
+msgid "Ne_wlines:"
+msgstr "Ny_rader:"
+
+#: lib/gaupol/gtk/dialog/file.py:483
+msgid "Select Video"
+msgstr "Välj video"
+
+#: lib/gaupol/gtk/dialog/file.py:501
+msgid "Video files"
+msgstr "Videofiler"
+
+#: lib/gaupol/base/cons.py:134
+msgid "23.976 fps"
+msgstr "23,976 bilder/s"
+
+#: lib/gaupol/base/cons.py:135
+msgid "25 fps"
+msgstr "25 bilder/s"
+
+#: lib/gaupol/base/cons.py:136
+msgid "29.97 fps"
+msgstr "29,97 bilder/s"
+
+#: lib/gaupol/base/delegate/format.py:73
+msgid "Changing case"
+msgstr "Ändrar skiftläge"
+
+#: lib/gaupol/base/delegate/format.py:120
+msgid "Toggling dialog lines"
+msgstr "Växlar dialograder"
+
+#: lib/gaupol/base/delegate/format.py:155
+msgid "Toggling italicization"
+msgstr "Växlar kursivering"
+
+#: lib/gaupol/base/delegate/find.py:206
+msgid "Replacing"
+msgstr "Ersätter"
+
+#: lib/gaupol/base/delegate/find.py:229
+msgid "Replacing all"
+msgstr "Ersätter alla"
+
+#: lib/gaupol/base/delegate/edit.py:125
+msgid "Clearing texts"
+msgstr "Rensar text"
+
+#: lib/gaupol/base/delegate/edit.py:144
+msgid "Cutting texts"
+msgstr "Klipper text"
+
+#: lib/gaupol/base/delegate/edit.py:223
+msgid "Inserting subtitles"
+msgstr "Infogar undertexter"
+
+#: lib/gaupol/base/delegate/edit.py:252
+msgid "Merging subtitles"
+msgstr "Sammanfogar undertexter"
+
+#: lib/gaupol/base/delegate/edit.py:296
+#: lib/gaupol/base/delegate/edit.py:297
+msgid "Pasting texts"
+msgstr "Klistrar in text"
+
+#: lib/gaupol/base/delegate/edit.py:318
+msgid "Removing subtitles"
+msgstr "Tar bort undertext"
+
+#: lib/gaupol/base/delegate/edit.py:343
+#: lib/gaupol/base/delegate/edit.py:385
+msgid "Replacing texts"
+msgstr "Ersätter text"
+
+#: lib/gaupol/base/delegate/edit.py:359
+msgid "Replacing positions"
+msgstr "Ersätter positioner"
+
+#: lib/gaupol/base/delegate/edit.py:440
+msgid "Editing frame"
+msgstr "Redigerar bildruta"
+
+#: lib/gaupol/base/delegate/edit.py:478
+msgid "Editing text"
+msgstr "Redigerar text"
+
+#: lib/gaupol/base/delegate/edit.py:524
+msgid "Editing time"
+msgstr "Redigerar tid"
+
+#: lib/gaupol/base/delegate/edit.py:557
+msgid "Splitting subtitle"
+msgstr "Delar upp undertext"
+
+#: lib/gaupol/base/delegate/position.py:108
+msgid "Adjusting durations"
+msgstr "Justerar längder"
+
+#: lib/gaupol/base/delegate/position.py:142
+msgid "Adjusting frames"
+msgstr "Justerar bildrutor"
+
+#: lib/gaupol/base/delegate/position.py:177
+msgid "Adjusting times"
+msgstr "Justerar tider"
+
+#: lib/gaupol/base/delegate/position.py:236
+msgid "Converting framerate"
+msgstr "Konverterar bildhastighet"
+
+#: lib/gaupol/base/delegate/position.py:248
+msgid "Setting framerate"
+msgstr "Ställer in bildhastighet"
+
+#: lib/gaupol/base/delegate/position.py:271
+msgid "Shifting frames"
+msgstr "Växlar bildrutor"
+
+#: lib/gaupol/base/delegate/position.py:291
+msgid "Shifting times"
+msgstr "Växlar tider"
+
+#. Translators: Most of the character encoding descriptions are copied from
+#. Gedit, which is translated to very many languages. Check the Gedit .po
+#. files for a reference: http://cvs.gnome.org/viewcvs/gedit/po/.
+#: lib/gaupol/base/util/enclib.py:51
+#: lib/gaupol/base/util/enclib.py:54
+#: lib/gaupol/base/util/enclib.py:56
+msgid "English"
+msgstr "Engelsk"
+
+#: lib/gaupol/base/util/enclib.py:52
+#: lib/gaupol/base/util/enclib.py:53
+#: lib/gaupol/base/util/enclib.py:77
+msgid "Chinese traditional"
+msgstr "Kinesisk (traditionell)"
+
+#: lib/gaupol/base/util/enclib.py:55
+#: lib/gaupol/base/util/enclib.py:63
+#: lib/gaupol/base/util/enclib.py:67
+#: lib/gaupol/base/util/enclib.py:86
+#: lib/gaupol/base/util/enclib.py:112
+msgid "Hebrew"
+msgstr "Hebreisk"
+
+#: lib/gaupol/base/util/enclib.py:57
+#: lib/gaupol/base/util/enclib.py:60
+#: lib/gaupol/base/util/enclib.py:80
+#: lib/gaupol/base/util/enclib.py:83
+#: lib/gaupol/base/util/enclib.py:105
+#: lib/gaupol/base/util/enclib.py:117
+#: lib/gaupol/base/util/enclib.py:125
+msgid "Western"
+msgstr "Västlig"
+
+#: lib/gaupol/base/util/enclib.py:58
+#: lib/gaupol/base/util/enclib.py:72
+#: lib/gaupol/base/util/enclib.py:74
+#: lib/gaupol/base/util/enclib.py:84
+#: lib/gaupol/base/util/enclib.py:111
+#: lib/gaupol/base/util/enclib.py:122
+msgid "Greek"
+msgstr "Grekisk"
+
+#: lib/gaupol/base/util/enclib.py:59
+#: lib/gaupol/base/util/enclib.py:88
+#: lib/gaupol/base/util/enclib.py:108
+#: lib/gaupol/base/util/enclib.py:115
+msgid "Baltic"
+msgstr "Baltisk"
+
+#: lib/gaupol/base/util/enclib.py:61
+#: lib/gaupol/base/util/enclib.py:81
+#: lib/gaupol/base/util/enclib.py:106
+#: lib/gaupol/base/util/enclib.py:124
+msgid "Central European"
+msgstr "Centraleuropeisk"
+
+#: lib/gaupol/base/util/enclib.py:62
+#: lib/gaupol/base/util/enclib.py:82
+#: lib/gaupol/base/util/enclib.py:109
+#: lib/gaupol/base/util/enclib.py:121
+msgid "Cyrillic"
+msgstr "Kyrillisk"
+
+#: lib/gaupol/base/util/enclib.py:64
+#: lib/gaupol/base/util/enclib.py:79
+#: lib/gaupol/base/util/enclib.py:85
+#: lib/gaupol/base/util/enclib.py:113
+#: lib/gaupol/base/util/enclib.py:126
+msgid "Turkish"
+msgstr "Turkisk"
+
+#: lib/gaupol/base/util/enclib.py:65
+msgid "Portugese"
+msgstr "Portugisisk"
+
+#: lib/gaupol/base/util/enclib.py:66
+#: lib/gaupol/base/util/enclib.py:123
+msgid "Icelandic"
+msgstr "Isländsk"
+
+#: lib/gaupol/base/util/enclib.py:68
+msgid "Canadian"
+msgstr "Kanadensisk"
+
+#: lib/gaupol/base/util/enclib.py:69
+#: lib/gaupol/base/util/enclib.py:87
+#: lib/gaupol/base/util/enclib.py:110
+msgid "Arabic"
+msgstr "Arabisk"
+
+#: lib/gaupol/base/util/enclib.py:70
+#: lib/gaupol/base/util/enclib.py:114
+msgid "Nordic"
+msgstr "Nordisk"
+
+#: lib/gaupol/base/util/enclib.py:71
+#: lib/gaupol/base/util/enclib.py:119
+msgid "Russian"
+msgstr "Rysk"
+
+#: lib/gaupol/base/util/enclib.py:73
+msgid "Thai"
+msgstr "Thai"
+
+#: lib/gaupol/base/util/enclib.py:75
+#: lib/gaupol/base/util/enclib.py:90
+#: lib/gaupol/base/util/enclib.py:91
+#: lib/gaupol/base/util/enclib.py:92
+#: lib/gaupol/base/util/enclib.py:98
+#: lib/gaupol/base/util/enclib.py:99
+#: lib/gaupol/base/util/enclib.py:100
+#: lib/gaupol/base/util/enclib.py:101
+#: lib/gaupol/base/util/enclib.py:102
+#: lib/gaupol/base/util/enclib.py:103
+#: lib/gaupol/base/util/enclib.py:128
+#: lib/gaupol/base/util/enclib.py:129
+#: lib/gaupol/base/util/enclib.py:130
+msgid "Japanese"
+msgstr "Japansk"
+
+#: lib/gaupol/base/util/enclib.py:76
+#: lib/gaupol/base/util/enclib.py:93
+#: lib/gaupol/base/util/enclib.py:104
+#: lib/gaupol/base/util/enclib.py:118
+msgid "Korean"
+msgstr "Koreansk"
+
+#: lib/gaupol/base/util/enclib.py:78
+msgid "Urdu"
+msgstr "Urdu"
+
+#: lib/gaupol/base/util/enclib.py:89
+msgid "Vietnamese"
+msgstr "Vietnamesisk"
+
+#: lib/gaupol/base/util/enclib.py:94
+#: lib/gaupol/base/util/enclib.py:97
+msgid "Chinese simplified"
+msgstr "Kinesisk (förenklad)"
+
+#: lib/gaupol/base/util/enclib.py:95
+#: lib/gaupol/base/util/enclib.py:96
+msgid "Chinese unified"
+msgstr "Kinesisk"
+
+#: lib/gaupol/base/util/enclib.py:107
+msgid "South European"
+msgstr "Sydeuropeisk"
+
+#: lib/gaupol/base/util/enclib.py:116
+msgid "Celtic"
+msgstr "Keltiska"
+
+#: lib/gaupol/base/util/enclib.py:120
+msgid "Ukrainian"
+msgstr "Ukrainsk"
+
+#: lib/gaupol/base/util/enclib.py:127
+msgid "Cyrillic Asian"
+msgstr "Kyrillisk-asiatisk"
+
+#: lib/gaupol/base/util/enclib.py:131
+#: lib/gaupol/base/util/enclib.py:132
+#: lib/gaupol/base/util/enclib.py:133
+#: lib/gaupol/base/util/enclib.py:134
+#: lib/gaupol/base/util/enclib.py:135
+msgid "Unicode"
+msgstr "Unicode"
+
+#: lib/gaupol/base/util/enclib.py:206
+#, python-format
+msgid "Current locale (%s)"
+msgstr "Aktuell lokal (%s)"
+

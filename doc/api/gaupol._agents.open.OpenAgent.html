@@ -1,0 +1,189 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>API docs for &ldquo;gaupol._agents.open.OpenAgent&rdquo;</title>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <link href="apidocs.css" type="text/css" rel="stylesheet" />
+    
+    
+  </head>
+  <body>
+    <h1 class="class">Class g._.o.OpenAgent(Delegate):</h1>
+    <p>
+      <span id="part">Part of <a href="gaupol.html">gaupol</a>.<a href="gaupol._agents.html">_agents</a>.<a href="gaupol._agents.open.html">open</a></span>
+      <a href="gaupol/_agents/open.py.html#L29">View Source</a>
+      <a href="classIndex.html#gaupol._agents.open.OpenAgent">View In Hierarchy</a>
+    </p>
+    <div>
+      
+    </div>
+    <div><pre class="literalblock">
+Opening subtitle files.
+
+Instance variables:
+
+    _sort_count: The amount of sort operations made
+</pre>
+<table class="fieldTable"></table></div>
+    
+    
+    <div id="splitTables">
+      <table class="children sortable" id="id87">
+  
+  
+  
+  
+  <tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol._agents.open.OpenAgent.html#__init__">__init__</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol._agents.open.OpenAgent.html#_adapt_translation">_adapt_translation</a></td>
+    <td><span><pre class="literalblock">
+Open translation file data in an adaptive manner.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol._agents.open.OpenAgent.html#_sort">_sort</a></td>
+    <td><span><pre class="literalblock">
+Sort data based on show positions.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol._agents.open.OpenAgent.html#open_main">open_main</a></td>
+    <td><span><pre class="literalblock">
+Open main file reading positions and texts.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol._agents.open.OpenAgent.html#open_translation">open_translation</a></td>
+    <td><span><pre class="literalblock">
+Open translation file reading texts.
+</pre>
+</span></td>
+  </tr>
+  
+</table>
+      
+      
+    </div>
+    
+    
+    
+    <div class="function">
+        <a name="gaupol._agents.open.OpenAgent.__init__"></a>
+        <a name="__init__"></a>
+        <div class="functionHeader">
+        def __init__(self, master):
+        <a href="gaupol/_agents/open.py.html#L40" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div class="undocumented">Undocumented</div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol._agents.open.OpenAgent._adapt_translation"></a>
+        <a name="_adapt_translation"></a>
+        <div class="functionHeader">
+        def _adapt_translation(self, shows, hides, texts):
+        <a href="gaupol/_agents/open.py.html#L46" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Open translation file data in an adaptive manner.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol._agents.open.OpenAgent._sort"></a>
+        <a name="_sort"></a>
+        <div class="functionHeader">
+        def _sort(self, shows, hides, texts):
+        <a href="gaupol/_agents/open.py.html#L68" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Sort data based on show positions.
+
+Return shows, hides, texts.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol._agents.open.OpenAgent.open_main"></a>
+        <a name="open_main"></a>
+        <div class="functionHeader">
+        def open_main(self, path, encoding):
+        <a href="gaupol/_agents/open.py.html#L87" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Open main file reading positions and texts.
+
+Raise IOError if reading fails.
+Raise UnicodeError if decoding fails.
+Raise FormatError if unable to detect the format.
+Return sort count.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol._agents.open.OpenAgent.open_translation"></a>
+        <a name="open_translation"></a>
+        <div class="functionHeader">
+        def open_translation(self, path, encoding, smart=True):
+        <a href="gaupol/_agents/open.py.html#L123" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Open translation file reading texts.
+
+Raise IOError if reading fails.
+Raise UnicodeError if decoding fails.
+Raise FileFormatError if unable to detect the format.
+Return sort count.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div>
+    
+    <address>
+      <a href="index.html">API Documentation</a> for <a href="http://home.gna.org/gaupol/">Gaupol</a>, generated by <a href="http://codespeak.net/~mwh/pydoctor/">pydoctor</a>.
+    </address>
+  </body>
+</html>

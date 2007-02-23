@@ -1,0 +1,196 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>API docs for &ldquo;gaupol.files.__init__.SubViewer2&rdquo;</title>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <link href="apidocs.css" type="text/css" rel="stylesheet" />
+    
+    
+  </head>
+  <body>
+    <h1 class="class">Class g.f._.SubViewer2(<a href="gaupol.files._subfile.SubtitleFile.html">SubtitleFile</a>):</h1>
+    <p>
+      <span id="part">Part of <a href="gaupol.html">gaupol</a>.<a href="gaupol.files.html">files</a></span>
+      <a href="gaupol/files/subviewer2.py.html#L30">View Source</a>
+      <a href="classIndex.html#gaupol.files.__init__.SubViewer2">View In Hierarchy</a>
+    </p>
+    <div>
+      
+    </div>
+    <div><pre class="literalblock">
+SubViewer 2.0 file.
+</pre>
+<table class="fieldTable"></table></div>
+    
+    
+    <div id="splitTables">
+      <table class="children sortable" id="id34">
+  
+  
+  
+  
+  <tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.files.__init__.SubViewer2.html#_read_components">_read_components</a></td>
+    <td><span><pre class="literalblock">
+Read and return shows, hides and texts.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.files.__init__.SubViewer2.html#_read_header">_read_header</a></td>
+    <td><span><pre class="literalblock">
+Read header and return leftover lines.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.files.__init__.SubViewer2.html#read">read</a></td>
+    <td><span><pre class="literalblock">
+Read file.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.files.__init__.SubViewer2.html#write">write</a></td>
+    <td><span><pre class="literalblock">
+Write file.
+</pre>
+</span></td>
+  </tr>
+  
+</table>
+      
+        <p>
+          Inherited from <a href="gaupol.files._subfile.SubtitleFile.html">SubtitleFile</a>:
+        </p>
+        <table class="children sortable" id="id35">
+  
+  
+  
+  
+  <tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.files._subfile.SubtitleFile.html#__init__">__init__</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.files._subfile.SubtitleFile.html#_read_lines">_read_lines</a></td>
+    <td><span><pre class="literalblock">
+Read file to a unicoded list of lines.
+</pre>
+</span></td>
+  </tr><tr class="basemethod">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.files._subfile.SubtitleFile.html#get_template_header">get_template_header</a></td>
+    <td><span><pre class="literalblock">
+Read and return the header from a template file.
+</pre>
+</span></td>
+  </tr>
+  
+</table>
+      
+      
+    </div>
+    
+    
+    
+    <div class="function">
+        <a name="gaupol.files.subviewer2.SubViewer2._read_components"></a>
+        <a name="_read_components"></a>
+        <div class="functionHeader">
+        def _read_components(self, lines):
+        <a href="gaupol/files/subviewer2.py.html#L39" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Read and return shows, hides and texts.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.files.subviewer2.SubViewer2._read_header"></a>
+        <a name="_read_header"></a>
+        <div class="functionHeader">
+        def _read_header(self, lines):
+        <a href="gaupol/files/subviewer2.py.html#L61" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Read header and return leftover lines.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.files.subviewer2.SubViewer2.read"></a>
+        <a name="read"></a>
+        <div class="functionHeader">
+        def read(self):
+        <a href="gaupol/files/subviewer2.py.html#L70" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          <div class="interfaceinfo">overrides <a href="gaupol.files._subfile.SubtitleFile.html#read">gaupol.files._subfile.SubtitleFile.read</a></div>
+          <div><pre class="literalblock">
+Read file.
+
+Raise IOError if reading fails.
+Raise UnicodeError if decoding fails.
+Return show times, hide times, texts.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.files.subviewer2.SubViewer2.write"></a>
+        <a name="write"></a>
+        <div class="functionHeader">
+        def write(self, shows, hides, texts):
+        <a href="gaupol/files/subviewer2.py.html#L81" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          <div class="interfaceinfo">overrides <a href="gaupol.files._subfile.SubtitleFile.html#write">gaupol.files._subfile.SubtitleFile.write</a></div>
+          <div><pre class="literalblock">
+Write file.
+
+Raise IOError if writing fails.
+Raise UnicodeError if encoding fails.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div>
+    
+    <address>
+      <a href="index.html">API Documentation</a> for <a href="http://home.gna.org/gaupol/">Gaupol</a>, generated by <a href="http://codespeak.net/~mwh/pydoctor/">pydoctor</a>.
+    </address>
+  </body>
+</html>

@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>gaupol.gtk._actions.file</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="code.css" />
+</head>
+<body>
+<pre>
+<a name="L1" class="line-number">   1 </a><span class="python-comment"># Copyright (C) 2005-2007 Osmo Salomaa</span>
+<a name="L2" class="line-number">   2 </a><span class="python-comment">#</span>
+<a name="L3" class="line-number">   3 </a><span class="python-comment"># This file is part of Gaupol.</span>
+<a name="L4" class="line-number">   4 </a><span class="python-comment">#</span>
+<a name="L5" class="line-number">   5 </a><span class="python-comment"># Gaupol is free software; you can redistribute it and/or modify it under the</span>
+<a name="L6" class="line-number">   6 </a><span class="python-comment"># terms of the GNU General Public License as published by the Free Software</span>
+<a name="L7" class="line-number">   7 </a><span class="python-comment"># Foundation; either version 2 of the License, or (at your option) any later</span>
+<a name="L8" class="line-number">   8 </a><span class="python-comment"># version.</span>
+<a name="L9" class="line-number">   9 </a><span class="python-comment">#</span>
+<a name="L10" class="line-number">  10 </a><span class="python-comment"># Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY</span>
+<a name="L11" class="line-number">  11 </a><span class="python-comment"># WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR</span>
+<a name="L12" class="line-number">  12 </a><span class="python-comment"># A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</span>
+<a name="L13" class="line-number">  13 </a><span class="python-comment">#</span>
+<a name="L14" class="line-number">  14 </a><span class="python-comment"># You should have received a copy of the GNU General Public License along with</span>
+<a name="L15" class="line-number">  15 </a><span class="python-comment"># Gaupol; if not, write to the Free Software Foundation, Inc., 51 Franklin</span>
+<a name="L16" class="line-number">  16 </a><span class="python-comment"># Street, Fifth Floor, Boston, MA 02110-1301, USA.</span>
+<a name="L17" class="line-number">  17 </a>
+<a name="L18" class="line-number">  18 </a>
+<a name="L19" class="line-number">  19 </a><span class="python-string">"""File menu UI manager actions."""</span>
+<a name="L20" class="line-number">  20 </a>
+<a name="L21" class="line-number">  21 </a>
+<a name="L22" class="line-number">  22 </a><span class="python-keyword">from</span> <span class="python-name">gettext</span> <span class="python-keyword">import</span> <span class="python-name">gettext</span> <span class="python-keyword">as</span> <span class="python-name">_</span>
+<a name="L23" class="line-number">  23 </a>
+<a name="L24" class="line-number">  24 </a><span class="python-keyword">import</span> <span class="python-name">gtk</span>
+<a name="L25" class="line-number">  25 </a>
+<a name="L26" class="line-number">  26 </a><span class="python-keyword">from</span> <span class="python-operator">.</span><span class="python-name">_action</span> <span class="python-keyword">import</span> <span class="python-name">UIMAction</span>
+<a name="L27" class="line-number">  27 </a>
+<a name="L28" class="line-number">  28 </a>
+<a name="L29" class="line-number">  29 </a><span class="python-keyword">class</span> <span class="python-name">CloseProjectAction</span><span class="python-operator">(</span><span class="python-name">UIMAction</span><span class="python-operator">)</span><span class="python-operator">:</span>
+<a name="L30" class="line-number">  30 </a>
+<a name="L31" class="line-number">  31 </a>    <span class="python-string">"""Close project."""</span>
+<a name="L32" class="line-number">  32 </a>
+<a name="L33" class="line-number">  33 </a>    <span class="python-name">action_item</span> <span class="python-operator">=</span> <span class="python-operator">(</span>
+<a name="L34" class="line-number">  34 </a>        <span class="python-string">"close_project"</span><span class="python-operator">,</span>
+<a name="L35" class="line-number">  35 </a>        <span class="python-name">gtk</span><span class="python-operator">.</span><span class="python-name">STOCK_CLOSE</span><span class="python-operator">,</span>
+<a name="L36" class="line-number">  36 </a>        <span class="python-name">_</span><span class="python-operator">(</span><span class="python-string">"_Close"</span><span class="python-operator">)</span><span class="python-operator">,</span>
+<a name="L37" class="line-number">  37 </a>        <span class="python-string">"&lt;control&gt;W"</span><span class="python-operator">,</span>
+<a name="L38" class="line-number">  38 </a>        <span class="python-name">_</span><span class="python-operator">(</span><span class="python-string">"Close the current project"</span><span class="python-operator">)</span><span class="python-operator">,</span><span class="python-operator">)</span>
+<a name="L39" class="line-number">  39 </a>
+<a name="L40" class="line-number">  40 </a>    <span class="python-name">paths</span> <span class="python-operator">=</span> <span class="python-operator">[</span><span class="python-string">"/ui/menubar/file/close"</span><span class="python-operator">]</span>
+<a name="L41" class="line-number">  41 </a>
+<a name="L42" class="line-number">  42 </a>    <span class="python-operator">@</span><span class="python-name">classmethod</span>
+<a name="L43" class="line-number">  43 </a>    <span class="python-keyword">def</span> <span class="python-name">is_doable</span><span class="python-operator">(</span><span class="python-name">cls</span><span class="python-operator">,</span> <span class="python-name">application</span><span class="python-operator">,</span> <span class="python-name">page</span><span class="python-operator">)</span><span class="python-operator">:</span>
+<a name="L44" class="line-number">  44 </a>        <span class="python-string">"""Return True if action can be done."""</span>
+<a name="L45" class="line-number">  45 </a>
+<a name="L46" class="line-number">  46 </a>        <span class="python-keyword">return</span> <span class="python-operator">(</span><span class="python-name">page</span> <span class="python-keyword">is</span> <span class="python-keyword">not</span> <span class="python-name">None</span><span class="python-operator">)</span>
+<a name="L47" class="line-number">  47 </a>
+<a name="L48" class="line-number">  48 </a>
+<a name="L49" class="line-number">  49 </a><span class="python-keyword">class</span> <span class="python-name">EditHeadersAction</span><span class="python-operator">(</span><span class="python-name">UIMAction</span><span class="python-operator">)</span><span class="python-operator">:</span>
+<a name="L50" class="line-number">  50 </a>
+<a name="L51" class="line-number">  51 </a>    <span class="python-string">"""Edit file headers."""</span>
+<a name="L52" class="line-number">  52 </a>
+<a name="L53" class="line-number">  53 </a>    <span class="python-name">action_item</span> <span class="python-operator">=</span> <span class="python-operator">(</span>
+<a name="L54" class="line-number">  54 </a>        <span class="python-string">"edit_headers"</span><span class="python-operator">,</span>
+<a name="L55" class="line-number">  55 </a>        <span class="python-name">gtk</span><span class="python-operator">.</span><span class="python-name">STOCK_PROPERTIES</span><span class="python-operator">,</span>
+<a name="L56" class="line-number">  56 </a>        <span class="python-name">_</span><span class="python-operator">(</span><span class="python-string">"_Headers"</span><span class="python-operator">)</span><span class="python-operator">,</span>
+<a name="L57" class="line-number">  57 </a>        <span class="python-string">"&lt;alt&gt;Return"</span><span class="python-operator">,</span>
+<a name="L58" class="line-number">  58 </a>        <span class="python-name">_</span><span class="python-operator">(</span><span class="python-string">"Edit file headers"</span><span class="python-operator">)</span><span class="python-operator">,</span><span class="python-operator">)</span>
+<a name="L59" class="line-number">  59 </a>
+<a name="L60" class="line-number">  60 </a>    <span class="python-name">paths</span> <span class="python-operator">=</span> <span class="python-operator">[</span><span class="python-string">"/ui/menubar/file/headers"</span><span class="python-operator">]</span>
+<a name="L61" class="line-number">  61 </a>
+<a name="L62" class="line-number">  62 </a>    <span class="python-operator">@</span><span class="python-name">classmethod</span>
+<a name="L63" class="line-number">  63 </a>    <span class="python-keyword">def</span> <span class="python-name">is_doable</span><span class="python-operator">(</span><span class="python-name">cls</span><span class="python-operator">,</span> <span class="python-name">application</span><span class="python-operator">,</span> <span class="python-name">page</span><span class="python-operator">)</span><span class="python-operator">:</span>
+<a name="L64" class="line-number">  64 </a>        <span class="python-string">"""Return True if action can be done."""</span>
+<a name="L65" class="line-number">  65 </a>
+<a name="L66" class="line-number">  66 </a>        <span class="python-keyword">if</span> <span class="python-name">page</span> <span class="python-keyword">is</span> <span class="python-name">None</span><span class="python-operator">:</span>
+<a name="L67" class="line-number">  67 </a>            <span class="python-keyword">return</span> <span class="python-name">False</span>
+<a name="L68" class="line-number">  68 </a>        <span class="python-name">main_file</span> <span class="python-operator">=</span> <span class="python-name">page</span><span class="python-operator">.</span><span class="python-name">project</span><span class="python-operator">.</span><span class="python-name">main_file</span>
+<a name="L69" class="line-number">  69 </a>        <span class="python-name">tran_file</span> <span class="python-operator">=</span> <span class="python-name">page</span><span class="python-operator">.</span><span class="python-name">project</span><span class="python-operator">.</span><span class="python-name">tran_file</span>
+<a name="L70" class="line-number">  70 </a>        <span class="python-keyword">if</span> <span class="python-name">main_file</span> <span class="python-keyword">is</span> <span class="python-keyword">not</span> <span class="python-name">None</span><span class="python-operator">:</span>
+<a name="L71" class="line-number">  71 </a>            <span class="python-keyword">if</span> <span class="python-name">main_file</span><span class="python-operator">.</span><span class="python-name">has_header</span><span class="python-operator">:</span>
+<a name="L72" class="line-number">  72 </a>                <span class="python-keyword">return</span> <span class="python-name">True</span>
+<a name="L73" class="line-number">  73 </a>        <span class="python-keyword">if</span> <span class="python-name">tran_file</span> <span class="python-keyword">is</span> <span class="python-keyword">not</span> <span class="python-name">None</span><span class="python-operator">:</span>
+<a name="L74" class="line-number">  74 </a>            <span class="python-keyword">if</span> <span class="python-name">tran_file</span><span class="python-operator">.</span><span class="python-name">has_header</span><span class="python-operator">:</span>
+<a name="L75" class="line-number">  75 </a>                <span class="python-keyword">return</span> <span class="python-name">True</span>
+<a name="L76" class="line-number">  76 </a>        <span class="python-keyword">return</span> <span class="python-name">False</span>
+<a name="L77" class="line-number">  77 </a>
+<a name="L78" class="line-number">  78 </a>
+<a name="L79" class="line-number">  79 </a><span class="python-keyword">class</span> <span class="python-name">NewProjectAction</span><span class="python-operator">(</span><span class="python-name">UIMAction</span><span class="python-operator">)</span><span class="python-operator">:</span>
+<a name="L80" class="line-number">  80 </a>
+<a name="L81" class="line-number">  81 </a>    <span class="python-string">"""Create a new project."""</span>
+<a name="L82" class="line-number">  82 </a>
+<a name="L83" class="line-number">  83 </a>    <span class="python-name">action_item</span> <span class="python-operator">=</span> <span class="python-operator">(</span>
+<a name="L84" class="line-number">  84 </a>        <span class="python-string">"new_project"</span><span class="python-operator">,</span>
+<a name="L85" class="line-number">  85 </a>        <span class="python-name">gtk</span><span class="python-operator">.</span><span class="python-name">STOCK_NEW</span><span class="python-operator">,</span>
+<a name="L86" class="line-number">  86 </a>        <span class="python-name">_</span><span class="python-operator">(</span><span class="python-string">"_New"</span><span class="python-operator">)</span><span class="python-operator">,</span>
+<a name="L87" class="line-number">  87 </a>        <span class="python-string">"&lt;control&gt;N"</span><span class="python-operator">,</span>
+<a name="L88" class="line-number">  88 </a>        <span class="python-name">_</span><span class="python-operator">(</span><span class="python-string">"Create a new project"</span><span class="python-operator">)</span><span class="python-operator">,</span><span class="python-operator">)</span>
+<a name="L89" class="line-number">  89 </a>
+<a name="L90" class="line-number">  90 </a>    <span class="python-name">paths</span> <span class="python-operator">=</span> <span class="python-operator">[</span><span class="python-string">"/ui/menubar/file/new"</span><span class="python-operator">]</span>
+<a name="L91" class="line-number">  91 </a>
+<a name="L92" class="line-number">  92 </a>
+<a name="L93" class="line-number">  93 </a><span class="python-keyword">class</span> <span class="python-name">OpenMainFileAction</span><span class="python-operator">(</span><span class="python-name">UIMAction</span><span class="python-operator">)</span><span class="python-operator">:</span>
+<a name="L94" class="line-number">  94 </a>
+<a name="L95" class="line-number">  95 </a>    <span class="python-string">"""Open main files."""</span>
+<a name="L96" class="line-number">  96 </a>
+<a name="L97" class="line-number">  97 </a>    <span class="python-name">action_item</span> <span class="python-operator">=</span> <span class="python-operator">(</span>
+<a name="L98" class="line-number">  98 </a>        <span class="python-string">"open_main_file"</span><span class="python-operator">,</span>
+<a name="L99" class="line-number">  99 </a>        <span class="python-name">gtk</span><span class="python-operator">.</span><span class="python-name">STOCK_OPEN</span><span class="python-operator">,</span>
+<a name="L100" class="line-number"> 100 </a>        <span class="python-name">_</span><span class="python-operator">(</span><span class="python-string">"_Open..."</span><span class="python-operator">)</span><span class="python-operator">,</span>
+<a name="L101" class="line-number"> 101 </a>        <span class="python-string">"&lt;control&gt;O"</span><span class="python-operator">,</span>
+<a name="L102" class="line-number"> 102 </a>        <span class="python-name">_</span><span class="python-operator">(</span><span class="python-string">"Open main files"</span><span class="python-operator">)</span><span class="python-operator">,</span><span class="python-operator">)</span>
+<a name="L103" class="line-number"> 103 </a>
+<a name="L104" class="line-number"> 104 </a>    <span class="python-name">paths</span> <span class="python-operator">=</span> <span class="python-operator">[</span><span class="python-string">"/ui/menubar/file/open_main"</span><span class="python-operator">]</span>
+<a name="L105" class="line-number"> 105 </a>    <span class="python-name">widgets</span> <span class="python-operator">=</span> <span class="python-operator">[</span><span class="python-string">"open_button"</span><span class="python-operator">]</span>
+<a name="L106" class="line-number"> 106 </a>
+<a name="L107" class="line-number"> 107 </a>
+<a name="L108" class="line-number"> 108 </a><span class="python-keyword">class</span> <span class="python-name">OpenTranslationFileAction</span><span class="python-operator">(</span><span class="python-name">UIMAction</span><span class="python-operator">)</span><span class="python-operator">:</span>
+<a name="L109" class="line-number"> 109 </a>
+<a name="L110" class="line-number"> 110 </a>    <span class="python-string">"""Open a translation file."""</span>
+<a name="L111" class="line-number"> 111 </a>
+<a name="L112" class="line-number"> 112 </a>    <span class="python-name">action_item</span> <span class="python-operator">=</span> <span class="python-operator">(</span>
+<a name="L113" class="line-number"> 113 </a>        <span class="python-string">"open_translation_file"</span><span class="python-operator">,</span>
+<a name="L114" class="line-number"> 114 </a>        <span class="python-name">None</span><span class="python-operator">,</span>
+<a name="L115" class="line-number"> 115 </a>        <span class="python-name">_</span><span class="python-operator">(</span><span class="python-string">"O_pen Translation..."</span><span class="python-operator">)</span><span class="python-operator">,</span>
+<a name="L116" class="line-number"> 116 </a>        <span class="python-name">None</span><span class="python-operator">,</span>
+<a name="L117" class="line-number"> 117 </a>        <span class="python-name">_</span><span class="python-operator">(</span><span class="python-string">"Open a translation file"</span><span class="python-operator">)</span><span class="python-operator">,</span><span class="python-operator">)</span>
+<a name="L118" class="line-number"> 118 </a>
+<a name="L119" class="line-number"> 119 </a>    <span class="python-name">paths</span> <span class="python-operator">=</span> <span class="python-operator">[</span><span class="python-string">"/ui/menubar/file/open_translation"</span><span class="python-operator">]</span>
+<a name="L120" class="line-number"> 120 </a>
+<a name="L121" class="line-number"> 121 </a>    <span class="python-operator">@</span><span class="python-name">classmethod</span>
+<a name="L122" class="line-number"> 122 </a>    <span class="python-keyword">def</span> <span class="python-name">is_doable</span><span class="python-operator">(</span><span class="python-name">cls</span><span class="python-operator">,</span> <span class="python-name">application</span><span class="python-operator">,</span> <span class="python-name">page</span><span class="python-operator">)</span><span class="python-operator">:</span>
+<a name="L123" class="line-number"> 123 </a>        <span class="python-string">"""Return True if action can be done."""</span>
+<a name="L124" class="line-number"> 124 </a>
+<a name="L125" class="line-number"> 125 </a>        <span class="python-keyword">if</span> <span class="python-name">page</span> <span class="python-keyword">is</span> <span class="python-keyword">not</span> <span class="python-name">None</span><span class="python-operator">:</span>
+<a name="L126" class="line-number"> 126 </a>            <span class="python-keyword">if</span> <span class="python-name">page</span><span class="python-operator">.</span><span class="python-name">project</span><span class="python-operator">.</span><span class="python-name">main_file</span> <span class="python-keyword">is</span> <span class="python-keyword">not</span> <span class="python-name">None</span><span class="python-operator">:</span>
+<a name="L127" class="line-number"> 127 </a>                <span class="python-keyword">return</span> <span class="python-name">True</span>
+<a name="L128" class="line-number"> 128 </a>        <span class="python-keyword">return</span> <span class="python-name">False</span>
+<a name="L129" class="line-number"> 129 </a>
+<a name="L130" class="line-number"> 130 </a>
+<a name="L131" class="line-number"> 131 </a><span class="python-keyword">class</span> <span class="python-name">QuitAction</span><span class="python-operator">(</span><span class="python-name">UIMAction</span><span class="python-operator">)</span><span class="python-operator">:</span>
+<a name="L132" class="line-number"> 132 </a>
+<a name="L133" class="line-number"> 133 </a>    <span class="python-string">"""Quit Gaupol."""</span>
+<a name="L134" class="line-number"> 134 </a>
+<a name="L135" class="line-number"> 135 </a>    <span class="python-name">action_item</span> <span class="python-operator">=</span> <span class="python-operator">(</span>
+<a name="L136" class="line-number"> 136 </a>        <span class="python-string">"quit"</span><span class="python-operator">,</span>
+<a name="L137" class="line-number"> 137 </a>        <span class="python-name">gtk</span><span class="python-operator">.</span><span class="python-name">STOCK_QUIT</span><span class="python-operator">,</span>
+<a name="L138" class="line-number"> 138 </a>        <span class="python-name">_</span><span class="python-operator">(</span><span class="python-string">"_Quit"</span><span class="python-operator">)</span><span class="python-operator">,</span>
+<a name="L139" class="line-number"> 139 </a>        <span class="python-string">"&lt;control&gt;Q"</span><span class="python-operator">,</span>
+<a name="L140" class="line-number"> 140 </a>        <span class="python-name">_</span><span class="python-operator">(</span><span class="python-string">"Quit Gaupol"</span><span class="python-operator">)</span><span class="python-operator">,</span><span class="python-operator">)</span>
+<a name="L141" class="line-number"> 141 </a>
+<a name="L142" class="line-number"> 142 </a>    <span class="python-name">paths</span> <span class="python-operator">=</span> <span class="python-operator">[</span><span class="python-string">"/ui/menubar/file/quit"</span><span class="python-operator">]</span>
+<a name="L143" class="line-number"> 143 </a>
+<a name="L144" class="line-number"> 144 </a>
+<a name="L145" class="line-number"> 145 </a><span class="python-keyword">class</span> <span class="python-name">SaveMainDocumentAction</span><span class="python-operator">(</span><span class="python-name">UIMAction</span><span class="python-operator">)</span><span class="python-operator">:</span>
+<a name="L146" class="line-number"> 146 </a>
+<a name="L147" class="line-number"> 147 </a>    <span class="python-string">"""Save the current main document."""</span>
+<a name="L148" class="line-number"> 148 </a>
+<a name="L149" class="line-number"> 149 </a>    <span class="python-name">action_item</span> <span class="python-operator">=</span> <span class="python-operator">(</span>
+<a name="L150" class="line-number"> 150 </a>        <span class="python-string">"save_main_document"</span><span class="python-operator">,</span>
+<a name="L151" class="line-number"> 151 </a>        <span class="python-name">gtk</span><span class="python-operator">.</span><span class="python-name">STOCK_SAVE</span><span class="python-operator">,</span>
+<a name="L152" class="line-number"> 152 </a>        <span class="python-name">_</span><span class="python-operator">(</span><span class="python-string">"_Save"</span><span class="python-operator">)</span><span class="python-operator">,</span>
+<a name="L153" class="line-number"> 153 </a>        <span class="python-string">"&lt;control&gt;S"</span><span class="python-operator">,</span>
+<a name="L154" class="line-number"> 154 </a>        <span class="python-name">_</span><span class="python-operator">(</span><span class="python-string">"Save the current main document"</span><span class="python-operator">)</span><span class="python-operator">,</span><span class="python-operator">)</span>
+<a name="L155" class="line-number"> 155 </a>
+<a name="L156" class="line-number"> 156 </a>    <span class="python-name">paths</span> <span class="python-operator">=</span> <span class="python-operator">[</span><span class="python-string">"/ui/menubar/file/save_main"</span><span class="python-operator">,</span> <span class="python-string">"/ui/main_toolbar/save_main"</span><span class="python-operator">]</span>
+<a name="L157" class="line-number"> 157 </a>
+<a name="L158" class="line-number"> 158 </a>    <span class="python-operator">@</span><span class="python-name">classmethod</span>
+<a name="L159" class="line-number"> 159 </a>    <span class="python-keyword">def</span> <span class="python-name">is_doable</span><span class="python-operator">(</span><span class="python-name">cls</span><span class="python-operator">,</span> <span class="python-name">application</span><span class="python-operator">,</span> <span class="python-name">page</span><span class="python-operator">)</span><span class="python-operator">:</span>
+<a name="L160" class="line-number"> 160 </a>        <span class="python-string">"""Return True if action can be done."""</span>
+<a name="L161" class="line-number"> 161 </a>
+<a name="L162" class="line-number"> 162 </a>        <span class="python-keyword">return</span> <span class="python-operator">(</span><span class="python-name">page</span> <span class="python-keyword">is</span> <span class="python-keyword">not</span> <span class="python-name">None</span><span class="python-operator">)</span>
+<a name="L163" class="line-number"> 163 </a>
+<a name="L164" class="line-number"> 164 </a>
+<a name="L165" class="line-number"> 165 </a><span class="python-keyword">class</span> <span class="python-name">SaveMainDocumentAsAction</span><span class="python-operator">(</span><span class="python-name">UIMAction</span><span class="python-operator">)</span><span class="python-operator">:</span>
+<a name="L166" class="line-number"> 166 </a>
+<a name="L167" class="line-number"> 167 </a>    <span class="python-string">"""Save the current main document with a different name."""</span>
+<a name="L168" class="line-number"> 168 </a>
+<a name="L169" class="line-number"> 169 </a>    <span class="python-name">action_item</span> <span class="python-operator">=</span> <span class="python-operator">(</span>
+<a name="L170" class="line-number"> 170 </a>        <span class="python-string">"save_main_document_as"</span><span class="python-operator">,</span>
+<a name="L171" class="line-number"> 171 </a>        <span class="python-name">gtk</span><span class="python-operator">.</span><span class="python-name">STOCK_SAVE_AS</span><span class="python-operator">,</span>
+<a name="L172" class="line-number"> 172 </a>        <span class="python-name">_</span><span class="python-operator">(</span><span class="python-string">"Save _As..."</span><span class="python-operator">)</span><span class="python-operator">,</span>
+<a name="L173" class="line-number"> 173 </a>        <span class="python-string">"&lt;shift&gt;&lt;control&gt;S"</span><span class="python-operator">,</span>
+<a name="L174" class="line-number"> 174 </a>        <span class="python-name">_</span><span class="python-operator">(</span><span class="python-string">"Save the current main document with a different name"</span><span class="python-operator">)</span><span class="python-operator">,</span><span class="python-operator">)</span>
+<a name="L175" class="line-number"> 175 </a>
+<a name="L176" class="line-number"> 176 </a>    <span class="python-name">paths</span> <span class="python-operator">=</span> <span class="python-operator">[</span><span class="python-string">"/ui/menubar/file/save_main_as"</span><span class="python-operator">]</span>
+<a name="L177" class="line-number"> 177 </a>
+<a name="L178" class="line-number"> 178 </a>    <span class="python-operator">@</span><span class="python-name">classmethod</span>
+<a name="L179" class="line-number"> 179 </a>    <span class="python-keyword">def</span> <span class="python-name">is_doable</span><span class="python-operator">(</span><span class="python-name">cls</span><span class="python-operator">,</span> <span class="python-name">application</span><span class="python-operator">,</span> <span class="python-name">page</span><span class="python-operator">)</span><span class="python-operator">:</span>
+<a name="L180" class="line-number"> 180 </a>        <span class="python-string">"""Return True if action can be done."""</span>
+<a name="L181" class="line-number"> 181 </a>
+<a name="L182" class="line-number"> 182 </a>        <span class="python-keyword">return</span> <span class="python-operator">(</span><span class="python-name">page</span> <span class="python-keyword">is</span> <span class="python-keyword">not</span> <span class="python-name">None</span><span class="python-operator">)</span>
+<a name="L183" class="line-number"> 183 </a>
+<a name="L184" class="line-number"> 184 </a>
+<a name="L185" class="line-number"> 185 </a><span class="python-keyword">class</span> <span class="python-name">SaveTranslationDocumentAction</span><span class="python-operator">(</span><span class="python-name">UIMAction</span><span class="python-operator">)</span><span class="python-operator">:</span>
+<a name="L186" class="line-number"> 186 </a>
+<a name="L187" class="line-number"> 187 </a>    <span class="python-string">"""Save the current translation document."""</span>
+<a name="L188" class="line-number"> 188 </a>
+<a name="L189" class="line-number"> 189 </a>    <span class="python-name">action_item</span> <span class="python-operator">=</span> <span class="python-operator">(</span>
+<a name="L190" class="line-number"> 190 </a>        <span class="python-string">"save_translation_document"</span><span class="python-operator">,</span>
+<a name="L191" class="line-number"> 191 </a>        <span class="python-name">None</span><span class="python-operator">,</span>
+<a name="L192" class="line-number"> 192 </a>        <span class="python-name">_</span><span class="python-operator">(</span><span class="python-string">"Sa_ve Translation"</span><span class="python-operator">)</span><span class="python-operator">,</span>
+<a name="L193" class="line-number"> 193 </a>        <span class="python-string">"&lt;control&gt;T"</span><span class="python-operator">,</span>
+<a name="L194" class="line-number"> 194 </a>        <span class="python-name">_</span><span class="python-operator">(</span><span class="python-string">"Save the current translation document"</span><span class="python-operator">)</span><span class="python-operator">,</span><span class="python-operator">)</span>
+<a name="L195" class="line-number"> 195 </a>
+<a name="L196" class="line-number"> 196 </a>    <span class="python-name">paths</span> <span class="python-operator">=</span> <span class="python-operator">[</span><span class="python-string">"/ui/menubar/file/save_translation"</span><span class="python-operator">]</span>
+<a name="L197" class="line-number"> 197 </a>
+<a name="L198" class="line-number"> 198 </a>    <span class="python-operator">@</span><span class="python-name">classmethod</span>
+<a name="L199" class="line-number"> 199 </a>    <span class="python-keyword">def</span> <span class="python-name">is_doable</span><span class="python-operator">(</span><span class="python-name">cls</span><span class="python-operator">,</span> <span class="python-name">application</span><span class="python-operator">,</span> <span class="python-name">page</span><span class="python-operator">)</span><span class="python-operator">:</span>
+<a name="L200" class="line-number"> 200 </a>        <span class="python-string">"""Return True if action can be done."""</span>
+<a name="L201" class="line-number"> 201 </a>
+<a name="L202" class="line-number"> 202 </a>        <span class="python-keyword">return</span> <span class="python-operator">(</span><span class="python-name">page</span> <span class="python-keyword">is</span> <span class="python-keyword">not</span> <span class="python-name">None</span><span class="python-operator">)</span>
+<a name="L203" class="line-number"> 203 </a>
+<a name="L204" class="line-number"> 204 </a>
+<a name="L205" class="line-number"> 205 </a><span class="python-keyword">class</span> <span class="python-name">SaveTranslationDocumentAsAction</span><span class="python-operator">(</span><span class="python-name">UIMAction</span><span class="python-operator">)</span><span class="python-operator">:</span>
+<a name="L206" class="line-number"> 206 </a>
+<a name="L207" class="line-number"> 207 </a>    <span class="python-string">"""Save the current translation document with a different name."""</span>
+<a name="L208" class="line-number"> 208 </a>
+<a name="L209" class="line-number"> 209 </a>    <span class="python-name">action_item</span> <span class="python-operator">=</span> <span class="python-operator">(</span>
+<a name="L210" class="line-number"> 210 </a>        <span class="python-string">"save_translation_document_as"</span><span class="python-operator">,</span>
+<a name="L211" class="line-number"> 211 </a>        <span class="python-name">None</span><span class="python-operator">,</span>
+<a name="L212" class="line-number"> 212 </a>        <span class="python-name">_</span><span class="python-operator">(</span><span class="python-string">"Save _Translation As..."</span><span class="python-operator">)</span><span class="python-operator">,</span>
+<a name="L213" class="line-number"> 213 </a>        <span class="python-string">"&lt;shift&gt;&lt;control&gt;T"</span><span class="python-operator">,</span>
+<a name="L214" class="line-number"> 214 </a>        <span class="python-name">_</span><span class="python-operator">(</span><span class="python-string">"Save the current translation document with a different name"</span><span class="python-operator">)</span><span class="python-operator">,</span><span class="python-operator">)</span>
+<a name="L215" class="line-number"> 215 </a>
+<a name="L216" class="line-number"> 216 </a>    <span class="python-name">paths</span> <span class="python-operator">=</span> <span class="python-operator">[</span><span class="python-string">"/ui/menubar/file/save_translation_as"</span><span class="python-operator">]</span>
+<a name="L217" class="line-number"> 217 </a>
+<a name="L218" class="line-number"> 218 </a>    <span class="python-operator">@</span><span class="python-name">classmethod</span>
+<a name="L219" class="line-number"> 219 </a>    <span class="python-keyword">def</span> <span class="python-name">is_doable</span><span class="python-operator">(</span><span class="python-name">cls</span><span class="python-operator">,</span> <span class="python-name">application</span><span class="python-operator">,</span> <span class="python-name">page</span><span class="python-operator">)</span><span class="python-operator">:</span>
+<a name="L220" class="line-number"> 220 </a>        <span class="python-string">"""Return True if action can be done."""</span>
+<a name="L221" class="line-number"> 221 </a>
+<a name="L222" class="line-number"> 222 </a>        <span class="python-keyword">return</span> <span class="python-operator">(</span><span class="python-name">page</span> <span class="python-keyword">is</span> <span class="python-keyword">not</span> <span class="python-name">None</span><span class="python-operator">)</span>
+<a name="L223" class="line-number"> 223 </a>
+<a name="L224" class="line-number"> 224 </a>
+<a name="L225" class="line-number"> 225 </a><span class="python-keyword">class</span> <span class="python-name">SelectVideoFileAction</span><span class="python-operator">(</span><span class="python-name">UIMAction</span><span class="python-operator">)</span><span class="python-operator">:</span>
+<a name="L226" class="line-number"> 226 </a>
+<a name="L227" class="line-number"> 227 </a>    <span class="python-string">"""Select a video file."""</span>
+<a name="L228" class="line-number"> 228 </a>
+<a name="L229" class="line-number"> 229 </a>    <span class="python-name">action_item</span> <span class="python-operator">=</span> <span class="python-operator">(</span>
+<a name="L230" class="line-number"> 230 </a>        <span class="python-string">"select_video_file"</span><span class="python-operator">,</span>
+<a name="L231" class="line-number"> 231 </a>        <span class="python-name">None</span><span class="python-operator">,</span>
+<a name="L232" class="line-number"> 232 </a>        <span class="python-name">_</span><span class="python-operator">(</span><span class="python-string">"Select _Video..."</span><span class="python-operator">)</span><span class="python-operator">,</span>
+<a name="L233" class="line-number"> 233 </a>        <span class="python-name">None</span><span class="python-operator">,</span>
+<a name="L234" class="line-number"> 234 </a>        <span class="python-name">_</span><span class="python-operator">(</span><span class="python-string">"Select a video file"</span><span class="python-operator">)</span><span class="python-operator">,</span><span class="python-operator">)</span>
+<a name="L235" class="line-number"> 235 </a>
+<a name="L236" class="line-number"> 236 </a>    <span class="python-name">paths</span> <span class="python-operator">=</span> <span class="python-operator">[</span><span class="python-string">"/ui/menubar/file/select_video"</span><span class="python-operator">]</span>
+<a name="L237" class="line-number"> 237 </a>    <span class="python-name">widgets</span> <span class="python-operator">=</span> <span class="python-operator">[</span><span class="python-string">"video_button"</span><span class="python-operator">]</span>
+<a name="L238" class="line-number"> 238 </a>
+<a name="L239" class="line-number"> 239 </a>    <span class="python-operator">@</span><span class="python-name">classmethod</span>
+<a name="L240" class="line-number"> 240 </a>    <span class="python-keyword">def</span> <span class="python-name">is_doable</span><span class="python-operator">(</span><span class="python-name">cls</span><span class="python-operator">,</span> <span class="python-name">application</span><span class="python-operator">,</span> <span class="python-name">page</span><span class="python-operator">)</span><span class="python-operator">:</span>
+<a name="L241" class="line-number"> 241 </a>        <span class="python-string">"""Return True if action can be done."""</span>
+<a name="L242" class="line-number"> 242 </a>
+<a name="L243" class="line-number"> 243 </a>        <span class="python-keyword">if</span> <span class="python-name">page</span> <span class="python-keyword">is</span> <span class="python-keyword">not</span> <span class="python-name">None</span><span class="python-operator">:</span>
+<a name="L244" class="line-number"> 244 </a>            <span class="python-keyword">if</span> <span class="python-name">page</span><span class="python-operator">.</span><span class="python-name">project</span><span class="python-operator">.</span><span class="python-name">main_file</span> <span class="python-keyword">is</span> <span class="python-keyword">not</span> <span class="python-name">None</span><span class="python-operator">:</span>
+<a name="L245" class="line-number"> 245 </a>                <span class="python-keyword">return</span> <span class="python-name">True</span>
+<a name="L246" class="line-number"> 246 </a>        <span class="python-keyword">return</span> <span class="python-name">False</span>
+<a name="L247" class="line-number"> 247 </a>
+<a name="L248" class="line-number"> 248 </a>
+<a name="L249" class="line-number"> 249 </a><span class="python-keyword">class</span> <span class="python-name">ShowRecentMainMenuAction</span><span class="python-operator">(</span><span class="python-name">UIMAction</span><span class="python-operator">)</span><span class="python-operator">:</span>
+<a name="L250" class="line-number"> 250 </a>
+<a name="L251" class="line-number"> 251 </a>    <span class="python-string">"""Show the recent main file menu."""</span>
+<a name="L252" class="line-number"> 252 </a>
+<a name="L253" class="line-number"> 253 </a>    <span class="python-name">menu_item</span> <span class="python-operator">=</span> <span class="python-operator">(</span>
+<a name="L254" class="line-number"> 254 </a>        <span class="python-string">"show_recent_main_menu"</span><span class="python-operator">,</span>
+<a name="L255" class="line-number"> 255 </a>        <span class="python-name">None</span><span class="python-operator">,</span>
+<a name="L256" class="line-number"> 256 </a>        <span class="python-name">_</span><span class="python-operator">(</span><span class="python-string">"Open _Recent"</span><span class="python-operator">)</span><span class="python-operator">,</span>
+<a name="L257" class="line-number"> 257 </a>        <span class="python-name">None</span><span class="python-operator">,</span>
+<a name="L258" class="line-number"> 258 </a>        <span class="python-name">None</span><span class="python-operator">,</span><span class="python-operator">)</span>
+<a name="L259" class="line-number"> 259 </a>
+<a name="L260" class="line-number"> 260 </a>    <span class="python-name">paths</span> <span class="python-operator">=</span> <span class="python-operator">[</span><span class="python-string">"/ui/menubar/file/recent_main"</span><span class="python-operator">]</span>
+<a name="L261" class="line-number"> 261 </a>
+<a name="L262" class="line-number"> 262 </a>
+<a name="L263" class="line-number"> 263 </a><span class="python-keyword">class</span> <span class="python-name">ShowRecentTranslationMenuAction</span><span class="python-operator">(</span><span class="python-name">UIMAction</span><span class="python-operator">)</span><span class="python-operator">:</span>
+<a name="L264" class="line-number"> 264 </a>
+<a name="L265" class="line-number"> 265 </a>    <span class="python-string">"""Show the recent translation file menu."""</span>
+<a name="L266" class="line-number"> 266 </a>
+<a name="L267" class="line-number"> 267 </a>    <span class="python-name">menu_item</span> <span class="python-operator">=</span> <span class="python-operator">(</span>
+<a name="L268" class="line-number"> 268 </a>        <span class="python-string">"show_recent_translation_menu"</span><span class="python-operator">,</span>
+<a name="L269" class="line-number"> 269 </a>        <span class="python-name">None</span><span class="python-operator">,</span>
+<a name="L270" class="line-number"> 270 </a>        <span class="python-name">_</span><span class="python-operator">(</span><span class="python-string">"Open R_ecent Translation"</span><span class="python-operator">)</span><span class="python-operator">,</span>
+<a name="L271" class="line-number"> 271 </a>        <span class="python-name">None</span><span class="python-operator">,</span>
+<a name="L272" class="line-number"> 272 </a>        <span class="python-name">None</span><span class="python-operator">,</span><span class="python-operator">)</span>
+<a name="L273" class="line-number"> 273 </a>
+<a name="L274" class="line-number"> 274 </a>    <span class="python-name">paths</span> <span class="python-operator">=</span> <span class="python-operator">[</span><span class="python-string">"/ui/menubar/file/recent_translation"</span><span class="python-operator">]</span>
+<a name="L275" class="line-number"> 275 </a>
+<a name="L276" class="line-number"> 276 </a>    <span class="python-operator">@</span><span class="python-name">classmethod</span>
+<a name="L277" class="line-number"> 277 </a>    <span class="python-keyword">def</span> <span class="python-name">is_doable</span><span class="python-operator">(</span><span class="python-name">cls</span><span class="python-operator">,</span> <span class="python-name">application</span><span class="python-operator">,</span> <span class="python-name">page</span><span class="python-operator">)</span><span class="python-operator">:</span>
+<a name="L278" class="line-number"> 278 </a>        <span class="python-string">"""Return True if action can be done."""</span>
+<a name="L279" class="line-number"> 279 </a>
+<a name="L280" class="line-number"> 280 </a>        <span class="python-keyword">if</span> <span class="python-name">page</span> <span class="python-keyword">is</span> <span class="python-keyword">not</span> <span class="python-name">None</span><span class="python-operator">:</span>
+<a name="L281" class="line-number"> 281 </a>            <span class="python-keyword">if</span> <span class="python-name">page</span><span class="python-operator">.</span><span class="python-name">project</span><span class="python-operator">.</span><span class="python-name">main_file</span> <span class="python-keyword">is</span> <span class="python-keyword">not</span> <span class="python-name">None</span><span class="python-operator">:</span>
+<a name="L282" class="line-number"> 282 </a>                <span class="python-keyword">return</span> <span class="python-name">True</span>
+<a name="L283" class="line-number"> 283 </a>        <span class="python-keyword">return</span> <span class="python-name">False</span><span class="python-text"></span>
+</pre>
+</body>
+</html>

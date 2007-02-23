@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Generate and view API documentation with PyDoctor.
+
+cd $(dirname "$0")/..
+DOCDIR=doc/api
+DATADIR=$(dirname "$0")/data
+PATHS=$(find gaupol -type f -name "*.py" | grep -v "/test/")
+rm -rf $DOCDIR
+
+for path in $PATHS; do
+    echo $DOCDIR/$path.html
+    dest=$DOCDIR/$path.html
+    mkdir --parents $(dirname $dest)
+    module=$(echo $path | sed "s|/|.|g" | sed "s|.py$||")
+    cat $DATADIR/header.html | sed "s|%title%|$module|" > $dest
+    $(dirname "$0")/py2html $path >> $dest
+    cat $DATADIR/footer.html >> $dest
+    cp -f $DATADIR/code.css $(dirname $dest)
+done
+
+pydoctor \
+    --make-html \
+    --add-package=gaupol \
+    --docformat=plaintext \
+    --html-output=$DOCDIR \
+    --html-viewsource-base=gaupol \
+    --project-name=Gaupol \
+    --project-url=http://home.gna.org/gaupol/ \
+    --resolve-aliases
+
+cp $DATADIR/apidocs.css $DOCDIR
+$BROWSER $DOCDIR/index.html &

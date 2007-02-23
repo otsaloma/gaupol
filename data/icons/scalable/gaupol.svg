@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="38.400000pt"
+   height="38.400000pt"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.44"
+   inkscape:export-xdpi="120"
+   inkscape:export-ydpi="120"
+   sodipodi:docname="gaupol.svg">
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient2860">
+      <stop
+         style="stop-color:black;stop-opacity:0.84313726;"
+         offset="0"
+         id="stop2862" />
+      <stop
+         style="stop-color:black;stop-opacity:0;"
+         offset="1"
+         id="stop2864" />
+    </linearGradient>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2860"
+       id="radialGradient2866"
+       cx="24"
+       cy="44.232143"
+       fx="24"
+       fy="44.232143"
+       r="24"
+       gradientTransform="matrix(1,0,0,0.134673,0,38.27528)"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="15.839192"
+     inkscape:cx="25.055249"
+     inkscape:cy="22.118869"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     inkscape:showpageshadow="false"
+     showgrid="true"
+     inkscape:grid-points="true"
+     inkscape:window-width="1270"
+     inkscape:window-height="907"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:grid-bbox="true"
+     inkscape:guide-points="true" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Gaupol</dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Osmo Salomaa</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/GPL/2.0/" />
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/GPL/2.0/">
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Reproduction" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Distribution" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/Notice" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/ShareAlike" />
+        <cc:requires
+           rdf:resource="http://web.resource.org/cc/SourceCode" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       sodipodi:type="arc"
+       style="fill:url(#radialGradient2866);fill-opacity:1.0;stroke:none;stroke-width:1.20000005;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path1971"
+       sodipodi:cx="24"
+       sodipodi:cy="44.232143"
+       sodipodi:rx="24"
+       sodipodi:ry="3.2321429"
+       d="M 48 44.232143 A 24 3.2321429 0 1 1  0,44.232143 A 24 3.2321429 0 1 1  48 44.232143 z"
+       transform="matrix(1,0,0,2.011045,0,-48.45286)" />
+    <path
+       style="opacity:1;color:#000000;fill:white;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.15806293;stroke-linecap:butt;stroke-linejoin:bevel;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:10;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible"
+       d="M 40,8 C 40,14 40,26 40,33 C 33,36 28,37.503801 9,43 C 7,24 6,16 5,8 C 15,8 30.588197,8 40,8 z "
+       id="path1401"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       style="opacity:1.0000000;color:#000000;fill:#222222;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.1580629;stroke-linecap:butt;stroke-linejoin:bevel;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:10.000000;stroke-dashoffset:0.0000000;stroke-opacity:1.0000000;visibility:visible;display:inline;overflow:visible"
+       d="M 46.000000,5.0000000 L 46.000000,43.000000 C 44.000000,43.000000 4.0000000,43.000000 2.0000000,43.000000 L 2.0000000,5.0000000 C 4.0000000,5.0000000 44.000000,5.0000000 46.000000,5.0000000 z M 24.000000,13.000000 C 10.000000,13.000000 10.000000,14.000000 10.000000,24.000000 C 10.000000,33.000000 11.558058,33.000000 11.558058,33.000000 C 9.0000000,43.000000 11.505076,32.947018 9.0000000,43.000000 C 24.000000,35.000000 9.0000000,43.000000 24.000000,35.000000 C 38.000142,35.000000 38.000000,34.000000 38.000000,24.000000 C 38.000000,14.000000 38.000000,13.000000 24.000000,13.000000 z "
+       id="path3599"
+       sodipodi:nodetypes="ccccccsccczz" />
+  </g>
+</svg>

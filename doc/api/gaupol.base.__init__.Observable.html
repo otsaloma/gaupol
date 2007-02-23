@@ -1,0 +1,386 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>API docs for &ldquo;gaupol.base.__init__.Observable&rdquo;</title>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <link href="apidocs.css" type="text/css" rel="stylesheet" />
+    
+    
+  </head>
+  <body>
+    <h1 class="class">Class g.b._.Observable(object):</h1>
+    <p>
+      <span id="part">Part of <a href="gaupol.html">gaupol</a>.<a href="gaupol.base.html">base</a></span>
+      <a href="gaupol/base/observable.py.html#L40">View Source</a>
+      <a href="classIndex.html#gaupol.base.__init__.Observable">View In Hierarchy</a>
+    </p>
+    <div>
+      
+    </div>
+    <div><pre class="literalblock">
+Base class for observable objects.
+
+Class variables:
+
+    _signals: List of emittable signals added automatically
+
+Instance variables:
+
+    _blocked_signals: List of blocked signals
+    _notify_frozen:   If True notify signals will be queued, not emitted
+    _notify_queue:    List of queued notify signals
+    _signal_handlers: Dictionary mapping signals to observers and data
+
+In addition to the signals defined in '_signals', all public instance
+variables will have a 'notify::name' signal generated automatically based
+on the name of the variable. 'notify::name' signals will be emitted
+whenever the value of the instance variable changes.
+
+Notify signals will be emitted for mutable variables as well, which means
+care should be taken not to emit thousands of signals when appending
+one-by-one to a large list. 'freeze_notify' and 'thaw_notify' methods as
+well as the 'notify_frozen' decorator will queue notify signals and emit
+only one of each once thawed.
+</pre>
+<table class="fieldTable"></table></div>
+    
+    
+    <div id="splitTables">
+      <table class="children sortable" id="id71">
+  
+  
+  
+  
+  <tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.base.__init__.Observable.html#__init__">__init__</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.base.__init__.Observable.html#__setattr__">__setattr__</a></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.base.__init__.Observable.html#_add_signal">_add_signal</a></td>
+    <td><span><pre class="literalblock">
+Add signal to the list of signals.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.base.__init__.Observable.html#_validate">_validate</a></td>
+    <td><span><pre class="literalblock">
+Return value or an observable version of mutable value.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.base.__init__.Observable.html#block">block</a></td>
+    <td><span><pre class="literalblock">
+Block all emissions of signal.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.base.__init__.Observable.html#connect">connect</a></td>
+    <td><span><pre class="literalblock">
+Register to receive notifications of signal.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.base.__init__.Observable.html#disconnect">disconnect</a></td>
+    <td><span><pre class="literalblock">
+Remove registration to receive notifications of signal.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.base.__init__.Observable.html#emit">emit</a></td>
+    <td><span><pre class="literalblock">
+Send notification of signal to all registered observers.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.base.__init__.Observable.html#freeze_notify">freeze_notify</a></td>
+    <td><span><pre class="literalblock">
+Queue notify signals instead of emitting them.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.base.__init__.Observable.html#notify">notify</a></td>
+    <td><span><pre class="literalblock">
+Emit notification signal for variable.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.base.__init__.Observable.html#thaw_notify">thaw_notify</a></td>
+    <td><span><pre class="literalblock">
+Emit all queued notify signals and queue no more.
+</pre>
+</span></td>
+  </tr><tr class="method">
+    
+    
+    <td>Method</td>
+    <td><a href="gaupol.base.__init__.Observable.html#unblock">unblock</a></td>
+    <td><span><pre class="literalblock">
+Unblock all emissions of signal.
+</pre>
+</span></td>
+  </tr>
+  
+</table>
+      
+      
+    </div>
+    
+    
+    
+    <div class="function">
+        <a name="gaupol.base.observable.Observable.__init__"></a>
+        <a name="__init__"></a>
+        <div class="functionHeader">
+        def __init__(self):
+        <a href="gaupol/base/observable.py.html#L78" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div class="undocumented">Undocumented</div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.base.observable.Observable.__setattr__"></a>
+        <a name="__setattr__"></a>
+        <div class="functionHeader">
+        def __setattr__(self, name, value):
+        <a href="gaupol/base/observable.py.html#L88" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div class="undocumented">Undocumented</div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.base.observable.Observable._add_signal"></a>
+        <a name="_add_signal"></a>
+        <div class="functionHeader">
+        def _add_signal(self, signal):
+        <a href="gaupol/base/observable.py.html#L101" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Add signal to the list of signals.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.base.observable.Observable._validate"></a>
+        <a name="_validate"></a>
+        <div class="functionHeader">
+        def _validate(self, name, value):
+        <a href="gaupol/base/observable.py.html#L108" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Return value or an observable version of mutable value.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.base.observable.Observable.block"></a>
+        <a name="block"></a>
+        <div class="functionHeader">
+        def block(self, signal):
+        <a href="gaupol/base/observable.py.html#L119" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Block all emissions of signal.
+
+Return False if already blocked, otherwise True.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.base.observable.Observable.connect"></a>
+        <a name="connect"></a>
+        <div class="functionHeader">
+        def connect(self, signal, method, *args):
+        <a href="gaupol/base/observable.py.html#L129" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Register to receive notifications of signal.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.base.observable.Observable.disconnect"></a>
+        <a name="disconnect"></a>
+        <div class="functionHeader">
+        def disconnect(self, signal, method):
+        <a href="gaupol/base/observable.py.html#L134" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Remove registration to receive notifications of signal.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.base.observable.Observable.emit"></a>
+        <a name="emit"></a>
+        <div class="functionHeader">
+        def emit(self, signal, *args):
+        <a href="gaupol/base/observable.py.html#L141" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Send notification of signal to all registered observers.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.base.observable.Observable.freeze_notify"></a>
+        <a name="freeze_notify"></a>
+        <div class="functionHeader">
+        def freeze_notify(self):
+        <a href="gaupol/base/observable.py.html#L158" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Queue notify signals instead of emitting them.
+
+Return False if already frozen, otherwise True.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.base.observable.Observable.notify"></a>
+        <a name="notify"></a>
+        <div class="functionHeader">
+        def notify(self, name):
+        <a href="gaupol/base/observable.py.html#L168" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Emit notification signal for variable.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.base.observable.Observable.thaw_notify"></a>
+        <a name="thaw_notify"></a>
+        <div class="functionHeader">
+        def thaw_notify(self, do=True):
+        <a href="gaupol/base/observable.py.html#L173" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Emit all queued notify signals and queue no more.
+
+The optional 'do' keyword argument should be the return value from
+'freeze_notify' to avoid problems with nested functions where
+notifications were frozen at a higher level. If 'do' is False, nothing
+will be done.
+Return False if already thawed, otherwise True.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div><div class="function">
+        <a name="gaupol.base.observable.Observable.unblock"></a>
+        <a name="unblock"></a>
+        <div class="functionHeader">
+        def unblock(self, signal, do=True):
+        <a href="gaupol/base/observable.py.html#L191" class="functionSourceLink">
+        
+        (source)
+      </a>
+      </div>
+        <div class="functionBody">
+          
+          <div><pre class="literalblock">
+Unblock all emissions of signal.
+
+The optional 'do' keyword argument should be the return value from
+'block' to avoid problems with nested functions where notifications
+were frozen at a higher level. If 'do' is False, nothing will be done.
+Return False if already unblocked, otherwise True.
+</pre>
+<table class="fieldTable"></table></div>
+        </div>
+      </div>
+    
+    <address>
+      <a href="index.html">API Documentation</a> for <a href="http://home.gna.org/gaupol/">Gaupol</a>, generated by <a href="http://codespeak.net/~mwh/pydoctor/">pydoctor</a>.
+    </address>
+  </body>
+</html>
