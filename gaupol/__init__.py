@@ -24,4 +24,4 @@ Module variables:
 """
 
 
-__version__ = "0.7.999.20070212"
+__version__ = "0.7.999"
