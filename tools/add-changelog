@@ -13,7 +13,7 @@ mv ChangeLog ChangeLog.old
 echo -e "$DATE  $NAME  <$EMAIL>\n" > ChangeLog
 for path in $PATHS; do
     echo "Adding $path..."
-    echo -e "\t* $path" >> ChangeLog
+    echo -e "\t* $path:" >> ChangeLog
 done
 echo >> ChangeLog
 cat ChangeLog.old >> ChangeLog

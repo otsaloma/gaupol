@@ -6,8 +6,8 @@ Gaupol 0.8
  * Search for "FIX", "TODO", etc.
  * Check that GUI updates work as intended
  * Test searching for unicode strings and regexes
+ * tools/py2html: line continuation backslashes
  * GNOME Bugzilla: http://live.gnome.org/Bugsquad/ForMaintainers
- * Forums --> gaupol-list
 
 Changes:
  [D] Configuration file backend and syntax changed
