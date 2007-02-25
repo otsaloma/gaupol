@@ -86,20 +86,22 @@ class Config(configobj.ConfigObj):
 
         validator = validate.Validator()
 
-        def check_constant(name, value):
-            index = validator.check("integer", value)
-            members = getattr(cons, name).members
+        def check_constant(section, value):
+            name = validator.check("string", value)
+            section = getattr(cons, section)
             try:
-                return members[index]
-            except IndexError:
+                index = section.names.index(name)
+                return section.members[index]
+            except ValueError:
                 raise validate.VdtValueError(value)
 
-        def check_constant_list(name, value):
-            lst = validator.check("int_list", value)
-            members = getattr(cons, name).members
+        def check_constant_list(section, value):
+            names = validator.check("string_list", value)
+            section = getattr(cons, section)
             try:
-                return list(members[x] for x in lst)
-            except IndexError:
+                indexes = list(section.names.index(x) for x in names)
+                return list(section.members[x] for x in indexes)
+            except ValueError:
                 raise validate.VdtValueError(value)
 
         for name in (x for x in dir(cons) if x.isupper()):

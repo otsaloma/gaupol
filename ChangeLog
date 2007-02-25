@@ -1,5 +1,12 @@
 2007-02-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/conf/wrappers.py:
+	* gaupol/base/cons.py:
+	* data/conf.spec:
+	Write constants in configuration file as strings instead of integers.
+
+2007-02-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/_agents/menu.py:
 	Add Alt+N accelerators for project menu items.
 

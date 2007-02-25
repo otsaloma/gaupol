@@ -25,9 +25,13 @@ class Member(int):
 
     def __new__(cls, value=0, name=""):
 
-        instance = int.__new__(cls, value)
-        instance.name = name
-        return instance
+        obj = int.__new__(cls, value)
+        obj.name = name
+        return obj
+
+    def __str__(self):
+
+        return self.name
 
 
 class Section(object):
