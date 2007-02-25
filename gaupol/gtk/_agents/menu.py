@@ -68,10 +68,10 @@ class MenuAgent(Delegate):
             if len(label) > 60:
                 label = label[:60] + "..."
             label = label.replace("_", "__")
-            if i < 9:
-                label = "_" + label
+            label = ("_%s" % label if i < 9 else label)
+            key = ("<alt>%d" % (i + 1) if i < 9 else None)
             tip = _('Activate "%s"') % basename
-            radio_actions.append((name, None, label, None, tip, i))
+            radio_actions.append((name, None, label, key, tip, i))
         return radio_actions
 
     def _get_project_ui_string(self):

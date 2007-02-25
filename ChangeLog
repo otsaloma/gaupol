@@ -1,3 +1,8 @@
+2007-02-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/_agents/menu.py:
+	Add Alt+N accelerators for project menu items.
+
 2007-02-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/glade/pref-dialog.glade:
