@@ -73,11 +73,6 @@ class ViewAgent(Delegate):
         action = self.uim.get_action("/ui/menubar/view/output_window")
         action.set_active(self.output_window.props.visible)
 
-    def on_show_columns_menu_activate(self, *args):
-        """Show the columns view menu."""
-
-        pass
-
     def on_show_framerate_23_976_activate(self, item, active_item):
         """Change the framerate with which unnative units are calculated."""
 
@@ -95,11 +90,6 @@ class ViewAgent(Delegate):
             rows = range(len(page.project.times))
             page.reload_view(rows, [SHOW, HIDE, DURN])
         util.set_cursor_normal(self.window)
-
-    def on_show_framerate_menu_activate(self, *args):
-        """Show the framerate view menu."""
-
-        pass
 
     @util.gc_collected
     def on_show_times_activate(self, item, active_item):

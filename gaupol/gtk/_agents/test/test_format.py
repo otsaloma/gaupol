@@ -29,10 +29,6 @@ class TestFormatAgent(TestCase):
         page.view.set_focus(0, MTXT)
         page.view.select_rows([0, 1, 2])
 
-    def test_on_show_case_menu_activate(self):
-
-        self.application.on_show_case_menu_activate()
-
     def test_on_toggle_dialogue_lines_activate(self):
 
         self.application.on_toggle_dialogue_lines_activate()

@@ -36,18 +36,10 @@ class TestViewAgent(TestCase):
 
         self.application.on_output_window_notify_visible()
 
-    def test_on_show_columns_menu_activate(self):
-
-        self.application.on_show_columns_menu_activate()
-
     def test_on_show_framerate_23_976_activate(self):
 
         for path in cons.FRAMERATE.uim_paths:
             self.application.uim.get_action(path).activate()
-
-    def test_on_show_framerate_menu_activate(self):
-
-        self.application.on_show_framerate_menu_activate()
 
     def test_on_show_times_activate(self):
 

@@ -39,11 +39,6 @@ class FormatAgent(Delegate):
         doc = page.text_column_to_document(col)
         page.project.change_case(rows, doc, method)
 
-    def on_show_case_menu_activate(self, *args):
-        """Show the case format menu."""
-
-        pass
-
     def on_toggle_dialogue_lines_activate(self, *args):
         """Toggle dialogue lines on the selected texts."""
 
