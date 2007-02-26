@@ -74,7 +74,7 @@ class AboutDialog(gtk.AboutDialog):
         self.set_copyright(u"Copyright \xa9 2005-2007 Osmo Salomaa")
         self.set_comments(_("Subtitle editor"))
         self.set_website(urls.HOMEPAGE)
-        self.set_website_label(urls.HOMEPAGE)
+        self.set_website_label(urls.HOMEPAGE.replace("http://", ""))
         self.set_authors(["Osmo Salomaa <otsaloma@cc.hut.fi>"])
         self.set_artists(["Osmo Salomaa <otsaloma@cc.hut.fi>"])
         self.set_translator_credits(_TRANSLATORS)
