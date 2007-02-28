@@ -30,15 +30,22 @@ class TimeCellRenderer(gtk.CellRendererText):
 
     __gtype_name__ = "TimeCellRenderer"
 
-    def _on_editor_editing_done(self, editor, *args):
-        """End editing."""
-
-        self.emit("edited", editor.get_text(), editor.get_data("path"))
-
     def _on_editor_focus_out_event(self, editor, *args):
         """End editing."""
 
-        editor.emit("editing-done")
+        editor.remove_widget()
+        self.emit("editing-canceled")
+
+    def _on_editor_key_press_event(self, editor, event):
+        """End editing if Enter pressed."""
+
+        if not event.state & (gtk.gdk.SHIFT_MASK | gtk.gdk.CONTROL_MASK):
+            if event.keyval in (gtk.keysyms.Return, gtk.keysyms.KP_Enter):
+                editor.remove_widget()
+                self.emit("edited", editor.get_data("path"), editor.get_text())
+            elif event.keyval == gtk.keysyms.Escape:
+                editor.remove_widget()
+                self.emit("editing-canceled")
 
     def do_start_editing(self, event, widget, path, bg_area, cell_area, flags):
         """Initialize and return the editor widget."""
@@ -50,7 +57,7 @@ class TimeCellRenderer(gtk.CellRendererText):
         editor.set_text(self.props.text)
         editor.select_region(0, -1)
         editor.set_data("path", path)
-        editor.connect("editing-done", self._on_editor_editing_done)
         editor.connect("focus-out-event", self._on_editor_focus_out_event)
+        editor.connect("key-press-event", self._on_editor_key_press_event)
         editor.show()
         return editor

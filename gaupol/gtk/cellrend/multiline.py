@@ -35,18 +35,7 @@ class _CellTextView(gtk.TextView, gtk.CellEditable):
 
         # pylint: disable-msg=W0231
         gtk.TextView.__init__(self, text_buffer)
-
         util.prepare_text_view(self)
-        util.connect(self, self, "key-press-event")
-
-    def _on_key_press_event(self, text_view, event):
-        """End editing if Enter pressed."""
-
-        if not event.state & (gtk.gdk.SHIFT_MASK | gtk.gdk.CONTROL_MASK):
-            keyname = gtk.gdk.keyval_name(event.keyval)
-            if event.keyval in (gtk.keysyms.Return, gtk.keysyms.KP_Enter):
-                self.emit("editing-done")
-                return True
 
     def do_editing_done(self, *args):
         """End editing."""
@@ -58,7 +47,7 @@ class _CellTextView(gtk.TextView, gtk.CellEditable):
 
         pass
 
-    def do_start_editing(self, event):
+    def do_start_editing(self, *args):
         """Start editing."""
 
         pass
@@ -102,6 +91,23 @@ class MultilineCellRenderer(gtk.CellRendererText):
 
         self._show_lengths = conf.editor.show_lengths_cell
 
+    def _on_editor_focus_out_event(self, editor, *args):
+        """End editing."""
+
+        editor.remove_widget()
+        self.emit("editing-canceled")
+
+    def _on_editor_key_press_event(self, editor, event):
+        """End editing if Enter pressed."""
+
+        if not event.state & (gtk.gdk.SHIFT_MASK | gtk.gdk.CONTROL_MASK):
+            if event.keyval in (gtk.keysyms.Return, gtk.keysyms.KP_Enter):
+                editor.remove_widget()
+                self.emit("edited", editor.get_data("path"), editor.get_text())
+            elif event.keyval == gtk.keysyms.Escape:
+                editor.remove_widget()
+                self.emit("editing-canceled")
+
     def _on_notify_text(self, *args):
         """Set markup by adding line lengths to text."""
 
@@ -114,16 +120,6 @@ class MultilineCellRenderer(gtk.CellRendererText):
                 lines[i] += " <small><sup>%d</sup></small>" % lengths[i]
             self.props.markup = "\n".join(lines)
 
-    def _on_editor_editing_done(self, editor, *args):
-        """End editing."""
-
-        self.emit("edited", editor.get_text(), editor.get_data("path"))
-
-    def _on_editor_focus_out_event(self, editor, *args):
-        """End editing."""
-
-        editor.emit("editing-done")
-
     def do_start_editing(self, event, widget, path, bg_area, cell_area, flags):
         """Initialize and return the editor widget."""
 
@@ -132,7 +128,7 @@ class MultilineCellRenderer(gtk.CellRendererText):
         editor.set_size_request(cell_area.width, cell_area.height)
         editor.set_border_width(min(self.props.xpad, self.props.ypad))
         editor.set_data("path", path)
-        editor.connect("editing-done", self._on_editor_editing_done)
         editor.connect("focus-out-event", self._on_editor_focus_out_event)
+        editor.connect("key-press-event", self._on_editor_key_press_event)
         editor.show()
         return editor

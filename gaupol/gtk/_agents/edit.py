@@ -50,20 +50,20 @@ class EditAgent(Delegate):
     def _get_next_cell(self, page, row, col, keyname):
         """Get adjacent cell to move to with Alt+Arrow."""
 
-        if keyname == 'Up':
+        if keyname == "Up":
             return max(0, row - 1), col
-        if keyname == 'Down':
+        if keyname == "Down":
             max_row = len(page.project.times) - 1
             return min(max_row, row + 1), col
 
         def get_visible(col):
             return page.view.get_column(col).get_visible()
         visible_cols = list(x for x in range(1, 6) if get_visible(x))
-        if keyname == 'Left':
+        if keyname == "Left":
             cols = list(x for x in visible_cols if x < col)
             col = (max(cols) if cols else col)
             return row, col
-        if keyname == 'Right':
+        if keyname == "Right":
             cols = list(x for x in visible_cols if x > col)
             col = (min(cols) if cols else col)
             return row, col
@@ -78,13 +78,13 @@ class EditAgent(Delegate):
             event.hardware_keycode, event.state, event.group)
         keyname = gtk.gdk.keyval_name(keyval)
         assert event.state & ~consumed & gtk.gdk.MOD1_MASK
-        assert keyname in ('Up', 'Down', 'Left', 'Right')
+        assert keyname in ("Up", "Down", "Left", "Right")
         if col == SHOW:
             # FIX: SEGFAULT.
             assert not page.project.needs_resort(row, editor.get_text())
         row, col = self._get_next_cell(page, row, col, keyname)
         column = page.view.get_column(col)
-        editor.emit('editing-done')
+        editor.emit("editing-done")
         while gtk.events_pending():
             gtk.main_iteration()
         page.view.set_cursor(row, column, True)
@@ -100,8 +100,8 @@ class EditAgent(Delegate):
 
         for group in self.uim.get_action_groups():
             group.set_sensitive(sensitive)
-        self.uim.get_widget('/ui/menubar').set_sensitive(sensitive)
-        self.uim.get_widget('/ui/main_toolbar').set_sensitive(sensitive)
+        self.uim.get_widget("/ui/menubar").set_sensitive(sensitive)
+        self.uim.get_widget("/ui/main_toolbar").set_sensitive(sensitive)
         self.video_toolbar.set_sensitive(sensitive)
 
     def _sync_clipboards(self, page):
@@ -273,10 +273,10 @@ class EditAgent(Delegate):
         self.undo()
 
     util.ignore_exceptions(AssertionError)
-    def on_view_renderer_edited(self, renderer, value, row, col):
+    def on_view_renderer_edited(self, renderer, path, value, col):
         """Finish editing cell."""
 
-        row = int(row)
+        row = int(path)
         self._set_sensitivities(True)
         self.push_message(None)
         page = self.get_current_page()
@@ -284,6 +284,7 @@ class EditAgent(Delegate):
             assert value
             if page.edit_mode == cons.MODE.FRAME:
                 assert value.isdigit()
+                value = int(value)
             new_row = page.project.set_position(row, col - 1, value)
             if new_row != row:
                 page.view.set_focus(new_row, col)
@@ -296,18 +297,18 @@ class EditAgent(Delegate):
         self._set_sensitivities(True)
         self.push_message(None)
 
-    def on_view_renderer_editing_started(self, renderer, editor, row, col):
+    def on_view_renderer_editing_started(self, renderer, editor, path, col):
         """Start editing cell."""
 
-        row = int(row)
+        row = int(path)
         self._set_sensitivities(False)
         page = self.get_current_page()
-        message = _('Use Alt+Arrow to move to edit an adjacent cell')
+        message = _("Use Alt+Arrow to move to edit an adjacent cell")
         if col in (MTXT, TTXT):
-            message = _('Use Shift+Return for line-break')
+            message = _("Use Shift+Return for line-break")
         self.push_message(message, False)
         method = self._on_editor_key_press_event
-        editor.connect('key-press-event', method, page, row, col)
+        editor.connect("key-press-event", method, page, row, col)
 
     def redo(self, count=1):
         """Redo actions."""

@@ -204,6 +204,8 @@ class Page(Observable):
         for row in sorted(rows):
             item = [row + 1] + positions[row] + [mains[row], trans[row]]
             store.insert(row, item)
+        # FIX: REMOVE WHEN THIS WORKS.
+        self.assert_store()
         self.view.set_focus(rows[0])
         self.view.select_rows(rows)
 
@@ -213,6 +215,8 @@ class Page(Observable):
         store = self.view.get_model()
         for row in reversed(sorted(rows)):
             store.remove(store.get_iter(row))
+        # FIX: REMOVE WHEN THIS WORKS.
+        self.assert_store()
         if self.project.times:
             row = min(rows[0], len(self.project.times) - 1)
             col = self.view.get_focus()[1]
