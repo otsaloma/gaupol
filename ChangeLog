@@ -1,3 +1,9 @@
+2007-02-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/_agents/edit.py:
+	* gaupol/gtk/_agents/open.py:
+	Add cell editing.
+
 2007-02-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/dialogs/about.py:

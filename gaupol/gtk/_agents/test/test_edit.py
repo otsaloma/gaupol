@@ -172,18 +172,6 @@ class TestEditAgent(TestCase):
         page.project.remove_subtitles([0])
         self.application.on_undo_button_clicked()
 
-    def test_on_view_renderer_edited(self):
-
-        pass
-
-    def test_on_view_renderer_editing_canceled(self):
-
-        pass
-
-    def test_on_view_renderer_editing_started(self):
-
-        pass
-
     def test_redo(self):
 
         page = self.application.get_current_page()

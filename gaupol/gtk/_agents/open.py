@@ -347,9 +347,9 @@ class OpenAgent(Delegate):
         for i, column in enumerate(view.get_columns()):
             renderer = column.get_cell_renderers()[0]
             method = self.on_view_renderer_edited
-            renderer.connect("edited", method)
+            renderer.connect("edited", method, i)
             method = self.on_view_renderer_editing_started
-            renderer.connect("editing-started", method)
+            renderer.connect("editing-started", method, i)
             method = self.on_view_renderer_editing_canceled
             renderer.connect("editing-canceled", method)
             button = util.get_parent(column.get_widget(), gtk.Button)

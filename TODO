@@ -4,7 +4,7 @@ Gaupol 0.8
  * Check PyEnchant 1.3.0 for API changes
 
  * Search for "FIX", "TODO", etc.
- * Check that GUI updates work as intended
+ * Examine Application.update_gui calls
  * Test searching for unicode strings and regexes
  * tools/py2html: line continuation backslashes
  * GNOME Bugzilla: http://live.gnome.org/Bugsquad/ForMaintainers
