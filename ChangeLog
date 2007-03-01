@@ -1,5 +1,11 @@
 2007-03-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* tools/data/pylintrc:
+	* tools/pylint:
+	Adjust to Pylint 0.13.
+
+2007-03-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/view.py:
 	Right-align number and frame cell contents.
 

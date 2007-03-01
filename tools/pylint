@@ -10,17 +10,9 @@ pylint --rcfile=$(dirname "$0")/data/pylintrc $@ \
     | egrep -v "No name '.+?' in module '.+?\.test\.?'" \
 \
     | egrep -v "Instance of 'Section' has no '.+?' member" \
-    | egrep -v "Instance of 'int' has no '.+?' member" \
+    | egrep -v "Instance of 'Member' has no '.+?' member" \
     | egrep -v "Module 'gaupol\.gtk\.\.?conf' has no '.+?' member" \
-    | egrep -v "Unused import AdvSubStationAlpha" \
-    | egrep -v "Unused import MPL2" \
-    | egrep -v "Unused import MPsub" \
-    | egrep -v "Unused import MicroDVD" \
-    | egrep -v "Unused import SubRip" \
-    | egrep -v "Unused import SubStationAlpha" \
-    | egrep -v "Unused import SubViewer2" \
-    | egrep -v "Unused import TMPlayer" \
-    | egrep -v "Unused import [A-Z]+" \
+    | egrep -v "Unused import (SHOW|HIDE|DURN)" \
 \
     | sed "s/\*\+ Module \(.*\)$/<\1>/" \
     | sed "s/>$/>\n</" \
