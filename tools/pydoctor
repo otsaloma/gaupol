@@ -1,6 +1,9 @@
 #!/bin/bash
 
-# Generate and view API documentation with PyDoctor.
+# Generate and view API documentation with pydoctor.
+# Requires hightlight and pydoctor.
+# http://www.andre-simon.de/
+# http://codespeak.net/~mwh/pydoctor/
 
 cd $(dirname "$0")/..
 DOCDIR=doc/api
@@ -12,10 +15,16 @@ for path in $PATHS; do
     echo $DOCDIR/$path.html
     dest=$DOCDIR/$path.html
     mkdir --parents $(dirname $dest)
-    module=$(echo $path | sed "s|/|.|g" | sed "s|.py$||")
-    cat $DATADIR/header.html | sed "s|%title%|$module|" > $dest
-    $(dirname "$0")/py2html $path >> $dest
-    cat $DATADIR/footer.html >> $dest
+    highlight \
+        --output=$dest \
+        --xhtml \
+        --style-outfile=code.css \
+        --line-number-width=4 \
+        --linenumbers \
+        --encoding=ascii \
+        --anchors \
+        $path
+    sed -i "s|^\(<a id=.\)l_|\1L|" $dest
     cp -f $DATADIR/code.css $(dirname $dest)
 done
 

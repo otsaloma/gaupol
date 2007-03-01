@@ -1,5 +1,14 @@
 2007-03-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* tools/data/code.css:
+	* tools/data/footer.html:
+	* tools/data/header.html:
+	* tools/py2html:
+	* tools/pydoctor:
+	Use highlight instead of py2html.
+
+2007-03-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* tools/data/pylintrc:
 	* tools/pylint:
 	Adjust to Pylint 0.13.
