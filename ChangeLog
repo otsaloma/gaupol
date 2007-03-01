@@ -1,5 +1,10 @@
 2007-03-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/view.py:
+	Set frame cells wide enough to fit the spin button editor.
+
+2007-03-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/_actions/__init__.py:
 	* gaupol/gtk/_agents/close.py:
 	* gaupol/gtk/_agents/help.py:

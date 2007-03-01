@@ -95,10 +95,16 @@ class View(gtk.TreeView):
 
             # Set the header label wide enough.
             label = gtk.Label(column.get_title())
+            label.props.xalign = 0
             column.set_widget(label)
             label.show()
             label.set_attributes(_ACTIVE_ATTR)
             width = label.size_request()[0]
+            if i in (SHOW, HIDE, DURN) and edit_mode == cons.MODE.FRAME:
+                spin = gtk.SpinButton()
+                digits = (0 if i == DURN else 5)
+                spin.set_digits(digits)
+                width = max(width, spin.size_request()[0])
             label.set_size_request(width, -1)
             label.set_attributes(_NORMAL_ATTR)
 
