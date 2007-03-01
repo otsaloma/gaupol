@@ -29,8 +29,7 @@ import gobject
 import gtk
 import pango
 
-from gaupol import util
-from gaupol.gtk import conf, cons
+from gaupol.gtk import conf, cons, util
 from gaupol.gtk.cellrend import *
 from gaupol.gtk.index import *
 

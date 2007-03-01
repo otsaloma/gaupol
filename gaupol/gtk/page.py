@@ -31,9 +31,9 @@ from gettext import gettext as _
 import gtk
 import pango
 
-from gaupol import enclib, util
+from gaupol import enclib
 from gaupol.base import Observable
-from gaupol.gtk import conf, cons
+from gaupol.gtk import conf, cons, util
 from gaupol.gtk.index import *
 from gaupol.project import Project
 from .view import View

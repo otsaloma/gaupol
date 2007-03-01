@@ -25,7 +25,7 @@ gaupol.project
 gaupol.__init__
 
 gaupol.gtk.unittest/
-gaupol.gtk.base/
+gaupol.gtk.runner
 gaupol.gtk.paths
 gaupol.gtk.errors
 gaupol.gtk.cons

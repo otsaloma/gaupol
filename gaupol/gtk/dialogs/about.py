@@ -31,8 +31,8 @@ from gettext import gettext as _
 
 import gtk
 
-from gaupol import urls, util, __version__
-from gaupol.gtk import paths
+from gaupol import urls, __version__
+from gaupol.gtk import paths, util
 
 
 _LOGO = os.path.join(paths.DATA_DIR, "icons", "logo.png")

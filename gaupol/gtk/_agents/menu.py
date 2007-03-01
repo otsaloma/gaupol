@@ -24,9 +24,8 @@ from gettext import gettext as _
 
 import gtk
 
-from gaupol import util
 from gaupol.base import Delegate
-from gaupol.gtk import conf, cons
+from gaupol.gtk import conf, cons, util
 
 
 class MenuAgent(Delegate):

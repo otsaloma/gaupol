@@ -31,7 +31,7 @@ import re
 import gobject
 import gtk
 
-from gaupol import util
+from gaupol.gtk import util
 
 
 _RE_DIGIT = re.compile(r"\d")

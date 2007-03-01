@@ -21,8 +21,7 @@
 
 import gtk
 
-from gaupol import util
-from gaupol.gtk import conf
+from gaupol.gtk import conf, util
 from .glade import GladeDialog
 
 

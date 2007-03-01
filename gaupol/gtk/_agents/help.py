@@ -19,8 +19,9 @@
 """Help and information."""
 
 
-from gaupol import urls, util
+from gaupol import urls
 from gaupol.base import Delegate
+from gaupol.gtk import util
 from gaupol.gtk.dialogs import AboutDialog
 
 
