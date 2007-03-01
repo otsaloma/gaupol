@@ -67,6 +67,14 @@ class TestEditAgent(TestCase):
         self.application.on_edit_headers_activate()
         self.application.on_edit_headers_activate()
 
+    def test_on_edit_next_value_activate(self):
+
+        page = self.application.get_current_page()
+        page.view.set_focus(0, SHOW)
+        self.application.on_edit_next_value_activate()
+        page.view.set_focus(0, MTXT)
+        self.application.on_edit_next_value_activate()
+
     def test_on_edit_preferences_activate(self):
 
         self.application.on_edit_preferences_activate()

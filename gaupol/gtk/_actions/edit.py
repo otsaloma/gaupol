@@ -113,6 +113,33 @@ class EditPreferencesAction(UIMAction):
     paths = ["/ui/menubar/edit/preferences"]
 
 
+class EditNextValueAction(UIMAction):
+
+    """Edit the focused cell of the next subtitle."""
+
+    action_item = (
+        "edit_next_value",
+        None,
+        _("Edit _Next"),
+        "space",
+        _("Edit the focused cell of the next subtitle"),)
+
+    paths = ["/ui/menubar/edit/edit_next"]
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return True if action can be done."""
+
+        if page is not None:
+            row, col = page.view.get_focus()
+            if None in (row, col):
+                return False
+            if row == len(page.project.times) - 1:
+                return False
+            return (col != NO)
+        return False
+
+
 class EditValueAction(UIMAction):
 
     """Edit the focused cell."""

@@ -27,11 +27,13 @@
       <menuitem name="undo" action="undo_action"/>
       <menuitem name="redo" action="redo_action"/>
       <separator/>
-      <menuitem name="edit" action="edit_value"/>
       <menuitem name="cut" action="cut_texts"/>
       <menuitem name="copy" action="copy_texts"/>
       <menuitem name="paste" action="paste_texts"/>
       <menuitem name="clear" action="clear_texts"/>
+      <separator/>
+      <menuitem name="edit" action="edit_value"/>
+      <menuitem name="edit_next" action="edit_next_value"/>
       <separator/>
       <menuitem name="split" action="split_subtitle"/>
       <menuitem name="merge" action="merge_subtitles"/>

@@ -1,5 +1,13 @@
 2007-03-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/ui.xml:
+	* gaupol/gtk/_actions/edit.py:
+	* gaupol/gtk/_agents/edit.py:
+	Remove Alt+Arrow keybindings and add "edit_next_value" UI manager
+	action bound to the space key.
+
+2007-03-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* tools/data/code.css:
 	* tools/data/footer.html:
 	* tools/data/header.html:

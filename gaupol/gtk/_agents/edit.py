@@ -22,8 +22,6 @@
 from gettext import gettext as _
 from gettext import ngettext
 
-import gtk
-
 from gaupol.base import Delegate
 from gaupol.gtk import cons, util
 from gaupol.gtk.dialogs import HeaderDialog, InsertDialog, PreferencesDialog
@@ -46,48 +44,6 @@ class EditAgent(Delegate):
         Delegate.__init__(self, master)
 
         self._pref_dialog = None
-
-    def _get_next_cell(self, page, row, col, keyname):
-        """Get adjacent cell to move to with Alt+Arrow."""
-
-        if keyname == "Up":
-            return max(0, row - 1), col
-        if keyname == "Down":
-            max_row = len(page.project.times) - 1
-            return min(max_row, row + 1), col
-
-        def get_visible(col):
-            return page.view.get_column(col).get_visible()
-        visible_cols = list(x for x in range(1, 6) if get_visible(x))
-        if keyname == "Left":
-            cols = list(x for x in visible_cols if x < col)
-            col = (max(cols) if cols else col)
-            return row, col
-        if keyname == "Right":
-            cols = list(x for x in visible_cols if x > col)
-            col = (min(cols) if cols else col)
-            return row, col
-
-    @util.ignore_exceptions(AssertionError)
-    def _on_editor_key_press_event(self, editor, event, page, row, col):
-        """End editing cell or move between adjacent cells."""
-
-        # pylint: disable-msg=W0612
-        keymap = gtk.gdk.keymap_get_default()
-        keyval, egroup, level, consumed = keymap.translate_keyboard_state(
-            event.hardware_keycode, event.state, event.group)
-        keyname = gtk.gdk.keyval_name(keyval)
-        assert event.state & ~consumed & gtk.gdk.MOD1_MASK
-        assert keyname in ("Up", "Down", "Left", "Right")
-        if col == SHOW:
-            # FIX: SEGFAULT.
-            assert not page.project.needs_resort(row, editor.get_text())
-        row, col = self._get_next_cell(page, row, col, keyname)
-        column = page.view.get_column(col)
-        editor.emit("editing-done")
-        while gtk.events_pending():
-            gtk.main_iteration()
-        page.view.set_cursor(row, column, True)
 
     def _on_pref_dialog_response(self, *args):
         """Destroy the preferences dialog."""
@@ -150,6 +106,13 @@ class EditAgent(Delegate):
         dialog = HeaderDialog(self.window, self)
         self.flash_dialog(dialog)
         self.update_gui()
+
+    def on_edit_next_value_activate(self, *args):
+        """Edit the focused cell of the next subtitle."""
+
+        view = self.get_current_page().view
+        path, column = view.get_cursor()
+        view.set_cursor((path[0] + 1,), column, True)
 
     def on_edit_preferences_activate(self, *args):
         """Configure Gaupol."""
@@ -300,15 +263,10 @@ class EditAgent(Delegate):
     def on_view_renderer_editing_started(self, renderer, editor, path, col):
         """Start editing cell."""
 
-        row = int(path)
         self._set_sensitivities(False)
-        page = self.get_current_page()
-        message = _("Use Alt+Arrow to move to edit an adjacent cell")
         if col in (MTXT, TTXT):
             message = _("Use Shift+Return for line-break")
-        self.push_message(message, False)
-        method = self._on_editor_key_press_event
-        editor.connect("key-press-event", method, page, row, col)
+            self.push_message(message, False)
 
     def redo(self, count=1):
         """Redo actions."""
