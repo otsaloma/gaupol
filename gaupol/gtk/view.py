@@ -65,6 +65,7 @@ class View(gtk.TreeView):
         if col == NO:
             renderer = gtk.CellRendererText()
             renderer.props.editable = False
+            renderer.props.xalign = 1
         elif col in (SHOW, HIDE, DURN):
             if edit_mode == cons.MODE.TIME:
                 renderer = TimeCellRenderer()
@@ -72,6 +73,7 @@ class View(gtk.TreeView):
                 renderer = gtk.CellRendererSpin()
                 adjustment = gtk.Adjustment(0, 0, 99999999, 1, 10)
                 renderer.props.adjustment = adjustment
+                renderer.props.xalign = 1
             renderer.props.editable = True
         elif col in (MTXT, TTXT):
             renderer = MultilineCellRenderer()

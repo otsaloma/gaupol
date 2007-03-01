@@ -1,6 +1,11 @@
 2007-03-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/view.py:
+	Right-align number and frame cell contents.
+
+2007-03-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/view.py:
 	Set frame cells wide enough to fit the spin button editor.
 
 2007-03-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
