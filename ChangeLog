@@ -1,5 +1,10 @@
 2007-03-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/enclib.py:
+	Updated URLs.
+
+2007-03-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* tools/pydoctor:
 	Browse not by default.
 

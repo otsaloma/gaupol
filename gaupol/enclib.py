@@ -29,7 +29,7 @@ Module variables:
 #
 # [1] http://docs.python.org/dev/lib/standard-encodings.html
 # [2] http://www.iana.org/assignments/character-sets
-# [3] http://cvs.gnome.org/viewcvs/*checkout*/gedit/gedit/gedit-encodings.c
+# [3] http://svn.gnome.org/viewcvs/gedit/trunk/gedit/gedit-encodings.c
 
 
 import codecs
@@ -47,7 +47,7 @@ except ImportError:
 _ENCODINGS = (
     # Translators: Most of the character encoding descriptions are copied from
     # Gedit, which is translated to very many languages. Check the Gedit .po
-    # files for a reference: http://cvs.gnome.org/viewcvs/gedit/po/.
+    # files for a reference: http://svn.gnome.org/viewcvs/gedit/trunk/po/.
     ("ascii"          , "US-ASCII"        , _("English")            ),
     ("big5"           , "Big5"            , _("Chinese traditional")),
     ("big5hkscs"      , "Big5-HKSCS"      , _("Chinese traditional")),
