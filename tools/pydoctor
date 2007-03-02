@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # Generate and view API documentation with pydoctor.
-# Requires hightlight and pydoctor.
+# Usage: pydoctor [browse]
+#
+# Requires highlight and pydoctor.
 # http://www.andre-simon.de/
 # http://codespeak.net/~mwh/pydoctor/
 
@@ -37,6 +39,8 @@ pydoctor \
     --project-name=Gaupol \
     --project-url=http://home.gna.org/gaupol/ \
     --resolve-aliases
-
 cp $DATADIR/apidocs.css $DOCDIR
-$BROWSER $DOCDIR/index.html &
+
+if [[ $1 == "browse" ]]; then
+    $BROWSER $DOCDIR/index.html &
+fi

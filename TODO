@@ -4,6 +4,7 @@ Gaupol 0.8
  * Check PyEnchant 1.3.0 for API changes
 
  * Search for "FIX", "TODO", etc.
+ * Edit menu: Split? Remove redundant "Subtitles" suffixes?
  * Examine Application.update_gui calls
  * Test searching for unicode strings and regexes
  * GNOME Bugzilla: http://live.gnome.org/Bugsquad/ForMaintainers

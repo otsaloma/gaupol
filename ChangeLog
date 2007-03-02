@@ -1,3 +1,8 @@
+2007-03-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* tools/pydoctor:
+	Browse not by default.
+
 2007-03-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/ui.xml:
