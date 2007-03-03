@@ -44,10 +44,9 @@ def _get_modules():
 
     from . import edit
     from . import file
-    from . import format
     from . import help
     from . import projects
-    from . import search
+    from . import text
     from . import tools
     from . import view
     return tuple(eval(x) for x in dir())

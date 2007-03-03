@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""."""
+"""Searching for and replacing text."""
 
 
 from gaupol.base import Delegate
@@ -24,8 +24,21 @@ from gaupol.base import Delegate
 
 class SearchAgent(Delegate):
 
-    """."""
+    """Searching for and replacing text."""
 
     # pylint: disable-msg=E0203,W0201
 
-    pass
+    def on_find_and_replace_activate(self, *args):
+        """Search for and replace text."""
+
+        pass
+
+    def on_find_next_activate(self, *args):
+        """Search forwards for same text."""
+
+        pass
+
+    def on_find_previous_activate(self, *args):
+        """Search backwards for same text."""
+
+        pass

@@ -108,7 +108,7 @@ class EditAgent(Delegate):
         self.update_gui()
 
     def on_edit_next_value_activate(self, *args):
-        """Edit the focused cell of the next subtitle."""
+        """Edit the focused column of the next subtitle."""
 
         view = self.get_current_page().view
         path, column = view.get_cursor()

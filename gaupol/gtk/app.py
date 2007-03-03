@@ -337,9 +337,8 @@ class Application(Observable, Runner):
             ("show_file_menu"    , None, _("_File")    ),
             ("show_edit_menu"    , None, _("_Edit")    ),
             ("show_view_menu"    , None, _("_View")    ),
-            ("show_format_menu"  , None, _("F_ormat")  ),
-            ("show_search_menu"  , None, _("_Search")  ),
-            ("show_tools_menu"   , None, _("_Tools")   ),
+            ("show_text_menu"    , None, _("_Text")    ),
+            ("show_tools_menu"   , None, _("T_ools")   ),
             ("show_projects_menu", None, _("_Projects")),
             ("show_help_menu"    , None, _("_Help")    ),]
         action_group.add_actions(menu_items)

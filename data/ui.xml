@@ -27,11 +27,6 @@
       <menuitem name="undo" action="undo_action"/>
       <menuitem name="redo" action="redo_action"/>
       <separator/>
-      <menuitem name="cut" action="cut_texts"/>
-      <menuitem name="copy" action="copy_texts"/>
-      <menuitem name="paste" action="paste_texts"/>
-      <menuitem name="clear" action="clear_texts"/>
-      <separator/>
       <menuitem name="edit" action="edit_value"/>
       <menuitem name="edit_next" action="edit_next_value"/>
       <separator/>
@@ -70,18 +65,24 @@
         <menuitem name="translation_text" action="toggle_translation_text_column"/>
       </menu>
     </menu>
-    <menu name="format" action="show_format_menu">
+    <menu name="text" action="show_text_menu">
+      <menuitem name="cut" action="cut_texts"/>
+      <menuitem name="copy" action="copy_texts"/>
+      <menuitem name="paste" action="paste_texts"/>
+      <menuitem name="clear" action="clear_texts"/>
+      <separator/>
+      <menuitem name="find_and_replace" action="find_and_replace"/>
+      <menuitem name="find_next" action="find_next"/>
+      <menuitem name="find_previous" action="find_previous"/>
+      <separator/>
       <menuitem name="dialogue" action="toggle_dialogue_lines"/>
       <menuitem name="italic" action="toggle_italicization"/>
-      <separator/>
       <menu name="case" action="show_case_menu">
         <menuitem name="title" action="use_title_case"/>
         <menuitem name="sentence" action="use_sentence_case"/>
         <menuitem name="upper" action="use_upper_case"/>
         <menuitem name="lower" action="use_lower_case"/>
       </menu>
-    </menu>
-    <menu name="search" action="show_search_menu">
     </menu>
     <menu name="tools" action="show_tools_menu">
       <menuitem name="append_file" action="append_file"/>

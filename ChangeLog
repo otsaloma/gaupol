@@ -1,3 +1,17 @@
+2007-03-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/ui.xml:
+	* gaupol/gtk/_actions/edit.py:
+	* gaupol/gtk/_actions/format.py:
+	* gaupol/gtk/_actions/__init__.py:
+	* gaupol/gtk/_actions/search.py:
+	* gaupol/gtk/_actions/text.py:
+	* gaupol/gtk/_agents/edit.py:
+	* gaupol/gtk/_agents/search.py:
+	* gaupol/gtk/app.py:
+	Add "Text" menu and move items from "Edit", "Format" and "Search"
+	menus there. Relabel some menu items.
+
 2007-03-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/enclib.py:
