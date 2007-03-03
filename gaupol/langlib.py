@@ -718,6 +718,6 @@ def get_long_name(locale):
     lang = get_language(locale)
     country = get_country(locale)
     if country is not None:
-        fields = {'language': lang, 'country': country}
+        fields = {"language": lang, "country": country}
         return _("%(language)s (%(country)s)") % fields
     return lang

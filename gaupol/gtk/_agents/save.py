@@ -115,7 +115,7 @@ class SaveAgent(Delegate):
         """Show an error dialog after failing to decode file."""
 
         codec = enclib.get_display_name(codec)
-        fields = {'filename': basename, 'codec': codec}
+        fields = {"filename": basename, "codec": codec}
         title = _('Failed to encode file "%(filename)s" '
             'with codec "%(codec)s"') % fields
         message = _("Please try to save the file with "

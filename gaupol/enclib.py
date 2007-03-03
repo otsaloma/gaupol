@@ -212,7 +212,7 @@ def get_long_name(python_name):
     """
     for seq in _ENCODINGS:
         if seq[0] == python_name:
-            fields = {'description': seq[2], 'encoding': seq[1]}
+            fields = {"description": seq[2], "encoding": seq[1]}
             return _("%(description)s (%(encoding)s)") % fields
     raise ValueError
 

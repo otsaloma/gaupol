@@ -383,7 +383,7 @@ class OpenAgent(Delegate):
         current.view.select_rows(rows)
         current.view.scroll_to_row(rows[0])
         basename = temp.get_main_basename()
-        fields = {'amount': len(rows), 'filename': basename}
+        fields = {"amount": len(rows), "filename": basename}
         self.push_message(
             _('Appended %(amount)d subtitles from "%(filename)s"') % fields)
         util.set_cursor_normal(self.window)

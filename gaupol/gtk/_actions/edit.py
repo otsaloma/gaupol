@@ -104,7 +104,10 @@ class InsertSubtitlesAction(UIMAction):
         "Insert",
         _("Insert blank subtitles"),)
 
-    paths = ["/ui/menubar/edit/insert", "/ui/view_popup/insert"]
+    paths = [
+        "/ui/menubar/edit/insert",
+        "/ui/main_toolbar/insert",
+        "/ui/view_popup/insert"]
 
     @classmethod
     def is_doable(cls, application, page):
@@ -198,7 +201,10 @@ class RemoveSubtitlesAction(UIMAction):
         "Delete",
         _("Remove the selected subtitles"),)
 
-    paths = ["/ui/menubar/edit/remove", "/ui/view_popup/remove"]
+    paths = [
+        "/ui/menubar/edit/remove",
+        "/ui/main_toolbar/remove",
+        "/ui/view_popup/remove"]
 
     @classmethod
     def is_doable(cls, application, page):

@@ -296,12 +296,13 @@ class Application(Observable, Runner):
         action = self.uim.get_action("/ui/menubar/projects")
         action.connect("activate", self.on_show_projects_menu_activate)
 
-        # FIX:
-        # Remove ellipses from toolitems.
-        #widget = self.uim.get_widget("/ui/main_toolbar/find")
-        #widget.set_label(_("Find"))
-        #widget = self.uim.get_widget("/ui/main_toolbar/replace")
-        #widget.set_label(_("Replace"))
+        # Shorten toolitems labels and remove ellipses.
+        widget = self.uim.get_widget("/ui/main_toolbar/insert")
+        widget.set_label(_("Insert"))
+        widget = self.uim.get_widget("/ui/main_toolbar/remove")
+        widget.set_label(_("Remove"))
+        widget = self.uim.get_widget("/ui/main_toolbar/find_and_replace")
+        widget.set_label(_("Find"))
 
     def _init_uim_actions(self, action_group):
         """Initialize the UI manager actions."""

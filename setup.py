@@ -117,7 +117,7 @@ class InstallLib(install_lib):
             parent = os.path.abspath(parent).replace(root, "")
         data_dir = os.path.join(parent, "share", "gaupol")
         locale_dir = os.path.join(parent, "share", "locale")
-        profile_dir = "os.path.join(os.path.expanduser('~'), '.gaupol')"
+        profile_dir = 'os.path.join(os.path.expanduser("~"), ".gaupol")'
 
         # Write gaupol.paths module.
         # pylint: disable-msg=E0602

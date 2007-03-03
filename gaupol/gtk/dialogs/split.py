@@ -120,7 +120,7 @@ class SplitDialog(GladeDialog):
         self._shift_destination(source, destination)
         self.application.add_new_page(destination)
         amount = len(destination.project.times)
-        fields = {'amount': amount, 'name': destination.untitle}
+        fields = {"amount": amount, "name": destination.untitle}
         self.application.push_message(
             _('Split %(amount)d subtitles to project "%(name)s"') % fields)
         util.set_cursor_normal(self.application.window)

@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Format menu UI manager actions."""
+"""Text menu UI manager actions."""
 
 
 from gettext import gettext as _
@@ -120,13 +120,15 @@ class FindAndReplaceAction(UIMAction):
     """Search for and replace text."""
 
     action_item = (
-        'find_and_replace',
+        "find_and_replace",
         gtk.STOCK_FIND_AND_REPLACE,
-        _('_Find And Replace...'),
-        '<control>F',
-        _('Search for and replace text'),)
+        _("_Find And Replace..."),
+        "<control>F",
+        _("Search for and replace text"),)
 
-    paths = ['/ui/menubar/text/find_and_replace']
+    paths = [
+        "/ui/menubar/text/find_and_replace",
+        "/ui/main_toolbar/find_and_replace"]
 
     @classmethod
     def is_doable(cls, application, page):
@@ -140,13 +142,13 @@ class FindNextAction(UIMAction):
     """Search forwards for same text."""
 
     action_item = (
-        'find_next',
+        "find_next",
         None,
-        _('Find _Next'),
-        '<control>G',
-        _('Search forwards for same text'),)
+        _("Find _Next"),
+        "<control>G",
+        _("Search forwards for same text"),)
 
-    paths = ['/ui/menubar/text/find_next']
+    paths = ["/ui/menubar/text/find_next"]
 
     @classmethod
     def is_doable(cls, application, page):
@@ -161,13 +163,13 @@ class FindPreviousAction(UIMAction):
     """Search backwards for same text."""
 
     action_item = (
-        'find_previous',
+        "find_previous",
         None,
-        _('Find _Previous'),
-        '<shift><control>G',
-        _('Search backwards for same text'),)
+        _("Find _Previous"),
+        "<shift><control>G",
+        _("Search backwards for same text"),)
 
-    paths = ['/ui/menubar/text/find_previous']
+    paths = ["/ui/menubar/text/find_previous"]
 
     @classmethod
     def is_doable(cls, application, page):

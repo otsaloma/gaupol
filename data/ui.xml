@@ -108,6 +108,11 @@
   </menubar>
   <toolbar name="main_toolbar">
     <toolitem name="save_main" action="save_main_document"/>
+    <separator/>
+    <toolitem name="insert" action="insert_subtitles"/>
+    <toolitem name="remove" action="remove_subtitles"/>
+    <separator/>
+    <toolitem name="find_and_replace" action="find_and_replace"/>
   </toolbar>
   <popup name="tab_popup">
     <menuitem name="move_tab_left" action="move_tab_left"/>

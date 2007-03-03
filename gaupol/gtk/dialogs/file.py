@@ -105,7 +105,7 @@ class _FileDialog(gtk.FileChooserDialog, Runner):
 
         for format in cons.FORMAT.members:
             pattern = "*" + format.extension
-            fields = {'format': format.display_name, 'extension': pattern}
+            fields = {"format": format.display_name, "extension": pattern}
             name = _("%(format)s (%(extension)s)") % fields
             file_filter = gtk.FileFilter()
             file_filter.set_name(name)
