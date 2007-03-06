@@ -85,6 +85,8 @@
       </menu>
     </menu>
     <menu name="tools" action="show_tools_menu">
+      <menuitem name="preview" action="preview"/>
+      <separator/>
       <menuitem name="append_file" action="append_file"/>
       <menuitem name="split_project" action="split_project"/>
     </menu>
@@ -113,6 +115,7 @@
     <toolitem name="remove" action="remove_subtitles"/>
     <separator/>
     <toolitem name="find_and_replace" action="find_and_replace"/>
+    <toolitem name="preview" action="preview"/>
   </toolbar>
   <popup name="tab_popup">
     <menuitem name="move_tab_left" action="move_tab_left"/>
@@ -128,6 +131,8 @@
     <separator/>
     <menuitem name="insert" action="insert_subtitles"/>
     <menuitem name="remove" action="remove_subtitles"/>
+    <separator/>
+    <menuitem name="preview" action="preview"/>
   </popup>
   <popup name="view_header_popup">
     <menuitem name="number" action="toggle_number_column"/>

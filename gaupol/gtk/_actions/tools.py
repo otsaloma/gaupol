@@ -21,6 +21,10 @@
 
 from gettext import gettext as _
 
+import gtk
+
+from gaupol.gtk import conf
+from gaupol.gtk.index import *
 from ._action import UIMAction
 
 
@@ -42,6 +46,38 @@ class AppendFileAction(UIMAction):
         """Return True if action can be done."""
 
         return (page is not None)
+
+
+class PreviewAction(UIMAction):
+
+    """Preview from selected position with a video player."""
+
+    action_item = (
+        "preview",
+        gtk.STOCK_MEDIA_PLAY,
+        _("_Preview"),
+        "P",
+        _("Preview from selected position with a video player"),)
+
+    paths = [
+        "/ui/menubar/tools/preview",
+        "/ui/main_toolbar/preview",
+        "/ui/view_popup/preview"]
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return True if action can be done."""
+
+        try:
+            assert page is not None
+            assert page.project.video_path is not None
+            if not conf.preview.use_predefined:
+                assert conf.preview.custom_command
+            if page.view.get_focus()[1] == TTXT:
+                return (page.project.tran_file is not None)
+            return (page.project.main_file is not None)
+        except AssertionError:
+            return False
 
 
 class SplitProjectAction(UIMAction):

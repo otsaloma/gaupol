@@ -112,7 +112,7 @@ class SaveAgent(Delegate):
         return props
 
     def _show_encoding_error_dialog(self, basename, codec):
-        """Show an error dialog after failing to decode file."""
+        """Show an error dialog after failing to encode file."""
 
         codec = enclib.get_display_name(codec)
         fields = {"filename": basename, "codec": codec}

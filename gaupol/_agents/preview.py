@@ -114,7 +114,8 @@ class PreviewAgent(Delegate):
 
         Raise IOError if writing to temporary file fails.
         Raise UnicodeError if encoding temporary file fails.
-        Return PID, command, path to output file, path to temporary file.
+        Return subprocess.POpen instance, command,
+        path to output file, path to temporary file.
         """
         sub_path = temp_path
         is_temp = temp_path is not None
@@ -133,4 +134,4 @@ class PreviewAgent(Delegate):
 
         process = util.start_process(
             command, stderr=subprocess.STDOUT, stdout=output_fd)
-        return process.pid, command, output_path, temp_path
+        return process, command, output_path, temp_path

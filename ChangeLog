@@ -1,5 +1,14 @@
 2007-03-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/ui.xml:
+	* gaupol/_agents/preview.py:
+	* gaupol/gtk/_actions/tools.py:
+	* gaupol/gtk/_agents/save.py:
+	* gaupol/gtk/_agents/tools.py:
+	Add preview.
+
+2007-03-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/gaupol.desktop.in:
 	Remove Application from Categories and Add Video.
 
