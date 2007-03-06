@@ -27,6 +27,8 @@ Changes:
  [D] Fixed a bug in the time entry validation
  [D] Migrated to gtk.RecentManager and gtk.RecentChooser
  [D] Added a menu for recent translation files
+ [D] Added "Text" menu to replace "Format", "Search" and part of
+     "Edit" menus
  [D] Reordrable tabs
  [D] Added more informative tooltips on tabs
  [D] Simplified and changed several keycombos
@@ -70,6 +72,7 @@ Unscheduled Possibilities
  * Document hidden settings (where?)
  * Multiple windows and tab drag-dropping between them
      - http://live.gnome.org/GTK+/ApplicationClass
+     - http://www.mail-archive.com/pygtk@daa.com.au/msg14080.html
  * Any use for lazy loading?
      - http://blogs.gnome.org/view/jamesh/2006/03/31/0
  * Windows installer

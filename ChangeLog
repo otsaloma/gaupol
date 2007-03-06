@@ -1,3 +1,10 @@
+2007-03-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* tools/add-changelog:
+	* tools/nose-run:
+	* tools/pydoctor:
+	Add proper quoting.
+
 2007-03-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/ui.xml:

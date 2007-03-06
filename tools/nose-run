@@ -3,4 +3,4 @@
 # Run interactive tests with nosetests.
 # Usage: See nosetests --help.
 
-nosetests --match="^(Test|run)" $@
+nosetests --match="^(Test|run)" "$@"

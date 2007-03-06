@@ -2,10 +2,10 @@
 
 # Generate and view API documentation with pydoctor.
 # Usage: pydoctor [browse]
+# Requires highlight [1] and pydoctor [2].
 #
-# Requires highlight and pydoctor.
-# http://www.andre-simon.de/
-# http://codespeak.net/~mwh/pydoctor/
+# [1] http://www.andre-simon.de/
+# [2] http://codespeak.net/~mwh/pydoctor/
 
 cd $(dirname "$0")/..
 DOCDIR=doc/api
