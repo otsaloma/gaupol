@@ -1,5 +1,10 @@
 2007-03-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/gaupol.desktop.in:
+	Remove Application from Categories and Add Video.
+
+2007-03-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* tools/add-changelog:
 	* tools/nose-run:
 	* tools/pydoctor:

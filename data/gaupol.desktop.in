@@ -7,4 +7,4 @@ Terminal=false
 StartupNotify=true
 Icon=gaupol
 Type=Application
-Categories=GTK;Application;AudioVideo;
+Categories=GTK;AudioVideo;Video;
