@@ -1,5 +1,10 @@
 2007-03-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/conf/wrappers.py (Container):
+	Set options as instance variables.
+
+2007-03-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/search-dialog.glade:
 	* gaupol/gtk/dialogs/search.py:
 	Fix initial focus.

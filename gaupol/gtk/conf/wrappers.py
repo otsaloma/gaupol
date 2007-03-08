@@ -162,10 +162,6 @@ class Container(Observable):
 
     """Configuration data container.
 
-    Instance variables:
-
-        root: A dictionary in a ConfigObj
-
     This class can be a configuration section or a container for the entire
     configuration data if there are no sections. This class is instantiated
     with a 'root', which is a lowest (sub)dictionary of a ConfigObj instance.
@@ -173,24 +169,15 @@ class Container(Observable):
     configuration variables as per the Observable API.
     """
 
-    __slots__ = ["root"]
-
-    def __getattr__(self, name):
-
-        return self.root[name]
-
     def __init__(self, root):
 
         Observable.__init__(self)
 
-        self.root = root
+        def sync_with_root(self, value, name):
+            if value != root[name]:
+                root[name] = value
+
         for name in root.keys():
-            self._add_signal("notify::%s" % name)
-
-    def __setattr__(self, name, value):
-
-        if name in self.__slots__ or name in Observable.__slots__:
-            return Observable.__setattr__(self, name, value)
-        if value != self.root[name]:
-            self.root[name] = value
-            self.emit("notify::" + name)
+            setattr(self, name, root[name])
+            signal = "notify::%s" % name
+            self.connect(signal, sync_with_root, name)
