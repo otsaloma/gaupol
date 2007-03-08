@@ -1,5 +1,10 @@
 2007-03-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/dialogs/search.py:
+	Fix text view scrolling.
+
+2007-03-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/search-dialog.glade:
 	* gaupol/_agents/search.py:
 	* gaupol/_agents/set.py:

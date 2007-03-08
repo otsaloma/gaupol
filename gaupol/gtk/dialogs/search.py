@@ -405,7 +405,8 @@ class SearchDialog(GladeDialog):
         ins = text_buffer.get_iter_at_offset(match_span[1])
         bound = text_buffer.get_iter_at_offset(match_span[0])
         text_buffer.select_range(ins, bound)
-        self._text_view.scroll_to_iter(ins, 0)
+        mark = text_buffer.create_mark(None, ins, True)
+        self._text_view.scroll_to_mark(mark, 0.2)
         self._text_view.set_sensitive(True)
         self._text_view.grab_focus()
 
