@@ -1,6 +1,11 @@
 2007-03-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/dialogs/search.py:
+	Set cursor busy for "Replace All".
+
+2007-03-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/dialogs/search.py:
 	Fix text view scrolling.
 
 2007-03-08  Osmo Salomaa  <otsaloma@cc.hut.fi>

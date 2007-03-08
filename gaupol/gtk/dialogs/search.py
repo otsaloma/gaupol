@@ -338,7 +338,9 @@ class SearchDialog(GladeDialog):
 
         # Make sure the text view experiences a focus-out-event.
         self._replace_all_button.grab_focus()
+        util.set_cursor_busy(self._dialog)
         self.replace_all()
+        util.set_cursor_normal(self._dialog)
 
     def _on_replace_button_clicked(self, *args):
         """Replace the current match."""
