@@ -1,5 +1,11 @@
 2007-03-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/glade/search-dialog.glade:
+	* gaupol/gtk/dialogs/search.py:
+	Fix initial focus.
+
+2007-03-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/dialogs/search.py:
 	Set cursor busy for "Replace All".
 

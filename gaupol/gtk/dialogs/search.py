@@ -92,6 +92,7 @@ class SearchDialog(GladeDialog):
         util.prepare_text_view(self._text_view)
         self._init_data()
         self._init_conf_handlers()
+        self._init_dialog_handlers()
         self._init_search_handlers()
         self._init_target_handlers()
         self._init_sensitivities()
@@ -242,6 +243,15 @@ class SearchDialog(GladeDialog):
         for replacement in conf.search.replacements:
             store.append([replacement])
 
+    def _init_dialog_handlers(self):
+        """Initialize dialog signal handlers."""
+
+        def focus(*args):
+            self._pattern_entry.select_region(0, -1)
+            self._pattern_entry.grab_focus()
+        self._dialog.connect("show", focus)
+        util.connect(self, self, "response")
+
     def _init_search_handlers(self):
         """Initialize search signal handlers."""
 
@@ -251,7 +261,6 @@ class SearchDialog(GladeDialog):
         util.connect(self, "_regex_check"       , "toggled" )
         util.connect(self, "_replace_all_button", "clicked" )
         util.connect(self, "_replace_button"    , "clicked" )
-        util.connect(self, self, "response")
 
         def disable_replace(*args):
             self._replace_button.set_sensitive(False)

@@ -214,10 +214,6 @@ store</property>
 		      <child>
 			<widget class="GtkComboBoxEntry" id="pattern_combo">
 			  <property name="visible">True</property>
-			  <property name="can_default">True</property>
-			  <property name="has_default">True</property>
-			  <property name="can_focus">True</property>
-			  <property name="has_focus">True</property>
 			  <property name="items">list
 store</property>
 			  <property name="add_tearoffs">False</property>
