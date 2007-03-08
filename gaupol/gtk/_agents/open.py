@@ -167,6 +167,10 @@ class OpenAgent(Delegate):
         encoding = None
         util.set_cursor_busy(self.window)
         dialog = OpenDialog(doc, title, self.window)
+        page = self.get_current_page()
+        if page is not None and page.project.main_file is not None:
+            directory = os.path.dirname(page.project.main_file.path)
+            dialog.set_current_folder(directory)
         util.set_cursor_normal(self.window)
         response = self.run_dialog(dialog)
         if response == gtk.RESPONSE_OK:

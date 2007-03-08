@@ -1,5 +1,11 @@
 2007-03-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/_agents/open.py (OpenAgent._select_files):
+	If possible, set the filechooser directory to that of the current
+	project's main file.
+
+2007-03-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/conf/wrappers.py (Container):
 	Set options as instance variables.
 
