@@ -88,8 +88,8 @@ class TestSearchAgent(TestCase):
                 StopIteration,)))
 
         for pattern, docs, wrap, matches in cases:
-            self.project.set_find_target(None, docs, wrap)
-            self.project.set_find_regex(pattern, re.DOTALL)
+            self.project.set_search_target(None, docs, wrap)
+            self.project.set_search_regex(pattern, re.DOTALL)
             row = 0
             doc = docs[0]
             pos = None
@@ -146,8 +146,8 @@ class TestSearchAgent(TestCase):
                 StopIteration,)))
 
         for pattern, docs, wrap, matches in cases:
-            self.project.set_find_target(None, docs, wrap)
-            self.project.set_find_regex(pattern, re.DOTALL)
+            self.project.set_search_target(None, docs, wrap)
+            self.project.set_search_regex(pattern, re.DOTALL)
             row = 2
             doc = docs[-1]
             pos = None
@@ -166,9 +166,9 @@ class TestSearchAgent(TestCase):
     @reversion_test
     def test_replace_next(self):
 
-        self.project.set_find_target(None, [MAIN])
-        self.project.set_find_regex(r"\b\s")
-        self.project.set_find_replacement("")
+        self.project.set_search_target(None, [MAIN])
+        self.project.set_search_regex(r"\b\s")
+        self.project.set_search_replacement("")
         self.project.find_next(0, MAIN, 4)
         self.project.replace()
         assert self.project.main_texts[0] == \
@@ -178,9 +178,9 @@ class TestSearchAgent(TestCase):
     @reversion_test
     def test_replace_previous(self):
 
-        self.project.set_find_target(None, [MAIN])
-        self.project.set_find_regex(r"\b\s")
-        self.project.set_find_replacement("")
+        self.project.set_search_target(None, [MAIN])
+        self.project.set_search_regex(r"\b\s")
+        self.project.set_search_replacement("")
         self.project.find_previous(2, MAIN)
         self.project.replace()
         assert self.project.main_texts[2] == \
@@ -190,9 +190,9 @@ class TestSearchAgent(TestCase):
     @reversion_test
     def test_replace_all_regex(self):
 
-        self.project.set_find_target(None, [MAIN, TRAN])
-        self.project.set_find_regex(r"$")
-        self.project.set_find_replacement("--")
+        self.project.set_search_target(None, [MAIN, TRAN])
+        self.project.set_search_regex(r"$")
+        self.project.set_search_replacement("--")
         self.project.replace_all()
         for texts in (self.project.main_texts, self.project.tran_texts):
             assert texts[0] == \
@@ -208,9 +208,9 @@ class TestSearchAgent(TestCase):
     @reversion_test
     def test_replace_all_string(self):
 
-        self.project.set_find_target(None, [MAIN, TRAN])
-        self.project.set_find_string("a")
-        self.project.set_find_replacement("-")
+        self.project.set_search_target(None, [MAIN, TRAN])
+        self.project.set_search_string("a")
+        self.project.set_search_replacement("-")
         self.project.replace_all()
         for texts in (self.project.main_texts, self.project.tran_texts):
             assert texts[0] == \
@@ -223,46 +223,46 @@ class TestSearchAgent(TestCase):
                 "Be c-reful,\n" + \
                 "it's - d-ngerous -nswer."
 
-    def test_set_find_regex(self):
+    def test_set_search_regex(self):
 
         flags = re.DOTALL | re.MULTILINE | re.UNICODE
-        self.project.set_find_regex(r"test")
+        self.project.set_search_regex(r"test")
         assert self.delegate._finder.pattern.pattern == r"test"
         assert self.delegate._finder.pattern.flags == flags
 
-        self.project.set_find_regex(r"test", re.IGNORECASE)
+        self.project.set_search_regex(r"test", re.IGNORECASE)
         assert self.delegate._finder.pattern.pattern == r"test"
         assert self.delegate._finder.pattern.flags == flags | re.IGNORECASE
 
         try:
-            self.project.set_find_regex(r"*(")
+            self.project.set_search_regex(r"*(")
             raise AssertionError
         except re.error:
             pass
 
-    def test_set_find_replacement(self):
+    def test_set_search_replacement(self):
 
-        self.project.set_find_replacement("test")
+        self.project.set_search_replacement("test")
         assert self.delegate._finder.replacement == "test"
 
-    def test_set_find_string(self):
+    def test_set_search_string(self):
 
-        self.project.set_find_string("")
+        self.project.set_search_string("")
         assert self.delegate._finder.pattern == ""
         assert self.delegate._finder.ignore_case == False
 
-        self.project.set_find_string("test", True)
+        self.project.set_search_string("test", True)
         assert self.delegate._finder.pattern == "test"
         assert self.delegate._finder.ignore_case == True
 
-    def test_set_find_target(self):
+    def test_set_search_target(self):
 
-        self.project.set_find_target()
+        self.project.set_search_target()
         assert self.delegate._rows == []
         assert self.delegate._docs == [MAIN, TRAN]
         assert self.delegate._wrap == True
 
-        self.project.set_find_target([1], [MAIN], False)
+        self.project.set_search_target([1], [MAIN], False)
         assert self.delegate._rows == [1]
         assert self.delegate._docs == [MAIN]
         assert self.delegate._wrap == False

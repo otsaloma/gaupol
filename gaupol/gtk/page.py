@@ -352,6 +352,8 @@ class Page(Observable):
             return cons.DOCUMENT.MAIN
         if col == TTXT:
             return cons.DOCUMENT.TRAN
+        if col is None:
+            return None
         raise ValueError
 
     def update_tab_label(self):

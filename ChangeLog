@@ -1,3 +1,18 @@
+2007-03-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/search-dialog.glade:
+	* gaupol/_agents/search.py:
+	* gaupol/_agents/set.py:
+	* gaupol/gtk/_actions/text.py:
+	* gaupol/gtk/_agents/edit.py:
+	* gaupol/gtk/_agents/search.py:
+	* gaupol/gtk/app.py:
+	* gaupol/gtk/dialogs/__init__.py:
+	* gaupol/gtk/dialogs/search.py:
+	* gaupol/gtk/lengthlib.py:
+	* gaupol/gtk/page.py:
+	Add search. Closes #6690.
+
 2007-03-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/ui.xml:

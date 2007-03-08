@@ -42,3 +42,9 @@ class TestApplication(TestCase):
         self.application.open_main_files([path])
         page = self.application.get_current_page()
         assert isinstance(page, Page)
+
+    def test_set_current_page(self):
+
+        for page in self.application.pages:
+            self.application.set_current_page(page)
+            assert self.application.get_current_page() == page

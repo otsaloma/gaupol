@@ -179,22 +179,30 @@ class SearchAgent(Delegate):
         # Raise ValueError if no match found in this document after position.
         raise ValueError
 
-    def find_next(self, row, doc, pos=None):
+    def find_next(self, row=None, doc=None, pos=None):
         """Find the next match starting from position.
 
-        pos can be None to start from beginning.
+        row, doc and pos can be None to start from beginning.
         Raise StopIteration if no matches exist.
         Return tuple of row, document, match span.
         """
+        if row is None:
+            row = 0
+        if doc is None:
+            doc = cons.DOCUMENT.MAIN
         return self._find(row, doc, pos, True)
 
-    def find_previous(self, row, doc, pos=None):
+    def find_previous(self, row=None, doc=None, pos=None):
         """Find the previous match starting from position.
 
-        pos can be None to start from end.
+        row, doc and pos can be None to start from end.
         Raise StopIteration if no matches exist.
         Return tuple of row, document, match span.
         """
+        if row is None:
+            row = len(self.times) - 1
+        if doc is None:
+            doc = cons.DOCUMENT.TRAN
         return self._find(row, doc, pos, False)
 
     @revertable
@@ -230,7 +238,7 @@ class SearchAgent(Delegate):
             self.set_action_description(register, _("Replacing all"))
         return count
 
-    def set_find_regex(self, pattern, flags=0):
+    def set_search_regex(self, pattern, flags=0):
         """Set the regular expression pattern to find.
 
         DOTALL, MULTILINE and UNICODE are automatically added to flags.
@@ -238,19 +246,19 @@ class SearchAgent(Delegate):
         """
         self._finder.set_regex(unicode(pattern), flags)
 
-    def set_find_replacement(self, replacement):
+    def set_search_replacement(self, replacement):
         """Set the replacement."""
 
         self._finder.replacement = unicode(replacement)
 
-    def set_find_string(self, pattern, ignore_case=False):
+    def set_search_string(self, pattern, ignore_case=False):
         """Set string pattern to find."""
 
         self._finder.pattern = unicode(pattern)
         self._finder.ignore_case = ignore_case
         self._finder.is_regex = False
 
-    def set_find_target(self, rows=None, docs=None, wrap=True):
+    def set_search_target(self, rows=None, docs=None, wrap=True):
         """Set the target to find in.
 
         rows can be None to target all rows.

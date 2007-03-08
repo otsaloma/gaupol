@@ -142,9 +142,9 @@ class SetAgent(Delegate):
         value = unicode(value)
         texts = self.get_texts(doc)
         orig_value = texts[row]
-        texts[row] = value
         if value == orig_value:
             return
+        texts[row] = value
 
         self.register_action(
             register=register,

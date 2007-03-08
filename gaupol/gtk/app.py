@@ -62,8 +62,10 @@ class Application(Observable, Runner):
         open_button:     gtk.MenuToolButton
         output_window:   OutputWindow
         pages:           List of Pages
+        pattern:         Search pattern
         recent_manager:  gtk.RecentManager
         redo_button:     gtk.MenuToolButton
+        replacement:     Search replacement
         static_tooltips: gtk.Tooltips, enabled always
         statusbar:       gtk.Statusbar
         tooltips:        gtk.Tooltips, enabled if a project is open
@@ -107,8 +109,10 @@ class Application(Observable, Runner):
         self.open_button     = None
         self.output_window   = None
         self.pages           = []
+        self.pattern         = ""
         self.recent_manager  = gtk.recent_manager_get_default()
         self.redo_button     = None
+        self.replacement     = ""
         self.static_tooltips = gtk.Tooltips()
         self.statusbar       = None
         self.tooltips        = gtk.Tooltips()
@@ -426,9 +430,15 @@ class Application(Observable, Runner):
             gtk.window_set_default_icon_from_file(_ICON_FILE)
 
     def get_current_page(self):
-        """Get the currently active Page or None."""
+        """Get the currently active page or None."""
 
         index = self.notebook.get_current_page()
         if index >= 0:
             return self.pages[index]
         return None
+
+    def set_current_page(self, page):
+        """Set the currently active page."""
+
+        index = self.pages.index(page)
+        self.notebook.set_current_page(index)

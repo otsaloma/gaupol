@@ -126,8 +126,9 @@ def _on_text_view_expose_event(text_view, event):
 
     text_buffer = text_view.get_buffer()
     text = text_buffer.get_text(*text_buffer.get_bounds())
+    if not text:
+        return
     lengths = get_lengths(text)
-
     layout = pango.Layout(text_view.get_pango_context())
     layout.set_markup("\n".join(list(str(x) for x in lengths)))
     layout.set_alignment(pango.ALIGN_RIGHT)

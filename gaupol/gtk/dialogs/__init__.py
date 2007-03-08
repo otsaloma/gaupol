@@ -31,6 +31,7 @@ from .message    import ErrorDialog, InfoDialog, QuestionDialog, WarningDialog
 from .multiclose import MultiCloseDialog
 from .pref       import PreferencesDialog
 from .previewerr import PreviewErrorDialog
+from .search     import SearchDialog
 from .split      import SplitDialog
 from .textedit   import TextEditDialog
 
@@ -53,6 +54,7 @@ __all__ = [
     "PreviewErrorDialog",
     "QuestionDialog",
     "SaveDialog",
+    "SearchDialog",
     "SplitDialog",
     "TextEditDialog",
     "VideoDialog",

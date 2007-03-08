@@ -2,20 +2,17 @@ Gaupol 0.8
 ==========
 
  * Check PyEnchant 1.3.0 for API changes
-
  * Search for "FIX", "TODO", etc.
- * Edit/Text/Format/Search menu?
  * Examine Application.update_gui calls
  * Test searching for unicode strings and regexes
  * GNOME Bugzilla: http://live.gnome.org/Bugsquad/ForMaintainers
 
 Changes:
  [D] Configuration file backend and syntax changed
- [W] Fixed numerous bugs with find and replace
- [ ] Notify of invalid regular expressions when searching (#6690)
+ [D] Fixed numerous bugs with find and replace
+ [D] Notify of invalid regular expressions when searching (#6690)
  [D] Regular expression searches are now always MULTILINE and DOTALL
- [ ] Search notifications moved to main window's statusbar
- [D] Search now notifies of wrapping
+ [D] Search notifications moved to main window's statusbar
  [D] Better (more preserving) handling of blank lines as well as
      leading and trailing spaces when opening files
  [D] Position shift amount now always defaults to zero

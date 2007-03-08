@@ -42,7 +42,6 @@ class EditAgent(Delegate):
     def __init__(self, master):
 
         Delegate.__init__(self, master)
-
         self._pref_dialog = None
 
     def _on_pref_dialog_response(self, *args):
