@@ -17,6 +17,7 @@ Changes:
      leading and trailing spaces when opening files
  [D] Position shift amount now always defaults to zero
  [D] Fixed sensitivity of "Adjust Positions..." menu item (#7255)
+ [D] Show confirmation dialog when closing file that no longer exists
  [D] Splitting a subtitle no longer duplicates texts
  [D] Subtitle file and video file paths in preview commands are now
      automatically escaped and quoted

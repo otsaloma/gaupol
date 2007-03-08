@@ -19,7 +19,6 @@
 import gtk
 
 from gaupol.gtk import cons
-from gaupol.gtk.errors import Default
 from gaupol.gtk.unittest import TestCase
 
 

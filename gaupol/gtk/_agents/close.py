@@ -19,6 +19,7 @@
 """Closing projects and quitting Gaupol."""
 
 
+import os
 from gettext import gettext as _
 
 import gtk
@@ -41,13 +42,12 @@ class CloseAgent(Delegate):
         Raise Default to abort.
         """
         count = 0
+        unsaved = None
         for page in self.pages:
-            if page.project.main_changed:
+            sub_count = len(self._need_confirmation(page))
+            if sub_count > 0:
+                count += sub_count
                 unsaved = page
-                count += 1
-            if page.project.tran_active and page.project.tran_changed:
-                unsaved = page
-                count += 1
         if count == 1:
             self._confirm_page(unsaved)
         elif count > 1:
@@ -83,14 +83,13 @@ class CloseAgent(Delegate):
 
         Raise Default to abort.
         """
-        confirm_main = page.project.main_changed
-        confirm_tran = page.project.tran_changed and page.project.tran_active
-        if confirm_main and confirm_tran:
-            self._confirm_multiple([page])
-        elif confirm_main:
-            self._confirm_main(page)
-        elif confirm_tran:
-            self._confirm_translation(page)
+        docs = self._need_confirmation(page)
+        if len(docs) == 2:
+            return self._confirm_multiple([page])
+        if cons.DOCUMENT.MAIN in docs:
+            return self._confirm_main(page)
+        if cons.DOCUMENT.TRAN in docs:
+            return self._confirm_translation(page)
 
     def _confirm_translation(self, page):
         """Confirm closing translation document.
@@ -104,6 +103,22 @@ class CloseAgent(Delegate):
             self.save_translation(page)
         elif response != gtk.RESPONSE_NO:
             raise Default
+
+    def _need_confirmation(self, page):
+        """Return the documents in page that require confirmation."""
+
+        docs = []
+        if page.project.main_changed:
+            docs.append(cons.DOCUMENT.MAIN)
+        elif page.project.main_file is not None:
+            if not os.path.isfile(page.project.main_file.path):
+                docs.append(cons.DOCUMENT.MAIN)
+        if page.project.tran_active and page.project.tran_changed:
+            docs.append(cons.DOCUMENT.TRAN)
+        elif page.project.tran_file is not None:
+            if not os.path.isfile(page.project.tran_file.path):
+                docs.append(cons.DOCUMENT.TRAN)
+        return docs
 
     def _save_window_geometry(self):
         """Save the geometry of main and output windows."""
