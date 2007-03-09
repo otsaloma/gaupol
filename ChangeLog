@@ -1,3 +1,31 @@
+2007-03-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol:
+	* gaupol/_agents:
+	* gaupol/_agents/test:
+	* gaupol/base:
+	* gaupol/base/test:
+	* gaupol/files:
+	* gaupol/files/test:
+	* gaupol/gtk/_actions/test:
+	* gaupol/gtk/_actions:
+	* gaupol/gtk/_agents/test:
+	* gaupol/gtk/_agents:
+	* gaupol/gtk/cellrend/test:
+	* gaupol/gtk/cellrend:
+	* gaupol/gtk/conf/test:
+	* gaupol/gtk/conf:
+	* gaupol/gtk/dialogs/test:
+	* gaupol/gtk/dialogs:
+	* gaupol/gtk/test:
+	* gaupol/gtk/unittest:
+	* gaupol/gtk:
+	* gaupol/tags/test:
+	* gaupol/tags:
+	* gaupol/test:
+	* gaupol/unittest:
+	Add ".hidden" to svn:ignore properties.
+
 2007-03-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/_agents/close.py:
