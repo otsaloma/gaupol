@@ -1,5 +1,10 @@
 2007-03-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/ui.xml:
+	Add separator to the "Text" menu. Flip "Dialogue" and "Italic".
+
+2007-03-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* tools/hide:
 	Add .hidden generator.
 

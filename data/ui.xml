@@ -75,8 +75,9 @@
       <menuitem name="find_next" action="find_next"/>
       <menuitem name="find_previous" action="find_previous"/>
       <separator/>
-      <menuitem name="dialogue" action="toggle_dialogue_lines"/>
       <menuitem name="italic" action="toggle_italicization"/>
+      <menuitem name="dialogue" action="toggle_dialogue_lines"/>
+      <separator/>
       <menu name="case" action="show_case_menu">
         <menuitem name="title" action="use_title_case"/>
         <menuitem name="sentence" action="use_sentence_case"/>
