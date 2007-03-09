@@ -1,5 +1,10 @@
 2007-03-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/page.py (_on_project_*):
+	Reload, change selection and focus only if rows is not empty.
+
+2007-03-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol:
 	* gaupol/_agents:
 	* gaupol/_agents/test:

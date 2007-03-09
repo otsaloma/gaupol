@@ -176,27 +176,35 @@ class Page(Observable):
 
         self.reload_view_all()
 
+    @util.ignore_exceptions(AssertionError)
     def _on_project_main_texts_changed(self, project, rows):
         """Reload main texts in rows."""
 
+        assert rows
         self.reload_view(rows, [MTXT])
         self.view.select_rows(rows)
 
+    @util.ignore_exceptions(AssertionError)
     def _on_project_positions_changed(self, project, rows):
         """Reload positions in rows."""
 
+        assert rows
         self.reload_view(rows, [SHOW, HIDE, DURN])
         self.view.select_rows(rows)
 
+    @util.ignore_exceptions(AssertionError)
     def _on_project_subtitles_changed(self, project, rows):
         """Reload subtitles in rows."""
 
+        assert rows
         self.reload_view(rows, [SHOW, HIDE, DURN, MTXT, TTXT])
         self.view.select_rows(rows)
 
+    @util.ignore_exceptions(AssertionError)
     def _on_project_subtitles_inserted(self, project, rows):
         """Insert rows to the list store."""
 
+        assert rows
         store = self.view.get_model()
         positions = self._get_positions()
         mains = self.project.main_texts
@@ -209,9 +217,11 @@ class Page(Observable):
         self.view.set_focus(rows[0])
         self.view.select_rows(rows)
 
+    @util.ignore_exceptions(AssertionError)
     def _on_project_subtitles_removed(self, project, rows):
         """Remove rows from the list store."""
 
+        assert rows
         store = self.view.get_model()
         for row in reversed(sorted(rows)):
             store.remove(store.get_iter(row))
@@ -227,9 +237,11 @@ class Page(Observable):
 
         self.reload_view_all()
 
+    @util.ignore_exceptions(AssertionError)
     def _on_project_translation_texts_changed(self, project, rows):
         """Reload translation texts in rows."""
 
+        assert rows
         self.reload_view(rows, [TTXT])
         self.view.select_rows(rows)
 
