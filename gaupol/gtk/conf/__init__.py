@@ -20,18 +20,18 @@
 
 Module variables:
 
-    _CONFIG: Instance of Config used
+    _CONFIG:     Instance of Config used
+    CONFIG_FILE: Path to the configuration file
+    SPEC_FILE:   Path to the configuration spec file
 
-The configuration file is read and validated upon import. All configuration
-sections are made available as module variables. See the spec file for what
-these sections and options are.
+All configuration sections are made available as module variables. See the spec
+file for what these sections and options are.
 """
 
 
 import os
 
-from gaupol import util, __version__
-from gaupol.gtk import paths
+from gaupol import paths, util, __version__
 from gaupol.gtk.errors import ConfigParseError
 from .wrappers import Config, Container
 
@@ -39,6 +39,8 @@ from .wrappers import Config, Container
 __all__ = ["Config", "Container"]
 
 _CONFIG = None
+CONFIG_FILE = None
+SPEC_FILE = os.path.join(paths.DATA_DIR, "conf.spec")
 
 
 def _translate_nones(config):
@@ -68,14 +70,14 @@ def read():
     """Read configurations from file."""
 
     try:
-        config = Config(paths.CONFIG_FILE, paths.SPEC_FILE)
+        config = Config(CONFIG_FILE, SPEC_FILE)
     except ConfigParseError:
         raise SystemExit(1)
     version = config["general"]["version"]
     if version is not None:
         if util.compare_versions(version, "0.7.999") == -1:
             print "Ignoring old-style configuration file entirely."
-            config = Config(None, paths.SPEC_FILE)
+            config = Config(None, SPEC_FILE)
     config["general"]["version"] = __version__
     _translate_nones(config)
 
@@ -87,7 +89,7 @@ def write():
     """Write configurations to file."""
 
     # pylint: disable-msg=E1101
-    _CONFIG.filename = paths.CONFIG_FILE
+    _CONFIG.filename = CONFIG_FILE
     _CONFIG.write_to_file()
 
 

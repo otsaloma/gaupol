@@ -152,17 +152,19 @@ def _parse_args(args):
 def _prepare_configuration(path):
     """Set the configuration file to use."""
 
-    if path is not None:
-        from gaupol.gtk import paths
-        paths.CONFIG_FILE = os.path.abspath(path)
+    if path is None:
+        from gaupol import paths
+        path = os.path.join(paths.PROFILE_DIR, "gaupol.gtk.conf")
     from gaupol.gtk import conf
+    conf.CONFIG_FILE = path
+    conf.read()
     atexit.register(conf.write)
 
 def _prepare_gettext():
     """Assign gettext domains."""
 
     import gtk.glade
-    from gaupol.gtk import paths
+    from gaupol import paths
     locale.setlocale(locale.LC_ALL, "")
     gettext.bindtextdomain("gaupol", paths.LOCALE_DIR)
     gettext.textdomain("gaupol")
@@ -176,7 +178,7 @@ def _prepare_ui():
     gobject.threads_init()
 
     import gtk
-    from gaupol.gtk import paths
+    from gaupol import paths
     rc_file = os.path.join(paths.DATA_DIR, "gtkrc")
     gtk.rc_add_default_file(rc_file)
 

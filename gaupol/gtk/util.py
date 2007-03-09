@@ -42,7 +42,7 @@ import gtk
 import gtk.glade
 import pango
 
-from gaupol.gtk import paths
+from gaupol import paths
 from gaupol.util import *
 from . import conf, lengthlib
 

@@ -32,9 +32,10 @@ from gettext import gettext as _
 import gtk
 import pango
 
+from gaupol import paths
 from gaupol.base import Observable
 from gaupol.clipboard import Clipboard
-from gaupol.gtk import conf, cons, paths, util
+from gaupol.gtk import conf, cons, util
 from gaupol.gtk._actions import *
 from gaupol.gtk._actions import ACTIONS
 from gaupol.gtk._agents import *
