@@ -19,17 +19,17 @@
 """Extension delegates of application."""
 
 
-from .close  import CloseAgent
-from .edit   import EditAgent
-from .format import FormatAgent
-from .help   import HelpAgent
-from .menu   import MenuAgent
-from .open   import OpenAgent
-from .save   import SaveAgent
-from .search import SearchAgent
-from .tools  import ToolsAgent
-from .update import UpdateAgent
-from .view   import ViewAgent
+from .close   import CloseAgent
+from .edit    import EditAgent
+from .format  import FormatAgent
+from .help    import HelpAgent
+from .menu    import MenuAgent
+from .open    import OpenAgent
+from .preview import PreviewAgent
+from .save    import SaveAgent
+from .search  import SearchAgent
+from .update  import UpdateAgent
+from .view    import ViewAgent
 
 
 __all__ = AGENTS = [
@@ -39,8 +39,8 @@ __all__ = AGENTS = [
     "HelpAgent",
     "MenuAgent",
     "OpenAgent",
+    "PreviewAgent",
     "SaveAgent",
     "SearchAgent",
-    "ToolsAgent",
     "UpdateAgent",
     "ViewAgent",]

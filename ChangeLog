@@ -1,5 +1,12 @@
 2007-03-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/_agents/__init__.py:
+	* gaupol/gtk/_agents/preview.py:
+	* gaupol/gtk/_agents/tools.py:
+	Renamed tools to preview.
+
+2007-03-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/app.py:
 	* gaupol/gtk/conf/__init__.py:
 	* gaupol/gtk/dialogs/about.py:

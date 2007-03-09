@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Miscellaneous tools."""
+"""Previewing subtitles with a video player."""
 
 
 from __future__ import with_statement
@@ -34,9 +34,9 @@ from gaupol.gtk.dialogs import ErrorDialog, PreviewErrorDialog
 from gaupol.gtk.index import *
 
 
-class ToolsAgent(Delegate):
+class PreviewAgent(Delegate):
 
-    """Miscellaneous tools."""
+    """Previewing subtitles with a video player."""
 
     # pylint: disable-msg=E0203,W0201
 

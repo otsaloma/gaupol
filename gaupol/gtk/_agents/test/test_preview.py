@@ -23,7 +23,7 @@ import gtk
 from gaupol.gtk.unittest import TestCase
 
 
-class TestToolsAgent(TestCase):
+class TestPreviewAgent(TestCase):
 
     def setup_method(self, method):
 
