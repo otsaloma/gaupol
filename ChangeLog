@@ -1,5 +1,11 @@
 2007-03-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/_actions/text.py (FindNextAction.is_doable,
+	FindPreviousAction.is_doable):
+	Fix application's pattern check.
+
+2007-03-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/ui.xml:
 	Add separator to the "Text" menu. Flip "Dialogue" and "Italic".
 

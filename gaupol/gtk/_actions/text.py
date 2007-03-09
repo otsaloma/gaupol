@@ -154,7 +154,7 @@ class FindNextAction(UIMAction):
     def is_doable(cls, application, page):
         """Return True if action can be done."""
 
-        return (application.pattern is not None)
+        return bool(application.pattern)
 
 
 class FindPreviousAction(UIMAction):
@@ -174,7 +174,7 @@ class FindPreviousAction(UIMAction):
     def is_doable(cls, application, page):
         """Return True if action can be done."""
 
-        return (application.pattern is not None)
+        return bool(application.pattern)
 
 
 class PasteTextsAction(UIMAction):
