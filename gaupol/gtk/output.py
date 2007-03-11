@@ -19,9 +19,8 @@
 """Output window."""
 
 
-from gettext import gettext as _
-
 import gtk
+from gettext import gettext as _
 
 from gaupol.gtk import conf, util
 
@@ -132,12 +131,13 @@ class OutputWindow(gtk.Window):
         maximized = bool(state & gtk.gdk.WINDOW_STATE_MAXIMIZED)
         conf.output_window.maximized = maximized
 
+    @util.ignore_exceptions(AssertionError)
     def _save_geometry(self):
         """Save window geometry."""
 
-        if not conf.output_window.maximized:
-            conf.output_window.size = self.get_size()
-            conf.output_window.position = self.get_position()
+        assert not conf.output_window.maximized
+        conf.output_window.size = self.get_size()
+        conf.output_window.position = self.get_position()
 
     def set_output(self, output):
         """Set output to the text view."""

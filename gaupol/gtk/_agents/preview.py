@@ -20,13 +20,13 @@
 
 
 from __future__ import with_statement
+
 import copy
+import gobject
+import gtk
 import os
 import tempfile
 from gettext import gettext as _
-
-import gobject
-import gtk
 
 from gaupol.base import Delegate
 from gaupol.gtk import conf, util
@@ -50,7 +50,6 @@ class PreviewAgent(Delegate):
     def _post_process(self, pid, return_value, data):
         """Process output of finished preview."""
 
-        # pylint: disable-msg=E0602
         output_path, temp_path = data
         with open(output_path, "r") as fobj:
             output = fobj.read()

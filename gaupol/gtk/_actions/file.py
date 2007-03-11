@@ -19,9 +19,8 @@
 """File menu UI manager actions."""
 
 
-from gettext import gettext as _
-
 import gtk
+from gettext import gettext as _
 
 from ._action import UIMAction
 

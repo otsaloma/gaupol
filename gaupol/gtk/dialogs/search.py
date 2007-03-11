@@ -19,11 +19,10 @@
 """Dialog for searching for and replacing text."""
 
 
-import re
-from gettext import gettext as _
-
 import gobject
 import gtk
+import re
+from gettext import gettext as _
 
 from gaupol import urls
 from gaupol.gtk import conf, cons, util

@@ -20,10 +20,9 @@
 
 
 from __future__ import with_statement
+
 import os
 import tempfile
-
-from .samples import MICRODVD_TEXT, SUBRIP_TEXT
 
 
 class TestCase(object):
@@ -35,21 +34,25 @@ class TestCase(object):
         files: List of the paths of temporary files created
     """
 
-    # pylint: disable-msg=C0103
-
     def __init__(self):
 
         self.files = []
 
+    def get_file_path(self, format):
+        """Get path to a temporary subtitle file."""
+
+        text = self.get_text(format)
+        fd, path = tempfile.mkstemp(prefix="gaupol.", suffix=".sub")
+        with os.fdopen(fd, "w") as fobj:
+            fobj.write(text)
+        self.files.append(path)
+        return path
+
     def get_microdvd_path(self):
         """Get path to a temporary MicroDVD file."""
 
-        # pylint: disable-msg=E0602
-        fd, path = tempfile.mkstemp(prefix="gaupol.", suffix=".sub")
-        with os.fdopen(fd, "w") as fobj:
-            fobj.write(MICRODVD_TEXT)
-        self.files.append(path)
-        return path
+        from gaupol import cons
+        return self.get_file_path(cons.FORMAT.MICRODVD)
 
     def get_project(self):
         """Get a new project."""
@@ -63,21 +66,29 @@ class TestCase(object):
     def get_subrip_path(self):
         """Get path to a temporary SubRip file."""
 
-        # pylint: disable-msg=E0602
-        fd, path = tempfile.mkstemp(prefix="gaupol.", suffix=".srt")
-        with os.fdopen(fd, "w") as fobj:
-            fobj.write(SUBRIP_TEXT)
-        self.files.append(path)
-        return path
+        from gaupol import cons
+        return self.get_file_path(cons.FORMAT.SUBRIP)
+
+    def get_text(self, format):
+        """Get subtitle file text."""
+
+        dirname = os.path.abspath(os.path.dirname(__file__))
+        while not dirname.endswith("gaupol"):
+            dirname = os.path.abspath(os.path.join(dirname, ".."))
+        basename = format.name.lower() + ".sample"
+        path = os.path.join(dirname, "..", "doc", "formats", basename)
+        with open(path, "r") as fobj:
+            return fobj.read().strip()
 
     def is_regex(self, obj):
         """Return True if obj is a regular expression object."""
 
-        is_regex = True
-        for name in ("pattern", "flags", "match", "sub"):
-            is_regex = is_regex and hasattr(obj, name)
-        return is_regex
+        for name in ("flags", "match", "pattern", "sub"):
+            if not hasattr(obj, name):
+                return False
+        return True
 
+    # pylint: disable-msg=C0103
     def setUp(self):
         """Compatibility alias for 'setup_method'."""
 
@@ -88,6 +99,7 @@ class TestCase(object):
 
         pass
 
+    # pylint: disable-msg=C0103
     def tearDown(self):
         """Compatibility alias for 'teardown_method'."""
 
@@ -96,9 +108,8 @@ class TestCase(object):
     def teardown_method(self, method):
         """Remove state set for executing tests in method."""
 
+        from gaupol import util
+        remove = util.ignore_exceptions(OSError)(os.remove)
         for path in self.files:
-            try:
-                os.remove(path)
-            except OSError:
-                pass
+            remove(path)
         self.files = []

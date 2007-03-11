@@ -51,6 +51,8 @@ Dependencies:
 Gaupol 0.9
 ==========
 
+ * Fix scriptlib
+
  [ ] Text correction assistant
  [W] Capitalization correction
  [W] Line split/join

@@ -31,6 +31,7 @@ class ViewAgent(Delegate):
 
     # pylint: disable-msg=E0203,W0201
 
+    @util.ignore_exceptions(AssertionError)
     def _toggle_column(self, col):
         """Show or hide column."""
 
@@ -38,8 +39,7 @@ class ViewAgent(Delegate):
         column = page.view.get_column(col)
         visible = column.get_visible()
         active = self.uim.get_action(col.uim_path).get_active()
-        if visible is active:
-            return
+        assert visible is not active
         util.set_cursor_busy(self.window)
         column.set_visible(not visible)
         visible_columns = []
@@ -50,14 +50,14 @@ class ViewAgent(Delegate):
         self.update_gui()
         util.set_cursor_normal(self.window)
 
+    @util.ignore_exceptions(AssertionError)
     def on_framerate_combo_changed(self, *args):
         """Change the framerate with which unnative units are calculated."""
 
         page = self.get_current_page()
         index = self.framerate_combo.get_active()
         framerate = cons.FRAMERATE.members[index]
-        if framerate == page.project.framerate:
-            return
+        assert framerate != page.project.framerate
         util.set_cursor_busy(self.window)
         page.project.change_framerate(framerate)
         conf.editor.framerate = framerate
@@ -73,6 +73,7 @@ class ViewAgent(Delegate):
         action = self.uim.get_action("/ui/menubar/view/output_window")
         action.set_active(self.output_window.props.visible)
 
+    @util.ignore_exceptions(AssertionError)
     def on_show_framerate_23_976_activate(self, item, active_item):
         """Change the framerate with which unnative units are calculated."""
 
@@ -80,8 +81,7 @@ class ViewAgent(Delegate):
         name = active_item.get_name()
         index = cons.FRAMERATE.uim_action_names.index(name)
         framerate = cons.FRAMERATE.members[index]
-        if framerate == page.project.framerate:
-            return
+        assert framerate != page.project.framerate
         util.set_cursor_busy(self.window)
         page.project.change_framerate(framerate)
         conf.editor.framerate = framerate
@@ -92,6 +92,7 @@ class ViewAgent(Delegate):
         util.set_cursor_normal(self.window)
 
     @util.gc_collected
+    @util.ignore_exceptions(AssertionError)
     def on_show_times_activate(self, item, active_item):
         """Change the units in which postions are shown."""
 
@@ -99,8 +100,7 @@ class ViewAgent(Delegate):
         name = active_item.get_name()
         index = cons.MODE.uim_action_names.index(name)
         edit_mode = cons.MODE.members[index]
-        if edit_mode == page.edit_mode:
-            return
+        assert edit_mode != page.edit_mode
         util.set_cursor_busy(self.window)
         page.edit_mode = edit_mode
         conf.editor.mode = edit_mode
@@ -185,9 +185,10 @@ class ViewAgent(Delegate):
         self.video_toolbar.props.visible = not visible
         conf.application_window.show_video_toolbar = not visible
 
+    @util.ignore_exceptions(AssertionError)
     def on_view_header_button_press_event(self, button, event):
         """Display a column visibility pop-up menu."""
 
-        if event.button == 3:
-            menu = self.uim.get_widget("/ui/view_header_popup")
-            menu.popup(None, None, None, event.button, event.time)
+        assert event.button == 3
+        menu = self.uim.get_widget("/ui/view_header_popup")
+        menu.popup(None, None, None, event.button, event.time)

@@ -147,7 +147,6 @@ class RegisterAgent(Delegate):
         Delegate.__init__(self, master)
 
         self._do_description = None
-
         util.connect(self, self, "notify::undo_limit")
 
     def _break_action_group(self, stack, index=0):
@@ -178,11 +177,12 @@ class RegisterAgent(Delegate):
             return self.undoables
         raise ValueError
 
+    @util.ignore_exceptions(AssertionError)
     def _on_notify_undo_limit(self, *args):
         """Cut reversion stacks if limit set."""
 
-        if self.undo_limit is not None:
-            self.cut_reversion_stacks()
+        assert self.undo_limit is not None
+        self.cut_reversion_stacks()
 
     def _revert_multiple(self, count, register):
         """Revert multiple actions."""
@@ -224,30 +224,33 @@ class RegisterAgent(Delegate):
 
         return bool(self.undoables)
 
+    @util.ignore_exceptions(AssertionError)
     def cut_reversion_stacks(self):
         """Cut the undo and redo stacks to their maximum lengths."""
 
-        if self.undo_limit is not None:
-            del self.redoables[self.undo_limit:]
-            del self.undoables[self.undo_limit:]
+        assert self.undo_limit is not None
+        del self.redoables[self.undo_limit:]
+        del self.undoables[self.undo_limit:]
 
+    @util.ignore_exceptions(AssertionError)
     def emit_action_signal(self, register, count=1):
         """Emit an action signal for register."""
 
-        if register is not None:
-            action = self._get_destination_stack(register)[0]
-            self.emit(register.signal, action)
+        assert register is not None
+        action = self._get_destination_stack(register)[0]
+        self.emit(register.signal, action)
 
+    @util.ignore_exceptions(AssertionError)
     def group_actions(self, register, count, description):
         """Group the registered actions as one item in the stack."""
 
-        if register is not None:
-            actions = []
-            stack = self._get_destination_stack(register)
-            for i in range(count):
-                actions.append(stack.pop(0))
-            action_group = RevertableActionGroup(actions, description)
-            stack.insert(0, action_group)
+        assert register is not None
+        actions = []
+        stack = self._get_destination_stack(register)
+        for i in range(count):
+            actions.append(stack.pop(0))
+        action_group = RevertableActionGroup(actions, description)
+        stack.insert(0, action_group)
 
     def redo(self, count=1):
         """Redo actions."""
@@ -257,14 +260,14 @@ class RegisterAgent(Delegate):
         self._do_description = self.redoables[0].description
         self.redoables.pop(0).revert()
 
+    @util.ignore_exceptions(AssertionError)
     def register_action(self, *args, **kwargs):
         """Register action done, undone or redone.
 
         See RevertableAction.__init__ for arguments.
         """
         action = RevertableAction(*args, **kwargs)
-        if action.register is None:
-            return
+        assert action.register is not None
         if action.register == cons.REGISTER.DO:
             self.undoables.insert(0, action)
             self.redoables = []
@@ -276,12 +279,13 @@ class RegisterAgent(Delegate):
             action.description = self._do_description
         self._shift_changed_value(action, action.register.shift)
 
+    @util.ignore_exceptions(AssertionError)
     def set_action_description(self, register, description):
         """Set the description of the most recent action."""
 
-        if register is not None:
-            stack = self._get_destination_stack(register)
-            stack[0].description = description
+        assert register is not None
+        stack = self._get_destination_stack(register)
+        stack[0].description = description
 
     def undo(self, count=1):
         """Undo actions."""

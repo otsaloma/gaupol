@@ -24,9 +24,9 @@ class TestDelegate(TestCase):
 
     def setup_method(self, method):
 
-        master = type("test", (object,), {})
-        master.name = "test"
-        self.delegate = delegate.Delegate(master)
+        self.master = type("test", (object,), {})
+        self.master.name = "test"
+        self.delegate = delegate.Delegate(self.master)
 
     def test___getattr__(self):
 
@@ -35,4 +35,6 @@ class TestDelegate(TestCase):
     def test___setattr__(self):
 
         self.delegate.name = None
+        assert self.master.name is None
         self.delegate.none = None
+        assert not hasattr(self.master, "none")

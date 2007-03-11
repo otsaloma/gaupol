@@ -72,7 +72,7 @@ def create_pot():
     files = header_files + python_files
     files = list(x.replace(SOURCE_DIR, ".") for x in files)
     args = (POT_FILE, " ".join(files))
-    os.system("xgettext --from-code=utf-8 -k_ -kN_ -c -o %s %s" % args)
+    os.system("xgettext --from-code=utf-8 -c -o %s %s" % args)
 
     title_print("Removing temporary files...")
     for path in header_files:

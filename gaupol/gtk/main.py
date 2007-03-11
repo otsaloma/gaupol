@@ -156,7 +156,7 @@ def _prepare_configuration(path):
         from gaupol import paths
         path = os.path.join(paths.PROFILE_DIR, "gaupol.gtk.conf")
     from gaupol.gtk import conf
-    conf.CONFIG_FILE = path
+    conf.CONFIG_FILE = os.path.abspath(path)
     conf.read()
     atexit.register(conf.write)
 

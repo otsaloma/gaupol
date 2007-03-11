@@ -19,10 +19,9 @@
 """Dialogs for selecting files."""
 
 
+import gtk
 import os
 from gettext import gettext as _
-
-import gtk
 
 from gaupol import enclib
 from gaupol.gtk import conf, cons, util
@@ -46,7 +45,6 @@ class _FileDialog(gtk.FileChooserDialog, Runner):
         gtk.FileChooserDialog.__init__(self, *args, **kwargs)
 
         self._encodings = []
-
         self._init_encodings()
         self._init_filters()
 
@@ -117,11 +115,11 @@ class _FileDialog(gtk.FileChooserDialog, Runner):
 
         pass
 
+    @util.ignore_exceptions(AssertionError)
     def _on_encoding_combo_changed(self, *args):
         """Show the encoding selection dialog."""
 
-        if self.get_encoding() != "other":
-            return
+        assert self.get_encoding() == "other"
         encoding = None
         dialog = AdvEncodingDialog(self)
         response = self.run_dialog(dialog)

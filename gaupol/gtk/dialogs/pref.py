@@ -19,11 +19,10 @@
 """Dialog for editing preferences."""
 
 
-from gettext import gettext as _
-
 import gobject
 import gtk
 import pango
+from gettext import gettext as _
 
 from gaupol import enclib
 from gaupol.base import Delegate
@@ -239,6 +238,7 @@ class _FilePage(Delegate):
         column = gtk.TreeViewColumn("", gtk.CellRendererText(), text=0)
         self._tree_view.append_column(column)
 
+    @util.ignore_exceptions(AssertionError)
     def _on_add_button_clicked(self, *args):
         """Add a new fallback encoding."""
 
@@ -246,10 +246,8 @@ class _FilePage(Delegate):
         response = self.run_dialog(dialog)
         encoding = dialog.get_encoding()
         dialog.destroy()
-        if response != gtk.RESPONSE_OK:
-            return
-        if encoding is None:
-            return
+        assert response == gtk.RESPONSE_OK
+        assert encoding is not None
         if encoding not in conf.encoding.fallbacks:
             conf.encoding.fallbacks.append(encoding)
         self._reload_tree_view()
@@ -392,11 +390,12 @@ class _PreviewPage(Delegate):
             self._command_entry.set_text(conf.preview.custom_command)
             self._command_entry.set_editable(True)
 
+    @util.ignore_exceptions(AssertionError)
     def _on_command_entry_changed(self, entry):
         """Save the custom command."""
 
-        if not conf.preview.use_predefined:
-            conf.preview.custom_command = entry.get_text()
+        assert not conf.preview.use_predefined
+        conf.preview.custom_command = entry.get_text()
 
     def _on_offset_spin_value_changed(self, spin_button):
         """Save the offset."""

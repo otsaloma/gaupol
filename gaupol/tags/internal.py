@@ -36,7 +36,7 @@ class Internal(object):
         <u></u>
         <color="#RRGGBB"></color>
         <font="NAME"></font>
-        <size="INT"></size>
+        <size="INTEGER"></size>
     """
 
     opening_tag = r"<[^/].*?>", 0

@@ -26,10 +26,10 @@ Module variables:
 
 
 from __future__ import division
-import re
 
 import gtk
 import pango
+import re
 
 from gaupol.gtk import conf, cons
 

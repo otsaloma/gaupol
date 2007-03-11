@@ -29,6 +29,14 @@ to have named groups 'before' and 'after'. Space (or whatever) between those
 groups acts as the separator. Either of the groups can be empty.
 """
 
+# TODO: IS THIS REALLY SENSIBLE?
+#
+# From a standpoint of users being able to define their own regular
+# expressions, it may be too much to expect them to understand named groups,
+# or to respect their cumbersome syntax. How about 'starts-with' and
+# 'ends-with' regular expressions that could automatically be compiled to use
+# named groups?
+
 
 from gettext import gettext as _
 

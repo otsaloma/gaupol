@@ -22,6 +22,7 @@ Relevant customizations in this file
 
 
 from __future__ import with_statement
+
 import filecmp
 import glob
 import os
@@ -120,7 +121,6 @@ class InstallLib(install_lib):
         profile_dir = 'os.path.join(os.path.expanduser("~"), ".gaupol")'
 
         # Write gaupol.paths module.
-        # pylint: disable-msg=E0602
         path = os.path.join(self.build_dir, "gaupol", "paths.py")
         with open(path, "w") as fobj:
             fobj.write("import os\n\n")
@@ -176,7 +176,6 @@ class SDistGna(sdist):
             os.system("gpg --detach %s" % tarball)
 
         # Create latest.txt.
-        # pylint: disable-msg=E0602
         os.chdir("..")
         info("creating 'latest.txt'")
         with open("latest.txt", "w") as fobj:

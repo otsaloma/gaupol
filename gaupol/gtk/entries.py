@@ -26,10 +26,9 @@ Module variables:
 
 
 import functools
-import re
-
 import gobject
 import gtk
+import re
 
 from gaupol.gtk import util
 
@@ -86,6 +85,7 @@ class TimeEntry(gtk.Entry):
         self._insert_handler = util.connect(self, self, "insert-text")
 
     @_blocked
+    @util.ignore_exceptions(AssertionError)
     def _insert_text(self, text):
         """Insert text."""
 
@@ -93,8 +93,7 @@ class TimeEntry(gtk.Entry):
         pos = self.get_position()
         orig_text = self.get_text()
         new_text = orig_text[:pos] + text + orig_text[pos + length:]
-        if not _RE_TIME.match(new_text):
-            return
+        assert _RE_TIME.match(new_text)
         self.set_text(new_text)
         if length == 1:
             new_pos = pos + length
@@ -114,11 +113,11 @@ class TimeEntry(gtk.Entry):
         self.stop_emission("delete-text")
         self.set_position(start_pos)
 
+    @util.ignore_exceptions(AssertionError)
     def _on_key_press_event(self, entry, event):
         """Change numbers to zero if BackSpace or Delete pressed."""
 
-        if event.keyval not in (gtk.keysyms.BackSpace, gtk.keysyms.Delete):
-            return
+        assert event.keyval in (gtk.keysyms.BackSpace, gtk.keysyms.Delete)
         self.stop_emission("key-press-event")
         if self.get_selection_bounds():
             gobject.idle_add(self._zero_selection)
@@ -139,12 +138,12 @@ class TimeEntry(gtk.Entry):
         self.stop_emission("toggle-overwrite")
 
     @_blocked
+    @util.ignore_exceptions(AssertionError)
     def _zero_next(self):
         """Change next digit to zero."""
 
         pos = self.get_position()
-        if pos in (2, 5, 8, 12):
-            return
+        assert pos in (2, 5, 8, 12)
         orig_text = self.get_text()
         text_before = orig_text[:pos]
         text_after = orig_text[pos + 1:]
@@ -168,11 +167,11 @@ class TimeEntry(gtk.Entry):
         self.set_position(pos - 1)
 
     @_blocked
+    @util.ignore_exceptions(AssertionError)
     def _zero_selection(self):
         """Change digits in selection to zero."""
 
-        if not self.get_selection_bounds():
-            return
+        assert self.get_selection_bounds()
         a, z = self.get_selection_bounds()
         orig_text = self.get_text()
         zero_text = _RE_DIGIT.sub("0", orig_text[a:z])

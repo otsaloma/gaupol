@@ -52,12 +52,9 @@ class TestSubtitleFile(TestCase):
     def test_read(self):
 
         if self.file.__class__ != _subfile.SubtitleFile:
-            mode = self.file.mode
-            path = (self.get_subrip_path, self.get_microdvd_path)[mode]()
-            temp_file = (SubRip, MicroDVD)[mode](path, "ascii")
+            path = self.get_file_path(self.file.format)
             self.file.path = path
             self.file.newline = cons.NEWLINE.UNIX
-            self.file.write(*temp_file.read())
             assert self.file.read()
 
     def test_write(self):
@@ -69,4 +66,3 @@ class TestSubtitleFile(TestCase):
             self.file.path = path
             self.file.newline = cons.NEWLINE.UNIX
             self.file.write(*temp_file.read())
-            assert self.file.read()

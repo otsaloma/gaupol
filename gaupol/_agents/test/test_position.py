@@ -29,6 +29,7 @@ class TestPositionAgent(TestCase):
         self.project = self.get_project()
         self.delegate = self.project.adjust_times.im_self
 
+        calc = self.project.calc
         times = self.project.times
         frames = self.project.frames
         times[0] = ["00:00:00.000", "00:00:04.000", "00:00:04.000"]
@@ -37,14 +38,14 @@ class TestPositionAgent(TestCase):
         times[3] = ["00:00:50.000", "00:00:57.000", "00:00:07.000"]
         for i in range(4):
             for j in range(3):
-                frames[i][j] = self.project.calc.time_to_frame(times[i][j])
+                frames[i][j] = calc.time_to_frame(times[i][j])
         frames[4] = [  0,  40, 40]
         frames[5] = [100, 150, 50]
         frames[6] = [200, 260, 60]
         frames[7] = [500, 570, 70]
         for i in range(4, 8):
             for j in range(3):
-                times[i][j] = self.project.calc.frame_to_time(frames[i][j])
+                times[i][j] = calc.frame_to_time(frames[i][j])
 
         texts = self.project.main_texts
         texts[0] = "1234567"

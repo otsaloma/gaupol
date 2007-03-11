@@ -1,4 +1,4 @@
-# Copyright (C) 2006 Osmo Salomaa
+# Copyright (C) 2006-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #

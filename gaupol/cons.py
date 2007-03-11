@@ -191,24 +191,28 @@ REGISTER.REDO_MULTIPLE.shift = 1
 REGISTER.REDO_MULTIPLE.signal = "action-redone"
 REGISTER.finalize()
 
+
+
 VIDEO_PLAYER = cons.Section()
 VIDEO_PLAYER.MPLAYER = cons.Member()
-VIDEO_PLAYER.MPLAYER.command = " ".join((
+VIDEO_PLAYER.MPLAYER.command = [
     "mplayer",
     "-identify",
     "-osdlevel 2",
     "-ss $SECONDS",
     "-sub $SUBFILE",
-    "$VIDEOFILE",))
+    "$VIDEOFILE",]
 VIDEO_PLAYER.MPLAYER.display_name = "MPlayer"
 VIDEO_PLAYER.VLC = cons.Member()
-VIDEO_PLAYER.VLC.command = " ".join((
+VIDEO_PLAYER.VLC.command = [
     "vlc",
     "--start-time=$SECONDS",
     "--sub-file=$SUBFILE",
-    "$VIDEOFILE",))
+    "$VIDEOFILE",]
 VIDEO_PLAYER.VLC.display_name = "VLC"
 if sys.platform == "win32":
-    VIDEO_PLAYER.MPLAYER.command[0:7] = r"%ProgramFiles%\mplayer\mplayer.exe"
-    VIDEO_PLAYER.VLC.command[0:3] = r"%ProgramFiles%\VideoLAN\vlc\vlc.exe"
+    VIDEO_PLAYER.MPLAYER.command[0] = r"%ProgramFiles%\mplayer\mplayer.exe"
+    VIDEO_PLAYER.VLC.command[0] = r"%ProgramFiles%\VideoLAN\vlc\vlc.exe"
+VIDEO_PLAYER.MPLAYER.command = " ".join(VIDEO_PLAYER.MPLAYER.command)
+VIDEO_PLAYER.VLC.command = " ".join(VIDEO_PLAYER.VLC.command)
 VIDEO_PLAYER.finalize()

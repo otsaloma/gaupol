@@ -22,7 +22,7 @@
 import bisect
 from gettext import gettext as _
 
-from gaupol import cons
+from gaupol import cons, util
 from gaupol.base import Delegate, notify_frozen
 from .index import SHOW, HIDE, DURN
 from .register import revertable
@@ -136,14 +136,14 @@ class SetAgent(Delegate):
         return new_row
 
     @revertable
+    @util.ignore_exceptions(AssertionError)
     def set_text(self, row, doc, value, register=-1):
         """Set the value of text."""
 
         value = unicode(value)
         texts = self.get_texts(doc)
         orig_value = texts[row]
-        if value == orig_value:
-            return
+        assert value != orig_value
         texts[row] = value
 
         self.register_action(

@@ -19,10 +19,9 @@
 """Closing projects and quitting Gaupol."""
 
 
+import gtk
 import os
 from gettext import gettext as _
-
-import gtk
 
 from gaupol.base import Delegate
 from gaupol.gtk import conf, cons, util
@@ -181,13 +180,11 @@ class CloseAgent(Delegate):
 
         self.close(page)
 
+    @util.ignore_exceptions(Default)
     def on_quit_activate(self, *args):
         """Quit Gaupol."""
 
-        try:
-            self._close_all_pages()
-        except Default:
-            return
+        self._close_all_pages()
         self._save_window_geometry()
         try:
             gtk.main_quit()

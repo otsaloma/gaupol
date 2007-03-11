@@ -38,6 +38,10 @@ class _TestObservable(TestCase):
         self.master = Master()
         self.master.count = 0
 
+    def teardown_method(self, method):
+
+        assert self.master.count == 1
+
     def test___copy__(self):
 
         obs_copy = copy.copy(self.obs)
@@ -69,37 +73,30 @@ class TestObservableDict(_TestObservable):
     def test___delitem__(self):
 
         del self.obs[1]
-        assert self.master.count == 1
 
     def test___setitem__(self):
 
         self.obs[1] = 2
-        assert self.master.count == 1
 
     def test_clear(self):
 
         self.obs.clear()
-        assert self.master.count == 1
 
     def test_pop(self):
 
         self.obs.pop(1)
-        assert self.master.count == 1
 
     def test_popitem(self):
 
         self.obs.popitem()
-        assert self.master.count == 1
 
     def test_setdefault(self):
 
         self.obs.setdefault(1, 2)
-        assert self.master.count == 1
 
     def test_update(self):
 
         self.obs.update({1: 2})
-        assert self.master.count == 1
 
 
 class TestObservableList(_TestObservable):
@@ -116,67 +113,54 @@ class TestObservableList(_TestObservable):
     def test___delitem__(self):
 
         del self.obs[0]
-        assert self.master.count == 1
 
     def test___delslice__(self):
 
         del self.obs[0:2]
-        assert self.master.count == 1
 
     def test___iadd__(self):
 
         self.obs += [4, 5]
-        assert self.master.count == 1
 
     def test___imul__(self):
 
         self.obs *= 2
-        assert self.master.count == 1
 
     def test___setitem__(self):
 
         self.obs[0] = 2
-        assert self.master.count == 1
 
     def test___setslice__(self):
 
         self.obs[0:2] = [2, 3]
-        assert self.master.count == 1
 
     def test_append(self):
 
         self.obs.append(4)
-        assert self.master.count == 1
 
     def test_extend(self):
 
         self.obs.extend([4, 5])
-        assert self.master.count == 1
 
     def test_insert(self):
 
         self.obs.insert(0, 0)
-        assert self.master.count == 1
 
     def test_pop(self):
 
         self.obs.pop()
-        assert self.master.count == 1
 
     def test_remove(self):
 
         self.obs.remove(1)
-        assert self.master.count == 1
 
     def test_reverse(self):
 
         self.obs.reverse()
-        assert self.master.count == 1
 
     def test_sort(self):
 
         self.obs.sort()
-        assert self.master.count == 1
 
 
 class TestObservableSet(_TestObservable):
@@ -193,64 +177,51 @@ class TestObservableSet(_TestObservable):
     def test___iand__(self):
 
         self.obs &= set((1, 2))
-        assert self.master.count == 1
 
     def test___ior__(self):
 
         self.obs |= set((1, 2))
-        assert self.master.count == 1
 
     def test___isub__(self):
 
         self.obs -= set((1, 2))
-        assert self.master.count == 1
 
     def test___ixor__(self):
 
         self.obs ^= set((1, 2))
-        assert self.master.count == 1
 
     def test_add(self):
 
         self.obs.add(4)
-        assert self.master.count == 1
 
     def test_clear(self):
 
         self.obs.clear()
-        assert self.master.count == 1
 
     def test_difference_update(self):
 
         self.obs.difference_update(set((1, 2)))
-        assert self.master.count == 1
 
     def test_discard(self):
 
         self.obs.discard(1)
-        assert self.master.count == 1
 
     def test_intersection_update(self):
 
         self.obs.intersection_update(set((1, 2)))
-        assert self.master.count == 1
 
     def test_pop(self):
 
         self.obs.pop()
-        assert self.master.count == 1
 
     def test_remove(self):
 
         self.obs.remove(1)
-        assert self.master.count == 1
 
     def test_symmetric_difference_update(self):
 
         self.obs.symmetric_difference_update(set((1, 2)))
-        assert self.master.count == 1
 
     def test_update(self):
 
         self.obs.update(set((4, 5)))
-        assert self.master.count == 1

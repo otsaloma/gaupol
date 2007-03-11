@@ -58,7 +58,7 @@ class Observable(object):
     whenever the value of the instance variable changes.
 
     Notify signals will be emitted for mutable variables as well, which means
-    care should be taken not to emit thousands of signals when appending
+    that care should be taken not to emit thousands of signals when appending
     one-by-one to a large list. 'freeze_notify' and 'thaw_notify' methods as
     well as the 'notify_frozen' decorator will queue notify signals and emit
     only one of each once thawed.
@@ -108,12 +108,13 @@ class Observable(object):
     def _validate(self, name, value):
         """Return value or an observable version of mutable value."""
 
+        args = (value, self, name)
         if isinstance(value, dict):
-            return ObservableDict(value, self, name)
+            return ObservableDict(*args)
         if isinstance(value, list):
-            return ObservableList(value, self, name)
+            return ObservableList(*args)
         if isinstance(value, set):
-            return ObservableSet(value, self, name)
+            return ObservableSet(*args)
         return value
 
     def block(self, signal):
@@ -147,8 +148,6 @@ class Observable(object):
             return
 
         if not signal in self._blocked_signals:
-            # FIX: REMOVE WHEN NO EXCESSIVE SIGNALS EMITTED.
-            print "%s.%s" % (self.__class__.__name__, signal)
             if signal.startswith("notify::"):
                 name = signal.replace("notify::", "")
                 args = (getattr(self, name),)

@@ -130,13 +130,14 @@ class LanguageDialog(GladeDialog):
         for lang in self._langs:
             store.append([langlib.get_long_name(lang)])
 
+    @util.ignore_exceptions(AssertionError)
     def _on_tree_view_selection_changed(self, selection):
         """Save the language."""
 
         store, itr = selection.get_selected()
-        if itr is not None:
-            row = store.get_path(itr)[0]
-            conf.spell_check.lang = self._langs[row]
+        assert itr is not None
+        row = store.get_path(itr)[0]
+        conf.spell_check.lang = self._langs[row]
 
     def _save_column(self):
         """Save the column."""

@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Miscellaneous functions for GTK widgets.
+"""Miscellaneous functions.
 
 Module variables:
 
@@ -35,11 +35,10 @@ different themes. Let the EXTRA constant very vaguely account for that.
 
 
 import functools
-import os
-
 import gobject
 import gtk
 import gtk.glade
+import os
 import pango
 
 from gaupol import paths
@@ -127,20 +126,19 @@ def idle_method(function):
 def prepare_text_view(text_view):
     """Connect text view to font and length margin updates."""
 
-    # pylint: disable-msg=E0102
-    def update(*args):
+    def update_view(*args):
         if conf.editor.show_lengths_edit:
             return lengthlib.connect_text_view(text_view)
         return lengthlib.disconnect_text_view(text_view)
-    conf.editor.connect("notify::show_lengths_edit", update)
-    update()
+    conf.editor.connect("notify::show_lengths_edit", update_view)
+    update_view()
 
-    def update(*args):
+    def update_font(*args):
         font = ("" if conf.editor.use_default_font else conf.editor.font)
         set_widget_font(text_view, font)
-    conf.editor.connect("notify::use_default_font", update)
-    conf.editor.connect("notify::font", update)
-    update()
+    conf.editor.connect("notify::use_default_font", update_font)
+    conf.editor.connect("notify::font", update_font)
+    update_font()
 
 def resize_dialog(dialog, width, height, max_width=0.6, max_height=0.6):
     """Resize dialog in a smart manner.

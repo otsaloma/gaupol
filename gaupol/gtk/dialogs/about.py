@@ -26,10 +26,9 @@ Module variables:
 """
 
 
+import gtk
 import os
 from gettext import gettext as _
-
-import gtk
 
 from gaupol import paths, urls, __version__
 from gaupol.gtk import util

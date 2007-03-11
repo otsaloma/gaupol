@@ -8,9 +8,10 @@ pylint --rcfile=$(dirname "$0")/data/pylintrc $@ \
     | egrep -v "Instance of 'None' has no '.+?' member" \
     | egrep -v "Instance of 'Test.+?' has no '.+?' member" \
     | egrep -v "No name '.+?' in module '.+?\.test\.?'" \
+    | egrep -v "Undefined variable 'fobj'" \
 \
-    | egrep -v "Instance of 'Section' has no '.+?' member" \
     | egrep -v "Instance of 'Member' has no '.+?' member" \
+    | egrep -v "Instance of 'Section' has no '.+?' member" \
     | egrep -v "Module 'gaupol\.gtk\.\.?conf' has no '.+?' member" \
     | egrep -v "Unused import (SHOW|HIDE|DURN)" \
 \

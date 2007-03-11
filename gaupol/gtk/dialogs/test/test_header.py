@@ -95,51 +95,51 @@ class TestHeaderDialog(TestCase):
 
     def test__on_copy_down_button_clicked(self):
 
-        self.dialog._copy_down_button.emit("clicked")
+        self.dialog._on_copy_down_button_clicked()
         value = self.dialog._get_translation_header()
         assert value == self.dialog._main_file.header
 
     def test__on_copy_up_button_clicked(self):
 
-        self.dialog._copy_up_button.emit("clicked")
+        self.dialog._on_copy_up_button_clicked()
         value = self.dialog._get_main_header()
         assert value == self.dialog._tran_file.header
 
     def test__on_main_clear_button_clicked(self):
 
-        self.dialog._main_clear_button.emit("clicked")
+        self.dialog._on_main_clear_button_clicked()
         value = self.dialog._get_main_header()
         assert value == ""
 
     def test__on_main_temp_button_clicked(self):
 
-        self.dialog._main_temp_button.emit("clicked")
+        self.dialog._on_main_temp_button_clicked()
         value = self.dialog._get_main_header()
         assert value == self.dialog._main_file.get_template_header()
 
     def test__on_main_revert_button_clicked(self):
 
-        self.dialog._main_clear_button.emit("clicked")
-        self.dialog._main_revert_button.emit("clicked")
+        self.dialog._on_main_clear_button_clicked()
+        self.dialog._on_main_revert_button_clicked()
         value = self.dialog._get_main_header()
         assert value == self.dialog._main_file.header
 
     def test__on_tran_clear_button_clicked(self):
 
-        self.dialog._tran_clear_button.emit("clicked")
+        self.dialog._on_tran_clear_button_clicked()
         value = self.dialog._get_translation_header()
         assert value == ""
 
     def test__on_tran_temp_button_clicked(self):
 
-        self.dialog._tran_temp_button.emit("clicked")
+        self.dialog._on_tran_temp_button_clicked()
         value = self.dialog._get_translation_header()
         assert value == self.dialog._tran_file.get_template_header()
 
     def test__on_tran_revert_button_clicked(self):
 
-        self.dialog._tran_clear_button.emit("clicked")
-        self.dialog._tran_revert_button.emit("clicked")
+        self.dialog._on_tran_clear_button_clicked()
+        self.dialog._on_tran_revert_button_clicked()
         value = self.dialog._get_translation_header()
         assert value == self.dialog._tran_file.header
 

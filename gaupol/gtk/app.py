@@ -25,12 +25,11 @@ Module variables:
 """
 
 
+import gtk
 import os
+import pango
 import types
 from gettext import gettext as _
-
-import gtk
-import pango
 
 from gaupol import paths
 from gaupol.base import Observable

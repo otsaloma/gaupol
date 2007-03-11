@@ -148,20 +148,22 @@ class View(gtk.TreeView):
         conf.connect(self, "editor", "show_lengths_cell")
         conf.connect(self, "editor", "use_default_font")
 
+    @util.ignore_exceptions(AssertionError)
     def _on_conf_editor_notify_font(self, *args):
         """Apply the new font."""
 
-        if not conf.editor.use_default_font:
-            for column in self.get_columns():
-                renderer = column.get_cell_renderers()[0]
-                renderer.props.font = conf.editor.font
-            self.columns_autosize()
+        assert not conf.editor.use_default_font
+        for column in self.get_columns():
+            renderer = column.get_cell_renderers()[0]
+            renderer.props.font = conf.editor.font
+        self.columns_autosize()
 
+    @util.ignore_exceptions(AssertionError)
     def _on_conf_editor_notify_length_unit(self, *args):
         """Repaint the cells."""
 
-        if conf.editor.show_lengths_cell:
-            self.columns_autosize()
+        assert conf.editor.show_lengths_cell
+        self.columns_autosize()
 
     def _on_conf_editor_notify_show_lengths_cell(self, *args):
         """Repaint the cells."""
@@ -228,12 +230,12 @@ class View(gtk.TreeView):
             col = self.get_column(col)
         self.set_cursor(row, col)
 
+    @util.ignore_exceptions(AssertionError)
     def update_headers(self):
         """Update the attributes of the column header labels."""
 
         col = self.get_focus()[1]
-        if col == self._active_col:
-            return
+        assert col != self._active_col
         if self._active_col is not None:
             label = self.get_column(self._active_col).get_widget()
             label.set_attributes(_NORMAL_ATTR)

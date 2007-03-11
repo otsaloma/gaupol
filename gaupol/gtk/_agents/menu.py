@@ -19,10 +19,9 @@
 """Building and updating menus."""
 
 
+import gtk
 import os
 from gettext import gettext as _
-
-import gtk
 
 from gaupol.base import Delegate
 from gaupol.gtk import conf, cons, util
@@ -177,12 +176,13 @@ class MenuAgent(Delegate):
         while gtk.events_pending():
             gtk.main_iteration()
 
+    @util.ignore_exceptions(AssertionError)
     def on_page_tab_widget_button_press_event(self, button, event):
         """Display a tab pop-up menu."""
 
-        if event.button == 3:
-            menu = self.uim.get_widget("/ui/tab_popup")
-            menu.popup(None, None, None, event.button, event.time)
+        assert event.button == 3
+        menu = self.uim.get_widget("/ui/tab_popup")
+        menu.popup(None, None, None, event.button, event.time)
 
     def on_redo_button_show_menu(self, *args):
         """Show the redo button menu."""

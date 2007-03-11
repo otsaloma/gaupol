@@ -24,12 +24,11 @@ Module variables:
 """
 
 
+import gtk
 import os
+import pango
 import string
 from gettext import gettext as _
-
-import gtk
-import pango
 
 from gaupol import enclib
 from gaupol.base import Observable
@@ -245,18 +244,19 @@ class Page(Observable):
         self.reload_view(rows, [TTXT])
         self.view.select_rows(rows)
 
+    @util.ignore_exceptions(AssertionError)
     def _on_tab_event_box_enter_notify_event(self, *args):
         """Update the text in the tooltip."""
 
         main_file = self.project.main_file
-        if main_file is not None:
-            event_box = self.tab_widget.get_data("event_box")
-            tooltip = string.Template(_TOOLTIP).substitute(
-                path=main_file.path,
-                format=main_file.format.display_name,
-                encoding=enclib.get_long_name(main_file.encoding),
-                newline=main_file.newline.display_name,)
-            self.tooltips.set_tip(event_box, tooltip)
+        assert main_file is not None
+        event_box = self.tab_widget.get_data("event_box")
+        tooltip = string.Template(_TOOLTIP).substitute(
+            path=main_file.path,
+            format=main_file.format.display_name,
+            encoding=enclib.get_long_name(main_file.encoding),
+            newline=main_file.newline.display_name,)
+        self.tooltips.set_tip(event_box, tooltip)
 
     def assert_store(self):
         """Assert that store's data matches project's."""

@@ -20,7 +20,7 @@
 
 Module variables:
 
-    BUG_REPORT, DOWNLOAD, HOMEPAGE, REGEX_HELP, VERSION
+    BUG_REPORT, DOWNLOAD, HOMEPAGE, REGEX_HELP
 """
 
 
@@ -28,4 +28,3 @@ BUG_REPORT = "http://gna.org/bugs/?func=additem&group=gaupol"
 DOWNLOAD   = "http://home.gna.org/gaupol/download.html"
 HOMEPAGE   = "http://home.gna.org/gaupol"
 REGEX_HELP = "http://docs.python.org/lib/re-syntax.html"
-VERSION    = "http://download.gna.org/gaupol/latest.txt"

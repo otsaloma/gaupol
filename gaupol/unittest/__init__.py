@@ -16,12 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Unit testing framework.
-
-Module variables:
-
-    MICRODVD_TEXT: Sample MicroDVD text
-    SUBRIP_TEXT:   Sample SubRip text
+"""Unit testing system.
 
 All test module names should be prefixed with 'test_', class names with 'Test',
 function and method names with 'test_'. Interactive GUI test method names
@@ -37,12 +32,6 @@ keep all test code independent of the application used to run the tests.
 
 from .case import TestCase
 from .decorators import benchmark, reversion_test
-from .samples import MICRODVD_TEXT, SUBRIP_TEXT
 
 
-__all__ = [
-    "TestCase",
-    "benchmark",
-    "reversion_test",
-    "MICRODVD_TEXT",
-    "SUBRIP_TEXT",]
+__all__ = ["TestCase", "benchmark", "reversion_test"]

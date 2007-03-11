@@ -19,10 +19,9 @@
 """Dialogs for selecting character encodings."""
 
 
-from gettext import gettext as _
-
 import gobject
 import gtk
+from gettext import gettext as _
 
 from gaupol import enclib
 from gaupol.gtk import conf, util

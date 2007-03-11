@@ -28,7 +28,7 @@ class TestModule(TestCase):
 
     def test_attributes(self):
 
-        assert isinstance(conf.CONFIG_FILE, basestring)
+        assert hasattr(conf, "CONFIG_FILE")
         assert isinstance(conf.SPEC_FILE, basestring)
 
         editor = conf.debug.editor

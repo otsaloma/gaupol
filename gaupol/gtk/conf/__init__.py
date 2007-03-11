@@ -44,7 +44,7 @@ SPEC_FILE = os.path.join(paths.DATA_DIR, "conf.spec")
 
 
 def _translate_nones(config):
-    """Translate Nones to a False value of proper type."""
+    """Translate Nones to a False value of appropriate type."""
 
     options = (
         ("editor" , "font"          , ""),

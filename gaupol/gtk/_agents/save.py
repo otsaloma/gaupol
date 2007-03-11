@@ -19,10 +19,9 @@
 """Saving documents."""
 
 
+import gtk
 import os
 from gettext import gettext as _
-
-import gtk
 
 from gaupol import enclib
 from gaupol.base import Delegate

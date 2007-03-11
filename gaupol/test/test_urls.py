@@ -30,4 +30,3 @@ class TestModule(TestCase):
         urllib.urlopen(urls.DOWNLOAD)
         urllib.urlopen(urls.HOMEPAGE)
         urllib.urlopen(urls.REGEX_HELP)
-        urllib.urlopen(urls.VERSION)

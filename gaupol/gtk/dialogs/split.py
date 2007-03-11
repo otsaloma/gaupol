@@ -20,9 +20,8 @@
 
 
 import copy
-from gettext import gettext as _
-
 import gtk
+from gettext import gettext as _
 
 from gaupol.gtk import cons, util
 from gaupol.gtk.page import Page

@@ -17,6 +17,7 @@
 
 
 
+from gaupol.gtk.unittest import TestCase
 from .. import errors
 
 

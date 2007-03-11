@@ -16,9 +16,8 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-import os
-
 import gtk
+import os
 
 from gaupol.gtk.unittest import TestCase
 

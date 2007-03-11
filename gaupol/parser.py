@@ -19,6 +19,7 @@
 """Text parser for tag-aware editing."""
 
 
+from gaupol import util
 from gaupol.finder import Finder
 
 
@@ -90,11 +91,12 @@ class Parser(Finder):
             if all(list(x.endswith(end_tag) for x in lines)):
                 self.margins = [start_tag, end_tag]
 
+    @util.ignore_exceptions(AssertionError)
     def _shift_tags(self, pos, shift, orig_text):
         """Shift all the tags after position."""
 
-        if not shift or not self.tags:
-            return
+        assert shift
+        assert self.tags
 
         # Shift tags at position if at a closing tag and shift is positive,
         # otherwise shift only tags after position. This should keep tags at
@@ -146,6 +148,7 @@ class Parser(Finder):
         shift = len(self.text) - len(orig_text)
         self._shift_tags(a, shift, orig_text)
 
+    @util.ignore_exceptions(AssertionError)
     def set_text(self, text, next=True):
         """Set the text and parse it.
 
@@ -155,8 +158,7 @@ class Parser(Finder):
 
         self.margins = []
         self.tags = []
-        if self.re_tag is None:
-            return
+        assert self.re_tag is not None
         if text.count("\n"):
             self._set_margins(text)
         if not self.margins:

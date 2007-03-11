@@ -30,8 +30,8 @@ import os
 __all__ = ["DATA_DIR", "LOCALE_DIR", "PROFILE_DIR"]
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-PREFIX_DIR = os.path.join(CURRENT_DIR, "..")
-DATA_DIR = os.path.join(PREFIX_DIR, "data")
-LOCALE_DIR = os.path.join(PREFIX_DIR, "locale")
+PREFIX_DIR  = os.path.abspath(os.path.join(CURRENT_DIR, ".."))
+DATA_DIR    = os.path.join(PREFIX_DIR, "data")
+LOCALE_DIR  = os.path.join(PREFIX_DIR, "locale")
 PROFILE_DIR = os.path.join(os.path.expanduser("~"), ".gaupol")
 del CURRENT_DIR, PREFIX_DIR

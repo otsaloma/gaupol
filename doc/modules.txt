@@ -26,7 +26,6 @@ gaupol.__init__
 
 gaupol.gtk.unittest/
 gaupol.gtk.runner
-gaupol.gtk.paths
 gaupol.gtk.errors
 gaupol.gtk.cons
 gaupol.gtk.index
@@ -34,7 +33,7 @@ gaupol.gtk.conf/
 gaupol.gtk.lengthlib
 gaupol.gtk.util
 gaupol.gtk.entries
-gaupol.gtk.cellrend
+gaupol.gtk.cellrend/
 gaupol.gtk.output
 gaupol.gtk.view
 gaupol.gtk.page

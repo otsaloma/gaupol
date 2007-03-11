@@ -139,16 +139,17 @@ class MultiCloseDialog(GladeDialog):
         tree_view.append_column(column)
         return store
 
+    @util.ignore_exceptions(AssertionError)
     def _on_response(self, dialog, response):
         """Save the selected documents and close pages."""
 
-        if response == gtk.RESPONSE_YES:
-            try:
-                self._save_documents()
-            except Default:
-                self.stop_emission("response")
-                return self.response(gtk.RESPONSE_CANCEL)
-            self._close_pages()
+        assert response == gtk.RESPONSE_YES
+        try:
+            self._save_documents()
+        except Default:
+            self.stop_emission("response")
+            return self.response(gtk.RESPONSE_CANCEL)
+        self._close_pages()
 
     def _on_tree_view_cell_toggled(self, renderer, row, store):
         """Toggle the save check button value."""

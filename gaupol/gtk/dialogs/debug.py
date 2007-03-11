@@ -22,16 +22,15 @@
 # Copyright (C) 2005 by Async Open Source and Sicem S.L.
 
 
+import gobject
+import gtk
 import linecache
 import os
+import pango
 import platform
 import sys
 import traceback
 from gettext import gettext as _
-
-import gobject
-import gtk
-import pango
 
 from gaupol import urls, __version__
 from gaupol.gtk import conf, util
@@ -100,20 +99,22 @@ class DebugDialog(GladeDialog):
         end_iter = text_buffer.get_end_iter()
         text_buffer.insert_with_tags_by_name(end_iter, text, *tags)
 
+    @util.ignore_exceptions(AssertionError)
     def _on_response(self, dialog, response):
         """Do not send response if reporting bug."""
 
-        if response == gtk.RESPONSE_YES:
-            util.browse_url(urls.BUG_REPORT)
-            self.stop_emission("response")
+        assert response == gtk.RESPONSE_YES
+        util.browse_url(urls.BUG_REPORT)
+        self.stop_emission("response")
 
+    @util.ignore_exceptions(AssertionError)
     def _on_text_view_link_tag_event(self, tag, text_view, event, itr):
         """Open linked file in editor."""
 
-        if event.type == gtk.gdk.BUTTON_RELEASE and event.button == 1:
-            text_buffer = self._text_view.get_buffer()
-            if not text_buffer.get_selection_bounds():
-                self._open_link(tag)
+        assert event.type == gtk.gdk.BUTTON_RELEASE and event.button == 1
+        text_buffer = self._text_view.get_buffer()
+        assert not text_buffer.get_selection_bounds()
+        self._open_link(tag)
 
     def _on_text_view_motion_notify_event(self, text_view, event):
         """Change mouse pointer when hovering over a link."""
@@ -265,14 +266,14 @@ class DebugDialog(GladeDialog):
         self._resize()
 
 
+@util.ignore_exceptions(AssertionError)
 def show(exctype, value, tb):
     """Show exception traceback in dialog.
 
     This function is usable as sys.excepthook.
     """
     traceback.print_exception(exctype, value, tb)
-    if not isinstance(value, Exception):
-        return
+    assert isinstance(value, Exception)
     try:
         dialog = DebugDialog()
         dialog.set_text(exctype, value, tb)

@@ -83,8 +83,8 @@ class TestFilePage(TestCase):
             selection.select_path(0)
             return responder.next()
         self.page.run_dialog = run_dialog
-        self.page._add_button.emit("clicked")
-        self.page._add_button.emit("clicked")
+        self.page._on_add_button_clicked()
+        self.page._on_add_button_clicked()
 
     def test__on_auto_check_toggled(self):
 
@@ -95,7 +95,7 @@ class TestFilePage(TestCase):
 
         selection = self.page._tree_view.get_selection()
         selection.select_path(0)
-        self.page._down_button.emit("clicked")
+        self.page._on_down_button_clicked()
 
     def test__on_locale_check_toggled(self):
 
@@ -106,13 +106,13 @@ class TestFilePage(TestCase):
 
         selection = self.page._tree_view.get_selection()
         selection.select_path(0)
-        self.page._remove_button.emit("clicked")
+        self.page._on_remove_button_clicked()
 
     def test__on_up_button_clicked(self):
 
         selection = self.page._tree_view.get_selection()
         selection.select_path(1)
-        self.page._up_button.emit("clicked")
+        self.page._on_up_button_clicked()
 
 
 class TestPreviewPage(TestCase):

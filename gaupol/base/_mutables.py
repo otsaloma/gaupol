@@ -22,11 +22,13 @@
 
 
 import copy
+import functools
 
 
 def _mutation(function):
     """Decorator for sending a notification after mutating object."""
 
+    @functools.wraps(function)
     def wrapper(*args, **kwargs):
         value = function(*args, **kwargs)
         args[0].master.notify(args[0].name)

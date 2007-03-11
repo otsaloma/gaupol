@@ -287,7 +287,7 @@ def makedirs(directory):
 def path_to_uri(path):
     """Convert local filepath to URI."""
 
-    return ("file://%s" % urllib.quote(path))
+    return "file://%s" % urllib.quote(path)
 
 def print_read_io(path, message):
     """Print IO error message to standard output."""

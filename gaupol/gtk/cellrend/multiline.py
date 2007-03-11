@@ -22,7 +22,7 @@
 import gobject
 import gtk
 
-from gaupol.gtk import conf, util, lengthlib
+from gaupol.gtk import conf, lengthlib, util
 
 
 class _CellTextView(gtk.TextView, gtk.CellEditable):
@@ -97,16 +97,17 @@ class MultilineCellRenderer(gtk.CellRendererText):
         editor.remove_widget()
         self.emit("editing-canceled")
 
+    @util.ignore_exceptions(AssertionError)
     def _on_editor_key_press_event(self, editor, event):
         """End editing if Enter pressed."""
 
-        if not event.state & (gtk.gdk.SHIFT_MASK | gtk.gdk.CONTROL_MASK):
-            if event.keyval in (gtk.keysyms.Return, gtk.keysyms.KP_Enter):
-                editor.remove_widget()
-                self.emit("edited", editor.get_data("path"), editor.get_text())
-            elif event.keyval == gtk.keysyms.Escape:
-                editor.remove_widget()
-                self.emit("editing-canceled")
+        assert not event.state & (gtk.gdk.SHIFT_MASK | gtk.gdk.CONTROL_MASK)
+        if event.keyval in (gtk.keysyms.Return, gtk.keysyms.KP_Enter):
+            editor.remove_widget()
+            self.emit("edited", editor.get_data("path"), editor.get_text())
+        elif event.keyval == gtk.keysyms.Escape:
+            editor.remove_widget()
+            self.emit("editing-canceled")
 
     def _on_notify_text(self, *args):
         """Set markup by adding line lengths to text."""

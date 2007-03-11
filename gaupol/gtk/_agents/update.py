@@ -19,11 +19,10 @@
 """Updating the application GUI."""
 
 
-import os
-from gettext import gettext as _
-
 import gobject
 import gtk
+import os
+from gettext import gettext as _
 
 from gaupol.base import Delegate
 from gaupol.gtk import conf, cons, util
@@ -146,13 +145,14 @@ class UpdateAgent(Delegate):
         self.update_gui()
         self.emit("pages-reordered", page, index)
 
+    @util.ignore_exceptions(AssertionError)
     def on_notebook_switch_page(self, notebook, pointer, index):
         """Update GUI for the page switched to."""
 
-        if self.pages:
-            page = self.pages[index]
-            self.update_gui()
-            page.view.grab_focus()
+        assert self.pages
+        page = self.pages[index]
+        self.update_gui()
+        page.view.grab_focus()
 
     def on_view_button_press_event(self, view, event):
         """Display a pop-up menu to edit data."""

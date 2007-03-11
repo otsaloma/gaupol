@@ -120,9 +120,8 @@ Module variables:
 # pylint: disable-msg=E1101
 
 
-from gettext import gettext as _
-
 import gtk
+from gettext import gettext as _
 
 from gaupol.base import cons
 from gaupol.cons import *

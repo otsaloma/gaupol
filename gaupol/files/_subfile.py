@@ -51,7 +51,7 @@ class SubtitleFile(object):
         encoding: Character encoding
         header:   Header string
         newline:  NEWLINE constant
-        path:     Filepath
+        path:     Path to the file
     """
 
     format = None

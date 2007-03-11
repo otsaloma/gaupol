@@ -18,7 +18,7 @@
 
 import os
 
-from gaupo.gtk import paths
+from gaupol import paths
 from gaupol.gtk.unittest import TestCase
 from .. import wrappers
 
@@ -44,7 +44,8 @@ class TestContainer(TestCase):
     def setup_method(self, method):
 
         config = wrappers.Config(CONFIG_FILE, SPEC_FILE)
-        self.container = wrappers.Container(config["output_window"])
+        self.root = config["output_window"]
+        self.container = wrappers.Container(self.root)
 
     def test___getattr__(self):
 
@@ -54,15 +55,15 @@ class TestContainer(TestCase):
     def test___setattr__(self):
 
         self.container.show = False
-        if not "show" in self.container.root.defaults:
-            self.container.root.defaults.append("show")
+        if not "show" in self.root.defaults:
+            self.root.defaults.append("show")
         self.container.show = False
-        assert self.container.root["show"] is False
-        assert "show" in self.container.root.defaults
+        assert self.root["show"] is False
+        assert "show" in self.root.defaults
 
         self.container.size = [200, 200]
-        if not "size" in self.container.root.defaults:
-            self.container.root.defaults.append("size")
+        if not "size" in self.root.defaults:
+            self.root.defaults.append("size")
         self.container.size = [100, 100]
-        assert self.container.root["size"] == [100, 100]
-        assert not "size" in self.container.root.defaults
+        assert self.root["size"] == [100, 100]
+        assert not "size" in self.root.defaults

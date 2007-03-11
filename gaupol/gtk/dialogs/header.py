@@ -19,9 +19,8 @@
 """Dialog for editing subtitle file headers."""
 
 
-from gettext import gettext as _
-
 import gtk
+from gettext import gettext as _
 
 from gaupol.files import *
 from gaupol.gtk import cons, util

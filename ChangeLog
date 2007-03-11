@@ -1,3 +1,70 @@
+2007-03-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/_agents/edit.py:
+	* gaupol/_agents/position.py:
+	* gaupol/_agents/register.py:
+	* gaupol/_agents/set.py:
+	* gaupol/_agents/support.py:
+	* gaupol/base/cons.py:
+	* gaupol/base/__init__.py:
+	* gaupol/base/_mutables.py:
+	* gaupol/base/observable.py:
+	* gaupol/cons.py:
+	* gaupol/files/_subfile.py:
+	* gaupol/gtk/_actions/edit.py:
+	* gaupol/gtk/_actions/file.py:
+	* gaupol/gtk/_actions/help.py:
+	* gaupol/gtk/_actions/projects.py:
+	* gaupol/gtk/_actions/text.py:
+	* gaupol/gtk/_actions/tools.py:
+	* gaupol/gtk/_agents/close.py:
+	* gaupol/gtk/_agents/edit.py:
+	* gaupol/gtk/_agents/menu.py:
+	* gaupol/gtk/_agents/open.py:
+	* gaupol/gtk/_agents/preview.py:
+	* gaupol/gtk/_agents/save.py:
+	* gaupol/gtk/_agents/update.py:
+	* gaupol/gtk/_agents/view.py:
+	* gaupol/gtk/app.py:
+	* gaupol/gtk/cellrend/multiline.py:
+	* gaupol/gtk/cellrend/time.py:
+	* gaupol/gtk/conf/__init__.py:
+	* gaupol/gtk/cons.py:
+	* gaupol/gtk/dialogs/about.py:
+	* gaupol/gtk/dialogs/debug.py:
+	* gaupol/gtk/dialogs/encoding.py:
+	* gaupol/gtk/dialogs/file.py:
+	* gaupol/gtk/dialogs/glade.py:
+	* gaupol/gtk/dialogs/header.py:
+	* gaupol/gtk/dialogs/language.py:
+	* gaupol/gtk/dialogs/multiclose.py:
+	* gaupol/gtk/dialogs/pref.py:
+	* gaupol/gtk/dialogs/search.py:
+	* gaupol/gtk/dialogs/split.py:
+	* gaupol/gtk/entries.py:
+	* gaupol/gtk/lengthlib.py:
+	* gaupol/gtk/main.py:
+	* gaupol/gtk/output.py:
+	* gaupol/gtk/page.py:
+	* gaupol/gtk/unittest/__init__.py:
+	* gaupol/gtk/util.py:
+	* gaupol/gtk/view.py:
+	* gaupol/liner.py:
+	* gaupol/parser.py:
+	* gaupol/paths.py:
+	* gaupol/scriptlib.py:
+	* gaupol/tags/internal.py:
+	* gaupol/unittest/case.py:
+	* gaupol/unittest/decorators.py:
+	* gaupol/unittest/__init__.py:
+	* gaupol/unittest/samples.py:
+	* gaupol/urls.py:
+	* gaupol/util.py:
+	* setup.py:
+	* tools/pylint:
+	* tools/translate:
+	Refactor some stuff.
+
 2007-03-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/_actions/text.py (FindNextAction.is_doable,

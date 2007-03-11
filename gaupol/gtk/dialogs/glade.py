@@ -41,7 +41,7 @@ class GladeDialog(Delegate, Runner):
         dialog = glade_xml.get_widget("dialog")
         Delegate.__init__(self, dialog)
 
-        self._dialog    = dialog
+        self._dialog = dialog
         self._glade_xml = glade_xml
 
     def run(self):

@@ -20,6 +20,7 @@
 
 
 from __future__ import division
+
 from gettext import gettext as _
 
 from gaupol import cons, util

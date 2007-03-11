@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""GTK Unit testing framework."""
+"""GTK unit testing system."""
 
 
 from gaupol import unittest

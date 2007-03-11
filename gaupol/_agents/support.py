@@ -22,7 +22,7 @@
 import re
 from gettext import gettext as _
 
-from gaupol import cons
+from gaupol import cons, util
 from gaupol.base import Delegate, notify_frozen
 from gaupol.tags import *
 from .register import revertable
@@ -96,6 +96,7 @@ class SupportAgent(Delegate):
                 return self.tran_file.format.class_name
             except AttributeError:
                 return self.get_format_class_name(cons.DOCUMENT.MAIN)
+        raise ValueError
 
     def get_line_lengths(self, row, doc):
         """Get a list of line lengths in text without tags."""
@@ -109,10 +110,9 @@ class SupportAgent(Delegate):
     def get_mode(self):
         """Get the mode of the main file or default."""
 
-        try:
+        if self.main_file is not None:
             return self.main_file.mode
-        except AttributeError:
-            return cons.MODE.TIME
+        return cons.MODE.TIME
 
     def get_positions(self, mode=None):
         """Get either times or frames depending the mode."""
@@ -125,15 +125,14 @@ class SupportAgent(Delegate):
             return self.frames
         raise ValueError
 
+    @util.ignore_exceptions(AssertionError)
     def get_tag_regex(self, doc):
         """Get the regular expression for a tag in document or None."""
 
         name = self.get_format_class_name(doc)
-        if name is None:
-            return None
+        assert name is not None
         cls = eval(name)
-        if cls.tag is None:
-            return None
+        assert cls.tag is not None
         return re.compile(*cls.tag)
 
     def get_text_length(self, row, doc):
@@ -178,14 +177,14 @@ class SupportAgent(Delegate):
         self.emit("subtitles-inserted", rows)
 
     @revertable
+    @util.ignore_exceptions(AssertionError)
     def replace_both_texts(self, rows, new_texts, register=-1):
         """Replace texts in both documents' rows with new_texts.
 
         rows should be a list of main rows, translation rows.
         new_texts should be a list of main texts, translation texts.
         """
-        if not rows[0] and not rows[1]:
-            return
+        assert rows[0] or rows[1]
         main_args = [rows[0], cons.DOCUMENT.MAIN, new_texts[0]]
         tran_args = [rows[1], cons.DOCUMENT.TRAN, new_texts[1]]
         kwargs = {"register": register}

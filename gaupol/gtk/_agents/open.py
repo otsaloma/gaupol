@@ -20,11 +20,11 @@
 
 
 from __future__ import division
+
 import functools
+import gtk
 import os
 from gettext import gettext as _
-
-import gtk
 
 from gaupol import enclib
 from gaupol.base import Delegate

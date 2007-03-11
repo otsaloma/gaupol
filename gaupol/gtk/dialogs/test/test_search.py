@@ -33,6 +33,7 @@ class TestSearchDialog(TestCase):
 
         self.application = self.get_application()
         self.dialog = search.SearchDialog(self.application)
+        self.dialog.show()
 
         def respond(*args):
             return gtk.RESPONSE_DELETE_EVENT
