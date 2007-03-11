@@ -52,6 +52,7 @@ def memoize(function):
 def browse_url(url, browser=None):
     """Open URL in browser."""
 
+    url = shell_quote_path(url)
     desktop = get_desktop_environment()
     if desktop == "GNOME":
         return start_process("gnome-open %s" % url)

@@ -1,5 +1,10 @@
 2007-03-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/util.py (browse_url):
+	Quote url.
+
+2007-03-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/_actions/format.py:
 	* gaupol/gtk/_actions/position.py:
 	Fix imports.
