@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Edit menu UI manager actions."""
+"""Simple subtitle data editing actions."""
 
 
 import gtk
@@ -24,6 +24,78 @@ from gettext import gettext as _
 
 from gaupol.gtk.index import *
 from ._action import UIMAction
+
+
+class ClearTextsAction(UIMAction):
+
+    """Clear the selected texts."""
+
+    action_item = (
+        "clear_texts",
+        gtk.STOCK_CLEAR,
+        _("C_lear"),
+        "C",
+        _("Clear the selected texts"),)
+
+    paths = ["/ui/menubar/text/clear"]
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return True if action can be done."""
+
+        if page is not None:
+            selection = bool(page.view.get_selected_rows())
+            focus = page.view.get_focus()[1] in (MTXT, TTXT)
+            return bool(selection and focus)
+        return False
+
+
+class CopyTextsAction(UIMAction):
+
+    """Copy the selected texts to the clipboard."""
+
+    action_item = (
+        "copy_texts",
+        gtk.STOCK_COPY,
+        _("_Copy"),
+        "<control>C",
+        _("Copy the selected texts to the clipboard"),)
+
+    paths = ["/ui/menubar/text/copy"]
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return True if action can be done."""
+
+        if page is not None:
+            selection = bool(page.view.get_selected_rows())
+            focus = page.view.get_focus()[1] in (MTXT, TTXT)
+            return bool(selection and focus)
+        return False
+
+
+class CutTextsAction(UIMAction):
+
+    """Cut the selected texts to the clipboard."""
+
+    action_item = (
+        "cut_texts",
+        gtk.STOCK_CUT,
+        _("Cu_t"),
+        "<control>X",
+        _("Cut the selected texts to the clipboard"),)
+
+    paths = ["/ui/menubar/text/cut"]
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return True if action can be done."""
+
+        if page is not None:
+            selection = bool(page.view.get_selected_rows())
+            focus = page.view.get_focus()[1] in (MTXT, TTXT)
+            return bool(selection and focus)
+        return False
 
 
 class EditPreferencesAction(UIMAction):
@@ -163,6 +235,30 @@ class MergeSubtitlesAction(UIMAction):
             rows = page.view.get_selected_rows()
             if (len(rows) > 1) and (rows[-1] == rows[0] + len(rows) - 1):
                 return True
+        return False
+
+
+class PasteTextsAction(UIMAction):
+
+    """Paste texts from the clipboard."""
+
+    action_item = (
+        "paste_texts",
+        gtk.STOCK_PASTE,
+        _("_Paste"),
+        "<control>V",
+        _("Paste texts from the clipboard"),)
+
+    paths = ["/ui/menubar/text/paste"]
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return True if action can be done."""
+
+        if (page is not None) and application.clipboard.data:
+            selection = bool(page.view.get_selected_rows())
+            focus = (page.view.get_focus()[1] in (MTXT, TTXT))
+            return bool(selection and focus)
         return False
 
 

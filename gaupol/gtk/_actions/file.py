@@ -16,13 +16,53 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""File menu UI manager actions."""
+"""File and project actions."""
 
 
 import gtk
 from gettext import gettext as _
 
 from ._action import UIMAction
+
+
+class AppendFileAction(UIMAction):
+
+    """Append subtitles from file to the current project."""
+
+    action_item = (
+        "append_file",
+        None,
+        _("_Append File..."),
+        None,
+        _("Append subtitles from file to the current project"),)
+
+    paths = ["/ui/menubar/tools/append_file"]
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return True if action can be done."""
+
+        return (page is not None)
+
+
+class CloseAllProjectsAction(UIMAction):
+
+    """Close all open projects."""
+
+    action_item = (
+        "close_all_projects",
+        gtk.STOCK_CLOSE,
+        _("_Close All"),
+        "<shift><control>W",
+        _("Close all open projects"),)
+
+    paths = ["/ui/menubar/projects/close_all"]
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return True if action can be done."""
+
+        return (page is not None)
 
 
 class CloseProjectAction(UIMAction):
@@ -139,6 +179,26 @@ class QuitAction(UIMAction):
         _("Quit Gaupol"),)
 
     paths = ["/ui/menubar/file/quit"]
+
+
+class SaveAllDocumentsAction(UIMAction):
+
+    """Save all open documents."""
+
+    action_item = (
+        "save_all_documents",
+        gtk.STOCK_SAVE,
+        _("_Save All"),
+        "<shift><control>L",
+        _("Save all open documents"),)
+
+    paths = ["/ui/menubar/projects/save_all"]
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return True if action can be done."""
+
+        return (page is not None)
 
 
 class SaveMainDocumentAction(UIMAction):
@@ -279,4 +339,26 @@ class ShowRecentTranslationMenuAction(UIMAction):
         if page is not None:
             if page.project.main_file is not None:
                 return True
+        return False
+
+
+class SplitProjectAction(UIMAction):
+
+    """Split the current project in two."""
+
+    action_item = (
+        "split_project",
+        None,
+        _("_Split Project..."),
+        None,
+        _("Split the current project in two"),)
+
+    paths = ["/ui/menubar/tools/split_project"]
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return True if action can be done."""
+
+        if page is not None:
+            return len(page.project.times) > 1
         return False

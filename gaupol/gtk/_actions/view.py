@@ -25,6 +25,96 @@ from gaupol.gtk import conf, cons
 from ._action import UIMAction
 
 
+class ActivateNextProjectAction(UIMAction):
+
+    """Activate the project in the next tab."""
+
+    action_item = (
+        "activate_next_project",
+        None,
+        _("_Next"),
+        "<control>Page_Down",
+        _("Activate the project in the next tab"),)
+
+    paths = ["/ui/menubar/projects/next"]
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return True if action can be done."""
+
+        if page is not None:
+            index = application.pages.index(page) + 1
+            return (index in range(len(application.pages)))
+        return False
+
+
+class ActivatePreviousProjectAction(UIMAction):
+
+    """Activate the project in the previous tab."""
+
+    action_item = (
+        "activate_previous_project",
+        None,
+        _("_Previous"),
+        "<control>Page_Up",
+        _("Activate the project in the previous tab"),)
+
+    paths = ["/ui/menubar/projects/previous"]
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return True if action can be done."""
+
+        if page is not None:
+            return (application.pages.index(page) > 0)
+        return False
+
+
+class MoveTabLeftAction(UIMAction):
+
+    """Move the current tab to the left."""
+
+    action_item = (
+        "move_tab_left",
+        None,
+        _("Move Tab _Left"),
+        None,
+        _("Move the current tab to the left"),)
+
+    paths = ["/ui/menubar/projects/move_tab_left"]
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return True if action can be done."""
+
+        if page is not None:
+            return (application.pages.index(page) > 0)
+        return False
+
+
+class MoveTabRightAction(UIMAction):
+
+    """Move the current tab to the right."""
+
+    action_item = (
+        "move_tab_right",
+        None,
+        _("Move Tab _Right"),
+        None,
+        _("Move the current tab to the right"),)
+
+    paths = ["/ui/menubar/projects/move_tab_right"]
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return True if action can be done."""
+
+        if page is not None:
+            index = application.pages.index(page) + 1
+            return (index in range(len(application.pages)))
+        return False
+
+
 class ShowColumnsMenuAction(UIMAction):
 
     """Show the columns view menu."""

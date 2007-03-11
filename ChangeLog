@@ -1,5 +1,20 @@
 2007-03-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/_actions/edit.py:
+	* gaupol/gtk/_actions/file.py:
+	* gaupol/gtk/_actions/format.py:
+	* gaupol/gtk/_actions/help.py:
+	* gaupol/gtk/_actions/__init__.py:
+	* gaupol/gtk/_actions/position.py:
+	* gaupol/gtk/_actions/projects.py:
+	* gaupol/gtk/_actions/search.py:
+	* gaupol/gtk/_actions/text.py:
+	* gaupol/gtk/_actions/tools.py:
+	* gaupol/gtk/_actions/view.py:
+	Refactor action modules.
+
+2007-03-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/_agents/edit.py:
 	* gaupol/_agents/position.py:
 	* gaupol/_agents/register.py:

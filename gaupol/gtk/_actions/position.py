@@ -16,35 +16,13 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Tools menu UI manager actions."""
+"""Time and frame editing actions."""
 
 
 import gtk
 from gettext import gettext as _
 
-from gaupol.gtk import conf
-from gaupol.gtk.index import *
 from ._action import UIMAction
-
-
-class AppendFileAction(UIMAction):
-
-    """Append subtitles from file to the current project."""
-
-    action_item = (
-        "append_file",
-        None,
-        _("_Append File..."),
-        None,
-        _("Append subtitles from file to the current project"),)
-
-    paths = ["/ui/menubar/tools/append_file"]
-
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
-
-        return (page is not None)
 
 
 class PreviewAction(UIMAction):
@@ -77,25 +55,3 @@ class PreviewAction(UIMAction):
             return (page.project.main_file is not None)
         except AssertionError:
             return False
-
-
-class SplitProjectAction(UIMAction):
-
-    """Split the current project in two."""
-
-    action_item = (
-        "split_project",
-        None,
-        _("_Split Project..."),
-        None,
-        _("Split the current project in two"),)
-
-    paths = ["/ui/menubar/tools/split_project"]
-
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
-
-        if page is not None:
-            return len(page.project.times) > 1
-        return False
