@@ -29,6 +29,7 @@ from .insert     import InsertDialog
 from .language   import LanguageDialog
 from .message    import ErrorDialog, InfoDialog, QuestionDialog, WarningDialog
 from .multiclose import MultiCloseDialog
+from .posshift   import FrameShiftDialog, TimeShiftDialog
 from .pref       import PreferencesDialog
 from .previewerr import PreviewErrorDialog
 from .search     import SearchDialog
@@ -43,6 +44,7 @@ __all__ = [
     "DebugDialog",
     "EncodingDialog",
     "ErrorDialog",
+    "FrameShiftDialog",
     "GladeDialog",
     "HeaderDialog",
     "InfoDialog",
@@ -57,5 +59,6 @@ __all__ = [
     "SearchDialog",
     "SplitDialog",
     "TextEditDialog",
+    "TimeShiftDialog",
     "VideoDialog",
     "WarningDialog",]

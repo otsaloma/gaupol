@@ -88,6 +88,8 @@
     <menu name="tools" action="show_tools_menu">
       <menuitem name="preview" action="preview"/>
       <separator/>
+      <menuitem name="shift_positions" action="shift_positions"/>
+      <separator/>
       <menuitem name="append_file" action="append_file"/>
       <menuitem name="split_project" action="split_project"/>
     </menu>

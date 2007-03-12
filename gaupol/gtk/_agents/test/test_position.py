@@ -1,4 +1,4 @@
-# Copyright (C) 2007 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,33 +16,22 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Extension delegates of application."""
+import gtk
+
+from gaupol.gtk.unittest import TestCase
 
 
-from .close    import CloseAgent
-from .edit     import EditAgent
-from .format   import FormatAgent
-from .help     import HelpAgent
-from .menu     import MenuAgent
-from .open     import OpenAgent
-from .position import PositionAgent
-from .preview  import PreviewAgent
-from .save     import SaveAgent
-from .search   import SearchAgent
-from .update   import UpdateAgent
-from .view     import ViewAgent
+class TestPositionAgent(TestCase):
 
+    def setup_method(self, method):
 
-__all__ = AGENTS = [
-    "CloseAgent",
-    "EditAgent",
-    "FormatAgent",
-    "HelpAgent",
-    "MenuAgent",
-    "OpenAgent",
-    "PositionAgent",
-    "PreviewAgent",
-    "SaveAgent",
-    "SearchAgent",
-    "UpdateAgent",
-    "ViewAgent",]
+        self.application = self.get_application()
+
+    def test_on_shift_positions_activate(self):
+
+        responder = iter((gtk.RESPONSE_CANCEL, gtk.RESPONSE_OK))
+        def flash_dialog(*args):
+            return responder.next()
+        self.application.flash_dialog = flash_dialog
+        self.application.on_shift_positions_activate()
+        self.application.on_shift_positions_activate()

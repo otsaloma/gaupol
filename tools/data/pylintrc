@@ -23,7 +23,7 @@ init-import=no
 [BASIC]
 argument-rgx=^[a-z_][a-z0-9_]{1,17}$
 attr-rgx=^[a-z_][a-z0-9_]{1,19}$
-class-rgx=(^[A-Z_][A-Za-z0-9]{1,21}$)|(.*?Action$)|(^Test)
+class-rgx=(^[A-Z_][A-Za-z0-9]{1,21}$)|(.*?Action$)|(^_?Test)
 const-rgx=(^[A-Z_][A-Z0-9_]{1,17}$)|(^__.+?__$)|(^_$)
 function-rgx=(^[a-z_][a-z0-9_]{1,23}$)|(^test_)|(^_?on_)
 good-names=a,b,c,d,e,f,g,h,i,j,k,m,n,p,q,r,s,t,u,v,w,x,y,z

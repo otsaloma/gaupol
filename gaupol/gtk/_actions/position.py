@@ -57,3 +57,23 @@ class PreviewAction(UIMAction):
             return (page.project.main_file is not None)
         except AssertionError:
             return False
+
+
+class ShiftPositionsAction(UIMAction):
+
+    """Make subtitles appear earlier or later."""
+
+    action_item = (
+        "shift_positions",
+        None,
+        _("S_hift Positions..."),
+        "H",
+        _("Make subtitles appear earlier or later"),)
+
+    paths = ["/ui/menubar/tools/shift_positions"]
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return True if action can be done."""
+
+        return (page is not None)

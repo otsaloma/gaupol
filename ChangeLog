@@ -1,3 +1,14 @@
+2007-03-12  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/posshift-dialog.glade:
+	* data/ui.xml:
+	* gaupol/gtk/_actions/position.py:
+	* gaupol/gtk/_agents/__init__.py:
+	* gaupol/gtk/_agents/position.py:
+	* gaupol/gtk/dialogs/__init__.py:
+	* gaupol/gtk/dialogs/posshift.py:
+	Add position shift.
+
 2007-03-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/util.py (browse_url):

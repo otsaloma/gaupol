@@ -5,6 +5,7 @@ Gaupol 0.8
  * Search for "FIX", "TODO", etc.
  * Examine Application.update_gui calls
  * Test searching for unicode strings and regexes
+ * util.gc_collected
  * GNOME Bugzilla: http://live.gnome.org/Bugsquad/ForMaintainers
 
 Changes:

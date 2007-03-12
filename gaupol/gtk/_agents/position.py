@@ -1,4 +1,4 @@
-# Copyright (C) 2007 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,33 +16,23 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Extension delegates of application."""
+"""Editing times and frames."""
 
 
-from .close    import CloseAgent
-from .edit     import EditAgent
-from .format   import FormatAgent
-from .help     import HelpAgent
-from .menu     import MenuAgent
-from .open     import OpenAgent
-from .position import PositionAgent
-from .preview  import PreviewAgent
-from .save     import SaveAgent
-from .search   import SearchAgent
-from .update   import UpdateAgent
-from .view     import ViewAgent
+from gaupol.base import Delegate
+from gaupol.gtk.dialogs import FrameShiftDialog, TimeShiftDialog
 
 
-__all__ = AGENTS = [
-    "CloseAgent",
-    "EditAgent",
-    "FormatAgent",
-    "HelpAgent",
-    "MenuAgent",
-    "OpenAgent",
-    "PositionAgent",
-    "PreviewAgent",
-    "SaveAgent",
-    "SearchAgent",
-    "UpdateAgent",
-    "ViewAgent",]
+class PositionAgent(Delegate):
+
+    """Editing times and frames."""
+
+    # pylint: disable-msg=E0203,W0201
+
+    def on_shift_positions_activate(self, *args):
+        """Make subtitles appear earlier or later."""
+
+        page = self.get_current_page()
+        cls = (TimeShiftDialog, FrameShiftDialog)[page.edit_mode]
+        dialog = cls(self.window, self)
+        self.flash_dialog(dialog)
