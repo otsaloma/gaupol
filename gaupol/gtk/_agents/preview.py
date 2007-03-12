@@ -127,12 +127,14 @@ class PreviewAgent(Delegate):
         main_texts = copy.deepcopy(page.project.main_texts)
         tran_texts = copy.deepcopy(page.project.tran_texts)
 
+        blocked = page.project.block_all()
         args = (args if args is not None else [])
         kwargs = (kwargs if kwargs is not None else {})
         kwargs["register"] = None
         method(*args, **kwargs)
         path = page.project.get_temp_file_path(doc)
         time = page.project.times[row][0]
+        page.project.unblock_all()
 
         page.project.times = times
         page.project.frames = frames

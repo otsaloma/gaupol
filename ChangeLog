@@ -1,5 +1,13 @@
 2007-03-12  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/base/observable.py (block_all, unblock_all):
+	New methods.
+
+	* gaupol/gtk/_agents/preview.py (preview_changes):
+	Wrap the project method call with a block_all-unblock_all.
+
+2007-03-12  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/posshift-dialog.glade:
 	* data/ui.xml:
 	* gaupol/gtk/_actions/position.py:

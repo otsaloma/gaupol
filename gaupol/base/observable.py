@@ -48,6 +48,7 @@ class Observable(object):
     Instance variables:
 
         _blocked_signals: List of blocked signals
+        _blocked_state:   True if all signals are blocked
         _notify_frozen:   If True notify signals will be queued, not emitted
         _notify_queue:    List of queued notify signals
         _signal_handlers: Dictionary mapping signals to observers and data
@@ -69,6 +70,7 @@ class Observable(object):
 
     __slots__ = [
         "_blocked_signals",
+        "_blocked_state",
         "_notify_frozen",
         "_notify_queue",
         "_signal_handlers",]
@@ -78,6 +80,7 @@ class Observable(object):
     def __init__(self):
 
         self._blocked_signals = []
+        self._blocked_state   = False
         self._notify_frozen   = False
         self._notify_queue    = []
         self._signal_handlers = {}
@@ -127,6 +130,16 @@ class Observable(object):
             return True
         return False
 
+    def block_all(self):
+        """Block all emissions of all signals.
+
+        Return False if already blocked, otherwise True.
+        """
+        if not self._blocked_state:
+            self._blocked_state = True
+            return True
+        return False
+
     def connect(self, signal, method, *args):
         """Register to receive notifications of signal."""
 
@@ -147,7 +160,7 @@ class Observable(object):
                 self._notify_queue.append(signal)
             return
 
-        if not signal in self._blocked_signals:
+        if (not self._blocked_state) and (not signal in self._blocked_signals):
             if signal.startswith("notify::"):
                 name = signal.replace("notify::", "")
                 args = (getattr(self, name),)
@@ -191,11 +204,24 @@ class Observable(object):
         """Unblock all emissions of signal.
 
         The optional 'do' keyword argument should be the return value from
-        'block' to avoid problems with nested functions where notifications
-        were frozen at a higher level. If 'do' is False, nothing will be done.
+        'block' to avoid problems with nested functions where signals were
+        blocked at a higher level. If 'do' is False, nothing will be done.
         Return False if already unblocked, otherwise True.
         """
         if do and (signal in self._blocked_signals):
             self._blocked_signals.remove(signal)
+            return True
+        return False
+
+    def unblock_all(self, do=True):
+        """Unblock all emissions of all signals.
+
+        The optional 'do' keyword argument should be the return value from
+        'block_all' to avoid problems with nested functions where signals were
+        blocked at a higher level. If 'do' is False, nothing will be done.
+        Return False if already unblocked, otherwise True.
+        """
+        if do and self._blocked_state:
+            self._blocked_state = False
             return True
         return False
