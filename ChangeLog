@@ -1,5 +1,10 @@
 2007-03-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/dialogs/posadjust.py:
+	Fix text view widths.
+
+2007-03-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/posadjust-dialog.glade:
 	* data/ui.xml:
 	* gaupol/gtk/_actions/file.py:

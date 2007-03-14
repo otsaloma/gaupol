@@ -143,7 +143,7 @@ class _PositionAdjustDialog(GladeDialog):
     def _init_sizes(self):
         """Initialize the widget sizes."""
 
-        label = gtk.Label("\n".join(["M" * 36] * 3))
+        label = gtk.Label("\n".join(["M" * 34] * 3))
         width, height = label.size_request()
         self._text_view_1.set_size_request(width + 4, height + 7)
         self._text_view_2.set_size_request(width + 4, height + 7)
