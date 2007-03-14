@@ -24,8 +24,8 @@ from gettext import gettext as _
 
 from gaupol import util
 from gaupol.base import Delegate
-from gaupol.finder import Finder
 from gaupol.liner import Liner
+from gaupol.parser import Parser
 from .register import revertable
 
 
@@ -43,8 +43,8 @@ class TextAgent(Delegate):
         Raise re.error if pattern sucks.
         Return changed rows.
         """
-        finder = Finder()
-        finder.set_regex(pattern)
+        parser = Parser(self.get_tag_regex(doc))
+        parser.set_regex(pattern)
         re_alphanum = re.compile(r"\w", re.UNICODE)
 
         new_rows = []
@@ -54,26 +54,30 @@ class TextAgent(Delegate):
         for rows in util.get_ranges(rows):
             cap_next = False
             for row in rows:
-                text = texts[row]
+                parser.set_text(texts[row])
                 if cap_next or row == 0:
-                    match = re_alphanum.search(text)
+                    match = re_alphanum.search(parser.text)
                     if match is not None:
                         a = match.start()
-                        text = text[:a] + text[a:].capitalize()
+                        prefix = parser.text[:a]
+                        text = parser.text[a:].capitalize()
+                        parser.text = prefix + text
                     cap_next = False
-                finder.set_text(text)
                 while True:
                     try:
-                        z = finder.next()[1]
+                        z = parser.next()[1]
                     except StopIteration:
                         break
-                    match = re_alphanum.search(text[z:])
+                    match = re_alphanum.search(parser.text[z:])
                     if match is not None:
                         z = z + match.start()
-                        text = text[:z] + text[z:].capitalize()
+                        prefix = parser.text[:z]
+                        text = parser.text[z:].capitalize()
+                        parser.text = prefix + text
                         continue
                     cap_next = True
                     break
+                text = parser.get_text()
                 if text != texts[row]:
                     new_rows.append(row)
                     new_texts.append(text)

@@ -1,5 +1,10 @@
 2007-03-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/_agents/text.py (capitalize):
+	Use Parser instead of Finder.
+
+2007-03-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/dialogs/posadjust.py:
 	Fix text view widths.
 

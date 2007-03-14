@@ -27,8 +27,8 @@ class TestTextAgent(TestCase):
         self.project = self.get_project()
 
         self.project.main_texts[0] = \
-            "- which... paper?\n" + \
-            "- figaro-pravda a.k.a. the paper."
+            "<i>- which... paper?</i>\n" + \
+            "<i>- figaro-pravda a.k.a. the paper.</i>"
         self.project.main_texts[1] = \
             "room 344. have you registered\n" + \
             "at residents control..."
@@ -61,8 +61,8 @@ class TestTextAgent(TestCase):
 
         assert rows == [0, 1]
         assert self.project.main_texts[0] == \
-            "- Which... paper?\n" + \
-            "- Figaro-pravda a.k.a. the paper."
+            "<i>- Which... paper?</i>\n" + \
+            "<i>- Figaro-pravda a.k.a. the paper.</i>"
         assert self.project.main_texts[1] == \
             "Room 344. Have you registered\n" + \
             "at residents control..."
