@@ -113,7 +113,8 @@ class MPsub(SubtitleFile):
         elif self.mode == cons.MODE.FRAME:
             shows = list(int(round(x, 0)) for x in shows)
             hides = list(int(round(x, 0)) for x in hides)
-        texts = list(x[:-1] for x in texts)
+        re_trailer = re.compile(r"\n\Z", re.MULTILINE)
+        texts = list(re_trailer.sub("", x) for x in texts)
         return shows, hides, texts
 
     def _read_header(self, lines, re_time_line):

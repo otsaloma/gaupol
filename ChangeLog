@@ -1,5 +1,13 @@
 2007-03-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/files/mpsub.py:
+	* gaupol/files/subrip.py:
+	* gaupol/files/subviewer2.py:
+	Use regular expression substitution instead of insane slicing to
+	right-strip the final newline off texts.
+
+2007-03-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/_agents/text.py (capitalize):
 	Use Parser instead of Finder.
 

@@ -41,6 +41,7 @@ class SubViewer2(SubtitleFile):
 
         time = r"\d\d:\d\d:\d\d.\d\d"
         re_time_line = re.compile(r"^(%s),(%s)\s*$" % (time, time))
+        re_trailer = re.compile(r"\n\Z", re.MULTILINE)
 
         shows = []
         hides = []
@@ -51,7 +52,7 @@ class SubViewer2(SubtitleFile):
             if match is not None:
                 shows.append(match.group(1))
                 hides.append(match.group(2))
-                texts.append(lines[i + 1][:-1])
+                texts.append(re_trailer.sub("", lines[i + 1]))
 
         shows = list(x + "0" for x in shows)
         hides = list(x + "0" for x in hides)

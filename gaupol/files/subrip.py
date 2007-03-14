@@ -62,7 +62,8 @@ class SubRip(SubtitleFile):
                 texts.append(u"")
                 continue
             texts[-1] += line
-        texts = list(x[:-1] for x in texts)
+        re_trailer = re.compile(r"\n\Z", re.MULTILINE)
+        texts = list(re_trailer.sub("", x) for x in texts)
         return shows, hides, texts
 
     def read(self):
