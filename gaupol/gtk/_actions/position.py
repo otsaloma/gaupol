@@ -27,6 +27,28 @@ from gaupol.gtk.index import *
 from ._action import UIMAction
 
 
+class AdjustPositionsAction(UIMAction):
+
+    """Adjust positions by linear two-point correction."""
+
+    action_item = (
+        "adjust_positions",
+        None,
+        _("_Adjust Positions..."),
+        "A",
+        _("Adjust positions by linear two-point correction"),)
+
+    paths = ["/ui/menubar/tools/adjust_positions"]
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return True if action can be done."""
+
+        if page is not None:
+            return (len(page.project.times) > 1)
+        return False
+
+
 class PreviewAction(UIMAction):
 
     """Preview from selected position with a video player."""
@@ -66,7 +88,7 @@ class ShiftPositionsAction(UIMAction):
     action_item = (
         "shift_positions",
         None,
-        _("S_hift Positions..."),
+        _("_Shift Positions..."),
         "H",
         _("Make subtitles appear earlier or later"),)
 

@@ -21,6 +21,7 @@
 
 from gaupol.base import Delegate
 from gaupol.gtk.dialogs import FrameShiftDialog, TimeShiftDialog
+from gaupol.gtk.dialogs import FrameAdjustDialog, TimeAdjustDialog
 
 
 class PositionAgent(Delegate):
@@ -28,6 +29,14 @@ class PositionAgent(Delegate):
     """Editing times and frames."""
 
     # pylint: disable-msg=E0203,W0201
+
+    def on_adjust_positions_activate(self, *args):
+        """Adjust positions by linear two-point correction."""
+
+        page = self.get_current_page()
+        cls = (TimeAdjustDialog, FrameAdjustDialog)[page.edit_mode]
+        dialog = cls(self.window, self)
+        self.flash_dialog(dialog)
 
     def on_shift_positions_activate(self, *args):
         """Make subtitles appear earlier or later."""

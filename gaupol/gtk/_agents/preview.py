@@ -134,7 +134,7 @@ class PreviewAgent(Delegate):
         method(*args, **kwargs)
         path = page.project.get_temp_file_path(doc)
         time = page.project.times[row][0]
-        page.project.unblock_all()
+        page.project.unblock_all(blocked)
 
         page.project.times = times
         page.project.frames = frames

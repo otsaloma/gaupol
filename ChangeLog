@@ -1,3 +1,16 @@
+2007-03-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/posadjust-dialog.glade:
+	* data/ui.xml:
+	* gaupol/gtk/_actions/file.py:
+	* gaupol/gtk/_actions/position.py:
+	* gaupol/gtk/_agents/position.py:
+	* gaupol/gtk/_agents/preview.py:
+	* gaupol/gtk/dialogs/__init__.py:
+	* gaupol/gtk/dialogs/posadjust.py:
+	* gaupol/gtk/dialogs/posshift.py:
+	Add position adjust.
+
 2007-03-12  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/base/observable.py (block_all, unblock_all):

@@ -124,13 +124,14 @@ class _PositionShiftDialog(GladeDialog):
 
         conf.position_shift.target = self._get_target()
         assert response == gtk.RESPONSE_OK
-        self._shift(self._get_amount())
+        self._shift()
 
-    def _shift(self, amount):
+    def _shift(self):
         """Shift positions in subtitles."""
 
         method = self._get_shift_method()
         rows = self._get_target_rows()
+        amount = self._get_amount()
         method(rows, amount)
 
 

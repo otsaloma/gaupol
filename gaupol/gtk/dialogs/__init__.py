@@ -21,15 +21,25 @@
 
 from .about      import AboutDialog
 from .debug      import DebugDialog
-from .encoding   import AdvEncodingDialog, EncodingDialog
-from .file       import AppendDialog, OpenDialog, SaveDialog, VideoDialog
+from .encoding   import AdvEncodingDialog
+from .encoding   import EncodingDialog
+from .file       import AppendDialog
+from .file       import OpenDialog
+from .file       import SaveDialog
+from .file       import VideoDialog
 from .glade      import GladeDialog
 from .header     import HeaderDialog
 from .insert     import InsertDialog
 from .language   import LanguageDialog
-from .message    import ErrorDialog, InfoDialog, QuestionDialog, WarningDialog
+from .message    import ErrorDialog
+from .message    import InfoDialog
+from .message    import QuestionDialog
+from .message    import WarningDialog
 from .multiclose import MultiCloseDialog
-from .posshift   import FrameShiftDialog, TimeShiftDialog
+from .posadjust  import FrameAdjustDialog
+from .posadjust  import TimeAdjustDialog
+from .posshift   import FrameShiftDialog
+from .posshift   import TimeShiftDialog
 from .pref       import PreferencesDialog
 from .previewerr import PreviewErrorDialog
 from .search     import SearchDialog
@@ -44,6 +54,7 @@ __all__ = [
     "DebugDialog",
     "EncodingDialog",
     "ErrorDialog",
+    "FrameAdjustDialog",
     "FrameShiftDialog",
     "GladeDialog",
     "HeaderDialog",
@@ -59,6 +70,7 @@ __all__ = [
     "SearchDialog",
     "SplitDialog",
     "TextEditDialog",
+    "TimeAdjustDialog",
     "TimeShiftDialog",
     "VideoDialog",
     "WarningDialog",]

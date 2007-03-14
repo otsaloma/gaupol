@@ -54,8 +54,7 @@ class _Test_PositionShiftDialog(TestCase):
 
     def test__shift(self):
 
-        amount = self.dialog._get_amount()
-        self.dialog._shift(amount)
+        self.dialog._shift()
 
 
 class TestFrameShiftDialog(_Test_PositionShiftDialog):

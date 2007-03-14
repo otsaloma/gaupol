@@ -32,7 +32,7 @@ class AppendFileAction(UIMAction):
     action_item = (
         "append_file",
         None,
-        _("_Append File..."),
+        _("App_end File..."),
         None,
         _("Append subtitles from file to the current project"),)
 
@@ -349,7 +349,7 @@ class SplitProjectAction(UIMAction):
     action_item = (
         "split_project",
         None,
-        _("_Split Project..."),
+        _("Sp_lit Project..."),
         None,
         _("Split the current project in two"),)
 
