@@ -1,3 +1,13 @@
+2007-03-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/duradjust-dialog.glade:
+	* data/ui.xml:
+	* gaupol/gtk/_actions/position.py:
+	* gaupol/gtk/_agents/position.py:
+	* gaupol/gtk/dialogs/duradjust.py:
+	* gaupol/gtk/dialogs/__init__.py:
+	Add duration adjust.
+
 2007-03-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/files/mpsub.py:

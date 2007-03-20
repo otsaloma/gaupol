@@ -21,6 +21,7 @@
 
 from .about      import AboutDialog
 from .debug      import DebugDialog
+from .duradjust  import DurationAdjustDialog
 from .encoding   import AdvEncodingDialog
 from .encoding   import EncodingDialog
 from .file       import AppendDialog
@@ -52,6 +53,7 @@ __all__ = [
     "AdvEncodingDialog",
     "AppendDialog",
     "DebugDialog",
+    "DurationAdjustDialog",
     "EncodingDialog",
     "ErrorDialog",
     "FrameAdjustDialog",

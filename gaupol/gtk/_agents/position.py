@@ -20,8 +20,9 @@
 
 
 from gaupol.base import Delegate
-from gaupol.gtk.dialogs import FrameShiftDialog, TimeShiftDialog
+from gaupol.gtk.dialogs import DurationAdjustDialog
 from gaupol.gtk.dialogs import FrameAdjustDialog, TimeAdjustDialog
+from gaupol.gtk.dialogs import FrameShiftDialog, TimeShiftDialog
 
 
 class PositionAgent(Delegate):
@@ -29,6 +30,13 @@ class PositionAgent(Delegate):
     """Editing times and frames."""
 
     # pylint: disable-msg=E0203,W0201
+
+    def on_adjust_durations_activate(self, *args):
+        """Lengthen or shorten durations."""
+
+        page = self.get_current_page()
+        dialog = DurationAdjustDialog(self.window, self)
+        self.flash_dialog(dialog)
 
     def on_adjust_positions_activate(self, *args):
         """Adjust positions by linear two-point correction."""

@@ -27,6 +27,26 @@ from gaupol.gtk.index import *
 from ._action import UIMAction
 
 
+class AdjustDurationsAction(UIMAction):
+
+    """Lengthen or shorten durations."""
+
+    action_item = (
+        "adjust_durations",
+        None,
+        _("A_djust Durations..."),
+        None,
+        _("Lengthen or shorten durations"),)
+
+    paths = ["/ui/menubar/tools/adjust_durations"]
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return True if action can be done."""
+
+        return (page is not None)
+
+
 class AdjustPositionsAction(UIMAction):
 
     """Adjust positions by linear two-point correction."""
