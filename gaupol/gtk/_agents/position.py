@@ -23,6 +23,7 @@ from gaupol.base import Delegate
 from gaupol.gtk.dialogs import DurationAdjustDialog
 from gaupol.gtk.dialogs import FrameAdjustDialog, TimeAdjustDialog
 from gaupol.gtk.dialogs import FrameShiftDialog, TimeShiftDialog
+from gaupol.gtk.dialogs import FramerateConvertDialog
 
 
 class PositionAgent(Delegate):
@@ -44,6 +45,13 @@ class PositionAgent(Delegate):
         page = self.get_current_page()
         cls = (TimeAdjustDialog, FrameAdjustDialog)[page.edit_mode]
         dialog = cls(self.window, self)
+        self.flash_dialog(dialog)
+
+    def on_convert_framerate_activate(self, *args):
+        """Convert framerate."""
+
+        page = self.get_current_page()
+        dialog = FramerateConvertDialog(self.window, self)
         self.flash_dialog(dialog)
 
     def on_shift_positions_activate(self, *args):

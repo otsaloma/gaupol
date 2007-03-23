@@ -91,6 +91,7 @@
       <menuitem name="shift_positions" action="shift_positions"/>
       <menuitem name="adjust_positions" action="adjust_positions"/>
       <menuitem name="adjust_durations" action="adjust_durations"/>
+      <menuitem name="convert_framerate" action="convert_framerate"/>
       <separator/>
       <menuitem name="append_file" action="append_file"/>
       <menuitem name="split_project" action="split_project"/>

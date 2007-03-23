@@ -69,6 +69,28 @@ class AdjustPositionsAction(UIMAction):
         return False
 
 
+class ConvertFramerateAction(UIMAction):
+
+    """Convert framerate."""
+
+    action_item = (
+        "convert_framerate",
+        gtk.STOCK_CONVERT,
+        _("Con_vert Framerate..."),
+        None,
+        _("Convert framerate"),)
+
+    paths = ["/ui/menubar/tools/convert_framerate"]
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return True if action can be done."""
+
+        if page is not None:
+            return (page.project.main_file is not None)
+        return False
+
+
 class PreviewAction(UIMAction):
 
     """Preview from selected position with a video player."""

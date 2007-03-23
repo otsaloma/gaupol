@@ -54,12 +54,6 @@ Dependencies:
 Gaupol 0.9
 ==========
 
-New features:
- [ ] Text correction assistant
- [W] Capitalization correction
- [W] Line split/join
-
-Changes:
  * Use design by contract -style preconditions (or something else cool
    enough) in project agent methods to assert requirements
  * Fix regular expression grouping in scriptlib
@@ -71,6 +65,11 @@ Changes:
  * Integrate the MenuToolButtons with UIManager
  * Review and adapt to various fixes to gtk.Recent* (e.g. #418219)
  * Move to using Glade 3 is acceptable
+
+New:
+ [ ] Text correction assistant
+ [W] Capitalization correction
+ [W] Line split/join
 
 
 Gaupol 1.0

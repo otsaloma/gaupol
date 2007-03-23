@@ -28,6 +28,7 @@ from .file       import AppendDialog
 from .file       import OpenDialog
 from .file       import SaveDialog
 from .file       import VideoDialog
+from .frconvert  import FramerateConvertDialog
 from .glade      import GladeDialog
 from .header     import HeaderDialog
 from .insert     import InsertDialog
@@ -57,6 +58,7 @@ __all__ = [
     "EncodingDialog",
     "ErrorDialog",
     "FrameAdjustDialog",
+    "FramerateConvertDialog",
     "FrameShiftDialog",
     "GladeDialog",
     "HeaderDialog",

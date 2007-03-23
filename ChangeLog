@@ -1,3 +1,13 @@
+2007-03-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/frconvert-dialog.glade:
+	* data/ui.xml:
+	* gaupol/gtk/_actions/position.py:
+	* gaupol/gtk/_agents/position.py:
+	* gaupol/gtk/dialogs/frconvert.py:
+	* gaupol/gtk/dialogs/__init__.py:
+	Add framerate conversion.
+
 2007-03-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/glade/duradjust-dialog.glade:
