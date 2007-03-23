@@ -48,6 +48,7 @@ def _get_modules():
     from . import help
     from . import position
     from . import search
+    from . import spellcheck
     from . import view
     return tuple(eval(x) for x in dir())
 
