@@ -45,6 +45,7 @@ from .posshift   import TimeShiftDialog
 from .pref       import PreferencesDialog
 from .previewerr import PreviewErrorDialog
 from .search     import SearchDialog
+from .spellcheck import SpellCheckDialog
 from .split      import SplitDialog
 from .textedit   import TextEditDialog
 
@@ -72,6 +73,7 @@ __all__ = [
     "QuestionDialog",
     "SaveDialog",
     "SearchDialog",
+    "SpellCheckDialog",
     "SplitDialog",
     "TextEditDialog",
     "TimeAdjustDialog",

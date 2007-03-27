@@ -19,9 +19,10 @@
 """Spell-checking actions."""
 
 
+import gtk
 from gettext import gettext as _
 
-from gaupol.gtk import util
+from gaupol.gtk import conf, util
 from ._action import UIMAction
 
 
@@ -43,3 +44,31 @@ class ConfigureSpellCheckAction(UIMAction):
         """Return True if action can be done."""
 
         return util.enchant_available()
+
+
+class CheckSpellingAction(UIMAction):
+
+    """Check for incorrect spelling."""
+
+    action_item = (
+        "check_spelling",
+        gtk.STOCK_SPELL_CHECK,
+        _("_Check Spelling"),
+        "F7",
+        _("Check for incorrect spelling"),)
+
+    paths = [
+        "/ui/menubar/tools/check_spelling",
+        "/ui/main_toolbar/check_spelling",]
+
+    @classmethod
+    def is_doable(cls, application, page):
+        """Return True if action can be done."""
+
+        try:
+            assert page is not None
+            assert util.enchant_available()
+            assert conf.spell_check.lang
+            return True
+        except AssertionError:
+            return False

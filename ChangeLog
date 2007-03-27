@@ -1,3 +1,13 @@
+2007-03-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/spellcheck-dialog.glade:
+	* data/ui.xml:
+	* gaupol/gtk/_actions/spellcheck.py:
+	* gaupol/gtk/_agents/spellcheck.py:
+	* gaupol/gtk/dialogs/__init__.py:
+	* gaupol/gtk/dialogs/spellcheck.py:
+	Add spell-check.
+
 2007-03-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/ui.xml:
