@@ -1,12 +1,11 @@
 [MASTER]
 ignore=.svn,configobj.py,validate.py
 persistent=no
-profile=no
 
 [MESSAGES CONTROL]
-disable-checker=design,miscellaneous,similarities
+disable-checker=design,similarities
 disable-msg-cat=
-disable-msg=C0111,C0322,F0401,I0011,R0201,W0142,W0212,W0232,W0401,W0402,W0403,W0613,W0614,W0622,W0703,W0704,W1010
+disable-msg=C0111,I0011,R0201,W1010
 
 [REPORTS]
 comment=no
@@ -15,28 +14,30 @@ include-ids=yes
 output-format=text
 reports=no
 
+[BASIC]
+argument-rgx=[a-z_][a-z0-9_]{0,19}$
+attr-rgx=[a-z_][a-z0-9_]{0,19}$
+class-rgx=[A-Z_][A-Za-z0-9]{0,29}$
+const-rgx=([A-Z_][A-Z0-9_]{0,19}$)|(__.+?__$)
+function-rgx=[a-z_][a-z0-9_]{0,29}$
+good-names=
+inlinevar-rgx=[a-z]$
+method-rgx=[a-z_][a-z0-9_]{0,29}$
+module-rgx=(_?[a-z][a-z0-9]{0,19}$)|(__.+?__$)
+variable-rgx=[a-z_][a-z0-9_]{0,19}$
+
 [VARIABLES]
 additional-builtins=
-dummy-variables-rgx=i|j|k|(no)|(root)|(dirs)|(files)
+dummy-variables-rgx=
 init-import=no
 
-[BASIC]
-argument-rgx=^[a-z_][a-z0-9_]{1,17}$
-attr-rgx=^[a-z_][a-z0-9_]{1,19}$
-class-rgx=(^[A-Z_][A-Za-z0-9]{1,21}$)|(.*?Action$)|(^_?Test)
-const-rgx=(^[A-Z_][A-Z0-9_]{1,17}$)|(^__.+?__$)|(^_$)
-function-rgx=(^[a-z_][a-z0-9_]{1,23}$)|(^test_)|(^_?on_)
-good-names=a,b,c,d,e,f,g,h,i,j,k,m,n,p,q,r,s,t,u,v,w,x,y,z
-inlinevar-rgx=^[a-z]$
-method-rgx=(^[a-z_][a-z0-9_]{1,23}$)|(^test_)|(^run_)|(^_?on_)|(^_?show_)
-module-rgx=(^_?[a-z][a-z0-9]{2,9}$)|(^__.+?__$)|(^test_)|(^$)|(^.+?-)
-no-docstring-rgx=(^_?test_)|(^__.+?__$)
-variable-rgx=^[a-z_][a-z0-9_]{1,17}$
-
 [CLASSES]
-defining-attr-methods=__init__,__new__,setup_method,_init_attributes,_init_members
+defining-attr-methods=__init__,__new__,setup_method
 
 [FORMAT]
 indent-string='    '
 max-line-length=79
 max-module-lines=1000
+
+[MISCELLANEOUS]
+notes=

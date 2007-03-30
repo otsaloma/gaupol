@@ -17,10 +17,10 @@ Search for unfinished code.
 
 Run (all) automatic checks.
 
-    tools/check gaupol
-    tools/check $(file tools/* | grep python | sed "s|:.*$||")
-    tools/test --tb=no gaupol
-    tools/run gaupol
+    tools/pylint gaupol
+    tools/pylint $(file tools/* | grep python | sed "s|:.*$||")
+    py.test --tb=no gaupol
+    [tools/nose-run gaupol]
 
 Make final edits to files and commit changes.
 
@@ -52,10 +52,11 @@ Edit homepage.
 Send announcement mail.
 
     gaupol-announcements@gna.org
-    http://mail.gna.org/public/gaupol-announcements
+    http://www.mail-archive.com/gaupol-announcements@gna.org
 
 Update web sites.
 
     http://gna.org/news/?group=gaupol
     http://www.gnomefiles.com/devs
     http://freshmeat.net/projects/gaupol
+    http://users.tkk.fi/~otsaloma/gaupol/doc/

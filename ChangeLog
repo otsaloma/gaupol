@@ -1,3 +1,14 @@
+2007-03-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* bin/gaupol:
+	Check if path in sys.path before inserting it.
+
+	* MANIFEST.in:
+	Remove doc/api. Include tools/data.
+
+	* setup.py (SDistGna.run):
+	Fix this to actually work.
+
 2007-03-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/glade/spellcheck-dialog.glade:

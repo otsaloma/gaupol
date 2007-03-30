@@ -1,9 +1,9 @@
-.TH GAUPOL 1 "February 20, 2007"
+.TH GAUPOL 1 "March 30, 2007"
 .SH NAME
 gaupol \- editor for text\-based subtitle files
 .SH SYNOPSIS
 .B gaupol
-[\fIOPTION...\fR] [\fIFILE...\fR] [\fI+NUM\fR]
+[\fIOPTION...\fR] [\fIFILE...\fR] [+[\fINUM\fR]]
 .SH DESCRIPTION
 .PP
 .B gaupol
@@ -13,12 +13,12 @@ video. The user interface is designed with attention to batch processing of
 multiple documents and convenience of translating.
 .SH OPTIONS
 .TP
-\fB\+NUM\fR
+\fB\+[NUM]\fR
 Go to subtitle number NUM in the opened file. If NUM is missing go to the last
 subtitle.
 .TP
 \fB\-h\fR, \fB\-\-help\fR
-Show help options.
+Show command line options.
 .TP
 \fB\-c\fR, \fB\-\-config\-file\fR=\fIFILE\fR
 Set the configuration file to use instead of the default.

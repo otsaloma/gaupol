@@ -4,8 +4,10 @@ import os
 import sys
 
 cwd = os.path.dirname(os.path.abspath(__file__))
-if os.path.isfile(os.path.join(cwd, '..', 'data', 'gaupol.desktop.in')):
-    sys.path.insert(0, os.path.join(cwd, '..'))
+if os.path.isfile(os.path.join(cwd, "..", "data", "gaupol.desktop.in")):
+    path = os.path.join(cwd, "..")
+    if not path in sys.path:
+        sys.path.insert(0, path)
 
 from gaupol.gtk import main
 main.main(sys.argv[1:])

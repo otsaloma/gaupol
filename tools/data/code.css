@@ -21,13 +21,13 @@ pre
 /* ??? */
 .dir
 {
-  color: #000000;
+  color: inherit;
 }
 
 /* ??? */
 .dstr
 {
-  color: #000000;
+  color: inherit;
 }
 
 /* String escape */
@@ -57,17 +57,17 @@ pre
 /* Function */
 .kwd
 {
-  color: #000000;
+  color: inherit;
 }
 
 /* Line anchor */
 .line
 {
-  -khtml-user-select: none;
-  -moz-user-select: none;
   color: #BABDB6;
   margin-right: 6px;
   user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
 }
 
 /* Number */
@@ -91,5 +91,5 @@ pre
 /* Symbol */
 .sym
 {
-  color: #000000;
+  color: inherit;
 }

@@ -23,7 +23,6 @@ Relevant customizations in this file
 
 from __future__ import with_statement
 
-import filecmp
 import glob
 import os
 import shutil
@@ -74,20 +73,20 @@ class Clean(clean):
 
 class InstallData(install_data):
 
-    def _get_desktop_file(self):
+    def __get_desktop_file(self):
 
         path = os.path.join("data", "gaupol.desktop")
         os.system("intltool-merge -d po %s.in %s" % (path, path))
         return [("share/applications", [path])]
 
-    def _get_mo_files(self):
+    def __get_mo_files(self):
 
         mo_files = []
         for po_file in glob.glob("po/*.po"):
             lang = os.path.basename(po_file[:-3])
-            mo_dir = "locale/%s/LC_MESSAGES" % lang
-            mo_file = "%s/gaupol.mo" % mo_dir
-            dest_dir = "share/%s" + mo_dir
+            mo_dir = os.path.join("locale", lang, "LC_MESSAGES")
+            mo_file = os.path.join(mo_dir, "gaupol.mo")
+            dest_dir = os.path.join("share", mo_dir)
             if not os.path.isdir(mo_dir):
                 info("creating %s" % mo_dir)
                 os.makedirs(mo_dir)
@@ -100,8 +99,8 @@ class InstallData(install_data):
     def run(self):
 
         # Translate files and add them to data files.
-        self.data_files.extend(self._get_mo_files())
-        self.data_files.extend(self._get_desktop_file())
+        self.data_files.extend(self.__get_mo_files())
+        self.data_files.extend(self.__get_desktop_file())
 
         install_data.run(self)
 
@@ -145,24 +144,22 @@ class SDistGna(sdist):
 
     def run(self):
 
-        basename = "gaupol-%s" % __version__
-        temp_dir = tempfile.gettempdir()
-        test_dir = os.path.join(temp_dir, basename)
-
         sdist.run(self)
+        basename = "gaupol-%s" % __version__
         tarballs = os.listdir(self.dist_dir)
+        os.chdir(self.dist_dir)
 
         # Compare tarball contents with working copy.
-        tarfile.open(tarballs[-1], "r").extractall()
-        info("comparing tarball 'tmp' and working copy '.'")
-        dircmp = filecmp.dircmp(".", test_dir, [".svn", "*.pyc"])
-        dircmp.report_full_closure()
+        temp_dir = tempfile.gettempdir()
+        test_dir = os.path.join(temp_dir, basename)
+        tarfile.open(tarballs[-1], "r").extractall(temp_dir)
+        info("comparing tarball (tmp) with working copy (../..)")
+        os.system('diff -qr -x ".*" -x "*.pyc" ../.. %s' % test_dir)
         response = raw_input("Are all files in the tarball [Y/n]? ")
         if response.lower() == "n":
-            raise SystemExit
+            raise SystemExit("Must edit MANIFEST.in.")
 
         # Create extra distribution files.
-        os.chdir(self.dist_dir)
         info("calculating md5sums")
         os.system("md5sum * > %s.md5sum" % basename)
         info("creating '%s.changes'" % basename)
@@ -202,7 +199,7 @@ DATA_FILES = [
     ("share/icons/hicolor/24x24/apps", ["data/icons/24x24/gaupol.png"]),
     ("share/icons/hicolor/32x32/apps", ["data/icons/32x32/gaupol.png"]),
     ("share/icons/hicolor/scalable/apps", ["data/icons/scalable/gaupol.svg"]),
-    ("share/man/man1", ["doc/gaupol.1"])]
+    ("share/man/man1", ["doc/gaupol.1"]),]
 
 setup(
     name="gaupol",
@@ -221,4 +218,4 @@ setup(
         "clean": Clean,
         "install_data": InstallData,
         "install_lib": InstallLib,
-        "sdist_gna": SDistGna})
+        "sdist_gna": SDistGna},)

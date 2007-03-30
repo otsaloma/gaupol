@@ -1,10 +1,9 @@
 include bin/*
-include doc/api/*
 include doc/gaupol.1
 include po/*
-include tools/*
 recursive-include data *
 recursive-include gaupol *.py
+recursive-include tools *
 include AUTHORS
 include ChangeLog
 include COPYING
