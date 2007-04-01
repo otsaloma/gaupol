@@ -101,7 +101,7 @@ class _Counter(object):
 
         if strip:
             text = RE_TAG.sub("", text)
-        return list(len(x) for x in text.split("\n"))
+        return [len(x) for x in text.split("\n")]
 
     def get_em_lengths(self, text, strip, floor):
         """Get a list of line lengths measured in ems."""
@@ -130,7 +130,7 @@ def _on_text_view_expose_event(text_view, event):
         return
     lengths = get_lengths(text)
     layout = pango.Layout(text_view.get_pango_context())
-    layout.set_markup("\n".join(list(str(x) for x in lengths)))
+    layout.set_markup("\n".join([str(x) for x in lengths]))
     layout.set_alignment(pango.ALIGN_RIGHT)
 
     width = layout.get_pixel_size()[0]

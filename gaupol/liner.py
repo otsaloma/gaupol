@@ -120,7 +120,7 @@ class Liner(Parser):
         start = self._get_start_index(lengths, max_lines)
         for i in range(start, unit_count - max_lines + 2):
             indexes = self._get_splits(lengths[i:], max_lines - 1)
-            indexes = list(x + i for x in indexes)
+            indexes = [x + i for x in indexes]
             indexes.insert(0, i)
             borders = [0] + indexes + [unit_count]
             line_lengths = []
@@ -128,7 +128,7 @@ class Liner(Parser):
                 a, z = borders[j - 1:j + 1]
                 line_lengths.append(self._get_length(lengths[a:z]))
             mean = sum(line_lengths) / max_lines
-            squares = sum(list((x - mean)**2 for x in line_lengths))
+            squares = sum([(x - mean)**2 for x in line_lengths])
             if min_squares is None or round(min_squares - squares, 6) > 0:
                 min_indexes = indexes
                 min_squares = squares
@@ -175,7 +175,7 @@ class Liner(Parser):
         if max_lines == 1:
             self.text = self.text.replace("\n", " ")
             return
-        lengths = list(self._length_func(x) for x in self.text.split("\n"))
+        lengths = [self._length_func(x) for x in self.text.split("\n")]
         indexes = self._get_splits(lengths, max_lines)
         text = u""
         units = self.text.split("\n")

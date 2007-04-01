@@ -89,5 +89,5 @@ class Section(object):
 
         names = dir(self.members[0])
         for name in (x for x in names if not x.startswith("_")):
-            values = list(getattr(x, name) for x in self.members)
+            values = [getattr(x, name) for x in self.members]
             setattr(self, name + "s", values)

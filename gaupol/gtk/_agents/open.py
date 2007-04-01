@@ -407,7 +407,7 @@ class OpenAgent(Delegate):
         """Open dragged files."""
 
         uris = selection_data.get_uris()
-        paths = list(util.uri_to_path(x) for x in uris)
+        paths = [util.uri_to_path(x) for x in uris]
         self.open_main_files(paths)
 
     def on_open_button_clicked(self, *args):

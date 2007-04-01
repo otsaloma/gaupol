@@ -96,8 +96,8 @@ class SaveAgent(Delegate):
         Raise UnicodeError if encoding fails.
         """
         positions = self.get_positions(file.mode)
-        shows = list(positions[i][SHOW] for i in range(len(positions)))
-        hides = list(positions[i][HIDE] for i in range(len(positions)))
+        shows = [positions[i][SHOW] for i in range(len(positions))]
+        hides = [positions[i][HIDE] for i in range(len(positions))]
 
         file_existed = os.path.isfile(file.path)
         if file_existed:

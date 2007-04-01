@@ -87,8 +87,8 @@ class Parser(Finder):
             end_tag = line[a:z] + end_tag
             line = line[:a]
 
-        if all(list(x.startswith(start_tag) for x in lines)):
-            if all(list(x.endswith(end_tag) for x in lines)):
+        if all([x.startswith(start_tag) for x in lines]):
+            if all([x.endswith(end_tag) for x in lines]):
                 self.margins = [start_tag, end_tag]
 
     @util.ignore_exceptions(AssertionError)

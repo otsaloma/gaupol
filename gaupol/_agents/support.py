@@ -40,7 +40,7 @@ class SupportAgent(Delegate):
         Return time, frame.
         """
         frame = [show, hide, self.calc.get_frame_duration(show, hide)]
-        time = list(self.calc.frame_to_time(x) for x in (show, hide))
+        time = [self.calc.frame_to_time(x) for x in (show, hide)]
         time.append(self.calc.get_time_duration(time[0], time[1]))
         return time, frame
 
@@ -62,9 +62,9 @@ class SupportAgent(Delegate):
 
         Return time, frame.
         """
-        time = list(self.calc.seconds_to_time(x) for x in (show, hide))
+        time = [self.calc.seconds_to_time(x) for x in (show, hide)]
         time.append(self.calc.get_time_duration(time[0], time[1]))
-        frame = list(self.calc.seconds_to_frame(x) for x in (show, hide))
+        frame = [self.calc.seconds_to_frame(x) for x in (show, hide)]
         frame.append(self.calc.get_frame_duration(frame[0], frame[1]))
         return time, frame
 
@@ -74,7 +74,7 @@ class SupportAgent(Delegate):
         Return time, frame.
         """
         time = [show, hide, self.calc.get_time_duration(show, hide)]
-        frame = list(self.calc.time_to_frame(x) for x in (show, hide))
+        frame = [self.calc.time_to_frame(x) for x in (show, hide)]
         frame.append(self.calc.get_frame_duration(frame[0], frame[1]))
         return time, frame
 
@@ -105,7 +105,7 @@ class SupportAgent(Delegate):
         re_tag = self.get_tag_regex(doc)
         if re_tag is not None:
             text = re_tag.sub("", text)
-        return list(len(x) for x in text.split("\n"))
+        return [len(x) for x in text.split("\n")]
 
     def get_mode(self):
         """Get the mode of the main file or default."""

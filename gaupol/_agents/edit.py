@@ -113,8 +113,8 @@ class EditAgent(Delegate):
         show = positions[rows[0]][SHOW]
         hide = positions[rows[-1]][HIDE]
         time, frame = self.expand_positions(show, hide)
-        main_texts = list(self.main_texts[x] for x in rows)
-        tran_texts = list(self.tran_texts[x] for x in rows)
+        main_texts = [self.main_texts[x] for x in rows]
+        tran_texts = [self.tran_texts[x] for x in rows]
         for texts in (main_texts, tran_texts):
             while "" in texts:
                 texts.remove("")

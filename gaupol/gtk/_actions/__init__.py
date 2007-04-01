@@ -28,12 +28,12 @@ def _get_actions():
     from ._action import UIMAction
     actions = []
     for module in _get_modules():
-        names = list(x for x in dir(module) if not x.startswith("_"))
+        names = [x for x in dir(module) if not x.startswith("_")]
         while "UIMAction" in names:
             names.remove("UIMAction")
-        values = list(getattr(module, x) for x in names)
-        values = list(x for x in values if isinstance(x, type))
-        values = list(x for x in values if issubclass(x, UIMAction))
+        values = [getattr(module, x) for x in names]
+        values = [x for x in values if isinstance(x, type)]
+        values = [x for x in values if issubclass(x, UIMAction)]
         for value in values:
             globals()[value.__name__] = value
             actions.append(value.__name__)

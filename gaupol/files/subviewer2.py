@@ -54,9 +54,9 @@ class SubViewer2(SubtitleFile):
                 hides.append(match.group(2))
                 texts.append(re_trailer.sub("", lines[i + 1]))
 
-        shows = list(x + "0" for x in shows)
-        hides = list(x + "0" for x in hides)
-        texts = list(x.replace("[br]", "\n") for x in texts)
+        shows = [x + "0" for x in shows]
+        hides = [x + "0" for x in hides]
+        texts = [x.replace("[br]", "\n") for x in texts]
         return shows, hides, texts
 
     def _read_header(self, lines):
@@ -86,9 +86,9 @@ class SubViewer2(SubtitleFile):
         Raise UnicodeError if encoding fails.
         """
         calc = Calculator()
-        shows = list(calc.round_time(x, 2)[:11] for x in shows)
-        hides = list(calc.round_time(x, 2)[:11] for x in hides)
-        texts = list(x.replace("\n", "[br]") for x in texts)
+        shows = [calc.round_time(x, 2)[:11] for x in shows]
+        hides = [calc.round_time(x, 2)[:11] for x in hides]
+        texts = [x.replace("\n", "[br]") for x in texts]
 
         fobj = codecs.open(self.path, "w", self.encoding)
         try:

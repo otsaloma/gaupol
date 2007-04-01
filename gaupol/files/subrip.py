@@ -63,7 +63,7 @@ class SubRip(SubtitleFile):
                 continue
             texts[-1] += line
         re_trailer = re.compile(r"\n\Z", re.MULTILINE)
-        texts = list(re_trailer.sub("", x) for x in texts)
+        texts = [re_trailer.sub("", x) for x in texts]
         return shows, hides, texts
 
     def read(self):
@@ -85,9 +85,9 @@ class SubRip(SubtitleFile):
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
-        shows = list(x.replace(".", ",") for x in shows)
-        hides = list(x.replace(".", ",") for x in hides)
-        texts = list(x.replace("\n", self.newline.value) for x in texts)
+        shows = [x.replace(".", ",") for x in shows]
+        hides = [x.replace(".", ",") for x in hides]
+        texts = [x.replace("\n", self.newline.value) for x in texts]
 
         fobj = codecs.open(self.path, "w", self.encoding)
         try:

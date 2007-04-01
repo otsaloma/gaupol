@@ -100,11 +100,11 @@ class ObservableList(list):
     """
 
     def __copy__(self):
-        lst = list(copy.copy(x) for x in self)
+        lst = [copy.copy(x) for x in self]
         return self.__class__(lst, self.master, self.name)
 
     def __deepcopy__(self, memo):
-        lst = list(copy.deepcopy(x) for x in self)
+        lst = [copy.deepcopy(x) for x in self]
         return self.__class__(lst, self.master, self.name)
 
     @_mutation

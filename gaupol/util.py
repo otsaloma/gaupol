@@ -84,8 +84,8 @@ def compare_versions(x, y):
     MAJOR.MINOR.PATCH.DATE, where all parts are expected to be integers.
     Return 1 if x newer, 0 if equal or -1 if y newer.
     """
-    x = list(int(d) for d in x.split("."))
-    y = list(int(d) for d in y.split("."))
+    x = [int(d) for d in x.split(".")]
+    y = [int(d) for d in y.split(".")]
     return cmp(x, y)
 
 def connect(observer, observable, signal, *args):
@@ -124,7 +124,7 @@ def exceptional(exception, handler, *data):
     arguments to the function that should be passed to the handler as well.
     """
     def get_params(data, function, args, kwargs):
-        params = list(args[x] for x in data if isinstance(x, int))
+        params = [args[x] for x in data if isinstance(x, int)]
         for key in (x for x in data if isinstance(x, str)):
             if  key in kwargs:
                 params.append(kwargs[key])

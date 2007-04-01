@@ -202,7 +202,7 @@ def _start(opts, args):
         for arg in (x for x in args if re_jump.match(x) is not None):
             row = (max(0, int(arg[1:]) - 1) if arg[1:] else -1)
             args.remove(arg)
-        paths = list(os.path.abspath(x) for x in args)
+        paths = [os.path.abspath(x) for x in args]
         application.open_main_files(paths, opts.encoding)
         page = application.get_current_page()
         if opts.translation_file:

@@ -203,7 +203,7 @@ class View(gtk.TreeView):
         """Get a list of the selected rows."""
 
         rows = self.get_selection().get_selected_rows()[1]
-        return list(x[0] for x in rows)
+        return [x[0] for x in rows]
 
     def scroll_to_row(self, row):
         """Scroll to row."""

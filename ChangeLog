@@ -1,5 +1,36 @@
 2007-04-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/_agents/edit.py:
+	* gaupol/_agents/open.py:
+	* gaupol/_agents/save.py:
+	* gaupol/_agents/support.py:
+	* gaupol/_agents/text.py:
+	* gaupol/base/cons.py:
+	* gaupol/base/_mutables.py:
+	* gaupol/clipboard.py:
+	* gaupol/files/microdvd.py:
+	* gaupol/files/mpl2.py:
+	* gaupol/files/mpsub.py:
+	* gaupol/files/ssa.py:
+	* gaupol/files/subrip.py:
+	* gaupol/files/subviewer2.py:
+	* gaupol/files/tmplayer.py:
+	* gaupol/gtk/_actions/__init__.py:
+	* gaupol/gtk/_agents/open.py:
+	* gaupol/gtk/conf/wrappers.py:
+	* gaupol/gtk/dialogs/multiclose.py:
+	* gaupol/gtk/dialogs/search.py:
+	* gaupol/gtk/lengthlib.py:
+	* gaupol/gtk/main.py:
+	* gaupol/gtk/view.py:
+	* gaupol/liner.py:
+	* gaupol/parser.py:
+	* gaupol/util.py:
+	* tools/translate:
+	Replace list(...) with [...] in list comprehensions.
+
+2007-04-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* tools/add-changelog:
 	* tools/data/apidocs.css:
 	* tools/data/code.css:

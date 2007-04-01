@@ -223,7 +223,7 @@ class TestModule(TestCase):
     def test_readlines(self):
 
         path = self.get_subrip_path()
-        lines = list(x.strip() for x in open(path, "r").readlines())
+        lines = [x.strip() for x in open(path, "r").readlines()]
         assert util.readlines(path) == lines
 
     def test_shell_quote_path(self):

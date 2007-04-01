@@ -31,7 +31,7 @@ class TestSupportAgent(TestCase):
         calc = self.project.calc
         time, frame = self.project.expand_frames(10, 100)
         assert frame == [10, 100, 90]
-        assert time == list(calc.frame_to_time(x) for x in frame)
+        assert time == [calc.frame_to_time(x) for x in frame]
 
     def test_expand_positions(self):
 
@@ -50,7 +50,7 @@ class TestSupportAgent(TestCase):
         calc = self.project.calc
         time, frame = self.project.expand_seconds(10.0, 100.0)
         assert time == ["00:00:10.000", "00:01:40.000", "00:01:30.000"]
-        assert frame == list(calc.time_to_frame(x) for x in time)
+        assert frame == [calc.time_to_frame(x) for x in time]
 
     def test_expand_times(self):
 
@@ -58,7 +58,7 @@ class TestSupportAgent(TestCase):
         times = ("00:00:01.000", "00:01:00.000")
         time, frame = self.project.expand_times(*times)
         assert time == ["00:00:01.000", "00:01:00.000", "00:00:59.000"]
-        assert frame == list(calc.time_to_frame(x) for x in time)
+        assert frame == [calc.time_to_frame(x) for x in time]
 
     def test_get_file(self):
 

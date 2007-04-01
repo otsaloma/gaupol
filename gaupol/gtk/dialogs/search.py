@@ -194,7 +194,7 @@ class SearchDialog(GladeDialog):
         doc = None
         if col in (MTXT, TTXT):
             doc = page.text_column_to_document(col)
-        docs = list(page.text_column_to_document(x) for x in conf.search.cols)
+        docs = [page.text_column_to_document(x) for x in conf.search.cols]
         if doc is None or doc not in docs:
             doc = (docs[-1], docs[0])[next]
         pos = self._get_cursor_offset(page, row, doc, next)
@@ -205,7 +205,7 @@ class SearchDialog(GladeDialog):
 
         def update_page(page):
             translate = page.text_column_to_document
-            docs = list(translate(x) for x in conf.search.cols)
+            docs = [translate(x) for x in conf.search.cols]
             wrap = (conf.search.target != cons.TARGET.ALL)
             page.project.set_search_target(None, docs, wrap)
 

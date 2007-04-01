@@ -24,4 +24,4 @@ class TestModule(TestCase):
 
     def test___version__(self):
 
-        list(int(x) for x in gaupol.__version__.split("."))
+        [int(x) for x in gaupol.__version__.split(".")]

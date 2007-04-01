@@ -75,10 +75,10 @@ class SubStationAlpha(SubtitleFile):
                 hides.append(fields[hide_index])
                 texts.append(fields[text_index])
 
-        shows = list("0" + x + "0" for x in shows)
-        hides = list("0" + x + "0" for x in hides)
-        texts = list(x.replace("\\n", "\n") for x in texts)
-        texts = list(x.replace("\\N", "\n") for x in texts)
+        shows = ["0" + x + "0" for x in shows]
+        hides = ["0" + x + "0" for x in hides]
+        texts = [x.replace("\\n", "\n") for x in texts]
+        texts = [x.replace("\\N", "\n") for x in texts]
         return shows, hides, texts
 
     def _read_header(self, lines):
@@ -109,9 +109,9 @@ class SubStationAlpha(SubtitleFile):
         Raise UnicodeError if encoding fails.
         """
         calc = Calculator()
-        shows = list(calc.round_time(x, 2)[1:11] for x in shows)
-        hides = list(calc.round_time(x, 2)[1:11] for x in hides)
-        texts = list(x.replace("\n", "\\n") for x in texts)
+        shows = [calc.round_time(x, 2)[1:11] for x in shows]
+        hides = [calc.round_time(x, 2)[1:11] for x in hides]
+        texts = [x.replace("\n", "\\n") for x in texts]
 
         fobj = codecs.open(self.path, "w", self.encoding)
         try:

@@ -99,8 +99,8 @@ class Config(configobj.ConfigObj):
             names = validator.check("string_list", value)
             section = getattr(cons, section)
             try:
-                indexes = list(section.names.index(x) for x in names)
-                return list(section.members[x] for x in indexes)
+                indexes = [section.names.index(x) for x in names]
+                return [section.members[x] for x in indexes]
             except ValueError:
                 raise validate.VdtValueError(value)
 

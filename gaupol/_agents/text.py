@@ -120,7 +120,7 @@ class TextAgent(Delegate):
                 liner.set_text(text)
                 text = liner.format()
             elif legal_length is not None:
-                if any(list(length_func(x) > legal_length for x in lines)):
+                if any([length_func(x) > legal_length for x in lines]):
                     liner.set_text(text)
                     text = liner.format()
                 elif legal_lines is not None:

@@ -156,9 +156,9 @@ class MultiCloseDialog(GladeDialog):
 
         store[row][0] = not store[row][0]
         store = self._main_tree_view.get_model()
-        mains = list(x for x in range(len(store)) if store[x][0])
+        mains = [x for x in range(len(store)) if store[x][0]]
         store = self._tran_tree_view.get_model()
-        trans = list(x for x in range(len(store)) if store[x][0])
+        trans = [x for x in range(len(store)) if store[x][0]]
         sensitive = bool(mains or trans)
         self._dialog.set_response_sensitive(gtk.RESPONSE_YES, sensitive)
 

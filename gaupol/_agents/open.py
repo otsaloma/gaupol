@@ -76,11 +76,11 @@ class OpenAgent(Delegate):
                 self._sort_count += 1
             return value
         self._sort_count = 0
-        data = list([shows[i], hides[i], texts[i]] for i in range(len(shows)))
+        data = [[shows[i], hides[i], texts[i]] for i in range(len(shows))]
         data.sort(sort)
-        shows = list(x[0] for x in data)
-        hides = list(x[1] for x in data)
-        texts = list(x[2] for x in data)
+        shows = [x[0] for x in data]
+        hides = [x[1] for x in data]
+        texts = [x[2] for x in data]
         return shows, hides, texts
 
     @notify_frozen

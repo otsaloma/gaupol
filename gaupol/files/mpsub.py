@@ -69,8 +69,8 @@ class MPsub(SubtitleFile):
         """Get MPsub style shows and hides as times."""
 
         calc = Calculator()
-        shows = list(calc.time_to_seconds(x) for x in shows)
-        hides = list(calc.time_to_seconds(x) for x in hides)
+        shows = [calc.time_to_seconds(x) for x in shows]
+        hides = [calc.time_to_seconds(x) for x in hides]
         for i in reversed(range(1, len(shows))):
             hides[i] -= shows[i]
             shows[i] -= hides[i - 1]
@@ -85,8 +85,8 @@ class MPsub(SubtitleFile):
             hides[i] = round(hides[i] - deviation, 2)
             deviation = deviation + hides[i] - orig_hide
 
-        shows = list("%.2f" % x for x in shows)
-        hides = list("%.2f" % x for x in hides)
+        shows = ["%.2f" % x for x in shows]
+        hides = ["%.2f" % x for x in hides]
         return shows, hides
 
     def _read_components(self, lines, re_time_line):
@@ -108,13 +108,13 @@ class MPsub(SubtitleFile):
 
         calc = Calculator()
         if self.mode == cons.MODE.TIME:
-            shows = list(calc.seconds_to_time(x) for x in shows)
-            hides = list(calc.seconds_to_time(x) for x in hides)
+            shows = [calc.seconds_to_time(x) for x in shows]
+            hides = [calc.seconds_to_time(x) for x in hides]
         elif self.mode == cons.MODE.FRAME:
-            shows = list(int(round(x, 0)) for x in shows)
-            hides = list(int(round(x, 0)) for x in hides)
+            shows = [int(round(x, 0)) for x in shows]
+            hides = [int(round(x, 0)) for x in hides]
         re_trailer = re.compile(r"\n\Z", re.MULTILINE)
-        texts = list(re_trailer.sub("", x) for x in texts)
+        texts = [re_trailer.sub("", x) for x in texts]
         return shows, hides, texts
 
     def _read_header(self, lines, re_time_line):
@@ -168,7 +168,7 @@ class MPsub(SubtitleFile):
         """
         method = (self._get_mpsub_times, self._get_mpsub_frames)[self.mode]
         shows, hides = method(shows, hides)
-        texts = list(x.replace("\n", self.newline.value) for x in texts)
+        texts = [x.replace("\n", self.newline.value) for x in texts]
 
         fobj = codecs.open(self.path, "w", self.encoding)
         try:

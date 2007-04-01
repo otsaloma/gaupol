@@ -54,7 +54,7 @@ class TMPlayer(SubtitleFile):
         for i in range(1, len(shows)):
             hides.append(shows[i])
         hides.append(calc.add_seconds_to_time(shows[-1], 3.000))
-        texts = list(x.replace("|", "\n") for x in texts)
+        texts = [x.replace("|", "\n") for x in texts]
         return shows, hides, texts
 
     def write(self, shows, hides, texts):
@@ -64,8 +64,8 @@ class TMPlayer(SubtitleFile):
         Raise UnicodeError if encoding fails.
         """
         calc = Calculator()
-        shows = list(calc.round_time(x, 0)[:8] + ":" for x in shows)
-        texts = list(x.replace("\n", "|") for x in texts)
+        shows = [calc.round_time(x, 0)[:8] + ":" for x in shows]
+        texts = [x.replace("\n", "|") for x in texts]
 
         fobj = codecs.open(self.path, "w", self.encoding)
         try:

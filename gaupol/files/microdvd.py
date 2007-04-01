@@ -56,9 +56,9 @@ class MicroDVD(SubtitleFile):
             elif line.startswith("{DEFAULT}"):
                 self.header = line[:-1]
 
-        shows = list(int(x) for x in shows)
-        hides = list(int(x) for x in hides)
-        texts = list(x.replace("|", "\n") for x in texts)
+        shows = [int(x) for x in shows]
+        hides = [int(x) for x in hides]
+        texts = [x.replace("|", "\n") for x in texts]
         return shows, hides, texts
 
     def write(self, shows, hides, texts):
@@ -67,7 +67,7 @@ class MicroDVD(SubtitleFile):
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
-        texts = list(x.replace("\n", "|") for x in texts)
+        texts = [x.replace("\n", "|") for x in texts]
         fobj = codecs.open(self.path, "w", self.encoding)
         try:
             if self.header:

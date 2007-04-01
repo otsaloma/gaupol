@@ -70,7 +70,7 @@ def create_pot():
     os.chdir(SOURCE_DIR)
     title_print("Creating .pot file from source files...")
     files = header_files + python_files
-    files = list(x.replace(SOURCE_DIR, ".") for x in files)
+    files = [x.replace(SOURCE_DIR, ".") for x in files]
     args = (POT_FILE, " ".join(files))
     os.system("xgettext --from-code=utf-8 -c -o %s %s" % args)
 
@@ -85,7 +85,7 @@ def get_languages(lang):
     if lang != "all":
         return [lang]
     paths = glob.glob(os.path.join(PO_DIR, "*.po"))
-    return sorted(list(os.path.basename(x)[:-3] for x in paths))
+    return sorted([os.path.basename(x)[:-3] for x in paths])
 
 def main():
     """Parse arguments and run commands."""

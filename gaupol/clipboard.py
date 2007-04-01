@@ -37,4 +37,4 @@ class Clipboard(object):
     def get_data_as_string(self):
         """Get the data as a string."""
 
-        return "\n\n".join(list(x or "" for x in self.data))
+        return "\n\n".join([x or "" for x in self.data])
