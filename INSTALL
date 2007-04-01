@@ -2,8 +2,8 @@ Installation
 ============
 
 The installation process requires that you have Python and intltool
-installed. Depending on your distro's Python packaging you may also
-need a package called python-dev or python-devel. For dependencies
+installed.  Depending on your distro's Python packaging you may also
+need a package called python-dev or python-devel.  For dependencies
 required to run Gaupol, see the file "README".
 
 To install, run command

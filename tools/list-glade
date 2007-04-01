@@ -4,7 +4,7 @@
 # Usage: list-glade FILE
 
 cat "$1" \
-    | egrep "id=" \
+    | grep "id=" \
     | sed "s|.*id=\"||" \
     | sed "s|\">||" \
     | egrep -v "[a-z][0-9]" \

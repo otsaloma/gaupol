@@ -10,18 +10,19 @@ import os
 import pstats
 import sys
 
-TOOL_DIR = os.path.dirname(os.path.abspath(__file__))
-LIB_DIR = os.path.join(TOOL_DIR, "..")
-sys.path.insert(0, LIB_DIR)
+FILE_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(FILE_DIR, ".."))
 
 # Unless planning on lazy loading modules,
 # we're not interested in profiling imports.
 # pylint: disable-msg=W0404,W0611
 import atexit
 import bisect
+import chardet
+import cPickle
 import codecs
 import copy
-import cPickle
+import enchant
 import filecmp
 import functools
 import gc

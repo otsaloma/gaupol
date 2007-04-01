@@ -1,21 +1,20 @@
 #!/bin/bash
 
-# Generate and view API documentation with pydoctor.
+# Generate API documentation with pydoctor.
 # Usage: pydoctor [browse]
-# Requires highlight [1] and pydoctor [2].
-#
-# [1] http://www.andre-simon.de/
-# [2] http://codespeak.net/~mwh/pydoctor/
+# Requires highlight and pydoctor.
+# http://www.andre-simon.de/
+# http://codespeak.net/~mwh/pydoctor/
 
 cd $(dirname "$0")/..
-DOCDIR=doc/api
-DATADIR=$(dirname "$0")/data
+DOC_DIR=doc/api
+DATA_DIR=$(dirname "$0")/data
 PATHS=$(find gaupol -type f -name "*.py" | grep -v "/test/")
-rm -rf $DOCDIR
+rm -rf $DOC_DIR
 
 for path in $PATHS; do
-    echo $DOCDIR/$path.html
-    dest=$DOCDIR/$path.html
+    echo $DOC_DIR/$path.html
+    dest=$DOC_DIR/$path.html
     mkdir --parents $(dirname $dest)
     highlight \
         --output=$dest \
@@ -27,20 +26,16 @@ for path in $PATHS; do
         --anchors \
         $path
     sed -i "s|^\(<a id=.\)l_|\1L|" $dest
-    cp -f $DATADIR/code.css $(dirname $dest)
+    cp $DATA_DIR/code.css $(dirname $dest)
 done
 
 pydoctor \
     --make-html \
     --add-package=gaupol \
     --docformat=plaintext \
-    --html-output=$DOCDIR \
+    --html-output=$DOC_DIR \
     --html-viewsource-base=gaupol \
     --project-name=Gaupol \
     --project-url=http://home.gna.org/gaupol/ \
     --resolve-aliases
-cp $DATADIR/apidocs.css $DOCDIR
-
-if [[ $1 == "browse" ]]; then
-    $BROWSER $DOCDIR/index.html &
-fi
+cp $DATA_DIR/apidocs.css $DOC_DIR

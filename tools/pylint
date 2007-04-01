@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Check code with pylint.
 # Usage: See pylint --help.
@@ -12,5 +12,5 @@ pylint --rcfile=$(dirname "$0")/data/pylintrc $@ \
     | sed "/<$/{N;/<\n./D}" \
     | sed "/>$/{N;/>\n</D}" \
     | sed "s/[<>]$//" \
-    | egrep -v ^$ \
+    | egrep -v "^$" \
     | sed "s/^</\n\xE2\x97\x8F /"

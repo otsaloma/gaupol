@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Run interactive tests with nosetests.
+# Run interactive tests with nose.
 # Usage: See nosetests --help.
 
 nosetests --match="^(Test|run)" "$@"

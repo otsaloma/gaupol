@@ -1,3 +1,18 @@
+2007-04-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* tools/add-changelog:
+	* tools/data/apidocs.css:
+	* tools/data/code.css:
+	* tools/data/pylintrc:
+	* tools/generate-tests:
+	* tools/list-glade:
+	* tools/nose-run:
+	* tools/profile:
+	* tools/pydoctor:
+	* tools/pylint:
+	* tools/translate:
+	Minor changes.
+
 2007-03-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* bin/gaupol:

@@ -15,54 +15,63 @@ pre
 /* Comment */
 .com
 {
+  background-color: inherit;
   color: #3366FF;
 }
 
 /* ??? */
 .dir
 {
+  background-color: inherit;
   color: inherit;
 }
 
 /* ??? */
 .dstr
 {
+  background-color: inherit;
   color: inherit;
 }
 
 /* String escape */
 .esc
 {
+  background-color: inherit;
   color: #B957FF;
 }
 
 /* Keyword */
 .kwa
 {
+  background-color: inherit;
   color: #FF4433;
 }
 
 /* __builtin__ */
 .kwb
 {
+  background-color: inherit;
   color: #FF38AC;
 }
 
 /* Exception */
 .kwc
 {
+  background-color: inherit;
   color: #00B286;
 }
 
 /* Function */
 .kwd
 {
+  background-color: inherit;
   color: inherit;
 }
 
 /* Line anchor */
 .line
 {
+  background-color: inherit;
   color: #BABDB6;
   margin-right: 6px;
   user-select: none;
@@ -73,23 +82,27 @@ pre
 /* Number */
 .num
 {
+  background-color: inherit;
   color: #B957FF;
 }
 
 /* Comment */
 .slc
 {
+  background-color: inherit;
   color: #3366FF;
 }
 
 /* String */
 .str
 {
+  background-color: inherit;
   color: #B957FF;
 }
 
 /* Symbol */
 .sym
 {
+  background-color: inherit;
   color: inherit;
 }

@@ -2,12 +2,12 @@
 
 # Add a ChangeLog entry.
 # Usage: add-changelog [PATH...]
-# Needs environement variables $NAME and $EMAIL.
+# Requires environment variables $NAME and $EMAIL.
 
 cd $(dirname "$0")/.. || exit
 DATE=$(date --utc +%Y-%m-%d) || exit
 svn status -q "$@" | egrep "\w" || exit
-PATHS=$(svn status -q "$@" | sed "s|^. *||" | egrep -v "test_" | sort)
+PATHS=$(svn status -q "$@" | sed "s|^.* ||" | egrep -v "test_" | sort)
 
 mv ChangeLog ChangeLog.old
 echo -e "$DATE  $NAME  <$EMAIL>\n" > ChangeLog
