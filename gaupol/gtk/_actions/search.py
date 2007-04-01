@@ -32,7 +32,7 @@ class FindAndReplaceAction(UIMAction):
     action_item = (
         "find_and_replace",
         gtk.STOCK_FIND_AND_REPLACE,
-        _("_Find And Replace..."),
+        _("_Find And Replace\342\200\246"),
         "<control>F",
         _("Search for and replace text"),)
 

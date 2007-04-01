@@ -32,7 +32,7 @@ class AppendFileAction(UIMAction):
     action_item = (
         "append_file",
         None,
-        _("App_end File..."),
+        _("App_end File\342\200\246"),
         None,
         _("Append subtitles from file to the current project"),)
 
@@ -136,7 +136,7 @@ class OpenMainFileAction(UIMAction):
     action_item = (
         "open_main_file",
         gtk.STOCK_OPEN,
-        _("_Open..."),
+        _("_Open\342\200\246"),
         "<control>O",
         _("Open main files"),)
 
@@ -151,7 +151,7 @@ class OpenTranslationFileAction(UIMAction):
     action_item = (
         "open_translation_file",
         None,
-        _("O_pen Translation..."),
+        _("O_pen Translation\342\200\246"),
         None,
         _("Open a translation file"),)
 
@@ -228,7 +228,7 @@ class SaveMainDocumentAsAction(UIMAction):
     action_item = (
         "save_main_document_as",
         gtk.STOCK_SAVE_AS,
-        _("Save _As..."),
+        _("Save _As\342\200\246"),
         "<shift><control>S",
         _("Save the current main document with a different name"),)
 
@@ -268,7 +268,7 @@ class SaveTranslationDocumentAsAction(UIMAction):
     action_item = (
         "save_translation_document_as",
         None,
-        _("Save _Translation As..."),
+        _("Save _Translation As\342\200\246"),
         "<shift><control>T",
         _("Save the current translation document with a different name"),)
 
@@ -288,7 +288,7 @@ class SelectVideoFileAction(UIMAction):
     action_item = (
         "select_video_file",
         None,
-        _("Select _Video..."),
+        _("Select _Video\342\200\246"),
         None,
         _("Select a video file"),)
 
@@ -349,7 +349,7 @@ class SplitProjectAction(UIMAction):
     action_item = (
         "split_project",
         None,
-        _("Sp_lit Project..."),
+        _("Sp_lit Project\342\200\246"),
         None,
         _("Split the current project in two"),)
 

@@ -34,7 +34,7 @@ class AdjustDurationsAction(UIMAction):
     action_item = (
         "adjust_durations",
         None,
-        _("A_djust Durations..."),
+        _("A_djust Durations\342\200\246"),
         None,
         _("Lengthen or shorten durations"),)
 
@@ -54,7 +54,7 @@ class AdjustPositionsAction(UIMAction):
     action_item = (
         "adjust_positions",
         None,
-        _("_Adjust Positions..."),
+        _("_Adjust Positions\342\200\246"),
         "A",
         _("Adjust positions by linear two-point correction"),)
 
@@ -76,7 +76,7 @@ class ConvertFramerateAction(UIMAction):
     action_item = (
         "convert_framerate",
         gtk.STOCK_CONVERT,
-        _("Con_vert Framerate..."),
+        _("Con_vert Framerate\342\200\246"),
         None,
         _("Convert framerate"),)
 
@@ -130,7 +130,7 @@ class ShiftPositionsAction(UIMAction):
     action_item = (
         "shift_positions",
         None,
-        _("_Shift Positions..."),
+        _("_Shift Positions\342\200\246"),
         "H",
         _("Make subtitles appear earlier or later"),)
 

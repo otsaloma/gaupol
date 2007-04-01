@@ -33,7 +33,7 @@ class ConfigureSpellCheckAction(UIMAction):
     action_item = (
         "configure_spell_check",
         None,
-        _("Co_nfigure Spell-check..."),
+        _("Co_nfigure Spell-check\342\200\246"),
         None,
         _("Set languages and spell-check targets"),)
 

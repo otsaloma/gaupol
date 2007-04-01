@@ -171,7 +171,7 @@ class InsertSubtitlesAction(UIMAction):
     action_item = (
         "insert_subtitles",
         gtk.STOCK_ADD,
-        _("_Insert Subtitles..."),
+        _("_Insert Subtitles\342\200\246"),
         "Insert",
         _("Insert blank subtitles"),)
 

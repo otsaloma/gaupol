@@ -1,5 +1,14 @@
 2007-04-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/_actions/edit.py:
+	* gaupol/gtk/_actions/file.py:
+	* gaupol/gtk/_actions/position.py:
+	* gaupol/gtk/_actions/search.py:
+	* gaupol/gtk/_actions/spellcheck.py:
+	Replaced three dots with U+2026 ellipses.
+
+2007-04-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/_agents/edit.py:
 	* gaupol/_agents/open.py:
 	* gaupol/_agents/save.py:
