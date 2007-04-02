@@ -42,7 +42,7 @@ class TestCase(object):
         """Get path to a temporary subtitle file."""
 
         text = self.get_text(format)
-        fd, path = tempfile.mkstemp(prefix="gaupol.", suffix=".sub")
+        fd, path = tempfile.mkstemp(format.extension, "gaupol.")
         with os.fdopen(fd, "w") as fobj:
             fobj.write(text)
         self.files.append(path)
@@ -75,18 +75,10 @@ class TestCase(object):
         dirname = os.path.abspath(os.path.dirname(__file__))
         while not dirname.endswith("gaupol"):
             dirname = os.path.abspath(os.path.join(dirname, ".."))
-        basename = format.name.lower() + ".sample"
+        basename = "%s.sample" % format.name.lower()
         path = os.path.join(dirname, "..", "doc", "formats", basename)
         with open(path, "r") as fobj:
             return fobj.read().strip()
-
-    def is_regex(self, obj):
-        """Return True if obj is a regular expression object."""
-
-        for name in ("flags", "match", "pattern", "sub"):
-            if not hasattr(obj, name):
-                return False
-        return True
 
     # pylint: disable-msg=C0103
     def setUp(self):
@@ -110,6 +102,6 @@ class TestCase(object):
 
         from gaupol import util
         remove = util.ignore_exceptions(OSError)(os.remove)
-        for path in self.files:
-            remove(path)
-        self.files = []
+        while self.files:
+            remove(self.files.pop())
+

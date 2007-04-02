@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Decorators for testing and timing methods and functions."""
+"""Decorators for testing methods and functions."""
 
 
 import copy
@@ -29,10 +29,10 @@ def benchmark(function):
 
     @functools.wraps(function)
     def wrapper(*args, **kwargs):
-        start = time.time()
+        a = time.time()
         value = function(*args, **kwargs)
-        end = time.time()
-        print "%.3f %s" % (end - start, function.__name__)
+        z = time.time()
+        print "%.3f %s" % (z - a, function.__name__)
         return value
 
     return wrapper
@@ -43,20 +43,20 @@ def reversion_test(function):
     @functools.wraps(function)
     def wrapper(*args, **kwargs):
         project = args[0].project
-        values = (
+        data = (
             project.times,
             project.frames,
             project.main_texts,
             project.tran_texts,)
-        orig_values = copy.deepcopy(values)
+        a = copy.deepcopy(data)
         value = function(*args, **kwargs)
-        new_values = copy.deepcopy(values)
-        assert new_values != orig_values
+        z = copy.deepcopy(data)
+        assert z != a
         for i in range(2):
             project.undo()
-            assert values == orig_values
+            assert data == a
             project.redo()
-            assert values == new_values
+            assert data == z
         return value
 
     return wrapper

@@ -18,20 +18,23 @@
 
 """Unit testing system.
 
+Imported names:
+
+    TestCase (case), benchmark (decorators), reversion_test (decorators)
+
 All test module names should be prefixed with 'test_', class names with 'Test',
 function and method names with 'test_'. Interactive GUI test method names
 should be prefixed with 'run'. All test classes should inherit from TestCase.
 
-Tests can be run with at least py.test [1] and nose [2]. The intention is to
-keep all test code independent of the application used to run the tests.
+Tests can be run with at least py.test [1] and nose [2]. All test code is to be
+kept as independent as possible of the application used to run the tests.
 
-[1] http://codespeak.net/py/current/doc/test.html
+[1] http://codespeak.net/py/dist/test.html
 [2] http://somethingaboutorange.com/mrl/projects/nose/
 """
 
 
 from .case import TestCase
 from .decorators import benchmark, reversion_test
-
 
 __all__ = ["TestCase", "benchmark", "reversion_test"]

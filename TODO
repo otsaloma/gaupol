@@ -76,6 +76,7 @@ Unscheduled Possibilities
 =========================
 
  * Interactive search
+ * gedit-style message area
  * Document hidden settings (where?)
  * Multiple windows and tab drag-dropping between them
     * http://live.gnome.org/GTK+/ApplicationClass
@@ -86,7 +87,7 @@ Unscheduled Possibilities
     * http://live.gnome.org/PyGTK/FAQ/Win32AndPygtk
     * http://trac.gajim.org/wiki/DevWindows
     * http://svn.berlios.de/svnroot/repos/griffith/trunk/
- * Plugin system (see Gedit)
+ * Plugin system (see gedit)
  * Built-in GStreamer preview
     * http://gstreamer.freedesktop.org/modules/gst-python.html
     * http://pygstdocs.berlios.de/

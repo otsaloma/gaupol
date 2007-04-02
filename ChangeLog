@@ -1,3 +1,10 @@
+2007-04-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/unittest/case.py:
+	* gaupol/unittest/decorators.py:
+	* gaupol/unittest/__init__.py:
+	Minor changes.
+
 2007-04-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/_actions/edit.py:
