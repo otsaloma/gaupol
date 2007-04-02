@@ -24,6 +24,9 @@ from __future__ import with_statement
 import os
 import tempfile
 
+from gaupol import cons, util
+from gaupol.project import Project
+
 
 class TestCase(object):
 
@@ -51,13 +54,11 @@ class TestCase(object):
     def get_microdvd_path(self):
         """Get path to a temporary MicroDVD file."""
 
-        from gaupol import cons
         return self.get_file_path(cons.FORMAT.MICRODVD)
 
     def get_project(self):
         """Get a new project."""
 
-        from gaupol.project import Project
         project = Project()
         project.open_main(self.get_subrip_path(), "ascii")
         project.open_translation(self.get_microdvd_path(), "ascii")
@@ -66,9 +67,9 @@ class TestCase(object):
     def get_subrip_path(self):
         """Get path to a temporary SubRip file."""
 
-        from gaupol import cons
         return self.get_file_path(cons.FORMAT.SUBRIP)
 
+    @util.memoize
     def get_text(self, format):
         """Get subtitle file text."""
 
@@ -100,7 +101,6 @@ class TestCase(object):
     def teardown_method(self, method):
         """Remove state set for executing tests in method."""
 
-        from gaupol import util
         remove = util.ignore_exceptions(OSError)(os.remove)
         while self.files:
             remove(self.files.pop())

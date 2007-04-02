@@ -42,7 +42,11 @@ def memoize(function):
     cache = {}
     @functools.wraps(function)
     def wrapper(*args, **kwargs):
-        key = cPickle.dumps((args, kwargs))
+        params = (args, kwargs)
+        # FIX: IS THIS THE RIGHT WAY TO CHECK FOR METHODS?
+        if args and hasattr(args[0], function.__name__):
+            params = (args[1:], kwargs)
+        key = cPickle.dumps(params)
         if not key in cache:
             cache[key] = function(*args, **kwargs)
         return cache[key]
