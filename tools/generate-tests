@@ -16,6 +16,7 @@ SETUP_METHOD="\n    def setup_method(self, method):\n\n        pass"
 
 cat "$1" \
     | egrep "^(class |\s*def |#)" \
+    | egrep -v "_(require|ensure)\(" \
     | sed "s|^\(# .*Boston.*\)$|\1$IMPORTS|" \
     | sed "s|^\(\s*\)def \(\w*\).*$|\n\1def test_\2(self):\n\n\1    pass|" \
     | sed "s|^class \(\w*\).*$|\n\nclass Test\1(TestCase):\n$SETUP_METHOD|"

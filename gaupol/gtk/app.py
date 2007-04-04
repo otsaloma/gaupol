@@ -319,7 +319,7 @@ class Application(Observable, Runner):
             cls = eval(class_name)
             if cls.menu_item is not None:
                 item = list(cls.menu_item)
-                method = util.ignore_exceptions()(get_method)(item[0])
+                method = util.silent()(get_method)(item[0])
                 item.append(method)
                 action_group.add_actions([tuple(item)], None)
             if cls.action_item is not None:

@@ -118,7 +118,7 @@ class _PositionShiftDialog(GladeDialog):
         args = [self._get_target_rows(), self._get_amount()]
         self.application.preview_changes(page, row, doc, method, args)
 
-    @util.ignore_exceptions(AssertionError)
+    @util.silent(AssertionError)
     def _on_response(self, dialog, response):
         """Save settings and shift positions."""
 

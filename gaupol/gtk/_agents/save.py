@@ -135,8 +135,8 @@ class SaveAgent(Delegate):
     def on_save_all_documents_activate(self, *args):
         """Save all open documents."""
 
-        save_main = util.ignore_exceptions(Default)(self.save_main)
-        save_tran = util.ignore_exceptions(Default)(self.save_translation)
+        save_main = util.silent(Default)(self.save_main)
+        save_tran = util.silent(Default)(self.save_translation)
         for page in self.pages:
             save_main(page)
             if page.project.tran_active:
@@ -144,7 +144,7 @@ class SaveAgent(Delegate):
         self.push_message(_("Saved all open documents"))
         self.update_gui()
 
-    @util.ignore_exceptions(Default)
+    @util.silent(Default)
     def on_save_main_document_activate(self, *args):
         """Save the current main document."""
 
@@ -152,7 +152,7 @@ class SaveAgent(Delegate):
         self.save_main(page)
         self.update_gui()
 
-    @util.ignore_exceptions(Default)
+    @util.silent(Default)
     def on_save_main_document_as_activate(self, *args):
         """Save the current main document with a different name."""
 
@@ -160,7 +160,7 @@ class SaveAgent(Delegate):
         self.save_main_as(page)
         self.update_gui()
 
-    @util.ignore_exceptions(Default)
+    @util.silent(Default)
     def on_save_translation_document_activate(self, *args):
         """Save the current translation document."""
 
@@ -168,7 +168,7 @@ class SaveAgent(Delegate):
         self.save_translation(page)
         self.update_gui()
 
-    @util.ignore_exceptions(Default)
+    @util.silent(Default)
     def on_save_translation_document_as_activate(self, *args):
         """Save the current translation document with a different name."""
 

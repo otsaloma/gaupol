@@ -23,7 +23,7 @@ function-rgx=[a-z_][a-z0-9_]{0,29}$
 good-names=
 inlinevar-rgx=[a-z]$
 method-rgx=[a-z_][a-z0-9_]{0,29}$
-module-rgx=(_?[a-z][a-z0-9]{0,19}$)|(__.+?__$)
+module-rgx=(_?[a-z_][a-z0-9_]{0,19}$)|(__.+?__$)
 variable-rgx=[a-z_][a-z0-9_]{0,19}$
 
 [VARIABLES]

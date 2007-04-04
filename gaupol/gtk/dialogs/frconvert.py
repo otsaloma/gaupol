@@ -119,7 +119,7 @@ class FramerateConvertDialog(GladeDialog):
         sensitive = current != correct
         self._dialog.set_response_sensitive(gtk.RESPONSE_OK, sensitive)
 
-    @util.ignore_exceptions(AssertionError)
+    @util.silent(AssertionError)
     def _on_response(self, dialog, response):
         """Save settings and convert framerates."""
 

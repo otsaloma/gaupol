@@ -129,8 +129,8 @@ class PreviewAgent(Delegate):
         seconds = "%.3f" % max(0.0, seconds - float(offset))
         command = string.Template(command).safe_substitute(
             SECONDS=seconds,
-            SUBFILE=util.shell_quote_path(sub_path),
-            VIDEOFILE=util.shell_quote_path(self.video_path))
+            SUBFILE=util.shell_quote(sub_path),
+            VIDEOFILE=util.shell_quote(self.video_path))
 
         process = util.start_process(
             command, stderr=subprocess.STDOUT, stdout=output_fd)

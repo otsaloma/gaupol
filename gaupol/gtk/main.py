@@ -107,6 +107,13 @@ def _parse_args(args):
         help=_("set the configuration file to be used"),)
 
     parser.add_option(
+        "-d", "--debug",
+        action="store_true",
+        dest="debug",
+        default=False,
+        help=_("enable additional run-time checks"),)
+
+    parser.add_option(
         "-e", "--encoding",
         action="store",
         type="string",
@@ -159,6 +166,12 @@ def _prepare_configuration(path):
     conf.CONFIG_FILE = os.path.abspath(path)
     conf.read()
     atexit.register(conf.write)
+
+def _prepare_debug(debug):
+    """Enable or disable debugging checks."""
+
+    from gaupol import util
+    util.CHECK_CONTRACTS = debug
 
 def _prepare_gettext():
     """Assign gettext domains."""
@@ -228,6 +241,7 @@ def main(args):
         return _list_encodings()
     if opts.version:
         return _show_version()
+    _prepare_debug(opts.debug)
     _prepare_configuration(opts.config_file)
     _prepare_ui()
     _start(opts, args)

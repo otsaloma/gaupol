@@ -41,6 +41,10 @@ class TestCase(object):
 
         self.files = []
 
+    def get_file_path_ensure(self, value, format):
+        assert os.path.isfile(value)
+
+    @util.contractual
     def get_file_path(self, format):
         """Get path to a temporary subtitle file."""
 
@@ -51,6 +55,10 @@ class TestCase(object):
         self.files.append(path)
         return path
 
+    def get_microdvd_path_ensure(self, value):
+        assert os.path.isfile(value)
+
+    @util.contractual
     def get_microdvd_path(self):
         """Get path to a temporary MicroDVD file."""
 
@@ -64,6 +72,10 @@ class TestCase(object):
         project.open_translation(self.get_microdvd_path(), "ascii")
         return project
 
+    def get_subrip_path_ensure(self, value):
+        assert os.path.isfile(value)
+
+    @util.contractual
     def get_subrip_path(self):
         """Get path to a temporary SubRip file."""
 
@@ -101,7 +113,7 @@ class TestCase(object):
     def teardown_method(self, method):
         """Remove state set for executing tests in method."""
 
-        remove = util.ignore_exceptions(OSError)(os.remove)
+        remove = util.silent(OSError)(os.remove)
         while self.files:
             remove(self.files.pop())
 

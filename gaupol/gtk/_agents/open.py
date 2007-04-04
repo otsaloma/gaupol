@@ -361,7 +361,7 @@ class OpenAgent(Delegate):
             button.connect("button-press-event", method)
 
     @util.gc_collected
-    @util.ignore_exceptions(Default)
+    @util.silent(Default)
     def on_append_file_activate(self, *args):
         """Append subtitles from file to the current project."""
 
@@ -506,7 +506,7 @@ class OpenAgent(Delegate):
                 gtk.main_iteration()
             util.set_cursor_normal(self.window)
 
-    @util.ignore_exceptions(Default)
+    @util.silent(Default)
     def open_translation_file(self, path, encoding=None):
         """Open translation file."""
 

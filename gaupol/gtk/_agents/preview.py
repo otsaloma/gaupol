@@ -43,7 +43,7 @@ class PreviewAgent(Delegate):
     def _clean(self, output_path, temp_path):
         """Remove output and temporary files if they exist."""
 
-        remove = util.ignore_exceptions(OSError, TypeError)(os.remove)
+        remove = util.silent(OSError, TypeError)(os.remove)
         remove(output_path)
         remove(temp_path)
 

@@ -191,7 +191,7 @@ class DurationAdjustDialog(GladeDialog):
 
         self._min_spin.set_sensitive(check_button.get_active())
 
-    @util.ignore_exceptions(AssertionError)
+    @util.silent(AssertionError)
     def _on_response(self, dialog, response):
         """Save settings and adjust durations."""
 

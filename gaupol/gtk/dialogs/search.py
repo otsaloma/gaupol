@@ -100,7 +100,7 @@ class SearchDialog(GladeDialog):
         self._dialog.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_NORMAL)
         self._dialog.set_default_response(gtk.RESPONSE_CLOSE)
 
-    @util.ignore_exceptions(AssertionError)
+    @util.silent(AssertionError)
     def _add_pattern(self):
         """Add the current pattern to the pattern combo box."""
 
@@ -118,7 +118,7 @@ class SearchDialog(GladeDialog):
             store.append([pattern])
         self.application.update_gui()
 
-    @util.ignore_exceptions(AssertionError)
+    @util.silent(AssertionError)
     def _add_replacement(self):
         """Add the current replacement to the replacement combo box."""
 
@@ -310,7 +310,7 @@ class SearchDialog(GladeDialog):
         self._current_radio.connect("toggled", save_target)
         self._all_radio.connect("toggled", save_target)
 
-    @util.ignore_exceptions(Default)
+    @util.silent(Default)
     def _on_next_button_clicked(self, *args):
         """Find the next match of pattern."""
 
@@ -326,7 +326,7 @@ class SearchDialog(GladeDialog):
         self._previous_button.set_sensitive(sensitive)
         self._replace_all_button.set_sensitive(sensitive)
 
-    @util.ignore_exceptions(Default)
+    @util.silent(Default)
     def _on_previous_button_clicked(self, *args):
         """Find the previous match of pattern."""
 
@@ -364,7 +364,7 @@ class SearchDialog(GladeDialog):
             util.browse_url(urls.REGEX_HELP)
             self.stop_emission("response")
 
-    @util.ignore_exceptions(AssertionError)
+    @util.silent(AssertionError)
     def _on_text_view_focus_out_event(self, text_view, event):
         """Save changes made in the text view."""
 
@@ -478,7 +478,7 @@ class SearchDialog(GladeDialog):
                 row = doc = pos = None
         self._admit_failure()
 
-    @util.ignore_exceptions(AssertionError, Default)
+    @util.silent(AssertionError, Default)
     def replace(self):
         """Replace the current match."""
 

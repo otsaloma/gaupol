@@ -1,6 +1,8 @@
 Gaupol 0.8
 ==========
 
+ * Disable contracts by default and use --debug?
+
 Changes:
  [D] Configuration file backend and syntax changed
  [D] Fixed numerous bugs with find and replace
@@ -29,7 +31,7 @@ Changes:
  [D] Faster list updates when inserting and removing subtitles
  [D] Spin buttons as editors in frame column cells
  [D] Greater contrast in the icon
- [D] Added --config-file, --encoding, --list-encodings,
+ [D] Added --config-file, --debug, --encoding, --list-encodings,
      --translation-file,  --video-file and +[NUM] options
  [D] Applied GNOME Goal #3: Remove "Application" category from
      .desktop files

@@ -6,6 +6,7 @@
 pylint --rcfile=$(dirname "$0")/data/pylintrc $@ \
 \
     | egrep -v "Undefined variable 'fobj'" \
+    | egrep -v "No name '.+?' in module '.+?\.test\.?'" \
 \
     | sed "s/\*\+ Module \(.*\)$/<\1>/" \
     | sed "s/>$/>\n</" \

@@ -162,25 +162,25 @@ class CloseAgent(Delegate):
         self.pages.remove(page)
         self.emit("page-closed", page)
 
-    @util.ignore_exceptions(Default)
+    @util.silent(Default)
     def on_close_all_projects_activate(self, *args):
         """Close all open projects."""
 
         self._close_all_pages()
 
-    @util.ignore_exceptions(Default)
+    @util.silent(Default)
     def on_close_project_activate(self, *args):
         """Close project."""
 
         self.close(self.get_current_page())
 
-    @util.ignore_exceptions(Default)
+    @util.silent(Default)
     def on_page_close_request(self, page, *args):
         """Close project."""
 
         self.close(page)
 
-    @util.ignore_exceptions(Default)
+    @util.silent(Default)
     def on_quit_activate(self, *args):
         """Quit Gaupol."""
 

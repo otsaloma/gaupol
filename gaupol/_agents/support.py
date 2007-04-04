@@ -125,7 +125,7 @@ class SupportAgent(Delegate):
             return self.frames
         raise ValueError
 
-    @util.ignore_exceptions(AssertionError)
+    @util.silent(AssertionError)
     def get_tag_regex(self, doc):
         """Get the regular expression for a tag in document or None."""
 
@@ -177,7 +177,7 @@ class SupportAgent(Delegate):
         self.emit("subtitles-inserted", rows)
 
     @revertable
-    @util.ignore_exceptions(AssertionError)
+    @util.silent(AssertionError)
     def replace_both_texts(self, rows, new_texts, register=-1):
         """Replace texts in both documents' rows with new_texts.
 

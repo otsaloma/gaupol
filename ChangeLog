@@ -1,3 +1,12 @@
+2007-04-04  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/main.py:
+	Set util.CHECK_CONTRACTS based on --debug.
+
+	* gaupol/util.py:
+	Add contractual decorator.
+	Remove old unused crap.
+
 2007-04-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/unittest/case.py (TestCase.get_text):

@@ -95,8 +95,9 @@ class SubtitleFile(object):
     def get_template_header(self):
         """Read and return the header from a template file."""
 
-        @util.exceptional(IOError, util.handle_read_io, 0)
-        @util.exceptional(UnicodeError, util.handle_read_unicode, 0, 1)
+        # FIX: REWRITE WITHOUT EXCEPTIONAL.
+        # @util.exceptional(IOError, util.handle_read_io, 0)
+        # @util.exceptional(UnicodeError, util.handle_read_unicode, 0, 1)
         def read(path, encoding):
             return util.read(path, encoding)
 

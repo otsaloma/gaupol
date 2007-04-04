@@ -91,7 +91,7 @@ class Parser(Finder):
             if all([x.endswith(end_tag) for x in lines]):
                 self.margins = [start_tag, end_tag]
 
-    @util.ignore_exceptions(AssertionError)
+    @util.silent(AssertionError)
     def _shift_tags(self, pos, shift, orig_text):
         """Shift all the tags after position."""
 
@@ -148,7 +148,7 @@ class Parser(Finder):
         shift = len(self.text) - len(orig_text)
         self._shift_tags(a, shift, orig_text)
 
-    @util.ignore_exceptions(AssertionError)
+    @util.silent(AssertionError)
     def set_text(self, text, next=True):
         """Set the text and parse it.
 

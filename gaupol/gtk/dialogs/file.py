@@ -115,7 +115,7 @@ class _FileDialog(gtk.FileChooserDialog, Runner):
 
         pass
 
-    @util.ignore_exceptions(AssertionError)
+    @util.silent(AssertionError)
     def _on_encoding_combo_changed(self, *args):
         """Show the encoding selection dialog."""
 

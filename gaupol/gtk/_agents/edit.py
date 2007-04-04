@@ -234,7 +234,7 @@ class EditAgent(Delegate):
 
         self.undo()
 
-    @util.ignore_exceptions(AssertionError)
+    @util.silent(AssertionError)
     def on_view_renderer_edited(self, renderer, path, value, col):
         """Finish editing cell."""
 

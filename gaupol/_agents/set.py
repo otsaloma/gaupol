@@ -136,7 +136,7 @@ class SetAgent(Delegate):
         return new_row
 
     @revertable
-    @util.ignore_exceptions(AssertionError)
+    @util.silent(AssertionError)
     def set_text(self, row, doc, value, register=-1):
         """Set the value of text."""
 

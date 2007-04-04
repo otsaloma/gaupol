@@ -237,7 +237,7 @@ class SpellCheckDialog(GladeDialog):
         text_buffer = self._text_view.get_buffer()
         text_buffer.create_tag("misspelled", weight=pango.WEIGHT_BOLD)
 
-    @util.ignore_exceptions(AssertionError)
+    @util.silent(AssertionError)
     def _init_replacements(self):
         """Read replacements from file."""
 
@@ -245,7 +245,7 @@ class SpellCheckDialog(GladeDialog):
         path = os.path.join(_SPELL_CHECK_DIR, lang + ".repl")
         assert os.path.isfile(path)
         exceptions = (IOError, UnicodeError)
-        readlines = util.ignore_exceptions(*exceptions)(util.readlines)
+        readlines = util.silent(*exceptions)(util.readlines)
         lines = readlines(path, "utf_8")
         for line in util.get_unique(lines):
             entry = tuple(line.strip().split("|"))
@@ -396,7 +396,7 @@ class SpellCheckDialog(GladeDialog):
         self._register_changes()
         self._set_done()
 
-    @util.ignore_exceptions(AssertionError)
+    @util.silent(AssertionError)
     def _on_tree_view_selection_changed(self, *args):
         """Copy the selected suggestion into the entry."""
 
@@ -406,7 +406,7 @@ class SpellCheckDialog(GladeDialog):
         row = store.get_path(itr)[0]
         self._entry.set_text(unicode(store[row][0]))
 
-    @util.ignore_exceptions(AssertionError)
+    @util.silent(AssertionError)
     def _register_changes(self):
         """Register changes to current page."""
 
@@ -457,7 +457,7 @@ class SpellCheckDialog(GladeDialog):
         replacements = util.get_unique(replacements)
         self._replacements = replacements
 
-    @util.ignore_exceptions(AssertionError)
+    @util.silent(AssertionError)
     def _write_replacements(self):
         """Write replacement files."""
 
