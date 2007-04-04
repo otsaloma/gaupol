@@ -320,6 +320,18 @@ def makedirs(directory):
     if not os.path.isdir(directory):
         os.makedirs(directory)
 
+def notify_frozen(function):
+    """Decorator for methods to be run in notify frozen state."""
+
+    @functools.wraps(function)
+    def wrapper(*args, **kwargs):
+        frozen = args[0].freeze_notify()
+        value = function(*args, **kwargs)
+        args[0].thaw_notify(frozen)
+        return value
+
+    return wrapper
+
 def path_to_uri(path):
     """Convert local filepath to URI."""
 

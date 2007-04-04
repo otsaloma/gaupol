@@ -24,19 +24,6 @@ import functools
 from ._mutables import ObservableDict, ObservableList, ObservableSet
 
 
-def notify_frozen(function):
-    """Decorator for methods to be run in notify frozen state."""
-
-    @functools.wraps(function)
-    def wrapper(*args, **kwargs):
-        changed = args[0].freeze_notify()
-        value = function(*args, **kwargs)
-        args[0].thaw_notify(changed)
-        return value
-
-    return wrapper
-
-
 class Observable(object):
 
     """Base class for observable objects.

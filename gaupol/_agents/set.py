@@ -23,7 +23,7 @@ import bisect
 from gettext import gettext as _
 
 from gaupol import cons, util
-from gaupol.base import Delegate, notify_frozen
+from gaupol.base import Delegate
 from .index import SHOW, HIDE, DURN
 from .register import revertable
 
@@ -107,7 +107,7 @@ class SetAgent(Delegate):
         return new_row != row
 
     @revertable
-    @notify_frozen
+    @util.notify_frozen
     def set_position(self, row, col, value, register=-1):
         """Set the value of position.
 

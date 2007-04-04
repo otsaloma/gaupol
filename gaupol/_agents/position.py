@@ -23,8 +23,8 @@ from __future__ import division
 
 from gettext import gettext as _
 
-from gaupol import cons
-from gaupol.base import Delegate, notify_frozen
+from gaupol import cons, util
+from gaupol.base import Delegate
 from .index import SHOW, HIDE, DURN
 from .register import revertable
 
@@ -144,7 +144,7 @@ class PositionAgent(Delegate):
         self.replace_positions(rows, new_times, new_frames, register=register)
         self.set_action_description(register, _("Adjusting times"))
 
-    @notify_frozen
+    @util.notify_frozen
     def change_framerate(self, framerate):
         """Change the framerate and update positions.
 

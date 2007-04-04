@@ -20,7 +20,7 @@
 
 
 from .delegate import Delegate
-from .observable import Observable, notify_frozen
+from .observable import Observable
 
 
-__all__ = ["Delegate", "Observable", "notify_frozen"]
+__all__ = ["Delegate", "Observable"]

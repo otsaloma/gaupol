@@ -19,8 +19,8 @@
 """Opening subtitle files."""
 
 
-from gaupol import cons
-from gaupol.base import Delegate, notify_frozen
+from gaupol import cons, util
+from gaupol.base import Delegate
 from gaupol.determiner import FormatDeterminer
 from gaupol.files import *
 from .index import SHOW, HIDE, DURN
@@ -83,7 +83,7 @@ class OpenAgent(Delegate):
         texts = [x[2] for x in data]
         return shows, hides, texts
 
-    @notify_frozen
+    @util.notify_frozen
     def open_main(self, path, encoding):
         """Open main file reading positions and texts.
 
@@ -119,7 +119,7 @@ class OpenAgent(Delegate):
         self.emit("main-file-opened", self.main_file)
         return self._sort_count
 
-    @notify_frozen
+    @util.notify_frozen
     def open_translation(self, path, encoding, smart=True):
         """Open translation file reading texts.
 

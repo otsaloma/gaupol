@@ -1,5 +1,11 @@
 2007-04-04  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/base/observable.py:
+	* gaupol/util.py:
+	Move notify_frozen to util.
+
+2007-04-04  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/main.py:
 	Set util.CHECK_CONTRACTS based on --debug.
 

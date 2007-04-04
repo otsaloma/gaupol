@@ -23,7 +23,7 @@ import re
 from gettext import gettext as _
 
 from gaupol import cons, util
-from gaupol.base import Delegate, notify_frozen
+from gaupol.base import Delegate
 from gaupol.tags import *
 from .register import revertable
 
@@ -150,7 +150,7 @@ class SupportAgent(Delegate):
         return (self.main_texts, self.tran_texts)[doc]
 
     @revertable
-    @notify_frozen
+    @util.notify_frozen
     def insert_subtitles(
         self, rows, times, frames, main_texts, tran_texts, register=-1):
         """Insert subtitles.
@@ -197,7 +197,7 @@ class SupportAgent(Delegate):
         self.group_actions(register, 2, _("Replacing texts"))
 
     @revertable
-    @notify_frozen
+    @util.notify_frozen
     def replace_positions(self, rows, new_times, new_frames, register=-1):
         """Replace times and frames in rows with new_times and new_frames."""
 
@@ -219,7 +219,7 @@ class SupportAgent(Delegate):
         self.emit("positions-changed", rows)
 
     @revertable
-    @notify_frozen
+    @util.notify_frozen
     def replace_texts(self, rows, doc, new_texts, register=-1):
         """Replace texts in document's rows with new_texts."""
 

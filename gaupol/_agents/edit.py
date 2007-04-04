@@ -24,7 +24,7 @@ from __future__ import division
 from gettext import gettext as _
 
 from gaupol import cons, util
-from gaupol.base import Delegate, notify_frozen
+from gaupol.base import Delegate
 from .index import SHOW, HIDE, DURN
 from .register import revertable
 
@@ -62,7 +62,7 @@ class EditAgent(Delegate):
         self.set_action_description(register, _("Cutting texts"))
 
     @revertable
-    @notify_frozen
+    @util.notify_frozen
     def insert_blank_subtitles(self, rows, register=-1):
         """Insert blank subtitles."""
 
@@ -152,7 +152,7 @@ class EditAgent(Delegate):
         return rows
 
     @revertable
-    @notify_frozen
+    @util.notify_frozen
     def remove_subtitles(self, rows, register=-1):
         """Remove subtitles."""
 
