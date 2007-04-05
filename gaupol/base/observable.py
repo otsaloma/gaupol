@@ -19,8 +19,7 @@
 """Base class for observable objects."""
 
 
-import functools
-
+from gaupol import util
 from ._mutables import ObservableDict, ObservableList, ObservableSet
 
 
@@ -47,9 +46,8 @@ class Observable(object):
 
     Notify signals will be emitted for mutable variables as well, which means
     that care should be taken not to emit thousands of signals when appending
-    one-by-one to a large list. 'freeze_notify' and 'thaw_notify' methods as
-    well as the 'notify_frozen' decorator will queue notify signals and emit
-    only one of each once thawed.
+    one-by-one to a large list. 'freeze_notify' and 'thaw_notify' methods will
+    queue notify signals and emit only one of each once thawed.
     """
 
     # The Observable philosophy and API is highly inspired by (Py)GObject.
@@ -88,13 +86,19 @@ class Observable(object):
         self.emit(signal, value)
         return return_value
 
+    def _add_signal_require(self, signal):
+        assert not signal in self._signal_handlers
+
+    @util.contractual
     def _add_signal(self, signal):
         """Add signal to the list of signals."""
 
-        if signal in self._signal_handlers:
-            raise ValueError
         self._signal_handlers[signal] = []
 
+    def _validate_ensure(self, return_value, name, value):
+        assert return_value == value
+
+    @util.contractual
     def _validate(self, name, value):
         """Return value or an observable version of mutable value."""
 
@@ -107,6 +111,10 @@ class Observable(object):
             return ObservableSet(*args)
         return value
 
+    def block_require(self, signal):
+        assert signal in self._signal_handlers
+
+    @util.contractual
     def block(self, signal):
         """Block all emissions of signal.
 
@@ -127,6 +135,11 @@ class Observable(object):
             return True
         return False
 
+    def connect_require(self, signal, method, *args):
+        assert signal in self._signal_handlers
+        assert callable(method)
+
+    @util.contractual
     def connect(self, signal, method, *args):
         """Register to receive notifications of signal."""
 
@@ -139,6 +152,10 @@ class Observable(object):
             if self._signal_handlers[signal][i][0] == method:
                 self._signal_handlers[signal].pop(i)
 
+    def emit_require(self, signal, *args):
+        assert signal in self._signal_handlers
+
+    @util.contractual
     def emit(self, signal, *args):
         """Send notification of signal to all registered observers."""
 
@@ -164,11 +181,19 @@ class Observable(object):
             return True
         return False
 
+    def notify_require(self, name):
+        assert hasattr(self, name)
+
+    @util.contractual
     def notify(self, name):
         """Emit notification signal for variable."""
 
         return self.emit("notify::%s" % name)
 
+    def thaw_notify_ensure(self, value, do=True):
+        assert not self._notify_queue
+
+    @util.contractual
     def thaw_notify(self, do=True):
         """Emit all queued notify signals and queue no more.
 
@@ -187,6 +212,10 @@ class Observable(object):
             return True
         return False
 
+    def unblock_require(self, signal, do=True):
+        assert signal in self._signal_handlers
+
+    @util.contractual
     def unblock(self, signal, do=True):
         """Unblock all emissions of signal.
 

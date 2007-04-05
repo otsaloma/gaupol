@@ -5,7 +5,7 @@ persistent=no
 [MESSAGES CONTROL]
 disable-checker=design,similarities
 disable-msg-cat=
-disable-msg=C0111,I0011,R0201,W0142,W0402,W0403,W0703,W0704,W1010
+disable-msg=C0111,I0011,R0201,W0142,W0212,W0402,W0403,W0703,W0704,W1010
 
 [REPORTS]
 comment=no
@@ -23,7 +23,7 @@ function-rgx=[a-z_][a-z0-9_]{0,29}$
 good-names=
 inlinevar-rgx=[a-z]$
 method-rgx=([a-z_][a-z0-9_]{0,29}$)|(test_)|(run_)
-module-rgx=(_?[a-z_][a-z0-9_]{0,19}$)|(__.+?__$)
+module-rgx=(_?[a-z_][a-z0-9_]{0,19}$)|(__.+?__$)|(^$)
 variable-rgx=[a-z_][a-z0-9_]{0,19}$
 
 [VARIABLES]

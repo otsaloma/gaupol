@@ -24,19 +24,12 @@ from .. import observable
 
 class Observable(observable.Observable):
 
-    _signals = ["test"]
+    _signals = ["do"]
 
     def __init__(self):
 
         observable.Observable.__init__(self)
         self.variable = 0
-
-    @observable.notify_frozen
-    def do(self):
-
-        self.variable = 1
-        self.variable = 2
-        self.variable = 3
 
 
 class _TestObservable(TestCase):
@@ -47,34 +40,26 @@ class _TestObservable(TestCase):
         assert value == self.obs.variable
         self.notify_count += 1
 
-    def on_test(self, obj):
+    def on_do(self, obj):
 
         assert obj is self.obs
-        self.test_count += 1
+        self.do_count += 1
 
     def setup_method(self, method):
 
         self.obs = Observable()
         self.notify_count = 0
-        self.test_count = 0
-        self.obs.connect("test", self.on_test)
+        self.do_count = 0
+        self.obs.connect("do", self.on_do)
         self.obs.connect("notify::variable", self.on_notify_variable)
-
-
-class TestModule(_TestObservable):
-
-    def _test_notify_frozen(self):
-
-        self.obs.do()
-        assert self.notify_count == 1
 
 
 class TestObservable(_TestObservable):
 
     def test__add_signal(self):
 
-        self.obs._add_signal("rest")
-        self.obs.emit("rest")
+        self.obs._add_signal("undo")
+        self.obs.emit("undo")
 
     def test__validate(self):
 
@@ -87,23 +72,32 @@ class TestObservable(_TestObservable):
 
     def test_block(self):
 
-        assert self.obs.block("test")
-        assert not self.obs.block("test")
-        self.obs.emit("test")
-        assert self.test_count == 0
+        assert self.obs.block("do")
+        assert not self.obs.block("do")
+        self.obs.emit("do")
+        assert self.do_count == 0
+
+    def test_block_all(self):
+
+        assert self.obs.block_all()
+        assert not self.obs.block_all()
+        self.obs.emit("do")
+        assert self.do_count == 0
+        self.obs.notify("variable")
+        assert self.notify_count == 0
 
     def test_disconnect(self):
 
-        self.obs.disconnect("test", self.on_test)
-        self.obs.emit("test")
-        assert self.test_count == 0
+        self.obs.disconnect("do", self.on_do)
+        self.obs.emit("do")
+        assert self.do_count == 0
 
     def test_emit(self):
 
         self.obs.variable = 1
         assert self.notify_count == 1
-        self.obs.emit("test")
-        assert self.test_count == 1
+        self.obs.emit("do")
+        assert self.do_count == 1
 
     def test_freeze_notify(self):
 
@@ -128,8 +122,18 @@ class TestObservable(_TestObservable):
 
     def test_unblock(self):
 
-        self.obs.block("test")
-        assert self.obs.unblock("test")
-        assert not self.obs.unblock("test")
-        self.obs.emit("test")
-        assert self.test_count == 1
+        self.obs.block("do")
+        assert self.obs.unblock("do")
+        assert not self.obs.unblock("do")
+        self.obs.emit("do")
+        assert self.do_count == 1
+
+    def test_unblock_all(self):
+
+        self.obs.block_all()
+        assert self.obs.unblock_all()
+        assert not self.obs.unblock_all()
+        self.obs.emit("do")
+        assert self.do_count == 1
+        self.obs.notify("variable")
+        assert self.notify_count == 1
