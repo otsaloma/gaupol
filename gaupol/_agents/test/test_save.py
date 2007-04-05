@@ -18,7 +18,7 @@
 
 import os
 
-from gaupol import cons
+from gaupol import const
 from gaupol.unittest import TestCase
 from .. import save
 
@@ -62,11 +62,11 @@ class TestSaveAgent(TestCase):
     def test_save(self):
 
         # pylint: disable-msg=E1101
-        unix = cons.NEWLINE.UNIX
-        for format in cons.FORMAT.members:
+        unix = const.NEWLINE.UNIX
+        for format in const.FORMAT.members:
 
             # MAIN, keep changes
-            doc = cons.DOCUMENT.MAIN
+            doc = const.DOCUMENT.MAIN
             self.project.clear_texts([0], doc)
             path = self.project.main_file.path
             self.project.save(doc, (path, format, "ascii", unix), True)
@@ -79,7 +79,7 @@ class TestSaveAgent(TestCase):
             assert self.project.main_changed == 1
 
             # TRAN, keep changes
-            doc = cons.DOCUMENT.TRAN
+            doc = const.DOCUMENT.TRAN
             self.project.clear_texts([0], doc)
             path = self.project.tran_file.path
             self.project.save(doc, (path, format, "ascii", unix), True)

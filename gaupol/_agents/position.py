@@ -23,7 +23,7 @@ from __future__ import division
 
 from gettext import gettext as _
 
-from gaupol import cons, util
+from gaupol import const, util
 from gaupol.base import Delegate
 from .index import SHOW, HIDE, DURN
 from .register import revertable
@@ -55,7 +55,7 @@ class PositionAgent(Delegate):
             if row < len(self.times) - 1:
                 hide_max = self.calc.time_to_seconds(self.times[row + 1][SHOW])
             if optimal is not None:
-                length = self.get_text_length(row, cons.DOCUMENT.MAIN)
+                length = self.get_text_length(row, const.DOCUMENT.MAIN)
                 optimal_durn = optimal * length
                 if hide - show < optimal_durn and lengthen:
                     hide = show + optimal_durn
@@ -153,14 +153,14 @@ class PositionAgent(Delegate):
         positions will remain unchanged.
         """
         self.set_framerate(framerate, register=None)
-        if self.main_file.mode == cons.MODE.TIME:
+        if self.main_file.mode == const.MODE.TIME:
             convert = self.calc.time_to_frame
             for i in range(len(self.times)):
                 self.frames[i][SHOW] = convert(self.times[i][SHOW])
                 self.frames[i][HIDE] = convert(self.times[i][HIDE])
                 self.frames[i][DURN] = self.calc.get_frame_duration(
                     self.frames[i][SHOW], self.frames[i][HIDE])
-        elif self.main_file.mode == cons.MODE.FRAME:
+        elif self.main_file.mode == const.MODE.FRAME:
             convert = self.calc.frame_to_time
             for i in range(len(self.times)):
                 self.times[i][SHOW] = convert(self.frames[i][SHOW])
@@ -183,13 +183,13 @@ class PositionAgent(Delegate):
         rows = rows or range(len(self.times))
         coefficient = correct.value / current.value
         for row in rows:
-            if self.main_file.mode == cons.MODE.TIME:
+            if self.main_file.mode == const.MODE.TIME:
                 show = self.calc.time_to_seconds(self.times[row][SHOW])
                 hide = self.calc.time_to_seconds(self.times[row][HIDE])
                 time, frame = self.expand_seconds(
                     show / coefficient,
                     hide / coefficient)
-            elif self.main_file.mode == cons.MODE.FRAME:
+            elif self.main_file.mode == const.MODE.FRAME:
                 time, frame = self.expand_frames(
                     int(round(coefficient * self.frames[row][SHOW], 0)),
                     int(round(coefficient * self.frames[row][HIDE], 0)))
@@ -209,7 +209,7 @@ class PositionAgent(Delegate):
 
         self.register_action(
             register=register,
-            docs=[cons.DOCUMENT.MAIN, cons.DOCUMENT.TRAN],
+            docs=[const.DOCUMENT.MAIN, const.DOCUMENT.TRAN],
             description=_("Setting framerate"),
             revert_method=self.set_framerate,
             revert_args=[orig_framerate],)

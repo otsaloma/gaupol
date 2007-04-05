@@ -21,7 +21,7 @@
 
 import types
 
-from gaupol import cons
+from gaupol import const
 from gaupol._agents import *
 from gaupol._agents import AGENTS
 from gaupol.base import Observable
@@ -91,7 +91,7 @@ class Project(Observable):
 
         return self._delegations[name].__getattribute__(name)
 
-    def __init__(self, framerate=cons.FRAMERATE.FR_23_976, undo_limit=None):
+    def __init__(self, framerate=const.FRAMERATE.FR_23_976, undo_limit=None):
 
         Observable.__init__(self)
 

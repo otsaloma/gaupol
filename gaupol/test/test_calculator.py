@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol import cons
+from gaupol import const
 from gaupol.unittest import TestCase
 from .. import calculator
 
@@ -25,12 +25,12 @@ class TestCalculator(TestCase):
 
     def setup_method(self, method):
 
-        self.calc = calculator.Calculator(cons.FRAMERATE.FR_23_976)
+        self.calc = calculator.Calculator(const.FRAMERATE.FR_23_976)
 
     def test___init__(self):
 
         calculator.Calculator()
-        for framerate in cons.FRAMERATE.members:
+        for framerate in const.FRAMERATE.members:
             calculator.Calculator(framerate)
 
     def test_add_seconds_to_time(self):
@@ -110,7 +110,7 @@ class TestCalculator(TestCase):
 
     def test_set_framerate(self):
 
-        for framerate in cons.FRAMERATE.members:
+        for framerate in const.FRAMERATE.members:
             self.calc.set_framerate(framerate)
             assert self.calc.framerate == framerate.value
 

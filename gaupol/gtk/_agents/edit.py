@@ -23,7 +23,7 @@ from gettext import gettext as _
 from gettext import ngettext
 
 from gaupol.base import Delegate
-from gaupol.gtk import cons, util
+from gaupol.gtk import const, util
 from gaupol.gtk.dialogs import HeaderDialog, InsertDialog, PreferencesDialog
 from gaupol.gtk.index import *
 
@@ -244,7 +244,7 @@ class EditAgent(Delegate):
         page = self.get_current_page()
         if col in (SHOW, HIDE, DURN):
             assert value
-            if page.edit_mode == cons.MODE.FRAME:
+            if page.edit_mode == const.MODE.FRAME:
                 assert value.isdigit()
                 value = int(value)
             new_row = page.project.set_position(row, col - 1, value)

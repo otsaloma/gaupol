@@ -32,7 +32,7 @@ import pango
 from gettext import gettext as _
 
 from gaupol import langlib, paths
-from gaupol.gtk import conf, cons, util
+from gaupol.gtk import conf, const, util
 from gaupol.gtk.index import *
 from .glade import GladeDialog
 from .message import ErrorDialog
@@ -204,7 +204,7 @@ class SpellCheckDialog(GladeDialog):
     def _get_target_pages(self):
         """Get pages corresponding to target."""
 
-        if conf.spell_check.target == cons.TARGET.ALL:
+        if conf.spell_check.target == const.TARGET.ALL:
             return self.application.pages
         return [self.application.get_current_page()]
 
@@ -414,7 +414,7 @@ class SpellCheckDialog(GladeDialog):
         self._page.project.replace_texts(
             self._new_rows, self._doc, self._new_texts)
         self._page.project.set_action_description(
-            cons.REGISTER.DO, _("Spell-checking"))
+            const.REGISTER.DO, _("Spell-checking"))
         self.application.update_gui()
         self._new_rows = []
         self._new_texts = []

@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol import cons
+from gaupol import const
 from gaupol.tags import *
 from gaupol.unittest import TestCase
 
@@ -25,5 +25,5 @@ class TestModule(TestCase):
 
     def test_imports(self):
 
-        for name in cons.FORMAT.class_names:
+        for name in const.FORMAT.class_names:
             assert name in globals()

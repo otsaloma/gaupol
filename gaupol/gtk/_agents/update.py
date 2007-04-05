@@ -25,7 +25,7 @@ import os
 from gettext import gettext as _
 
 from gaupol.base import Delegate
-from gaupol.gtk import conf, cons, util
+from gaupol.gtk import conf, const, util
 from gaupol.gtk._actions import *
 from gaupol.gtk._actions import ACTIONS
 
@@ -84,10 +84,10 @@ class UpdateAgent(Delegate):
         self.tooltips.enable()
         self.window.set_title(page.tab_label.get_text())
         self.uim.get_action(page.edit_mode.uim_path).set_active(True)
-        path = cons.FRAMERATE.uim_paths[page.project.framerate]
+        path = const.FRAMERATE.uim_paths[page.project.framerate]
         self.uim.get_action(path).set_active(True)
         self.framerate_combo.set_active(page.project.framerate)
-        for i, path in enumerate(cons.COLUMN.uim_paths):
+        for i, path in enumerate(const.COLUMN.uim_paths):
             visible = page.view.get_column(i).props.visible
             self.uim.get_action(path).set_active(visible)
         if page.project.video_path is not None:
@@ -112,7 +112,7 @@ class UpdateAgent(Delegate):
 
         toolbar = self.uim.get_widget("/ui/main_toolbar")
         style = conf.application_window.toolbar_style
-        if style == cons.TOOLBAR_STYLE.DEFAULT:
+        if style == const.TOOLBAR_STYLE.DEFAULT:
             return toolbar.unset_style()
         toolbar.set_style(style.value)
 

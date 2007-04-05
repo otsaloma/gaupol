@@ -22,7 +22,7 @@
 import codecs
 import re
 
-from gaupol import cons
+from gaupol import const
 from gaupol.calculator import Calculator
 from ._subfile import SubtitleFile
 
@@ -36,11 +36,11 @@ class MPsub(SubtitleFile):
         mode: MODE constant
     """
 
-    format = cons.FORMAT.MPSUB
+    format = const.FORMAT.MPSUB
     framerate  = None
     has_header = True
     identifier = r"^FORMAT=(TIME|[\d\.]+)\s*$", 0
-    mode = cons.MODE.TIME
+    mode = const.MODE.TIME
 
     def _clean_lines(self, all_lines, re_time_line):
         """Return lines without blank lines preceding time lines."""
@@ -107,10 +107,10 @@ class MPsub(SubtitleFile):
                 texts[-1] += line
 
         calc = Calculator()
-        if self.mode == cons.MODE.TIME:
+        if self.mode == const.MODE.TIME:
             shows = [calc.seconds_to_time(x) for x in shows]
             hides = [calc.seconds_to_time(x) for x in hides]
-        elif self.mode == cons.MODE.FRAME:
+        elif self.mode == const.MODE.FRAME:
             shows = [int(round(x, 0)) for x in shows]
             hides = [int(round(x, 0)) for x in hides]
         re_trailer = re.compile(r"\n\Z", re.MULTILINE)
@@ -149,16 +149,16 @@ class MPsub(SubtitleFile):
         for line in header.split("\n"):
             if line.startswith("FORMAT="):
                 mode = line[7:].strip()
-        if not mode in (cons.FRAMERATE.mpsub_names + ["TIME"]):
+        if not mode in (const.FRAMERATE.mpsub_names + ["TIME"]):
             raise ValueError
 
         self.header = header
         self.framerate = None
-        self.mode = cons.MODE.TIME
-        if mode in cons.FRAMERATE.mpsub_names:
-            index = cons.FRAMERATE.mpsub_names.index(mode)
-            self.framerate = cons.FRAMERATE.members[index]
-            self.mode = cons.MODE.FRAME
+        self.mode = const.MODE.TIME
+        if mode in const.FRAMERATE.mpsub_names:
+            index = const.FRAMERATE.mpsub_names.index(mode)
+            self.framerate = const.FRAMERATE.members[index]
+            self.mode = const.MODE.FRAME
 
     def write(self, shows, hides, texts):
         """Write file.

@@ -24,7 +24,7 @@ import os
 from gettext import gettext as _
 
 from gaupol import enclib
-from gaupol.gtk import conf, cons, util
+from gaupol.gtk import conf, const, util
 from gaupol.gtk.index import *
 from gaupol.gtk.runner import Runner
 from .encoding import AdvEncodingDialog
@@ -101,7 +101,7 @@ class _FileDialog(gtk.FileChooserDialog, Runner):
         file_filter.add_mime_type("text/plain")
         self.add_filter(file_filter)
 
-        for format in cons.FORMAT.members:
+        for format in const.FORMAT.members:
             pattern = "*" + format.extension
             fields = {"format": format.display_name, "extension": pattern}
             name = _("%(format)s (%(extension)s)") % fields
@@ -180,7 +180,7 @@ class OpenDialog(_FileDialog):
     def _init_data(self, doc):
         """Initialize default values for widgets."""
 
-        self.set_select_multiple(doc == cons.DOCUMENT.MAIN)
+        self.set_select_multiple(doc == const.DOCUMENT.MAIN)
         if os.path.isdir(conf.file.directory):
             self.set_current_folder(conf.file.directory)
         self.set_encoding(conf.file.encoding)
@@ -194,7 +194,7 @@ class OpenDialog(_FileDialog):
         glade_xml = util.get_glade_xml("open-box", "extra_widget")
         self._encoding_combo = glade_xml.get_widget("encoding_combo")
         self._smart_check = glade_xml.get_widget("smart_check")
-        self._smart_check.props.visible = (doc == cons.DOCUMENT.TRAN)
+        self._smart_check.props.visible = (doc == const.DOCUMENT.TRAN)
         self.set_extra_widget(glade_xml.get_widget("extra_widget"))
 
     def _init_signal_handlers(self):
@@ -228,7 +228,7 @@ class AppendDialog(OpenDialog):
 
         # pylint: disable-msg=E1101
         OpenDialog.__init__(
-            self, cons.DOCUMENT.MAIN, _("Append File"), parent)
+            self, const.DOCUMENT.MAIN, _("Append File"), parent)
 
         self.set_select_multiple(False)
         button = self.action_area.get_children()[0]
@@ -289,7 +289,7 @@ class SaveDialog(_FileDialog):
 
         store = self._format_combo.get_model()
         store.clear()
-        for name in cons.FORMAT.display_names:
+        for name in const.FORMAT.display_names:
             store.append([name])
         self._format_combo.set_active(0)
 
@@ -298,7 +298,7 @@ class SaveDialog(_FileDialog):
 
         store = self._newline_combo.get_model()
         store.clear()
-        for name in cons.NEWLINE.display_names:
+        for name in const.NEWLINE.display_names:
             store.append([name])
         self._newline_combo.set_active(0)
 
@@ -324,11 +324,11 @@ class SaveDialog(_FileDialog):
         self.unselect_filename(path)
         dirname = os.path.dirname(path)
         basename = os.path.basename(path)
-        for extension in cons.FORMAT.extensions:
+        for extension in const.FORMAT.extensions:
             if basename.endswith(extension):
                 basename = basename[:-len(extension)]
                 break
-        format = cons.FORMAT.members[combo_box.get_active()]
+        format = const.FORMAT.members[combo_box.get_active()]
         basename += format.extension
         path = os.path.join(dirname, basename)
         self.set_current_name(basename)
@@ -346,13 +346,13 @@ class SaveDialog(_FileDialog):
         """Get the format."""
 
         index = self._format_combo.get_active()
-        return cons.FORMAT.members[index]
+        return const.FORMAT.members[index]
 
     def get_newline(self):
         """Get the newline."""
 
         index = self._newline_combo.get_active()
-        return cons.NEWLINE.members[index]
+        return const.NEWLINE.members[index]
 
     def set_format(self, format):
         """Set the format."""

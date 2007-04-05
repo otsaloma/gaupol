@@ -22,7 +22,7 @@
 import codecs
 import re
 
-from gaupol import cons
+from gaupol import const
 from gaupol.calculator import Calculator
 from ._subfile import SubtitleFile
 
@@ -31,10 +31,10 @@ class SubViewer2(SubtitleFile):
 
     """SubViewer 2.0 file."""
 
-    format = cons.FORMAT.SUBVIEWER2
+    format = const.FORMAT.SUBVIEWER2
     has_header = True
     identifier = r"^\d\d:\d\d:\d\d.\d\d,\d\d:\d\d:\d\d.\d\d\s*$", 0
-    mode = cons.MODE.TIME
+    mode = const.MODE.TIME
 
     def _read_components(self, lines):
         """Read and return shows, hides and texts."""

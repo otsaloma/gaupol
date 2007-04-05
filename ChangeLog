@@ -1,3 +1,9 @@
+2007-04-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/base/cons.py:
+	* gaupol/base/const.py:
+	Rename to const.
+
 2007-04-04  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/base/observable.py:

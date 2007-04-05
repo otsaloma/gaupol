@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol.gtk import cons
+from gaupol.gtk import const
 from gaupol.gtk.index import *
 from gaupol.gtk.unittest import TestCase
 
@@ -29,7 +29,7 @@ class TestViewAgent(TestCase):
 
     def test_on_framerate_combo_changed(self):
 
-        for framerate in cons.FRAMERATE.members:
+        for framerate in const.FRAMERATE.members:
             self.application.framerate_combo.set_active(framerate)
 
     def test_on_output_window_notify_visible(self):
@@ -38,12 +38,12 @@ class TestViewAgent(TestCase):
 
     def test_on_show_framerate_23_976_activate(self):
 
-        for path in cons.FRAMERATE.uim_paths:
+        for path in const.FRAMERATE.uim_paths:
             self.application.uim.get_action(path).activate()
 
     def test_on_show_times_activate(self):
 
-        for path in cons.MODE.uim_paths:
+        for path in const.MODE.uim_paths:
             self.application.uim.get_action(path).activate()
 
     def test_on_toggle_duration_column_activate(self):

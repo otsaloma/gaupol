@@ -24,7 +24,7 @@ import os
 from gettext import gettext as _
 
 from gaupol.base import Delegate
-from gaupol.gtk import conf, cons, util
+from gaupol.gtk import conf, const, util
 from gaupol.gtk.dialogs import MultiCloseDialog, WarningDialog
 from gaupol.gtk.errors import Default
 
@@ -59,7 +59,7 @@ class CloseAgent(Delegate):
 
         Raise Default to abort.
         """
-        doc = cons.DOCUMENT.MAIN
+        doc = const.DOCUMENT.MAIN
         basename = page.get_main_basename()
         response = self._show_close_warning_dialog(doc, basename)
         if response == gtk.RESPONSE_YES:
@@ -85,9 +85,9 @@ class CloseAgent(Delegate):
         docs = self._need_confirmation(page)
         if len(docs) == 2:
             return self._confirm_multiple([page])
-        if cons.DOCUMENT.MAIN in docs:
+        if const.DOCUMENT.MAIN in docs:
             return self._confirm_main(page)
-        if cons.DOCUMENT.TRAN in docs:
+        if const.DOCUMENT.TRAN in docs:
             return self._confirm_translation(page)
 
     def _confirm_translation(self, page):
@@ -95,7 +95,7 @@ class CloseAgent(Delegate):
 
         Raise Default to abort.
         """
-        doc = cons.DOCUMENT.TRAN
+        doc = const.DOCUMENT.TRAN
         basename = page.get_translation_basename()
         response = self._show_close_warning_dialog(doc, basename)
         if response == gtk.RESPONSE_YES:
@@ -108,15 +108,15 @@ class CloseAgent(Delegate):
 
         docs = []
         if page.project.main_changed:
-            docs.append(cons.DOCUMENT.MAIN)
+            docs.append(const.DOCUMENT.MAIN)
         elif page.project.main_file is not None:
             if not os.path.isfile(page.project.main_file.path):
-                docs.append(cons.DOCUMENT.MAIN)
+                docs.append(const.DOCUMENT.MAIN)
         if page.project.tran_active and page.project.tran_changed:
-            docs.append(cons.DOCUMENT.TRAN)
+            docs.append(const.DOCUMENT.TRAN)
         elif page.project.tran_file is not None:
             if not os.path.isfile(page.project.tran_file.path):
-                docs.append(cons.DOCUMENT.TRAN)
+                docs.append(const.DOCUMENT.TRAN)
         return docs
 
     def _save_window_geometry(self):
@@ -136,10 +136,10 @@ class CloseAgent(Delegate):
 
         Return response.
         """
-        if doc == cons.DOCUMENT.MAIN:
+        if doc == const.DOCUMENT.MAIN:
             title = _('Save changes to main document "%s" before closing?') \
                 % basename
-        elif doc == cons.DOCUMENT.TRAN:
+        elif doc == const.DOCUMENT.TRAN:
             title = _('Save changes to translation document "%s" before '
                 'closing?') % basename
         message = _("If you don't save, changes will be permanently lost.")

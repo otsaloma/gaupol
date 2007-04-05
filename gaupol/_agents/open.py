@@ -19,7 +19,7 @@
 """Opening subtitle files."""
 
 
-from gaupol import cons, util
+from gaupol import const, util
 from gaupol.base import Delegate
 from gaupol.determiner import FormatDeterminer
 from gaupol.files import *
@@ -109,7 +109,7 @@ class OpenAgent(Delegate):
             self.tran_texts.append(u"")
 
         # Get framerate from MPsub header.
-        if self.main_file.format == cons.FORMAT.MPSUB:
+        if self.main_file.format == const.FORMAT.MPSUB:
             if self.main_file.framerate is not None:
                 self.set_framerate(self.main_file.framerate, register=None)
 

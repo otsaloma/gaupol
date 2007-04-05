@@ -29,7 +29,7 @@ import gobject
 import gtk
 import pango
 
-from gaupol.gtk import conf, cons, util
+from gaupol.gtk import conf, const, util
 from gaupol.gtk.cellrend import *
 from gaupol.gtk.index import *
 
@@ -67,9 +67,9 @@ class View(gtk.TreeView):
             renderer.props.editable = False
             renderer.props.xalign = 1
         elif col in (SHOW, HIDE, DURN):
-            if edit_mode == cons.MODE.TIME:
+            if edit_mode == const.MODE.TIME:
                 renderer = TimeCellRenderer()
-            elif edit_mode == cons.MODE.FRAME:
+            elif edit_mode == const.MODE.FRAME:
                 renderer = gtk.CellRendererSpin()
                 adjustment = gtk.Adjustment(0, 0, 99999999, 1, 10)
                 renderer.props.adjustment = adjustment
@@ -86,7 +86,7 @@ class View(gtk.TreeView):
 
         for i in range(6):
 
-            name = cons.COLUMN.display_names[i]
+            name = const.COLUMN.display_names[i]
             renderer = self._get_renderer(i, edit_mode)
             column = gtk.TreeViewColumn(name, renderer , text=i)
             self.append_column(column)
@@ -102,7 +102,7 @@ class View(gtk.TreeView):
             label.show()
             label.set_attributes(_ACTIVE_ATTR)
             width = label.size_request()[0]
-            if i in (SHOW, HIDE, DURN) and edit_mode == cons.MODE.FRAME:
+            if i in (SHOW, HIDE, DURN) and edit_mode == const.MODE.FRAME:
                 spin = gtk.SpinButton()
                 digits = (0 if i == DURN else 5)
                 spin.set_digits(digits)
@@ -128,9 +128,9 @@ class View(gtk.TreeView):
         self.set_search_column(NO)
 
         columns = [gobject.TYPE_INT]
-        if edit_mode == cons.MODE.TIME:
+        if edit_mode == const.MODE.TIME:
             columns += [gobject.TYPE_STRING] * 3
-        elif edit_mode == cons.MODE.FRAME:
+        elif edit_mode == const.MODE.FRAME:
             columns += [gobject.TYPE_INT] * 3
         columns += [gobject.TYPE_STRING] * 2
         store = gtk.ListStore(*columns)

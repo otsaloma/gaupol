@@ -18,7 +18,7 @@
 
 import copy
 
-from gaupol import cons
+from gaupol import const
 from gaupol.unittest import TestCase, reversion_test
 from ..index import SHOW, HIDE, DURN
 
@@ -32,7 +32,7 @@ class TestEditAgent(TestCase):
     @reversion_test
     def test_clear_texts(self):
 
-        self.project.clear_texts([0, 1], cons.DOCUMENT.MAIN)
+        self.project.clear_texts([0, 1], const.DOCUMENT.MAIN)
         assert self.project.main_texts[0] == ""
         assert self.project.main_texts[1] == ""
 
@@ -40,7 +40,7 @@ class TestEditAgent(TestCase):
 
         text_0 = self.project.main_texts[0]
         text_2 = self.project.main_texts[2]
-        self.project.copy_texts([0, 2], cons.DOCUMENT.MAIN)
+        self.project.copy_texts([0, 2], const.DOCUMENT.MAIN)
         assert self.project.clipboard.data == [text_0, None, text_2]
 
     @reversion_test
@@ -48,7 +48,7 @@ class TestEditAgent(TestCase):
 
         text_1 = self.project.main_texts[1]
         text_3 = self.project.main_texts[3]
-        self.project.cut_texts([1, 3], cons.DOCUMENT.MAIN)
+        self.project.cut_texts([1, 3], const.DOCUMENT.MAIN)
         assert self.project.clipboard.data == [text_1, None, text_3]
         assert self.project.main_texts[1] == ""
         assert self.project.main_texts[3] == ""
@@ -101,15 +101,15 @@ class TestEditAgent(TestCase):
     def test_paste_texts(self):
 
         texts = self.project.tran_texts[2:4]
-        self.project.copy_texts([2, 3], cons.DOCUMENT.TRAN)
-        assert self.project.paste_texts(0, cons.DOCUMENT.MAIN) == [0, 1]
+        self.project.copy_texts([2, 3], const.DOCUMENT.TRAN)
+        assert self.project.paste_texts(0, const.DOCUMENT.MAIN) == [0, 1]
         assert self.project.main_texts[0:2] == texts
 
     @reversion_test
     def test_paste_texts_excess(self):
 
         self.project.clipboard.data = ["x"] * 99
-        rows = self.project.paste_texts(1, cons.DOCUMENT.MAIN)
+        rows = self.project.paste_texts(1, const.DOCUMENT.MAIN)
         assert rows == range(1, 100)
         assert len(self.project.times) == 100
         for i in range(1, 100):

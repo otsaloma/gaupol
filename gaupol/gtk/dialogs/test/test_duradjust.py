@@ -18,7 +18,7 @@
 
 import gtk
 
-from gaupol.gtk import cons
+from gaupol.gtk import const
 from gaupol.gtk.unittest import TestCase
 from .. import duradjust
 
@@ -44,7 +44,7 @@ class TestDurationAdjustDialog(TestCase):
     def test__get_target(self):
 
         target = self.dialog._get_target()
-        assert target in (cons.TARGET.SELECTED, cons.TARGET.CURRENT)
+        assert target in (const.TARGET.SELECTED, const.TARGET.CURRENT)
 
     def test__get_target_pages(self):
 

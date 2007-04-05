@@ -34,7 +34,7 @@ from gettext import gettext as _
 from gaupol import paths
 from gaupol.base import Observable
 from gaupol.clipboard import Clipboard
-from gaupol.gtk import conf, cons, util
+from gaupol.gtk import conf, const, util
 from gaupol.gtk._actions import *
 from gaupol.gtk._actions import ACTIONS
 from gaupol.gtk._agents import *
@@ -141,7 +141,7 @@ class Application(Observable, Runner):
         """Intialize the framerate combo box on the video toolbar."""
 
         self.framerate_combo = gtk.combo_box_new_text()
-        for name in cons.FRAMERATE.display_names:
+        for name in const.FRAMERATE.display_names:
             self.framerate_combo.append_text(name)
         self.framerate_combo.set_active(conf.editor.framerate)
         util.connect(self, "framerate_combo", "changed")
@@ -203,7 +203,7 @@ class Application(Observable, Runner):
         self.uim.get_widget(path).set_is_important(True)
 
         style = conf.application_window.toolbar_style
-        if style != cons.TOOLBAR_STYLE.DEFAULT:
+        if style != const.TOOLBAR_STYLE.DEFAULT:
             toolbar.set_style(style.value)
         conf.connect(self, "application_window", "toolbar_style")
         vbox.pack_start(toolbar, False, False, 0)

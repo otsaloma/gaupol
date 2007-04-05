@@ -18,7 +18,7 @@
 
 import os
 
-from gaupol import cons
+from gaupol import const
 from gaupol.unittest import TestCase
 
 
@@ -32,12 +32,12 @@ class TestPreviewAgent(TestCase):
     def test__get_subtitle_path(self):
 
         # pylint: disable-msg=E1101
-        path, is_temp = self.delegate._get_subtitle_path(cons.DOCUMENT.MAIN)
+        path, is_temp = self.delegate._get_subtitle_path(const.DOCUMENT.MAIN)
         assert path == self.project.main_file.path
         assert not is_temp
 
-        self.project.clear_texts([0], cons.DOCUMENT.TRAN)
-        path, is_temp = self.delegate._get_subtitle_path(cons.DOCUMENT.TRAN)
+        self.project.clear_texts([0], const.DOCUMENT.TRAN)
+        path, is_temp = self.delegate._get_subtitle_path(const.DOCUMENT.TRAN)
         assert path != self.project.main_file.path
         assert os.path.isfile(path)
         assert is_temp
@@ -49,11 +49,11 @@ class TestPreviewAgent(TestCase):
 
     def test_get_temp_file_path(self):
 
-        path = self.project.get_temp_file_path(cons.DOCUMENT.MAIN)
+        path = self.project.get_temp_file_path(const.DOCUMENT.MAIN)
         assert os.path.isfile(path)
         self.files.append(path)
 
-        path = self.project.get_temp_file_path(cons.DOCUMENT.TRAN)
+        path = self.project.get_temp_file_path(const.DOCUMENT.TRAN)
         assert os.path.isfile(path)
         self.files.append(path)
 

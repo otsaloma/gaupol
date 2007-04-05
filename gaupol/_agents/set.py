@@ -22,7 +22,7 @@
 import bisect
 from gettext import gettext as _
 
-from gaupol import cons, util
+from gaupol import const, util
 from gaupol.base import Delegate
 from .index import SHOW, HIDE, DURN
 from .register import revertable
@@ -95,10 +95,10 @@ class SetAgent(Delegate):
         mode = self.get_mode()
         positions = self.get_positions()
         if isinstance(show, basestring):
-            if mode == cons.MODE.FRAME:
+            if mode == const.MODE.FRAME:
                 show = self.calc.time_to_frame(show)
         elif isinstance(show, int):
-            if mode == cons.MODE.TIME:
+            if mode == const.MODE.TIME:
                 show = self.calc.frame_to_time(show)
 
         lst = positions[:row] + positions[row + 1:]
@@ -127,7 +127,7 @@ class SetAgent(Delegate):
 
         self.register_action(
             register=register,
-            docs=[cons.DOCUMENT.MAIN],
+            docs=[const.DOCUMENT.MAIN],
             description=_("Editing position"),
             revert_method=self.set_position,
             revert_args=[new_row, col, orig_value],)

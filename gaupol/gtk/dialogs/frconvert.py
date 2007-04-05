@@ -21,7 +21,7 @@
 
 import gtk
 
-from gaupol.gtk import conf, cons, util
+from gaupol.gtk import conf, const, util
 from .glade import GladeDialog
 
 
@@ -57,9 +57,9 @@ class FramerateConvertDialog(GladeDialog):
         """Convert framerates."""
 
         current = self._current_combo.get_active()
-        current = cons.FRAMERATE.members[current]
+        current = const.FRAMERATE.members[current]
         correct = self._correct_combo.get_active()
-        correct = cons.FRAMERATE.members[correct]
+        correct = const.FRAMERATE.members[correct]
         for page in self._get_target_pages():
             index = self.application.pages.index(page)
             self.application.notebook.set_current_page(index)
@@ -69,16 +69,16 @@ class FramerateConvertDialog(GladeDialog):
         """Get the selected target."""
 
         if self._current_radio.get_active():
-            return cons.TARGET.CURRENT
+            return const.TARGET.CURRENT
         if self._all_radio.get_active():
-            return cons.TARGET.ALL
+            return const.TARGET.ALL
         raise ValueError
 
     def _get_target_pages(self):
         """Get pages corresponding to target."""
 
         target = self._get_target()
-        if target == cons.TARGET.ALL:
+        if target == const.TARGET.ALL:
             return self.application.pages
         return [self.application.get_current_page()]
 
@@ -88,13 +88,13 @@ class FramerateConvertDialog(GladeDialog):
         for combo_box in (self._current_combo, self._correct_combo):
             store = combo_box.get_model()
             store.clear()
-            for name in cons.FRAMERATE.display_names:
+            for name in const.FRAMERATE.display_names:
                 store.append([name])
             combo_box.set_active(conf.editor.framerate)
 
         target = conf.framerate_convert.target
-        self._current_radio.set_active(target == cons.TARGET.CURRENT)
-        self._all_radio.set_active(target == cons.TARGET.ALL)
+        self._current_radio.set_active(target == const.TARGET.CURRENT)
+        self._all_radio.set_active(target == const.TARGET.ALL)
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""

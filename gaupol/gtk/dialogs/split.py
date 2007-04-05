@@ -23,7 +23,7 @@ import copy
 import gtk
 from gettext import gettext as _
 
-from gaupol.gtk import cons, util
+from gaupol.gtk import const, util
 from gaupol.gtk.page import Page
 from .glade import GladeDialog
 
@@ -79,7 +79,7 @@ class SplitDialog(GladeDialog):
         source.project.block("action-done")
         source.project.remove_subtitles(rows)
         source.project.set_action_description(
-            cons.REGISTER.DO, _("Splitting project"))
+            const.REGISTER.DO, _("Splitting project"))
         source.project.unblock("action-done")
 
     def _shift_destination(self, source, destination):
@@ -87,11 +87,11 @@ class SplitDialog(GladeDialog):
 
         mode = destination.project.get_mode()
         calc = destination.project.calc
-        if mode == cons.MODE.TIME:
+        if mode == const.MODE.TIME:
             count = source.project.times[-1][1]
             count = -1 * calc.time_to_seconds(count)
             method = destination.project.shift_seconds
-        elif mode == cons.MODE.FRAME:
+        elif mode == const.MODE.FRAME:
             count = -1 * source.project.frames[-1][1]
             method = destination.project.shift_frames
         method([], count, register=None)

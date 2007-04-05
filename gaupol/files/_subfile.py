@@ -28,7 +28,7 @@ Module variables:
 import codecs
 import os
 
-from gaupol import cons, paths, util
+from gaupol import const, paths, util
 
 
 _GLOBAL_HEADER_DIR = os.path.join(paths.DATA_DIR, "headers")
@@ -88,8 +88,8 @@ class SubtitleFile(object):
             lines.pop(-1)
         if isinstance(chars, tuple):
             chars = chars[0]
-        index = cons.NEWLINE.values.index(chars)
-        self.newline = cons.NEWLINE.members[index]
+        index = const.NEWLINE.values.index(chars)
+        self.newline = const.NEWLINE.members[index]
         return lines
 
     def get_template_header(self):

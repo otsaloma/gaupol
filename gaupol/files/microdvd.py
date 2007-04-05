@@ -22,7 +22,7 @@
 import codecs
 import re
 
-from gaupol import cons
+from gaupol import const
 from ._subfile import SubtitleFile
 
 
@@ -30,10 +30,10 @@ class MicroDVD(SubtitleFile):
 
     """MicroDVD file."""
 
-    format = cons.FORMAT.MICRODVD
+    format = const.FORMAT.MICRODVD
     has_header = True
     identifier = r"^\{\d+\}\{\d+\}.*?$", 0
-    mode = cons.MODE.FRAME
+    mode = const.MODE.FRAME
 
     def read(self):
         """Read file.

@@ -19,7 +19,7 @@
 """Constant members and sections.
 
 Members are subclassed from 'int', so they are directly usable as integers.
-The string value af a member will be the name that it was defined with in its
+The string value of a member will be the name that it was defined with in its
 section.
 
 Example usage:

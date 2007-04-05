@@ -22,7 +22,7 @@
 import re
 from gettext import gettext as _
 
-from gaupol import cons, util
+from gaupol import const, util
 from gaupol.base import Delegate
 from gaupol.tags import *
 from .register import revertable
@@ -86,16 +86,16 @@ class SupportAgent(Delegate):
     def get_format_class_name(self, doc):
         """Get the class name of document's file format or None."""
 
-        if doc == cons.DOCUMENT.MAIN:
+        if doc == const.DOCUMENT.MAIN:
             try:
                 return self.main_file.format.class_name
             except AttributeError:
                 return None
-        if doc == cons.DOCUMENT.TRAN:
+        if doc == const.DOCUMENT.TRAN:
             try:
                 return self.tran_file.format.class_name
             except AttributeError:
-                return self.get_format_class_name(cons.DOCUMENT.MAIN)
+                return self.get_format_class_name(const.DOCUMENT.MAIN)
         raise ValueError
 
     def get_line_lengths(self, row, doc):
@@ -112,16 +112,16 @@ class SupportAgent(Delegate):
 
         if self.main_file is not None:
             return self.main_file.mode
-        return cons.MODE.TIME
+        return const.MODE.TIME
 
     def get_positions(self, mode=None):
         """Get either times or frames depending the mode."""
 
         if mode is None:
             mode = self.get_mode()
-        if mode == cons.MODE.TIME:
+        if mode == const.MODE.TIME:
             return self.times
-        if mode == cons.MODE.FRAME:
+        if mode == const.MODE.FRAME:
             return self.frames
         raise ValueError
 
@@ -169,7 +169,7 @@ class SupportAgent(Delegate):
 
         self.register_action(
             register=register,
-            docs=[cons.DOCUMENT.MAIN, cons.DOCUMENT.TRAN],
+            docs=[const.DOCUMENT.MAIN, const.DOCUMENT.TRAN],
             description=_("Inserting subtitles"),
             revert_method=self.remove_subtitles,
             revert_args=[sorted(rows)],)
@@ -185,8 +185,8 @@ class SupportAgent(Delegate):
         new_texts should be a list of main texts, translation texts.
         """
         assert rows[0] or rows[1]
-        main_args = [rows[0], cons.DOCUMENT.MAIN, new_texts[0]]
-        tran_args = [rows[1], cons.DOCUMENT.TRAN, new_texts[1]]
+        main_args = [rows[0], const.DOCUMENT.MAIN, new_texts[0]]
+        tran_args = [rows[1], const.DOCUMENT.TRAN, new_texts[1]]
         kwargs = {"register": register}
         if not rows[1]:
             return self.replace_texts(*main_args, **kwargs)
@@ -211,7 +211,7 @@ class SupportAgent(Delegate):
 
         self.register_action(
             register=register,
-            docs=[cons.DOCUMENT.MAIN, cons.DOCUMENT.TRAN],
+            docs=[const.DOCUMENT.MAIN, const.DOCUMENT.TRAN],
             description=_("Replacing positions"),
             revert_method=self.replace_positions,
             revert_args=[rows, orig_times, orig_frames],)

@@ -31,7 +31,7 @@ import gtk
 import pango
 import re
 
-from gaupol.gtk import conf, cons
+from gaupol.gtk import conf, const
 
 
 RE_TAG = re.compile(r"(^[/\\_]|<.*?>|\{.*?\})")
@@ -91,9 +91,9 @@ class _Counter(object):
     def _update_length_func(self):
         """Update the length function used."""
 
-        if conf.editor.length_unit == cons.LENGTH_UNIT.CHAR:
+        if conf.editor.length_unit == const.LENGTH_UNIT.CHAR:
             self.get_lengths = self.get_char_lengths
-        elif conf.editor.length_unit == cons.LENGTH_UNIT.EM:
+        elif conf.editor.length_unit == const.LENGTH_UNIT.EM:
             self.get_lengths = self.get_em_lengths
 
     def get_char_lengths(self, text, strip, floor):

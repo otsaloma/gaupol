@@ -21,7 +21,7 @@
 
 from gettext import gettext as _
 
-from gaupol import cons
+from gaupol import const
 from gaupol.base import Delegate
 from gaupol.finder import Finder
 from .register import revertable
@@ -49,7 +49,7 @@ class SearchAgent(Delegate):
 
         Delegate.__init__(self, master)
 
-        self._docs         = [cons.DOCUMENT.MAIN, cons.DOCUMENT.TRAN]
+        self._docs         = [const.DOCUMENT.MAIN, const.DOCUMENT.TRAN]
         self._finder       = Finder()
         self._match_doc    = None
         self._match_passed = False
@@ -93,18 +93,18 @@ class SearchAgent(Delegate):
             if self._wrap:
                 return doc
             raise StopIteration
-        if next and doc == cons.DOCUMENT.MAIN:
-            return cons.DOCUMENT.TRAN
-        if next and doc == cons.DOCUMENT.TRAN:
+        if next and doc == const.DOCUMENT.MAIN:
+            return const.DOCUMENT.TRAN
+        if next and doc == const.DOCUMENT.TRAN:
             if self._wrap:
-                return cons.DOCUMENT.MAIN
+                return const.DOCUMENT.MAIN
             raise StopIteration
-        if not next and doc == cons.DOCUMENT.MAIN:
+        if not next and doc == const.DOCUMENT.MAIN:
             if self._wrap:
-                return cons.DOCUMENT.TRAN
+                return const.DOCUMENT.TRAN
             raise StopIteration
-        if not next and doc == cons.DOCUMENT.TRAN:
-            return cons.DOCUMENT.MAIN
+        if not next and doc == const.DOCUMENT.TRAN:
+            return const.DOCUMENT.MAIN
         raise ValueError
 
     def _next_in_document(self, row, doc, pos=None):
@@ -189,7 +189,7 @@ class SearchAgent(Delegate):
         if row is None:
             row = 0
         if doc is None:
-            doc = cons.DOCUMENT.MAIN
+            doc = const.DOCUMENT.MAIN
         return self._find(row, doc, pos, True)
 
     def find_previous(self, row=None, doc=None, pos=None):
@@ -202,7 +202,7 @@ class SearchAgent(Delegate):
         if row is None:
             row = len(self.times) - 1
         if doc is None:
-            doc = cons.DOCUMENT.TRAN
+            doc = const.DOCUMENT.TRAN
         return self._find(row, doc, pos, False)
 
     @revertable
@@ -265,5 +265,5 @@ class SearchAgent(Delegate):
         docs can be None to target all documents.
         """
         self._rows = rows or []
-        self._docs = docs or [cons.DOCUMENT.MAIN, cons.DOCUMENT.TRAN]
+        self._docs = docs or [const.DOCUMENT.MAIN, const.DOCUMENT.TRAN]
         self._wrap = wrap

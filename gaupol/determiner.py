@@ -21,7 +21,7 @@
 
 import re
 
-from gaupol import cons, util
+from gaupol import const, util
 from gaupol.errors import FormatError
 from gaupol.files import *
 
@@ -43,7 +43,7 @@ class FormatDeterminer(object):
         self.path     = path
         self.re_ids   = []
 
-        for format in cons.FORMAT.members:
+        for format in const.FORMAT.members:
             re_id = re.compile(*eval(format.class_name).identifier)
             self.re_ids.append((format, re_id))
 

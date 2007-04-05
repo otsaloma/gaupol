@@ -22,7 +22,7 @@
 import gtk
 from gettext import gettext as _
 
-from gaupol.gtk import conf, cons, util
+from gaupol.gtk import conf, const, util
 from gaupol.gtk.entries import TimeEntry
 from .glade import GladeDialog
 
@@ -92,16 +92,16 @@ class _PositionAdjustDialog(GladeDialog):
         """Get the selected target."""
 
         if self._selected_radio.get_active():
-            return cons.TARGET.SELECTED
+            return const.TARGET.SELECTED
         if self._current_radio.get_active():
-            return cons.TARGET.CURRENT
+            return const.TARGET.CURRENT
         raise ValueError
 
     def _get_target_rows(self):
         """Get rows corresponding to target."""
 
         target = self._get_target()
-        if target == cons.TARGET.SELECTED:
+        if target == const.TARGET.SELECTED:
             page = self.application.get_current_page()
             return page.view.get_selected_rows()
         return None
@@ -116,11 +116,11 @@ class _PositionAdjustDialog(GladeDialog):
         self._sub_spin_2.emit("value-changed")
 
         target = conf.position_adjust.target
-        self._selected_radio.set_active(target == cons.TARGET.SELECTED)
-        self._current_radio.set_active(target == cons.TARGET.CURRENT)
+        self._selected_radio.set_active(target == const.TARGET.SELECTED)
+        self._current_radio.set_active(target == const.TARGET.CURRENT)
 
         rows = page.view.get_selected_rows()
-        if not rows and target == cons.TARGET.SELECTED:
+        if not rows and target == const.TARGET.SELECTED:
             self._current_radio.set_active(True)
             self._selected_radio.set_sensitive(False)
 
@@ -161,7 +161,7 @@ class _PositionAdjustDialog(GladeDialog):
 
         page = self.application.get_current_page()
         row = self._sub_spin_1.get_value_as_int() - 1
-        doc = cons.DOCUMENT.MAIN
+        doc = const.DOCUMENT.MAIN
         method = self._get_adjust_method()
         rows = self._get_target_rows()
         point_1 = self._get_first_point()
@@ -174,7 +174,7 @@ class _PositionAdjustDialog(GladeDialog):
 
         page = self.application.get_current_page()
         row = self._sub_spin_2.get_value_as_int() - 1
-        doc = cons.DOCUMENT.MAIN
+        doc = const.DOCUMENT.MAIN
         method = self._get_adjust_method()
         rows = self._get_target_rows()
         point_1 = self._get_first_point()

@@ -17,7 +17,7 @@
 
 
 from gaupol.unittest import TestCase
-from .. import cons
+from .. import const
 
 
 class TestSection(TestCase):
@@ -25,25 +25,25 @@ class TestSection(TestCase):
     def setup_method(self, method):
 
         # pylint: disable-msg=C0103
-        self.SECTION = cons.Section()
-        self.SECTION.BOO = cons.Member()
-        self.SECTION.BOO.value = 0
-        self.SECTION.HOO = cons.Member()
-        self.SECTION.HOO.value = 1
-        self.SECTION.finalize()
+        self.FRUIT = const.Section()
+        self.FRUIT.APPLE = const.Member()
+        self.FRUIT.APPLE.color = "green"
+        self.FRUIT.ORANGE = const.Member()
+        self.FRUIT.ORANGE.color = "orange"
+        self.FRUIT.finalize()
 
     def test_attributes(self):
 
-        assert self.SECTION.BOO == 0
-        assert self.SECTION.BOO.name == "BOO"
-        assert self.SECTION.BOO.value == 0
-        assert self.SECTION.members[0] == self.SECTION.BOO
-        assert self.SECTION.names[0] == "BOO"
-        assert self.SECTION.values[0] == 0
+        assert self.FRUIT.APPLE == 0
+        assert self.FRUIT.APPLE.name == "APPLE"
+        assert self.FRUIT.APPLE.value == 0
+        assert self.FRUIT.members[0] == self.FRUIT.APPLE
+        assert self.FRUIT.names[0] == "APPLE"
+        assert self.FRUIT.values[0] == 0
 
-        assert self.SECTION.HOO == 1
-        assert self.SECTION.HOO.name == "HOO"
-        assert self.SECTION.HOO.value == 1
-        assert self.SECTION.members[1] == self.SECTION.HOO
-        assert self.SECTION.names[1] == "HOO"
-        assert self.SECTION.values[1] == 1
+        assert self.FRUIT.ORANGE == 1
+        assert self.FRUIT.ORANGE.name == "ORANGE"
+        assert self.FRUIT.ORANGE.value == 1
+        assert self.FRUIT.members[1] == self.FRUIT.ORANGE
+        assert self.FRUIT.names[1] == "ORANGE"
+        assert self.FRUIT.values[1] == 1

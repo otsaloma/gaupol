@@ -18,7 +18,7 @@
 
 import gtk
 
-from gaupol.gtk import conf, cons
+from gaupol.gtk import conf, const
 from gaupol.gtk.unittest import TestCase
 from .. import view
 
@@ -37,7 +37,7 @@ class TestView(TestCase):
 
     def setup_method(self, method):
 
-        self.view = view.View(cons.MODE.FRAME)
+        self.view = view.View(const.MODE.FRAME)
         store = self.view.get_model()
         store.append([1, 2, 3, 1, "test\ntest", "test\ntest"])
         store.append([2, 6, 7, 1, "test\ntest", "test\ntest"])
@@ -50,8 +50,8 @@ class TestView(TestCase):
 
     def test__on_conf_editor_notify_length_unit(self):
 
-        conf.editor.length_unit = cons.LENGTH_UNIT.CHAR
-        conf.editor.length_unit = cons.LENGTH_UNIT.EM
+        conf.editor.length_unit = const.LENGTH_UNIT.CHAR
+        conf.editor.length_unit = const.LENGTH_UNIT.EM
 
     def test__on_conf_editor_notify_show_lengths_cell(self):
 

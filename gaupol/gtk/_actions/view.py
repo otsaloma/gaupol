@@ -21,7 +21,7 @@
 
 from gettext import gettext as _
 
-from gaupol.gtk import conf, cons
+from gaupol.gtk import conf, const
 from ._action import UIMAction
 
 
@@ -162,7 +162,7 @@ class ShowFramerate23976Action(UIMAction):
           2,),],
         conf.editor.framerate,)
 
-    paths = cons.FRAMERATE.uim_paths
+    paths = const.FRAMERATE.uim_paths
     widgets = ["framerate_combo"]
 
     @classmethod
@@ -215,7 +215,7 @@ class ShowTimesAction(UIMAction):
           1,),],
           conf.editor.mode,)
 
-    paths = cons.MODE.uim_paths
+    paths = const.MODE.uim_paths
 
     @classmethod
     def is_doable(cls, application, page):
@@ -234,10 +234,10 @@ class ToggleDurationColumnAction(UIMAction):
         _("_Duration"),
         None,
         _('Show or hide the "Duration" column'),
-        cons.COLUMN.DURN in conf.editor.visible_cols,)
+        const.COLUMN.DURN in conf.editor.visible_cols,)
 
     # pylint: disable-msg=E1101
-    paths = [cons.COLUMN.DURN.uim_path]
+    paths = [const.COLUMN.DURN.uim_path]
 
     @classmethod
     def is_doable(cls, application, page):
@@ -256,10 +256,10 @@ class ToggleHideColumnAction(UIMAction):
         _("_Hide"),
         None,
         _('Show or hide the "Hide" column'),
-        cons.COLUMN.HIDE in conf.editor.visible_cols,)
+        const.COLUMN.HIDE in conf.editor.visible_cols,)
 
     # pylint: disable-msg=E1101
-    paths = [cons.COLUMN.HIDE.uim_path]
+    paths = [const.COLUMN.HIDE.uim_path]
 
     @classmethod
     def is_doable(cls, application, page):
@@ -278,10 +278,10 @@ class ToggleMainTextColumnAction(UIMAction):
         _("_Main Text"),
         None,
         _('Show or hide the "Main Text" column'),
-        cons.COLUMN.MTXT in conf.editor.visible_cols,)
+        const.COLUMN.MTXT in conf.editor.visible_cols,)
 
     # pylint: disable-msg=E1101
-    paths = [cons.COLUMN.MTXT.uim_path]
+    paths = [const.COLUMN.MTXT.uim_path]
 
     @classmethod
     def is_doable(cls, application, page):
@@ -315,10 +315,10 @@ class ToggleNumberColumnAction(UIMAction):
         _("_No."),
         None,
         _('Show or hide the "No." column'),
-        cons.COLUMN.NO in conf.editor.visible_cols,)
+        const.COLUMN.NO in conf.editor.visible_cols,)
 
     # pylint: disable-msg=E1101
-    paths = [cons.COLUMN.NO.uim_path]
+    paths = [const.COLUMN.NO.uim_path]
 
     @classmethod
     def is_doable(cls, application, page):
@@ -352,10 +352,10 @@ class ToggleShowColumnAction(UIMAction):
         _("_Show"),
         None,
         _('Show or hide the "Show" column'),
-        cons.COLUMN.SHOW in conf.editor.visible_cols,)
+        const.COLUMN.SHOW in conf.editor.visible_cols,)
 
     # pylint: disable-msg=E1101
-    paths = [cons.COLUMN.SHOW.uim_path]
+    paths = [const.COLUMN.SHOW.uim_path]
 
     @classmethod
     def is_doable(cls, application, page):
@@ -389,10 +389,10 @@ class ToggleTranslationTextColumnAction(UIMAction):
         _("_Translation Text"),
         None,
         _('Show or hide the "Translation Text" column'),
-        cons.COLUMN.TTXT in conf.editor.visible_cols,)
+        const.COLUMN.TTXT in conf.editor.visible_cols,)
 
     # pylint: disable-msg=E1101
-    paths = [cons.COLUMN.TTXT.uim_path]
+    paths = [const.COLUMN.TTXT.uim_path]
 
     @classmethod
     def is_doable(cls, application, page):

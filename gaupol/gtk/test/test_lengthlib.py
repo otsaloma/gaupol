@@ -18,7 +18,7 @@
 
 import gtk
 
-from gaupol.gtk import conf, cons
+from gaupol.gtk import conf, const
 from gaupol.gtk.unittest import TestCase
 from .. import lengthlib
 
@@ -68,18 +68,18 @@ class TestModule(TestCase):
 
     def test_func(self):
 
-        conf.editor.length_unit = cons.LENGTH_UNIT.CHAR
+        conf.editor.length_unit = const.LENGTH_UNIT.CHAR
         assert lengthlib.func("MMMMM<i>iiiii</i>") == 17
 
     def test_get_lengths_char(self):
 
-        conf.editor.length_unit = cons.LENGTH_UNIT.CHAR
+        conf.editor.length_unit = const.LENGTH_UNIT.CHAR
         lengths = lengthlib.get_lengths("MMMMM\n<i>iiiii</i>")
         assert lengths == [5, 5]
 
     def test_get_lengths_em(self):
 
-        conf.editor.length_unit = cons.LENGTH_UNIT.EM
+        conf.editor.length_unit = const.LENGTH_UNIT.EM
         conf.editor.use_default_font = True
         lengths = lengthlib.get_lengths("MMMMM\n<i>iiiii</i>")
         assert lengths[0] == 5

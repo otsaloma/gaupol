@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol.gtk import conf, cons
+from gaupol.gtk import conf, const
 from gaupol.gtk.index import *
 from gaupol.gtk.unittest import TestCase
 
@@ -29,11 +29,11 @@ class TestPage(TestCase):
 
     def test__get_positions(self):
 
-        self.page.edit_mode = cons.MODE.FRAME
+        self.page.edit_mode = const.MODE.FRAME
         positions = self.page._get_positions()
         assert positions == self.page.project.frames
 
-        self.page.edit_mode = cons.MODE.TIME
+        self.page.edit_mode = const.MODE.TIME
         positions = self.page._get_positions()
         assert positions == self.page.project.times
 
@@ -41,7 +41,7 @@ class TestPage(TestCase):
 
         self.page.project.open_main(self.get_subrip_path(), "ascii")
         self.page.project.remove_subtitles([0, 1])
-        self.page.project.set_text(0, cons.DOCUMENT.TRAN, "test")
+        self.page.project.set_text(0, const.DOCUMENT.TRAN, "test")
 
         conf.editor.limit_undo = True
         conf.editor.undo_levels = 10
@@ -58,7 +58,7 @@ class TestPage(TestCase):
 
     def test__on_project_main_texts_changed(self):
 
-        self.page.project.set_text(0, cons.DOCUMENT.MAIN, "test")
+        self.page.project.set_text(0, const.DOCUMENT.MAIN, "test")
         self.page.assert_store()
 
     def test__on_project_positions_changed(self):
@@ -89,7 +89,7 @@ class TestPage(TestCase):
 
     def test__on_project_translation_texts_changed(self):
 
-        self.page.project.set_text(0, cons.DOCUMENT.TRAN, "test")
+        self.page.project.set_text(0, const.DOCUMENT.TRAN, "test")
         self.page.assert_store()
 
     def test_assert_store(self):
@@ -98,8 +98,8 @@ class TestPage(TestCase):
 
     def test_document_to_text_column(self):
 
-        assert self.page.document_to_text_column(cons.DOCUMENT.MAIN) == MTXT
-        assert self.page.document_to_text_column(cons.DOCUMENT.TRAN) == TTXT
+        assert self.page.document_to_text_column(const.DOCUMENT.MAIN) == MTXT
+        assert self.page.document_to_text_column(const.DOCUMENT.TRAN) == TTXT
 
     def test_get_main_basename(self):
 
@@ -134,13 +134,13 @@ class TestPage(TestCase):
 
     def test_text_column_to_document(self):
 
-        assert self.page.text_column_to_document(MTXT) == cons.DOCUMENT.MAIN
-        assert self.page.text_column_to_document(TTXT) == cons.DOCUMENT.TRAN
+        assert self.page.text_column_to_document(MTXT) == const.DOCUMENT.MAIN
+        assert self.page.text_column_to_document(TTXT) == const.DOCUMENT.TRAN
 
     def test_update_tab_label(self):
 
-        self.page.project.save(cons.DOCUMENT.MAIN)
-        self.page.project.save(cons.DOCUMENT.TRAN)
+        self.page.project.save(const.DOCUMENT.MAIN)
+        self.page.project.save(const.DOCUMENT.TRAN)
         title = self.page.update_tab_label()
         assert title == self.page.get_main_basename()
 

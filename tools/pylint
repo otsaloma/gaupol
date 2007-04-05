@@ -5,6 +5,7 @@
 
 pylint --rcfile=$(dirname "$0")/data/pylintrc $@ \
 \
+    | egrep -v "Instance of 'Member' has no '.+?' member" \
     | egrep -v "Undefined variable 'fobj'" \
     | egrep -v "No name '.+?' in module '.+?\.test\.?'" \
 \

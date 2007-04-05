@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol import cons, util
+from gaupol import const, util
 from gaupol.errors import FormatError
 from gaupol.unittest import TestCase
 from .. import determiner
@@ -35,10 +35,10 @@ class TestFormatDeterminer(TestCase):
     def test_determine(self):
 
         self.determiner.path = self.get_subrip_path()
-        assert self.determiner.determine() == cons.FORMAT.SUBRIP
+        assert self.determiner.determine() == const.FORMAT.SUBRIP
 
         self.determiner.path = self.get_microdvd_path()
-        assert self.determiner.determine() == cons.FORMAT.MICRODVD
+        assert self.determiner.determine() == const.FORMAT.MICRODVD
 
         path = self.get_subrip_path()
         util.write(path, "test", "ascii")

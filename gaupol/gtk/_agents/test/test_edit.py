@@ -18,7 +18,7 @@
 
 import gtk
 
-from gaupol.gtk import cons
+from gaupol.gtk import const
 from gaupol.gtk.index import *
 from gaupol.gtk.unittest import TestCase
 
@@ -54,9 +54,9 @@ class TestEditAgent(TestCase):
     def test_on_edit_headers_activate(self):
 
         page = self.application.get_current_page()
-        page.project.save(cons.DOCUMENT.MAIN, (
+        page.project.save(const.DOCUMENT.MAIN, (
             page.project.main_file.path,
-            cons.FORMAT.SUBVIEWER2,
+            const.FORMAT.SUBVIEWER2,
             "ascii",
             page.project.main_file.newline))
 

@@ -28,7 +28,7 @@
 import gtk
 
 from gaupol import enclib
-from gaupol.gtk import cons
+from gaupol.gtk import const
 from gaupol.gtk.index import *
 from gaupol.gtk.unittest import TestCase
 from .. import file
@@ -80,14 +80,14 @@ class TestOpenDialogMain(_TestFileDialog):
 
     def setup_method(self, method):
 
-        self.dialog = file.OpenDialog(cons.DOCUMENT.MAIN, "test", gtk.Window())
+        self.dialog = file.OpenDialog(const.DOCUMENT.MAIN, "test", gtk.Window())
 
 
 class TestOpenDialogTranslation(_TestFileDialog):
 
     def setup_method(self, method):
 
-        self.dialog = file.OpenDialog(cons.DOCUMENT.TRAN, "test", gtk.Window())
+        self.dialog = file.OpenDialog(const.DOCUMENT.TRAN, "test", gtk.Window())
 
 
 class TestAppendDialog(_TestFileDialog):
@@ -105,7 +105,7 @@ class TestSaveDialog(_TestFileDialog):
 
     def test__on_format_combo_changed(self):
 
-        for format in cons.FORMAT.members:
+        for format in const.FORMAT.members:
             self.dialog.set_format(format)
 
     def test__on_response(self):
@@ -114,25 +114,25 @@ class TestSaveDialog(_TestFileDialog):
 
     def test_get_format(self):
 
-        for format in cons.FORMAT.members:
+        for format in const.FORMAT.members:
             self.dialog.set_format(format)
             assert self.dialog.get_format() == format
 
     def test_get_newline(self):
 
-        for newline in cons.NEWLINE.members:
+        for newline in const.NEWLINE.members:
             self.dialog.set_newline(newline)
             assert self.dialog.get_newline() == newline
 
     def test_set_format(self):
 
-        for format in cons.FORMAT.members:
+        for format in const.FORMAT.members:
             self.dialog.set_format(format)
             assert self.dialog.get_format() == format
 
     def test_set_newline(self):
 
-        for newline in cons.NEWLINE.members:
+        for newline in const.NEWLINE.members:
             self.dialog.set_newline(newline)
             assert self.dialog.get_newline() == newline
 

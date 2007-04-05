@@ -25,7 +25,7 @@ from gettext import gettext as _
 
 from gaupol import enclib
 from gaupol.base import Delegate
-from gaupol.gtk import cons, util
+from gaupol.gtk import const, util
 from gaupol.gtk.dialogs import ErrorDialog, SaveDialog
 from gaupol.gtk.errors import Default
 from gaupol.gtk.index import *
@@ -184,7 +184,7 @@ class SaveAgent(Delegate):
         props = self._get_main_props(page)
         if None in props:
             return self.save_main_as(page)
-        self._save_document(page, cons.DOCUMENT.MAIN, props)
+        self._save_document(page, const.DOCUMENT.MAIN, props)
         self.push_message(_("Saved main document"))
 
     def save_main_as(self, page):
@@ -199,11 +199,11 @@ class SaveAgent(Delegate):
         props = self._select_file(_("Save As"), props)
         if None in props:
             raise Default
-        self._save_document(page, cons.DOCUMENT.MAIN, props)
+        self._save_document(page, const.DOCUMENT.MAIN, props)
         if orig_format is not None:
             if props[1] != orig_format:
                 page.reload_view_all()
-        self.add_to_recent_files(props[0], cons.DOCUMENT.MAIN)
+        self.add_to_recent_files(props[0], const.DOCUMENT.MAIN)
         basename = os.path.basename(props[0])
         self.push_message(_('Saved main document as "%s"') % basename)
 
@@ -215,7 +215,7 @@ class SaveAgent(Delegate):
         props = self._get_translation_props(page)
         if None in props:
             return self.save_translation_as(page)
-        self._save_document(page, cons.DOCUMENT.TRAN, props)
+        self._save_document(page, const.DOCUMENT.TRAN, props)
         self.push_message(_("Saved translation document"))
 
     def save_translation_as(self, page):
@@ -230,11 +230,11 @@ class SaveAgent(Delegate):
         props = self._select_file(_("Save Translation As"), props)
         if None in props:
             raise Default
-        self._save_document(page, cons.DOCUMENT.TRAN, props)
+        self._save_document(page, const.DOCUMENT.TRAN, props)
         if orig_format is not None:
             if props[1] != orig_format:
                 rows = range(len(page.project.times))
                 page.reload_view(rows, [TTXT])
-        self.add_to_recent_files(props[0], cons.DOCUMENT.TRAN)
+        self.add_to_recent_files(props[0], const.DOCUMENT.TRAN)
         basename = os.path.basename(props[0])
         self.push_message(_('Saved translation document as "%s"') % basename)

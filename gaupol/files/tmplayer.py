@@ -21,7 +21,7 @@
 
 import codecs
 
-from gaupol import cons
+from gaupol import const
 from gaupol.calculator import Calculator
 from ._subfile import SubtitleFile
 
@@ -30,10 +30,10 @@ class TMPlayer(SubtitleFile):
 
     """TMPlayer file."""
 
-    format = cons.FORMAT.TMPLAYER
+    format = const.FORMAT.TMPLAYER
     has_header = False
     identifier = r"^\d\d:\d\d:\d\d:.*$", 0
-    mode = cons.MODE.TIME
+    mode = const.MODE.TIME
 
     def read(self):
         """Read file.

@@ -1,4 +1,4 @@
-# Copyright (C) 2006 Osmo Salomaa
+# Copyright (C) 2006-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -25,16 +25,20 @@ class TestDelegate(TestCase):
     def setup_method(self, method):
 
         self.master = type("test", (object,), {})
-        self.master.name = "test"
         self.delegate = delegate.Delegate(self.master)
 
     def test___getattr__(self):
 
+        self.master.name = "test"
         assert self.delegate.name == "test"
 
-    def test___setattr__(self):
+    def test___setattr___master(self):
+
+        self.master.name = None
+        self.delegate.name = "test"
+        assert self.master.name == "test"
+
+    def test___setattr___delegate(self):
 
         self.delegate.name = None
-        assert self.master.name is None
-        self.delegate.none = None
-        assert not hasattr(self.master, "none")
+        assert not hasattr(self.master, "name")

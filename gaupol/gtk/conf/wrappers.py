@@ -25,7 +25,7 @@ import sys
 
 from gaupol import util
 from gaupol.base import Observable
-from gaupol.gtk import cons
+from gaupol.gtk import const
 from gaupol.gtk.errors import ConfigParseError
 from . import configobj, validate
 
@@ -88,7 +88,7 @@ class Config(configobj.ConfigObj):
 
         def check_constant(section, value):
             name = validator.check("string", value)
-            section = getattr(cons, section)
+            section = getattr(const, section)
             try:
                 index = section.names.index(name)
                 return section.members[index]
@@ -97,14 +97,14 @@ class Config(configobj.ConfigObj):
 
         def check_constant_list(section, value):
             names = validator.check("string_list", value)
-            section = getattr(cons, section)
+            section = getattr(const, section)
             try:
                 indexes = [section.names.index(x) for x in names]
                 return [section.members[x] for x in indexes]
             except ValueError:
                 raise validate.VdtValueError(value)
 
-        for name in (x for x in dir(cons) if x.isupper()):
+        for name in (x for x in dir(const) if x.isupper()):
             func = functools.partial(check_constant, name)
             validator.functions[name] = func
             func = functools.partial(check_constant_list, name)

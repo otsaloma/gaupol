@@ -28,7 +28,7 @@ except Exception:
     pass
 
 from gaupol import langlib
-from gaupol.gtk import conf, cons, util
+from gaupol.gtk import conf, const, util
 from gaupol.gtk.index import *
 from .glade import GladeDialog
 
@@ -79,8 +79,8 @@ class LanguageDialog(GladeDialog):
         self._tran_radio.set_active(col == TTXT)
 
         target = conf.spell_check.target
-        self._all_radio.set_active(target == cons.TARGET.ALL)
-        self._current_radio.set_active(target == cons.TARGET.CURRENT)
+        self._all_radio.set_active(target == const.TARGET.ALL)
+        self._current_radio.set_active(target == const.TARGET.CURRENT)
 
     def _init_langs(self):
         """Initialize the list of available languages."""
@@ -150,5 +150,5 @@ class LanguageDialog(GladeDialog):
         """Save the target."""
 
         each = self._all_radio.get_active()
-        target = (cons.TARGET.ALL if each else cons.TARGET.CURRENT)
+        target = (const.TARGET.ALL if each else const.TARGET.CURRENT)
         conf.spell_check.target = target

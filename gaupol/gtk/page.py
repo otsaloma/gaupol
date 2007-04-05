@@ -32,7 +32,7 @@ from gettext import gettext as _
 
 from gaupol import enclib
 from gaupol.base import Observable
-from gaupol.gtk import conf, cons, util
+from gaupol.gtk import conf, const, util
 from gaupol.gtk.index import *
 from gaupol.project import Project
 from .view import View
@@ -91,9 +91,9 @@ class Page(Observable):
     def _get_positions(self):
         """Return times or frames depending on edit mode."""
 
-        if self.edit_mode == cons.MODE.TIME:
+        if self.edit_mode == const.MODE.TIME:
             return self.project.times
-        if self.edit_mode == cons.MODE.FRAME:
+        if self.edit_mode == const.MODE.FRAME:
             return self.project.frames
         raise ValueError
 
@@ -275,9 +275,9 @@ class Page(Observable):
     def document_to_text_column(self, document):
         """Translate document index to text column index."""
 
-        if document == cons.DOCUMENT.MAIN:
+        if document == const.DOCUMENT.MAIN:
             return MTXT
-        if document == cons.DOCUMENT.TRAN:
+        if document == const.DOCUMENT.TRAN:
             return TTXT
         raise ValueError
 
@@ -361,9 +361,9 @@ class Page(Observable):
         """Translate text column constant to document constant."""
 
         if col == MTXT:
-            return cons.DOCUMENT.MAIN
+            return const.DOCUMENT.MAIN
         if col == TTXT:
-            return cons.DOCUMENT.TRAN
+            return const.DOCUMENT.TRAN
         if col is None:
             return None
         raise ValueError

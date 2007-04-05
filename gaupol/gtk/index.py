@@ -24,14 +24,14 @@ Module variables:
 """
 
 
-from gaupol.gtk import cons
+from gaupol.gtk import const
 
 
 __all__ = ["NO", "SHOW", "HIDE", "DURN", "MTXT", "TTXT"]
 
-NO   = cons.COLUMN.NO
-SHOW = cons.COLUMN.SHOW
-HIDE = cons.COLUMN.HIDE
-DURN = cons.COLUMN.DURN
-MTXT = cons.COLUMN.MTXT
-TTXT = cons.COLUMN.TTXT
+NO   = const.COLUMN.NO
+SHOW = const.COLUMN.SHOW
+HIDE = const.COLUMN.HIDE
+DURN = const.COLUMN.DURN
+MTXT = const.COLUMN.MTXT
+TTXT = const.COLUMN.TTXT

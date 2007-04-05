@@ -86,7 +86,7 @@ Module variables:
 import sys
 from gettext import gettext as _
 
-from gaupol.base import cons
+from gaupol.base import const
 
 
 __all__ = [
@@ -98,103 +98,103 @@ __all__ = [
     "REGISTER",
     "VIDEO_PLAYER",]
 
-DOCUMENT = cons.Section()
-DOCUMENT.MAIN = cons.Member()
-DOCUMENT.TRAN = cons.Member()
+DOCUMENT = const.Section()
+DOCUMENT.MAIN = const.Member()
+DOCUMENT.TRAN = const.Member()
 DOCUMENT.finalize()
 
-FORMAT = cons.Section()
-FORMAT.ASS = cons.Member()
+FORMAT = const.Section()
+FORMAT.ASS = const.Member()
 FORMAT.ASS.class_name = "AdvSubStationAlpha"
 FORMAT.ASS.display_name = "Advanced Sub Station Alpha"
 FORMAT.ASS.extension = ".ass"
-FORMAT.MICRODVD = cons.Member()
+FORMAT.MICRODVD = const.Member()
 FORMAT.MICRODVD.class_name = "MicroDVD"
 FORMAT.MICRODVD.display_name = "MicroDVD"
 FORMAT.MICRODVD.extension = ".sub"
-FORMAT.MPL2 = cons.Member()
+FORMAT.MPL2 = const.Member()
 FORMAT.MPL2.class_name = "MPL2"
 FORMAT.MPL2.display_name = "MPL2"
 FORMAT.MPL2.extension = ".txt"
-FORMAT.MPSUB = cons.Member()
+FORMAT.MPSUB = const.Member()
 FORMAT.MPSUB.class_name = "MPsub"
 FORMAT.MPSUB.display_name = "MPsub"
 FORMAT.MPSUB.extension = ".sub"
-FORMAT.SSA = cons.Member()
+FORMAT.SSA = const.Member()
 FORMAT.SSA.class_name = "SubStationAlpha"
 FORMAT.SSA.display_name = "Sub Station Alpha"
 FORMAT.SSA.extension = ".ssa"
-FORMAT.SUBRIP = cons.Member()
+FORMAT.SUBRIP = const.Member()
 FORMAT.SUBRIP.class_name = "SubRip"
 FORMAT.SUBRIP.display_name = "SubRip"
 FORMAT.SUBRIP.extension = ".srt"
-FORMAT.SUBVIEWER2 = cons.Member()
+FORMAT.SUBVIEWER2 = const.Member()
 FORMAT.SUBVIEWER2.class_name = "SubViewer2"
 FORMAT.SUBVIEWER2.display_name = "SubViewer 2.0"
 FORMAT.SUBVIEWER2.extension = ".sub"
-FORMAT.TMPLAYER = cons.Member()
+FORMAT.TMPLAYER = const.Member()
 FORMAT.TMPLAYER.class_name = "TMPlayer"
 FORMAT.TMPLAYER.display_name = "TMPlayer"
 FORMAT.TMPLAYER.extension = ".txt"
 FORMAT.finalize()
 
-FRAMERATE = cons.Section()
-FRAMERATE.FR_23_976 = cons.Member()
+FRAMERATE = const.Section()
+FRAMERATE.FR_23_976 = const.Member()
 FRAMERATE.FR_23_976.display_name = _("23.976 fps")
 FRAMERATE.FR_23_976.mpsub_name = "23.98"
 FRAMERATE.FR_23_976.value = 23.976
-FRAMERATE.FR_25 = cons.Member()
+FRAMERATE.FR_25 = const.Member()
 FRAMERATE.FR_25.display_name = _("25 fps")
 FRAMERATE.FR_25.mpsub_name = "25.00"
 FRAMERATE.FR_25.value = 25.0
-FRAMERATE.FR_29_97 = cons.Member()
+FRAMERATE.FR_29_97 = const.Member()
 FRAMERATE.FR_29_97.display_name = _("29.97 fps")
 FRAMERATE.FR_29_97.mpsub_name = "29.97"
 FRAMERATE.FR_29_97.value = 29.97
 FRAMERATE.finalize()
 
-MODE = cons.Section()
-MODE.TIME = cons.Member()
-MODE.FRAME = cons.Member()
+MODE = const.Section()
+MODE.TIME = const.Member()
+MODE.FRAME = const.Member()
 MODE.finalize()
 
-NEWLINE = cons.Section()
-NEWLINE.MAC = cons.Member()
+NEWLINE = const.Section()
+NEWLINE.MAC = const.Member()
 NEWLINE.MAC.display_name = "Mac"
 NEWLINE.MAC.value = "\r"
-NEWLINE.UNIX = cons.Member()
+NEWLINE.UNIX = const.Member()
 NEWLINE.UNIX.display_name = "Unix"
 NEWLINE.UNIX.value = "\n"
-NEWLINE.WINDOWS = cons.Member()
+NEWLINE.WINDOWS = const.Member()
 NEWLINE.WINDOWS.display_name = "Windows"
 NEWLINE.WINDOWS.value = "\r\n"
 NEWLINE.finalize()
 
-REGISTER = cons.Section()
-REGISTER.DO = cons.Member()
+REGISTER = const.Section()
+REGISTER.DO = const.Member()
 REGISTER.DO.shift = 1
 REGISTER.DO.signal = "action-done"
-REGISTER.UNDO = cons.Member()
+REGISTER.UNDO = const.Member()
 REGISTER.UNDO.shift = -1
 REGISTER.UNDO.signal = "action-undone"
-REGISTER.REDO = cons.Member()
+REGISTER.REDO = const.Member()
 REGISTER.REDO.shift = 1
 REGISTER.REDO.signal = "action-redone"
-REGISTER.DO_MULTIPLE = cons.Member()
+REGISTER.DO_MULTIPLE = const.Member()
 REGISTER.DO_MULTIPLE.shift = 1
 REGISTER.DO_MULTIPLE.signal = "action-done"
-REGISTER.UNDO_MULTIPLE = cons.Member()
+REGISTER.UNDO_MULTIPLE = const.Member()
 REGISTER.UNDO_MULTIPLE.shift = -1
 REGISTER.UNDO_MULTIPLE.signal = "action-undone"
-REGISTER.REDO_MULTIPLE = cons.Member()
+REGISTER.REDO_MULTIPLE = const.Member()
 REGISTER.REDO_MULTIPLE.shift = 1
 REGISTER.REDO_MULTIPLE.signal = "action-redone"
 REGISTER.finalize()
 
 
 
-VIDEO_PLAYER = cons.Section()
-VIDEO_PLAYER.MPLAYER = cons.Member()
+VIDEO_PLAYER = const.Section()
+VIDEO_PLAYER.MPLAYER = const.Member()
 VIDEO_PLAYER.MPLAYER.command = [
     "mplayer",
     "-identify",
@@ -203,7 +203,7 @@ VIDEO_PLAYER.MPLAYER.command = [
     "-sub $SUBFILE",
     "$VIDEOFILE",]
 VIDEO_PLAYER.MPLAYER.display_name = "MPlayer"
-VIDEO_PLAYER.VLC = cons.Member()
+VIDEO_PLAYER.VLC = const.Member()
 VIDEO_PLAYER.VLC.command = [
     "vlc",
     "--start-time=$SECONDS",

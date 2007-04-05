@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol import cons
+from gaupol import const
 from gaupol.unittest import TestCase
 from ..register import RevertableAction, RevertableActionGroup
 
@@ -30,9 +30,9 @@ class TestModule(TestCase):
     def test_revertable(self):
 
         self.project.undo_limit = 2
-        self.project.clear_texts([0], cons.DOCUMENT.MAIN)
-        self.project.clear_texts([1], cons.DOCUMENT.MAIN)
-        self.project.clear_texts([2], cons.DOCUMENT.TRAN)
+        self.project.clear_texts([0], const.DOCUMENT.MAIN)
+        self.project.clear_texts([1], const.DOCUMENT.MAIN)
+        self.project.clear_texts([2], const.DOCUMENT.TRAN)
         assert self.project.main_changed == 2
         assert self.project.tran_changed == 1
         assert len(self.project.undoables) == 2
@@ -43,11 +43,11 @@ class TestRevertableAction(TestCase):
     def setup_method(self, method):
 
         def revert(register=-1):
-            assert register in cons.REGISTER.members
+            assert register in const.REGISTER.members
 
         self.action = RevertableAction(
-            register=cons.REGISTER.DO,
-            docs=[cons.DOCUMENT.MAIN],
+            register=const.REGISTER.DO,
+            docs=[const.DOCUMENT.MAIN],
             description="",
             revert_method=revert,
             revert_args=[],
@@ -74,39 +74,39 @@ class TestRegisterAgent(TestCase):
 
     def test__break_action_group(self):
 
-        self.project.clear_texts([0], cons.DOCUMENT.MAIN)
-        self.project.clear_texts([1], cons.DOCUMENT.MAIN)
-        self.project.clear_texts([2], cons.DOCUMENT.MAIN)
-        self.project.group_actions(cons.REGISTER.DO, 3, "test")
+        self.project.clear_texts([0], const.DOCUMENT.MAIN)
+        self.project.clear_texts([1], const.DOCUMENT.MAIN)
+        self.project.clear_texts([2], const.DOCUMENT.MAIN)
+        self.project.group_actions(const.REGISTER.DO, 3, "test")
         self.delegate._break_action_group(self.project.undoables)
         assert len(self.project.undoables) == 3
 
     def test__get_destination_stack(self):
 
         stacks = (
-            (cons.REGISTER.DO           , self.project.undoables),
-            (cons.REGISTER.UNDO         , self.project.redoables),
-            (cons.REGISTER.REDO         , self.project.undoables),
-            (cons.REGISTER.DO_MULTIPLE  , self.project.undoables),
-            (cons.REGISTER.UNDO_MULTIPLE, self.project.redoables),
-            (cons.REGISTER.REDO_MULTIPLE, self.project.undoables),)
+            (const.REGISTER.DO           , self.project.undoables),
+            (const.REGISTER.UNDO         , self.project.redoables),
+            (const.REGISTER.REDO         , self.project.undoables),
+            (const.REGISTER.DO_MULTIPLE  , self.project.undoables),
+            (const.REGISTER.UNDO_MULTIPLE, self.project.redoables),
+            (const.REGISTER.REDO_MULTIPLE, self.project.undoables),)
         for register, stack in stacks:
             assert self.delegate._get_destination_stack(register) == stack
 
     def test__get_source_stack(self):
 
         stacks = (
-            (cons.REGISTER.UNDO         , self.project.undoables),
-            (cons.REGISTER.REDO         , self.project.redoables),
-            (cons.REGISTER.UNDO_MULTIPLE, self.project.undoables),
-            (cons.REGISTER.REDO_MULTIPLE, self.project.redoables),)
+            (const.REGISTER.UNDO         , self.project.undoables),
+            (const.REGISTER.REDO         , self.project.redoables),
+            (const.REGISTER.UNDO_MULTIPLE, self.project.undoables),
+            (const.REGISTER.REDO_MULTIPLE, self.project.redoables),)
         for register, stack in stacks:
             assert self.delegate._get_source_stack(register) == stack
 
     def test__on_notify_undo_limit(self):
 
-        self.project.clear_texts([0], cons.DOCUMENT.MAIN)
-        self.project.clear_texts([1], cons.DOCUMENT.MAIN)
+        self.project.clear_texts([0], const.DOCUMENT.MAIN)
+        self.project.clear_texts([1], const.DOCUMENT.MAIN)
         assert len(self.project.undoables) == 2
         self.project.undo_limit = 1
         assert len(self.project.undoables) == 1
@@ -114,8 +114,8 @@ class TestRegisterAgent(TestCase):
     def test__revert_multiple(self):
 
         for i in range(6):
-            self.project.clear_texts([i], cons.DOCUMENT.MAIN)
-        self.project.group_actions(cons.REGISTER.DO, 3, "")
+            self.project.clear_texts([i], const.DOCUMENT.MAIN)
+        self.project.group_actions(const.REGISTER.DO, 3, "")
         self.project.remove_subtitles([3, 4])
         self.project.insert_blank_subtitles([3])
         self.project.undo(6)
@@ -123,8 +123,8 @@ class TestRegisterAgent(TestCase):
 
     def test__shift_changed_value(self):
 
-        self.project.clear_texts([0], cons.DOCUMENT.MAIN)
-        self.project.clear_texts([1], cons.DOCUMENT.TRAN)
+        self.project.clear_texts([0], const.DOCUMENT.MAIN)
+        self.project.clear_texts([1], const.DOCUMENT.TRAN)
         assert self.project.main_changed == 1
         assert self.project.tran_changed == 1
         assert self.project.tran_active
@@ -132,7 +132,7 @@ class TestRegisterAgent(TestCase):
     def test_can_redo(self):
 
         assert not self.project.can_redo()
-        self.project.clear_texts([0], cons.DOCUMENT.MAIN)
+        self.project.clear_texts([0], const.DOCUMENT.MAIN)
         assert not self.project.can_redo()
         self.project.undo()
         assert self.project.can_redo()
@@ -140,15 +140,15 @@ class TestRegisterAgent(TestCase):
     def test_can_undo(self):
 
         assert not self.project.can_undo()
-        self.project.clear_texts([0], cons.DOCUMENT.MAIN)
+        self.project.clear_texts([0], const.DOCUMENT.MAIN)
         assert self.project.can_undo()
         self.project.undo()
         assert not self.project.can_undo()
 
     def test_cut_reversion_stacks(self):
 
-        self.project.clear_texts([0], cons.DOCUMENT.MAIN)
-        self.project.clear_texts([1], cons.DOCUMENT.MAIN)
+        self.project.clear_texts([0], const.DOCUMENT.MAIN)
+        self.project.clear_texts([1], const.DOCUMENT.MAIN)
         self.project.cut_reversion_stacks()
         self.project.undo_limit = 1
         self.project.cut_reversion_stacks()
@@ -157,36 +157,36 @@ class TestRegisterAgent(TestCase):
 
         def on_action_done(project, action):
             assert isinstance(action, RevertableAction)
-        self.project.clear_texts([0], cons.DOCUMENT.MAIN)
-        self.project.clear_texts([1], cons.DOCUMENT.MAIN)
+        self.project.clear_texts([0], const.DOCUMENT.MAIN)
+        self.project.clear_texts([1], const.DOCUMENT.MAIN)
         self.project.connect("action-done", on_action_done)
-        self.delegate.emit_action_signal(cons.REGISTER.DO, 1)
-        self.delegate.emit_action_signal(cons.REGISTER.DO, 2)
+        self.delegate.emit_action_signal(const.REGISTER.DO, 1)
+        self.delegate.emit_action_signal(const.REGISTER.DO, 2)
 
     def test_group_actions(self):
 
-        self.project.clear_texts([0], cons.DOCUMENT.MAIN)
-        self.project.clear_texts([1], cons.DOCUMENT.MAIN)
-        self.project.clear_texts([2], cons.DOCUMENT.MAIN)
-        self.project.group_actions(cons.REGISTER.DO, 2, "test")
+        self.project.clear_texts([0], const.DOCUMENT.MAIN)
+        self.project.clear_texts([1], const.DOCUMENT.MAIN)
+        self.project.clear_texts([2], const.DOCUMENT.MAIN)
+        self.project.group_actions(const.REGISTER.DO, 2, "test")
         assert len(self.project.undoables) == 2
         assert self.project.undoables[0].description == "test"
         assert len(self.project.undoables[0].actions) == 2
 
     def test_redo(self):
 
-        self.project.clear_texts([0], cons.DOCUMENT.MAIN)
-        self.project.clear_texts([1], cons.DOCUMENT.MAIN)
-        self.project.clear_texts([2], cons.DOCUMENT.MAIN)
+        self.project.clear_texts([0], const.DOCUMENT.MAIN)
+        self.project.clear_texts([1], const.DOCUMENT.MAIN)
+        self.project.clear_texts([2], const.DOCUMENT.MAIN)
         self.project.undo(3)
         self.project.redo(1)
         self.project.redo(2)
 
     def test_register_action(self):
 
-        self.project.clear_texts([0], cons.DOCUMENT.TRAN)
-        self.project.clear_texts([1], cons.DOCUMENT.MAIN)
-        self.project.clear_texts([2], cons.DOCUMENT.MAIN)
+        self.project.clear_texts([0], const.DOCUMENT.TRAN)
+        self.project.clear_texts([1], const.DOCUMENT.MAIN)
+        self.project.clear_texts([2], const.DOCUMENT.MAIN)
         self.project.undo(3)
         self.project.redo(2)
         assert len(self.project.undoables) == 2
@@ -197,15 +197,15 @@ class TestRegisterAgent(TestCase):
 
     def test_set_action_description(self):
 
-        self.project.clear_texts([0], cons.DOCUMENT.MAIN)
-        self.project.set_action_description(cons.REGISTER.DO, "test")
+        self.project.clear_texts([0], const.DOCUMENT.MAIN)
+        self.project.set_action_description(const.REGISTER.DO, "test")
         assert self.project.undoables[0].description == "test"
 
     def test_undo(self):
 
-        self.project.clear_texts([0], cons.DOCUMENT.MAIN)
-        self.project.clear_texts([1], cons.DOCUMENT.MAIN)
-        self.project.clear_texts([2], cons.DOCUMENT.MAIN)
+        self.project.clear_texts([0], const.DOCUMENT.MAIN)
+        self.project.clear_texts([1], const.DOCUMENT.MAIN)
+        self.project.clear_texts([2], const.DOCUMENT.MAIN)
         self.project.undo(1)
         self.project.undo(2)
         self.project.redo(3)

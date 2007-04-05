@@ -25,7 +25,7 @@ import re
 from gettext import gettext as _
 
 from gaupol import urls
-from gaupol.gtk import conf, cons, util
+from gaupol.gtk import conf, const, util
 from gaupol.gtk.dialogs import ErrorDialog
 from gaupol.gtk.errors import Default
 from gaupol.gtk.index import *
@@ -206,7 +206,7 @@ class SearchDialog(GladeDialog):
         def update_page(page):
             translate = page.text_column_to_document
             docs = [translate(x) for x in conf.search.cols]
-            wrap = (conf.search.target != cons.TARGET.ALL)
+            wrap = (conf.search.target != const.TARGET.ALL)
             page.project.set_search_target(None, docs, wrap)
 
         def update_pages(*args):
@@ -229,8 +229,8 @@ class SearchDialog(GladeDialog):
         target = conf.search.target
         self._main_check.set_active(MTXT in conf.search.cols)
         self._tran_check.set_active(TTXT in conf.search.cols)
-        self._all_radio.set_active(target == cons.TARGET.ALL)
-        self._current_radio.set_active(target == cons.TARGET.CURRENT)
+        self._all_radio.set_active(target == const.TARGET.ALL)
+        self._current_radio.set_active(target == const.TARGET.CURRENT)
 
         store = self._pattern_combo.get_model()
         store.clear()
@@ -304,9 +304,9 @@ class SearchDialog(GladeDialog):
 
         def save_target(*args):
             if self._current_radio.get_active():
-                conf.search.target = cons.TARGET.CURRENT
+                conf.search.target = const.TARGET.CURRENT
             elif self._all_radio.get_active():
-                conf.search.target = cons.TARGET.ALL
+                conf.search.target = const.TARGET.ALL
         self._current_radio.connect("toggled", save_target)
         self._all_radio.connect("toggled", save_target)
 
@@ -446,7 +446,7 @@ class SearchDialog(GladeDialog):
                 row, doc, span = page.project.find_next(row, doc, pos)
                 return self._admit_success(page, row, doc, span, True)
             except StopIteration:
-                if conf.search.target == cons.TARGET.CURRENT:
+                if conf.search.target == const.TARGET.CURRENT:
                     # Fail wrapped single-page search.
                     return self._admit_failure()
                 # Proceed to the next page.
@@ -471,7 +471,7 @@ class SearchDialog(GladeDialog):
                 row, doc, span = page.project.find_previous(row, doc, pos)
                 return self._admit_success(page, row, doc, span, False)
             except StopIteration:
-                if conf.search.target == cons.TARGET.CURRENT:
+                if conf.search.target == const.TARGET.CURRENT:
                     # Fail wrapped single-page search.
                     return self._admit_failure()
                 # Proceed to the previous page.
@@ -497,9 +497,9 @@ class SearchDialog(GladeDialog):
         """Replace all matches of pattern."""
 
         count = 0
-        if conf.search.target == cons.TARGET.CURRENT:
+        if conf.search.target == const.TARGET.CURRENT:
             pages = [self.application.get_current_page()]
-        elif conf.search.target == cons.TARGET.ALL:
+        elif conf.search.target == const.TARGET.ALL:
             pages = self.application.pages
         for page in pages:
             self._set_pattern(page)

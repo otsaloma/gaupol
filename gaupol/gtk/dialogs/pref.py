@@ -26,7 +26,7 @@ from gettext import gettext as _
 
 from gaupol import enclib
 from gaupol.base import Delegate
-from gaupol.gtk import conf, cons, util
+from gaupol.gtk import conf, const, util
 from .encoding import EncodingDialog
 from .glade import GladeDialog
 
@@ -102,7 +102,7 @@ class _EditorPage(Delegate):
 
         store = self._length_combo.get_model()
         store.clear()
-        for name in cons.LENGTH_UNIT.display_names:
+        for name in const.LENGTH_UNIT.display_names:
             store.append([name])
 
     def _init_signal_handlers(self):
@@ -140,7 +140,7 @@ class _EditorPage(Delegate):
         """Save the line length unit."""
 
         index = combo_box.get_active()
-        conf.editor.length_unit = cons.LENGTH_UNIT.members[index]
+        conf.editor.length_unit = const.LENGTH_UNIT.members[index]
 
     def _on_length_edit_radio_toggled(self, radio_button):
         """Save the line length showage on text views."""
@@ -348,7 +348,7 @@ class _PreviewPage(Delegate):
 
         store = self._app_combo.get_model()
         store.clear()
-        for name in cons.VIDEO_PLAYER.display_names:
+        for name in const.VIDEO_PLAYER.display_names:
             store.append([name])
         store.append([util.COMBO_SEP])
         store.append([_("Custom")])
@@ -380,9 +380,9 @@ class _PreviewPage(Delegate):
         """Save the video player and show it's command."""
 
         index = combo_box.get_active()
-        if index in range(len(cons.VIDEO_PLAYER.members)):
+        if index in range(len(const.VIDEO_PLAYER.members)):
             conf.preview.use_predefined = True
-            conf.preview.video_player = cons.VIDEO_PLAYER.members[index]
+            conf.preview.video_player = const.VIDEO_PLAYER.members[index]
             self._command_entry.set_text(conf.preview.video_player.command)
             self._command_entry.set_editable(False)
         else:

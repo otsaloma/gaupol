@@ -32,7 +32,7 @@ To hook a method up with the undo/redo system, the following need to be done:
 (3) The method should be marked with the 'revertable' decorator. This decorator
     takes care of emitting an action signal once the method has been run, cuts
     the undo and redo stacks if needed and defaults the 'register' keyword
-    argument to cons.REGISTER.DO.
+    argument to const.REGISTER.DO.
 
 Each method marked as revertable should match exactly one action in the undo
 and redo stacks. Hence, if the method calls other revertable methods, the
@@ -46,7 +46,7 @@ way it will not be in any way processed by the undo/redo system.
 
 import functools
 
-from gaupol import cons, util
+from gaupol import const, util
 from gaupol.base import Delegate
 
 
@@ -59,7 +59,7 @@ def revertable(function):
         main_changed = project.main_changed
         tran_changed = project.tran_changed
         if not "register" in kwargs:
-            kwargs["register"] = cons.REGISTER.DO
+            kwargs["register"] = const.REGISTER.DO
         register = kwargs["register"]
         if register is None:
             return function(*args, **kwargs)
@@ -108,9 +108,9 @@ class RevertableAction(object):
 
         register = None
         if self.register.shift == 1:
-            register = cons.REGISTER.UNDO
+            register = const.REGISTER.UNDO
         if self.register.shift == -1:
-            register = cons.REGISTER.REDO
+            register = const.REGISTER.REDO
         self.revert_kwargs["register"] = register
         self.revert_method(*self.revert_args, **self.revert_kwargs)
 
@@ -206,12 +206,12 @@ class RegisterAgent(Delegate):
     def _shift_changed_value(self, action, shift):
         """Shift the values of the changed attributes."""
 
-        if cons.DOCUMENT.MAIN in action.docs:
+        if const.DOCUMENT.MAIN in action.docs:
             self.main_changed += shift
-        if cons.DOCUMENT.TRAN in action.docs:
+        if const.DOCUMENT.TRAN in action.docs:
             self.tran_changed += shift
 
-        if action.docs == [cons.DOCUMENT.TRAN]:
+        if action.docs == [const.DOCUMENT.TRAN]:
             self.tran_active = True
 
     def can_redo(self):
@@ -256,7 +256,7 @@ class RegisterAgent(Delegate):
         """Redo actions."""
 
         if count > 1 or isinstance(self.redoables[0], RevertableActionGroup):
-            return self._revert_multiple(count, cons.REGISTER.REDO_MULTIPLE)
+            return self._revert_multiple(count, const.REGISTER.REDO_MULTIPLE)
         self._do_description = self.redoables[0].description
         self.redoables.pop(0).revert()
 
@@ -268,13 +268,13 @@ class RegisterAgent(Delegate):
         """
         action = RevertableAction(*args, **kwargs)
         assert action.register is not None
-        if action.register == cons.REGISTER.DO:
+        if action.register == const.REGISTER.DO:
             self.undoables.insert(0, action)
             self.redoables = []
-        elif action.register == cons.REGISTER.UNDO:
+        elif action.register == const.REGISTER.UNDO:
             self.redoables.insert(0, action)
             action.description = self._do_description
-        elif action.register == cons.REGISTER.REDO:
+        elif action.register == const.REGISTER.REDO:
             self.undoables.insert(0, action)
             action.description = self._do_description
         self._shift_changed_value(action, action.register.shift)
@@ -291,6 +291,6 @@ class RegisterAgent(Delegate):
         """Undo actions."""
 
         if count > 1 or isinstance(self.undoables[0], RevertableActionGroup):
-            return self._revert_multiple(count, cons.REGISTER.UNDO_MULTIPLE)
+            return self._revert_multiple(count, const.REGISTER.UNDO_MULTIPLE)
         self._do_description = self.undoables[0].description
         self.undoables.pop(0).revert()

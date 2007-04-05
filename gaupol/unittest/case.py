@@ -24,7 +24,7 @@ from __future__ import with_statement
 import os
 import tempfile
 
-from gaupol import cons, util
+from gaupol import const, util
 from gaupol.project import Project
 
 
@@ -62,7 +62,7 @@ class TestCase(object):
     def get_microdvd_path(self):
         """Get path to a temporary MicroDVD file."""
 
-        return self.get_file_path(cons.FORMAT.MICRODVD)
+        return self.get_file_path(const.FORMAT.MICRODVD)
 
     def get_project(self):
         """Get a new project."""
@@ -79,7 +79,7 @@ class TestCase(object):
     def get_subrip_path(self):
         """Get path to a temporary SubRip file."""
 
-        return self.get_file_path(cons.FORMAT.SUBRIP)
+        return self.get_file_path(const.FORMAT.SUBRIP)
 
     @util.memoize
     def get_text(self, format):

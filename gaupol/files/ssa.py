@@ -22,7 +22,7 @@
 import codecs
 import re
 
-from gaupol import cons
+from gaupol import const
 from gaupol.calculator import Calculator
 from ._subfile import SubtitleFile
 
@@ -36,10 +36,10 @@ class SubStationAlpha(SubtitleFile):
         event_fields: Tuple of the fields under 'Events' section
     """
 
-    format = cons.FORMAT.SSA
+    format = const.FORMAT.SSA
     has_header = True
     identifier = r"^ScriptType: [vV]4.00\s*$", 0
-    mode = cons.MODE.TIME
+    mode = const.MODE.TIME
 
     event_fields = (
         "Marked",

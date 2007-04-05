@@ -22,7 +22,7 @@
 import gtk
 from gettext import ngettext
 
-from gaupol.gtk import conf, cons, util
+from gaupol.gtk import conf, const, util
 from .glade import GladeDialog
 
 
@@ -98,18 +98,18 @@ class DurationAdjustDialog(GladeDialog):
         """Get the selected target."""
 
         if self._selected_radio.get_active():
-            return cons.TARGET.SELECTED
+            return const.TARGET.SELECTED
         if self._current_radio.get_active():
-            return cons.TARGET.CURRENT
+            return const.TARGET.CURRENT
         if self._all_radio.get_active():
-            return cons.TARGET.ALL
+            return const.TARGET.ALL
         raise ValueError
 
     def _get_target_pages(self):
         """Get pages corresponding to target."""
 
         target = self._get_target()
-        if target == cons.TARGET.ALL:
+        if target == const.TARGET.ALL:
             return self.application.pages
         return [self.application.get_current_page()]
 
@@ -117,7 +117,7 @@ class DurationAdjustDialog(GladeDialog):
         """Get rows corresponding to target."""
 
         target = self._get_target()
-        if target == cons.TARGET.SELECTED:
+        if target == const.TARGET.SELECTED:
             page = self.application.get_current_page()
             return page.view.get_selected_rows()
         return None
@@ -136,13 +136,13 @@ class DurationAdjustDialog(GladeDialog):
         self._shorten_check.set_active(conf.duration_adjust.shorten)
 
         target = conf.duration_adjust.target
-        self._all_radio.set_active(target == cons.TARGET.ALL)
-        self._current_radio.set_active(target == cons.TARGET.CURRENT)
-        self._selected_radio.set_active(target == cons.TARGET.SELECTED)
+        self._all_radio.set_active(target == const.TARGET.ALL)
+        self._current_radio.set_active(target == const.TARGET.CURRENT)
+        self._selected_radio.set_active(target == const.TARGET.SELECTED)
 
         page = self.application.get_current_page()
         rows = page.view.get_selected_rows()
-        if not rows and target == cons.TARGET.SELECTED:
+        if not rows and target == const.TARGET.SELECTED:
             self._current_radio.set_active(True)
             self._selected_radio.set_sensitive(False)
 

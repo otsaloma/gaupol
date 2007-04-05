@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol import cons
+from gaupol import const
 from gaupol.unittest import TestCase, reversion_test
 
 
@@ -41,7 +41,7 @@ class TestFormatAgent(TestCase):
     @reversion_test
     def test_change_case_capitalize(self):
 
-        self.project.change_case(range(4), cons.DOCUMENT.MAIN, "capitalize")
+        self.project.change_case(range(4), const.DOCUMENT.MAIN, "capitalize")
         assert self.project.main_texts[0] == \
             "In love? what's that?"
         assert self.project.main_texts[1] == \
@@ -57,7 +57,7 @@ class TestFormatAgent(TestCase):
     @reversion_test
     def test_change_case_lower(self):
 
-        self.project.change_case(range(4), cons.DOCUMENT.MAIN, "lower")
+        self.project.change_case(range(4), const.DOCUMENT.MAIN, "lower")
         assert self.project.main_texts[0] == \
             "in love? what's that?"
         assert self.project.main_texts[1] == \
@@ -73,7 +73,7 @@ class TestFormatAgent(TestCase):
     @reversion_test
     def test_change_case_title(self):
 
-        self.project.change_case(range(4), cons.DOCUMENT.MAIN, "title")
+        self.project.change_case(range(4), const.DOCUMENT.MAIN, "title")
         assert self.project.main_texts[0] == \
             "In Love? What'S That?"
         assert self.project.main_texts[1] == \
@@ -89,7 +89,7 @@ class TestFormatAgent(TestCase):
     @reversion_test
     def test_change_case_upper(self):
 
-        self.project.change_case(range(4), cons.DOCUMENT.MAIN, "upper")
+        self.project.change_case(range(4), const.DOCUMENT.MAIN, "upper")
         assert self.project.main_texts[0] == \
             "IN LOVE? WHAT'S THAT?"
         assert self.project.main_texts[1] == \
@@ -105,7 +105,7 @@ class TestFormatAgent(TestCase):
     @reversion_test
     def test_toggle_dialogue_lines_all(self):
 
-        self.project.toggle_dialogue_lines([2, 3], cons.DOCUMENT.MAIN)
+        self.project.toggle_dialogue_lines([2, 3], const.DOCUMENT.MAIN)
         assert self.project.main_texts[2] == \
             "Yes, Mr. Johnson.\n" + \
             "You've finished taking me"
@@ -116,7 +116,7 @@ class TestFormatAgent(TestCase):
     @reversion_test
     def test_toggle_dialogue_lines_none(self):
 
-        self.project.toggle_dialogue_lines([0, 1], cons.DOCUMENT.MAIN)
+        self.project.toggle_dialogue_lines([0, 1], const.DOCUMENT.MAIN)
         assert self.project.main_texts[0] == \
             "- In love? What's that?"
         assert self.project.main_texts[1] == \
@@ -126,7 +126,7 @@ class TestFormatAgent(TestCase):
     @reversion_test
     def test_toggle_dialogue_lines_partial(self):
 
-        self.project.toggle_dialogue_lines([1, 2], cons.DOCUMENT.MAIN)
+        self.project.toggle_dialogue_lines([1, 2], const.DOCUMENT.MAIN)
         assert self.project.main_texts[1] == \
             "<i>- There's one thing I'd like</i>\n" + \
             "<i>- to know, miss.</i>"
@@ -137,7 +137,7 @@ class TestFormatAgent(TestCase):
     @reversion_test
     def test_toggle_italicization_all(self):
 
-        self.project.toggle_italicization([1, 3], cons.DOCUMENT.MAIN)
+        self.project.toggle_italicization([1, 3], const.DOCUMENT.MAIN)
         assert self.project.main_texts[1] == \
             "There's one thing I'd like\n" + \
             "to know, miss."
@@ -148,7 +148,7 @@ class TestFormatAgent(TestCase):
     @reversion_test
     def test_toggle_italicization_none(self):
 
-        self.project.toggle_italicization([0, 2], cons.DOCUMENT.MAIN)
+        self.project.toggle_italicization([0, 2], const.DOCUMENT.MAIN)
         assert self.project.main_texts[0] == \
             "<i>In love? What's that?</i>"
         assert self.project.main_texts[2] == \
@@ -158,7 +158,7 @@ class TestFormatAgent(TestCase):
     @reversion_test
     def test_toggle_italicization_partial(self):
 
-        self.project.toggle_italicization([0, 1], cons.DOCUMENT.MAIN)
+        self.project.toggle_italicization([0, 1], const.DOCUMENT.MAIN)
         assert self.project.main_texts[0] == \
             "<i>In love? What's that?</i>"
         assert self.project.main_texts[1] == \

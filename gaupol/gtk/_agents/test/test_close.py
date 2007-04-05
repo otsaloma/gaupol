@@ -18,7 +18,7 @@
 
 import gtk
 
-from gaupol.gtk import cons
+from gaupol.gtk import const
 from gaupol.gtk.unittest import TestCase
 
 
@@ -36,7 +36,7 @@ class TestCloseAgent(TestCase):
 
     def test__show_close_warning_dialog(self):
 
-        self.delegate._show_close_warning_dialog(cons.DOCUMENT.MAIN, "test")
+        self.delegate._show_close_warning_dialog(const.DOCUMENT.MAIN, "test")
 
     def test_close_confirm(self):
 

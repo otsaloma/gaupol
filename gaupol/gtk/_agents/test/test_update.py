@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol.gtk import conf, cons
+from gaupol.gtk import conf, const
 from gaupol.gtk.unittest import TestCase
 
 
@@ -38,7 +38,7 @@ class TestUpdateAgent(TestCase):
 
     def test_on_conf_application_window_notify_toolbar_style(self):
 
-        for style in cons.TOOLBAR_STYLE.members:
+        for style in const.TOOLBAR_STYLE.members:
             conf.application_window.toolbar_style = style
 
     def test_on_move_tab_left_activate(self):

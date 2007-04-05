@@ -29,7 +29,7 @@ import string
 import subprocess
 import tempfile
 
-from gaupol import cons, util
+from gaupol import const, util
 from gaupol.base import Delegate
 
 
@@ -58,10 +58,10 @@ class PreviewAgent(Delegate):
         Raise UnicodeError if encoding temporary file fails.
         Return subtitle file path, True if file is temporary.
         """
-        if doc == cons.DOCUMENT.MAIN:
+        if doc == const.DOCUMENT.MAIN:
             if not self.main_changed:
                 return self.main_file.path, False
-        if doc == cons.DOCUMENT.TRAN:
+        if doc == const.DOCUMENT.TRAN:
             if not self.tran_active or not self.tran_changed:
                 return self.tran_file.path, False
         return self.get_temp_file_path(doc), True

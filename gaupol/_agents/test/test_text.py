@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol import cons, scriptlib
+from gaupol import const, scriptlib
 from gaupol.unittest import TestCase, reversion_test
 
 
@@ -57,7 +57,7 @@ class TestTextAgent(TestCase):
     def test_capitalize(self):
 
         pattern = scriptlib.get_capitalize_after("latin")
-        rows = self.project.capitalize([0, 1, 2], cons.DOCUMENT.MAIN, pattern)
+        rows = self.project.capitalize([0, 1, 2], const.DOCUMENT.MAIN, pattern)
 
         assert rows == [0, 1]
         assert self.project.main_texts[0] == \
@@ -75,7 +75,7 @@ class TestTextAgent(TestCase):
 
         rows = self.project.format_lines(
             rows=[3, 4, 5, 6],
-            doc=cons.DOCUMENT.MAIN,
+            doc=const.DOCUMENT.MAIN,
             dialogue_pattern=scriptlib.get_dialogue_separator("latin"),
             clause_pattern=scriptlib.get_clause_separator("latin-english"),
             ok_dialogue=3,

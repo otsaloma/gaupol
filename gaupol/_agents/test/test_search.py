@@ -18,12 +18,12 @@
 
 import re
 
-from gaupol import cons
+from gaupol import const
 from gaupol.unittest import TestCase, reversion_test
 
 
-MAIN = cons.DOCUMENT.MAIN
-TRAN = cons.DOCUMENT.TRAN
+MAIN = const.DOCUMENT.MAIN
+TRAN = const.DOCUMENT.TRAN
 
 
 class TestSearchAgent(TestCase):

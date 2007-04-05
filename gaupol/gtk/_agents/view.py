@@ -20,7 +20,7 @@
 
 
 from gaupol.base import Delegate
-from gaupol.gtk import conf, cons, util
+from gaupol.gtk import conf, const, util
 from gaupol.gtk.index import *
 from gaupol.gtk.view import View
 
@@ -43,7 +43,7 @@ class ViewAgent(Delegate):
         util.set_cursor_busy(self.window)
         column.set_visible(not visible)
         visible_columns = []
-        for col in cons.COLUMN.members:
+        for col in const.COLUMN.members:
             if page.view.get_column(col).get_visible():
                 visible_columns.append(col)
         conf.editor.visible_cols = visible_columns
@@ -56,7 +56,7 @@ class ViewAgent(Delegate):
 
         page = self.get_current_page()
         index = self.framerate_combo.get_active()
-        framerate = cons.FRAMERATE.members[index]
+        framerate = const.FRAMERATE.members[index]
         assert framerate != page.project.framerate
         util.set_cursor_busy(self.window)
         page.project.change_framerate(framerate)
@@ -79,8 +79,8 @@ class ViewAgent(Delegate):
 
         page = self.get_current_page()
         name = active_item.get_name()
-        index = cons.FRAMERATE.uim_action_names.index(name)
-        framerate = cons.FRAMERATE.members[index]
+        index = const.FRAMERATE.uim_action_names.index(name)
+        framerate = const.FRAMERATE.members[index]
         assert framerate != page.project.framerate
         util.set_cursor_busy(self.window)
         page.project.change_framerate(framerate)
@@ -98,8 +98,8 @@ class ViewAgent(Delegate):
 
         page = self.get_current_page()
         name = active_item.get_name()
-        index = cons.MODE.uim_action_names.index(name)
-        edit_mode = cons.MODE.members[index]
+        index = const.MODE.uim_action_names.index(name)
+        edit_mode = const.MODE.members[index]
         assert edit_mode != page.edit_mode
         util.set_cursor_busy(self.window)
         page.edit_mode = edit_mode
@@ -125,17 +125,17 @@ class ViewAgent(Delegate):
     def on_toggle_duration_column_activate(self, *args):
         """Show or hide the 'Duration' column."""
 
-        self._toggle_column(cons.COLUMN.DURN)
+        self._toggle_column(const.COLUMN.DURN)
 
     def on_toggle_hide_column_activate(self, *args):
         """Show or hide the 'Hide' column."""
 
-        self._toggle_column(cons.COLUMN.HIDE)
+        self._toggle_column(const.COLUMN.HIDE)
 
     def on_toggle_main_text_column_activate(self, *args):
         """Show or hide the 'Main Text' column."""
 
-        self._toggle_column(cons.COLUMN.MTXT)
+        self._toggle_column(const.COLUMN.MTXT)
 
     def on_toggle_main_toolbar_activate(self, *args):
         """Show or hide the main toolbar."""
@@ -148,7 +148,7 @@ class ViewAgent(Delegate):
     def on_toggle_number_column_activate(self, *args):
         """Show or hide the 'No.' column."""
 
-        self._toggle_column(cons.COLUMN.NO)
+        self._toggle_column(const.COLUMN.NO)
 
     def on_toggle_output_window_activate(self, *args):
         """Show or hide the output window."""
@@ -164,7 +164,7 @@ class ViewAgent(Delegate):
     def on_toggle_show_column_activate(self, *args):
         """Show or hide the 'Show' column."""
 
-        self._toggle_column(cons.COLUMN.SHOW)
+        self._toggle_column(const.COLUMN.SHOW)
 
     def on_toggle_statusbar_activate(self, *args):
         """Show or hide the statusbar."""
@@ -176,7 +176,7 @@ class ViewAgent(Delegate):
     def on_toggle_translation_text_column_activate(self, *args):
         """Show or hide the 'Translation Text' column."""
 
-        self._toggle_column(cons.COLUMN.TTXT)
+        self._toggle_column(const.COLUMN.TTXT)
 
     def on_toggle_video_toolbar_activate(self, *args):
         """Show or hide the video toolbar."""

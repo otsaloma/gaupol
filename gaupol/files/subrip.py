@@ -22,7 +22,7 @@
 import codecs
 import re
 
-from gaupol import cons
+from gaupol import const
 from ._subfile import SubtitleFile
 
 
@@ -30,10 +30,10 @@ class SubRip(SubtitleFile):
 
     """SubRip file."""
 
-    format = cons.FORMAT.SUBRIP
+    format = const.FORMAT.SUBRIP
     has_header = False
     identifier = r"^\d\d:\d\d:\d\d,\d\d\d --> \d\d:\d\d:\d\d,\d\d\d\s*$", 0
-    mode = cons.MODE.TIME
+    mode = const.MODE.TIME
 
     def _clean_lines(self, all_lines, re_time_line):
         """Return lines without unit numbers and preceding blank lines."""

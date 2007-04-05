@@ -22,7 +22,7 @@
 import codecs
 import re
 
-from gaupol import cons
+from gaupol import const
 from gaupol.calculator import Calculator
 from ._subfile import SubtitleFile
 
@@ -31,10 +31,10 @@ class MPL2(SubtitleFile):
 
     """MPL2 file."""
 
-    format = cons.FORMAT.MPL2
+    format = const.FORMAT.MPL2
     has_header = False
     identifier = r"^\[\d+\]\[\d+\].*?$", 0
-    mode = cons.MODE.TIME
+    mode = const.MODE.TIME
 
     def read(self):
         """Read file.

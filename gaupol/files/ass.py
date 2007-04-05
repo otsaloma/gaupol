@@ -19,7 +19,7 @@
 """Advanced Sub Station Alpha file."""
 
 
-from gaupol import cons
+from gaupol import const
 from .ssa import SubStationAlpha
 
 
@@ -27,7 +27,7 @@ class AdvSubStationAlpha(SubStationAlpha):
 
     """Advanced Sub Station Alpha file."""
 
-    format = cons.FORMAT.ASS
+    format = const.FORMAT.ASS
     identifier = r"^ScriptType:\s+[vV]4.00\+\s*$", 0
 
     event_fields = (

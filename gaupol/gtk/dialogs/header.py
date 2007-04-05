@@ -23,7 +23,7 @@ import gtk
 from gettext import gettext as _
 
 from gaupol.files import *
-from gaupol.gtk import cons, util
+from gaupol.gtk import const, util
 from .glade import GladeDialog
 from .message import ErrorDialog
 
@@ -194,7 +194,7 @@ class HeaderDialog(GladeDialog):
 
         for i, file in enumerate(files):
             header = unicode(headers[i])
-            if file.format == cons.FORMAT.MPSUB:
+            if file.format == const.FORMAT.MPSUB:
                 try:
                     file.set_header(header)
                 except ValueError:

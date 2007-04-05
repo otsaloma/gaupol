@@ -17,7 +17,7 @@
 
 
 from gaupol.unittest import TestCase
-from .. import cons
+from .. import const
 
 
 class TestModule(TestCase):
@@ -53,7 +53,7 @@ class TestModule(TestCase):
                  "names",)))
 
         for section_name, attr_names in constants:
-            section = getattr(cons, section_name)
+            section = getattr(const, section_name)
             for attr_name in attr_names:
                 getattr(section, attr_name)
                 for member in section.members:

@@ -18,7 +18,7 @@
 
 import gtk
 
-from gaupol.gtk import cons
+from gaupol.gtk import const
 from gaupol.gtk.unittest import TestCase
 from .. import frconvert
 
@@ -45,7 +45,7 @@ class TestFramerateConvertDialog(TestCase):
     def test__get_target(self):
 
         target = self.dialog._get_target()
-        assert target in (cons.TARGET.SELECTED, cons.TARGET.CURRENT)
+        assert target in (const.TARGET.SELECTED, const.TARGET.CURRENT)
 
     def test__get_target_pages(self):
 
@@ -54,12 +54,12 @@ class TestFramerateConvertDialog(TestCase):
 
     def test__on_correct_combo_changed(self):
 
-        for framerate in cons.FRAMERATE.members:
+        for framerate in const.FRAMERATE.members:
             self.dialog._correct_combo.set_active(framerate)
 
     def test__on_current_combo_changed(self):
 
-        for framerate in cons.FRAMERATE.members:
+        for framerate in const.FRAMERATE.members:
             self.dialog._current_combo.set_active(framerate)
 
     def test__on_response(self):

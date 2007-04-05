@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol import cons
+from gaupol import const
 from gaupol.unittest import TestCase, reversion_test
 
 
@@ -62,32 +62,32 @@ class TestSupportAgent(TestCase):
 
     def test_get_file(self):
 
-        file = self.project.get_file(cons.DOCUMENT.MAIN)
+        file = self.project.get_file(const.DOCUMENT.MAIN)
         assert file == self.project.main_file
-        file = self.project.get_file(cons.DOCUMENT.TRAN)
+        file = self.project.get_file(const.DOCUMENT.TRAN)
         assert file == self.project.tran_file
 
     def test_get_format_class_name(self):
 
         # pylint: disable-msg=E1101
-        name = self.project.get_format_class_name(cons.DOCUMENT.MAIN)
+        name = self.project.get_format_class_name(const.DOCUMENT.MAIN)
         assert name == self.project.main_file.format.class_name
-        name = self.project.get_format_class_name(cons.DOCUMENT.TRAN)
+        name = self.project.get_format_class_name(const.DOCUMENT.TRAN)
         assert name == self.project.tran_file.format.class_name
 
     def test_get_line_lengths(self):
 
         self.project.main_texts[0] = "<i>test\ntest.</i>"
-        assert self.project.get_line_lengths(0, cons.DOCUMENT.MAIN) == [4, 5]
+        assert self.project.get_line_lengths(0, const.DOCUMENT.MAIN) == [4, 5]
         self.project.main_texts[0] = ""
-        assert self.project.get_line_lengths(0, cons.DOCUMENT.MAIN) == [0]
+        assert self.project.get_line_lengths(0, const.DOCUMENT.MAIN) == [0]
 
     def test_get_mode(self):
 
         self.project.open_main(self.get_subrip_path(), "ascii")
-        assert self.project.get_mode() == cons.MODE.TIME
+        assert self.project.get_mode() == const.MODE.TIME
         self.project.open_main(self.get_microdvd_path(), "ascii")
-        assert self.project.get_mode() == cons.MODE.FRAME
+        assert self.project.get_mode() == const.MODE.FRAME
 
     def test_get_positions(self):
 
@@ -98,25 +98,25 @@ class TestSupportAgent(TestCase):
 
     def test_get_tag_regex(self):
 
-        re_tag = self.project.get_tag_regex(cons.DOCUMENT.MAIN)
+        re_tag = self.project.get_tag_regex(const.DOCUMENT.MAIN)
         #assert self.is_regex(re_tag)
 
         self.project.main_file = None
-        re_tag = self.project.get_tag_regex(cons.DOCUMENT.MAIN)
+        re_tag = self.project.get_tag_regex(const.DOCUMENT.MAIN)
         assert re_tag is None
 
     def test_get_text_length(self):
 
         self.project.main_texts[0] = "<i>test\ntest.</i>"
-        assert self.project.get_text_length(0, cons.DOCUMENT.MAIN) == 10
+        assert self.project.get_text_length(0, const.DOCUMENT.MAIN) == 10
         self.project.main_texts[0] = ""
-        assert self.project.get_text_length(0, cons.DOCUMENT.MAIN) == 0
+        assert self.project.get_text_length(0, const.DOCUMENT.MAIN) == 0
 
     def test_get_texts(self):
 
-        texts = self.project.get_texts(cons.DOCUMENT.MAIN)
+        texts = self.project.get_texts(const.DOCUMENT.MAIN)
         assert texts == self.project.main_texts
-        texts = self.project.get_texts(cons.DOCUMENT.TRAN)
+        texts = self.project.get_texts(const.DOCUMENT.TRAN)
         assert texts == self.project.tran_texts
 
     @reversion_test
@@ -191,7 +191,7 @@ class TestSupportAgent(TestCase):
     def test_replace_texts_main(self):
 
         self.project.replace_texts(
-            [1, 2], cons.DOCUMENT.MAIN, ["", ""])
+            [1, 2], const.DOCUMENT.MAIN, ["", ""])
         assert self.project.main_texts[1] == ""
         assert self.project.main_texts[2] == ""
 
@@ -199,6 +199,6 @@ class TestSupportAgent(TestCase):
     def test_replace_texts_tran(self):
 
         self.project.replace_texts(
-            [3, 4], cons.DOCUMENT.TRAN, ["", ""])
+            [3, 4], const.DOCUMENT.TRAN, ["", ""])
         assert self.project.tran_texts[3] == ""
         assert self.project.tran_texts[4] == ""

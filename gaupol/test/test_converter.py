@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol import cons
+from gaupol import const
 from gaupol.unittest import TestCase
 from .. import converter
 
@@ -29,7 +29,7 @@ class TestTagConverter(TestCase):
             "All things weird are normal\n" + \
             "in this whore of cities."
 
-        for from_format in cons.FORMAT.members:
-            for to_format in cons.FORMAT.members:
+        for from_format in const.FORMAT.members:
+            for to_format in const.FORMAT.members:
                 conv = converter.TagConverter(from_format, to_format)
                 assert conv.convert(text) == text

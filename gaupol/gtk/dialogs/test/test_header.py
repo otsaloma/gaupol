@@ -18,7 +18,7 @@
 
 import gtk
 
-from gaupol.gtk import cons
+from gaupol.gtk import const
 from gaupol.gtk.unittest import TestCase
 from .. import header
 
@@ -35,9 +35,9 @@ class TestHeaderDialog(TestCase):
     def run_main(self):
 
         page = self.application.get_current_page()
-        page.project.save(cons.DOCUMENT.TRAN, (
+        page.project.save(const.DOCUMENT.TRAN, (
             page.project.main_file.path,
-            cons.FORMAT.SUBRIP,
+            const.FORMAT.SUBRIP,
             "ascii",
             page.project.main_file.newline))
         self.dialog = header.HeaderDialog(
@@ -48,9 +48,9 @@ class TestHeaderDialog(TestCase):
     def run_translation(self):
 
         page = self.application.get_current_page()
-        page.project.save(cons.DOCUMENT.MAIN, (
+        page.project.save(const.DOCUMENT.MAIN, (
             page.project.main_file.path,
-            cons.FORMAT.SUBRIP,
+            const.FORMAT.SUBRIP,
             "ascii",
             page.project.main_file.newline))
         self.dialog = header.HeaderDialog(
@@ -63,14 +63,14 @@ class TestHeaderDialog(TestCase):
         # pylint: disable-msg=E1101
         self.application = self.get_application()
         page = self.application.get_current_page()
-        page.project.save(cons.DOCUMENT.MAIN, (
+        page.project.save(const.DOCUMENT.MAIN, (
             page.project.main_file.path,
-            cons.FORMAT.SUBVIEWER2,
+            const.FORMAT.SUBVIEWER2,
             "ascii",
             page.project.main_file.newline))
-        page.project.save(cons.DOCUMENT.TRAN, (
+        page.project.save(const.DOCUMENT.TRAN, (
             page.project.tran_file.path,
-            cons.FORMAT.ASS,
+            const.FORMAT.ASS,
             "ascii",
             page.project.tran_file.newline))
         self.dialog = header.HeaderDialog(

@@ -24,7 +24,7 @@ import os
 from gettext import gettext as _
 
 from gaupol.base import Delegate
-from gaupol.gtk import conf, cons, util
+from gaupol.gtk import conf, const, util
 
 
 class MenuAgent(Delegate):
@@ -112,12 +112,12 @@ class MenuAgent(Delegate):
         menu_items = []
         menu = gtk.Menu()
         page = self.get_current_page()
-        if register == cons.REGISTER.UNDO:
+        if register == const.REGISTER.UNDO:
             stack = page.project.undoables
             button = self.undo_button
             revert_method = self.undo
             get_tip = lambda desc: _('Undo "%s"') % desc
-        elif register == cons.REGISTER.REDO:
+        elif register == const.REGISTER.REDO:
             stack = page.project.redoables
             button = self.redo_button
             revert_method = self.redo
@@ -169,7 +169,7 @@ class MenuAgent(Delegate):
     def on_open_button_show_menu(self, *args):
         """Build and attach a new recent menu on the open button."""
 
-        menu = self._get_recent_menu(cons.DOCUMENT.MAIN)
+        menu = self._get_recent_menu(const.DOCUMENT.MAIN)
         method = self.on_recent_main_menu_item_activated
         menu.connect("item-activated", method)
         self.open_button.set_menu(menu)
@@ -187,7 +187,7 @@ class MenuAgent(Delegate):
     def on_redo_button_show_menu(self, *args):
         """Show the redo button menu."""
 
-        self._show_revert_button_menu(cons.REGISTER.REDO)
+        self._show_revert_button_menu(const.REGISTER.REDO)
 
     def on_show_projects_menu_activate(self, *args):
         """Add all open projects to the projects menu."""
@@ -221,7 +221,7 @@ class MenuAgent(Delegate):
         """Show the recent main file menu."""
 
         item = self.uim.get_widget("/ui/menubar/file/recent_main")
-        menu = self._get_recent_menu(cons.DOCUMENT.MAIN)
+        menu = self._get_recent_menu(const.DOCUMENT.MAIN)
         method = self.on_recent_main_menu_item_activated
         menu.connect("item-activated", method)
         item.set_submenu(menu)
@@ -232,7 +232,7 @@ class MenuAgent(Delegate):
         """Show the recent translation file menu."""
 
         item = self.uim.get_widget("/ui/menubar/file/recent_translation")
-        menu = self._get_recent_menu(cons.DOCUMENT.TRAN)
+        menu = self._get_recent_menu(const.DOCUMENT.TRAN)
         method = self.on_recent_translation_menu_item_activated
         menu.connect("item-activated", method)
         item.set_submenu(menu)
@@ -242,7 +242,7 @@ class MenuAgent(Delegate):
     def on_undo_button_show_menu(self, *args):
         """Show the undo button menu."""
 
-        self._show_revert_button_menu(cons.REGISTER.UNDO)
+        self._show_revert_button_menu(const.REGISTER.UNDO)
 
     def set_menu_notify_events(self, name):
         """Set statusbar tooltips for menu items.

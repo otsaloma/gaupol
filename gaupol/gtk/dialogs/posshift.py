@@ -22,7 +22,7 @@
 import gtk
 from gettext import gettext as _
 
-from gaupol.gtk import conf, cons, util
+from gaupol.gtk import conf, const, util
 from .glade import GladeDialog
 
 
@@ -61,7 +61,7 @@ class _PositionShiftDialog(GladeDialog):
         """Get the row to start preview from."""
 
         target = self._get_target()
-        if target == cons.TARGET.SELECTED:
+        if target == const.TARGET.SELECTED:
             page = self.application.get_current_page()
             return page.view.get_selected_rows()[0]
         return 0
@@ -70,16 +70,16 @@ class _PositionShiftDialog(GladeDialog):
         """Get the selected target."""
 
         if self._selected_radio.get_active():
-            return cons.TARGET.SELECTED
+            return const.TARGET.SELECTED
         if self._current_radio.get_active():
-            return cons.TARGET.CURRENT
+            return const.TARGET.CURRENT
         raise ValueError
 
     def _get_target_rows(self):
         """Get rows corresponding to target."""
 
         target = self._get_target()
-        if target == cons.TARGET.SELECTED:
+        if target == const.TARGET.SELECTED:
             page = self.application.get_current_page()
             return page.view.get_selected_rows()
         return None
@@ -88,12 +88,12 @@ class _PositionShiftDialog(GladeDialog):
         """Intialize default values for widgets."""
 
         target = conf.position_shift.target
-        self._selected_radio.set_active(target == cons.TARGET.SELECTED)
-        self._current_radio.set_active(target == cons.TARGET.CURRENT)
+        self._selected_radio.set_active(target == const.TARGET.SELECTED)
+        self._current_radio.set_active(target == const.TARGET.CURRENT)
 
         page = self.application.get_current_page()
         rows = page.view.get_selected_rows()
-        if not rows and target == cons.TARGET.SELECTED:
+        if not rows and target == const.TARGET.SELECTED:
             self._current_radio.set_active(True)
             self._selected_radio.set_sensitive(False)
 
@@ -113,7 +113,7 @@ class _PositionShiftDialog(GladeDialog):
 
         page = self.application.get_current_page()
         row = self._get_preview_row()
-        doc = cons.DOCUMENT.MAIN
+        doc = const.DOCUMENT.MAIN
         method = self._get_shift_method()
         args = [self._get_target_rows(), self._get_amount()]
         self.application.preview_changes(page, row, doc, method, args)

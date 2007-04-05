@@ -23,7 +23,7 @@ import os
 import shutil
 import tempfile
 
-from gaupol import cons
+from gaupol import const
 from gaupol.base import Delegate
 from gaupol.converter import TagConverter
 from gaupol.files import *
@@ -144,19 +144,19 @@ class SaveAgent(Delegate):
             if file is not None and file.format == format:
                 # Copy header and mode to new file.
                 new_file.header = file.header
-                if format == cons.FORMAT.MPSUB:
+                if format == const.FORMAT.MPSUB:
                     new_file.mode = file.mode
             file = new_file
 
         self._write_file(file, texts)
 
         if keep_changes:
-            if doc == cons.DOCUMENT.MAIN:
+            if doc == const.DOCUMENT.MAIN:
                 self.main_file = file
                 self.main_texts = texts
                 self.main_changed = 0
                 self.emit("main-texts-changed", updated_rows)
-            elif doc == cons.DOCUMENT.TRAN:
+            elif doc == const.DOCUMENT.TRAN:
                 self.tran_file = file
                 self.tran_texts = texts
                 self.tran_changed = 0

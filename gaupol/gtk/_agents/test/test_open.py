@@ -18,7 +18,7 @@
 
 import gtk
 
-from gaupol.gtk import cons
+from gaupol.gtk import const
 from gaupol.gtk.errors import Default
 from gaupol.gtk.unittest import TestCase
 
@@ -104,8 +104,8 @@ class TestOpenAgent(TestCase):
     def test_add_to_recent_files(self):
 
         path = self.get_subrip_path()
-        self.delegate.add_to_recent_files(path, cons.DOCUMENT.MAIN)
-        self.delegate.add_to_recent_files(path, cons.DOCUMENT.TRAN)
+        self.delegate.add_to_recent_files(path, const.DOCUMENT.MAIN)
+        self.delegate.add_to_recent_files(path, const.DOCUMENT.TRAN)
 
     def test_connect_to_view_signals(self):
 

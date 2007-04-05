@@ -23,7 +23,7 @@ from __future__ import division
 
 from gettext import gettext as _
 
-from gaupol import cons, util
+from gaupol import const, util
 from gaupol.base import Delegate
 from .index import SHOW, HIDE, DURN
 from .register import revertable
@@ -69,7 +69,7 @@ class EditAgent(Delegate):
         mode = self.get_mode()
         all_rows = util.get_sorted_unique(rows)
         for rows in util.get_ranges(all_rows):
-            if mode == cons.MODE.TIME:
+            if mode == const.MODE.TIME:
                 start = 0.0
                 if min(rows) > 0:
                     start = self.times[min(rows) - 1][HIDE]
@@ -79,7 +79,7 @@ class EditAgent(Delegate):
                     end = self.times[min(rows)][SHOW]
                     end = self.calc.time_to_seconds(end)
                     duration = (end - start) / len(rows)
-            if mode == cons.MODE.FRAME:
+            if mode == const.MODE.FRAME:
                 start = 0
                 if min(rows) > 0:
                     start = self.frames[min(rows) - 1][HIDE]
@@ -97,7 +97,7 @@ class EditAgent(Delegate):
 
         self.register_action(
             register=register,
-            docs=[cons.DOCUMENT.MAIN, cons.DOCUMENT.TRAN],
+            docs=[const.DOCUMENT.MAIN, const.DOCUMENT.TRAN],
             description=_("Inserting subtitles"),
             revert_method=self.remove_subtitles,
             revert_args=[all_rows],)
@@ -169,7 +169,7 @@ class EditAgent(Delegate):
 
         self.register_action(
             register=register,
-            docs=[cons.DOCUMENT.MAIN, cons.DOCUMENT.TRAN],
+            docs=[const.DOCUMENT.MAIN, const.DOCUMENT.TRAN],
             description=_("Removing subtitles"),
             revert_method=self.insert_subtitles,
             revert_args=[rows, times, frames, main_texts, tran_texts],)

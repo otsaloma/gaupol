@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol import cons
+from gaupol import const
 from gaupol.unittest import TestCase, reversion_test
 from ..index import SHOW, HIDE, DURN
 
@@ -123,11 +123,11 @@ class TestSetAgent(TestCase):
     @reversion_test
     def test_set_text_main(self):
 
-        self.project.set_text(2, cons.DOCUMENT.MAIN, "")
+        self.project.set_text(2, const.DOCUMENT.MAIN, "")
         assert self.project.main_texts[2] == ""
 
     @reversion_test
     def test_set_text_tran(self):
 
-        self.project.set_text(2, cons.DOCUMENT.TRAN, "")
+        self.project.set_text(2, const.DOCUMENT.TRAN, "")
         assert self.project.tran_texts[2] == ""
