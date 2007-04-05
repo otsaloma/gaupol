@@ -56,6 +56,8 @@ def contractual(function):
             return function(*args, **kwargs)
         name = "%s_require" % function.__name__
         if (args and hasattr(args[0], function.__name__)):
+            if function.__name__.startswith("__"):
+                name = "_%s%s" % (args[0].__class__.__name__, name)
             if hasattr(args[0], name):
                 getattr(args[0], name)(*args[1:], **kwargs)
         elif name in function.func_globals:
@@ -63,6 +65,8 @@ def contractual(function):
         value = function(*args, **kwargs)
         name = "%s_ensure" % function.__name__
         if (args and hasattr(args[0], function.__name__)):
+            if function.__name__.startswith("__"):
+                name = "_%s%s" % (args[0].__class__.__name__, name)
             if hasattr(args[0], name):
                 getattr(args[0], name)(value, *args[1:], **kwargs)
         elif name in function.func_globals:

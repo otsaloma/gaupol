@@ -48,7 +48,8 @@ class _TestObservable(TestCase):
         assert obs_copy == self.obs
         assert obs_copy.master is self.obs.master
         self.edit_obs()
-        assert not obs_copy == self.obs
+        assert obs_copy != self.obs
+        assert obs_copy.master is self.obs.master
 
     def test___deepcopy__(self):
 
@@ -56,7 +57,8 @@ class _TestObservable(TestCase):
         assert obs_copy == self.obs
         assert obs_copy.master is self.obs.master
         self.edit_obs()
-        assert not obs_copy == self.obs
+        assert obs_copy != self.obs
+        assert obs_copy.master is self.obs.master
 
 
 class TestObservableDict(_TestObservable):

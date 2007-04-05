@@ -1,5 +1,13 @@
 2007-04-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/base/_mutables.py:
+	Add contracts.
+
+	* gaupol/util.py (contractual):
+	Handle name mangling of __private methods.
+
+2007-04-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/cons.py:
 	* gaupol/const.py:
 	* gaupol/gtk/cons.py:

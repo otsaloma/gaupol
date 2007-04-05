@@ -24,6 +24,8 @@
 import copy
 import functools
 
+from gaupol import util
+
 
 def _mutation(function):
     """Decorator for sending a notification after mutating object."""
@@ -59,6 +61,10 @@ class ObservableDict(dict):
     def __delitem__(self, *args, **kwargs):
         return dict.__delitem__(self, *args, **kwargs)
 
+    def __init___require(self, *args, **kwargs):
+        assert hasattr(args[-2], "notify")
+
+    @util.contractual
     def __init__(self, *args, **kwargs):
         dict.__init__(self, *args[:-2], **kwargs)
         self.master = args[-2]
@@ -100,7 +106,7 @@ class ObservableList(list):
     """
 
     def __copy__(self):
-        lst = [copy.copy(x) for x in self]
+        lst = list(copy.copy(x) for x in self)
         return self.__class__(lst, self.master, self.name)
 
     def __deepcopy__(self, memo):
@@ -123,6 +129,10 @@ class ObservableList(list):
     def __imul__(self, *args, **kwargs):
         return list.__imul__(self, *args, **kwargs)
 
+    def __init___require(self, *args, **kwargs):
+        assert hasattr(args[-2], "notify")
+
+    @util.contractual
     def __init__(self, *args, **kwargs):
         list.__init__(self, *args[:-2], **kwargs)
         self.master = args[-2]
@@ -187,6 +197,10 @@ class ObservableSet(set):
     def __iand__(self, *args, **kwargs):
         return set.__iand__(self, *args, **kwargs)
 
+    def __init___require(self, *args, **kwargs):
+        assert hasattr(args[-2], "notify")
+
+    @util.contractual
     def __init__(self, *args, **kwargs):
         set.__init__(self, *args[:-2], **kwargs)
         self.master = args[-2]
