@@ -55,7 +55,7 @@ def contractual(function):
         if not CHECK_CONTRACTS:
             return function(*args, **kwargs)
         name = "%s_require" % function.__name__
-        if (args and hasattr(args[0], function.__name__)):
+        if is_method(function, args):
             if function.__name__.startswith("__"):
                 name = "_%s%s" % (args[0].__class__.__name__, name)
             if hasattr(args[0], name):
@@ -64,7 +64,7 @@ def contractual(function):
             function.func_globals[name](*args, **kwargs)
         value = function(*args, **kwargs)
         name = "%s_ensure" % function.__name__
-        if (args and hasattr(args[0], function.__name__)):
+        if is_method(function, args):
             if function.__name__.startswith("__"):
                 name = "_%s%s" % (args[0].__class__.__name__, name)
             if hasattr(args[0], name):
@@ -73,6 +73,7 @@ def contractual(function):
             function.func_globals[name](value, *args, **kwargs)
         return value
 
+    wrapper.original = function
     return wrapper
 
 def memoize(function):
@@ -82,13 +83,14 @@ def memoize(function):
     @functools.wraps(function)
     def wrapper(*args, **kwargs):
         params = (args, kwargs)
-        if args and hasattr(args[0], function.__name__):
+        if is_method(function, args):
             params = (args[1:], kwargs)
         key = cPickle.dumps(params)
         if not key in cache:
             cache[key] = function(*args, **kwargs)
         return cache[key]
 
+    wrapper.original = function
     return wrapper
 
 def browse_url(url, browser=None):
@@ -311,6 +313,18 @@ def handle_write_unicode(exc_info, path, encoding):
     if encoding is None:
         encoding = get_default_encoding()
     print "Failed to encode file '%s' with codec '%s'." % (path, encoding)
+
+def is_method(function, args):
+    """Return True if function to be decorated is a method.
+
+    Decorator is required to have set an 'original' attribute on the wrapped
+    method pointing to the original unwrapped function.
+    """
+    try:
+        method = getattr(args[0], function.__name__)
+        return (method.original is function)
+    except (IndexError, AttributeError):
+        return False
 
 def makedirs_ensure(value, directory):
     assert os.path.isdir(directory)
