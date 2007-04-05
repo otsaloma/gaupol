@@ -1,5 +1,13 @@
 2007-04-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/cons.py:
+	* gaupol/const.py:
+	* gaupol/gtk/cons.py:
+	* gaupol/gtk/const.py:
+	Rename to const.
+
+2007-04-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/base/cons.py:
 	* gaupol/base/const.py:
 	Rename to const.

@@ -36,14 +36,14 @@ class TestSection(TestCase):
 
         assert self.FRUIT.APPLE == 0
         assert self.FRUIT.APPLE.name == "APPLE"
-        assert self.FRUIT.APPLE.value == 0
+        assert self.FRUIT.APPLE.color == "green"
         assert self.FRUIT.members[0] == self.FRUIT.APPLE
         assert self.FRUIT.names[0] == "APPLE"
-        assert self.FRUIT.values[0] == 0
+        assert self.FRUIT.colors[0] == "green"
 
         assert self.FRUIT.ORANGE == 1
         assert self.FRUIT.ORANGE.name == "ORANGE"
-        assert self.FRUIT.ORANGE.value == 1
+        assert self.FRUIT.ORANGE.color == "orange"
         assert self.FRUIT.members[1] == self.FRUIT.ORANGE
         assert self.FRUIT.names[1] == "ORANGE"
-        assert self.FRUIT.values[1] == 1
+        assert self.FRUIT.colors[1] == "orange"
