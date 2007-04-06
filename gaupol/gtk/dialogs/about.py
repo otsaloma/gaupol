@@ -28,10 +28,10 @@ Module variables:
 
 import gtk
 import os
-from gettext import gettext as _
 
 from gaupol import paths, urls, __version__
 from gaupol.gtk import util
+from gaupol.gtk.i18n import _
 
 
 _LOGO = os.path.join(paths.DATA_DIR, "icons", "logo.png")

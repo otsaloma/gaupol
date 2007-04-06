@@ -30,10 +30,10 @@ import pango
 import platform
 import sys
 import traceback
-from gettext import gettext as _
 
 from gaupol import urls, __version__
 from gaupol.gtk import conf, util
+from gaupol.gtk.i18n import _
 from .glade import GladeDialog
 from .message import ErrorDialog
 

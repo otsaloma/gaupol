@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,38 +16,15 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Help actions."""
+"""Internationalization functions."""
 
 
-import gtk
+import gtk.glade
 
-from gaupol.gtk.i18n import _
-from ._action import UIMAction
+from gaupol import i18n, paths
+from gaupol.i18n import *
 
+gtk.glade.bindtextdomain("gaupol", paths.LOCALE_DIR)
+gtk.glade.textdomain("gaupol")
 
-class ReportABugAction(UIMAction):
-
-    """Submit a bug report."""
-
-    action_item = (
-        "report_a_bug",
-        None,
-        _("_Report A Bug"),
-        None,
-        _("Submit a bug report"),)
-
-    paths = ["/ui/menubar/help/report_a_bug"]
-
-
-class ViewAboutDialogAction(UIMAction):
-
-    """Show information about Gaupol."""
-
-    action_item = (
-        "view_about_dialog",
-        gtk.STOCK_ABOUT,
-        _("_About"),
-        None,
-        _("Show information about Gaupol"),)
-
-    paths = ["/ui/menubar/help/about"]
+__all__ = i18n.__all__

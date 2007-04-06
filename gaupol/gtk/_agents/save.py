@@ -21,13 +21,13 @@
 
 import gtk
 import os
-from gettext import gettext as _
 
 from gaupol import enclib
 from gaupol.base import Delegate
 from gaupol.gtk import const, util
 from gaupol.gtk.dialogs import ErrorDialog, SaveDialog
 from gaupol.gtk.errors import Default
+from gaupol.gtk.i18n import _
 from gaupol.gtk.index import *
 
 

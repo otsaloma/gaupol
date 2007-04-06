@@ -21,10 +21,10 @@
 
 import gobject
 import gtk
-from gettext import gettext as _
 
 from gaupol import enclib
 from gaupol.gtk import conf, util
+from gaupol.gtk.i18n import _
 from .glade import GladeDialog
 
 

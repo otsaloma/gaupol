@@ -22,15 +22,10 @@
 
 
 import atexit
-import gettext
-import locale
 import os
 import re
 import sys
 import tempfile
-
-
-_ = gettext.gettext
 
 
 def _check_dependencies():
@@ -93,6 +88,8 @@ def _parse_args(args):
     """Parse and return options and arguments."""
 
     import optparse
+    from gaupol.gtk.i18n import _
+
     parser = optparse.OptionParser(
         formatter=optparse.IndentedHelpFormatter(2, 42),
         usage=_("gaupol [OPTION...] [FILE...] [+NUM]"),)
@@ -173,17 +170,6 @@ def _prepare_debug(debug):
     from gaupol import util
     util.CHECK_CONTRACTS = debug
 
-def _prepare_gettext():
-    """Assign gettext domains."""
-
-    import gtk.glade
-    from gaupol import paths
-    locale.setlocale(locale.LC_ALL, "")
-    gettext.bindtextdomain("gaupol", paths.LOCALE_DIR)
-    gettext.textdomain("gaupol")
-    gtk.glade.bindtextdomain("gaupol", paths.LOCALE_DIR)
-    gtk.glade.textdomain("gaupol")
-
 def _prepare_ui():
     """Prepare user interface stuff."""
 
@@ -235,7 +221,6 @@ def main(args):
 
     _move_eggs()
     _check_dependencies()
-    _prepare_gettext()
     opts, args = _parse_args(args)
     if opts.list_encodings:
         return _list_encodings()

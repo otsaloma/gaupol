@@ -22,12 +22,12 @@
 import gobject
 import gtk
 import re
-from gettext import gettext as _
 
 from gaupol import urls
 from gaupol.gtk import conf, const, util
 from gaupol.gtk.dialogs import ErrorDialog
 from gaupol.gtk.errors import Default
+from gaupol.gtk.i18n import _
 from gaupol.gtk.index import *
 from .glade import GladeDialog
 

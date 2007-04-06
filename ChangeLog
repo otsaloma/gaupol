@@ -1,5 +1,11 @@
 2007-04-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/i18n.py:
+	* gaupol/i18n.py:
+	New modules.
+
+2007-04-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/const.py:
 	* gaupol/util.py:
 	Minor changes.

@@ -38,7 +38,7 @@ groups acts as the separator. Either of the groups can be empty.
 # named groups?
 
 
-from gettext import gettext as _
+from gaupol.i18n import _
 
 
 CAP_AFTERS = (

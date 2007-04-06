@@ -20,8 +20,8 @@
 
 
 import gtk
-from gettext import gettext as _
 
+from gaupol.gtk.i18n import _
 from gaupol.gtk.index import *
 from ._action import UIMAction
 

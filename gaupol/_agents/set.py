@@ -20,10 +20,10 @@
 
 
 import bisect
-from gettext import gettext as _
 
 from gaupol import const, util
 from gaupol.base import Delegate
+from gaupol.i18n import _
 from .index import SHOW, HIDE, DURN
 from .register import revertable
 

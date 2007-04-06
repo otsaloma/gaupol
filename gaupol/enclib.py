@@ -36,12 +36,13 @@ import codecs
 import locale
 import re
 from encodings.aliases import aliases
-from gettext import gettext as _
 
 try:
     from chardet.universaldetector import UniversalDetector
 except ImportError:
     pass
+
+from gaupol.i18n import _
 
 
 _ENCODINGS = (

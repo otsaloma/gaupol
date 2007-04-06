@@ -25,9 +25,9 @@ Module variables:
 
 
 import sys
-from gettext import gettext as _
 
 from gaupol.base import const
+from gaupol.i18n import _
 
 
 # All defined constants.

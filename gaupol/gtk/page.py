@@ -28,11 +28,11 @@ import gtk
 import os
 import pango
 import string
-from gettext import gettext as _
 
 from gaupol import enclib
 from gaupol.base import Observable
 from gaupol.gtk import conf, const, util
+from gaupol.gtk.i18n import _
 from gaupol.gtk.index import *
 from gaupol.project import Project
 from .view import View

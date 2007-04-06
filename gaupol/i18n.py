@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,38 +16,21 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Help actions."""
+"""Internationalization functions."""
 
 
-import gtk
+import gettext
+import locale
 
-from gaupol.gtk.i18n import _
-from ._action import UIMAction
+from gaupol import paths
 
+locale.setlocale(locale.LC_ALL, "")
+gettext.bindtextdomain("gaupol", paths.LOCALE_DIR)
+gettext.textdomain("gaupol")
 
-class ReportABugAction(UIMAction):
+__all__ = ["_", "dgettext", "ngettext"]
 
-    """Submit a bug report."""
-
-    action_item = (
-        "report_a_bug",
-        None,
-        _("_Report A Bug"),
-        None,
-        _("Submit a bug report"),)
-
-    paths = ["/ui/menubar/help/report_a_bug"]
-
-
-class ViewAboutDialogAction(UIMAction):
-
-    """Show information about Gaupol."""
-
-    action_item = (
-        "view_about_dialog",
-        gtk.STOCK_ABOUT,
-        _("_About"),
-        None,
-        _("Show information about Gaupol"),)
-
-    paths = ["/ui/menubar/help/about"]
+# pylint: disable-msg=C0103
+_ = gettext.gettext
+ngettext = gettext.ngettext
+dgettext = gettext.dgettext

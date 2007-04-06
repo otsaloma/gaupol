@@ -19,9 +19,8 @@
 """View menu UI manager actions."""
 
 
-from gettext import gettext as _
-
 from gaupol.gtk import conf, const
+from gaupol.gtk.i18n import _
 from ._action import UIMAction
 
 

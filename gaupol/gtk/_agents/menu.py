@@ -21,10 +21,10 @@
 
 import gtk
 import os
-from gettext import gettext as _
 
 from gaupol.base import Delegate
 from gaupol.gtk import conf, const, util
+from gaupol.gtk.i18n import _
 
 
 class MenuAgent(Delegate):

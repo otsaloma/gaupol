@@ -121,10 +121,10 @@ Module variables:
 
 
 import gtk
-from gettext import gettext as _
 
 from gaupol.base import const
 from gaupol.const import *
+from gaupol.gtk.i18n import _
 
 
 __all__ = [

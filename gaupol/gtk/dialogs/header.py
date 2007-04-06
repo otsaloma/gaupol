@@ -20,10 +20,10 @@
 
 
 import gtk
-from gettext import gettext as _
 
 from gaupol.files import *
 from gaupol.gtk import const, util
+from gaupol.gtk.i18n import _
 from .glade import GladeDialog
 from .message import ErrorDialog
 

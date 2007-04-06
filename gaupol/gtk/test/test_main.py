@@ -34,10 +34,6 @@ class TestModule(TestCase):
 
         main._move_eggs()
 
-    def test_prepare_gettext(self):
-
-        main._prepare_gettext()
-
     def test_prepare_ui(self):
 
         main._prepare_ui()

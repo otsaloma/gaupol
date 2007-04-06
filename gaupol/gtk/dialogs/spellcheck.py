@@ -29,10 +29,10 @@ import gtk
 import os
 import sys
 import pango
-from gettext import gettext as _
 
 from gaupol import langlib, paths
 from gaupol.gtk import conf, const, util
+from gaupol.gtk.i18n import _
 from gaupol.gtk.index import *
 from .glade import GladeDialog
 from .message import ErrorDialog

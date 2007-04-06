@@ -26,11 +26,11 @@ import gobject
 import gtk
 import os
 import tempfile
-from gettext import gettext as _
 
 from gaupol.base import Delegate
 from gaupol.gtk import conf, util
 from gaupol.gtk.dialogs import ErrorDialog, PreviewErrorDialog
+from gaupol.gtk.i18n import _
 from gaupol.gtk.index import *
 
 

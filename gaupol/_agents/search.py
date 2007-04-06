@@ -19,11 +19,10 @@
 """Searching for and replacing text."""
 
 
-from gettext import gettext as _
-
 from gaupol import const
 from gaupol.base import Delegate
 from gaupol.finder import Finder
+from gaupol.i18n import _
 from .register import revertable
 
 

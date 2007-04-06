@@ -24,7 +24,6 @@ from __future__ import division
 import functools
 import gtk
 import os
-from gettext import gettext as _
 
 from gaupol import enclib
 from gaupol.base import Delegate
@@ -33,6 +32,7 @@ from gaupol.gtk.dialogs import AppendDialog, OpenDialog, VideoDialog
 from gaupol.gtk.dialogs import ErrorDialog, WarningDialog
 from gaupol.gtk.dialogs import SplitDialog
 from gaupol.gtk.errors import Default, FormatError
+from gaupol.gtk.i18n import _
 from gaupol.gtk.index import *
 from gaupol.gtk.page import Page
 

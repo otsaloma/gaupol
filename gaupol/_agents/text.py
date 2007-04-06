@@ -20,10 +20,10 @@
 
 
 import re
-from gettext import gettext as _
 
 from gaupol import util
 from gaupol.base import Delegate
+from gaupol.i18n import _
 from gaupol.liner import Liner
 from gaupol.parser import Parser
 from .register import revertable

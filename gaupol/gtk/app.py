@@ -29,7 +29,6 @@ import gtk
 import os
 import pango
 import types
-from gettext import gettext as _
 
 from gaupol import paths
 from gaupol.base import Observable
@@ -39,6 +38,7 @@ from gaupol.gtk._actions import *
 from gaupol.gtk._actions import ACTIONS
 from gaupol.gtk._agents import *
 from gaupol.gtk._agents import AGENTS
+from gaupol.gtk.i18n import _
 from gaupol.gtk.runner import Runner
 from .output import OutputWindow
 

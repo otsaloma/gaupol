@@ -20,10 +20,10 @@
 
 
 import re
-from gettext import gettext as _
 
 from gaupol import const, util
 from gaupol.base import Delegate
+from gaupol.i18n import _
 from gaupol.tags import *
 from .register import revertable
 

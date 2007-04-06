@@ -6,6 +6,7 @@ gaupol.util*
 gaupol.base/
 gaupol.paths
 gaupol.urls
+gaupol.i18n
 gaupol.errors
 gaupol.cons
 gaupol.enclib
@@ -26,6 +27,7 @@ gaupol.__init__
 
 gaupol.gtk.unittest/
 gaupol.gtk.util*
+gaupol.gtk.i18n
 gaupol.gtk.runner
 gaupol.gtk.errors
 gaupol.gtk.cons

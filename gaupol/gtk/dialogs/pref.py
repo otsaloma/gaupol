@@ -22,11 +22,11 @@
 import gobject
 import gtk
 import pango
-from gettext import gettext as _
 
 from gaupol import enclib
 from gaupol.base import Delegate
 from gaupol.gtk import conf, const, util
+from gaupol.gtk.i18n import _
 from .encoding import EncodingDialog
 from .glade import GladeDialog
 

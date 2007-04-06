@@ -19,12 +19,10 @@
 """Editing subtitle data."""
 
 
-from gettext import gettext as _
-from gettext import ngettext
-
 from gaupol.base import Delegate
 from gaupol.gtk import const, util
 from gaupol.gtk.dialogs import HeaderDialog, InsertDialog, PreferencesDialog
+from gaupol.gtk.i18n import _, ngettext
 from gaupol.gtk.index import *
 
 

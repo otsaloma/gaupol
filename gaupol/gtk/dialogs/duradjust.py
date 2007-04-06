@@ -20,9 +20,9 @@
 
 
 import gtk
-from gettext import ngettext
 
 from gaupol.gtk import conf, const, util
+from gaupol.gtk.i18n import _, ngettext
 from .glade import GladeDialog
 
 
