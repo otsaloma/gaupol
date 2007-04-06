@@ -51,9 +51,9 @@ Module variables:
     FORMAT.members
     FORMAT.names
 
-    FRAMERATE.FR_23_976
-    FRAMERATE.FR_25
-    FRAMERATE.FR_29_97
+    FRAMERATE.P24
+    FRAMERATE.P25
+    FRAMERATE.P30
     FRAMERATE.display_names
     FRAMERATE.members
     FRAMERATE.names
@@ -167,12 +167,12 @@ COLUMN.TTXT.uim_action_name = "toggle_translation_text_column"
 COLUMN.TTXT.uim_path = "/ui/menubar/view/columns/translation_text"
 COLUMN.finalize()
 
-FRAMERATE.FR_23_976.uim_action_name = "show_framerate_23_976"
-FRAMERATE.FR_23_976.uim_path = "/ui/menubar/view/framerate/23_976"
-FRAMERATE.FR_25.uim_action_name = "show_framerate_25"
-FRAMERATE.FR_25.uim_path = "/ui/menubar/view/framerate/25"
-FRAMERATE.FR_29_97.uim_action_name = "show_framerate_29_97"
-FRAMERATE.FR_29_97.uim_path = "/ui/menubar/view/framerate/29_97"
+FRAMERATE.P24.uim_action_name = "show_framerate_23_976"
+FRAMERATE.P24.uim_path = "/ui/menubar/view/framerate/23_976"
+FRAMERATE.P25.uim_action_name = "show_framerate_25"
+FRAMERATE.P25.uim_path = "/ui/menubar/view/framerate/25"
+FRAMERATE.P30.uim_action_name = "show_framerate_29_97"
+FRAMERATE.P30.uim_path = "/ui/menubar/view/framerate/29_97"
 FRAMERATE.finalize()
 
 LENGTH_UNIT = const.Section()

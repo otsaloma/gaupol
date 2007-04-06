@@ -20,67 +20,8 @@
 
 Module variables:
 
-    DOCUMENT.MAIN
-    DOCUMENT.TRAN
-    DOCUMENT.members
-    DOCUMENT.names
-
-    FORMAT.ASS
-    FORMAT.MICRODVD
-    FORMAT.MPL2
-    FORMAT.MPSUB
-    FORMAT.SSA
-    FORMAT.SUBRIP
-    FORMAT.SUBVIEWER2
-    FORMAT.TMPLAYER
-    FORMAT.class_names
-    FORMAT.display_names
-    FORMAT.extensions
-    FORMAT.members
-    FORMAT.names
-
-    FRAMERATE.FR_23_976
-    FRAMERATE.FR_25
-    FRAMERATE.FR_29_97
-    FRAMERATE.display_names
-    FRAMERATE.members
-    FRAMERATE.names
-    FRAMERATE.mpsub_names
-    FRAMERATE.values
-
-    MODE.TIME
-    MODE.FRAME
-    MODE.members
-    MODE.names
-
-    NEWLINE.MAC
-    NEWLINE.UNIX
-    NEWLINE.WINDOWS
-    NEWLINE.display_names
-    NEWLINE.members
-    NEWLINE.names
-    NEWLINE.values
-
-    REGISTER.DO
-    REGISTER.UNDO
-    REGISTER.REDO
-    REGISTER.DO_MULTIPLE
-    REGISTER.UNDO_MULTIPLE
-    REGISTER.REDO_MULTIPLE
-    REGISTER.members
-    REGISTER.names
-    REGISTER.shifts
-    REGISTER.signals
-
-    VIDEO_PLAYER.MPLAYER
-    VIDEO_PLAYER.VLC
-    VIDEO_PLAYER.commands
-    VIDEO_PLAYER.display_names
-    VIDEO_PLAYER.members
-    VIDEO_PLAYER.names
+    DOCUMENT, FORMAT, FRAMERATE, MODE, NEWLINE, REGISTER, VIDEO_PLAYER
 """
-
-# pylint: disable-msg=E1101
 
 
 import sys
@@ -89,14 +30,8 @@ from gettext import gettext as _
 from gaupol.base import const
 
 
-__all__ = [
-    "DOCUMENT",
-    "FORMAT",
-    "FRAMERATE",
-    "MODE",
-    "NEWLINE",
-    "REGISTER",
-    "VIDEO_PLAYER",]
+# All defined constants.
+__all__ = set(locals())
 
 DOCUMENT = const.Section()
 DOCUMENT.MAIN = const.Member()
@@ -139,18 +74,18 @@ FORMAT.TMPLAYER.extension = ".txt"
 FORMAT.finalize()
 
 FRAMERATE = const.Section()
-FRAMERATE.FR_23_976 = const.Member()
-FRAMERATE.FR_23_976.display_name = _("23.976 fps")
-FRAMERATE.FR_23_976.mpsub_name = "23.98"
-FRAMERATE.FR_23_976.value = 23.976
-FRAMERATE.FR_25 = const.Member()
-FRAMERATE.FR_25.display_name = _("25 fps")
-FRAMERATE.FR_25.mpsub_name = "25.00"
-FRAMERATE.FR_25.value = 25.0
-FRAMERATE.FR_29_97 = const.Member()
-FRAMERATE.FR_29_97.display_name = _("29.97 fps")
-FRAMERATE.FR_29_97.mpsub_name = "29.97"
-FRAMERATE.FR_29_97.value = 29.97
+FRAMERATE.P24 = const.Member()
+FRAMERATE.P24.display_name = _("23.976 fps")
+FRAMERATE.P24.mpsub_name = "23.98"
+FRAMERATE.P24.value = 23.976
+FRAMERATE.P25 = const.Member()
+FRAMERATE.P25.display_name = _("25 fps")
+FRAMERATE.P25.mpsub_name = "25.00"
+FRAMERATE.P25.value = 25.0
+FRAMERATE.P30 = const.Member()
+FRAMERATE.P30.display_name = _("29.97 fps")
+FRAMERATE.P30.mpsub_name = "29.97"
+FRAMERATE.P30.value = 29.97
 FRAMERATE.finalize()
 
 MODE = const.Section()
@@ -160,7 +95,7 @@ MODE.finalize()
 
 NEWLINE = const.Section()
 NEWLINE.MAC = const.Member()
-NEWLINE.MAC.display_name = "Mac"
+NEWLINE.MAC.display_name = "Mac (classic)"
 NEWLINE.MAC.value = "\r"
 NEWLINE.UNIX = const.Member()
 NEWLINE.UNIX.display_name = "Unix"
@@ -191,28 +126,34 @@ REGISTER.REDO_MULTIPLE.shift = 1
 REGISTER.REDO_MULTIPLE.signal = "action-redone"
 REGISTER.finalize()
 
+def get_mplayer_executable():
+    if sys.platform == "win32":
+        return r"%ProgramFiles%\mplayer\mplayer.exe"
+    return "mplayer"
 
+def get_vlc_executable():
+    if sys.platform == "win32":
+        return r"%ProgramFiles%\VideoLAN\vlc\vlc.exe"
+    return "vlc"
 
 VIDEO_PLAYER = const.Section()
 VIDEO_PLAYER.MPLAYER = const.Member()
-VIDEO_PLAYER.MPLAYER.command = [
-    "mplayer",
+VIDEO_PLAYER.MPLAYER.command = " ".join((
+    get_mplayer_executable(),
     "-identify",
     "-osdlevel 2",
     "-ss $SECONDS",
     "-sub $SUBFILE",
-    "$VIDEOFILE",]
+    "$VIDEOFILE",))
 VIDEO_PLAYER.MPLAYER.display_name = "MPlayer"
 VIDEO_PLAYER.VLC = const.Member()
-VIDEO_PLAYER.VLC.command = [
-    "vlc",
+VIDEO_PLAYER.VLC.command = " ".join((
+    get_vlc_executable(),
     "--start-time=$SECONDS",
     "--sub-file=$SUBFILE",
-    "$VIDEOFILE",]
+    "$VIDEOFILE",))
 VIDEO_PLAYER.VLC.display_name = "VLC"
-if sys.platform == "win32":
-    VIDEO_PLAYER.MPLAYER.command[0] = r"%ProgramFiles%\mplayer\mplayer.exe"
-    VIDEO_PLAYER.VLC.command[0] = r"%ProgramFiles%\VideoLAN\vlc\vlc.exe"
-VIDEO_PLAYER.MPLAYER.command = " ".join(VIDEO_PLAYER.MPLAYER.command)
-VIDEO_PLAYER.VLC.command = " ".join(VIDEO_PLAYER.VLC.command)
 VIDEO_PLAYER.finalize()
+
+del get_mplayer_executable, get_vlc_executable
+__all__ = sorted(list(set(locals()) - __all__))

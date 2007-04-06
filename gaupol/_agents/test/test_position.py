@@ -122,12 +122,12 @@ class TestPositionAgent(TestCase):
 
     def test_change_framerate(self):
 
-        self.project.change_framerate(const.FRAMERATE.FR_23_976)
+        self.project.change_framerate(const.FRAMERATE.P24)
         self.project.main_file.mode = const.MODE.TIME
         orig_times = copy.deepcopy(self.project.times)
         orig_frames = copy.deepcopy(self.project.frames)
-        self.project.change_framerate(const.FRAMERATE.FR_25)
-        assert self.project.framerate == const.FRAMERATE.FR_25
+        self.project.change_framerate(const.FRAMERATE.P25)
+        assert self.project.framerate == const.FRAMERATE.P25
         assert self.project.times == orig_times
         assert self.project.frames != orig_frames
         assert not self.project.can_undo()
@@ -135,8 +135,8 @@ class TestPositionAgent(TestCase):
         self.project.main_file.mode = const.MODE.FRAME
         orig_times = copy.deepcopy(self.project.times)
         orig_frames = copy.deepcopy(self.project.frames)
-        self.project.change_framerate(const.FRAMERATE.FR_29_97)
-        assert self.project.framerate == const.FRAMERATE.FR_29_97
+        self.project.change_framerate(const.FRAMERATE.P30)
+        assert self.project.framerate == const.FRAMERATE.P30
         assert self.project.times != orig_times
         assert self.project.frames == orig_frames
         assert not self.project.can_undo()
@@ -147,8 +147,8 @@ class TestPositionAgent(TestCase):
         frames = self.project.frames
         self.project.main_file = self.project.tran_file
         self.project.convert_framerate(
-            [], const.FRAMERATE.FR_25, const.FRAMERATE.FR_29_97)
-        assert self.project.framerate == const.FRAMERATE.FR_29_97
+            [], const.FRAMERATE.P25, const.FRAMERATE.P30)
+        assert self.project.framerate == const.FRAMERATE.P30
         assert self.project.calc.framerate == 29.97
         assert frames[4] == [  0,  48, 48]
         assert frames[5] == [120, 180, 60]
@@ -160,8 +160,8 @@ class TestPositionAgent(TestCase):
 
         times = self.project.times
         self.project.convert_framerate(
-            [], const.FRAMERATE.FR_23_976, const.FRAMERATE.FR_25)
-        assert self.project.framerate == const.FRAMERATE.FR_25
+            [], const.FRAMERATE.P24, const.FRAMERATE.P25)
+        assert self.project.framerate == const.FRAMERATE.P25
         assert self.project.calc.framerate == 25.0
         assert times[0] == ["00:00:00.000", "00:00:03.836", "00:00:03.836"]
         assert times[1] == ["00:00:09.590", "00:00:14.386", "00:00:04.796"]
@@ -170,15 +170,15 @@ class TestPositionAgent(TestCase):
 
     def test_set_framerate(self):
 
-        self.project.set_framerate(const.FRAMERATE.FR_25)
-        self.project.set_framerate(const.FRAMERATE.FR_29_97)
-        assert self.project.framerate == const.FRAMERATE.FR_29_97
+        self.project.set_framerate(const.FRAMERATE.P25)
+        self.project.set_framerate(const.FRAMERATE.P30)
+        assert self.project.framerate == const.FRAMERATE.P30
         assert self.project.calc.framerate == 29.970
         self.project.undo()
-        assert self.project.framerate == const.FRAMERATE.FR_25
+        assert self.project.framerate == const.FRAMERATE.P25
         assert self.project.calc.framerate == 25.000
         self.project.redo()
-        assert self.project.framerate == const.FRAMERATE.FR_29_97
+        assert self.project.framerate == const.FRAMERATE.P30
         assert self.project.calc.framerate == 29.970
 
     @reversion_test

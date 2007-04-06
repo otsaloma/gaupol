@@ -91,7 +91,7 @@ class Project(Observable):
 
         return self._delegations[name].__getattribute__(name)
 
-    def __init__(self, framerate=const.FRAMERATE.FR_23_976, undo_limit=None):
+    def __init__(self, framerate=const.FRAMERATE.P24, undo_limit=None):
 
         Observable.__init__(self)
 

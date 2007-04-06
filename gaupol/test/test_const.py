@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -25,35 +25,29 @@ class TestModule(TestCase):
     def test_attributes(self):
 
         constants = (
-            ("DOCUMENT", (
-                "names",)),
+            ("DOCUMENT", ()),
             ("FORMAT", (
                  "class_names",
                  "display_names",
-                 "extensions",
-                 "names",)),
+                 "extensions",)),
             ("FRAMERATE", (
                  "display_names",
                  "mpsub_names",
-                 "names",
                  "values",)),
-            ("MODE", (
-                "names",)),
+            ("MODE", ()),
             ("NEWLINE", (
                  "display_names",
-                 "names",
                  "values",)),
             ("REGISTER", (
-                 "names",
                  "shifts",
                  "signals",)),
             ("VIDEO_PLAYER", (
                  "commands",
-                 "display_names",
-                 "names",)))
+                 "display_names",)))
 
         for section_name, attr_names in constants:
             section = getattr(const, section_name)
+            attr_names = attr_names + ("names",)
             for attr_name in attr_names:
                 getattr(section, attr_name)
                 for member in section.members:

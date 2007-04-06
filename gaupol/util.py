@@ -444,4 +444,4 @@ def write(path, text, encoding=None):
     finally:
         fobj.close()
 
-__all__ = sorted(list(set(dir()) - __all__))
+__all__ = sorted(list(set(locals()) - __all__))

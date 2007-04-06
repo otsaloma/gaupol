@@ -25,7 +25,7 @@ class TestCalculator(TestCase):
 
     def setup_method(self, method):
 
-        self.calc = calculator.Calculator(const.FRAMERATE.FR_23_976)
+        self.calc = calculator.Calculator(const.FRAMERATE.P24)
 
     def test___init__(self):
 

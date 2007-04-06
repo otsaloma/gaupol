@@ -24,7 +24,7 @@ use_min = boolean(default=True)
 
 [editor]
 font = string(default=None)
-framerate = FRAMERATE(default="FR_23_976")
+framerate = FRAMERATE(default="P24")
 length_unit = LENGTH_UNIT(default="EM")
 limit_undo = boolean(default=False)
 mode = MODE(default="TIME")
