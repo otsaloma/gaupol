@@ -36,11 +36,11 @@ class Parser(Finder):
     The purpose of the Parser is to split text to the actual text and its tags,
     allowing the text to be edited while keeping the tags separate and intact.
     Parser can be used by first setting text to it, then performing operations
-    via defined methods and finally getting the full text back.
+    via the defined methods and finally getting the full text back.
 
-    The margin system is only used if no other tags are found in the text and
-    if the text has at least two lines. Either margins or tags will always be
-    empty.
+    The margin system (wrapping each line in the same tags) is only used if no
+    other tags are found in the text and if the text has at least two lines.
+    Either margins or tags will always be empty.
     """
 
     def __init__(self, re_tag=None):
@@ -54,6 +54,11 @@ class Parser(Finder):
         self.margins = None
         self.tags    = None
 
+    def _set_margins_require(self, text):
+        assert self.re_tag is not None
+
+    @util.contractual
+    @util.silent(AssertionError)
     def _set_margins(self, text):
         """Find the margin tags in text if such exist."""
 
@@ -67,29 +72,33 @@ class Parser(Finder):
             a, z = match.span()
             start_tag += line[a:z]
             line = line[z:]
-        if not start_tag:
-            return
+        assert start_tag
 
         end_tag = ""
         while True:
             iterator = self.re_tag.finditer(line)
-            match = None
-            while True:
-                try:
-                    match = iterator.next()
-                except StopIteration:
-                    break
+            match = util.last(iterator)
             if match is None:
                 break
             a, z = match.span()
-            if z != len(line):
-                return
+            assert z == len(line)
             end_tag = line[a:z] + end_tag
             line = line[:a]
 
         if all([x.startswith(start_tag) for x in lines]):
             if all([x.endswith(end_tag) for x in lines]):
                 self.margins = [start_tag, end_tag]
+
+    def _set_tags_require(self, text):
+        assert self.re_tag is not None
+
+    @util.contractual
+    def _set_tags(self, text):
+        """Find tags in text."""
+
+        for match in self.re_tag.finditer(text):
+            a, z = match.span()
+            self.tags.append([a, text[a:z]])
 
     @util.silent(AssertionError)
     def _shift_tags(self, pos, shift, orig_text):
@@ -137,6 +146,7 @@ class Parser(Finder):
             text = self.margins[0] + text + self.margins[1]
         return text
 
+    @util.contractual
     def replace(self, next=True):
         """Replace the current match.
 
@@ -155,14 +165,11 @@ class Parser(Finder):
         next should be True to start at beginning, False for end.
         """
         Finder.set_text(self, text, next)
-
         self.margins = []
         self.tags = []
         assert self.re_tag is not None
         if text.count("\n"):
             self._set_margins(text)
         if not self.margins:
-            for match in self.re_tag.finditer(text):
-                a, z = match.span()
-                self.tags.append([a, text[a:z]])
+            self._set_tags(text)
         self.text = self.re_tag.sub("", text)

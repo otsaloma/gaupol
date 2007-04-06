@@ -26,7 +26,7 @@ class TestLiner(TestCase):
 
     def setup_method(self, method):
 
-        self.liner = liner.Liner(re.compile(r"<.*?>"))
+        self.liner = liner.Liner(re.compile(r"<.+?>"))
 
     def test__get_length(self):
 
@@ -124,13 +124,13 @@ class TestLiner(TestCase):
         self.liner.set_text(text)
         assert self.liner.is_legal()
 
-        text = "<i>I got to the restaurant a little early little early.</i>"
-        self.liner.set_text(text)
-        assert not self.liner.is_legal()
-
         text = "He'soffdutytodayHe'soffdutytodayHe'soffdutytoday."
         self.liner.set_text(text)
         assert self.liner.is_legal()
+
+        text = "<i>I got to the restaurant a little early little early.</i>"
+        self.liner.set_text(text)
+        assert not self.liner.is_legal()
 
     def test_set_length_func(self):
 

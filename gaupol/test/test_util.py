@@ -132,6 +132,10 @@ class TestModule(TestCase):
         except UnicodeError:
             util.handle_write_unicode(sys.exc_info(), path, "ascii")
 
+    def test_last(self):
+
+        assert util.last(iter((1, 2, 3))) == 3
+
     def test_makedirs(self):
 
         util.makedirs(tempfile.gettempdir())

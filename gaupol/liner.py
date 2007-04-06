@@ -1,4 +1,4 @@
-# Copyright (C) 2006 Osmo Salomaa
+# Copyright (C) 2006-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -29,7 +29,7 @@ from __future__ import division
 import copy
 import re
 
-from gaupol import scriptlib
+from gaupol import scriptlib, util
 from gaupol.parser import Parser
 
 
@@ -71,15 +71,18 @@ class Liner(Parser):
 
         pattern = scriptlib.get_clause_separator("latin-english")
         self.re_clause = re.compile(pattern, re.UNICODE)
-
         pattern = scriptlib.get_dialogue_separator("latin")
         self.re_dialogue = re.compile(pattern, re.UNICODE)
 
     def _get_length(self, lengths):
         """Get the length of units joined by spaces."""
 
-        return sum(lengths) + (len(lengths) - 1) * self._space_length
+        return (sum(lengths) + (len(lengths) - 1) * self._space_length)
 
+    def _get_split_ensure(self, value, lengths):
+        assert 0 <= value <= len(lengths)
+
+    @util.contractual
     def _get_split(self, lengths):
         """Get index of split in two for units.
 
@@ -100,6 +103,11 @@ class Liner(Parser):
                 break
         return min_index
 
+    def _get_splits_ensure(self, value, lengths, max_lines):
+        for index in value:
+            assert 0 <= index <= len(lengths)
+
+    @util.contractual
     def _get_splits(self, lengths, max_lines):
         """Get indexes of splits for units."""
 
@@ -107,13 +115,6 @@ class Liner(Parser):
             return [self._get_split(lengths)]
         if max_lines > 5 and max_lines % 2 == 0:
             return self._get_splits_ugly(lengths, max_lines)
-        return self._get_splits_brute(lengths, max_lines)
-
-    def _get_splits_brute(self, lengths, max_lines):
-        """Get brute forced indexes of splits for units.
-
-        Indexes are brute forced within reason and the result is optimal.
-        """
         min_indexes = None
         min_squares = None
         unit_count = len(lengths)
@@ -137,6 +138,11 @@ class Liner(Parser):
                 break
         return min_indexes
 
+    def _get_splits_ugly_ensure(self, value, lengths, max_lines):
+        for index in value:
+            assert 0 <= index <= len(lengths)
+
+    @util.contractual
     def _get_splits_ugly(self, lengths, max_lines):
         """Get unoptimal indexes of splits for units.
 
@@ -155,6 +161,10 @@ class Liner(Parser):
             sub_indexes.append(self._get_split(lengths[a:z]) + a)
         return sorted(double_indexes + sub_indexes)
 
+    def _get_start_index_ensure(self, value, lengths, max_lines):
+        assert 0 <= value <= len(lengths)
+
+    @util.contractual
     def _get_start_index(self, lengths, max_lines):
         """Get the index for the first split candidate for units.
 
@@ -162,23 +172,28 @@ class Liner(Parser):
         purpose to avoid brute forcing insane indexes.
         """
         unit_count = len(lengths)
-        if unit_count > 2:
-            mean = sum(lengths) / max_lines
-            for i in range(2, unit_count):
-                if self._get_length(lengths[:i]) > mean:
-                    return i - 1
+        if unit_count < 3:
+            return 1
+        mean = sum(lengths) / max_lines
+        for i in range(2, unit_count):
+            if self._get_length(lengths[:i]) > mean:
+                return i - 1
         return 1
 
+    def _join_even_ensure(self, value, max_lines):
+        assert self.text.count("\n") == max_lines - 1
+
+    @util.contractual
     def _join_even(self, max_lines):
         """Join the lines, each containing a logical unit, evenly."""
 
         if max_lines == 1:
             self.text = self.text.replace("\n", " ")
             return
-        lengths = [self._length_func(x) for x in self.text.split("\n")]
-        indexes = self._get_splits(lengths, max_lines)
-        text = u""
+        text = ""
         units = self.text.split("\n")
+        lengths = [self._length_func(x) for x in units]
+        indexes = self._get_splits(lengths, max_lines)
         for i in range(len(lengths)):
             prefix = ("\n" if i in indexes else " ")
             text = text + prefix + units[i]
@@ -193,7 +208,6 @@ class Liner(Parser):
         self.text = self.re_clause.sub(replacement, self.text).strip()
         if not self.text.count("\n"):
             return False
-
         line_count = max(self.ok_clauses, max_lines)
         if self.text.count("\n") < line_count:
             return True
@@ -209,7 +223,6 @@ class Liner(Parser):
         self.text = self.re_dialogue.sub(replacement, self.text).strip()
         if not self.text.count("\n"):
             return False
-
         line_count = max(self.ok_dialogue, max_lines)
         if self.text.count("\n") < line_count:
             return True
@@ -217,10 +230,8 @@ class Liner(Parser):
         return True
 
     def _split_on_words(self, max_lines):
-        """Split the text to lines based on words.
+        """Split the text to lines based on words."""
 
-        Return True.
-        """
         self.text = self.text.replace(" ", "\n")
         self.text = self.text.replace("\n-\n", "\n- ")
         if self.text.count("\n") < max_lines:
@@ -238,7 +249,7 @@ class Liner(Parser):
 
         text = self.text
         tags = copy.deepcopy(self.tags)
-        for max_lines in range(1, 20):
+        for max_lines in range(1, 100):
             for method in ("dialogue", "clauses", "words"):
                 self.text = text
                 self.tags = copy.deepcopy(tags)
@@ -248,15 +259,17 @@ class Liner(Parser):
         return self.get_text()
 
     def is_legal(self):
-        """Return True if the text is legal.
+        """Return True if the text does not break self.max_length."""
 
-        The text is legal if it does not break self.max_length.
-        """
         for line in self.text.split("\n"):
-            if " " in line and self._length_func(line) > self.max_length:
+            if (" " in line) and (self._length_func(line) > self.max_length):
                 return False
         return True
 
+    def set_length_function_require(self, func):
+        assert isinstance(func(""), int) or isinstance(func(""), float)
+
+    @util.contractual
     def set_length_function(self, func):
         """Set the length function to use."""
 

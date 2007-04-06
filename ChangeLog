@@ -1,5 +1,16 @@
 2007-04-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/calculator.py:
+	* gaupol/finder.py:
+	* gaupol/liner.py:
+	* gaupol/parser.py:
+	Add contracts.
+
+	* gaupol/util.py (last):
+	New function.
+
+2007-04-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/enclib.py:
 	* gaupol/langlib.py:
 	* gaupol/scriptlib.py:

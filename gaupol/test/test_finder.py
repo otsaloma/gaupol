@@ -22,7 +22,7 @@ from gaupol.unittest import TestCase
 from .. import finder
 
 
-ORIG_TEXT = \
+TEXT = \
 """One only risks it, because
 one's survival depends on it."""
 
@@ -33,7 +33,7 @@ class TestFinder(TestCase):
 
         advance = (self.finder.next if next else self.finder.previous)
         for pattern, matches in cases:
-            self.finder.set_text(ORIG_TEXT, next)
+            self.finder.set_text(TEXT, next)
             self.finder.pattern = pattern
             if regex:
                 self.finder.set_regex(pattern, re.DOTALL)
@@ -302,7 +302,7 @@ class TestFinder(TestCase):
 
     def test_replace_equal_next(self):
 
-        self.finder.set_text(ORIG_TEXT)
+        self.finder.set_text(TEXT)
         self.finder.pattern = "ne"
         self.finder.replacement = "--"
 
@@ -328,7 +328,7 @@ class TestFinder(TestCase):
 
     def test_replace_equal_previous(self):
 
-        self.finder.set_text(ORIG_TEXT, False)
+        self.finder.set_text(TEXT, False)
         self.finder.pattern = "ne"
         self.finder.replacement = "--"
 
@@ -354,7 +354,7 @@ class TestFinder(TestCase):
 
     def test_replace_lengthen_regex_dollar_next(self):
 
-        self.finder.set_text(ORIG_TEXT)
+        self.finder.set_text(TEXT)
         self.finder.set_regex(r"$")
         self.finder.replacement = "--"
 
@@ -380,7 +380,7 @@ class TestFinder(TestCase):
 
     def test_replace_lengthen_regex_dollar_previous(self):
 
-        self.finder.set_text(ORIG_TEXT, False)
+        self.finder.set_text(TEXT, False)
         self.finder.set_regex(r"$")
         self.finder.replacement = "--"
 
@@ -406,7 +406,7 @@ class TestFinder(TestCase):
 
     def test_replace_lengthen_regex_hat_next(self):
 
-        self.finder.set_text(ORIG_TEXT)
+        self.finder.set_text(TEXT)
         self.finder.set_regex(r"^")
         self.finder.replacement = "--"
 
@@ -432,7 +432,7 @@ class TestFinder(TestCase):
 
     def test_replace_lengthen_regex_hat_previous(self):
 
-        self.finder.set_text(ORIG_TEXT, False)
+        self.finder.set_text(TEXT, False)
         self.finder.set_regex(r"^")
         self.finder.replacement = "--"
 
@@ -458,7 +458,7 @@ class TestFinder(TestCase):
 
     def test_replace_lengthen_string_match_next(self):
 
-        self.finder.set_text(ORIG_TEXT)
+        self.finder.set_text(TEXT)
         self.finder.pattern = "v"
         self.finder.replacement = "vv"
 
@@ -484,7 +484,7 @@ class TestFinder(TestCase):
 
     def test_replace_lengthen_string_match_previous(self):
 
-        self.finder.set_text(ORIG_TEXT, False)
+        self.finder.set_text(TEXT, False)
         self.finder.pattern = "v"
         self.finder.replacement = "vv"
 
@@ -510,7 +510,7 @@ class TestFinder(TestCase):
 
     def test_replace_shorten_regex_next(self):
 
-        self.finder.set_text(ORIG_TEXT)
+        self.finder.set_text(TEXT)
         self.finder.set_regex(r"[\.,]")
         self.finder.replacement = ""
 
@@ -536,7 +536,7 @@ class TestFinder(TestCase):
 
     def test_replace_shorten_regex_previous(self):
 
-        self.finder.set_text(ORIG_TEXT, False)
+        self.finder.set_text(TEXT, False)
         self.finder.set_regex(r"[\.,]")
         self.finder.replacement = ""
 
@@ -595,7 +595,7 @@ class TestFinder(TestCase):
                 "one-s-survival-depends-on-it-"))
 
         for pattern, replacement, count, text in cases:
-            self.finder.set_text(ORIG_TEXT)
+            self.finder.set_text(TEXT)
             self.finder.set_regex(pattern, re.DOTALL)
             self.finder.replacement = replacement
             assert self.finder.replace_all() == count
@@ -621,7 +621,7 @@ class TestFinder(TestCase):
                 "one's survival depends on it."))
 
         for pattern, replacement, count, text in cases:
-            self.finder.set_text(ORIG_TEXT)
+            self.finder.set_text(TEXT)
             self.finder.pattern = pattern
             self.finder.replacement = replacement
             assert self.finder.replace_all() == count
@@ -637,12 +637,6 @@ class TestFinder(TestCase):
         self.finder.set_regex("test", re.IGNORECASE)
         assert self.finder.pattern.pattern == "test"
         assert self.finder.pattern.flags == flags | re.IGNORECASE
-
-        try:
-            self.finder.set_regex(r"*(")
-            raise AssertionError
-        except re.error:
-            pass
 
     def test_set_text(self):
 

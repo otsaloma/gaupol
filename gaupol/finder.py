@@ -21,6 +21,8 @@
 
 import re
 
+from gaupol import util
+
 
 class Finder(object):
 
@@ -47,6 +49,26 @@ class Finder(object):
         self.replacement = None
         self.text        = None
 
+    def __setattr___ensure(self, return_value, name, value):
+        if (name == "match_span") and (value is not None):
+            for pos in value:
+                assert (0 <= pos <= len(self.text))
+        elif (name == "pos") and (value is not None):
+            assert (0 <= value <= len(self.text))
+
+    @util.contractual
+    def __setattr__(self, name, value):
+
+        return object.__setattr__(self, name, value)
+
+    def next_require(self):
+        assert self.pattern is not None
+
+    def next_ensure(self, value):
+        for pos in value:
+            assert (0 <= pos <= len(self.text))
+
+    @util.contractual
     def next(self):
         """Find the next match of pattern.
 
@@ -80,6 +102,14 @@ class Finder(object):
         self.pos = self.match_span[1]
         return self.match_span
 
+    def previous_require(self):
+        assert self.pattern is not None
+
+    def previous_ensure(self, value):
+        for pos in value:
+            assert (0 <= pos <= len(self.text))
+
+    @util.contractual
     def previous(self):
         """Find the previous match of pattern.
 
@@ -122,6 +152,12 @@ class Finder(object):
         self.pos = self.match_span[0]
         return self.match_span
 
+    def replace_require(self, next=True):
+        assert self.match_span is not None
+        assert self.pattern is not None
+        assert self.replacement is not None
+
+    @util.contractual
     def replace(self, next=True):
         """Replace the current match.
 
@@ -137,11 +173,16 @@ class Finder(object):
         shift = len(self.text) - orig_length
         self.pos = ((z + shift) if next else a)
 
-        # Adapt match span to new to text length to avoid getting stuck with
+        # Adapt match span to new text length to avoid getting stuck with
         # zero-length regular expressions.
         if next and self.match_span[0] == self.match_span[1]:
             self.match_span = (self.pos, self.pos)
 
+    def replace_all_require(self):
+        assert self.pattern is not None
+        assert self.replacement is not None
+
+    @util.contractual
     def replace_all(self):
         """Replace all occurences of pattern.
 

@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -20,6 +20,8 @@
 
 
 from __future__ import division
+
+from gaupol import util
 
 
 class Calculator(object):
@@ -55,11 +57,19 @@ class Calculator(object):
         y = self.time_to_seconds(y)
         return self.seconds_to_time(max(x + y, 0))
 
+    def frame_to_seconds_require(self, frame):
+        assert self.framerate is not None
+
+    @util.contractual
     def frame_to_seconds(self, frame):
         """Convert frame to seconds."""
 
         return frame / self.framerate
 
+    def frame_to_time_require(self, frame):
+        assert self.framerate is not None
+
+    @util.contractual
     def frame_to_time(self, frame):
         """Convert frame to time."""
 
@@ -97,6 +107,10 @@ class Calculator(object):
         seconds = round(seconds, decimals)
         return self.seconds_to_time(seconds)
 
+    def seconds_to_frame_require(self, frame):
+        assert self.framerate is not None
+
+    @util.contractual
     def seconds_to_frame(self, seconds):
         """Convert seconds to frame."""
 
@@ -122,6 +136,10 @@ class Calculator(object):
         """
         self.framerate = framerate.value
 
+    def time_to_frame_require(self, frame):
+        assert self.framerate is not None
+
+    @util.contractual
     def time_to_frame(self, time):
         """Convert time to frame."""
 

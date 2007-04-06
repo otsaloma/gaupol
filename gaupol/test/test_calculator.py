@@ -27,12 +27,6 @@ class TestCalculator(TestCase):
 
         self.calc = calculator.Calculator(const.FRAMERATE.P24)
 
-    def test___init__(self):
-
-        calculator.Calculator()
-        for framerate in const.FRAMERATE.members:
-            calculator.Calculator(framerate)
-
     def test_add_seconds_to_time(self):
 
         time = self.calc.add_seconds_to_time("00:00:00.001", 5)
@@ -49,7 +43,7 @@ class TestCalculator(TestCase):
     def test_frame_to_seconds(self):
 
         seconds = self.calc.frame_to_seconds(127)
-        assert seconds == 127 / self.calc.framerate
+        assert seconds == 127 / 23.976
 
     def test_frame_to_time(self):
 
@@ -86,14 +80,14 @@ class TestCalculator(TestCase):
 
     def test_round_time(self):
 
-        time = self.calc.round_time("02:36:35.857", 0)
-        assert time == "02:36:36.000"
-        time = self.calc.round_time("02:36:35.857", 1)
-        assert time == "02:36:35.900"
-        time = self.calc.round_time("02:36:35.857", 2)
-        assert time == "02:36:35.860"
         time = self.calc.round_time("02:36:35.857", 3)
         assert time == "02:36:35.857"
+        time = self.calc.round_time("02:36:35.857", 2)
+        assert time == "02:36:35.860"
+        time = self.calc.round_time("02:36:35.857", 1)
+        assert time == "02:36:35.900"
+        time = self.calc.round_time("02:36:35.857", 0)
+        assert time == "02:36:36.000"
 
     def test_seconds_to_frame(self):
 

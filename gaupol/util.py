@@ -326,6 +326,17 @@ def is_method(function, args):
     except (IndexError, AttributeError):
         return False
 
+def last(iterator):
+    """Return the last value from iterator or None."""
+
+    value = None
+    while True:
+        try:
+            value = iterator.next()
+        except StopIteration:
+            break
+    return value
+
 def makedirs_ensure(value, directory):
     assert os.path.isdir(directory)
 
