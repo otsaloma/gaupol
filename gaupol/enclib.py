@@ -32,16 +32,13 @@ Module variables:
 # [3] http://svn.gnome.org/viewcvs/gedit/trunk/gedit/gedit-encodings.c
 
 
+from __future__ import with_statement
+
 import codecs
 import locale
 import re
-from encodings.aliases import aliases
 
-try:
-    from chardet.universaldetector import UniversalDetector
-except ImportError:
-    pass
-
+from gaupol import util
 from gaupol.i18n import _
 
 
@@ -138,21 +135,29 @@ _ENCODINGS = (
 _RE_ILLEGAL = re.compile(r"[^a-z0-9_]")
 
 
+def _translate_ensure(value, name):
+    assert is_valid(value)
+
+@util.contractual
 def _translate(name):
     """Translate weird encoding name.
 
     Raise ValueError if not found.
-    Return python name, display name, description.
+    Return python name.
     """
+    from encodings.aliases import aliases
     name = _RE_ILLEGAL.sub("_", name.lower())
     if name in aliases:
         name = aliases[name]
-
     for seq in _ENCODINGS:
         if seq[0] == name:
-            return seq
+            return seq[0]
     raise ValueError
 
+def _detect_ensure(value, path):
+    assert is_valid(value)
+
+@util.contractual
 def detect(path):
     """Detect the character encoding in file.
 
@@ -160,21 +165,18 @@ def detect(path):
     Raise ValueError if not found.
     Return python name.
     """
-    fobj = open(path, "r")
-    detector = UniversalDetector()
-    try:
-        for line in fobj.readlines():
+    from chardet import universaldetector
+    detector = universaldetector.UniversalDetector()
+    with open(path, "r") as fobj:
+        for line in fobj:
             detector.feed(line)
             if detector.done:
                 break
-    finally:
-        detector.close()
-        fobj.close()
-
+    detector.close()
     encoding = detector.result["encoding"]
     if encoding is None:
         raise ValueError
-    return _translate(encoding)[0]
+    return _translate(encoding)
 
 def get_display_name(python_name):
     """Get the display name for encoding.
@@ -186,6 +188,11 @@ def get_display_name(python_name):
             return seq[1]
     raise ValueError
 
+def get_locale_long_name_require():
+    assert get_locale_python_name() is not None
+
+@util.memoize
+@util.contractual
 def get_locale_long_name():
     """Get the long name for locale encoding.
 
@@ -195,15 +202,23 @@ def get_locale_long_name():
     encoding = get_locale_python_name()
     return _("Current locale (%s)") % get_display_name(encoding)
 
+def get_locale_python_name_ensure(value):
+    if value is not None:
+        assert is_valid(value)
+
+@util.memoize
+@util.contractual
 def get_locale_python_name():
     """Get the python name of the locale encoding or None."""
 
-    name = locale.getdefaultlocale()[1]
-    if name is not None:
-        name = _RE_ILLEGAL.sub("_", name.lower())
-        if name in aliases:
-            name = aliases[name]
-    return name
+    from encodings.aliases import aliases
+    encoding = locale.getpreferredencoding()
+    if encoding is None:
+        return None
+    encoding = _RE_ILLEGAL.sub("_", encoding.lower())
+    if encoding in aliases:
+        encoding = aliases[encoding]
+    return encoding
 
 def get_long_name(python_name):
     """Get the long name for encoding.

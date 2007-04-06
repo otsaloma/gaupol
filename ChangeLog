@@ -1,5 +1,12 @@
 2007-04-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/enclib.py:
+	* gaupol/langlib.py:
+	* gaupol/scriptlib.py:
+	Add contracts.
+
+2007-04-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/i18n.py:
 	* gaupol/i18n.py:
 	New modules.

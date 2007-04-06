@@ -49,8 +49,6 @@ Dependencies:
 Gaupol 0.9
 ==========
 
- * Use design by contract -style preconditions (or something else cool
-   enough) in project agent methods to assert requirements
  * Fix regular expression grouping in scriptlib
  * Refactor UIMActions
     * Get rid of specifying uim_paths

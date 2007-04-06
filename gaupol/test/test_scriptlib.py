@@ -24,25 +24,23 @@ from .. import scriptlib
 
 class TestModule(TestCase):
 
-    # pylint: disable-msg=W0612
-
     def test_get_capitalize_after(self):
 
         assert scriptlib.CAP_AFTERS
         for script, name, pattern in scriptlib.CAP_AFTERS:
-            output = scriptlib.get_capitalize_after(script)
-            re.compile(output)
+            value = scriptlib.get_capitalize_after(script)
+            re.compile(value)
 
     def test_get_clause_separator(self):
 
         assert scriptlib.CLAUSE_SEPS
         for script, name, pattern in scriptlib.CLAUSE_SEPS:
-            output = scriptlib.get_clause_separator(script)
-            re.compile(output)
+            value = scriptlib.get_clause_separator(script)
+            re.compile(value)
 
     def test_get_dialogue_separator(self):
 
         assert scriptlib.DIALOGUE_SEPS
         for script, name, pattern in scriptlib.DIALOGUE_SEPS:
-            output = scriptlib.get_dialogue_separator(script)
-            re.compile(output)
+            value = scriptlib.get_dialogue_separator(script)
+            re.compile(value)

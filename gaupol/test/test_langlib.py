@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -30,24 +30,12 @@ class TestModule(TestCase):
         country = langlib.get_country("af")
         assert country is None
 
-        try:
-            langlib.get_country("xx_XX")
-            raise AssertionError
-        except KeyError:
-            pass
-
     def test_get_language(self):
 
         lang = langlib.get_language("is_IS")
         assert lang == dgettext("iso_639", "Icelandic")
         lang = langlib.get_language("is")
         assert lang == dgettext("iso_639", "Icelandic")
-
-        try:
-            langlib.get_language("xx")
-            raise AssertionError
-        except KeyError:
-            pass
 
     def test_get_long_name(self):
 
@@ -59,9 +47,3 @@ class TestModule(TestCase):
         name = langlib.get_long_name("mn")
         lang = dgettext("iso_639", "Mongolian")
         assert name == lang
-
-        try:
-            langlib.get_long_name("xx_XX")
-            raise AssertionError
-        except KeyError:
-            pass

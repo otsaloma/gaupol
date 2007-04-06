@@ -29,15 +29,12 @@ to have named groups 'before' and 'after'. Space (or whatever) between those
 groups acts as the separator. Either of the groups can be empty.
 """
 
-# TODO: IS THIS REALLY SENSIBLE?
-#
-# From a standpoint of users being able to define their own regular
-# expressions, it may be too much to expect them to understand named groups,
-# or to respect their cumbersome syntax. How about 'starts-with' and
-# 'ends-with' regular expressions that could automatically be compiled to use
-# named groups?
+# TODO: REWRITE AS 'BEFORE' AND 'AFTER' INSTEAD OF SEPARATORS.
 
 
+import re
+
+from gaupol import util
 from gaupol.i18n import _
 
 
@@ -81,16 +78,24 @@ DIALOGUE_SEPS = (
     ("latin", _("Latin"), r"(?P<before>) (?P<after>- )"),)
 
 
+def get_capitalize_after_ensure(value, script):
+    re.compile(value)
+
+@util.contractual
 def get_capitalize_after(script):
     """Get the regular expression to capitalize after for script.
 
-    Return regular expression pattern, flags.
+    Return regular expression pattern.
     """
     for seq in CAP_AFTERS:
         if seq[0] == script:
             return seq[2]
     raise ValueError
 
+def get_clause_separator_ensure(value, script):
+    re.compile(value)
+
+@util.contractual
 def get_clause_separator(script):
     """Get the regular expression for a clause separator for script.
 
@@ -101,6 +106,10 @@ def get_clause_separator(script):
             return seq[2]
     raise ValueError
 
+def get_dialogue_separator_ensure(value, script):
+    re.compile(value)
+
+@util.contractual
 def get_dialogue_separator(script):
     """Get the regular expression for a dialogue separator for script.
 

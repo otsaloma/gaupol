@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -25,7 +25,7 @@ Module variables:
     LOCALES:   Frozen set of locale codes
 
 Language codes are ISO 639 two-letter codes. Country codes are ISO 3166 codes.
-These combined with an underscore form locale codes. Translations for the
+These connected with an underscore form locale codes. Translations for the
 language and country names are acquired from the 'iso-codes' gettext domain if
 it exists.
 """
@@ -716,7 +716,7 @@ def get_long_name(locale):
     """
     lang = get_language(locale)
     country = get_country(locale)
-    if country is not None:
-        fields = {"language": lang, "country": country}
-        return _("%(language)s (%(country)s)") % fields
-    return lang
+    if country is None:
+        return lang
+    fields = {"language": lang, "country": country}
+    return _("%(language)s (%(country)s)") % fields

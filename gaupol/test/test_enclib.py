@@ -25,19 +25,9 @@ class TestModule(TestCase):
 
     def test__translate(self):
 
-        output = enclib._translate("koi8_r")
-        assert isinstance(output, tuple)
-        assert len(output) == 3
-
-        assert enclib._translate("johab")[0] == "johab"
-        assert enclib._translate("UTF-8")[0] == "utf_8"
-        assert enclib._translate("ISO-8859-1")[0] == "latin_1"
-
-        try:
-            enclib._translate("xxx")
-            raise AssertionError
-        except ValueError:
-            pass
+        assert enclib._translate("johab") == "johab"
+        assert enclib._translate("UTF-8") == "utf_8"
+        assert enclib._translate("ISO-8859-1") == "latin_1"
 
     def test_detect(self):
 
@@ -49,12 +39,6 @@ class TestModule(TestCase):
         name = enclib.get_display_name("mac_roman")
         assert name == _("MacRoman")
 
-        try:
-            enclib.get_display_name("xxx")
-            raise AssertionError
-        except ValueError:
-            pass
-
     def test_get_locale_long_name(self):
 
         name = enclib.get_locale_long_name()
@@ -64,31 +48,18 @@ class TestModule(TestCase):
 
     def test_get_locale_python_name(self):
 
-        output = enclib.get_locale_python_name()
-        if output is not None:
-            assert enclib.is_valid(output)
+        name = enclib.get_locale_python_name()
+        assert enclib.is_valid(name)
 
     def test_get_long_name(self):
 
         name = enclib.get_long_name("cp1140")
         assert name == _("%s (%s)") % (_("Western"), "IBM1140")
 
-        try:
-            enclib.get_long_name("xxx")
-            raise AssertionError
-        except ValueError:
-            pass
-
     def test_get_python_name(self):
 
         name = enclib.get_python_name(_("GB2312"))
         assert name == "gb2312"
-
-        try:
-            enclib.get_python_name("xxx")
-            raise AssertionError
-        except ValueError:
-            pass
 
     def test_get_valid_encodings(self):
 
@@ -96,8 +67,6 @@ class TestModule(TestCase):
         assert isinstance(encodings, list)
         assert len(encodings) > 10
         for seq in encodings:
-            assert isinstance(seq, tuple)
-            assert len(seq) == 3
             assert enclib.is_valid(seq[0])
             assert isinstance(seq[1], basestring)
             assert isinstance(seq[2], basestring)
