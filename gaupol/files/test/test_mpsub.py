@@ -34,9 +34,4 @@ class TestMPsub(TestSubtitleFile):
         assert self.file.mode == const.MODE.TIME
         self.file.set_header("FORMAT=23.98\n")
         assert self.file.mode == const.MODE.FRAME
-
-        try:
-            self.file.set_header("")
-            raise AssertionError
-        except ValueError:
-            pass
+        self.raises(ValueError, self.file.set_header, "")

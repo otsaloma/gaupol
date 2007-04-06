@@ -40,11 +40,7 @@ class TestFinder(TestCase):
             for match in matches:
                 assert advance() == match
                 assert self.finder.pos == match[next]
-            try:
-                advance()
-                raise AssertionError
-            except StopIteration:
-                pass
+            self.raises(StopIteration, advance)
 
     def setup_method(self, method):
 
@@ -319,12 +315,7 @@ class TestFinder(TestCase):
             "O-- only risks it, because\n" + \
             "o--'s survival depends on it."
         assert self.finder.pos == 30
-
-        try:
-            self.finder.next()
-            raise AssertionError
-        except StopIteration:
-            pass
+        self.raises(StopIteration, self.finder.next)
 
     def test_replace_equal_previous(self):
 
@@ -345,12 +336,7 @@ class TestFinder(TestCase):
             "O-- only risks it, because\n" + \
             "o--'s survival depends on it."
         assert self.finder.pos == 1
-
-        try:
-            self.finder.previous()
-            raise AssertionError
-        except StopIteration:
-            pass
+        self.raises(StopIteration, self.finder.previous)
 
     def test_replace_lengthen_regex_dollar_next(self):
 
@@ -371,12 +357,7 @@ class TestFinder(TestCase):
             "One only risks it, because--\n" + \
             "one's survival depends on it.--"
         assert self.finder.pos == 60
-
-        try:
-            self.finder.next()
-            raise AssertionError
-        except StopIteration:
-            pass
+        self.raises(StopIteration, self.finder.next)
 
     def test_replace_lengthen_regex_dollar_previous(self):
 
@@ -397,12 +378,7 @@ class TestFinder(TestCase):
             "One only risks it, because--\n" + \
             "one's survival depends on it.--"
         assert self.finder.pos == 26
-
-        try:
-            self.finder.previous()
-            raise AssertionError
-        except StopIteration:
-            pass
+        self.raises(StopIteration, self.finder.previous)
 
     def test_replace_lengthen_regex_hat_next(self):
 
@@ -423,12 +399,7 @@ class TestFinder(TestCase):
             "--One only risks it, because\n" + \
             "--one's survival depends on it."
         assert self.finder.pos == 31
-
-        try:
-            self.finder.next()
-            raise AssertionError
-        except StopIteration:
-            pass
+        self.raises(StopIteration, self.finder.next)
 
     def test_replace_lengthen_regex_hat_previous(self):
 
@@ -449,12 +420,7 @@ class TestFinder(TestCase):
             "--One only risks it, because\n" + \
             "--one's survival depends on it."
         assert self.finder.pos == 0
-
-        try:
-            self.finder.previous()
-            raise AssertionError
-        except StopIteration:
-            pass
+        self.raises(StopIteration, self.finder.previous)
 
     def test_replace_lengthen_string_match_next(self):
 
@@ -475,12 +441,7 @@ class TestFinder(TestCase):
             "One only risks it, because\n" + \
             "one's survvivval depends on it."
         assert self.finder.pos == 41
-
-        try:
-            self.finder.next()
-            raise AssertionError
-        except StopIteration:
-            pass
+        self.raises(StopIteration, self.finder.next)
 
     def test_replace_lengthen_string_match_previous(self):
 
@@ -501,12 +462,7 @@ class TestFinder(TestCase):
             "One only risks it, because\n" + \
             "one's survvivval depends on it."
         assert self.finder.pos == 36
-
-        try:
-            self.finder.previous()
-            raise AssertionError
-        except StopIteration:
-            pass
+        self.raises(StopIteration, self.finder.previous)
 
     def test_replace_shorten_regex_next(self):
 
@@ -527,12 +483,7 @@ class TestFinder(TestCase):
             "One only risks it because\n" + \
             "one's survival depends on it"
         assert self.finder.pos == 54
-
-        try:
-            self.finder.next()
-            raise AssertionError
-        except StopIteration:
-            pass
+        self.raises(StopIteration, self.finder.next)
 
     def test_replace_shorten_regex_previous(self):
 
@@ -553,12 +504,7 @@ class TestFinder(TestCase):
             "One only risks it because\n" + \
             "one's survival depends on it"
         assert self.finder.pos == 17
-
-        try:
-            self.finder.previous()
-            raise AssertionError
-        except StopIteration:
-            pass
+        self.raises(StopIteration, self.finder.previous)
 
     def test_replace_all_regex(self):
 

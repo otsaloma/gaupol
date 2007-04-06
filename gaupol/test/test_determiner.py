@@ -43,8 +43,5 @@ class TestFormatDeterminer(TestCase):
         path = self.get_subrip_path()
         util.write(path, "test", "ascii")
         self.determiner.path = path
-        try:
-            self.determiner.determine()
-            raise AssertionError
-        except FormatError:
-            pass
+        function = self.determiner.determine
+        self.raises(FormatError, function)

@@ -95,11 +95,9 @@ class TestSearchAgent(TestCase):
             pos = None
             for match in matches:
                 if match is StopIteration:
-                    try:
-                        self.project.find_next(row, doc, pos)
-                        raise AssertionError
-                    except StopIteration:
-                        continue
+                    function = self.project.find_next
+                    self.raises(StopIteration, function, row, doc, pos)
+                    continue
                 assert self.project.find_next(row, doc, pos) == match
                 row = match[0]
                 doc = match[1]
@@ -153,11 +151,9 @@ class TestSearchAgent(TestCase):
             pos = None
             for match in matches:
                 if match is StopIteration:
-                    try:
-                        self.project.find_previous(row, doc, pos)
-                        raise AssertionError
-                    except StopIteration:
-                        continue
+                    function = self.project.find_previous
+                    self.raises(StopIteration, function, row, doc, pos)
+                    continue
                 assert self.project.find_previous(row, doc, pos) == match
                 row = match[0]
                 doc = match[1]
@@ -233,12 +229,6 @@ class TestSearchAgent(TestCase):
         self.project.set_search_regex(r"test", re.IGNORECASE)
         assert self.delegate._finder.pattern.pattern == r"test"
         assert self.delegate._finder.pattern.flags == flags | re.IGNORECASE
-
-        try:
-            self.project.set_search_regex(r"*(")
-            raise AssertionError
-        except re.error:
-            pass
 
     def test_set_search_replacement(self):
 

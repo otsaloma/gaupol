@@ -69,12 +69,9 @@ class TestSaveAgent(TestCase):
 
     def test_save_main_as(self):
 
-        try:
-            page = self.application.get_current_page()
-            self.application.save_main_as(page)
-            raise AssertionError
-        except Default:
-            pass
+        page = self.application.get_current_page()
+        function = self.application.save_main_as
+        self.raises(Default, function, page)
 
     def test_save_translation(self):
 
@@ -83,9 +80,6 @@ class TestSaveAgent(TestCase):
 
     def test_save_translation_as(self):
 
-        try:
-            page = self.application.get_current_page()
-            self.application.save_translation_as(page)
-            raise AssertionError
-        except Default:
-            pass
+        page = self.application.get_current_page()
+        function = self.application.save_translation_as
+        self.raises(Default, function, page)

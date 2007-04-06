@@ -93,6 +93,15 @@ class TestCase(object):
         with open(path, "r") as fobj:
             return fobj.read().strip()
 
+    def raises(self, exception, function, *args, **kwargs):
+        """Assert that function raises exception."""
+
+        try:
+            function(*args, **kwargs)
+            raise AssertionError
+        except exception:
+            pass
+
     # pylint: disable-msg=C0103
     def setUp(self):
         """Compatibility alias for 'setup_method'."""
@@ -116,4 +125,3 @@ class TestCase(object):
         remove = util.silent(OSError)(os.remove)
         while self.files:
             remove(self.files.pop())
-

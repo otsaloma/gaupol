@@ -1,5 +1,10 @@
 2007-04-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/unittest/case.py (raises):
+	New function.
+
+2007-04-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/calculator.py:
 	* gaupol/finder.py:
 	* gaupol/liner.py:

@@ -66,36 +66,24 @@ class TestOpenAgent(TestCase):
 
     def test__show_size_warning_dialog(self):
 
-        try:
-            self.delegate._show_size_warning_dialog("test", 10)
-            raise AssertionError
-        except Default:
-            pass
+        function = self.delegate._show_size_warning_dialog
+        self.raises(Default, function, "test", 10)
 
     def test__show_sort_warning_dialog(self):
 
-        try:
-            self.delegate._show_sort_warning_dialog("test", 10)
-            raise AssertionError
-        except Default:
-            pass
+        function = self.delegate._show_sort_warning_dialog
+        self.raises(Default, function, "test", 10)
 
     def test__show_ssa_warning_dialog(self):
 
-        try:
-            self.delegate._show_ssa_warning_dialog()
-            raise AssertionError
-        except Default:
-            pass
+        function = self.delegate._show_ssa_warning_dialog
+        self.raises(Default, function)
 
     def test__show_translation_warning_dialog(self):
 
-        try:
-            page = self.application.pages[0]
-            self.delegate._show_translation_warning_dialog(page)
-            raise AssertionError
-        except Default:
-            pass
+        function = self.delegate._show_translation_warning_dialog
+        page = self.application.pages[0]
+        self.raises(Default, function, page)
 
     def test_add_new_page(self):
 
