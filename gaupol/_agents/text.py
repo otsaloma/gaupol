@@ -40,7 +40,7 @@ class TextAgent(Delegate):
         """Capitalize texts following match of pattern.
 
         rows can be None to process all rows.
-        Raise re.error if pattern sucks.
+        Raise re.error if bad pattern.
         Return changed rows.
         """
         parser = Parser(self.get_tag_regex(doc))
@@ -98,7 +98,7 @@ class TextAgent(Delegate):
         legal_length is the maximum line length of skipped subtitles.
         legal_lines is the maximum line count of skipped subtitles.
         require_reduction should be True to skip unreducible line counts.
-        Raise re.error if pattern sucks.
+        Raise re.error if bad pattern.
         Return changed rows.
         """
         liner = Liner(self.get_tag_regex(doc))

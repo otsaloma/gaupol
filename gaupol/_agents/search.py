@@ -241,7 +241,7 @@ class SearchAgent(Delegate):
         """Set the regular expression pattern to find.
 
         DOTALL, MULTILINE and UNICODE are automatically added to flags.
-        Raise re.error if pattern sucks.
+        Raise re.error if bad pattern.
         """
         self._finder.set_regex(unicode(pattern), flags)
 

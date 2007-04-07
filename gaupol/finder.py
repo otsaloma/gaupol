@@ -208,7 +208,7 @@ class Finder(object):
 
         DOTALL, MULTILINE and UNICODE are automatically added to flags.
         IGNORECASE is automatically added to flags if self.ignore_case is True.
-        Raise re.error if pattern sucks.
+        Raise re.error if bad pattern.
         """
         if self.ignore_case:
             flags = flags | re.IGNORECASE

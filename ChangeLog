@@ -1,5 +1,13 @@
 2007-04-07  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/_agents/search.py:
+	* gaupol/_agents/text.py:
+	* gaupol/finder.py:
+	* gaupol/gtk/dialogs/search.py:
+	Docstring fixes.
+
+2007-04-07  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/files/__init__.py:
 	* gaupol/files/microdvd.py:
 	* gaupol/files/mpl2.py:

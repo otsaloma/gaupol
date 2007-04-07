@@ -383,7 +383,7 @@ class SearchDialog(GladeDialog):
     def _set_pattern(self, page):
         """Set the search pattern for page.
 
-        Raise Default if pattern is empty or if it sucks.
+        Raise Default if pattern is empty or bad.
         """
         pattern = self._pattern_entry.get_text()
         if not pattern:
