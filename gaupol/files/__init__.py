@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,8 +16,22 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Subtitle files of all formats."""
+"""Subtitle files of all formats.
 
+Imported names:
+
+    AdvSubStationAlpha (ass)
+    MicroDVD (microdvd)
+    MPL2 (mpl2)
+    MPsub (mpsub)
+    SubStationAlpha (ssa)
+    SubRip (subrip)
+    SubViewer2 (subviewer2)
+    TMPlayer (tmplayer)
+"""
+
+
+__all__ = set(dir())
 
 from .ass        import AdvSubStationAlpha
 from .microdvd   import MicroDVD
@@ -28,13 +42,4 @@ from .subrip     import SubRip
 from .subviewer2 import SubViewer2
 from .tmplayer   import TMPlayer
 
-
-__all__ = [
-    "AdvSubStationAlpha",
-    "MicroDVD",
-    "MPL2",
-    "MPsub",
-    "SubRip",
-    "SubStationAlpha",
-    "SubViewer2",
-    "TMPlayer",]
+__all__ = sorted(list(set(dir()) - __all__))

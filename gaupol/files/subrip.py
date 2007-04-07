@@ -19,10 +19,13 @@
 """SubRip file."""
 
 
+from __future__ import with_statement
+
 import codecs
+import contextlib
 import re
 
-from gaupol import const
+from gaupol import const, util
 from ._subfile import SubtitleFile
 
 
@@ -59,7 +62,7 @@ class SubRip(SubtitleFile):
             if match is not None:
                 shows.append(match.group(1).replace(",", "."))
                 hides.append(match.group(2).replace(",", "."))
-                texts.append(u"")
+                texts.append("")
                 continue
             texts[-1] += line
         re_trailer = re.compile(r"\n\Z", re.MULTILINE)
@@ -79,6 +82,7 @@ class SubRip(SubtitleFile):
         lines = self._clean_lines(lines, re_time_line)
         return self._read_components(lines, re_time_line)
 
+    @util.contractual
     def write(self, shows, hides, texts):
         """Write file.
 
@@ -89,12 +93,15 @@ class SubRip(SubtitleFile):
         hides = [x.replace(".", ",") for x in hides]
         texts = [x.replace("\n", self.newline.value) for x in texts]
 
-        fobj = codecs.open(self.path, "w", self.encoding)
-        try:
+        args = (self.path, "w", self.encoding)
+        with contextlib.closing(codecs.open(*args)) as fobj:
             for i in range(len(shows)):
-                fobj.write("%.0f%s%s --> %s%s%s%s%s" % (
-                    i + 1, self.newline.value,
-                    shows[i], hides[i], self.newline.value,
-                    texts[i], self.newline.value, self.newline.value))
-        finally:
-            fobj.close()
+                fobj.write(str(i + 1))
+                fobj.write(self.newline.value)
+                fobj.write(shows[i])
+                fobj.write(" --> ")
+                fobj.write(hides[i])
+                fobj.write(self.newline.value)
+                fobj.write(texts[i])
+                fobj.write(self.newline.value)
+                fobj.write(self.newline.value)

@@ -19,8 +19,11 @@
 """Miscellaneous functions and decorators."""
 
 
+from __future__ import with_statement
+
 import cPickle
 import codecs
+import contextlib
 import functools
 import gc
 import locale
@@ -34,7 +37,7 @@ import webbrowser
 
 
 # All defined variables and functions (Scroll to bottom).
-__all__ = set(locals())
+__all__ = set(dir())
 
 CHECK_CONTRACTS = True
 
@@ -374,11 +377,9 @@ def read(path, encoding=None):
     """
     if encoding is None:
         encoding = get_default_encoding()
-    fobj = codecs.open(path, "r", encoding)
-    try:
+    args = (path, "r", encoding)
+    with contextlib.closing(codecs.open(*args)) as fobj:
         return fobj.read().strip()
-    finally:
-        fobj.close()
 
 def readlines(path, encoding=None):
     """Read file and return lines.
@@ -449,10 +450,8 @@ def write(path, text, encoding=None):
     """
     if encoding is None:
         encoding = get_default_encoding()
-    fobj = codecs.open(path, "w", encoding)
-    try:
+    args = (path, "w", encoding)
+    with contextlib.closing(codecs.open(*args)) as fobj:
         return fobj.write(text)
-    finally:
-        fobj.close()
 
-__all__ = sorted(list(set(locals()) - __all__))
+__all__ = sorted(list(set(dir()) - __all__))

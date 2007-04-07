@@ -6,8 +6,9 @@
 pylint --rcfile=$(dirname "$0")/data/pylintrc $@ \
 \
     | egrep -v "Instance of 'Member' has no '.+?' member" \
-    | egrep -v "Undefined variable 'fobj'" \
+    | egrep -v "Instance of 'Section' has no '.+?s' member" \
     | egrep -v "No name '.+?' in module '.+?\.test\.?'" \
+    | egrep -v "Undefined variable 'fobj'" \
 \
     | sed "s/\*\+ Module \(.*\)$/<\1>/" \
     | sed "s/>$/>\n</" \

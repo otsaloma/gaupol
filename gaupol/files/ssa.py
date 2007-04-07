@@ -19,10 +19,13 @@
 """Sub Station Alpha file."""
 
 
+from __future__ import with_statement
+
 import codecs
+import contextlib
 import re
 
-from gaupol import const
+from gaupol import const, util
 from gaupol.calculator import Calculator
 from ._subfile import SubtitleFile
 
@@ -33,7 +36,7 @@ class SubStationAlpha(SubtitleFile):
 
     Class variables:
 
-        event_fields: Tuple of the fields under 'Events' section
+        event_fields: Tuple of the names of fields under the 'Events' section
     """
 
     format = const.FORMAT.SSA
@@ -75,8 +78,8 @@ class SubStationAlpha(SubtitleFile):
                 hides.append(fields[hide_index])
                 texts.append(fields[text_index])
 
-        shows = ["0" + x + "0" for x in shows]
-        hides = ["0" + x + "0" for x in hides]
+        shows = ["0%s0" % x for x in shows]
+        hides = ["0%s0" % x for x in hides]
         texts = [x.replace("\\n", "\n") for x in texts]
         texts = [x.replace("\\N", "\n") for x in texts]
         return shows, hides, texts
@@ -85,6 +88,7 @@ class SubStationAlpha(SubtitleFile):
         """Read header and return leftover lines."""
 
         header = ""
+        lines = lines[:]
         while not lines[0].startswith("[Events]"):
             header += lines.pop(0)
         if header:
@@ -102,6 +106,7 @@ class SubStationAlpha(SubtitleFile):
         lines = self._read_header(lines)
         return self._read_components(lines)
 
+    @util.contractual
     def write(self, shows, hides, texts):
         """Write file.
 
@@ -113,16 +118,20 @@ class SubStationAlpha(SubtitleFile):
         hides = [calc.round_time(x, 2)[1:11] for x in hides]
         texts = [x.replace("\n", "\\n") for x in texts]
 
-        fobj = codecs.open(self.path, "w", self.encoding)
-        try:
+        args = (self.path, "w", self.encoding)
+        with contextlib.closing(codecs.open(*args)) as fobj:
             fobj.write(self.header)
-            fobj.write(self.newline.value * 2)
+            fobj.write(self.newline.value)
+            fobj.write(self.newline.value)
             fobj.write("[Events]")
             fobj.write(self.newline.value)
             fobj.write("Format: " + ", ".join(self.event_fields))
             fobj.write(self.newline.value)
             for i in range(len(shows)):
-                fobj.write("Dialogue: 0,%s,%s,Default,,0000,0000,0000,,%s%s" \
-                    % (shows[i], hides[i], texts[i], self.newline.value))
-        finally:
-            fobj.close()
+                fobj.write("Dialogue: 0,")
+                fobj.write(shows[i])
+                fobj.write(",")
+                fobj.write(hides[i])
+                fobj.write(",Default,,0000,0000,0000,,")
+                fobj.write(texts[i])
+                fobj.write(self.newline.value)

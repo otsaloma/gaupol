@@ -1,4 +1,4 @@
-# Copyright (C) 2006 Osmo Salomaa
+# Copyright (C) 2006-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -19,9 +19,12 @@
 """TMPlayer file."""
 
 
-import codecs
+from __future__ import with_statement
 
-from gaupol import const
+import codecs
+import contextlib
+
+from gaupol import const, util
 from gaupol.calculator import Calculator
 from ._subfile import SubtitleFile
 
@@ -57,6 +60,7 @@ class TMPlayer(SubtitleFile):
         texts = [x.replace("|", "\n") for x in texts]
         return shows, hides, texts
 
+    @util.contractual
     def write(self, shows, hides, texts):
         """Write file.
 
@@ -67,9 +71,9 @@ class TMPlayer(SubtitleFile):
         shows = [calc.round_time(x, 0)[:8] + ":" for x in shows]
         texts = [x.replace("\n", "|") for x in texts]
 
-        fobj = codecs.open(self.path, "w", self.encoding)
-        try:
+        args = (self.path, "w", self.encoding)
+        with contextlib.closing(codecs.open(*args)) as fobj:
             for i in range(len(shows)):
-                fobj.write("%s%s%s" % (shows[i], texts[i], self.newline.value))
-        finally:
-            fobj.close()
+                fobj.write(shows[i])
+                fobj.write(texts[i])
+                fobj.write(self.newline.value)

@@ -16,23 +16,16 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Base class for subtitle files.
+"""Base class for subtitle files."""
 
-Module variables:
 
-    _GLOBAL_HEADER_DIR: Directory path to global header templates
-    _LOCAL_HEADER_DIR:  Directory path to local header templates
-"""
-
+from __future__ import with_statement
 
 import codecs
+import contextlib
 import os
 
-from gaupol import const, paths, util
-
-
-_GLOBAL_HEADER_DIR = os.path.join(paths.DATA_DIR, "headers")
-_LOCAL_HEADER_DIR = os.path.join(paths.PROFILE_DIR, "headers")
+from gaupol import const, enclib, paths, util
 
 
 class SubtitleFile(object):
@@ -49,67 +42,82 @@ class SubtitleFile(object):
     Instance variables:
 
         encoding: Character encoding
-        header:   Header string
+        header:   Header text
         newline:  NEWLINE constant
         path:     Path to the file
+
+    Depending on their mode, files handle data in either time or frame format.
+    It is up to the caller to first check the class variable 'mode' before
+    receiving read data or before sending data to write.
+
+    If the file format contains a header, it will default to a template header
+    read upon instantiation of the class, from path.PROFILE_DIR/headers or
+    paths.DATA_DIR/headers. If the read file has a header, it will replace the
+    template.
     """
 
     format = None
     has_header = None
-    identifier = None, None
+    identifier = None
     mode = None
 
     def __init__(self, path, encoding, newline=None):
 
+        self.path = path
         self.encoding = encoding
-        self.header   = ""
-        self.newline  = newline
-        self.path     = path
+        self.newline = newline
+        self.header = (self.get_template_header() if self.has_header else "")
 
-        if self.has_header:
-            self.header = self.get_template_header()
+    def __setattr___require(self, name, value):
+        if name == "encoding":
+            assert enclib.is_valid(value)
 
+    @util.contractual
+    def __setattr__(self, name, value):
+
+        return object.__setattr__(self, name, value)
+
+    def _read_lines_require(self):
+        assert os.path.isfile(self.path)
+
+    @util.contractual
     def _read_lines(self):
         """Read file to a unicoded list of lines.
 
-        All newlines are converted to '\\n'.
+        All newlines are converted to '\n'.
         All blank lines from the end are removed.
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
         Return a list of the lines.
         """
-        fobj = codecs.open(self.path, "rU", self.encoding)
-        try:
+        args = (self.path, "rU", self.encoding)
+        with contextlib.closing(codecs.open(*args)) as fobj:
             lines = fobj.readlines()
             chars = fobj.newlines
-        finally:
-            fobj.close()
         while lines and lines[-1] == "\n":
-            lines.pop(-1)
+            lines.pop()
         if isinstance(chars, tuple):
             chars = chars[0]
         index = const.NEWLINE.values.index(chars)
         self.newline = const.NEWLINE.members[index]
         return lines
 
+    def get_template_header_require(self):
+        assert self.has_header
+
+    @util.contractual
     def get_template_header(self):
         """Read and return the header from a template file."""
 
-        # FIX: REWRITE WITHOUT EXCEPTIONAL.
-        # @util.exceptional(IOError, util.handle_read_io, 0)
-        # @util.exceptional(UnicodeError, util.handle_read_unicode, 0, 1)
-        def read(path, encoding):
-            return util.read(path, encoding)
-
-        # pylint: disable-msg=E1101
         basename = self.format.name.lower() + ".txt"
-        path = os.path.join(_LOCAL_HEADER_DIR, basename)
+        read = util.silent(IOError, UnicodeError)(util.read)
+        directory = os.path.join(paths.PROFILE_DIR, "headers")
+        path = os.path.join(directory, basename)
         if os.path.isfile(path):
             return read(path, None)
-        path = os.path.join(_GLOBAL_HEADER_DIR, basename)
-        if os.path.isfile(path):
-            return read(path, "ascii")
-        return ""
+        directory = os.path.join(paths.DATA_DIR, "headers")
+        path = os.path.join(directory, basename)
+        return read(path, "ascii")
 
     def read(self):
         """Read file.
@@ -120,6 +128,10 @@ class SubtitleFile(object):
         """
         raise NotImplementedError
 
+    def write_require(self, shows, hides, texts):
+        assert self.newline is not None
+
+    @util.contractual
     def write(self, shows, hides, texts):
         """Write file.
 

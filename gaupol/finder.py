@@ -49,7 +49,7 @@ class Finder(object):
         self.replacement = None
         self.text        = None
 
-    def __setattr___ensure(self, return_value, name, value):
+    def __setattr___require(self, name, value):
         if (name == "match_span") and (value is not None):
             for pos in value:
                 assert (0 <= pos <= len(self.text))

@@ -1,3 +1,21 @@
+2007-04-07  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/files/__init__.py:
+	* gaupol/files/microdvd.py:
+	* gaupol/files/mpl2.py:
+	* gaupol/files/mpsub.py:
+	* gaupol/files/ssa.py:
+	* gaupol/files/_subfile.py:
+	* gaupol/files/subrip.py:
+	* gaupol/files/subviewer2.py:
+	* gaupol/files/tmplayer.py:
+	* gaupol/finder.py:
+	Add contracts.
+	Use contextlib.closing with codecs.open.
+
+	* gaupol/util.py:
+	Use contextlib.closing with codecs.open.
+
 2007-04-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/unittest/case.py (raises):

@@ -35,9 +35,9 @@ class TestSubtitleFile(TestCase):
 
         if self.file.__class__ != _subfile.SubtitleFile:
             assert self.file.format in const.FORMAT.members
+            assert self.file.mode in const.MODE.members
             assert isinstance(self.file.has_header, bool)
             re.compile(*self.file.identifier)
-            assert self.file.mode in const.MODE.members
 
     def test__read_lines(self):
 
@@ -54,15 +54,13 @@ class TestSubtitleFile(TestCase):
         if self.file.__class__ != _subfile.SubtitleFile:
             path = self.get_file_path(self.file.format)
             self.file.path = path
-            self.file.newline = const.NEWLINE.UNIX
             assert self.file.read()
 
     def test_write(self):
 
         if self.file.__class__ != _subfile.SubtitleFile:
-            mode = self.file.mode
-            path = (self.get_subrip_path, self.get_microdvd_path)[mode]()
-            temp_file = (SubRip, MicroDVD)[mode](path, "ascii")
+            path = self.get_file_path(self.file.format)
             self.file.path = path
             self.file.newline = const.NEWLINE.UNIX
-            self.file.write(*temp_file.read())
+            data = self.file.read()
+            self.file.write(*data)

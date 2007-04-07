@@ -19,10 +19,13 @@
 """MicroDVD file."""
 
 
+from __future__ import with_statement
+
 import codecs
+import contextlib
 import re
 
-from gaupol import const
+from gaupol import const, util
 from ._subfile import SubtitleFile
 
 
@@ -42,11 +45,10 @@ class MicroDVD(SubtitleFile):
         Raise UnicodeError if decoding fails.
         Return show frames, hide frames, texts.
         """
-        re_line = re.compile(r"^\{(\d+)\}\{(\d+)\}(.*?)$")
-
         shows = []
         hides = []
         texts = []
+        re_line = re.compile(r"^\{(\d+)\}\{(\d+)\}(.*?)$")
         for line in self._read_lines():
             match = re_line.match(line)
             if match is not None:
@@ -61,6 +63,7 @@ class MicroDVD(SubtitleFile):
         texts = [x.replace("|", "\n") for x in texts]
         return shows, hides, texts
 
+    @util.contractual
     def write(self, shows, hides, texts):
         """Write file.
 
@@ -68,12 +71,13 @@ class MicroDVD(SubtitleFile):
         Raise UnicodeError if encoding fails.
         """
         texts = [x.replace("\n", "|") for x in texts]
-        fobj = codecs.open(self.path, "w", self.encoding)
-        try:
+        args = (self.path, "w", self.encoding)
+        with contextlib.closing(codecs.open(*args)) as fobj:
             if self.header:
-                fobj.write(self.header + self.newline.value)
+                fobj.write(self.header)
+                fobj.write(self.newline.value)
             for i in range(len(shows)):
-                fobj.write("{%.0f}{%.0f}%s%s" % (
-                    shows[i], hides[i], texts[i], self.newline.value))
-        finally:
-            fobj.close()
+                fobj.write("{%d}" % shows[i])
+                fobj.write("{%d}" % hides[i])
+                fobj.write(texts[i])
+                fobj.write(self.newline.value)

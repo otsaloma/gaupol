@@ -31,7 +31,7 @@ from gaupol.i18n import _
 
 
 # All defined constants.
-__all__ = set(locals())
+__all__ = set(dir())
 
 DOCUMENT = const.Section()
 DOCUMENT.MAIN = const.Member()
@@ -156,4 +156,4 @@ VIDEO_PLAYER.VLC.display_name = "VLC"
 VIDEO_PLAYER.finalize()
 
 del get_mplayer_executable, get_vlc_executable
-__all__ = sorted(list(set(locals()) - __all__))
+__all__ = sorted(list(set(dir()) - __all__))

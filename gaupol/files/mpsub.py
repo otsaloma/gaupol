@@ -19,10 +19,13 @@
 """MPsub file."""
 
 
+from __future__ import with_statement
+
 import codecs
+import contextlib
 import re
 
-from gaupol import const
+from gaupol import const, util
 from gaupol.calculator import Calculator
 from ._subfile import SubtitleFile
 
@@ -31,16 +34,26 @@ class MPsub(SubtitleFile):
 
     """MPsub file.
 
-    Class variables:
+    Instance variables:
 
-        mode: MODE constant
+        framerate: FRAMERATE constant
+        mode:      MODE constant
+
+    framerate and mode depend on what is written on the first line of the file
+    header. They will be determined when the file is read and can later be
+    changed with the 'set_header' method.
     """
 
     format = const.FORMAT.MPSUB
-    framerate  = None
     has_header = True
     identifier = r"^FORMAT=(TIME|[\d\.]+)\s*$", 0
     mode = const.MODE.TIME
+
+    def __init__(self, path, encoding, newline=None):
+
+        SubtitleFile.__init__(self, path, encoding, newline=None)
+        self.framerate = None
+        self.mode = const.MODE.TIME
 
     def _clean_lines(self, all_lines, re_time_line):
         """Return lines without blank lines preceding time lines."""
@@ -77,6 +90,7 @@ class MPsub(SubtitleFile):
         hides[0] -= shows[0]
 
         deviation = 0
+        # Round times and avoid cumulation of rounding errors.
         for i in range(len(shows)):
             orig_show = shows[i]
             shows[i] = round(shows[i] - deviation, 2)
@@ -121,9 +135,12 @@ class MPsub(SubtitleFile):
         """Read header and return leftover lines."""
 
         header = ""
+        lines = lines[:]
         while re_time_line.match(lines[0]) is None:
             header += lines.pop(0)
-        self.header = header[:-1]
+        if header.endswith("\n"):
+            header = header[:-1]
+        self.header = header
         return lines
 
     def read(self):
@@ -134,14 +151,14 @@ class MPsub(SubtitleFile):
         Raise ValueError if bad FORMAT line.
         Return shows, hides, texts.
         """
-        re_time_line = re.compile(r"^([\d\.]+) ([\d\.]+)\s*$")
         lines = self._read_lines()
+        re_time_line = re.compile(r"^([\d\.]+) ([\d\.]+)\s*$")
         lines = self._clean_lines(lines, re_time_line)
         lines = self._read_header(lines, re_time_line)
         return self._read_components(lines, re_time_line)
 
     def set_header(self, header):
-        """Parse and set header and mode.
+        """Parse and set header, mode and framerate.
 
         Raise ValueError if bad FORMAT line.
         """
@@ -153,13 +170,14 @@ class MPsub(SubtitleFile):
             raise ValueError
 
         self.header = header
-        self.framerate = None
         self.mode = const.MODE.TIME
+        self.framerate = None
         if mode in const.FRAMERATE.mpsub_names:
+            self.mode = const.MODE.FRAME
             index = const.FRAMERATE.mpsub_names.index(mode)
             self.framerate = const.FRAMERATE.members[index]
-            self.mode = const.MODE.FRAME
 
+    @util.contractual
     def write(self, shows, hides, texts):
         """Write file.
 
@@ -170,12 +188,16 @@ class MPsub(SubtitleFile):
         shows, hides = method(shows, hides)
         texts = [x.replace("\n", self.newline.value) for x in texts]
 
-        fobj = codecs.open(self.path, "w", self.encoding)
-        try:
-            fobj.write(self.header + self.newline.value * 2)
+        args = (self.path, "w", self.encoding)
+        with contextlib.closing(codecs.open(*args)) as fobj:
+            fobj.write(self.header)
+            fobj.write(self.newline.value)
+            fobj.write(self.newline.value)
             for i in range(len(shows)):
-                fobj.write("%s %s%s%s%s%s" % (
-                    shows[i], hides[i], self.newline.value,
-                    texts[i], self.newline.value, self.newline.value))
-        finally:
-            fobj.close()
+                fobj.write(shows[i])
+                fobj.write(" ")
+                fobj.write(hides[i])
+                fobj.write(self.newline.value)
+                fobj.write(texts[i])
+                fobj.write(self.newline.value)
+                fobj.write(self.newline.value)

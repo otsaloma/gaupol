@@ -19,10 +19,13 @@
 """SubViewer 2.0 file."""
 
 
+from __future__ import with_statement
+
 import codecs
+import contextlib
 import re
 
-from gaupol import const
+from gaupol import const, util
 from gaupol.calculator import Calculator
 from ._subfile import SubtitleFile
 
@@ -39,15 +42,13 @@ class SubViewer2(SubtitleFile):
     def _read_components(self, lines):
         """Read and return shows, hides and texts."""
 
-        time = r"\d\d:\d\d:\d\d.\d\d"
-        re_time_line = re.compile(r"^(%s),(%s)\s*$" % (time, time))
-        re_trailer = re.compile(r"\n\Z", re.MULTILINE)
-
         shows = []
         hides = []
         texts = []
-        lines.append(u"")
-        for i, line in enumerate(lines):
+        time = r"\d\d:\d\d:\d\d.\d\d"
+        re_time_line = re.compile(r"^(%s),(%s)\s*$" % (time, time))
+        re_trailer = re.compile(r"\n\Z", re.MULTILINE)
+        for i, line in enumerate(lines + [""]):
             match = re_time_line.match(line)
             if match is not None:
                 shows.append(match.group(1))
@@ -63,9 +64,12 @@ class SubViewer2(SubtitleFile):
         """Read header and return leftover lines."""
 
         header = ""
+        lines = lines[:]
         while lines[0].startswith("["):
             header += lines.pop(0)
-        self.header = header[:-1]
+        if header.endswith("\n"):
+            header = header[:-1]
+        self.header = header
         return lines
 
     def read(self):
@@ -79,6 +83,7 @@ class SubViewer2(SubtitleFile):
         lines = self._read_header(lines)
         return self._read_components(lines)
 
+    @util.contractual
     def write(self, shows, hides, texts):
         """Write file.
 
@@ -90,12 +95,16 @@ class SubViewer2(SubtitleFile):
         hides = [calc.round_time(x, 2)[:11] for x in hides]
         texts = [x.replace("\n", "[br]") for x in texts]
 
-        fobj = codecs.open(self.path, "w", self.encoding)
-        try:
-            fobj.write(self.header + self.newline.value * 2)
+        args = (self.path, "w", self.encoding)
+        with contextlib.closing(codecs.open(*args)) as fobj:
+            fobj.write(self.header)
+            fobj.write(self.newline.value)
+            fobj.write(self.newline.value)
             for i in range(len(shows)):
-                fobj.write("%s,%s%s%s%s%s" % (
-                    shows[i], hides[i], self.newline.value,
-                    texts[i], self.newline.value, self.newline.value))
-        finally:
-            fobj.close()
+                fobj.write(shows[i])
+                fobj.write(",")
+                fobj.write(hides[i])
+                fobj.write(self.newline.value)
+                fobj.write(texts[i])
+                fobj.write(self.newline.value)
+                fobj.write(self.newline.value)

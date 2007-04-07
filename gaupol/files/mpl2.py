@@ -19,10 +19,13 @@
 """MPL2 file."""
 
 
+from __future__ import with_statement
+
 import codecs
+import contextlib
 import re
 
-from gaupol import const
+from gaupol import const, util
 from gaupol.calculator import Calculator
 from ._subfile import SubtitleFile
 
@@ -43,12 +46,11 @@ class MPL2(SubtitleFile):
         Raise UnicodeError if decoding fails.
         Return show times, hide times, texts.
         """
-        re_line = re.compile(r"^\[(\d+)\]\[(\d+)\](.*?)$")
-        calc = Calculator()
-
         shows = []
         hides = []
         texts = []
+        calc = Calculator()
+        re_line = re.compile(r"^\[(\d+)\]\[(\d+)\](.*?)$")
         for line in self._read_lines():
             match = re_line.match(line)
             if match is not None:
@@ -56,13 +58,14 @@ class MPL2(SubtitleFile):
                 hides.append(match.group(2))
                 texts.append(match.group(3))
 
-        for seq in (shows, hides):
-            for i, value in enumerate(seq):
-                seconds = float(value[:-1] + "." + value[-1])
-                seq[i] = calc.seconds_to_time(seconds)
+        for times in (shows, hides):
+            for i, time in enumerate(times):
+                seconds = float("%s.%s" % (time[:-1], time[-1]))
+                times[i] = calc.seconds_to_time(seconds)
         texts = [x.replace("|", "\n") for x in texts]
         return shows, hides, texts
 
+    @util.contractual
     def write(self, shows, hides, texts):
         """Write file.
 
@@ -76,10 +79,10 @@ class MPL2(SubtitleFile):
         hides = [get_deca(x) for x in hides]
         texts = [x.replace("\n", "|") for x in texts]
 
-        fobj = codecs.open(self.path, "w", self.encoding)
-        try:
+        args = (self.path, "w", self.encoding)
+        with contextlib.closing(codecs.open(*args)) as fobj:
             for i in range(len(shows)):
-                fobj.write("[%s][%s]%s%s" % (
-                    shows[i], hides[i], texts[i], self.newline.value))
-        finally:
-            fobj.close()
+                fobj.write("[%s]" % shows[i])
+                fobj.write("[%s]" % hides[i])
+                fobj.write(texts[i])
+                fobj.write(self.newline.value)
