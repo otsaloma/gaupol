@@ -47,7 +47,6 @@ class TestModule(TestCase):
 
     def teardown_method(self, method):
 
-        TestCase.teardown_method(self, method)
         reload(conf)
         reload(lengthlib)
 

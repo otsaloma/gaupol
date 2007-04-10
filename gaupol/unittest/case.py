@@ -21,6 +21,7 @@
 
 from __future__ import with_statement
 
+import atexit
 import os
 import tempfile
 
@@ -32,14 +33,12 @@ class TestCase(object):
 
     """Base class for unit test cases.
 
-    Instance variables:
+    Class variables:
 
         files: List of the paths of temporary files created
     """
 
-    def __init__(self):
-
-        self.files = []
+    files = []
 
     def get_file_path_ensure(self, value, format):
         assert os.path.isfile(value)
@@ -122,6 +121,14 @@ class TestCase(object):
     def teardown_method(self, method):
         """Remove state set for executing tests in method."""
 
-        remove = util.silent(OSError)(os.remove)
-        while self.files:
-            remove(self.files.pop())
+        pass
+
+
+def remove_files():
+    """Remove temporary files created."""
+
+    remove = util.silent(OSError)(os.remove)
+    while TestCase.files:
+        remove(TestCase.files.pop())
+
+atexit.register(remove_files)

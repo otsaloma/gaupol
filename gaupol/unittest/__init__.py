@@ -20,7 +20,9 @@
 
 Imported names:
 
-    TestCase (case), benchmark (decorators), reversion_test (decorators)
+    TestCase (case)
+    benchmark (decorators)
+    reversion_test (decorators)
 
 All test module names should be prefixed with 'test_', class names with 'Test',
 function and method names with 'test_'. Interactive GUI test method names
