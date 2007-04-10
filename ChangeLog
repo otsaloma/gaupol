@@ -1,5 +1,10 @@
 2007-04-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* tools/nose-cover:
+	New file.
+
+2007-04-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/unittest/case.py:
 	* gaupol/unittest/__init__.py:
 	Use atexit.register to remove temporary files.

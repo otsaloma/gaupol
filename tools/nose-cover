@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Check unittest coverage with nose.
+# Usage: nose-cover PACKAGE
+
+PACKAGE=$(echo $1 | sed "s|/|.|")
+nosetests --with-coverage --cover-package=$PACKAGE $PACKAGE
+rm .coverage
