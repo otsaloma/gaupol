@@ -91,7 +91,6 @@ class ViewAgent(Delegate):
             page.reload_view(rows, [SHOW, HIDE, DURN])
         util.set_cursor_normal(self.window)
 
-    @util.gc_collected
     @util.silent(AssertionError)
     def on_show_times_activate(self, item, active_item):
         """Change the units in which postions are shown."""

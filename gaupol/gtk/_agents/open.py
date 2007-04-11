@@ -159,7 +159,6 @@ class OpenAgent(Delegate):
         if size > 1:
             self._show_size_warning_dialog(basename, size)
 
-    @util.gc_collected
     def _select_files(self, title, doc):
         """Select and return files and encoding."""
 
@@ -360,7 +359,6 @@ class OpenAgent(Delegate):
             method = self.on_view_header_button_press_event
             button.connect("button-press-event", method)
 
-    @util.gc_collected
     @util.silent(Default)
     def on_append_file_activate(self, *args):
         """Append subtitles from file to the current project."""
@@ -446,7 +444,6 @@ class OpenAgent(Delegate):
         path = util.uri_to_path(chooser.get_current_uri())
         self.open_translation_file(path)
 
-    @util.gc_collected
     def on_select_video_file_activate(self, *args):
         """Select a video file."""
 

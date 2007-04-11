@@ -1,5 +1,10 @@
 2007-04-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/util.py:
+	Remove gc_collected.
+
+2007-04-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/base/__init__.py:
 	Import singleton.Singleton.
 

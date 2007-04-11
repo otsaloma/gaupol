@@ -56,13 +56,6 @@ class TestModule(TestCase):
 
         assert util.enchant_available()
 
-    def test_gc_collected(self):
-
-        @util.gc_collected
-        def litter():
-            return None
-        litter()
-
     def test_get_chardet_version(self):
 
         util.get_chardet_version()

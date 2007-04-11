@@ -86,7 +86,6 @@ class SaveAgent(Delegate):
         finally:
             util.set_cursor_normal(self.window)
 
-    @util.gc_collected
     def _select_file(self, title, props):
         """Select a file and return path, format, encoding, newline."""
 

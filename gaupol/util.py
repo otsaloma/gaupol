@@ -30,7 +30,6 @@ import codecs
 import contextlib
 import cPickle
 import functools
-import gc
 import locale
 import os
 import re
@@ -178,17 +177,6 @@ def enchant_available():
         return True
     except Exception:
         return False
-
-def gc_collected(function):
-    """Decorator for functions to be followed by a gc.collect call."""
-
-    @functools.wraps(function)
-    def wrapper(*args, **kwargs):
-        value = function(*args, **kwargs)
-        gc.collect()
-        return value
-
-    return wrapper
 
 def get_chardet_version_ensure(value):
     assert isinstance(value, basestring)

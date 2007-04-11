@@ -19,14 +19,10 @@
 """Base class for dialog-running classes."""
 
 
-from gaupol import util
-
-
 class Runner(object):
 
     """Base class for dialog-running classes."""
 
-    @util.gc_collected
     def flash_dialog(self, dialog):
         """Run dialog, destroy it and return response."""
 
