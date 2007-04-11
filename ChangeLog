@@ -1,5 +1,10 @@
 2007-04-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* tools/nose-cover:
+	Fix to work with individual modules.
+
+2007-04-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/util.py:
 	Fix module docstring.
 

@@ -1,8 +1,10 @@
 #!/bin/bash
 
 # Check unittest coverage with nose.
-# Usage: nose-cover PACKAGE
+# Usage: nose-cover FILE
 
-PACKAGE=$(echo $1 | sed "s|/|.|")
-nosetests --with-coverage --cover-package=$PACKAGE $PACKAGE
+MODULE=$(echo $1 | sed "s|/|.|")
+MODULE=${MODULE%%.py}
+TEST_FILE=$(dirname $1)/test/test_$(basename $1)
+nosetests --with-coverage --cover-package=$MODULE $TEST_FILE
 rm .coverage
