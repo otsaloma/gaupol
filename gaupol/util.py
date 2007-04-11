@@ -21,9 +21,9 @@
 
 from __future__ import with_statement
 
-import cPickle
 import codecs
 import contextlib
+import cPickle
 import functools
 import gc
 import locale
@@ -87,7 +87,7 @@ def memoize(function):
     def wrapper(*args, **kwargs):
         params = (args, kwargs)
         if is_method(function, args):
-            params = (args[1:], kwargs)
+            params = (id(args[0]), args[1:], kwargs)
         key = cPickle.dumps(params)
         if not key in cache:
             cache[key] = function(*args, **kwargs)
