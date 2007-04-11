@@ -16,10 +16,18 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Commonly used base classes."""
+"""Commonly used base classes.
+
+Imported names:
+
+    Delegate (delegate)
+    Observable (observable)
+    Singleton (singleton)
+"""
 
 
-from .delegate import Delegate
+from .delegate   import Delegate
 from .observable import Observable
+from .singleton  import Singleton
 
-__all__ = ["Delegate", "Observable"]
+__all__ = ["Delegate", "Observable", "Singleton"]

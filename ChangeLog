@@ -1,5 +1,13 @@
 2007-04-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/base/__init__.py:
+	Import singleton.Singleton.
+
+	* gaupol/base/singleton.py:
+	New file with a Singleton base class.
+
+2007-04-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* tools/nose-cover:
 	Fix to work with individual modules.
 

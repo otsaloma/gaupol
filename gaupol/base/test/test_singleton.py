@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,28 +16,14 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Base class for delegates."""
+from gaupol.unittest import TestCase
+from .. import singleton
 
 
-class Delegate(object):
+class TestSingleton(TestCase):
 
-    """Base class for delegates.
+    def test___new__(self):
 
-    Instance variables:
-
-        master: The master instance to where attribute calls are redirected
-    """
-
-    def __getattr__(self, name):
-
-        return getattr(self.master, name)
-
-    def __init__(self, master):
-
-        object.__setattr__(self, "master", master)
-
-    def __setattr__(self, name, value):
-
-        if hasattr(self.master, name):
-            return setattr(self.master, name, value)
-        return object.__setattr__(self, name, value)
+        a = singleton.Singleton()
+        b = singleton.Singleton()
+        assert a is b

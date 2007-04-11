@@ -20,6 +20,17 @@ from gaupol.unittest import TestCase
 from .. import const
 
 
+class TestMember(TestCase):
+
+    def setup_method(self, method):
+
+        self.member = const.Member(0, "test")
+
+    def test___str__(self):
+
+        assert str(self.member) == "test"
+
+
 class TestSection(TestCase):
 
     def setup_method(self, method):

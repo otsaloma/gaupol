@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,28 +16,20 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Base class for delegates."""
+"""Base class for single-instance classes."""
 
 
-class Delegate(object):
+class Singleton(object):
 
-    """Base class for delegates.
+    """Base class for single-instance classes.
 
-    Instance variables:
+    Class variables:
 
-        master: The master instance to where attribute calls are redirected
+        _instance: The single instance returned by __new__
     """
 
-    def __getattr__(self, name):
+    def __new__(cls):
 
-        return getattr(self.master, name)
-
-    def __init__(self, master):
-
-        object.__setattr__(self, "master", master)
-
-    def __setattr__(self, name, value):
-
-        if hasattr(self.master, name):
-            return setattr(self.master, name, value)
-        return object.__setattr__(self, name, value)
+        if not hasattr(cls, '_instance'):
+            cls._instance = object.__new__(cls)
+        return cls._instance

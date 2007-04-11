@@ -3,7 +3,7 @@
 # Check unittest coverage with nose.
 # Usage: nose-cover FILE
 
-MODULE=$(echo $1 | sed "s|/|.|")
+MODULE=$(echo $1 | sed "s|/|.|g")
 MODULE=${MODULE%%.py}
 TEST_FILE=$(dirname $1)/test/test_$(basename $1)
 nosetests --with-coverage --cover-package=$MODULE $TEST_FILE
