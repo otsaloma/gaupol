@@ -16,12 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Splitter and merger of lines.
-
-Module variables:
-
-    _RE_MULTI_SPACE: Regular expression for two or more spaces
-"""
+"""Splitter and merger of lines."""
 
 
 from __future__ import division
@@ -33,17 +28,19 @@ from gaupol import scriptlib, util
 from gaupol.parser import Parser
 
 
-_RE_MULTI_SPACE = re.compile(r" {2,}")
-
-
 class Liner(Parser):
 
     """Splitter and merger of lines.
+
+    Class variables:
+
+        _re_multi_space: Regular expression for two or more spaces
 
     Instance variables:
 
         _length_func:  A function that returns the length of its argument
         _space_length: Length of a space according to length_func
+        is_legal:      True if the the text does not break max_length
         max_length:    Maximum length of a line in units of _length_func
         ok_clauses:    Amount of clause lines that need not be joined
         ok_dialogue:   Amount of dialogue lines that need not be joined
@@ -53,6 +50,17 @@ class Liner(Parser):
     re_clause and re_dialogue are required to have groups 'before' and 'after'
     surrounding a single space that acts as the separator.
     """
+
+    _re_multi_space = re.compile(r" {2,}")
+
+    @property
+    def is_legal(self):
+        """Return True if the text does not break self.max_length."""
+
+        for line in self.text.split("\n"):
+            if (" " in line) and (self._length_func(line) > self.max_length):
+                return False
+        return True
 
     def __init__(self, re_tag=None):
         """Initialize Liner.
@@ -243,7 +251,7 @@ class Liner(Parser):
         """Format lines and return text."""
 
         self.text = self.text.replace("\n", " ")
-        self.pattern = _RE_MULTI_SPACE
+        self.pattern = self._re_multi_space
         self.replacement = r" "
         self.replace_all()
 
@@ -254,17 +262,9 @@ class Liner(Parser):
                 self.text = text
                 self.tags = copy.deepcopy(tags)
                 method = getattr(self, "_split_on_%s" % method)
-                if method(max_lines) and self.is_legal():
+                if method(max_lines) and self.is_legal:
                     return self.get_text()
         return self.get_text()
-
-    def is_legal(self):
-        """Return True if the text does not break self.max_length."""
-
-        for line in self.text.split("\n"):
-            if (" " in line) and (self._length_func(line) > self.max_length):
-                return False
-        return True
 
     def set_length_function_require(self, func):
         assert isinstance(func(""), int) or isinstance(func(""), float)

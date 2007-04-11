@@ -19,7 +19,6 @@
 import re
 
 from gaupol import const
-from gaupol.files import *
 from gaupol.unittest import TestCase
 from .. import _subfile
 

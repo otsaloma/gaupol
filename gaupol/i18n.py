@@ -24,11 +24,12 @@ import locale
 
 from gaupol import paths
 
+__all__ = ["_", "dgettext", "ngettext"]
+
+
 locale.setlocale(locale.LC_ALL, "")
 gettext.bindtextdomain("gaupol", paths.LOCALE_DIR)
 gettext.textdomain("gaupol")
-
-__all__ = ["_", "dgettext", "ngettext"]
 
 # pylint: disable-msg=C0103
 _ = gettext.gettext

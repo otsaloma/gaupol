@@ -30,7 +30,7 @@ from gaupol.base import const
 from gaupol.i18n import _
 
 
-# All defined constants.
+# All defined constant sections.
 __all__ = set(dir() + ["__all__"])
 
 DOCUMENT = const.Section()

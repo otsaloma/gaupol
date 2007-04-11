@@ -22,21 +22,20 @@ from gaupol.unittest import TestCase
 from .. import parser
 
 
-TEXT = \
-"""<i>One only risks it, <b>because</b>
-one's survival depends on it.</i>"""
-
-
 class TestParser(TestCase):
+
+    text = \
+        "<i>One only risks it, <b>because</b>\n" \
+        "one's survival depends on it.</i>"
 
     def setup_method(self, method):
 
         self.parser = parser.Parser(re.compile(r"<.+?>"))
-        self.parser.set_text(TEXT)
+        self.parser.set_text(self.text)
 
     def test_get_text(self):
 
-        assert self.parser.get_text() == TEXT
+        assert self.parser.get_text() == self.text
 
         text = \
             "<i>One only risks it, because</i>\n" + \
@@ -74,7 +73,7 @@ class TestParser(TestCase):
 
         for pattern, replacement, text in cases:
             self.parser = parser.Parser(re.compile(r"<.+?>"))
-            self.parser.set_text(TEXT)
+            self.parser.set_text(self.text)
             self.parser.set_regex(pattern)
             self.parser.replacement = replacement
             self.parser.replace_all()
@@ -119,7 +118,7 @@ class TestParser(TestCase):
 
         for pattern, replacement, text in cases:
             self.parser = parser.Parser(re.compile(r"<.+?>"))
-            self.parser.set_text(TEXT)
+            self.parser.set_text(self.text)
             self.parser.pattern = pattern
             self.parser.replacement = replacement
             self.parser.replace_all()
@@ -127,7 +126,7 @@ class TestParser(TestCase):
 
     def test_set_text(self):
 
-        self.parser.set_text(TEXT)
+        self.parser.set_text(self.text)
         assert not self.parser.margins
         assert self.parser.tags
         assert self.parser.text == \

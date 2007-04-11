@@ -1,5 +1,18 @@
 2007-04-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/const.py:
+	* gaupol/files/__init__.py:
+	* gaupol/i18n.py:
+	* gaupol/liner.py:
+	* gaupol/paths.py:
+	* gaupol/scriptlib.py:
+	Minor changes.
+
+	* tools/nose-cover:
+	Remove file.
+
+2007-04-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/util.py:
 	Remove gc_collected.
 

@@ -20,9 +20,9 @@
 
 Module variables:
 
-    CAP_AFTERS:    Tuple of tuples of script, display name, pattern
-    CLAUSE_SEPS:   Tuple of tuples of script, display name, pattern
-    DIALOGUE_SEPS: Tuple of tuples of script, display name, pattern
+    _CAP_AFTERS:    Tuple of tuples of script, display name, pattern
+    _CLAUSE_SEPS:   Tuple of tuples of script, display name, pattern
+    _DIALOGUE_SEPS: Tuple of tuples of script, display name, pattern
 
 Regular expression patterns in 'CLAUSE_SEPS' and 'DIALOGUE_SEPS' are required
 to have named groups 'before' and 'after'. Space (or whatever) between those
@@ -38,10 +38,10 @@ from gaupol import util
 from gaupol.i18n import _
 
 
-CAP_AFTERS = (
+_CAP_AFTERS = (
     ("latin", _("Latin"), r"((?<!(.\.|\..))\.|\?|\!)(\'|\")?( |$)"),)
 
-CLAUSE_SEPS = (
+_CLAUSE_SEPS = (
     ("latin", _("Latin"),
      r"(?P<before>" + \
          r"(" + \
@@ -74,7 +74,7 @@ CLAUSE_SEPS = (
      r"( |$)" + \
      r"(?P<after>)"),)
 
-DIALOGUE_SEPS = (
+_DIALOGUE_SEPS = (
     ("latin", _("Latin"), r"(?P<before>) (?P<after>- )"),)
 
 
@@ -87,7 +87,7 @@ def get_capitalize_after(script):
 
     Return regular expression pattern.
     """
-    for seq in CAP_AFTERS:
+    for seq in _CAP_AFTERS:
         if seq[0] == script:
             return seq[2]
     raise ValueError
@@ -101,7 +101,7 @@ def get_clause_separator(script):
 
     Return regular expression pattern.
     """
-    for seq in CLAUSE_SEPS:
+    for seq in _CLAUSE_SEPS:
         if seq[0] == script:
             return seq[2]
     raise ValueError
@@ -115,7 +115,7 @@ def get_dialogue_separator(script):
 
     Return regular expression pattern.
     """
-    for seq in DIALOGUE_SEPS:
+    for seq in _DIALOGUE_SEPS:
         if seq[0] == script:
             return seq[2]
     raise ValueError

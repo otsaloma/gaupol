@@ -31,8 +31,6 @@ Imported names:
 """
 
 
-__all__ = set(dir() + ["__all__"])
-
 from .ass        import AdvSubStationAlpha
 from .microdvd   import MicroDVD
 from .mpl2       import MPL2
@@ -42,4 +40,5 @@ from .subrip     import SubRip
 from .subviewer2 import SubViewer2
 from .tmplayer   import TMPlayer
 
-__all__ = sorted(list(set(dir()) - __all__))
+from gaupol import const
+__all__ = const.FORMAT.class_names
