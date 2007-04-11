@@ -1,5 +1,10 @@
 2007-04-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/util.py:
+	Fix module docstring.
+
+2007-04-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/unittest/case.py:
 	Use a set as TestCase.files.
 

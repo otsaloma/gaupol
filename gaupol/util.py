@@ -16,7 +16,12 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Miscellaneous functions and decorators."""
+"""Miscellaneous functions and decorators.
+
+Module variables:
+
+    CHECK_CONTRACTS: True to check pre- and postconditions of functions
+"""
 
 
 from __future__ import with_statement
