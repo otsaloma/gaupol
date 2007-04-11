@@ -35,10 +35,10 @@ class TestCase(object):
 
     Class variables:
 
-        files: List of the paths of temporary files created
+        files: Set of the paths of temporary files created
     """
 
-    files = []
+    files = set()
 
     def get_file_path_ensure(self, value, format):
         assert os.path.isfile(value)
@@ -51,7 +51,7 @@ class TestCase(object):
         fd, path = tempfile.mkstemp(format.extension, "gaupol.")
         with os.fdopen(fd, "w") as fobj:
             fobj.write(text)
-        self.files.append(path)
+        self.files.add(path)
         return path
 
     def get_microdvd_path_ensure(self, value):

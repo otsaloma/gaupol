@@ -41,7 +41,7 @@ class TestPreviewAgent(TestCase):
         assert path != self.project.main_file.path
         assert os.path.isfile(path)
         assert is_temp
-        self.files.append(path)
+        self.files.add(path)
 
     def test__on_notify_main_file(self):
 
@@ -51,11 +51,11 @@ class TestPreviewAgent(TestCase):
 
         path = self.project.get_temp_file_path(const.DOCUMENT.MAIN)
         assert os.path.isfile(path)
-        self.files.append(path)
+        self.files.add(path)
 
         path = self.project.get_temp_file_path(const.DOCUMENT.TRAN)
         assert os.path.isfile(path)
-        self.files.append(path)
+        self.files.add(path)
 
     def test_guess_video_path(self):
 

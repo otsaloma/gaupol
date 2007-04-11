@@ -1,5 +1,10 @@
 2007-04-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/unittest/case.py:
+	Use a set as TestCase.files.
+
+2007-04-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/const.py:
 	* gaupol/files/__init__.py:
 	* gaupol/util.py:

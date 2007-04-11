@@ -30,7 +30,7 @@ class TestModule(TestCase):
         path = self.get_subrip_path()
         assert save._create_backup(path, path + "x")
         assert os.path.isfile(path + "x")
-        self.files.append(path + "x")
+        self.files.add(path + "x")
 
     def test__remove_backup(self):
 
@@ -50,7 +50,7 @@ class TestModule(TestCase):
         assert save._restore_original(path + "x", path)
         assert os.path.isfile(path + "x")
         assert not os.path.isfile(path)
-        self.files.append(path + "x")
+        self.files.add(path + "x")
 
 
 class TestSaveAgent(TestCase):
