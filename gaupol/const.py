@@ -31,7 +31,7 @@ from gaupol.i18n import _
 
 
 # All defined constants.
-__all__ = set(dir())
+__all__ = set(dir() + ["__all__"])
 
 DOCUMENT = const.Section()
 DOCUMENT.MAIN = const.Member()

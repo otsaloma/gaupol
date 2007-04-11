@@ -37,7 +37,7 @@ import webbrowser
 
 
 # All defined variables and functions (Scroll to bottom).
-__all__ = set(dir())
+__all__ = set(dir() + ["__all__"])
 
 CHECK_CONTRACTS = True
 

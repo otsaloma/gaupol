@@ -1,3 +1,10 @@
+2007-04-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/const.py:
+	* gaupol/files/__init__.py:
+	* gaupol/util.py:
+	Fix value of __all__.
+
 2007-04-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/util.py (memoize):

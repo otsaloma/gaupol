@@ -31,7 +31,7 @@ Imported names:
 """
 
 
-__all__ = set(dir())
+__all__ = set(dir() + ["__all__"])
 
 from .ass        import AdvSubStationAlpha
 from .microdvd   import MicroDVD
