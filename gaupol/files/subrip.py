@@ -33,9 +33,10 @@ class SubRip(SubtitleFile):
 
     """SubRip file."""
 
+    _time = r"\d\d:\d\d:\d\d,\d\d\d"
     format = const.FORMAT.SUBRIP
     has_header = False
-    identifier = r"^\d\d:\d\d:\d\d,\d\d\d --> \d\d:\d\d:\d\d,\d\d\d\s*$", 0
+    identifier = re.compile(r"^%s --> %s\s*$" % (_time, _time))
     mode = const.MODE.TIME
 
     def _clean_lines(self, all_lines, re_time_line):

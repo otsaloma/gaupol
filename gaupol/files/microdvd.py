@@ -35,7 +35,7 @@ class MicroDVD(SubtitleFile):
 
     format = const.FORMAT.MICRODVD
     has_header = True
-    identifier = r"^\{\d+\}\{\d+\}.*?$", 0
+    identifier = re.compile(r"^\{\d+\}\{\d+\}.*?$")
     mode = const.MODE.FRAME
 
     def read(self):

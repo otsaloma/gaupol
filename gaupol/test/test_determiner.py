@@ -26,22 +26,17 @@ class TestFormatDeterminer(TestCase):
 
     def setup_method(self, method):
 
-        self.determiner = determiner.FormatDeterminer("", "ascii")
-
-    def test___init__(self):
-
-        assert self.determiner.re_ids
+        self.path = self.get_subrip_path()
+        self.determiner = determiner.FormatDeterminer(self.path, "ascii")
 
     def test_determine(self):
 
-        self.determiner.path = self.get_subrip_path()
-        assert self.determiner.determine() == const.FORMAT.SUBRIP
+        for format in const.FORMAT.members:
+            text = self.get_text(format)
+            util.write(self.path, text, "ascii")
+            value = self.determiner.determine()
+            assert value == format
 
-        self.determiner.path = self.get_microdvd_path()
-        assert self.determiner.determine() == const.FORMAT.MICRODVD
-
-        path = self.get_subrip_path()
-        util.write(path, "test", "ascii")
-        self.determiner.path = path
+        util.write(self.path, "", "ascii")
         function = self.determiner.determine
         self.raises(FormatError, function)

@@ -19,6 +19,8 @@
 """Advanced Sub Station Alpha file."""
 
 
+import re
+
 from gaupol import const
 from .ssa import SubStationAlpha
 
@@ -28,7 +30,7 @@ class AdvSubStationAlpha(SubStationAlpha):
     """Advanced Sub Station Alpha file."""
 
     format = const.FORMAT.ASS
-    identifier = r"^ScriptType:\s+[vV]4.00\+\s*$", 0
+    identifier = re.compile(r"^ScriptType:\s+[vV]4.00\+\s*$")
 
     event_fields = (
         "Layer",

@@ -46,7 +46,7 @@ class MPsub(SubtitleFile):
 
     format = const.FORMAT.MPSUB
     has_header = True
-    identifier = r"^FORMAT=(TIME|[\d\.]+)\s*$", 0
+    identifier = re.compile(r"^FORMAT=(TIME|[\d\.]+)\s*$")
     mode = const.MODE.TIME
 
     def __init__(self, path, encoding, newline=None):

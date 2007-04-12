@@ -23,6 +23,7 @@ from __future__ import with_statement
 
 import codecs
 import contextlib
+import re
 
 from gaupol import const, util
 from gaupol.calculator import Calculator
@@ -35,7 +36,7 @@ class TMPlayer(SubtitleFile):
 
     format = const.FORMAT.TMPLAYER
     has_header = False
-    identifier = r"^\d\d:\d\d:\d\d:.*$", 0
+    identifier = re.compile(r"^\d\d:\d\d:\d\d:.*$")
     mode = const.MODE.TIME
 
     def read(self):

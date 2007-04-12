@@ -36,7 +36,7 @@ class SubViewer2(SubtitleFile):
 
     format = const.FORMAT.SUBVIEWER2
     has_header = True
-    identifier = r"^\d\d:\d\d:\d\d.\d\d,\d\d:\d\d:\d\d.\d\d\s*$", 0
+    identifier = re.compile(r"^\d\d:\d\d:\d\d.\d\d,\d\d:\d\d:\d\d.\d\d\s*$")
     mode = const.MODE.TIME
 
     def _read_components(self, lines):

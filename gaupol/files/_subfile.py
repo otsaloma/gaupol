@@ -36,7 +36,7 @@ class SubtitleFile(object):
 
         format:     FORMAT constant
         has_header: True if file has a header
-        identifier: Regular expression pattern, flags
+        identifier: Regular expression object
         mode:       MODE constant
 
     Instance variables:

@@ -16,8 +16,6 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-import re
-
 from gaupol import const
 from gaupol.unittest import TestCase
 from .. import _subfile
@@ -36,7 +34,7 @@ class TestSubtitleFile(TestCase):
             assert self.file.format in const.FORMAT.members
             assert self.file.mode in const.MODE.members
             assert isinstance(self.file.has_header, bool)
-            re.compile(*self.file.identifier)
+            self.file.identifier.findall("test")
 
     def test__read_lines(self):
 

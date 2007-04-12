@@ -41,7 +41,7 @@ class SubStationAlpha(SubtitleFile):
 
     format = const.FORMAT.SSA
     has_header = True
-    identifier = r"^ScriptType: [vV]4.00\s*$", 0
+    identifier = re.compile(r"^ScriptType: [vV]4.00\s*$")
     mode = const.MODE.TIME
 
     event_fields = (

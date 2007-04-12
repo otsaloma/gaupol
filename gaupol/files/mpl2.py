@@ -36,7 +36,7 @@ class MPL2(SubtitleFile):
 
     format = const.FORMAT.MPL2
     has_header = False
-    identifier = r"^\[\d+\]\[\d+\].*?$", 0
+    identifier = re.compile(r"^\[\d+\]\[\d+\].*?$")
     mode = const.MODE.TIME
 
     def read(self):
