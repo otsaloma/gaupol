@@ -191,7 +191,7 @@ def get_display_name(python_name):
 def get_locale_long_name_require():
     assert get_locale_python_name() is not None
 
-@util.memoize
+@util.once
 @util.contractual
 def get_locale_long_name():
     """Get the long name for locale encoding.
@@ -206,7 +206,7 @@ def get_locale_python_name_ensure(value):
     if value is not None:
         assert is_valid(value)
 
-@util.memoize
+@util.once
 @util.contractual
 def get_locale_python_name():
     """Get the python name of the locale encoding or None."""

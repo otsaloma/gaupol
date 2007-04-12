@@ -1,5 +1,11 @@
 2007-04-12  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/enclib.py:
+	* gaupol/util.py:
+	Replace memoize with once where appropriate.
+
+2007-04-12  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/base/singleton.py (__new__):
 	Fix to work with inheritance.
 

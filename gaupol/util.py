@@ -129,7 +129,7 @@ def browse_url(url, browser=None):
 
     return webbrowser.open(url)
 
-@memoize
+@once
 def chardet_available():
     """Return True if chardet is available."""
 
@@ -179,7 +179,7 @@ def connect(observer, observable, signal, *args):
         observable = getattr(observer, observable)
     return observable.connect(signal, method, *args)
 
-@memoize
+@once
 def enchant_available():
     """Return True if enchant is available."""
 
@@ -206,7 +206,7 @@ def get_chardet_version():
 def get_default_encoding_ensure(value):
     codecs.lookup(value)
 
-@memoize
+@once
 @contractual
 def get_default_encoding():
     """Get the locale encoding or UTF-8 (as fallback)."""
@@ -221,7 +221,7 @@ def get_default_encoding():
         encoding = aliases[encoding]
     return encoding
 
-@memoize
+@once
 def get_desktop_environment():
     """Return 'GNOME', 'KDE' or None if unknown."""
 
@@ -234,7 +234,7 @@ def get_desktop_environment():
 def get_enchant_version_ensure(value):
     assert isinstance(value, basestring)
 
-@memoize
+@once
 @contractual
 def get_enchant_version():
     """Return enchant version number as string or None."""
