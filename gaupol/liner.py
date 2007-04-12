@@ -40,7 +40,6 @@ class Liner(Parser):
 
         _length_func:  A function that returns the length of its argument
         _space_length: Length of a space according to length_func
-        is_legal:      True if the the text does not break max_length
         max_length:    Maximum length of a line in units of _length_func
         ok_clauses:    Amount of clause lines that need not be joined
         ok_dialogue:   Amount of dialogue lines that need not be joined
@@ -52,15 +51,6 @@ class Liner(Parser):
     """
 
     _re_multi_space = re.compile(r" {2,}")
-
-    @property
-    def is_legal(self):
-        """Return True if the text does not break self.max_length."""
-
-        for line in self.text.split("\n"):
-            if (" " in line) and (self._length_func(line) > self.max_length):
-                return False
-        return True
 
     def __init__(self, re_tag=None):
         """Initialize Liner.
@@ -188,6 +178,14 @@ class Liner(Parser):
                 return i - 1
         return 1
 
+    def is_legal(self):
+        """Return True if the text does not break self.max_length."""
+
+        for line in self.text.split("\n"):
+            if (" " in line) and (self._length_func(line) > self.max_length):
+                return False
+        return True
+
     def _join_even_ensure(self, value, max_lines):
         assert self.text.count("\n") == max_lines - 1
 
@@ -262,7 +260,7 @@ class Liner(Parser):
                 self.text = text
                 self.tags = copy.deepcopy(tags)
                 method = getattr(self, "_split_on_%s" % method)
-                if method(max_lines) and self.is_legal:
+                if method(max_lines) and self.is_legal():
                     return self.get_text()
         return self.get_text()
 
