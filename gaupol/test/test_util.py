@@ -36,6 +36,14 @@ class TestModule(TestCase):
         assert square(2) == 4
         assert square(2) == 4
 
+    def test_once(self):
+
+        @util.once
+        def get_constant():
+            return 5
+        assert get_constant() == 5
+        assert get_constant() == 5
+
     def test_browse_url(self):
 
         util.browse_url("http://home.gna.org/gaupol")

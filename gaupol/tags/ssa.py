@@ -16,21 +16,13 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Sub Station Alpha tag library.
-
-Module variables:
-
-    _FLAGS: Common regular expression flags
-"""
+"""Sub Station Alpha tag library."""
 
 
 import re
 
+from gaupol import util
 from ._taglib import TagLibrary
-from .internal import Internal
-
-
-_FLAGS = re.MULTILINE | re.DOTALL
 
 
 class SubStationAlpha(TagLibrary):
@@ -39,67 +31,114 @@ class SubStationAlpha(TagLibrary):
 
     Class variables:
 
-        _re_redundant: Regular expression for a redundant tag pair
+        _re_int_opening:     Regular expression for an internal opening tag
+        _re_int_closing:     Regular expression for an internal closing tag
+        _re_int_closing_end: Regular expression ... at the end of a subtitle
     """
 
-    tag = r"\{.*?\}", 0
-    italic_tag = r"\{\\i[01]\}", re.IGNORECASE
+    _re_int_opening = re.compile(r"<[^/].*?>")
+    _re_int_closing = re.compile(r"</.*?>")
+    _re_int_closing_end = re.compile(r"</.*?>\Z")
 
-    @classmethod
-    def pre_decode(cls, text):
-        """Break combined tags, e.g. {\\b1i1} to {\\b1}{\\i1}."""
+    @property
+    @util.once
+    def italic_tag(self):
+        """Regular expression for an italic tag."""
 
-        parts = text.split("\\")
-        for i in range(1, len(parts)):
-            text_so_far = "\\".join(parts[:i])
-            if text_so_far.endswith("{"):
-                continue
-            opening_index = text_so_far.rfind("{")
-            closing_index = text_so_far.rfind("}")
-            if opening_index > closing_index:
-                parts[i - 1] += "}{"
-        return "\\".join(parts)
+        return re.compile(r"\{\\i[01]\}", re.IGNORECASE)
 
-    # Decode tags leave </> for reset and a lot of tags unclosed.
-    decode_tags = [
-        # Bold opening
-        (r"\{\\b[1-9]\d*\}", re.IGNORECASE,
-            r"<b>"),
-        # Italic opening
-        (r"\{\\i1\}", re.IGNORECASE,
-            r"<i>"),
-        # Bold, Italic closing
-        (r"\{\\(b|i)0\}", re.IGNORECASE,
-            r"</\1>"),
-        # Color
-        (r"\{\\c&H([a-zA-Z0-9]{6})&\}", re.IGNORECASE,
-            r'<color="#\1">'),
-        # Font
-        (r"\{\\fn(.*?)\}", re.IGNORECASE,
-            r'<font="\1">'),
-        # Size
-        (r"\{\\fs(.*?)\}", re.IGNORECASE,
-            r'<size="\1">'),
-        # Reset
-        (r"\{\\r\}", re.IGNORECASE,
-            r"</>"),
-        # Remove all else.
-        (r"\{.*?\}", re.IGNORECASE,
-            r"")]
+    @property
+    @util.once
+    def tag(self):
+        """Regular expression for any tag."""
 
-    @classmethod
-    def post_decode(cls, text):
+        return re.compile(r"\{.*?\}", 0)
+
+    @util.once
+    def _get_decode_tags(self):
+        """Get list of tuples of regular expression, replacement, count."""
+
+        FLAGS = re.IGNORECASE
+
+        # These leave </> for reset and a lot of tags unclosed.
+        tags = [
+            # Bold opening
+            (r"\{\\b[1-9]\d*\}", FLAGS,
+                r"<b>", 1),
+            # Italic opening
+            (r"\{\\i1\}", FLAGS,
+                r"<i>", 1),
+            # Bold, Italic closing
+            (r"\{\\(b|i)0\}", FLAGS,
+                r"</\1>", 1),
+            # Color
+            (r"\{\\c&H([a-zA-Z0-9]{6})&\}", FLAGS,
+                r'<color="#\1">', 1),
+            # Font
+            (r"\{\\fn(.*?)\}", FLAGS,
+                r'<font="\1">', 1),
+            # Size
+            (r"\{\\fs(.*?)\}", FLAGS,
+                r'<size="\1">', 1),
+            # Reset
+            (r"\{\\r\}", FLAGS,
+                r"</>", 1),
+            # Remove all else.
+            (r"\{.*?\}", FLAGS,
+                r"", 1),]
+
+        for i, (pattern, flags, replacement, count) in enumerate(tags):
+            tags[i] = (re.compile(pattern, flags), replacement, count)
+        return tags
+
+    @util.once
+    def _get_encode_tags(self):
+        """Get list of tuples of regular expression, replacement, count."""
+
+        FLAGS = re.MULTILINE | re.DOTALL
+
+        tags = [
+            # Remove redundant style tags (e.g. </b><b>).
+            (r"</(b|i|u)>(\n?)<\1>", FLAGS,
+                r"\2", 3),
+            # Remove other redundant tags.
+            (r"<(.*?)=(.*?)>(.*?)</\1>(\n?)<\1=\2>", FLAGS,
+                r"<\1=\2>\3\4", 3),
+            # Bold and italic, \061 = 1
+            (r"<(b|i)>", 0,
+                r"{\\\1\061}", 1),
+            # Bold and italic, \060 = 0
+            (r"</(b|i)>", 0,
+                r"{\\\1\060}", 1),
+            # Color opening
+            (r'<color="#(.*?)">', 0,
+                r"{\\c&H\1&}", 1),
+            # Font opening
+            (r'<font="(.*?)">', 0,
+                r"{\\fn\1}", 1),
+            # Size opening
+            (r'<size="(.*?)">', 0,
+                r"{\\fs\1}", 1),
+            # Color, font or size closing
+            (r"</[a-z]{3,}>", 0,
+                r"{\\r}", 1),
+            # Remove underline.
+            (r"</?u>", 0,
+                r"", 1),]
+
+        for i, (pattern, flags, replacement, count) in enumerate(tags):
+            tags[i] = (re.compile(pattern, flags), replacement, count)
+        return tags
+
+    def _post_decode(self, text):
         """Fix or add closing tags."""
-
-        re_opening_tag = re.compile(*Internal.opening_tag)
-        re_closing_tag = re.compile(*Internal.closing_tag)
 
         parts = text.split("</>")
         for i, part in enumerate(parts):
 
             suffix = ""
-            opening_tags = re_opening_tag.findall(part)
-            closing_tags = re_closing_tag.findall(part)
+            opening_tags = self._re_int_opening.findall(part)
+            closing_tags = self._re_int_closing.findall(part)
 
             # Find out which tags have already been closed.
             for j in reversed(range(len(closing_tags))):
@@ -119,56 +158,49 @@ class SubStationAlpha(TagLibrary):
 
         return "".join(parts)
 
-    @classmethod
-    def pre_encode(cls, text):
+    def _pre_decode(self, text):
+        """Break combined tags, e.g. {\\b1i1} to {\\b1}{\\i1}."""
+
+        parts = text.split("\\")
+        for i in range(1, len(parts)):
+            text_so_far = "\\".join(parts[:i])
+            if text_so_far.endswith("{"):
+                continue
+            opening_index = text_so_far.rfind("{")
+            closing_index = text_so_far.rfind("}")
+            if opening_index > closing_index:
+                parts[i - 1] += "}{"
+        return "\\".join(parts)
+
+    def _pre_encode(self, text):
         """Remove pointless closing tags at the end of the text."""
 
-        regex = re.compile(*Internal.closing_tag_end)
-        while regex.search(text) is not None:
-            text = regex.sub("", text)
+        while self._re_int_closing_end.search(text) is not None:
+            text = self._re_int_closing_end.sub("", text)
         return text
 
-    encode_tags = [
-        # Remove duplicate style tags (e.g. <b>foo</b><b>bar</b>).
-        (r"</(b|i|u)>(\n?)<\1>", _FLAGS,
-            r"\2", 3),
-        # Remove other duplicate tags.
-        (r"<(.*?)=(.*?)>(.*?)</\1>(\n?)<\1=\2>", _FLAGS,
-            r"<\1=\2>\3\4", 3),
-        # Bold and italic, \061 = 1
-        (r"<(b|i)>", 0,
-            r"{\\\1\061}"),
-        # Bold and italic, \060 = 0
-        (r"</(b|i)>", 0,
-            r"{\\\1\060}"),
-        # Color opening
-        (r'<color="#(.*?)">', 0,
-            r"{\\c&H\1&}"),
-        # Font opening
-        (r'<font="(.*?)">', 0,
-            r"{\\fn\1}"),
-        # Size opening
-        (r'<size="(.*?)">', 0,
-            r"{\\fs\1}"),
-        # Color, font or size closing
-        (r"</[a-z]{3,}>", 0,
-            r"{\\r}"),
-        # Remove underline.
-        (r"</?u>", 0,
-            r"")]
+    def decode(self, text):
+        """Return text with tags converted from this to internal format."""
 
-    # \061 = 1
-    _re_redundant = re.compile(
-        r"\{\\([ib])0\}([^\w\n]*?)\{\\\1\061\}", re.UNICODE)
+        text = self._pre_decode(text)
+        for regex, replacement, count in self._get_decode_tags():
+            for i in range(count):
+                # pylint: disable-msg=E1101
+                text = regex.sub(replacement, text)
+        text = self._post_decode(text)
+        return text
 
-    @classmethod
-    def italicize(cls, text):
-        """Italicize text."""
+    def encode(self, text):
+        """Return text with tags converted from internal to this format."""
+
+        text = self._pre_encode(text)
+        for regex, replacement, count in self._get_encode_tags():
+            for i in range(count):
+                # pylint: disable-msg=E1101
+                text = regex.sub(replacement, text)
+        return text
+
+    def italicize(self, text):
+        """Return italicized text."""
 
         return u"{\\i1}%s" % text
-
-    @classmethod
-    def remove_redundant(cls, text):
-        """Remove redundant tags from text."""
-
-        return cls._re_redundant.sub(r"\2", text)

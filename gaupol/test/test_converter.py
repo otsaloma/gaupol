@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -25,11 +25,7 @@ class TestTagConverter(TestCase):
 
     def test_convert(self):
 
-        text = \
-            "All things weird are normal\n" + \
-            "in this whore of cities."
-
         for from_format in const.FORMAT.members:
             for to_format in const.FORMAT.members:
                 conv = converter.TagConverter(from_format, to_format)
-                assert conv.convert(text) == text
+                assert conv.convert("test") == "test"

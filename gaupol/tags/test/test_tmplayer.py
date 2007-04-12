@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -24,4 +24,4 @@ class TestTMPlayer(TestTagLibrary):
 
     def setup_method(self, method):
 
-        self.cls = tmplayer.TMPlayer
+        self.taglib = tmplayer.TMPlayer()

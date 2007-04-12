@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -19,8 +19,6 @@
 """Subtitle text tag converter."""
 
 
-import re
-
 from gaupol.tags import *
 
 
@@ -30,51 +28,19 @@ class TagConverter(object):
 
     Instance variables:
 
-        _from_regexes: List of lists of regular expression, replacement, count
-        _to_regexes:   List of lists of regular expression, replacement, count
-        _pre_decode:   Tag conversion function
-        _pre_encode:   Tag conversion function
-        _post_decode:  Tag conversion function
-        _post_encode:  Tag conversion function
+        _from: TagLibrary instance for the 'from' format
+        _to:   TagLibrary instance for the 'to' format
     """
 
     def __init__(self, from_format, to_format):
+        """Initialize a TagConverter instance.
 
-        self._from_regexs = []
-        for seq in eval(from_format.class_name).decode_tags:
-            regex = re.compile(seq[0], seq[1])
-            count = (seq[3] if len(seq) == 4 else 1)
-            self._from_regexs.append([regex, seq[2], count])
-
-        self._to_regexs = []
-        for seq in eval(to_format.class_name).encode_tags:
-            regex = re.compile(seq[0], seq[1])
-            count = (seq[3] if len(seq) == 4 else 1)
-            self._to_regexs.append([regex, seq[2], count])
-
-        self._pre_decode  = eval(from_format.class_name).pre_decode
-        self._post_decode = eval(from_format.class_name).post_decode
-        self._pre_encode  = eval(to_format.class_name).pre_encode
-        self._post_encode = eval(to_format.class_name).post_encode
+        from_format and to_format should be FORMAT constants.
+        """
+        self._from = eval(from_format.class_name)()
+        self._to = eval(to_format.class_name)()
 
     def convert(self, text):
         """Return text with tags converted."""
 
-        if not text:
-            return text
-
-        # Convert to internal format ("decode").
-        text = self._pre_decode(text)
-        for regex, replacement, count in self._from_regexs:
-            for i in range(count):
-                text = regex.sub(replacement, text)
-        text = self._post_decode(text)
-
-        # Convert to desired format ("encode").
-        text = self._pre_encode(text)
-        for regex, replacement, count in self._to_regexs:
-            for i in range(count):
-                text = regex.sub(replacement, text)
-        text = self._post_encode(text)
-
-        return text
+        return self._to.encode(self._from.decode(text))

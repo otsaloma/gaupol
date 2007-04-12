@@ -132,8 +132,7 @@ class SupportAgent(Delegate):
         name = self.get_format_class_name(doc)
         assert name is not None
         cls = eval(name)
-        assert cls.tag is not None
-        return re.compile(*cls.tag)
+        return cls().tag
 
     def get_text_length(self, row, doc):
         """Get the legth of text without tags."""

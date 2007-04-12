@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,60 +16,66 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""MPL2 tag library.
-
-Module variables:
-
-    _FLAGS: Common regular expression flags
-"""
+"""MPL2 tag library."""
 
 
 import re
 
-from ._taglib import TagLibrary
+from gaupol import util
 from .microdvd import MicroDVD
 
 
-_FLAGS = re.MULTILINE | re.DOTALL
+class MPL2(MicroDVD):
 
+    """MPL2 tag library."""
 
-class MPL2(TagLibrary):
+    @property
+    @util.once
+    def italic_tag(self):
+        """Regular expression for an italic tag."""
 
-    """MPL2 tag library.
+        return re.compile(r"(\{y:i\})|(/)", re.IGNORECASE)
 
-    Class variables:
+    @property
+    @util.once
+    def tag(self):
+        """Regular expression for any tag."""
 
-        _style_tags: List of tuples of style tags
-    """
+        return re.compile(r"(\{[a-z]:.*?\})|(\\|/|_)", re.IGNORECASE)
 
-    tag = r"(\{[a-z]:.*?\})|(\\|/|_)", re.IGNORECASE
-    italic_tag = r"(\{y:i\})|(/)", re.IGNORECASE
+    @util.once
+    def _get_decode_tags(self):
+        """Get list of tuples of regular expression, replacement, count."""
 
-    decode_tags = [
-        # Italic (single line)
-        (r"/(.*?)$", _FLAGS,
-            r"<i>\1</i>"),
-        # Bold (single line)
-        (r"\\(.*?)$", _FLAGS,
-            r"<b>\1</b>"),
-        # Underline (single line)
-        (r"_(.*?)$", _FLAGS,
-            r"<u>\1</u>"),
-        # Remove duplicate style tags (e.g. <b>test</b><b>test</b>).
-        (r"</(b|i|u)>(\n?)<\1>", _FLAGS,
-            r"\2", 3)
-    ] + MicroDVD.decode_tags
+        FLAGS = re.MULTILINE | re.DOTALL
 
-    _style_tags = [
-        ("<i>", "</i>", "/" ),
-        ("<b>", "</b>", "\\"),
-        ("<u>", "</u>", "_" ),]
+        tags = [
+            # Italic (single line)
+            (r"/(.*?)$", FLAGS,
+                r"<i>\1</i>", 1),
+            # Bold (single line)
+            (r"\\(.*?)$", FLAGS,
+                r"<b>\1</b>", 1),
+            # Underline (single line)
+            (r"_(.*?)$", FLAGS,
+                r"<u>\1</u>", 1),
+            # Remove redundant style tags (e.g. </b><b>).
+            (r"</(b|i|u)>(\n?)<\1>", FLAGS,
+                r"\2", 3),]
 
-    @classmethod
-    def pre_encode(cls, text):
-        """Convert style tags."""
+        for i, (pattern, flags, replacement, count) in enumerate(tags):
+            tags[i] = (re.compile(pattern, flags), replacement, count)
+        return tags + MicroDVD._get_decode_tags(self)
 
-        for opening, closing, replacement in cls._style_tags:
+    def _encode_style(self, text):
+        """Convert style tags to MPL2 style."""
+
+        style_tags = [
+            ("<i>", "</i>", "/" ),
+            ("<b>", "</b>", "\\"),
+            ("<u>", "</u>", "_" ),]
+
+        for opening, closing, replacement in style_tags:
             opening_lenght = len(opening)
             closing_length = len(closing)
             while True:
@@ -88,10 +94,13 @@ class MPL2(TagLibrary):
                 text = before + replacement + middle + after
         return text
 
-    encode_tags = MicroDVD.encode_tags
+    def encode(self, text):
+        """Return text with tags converted from internal to this format."""
 
-    @classmethod
-    def italicize(cls, text):
-        """Italicize text."""
+        text = self._encode_style(text)
+        return MicroDVD.encode(self, text)
+
+    def italicize(self, text):
+        """Return italicized text."""
 
         return "/" + text.replace("\n", "\n/")

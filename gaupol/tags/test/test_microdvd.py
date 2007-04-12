@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -24,7 +24,7 @@ class TestMicroDVD(TestTagLibrary):
 
     def setup_method(self, method):
 
-        self.cls = microdvd.MicroDVD
+        self.taglib = microdvd.MicroDVD()
 
     def test_decode(self):
 
@@ -32,7 +32,7 @@ class TestMicroDVD(TestTagLibrary):
         text = \
             "{y:biu}All things weird are normal\n" + \
             "in this whore of cities."
-        assert self._decode(text) == \
+        assert self.taglib.decode(text) == \
             "<b><i><u>All things weird are normal</u></i></b>\n" + \
             "in this whore of cities."
 
@@ -40,7 +40,7 @@ class TestMicroDVD(TestTagLibrary):
         text = \
             "All things {y:bi}weird are normal\n" + \
             "in this whore of cities."
-        assert self._decode(text) == \
+        assert self.taglib.decode(text) == \
             "All things <b><i>weird are normal</i></b>\n" + \
             "in this whore of cities."
 
@@ -48,7 +48,7 @@ class TestMicroDVD(TestTagLibrary):
         text = \
             "All things weird are normal\n" + \
             "in this {y:i}whore of cities."
-        assert self._decode(text) == \
+        assert self.taglib.decode(text) == \
             "All things weird are normal\n" + \
             "in this <i>whore of cities.</i>"
 
@@ -56,7 +56,7 @@ class TestMicroDVD(TestTagLibrary):
         text = \
             "{y:i}All things weird are normal\n" + \
             "{y:i}in this whore of cities."
-        assert self._decode(text) == \
+        assert self.taglib.decode(text) == \
             "<i>All things weird are normal</i>\n" + \
             "<i>in this whore of cities.</i>"
 
@@ -64,7 +64,7 @@ class TestMicroDVD(TestTagLibrary):
         text = \
             "{Y:biu}All things weird are normal\n" + \
             "in this whore of cities."
-        assert self._decode(text) == \
+        assert self.taglib.decode(text) == \
             "<b><i><u>All things weird are normal\n" + \
             "in this whore of cities.</u></i></b>"
 
@@ -72,7 +72,7 @@ class TestMicroDVD(TestTagLibrary):
         text = \
             "All things {Y:bi}weird are normal\n" + \
             "in this whore of cities."
-        assert self._decode(text) == \
+        assert self.taglib.decode(text) == \
             "All things <b><i>weird are normal\n" + \
             "in this whore of cities.</i></b>"
 
@@ -80,7 +80,7 @@ class TestMicroDVD(TestTagLibrary):
         text = \
             "All things weird are normal\n" + \
             "in this {Y:i}whore of cities."
-        assert self._decode(text) == \
+        assert self.taglib.decode(text) == \
             "All things weird are normal\n" + \
             "in this <i>whore of cities.</i>"
 
@@ -88,7 +88,7 @@ class TestMicroDVD(TestTagLibrary):
         text = \
             "{c:$ffffff}All things weird are normal\n" + \
             "in this whore of cities."
-        assert self._decode(text) == \
+        assert self.taglib.decode(text) == \
             '<color="#ffffff">All things weird are normal</color>\n' + \
             'in this whore of cities.'
 
@@ -96,7 +96,7 @@ class TestMicroDVD(TestTagLibrary):
         text = \
             "{C:$ffffff}All things weird are normal\n" + \
             "in this whore of cities."
-        assert self._decode(text) == \
+        assert self.taglib.decode(text) == \
             '<color="#ffffff">All things weird are normal\n' + \
             'in this whore of cities.</color>'
 
@@ -104,7 +104,7 @@ class TestMicroDVD(TestTagLibrary):
         text = \
             "All things {f:Sans}weird are normal\n" + \
             "in this whore of cities."
-        assert self._decode(text) == \
+        assert self.taglib.decode(text) == \
             'All things <font="Sans">weird are normal</font>\n' + \
             'in this whore of cities.'
 
@@ -112,7 +112,7 @@ class TestMicroDVD(TestTagLibrary):
         text = \
             "All things {F:Sans}weird are normal\n" + \
             "in this whore of cities."
-        assert self._decode(text) == \
+        assert self.taglib.decode(text) == \
             'All things <font="Sans">weird are normal\n' + \
             'in this whore of cities.</font>'
 
@@ -120,7 +120,7 @@ class TestMicroDVD(TestTagLibrary):
         text = \
             "All things weird are normal\n" + \
             "in this {s:12}whore of cities."
-        assert self._decode(text) == \
+        assert self.taglib.decode(text) == \
             'All things weird are normal\n' + \
             'in this <size="12">whore of cities.</size>'
 
@@ -128,7 +128,7 @@ class TestMicroDVD(TestTagLibrary):
         text = \
             "All things weird are normal\n" + \
             "in this {S:12}whore of cities."
-        assert self._decode(text) == \
+        assert self.taglib.decode(text) == \
             'All things weird are normal\n' + \
             'in this <size="12">whore of cities.</size>'
 
@@ -136,7 +136,7 @@ class TestMicroDVD(TestTagLibrary):
         text = \
             "{P:0}All things weird are normal\n" + \
             "in this whore of cities."
-        assert self._decode(text) == \
+        assert self.taglib.decode(text) == \
             "All things weird are normal\n" + \
             "in this whore of cities."
 
@@ -144,7 +144,7 @@ class TestMicroDVD(TestTagLibrary):
         text = \
             "{o:5,5}All things weird are normal\n" + \
             "in this whore of cities."
-        assert self._decode(text) == \
+        assert self.taglib.decode(text) == \
             "All things weird are normal\n" + \
             "in this whore of cities."
 
@@ -152,13 +152,14 @@ class TestMicroDVD(TestTagLibrary):
 
         # Style (affecting a single line subtitle fully)
         text = "<i>All things weird are normal</i>"
-        assert self._encode(text) == "{Y:i}All things weird are normal"
+        assert self.taglib.encode(text) == \
+            "{Y:i}All things weird are normal"
 
         # Style (affecting only one line)
         text = \
             "<b>All things weird are normal</b>\n" + \
             "in this whore of cities."
-        assert self._encode(text) == \
+        assert self.taglib.encode(text) == \
             "{y:b}All things weird are normal\n" + \
             "in this whore of cities."
 
@@ -166,7 +167,7 @@ class TestMicroDVD(TestTagLibrary):
         text = \
             "<u>All things weird are normal</u>\n" + \
             "<u>in this whore of cities.</u>"
-        assert self._encode(text) == \
+        assert self.taglib.encode(text) == \
             "{Y:u}All things weird are normal\n" + \
             "in this whore of cities."
 
@@ -174,13 +175,14 @@ class TestMicroDVD(TestTagLibrary):
 
         # Color (affecting a single line subtitle fully)
         text = '<color="#ffffff">All things weird are normal</color>'
-        assert self._encode(text) == "{C:$ffffff}All things weird are normal"
+        assert self.taglib.encode(text) == \
+            "{C:$ffffff}All things weird are normal"
 
         # Color (affecting only one line)
         text = \
             'All things <color="#ffffff">weird are normal</color>\n' + \
             'in this whore of cities.'
-        assert self._encode(text) == \
+        assert self.taglib.encode(text) == \
             "All things {c:$ffffff}weird are normal\n" + \
             "in this whore of cities."
 
@@ -188,19 +190,20 @@ class TestMicroDVD(TestTagLibrary):
         text = \
             'All things <color="#ffffff">weird are normal\n' + \
             'in this whore of cities.</color>'
-        assert self._encode(text) == \
+        assert self.taglib.encode(text) == \
             "All things {C:$ffffff}weird are normal\n" + \
             "in this whore of cities."
 
         # Font (affecting a single line subtitle fully)
         text = '<font="Sans">All things weird are normal</font>'
-        assert self._encode(text) == "{F:Sans}All things weird are normal"
+        assert self.taglib.encode(text) == \
+            "{F:Sans}All things weird are normal"
 
         # Font (affecting only one line)
         text = \
             '<font="Sans">All things</font> weird are normal\n' + \
             'in this whore of cities.'
-        assert self._encode(text) == \
+        assert self.taglib.encode(text) == \
             "{f:Sans}All things weird are normal\n" + \
             "in this whore of cities."
 
@@ -208,19 +211,20 @@ class TestMicroDVD(TestTagLibrary):
         text = \
             '<font="Sans">All things weird are normal\n' + \
             'in this whore</font> of cities.'
-        assert self._encode(text) == \
+        assert self.taglib.encode(text) == \
             "{F:Sans}All things weird are normal\n" + \
             "in this whore of cities."
 
         # Size (affecting a single line subtitle fully)
         text = '<size="12">All things weird are normal</size>'
-        assert self._encode(text) == "{S:12}All things weird are normal"
+        assert self.taglib.encode(text) == \
+            "{S:12}All things weird are normal"
 
         # Size (affecting only one line)
         text = \
             'All things weird are normal\n' + \
             'in this <size="12">whore of cities.</size>'
-        assert self._encode(text) == \
+        assert self.taglib.encode(text) == \
             "All things weird are normal\n" + \
             "in this {s:12}whore of cities."
 
@@ -228,7 +232,7 @@ class TestMicroDVD(TestTagLibrary):
         text = \
             'All things <size="12">weird are normal\n' + \
             'in this whore of cities.</size>'
-        assert self._encode(text) == \
+        assert self.taglib.encode(text) == \
             "All things {S:12}weird are normal\n" + \
             "in this whore of cities."
 
@@ -237,6 +241,6 @@ class TestMicroDVD(TestTagLibrary):
         text = \
             "All things weird are normal\n" + \
             "in this whore of cities."
-        assert self.cls.italicize(text) == \
+        assert self.taglib.italicize(text) == \
             "{Y:i}All things weird are normal\n" + \
             "in this whore of cities."

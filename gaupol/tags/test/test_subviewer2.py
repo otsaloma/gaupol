@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -24,4 +24,4 @@ class TestSubViewer2(TestSubRip):
 
     def setup_method(self, method):
 
-        self.cls = subviewer2.SubViewer2
+        self.taglib = subviewer2.SubViewer2()

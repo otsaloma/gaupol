@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -21,47 +21,61 @@
 
 import re
 
+from gaupol import util
 from ._taglib import TagLibrary
 
 
 class SubRip(TagLibrary):
 
-    """SubRip tag library.
+    """SubRip tag library."""
 
-    Class variables:
+    @property
+    @util.once
+    def italic_tag(self):
+        """Regular expression for an italic tag."""
 
-        _re_redundant: Regular expression for a redundant tag pair
-    """
+        return re.compile(r"</?i>", re.IGNORECASE)
 
-    tag = r"</?(b|i|u)>", re.IGNORECASE
-    italic_tag = r"</?i>", re.IGNORECASE
+    @property
+    @util.once
+    def tag(self):
+        """Regular expression for any tag."""
 
-    decode_tags = [
-        # Uppercase bold
-        (r"(</?)B>", 0,
-            r"\1b>"),
-        # Uppercase italic
-        (r"(</?)I>", 0,
-            r"\1i>"),
-        # Uppercase underline
-        (r"(</?)U>", 0,
-            r"\1u>")]
+        return re.compile(r"</?(b|i|u)>", re.IGNORECASE)
 
-    encode_tags = [
-        # All unsupported tags
-        (r"</?[^>]{3,}>", 0,
-            r"")]
+    @util.once
+    def _get_decode_tags(self):
+        """Get list of tuples of regular expression, replacement."""
 
-    _re_redundant = re.compile(r"</([ibu])>([^\w\n]*?)<\1>", re.UNICODE)
+        tags = [
+            # Uppercase style tags
+            (re.compile(r"(</?)B>"), r"\1b>"),
+            (re.compile(r"(</?)I>"), r"\1i>"),
+            (re.compile(r"(</?)U>"), r"\1u>"),]
+        return tags
 
-    @classmethod
-    def italicize(cls, text):
-        """Italicize text."""
+    @util.once
+    def _get_encode_tags(self):
+        """Get list of tuples of regular expression, replacement."""
+
+        # Remove all non-style tags.
+        return [(re.compile(r"</?[^>]{3,}>"), "")]
+
+    def decode(self, text):
+        """Return text with tags converted from this to internal format."""
+
+        for regex, replacement in self._get_decode_tags():
+            text = regex.sub(replacement, text)
+        return text
+
+    def encode(self, text):
+        """Return text with tags converted from internal to this format."""
+
+        for regex, replacement in self._get_encode_tags():
+            text = regex.sub(replacement, text)
+        return text
+
+    def italicize(self, text):
+        """Return italicized text."""
 
         return u"<i>%s</i>" % text
-
-    @classmethod
-    def remove_redundant(cls, text):
-        """Remove redundant tags from text."""
-
-        return cls._re_redundant.sub(r"\2", text)

@@ -30,6 +30,6 @@ class Singleton(object):
 
     def __new__(cls):
 
-        if not hasattr(cls, '_instance'):
+        if not '_instance' in cls.__dict__:
             cls._instance = object.__new__(cls)
         return cls._instance

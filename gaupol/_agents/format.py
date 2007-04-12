@@ -91,7 +91,7 @@ class FormatAgent(Delegate):
 
         re_tag = self.get_tag_regex(doc)
         format = eval(self.get_format_class_name(doc))
-        re_italic_tag = re.compile(*format.italic_tag)
+        re_italic_tag = format.italic_tag
         texts = self.get_texts(doc)
         italicize = False
         for row in rows:

@@ -24,7 +24,7 @@ good-names=
 inlinevar-rgx=[a-z]$
 method-rgx=([a-z_][a-z0-9_]{0,29}$)|(test_)|(run_)
 module-rgx=(_?[a-z_][a-z0-9_]{0,19}$)|(__.+?__$)|(^$)
-variable-rgx=[a-z_][a-z0-9_]{0,19}$
+variable-rgx=([a-z_][a-z0-9_]{0,19}$)|([A-Z_][A-Z0-9_]{0,19}$)
 
 [VARIABLES]
 additional-builtins=

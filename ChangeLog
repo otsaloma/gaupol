@@ -1,3 +1,22 @@
+2007-04-12  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/base/singleton.py (__new__):
+	Fix to work with inheritance.
+
+	* gaupol/converter.py:
+	* gaupol/tags/ass.py:
+	* gaupol/tags/__init__.py:
+	* gaupol/tags/internal.py:
+	* gaupol/tags/microdvd.py:
+	* gaupol/tags/mpl2.py:
+	* gaupol/tags/ssa.py:
+	* gaupol/tags/subrip.py:
+	* gaupol/tags/_taglib.py:
+	Simplify TagLibrary interface.
+
+	* gaupol/util.py (once):
+	New decorator.
+
 2007-04-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/const.py:

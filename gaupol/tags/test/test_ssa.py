@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -24,7 +24,7 @@ class TestSubStationAlpha(TestTagLibrary):
 
     def setup_method(self, method):
 
-        self.cls = ssa.SubStationAlpha
+        self.taglib = ssa.SubStationAlpha()
 
     def test_decode(self):
 
@@ -32,7 +32,7 @@ class TestSubStationAlpha(TestTagLibrary):
         text = \
             "{\\b1}All things weird are normal\n" + \
             "in this whore of cities."
-        assert self._decode(text) == \
+        assert self.taglib.decode(text) == \
             "<b>All things weird are normal\n" + \
             "in this whore of cities.</b>"
 
@@ -40,7 +40,7 @@ class TestSubStationAlpha(TestTagLibrary):
         text = \
             "All things {\\i1}weird{\\r} are normal\n" + \
             "in this whore of cities."
-        assert self._decode(text) == \
+        assert self.taglib.decode(text) == \
             "All things <i>weird</i> are normal\n" + \
             "in this whore of cities."
 
@@ -48,7 +48,7 @@ class TestSubStationAlpha(TestTagLibrary):
         text = \
             "{\\c&Hffffff&}All things weird are normal\n" + \
             "in this whore of cities."
-        assert self._decode(text) == \
+        assert self.taglib.decode(text) == \
             '<color="#ffffff">All things weird are normal\n' + \
             'in this whore of cities.</color>'
 
@@ -56,7 +56,7 @@ class TestSubStationAlpha(TestTagLibrary):
         text = \
             "All things {\\fnSans}weird are normal\n" + \
             "in this whore{\\r} of cities."
-        assert self._decode(text) == \
+        assert self.taglib.decode(text) == \
             'All things <font="Sans">weird are normal\n' + \
             'in this whore</font> of cities.'
 
@@ -64,7 +64,7 @@ class TestSubStationAlpha(TestTagLibrary):
         text = \
             "All things weird are normal\n" + \
             "in this {\\fs12}whore of cities."
-        assert self._decode(text) == \
+        assert self.taglib.decode(text) == \
             'All things weird are normal\n' + \
             'in this <size="12">whore of cities.</size>'
 
@@ -72,7 +72,7 @@ class TestSubStationAlpha(TestTagLibrary):
         text = \
             "{\\i1\\b1\\fs12}All things weird{\\i0} are normal\n" + \
             "in this whore{\\b0} of cities."
-        assert self._decode(text) == \
+        assert self.taglib.decode(text) == \
             '<i><b><size="12">All things weird</i> are normal\n' + \
             'in this whore</b> of cities.</size>'
 
@@ -80,7 +80,7 @@ class TestSubStationAlpha(TestTagLibrary):
         text = \
             "{\\s1}All things weird are normal\n" + \
             "in this whore of cities."
-        assert self._decode(text) == \
+        assert self.taglib.decode(text) == \
             "All things weird are normal\n" + \
             "in this whore of cities."
 
@@ -90,7 +90,7 @@ class TestSubStationAlpha(TestTagLibrary):
         text = \
             "<b>All things weird are normal\n" + \
             "in this whore of cities.</b>"
-        assert self._encode(text) == \
+        assert self.taglib.encode(text) == \
             "{\\b1}All things weird are normal\n" + \
             "in this whore of cities."
 
@@ -98,7 +98,7 @@ class TestSubStationAlpha(TestTagLibrary):
         text = \
             "All things <i>weird are normal\n" + \
             "in this whore</i> of cities."
-        assert self._encode(text) == \
+        assert self.taglib.encode(text) == \
             "All things {\\i1}weird are normal\n" + \
             "in this whore{\\i0} of cities."
 
@@ -106,7 +106,7 @@ class TestSubStationAlpha(TestTagLibrary):
         text = \
             '<color="#ffffff">All things weird are normal\n' + \
             'in this whore of cities.</color>'
-        assert self._encode(text) == \
+        assert self.taglib.encode(text) == \
             "{\\c&Hffffff&}All things weird are normal\n" + \
             "in this whore of cities."
 
@@ -114,7 +114,7 @@ class TestSubStationAlpha(TestTagLibrary):
         text = \
             '<font="Sans">All things weird are normal\n' + \
             'in this whore</font> of cities.'
-        assert self._encode(text) == \
+        assert self.taglib.encode(text) == \
             "{\\fnSans}All things weird are normal\n" + \
             "in this whore{\\r} of cities."
 
@@ -122,7 +122,7 @@ class TestSubStationAlpha(TestTagLibrary):
         text = \
             'All things <size="12">weird are normal\n' + \
             'in this whore of cities.</size>'
-        assert self._encode(text) == \
+        assert self.taglib.encode(text) == \
             "All things {\\fs12}weird are normal\n" + \
             "in this whore of cities."
 
@@ -131,20 +131,6 @@ class TestSubStationAlpha(TestTagLibrary):
         text = \
             "All things weird are normal\n" + \
             "in this whore of cities."
-        assert self.cls.italicize(text) == \
+        assert self.taglib.italicize(text) == \
             "{\\i1}All things weird are normal\n" + \
             "in this whore of cities."
-
-    def test_remove_redundant(self):
-
-        text = \
-            "{\\i1}All things weird are normal{\\i0}\n" + \
-            "{\\i1}in this whore of cities.{\\i0}"
-        assert self.cls.remove_redundant(text) == text
-
-        text = \
-            "All things weird are normal\n" + \
-            "in this{\\b0}... {\\b1}whore of cities."
-        assert self.cls.remove_redundant(text) == \
-            "All things weird are normal\n" + \
-            "in this... whore of cities."

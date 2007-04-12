@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -24,7 +24,7 @@ class TestMPL2(TestMicroDVD):
 
     def setup_method(self, method):
 
-        self.cls = mpl2.MPL2
+        self.taglib = mpl2.MPL2()
 
     def test_decode(self):
 
@@ -32,7 +32,7 @@ class TestMPL2(TestMicroDVD):
         text = \
             "/All things weird are normal\n" + \
             "in this whore of cities."
-        assert self._decode(text) == \
+        assert self.taglib.decode(text) == \
             "<i>All things weird are normal</i>\n" + \
             "in this whore of cities."
 
@@ -40,7 +40,7 @@ class TestMPL2(TestMicroDVD):
         text = \
             "/All things weird are normal\n" + \
             "/in this whore of cities."
-        assert self._decode(text) == \
+        assert self.taglib.decode(text) == \
             "<i>All things weird are normal\n" + \
             "in this whore of cities.</i>"
 
@@ -48,7 +48,7 @@ class TestMPL2(TestMicroDVD):
         text = \
             "All things \\weird are normal\n" + \
             "in this whore of cities."
-        assert self._decode(text) == \
+        assert self.taglib.decode(text) == \
             "All things <b>weird are normal</b>\n" + \
             "in this whore of cities."
 
@@ -56,7 +56,7 @@ class TestMPL2(TestMicroDVD):
         text = \
             "All things \\weird are normal\n" + \
             "in this \\whore of cities."
-        assert self._decode(text) == \
+        assert self.taglib.decode(text) == \
             "All things <b>weird are normal</b>\n" + \
             "in this <b>whore of cities.</b>"
 
@@ -64,7 +64,7 @@ class TestMPL2(TestMicroDVD):
         text = \
             "All things weird are normal\n" + \
             "_in this whore of cities."
-        assert self._decode(text) == \
+        assert self.taglib.decode(text) == \
             "All things weird are normal\n" + \
             "<u>in this whore of cities.</u>"
 
@@ -72,7 +72,7 @@ class TestMPL2(TestMicroDVD):
         text = \
             "_All things weird are normal\n" + \
             "in this _whore of cities."
-        assert self._decode(text) == \
+        assert self.taglib.decode(text) == \
             "<u>All things weird are normal</u>\n" + \
             "in this <u>whore of cities.</u>"
 
@@ -84,7 +84,7 @@ class TestMPL2(TestMicroDVD):
         text = \
             "<i>All things weird are normal</i>\n" + \
             "in this whore of cities."
-        assert self._encode(text) == \
+        assert self.taglib.encode(text) == \
             "/All things weird are normal\n" + \
             "in this whore of cities."
 
@@ -92,7 +92,7 @@ class TestMPL2(TestMicroDVD):
         text = \
             "<i>All things weird are normal\n" + \
             "in this whore of cities.</i>"
-        assert self._encode(text) == \
+        assert self.taglib.encode(text) == \
             "/All things weird are normal\n" + \
             "/in this whore of cities."
 
@@ -100,7 +100,7 @@ class TestMPL2(TestMicroDVD):
         text = \
             "<b>All things weird</b> are normal\n" + \
             "in this whore of cities."
-        assert self._encode(text) == \
+        assert self.taglib.encode(text) == \
             "\\All things weird are normal\n" + \
             "in this whore of cities."
 
@@ -108,7 +108,7 @@ class TestMPL2(TestMicroDVD):
         text = \
             "<b>All things weird are normal\n" + \
             "in this whore</b> of cities."
-        assert self._encode(text) == \
+        assert self.taglib.encode(text) == \
             "\\All things weird are normal\n" + \
             "\\in this whore of cities."
 
@@ -116,7 +116,7 @@ class TestMPL2(TestMicroDVD):
         text = \
             "All things <u>weird are normal</u>\n" + \
             "in this whore of cities."
-        assert self._encode(text) == \
+        assert self.taglib.encode(text) == \
             "All things _weird are normal\n" + \
             "in this whore of cities."
 
@@ -124,7 +124,7 @@ class TestMPL2(TestMicroDVD):
         text = \
             "All things <u>weird are normal\n" + \
             "in this whore of cities.</u>"
-        assert self._encode(text) == \
+        assert self.taglib.encode(text) == \
             "All things _weird are normal\n" + \
             "_in this whore of cities."
 
@@ -135,6 +135,6 @@ class TestMPL2(TestMicroDVD):
         text = \
             "All things weird are normal\n" + \
             "in this whore of cities."
-        assert self.cls.italicize(text) == \
+        assert self.taglib.italicize(text) == \
             "/All things weird are normal\n" + \
             "/in this whore of cities."

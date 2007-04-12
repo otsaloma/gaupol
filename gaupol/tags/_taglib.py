@@ -16,73 +16,63 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Base class for subtitle tag libraries."""
+"""Base class for subtitle tag libraries.
+
+Tag conversions are done via an internal format, which has the following tags:
+
+    <b>BOLD</b>
+    <i>ITALIC</i>
+    <u>UNDERLINE</u>
+    <color="#RRGGBB">COLOR</color>
+    <font="NAME">FONT FAMILY</font>
+    <size="INTEGER">FONT SIZE</size>
+"""
 
 
-class TagLibrary(object):
+import re
 
-    """Base class for subtitle tag libraries.
+from gaupol import util
+from gaupol.base import Singleton
 
-    Class variables:
 
-        tag:         Regular expression pattern, flags
-        italic_tag:  Regular expression pattern, flags
-        decode_tags: List of tuples of pattern, flags, replacement [,count]
-        encode_tags: List of tuples of pattern, flags, replacement [,count]
+class TagLibrary(Singleton):
 
-    decode_tags is a list of regular expressions that convert tags to the
-    internal format. encode_tags convert from the internal format to the
-    class's format. The fourth item in the decode_tags and encode_tags tuple is
-    an optional integer that tells how many times the substitution should be
-    performed (default is one).
+    """Base class for subtitle tag libraries."""
 
-    pre- and post-, -decode and -encode functions can be used to perform
-    arbitrary tasks in tag conversion. pre-methods are run before regular
-    exressions and post-methods after.
-    """
+    @property
+    @util.once
+    def italic_tag(self):
+        """Regular expression for an italic tag or None."""
 
-    tag = None
-    italic_tag = None
+        return None
 
-    @classmethod
-    def pre_decode(cls, text):
-        """Convert tags."""
+    @property
+    @util.once
+    def tag(self):
+        """Regular expression for any tag or None."""
 
-        return text
+        return None
 
-    decode_tags = []
+    @util.once
+    def _get_encode_tags(self):
+        """Get list of tuples of regular expression, replacement."""
 
-    @classmethod
-    def post_decode(cls, text):
-        """Convert tags."""
-
-        return text
-
-    @classmethod
-    def pre_encode(cls, text):
-        """Convert tags."""
-
-        return text
-
-    encode_tags = [
         # Remove all tags.
-        (r"<.*?>", 0,
-            r"")]
+        return [(re.compile(r"<.*?>"), "")]
 
-    @classmethod
-    def post_encode(cls, text):
-        """Convert tags."""
+    def decode(self, text):
+        """Return text with tags converted from this to internal format."""
 
         return text
 
-    @classmethod
-    def italicize(cls, text):
-        """Italicize text."""
+    def encode(self, text):
+        """Return text with tags converted from internal to this format."""
 
+        for regex, replacement in self._get_encode_tags():
+            text = regex.sub(replacement, text)
         return text
 
-    @classmethod
-    def remove_redundant(cls, text):
-        """Remove redundant tags from text."""
+    def italicize(self, text):
+        """Return italicized text."""
 
-        return text
+        raise NotImplementedError

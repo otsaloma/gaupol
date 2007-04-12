@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -21,42 +21,46 @@
 
 import re
 
+from gaupol import util
 from .ssa import SubStationAlpha
 
 
 class AdvSubStationAlpha(SubStationAlpha):
 
-    """Advanced Sub Station Alpha tag library.
+    """Advanced Sub Station Alpha tag library."""
 
-    Class variables:
+    @util.once
+    def _get_decode_tags(self):
+        """Get list of tuples of regular expression, replacement, count."""
 
-        _re_redundant: Regular expression for a redundant tag pair
-    """
+        FLAGS = re.IGNORECASE
 
-    decode_tags = [
-        # Underline opening
-        (r"\{\\u1\}", re.IGNORECASE,
-            r"<u>"),
-        # Underline closing
-        (r"\{\\u0\}", re.IGNORECASE,
-            r"</u>")
-    ] + SubStationAlpha.decode_tags
+        tags = [
+            # Underline opening
+            (r"\{\\u1\}", FLAGS,
+                r"<u>", 1),
+            # Underline closing
+            (r"\{\\u0\}", FLAGS,
+                r"</u>", 1),]
 
-    encode_tags = [
-        # Underline opening
-        (r"<u>", re.IGNORECASE,
-            r"{\\u1}"),
-        # Underline closing
-        (r"</u>", re.IGNORECASE,
-            r"{\\u0}")
-    ] + SubStationAlpha.encode_tags
+        for i, (pattern, flags, replacement, count) in enumerate(tags):
+            tags[i] = (re.compile(pattern, flags), replacement, count)
+        return tags + SubStationAlpha._get_decode_tags(self)
 
-    # \061 = 1
-    _re_redundant = re.compile(
-        r"\{\\([ibu])0\}([^\w\n]*?)\{\\\1\061\}", re.UNICODE)
+    @util.once
+    def _get_encode_tags(self):
+        """Get list of tuples of regular expression, replacement, count."""
 
-    @classmethod
-    def remove_redundant(cls, text):
-        """Remove redundant tags from text."""
+        FLAGS = re.IGNORECASE
 
-        return cls._re_redundant.sub(r"\2", text)
+        tags = [
+            # Underline opening
+            (r"<u>", FLAGS,
+                r"{\\u1}", 1),
+            # Underline closing
+            (r"</u>", FLAGS,
+                r"{\\u0}", 1),]
+
+        for i, (pattern, flags, replacement, count) in enumerate(tags):
+            tags[i] = (re.compile(pattern, flags), replacement, count)
+        return tags + SubStationAlpha._get_encode_tags(self)

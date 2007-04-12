@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -24,7 +24,7 @@ class TestSubRip(TestTagLibrary):
 
     def setup_method(self, method):
 
-        self.cls = subrip.SubRip
+        self.taglib = subrip.SubRip()
 
     def test_decode(self):
 
@@ -32,7 +32,7 @@ class TestSubRip(TestTagLibrary):
         text = \
             "<B>All things weird are normal\n" + \
             "in this whore of cities.</B>"
-        assert self._decode(text) == \
+        assert self.taglib.decode(text) == \
             "<b>All things weird are normal\n" + \
             "in this whore of cities.</b>"
 
@@ -40,7 +40,7 @@ class TestSubRip(TestTagLibrary):
         text = \
             "<I>All</I> things weird are normal\n" + \
             "in this whore of cities."
-        assert self._decode(text) == \
+        assert self.taglib.decode(text) == \
             "<i>All</i> things weird are normal\n" + \
             "in this whore of cities."
 
@@ -48,73 +48,50 @@ class TestSubRip(TestTagLibrary):
         text = \
             "All things weird are normal\n" + \
             "in this whore of <U>cities</U>."
-        assert self._decode(text) == \
+        assert self.taglib.decode(text) == \
             "All things weird are normal\n" + \
             "in this whore of <u>cities</u>."
 
     def test_encode(self):
 
-        # Keep style tags: italic.
+        # Italic
         text = \
             "<i>All things weird are normal\n" + \
             "in this whore of cities.</i>"
-        assert self._encode(text) == text
+        assert self.taglib.encode(text) == text
 
-        # Keep style tags: bold.
+        # Bold
         text = \
             "<b>All</b> things weird are normal\n" + \
             "in this whore of cities.</b>"
-        assert self._encode(text) == text
+        assert self.taglib.encode(text) == text
 
-        # Keep style tags: underline.
+        # Underline
         text = \
             "All things weird are normal\n" + \
             "in this whore of <u>cities</u>."
-        assert self._encode(text) == text
+        assert self.taglib.encode(text) == text
 
-        # All unsupported tags: font
+        # Remove font.
         text = \
             '<font="Sans">All things weird are normal\n' + \
             'in this whore of cities.</font>'
-        assert self._encode(text) == \
-            "All things weird are normal\n" + \
-            "in this whore of cities."
+        assert self.taglib.encode(text) == self.plain_text
 
-        # All unsupported tags: color
+        # Remove color.
         text = \
             '<color="#ffffff">All</color> things weird are normal\n' + \
             'in this whore of cities.'
-        assert self._encode(text) == \
-            "All things weird are normal\n" + \
-            "in this whore of cities."
+        assert self.taglib.encode(text) == self.plain_text
 
-        # All unsupported tags: size
+        # Remove size.
         text = \
             'All things weird are normal\n' + \
             'in this whore of <size="12">cities</size>.'
-        assert self._encode(text) == \
-            "All things weird are normal\n" + \
-            "in this whore of cities."
+        assert self.taglib.encode(text) == self.plain_text
 
     def test_italicize(self):
 
-        text = \
-            "All things weird are normal\n" + \
-            "in this whore of cities."
-        assert self.cls.italicize(text) == \
+        assert self.taglib.italicize(self.plain_text) == \
             "<i>All things weird are normal\n" + \
             "in this whore of cities.</i>"
-
-    def test_remove_redundant(self):
-
-        text = \
-            "<i>All things weird are normal</i>\n" + \
-            "<i>in this whore of cities.</i>"
-        assert self.cls.remove_redundant(text) == text
-
-        text = \
-            "All things weird are normal\n" + \
-            "in this</i>... <i>whore of cities."
-        assert self.cls.remove_redundant(text) == \
-            "All things weird are normal\n" + \
-            "in this... whore of cities."

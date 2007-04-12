@@ -100,6 +100,18 @@ def memoize(function):
     wrapper.original = function
     return wrapper
 
+def once(function):
+    """Decorator for functions that cache their only return value."""
+
+    cache = []
+    @functools.wraps(function)
+    def wrapper(*args, **kwargs):
+        if not cache:
+            cache.append(function(*args, **kwargs))
+        return cache[0]
+
+    return wrapper
+
 def browse_url(url, browser=None):
     """Open URL in browser."""
 

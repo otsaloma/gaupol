@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,7 +16,19 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Tags of all formats."""
+"""Tags files of all formats.
+
+Imported names:
+
+    AdvSubStationAlpha (ass)
+    MicroDVD (microdvd)
+    MPL2 (mpl2)
+    MPsub (mpsub)
+    SubStationAlpha (ssa)
+    SubRip (subrip)
+    SubViewer2 (subviewer2)
+    TMPlayer (tmplayer)
+"""
 
 
 from .ass        import AdvSubStationAlpha
@@ -28,13 +40,5 @@ from .subrip     import SubRip
 from .subviewer2 import SubViewer2
 from .tmplayer   import TMPlayer
 
-
-__all__ = [
-    "AdvSubStationAlpha",
-    "MicroDVD",
-    "MPL2",
-    "MPsub",
-    "SubRip",
-    "SubStationAlpha",
-    "SubViewer2",
-    "TMPlayer",]
+from gaupol import const
+__all__ = const.FORMAT.class_names

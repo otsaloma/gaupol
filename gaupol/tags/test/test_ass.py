@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -24,7 +24,7 @@ class TestAdvSubStationAlpha(TestSubStationAlpha):
 
     def setup_method(self, method):
 
-        self.cls = ass.AdvSubStationAlpha
+        self.taglib = ass.AdvSubStationAlpha()
 
     def test_decode(self):
 
@@ -34,7 +34,7 @@ class TestAdvSubStationAlpha(TestSubStationAlpha):
         text = \
             "{\\u1}All things weird are normal\n" + \
             "in this whore of cities."
-        assert self._decode(text) == \
+        assert self.taglib.decode(text) == \
             "<u>All things weird are normal\n" + \
             "in this whore of cities.</u>"
 
@@ -46,20 +46,6 @@ class TestAdvSubStationAlpha(TestSubStationAlpha):
         text = \
             "<u>All things weird are normal\n" + \
             "in this whore of cities.</u>"
-        assert self._encode(text) == \
+        assert self.taglib.encode(text) == \
             "{\\u1}All things weird are normal\n" + \
             "in this whore of cities."
-
-    def test_remove_redundant(self):
-
-        text = \
-            "{\\i1}All things weird are normal{\\i0}\n" + \
-            "{\\i1}in this whore of cities.{\\i0}"
-        assert self.cls.remove_redundant(text) == text
-
-        text = \
-            "All things weird are normal\n" + \
-            "in this{\\u0}... {\\u1}whore of cities."
-        assert self.cls.remove_redundant(text) == \
-            "All things weird are normal\n" + \
-            "in this... whore of cities."
