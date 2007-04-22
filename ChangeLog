@@ -1,5 +1,10 @@
 2007-04-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/subtitle.py:
+	New file.
+
+2007-04-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/base/contractual.py:
 	* gaupol/opts.py:
 	New files.
