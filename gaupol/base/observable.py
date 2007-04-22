@@ -19,8 +19,8 @@
 """Base class for observable objects."""
 
 
-from gaupol import util
 from ._mutables import ObservableDict, ObservableList, ObservableSet
+from .contractual import Contractual
 
 
 class Observable(object):
@@ -52,6 +52,8 @@ class Observable(object):
 
     # The Observable philosophy and API is highly inspired by (Py)GObject.
     # http://www.pygtk.org/docs/pygobject/class-gobject.html
+
+    __metaclass__ = Contractual
 
     __slots__ = [
         "_blocked_signals",
@@ -89,7 +91,6 @@ class Observable(object):
     def _add_signal_require(self, signal):
         assert not signal in self._signal_handlers
 
-    @util.contractual
     def _add_signal(self, signal):
         """Add signal to the list of signals."""
 
@@ -98,7 +99,6 @@ class Observable(object):
     def _validate_ensure(self, return_value, name, value):
         assert return_value == value
 
-    @util.contractual
     def _validate(self, name, value):
         """Return value or an observable version of mutable value."""
 
@@ -114,7 +114,6 @@ class Observable(object):
     def block_require(self, signal):
         assert signal in self._signal_handlers
 
-    @util.contractual
     def block(self, signal):
         """Block all emissions of signal.
 
@@ -139,7 +138,6 @@ class Observable(object):
         assert signal in self._signal_handlers
         assert callable(method)
 
-    @util.contractual
     def connect(self, signal, method, *args):
         """Register to receive notifications of signal."""
 
@@ -155,7 +153,6 @@ class Observable(object):
     def emit_require(self, signal, *args):
         assert signal in self._signal_handlers
 
-    @util.contractual
     def emit(self, signal, *args):
         """Send notification of signal to all registered observers."""
 
@@ -184,7 +181,6 @@ class Observable(object):
     def notify_require(self, name):
         assert hasattr(self, name)
 
-    @util.contractual
     def notify(self, name):
         """Emit notification signal for variable."""
 
@@ -193,7 +189,6 @@ class Observable(object):
     def thaw_notify_ensure(self, value, do=True):
         assert not self._notify_queue
 
-    @util.contractual
     def thaw_notify(self, do=True):
         """Emit all queued notify signals and queue no more.
 
@@ -215,7 +210,6 @@ class Observable(object):
     def unblock_require(self, signal, do=True):
         assert signal in self._signal_handlers
 
-    @util.contractual
     def unblock(self, signal, do=True):
         """Unblock all emissions of signal.
 

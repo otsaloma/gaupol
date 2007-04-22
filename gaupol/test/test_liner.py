@@ -28,20 +28,6 @@ class TestLiner(TestCase):
 
         self.liner = liner.Liner(re.compile(r"<.+?>"))
 
-    def test_is_legal(self):
-
-        text = "<i>I got to the restaurant a little early.</i>"
-        self.liner.set_text(text)
-        assert self.liner.is_legal()
-
-        text = "He'soffdutytodayHe'soffdutytodayHe'soffdutytoday."
-        self.liner.set_text(text)
-        assert self.liner.is_legal()
-
-        text = "<i>I got to the restaurant a little early little early.</i>"
-        self.liner.set_text(text)
-        assert not self.liner.is_legal()
-
     def test__get_length(self):
 
         assert self.liner._get_length([3]) == 3
@@ -132,11 +118,25 @@ class TestLiner(TestCase):
             "test test test test test test test test test\n" + \
             "test test test test test test test test test"
 
+    def test_is_legal(self):
+
+        text = "<i>I got to the restaurant a little early.</i>"
+        self.liner.set_text(text)
+        assert self.liner.is_legal()
+
+        text = "He'soffdutytodayHe'soffdutytodayHe'soffdutytoday."
+        self.liner.set_text(text)
+        assert self.liner.is_legal()
+
+        text = "<i>I got to the restaurant a little early little early.</i>"
+        self.liner.set_text(text)
+        assert not self.liner.is_legal()
+
     def test_set_length_func(self):
 
         def get_length(arg):
             return len(arg)**2 + 1
-        self.liner.set_length_function(get_length)
+        self.liner.set_length_func(get_length)
         assert self.liner._length_func == get_length
         assert self.liner._space_length == 2
 

@@ -16,21 +16,12 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Internationalization functions."""
+from gaupol.unittest import TestCase
+from .. import opts
 
 
-import gettext
-import locale
+class TestModule(TestCase):
 
-from gaupol import paths
+    def test_attributes(self):
 
-__all__ = ["_", "dgettext", "ngettext"]
-
-
-locale.setlocale(locale.LC_ALL, "")
-gettext.bindtextdomain("gaupol", paths.LOCALE_DIR)
-gettext.textdomain("gaupol")
-
-_ = gettext.gettext
-ngettext = gettext.ngettext
-dgettext = gettext.dgettext
+        assert opts.check_contracts

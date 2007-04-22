@@ -20,8 +20,8 @@
 
 Module variables:
 
-    _ENCODINGS:  Tuple of tuples of python name, display name, description
-    _RE_ILLEGAL: Regular expression for illegal characters in encoding names
+    _encodings:  Tuple of tuples of python name, display name, description
+    _re_illegal: Regular expression for illegal characters in encoding names
 """
 
 # Python names are the official names used by Python [1]. Display names are
@@ -42,7 +42,7 @@ from gaupol import util
 from gaupol.i18n import _
 
 
-_ENCODINGS = (
+_encodings = (
     # Translators: Most of the character encoding descriptions are copied from
     # Gedit, which is translated to very many languages. Check the Gedit .po
     # files for a reference: http://svn.gnome.org/viewcvs/gedit/trunk/po/.
@@ -132,7 +132,7 @@ _ENCODINGS = (
     ("utf_7"          , "UTF-7"           , _("Unicode")            ),
     ("utf_8"          , "UTF-8"           , _("Unicode")            ),)
 
-_RE_ILLEGAL = re.compile(r"[^a-z0-9_]")
+_re_illegal = re.compile(r"[^a-z0-9_]")
 
 
 def _translate_ensure(value, name):
@@ -146,10 +146,10 @@ def _translate(name):
     Return python name.
     """
     from encodings.aliases import aliases
-    name = _RE_ILLEGAL.sub("_", name.lower())
+    name = _re_illegal.sub("_", name.lower())
     if name in aliases:
         name = aliases[name]
-    for seq in _ENCODINGS:
+    for seq in _encodings:
         if seq[0] == name:
             return seq[0]
     raise ValueError
@@ -183,7 +183,7 @@ def get_display_name(python_name):
 
     Raise ValueError if not found.
     """
-    for seq in _ENCODINGS:
+    for seq in _encodings:
         if seq[0] == python_name:
             return seq[1]
     raise ValueError
@@ -215,7 +215,7 @@ def get_locale_python_name():
     encoding = locale.getpreferredencoding()
     if encoding is None:
         return None
-    encoding = _RE_ILLEGAL.sub("_", encoding.lower())
+    encoding = _re_illegal.sub("_", encoding.lower())
     if encoding in aliases:
         encoding = aliases[encoding]
     return encoding
@@ -226,7 +226,7 @@ def get_long_name(python_name):
     Raise ValueError if not found.
     Return 'Description (Display name)'.
     """
-    for seq in _ENCODINGS:
+    for seq in _encodings:
         if seq[0] == python_name:
             fields = {"description": seq[2], "encoding": seq[1]}
             return _("%(description)s (%(encoding)s)") % fields
@@ -237,7 +237,7 @@ def get_python_name(display_name):
 
     Raise ValueError if not found.
     """
-    for seq in _ENCODINGS:
+    for seq in _encodings:
         if seq[1] == display_name:
             return seq[0]
     raise ValueError
@@ -247,7 +247,7 @@ def get_valid_encodings():
 
     Return list of tuples of python name, display name, description.
     """
-    valid_encodings = list(_ENCODINGS)
+    valid_encodings = list(_encodings)
     for i, seq in enumerate(reversed(valid_encodings)):
         if not is_valid(seq[0]):
             valid_encodings.pop(i)

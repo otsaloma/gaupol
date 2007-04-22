@@ -21,28 +21,36 @@
 
 from __future__ import division
 
-from gaupol import util
+from gaupol import const
 
 
 class Calculator(object):
 
     """Time and frame calculator.
 
+    Class variables:
+
+        _instances: Dictionary mapping framerates to instances
+
     Instance variables:
 
         framerate: Video framerate as float
 
     Times are handled as strings, frames as integers and seconds as floats.
+    Only one instance of Calculator exists for a given framerate.
     """
 
-    def __init__(self, framerate=None):
-        """Initialize Calculator.
+    _instances = {}
 
-        framerate should be a FRAMERATE constant.
-        """
-        self.framerate = None
-        if framerate is not None:
-            self.set_framerate(framerate)
+    def __init__(self, framerate=const.FRAMERATE.P24):
+
+        self.framerate = framerate.value
+
+    def __new__(cls, framerate=const.FRAMERATE.P24):
+
+        if not framerate in cls._instances:
+            cls._instances[framerate] = object.__new__(cls)
+        return cls._instances[framerate]
 
     def add_seconds_to_time(self, time, seconds):
         """Add amount of seconds to time."""
@@ -57,19 +65,11 @@ class Calculator(object):
         y = self.time_to_seconds(y)
         return self.seconds_to_time(max(x + y, 0))
 
-    def frame_to_seconds_require(self, frame):
-        assert self.framerate is not None
-
-    @util.contractual
     def frame_to_seconds(self, frame):
         """Convert frame to seconds."""
 
         return frame / self.framerate
 
-    def frame_to_time_require(self, frame):
-        assert self.framerate is not None
-
-    @util.contractual
     def frame_to_time(self, frame):
         """Convert frame to time."""
 
@@ -107,10 +107,6 @@ class Calculator(object):
         seconds = round(seconds, decimals)
         return self.seconds_to_time(seconds)
 
-    def seconds_to_frame_require(self, frame):
-        assert self.framerate is not None
-
-    @util.contractual
     def seconds_to_frame(self, seconds):
         """Convert seconds to frame."""
 
@@ -129,17 +125,6 @@ class Calculator(object):
             int(seconds % 60),
             (seconds % 1) * 1000)
 
-    def set_framerate(self, framerate):
-        """Set the framerate.
-
-        framerate should be a FRAMERATE constant.
-        """
-        self.framerate = framerate.value
-
-    def time_to_frame_require(self, frame):
-        assert self.framerate is not None
-
-    @util.contractual
     def time_to_frame(self, time):
         """Convert time to frame."""
 

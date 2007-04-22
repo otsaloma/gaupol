@@ -3,7 +3,7 @@ maximized = boolean(default=False)
 position = int_list(2, 2, default=list(0, 0))
 show_main_toolbar = boolean(default=True)
 show_statusbar = boolean(default=True)
-show_video_toolbar = boolean(default=False)
+show_video_toolbar = boolean(default=True)
 size = int_list(2, 2, default=list(600, 371))
 toolbar_style = TOOLBAR_STYLE(default="DEFAULT")
 

@@ -1,3 +1,15 @@
+2007-04-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/base/contractual.py:
+	* gaupol/opts.py:
+	New files.
+
+	* gaupol/calculator.py:
+	Use one instance per framerate.
+
+	* gaupol/util.py (contractual):
+	Handle only global functions.
+
 2007-04-12  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/determiner.py:

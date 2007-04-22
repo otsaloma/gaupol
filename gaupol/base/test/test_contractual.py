@@ -16,21 +16,24 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Internationalization functions."""
+from gaupol.unittest import TestCase
+from .. import contractual
 
 
-import gettext
-import locale
+class TestContractual(TestCase):
 
-from gaupol import paths
+    def test___new__(self):
 
-__all__ = ["_", "dgettext", "ngettext"]
+        class Example(object):
+            __metaclass__ = contractual.Contractual
+            def _invariant(self):
+                assert True
+            def do_require(self):
+                assert True
+            def do_ensure(self, value):
+                assert value is None
+            def do(self):
+                return None
 
-
-locale.setlocale(locale.LC_ALL, "")
-gettext.bindtextdomain("gaupol", paths.LOCALE_DIR)
-gettext.textdomain("gaupol")
-
-_ = gettext.gettext
-ngettext = gettext.ngettext
-dgettext = gettext.dgettext
+        example = Example()
+        example.do()

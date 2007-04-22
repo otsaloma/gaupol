@@ -26,21 +26,21 @@ class TestModule(TestCase):
 
     def test_get_capitalize_after(self):
 
-        assert scriptlib._CAP_AFTERS
-        for script, name, pattern in scriptlib._CAP_AFTERS:
+        assert scriptlib._cap_afters
+        for script, name, pattern in scriptlib._cap_afters:
             value = scriptlib.get_capitalize_after(script)
             re.compile(value)
 
     def test_get_clause_separator(self):
 
-        assert scriptlib._CLAUSE_SEPS
-        for script, name, pattern in scriptlib._CLAUSE_SEPS:
+        assert scriptlib._clause_seps
+        for script, name, pattern in scriptlib._clause_seps:
             value = scriptlib.get_clause_separator(script)
             re.compile(value)
 
     def test_get_dialogue_separator(self):
 
-        assert scriptlib._DIALOGUE_SEPS
-        for script, name, pattern in scriptlib._DIALOGUE_SEPS:
+        assert scriptlib._dialogue_seps
+        for script, name, pattern in scriptlib._dialogue_seps:
             value = scriptlib.get_dialogue_separator(script)
             re.compile(value)

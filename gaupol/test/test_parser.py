@@ -127,8 +127,8 @@ class TestParser(TestCase):
     def test_set_text(self):
 
         self.parser.set_text(self.text)
-        assert not self.parser.margins
-        assert self.parser.tags
+        assert not self.parser._margins
+        assert self.parser._tags
         assert self.parser.text == \
             "One only risks it, because\n" + \
             "one's survival depends on it."
@@ -137,8 +137,8 @@ class TestParser(TestCase):
             "<i>One only risks it, because</i>\n" + \
             "<i>one's survival depends on it.</i>"
         self.parser.set_text(text)
-        assert self.parser.margins == ["<i>", "</i>"]
-        assert not self.parser.tags
+        assert self.parser._margins == ["<i>", "</i>"]
+        assert not self.parser._tags
         assert self.parser.text == \
             "One only risks it, because\n" + \
             "one's survival depends on it."

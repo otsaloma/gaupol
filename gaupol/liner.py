@@ -24,7 +24,8 @@ from __future__ import division
 import copy
 import re
 
-from gaupol import scriptlib, util
+from gaupol import scriptlib
+from gaupol.base import Contractual
 from gaupol.parser import Parser
 
 
@@ -49,6 +50,8 @@ class Liner(Parser):
     re_clause and re_dialogue are required to have groups 'before' and 'after'
     surrounding a single space that acts as the separator.
     """
+
+    __metaclass__ = Contractual
 
     _re_multi_space = re.compile(r" {2,}")
 
@@ -80,7 +83,6 @@ class Liner(Parser):
     def _get_split_ensure(self, value, lengths):
         assert 0 <= value <= len(lengths)
 
-    @util.contractual
     def _get_split(self, lengths):
         """Get index of split in two for units.
 
@@ -105,7 +107,6 @@ class Liner(Parser):
         for index in value:
             assert 0 <= index <= len(lengths)
 
-    @util.contractual
     def _get_splits(self, lengths, max_lines):
         """Get indexes of splits for units."""
 
@@ -140,7 +141,6 @@ class Liner(Parser):
         for index in value:
             assert 0 <= index <= len(lengths)
 
-    @util.contractual
     def _get_splits_ugly(self, lengths, max_lines):
         """Get unoptimal indexes of splits for units.
 
@@ -162,7 +162,6 @@ class Liner(Parser):
     def _get_start_index_ensure(self, value, lengths, max_lines):
         assert 0 <= value <= len(lengths)
 
-    @util.contractual
     def _get_start_index(self, lengths, max_lines):
         """Get the index for the first split candidate for units.
 
@@ -178,18 +177,9 @@ class Liner(Parser):
                 return i - 1
         return 1
 
-    def is_legal(self):
-        """Return True if the text does not break self.max_length."""
-
-        for line in self.text.split("\n"):
-            if (" " in line) and (self._length_func(line) > self.max_length):
-                return False
-        return True
-
     def _join_even_ensure(self, value, max_lines):
         assert self.text.count("\n") == max_lines - 1
 
-    @util.contractual
     def _join_even(self, max_lines):
         """Join the lines, each containing a logical unit, evenly."""
 
@@ -254,21 +244,28 @@ class Liner(Parser):
         self.replace_all()
 
         text = self.text
-        tags = copy.deepcopy(self.tags)
+        tags = copy.deepcopy(self._tags)
         for max_lines in range(1, 100):
             for method in ("dialogue", "clauses", "words"):
                 self.text = text
-                self.tags = copy.deepcopy(tags)
+                self._tags = copy.deepcopy(tags)
                 method = getattr(self, "_split_on_%s" % method)
                 if method(max_lines) and self.is_legal():
                     return self.get_text()
         return self.get_text()
 
-    def set_length_function_require(self, func):
+    def is_legal(self):
+        """Return True if the text does not break self.max_length."""
+
+        for line in self.text.split("\n"):
+            if (" " in line) and (self._length_func(line) > self.max_length):
+                return False
+        return True
+
+    def set_length_func_require(self, func):
         assert isinstance(func(""), int) or isinstance(func(""), float)
 
-    @util.contractual
-    def set_length_function(self, func):
+    def set_length_func(self, func):
         """Set the length function to use."""
 
         self._length_func = func

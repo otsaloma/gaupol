@@ -16,21 +16,12 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Internationalization functions."""
+"""Options for run-time behaviour.
+
+Module variables:
+
+    check_contracts: True to check pre-, postconditions and class invariants
+"""
 
 
-import gettext
-import locale
-
-from gaupol import paths
-
-__all__ = ["_", "dgettext", "ngettext"]
-
-
-locale.setlocale(locale.LC_ALL, "")
-gettext.bindtextdomain("gaupol", paths.LOCALE_DIR)
-gettext.textdomain("gaupol")
-
-_ = gettext.gettext
-ngettext = gettext.ngettext
-dgettext = gettext.dgettext
+check_contracts = True

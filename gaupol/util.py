@@ -16,12 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Miscellaneous functions and decorators.
-
-Module variables:
-
-    CHECK_CONTRACTS: True to check pre- and postconditions of functions
-"""
+"""Miscellaneous functions and decorators."""
 
 
 from __future__ import with_statement
@@ -39,48 +34,35 @@ import urllib
 import urlparse
 import webbrowser
 
+from gaupol import opts
 
-# All defined variables and functions (Scroll to bottom).
+# All defined variables and functions.
 __all__ = set(dir() + ["__all__"])
-
-CHECK_CONTRACTS = True
 
 
 def contractual(function):
-    """Design by contract decorator for functions.
+    """Decorator for functions with pre- and/or postconditions.
 
     function call will be wrapped around 'FUNCTION_NAME_require' and
     'FUNCTION_NAME_ensure' calls if such functions exist. The require function
     receives the same arguments as function, the ensure function will in
     addition receive function's return value as its first argument.
 
-    Works only for module level functions, methods and classmethods;
-    fails silently for nested functions and staticmethods!
+    Works only for module level functions!
     """
     @functools.wraps(function)
     def wrapper(*args, **kwargs):
-        if not CHECK_CONTRACTS:
+        if not opts.check_contracts:
             return function(*args, **kwargs)
         name = "%s_require" % function.__name__
-        if is_method(function, args):
-            if function.__name__.startswith("__"):
-                name = "_%s%s" % (args[0].__class__.__name__, name)
-            if hasattr(args[0], name):
-                getattr(args[0], name)(*args[1:], **kwargs)
-        elif name in function.func_globals:
+        if name in function.func_globals:
             function.func_globals[name](*args, **kwargs)
         value = function(*args, **kwargs)
         name = "%s_ensure" % function.__name__
-        if is_method(function, args):
-            if function.__name__.startswith("__"):
-                name = "_%s%s" % (args[0].__class__.__name__, name)
-            if hasattr(args[0], name):
-                getattr(args[0], name)(value, *args[1:], **kwargs)
-        elif name in function.func_globals:
+        if name in function.func_globals:
             function.func_globals[name](value, *args, **kwargs)
         return value
 
-    wrapper.original = function
     return wrapper
 
 def memoize(function):
@@ -100,6 +82,18 @@ def memoize(function):
     wrapper.original = function
     return wrapper
 
+def notify_frozen(function):
+    """Decorator for methods to be run in notify frozen state."""
+
+    @functools.wraps(function)
+    def wrapper(*args, **kwargs):
+        frozen = args[0].freeze_notify()
+        value = function(*args, **kwargs)
+        args[0].thaw_notify(frozen)
+        return value
+
+    return wrapper
+
 def once(function):
     """Decorator for functions that cache their only return value."""
 
@@ -111,6 +105,26 @@ def once(function):
         return cache[0]
 
     return wrapper
+
+def silent(*exceptions):
+    """Decorator for ignoring exceptions raised  by function.
+
+    If no exceptions specified, ignore Exception.
+    Return None if an exception encountered.
+    """
+    if not exceptions:
+        exceptions = (Exception,)
+
+    def outer_wrapper(function):
+        @functools.wraps(function)
+        def inner_wrapper(*args, **kwargs):
+            try:
+                return function(*args, **kwargs)
+            except exceptions:
+                return None
+        return inner_wrapper
+
+    return outer_wrapper
 
 def browse_url(url, browser=None):
     """Open URL in browser."""
@@ -357,18 +371,6 @@ def makedirs(directory):
     if not os.path.isdir(directory):
         os.makedirs(directory)
 
-def notify_frozen(function):
-    """Decorator for methods to be run in notify frozen state."""
-
-    @functools.wraps(function)
-    def wrapper(*args, **kwargs):
-        frozen = args[0].freeze_notify()
-        value = function(*args, **kwargs)
-        args[0].thaw_notify(frozen)
-        return value
-
-    return wrapper
-
 def path_to_uri(path):
     """Convert local filepath to URI."""
 
@@ -403,26 +405,6 @@ def shell_quote(path):
         path = path.replace("\\", "\\\\")
         path = path.replace('"', '\\"')
     return '"%s"' % path
-
-def silent(*exceptions):
-    """Decorator for ignoring exceptions raised  by function.
-
-    If no exceptions specified, ignore Exception.
-    Return None if an exception encountered.
-    """
-    if not exceptions:
-        exceptions = (Exception,)
-
-    def outer_wrapper(function):
-        @functools.wraps(function)
-        def inner_wrapper(*args, **kwargs):
-            try:
-                return function(*args, **kwargs)
-            except exceptions:
-                return None
-        return inner_wrapper
-
-    return outer_wrapper
 
 def start_process(command, **kwargs):
     """Start command as a new background subprocess.
@@ -459,4 +441,5 @@ def write(path, text, encoding=None):
     with contextlib.closing(codecs.open(*args)) as fobj:
         return fobj.write(text)
 
+# All defined variables and functions.
 __all__ = sorted(list(set(dir()) - __all__))

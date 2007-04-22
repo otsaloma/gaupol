@@ -25,7 +25,14 @@ class TestCalculator(TestCase):
 
     def setup_method(self, method):
 
-        self.calc = calculator.Calculator(const.FRAMERATE.P24)
+        self.calc = calculator.Calculator()
+
+    def test___new__(self):
+
+        for framerate in const.FRAMERATE.members:
+            a = calculator.Calculator(framerate)
+            b = calculator.Calculator(framerate)
+            assert a is b
 
     def test_add_seconds_to_time(self):
 
@@ -101,12 +108,6 @@ class TestCalculator(TestCase):
 
         time = self.calc.seconds_to_time(999999)
         assert time == "99:59:59.999"
-
-    def test_set_framerate(self):
-
-        for framerate in const.FRAMERATE.members:
-            self.calc.set_framerate(framerate)
-            assert self.calc.framerate == framerate.value
 
     def test_time_to_frame(self):
 

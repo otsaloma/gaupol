@@ -20,9 +20,9 @@
 
 Module variables:
 
-    COUNTRIES: Dictionary mapping ISO 3166 codes to country names
-    LANGS:     Dictionary mapping ISO 639 codes to language names
-    LOCALES:   Frozen set of locale codes
+    countries: Dictionary mapping ISO 3166 codes to country names
+    langs:     Dictionary mapping ISO 639 codes to language names
+    locales:   Frozen set of locale codes
 
 Language codes are ISO 639 two-letter codes. Country codes are ISO 3166 codes.
 These connected with an underscore form locale codes. Translations for the
@@ -50,7 +50,7 @@ it exists.
 from gaupol.i18n import _, dgettext
 
 
-COUNTRIES = {
+countries = {
     "AD": "Andorra",
     "AE": "United Arab Emirates",
     "AF": "Afghanistan",
@@ -292,7 +292,7 @@ COUNTRIES = {
     "ZM": "Zambia",
     "ZW": "Zimbabwe",}
 
-LANGS = {
+langs = {
     "aa": "Afar",
     "ab": "Abkhazian",
     "ae": "Avestan",
@@ -477,7 +477,7 @@ LANGS = {
     "zh": "Chinese",
     "zu": "Zulu",}
 
-LOCALES = frozenset((
+locales = frozenset((
     "af",
     "af_ZA",
     "ak",
@@ -698,7 +698,7 @@ def get_country(locale):
     Raise KeyError if language not found.
     """
     if len(locale) == 5:
-        return dgettext("iso_3166", COUNTRIES[locale[3:]])
+        return dgettext("iso_3166", countries[locale[3:]])
     return None
 
 def get_language(locale):
@@ -706,7 +706,7 @@ def get_language(locale):
 
     Raise KeyError if language not found.
     """
-    return dgettext("iso_639", LANGS[locale[:2]])
+    return dgettext("iso_639", langs[locale[:2]])
 
 def get_long_name(locale):
     """Get the localized long name from locale code.

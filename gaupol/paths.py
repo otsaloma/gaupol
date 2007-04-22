@@ -27,9 +27,13 @@ Module variables:
 import os
 
 
-CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-PREFIX_DIR  = os.path.abspath(os.path.join(CURRENT_DIR, ".."))
-DATA_DIR    = os.path.join(PREFIX_DIR, "data")
-LOCALE_DIR  = os.path.join(PREFIX_DIR, "locale")
+def get_directory(name):
+    cwd = os.path.dirname(os.path.abspath(__file__))
+    prefix = os.path.abspath(os.path.join(cwd, ".."))
+    return os.path.join(prefix, name)
+
+DATA_DIR = get_directory("data")
+LOCALE_DIR = get_directory("locale")
 PROFILE_DIR = os.path.join(os.path.expanduser("~"), ".gaupol")
-del CURRENT_DIR, PREFIX_DIR
+
+del get_directory

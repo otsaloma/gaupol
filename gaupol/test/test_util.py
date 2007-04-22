@@ -44,6 +44,13 @@ class TestModule(TestCase):
         assert get_constant() == 5
         assert get_constant() == 5
 
+    def test_silent(self):
+
+        @util.silent(ValueError)
+        def erroneous_do():
+            [].remove(None)
+        erroneous_do()
+
     def test_browse_url(self):
 
         util.browse_url("http://home.gna.org/gaupol")
@@ -162,13 +169,6 @@ class TestModule(TestCase):
 
         path = util.shell_quote(r'/home/tester/my "file"\.ext')
         assert path == r'"/home/tester/my \"file\"\\.ext"'
-
-    def test_silent(self):
-
-        @util.silent(ValueError)
-        def erroneous_do():
-            [].remove(None)
-        erroneous_do()
 
     def test_start_process(self):
 

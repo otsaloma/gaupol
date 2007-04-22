@@ -24,7 +24,7 @@
 import copy
 import functools
 
-from gaupol import util
+from .contractual import Contractual
 
 
 def _mutation(function):
@@ -49,6 +49,8 @@ class ObservableDict(dict):
         name:   Argument given when calling master's 'notify' method
     """
 
+    __metaclass__ = Contractual
+
     def __copy__(self):
         dic = dict(copy.copy(x) for  x in self.items())
         return self.__class__(dic, self.master, self.name)
@@ -64,7 +66,6 @@ class ObservableDict(dict):
     def __init___require(self, *args, **kwargs):
         assert hasattr(args[-2], "notify")
 
-    @util.contractual
     def __init__(self, *args, **kwargs):
         dict.__init__(self, *args[:-2], **kwargs)
         self.master = args[-2]
@@ -105,6 +106,8 @@ class ObservableList(list):
         name:   Argument given when calling master's 'notify' method
     """
 
+    __metaclass__ = Contractual
+
     def __copy__(self):
         lst = list(copy.copy(x) for x in self)
         return self.__class__(lst, self.master, self.name)
@@ -132,7 +135,6 @@ class ObservableList(list):
     def __init___require(self, *args, **kwargs):
         assert hasattr(args[-2], "notify")
 
-    @util.contractual
     def __init__(self, *args, **kwargs):
         list.__init__(self, *args[:-2], **kwargs)
         self.master = args[-2]
@@ -185,6 +187,8 @@ class ObservableSet(set):
         name:   Argument given when calling master's 'notify' method
     """
 
+    __metaclass__ = Contractual
+
     def __copy__(self):
         zet = set(copy.copy(x) for x in self)
         return self.__class__(zet, self.master, self.name)
@@ -200,7 +204,6 @@ class ObservableSet(set):
     def __init___require(self, *args, **kwargs):
         assert hasattr(args[-2], "notify")
 
-    @util.contractual
     def __init__(self, *args, **kwargs):
         set.__init__(self, *args[:-2], **kwargs)
         self.master = args[-2]

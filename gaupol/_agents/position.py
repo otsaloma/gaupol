@@ -23,6 +23,7 @@ from __future__ import division
 
 from gaupol import const, util
 from gaupol.base import Delegate
+from gaupol.calculator import Calculator
 from gaupol.i18n import _
 from .index import SHOW, HIDE, DURN
 from .register import revertable
@@ -204,7 +205,7 @@ class PositionAgent(Delegate):
 
         orig_framerate = self.framerate
         self.framerate = framerate
-        self.calc.set_framerate(framerate)
+        self.calc = Calculator(framerate)
 
         self.register_action(
             register=register,

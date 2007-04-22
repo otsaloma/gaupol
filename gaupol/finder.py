@@ -21,7 +21,7 @@
 
 import re
 
-from gaupol import util
+from gaupol.base import Contractual
 
 
 class Finder(object):
@@ -39,6 +39,8 @@ class Finder(object):
         text:        Target text
     """
 
+    __metaclass__ = Contractual
+
     def __init__(self):
 
         self.ignore_case = False
@@ -49,17 +51,9 @@ class Finder(object):
         self.replacement = None
         self.text        = None
 
-    def __setattr___require(self, name, value):
-        if (name == "match_span") and (value is not None):
-            for pos in value:
-                assert (0 <= pos <= len(self.text))
-        elif (name == "pos") and (value is not None):
-            assert (0 <= value <= len(self.text))
-
-    @util.contractual
-    def __setattr__(self, name, value):
-
-        return object.__setattr__(self, name, value)
+    def _invariant(self):
+        if self.pos is not None:
+            assert (0 <= self.pos <= len(self.text))
 
     def next_require(self):
         assert self.pattern is not None
@@ -68,7 +62,6 @@ class Finder(object):
         for pos in value:
             assert (0 <= pos <= len(self.text))
 
-    @util.contractual
     def next(self):
         """Find the next match of pattern.
 
@@ -109,7 +102,6 @@ class Finder(object):
         for pos in value:
             assert (0 <= pos <= len(self.text))
 
-    @util.contractual
     def previous(self):
         """Find the previous match of pattern.
 
@@ -157,7 +149,6 @@ class Finder(object):
         assert self.pattern is not None
         assert self.replacement is not None
 
-    @util.contractual
     def replace(self, next=True):
         """Replace the current match.
 
@@ -182,7 +173,6 @@ class Finder(object):
         assert self.pattern is not None
         assert self.replacement is not None
 
-    @util.contractual
     def replace_all(self):
         """Replace all occurences of pattern.
 

@@ -20,6 +20,7 @@
 
 
 from gaupol import util
+from gaupol.base import Contractual
 from gaupol.finder import Finder
 
 
@@ -29,9 +30,9 @@ class Parser(Finder):
 
     Instance variables:
 
-        re_tag:  Regular expression object to match any tag
-        margins: Start tag, end tag that every line is wrapped in
-        tags:    List of lists of tag, position
+        _margins: Start tag, end tag that every line is wrapped in
+        _tags:    List of lists of tag, position
+        re_tag:   Regular expression object to match any tag
 
     The purpose of the Parser is to split text to the actual text and its tags,
     allowing the text to be edited while keeping the tags separate and intact.
@@ -43,21 +44,19 @@ class Parser(Finder):
     Either margins or tags will always be empty.
     """
 
-    def __init__(self, re_tag=None):
-        """Initialize Parser.
+    __metaclass__ = Contractual
 
-        re_tag should be a regular expression object.
-        """
+    def __init__(self, re_tag=None):
+
         Finder.__init__(self)
 
-        self.re_tag  = re_tag
-        self.margins = None
-        self.tags    = None
+        self._margins = None
+        self._tags    = None
+        self.re_tag   = re_tag
 
     def _set_margins_require(self, text):
         assert self.re_tag is not None
 
-    @util.contractual
     @util.silent(AssertionError)
     def _set_margins(self, text):
         """Find the margin tags in text if such exist."""
@@ -87,25 +86,24 @@ class Parser(Finder):
 
         if all([x.startswith(start_tag) for x in lines]):
             if all([x.endswith(end_tag) for x in lines]):
-                self.margins = [start_tag, end_tag]
+                self._margins = [start_tag, end_tag]
 
     def _set_tags_require(self, text):
         assert self.re_tag is not None
 
-    @util.contractual
     def _set_tags(self, text):
         """Find tags in text."""
 
         for match in self.re_tag.finditer(text):
             a, z = match.span()
-            self.tags.append([a, text[a:z]])
+            self._tags.append([a, text[a:z]])
 
     @util.silent(AssertionError)
     def _shift_tags(self, pos, shift, orig_text):
         """Shift all the tags after position."""
 
         assert shift
-        assert self.tags
+        assert self._tags
 
         # Shift tags at position if at a closing tag and shift is positive,
         # otherwise shift only tags after position. This should keep tags at
@@ -120,33 +118,32 @@ class Parser(Finder):
 
         # Get length of tags before position.
         pos_with_tags = pos
-        for pos, tag in self.tags:
+        for pos, tag in self._tags:
             if opening and pos <= pos_with_tags:
                 pos_with_tags += len(tag)
             elif pos < pos_with_tags:
                 pos_with_tags += len(tag)
 
         # Shift tags.
-        for i in range(len(self.tags)):
-            if opening and self.tags[i][0] > pos_with_tags:
-                self.tags[i][0] += shift
-            elif self.tags[i][0] >= pos_with_tags:
-                self.tags[i][0] += shift
-            if self.tags[i][0] < 0:
-                self.tags[i][0] = 0
+        for i in range(len(self._tags)):
+            if opening and self._tags[i][0] > pos_with_tags:
+                self._tags[i][0] += shift
+            elif self._tags[i][0] >= pos_with_tags:
+                self._tags[i][0] += shift
+            if self._tags[i][0] < 0:
+                self._tags[i][0] = 0
 
     def get_text(self):
         """Reassemble the text and return it."""
 
         text = self.text[:]
-        for pos, tag in self.tags:
+        for pos, tag in self._tags:
             text = text[:pos] + tag + text[pos:]
-        if self.margins:
-            text = text.replace("\n", "%s\n%s" % tuple(self.margins[::-1]))
-            text = self.margins[0] + text + self.margins[1]
+        if self._margins:
+            text = text.replace("\n", "%s\n%s" % tuple(self._margins[::-1]))
+            text = self._margins[0] + text + self._margins[1]
         return text
 
-    @util.contractual
     def replace(self, next=True):
         """Replace the current match.
 
@@ -165,11 +162,11 @@ class Parser(Finder):
         next should be True to start at beginning, False for end.
         """
         Finder.set_text(self, text, next)
-        self.margins = []
-        self.tags = []
+        self._margins = []
+        self._tags = []
         assert self.re_tag is not None
         if text.count("\n"):
             self._set_margins(text)
-        if not self.margins:
+        if not self._margins:
             self._set_tags(text)
         self.text = self.re_tag.sub("", text)

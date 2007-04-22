@@ -26,6 +26,7 @@ import os
 import tempfile
 
 from gaupol import const, util
+from gaupol.base import Contractual
 from gaupol.project import Project
 
 
@@ -38,26 +39,38 @@ class TestCase(object):
         files: Set of the paths of temporary files created
     """
 
+    __metaclass__ = Contractual
+
     files = set()
 
     def get_file_path_ensure(self, value, format):
         assert os.path.isfile(value)
 
-    @util.contractual
     def get_file_path(self, format):
         """Get path to a temporary subtitle file."""
 
-        text = self.get_text(format)
+        text = self.get_file_text(format)
         fd, path = tempfile.mkstemp(format.extension, "gaupol.")
         with os.fdopen(fd, "w") as fobj:
             fobj.write(text)
         self.files.add(path)
         return path
 
+    @util.memoize
+    def get_file_text(self, format):
+        """Get subtitle file text."""
+
+        dirname = os.path.abspath(os.path.dirname(__file__))
+        while not dirname.endswith("gaupol"):
+            dirname = os.path.abspath(os.path.join(dirname, ".."))
+        basename = "%s.sample" % format.name.lower()
+        path = os.path.join(dirname, "..", "doc", "formats", basename)
+        with open(path, "r") as fobj:
+            return fobj.read().strip()
+
     def get_microdvd_path_ensure(self, value):
         assert os.path.isfile(value)
 
-    @util.contractual
     def get_microdvd_path(self):
         """Get path to a temporary MicroDVD file."""
 
@@ -74,26 +87,13 @@ class TestCase(object):
     def get_subrip_path_ensure(self, value):
         assert os.path.isfile(value)
 
-    @util.contractual
     def get_subrip_path(self):
         """Get path to a temporary SubRip file."""
 
         return self.get_file_path(const.FORMAT.SUBRIP)
 
-    @util.memoize
-    def get_text(self, format):
-        """Get subtitle file text."""
-
-        dirname = os.path.abspath(os.path.dirname(__file__))
-        while not dirname.endswith("gaupol"):
-            dirname = os.path.abspath(os.path.join(dirname, ".."))
-        basename = "%s.sample" % format.name.lower()
-        path = os.path.join(dirname, "..", "doc", "formats", basename)
-        with open(path, "r") as fobj:
-            return fobj.read().strip()
-
     def raises(self, exception, function, *args, **kwargs):
-        """Assert that function raises exception."""
+        """Assert that calling function raises exception."""
 
         try:
             function(*args, **kwargs)

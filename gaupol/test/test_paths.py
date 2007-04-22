@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -27,5 +27,5 @@ class TestModule(TestCase):
     def test_attributes(self):
 
         assert os.path.isdir(paths.DATA_DIR)
-        assert isinstance(paths.LOCALE_DIR, basestring)
-        assert isinstance(paths.PROFILE_DIR, basestring)
+        assert hasattr(paths, "LOCALE_DIR")
+        assert hasattr(paths, "PROFILE_DIR")

@@ -20,16 +20,16 @@
 
 Module variables:
 
-    _CAP_AFTERS:    Tuple of tuples of script, display name, pattern
-    _CLAUSE_SEPS:   Tuple of tuples of script, display name, pattern
-    _DIALOGUE_SEPS: Tuple of tuples of script, display name, pattern
+    _cap_afters:    Tuple of tuples of script, display name, pattern
+    _clause_seps:   Tuple of tuples of script, display name, pattern
+    _dialogue_seps: Tuple of tuples of script, display name, pattern
 
-Regular expression patterns in 'CLAUSE_SEPS' and 'DIALOGUE_SEPS' are required
+Regular expression patterns in 'clause_seps' and 'dialogue_seps' are required
 to have named groups 'before' and 'after'. Space (or whatever) between those
 groups acts as the separator. Either of the groups can be empty.
 """
 
-# TODO: REWRITE AS 'BEFORE' AND 'AFTER' INSTEAD OF SEPARATORS.
+# TODO: Rewrite as 'before' and 'after' instead of separators.
 
 
 import re
@@ -38,10 +38,10 @@ from gaupol import util
 from gaupol.i18n import _
 
 
-_CAP_AFTERS = (
+_cap_afters = (
     ("latin", _("Latin"), r"((?<!(.\.|\..))\.|\?|\!)(\'|\")?( |$)"),)
 
-_CLAUSE_SEPS = (
+_clause_seps = (
     ("latin", _("Latin"),
      r"(?P<before>" + \
          r"(" + \
@@ -74,7 +74,7 @@ _CLAUSE_SEPS = (
      r"( |$)" + \
      r"(?P<after>)"),)
 
-_DIALOGUE_SEPS = (
+_dialogue_seps = (
     ("latin", _("Latin"), r"(?P<before>) (?P<after>- )"),)
 
 
@@ -87,7 +87,7 @@ def get_capitalize_after(script):
 
     Return regular expression pattern.
     """
-    for seq in _CAP_AFTERS:
+    for seq in _cap_afters:
         if seq[0] == script:
             return seq[2]
     raise ValueError
@@ -101,7 +101,7 @@ def get_clause_separator(script):
 
     Return regular expression pattern.
     """
-    for seq in _CLAUSE_SEPS:
+    for seq in _clause_seps:
         if seq[0] == script:
             return seq[2]
     raise ValueError
@@ -115,7 +115,7 @@ def get_dialogue_separator(script):
 
     Return regular expression pattern.
     """
-    for seq in _DIALOGUE_SEPS:
+    for seq in _dialogue_seps:
         if seq[0] == script:
             return seq[2]
     raise ValueError
