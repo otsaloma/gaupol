@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Tags files of all formats.
+"""Tags of all formats.
 
 Imported names:
 

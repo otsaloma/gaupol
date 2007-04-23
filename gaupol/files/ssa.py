@@ -25,7 +25,8 @@ import codecs
 import contextlib
 import re
 
-from gaupol import const, util
+from gaupol import const
+from gaupol.base import Contractual
 from gaupol.calculator import Calculator
 from ._subfile import SubtitleFile
 
@@ -39,9 +40,8 @@ class SubStationAlpha(SubtitleFile):
         event_fields: Tuple of the names of fields under the 'Events' section
     """
 
+    __metaclass__ = Contractual
     format = const.FORMAT.SSA
-    has_header = True
-    identifier = re.compile(r"^ScriptType: [vV]4.00\s*$")
     mode = const.MODE.TIME
 
     event_fields = (
@@ -57,10 +57,10 @@ class SubStationAlpha(SubtitleFile):
         "Text",)
 
     def _read_components(self, lines):
-        """Read and return shows, hides and texts."""
+        """Read and return starts, ends and texts."""
 
-        shows = []
-        hides = []
+        starts = []
+        ends = []
         texts = []
         re_comma = re.compile(r",\s*")
         for line in lines:
@@ -74,15 +74,15 @@ class SubStationAlpha(SubtitleFile):
             elif line.startswith("Dialogue:"):
                 line = line.replace("Dialogue:", "")[:-1]
                 fields = re_comma.split(line, max_split)
-                shows.append(fields[show_index])
-                hides.append(fields[hide_index])
+                starts.append(fields[show_index])
+                ends.append(fields[hide_index])
                 texts.append(fields[text_index])
 
-        shows = ["0%s0" % x for x in shows]
-        hides = ["0%s0" % x for x in hides]
+        starts = ["0%s0" % x for x in starts]
+        ends = ["0%s0" % x for x in ends]
         texts = [x.replace("\\n", "\n") for x in texts]
         texts = [x.replace("\\N", "\n") for x in texts]
-        return shows, hides, texts
+        return starts, ends, texts
 
     def _read_header(self, lines):
         """Read header and return leftover lines."""
@@ -100,22 +100,21 @@ class SubStationAlpha(SubtitleFile):
 
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
-        Return show times, hide times, texts.
+        Return start times, end times, texts.
         """
         lines = self._read_lines()
         lines = self._read_header(lines)
         return self._read_components(lines)
 
-    @util.contractual
-    def write(self, shows, hides, texts):
+    def write(self, starts, ends, texts):
         """Write file.
 
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
         calc = Calculator()
-        shows = [calc.round_time(x, 2)[1:11] for x in shows]
-        hides = [calc.round_time(x, 2)[1:11] for x in hides]
+        starts = [calc.round_time(x, 2)[1:11] for x in starts]
+        ends = [calc.round_time(x, 2)[1:11] for x in ends]
         texts = [x.replace("\n", "\\n") for x in texts]
 
         args = (self.path, "w", self.encoding)
@@ -127,11 +126,11 @@ class SubStationAlpha(SubtitleFile):
             fobj.write(self.newline.value)
             fobj.write("Format: " + ", ".join(self.event_fields))
             fobj.write(self.newline.value)
-            for i in range(len(shows)):
+            for i in range(len(starts)):
                 fobj.write("Dialogue: 0,")
-                fobj.write(shows[i])
+                fobj.write(starts[i])
                 fobj.write(",")
-                fobj.write(hides[i])
+                fobj.write(ends[i])
                 fobj.write(",Default,,0000,0000,0000,,")
                 fobj.write(texts[i])
                 fobj.write(self.newline.value)

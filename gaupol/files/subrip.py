@@ -25,7 +25,8 @@ import codecs
 import contextlib
 import re
 
-from gaupol import const, util
+from gaupol import const
+from gaupol.base import Contractual
 from ._subfile import SubtitleFile
 
 
@@ -33,10 +34,8 @@ class SubRip(SubtitleFile):
 
     """SubRip file."""
 
-    _time = r"\d\d:\d\d:\d\d,\d\d\d"
+    __metaclass__ = Contractual
     format = const.FORMAT.SUBRIP
-    has_header = False
-    identifier = re.compile(r"^%s --> %s\s*$" % (_time, _time))
     mode = const.MODE.TIME
 
     def _clean_lines(self, all_lines, re_time_line):
@@ -53,29 +52,29 @@ class SubRip(SubtitleFile):
         return lines
 
     def _read_components(self, lines, re_time_line):
-        """Read and return shows, hides and texts."""
+        """Read and return starts, ends and texts."""
 
-        shows = []
-        hides = []
+        starts = []
+        ends = []
         texts = []
         for line in lines:
             match = re_time_line.match(line)
             if match is not None:
-                shows.append(match.group(1).replace(",", "."))
-                hides.append(match.group(2).replace(",", "."))
+                starts.append(match.group(1).replace(",", "."))
+                ends.append(match.group(2).replace(",", "."))
                 texts.append("")
                 continue
             texts[-1] += line
         re_trailer = re.compile(r"\n\Z", re.MULTILINE)
         texts = [re_trailer.sub("", x) for x in texts]
-        return shows, hides, texts
+        return starts, ends, texts
 
     def read(self):
         """Read file.
 
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
-        Return show times, hide times, texts.
+        Return start times, end times, texts.
         """
         time = r"\d\d:\d\d:\d\d,\d\d\d"
         re_time_line = re.compile(r"^(%s) --> (%s)\s*$" % (time, time))
@@ -83,25 +82,24 @@ class SubRip(SubtitleFile):
         lines = self._clean_lines(lines, re_time_line)
         return self._read_components(lines, re_time_line)
 
-    @util.contractual
-    def write(self, shows, hides, texts):
+    def write(self, starts, ends, texts):
         """Write file.
 
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
-        shows = [x.replace(".", ",") for x in shows]
-        hides = [x.replace(".", ",") for x in hides]
+        starts = [x.replace(".", ",") for x in starts]
+        ends = [x.replace(".", ",") for x in ends]
         texts = [x.replace("\n", self.newline.value) for x in texts]
 
         args = (self.path, "w", self.encoding)
         with contextlib.closing(codecs.open(*args)) as fobj:
-            for i in range(len(shows)):
+            for i in range(len(starts)):
                 fobj.write(str(i + 1))
                 fobj.write(self.newline.value)
-                fobj.write(shows[i])
+                fobj.write(starts[i])
                 fobj.write(" --> ")
-                fobj.write(hides[i])
+                fobj.write(ends[i])
                 fobj.write(self.newline.value)
                 fobj.write(texts[i])
                 fobj.write(self.newline.value)

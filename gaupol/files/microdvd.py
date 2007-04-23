@@ -25,7 +25,8 @@ import codecs
 import contextlib
 import re
 
-from gaupol import const, util
+from gaupol import const
+from gaupol.base import Contractual
 from ._subfile import SubtitleFile
 
 
@@ -33,9 +34,8 @@ class MicroDVD(SubtitleFile):
 
     """MicroDVD file."""
 
+    __metaclass__ = Contractual
     format = const.FORMAT.MICRODVD
-    has_header = True
-    identifier = re.compile(r"^\{\d+\}\{\d+\}.*?$")
     mode = const.MODE.FRAME
 
     def read(self):
@@ -43,28 +43,27 @@ class MicroDVD(SubtitleFile):
 
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
-        Return show frames, hide frames, texts.
+        Return start frames, end frames, texts.
         """
-        shows = []
-        hides = []
+        starts = []
+        ends = []
         texts = []
         re_line = re.compile(r"^\{(\d+)\}\{(\d+)\}(.*?)$")
         for line in self._read_lines():
             match = re_line.match(line)
             if match is not None:
-                shows.append(match.group(1))
-                hides.append(match.group(2))
+                starts.append(match.group(1))
+                ends.append(match.group(2))
                 texts.append(match.group(3))
             elif line.startswith("{DEFAULT}"):
                 self.header = line[:-1]
 
-        shows = [int(x) for x in shows]
-        hides = [int(x) for x in hides]
+        starts = [int(x) for x in starts]
+        ends = [int(x) for x in ends]
         texts = [x.replace("|", "\n") for x in texts]
-        return shows, hides, texts
+        return starts, ends, texts
 
-    @util.contractual
-    def write(self, shows, hides, texts):
+    def write(self, starts, ends, texts):
         """Write file.
 
         Raise IOError if writing fails.
@@ -76,8 +75,8 @@ class MicroDVD(SubtitleFile):
             if self.header:
                 fobj.write(self.header)
                 fobj.write(self.newline.value)
-            for i in range(len(shows)):
-                fobj.write("{%d}" % shows[i])
-                fobj.write("{%d}" % hides[i])
+            for i in range(len(starts)):
+                fobj.write("{%d}" % starts[i])
+                fobj.write("{%d}" % ends[i])
                 fobj.write(texts[i])
                 fobj.write(self.newline.value)

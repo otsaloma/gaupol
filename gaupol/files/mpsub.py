@@ -1,4 +1,4 @@
-# Copyright (C) 2006 Osmo Salomaa
+# Copyright (C) 2006-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -25,7 +25,8 @@ import codecs
 import contextlib
 import re
 
-from gaupol import const, util
+from gaupol import const
+from gaupol.base import Contractual
 from gaupol.calculator import Calculator
 from ._subfile import SubtitleFile
 
@@ -34,19 +35,13 @@ class MPsub(SubtitleFile):
 
     """MPsub file.
 
-    Instance variables:
-
-        framerate: FRAMERATE constant
-        mode:      MODE constant
-
-    framerate and mode depend on what is written on the first line of the file
-    header. They will be determined when the file is read and can later be
-    changed with the 'set_header' method.
+    Instance variables framerate and mode depend on what is written on the
+    first line of the file header. They will be determined when the file is
+    read and can later be changed with the 'set_header' method.
     """
 
+    __metaclass__ = Contractual
     format = const.FORMAT.MPSUB
-    has_header = True
-    identifier = re.compile(r"^FORMAT=(TIME|[\d\.]+)\s*$")
     mode = const.MODE.TIME
 
     def __init__(self, path, encoding, newline=None):
@@ -67,69 +62,69 @@ class MPsub(SubtitleFile):
             lines.append(line)
         return lines
 
-    def _get_mpsub_frames(self, shows, hides):
-        """Get MPsub style shows and hides as frames."""
+    def _get_mpsub_frames(self, starts, ends):
+        """Get MPsub style starts and ends as frames."""
 
-        shows = shows[:]
-        hides = hides[:]
-        for i in reversed(range(1, len(shows))):
-            hides[i] = str(hides[i] - shows[i])
-            shows[i] = str(shows[i] - hides[i - 1])
-        hides[0] = str(hides[0] - shows[0])
-        return shows, hides
+        starts = starts[:]
+        ends = ends[:]
+        for i in reversed(range(1, len(starts))):
+            ends[i] = str(ends[i] - starts[i])
+            starts[i] = str(starts[i] - ends[i - 1])
+        ends[0] = str(ends[0] - starts[0])
+        return starts, ends
 
-    def _get_mpsub_times(self, shows, hides):
-        """Get MPsub style shows and hides as times."""
+    def _get_mpsub_times(self, starts, ends):
+        """Get MPsub style starts and ends as times."""
 
         calc = Calculator()
-        shows = [calc.time_to_seconds(x) for x in shows]
-        hides = [calc.time_to_seconds(x) for x in hides]
-        for i in reversed(range(1, len(shows))):
-            hides[i] -= shows[i]
-            shows[i] -= hides[i - 1]
-        hides[0] -= shows[0]
+        starts = [calc.time_to_seconds(x) for x in starts]
+        ends = [calc.time_to_seconds(x) for x in ends]
+        for i in reversed(range(1, len(starts))):
+            ends[i] -= starts[i]
+            starts[i] -= ends[i - 1]
+        ends[0] -= starts[0]
 
         deviation = 0
         # Round times and avoid cumulation of rounding errors.
-        for i in range(len(shows)):
-            orig_show = shows[i]
-            shows[i] = round(shows[i] - deviation, 2)
-            deviation = deviation + shows[i] - orig_show
-            orig_hide = hides[i]
-            hides[i] = round(hides[i] - deviation, 2)
-            deviation = deviation + hides[i] - orig_hide
+        for i in range(len(starts)):
+            orig_show = starts[i]
+            starts[i] = round(starts[i] - deviation, 2)
+            deviation = deviation + starts[i] - orig_show
+            orig_hide = ends[i]
+            ends[i] = round(ends[i] - deviation, 2)
+            deviation = deviation + ends[i] - orig_hide
 
-        shows = ["%.2f" % x for x in shows]
-        hides = ["%.2f" % x for x in hides]
-        return shows, hides
+        starts = ["%.2f" % x for x in starts]
+        ends = ["%.2f" % x for x in ends]
+        return starts, ends
 
     def _read_components(self, lines, re_time_line):
-        """Read and return shows, hides and texts."""
+        """Read and return starts, ends and texts."""
 
-        shows = []
-        hides = []
+        starts = []
+        ends = []
         texts = []
         for line in lines:
             match = re_time_line.match(line)
             if match is not None:
-                show = float(match.group(1))
-                show = (show + hides[-1] if hides else show)
-                shows.append(show)
-                hides.append(shows[-1] + float(match.group(2)))
+                start = float(match.group(1))
+                start = (start + ends[-1] if ends else start)
+                starts.append(start)
+                ends.append(starts[-1] + float(match.group(2)))
                 texts.append(u"")
             elif texts:
                 texts[-1] += line
 
         calc = Calculator()
         if self.mode == const.MODE.TIME:
-            shows = [calc.seconds_to_time(x) for x in shows]
-            hides = [calc.seconds_to_time(x) for x in hides]
+            starts = [calc.seconds_to_time(x) for x in starts]
+            ends = [calc.seconds_to_time(x) for x in ends]
         elif self.mode == const.MODE.FRAME:
-            shows = [int(round(x, 0)) for x in shows]
-            hides = [int(round(x, 0)) for x in hides]
+            starts = [int(round(x, 0)) for x in starts]
+            ends = [int(round(x, 0)) for x in ends]
         re_trailer = re.compile(r"\n\Z", re.MULTILINE)
         texts = [re_trailer.sub("", x) for x in texts]
-        return shows, hides, texts
+        return starts, ends, texts
 
     def _read_header(self, lines, re_time_line):
         """Read header and return leftover lines."""
@@ -149,7 +144,7 @@ class MPsub(SubtitleFile):
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
         Raise ValueError if bad FORMAT line.
-        Return shows, hides, texts.
+        Return starts, ends, texts.
         """
         lines = self._read_lines()
         re_time_line = re.compile(r"^([\d\.]+) ([\d\.]+)\s*$")
@@ -177,15 +172,14 @@ class MPsub(SubtitleFile):
             index = const.FRAMERATE.mpsub_names.index(mode)
             self.framerate = const.FRAMERATE.members[index]
 
-    @util.contractual
-    def write(self, shows, hides, texts):
+    def write(self, starts, ends, texts):
         """Write file.
 
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
         method = (self._get_mpsub_times, self._get_mpsub_frames)[self.mode]
-        shows, hides = method(shows, hides)
+        starts, ends = method(starts, ends)
         texts = [x.replace("\n", self.newline.value) for x in texts]
 
         args = (self.path, "w", self.encoding)
@@ -193,10 +187,10 @@ class MPsub(SubtitleFile):
             fobj.write(self.header)
             fobj.write(self.newline.value)
             fobj.write(self.newline.value)
-            for i in range(len(shows)):
-                fobj.write(shows[i])
+            for i in range(len(starts)):
+                fobj.write(starts[i])
                 fobj.write(" ")
-                fobj.write(hides[i])
+                fobj.write(ends[i])
                 fobj.write(self.newline.value)
                 fobj.write(texts[i])
                 fobj.write(self.newline.value)

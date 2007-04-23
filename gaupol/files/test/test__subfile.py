@@ -18,46 +18,46 @@
 
 from gaupol import const
 from gaupol.unittest import TestCase
-from .. import _subfile
+
+
+def omit_abstract(function):
+
+    def wrapper(*args, **kwargs):
+        if args[0].__class__ != TestSubtitleFile:
+            return function(*args, **kwargs)
+        return None
+
+    return wrapper
 
 
 class TestSubtitleFile(TestCase):
 
     def setup_method(self, method):
 
-        path = self.get_subrip_path()
-        self.file = _subfile.SubtitleFile(path, "ascii")
+        self.file = None
 
-    def test_attributes(self):
-
-        if self.file.__class__ != _subfile.SubtitleFile:
-            assert self.file.format in const.FORMAT.members
-            assert self.file.mode in const.MODE.members
-            assert isinstance(self.file.has_header, bool)
-            self.file.identifier.findall("test")
-
+    @omit_abstract
     def test__read_lines(self):
 
         assert self.file._read_lines()
 
+    @omit_abstract
     def test_get_template_header(self):
 
-        if self.file.has_header:
-            header = self.file.get_template_header()
-            assert isinstance(header, basestring)
+        if self.file.format.has_header:
+            self.file.get_template_header()
 
+    @omit_abstract
     def test_read(self):
 
-        if self.file.__class__ != _subfile.SubtitleFile:
-            path = self.get_file_path(self.file.format)
-            self.file.path = path
-            assert self.file.read()
+        path = self.get_file_path(self.file.format)
+        self.file.path = path
+        assert self.file.read()
 
+    @omit_abstract
     def test_write(self):
 
-        if self.file.__class__ != _subfile.SubtitleFile:
-            path = self.get_file_path(self.file.format)
-            self.file.path = path
-            self.file.newline = const.NEWLINE.UNIX
-            data = self.file.read()
-            self.file.write(*data)
+        path = self.get_file_path(self.file.format)
+        self.file.path = path
+        self.file.newline = const.NEWLINE.UNIX
+        self.file.write(*self.file.read())

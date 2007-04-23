@@ -25,7 +25,8 @@ import codecs
 import contextlib
 import re
 
-from gaupol import const, util
+from gaupol import const
+from gaupol.base import Contractual
 from gaupol.calculator import Calculator
 from ._subfile import SubtitleFile
 
@@ -34,9 +35,8 @@ class MPL2(SubtitleFile):
 
     """MPL2 file."""
 
+    __metaclass__ = Contractual
     format = const.FORMAT.MPL2
-    has_header = False
-    identifier = re.compile(r"^\[\d+\]\[\d+\].*?$")
     mode = const.MODE.TIME
 
     def read(self):
@@ -44,29 +44,28 @@ class MPL2(SubtitleFile):
 
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
-        Return show times, hide times, texts.
+        Return start times, end times, texts.
         """
-        shows = []
-        hides = []
+        starts = []
+        ends = []
         texts = []
         calc = Calculator()
         re_line = re.compile(r"^\[(\d+)\]\[(\d+)\](.*?)$")
         for line in self._read_lines():
             match = re_line.match(line)
             if match is not None:
-                shows.append(match.group(1))
-                hides.append(match.group(2))
+                starts.append(match.group(1))
+                ends.append(match.group(2))
                 texts.append(match.group(3))
 
-        for times in (shows, hides):
+        for times in (starts, ends):
             for i, time in enumerate(times):
                 seconds = float("%s.%s" % (time[:-1], time[-1]))
                 times[i] = calc.seconds_to_time(seconds)
         texts = [x.replace("|", "\n") for x in texts]
-        return shows, hides, texts
+        return starts, ends, texts
 
-    @util.contractual
-    def write(self, shows, hides, texts):
+    def write(self, starts, ends, texts):
         """Write file.
 
         Raise IOError if writing fails.
@@ -75,14 +74,14 @@ class MPL2(SubtitleFile):
         calc = Calculator()
         def get_deca(time):
             return "%.0f" % (calc.time_to_seconds(time) * 10)
-        shows = [get_deca(x) for x in shows]
-        hides = [get_deca(x) for x in hides]
+        starts = [get_deca(x) for x in starts]
+        ends = [get_deca(x) for x in ends]
         texts = [x.replace("\n", "|") for x in texts]
 
         args = (self.path, "w", self.encoding)
         with contextlib.closing(codecs.open(*args)) as fobj:
-            for i in range(len(shows)):
-                fobj.write("[%s]" % shows[i])
-                fobj.write("[%s]" % hides[i])
+            for i in range(len(starts)):
+                fobj.write("[%s]" % starts[i])
+                fobj.write("[%s]" % ends[i])
                 fobj.write(texts[i])
                 fobj.write(self.newline.value)

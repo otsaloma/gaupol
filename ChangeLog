@@ -1,3 +1,25 @@
+2007-04-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/const.py:
+	Add FORMAT.*.has_header and FORMAT.*.identifier.
+
+	* gaupol/determiner.py:
+	Subclass from Singleton.
+
+	* gaupol/files/ass.py:
+	* gaupol/files/microdvd.py:
+	* gaupol/files/mpl2.py:
+	* gaupol/files/mpsub.py:
+	* gaupol/files/ssa.py:
+	* gaupol/files/_subfile.py:
+	* gaupol/files/subrip.py:
+	* gaupol/files/subviewer2.py:
+	* gaupol/files/tmplayer.py:
+	Use Contractual metaclass.
+
+	* gaupol/tags/__init__.py:
+	Fix docstring.
+
 2007-04-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/subtitle.py:

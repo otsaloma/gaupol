@@ -23,9 +23,9 @@ from __future__ import with_statement
 
 import codecs
 import contextlib
-import re
 
-from gaupol import const, util
+from gaupol import const
+from gaupol.base import Contractual
 from gaupol.calculator import Calculator
 from ._subfile import SubtitleFile
 
@@ -34,9 +34,8 @@ class TMPlayer(SubtitleFile):
 
     """TMPlayer file."""
 
+    __metaclass__ = Contractual
     format = const.FORMAT.TMPLAYER
-    has_header = False
-    identifier = re.compile(r"^\d\d:\d\d:\d\d:.*$")
     mode = const.MODE.TIME
 
     def read(self):
@@ -44,37 +43,36 @@ class TMPlayer(SubtitleFile):
 
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
-        Return show times, hide times, texts.
+        Return start times, end times, texts.
         """
-        shows = []
-        hides = []
+        starts = []
+        ends = []
         texts = []
         for line in self._read_lines():
             if len(line.strip()) >= 9:
-                shows.append(line[:8] + ".000")
+                starts.append(line[:8] + ".000")
                 texts.append(line[9:-1])
 
         calc = Calculator()
-        for i in range(1, len(shows)):
-            hides.append(shows[i])
-        hides.append(calc.add_seconds_to_time(shows[-1], 3.000))
+        for i in range(1, len(starts)):
+            ends.append(starts[i])
+        ends.append(calc.add_seconds_to_time(starts[-1], 3.000))
         texts = [x.replace("|", "\n") for x in texts]
-        return shows, hides, texts
+        return starts, ends, texts
 
-    @util.contractual
-    def write(self, shows, hides, texts):
+    def write(self, starts, ends, texts):
         """Write file.
 
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
         calc = Calculator()
-        shows = [calc.round_time(x, 0)[:8] + ":" for x in shows]
+        starts = [calc.round_time(x, 0)[:8] + ":" for x in starts]
         texts = [x.replace("\n", "|") for x in texts]
 
         args = (self.path, "w", self.encoding)
         with contextlib.closing(codecs.open(*args)) as fobj:
-            for i in range(len(shows)):
-                fobj.write(shows[i])
+            for i in range(len(starts)):
+                fobj.write(starts[i])
                 fobj.write(texts[i])
                 fobj.write(self.newline.value)

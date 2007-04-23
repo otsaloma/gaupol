@@ -26,23 +26,19 @@ import contextlib
 import os
 
 from gaupol import const, enclib, paths, util
+from gaupol.base import Contractual
 
 
 class SubtitleFile(object):
 
     """Base class for subtitle files.
 
-    Class variables:
-
-        format:     FORMAT constant
-        has_header: True if file has a header
-        identifier: Regular expression object
-        mode:       MODE constant
-
-    Instance variables:
+    Class or instance variables:
 
         encoding: Character encoding
+        format:   FORMAT constant
         header:   Header text
+        mode:     MODE constant
         newline:  NEWLINE constant
         path:     Path to the file
 
@@ -51,40 +47,35 @@ class SubtitleFile(object):
     receiving read data or before sending data to write.
 
     If the file format contains a header, it will default to a template header
-    read upon instantiation of the class, from path.PROFILE_DIR/headers or
+    read upon instantiation of the class, from paths.PROFILE_DIR/headers or
     paths.DATA_DIR/headers. If the read file has a header, it will replace the
     template.
     """
 
+    __metaclass__ = Contractual
     format = None
-    has_header = None
-    identifier = None
     mode = None
 
     def __init__(self, path, encoding, newline=None):
 
-        self.path = path
         self.encoding = encoding
-        self.newline = newline
-        self.header = (self.get_template_header() if self.has_header else "")
+        self.header   = ""
+        self.newline  = newline
+        self.path     = path
 
-    def __setattr___require(self, name, value):
-        if name == "encoding":
-            assert enclib.is_valid(value)
+        if self.format.has_header:
+            self.header = self.get_template_header()
 
-    @util.contractual
-    def __setattr__(self, name, value):
-
-        return object.__setattr__(self, name, value)
+    def _invariant(self):
+        assert enclib.is_valid(self.encoding)
 
     def _read_lines_require(self):
         assert os.path.isfile(self.path)
 
-    @util.contractual
     def _read_lines(self):
         """Read file to a unicoded list of lines.
 
-        All newlines are converted to '\n'.
+        All newlines are converted to '\\n'.
         All blank lines from the end are removed.
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
@@ -103,9 +94,8 @@ class SubtitleFile(object):
         return lines
 
     def get_template_header_require(self):
-        assert self.has_header
+        assert self.format.has_header
 
-    @util.contractual
     def get_template_header(self):
         """Read and return the header from a template file."""
 
@@ -124,15 +114,14 @@ class SubtitleFile(object):
 
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
-        Return shows, hides, texts.
+        Return starts, ends, texts.
         """
         raise NotImplementedError
 
-    def write_require(self, shows, hides, texts):
+    def write_require(self, starts, ends, texts):
         assert self.newline is not None
 
-    @util.contractual
-    def write(self, shows, hides, texts):
+    def write(self, starts, ends, texts):
         """Write file.
 
         Raise IOError if writing fails.

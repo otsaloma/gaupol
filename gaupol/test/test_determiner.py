@@ -26,17 +26,17 @@ class TestFormatDeterminer(TestCase):
 
     def setup_method(self, method):
 
-        self.path = self.get_subrip_path()
-        self.determiner = determiner.FormatDeterminer(self.path, "ascii")
+        self.determiner = determiner.FormatDeterminer()
 
     def test_determine(self):
 
+        path = self.get_subrip_path()
         for format in const.FORMAT.members:
-            text = self.get_text(format)
-            util.write(self.path, text, "ascii")
-            value = self.determiner.determine()
+            text = self.get_file_text(format)
+            util.write(path, text, "ascii")
+            value = self.determiner.determine(path, "ascii")
             assert value == format
 
-        util.write(self.path, "", "ascii")
+        util.write(path, "", "ascii")
         function = self.determiner.determine
-        self.raises(FormatError, function)
+        self.raises(FormatError, function, path, "ascii")

@@ -24,43 +24,41 @@ from __future__ import with_statement
 import codecs
 import contextlib
 import os
+import re
 
-from gaupol import const, enclib, util
+from gaupol import const, enclib
+from gaupol.base import Contractual, Singleton
 from gaupol.errors import FormatError
 from gaupol.files import *
 
 
-class FormatDeterminer(object):
+class FormatDeterminer(Singleton):
 
     """Subtitle file format determiner.
 
     Instance variables:
 
-        _re_ids:  List of tuples of format, regular expression
-        encoding: Character encoding to open the file with
-        path:     Path to the file
+        _re_ids: List of tuples of format, regular expression
     """
 
-    def __init___require(self, path, encoding):
+    __metaclass__ = Contractual
+
+    # pylint: disable-msg=W0231
+    def __init__(self):
+
+        self._re_ids = []
+        for format in const.FORMAT.members:
+            re_id = re.compile(format.identifier)
+            self._re_ids.append((format, re_id))
+
+    def determine_require(self, path, encoding):
         assert os.path.isfile(path)
         assert enclib.is_valid(encoding)
 
-    @util.contractual
-    def __init__(self, path, encoding):
-
-        self._re_ids = []
-        self.encoding = encoding
-        self.path = path
-
-        for format in const.FORMAT.members:
-            re_id = eval(format.class_name).identifier
-            self._re_ids.append((format, re_id))
-
-    def determine_ensure(self, value):
+    def determine_ensure(self, value, path, encoding):
         assert value in const.FORMAT.members
 
-    @util.contractual
-    def determine(self):
+    def determine(self, path, encoding):
         """Determine the format of the file.
 
         Raise IOError if reading fails.
@@ -68,7 +66,7 @@ class FormatDeterminer(object):
         Raise FormatError if unable to detect the format.
         Return FORMAT constant.
         """
-        args = (self.path, "r", self.encoding)
+        args = (path, "r", encoding)
         with contextlib.closing(codecs.open(*args)) as fobj:
             for line in fobj:
                 for format, re_id in self._re_ids:

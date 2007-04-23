@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -23,7 +23,8 @@ from gaupol.unittest import TestCase
 
 class TestModule(TestCase):
 
-    def test_imports(self):
+    def test_attributes(self):
 
+        path = self.get_subrip_path()
         for name in const.FORMAT.class_names:
-            assert name in globals()
+            eval(name)(path, "ascii", const.NEWLINE.UNIX)
