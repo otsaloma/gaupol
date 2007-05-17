@@ -21,7 +21,7 @@
 import copy
 
 from gaupol.unittest import TestCase
-from .. import _mutables
+from .. import mutables
 
 
 class Master(object):
@@ -70,7 +70,7 @@ class TestObservableDict(_TestObservable):
     def setup_method(self, method):
 
         _TestObservable.setup_method(self, method)
-        self.obs = _mutables.ObservableDict(((1, 1), (2, 2)), self.master, "")
+        self.obs = mutables.ObservableDict(((1, 1), (2, 2)), self.master, "")
 
     def test___delitem__(self):
 
@@ -110,7 +110,7 @@ class TestObservableList(_TestObservable):
     def setup_method(self, method):
 
         _TestObservable.setup_method(self, method)
-        self.obs = _mutables.ObservableList((1, 2, 3), self.master, "")
+        self.obs = mutables.ObservableList((1, 2, 3), self.master, "")
 
     def test___delitem__(self):
 
@@ -174,7 +174,7 @@ class TestObservableSet(_TestObservable):
     def setup_method(self, method):
 
         _TestObservable.setup_method(self, method)
-        self.obs = _mutables.ObservableSet((1, 2, 3), self.master, "")
+        self.obs = mutables.ObservableSet((1, 2, 3), self.master, "")
 
     def test___iand__(self):
 

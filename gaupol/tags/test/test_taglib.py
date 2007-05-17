@@ -19,7 +19,7 @@
 
 
 from gaupol.unittest import TestCase
-from .. import _taglib
+from .. import taglib
 
 
 class TestTagLibrary(TestCase):
@@ -30,7 +30,7 @@ class TestTagLibrary(TestCase):
 
     def setup_method(self, method):
 
-        self.taglib = _taglib.TagLibrary()
+        self.taglib = taglib.TagLibrary()
 
     def test_italic_tag(self):
 

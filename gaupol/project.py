@@ -19,7 +19,7 @@
 """Model for subtitle data."""
 
 
-from gaupol import _agents, const
+from gaupol import agents, const
 from gaupol.base import Contractual, Observable
 from gaupol.calculator import Calculator
 from gaupol.clipboard import Clipboard
@@ -114,8 +114,8 @@ class Project(Observable):
     def _init_delegations(self):
         """Initialize the delegation mappings."""
 
-        for agent_class_name in _agents.__all__:
-            agent = getattr(_agents, agent_class_name)(self)
+        for agent_class_name in agents.__all__:
+            agent = getattr(agents, agent_class_name)(self)
             attrs = [x for x in dir(agent) if not x.startswith("_")]
             attrs = [(x, getattr(agent, x)) for x in attrs]
             attrs = [(x, y) for (x, y) in attrs if callable(y)]
