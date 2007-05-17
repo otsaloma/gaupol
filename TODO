@@ -51,7 +51,7 @@ Gaupol 0.9
 ==========
 
  * Fix regular expression grouping in scriptlib
- * Maximum variance for liner?
+ * Maximum variance for Liner?
  * Refactor UIMActions
     * Get rid of specifying uim_paths
     * Handle actions as gtk.Actions?
