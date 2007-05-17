@@ -173,6 +173,11 @@ def _prepare_debug(debug):
 def _prepare_ui():
     """Prepare user interface stuff."""
 
+    import gtk.glade
+    from gaupol import paths
+    gtk.glade.bindtextdomain("gaupol", paths.LOCALE_DIR)
+    gtk.glade.textdomain("gaupol")
+
     import gobject
     gobject.threads_init()
 

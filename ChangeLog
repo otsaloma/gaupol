@@ -1,5 +1,11 @@
 2007-05-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/i18n.py:
+	* gaupol/gtk/main.py:
+	Remove i18n and move stuff to main.
+
+2007-05-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/unittest/case.py:
 	* gaupol/gtk/unittest/__init__.py:
 	Minor changes.
