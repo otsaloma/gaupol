@@ -19,7 +19,7 @@
 """TMPlayer tag library."""
 
 
-from ._taglib import TagLibrary
+from .taglib import TagLibrary
 
 
 class TMPlayer(TagLibrary):

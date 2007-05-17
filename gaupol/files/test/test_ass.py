@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from .test__subfile import TestSubtitleFile
+from .test_subfile import TestSubtitleFile
 from .. import ass
 
 

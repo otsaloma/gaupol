@@ -28,7 +28,7 @@ import re
 from gaupol import const
 from gaupol.base import Contractual
 from gaupol.calculator import Calculator
-from ._subfile import SubtitleFile
+from .subfile import SubtitleFile
 
 
 class MPL2(SubtitleFile):

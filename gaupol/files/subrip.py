@@ -27,7 +27,7 @@ import re
 
 from gaupol import const
 from gaupol.base import Contractual
-from ._subfile import SubtitleFile
+from .subfile import SubtitleFile
 
 
 class SubRip(SubtitleFile):

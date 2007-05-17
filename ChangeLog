@@ -1,5 +1,10 @@
 2007-05-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/actions/action.py:
+	Remove leading underscore from filename.
+
+2007-05-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/agents:
 	* gaupol/base/mutables.py:
 	* gaupol/files/subfile.py:

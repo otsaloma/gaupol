@@ -22,7 +22,7 @@
 import re
 
 from gaupol import util
-from ._taglib import TagLibrary
+from .taglib import TagLibrary
 
 
 class MicroDVD(TagLibrary):

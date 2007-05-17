@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from .test__taglib import TestTagLibrary
+from .test_taglib import TestTagLibrary
 from .. import mpsub
 
 

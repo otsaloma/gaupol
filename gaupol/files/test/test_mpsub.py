@@ -17,7 +17,7 @@
 
 
 from gaupol import const
-from .test__subfile import TestSubtitleFile
+from .test_subfile import TestSubtitleFile
 from .. import mpsub
 
 

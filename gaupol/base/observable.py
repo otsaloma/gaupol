@@ -19,8 +19,8 @@
 """Base class for observable objects."""
 
 
-from ._mutables import ObservableDict, ObservableList, ObservableSet
 from .contractual import Contractual
+from .mutables import ObservableDict, ObservableList, ObservableSet
 
 
 class Observable(object):

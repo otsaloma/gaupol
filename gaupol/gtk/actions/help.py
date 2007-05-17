@@ -22,7 +22,7 @@
 import gtk
 
 from gaupol.gtk.i18n import _
-from ._action import UIMAction
+from .action import UIMAction
 
 
 class ReportABugAction(UIMAction):

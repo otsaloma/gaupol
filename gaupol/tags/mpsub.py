@@ -19,7 +19,7 @@
 """MPsub tag library."""
 
 
-from ._taglib import TagLibrary
+from .taglib import TagLibrary
 
 
 class MPsub(TagLibrary):

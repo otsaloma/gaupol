@@ -18,8 +18,8 @@
 
 # pylint: disable-msg=W0611
 
-from gaupol.gtk._actions import *
-from gaupol.gtk._actions import ACTIONS
+from gaupol.gtk.actions import *
+from gaupol.gtk.actions import ACTIONS
 from gaupol.gtk.unittest import TestCase
 
 

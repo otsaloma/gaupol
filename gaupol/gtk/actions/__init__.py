@@ -25,7 +25,7 @@ def _get_actions():
     """Get all UIMAction classes."""
 
     from gaupol.gtk import util
-    from ._action import UIMAction
+    from .action import UIMAction
     actions = []
     for module in _get_modules():
         names = [x for x in dir(module) if not x.startswith("_")]
