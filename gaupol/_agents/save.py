@@ -21,66 +21,12 @@
 
 import os
 import shutil
+import sys
 import tempfile
 
-from gaupol import const
-from gaupol.base import Delegate
+from gaupol import const, files, util
+from gaupol.base import Contractual, Delegate
 from gaupol.converter import TagConverter
-from gaupol.files import *
-from .index import SHOW, HIDE, DURN
-
-
-def _create_backup(path, bak_path):
-    """Create a temporary backup file.
-
-    Return success (True or False).
-    """
-    try:
-        shutil.copyfile(path, bak_path)
-        return True
-    except IOError, (no, message):
-        print "Failed to create temporary backup file '%s': %s." % (
-            bak_path, message)
-        return False
-
-def _remove_backup(bak_path):
-    """Remove the temporary backup file.
-
-    Return success (True or False).
-    """
-    try:
-        os.remove(bak_path)
-        return True
-    except OSError, (no, message):
-        print "Failed to remove temporary backup file '%s': %s." % (
-            bak_path, message)
-        return False
-
-def _remove_failed(path):
-    """Remove the empty file after failing to write it.
-
-    Return success (True or False).
-    """
-    try:
-        os.remove(path)
-        return True
-    except OSError, (no, message):
-        print "Failed to remove file '%s' after failing to write it: %s." % (
-            path, message)
-        return False
-
-def _restore_original(path, bak_path):
-    """Restore the file from the temporary backup after failing writing.
-
-    Return success (True or False).
-    """
-    try:
-        shutil.move(bak_path, path)
-        return True
-    except (IOError, OSError), (no, message):
-        print "Failed to restore file '%s' from temporary backup file '%s' " \
-            "after failing to write it: %s." % (path, bak_path, message)
-        return False
 
 
 class SaveAgent(Delegate):
@@ -89,79 +35,166 @@ class SaveAgent(Delegate):
 
     # pylint: disable-msg=E0203,W0201
 
+    __metaclass__ = Contractual
+
+    def _convert_tags(self, texts, from_format, to_format):
+        """Convert tags in texts and return changed indexes."""
+
+        changed_indexes = []
+        converter = TagConverter(from_format, to_format)
+        for i, text in enumerate(texts):
+            new_text = converter.convert(text)
+            if new_text != text:
+                texts[i] = new_text
+                changed_indexes.append(i)
+        return changed_indexes
+
+    def _copy_file_ensure(self, value, source, destination):
+        assert (not value) or os.path.isfile(destination)
+
+    def _copy_file(self, source, destination):
+        """Copy source file to destination and return success."""
+
+        try:
+            shutil.copyfile(source, destination)
+            return True
+        except IOError:
+            util.handle_write_io(sys.exc_info(), destination)
+        return False
+
+    def _move_file_ensure(self, value, source, destination):
+        assert (not value) or os.path.isfile(destination)
+
+    def _move_file(self, source, destination):
+        """Move source file to destination and return success."""
+
+        try:
+            shutil.move(source, destination)
+            return True
+        except (IOError, OSError):
+            util.handle_write_io(sys.exc_info(), destination)
+        return False
+
+    def _remove_file_ensure(self, value, path):
+        assert (not value) or (not os.path.isfile(path))
+
+    def _remove_file(self, path):
+        """Remove file and return success."""
+
+        try:
+            os.remove(path)
+            return True
+        except OSError:
+            util.handle_remove_os(sys.exc_info(), path)
+        return False
+
+    def _save(self, doc, props, keep_changes):
+        """Save subtitle file.
+
+        props should be a sequence of path, format, encoding, newline.
+        Raise IOError if writing fails.
+        Raise UnicodeError if encoding fails.
+        Return file, texts, changed indexes.
+        """
+        file = self.get_file(doc)
+        path, format, encoding, newline = props or ([None] * 4)
+        texts = [x.get_text(doc) for x in self.subtitles]
+
+        changed_indexes = []
+        # Convert tags if saving in different format.
+        if (not None in (file, format)) and (file.format != format):
+            args = (texts, file.format, format)
+            changed_indexes = self._convert_tags(*args)
+
+        # Create new file if needed.
+        if not None in (path, format, encoding, newline):
+            cls = getattr(files, format.class_name)
+            new_file = cls(path, encoding, newline)
+            if (file is not None) and (file.format == format):
+                new_file.copy_from(file)
+            file = new_file
+
+        self._write_file(file, texts)
+        return file, texts, changed_indexes
+
+    def _write_file_ensure(self, value, file, texts):
+        assert os.path.isfile(file.path)
+
     def _write_file(self, file, texts):
         """Write subtitle file.
 
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
-        positions = self.get_positions(file.mode)
-        shows = [positions[i][SHOW] for i in range(len(positions))]
-        hides = [positions[i][HIDE] for i in range(len(positions))]
-
+        starts = [x.get_start(file.mode) for x in self.subtitles]
+        ends = [x.get_end(file.mode) for x in self.subtitles]
         file_existed = os.path.isfile(file.path)
         if file_existed:
-            bak_path = tempfile.mkstemp(suffix=".bak", prefix="gaupol.")[1]
-            bak_success = _create_backup(file.path, bak_path)
+            backup_path = tempfile.mkstemp(".bak", "gaupol.")[1]
+            backup_success = self._copy_file(file.path, backup_path)
         try:
             write_success = False
-            file.write(shows, hides, texts)
+            file.write(starts, ends, texts)
             write_success = True
         finally:
-            if write_success:
-                if file_existed and bak_success:
-                    _remove_backup(bak_path)
-            elif not file_existed:
-                _remove_failed(file.path)
-            elif bak_success:
-                _restore_original(file.path, bak_path)
+            if write_success and file_existed and backup_success:
+                self._remove_file(backup_path)
+            elif (not write_success) and (not file_existed):
+                self._remove_file(file.path)
+            elif (not write_success) and file_existed and backup_success:
+                self._move_file(backup_path, file.path)
 
-    def save(self, doc, props=None, keep_changes=True):
-        """Save subtitle file.
+    def save(self, doc, props, keep_changes=True):
+        """Save document's subtitle file.
 
         props should be a sequence of path, format, encoding, newline.
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
-        file = self.get_file(doc)
-        path, format, encoding, newline = props or [None] * 4
+        if doc == const.DOCUMENT.MAIN:
+            return self.save_main(props, keep_changes)
+        if doc == const.DOCUMENT.TRAN:
+            return self.save_translation(props, keep_changes)
+        raise ValueError
 
-        # Convert tags if saving in different format.
-        updated_rows = []
-        texts = self.get_texts(doc)[:]
-        if file is not None and format is not None:
-            if file.format != format:
-                converter = TagConverter(file.format, format)
-                for i, text in enumerate(texts):
-                    new = converter.convert(text)
-                    if new != text:
-                        texts[i] = new
-                        updated_rows.append(i)
+    def save_main_ensure(self, value, props=None, keep_changes=True):
+        assert self.main_file is not None
+        assert (not keep_changes) or (self.main_changed == 0)
 
-        # Create file if needed.
-        if not None in (path, format, encoding, newline):
-            new_file = eval(format.class_name)(path, encoding, newline)
-            if file is not None and file.format == format:
-                # Copy header and mode to new file.
-                new_file.header = file.header
-                if format == const.FORMAT.MPSUB:
-                    new_file.mode = file.mode
-            file = new_file
+    def save_main(self, props, keep_changes=True):
+        """Save the main subtitle file.
 
-        self._write_file(file, texts)
-
+        props should be a sequence of path, format, encoding, newline.
+        Raise IOError if writing fails.
+        Raise UnicodeError if encoding fails.
+        """
+        args = (const.DOCUMENT.MAIN, props, keep_changes)
+        main_file, texts, changed_indexes = self._save(*args)
         if keep_changes:
-            if doc == const.DOCUMENT.MAIN:
-                self.main_file = file
-                self.main_texts = texts
-                self.main_changed = 0
-                self.emit("main-texts-changed", updated_rows)
-            elif doc == const.DOCUMENT.TRAN:
-                self.tran_file = file
-                self.tran_texts = texts
-                self.tran_changed = 0
-                self.tran_active = True
-                self.emit("translation-texts-changed", updated_rows)
+            self.main_file = main_file
+            for i, text in enumerate(texts):
+                self.subtitles[i].main_text = text
+            self.main_changed = 0
+            self.emit("main-texts-changed", changed_indexes)
+        self.emit("main-file-saved", self.main_file)
 
-        signal = ("main-file-saved", "translation-file-saved")[doc]
-        self.emit(signal, file)
+    def save_translation_ensure(self, value, props=None, keep_changes=True):
+        assert self.tran_file is not None
+        assert (not keep_changes) or (self.tran_changed == 0)
+
+    def save_translation(self, props, keep_changes=True):
+        """Save the translation subtitle file.
+
+        props should be a sequence of path, format, encoding, newline.
+        Raise IOError if writing fails.
+        Raise UnicodeError if encoding fails.
+        """
+        args = (const.DOCUMENT.TRAN, props, keep_changes)
+        tran_file, texts, changed_indexes = self._save(*args)
+        if keep_changes:
+            self.tran_file = tran_file
+            for i, text in enumerate(texts):
+                self.subtitles[i].tran_text = text
+            self.tran_changed = 0
+            self.emit("translation-texts-changed", changed_indexes)
+        self.emit("translation-file-saved", self.tran_file)

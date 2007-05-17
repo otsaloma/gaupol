@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -19,12 +19,8 @@
 """Model for subtitle data."""
 
 
-import types
-
-from gaupol import const
-from gaupol._agents import *
-from gaupol._agents import AGENTS
-from gaupol.base import Observable
+from gaupol import _agents, const
+from gaupol.base import Contractual, Observable
 from gaupol.calculator import Calculator
 from gaupol.clipboard import Clipboard
 
@@ -35,22 +31,18 @@ class Project(Observable):
 
     Instance variables:
 
-        _delegations: Dictionary mapping method names to agents
+        _delegations: Dictionary mapping method names to agent methods
         calc:         Position calculator
-        clipboard:    Internal clipboard
+        clipboard:    Internal subtitle clipboard
         framerate:    FRAMERATE constant
-        frames:       List of lists of show, hide, duration frames
         main_changed: Integer, status of main document
-        main_file:    The main SubtitleFile
-        main_texts:   List of the main document's texts
+        main_file:    Main SubtitleFile
         redoables:    Stack of redoable Actions
-        times:        List of lists of show, hide, duration times
-        tran_active:  True if the translation document is active
-        tran_changed: Integer, status of the translation document
-        tran_file:    The translation SubtitleFile
-        tran_texts:   List of the translation document's texts
+        subtitles:    List of Subtitles
+        tran_changed: Status of the translation document or None if not active
+        tran_file:    Translation SubtitleFile
         undoables:    Stack of undoable Actions
-        undo_limit:   Maximum size of the undo/redo stacks or None for no limit
+        undo_limit:   Maximum size of undo/redo stacks or None for no limit
         video_path:   Path to the video file
 
     Signals:
@@ -60,17 +52,19 @@ class Project(Observable):
         action-undone (project, action)
         main-file-opened (project, main_file)
         main-file-saved (project, main_file)
-        main-texts-changed (project, rows)
-        positions-changed (project, rows)
-        subtitles-changed (project, rows)
-        subtitles-inserted (project, rows)
-        subtitles-removed (project, rows)
+        main-texts-changed (project, indexes)
+        positions-changed (project, indexes)
+        subtitles-changed (project, indexes)
+        subtitles-inserted (project, indexes)
+        subtitles-removed (project, indexes)
         translation-file-opened (project, tran_file)
         translation-file-saved (project, tran_file)
-        translation-texts-changed (project, rows)
+        translation-texts-changed (project, indexes)
 
     See gaupol._agents for project methods provided by agents.
     """
+
+    __metaclass__ = Contractual
 
     _signals = [
         "action-done",
@@ -89,7 +83,7 @@ class Project(Observable):
 
     def __getattr__(self, name):
 
-        return self._delegations[name].__getattribute__(name)
+        return self._delegations[name]
 
     def __init__(self, framerate=const.FRAMERATE.P24, undo_limit=None):
 
@@ -99,29 +93,33 @@ class Project(Observable):
         self.calc         = Calculator(framerate)
         self.clipboard    = Clipboard()
         self.framerate    = framerate
-        self.frames       = []
         self.main_changed = 0
         self.main_file    = None
-        self.main_texts   = []
         self.redoables    = []
-        self.times        = []
-        self.tran_active  = False
-        self.tran_changed = 0
+        self.subtitles    = []
+        self.tran_changed = None
         self.tran_file    = None
-        self.tran_texts   = []
         self.undo_limit   = undo_limit
         self.undoables    = []
         self.video_path   = None
 
         self._init_delegations()
 
+    def _invariant(self):
+        assert self.calc.framerate == self.framerate.value
+        if self.undo_limit is not None:
+            assert len(self.undoables) <= self.undo_limit
+            assert len(self.redoables) <= self.undo_limit
+
     def _init_delegations(self):
         """Initialize the delegation mappings."""
 
-        for agent in (eval(x)(self) for x in AGENTS):
-            for attr_name in (x for x in dir(agent) if not x.startswith("_")):
-                attr = getattr(agent, attr_name)
-                if type(attr) is types.MethodType:
-                    if attr_name in self._delegations:
-                        raise ValueError
-                    self._delegations[attr_name] = agent
+        for agent_class_name in _agents.__all__:
+            agent = getattr(_agents, agent_class_name)(self)
+            attrs = [x for x in dir(agent) if not x.startswith("_")]
+            attrs = [(x, getattr(agent, x)) for x in attrs]
+            attrs = [(x, y) for (x, y) in attrs if callable(y)]
+            for attr_name, attr in attrs:
+                if attr_name in self._delegations:
+                    raise ValueError("Agents overlap")
+                self._delegations[attr_name] = attr

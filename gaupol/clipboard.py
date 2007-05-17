@@ -16,25 +16,41 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Internal clipboard."""
+"""Internal text clipboard."""
 
 
 class Clipboard(object):
 
-    """Internal clipboard.
+    """Internal text clipboard.
 
     Instance variables:
 
-        data: List of strings or Nones
+        _texts: List of strings or Nones
 
-    Nones in data express that those items are to be skipped.
+    Nones in _texts express that those items are to be skipped.
     """
 
     def __init__(self):
 
-        self.data = []
+        self._texts = []
 
-    def get_data_as_string(self):
-        """Get the data as a string."""
+    def append(self, item):
+        """Append item to texts."""
 
-        return "\n\n".join([x or "" for x in self.data])
+        self._texts.append(item)
+
+    def clear(self):
+        """Clear the texts."""
+
+        self._texts = []
+
+    def get_string(self):
+        """Get the texts as one string."""
+
+        strings = [x or "" for x in self._texts]
+        return "\n\n".join(strings)
+
+    def get_texts(self):
+        """Get the texts."""
+
+        return self._texts[:]

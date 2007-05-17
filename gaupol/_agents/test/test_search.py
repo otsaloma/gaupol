@@ -28,207 +28,229 @@ TRAN = const.DOCUMENT.TRAN
 
 class TestSearchAgent(TestCase):
 
+    def _test_find_next(self, pattern, docs, wrap, matches):
+
+        self.project.set_search_target(None, docs, wrap)
+        self.project.set_search_regex(pattern)
+        index = None
+        doc = docs[0]
+        pos = None
+        for match in matches:
+            if match is StopIteration:
+                function = self.project.find_next
+                self.raises(StopIteration, function, index, doc, pos)
+                continue
+            value = self.project.find_next(index, doc, pos)
+            assert value == match
+            index = match[0]
+            doc = match[1]
+            pos = match[2][1]
+
+    def _test_find_previous(self, pattern, docs, wrap, matches):
+
+        self.project.set_search_target(None, docs, wrap)
+        self.project.set_search_regex(pattern)
+        index = None
+        doc = docs[-1]
+        pos = None
+        for match in matches:
+            if match is StopIteration:
+                function = self.project.find_previous
+                self.raises(StopIteration, function, index, doc, pos)
+                continue
+            value = self.project.find_previous(index, doc, pos)
+            assert value == match
+            index = match[0]
+            doc = match[1]
+            pos = match[2][0]
+
     def setup_method(self, method):
 
         self.project = self.get_project()
         self.delegate = self.project.find_next.im_self
 
-        for texts in (self.project.main_texts, self.project.tran_texts):
-            texts[0] = \
-                "God has promised you that\n" + \
-                "you will go to Heaven?"
-            texts[1] = \
-                "So you are certain of\n" + \
-                "being saved?"
-            texts[2] = \
-                "Be careful,\n" + \
-                "it's a dangerous answer."
+        texts = (
+            "God has promised you that\n" + \
+             "you will go to Heaven?",
+            "So you are certain of\n" + \
+             "being saved?",
+            "Be careful,\n" + \
+             "it's a dangerous answer.",)
+        for i, text in enumerate(texts):
+            self.project.subtitles[i].main_text = text
+            self.project.subtitles[i].tran_text = text
 
-        rows = range(3, len(self.project.main_texts))
-        self.project.remove_subtitles(rows, register=None)
+        indexes = range(3, len(self.project.subtitles))
+        self.project.remove_subtitles(indexes, register=None)
 
-    def test_find_next(self):
+    def test_find_next__1(self):
 
-        cases = (
-            (r"^", [MAIN], True, (
-                (0, MAIN, ( 0,  0)),
-                (0, MAIN, (26, 26)),
-                (1, MAIN, ( 0,  0)),
-                (1, MAIN, (22, 22)),
-                (2, MAIN, ( 0,  0)),
-                (2, MAIN, (12, 12)),
-                (0, MAIN, ( 0,  0)))),
-            (r"$", [MAIN, TRAN], True, (
-                (0, MAIN, (25, 25)),
-                (0, MAIN, (48, 48)),
-                (1, MAIN, (21, 21)),
-                (1, MAIN, (34, 34)),
-                (2, MAIN, (11, 11)),
-                (2, MAIN, (36, 36)),
-                (0, TRAN, (25, 25)),
-                (0, TRAN, (48, 48)),
-                (1, TRAN, (21, 21)),
-                (1, TRAN, (34, 34)),
-                (2, TRAN, (11, 11)),
-                (2, TRAN, (36, 36)),
-                (0, MAIN, (25, 25)))),
-            (r"\n", [TRAN], True, (
-                (0, TRAN, (25, 26)),
-                (1, TRAN, (21, 22)),
-                (2, TRAN, (11, 12)),
-                (0, TRAN, (25, 26)))),
-            (r" t", [MAIN], False, (
-                (0, MAIN, (20, 22)),
-                (0, MAIN, (37, 39)),
-                StopIteration)),
-            (r"l{2}", [TRAN], False, (
-                (0, TRAN, (32, 34)),
-                StopIteration)),
-            (r"xxx", [MAIN, TRAN], False, (
-                StopIteration,)))
+        matches = (
+            (0, MAIN, ( 0,  0)),
+            (0, MAIN, (26, 26)),
+            (1, MAIN, ( 0,  0)),
+            (1, MAIN, (22, 22)),
+            (2, MAIN, ( 0,  0)),
+            (2, MAIN, (12, 12)),
+            (0, MAIN, ( 0,  0)),)
 
-        for pattern, docs, wrap, matches in cases:
-            self.project.set_search_target(None, docs, wrap)
-            self.project.set_search_regex(pattern, re.DOTALL)
-            row = 0
-            doc = docs[0]
-            pos = None
-            for match in matches:
-                if match is StopIteration:
-                    function = self.project.find_next
-                    self.raises(StopIteration, function, row, doc, pos)
-                    continue
-                assert self.project.find_next(row, doc, pos) == match
-                row = match[0]
-                doc = match[1]
-                pos = match[2][1]
+        self._test_find_next(r"^", [MAIN], True, matches)
 
-    def test_find_previous(self):
+    def test_find_next__2(self):
 
-        cases = (
-            (r"^", [MAIN], True, (
-                (2, MAIN, (12, 12)),
-                (2, MAIN, ( 0,  0)),
-                (1, MAIN, (22, 22)),
-                (1, MAIN, ( 0,  0)),
-                (0, MAIN, (26, 26)),
-                (0, MAIN, ( 0,  0)),
-                (2, MAIN, (12, 12)))),
-            (r"$", [MAIN, TRAN], True, (
-                (2, TRAN, (36, 36)),
-                (2, TRAN, (11, 11)),
-                (1, TRAN, (34, 34)),
-                (1, TRAN, (21, 21)),
-                (0, TRAN, (48, 48)),
-                (0, TRAN, (25, 25)),
-                (2, MAIN, (36, 36)),
-                (2, MAIN, (11, 11)),
-                (1, MAIN, (34, 34)),
-                (1, MAIN, (21, 21)),
-                (0, MAIN, (48, 48)),
-                (0, MAIN, (25, 25)),
-                (2, TRAN, (36, 36)))),
-            (r"\n", [TRAN], True, (
-                (2, TRAN, (11, 12)),
-                (1, TRAN, (21, 22)),
-                (0, TRAN, (25, 26)),
-                (2, TRAN, (11, 12)))),
-            (r" t", [MAIN], False, (
-                (0, MAIN, (37, 39)),
-                (0, MAIN, (20, 22)),
-                StopIteration)),
-            (r"l{2}", [TRAN], False, (
-                (0, TRAN, (32, 34)),
-                StopIteration)),
-            (r"xxx", [MAIN, TRAN], False, (
-                StopIteration,)))
+        matches = (
+            (0, MAIN, (25, 25)),
+            (0, MAIN, (48, 48)),
+            (1, MAIN, (21, 21)),
+            (1, MAIN, (34, 34)),
+            (2, MAIN, (11, 11)),
+            (2, MAIN, (36, 36)),
+            (0, TRAN, (25, 25)),
+            (0, TRAN, (48, 48)),
+            (1, TRAN, (21, 21)),
+            (1, TRAN, (34, 34)),
+            (2, TRAN, (11, 11)),
+            (2, TRAN, (36, 36)),
+            (0, MAIN, (25, 25)),)
 
-        for pattern, docs, wrap, matches in cases:
-            self.project.set_search_target(None, docs, wrap)
-            self.project.set_search_regex(pattern, re.DOTALL)
-            row = 2
-            doc = docs[-1]
-            pos = None
-            for match in matches:
-                if match is StopIteration:
-                    function = self.project.find_previous
-                    self.raises(StopIteration, function, row, doc, pos)
-                    continue
-                assert self.project.find_previous(row, doc, pos) == match
-                row = match[0]
-                doc = match[1]
-                pos = match[2][0]
+        self._test_find_next(r"$", [MAIN, TRAN], True, matches)
+
+    def test_find_next__3(self):
+
+        matches = (
+            (0, TRAN, (25, 26)),
+            (1, TRAN, (21, 22)),
+            (2, TRAN, (11, 12)),
+            (0, TRAN, (25, 26)),)
+
+        self._test_find_next(r"\n", [TRAN], True, matches)
+
+    def test_find_next__4(self):
+
+        matches = (
+            (0, MAIN, (20, 22)),
+            (0, MAIN, (37, 39)),
+            StopIteration,)
+
+        self._test_find_next(r" t", [MAIN], False, matches)
+
+    def test_find_next__5(self):
+
+        matches = (
+            (0, TRAN, (32, 34)),
+            StopIteration,)
+
+        self._test_find_next(r"l{2}", [TRAN], False, matches)
+
+    def test_find_next__6(self):
+
+        matches = (StopIteration,)
+        self._test_find_next(r"xxx", [MAIN, TRAN], False, matches)
+
+    def test_find_previous__1(self):
+
+        matches = (
+            (2, MAIN, (12, 12)),
+            (2, MAIN, ( 0,  0)),
+            (1, MAIN, (22, 22)),
+            (1, MAIN, ( 0,  0)),
+            (0, MAIN, (26, 26)),
+            (0, MAIN, ( 0,  0)),
+            (2, MAIN, (12, 12)),)
+
+        self._test_find_previous(r"^", [MAIN], True, matches)
+
+    def test_find_previous__2(self):
+
+        matches = (
+            (2, TRAN, (36, 36)),
+            (2, TRAN, (11, 11)),
+            (1, TRAN, (34, 34)),
+            (1, TRAN, (21, 21)),
+            (0, TRAN, (48, 48)),
+            (0, TRAN, (25, 25)),
+            (2, MAIN, (36, 36)),
+            (2, MAIN, (11, 11)),
+            (1, MAIN, (34, 34)),
+            (1, MAIN, (21, 21)),
+            (0, MAIN, (48, 48)),
+            (0, MAIN, (25, 25)),
+            (2, TRAN, (36, 36)),)
+
+        self._test_find_previous(r"$", [MAIN, TRAN], True, matches)
+
+    def test_find_previous__3(self):
+
+        matches = (
+            (2, TRAN, (11, 12)),
+            (1, TRAN, (21, 22)),
+            (0, TRAN, (25, 26)),
+            (2, TRAN, (11, 12)),)
+
+        self._test_find_previous(r"\n", [TRAN], True, matches)
+
+    def test_find_previous__4(self):
+
+        matches = (
+            (0, MAIN, (37, 39)),
+            (0, MAIN, (20, 22)),
+            StopIteration,)
+
+        self._test_find_previous(r" t", [MAIN], False, matches)
+
+    def test_find_previous__5(self):
+
+        matches = (
+            (0, TRAN, (32, 34)),
+            StopIteration,)
+
+        self._test_find_previous(r"l{2}", [TRAN], False, matches)
+
+    def test_find_previous__6(self):
+
+        matches = (StopIteration,)
+        self._test_find_previous(r"xxx", [MAIN, TRAN], False, matches)
 
     @reversion_test
-    def test_replace_next(self):
+    def test_replace(self):
 
         self.project.set_search_target(None, [MAIN])
         self.project.set_search_regex(r"\b\s")
         self.project.set_search_replacement("")
         self.project.find_next(0, MAIN, 4)
         self.project.replace()
-        assert self.project.main_texts[0] == \
+        assert self.project.subtitles[0].main_text == \
             "God haspromised you that\n" + \
             "you will go to Heaven?"
 
     @reversion_test
-    def test_replace_previous(self):
-
-        self.project.set_search_target(None, [MAIN])
-        self.project.set_search_regex(r"\b\s")
-        self.project.set_search_replacement("")
-        self.project.find_previous(2, MAIN)
-        self.project.replace()
-        assert self.project.main_texts[2] == \
-            "Be careful,\n" + \
-            "it's a dangerousanswer."
-
-    @reversion_test
-    def test_replace_all_regex(self):
+    def test_replace_all(self):
 
         self.project.set_search_target(None, [MAIN, TRAN])
         self.project.set_search_regex(r"$")
         self.project.set_search_replacement("--")
         self.project.replace_all()
-        for texts in (self.project.main_texts, self.project.tran_texts):
-            assert texts[0] == \
-                "God has promised you that--\n" + \
-                "you will go to Heaven?--"
-            assert texts[1] == \
-                "So you are certain of--\n" + \
-                "being saved?--"
-            assert texts[2] == \
-                "Be careful,--\n" + \
-                "it's a dangerous answer.--"
-
-    @reversion_test
-    def test_replace_all_string(self):
-
-        self.project.set_search_target(None, [MAIN, TRAN])
-        self.project.set_search_string("a")
-        self.project.set_search_replacement("-")
-        self.project.replace_all()
-        for texts in (self.project.main_texts, self.project.tran_texts):
-            assert texts[0] == \
-                "God h-s promised you th-t\n" + \
-                "you will go to He-ven?"
-            assert texts[1] == \
-                "So you -re cert-in of\n" + \
-                "being s-ved?"
-            assert texts[2] == \
-                "Be c-reful,\n" + \
-                "it's - d-ngerous -nswer."
+        texts = (
+            "God has promised you that--\n" + \
+             "you will go to Heaven?--",
+            "So you are certain of--\n" + \
+             "being saved?--",
+            "Be careful,--\n" + \
+             "it's a dangerous answer.--",)
+        for i, text in enumerate(texts):
+            assert self.project.subtitles[i].main_text == text
+            assert self.project.subtitles[i].tran_text == text
 
     def test_set_search_regex(self):
 
         flags = re.DOTALL | re.MULTILINE | re.UNICODE
+        finder = self.delegate._finder
         self.project.set_search_regex(r"test")
-        assert self.delegate._finder.pattern.pattern == r"test"
-        assert self.delegate._finder.pattern.flags == flags
-
+        assert finder.pattern.pattern == r"test"
+        assert finder.pattern.flags == flags
         self.project.set_search_regex(r"test", re.IGNORECASE)
-        assert self.delegate._finder.pattern.pattern == r"test"
-        assert self.delegate._finder.pattern.flags == flags | re.IGNORECASE
+        assert finder.pattern.pattern == r"test"
+        assert finder.pattern.flags == flags | re.IGNORECASE
 
     def test_set_search_replacement(self):
 
@@ -237,22 +259,21 @@ class TestSearchAgent(TestCase):
 
     def test_set_search_string(self):
 
+        finder = self.delegate._finder
         self.project.set_search_string("")
-        assert self.delegate._finder.pattern == ""
-        assert self.delegate._finder.ignore_case == False
-
+        assert finder.pattern == ""
+        assert finder.ignore_case == False
         self.project.set_search_string("test", True)
-        assert self.delegate._finder.pattern == "test"
-        assert self.delegate._finder.ignore_case == True
+        assert finder.pattern == "test"
+        assert finder.ignore_case == True
 
     def test_set_search_target(self):
 
         self.project.set_search_target()
-        assert self.delegate._rows == []
+        assert self.delegate._indexes == None
         assert self.delegate._docs == [MAIN, TRAN]
         assert self.delegate._wrap == True
-
         self.project.set_search_target([1], [MAIN], False)
-        assert self.delegate._rows == [1]
+        assert self.delegate._indexes == [1]
         assert self.delegate._docs == [MAIN]
         assert self.delegate._wrap == False

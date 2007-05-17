@@ -38,9 +38,8 @@ class TestCalculator(TestCase):
 
         time = self.calc.add_seconds_to_time("00:00:00.001", 5)
         assert time == "00:00:05.001"
-
         time = self.calc.add_seconds_to_time("00:00:00.001", -5)
-        assert time == "00:00:00.000"
+        assert time == "-00:00:04.999"
 
     def test_add_times(self):
 
@@ -61,9 +60,8 @@ class TestCalculator(TestCase):
 
         duration = self.calc.get_frame_duration(561, 1048)
         assert duration == 487
-
         duration = self.calc.get_frame_duration(561, 560)
-        assert duration == 0
+        assert duration == -1
 
     def test_get_middle(self):
 
@@ -81,9 +79,8 @@ class TestCalculator(TestCase):
 
         duration = self.calc.get_time_duration("00:01:22.500", "00:01:45.100")
         assert duration == "00:00:22.600"
-
         duration = self.calc.get_time_duration("00:01:22.500", "00:01:00.100")
-        assert duration == "00:00:00.000"
+        assert duration == "-00:00:22.400"
 
     def test_round_time(self):
 
@@ -105,9 +102,10 @@ class TestCalculator(TestCase):
 
         time = self.calc.seconds_to_time(68951.15388)
         assert time == "19:09:11.154"
-
-        time = self.calc.seconds_to_time(999999)
+        time = self.calc.seconds_to_time(999999.0)
         assert time == "99:59:59.999"
+        time = self.calc.seconds_to_time(-12.0)
+        assert time == "-00:00:12.000"
 
     def test_time_to_frame(self):
 
@@ -118,3 +116,5 @@ class TestCalculator(TestCase):
 
         seconds = self.calc.time_to_seconds("03:45:22.117")
         assert seconds == 13522.117
+        seconds = self.calc.time_to_seconds("-00:00:45.000")
+        assert seconds == -45.0

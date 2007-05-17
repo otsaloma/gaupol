@@ -1,3 +1,52 @@
+2007-05-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/_agents/__init__.py:
+	* gaupol/_agents/clipboard.py:
+	* gaupol/_agents/edit.py:
+	* gaupol/_agents/format.py:
+	* gaupol/_agents/index.py:
+	* gaupol/_agents/open.py:
+	* gaupol/_agents/position.py:
+	* gaupol/_agents/preview.py:
+	* gaupol/_agents/register.py:
+	* gaupol/_agents/save.py:
+	* gaupol/_agents/search.py:
+	* gaupol/_agents/set.py:
+	* gaupol/_agents/support.py:
+	* gaupol/_agents/text.py:
+	* gaupol/_agents/util.py:
+	* gaupol/base/contractual.py:
+	* gaupol/base/delegate.py:
+	* gaupol/base/observable.py:
+	* gaupol/base/singleton.py:
+	* gaupol/calculator.py:
+	* gaupol/clipboard.py:
+	* gaupol/const.py:
+	* gaupol/enclib.py:
+	* gaupol/files/_subfile.py:
+	* gaupol/files/mpsub.py:
+	* gaupol/gtk/cellrend/time.py:
+	* gaupol/gtk/dialogs/encoding.py:
+	* gaupol/gtk/dialogs/pref.py:
+	* gaupol/gtk/dialogs/textedit.py:
+	* gaupol/gtk/entries.py:
+	* gaupol/liner.py:
+	* gaupol/project.py:
+	* gaupol/reversion/__init__.py:
+	* gaupol/reversion/action.py:
+	* gaupol/reversion/deco.py:
+	* gaupol/reversion/group.py:
+	* gaupol/reversion:
+	* gaupol/subtitle.py:
+	* gaupol/tags/_taglib.py:
+	* gaupol/unittest/case.py:
+	* gaupol/unittest/deco.py:
+	* gaupol/urls.py:
+	* gaupol/util.py:
+	Use Subtitle class.
+	Add contracts to agents.
+	Allow negative values of positions.
+
 2007-04-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/const.py:

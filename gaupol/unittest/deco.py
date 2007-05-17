@@ -19,10 +19,22 @@
 """Decorators for testing methods and functions."""
 
 
-import copy
 import functools
 import time
 
+
+def _dump(subtitles):
+    """Get a list of the essential attributes of subtitles."""
+
+    values = []
+    for subtitle in subtitles:
+        values.append((
+            subtitle._start,
+            subtitle._end,
+            subtitle._main_text,
+            subtitle._tran_text,
+            subtitle._framerate,))
+    return values
 
 def benchmark(function):
     """Decorator for benchmarking functions and methods."""
@@ -43,20 +55,17 @@ def reversion_test(function):
     @functools.wraps(function)
     def wrapper(*args, **kwargs):
         project = args[0].project
-        data = (
-            project.times,
-            project.frames,
-            project.main_texts,
-            project.tran_texts,)
-        a = copy.deepcopy(data)
+        original = _dump(project.subtitles)
         value = function(*args, **kwargs)
-        z = copy.deepcopy(data)
-        assert z != a
+        changed = _dump(project.subtitles)
+        assert changed != original
         for i in range(2):
             project.undo()
-            assert data == a
+            current = _dump(project.subtitles)
+            assert current == original
             project.redo()
-            assert data == z
+            current = _dump(project.subtitles)
+            assert current == changed
         return value
 
     return wrapper

@@ -2,13 +2,14 @@ Module Dependency Order
 =======================
 
 gaupol.unittest/
-gaupol.util*
-gaupol.base/
+gaupol.opts
 gaupol.paths
 gaupol.urls
+gaupol.util
+gaupol.base/
 gaupol.i18n
 gaupol.errors
-gaupol.cons
+gaupol.const
 gaupol.enclib
 gaupol.langlib
 gaupol.scriptlib
@@ -17,12 +18,14 @@ gaupol.finder
 gaupol.parser
 gaupol.liner
 gaupol.files/
-gaupol.tags/
 gaupol.determiner
+gaupol.tags/
 gaupol.converter
+gaupol.subtitle
 gaupol.clipboard
-gaupol._agents/
 gaupol.project
+gaupol.reversion/
+gaupol.agents/
 gaupol.__init__
 
 gaupol.gtk.unittest/

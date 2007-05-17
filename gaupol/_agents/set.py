@@ -16,16 +16,15 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Setting values of single subtitle data units."""
+"""Setting values of single subtitle fields."""
 
 
 import bisect
 
 from gaupol import const, util
-from gaupol.base import Delegate
+from gaupol.base import Contractual, Delegate
 from gaupol.i18n import _
-from .index import SHOW, HIDE, DURN
-from .register import revertable
+from gaupol.reversion import revertable
 
 
 class SetAgent(Delegate):
@@ -34,124 +33,106 @@ class SetAgent(Delegate):
 
     # pylint: disable-msg=E0203,W0201
 
-    def _complete_positions(self, row, col, value):
-        """Set values of units affected."""
+    __metaclass__ = Contractual
 
-        if isinstance(value, basestring):
-            self.frames[row][col] = self.calc.time_to_frame(value)
-        elif isinstance(value, int):
-            self.times[row][col] = self.calc.frame_to_time(value)
+    def _move_if_needed_require(self, index):
+        assert 0 <= index < len(self.subtitles)
 
-        if col in (SHOW, HIDE):
-            self.times[row][DURN], self.frames[row][DURN] = \
-                self._get_durations(row)
-        elif col == DURN:
-            self.times[row][HIDE], self.frames[row][HIDE] = \
-                self._get_hides(row)
+    def _move_if_needed(self, index):
+        """Move subtitle for correct order and return new index."""
 
-    def _get_durations(self, row):
-        """Set durations for row based on shows and hides."""
+        subtitle = self.subtitles[index]
+        subtitles = self.subtitles[:index] + self.subtitles[index + 1:]
+        new_index = bisect.bisect_right(subtitles, subtitle)
+        if new_index != index:
+            subtitle = self.subtitles.pop(index)
+            self.emit("subtitles-removed", [index])
+            self.subtitles.insert(new_index, subtitle)
+            self.emit("subtitles-inserted", [new_index])
+        return new_index
 
-        time = self.calc.get_time_duration(
-            self.times[row][SHOW], self.times[row][HIDE])
-        frame = self.calc.get_frame_duration(
-            self.frames[row][SHOW], self.frames[row][HIDE])
-        return time, frame
+    def set_duration_require(self, index, value, register=-1):
+        assert 0 <= index < len(self.subtitles)
 
-    def _get_hides(self, row):
-        """Set hides for row based on shows and durations."""
+    @revertable
+    def set_duration(self, index, value, register=-1):
+        """Set the value of duration position."""
 
-        time = self.calc.add_times(
-            self.times[row][SHOW], self.times[row][DURN])
-        frame = sum((self.frames[row][SHOW], self.frames[row][DURN]))
-        return time, frame
+        subtitle = self.subtitles[index]
+        orig_end = subtitle.end
+        subtitle.duration = value
 
-    def _move_if_needed(self, row):
-        """Move row if it's show position so demands.
+        action = self.get_revertable_action(register)
+        action.docs = [const.DOCUMENT.MAIN, const.DOCUMENT.TRAN]
+        action.description = _("Editing position")
+        action.revert_method = self.set_end
+        action.revert_args = (index, orig_end)
+        self.register_action(action)
+        self.emit("positions-changed", [index])
 
-        Return the new row or row if not moved.
-        """
-        positions = self.get_positions()
-        lst = positions[:row] + positions[row + 1:]
-        item = positions[row]
-        new_row = bisect.bisect_right(lst, item)
-        if new_row == row:
-            return row
-        time = self.times.pop(row)
-        frame = self.frames.pop(row)
-        main_text = self.main_texts.pop(row)
-        tran_text = self.tran_texts.pop(row)
-        self.emit("subtitles-removed", [row])
-        self.times.insert(new_row, time)
-        self.frames.insert(new_row, frame)
-        self.main_texts.insert(new_row, main_text)
-        self.tran_texts.insert(new_row, tran_text)
-        self.emit("subtitles-inserted", [new_row])
-        return new_row
+    def set_end_require(self, index, value, register=-1):
+        assert 0 <= index < len(self.subtitles)
 
-    def needs_resort(self, row, show):
-        """Return True if resort is needed after changing the show value."""
+    @revertable
+    def set_end(self, index, value, register=-1):
+        """Set the value of end position."""
 
-        mode = self.get_mode()
-        positions = self.get_positions()
-        if isinstance(show, basestring):
-            if mode == const.MODE.FRAME:
-                show = self.calc.time_to_frame(show)
-        elif isinstance(show, int):
-            if mode == const.MODE.TIME:
-                show = self.calc.frame_to_time(show)
+        subtitle = self.subtitles[index]
+        orig_value = subtitle.end
+        subtitle.end = value
 
-        lst = positions[:row] + positions[row + 1:]
-        item = [show] + positions[row][1:]
-        new_row = bisect.bisect_right(lst, item)
-        return new_row != row
+        action = self.get_revertable_action(register)
+        action.docs = [const.DOCUMENT.MAIN, const.DOCUMENT.TRAN]
+        action.description = _("Editing position")
+        action.revert_method = self.set_end
+        action.revert_args = (index, orig_value)
+        self.register_action(action)
+        self.emit("positions-changed", [index])
+
+    def set_start_require(self, index, value, register=-1):
+        assert 0 <= index < len(self.subtitles)
+
+    def set_start_ensure(self, return_value, index, value, register=-1):
+        for i in range(len(self.subtitles) - 1):
+            assert self.subtitles[i] <= self.subtitles[i + 1]
 
     @revertable
     @util.notify_frozen
-    def set_position(self, row, col, value, register=-1):
-        """Set the value of position.
+    def set_start(self, index, value, register=-1):
+        """Set the value of start position."""
 
-        Return new row or row if not moved.
-        """
-        if isinstance(value, basestring):
-            positions = self.times
-        elif isinstance(value, int):
-            positions = self.frames
-        if value == positions[row][col]:
-            return row
-        natives = self.get_positions()
-        orig_value = natives[row][col]
-        positions[row][col] = value
-        self._complete_positions(row, col, value)
-        new_row = (self._move_if_needed(row) if col == SHOW else row)
+        subtitle = self.subtitles[index]
+        orig_value = subtitle.start
+        subtitle.start = value
+        index = self._move_if_needed(index)
 
-        self.register_action(
-            register=register,
-            docs=[const.DOCUMENT.MAIN],
-            description=_("Editing position"),
-            revert_method=self.set_position,
-            revert_args=[new_row, col, orig_value],)
+        action = self.get_revertable_action(register)
+        action.docs = [const.DOCUMENT.MAIN, const.DOCUMENT.TRAN]
+        action.description = _("Editing position")
+        action.revert_method = self.set_start
+        action.revert_args = (index, orig_value)
+        self.register_action(action)
+        self.emit("positions-changed", [index])
 
-        self.emit("positions-changed", [new_row])
-        return new_row
+    def set_text_require(self, index, doc, value, register=-1):
+        assert 0 <= index < len(self.subtitles)
 
     @revertable
     @util.silent(AssertionError)
-    def set_text(self, row, doc, value, register=-1):
-        """Set the value of text."""
+    def set_text(self, index, doc, value, register=-1):
+        """Set the value of document's text."""
 
         value = unicode(value)
-        texts = self.get_texts(doc)
-        orig_value = texts[row]
+        subtitle = self.subtitles[index]
+        orig_value = subtitle.get_text(doc)
         assert value != orig_value
-        texts[row] = value
+        subtitle.set_text(doc, value)
 
-        self.register_action(
-            register=register,
-            docs=[doc],
-            description=_("Editing text"),
-            revert_method=self.set_text,
-            revert_args=[row, doc, orig_value],)
-
-        signal = ("main-texts-changed", "translation-texts-changed")[doc]
-        self.emit(signal, [row])
+        action = self.get_revertable_action(register)
+        action.docs = [doc]
+        action.description = _("Editing text")
+        action.revert_method = self.set_text
+        action.revert_args = (index, doc, orig_value)
+        self.register_action(action)
+        signal = self.get_text_signal(doc)
+        self.emit(signal, [index])

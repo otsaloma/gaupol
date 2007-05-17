@@ -1,4 +1,4 @@
-# Copyright (C) 2006 Osmo Salomaa
+# Copyright (C) 2006-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,31 +16,20 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Data editing extension delegates of a subtitle project."""
+"""Data editing extension delegates of Project."""
 
 
-from .edit     import EditAgent
-from .format   import FormatAgent
-from .open     import OpenAgent
-from .position import PositionAgent
-from .preview  import PreviewAgent
-from .register import RegisterAgent
-from .save     import SaveAgent
-from .search   import SearchAgent
-from .set      import SetAgent
-from .support  import SupportAgent
-from .text     import TextAgent
+from .clipboard import ClipboardAgent
+from .edit      import EditAgent
+from .format    import FormatAgent
+from .open      import OpenAgent
+from .position  import PositionAgent
+from .preview   import PreviewAgent
+from .register  import RegisterAgent
+from .save      import SaveAgent
+from .search    import SearchAgent
+from .set       import SetAgent
+from .text      import TextAgent
+from .util      import UtilityAgent
 
-
-__all__ = AGENTS = [
-    "EditAgent",
-    "FormatAgent",
-    "OpenAgent",
-    "PositionAgent",
-    "PreviewAgent",
-    "RegisterAgent",
-    "SaveAgent",
-    "SearchAgent",
-    "SetAgent",
-    "SupportAgent",
-    "TextAgent",]
+__all__ = [x for x in dir() if x.endswith("Agent")]

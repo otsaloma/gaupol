@@ -1,4 +1,4 @@
-# Copyright (C) 2006 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,24 +16,18 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol._agents import *
-from gaupol.project import Project
-from gaupol.unittest import TestCase
+"""Revertable actions and decorators for dealing with them.
+
+Imported names:
+
+    RevertableAction (action)
+    RevertableActionGroup (group)
+    revertable (deco)
+"""
 
 
-class TestModule(TestCase):
+from .action import RevertableAction
+from .deco   import revertable
+from .group  import RevertableActionGroup
 
-    def test_imports(self):
-
-        project = Project()
-        EditAgent(project)
-        FormatAgent(project)
-        OpenAgent(project)
-        PositionAgent(project)
-        PreviewAgent(project)
-        RegisterAgent(project)
-        SaveAgent(project)
-        SearchAgent(project)
-        SetAgent(project)
-        SupportAgent(project)
-        TextAgent(project)
+__all__ = ["RevertableAction", "RevertableActionGroup", "revertable"]

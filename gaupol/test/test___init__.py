@@ -24,4 +24,5 @@ class TestModule(TestCase):
 
     def test___version__(self):
 
-        [int(x) for x in gaupol.__version__.split(".")]
+        # pylint: disable-msg=W0104
+        (int(x) for x in gaupol.__version__.split("."))

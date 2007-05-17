@@ -16,16 +16,28 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Integer constants for position column indexes.
-
-Module variables:
-
-    SHOW, HIDE, DURN
-"""
+from gaupol import const
+from gaupol.unittest import TestCase
+from .. import action
 
 
-__all__ = ["SHOW", "HIDE", "DURN"]
+class TestRevertableAction(TestCase):
 
-SHOW = 0
-HIDE = 1
-DURN = 2
+    def setup_method(self, method):
+
+        def revert(register=-1):
+            assert register in const.REGISTER.members
+        self.action = action.RevertableAction()
+        self.action.register=const.REGISTER.DO
+        self.action.docs=[const.DOCUMENT.MAIN]
+        self.action.description=""
+        self.action.revert_method=revert
+
+    def test__get_reversion_register(self):
+
+        register = self.action._get_reversion_register()
+        assert register == const.REGISTER.UNDO
+
+    def test_revert(self):
+
+        self.action.revert()

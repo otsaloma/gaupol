@@ -23,15 +23,14 @@ Module variables:
     DOCUMENT, FORMAT, FRAMERATE, MODE, NEWLINE, REGISTER, VIDEO_PLAYER
 """
 
+# pylint: disable-msg=C0301
+
 
 import sys
 
 from gaupol.base import const
 from gaupol.i18n import _
 
-
-# All defined constant sections.
-__all__ = set(dir() + ["__all__"])
 
 DOCUMENT = const.Section()
 DOCUMENT.MAIN = const.Member()
@@ -131,15 +130,6 @@ REGISTER.UNDO.signal = "action-undone"
 REGISTER.REDO = const.Member()
 REGISTER.REDO.shift = 1
 REGISTER.REDO.signal = "action-redone"
-REGISTER.DO_MULTIPLE = const.Member()
-REGISTER.DO_MULTIPLE.shift = 1
-REGISTER.DO_MULTIPLE.signal = "action-done"
-REGISTER.UNDO_MULTIPLE = const.Member()
-REGISTER.UNDO_MULTIPLE.shift = -1
-REGISTER.UNDO_MULTIPLE.signal = "action-undone"
-REGISTER.REDO_MULTIPLE = const.Member()
-REGISTER.REDO_MULTIPLE.shift = 1
-REGISTER.REDO_MULTIPLE.signal = "action-redone"
 REGISTER.finalize()
 
 def get_mplayer_executable():
@@ -172,4 +162,4 @@ VIDEO_PLAYER.VLC.display_name = "VLC"
 VIDEO_PLAYER.finalize()
 
 del get_mplayer_executable, get_vlc_executable
-__all__ = sorted(list(set(dir()) - __all__))
+__all__ = [x for x in dir() if x.isupper()]

@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -26,8 +26,30 @@ class TestClipboard(TestCase):
 
         self.clipboard = clipboard.Clipboard()
 
-    def test_get_data_as_string(self):
+    def test_append(self):
 
-        self.clipboard.data = ["test", None, "test", None]
-        string = self.clipboard.get_data_as_string()
+        self.clipboard.append("")
+        self.clipboard.append(None)
+        texts = self.clipboard.get_texts()
+        assert texts == ["", None]
+
+    def test_clear(self):
+
+        self.clipboard.append("")
+        self.clipboard.append(None)
+        self.clipboard.clear()
+        texts = self.clipboard.get_texts()
+        assert texts == []
+
+    def test_get_string(self):
+
+        self.clipboard._texts = ["test", None, "test", None]
+        string = self.clipboard.get_string()
         assert string == "test\n\n\n\ntest\n\n"
+
+    def test_get_texts(self):
+
+        self.clipboard.append("")
+        self.clipboard.append(None)
+        texts = self.clipboard.get_texts()
+        assert texts == ["", None]

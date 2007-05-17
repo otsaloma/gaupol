@@ -28,10 +28,6 @@ class Calculator(object):
 
     """Time and frame calculator.
 
-    Class variables:
-
-        _instances: Dictionary mapping framerates to instances
-
     Instance variables:
 
         framerate: Video framerate as float
@@ -55,7 +51,7 @@ class Calculator(object):
     def add_seconds_to_time(self, time, seconds):
         """Add amount of seconds to time."""
 
-        seconds = max(self.time_to_seconds(time) + seconds, 0)
+        seconds = self.time_to_seconds(time) + seconds
         return self.seconds_to_time(seconds)
 
     def add_times(self, x, y):
@@ -63,7 +59,7 @@ class Calculator(object):
 
         x = self.time_to_seconds(x)
         y = self.time_to_seconds(y)
-        return self.seconds_to_time(max(x + y, 0))
+        return self.seconds_to_time(x + y)
 
     def frame_to_seconds(self, frame):
         """Convert frame to seconds."""
@@ -79,10 +75,10 @@ class Calculator(object):
     def get_frame_duration(self, x, y):
         """Get duration from frame x to frame y."""
 
-        return max(y - x, 0)
+        return y - x
 
     def get_middle(self, x, y):
-        """Get time or frame halfway between start and end."""
+        """Get time or frame halfway between x and y."""
 
         if isinstance(x, basestring):
             x = self.time_to_seconds(x)
@@ -96,8 +92,6 @@ class Calculator(object):
 
         x = self.time_to_seconds(x)
         y = self.time_to_seconds(y)
-        if x > y:
-            return "00:00:00.000"
         return self.seconds_to_time(y - x)
 
     def round_time(self, time, decimals):
@@ -115,12 +109,13 @@ class Calculator(object):
     def seconds_to_time(self, seconds):
         """Convert seconds to time."""
 
-        seconds = round(seconds, 3)
+        sign = ("-" if seconds < 0 else "")
+        seconds = abs(round(seconds, 3))
         if seconds > 359999.999:
-            return "99:59:59.999"
+            return "%s99:59:59.999" % sign
 
-        return "%02.0f:%02.0f:%02.0f.%03.0f" % (
-            seconds // 3600,
+        return "%s%02.0f:%02.0f:%02.0f.%03.0f" % (
+            sign, seconds // 3600,
             (seconds % 3600) // 60,
             int(seconds % 60),
             (seconds % 1) * 1000)
@@ -134,7 +129,12 @@ class Calculator(object):
     def time_to_seconds(self, time):
         """Convert time to seconds."""
 
-        return sum((
+        coefficient = 1
+        if time.startswith("-"):
+            coefficient = -1
+            time = time[1:]
+
+        return coefficient * sum((
             float(time[ :2]) * 3600,
             float(time[3:5]) *   60,
             float(time[6:8])       ,

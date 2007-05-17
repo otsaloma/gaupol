@@ -54,7 +54,7 @@ class TagLibrary(Singleton):
         return None
 
     @util.once
-    def _get_encode_tags(self):
+    def __get_encode_tags(self):
         """Get list of tuples of regular expression, replacement."""
 
         # Remove all tags.
@@ -68,7 +68,7 @@ class TagLibrary(Singleton):
     def encode(self, text):
         """Return text with tags converted from internal to this format."""
 
-        for regex, replacement in self._get_encode_tags():
+        for regex, replacement in self.__get_encode_tags():
             text = regex.sub(replacement, text)
         return text
 

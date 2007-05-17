@@ -16,13 +16,14 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol import const, files
 from gaupol.unittest import TestCase
+from .. import group
 
 
-class TestModule(TestCase):
+class TestRevertableActionGroup(TestCase):
 
-    def test_attributes(self):
+    def test___init__(self):
 
-        for name in const.FORMAT.class_names:
-            assert hasattr(files, name)
+        action_group = group.RevertableActionGroup()
+        action_group.actions = []
+        action_group.description = ""

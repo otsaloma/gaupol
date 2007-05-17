@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,11 +16,8 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-import copy
-
 from gaupol import const
 from gaupol.unittest import TestCase, reversion_test
-from ..index import SHOW, HIDE, DURN
 
 
 class TestEditAgent(TestCase):
@@ -33,110 +30,109 @@ class TestEditAgent(TestCase):
     def test_clear_texts(self):
 
         self.project.clear_texts([0, 1], const.DOCUMENT.MAIN)
-        assert self.project.main_texts[0] == ""
-        assert self.project.main_texts[1] == ""
-
-    def test_copy_texts(self):
-
-        text_0 = self.project.main_texts[0]
-        text_2 = self.project.main_texts[2]
-        self.project.copy_texts([0, 2], const.DOCUMENT.MAIN)
-        assert self.project.clipboard.data == [text_0, None, text_2]
+        assert self.project.subtitles[0].main_text == ""
+        assert self.project.subtitles[1].main_text == ""
 
     @reversion_test
-    def test_cut_texts(self):
+    def test_insert_blank_subtitles__end(self):
 
-        text_1 = self.project.main_texts[1]
-        text_3 = self.project.main_texts[3]
-        self.project.cut_texts([1, 3], const.DOCUMENT.MAIN)
-        assert self.project.clipboard.data == [text_1, None, text_3]
-        assert self.project.main_texts[1] == ""
-        assert self.project.main_texts[3] == ""
-
-    @reversion_test
-    def test_insert_blank_subtitles(self):
-
-        orig_length = len(self.project.main_texts)
-        self.project.insert_blank_subtitles([1, 2])
-        assert len(self.project.main_texts) == orig_length + 2
-        assert self.project.main_texts[1] == ""
-        assert self.project.main_texts[2] == ""
+        subtitles = self.project.subtitles
+        orig_length = len(subtitles)
+        indexes = range(orig_length, orig_length + 10)
+        self.project.insert_blank_subtitles(indexes)
+        assert len(subtitles) == orig_length + 10
+        for i in range(0, len(subtitles) - 1):
+            assert subtitles[i] <= subtitles[i + 1]
 
     @reversion_test
-    def test_insert_blank_subtitles_excess(self):
+    def test_insert_blank_subtitles__middle(self):
 
-        orig_length = len(self.project.main_texts)
-        self.project.insert_blank_subtitles([orig_length])
-        assert len(self.project.main_texts) == orig_length + 1
-        assert self.project.main_texts[orig_length] == ""
+        subtitles = self.project.subtitles
+        orig_length = len(subtitles)
+        self.project.insert_blank_subtitles([1, 2, 3])
+        assert len(subtitles) == orig_length + 3
+        for i in range(0, len(subtitles) - 1):
+            assert subtitles[i] <= subtitles[i + 1]
 
     @reversion_test
-    def test_insert_blank_subtitles_multiple_ranges(self):
+    def test_insert_blank_subtitles__start(self):
 
-        orig_length = len(self.project.main_texts)
-        self.project.insert_blank_subtitles([1, 3, 4])
-        assert len(self.project.main_texts) == orig_length + 3
-        assert self.project.main_texts[1] == ""
-        assert self.project.main_texts[3] == ""
-        assert self.project.main_texts[4] == ""
+        subtitles = self.project.subtitles
+        orig_length = len(subtitles)
+        self.project.insert_blank_subtitles([0, 1])
+        assert len(subtitles) == orig_length + 2
+        for i in range(0, len(subtitles) - 1):
+            assert subtitles[i] <= subtitles[i + 1]
+
+    @reversion_test
+    def test_insert_subtitles(self):
+
+        subtitles = self.project.subtitles
+        orig_length = len(subtitles)
+        new_subtitles = []
+        for i in range(3):
+            subtitle = self.project.get_subtitle()
+            subtitle.start = i
+            subtitle.end = i + 1
+            subtitle.main_text = str(i)
+            subtitle.tran_text = str(i)
+            new_subtitles.append(subtitle)
+        self.project.insert_subtitles([0, 1, 2], new_subtitles)
+        assert len(subtitles) == orig_length + 3
+        assert subtitles[0:3] == new_subtitles
 
     @reversion_test
     def test_merge_subtitles(self):
 
-        orig_times = copy.deepcopy(self.project.times)
-        orig_frames = copy.deepcopy(self.project.frames)
-        orig_main_texts = copy.deepcopy(self.project.main_texts)
-        orig_tran_texts = copy.deepcopy(self.project.tran_texts)
-        orig_length = len(self.project.times)
+        subtitles = self.project.subtitles
+        subtitle_1 = subtitles[1].copy()
+        subtitle_2 = subtitles[2].copy()
+        orig_length = len(subtitles)
         self.project.merge_subtitles([1, 2])
-        assert len(self.project.times) == orig_length - 1
-        assert self.project.times[1][SHOW] == orig_times[1][SHOW]
-        assert self.project.times[1][HIDE] == orig_times[2][HIDE]
-        assert self.project.frames[1][SHOW] == orig_frames[1][SHOW]
-        assert self.project.frames[1][HIDE] == orig_frames[2][HIDE]
-        assert self.project.main_texts[1] == "\n".join(orig_main_texts[1:3])
-        assert self.project.tran_texts[1] == "\n".join(orig_tran_texts[1:3])
-
-    @reversion_test
-    def test_paste_texts(self):
-
-        texts = self.project.tran_texts[2:4]
-        self.project.copy_texts([2, 3], const.DOCUMENT.TRAN)
-        assert self.project.paste_texts(0, const.DOCUMENT.MAIN) == [0, 1]
-        assert self.project.main_texts[0:2] == texts
-
-    @reversion_test
-    def test_paste_texts_excess(self):
-
-        self.project.clipboard.data = ["x"] * 99
-        rows = self.project.paste_texts(1, const.DOCUMENT.MAIN)
-        assert rows == range(1, 100)
-        assert len(self.project.times) == 100
-        for i in range(1, 100):
-            assert self.project.main_texts[i] == "x"
+        assert len(subtitles) == orig_length - 1
+        assert subtitles[1].start == subtitle_1.start
+        assert subtitles[1].end == subtitle_2.end
 
     @reversion_test
     def test_remove_subtitles(self):
 
-        orig_length = len(self.project.times)
+        subtitles = self.project.subtitles
+        orig_length = len(subtitles)
         self.project.remove_subtitles([2, 3])
-        assert len(self.project.times) == orig_length - 2
+        assert len(subtitles) == orig_length - 2
+
+    @reversion_test
+    def test_replace_positions(self):
+
+        new_subtitles = []
+        for i in range(3):
+            subtitle = self.project.get_subtitle()
+            subtitle.start = i
+            subtitle.end = i + 1
+            new_subtitles.append(subtitle)
+        self.project.replace_positions([0, 1, 2], new_subtitles)
+        subtitles = self.project.subtitles
+        for i in range(3):
+            assert subtitles[i].start == new_subtitles[i].start
+            assert subtitles[i].end == new_subtitles[i].end
+
+    @reversion_test
+    def test_replace_texts(self):
+
+        doc = const.DOCUMENT.MAIN
+        self.project.replace_texts([1, 2], doc, ["", ""])
+        assert self.project.subtitles[1].main_text == ""
+        assert self.project.subtitles[2].main_text == ""
 
     @reversion_test
     def test_split_subtitle(self):
 
-        orig_times = self.project.times[1]
-        orig_frames = self.project.frames[1]
-        orig_length = len(self.project.times)
+        subtitles = self.project.subtitles
+        subtitle = subtitles[1].copy()
+        orig_length = len(subtitles)
         self.project.split_subtitle(1)
-        assert len(self.project.times) == orig_length + 1
-        assert self.project.times[1][HIDE] == self.project.times[2][SHOW]
-        assert self.project.frames[1][HIDE] == self.project.frames[2][SHOW]
-        assert self.project.times[2][SHOW] > orig_times[SHOW]
-        assert self.project.times[2][SHOW] < orig_times[HIDE]
-        assert self.project.frames[2][SHOW] > orig_frames[SHOW]
-        assert self.project.frames[2][SHOW] < orig_frames[HIDE]
-        assert self.project.times[2][HIDE] == orig_times[HIDE]
-        assert self.project.frames[2][HIDE] == orig_frames[HIDE]
-        assert self.project.main_texts[2] == ""
-        assert self.project.tran_texts[2] == ""
+        assert len(subtitles) == orig_length + 1
+        assert subtitles[1].start == subtitle.start
+        assert subtitles[1].end < subtitle.end
+        assert subtitles[2].start < subtitle.end
+        assert subtitles[2].end == subtitle.end

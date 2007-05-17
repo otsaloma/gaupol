@@ -93,6 +93,11 @@ class SubtitleFile(object):
         self.newline = const.NEWLINE.members[index]
         return lines
 
+    def copy_from(self, file):
+        """Copy generic properties from file of same format."""
+
+        self.header = file.header
+
     def get_template_header_require(self):
         assert self.format.has_header
 

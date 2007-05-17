@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -22,10 +22,9 @@
 from __future__ import division
 
 from gaupol import const, util
-from gaupol.base import Delegate
+from gaupol.base import Contractual, Delegate
 from gaupol.i18n import _
-from .index import SHOW, HIDE, DURN
-from .register import revertable
+from gaupol.reversion import revertable
 
 
 class EditAgent(Delegate):
@@ -34,166 +33,187 @@ class EditAgent(Delegate):
 
     # pylint: disable-msg=E0203,W0201
 
-    @revertable
-    def clear_texts(self, rows, doc, register=-1):
-        """Clear texts."""
+    __metaclass__ = Contractual
 
-        new_texts = [u""] * len(rows)
-        self.replace_texts(rows, doc, new_texts, register=register)
+    def clear_texts_require(self, indexes, doc, register=-1):
+        for index in indexes:
+            assert 0 <= index < len(self.subtitles)
+
+    @revertable
+    def clear_texts(self, indexes, doc, register=-1):
+        """Set texts to blank strings."""
+
+        new_texts = [""] * len(indexes)
+        self.replace_texts(indexes, doc, new_texts, register=register)
         self.set_action_description(register, _("Clearing texts"))
 
-    def copy_texts(self, rows, doc):
-        """Copy texts to the clipboard."""
-
-        data = []
-        texts = self.get_texts(doc)
-        for row in range(min(rows), max(rows) + 1):
-            item = (texts[row] if row in rows else None)
-            data.append(item)
-        self.clipboard.data = data
-
     @revertable
-    def cut_texts(self, rows, doc, register=-1):
-        """Cut texts to the clipboard."""
+    @util.notify_frozen
+    def insert_blank_subtitles(self, indexes, register=-1):
+        """Insert blank subtitles with fitting positions."""
 
-        self.copy_texts(rows, doc)
-        self.clear_texts(rows, doc, register=register)
-        self.set_action_description(register, _("Cutting texts"))
+        for these_indexes in util.get_ranges(indexes):
+            first_start = 0.0
+            if these_indexes[0] > 0:
+                subtitle = self.subtitles[these_indexes[0] - 1]
+                first_start = subtitle.end_seconds
+            duration = 3.0
+            if these_indexes[0] < len(self.subtitles):
+                subtitle = self.subtitles[these_indexes[0]]
+                window = subtitle.start_seconds - first_start
+                duration = window / len(these_indexes)
+            for i, index in enumerate(these_indexes):
+                subtitle = self.get_subtitle()
+                subtitle.start = first_start + (i * duration)
+                subtitle.end = first_start + ((i + 1) * duration)
+                self.subtitles.insert(index, subtitle)
+
+        action = self.get_revertable_action(register)
+        action.docs = const.DOCUMENT.members
+        action.description = _("Inserting subtitles")
+        action.revert_method = self.remove_subtitles
+        action.revert_args = (indexes,)
+        self.register_action(action)
+        self.emit("subtitles-inserted", indexes)
 
     @revertable
     @util.notify_frozen
-    def insert_blank_subtitles(self, rows, register=-1):
-        """Insert blank subtitles."""
+    def insert_subtitles(self, indexes, subtitles, register=-1):
+        """Insert given subtitles."""
 
-        mode = self.get_mode()
-        all_rows = util.get_sorted_unique(rows)
-        for rows in util.get_ranges(all_rows):
-            if mode == const.MODE.TIME:
-                start = 0.0
-                if min(rows) > 0:
-                    start = self.times[min(rows) - 1][HIDE]
-                    start = self.calc.time_to_seconds(start)
-                duration = 3.0
-                if min(rows) < len(self.times):
-                    end = self.times[min(rows)][SHOW]
-                    end = self.calc.time_to_seconds(end)
-                    duration = (end - start) / len(rows)
-            if mode == const.MODE.FRAME:
-                start = 0
-                if min(rows) > 0:
-                    start = self.frames[min(rows) - 1][HIDE]
-                duration = self.calc.seconds_to_frame(3.0)
-                if min(rows) < len(self.times):
-                    end = self.frames[min(rows)][SHOW]
-                    duration = int((end - start) / len(rows))
-            for i, row in enumerate(rows):
-                time, frame = self.expand_positions(
-                    start + (i * duration), start + ((i + 1) * duration))
-                self.times.insert(row, time)
-                self.frames.insert(row, frame)
-                self.main_texts.insert(row, u"")
-                self.tran_texts.insert(row, u"")
+        for i, index in enumerate(indexes):
+            self.subtitles.insert(index, subtitles[i])
 
-        self.register_action(
-            register=register,
-            docs=[const.DOCUMENT.MAIN, const.DOCUMENT.TRAN],
-            description=_("Inserting subtitles"),
-            revert_method=self.remove_subtitles,
-            revert_args=[all_rows],)
+        action = self.get_revertable_action(register)
+        action.docs = const.DOCUMENT.members
+        action.description = _("Inserting subtitles")
+        action.revert_method = self.remove_subtitles
+        action.revert_args = (indexes,)
+        self.register_action(action)
+        self.emit("subtitles-inserted", indexes)
 
-        self.emit("subtitles-inserted", all_rows)
+    def merge_subtitles_require(self, indexes, register=-1):
+        assert len(indexes) > 1
+        for index in indexes:
+            assert 0 <= index < len(self.subtitles)
+        assert indexes == range(indexes[0], indexes[-1] + 1)
 
     @revertable
-    def merge_subtitles(self, rows, register=-1):
-        """Merge subtitles."""
+    def merge_subtitles(self, indexes, register=-1):
+        """Merge subtitles in indexes to form one subtitle."""
 
-        rows = sorted(rows)
-        positions = self.get_positions()
-        show = positions[rows[0]][SHOW]
-        hide = positions[rows[-1]][HIDE]
-        time, frame = self.expand_positions(show, hide)
-        main_texts = [self.main_texts[x] for x in rows]
-        tran_texts = [self.tran_texts[x] for x in rows]
-        for texts in (main_texts, tran_texts):
-            while "" in texts:
-                texts.remove("")
-        main_text = "\n".join(main_texts)
-        tran_text = "\n".join(tran_texts)
+        subtitle = self.get_subtitle()
+        subtitle.start = self.subtitles[indexes[0]].start
+        subtitle.end = self.subtitles[indexes[-1]].end
+        main_texts = [self.subtitles[x].main_text for x in indexes]
+        main_texts = [x for x in main_texts if x]
+        subtitle.main_text = "\n".join(main_texts)
+        tran_texts = [self.subtitles[x].tran_text for x in indexes]
+        tran_texts = [x for x in tran_texts if x]
+        subtitle.tran_text = "\n".join(tran_texts)
 
-        self.remove_subtitles(rows, register=register)
-        self.insert_subtitles(
-            [rows[0]], [time], [frame], [main_text], [tran_text],
-            register=register)
+        self.remove_subtitles(indexes, register=register)
+        self.insert_subtitles([indexes[0]], [subtitle], register=register)
         self.group_actions(register, 2, _("Merging subtitles"))
 
-    @revertable
-    def paste_texts(self, row, doc, register=-1):
-        """Paste texts from the clipboard.
-
-        Return the rows that were pasted into.
-        """
-        data = self.clipboard.data
-        excess = len(data) - (len(self.times) - row)
-        if excess > 0:
-            rows = range(len(self.times), len(self.times) + excess)
-            self.insert_blank_subtitles(rows, register=register)
-
-        rows = []
-        new_texts = []
-        for i, text in enumerate(data):
-            if text is not None:
-                rows.append(row + i)
-                new_texts.append(text)
-        self.replace_texts(rows, doc, new_texts, register=register)
-        if excess > 0:
-            self.group_actions(register, 2, "")
-        self.set_action_description(register, _("Pasting texts"))
-        return rows
+    def remove_subtitles_require(self, indexes, register=-1):
+        for index in indexes:
+            assert 0 <= index < len(self.subtitles)
 
     @revertable
     @util.notify_frozen
-    def remove_subtitles(self, rows, register=-1):
-        """Remove subtitles."""
+    def remove_subtitles(self, indexes, register=-1):
+        """Remove subtitles in indexes."""
 
-        times = []
-        frames = []
-        main_texts = []
-        tran_texts = []
-        rows = sorted(rows)
-        for row in reversed(rows):
-            times.insert(0, self.times.pop(row))
-            frames.insert(0, self.frames.pop(row))
-            main_texts.insert(0, self.main_texts.pop(row))
-            tran_texts.insert(0, self.tran_texts.pop(row))
+        subtitles = []
+        indexes = sorted(indexes)
+        for index in reversed(indexes):
+            subtitles.insert(0, self.subtitles.pop(index))
 
-        self.register_action(
-            register=register,
-            docs=[const.DOCUMENT.MAIN, const.DOCUMENT.TRAN],
-            description=_("Removing subtitles"),
-            revert_method=self.insert_subtitles,
-            revert_args=[rows, times, frames, main_texts, tran_texts],)
+        action = self.get_revertable_action(register)
+        action.docs = const.DOCUMENT.members
+        action.description = _("Removing subtitles")
+        action.revert_method = self.insert_subtitles
+        action.revert_args = (indexes, subtitles)
+        self.register_action(action)
+        self.emit("subtitles-removed", indexes)
 
-        self.emit("subtitles-removed", rows)
+    def replace_positions_require(self, indexes, subtitles, register=-1):
+        for index in indexes:
+            assert 0 <= index < len(self.subtitles)
+        assert len(indexes) == len(subtitles)
 
     @revertable
-    def split_subtitle(self, row, register=-1):
-        """Split subtitle in two."""
+    @util.notify_frozen
+    def replace_positions(self, indexes, subtitles, register=-1):
+        """Replace positions in indexes with those in subtitles."""
 
-        positions = self.get_positions()
-        show = positions[row][SHOW]
-        hide = positions[row][HIDE]
-        middle = self.calc.get_middle(show, hide)
-        time_1, frame_1 = self.expand_positions(show, middle)
-        time_2, frame_2 = self.expand_positions(middle, hide)
-        main_text = self.main_texts[row]
-        tran_text = self.tran_texts[row]
+        orig_subtitles = []
+        for i, index in enumerate(indexes):
+            subtitle = self.subtitles[index]
+            orig_subtitles.append(subtitle.copy())
+            subtitle.start = subtitles[i].start
+            subtitle.end = subtitles[i].end
 
-        self.remove_subtitles([row], register=register)
-        self.insert_subtitles(
-            [row, row + 1],
-            [time_1, time_2],
-            [frame_1, frame_2],
-            [main_text, u""],
-            [tran_text, u""],
-            register=register)
+        action = self.get_revertable_action(register)
+        action.docs = const.DOCUMENT.members
+        action.description = _("Replacing positions")
+        action.revert_method = self.replace_positions
+        action.revert_args = (indexes, orig_subtitles)
+        self.register_action(action)
+        self.emit("positions-changed", indexes)
+
+    def replace_texts_require(self, indexes, doc, texts, register=-1):
+        for index in indexes:
+            assert 0 <= index < len(self.subtitles)
+        assert len(indexes) == len(texts)
+
+    @revertable
+    @util.notify_frozen
+    def replace_texts(self, indexes, doc, texts, register=-1):
+        """Replace texts in document's indexes with new_texts."""
+
+        orig_texts = []
+        for i, index in enumerate(indexes):
+            subtitle = self.subtitles[index]
+            orig_texts.append(subtitle.get_text(doc))
+            subtitle.set_text(doc, texts[i])
+
+        action = self.get_revertable_action(register)
+        action.docs = [doc]
+        action.description = _("Replacing texts")
+        action.revert_method = self.replace_texts
+        action.revert_args = (indexes, doc, orig_texts)
+        self.register_action(action)
+        signal = self.get_text_signal(doc)
+        self.emit(signal, indexes)
+
+    def split_subtitle_require(self, index, register=-1):
+        assert 0 <= index < len(self.subtitles)
+
+    @revertable
+    def split_subtitle(self, index, register=-1):
+        """Split subtitle in two subtitles with the same durations."""
+
+        start = self.subtitles[index].start
+        end = self.subtitles[index].end
+        middle = self.calc.get_middle(start, end)
+        main_text = self.subtitles[index].main_text
+        tran_text = self.subtitles[index].tran_text
+
+        subtitles = []
+        indexes = [index, index + 1]
+        subtitle = self.get_subtitle()
+        subtitle.start = start
+        subtitle.end = middle
+        subtitle.main_text = main_text
+        subtitle.tran_text = tran_text
+        subtitles.append(subtitle)
+        subtitle = self.get_subtitle()
+        subtitle.start = middle
+        subtitle.end = end
+        subtitles.append(subtitle)
+
+        self.remove_subtitles([index], register=register)
+        self.insert_subtitles(indexes, subtitles, register=register)
         self.group_actions(register, 2, _("Splitting subtitle"))

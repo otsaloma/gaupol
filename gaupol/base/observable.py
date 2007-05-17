@@ -187,7 +187,7 @@ class Observable(object):
         return self.emit("notify::%s" % name)
 
     def thaw_notify_ensure(self, value, do=True):
-        assert not self._notify_queue
+        assert (not do) or (not self._notify_queue)
 
     def thaw_notify(self, do=True):
         """Emit all queued notify signals and queue no more.

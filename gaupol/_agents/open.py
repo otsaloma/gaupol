@@ -19,69 +19,84 @@
 """Opening subtitle files."""
 
 
-from gaupol import const, util
-from gaupol.base import Delegate
+from gaupol import const, enclib, files, util
+from gaupol.base import Contractual, Delegate
 from gaupol.determiner import FormatDeterminer
-from gaupol.files import *
-from .index import SHOW, HIDE, DURN
 
 
 class OpenAgent(Delegate):
 
-    """Opening subtitle files.
-
-    Instance variables:
-
-        _sort_count: The amount of sort operations made
-    """
+    """Opening subtitle files."""
 
     # pylint: disable-msg=E0203,W0201
 
-    def __init__(self, master):
+    __metaclass__ = Contractual
 
-        Delegate.__init__(self, master)
-
-        self._sort_count = 0
-
-    def _adapt_translation(self, shows, hides, texts):
+    def _adapt_translations(self, mode, starts, ends, texts):
         """Open translation file data in an adaptive manner."""
+
+        for subtitle in self.subtitles:
+            subtitle.tran_text = ""
 
         m = 0
         t = 0
-        positions = self.get_positions(self.tran_file.mode)
-        while t < len(shows):
-            middle = self.calc.get_middle(shows[t], hides[t])
-            time, frame = self.expand_positions(shows[t], hides[t])
-            if m == len(self.times) or middle < positions[m][SHOW]:
-                self.insert_subtitles(
-                    [m], [time], [frame], [u""], [texts[t]], register=None)
+        while t < len(starts):
+            middle = self.calc.get_middle(starts[t], ends[t])
+            main_start = self.subtitles[m].get_start(mode)
+            if (m == len(self.subtitles)) or (middle < main_start):
+                subtitle = self.get_subtitle()
+                subtitle.start = starts[t]
+                subtitle.end = ends[t]
+                subtitle.tran_text = texts[t]
+                self.subtitles.insert(m, subtitle)
                 m += 1
                 t += 1
                 continue
-            if middle > positions[m][HIDE]:
+            main_end = self.subtitles[m].get_end(mode)
+            if middle > main_end:
                 m += 1
                 continue
-            self.tran_texts[m] = texts[t]
+            self.subtitles[t].tran_text = texts[t]
             m += 1
             t += 1
 
-    def _sort(self, shows, hides, texts):
-        """Sort data based on show positions.
+    def _append_translations(self, mode, starts, ends, texts):
+        """Open translation file data in a simple appending manner."""
 
-        Return shows, hides, texts.
-        """
-        def sort(x, y):
+        count = len(self.subtitles)
+        excess = len(texts) - count
+        if excess > 0:
+            indexes = range(count, count + excess)
+            self.insert_blank_subtitles(indexes, register=None)
+        for i, text in enumerate(texts):
+            self.subtitles[i].tran_text = text
+
+    def _sort(self, starts, ends, texts):
+        """Sort and return data based on start positions."""
+
+        sorts = []
+        def compare_starts(x, y):
             value = cmp(x[0], y[0])
             if value == -1:
-                self._sort_count += 1
+                sorts.append(1)
             return value
-        self._sort_count = 0
-        data = [[shows[i], hides[i], texts[i]] for i in range(len(shows))]
-        data.sort(sort)
-        shows = [x[0] for x in data]
-        hides = [x[1] for x in data]
-        texts = [x[2] for x in data]
-        return shows, hides, texts
+        data = []
+        for i in range(len(starts)):
+            data.append((starts[i], ends[i], texts[i]))
+        data.sort(compare_starts)
+        starts = [x[0] for x in data]
+        ends   = [x[1] for x in data]
+        texts  = [x[2] for x in data]
+        return starts, ends, texts, len(sorts)
+
+    def open_main_require(self, path, encoding):
+        assert enclib.is_valid(encoding)
+
+    def open_main_ensure(self, value, path, encoding):
+        assert self.main_file is not None
+        assert self.main_changed == 0
+        assert self.tran_changed == None
+        assert value >= -1
 
     @util.notify_frozen
     def open_main(self, path, encoding):
@@ -92,32 +107,36 @@ class OpenAgent(Delegate):
         Raise FormatError if unable to detect the format.
         Return sort count.
         """
-        format = FormatDeterminer(path, encoding).determine()
-        main_file = eval(format.class_name)(path, encoding)
-        shows, hides, texts = self._sort(*main_file.read())
-        self.main_file = main_file
-
-        self.times = []
-        self.frames = []
-        self.main_texts = []
-        self.tran_texts = []
-        for i in range(len(shows)):
-            time, frame = self.expand_positions(shows[i], hides[i])
-            self.times.append(time)
-            self.frames.append(frame)
-            self.main_texts.append(texts[i])
-            self.tran_texts.append(u"")
+        format = FormatDeterminer().determine(path, encoding)
+        self.main_file = getattr(files, format.class_name)(path, encoding)
+        starts, ends, texts, sort_count = self._sort(*self.main_file.read())
 
         # Get framerate from MPsub header.
         if self.main_file.format == const.FORMAT.MPSUB:
             if self.main_file.framerate is not None:
                 self.set_framerate(self.main_file.framerate, register=None)
 
+        self.subtitles = []
+        for i in range(len(starts)):
+            subtitle = self.get_subtitle()
+            subtitle.start = starts[i]
+            subtitle.end = ends[i]
+            subtitle.main_text = texts[i]
+            self.subtitles.append(subtitle)
+
         self.main_changed = 0
-        self.tran_changed = 0
-        self.tran_active = False
+        self.tran_changed = None
         self.emit("main-file-opened", self.main_file)
-        return self._sort_count
+        return sort_count
+
+    def open_translation_require(self, path, encoding, smart=True):
+        assert self.main_file is not None
+        assert enclib.is_valid(encoding)
+
+    def open_translation_ensure(self, value, path, encoding, smart=True):
+        assert self.tran_file is not None
+        assert self.tran_changed == 0
+        assert value >= 0
 
     @util.notify_frozen
     def open_translation(self, path, encoding, smart=True):
@@ -128,24 +147,15 @@ class OpenAgent(Delegate):
         Raise FileFormatError if unable to detect the format.
         Return sort count.
         """
-        format = FormatDeterminer(path, encoding).determine()
-        tran_file = eval(format.class_name)(path, encoding)
-        shows, hides, texts = self._sort(*tran_file.read())
-        self.tran_file = tran_file
+        format = FormatDeterminer().determine(path, encoding)
+        self.tran_file = getattr(files, format.class_name)(path, encoding)
+        starts, ends, texts, sort_count = self._sort(*self.tran_file.read())
 
         blocked = self.block("subtitles-inserted")
-        self.tran_texts = [u""] * len(self.tran_texts)
-        if smart:
-            self._adapt_translation(shows, hides, texts)
-        else:
-            excess = len(texts) - len(self.main_texts)
-            if excess > 0:
-                rows = range(len(self.times), len(self.times) + excess)
-                self.insert_blank_subtitles(rows, register=None)
-            self.tran_texts[:len(texts)] = texts
+        method = (self._append_translations, self._adapt_translations)[smart]
+        method(self.tran_file.mode, starts, ends, texts)
         self.unblock("subtitles-inserted", blocked)
 
         self.tran_changed = 0
-        self.tran_active = True
         self.emit("translation-file-opened", self.tran_file)
-        return self._sort_count
+        return sort_count

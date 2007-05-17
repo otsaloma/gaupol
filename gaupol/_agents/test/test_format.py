@@ -17,7 +17,7 @@
 
 
 from gaupol import const
-from gaupol.unittest import TestCase, reversion_test
+from gaupol.unittest import TestCase
 
 
 class TestFormatAgent(TestCase):
@@ -26,141 +26,128 @@ class TestFormatAgent(TestCase):
 
         self.project = self.get_project()
 
-        self.project.main_texts[0] = \
-            "In love? What's that?"
-        self.project.main_texts[1] = \
-            "<i>There's one thing I'd like</i>\n" + \
-            "<i>to know, miss.</i>"
-        self.project.main_texts[2] = \
-            "- Yes, Mr. Johnson.\n" + \
-            "- You've finished taking me"
-        self.project.main_texts[3] = \
-            "<i>- for an ass, or are you beginning?\n" + \
-            "- Let go of me.</i>"
+    def test_change_case__dialogue(self):
 
-    @reversion_test
-    def test_change_case_capitalize(self):
+        self.project.subtitles[0].main_text = \
+            "- mrs. pavinato?\n" + \
+            "- yes, what do you want?"
+        self.project.change_case([0], const.DOCUMENT.MAIN, "title")
+        assert self.project.subtitles[0].main_text == \
+            "- Mrs. Pavinato?\n" + \
+            "- Yes, What Do You Want?"
 
-        self.project.change_case(range(4), const.DOCUMENT.MAIN, "capitalize")
-        assert self.project.main_texts[0] == \
-            "In love? what's that?"
-        assert self.project.main_texts[1] == \
-            "<i>There's one thing i'd like</i>\n" + \
-            "<i>to know, miss.</i>"
-        assert self.project.main_texts[2] == \
-            "- yes, mr. johnson.\n" + \
-            "- you've finished taking me"
-        assert self.project.main_texts[3] == \
-            "<i>- for an ass, or are you beginning?\n" + \
-            "- let go of me.</i>"
+    def test_change_case__italic(self):
 
-    @reversion_test
-    def test_change_case_lower(self):
+        self.project.subtitles[0].main_text = \
+            "<i>mrs. pavinato?</i>\n" + \
+            "<i>yes, what do you want?</i>"
+        self.project.change_case([0], const.DOCUMENT.MAIN, "capitalize")
+        assert self.project.subtitles[0].main_text == \
+            "<i>Mrs. pavinato?</i>\n" + \
+            "<i>yes, what do you want?</i>"
 
-        self.project.change_case(range(4), const.DOCUMENT.MAIN, "lower")
-        assert self.project.main_texts[0] == \
-            "in love? what's that?"
-        assert self.project.main_texts[1] == \
-            "<i>there's one thing i'd like</i>\n" + \
-            "<i>to know, miss.</i>"
-        assert self.project.main_texts[2] == \
-            "- yes, mr. johnson.\n" + \
-            "- you've finished taking me"
-        assert self.project.main_texts[3] == \
-            "<i>- for an ass, or are you beginning?\n" + \
-            "- let go of me.</i>"
+    def test_change_case__plain(self):
 
-    @reversion_test
-    def test_change_case_title(self):
+        self.project.subtitles[0].main_text = \
+            "mrs. pavinato?\n" + \
+            "yes, what do you want?"
+        self.project.change_case([0], const.DOCUMENT.MAIN, "upper")
+        assert self.project.subtitles[0].main_text == \
+            "MRS. PAVINATO?\n" + \
+            "YES, WHAT DO YOU WANT?"
 
-        self.project.change_case(range(4), const.DOCUMENT.MAIN, "title")
-        assert self.project.main_texts[0] == \
-            "In Love? What'S That?"
-        assert self.project.main_texts[1] == \
-            "<i>There'S One Thing I'D Like</i>\n" + \
-            "<i>To Know, Miss.</i>"
-        assert self.project.main_texts[2] == \
-            "- Yes, Mr. Johnson.\n" + \
-            "- You'Ve Finished Taking Me"
-        assert self.project.main_texts[3] == \
-            "<i>- For An Ass, Or Are You Beginning?\n" + \
-            "- Let Go Of Me.</i>"
+    def test_toggle_dialogue_lines__all(self):
 
-    @reversion_test
-    def test_change_case_upper(self):
-
-        self.project.change_case(range(4), const.DOCUMENT.MAIN, "upper")
-        assert self.project.main_texts[0] == \
-            "IN LOVE? WHAT'S THAT?"
-        assert self.project.main_texts[1] == \
-            "<i>THERE'S ONE THING I'D LIKE</i>\n" + \
-            "<i>TO KNOW, MISS.</i>"
-        assert self.project.main_texts[2] == \
-            "- YES, MR. JOHNSON.\n" + \
-            "- YOU'VE FINISHED TAKING ME"
-        assert self.project.main_texts[3] == \
-            "<i>- FOR AN ASS, OR ARE YOU BEGINNING?\n" + \
-            "- LET GO OF ME.</i>"
-
-    @reversion_test
-    def test_toggle_dialogue_lines_all(self):
-
-        self.project.toggle_dialogue_lines([2, 3], const.DOCUMENT.MAIN)
-        assert self.project.main_texts[2] == \
-            "Yes, Mr. Johnson.\n" + \
-            "You've finished taking me"
-        assert self.project.main_texts[3] == \
-            "<i>for an ass, or are you beginning?\n" + \
-            "Let go of me.</i>"
-
-    @reversion_test
-    def test_toggle_dialogue_lines_none(self):
-
+        self.project.subtitles[0].main_text = \
+            "- You have cut your beard?\n" + \
+            "- Yes, don't you like it?"
+        self.project.subtitles[1].main_text = \
+            "- It was the only beautiful thing you had.\n" + \
+            "- Now you seem a different person."
         self.project.toggle_dialogue_lines([0, 1], const.DOCUMENT.MAIN)
-        assert self.project.main_texts[0] == \
-            "- In love? What's that?"
-        assert self.project.main_texts[1] == \
-            "<i>- There's one thing I'd like</i>\n" + \
-            "<i>- to know, miss.</i>"
+        assert self.project.subtitles[0].main_text == \
+            "You have cut your beard?\n" + \
+            "Yes, don't you like it?"
+        assert self.project.subtitles[1].main_text == \
+            "It was the only beautiful thing you had.\n" + \
+            "Now you seem a different person."
 
-    @reversion_test
-    def test_toggle_dialogue_lines_partial(self):
+    def test_toggle_dialogue_lines__none(self):
 
-        self.project.toggle_dialogue_lines([1, 2], const.DOCUMENT.MAIN)
-        assert self.project.main_texts[1] == \
-            "<i>- There's one thing I'd like</i>\n" + \
-            "<i>- to know, miss.</i>"
-        assert self.project.main_texts[2] == \
-            "- Yes, Mr. Johnson.\n" + \
-            "- You've finished taking me"
+        self.project.subtitles[0].main_text = \
+            "You have cut your beard?\n" + \
+            "Yes, don't you like it?"
+        self.project.subtitles[1].main_text = \
+            "It was the only beautiful thing you had.\n" + \
+            "Now you seem a different person."
+        self.project.toggle_dialogue_lines([0, 1], const.DOCUMENT.MAIN)
+        assert self.project.subtitles[0].main_text == \
+            "- You have cut your beard?\n" + \
+            "- Yes, don't you like it?"
+        assert self.project.subtitles[1].main_text == \
+            "- It was the only beautiful thing you had.\n" + \
+            "- Now you seem a different person."
 
-    @reversion_test
-    def test_toggle_italicization_all(self):
+    def test_toggle_dialogue_lines__some(self):
 
-        self.project.toggle_italicization([1, 3], const.DOCUMENT.MAIN)
-        assert self.project.main_texts[1] == \
-            "There's one thing I'd like\n" + \
-            "to know, miss."
-        assert self.project.main_texts[3] == \
-            "- for an ass, or are you beginning?\n" + \
-            "- Let go of me."
+        self.project.subtitles[0].main_text = \
+            "- You have cut your beard?\n" + \
+            "- Yes, don't you like it?"
+        self.project.subtitles[1].main_text = \
+            "It was the only beautiful thing you had.\n" + \
+            "Now you seem a different person."
+        self.project.toggle_dialogue_lines([0, 1], const.DOCUMENT.MAIN)
+        assert self.project.subtitles[0].main_text == \
+            "- You have cut your beard?\n" + \
+            "- Yes, don't you like it?"
+        assert self.project.subtitles[1].main_text == \
+            "- It was the only beautiful thing you had.\n" + \
+            "- Now you seem a different person."
 
-    @reversion_test
-    def test_toggle_italicization_none(self):
+    def test_toggle_italicization__all(self):
 
-        self.project.toggle_italicization([0, 2], const.DOCUMENT.MAIN)
-        assert self.project.main_texts[0] == \
-            "<i>In love? What's that?</i>"
-        assert self.project.main_texts[2] == \
-            "<i>- Yes, Mr. Johnson.\n" + \
-            "- You've finished taking me</i>"
-
-    @reversion_test
-    def test_toggle_italicization_partial(self):
-
+        self.project.subtitles[0].main_text = \
+            "<i>I am no thief, I am an officer\n" + \
+            "and a university student.</i>"
+        self.project.subtitles[1].main_text = \
+            "<i>I look like this because\n" + \
+            "I'm hunted for by the Germans.</i>"
         self.project.toggle_italicization([0, 1], const.DOCUMENT.MAIN)
-        assert self.project.main_texts[0] == \
-            "<i>In love? What's that?</i>"
-        assert self.project.main_texts[1] == \
-            "<i>There's one thing I'd like\n" + \
-            "to know, miss.</i>"
+        assert self.project.subtitles[0].main_text == \
+            "I am no thief, I am an officer\n" + \
+            "and a university student."
+        assert self.project.subtitles[1].main_text == \
+            "I look like this because\n" + \
+            "I'm hunted for by the Germans."
+
+    def test_toggle_italicization__none(self):
+
+        self.project.subtitles[0].main_text = \
+            "I am no thief, I am an officer\n" + \
+            "and a university student."
+        self.project.subtitles[1].main_text = \
+            "I look like this because\n" + \
+            "I'm hunted for by the Germans."
+        self.project.toggle_italicization([0, 1], const.DOCUMENT.MAIN)
+        assert self.project.subtitles[0].main_text == \
+            "<i>I am no thief, I am an officer\n" + \
+            "and a university student.</i>"
+        assert self.project.subtitles[1].main_text == \
+            "<i>I look like this because\n" + \
+            "I'm hunted for by the Germans.</i>"
+
+    def test_toggle_italicization__some(self):
+
+        self.project.subtitles[0].main_text = \
+            "<i>I am no thief, I am an officer\n" + \
+            "and a university student.</i>"
+        self.project.subtitles[1].main_text = \
+            "I look like this because\n" + \
+            "I'm hunted for by the Germans."
+        self.project.toggle_italicization([0, 1], const.DOCUMENT.MAIN)
+        assert self.project.subtitles[0].main_text == \
+            "<i>I am no thief, I am an officer\n" + \
+            "and a university student.</i>"
+        assert self.project.subtitles[1].main_text == \
+            "<i>I look like this because\n" + \
+            "I'm hunted for by the Germans.</i>"

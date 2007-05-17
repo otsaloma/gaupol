@@ -52,7 +52,6 @@ class Liner(Parser):
     """
 
     __metaclass__ = Contractual
-
     _re_multi_space = re.compile(r" {2,}")
 
     def __init__(self, re_tag=None):

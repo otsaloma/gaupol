@@ -17,90 +17,59 @@
 
 
 from gaupol import const, scriptlib
-from gaupol.unittest import TestCase, reversion_test
+from gaupol.unittest import TestCase
 
 
 class TestTextAgent(TestCase):
+
+    def format_lines(self):
+
+        dialogue_pattern = scriptlib.get_dialogue_separator("latin")
+        clause_pattern = scriptlib.get_clause_separator("latin")
+        self.project.format_lines(
+            indexes=None,
+            doc=const.DOCUMENT.MAIN,
+            dialogue_pattern=dialogue_pattern,
+            clause_pattern=clause_pattern,
+            ok_dialogue=3,
+            ok_clauses=2,
+            max_length=32,
+            length_func=len,
+            legal_length=46,
+            legal_lines=2,
+            require_reduction=True)
 
     def setup_method(self, method):
 
         self.project = self.get_project()
 
-        self.project.main_texts[0] = \
-            "<i>- which... paper?</i>\n" + \
-            "<i>- figaro-pravda a.k.a. the paper.</i>"
-        self.project.main_texts[1] = \
-            "room 344. have you registered\n" + \
-            "at residents control..."
-        self.project.main_texts[2] = \
-            "you must, even if you're...\n" + \
-            "...a festival visitor."
-
-        self.project.main_texts[3] = \
-            "Room 344."
-        self.project.main_texts[4] = \
-            "Room 344. Have you registered at residents control?"
-        self.project.main_texts[5] = \
-            "Room 344. Have you registered at residents control?\n" + \
-            "Room 344. Have you registered at residents control?\n" + \
-            "Room 344. Have you registered at residents control?"
-        self.project.main_texts[6] = \
-            "Room 344.\n" + \
-            "Room 344.\n" + \
-            "Room 344."
-        self.project.main_texts[7] = \
-            "- Room 344.\n" + \
-            "- Room 344.\n" + \
-            "- Room 344."
-
-    @reversion_test
     def test_capitalize(self):
 
+        self.project.subtitles[0].main_text = "test. test."
         pattern = scriptlib.get_capitalize_after("latin")
-        rows = self.project.capitalize([0, 1, 2], const.DOCUMENT.MAIN, pattern)
+        self.project.capitalize(None, const.DOCUMENT.MAIN, pattern)
+        assert self.project.subtitles[0].main_text == "Test. Test."
 
-        assert rows == [0, 1]
-        assert self.project.main_texts[0] == \
-            "<i>- Which... paper?</i>\n" + \
-            "<i>- Figaro-pravda a.k.a. the paper.</i>"
-        assert self.project.main_texts[1] == \
-            "Room 344. Have you registered\n" + \
-            "at residents control..."
-        assert self.project.main_texts[2] == \
-            "you must, even if you're...\n" + \
-            "...a festival visitor."
+    def test_format_lines__legal_lines_and_legal_length(self):
 
-    @reversion_test
-    def test_format_lines(self):
+        # Liner would break this to one clause per line.
+        self.project.subtitles[0].main_text = \
+            "You have stolen salami from\n" + \
+            "me. Be careful what you say."
+        self.format_lines()
+        assert self.project.subtitles[0].main_text == \
+            "You have stolen salami from\n" + \
+            "me. Be careful what you say."
 
-        rows = self.project.format_lines(
-            rows=[3, 4, 5, 6],
-            doc=const.DOCUMENT.MAIN,
-            dialogue_pattern=scriptlib.get_dialogue_separator("latin"),
-            clause_pattern=scriptlib.get_clause_separator("latin-english"),
-            ok_dialogue=3,
-            ok_clauses=2,
-            max_length=32,
-            length_func=len,
-            legal_length=32,
-            legal_lines=2,
-            require_reduction=True)
+    def test_format_lines__require_reduction(self):
 
-        assert rows == [4, 5, 6]
-        assert self.project.main_texts[3] == "Room 344."
-        assert self.project.main_texts[4] == \
-            "Room 344. Have you registered\n" + \
-            "at residents control?"
-        assert self.project.main_texts[5] == \
-            "Room 344. Have you registered\n" + \
-            "at residents control? Room 344.\n" + \
-            "Have you registered at residents\n" + \
-            "control? Room 344. Have you\n" + \
-            "registered at residents control?"
-        assert self.project.main_texts[6] == \
-            "Room 344.\n" + \
-            "Room 344. Room 344."
-        assert self.project.main_texts[7] == \
-            "- Room 344.\n" + \
-            "- Room 344.\n" + \
-            "- Room 344."
+        # Liner would break this to one clause per line.
+        self.project.subtitles[0].main_text = \
+            "You have stolen salami. You\n" + \
+            "have stolen salami. You have\n" + \
+            "stolen salami."
+        self.format_lines()
+        assert self.project.subtitles[0].main_text == \
+            "You have stolen salami. You\n" + \
+            "have stolen salami. You have\n" + \
+            "stolen salami."

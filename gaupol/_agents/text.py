@@ -16,132 +16,147 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Text corrections."""
+"""Automatic correcting of texts."""
 
 
 import re
 
 from gaupol import util
-from gaupol.base import Delegate
+from gaupol.base import Contractual, Delegate
 from gaupol.i18n import _
 from gaupol.liner import Liner
-from gaupol.parser import Parser
-from .register import revertable
+from gaupol.reversion import revertable
 
 
 class TextAgent(Delegate):
 
-    """Text corrections."""
+    """Automatic correcting of texts."""
 
     # pylint: disable-msg=E0203,W0201
 
-    @revertable
-    def capitalize(self, rows, doc, pattern, register=-1):
-        """Capitalize texts following match of pattern.
+    __metaclass__ = Contractual
+    _re_alphanum = re.compile(r"\w", re.UNICODE)
 
-        rows can be None to process all rows.
-        Raise re.error if bad pattern.
-        Return changed rows.
-        """
-        parser = Parser(self.get_tag_regex(doc))
-        parser.set_regex(pattern)
-        re_alphanum = re.compile(r"\w", re.UNICODE)
+    def _capitalize_after(self, parser, cap_next):
+        """Capitalize all texts following matches of pattern."""
 
-        new_rows = []
-        new_texts = []
-        rows = rows or range(len(self.times))
-        texts = self.get_texts(doc)
-        for rows in util.get_ranges(rows):
+        try:
+            z = parser.next()[1]
+        except StopIteration:
+            return cap_next
+        match = self._re_alphanum.search(parser.text[z:])
+        if match is not None:
+            z = z + match.start()
+            prefix = parser.text[:z]
+            text = parser.text[z:].capitalize()
+            parser.text = prefix + text
+            return self._capitalize_after(parser, cap_next)
+        return True
+
+    def _capitalize_next(self, parser, cap_next):
+        """Capitalize the next alphanumeric character."""
+
+        match = self._re_alphanum.search(parser.text)
+        if match is not None:
+            a = match.start()
+            prefix = parser.text[:a]
+            text = parser.text[a:].capitalize()
+            parser.text = prefix + text
             cap_next = False
-            for row in rows:
-                parser.set_text(texts[row])
-                if cap_next or row == 0:
-                    match = re_alphanum.search(parser.text)
-                    if match is not None:
-                        a = match.start()
-                        prefix = parser.text[:a]
-                        text = parser.text[a:].capitalize()
-                        parser.text = prefix + text
-                    cap_next = False
-                while True:
-                    try:
-                        z = parser.next()[1]
-                    except StopIteration:
-                        break
-                    match = re_alphanum.search(parser.text[z:])
-                    if match is not None:
-                        z = z + match.start()
-                        prefix = parser.text[:z]
-                        text = parser.text[z:].capitalize()
-                        parser.text = prefix + text
-                        continue
-                    cap_next = True
-                    break
+        return cap_next
+
+    def capitalize_require(self, indexes, doc, pattern, register=-1):
+        for index in (indexes or []):
+            assert 0 <= index < len(self.subtitles)
+
+    @revertable
+    def capitalize(self, indexes, doc, pattern, register=-1):
+        """Capitalize texts following matches of pattern.
+
+        indexes can be None to process all subtitles.
+        Raise re.error if bad pattern.
+        Return changed indexes.
+        """
+        new_indexes = []
+        new_texts = []
+        parser = self.get_parser(doc)
+        parser.set_regex(pattern)
+        indexes = indexes or range(len(self.subtitles))
+        for indexes in util.get_ranges(indexes):
+            cap_next = False
+            for index in indexes:
+                orig_text = self.subtitles[index].get_text(doc)
+                parser.set_text(orig_text)
+                if cap_next or (index == 0):
+                    cap_next = self._capitalize_next(parser, cap_next)
+                cap_next = self._capitalize_after(parser, cap_next)
                 text = parser.get_text()
-                if text != texts[row]:
-                    new_rows.append(row)
+                if text != orig_text:
+                    new_indexes.append(index)
                     new_texts.append(text)
 
-        if new_rows:
-            self.replace_texts(new_rows, doc, new_texts, register=register)
+        if new_indexes:
+            self.replace_texts(new_indexes, doc, new_texts, register=register)
             self.set_action_description(register, _("Capitalizing texts"))
-        return new_rows
+        return new_indexes
+
+    def format_lines_require(self, indexes, *args, **kwargs):
+        for index in (indexes or []):
+            assert 0 <= index < len(self.subtitles)
 
     @revertable
-    def format_lines(self, rows, doc, dialogue_pattern, clause_pattern,
+    def format_lines(self, indexes, doc, dialogue_pattern, clause_pattern,
         ok_dialogue, ok_clauses, max_length, length_func, legal_length=None,
         legal_lines=None, require_reduction=False, register=-1):
-        """Split or merge lines.
+        """Split or merge lines based on line length and count rules.
 
-        rows can be None to process all rows.
-        ok_* are line counts that are not attempted to be reduced.
-        legal_length is the maximum line length of skipped subtitles.
-        legal_lines is the maximum line count of skipped subtitles.
-        require_reduction should be True to skip unreducible line counts.
+        ok_dialogue is an acceptable line count if all lines are dialogue,
+        ok_clauses similarly for lines that are clauses. These are used for to
+        prefer elegance over compactness. Subtitles that do not violate
+        legal_length and legal_lines are skipped entirely to preserve an
+        assumed existing elegant line split. require_reduction should be True
+        to make changes in case of line count violations only when the line
+        count can be reduced.
+
+        indexes can be None to process all subtitles.
         Raise re.error if bad pattern.
-        Return changed rows.
+        Return changed indexes.
         """
+        def reduction_ok(check_reduction, text, lines):
+            if check_reduction and require_reduction:
+                return len(text.split("\n")) < len(lines)
+            return True
+
+        new_indexes = []
+        new_texts = []
         liner = Liner(self.get_tag_regex(doc))
         liner.re_dialogue = re.compile(dialogue_pattern, re.UNICODE)
         liner.re_clause = re.compile(clause_pattern, re.UNICODE)
         liner.ok_dialogue = ok_dialogue
         liner.ok_clauses = ok_clauses
         liner.max_length = max_length
-        liner.set_length_function(length_func)
-
-        new_rows = []
-        new_texts = []
-        rows = rows or range(len(self.times))
-        texts = self.get_texts(doc)
-        for row in rows:
-            text = texts[row]
-            lines = text.split("\n")
-            if legal_length is None and legal_lines is None:
-                liner.set_text(text)
+        liner.set_length_func(length_func)
+        indexes = indexes or range(len(self.subtitles))
+        for index in indexes:
+            orig_text = self.subtitles[index].get_text(doc)
+            lines = orig_text.split("\n")
+            format = not any((legal_length, legal_lines))
+            check_reduction = False
+            if (not format) and (legal_length is not None):
+                lengths = [length_func(x) for x in lines]
+                format = any([x > legal_length for x in lengths])
+            if (not format) and (legal_lines is not None):
+                format = len(lines) > legal_lines
+                check_reduction = True
+            if format:
+                liner.set_text(orig_text)
                 text = liner.format()
-            elif legal_length is not None:
-                if any([length_func(x) > legal_length for x in lines]):
-                    liner.set_text(text)
-                    text = liner.format()
-                elif legal_lines is not None:
-                    if len(lines) > legal_lines:
-                        liner.set_text(text)
-                        text = liner.format()
-                        if require_reduction:
-                            if not len(text.split("\n")) < len(lines):
-                                continue
-            elif legal_lines is not None:
-                if len(lines) > legal_lines:
-                    liner.set_text(text)
-                    text = liner.format()
-                    if require_reduction:
-                        if not len(text.split("\n")) < len(lines):
-                            continue
-            if text != texts[row]:
-                new_rows.append(row)
-                new_texts.append(text)
+                if reduction_ok(check_reduction, text, lines):
+                    if text != orig_text:
+                        new_indexes.append(index)
+                        new_texts.append(text)
 
-        if new_rows:
-            self.replace_texts(new_rows, doc, new_texts, register=register)
+        if new_indexes:
+            self.replace_texts(new_indexes, doc, new_texts, register=register)
             self.set_action_description(register, _("Formatting lines"))
-        return new_rows
+        return new_indexes

@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,8 +16,6 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-import copy
-
 from gaupol import const
 from gaupol.unittest import TestCase, reversion_test
 
@@ -27,196 +25,176 @@ class TestPositionAgent(TestCase):
     def setup_method(self, method):
 
         self.project = self.get_project()
-        self.delegate = self.project.adjust_times.im_self
 
-        calc = self.project.calc
-        times = self.project.times
-        frames = self.project.frames
-        times[0] = ["00:00:00.000", "00:00:04.000", "00:00:04.000"]
-        times[1] = ["00:00:10.000", "00:00:15.000", "00:00:05.000"]
-        times[2] = ["00:00:20.000", "00:00:26.000", "00:00:06.000"]
-        times[3] = ["00:00:50.000", "00:00:57.000", "00:00:07.000"]
-        for i in range(4):
-            for j in range(3):
-                frames[i][j] = calc.time_to_frame(times[i][j])
-        frames[4] = [  0,  40, 40]
-        frames[5] = [100, 150, 50]
-        frames[6] = [200, 260, 60]
-        frames[7] = [500, 570, 70]
-        for i in range(4, 8):
-            for j in range(3):
-                times[i][j] = calc.frame_to_time(frames[i][j])
+    def test_adjust_durations__gap(self):
 
-        texts = self.project.main_texts
-        texts[0] = "1234567"
-        texts[1] = "123456"
-        texts[2] = "12345"
-        texts[3] = "1234"
+        subtitles = self.project.subtitles
+        subtitles[0].start = "00:00:01.000"
+        subtitles[0].end = "00:00:02.000"
+        subtitles[1].start = "00:00:02.000"
+        subtitles[1].end = "00:00:03.000"
+        subtitles[2].start = "00:00:04.000"
+        self.project.adjust_durations(
+            indexes=None, gap=0.3)
+        assert subtitles[0].start == "00:00:01.000"
+        assert subtitles[0].end == "00:00:01.700"
+        assert subtitles[1].start == "00:00:02.000"
+        assert subtitles[1].end == "00:00:03.000"
+        assert subtitles[2].start == "00:00:04.000"
 
-    @reversion_test
-    def test_adjust_durations_gap(self):
+    def test_adjust_durations__lengthen(self):
 
-        times = self.project.times
-        self.project.adjust_durations(gap=7)
-        assert times[0] == ["00:00:00.000", "00:00:03.000", "00:00:03.000"]
-        assert times[1] == ["00:00:10.000", "00:00:13.000", "00:00:03.000"]
-        assert times[2] == ["00:00:20.000", "00:00:26.000", "00:00:06.000"]
+        subtitles = self.project.subtitles
+        subtitles[0].start = "00:00:01.000"
+        subtitles[0].end = "00:00:01.100"
+        subtitles[0].main_text = "1234567890"
+        subtitles[1].start = "00:00:02.000"
+        subtitles[1].end = "00:00:02.100"
+        subtitles[1].main_text = "12345678901234567890"
+        self.project.adjust_durations(
+            indexes=None, optimal=0.05, lengthen=True)
+        assert subtitles[0].start == "00:00:01.000"
+        assert subtitles[0].end == "00:00:01.500"
+        assert subtitles[1].start == "00:00:02.000"
+        assert subtitles[1].end == "00:00:03.000"
 
-    @reversion_test
-    def test_adjust_durations_maximum(self):
+    def test_adjust_durations__maximum(self):
 
-        times = self.project.times
-        self.project.adjust_durations(maximum=5)
-        assert times[0] == ["00:00:00.000", "00:00:04.000", "00:00:04.000"]
-        assert times[1] == ["00:00:10.000", "00:00:15.000", "00:00:05.000"]
-        assert times[2] == ["00:00:20.000", "00:00:25.000", "00:00:05.000"]
+        subtitles = self.project.subtitles
+        subtitles[0].start = "00:00:01.000"
+        subtitles[0].end = "00:00:01.100"
+        subtitles[1].start = "00:00:02.000"
+        subtitles[1].end = "00:00:02.100"
+        self.project.adjust_durations(
+            indexes=None, optimal=0.1, lengthen=True, maximum=0.5)
+        assert subtitles[0].start == "00:00:01.000"
+        assert subtitles[0].end == "00:00:01.500"
+        assert subtitles[1].start == "00:00:02.000"
+        assert subtitles[1].end == "00:00:02.500"
 
-    @reversion_test
-    def test_adjust_durations_minimum(self):
+    def test_adjust_durations__minimum(self):
 
-        times = self.project.times
-        self.project.adjust_durations(minimum=6)
-        assert times[0] == ["00:00:00.000", "00:00:06.000", "00:00:06.000"]
-        assert times[1] == ["00:00:10.000", "00:00:16.000", "00:00:06.000"]
-        assert times[2] == ["00:00:20.000", "00:00:26.000", "00:00:06.000"]
+        subtitles = self.project.subtitles
+        subtitles[0].start = "00:00:01.000"
+        subtitles[0].end = "00:00:01.900"
+        subtitles[1].start = "00:00:02.000"
+        subtitles[1].end = "00:00:02.900"
+        self.project.adjust_durations(
+            indexes=None, optimal=0.001, shorten=True, minimum=0.5)
+        assert subtitles[0].start == "00:00:01.000"
+        assert subtitles[0].end == "00:00:01.500"
+        assert subtitles[1].start == "00:00:02.000"
+        assert subtitles[1].end == "00:00:02.500"
 
-    @reversion_test
-    def test_adjust_durations_optimal_lengthen(self):
+    def test_adjust_durations__shorten(self):
 
-        times = self.project.times
-        self.project.adjust_durations(optimal=1, lengthen=True)
-        assert times[0] == ["00:00:00.000", "00:00:07.000", "00:00:07.000"]
-        assert times[1] == ["00:00:10.000", "00:00:16.000", "00:00:06.000"]
-        assert times[2] == ["00:00:20.000", "00:00:26.000", "00:00:06.000"]
-
-    @reversion_test
-    def test_adjust_durations_optimal_shorten(self):
-
-        times = self.project.times
-        self.project.adjust_durations(optimal=1, shorten=True)
-        assert times[0] == ["00:00:00.000", "00:00:04.000", "00:00:04.000"]
-        assert times[1] == ["00:00:10.000", "00:00:15.000", "00:00:05.000"]
-        assert times[2] == ["00:00:20.000", "00:00:25.000", "00:00:05.000"]
-
-    @reversion_test
-    def test_adjust_frames(self):
-
-        frames = self.project.frames
-        self.project.adjust_frames(None, (4, 10), (7, 100))
-        assert frames[4] == [ 10,  17,  7]
-        assert frames[5] == [ 28,  37,  9]
-        assert frames[6] == [ 46,  57, 11]
-        assert frames[7] == [100, 113, 13]
+        subtitles = self.project.subtitles
+        subtitles[0].start = "00:00:01.000"
+        subtitles[0].end = "00:00:01.900"
+        subtitles[0].main_text = "1234567890"
+        subtitles[1].start = "00:00:02.000"
+        subtitles[1].end = "00:00:02.900"
+        subtitles[1].main_text = "12345678901234567890"
+        self.project.adjust_durations(
+            indexes=None, optimal=0.01, shorten=True)
+        assert subtitles[0].start == "00:00:01.000"
+        assert subtitles[0].end == "00:00:01.100"
+        assert subtitles[1].start == "00:00:02.000"
+        assert subtitles[1].end == "00:00:02.200"
 
     @reversion_test
-    def test_adjust_times(self):
+    def test_adjust_positions__frame(self):
 
-        times = self.project.times
-        point_1 = (0, "00:00:01.000")
-        point_2 = (3, "00:00:10.000")
-        self.project.adjust_times(None, point_1, point_2)
-        assert times[0] == ["00:00:01.000", "00:00:01.720", "00:00:00.720"]
-        assert times[1] == ["00:00:02.800", "00:00:03.700", "00:00:00.900"]
-        assert times[2] == ["00:00:04.600", "00:00:05.680", "00:00:01.080"]
-        assert times[3] == ["00:00:10.000", "00:00:11.260", "00:00:01.260"]
-
-    def test_change_framerate(self):
-
-        self.project.change_framerate(const.FRAMERATE.P24)
-        self.project.main_file.mode = const.MODE.TIME
-        orig_times = copy.deepcopy(self.project.times)
-        orig_frames = copy.deepcopy(self.project.frames)
-        self.project.change_framerate(const.FRAMERATE.P25)
-        assert self.project.framerate == const.FRAMERATE.P25
-        assert self.project.times == orig_times
-        assert self.project.frames != orig_frames
-        assert not self.project.can_undo()
-
-        self.project.main_file.mode = const.MODE.FRAME
-        orig_times = copy.deepcopy(self.project.times)
-        orig_frames = copy.deepcopy(self.project.frames)
-        self.project.change_framerate(const.FRAMERATE.P30)
-        assert self.project.framerate == const.FRAMERATE.P30
-        assert self.project.times != orig_times
-        assert self.project.frames == orig_frames
-        assert not self.project.can_undo()
+        self.project.adjust_positions(None, (2, 10), (6, 100))
+        assert self.project.subtitles[2].start_frame == 10
+        for subtitle in self.project.subtitles[3:6]:
+            assert 10 < subtitle.start_frame < 100
+        assert self.project.subtitles[6].start_frame == 100
 
     @reversion_test
-    def test_convert_framerate_frame(self):
+    def test_adjust_positions__seconds(self):
 
-        frames = self.project.frames
-        self.project.main_file = self.project.tran_file
-        self.project.convert_framerate(
-            [], const.FRAMERATE.P25, const.FRAMERATE.P30)
-        assert self.project.framerate == const.FRAMERATE.P30
-        assert self.project.calc.framerate == 29.97
-        assert frames[4] == [  0,  48, 48]
-        assert frames[5] == [120, 180, 60]
-        assert frames[6] == [240, 312, 72]
-        assert frames[7] == [599, 683, 84]
+        self.project.adjust_positions(None, (2, 20.0), (6, 200.0))
+        assert self.project.subtitles[2].start_seconds == 20.0
+        for subtitle in self.project.subtitles[3:6]:
+            assert 20.0 < subtitle.start_seconds < 200.0
+        assert self.project.subtitles[6].start_seconds == 200.0
 
     @reversion_test
-    def test_convert_framerate_time(self):
+    def test_adjust_positions__time(self):
 
-        times = self.project.times
-        self.project.convert_framerate(
-            [], const.FRAMERATE.P24, const.FRAMERATE.P25)
-        assert self.project.framerate == const.FRAMERATE.P25
-        assert self.project.calc.framerate == 25.0
-        assert times[0] == ["00:00:00.000", "00:00:03.836", "00:00:03.836"]
-        assert times[1] == ["00:00:09.590", "00:00:14.386", "00:00:04.796"]
-        assert times[2] == ["00:00:19.181", "00:00:24.935", "00:00:05.754"]
-        assert times[3] == ["00:00:47.952", "00:00:54.665", "00:00:06.713"]
+        a, b = "00:00:01.000", "00:00:45.000"
+        self.project.adjust_positions(None, (2, a), (6, b))
+        assert self.project.subtitles[2].start_time == a
+        for subtitle in self.project.subtitles[3:6]:
+            assert a < subtitle.start_time < b
+        assert self.project.subtitles[6].start_time == b
+
+    def test_convert_framerate__frame(self):
+
+        self.project.open_main(self.get_microdvd_path(), "ascii")
+        self.project.subtitles[0].start = 100
+        self.project.subtitles[1].start = 200
+        current = const.FRAMERATE.P24
+        correct = const.FRAMERATE.P25
+        self.project.convert_framerate(None, current, correct)
+        assert self.project.framerate == correct
+        for subtitle in self.project.subtitles:
+            assert subtitle.framerate == correct
+        assert self.project.subtitles[0].start == 104
+        assert self.project.subtitles[1].start == 209
+
+    def test_convert_framerate__time(self):
+
+        self.project.open_main(self.get_subrip_path(), "ascii")
+        self.project.subtitles[0].start = "00:00:01.000"
+        self.project.subtitles[1].start = "00:00:02.000"
+        current = const.FRAMERATE.P24
+        correct = const.FRAMERATE.P25
+        self.project.convert_framerate(None, current, correct)
+        assert self.project.framerate == correct
+        for subtitle in self.project.subtitles:
+            assert subtitle.framerate == correct
+        assert self.project.subtitles[0].start == "00:00:00.959"
+        assert self.project.subtitles[1].start == "00:00:01.918"
 
     def test_set_framerate(self):
 
-        self.project.set_framerate(const.FRAMERATE.P25)
-        self.project.set_framerate(const.FRAMERATE.P30)
-        assert self.project.framerate == const.FRAMERATE.P30
-        assert self.project.calc.framerate == 29.970
-        self.project.undo()
-        assert self.project.framerate == const.FRAMERATE.P25
-        assert self.project.calc.framerate == 25.000
-        self.project.redo()
-        assert self.project.framerate == const.FRAMERATE.P30
-        assert self.project.calc.framerate == 29.970
+        framerate = const.FRAMERATE.P25
+        self.project.set_framerate(framerate)
+        assert self.project.framerate == framerate
+        for subtitle in self.project.subtitles:
+            assert subtitle.framerate == framerate
 
     @reversion_test
-    def test_shift_frames_back(self):
+    def test_shift_positions__frame(self):
 
-        frames = self.project.frames
-        self.project.shift_frames([4, 5, 6, 7], -5)
-        assert frames[4] == [  0,  35, 35]
-        assert frames[5] == [ 95, 145, 50]
-        assert frames[6] == [195, 255, 60]
-        assert frames[7] == [495, 565, 70]
-
-    @reversion_test
-    def test_shift_frames_forward(self):
-
-        frames = self.project.frames
-        self.project.shift_frames([], 5)
-        assert frames[4] == [  5,  45, 40]
-        assert frames[5] == [105, 155, 50]
-        assert frames[6] == [205, 265, 60]
-        assert frames[7] == [505, 575, 70]
+        orig_subtitles = [x.copy() for x in self.project.subtitles]
+        self.project.shift_positions(None, -10)
+        for i, subtitle in enumerate(self.project.subtitles):
+            start = orig_subtitles[i].start_frame - 10
+            assert subtitle.start_frame == start
+            end = orig_subtitles[i].end_frame - 10
+            assert subtitle.end_frame == end
 
     @reversion_test
-    def test_shift_seconds_back(self):
+    def test_shift_positions__time(self):
 
-        times = self.project.times
-        self.project.shift_seconds([0, 1, 2, 3], -0.5)
-        assert times[0] == ["00:00:00.000", "00:00:03.500", "00:00:03.500"]
-        assert times[1] == ["00:00:09.500", "00:00:14.500", "00:00:05.000"]
-        assert times[2] == ["00:00:19.500", "00:00:25.500", "00:00:06.000"]
-        assert times[3] == ["00:00:49.500", "00:00:56.500", "00:00:07.000"]
+        orig_subtitles = [x.copy() for x in self.project.subtitles]
+        self.project.shift_positions(None, "00:00:01.000")
+        for i, subtitle in enumerate(self.project.subtitles):
+            start = round(orig_subtitles[i].start_seconds + 1.0, 3)
+            assert round(subtitle.start_seconds, 3) == start
+            end = round(orig_subtitles[i].end_seconds + 1.0, 3)
+            assert round(subtitle.end_seconds, 3) == end
 
     @reversion_test
-    def test_shift_seconds_forward(self):
+    def test_shift_positions__seconds(self):
 
-        times = self.project.times
-        self.project.shift_seconds([], 0.5)
-        assert times[0] == ["00:00:00.500", "00:00:04.500", "00:00:04.000"]
-        assert times[1] == ["00:00:10.500", "00:00:15.500", "00:00:05.000"]
-        assert times[2] == ["00:00:20.500", "00:00:26.500", "00:00:06.000"]
-        assert times[3] == ["00:00:50.500", "00:00:57.500", "00:00:07.000"]
+        orig_subtitles = [x.copy() for x in self.project.subtitles]
+        self.project.shift_positions(None, 1.0)
+        for i, subtitle in enumerate(self.project.subtitles):
+            start = round(orig_subtitles[i].start_seconds + 1.0, 3)
+            assert round(subtitle.start_seconds, 3) == start
+            end = round(orig_subtitles[i].end_seconds + 1.0, 3)
+            assert round(subtitle.end_seconds, 3) == end

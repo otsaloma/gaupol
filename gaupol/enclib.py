@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Encodings and encoding names.
+"""Character encodings and encoding names.
 
 Module variables:
 

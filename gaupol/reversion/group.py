@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,14 +16,29 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol.unittest import TestCase
-from ..index import SHOW, HIDE, DURN
+"""Group of revertable actions."""
 
 
-class TestModule(TestCase):
+class RevertableActionGroup(object):
 
-    def test_attributes(self):
+    """Group of revertable actions.
 
-        assert SHOW == 0
-        assert HIDE == 1
-        assert DURN == 2
+    Instance variables:
+
+        actions:     List of actions in group
+        description: Short one line description
+
+    Instance variables are required to be set eventually, either upon
+    instantiation or directly after.
+    """
+
+    def __init__(self, **kwargs):
+        """Initialize a RevertableAction object.
+
+        kwargs can contain any of the names of public instance variables,
+        """
+        self.actions = None
+        self.description = None
+
+        for key, value in kwargs.items():
+            setattr(self, key, value)

@@ -28,8 +28,8 @@ class Singleton(object):
         _instance: The single instance returned by __new__
     """
 
-    def __new__(cls):
+    def __new__(cls, *args, **kwargs):
 
         if not '_instance' in cls.__dict__:
-            cls._instance = object.__new__(cls)
+            cls._instance = object.__new__(cls, *args, **kwargs)
         return cls._instance

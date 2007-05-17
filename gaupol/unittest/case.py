@@ -40,7 +40,6 @@ class TestCase(object):
     """
 
     __metaclass__ = Contractual
-
     files = set()
 
     def get_file_path_ensure(self, value, format):

@@ -18,7 +18,6 @@
 
 from gaupol import const
 from gaupol.unittest import TestCase, reversion_test
-from ..index import SHOW, HIDE, DURN
 
 
 class TestSetAgent(TestCase):
@@ -27,107 +26,88 @@ class TestSetAgent(TestCase):
 
         self.project = self.get_project()
 
-    def test_needs_resort(self):
+    @reversion_test
+    def test_set_duration__frame(self):
 
-        assert self.project.needs_resort(0, "99:59:59.999")
-        assert self.project.needs_resort(0, 999999)
-        assert not self.project.needs_resort(0, "00:00:00.000")
-        assert not self.project.needs_resort(0, 0)
+        subtitles = self.project.subtitles
+        self.project.set_duration(0, 1)
+        assert subtitles[0].duration_frame == 1
 
     @reversion_test
-    def test_set_position_frame_durn(self):
+    def test_set_duration__seconds(self):
 
-        time = self.project.times[3][:]
-        frame = self.project.frames[3][:]
-        self.project.set_position(3, DURN, 0)
-        assert self.project.times[3][SHOW] == time[SHOW]
-        assert self.project.times[3][HIDE] == time[SHOW]
-        assert self.project.times[3][DURN] == "00:00:00.000"
-        assert self.project.frames[3][SHOW] == frame[SHOW]
-        assert self.project.frames[3][HIDE] == frame[SHOW]
-        assert self.project.frames[3][DURN] == 0
+        subtitles = self.project.subtitles
+        self.project.set_duration(0, 100.0)
+        assert subtitles[0].duration_seconds == 100.0
 
     @reversion_test
-    def test_set_position_frame_hide(self):
+    def test_set_duration__time(self):
 
-        time = self.project.times[3][:]
-        frame = self.project.frames[3][:]
-        self.project.set_position(3, HIDE, 999999)
-        assert self.project.times[3][SHOW] == time[SHOW]
-        assert self.project.times[3][HIDE] != time[HIDE]
-        assert self.project.times[3][DURN] != time[DURN]
-        assert self.project.frames[3][SHOW] == frame[SHOW]
-        assert self.project.frames[3][HIDE] == 999999
-        assert self.project.frames[3][DURN] != frame[DURN]
+        subtitles = self.project.subtitles
+        self.project.set_duration(0, "00:01:11.111")
+        assert subtitles[0].duration_time == "00:01:11.111"
 
     @reversion_test
-    def test_set_position_frame_show(self):
+    def test_set_end__frame(self):
 
-        time = self.project.times[3][:]
-        frame = self.project.frames[3][:]
-        main_text = self.project.main_texts[3][:]
-        tran_text = self.project.tran_texts[3][:]
-        self.project.set_position(3, SHOW, 0)
-        assert self.project.times[0][SHOW] == "00:00:00.000"
-        assert self.project.times[0][HIDE] == time[HIDE]
-        assert self.project.times[0][DURN] != time[DURN]
-        assert self.project.frames[0][SHOW] == 0
-        assert self.project.frames[0][HIDE] == frame[HIDE]
-        assert self.project.frames[0][DURN] != frame[DURN]
-        assert self.project.main_texts[0] == main_text
-        assert self.project.tran_texts[0] == tran_text
+        subtitles = self.project.subtitles
+        self.project.set_end(0, 600000)
+        assert subtitles[0].end_frame == 600000
 
     @reversion_test
-    def test_set_position_time_durn(self):
+    def test_set_end__seconds(self):
 
-        time = self.project.times[3][:]
-        frame = self.project.frames[3][:]
-        self.project.set_position(3, DURN, "00:00:00.000")
-        assert self.project.times[3][SHOW] == time[SHOW]
-        assert self.project.times[3][HIDE] == time[SHOW]
-        assert self.project.times[3][DURN] == "00:00:00.000"
-        assert self.project.frames[3][SHOW] == frame[SHOW]
-        assert self.project.frames[3][HIDE] == frame[SHOW]
-        assert self.project.frames[3][DURN] == 0
+        subtitles = self.project.subtitles
+        self.project.set_end(0, 500.0)
+        assert subtitles[0].end_seconds == 500.0
 
     @reversion_test
-    def test_set_position_time_hide(self):
+    def test_set_end__time(self):
 
-        time = self.project.times[3][:]
-        frame = self.project.frames[3][:]
-        self.project.set_position(3, HIDE, "99:59:59.999")
-        assert self.project.times[3][SHOW] == time[SHOW]
-        assert self.project.times[3][HIDE] == "99:59:59.999"
-        assert self.project.times[3][DURN] != time[DURN]
-        assert self.project.frames[3][SHOW] == frame[SHOW]
-        assert self.project.frames[3][HIDE] != frame[SHOW]
-        assert self.project.frames[3][DURN] != frame[DURN]
+        subtitles = self.project.subtitles
+        self.project.set_end(0, "00:22:00.000")
+        assert subtitles[0].end_time == "00:22:00.000"
 
     @reversion_test
-    def test_set_position_time_show(self):
+    def test_set_start__frame(self):
 
-        time = self.project.times[3][:]
-        frame = self.project.frames[3][:]
-        main_text = self.project.main_texts[3][:]
-        tran_text = self.project.tran_texts[3][:]
-        self.project.set_position(3, SHOW, "00:00:00.000")
-        assert self.project.times[0][SHOW] == "00:00:00.000"
-        assert self.project.times[0][HIDE] == time[HIDE]
-        assert self.project.times[0][DURN] != time[DURN]
-        assert self.project.frames[0][SHOW] == 0
-        assert self.project.frames[0][HIDE] == frame[HIDE]
-        assert self.project.frames[0][DURN] != frame[DURN]
-        assert self.project.main_texts[0] == main_text
-        assert self.project.tran_texts[0] == tran_text
+        subtitles = self.project.subtitles
+        self.project.set_start(0, 1)
+        assert subtitles[0].start_frame == 1
 
     @reversion_test
-    def test_set_text_main(self):
+    def test_set_start__reorder(self):
 
-        self.project.set_text(2, const.DOCUMENT.MAIN, "")
-        assert self.project.main_texts[2] == ""
+        subtitles = self.project.subtitles
+        text_0 = subtitles[0].main_text
+        text_3 = subtitles[3].main_text
+        self.project.set_start(3, 0)
+        assert subtitles[0].start_frame == 0
+        assert subtitles[0].main_text == text_3
+        assert subtitles[1].main_text == text_0
 
     @reversion_test
-    def test_set_text_tran(self):
+    def test_set_start__seconds(self):
 
-        self.project.set_text(2, const.DOCUMENT.TRAN, "")
-        assert self.project.tran_texts[2] == ""
+        subtitles = self.project.subtitles
+        self.project.set_start(0, 1.0)
+        assert subtitles[0].start_seconds == 1.0
+
+    @reversion_test
+    def test_set_start__time(self):
+
+        subtitles = self.project.subtitles
+        self.project.set_start(0, "00:00:00.001")
+        assert subtitles[0].start_time == "00:00:00.001"
+
+    @reversion_test
+    def test_set_text__main(self):
+
+        self.project.set_text(0, const.DOCUMENT.MAIN, "m")
+        assert self.project.subtitles[0].main_text == "m"
+
+    @reversion_test
+    def test_set_text__translation(self):
+
+        self.project.set_text(0, const.DOCUMENT.TRAN, "t")
+        assert self.project.subtitles[0].tran_text == "t"

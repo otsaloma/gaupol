@@ -41,6 +41,10 @@ class TestSubtitle(TestCase):
         self.frame_sub.main_text = "main"
         self.frame_sub.tran_text = "translation"
 
+    def test___cmp__(self):
+
+        assert self.time_sub < self.frame_sub
+
     def test__get_duration(self):
 
         assert self.time_sub.duration == "00:00:02.000"
@@ -167,3 +171,84 @@ class TestSubtitle(TestCase):
 
         self.time_sub.tran_text = "test"
         assert self.time_sub.tran_text == u"test"
+
+    def test_convert_framerate(self):
+
+        self.time_sub.start = "00:00:01.000"
+        self.time_sub.end = "00:00:02.000"
+        self.time_sub.convert_framerate(const.FRAMERATE.P24)
+        assert self.time_sub.framerate == const.FRAMERATE.P24
+        assert self.time_sub.start == "00:00:01.043"
+        assert self.time_sub.end == "00:00:02.085"
+
+        self.frame_sub.start = 100
+        self.frame_sub.end = 200
+        self.frame_sub.convert_framerate(const.FRAMERATE.P24)
+        assert self.frame_sub.framerate == const.FRAMERATE.P24
+        assert self.frame_sub.start == 96
+        assert self.frame_sub.end == 192
+
+    def test_copy(self):
+
+        copy = self.time_sub.copy()
+        assert copy == self.time_sub
+        assert not copy is self.time_sub
+
+    def test_get_end(self):
+
+        value = self.time_sub.get_end(const.MODE.TIME)
+        assert value == "00:00:03.000"
+        value = self.time_sub.get_end(const.MODE.FRAME)
+        assert value == 75
+
+        value = self.frame_sub.get_end(const.MODE.TIME)
+        assert value == "00:00:12.000"
+        value = self.frame_sub.get_end(const.MODE.FRAME)
+        assert value == 300
+
+    def test_get_start(self):
+
+        value = self.time_sub.get_start(const.MODE.TIME)
+        assert value == "00:00:01.000"
+        value = self.time_sub.get_start(const.MODE.FRAME)
+        assert value == 25
+
+        value = self.frame_sub.get_start(const.MODE.TIME)
+        assert value == "00:00:04.000"
+        value = self.frame_sub.get_start(const.MODE.FRAME)
+        assert value == 100
+
+    def test_get_text(self):
+
+        value = self.time_sub.get_text(const.DOCUMENT.MAIN)
+        assert value == "main"
+        value = self.time_sub.get_text(const.DOCUMENT.TRAN)
+        assert value == "translation"
+
+    def test_set_text(self):
+
+        self.time_sub.set_text(const.DOCUMENT.MAIN, "")
+        assert self.time_sub.main_text == ""
+        self.time_sub.set_text(const.DOCUMENT.TRAN, "")
+        assert self.time_sub.tran_text == ""
+
+    def test_scale_positions(self):
+
+        self.time_sub.scale_positions(2.0)
+        assert self.time_sub.start == "00:00:02.000"
+        assert self.time_sub.end == "00:00:06.000"
+        self.frame_sub.scale_positions(2.0)
+        assert self.frame_sub.start == 200
+        assert self.frame_sub.end == 600
+
+    def test_shift_positions(self):
+
+        self.time_sub.shift_positions("00:00:01.000")
+        assert self.time_sub._start == "00:00:02.000"
+        assert self.time_sub._end == "00:00:04.000"
+        self.frame_sub.shift_positions(-10)
+        assert self.frame_sub._start == 90
+        assert self.frame_sub._end == 290
+        self.time_sub.shift_positions(2.0)
+        assert self.time_sub._start == "00:00:04.000"
+        assert self.time_sub._end == "00:00:06.000"

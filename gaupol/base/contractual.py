@@ -74,8 +74,8 @@ class Contractual(type):
     precondition call, 'METHOD_NAME_ensure' postcondition call and public
     method calls in '_invariant' class invariant check call if such methods
     exist. The require method receives the same arguments as method, the ensure
-    method will in addition receive method's return value as its first
-    argument after self.
+    method will in addition receive method's return value as its first argument
+    after self.
 
     Preconditions may be weakened; only the first precondition found in the
     inheritance tree is used. Postconditions and class invariants may be

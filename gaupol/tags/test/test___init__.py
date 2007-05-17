@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,8 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol import const
-from gaupol.tags import *
+from gaupol import const, tags
 from gaupol.unittest import TestCase
 
 
@@ -26,4 +25,4 @@ class TestModule(TestCase):
     def test_imports(self):
 
         for name in const.FORMAT.class_names:
-            assert name in globals()
+            assert hasattr(tags, name)

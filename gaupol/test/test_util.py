@@ -17,6 +17,7 @@
 
 
 import codecs
+import os
 import sys
 import tempfile
 
@@ -122,6 +123,13 @@ class TestModule(TestCase):
             raise AssertionError
         except UnicodeError:
             util.handle_read_unicode(sys.exc_info(), path, "undefined")
+
+    def handle_remove_os(self):
+
+        try:
+            os.remove("/////")
+        except OSError:
+            util.handle_remove_io(sys.exc_info(), "/////")
 
     def test_handle_write_io(self):
 

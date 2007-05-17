@@ -50,6 +50,15 @@ class Subtitle(object):
     seconds. Positions are saved internally in only one mode.
     """
 
+    def __cmp__(self, other):
+        """Compare start positions in this subtitle's mode."""
+
+        if self.mode == const.MODE.TIME:
+            return cmp(self.start_time, other.start_time)
+        if self.mode == const.MODE.FRAME:
+            return cmp(self.start_frame, other.start_frame)
+        raise ValueError
+
     def __init__(self):
 
         self._start = "00:00:00.000"
@@ -187,9 +196,9 @@ class Subtitle(object):
         if isinstance(value, basestring):
             value = self._calc.add_times(self.start_time, value)
         elif isinstance(value, int):
-            value = self.start_frame + max(0, value)
+            value = self.start_frame + value
         elif isinstance(value, float):
-            value = self._calc.seconds_to_time(max(0.0, value))
+            value = self._calc.seconds_to_time(value)
             value = self._calc.add_times(self.start_time, value)
         self.end = self._convert_position(value)
 
@@ -218,6 +227,100 @@ class Subtitle(object):
         """Set the translation text."""
 
         self._tran_text = unicode(value)
+
+    def convert_framerate(self, framerate):
+        """Set the framerate and convert positions to it."""
+
+        coefficient = framerate.value / self._framerate.value
+        self._set_framerate(framerate)
+        if self.mode == const.MODE.TIME:
+            start = self.start_seconds / coefficient
+            end = self.end_seconds / coefficient
+        elif self.mode == const.MODE.FRAME:
+            start = int(round(coefficient * self.start_frame, 0))
+            end = int(round(coefficient * self.end_frame, 0))
+        self._set_start(start)
+        self._set_end(end)
+
+    def copy(self):
+        """Return a copy with the same values."""
+
+        subtitle = Subtitle()
+        subtitle._start = self._start
+        subtitle._end = self._end
+        subtitle._main_text = self._main_text
+        subtitle._tran_text = self._tran_text
+        subtitle.mode = self.mode
+        subtitle._framerate = self._framerate
+        subtitle._calc = self._calc
+        return subtitle
+
+    def get_end(self, mode):
+        """Get the start position in mode."""
+
+        if mode == const.MODE.TIME:
+            return self.end_time
+        if mode == const.MODE.FRAME:
+            return self.end_frame
+        raise ValueError
+
+    def get_start(self, mode):
+        """Get the start position in mode."""
+
+        if mode == const.MODE.TIME:
+            return self.start_time
+        if mode == const.MODE.FRAME:
+            return self.start_frame
+        raise ValueError
+
+    def get_text(self, doc):
+        """Get the text corresponding to document."""
+
+        if doc == const.DOCUMENT.MAIN:
+            return self.main_text
+        if doc == const.DOCUMENT.TRAN:
+            return self.tran_text
+        raise ValueError
+
+    def set_text(self, doc, value):
+        """set the text corresponding to document."""
+
+        if doc == const.DOCUMENT.MAIN:
+            return self._set_main_text(value)
+        if doc == const.DOCUMENT.TRAN:
+            return self._set_tran_text(value)
+        raise ValueError
+
+    def scale_positions(self, value):
+        """Multiply start and end positions by value."""
+
+        if self.mode == const.MODE.TIME:
+            self.start = self._get_start_seconds() * value
+            self.end = self._get_end_seconds() * value
+        elif self.mode == const.MODE.FRAME:
+            self.start = int(round(self._start * value, 0))
+            self.end = int(round(self._end * value, 0))
+
+    def shift_positions(self, value):
+        """Add value to start and end positions."""
+
+        if isinstance(value, basestring):
+            start = self._get_start_time()
+            start = self._calc.add_times(start, value)
+            end = self._get_end_time()
+            end = self._calc.add_times(end, value)
+        elif isinstance(value, int):
+            start = self._get_start_frame()
+            start = max(0, start + value)
+            end = self._get_end_frame()
+            end = max(0, end + value)
+        elif isinstance(value, float):
+            start = self._get_start_seconds()
+            start = max(0, start + value)
+            end = self._get_end_seconds()
+            end = max(0, end + value)
+        self._set_start(start)
+        self._set_end(end)
 
     start = property(_get_start, _set_start)
     start_frame = property(_get_start_frame, None)

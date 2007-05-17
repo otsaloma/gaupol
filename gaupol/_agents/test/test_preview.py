@@ -31,17 +31,12 @@ class TestPreviewAgent(TestCase):
 
     def test__get_subtitle_path(self):
 
-        # pylint: disable-msg=E1101
-        path, is_temp = self.delegate._get_subtitle_path(const.DOCUMENT.MAIN)
-        assert path == self.project.main_file.path
-        assert not is_temp
-
-        self.project.clear_texts([0], const.DOCUMENT.TRAN)
-        path, is_temp = self.delegate._get_subtitle_path(const.DOCUMENT.TRAN)
-        assert path != self.project.main_file.path
-        assert os.path.isfile(path)
-        assert is_temp
-        self.files.add(path)
+        value = self.delegate._get_subtitle_path(const.DOCUMENT.MAIN)
+        assert value == self.project.main_file.path
+        self.project.clear_texts([0], const.DOCUMENT.MAIN)
+        value = self.delegate._get_subtitle_path(const.DOCUMENT.MAIN)
+        assert value != self.project.main_file.path
+        self.files.add(value)
 
     def test__on_notify_main_file(self):
 
@@ -49,14 +44,25 @@ class TestPreviewAgent(TestCase):
 
     def test_get_temp_file_path(self):
 
-        path = self.project.get_temp_file_path(const.DOCUMENT.MAIN)
-        assert os.path.isfile(path)
+        method = self.project.get_temp_file_path
+        path = method(const.DOCUMENT.MAIN)
         self.files.add(path)
-
-        path = self.project.get_temp_file_path(const.DOCUMENT.TRAN)
-        assert os.path.isfile(path)
+        path = method(const.DOCUMENT.TRAN)
         self.files.add(path)
 
     def test_guess_video_path(self):
 
-        assert self.project.guess_video_path() is None
+        self.project.guess_video_path()
+
+    def test_preview(self):
+
+        doc = const.DOCUMENT.MAIN
+        self.project.video_path = self.get_subrip_path()
+        self.project.preview("00:00:00.000", doc, "echo", 0)
+        assert os.path.isfile(self.project.get_file(doc).path)
+        path = self.get_subrip_path()
+        self.project.preview("00:00:00.000", doc, "echo", 0, path)
+        assert os.path.isfile(self.project.get_file(doc).path)
+        self.project.clear_texts([0], const.DOCUMENT.MAIN)
+        self.project.preview("00:00:00.000", doc, "echo", 0)
+        assert os.path.isfile(self.project.get_file(doc).path)

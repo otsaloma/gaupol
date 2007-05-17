@@ -24,111 +24,28 @@ To hook a method up with the undo/redo system, the following need to be done:
     default value of -1. This argument indicates which of doing, undoing or
     redoing is in process.
 
-(2) At the end of the method, self.register_action(...) needs to be called with
-    keyword arguments specified in RevertableAction.__init__, where they're
-    directly passed to. Calling this method takes care of the management of
-    undo and redo stacks.
+(2) At the end of the method, 'self.register_action' needs to be called with an
+    instance of 'RevertableAction'. Calling this method takes care of the
+    management of undo and redo stacks.
 
 (3) The method should be marked with the 'revertable' decorator. This decorator
     takes care of emitting an action signal once the method has been run, cuts
     the undo and redo stacks if needed and defaults the 'register' keyword
-    argument to const.REGISTER.DO.
+    argument to 'const.REGISTER.DO'.
 
 Each method marked as revertable should match exactly one action in the undo
 and redo stacks. Hence, if the method calls other revertable methods, the
-resulting action needs to be grouped as one using self.group_actions(...).
+resulting action needs to be grouped as one using 'self.group_actions'.
 
 If a revertable method needs to be performed without the possibility of
-reverting, the 'register' keyword argument can be given a value of None. This
-way it will not be in any way processed by the undo/redo system.
+reverting, the 'register' keyword argument should be given a value of 'None'.
+This way it will not be in any way processed by the undo/redo system.
 """
 
 
-import functools
-
 from gaupol import const, util
-from gaupol.base import Delegate
-
-
-def revertable(function):
-    """Decorator to handle handle function with the action reversion system."""
-
-    @functools.wraps(function)
-    def wrapper(*args, **kwargs):
-        project = args[0]
-        main_changed = project.main_changed
-        tran_changed = project.tran_changed
-        if not "register" in kwargs:
-            kwargs["register"] = const.REGISTER.DO
-        register = kwargs["register"]
-        if register is None:
-            return function(*args, **kwargs)
-        blocked = project.block(register.signal)
-        value = function(*args, **kwargs)
-        if blocked:
-            project.cut_reversion_stacks()
-            project.unblock(register.signal)
-            if project.main_changed != main_changed or \
-               project.tran_changed != tran_changed:
-                project.emit_action_signal(register)
-        return value
-
-    return wrapper
-
-
-class RevertableAction(object):
-
-    """Action that can be reverted (undone or redone).
-
-    Instance variables:
-
-        description:   Short one line description
-        docs:          List of DOCUMENT constants
-        register:      REGISTER constant
-        revert_args:   Arguments passed to the revert method
-        revert_kwargs: Keyword arguments passed to the revert method
-        revert_method: Method called for reversion
-    """
-
-    def __init__(self, register, docs, description,
-        revert_method, revert_args=None, revert_kwargs=None):
-
-        revert_args = (revert_args if revert_args is not None else [])
-        revert_kwargs = (revert_kwargs if revert_kwargs is not None else {})
-
-        self.description   = description
-        self.docs          = docs
-        self.register      = register
-        self.revert_args   = revert_args
-        self.revert_kwargs = revert_kwargs
-        self.revert_method = revert_method
-
-    def revert(self):
-        """Call the revert method."""
-
-        register = None
-        if self.register.shift == 1:
-            register = const.REGISTER.UNDO
-        if self.register.shift == -1:
-            register = const.REGISTER.REDO
-        self.revert_kwargs["register"] = register
-        self.revert_method(*self.revert_args, **self.revert_kwargs)
-
-
-class RevertableActionGroup(object):
-
-    """Group of revertable actions.
-
-    Instance variables:
-
-        actions:     List of actions in group
-        description: Short one line description
-    """
-
-    def __init__(self, actions, description):
-
-        self.actions     = actions
-        self.description = description
+from gaupol.base import Contractual, Delegate
+from gaupol.reversion import RevertableActionGroup
 
 
 class RegisterAgent(Delegate):
@@ -142,12 +59,16 @@ class RegisterAgent(Delegate):
 
     # pylint: disable-msg=E0203,W0201
 
+    __metaclass__ = Contractual
+
     def __init__(self, master):
 
         Delegate.__init__(self, master)
-
         self._do_description = None
         util.connect(self, self, "notify::undo_limit")
+
+    def _break_action_group_require(self, stack, index=0):
+        assert 0 <= index < len(stack)
 
     def _break_action_group(self, stack, index=0):
         """Break the action group in stack into individual actions.
@@ -169,7 +90,7 @@ class RegisterAgent(Delegate):
         raise ValueError
 
     def _get_source_stack(self, register):
-        """Get the stack where the action to register is."""
+        """Get the stack where the action to register is taken from."""
 
         if register.shift == 1:
             return self.redoables
@@ -183,6 +104,10 @@ class RegisterAgent(Delegate):
 
         assert self.undo_limit is not None
         self.cut_reversion_stacks()
+
+    def _revert_multiple_require(self, count, register):
+        stack = self._get_source_stack(register)
+        assert len(stack) >= count
 
     def _revert_multiple(self, count, register):
         """Revert multiple actions."""
@@ -201,18 +126,19 @@ class RegisterAgent(Delegate):
                 self.group_actions(register, sub_count, description)
         self.unblock(register.signal)
         self.cut_reversion_stacks()
-        self.emit_action_signal(register, count)
+        self.emit_action_signal(register)
 
     def _shift_changed_value(self, action, shift):
         """Shift the values of the changed attributes."""
 
         if const.DOCUMENT.MAIN in action.docs:
             self.main_changed += shift
-        if const.DOCUMENT.TRAN in action.docs:
-            self.tran_changed += shift
-
         if action.docs == [const.DOCUMENT.TRAN]:
-            self.tran_active = True
+            if self.tran_changed is None:
+                self.tran_active = 0
+        if const.DOCUMENT.TRAN in action.docs:
+            if self.tran_changed is not None:
+                self.tran_changed += shift
 
     def can_redo(self):
         """Return True if something can be redone."""
@@ -232,13 +158,26 @@ class RegisterAgent(Delegate):
         del self.redoables[self.undo_limit:]
         del self.undoables[self.undo_limit:]
 
+    def emit_action_signal_require(self, register):
+        assert self._get_destination_stack(register)
+
     @util.silent(AssertionError)
-    def emit_action_signal(self, register, count=1):
-        """Emit an action signal for register."""
+    def emit_action_signal(self, register):
+        """Emit an action signal for the most recent registered action."""
 
         assert register is not None
         action = self._get_destination_stack(register)[0]
         self.emit(register.signal, action)
+
+    def group_actions_require(self, register, count, description):
+        if register is not None:
+            stack = self._get_destination_stack(register)
+            assert len(stack) >= count
+
+    def group_actions_ensure(self, value, register, count, description):
+        if register is not None:
+            stack = self._get_destination_stack(register)
+            assert isinstance(stack[0], RevertableActionGroup)
 
     @util.silent(AssertionError)
     def group_actions(self, register, count, description):
@@ -249,24 +188,26 @@ class RegisterAgent(Delegate):
         stack = self._get_destination_stack(register)
         for i in range(count):
             actions.append(stack.pop(0))
-        action_group = RevertableActionGroup(actions, description)
+        action_group = RevertableActionGroup()
+        action_group.actions = actions
+        action_group.description = description
         stack.insert(0, action_group)
+
+    def redo_require(self, count=1):
+        assert len(self.redoables) >= count
 
     def redo(self, count=1):
         """Redo actions."""
 
         if count > 1 or isinstance(self.redoables[0], RevertableActionGroup):
-            return self._revert_multiple(count, const.REGISTER.REDO_MULTIPLE)
+            return self._revert_multiple(count, const.REGISTER.REDO)
         self._do_description = self.redoables[0].description
         self.redoables.pop(0).revert()
 
     @util.silent(AssertionError)
-    def register_action(self, *args, **kwargs):
-        """Register action done, undone or redone.
+    def register_action(self, action):
+        """Register action done, undone or redone."""
 
-        See RevertableAction.__init__ for arguments.
-        """
-        action = RevertableAction(*args, **kwargs)
         assert action.register is not None
         if action.register == const.REGISTER.DO:
             self.undoables.insert(0, action)
@@ -279,6 +220,9 @@ class RegisterAgent(Delegate):
             action.description = self._do_description
         self._shift_changed_value(action, action.register.shift)
 
+    def set_action_description_require(self, register, description):
+        assert self._get_destination_stack(register)
+
     @util.silent(AssertionError)
     def set_action_description(self, register, description):
         """Set the description of the most recent action."""
@@ -287,10 +231,13 @@ class RegisterAgent(Delegate):
         stack = self._get_destination_stack(register)
         stack[0].description = description
 
+    def undo_require(self, count=1):
+        assert len(self.undoables) >= count
+
     def undo(self, count=1):
         """Undo actions."""
 
         if count > 1 or isinstance(self.undoables[0], RevertableActionGroup):
-            return self._revert_multiple(count, const.REGISTER.UNDO_MULTIPLE)
+            return self._revert_multiple(count, const.REGISTER.UNDO)
         self._do_description = self.undoables[0].description
         self.undoables.pop(0).revert()

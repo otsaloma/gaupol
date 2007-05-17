@@ -46,7 +46,7 @@ class MPsub(SubtitleFile):
 
     def __init__(self, path, encoding, newline=None):
 
-        SubtitleFile.__init__(self, path, encoding, newline=None)
+        SubtitleFile.__init__(self, path, encoding, newline)
         self.framerate = None
         self.mode = const.MODE.TIME
 
@@ -137,6 +137,13 @@ class MPsub(SubtitleFile):
             header = header[:-1]
         self.header = header
         return lines
+
+    def copy_from(self, file):
+        """Copy generic properties from file of same format."""
+
+        SubtitleFile.copy_from(self, file)
+        self.mode = file.mode
+        self.framerate = file.framerate
 
     def read(self):
         """Read file.

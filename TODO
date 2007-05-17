@@ -30,6 +30,7 @@ Changes:
  [D] Fixed cropped close button images on tabs
  [D] Faster list updates when inserting and removing subtitles
  [D] Spin buttons as editors in frame column cells
+ [ ] Allow negative value in time and frame cells
  [D] Greater contrast in the icon
  [D] Added --config-file, --debug, --encoding, --list-encodings,
      --translation-file,  --video-file and +[NUM] options
@@ -50,6 +51,7 @@ Gaupol 0.9
 ==========
 
  * Fix regular expression grouping in scriptlib
+ * Maximum variance for liner?
  * Refactor UIMActions
     * Get rid of specifying uim_paths
     * Handle actions as gtk.Actions?
@@ -57,7 +59,6 @@ Gaupol 0.9
     * Move UIMAction.is_doable to be a callback method attribute?
  * Integrate the MenuToolButtons with UIManager
  * Review and adapt to various fixes to gtk.Recent* (e.g. #418219)
- * Carefully experiment with Glade 3
 
 New:
  [ ] Text correction assistant
@@ -78,17 +79,7 @@ Unscheduled Possibilities
  * Interactive search
  * gedit-style message area
  * Document hidden settings (where?)
- * Multiple windows and tab drag-dropping between them
-    * http://live.gnome.org/GTK+/ApplicationClass
-    * http://www.mail-archive.com/pygtk@daa.com.au/msg14080.html
- * Any use for lazy loading?
-    * http://blogs.gnome.org/view/jamesh/2006/03/31/0
  * Windows installer
-    * http://live.gnome.org/PyGTK/FAQ/Win32AndPygtk
-    * http://trac.gajim.org/wiki/DevWindows
-    * http://svn.berlios.de/svnroot/repos/griffith/trunk/
  * Plugin system (see gedit)
+ * Multiple windows and tab drag-dropping between them
  * Built-in GStreamer preview
-    * http://gstreamer.freedesktop.org/modules/gst-python.html
-    * http://pygstdocs.berlios.de/
-    * http://www.jonobacon.org/?p=750

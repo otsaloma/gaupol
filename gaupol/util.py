@@ -324,6 +324,11 @@ def handle_read_unicode(exc_info, path, encoding):
         encoding = get_default_encoding()
     print "Failed to decode file '%s' with codec '%s'." % (path, encoding)
 
+def handle_remove_os(exc_info, path):
+    """Print OS error message to standard output."""
+
+    print "Failed to remove file '%s': %s." % (path, exc_info[1].args[1])
+
 def handle_write_io(exc_info, path):
     """Print IO error message to standard output."""
 

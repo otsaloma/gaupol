@@ -16,6 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
+from gaupol import const
 from gaupol.unittest import TestCase
 
 
@@ -26,64 +27,24 @@ class TestOpenAgent(TestCase):
         self.project = self.get_project()
         self.delegate = self.project.open_main.im_self
 
-    def test__sort(self):
-
-        sort = self.delegate._sort
-
-        shows = [ 1 ,  2 ,  3 ]
-        hides = [ 2 ,  3 ,  4 ]
-        texts = ["1", "2", "3"]
-        shows, hides, texts = sort(shows, hides, texts)
-        assert shows == [ 1 ,  2 ,  3 ]
-        assert hides == [ 2 ,  3 ,  4 ]
-        assert texts == ["1", "2", "3"]
-        assert self.delegate._sort_count == 0
-
-        shows = [ 2 ,  3 ,  1 ]
-        hides = [ 3 ,  4 ,  2 ]
-        texts = ["2", "3", "1"]
-        shows, hides, texts = sort(shows, hides, texts)
-        assert shows == [ 1 ,  2 ,  3 ]
-        assert hides == [ 2 ,  3 ,  4 ]
-        assert texts == ["1", "2", "3"]
-        assert self.delegate._sort_count > 0
-
     def test_open_main_file(self):
 
-        for path in (self.get_subrip_path(), self.get_microdvd_path()):
+        for format in const.FORMAT.members:
+            path = self.get_file_path(format)
             self.project.remove_subtitles([0])
-            assert self.project.open_main(path, "ascii") == 0
-            assert self.project.times
-            assert self.project.frames
-            assert self.project.main_texts
-            assert self.project.tran_texts
-            assert self.project.main_file is not None
-            assert self.project.main_changed == 0
-            assert self.project.tran_changed == 0
-            assert self.project.tran_active == False
+            self.project.open_main(path, "ascii")
+            assert self.project.subtitles
 
-    def test_open_translation_file_smart(self):
+    def test_open_translation_file__smart(self):
 
-        for path in (self.get_subrip_path(), self.get_microdvd_path()):
+        for format in const.FORMAT.members:
+            path = self.get_file_path(format)
             self.project.remove_subtitles([0])
-            assert self.project.open_translation(path, "ascii", True) == 0
-            assert self.project.tran_texts
-            assert len(self.project.tran_texts) == len(self.project.main_texts)
-            for i, main_text in enumerate(self.project.main_texts):
-                assert main_text or self.project.tran_texts[i]
-            assert self.project.tran_file is not None
-            assert self.project.tran_changed == 0
-            assert self.project.tran_active == True
+            self.project.open_translation(path, "ascii", True)
 
-    def test_open_translation_file_stupid(self):
+    def test_open_translation_file__stupid(self):
 
-        for path in (self.get_subrip_path(), self.get_microdvd_path()):
+        for format in const.FORMAT.members:
+            path = self.get_file_path(format)
             self.project.remove_subtitles([0])
-            assert self.project.open_translation(path, "ascii", False) == 0
-            assert self.project.tran_texts
-            assert len(self.project.tran_texts) == len(self.project.main_texts)
-            for i, main_text in enumerate(self.project.main_texts):
-                assert main_text or self.project.tran_texts[i]
-            assert self.project.tran_file is not None
-            assert self.project.tran_changed == 0
-            assert self.project.tran_active == True
+            self.project.open_translation(path, "ascii", False)
