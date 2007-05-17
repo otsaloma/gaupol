@@ -23,5 +23,4 @@ from gaupol import unittest
 from gaupol.unittest import *
 from .case import TestCase
 
-
 __all__ = unittest.__all__

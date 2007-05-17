@@ -30,18 +30,12 @@ class TestCase(unittest.TestCase):
 
     """Base class for GTK unit test cases."""
 
-    APPLICATION = Application()
-
-    def __init__(self):
-
-        unittest.TestCase.__init__(self)
-        while gtk.events_pending():
-            gtk.main_iteration()
+    application = Application()
 
     def get_application(self):
-        """Get a new application."""
+        """Get a new application with two open pages."""
 
-        application = self.APPLICATION
+        application = self.application
         while application.pages:
             application.close(application.pages[0], False)
         application.add_new_page(self.get_page())
@@ -49,9 +43,15 @@ class TestCase(unittest.TestCase):
         return application
 
     def get_page(self):
-        """Get a new page."""
+        """Get a new page with two open documents."""
 
         page = Page()
         page.project.open_main(self.get_subrip_path(), "ascii")
         page.project.open_translation(self.get_microdvd_path(), "ascii")
         return page
+
+    def teardown_method(self, method):
+        """Remove state set for executing tests in method."""
+
+        while gtk.events_pending():
+            gtk.main_iteration(block=False)
