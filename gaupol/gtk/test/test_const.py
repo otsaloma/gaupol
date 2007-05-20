@@ -20,32 +20,33 @@ from gaupol.gtk.unittest import TestCase
 from .. import const
 
 
-class TestGTKModule(TestCase):
+class TestModule(TestCase):
 
     def test_attributes(self):
 
         constants = (
             ("COLUMN", (
-                 "display_names",
-                 "names",
-                 "uim_action_names",
-                 "uim_paths",)),
+                "display_names",
+                "names",
+                "uim_action_names",
+                "uim_paths",)),
             ("FRAMERATE", (
-                 "uim_action_names",
-                 "uim_paths",)),
+                "uim_action_names",
+                "uim_paths",)),
             ("LENGTH_UNIT", (
-                 "names",)),
+                "names",)),
             ("MODE", (
-                 "uim_action_names",
-                 "uim_paths",)),
+                "uim_action_names",
+                "uim_paths",)),
             ("TARGET", (
-                 "names",)),
+                "names",)),
             ("TOOLBAR_STYLE", (
-                 "names",
-                 "values",)))
+                "names",
+                "values",)))
 
         for section_name, attr_names in constants:
             section = getattr(const, section_name)
+            attr_names = attr_names + ("names",)
             for attr_name in attr_names:
                 getattr(section, attr_name)
                 for member in section.members:

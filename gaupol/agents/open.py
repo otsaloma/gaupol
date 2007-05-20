@@ -96,7 +96,6 @@ class OpenAgent(Delegate):
         assert self.main_file is not None
         assert self.main_changed == 0
         assert self.tran_changed == None
-        assert value >= -1
 
     @util.notify_frozen
     def open_main(self, path, encoding):
@@ -136,7 +135,6 @@ class OpenAgent(Delegate):
     def open_translation_ensure(self, value, path, encoding, smart=True):
         assert self.tran_file is not None
         assert self.tran_changed == 0
-        assert value >= 0
 
     @util.notify_frozen
     def open_translation(self, path, encoding, smart=True):

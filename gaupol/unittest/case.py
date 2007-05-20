@@ -27,7 +27,6 @@ import tempfile
 
 from gaupol import const, util
 from gaupol.base import Contractual
-from gaupol.project import Project
 
 
 class TestCase(object):
@@ -78,6 +77,7 @@ class TestCase(object):
     def get_project(self):
         """Get a new project."""
 
+        from gaupol.project import Project
         project = Project()
         project.open_main(self.get_subrip_path(), "ascii")
         project.open_translation(self.get_microdvd_path(), "ascii")

@@ -177,7 +177,7 @@ class Liner(Parser):
         return 1
 
     def _join_even_ensure(self, value, max_lines):
-        assert self.text.count("\n") == max_lines - 1
+        assert self.text.count("\n") == (max_lines - 1)
 
     def _join_even(self, max_lines):
         """Join the lines, each containing a logical unit, evenly."""

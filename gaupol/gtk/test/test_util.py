@@ -38,9 +38,7 @@ class TestModule(TestCase):
     def test_get_glade_xml(self):
 
         glade_xml = util.get_glade_xml("debug-dialog")
-        assert isinstance(glade_xml, gtk.glade.XML)
         glade_xml = util.get_glade_xml("debug-dialog", "text_view")
-        assert isinstance(glade_xml, gtk.glade.XML)
 
     def test_get_event_box(self):
 
@@ -48,7 +46,7 @@ class TestModule(TestCase):
         event_box = gtk.EventBox()
         event_box.add(label)
         widget = util.get_event_box(label)
-        assert widget == event_box
+        assert widget is event_box
 
     def test_get_parent(self):
 
@@ -56,23 +54,19 @@ class TestModule(TestCase):
         window = gtk.Window()
         window.add(label)
         widget = util.get_parent(label, gtk.Window)
-        assert widget == window
+        assert widget is window
 
     def test_get_text_view_size(self):
 
         text_view = gtk.TextView(gtk.TextBuffer())
-        size = util.get_text_view_size(text_view)
-        assert isinstance(size[0], int)
-        assert isinstance(size[1], int)
+        width, height = util.get_text_view_size(text_view)
 
     def test_get_tree_view_size(self):
 
         tree_view = gtk.TreeView()
         scroller = gtk.ScrolledWindow()
         scroller.add(tree_view)
-        size = util.get_tree_view_size(tree_view)
-        assert isinstance(size[0], int)
-        assert isinstance(size[1], int)
+        width, height = util.get_tree_view_size(tree_view)
 
     def test_prepare_text_view(self):
 
@@ -91,9 +85,7 @@ class TestModule(TestCase):
         dialog = gtk.Dialog()
         util.resize_dialog(dialog, 200, 200)
         assert dialog.get_size() == (200, 200)
-
-        dialog = gtk.Dialog()
-        util.resize_dialog(dialog, 2000, 2000, 0.3, 0.3)
+        util.resize_dialog(dialog, 2000, 2000, (0.3, 0.3))
         size = dialog.get_size()
         assert size[0] == 0.3 * gtk.gdk.screen_width()
         assert size[1] == 0.3 * gtk.gdk.screen_height()
@@ -103,19 +95,21 @@ class TestModule(TestCase):
         dialog = gtk.Dialog()
         util.resize_message_dialog(dialog, 200, 200)
         assert dialog.get_size() == (200, 200)
-
-        dialog = gtk.Dialog()
-        util.resize_message_dialog(dialog, 2000, 2000, 0.3, 0.3)
+        util.resize_message_dialog(dialog, 2000, 2000, (0.3, 0.3))
         size = dialog.get_size()
         assert size[0] == 0.3 * gtk.gdk.screen_width()
         assert size[1] == 0.3 * gtk.gdk.screen_height()
 
     def test_separate_combo(self):
 
-        hasattr(util, "separate_combo")
+        combo_box = gtk.ComboBox()
+        combo_box.set_row_separator_func(util.separate_combo)
 
     def test_set_button(self):
 
+        button = gtk.Button(gtk.STOCK_CLOSE)
+        util.set_button(button, "test")
+        util.set_button(button, "test", gtk.STOCK_QUIT)
         button = gtk.Button(gtk.STOCK_CLOSE)
         util.set_button(button, "test", gtk.STOCK_QUIT)
         util.set_button(button, "test")
@@ -124,6 +118,7 @@ class TestModule(TestCase):
 
         window = gtk.Window()
         window.show_all()
+        util.set_cursor_normal(window)
         util.set_cursor_busy(window)
         window.destroy()
 
@@ -137,8 +132,8 @@ class TestModule(TestCase):
 
     def test_set_label_font(self):
 
-        util.set_label_font(gtk.Label(""), "Serif 10")
+        util.set_label_font(gtk.Label(""), "Serif 12")
 
     def test_set_widget_font(self):
 
-        util.set_label_font(gtk.Label(""), "Serif 10")
+        util.set_label_font(gtk.Label(""), "Serif 12")

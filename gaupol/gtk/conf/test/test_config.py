@@ -16,31 +16,29 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol import __version__
-from gaupol.gtk import conf
+import os
+
+from gaupol import paths
 from gaupol.gtk.unittest import TestCase
+from .. import config
 
 
-class TestModule(TestCase):
+class TestConfig(TestCase):
 
-    def on_conf_editor_notify_font(self, obj, value):
+    def setup_method(self, method):
 
-        assert value == "Serif 12"
+        self.spec_file = os.path.join(paths.DATA_DIR, "conf.spec")
+        self.config = config.Config(None, self.spec_file)
 
-    def test_connect(self):
+    def test_translate_none(self):
 
-        conf.connect(self, "editor", "font")
-        conf.editor.font = "Serif 12"
+        assert self.config["editor"]["font"] is None
+        self.config.translate_none("editor", "font", "")
+        assert self.config["editor"]["font"] == ""
+        assert "font" in self.config["editor"].defaults
 
-    def test_read(self):
+    def test_write_to_file(self):
 
-        conf.read()
-        assert conf.general.version == __version__
-        assert conf.editor.font == ""
-
-    def test_write(self):
-
-        conf.read()
-        conf.config_file = self.get_subrip_path()
-        conf.write()
-        conf.read()
+        self.config.filename = self.get_subrip_path()
+        self.config.write_to_file()
+        config.Config(self.config.filename, self.spec_file)

@@ -20,101 +20,8 @@
 
 Module variables:
 
-    COLUMN.NO
-    COLUMN.SHOW
-    COLUMN.HIDE
-    COLUMN.DURN
-    COLUMN.MTXT
-    COLUMN.TTXT
-    COLUMN.display_names
-    COLUMN.members
-    COLUMN.names
-    COLUMN.uim_action_names
-    COLUMN.uim_paths
-
-    DOCUMENT.MAIN
-    DOCUMENT.TRAN
-    DOCUMENT.members
-    DOCUMENT.names
-
-    FORMAT.ASS
-    FORMAT.MICRODVD
-    FORMAT.MPL2
-    FORMAT.MPSUB
-    FORMAT.SSA
-    FORMAT.SUBRIP
-    FORMAT.SUBVIEWER2
-    FORMAT.TMPLAYER
-    FORMAT.class_names
-    FORMAT.display_names
-    FORMAT.extensions
-    FORMAT.members
-    FORMAT.names
-
-    FRAMERATE.P24
-    FRAMERATE.P25
-    FRAMERATE.P30
-    FRAMERATE.display_names
-    FRAMERATE.members
-    FRAMERATE.names
-    FRAMERATE.mpsub_names
-    FRAMERATE.uim_action_names
-    FRAMERATE.uim_paths
-    FRAMERATE.values
-
-    LENGTH_UNIT.CHAR
-    LENGTH_UNIT.EM
-    LENGTH_UNIT.display_names
-    LENGTH_UNIT.members
-    LENGTH_UNIT.names
-
-    MODE.TIME
-    MODE.FRAME
-    MODE.members
-    MODE.names
-    MODE.uim_action_names
-    MODE.uim_paths
-
-    NEWLINE.MAC
-    NEWLINE.UNIX
-    NEWLINE.WINDOWS
-    NEWLINE.display_names
-    NEWLINE.members
-    NEWLINE.names
-    NEWLINE.values
-
-    REGISTER.DO
-    REGISTER.UNDO
-    REGISTER.REDO
-    REGISTER.DO_MULTIPLE
-    REGISTER.UNDO_MULTIPLE
-    REGISTER.REDO_MULTIPLE
-    REGISTER.members
-    REGISTER.names
-    REGISTER.shifts
-    REGISTER.signals
-
-    TARGET.SELECTED
-    TARGET.CURRENT
-    TARGET.ALL
-    TARGET.members
-    TARGET.names
-
-    TOOLBAR_STYLE.DEFAULT
-    TOOLBAR_STYLE.ICONS
-    TOOLBAR_STYLE.TEXT
-    TOOLBAR_STYLE.BOTH
-    TOOLBAR_STYLE.BOTH_HORIZ
-    TOOLBAR_STYLE.members
-    TOOLBAR_STYLE.names
-    TOOLBAR_STYLE.values
-
-    VIDEO_PLAYER.MPLAYER
-    VIDEO_PLAYER.VLC
-    VIDEO_PLAYER.commands
-    VIDEO_PLAYER.display_names
-    VIDEO_PLAYER.members
-    VIDEO_PLAYER.names
+    COLUMN, DOCUMENT, FORMAT, FRAMERATE, LENGTH_UNIT, MODE, NEWLINE, REGISTER,
+    TARGET, TOOLBAR_STYLE, VIDEO_PLAYER
 """
 
 # pylint: disable-msg=E1101
@@ -124,21 +31,8 @@ import gtk
 
 from gaupol.base import const
 from gaupol.const import *
-from gaupol.gtk.i18n import _
+from gaupol.i18n import _
 
-
-__all__ = [
-    "COLUMN",
-    "DOCUMENT",
-    "FORMAT",
-    "FRAMERATE",
-    "LENGTH_UNIT",
-    "MODE",
-    "NEWLINE",
-    "REGISTER",
-    "TARGET",
-    "TOOLBAR_STYLE",
-    "VIDEO_PLAYER",]
 
 COLUMN = const.Section()
 COLUMN.NO = const.Member()
@@ -146,11 +40,11 @@ COLUMN.NO.display_name = _("No.")
 COLUMN.NO.uim_action_name = "toggle_number_column"
 COLUMN.NO.uim_path = "/ui/menubar/view/columns/number"
 COLUMN.SHOW = const.Member()
-COLUMN.SHOW.display_name = _("Show")
+COLUMN.SHOW.display_name = _("Start")
 COLUMN.SHOW.uim_action_name = "toggle_show_column"
 COLUMN.SHOW.uim_path = "/ui/menubar/view/columns/show"
 COLUMN.HIDE = const.Member()
-COLUMN.HIDE.display_name = _("Hide")
+COLUMN.HIDE.display_name = _("End")
 COLUMN.HIDE.uim_action_name = "toggle_hide_column"
 COLUMN.HIDE.uim_path = "/ui/menubar/view/columns/hide"
 COLUMN.DURN = const.Member()
@@ -167,18 +61,19 @@ COLUMN.TTXT.uim_action_name = "toggle_translation_text_column"
 COLUMN.TTXT.uim_path = "/ui/menubar/view/columns/translation_text"
 COLUMN.finalize()
 
-FRAMERATE.P24.uim_action_name = "show_framerate_23_976"
-FRAMERATE.P24.uim_path = "/ui/menubar/view/framerate/23_976"
+FRAMERATE.P24.uim_action_name = "show_framerate_24"
+FRAMERATE.P24.uim_path = "/ui/menubar/view/framerate/24"
 FRAMERATE.P25.uim_action_name = "show_framerate_25"
 FRAMERATE.P25.uim_path = "/ui/menubar/view/framerate/25"
-FRAMERATE.P30.uim_action_name = "show_framerate_29_97"
-FRAMERATE.P30.uim_path = "/ui/menubar/view/framerate/29_97"
+FRAMERATE.P30.uim_action_name = "show_framerate_30"
+FRAMERATE.P30.uim_path = "/ui/menubar/view/framerate/30"
 FRAMERATE.finalize()
 
 LENGTH_UNIT = const.Section()
 LENGTH_UNIT.CHAR = const.Member()
 LENGTH_UNIT.CHAR.display_name = _("characters")
 LENGTH_UNIT.EM = const.Member()
+# Translators: Unit of measurement, equal to the width of the letter M.
 LENGTH_UNIT.EM.display_name = _("ems")
 LENGTH_UNIT.finalize()
 
@@ -206,3 +101,5 @@ TOOLBAR_STYLE.BOTH.value = gtk.TOOLBAR_BOTH
 TOOLBAR_STYLE.BOTH_HORIZ = const.Member()
 TOOLBAR_STYLE.BOTH_HORIZ.value = gtk.TOOLBAR_BOTH_HORIZ
 TOOLBAR_STYLE.finalize()
+
+__all__ = [x for x in dir() if x.isupper()]

@@ -16,16 +16,17 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Configuration.
+"""Reading, writing and storing all configurations.
 
 Module variables:
 
-    _CONFIG:     Instance of Config used
-    CONFIG_FILE: Path to the configuration file
-    SPEC_FILE:   Path to the configuration spec file
+    config_file: Path to the configuration file
 
-All configuration sections are made available as module variables. See the spec
-file for what these sections and options are.
+Importing this module will read the default configurations from the spec file.
+To read some actual saved configurations, assign a path to the 'config_file'
+attribute and call 'read'. All configuration sections are made available as
+module variables. See the spec file for a list of those sections, options,
+their default values and types.
 """
 
 
@@ -33,64 +34,77 @@ import os
 
 from gaupol import paths, util, __version__
 from gaupol.gtk.errors import ConfigParseError
-from .wrappers import Config, Container
+from .config import Config
+from .container import Container
 
 
-__all__ = ["Config", "Container"]
-
-_CONFIG = None
-CONFIG_FILE = None
-SPEC_FILE = os.path.join(paths.DATA_DIR, "conf.spec")
+config_file = None
 
 
-def _translate_nones(config):
-    """Translate Nones to a False value of appropriate type."""
+def _handle_transitions(config):
+    """Handle transitions of section and option names."""
 
-    options = (
-        ("editor" , "font"          , ""),
-        ("file"   , "directory"     , ""),
-        ("file"   , "encoding"      , ""),
-        ("preview", "custom_command", ""),)
-    for section, option, value in options:
-        if config[section][option] is None:
-            config[section][option] = value
-            config[section].defaults.append(option)
-
-def connect(obj, section, option):
-    """Connect option's signal to object's callback method."""
-
-    signal = "notify::%s" % option
-    method_name = "_on_conf_%s_%s" % (section, signal.replace("::", "_"))
-    if not hasattr(obj, method_name):
-        method_name = method_name[1:]
-    method = getattr(obj, method_name)
-    eval(section).connect(signal, method)
-
-def read():
-    """Read configurations from file."""
-
-    try:
-        config = Config(CONFIG_FILE, SPEC_FILE)
-    except ConfigParseError:
-        raise SystemExit(1)
     version = config["general"]["version"]
     if version is not None:
         if util.compare_versions(version, "0.7.999") == -1:
             print "Ignoring old-style configuration file entirely."
-            config = Config(None, SPEC_FILE)
-    config["general"]["version"] = __version__
-    _translate_nones(config)
+            spec_file = os.path.join(paths.DATA_DIR, "conf.spec")
+            return Config(None, spec_file)
+    return config
 
-    globals()["_CONFIG"] = config
+def _translate_nones(config):
+    """Translate Nones to a False value of appropriate type."""
+
+    config.translate_none("editor", "font", "")
+    config.translate_none("file", "directory", "")
+    config.translate_none("file", "encoding", "")
+    config.translate_none("preview", "custom_command", "")
+
+def connect_require(obj, section, option):
+    assert section in globals()
+    assert hasattr(globals()[section], option)
+
+@util.contractual
+def connect(obj, section, option):
+    """Connect option's signal to object's callback method."""
+
+    signal = "notify::%s" % option
+    suffix = signal.replace("::", "_")
+    method_name = "_on_conf_%s_%s" % (section, suffix)
+    if not hasattr(obj, method_name):
+        method_name = method_name[1:]
+    method = getattr(obj, method_name)
+    globals()[section].connect(signal, method)
+
+def read_ensure(value):
+    assert "_config" in globals()
+
+@util.contractual
+def read():
+    """Read configurations from file."""
+
+    try:
+        spec_file = os.path.join(paths.DATA_DIR, "conf.spec")
+        config = Config(config_file, spec_file)
+        config = _handle_transitions(config)
+    except ConfigParseError:
+        raise SystemExit(1)
+    _translate_nones(config)
+    config["general"]["version"] = __version__
+    globals()["_config"] = config
     for key, value in config.items():
         globals()[key] = Container(value)
 
+def write_ensure(value):
+    assert "_config" in globals()
+    assert os.path.isfile(config_file)
+
+@util.contractual
 def write():
     """Write configurations to file."""
 
-    # pylint: disable-msg=E1101
-    _CONFIG.filename = CONFIG_FILE
-    _CONFIG.write_to_file()
-
+    # pylint: disable-msg=E0602
+    _config.filename = config_file
+    _config.write_to_file()
 
 read()

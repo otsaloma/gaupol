@@ -20,32 +20,17 @@ import os
 
 from gaupol import paths
 from gaupol.gtk.unittest import TestCase
-from .. import wrappers
-
-
-CONFIG_FILE = os.path.join(paths.PROFILE_DIR, "gaupol.gtk.conf")
-SPEC_FILE = os.path.join(paths.DATA_DIR, "conf.spec")
-
-
-class TestConfig(TestCase):
-
-    def setup_method(self, method):
-
-        self.config = wrappers.Config(CONFIG_FILE, SPEC_FILE)
-
-    def test_write_to_file(self):
-
-        self.config.filename = self.get_subrip_path()
-        self.config.write_to_file()
+from .. import config, container
 
 
 class TestContainer(TestCase):
 
     def setup_method(self, method):
 
-        config = wrappers.Config(CONFIG_FILE, SPEC_FILE)
-        self.root = config["output_window"]
-        self.container = wrappers.Container(self.root)
+        spec_file = os.path.join(paths.DATA_DIR, "conf.spec")
+        root = config.Config(None, spec_file)
+        self.root = root["output_window"]
+        self.container = container.Container(self.root)
 
     def test___getattr__(self):
 
@@ -54,16 +39,10 @@ class TestContainer(TestCase):
 
     def test___setattr__(self):
 
-        self.container.show = False
-        if not "show" in self.root.defaults:
-            self.root.defaults.append("show")
-        self.container.show = False
-        assert self.root["show"] is False
+        value = self.container.show
+        self.container.show = value
+        assert self.root["show"] is value
         assert "show" in self.root.defaults
-
-        self.container.size = [200, 200]
-        if not "size" in self.root.defaults:
-            self.root.defaults.append("size")
-        self.container.size = [100, 100]
-        assert self.root["size"] == [100, 100]
-        assert not "size" in self.root.defaults
+        self.container.show = not value
+        assert self.container.show is not value
+        assert not "show" in self.root.defaults

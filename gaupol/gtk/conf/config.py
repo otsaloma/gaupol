@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Wrapper classes for easier use of ConfigObj."""
+"""Reading, writing and storing configurations."""
 
 
 import functools
@@ -24,7 +24,7 @@ import os
 import sys
 
 from gaupol import util
-from gaupol.base import Observable
+from gaupol.base import Contractual
 from gaupol.gtk import const
 from gaupol.gtk.errors import ConfigParseError
 from . import configobj, validate
@@ -37,12 +37,40 @@ class Config(configobj.ConfigObj):
     This is a convenience wrapper around ConfigObj. Methods defined in this
     class are as error-tolerant as possible. Validation includes extensions to
     handle Gaupol's constants, which can be defined in the spec file as
-    CONSTANT and CONSTANT_list for each constant.
+    CONSTANT and CONSTANT_list for each CONSTANT.
     """
+
+    __metaclass__ = Contractual
+
+    def __check_constant(self, validator, section, value):
+        """Validate and return constant or raise VdtValueError."""
+
+        name = validator.check("string", value)
+        section = getattr(const, section)
+        try:
+            index = section.names.index(name)
+            return section.members[index]
+        except ValueError:
+            raise validate.VdtValueError(value)
+
+    def __check_constant_list(self, validator, section, value):
+        """Validate and return constant list or raise VdtValueError."""
+
+        names = validator.check("string_list", value)
+        section = getattr(const, section)
+        try:
+            indexes = [section.names.index(x) for x in names]
+            return [section.members[x] for x in indexes]
+        except ValueError:
+            raise validate.VdtValueError(value)
+
+    def __init___require(self, config_file, spec_file):
+        assert os.path.isfile(spec_file)
 
     def __init__(self, config_file, spec_file):
         """Initialize a Config object.
 
+        config_file can be None for default configuration.
         Raise ConfigParseError if parsing config_file fails.
         """
         try:
@@ -59,69 +87,45 @@ class Config(configobj.ConfigObj):
         except configobj.ConfigObjError, obj:
             print "Errors parsing configuration file '%s':" % config_file
             for error in obj.errors:
-                print "  Line %d: %s" % (error.line_number, error.message)
+                print "Line %d: %s" % (error.line_number, error.message)
             raise ConfigParseError(obj)
 
         validator = self.__init_validator()
         spec = self.__init_spec(validator, spec_file)
-        self.__remove_crap(spec)
+        self.__remove_sections(spec)
+        self.__remove_options(spec)
         self.__validate(validator, spec)
 
     def __init_spec(self, validator, spec_file):
-        """Initialize and return spec ConfigObj."""
+        """Initialize and return ConfigObj of spec."""
 
         spec = configobj.ConfigObj(None, configspec=spec_file)
         result = spec.validate(validator)
         if result is True:
             return spec
-        print "The spec is erroneous!"
+        print "Errors parsing configuration spec file '%s':" % spec_file
         for error in configobj.flatten_errors(spec, result):
-            sections, option, result = error
+            sections, option, message = error
             for section in sections:
-                print "  %s.%s: %s" % (section, option, result)
-        raise SystemExit
+                print "%s.%s: %s" % (section, option, message)
+        raise SystemExit("Must exit.")
 
     def __init_validator(self):
         """Initialize and return validator."""
 
+        partial = functools.partial
         validator = validate.Validator()
-
-        def check_constant(section, value):
-            name = validator.check("string", value)
-            section = getattr(const, section)
-            try:
-                index = section.names.index(name)
-                return section.members[index]
-            except ValueError:
-                raise validate.VdtValueError(value)
-
-        def check_constant_list(section, value):
-            names = validator.check("string_list", value)
-            section = getattr(const, section)
-            try:
-                indexes = [section.names.index(x) for x in names]
-                return [section.members[x] for x in indexes]
-            except ValueError:
-                raise validate.VdtValueError(value)
-
         for name in (x for x in dir(const) if x.isupper()):
-            func = functools.partial(check_constant, name)
+            # pylint: disable-msg=E1102
+            func = partial(self.__check_constant, validator, name)
             validator.functions[name] = func
-            func = functools.partial(check_constant_list, name)
+            func = partial(self.__check_constant_list, validator, name)
             validator.functions["%s_list" % name] = func
-
         return validator
 
-    def __remove_crap(self, spec):
-        """Remove sections and options not in spec."""
-
-        sections = set(self.keys())
-        sections -= set(spec.keys())
-        if sections:
-            print "Discarding unrecognized configuration sections:"
-        for section in sections:
-            print "  %s" % section
-            del self[section]
+    @util.silent(AssertionError)
+    def __remove_options(self, spec):
+        """Remove options in config, but not in spec."""
 
         first = True
         for section in self.iterkeys():
@@ -131,22 +135,49 @@ class Config(configobj.ConfigObj):
                 print "Discarding unrecognized configuration options:"
                 first = False
             for option in options:
-                print "  %s.%s" % (section, option)
+                print "%s.%s" % (section, option)
                 del self[section][option]
 
+    @util.silent(AssertionError)
+    def __remove_sections(self, spec):
+        """Remove sections in config, but not in spec."""
+
+        sections = set(self.keys())
+        sections -= set(spec.keys())
+        assert sections
+        print "Discarding unrecognized configuration sections:"
+        for section in sections:
+            print section
+            del self[section]
+
+    @util.silent(AssertionError)
     def __validate(self, validator, spec):
         """Validate options according to spec."""
 
         result = self.validate(validator, preserve_errors=True)
-        if result is True:
-            return
+        assert not result
         print "Discarding erroneous configuration options:"
         for error in configobj.flatten_errors(self, result):
-            sections, option, result = error
+            sections, option, message = error
             for section in sections:
-                print "  %s.%s: %s" % (section, option, result)
+                print "%s.%s: %s" % (section, option, message)
                 self[section][option] = spec[section][option]
                 self[section].defaults.append(option)
+
+    @util.silent(AssertionError)
+    def translate_none(self, section, option, value):
+        """Translate a default None value to value."""
+
+        assert option in self[section].defaults
+        assert self[section][option] is None
+        self[section][option] = value
+        self[section].defaults.append(option)
+
+    def write_to_file_require(self):
+        assert self.filename is not None
+
+    def write_to_file_ensure(self, value):
+        assert os.path.isfile(self.filename)
 
     def write_to_file(self):
         """Write configurations to file."""
@@ -156,28 +187,3 @@ class Config(configobj.ConfigObj):
             configobj.ConfigObj.write(self)
         except (IOError, OSError):
             util.handle_write_io(sys.exc_info(), self.filename)
-
-
-class Container(Observable):
-
-    """Configuration data container.
-
-    This class can be a configuration section or a container for the entire
-    configuration data if there are no sections. This class is instantiated
-    with a 'root', which is a lowest (sub)dictionary of a ConfigObj instance.
-    This class provides convenient attribute access and notifications for
-    configuration variables as per the Observable API.
-    """
-
-    def __init__(self, root):
-
-        Observable.__init__(self)
-
-        def sync_with_root(self, value, name):
-            if value != root[name]:
-                root[name] = value
-
-        for name in root.keys():
-            setattr(self, name, root[name])
-            signal = "notify::%s" % name
-            self.connect(signal, sync_with_root, name)

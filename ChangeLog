@@ -1,3 +1,23 @@
+2007-05-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/agents/open.py:
+	* gaupol/determiner.py:
+	* gaupol/liner.py:
+	Minor changes to contracts.
+
+	* gaupol/gtk/conf/__init__.py:
+	* gaupol/gtk/conf/config.py:
+	* gaupol/gtk/conf/container.py:
+	* gaupol/gtk/conf/wrappers.py:
+	* gaupol/gtk/const.py:
+	* gaupol/gtk/lengthlib.py:
+	* gaupol/gtk/util.py:
+	Add contracts and clean up code.
+
+	* gaupol/gtk/unittest/case.py:
+	* gaupol/unittest/case.py:
+	Import Project, Page and Application locally.
+
 2007-05-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/i18n.py:

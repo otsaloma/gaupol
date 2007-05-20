@@ -55,9 +55,6 @@ class FormatDeterminer(Singleton):
         assert os.path.isfile(path)
         assert enclib.is_valid(encoding)
 
-    def determine_ensure(self, value, path, encoding):
-        assert value in const.FORMAT.members
-
     def determine(self, path, encoding):
         """Determine the format of the file.
 

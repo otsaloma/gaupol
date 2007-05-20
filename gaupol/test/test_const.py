@@ -27,23 +27,23 @@ class TestModule(TestCase):
         constants = (
             ("DOCUMENT", ()),
             ("FORMAT", (
-                 "class_names",
-                 "display_names",
-                 "extensions",)),
+                "class_names",
+                "display_names",
+                "extensions",)),
             ("FRAMERATE", (
-                 "display_names",
-                 "mpsub_names",
-                 "values",)),
+                "display_names",
+                "mpsub_names",
+                "values",)),
             ("MODE", ()),
             ("NEWLINE", (
-                 "display_names",
-                 "values",)),
+                "display_names",
+                "values",)),
             ("REGISTER", (
-                 "shifts",
-                 "signals",)),
+                "shifts",
+                "signals",)),
             ("VIDEO_PLAYER", (
-                 "commands",
-                 "display_names",)))
+                "commands",
+                "display_names",)))
 
         for section_name, attr_names in constants:
             section = getattr(const, section_name)

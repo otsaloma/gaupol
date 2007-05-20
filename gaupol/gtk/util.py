@@ -16,16 +16,16 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Miscellaneous functions.
+"""Miscellaneous functions and decorators.
 
 Module variables:
 
+    BUSY_CURSOR:   gtk.gdk.Cursor used when application not idle
     COMBO_SEP:     String rendered as a separator in combo boxes
-    EXTRA:         Extra width to add to size calculations
-    BUSY_CURSOR:   gtk.gdk.Cursor
-    HAND_CURSOR:   gtk.gdk.Cursor
-    INSERT_CURSOR: gtk.gdk.Cursor
-    NORMAL_CURSOR: gtk.gdk.Cursor
+    EXTRA:         Extra length to add to size calculations
+    HAND_CURSOR:   gtk.gdk.Cursor for use with hyperlinks
+    INSERT_CURSOR: gtk.gdk.Cursor for editable text widgets
+    NORMAL_CURSOR: gtk.gdk.Cursor used by default
 
 When setting dialog sizes based on their content, we get the size request of
 the scrolled window component and add the surroundings to that. For this to
@@ -46,14 +46,25 @@ from gaupol.util import *
 from . import conf, lengthlib
 
 
-COMBO_SEP = "<separator/>"
-EXTRA = 36
-
 BUSY_CURSOR   = gtk.gdk.Cursor(gtk.gdk.WATCH)
+COMBO_SEP     = "<separator/>"
+EXTRA         = 36
 HAND_CURSOR   = gtk.gdk.Cursor(gtk.gdk.HAND2)
 INSERT_CURSOR = gtk.gdk.Cursor(gtk.gdk.XTERM)
 NORMAL_CURSOR = gtk.gdk.Cursor(gtk.gdk.LEFT_PTR)
 
+
+def idle_method(function):
+    """Decorator for functions to be run in main loop while idle."""
+
+    def do_idle(args, kwargs):
+        function(*args, **kwargs)
+        return False
+    @functools.wraps(function)
+    def wrapper(*args, **kwargs):
+        gobject.idle_add(do_idle, args, kwargs)
+
+    return wrapper
 
 def get_glade_xml(name, root=None, directory=None):
     """Get gtk.glade.XML object from Glade file path.
@@ -65,11 +76,7 @@ def get_glade_xml(name, root=None, directory=None):
     if directory is None:
         directory = os.path.join(paths.DATA_DIR, "glade")
     path = os.path.join(directory, "%s.glade" % name)
-    try:
-        return gtk.glade.XML(path, root)
-    except RuntimeError:
-        print "Failed to load Glade XML file '%s'." % path
-        raise
+    return gtk.glade.XML(path, root)
 
 def get_event_box(widget):
     """Get an event box if it is a parent of widget."""
@@ -85,21 +92,17 @@ def get_parent(child, parent_type):
     return parent
 
 def get_text_view_size(text_view):
-    """Get the size desired by text view.
+    """Get the width and height desired by text view."""
 
-    Return width, height.
-    """
     text_buffer = text_view.get_buffer()
-    start, end = text_buffer.get_bounds()
-    text = text_buffer.get_text(start, end)
+    bounds = text_buffer.get_bounds()
+    text = text_buffer.get_text(*bounds)
     label = gtk.Label(text)
     return label.size_request()
 
 def get_tree_view_size(tree_view):
-    """Get the size desired by tree view.
+    """Get the width and height desired by tree view."""
 
-    Return width, height.
-    """
     scroller = tree_view.get_parent()
     policy = scroller.get_policy()
     scroller.set_policy(gtk.POLICY_NEVER, gtk.POLICY_NEVER)
@@ -107,31 +110,15 @@ def get_tree_view_size(tree_view):
     scroller.set_policy(*policy)
     return width, height
 
-def idle_method(function):
-    """Decorator for functions to be run in main loop while idle.
-
-    Threads doing GUI operations should use this decorator so that all GUI
-    operations get done in the main loop.
-    """
-    def do_idle(args, kwargs):
-        function(*args, **kwargs)
-        return False
-
-    @functools.wraps(function)
-    def wrapper(*args, **kwargs):
-        gobject.idle_add(do_idle, args, kwargs)
-
-    return wrapper
-
 def prepare_text_view(text_view):
     """Connect text view to font and length margin updates."""
 
-    def update_view(*args):
+    def update_margin(*args):
         if conf.editor.show_lengths_edit:
             return lengthlib.connect_text_view(text_view)
         return lengthlib.disconnect_text_view(text_view)
-    conf.editor.connect("notify::show_lengths_edit", update_view)
-    update_view()
+    conf.editor.connect("notify::show_lengths_edit", update_margin)
+    update_margin()
 
     def update_font(*args):
         font = ("" if conf.editor.use_default_font else conf.editor.font)
@@ -140,31 +127,25 @@ def prepare_text_view(text_view):
     conf.editor.connect("notify::font", update_font)
     update_font()
 
-def resize_dialog(dialog, width, height, max_width=0.6, max_height=0.6):
-    """Resize dialog in a smart manner.
+def resize_dialog(dialog, width, height, max_size=(0.6, 0.6)):
+    """Resize dialog to size required by its widgets.
 
     width and height should be desired sizes in pixels.
-    max_width and max_height should be between 0 and 1.
+    max_size should be width, height, between 0 and 1.
     """
-    # Set maximum based on percentage of screen space.
-    width = min(width, int(max_width * gtk.gdk.screen_width()))
-    height = min(height, int(max_height * gtk.gdk.screen_height()))
-
-    # Set minimum based on dialog content.
-    size = dialog.size_request()
-    width = max(size[0], width)
-    height = max(size[1], height)
-
+    width = min(width, int(max_size[0] * gtk.gdk.screen_width()))
+    height = min(height, int(max_size[1] * gtk.gdk.screen_height()))
+    width = max(dialog.size_request()[0], width)
+    height = max(dialog.size_request()[1], height)
     dialog.set_default_size(width, height)
 
-def resize_message_dialog(
-    dialog, width, height, max_width=0.5, max_height=0.5):
-    """Resize message dialog in a smart manner.
+def resize_message_dialog(dialog, width, height, max_size=(0.5, 0.5)):
+    """Resize message dialog to size required by its widgets.
 
     width and height should be desired sizes in pixels.
-    max_width and max_height should be between 0 and 1.
+    max_size should be width, height, between 0 and 1.
     """
-    resize_dialog(dialog, width, height, max_width, max_height)
+    resize_dialog(dialog, width, height, max_size)
 
 def separate_combo(store, itr):
     """Separator function for combo box models."""
@@ -177,34 +158,39 @@ def set_button(button, text, stock=None):
     if stock is not None:
         image = gtk.Button(stock=stock).get_image()
         button.set_image(image)
-    alignment = button.get_children()[0]
-    hbox = alignment.get_children()[0]
-    image = hbox.get_children()[0]
-    if stock is None:
-        hbox.remove(image)
+    child = button.get_children()[0]
+    if isinstance(child, gtk.Alignment):
+        hbox = child.get_children()[0]
+        image = hbox.get_children()[0]
+        if stock is None:
+            hbox.remove(image)
     button.set_label(text)
     button.set_use_underline(True)
 
+def set_cursor_busy_require(window):
+    assert hasattr(window, "window")
+
+@contractual
 def set_cursor_busy(window):
     """Set cursor busy when above window."""
 
-    while gtk.events_pending():
-        gtk.main_iteration()
     window.window.set_cursor(BUSY_CURSOR)
     while gtk.events_pending():
         gtk.main_iteration()
 
+def set_cursor_normal_require(window):
+    assert hasattr(window, "window")
+
+@contractual
 def set_cursor_normal(window):
     """Set cursor normal when above window."""
 
-    while gtk.events_pending():
-        gtk.main_iteration()
     window.window.set_cursor(NORMAL_CURSOR)
     while gtk.events_pending():
         gtk.main_iteration()
 
 def set_label_font(label, font):
-    """Set label font."""
+    """Set the font on label."""
 
     context = label.get_pango_context()
     font_desc = context.get_font_description()
@@ -217,7 +203,7 @@ def set_label_font(label, font):
     label.set_attributes(attr_list)
 
 def set_widget_font(widget, font):
-    """Set widget font."""
+    """Set the font on widget of any type."""
 
     context = widget.get_pango_context()
     font_desc = context.get_font_description()
