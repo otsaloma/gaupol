@@ -238,7 +238,7 @@ class _FilePage(Delegate):
         column = gtk.TreeViewColumn("", gtk.CellRendererText(), text=0)
         self._tree_view.append_column(column)
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def _on_add_button_clicked(self, *args):
         """Add a new fallback encoding."""
 
@@ -390,7 +390,7 @@ class _PreviewPage(Delegate):
             self._command_entry.set_text(conf.preview.custom_command)
             self._command_entry.set_editable(True)
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def _on_command_entry_changed(self, entry):
         """Save the custom command."""
 

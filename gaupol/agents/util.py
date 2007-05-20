@@ -65,7 +65,7 @@ class UtilityAgent(Delegate):
             return self.tran_file
         raise ValueError
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def get_file_class(self, doc):
         """Get document's file class or None."""
 
@@ -112,7 +112,7 @@ class UtilityAgent(Delegate):
         subtitle.framerate = self.framerate
         return subtitle
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def get_tag_library(self, doc):
         """Get document's tag library instance or None."""
 
@@ -120,7 +120,7 @@ class UtilityAgent(Delegate):
         assert class_name is not None
         return getattr(tags, class_name)()
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def get_tag_regex(self, doc):
         """Get the regular expression for a tag in document or None."""
 

@@ -31,7 +31,7 @@ class ViewAgent(Delegate):
 
     # pylint: disable-msg=E0203,W0201
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def _toggle_column(self, col):
         """Show or hide column."""
 
@@ -50,7 +50,7 @@ class ViewAgent(Delegate):
         self.update_gui()
         util.set_cursor_normal(self.window)
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def on_framerate_combo_changed(self, *args):
         """Change the framerate with which unnative units are calculated."""
 
@@ -73,7 +73,7 @@ class ViewAgent(Delegate):
         action = self.uim.get_action("/ui/menubar/view/output_window")
         action.set_active(self.output_window.props.visible)
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def on_show_framerate_23_976_activate(self, item, active_item):
         """Change the framerate with which unnative units are calculated."""
 
@@ -91,7 +91,7 @@ class ViewAgent(Delegate):
             page.reload_view(rows, [SHOW, HIDE, DURN])
         util.set_cursor_normal(self.window)
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def on_show_times_activate(self, item, active_item):
         """Change the units in which postions are shown."""
 
@@ -184,7 +184,7 @@ class ViewAgent(Delegate):
         self.video_toolbar.props.visible = not visible
         conf.application_window.show_video_toolbar = not visible
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def on_view_header_button_press_event(self, button, event):
         """Display a column visibility pop-up menu."""
 

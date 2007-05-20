@@ -29,6 +29,19 @@ class TestModule(TestCase):
 
     # pylint: disable-msg=E0102
 
+    def test_asserted_return(self):
+
+        def do_a():
+            assert False
+        def do_b():
+            return do_a()
+        assert util.asserted_return(do_a)() is None
+        try:
+            util.asserted_return(do_b)()
+            raise AssertionError
+        except AssertionError:
+            pass
+
     def test_memoize(self):
 
         @util.memoize

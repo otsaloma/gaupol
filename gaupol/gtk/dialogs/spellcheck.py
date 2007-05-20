@@ -237,7 +237,7 @@ class SpellCheckDialog(GladeDialog):
         text_buffer = self._text_view.get_buffer()
         text_buffer.create_tag("misspelled", weight=pango.WEIGHT_BOLD)
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def _init_replacements(self):
         """Read replacements from file."""
 
@@ -396,7 +396,7 @@ class SpellCheckDialog(GladeDialog):
         self._register_changes()
         self._set_done()
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def _on_tree_view_selection_changed(self, *args):
         """Copy the selected suggestion into the entry."""
 
@@ -406,7 +406,7 @@ class SpellCheckDialog(GladeDialog):
         row = store.get_path(itr)[0]
         self._entry.set_text(unicode(store[row][0]))
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def _register_changes(self):
         """Register changes to current page."""
 
@@ -457,7 +457,7 @@ class SpellCheckDialog(GladeDialog):
         replacements = util.get_unique(replacements)
         self._replacements = replacements
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def _write_replacements(self):
         """Write replacement files."""
 

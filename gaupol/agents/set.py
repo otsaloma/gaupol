@@ -118,7 +118,7 @@ class SetAgent(Delegate):
         assert 0 <= index < len(self.subtitles)
 
     @revertable
-    @util.silent(AssertionError)
+    @util.asserted_return
     def set_text(self, index, doc, value, register=-1):
         """Set the value of document's text."""
 

@@ -175,7 +175,7 @@ class Page(Observable):
 
         self.reload_view_all()
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def _on_project_main_texts_changed(self, project, rows):
         """Reload main texts in rows."""
 
@@ -183,7 +183,7 @@ class Page(Observable):
         self.reload_view(rows, [MTXT])
         self.view.select_rows(rows)
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def _on_project_positions_changed(self, project, rows):
         """Reload positions in rows."""
 
@@ -191,7 +191,7 @@ class Page(Observable):
         self.reload_view(rows, [SHOW, HIDE, DURN])
         self.view.select_rows(rows)
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def _on_project_subtitles_changed(self, project, rows):
         """Reload subtitles in rows."""
 
@@ -199,7 +199,7 @@ class Page(Observable):
         self.reload_view(rows, [SHOW, HIDE, DURN, MTXT, TTXT])
         self.view.select_rows(rows)
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def _on_project_subtitles_inserted(self, project, rows):
         """Insert rows to the list store."""
 
@@ -216,7 +216,7 @@ class Page(Observable):
         self.view.set_focus(rows[0])
         self.view.select_rows(rows)
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def _on_project_subtitles_removed(self, project, rows):
         """Remove rows from the list store."""
 
@@ -236,7 +236,7 @@ class Page(Observable):
 
         self.reload_view_all()
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def _on_project_translation_texts_changed(self, project, rows):
         """Reload translation texts in rows."""
 
@@ -244,7 +244,7 @@ class Page(Observable):
         self.reload_view(rows, [TTXT])
         self.view.select_rows(rows)
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def _on_tab_event_box_enter_notify_event(self, *args):
         """Update the text in the tooltip."""
 

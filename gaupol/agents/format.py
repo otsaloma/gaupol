@@ -36,7 +36,7 @@ class FormatAgent(Delegate):
     __metaclass__ = Contractual
     _re_alphanum = re.compile(r"\w", re.UNICODE)
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def _change_case_first(self, parser, method):
         """Change the case of the alphanumeric substring."""
 

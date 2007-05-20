@@ -176,7 +176,7 @@ class MenuAgent(Delegate):
         while gtk.events_pending():
             gtk.main_iteration()
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def on_page_tab_widget_button_press_event(self, button, event):
         """Display a tab pop-up menu."""
 

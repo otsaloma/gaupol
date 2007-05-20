@@ -57,7 +57,7 @@ class Parser(Finder):
     def _set_margins_require(self, text):
         assert self.re_tag is not None
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def _set_margins(self, text):
         """Find the margin tags in text if such exist."""
 
@@ -98,7 +98,7 @@ class Parser(Finder):
             a, z = match.span()
             self._tags.append([a, text[a:z]])
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def _shift_tags(self, pos, shift, orig_text):
         """Shift all the tags after position."""
 
@@ -155,7 +155,7 @@ class Parser(Finder):
         shift = len(self.text) - len(orig_text)
         self._shift_tags(a, shift, orig_text)
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def set_text(self, text, next=True):
         """Set the text and parse it.
 

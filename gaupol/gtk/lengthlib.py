@@ -111,7 +111,7 @@ class _Counter(object):
 
 _counter = _Counter()
 
-@util.silent(AssertionError)
+@util.asserted_return
 def _on_text_view_expose_event(text_view, event):
     """Calculate and show line lengths in the margin."""
 

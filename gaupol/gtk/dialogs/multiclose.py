@@ -139,7 +139,7 @@ class MultiCloseDialog(GladeDialog):
         tree_view.append_column(column)
         return store
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def _on_response(self, dialog, response):
         """Save the selected documents and close pages."""
 

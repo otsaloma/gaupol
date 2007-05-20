@@ -98,7 +98,7 @@ class RegisterAgent(Delegate):
             return self.undoables
         raise ValueError
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def _on_notify_undo_limit(self, *args):
         """Cut reversion stacks if limit set."""
 
@@ -150,7 +150,7 @@ class RegisterAgent(Delegate):
 
         return bool(self.undoables)
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def cut_reversion_stacks(self):
         """Cut the undo and redo stacks to their maximum lengths."""
 
@@ -161,7 +161,7 @@ class RegisterAgent(Delegate):
     def emit_action_signal_require(self, register):
         assert self._get_destination_stack(register)
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def emit_action_signal(self, register):
         """Emit an action signal for the most recent registered action."""
 
@@ -179,7 +179,7 @@ class RegisterAgent(Delegate):
             stack = self._get_destination_stack(register)
             assert isinstance(stack[0], RevertableActionGroup)
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def group_actions(self, register, count, description):
         """Group the registered actions as one item in the stack."""
 
@@ -204,7 +204,7 @@ class RegisterAgent(Delegate):
         self._do_description = self.redoables[0].description
         self.redoables.pop(0).revert()
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def register_action(self, action):
         """Register action done, undone or redone."""
 
@@ -223,7 +223,7 @@ class RegisterAgent(Delegate):
     def set_action_description_require(self, register, description):
         assert self._get_destination_stack(register)
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def set_action_description(self, register, description):
         """Set the description of the most recent action."""
 

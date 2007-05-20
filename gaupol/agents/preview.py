@@ -84,7 +84,7 @@ class PreviewAgent(Delegate):
         self.save(doc, props, False)
         return path
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def guess_video_path(self, extensions=None):
         """Guess and return the video file path based on main file's path.
 

@@ -182,7 +182,7 @@ class _PositionAdjustDialog(GladeDialog):
         args = (rows, point_1, point_2)
         self.application.preview_changes(page, row, doc, method, args)
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def _on_response(self, dialog, response):
         """Save settings and adjust positions."""
 

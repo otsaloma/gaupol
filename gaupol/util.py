@@ -40,6 +40,26 @@ from gaupol import opts
 __all__ = set(dir() + ["__all__"])
 
 
+def asserted_return(function):
+    """Decorator for ignoring AssertionErrors raised by function.
+
+    Only AssertionErrors from function's level are ignored.
+    Return None if an exception encountered.
+    """
+    def wrapper(*args, **kwargs):
+        try:
+            return function(*args, **kwargs)
+        except AssertionError:
+            depth = 0
+            tb = sys.exc_info()[2]
+            while tb.tb_next is not None:
+                tb = tb.tb_next
+                depth += 1
+                if depth > 1:
+                    raise
+            return None
+    return wrapper
+
 def contractual(function):
     """Decorator for functions with pre- and/or postconditions.
 

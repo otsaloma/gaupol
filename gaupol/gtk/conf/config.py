@@ -123,7 +123,7 @@ class Config(configobj.ConfigObj):
             validator.functions["%s_list" % name] = func
         return validator
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def __remove_options(self, spec):
         """Remove options in config, but not in spec."""
 
@@ -138,7 +138,7 @@ class Config(configobj.ConfigObj):
                 print "%s.%s" % (section, option)
                 del self[section][option]
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def __remove_sections(self, spec):
         """Remove sections in config, but not in spec."""
 
@@ -150,7 +150,7 @@ class Config(configobj.ConfigObj):
             print section
             del self[section]
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def __validate(self, validator, spec):
         """Validate options according to spec."""
 
@@ -164,7 +164,7 @@ class Config(configobj.ConfigObj):
                 self[section][option] = spec[section][option]
                 self[section].defaults.append(option)
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def translate_none(self, section, option, value):
         """Translate a default None value to value."""
 

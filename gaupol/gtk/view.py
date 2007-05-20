@@ -148,7 +148,7 @@ class View(gtk.TreeView):
         conf.connect(self, "editor", "show_lengths_cell")
         conf.connect(self, "editor", "use_default_font")
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def _on_conf_editor_notify_font(self, *args):
         """Apply the new font."""
 
@@ -158,7 +158,7 @@ class View(gtk.TreeView):
             renderer.props.font = conf.editor.font
         self.columns_autosize()
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def _on_conf_editor_notify_length_unit(self, *args):
         """Repaint the cells."""
 
@@ -230,7 +230,7 @@ class View(gtk.TreeView):
             col = self.get_column(col)
         self.set_cursor(row, col)
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def update_headers(self):
         """Update the attributes of the column header labels."""
 

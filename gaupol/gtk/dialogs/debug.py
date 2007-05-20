@@ -99,7 +99,7 @@ class DebugDialog(GladeDialog):
         end_iter = text_buffer.get_end_iter()
         text_buffer.insert_with_tags_by_name(end_iter, text, *tags)
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def _on_response(self, dialog, response):
         """Do not send response if reporting bug."""
 
@@ -107,7 +107,7 @@ class DebugDialog(GladeDialog):
         util.browse_url(urls.BUG_REPORT)
         self.stop_emission("response")
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def _on_text_view_link_tag_event(self, tag, text_view, event, itr):
         """Open linked file in editor."""
 
@@ -266,7 +266,7 @@ class DebugDialog(GladeDialog):
         self._resize()
 
 
-@util.silent(AssertionError)
+@util.asserted_return
 def show(exctype, value, tb):
     """Show exception traceback in dialog.
 

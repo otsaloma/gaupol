@@ -131,7 +131,7 @@ class OutputWindow(gtk.Window):
         maximized = bool(state & gtk.gdk.WINDOW_STATE_MAXIMIZED)
         conf.output_window.maximized = maximized
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def _save_geometry(self):
         """Save window geometry."""
 

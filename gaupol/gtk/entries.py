@@ -85,7 +85,7 @@ class TimeEntry(gtk.Entry):
         self._insert_handler = util.connect(self, self, "insert-text")
 
     @_blocked
-    @util.silent(AssertionError)
+    @util.asserted_return
     def _insert_text(self, text):
         """Insert text."""
 
@@ -113,7 +113,7 @@ class TimeEntry(gtk.Entry):
         self.stop_emission("delete-text")
         self.set_position(start_pos)
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def _on_key_press_event(self, entry, event):
         """Change numbers to zero if BackSpace or Delete pressed."""
 
@@ -138,7 +138,7 @@ class TimeEntry(gtk.Entry):
         self.stop_emission("toggle-overwrite")
 
     @_blocked
-    @util.silent(AssertionError)
+    @util.asserted_return
     def _zero_next(self):
         """Change next digit to zero."""
 
@@ -167,7 +167,7 @@ class TimeEntry(gtk.Entry):
         self.set_position(pos - 1)
 
     @_blocked
-    @util.silent(AssertionError)
+    @util.asserted_return
     def _zero_selection(self):
         """Change digits in selection to zero."""
 

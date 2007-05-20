@@ -145,7 +145,7 @@ class UpdateAgent(Delegate):
         self.update_gui()
         self.emit("pages-reordered", page, index)
 
-    @util.silent(AssertionError)
+    @util.asserted_return
     def on_notebook_switch_page(self, notebook, pointer, index):
         """Update GUI for the page switched to."""
 
