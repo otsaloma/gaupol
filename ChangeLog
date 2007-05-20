@@ -1,5 +1,11 @@
 2007-05-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/errors.py:
+	* gaupol/gtk/index.py:
+	Minor changes.
+
+2007-05-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/util.py (asserted_return):
 	New decorator to replace silent(AssertionError).
 	Fix all references.

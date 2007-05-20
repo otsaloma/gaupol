@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,18 +16,13 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Integer column index constants.
-
-Module variables:
-
-    NO, SHOW, HIDE, DURN, MTXT, TTXT
-"""
+"""Column index constants."""
 
 
 from gaupol.gtk import const
 
+__all__ = const.COLUMN.names
 
-__all__ = ["NO", "SHOW", "HIDE", "DURN", "MTXT", "TTXT"]
 
 NO   = const.COLUMN.NO
 SHOW = const.COLUMN.SHOW

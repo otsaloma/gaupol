@@ -22,7 +22,6 @@
 from gaupol import errors
 from gaupol.errors import *
 
-
 __all__ = errors.__all__ + ["ConfigParseError", "Default"]
 
 
