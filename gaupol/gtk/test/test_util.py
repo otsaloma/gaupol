@@ -35,6 +35,10 @@ class TestModule(TestCase):
         assert hasattr(util, "INSERT_CURSOR")
         assert hasattr(util, "NORMAL_CURSOR")
 
+    def test_get_contractual_metaclass(self):
+
+        util.get_contractual_metaclass()
+
     def test_get_glade_xml(self):
 
         glade_xml = util.get_glade_xml("debug-dialog")

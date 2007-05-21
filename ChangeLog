@@ -1,3 +1,12 @@
+2007-05-21  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/entries.py:
+	Allow negative values.
+	Add contracts.
+
+	* gaupol/gtk/util.py (get_contractual_metaclass):
+	New function to help avoid metaclass conflicts.
+
 2007-05-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/errors.py:

@@ -42,6 +42,7 @@ import os
 import pango
 
 from gaupol import paths
+from gaupol.base import Contractual
 from gaupol.util import *
 from . import conf, lengthlib
 
@@ -65,6 +66,13 @@ def idle_method(function):
         gobject.idle_add(do_idle, args, kwargs)
 
     return wrapper
+
+@once
+def get_contractual_metaclass():
+    """Return Contractual metaclass for subclasses of GObject."""
+
+    name = "GObjectMetaContractual"
+    return type(name, (gobject.GObjectMeta, Contractual), {})
 
 def get_glade_xml(name, root=None, directory=None):
     """Get gtk.glade.XML object from Glade file path.

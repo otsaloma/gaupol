@@ -16,13 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Entry for time data in format HH:MM:SS.SSS.
-
-Module variables:
-
-    _RE_DIGIT: Regular expression for a digit
-    _RE_TIME:  Regular expression for time in format HH:MM:SS.SSS
-"""
+"""Entry for time data in format [-]HH:MM:SS.SSS."""
 
 
 import functools
@@ -31,10 +25,6 @@ import gtk
 import re
 
 from gaupol.gtk import util
-
-
-_RE_DIGIT = re.compile(r"\d")
-_RE_TIME  = re.compile(r"^\d\d:[0-5]\d:[0-5]\d\.\d\d\d$")
 
 
 def _blocked(function):
@@ -61,17 +51,23 @@ class TimeEntry(gtk.Entry):
 
         _delete_handler: Handler for 'delete-text' signal
         _insert_handler: Handler for 'insert-text' signal
+
+    This widget uses 'gobject.idle_add' a lot, which means that clients may
+    need to call 'gtk.main_iteration' to ensure that proper updating.
     """
+
+    __metaclass__ = util.get_contractual_metaclass()
+    _re_digit = re.compile(r"\d")
+    _re_time  = re.compile(r"^-?\d\d:[0-5]\d:[0-5]\d\.\d\d\d$")
 
     def __init__(self):
 
         gtk.Entry.__init__(self)
-
         self._delete_handler = None
         self._insert_handler = None
 
-        self.set_width_chars(12)
-        self.set_max_length(12)
+        self.set_width_chars(13)
+        self.set_max_length(13)
         self._init_signal_handlers()
 
     def _init_signal_handlers(self):
@@ -86,20 +82,29 @@ class TimeEntry(gtk.Entry):
 
     @_blocked
     @util.asserted_return
-    def _insert_text(self, text):
+    def _insert_text(self, value):
         """Insert text."""
 
-        length = len(text)
         pos = self.get_position()
-        orig_text = self.get_text()
-        new_text = orig_text[:pos] + text + orig_text[pos + length:]
-        assert _RE_TIME.match(new_text)
-        self.set_text(new_text)
-        if length == 1:
-            new_pos = pos + length
-            self.set_position(new_pos)
-            if new_pos in (2, 5, 8):
-                self.set_position(new_pos + 1)
+        text = self.get_text()
+        if (pos == 0) and value.startswith("-"):
+            text = "-%s" % text
+            pos += 1
+            value = value[1:]
+        length = len(value)
+        text = text[:pos] + value + text[pos + length:]
+        assert self._re_time.match(text)
+        self.set_text(text)
+        self.set_position(pos)
+        assert length == 1
+        self.set_position(pos + 1)
+        assert pos + 1 < len(text)
+        if text[pos + 1] in (":", "."):
+            self.set_position(pos + 2)
+
+    def _on_cut_clipboard_ensure(self, *args, **kwargs):
+        text = self.get_text()
+        assert (not text) or self._re_time.match(text)
 
     def _on_cut_clipboard(self, entry):
         """Transform cut signal to a copy signal."""
@@ -107,11 +112,19 @@ class TimeEntry(gtk.Entry):
         self.stop_emission("cut-clipboard")
         self.emit("copy-clipboard")
 
+    def _on_delete_text_ensure(self, *args, **kwargs):
+        text = self.get_text()
+        assert (not text) or self._re_time.match(text)
+
     def _on_delete_text(self, entry, start_pos, end_pos):
         """Do not allow deleting text."""
 
         self.stop_emission("delete-text")
         self.set_position(start_pos)
+
+    def _on_key_press_event_ensure(self, *args, **kwargs):
+        text = self.get_text()
+        assert (not text) or self._re_time.match(text)
 
     @util.asserted_return
     def _on_key_press_event(self, entry, event):
@@ -125,6 +138,10 @@ class TimeEntry(gtk.Entry):
             gobject.idle_add(self._zero_previous)
         elif event.keyval == gtk.keysyms.Delete:
             gobject.idle_add(self._zero_next)
+
+    def _on_insert_text_ensure(self, *args, **kwargs):
+        text = self.get_text()
+        assert (not text) or self._re_time.match(text)
 
     def _on_insert_text(self, entry, text, length, pos):
         """Insert text if it is proper."""
@@ -140,30 +157,38 @@ class TimeEntry(gtk.Entry):
     @_blocked
     @util.asserted_return
     def _zero_next(self):
-        """Change next digit to zero."""
+        """Change the next digit to zero."""
 
         pos = self.get_position()
-        assert pos in (2, 5, 8, 12)
-        orig_text = self.get_text()
-        text_before = orig_text[:pos]
-        text_after = orig_text[pos + 1:]
-        full_text = text_before + "0" + text_after
-        self.set_text(full_text)
+        text = self.get_text()
+        assert pos < len(text)
+        if (pos == 0) and text.startswith("-"):
+            self.set_text(text[1:])
+            return self.set_position(0)
+        assert text[pos].isdigit()
+        before = text[:pos]
+        after = text[pos + 1:]
+        text = before + "0" + after
+        self.set_text(text)
         self.set_position(pos)
 
     @_blocked
+    @util.asserted_return
     def _zero_previous(self):
-        """Change previous digit to zero."""
+        """Change the previous digit to zero."""
 
         pos = self.get_position()
-        if pos in (0, 3, 6, 9):
-            self.set_position(max(0, pos - 1))
-            return
-        orig_text = self.get_text()
-        text_before = orig_text[:pos - 1]
-        text_after = orig_text[pos:]
-        full_text = text_before + "0" + text_after
-        self.set_text(full_text)
+        text = self.get_text()
+        assert pos > 0
+        if (pos == 1) and text.startswith("-"):
+            self.set_text(text[1:])
+            return self.set_position(0)
+        if not text[pos - 1].isdigit():
+            return self.set_position(pos - 1)
+        before = text[:pos - 1]
+        after = text[pos:]
+        text = before + "0" + after
+        self.set_text(text)
         self.set_position(pos - 1)
 
     @_blocked
@@ -173,8 +198,8 @@ class TimeEntry(gtk.Entry):
 
         assert self.get_selection_bounds()
         a, z = self.get_selection_bounds()
-        orig_text = self.get_text()
-        zero_text = _RE_DIGIT.sub("0", orig_text[a:z])
-        full_text = orig_text[:a] + zero_text + orig_text[z:]
-        self.set_text(full_text)
+        text = self.get_text()
+        zero = self._re_digit.sub("0", text[a:z])
+        text = text[:a] + zero + text[z:]
+        self.set_text(text)
         self.set_position(a)

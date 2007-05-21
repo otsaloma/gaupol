@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -39,6 +39,7 @@ class TestTimeEntry(TestCase):
 
         self.entry = entries.TimeEntry()
 
-    def test___init__(self):
+    def test_set_text(self):
 
-        pass
+        self.entry.set_text("12:34:56.789")
+        self.entry.set_text("-12:34:56.789")
