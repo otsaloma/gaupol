@@ -23,7 +23,7 @@ from gaupol.gtk.unittest import TestCase
 from .. import multiline
 
 
-class TestCellTextView(TestCase):
+class Test_CellTextView(TestCase):
 
     def setup_method(self, method):
 

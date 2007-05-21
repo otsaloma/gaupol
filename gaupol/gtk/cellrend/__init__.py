@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -21,6 +21,5 @@
 
 from .multiline import MultilineCellRenderer
 from .time import TimeCellRenderer
-
 
 __all__ = ["MultilineCellRenderer", "TimeCellRenderer"]

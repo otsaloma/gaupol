@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Cell renderer for time data in format HH:MM:SS,SSS."""
+"""Cell renderer for time data in format [-]HH:MM:SS,SSS."""
 
 
 import gtk

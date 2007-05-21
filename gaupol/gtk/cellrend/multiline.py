@@ -52,7 +52,7 @@ class _CellTextView(gtk.TextView, gtk.CellEditable):
 
         pass
 
-    def get_text(self, *args):
+    def get_text(self):
         """Get the text."""
 
         text_buffer = self.get_buffer()
@@ -69,10 +69,9 @@ class MultilineCellRenderer(gtk.CellRendererText):
 
     """Cell renderer for multiline text data.
 
-    Instance variables:
-
-        _text:         Text without line length superscripts
-        _show_lengths: True to show line lengths as superscripts
+    If conf.editor.show_lengths_cell is True, line lengths are shown as
+    superscripts at the end of each line. The original text without those
+    superscripts is stored in instance variable '_text'.
     """
 
     __gtype_name__ = "MultilineCellRenderer"
@@ -80,7 +79,6 @@ class MultilineCellRenderer(gtk.CellRendererText):
     def __init__(self):
 
         gtk.CellRendererText.__init__(self)
-
         self._show_lengths = conf.editor.show_lengths_cell
         self._text = ""
         conf.connect(self, "editor", "show_lengths_cell")
@@ -109,17 +107,18 @@ class MultilineCellRenderer(gtk.CellRendererText):
             editor.remove_widget()
             self.emit("editing-canceled")
 
+    @util.asserted_return
     def _on_notify_text(self, *args):
         """Set markup by adding line lengths to text."""
 
         self._text = text = self.props.text
-        if text and self._show_lengths:
-            lengths = lengthlib.get_lengths(text)
-            text = gobject.markup_escape_text(text)
-            lines = text.split("\n")
-            for i in (x for x in range(len(lines)) if lines[x]):
-                lines[i] += " <small><sup>%d</sup></small>" % lengths[i]
-            self.props.markup = "\n".join(lines)
+        assert text and self._show_lengths
+        lengths = lengthlib.get_lengths(text)
+        text = gobject.markup_escape_text(text)
+        lines = text.split("\n")
+        for i in (x for x in range(len(lines)) if lines[x]):
+            lines[i] += " <small><sup>%d</sup></small>" % lengths[i]
+        self.props.markup = "\n".join(lines)
 
     def do_start_editing(self, event, widget, path, bg_area, cell_area, flags):
         """Initialize and return the editor widget."""

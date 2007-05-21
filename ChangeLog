@@ -1,5 +1,12 @@
 2007-05-21  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/cellrend/__init__.py:
+	* gaupol/gtk/cellrend/multiline.py:
+	* gaupol/gtk/cellrend/time.py:
+	Minor changes.
+
+2007-05-21  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/entries.py:
 	Allow negative values.
 	Add contracts.

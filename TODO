@@ -1,8 +1,6 @@
 Gaupol 0.8
 ==========
 
- * Disable contracts by default and use --debug?
-
 Changes:
  [D] Configuration file backend and syntax changed
  [D] Fixed numerous bugs with find and replace
@@ -21,7 +19,7 @@ Changes:
  [D] Fixed a bug in the time entry validation
  [D] Migrated to gtk.RecentManager and gtk.RecentChooser
  [D] Added a menu for recent translation files
- [ ] Added "Text" menu to replace "Format", "Search" and part of
+ [D] Added "Text" menu to replace "Format", "Search" and part of
      "Edit" menus
  [D] Reorderable tabs
  [D] Added more informative tooltips on tabs
@@ -30,7 +28,7 @@ Changes:
  [D] Fixed cropped close button images on tabs
  [D] Faster list updates when inserting and removing subtitles
  [D] Spin buttons as editors in frame column cells
- [ ] Allow negative value in time and frame cells
+ [D] Allow negative value in time and frame cells
  [D] Greater contrast in the icon
  [D] Added --config-file, --debug, --encoding, --list-encodings,
      --translation-file,  --video-file and +[NUM] options
@@ -51,7 +49,6 @@ Gaupol 0.9
 ==========
 
  * Fix regular expression grouping in scriptlib
- * Maximum variance for Liner?
  * Refactor UIMActions
     * Get rid of specifying uim_paths
     * Handle actions as gtk.Actions?
