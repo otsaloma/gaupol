@@ -34,14 +34,14 @@ class View(gtk.TreeView):
 
     The index of the active column is saved as instance variable '_active_col'.
     The active column header is styled with pango.AttrList according to class
-    variable '_ACTIVE_ATTR', other column headers as '_NORMAL_ATTR'.
+    variable '_active_attr', other column headers as '_normal_attr'.
     """
 
     __metaclass__ = util.get_contractual_metaclass()
-    _ACTIVE_ATTR = pango.AttrList()
-    _ACTIVE_ATTR.insert(pango.AttrWeight(pango.WEIGHT_BOLD, 0, -1))
-    _NORMAL_ATTR = pango.AttrList()
-    _NORMAL_ATTR.insert(pango.AttrWeight(pango.WEIGHT_NORMAL, 0, -1))
+    _active_attr = pango.AttrList()
+    _active_attr.insert(pango.AttrWeight(pango.WEIGHT_BOLD, 0, -1))
+    _normal_attr = pango.AttrList()
+    _normal_attr.insert(pango.AttrWeight(pango.WEIGHT_NORMAL, 0, -1))
 
     def __init__(self, edit_mode):
 
@@ -56,7 +56,7 @@ class View(gtk.TreeView):
         label = gtk.Label(col.display_name)
         label.props.xalign = 0
         label.show()
-        label.set_attributes(self._ACTIVE_ATTR)
+        label.set_attributes(self._active_attr)
         width = label.size_request()[0]
         if (col in (SHOW, HIDE, DURN)) and (edit_mode == const.MODE.FRAME):
             spin = gtk.SpinButton()
@@ -64,7 +64,7 @@ class View(gtk.TreeView):
             spin.set_digits(digits)
             width = max(width, spin.size_request()[0])
         label.set_size_request(width, -1)
-        label.set_attributes(self._NORMAL_ATTR)
+        label.set_attributes(self._normal_attr)
         return label
 
     def _get_renderer(self, col, edit_mode):
@@ -259,8 +259,8 @@ class View(gtk.TreeView):
         assert col != self._active_col
         if self._active_col is not None:
             label = self.get_column(self._active_col).get_widget()
-            label.set_attributes(self._NORMAL_ATTR)
+            label.set_attributes(self._normal_attr)
         if col is not None:
             label = self.get_column(col).get_widget()
-            label.set_attributes(self._ACTIVE_ATTR)
+            label.set_attributes(self._active_attr)
         self._active_col = col

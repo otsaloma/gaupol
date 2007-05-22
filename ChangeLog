@@ -1,6 +1,11 @@
 2007-05-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/view.py:
+	Lowercase class variables.
+
+2007-05-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/view.py:
 	Add contracts and clean up code.
 
 2007-05-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
