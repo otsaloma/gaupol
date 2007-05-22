@@ -17,6 +17,7 @@
 
 
 import gtk
+import random
 
 from gaupol.gtk import conf, const
 from gaupol.gtk.unittest import TestCase
@@ -25,23 +26,60 @@ from .. import view
 
 class TestView(TestCase):
 
-    def run(self):
+    def run__frame(self):
 
+        self.setup_time()
         window = gtk.Window()
         window.connect("delete-event", gtk.main_quit)
         window.set_position(gtk.WIN_POS_CENTER)
-        window.set_default_size(200, 50)
+        window.set_default_size(200, 200)
         window.add(self.view)
         window.show_all()
         gtk.main()
 
-    def setup_method(self, method):
+    def run__time(self):
 
+        self.setup_frame()
+        window = gtk.Window()
+        window.connect("delete-event", gtk.main_quit)
+        window.set_position(gtk.WIN_POS_CENTER)
+        window.set_default_size(200, 200)
+        window.add(self.view)
+        window.show_all()
+        gtk.main()
+
+    def setup_frame(self):
+
+        # pylint: disable-msg=W0201
         self.view = view.View(const.MODE.FRAME)
         store = self.view.get_model()
-        store.append([1, 2, 3, 1, "test\ntest", "test\ntest"])
-        store.append([2, 6, 7, 1, "test\ntest", "test\ntest"])
-        store.append([3, 8, 9, 1, "test\ntest", "test\ntest"])
+        project = self.get_project()
+        for subtitle in project.subtitles:
+            store.append([0,
+                subtitle.start_frame,
+                subtitle.end_frame,
+                subtitle.duration_frame,
+                subtitle.main_text,
+                subtitle.tran_text,])
+
+    def setup_method(self, method):
+
+        index = random.randint(0, 1)
+        (self.setup_time, self.setup_frame)[index]()
+
+    def setup_time(self):
+
+        # pylint: disable-msg=W0201
+        self.view = view.View(const.MODE.TIME)
+        store = self.view.get_model()
+        project = self.get_project()
+        for subtitle in project.subtitles:
+            store.append([0,
+                subtitle.start_time,
+                subtitle.end_time,
+                subtitle.duration_time,
+                subtitle.main_text,
+                subtitle.tran_text,])
 
     def test__on_conf_editor_notify_font(self):
 
