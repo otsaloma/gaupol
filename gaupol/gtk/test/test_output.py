@@ -18,6 +18,7 @@
 
 import gtk
 
+from gaupol.gtk import const, util
 from gaupol.gtk.unittest import TestCase
 from .. import output
 
@@ -26,11 +27,13 @@ class TestOutputWindow(TestCase):
 
     def run(self):
 
+        @util.asserted_return
         def destroy(*args):
-            if not self.window.props.visible:
-                self.window.destroy()
-                gtk.main_quit()
+            assert not self.window.props.visible
+            self.window.destroy()
+            gtk.main_quit()
         self.window.connect("notify::visible", destroy)
+        self.window.set_output(self.get_file_text(const.FORMAT.MPSUB))
         self.window.show()
         gtk.main()
 
@@ -49,11 +52,6 @@ class TestOutputWindow(TestCase):
     def test__on_delete_event(self):
 
         self.window._on_delete_event()
-
-    def test__on_notify_visible(self):
-
-        self.window.show()
-        self.window.hide()
 
     def test_on_window_state_event(self):
 

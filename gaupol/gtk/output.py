@@ -16,31 +16,24 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Output window."""
+"""Window for standard output from external applications."""
 
 
 import gtk
 
 from gaupol.gtk import conf, util
-from gaupol.gtk.i18n import _
+from gaupol.i18n import _
 
 
 class OutputWindow(gtk.Window):
 
-    """Output window.
-
-    Instance variables:
-
-        _close_button: gtk.Button
-        _text_view:    gtk.TextView
-    """
+    """Window for standard output from external applications."""
 
     def __init__(self):
 
         gtk.Window.__init__(self)
-
         self._close_button = None
-        self._text_view    = None
+        self._text_view = None
 
         self.set_border_width(12)
         self.set_title(_("Output"))
@@ -52,11 +45,12 @@ class OutputWindow(gtk.Window):
     def _init_keys(self):
         """Initialize keyboard shortcuts."""
 
-        # Add Ctrl+W as an accelerator to close the window.
         accel_group = gtk.AccelGroup()
-        method = self._on_close_key_pressed
-        accel_group.connect_group(
-            119, gtk.gdk.CONTROL_MASK, gtk.ACCEL_MASK, method)
+        key = gtk.keysyms.w
+        mods = gtk.gdk.CONTROL_MASK
+        flags = gtk.ACCEL_MASK
+        callback = self._on_close_key_pressed
+        accel_group.connect_group(key, mods, flags, callback)
         self.add_accel_group(accel_group)
 
     def _init_signal_handlers(self):
@@ -64,8 +58,11 @@ class OutputWindow(gtk.Window):
 
         util.connect(self, "_close_button", "clicked")
         util.connect(self, self, "delete-event")
-        util.connect(self, self, "notify::visible")
         util.connect(self, self, "window-state-event")
+
+        def save_visibility(*args):
+            conf.output_window.show = self.props.visible
+        self.connect("notify::visible", save_visibility)
 
     def _init_sizes(self):
         """Initialize widget sizes."""
@@ -76,7 +73,7 @@ class OutputWindow(gtk.Window):
             self.maximize()
 
     def _init_widgets(self):
-        """Initialize widgets."""
+        """Initialize all contained widgets."""
 
         self._text_view = gtk.TextView()
         self._text_view.set_wrap_mode(gtk.WRAP_WORD)
@@ -119,13 +116,8 @@ class OutputWindow(gtk.Window):
         self.hide()
         return True
 
-    def _on_notify_visible(self, *args):
-        """Save visibility."""
-
-        conf.output_window.show = self.props.visible
-
     def _on_window_state_event(self, window, event):
-        """Remember window maximization."""
+        """Save window maximization."""
 
         state = event.new_window_state
         maximized = bool(state & gtk.gdk.WINDOW_STATE_MAXIMIZED)
@@ -133,7 +125,7 @@ class OutputWindow(gtk.Window):
 
     @util.asserted_return
     def _save_geometry(self):
-        """Save window geometry."""
+        """Save window size and position."""
 
         assert not conf.output_window.maximized
         conf.output_window.size = self.get_size()

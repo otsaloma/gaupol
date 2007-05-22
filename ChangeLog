@@ -1,3 +1,8 @@
+2007-05-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/output.py:
+	Minor changes.
+
 2007-05-21  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/cellrend/__init__.py:
