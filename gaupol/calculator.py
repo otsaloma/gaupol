@@ -29,8 +29,7 @@ class Calculator(object):
     """Time and frame calculator.
 
     Instance variables:
-
-        framerate: Video framerate as float
+     * framerate: Video framerate as float
 
     Times are handled as strings, frames as integers and seconds as floats.
     Only one instance of Calculator exists for a given framerate.

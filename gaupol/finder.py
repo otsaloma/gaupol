@@ -29,14 +29,13 @@ class Finder(object):
     """String and regular expression finder and replacer.
 
     Instance variables:
-
-        ignore_case: True to ignore case
-        match:       Regular expression match object
-        match_span:  Tuple of start and end position
-        pattern:     String or regular expression object to find
-        pos:         Current offset in text
-        replacement: Replacement string
-        text:        Target text
+     * ignore_case: True to ignore case
+     * match: Regular expression match object
+     * match_span: Tuple of start and end position
+     * pattern: String or regular expression object to find
+     * pos: Current offset in text
+     * replacement: Replacement string
+     * text: Target text
     """
 
     __metaclass__ = Contractual
@@ -44,12 +43,12 @@ class Finder(object):
     def __init__(self):
 
         self.ignore_case = False
-        self.match       = None
-        self.match_span  = None
-        self.pattern     = None
-        self.pos         = None
+        self.match = None
+        self.match_span = None
+        self.pattern = None
+        self.pos = None
         self.replacement = None
-        self.text        = None
+        self.text = None
 
     def _invariant(self):
         if self.pos is not None:

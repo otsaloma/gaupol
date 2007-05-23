@@ -30,36 +30,34 @@ class Project(Observable):
     """Model for subtitle data.
 
     Instance variables:
-
-        _delegations: Dictionary mapping method names to agent methods
-        calc:         Position calculator
-        clipboard:    Internal subtitle clipboard
-        framerate:    FRAMERATE constant
-        main_changed: Integer, status of main document
-        main_file:    Main SubtitleFile
-        redoables:    Stack of redoable Actions
-        subtitles:    List of Subtitles
-        tran_changed: Status of the translation document or None if not active
-        tran_file:    Translation SubtitleFile
-        undoables:    Stack of undoable Actions
-        undo_limit:   Maximum size of undo/redo stacks or None for no limit
-        video_path:   Path to the video file
+     * _delegations: Dictionary mapping method names to agent methods
+     * calc: Position calculator
+     * clipboard: Internal subtitle clipboard
+     * framerate: FRAMERATE constant
+     * main_changed: Integer, status of main document
+     * main_file: Main SubtitleFile
+     * redoables: Stack of redoable Actions
+     * subtitles: List of Subtitles
+     * tran_changed: Status of the translation document or None if not active
+     * tran_file: Translation SubtitleFile
+     * undoables: Stack of undoable Actions
+     * undo_limit: Maximum size of undo/redo stacks or None for no limit
+     * video_path: Path to the video file
 
     Signals:
-
-        action-done (project, action)
-        action-redone (project, action)
-        action-undone (project, action)
-        main-file-opened (project, main_file)
-        main-file-saved (project, main_file)
-        main-texts-changed (project, indexes)
-        positions-changed (project, indexes)
-        subtitles-changed (project, indexes)
-        subtitles-inserted (project, indexes)
-        subtitles-removed (project, indexes)
-        translation-file-opened (project, tran_file)
-        translation-file-saved (project, tran_file)
-        translation-texts-changed (project, indexes)
+     * action-done (project, action)
+     * action-redone (project, action)
+     * action-undone (project, action)
+     * main-file-opened (project, main_file)
+     * main-file-saved (project, main_file)
+     * main-texts-changed (project, indexes)
+     * positions-changed (project, indexes)
+     * subtitles-changed (project, indexes)
+     * subtitles-inserted (project, indexes)
+     * subtitles-removed (project, indexes)
+     * translation-file-opened (project, tran_file)
+     * translation-file-saved (project, tran_file)
+     * translation-texts-changed (project, indexes)
 
     See gaupol._agents for project methods provided by agents.
     """
@@ -88,20 +86,19 @@ class Project(Observable):
     def __init__(self, framerate=const.FRAMERATE.P24, undo_limit=None):
 
         Observable.__init__(self)
-
         self._delegations = {}
-        self.calc         = Calculator(framerate)
-        self.clipboard    = Clipboard()
-        self.framerate    = framerate
+        self.calc = Calculator(framerate)
+        self.clipboard = Clipboard()
+        self.framerate = framerate
         self.main_changed = 0
-        self.main_file    = None
-        self.redoables    = []
-        self.subtitles    = []
+        self.main_file = None
+        self.redoables = []
+        self.subtitles = []
         self.tran_changed = None
-        self.tran_file    = None
-        self.undo_limit   = undo_limit
-        self.undoables    = []
-        self.video_path   = None
+        self.tran_file = None
+        self.undo_limit = undo_limit
+        self.undoables = []
+        self.video_path = None
 
         self._init_delegations()
 

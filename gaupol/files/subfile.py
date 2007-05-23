@@ -34,13 +34,12 @@ class SubtitleFile(object):
     """Base class for subtitle files.
 
     Class or instance variables:
-
-        encoding: Character encoding
-        format:   FORMAT constant
-        header:   Header text
-        mode:     MODE constant
-        newline:  NEWLINE constant
-        path:     Path to the file
+     * encoding: Character encoding
+     * format: FORMAT constant
+     * header: Header text
+     * mode: MODE constant
+     * newline: NEWLINE constant
+     * path: Path to the file
 
     Depending on their mode, files handle data in either time or frame format.
     It is up to the caller to first check the class variable 'mode' before
@@ -59,9 +58,9 @@ class SubtitleFile(object):
     def __init__(self, path, encoding, newline=None):
 
         self.encoding = encoding
-        self.header   = ""
-        self.newline  = newline
-        self.path     = path
+        self.header = ""
+        self.newline = newline
+        self.path = path
 
         if self.format.has_header:
             self.header = self.get_template_header()

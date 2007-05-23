@@ -40,7 +40,6 @@ class InsertDialog(GladeDialog):
     def __init__(self, parent, application):
 
         GladeDialog.__init__(self, "insert-dialog")
-
         self._amount_spin    = self._glade_xml.get_widget("amount_spin")
         self._position_combo = self._glade_xml.get_widget("position_combo")
         self._position_label = self._glade_xml.get_widget("position_label")

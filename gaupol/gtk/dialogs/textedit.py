@@ -36,7 +36,6 @@ class TextEditDialog(gtk.Dialog):
     def __init__(self, parent, text):
 
         gtk.Dialog.__init__(self)
-
         self._text_view = None
 
         self._init_dialog(parent)

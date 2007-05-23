@@ -45,8 +45,7 @@ class UpdateAgent(Delegate):
     def __init__(self, master):
 
         Delegate.__init__(self, master)
-
-        self._message_id  = None
+        self._message_id = None
         self._message_tag = None
 
     def _update_actions(self, page):

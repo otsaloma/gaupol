@@ -24,9 +24,9 @@ class TestModule(TestCase):
 
     def test_attributes(self):
 
-        assert NO   == 0
-        assert SHOW == 1
-        assert HIDE == 2
-        assert DURN == 3
-        assert MTXT == 4
-        assert TTXT == 5
+        assert NO    == 0
+        assert START == 1
+        assert END   == 2
+        assert DURN  == 3
+        assert MTXT  == 4
+        assert TTXT  == 5

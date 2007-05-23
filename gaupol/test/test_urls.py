@@ -27,6 +27,5 @@ class TestModule(TestCase):
     def test_attributes(self):
 
         urllib.urlopen(urls.BUG_REPORT)
-        urllib.urlopen(urls.DOWNLOAD)
         urllib.urlopen(urls.HOMEPAGE)
         urllib.urlopen(urls.REGEX_HELP)

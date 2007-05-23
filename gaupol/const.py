@@ -16,12 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Constants.
-
-Module variables:
-
-    DOCUMENT, FORMAT, FRAMERATE, MODE, NEWLINE, REGISTER, VIDEO_PLAYER
-"""
+"""Constants."""
 
 # pylint: disable-msg=C0301
 

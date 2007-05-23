@@ -34,18 +34,16 @@ class Liner(Parser):
     """Splitter and merger of lines.
 
     Class variables:
-
-        _re_multi_space: Regular expression for two or more spaces
+     * _re_multi_space: Regular expression for two or more spaces
 
     Instance variables:
-
-        _length_func:  A function that returns the length of its argument
-        _space_length: Length of a space according to length_func
-        max_length:    Maximum length of a line in units of _length_func
-        ok_clauses:    Amount of clause lines that need not be joined
-        ok_dialogue:   Amount of dialogue lines that need not be joined
-        re_clause:     Regular expression for a clause separator
-        re_dialogue:   Regular expression for a dialogue separator
+     * _length_func: A function that returns the length of its argument
+     * _space_length: Length of a space according to length_func
+     * max_length: Maximum length of a line in units of _length_func
+     * ok_clauses: Amount of clause lines that need not be joined
+     * ok_dialogue: Amount of dialogue lines that need not be joined
+     * re_clause: Regular expression for a clause separator
+     * re_dialogue: Regular expression for a dialogue separator
 
     re_clause and re_dialogue are required to have groups 'before' and 'after'
     surrounding a single space that acts as the separator.
@@ -60,14 +58,13 @@ class Liner(Parser):
         re_tag should be a regular expression object.
         """
         Parser.__init__(self, re_tag)
-
-        self._length_func  = len
+        self._length_func = len
         self._space_length = 1
-        self.max_length    = 44
-        self.ok_clauses    = 2
-        self.ok_dialogue   = 3
-        self.re_clause     = None
-        self.re_dialogue   = None
+        self.max_length = 44
+        self.ok_clauses = 2
+        self.ok_dialogue = 3
+        self.re_clause = None
+        self.re_dialogue = None
 
         pattern = scriptlib.get_clause_separator("latin-english")
         self.re_clause = re.compile(pattern, re.UNICODE)

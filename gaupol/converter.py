@@ -27,9 +27,8 @@ class TagConverter(object):
     """Subtitle text tag converter.
 
     Instance variables:
-
-        _from: TagLibrary instance for the 'from' format
-        _to:   TagLibrary instance for the 'to' format
+     * _from: TagLibrary instance for the 'from' format
+     * _to: TagLibrary instance for the 'to' format
     """
 
     def __init__(self, from_format, to_format):

@@ -51,7 +51,6 @@ class _EditorPage(Delegate):
     def __init__(self, master):
 
         Delegate.__init__(self, master)
-
         get_widget = self._glade_xml.get_widget
         self._default_font_check = get_widget("editor_default_font_check")
         self._font_button        = get_widget("editor_font_button")
@@ -181,7 +180,6 @@ class _FilePage(Delegate):
     def __init__(self, master):
 
         Delegate.__init__(self, master)
-
         get_widget = self._glade_xml.get_widget
         self._add_button    = get_widget("file_add_button")
         self._auto_check    = get_widget("file_auto_check")
@@ -333,7 +331,6 @@ class _PreviewPage(Delegate):
     def __init__(self, master):
 
         Delegate.__init__(self, master)
-
         get_widget = self._glade_xml.get_widget
         self._app_combo     = get_widget("preview_app_combo")
         self._command_entry = get_widget("preview_command_entry")
@@ -417,7 +414,6 @@ class PreferencesDialog(GladeDialog):
     def __init__(self):
 
         GladeDialog.__init__(self, "pref-dialog")
-
         self._editor_page  = _EditorPage(self)
         self._file_page    = _FilePage(self)
         self._preview_page = _PreviewPage(self)

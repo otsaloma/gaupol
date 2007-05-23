@@ -16,15 +16,9 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Website URLs.
-
-Module variables:
-
-    BUG_REPORT, DOWNLOAD, HOMEPAGE, REGEX_HELP
-"""
+"""Website URLs."""
 
 
 BUG_REPORT = "http://gna.org/bugs/?func=additem&group=gaupol"
-DOWNLOAD   = "http://home.gna.org/gaupol/download.html"
 HOMEPAGE   = "http://home.gna.org/gaupol"
 REGEX_HELP = "http://docs.python.org/lib/re-syntax.html"

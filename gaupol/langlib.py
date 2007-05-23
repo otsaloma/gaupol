@@ -19,10 +19,9 @@
 """Names and codes for languages, countries and locales.
 
 Module variables:
-
-    countries: Dictionary mapping ISO 3166 codes to country names
-    langs:     Dictionary mapping ISO 639 codes to language names
-    locales:   Frozen set of locale codes
+ * countries: Dictionary mapping ISO 3166 codes to country names
+ * langs: Dictionary mapping ISO 639 codes to language names
+ * locales: Frozen set of locale codes
 
 Language codes are ISO 639 two-letter codes. Country codes are ISO 3166 codes.
 These connected with an underscore form locale codes. Translations for the

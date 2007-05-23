@@ -28,16 +28,14 @@ class Observable(object):
     """Base class for observable objects.
 
     Class variables:
-
-        _signals: List of emittable signals added automatically
+     * _signals: List of emittable signals added automatically
 
     Instance variables:
-
-        _blocked_signals: List of blocked signals
-        _blocked_state:   True if all signals are blocked
-        _notify_frozen:   If True notify signals will be queued, not emitted
-        _notify_queue:    List of queued notify signals
-        _signal_handlers: Dictionary mapping signals to observers and data
+     * _blocked_signals: List of blocked signals
+     * _blocked_state: True if all signals are blocked
+     * _notify_frozen: If True notify signals will be queued, not emitted
+     * _notify_queue: List of queued notify signals
+     * _signal_handlers: Dictionary mapping signals to observers and data
 
     In addition to the signals defined in '_signals', all public instance
     variables will have a 'notify::name' signal generated automatically based
@@ -67,9 +65,9 @@ class Observable(object):
     def __init__(self):
 
         self._blocked_signals = []
-        self._blocked_state   = False
-        self._notify_frozen   = False
-        self._notify_queue    = []
+        self._blocked_state = False
+        self._notify_frozen = False
+        self._notify_queue = []
         self._signal_handlers = {}
 
         for signal in self._signals:

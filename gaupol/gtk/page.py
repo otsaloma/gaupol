@@ -25,7 +25,7 @@ import pango
 
 from gaupol import enclib
 from gaupol.base import Contractual, Observable
-from gaupol.gtk import conf, util
+from gaupol.gtk import conf, const, util
 from gaupol.gtk.index import *
 from gaupol.gtk.tooltips import Tooltips
 from gaupol.gtk.view import View
@@ -38,18 +38,15 @@ class Page(Observable):
     """User interface for a single project.
 
     Instance variables:
+     * edit_mode: MODE constant, currently used in the view
+     * project: The associated Project
+     * tab_label: gtk.Label contained in the tab_widget
+     * tab_widget: Widget to use in a notebook tab
+     * tooltips: Markup-enabled Tooltips, always active
+     * untitle: Title used if the main document is unsaved
+     * view: The associated View
 
-        edit_mode:  MODE constant, currently used in the view
-        project:    The associated Project
-        tab_label:  gtk.Label contained in the tab_widget
-        tab_widget: Widget to use in a notebook tab
-        tooltips:   Markup-enabled Tooltips, always active
-        untitle:    Title used if the main document is unsaved
-        view:       The associated View
-
-    Signals:
-
-        close-request (page)
+    Signals: close-request (page)
 
     This class represents one page in a notebook of user interfaces for
     projects. The view is updated automatically when project data changes.
@@ -93,15 +90,15 @@ class Page(Observable):
 
         mode = self.edit_mode
         subtitle = self.project.subtitles[row]
-        if col == START:
+        if col == const.COLUMN.START:
             return subtitle.get_start(mode)
-        if col == END:
+        if col == const.COLUMN.END:
             return subtitle.get_end(mode)
-        if col == DURN:
+        if col == const.COLUMN.DURN:
             return subtitle.get_duration(mode)
-        if col == MTXT:
+        if col == const.COLUMN.MTXT:
             return subtitle.main_text
-        if col == TTXT:
+        if col == const.COLUMN.TTXT:
             return subtitle.tran_text
         raise ValueError
 
@@ -267,10 +264,10 @@ class Page(Observable):
         format = main_file.format.display_name
         encoding = enclib.get_long_name(main_file.encoding)
         newline = main_file.newline.display_name
-        tooltip  = _("<b>Path:</b> %s") % path
-        tooltip += _("\n\n<b>Format:</b> %s") % format
-        tooltip += _("\n<b>Encoding:</b> %s") % encoding
-        tooltip += _("\n<b>Newlines:</b> %s") % newline
+        tooltip  = _("<b>Path:</b> %s") % path + "\n\n"
+        tooltip += _("<b>Format:</b> %s") % format + "\n"
+        tooltip += _("<b>Encoding:</b> %s") % encoding + "\n"
+        tooltip += _("<b>Newlines:</b> %s") % newline
         event_box = self.tab_widget.get_data("event_box")
         self.tooltips.set_tip(event_box, tooltip)
 

@@ -41,7 +41,6 @@ class MenuAgent(Delegate):
     def __init__(self, master):
 
         Delegate.__init__(self, master)
-
         self._projects_id = None
 
     def _get_action_group(self, name):
@@ -170,8 +169,8 @@ class MenuAgent(Delegate):
         """Build and attach a new recent menu on the open button."""
 
         menu = self._get_recent_menu(const.DOCUMENT.MAIN)
-        method = self.on_recent_main_menu_item_activated
-        menu.connect("item-activated", method)
+        callback = self.on_recent_main_menu_item_activated
+        menu.connect("item-activated", callback)
         self.open_button.set_menu(menu)
         while gtk.events_pending():
             gtk.main_iteration()
@@ -222,8 +221,8 @@ class MenuAgent(Delegate):
 
         item = self.uim.get_widget("/ui/menubar/file/recent_main")
         menu = self._get_recent_menu(const.DOCUMENT.MAIN)
-        method = self.on_recent_main_menu_item_activated
-        menu.connect("item-activated", method)
+        callback = self.on_recent_main_menu_item_activated
+        menu.connect("item-activated", callback)
         item.set_submenu(menu)
         while gtk.events_pending():
             gtk.main_iteration()
@@ -233,8 +232,8 @@ class MenuAgent(Delegate):
 
         item = self.uim.get_widget("/ui/menubar/file/recent_translation")
         menu = self._get_recent_menu(const.DOCUMENT.TRAN)
-        method = self.on_recent_translation_menu_item_activated
-        menu.connect("item-activated", method)
+        callback = self.on_recent_translation_menu_item_activated
+        menu.connect("item-activated", callback)
         item.set_submenu(menu)
         while gtk.events_pending():
             gtk.main_iteration()

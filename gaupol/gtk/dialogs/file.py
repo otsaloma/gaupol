@@ -43,7 +43,6 @@ class _FileDialog(gtk.FileChooserDialog, Runner):
     def __init__(self, *args, **kwargs):
 
         gtk.FileChooserDialog.__init__(self, *args, **kwargs)
-
         self._encodings = []
         self._init_encodings()
         self._init_filters()

@@ -16,12 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Paths to files used.
-
-Module variables:
-
-    DATA_DIR, LOCALE_DIR, PROFILE_DIR
-"""
+"""Paths to files used."""
 
 
 import os

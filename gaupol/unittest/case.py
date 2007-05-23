@@ -34,8 +34,7 @@ class TestCase(object):
     """Base class for unit test cases.
 
     Class variables:
-
-        files: Set of the paths of temporary files created
+     * files: Set of the paths of temporary files created
     """
 
     __metaclass__ = Contractual

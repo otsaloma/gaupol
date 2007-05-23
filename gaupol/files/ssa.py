@@ -36,8 +36,7 @@ class SubStationAlpha(SubtitleFile):
     """Sub Station Alpha file.
 
     Class variables:
-
-        event_fields: Tuple of the names of fields under the 'Events' section
+     * event_fields: Tuple of the names of fields under the 'Events' section
     """
 
     __metaclass__ = Contractual

@@ -40,7 +40,6 @@ class EncodingDialog(GladeDialog):
     def __init__(self, parent):
 
         GladeDialog.__init__(self, "encoding-dialog")
-
         self._tree_view = self._glade_xml.get_widget("tree_view")
 
         self._init_tree_view()

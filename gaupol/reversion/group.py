@@ -24,9 +24,8 @@ class RevertableActionGroup(object):
     """Group of revertable actions.
 
     Instance variables:
-
-        actions:     List of actions in group
-        description: Short one line description
+     * actions: List of actions in group
+     * description: Short one line description
 
     Instance variables are required to be set eventually, either upon
     instantiation or directly after.

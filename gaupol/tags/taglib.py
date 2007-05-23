@@ -19,13 +19,12 @@
 """Base class for subtitle tag libraries.
 
 Tag conversions are done via an internal format, which has the following tags:
-
-    <b>BOLD</b>
-    <i>ITALIC</i>
-    <u>UNDERLINE</u>
-    <color="#RRGGBB">COLOR</color>
-    <font="NAME">FONT FAMILY</font>
-    <size="INTEGER">FONT SIZE</size>
+ * <b>BOLD</b>
+ * <i>ITALIC</i>
+ * <u>UNDERLINE</u>
+ * <color="#RRGGBB">COLOR</color>
+ * <font="NAME">FONT FAMILY</font>
+ * <size="INTEGER">FONT SIZE</size>
 """
 
 

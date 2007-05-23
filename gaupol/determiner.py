@@ -37,8 +37,7 @@ class FormatDeterminer(Singleton):
     """Subtitle file format determiner.
 
     Instance variables:
-
-        _re_ids: List of tuples of format, regular expression
+     * _re_ids: List of tuples of format, regular expression
     """
 
     __metaclass__ = Contractual

@@ -19,11 +19,10 @@
 """Commonly used base classes and metaclasses.
 
 Imported names:
-
-    Contractual (contractual)
-    Delegate (delegate)
-    Observable (observable)
-    Singleton (singleton)
+ * Contractual (contractual)
+ * Delegate (delegate)
+ * Observable (observable)
+ * Singleton (singleton)
 """
 
 

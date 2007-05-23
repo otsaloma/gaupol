@@ -19,8 +19,7 @@
 """Reading, writing and storing all configurations.
 
 Module variables:
-
-    config_file: Path to the configuration file
+ * config_file: Path to the configuration file
 
 Importing this module will read the default configurations from the spec file.
 To read some actual saved configurations, assign a path to the 'config_file'

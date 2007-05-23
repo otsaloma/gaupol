@@ -100,7 +100,6 @@ class Application(Observable, Runner):
 
         # pylint: disable-msg=W0231
         Observable.__init__(self)
-
         self._delegations    = {}
         self.clipboard       = Clipboard()
         self.counter         = 0
@@ -226,8 +225,8 @@ class Application(Observable, Runner):
 
         util.connect(self, "notebook", "drag-data-received")
         util.connect(self, "notebook", "page-reordered")
-        method = self.on_notebook_switch_page
-        self.notebook.connect_after("switch-page", method)
+        callback = self.on_notebook_switch_page
+        self.notebook.connect_after("switch-page", callback)
         vbox.pack_start(self.notebook, True , True , 0)
 
     def _init_open_button(self):

@@ -53,8 +53,7 @@ class RegisterAgent(Delegate):
     """Managing revertable actions.
 
     Instance variables:
-
-        _do_description: The original description of the reverted action
+     * _do_description: The original description of the reverted action
     """
 
     # pylint: disable-msg=E0203,W0201

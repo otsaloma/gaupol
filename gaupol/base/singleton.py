@@ -24,8 +24,7 @@ class Singleton(object):
     """Base class for single-instance classes.
 
     Class variables:
-
-        _instance: The single instance returned by __new__
+     * _instance: The single instance returned by __new__
     """
 
     def __new__(cls, *args, **kwargs):

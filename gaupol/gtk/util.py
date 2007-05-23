@@ -19,13 +19,12 @@
 """Miscellaneous functions and decorators.
 
 Module variables:
-
-    BUSY_CURSOR:   gtk.gdk.Cursor used when application not idle
-    COMBO_SEP:     String rendered as a separator in combo boxes
-    EXTRA:         Extra length to add to size calculations
-    HAND_CURSOR:   gtk.gdk.Cursor for use with hyperlinks
-    INSERT_CURSOR: gtk.gdk.Cursor for editable text widgets
-    NORMAL_CURSOR: gtk.gdk.Cursor used by default
+ * BUSY_CURSOR: gtk.gdk.Cursor used when application not idle
+ * COMBO_SEP: String rendered as a separator in combo boxes
+ * EXTRA: Extra length to add to size calculations
+ * HAND_CURSOR: gtk.gdk.Cursor for use with hyperlinks
+ * INSERT_CURSOR: gtk.gdk.Cursor for editable text widgets
+ * NORMAL_CURSOR: gtk.gdk.Cursor used by default
 
 When setting dialog sizes based on their content, we get the size request of
 the scrolled window component and add the surroundings to that. For this to
@@ -48,10 +47,10 @@ from gaupol.gtk.index import *
 from gaupol.util import *
 
 
-BUSY_CURSOR   = gtk.gdk.Cursor(gtk.gdk.WATCH)
-COMBO_SEP     = "<separator/>"
-EXTRA         = 36
-HAND_CURSOR   = gtk.gdk.Cursor(gtk.gdk.HAND2)
+BUSY_CURSOR = gtk.gdk.Cursor(gtk.gdk.WATCH)
+COMBO_SEP = "<separator/>"
+EXTRA = 36
+HAND_CURSOR = gtk.gdk.Cursor(gtk.gdk.HAND2)
 INSERT_CURSOR = gtk.gdk.Cursor(gtk.gdk.XTERM)
 NORMAL_CURSOR = gtk.gdk.Cursor(gtk.gdk.LEFT_PTR)
 

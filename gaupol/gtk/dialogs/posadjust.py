@@ -204,7 +204,6 @@ class FrameAdjustDialog(_PositionAdjustDialog):
     def __init__(self, parent, application):
 
         _PositionAdjustDialog.__init__(self, parent, application)
-
         self._correct_spin_1 = gtk.SpinButton()
         self._correct_spin_2 = gtk.SpinButton()
 
@@ -289,7 +288,6 @@ class TimeAdjustDialog(_PositionAdjustDialog):
     def __init__(self, parent, application):
 
         _PositionAdjustDialog.__init__(self, parent, application)
-
         self._correct_entry_1 = TimeEntry()
         self._correct_entry_2 = TimeEntry()
 

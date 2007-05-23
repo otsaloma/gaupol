@@ -16,7 +16,12 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Cell renderer widgets for subtitle data."""
+"""Cell renderer widgets for subtitle data.
+
+Imported names:
+ * MultilineCellRenderer (multiline)
+ * TimeCellRenderer (time)
+"""
 
 
 from .multiline import MultilineCellRenderer

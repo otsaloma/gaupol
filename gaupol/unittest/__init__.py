@@ -19,10 +19,9 @@
 """Unit testing system.
 
 Imported names:
-
-    TestCase (case)
-    benchmark (deco)
-    reversion_test (deco)
+ * TestCase (case)
+ * benchmark (deco)
+ * reversion_test (deco)
 
 All test module names should be prefixed with 'test_', class names with 'Test',
 function and method names with 'test_'. Interactive GUI test method names

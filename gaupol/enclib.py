@@ -19,9 +19,8 @@
 """Character encodings and encoding names.
 
 Module variables:
-
-    _encodings:  Tuple of tuples of python name, display name, description
-    _re_illegal: Regular expression for illegal characters in encoding names
+ * _encodings: Tuple of tuples of python name, display name, description
+ * _re_illegal: Regular expression for illegal characters in encoding names
 """
 
 # Python names are the official names used by Python [1]. Display names are

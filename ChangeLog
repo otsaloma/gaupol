@@ -1,5 +1,64 @@
 2007-05-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/agents/register.py:
+	* gaupol/agents/search.py:
+	* gaupol/base/delegate.py:
+	* gaupol/base/__init__.py:
+	* gaupol/base/mutables.py:
+	* gaupol/base/observable.py:
+	* gaupol/base/singleton.py:
+	* gaupol/calculator.py:
+	* gaupol/clipboard.py:
+	* gaupol/const.py:
+	* gaupol/converter.py:
+	* gaupol/determiner.py:
+	* gaupol/enclib.py:
+	* gaupol/files/__init__.py:
+	* gaupol/files/ssa.py:
+	* gaupol/files/subfile.py:
+	* gaupol/finder.py:
+	* gaupol/gtk/agents/menu.py:
+	* gaupol/gtk/agents/open.py:
+	* gaupol/gtk/agents/update.py:
+	* gaupol/gtk/app.py:
+	* gaupol/gtk/cellrend/__init__.py:
+	* gaupol/gtk/conf/__init__.py:
+	* gaupol/gtk/const.py:
+	* gaupol/gtk/dialogs/debug.py:
+	* gaupol/gtk/dialogs/encoding.py:
+	* gaupol/gtk/dialogs/file.py:
+	* gaupol/gtk/dialogs/glade.py:
+	* gaupol/gtk/dialogs/insert.py:
+	* gaupol/gtk/dialogs/language.py:
+	* gaupol/gtk/dialogs/posadjust.py:
+	* gaupol/gtk/dialogs/pref.py:
+	* gaupol/gtk/dialogs/textedit.py:
+	* gaupol/gtk/entries.py:
+	* gaupol/gtk/lengthlib.py:
+	* gaupol/gtk/page.py:
+	* gaupol/gtk/util.py:
+	* gaupol/__init__.py:
+	* gaupol/langlib.py:
+	* gaupol/liner.py:
+	* gaupol/opts.py:
+	* gaupol/parser.py:
+	* gaupol/paths.py:
+	* gaupol/project.py:
+	* gaupol/reversion/action.py:
+	* gaupol/reversion/group.py:
+	* gaupol/reversion/__init__.py:
+	* gaupol/scriptlib.py:
+	* gaupol/subtitle.py:
+	* gaupol/tags/__init__.py:
+	* gaupol/tags/ssa.py:
+	* gaupol/tags/taglib.py:
+	* gaupol/unittest/case.py:
+	* gaupol/unittest/__init__.py:
+	* gaupol/urls.py:
+	Style fixes to docstrings and variable names.
+
+2007-05-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/conf.spec:
 	* gaupol/gtk/const.py:
 	* gaupol/gtk/index.py:

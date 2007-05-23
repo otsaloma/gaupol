@@ -19,8 +19,7 @@
 """Editor for text-based subtitle files.
 
 Module variables:
-
-    __version__: Version number as string
+ * __version__: Version number as string
 """
 
 

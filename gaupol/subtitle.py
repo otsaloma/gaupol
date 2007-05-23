@@ -28,23 +28,22 @@ class Subtitle(object):
     """Single subtitle.
 
     Instance variables and properties:
-
-        start (get, set)
-        start_time (get)
-        start_frame (get)
-        start_seconds (get)
-        end (get, set)
-        end_time (get)
-        end_frame (get)
-        end_seconds (get)
-        duration (get, set)
-        duration_time (get)
-        duration_frame (get)
-        duration_seconds (get)
-        main_text (get, set)
-        tran_text (get, set)
-        mode (get, set)
-        framerate (get, set)
+     * start (get, set)
+     * start_time (get)
+     * start_frame (get)
+     * start_seconds (get)
+     * end (get, set)
+     * end_time (get)
+     * end_frame (get)
+     * end_seconds (get)
+     * duration (get, set)
+     * duration_time (get)
+     * duration_frame (get)
+     * duration_seconds (get)
+     * main_text (get, set)
+     * tran_text (get, set)
+     * mode (get, set)
+     * framerate (get, set)
 
     Positions can be set as strings for times, ints for frames or floats for
     seconds. Positions are saved internally in only one mode.

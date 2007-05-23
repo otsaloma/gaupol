@@ -30,10 +30,9 @@ class SubStationAlpha(TagLibrary):
     """Sub Station Alpha tag library.
 
     Class variables:
-
-        _re_int_opening:     Regular expression for an internal opening tag
-        _re_int_closing:     Regular expression for an internal closing tag
-        _re_int_closing_end: Regular expression ... at the end of a subtitle
+     * _re_int_opening: Regular expression for an internal opening tag
+     * _re_int_closing: Regular expression for an internal closing tag
+     * _re_int_closing_end: Regular expression ... at the end of a subtitle
     """
 
     _re_int_opening = re.compile(r"<[^/].*?>")

@@ -51,9 +51,8 @@ class DebugDialog(GladeDialog):
     def __init__(self):
 
         GladeDialog.__init__(self, "debug-dialog")
-
         self._code_lines = []
-        self._text_view  = self._glade_xml.get_widget("text_view")
+        self._text_view = self._glade_xml.get_widget("text_view")
 
         self._init_text_tags()
         self._init_signal_handlers()

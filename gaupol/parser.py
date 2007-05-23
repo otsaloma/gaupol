@@ -29,10 +29,9 @@ class Parser(Finder):
     """Text parser for tag-aware editing.
 
     Instance variables:
-
-        _margins: Start tag, end tag that every line is wrapped in
-        _tags:    List of lists of tag, position
-        re_tag:   Regular expression object to match any tag
+     * _margins: Start tag, end tag that every line is wrapped in
+     * _tags: List of lists of tag, position
+     * re_tag: Regular expression object to match any tag
 
     The purpose of the Parser is to split text to the actual text and its tags,
     allowing the text to be edited while keeping the tags separate and intact.
@@ -49,10 +48,9 @@ class Parser(Finder):
     def __init__(self, re_tag=None):
 
         Finder.__init__(self)
-
         self._margins = None
-        self._tags    = None
-        self.re_tag   = re_tag
+        self._tags = None
+        self.re_tag = re_tag
 
     def _set_margins_require(self, text):
         assert self.re_tag is not None

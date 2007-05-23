@@ -19,8 +19,7 @@
 """Options for run-time behaviour.
 
 Module variables:
-
-    check_contracts: True to check pre-, postconditions and class invariants
+ * check_contracts: True to check pre-, postconditions and class invariants
 """
 
 

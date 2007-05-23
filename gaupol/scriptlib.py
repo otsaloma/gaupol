@@ -19,10 +19,9 @@
 """Script-specific regular expression patterns.
 
 Module variables:
-
-    _cap_afters:    Tuple of tuples of script, display name, pattern
-    _clause_seps:   Tuple of tuples of script, display name, pattern
-    _dialogue_seps: Tuple of tuples of script, display name, pattern
+ * _cap_afters: Tuple of tuples of script, display name, pattern
+ * _clause_seps: Tuple of tuples of script, display name, pattern
+ * _dialogue_seps: Tuple of tuples of script, display name, pattern
 
 Regular expression patterns in 'clause_seps' and 'dialogue_seps' are required
 to have named groups 'before' and 'after'. Space (or whatever) between those

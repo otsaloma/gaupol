@@ -19,10 +19,9 @@
 """Revertable actions and decorators for dealing with them.
 
 Imported names:
-
-    RevertableAction (action)
-    RevertableActionGroup (group)
-    revertable (deco)
+ * RevertableAction (action)
+ * RevertableActionGroup (group)
+ * revertable (deco)
 """
 
 

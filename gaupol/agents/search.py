@@ -31,15 +31,14 @@ class SearchAgent(Delegate):
     """Searching for and replacing text.
 
     Instance variables:
-
-        _docs:         List of the target DOCUMENT constants
-        _finder:       Instance of Finder used
-        _match_doc:    DOCUMENT constant of the last match
-        _match_passed: True if the position of last match has been passed
-        _match_index:  The index of the last match
-        _match_span:   The start and end positions of the last match
-        _indexes:      List of the target indexes or None for all
-        _wrap:         True to wrap search, False to stop at the last index
+     * _docs: List of the target DOCUMENT constants
+     * _finder: Instance of Finder used
+     * _match_doc: DOCUMENT constant of the last match
+     * _match_passed: True if the position of last match has been passed
+     * _match_index: The index of the last match
+     * _match_span: The start and end positions of the last match
+     * _indexes: List of the target indexes or None for all
+     * _wrap: True to wrap search, False to stop at the last index
 
     Searching is done with the help of an instance of Finder. This agent
     provides for looping over the subtitles and their texts feeding those texts
@@ -53,15 +52,14 @@ class SearchAgent(Delegate):
     def __init__(self, master):
 
         Delegate.__init__(self, master)
-
-        self._docs         = None
-        self._finder       = Finder()
-        self._indexes      = None
-        self._match_doc    = None
-        self._match_index  = None
+        self._docs = None
+        self._finder = Finder()
+        self._indexes = None
+        self._match_doc = None
+        self._match_index = None
         self._match_passed = None
-        self._match_span   = None
-        self._wrap         = None
+        self._match_span = None
+        self._wrap = None
 
         # Set targets to defaults.
         self.set_search_target()

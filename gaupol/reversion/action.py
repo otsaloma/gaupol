@@ -28,13 +28,12 @@ class RevertableAction(object):
     """Action that can be reverted, i.e. undone and redone.
 
     Instance variables:
-
-        description:   Short one line description
-        docs:          List of DOCUMENT constants affected
-        register:      REGISTER constant corresponding to doing
-        revert_args:   Arguments passed to the revert method
-        revert_kwargs: Keyword arguments passed to the revert method
-        revert_method: Method called to revert this action
+     * description: Short one line description
+     * docs: List of DOCUMENT constants affected
+     * register: REGISTER constant corresponding to doing
+     * revert_args: Arguments passed to the revert method
+     * revert_kwargs: Keyword arguments passed to the revert method
+     * revert_method: Method called to revert this action
 
     'description', 'docs', 'register' and 'revert_method' are required to be
     set eventually, either upon instantiation or directly after.
@@ -47,10 +46,10 @@ class RevertableAction(object):
 
         kwargs can contain any of the names of public instance variables,
         """
-        self.description   = None
-        self.docs          = None
-        self.register      = None
-        self.revert_args   = []
+        self.description = None
+        self.docs = None
+        self.register = None
+        self.revert_args = []
         self.revert_kwargs = {}
         self.revert_method = None
 

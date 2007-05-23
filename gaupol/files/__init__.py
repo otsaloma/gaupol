@@ -19,15 +19,14 @@
 """Subtitle files of all formats.
 
 Imported names:
-
-    AdvSubStationAlpha (ass)
-    MicroDVD (microdvd)
-    MPL2 (mpl2)
-    MPsub (mpsub)
-    SubStationAlpha (ssa)
-    SubRip (subrip)
-    SubViewer2 (subviewer2)
-    TMPlayer (tmplayer)
+ * AdvSubStationAlpha (ass)
+ * MicroDVD (microdvd)
+ * MPL2 (mpl2)
+ * MPsub (mpsub)
+ * SubStationAlpha (ssa)
+ * SubRip (subrip)
+ * SubViewer2 (subviewer2)
+ * TMPlayer (tmplayer)
 """
 
 

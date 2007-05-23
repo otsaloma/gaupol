@@ -314,8 +314,8 @@ class OpenAgent(Delegate):
         page.project.connect("action-done", self.on_project_action_done)
         page.project.connect("action-redone", self.on_project_action_redone)
         page.project.connect("action-undone", self.on_project_action_undone)
-        method = self.on_page_tab_widget_button_press_event
-        page.tab_widget.connect("button-press-event", method)
+        callback = self.on_page_tab_widget_button_press_event
+        page.tab_widget.connect("button-press-event", callback)
         self.connect_to_view_signals(page.view)
         page.project.clipboard.data = self.clipboard.data[:]
 
@@ -349,15 +349,15 @@ class OpenAgent(Delegate):
 
         for i, column in enumerate(view.get_columns()):
             renderer = column.get_cell_renderers()[0]
-            method = self.on_view_renderer_edited
-            renderer.connect("edited", method, i)
-            method = self.on_view_renderer_editing_started
-            renderer.connect("editing-started", method, i)
-            method = self.on_view_renderer_editing_canceled
-            renderer.connect("editing-canceled", method)
+            callback = self.on_view_renderer_edited
+            renderer.connect("edited", callback, i)
+            callback = self.on_view_renderer_editing_started
+            renderer.connect("editing-started", callback, i)
+            callback = self.on_view_renderer_editing_canceled
+            renderer.connect("editing-canceled", callback)
             button = util.get_parent(column.get_widget(), gtk.Button)
-            method = self.on_view_header_button_press_event
-            button.connect("button-press-event", method)
+            callback = self.on_view_header_button_press_event
+            button.connect("button-press-event", callback)
 
     @util.silent(Default)
     def on_append_file_activate(self, *args):

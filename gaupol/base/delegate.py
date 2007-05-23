@@ -24,8 +24,7 @@ class Delegate(object):
     """Base class for delegates.
 
     Instance variables:
-
-        master: The master instance to where attribute calls are redirected
+     * master: The master instance to where attribute calls are redirected
     """
 
     def __getattr__(self, name):

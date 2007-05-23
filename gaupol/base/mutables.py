@@ -44,9 +44,8 @@ class ObservableDict(dict):
     """Observable version of dict.
 
     Instance variables:
-
-        master: Master instance with a 'notify' method
-        name:   Argument given when calling master's 'notify' method
+     * master: Master instance with a 'notify' method
+     * name: Argument given when calling master's 'notify' method
     """
 
     __metaclass__ = Contractual
@@ -101,9 +100,8 @@ class ObservableList(list):
     """Observable version of list.
 
     Instance variables:
-
-        master: Master instance with a 'notify' method
-        name:   Argument given when calling master's 'notify' method
+     * master: Master instance with a 'notify' method
+     * name: Argument given when calling master's 'notify' method
     """
 
     __metaclass__ = Contractual
@@ -182,9 +180,8 @@ class ObservableSet(set):
     """Observable version of set.
 
     Instance variables:
-
-        master: Master instance with a 'notify' method
-        name:   Argument given when calling master's 'notify' method
+     * master: Master instance with a 'notify' method
+     * name: Argument given when calling master's 'notify' method
     """
 
     __metaclass__ = Contractual

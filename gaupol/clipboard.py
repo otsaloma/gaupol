@@ -24,8 +24,7 @@ class Clipboard(object):
     """Internal text clipboard.
 
     Instance variables:
-
-        _texts: List of strings or Nones
+     * _texts: List of strings or Nones
 
     Nones in _texts express that those items are to be skipped.
     """

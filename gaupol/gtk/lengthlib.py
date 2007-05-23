@@ -34,17 +34,16 @@ class _Counter(object):
     """Line length counter.
 
     Instance variables:
-
-        _em_width: Width of the letter 'M' in pixels in the current font
-        _layout:   pango.Layout used for text length calculations
+     * _em_width: Width of the letter 'M' in pixels in the current font
+     * _layout: pango.Layout used for text length calculations
     """
 
     _re_tag = re.compile(r"(^[/\\_]|<.*?>|\{.*?\})")
 
     def __init__(self):
 
-        self._em_width   = None
-        self._layout     = None
+        self._em_width = None
+        self._layout = None
         self.get_lengths = None
 
         self._update_em_width()

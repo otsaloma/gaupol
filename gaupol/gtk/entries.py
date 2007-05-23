@@ -48,9 +48,8 @@ class TimeEntry(gtk.Entry):
     """Entry for time data in format HH:MM:SS.SSS.
 
     Instance variables:
-
-        _delete_handler: Handler for 'delete-text' signal
-        _insert_handler: Handler for 'insert-text' signal
+     * _delete_handler: Handler for 'delete-text' signal
+     * _insert_handler: Handler for 'insert-text' signal
 
     This widget uses 'gobject.idle_add' a lot, which means that clients may
     need to call 'gtk.main_iteration' to ensure that proper updating.
@@ -58,7 +57,7 @@ class TimeEntry(gtk.Entry):
 
     __metaclass__ = util.get_contractual_metaclass()
     _re_digit = re.compile(r"\d")
-    _re_time  = re.compile(r"^-?\d\d:[0-5]\d:[0-5]\d\.\d\d\d$")
+    _re_time = re.compile(r"^-?\d\d:[0-5]\d:[0-5]\d\.\d\d\d$")
 
     def __init__(self):
 

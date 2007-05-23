@@ -50,7 +50,6 @@ class LanguageDialog(GladeDialog):
     def __init__(self, parent):
 
         GladeDialog.__init__(self, "language-dialog")
-
         self._langs = []
 
         self._all_radio     = self._glade_xml.get_widget("all_radio")
