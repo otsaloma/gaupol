@@ -194,6 +194,18 @@ class TestSubtitle(TestCase):
         assert copy == self.time_sub
         assert not copy is self.time_sub
 
+    def test_get_duration(self):
+
+        value = self.time_sub.get_duration(const.MODE.TIME)
+        assert value == "00:00:02.000"
+        value = self.time_sub.get_duration(const.MODE.FRAME)
+        assert value == 50
+
+        value = self.frame_sub.get_duration(const.MODE.TIME)
+        assert value == "00:00:08.000"
+        value = self.frame_sub.get_duration(const.MODE.FRAME)
+        assert value == 200
+
     def test_get_end(self):
 
         value = self.time_sub.get_end(const.MODE.TIME)

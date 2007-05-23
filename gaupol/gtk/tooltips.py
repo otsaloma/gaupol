@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,17 +16,31 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Column index constants."""
+"""Tooltips with markup labels."""
 
 
-from gaupol.gtk import const
+import gtk
 
-__all__ = const.COLUMN.names
+from gaupol.gtk import util
 
 
-NO    = const.COLUMN.NO
-START = const.COLUMN.START
-END   = const.COLUMN.END
-DURN  = const.COLUMN.DURN
-MTXT  = const.COLUMN.MTXT
-TTXT  = const.COLUMN.TTXT
+class Tooltips(gtk.Tooltips):
+
+    """Tooltips with markup labels."""
+
+    @util.asserted_return
+    def __init__(self):
+
+        # pylint: disable-msg=E1101
+        gtk.Tooltips.__init__(self)
+        self.force_window()
+        label = self.tip_label
+        assert label is not None
+        label.set_use_markup(True)
+        callback = self._on_label_notify_use_markup
+        label.connect("notify::use-markup", callback)
+
+    def _on_label_notify_use_markup(self, label, *args):
+        """Reset label to use markup."""
+
+        label.set_use_markup(True)

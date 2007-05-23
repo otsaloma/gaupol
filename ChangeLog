@@ -1,3 +1,24 @@
+2007-05-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/conf.spec:
+	* gaupol/gtk/const.py:
+	* gaupol/gtk/index.py:
+	* gaupol/gtk/view.py:
+	Fix column constant names.
+
+	* gaupol/gtk/page.py:
+	Add contracts and use Subtitle class.
+
+	* gaupol/gtk/tooltips.py:
+	New file with markup tooltips; split from page.
+
+	* gaupol/gtk/util.py (document_to_text_column,
+	text_column_to_document):
+	New functions; split from page.
+
+	* gaupol/subtitle.py (get_duration):
+	Add missing method.
+
 2007-05-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/view.py:

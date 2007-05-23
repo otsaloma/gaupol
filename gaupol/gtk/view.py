@@ -58,7 +58,7 @@ class View(gtk.TreeView):
         label.show()
         label.set_attributes(self._active_attr)
         width = label.size_request()[0]
-        if (col in (SHOW, HIDE, DURN)) and (edit_mode == const.MODE.FRAME):
+        if (col in (START, END, DURN)) and (edit_mode == const.MODE.FRAME):
             spin = gtk.SpinButton()
             digits = (0 if col == DURN else 5)
             spin.set_digits(digits)
@@ -74,7 +74,7 @@ class View(gtk.TreeView):
         if col == NO:
             renderer = gtk.CellRendererText()
             renderer.props.xalign = 1
-        elif col in (SHOW, HIDE, DURN):
+        elif col in (START, END, DURN):
             if edit_mode == const.MODE.TIME:
                 renderer = TimeCellRenderer()
             elif edit_mode == const.MODE.FRAME:

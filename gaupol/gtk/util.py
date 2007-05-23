@@ -43,8 +43,9 @@ import pango
 
 from gaupol import paths
 from gaupol.base import Contractual
+from gaupol.gtk import conf, const, lengthlib
+from gaupol.gtk.index import *
 from gaupol.util import *
-from . import conf, lengthlib
 
 
 BUSY_CURSOR   = gtk.gdk.Cursor(gtk.gdk.WATCH)
@@ -66,6 +67,16 @@ def idle_method(function):
         gobject.idle_add(do_idle, args, kwargs)
 
     return wrapper
+
+@memoize
+def document_to_text_column(doc):
+    """Translate document index to text column index."""
+
+    if doc == const.DOCUMENT.MAIN:
+        return MTXT
+    if doc == const.DOCUMENT.TRAN:
+        return TTXT
+    raise ValueError
 
 @once
 def get_contractual_metaclass():
@@ -218,3 +229,13 @@ def set_widget_font(widget, font):
     custom_font_desc = pango.FontDescription(font)
     font_desc.merge(custom_font_desc, True)
     widget.modify_font(font_desc)
+
+@memoize
+def text_column_to_document(col):
+    """Translate text column constant to document constant."""
+
+    if col == MTXT:
+        return const.DOCUMENT.MAIN
+    if col == TTXT:
+        return const.DOCUMENT.TRAN
+    raise ValueError

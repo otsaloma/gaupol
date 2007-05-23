@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,17 +16,30 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Column index constants."""
+import gtk
+
+from gaupol.gtk.unittest import TestCase
+from .. import tooltips
 
 
-from gaupol.gtk import const
+class TestTooltips(TestCase):
 
-__all__ = const.COLUMN.names
+    def run(self):
 
+        button = gtk.Button("Hover over this")
+        text = "<b>Bold</b>\n<i>Italic</i>\n<u>Underline</u>"
+        self.tooltips.set_tip(button, text)
+        window = gtk.Window()
+        window.connect("delete-event", gtk.main_quit)
+        window.set_position(gtk.WIN_POS_CENTER)
+        window.add(button)
+        window.show_all()
+        gtk.main()
 
-NO    = const.COLUMN.NO
-START = const.COLUMN.START
-END   = const.COLUMN.END
-DURN  = const.COLUMN.DURN
-MTXT  = const.COLUMN.MTXT
-TTXT  = const.COLUMN.TTXT
+    def setup_method(self, method):
+
+        self.tooltips = tooltips.Tooltips()
+
+    def test__on_label_notify_use_markup(self):
+
+        self.tooltips.tip_label.set_use_markup(False)

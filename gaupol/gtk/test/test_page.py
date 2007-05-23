@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol.gtk import conf, const
+from gaupol.gtk import const
 from gaupol.gtk.index import *
 from gaupol.gtk.unittest import TestCase
 
@@ -27,123 +27,84 @@ class TestPage(TestCase):
 
         self.page = self.get_page()
 
-    def test__get_positions(self):
+    def test__assert_store(self):
 
-        self.page.edit_mode = const.MODE.FRAME
-        positions = self.page._get_positions()
-        assert positions == self.page.project.frames
-
-        self.page.edit_mode = const.MODE.TIME
-        positions = self.page._get_positions()
-        assert positions == self.page.project.times
-
-    def test__init_signal_handlers(self):
-
-        self.page.project.open_main(self.get_subrip_path(), "ascii")
-        self.page.project.remove_subtitles([0, 1])
-        self.page.project.set_text(0, const.DOCUMENT.TRAN, "test")
-
-        conf.editor.limit_undo = True
-        conf.editor.undo_levels = 10
-        conf.editor.limit_undo = False
-
-    def test__init_widgets(self):
-
-        self.page.tab_widget.get_data("button").emit("clicked")
+        self.page._assert_store()
 
     def test__on_project_main_file_opened(self):
 
-        self.page.project.open_main(self.get_subrip_path(), "ascii")
-        self.page.assert_store()
+        path = self.get_subrip_path()
+        self.page.project.open_main(path, "ascii")
 
     def test__on_project_main_texts_changed(self):
 
         self.page.project.set_text(0, const.DOCUMENT.MAIN, "test")
-        self.page.assert_store()
 
     def test__on_project_positions_changed(self):
 
-        self.page.project.set_position(0, 0, "00:00:00,000")
-        self.page.assert_store()
+        self.page.project.set_start(0, "00:00:00,000")
 
     def test__on_project_subtitles_changed(self):
 
-        self.page.project.set_position(0, 0, "99:59:59,999")
-        self.page.assert_store()
+        self.page.project.set_start(0, "99:59:59,999")
 
     def test__on_project_subtitles_inserted(self):
 
         self.page.project.insert_blank_subtitles([0, 1])
-        self.page.assert_store()
 
     def test__on_project_subtitles_removed(self):
 
         self.page.project.remove_subtitles([2, 3])
-        self.page.assert_store()
 
     def test__on_project_translation_file_opened(self):
 
         path = self.get_subrip_path()
         self.page.project.open_translation(path, "ascii")
-        self.page.assert_store()
 
     def test__on_project_translation_texts_changed(self):
 
         self.page.project.set_text(0, const.DOCUMENT.TRAN, "test")
-        self.page.assert_store()
 
-    def test_assert_store(self):
+    def test__on_tab_event_box_enter_notify_event(self):
 
-        self.page.assert_store()
-
-    def test_document_to_text_column(self):
-
-        assert self.page.document_to_text_column(const.DOCUMENT.MAIN) == MTXT
-        assert self.page.document_to_text_column(const.DOCUMENT.TRAN) == TTXT
+        self.page._on_tab_event_box_enter_notify_event()
 
     def test_get_main_basename(self):
 
         self.page.project.main_file.path = "/tmp/root.srt"
-        assert self.page.get_main_basename() == "root.srt"
-
-    def test_get_main_corename(self):
-
-        self.page.project.main_file.path = "/tmp/root.srt"
-        assert self.page.get_main_corename() == "root"
+        name = self.page.get_main_basename()
+        assert name == "root.srt"
+        self.page.project.main_file = None
+        name = self.page.get_main_basename()
+        assert name == self.page.untitle
 
     def test_get_translation_basename(self):
 
         self.page.project.tran_file.path = "/tmp/root.sub"
-        assert self.page.get_translation_basename() == "root.sub"
-
-    def test_get_translation_corename(self):
-
-        self.page.project.tran_file.path = "/tmp/root.sub"
-        assert self.page.get_translation_corename() == "root"
+        name = self.page.get_translation_basename()
+        assert name == "root.sub"
+        self.page.project.main_file.path = "/tmp/root.srt"
+        self.page.project.tran_file = None
+        name = self.page.get_translation_basename()
+        assert name == "root translation"
+        self.page.project.main_file = None
+        name = self.page.get_translation_basename()
+        assert name == "%s translation" % self.page.untitle
 
     def test_reload_view(self):
 
-        rows = range(len(self.page.project.times))
-        self.page.reload_view(rows, [SHOW, HIDE, DURN, MTXT, TTXT])
-        self.page.assert_store()
+        rows = range(len(self.page.project.subtitles))
+        cols = [START, END, DURN, MTXT, TTXT]
+        self.page.reload_view(rows, cols)
 
     def test_reload_view_all(self):
 
         self.page.reload_view_all()
-        self.page.assert_store()
-
-    def test_text_column_to_document(self):
-
-        assert self.page.text_column_to_document(MTXT) == const.DOCUMENT.MAIN
-        assert self.page.text_column_to_document(TTXT) == const.DOCUMENT.TRAN
 
     def test_update_tab_label(self):
 
-        self.page.project.save(const.DOCUMENT.MAIN)
-        self.page.project.save(const.DOCUMENT.TRAN)
         title = self.page.update_tab_label()
         assert title == self.page.get_main_basename()
-
         self.page.project.remove_subtitles([1])
         title = self.page.update_tab_label()
         assert title == "*" + self.page.get_main_basename()

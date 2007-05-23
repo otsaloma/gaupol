@@ -255,6 +255,15 @@ class Subtitle(object):
         subtitle._calc = self._calc
         return subtitle
 
+    def get_duration(self, mode):
+        """Get the duration in mode."""
+
+        if mode == const.MODE.TIME:
+            return self.duration_time
+        if mode == const.MODE.FRAME:
+            return self.duration_frame
+        raise ValueError
+
     def get_end(self, mode):
         """Get the start position in mode."""
 

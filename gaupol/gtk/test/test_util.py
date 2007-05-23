@@ -19,7 +19,8 @@
 import gtk
 import gtk.glade
 
-from gaupol.gtk import conf
+from gaupol.gtk import conf, const
+from gaupol.gtk.index import *
 from gaupol.gtk.unittest import TestCase
 from .. import util
 
@@ -34,6 +35,15 @@ class TestModule(TestCase):
         assert hasattr(util, "HAND_CURSOR")
         assert hasattr(util, "INSERT_CURSOR")
         assert hasattr(util, "NORMAL_CURSOR")
+
+    def test_document_to_text_column(self):
+
+        doc = const.DOCUMENT.MAIN
+        col = util.document_to_text_column(doc)
+        assert col == MTXT
+        doc = const.DOCUMENT.TRAN
+        col = util.document_to_text_column(doc)
+        assert col == TTXT
 
     def test_get_contractual_metaclass(self):
 
@@ -141,3 +151,10 @@ class TestModule(TestCase):
     def test_set_widget_font(self):
 
         util.set_label_font(gtk.Label(""), "Serif 12")
+
+    def test_text_column_to_document(self):
+
+        doc = util.text_column_to_document(MTXT)
+        assert doc == const.DOCUMENT.MAIN
+        doc = util.text_column_to_document(TTXT)
+        assert doc == const.DOCUMENT.TRAN
