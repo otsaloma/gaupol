@@ -1,5 +1,19 @@
 2007-05-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/icons/logo.png:
+	Remove file, use icon instead.
+
+	* gaupol/gtk/dialogs/about.py:
+	Add title, fix website label and use a named icon.
+
+	* gaupol/gtk/dialogs/__init__.py:
+	Comment out imports for now.
+
+	* gaupol/urls.py (HOMEPAGE):
+	Add trailing slash.
+
+2007-05-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/agents/register.py:
 	* gaupol/agents/search.py:
 	* gaupol/base/delegate.py:

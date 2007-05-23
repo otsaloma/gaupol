@@ -20,63 +20,33 @@
 
 
 from .about      import AboutDialog
-from .debug      import DebugDialog
-from .duradjust  import DurationAdjustDialog
-from .encoding   import AdvEncodingDialog
-from .encoding   import EncodingDialog
-from .file       import AppendDialog
-from .file       import OpenDialog
-from .file       import SaveDialog
-from .file       import VideoDialog
-from .frconvert  import FramerateConvertDialog
-from .glade      import GladeDialog
-from .header     import HeaderDialog
-from .insert     import InsertDialog
-from .language   import LanguageDialog
-from .message    import ErrorDialog
-from .message    import InfoDialog
-from .message    import QuestionDialog
-from .message    import WarningDialog
-from .multiclose import MultiCloseDialog
-from .posadjust  import FrameAdjustDialog
-from .posadjust  import TimeAdjustDialog
-from .posshift   import FrameShiftDialog
-from .posshift   import TimeShiftDialog
-from .pref       import PreferencesDialog
-from .previewerr import PreviewErrorDialog
-from .search     import SearchDialog
-from .spellcheck import SpellCheckDialog
-from .split      import SplitDialog
-from .textedit   import TextEditDialog
+# from .debug      import DebugDialog
+# from .duradjust  import DurationAdjustDialog
+# from .encoding   import AdvEncodingDialog
+# from .encoding   import EncodingDialog
+# from .file       import AppendDialog
+# from .file       import OpenDialog
+# from .file       import SaveDialog
+# from .file       import VideoDialog
+# from .frconvert  import FramerateConvertDialog
+# from .glade      import GladeDialog
+# from .header     import HeaderDialog
+# from .insert     import InsertDialog
+# from .language   import LanguageDialog
+# from .message    import ErrorDialog
+# from .message    import InfoDialog
+# from .message    import QuestionDialog
+# from .message    import WarningDialog
+# from .multiclose import MultiCloseDialog
+# from .posadjust  import FrameAdjustDialog
+# from .posadjust  import TimeAdjustDialog
+# from .posshift   import FrameShiftDialog
+# from .posshift   import TimeShiftDialog
+# from .pref       import PreferencesDialog
+# from .previewerr import PreviewErrorDialog
+# from .search     import SearchDialog
+# from .spellcheck import SpellCheckDialog
+# from .split      import SplitDialog
+# from .textedit   import TextEditDialog
 
-
-__all__ = [
-    "AboutDialog",
-    "AdvEncodingDialog",
-    "AppendDialog",
-    "DebugDialog",
-    "DurationAdjustDialog",
-    "EncodingDialog",
-    "ErrorDialog",
-    "FrameAdjustDialog",
-    "FramerateConvertDialog",
-    "FrameShiftDialog",
-    "GladeDialog",
-    "HeaderDialog",
-    "InfoDialog",
-    "InsertDialog",
-    "LanguageDialog",
-    "MultiCloseDialog",
-    "OpenDialog",
-    "PreferencesDialog",
-    "PreviewErrorDialog",
-    "QuestionDialog",
-    "SaveDialog",
-    "SearchDialog",
-    "SpellCheckDialog",
-    "SplitDialog",
-    "TextEditDialog",
-    "TimeAdjustDialog",
-    "TimeShiftDialog",
-    "VideoDialog",
-    "WarningDialog",]
+__all__ = [x for x in dir() if x.endswith("Dialog")]

@@ -20,5 +20,5 @@
 
 
 BUG_REPORT = "http://gna.org/bugs/?func=additem&group=gaupol"
-HOMEPAGE   = "http://home.gna.org/gaupol"
+HOMEPAGE   = "http://home.gna.org/gaupol/"
 REGEX_HELP = "http://docs.python.org/lib/re-syntax.html"
