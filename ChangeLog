@@ -1,5 +1,10 @@
 2007-05-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/output.py:
+	Set 6 pixel margins to the text view.
+
+2007-05-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/icons/logo.png:
 	Remove file, use icon instead.
 

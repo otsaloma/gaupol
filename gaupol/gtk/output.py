@@ -79,6 +79,8 @@ class OutputWindow(gtk.Window):
         self._text_view.set_wrap_mode(gtk.WRAP_WORD)
         self._text_view.set_cursor_visible(False)
         self._text_view.set_editable(False)
+        self._text_view.set_left_margin(6)
+        self._text_view.set_right_margin(6)
         util.set_widget_font(self._text_view, "monospace")
 
         scroller = gtk.ScrolledWindow()
