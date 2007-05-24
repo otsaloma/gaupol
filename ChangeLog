@@ -1,5 +1,10 @@
 2007-05-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/dialogs/language.py:
+	Fix tree view sorting.
+
+2007-05-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/encoding-dialog.glade:
 	Save with Glade 3.
 

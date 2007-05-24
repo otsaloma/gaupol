@@ -49,7 +49,6 @@ class LanguageDialog(GladeDialog):
         self._tree_view = get_widget("tree_view")
 
         self._init_tree_view()
-        self._populate_tree_view()
         self._init_data()
         self._init_signal_handlers()
         self._init_sizes()
@@ -99,16 +98,15 @@ class LanguageDialog(GladeDialog):
 
         selection = self._tree_view.get_selection()
         selection.set_mode(gtk.SELECTION_SINGLE)
-        store = gtk.ListStore(gobject.TYPE_STRING)
-        store.set_sort_column_id(0, gtk.SORT_ASCENDING)
+        store = gtk.ListStore(*(gobject.TYPE_STRING,) * 2)
+        self._populate_store(store)
+        store.set_sort_column_id(1, gtk.SORT_ASCENDING)
         self._tree_view.set_model(store)
+
         renderer = gtk.CellRendererText()
-        column = gtk.TreeViewColumn("", renderer, text=0)
+        column = gtk.TreeViewColumn("", renderer, text=1)
+        column.set_sort_column_id(1)
         self._tree_view.append_column(column)
-        def set_language(column, renderer, store, itr):
-            value = store.get_value(itr, 0)
-            renderer.props.text = langlib.get_long_name(value)
-        column.set_cell_data_func(renderer, set_language)
 
     @util.asserted_return
     def _on_tree_view_selection_changed(self, selection):
@@ -119,15 +117,15 @@ class LanguageDialog(GladeDialog):
         value = store.get_value(itr, 0)
         conf.spell_check.lang = value
 
-    def _populate_tree_view(self):
-        """Add all available languages to the tree view."""
+    def _populate_store(self, store):
+        """Add all available languages to the list store."""
 
         import enchant
-        store = self._tree_view.get_model()
         @util.silent(enchant.Error)
         def append(locale):
             enchant.Dict(locale)
-            store.append([locale])
+            name = langlib.get_long_name(locale)
+            store.append([locale, name])
         for locale in langlib.locales:
             append(locale)
 
