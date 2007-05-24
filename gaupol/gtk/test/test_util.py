@@ -72,7 +72,7 @@ class TestModule(TestCase):
 
     def test_get_text_view_size(self):
 
-        text_view = gtk.TextView(gtk.TextBuffer())
+        text_view = gtk.TextView(gtk.TextBuffer(), "")
         width, height = util.get_text_view_size(text_view)
 
     def test_get_tree_view_size(self):

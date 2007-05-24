@@ -109,13 +109,14 @@ def get_parent(child, parent_type):
         parent = parent.get_parent()
     return parent
 
-def get_text_view_size(text_view):
+def get_text_view_size(text_view, font=""):
     """Get the width and height desired by text view."""
 
     text_buffer = text_view.get_buffer()
     bounds = text_buffer.get_bounds()
     text = text_buffer.get_text(*bounds)
     label = gtk.Label(text)
+    set_label_font(label, font)
     return label.size_request()
 
 def get_tree_view_size(tree_view):
@@ -214,7 +215,6 @@ def set_label_font(label, font):
     font_desc = context.get_font_description()
     custom_font_desc = pango.FontDescription(font)
     font_desc.merge(custom_font_desc, True)
-
     attr = pango.AttrFontDesc(font_desc, 0, -1)
     attr_list = pango.AttrList()
     attr_list.insert(attr)

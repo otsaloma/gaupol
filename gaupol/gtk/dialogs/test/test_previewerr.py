@@ -18,6 +18,7 @@
 
 import gtk
 
+from gaupol.gtk import const
 from gaupol.gtk.unittest import TestCase
 from .. import previewerr
 
@@ -31,7 +32,8 @@ class TestPreviewErrorDialog(TestCase):
 
     def setup_method(self, method):
 
-        self.dialog = previewerr.PreviewErrorDialog(gtk.Window(), "test")
+        output = self.get_file_text(const.FORMAT.SUBRIP)
+        self.dialog = previewerr.PreviewErrorDialog(gtk.Window(), output)
 
     def test___init__(self):
 

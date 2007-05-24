@@ -20,7 +20,6 @@
 
 
 import gtk
-import pango
 
 from gaupol.gtk import util
 from .glade import GladeDialog
@@ -28,12 +27,7 @@ from .glade import GladeDialog
 
 class PreviewErrorDialog(GladeDialog):
 
-    """Dialog for informing that preview failed.
-
-    Instance variables:
-
-        _text_view: gtk.TextView
-    """
+    """Dialog for informing that preview failed."""
 
     def __init__(self, parent, output):
 
@@ -41,27 +35,22 @@ class PreviewErrorDialog(GladeDialog):
         self._text_view = self._glade_xml.get_widget("text_view")
 
         self._init_data(output)
-        self._init_sizes(output)
+        self._init_sizes()
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_OK)
 
     def _init_data(self, output):
-        """Initialize the output data in the text view."""
+        """Initialize the output text in the text view."""
 
         text_buffer = self._text_view.get_buffer()
         text_buffer.create_tag("code", family="monospace")
-        end_iter = text_buffer.get_end_iter()
-        text_buffer.insert_with_tags_by_name(end_iter, output, "code")
+        itr = text_buffer.get_end_iter()
+        text_buffer.insert_with_tags_by_name(itr, output, "code")
 
-    def _init_sizes(self, output):
+    def _init_sizes(self):
         """Initialize widget sizes."""
 
-        label = gtk.Label()
-        attrs = pango.AttrList()
-        attrs.insert(pango.AttrFamily("monospace", 0, -1))
-        label.set_attributes(attrs)
-        label.set_text(output)
-        width, height = label.size_request()
+        width, height = util.get_text_view_size(self._text_view, "monospace")
         width = width + 112 + util.EXTRA
         height = height + 148 + util.EXTRA
-        util.resize_message_dialog(self._dialog, width, height)
+        util.resize_message_dialog(self, width, height)

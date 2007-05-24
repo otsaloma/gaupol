@@ -1,5 +1,16 @@
 2007-05-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/glade/previewerr-dialog.glade:
+	Set 6 pixel margins to the text view.
+
+	* gaupol/gtk/dialogs/previewerr.py:
+	Use util.get_text_view_size.
+
+	* gaupol/gtk/util.py (get_text_view_size):
+	Add font argument with a blank default value.
+
+2007-05-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/language-dialog.glade:
 	Use gtk.Alignments to indent sections.
 
