@@ -18,7 +18,6 @@
 
 import gtk
 
-from gaupol import enclib
 from gaupol.gtk.unittest import TestCase
 from .. import encoding
 
@@ -38,13 +37,9 @@ class TestEncodingDialog(TestCase):
 
         store = self.dialog._tree_view.get_model()
         selection = self.dialog._tree_view.get_selection()
-        selection.unselect_all()
+        selection.select_path(10)
         name = self.dialog.get_encoding()
-        assert name is None
-        for i in range(len(store)):
-            selection.select_path(i)
-            name = self.dialog.get_encoding()
-            assert enclib.is_valid(name)
+        assert name is not None
 
 
 class TestAdvEncodingDialog(TestEncodingDialog):
@@ -55,14 +50,5 @@ class TestAdvEncodingDialog(TestEncodingDialog):
 
     def test_get_visible_encodings(self):
 
-        store = self.dialog._tree_view.get_model()
-        for i in range(len(store)):
-            store[i][2] = False
-        assert not self.dialog.get_visible_encodings()
-
-        for i in range(len(store)):
-            store[i][2] = True
-        visibles = self.dialog.get_visible_encodings()
-        assert visibles
-        for name in visibles:
-            assert enclib.is_valid(name)
+        encodings = self.dialog.get_visible_encodings()
+        assert set(encodings) == set(("cp1252", "utf_8"))

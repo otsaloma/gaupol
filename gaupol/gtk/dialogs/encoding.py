@@ -23,19 +23,17 @@ import gobject
 import gtk
 
 from gaupol import enclib
+from gaupol.base import Contractual
 from gaupol.gtk import conf, util
-from gaupol.gtk.i18n import _
+from gaupol.i18n import _
 from .glade import GladeDialog
 
 
 class EncodingDialog(GladeDialog):
 
-    """Dialog for selecting a character encoding.
+    """Dialog for selecting a character encoding."""
 
-    Instance variables:
-
-        _tree_view: gtk.TreeView
-    """
+    __metaclass__ = Contractual
 
     def __init__(self, parent):
 
@@ -54,7 +52,7 @@ class EncodingDialog(GladeDialog):
         width, height = util.get_tree_view_size(self._tree_view)
         width = width + 52 + util.EXTRA
         height = height + 84 + util.EXTRA
-        util.resize_dialog(self._dialog, width, height, 0.5, 0.5)
+        util.resize_dialog(self._dialog, width, height, (0.5, 0.5))
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
@@ -66,38 +64,38 @@ class EncodingDialog(GladeDialog):
     def _init_tree_view(self):
         """Initialize the tree view."""
 
-        self._tree_view.columns_autosize()
         selection = self._tree_view.get_selection()
         selection.set_mode(gtk.SELECTION_SINGLE)
-        store = gtk.ListStore(*(gobject.TYPE_STRING,) * 2)
+        store = gtk.ListStore(*(gobject.TYPE_STRING,) * 3)
+        for item in enclib.get_valid_encodings():
+            store.append([item[0], item[2], item[1]])
+        store.set_sort_column_id(1, gtk.SORT_ASCENDING)
         self._tree_view.set_model(store)
 
         renderer = gtk.CellRendererText()
-        column = gtk.TreeViewColumn(_("Description"), renderer, text=0)
+        column = gtk.TreeViewColumn(_("Description"), renderer, text=1)
+        column.set_clickable(True)
+        column.set_sort_column_id(1)
         self._tree_view.append_column(column)
 
         renderer = gtk.CellRendererText()
-        column = gtk.TreeViewColumn(_("Encoding"), renderer, text=1)
+        column = gtk.TreeViewColumn(_("Encoding"), renderer, text=2)
+        column.set_clickable(True)
+        column.set_sort_column_id(2)
         self._tree_view.append_column(column)
 
-        for i, column in enumerate(self._tree_view.get_columns()):
-            column.set_resizable(True)
-            column.set_clickable(True)
-            column.set_sort_column_id(i)
+    def get_encoding_ensure(self, value):
+        if value is not None:
+            assert enclib.is_valid(value)
 
-        store.set_sort_column_id(0, gtk.SORT_ASCENDING)
-        for item in enclib.get_valid_encodings():
-            store.append([item[2], item[1]])
-
+    @util.asserted_return
     def get_encoding(self):
         """Get the selected encoding or None."""
 
         selection = self._tree_view.get_selection()
         store, itr = selection.get_selected()
-        if itr is not None:
-            row = store.get_path(itr)[0]
-            return enclib.get_python_name(store[row][1])
-        return None
+        assert itr is not None
+        return store.get_value(itr, 0)
 
 
 class AdvEncodingDialog(EncodingDialog):
@@ -107,44 +105,42 @@ class AdvEncodingDialog(EncodingDialog):
     def _init_tree_view(self):
         """Initialize the tree view."""
 
-        self._tree_view.columns_autosize()
         selection = self._tree_view.get_selection()
         selection.set_mode(gtk.SELECTION_SINGLE)
-        columns = (gobject.TYPE_STRING,) * 2 + (gobject.TYPE_BOOLEAN,)
+        columns = (gobject.TYPE_STRING,) * 3 + (gobject.TYPE_BOOLEAN,)
         store = gtk.ListStore(*columns)
+        visibles = conf.encoding.visibles
+        for item in enclib.get_valid_encodings():
+            store.append([item[0], item[2], item[1], item[0] in visibles])
+        store.set_sort_column_id(1, gtk.SORT_ASCENDING)
         self._tree_view.set_model(store)
 
         renderer = gtk.CellRendererText()
-        column = gtk.TreeViewColumn(_("Description"), renderer, text=0)
+        column = gtk.TreeViewColumn(_("Description"), renderer, text=1)
+        column.set_clickable(True)
+        column.set_sort_column_id(1)
         self._tree_view.append_column(column)
 
         renderer = gtk.CellRendererText()
-        column = gtk.TreeViewColumn(_("Encoding"), renderer, text=1)
+        column = gtk.TreeViewColumn(_("Encoding"), renderer, text=2)
+        column.set_clickable(True)
+        column.set_sort_column_id(2)
         self._tree_view.append_column(column)
 
         def on_toggled(renderer, row):
-            store[row][2] = not store[row][2]
+            store[row][3] = not store[row][3]
         renderer = gtk.CellRendererToggle()
         renderer.connect("toggled", on_toggled)
-        column = gtk.TreeViewColumn(_("Show in Menu"), renderer, active=2)
+        column = gtk.TreeViewColumn(_("Show in Menu"), renderer, active=3)
+        column.set_sort_column_id(3)
         self._tree_view.append_column(column)
 
-        for i, column in enumerate(self._tree_view.get_columns()):
-            column.set_resizable(True)
-            column.set_clickable(True)
-            column.set_sort_column_id(i)
-
-        store.set_sort_column_id(0, gtk.SORT_ASCENDING)
-        visibles = conf.encoding.visibles
-        for item in enclib.get_valid_encodings():
-            store.append([item[2], item[1], item[0] in visibles])
+    def get_visible_encodings_ensure(self, value):
+        for name in value:
+            assert enclib.is_valid(name)
 
     def get_visible_encodings(self):
         """Get encodings chosen to be visible."""
 
-        visibles = []
         store = self._tree_view.get_model()
-        for i in range(len(store)):
-            if store[i][2]:
-                visibles.append(enclib.get_python_name(store[i][1]))
-        return visibles
+        return [store[i][0] for i in range(len(store)) if store[i][3]]

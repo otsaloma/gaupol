@@ -34,6 +34,11 @@ class TestModule(TestCase):
         name = enclib.detect(self.get_subrip_path())
         assert enclib.is_valid(name)
 
+    def test_get_description(self):
+
+        description = enclib.get_description("cp1006")
+        assert description == _("Urdu")
+
     def test_get_display_name(self):
 
         name = enclib.get_display_name("mac_roman")

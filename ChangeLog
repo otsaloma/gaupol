@@ -1,5 +1,16 @@
 2007-05-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/glade/encoding-dialog.glade:
+	Save with Glade 3.
+
+	* gaupol/enclib.py (get_description):
+	Add missing method.
+
+	* gaupol/gtk/dialogs/encoding.py:
+	Add contracts and clean up code.
+
+2007-05-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/previewerr-dialog.glade:
 	Set 6 pixel margins to the text view.
 

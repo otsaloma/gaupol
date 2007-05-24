@@ -177,6 +177,16 @@ def detect(path):
         raise ValueError
     return _translate(encoding)
 
+def get_description(python_name):
+    """Get the description for encoding.
+
+    Raise ValueError if not found.
+    """
+    for seq in _encodings:
+        if seq[0] == python_name:
+            return seq[2]
+    raise ValueError
+
 def get_display_name(python_name):
     """Get the display name for encoding.
 
