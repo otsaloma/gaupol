@@ -16,9 +16,6 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-import gtk
-import gtk.glade
-
 from gaupol.gtk.unittest import TestCase
 from .. import glade
 
@@ -27,7 +24,7 @@ class TestGladeDialog(TestCase):
 
     def setup_method(self, method):
 
-        self.dialog = glade.GladeDialog("debug-dialog")
+        self.dialog = glade.GladeDialog("encoding-dialog")
 
     def test___getattr__(self):
 
@@ -36,8 +33,8 @@ class TestGladeDialog(TestCase):
 
     def test___init__(self):
 
-        assert isinstance(self.dialog._dialog, gtk.Dialog)
-        assert isinstance(self.dialog._glade_xml, gtk.glade.XML)
+        assert hasattr(self.dialog, "_dialog")
+        assert hasattr(self.dialog, "_glade_xml")
 
     def test___setattr__(self):
 

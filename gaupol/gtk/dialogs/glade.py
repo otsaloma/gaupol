@@ -29,14 +29,13 @@ class GladeDialog(Delegate, Runner):
     """Wrapper for Glade constructed dialogs.
 
     Instance variables:
-
-        _dialog:    gtk.Dialog
-        _glade_xml: gtk.glade.XML
+     * _dialog: gtk.Dialog (from widget named "dialog")
+     * _glade_xml: gtk.glade.XML widget tree
     """
 
-    # pylint: disable-msg=W0231
     def __init__(self, name):
 
+        # pylint: disable-msg=W0231
         glade_xml = util.get_glade_xml(name)
         dialog = glade_xml.get_widget("dialog")
         Delegate.__init__(self, dialog)

@@ -31,8 +31,16 @@ class TestTextEditDialog(TestCase):
 
     def setup_method(self, method):
 
-        self.dialog = textedit.TextEditDialog(gtk.Window(), "test")
+        self.dialog = textedit.TextEditDialog(gtk.Window())
 
     def test_get_text(self):
 
-        assert self.dialog.get_text() == "test"
+        self.dialog.set_text("test")
+        text = self.dialog.get_text()
+        assert text == "test"
+
+    def test_set_text(self):
+
+        self.dialog.set_text("test")
+        text = self.dialog.get_text()
+        assert text == "test"

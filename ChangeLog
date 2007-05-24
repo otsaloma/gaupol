@@ -1,3 +1,14 @@
+2007-05-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/language-dialog.glade:
+	Use gtk.Alignments to indent sections.
+
+	* gaupol/gtk/dialogs/glade.py:
+	* gaupol/gtk/dialogs/language.py:
+	* gaupol/gtk/dialogs/message.py:
+	* gaupol/gtk/dialogs/textedit.py:
+	Add contracts and clean up code.
+
 2007-05-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/output.py:

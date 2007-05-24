@@ -47,7 +47,7 @@ class TestInfoDialog(_TestMessageDialog):
 
     def setup_method(self, method):
 
-        self.dialog = message.InfoDialog(gtk.Window(), "test")
+        self.dialog = message.InfoDialog(gtk.Window(), "test", "test")
         self.dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
 
 
@@ -63,5 +63,5 @@ class TestWarningDialog(_TestMessageDialog):
 
     def setup_method(self, method):
 
-        self.dialog = message.WarningDialog(gtk.Window(), "test")
+        self.dialog = message.WarningDialog(gtk.Window(), "test", "test")
         self.dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)

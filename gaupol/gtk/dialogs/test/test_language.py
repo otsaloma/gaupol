@@ -33,6 +33,12 @@ class TestLanguageDialog(TestCase):
 
         self.dialog = language.LanguageDialog(gtk.Window())
 
+    def test__on_tree_view_selection_changed(self):
+
+        store = self.dialog._tree_view.get_model()
+        selection = self.dialog._tree_view.get_selection()
+        self.dialog._on_tree_view_selection_changed(selection)
+
     def test__save_column(self):
 
         self.dialog._save_column()
@@ -40,11 +46,3 @@ class TestLanguageDialog(TestCase):
     def test__save_target(self):
 
         self.dialog._save_target()
-
-    def test__on_tree_view_selection_changed(self):
-
-        store = self.dialog._tree_view.get_model()
-        selection = self.dialog._tree_view.get_selection()
-        selection.unselect_all()
-        for i in range(len(store)):
-            selection.select_path(i)

@@ -22,12 +22,8 @@
 import gobject
 import gtk
 
-try:
-    import enchant
-except Exception:
-    pass
-
 from gaupol import langlib
+from gaupol.base import Contractual
 from gaupol.gtk import conf, const, util
 from gaupol.gtk.index import *
 from .glade import GladeDialog
@@ -35,31 +31,25 @@ from .glade import GladeDialog
 
 class LanguageDialog(GladeDialog):
 
-    """Dialog for configuring spell-check.
+    """Dialog for configuring spell-check."""
 
-    Instance variables:
+    __metaclass__ = Contractual
 
-        _all_radio:     gtk.RadioButton, target all documents
-        _current_radio: gtk.RadioButton, target current document
-        _langs:         List of languages, er... locales
-        _main_radio:    gtk.RadioButton, target main text column
-        _tran_radio:    gtk.RadioButton, target translation text column
-        _tree_view:     gtk.TreeView, languages
-    """
+    def __init___require(self, parent):
+        assert util.enchant_available()
 
     def __init__(self, parent):
 
         GladeDialog.__init__(self, "language-dialog")
-        self._langs = []
+        get_widget = self._glade_xml.get_widget
+        self._all_radio = get_widget("all_radio")
+        self._current_radio = get_widget("current_radio")
+        self._main_radio = get_widget("main_radio")
+        self._tran_radio = get_widget("tran_radio")
+        self._tree_view = get_widget("tree_view")
 
-        self._all_radio     = self._glade_xml.get_widget("all_radio")
-        self._current_radio = self._glade_xml.get_widget("current_radio")
-        self._main_radio    = self._glade_xml.get_widget("main_radio")
-        self._tran_radio    = self._glade_xml.get_widget("tran_radio")
-        self._tree_view     = self._glade_xml.get_widget("tree_view")
-
-        self._init_langs()
         self._init_tree_view()
+        self._populate_tree_view()
         self._init_data()
         self._init_signal_handlers()
         self._init_sizes()
@@ -69,44 +59,32 @@ class LanguageDialog(GladeDialog):
     def _init_data(self):
         """Initialize default values for widgets."""
 
-        if conf.spell_check.lang in self._langs:
-            row = self._langs.index(conf.spell_check.lang)
-            self._tree_view.get_selection().select_path(row)
-
+        store = self._tree_view.get_model()
+        for i in range(len(store)):
+            if store[i][0] == conf.spell_check.lang:
+                selection = self._tree_view.get_selection()
+                selection.select_path(i)
         col = conf.spell_check.col
         self._main_radio.set_active(col == MTXT)
         self._tran_radio.set_active(col == TTXT)
-
         target = conf.spell_check.target
         self._all_radio.set_active(target == const.TARGET.ALL)
         self._current_radio.set_active(target == const.TARGET.CURRENT)
 
-    def _init_langs(self):
-        """Initialize the list of available languages."""
-
-        for locale in langlib.LOCALES:
-            try:
-                enchant.Dict(locale)
-                self._langs.append(locale)
-            except enchant.Error:
-                pass
-        self._langs.sort()
-
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
-
-        def on_target_toggled(*args):
-            self._save_target()
-        self._all_radio.connect("toggled", on_target_toggled)
-        self._current_radio.connect("toggled", on_target_toggled)
 
         def on_column_toggled(*args):
             self._save_column()
         self._main_radio.connect("toggled", on_column_toggled)
         self._tran_radio.connect("toggled", on_column_toggled)
-
+        def on_target_toggled(*args):
+            self._save_target()
+        self._all_radio.connect("toggled", on_target_toggled)
+        self._current_radio.connect("toggled", on_target_toggled)
         selection = self._tree_view.get_selection()
-        selection.connect("changed", self._on_tree_view_selection_changed)
+        callback = self._on_tree_view_selection_changed
+        selection.connect("changed", callback)
 
     def _init_sizes(self):
         """Initialize widget sizes."""
@@ -114,40 +92,58 @@ class LanguageDialog(GladeDialog):
         width, height = util.get_tree_view_size(self._tree_view)
         width = width + 42 + util.EXTRA
         height = height + 259 + util.EXTRA
-        util.resize_dialog(self, width, height, 0.5, 0.5)
+        util.resize_dialog(self, width, height, (0.5, 0.5))
 
     def _init_tree_view(self):
         """Initialize the tree view."""
 
-        self._tree_view.columns_autosize()
         selection = self._tree_view.get_selection()
         selection.set_mode(gtk.SELECTION_SINGLE)
         store = gtk.ListStore(gobject.TYPE_STRING)
+        store.set_sort_column_id(0, gtk.SORT_ASCENDING)
         self._tree_view.set_model(store)
-        column = gtk.TreeViewColumn("", gtk.CellRendererText(), text=0)
+        renderer = gtk.CellRendererText()
+        column = gtk.TreeViewColumn("", renderer, text=0)
         self._tree_view.append_column(column)
-        for lang in self._langs:
-            store.append([langlib.get_long_name(lang)])
+        def set_language(column, renderer, store, itr):
+            value = store.get_value(itr, 0)
+            renderer.props.text = langlib.get_long_name(value)
+        column.set_cell_data_func(renderer, set_language)
 
     @util.asserted_return
     def _on_tree_view_selection_changed(self, selection):
-        """Save the language."""
+        """Save the active language."""
 
         store, itr = selection.get_selected()
         assert itr is not None
-        row = store.get_path(itr)[0]
-        conf.spell_check.lang = self._langs[row]
+        value = store.get_value(itr, 0)
+        conf.spell_check.lang = value
+
+    def _populate_tree_view(self):
+        """Add all available languages to the tree view."""
+
+        import enchant
+        store = self._tree_view.get_model()
+        @util.silent(enchant.Error)
+        def append(locale):
+            enchant.Dict(locale)
+            store.append([locale])
+        for locale in langlib.locales:
+            append(locale)
 
     def _save_column(self):
-        """Save the column."""
+        """Save the active column."""
 
-        main = self._main_radio.get_active()
-        col = (MTXT if main else TTXT)
-        conf.spell_check.col = col
+        if self._main_radio.get_active():
+            conf.spell_check.col = MTXT
+        elif self._tran_radio.get_active():
+            conf.spell_check.col = TTXT
 
     def _save_target(self):
-        """Save the target."""
+        """Save the active target."""
 
-        each = self._all_radio.get_active()
-        target = (const.TARGET.ALL if each else const.TARGET.CURRENT)
+        if self._current_radio.get_active():
+            target = const.TARGET.CURRENT
+        elif self._all_radio.get_active():
+            target = const.TARGET.ALL
         conf.spell_check.target = target

@@ -31,7 +31,6 @@ class ErrorDialog(gtk.MessageDialog):
         gtk.MessageDialog.__init__(
             self, parent, gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
             gtk.MESSAGE_ERROR, gtk.BUTTONS_NONE, title)
-
         if message is not None:
             self.format_secondary_text(message)
 
@@ -45,7 +44,6 @@ class InfoDialog(gtk.MessageDialog):
         gtk.MessageDialog.__init__(
             self, parent, gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
             gtk.MESSAGE_INFO, gtk.BUTTONS_NONE, title)
-
         if message is not None:
             self.format_secondary_text(message)
 
@@ -59,7 +57,6 @@ class QuestionDialog(gtk.MessageDialog):
         gtk.MessageDialog.__init__(
             self, parent, gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
             gtk.MESSAGE_QUESTION, gtk.BUTTONS_NONE, title)
-
         if message is not None:
             self.format_secondary_text(message)
 
@@ -73,6 +70,5 @@ class WarningDialog(gtk.MessageDialog):
         gtk.MessageDialog.__init__(
             self, parent, gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
             gtk.MESSAGE_WARNING, gtk.BUTTONS_NONE, title)
-
         if message is not None:
             self.format_secondary_text(message)
