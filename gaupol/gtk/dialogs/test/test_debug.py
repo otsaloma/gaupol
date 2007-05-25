@@ -27,6 +27,10 @@ class TestDebugDialog(TestCase):
 
     def run(self):
 
+        try:
+            self.dialog.foo()
+        except Exception:
+            self.dialog.set_text(*sys.exc_info())
         self.dialog.run()
         self.dialog.destroy()
 
@@ -38,28 +42,14 @@ class TestDebugDialog(TestCase):
 
         self.dialog = debug.DebugDialog()
 
-    def test__on_response_close(self):
+    def test__on_response__close(self):
 
         self.dialog.response(gtk.RESPONSE_CLOSE)
 
-    def test__on_response_no(self):
+    def test__on_response__no(self):
 
         self.dialog.response(gtk.RESPONSE_NO)
 
-    def test__on_response_yes(self):
+    def test__on_response__yes(self):
 
         self.dialog.response(gtk.RESPONSE_YES)
-
-
-class TestModule(TestCase):
-
-    def run(self):
-
-        dialog = debug.DebugDialog()
-        try:
-            # pylint: disable-msg=W0104
-            1 / 0
-        except Exception:
-            dialog.set_text(*sys.exc_info())
-        dialog.run()
-        dialog.destroy()

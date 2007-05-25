@@ -33,7 +33,7 @@ import traceback
 
 from gaupol import urls, __version__
 from gaupol.gtk import conf, util
-from gaupol.gtk.i18n import _
+from gaupol.i18n import _
 from .glade import GladeDialog
 from .message import ErrorDialog
 
@@ -43,16 +43,14 @@ class DebugDialog(GladeDialog):
     """Dialog for displaying a traceback in case of an unhandled exception.
 
     Instance variables:
-
-        _code_lines: List of lines of code displayed
-        _text_view:  gtk.TextView displaying the traceback
+     * _code_lines: List of lines of code displayed in the traceback
     """
 
     def __init__(self):
 
         GladeDialog.__init__(self, "debug-dialog")
-        self._code_lines = []
         self._text_view = self._glade_xml.get_widget("text_view")
+        self._code_lines = []
 
         self._init_text_tags()
         self._init_signal_handlers()
@@ -70,8 +68,7 @@ class DebugDialog(GladeDialog):
         text_buffer = self._text_view.get_buffer()
         text_buffer.create_tag("bold", weight=pango.WEIGHT_BOLD)
         text_buffer.create_tag("large", scale=pango.SCALE_LARGE)
-        text_buffer.create_tag("margin_12", left_margin=12)
-        text_buffer.create_tag("margin_24", left_margin=24)
+        text_buffer.create_tag("indent", left_margin=24)
         text_buffer.create_tag("monospace", family="monospace")
 
     def _insert_link(self, path, lineno, *tags):
@@ -82,21 +79,23 @@ class DebugDialog(GladeDialog):
         tag.props.underline = pango.UNDERLINE_SINGLE
         tag.connect("event", self._on_text_view_link_tag_event)
         path = os.path.abspath(path)
-        if path.startswith(os.getcwd()):
-            path = path.replace(os.getcwd(), "")[len(os.sep):]
-        tag.set_data("path", os.path.abspath(path))
+        tag.set_data("path", path)
         tag.set_data("lineno", lineno)
-        end_iter = text_buffer.get_end_iter()
+        if path.startswith(os.getcwd()):
+            path = path.replace(os.getcwd(), "")
+        if path.startswith(os.sep):
+            path = path.replace(os.sep, "", 1)
+        itr = text_buffer.get_end_iter()
         tag_table = text_buffer.get_tag_table()
         tags = tuple(tag_table.lookup(x) for x in tags)
-        text_buffer.insert_with_tags(end_iter, path, tag, *tags)
+        text_buffer.insert_with_tags(itr, path, tag, *tags)
 
     def _insert_text(self, text, *tags):
         """Insert text with tags to the text view."""
 
         text_buffer = self._text_view.get_buffer()
-        end_iter = text_buffer.get_end_iter()
-        text_buffer.insert_with_tags_by_name(end_iter, text, *tags)
+        itr = text_buffer.get_end_iter()
+        text_buffer.insert_with_tags_by_name(itr, text, *tags)
 
     @util.asserted_return
     def _on_response(self, dialog, response):
@@ -110,7 +109,8 @@ class DebugDialog(GladeDialog):
     def _on_text_view_link_tag_event(self, tag, text_view, event, itr):
         """Open linked file in editor."""
 
-        assert event.type == gtk.gdk.BUTTON_RELEASE and event.button == 1
+        assert event.type == gtk.gdk.BUTTON_RELEASE
+        assert event.button == 1
         text_buffer = self._text_view.get_buffer()
         assert not text_buffer.get_selection_bounds()
         self._open_link(tag)
@@ -118,25 +118,25 @@ class DebugDialog(GladeDialog):
     def _on_text_view_motion_notify_event(self, text_view, event):
         """Change mouse pointer when hovering over a link."""
 
-        window = gtk.TEXT_WINDOW_WIDGET
         x = int(event.x)
         y = int(event.y)
+        window = gtk.TEXT_WINDOW_WIDGET
         x, y = text_view.window_to_buffer_coords(window, x, y)
         window = text_view.get_window(gtk.TEXT_WINDOW_TEXT)
         for tag in text_view.get_iter_at_location(x, y).get_tags():
             if tag.get_data("path") is not None:
                 window.set_cursor(util.HAND_CURSOR)
-                text_view.window.get_pointer()
-                return
+                return text_view.window.get_pointer()
         window.set_cursor(util.INSERT_CURSOR)
         text_view.window.get_pointer()
 
     def _open_link(self, tag):
         """Open linked file in editor."""
 
+        @util.asserted_return
         def on_editor_exit(pid, return_value):
-            if return_value != 0:
-                self._show_editor_error_dialog()
+            assert return_value != 0
+            self._show_editor_error_dialog()
         path = util.shell_quote(tag.get_data("path"))
         process = util.start_process("%s %s +%d" % (
             conf.debug.editor, path, tag.get_data("lineno")))
@@ -146,94 +146,52 @@ class DebugDialog(GladeDialog):
     def _print_platform(self):
         """Print platform information."""
 
-        def insert_text(text, *tags):
-            self._insert_text(text, "margin_12", *tags)
-        insert_text("System: ", "bold")
-        insert_text(platform.system())
-        insert_text("\n")
-        insert_text("Desktop environment: ", "bold")
-        insert_text(util.get_desktop_environment() or "?")
-        insert_text("\n")
+        self._insert_text("System: %s\n" % platform.system())
+        desktop = util.get_desktop_environment() or "???"
+        self._insert_text("Desktop environment: %s\n\n" % desktop)
 
-    def _print_traceback(self, exctype, value, tb, limit=None):
+    def _print_traceback(self, exctype, value, tb, limit=100):
         """Print up to limit stack trace entries from traceback."""
 
-        def insert_text(text, *tags):
-            self._insert_text(text, "margin_12", *tags)
-
-        i = 0
-        while tb is not None and (limit is None or i < limit):
+        depth = 0
+        while (tb is not None) and (depth < limit):
             frame = tb.tb_frame
-            lineno = tb.tb_lineno
             code = frame.f_code
-            filename = code.co_filename
-            name = code.co_name
-            insert_text("File: ", "bold")
-            self._insert_link(filename, lineno)
-            insert_text("\n")
-            insert_text("Line: ", "bold")
-            insert_text(str(lineno))
-            insert_text("\n")
-            insert_text("In: ", "bold")
-            insert_text(name)
-            insert_text("\n")
-            line = linecache.getline(filename, lineno).strip()
-            if line:
-                self._code_lines.append(line)
-                insert_text("\n%s\n\n" % line, "monospace", "margin_24")
+            self._insert_text("File: ")
+            self._insert_link(code.co_filename, tb.tb_lineno)
+            self._insert_text("\n")
+            self._insert_text("Line: %s\n" % str(tb.tb_lineno))
+            self._insert_text("In: %s\n\n" % code.co_name)
+            line = linecache.getline(code.co_filename, tb.tb_lineno).strip()
+            self._insert_text(line + "\n\n", "monospace", "indent")
+            self._code_lines.append(line)
             tb = tb.tb_next
-            i += 1
+            depth += 1
 
         exception = traceback.format_exception_only(exctype, value)[0]
-        message = ""
-        if exception.count(" "):
-            exception, message = exception.split(" ", 1)
-        insert_text(exception + " ", "bold")
-        insert_text(message)
-        insert_text("\n")
+        exception, space, message = exception.partition(" ")
+        self._insert_text(exception, "bold")
+        self._insert_text("%s%s\n" % (space, message))
 
     def _print_versions(self):
-        """Print version information."""
+        """Print version numbers of dependencies."""
 
-        def insert_text(text, *tags):
-            self._insert_text(text, "margin_12", *tags)
-        insert_text("Gaupol: ", "bold")
-        insert_text(__version__)
-        insert_text("\n")
-        insert_text("Python: ", "bold")
-        insert_text("%d.%d.%d" % sys.version_info[:3])
-        insert_text("\n")
-        insert_text("GTK: ", "bold")
-        insert_text("%d.%d.%d" % gtk.gtk_version)
-        insert_text("\n")
-        insert_text("PyGTK: ", "bold")
-        insert_text("%d.%d.%d" % gtk.pygtk_version)
-        insert_text("\n")
-        insert_text("PyEnchant: ", "bold")
-        insert_text(util.get_enchant_version() or "N/A")
-        insert_text("\n")
-        insert_text("Universal Encoding Detector: ", "bold")
-        insert_text(util.get_chardet_version() or "N/A")
-        insert_text("\n")
+        self._insert_text("Gaupol: %s\n" % __version__)
+        self._insert_text("Python: %d.%d.%d\n" % sys.version_info[:3])
+        self._insert_text("GTK: %d.%d.%d\n" % gtk.gtk_version)
+        self._insert_text("PyGTK: %d.%d.%d\n" % gtk.pygtk_version)
+        version = util.get_enchant_version() or "N/A"
+        self._insert_text("PyEnchant: %s\n" % version)
+        version = util.get_chardet_version() or "N/A"
+        self._insert_text("Universal Encoding Detector: %s\n" % version)
 
     def _resize(self):
         """Resize dialog based on the text view's content."""
 
-        # Get required width and height to display text.
-        text_buffer = self._text_view.get_buffer()
-        bounds = text_buffer.get_bounds()
-        text = text_buffer.get_text(*bounds)
-        label = gtk.Label(text)
-        text_width, height = label.size_request()
-
-        # Get required width to display code.
-        attrs = pango.AttrList()
-        attrs.insert(pango.AttrFamily("monospace", 0, -1))
-        label.set_attributes(attrs)
-        label.set_text("\n".join(self._code_lines))
+        text_width, height = util.get_text_view_size(self._text_view)
+        label = gtk.Label("\n".join(self._code_lines))
+        util.set_label_font(label, "monospace")
         code_width = label.size_request()[0]
-
-        # Set dialog size.
         width = max(text_width, code_width) + 150 + util.EXTRA
         height = height + 160 + util.EXTRA
         util.resize_message_dialog(self, width, height)
@@ -243,7 +201,7 @@ class DebugDialog(GladeDialog):
 
         title = _('Failed to open editor "%s"') % conf.debug.editor
         message = _('To change the editor, edit option "editor" under ' \
-            'section "debug" in configuration file "%s".') % conf.CONFIG_FILE
+            'section "debug" in configuration file "%s".') % conf.config_file
         dialog = ErrorDialog(self._dialog, title, message)
         dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
         self.flash_dialog(dialog)
@@ -253,24 +211,20 @@ class DebugDialog(GladeDialog):
 
         self._insert_text("Traceback", "large", "bold")
         self._insert_text("\n\n")
-        self._print_traceback(exctype, value, tb, 100)
+        self._print_traceback(exctype, value, tb)
         self._insert_text("Platform", "large", "bold")
         self._insert_text("\n\n")
         self._print_platform()
-        self._insert_text("\n")
         self._insert_text("Versions", "large", "bold")
         self._insert_text("\n\n")
         self._print_versions()
-
         self._resize()
 
 
 @util.asserted_return
 def show(exctype, value, tb):
-    """Show exception traceback in dialog.
+    """Show exception traceback in dialog."""
 
-    This function is usable as sys.excepthook.
-    """
     traceback.print_exception(exctype, value, tb)
     assert isinstance(value, Exception)
     try:
@@ -279,9 +233,6 @@ def show(exctype, value, tb):
         response = dialog.run()
         dialog.destroy()
         if response == gtk.RESPONSE_NO:
-            try:
-                gtk.main_quit()
-            except RuntimeError:
-                raise SystemExit(1)
+            raise SystemExit(1)
     except Exception:
         traceback.print_exc()
