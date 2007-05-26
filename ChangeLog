@@ -1,3 +1,10 @@
+2007-05-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/preferences-dialog.glade:
+	* gaupol/gtk/dialogs/preferences.py:
+	Use gtk.Alignments to indent sections.
+	Remove undo limiting and level preferences.
+
 2007-05-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/glade/debug-dialog.glade:

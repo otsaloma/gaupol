@@ -26,42 +26,26 @@ import pango
 from gaupol import enclib
 from gaupol.base import Delegate
 from gaupol.gtk import conf, const, util
-from gaupol.gtk.i18n import _
+from gaupol.i18n import _
 from .encoding import EncodingDialog
 from .glade import GladeDialog
 
 
 class _EditorPage(Delegate):
 
-    """Editor preferences page.
-
-    Instance variables:
-
-        _default_font_check: gtk.CheckButton, use default font
-        _font_button:        gtk.FontButton, custom font
-        _font_hbox:          gtk.HBox, custom font widgets
-        _length_cell_radio:  gtk.RadioButton, show line lengths in cells
-        _length_combo:       gtk.ComboBox, line length units
-        _length_edit_radio:  gtk.RadioButton, show line lengths in text views
-        _undo_limit_hbox:    gtk.HBox, limit undo widgets
-        _undo_limit_spin:    gtk.SpinButton, amount of undo levels
-        _unlimit_undo_check: gtk.CheckButton, unlimited undo
-    """
+    """Editor preferences page."""
 
     def __init__(self, master):
 
         Delegate.__init__(self, master)
         get_widget = self._glade_xml.get_widget
         self._default_font_check = get_widget("editor_default_font_check")
-        self._font_button        = get_widget("editor_font_button")
-        self._font_hbox          = get_widget("editor_font_hbox")
-        self._length_cell_radio  = get_widget("editor_length_cell_radio")
-        self._length_combo       = get_widget("editor_length_combo")
-        self._length_edit_radio  = get_widget("editor_length_edit_radio")
-        self._length_hbox        = get_widget("editor_length_hbox")
-        self._undo_limit_hbox    = get_widget("editor_undo_limit_hbox")
-        self._undo_limit_spin    = get_widget("editor_undo_limit_spin")
-        self._unlimit_undo_check = get_widget("editor_unlimit_undo_check")
+        self._font_button = get_widget("editor_font_button")
+        self._font_hbox = get_widget("editor_font_hbox")
+        self._length_cell_check = get_widget("editor_length_cell_check")
+        self._length_combo = get_widget("editor_length_combo")
+        self._length_edit_check = get_widget("editor_length_edit_check")
+        self._length_hbox = get_widget("editor_length_hbox")
 
         self._init_length_combo()
         self._init_data()
@@ -84,16 +68,11 @@ class _EditorPage(Delegate):
         self._font_hbox.set_sensitive(not use_default)
         self._font_button.set_font_name(self._get_custom_font())
 
-        limit = conf.editor.limit_undo
-        self._unlimit_undo_check.set_active(not limit)
-        self._undo_limit_hbox.set_sensitive(limit)
-        self._undo_limit_spin.set_value(conf.editor.undo_levels)
-
         cell = conf.editor.show_lengths_cell
         edit = conf.editor.show_lengths_edit
         self._length_hbox.set_sensitive(cell or edit)
-        self._length_cell_radio.set_active(cell)
-        self._length_edit_radio.set_active(edit)
+        self._length_cell_check.set_active(cell)
+        self._length_edit_check.set_active(edit)
         self._length_combo.set_active(conf.editor.length_unit)
 
     def _init_length_combo(self):
@@ -109,11 +88,9 @@ class _EditorPage(Delegate):
 
         util.connect(self, "_default_font_check", "toggled")
         util.connect(self, "_font_button", "font-set")
-        util.connect(self, "_length_cell_radio", "toggled")
+        util.connect(self, "_length_cell_check", "toggled")
         util.connect(self, "_length_combo", "changed")
-        util.connect(self, "_length_edit_radio", "toggled")
-        util.connect(self, "_undo_limit_spin", "value-changed")
-        util.connect(self, "_unlimit_undo_check", "toggled")
+        util.connect(self, "_length_edit_check", "toggled")
 
     def _on_default_font_check_toggled(self, check_button):
         """Save the default font usage."""
@@ -127,10 +104,10 @@ class _EditorPage(Delegate):
 
         conf.editor.font = font_button.get_font_name()
 
-    def _on_length_cell_radio_toggled(self, radio_button):
+    def _on_length_cell_check_toggled(self, check_button):
         """Save the line length showage on cells."""
 
-        conf.editor.show_lengths_cell = radio_button.get_active()
+        conf.editor.show_lengths_cell = check_button.get_active()
         cell = conf.editor.show_lengths_cell
         edit = conf.editor.show_lengths_edit
         self._length_hbox.set_sensitive(cell or edit)
@@ -141,66 +118,43 @@ class _EditorPage(Delegate):
         index = combo_box.get_active()
         conf.editor.length_unit = const.LENGTH_UNIT.members[index]
 
-    def _on_length_edit_radio_toggled(self, radio_button):
+    def _on_length_edit_check_toggled(self, check_button):
         """Save the line length showage on text views."""
 
-        conf.editor.show_lengths_edit = radio_button.get_active()
+        conf.editor.show_lengths_edit = check_button.get_active()
         cell = conf.editor.show_lengths_cell
         edit = conf.editor.show_lengths_edit
         self._length_hbox.set_sensitive(cell or edit)
 
-    def _on_undo_limit_spin_value_changed(self, spin_button):
-        """Save the amount of undo levels."""
-
-        conf.editor.undo_levels = spin_button.get_value_as_int()
-
-    def _on_unlimit_undo_check_toggled(self, check_button):
-        """Save the undo limiting."""
-
-        limit = not check_button.get_active()
-        conf.editor.limit_undo = limit
-        self._undo_limit_hbox.set_sensitive(limit)
-
 
 class _FilePage(Delegate):
 
-    """File preferences page.
-
-    Instance variables:
-
-        _add_button:    gtk.Button, add encoding
-        _auto_check:    gtk.CheckButton, try encoding auto-detection
-        _down_button:   gtk.Button, move encoding down
-        _tree_view:     gtk.TreeView, fallback encodings
-        _locale_check:  gtk.CheckButton, try locale encoding
-        _remove_button: gtk.Button, remove encoding
-        _up_button:     gtk.Button, move encoding up
-    """
+    """File preferences page."""
 
     def __init__(self, master):
 
         Delegate.__init__(self, master)
         get_widget = self._glade_xml.get_widget
-        self._add_button    = get_widget("file_add_button")
-        self._auto_check    = get_widget("file_auto_check")
-        self._down_button   = get_widget("file_down_button")
-        self._tree_view     = get_widget("file_tree_view")
-        self._locale_check  = get_widget("file_locale_check")
+        self._add_button = get_widget("file_add_button")
+        self._auto_check = get_widget("file_auto_check")
+        self._down_button = get_widget("file_down_button")
+        self._tree_view = get_widget("file_tree_view")
+        self._locale_check = get_widget("file_locale_check")
         self._remove_button = get_widget("file_remove_button")
-        self._up_button     = get_widget("file_up_button")
+        self._up_button = get_widget("file_up_button")
 
         self._init_tree_view()
         self._init_data()
         self._init_signal_handlers()
 
+    @util.asserted_return
     def _get_selected_row(self):
         """Get the selected row in the tree view or None."""
 
         selection = self._tree_view.get_selection()
         store, itr = selection.get_selected()
-        if itr is not None:
-            return store.get_path(itr)[0]
-        return None
+        assert itr is not None
+        return store.get_path(itr)[0]
 
     def _init_data(self):
         """Initialize default values for widgets."""
@@ -228,12 +182,12 @@ class _FilePage(Delegate):
     def _init_tree_view(self):
         """Initialize the tree view."""
 
-        self._tree_view.columns_autosize()
         selection = self._tree_view.get_selection()
         selection.set_mode(gtk.SELECTION_SINGLE)
         store = gtk.ListStore(gobject.TYPE_STRING)
         self._tree_view.set_model(store)
-        column = gtk.TreeViewColumn("", gtk.CellRendererText(), text=0)
+        renderer = gtk.CellRendererText()
+        column = gtk.TreeViewColumn("", renderer, text=0)
         self._tree_view.append_column(column)
 
     @util.asserted_return
@@ -246,8 +200,8 @@ class _FilePage(Delegate):
         dialog.destroy()
         assert response == gtk.RESPONSE_OK
         assert encoding is not None
-        if encoding not in conf.encoding.fallbacks:
-            conf.encoding.fallbacks.append(encoding)
+        assert encoding not in conf.encoding.fallbacks
+        conf.encoding.fallbacks.append(encoding)
         self._reload_tree_view()
         self._tree_view.grab_focus()
         store = self._tree_view.get_model()
@@ -273,6 +227,7 @@ class _FilePage(Delegate):
 
         conf.encoding.try_locale = check_button.get_active()
 
+    @util.asserted_return
     def _on_remove_button_clicked(self, *args):
         """Remove the selected encoding."""
 
@@ -281,8 +236,8 @@ class _FilePage(Delegate):
         self._reload_tree_view()
         self._tree_view.grab_focus()
         store = self._tree_view.get_model()
-        if len(store) > 0:
-            self._tree_view.set_cursor(max(row - 1, 0))
+        assert len(store) > 0
+        self._tree_view.set_cursor(max(row - 1, 0))
 
     def _on_up_button_clicked(self, *args):
         """Move the selected encoding up."""
@@ -306,35 +261,24 @@ class _FilePage(Delegate):
     def _set_sensitivities(self):
         """Set the tree view button sensitivities."""
 
-        def set_sensitive(remove, up, down):
-            self._remove_button.set_sensitive(remove)
-            self._up_button.set_sensitive(up)
-            self._down_button.set_sensitive(down)
         store = self._tree_view.get_model()
         row = self._get_selected_row()
-        if row is not None:
-            return set_sensitive(True, row > 0, row < len(store) - 1)
-        return set_sensitive(False, False, False)
+        self._remove_button.set_sensitive(row >= 0)
+        self._up_button.set_sensitive(row > 0)
+        self._down_button.set_sensitive(0 <= row < len(store) - 1)
 
 
 class _PreviewPage(Delegate):
 
-    """Preview preferences page.
-
-    Instance variables:
-
-        _app_combo:     gtk.ComboBox, video players
-        _command_entry: gtk.Entry, video player command
-        _offset_spin:   gtk.SpinButton, offset to start playing at
-    """
+    """Preview preferences page."""
 
     def __init__(self, master):
 
         Delegate.__init__(self, master)
         get_widget = self._glade_xml.get_widget
-        self._app_combo     = get_widget("preview_app_combo")
+        self._app_combo = get_widget("preview_app_combo")
         self._command_entry = get_widget("preview_command_entry")
-        self._offset_spin   = get_widget("preview_offset_spin")
+        self._offset_spin = get_widget("preview_offset_spin")
 
         self._init_app_combo()
         self._init_data()
@@ -354,17 +298,15 @@ class _PreviewPage(Delegate):
     def _init_data(self):
         """Initialize default values for widgets."""
 
+        self._offset_spin.set_value(conf.preview.offset)
         if conf.preview.use_predefined:
             self._app_combo.set_active(conf.preview.video_player)
             self._command_entry.set_text(conf.preview.video_player.command)
-            self._command_entry.set_editable(False)
-        else:
-            store = self._app_combo.get_model()
-            self._app_combo.set_active(len(store) - 1)
-            self._command_entry.set_text(conf.preview.custom_command)
-            self._command_entry.set_editable(True)
-
-        self._offset_spin.set_value(conf.preview.offset)
+            return self._command_entry.set_editable(False)
+        store = self._app_combo.get_model()
+        self._app_combo.set_active(len(store) - 1)
+        self._command_entry.set_text(conf.preview.custom_command)
+        self._command_entry.set_editable(True)
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
@@ -377,15 +319,15 @@ class _PreviewPage(Delegate):
         """Save the video player and show it's command."""
 
         index = combo_box.get_active()
-        if index in range(len(const.VIDEO_PLAYER.members)):
+        if index in const.VIDEO_PLAYER.members:
             conf.preview.use_predefined = True
-            conf.preview.video_player = const.VIDEO_PLAYER.members[index]
-            self._command_entry.set_text(conf.preview.video_player.command)
-            self._command_entry.set_editable(False)
-        else:
-            conf.preview.use_predefined = False
-            self._command_entry.set_text(conf.preview.custom_command)
-            self._command_entry.set_editable(True)
+            player = const.VIDEO_PLAYER.members[index]
+            conf.preview.video_player = player
+            self._command_entry.set_text(player.command)
+            return self._command_entry.set_editable(False)
+        conf.preview.use_predefined = False
+        self._command_entry.set_text(conf.preview.custom_command)
+        self._command_entry.set_editable(True)
 
     @util.asserted_return
     def _on_command_entry_changed(self, entry):
@@ -395,27 +337,20 @@ class _PreviewPage(Delegate):
         conf.preview.custom_command = entry.get_text()
 
     def _on_offset_spin_value_changed(self, spin_button):
-        """Save the offset."""
+        """Save the start position offset."""
 
         conf.preview.offset = spin_button.get_value()
 
 
 class PreferencesDialog(GladeDialog):
 
-    """Dialog for editing preferences.
-
-    Instance variables:
-
-        _editor_page:  _EditorPage
-        _file_page:    _FilePage
-        _preview_page: _PreviewPage
-    """
+    """Dialog for editing preferences."""
 
     def __init__(self):
 
-        GladeDialog.__init__(self, "pref-dialog")
-        self._editor_page  = _EditorPage(self)
-        self._file_page    = _FilePage(self)
+        GladeDialog.__init__(self, "preferences-dialog")
+        self._editor_page = _EditorPage(self)
+        self._file_page = _FilePage(self)
         self._preview_page = _PreviewPage(self)
 
         self.set_transient_for(None)
