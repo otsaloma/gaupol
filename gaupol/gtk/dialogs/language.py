@@ -49,26 +49,11 @@ class LanguageDialog(GladeDialog):
         self._tree_view = get_widget("tree_view")
 
         self._init_tree_view()
-        self._init_data()
+        self._init_values()
         self._init_signal_handlers()
         self._init_sizes()
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_CLOSE)
-
-    def _init_data(self):
-        """Initialize default values for widgets."""
-
-        store = self._tree_view.get_model()
-        for i in range(len(store)):
-            if store[i][0] == conf.spell_check.lang:
-                selection = self._tree_view.get_selection()
-                selection.select_path(i)
-        col = conf.spell_check.col
-        self._main_radio.set_active(col == MTXT)
-        self._tran_radio.set_active(col == TTXT)
-        target = conf.spell_check.target
-        self._all_radio.set_active(target == const.TARGET.ALL)
-        self._current_radio.set_active(target == const.TARGET.CURRENT)
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
@@ -107,6 +92,21 @@ class LanguageDialog(GladeDialog):
         column = gtk.TreeViewColumn("", renderer, text=1)
         column.set_sort_column_id(1)
         self._tree_view.append_column(column)
+
+    def _init_values(self):
+        """Initialize default values for widgets."""
+
+        store = self._tree_view.get_model()
+        selection = self._tree_view.get_selection()
+        for i in range(len(store)):
+            if store[i][0] == conf.spell_check.lang:
+                selection.select_path(i)
+        col = conf.spell_check.col
+        self._main_radio.set_active(col == MTXT)
+        self._tran_radio.set_active(col == TTXT)
+        target = conf.spell_check.target
+        self._all_radio.set_active(target == const.TARGET.ALL)
+        self._current_radio.set_active(target == const.TARGET.CURRENT)
 
     @util.asserted_return
     def _on_tree_view_selection_changed(self, selection):

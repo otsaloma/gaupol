@@ -48,7 +48,7 @@ class _EditorPage(Delegate):
         self._length_hbox = get_widget("editor_length_hbox")
 
         self._init_length_combo()
-        self._init_data()
+        self._init_values()
         self._init_signal_handlers()
 
     def _get_custom_font(self):
@@ -60,7 +60,23 @@ class _EditorPage(Delegate):
         font_desc.merge(custom_font_desc, True)
         return font_desc.to_string()
 
-    def _init_data(self):
+    def _init_length_combo(self):
+        """Initialize the line length combo box."""
+
+        store = self._length_combo.get_model()
+        for name in const.LENGTH_UNIT.display_names:
+            store.append([name])
+
+    def _init_signal_handlers(self):
+        """Initialize signal handlers."""
+
+        util.connect(self, "_default_font_check", "toggled")
+        util.connect(self, "_font_button", "font-set")
+        util.connect(self, "_length_cell_check", "toggled")
+        util.connect(self, "_length_combo", "changed")
+        util.connect(self, "_length_edit_check", "toggled")
+
+    def _init_values(self):
         """Initialize default values for widgets."""
 
         use_default = conf.editor.use_default_font
@@ -74,23 +90,6 @@ class _EditorPage(Delegate):
         self._length_cell_check.set_active(cell)
         self._length_edit_check.set_active(edit)
         self._length_combo.set_active(conf.editor.length_unit)
-
-    def _init_length_combo(self):
-        """Initialize the line length combo box."""
-
-        store = self._length_combo.get_model()
-        store.clear()
-        for name in const.LENGTH_UNIT.display_names:
-            store.append([name])
-
-    def _init_signal_handlers(self):
-        """Initialize signal handlers."""
-
-        util.connect(self, "_default_font_check", "toggled")
-        util.connect(self, "_font_button", "font-set")
-        util.connect(self, "_length_cell_check", "toggled")
-        util.connect(self, "_length_combo", "changed")
-        util.connect(self, "_length_edit_check", "toggled")
 
     def _on_default_font_check_toggled(self, check_button):
         """Save the default font usage."""
@@ -144,7 +143,7 @@ class _FilePage(Delegate):
         self._up_button = get_widget("file_up_button")
 
         self._init_tree_view()
-        self._init_data()
+        self._init_values()
         self._init_signal_handlers()
 
     @util.asserted_return
@@ -155,14 +154,6 @@ class _FilePage(Delegate):
         store, itr = selection.get_selected()
         assert itr is not None
         return store.get_path(itr)[0]
-
-    def _init_data(self):
-        """Initialize default values for widgets."""
-
-        self._auto_check.set_active(conf.encoding.try_auto)
-        self._auto_check.set_sensitive(util.chardet_available())
-        self._locale_check.set_active(conf.encoding.try_locale)
-        self._reload_tree_view()
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
@@ -189,6 +180,14 @@ class _FilePage(Delegate):
         renderer = gtk.CellRendererText()
         column = gtk.TreeViewColumn("", renderer, text=0)
         self._tree_view.append_column(column)
+
+    def _init_values(self):
+        """Initialize default values for widgets."""
+
+        self._auto_check.set_active(conf.encoding.try_auto)
+        self._auto_check.set_sensitive(util.chardet_available())
+        self._locale_check.set_active(conf.encoding.try_locale)
+        self._reload_tree_view()
 
     @util.asserted_return
     def _on_add_button_clicked(self, *args):
@@ -281,21 +280,27 @@ class _PreviewPage(Delegate):
         self._offset_spin = get_widget("preview_offset_spin")
 
         self._init_app_combo()
-        self._init_data()
+        self._init_values()
         self._init_signal_handlers()
 
     def _init_app_combo(self):
         """Initialize the application combo box."""
 
         store = self._app_combo.get_model()
-        store.clear()
         for name in const.VIDEO_PLAYER.display_names:
             store.append([name])
         store.append([util.COMBO_SEP])
         store.append([_("Custom")])
         self._app_combo.set_row_separator_func(util.separate_combo)
 
-    def _init_data(self):
+    def _init_signal_handlers(self):
+        """Initialize signal handlers."""
+
+        util.connect(self, "_app_combo", "changed")
+        util.connect(self, "_command_entry", "changed")
+        util.connect(self, "_offset_spin", "value-changed")
+
+    def _init_values(self):
         """Initialize default values for widgets."""
 
         self._offset_spin.set_value(conf.preview.offset)
@@ -307,13 +312,6 @@ class _PreviewPage(Delegate):
         self._app_combo.set_active(len(store) - 1)
         self._command_entry.set_text(conf.preview.custom_command)
         self._command_entry.set_editable(True)
-
-    def _init_signal_handlers(self):
-        """Initialize signal handlers."""
-
-        util.connect(self, "_app_combo", "changed")
-        util.connect(self, "_command_entry", "changed")
-        util.connect(self, "_offset_spin", "value-changed")
 
     def _on_app_combo_changed(self, combo_box):
         """Save the video player and show it's command."""

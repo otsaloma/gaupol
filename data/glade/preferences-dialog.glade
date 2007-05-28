@@ -396,8 +396,7 @@
                                 <child>
                                   <widget class="GtkComboBox" id="editor_length_combo">
                                     <property name="visible">True</property>
-                                    <property name="items">a
-b</property>
+                                    <property name="items"></property>
                                   </widget>
                                   <packing>
                                     <property name="position">1</property>
@@ -474,30 +473,37 @@ b</property>
                             <property name="column_spacing">12</property>
                             <property name="row_spacing">6</property>
                             <child>
-                              <widget class="GtkEntry" id="preview_command_entry">
+                              <widget class="GtkLabel" id="label4">
                                 <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="invisible_char">*</property>
+                                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                              </widget>
+                              <packing>
+                                <property name="top_attach">2</property>
+                                <property name="bottom_attach">3</property>
+                                <property name="x_options">GTK_FILL</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="GtkComboBox" id="preview_app_combo">
+                                <property name="visible">True</property>
+                                <property name="items"></property>
                               </widget>
                               <packing>
                                 <property name="left_attach">1</property>
                                 <property name="right_attach">2</property>
-                                <property name="top_attach">1</property>
-                                <property name="bottom_attach">2</property>
-                                <property name="y_options"></property>
+                                <property name="x_options">GTK_FILL</property>
+                                <property name="y_options">GTK_FILL</property>
                               </packing>
                             </child>
                             <child>
-                              <widget class="GtkLabel" id="label3">
+                              <widget class="GtkLabel" id="label6">
                                 <property name="visible">True</property>
                                 <property name="xalign">0</property>
-                                <property name="label" translatable="yes">Co_mmand:</property>
+                                <property name="label" translatable="yes">_Application:</property>
                                 <property name="use_underline">True</property>
-                                <property name="mnemonic_widget">preview_command_entry</property>
+                                <property name="mnemonic_widget">preview_app_combo</property>
                               </widget>
                               <packing>
-                                <property name="top_attach">1</property>
-                                <property name="bottom_attach">2</property>
                                 <property name="x_options">GTK_FILL</property>
                                 <property name="y_options"></property>
                               </packing>
@@ -519,40 +525,32 @@ b</property>
                               </packing>
                             </child>
                             <child>
-                              <widget class="GtkLabel" id="label6">
+                              <widget class="GtkLabel" id="label3">
                                 <property name="visible">True</property>
                                 <property name="xalign">0</property>
-                                <property name="label" translatable="yes">_Application:</property>
+                                <property name="label" translatable="yes">Co_mmand:</property>
                                 <property name="use_underline">True</property>
-                                <property name="mnemonic_widget">preview_app_combo</property>
+                                <property name="mnemonic_widget">preview_command_entry</property>
                               </widget>
                               <packing>
+                                <property name="top_attach">1</property>
+                                <property name="bottom_attach">2</property>
                                 <property name="x_options">GTK_FILL</property>
                                 <property name="y_options"></property>
                               </packing>
                             </child>
                             <child>
-                              <widget class="GtkComboBox" id="preview_app_combo">
+                              <widget class="GtkEntry" id="preview_command_entry">
                                 <property name="visible">True</property>
-                                <property name="items">a
-b</property>
+                                <property name="can_focus">True</property>
+                                <property name="invisible_char">*</property>
                               </widget>
                               <packing>
                                 <property name="left_attach">1</property>
                                 <property name="right_attach">2</property>
-                                <property name="x_options">GTK_FILL</property>
-                                <property name="y_options">GTK_FILL</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <widget class="GtkLabel" id="label4">
-                                <property name="visible">True</property>
-                                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                              </widget>
-                              <packing>
-                                <property name="top_attach">2</property>
-                                <property name="bottom_attach">3</property>
-                                <property name="x_options">GTK_FILL</property>
+                                <property name="top_attach">1</property>
+                                <property name="bottom_attach">2</property>
+                                <property name="y_options"></property>
                               </packing>
                             </child>
                           </widget>
@@ -613,7 +611,7 @@ b</property>
                                   <widget class="GtkSpinButton" id="preview_offset_spin">
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
-                                    <property name="adjustment">4.250922723738882e-313 3.3951932667795998e-313 4.250922723738882e-313 -1.3408926466139722e-40 1.0193485182949746e-269 -1.418429338051192e-40</property>
+                                    <property name="adjustment">4.2509227628688812e-313 3.3951932667795998e-313 4.2509227628688812e-313 -1.075430665203335e-40 1.0193485182949746e-269 -1.1529673569694987e-40</property>
                                     <property name="climb_rate">1</property>
                                     <property name="digits">1</property>
                                     <property name="numeric">True</property>

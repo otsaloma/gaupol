@@ -46,7 +46,6 @@ encoding = string(default=None)
 format = FORMAT(default="SUBRIP")
 max_recent = integer(min=0, default=10)
 newline = NEWLINE(default="UNIX")
-recents = string_list(default=list())
 smart_tran = boolean(default=True)
 warn_ssa = boolean(default=True)
 
@@ -79,7 +78,6 @@ video_player = VIDEO_PLAYER(default="MPLAYER")
 
 [search]
 cols = COLUMN_list(default=list("MTXT"))
-dot_all = boolean(default=True)
 ignore_case = boolean(default=True)
 max_history = integer(min=0, default=10)
 patterns = string_list(default=list())

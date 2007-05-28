@@ -1,3 +1,32 @@
+2007-05-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/conf.spec:
+	Remove obsolete entries.
+
+	* data/glade/encoding-dialog.glade:
+	* data/glade/language-dialog.glade:
+	* data/glade/preferences-dialog.glade:
+	* data/glade/previewerr-dialog.glade:
+	Set dialog position.
+	Remove unnecessary combo box items.
+
+	* data/glade/open-dialog.glade:
+	* data/glade/save-dialog.glade:
+	New files to replace open-box.glade and save-box.glade.
+
+	* gaupol/gtk/dialogs/file:
+	* gaupol/gtk/dialogs/file/append.py:
+	* gaupol/gtk/dialogs/file/__init__.py:
+	* gaupol/gtk/dialogs/file/open.py:
+	* gaupol/gtk/dialogs/file/save.py:
+	* gaupol/gtk/dialogs/file/subtitle.py:
+	* gaupol/gtk/dialogs/file/video.py:
+	New files for file dialogs.
+
+	* gaupol/gtk/dialogs/language.py:
+	* gaupol/gtk/dialogs/preferences.py:
+	Minor changes.
+
 2007-05-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/glade/preferences-dialog.glade:

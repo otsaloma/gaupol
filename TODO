@@ -1,6 +1,13 @@
 Gaupol 0.8
 ==========
 
+ * Refactor UIMActions
+    * Get rid of specifying uim_paths
+    * Handle actions as gtk.Actions?
+    * Use assertions in UIMAction.is_doable
+ * Integrate the MenuToolButtons with UIManager
+ * Review and adapt to various fixes to gtk.Recent* (e.g. #418219)
+
 Changes:
  [D] Configuration file backend and syntax changed
  [D] Fixed numerous bugs with find and replace
@@ -49,13 +56,6 @@ Gaupol 0.9
 ==========
 
  * Fix regular expression grouping in scriptlib
- * Refactor UIMActions
-    * Get rid of specifying uim_paths
-    * Handle actions as gtk.Actions?
-    * Use assertions in UIMAction.is_doable
-    * Move UIMAction.is_doable to be a callback method attribute?
- * Integrate the MenuToolButtons with UIManager
- * Review and adapt to various fixes to gtk.Recent* (e.g. #418219)
 
 New:
  [ ] Text correction assistant
@@ -73,8 +73,8 @@ Gaupol 1.0
 Unscheduled Possibilities
 =========================
 
- * GTK 2.12
-    - gtk.Tooltips: New API, that allows complex tooltips
+ * PyGTK 2.12
+    - gtk.Tooltips: New API that allows complex tooltips
     - gtk.AboutDialog: "name" replaced with "program-name"
  * Interactive search
  * gedit-style message area
