@@ -1,5 +1,10 @@
 2007-05-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/main.py (_start):
+	Remove one level of indentation.
+
+2007-05-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/main.py:
 	Adapt to renamed modules and variables.
 

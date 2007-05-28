@@ -195,23 +195,22 @@ def _start(opts, args):
 
     from gaupol.gtk.app import Application
     application = Application()
-    if args:
-        jump_row = None
-        re_jump = re.compile(r"\+\d*")
-        for arg in (x for x in args if re_jump.match(x) is not None):
-            jump_row = (max(0, int(arg[1:]) - 1) if arg[1:] else -1)
-            args.remove(arg)
-        paths = [os.path.abspath(x) for x in args]
-        application.open_main_files(paths, opts.encoding)
-        page = application.get_current_page()
-        if opts.translation_file:
-            path = os.path.abspath(opts.translation_file)
-            application.open_translation_file(path, opts.encoding)
-        if opts.video_file and os.path.isfile(opts.video_file):
-            path = os.path.abspath(opts.video_file)
-            page.project.video_path = path
-        if jump_row is not None:
-            page.view.set_focus(jump_row)
+    jump_row = None
+    re_jump = re.compile(r"\+\d*")
+    for arg in (x for x in args if re_jump.match(x) is not None):
+        jump_row = (max(0, int(arg[1:]) - 1) if arg[1:] else -1)
+        args.remove(arg)
+    paths = [os.path.abspath(x) for x in args]
+    application.open_main_files(paths, opts.encoding)
+    page = application.get_current_page()
+    if (page is not None) and opts.translation_file:
+        path = os.path.abspath(opts.translation_file)
+        application.open_translation_file(path, opts.encoding)
+    if (page is not None) and opts.video_file:
+        path = os.path.abspath(opts.video_file)
+        page.project.video_path = path
+    if (page is not None) and (jump_row is not None):
+        page.view.set_focus(jump_row)
     import gtk
     gtk.main()
 
