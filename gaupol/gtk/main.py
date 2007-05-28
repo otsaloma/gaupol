@@ -25,7 +25,6 @@ import atexit
 import os
 import re
 import sys
-import tempfile
 
 
 def _check_dependencies():
@@ -88,7 +87,7 @@ def _parse_args(args):
     """Parse and return options and arguments."""
 
     import optparse
-    from gaupol.gtk.i18n import _
+    from gaupol.i18n import _
 
     parser = optparse.OptionParser(
         formatter=optparse.IndentedHelpFormatter(2, 42),
@@ -101,7 +100,7 @@ def _parse_args(args):
         metavar=_("FILE"),
         dest="config_file",
         default=None,
-        help=_("set the configuration file to be used"),)
+        help=_("set the configuration file used"),)
 
     parser.add_option(
         "-d", "--debug",
@@ -153,40 +152,36 @@ def _parse_args(args):
 
     return parser.parse_args(args)
 
-def _prepare_configuration(path):
+def _prepare_config_file(path):
     """Set the configuration file to use."""
 
     if path is None:
         from gaupol import paths
         path = os.path.join(paths.PROFILE_DIR, "gaupol.gtk.conf")
     from gaupol.gtk import conf
-    conf.CONFIG_FILE = os.path.abspath(path)
+    conf.config_file = os.path.abspath(path)
     conf.read()
     atexit.register(conf.write)
 
 def _prepare_debug(debug):
     """Enable or disable debugging checks."""
 
-    from gaupol import util
-    util.CHECK_CONTRACTS = debug
+    from gaupol import opts
+    opts.check_contracts = debug
 
 def _prepare_ui():
     """Prepare user interface stuff."""
 
+    import gobject
+    import gtk
     import gtk.glade
     from gaupol import paths
+    from gaupol.gtk.dialogs import debug
     gtk.glade.bindtextdomain("gaupol", paths.LOCALE_DIR)
     gtk.glade.textdomain("gaupol")
-
-    import gobject
     gobject.threads_init()
-
-    import gtk
-    from gaupol import paths
     rc_file = os.path.join(paths.DATA_DIR, "gtkrc")
     gtk.rc_add_default_file(rc_file)
-
-    from gaupol.gtk.dialogs import debug
     sys.excepthook = debug.show
 
 def _show_version():
@@ -201,10 +196,10 @@ def _start(opts, args):
     from gaupol.gtk.app import Application
     application = Application()
     if args:
-        row = None
+        jump_row = None
         re_jump = re.compile(r"\+\d*")
         for arg in (x for x in args if re_jump.match(x) is not None):
-            row = (max(0, int(arg[1:]) - 1) if arg[1:] else -1)
+            jump_row = (max(0, int(arg[1:]) - 1) if arg[1:] else -1)
             args.remove(arg)
         paths = [os.path.abspath(x) for x in args]
         application.open_main_files(paths, opts.encoding)
@@ -215,9 +210,8 @@ def _start(opts, args):
         if opts.video_file and os.path.isfile(opts.video_file):
             path = os.path.abspath(opts.video_file)
             page.project.video_path = path
-        if row is not None:
-            row = min(len(page.project.times) - 1, row)
-            page.view.set_focus(row)
+        if jump_row is not None:
+            page.view.set_focus(jump_row)
     import gtk
     gtk.main()
 
@@ -232,6 +226,6 @@ def main(args):
     if opts.version:
         return _show_version()
     _prepare_debug(opts.debug)
-    _prepare_configuration(opts.config_file)
+    _prepare_config_file(opts.config_file)
     _prepare_ui()
     _start(opts, args)
