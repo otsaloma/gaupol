@@ -1,5 +1,11 @@
 2007-05-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/dialogs/file:
+	* gaupol/gtk/dialogs/file/test:
+	Set svn:ignore properties.
+
+2007-05-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/conf.spec:
 	Remove obsolete entries.
 
