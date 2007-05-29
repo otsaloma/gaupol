@@ -63,7 +63,7 @@ class MenuAgent(Delegate):
             label = self.pages[i].tab_label.get_text()
             label = "%d. %s" % (i + 1, label)
             if len(label) > 60:
-                label = label[:60] + "..."
+                label = label[:60] + "\342\200\246"
             label = label.replace("_", "__")
             label = ("_%s" % label if i < 9 else label)
             key = ("<alt>%d" % (i + 1) if i < 9 else None)

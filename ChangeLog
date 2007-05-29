@@ -1,3 +1,9 @@
+2007-05-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/agents/menu.py:
+	* gaupol/gtk/dialogs/file/subtitle.py:
+	Replace three dots with ellipsis characters.
+
 2007-05-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/main.py (_start):

@@ -122,7 +122,7 @@ class SubtitleFileDialog(object):
             encodings.append((util.COMBO_SEP, util.COMBO_SEP))
             encodings.append(("auto", _("Auto-detected")))
         encodings.append((util.COMBO_SEP, util.COMBO_SEP))
-        encodings.append(("other", _("Other...")))
+        encodings.append(("other", _("Other\342\200\246")))
 
         self._encoding_combo.get_model().clear()
         store = self._encoding_combo.get_model()
