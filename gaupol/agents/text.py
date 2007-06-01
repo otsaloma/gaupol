@@ -48,8 +48,9 @@ class TextAgent(Delegate):
         if match is not None:
             z = z + match.start()
             prefix = parser.text[:z]
-            text = parser.text[z:].capitalize()
-            parser.text = prefix + text
+            text = parser.text[z:z + 1].capitalize()
+            suffix = parser.text[z + 1:]
+            parser.text = prefix + text + suffix
             return self._capitalize_after(parser, cap_next)
         return True
 
@@ -60,8 +61,9 @@ class TextAgent(Delegate):
         if match is not None:
             a = match.start()
             prefix = parser.text[:a]
-            text = parser.text[a:].capitalize()
-            parser.text = prefix + text
+            text = parser.text[a:a + 1].capitalize()
+            suffix = parser.text[a + 1:]
+            parser.text = prefix + text + suffix
             cap_next = False
         return cap_next
 

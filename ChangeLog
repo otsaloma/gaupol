@@ -1,5 +1,10 @@
 2007-06-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/agents/text.py (capitalize_texts):
+	Only change the case of the first letter of a clause.
+
+2007-06-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/open-dialog.glade:
 	* data/glade/preferences-dialog.glade:
 	* data/glade/save-dialog.glade:
