@@ -28,6 +28,8 @@ from gaupol.const import *
 from gaupol.i18n import _
 
 
+# FIX: Remove uim_*.
+
 COLUMN = const.Section()
 COLUMN.NO = const.Member()
 COLUMN.NO.display_name = _("No.")

@@ -21,67 +21,60 @@
 
 import gtk
 
-from gaupol.gtk.i18n import _
-from .action import UIMAction
+from gaupol.i18n import _
+from .action import Action
 
 
-class FindAndReplaceAction(UIMAction):
+class FindAndReplaceAction(Action):
 
     """Search for and replace text."""
 
-    action_item = (
-        "find_and_replace",
-        gtk.STOCK_FIND_AND_REPLACE,
-        _("_Find And Replace\342\200\246"),
-        "<control>F",
-        _("Search for and replace text"),)
+    def __init__(self):
 
-    paths = [
-        "/ui/menubar/text/find_and_replace",
-        "/ui/main_toolbar/find_and_replace"]
+        Action.__init__(self, "find_and_replace")
+        self.props.label = _("_Find And Replace\342\200\246")
+        self.props.short_label = _("Find")
+        self.props.stock_id = gtk.STOCK_FIND_AND_REPLACE
+        self.props.tooltip = _("Search for and replace text")
+        self.accelerator = "<Control>F"
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        return (page is not None)
+        assert page is not None
 
 
-class FindNextAction(UIMAction):
+class FindNextAction(Action):
 
     """Search forwards for same text."""
 
-    action_item = (
-        "find_next",
-        None,
-        _("Find _Next"),
-        "<control>G",
-        _("Search forwards for same text"),)
+    def __init__(self):
 
-    paths = ["/ui/menubar/text/find_next"]
+        Action.__init__(self, "find_next")
+        self.props.label = _("Find _Next")
+        self.props.tooltip = _("Search forwards for same text")
+        self.accelerator = "<Control>G"
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        return bool(application.pattern)
+        assert page is not None
+        assert application.pattern
 
 
-class FindPreviousAction(UIMAction):
+class FindPreviousAction(Action):
 
     """Search backwards for same text."""
 
-    action_item = (
-        "find_previous",
-        None,
-        _("Find _Previous"),
-        "<shift><control>G",
-        _("Search backwards for same text"),)
+    def __init__(self):
 
-    paths = ["/ui/menubar/text/find_previous"]
+        Action.__init__(self, "find_previous")
+        self.props.label = _("Find Pre_vious")
+        self.props.tooltip = _("Search backwards for same text")
+        self.accelerator = "<Shift><Control>G"
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        return bool(application.pattern)
+        assert page is not None
+        assert application.pattern

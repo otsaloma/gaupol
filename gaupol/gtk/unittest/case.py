@@ -32,7 +32,7 @@ class TestCase(unittest.TestCase):
         """Get a new application with two open pages."""
 
         if not hasattr(TestCase, "application"):
-            from gaupol.gtk.app import Application
+            from gaupol.gtk.application import Application
             TestCase.application = Application()
         application = TestCase.application
         while application.pages:

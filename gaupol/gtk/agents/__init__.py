@@ -16,35 +16,22 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Extension delegates of application."""
+"""Extension delegates of Application."""
 
 
-from .close      import CloseAgent
-from .edit       import EditAgent
-from .format     import FormatAgent
-from .help       import HelpAgent
-from .menu       import MenuAgent
-from .open       import OpenAgent
-from .position   import PositionAgent
-from .preview    import PreviewAgent
-from .save       import SaveAgent
-from .search     import SearchAgent
-from .spellcheck import SpellCheckAgent
-from .update     import UpdateAgent
-from .view       import ViewAgent
+# FIX:
+# from .close      import CloseAgent
+# from .edit       import EditAgent
+# from .format     import FormatAgent
+# from .help       import HelpAgent
+# from .menu       import MenuAgent
+# from .open       import OpenAgent
+# from .position   import PositionAgent
+# from .preview    import PreviewAgent
+# from .save       import SaveAgent
+# from .search     import SearchAgent
+# from .spellcheck import SpellCheckAgent
+# from .update     import UpdateAgent
+# from .view       import ViewAgent
 
-
-__all__ = AGENTS = [
-    "CloseAgent",
-    "EditAgent",
-    "FormatAgent",
-    "HelpAgent",
-    "MenuAgent",
-    "OpenAgent",
-    "PositionAgent",
-    "PreviewAgent",
-    "SaveAgent",
-    "SearchAgent",
-    "SpellCheckAgent",
-    "UpdateAgent",
-    "ViewAgent",]
+__all__ = [x for x in dir() if x.endswith("Agent")]

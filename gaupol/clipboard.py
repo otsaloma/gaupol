@@ -53,3 +53,8 @@ class Clipboard(object):
         """Get the texts."""
 
         return self._texts[:]
+
+    def is_empty(self):
+        """Return True is the clipboard is empty."""
+
+        return not bool(self._texts)

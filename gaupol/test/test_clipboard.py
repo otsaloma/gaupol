@@ -53,3 +53,9 @@ class TestClipboard(TestCase):
         self.clipboard.append(None)
         texts = self.clipboard.get_texts()
         assert texts == ["", None]
+
+    def test_is_empty(self):
+
+        assert self.clipboard.is_empty()
+        self.clipboard.append("")
+        assert not self.clipboard.is_empty()

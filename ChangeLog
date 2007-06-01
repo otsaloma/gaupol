@@ -1,3 +1,42 @@
+2007-06-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/open-dialog.glade:
+	* data/glade/preferences-dialog.glade:
+	* data/glade/save-dialog.glade:
+	Fix mnemonics.
+
+	* data/icons/gaupol.png:
+	Remove as obsolete.
+
+	* gaupol/agents/position.py:
+	* gaupol/clipboard.py:
+	* gaupol/gtk/const.py:
+	* gaupol/gtk/main.py:
+	* gaupol/gtk/unittest/case.py:
+	* gaupol/project.py:
+	Minor changes.
+
+	* data/ui.xml:
+	* gaupol/gtk/actions/action.py:
+	* gaupol/gtk/actions/edit.py:
+	* gaupol/gtk/actions/file.py:
+	* gaupol/gtk/actions/format.py:
+	* gaupol/gtk/actions/help.py:
+	* gaupol/gtk/actions/__init__.py:
+	* gaupol/gtk/actions/position.py:
+	* gaupol/gtk/actions/search.py:
+	* gaupol/gtk/actions/spellcheck.py:
+	* gaupol/gtk/actions/test:
+	* gaupol/gtk/actions/test/___init__.py:
+	* gaupol/gtk/actions/view.py:
+	Rewrite action classes as gtk.Actions.
+
+	* gaupol/gtk/agents/__init__.py:
+	Comment imports out for now.
+
+	* gaupol/gtk/application.py:
+	Add contracts and clean up code.
+
 2007-05-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/agents/menu.py:

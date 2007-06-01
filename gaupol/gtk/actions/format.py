@@ -21,132 +21,139 @@
 
 import gtk
 
-from gaupol.gtk.i18n import _
+from gaupol.gtk import util
 from gaupol.gtk.index import *
-from .action import UIMAction
+from gaupol.i18n import _
+from .action import Action
 
 
-class _FormatAction(UIMAction):
-
-    """Base class for text formatting actions."""
-
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
-
-        if page is not None:
-            selection = bool(page.view.get_selected_rows())
-            focus = page.view.get_focus()[1] in (MTXT, TTXT)
-            return bool(selection and focus)
-        return False
-
-
-class ShowCaseMenuAction(_FormatAction):
+class ShowCaseMenuAction(Action):
 
     """Show the case format menu."""
 
-    menu_item = (
-        "show_case_menu",
-        None,
-        _("_Case"),
-        None,
-        None,)
+    def __init__(self):
 
-    paths = ["/ui/menubar/text/case"]
+        Action.__init__(self, "show_case_menu")
+        self.props.label = _("Ca_se")
+
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
+
+        assert page is not None
+        assert page.view.get_selected_rows()
+        assert page.view.get_focus()[1] in (MTXT, TTXT)
 
 
-class ToggleDialogLinesAction(_FormatAction):
+class ToggleDialogLinesAction(Action):
 
     """Toggle dialogue lines on the selected texts."""
 
-    action_item = (
-        "toggle_dialogue_lines",
-        None,
-        _("_Dialogue"),
-        "D",
-        _("Toggle dialogue lines on the selected texts"),)
+    def __init__(self):
 
-    paths = ["/ui/menubar/text/dialogue"]
+        Action.__init__(self, "toggle_dialogue_lines")
+        self.props.label = _("_Dialogue")
+        tooltip = _("Add or remove dialogue lines on the selected texts")
+        self.props.tooltip = tooltip
+        self.accelerator = "D"
+
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
+
+        assert page is not None
+        assert page.view.get_selected_rows()
+        assert page.view.get_focus()[1] in (MTXT, TTXT)
 
 
-class ToggleItalicizationAction(UIMAction):
+class ToggleItalicizationAction(Action):
 
     """Toggle italicization of the selected texts."""
 
-    action_item = (
-        "toggle_italicization",
-        gtk.STOCK_ITALIC,
-        _("_Italic"),
-        "I",
-        _("Toggle italicization of the selected texts"),)
+    def __init__(self):
 
-    paths = ["/ui/menubar/text/italic"]
+        Action.__init__(self, "toggle_italicization")
+        self.props.label = _("_Italic")
+        self.props.stock_id = gtk.STOCK_ITALIC
+        self.props.tooltip = _("Italicize or unitalicize the selected texts")
+        self.accelerator = "I"
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        try:
-            assert page.view.get_selected_rows()
-            col = page.view.get_focus()[1]
-            doc = page.text_column_to_document(col)
-            name = page.project.get_format_class_name(doc)
-            return (eval(name).italic_tag is not None)
-        except Exception:
-            return False
+        assert page is not None
+        assert page.view.get_selected_rows()
+        col = page.view.get_focus()[1]
+        assert col in (MTXT, TTXT)
+        doc = util.text_column_to_document(col)
+        taglib = page.project.get_tag_library(doc)
+        assert taglib is not None
+        assert taglib.italic_tag is not None
 
 
-class UseLowerCaseAction(_FormatAction):
+class UseLowerCaseAction(Action):
 
     """Change the selected texts to lower case."""
 
-    action_item = (
-        "use_lower_case",
-        None,
-        _("_Lower"),
-        "<shift>U",
-        _("Change the selected texts to lower case"),)
+    def __init__(self):
 
-    paths = ["/ui/menubar/text/case/lower"]
+        Action.__init__(self, "use_lower_case")
+        self.props.label = _("_Lower")
+        self.props.tooltip = _("Change the selected texts to lower case")
+
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
+
+        assert page is not None
+        assert page.view.get_selected_rows()
+        assert page.view.get_focus()[1] in (MTXT, TTXT)
 
 
-class UseSentenceCaseAction(_FormatAction):
+class UseSentenceCaseAction(Action):
 
     """Change the selected texts to sentence case."""
 
-    action_item = (
-        "use_sentence_case",
-        None,
-        _("_Sentence"),
-        "<shift>T",
-        _("Change the selected texts to sentence case"),)
+    def __init__(self):
 
-    paths = ["/ui/menubar/text/case/sentence"]
+        Action.__init__(self, "use_sentence_case")
+        self.props.label = _("_Sentence")
+        self.props.tooltip = _("Change the selected texts to sentence case")
+
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
+
+        assert page is not None
+        assert page.view.get_selected_rows()
+        assert page.view.get_focus()[1] in (MTXT, TTXT)
 
 
-class UseTitleCaseAction(_FormatAction):
+class UseTitleCaseAction(Action):
 
     """Change the selected texts to title case."""
 
-    action_item = (
-        "use_title_case",
-        None,
-        _("_Title"),
-        "T",
-        _("Change the selected texts to title case"),)
+    def __init__(self):
 
-    paths = ["/ui/menubar/text/case/title"]
+        Action.__init__(self, "use_title_case")
+        self.props.label = _("_Title")
+        self.props.tooltip = _("Change the selected texts to title case")
+
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
+
+        assert page is not None
+        assert page.view.get_selected_rows()
+        assert page.view.get_focus()[1] in (MTXT, TTXT)
 
 
-class UseUpperCaseAction(_FormatAction):
+class UseUpperCaseAction(Action):
 
-    """Change the selected texts to upper case."""
+    def __init__(self):
 
-    action_item = (
-        "use_upper_case",
-        None,
-        _("_Upper"),
-        "U",
-        _("Change the selected texts to upper case"),)
+        Action.__init__(self, "use_upper_case")
+        self.props.label = _("_Upper")
+        self.props.tooltip = _("Change the selected texts to upper case")
 
-    paths = ["/ui/menubar/text/case/upper"]
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
+
+        assert page is not None
+        assert page.view.get_selected_rows()
+        assert page.view.get_focus()[1] in (MTXT, TTXT)

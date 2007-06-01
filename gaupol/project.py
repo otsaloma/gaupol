@@ -32,7 +32,7 @@ class Project(Observable):
     Instance variables:
      * _delegations: Dictionary mapping method names to agent methods
      * calc: Position calculator
-     * clipboard: Internal subtitle clipboard
+     * clipboard: Internal subtitle text clipboard
      * framerate: FRAMERATE constant
      * main_changed: Integer, status of main document
      * main_file: Main SubtitleFile
@@ -59,7 +59,7 @@ class Project(Observable):
      * translation-file-saved (project, tran_file)
      * translation-texts-changed (project, indexes)
 
-    See gaupol._agents for project methods provided by agents.
+    See gaupol.agents for project methods provided by agents.
     """
 
     __metaclass__ = Contractual

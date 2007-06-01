@@ -21,33 +21,28 @@
 
 import gtk
 
-from gaupol.gtk.i18n import _
-from .action import UIMAction
+from gaupol.i18n import _
+from .action import Action
 
 
-class ReportABugAction(UIMAction):
+class ReportABugAction(Action):
 
     """Submit a bug report."""
 
-    action_item = (
-        "report_a_bug",
-        None,
-        _("_Report A Bug"),
-        None,
-        _("Submit a bug report"),)
+    def __init__(self):
 
-    paths = ["/ui/menubar/help/report_a_bug"]
+        Action.__init__(self, "report_a_bug")
+        self.props.label = _("_Report A Bug")
+        self.props.tooltip = _("Submit a bug report")
 
 
-class ViewAboutDialogAction(UIMAction):
+class ViewAboutDialogAction(Action):
 
     """Show information about Gaupol."""
 
-    action_item = (
-        "view_about_dialog",
-        gtk.STOCK_ABOUT,
-        _("_About"),
-        None,
-        _("Show information about Gaupol"),)
+    def __init__(self):
 
-    paths = ["/ui/menubar/help/about"]
+        Action.__init__(self, "view_about_dialog")
+        self.props.label = _("_About")
+        self.props.stock_id = gtk.STOCK_ABOUT
+        self.props.tooltip = _("Show information about Gaupol")

@@ -1,4 +1,4 @@
-# Copyright (C) 2007 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,16 +16,36 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-# pylint: disable-msg=W0611
+import gtk
 
-from gaupol.gtk.actions import *
-from gaupol.gtk.actions import ACTIONS
 from gaupol.gtk.unittest import TestCase
+from .. import application
 
 
-class TestModule(TestCase):
+class TestApplication(TestCase):
 
-    def test_imports(self):
+    def run(self):
 
-        assert "NewProjectAction" in globals()
-        assert "ViewAboutDialogAction" in globals()
+        gtk.main()
+
+    def setup_method(self, method):
+
+        # FIX:
+        self.application = application.Application()
+        #self.application = self.get_application()
+
+    def test_get_current_page(self):
+
+        # FIX:
+        #page = self.application.pages[0]
+        #self.application.set_current_page(page)
+        value = self.application.get_current_page()
+        #assert value == page
+
+    def test_set_current_page(self):
+
+        # FIX:
+        #page = self.application.pages[-1]
+        #self.application.set_current_page(page)
+        value = self.application.get_current_page()
+        #assert value == page

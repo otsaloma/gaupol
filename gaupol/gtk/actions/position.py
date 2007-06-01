@@ -22,122 +22,101 @@
 import gtk
 
 from gaupol.gtk import conf
-from gaupol.gtk.i18n import _
 from gaupol.gtk.index import *
-from .action import UIMAction
+from gaupol.i18n import _
+from .action import Action
 
 
-class AdjustDurationsAction(UIMAction):
+class AdjustDurationsAction(Action):
 
     """Lengthen or shorten durations."""
 
-    action_item = (
-        "adjust_durations",
-        None,
-        _("A_djust Durations\342\200\246"),
-        None,
-        _("Lengthen or shorten durations"),)
+    def __init__(self):
 
-    paths = ["/ui/menubar/tools/adjust_durations"]
+        Action.__init__(self, "adjust_durations")
+        self.props.label = _("Adjust _Durations\342\200\246")
+        self.props.tooltip = _("Lengthen or shorten durations")
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        return (page is not None)
+        assert page is not None
 
 
-class AdjustPositionsAction(UIMAction):
-
-    """Adjust positions by linear two-point correction."""
-
-    action_item = (
-        "adjust_positions",
-        None,
-        _("_Adjust Positions\342\200\246"),
-        "A",
-        _("Adjust positions by linear two-point correction"),)
-
-    paths = ["/ui/menubar/tools/adjust_positions"]
-
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
-
-        if page is not None:
-            return (len(page.project.times) > 1)
-        return False
-
-
-class ConvertFramerateAction(UIMAction):
+class ConvertFramerateAction(Action):
 
     """Convert framerate."""
 
-    action_item = (
-        "convert_framerate",
-        gtk.STOCK_CONVERT,
-        _("Con_vert Framerate\342\200\246"),
-        None,
-        _("Convert framerate"),)
+    def __init__(self):
 
-    paths = ["/ui/menubar/tools/convert_framerate"]
+        Action.__init__(self, "convert_framerate")
+        self.props.label = _("Convert _Framerate\342\200\246")
+        self.props.tooltip = _("Change positions for a different framerate")
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        if page is not None:
-            return (page.project.main_file is not None)
-        return False
+        assert page is not None
+        assert page.project.main_file is not None
 
 
-class PreviewAction(UIMAction):
+class PreviewAction(Action):
 
     """Preview from selected position with a video player."""
 
-    action_item = (
-        "preview",
-        gtk.STOCK_MEDIA_PLAY,
-        _("_Preview"),
-        "P",
-        _("Preview from selected position with a video player"),)
+    def __init__(self):
 
-    paths = [
-        "/ui/menubar/tools/preview",
-        "/ui/main_toolbar/preview",
-        "/ui/view_popup/preview"]
+        Action.__init__(self, "preview")
+        self.props.label = _("_Preview")
+        self.props.stock_id = gtk.STOCK_MEDIA_PLAY
+        tooltip = _("Preview from selected position with a video player")
+        self.props.tooltip = tooltip
+        self.accelerator = "P"
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        try:
-            assert page is not None
-            assert page.project.video_path is not None
-            if not conf.preview.use_predefined:
-                assert conf.preview.custom_command
-            if page.view.get_focus()[1] == TTXT:
-                return (page.project.tran_file is not None)
-            return (page.project.main_file is not None)
-        except AssertionError:
-            return False
+        assert page is not None
+        assert page.project.video_path is not None
+        if not conf.preview.use_predefined:
+            assert conf.preview.custom_command
+        col = page.view.get_focus()[1]
+        main_file = page.project.main_file
+        tran_file = page.project.tran_file
+        file = (tran_file if col == TTXT else main_file)
+        assert file is not None
 
 
-class ShiftPositionsAction(UIMAction):
+class ShiftPositionsAction(Action):
 
     """Make subtitles appear earlier or later."""
 
-    action_item = (
-        "shift_positions",
-        None,
-        _("_Shift Positions\342\200\246"),
-        "H",
-        _("Make subtitles appear earlier or later"),)
+    def __init__(self):
 
-    paths = ["/ui/menubar/tools/shift_positions"]
+        Action.__init__(self, "shift_positions")
+        self.props.label = _("_Shift Positions\342\200\246")
+        self.props.tooltip = _("Make subtitles appear earlier or later")
+        self.accelerator = "H"
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        return (page is not None)
+        assert page is not None
+
+
+class TransformPositionsAction(Action):
+
+    """Change positions by linear two-point correction."""
+
+    def __init__(self):
+
+        Action.__init__(self, "transform_positions")
+        self.props.label = _("_Transform Positions\342\200\246")
+        tooltip = _("Change positions by linear two-point correction")
+        self.props.tooltip = tooltip
+
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
+
+        assert page is not None
+        assert len(page.project.subtitles) > 1

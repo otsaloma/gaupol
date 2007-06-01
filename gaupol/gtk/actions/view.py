@@ -20,396 +20,361 @@
 
 
 from gaupol.gtk import conf, const
-from gaupol.gtk.i18n import _
-from .action import UIMAction
+from gaupol.i18n import _
+from .action import Action, RadioAction, ToggleAction
 
 
-class ActivateNextProjectAction(UIMAction):
+class ActivateNextProjectAction(Action):
 
     """Activate the project in the next tab."""
 
-    action_item = (
-        "activate_next_project",
-        None,
-        _("_Next"),
-        "<control>Page_Down",
-        _("Activate the project in the next tab"),)
+    def __init__(self):
 
-    paths = ["/ui/menubar/projects/next"]
+        Action.__init__(self, "activate_next_project")
+        self.props.label = _("_Next")
+        self.props.tooltip = _("Activate the project in the next tab")
+        self.accelerator = "<Control>Page_Down"
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        if page is not None:
-            index = application.pages.index(page) + 1
-            return (index in range(len(application.pages)))
-        return False
+        assert page is not None
+        index = application.pages.index(page) + 1
+        assert index in range(len(application.pages))
 
 
-class ActivatePreviousProjectAction(UIMAction):
+class ActivatePreviousProjectAction(Action):
 
     """Activate the project in the previous tab."""
 
-    action_item = (
-        "activate_previous_project",
-        None,
-        _("_Previous"),
-        "<control>Page_Up",
-        _("Activate the project in the previous tab"),)
+    def __init__(self):
 
-    paths = ["/ui/menubar/projects/previous"]
+        Action.__init__(self, "activate_previous_project")
+        self.props.label = _("_Previous")
+        self.props.tooltip = _("Activate the project in the previous tab")
+        self.accelerator = "<Control>Page_Up"
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        if page is not None:
-            return (application.pages.index(page) > 0)
-        return False
+        assert page is not None
+        assert application.pages.index(page) > 0
 
 
-class MoveTabLeftAction(UIMAction):
+class MoveTabLeftAction(Action):
 
     """Move the current tab to the left."""
 
-    action_item = (
-        "move_tab_left",
-        None,
-        _("Move Tab _Left"),
-        None,
-        _("Move the current tab to the left"),)
+    def __init__(self):
 
-    paths = ["/ui/menubar/projects/move_tab_left"]
+        Action.__init__(self, "move_tab_left")
+        self.props.label = _("Move Tab _Left")
+        self.props.tooltip = _("Move the current tab to the left")
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        if page is not None:
-            return (application.pages.index(page) > 0)
-        return False
+        assert page is not None
+        assert application.pages.index(page) > 0
 
 
-class MoveTabRightAction(UIMAction):
+class MoveTabRightAction(Action):
 
     """Move the current tab to the right."""
 
-    action_item = (
-        "move_tab_right",
-        None,
-        _("Move Tab _Right"),
-        None,
-        _("Move the current tab to the right"),)
+    def __init__(self):
 
-    paths = ["/ui/menubar/projects/move_tab_right"]
+        Action.__init__(self, "move_tab_right")
+        self.props.label = _("Move Tab _Right")
+        self.props.tooltip = _("Move the current tab to the right")
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        if page is not None:
-            index = application.pages.index(page) + 1
-            return (index in range(len(application.pages)))
-        return False
+        assert page is not None
+        index = application.pages.index(page) + 1
+        assert index in range(len(application.pages))
 
 
-class ShowColumnsMenuAction(UIMAction):
+class ShowColumnsMenuAction(Action):
 
     """Show the columns view menu."""
+    def __init__(self):
 
-    menu_item = (
-        "show_columns_menu",
-        None,
-        _("_Columns"),
-        None,
-        None,)
+        Action.__init__(self, "show_columns_menu")
+        self.props.label = _("_Columns")
 
-    paths = ["/ui/menubar/view/columns"]
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
-
-        if page is not None:
-            return (page.project.main_file is not None)
-        return False
+        assert page is not None
 
 
-class ShowFramerate23976Action(UIMAction):
+class ShowFramerate24Action(RadioAction):
 
-    """Change the framerate with which unnative units are calculated."""
+    """Change the framerate to 24 fps."""
 
-    radio_items = (
-        [("show_framerate_23_976",
-          None,
-          _("2_3.976 fps"),
-          None,
-          _("Calculate unnative units with framerate 23.976 fps"),
-          0,),
-         ("show_framerate_25",
-          None,
-          _("2_5 fps"),
-          None,
-          _("Calculate unnative units with framerate 25 fps"),
-          1,),
-         ("show_framerate_29_97",
-          None,
-          _("2_9.97 fps"),
-          None,
-          _("Calculate unnative units with framerate 29.97 fps"),
-          2,),],
-        conf.editor.framerate,)
+    def __init__(self):
 
-    paths = const.FRAMERATE.uim_paths
-    widgets = ["framerate_combo"]
+        RadioAction.__init__(self, "show_framerate_24")
+        self.props.active = (conf.editor.framerate == const.FRAMERATE.P24)
+        self.props.label = _("2_4 fps")
+        tooltip = _("Calculate unnative units with framerate 24 fps")
+        self.props.tooltip = tooltip
+        self.props.value = const.FRAMERATE.P24
+        self.group = "ShowFramerate24Action"
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        if page is not None:
-            return (page.project.main_file is not None)
-        return False
+        assert page is not None
+        assert page.project.main_file is not None
 
 
-class ShowFramerateMenuAction(UIMAction):
+class ShowFramerate25Action(RadioAction):
+
+    """Change the framerate to 25 fps."""
+
+    def __init__(self):
+
+        RadioAction.__init__(self, "show_framerate_25")
+        self.props.active = (conf.editor.framerate == const.FRAMERATE.P25)
+        self.props.label = _("2_5 fps")
+        tooltip = _("Calculate unnative units with framerate 25 fps")
+        self.props.tooltip = tooltip
+        self.props.value = const.FRAMERATE.P25
+        self.group = "ShowFramerate24Action"
+
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
+
+        assert page is not None
+        assert page.project.main_file is not None
+
+
+class ShowFramerate30Action(RadioAction):
+
+    """Change the framerate to 30 fps."""
+
+    def __init__(self):
+
+        RadioAction.__init__(self, "show_framerate_30")
+        self.props.active = (conf.editor.framerate == const.FRAMERATE.P30)
+        self.props.label = _("_30 fps")
+        tooltip = _("Calculate unnative units with framerate 30 fps")
+        self.props.tooltip = tooltip
+        self.props.value = const.FRAMERATE.P30
+        self.group = "ShowFramerate24Action"
+
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
+
+        assert page is not None
+        assert page.project.main_file is not None
+
+
+class ShowFramerateMenuAction(Action):
 
     """Show the framerate view menu."""
 
-    menu_item = (
-        "show_framerate_menu",
-        None,
-        _("_Framerate"),
-        None,
-        None,)
+    def __init__(self):
 
-    paths = ["/ui/menubar/view/framerate"]
+        Action.__init__(self, "show_framerate_menu")
+        self.props.label = _("F_ramerate")
+        self.widgets = ["framerate_combo"]
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        if page is not None:
-            return (page.project.main_file is not None)
-        return False
+        assert page is not None
+        assert page.project.main_file is not None
 
 
-class ShowTimesAction(UIMAction):
+class ShowFramesAction(RadioAction):
 
-    """Change the units in which postions are shown."""
+    """Show positions as frames."""
 
-    radio_items = (
-        [("show_times",
-          None,
-          _("T_imes"),
-          "R",
-          _("Show positions as times"),
-          0,),
-         ("show_frames",
-          None,
-          _("F_rames"),
-          "<shift>R",
-          _("Show positions as frames"),
-          1,),],
-          conf.editor.mode,)
+    def __init__(self):
 
-    paths = const.MODE.uim_paths
+        RadioAction.__init__(self, "show_frames")
+        self.props.active = (conf.editor.mode == const.MODE.FRAME)
+        self.props.label = _("_Frames")
+        self.props.tooltip = _("Show positions as frames")
+        self.props.value = const.MODE.FRAME
+        self.accelerator = "<Shift>T"
+        self.group = "ShowTimesAction"
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        return (page is not None)
+        assert page is not None
 
 
-class ToggleDurationColumnAction(UIMAction):
+class ShowTimesAction(RadioAction):
+
+    """Show positions as times."""
+
+    def __init__(self):
+
+        RadioAction.__init__(self, "show_times")
+        self.props.active = (conf.editor.mode == const.MODE.TIME)
+        self.props.label = _("_Times")
+        self.props.tooltip = _("Show positions as times")
+        self.props.value = const.MODE.TIME
+        self.accelerator = "T"
+        self.group = "ShowTimesAction"
+
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
+
+        assert page is not None
+
+
+class ToggleDurationColumnAction(ToggleAction):
 
     """Show or hide the "Duration" column."""
 
-    toggle_item = (
-        "toggle_duration_column",
-        None,
-        _("_Duration"),
-        None,
-        _('Show or hide the "Duration" column'),
-        const.COLUMN.DURN in conf.editor.visible_cols,)
+    def __init__(self):
 
-    # pylint: disable-msg=E1101
-    paths = [const.COLUMN.DURN.uim_path]
+        ToggleAction.__init__(self, "toggle_duration_column")
+        self.props.active = const.COLUMN.DURN in conf.editor.visible_cols
+        self.props.label = _("_Duration")
+        self.props.tooltip = _('Show or hide the "Duration" column')
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        return (page is not None)
+        assert page is not None
 
 
-class ToggleHideColumnAction(UIMAction):
+class ToggleEndColumnAction(ToggleAction):
 
-    """Show or hide the "Hide" column."""
+    """Show or hide the "End" column."""
 
-    toggle_item = (
-        "toggle_hide_column",
-        None,
-        _("_Hide"),
-        None,
-        _('Show or hide the "Hide" column'),
-        const.COLUMN.HIDE in conf.editor.visible_cols,)
+    def __init__(self):
 
-    # pylint: disable-msg=E1101
-    paths = [const.COLUMN.HIDE.uim_path]
+        ToggleAction.__init__(self, "toggle_end_column")
+        self.props.active = const.COLUMN.END in conf.editor.visible_cols
+        self.props.label = _("_End")
+        self.props.tooltip = _('Show or hide the "End" column')
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        return (page is not None)
+        assert page is not None
 
 
-class ToggleMainTextColumnAction(UIMAction):
+class ToggleMainTextColumnAction(ToggleAction):
 
     """Show or hide the "Main Text" column."""
 
-    toggle_item = (
-        "toggle_main_text_column",
-        None,
-        _("_Main Text"),
-        None,
-        _('Show or hide the "Main Text" column'),
-        const.COLUMN.MTXT in conf.editor.visible_cols,)
+    def __init__(self):
 
-    # pylint: disable-msg=E1101
-    paths = [const.COLUMN.MTXT.uim_path]
+        ToggleAction.__init__(self, "toggle_main_text_column")
+        self.props.active = const.COLUMN.MTXT in conf.editor.visible_cols
+        self.props.label = _("_Main Text")
+        self.props.tooltip = _('Show or hide the "Main Text" column')
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        return (page is not None)
+        assert page is not None
 
 
-class ToggleMainToolbarAction(UIMAction):
+class ToggleMainToolbarAction(ToggleAction):
 
     """Show or hide the main toolbar."""
 
-    toggle_item = (
-        "toggle_main_toolbar",
-        None,
-        _("_Main Toolbar"),
-        None,
-        _("Show or hide the main toolbar"),
-        conf.application_window.show_main_toolbar,)
+    def __init__(self):
 
-    paths = ["/ui/menubar/view/main_toolbar"]
+        ToggleAction.__init__(self, "toggle_main_toolbar")
+        self.props.active = conf.application_window.show_main_toolbar
+        self.props.label = _("_Main Toolbar")
+        self.props.tooltip = _("Show or hide the main toolbar")
 
 
-class ToggleNumberColumnAction(UIMAction):
+class ToggleNumberColumnAction(ToggleAction):
 
     """Show or hide the 'No.' column."""
 
-    toggle_item = (
-        "toggle_number_column",
-        None,
-        _("_No."),
-        None,
-        _('Show or hide the "No." column'),
-        const.COLUMN.NO in conf.editor.visible_cols,)
+    def __init__(self):
 
-    # pylint: disable-msg=E1101
-    paths = [const.COLUMN.NO.uim_path]
+        ToggleAction.__init__(self, "toggle_number_column")
+        self.props.active = const.COLUMN.NO in conf.editor.visible_cols
+        self.props.label = _("_No.")
+        self.props.tooltip = _('Show or hide the "No." column')
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        return (page is not None)
+        assert page is not None
 
 
-class ToggleOutputWindowAction(UIMAction):
+class ToggleOutputWindowAction(ToggleAction):
 
     """Show or hide the output window."""
 
-    toggle_item = (
-        "toggle_output_window",
-        None,
-        _("_Output Window"),
-        None,
-        _("Show or hide the output window"),
-        conf.output_window.show,)
+    def __init__(self):
 
-    paths = ["/ui/menubar/view/output_window"]
+        ToggleAction.__init__(self, "toggle_output_window")
+        self.props.active = conf.output_window.show
+        self.props.label = _("_Output Window")
+        self.props.tooltip = _("Show or hide the output window")
 
 
-class ToggleShowColumnAction(UIMAction):
+class ToggleStartColumnAction(ToggleAction):
 
-    """Show or hide the 'Show' column."""
+    """Show or hide the 'Start' column."""
 
-    toggle_item = (
-        "toggle_show_column",
-        None,
-        _("_Show"),
-        None,
-        _('Show or hide the "Show" column'),
-        const.COLUMN.SHOW in conf.editor.visible_cols,)
+    def __init__(self):
 
-    # pylint: disable-msg=E1101
-    paths = [const.COLUMN.SHOW.uim_path]
+        ToggleAction.__init__(self, "toggle_start_column")
+        self.props.active = const.COLUMN.START in conf.editor.visible_cols
+        self.props.label = _("_Start")
+        self.props.tooltip = _('Show or hide the "Start" column')
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        return (page is not None)
+        assert page is not None
 
 
-class ToggleStatusbarAction(UIMAction):
+class ToggleStatusbarAction(ToggleAction):
 
     """Show or hide the statusbar."""
 
-    toggle_item = (
-        "toggle_statusbar",
-        None,
-        _("_Statusbar"),
-        None,
-        _("Show or hide the statusbar"),
-        conf.application_window.show_statusbar,)
+    def __init__(self):
 
-    paths = ["/ui/menubar/view/statusbar"]
+        ToggleAction.__init__(self, "toggle_statusbar")
+        self.props.active = conf.application_window.show_statusbar
+        self.props.label = _("_Statusbar")
+        self.props.tooltip = _("Show or hide the statusbar")
 
 
-class ToggleTranslationTextColumnAction(UIMAction):
+class ToggleTranslationTextColumnAction(ToggleAction):
 
     """Show or hide the 'Translation Text' column."""
 
-    toggle_item = (
-        "toggle_translation_text_column",
-        None,
-        _("_Translation Text"),
-        None,
-        _('Show or hide the "Translation Text" column'),
-        const.COLUMN.TTXT in conf.editor.visible_cols,)
+    def __init__(self):
 
-    # pylint: disable-msg=E1101
-    paths = [const.COLUMN.TTXT.uim_path]
+        ToggleAction.__init__(self, "toggle_translation_text_column")
+        self.props.active = const.COLUMN.TTXT in conf.editor.visible_cols
+        self.props.label = _("_Translation Text")
+        self.props.tooltip = _('Show or hide the "Translation Text" column')
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        return (page is not None)
+        assert page is not None
 
 
-class ToggleVideoToolbarAction(UIMAction):
+class ToggleVideoToolbarAction(ToggleAction):
 
     """Show or hide the video toolbar."""
 
-    toggle_item = (
-        "toggle_video_toolbar",
-        None,
-        _("_Video Toolbar"),
-        None,
-        _("Show or hide the video toolbar"),
-        conf.application_window.show_video_toolbar,)
+    def __init__(self):
 
-    paths = ["/ui/menubar/view/video_toolbar"]
+        ToggleAction.__init__(self, "toggle_video_toolbar")
+        self.props.active = conf.application_window.show_video_toolbar
+        self.props.label = _("_Video Toolbar")
+        self.props.tooltip = _("Show or hide the video toolbar")

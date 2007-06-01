@@ -17,7 +17,7 @@ reports=no
 [BASIC]
 argument-rgx=[a-z_][a-z0-9_]{0,19}$
 attr-rgx=[a-z_][a-z0-9_]{0,19}$
-class-rgx=([A-Z_][A-Za-z0-9]{0,29}$)|(Test)
+class-rgx=([A-Z_][A-Za-z0-9]{0,29}$)|(.+?Action$)|(Test)
 const-rgx=[A-Za-z_][A-Za-z0-9_]{0,19}$
 function-rgx=[a-z_][a-z0-9_]{0,29}$
 good-names=

@@ -19,57 +19,88 @@
 """Base class for UI manager actions."""
 
 
-class UIMAction(object):
+import gtk
+
+
+class Action(gtk.Action):
 
     """Base class for UI manager actions.
 
-    Class variables:
-
-        action_item = (
-            name,
-            stock-id,
-            label,
-            accelerator,
-            tooltip,)
-
-        menu_item = (
-            name,
-            stock-id,
-            label,
-            accelerator,
-            tooltip,)
-
-        radio_items = (
-            [(name,
-              stock-id,
-              label,
-              accelerator,
-              tooltip,
-              index),
-             (...),],
-            value)
-
-        toggle_item = (
-            name,
-            stock-id,
-            label,
-            accelerator,
-            tooltip,
-            active)
-
-        paths:   List of UI manager paths for action
-        widgets: List of attribute widget names for action
+    Instance variable 'accelerator' defines a string string in the format
+    understood by the gtk.accelerator_parse(), None to use the stock
+    accelerator or undefined to use a blank string as a fallback. The 'widgets'
+    instance variable defined a list of names of application widgets,
+    acquirable with getattr, whose sensitivities should be synced with action.
     """
 
-    action_item = None
-    menu_item   = None
-    radio_items = None
-    toggle_item = None
-    paths       = []
-    widgets     = []
+    # pylint: disable-msg=W0232
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    accelerator = ""
+    widgets = []
 
-        return True
+    def __init__(self, name):
+
+        gtk.Action.__init__(self, name, None, None, None)
+
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
+
+        assert True
+
+    def finalize(self, application):
+        """Connect action to the widgets and methods of application."""
+
+        # FIX: Always connect (assume hasattr).
+        self.widgets = [getattr(application, x) for x in self.widgets]
+        callback = "on_%s_activate" % self.props.name
+        if hasattr(application, callback):
+            self.connect("activate", getattr(application, callback))
+
+    def set_sensitive(self, sensitive):
+        """Set the sensitivity of action and all its widgets."""
+
+        for widget in self.widgets:
+            widget.set_sensitive(sensitive)
+        return gtk.Action.set_sensitive(self, sensitive)
+
+    def update_sensitivity(self, application, page):
+        """Update the sensitivity of action and all its widgets."""
+
+        try:
+            self._assert_doable(application, page)
+        except AssertionError:
+            return self.set_sensitive(False)
+        return self.set_sensitive(True)
+
+
+class ToggleAction(Action, gtk.ToggleAction):
+
+    """Base class for UI manager toggle actions."""
+
+    def finalize(self, application):
+        """Connect action to the widgets and methods of application."""
+
+        # FIX: Always connect (assume hasattr).
+        self.widgets = [getattr(application, x) for x in self.widgets]
+        callback = "on_%s_toggled" % self.props.name
+        if hasattr(application, callback):
+            self.connect("toggled", getattr(application, callback))
+
+
+class RadioAction(ToggleAction, gtk.RadioAction):
+
+    """Base class for UI manager radio actions.
+
+    Instance variable 'group' should be a unique string to recognize group
+    members by, e.g. the class name of the first of the radio actions. The
+    actual 'group' property is set once all the actions are instantiated.
+    """
+
+    def finalize(self, application):
+        """Connect action to the widgets and methods of application."""
+
+        # FIX: Always connect (assume hasattr).
+        self.widgets = [getattr(application, x) for x in self.widgets]
+        callback = "on_%s_changed" % self.props.name
+        if hasattr(application, callback):
+            self.connect("changed", getattr(application, callback))

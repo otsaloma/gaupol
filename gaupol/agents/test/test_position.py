@@ -102,34 +102,6 @@ class TestPositionAgent(TestCase):
         assert subtitles[1].start == "00:00:02.000"
         assert subtitles[1].end == "00:00:02.200"
 
-    @reversion_test
-    def test_adjust_positions__frame(self):
-
-        self.project.adjust_positions(None, (2, 10), (6, 100))
-        assert self.project.subtitles[2].start_frame == 10
-        for subtitle in self.project.subtitles[3:6]:
-            assert 10 < subtitle.start_frame < 100
-        assert self.project.subtitles[6].start_frame == 100
-
-    @reversion_test
-    def test_adjust_positions__seconds(self):
-
-        self.project.adjust_positions(None, (2, 20.0), (6, 200.0))
-        assert self.project.subtitles[2].start_seconds == 20.0
-        for subtitle in self.project.subtitles[3:6]:
-            assert 20.0 < subtitle.start_seconds < 200.0
-        assert self.project.subtitles[6].start_seconds == 200.0
-
-    @reversion_test
-    def test_adjust_positions__time(self):
-
-        a, b = "00:00:01.000", "00:00:45.000"
-        self.project.adjust_positions(None, (2, a), (6, b))
-        assert self.project.subtitles[2].start_time == a
-        for subtitle in self.project.subtitles[3:6]:
-            assert a < subtitle.start_time < b
-        assert self.project.subtitles[6].start_time == b
-
     def test_convert_framerate__frame(self):
 
         self.project.open_main(self.get_microdvd_path(), "ascii")
@@ -198,3 +170,31 @@ class TestPositionAgent(TestCase):
             assert round(subtitle.start_seconds, 3) == start
             end = round(orig_subtitles[i].end_seconds + 1.0, 3)
             assert round(subtitle.end_seconds, 3) == end
+
+    @reversion_test
+    def test_transform_positions__frame(self):
+
+        self.project.transform_positions(None, (2, 10), (6, 100))
+        assert self.project.subtitles[2].start_frame == 10
+        for subtitle in self.project.subtitles[3:6]:
+            assert 10 < subtitle.start_frame < 100
+        assert self.project.subtitles[6].start_frame == 100
+
+    @reversion_test
+    def test_transform_positions__seconds(self):
+
+        self.project.transform_positions(None, (2, 20.0), (6, 200.0))
+        assert self.project.subtitles[2].start_seconds == 20.0
+        for subtitle in self.project.subtitles[3:6]:
+            assert 20.0 < subtitle.start_seconds < 200.0
+        assert self.project.subtitles[6].start_seconds == 200.0
+
+    @reversion_test
+    def test_transform_positions__time(self):
+
+        a, b = "00:00:01.000", "00:00:45.000"
+        self.project.transform_positions(None, (2, a), (6, b))
+        assert self.project.subtitles[2].start_time == a
+        for subtitle in self.project.subtitles[3:6]:
+            assert a < subtitle.start_time < b
+        assert self.project.subtitles[6].start_time == b

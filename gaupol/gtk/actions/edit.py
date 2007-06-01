@@ -21,357 +21,306 @@
 
 import gtk
 
-from gaupol.gtk.i18n import _
 from gaupol.gtk.index import *
-from .action import UIMAction
+from gaupol.i18n import _
+from .action import Action
 
 
-class ClearTextsAction(UIMAction):
+class ClearTextsAction(Action):
 
     """Clear the selected texts."""
 
-    action_item = (
-        "clear_texts",
-        gtk.STOCK_CLEAR,
-        _("C_lear"),
-        "C",
-        _("Clear the selected texts"),)
+    def __init__(self):
 
-    paths = ["/ui/menubar/text/clear"]
+        Action.__init__(self, "clear_texts")
+        self.props.label = _("Cl_ear")
+        self.props.stock_id = gtk.STOCK_CLEAR
+        self.props.tooltip = _("Clear the selected texts")
+        self.accelerator = "C"
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        if page is not None:
-            selection = bool(page.view.get_selected_rows())
-            focus = page.view.get_focus()[1] in (MTXT, TTXT)
-            return bool(selection and focus)
-        return False
+        assert page is not None
+        assert page.view.get_selected_rows()
+        assert page.view.get_focus()[1] in (MTXT, TTXT)
 
 
-class CopyTextsAction(UIMAction):
+class CopyTextsAction(Action):
 
     """Copy the selected texts to the clipboard."""
 
-    action_item = (
-        "copy_texts",
-        gtk.STOCK_COPY,
-        _("_Copy"),
-        "<control>C",
-        _("Copy the selected texts to the clipboard"),)
+    def __init__(self):
 
-    paths = ["/ui/menubar/text/copy"]
+        Action.__init__(self, "copy_texts")
+        self.props.label = _("_Copy")
+        self.props.stock_id = gtk.STOCK_COPY
+        self.props.tooltip = _("Copy the selected texts to the clipboard")
+        self.accelerator = "<Control>C"
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        if page is not None:
-            selection = bool(page.view.get_selected_rows())
-            focus = page.view.get_focus()[1] in (MTXT, TTXT)
-            return bool(selection and focus)
-        return False
+        assert page is not None
+        assert page.view.get_selected_rows()
+        assert page.view.get_focus()[1] in (MTXT, TTXT)
 
 
-class CutTextsAction(UIMAction):
+class CutTextsAction(Action):
 
     """Cut the selected texts to the clipboard."""
 
-    action_item = (
-        "cut_texts",
-        gtk.STOCK_CUT,
-        _("Cu_t"),
-        "<control>X",
-        _("Cut the selected texts to the clipboard"),)
+    def __init__(self):
 
-    paths = ["/ui/menubar/text/cut"]
+        Action.__init__(self, "cut_texts")
+        self.props.label = _("Cu_t")
+        self.props.stock_id = gtk.STOCK_CUT
+        self.props.tooltip = _("Cut the selected texts to the clipboard")
+        self.accelerator = "<Control>X"
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        if page is not None:
-            selection = bool(page.view.get_selected_rows())
-            focus = page.view.get_focus()[1] in (MTXT, TTXT)
-            return bool(selection and focus)
-        return False
+        assert page is not None
+        assert page.view.get_selected_rows()
+        assert page.view.get_focus()[1] in (MTXT, TTXT)
 
 
-class EditPreferencesAction(UIMAction):
+class EditPreferencesAction(Action):
 
     """Configure Gaupol."""
 
-    action_item = (
-        "edit_preferences",
-        gtk.STOCK_PREFERENCES,
-        _("Pre_ferences"),
-        None,
-        _("Configure Gaupol"),)
+    def __init__(self):
 
-    paths = ["/ui/menubar/edit/preferences"]
+        Action.__init__(self, "edit_preferences")
+        self.props.label = _("_Preferences")
+        self.props.stock_id = gtk.STOCK_PREFERENCES
+        self.props.tooltip = _("Configure Gaupol")
 
 
-class EditNextValueAction(UIMAction):
+class EditNextValueAction(Action):
 
     """Edit the focused column of the next subtitle."""
 
-    action_item = (
-        "edit_next_value",
-        None,
-        _("Edit _Next Cell"),
-        "space",
-        _("Edit the focused column of the next subtitle"),)
+    def __init__(self):
 
-    paths = ["/ui/menubar/edit/edit_next"]
+        Action.__init__(self, "edit_next_value")
+        self.props.label = _("Edit _Next Cell")
+        self.props.short_label = _("Next")
+        self.props.stock_id = gtk.STOCK_EDIT
+        self.props.tooltip = _("Edit the focused column of the next subtitle")
+        self.accelerator = "space"
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        if page is not None:
-            row, col = page.view.get_focus()
-            if None in (row, col):
-                return False
-            if row == len(page.project.times) - 1:
-                return False
-            return (col != NO)
-        return False
+        assert page is not None
+        row, col = page.view.get_focus()
+        assert not None in (row, col)
+        assert row < len(page.project.times) - 1
+        assert col != NO
 
 
-class EditValueAction(UIMAction):
+class EditValueAction(Action):
 
     """Edit the focused cell."""
 
-    action_item = (
-        "edit_value",
-        gtk.STOCK_EDIT,
-        _("_Edit Cell"),
-        "Return",
-        _("Edit the focused cell"),)
+    def __init__(self):
 
-    paths = ["/ui/menubar/edit/edit", "/ui/view_popup/edit"]
+        Action.__init__(self, "edit_value")
+        self.props.is_important = True
+        self.props.label = _("_Edit Cell")
+        self.props.short_label = _("Edit")
+        self.props.stock_id = gtk.STOCK_EDIT
+        self.props.tooltip = _("Edit the focused cell")
+        self.accelerator = "Return"
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        if page is not None:
-            row, col = page.view.get_focus()
-            if None in (row, col):
-                return False
-            return (col != NO)
-        return False
+        assert page is not None
+        row, col = page.view.get_focus()
+        assert not None in (row, col)
+        assert col != NO
 
 
-class InsertSubtitlesAction(UIMAction):
+class InsertSubtitlesAction(Action):
 
-    """Insert blank subtitles."""
+    """Insert subtitles."""
 
-    action_item = (
-        "insert_subtitles",
-        gtk.STOCK_ADD,
-        _("_Insert Subtitles\342\200\246"),
-        "Insert",
-        _("Insert blank subtitles"),)
+    def __init__(self):
 
-    paths = [
-        "/ui/menubar/edit/insert",
-        "/ui/main_toolbar/insert",
-        "/ui/view_popup/insert"]
+        Action.__init__(self, "insert_subtitles")
+        self.props.label = _("_Insert Subtitles\342\200\246")
+        self.props.short_label = _("Insert")
+        self.props.stock_id = gtk.STOCK_ADD
+        self.props.tooltip = _("Insert subtitles")
+        self.accelerator = "Insert"
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        if page is not None:
-            if page.view.get_selected_rows():
-                return True
-            if not page.project.times:
-                return True
-        return False
+        assert page is not None
+        if page.project.subtitles:
+            assert page.view.get_selected_rows()
 
 
-class InvertSelectionAction(UIMAction):
+class InvertSelectionAction(Action):
 
     """Invert the current selection."""
 
-    action_item = (
-        "invert_selection",
-        None,
-        _("In_vert Selection"),
-        "<shift><control>A",
-        _("Invert the current selection"),)
+    def __init__(self):
 
-    paths = ["/ui/menubar/edit/invert_selection"]
+        Action.__init__(self, "invert_selection")
+        self.props.label = _("In_vert Selection")
+        self.props.tooltip = _("Invert the current selection")
+        self.accelerator = "<Control>I"
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        if page is not None:
-            return bool(page.project.times)
-        return False
+        assert page is not None
+        assert page.project.subtitles
 
 
-class MergeSubtitlesAction(UIMAction):
+class MergeSubtitlesAction(Action):
 
     """Merge the selected subtitles."""
 
-    action_item = (
-        "merge_subtitles",
-        None,
-        _("_Merge Subtitles"),
-        "M",
-        _("Merge the selected subtitles"),)
+    def __init__(self):
 
-    paths = ["/ui/menubar/edit/merge", "/ui/view_popup/merge"]
+        Action.__init__(self, "merge_subtitles")
+        self.props.label = _("_Merge Subtitles")
+        self.props.tooltip = _("Merge the selected subtitles")
+        self.accelerator = "M"
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        if page is not None:
-            rows = page.view.get_selected_rows()
-            if (len(rows) > 1) and (rows[-1] == rows[0] + len(rows) - 1):
-                return True
-        return False
+        assert page is not None
+        rows = page.view.get_selected_rows()
+        assert len(rows) > 1
+        assert rows == range(rows[0], rows[-1] + 1)
 
 
-class PasteTextsAction(UIMAction):
+class PasteTextsAction(Action):
 
     """Paste texts from the clipboard."""
 
-    action_item = (
-        "paste_texts",
-        gtk.STOCK_PASTE,
-        _("_Paste"),
-        "<control>V",
-        _("Paste texts from the clipboard"),)
+    def __init__(self):
 
-    paths = ["/ui/menubar/text/paste"]
+        Action.__init__(self, "paste_texts")
+        self.props.label = _("_Paste")
+        self.props.stock_id = gtk.STOCK_PASTE
+        self.props.tooltip = _("Paste texts from the clipboard")
+        self.accelerator = "<Control>V"
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        if (page is not None) and application.clipboard.data:
-            selection = bool(page.view.get_selected_rows())
-            focus = (page.view.get_focus()[1] in (MTXT, TTXT))
-            return bool(selection and focus)
-        return False
+        assert page is not None
+        assert not application.clipboard.is_empty()
+        assert page.view.get_selected_rows()
+        assert page.view.get_focus()[1] in (MTXT, TTXT)
 
 
-class RedoActionAction(UIMAction):
+class RedoActionAction(Action):
 
     """Redo the last undone action."""
 
-    action_item = (
-        "redo_action",
-        gtk.STOCK_REDO,
-        _("_Redo"),
-        "<shift><control>Z",
-        _("Redo the last undone action"),)
+    __gtype_name__ = "RedoActionAction"
 
-    paths = ["/ui/menubar/edit/redo"]
-    widgets = ["redo_button"]
+    def __init__(self):
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+        Action.__init__(self, "redo_action")
+        self.props.label = _("_Redo")
+        self.props.stock_id = gtk.STOCK_REDO
+        self.props.tooltip = _("Redo the last undone action")
+        self.accelerator = "<Shift><Control>Z"
+        self.set_tool_item_type(gtk.MenuToolButton)
 
-        if page is not None:
-            return page.project.can_redo()
-        return False
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
+
+        assert page is not None
+        assert page.project.can_redo()
 
 
-class RemoveSubtitlesAction(UIMAction):
+class RemoveSubtitlesAction(Action):
 
     """Remove the selected subtitles."""
 
-    action_item = (
-        "remove_subtitles",
-        gtk.STOCK_REMOVE,
-        _("Rem_ove Subtitles"),
-        "Delete",
-        _("Remove the selected subtitles"),)
+    def __init__(self):
 
-    paths = [
-        "/ui/menubar/edit/remove",
-        "/ui/main_toolbar/remove",
-        "/ui/view_popup/remove"]
+        Action.__init__(self, "remove_subtitles")
+        self.props.label = _("Rem_ove Subtitles")
+        self.props.short_label = _("Remove")
+        self.props.stock_id = gtk.STOCK_REMOVE
+        self.props.tooltip = _("Remove the selected subtitles")
+        self.accelerator = "Delete"
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        if page is not None:
-            return bool(page.view.get_selected_rows())
-        return False
+        assert page is not None
+        assert page.view.get_selected_rows()
 
 
-class SelectAllAction(UIMAction):
+class SelectAllAction(Action):
 
     """Select all subtitles."""
 
-    action_item = (
-        "select_all",
-        None,
-        _("Select _All"),
-        "<control>A",
-        _("Select all subtitles"),)
+    def __init__(self):
 
-    paths = ["/ui/menubar/edit/select_all"]
+        Action.__init__(self, "select_all")
+        self.props.label = _("Select _All")
+        self.props.stock_id = gtk.STOCK_SELECT_ALL
+        self.props.tooltip = _("Select all subtitles")
+        self.accelerator = "<Control>A"
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        if page is not None:
-            return bool(page.project.times)
-        return False
+        assert page is not None
+        assert page.project.subtitles
 
 
-class SplitSubtitlesAction(UIMAction):
+class SplitSubtitleAction(Action):
 
     """Split the selected subtitle."""
 
-    action_item = (
-        "split_subtitle",
-        None,
-        _("_Split Subtitle"),
-        "S",
-        _("Split the selected subtitle"),)
+    def __init__(self):
 
-    paths = ["/ui/menubar/edit/split", "/ui/view_popup/split"]
+        Action.__init__(self, "split_subtitle")
+        self.props.label = _("_Split Subtitle")
+        self.props.tooltip = _("Split the selected subtitle")
+        self.accelerator = "S"
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        if page is not None:
-            return (len(page.view.get_selected_rows()) == 1)
-        return False
+        assert page is not None
+        assert len(page.view.get_selected_rows()) == 1
 
 
-class UndoActionAction(UIMAction):
+class UndoActionAction(Action):
 
     """Undo the last action."""
 
-    action_item = (
-        "undo_action",
-        gtk.STOCK_UNDO,
-        _("_Undo"),
-        "<control>Z",
-        _("Undo the last action"),)
+    __gtype_name__ = "UndoActionAction"
 
-    paths = ["/ui/menubar/edit/undo"]
-    widgets = ["undo_button"]
+    def __init__(self):
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+        Action.__init__(self, "undo_action")
+        self.props.is_important = True
+        self.props.label = _("_Undo")
+        self.props.stock_id = gtk.STOCK_UNDO
+        self.props.tooltip = _("Undo the last action")
+        self.accelerator = "<Control>Z"
+        self.set_tool_item_type(gtk.MenuToolButton)
 
-        if page is not None:
-            return page.project.can_undo()
-        return False
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
+
+        assert page is not None
+        assert page.project.can_undo()

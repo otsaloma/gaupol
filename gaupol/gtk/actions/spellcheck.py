@@ -22,53 +22,42 @@
 import gtk
 
 from gaupol.gtk import conf, util
-from gaupol.gtk.i18n import _
-from .action import UIMAction
+from gaupol.i18n import _
+from .action import Action
 
 
-class ConfigureSpellCheckAction(UIMAction):
+class ConfigureSpellCheckAction(Action):
 
     """Set languages and spell-check targets."""
 
-    action_item = (
-        "configure_spell_check",
-        None,
-        _("Co_nfigure Spell-check\342\200\246"),
-        None,
-        _("Set languages and spell-check targets"),)
+    def __init__(self):
 
-    paths = ["/ui/menubar/tools/configure_spell_check"]
+        Action.__init__(self, "configure_spell_check")
+        self.props.label = _("Co_nfigure Spell-check\342\200\246")
+        self.props.tooltip = _("Set language and spell-check target")
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        return util.enchant_available()
+        assert util.enchant_available()
 
 
-class CheckSpellingAction(UIMAction):
+class CheckSpellingAction(Action):
 
     """Check for incorrect spelling."""
 
-    action_item = (
-        "check_spelling",
-        gtk.STOCK_SPELL_CHECK,
-        _("_Check Spelling"),
-        "F7",
-        _("Check for incorrect spelling"),)
+    def __init__(self):
 
-    paths = [
-        "/ui/menubar/tools/check_spelling",
-        "/ui/main_toolbar/check_spelling",]
+        Action.__init__(self, "check_spelling")
+        self.props.label = _("_Check Spelling")
+        self.props.short_label = _("Spelling")
+        self.props.stock_id = gtk.STOCK_SPELL_CHECK
+        self.props.tooltip = _("Check for incorrect spelling")
+        self.accelerator = "F7"
 
-    @classmethod
-    def is_doable(cls, application, page):
-        """Return True if action can be done."""
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
 
-        try:
-            assert page is not None
-            assert util.enchant_available()
-            assert conf.spell_check.lang
-            return True
-        except AssertionError:
-            return False
+        assert page is not None
+        assert util.enchant_available()
+        assert conf.spell_check.lang

@@ -18,29 +18,24 @@
 
 """UI manager actions."""
 
-# pylint: disable-msg=W0612,W0621
+
+from gaupol.gtk import util
 
 
 def _get_actions():
-    """Get all UIMAction classes."""
+    """Get all Action classes."""
 
-    from gaupol.gtk import util
-    from .action import UIMAction
     actions = []
     for module in _get_modules():
-        names = [x for x in dir(module) if not x.startswith("_")]
-        while "UIMAction" in names:
-            names.remove("UIMAction")
-        values = [getattr(module, x) for x in names]
-        values = [x for x in values if isinstance(x, type)]
-        values = [x for x in values if issubclass(x, UIMAction)]
-        for value in values:
+        names = set(x for x in dir(module) if x.endswith("Action"))
+        names -= set(("Action", "ToggleAction", "RadioAction"))
+        for value in (getattr(module, x) for x in names):
             globals()[value.__name__] = value
             actions.append(value.__name__)
     return util.get_sorted_unique(actions)
 
 def _get_modules():
-    """Get all modules that define UIMActions."""
+    """Get all modules that define Actions."""
 
     from . import edit
     from . import file
@@ -50,6 +45,6 @@ def _get_modules():
     from . import search
     from . import spellcheck
     from . import view
-    return tuple(eval(x) for x in dir())
+    return locals().values()
 
-__all__ = ACTIONS = _get_actions()
+__all__ = _get_actions()

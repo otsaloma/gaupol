@@ -36,10 +36,10 @@ class PositionAgent(Delegate):
 
     __metaclass__ = Contractual
 
-    def _get_frame_adjustment_ensure(self, value, point_1, point_2):
+    def _get_frame_transform_ensure(self, value, point_1, point_2):
         assert isinstance(value[1], int)
 
-    def _get_frame_adjustment(self, point_1, point_2):
+    def _get_frame_transform(self, point_1, point_2):
         """Get a formula for linear correction of positions.
 
         point_* should be a tuple of index and start frame.
@@ -56,10 +56,10 @@ class PositionAgent(Delegate):
         constant = int(round(- (coefficient * x_1) + y_1, 0))
         return coefficient, constant
 
-    def _get_seconds_adjustment_ensure(self, value, point_1, point_2):
+    def _get_seconds_transform_ensure(self, value, point_1, point_2):
         assert isinstance(value[1], float)
 
-    def _get_seconds_adjustment(self, point_1, point_2):
+    def _get_seconds_transform(self, point_1, point_2):
         """Get a formula for linear correction of positions.
 
         point_* should be a tuple of index and start seconds.
@@ -76,7 +76,7 @@ class PositionAgent(Delegate):
         constant = - (coefficient * x_1) + y_1
         return coefficient, constant
 
-    def _get_time_adjustment(self, point_1, point_2):
+    def _get_time_transform(self, point_1, point_2):
         """Get a formula for linear correction of positions.
 
         point_* should be a tuple of index and start time.
@@ -87,7 +87,7 @@ class PositionAgent(Delegate):
         point_1[1] = self.calc.time_to_seconds(point_1[1])
         point_2 = list(point_2[:])
         point_2[1] = self.calc.time_to_seconds(point_2[1])
-        return self._get_seconds_adjustment(point_1, point_2)
+        return self._get_seconds_transform(point_1, point_2)
 
     def adjust_durations_require(self, indexes=None, *args, **kwargs):
         for index in indexes or []:
@@ -136,35 +136,6 @@ class PositionAgent(Delegate):
             method(new_indexes, new_subtitles, register=register)
             self.set_action_description(register, _("Adjusting durations"))
         return new_indexes
-
-    def adjust_positions_require(self, indexes, *args, **kwargs):
-        for index in indexes or []:
-            assert 0 <= index < len(self.subtitles)
-
-    @revertable
-    def adjust_positions(self, indexes, point_1, point_2, register=-1):
-        """Adjust positions by linear two-point correction.
-
-        indexes can be None to process all subtitles.
-        point_* should be a tuple of index and start position.
-        """
-        if isinstance(point_1[1], basestring):
-            method = self._get_time_adjustment
-        elif isinstance(point_1[1], int):
-            method = self._get_frame_adjustment
-        elif isinstance(point_1[1], float):
-            method = self._get_seconds_adjustment
-        coefficient, constant = method(point_1, point_2)
-        new_subtitles = []
-        indexes = indexes or range(len(self.subtitles))
-        for index in indexes:
-            subtitle = self.subtitles[index].copy()
-            subtitle.scale_positions(coefficient)
-            subtitle.shift_positions(constant)
-            new_subtitles.append(subtitle)
-
-        self.replace_positions(indexes, new_subtitles, register=register)
-        self.set_action_description(register, _("Adjusting positions"))
 
     def convert_framerate_require(self, indexes, *args, **kwargs):
         for index in indexes or []:
@@ -224,3 +195,32 @@ class PositionAgent(Delegate):
 
         self.replace_positions(indexes, new_subtitles, register=register)
         self.set_action_description(register, _("Shifting positions"))
+
+    def transform_positions_require(self, indexes, *args, **kwargs):
+        for index in indexes or []:
+            assert 0 <= index < len(self.subtitles)
+
+    @revertable
+    def transform_positions(self, indexes, point_1, point_2, register=-1):
+        """Change positions by linear two-point correction.
+
+        indexes can be None to process all subtitles.
+        point_* should be a tuple of index and start position.
+        """
+        if isinstance(point_1[1], basestring):
+            method = self._get_time_transform
+        elif isinstance(point_1[1], int):
+            method = self._get_frame_transform
+        elif isinstance(point_1[1], float):
+            method = self._get_seconds_transform
+        coefficient, constant = method(point_1, point_2)
+        new_subtitles = []
+        indexes = indexes or range(len(self.subtitles))
+        for index in indexes:
+            subtitle = self.subtitles[index].copy()
+            subtitle.scale_positions(coefficient)
+            subtitle.shift_positions(constant)
+            new_subtitles.append(subtitle)
+
+        self.replace_positions(indexes, new_subtitles, register=register)
+        self.set_action_description(register, _("Transforming positions"))
