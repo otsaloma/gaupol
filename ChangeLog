@@ -1,3 +1,8 @@
+2007-06-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/application.py (_init_uim):
+	Set radio action groups.
+
 2007-06-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/agents/text.py (capitalize_texts):

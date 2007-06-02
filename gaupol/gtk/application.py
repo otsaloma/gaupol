@@ -240,7 +240,6 @@ class Application(Observable, Runner):
     def _init_uim(self):
         """Initialize the UI manager."""
 
-        # FIX:
         self.uim = gtk.UIManager()
         action_group = gtk.ActionGroup("main")
         self._init_uim_menus(action_group)
@@ -248,7 +247,7 @@ class Application(Observable, Runner):
             action = getattr(actions, name)()
             action.finalize(self)
             action_group.add_action_with_accel(action, action.accelerator)
-        # SET RADIO ACTION GROUPS.
+        self._init_uim_radio_groups(action_group)
         self.uim.insert_action_group(action_group, 0)
         action_group = gtk.ActionGroup("recent")
         self.uim.insert_action_group(action_group, -1)
@@ -276,6 +275,18 @@ class Application(Observable, Runner):
         action = self.uim.get_action("/ui/menubar/projects")
         #callback = self.on_show_projects_menu_activate
         #action.connect("activate", callback)
+
+    def _init_uim_radio_groups(self, action_group):
+        """Initialize the groups of radio actions in action group."""
+
+        radios = action_group.list_actions()
+        radios = [x for x in radios if isinstance(x, gtk.RadioAction)]
+        for group in set((x.group for x in radios)):
+            instance = None
+            for radio in (x for x in radios if x.group == group):
+                if instance is not None:
+                    radio.set_group(instance)
+                instance = instance or radio
 
     def _init_undo_button(self):
         """Initialize the undo button on the main toolbar."""
