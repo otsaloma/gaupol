@@ -57,8 +57,7 @@ class EncodingDialog(GladeDialog):
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
-        def respond(*args):
-            self.response(gtk.RESPONSE_OK)
+        respond = lambda *args: self.response(gtk.RESPONSE_OK)
         self._tree_view.connect("row-activated", respond)
 
     def _init_tree_view(self):

@@ -29,8 +29,7 @@ class TestPreviewAgent(TestCase):
         self.application = self.get_application()
         self.delegate = self.application.preview.im_self
 
-        def respond(*args):
-            return gtk.RESPONSE_DELETE_EVENT
+        respond = lambda *args: gtk.RESPONSE_DELETE_EVENT
         self.delegate.flash_dialog = respond
         self.delegate.run_dialog = respond
 

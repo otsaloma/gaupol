@@ -30,8 +30,7 @@ class TestOpenAgent(TestCase):
         self.application = self.get_application()
         self.delegate = self.application.open_main_files.im_self
 
-        def respond(*args):
-            return gtk.RESPONSE_DELETE_EVENT
+        respond = lambda *args: gtk.RESPONSE_DELETE_EVENT
         self.delegate.flash_dialog = respond
         self.delegate.run_dialog = respond
 
@@ -142,8 +141,7 @@ class TestOpenAgent(TestCase):
     def test_on_split_project_activate(self):
 
         responder = iter((gtk.RESPONSE_OK, gtk.RESPONSE_CANCEL))
-        def flash_dialog(dialog):
-            return responder.next()
+        respond = lambda *args: responder.next()
         self.delegate.flash_dialog = flash_dialog
         self.application.pages[0].view.select_rows([3])
         self.application.on_split_project_activate()

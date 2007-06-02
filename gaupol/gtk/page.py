@@ -114,8 +114,7 @@ class Page(Observable):
         button.set_name("gaupol-tab-close-button")
         width, height = image.size_request()
         button.set_size_request(width + 2, height + 2)
-        def request_close(*args):
-            self.emit("close-request")
+        request_close = lambda *args: self.emit("close-request")
         button.connect("clicked", request_close)
         self.tooltips.set_tip(button, _("Close project"))
         return button
@@ -140,8 +139,7 @@ class Page(Observable):
         util.connect(self, "project", "translation-file-opened")
         util.connect(self, "project", "translation-texts-changed")
 
-        def update_label(*args):
-            self.update_tab_label()
+        update_label = lambda *args: self.update_tab_label()
         self.project.connect("main-file-opened", update_label)
         self.project.connect("main-file-saved", update_label)
         self.project.connect("notify::main_changed", update_label)

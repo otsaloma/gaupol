@@ -30,8 +30,7 @@ class TestPositionAgent(TestCase):
     def test_on_shift_positions_activate(self):
 
         responder = iter((gtk.RESPONSE_CANCEL, gtk.RESPONSE_OK))
-        def flash_dialog(*args):
-            return responder.next()
+        respond = lambda *args: responder.next()
         self.application.flash_dialog = flash_dialog
         self.application.on_shift_positions_activate()
         self.application.on_shift_positions_activate()

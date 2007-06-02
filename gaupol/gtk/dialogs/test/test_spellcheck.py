@@ -55,8 +55,7 @@ class TestSpellCheckDialog(TestCase):
 
     def test__on_edit_button_clicked(self):
 
-        def respond(*args):
-            return gtk.RESPONSE_OK
+        respond = lambda *args: gtk.RESPONSE_OK
         self.dialog.run_dialog = respond
         self.dialog._edit_button.emit("clicked")
 
@@ -106,8 +105,7 @@ class TestSpellCheckDialog(TestCase):
 
     def test__show_error_dialog(self):
 
-        def respond(*args):
-            return gtk.RESPONSE_OK
+        respond = lambda *args: gtk.RESPONSE_OK
         self.dialog.flash_dialog = respond
         self.dialog._show_error_dialog("test")
 

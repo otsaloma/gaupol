@@ -58,12 +58,10 @@ class LanguageDialog(GladeDialog):
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
-        def on_column_toggled(*args):
-            self._save_column()
+        on_column_toggled = lambda *args: self._save_column()
         self._main_radio.connect("toggled", on_column_toggled)
         self._tran_radio.connect("toggled", on_column_toggled)
-        def on_target_toggled(*args):
-            self._save_target()
+        on_target_toggled = lambda *args: self._save_target()
         self._all_radio.connect("toggled", on_target_toggled)
         self._current_radio.connect("toggled", on_target_toggled)
         selection = self._tree_view.get_selection()

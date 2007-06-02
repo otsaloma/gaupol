@@ -1,5 +1,14 @@
 2007-06-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/files/mpl2.py:
+	* gaupol/gtk/dialogs/encoding.py:
+	* gaupol/gtk/dialogs/language.py:
+	* gaupol/gtk/dialogs/preferences.py:
+	* gaupol/gtk/page.py:
+	Use lambda where appropriate.
+
+2007-06-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/application.py (_init_uim):
 	Set radio action groups.
 

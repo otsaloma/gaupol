@@ -61,8 +61,7 @@ class TestEditAgent(TestCase):
             page.project.main_file.newline))
 
         responder = iter((gtk.RESPONSE_OK, gtk.RESPONSE_CANCEL))
-        def respond(*args):
-            return responder.next()
+        respond = lambda *args: responder.next()
         self.application.flash_dialog = respond
         self.application.on_edit_headers_activate()
         self.application.on_edit_headers_activate()
@@ -91,8 +90,7 @@ class TestEditAgent(TestCase):
     def test_on_insert_subtitles_activate(self):
 
         responder = iter((gtk.RESPONSE_OK, gtk.RESPONSE_CANCEL))
-        def respond(*args):
-            return responder.next()
+        respond = lambda *args: responder.next()
         self.application.flash_dialog = respond
         self.application.on_insert_subtitles_activate()
         self.application.on_insert_subtitles_activate()

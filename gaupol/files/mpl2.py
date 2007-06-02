@@ -72,8 +72,7 @@ class MPL2(SubtitleFile):
         Raise UnicodeError if encoding fails.
         """
         calc = Calculator()
-        def get_deca(time):
-            return "%.0f" % (calc.time_to_seconds(time) * 10)
+        get_deca = lambda x: "%.0f" % (calc.time_to_seconds(x) * 10)
         starts = [get_deca(x) for x in starts]
         ends = [get_deca(x) for x in ends]
         texts = [x.replace("\n", "|") for x in texts]

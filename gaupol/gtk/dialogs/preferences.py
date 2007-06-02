@@ -165,8 +165,7 @@ class _FilePage(Delegate):
         util.connect(self, "_remove_button", "clicked")
         util.connect(self, "_up_button", "clicked")
 
-        def update(*args):
-            self._set_sensitivities()
+        update = lambda *args: self._set_sensitivities()
         selection = self._tree_view.get_selection()
         selection.connect("changed", update)
 

@@ -35,8 +35,7 @@ class TestSearchDialog(TestCase):
         self.dialog = search.SearchDialog(self.application)
         self.dialog.show()
 
-        def respond(*args):
-            return gtk.RESPONSE_DELETE_EVENT
+        respond = lambda *args: gtk.RESPONSE_DELETE_EVENT
         self.dialog.flash_dialog = respond
         self.dialog.run_dialog = respond
 

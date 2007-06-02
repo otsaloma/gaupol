@@ -33,7 +33,6 @@ class TestHelpAgent(TestCase):
 
     def test_on_view_about_dialog_activate(self):
 
-        def respond(*args):
-            return gtk.RESPONSE_DELETE_EVENT
+        respond = lambda *args: gtk.RESPONSE_DELETE_EVENT
         self.application.flash_dialog = respond
         self.application.on_view_about_dialog_activate()

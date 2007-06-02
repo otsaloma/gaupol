@@ -76,8 +76,7 @@ class TestHeaderDialog(TestCase):
         self.dialog = header.HeaderDialog(
             self.application.window, self.application)
 
-        def respond(*args):
-            return gtk.RESPONSE_DELETE_EVENT
+        respond = lambda *args: gtk.RESPONSE_DELETE_EVENT
         self.dialog.flash_dialog = respond
         self.dialog.run_dialog = respond
 
