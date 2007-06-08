@@ -19,6 +19,8 @@
 """SubViewer 2.0 tag library."""
 
 
+import gaupol
+
 from .subrip import SubRip
 
 
@@ -26,4 +28,4 @@ class SubViewer2(SubRip):
 
     """SubViewer 2.0 tag library."""
 
-    pass
+    format = gaupol.FORMAT.SUBVIEWER2

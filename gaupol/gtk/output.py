@@ -19,10 +19,11 @@
 """Window for standard output from external applications."""
 
 
+import gaupol.gtk
 import gtk
+_ = gaupol.i18n._
 
-from gaupol.gtk import conf, util
-from gaupol.i18n import _
+__all__ = ["OutputWindow"]
 
 
 class OutputWindow(gtk.Window):
@@ -56,20 +57,20 @@ class OutputWindow(gtk.Window):
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
-        util.connect(self, "_close_button", "clicked")
-        util.connect(self, self, "delete-event")
-        util.connect(self, self, "window-state-event")
+        gaupol.gtk.util.connect(self, "_close_button", "clicked")
+        gaupol.gtk.util.connect(self, self, "delete-event")
+        gaupol.gtk.util.connect(self, self, "window-state-event")
 
         def save_visibility(*args):
-            conf.output_window.show = self.props.visible
+            gaupol.gtk.gaupol.gtk.conf.output_window.show = self.props.visible
         self.connect("notify::visible", save_visibility)
 
     def _init_sizes(self):
         """Initialize widget sizes."""
 
-        self.resize(*conf.output_window.size)
-        self.move(*conf.output_window.position)
-        if conf.output_window.maximized:
+        self.resize(*gaupol.gtk.gaupol.gtk.conf.output_window.size)
+        self.move(*gaupol.gtk.gaupol.gtk.conf.output_window.position)
+        if gaupol.gtk.gaupol.gtk.conf.output_window.maximized:
             self.maximize()
 
     def _init_widgets(self):
@@ -81,7 +82,7 @@ class OutputWindow(gtk.Window):
         self._text_view.set_editable(False)
         self._text_view.set_left_margin(6)
         self._text_view.set_right_margin(6)
-        util.set_widget_font(self._text_view, "monospace")
+        gaupol.gtk.util.set_widget_font(self._text_view, "monospace")
 
         scroller = gtk.ScrolledWindow()
         scroller.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
@@ -123,15 +124,15 @@ class OutputWindow(gtk.Window):
 
         state = event.new_window_state
         maximized = bool(state & gtk.gdk.WINDOW_STATE_MAXIMIZED)
-        conf.output_window.maximized = maximized
+        gaupol.gtk.gaupol.gtk.conf.output_window.maximized = maximized
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _save_geometry(self):
         """Save window size and position."""
 
-        assert not conf.output_window.maximized
-        conf.output_window.size = self.get_size()
-        conf.output_window.position = self.get_position()
+        assert not gaupol.gtk.gaupol.gtk.conf.output_window.maximized
+        gaupol.gtk.gaupol.gtk.conf.output_window.size = self.get_size()
+        gaupol.gtk.gaupol.gtk.conf.output_window.position = self.get_position()
 
     def set_output(self, output):
         """Set output to the text view."""

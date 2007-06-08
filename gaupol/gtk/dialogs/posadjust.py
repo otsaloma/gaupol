@@ -92,16 +92,16 @@ class _PositionAdjustDialog(GladeDialog):
         """Get the selected target."""
 
         if self._selected_radio.get_active():
-            return const.TARGET.SELECTED
+            return gaupol.gtk.TARGET.SELECTED
         if self._current_radio.get_active():
-            return const.TARGET.CURRENT
+            return gaupol.gtk.TARGET.CURRENT
         raise ValueError
 
     def _get_target_rows(self):
         """Get rows corresponding to target."""
 
         target = self._get_target()
-        if target == const.TARGET.SELECTED:
+        if target == gaupol.gtk.TARGET.SELECTED:
             page = self.application.get_current_page()
             return page.view.get_selected_rows()
         return None
@@ -115,12 +115,12 @@ class _PositionAdjustDialog(GladeDialog):
         self._sub_spin_1.emit("value-changed")
         self._sub_spin_2.emit("value-changed")
 
-        target = conf.position_adjust.target
-        self._selected_radio.set_active(target == const.TARGET.SELECTED)
-        self._current_radio.set_active(target == const.TARGET.CURRENT)
+        target = gaupol.gtk.conf.position_adjust.target
+        self._selected_radio.set_active(target == gaupol.gtk.TARGET.SELECTED)
+        self._current_radio.set_active(target == gaupol.gtk.TARGET.CURRENT)
 
         rows = page.view.get_selected_rows()
-        if not rows and target == const.TARGET.SELECTED:
+        if not rows and target == gaupol.gtk.TARGET.SELECTED:
             self._current_radio.set_active(True)
             self._selected_radio.set_sensitive(False)
 
@@ -134,11 +134,11 @@ class _PositionAdjustDialog(GladeDialog):
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
-        util.connect(self, "_preview_button_1", "clicked")
-        util.connect(self, "_preview_button_2", "clicked")
-        util.connect(self, "_sub_spin_1", "value-changed")
-        util.connect(self, "_sub_spin_2", "value-changed")
-        util.connect(self, self, "response")
+        gaupol.gtk.util.connect(self, "_preview_button_1", "clicked")
+        gaupol.gtk.util.connect(self, "_preview_button_2", "clicked")
+        gaupol.gtk.util.connect(self, "_sub_spin_1", "value-changed")
+        gaupol.gtk.util.connect(self, "_sub_spin_2", "value-changed")
+        gaupol.gtk.util.connect(self, self, "response")
 
     def _init_sizes(self):
         """Initialize the widget sizes."""
@@ -161,7 +161,7 @@ class _PositionAdjustDialog(GladeDialog):
 
         page = self.application.get_current_page()
         row = self._sub_spin_1.get_value_as_int() - 1
-        doc = const.DOCUMENT.MAIN
+        doc = gaupol.gtk.DOCUMENT.MAIN
         method = self._get_adjust_method()
         rows = self._get_target_rows()
         point_1 = self._get_first_point()
@@ -174,7 +174,7 @@ class _PositionAdjustDialog(GladeDialog):
 
         page = self.application.get_current_page()
         row = self._sub_spin_2.get_value_as_int() - 1
-        doc = const.DOCUMENT.MAIN
+        doc = gaupol.gtk.DOCUMENT.MAIN
         method = self._get_adjust_method()
         rows = self._get_target_rows()
         point_1 = self._get_first_point()
@@ -182,11 +182,11 @@ class _PositionAdjustDialog(GladeDialog):
         args = (rows, point_1, point_2)
         self.application.preview_changes(page, row, doc, method, args)
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _on_response(self, dialog, response):
         """Save settings and adjust positions."""
 
-        conf.position_adjust.target = self._get_target()
+        gaupol.gtk.conf.position_adjust.target = self._get_target()
         assert response == gtk.RESPONSE_OK
         self._adjust()
 

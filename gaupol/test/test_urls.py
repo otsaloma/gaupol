@@ -18,14 +18,14 @@
 
 import urllib
 
-from gaupol.unittest import TestCase
+from gaupol import unittest
 from .. import urls
 
 
-class TestModule(TestCase):
+class TestModule(unittest.TestCase):
 
     def test_attributes(self):
 
-        urllib.urlopen(urls.BUG_REPORT)
-        urllib.urlopen(urls.HOMEPAGE)
-        urllib.urlopen(urls.REGEX_HELP)
+        urllib.urlopen(urls.BUG_REPORT_URL)
+        urllib.urlopen(urls.HOMEPAGE_URL)
+        urllib.urlopen(urls.REGEX_HELP_URL)

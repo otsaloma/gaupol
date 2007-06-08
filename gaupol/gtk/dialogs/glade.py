@@ -19,12 +19,10 @@
 """Wrapper for Glade constructed dialogs."""
 
 
-from gaupol.base import Delegate
-from gaupol.gtk import util
-from gaupol.gtk.runner import Runner
+import gaupol.gtk
 
 
-class GladeDialog(Delegate, Runner):
+class GladeDialog(gaupol.Delegate, gaupol.gtk.Runner):
 
     """Wrapper for Glade constructed dialogs.
 
@@ -36,9 +34,9 @@ class GladeDialog(Delegate, Runner):
     def __init__(self, name):
 
         # pylint: disable-msg=W0231
-        glade_xml = util.get_glade_xml(name)
+        glade_xml = gaupol.gtk.util.get_glade_xml(name)
         dialog = glade_xml.get_widget("dialog")
-        Delegate.__init__(self, dialog)
+        gaupol.Delegate.__init__(self, dialog)
         self._dialog = dialog
         self._glade_xml = glade_xml
 

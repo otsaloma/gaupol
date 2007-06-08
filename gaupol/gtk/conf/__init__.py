@@ -29,10 +29,9 @@ their default values and types.
 """
 
 
+import gaupol.gtk
 import os
 
-from gaupol import paths, util, __version__
-from gaupol.gtk.errors import ConfigParseError
 from .config import Config
 from .container import Container
 
@@ -45,9 +44,9 @@ def _handle_transitions(config):
 
     version = config["general"]["version"]
     if version is not None:
-        if util.compare_versions(version, "0.7.999") == -1:
+        if gaupol.util.compare_versions(version, "0.7.999") == -1:
             print "Ignoring old-style configuration file entirely."
-            spec_file = os.path.join(paths.DATA_DIR, "conf.spec")
+            spec_file = os.path.join(gaupol.DATA_DIR, "conf.spec")
             return Config(None, spec_file)
     return config
 
@@ -63,7 +62,7 @@ def connect_require(obj, section, option):
     assert section in globals()
     assert hasattr(globals()[section], option)
 
-@util.contractual
+@gaupol.util.contractual
 def connect(obj, section, option):
     """Connect option's signal to object's callback method."""
 
@@ -78,18 +77,18 @@ def connect(obj, section, option):
 def read_ensure(value):
     assert "_config" in globals()
 
-@util.contractual
+@gaupol.util.contractual
 def read():
     """Read configurations from file."""
 
     try:
-        spec_file = os.path.join(paths.DATA_DIR, "conf.spec")
+        spec_file = os.path.join(gaupol.DATA_DIR, "conf.spec")
         config = Config(config_file, spec_file)
         config = _handle_transitions(config)
-    except ConfigParseError:
+    except gaupol.gtk.ConfigParseError:
         raise SystemExit(1)
     _translate_nones(config)
-    config["general"]["version"] = __version__
+    config["general"]["version"] = gaupol.__version__
     globals()["_config"] = config
     for key, value in config.items():
         globals()[key] = Container(value)
@@ -98,7 +97,7 @@ def write_ensure(value):
     assert "_config" in globals()
     assert os.path.isfile(config_file)
 
-@util.contractual
+@gaupol.util.contractual
 def write():
     """Write configurations to file."""
 

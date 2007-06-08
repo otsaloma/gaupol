@@ -16,11 +16,11 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol import const
-from gaupol.unittest import TestCase
+import gaupol
+from gaupol import unittest
 
 
-class TestOpenAgent(TestCase):
+class TestOpenAgent(unittest.TestCase):
 
     def setup_method(self, method):
 
@@ -29,7 +29,7 @@ class TestOpenAgent(TestCase):
 
     def test_open_main_file(self):
 
-        for format in const.FORMAT.members:
+        for format in gaupol.FORMAT.members:
             path = self.get_file_path(format)
             self.project.remove_subtitles([0])
             self.project.open_main(path, "ascii")
@@ -37,14 +37,14 @@ class TestOpenAgent(TestCase):
 
     def test_open_translation_file__smart(self):
 
-        for format in const.FORMAT.members:
+        for format in gaupol.FORMAT.members:
             path = self.get_file_path(format)
             self.project.remove_subtitles([0])
             self.project.open_translation(path, "ascii", True)
 
     def test_open_translation_file__stupid(self):
 
-        for format in const.FORMAT.members:
+        for format in gaupol.FORMAT.members:
             path = self.get_file_path(format)
             self.project.remove_subtitles([0])
             self.project.open_translation(path, "ascii", False)

@@ -16,24 +16,24 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol import const
-from gaupol.unittest import TestCase, reversion_test
+import gaupol
+from gaupol import unittest
 
 
-class TestEditAgent(TestCase):
+class TestEditAgent(unittest.TestCase):
 
     def setup_method(self, method):
 
         self.project = self.get_project()
 
-    @reversion_test
+    @unittest.reversion_test
     def test_clear_texts(self):
 
-        self.project.clear_texts([0, 1], const.DOCUMENT.MAIN)
+        self.project.clear_texts([0, 1], gaupol.DOCUMENT.MAIN)
         assert self.project.subtitles[0].main_text == ""
         assert self.project.subtitles[1].main_text == ""
 
-    @reversion_test
+    @unittest.reversion_test
     def test_insert_blank_subtitles__end(self):
 
         subtitles = self.project.subtitles
@@ -44,7 +44,7 @@ class TestEditAgent(TestCase):
         for i in range(0, len(subtitles) - 1):
             assert subtitles[i] <= subtitles[i + 1]
 
-    @reversion_test
+    @unittest.reversion_test
     def test_insert_blank_subtitles__middle(self):
 
         subtitles = self.project.subtitles
@@ -54,7 +54,7 @@ class TestEditAgent(TestCase):
         for i in range(0, len(subtitles) - 1):
             assert subtitles[i] <= subtitles[i + 1]
 
-    @reversion_test
+    @unittest.reversion_test
     def test_insert_blank_subtitles__start(self):
 
         subtitles = self.project.subtitles
@@ -64,7 +64,7 @@ class TestEditAgent(TestCase):
         for i in range(0, len(subtitles) - 1):
             assert subtitles[i] <= subtitles[i + 1]
 
-    @reversion_test
+    @unittest.reversion_test
     def test_insert_subtitles(self):
 
         subtitles = self.project.subtitles
@@ -81,7 +81,7 @@ class TestEditAgent(TestCase):
         assert len(subtitles) == orig_length + 3
         assert subtitles[0:3] == new_subtitles
 
-    @reversion_test
+    @unittest.reversion_test
     def test_merge_subtitles(self):
 
         subtitles = self.project.subtitles
@@ -93,7 +93,7 @@ class TestEditAgent(TestCase):
         assert subtitles[1].start == subtitle_1.start
         assert subtitles[1].end == subtitle_2.end
 
-    @reversion_test
+    @unittest.reversion_test
     def test_remove_subtitles(self):
 
         subtitles = self.project.subtitles
@@ -101,7 +101,7 @@ class TestEditAgent(TestCase):
         self.project.remove_subtitles([2, 3])
         assert len(subtitles) == orig_length - 2
 
-    @reversion_test
+    @unittest.reversion_test
     def test_replace_positions(self):
 
         new_subtitles = []
@@ -116,15 +116,15 @@ class TestEditAgent(TestCase):
             assert subtitles[i].start == new_subtitles[i].start
             assert subtitles[i].end == new_subtitles[i].end
 
-    @reversion_test
+    @unittest.reversion_test
     def test_replace_texts(self):
 
-        doc = const.DOCUMENT.MAIN
+        doc = gaupol.DOCUMENT.MAIN
         self.project.replace_texts([1, 2], doc, ["", ""])
         assert self.project.subtitles[1].main_text == ""
         assert self.project.subtitles[2].main_text == ""
 
-    @reversion_test
+    @unittest.reversion_test
     def test_split_subtitle(self):
 
         subtitles = self.project.subtitles

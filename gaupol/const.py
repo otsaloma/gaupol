@@ -21,108 +21,99 @@
 # pylint: disable-msg=C0301
 
 
+import gaupol
 import sys
-
-from gaupol.base import const
-from gaupol.i18n import _
+_ = gaupol.i18n._
 
 
-DOCUMENT = const.Section()
-DOCUMENT.MAIN = const.Member()
-DOCUMENT.TRAN = const.Member()
+DOCUMENT = gaupol.ConstantSection()
+DOCUMENT.MAIN = gaupol.ConstantMember()
+DOCUMENT.TRAN = gaupol.ConstantMember()
 DOCUMENT.finalize()
 
-FORMAT = const.Section()
-FORMAT.ASS = const.Member()
-FORMAT.ASS.class_name = "AdvSubStationAlpha"
-FORMAT.ASS.display_name = "Advanced Sub Station Alpha"
+FORMAT = gaupol.ConstantSection()
+FORMAT.ASS = gaupol.ConstantMember()
+FORMAT.ASS.label = "Advanced Sub Station Alpha"
 FORMAT.ASS.extension = ".ass"
 FORMAT.ASS.has_header = True
 FORMAT.ASS.identifier = r"^ScriptType:\s*[vV]4.00\+\s*$"
-FORMAT.MICRODVD = const.Member()
-FORMAT.MICRODVD.class_name = "MicroDVD"
-FORMAT.MICRODVD.display_name = "MicroDVD"
+FORMAT.MICRODVD = gaupol.ConstantMember()
+FORMAT.MICRODVD.label = "MicroDVD"
 FORMAT.MICRODVD.extension = ".sub"
 FORMAT.MICRODVD.has_header = True
 FORMAT.MICRODVD.identifier = r"^\{\d+\}\{\d+\}"
-FORMAT.MPL2 = const.Member()
-FORMAT.MPL2.class_name = "MPL2"
-FORMAT.MPL2.display_name = "MPL2"
+FORMAT.MPL2 = gaupol.ConstantMember()
+FORMAT.MPL2.label = "MPL2"
 FORMAT.MPL2.extension = ".txt"
 FORMAT.MPL2.has_header = False
 FORMAT.MPL2.identifier = r"^\[\d+\]\[\d+\]"
-FORMAT.MPSUB = const.Member()
-FORMAT.MPSUB.class_name = "MPsub"
-FORMAT.MPSUB.display_name = "MPsub"
+FORMAT.MPSUB = gaupol.ConstantMember()
+FORMAT.MPSUB.label = "MPsub"
 FORMAT.MPSUB.extension = ".sub"
 FORMAT.MPSUB.has_header = True
 FORMAT.MPSUB.identifier = r"^FORMAT=(TIME|[\d\.]+)\s*$"
-FORMAT.SSA = const.Member()
-FORMAT.SSA.class_name = "SubStationAlpha"
-FORMAT.SSA.display_name = "Sub Station Alpha"
+FORMAT.SSA = gaupol.ConstantMember()
+FORMAT.SSA.label = "Sub Station Alpha"
 FORMAT.SSA.extension = ".ssa"
 FORMAT.SSA.has_header = True
 FORMAT.SSA.identifier = r"^ScriptType:\s*[vV]4.00\s*$"
-FORMAT.SUBRIP = const.Member()
-FORMAT.SUBRIP.class_name = "SubRip"
-FORMAT.SUBRIP.display_name = "SubRip"
+FORMAT.SUBRIP = gaupol.ConstantMember()
+FORMAT.SUBRIP.label = "SubRip"
 FORMAT.SUBRIP.extension = ".srt"
 FORMAT.SUBRIP.has_header = False
 FORMAT.SUBRIP.identifier = r"^\d\d:\d\d:\d\d,\d\d\d --> \d\d:\d\d:\d\d,\d\d\d\s*$"
-FORMAT.SUBVIEWER2 = const.Member()
-FORMAT.SUBVIEWER2.class_name = "SubViewer2"
-FORMAT.SUBVIEWER2.display_name = "SubViewer 2.0"
+FORMAT.SUBVIEWER2 = gaupol.ConstantMember()
+FORMAT.SUBVIEWER2.label = "SubViewer 2.0"
 FORMAT.SUBVIEWER2.extension = ".sub"
 FORMAT.SUBVIEWER2.has_header = True
 FORMAT.SUBVIEWER2.identifier = r"^\d\d:\d\d:\d\d\.\d\d,\d\d:\d\d:\d\d\.\d\d\s*$"
-FORMAT.TMPLAYER = const.Member()
-FORMAT.TMPLAYER.class_name = "TMPlayer"
-FORMAT.TMPLAYER.display_name = "TMPlayer"
+FORMAT.TMPLAYER = gaupol.ConstantMember()
+FORMAT.TMPLAYER.label = "TMPlayer"
 FORMAT.TMPLAYER.extension = ".txt"
 FORMAT.TMPLAYER.has_header = False
 FORMAT.TMPLAYER.identifier = r"^\d\d:\d\d:\d\d:"
 FORMAT.finalize()
 
-FRAMERATE = const.Section()
-FRAMERATE.P24 = const.Member()
-FRAMERATE.P24.display_name = _("23.976 fps")
-FRAMERATE.P24.mpsub_name = "23.98"
+FRAMERATE = gaupol.ConstantSection()
+FRAMERATE.P24 = gaupol.ConstantMember()
+FRAMERATE.P24.label = _("24 fps")
+FRAMERATE.P24.mpsub = "23.98"
 FRAMERATE.P24.value = 23.976
-FRAMERATE.P25 = const.Member()
-FRAMERATE.P25.display_name = _("25 fps")
-FRAMERATE.P25.mpsub_name = "25.00"
+FRAMERATE.P25 = gaupol.ConstantMember()
+FRAMERATE.P25.label = _("25 fps")
+FRAMERATE.P25.mpsub = "25.00"
 FRAMERATE.P25.value = 25.0
-FRAMERATE.P30 = const.Member()
-FRAMERATE.P30.display_name = _("29.97 fps")
-FRAMERATE.P30.mpsub_name = "29.97"
+FRAMERATE.P30 = gaupol.ConstantMember()
+FRAMERATE.P30.label = _("30 fps")
+FRAMERATE.P30.mpsub = "29.97"
 FRAMERATE.P30.value = 29.97
 FRAMERATE.finalize()
 
-MODE = const.Section()
-MODE.TIME = const.Member()
-MODE.FRAME = const.Member()
+MODE = gaupol.ConstantSection()
+MODE.TIME = gaupol.ConstantMember()
+MODE.FRAME = gaupol.ConstantMember()
 MODE.finalize()
 
-NEWLINE = const.Section()
-NEWLINE.MAC = const.Member()
-NEWLINE.MAC.display_name = "Mac (classic)"
+NEWLINE = gaupol.ConstantSection()
+NEWLINE.MAC = gaupol.ConstantMember()
+NEWLINE.MAC.label = "Mac (classic)"
 NEWLINE.MAC.value = "\r"
-NEWLINE.UNIX = const.Member()
-NEWLINE.UNIX.display_name = "Unix"
+NEWLINE.UNIX = gaupol.ConstantMember()
+NEWLINE.UNIX.label = "Unix"
 NEWLINE.UNIX.value = "\n"
-NEWLINE.WINDOWS = const.Member()
-NEWLINE.WINDOWS.display_name = "Windows"
+NEWLINE.WINDOWS = gaupol.ConstantMember()
+NEWLINE.WINDOWS.label = "Windows"
 NEWLINE.WINDOWS.value = "\r\n"
 NEWLINE.finalize()
 
-REGISTER = const.Section()
-REGISTER.DO = const.Member()
+REGISTER = gaupol.ConstantSection()
+REGISTER.DO = gaupol.ConstantMember()
 REGISTER.DO.shift = 1
 REGISTER.DO.signal = "action-done"
-REGISTER.UNDO = const.Member()
+REGISTER.UNDO = gaupol.ConstantMember()
 REGISTER.UNDO.shift = -1
 REGISTER.UNDO.signal = "action-undone"
-REGISTER.REDO = const.Member()
+REGISTER.REDO = gaupol.ConstantMember()
 REGISTER.REDO.shift = 1
 REGISTER.REDO.signal = "action-redone"
 REGISTER.finalize()
@@ -137,8 +128,8 @@ def get_vlc_executable():
         return r"%ProgramFiles%\VideoLAN\vlc\vlc.exe"
     return "vlc"
 
-VIDEO_PLAYER = const.Section()
-VIDEO_PLAYER.MPLAYER = const.Member()
+VIDEO_PLAYER = gaupol.ConstantSection()
+VIDEO_PLAYER.MPLAYER = gaupol.ConstantMember()
 VIDEO_PLAYER.MPLAYER.command = " ".join((
     get_mplayer_executable(),
     "-identify",
@@ -146,14 +137,14 @@ VIDEO_PLAYER.MPLAYER.command = " ".join((
     "-ss $SECONDS",
     "-sub $SUBFILE",
     "$VIDEOFILE",))
-VIDEO_PLAYER.MPLAYER.display_name = "MPlayer"
-VIDEO_PLAYER.VLC = const.Member()
+VIDEO_PLAYER.MPLAYER.label = "MPlayer"
+VIDEO_PLAYER.VLC = gaupol.ConstantMember()
 VIDEO_PLAYER.VLC.command = " ".join((
     get_vlc_executable(),
     "--start-time=$SECONDS",
     "--sub-file=$SUBFILE",
     "$VIDEOFILE",))
-VIDEO_PLAYER.VLC.display_name = "VLC"
+VIDEO_PLAYER.VLC.label = "VLC"
 VIDEO_PLAYER.finalize()
 
 del get_mplayer_executable, get_vlc_executable

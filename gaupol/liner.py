@@ -22,14 +22,11 @@
 from __future__ import division
 
 import copy
+import gaupol
 import re
 
-from gaupol import scriptlib
-from gaupol.base import Contractual
-from gaupol.parser import Parser
 
-
-class Liner(Parser):
+class Liner(gaupol.Parser):
 
     """Splitter and merger of lines.
 
@@ -49,7 +46,7 @@ class Liner(Parser):
     surrounding a single space that acts as the separator.
     """
 
-    __metaclass__ = Contractual
+    __metaclass__ = gaupol.Contractual
     _re_multi_space = re.compile(r" {2,}")
 
     def __init__(self, re_tag=None):
@@ -57,7 +54,7 @@ class Liner(Parser):
 
         re_tag should be a regular expression object.
         """
-        Parser.__init__(self, re_tag)
+        gaupol.Parser.__init__(self, re_tag)
         self._length_func = len
         self._space_length = 1
         self.max_length = 44
@@ -66,9 +63,9 @@ class Liner(Parser):
         self.re_clause = None
         self.re_dialogue = None
 
-        pattern = scriptlib.get_clause_separator("latin-english")
+        pattern = gaupol.scripts.get_clause_separator("latin-english")
         self.re_clause = re.compile(pattern, re.UNICODE)
-        pattern = scriptlib.get_dialogue_separator("latin")
+        pattern = gaupol.scripts.get_dialogue_separator("latin")
         self.re_dialogue = re.compile(pattern, re.UNICODE)
 
     def _get_length(self, lengths):
@@ -272,4 +269,4 @@ class Liner(Parser):
 
         next should be True to start at beginning, False for end.
         """
-        Parser.set_text(self, text.strip(), next)
+        gaupol.Parser.set_text(self, text.strip(), next)

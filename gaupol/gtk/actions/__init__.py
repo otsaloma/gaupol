@@ -19,7 +19,7 @@
 """UI manager actions."""
 
 
-from gaupol.gtk import util
+import gaupol.gtk
 
 
 def _get_actions():
@@ -32,7 +32,7 @@ def _get_actions():
         for value in (getattr(module, x) for x in names):
             globals()[value.__name__] = value
             actions.append(value.__name__)
-    return util.get_sorted_unique(actions)
+    return gaupol.gtk.util.get_sorted_unique(actions)
 
 def _get_modules():
     """Get all modules that define Actions."""

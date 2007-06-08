@@ -16,11 +16,11 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol.gtk.unittest import TestCase
+from gaupol.gtk import unittest
 from .. import glade
 
 
-class TestGladeDialog(TestCase):
+class TestGladeDialog(unittest.TestCase):
 
     def setup_method(self, method):
 

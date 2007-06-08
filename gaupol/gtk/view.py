@@ -19,13 +19,12 @@
 """List widget to display subtitle data."""
 
 
+import gaupol.gtk
 import gobject
 import gtk
 import pango
 
-from gaupol.gtk import conf, const, util
-from gaupol.gtk.cellrend import *
-from gaupol.gtk.index import *
+__all__ = ["View"]
 
 
 class View(gtk.TreeView):
@@ -37,7 +36,7 @@ class View(gtk.TreeView):
     variable '_active_attr', other column headers as '_normal_attr'.
     """
 
-    __metaclass__ = util.get_contractual_metaclass()
+    __metaclass__ = gaupol.gtk.ContractualGObject
     _active_attr = pango.AttrList()
     _active_attr.insert(pango.AttrWeight(pango.WEIGHT_BOLD, 0, -1))
     _normal_attr = pango.AttrList()
@@ -53,14 +52,16 @@ class View(gtk.TreeView):
     def _get_header_label(self, col, edit_mode):
         """Get a column header label that's wide enough."""
 
-        label = gtk.Label(col.display_name)
+        label = gtk.Label(col.label)
         label.props.xalign = 0
         label.show()
         label.set_attributes(self._active_attr)
         width = label.size_request()[0]
-        if (col in (START, END, DURN)) and (edit_mode == const.MODE.FRAME):
+        COLUMN = gaupol.gtk.COLUMN
+        cols = (COLUMN.START, COLUMN.END, COLUMN.DURATION)
+        if (col in cols) and (edit_mode == gaupol.gtk.MODE.FRAME):
             spin = gtk.SpinButton()
-            digits = (0 if col == DURN else 5)
+            digits = (0 if col == COLUMN.DURATION else 5)
             spin.set_digits(digits)
             width = max(width, spin.size_request()[0])
         label.set_size_request(width, -1)
@@ -70,43 +71,46 @@ class View(gtk.TreeView):
     def _get_renderer(self, col, edit_mode):
         """Initialize and return a new cell renderer."""
 
-        font = ("" if conf.editor.use_default_font else conf.editor.font)
-        if col == NO:
+        font = gaupol.gtk.util.get_font()
+        COLUMN = gaupol.gtk.COLUMN
+        position_cols = (COLUMN.START, COLUMN.END, COLUMN.DURATION)
+        text_cols = (COLUMN.MAIN_TEXT, COLUMN.TRAN_TEXT)
+        if col == COLUMN.NUMBER:
             renderer = gtk.CellRendererText()
             renderer.props.xalign = 1
-        elif col in (START, END, DURN):
-            if edit_mode == const.MODE.TIME:
-                renderer = TimeCellRenderer()
-            elif edit_mode == const.MODE.FRAME:
+        elif col in position_cols:
+            if edit_mode == gaupol.gtk.MODE.TIME:
+                renderer = gaupol.gtk.TimeCellRenderer()
+            elif edit_mode == gaupol.gtk.MODE.FRAME:
                 renderer = gtk.CellRendererSpin()
                 adjustment = gtk.Adjustment(0, 0, 99999999, 1, 10)
                 renderer.props.adjustment = adjustment
             renderer.props.xalign = 1
-        elif col in (MTXT, TTXT):
-            renderer = MultilineCellRenderer()
-        renderer.props.editable = (col != NO)
+        elif col in text_cols:
+            renderer = gaupol.gtk.MultilineCellRenderer()
+        renderer.props.editable = (col != COLUMN.NUMBER)
         renderer.props.font = font
         return renderer
 
     def _init_columns(self, edit_mode):
         """Initialize the tree view columns."""
 
-        for col in const.COLUMN.members:
+        text_cols = (gaupol.gtk.COLUMN.MAIN_TEXT, gaupol.gtk.COLUMN.TRAN_TEXT)
+        for col in gaupol.gtk.COLUMN.members:
             renderer = self._get_renderer(col, edit_mode)
-            name = col.display_name
-            column = gtk.TreeViewColumn(name, renderer , text=col)
+            column = gtk.TreeViewColumn(col.label, renderer , text=col)
             self.append_column(column)
             column.set_clickable(True)
             column.set_resizable(True)
-            column.set_visible(col in conf.editor.visible_cols)
-            column.set_expand(col in (MTXT, TTXT))
+            column.set_visible(col in gaupol.gtk.conf.editor.visible_cols)
+            column.set_expand(col in text_cols)
             label = self._get_header_label(col, edit_mode)
             column.set_widget(label)
 
         # Set the data in the number column automatically.
         def set_number(column, renderer, store, itr):
             renderer.props.text = store.get_path(itr)[0] + 1
-        column = self.get_column(NO)
+        column = self.get_column(gaupol.gtk.COLUMN.NUMBER)
         renderer = column.get_cell_renderers()[0]
         column.set_cell_data_func(renderer, set_number)
 
@@ -118,12 +122,12 @@ class View(gtk.TreeView):
         selection = self.get_selection()
         selection.set_mode(gtk.SELECTION_MULTIPLE)
         self.set_enable_search(True)
-        self.set_search_column(NO)
+        self.set_search_column(gaupol.gtk.COLUMN.NUMBER)
 
         columns = [gobject.TYPE_INT]
-        if edit_mode == const.MODE.TIME:
+        if edit_mode == gaupol.gtk.MODE.TIME:
             columns += [gobject.TYPE_STRING] * 3
-        elif edit_mode == const.MODE.FRAME:
+        elif edit_mode == gaupol.gtk.MODE.FRAME:
             columns += [gobject.TYPE_INT] * 3
         columns += [gobject.TYPE_STRING] * 2
         store = gtk.ListStore(*columns)
@@ -133,32 +137,32 @@ class View(gtk.TreeView):
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
-        util.connect(self, self, "cursor-changed")
-        util.connect(self, self, "key-press-event")
-        conf.connect(self, "editor", "font")
-        conf.connect(self, "editor", "length_unit")
-        conf.connect(self, "editor", "show_lengths_cell")
-        conf.connect(self, "editor", "use_default_font")
+        gaupol.gtk.util.connect(self, self, "cursor-changed")
+        gaupol.gtk.util.connect(self, self, "key-press-event")
+        gaupol.gtk.conf.connect(self, "editor", "font")
+        gaupol.gtk.conf.connect(self, "editor", "length_unit")
+        gaupol.gtk.conf.connect(self, "editor", "show_lengths_cell")
+        gaupol.gtk.conf.connect(self, "editor", "use_default_font")
 
     def _invariant(self):
         if self._active_col is not None:
-            assert self._active_col in const.COLUMN.members
+            assert self._active_col in gaupol.gtk.COLUMN.members
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _on_conf_editor_notify_font(self, *args):
         """Apply the new font."""
 
-        assert not conf.editor.use_default_font
+        assert not gaupol.gtk.conf.editor.use_default_font
         for column in self.get_columns():
             renderer = column.get_cell_renderers()[0]
-            renderer.props.font = conf.editor.font
+            renderer.props.font = gaupol.gtk.conf.editor.font
         self.columns_autosize()
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _on_conf_editor_notify_length_unit(self, *args):
         """Repaint the cells."""
 
-        assert conf.editor.show_lengths_cell
+        assert gaupol.gtk.conf.editor.show_lengths_cell
         self.columns_autosize()
 
     def _on_conf_editor_notify_show_lengths_cell(self, *args):
@@ -169,7 +173,7 @@ class View(gtk.TreeView):
     def _on_conf_editor_notify_use_default_font(self, *args):
         """Apply the new font."""
 
-        font = ("" if conf.editor.use_default_font else conf.editor.font)
+        font = gaupol.gtk.util.get_font()
         for column in self.get_columns():
             renderer = column.get_cell_renderers()[0]
             renderer.props.font = font
@@ -190,7 +194,7 @@ class View(gtk.TreeView):
         if value[0] is not None:
             assert 0 <= value[0] < len(store)
         if value[1] is not None:
-            assert value[1] in const.COLUMN.members
+            assert value[1] in gaupol.gtk.COLUMN.members
 
     def get_focus(self):
         """Get the row and column of the current focus."""
@@ -233,14 +237,14 @@ class View(gtk.TreeView):
         # Select by ranges to avoid sending too many 'changed' signals.
         selection = self.get_selection()
         selection.unselect_all()
-        for lst in util.get_ranges(rows):
+        for lst in gaupol.gtk.util.get_ranges(rows):
             selection.select_range(lst[0], lst[-1])
 
     def set_focus_require(self, row, col=None):
         store = self.get_model()
         assert -1 <= row < len(store)
         if col is not None:
-            assert col in const.COLUMN.members
+            assert col in gaupol.gtk.COLUMN.members
 
     def set_focus(self, row, col=None):
         """Set the focus to row, col."""
@@ -251,7 +255,7 @@ class View(gtk.TreeView):
             col = self.get_column(col)
         self.set_cursor(row, col)
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def update_headers(self):
         """Update the attributes of the column header labels."""
 

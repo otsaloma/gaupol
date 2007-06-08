@@ -16,17 +16,16 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
+import gaupol
 import re
 
-from gaupol import const
-from gaupol.unittest import TestCase, reversion_test
+from gaupol import unittest
+
+MAIN = gaupol.DOCUMENT.MAIN
+TRAN = gaupol.DOCUMENT.TRAN
 
 
-MAIN = const.DOCUMENT.MAIN
-TRAN = const.DOCUMENT.TRAN
-
-
-class TestSearchAgent(TestCase):
+class TestSearchAgent(unittest.TestCase):
 
     def _test_find_next(self, pattern, docs, wrap, matches):
 
@@ -211,7 +210,7 @@ class TestSearchAgent(TestCase):
         matches = (StopIteration,)
         self._test_find_previous(r"xxx", [MAIN, TRAN], False, matches)
 
-    @reversion_test
+    @unittest.reversion_test
     def test_replace(self):
 
         self.project.set_search_target(None, [MAIN])
@@ -223,7 +222,7 @@ class TestSearchAgent(TestCase):
             "God haspromised you that\n" + \
             "you will go to Heaven?"
 
-    @reversion_test
+    @unittest.reversion_test
     def test_replace_all(self):
 
         self.project.set_search_target(None, [MAIN, TRAN])

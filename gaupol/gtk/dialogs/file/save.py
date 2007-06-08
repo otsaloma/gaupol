@@ -19,9 +19,9 @@
 """Dialog for selecting a subtitle file to save."""
 
 
+import gaupol.gtk
 import os
 
-from gaupol.gtk import conf, const, util
 from .subtitle import SubtitleFileDialog
 from ..glade import GladeDialog
 
@@ -51,7 +51,7 @@ class SaveDialog(GladeDialog, SubtitleFileDialog):
         """Initialize the format combo box."""
 
         store = self._format_combo.get_model()
-        for name in const.FORMAT.display_names:
+        for name in gaupol.gtk.FORMAT.labels:
             store.append([name])
         self._format_combo.set_active(0)
 
@@ -59,16 +59,16 @@ class SaveDialog(GladeDialog, SubtitleFileDialog):
         """Initialize the newline combo box."""
 
         store = self._newline_combo.get_model()
-        for name in const.NEWLINE.display_names:
+        for name in gaupol.gtk.NEWLINE.labels:
             store.append([name])
         self._newline_combo.set_active(0)
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
-        util.connect(self, self, "response")
-        util.connect(self, "_format_combo", "changed")
-        util.connect(self, "_encoding_combo", "changed")
+        gaupol.gtk.util.connect(self, self, "response")
+        gaupol.gtk.util.connect(self, "_format_combo", "changed")
+        gaupol.gtk.util.connect(self, "_encoding_combo", "changed")
 
         def update_filename(*args):
             self._format_combo.emit("changed")
@@ -78,13 +78,13 @@ class SaveDialog(GladeDialog, SubtitleFileDialog):
     def _init_values(self):
         """Initialize default values for widgets."""
 
-        if os.path.isdir(conf.file.directory):
-            self.set_current_folder(conf.file.directory)
-        self.set_encoding(conf.file.encoding)
-        self.set_format(conf.file.format)
-        self.set_newline(conf.file.newline)
+        if os.path.isdir(gaupol.gtk.conf.file.directory):
+            self.set_current_folder(gaupol.gtk.conf.file.directory)
+        self.set_encoding(gaupol.gtk.conf.file.encoding)
+        self.set_format(gaupol.gtk.conf.file.format)
+        self.set_newline(gaupol.gtk.conf.file.newline)
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _on_format_combo_changed(self, combo_box):
         """Change the extension of the current filename."""
 
@@ -93,7 +93,7 @@ class SaveDialog(GladeDialog, SubtitleFileDialog):
         self.unselect_filename(path)
         dirname = os.path.dirname(path)
         basename = os.path.basename(path)
-        extensions = const.FORMAT.extensions
+        extensions = gaupol.gtk.FORMAT.extensions
         if basename.endswith(tuple(extensions)):
             index = basename.rfind(".")
             basename = basename[:index]
@@ -106,22 +106,22 @@ class SaveDialog(GladeDialog, SubtitleFileDialog):
     def _on_response(self, dialog, response):
         """Save widget values."""
 
-        conf.file.encoding = self.get_encoding()
-        conf.file.format = self.get_format()
-        conf.file.newline = self.get_newline()
-        conf.file.directory = self.get_current_folder()
+        gaupol.gtk.conf.file.encoding = self.get_encoding()
+        gaupol.gtk.conf.file.format = self.get_format()
+        gaupol.gtk.conf.file.newline = self.get_newline()
+        gaupol.gtk.conf.file.directory = self.get_current_folder()
 
     def get_format(self):
         """Get the selected format."""
 
         index = self._format_combo.get_active()
-        return const.FORMAT.members[index]
+        return gaupol.gtk.FORMAT.members[index]
 
     def get_newline(self):
         """Get the selected newline."""
 
         index = self._newline_combo.get_active()
-        return const.NEWLINE.members[index]
+        return gaupol.gtk.NEWLINE.members[index]
 
     def set_format(self, format):
         """Set the selected format."""

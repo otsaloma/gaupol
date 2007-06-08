@@ -16,11 +16,11 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol.unittest import TestCase
+from gaupol import unittest
 from .. import contractual
 
 
-class TestContractual(TestCase):
+class TestContractual(unittest.TestCase):
 
     def test___new__(self):
 

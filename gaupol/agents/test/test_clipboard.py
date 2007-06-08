@@ -16,11 +16,11 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol import const
-from gaupol.unittest import TestCase, reversion_test
+import gaupol
+from gaupol import unittest
 
 
-class TestClipboardAgent(TestCase):
+class TestClipboardAgent(unittest.TestCase):
 
     def setup_method(self, method):
 
@@ -30,37 +30,37 @@ class TestClipboardAgent(TestCase):
 
         text_0 = self.project.subtitles[0].main_text
         text_2 = self.project.subtitles[2].main_text
-        self.project.copy_texts([0, 2], const.DOCUMENT.MAIN)
+        self.project.copy_texts([0, 2], gaupol.DOCUMENT.MAIN)
         texts = self.project.clipboard.get_texts()
         assert texts == [text_0, None, text_2]
 
-    @reversion_test
+    @unittest.reversion_test
     def test_cut_texts(self):
 
         text_0 = self.project.subtitles[0].main_text
         text_2 = self.project.subtitles[2].main_text
-        self.project.cut_texts([0, 2], const.DOCUMENT.MAIN)
+        self.project.cut_texts([0, 2], gaupol.DOCUMENT.MAIN)
         texts = self.project.clipboard.get_texts()
         assert texts == [text_0, None, text_2]
         assert self.project.subtitles[0].main_text == ""
         assert self.project.subtitles[2].main_text == ""
 
-    @reversion_test
+    @unittest.reversion_test
     def test_paste_texts__excess(self):
 
         subtitles = self.project.subtitles
-        self.project.copy_texts([0, 1], const.DOCUMENT.TRAN)
+        self.project.copy_texts([0, 1], gaupol.DOCUMENT.TRAN)
         last_index = len(subtitles) - 1
-        indexes = self.project.paste_texts(last_index, const.DOCUMENT.MAIN)
+        indexes = self.project.paste_texts(last_index, gaupol.DOCUMENT.MAIN)
         assert indexes == [last_index, last_index + 1]
         assert len(subtitles) == last_index + 2
 
-    @reversion_test
+    @unittest.reversion_test
     def test_paste_texts__fit(self):
 
         subtitles = self.project.subtitles
-        self.project.copy_texts([0, 1], const.DOCUMENT.TRAN)
-        indexes = self.project.paste_texts(2, const.DOCUMENT.MAIN)
+        self.project.copy_texts([0, 1], gaupol.DOCUMENT.TRAN)
+        indexes = self.project.paste_texts(2, gaupol.DOCUMENT.MAIN)
         assert indexes == [2, 3]
         assert subtitles[0].main_text == subtitles[2].main_text
         assert subtitles[1].main_text == subtitles[3].main_text

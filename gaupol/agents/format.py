@@ -19,24 +19,21 @@
 """Changing the appearance of texts."""
 
 
+import gaupol
 import re
-
-from gaupol import util
-from gaupol.base import Contractual, Delegate
-from gaupol.i18n import _
-from gaupol.reversion import revertable
+_ = gaupol.i18n._
 
 
-class FormatAgent(Delegate):
+class FormatAgent(gaupol.Delegate):
 
     """Changing the appearance of texts."""
 
     # pylint: disable-msg=E0203,W0201
 
-    __metaclass__ = Contractual
+    __metaclass__ = gaupol.Contractual
     _re_alphanum = re.compile(r"\w", re.UNICODE)
 
-    @util.asserted_return
+    @gaupol.util.asserted_return
     def _change_case_first(self, parser, method):
         """Change the case of the alphanumeric substring."""
 
@@ -90,7 +87,7 @@ class FormatAgent(Delegate):
             assert 0 <= index < len(self.subtitles)
         assert method in ("title", "capitalize", "upper", "lower")
 
-    @revertable
+    @gaupol.util.revertable
     def change_case(self, indexes, doc, method, register=-1):
         """Change the case of texts with method.
 
@@ -111,7 +108,7 @@ class FormatAgent(Delegate):
         for index in indexes:
             assert 0 <= index < len(self.subtitles)
 
-    @revertable
+    @gaupol.util.revertable
     def toggle_dialogue_lines(self, indexes, doc, register=-1):
         """Show or hide dialogue lines on texts."""
 
@@ -137,7 +134,7 @@ class FormatAgent(Delegate):
         for index in indexes:
             assert 0 <= index < len(self.subtitles)
 
-    @revertable
+    @gaupol.util.revertable
     def toggle_italicization(self, indexes, doc, register=-1):
         """Italicize or normalize texts."""
 

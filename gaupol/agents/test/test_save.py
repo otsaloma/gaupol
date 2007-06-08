@@ -16,11 +16,11 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol import const
-from gaupol.unittest import TestCase
+import gaupol
+from gaupol import unittest
 
 
-class TestSaveAgent(TestCase):
+class TestSaveAgent(unittest.TestCase):
 
     def setup_method(self, method):
 
@@ -46,15 +46,15 @@ class TestSaveAgent(TestCase):
 
     def test_save(self):
 
-        self.project.save(const.DOCUMENT.MAIN, ())
-        self.project.save(const.DOCUMENT.TRAN, ())
+        self.project.save(gaupol.DOCUMENT.MAIN, ())
+        self.project.save(gaupol.DOCUMENT.TRAN, ())
 
     def test_save_main(self):
 
         path = self.project.main_file.path
-        unix = const.NEWLINE.UNIX
-        for format in const.FORMAT.members:
-            self.project.clear_texts([0], const.DOCUMENT.MAIN)
+        unix = gaupol.NEWLINE.UNIX
+        for format in gaupol.FORMAT.members:
+            self.project.clear_texts([0], gaupol.DOCUMENT.MAIN)
             props = (path, format, "ascii", unix)
             self.project.save_main(props, False)
             assert self.project.main_changed == 1
@@ -64,9 +64,9 @@ class TestSaveAgent(TestCase):
     def test_save_translation(self):
 
         path = self.project.tran_file.path
-        unix = const.NEWLINE.UNIX
-        for format in const.FORMAT.members:
-            self.project.clear_texts([0], const.DOCUMENT.TRAN)
+        unix = gaupol.NEWLINE.UNIX
+        for format in gaupol.FORMAT.members:
+            self.project.clear_texts([0], gaupol.DOCUMENT.TRAN)
             props = (path, format, "ascii", unix)
             self.project.save_translation(props, False)
             assert self.project.tran_changed == 1

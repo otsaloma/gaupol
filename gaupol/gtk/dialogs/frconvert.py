@@ -57,9 +57,9 @@ class FramerateConvertDialog(GladeDialog):
         """Convert framerates."""
 
         current = self._current_combo.get_active()
-        current = const.FRAMERATE.members[current]
+        current = gaupol.gtk.FRAMERATE.members[current]
         correct = self._correct_combo.get_active()
-        correct = const.FRAMERATE.members[correct]
+        correct = gaupol.gtk.FRAMERATE.members[correct]
         for page in self._get_target_pages():
             index = self.application.pages.index(page)
             self.application.notebook.set_current_page(index)
@@ -69,16 +69,16 @@ class FramerateConvertDialog(GladeDialog):
         """Get the selected target."""
 
         if self._current_radio.get_active():
-            return const.TARGET.CURRENT
+            return gaupol.gtk.TARGET.CURRENT
         if self._all_radio.get_active():
-            return const.TARGET.ALL
+            return gaupol.gtk.TARGET.ALL
         raise ValueError
 
     def _get_target_pages(self):
         """Get pages corresponding to target."""
 
         target = self._get_target()
-        if target == const.TARGET.ALL:
+        if target == gaupol.gtk.TARGET.ALL:
             return self.application.pages
         return [self.application.get_current_page()]
 
@@ -88,20 +88,20 @@ class FramerateConvertDialog(GladeDialog):
         for combo_box in (self._current_combo, self._correct_combo):
             store = combo_box.get_model()
             store.clear()
-            for name in const.FRAMERATE.display_names:
+            for name in gaupol.gtk.FRAMERATE.labels:
                 store.append([name])
-            combo_box.set_active(conf.editor.framerate)
+            combo_box.set_active(gaupol.gtk.conf.editor.framerate)
 
-        target = conf.framerate_convert.target
-        self._current_radio.set_active(target == const.TARGET.CURRENT)
-        self._all_radio.set_active(target == const.TARGET.ALL)
+        target = gaupol.gtk.conf.framerate_convert.target
+        self._current_radio.set_active(target == gaupol.gtk.TARGET.CURRENT)
+        self._all_radio.set_active(target == gaupol.gtk.TARGET.ALL)
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
-        util.connect(self, "_correct_combo", "changed")
-        util.connect(self, "_current_combo", "changed")
-        util.connect(self, self, "response")
+        gaupol.gtk.util.connect(self, "_correct_combo", "changed")
+        gaupol.gtk.util.connect(self, "_current_combo", "changed")
+        gaupol.gtk.util.connect(self, self, "response")
 
     def _on_correct_combo_changed(self, *args):
         """Set response sensitivity."""
@@ -119,10 +119,10 @@ class FramerateConvertDialog(GladeDialog):
         sensitive = current != correct
         self._dialog.set_response_sensitive(gtk.RESPONSE_OK, sensitive)
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _on_response(self, dialog, response):
         """Save settings and convert framerates."""
 
-        conf.position_shift.target = self._get_target()
+        gaupol.gtk.conf.position_shift.target = self._get_target()
         assert response == gtk.RESPONSE_OK
         self._convert()

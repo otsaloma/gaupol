@@ -31,10 +31,9 @@ groups acts as the separator. Either of the groups can be empty.
 # TODO: Rewrite as 'before' and 'after' instead of separators.
 
 
+import gaupol
 import re
-
-from gaupol import util
-from gaupol.i18n import _
+_ = gaupol.i18n._
 
 
 _cap_afters = (
@@ -80,41 +79,41 @@ _dialogue_seps = (
 def get_capitalize_after_ensure(value, script):
     re.compile(value)
 
-@util.contractual
+@gaupol.util.contractual
 def get_capitalize_after(script):
     """Get the regular expression to capitalize after for script.
 
     Return regular expression pattern.
     """
-    for seq in _cap_afters:
-        if seq[0] == script:
-            return seq[2]
+    for item in _cap_afters:
+        if item[0] == script:
+            return item[2]
     raise ValueError
 
 def get_clause_separator_ensure(value, script):
     re.compile(value)
 
-@util.contractual
+@gaupol.util.contractual
 def get_clause_separator(script):
     """Get the regular expression for a clause separator for script.
 
     Return regular expression pattern.
     """
-    for seq in _clause_seps:
-        if seq[0] == script:
-            return seq[2]
+    for item in _clause_seps:
+        if item[0] == script:
+            return item[2]
     raise ValueError
 
 def get_dialogue_separator_ensure(value, script):
     re.compile(value)
 
-@util.contractual
+@gaupol.util.contractual
 def get_dialogue_separator(script):
     """Get the regular expression for a dialogue separator for script.
 
     Return regular expression pattern.
     """
-    for seq in _dialogue_seps:
-        if seq[0] == script:
-            return seq[2]
+    for item in _dialogue_seps:
+        if item[0] == script:
+            return item[2]
     raise ValueError

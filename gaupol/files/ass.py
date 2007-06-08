@@ -19,7 +19,8 @@
 """Advanced Sub Station Alpha file."""
 
 
-from gaupol import const
+import gaupol
+
 from .ssa import SubStationAlpha
 
 
@@ -27,7 +28,7 @@ class AdvSubStationAlpha(SubStationAlpha):
 
     """Advanced Sub Station Alpha file."""
 
-    format = const.FORMAT.ASS
+    format = gaupol.FORMAT.ASS
 
     event_fields = (
         "Layer",

@@ -19,14 +19,11 @@
 """Searching for and replacing text."""
 
 
-from gaupol import const
-from gaupol.base import Contractual, Delegate
-from gaupol.finder import Finder
-from gaupol.i18n import _
-from gaupol.reversion import revertable
+import gaupol
+_ = gaupol.i18n._
 
 
-class SearchAgent(Delegate):
+class SearchAgent(gaupol.Delegate):
 
     """Searching for and replacing text.
 
@@ -47,13 +44,13 @@ class SearchAgent(Delegate):
 
     # pylint: disable-msg=E0203,W0201
 
-    __metaclass__ = Contractual
+    __metaclass__ = gaupol.Contractual
 
     def __init__(self, master):
 
-        Delegate.__init__(self, master)
+        gaupol.Delegate.__init__(self, master)
         self._docs = None
-        self._finder = Finder()
+        self._finder = gaupol.Finder()
         self._indexes = None
         self._match_doc = None
         self._match_index = None
@@ -99,18 +96,18 @@ class SearchAgent(Delegate):
             if self._wrap:
                 return doc
             raise StopIteration
-        if next and (doc == const.DOCUMENT.MAIN):
-            return const.DOCUMENT.TRAN
-        if next and (doc == const.DOCUMENT.TRAN):
+        if next and (doc == gaupol.DOCUMENT.MAIN):
+            return gaupol.DOCUMENT.TRAN
+        if next and (doc == gaupol.DOCUMENT.TRAN):
             if self._wrap:
-                return const.DOCUMENT.MAIN
+                return gaupol.DOCUMENT.MAIN
             raise StopIteration
-        if (not next) and (doc == const.DOCUMENT.MAIN):
+        if (not next) and (doc == gaupol.DOCUMENT.MAIN):
             if self._wrap:
-                return const.DOCUMENT.TRAN
+                return gaupol.DOCUMENT.TRAN
             raise StopIteration
-        if (not next) and (doc == const.DOCUMENT.TRAN):
-            return const.DOCUMENT.MAIN
+        if (not next) and (doc == gaupol.DOCUMENT.TRAN):
+            return gaupol.DOCUMENT.MAIN
         raise ValueError
 
     def _invariant(self):
@@ -209,7 +206,7 @@ class SearchAgent(Delegate):
         Return tuple of index, document, match span.
         """
         index = (0 if index is None else index)
-        doc = (const.DOCUMENT.MAIN if doc is None else doc)
+        doc = (gaupol.DOCUMENT.MAIN if doc is None else doc)
         return self._find(index, doc, pos, True)
 
     def find_previous_require(self, index=None, doc=None, pos=None):
@@ -232,7 +229,7 @@ class SearchAgent(Delegate):
         Return tuple of index, document, match span.
         """
         index = (len(self.subtitles) - 1 if index is None else index)
-        doc = (const.DOCUMENT.TRAN if doc is None else doc)
+        doc = (gaupol.DOCUMENT.TRAN if doc is None else doc)
         return self._find(index, doc, pos, False)
 
     def replace_require(self, register=-1):
@@ -242,7 +239,7 @@ class SearchAgent(Delegate):
         assert 0 <= self._match_span[0] <= len(text)
         assert 0 <= self._match_span[1] <= len(text)
 
-    @revertable
+    @gaupol.util.revertable
     def replace(self, register=-1):
         """Replace the current match."""
 
@@ -253,7 +250,7 @@ class SearchAgent(Delegate):
         self.set_text(index, doc, text, register=register)
         self.set_action_description(register, _("Replacing"))
 
-    @revertable
+    @gaupol.util.revertable
     def replace_all(self, register=-1):
         """Replace all matches of pattern and return amount."""
 
@@ -310,5 +307,5 @@ class SearchAgent(Delegate):
         docs can be None to target all documents.
         """
         self._indexes = indexes
-        self._docs = docs or const.DOCUMENT.members
+        self._docs = docs or gaupol.DOCUMENT.members
         self._wrap = wrap

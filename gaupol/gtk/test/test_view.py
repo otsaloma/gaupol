@@ -16,15 +16,15 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
+import gaupol.gtk
 import gtk
 import random
 
-from gaupol.gtk import conf, const
-from gaupol.gtk.unittest import TestCase
+from gaupol.gtk import unittest
 from .. import view
 
 
-class TestView(TestCase):
+class TestView(unittest.TestCase):
 
     def run__frame(self):
 
@@ -51,7 +51,7 @@ class TestView(TestCase):
     def setup_frame(self):
 
         # pylint: disable-msg=W0201
-        self.view = view.View(const.MODE.FRAME)
+        self.view = view.View(gaupol.gtk.MODE.FRAME)
         store = self.view.get_model()
         project = self.get_project()
         for subtitle in project.subtitles:
@@ -70,7 +70,7 @@ class TestView(TestCase):
     def setup_time(self):
 
         # pylint: disable-msg=W0201
-        self.view = view.View(const.MODE.TIME)
+        self.view = view.View(gaupol.gtk.MODE.TIME)
         store = self.view.get_model()
         project = self.get_project()
         for subtitle in project.subtitles:
@@ -83,27 +83,27 @@ class TestView(TestCase):
 
     def test__on_conf_editor_notify_font(self):
 
-        conf.editor.use_default_font = False
-        conf.editor.font = "Serif 12"
+        gaupol.gtk.conf.editor.use_default_font = False
+        gaupol.gtk.conf.editor.font = "Serif 12"
 
     def test__on_conf_editor_notify_length_unit(self):
 
-        conf.editor.length_unit = const.LENGTH_UNIT.CHAR
-        conf.editor.length_unit = const.LENGTH_UNIT.EM
+        gaupol.gtk.conf.editor.length_unit = gaupol.gtk.LENGTH_UNIT.CHAR
+        gaupol.gtk.conf.editor.length_unit = gaupol.gtk.LENGTH_UNIT.EM
 
     def test__on_conf_editor_notify_show_lengths_cell(self):
 
-        conf.editor.show_lengths_cell = True
-        conf.editor.show_lengths_cell = False
-        conf.editor.show_lengths_cell = True
-        conf.editor.show_lengths_cell = False
+        gaupol.gtk.conf.editor.show_lengths_cell = True
+        gaupol.gtk.conf.editor.show_lengths_cell = False
+        gaupol.gtk.conf.editor.show_lengths_cell = True
+        gaupol.gtk.conf.editor.show_lengths_cell = False
 
     def test__on_conf_editor_notify_use_default_font(self):
 
-        conf.editor.use_default_font = True
-        conf.editor.use_default_font = False
-        conf.editor.use_default_font = True
-        conf.editor.use_default_font = False
+        gaupol.gtk.conf.editor.use_default_font = True
+        gaupol.gtk.conf.editor.use_default_font = False
+        gaupol.gtk.conf.editor.use_default_font = True
+        gaupol.gtk.conf.editor.use_default_font = False
 
     def test__on_cursor_changed(self):
 

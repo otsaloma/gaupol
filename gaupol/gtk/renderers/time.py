@@ -19,10 +19,8 @@
 """Cell renderer for time data in format [-]HH:MM:SS,SSS."""
 
 
+import gaupol.gtk
 import gtk
-
-from gaupol.gtk import util
-from gaupol.gtk.entries import TimeEntry
 
 
 class TimeCellRenderer(gtk.CellRendererText):
@@ -37,7 +35,7 @@ class TimeCellRenderer(gtk.CellRendererText):
         editor.remove_widget()
         self.emit("editing-canceled")
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _on_editor_key_press_event(self, editor, event):
         """End editing if Enter pressed."""
 
@@ -52,7 +50,7 @@ class TimeCellRenderer(gtk.CellRendererText):
     def do_start_editing(self, event, widget, path, bg_area, cell_area, flags):
         """Initialize and return the editor widget."""
 
-        editor = TimeEntry()
+        editor = gaupol.gtk.TimeEntry()
         editor.set_has_frame(False)
         editor.set_alignment(self.props.xalign)
         editor.modify_font(self.props.font_desc)

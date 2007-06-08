@@ -19,16 +19,15 @@
 """Internationalization functions."""
 
 
+import gaupol
 import gettext
 import locale
-
-from gaupol import paths
 
 __all__ = ["_", "dgettext", "ngettext"]
 
 
 locale.setlocale(locale.LC_ALL, "")
-gettext.bindtextdomain("gaupol", paths.LOCALE_DIR)
+gettext.bindtextdomain("gaupol", gaupol.LOCALE_DIR)
 gettext.textdomain("gaupol")
 
 _ = gettext.gettext

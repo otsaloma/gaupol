@@ -16,7 +16,8 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol import const
+import gaupol
+
 from .test_subfile import TestSubtitleFile
 from .. import mpsub
 
@@ -31,7 +32,7 @@ class TestMPsub(TestSubtitleFile):
     def test_set_header(self):
 
         self.file.set_header("FORMAT=TIME\n")
-        assert self.file.mode == const.MODE.TIME
+        assert self.file.mode == gaupol.MODE.TIME
         self.file.set_header("FORMAT=23.98\n")
-        assert self.file.mode == const.MODE.FRAME
+        assert self.file.mode == gaupol.MODE.FRAME
         self.raises(ValueError, self.file.set_header, "")

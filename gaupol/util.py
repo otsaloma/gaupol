@@ -19,12 +19,14 @@
 """Miscellaneous functions and decorators."""
 
 
+from __future__ import absolute_import
 from __future__ import with_statement
 
+import cPickle
 import codecs
 import contextlib
-import cPickle
 import functools
+import gaupol
 import locale
 import os
 import re
@@ -33,8 +35,6 @@ import sys
 import urllib
 import urlparse
 import webbrowser
-
-from gaupol import opts
 
 # All defined variables and functions.
 __all__ = set(dir() + ["__all__"])
@@ -72,7 +72,7 @@ def contractual(function):
     """
     @functools.wraps(function)
     def wrapper(*args, **kwargs):
-        if not opts.check_contracts:
+        if not gaupol.check_contracts:
             return function(*args, **kwargs)
         name = "%s_require" % function.__name__
         if name in function.func_globals:
@@ -123,6 +123,31 @@ def once(function):
         if not cache:
             cache.append(function(*args, **kwargs))
         return cache[0]
+
+    return wrapper
+
+def revertable(function):
+    """Decorator for revertable methods."""
+
+    @functools.wraps(function)
+    def wrapper(*args, **kwargs):
+        project = args[0]
+        main_changed = project.main_changed
+        tran_changed = project.tran_changed
+        kwargs.setdefault("register", gaupol.REGISTER.DO)
+        register = kwargs["register"]
+        if register is None:
+            return function(*args, **kwargs)
+        blocked = project.block(register.signal)
+        value = function(*args, **kwargs)
+        if not blocked:
+            return value
+        project.cut_reversion_stacks()
+        project.unblock(register.signal)
+        if (project.main_changed != main_changed) or \
+           (project.tran_changed != tran_changed):
+            project.emit_action_signal(register)
+        return value
 
     return wrapper
 
@@ -250,9 +275,7 @@ def get_default_encoding():
         return "utf_8"
     re_illegal = re.compile(r"[^a-z0-9_]")
     encoding = re_illegal.sub("_", encoding.lower())
-    from encodings.aliases import aliases
-    if encoding in aliases:
-        encoding = aliases[encoding]
+    encoding = get_encoding_alias(encoding)
     return encoding
 
 @once
@@ -278,6 +301,15 @@ def get_enchant_version():
         return enchant.__version__
     except Exception:
         return None
+
+def get_encoding_alias(encoding):
+    """Get proper alias for encoding."""
+
+    # pylint: disable-msg=E0611
+    from encodings.aliases import aliases
+    if encoding in aliases:
+        return aliases[encoding]
+    return encoding
 
 def get_ranges_require(lst):
     for item in lst:

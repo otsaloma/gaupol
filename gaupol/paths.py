@@ -21,6 +21,7 @@
 
 import os
 
+__all__ = ["DATA_DIR", "LOCALE_DIR", "PROFILE_DIR"]
 
 def get_directory(name):
     cwd = os.path.dirname(os.path.abspath(__file__))

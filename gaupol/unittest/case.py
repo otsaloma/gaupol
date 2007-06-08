@@ -22,11 +22,9 @@
 from __future__ import with_statement
 
 import atexit
+import gaupol
 import os
 import tempfile
-
-from gaupol import const, util
-from gaupol.base import Contractual
 
 
 class TestCase(object):
@@ -37,7 +35,7 @@ class TestCase(object):
      * files: Set of the paths of temporary files created
     """
 
-    __metaclass__ = Contractual
+    __metaclass__ = gaupol.Contractual
     files = set()
 
     def get_file_path_ensure(self, value, format):
@@ -53,7 +51,7 @@ class TestCase(object):
         self.files.add(path)
         return path
 
-    @util.memoize
+    @gaupol.util.memoize
     def get_file_text(self, format):
         """Get subtitle file text."""
 
@@ -71,13 +69,12 @@ class TestCase(object):
     def get_microdvd_path(self):
         """Get path to a temporary MicroDVD file."""
 
-        return self.get_file_path(const.FORMAT.MICRODVD)
+        return self.get_file_path(gaupol.FORMAT.MICRODVD)
 
     def get_project(self):
         """Get a new project."""
 
-        from gaupol.project import Project
-        project = Project()
+        project = gaupol.Project()
         project.open_main(self.get_subrip_path(), "ascii")
         project.open_translation(self.get_microdvd_path(), "ascii")
         return project
@@ -88,7 +85,7 @@ class TestCase(object):
     def get_subrip_path(self):
         """Get path to a temporary SubRip file."""
 
-        return self.get_file_path(const.FORMAT.SUBRIP)
+        return self.get_file_path(gaupol.FORMAT.SUBRIP)
 
     def raises(self, exception, function, *args, **kwargs):
         """Assert that calling function raises exception."""
@@ -125,7 +122,7 @@ class TestCase(object):
 def remove_files():
     """Remove temporary files created."""
 
-    remove = util.silent(OSError)(os.remove)
+    remove = gaupol.util.silent(OSError)(os.remove)
     while TestCase.files:
         remove(TestCase.files.pop())
 

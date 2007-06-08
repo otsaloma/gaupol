@@ -5,8 +5,8 @@
 
 pylint --rcfile=$(dirname "$0")/data/pylintrc $@ \
 \
-    | egrep -v "Instance of 'Member' has no '.+?' member" \
-    | egrep -v "Instance of 'Section' has no '.+?s' member" \
+    | egrep -v "Instance of 'ConstantMember' has no '.+?' member" \
+    | egrep -v "Instance of 'ConstantSection' has no '.+?s' member" \
     | egrep -v "Module 'gaupol.gtk..?conf' has no '.+?' member" \
     | egrep -v "No name '.+?' in module '.+?\.test\.?'" \
     | egrep -v "Undefined variable 'fobj'" \

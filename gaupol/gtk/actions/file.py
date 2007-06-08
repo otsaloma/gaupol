@@ -19,9 +19,10 @@
 """File and project actions."""
 
 
+import gaupol.gtk
 import gtk
+_ = gaupol.i18n._
 
-from gaupol.i18n import _
 from .action import Action
 
 

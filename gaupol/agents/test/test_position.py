@@ -16,11 +16,11 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol import const
-from gaupol.unittest import TestCase, reversion_test
+import gaupol
+from gaupol import unittest
 
 
-class TestPositionAgent(TestCase):
+class TestPositionAgent(unittest.TestCase):
 
     def setup_method(self, method):
 
@@ -107,8 +107,8 @@ class TestPositionAgent(TestCase):
         self.project.open_main(self.get_microdvd_path(), "ascii")
         self.project.subtitles[0].start = 100
         self.project.subtitles[1].start = 200
-        current = const.FRAMERATE.P24
-        correct = const.FRAMERATE.P25
+        current = gaupol.FRAMERATE.P24
+        correct = gaupol.FRAMERATE.P25
         self.project.convert_framerate(None, current, correct)
         assert self.project.framerate == correct
         for subtitle in self.project.subtitles:
@@ -121,8 +121,8 @@ class TestPositionAgent(TestCase):
         self.project.open_main(self.get_subrip_path(), "ascii")
         self.project.subtitles[0].start = "00:00:01.000"
         self.project.subtitles[1].start = "00:00:02.000"
-        current = const.FRAMERATE.P24
-        correct = const.FRAMERATE.P25
+        current = gaupol.FRAMERATE.P24
+        correct = gaupol.FRAMERATE.P25
         self.project.convert_framerate(None, current, correct)
         assert self.project.framerate == correct
         for subtitle in self.project.subtitles:
@@ -132,13 +132,13 @@ class TestPositionAgent(TestCase):
 
     def test_set_framerate(self):
 
-        framerate = const.FRAMERATE.P25
+        framerate = gaupol.FRAMERATE.P25
         self.project.set_framerate(framerate)
         assert self.project.framerate == framerate
         for subtitle in self.project.subtitles:
             assert subtitle.framerate == framerate
 
-    @reversion_test
+    @unittest.reversion_test
     def test_shift_positions__frame(self):
 
         orig_subtitles = [x.copy() for x in self.project.subtitles]
@@ -149,7 +149,7 @@ class TestPositionAgent(TestCase):
             end = orig_subtitles[i].end_frame - 10
             assert subtitle.end_frame == end
 
-    @reversion_test
+    @unittest.reversion_test
     def test_shift_positions__time(self):
 
         orig_subtitles = [x.copy() for x in self.project.subtitles]
@@ -160,7 +160,7 @@ class TestPositionAgent(TestCase):
             end = round(orig_subtitles[i].end_seconds + 1.0, 3)
             assert round(subtitle.end_seconds, 3) == end
 
-    @reversion_test
+    @unittest.reversion_test
     def test_shift_positions__seconds(self):
 
         orig_subtitles = [x.copy() for x in self.project.subtitles]
@@ -171,7 +171,7 @@ class TestPositionAgent(TestCase):
             end = round(orig_subtitles[i].end_seconds + 1.0, 3)
             assert round(subtitle.end_seconds, 3) == end
 
-    @reversion_test
+    @unittest.reversion_test
     def test_transform_positions__frame(self):
 
         self.project.transform_positions(None, (2, 10), (6, 100))
@@ -180,7 +180,7 @@ class TestPositionAgent(TestCase):
             assert 10 < subtitle.start_frame < 100
         assert self.project.subtitles[6].start_frame == 100
 
-    @reversion_test
+    @unittest.reversion_test
     def test_transform_positions__seconds(self):
 
         self.project.transform_positions(None, (2, 20.0), (6, 200.0))
@@ -189,7 +189,7 @@ class TestPositionAgent(TestCase):
             assert 20.0 < subtitle.start_seconds < 200.0
         assert self.project.subtitles[6].start_seconds == 200.0
 
-    @reversion_test
+    @unittest.reversion_test
     def test_transform_positions__time(self):
 
         a, b = "00:00:01.000", "00:00:45.000"

@@ -19,6 +19,9 @@
 """Base class for dialog-running classes."""
 
 
+__all__ = ["Runner"]
+
+
 class Runner(object):
 
     """Base class for dialog-running classes."""

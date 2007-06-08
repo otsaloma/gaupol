@@ -23,10 +23,8 @@ from __future__ import with_statement
 
 import codecs
 import contextlib
+import gaupol
 
-from gaupol import const
-from gaupol.base import Contractual
-from gaupol.calculator import Calculator
 from .subfile import SubtitleFile
 
 
@@ -34,9 +32,9 @@ class TMPlayer(SubtitleFile):
 
     """TMPlayer file."""
 
-    __metaclass__ = Contractual
-    format = const.FORMAT.TMPLAYER
-    mode = const.MODE.TIME
+    __metaclass__ = gaupol.Contractual
+    format = gaupol.FORMAT.TMPLAYER
+    mode = gaupol.MODE.TIME
 
     def read(self):
         """Read file.
@@ -53,7 +51,7 @@ class TMPlayer(SubtitleFile):
                 starts.append(line[:8] + ".000")
                 texts.append(line[9:-1])
 
-        calc = Calculator()
+        calc = gaupol.Calculator()
         for i in range(1, len(starts)):
             ends.append(starts[i])
         ends.append(calc.add_seconds_to_time(starts[-1], 3.000))
@@ -66,7 +64,7 @@ class TMPlayer(SubtitleFile):
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
-        calc = Calculator()
+        calc = gaupol.Calculator()
         starts = [calc.round_time(x, 0)[:8] + ":" for x in starts]
         texts = [x.replace("\n", "|") for x in texts]
 

@@ -19,10 +19,9 @@
 """Dialog for selecting a video file."""
 
 
+import gaupol.gtk
 import gtk
-
-from gaupol.gtk import conf, util
-from gaupol.i18n import _
+_ = gaupol.i18n._
 
 
 class VideoDialog(gtk.FileChooserDialog):
@@ -38,9 +37,9 @@ class VideoDialog(gtk.FileChooserDialog):
         self.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
         self.add_button(_("_Select"), gtk.RESPONSE_OK)
         self.set_default_response(gtk.RESPONSE_OK)
-        if all(conf.open_dialog.size):
-            self.set_default_size(*conf.open_dialog.size)
-        util.connect(self, self, "response")
+        if all(gaupol.gtk.conf.open_dialog.size):
+            self.set_default_size(*gaupol.gtk.conf.open_dialog.size)
+        gaupol.gtk.util.connect(self, self, "response")
         self._init_filters()
 
     def _init_filters(self):
@@ -60,4 +59,4 @@ class VideoDialog(gtk.FileChooserDialog):
     def _on_response(self, dialog, response):
         """Save dialog size."""
 
-        conf.open_dialog.size = self.get_size()
+        gaupol.gtk.conf.open_dialog.size = self.get_size()

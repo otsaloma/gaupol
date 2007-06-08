@@ -19,10 +19,10 @@
 """Dialog for selecting a subtitle file to append to project."""
 
 
+import gaupol.gtk
 import gtk
+_ = gaupol.i18n._
 
-from gaupol.gtk import const, util
-from gaupol.i18n import _
 from .open import OpenDialog
 
 
@@ -34,8 +34,8 @@ class AppendDialog(OpenDialog):
 
     def __init__(self, parent):
 
-        doc = const.DOCUMENT.MAIN
+        doc = gaupol.gtk.DOCUMENT.MAIN
         OpenDialog.__init__(self, parent, _("Append File"), doc)
         self.set_select_multiple(False)
         button = self.action_area.get_children()[0]
-        util.set_button(button, _("_Append"), gtk.STOCK_ADD)
+        gaupol.gtk.util.set_button(button, _("_Append"), gtk.STOCK_ADD)

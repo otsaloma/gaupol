@@ -23,11 +23,9 @@ from __future__ import with_statement
 
 import codecs
 import contextlib
+import gaupol
 import re
 
-from gaupol import const
-from gaupol.base import Contractual
-from gaupol.calculator import Calculator
 from .subfile import SubtitleFile
 
 
@@ -40,15 +38,15 @@ class MPsub(SubtitleFile):
     read and can later be changed with the 'set_header' method.
     """
 
-    __metaclass__ = Contractual
-    format = const.FORMAT.MPSUB
-    mode = const.MODE.TIME
+    __metaclass__ = gaupol.Contractual
+    format = gaupol.FORMAT.MPSUB
+    mode = gaupol.MODE.TIME
 
     def __init__(self, path, encoding, newline=None):
 
         SubtitleFile.__init__(self, path, encoding, newline)
         self.framerate = None
-        self.mode = const.MODE.TIME
+        self.mode = gaupol.MODE.TIME
 
     def _clean_lines(self, all_lines, re_time_line):
         """Return lines without blank lines preceding time lines."""
@@ -76,7 +74,7 @@ class MPsub(SubtitleFile):
     def _get_mpsub_times(self, starts, ends):
         """Get MPsub style starts and ends as times."""
 
-        calc = Calculator()
+        calc = gaupol.Calculator()
         starts = [calc.time_to_seconds(x) for x in starts]
         ends = [calc.time_to_seconds(x) for x in ends]
         for i in reversed(range(1, len(starts))):
@@ -115,11 +113,11 @@ class MPsub(SubtitleFile):
             elif texts:
                 texts[-1] += line
 
-        calc = Calculator()
-        if self.mode == const.MODE.TIME:
+        calc = gaupol.Calculator()
+        if self.mode == gaupol.MODE.TIME:
             starts = [calc.seconds_to_time(x) for x in starts]
             ends = [calc.seconds_to_time(x) for x in ends]
-        elif self.mode == const.MODE.FRAME:
+        elif self.mode == gaupol.MODE.FRAME:
             starts = [int(round(x, 0)) for x in starts]
             ends = [int(round(x, 0)) for x in ends]
         re_trailer = re.compile(r"\n\Z", re.MULTILINE)
@@ -168,16 +166,16 @@ class MPsub(SubtitleFile):
         for line in header.split("\n"):
             if line.startswith("FORMAT="):
                 mode = line[7:].strip()
-        if not mode in (const.FRAMERATE.mpsub_names + ["TIME"]):
+        if not mode in (gaupol.FRAMERATE.mpsubs + ["TIME"]):
             raise ValueError
 
         self.header = header
-        self.mode = const.MODE.TIME
+        self.mode = gaupol.MODE.TIME
         self.framerate = None
-        if mode in const.FRAMERATE.mpsub_names:
-            self.mode = const.MODE.FRAME
-            index = const.FRAMERATE.mpsub_names.index(mode)
-            self.framerate = const.FRAMERATE.members[index]
+        if mode in gaupol.FRAMERATE.mpsubs:
+            self.mode = gaupol.MODE.FRAME
+            index = gaupol.FRAMERATE.mpsubs.index(mode)
+            self.framerate = gaupol.FRAMERATE.members[index]
 
     def write(self, starts, ends, texts):
         """Write file.

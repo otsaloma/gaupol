@@ -20,11 +20,12 @@
 
 
 import functools
+import gaupol.gtk
 import gobject
 import gtk
 import re
 
-from gaupol.gtk import util
+__all__ = ["TimeEntry"]
 
 
 def _blocked(function):
@@ -55,7 +56,7 @@ class TimeEntry(gtk.Entry):
     need to call 'gtk.main_iteration' to ensure that proper updating.
     """
 
-    __metaclass__ = util.get_contractual_metaclass()
+    __metaclass__ = gaupol.gtk.ContractualGObject
     _re_digit = re.compile(r"\d")
     _re_time = re.compile(r"^-?\d\d:[0-5]\d:[0-5]\d\.\d\d\d$")
 
@@ -72,15 +73,15 @@ class TimeEntry(gtk.Entry):
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
-        util.connect(self, self, "cut-clipboard")
-        util.connect(self, self, "key-press-event")
-        util.connect(self, self, "toggle-overwrite")
-
-        self._delete_handler = util.connect(self, self, "delete-text")
-        self._insert_handler = util.connect(self, self, "insert-text")
+        connect = gaupol.gtk.util.connect
+        connect(self, self, "cut-clipboard")
+        connect(self, self, "key-press-event")
+        connect(self, self, "toggle-overwrite")
+        self._delete_handler = connect(self, self, "delete-text")
+        self._insert_handler = connect(self, self, "insert-text")
 
     @_blocked
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _insert_text(self, value):
         """Insert text."""
 
@@ -125,7 +126,7 @@ class TimeEntry(gtk.Entry):
         text = self.get_text()
         assert (not text) or self._re_time.match(text)
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _on_key_press_event(self, entry, event):
         """Change numbers to zero if BackSpace or Delete pressed."""
 
@@ -154,7 +155,7 @@ class TimeEntry(gtk.Entry):
         self.stop_emission("toggle-overwrite")
 
     @_blocked
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _zero_next(self):
         """Change the next digit to zero."""
 
@@ -172,7 +173,7 @@ class TimeEntry(gtk.Entry):
         self.set_position(pos)
 
     @_blocked
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _zero_previous(self):
         """Change the previous digit to zero."""
 
@@ -191,7 +192,7 @@ class TimeEntry(gtk.Entry):
         self.set_position(pos - 1)
 
     @_blocked
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _zero_selection(self):
         """Change digits in selection to zero."""
 

@@ -16,11 +16,11 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol.unittest import TestCase
+from gaupol import unittest
 from .. import i18n
 
 
-class TestModule(TestCase):
+class TestModule(unittest.TestCase):
 
     def test_attributes(self):
 

@@ -17,16 +17,16 @@
 
 
 from gaupol.gtk.index import *
-from gaupol.gtk.unittest import TestCase
+from gaupol.gtk import unittest
 
 
-class TestFormatAgent(TestCase):
+class TestFormatAgent(unittest.TestCase):
 
     def setup_method(self, method):
 
         self.application = self.get_application()
         page = self.application.get_current_page()
-        page.view.set_focus(0, MTXT)
+        page.view.set_focus(0, gaupol.gtk.COLUMN.MAIN_TEXT)
         page.view.select_rows([0, 1, 2])
 
     def test_on_toggle_dialogue_lines_activate(self):

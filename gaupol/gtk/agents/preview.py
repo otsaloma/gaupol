@@ -34,7 +34,7 @@ from gaupol.gtk.i18n import _
 from gaupol.gtk.index import *
 
 
-class PreviewAgent(Delegate):
+class PreviewAgent(gaupol.Delegate):
 
     """Previewing subtitles with a video player."""
 
@@ -43,7 +43,7 @@ class PreviewAgent(Delegate):
     def _clean(self, output_path, temp_path):
         """Remove output and temporary files if they exist."""
 
-        remove = util.silent(OSError, TypeError)(os.remove)
+        remove = gaupol.gtk.util.silent(OSError, TypeError)(os.remove)
         remove(output_path)
         remove(temp_path)
 
@@ -90,17 +90,17 @@ class PreviewAgent(Delegate):
         row = (rows[0] if rows else 0)
         time = page.project.times[row][0]
         col = page.view.get_focus()[1]
-        col = (TTXT if col == TTXT else MTXT)
+        col = (gaupol.gtk.COLUMN.TRAN_TEXT if col == gaupol.gtk.COLUMN.TRAN_TEXT else gaupol.gtk.COLUMN.MAIN_TEXT)
         doc = page.text_column_to_document(col)
         self.preview(page, time, doc)
 
     def preview(self, page, time, doc, path=None):
         """Preview from time with a video player."""
 
-        command = conf.preview.video_player.command
-        if not conf.preview.use_predefined:
-            command = conf.preview.custom_command
-        offset = conf.preview.offset
+        command = gaupol.gtk.conf.preview.video_player.command
+        if not gaupol.gtk.conf.preview.use_predefined:
+            command = gaupol.gtk.conf.preview.custom_command
+        offset = gaupol.gtk.conf.preview.offset
 
         try:
             output = page.project.preview(time, doc, command, offset, path)

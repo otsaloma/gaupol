@@ -16,18 +16,18 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
+import gaupol
 import os
 
-from gaupol import paths
-from gaupol.gtk.unittest import TestCase
+from gaupol.gtk import unittest
 from .. import config
 
 
-class TestConfig(TestCase):
+class TestConfig(unittest.TestCase):
 
     def setup_method(self, method):
 
-        self.spec_file = os.path.join(paths.DATA_DIR, "conf.spec")
+        self.spec_file = os.path.join(gaupol.DATA_DIR, "conf.spec")
         self.config = config.Config(None, self.spec_file)
 
     def test_translate_none(self):

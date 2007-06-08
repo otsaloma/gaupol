@@ -18,11 +18,11 @@
 
 import re
 
-from gaupol.unittest import TestCase
+from gaupol import unittest
 from .. import liner
 
 
-class TestLiner(TestCase):
+class TestLiner(unittest.TestCase):
 
     def setup_method(self, method):
 

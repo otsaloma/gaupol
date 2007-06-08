@@ -19,9 +19,9 @@
 """MicroDVD tag library."""
 
 
+import gaupol
 import re
 
-from gaupol import util
 from .taglib import TagLibrary
 
 
@@ -29,21 +29,23 @@ class MicroDVD(TagLibrary):
 
     """MicroDVD tag library."""
 
+    format = gaupol.FORMAT.MICRODVD
+
     @property
-    @util.once
+    @gaupol.util.once
     def italic_tag(self):
         """Regular expression for an italic tag."""
 
         return re.compile(r"\{y:i\}", re.IGNORECASE)
 
     @property
-    @util.once
+    @gaupol.util.once
     def tag(self):
         """Regular expression for any tag."""
 
         return re.compile(r"\{[a-z]:.*?\}", re.IGNORECASE)
 
-    @util.once
+    @gaupol.util.once
     def _get_decode_tags(self):
         """Get list of tuples of regular expression, replacement, count."""
 
@@ -94,7 +96,7 @@ class MicroDVD(TagLibrary):
             tags[i] = (re.compile(pattern, flags), replacement, count)
         return tags
 
-    @util.once
+    @gaupol.util.once
     def _get_encode_tags(self):
         """Get list of tuples of regular expression, replacement, count."""
 

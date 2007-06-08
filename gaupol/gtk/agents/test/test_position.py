@@ -18,10 +18,10 @@
 
 import gtk
 
-from gaupol.gtk.unittest import TestCase
+from gaupol.gtk import unittest
 
 
-class TestPositionAgent(TestCase):
+class TestPositionAgent(unittest.TestCase):
 
     def setup_method(self, method):
 

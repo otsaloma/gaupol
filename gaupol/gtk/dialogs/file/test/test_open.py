@@ -16,10 +16,10 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
+import gaupol.gtk
 import gtk
 import random
 
-from gaupol.gtk import const
 from .test_subtitle import _TestSubtitleFileDialog
 from .. import open
 
@@ -28,5 +28,5 @@ class TestOpenDialog(_TestSubtitleFileDialog):
 
     def setup_method(self, method):
 
-        doc = const.DOCUMENT.members[random.randint(0, 1)]
+        doc = gaupol.gtk.DOCUMENT.members[random.randint(0, 1)]
         self.dialog = open.OpenDialog(gtk.Window(), "test", doc)

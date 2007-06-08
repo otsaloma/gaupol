@@ -63,11 +63,11 @@ def _check_dependencies():
 def _list_encodings():
     """List all available character encodings."""
 
-    from gaupol import enclib, util
-    if util.chardet_available():
+    import gaupol
+    if gaupol.util.chardet_available():
         print "auto"
-    for seq in enclib.get_valid_encodings():
-        print seq[0]
+    for item in gaupol.encodings.get_valid_encodings():
+        print item[0]
 
 def _move_eggs():
     """Move eggs to sys.path so that they are importable."""
@@ -155,47 +155,45 @@ def _parse_args(args):
 def _prepare_config_file(path):
     """Set the configuration file to use."""
 
+    import gaupol.gtk
     if path is None:
-        from gaupol import paths
-        path = os.path.join(paths.PROFILE_DIR, "gaupol.gtk.conf")
-    from gaupol.gtk import conf
-    conf.config_file = os.path.abspath(path)
-    conf.read()
-    atexit.register(conf.write)
+        path = os.path.join(gaupol.PROFILE_DIR, "gaupol.gtk.conf")
+    gaupol.gtk.conf.config_file = os.path.abspath(path)
+    gaupol.gtk.conf.read()
+    atexit.register(gaupol.gtk.conf.write)
 
 def _prepare_debug(debug):
     """Enable or disable debugging checks."""
 
-    from gaupol import opts
-    opts.check_contracts = debug
+    import gaupol
+    gaupol.check_contracts = debug
 
 def _prepare_ui():
     """Prepare user interface stuff."""
 
+    import gaupol
     import gobject
-    import gtk
     import gtk.glade
-    from gaupol import paths
     from gaupol.gtk.dialogs import debug
-    gtk.glade.bindtextdomain("gaupol", paths.LOCALE_DIR)
+    gtk.glade.bindtextdomain("gaupol", gaupol.LOCALE_DIR)
     gtk.glade.textdomain("gaupol")
     gobject.threads_init()
-    rc_file = os.path.join(paths.DATA_DIR, "gtkrc")
+    rc_file = os.path.join(gaupol.DATA_DIR, "gtkrc")
     gtk.rc_add_default_file(rc_file)
     sys.excepthook = debug.show
 
 def _show_version():
     """Show the version number."""
 
-    from gaupol import __version__
-    print "gaupol %s" % __version__
+    import gaupol
+    print "gaupol %s" % gaupol.__version__
 
 def _start(opts, args):
     """Start application and open files given as arguments."""
 
     # FIX:
-    from gaupol.gtk.application import Application
-    application = Application()
+    import gaupol.gtk
+    application = gaupol.gtk.Application()
     jump_row = None
     re_jump = re.compile(r"\+\d*")
     for arg in (x for x in args if re_jump.match(x) is not None):

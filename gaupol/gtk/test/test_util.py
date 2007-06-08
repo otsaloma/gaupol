@@ -16,20 +16,18 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-import gtk
+import gaupol.gtk
 import gtk.glade
 
-from gaupol.gtk import conf, const
-from gaupol.gtk.index import *
-from gaupol.gtk.unittest import TestCase
+from gaupol.gtk import unittest
 from .. import util
 
 
-class TestModule(TestCase):
+class TestModule(unittest.TestCase):
 
     def test_attributes(self):
 
-        assert hasattr(util, "COMBO_SEP")
+        assert hasattr(util, "COMBO_SEPARATOR")
         assert hasattr(util, "EXTRA")
         assert hasattr(util, "BUSY_CURSOR")
         assert hasattr(util, "HAND_CURSOR")
@@ -38,41 +36,28 @@ class TestModule(TestCase):
 
     def test_document_to_text_column(self):
 
-        doc = const.DOCUMENT.MAIN
+        doc = gaupol.gtk.DOCUMENT.MAIN
         col = util.document_to_text_column(doc)
-        assert col == MTXT
-        doc = const.DOCUMENT.TRAN
+        assert col == gaupol.gtk.COLUMN.MAIN_TEXT
+        doc = gaupol.gtk.DOCUMENT.TRAN
         col = util.document_to_text_column(doc)
-        assert col == TTXT
+        assert col == gaupol.gtk.COLUMN.TRAN_TEXT
 
-    def test_get_contractual_metaclass(self):
+    def test_get_font(self):
 
-        util.get_contractual_metaclass()
+        assert util.get_font() == ""
+        gaupol.gtk.conf.editor.use_default_font = False
+        gaupol.gtk.conf.editor.font = "Serif 12"
+        assert util.get_font() == "Serif 12"
 
     def test_get_glade_xml(self):
 
         glade_xml = util.get_glade_xml("debug-dialog")
         glade_xml = util.get_glade_xml("debug-dialog", "text_view")
 
-    def test_get_event_box(self):
-
-        label = gtk.Label()
-        event_box = gtk.EventBox()
-        event_box.add(label)
-        widget = util.get_event_box(label)
-        assert widget is event_box
-
-    def test_get_parent(self):
-
-        label = gtk.Label()
-        window = gtk.Window()
-        window.add(label)
-        widget = util.get_parent(label, gtk.Window)
-        assert widget is window
-
     def test_get_text_view_size(self):
 
-        text_view = gtk.TextView(gtk.TextBuffer(), "")
+        text_view = gtk.TextView(gtk.TextBuffer())
         width, height = util.get_text_view_size(text_view)
 
     def test_get_tree_view_size(self):
@@ -85,21 +70,21 @@ class TestModule(TestCase):
     def test_prepare_text_view(self):
 
         util.prepare_text_view(gtk.TextView())
-        conf.editor.show_lengths_edit = True
-        conf.editor.use_default_font = True
-        conf.editor.font = ""
+        gaupol.gtk.conf.editor.show_lengths_edit = True
+        gaupol.gtk.conf.editor.use_default_font = True
+        gaupol.gtk.conf.editor.font = ""
 
         util.prepare_text_view(gtk.TextView())
-        conf.editor.show_lengths_edit = False
-        conf.editor.use_default_font = False
-        conf.editor.font = "Serif 12"
+        gaupol.gtk.conf.editor.show_lengths_edit = False
+        gaupol.gtk.conf.editor.use_default_font = False
+        gaupol.gtk.conf.editor.font = "Serif 12"
 
     def test_resize_dialog(self):
 
         dialog = gtk.Dialog()
         util.resize_dialog(dialog, 200, 200)
         assert dialog.get_size() == (200, 200)
-        util.resize_dialog(dialog, 2000, 2000, (0.3, 0.3))
+        util.resize_dialog(dialog, 2000, 2000, 0.3)
         size = dialog.get_size()
         assert size[0] == 0.3 * gtk.gdk.screen_width()
         assert size[1] == 0.3 * gtk.gdk.screen_height()
@@ -109,7 +94,7 @@ class TestModule(TestCase):
         dialog = gtk.Dialog()
         util.resize_message_dialog(dialog, 200, 200)
         assert dialog.get_size() == (200, 200)
-        util.resize_message_dialog(dialog, 2000, 2000, (0.3, 0.3))
+        util.resize_message_dialog(dialog, 2000, 2000, 0.3)
         size = dialog.get_size()
         assert size[0] == 0.3 * gtk.gdk.screen_width()
         assert size[1] == 0.3 * gtk.gdk.screen_height()
@@ -154,7 +139,9 @@ class TestModule(TestCase):
 
     def test_text_column_to_document(self):
 
-        doc = util.text_column_to_document(MTXT)
-        assert doc == const.DOCUMENT.MAIN
-        doc = util.text_column_to_document(TTXT)
-        assert doc == const.DOCUMENT.TRAN
+        col = gaupol.gtk.COLUMN.MAIN_TEXT
+        doc = util.text_column_to_document(col)
+        assert doc == gaupol.gtk.DOCUMENT.MAIN
+        col = gaupol.gtk.COLUMN.TRAN_TEXT
+        doc = util.text_column_to_document(col)
+        assert doc == gaupol.gtk.DOCUMENT.TRAN

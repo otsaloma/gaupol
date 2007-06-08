@@ -23,16 +23,14 @@ from __future__ import with_statement
 
 import codecs
 import contextlib
+import gaupol
 import os
 import re
 
-from gaupol import const, enclib
-from gaupol.base import Contractual, Singleton
-from gaupol.errors import FormatError
-from gaupol.files import *
+__all__ = ["FormatDeterminer"]
 
 
-class FormatDeterminer(Singleton):
+class FormatDeterminer(gaupol.Singleton):
 
     """Subtitle file format determiner.
 
@@ -40,19 +38,19 @@ class FormatDeterminer(Singleton):
      * _re_ids: List of tuples of format, regular expression
     """
 
-    __metaclass__ = Contractual
+    __metaclass__ = gaupol.Contractual
 
     # pylint: disable-msg=W0231
     def __init__(self):
 
         self._re_ids = []
-        for format in const.FORMAT.members:
+        for format in gaupol.FORMAT.members:
             re_id = re.compile(format.identifier)
             self._re_ids.append((format, re_id))
 
     def determine_require(self, path, encoding):
         assert os.path.isfile(path)
-        assert enclib.is_valid(encoding)
+        assert gaupol.encodings.is_valid(encoding)
 
     def determine(self, path, encoding):
         """Determine the format of the file.
@@ -68,4 +66,4 @@ class FormatDeterminer(Singleton):
                 for format, re_id in self._re_ids:
                     if re_id.search(line) is not None:
                         return format
-        raise FormatError
+        raise gaupol.FormatError

@@ -16,11 +16,12 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Action that can be reverted, i.e. undone and redone."""
+"""Actions that can be reverted, i.e. undone and redone."""
 
 
-from gaupol import const
-from gaupol.base import Contractual
+import gaupol
+
+__all__ = ["RevertableAction", "RevertableActionGroup"]
 
 
 class RevertableAction(object):
@@ -39,7 +40,7 @@ class RevertableAction(object):
     set eventually, either upon instantiation or directly after.
     """
 
-    __metaclass__ = Contractual
+    __metaclass__ = gaupol.Contractual
 
     def __init__(self, **kwargs):
         """Initialize a RevertableAction object.
@@ -57,15 +58,15 @@ class RevertableAction(object):
             setattr(self, key, value)
 
     def _get_reversion_register_require(self):
-        assert self.register in const.REGISTER.members
+        assert self.register in gaupol.REGISTER.members
 
     def _get_reversion_register(self):
         """Get the REGISTER constant corresponding to reversion."""
 
         if self.register.shift == 1:
-            return const.REGISTER.UNDO
+            return gaupol.REGISTER.UNDO
         if self.register.shift == -1:
-            return const.REGISTER.REDO
+            return gaupol.REGISTER.REDO
         raise ValueError
 
     def revert_require(self):
@@ -78,3 +79,27 @@ class RevertableAction(object):
         kwargs = self.revert_kwargs.copy()
         kwargs["register"] = self._get_reversion_register()
         return self.revert_method(*self.revert_args, **kwargs)
+
+
+class RevertableActionGroup(object):
+
+    """Group of revertable actions.
+
+    Instance variables:
+     * actions: List of actions in group
+     * description: Short one line description
+
+    Instance variables are required to be set eventually, either upon
+    instantiation or directly after.
+    """
+
+    def __init__(self, **kwargs):
+        """Initialize a RevertableAction object.
+
+        kwargs can contain any of the names of public instance variables,
+        """
+        self.actions = None
+        self.description = None
+
+        for key, value in kwargs.items():
+            setattr(self, key, value)

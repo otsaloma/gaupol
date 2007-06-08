@@ -19,6 +19,8 @@
 """Website URLs."""
 
 
-BUG_REPORT = "http://gna.org/bugs/?func=additem&group=gaupol"
-HOMEPAGE   = "http://home.gna.org/gaupol/"
-REGEX_HELP = "http://docs.python.org/lib/re-syntax.html"
+__all__ = ["BUG_REPORT_URL", "HOMEPAGE_URL", "REGEX_HELP_URL"]
+
+BUG_REPORT_URL = "http://gna.org/bugs/?func=additem&group=gaupol"
+HOMEPAGE_URL = "http://home.gna.org/gaupol/"
+REGEX_HELP_URL = "http://docs.python.org/lib/re-syntax.html"

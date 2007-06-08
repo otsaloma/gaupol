@@ -32,7 +32,7 @@ show_lengths_cell = boolean(default=True)
 show_lengths_edit = boolean(default=True)
 undo_levels = integer(min=0, default=50)
 use_default_font = boolean(default=True)
-visible_cols = COLUMN_list(default=list("NO", "START", "END", "DURN", "MTXT"))
+visible_cols = COLUMN_list(default=list("NUMBER", "START", "END", "DURATION", "MAIN_TEXT"))
 
 [encoding]
 fallbacks = string_list(default=list("utf_8", "cp1252"))
@@ -77,7 +77,7 @@ use_predefined = boolean(default=True)
 video_player = VIDEO_PLAYER(default="MPLAYER")
 
 [search]
-cols = COLUMN_list(default=list("MTXT"))
+cols = COLUMN_list(default=list("MAIN_TEXT"))
 ignore_case = boolean(default=True)
 max_history = integer(min=0, default=10)
 patterns = string_list(default=list())
@@ -86,7 +86,7 @@ replacements = string_list(default=list())
 target = TARGET(default="CURRENT")
 
 [spell_check]
-col = COLUMN(default="MTXT")
+col = COLUMN(default="MAIN_TEXT")
 lang = string(default="en")
 target = TARGET(default="CURRENT")
 

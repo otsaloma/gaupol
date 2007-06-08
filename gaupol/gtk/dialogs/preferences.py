@@ -19,25 +19,23 @@
 """Dialog for editing preferences."""
 
 
+import gaupol.gtk
 import gobject
 import gtk
 import pango
+_ = gaupol.i18n._
 
-from gaupol import enclib
-from gaupol.base import Delegate
-from gaupol.gtk import conf, const, util
-from gaupol.i18n import _
 from .encoding import EncodingDialog
 from .glade import GladeDialog
 
 
-class _EditorPage(Delegate):
+class _EditorPage(gaupol.Delegate):
 
     """Editor preferences page."""
 
     def __init__(self, master):
 
-        Delegate.__init__(self, master)
+        gaupol.Delegate.__init__(self, master)
         get_widget = self._glade_xml.get_widget
         self._default_font_check = get_widget("editor_default_font_check")
         self._font_button = get_widget("editor_font_button")
@@ -56,7 +54,8 @@ class _EditorPage(Delegate):
 
         context = gtk.Label().get_pango_context()
         font_desc = context.get_font_description()
-        custom_font_desc = pango.FontDescription(conf.editor.font)
+        font = gaupol.gtk.conf.editor.font
+        custom_font_desc = pango.FontDescription(font)
         font_desc.merge(custom_font_desc, True)
         return font_desc.to_string()
 
@@ -64,75 +63,76 @@ class _EditorPage(Delegate):
         """Initialize the line length combo box."""
 
         store = self._length_combo.get_model()
-        for name in const.LENGTH_UNIT.display_names:
+        for name in gaupol.gtk.LENGTH_UNIT.labels:
             store.append([name])
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
-        util.connect(self, "_default_font_check", "toggled")
-        util.connect(self, "_font_button", "font-set")
-        util.connect(self, "_length_cell_check", "toggled")
-        util.connect(self, "_length_combo", "changed")
-        util.connect(self, "_length_edit_check", "toggled")
+        gaupol.gtk.util.connect(self, "_default_font_check", "toggled")
+        gaupol.gtk.util.connect(self, "_font_button", "font-set")
+        gaupol.gtk.util.connect(self, "_length_cell_check", "toggled")
+        gaupol.gtk.util.connect(self, "_length_combo", "changed")
+        gaupol.gtk.util.connect(self, "_length_edit_check", "toggled")
 
     def _init_values(self):
         """Initialize default values for widgets."""
 
-        use_default = conf.editor.use_default_font
+        use_default = gaupol.gtk.conf.editor.use_default_font
         self._default_font_check.set_active(use_default)
         self._font_hbox.set_sensitive(not use_default)
         self._font_button.set_font_name(self._get_custom_font())
 
-        cell = conf.editor.show_lengths_cell
-        edit = conf.editor.show_lengths_edit
+        cell = gaupol.gtk.conf.editor.show_lengths_cell
+        edit = gaupol.gtk.conf.editor.show_lengths_edit
         self._length_hbox.set_sensitive(cell or edit)
         self._length_cell_check.set_active(cell)
         self._length_edit_check.set_active(edit)
-        self._length_combo.set_active(conf.editor.length_unit)
+        self._length_combo.set_active(gaupol.gtk.conf.editor.length_unit)
 
     def _on_default_font_check_toggled(self, check_button):
         """Save the default font usage."""
 
         use_default = check_button.get_active()
-        conf.editor.use_default_font = use_default
+        gaupol.gtk.conf.editor.use_default_font = use_default
         self._font_hbox.set_sensitive(not use_default)
 
     def _on_font_button_font_set(self, font_button):
         """Save the custom font."""
 
-        conf.editor.font = font_button.get_font_name()
+        gaupol.gtk.conf.editor.font = font_button.get_font_name()
 
     def _on_length_cell_check_toggled(self, check_button):
         """Save the line length showage on cells."""
 
-        conf.editor.show_lengths_cell = check_button.get_active()
-        cell = conf.editor.show_lengths_cell
-        edit = conf.editor.show_lengths_edit
+        gaupol.gtk.conf.editor.show_lengths_cell = check_button.get_active()
+        cell = gaupol.gtk.conf.editor.show_lengths_cell
+        edit = gaupol.gtk.conf.editor.show_lengths_edit
         self._length_hbox.set_sensitive(cell or edit)
 
     def _on_length_combo_changed(self, combo_box):
         """Save the line length unit."""
 
         index = combo_box.get_active()
-        conf.editor.length_unit = const.LENGTH_UNIT.members[index]
+        length_unit = gaupol.gtk.LENGTH_UNIT.members[index]
+        gaupol.gtk.conf.editor.length_unit = length_unit
 
     def _on_length_edit_check_toggled(self, check_button):
         """Save the line length showage on text views."""
 
-        conf.editor.show_lengths_edit = check_button.get_active()
-        cell = conf.editor.show_lengths_cell
-        edit = conf.editor.show_lengths_edit
+        gaupol.gtk.conf.editor.show_lengths_edit = check_button.get_active()
+        cell = gaupol.gtk.conf.editor.show_lengths_cell
+        edit = gaupol.gtk.conf.editor.show_lengths_edit
         self._length_hbox.set_sensitive(cell or edit)
 
 
-class _FilePage(Delegate):
+class _FilePage(gaupol.Delegate):
 
     """File preferences page."""
 
     def __init__(self, master):
 
-        Delegate.__init__(self, master)
+        gaupol.Delegate.__init__(self, master)
         get_widget = self._glade_xml.get_widget
         self._add_button = get_widget("file_add_button")
         self._auto_check = get_widget("file_auto_check")
@@ -146,7 +146,7 @@ class _FilePage(Delegate):
         self._init_values()
         self._init_signal_handlers()
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _get_selected_row(self):
         """Get the selected row in the tree view or None."""
 
@@ -158,12 +158,12 @@ class _FilePage(Delegate):
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
-        util.connect(self, "_add_button", "clicked")
-        util.connect(self, "_auto_check", "toggled")
-        util.connect(self, "_down_button", "clicked")
-        util.connect(self, "_locale_check", "toggled")
-        util.connect(self, "_remove_button", "clicked")
-        util.connect(self, "_up_button", "clicked")
+        gaupol.gtk.util.connect(self, "_add_button", "clicked")
+        gaupol.gtk.util.connect(self, "_auto_check", "toggled")
+        gaupol.gtk.util.connect(self, "_down_button", "clicked")
+        gaupol.gtk.util.connect(self, "_locale_check", "toggled")
+        gaupol.gtk.util.connect(self, "_remove_button", "clicked")
+        gaupol.gtk.util.connect(self, "_up_button", "clicked")
 
         update = lambda *args: self._set_sensitivities()
         selection = self._tree_view.get_selection()
@@ -183,12 +183,12 @@ class _FilePage(Delegate):
     def _init_values(self):
         """Initialize default values for widgets."""
 
-        self._auto_check.set_active(conf.encoding.try_auto)
-        self._auto_check.set_sensitive(util.chardet_available())
-        self._locale_check.set_active(conf.encoding.try_locale)
+        self._auto_check.set_active(gaupol.gtk.conf.encoding.try_auto)
+        self._auto_check.set_sensitive(gaupol.gtk.util.chardet_available())
+        self._locale_check.set_active(gaupol.gtk.conf.encoding.try_locale)
         self._reload_tree_view()
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _on_add_button_clicked(self, *args):
         """Add a new fallback encoding."""
 
@@ -198,8 +198,8 @@ class _FilePage(Delegate):
         dialog.destroy()
         assert response == gtk.RESPONSE_OK
         assert encoding is not None
-        assert encoding not in conf.encoding.fallbacks
-        conf.encoding.fallbacks.append(encoding)
+        assert encoding not in gaupol.gtk.conf.encoding.fallbacks
+        gaupol.gtk.conf.encoding.fallbacks.append(encoding)
         self._reload_tree_view()
         self._tree_view.grab_focus()
         store = self._tree_view.get_model()
@@ -208,13 +208,13 @@ class _FilePage(Delegate):
     def _on_auto_check_toggled(self, check_button):
         """Save the encoding auto-detection usage."""
 
-        conf.encoding.try_auto = check_button.get_active()
+        gaupol.gtk.conf.encoding.try_auto = check_button.get_active()
 
     def _on_down_button_clicked(self, *args):
         """Move the selected fallback encoding down."""
 
         row = self._get_selected_row()
-        encodings = conf.encoding.fallbacks
+        encodings = gaupol.gtk.conf.encoding.fallbacks
         encodings.insert(row + 1, encodings.pop(row))
         self._reload_tree_view()
         self._tree_view.grab_focus()
@@ -223,14 +223,14 @@ class _FilePage(Delegate):
     def _on_locale_check_toggled(self, check_button):
         """Save the locale encoding usage."""
 
-        conf.encoding.try_locale = check_button.get_active()
+        gaupol.gtk.conf.encoding.try_locale = check_button.get_active()
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _on_remove_button_clicked(self, *args):
         """Remove the selected encoding."""
 
         row = self._get_selected_row()
-        conf.encoding.fallbacks.pop(row)
+        gaupol.gtk.conf.encoding.fallbacks.pop(row)
         self._reload_tree_view()
         self._tree_view.grab_focus()
         store = self._tree_view.get_model()
@@ -241,7 +241,7 @@ class _FilePage(Delegate):
         """Move the selected encoding up."""
 
         row = self._get_selected_row()
-        encodings = conf.encoding.fallbacks
+        encodings = gaupol.gtk.conf.encoding.fallbacks
         encodings.insert(row - 1, encodings.pop(row))
         self._reload_tree_view()
         self._tree_view.grab_focus()
@@ -252,8 +252,8 @@ class _FilePage(Delegate):
 
         store = self._tree_view.get_model()
         store.clear()
-        for encoding in conf.encoding.fallbacks:
-            store.append([enclib.get_long_name(encoding)])
+        for encoding in gaupol.gtk.conf.encoding.fallbacks:
+            store.append([gaupol.encodings.get_long_name(encoding)])
         self._set_sensitivities()
 
     def _set_sensitivities(self):
@@ -266,13 +266,13 @@ class _FilePage(Delegate):
         self._down_button.set_sensitive(0 <= row < len(store) - 1)
 
 
-class _PreviewPage(Delegate):
+class _PreviewPage(gaupol.Delegate):
 
     """Preview preferences page."""
 
     def __init__(self, master):
 
-        Delegate.__init__(self, master)
+        gaupol.Delegate.__init__(self, master)
         get_widget = self._glade_xml.get_widget
         self._app_combo = get_widget("preview_app_combo")
         self._command_entry = get_widget("preview_command_entry")
@@ -286,57 +286,61 @@ class _PreviewPage(Delegate):
         """Initialize the application combo box."""
 
         store = self._app_combo.get_model()
-        for name in const.VIDEO_PLAYER.display_names:
+        for name in gaupol.gtk.VIDEO_PLAYER.labels:
             store.append([name])
-        store.append([util.COMBO_SEP])
+        store.append([gaupol.gtk.util.COMBO_SEPARATOR])
         store.append([_("Custom")])
-        self._app_combo.set_row_separator_func(util.separate_combo)
+        function = gaupol.gtk.util.separate_combo
+        self._app_combo.set_row_separator_func(function)
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
-        util.connect(self, "_app_combo", "changed")
-        util.connect(self, "_command_entry", "changed")
-        util.connect(self, "_offset_spin", "value-changed")
+        gaupol.gtk.util.connect(self, "_app_combo", "changed")
+        gaupol.gtk.util.connect(self, "_command_entry", "changed")
+        gaupol.gtk.util.connect(self, "_offset_spin", "value-changed")
 
     def _init_values(self):
         """Initialize default values for widgets."""
 
-        self._offset_spin.set_value(conf.preview.offset)
-        if conf.preview.use_predefined:
-            self._app_combo.set_active(conf.preview.video_player)
-            self._command_entry.set_text(conf.preview.video_player.command)
+        self._offset_spin.set_value(gaupol.gtk.conf.preview.offset)
+        if gaupol.gtk.conf.preview.use_predefined:
+            player = gaupol.gtk.conf.preview.video_player
+            self._app_combo.set_active(player)
+            self._command_entry.set_text(player.command)
             return self._command_entry.set_editable(False)
         store = self._app_combo.get_model()
         self._app_combo.set_active(len(store) - 1)
-        self._command_entry.set_text(conf.preview.custom_command)
+        command = gaupol.gtk.conf.preview.custom_command
+        self._command_entry.set_text(command)
         self._command_entry.set_editable(True)
 
     def _on_app_combo_changed(self, combo_box):
         """Save the video player and show it's command."""
 
         index = combo_box.get_active()
-        if index in const.VIDEO_PLAYER.members:
-            conf.preview.use_predefined = True
-            player = const.VIDEO_PLAYER.members[index]
-            conf.preview.video_player = player
+        if index in gaupol.gtk.VIDEO_PLAYER.members:
+            gaupol.gtk.conf.preview.use_predefined = True
+            player = gaupol.gtk.VIDEO_PLAYER.members[index]
+            gaupol.gtk.conf.preview.video_player = player
             self._command_entry.set_text(player.command)
             return self._command_entry.set_editable(False)
-        conf.preview.use_predefined = False
-        self._command_entry.set_text(conf.preview.custom_command)
+        gaupol.gtk.conf.preview.use_predefined = False
+        command = gaupol.gtk.conf.preview.custom_command
+        self._command_entry.set_text(command)
         self._command_entry.set_editable(True)
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _on_command_entry_changed(self, entry):
         """Save the custom command."""
 
-        assert not conf.preview.use_predefined
-        conf.preview.custom_command = entry.get_text()
+        assert not gaupol.gtk.conf.preview.use_predefined
+        gaupol.gtk.conf.preview.custom_command = entry.get_text()
 
     def _on_offset_spin_value_changed(self, spin_button):
         """Save the start position offset."""
 
-        conf.preview.offset = spin_button.get_value()
+        gaupol.gtk.conf.preview.offset = spin_button.get_value()
 
 
 class PreferencesDialog(GladeDialog):

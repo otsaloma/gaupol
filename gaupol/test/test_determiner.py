@@ -16,13 +16,13 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol import const, util
-from gaupol.errors import FormatError
-from gaupol.unittest import TestCase
+import gaupol
+
+from gaupol import unittest
 from .. import determiner
 
 
-class TestFormatDeterminer(TestCase):
+class TestFormatDeterminer(unittest.TestCase):
 
     def setup_method(self, method):
 
@@ -31,12 +31,12 @@ class TestFormatDeterminer(TestCase):
     def test_determine(self):
 
         path = self.get_subrip_path()
-        for format in const.FORMAT.members:
+        for format in gaupol.FORMAT.members:
             text = self.get_file_text(format)
-            util.write(path, text, "ascii")
+            gaupol.util.write(path, text, "ascii")
             value = self.determiner.determine(path, "ascii")
             assert value == format
 
-        util.write(path, "", "ascii")
+        gaupol.util.write(path, "", "ascii")
         function = self.determiner.determine
-        self.raises(FormatError, function, path, "ascii")
+        self.raises(gaupol.FormatError, function, path, "ascii")

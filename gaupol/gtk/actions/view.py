@@ -19,8 +19,9 @@
 """View menu UI manager actions."""
 
 
-from gaupol.gtk import conf, const
-from gaupol.i18n import _
+import gaupol.gtk
+_ = gaupol.i18n._
+
 from .action import Action, RadioAction, ToggleAction
 
 
@@ -117,11 +118,12 @@ class ShowFramerate24Action(RadioAction):
     def __init__(self):
 
         RadioAction.__init__(self, "show_framerate_24")
-        self.props.active = (conf.editor.framerate == const.FRAMERATE.P24)
+        framerate = gaupol.gtk.conf.editor.framerate
+        self.props.active = (framerate == gaupol.gtk.FRAMERATE.P24)
         self.props.label = _("2_4 fps")
         tooltip = _("Calculate unnative units with framerate 24 fps")
         self.props.tooltip = tooltip
-        self.props.value = const.FRAMERATE.P24
+        self.props.value = gaupol.gtk.FRAMERATE.P24
         self.group = "ShowFramerate24Action"
 
     def _assert_doable(self, application, page):
@@ -138,11 +140,12 @@ class ShowFramerate25Action(RadioAction):
     def __init__(self):
 
         RadioAction.__init__(self, "show_framerate_25")
-        self.props.active = (conf.editor.framerate == const.FRAMERATE.P25)
+        framerate = gaupol.gtk.conf.editor.framerate
+        self.props.active = (framerate == gaupol.gtk.FRAMERATE.P25)
         self.props.label = _("2_5 fps")
         tooltip = _("Calculate unnative units with framerate 25 fps")
         self.props.tooltip = tooltip
-        self.props.value = const.FRAMERATE.P25
+        self.props.value = gaupol.gtk.FRAMERATE.P25
         self.group = "ShowFramerate24Action"
 
     def _assert_doable(self, application, page):
@@ -159,11 +162,12 @@ class ShowFramerate30Action(RadioAction):
     def __init__(self):
 
         RadioAction.__init__(self, "show_framerate_30")
-        self.props.active = (conf.editor.framerate == const.FRAMERATE.P30)
+        framerate = gaupol.gtk.conf.editor.framerate
+        self.props.active = (framerate == gaupol.gtk.FRAMERATE.P30)
         self.props.label = _("_30 fps")
         tooltip = _("Calculate unnative units with framerate 30 fps")
         self.props.tooltip = tooltip
-        self.props.value = const.FRAMERATE.P30
+        self.props.value = gaupol.gtk.FRAMERATE.P30
         self.group = "ShowFramerate24Action"
 
     def _assert_doable(self, application, page):
@@ -197,10 +201,11 @@ class ShowFramesAction(RadioAction):
     def __init__(self):
 
         RadioAction.__init__(self, "show_frames")
-        self.props.active = (conf.editor.mode == const.MODE.FRAME)
+        mode = gaupol.gtk.conf.editor.mode
+        self.props.active = (mode == gaupol.gtk.MODE.FRAME)
         self.props.label = _("_Frames")
         self.props.tooltip = _("Show positions as frames")
-        self.props.value = const.MODE.FRAME
+        self.props.value = gaupol.gtk.MODE.FRAME
         self.accelerator = "<Shift>T"
         self.group = "ShowTimesAction"
 
@@ -217,10 +222,11 @@ class ShowTimesAction(RadioAction):
     def __init__(self):
 
         RadioAction.__init__(self, "show_times")
-        self.props.active = (conf.editor.mode == const.MODE.TIME)
+        mode = gaupol.gtk.conf.editor.mode
+        self.props.active = (mode == gaupol.gtk.MODE.TIME)
         self.props.label = _("_Times")
         self.props.tooltip = _("Show positions as times")
-        self.props.value = const.MODE.TIME
+        self.props.value = gaupol.gtk.MODE.TIME
         self.accelerator = "T"
         self.group = "ShowTimesAction"
 
@@ -237,7 +243,8 @@ class ToggleDurationColumnAction(ToggleAction):
     def __init__(self):
 
         ToggleAction.__init__(self, "toggle_duration_column")
-        self.props.active = const.COLUMN.DURN in conf.editor.visible_cols
+        cols = gaupol.gtk.conf.editor.visible_cols
+        self.props.active = gaupol.gtk.COLUMN.DURATION in cols
         self.props.label = _("_Duration")
         self.props.tooltip = _('Show or hide the "Duration" column')
 
@@ -254,7 +261,8 @@ class ToggleEndColumnAction(ToggleAction):
     def __init__(self):
 
         ToggleAction.__init__(self, "toggle_end_column")
-        self.props.active = const.COLUMN.END in conf.editor.visible_cols
+        cols = gaupol.gtk.conf.editor.visible_cols
+        self.props.active = gaupol.gtk.COLUMN.END in cols
         self.props.label = _("_End")
         self.props.tooltip = _('Show or hide the "End" column')
 
@@ -271,7 +279,8 @@ class ToggleMainTextColumnAction(ToggleAction):
     def __init__(self):
 
         ToggleAction.__init__(self, "toggle_main_text_column")
-        self.props.active = const.COLUMN.MTXT in conf.editor.visible_cols
+        cols = gaupol.gtk.conf.editor.visible_cols
+        self.props.active = gaupol.gtk.COLUMN.MAIN_TEXT in cols
         self.props.label = _("_Main Text")
         self.props.tooltip = _('Show or hide the "Main Text" column')
 
@@ -288,7 +297,8 @@ class ToggleMainToolbarAction(ToggleAction):
     def __init__(self):
 
         ToggleAction.__init__(self, "toggle_main_toolbar")
-        self.props.active = conf.application_window.show_main_toolbar
+        show = gaupol.gtk.conf.application_window.show_main_toolbar
+        self.props.active = show
         self.props.label = _("_Main Toolbar")
         self.props.tooltip = _("Show or hide the main toolbar")
 
@@ -300,7 +310,8 @@ class ToggleNumberColumnAction(ToggleAction):
     def __init__(self):
 
         ToggleAction.__init__(self, "toggle_number_column")
-        self.props.active = const.COLUMN.NO in conf.editor.visible_cols
+        cols = gaupol.gtk.conf.editor.visible_cols
+        self.props.active = gaupol.gtk.COLUMN.NUMBER in cols
         self.props.label = _("_No.")
         self.props.tooltip = _('Show or hide the "No." column')
 
@@ -317,7 +328,7 @@ class ToggleOutputWindowAction(ToggleAction):
     def __init__(self):
 
         ToggleAction.__init__(self, "toggle_output_window")
-        self.props.active = conf.output_window.show
+        self.props.active = gaupol.gtk.conf.output_window.show
         self.props.label = _("_Output Window")
         self.props.tooltip = _("Show or hide the output window")
 
@@ -329,7 +340,8 @@ class ToggleStartColumnAction(ToggleAction):
     def __init__(self):
 
         ToggleAction.__init__(self, "toggle_start_column")
-        self.props.active = const.COLUMN.START in conf.editor.visible_cols
+        cols = gaupol.gtk.conf.editor.visible_cols
+        self.props.active = gaupol.gtk.COLUMN.START in cols
         self.props.label = _("_Start")
         self.props.tooltip = _('Show or hide the "Start" column')
 
@@ -346,7 +358,7 @@ class ToggleStatusbarAction(ToggleAction):
     def __init__(self):
 
         ToggleAction.__init__(self, "toggle_statusbar")
-        self.props.active = conf.application_window.show_statusbar
+        self.props.active = gaupol.gtk.conf.application_window.show_statusbar
         self.props.label = _("_Statusbar")
         self.props.tooltip = _("Show or hide the statusbar")
 
@@ -358,7 +370,8 @@ class ToggleTranslationTextColumnAction(ToggleAction):
     def __init__(self):
 
         ToggleAction.__init__(self, "toggle_translation_text_column")
-        self.props.active = const.COLUMN.TTXT in conf.editor.visible_cols
+        cols = gaupol.gtk.conf.editor.visible_cols
+        self.props.active = gaupol.gtk.COLUMN.TRAN_TEXT in cols
         self.props.label = _("_Translation Text")
         self.props.tooltip = _('Show or hide the "Translation Text" column')
 
@@ -375,6 +388,7 @@ class ToggleVideoToolbarAction(ToggleAction):
     def __init__(self):
 
         ToggleAction.__init__(self, "toggle_video_toolbar")
-        self.props.active = conf.application_window.show_video_toolbar
+        show = gaupol.gtk.conf.application_window.show_video_toolbar
+        self.props.active = show
         self.props.label = _("_Video Toolbar")
         self.props.tooltip = _("Show or hide the video toolbar")

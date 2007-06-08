@@ -23,10 +23,8 @@ from __future__ import with_statement
 
 import codecs
 import contextlib
+import gaupol
 import os
-
-from gaupol import const, enclib, paths, util
-from gaupol.base import Contractual
 
 
 class SubtitleFile(object):
@@ -51,7 +49,7 @@ class SubtitleFile(object):
     template.
     """
 
-    __metaclass__ = Contractual
+    __metaclass__ = gaupol.Contractual
     format = None
     mode = None
 
@@ -66,7 +64,7 @@ class SubtitleFile(object):
             self.header = self.get_template_header()
 
     def _invariant(self):
-        assert enclib.is_valid(self.encoding)
+        assert gaupol.encodings.is_valid(self.encoding)
 
     def _read_lines_require(self):
         assert os.path.isfile(self.path)
@@ -88,8 +86,8 @@ class SubtitleFile(object):
             lines.pop()
         if isinstance(chars, tuple):
             chars = chars[0]
-        index = const.NEWLINE.values.index(chars)
-        self.newline = const.NEWLINE.members[index]
+        index = gaupol.NEWLINE.values.index(chars)
+        self.newline = gaupol.NEWLINE.members[index]
         return lines
 
     def copy_from(self, file):
@@ -104,12 +102,12 @@ class SubtitleFile(object):
         """Read and return the header from a template file."""
 
         basename = self.format.name.lower() + ".txt"
-        read = util.silent(IOError, UnicodeError)(util.read)
-        directory = os.path.join(paths.PROFILE_DIR, "headers")
+        read = gaupol.util.silent(IOError, UnicodeError)(gaupol.util.read)
+        directory = os.path.join(gaupol.PROFILE_DIR, "headers")
         path = os.path.join(directory, basename)
         if os.path.isfile(path):
             return read(path, None)
-        directory = os.path.join(paths.DATA_DIR, "headers")
+        directory = os.path.join(gaupol.DATA_DIR, "headers")
         path = os.path.join(directory, basename)
         return read(path, "ascii")
 

@@ -19,11 +19,14 @@
 """Simple subtitle data editing actions."""
 
 
+import gaupol.gtk
 import gtk
+_ = gaupol.i18n._
 
-from gaupol.gtk.index import *
-from gaupol.i18n import _
 from .action import Action
+
+
+_TEXT_COLUMNS = (gaupol.gtk.COLUMN.MAIN_TEXT, gaupol.gtk.COLUMN.TRAN_TEXT)
 
 
 class ClearTextsAction(Action):
@@ -43,7 +46,7 @@ class ClearTextsAction(Action):
 
         assert page is not None
         assert page.view.get_selected_rows()
-        assert page.view.get_focus()[1] in (MTXT, TTXT)
+        assert page.view.get_focus()[1] in _TEXT_COLUMNS
 
 
 class CopyTextsAction(Action):
@@ -63,7 +66,7 @@ class CopyTextsAction(Action):
 
         assert page is not None
         assert page.view.get_selected_rows()
-        assert page.view.get_focus()[1] in (MTXT, TTXT)
+        assert page.view.get_focus()[1] in _TEXT_COLUMNS
 
 
 class CutTextsAction(Action):
@@ -83,7 +86,7 @@ class CutTextsAction(Action):
 
         assert page is not None
         assert page.view.get_selected_rows()
-        assert page.view.get_focus()[1] in (MTXT, TTXT)
+        assert page.view.get_focus()[1] in _TEXT_COLUMNS
 
 
 class EditPreferencesAction(Action):
@@ -118,7 +121,7 @@ class EditNextValueAction(Action):
         row, col = page.view.get_focus()
         assert not None in (row, col)
         assert row < len(page.project.times) - 1
-        assert col != NO
+        assert col != gaupol.gtk.COLUMN.NUMBER
 
 
 class EditValueAction(Action):
@@ -141,7 +144,7 @@ class EditValueAction(Action):
         assert page is not None
         row, col = page.view.get_focus()
         assert not None in (row, col)
-        assert col != NO
+        assert col != gaupol.gtk.COLUMN.NUMBER
 
 
 class InsertSubtitlesAction(Action):
@@ -221,7 +224,7 @@ class PasteTextsAction(Action):
         assert page is not None
         assert not application.clipboard.is_empty()
         assert page.view.get_selected_rows()
-        assert page.view.get_focus()[1] in (MTXT, TTXT)
+        assert page.view.get_focus()[1] in _TEXT_COLUMNS
 
 
 class RedoActionAction(Action):

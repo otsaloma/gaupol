@@ -21,20 +21,17 @@
 
 from __future__ import division
 
-from gaupol import const
-from gaupol.base import Contractual, Delegate
-from gaupol.calculator import Calculator
-from gaupol.i18n import _
-from gaupol.reversion import revertable
+import gaupol
+_ = gaupol.i18n._
 
 
-class PositionAgent(Delegate):
+class PositionAgent(gaupol.Delegate):
 
     """Manipulating times and frames."""
 
     # pylint: disable-msg=E0203,W0201
 
-    __metaclass__ = Contractual
+    __metaclass__ = gaupol.Contractual
 
     def _get_frame_transform_ensure(self, value, point_1, point_2):
         assert isinstance(value[1], int)
@@ -93,7 +90,7 @@ class PositionAgent(Delegate):
         for index in indexes or []:
             assert 0 <= index < len(self.subtitles)
 
-    @revertable
+    @gaupol.util.revertable
     def adjust_durations(self, indexes=None, optimal=None, lengthen=False,
         shorten=False, maximum=None, minimum=None, gap=None, register=-1):
         """Lengthen or shorten durations by changing the end positions.
@@ -113,7 +110,7 @@ class PositionAgent(Delegate):
             if index < (len(self.subtitles) - 1):
                 end_max = self.subtitles[index + 1].start_seconds
             if optimal is not None:
-                length = self.get_text_length(index, const.DOCUMENT.MAIN)
+                length = self.get_text_length(index, gaupol.DOCUMENT.MAIN)
                 optimal_duration = optimal * length
                 if ((end - start) < optimal_duration) and lengthen:
                     end = start + optimal_duration
@@ -141,7 +138,7 @@ class PositionAgent(Delegate):
         for index in indexes or []:
             assert 0 <= index < len(self.subtitles)
 
-    @revertable
+    @gaupol.util.revertable
     def convert_framerate(self, indexes, current, correct, register=-1):
         """Set the value of the framerate and convert subtitles to it.
 
@@ -159,18 +156,18 @@ class PositionAgent(Delegate):
         self.replace_positions(indexes, new_subtitles, register=register)
         self.group_actions(register, 2, _("Converting framerate"))
 
-    @revertable
+    @gaupol.util.revertable
     def set_framerate(self, framerate, register=-1):
         """Set the value of the framerate."""
 
         orig_framerate = self.framerate
         self.framerate = framerate
-        self.calc = Calculator(framerate)
+        self.calc = gaupol.Calculator(framerate)
         for subtitle in self.subtitles:
             subtitle.framerate = framerate
 
         action = self.get_revertable_action(register)
-        action.docs = const.DOCUMENT.members
+        action.docs = gaupol.DOCUMENT.members
         action.description = _("Setting framerate")
         action.revert_method = self.set_framerate
         action.revert_args = (orig_framerate,)
@@ -180,7 +177,7 @@ class PositionAgent(Delegate):
         for index in indexes or []:
             assert 0 <= index < len(self.subtitles)
 
-    @revertable
+    @gaupol.util.revertable
     def shift_positions(self, indexes, value, register=-1):
         """Make subtitles appear earlier or later.
 
@@ -200,7 +197,7 @@ class PositionAgent(Delegate):
         for index in indexes or []:
             assert 0 <= index < len(self.subtitles)
 
-    @revertable
+    @gaupol.util.revertable
     def transform_positions(self, indexes, point_1, point_2, register=-1):
         """Change positions by linear two-point correction.
 

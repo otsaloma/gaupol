@@ -16,19 +16,14 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Commonly used base classes and metaclasses.
-
-Imported names:
- * Contractual (contractual)
- * Delegate (delegate)
- * Observable (observable)
- * Singleton (singleton)
-"""
+"""Commonly used base classes and metaclasses."""
 
 
+from .const       import ConstantMember
+from .const       import ConstantSection
 from .contractual import Contractual
 from .delegate    import Delegate
 from .observable  import Observable
 from .singleton   import Singleton
 
-__all__ = ["Contractual", "Delegate", "Observable", "Singleton"]
+__all__ = [x for x in dir() if x[0].isupper()]

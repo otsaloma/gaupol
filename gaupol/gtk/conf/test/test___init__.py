@@ -16,12 +16,11 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol import __version__
-from gaupol.gtk import conf
-from gaupol.gtk.unittest import TestCase
+import gaupol.gtk
+from gaupol.gtk import unittest
 
 
-class TestModule(TestCase):
+class TestModule(unittest.TestCase):
 
     def on_conf_editor_notify_font(self, obj, value):
 
@@ -29,18 +28,18 @@ class TestModule(TestCase):
 
     def test_connect(self):
 
-        conf.connect(self, "editor", "font")
-        conf.editor.font = "Serif 12"
+        gaupol.gtk.conf.connect(self, "editor", "font")
+        gaupol.gtk.conf.editor.font = "Serif 12"
 
     def test_read(self):
 
-        conf.read()
-        assert conf.general.version == __version__
-        assert conf.editor.font == ""
+        gaupol.gtk.conf.read()
+        assert gaupol.gtk.conf.general.version == gaupol.__version__
+        assert gaupol.gtk.conf.editor.font == ""
 
     def test_write(self):
 
-        conf.read()
-        conf.config_file = self.get_subrip_path()
-        conf.write()
-        conf.read()
+        gaupol.gtk.conf.read()
+        gaupol.gtk.conf.config_file = self.get_subrip_path()
+        gaupol.gtk.conf.write()
+        gaupol.gtk.conf.read()

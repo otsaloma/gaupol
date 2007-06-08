@@ -23,11 +23,9 @@ from __future__ import with_statement
 
 import codecs
 import contextlib
+import gaupol
 import re
 
-from gaupol import const
-from gaupol.base import Contractual
-from gaupol.calculator import Calculator
 from .subfile import SubtitleFile
 
 
@@ -39,9 +37,9 @@ class SubStationAlpha(SubtitleFile):
      * event_fields: Tuple of the names of fields under the 'Events' section
     """
 
-    __metaclass__ = Contractual
-    format = const.FORMAT.SSA
-    mode = const.MODE.TIME
+    __metaclass__ = gaupol.Contractual
+    format = gaupol.FORMAT.SSA
+    mode = gaupol.MODE.TIME
 
     event_fields = (
         "Marked",
@@ -111,7 +109,7 @@ class SubStationAlpha(SubtitleFile):
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
-        calc = Calculator()
+        calc = gaupol.Calculator()
         starts = [calc.round_time(x, 2)[1:11] for x in starts]
         ends = [calc.round_time(x, 2)[1:11] for x in ends]
         texts = [x.replace("\n", "\\n") for x in texts]

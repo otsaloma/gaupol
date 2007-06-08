@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -17,3 +17,29 @@
 
 
 """GTK user interface."""
+
+
+import gaupol
+import inspect
+
+module = inspect.getmodule(lambda: True)
+gaupol.__dict__["gtk"] = module
+
+from gaupol.gtk.const import *
+from gaupol.gtk.errors import *
+from gaupol.gtk import conf
+from gaupol.gtk import ruler
+from gaupol.gtk import util
+from gaupol.gtk.meta import *
+from gaupol.gtk.runner import *
+from gaupol.gtk.tooltips import *
+from gaupol.gtk.entries import *
+from gaupol.gtk.renderers import *
+from gaupol.gtk.output import *
+from gaupol.gtk.view import *
+from gaupol.gtk.page import *
+from gaupol.gtk.dialogs import *
+from gaupol.gtk import actions
+from gaupol.gtk import agents
+from gaupol.gtk.application import *
+from gaupol.gtk import main

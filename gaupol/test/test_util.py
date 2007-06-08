@@ -21,11 +21,11 @@ import os
 import sys
 import tempfile
 
-from gaupol.unittest import TestCase
+from gaupol import unittest
 from .. import util
 
 
-class TestModule(TestCase):
+class TestModule(unittest.TestCase):
 
     # pylint: disable-msg=E0102
 
@@ -36,11 +36,7 @@ class TestModule(TestCase):
         def do_b():
             return do_a()
         assert util.asserted_return(do_a)() is None
-        try:
-            util.asserted_return(do_b)()
-            raise AssertionError
-        except AssertionError:
-            pass
+        self.raises(AssertionError, util.asserted_return, do_b)
 
     def test_memoize(self):
 
@@ -101,6 +97,13 @@ class TestModule(TestCase):
     def test_get_enchant_version(self):
 
         util.get_enchant_version()
+
+    def test_get_encoding_alias(self):
+
+        alias = util.get_encoding_alias("utf8")
+        assert alias == "utf_8"
+        alias = util.get_encoding_alias("johab")
+        assert alias == "johab"
 
     def test_get_ranges(self):
 

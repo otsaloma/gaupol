@@ -20,7 +20,7 @@
 
 import copy
 
-from gaupol.unittest import TestCase
+from gaupol import unittest
 from .. import mutables
 
 
@@ -31,7 +31,7 @@ class Master(object):
         self.count += 1
 
 
-class _TestObservable(TestCase):
+class _TestObservable(unittest.TestCase):
 
     def setup_method(self, method):
 

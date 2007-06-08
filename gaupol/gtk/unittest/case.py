@@ -19,6 +19,7 @@
 """Base class for GTK unit test cases."""
 
 
+import gaupol.gtk
 import gtk
 
 from gaupol import unittest
@@ -32,8 +33,7 @@ class TestCase(unittest.TestCase):
         """Get a new application with two open pages."""
 
         if not hasattr(TestCase, "application"):
-            from gaupol.gtk.application import Application
-            TestCase.application = Application()
+            TestCase.application = gaupol.gtk.Application()
         application = TestCase.application
         while application.pages:
             application.close(application.pages[0], False)
@@ -44,8 +44,7 @@ class TestCase(unittest.TestCase):
     def get_page(self):
         """Get a new page with two open documents."""
 
-        from gaupol.gtk.page import Page
-        page = Page()
+        page = gaupol.gtk.Page()
         page.project.open_main(self.get_subrip_path(), "ascii")
         page.project.open_translation(self.get_microdvd_path(), "ascii")
         return page

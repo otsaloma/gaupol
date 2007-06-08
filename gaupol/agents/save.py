@@ -19,29 +19,26 @@
 """Saving subtitle files."""
 
 
+import gaupol
 import os
 import shutil
 import sys
 import tempfile
 
-from gaupol import const, files, util
-from gaupol.base import Contractual, Delegate
-from gaupol.converter import TagConverter
 
-
-class SaveAgent(Delegate):
+class SaveAgent(gaupol.Delegate):
 
     """Saving subtitle files."""
 
     # pylint: disable-msg=E0203,W0201
 
-    __metaclass__ = Contractual
+    __metaclass__ = gaupol.Contractual
 
     def _convert_tags(self, texts, from_format, to_format):
         """Convert tags in texts and return changed indexes."""
 
         changed_indexes = []
-        converter = TagConverter(from_format, to_format)
+        converter = gaupol.TagConverter(from_format, to_format)
         for i, text in enumerate(texts):
             new_text = converter.convert(text)
             if new_text != text:
@@ -59,7 +56,7 @@ class SaveAgent(Delegate):
             shutil.copyfile(source, destination)
             return True
         except IOError:
-            util.handle_write_io(sys.exc_info(), destination)
+            gaupol.util.handle_write_io(sys.exc_info(), destination)
         return False
 
     def _move_file_ensure(self, value, source, destination):
@@ -72,7 +69,7 @@ class SaveAgent(Delegate):
             shutil.move(source, destination)
             return True
         except (IOError, OSError):
-            util.handle_write_io(sys.exc_info(), destination)
+            gaupol.util.handle_write_io(sys.exc_info(), destination)
         return False
 
     def _remove_file_ensure(self, value, path):
@@ -85,7 +82,7 @@ class SaveAgent(Delegate):
             os.remove(path)
             return True
         except OSError:
-            util.handle_remove_os(sys.exc_info(), path)
+            gaupol.util.handle_remove_os(sys.exc_info(), path)
         return False
 
     def _save(self, doc, props, keep_changes):
@@ -108,7 +105,7 @@ class SaveAgent(Delegate):
 
         # Create new file if needed.
         if not None in (path, format, encoding, newline):
-            cls = getattr(files, format.class_name)
+            cls = gaupol.files.get_class(format)
             new_file = cls(path, encoding, newline)
             if (file is not None) and (file.format == format):
                 new_file.copy_from(file)
@@ -151,9 +148,9 @@ class SaveAgent(Delegate):
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
-        if doc == const.DOCUMENT.MAIN:
+        if doc == gaupol.DOCUMENT.MAIN:
             return self.save_main(props, keep_changes)
-        if doc == const.DOCUMENT.TRAN:
+        if doc == gaupol.DOCUMENT.TRAN:
             return self.save_translation(props, keep_changes)
         raise ValueError
 
@@ -168,7 +165,7 @@ class SaveAgent(Delegate):
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
-        args = (const.DOCUMENT.MAIN, props, keep_changes)
+        args = (gaupol.DOCUMENT.MAIN, props, keep_changes)
         main_file, texts, changed_indexes = self._save(*args)
         if keep_changes:
             self.main_file = main_file
@@ -189,7 +186,7 @@ class SaveAgent(Delegate):
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
-        args = (const.DOCUMENT.TRAN, props, keep_changes)
+        args = (gaupol.DOCUMENT.TRAN, props, keep_changes)
         tran_file, texts, changed_indexes = self._save(*args)
         if keep_changes:
             self.tran_file = tran_file

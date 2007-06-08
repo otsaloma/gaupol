@@ -9,5 +9,5 @@ if os.path.isfile(os.path.join(cwd, "..", "data", "gaupol.desktop.in")):
     if not path in sys.path:
         sys.path.insert(0, path)
 
-from gaupol.gtk import main
-main.main(sys.argv[1:])
+import gaupol.gtk
+gaupol.gtk.main.main(sys.argv[1:])

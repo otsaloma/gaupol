@@ -19,21 +19,16 @@
 """User interface for a single project."""
 
 
+import gaupol.gtk
 import gtk
 import os
 import pango
+_ = gaupol.i18n._
 
-from gaupol import enclib
-from gaupol.base import Contractual, Observable
-from gaupol.gtk import conf, const, util
-from gaupol.gtk.index import *
-from gaupol.gtk.tooltips import Tooltips
-from gaupol.gtk.view import View
-from gaupol.i18n import _
-from gaupol.project import Project
+__all__ = ["Page"]
 
 
-class Page(Observable):
+class Page(gaupol.Observable):
 
     """User interface for a single project.
 
@@ -52,19 +47,19 @@ class Page(Observable):
     projects. The view is updated automatically when project data changes.
     """
 
-    __metaclass__ = Contractual
+    __metaclass__ = gaupol.Contractual
     _signals = ["close-request"]
 
     def __init__(self, counter=0):
 
-        Observable.__init__(self)
-        self.edit_mode = conf.editor.mode
+        gaupol.Observable.__init__(self)
+        self.edit_mode = gaupol.gtk.conf.editor.mode
         self.project = None
         self.tab_label = None
         self.tab_widget = None
-        self.tooltips = Tooltips()
+        self.tooltips = gaupol.gtk.Tooltips()
         self.untitle = _("Untitled %d") % counter
-        self.view = View(conf.editor.mode)
+        self.view = gaupol.gtk.View(gaupol.gtk.conf.editor.mode)
 
         self._init_project()
         self._init_widgets()
@@ -90,15 +85,15 @@ class Page(Observable):
 
         mode = self.edit_mode
         subtitle = self.project.subtitles[row]
-        if col == const.COLUMN.START:
+        if col == gaupol.gtk.COLUMN.START:
             return subtitle.get_start(mode)
-        if col == const.COLUMN.END:
+        if col == gaupol.gtk.COLUMN.END:
             return subtitle.get_end(mode)
-        if col == const.COLUMN.DURN:
+        if col == gaupol.gtk.COLUMN.DURATION:
             return subtitle.get_duration(mode)
-        if col == const.COLUMN.MTXT:
+        if col == gaupol.gtk.COLUMN.MAIN_TEXT:
             return subtitle.main_text
-        if col == const.COLUMN.TTXT:
+        if col == gaupol.gtk.COLUMN.TRAN_TEXT:
             return subtitle.tran_text
         raise ValueError
 
@@ -122,22 +117,23 @@ class Page(Observable):
     def _init_project(self):
         """Initialize the project with proper properties."""
 
-        limit = conf.editor.limit_undo
-        levels = conf.editor.undo_levels
+        framerate = gaupol.gtk.conf.editor.framerate
+        limit = gaupol.gtk.conf.editor.limit_undo
+        levels = gaupol.gtk.conf.editor.undo_levels
         undo_levels = (levels if limit else None)
-        self.project = Project(conf.editor.framerate, undo_levels)
+        self.project = gaupol.Project(framerate, undo_levels)
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
-        util.connect(self, "project", "main-file-opened")
-        util.connect(self, "project", "main-texts-changed")
-        util.connect(self, "project", "positions-changed")
-        util.connect(self, "project", "subtitles-changed")
-        util.connect(self, "project", "subtitles-inserted")
-        util.connect(self, "project", "subtitles-removed")
-        util.connect(self, "project", "translation-file-opened")
-        util.connect(self, "project", "translation-texts-changed")
+        gaupol.gtk.util.connect(self, "project", "main-file-opened")
+        gaupol.gtk.util.connect(self, "project", "main-texts-changed")
+        gaupol.gtk.util.connect(self, "project", "positions-changed")
+        gaupol.gtk.util.connect(self, "project", "subtitles-changed")
+        gaupol.gtk.util.connect(self, "project", "subtitles-inserted")
+        gaupol.gtk.util.connect(self, "project", "subtitles-removed")
+        gaupol.gtk.util.connect(self, "project", "translation-file-opened")
+        gaupol.gtk.util.connect(self, "project", "translation-texts-changed")
 
         update_label = lambda *args: self.update_tab_label()
         self.project.connect("main-file-opened", update_label)
@@ -146,11 +142,11 @@ class Page(Observable):
         self.project.connect("notify::tran_changed", update_label)
 
         def update_levels(*args):
-            limit = conf.editor.limit_undo
-            limit = (conf.editor.undo_levels if limit else None)
+            limit = gaupol.gtk.conf.editor.limit_undo
+            limit = (gaupol.gtk.conf.editor.undo_levels if limit else None)
             self.project.undo_levels = limit
-        conf.editor.connect("notify::limit_undo", update_levels)
-        conf.editor.connect("notify::undo_levels", update_levels)
+        gaupol.gtk.conf.editor.connect("notify::limit_undo", update_levels)
+        gaupol.gtk.conf.editor.connect("notify::undo_levels", update_levels)
 
     def _init_widgets(self):
         """Initialize the widgets to use in a notebook tab."""
@@ -177,34 +173,39 @@ class Page(Observable):
 
         self.reload_view_all()
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _on_project_main_texts_changed(self, project, rows):
         """Reload and select main texts in rows."""
 
         assert rows
-        self.reload_view(rows, [MTXT])
+        cols = [gaupol.gtk.COLUMN.MAIN_TEXT]
+        self.reload_view(rows, cols)
         self.view.select_rows(rows)
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _on_project_positions_changed(self, project, rows):
         """Reload and select positions in rows."""
 
         assert rows
-        self.reload_view(rows, [START, END, DURN])
+        COLUMN = gaupol.gtk.COLUMN
+        cols = [COLUMN.START, COLUMN.END, COLUMN.DURATION]
+        self.reload_view(rows, cols)
         self.view.select_rows(rows)
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _on_project_subtitles_changed(self, project, rows):
         """Reload and select subtitles in rows."""
 
         assert rows
-        self.reload_view(rows, [START, END, DURN, MTXT, TTXT])
+        cols = gaupol.gtk.COLUMN.members[:]
+        cols.remove(gaupol.gtk.COLUMN.NUMBER)
+        self.reload_view(rows, cols)
         self.view.select_rows(rows)
 
     def _on_project_subtitles_inserted_ensure(self, value, project, rows):
         self._assert_store()
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _on_project_subtitles_inserted(self, project, rows):
         """Insert rows to the view and select them."""
 
@@ -226,7 +227,7 @@ class Page(Observable):
     def _on_project_subtitles_removed_ensure(self, value, project, rows):
         self._assert_store()
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _on_project_subtitles_removed(self, project, rows):
         """Remove rows from the view."""
 
@@ -244,24 +245,25 @@ class Page(Observable):
 
         self.reload_view_all()
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _on_project_translation_texts_changed(self, project, rows):
         """Reload and select translation texts in rows."""
 
         assert rows
-        self.reload_view(rows, [TTXT])
+        cols = [gaupol.gtk.COLUMN.TRAN_TEXT]
+        self.reload_view(rows, cols)
         self.view.select_rows(rows)
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _on_tab_event_box_enter_notify_event(self, *args):
         """Update the text in the tab tooltip."""
 
         main_file = self.project.main_file
         assert main_file is not None
         path = main_file.path
-        format = main_file.format.display_name
-        encoding = enclib.get_long_name(main_file.encoding)
-        newline = main_file.newline.display_name
+        format = main_file.format.label
+        encoding = gaupol.encodings.get_long_name(main_file.encoding)
+        newline = main_file.newline.label
         tooltip  = _("<b>Path:</b> %s") % path + "\n\n"
         tooltip += _("<b>Format:</b> %s") % format + "\n"
         tooltip += _("<b>Encoding:</b> %s") % encoding + "\n"

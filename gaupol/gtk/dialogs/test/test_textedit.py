@@ -18,11 +18,11 @@
 
 import gtk
 
-from gaupol.gtk.unittest import TestCase
+from gaupol.gtk import unittest
 from .. import textedit
 
 
-class TestTextEditDialog(TestCase):
+class TestTextEditDialog(unittest.TestCase):
 
     def run(self):
 

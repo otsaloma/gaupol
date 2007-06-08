@@ -16,11 +16,11 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol.gtk.unittest import TestCase
+from gaupol.gtk import unittest
 from .. import errors
 
 
-class TestConfigParseError(TestCase):
+class TestConfigParseError(unittest.TestCase):
 
     def test_raise(self):
 
@@ -30,7 +30,7 @@ class TestConfigParseError(TestCase):
             pass
 
 
-class TestDefault(TestCase):
+class TestDefault(unittest.TestCase):
 
     def test_raise(self):
 

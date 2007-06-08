@@ -87,7 +87,7 @@ class MultiCloseDialog(GladeDialog):
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
-        util.connect(self, self, "response")
+        gaupol.gtk.util.connect(self, self, "response")
 
     def _init_sizes(self):
         """Initialize widget sizes."""
@@ -97,7 +97,7 @@ class MultiCloseDialog(GladeDialog):
         tran_width   = 0
         tran_height  = 0
         height_extra = 136
-        get_size = util.get_tree_view_size
+        get_size = gaupol.gtk.util.get_tree_view_size
         if self._main_pages:
             main_width, main_height = get_size(self._main_tree_view)
             height_extra += 32
@@ -105,9 +105,9 @@ class MultiCloseDialog(GladeDialog):
             tran_width, tran_height = get_size(self._tran_tree_view)
             height_extra += 32
 
-        width = max(main_width, tran_width) + 88 + util.EXTRA
-        height = main_height + tran_height + height_extra + util.EXTRA
-        util.resize_message_dialog(self._dialog, width, height)
+        width = max(main_width, tran_width) + 88 + gaupol.gtk.util.EXTRA
+        height = main_height + tran_height + height_extra + gaupol.gtk.util.EXTRA
+        gaupol.gtk.util.resize_message_dialog(self._dialog, width, height)
 
     def _init_tran_tree_view(self):
         """Initialize the translation tree view."""
@@ -139,7 +139,7 @@ class MultiCloseDialog(GladeDialog):
         tree_view.append_column(column)
         return store
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _on_response(self, dialog, response):
         """Save the selected documents and close pages."""
 

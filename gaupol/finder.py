@@ -19,9 +19,8 @@
 """String and regular expression finder and replacer."""
 
 
+import gaupol
 import re
-
-from gaupol.base import Contractual
 
 
 class Finder(object):
@@ -38,7 +37,7 @@ class Finder(object):
      * text: Target text
     """
 
-    __metaclass__ = Contractual
+    __metaclass__ = gaupol.Contractual
 
     def __init__(self):
 

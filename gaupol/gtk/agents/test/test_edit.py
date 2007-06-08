@@ -20,10 +20,10 @@ import gtk
 
 from gaupol.gtk import const
 from gaupol.gtk.index import *
-from gaupol.gtk.unittest import TestCase
+from gaupol.gtk import unittest
 
 
-class TestEditAgent(TestCase):
+class TestEditAgent(unittest.TestCase):
 
     def setup_method(self, method):
 
@@ -33,30 +33,30 @@ class TestEditAgent(TestCase):
     def test_on_clear_texts_activate(self):
 
         page = self.application.get_current_page()
-        page.view.set_focus(0, MTXT)
+        page.view.set_focus(0, gaupol.gtk.COLUMN.MAIN_TEXT)
         page.view.select_rows([0, 1, 2])
         self.application.on_clear_texts_activate()
 
     def test_on_copy_texts_activate(self):
 
         page = self.application.get_current_page()
-        page.view.set_focus(0, MTXT)
+        page.view.set_focus(0, gaupol.gtk.COLUMN.MAIN_TEXT)
         page.view.select_rows([0, 1, 2])
         self.application.on_copy_texts_activate()
 
     def test_on_cut_texts_activate(self):
 
         page = self.application.get_current_page()
-        page.view.set_focus(0, MTXT)
+        page.view.set_focus(0, gaupol.gtk.COLUMN.MAIN_TEXT)
         page.view.select_rows([0, 1, 2])
         self.application.on_cut_texts_activate()
 
     def test_on_edit_headers_activate(self):
 
         page = self.application.get_current_page()
-        page.project.save(const.DOCUMENT.MAIN, (
+        page.project.save(gaupol.gtk.DOCUMENT.MAIN, (
             page.project.main_file.path,
-            const.FORMAT.SUBVIEWER2,
+            gaupol.gtk.FORMAT.SUBVIEWER2,
             "ascii",
             page.project.main_file.newline))
 
@@ -71,7 +71,7 @@ class TestEditAgent(TestCase):
         page = self.application.get_current_page()
         page.view.set_focus(0, SHOW)
         self.application.on_edit_next_value_activate()
-        page.view.set_focus(0, MTXT)
+        page.view.set_focus(0, gaupol.gtk.COLUMN.MAIN_TEXT)
         self.application.on_edit_next_value_activate()
 
     def test_on_edit_preferences_activate(self):
@@ -84,7 +84,7 @@ class TestEditAgent(TestCase):
         page = self.application.get_current_page()
         page.view.set_focus(0, SHOW)
         self.application.on_edit_value_activate()
-        page.view.set_focus(0, MTXT)
+        page.view.set_focus(0, gaupol.gtk.COLUMN.MAIN_TEXT)
         self.application.on_edit_value_activate()
 
     def test_on_insert_subtitles_activate(self):
@@ -102,20 +102,20 @@ class TestEditAgent(TestCase):
     def test_on_merge_subtitles_activate(self):
 
         page = self.application.get_current_page()
-        page.view.set_focus(0, MTXT)
+        page.view.set_focus(0, gaupol.gtk.COLUMN.MAIN_TEXT)
         page.view.select_rows([0, 1])
         self.application.on_merge_subtitles_activate()
 
     def test_on_paste_texts_activate(self):
 
         page = self.application.get_current_page()
-        page.view.set_focus(0, MTXT)
+        page.view.set_focus(0, gaupol.gtk.COLUMN.MAIN_TEXT)
         page.view.select_rows([0, 1, 2])
         self.application.on_copy_texts_activate()
 
-        page.view.set_focus(0, MTXT)
+        page.view.set_focus(0, gaupol.gtk.COLUMN.MAIN_TEXT)
         self.application.on_paste_texts_activate()
-        page.view.set_focus(len(page.project.times) - 1, MTXT)
+        page.view.set_focus(len(page.project.times) - 1, gaupol.gtk.COLUMN.MAIN_TEXT)
         self.application.on_paste_texts_activate()
 
     def test_on_project_action_done(self):
@@ -163,7 +163,7 @@ class TestEditAgent(TestCase):
     def test_on_split_subtitle_activate(self):
 
         page = self.application.get_current_page()
-        page.view.set_focus(0, MTXT)
+        page.view.set_focus(0, gaupol.gtk.COLUMN.MAIN_TEXT)
         self.application.on_split_subtitle_activate()
 
     def test_on_undo_action_activate(self):

@@ -45,7 +45,7 @@ except Exception:
     pass
 
 
-_SPELL_CHECK_DIR = os.path.join(paths.PROFILE_DIR, "spell-check")
+_SPELL_CHECK_DIR = os.path.join(gaupol.PROFILE_DIR, "spell-check")
 
 
 class SpellCheckDialog(GladeDialog):
@@ -195,7 +195,7 @@ class SpellCheckDialog(GladeDialog):
             index = self.application.pages.index(page)
             self.application.notebook.set_current_page(index)
             self._page = page
-            self._doc = page.text_column_to_document(conf.spell_check.col)
+            self._doc = page.text_column_to_document(gaupol.gtk.conf.spell_check.col)
             self._row = -1
             self._set_next_text()
             yield page
@@ -204,20 +204,20 @@ class SpellCheckDialog(GladeDialog):
     def _get_target_pages(self):
         """Get pages corresponding to target."""
 
-        if conf.spell_check.target == const.TARGET.ALL:
+        if gaupol.gtk.conf.spell_check.target == gaupol.gtk.TARGET.ALL:
             return self.application.pages
         return [self.application.get_current_page()]
 
     def _init_checker(self):
         """Initialize the checker."""
 
-        lang = conf.spell_check.lang
+        lang = gaupol.gtk.conf.spell_check.lang
         path = os.path.join(_SPELL_CHECK_DIR, lang + ".dict")
         try:
             try:
                 dic = enchant.DictWithPWL(str(lang), str(path))
             except IOError, (no, message):
-                util.handle_write_io(sys.exc_info(), path)
+                gaupol.gtk.util.handle_write_io(sys.exc_info(), path)
                 self._dict_label.set_sensitive(False)
                 self._add_button.set_sensitive(False)
                 dic = enchant.Dict(str(lang))
@@ -229,25 +229,25 @@ class SpellCheckDialog(GladeDialog):
     def _init_fonts(self):
         """Initialize fonts and text tags."""
 
-        if not conf.editor.use_default_font:
-            util.set_widget_font(self._entry    , conf.editor.font)
-            util.set_widget_font(self._text_view, conf.editor.font)
-            util.set_widget_font(self._tree_view, conf.editor.font)
+        if not gaupol.gtk.conf.editor.use_default_font:
+            gaupol.gtk.util.set_widget_font(self._entry    , gaupol.gtk.conf.editor.font)
+            gaupol.gtk.util.set_widget_font(self._text_view, gaupol.gtk.conf.editor.font)
+            gaupol.gtk.util.set_widget_font(self._tree_view, gaupol.gtk.conf.editor.font)
 
         text_buffer = self._text_view.get_buffer()
         text_buffer.create_tag("misspelled", weight=pango.WEIGHT_BOLD)
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _init_replacements(self):
         """Read replacements from file."""
 
-        lang = conf.spell_check.lang
+        lang = gaupol.gtk.conf.spell_check.lang
         path = os.path.join(_SPELL_CHECK_DIR, lang + ".repl")
         assert os.path.isfile(path)
         exceptions = (IOError, UnicodeError)
-        readlines = util.silent(*exceptions)(util.readlines)
+        readlines = gaupol.gtk.util.silent(*exceptions)(gaupol.gtk.util.readlines)
         lines = readlines(path, "utf_8")
-        for line in util.get_unique(lines):
+        for line in gaupol.gtk.util.get_unique(lines):
             entry = tuple(line.strip().split("|"))
             self._replacements.append(entry)
 
@@ -263,41 +263,41 @@ class SpellCheckDialog(GladeDialog):
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
-        util.connect(self, "_add_button"         , "clicked")
-        util.connect(self, "_check_button"       , "clicked")
-        util.connect(self, "_edit_button"        , "clicked")
-        util.connect(self, "_entry"              , "changed")
-        util.connect(self, "_ignore_all_button"  , "clicked")
-        util.connect(self, "_ignore_button"      , "clicked")
-        util.connect(self, "_join_back_button"   , "clicked")
-        util.connect(self, "_join_forward_button", "clicked")
-        util.connect(self, "_replace_all_button" , "clicked")
-        util.connect(self, "_replace_button"     , "clicked")
-        util.connect(self, self, "response")
+        gaupol.gtk.util.connect(self, "_add_button"         , "clicked")
+        gaupol.gtk.util.connect(self, "_check_button"       , "clicked")
+        gaupol.gtk.util.connect(self, "_edit_button"        , "clicked")
+        gaupol.gtk.util.connect(self, "_entry"              , "changed")
+        gaupol.gtk.util.connect(self, "_ignore_all_button"  , "clicked")
+        gaupol.gtk.util.connect(self, "_ignore_button"      , "clicked")
+        gaupol.gtk.util.connect(self, "_join_back_button"   , "clicked")
+        gaupol.gtk.util.connect(self, "_join_forward_button", "clicked")
+        gaupol.gtk.util.connect(self, "_replace_all_button" , "clicked")
+        gaupol.gtk.util.connect(self, "_replace_button"     , "clicked")
+        gaupol.gtk.util.connect(self, self, "response")
 
     def _init_sizes(self):
         """Initialize widget sizes."""
 
         label = gtk.Label("\n".join(["M" * 34] * 4))
-        if not conf.editor.use_default_font:
-            util.set_label_font(label, conf.editor.font)
+        if not gaupol.gtk.conf.editor.use_default_font:
+            gaupol.gtk.util.set_label_font(label, gaupol.gtk.conf.editor.font)
         width, height = label.size_request()
         self._text_view.set_size_request(width + 4, height + 7)
 
         label = gtk.Label("M" * 24)
-        if not conf.editor.use_default_font:
-            util.set_label_font(label, conf.editor.font)
+        if not gaupol.gtk.conf.editor.use_default_font:
+            gaupol.gtk.util.set_label_font(label, gaupol.gtk.conf.editor.font)
         width = label.size_request()[0]
         self._tree_view.set_size_request(width + 4, -1)
 
     def _init_spell_check(self):
         """Initialize spell-check stuff."""
 
-        util.makedirs(_SPELL_CHECK_DIR)
+        gaupol.gtk.util.makedirs(_SPELL_CHECK_DIR)
         self._init_checker()
         self._init_replacements()
 
-        name = langlib.get_long_name(conf.spell_check.lang)
+        name = gaupol.languages.get_long_name(gaupol.gtk.conf.spell_check.lang)
         self._lang_label.set_text(name)
 
     def _init_tree_view(self):
@@ -396,7 +396,7 @@ class SpellCheckDialog(GladeDialog):
         self._register_changes()
         self._set_done()
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _on_tree_view_selection_changed(self, *args):
         """Copy the selected suggestion into the entry."""
 
@@ -406,7 +406,7 @@ class SpellCheckDialog(GladeDialog):
         row = store.get_path(itr)[0]
         self._entry.set_text(unicode(store[row][0]))
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _register_changes(self):
         """Register changes to current page."""
 
@@ -414,7 +414,7 @@ class SpellCheckDialog(GladeDialog):
         self._page.project.replace_texts(
             self._new_rows, self._doc, self._new_texts)
         self._page.project.set_action_description(
-            const.REGISTER.DO, _("Spell-checking"))
+            gaupol.gtk.REGISTER.DO, _("Spell-checking"))
         self.application.update_gui()
         self._new_rows = []
         self._new_texts = []
@@ -442,7 +442,7 @@ class SpellCheckDialog(GladeDialog):
 
     def _show_error_dialog(self, message):
 
-        name = langlib.get_long_name(conf.spell_check.lang)
+        name = gaupol.languages.get_long_name(gaupol.gtk.conf.spell_check.lang)
         title = _('Failed to load dictionary for language "%s"') % name
         message = _("%s.") % message
         dialog = ErrorDialog(self._dialog, title, message)
@@ -454,21 +454,21 @@ class SpellCheckDialog(GladeDialog):
 
         replacements = self._replacements
         replacements.append((misspelled, correct))
-        replacements = util.get_unique(replacements)
+        replacements = gaupol.gtk.util.get_unique(replacements)
         self._replacements = replacements
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _write_replacements(self):
         """Write replacement files."""
 
         assert self._replacements
-        lang = conf.spell_check.lang
+        lang = gaupol.gtk.conf.spell_check.lang
         path = os.path.join(_SPELL_CHECK_DIR, lang + ".repl")
         text = ""
         for misspelled, correct in self._replacements:
             text += "%s|%s%s" % (misspelled, correct, os.linesep)
         try:
-            util.write(path, text, "utf_8")
+            gaupol.gtk.util.write(path, text, "utf_8")
         except (IOError, UnicodeError):
-            util.handle_write_io(sys.exc_info(), path)
+            gaupol.gtk.util.handle_write_io(sys.exc_info(), path)
 

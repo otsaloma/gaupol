@@ -16,18 +16,19 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
+import gaupol.gtk
 import gtk
 
-from gaupol.gtk import conf
-from gaupol.gtk.unittest import TestCase
+from gaupol.gtk import unittest
 from .. import preferences
 
 
-class _TestPreferencesPage(TestCase):
+class _TestPreferencesPage(unittest.TestCase):
 
     def teardown_method(self, method):
 
-        conf.read()
+        gaupol.gtk.conf.read()
+        unittest.TestCase.teardown_method(self, method)
 
 
 class TestEditorPage(_TestPreferencesPage):
@@ -137,7 +138,7 @@ class TestPreviewPage(_TestPreferencesPage):
         self.page._offset_spin.set_value(-13)
 
 
-class TestPreferencesDialog(TestCase):
+class TestPreferencesDialog(unittest.TestCase):
 
     def run(self):
 

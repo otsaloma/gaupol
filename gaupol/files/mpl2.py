@@ -23,11 +23,9 @@ from __future__ import with_statement
 
 import codecs
 import contextlib
+import gaupol
 import re
 
-from gaupol import const
-from gaupol.base import Contractual
-from gaupol.calculator import Calculator
 from .subfile import SubtitleFile
 
 
@@ -35,9 +33,9 @@ class MPL2(SubtitleFile):
 
     """MPL2 file."""
 
-    __metaclass__ = Contractual
-    format = const.FORMAT.MPL2
-    mode = const.MODE.TIME
+    __metaclass__ = gaupol.Contractual
+    format = gaupol.FORMAT.MPL2
+    mode = gaupol.MODE.TIME
 
     def read(self):
         """Read file.
@@ -49,7 +47,7 @@ class MPL2(SubtitleFile):
         starts = []
         ends = []
         texts = []
-        calc = Calculator()
+        calc = gaupol.Calculator()
         re_line = re.compile(r"^\[(\d+)\]\[(\d+)\](.*?)$")
         for line in self._read_lines():
             match = re_line.match(line)
@@ -71,7 +69,7 @@ class MPL2(SubtitleFile):
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
-        calc = Calculator()
+        calc = gaupol.Calculator()
         get_deca = lambda x: "%.0f" % (calc.time_to_seconds(x) * 10)
         starts = [get_deca(x) for x in starts]
         ends = [get_deca(x) for x in ends]

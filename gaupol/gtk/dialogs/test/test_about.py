@@ -18,11 +18,11 @@
 
 import gtk
 
-from gaupol.gtk.unittest import TestCase
+from gaupol.gtk import unittest
 from .. import about
 
 
-class TestAboutDialog(TestCase):
+class TestAboutDialog(unittest.TestCase):
 
     def run(self):
 

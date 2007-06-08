@@ -19,10 +19,10 @@
 """Configuration data container."""
 
 
-from gaupol.base import Observable
+import gaupol
 
 
-class Container(Observable):
+class Container(gaupol.Observable):
 
     """Configuration data container.
 
@@ -35,7 +35,7 @@ class Container(Observable):
 
     def __init__(self, root):
 
-        Observable.__init__(self)
+        gaupol.Observable.__init__(self)
         self.__root = root
         self._init_signal_handlers()
 

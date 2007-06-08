@@ -16,28 +16,20 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol.gtk.unittest import TestCase
+from gaupol.gtk import unittest
 from .. import const
 
 
-class TestModule(TestCase):
+class TestModule(unittest.TestCase):
 
     def test_attributes(self):
 
         constants = (
             ("COLUMN", (
-                "display_names",
-                "names",
-                "uim_action_names",
-                "uim_paths",)),
-            ("FRAMERATE", (
-                "uim_action_names",
-                "uim_paths",)),
+                "labels",
+                "names",)),
             ("LENGTH_UNIT", (
                 "names",)),
-            ("MODE", (
-                "uim_action_names",
-                "uim_paths",)),
             ("TARGET", (
                 "names",)),
             ("TOOLBAR_STYLE", (

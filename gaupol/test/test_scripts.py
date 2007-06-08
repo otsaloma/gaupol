@@ -18,29 +18,29 @@
 
 import re
 
-from gaupol.unittest import TestCase
-from .. import scriptlib
+from gaupol import unittest
+from .. import scripts
 
 
-class TestModule(TestCase):
+class TestModule(unittest.TestCase):
 
     def test_get_capitalize_after(self):
 
-        assert scriptlib._cap_afters
-        for script, name, pattern in scriptlib._cap_afters:
-            value = scriptlib.get_capitalize_after(script)
+        assert scripts._cap_afters
+        for script, name, pattern in scripts._cap_afters:
+            value = scripts.get_capitalize_after(script)
             re.compile(value)
 
     def test_get_clause_separator(self):
 
-        assert scriptlib._clause_seps
-        for script, name, pattern in scriptlib._clause_seps:
-            value = scriptlib.get_clause_separator(script)
+        assert scripts._clause_seps
+        for script, name, pattern in scripts._clause_seps:
+            value = scripts.get_clause_separator(script)
             re.compile(value)
 
     def test_get_dialogue_separator(self):
 
-        assert scriptlib._dialogue_seps
-        for script, name, pattern in scriptlib._dialogue_seps:
-            value = scriptlib.get_dialogue_separator(script)
+        assert scripts._dialogue_seps
+        for script, name, pattern in scripts._dialogue_seps:
+            value = scripts.get_dialogue_separator(script)
             re.compile(value)

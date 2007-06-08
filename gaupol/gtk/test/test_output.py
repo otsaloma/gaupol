@@ -16,24 +16,24 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
+import gaupol.gtk
 import gtk
 
-from gaupol.gtk import const, util
-from gaupol.gtk.unittest import TestCase
+from gaupol.gtk import unittest
 from .. import output
 
 
-class TestOutputWindow(TestCase):
+class TestOutputWindow(unittest.TestCase):
 
     def run(self):
 
-        @util.asserted_return
+        @gaupol.gtk.util.asserted_return
         def destroy(*args):
             assert not self.window.props.visible
             self.window.destroy()
             gtk.main_quit()
         self.window.connect("notify::visible", destroy)
-        self.window.set_output(self.get_file_text(const.FORMAT.MPSUB))
+        self.window.set_output(self.get_file_text(gaupol.gtk.FORMAT.MPSUB))
         self.window.show()
         gtk.main()
 

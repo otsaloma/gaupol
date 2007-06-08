@@ -18,11 +18,11 @@
 
 import gtk
 
-from gaupol.gtk.unittest import TestCase
+from gaupol.gtk import unittest
 from .. import spellcheck
 
 
-class TestSpellCheckDialog(TestCase):
+class TestSpellCheckDialog(unittest.TestCase):
 
     def run(self):
 

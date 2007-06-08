@@ -16,11 +16,11 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol.unittest import TestCase
+from gaupol import unittest
 from .. import errors
 
 
-class TestGaupolError(TestCase):
+class TestGaupolError(unittest.TestCase):
 
     def test_raise(self):
 
@@ -30,7 +30,7 @@ class TestGaupolError(TestCase):
             pass
 
 
-class TestFormatError(TestCase):
+class TestFormatError(unittest.TestCase):
 
     def test_raise(self):
 

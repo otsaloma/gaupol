@@ -19,12 +19,10 @@
 """Text parser for tag-aware editing."""
 
 
-from gaupol import util
-from gaupol.base import Contractual
-from gaupol.finder import Finder
+import gaupol
 
 
-class Parser(Finder):
+class Parser(gaupol.Finder):
 
     """Text parser for tag-aware editing.
 
@@ -43,11 +41,11 @@ class Parser(Finder):
     Either margins or tags will always be empty.
     """
 
-    __metaclass__ = Contractual
+    __metaclass__ = gaupol.Contractual
 
     def __init__(self, re_tag=None):
 
-        Finder.__init__(self)
+        gaupol.Finder.__init__(self)
         self._margins = None
         self._tags = None
         self.re_tag = re_tag
@@ -55,7 +53,7 @@ class Parser(Finder):
     def _set_margins_require(self, text):
         assert self.re_tag is not None
 
-    @util.asserted_return
+    @gaupol.util.asserted_return
     def _set_margins(self, text):
         """Find the margin tags in text if such exist."""
 
@@ -74,7 +72,7 @@ class Parser(Finder):
         end_tag = ""
         while True:
             iterator = self.re_tag.finditer(line)
-            match = util.last(iterator)
+            match = gaupol.util.last(iterator)
             if match is None:
                 break
             a, z = match.span()
@@ -96,7 +94,7 @@ class Parser(Finder):
             a, z = match.span()
             self._tags.append([a, text[a:z]])
 
-    @util.asserted_return
+    @gaupol.util.asserted_return
     def _shift_tags(self, pos, shift, orig_text):
         """Shift all the tags after position."""
 
@@ -149,17 +147,17 @@ class Parser(Finder):
         """
         a = self.match_span[0]
         orig_text = self.text[:]
-        Finder.replace(self, next)
+        gaupol.Finder.replace(self, next)
         shift = len(self.text) - len(orig_text)
         self._shift_tags(a, shift, orig_text)
 
-    @util.asserted_return
+    @gaupol.util.asserted_return
     def set_text(self, text, next=True):
         """Set the text and parse it.
 
         next should be True to start at beginning, False for end.
         """
-        Finder.set_text(self, text, next)
+        gaupol.Finder.set_text(self, text, next)
         self._margins = []
         self._tags = []
         assert self.re_tag is not None

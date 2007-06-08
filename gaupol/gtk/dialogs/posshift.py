@@ -61,7 +61,7 @@ class _PositionShiftDialog(GladeDialog):
         """Get the row to start preview from."""
 
         target = self._get_target()
-        if target == const.TARGET.SELECTED:
+        if target == gaupol.gtk.TARGET.SELECTED:
             page = self.application.get_current_page()
             return page.view.get_selected_rows()[0]
         return 0
@@ -70,16 +70,16 @@ class _PositionShiftDialog(GladeDialog):
         """Get the selected target."""
 
         if self._selected_radio.get_active():
-            return const.TARGET.SELECTED
+            return gaupol.gtk.TARGET.SELECTED
         if self._current_radio.get_active():
-            return const.TARGET.CURRENT
+            return gaupol.gtk.TARGET.CURRENT
         raise ValueError
 
     def _get_target_rows(self):
         """Get rows corresponding to target."""
 
         target = self._get_target()
-        if target == const.TARGET.SELECTED:
+        if target == gaupol.gtk.TARGET.SELECTED:
             page = self.application.get_current_page()
             return page.view.get_selected_rows()
         return None
@@ -87,13 +87,13 @@ class _PositionShiftDialog(GladeDialog):
     def _init_data(self):
         """Intialize default values for widgets."""
 
-        target = conf.position_shift.target
-        self._selected_radio.set_active(target == const.TARGET.SELECTED)
-        self._current_radio.set_active(target == const.TARGET.CURRENT)
+        target = gaupol.gtk.conf.position_shift.target
+        self._selected_radio.set_active(target == gaupol.gtk.TARGET.SELECTED)
+        self._current_radio.set_active(target == gaupol.gtk.TARGET.CURRENT)
 
         page = self.application.get_current_page()
         rows = page.view.get_selected_rows()
-        if not rows and target == const.TARGET.SELECTED:
+        if not rows and target == gaupol.gtk.TARGET.SELECTED:
             self._current_radio.set_active(True)
             self._selected_radio.set_sensitive(False)
 
@@ -105,24 +105,24 @@ class _PositionShiftDialog(GladeDialog):
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
-        util.connect(self, "_preview_button", "clicked" )
-        util.connect(self, self, "response")
+        gaupol.gtk.util.connect(self, "_preview_button", "clicked" )
+        gaupol.gtk.util.connect(self, self, "response")
 
     def _on_preview_button_clicked(self, *args):
         """Preview changes."""
 
         page = self.application.get_current_page()
         row = self._get_preview_row()
-        doc = const.DOCUMENT.MAIN
+        doc = gaupol.gtk.DOCUMENT.MAIN
         method = self._get_shift_method()
         args = [self._get_target_rows(), self._get_amount()]
         self.application.preview_changes(page, row, doc, method, args)
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _on_response(self, dialog, response):
         """Save settings and shift positions."""
 
-        conf.position_shift.target = self._get_target()
+        gaupol.gtk.conf.position_shift.target = self._get_target()
         assert response == gtk.RESPONSE_OK
         self._shift()
 

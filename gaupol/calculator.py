@@ -21,7 +21,9 @@
 
 from __future__ import division
 
-from gaupol import const
+import gaupol
+
+__all__ = ["Calculator"]
 
 
 class Calculator(object):
@@ -37,11 +39,11 @@ class Calculator(object):
 
     _instances = {}
 
-    def __init__(self, framerate=const.FRAMERATE.P24):
+    def __init__(self, framerate=gaupol.FRAMERATE.P24):
 
         self.framerate = framerate.value
 
-    def __new__(cls, framerate=const.FRAMERATE.P24):
+    def __new__(cls, framerate=gaupol.FRAMERATE.P24):
 
         if not framerate in cls._instances:
             cls._instances[framerate] = object.__new__(cls)

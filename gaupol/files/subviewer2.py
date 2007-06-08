@@ -23,11 +23,9 @@ from __future__ import with_statement
 
 import codecs
 import contextlib
+import gaupol
 import re
 
-from gaupol import const
-from gaupol.base import Contractual
-from gaupol.calculator import Calculator
 from .subfile import SubtitleFile
 
 
@@ -35,9 +33,9 @@ class SubViewer2(SubtitleFile):
 
     """SubViewer 2.0 file."""
 
-    __metaclass__ = Contractual
-    format = const.FORMAT.SUBVIEWER2
-    mode = const.MODE.TIME
+    __metaclass__ = gaupol.Contractual
+    format = gaupol.FORMAT.SUBVIEWER2
+    mode = gaupol.MODE.TIME
 
     def _read_components(self, lines):
         """Read and return starts, ends and texts."""
@@ -89,7 +87,7 @@ class SubViewer2(SubtitleFile):
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
-        calc = Calculator()
+        calc = gaupol.Calculator()
         starts = [calc.round_time(x, 2)[:11] for x in starts]
         ends = [calc.round_time(x, 2)[:11] for x in ends]
         texts = [x.replace("\n", "[br]") for x in texts]

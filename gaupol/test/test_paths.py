@@ -18,11 +18,11 @@
 
 import os
 
-from gaupol.unittest import TestCase
+from gaupol import unittest
 from .. import paths
 
 
-class TestModule(TestCase):
+class TestModule(unittest.TestCase):
 
     def test_attributes(self):
 

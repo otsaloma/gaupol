@@ -16,12 +16,11 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol.gtk import const
-from gaupol.gtk.index import *
-from gaupol.gtk.unittest import TestCase
+import gaupol.gtk
+from gaupol.gtk import unittest
 
 
-class TestPage(TestCase):
+class TestPage(unittest.TestCase):
 
     def setup_method(self, method):
 
@@ -38,7 +37,7 @@ class TestPage(TestCase):
 
     def test__on_project_main_texts_changed(self):
 
-        self.page.project.set_text(0, const.DOCUMENT.MAIN, "test")
+        self.page.project.set_text(0, gaupol.gtk.DOCUMENT.MAIN, "test")
 
     def test__on_project_positions_changed(self):
 
@@ -63,7 +62,7 @@ class TestPage(TestCase):
 
     def test__on_project_translation_texts_changed(self):
 
-        self.page.project.set_text(0, const.DOCUMENT.TRAN, "test")
+        self.page.project.set_text(0, gaupol.gtk.DOCUMENT.TRAN, "test")
 
     def test__on_tab_event_box_enter_notify_event(self):
 
@@ -94,7 +93,8 @@ class TestPage(TestCase):
     def test_reload_view(self):
 
         rows = range(len(self.page.project.subtitles))
-        cols = [START, END, DURN, MTXT, TTXT]
+        cols = gaupol.gtk.COLUMN.members[:]
+        cols.remove(gaupol.gtk.COLUMN.NUMBER)
         self.page.reload_view(rows, cols)
 
     def test_reload_view_all(self):

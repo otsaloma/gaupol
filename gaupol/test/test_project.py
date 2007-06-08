@@ -16,11 +16,11 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol.unittest import TestCase
+from gaupol import unittest
 from .. import project
 
 
-class TestProject(TestCase):
+class TestProject(unittest.TestCase):
 
     def setup_method(self, method):
 

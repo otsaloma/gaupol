@@ -16,11 +16,11 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol.gtk.unittest import TestCase
+from gaupol.gtk import unittest
 from .. import main
 
 
-class TestModule(TestCase):
+class TestModule(unittest.TestCase):
 
     def test_check_dependencies(self):
 

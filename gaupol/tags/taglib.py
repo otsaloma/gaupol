@@ -28,31 +28,31 @@ Tag conversions are done via an internal format, which has the following tags:
 """
 
 
+import gaupol
 import re
 
-from gaupol import util
-from gaupol.base import Singleton
 
-
-class TagLibrary(Singleton):
+class TagLibrary(gaupol.Singleton):
 
     """Base class for subtitle tag libraries."""
 
+    format = None
+
     @property
-    @util.once
+    @gaupol.util.once
     def italic_tag(self):
         """Regular expression for an italic tag or None."""
 
         return None
 
     @property
-    @util.once
+    @gaupol.util.once
     def tag(self):
         """Regular expression for any tag or None."""
 
         return None
 
-    @util.once
+    @gaupol.util.once
     def __get_encode_tags(self):
         """Get list of tuples of regular expression, replacement."""
 

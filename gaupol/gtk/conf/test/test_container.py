@@ -16,18 +16,18 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
+import gaupol
 import os
 
-from gaupol import paths
-from gaupol.gtk.unittest import TestCase
+from gaupol.gtk import unittest
 from .. import config, container
 
 
-class TestContainer(TestCase):
+class TestContainer(unittest.TestCase):
 
     def setup_method(self, method):
 
-        spec_file = os.path.join(paths.DATA_DIR, "conf.spec")
+        spec_file = os.path.join(gaupol.DATA_DIR, "conf.spec")
         root = config.Config(None, spec_file)
         self.root = root["output_window"]
         self.container = container.Container(self.root)

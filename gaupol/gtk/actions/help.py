@@ -19,9 +19,10 @@
 """Help actions."""
 
 
+import gaupol
 import gtk
+_ = gaupol.i18n._
 
-from gaupol.i18n import _
 from .action import Action
 
 

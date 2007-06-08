@@ -54,7 +54,7 @@ class SplitDialog(GladeDialog):
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
-        util.connect(self, self, "response")
+        gaupol.gtk.util.connect(self, self, "response")
 
     def _init_subtitle_spin(self):
         """Initialize the subtitle spin button."""
@@ -79,7 +79,7 @@ class SplitDialog(GladeDialog):
         source.project.block("action-done")
         source.project.remove_subtitles(rows)
         source.project.set_action_description(
-            const.REGISTER.DO, _("Splitting project"))
+            gaupol.gtk.REGISTER.DO, _("Splitting project"))
         source.project.unblock("action-done")
 
     def _shift_destination(self, source, destination):
@@ -87,11 +87,11 @@ class SplitDialog(GladeDialog):
 
         mode = destination.project.get_mode()
         calc = destination.project.calc
-        if mode == const.MODE.TIME:
+        if mode == gaupol.gtk.MODE.TIME:
             count = source.project.times[-1][1]
             count = -1 * calc.time_to_seconds(count)
             method = destination.project.shift_seconds
-        elif mode == const.MODE.FRAME:
+        elif mode == gaupol.gtk.MODE.FRAME:
             count = -1 * source.project.frames[-1][1]
             method = destination.project.shift_frames
         method([], count, register=None)
@@ -99,7 +99,7 @@ class SplitDialog(GladeDialog):
     def _split_project(self):
         """Split the current project in two."""
 
-        util.set_cursor_busy(self.application.window)
+        gaupol.gtk.util.set_cursor_busy(self.application.window)
         row = self._subtitle_spin.get_value_as_int() - 1
         source = self.application.get_current_page()
         self.application.counter += 1
@@ -122,4 +122,4 @@ class SplitDialog(GladeDialog):
         fields = {"amount": amount, "name": destination.untitle}
         self.application.push_message(
             _('Split %(amount)d subtitles to project "%(name)s"') % fields)
-        util.set_cursor_normal(self.application.window)
+        gaupol.gtk.util.set_cursor_normal(self.application.window)

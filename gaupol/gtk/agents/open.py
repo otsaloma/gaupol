@@ -37,7 +37,7 @@ from gaupol.gtk.index import *
 from gaupol.gtk.page import Page
 
 
-class OpenAgent(Delegate):
+class OpenAgent(gaupol.Delegate):
 
     """Opening files and creating new projects."""
 
@@ -57,7 +57,7 @@ class OpenAgent(Delegate):
             temp.project.main_texts,
             temp.project.tran_texts)
         current.project.set_action_description(
-            const.REGISTER.DO, _("Appending file"))
+            gaupol.gtk.REGISTER.DO, _("Appending file"))
         current.project.unblock("action-done")
         return rows
 
@@ -65,16 +65,16 @@ class OpenAgent(Delegate):
         """Get a list of encodings to try."""
 
         encodings = [first]
-        if conf.encoding.try_locale:
-            encodings.append(enclib.get_locale_python_name())
-        encodings += conf.encoding.fallbacks
-        if conf.encoding.try_auto and util.chardet_available():
+        if gaupol.gtk.conf.encoding.try_locale:
+            encodings.append(gaupol.encodings.get_locale_python_name())
+        encodings += gaupol.gtk.conf.encoding.fallbacks
+        if gaupol.gtk.conf.encoding.try_auto and gaupol.gtk.util.chardet_available():
             encodings.append("auto")
         while None in encodings:
             encodings.remove(None)
         if not encodings:
             encodings.append("utf_8")
-        return util.get_unique(encodings)
+        return gaupol.gtk.util.get_unique(encodings)
 
     def _get_file_open(self, path):
         """Switch page and return True if file is already open."""
@@ -102,14 +102,14 @@ class OpenAgent(Delegate):
         self._pre_open_check(path, check_open)
         basename = os.path.basename(path)
 
-        if doc == const.DOCUMENT.MAIN:
+        if doc == gaupol.gtk.DOCUMENT.MAIN:
             page = Page()
             open_method = page.project.open_main
-        elif doc == const.DOCUMENT.TRAN:
+        elif doc == gaupol.gtk.DOCUMENT.TRAN:
             page = self.get_current_page()
             open_method = page.project.open_translation
             open_method = functools.partial(
-                open_method, smart=conf.file.smart_tran)
+                open_method, smart=gaupol.gtk.conf.file.smart_tran)
 
         for encoding in encodings:
             sort_count = self._try_open_file(open_method, path, encoding)
@@ -125,8 +125,8 @@ class OpenAgent(Delegate):
 
         Raise Default if something goes wrong.
         """
-        if file.format in (const.FORMAT.SSA, const.FORMAT.ASS):
-            if conf.file.warn_ssa:
+        if file.format in (gaupol.gtk.FORMAT.SSA, gaupol.gtk.FORMAT.ASS):
+            if gaupol.gtk.conf.file.warn_ssa:
                 self._show_ssa_warning_dialog()
         if sort_count > 0:
             basename = os.path.basename(file.path)
@@ -136,11 +136,11 @@ class OpenAgent(Delegate):
         """Shift subtitles in current page before appending ones in temp."""
 
         mode = temp.project.get_mode()
-        if mode == const.MODE.TIME:
+        if mode == gaupol.gtk.MODE.TIME:
             count = current.project.times[-1][1]
             count = current.project.calc.time_to_seconds(count)
             method = temp.project.shift_seconds
-        elif mode == const.MODE.FRAME:
+        elif mode == gaupol.gtk.MODE.FRAME:
             count = current.project.frames[-1][1]
             method = temp.project.shift_frames
         method([], count, register=None)
@@ -164,13 +164,13 @@ class OpenAgent(Delegate):
 
         paths = []
         encoding = None
-        util.set_cursor_busy(self.window)
+        gaupol.gtk.util.set_cursor_busy(self.window)
         dialog = OpenDialog(doc, title, self.window)
         page = self.get_current_page()
         if page is not None and page.project.main_file is not None:
             directory = os.path.dirname(page.project.main_file.path)
             dialog.set_current_folder(directory)
-        util.set_cursor_normal(self.window)
+        gaupol.gtk.util.set_cursor_normal(self.window)
         response = self.run_dialog(dialog)
         if response == gtk.RESPONSE_OK:
             paths = dialog.get_filenames()
@@ -286,25 +286,25 @@ class OpenAgent(Delegate):
         Raise Default if reading file fails.
         Return None if decoding file fails.
         """
-        util.set_cursor_busy(self.window)
+        gaupol.gtk.util.set_cursor_busy(self.window)
         try:
             if encoding == "auto":
-                encoding = enclib.detect(path)
+                encoding = gaupol.encodings.detect(path)
             return method(path, encoding)
         except FormatError:
-            util.set_cursor_normal(self.window)
+            gaupol.gtk.util.set_cursor_normal(self.window)
             basename = os.path.basename(path)
             self._show_format_error_dialog(basename)
             raise Default
         except IOError, (no, message):
-            util.set_cursor_normal(self.window)
+            gaupol.gtk.util.set_cursor_normal(self.window)
             basename = os.path.basename(path)
             self._show_io_error_dialog(basename, message)
             raise Default
         except (UnicodeError, ValueError):
             return None
         finally:
-            util.set_cursor_normal(self.window)
+            gaupol.gtk.util.set_cursor_normal(self.window)
 
     def add_new_page(self, page):
         """Add a new page."""
@@ -333,7 +333,7 @@ class OpenAgent(Delegate):
 
         group = ("gaupol-main", "gaupol-translation")[doc]
         self.recent_manager.add_full(
-            util.path_to_uri(path), {
+            gaupol.gtk.util.path_to_uri(path), {
                 "mime_type": "text/plain",
                 "app_name": "gaupol",
                 "app_exec": "gaupol %F",
@@ -355,17 +355,17 @@ class OpenAgent(Delegate):
             renderer.connect("editing-started", callback, i)
             callback = self.on_view_renderer_editing_canceled
             renderer.connect("editing-canceled", callback)
-            button = util.get_parent(column.get_widget(), gtk.Button)
+            button = gaupol.gtk.util.get_parent(column.get_widget(), gtk.Button)
             callback = self.on_view_header_button_press_event
             button.connect("button-press-event", callback)
 
-    @util.silent(Default)
+    @gaupol.gtk.util.silent(Default)
     def on_append_file_activate(self, *args):
         """Append subtitles from file to the current project."""
 
-        util.set_cursor_busy(self.window)
+        gaupol.gtk.util.set_cursor_busy(self.window)
         dialog = AppendDialog(self.window)
-        util.set_cursor_normal(self.window)
+        gaupol.gtk.util.set_cursor_normal(self.window)
         response = self.run_dialog(dialog)
         if response != gtk.RESPONSE_OK:
             return dialog.destroy()
@@ -376,8 +376,8 @@ class OpenAgent(Delegate):
             gtk.main_iteration()
 
         encodings = self._get_encodings(encoding)
-        temp = self._open_file(path, encodings, const.DOCUMENT.MAIN, False)
-        util.set_cursor_busy(self.window)
+        temp = self._open_file(path, encodings, gaupol.gtk.DOCUMENT.MAIN, False)
+        gaupol.gtk.util.set_cursor_busy(self.window)
         current = self.get_current_page()
         self._pre_append_shift(current, temp)
         rows = self._append_subtitles(current, temp)
@@ -388,24 +388,24 @@ class OpenAgent(Delegate):
         fields = {"amount": len(rows), "filename": basename}
         self.push_message(
             _('Appended %(amount)d subtitles from "%(filename)s"') % fields)
-        util.set_cursor_normal(self.window)
+        gaupol.gtk.util.set_cursor_normal(self.window)
 
     def on_new_project_activate(self, *args):
         """Create a new project."""
 
-        util.set_cursor_busy(self.window)
+        gaupol.gtk.util.set_cursor_busy(self.window)
         self.counter += 1
         page = Page(self.counter)
         page.project.insert_blank_subtitles([0], register=None)
         self.add_new_page(page)
-        util.set_cursor_normal(self.window)
+        gaupol.gtk.util.set_cursor_normal(self.window)
 
     def on_notebook_drag_data_received(
         self, notebook, context, x, y, selection_data, info, time):
         """Open dragged files."""
 
         uris = selection_data.get_uris()
-        paths = [util.uri_to_path(x) for x in uris]
+        paths = [gaupol.gtk.util.uri_to_path(x) for x in uris]
         self.open_main_files(paths)
 
     def on_open_button_clicked(self, *args):
@@ -416,7 +416,7 @@ class OpenAgent(Delegate):
     def on_open_main_file_activate(self, *args):
         """Open main files."""
 
-        paths, encoding = self._select_files(_("Open"), const.DOCUMENT.MAIN)
+        paths, encoding = self._select_files(_("Open"), gaupol.gtk.DOCUMENT.MAIN)
         if paths and encoding:
             self.open_main_files(paths, encoding)
 
@@ -428,26 +428,26 @@ class OpenAgent(Delegate):
             self._show_translation_warning_dialog(page)
 
         paths, encoding = self._select_files(
-            _("Open Translation"), const.DOCUMENT.TRAN)
+            _("Open Translation"), gaupol.gtk.DOCUMENT.TRAN)
         if paths and encoding:
             self.open_translation_file(paths[0], encoding)
 
     def on_recent_main_menu_item_activated(self, chooser):
         """Open a recent main file."""
 
-        path = util.uri_to_path(chooser.get_current_uri())
+        path = gaupol.gtk.util.uri_to_path(chooser.get_current_uri())
         self.open_main_files([path])
 
     def on_recent_translation_menu_item_activated(self, chooser):
         """Open a recent translation file."""
 
-        path = util.uri_to_path(chooser.get_current_uri())
+        path = gaupol.gtk.util.uri_to_path(chooser.get_current_uri())
         self.open_translation_file(path)
 
     def on_select_video_file_activate(self, *args):
         """Select a video file."""
 
-        util.set_cursor_busy(self.window)
+        gaupol.gtk.util.set_cursor_busy(self.window)
         page = self.get_current_page()
         path = page.project.video_path
         dialog = VideoDialog(self.window)
@@ -456,7 +456,7 @@ class OpenAgent(Delegate):
         elif page.project.main_file is not None:
             directory = os.path.dirname(page.project.main_file.path)
             dialog.set_current_folder(directory)
-        util.set_cursor_normal(self.window)
+        gaupol.gtk.util.set_cursor_normal(self.window)
         response = self.run_dialog(dialog)
         if response == gtk.RESPONSE_OK:
             page.project.video_path = dialog.get_filename()
@@ -480,7 +480,7 @@ class OpenAgent(Delegate):
 
         page = self.get_current_page()
         uri = selection_data.get_uris()[0]
-        path = util.uri_to_path(uri)
+        path = gaupol.gtk.util.uri_to_path(uri)
         if os.path.isfile(path):
             page.project.video_path = path
             self.update_gui()
@@ -491,28 +491,28 @@ class OpenAgent(Delegate):
         encodings = self._get_encodings(encoding)
         for path in sorted(paths):
             try:
-                page = self._open_file(path, encodings, const.DOCUMENT.MAIN)
+                page = self._open_file(path, encodings, gaupol.gtk.DOCUMENT.MAIN)
             except Default:
                 continue
-            util.set_cursor_busy(self.window)
+            gaupol.gtk.util.set_cursor_busy(self.window)
             self.add_new_page(page)
-            self.add_to_recent_files(path, const.DOCUMENT.MAIN)
+            self.add_to_recent_files(path, gaupol.gtk.DOCUMENT.MAIN)
             basename = page.get_main_basename()
             self.push_message(_('Opened main file "%s"') % basename)
             while gtk.events_pending():
                 gtk.main_iteration()
-            util.set_cursor_normal(self.window)
+            gaupol.gtk.util.set_cursor_normal(self.window)
 
-    @util.silent(Default)
+    @gaupol.gtk.util.silent(Default)
     def open_translation_file(self, path, encoding=None):
         """Open translation file."""
 
         encodings = self._get_encodings(encoding)
-        page = self._open_file(path, encodings, const.DOCUMENT.TRAN)
-        util.set_cursor_busy(self.window)
-        if not page.view.get_column(TTXT).get_visible():
-            self.uim.get_action(TTXT.uim_path).activate()
-        self.add_to_recent_files(path, const.DOCUMENT.TRAN)
+        page = self._open_file(path, encodings, gaupol.gtk.DOCUMENT.TRAN)
+        gaupol.gtk.util.set_cursor_busy(self.window)
+        if not page.view.get_column(gaupol.gtk.COLUMN.TRAN_TEXT).get_visible():
+            self.uim.get_action(gaupol.gtk.COLUMN.TRAN_TEXT.uim_path).activate()
+        self.add_to_recent_files(path, gaupol.gtk.DOCUMENT.TRAN)
         basename = page.get_translation_basename()
         self.push_message(_('Opened translation file "%s"') % basename)
-        util.set_cursor_normal(self.window)
+        gaupol.gtk.util.set_cursor_normal(self.window)

@@ -16,13 +16,14 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol import const, tags
-from gaupol.unittest import TestCase
+import gaupol
+from gaupol import unittest
 
 
-class TestModule(TestCase):
+class TestModule(unittest.TestCase):
 
-    def test_imports(self):
+    def test_get_class(self):
 
-        for name in const.FORMAT.class_names:
-            assert hasattr(tags, name)
+        for format in gaupol.FORMAT.members:
+            value = gaupol.tags.get_class(format)
+            assert value.format == format

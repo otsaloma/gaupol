@@ -19,9 +19,9 @@
 """Sub Station Alpha tag library."""
 
 
+import gaupol
 import re
 
-from gaupol import util
 from .taglib import TagLibrary
 
 
@@ -38,22 +38,23 @@ class SubStationAlpha(TagLibrary):
     _re_int_opening = re.compile(r"<[^/].*?>")
     _re_int_closing = re.compile(r"</.*?>")
     _re_int_closing_end = re.compile(r"</.*?>\Z")
+    format = gaupol.FORMAT.SSA
 
     @property
-    @util.once
+    @gaupol.util.once
     def italic_tag(self):
         """Regular expression for an italic tag."""
 
         return re.compile(r"\{\\i[01]\}", re.IGNORECASE)
 
     @property
-    @util.once
+    @gaupol.util.once
     def tag(self):
         """Regular expression for any tag."""
 
         return re.compile(r"\{.*?\}", 0)
 
-    @util.once
+    @gaupol.util.once
     def _get_decode_tags(self):
         """Get list of tuples of regular expression, replacement, count."""
 
@@ -90,7 +91,7 @@ class SubStationAlpha(TagLibrary):
             tags[i] = (re.compile(pattern, flags), replacement, count)
         return tags
 
-    @util.once
+    @gaupol.util.once
     def _get_encode_tags(self):
         """Get list of tuples of regular expression, replacement, count."""
 

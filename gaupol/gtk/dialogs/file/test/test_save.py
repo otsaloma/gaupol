@@ -16,9 +16,9 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
+import gaupol.gtk
 import gtk
 
-from gaupol.gtk import const
 from .test_subtitle import _TestSubtitleFileDialog
 from .. import save
 
@@ -31,7 +31,7 @@ class TestSaveDialog(_TestSubtitleFileDialog):
 
     def test__on_format_combo_changed(self):
 
-        for format in const.FORMAT.members:
+        for format in gaupol.gtk.FORMAT.members:
             self.dialog.set_format(format)
 
     def test__on_response(self):
@@ -40,28 +40,28 @@ class TestSaveDialog(_TestSubtitleFileDialog):
 
     def test_get_format(self):
 
-        for format in const.FORMAT.members:
+        for format in gaupol.gtk.FORMAT.members:
             self.dialog.set_format(format)
             value = self.dialog.get_format()
             assert value == format
 
     def test_get_newline(self):
 
-        for newline in const.NEWLINE.members:
+        for newline in gaupol.gtk.NEWLINE.members:
             self.dialog.set_newline(newline)
             value = self.dialog.get_newline()
             assert value == newline
 
     def test_set_format(self):
 
-        for format in const.FORMAT.members:
+        for format in gaupol.gtk.FORMAT.members:
             self.dialog.set_format(format)
             value = self.dialog.get_format()
             assert value == format
 
     def test_set_newline(self):
 
-        for newline in const.NEWLINE.members:
+        for newline in gaupol.gtk.NEWLINE.members:
             self.dialog.set_newline(newline)
             value = self.dialog.get_newline()
             assert value == newline

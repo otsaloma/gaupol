@@ -21,18 +21,17 @@
 
 from __future__ import division
 
-from gaupol.base import Contractual, Delegate
-from gaupol.i18n import _
-from gaupol.reversion import revertable
+import gaupol
+_ = gaupol.i18n._
 
 
-class ClipboardAgent(Delegate):
+class ClipboardAgent(gaupol.Delegate):
 
     """Storing text to the clipboard and pasting from it."""
 
     # pylint: disable-msg=E0203,W0201
 
-    __metaclass__ = Contractual
+    __metaclass__ = gaupol.Contractual
 
     def copy_texts_require(self, indexes, doc):
         for index in indexes:
@@ -58,7 +57,7 @@ class ClipboardAgent(Delegate):
         for index in indexes:
             assert 0 <= index < len(self.subtitles)
 
-    @revertable
+    @gaupol.util.revertable
     def cut_texts(self, indexes, doc, register=-1):
         """Cut texts to the clipboard."""
 
@@ -70,7 +69,7 @@ class ClipboardAgent(Delegate):
         assert 0 <= index <= len(self.subtitles)
         assert self.clipboard.get_texts()
 
-    @revertable
+    @gaupol.util.revertable
     def paste_texts(self, index, doc, register=-1):
         """Paste texts from the clipboard and return pasted indexes."""
 

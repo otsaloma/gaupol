@@ -20,8 +20,7 @@
 
 
 import functools
-
-from gaupol.opts import check_contracts
+import gaupol
 
 
 def _ensured(ensure_func):
@@ -31,7 +30,7 @@ def _ensured(ensure_func):
         @functools.wraps(function)
         def inner_wrapper(*args, **kwargs):
             value = function(*args, **kwargs)
-            if check_contracts:
+            if gaupol.check_contracts:
                 ensure_func(args[0], value, *args[1:], **kwargs)
             return value
         return inner_wrapper
@@ -45,7 +44,7 @@ def _invariated(invariant_func):
         @functools.wraps(function)
         def inner_wrapper(*args, **kwargs):
             value = function(*args, **kwargs)
-            if check_contracts:
+            if gaupol.check_contracts:
                 invariant_func(args[0])
             return value
         return inner_wrapper
@@ -58,7 +57,7 @@ def _required(require_func):
     def outer_wrapper(function):
         @functools.wraps(function)
         def inner_wrapper(*args, **kwargs):
-            if check_contracts:
+            if gaupol.check_contracts:
                 require_func(*args, **kwargs)
             return function(*args, **kwargs)
         return inner_wrapper

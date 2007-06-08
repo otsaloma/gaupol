@@ -19,18 +19,16 @@
 """Opening subtitle files."""
 
 
-from gaupol import const, enclib, files, util
-from gaupol.base import Contractual, Delegate
-from gaupol.determiner import FormatDeterminer
+import gaupol
 
 
-class OpenAgent(Delegate):
+class OpenAgent(gaupol.Delegate):
 
     """Opening subtitle files."""
 
     # pylint: disable-msg=E0203,W0201
 
-    __metaclass__ = Contractual
+    __metaclass__ = gaupol.Contractual
 
     def _adapt_translations(self, mode, starts, ends, texts):
         """Open translation file data in an adaptive manner."""
@@ -90,14 +88,14 @@ class OpenAgent(Delegate):
         return starts, ends, texts, len(sorts)
 
     def open_main_require(self, path, encoding):
-        assert enclib.is_valid(encoding)
+        assert gaupol.encodings.is_valid(encoding)
 
     def open_main_ensure(self, value, path, encoding):
         assert self.main_file is not None
         assert self.main_changed == 0
         assert self.tran_changed == None
 
-    @util.notify_frozen
+    @gaupol.util.notify_frozen
     def open_main(self, path, encoding):
         """Open main file reading positions and texts.
 
@@ -106,12 +104,12 @@ class OpenAgent(Delegate):
         Raise FormatError if unable to detect the format.
         Return sort count.
         """
-        format = FormatDeterminer().determine(path, encoding)
-        self.main_file = getattr(files, format.class_name)(path, encoding)
+        format = gaupol.FormatDeterminer().determine(path, encoding)
+        self.main_file = gaupol.files.get_class(format)(path, encoding)
         starts, ends, texts, sort_count = self._sort(*self.main_file.read())
 
         # Get framerate from MPsub header.
-        if self.main_file.format == const.FORMAT.MPSUB:
+        if self.main_file.format == gaupol.FORMAT.MPSUB:
             if self.main_file.framerate is not None:
                 self.set_framerate(self.main_file.framerate, register=None)
 
@@ -130,13 +128,13 @@ class OpenAgent(Delegate):
 
     def open_translation_require(self, path, encoding, smart=True):
         assert self.main_file is not None
-        assert enclib.is_valid(encoding)
+        assert gaupol.encodings.is_valid(encoding)
 
     def open_translation_ensure(self, value, path, encoding, smart=True):
         assert self.tran_file is not None
         assert self.tran_changed == 0
 
-    @util.notify_frozen
+    @gaupol.util.notify_frozen
     def open_translation(self, path, encoding, smart=True):
         """Open translation file reading texts.
 
@@ -145,8 +143,8 @@ class OpenAgent(Delegate):
         Raise FileFormatError if unable to detect the format.
         Return sort count.
         """
-        format = FormatDeterminer().determine(path, encoding)
-        self.tran_file = getattr(files, format.class_name)(path, encoding)
+        format = gaupol.FormatDeterminer().determine(path, encoding)
+        self.tran_file = gaupol.files.get_class(format)(path, encoding)
         starts, ends, texts, sort_count = self._sort(*self.tran_file.read())
 
         blocked = self.block("subtitles-inserted")

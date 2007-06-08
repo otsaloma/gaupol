@@ -46,7 +46,9 @@ it exists.
 # pylint: disable-msg=C0301
 
 
-from gaupol.i18n import _, dgettext
+import gaupol
+_ = gaupol.i18n._
+dgettext = gaupol.i18n.dgettext
 
 
 countries = {

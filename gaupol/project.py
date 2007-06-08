@@ -19,13 +19,10 @@
 """Model for subtitle data."""
 
 
-from gaupol import agents, const
-from gaupol.base import Contractual, Observable
-from gaupol.calculator import Calculator
-from gaupol.clipboard import Clipboard
+import gaupol
 
 
-class Project(Observable):
+class Project(gaupol.Observable):
 
     """Model for subtitle data.
 
@@ -62,7 +59,7 @@ class Project(Observable):
     See gaupol.agents for project methods provided by agents.
     """
 
-    __metaclass__ = Contractual
+    __metaclass__ = gaupol.Contractual
 
     _signals = [
         "action-done",
@@ -83,12 +80,12 @@ class Project(Observable):
 
         return self._delegations[name]
 
-    def __init__(self, framerate=const.FRAMERATE.P24, undo_limit=None):
+    def __init__(self, framerate=gaupol.FRAMERATE.P24, undo_limit=None):
 
-        Observable.__init__(self)
+        gaupol.Observable.__init__(self)
         self._delegations = {}
-        self.calc = Calculator(framerate)
-        self.clipboard = Clipboard()
+        self.calc = gaupol.Calculator(framerate)
+        self.clipboard = gaupol.Clipboard()
         self.framerate = framerate
         self.main_changed = 0
         self.main_file = None
@@ -111,8 +108,8 @@ class Project(Observable):
     def _init_delegations(self):
         """Initialize the delegation mappings."""
 
-        for agent_class_name in agents.__all__:
-            agent = getattr(agents, agent_class_name)(self)
+        for agent_class_name in gaupol.agents.__all__:
+            agent = getattr(gaupol.agents, agent_class_name)(self)
             attrs = [x for x in dir(agent) if not x.startswith("_")]
             attrs = [(x, getattr(agent, x)) for x in attrs]
             attrs = [(x, y) for (x, y) in attrs if callable(y)]

@@ -16,8 +16,8 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol import const
-from gaupol.unittest import TestCase
+import gaupol
+from gaupol import unittest
 
 
 def omit_abstract(function):
@@ -30,7 +30,7 @@ def omit_abstract(function):
     return wrapper
 
 
-class TestSubtitleFile(TestCase):
+class TestSubtitleFile(unittest.TestCase):
 
     def setup_method(self, method):
 
@@ -59,5 +59,5 @@ class TestSubtitleFile(TestCase):
 
         path = self.get_file_path(self.file.format)
         self.file.path = path
-        self.file.newline = const.NEWLINE.UNIX
+        self.file.newline = gaupol.NEWLINE.UNIX
         self.file.write(*self.file.read())

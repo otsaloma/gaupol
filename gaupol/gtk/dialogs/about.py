@@ -19,11 +19,9 @@
 """Dialog for displaying credits and information."""
 
 
+import gaupol.gtk
 import gtk
-
-from gaupol import urls, __version__
-from gaupol.gtk import util
-from gaupol.i18n import _
+_ = gaupol.i18n._
 
 
 _LICENSE = \
@@ -52,12 +50,12 @@ class AboutDialog(gtk.AboutDialog):
         self.set_title(_("About Gaupol"))
 
         self.set_name("Gaupol")
-        self.set_version(__version__)
+        self.set_version(gaupol.__version__)
         self.set_copyright(u"Copyright \xa9 2005-2007 Osmo Salomaa")
         self.set_comments(_("Subtitle editor"))
         self.set_license(_LICENSE)
         self.set_wrap_license(True)
-        self.set_website(urls.HOMEPAGE)
+        self.set_website(gaupol.HOMEPAGE_URL)
         self.set_website_label(_("Gaupol Website"))
         self.set_authors(["Osmo Salomaa <otsaloma@cc.hut.fi>"])
         self.set_artists(["Osmo Salomaa <otsaloma@cc.hut.fi>"])
@@ -74,4 +72,4 @@ class AboutDialog(gtk.AboutDialog):
     def _on_url_clicked(self, *args):
         """Open website in a web browser."""
 
-        util.browse_url(urls.HOMEPAGE)
+        gaupol.gtk.util.browse_url(gaupol.HOMEPAGE_URL)

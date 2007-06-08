@@ -18,10 +18,10 @@
 
 from gaupol.gtk import const
 from gaupol.gtk.index import *
-from gaupol.gtk.unittest import TestCase
+from gaupol.gtk import unittest
 
 
-class TestViewAgent(TestCase):
+class TestViewAgent(unittest.TestCase):
 
     def setup_method(self, method):
 
@@ -29,7 +29,7 @@ class TestViewAgent(TestCase):
 
     def test_on_framerate_combo_changed(self):
 
-        for framerate in const.FRAMERATE.members:
+        for framerate in gaupol.gtk.FRAMERATE.members:
             self.application.framerate_combo.set_active(framerate)
 
     def test_on_output_window_notify_visible(self):
@@ -38,18 +38,18 @@ class TestViewAgent(TestCase):
 
     def test_on_show_framerate_23_976_activate(self):
 
-        for path in const.FRAMERATE.uim_paths:
+        for path in gaupol.gtk.FRAMERATE.uim_paths:
             self.application.uim.get_action(path).activate()
 
     def test_on_show_times_activate(self):
 
-        for path in const.MODE.uim_paths:
+        for path in gaupol.gtk.MODE.uim_paths:
             self.application.uim.get_action(path).activate()
 
     def test_on_toggle_duration_column_activate(self):
 
-        self.application.uim.get_action(DURN.uim_path).activate()
-        self.application.uim.get_action(DURN.uim_path).activate()
+        self.application.uim.get_action(gaupol.gtk.COLUMN.DURATION.uim_path).activate()
+        self.application.uim.get_action(gaupol.gtk.COLUMN.DURATION.uim_path).activate()
 
     def test_on_toggle_hide_column_activate(self):
 
@@ -58,8 +58,8 @@ class TestViewAgent(TestCase):
 
     def test_on_toggle_main_text_column_activate(self):
 
-        self.application.uim.get_action(MTXT.uim_path).activate()
-        self.application.uim.get_action(MTXT.uim_path).activate()
+        self.application.uim.get_action(gaupol.gtk.COLUMN.MAIN_TEXT.uim_path).activate()
+        self.application.uim.get_action(gaupol.gtk.COLUMN.MAIN_TEXT.uim_path).activate()
 
     def test_on_toggle_main_toolbar_activate(self):
 
@@ -70,8 +70,8 @@ class TestViewAgent(TestCase):
 
     def test_on_toggle_number_column_activate(self):
 
-        self.application.uim.get_action(NO.uim_path).activate()
-        self.application.uim.get_action(NO.uim_path).activate()
+        self.application.uim.get_action(gaupol.gtk.COLUMN.NUMBER.uim_path).activate()
+        self.application.uim.get_action(gaupol.gtk.COLUMN.NUMBER.uim_path).activate()
 
     def test_on_toggle_output_window_activate(self):
 
@@ -94,8 +94,8 @@ class TestViewAgent(TestCase):
 
     def test_on_toggle_translation_text_column_activate(self):
 
-        self.application.uim.get_action(TTXT.uim_path).activate()
-        self.application.uim.get_action(TTXT.uim_path).activate()
+        self.application.uim.get_action(gaupol.gtk.COLUMN.TRAN_TEXT.uim_path).activate()
+        self.application.uim.get_action(gaupol.gtk.COLUMN.TRAN_TEXT.uim_path).activate()
 
     def test_on_toggle_video_toolbar_activate(self):
 

@@ -19,13 +19,11 @@
 """Base class for dialogs for selecting subtitle files."""
 
 
+import gaupol.gtk
 import gobject
 import gtk
+_ = gaupol.i18n._
 
-from gaupol import enclib
-from gaupol.base import Contractual
-from gaupol.gtk import conf, const, util
-from gaupol.i18n import _
 from ..encoding import AdvEncodingDialog
 
 
@@ -35,7 +33,7 @@ class SubtitleFileDialog(object):
 
     # pylint: disable-msg=E1101
 
-    __metaclass__ = Contractual
+    __metaclass__ = gaupol.Contractual
 
     def __init__(self):
 
@@ -55,8 +53,9 @@ class SubtitleFileDialog(object):
         view.set_displayed_row(0)
         renderer = view.get_cell_renderers()[0]
         self._encoding_combo.set_attributes(renderer, text=1)
-        self._encoding_combo.set_row_separator_func(util.separate_combo)
-        util.connect(self, "_encoding_combo", "changed")
+        function = gaupol.gtk.util.separate_combo
+        self._encoding_combo.set_row_separator_func(function)
+        gaupol.gtk.util.connect(self, "_encoding_combo", "changed")
 
     def _init_filters(self):
         """Initialize the file filters."""
@@ -71,16 +70,16 @@ class SubtitleFileDialog(object):
         file_filter.add_mime_type("text/plain")
         self.add_filter(file_filter)
 
-        for format in const.FORMAT.members:
+        for format in gaupol.gtk.FORMAT.members:
             pattern = "*%s" % format.extension
-            format = format.display_name
+            format = format.label
             name = _("%(format)s (%(pattern)s)") % locals()
             file_filter = gtk.FileFilter()
             file_filter.set_name(name)
             file_filter.add_pattern(pattern)
             self.add_filter(file_filter)
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _on_encoding_combo_changed(self, *args):
         """Show the encoding selection dialog."""
 
@@ -93,35 +92,36 @@ class SubtitleFileDialog(object):
         dialog.destroy()
         self._encoding_combo.set_active(0)
         assert response == gtk.RESPONSE_OK
-        conf.encoding.visibles = visibles
+        gaupol.gtk.conf.encoding.visibles = visibles
         self._populate_encoding_combo(encoding)
         self.set_encoding(encoding)
 
     def _populate_encoding_combo(self, custom=None):
         """Populate the encoding combo box, including custom encoding."""
 
-        encodings = list(conf.encoding.visibles)
-        locale = enclib.get_locale_python_name()
+        encodings = list(gaupol.gtk.conf.encoding.visibles)
+        locale = gaupol.encodings.get_locale_python_name()
         encodings.insert(0, locale)
         encodings.append(custom)
         while None in encodings:
             encodings.remove(None)
-        encodings = util.get_unique(encodings)
+        encodings = gaupol.gtk.util.get_unique(encodings)
         encodings = encodings or ["utf_8"]
 
         for i, encoding in enumerate(encodings):
-            name = enclib.get_long_name(encoding)
+            name = gaupol.encodings.get_long_name(encoding)
             encodings[i] = (encoding, name)
         if locale is not None:
-            name = enclib.get_locale_long_name()
+            name = gaupol.encodings.get_locale_long_name()
             encodings[0] = (locale, name)
         a = (0 if locale is None else 1)
         encodings[a:] = sorted(encodings[a:], key=lambda x: x[1])
 
+        separator = gaupol.gtk.util.COMBO_SEPARATOR
         if self._use_autodetection:
-            encodings.append((util.COMBO_SEP, util.COMBO_SEP))
+            encodings.append((separator, separator))
             encodings.append(("auto", _("Auto-detected")))
-        encodings.append((util.COMBO_SEP, util.COMBO_SEP))
+        encodings.append((separator, separator))
         encodings.append(("other", _("Other\342\200\246")))
 
         self._encoding_combo.get_model().clear()
@@ -131,9 +131,9 @@ class SubtitleFileDialog(object):
 
     def get_encoding_ensure(self, value):
         if value not in ("auto", "other", None):
-            assert enclib.is_valid(value)
+            assert gaupol.encodings.is_valid(value)
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def get_encoding(self):
         """Get the selected encoding or None."""
 
@@ -149,7 +149,7 @@ class SubtitleFileDialog(object):
         for i in range(len(store)):
             if store[i][0] == encoding:
                 return self._encoding_combo.set_active(i)
-        if enclib.is_valid(encoding):
+        if gaupol.encodings.is_valid(encoding):
             self._populate_encoding_combo(encoding)
             return self.set_encoding(encoding)
         self._encoding_combo.set_active(0)

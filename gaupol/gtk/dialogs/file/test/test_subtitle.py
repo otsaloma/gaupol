@@ -16,13 +16,13 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
+import gaupol.gtk
 import gtk
 
-from gaupol.gtk import conf
-from gaupol.gtk.unittest import TestCase
+from gaupol.gtk import unittest
 
 
-class _TestSubtitleFileDialog(TestCase):
+class _TestSubtitleFileDialog(unittest.TestCase):
 
     # pylint: disable-msg=E1101
 
@@ -45,7 +45,7 @@ class _TestSubtitleFileDialog(TestCase):
 
     def test_get_encoding(self):
 
-        encoding = conf.encoding.visibles[0]
+        encoding = gaupol.gtk.conf.encoding.visibles[0]
         self.dialog.set_encoding(encoding)
         assert self.dialog.get_encoding() == encoding
         self.dialog.set_encoding("johab")
@@ -53,7 +53,7 @@ class _TestSubtitleFileDialog(TestCase):
 
     def test_set_encoding(self):
 
-        encoding = conf.encoding.visibles[0]
+        encoding = gaupol.gtk.conf.encoding.visibles[0]
         self.dialog.set_encoding(encoding)
         assert self.dialog.get_encoding() == encoding
         self.dialog.set_encoding("johab")

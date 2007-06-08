@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2006 Osmo Salomaa
+# Copyright (C) 2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,17 +16,17 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol.gtk.index import *
-from gaupol.gtk.unittest import TestCase
+"""Metaclass for contractual GObjects."""
 
 
-class TestModule(TestCase):
+import gaupol
+import gobject
 
-    def test_attributes(self):
+__all__ = ["ContractualGObject"]
 
-        assert NO    == 0
-        assert START == 1
-        assert END   == 2
-        assert DURN  == 3
-        assert MTXT  == 4
-        assert TTXT  == 5
+
+class ContractualGObject(gobject.GObjectMeta, gaupol.Contractual):
+
+    """Metaclass for contractual GObjects."""
+
+    pass

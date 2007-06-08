@@ -19,13 +19,10 @@
 """Dialog for configuring spell-check."""
 
 
+import gaupol.gtk
 import gobject
 import gtk
 
-from gaupol import langlib
-from gaupol.base import Contractual
-from gaupol.gtk import conf, const, util
-from gaupol.gtk.index import *
 from .glade import GladeDialog
 
 
@@ -33,10 +30,10 @@ class LanguageDialog(GladeDialog):
 
     """Dialog for configuring spell-check."""
 
-    __metaclass__ = Contractual
+    __metaclass__ = gaupol.Contractual
 
     def __init___require(self, parent):
-        assert util.enchant_available()
+        assert gaupol.gtk.util.enchant_available()
 
     def __init__(self, parent):
 
@@ -71,10 +68,10 @@ class LanguageDialog(GladeDialog):
     def _init_sizes(self):
         """Initialize widget sizes."""
 
-        width, height = util.get_tree_view_size(self._tree_view)
-        width = width + 42 + util.EXTRA
-        height = height + 259 + util.EXTRA
-        util.resize_dialog(self, width, height, (0.5, 0.5))
+        width, height = gaupol.gtk.util.get_tree_view_size(self._tree_view)
+        width = width + 42 + gaupol.gtk.util.EXTRA
+        height = height + 259 + gaupol.gtk.util.EXTRA
+        gaupol.gtk.util.resize_dialog(self, width, height, 0.5)
 
     def _init_tree_view(self):
         """Initialize the tree view."""
@@ -97,49 +94,50 @@ class LanguageDialog(GladeDialog):
         store = self._tree_view.get_model()
         selection = self._tree_view.get_selection()
         for i in range(len(store)):
-            if store[i][0] == conf.spell_check.lang:
+            if store[i][0] == gaupol.gtk.conf.spell_check.lang:
                 selection.select_path(i)
-        col = conf.spell_check.col
-        self._main_radio.set_active(col == MTXT)
-        self._tran_radio.set_active(col == TTXT)
-        target = conf.spell_check.target
-        self._all_radio.set_active(target == const.TARGET.ALL)
-        self._current_radio.set_active(target == const.TARGET.CURRENT)
+        col = gaupol.gtk.conf.spell_check.col
+        self._main_radio.set_active(col == gaupol.gtk.COLUMN.MAIN_TEXT)
+        self._tran_radio.set_active(col == gaupol.gtk.COLUMN.TRAN_TEXT)
+        target = gaupol.gtk.conf.spell_check.target
+        self._all_radio.set_active(target == gaupol.gtk.TARGET.ALL)
+        self._current_radio.set_active(target == gaupol.gtk.TARGET.CURRENT)
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _on_tree_view_selection_changed(self, selection):
         """Save the active language."""
 
         store, itr = selection.get_selected()
         assert itr is not None
         value = store.get_value(itr, 0)
-        conf.spell_check.lang = value
+        gaupol.gtk.conf.spell_check.lang = value
 
     def _populate_store(self, store):
         """Add all available languages to the list store."""
 
         import enchant
-        @util.silent(enchant.Error)
+        @gaupol.gtk.util.silent(enchant.Error)
         def append(locale):
             enchant.Dict(locale)
-            name = langlib.get_long_name(locale)
+            name = gaupol.languages.get_long_name(locale)
             store.append([locale, name])
-        for locale in langlib.locales:
+        for locale in gaupol.languages.locales:
             append(locale)
 
     def _save_column(self):
         """Save the active column."""
 
         if self._main_radio.get_active():
-            conf.spell_check.col = MTXT
+            col = gaupol.gtk.COLUMN.MAIN_TEXT
         elif self._tran_radio.get_active():
-            conf.spell_check.col = TTXT
+            col = gaupol.gtk.COLUMN.TRAN_TEXT
+        gaupol.gtk.conf.spell_check.col = col
 
     def _save_target(self):
         """Save the active target."""
 
         if self._current_radio.get_active():
-            target = const.TARGET.CURRENT
+            target = gaupol.gtk.TARGET.CURRENT
         elif self._all_radio.get_active():
-            target = const.TARGET.ALL
-        conf.spell_check.target = target
+            target = gaupol.gtk.TARGET.ALL
+        gaupol.gtk.conf.spell_check.target = target

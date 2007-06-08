@@ -20,13 +20,10 @@
 
 
 import functools
+import gaupol.gtk
 import os
 import sys
 
-from gaupol import util
-from gaupol.base import Contractual
-from gaupol.gtk import const
-from gaupol.gtk.errors import ConfigParseError
 from . import configobj, validate
 
 
@@ -40,13 +37,13 @@ class Config(configobj.ConfigObj):
     CONSTANT and CONSTANT_list for each CONSTANT.
     """
 
-    __metaclass__ = Contractual
+    __metaclass__ = gaupol.Contractual
 
     def __check_constant(self, validator, section, value):
         """Validate and return constant or raise VdtValueError."""
 
         name = validator.check("string", value)
-        section = getattr(const, section)
+        section = getattr(gaupol.gtk, section)
         try:
             index = section.names.index(name)
             return section.members[index]
@@ -57,7 +54,7 @@ class Config(configobj.ConfigObj):
         """Validate and return constant list or raise VdtValueError."""
 
         names = validator.check("string_list", value)
-        section = getattr(const, section)
+        section = getattr(gaupol.gtk, section)
         try:
             indexes = [section.names.index(x) for x in names]
             return [section.members[x] for x in indexes]
@@ -76,19 +73,19 @@ class Config(configobj.ConfigObj):
         try:
             configobj.ConfigObj.__init__(
                 self, config_file, configspec=spec_file,
-                encoding=util.get_default_encoding(),
+                encoding=gaupol.util.get_default_encoding(),
                 write_empty_values=True)
         except IOError:
-            util.handle_read_io(sys.exc_info(), config_file)
+            gaupol.util.handle_read_io(sys.exc_info(), config_file)
             # pylint: disable-msg=W0233
             configobj.ConfigObj.__init__(
                 self, None, configspec=spec_file,
-                encoding=util.get_default_encoding())
+                encoding=gaupol.util.get_default_encoding())
         except configobj.ConfigObjError, obj:
             print "Errors parsing configuration file '%s':" % config_file
             for error in obj.errors:
                 print "Line %d: %s" % (error.line_number, error.message)
-            raise ConfigParseError(obj)
+            raise gaupol.gtk.ConfigParseError(obj)
 
         validator = self.__init_validator()
         spec = self.__init_spec(validator, spec_file)
@@ -113,6 +110,7 @@ class Config(configobj.ConfigObj):
     def __init_validator(self):
         """Initialize and return validator."""
 
+        from gaupol.gtk import const
         partial = functools.partial
         validator = validate.Validator()
         for name in (x for x in dir(const) if x.isupper()):
@@ -123,7 +121,7 @@ class Config(configobj.ConfigObj):
             validator.functions["%s_list" % name] = func
         return validator
 
-    @util.asserted_return
+    @gaupol.util.asserted_return
     def __remove_options(self, spec):
         """Remove options in config, but not in spec."""
 
@@ -138,7 +136,7 @@ class Config(configobj.ConfigObj):
                 print "%s.%s" % (section, option)
                 del self[section][option]
 
-    @util.asserted_return
+    @gaupol.util.asserted_return
     def __remove_sections(self, spec):
         """Remove sections in config, but not in spec."""
 
@@ -150,7 +148,7 @@ class Config(configobj.ConfigObj):
             print section
             del self[section]
 
-    @util.asserted_return
+    @gaupol.util.asserted_return
     def __validate(self, validator, spec):
         """Validate options according to spec."""
 
@@ -164,7 +162,7 @@ class Config(configobj.ConfigObj):
                 self[section][option] = spec[section][option]
                 self[section].defaults.append(option)
 
-    @util.asserted_return
+    @gaupol.util.asserted_return
     def translate_none(self, section, option, value):
         """Translate a default None value to value."""
 
@@ -183,7 +181,7 @@ class Config(configobj.ConfigObj):
         """Write configurations to file."""
 
         try:
-            util.makedirs(os.path.dirname(self.filename))
+            gaupol.util.makedirs(os.path.dirname(self.filename))
             configobj.ConfigObj.write(self)
         except (IOError, OSError):
-            util.handle_write_io(sys.exc_info(), self.filename)
+            gaupol.util.handle_write_io(sys.exc_info(), self.filename)

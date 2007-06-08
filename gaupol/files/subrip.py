@@ -23,10 +23,9 @@ from __future__ import with_statement
 
 import codecs
 import contextlib
+import gaupol
 import re
 
-from gaupol import const
-from gaupol.base import Contractual
 from .subfile import SubtitleFile
 
 
@@ -34,9 +33,9 @@ class SubRip(SubtitleFile):
 
     """SubRip file."""
 
-    __metaclass__ = Contractual
-    format = const.FORMAT.SUBRIP
-    mode = const.MODE.TIME
+    __metaclass__ = gaupol.Contractual
+    format = gaupol.FORMAT.SUBRIP
+    mode = gaupol.MODE.TIME
 
     def _clean_lines(self, all_lines, re_time_line):
         """Return lines without unit numbers and preceding blank lines."""

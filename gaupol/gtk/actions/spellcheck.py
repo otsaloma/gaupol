@@ -19,10 +19,10 @@
 """Spell-checking actions."""
 
 
+import gaupol.gtk
 import gtk
+_ = gaupol.i18n._
 
-from gaupol.gtk import conf, util
-from gaupol.i18n import _
 from .action import Action
 
 
@@ -39,7 +39,7 @@ class ConfigureSpellCheckAction(Action):
     def _assert_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
 
-        assert util.enchant_available()
+        assert gaupol.gtk.util.enchant_available()
 
 
 class CheckSpellingAction(Action):
@@ -59,5 +59,5 @@ class CheckSpellingAction(Action):
         """Raise AssertionError if action cannot be done."""
 
         assert page is not None
-        assert util.enchant_available()
-        assert conf.spell_check.lang
+        assert gaupol.gtk.util.enchant_available()
+        assert gaupol.gtk.conf.spell_check.lang

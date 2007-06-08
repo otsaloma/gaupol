@@ -19,59 +19,55 @@
 """Miscellaneous methods for use with subtitle data editing."""
 
 
-from gaupol import const, files, tags, util
-from gaupol.base import Contractual, Delegate
-from gaupol.parser import Parser
-from gaupol.reversion import RevertableAction
-from gaupol.subtitle import Subtitle
+import gaupol
 
 
-class UtilityAgent(Delegate):
+class UtilityAgent(gaupol.Delegate):
 
     """Miscellaneous methods for subtitle data editing."""
 
     # pylint: disable-msg=E0203,W0201
 
-    __metaclass__ = Contractual
+    __metaclass__ = gaupol.Contractual
 
-    def _get_format_class_name(self, doc):
-        """Get the class name of document's file format or None."""
+    def _get_format(self, doc):
+        """Get the format of document's file or None."""
 
-        if doc == const.DOCUMENT.MAIN:
+        if doc == gaupol.DOCUMENT.MAIN:
             if self.main_file is not None:
-                return self.main_file.format.class_name
+                return self.main_file.format
             return None
-        if doc == const.DOCUMENT.TRAN:
+        if doc == gaupol.DOCUMENT.TRAN:
             if self.tran_file is not None:
-                return self.tran_file.format.class_name
-            return self.get_format_class_name(const.DOCUMENT.MAIN)
+                return self.tran_file.format
+            return self.get_format(gaupol.DOCUMENT.MAIN)
         raise ValueError
 
     def get_changed(self, doc):
         """Get the changed value corresponding to document."""
 
-        if doc == const.DOCUMENT.MAIN:
+        if doc == gaupol.DOCUMENT.MAIN:
             return self.main_changed
-        if doc == const.DOCUMENT.TRAN:
+        if doc == gaupol.DOCUMENT.TRAN:
             return self.tran_changed
         raise ValueError
 
     def get_file(self, doc):
         """Get the file corresponding to document."""
 
-        if doc == const.DOCUMENT.MAIN:
+        if doc == gaupol.DOCUMENT.MAIN:
             return self.main_file
-        if doc == const.DOCUMENT.TRAN:
+        if doc == gaupol.DOCUMENT.TRAN:
             return self.tran_file
         raise ValueError
 
-    @util.asserted_return
+    @gaupol.util.asserted_return
     def get_file_class(self, doc):
         """Get document's file class or None."""
 
-        class_name = self._get_format_class_name(doc)
-        assert class_name is not None
-        return getattr(files, class_name)
+        format = self._get_format(doc)
+        assert format is not None
+        return gaupol.files.get_class(format)
 
     def get_line_lengths_require(self, index, doc):
         assert 0 <= index < len(self.subtitles)
@@ -90,43 +86,43 @@ class UtilityAgent(Delegate):
 
         if self.main_file is not None:
             return self.main_file.mode
-        return const.MODE.TIME
+        return gaupol.MODE.TIME
 
     def get_parser(self, doc):
         """Get parser with proper properties."""
 
-        return Parser(self.get_tag_regex(doc))
+        return gaupol.Parser(self.get_tag_regex(doc))
 
     def get_revertable_action(self, register):
         """Get a new revertable action with proper properties."""
 
-        action = RevertableAction()
+        action = gaupol.RevertableAction()
         action.register = register
         return action
 
     def get_subtitle(self):
         """Get a new subtitle with proper properties."""
 
-        subtitle = Subtitle()
+        subtitle = gaupol.Subtitle()
         subtitle.mode = self.get_mode()
         subtitle.framerate = self.framerate
         return subtitle
 
-    @util.asserted_return
+    @gaupol.util.asserted_return
     def get_tag_library(self, doc):
         """Get document's tag library instance or None."""
 
-        class_name = self._get_format_class_name(doc)
-        assert class_name is not None
-        return getattr(tags, class_name)()
+        format = self._get_format(doc)
+        assert format is not None
+        return gaupol.tags.get_class(format)()
 
-    @util.asserted_return
+    @gaupol.util.asserted_return
     def get_tag_regex(self, doc):
         """Get the regular expression for a tag in document or None."""
 
-        class_name = self._get_format_class_name(doc)
-        assert class_name is not None
-        return getattr(tags, class_name)().tag
+        format = self._get_format(doc)
+        assert format is not None
+        return gaupol.tags.get_class(format)().tag
 
     def get_text_length_require(self, index, doc):
         assert 0 <= index < len(self.subtitles)
@@ -143,8 +139,8 @@ class UtilityAgent(Delegate):
     def get_text_signal(self, doc):
         """Get the 'texts-changed' signal corresponding to document."""
 
-        if doc == const.DOCUMENT.MAIN:
+        if doc == gaupol.DOCUMENT.MAIN:
             return "main-texts-changed"
-        if doc == const.DOCUMENT.TRAN:
+        if doc == gaupol.DOCUMENT.TRAN:
             return "translation-texts-changed"
         raise ValueError

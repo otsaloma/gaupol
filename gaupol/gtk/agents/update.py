@@ -30,7 +30,7 @@ from gaupol.gtk._actions import *
 from gaupol.gtk._actions import ACTIONS
 
 
-class UpdateAgent(Delegate):
+class UpdateAgent(gaupol.Delegate):
 
     """Updating the application GUI.
 
@@ -44,7 +44,7 @@ class UpdateAgent(Delegate):
 
     def __init__(self, master):
 
-        Delegate.__init__(self, master)
+        gaupol.Delegate.__init__(self, master)
         self._message_id = None
         self._message_tag = None
 
@@ -83,10 +83,10 @@ class UpdateAgent(Delegate):
         self.tooltips.enable()
         self.window.set_title(page.tab_label.get_text())
         self.uim.get_action(page.edit_mode.uim_path).set_active(True)
-        path = const.FRAMERATE.uim_paths[page.project.framerate]
+        path = gaupol.gtk.FRAMERATE.uim_paths[page.project.framerate]
         self.uim.get_action(path).set_active(True)
         self.framerate_combo.set_active(page.project.framerate)
-        for i, path in enumerate(const.COLUMN.uim_paths):
+        for i, path in enumerate(gaupol.gtk.COLUMN.uim_paths):
             visible = page.view.get_column(i).props.visible
             self.uim.get_action(path).set_active(visible)
         if page.project.video_path is not None:
@@ -110,8 +110,8 @@ class UpdateAgent(Delegate):
         """Change the style of the main toolbar."""
 
         toolbar = self.uim.get_widget("/ui/main_toolbar")
-        style = conf.application_window.toolbar_style
-        if style == const.TOOLBAR_STYLE.DEFAULT:
+        style = gaupol.gtk.conf.application_window.toolbar_style
+        if style == gaupol.gtk.TOOLBAR_STYLE.DEFAULT:
             return toolbar.unset_style()
         toolbar.set_style(style.value)
 
@@ -144,7 +144,7 @@ class UpdateAgent(Delegate):
         self.update_gui()
         self.emit("pages-reordered", page, index)
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def on_notebook_switch_page(self, notebook, pointer, index):
         """Update GUI for the page switched to."""
 
@@ -186,7 +186,7 @@ class UpdateAgent(Delegate):
 
         state = event.new_window_state
         maximized = bool(state & gtk.gdk.WINDOW_STATE_MAXIMIZED)
-        conf.application_window.maximized = maximized
+        gaupol.gtk.conf.application_window.maximized = maximized
 
     def push_message(self, message, clear=True):
         """Push message to the statusbar."""
@@ -195,7 +195,7 @@ class UpdateAgent(Delegate):
             gobject.source_remove(self._message_tag)
         if self._message_id is not None:
             self.statusbar.remove(0, self._message_id)
-        event_box = util.get_event_box(self.statusbar)
+        event_box = gaupol.gtk.util.get_event_box(self.statusbar)
         self.tooltips.set_tip(event_box, message)
         if message is not None:
             self._message_id = self.statusbar.push(0, message)

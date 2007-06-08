@@ -19,6 +19,9 @@
 """Internal text clipboard."""
 
 
+__all__ = ["Clipboard"]
+
+
 class Clipboard(object):
 
     """Internal text clipboard.

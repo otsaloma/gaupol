@@ -19,9 +19,9 @@
 """Advanced Sub Station Alpha tag library."""
 
 
+import gaupol
 import re
 
-from gaupol import util
 from .ssa import SubStationAlpha
 
 
@@ -29,7 +29,9 @@ class AdvSubStationAlpha(SubStationAlpha):
 
     """Advanced Sub Station Alpha tag library."""
 
-    @util.once
+    format = gaupol.FORMAT.ASS
+
+    @gaupol.util.once
     def _get_decode_tags(self):
         """Get list of tuples of regular expression, replacement, count."""
 
@@ -47,7 +49,7 @@ class AdvSubStationAlpha(SubStationAlpha):
             tags[i] = (re.compile(pattern, flags), replacement, count)
         return tags + SubStationAlpha._get_decode_tags(self)
 
-    @util.once
+    @gaupol.util.once
     def _get_encode_tags(self):
         """Get list of tuples of regular expression, replacement, count."""
 

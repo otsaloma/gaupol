@@ -22,7 +22,7 @@
 from gaupol.base import Delegate
 
 
-class FormatAgent(Delegate):
+class FormatAgent(gaupol.Delegate):
 
     """Formatting text."""
 

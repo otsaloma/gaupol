@@ -24,7 +24,7 @@ from gaupol.gtk import util
 from gaupol.gtk.dialogs import SearchDialog
 
 
-class SearchAgent(Delegate):
+class SearchAgent(gaupol.Delegate):
 
     """Searching for and replacing text.
 
@@ -37,7 +37,7 @@ class SearchAgent(Delegate):
 
     def __init__(self, master):
 
-        Delegate.__init__(self, master)
+        gaupol.Delegate.__init__(self, master)
         self._search_dialog = None
 
     def _on_search_dialog_response(self, *args):
@@ -51,7 +51,7 @@ class SearchAgent(Delegate):
 
         if self._search_dialog is None:
             self._search_dialog = SearchDialog(self.master)
-            util.connect(self, "_search_dialog", "response")
+            gaupol.gtk.util.connect(self, "_search_dialog", "response")
             self._search_dialog.show()
         self._search_dialog.present()
 
@@ -60,7 +60,7 @@ class SearchAgent(Delegate):
 
         if self._search_dialog is None:
             self._search_dialog = SearchDialog(self.master)
-            util.connect(self, "_search_dialog", "response")
+            gaupol.gtk.util.connect(self, "_search_dialog", "response")
         self._search_dialog.next()
 
     def on_find_previous_activate(self, *args):
@@ -68,5 +68,5 @@ class SearchAgent(Delegate):
 
         if self._search_dialog is None:
             self._search_dialog = SearchDialog(self.master)
-            util.connect(self, "_search_dialog", "response")
+            gaupol.gtk.util.connect(self, "_search_dialog", "response")
         self._search_dialog.previous()

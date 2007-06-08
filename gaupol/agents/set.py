@@ -20,20 +20,17 @@
 
 
 import bisect
-
-from gaupol import const, util
-from gaupol.base import Contractual, Delegate
-from gaupol.i18n import _
-from gaupol.reversion import revertable
+import gaupol
+_ = gaupol.i18n._
 
 
-class SetAgent(Delegate):
+class SetAgent(gaupol.Delegate):
 
     """Setting values of single subtitle data units."""
 
     # pylint: disable-msg=E0203,W0201
 
-    __metaclass__ = Contractual
+    __metaclass__ = gaupol.Contractual
 
     def _move_if_needed_require(self, index):
         assert 0 <= index < len(self.subtitles)
@@ -54,7 +51,7 @@ class SetAgent(Delegate):
     def set_duration_require(self, index, value, register=-1):
         assert 0 <= index < len(self.subtitles)
 
-    @revertable
+    @gaupol.util.revertable
     def set_duration(self, index, value, register=-1):
         """Set the value of duration position."""
 
@@ -63,7 +60,7 @@ class SetAgent(Delegate):
         subtitle.duration = value
 
         action = self.get_revertable_action(register)
-        action.docs = [const.DOCUMENT.MAIN, const.DOCUMENT.TRAN]
+        action.docs = [gaupol.DOCUMENT.MAIN, gaupol.DOCUMENT.TRAN]
         action.description = _("Editing position")
         action.revert_method = self.set_end
         action.revert_args = (index, orig_end)
@@ -73,7 +70,7 @@ class SetAgent(Delegate):
     def set_end_require(self, index, value, register=-1):
         assert 0 <= index < len(self.subtitles)
 
-    @revertable
+    @gaupol.util.revertable
     def set_end(self, index, value, register=-1):
         """Set the value of end position."""
 
@@ -82,7 +79,7 @@ class SetAgent(Delegate):
         subtitle.end = value
 
         action = self.get_revertable_action(register)
-        action.docs = [const.DOCUMENT.MAIN, const.DOCUMENT.TRAN]
+        action.docs = [gaupol.DOCUMENT.MAIN, gaupol.DOCUMENT.TRAN]
         action.description = _("Editing position")
         action.revert_method = self.set_end
         action.revert_args = (index, orig_value)
@@ -96,8 +93,8 @@ class SetAgent(Delegate):
         for i in range(len(self.subtitles) - 1):
             assert self.subtitles[i] <= self.subtitles[i + 1]
 
-    @revertable
-    @util.notify_frozen
+    @gaupol.util.revertable
+    @gaupol.util.notify_frozen
     def set_start(self, index, value, register=-1):
         """Set the value of start position."""
 
@@ -107,7 +104,7 @@ class SetAgent(Delegate):
         index = self._move_if_needed(index)
 
         action = self.get_revertable_action(register)
-        action.docs = [const.DOCUMENT.MAIN, const.DOCUMENT.TRAN]
+        action.docs = [gaupol.DOCUMENT.MAIN, gaupol.DOCUMENT.TRAN]
         action.description = _("Editing position")
         action.revert_method = self.set_start
         action.revert_args = (index, orig_value)
@@ -117,8 +114,8 @@ class SetAgent(Delegate):
     def set_text_require(self, index, doc, value, register=-1):
         assert 0 <= index < len(self.subtitles)
 
-    @revertable
-    @util.asserted_return
+    @gaupol.util.revertable
+    @gaupol.util.asserted_return
     def set_text(self, index, doc, value, register=-1):
         """Set the value of document's text."""
 

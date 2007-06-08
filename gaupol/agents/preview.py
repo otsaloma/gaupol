@@ -20,27 +20,25 @@
 
 
 import atexit
+import gaupol
 import os
 import string
 import subprocess
 import tempfile
 
-from gaupol import const, util
-from gaupol.base import Contractual, Delegate
 
-
-class PreviewAgent(Delegate):
+class PreviewAgent(gaupol.Delegate):
 
     """Previewing subtitles with a video player."""
 
     # pylint: disable-msg=E0203,W0201
 
-    __metaclass__ = Contractual
+    __metaclass__ = gaupol.Contractual
 
     def __init__(self, master):
 
-        Delegate.__init__(self, master)
-        util.connect(self, self, "notify::main_file")
+        gaupol.Delegate.__init__(self, master)
+        gaupol.util.connect(self, self, "notify::main_file")
 
     def _get_subtitle_path_require(self, doc):
         assert self.get_file(doc) is not None
@@ -52,10 +50,10 @@ class PreviewAgent(Delegate):
         Raise UnicodeError if encoding temporary file fails.
         Return subtitle file path, True if file is temporary.
         """
-        if doc == const.DOCUMENT.MAIN:
+        if doc == gaupol.DOCUMENT.MAIN:
             if not self.main_changed:
                 return self.main_file.path
-        if doc == const.DOCUMENT.TRAN:
+        if doc == gaupol.DOCUMENT.TRAN:
             if not self.tran_changed:
                 return self.tran_file.path
         return self.get_temp_file_path(doc)
@@ -84,7 +82,7 @@ class PreviewAgent(Delegate):
         self.save(doc, props, False)
         return path
 
-    @util.asserted_return
+    @gaupol.util.asserted_return
     def guess_video_path(self, extensions=None):
         """Guess and return the video file path based on main file's path.
 
@@ -127,7 +125,7 @@ class PreviewAgent(Delegate):
         Return subprocess.POpen instance, command, output path.
         """
         sub_path = sub_path or self._get_subtitle_path(doc)
-        remove = util.silent(OSError)(os.remove)
+        remove = gaupol.util.silent(OSError)(os.remove)
         if sub_path != self.get_file(doc).path:
             atexit.register(remove, sub_path)
         output_fd, output_path = tempfile.mkstemp(".output", "gaupol.")
@@ -135,8 +133,8 @@ class PreviewAgent(Delegate):
         seconds = self.calc.time_to_seconds(time)
         seconds = "%.3f" % max(0.0, seconds - float(offset))
         command = string.Template(command).safe_substitute(
-            SECONDS=seconds, SUBFILE=util.shell_quote(sub_path),
-            VIDEOFILE=util.shell_quote(self.video_path))
-        process = util.start_process(
+            SECONDS=seconds, SUBFILE=gaupol.util.shell_quote(sub_path),
+            VIDEOFILE=gaupol.util.shell_quote(self.video_path))
+        process = gaupol.util.start_process(
             command, stderr=subprocess.STDOUT, stdout=output_fd)
         return process, command, output_path

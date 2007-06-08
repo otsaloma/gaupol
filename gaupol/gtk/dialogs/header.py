@@ -112,27 +112,27 @@ class HeaderDialog(GladeDialog):
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
-        util.connect(self, "_copy_down_button"  , "clicked")
-        util.connect(self, "_copy_up_button"    , "clicked")
-        util.connect(self, "_main_clear_button" , "clicked")
-        util.connect(self, "_main_revert_button", "clicked")
-        util.connect(self, "_main_temp_button"  , "clicked")
-        util.connect(self, "_tran_clear_button" , "clicked")
-        util.connect(self, "_tran_revert_button", "clicked")
-        util.connect(self, "_tran_temp_button"  , "clicked")
-        util.connect(self, self, "response")
+        gaupol.gtk.util.connect(self, "_copy_down_button"  , "clicked")
+        gaupol.gtk.util.connect(self, "_copy_up_button"    , "clicked")
+        gaupol.gtk.util.connect(self, "_main_clear_button" , "clicked")
+        gaupol.gtk.util.connect(self, "_main_revert_button", "clicked")
+        gaupol.gtk.util.connect(self, "_main_temp_button"  , "clicked")
+        gaupol.gtk.util.connect(self, "_tran_clear_button" , "clicked")
+        gaupol.gtk.util.connect(self, "_tran_revert_button", "clicked")
+        gaupol.gtk.util.connect(self, "_tran_temp_button"  , "clicked")
+        gaupol.gtk.util.connect(self, self, "response")
 
     def _init_sizes(self):
         """Initialize widget sizes."""
 
         label = gtk.Label(("M" * 44 + "\n") * 12)
         width, height = label.size_request()
-        width = width + 166 + util.EXTRA
+        width = width + 166 + gaupol.gtk.util.EXTRA
         if self._main_vbox.props.visible and self._tran_vbox.props.visible:
-            height = 2 * height + 205 + util.EXTRA
+            height = 2 * height + 205 + gaupol.gtk.util.EXTRA
         elif self._main_vbox.props.visible or self._tran_vbox.props.visible:
-            height = height + 90 + util.EXTRA
-        util.resize_dialog(self, width, height)
+            height = height + 90 + gaupol.gtk.util.EXTRA
+        gaupol.gtk.util.resize_dialog(self, width, height)
 
     def _on_copy_down_button_clicked(self, *args):
         """Copy main header to translation header."""
@@ -194,7 +194,7 @@ class HeaderDialog(GladeDialog):
 
         for i, file in enumerate(files):
             header = unicode(headers[i])
-            if file.format == const.FORMAT.MPSUB:
+            if file.format == gaupol.gtk.FORMAT.MPSUB:
                 try:
                     file.set_header(header)
                 except ValueError:

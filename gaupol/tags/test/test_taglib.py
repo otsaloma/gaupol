@@ -18,11 +18,11 @@
 # pylint: disable-msg=W0104
 
 
-from gaupol.unittest import TestCase
+from gaupol import unittest
 from .. import taglib
 
 
-class TestTagLibrary(TestCase):
+class TestTagLibrary(unittest.TestCase):
 
     plain_text = \
         "All things weird are normal\n" + \

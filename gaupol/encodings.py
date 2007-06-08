@@ -34,11 +34,10 @@ Module variables:
 from __future__ import with_statement
 
 import codecs
+import gaupol
 import locale
 import re
-
-from gaupol import util
-from gaupol.i18n import _
+_ = gaupol.i18n._
 
 
 _encodings = (
@@ -137,26 +136,24 @@ _re_illegal = re.compile(r"[^a-z0-9_]")
 def _translate_ensure(value, name):
     assert is_valid(value)
 
-@util.contractual
+@gaupol.util.contractual
 def _translate(name):
     """Translate weird encoding name.
 
     Raise ValueError if not found.
     Return python name.
     """
-    from encodings.aliases import aliases
     name = _re_illegal.sub("_", name.lower())
-    if name in aliases:
-        name = aliases[name]
-    for seq in _encodings:
-        if seq[0] == name:
-            return seq[0]
+    name = gaupol.util.get_encoding_alias(name)
+    for item in _encodings:
+        if item[0] == name:
+            return item[0]
     raise ValueError
 
 def _detect_ensure(value, path):
     assert is_valid(value)
 
-@util.contractual
+@gaupol.util.contractual
 def detect(path):
     """Detect the character encoding in file.
 
@@ -182,9 +179,9 @@ def get_description(python_name):
 
     Raise ValueError if not found.
     """
-    for seq in _encodings:
-        if seq[0] == python_name:
-            return seq[2]
+    for item in _encodings:
+        if item[0] == python_name:
+            return item[2]
     raise ValueError
 
 def get_display_name(python_name):
@@ -192,16 +189,16 @@ def get_display_name(python_name):
 
     Raise ValueError if not found.
     """
-    for seq in _encodings:
-        if seq[0] == python_name:
-            return seq[1]
+    for item in _encodings:
+        if item[0] == python_name:
+            return item[1]
     raise ValueError
 
 def get_locale_long_name_require():
     assert get_locale_python_name() is not None
 
-@util.once
-@util.contractual
+@gaupol.util.once
+@gaupol.util.contractual
 def get_locale_long_name():
     """Get the long name for locale encoding.
 
@@ -215,18 +212,16 @@ def get_locale_python_name_ensure(value):
     if value is not None:
         assert is_valid(value)
 
-@util.once
-@util.contractual
+@gaupol.util.once
+@gaupol.util.contractual
+@gaupol.util.asserted_return
 def get_locale_python_name():
     """Get the python name of the locale encoding or None."""
 
-    from encodings.aliases import aliases
     encoding = locale.getpreferredencoding()
-    if encoding is None:
-        return None
+    assert encoding is not None
     encoding = _re_illegal.sub("_", encoding.lower())
-    if encoding in aliases:
-        encoding = aliases[encoding]
+    encoding = gaupol.util.get_encoding_alias(encoding)
     return encoding
 
 def get_long_name(python_name):
@@ -235,9 +230,9 @@ def get_long_name(python_name):
     Raise ValueError if not found.
     Return 'Description (Display name)'.
     """
-    for seq in _encodings:
-        if seq[0] == python_name:
-            fields = {"description": seq[2], "encoding": seq[1]}
+    for item in _encodings:
+        if item[0] == python_name:
+            fields = {"description": item[2], "encoding": item[1]}
             return _("%(description)s (%(encoding)s)") % fields
     raise ValueError
 
@@ -246,9 +241,9 @@ def get_python_name(display_name):
 
     Raise ValueError if not found.
     """
-    for seq in _encodings:
-        if seq[1] == display_name:
-            return seq[0]
+    for item in _encodings:
+        if item[1] == display_name:
+            return item[0]
     raise ValueError
 
 def get_valid_encodings():
@@ -257,8 +252,8 @@ def get_valid_encodings():
     Return list of tuples of python name, display name, description.
     """
     valid_encodings = list(_encodings)
-    for i, seq in enumerate(reversed(valid_encodings)):
-        if not is_valid(seq[0]):
+    for i, item in enumerate(reversed(valid_encodings)):
+        if not is_valid(item[0]):
             valid_encodings.pop(i)
     return valid_encodings
 

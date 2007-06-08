@@ -16,11 +16,11 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol import const, tags
-from gaupol.unittest import TestCase
+import gaupol
+from gaupol import unittest
 
 
-class TestUtilityAgent(TestCase):
+class TestUtilityAgent(unittest.TestCase):
 
     def setup_method(self, method):
 
@@ -28,47 +28,47 @@ class TestUtilityAgent(TestCase):
 
     def test_get_changed(self):
 
-        changed = self.project.get_changed(const.DOCUMENT.MAIN)
+        changed = self.project.get_changed(gaupol.DOCUMENT.MAIN)
         assert changed == self.project.main_changed
-        changed = self.project.get_changed(const.DOCUMENT.TRAN)
+        changed = self.project.get_changed(gaupol.DOCUMENT.TRAN)
         assert changed == self.project.tran_changed
 
     def test_get_file(self):
 
-        file = self.project.get_file(const.DOCUMENT.MAIN)
+        file = self.project.get_file(gaupol.DOCUMENT.MAIN)
         assert file == self.project.main_file
-        file = self.project.get_file(const.DOCUMENT.TRAN)
+        file = self.project.get_file(gaupol.DOCUMENT.TRAN)
         assert file == self.project.tran_file
 
     def test_get_file_class(self):
 
-        cls = self.project.get_file_class(const.DOCUMENT.MAIN)
+        cls = self.project.get_file_class(gaupol.DOCUMENT.MAIN)
         assert cls == self.project.main_file.__class__
-        cls = self.project.get_file_class(const.DOCUMENT.TRAN)
+        cls = self.project.get_file_class(gaupol.DOCUMENT.TRAN)
         assert cls == self.project.tran_file.__class__
 
     def test_get_line_lengths(self):
 
         self.project.subtitles[0].main_text = "<i>test\ntest.</i>"
-        lengths = self.project.get_line_lengths(0, const.DOCUMENT.MAIN)
+        lengths = self.project.get_line_lengths(0, gaupol.DOCUMENT.MAIN)
         assert lengths == [4, 5]
 
     def test_get_mode(self):
 
         self.project.open_main(self.get_subrip_path(), "ascii")
-        assert self.project.get_mode() == const.MODE.TIME
+        assert self.project.get_mode() == gaupol.MODE.TIME
         self.project.open_main(self.get_microdvd_path(), "ascii")
-        assert self.project.get_mode() == const.MODE.FRAME
+        assert self.project.get_mode() == gaupol.MODE.FRAME
 
     def test_get_parser(self):
 
-        doc = const.DOCUMENT.MAIN
+        doc = gaupol.DOCUMENT.MAIN
         parser = self.project.get_parser(doc)
         assert parser.re_tag == self.project.get_tag_regex(doc)
 
     def test_get_revertable_action(self):
 
-        register = const.REGISTER.DO
+        register = gaupol.REGISTER.DO
         action = self.project.get_revertable_action(register)
         assert action.register == register
 
@@ -80,30 +80,30 @@ class TestUtilityAgent(TestCase):
 
     def test_get_tag_library(self):
 
-        taglib = self.project.get_tag_library(const.DOCUMENT.MAIN)
-        class_name = self.project.main_file.__class__.__name__
-        assert taglib == getattr(tags, class_name)()
-        taglib = self.project.get_tag_library(const.DOCUMENT.TRAN)
-        class_name = self.project.tran_file.__class__.__name__
-        assert taglib == getattr(tags, class_name)()
+        taglib = self.project.get_tag_library(gaupol.DOCUMENT.MAIN)
+        format = self.project.main_file.format
+        assert taglib == gaupol.tags.get_class(format)()
+        taglib = self.project.get_tag_library(gaupol.DOCUMENT.TRAN)
+        format = self.project.tran_file.format
+        assert taglib == gaupol.tags.get_class(format)()
 
     def test_get_tag_regex(self):
 
-        re_tag = self.project.get_tag_regex(const.DOCUMENT.MAIN)
+        re_tag = self.project.get_tag_regex(gaupol.DOCUMENT.MAIN)
         assert re_tag is not None
         self.project.main_file = None
-        re_tag = self.project.get_tag_regex(const.DOCUMENT.MAIN)
+        re_tag = self.project.get_tag_regex(gaupol.DOCUMENT.MAIN)
         assert re_tag is None
 
     def test_get_text_length(self):
 
         self.project.subtitles[0].main_text = "<i>test\ntest.</i>"
-        length = self.project.get_text_length(0, const.DOCUMENT.MAIN)
+        length = self.project.get_text_length(0, gaupol.DOCUMENT.MAIN)
         assert length == 10
 
     def test_get_text_signal(self):
 
-        signal = self.project.get_text_signal(const.DOCUMENT.MAIN)
+        signal = self.project.get_text_signal(gaupol.DOCUMENT.MAIN)
         assert signal == "main-texts-changed"
-        signal = self.project.get_text_signal(const.DOCUMENT.TRAN)
+        signal = self.project.get_text_signal(gaupol.DOCUMENT.TRAN)
         assert signal == "translation-texts-changed"

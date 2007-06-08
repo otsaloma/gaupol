@@ -18,11 +18,11 @@
 
 import gtk
 
-from gaupol.gtk.unittest import TestCase
+from gaupol.gtk import unittest
 from .. import search
 
 
-class TestSearchDialog(TestCase):
+class TestSearchDialog(unittest.TestCase):
 
     def run(self):
 

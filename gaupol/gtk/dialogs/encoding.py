@@ -19,13 +19,11 @@
 """Dialogs for selecting character encodings."""
 
 
+import gaupol.gtk
 import gobject
 import gtk
+_ = gaupol.i18n._
 
-from gaupol import enclib
-from gaupol.base import Contractual
-from gaupol.gtk import conf, util
-from gaupol.i18n import _
 from .glade import GladeDialog
 
 
@@ -33,7 +31,7 @@ class EncodingDialog(GladeDialog):
 
     """Dialog for selecting a character encoding."""
 
-    __metaclass__ = Contractual
+    __metaclass__ = gaupol.Contractual
 
     def __init__(self, parent):
 
@@ -49,10 +47,10 @@ class EncodingDialog(GladeDialog):
     def _init_sizes(self):
         """Initialize widget sizes."""
 
-        width, height = util.get_tree_view_size(self._tree_view)
-        width = width + 52 + util.EXTRA
-        height = height + 84 + util.EXTRA
-        util.resize_dialog(self._dialog, width, height, (0.5, 0.5))
+        width, height = gaupol.gtk.util.get_tree_view_size(self._tree_view)
+        width = width + 52 + gaupol.gtk.util.EXTRA
+        height = height + 84 + gaupol.gtk.util.EXTRA
+        gaupol.gtk.util.resize_dialog(self._dialog, width, height, 0.5)
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
@@ -66,7 +64,7 @@ class EncodingDialog(GladeDialog):
         selection = self._tree_view.get_selection()
         selection.set_mode(gtk.SELECTION_SINGLE)
         store = gtk.ListStore(*(gobject.TYPE_STRING,) * 3)
-        for item in enclib.get_valid_encodings():
+        for item in gaupol.encodings.get_valid_encodings():
             store.append([item[0], item[2], item[1]])
         store.set_sort_column_id(1, gtk.SORT_ASCENDING)
         self._tree_view.set_model(store)
@@ -85,9 +83,9 @@ class EncodingDialog(GladeDialog):
 
     def get_encoding_ensure(self, value):
         if value is not None:
-            assert enclib.is_valid(value)
+            assert gaupol.encodings.is_valid(value)
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def get_encoding(self):
         """Get the selected encoding or None."""
 
@@ -108,8 +106,8 @@ class AdvEncodingDialog(EncodingDialog):
         selection.set_mode(gtk.SELECTION_SINGLE)
         columns = (gobject.TYPE_STRING,) * 3 + (gobject.TYPE_BOOLEAN,)
         store = gtk.ListStore(*columns)
-        visibles = conf.encoding.visibles
-        for item in enclib.get_valid_encodings():
+        visibles = gaupol.gtk.conf.encoding.visibles
+        for item in gaupol.encodings.get_valid_encodings():
             store.append([item[0], item[2], item[1], item[0] in visibles])
         store.set_sort_column_id(1, gtk.SORT_ASCENDING)
         self._tree_view.set_model(store)
@@ -136,7 +134,7 @@ class AdvEncodingDialog(EncodingDialog):
 
     def get_visible_encodings_ensure(self, value):
         for name in value:
-            assert enclib.is_valid(name)
+            assert gaupol.encodings.is_valid(name)
 
     def get_visible_encodings(self):
         """Get encodings chosen to be visible."""

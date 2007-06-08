@@ -16,28 +16,38 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol import const
-from gaupol.unittest import TestCase
-from .. import action
+import gaupol
+
+from gaupol import unittest
+from .. import revertable
 
 
-class TestRevertableAction(TestCase):
+class TestRevertableAction(unittest.TestCase):
 
     def setup_method(self, method):
 
         def revert(register=-1):
-            assert register in const.REGISTER.members
-        self.action = action.RevertableAction()
-        self.action.register=const.REGISTER.DO
-        self.action.docs=[const.DOCUMENT.MAIN]
+            assert register in gaupol.REGISTER.members
+        self.action = revertable.RevertableAction()
+        self.action.register=gaupol.REGISTER.DO
+        self.action.docs=[gaupol.DOCUMENT.MAIN]
         self.action.description=""
         self.action.revert_method=revert
 
     def test__get_reversion_register(self):
 
         register = self.action._get_reversion_register()
-        assert register == const.REGISTER.UNDO
+        assert register == gaupol.REGISTER.UNDO
 
     def test_revert(self):
 
         self.action.revert()
+
+
+class TestRevertableActionGroup(unittest.TestCase):
+
+    def test___init__(self):
+
+        action_group = revertable.RevertableActionGroup()
+        action_group.actions = []
+        action_group.description = ""

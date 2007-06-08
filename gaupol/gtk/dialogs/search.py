@@ -88,7 +88,7 @@ class SearchDialog(GladeDialog):
         self._was_next   = None
         self.application = application
 
-        util.prepare_text_view(self._text_view)
+        gaupol.gtk.util.prepare_text_view(self._text_view)
         self._init_data()
         self._init_conf_handlers()
         self._init_dialog_handlers()
@@ -100,7 +100,7 @@ class SearchDialog(GladeDialog):
         self._dialog.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_NORMAL)
         self._dialog.set_default_response(gtk.RESPONSE_CLOSE)
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _add_pattern(self):
         """Add the current pattern to the pattern combo box."""
 
@@ -108,17 +108,17 @@ class SearchDialog(GladeDialog):
         store = self._pattern_combo.get_model()
         assert pattern != self.application.pattern
         self.application.pattern = pattern
-        conf.search.patterns.insert(0, pattern)
-        conf.search.patterns = util.get_unique(conf.search.patterns)
-        while len(conf.search.patterns) > conf.search.max_history:
-            conf.search.patterns.pop()
+        gaupol.gtk.conf.search.patterns.insert(0, pattern)
+        gaupol.gtk.conf.search.patterns = gaupol.gtk.util.get_unique(gaupol.gtk.conf.search.patterns)
+        while len(gaupol.gtk.conf.search.patterns) > gaupol.gtk.conf.search.max_history:
+            gaupol.gtk.conf.search.patterns.pop()
 
         store.clear()
-        for pattern in conf.search.patterns:
+        for pattern in gaupol.gtk.conf.search.patterns:
             store.append([pattern])
         self.application.update_gui()
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _add_replacement(self):
         """Add the current replacement to the replacement combo box."""
 
@@ -126,13 +126,13 @@ class SearchDialog(GladeDialog):
         store = self._replacement_combo.get_model()
         assert replacement != self.application.replacement
         self.application.replacement = replacement
-        conf.search.replacements.insert(0, replacement)
-        conf.search.replacements = util.get_unique(conf.search.replacements)
-        while len(conf.search.replacements) > conf.search.max_history:
-            conf.search.replacements.pop()
+        gaupol.gtk.conf.search.replacements.insert(0, replacement)
+        gaupol.gtk.conf.search.replacements = gaupol.gtk.util.get_unique(gaupol.gtk.conf.search.replacements)
+        while len(gaupol.gtk.conf.search.replacements) > gaupol.gtk.conf.search.max_history:
+            gaupol.gtk.conf.search.replacements.pop()
 
         store.clear()
-        for replacement in conf.search.replacements:
+        for replacement in gaupol.gtk.conf.search.replacements:
             store.append([replacement])
         self.application.update_gui()
 
@@ -192,9 +192,9 @@ class SearchDialog(GladeDialog):
             row = (len(page.project.times) - 1, 0)[next]
         col = page.view.get_focus()[1]
         doc = None
-        if col in (MTXT, TTXT):
+        if col in (gaupol.gtk.COLUMN.MAIN_TEXT, gaupol.gtk.COLUMN.TRAN_TEXT):
             doc = page.text_column_to_document(col)
-        docs = [page.text_column_to_document(x) for x in conf.search.cols]
+        docs = [page.text_column_to_document(x) for x in gaupol.gtk.conf.search.cols]
         if doc is None or doc not in docs:
             doc = (docs[-1], docs[0])[next]
         pos = self._get_cursor_offset(page, row, doc, next)
@@ -205,8 +205,8 @@ class SearchDialog(GladeDialog):
 
         def update_page(page):
             translate = page.text_column_to_document
-            docs = [translate(x) for x in conf.search.cols]
-            wrap = (conf.search.target != const.TARGET.ALL)
+            docs = [translate(x) for x in gaupol.gtk.conf.search.cols]
+            wrap = (gaupol.gtk.conf.search.target != gaupol.gtk.TARGET.ALL)
             page.project.set_search_target(None, docs, wrap)
 
         def update_pages(*args):
@@ -214,8 +214,8 @@ class SearchDialog(GladeDialog):
                 update_page(page)
 
         self.application.connect("page-added", update_pages)
-        conf.search.connect("notify::cols", update_pages)
-        conf.search.connect("notify::target", update_pages)
+        gaupol.gtk.conf.search.connect("notify::cols", update_pages)
+        gaupol.gtk.conf.search.connect("notify::target", update_pages)
         update_pages()
 
     def _init_data(self):
@@ -223,23 +223,23 @@ class SearchDialog(GladeDialog):
 
         self._pattern_entry.set_text(self.application.pattern)
         self._replacement_entry.set_text(self.application.replacement)
-        self._regex_check.set_active(conf.search.regex)
-        self._ignore_case_check.set_active(conf.search.ignore_case)
+        self._regex_check.set_active(gaupol.gtk.conf.search.regex)
+        self._ignore_case_check.set_active(gaupol.gtk.conf.search.ignore_case)
 
-        target = conf.search.target
-        self._main_check.set_active(MTXT in conf.search.cols)
-        self._tran_check.set_active(TTXT in conf.search.cols)
-        self._all_radio.set_active(target == const.TARGET.ALL)
-        self._current_radio.set_active(target == const.TARGET.CURRENT)
+        target = gaupol.gtk.conf.search.target
+        self._main_check.set_active(gaupol.gtk.COLUMN.MAIN_TEXT in gaupol.gtk.conf.search.cols)
+        self._tran_check.set_active(gaupol.gtk.COLUMN.TRAN_TEXT in gaupol.gtk.conf.search.cols)
+        self._all_radio.set_active(target == gaupol.gtk.TARGET.ALL)
+        self._current_radio.set_active(target == gaupol.gtk.TARGET.CURRENT)
 
         store = self._pattern_combo.get_model()
         store.clear()
-        for pattern in conf.search.patterns:
+        for pattern in gaupol.gtk.conf.search.patterns:
             store.append([pattern])
 
         store = self._replacement_combo.get_model()
         store.clear()
-        for replacement in conf.search.replacements:
+        for replacement in gaupol.gtk.conf.search.replacements:
             store.append([replacement])
 
     def _init_dialog_handlers(self):
@@ -249,26 +249,26 @@ class SearchDialog(GladeDialog):
             self._pattern_entry.select_region(0, -1)
             self._pattern_entry.grab_focus()
         self._dialog.connect("show", focus)
-        util.connect(self, self, "response")
+        gaupol.gtk.util.connect(self, self, "response")
 
     def _init_search_handlers(self):
         """Initialize search signal handlers."""
 
-        util.connect(self, "_next_button"       , "clicked" )
-        util.connect(self, "_pattern_entry"     , "changed" )
-        util.connect(self, "_previous_button"   , "clicked" )
-        util.connect(self, "_regex_check"       , "toggled" )
-        util.connect(self, "_replace_all_button", "clicked" )
-        util.connect(self, "_replace_button"    , "clicked" )
+        gaupol.gtk.util.connect(self, "_next_button"       , "clicked" )
+        gaupol.gtk.util.connect(self, "_pattern_entry"     , "changed" )
+        gaupol.gtk.util.connect(self, "_previous_button"   , "clicked" )
+        gaupol.gtk.util.connect(self, "_regex_check"       , "toggled" )
+        gaupol.gtk.util.connect(self, "_replace_all_button", "clicked" )
+        gaupol.gtk.util.connect(self, "_replace_button"    , "clicked" )
 
         def disable_replace(*args):
             self._replace_button.set_sensitive(False)
         text_buffer = self._text_view.get_buffer()
         text_buffer.connect("changed", disable_replace)
-        util.connect(self, "_text_view", "focus-out-event")
+        gaupol.gtk.util.connect(self, "_text_view", "focus-out-event")
 
         def save_ignore_case(check_button):
-            conf.search.ignore_case = check_button.get_active()
+            gaupol.gtk.conf.search.ignore_case = check_button.get_active()
         self._ignore_case_check.connect("toggled", save_ignore_case)
 
     def _init_sensitivities(self):
@@ -287,8 +287,8 @@ class SearchDialog(GladeDialog):
         """Initialize widget sizes."""
 
         label = gtk.Label("\n".join(["M" * 34] * 4))
-        if not conf.editor.use_default_font:
-            util.set_label_font(label, conf.editor.font)
+        if not gaupol.gtk.conf.editor.use_default_font:
+            gaupol.gtk.util.set_label_font(label, gaupol.gtk.conf.editor.font)
         width, height = label.size_request()
         self._text_view.set_size_request(width + 4, height + 7)
 
@@ -296,21 +296,21 @@ class SearchDialog(GladeDialog):
         """Initialize target signal handlers."""
 
         def save_columns(*args):
-            main = ([MTXT] if self._main_check.get_active() else [])
-            tran = ([TTXT] if self._tran_check.get_active() else [])
-            conf.search.cols = (main + tran)
+            main = ([gaupol.gtk.COLUMN.MAIN_TEXT] if self._main_check.get_active() else [])
+            tran = ([gaupol.gtk.COLUMN.TRAN_TEXT] if self._tran_check.get_active() else [])
+            gaupol.gtk.conf.search.cols = (main + tran)
         self._main_check.connect("toggled", save_columns)
         self._tran_check.connect("toggled", save_columns)
 
         def save_target(*args):
             if self._current_radio.get_active():
-                conf.search.target = const.TARGET.CURRENT
+                gaupol.gtk.conf.search.target = gaupol.gtk.TARGET.CURRENT
             elif self._all_radio.get_active():
-                conf.search.target = const.TARGET.ALL
+                gaupol.gtk.conf.search.target = gaupol.gtk.TARGET.ALL
         self._current_radio.connect("toggled", save_target)
         self._all_radio.connect("toggled", save_target)
 
-    @util.silent(Default)
+    @gaupol.gtk.util.silent(Default)
     def _on_next_button_clicked(self, *args):
         """Find the next match of pattern."""
 
@@ -326,7 +326,7 @@ class SearchDialog(GladeDialog):
         self._previous_button.set_sensitive(sensitive)
         self._replace_all_button.set_sensitive(sensitive)
 
-    @util.silent(Default)
+    @gaupol.gtk.util.silent(Default)
     def _on_previous_button_clicked(self, *args):
         """Find the previous match of pattern."""
 
@@ -338,7 +338,7 @@ class SearchDialog(GladeDialog):
         """Save regular expression setting and update sensitivities."""
 
         active = check_button.get_active()
-        conf.search.regex = active
+        gaupol.gtk.conf.search.regex = active
         self.set_response_sensitive(gtk.RESPONSE_HELP, active)
 
     def _on_replace_all_button_clicked(self, *args):
@@ -346,9 +346,9 @@ class SearchDialog(GladeDialog):
 
         # Make sure the text view experiences a focus-out-event.
         self._replace_all_button.grab_focus()
-        util.set_cursor_busy(self._dialog)
+        gaupol.gtk.util.set_cursor_busy(self._dialog)
         self.replace_all()
-        util.set_cursor_normal(self._dialog)
+        gaupol.gtk.util.set_cursor_normal(self._dialog)
 
     def _on_replace_button_clicked(self, *args):
         """Replace the current match."""
@@ -361,10 +361,10 @@ class SearchDialog(GladeDialog):
         """Do not send response if browsing help."""
 
         if response == gtk.RESPONSE_HELP:
-            util.browse_url(urls.REGEX_HELP)
+            gaupol.gtk.util.browse_url(gaupol.gtk.REGEX_HELP)
             self.stop_emission("response")
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _on_text_view_focus_out_event(self, text_view, event):
         """Save changes made in the text view."""
 
@@ -389,7 +389,7 @@ class SearchDialog(GladeDialog):
         if not pattern:
             raise Default
         ignore_case = self._ignore_case_check.get_active()
-        if not conf.search.regex:
+        if not gaupol.gtk.conf.search.regex:
             return page.project.set_search_string(pattern, ignore_case)
         flags = (re.IGNORECASE if ignore_case else 0)
         try:
@@ -446,7 +446,7 @@ class SearchDialog(GladeDialog):
                 row, doc, span = page.project.find_next(row, doc, pos)
                 return self._admit_success(page, row, doc, span, True)
             except StopIteration:
-                if conf.search.target == const.TARGET.CURRENT:
+                if gaupol.gtk.conf.search.target == gaupol.gtk.TARGET.CURRENT:
                     # Fail wrapped single-page search.
                     return self._admit_failure()
                 # Proceed to the next page.
@@ -471,14 +471,14 @@ class SearchDialog(GladeDialog):
                 row, doc, span = page.project.find_previous(row, doc, pos)
                 return self._admit_success(page, row, doc, span, False)
             except StopIteration:
-                if conf.search.target == const.TARGET.CURRENT:
+                if gaupol.gtk.conf.search.target == gaupol.gtk.TARGET.CURRENT:
                     # Fail wrapped single-page search.
                     return self._admit_failure()
                 # Proceed to the previous page.
                 row = doc = pos = None
         self._admit_failure()
 
-    @util.silent(AssertionError, Default)
+    @gaupol.gtk.util.silent(AssertionError, Default)
     def replace(self):
         """Replace the current match."""
 
@@ -497,9 +497,9 @@ class SearchDialog(GladeDialog):
         """Replace all matches of pattern."""
 
         count = 0
-        if conf.search.target == const.TARGET.CURRENT:
+        if gaupol.gtk.conf.search.target == gaupol.gtk.TARGET.CURRENT:
             pages = [self.application.get_current_page()]
-        elif conf.search.target == const.TARGET.ALL:
+        elif gaupol.gtk.conf.search.target == gaupol.gtk.TARGET.ALL:
             pages = self.application.pages
         for page in pages:
             self._set_pattern(page)

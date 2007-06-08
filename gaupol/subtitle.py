@@ -19,8 +19,9 @@
 """Single subtitle."""
 
 
-from gaupol import const
-from gaupol.calculator import Calculator
+import gaupol
+
+__all__ = ["Subtitle"]
 
 
 class Subtitle(object):
@@ -52,9 +53,9 @@ class Subtitle(object):
     def __cmp__(self, other):
         """Compare start positions in this subtitle's mode."""
 
-        if self.mode == const.MODE.TIME:
+        if self.mode == gaupol.MODE.TIME:
             return cmp(self.start_time, other.start_time)
-        if self.mode == const.MODE.FRAME:
+        if self.mode == gaupol.MODE.FRAME:
             return cmp(self.start_frame, other.start_frame)
         raise ValueError
 
@@ -65,36 +66,36 @@ class Subtitle(object):
         self._main_text = ""
         self._tran_text = ""
 
-        self.mode = const.MODE.TIME
-        self._framerate = const.FRAMERATE.P24
-        self._calc = Calculator(self._framerate)
+        self._mode = gaupol.MODE.TIME
+        self._framerate = gaupol.FRAMERATE.P24
+        self._calc = gaupol.Calculator(self._framerate)
 
     def _convert_position(self, value):
         """Return value of position in correct mode."""
 
         if isinstance(value, basestring):
-            if self.mode == const.MODE.TIME:
+            if self.mode == gaupol.MODE.TIME:
                 return value
-            if self.mode == const.MODE.FRAME:
+            if self.mode == gaupol.MODE.FRAME:
                 return self._calc.time_to_frame(value)
         if isinstance(value, int):
-            if self.mode == const.MODE.TIME:
+            if self.mode == gaupol.MODE.TIME:
                 return self._calc.frame_to_time(value)
-            if self.mode == const.MODE.FRAME:
+            if self.mode == gaupol.MODE.FRAME:
                 return value
         if isinstance(value, float):
-            if self.mode == const.MODE.TIME:
+            if self.mode == gaupol.MODE.TIME:
                 return self._calc.seconds_to_time(value)
-            if self.mode == const.MODE.FRAME:
+            if self.mode == gaupol.MODE.FRAME:
                 return self._calc.seconds_to_frame(value)
         raise ValueError
 
     def _get_duration(self):
         """Get the duration in correct mode."""
 
-        if self.mode == const.MODE.TIME:
+        if self.mode == gaupol.MODE.TIME:
             return self._get_duration_time()
-        if self.mode == const.MODE.FRAME:
+        if self.mode == gaupol.MODE.FRAME:
             return self._get_duration_frame()
         raise ValueError
 
@@ -124,9 +125,9 @@ class Subtitle(object):
     def _get_end_frame(self):
         """Get the end position as frame."""
 
-        if self.mode == const.MODE.TIME:
+        if self.mode == gaupol.MODE.TIME:
             return self._calc.time_to_frame(self._end)
-        if self.mode == const.MODE.FRAME:
+        if self.mode == gaupol.MODE.FRAME:
             return self._end
         raise ValueError
 
@@ -139,9 +140,9 @@ class Subtitle(object):
     def _get_end_time(self):
         """Get the end position as time."""
 
-        if self.mode == const.MODE.TIME:
+        if self.mode == gaupol.MODE.TIME:
             return self._end
-        if self.mode == const.MODE.FRAME:
+        if self.mode == gaupol.MODE.FRAME:
             return self._calc.frame_to_time(self._end)
         raise ValueError
 
@@ -155,6 +156,11 @@ class Subtitle(object):
 
         return self._main_text
 
+    def _get_mode(self):
+        """Get the current position mode."""
+
+        return self._mode
+
     def _get_start(self):
         """Get the start position in correct mode."""
 
@@ -163,9 +169,9 @@ class Subtitle(object):
     def _get_start_frame(self):
         """Get the start position as frame."""
 
-        if self.mode == const.MODE.TIME:
+        if self.mode == gaupol.MODE.TIME:
             return self._calc.time_to_frame(self._start)
-        if self.mode == const.MODE.FRAME:
+        if self.mode == gaupol.MODE.FRAME:
             return self._start
         raise ValueError
 
@@ -178,9 +184,9 @@ class Subtitle(object):
     def _get_start_time(self):
         """Get the start positions as time."""
 
-        if self.mode == const.MODE.TIME:
+        if self.mode == gaupol.MODE.TIME:
             return self._start
-        if self.mode == const.MODE.FRAME:
+        if self.mode == gaupol.MODE.FRAME:
             return self._calc.frame_to_time(self._start)
         raise ValueError
 
@@ -210,12 +216,23 @@ class Subtitle(object):
         """Set the framerate."""
 
         self._framerate = value
-        self._calc = Calculator(value)
+        self._calc = gaupol.Calculator(value)
 
     def _set_main_text(self, value):
         """Set the main text."""
 
         self._main_text = unicode(value)
+
+    def _set_mode(self, mode):
+        """Set the current position mode."""
+
+        if mode == gaupol.MODE.TIME:
+            self._start = self.start_time
+            self._end = self.end_time
+        elif mode == gaupol.MODE.FRAME:
+            self._start = self.start_frame
+            self._end = self.end_frame
+        self._mode = mode
 
     def _set_start(self, value):
         """Set the start position from value."""
@@ -232,10 +249,10 @@ class Subtitle(object):
 
         coefficient = framerate.value / self._framerate.value
         self._set_framerate(framerate)
-        if self.mode == const.MODE.TIME:
+        if self.mode == gaupol.MODE.TIME:
             start = self.start_seconds / coefficient
             end = self.end_seconds / coefficient
-        elif self.mode == const.MODE.FRAME:
+        elif self.mode == gaupol.MODE.FRAME:
             start = int(round(coefficient * self.start_frame, 0))
             end = int(round(coefficient * self.end_frame, 0))
         self._set_start(start)
@@ -249,7 +266,7 @@ class Subtitle(object):
         subtitle._end = self._end
         subtitle._main_text = self._main_text
         subtitle._tran_text = self._tran_text
-        subtitle.mode = self.mode
+        subtitle._mode = self._mode
         subtitle._framerate = self._framerate
         subtitle._calc = self._calc
         return subtitle
@@ -257,55 +274,55 @@ class Subtitle(object):
     def get_duration(self, mode):
         """Get the duration in mode."""
 
-        if mode == const.MODE.TIME:
+        if mode == gaupol.MODE.TIME:
             return self.duration_time
-        if mode == const.MODE.FRAME:
+        if mode == gaupol.MODE.FRAME:
             return self.duration_frame
         raise ValueError
 
     def get_end(self, mode):
         """Get the start position in mode."""
 
-        if mode == const.MODE.TIME:
+        if mode == gaupol.MODE.TIME:
             return self.end_time
-        if mode == const.MODE.FRAME:
+        if mode == gaupol.MODE.FRAME:
             return self.end_frame
         raise ValueError
 
     def get_start(self, mode):
         """Get the start position in mode."""
 
-        if mode == const.MODE.TIME:
+        if mode == gaupol.MODE.TIME:
             return self.start_time
-        if mode == const.MODE.FRAME:
+        if mode == gaupol.MODE.FRAME:
             return self.start_frame
         raise ValueError
 
     def get_text(self, doc):
         """Get the text corresponding to document."""
 
-        if doc == const.DOCUMENT.MAIN:
+        if doc == gaupol.DOCUMENT.MAIN:
             return self.main_text
-        if doc == const.DOCUMENT.TRAN:
+        if doc == gaupol.DOCUMENT.TRAN:
             return self.tran_text
         raise ValueError
 
     def set_text(self, doc, value):
         """set the text corresponding to document."""
 
-        if doc == const.DOCUMENT.MAIN:
+        if doc == gaupol.DOCUMENT.MAIN:
             return self._set_main_text(value)
-        if doc == const.DOCUMENT.TRAN:
+        if doc == gaupol.DOCUMENT.TRAN:
             return self._set_tran_text(value)
         raise ValueError
 
     def scale_positions(self, value):
         """Multiply start and end positions by value."""
 
-        if self.mode == const.MODE.TIME:
+        if self.mode == gaupol.MODE.TIME:
             self.start = self._get_start_seconds() * value
             self.end = self._get_end_seconds() * value
-        elif self.mode == const.MODE.FRAME:
+        elif self.mode == gaupol.MODE.FRAME:
             self.start = int(round(self._start * value, 0))
             self.end = int(round(self._end * value, 0))
 
@@ -344,4 +361,5 @@ class Subtitle(object):
     duration_seconds = property(_get_duration_seconds, None)
     main_text = property(_get_main_text, _set_main_text)
     tran_text = property(_get_tran_text, _set_tran_text)
+    mode = property(_get_mode, _set_mode)
     framerate = property(_get_framerate, _set_framerate)

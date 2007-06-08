@@ -19,11 +19,11 @@
 import gtk
 
 from gaupol.gtk import const
-from gaupol.gtk.unittest import TestCase
+from gaupol.gtk import unittest
 from .. import posadjust
 
 
-class _Test_PositionAdjustDialog(TestCase):
+class _Test_PositionAdjustDialog(unittest.TestCase):
 
     # pylint: disable-msg=E1101
 
@@ -39,7 +39,7 @@ class _Test_PositionAdjustDialog(TestCase):
     def test__get_target(self):
 
         target = self.dialog._get_target()
-        assert target in (const.TARGET.SELECTED, const.TARGET.CURRENT)
+        assert target in (gaupol.gtk.TARGET.SELECTED, gaupol.gtk.TARGET.CURRENT)
 
     def test__get_target_rows(self):
 

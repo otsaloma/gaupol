@@ -19,20 +19,14 @@
 """GTK user interface controller."""
 
 
+import gaupol.gtk
 import gtk
 import os
 import pango
-
-from gaupol import paths
-from gaupol.base import Contractual, Observable
-from gaupol.clipboard import Clipboard
-from gaupol.gtk import actions, agents, conf, const, util
-from gaupol.gtk.output import OutputWindow
-from gaupol.gtk.runner import Runner
-from gaupol.i18n import _
+_ = gaupol.i18n._
 
 
-class Application(Observable, Runner):
+class Application(gaupol.Observable, gaupol.gtk.Runner):
 
     """GTK user interface controller.
 
@@ -53,7 +47,7 @@ class Application(Observable, Runner):
     See gaupol.gtk.agents for application methods provided by agents.
     """
 
-    __metaclass__ = Contractual
+    __metaclass__ = gaupol.Contractual
 
     _signals = [
         "page-added",
@@ -68,9 +62,9 @@ class Application(Observable, Runner):
     def __init__(self):
 
         # pylint: disable-msg=W0231
-        Observable.__init__(self)
+        gaupol.Observable.__init__(self)
         self._delegations = {}
-        self.clipboard = Clipboard()
+        self.clipboard = gaupol.Clipboard()
         self.counter = 0
         self.framerate_combo = None
         self.notebook = None
@@ -94,8 +88,8 @@ class Application(Observable, Runner):
     def _init_delegations(self):
         """Initialize the delegation mappings."""
 
-        for agent_class_name in agents.__all__:
-            agent = getattr(agents, agent_class_name)(self)
+        for agent_class_name in gaupol.gtk.agents.__all__:
+            agent = getattr(gaupol.gtk.agents, agent_class_name)(self)
             attrs = [x for x in dir(agent) if not x.startswith("_")]
             attrs = [(x, getattr(agent, x)) for x in attrs]
             attrs = [(x, y) for (x, y) in attrs if callable(y)]
@@ -109,10 +103,10 @@ class Application(Observable, Runner):
 
         # FIX:
         self.framerate_combo = gtk.combo_box_new_text()
-        for name in const.FRAMERATE.display_names:
+        for name in gaupol.gtk.FRAMERATE.labels:
             self.framerate_combo.append_text(name)
-        #self.framerate_combo.set_active(conf.editor.framerate)
-        #util.connect(self, "framerate_combo", "changed")
+        #self.framerate_combo.set_active(gaupol.gtk.conf.editor.framerate)
+        #gaupol.gtk.util.connect(self, "framerate_combo", "changed")
 
         tool_item = gtk.ToolItem()
         tool_item.set_border_width(4)
@@ -157,10 +151,10 @@ class Application(Observable, Runner):
         #self._init_redo_button()
         #self._init_undo_button()
         toolbar = self.uim.get_widget("/ui/main_toolbar")
-        style = conf.application_window.toolbar_style
-        if style != const.TOOLBAR_STYLE.DEFAULT:
+        style = gaupol.gtk.conf.application_window.toolbar_style
+        if style != gaupol.gtk.TOOLBAR_STYLE.DEFAULT:
             toolbar.set_style(style.value)
-        #conf.connect(self, "application_window", "toolbar_style")
+        #gaupol.gtk.conf.connect(self, "application_window", "toolbar_style")
         vbox.pack_start(toolbar, False, False, 0)
 
     def _init_menubar(self, vbox):
@@ -179,8 +173,8 @@ class Application(Observable, Runner):
         targets = [("text/uri-list", 0, 0)]
         types = gtk.gdk.ACTION_COPY
         self.notebook.drag_dest_set(flags, targets, types)
-        #util.connect(self, "notebook", "drag-data-received")
-        #util.connect(self, "notebook", "page-reordered")
+        #gaupol.gtk.util.connect(self, "notebook", "drag-data-received")
+        #gaupol.gtk.util.connect(self, "notebook", "page-reordered")
         #callback = self.on_notebook_switch_page
         #self.notebook.connect_after("switch-page", callback)
         vbox.pack_start(self.notebook, True , True , 0)
@@ -200,9 +194,9 @@ class Application(Observable, Runner):
         """Initialize the output window."""
 
         # FIX:
-        self.output_window = OutputWindow()
-        #util.connect(self, "output_window", "notify::visible")
-        self.output_window.props.visible = conf.output_window.show
+        self.output_window = gaupol.gtk.OutputWindow()
+        #gaupol.gtk.util.connect(self, "output_window", "notify::visible")
+        self.output_window.props.visible = gaupol.gtk.conf.output_window.show
 
     def _init_recent_menus(self):
         """Initialize the recent file menus."""
@@ -243,8 +237,8 @@ class Application(Observable, Runner):
         self.uim = gtk.UIManager()
         action_group = gtk.ActionGroup("main")
         self._init_uim_menus(action_group)
-        for name in actions.__all__:
-            action = getattr(actions, name)()
+        for name in gaupol.gtk.actions.__all__:
+            action = getattr(gaupol.gtk.actions, name)()
             action.finalize(self)
             action_group.add_action_with_accel(action, action.accelerator)
         self._init_uim_radio_groups(action_group)
@@ -253,7 +247,7 @@ class Application(Observable, Runner):
         self.uim.insert_action_group(action_group, -1)
         action_group = gtk.ActionGroup("projects")
         self.uim.insert_action_group(action_group, -1)
-        ui_xml_file = os.path.join(paths.DATA_DIR, "ui.xml")
+        ui_xml_file = os.path.join(gaupol.DATA_DIR, "ui.xml")
         self.uim.add_ui_from_file(ui_xml_file)
         self.window.add_accel_group(self.uim.get_accel_group())
         self.uim.ensure_update()
@@ -261,7 +255,7 @@ class Application(Observable, Runner):
     def _init_uim_menus(self, action_group):
         """Initialize the top-level UI manager menus."""
 
-        menu_items = [
+        actions = [
             ("show_file_menu", None, _("_File")),
             ("show_edit_menu", None, _("_Edit")),
             ("show_view_menu", None, _("_View")),
@@ -269,7 +263,7 @@ class Application(Observable, Runner):
             ("show_tools_menu", None, _("T_ools")),
             ("show_projects_menu", None, _("_Projects")),
             ("show_help_menu", None, _("_Help")),]
-        action_group.add_actions(menu_items)
+        action_group.add_actions(actions)
 
         # FIX:
         action = self.uim.get_action("/ui/menubar/projects")
@@ -279,14 +273,14 @@ class Application(Observable, Runner):
     def _init_uim_radio_groups(self, action_group):
         """Initialize the groups of radio actions in action group."""
 
-        radios = action_group.list_actions()
-        radios = [x for x in radios if isinstance(x, gtk.RadioAction)]
-        for group in set((x.group for x in radios)):
+        actions = action_group.list_actions()
+        actions = [x for x in actions if isinstance(x, gtk.RadioAction)]
+        for group in set((x.group for x in actions)):
             instance = None
-            for radio in (x for x in radios if x.group == group):
+            for action in (x for x in actions if x.group == group):
                 if instance is not None:
-                    radio.set_group(instance)
-                instance = instance or radio
+                    action.set_group(instance)
+                instance = instance or action
 
     def _init_undo_button(self):
         """Initialize the undo button on the main toolbar."""
@@ -302,12 +296,12 @@ class Application(Observable, Runner):
     def _init_visibilities(self):
         """Initialize visibilities of hideable widgets."""
 
-        visible = conf.application_window.show_main_toolbar
+        visible = gaupol.gtk.conf.application_window.show_main_toolbar
         toolbar = self.uim.get_widget("/ui/main_toolbar")
         toolbar.props.visible = visible
-        visible = conf.application_window.show_video_toolbar
+        visible = gaupol.gtk.conf.application_window.show_video_toolbar
         self.video_toolbar.props.visible = visible
-        visible = conf.application_window.show_statusbar
+        visible = gaupol.gtk.conf.application_window.show_statusbar
         self.statusbar.props.visible = visible
 
     def _init_video_button(self):
@@ -333,8 +327,8 @@ class Application(Observable, Runner):
         targets = [("text/uri-list", 0, 0)]
         types = gtk.gdk.ACTION_COPY
         self.video_button.drag_dest_set(flags, targets, types)
-        #util.connect(self, "video_button", "clicked")
-        #util.connect(self, "video_button", "drag-data-received")
+        #gaupol.gtk.util.connect(self, "video_button", "clicked")
+        #gaupol.gtk.util.connect(self, "video_button", "drag-data-received")
 
         tool_item = gtk.ToolItem()
         tool_item.set_border_width(4)
@@ -369,19 +363,19 @@ class Application(Observable, Runner):
         icon_theme = gtk.icon_theme_get_default()
         self.window.set_icon_name("gaupol")
         gtk.window_set_default_icon_name("gaupol")
-        self.window.resize(*conf.application_window.size)
-        self.window.move(*conf.application_window.position)
-        if conf.application_window.maximized:
+        self.window.resize(*gaupol.gtk.conf.application_window.size)
+        self.window.move(*gaupol.gtk.conf.application_window.position)
+        if gaupol.gtk.conf.application_window.maximized:
             self.window.maximize()
-        #util.connect(self, "window", "delete-event")
-        #util.connect(self, "window", "window-state-event")
+        #gaupol.gtk.util.connect(self, "window", "delete-event")
+        #gaupol.gtk.util.connect(self, "window", "window-state-event")
 
     def _invariant(self):
         for i, page in enumerate(self.pages):
             value = self.notebook.get_nth_page(i)
             assert value.get_child() == page.view
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def get_current_page(self):
         """Get the currently active page or None."""
 

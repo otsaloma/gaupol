@@ -17,10 +17,10 @@
 
 
 import gaupol
-from gaupol.unittest import TestCase
+from gaupol import unittest
 
 
-class TestModule(TestCase):
+class TestModule(unittest.TestCase):
 
     def test___version__(self):
 

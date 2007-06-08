@@ -18,11 +18,11 @@
 
 import gtk
 
-from gaupol.gtk.unittest import TestCase
+from gaupol.gtk import unittest
 from .. import multiclose
 
 
-class TestMultiCloseDialog(TestCase):
+class TestMultiCloseDialog(unittest.TestCase):
 
     def run(self):
 

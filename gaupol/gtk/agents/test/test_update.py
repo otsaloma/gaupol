@@ -17,10 +17,10 @@
 
 
 from gaupol.gtk import conf, const
-from gaupol.gtk.unittest import TestCase
+from gaupol.gtk import unittest
 
 
-class TestUpdateAgent(TestCase):
+class TestUpdateAgent(unittest.TestCase):
 
     def setup_method(self, method):
 
@@ -38,8 +38,8 @@ class TestUpdateAgent(TestCase):
 
     def test_on_conf_application_window_notify_toolbar_style(self):
 
-        for style in const.TOOLBAR_STYLE.members:
-            conf.application_window.toolbar_style = style
+        for style in gaupol.gtk.TOOLBAR_STYLE.members:
+            gaupol.gtk.conf.application_window.toolbar_style = style
 
     def test_on_move_tab_left_activate(self):
 

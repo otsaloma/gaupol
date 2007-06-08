@@ -26,7 +26,7 @@ from gaupol.gtk.dialogs import FrameShiftDialog, TimeShiftDialog
 from gaupol.gtk.dialogs import FramerateConvertDialog
 
 
-class PositionAgent(Delegate):
+class PositionAgent(gaupol.Delegate):
 
     """Editing times and frames."""
 

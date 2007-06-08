@@ -20,7 +20,7 @@
 
 Module variables:
  * BUSY_CURSOR: gtk.gdk.Cursor used when application not idle
- * COMBO_SEP: String rendered as a separator in combo boxes
+ * COMBO_SEPARATOR: String rendered as a separator in combo boxes
  * EXTRA: Extra length to add to size calculations
  * HAND_CURSOR: gtk.gdk.Cursor for use with hyperlinks
  * INSERT_CURSOR: gtk.gdk.Cursor for editable text widgets
@@ -34,21 +34,17 @@ different themes. Let the EXTRA constant very vaguely account for that.
 
 
 import functools
+import gaupol.gtk
 import gobject
-import gtk
 import gtk.glade
 import os
 import pango
 
-from gaupol import paths
-from gaupol.base import Contractual
-from gaupol.gtk import conf, const, lengthlib
-from gaupol.gtk.index import *
 from gaupol.util import *
 
 
 BUSY_CURSOR = gtk.gdk.Cursor(gtk.gdk.WATCH)
-COMBO_SEP = "<separator/>"
+COMBO_SEPARATOR = "<separator/>"
 EXTRA = 36
 HAND_CURSOR = gtk.gdk.Cursor(gtk.gdk.HAND2)
 INSERT_CURSOR = gtk.gdk.Cursor(gtk.gdk.XTERM)
@@ -71,18 +67,18 @@ def idle_method(function):
 def document_to_text_column(doc):
     """Translate document index to text column index."""
 
-    if doc == const.DOCUMENT.MAIN:
-        return MTXT
-    if doc == const.DOCUMENT.TRAN:
-        return TTXT
+    if doc == gaupol.gtk.DOCUMENT.MAIN:
+        return gaupol.gtk.COLUMN.MAIN_TEXT
+    if doc == gaupol.gtk.DOCUMENT.TRAN:
+        return gaupol.gtk.COLUMN.TRAN_TEXT
     raise ValueError
 
-@once
-def get_contractual_metaclass():
-    """Return Contractual metaclass for subclasses of GObject."""
+def get_font():
+    """Get custom font or blank string."""
 
-    name = "GObjectMetaContractual"
-    return type(name, (gobject.GObjectMeta, Contractual), {})
+    if not gaupol.gtk.gaupol.gtk.conf.editor.use_default_font:
+        return gaupol.gtk.gaupol.gtk.conf.editor.font
+    return ""
 
 def get_glade_xml(name, root=None, directory=None):
     """Get gtk.glade.XML object from Glade file path.
@@ -92,22 +88,9 @@ def get_glade_xml(name, root=None, directory=None):
     Raise RuntimeError if unable to load Glade XML file.
     """
     if directory is None:
-        directory = os.path.join(paths.DATA_DIR, "glade")
+        directory = os.path.join(gaupol.DATA_DIR, "glade")
     path = os.path.join(directory, "%s.glade" % name)
     return gtk.glade.XML(path, root)
-
-def get_event_box(widget):
-    """Get an event box if it is a parent of widget."""
-
-    return get_parent(widget, gtk.EventBox)
-
-def get_parent(child, parent_type):
-    """Get the first parent of widget that is of given type."""
-
-    parent = child.get_parent()
-    while not isinstance(parent, parent_type):
-        parent = parent.get_parent()
-    return parent
 
 def get_text_view_size(text_view, font=""):
     """Get the width and height desired by text view."""
@@ -133,32 +116,30 @@ def prepare_text_view(text_view):
     """Connect text view to font and length margin updates."""
 
     def update_margin(*args):
-        if conf.editor.show_lengths_edit:
-            return lengthlib.connect_text_view(text_view)
-        return lengthlib.disconnect_text_view(text_view)
-    conf.editor.connect("notify::show_lengths_edit", update_margin)
+        if gaupol.gtk.gaupol.gtk.conf.editor.show_lengths_edit:
+            return gaupol.gtk.ruler.connect_text_view(text_view)
+        return gaupol.gtk.ruler.disconnect_text_view(text_view)
+    gaupol.gtk.gaupol.gtk.conf.editor.connect("notify::show_lengths_edit", update_margin)
     update_margin()
 
-    def update_font(*args):
-        font = ("" if conf.editor.use_default_font else conf.editor.font)
-        set_widget_font(text_view, font)
-    conf.editor.connect("notify::use_default_font", update_font)
-    conf.editor.connect("notify::font", update_font)
+    update_font = lambda *args: set_widget_font(text_view, get_font())
+    gaupol.gtk.gaupol.gtk.conf.editor.connect("notify::use_default_font", update_font)
+    gaupol.gtk.gaupol.gtk.conf.editor.connect("notify::font", update_font)
     update_font()
 
-def resize_dialog(dialog, width, height, max_size=(0.6, 0.6)):
+def resize_dialog(dialog, width, height, max_size=0.6):
     """Resize dialog to size required by its widgets.
 
     width and height should be desired sizes in pixels.
-    max_size should be width, height, between 0 and 1.
+    max_size should be between 0 and 1.
     """
-    width = min(width, int(max_size[0] * gtk.gdk.screen_width()))
-    height = min(height, int(max_size[1] * gtk.gdk.screen_height()))
+    width = min(width, int(max_size * gtk.gdk.screen_width()))
+    height = min(height, int(max_size * gtk.gdk.screen_height()))
     width = max(dialog.size_request()[0], width)
     height = max(dialog.size_request()[1], height)
     dialog.set_default_size(width, height)
 
-def resize_message_dialog(dialog, width, height, max_size=(0.5, 0.5)):
+def resize_message_dialog(dialog, width, height, max_size=0.5):
     """Resize message dialog to size required by its widgets.
 
     width and height should be desired sizes in pixels.
@@ -169,7 +150,7 @@ def resize_message_dialog(dialog, width, height, max_size=(0.5, 0.5)):
 def separate_combo(store, itr):
     """Separator function for combo box models."""
 
-    return store.get_value(itr, 0) == COMBO_SEP
+    return store.get_value(itr, 0) == COMBO_SEPARATOR
 
 def set_button(button, text, stock=None):
     """Set the label and the image on button."""
@@ -233,8 +214,8 @@ def set_widget_font(widget, font):
 def text_column_to_document(col):
     """Translate text column constant to document constant."""
 
-    if col == MTXT:
-        return const.DOCUMENT.MAIN
-    if col == TTXT:
-        return const.DOCUMENT.TRAN
+    if col == gaupol.gtk.COLUMN.MAIN_TEXT:
+        return gaupol.gtk.DOCUMENT.MAIN
+    if col == gaupol.gtk.COLUMN.TRAN_TEXT:
+        return gaupol.gtk.DOCUMENT.TRAN
     raise ValueError

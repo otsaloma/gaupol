@@ -19,10 +19,10 @@
 import gtk
 import os
 
-from gaupol.gtk.unittest import TestCase
+from gaupol.gtk import unittest
 
 
-class TestPreviewAgent(TestCase):
+class TestPreviewAgent(unittest.TestCase):
 
     def setup_method(self, method):
 

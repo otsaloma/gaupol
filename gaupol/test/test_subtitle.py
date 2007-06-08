@@ -16,26 +16,27 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol import const
-from gaupol.unittest import TestCase
+import gaupol
+
+from gaupol import unittest
 from .. import subtitle
 
 
-class TestSubtitle(TestCase):
+class TestSubtitle(unittest.TestCase):
 
     def setup_method(self, method):
 
         self.time_sub = subtitle.Subtitle()
-        self.time_sub.mode = const.MODE.TIME
-        self.time_sub.framerate = const.FRAMERATE.P25
+        self.time_sub.mode = gaupol.MODE.TIME
+        self.time_sub.framerate = gaupol.FRAMERATE.P25
         self.time_sub.start = "00:00:01.000"
         self.time_sub.end = "00:00:03.000"
         self.time_sub.main_text = "main"
         self.time_sub.tran_text = "translation"
 
         self.frame_sub = subtitle.Subtitle()
-        self.frame_sub.mode = const.MODE.FRAME
-        self.frame_sub.framerate = const.FRAMERATE.P25
+        self.frame_sub.mode = gaupol.MODE.FRAME
+        self.frame_sub.framerate = gaupol.FRAMERATE.P25
         self.frame_sub.start = 100
         self.frame_sub.end = 300
         self.frame_sub.main_text = "main"
@@ -87,13 +88,18 @@ class TestSubtitle(TestCase):
 
     def test__get_framerate(self):
 
-        assert self.time_sub.framerate == const.FRAMERATE.P25
-        assert self.frame_sub.framerate == const.FRAMERATE.P25
+        assert self.time_sub.framerate == gaupol.FRAMERATE.P25
+        assert self.frame_sub.framerate == gaupol.FRAMERATE.P25
 
     def test__get_main_text(self):
 
         assert self.time_sub.main_text == u"main"
         assert self.frame_sub.main_text == u"main"
+
+    def test__get_mode(self):
+
+        assert self.time_sub.mode == gaupol.MODE.TIME
+        assert self.frame_sub.mode == gaupol.MODE.FRAME
 
     def test__get_start(self):
 
@@ -146,14 +152,26 @@ class TestSubtitle(TestCase):
 
     def test__set_framerate(self):
 
-        self.time_sub.framerate = const.FRAMERATE.P30
-        assert self.time_sub.framerate == const.FRAMERATE.P30
+        self.time_sub.framerate = gaupol.FRAMERATE.P30
+        assert self.time_sub.framerate == gaupol.FRAMERATE.P30
         assert self.time_sub._calc.framerate == 29.97
 
     def test__set_main_text(self):
 
         self.time_sub.main_text = "test"
         assert self.time_sub.main_text == u"test"
+
+    def test__set_mode(self):
+
+        self.time_sub.mode = gaupol.MODE.TIME
+        self.time_sub.mode = gaupol.MODE.FRAME
+        assert self.time_sub._start == 25
+        assert self.time_sub._end == 75
+
+        self.frame_sub.mode = gaupol.MODE.FRAME
+        self.frame_sub.mode = gaupol.MODE.TIME
+        assert self.frame_sub._start == "00:00:04.000"
+        assert self.frame_sub._end == "00:00:12.000"
 
     def test__set_start(self):
 
@@ -176,15 +194,15 @@ class TestSubtitle(TestCase):
 
         self.time_sub.start = "00:00:01.000"
         self.time_sub.end = "00:00:02.000"
-        self.time_sub.convert_framerate(const.FRAMERATE.P24)
-        assert self.time_sub.framerate == const.FRAMERATE.P24
+        self.time_sub.convert_framerate(gaupol.FRAMERATE.P24)
+        assert self.time_sub.framerate == gaupol.FRAMERATE.P24
         assert self.time_sub.start == "00:00:01.043"
         assert self.time_sub.end == "00:00:02.085"
 
         self.frame_sub.start = 100
         self.frame_sub.end = 200
-        self.frame_sub.convert_framerate(const.FRAMERATE.P24)
-        assert self.frame_sub.framerate == const.FRAMERATE.P24
+        self.frame_sub.convert_framerate(gaupol.FRAMERATE.P24)
+        assert self.frame_sub.framerate == gaupol.FRAMERATE.P24
         assert self.frame_sub.start == 96
         assert self.frame_sub.end == 192
 
@@ -196,52 +214,52 @@ class TestSubtitle(TestCase):
 
     def test_get_duration(self):
 
-        value = self.time_sub.get_duration(const.MODE.TIME)
+        value = self.time_sub.get_duration(gaupol.MODE.TIME)
         assert value == "00:00:02.000"
-        value = self.time_sub.get_duration(const.MODE.FRAME)
+        value = self.time_sub.get_duration(gaupol.MODE.FRAME)
         assert value == 50
 
-        value = self.frame_sub.get_duration(const.MODE.TIME)
+        value = self.frame_sub.get_duration(gaupol.MODE.TIME)
         assert value == "00:00:08.000"
-        value = self.frame_sub.get_duration(const.MODE.FRAME)
+        value = self.frame_sub.get_duration(gaupol.MODE.FRAME)
         assert value == 200
 
     def test_get_end(self):
 
-        value = self.time_sub.get_end(const.MODE.TIME)
+        value = self.time_sub.get_end(gaupol.MODE.TIME)
         assert value == "00:00:03.000"
-        value = self.time_sub.get_end(const.MODE.FRAME)
+        value = self.time_sub.get_end(gaupol.MODE.FRAME)
         assert value == 75
 
-        value = self.frame_sub.get_end(const.MODE.TIME)
+        value = self.frame_sub.get_end(gaupol.MODE.TIME)
         assert value == "00:00:12.000"
-        value = self.frame_sub.get_end(const.MODE.FRAME)
+        value = self.frame_sub.get_end(gaupol.MODE.FRAME)
         assert value == 300
 
     def test_get_start(self):
 
-        value = self.time_sub.get_start(const.MODE.TIME)
+        value = self.time_sub.get_start(gaupol.MODE.TIME)
         assert value == "00:00:01.000"
-        value = self.time_sub.get_start(const.MODE.FRAME)
+        value = self.time_sub.get_start(gaupol.MODE.FRAME)
         assert value == 25
 
-        value = self.frame_sub.get_start(const.MODE.TIME)
+        value = self.frame_sub.get_start(gaupol.MODE.TIME)
         assert value == "00:00:04.000"
-        value = self.frame_sub.get_start(const.MODE.FRAME)
+        value = self.frame_sub.get_start(gaupol.MODE.FRAME)
         assert value == 100
 
     def test_get_text(self):
 
-        value = self.time_sub.get_text(const.DOCUMENT.MAIN)
+        value = self.time_sub.get_text(gaupol.DOCUMENT.MAIN)
         assert value == "main"
-        value = self.time_sub.get_text(const.DOCUMENT.TRAN)
+        value = self.time_sub.get_text(gaupol.DOCUMENT.TRAN)
         assert value == "translation"
 
     def test_set_text(self):
 
-        self.time_sub.set_text(const.DOCUMENT.MAIN, "")
+        self.time_sub.set_text(gaupol.DOCUMENT.MAIN, "")
         assert self.time_sub.main_text == ""
-        self.time_sub.set_text(const.DOCUMENT.TRAN, "")
+        self.time_sub.set_text(gaupol.DOCUMENT.TRAN, "")
         assert self.time_sub.tran_text == ""
 
     def test_scale_positions(self):

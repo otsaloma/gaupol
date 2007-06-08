@@ -19,22 +19,18 @@
 """Automatic correcting of texts."""
 
 
+import gaupol
 import re
-
-from gaupol import util
-from gaupol.base import Contractual, Delegate
-from gaupol.i18n import _
-from gaupol.liner import Liner
-from gaupol.reversion import revertable
+_ = gaupol.i18n._
 
 
-class TextAgent(Delegate):
+class TextAgent(gaupol.Delegate):
 
     """Automatic correcting of texts."""
 
     # pylint: disable-msg=E0203,W0201
 
-    __metaclass__ = Contractual
+    __metaclass__ = gaupol.Contractual
     _re_alphanum = re.compile(r"\w", re.UNICODE)
 
     def _capitalize_after(self, parser, cap_next):
@@ -71,7 +67,7 @@ class TextAgent(Delegate):
         for index in (indexes or []):
             assert 0 <= index < len(self.subtitles)
 
-    @revertable
+    @gaupol.util.revertable
     def capitalize(self, indexes, doc, pattern, register=-1):
         """Capitalize texts following matches of pattern.
 
@@ -84,7 +80,7 @@ class TextAgent(Delegate):
         parser = self.get_parser(doc)
         parser.set_regex(pattern)
         indexes = indexes or range(len(self.subtitles))
-        for indexes in util.get_ranges(indexes):
+        for indexes in gaupol.util.get_ranges(indexes):
             cap_next = False
             for index in indexes:
                 orig_text = self.subtitles[index].get_text(doc)
@@ -106,7 +102,7 @@ class TextAgent(Delegate):
         for index in (indexes or []):
             assert 0 <= index < len(self.subtitles)
 
-    @revertable
+    @gaupol.util.revertable
     def format_lines(self, indexes, doc, dialogue_pattern, clause_pattern,
         ok_dialogue, ok_clauses, max_length, length_func, legal_length=None,
         legal_lines=None, require_reduction=False, register=-1):
@@ -131,7 +127,7 @@ class TextAgent(Delegate):
 
         new_indexes = []
         new_texts = []
-        liner = Liner(self.get_tag_regex(doc))
+        liner = gaupol.Liner(self.get_tag_regex(doc))
         liner.re_dialogue = re.compile(dialogue_pattern, re.UNICODE)
         liner.re_clause = re.compile(clause_pattern, re.UNICODE)
         liner.ok_dialogue = ok_dialogue

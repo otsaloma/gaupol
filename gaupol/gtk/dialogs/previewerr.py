@@ -19,9 +19,9 @@
 """Dialog for informing that preview failed."""
 
 
+import gaupol.gtk
 import gtk
 
-from gaupol.gtk import util
 from .glade import GladeDialog
 
 
@@ -50,7 +50,8 @@ class PreviewErrorDialog(GladeDialog):
     def _init_sizes(self):
         """Initialize widget sizes."""
 
-        width, height = util.get_text_view_size(self._text_view, "monospace")
-        width = width + 112 + util.EXTRA
-        height = height + 148 + util.EXTRA
-        util.resize_message_dialog(self, width, height)
+        get_size = gaupol.gtk.util.get_text_view_size
+        width, height = get_size(self._text_view, "monospace")
+        width = width + 112 + gaupol.gtk.util.EXTRA
+        height = height + 148 + gaupol.gtk.util.EXTRA
+        gaupol.gtk.util.resize_message_dialog(self, width, height)

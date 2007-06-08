@@ -19,6 +19,8 @@
 """MPsub tag library."""
 
 
+import gaupol
+
 from .taglib import TagLibrary
 
 
@@ -26,4 +28,4 @@ class MPsub(TagLibrary):
 
     """MPsub tag library."""
 
-    pass
+    format = gaupol.FORMAT.MPSUB

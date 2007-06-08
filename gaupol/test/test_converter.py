@@ -16,16 +16,17 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol import const
-from gaupol.unittest import TestCase
+import gaupol
+
+from gaupol import unittest
 from .. import converter
 
 
-class TestTagConverter(TestCase):
+class TestTagConverter(unittest.TestCase):
 
     def test_convert(self):
 
-        for from_format in const.FORMAT.members:
-            for to_format in const.FORMAT.members:
+        for from_format in gaupol.FORMAT.members:
+            for to_format in gaupol.FORMAT.members:
                 conv = converter.TagConverter(from_format, to_format)
                 assert conv.convert("test") == "test"

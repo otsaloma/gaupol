@@ -16,30 +16,30 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol.unittest import TestCase
+from gaupol import unittest
 from .. import const
 
 
-class TestMember(TestCase):
+class TestConstantMember(unittest.TestCase):
 
     def setup_method(self, method):
 
-        self.member = const.Member(0, "test")
+        self.member = const.ConstantMember(0, "test")
 
     def test___str__(self):
 
         assert str(self.member) == "test"
 
 
-class TestSection(TestCase):
+class TestConstantSection(unittest.TestCase):
 
     def setup_method(self, method):
 
         # pylint: disable-msg=C0103
-        self.FRUIT = const.Section()
-        self.FRUIT.APPLE = const.Member()
+        self.FRUIT = const.ConstantSection()
+        self.FRUIT.APPLE = const.ConstantMember()
         self.FRUIT.APPLE.color = "green"
-        self.FRUIT.ORANGE = const.Member()
+        self.FRUIT.ORANGE = const.ConstantMember()
         self.FRUIT.ORANGE.color = "orange"
         self.FRUIT.finalize()
 

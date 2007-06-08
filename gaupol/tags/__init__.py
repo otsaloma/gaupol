@@ -16,18 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Tags of all formats.
-
-Imported names:
- * AdvSubStationAlpha (ass)
- * MicroDVD (microdvd)
- * MPL2 (mpl2)
- * MPsub (mpsub)
- * SubStationAlpha (ssa)
- * SubRip (subrip)
- * SubViewer2 (subviewer2)
- * TMPlayer (tmplayer)
-"""
+"""Tag libraries of all formats."""
 
 
 from .ass        import AdvSubStationAlpha
@@ -39,5 +28,13 @@ from .subrip     import SubRip
 from .subviewer2 import SubViewer2
 from .tmplayer   import TMPlayer
 
-from gaupol import const
-__all__ = const.FORMAT.class_names
+__all__ = [x for x in dir() if x[0].isupper()]
+
+
+def get_class(format):
+    """Get TagLibrary class for format."""
+
+    for name in __all__:
+        if eval(name).format == format:
+            return eval(name)
+    raise ValueError

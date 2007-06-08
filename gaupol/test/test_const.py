@@ -16,34 +16,33 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol.unittest import TestCase
+from gaupol import unittest
 from .. import const
 
 
-class TestModule(TestCase):
+class TestModule(unittest.TestCase):
 
     def test_attributes(self):
 
         constants = (
             ("DOCUMENT", ()),
             ("FORMAT", (
-                "class_names",
-                "display_names",
+                "labels",
                 "extensions",)),
             ("FRAMERATE", (
-                "display_names",
-                "mpsub_names",
+                "labels",
+                "mpsubs",
                 "values",)),
             ("MODE", ()),
             ("NEWLINE", (
-                "display_names",
+                "labels",
                 "values",)),
             ("REGISTER", (
                 "shifts",
                 "signals",)),
             ("VIDEO_PLAYER", (
                 "commands",
-                "display_names",)))
+                "labels",)))
 
         for section_name, attr_names in constants:
             section = getattr(const, section_name)

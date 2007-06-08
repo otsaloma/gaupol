@@ -18,11 +18,6 @@
 
 """Unit testing system.
 
-Imported names:
- * TestCase (case)
- * benchmark (deco)
- * reversion_test (deco)
-
 All test module names should be prefixed with 'test_', class names with 'Test',
 function and method names with 'test_'. Interactive GUI test method names
 should be prefixed with 'run'. All test classes should inherit from TestCase.
@@ -36,6 +31,7 @@ kept as independent as possible of the application used to run the tests.
 
 
 from .case import TestCase
-from .deco import benchmark, reversion_test
+from .deco import benchmark
+from .deco import reversion_test
 
 __all__ = ["TestCase", "benchmark", "reversion_test"]

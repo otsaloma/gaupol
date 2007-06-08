@@ -19,10 +19,9 @@
 """Cell renderer for multiline text data."""
 
 
+import gaupol.gtk
 import gobject
 import gtk
-
-from gaupol.gtk import conf, lengthlib, util
 
 
 class _CellTextView(gtk.TextView, gtk.CellEditable):
@@ -35,7 +34,7 @@ class _CellTextView(gtk.TextView, gtk.CellEditable):
 
         # pylint: disable-msg=W0231
         gtk.TextView.__init__(self, text_buffer)
-        util.prepare_text_view(self)
+        gaupol.gtk.util.prepare_text_view(self)
 
     def do_editing_done(self, *args):
         """End editing."""
@@ -79,15 +78,15 @@ class MultilineCellRenderer(gtk.CellRendererText):
     def __init__(self):
 
         gtk.CellRendererText.__init__(self)
-        self._show_lengths = conf.editor.show_lengths_cell
+        self._show_lengths = gaupol.gtk.conf.editor.show_lengths_cell
         self._text = ""
-        conf.connect(self, "editor", "show_lengths_cell")
-        util.connect(self, self, "notify::text")
+        gaupol.gtk.conf.connect(self, "editor", "show_lengths_cell")
+        gaupol.gtk.util.connect(self, self, "notify::text")
 
     def _on_conf_editor_notify_show_lengths_cell(self, *args):
         """Synch the '_show_lengths' attribute with conf."""
 
-        self._show_lengths = conf.editor.show_lengths_cell
+        self._show_lengths = gaupol.gtk.conf.editor.show_lengths_cell
 
     def _on_editor_focus_out_event(self, editor, *args):
         """End editing."""
@@ -95,7 +94,7 @@ class MultilineCellRenderer(gtk.CellRendererText):
         editor.remove_widget()
         self.emit("editing-canceled")
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _on_editor_key_press_event(self, editor, event):
         """End editing if Enter pressed."""
 
@@ -107,13 +106,13 @@ class MultilineCellRenderer(gtk.CellRendererText):
             editor.remove_widget()
             self.emit("editing-canceled")
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _on_notify_text(self, *args):
         """Set markup by adding line lengths to text."""
 
         self._text = text = self.props.text
         assert text and self._show_lengths
-        lengths = lengthlib.get_lengths(text)
+        lengths = gaupol.gtk.ruler.get_lengths(text)
         text = gobject.markup_escape_text(text)
         lines = text.split("\n")
         for i in (x for x in range(len(lines)) if lines[x]):

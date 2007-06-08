@@ -18,7 +18,7 @@
 # pylint: disable-msg=E1101
 
 
-from gaupol.unittest import TestCase
+from gaupol import unittest
 from .. import observable
 
 
@@ -32,7 +32,7 @@ class Observable(observable.Observable):
         self.variable = 0
 
 
-class _TestObservable(TestCase):
+class _TestObservable(unittest.TestCase):
 
     def on_notify_variable(self, obj, value):
 

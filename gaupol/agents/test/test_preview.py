@@ -16,13 +16,13 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
+import gaupol
 import os
 
-from gaupol import const
-from gaupol.unittest import TestCase
+from gaupol import unittest
 
 
-class TestPreviewAgent(TestCase):
+class TestPreviewAgent(unittest.TestCase):
 
     def setup_method(self, method):
 
@@ -31,10 +31,10 @@ class TestPreviewAgent(TestCase):
 
     def test__get_subtitle_path(self):
 
-        value = self.delegate._get_subtitle_path(const.DOCUMENT.MAIN)
+        value = self.delegate._get_subtitle_path(gaupol.DOCUMENT.MAIN)
         assert value == self.project.main_file.path
-        self.project.clear_texts([0], const.DOCUMENT.MAIN)
-        value = self.delegate._get_subtitle_path(const.DOCUMENT.MAIN)
+        self.project.clear_texts([0], gaupol.DOCUMENT.MAIN)
+        value = self.delegate._get_subtitle_path(gaupol.DOCUMENT.MAIN)
         assert value != self.project.main_file.path
         self.files.add(value)
 
@@ -45,9 +45,9 @@ class TestPreviewAgent(TestCase):
     def test_get_temp_file_path(self):
 
         method = self.project.get_temp_file_path
-        path = method(const.DOCUMENT.MAIN)
+        path = method(gaupol.DOCUMENT.MAIN)
         self.files.add(path)
-        path = method(const.DOCUMENT.TRAN)
+        path = method(gaupol.DOCUMENT.TRAN)
         self.files.add(path)
 
     def test_guess_video_path(self):
@@ -56,13 +56,13 @@ class TestPreviewAgent(TestCase):
 
     def test_preview(self):
 
-        doc = const.DOCUMENT.MAIN
+        doc = gaupol.DOCUMENT.MAIN
         self.project.video_path = self.get_subrip_path()
         self.project.preview("00:00:00.000", doc, "echo", 0)
         assert os.path.isfile(self.project.get_file(doc).path)
         path = self.get_subrip_path()
         self.project.preview("00:00:00.000", doc, "echo", 0, path)
         assert os.path.isfile(self.project.get_file(doc).path)
-        self.project.clear_texts([0], const.DOCUMENT.MAIN)
+        self.project.clear_texts([0], gaupol.DOCUMENT.MAIN)
         self.project.preview("00:00:00.000", doc, "echo", 0)
         assert os.path.isfile(self.project.get_file(doc).path)

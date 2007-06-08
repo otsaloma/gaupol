@@ -16,12 +16,12 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol import const
-from gaupol.unittest import TestCase
+import gaupol
+from gaupol import unittest
 from .. import calculator
 
 
-class TestCalculator(TestCase):
+class TestCalculator(unittest.TestCase):
 
     def setup_method(self, method):
 
@@ -29,7 +29,7 @@ class TestCalculator(TestCase):
 
     def test___new__(self):
 
-        for framerate in const.FRAMERATE.members:
+        for framerate in gaupol.FRAMERATE.members:
             a = calculator.Calculator(framerate)
             b = calculator.Calculator(framerate)
             assert a is b

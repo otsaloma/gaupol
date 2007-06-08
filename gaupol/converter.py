@@ -19,7 +19,9 @@
 """Subtitle text tag converter."""
 
 
-from gaupol.tags import *
+import gaupol
+
+__all__ = ["TagConverter"]
 
 
 class TagConverter(object):
@@ -36,8 +38,8 @@ class TagConverter(object):
 
         from_format and to_format should be FORMAT constants.
         """
-        self._from = eval(from_format.class_name)()
-        self._to = eval(to_format.class_name)()
+        self._from = gaupol.tags.get_class(from_format)()
+        self._to = gaupol.tags.get_class(to_format)()
 
     def convert(self, text):
         """Return text with tags converted."""

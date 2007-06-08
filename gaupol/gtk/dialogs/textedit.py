@@ -19,9 +19,8 @@
 """Dialog for editing the text of a single subtitle."""
 
 
+import gaupol.gtk
 import gtk
-
-from gaupol.gtk import conf, util
 
 
 class TextEditDialog(gtk.Dialog):
@@ -53,7 +52,7 @@ class TextEditDialog(gtk.Dialog):
         """Initialize the text view."""
 
         self._text_view = gtk.TextView()
-        util.prepare_text_view(self._text_view)
+        gaupol.gtk.util.prepare_text_view(self._text_view)
         self._text_view.set_wrap_mode(gtk.WRAP_NONE)
         self._text_view.set_accepts_tab(False)
         self._text_view.set_left_margin(6)
@@ -72,8 +71,9 @@ class TextEditDialog(gtk.Dialog):
         """Initialize widget sizes."""
 
         label = gtk.Label("\n".join(["M" * 40] * 5))
-        if not conf.editor.use_default_font:
-            util.set_label_font(label, conf.editor.font)
+        if not gaupol.gtk.conf.editor.use_default_font:
+            font = gaupol.gtk.conf.editor.font
+            gaupol.gtk.util.set_label_font(label, font)
         width, height = label.size_request()
         self._text_view.set_size_request(width + 4, height + 7)
 

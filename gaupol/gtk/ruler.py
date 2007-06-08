@@ -21,12 +21,10 @@
 
 from __future__ import division
 
+import gaupol.gtk
 import gtk
 import pango
 import re
-
-from gaupol import util
-from gaupol.gtk import conf, const
 
 
 class _Counter(object):
@@ -40,6 +38,7 @@ class _Counter(object):
 
     _re_tag = re.compile(r"(^[/\\_]|<.*?>|\{.*?\})")
 
+    # pylint: disable-msg=W0231
     def __init__(self):
 
         self._em_width = None
@@ -54,7 +53,7 @@ class _Counter(object):
         """Initialize signal handlers."""
 
         for option in ("font", "length_unit", "use_default_font"):
-            conf.connect(self, "editor", option)
+            gaupol.gtk.gaupol.gtk.conf.connect(self, "editor", option)
 
     def _on_conf_editor_notify_font(self, *args):
         """Update the width of the letter 'M'."""
@@ -75,8 +74,9 @@ class _Counter(object):
         """Update the width of the letter 'M'."""
 
         self._layout = gtk.Label().get_layout().copy()
-        if not conf.editor.use_default_font:
-            font_desc = pango.FontDescription(conf.editor.font)
+        if not gaupol.gtk.gaupol.gtk.conf.editor.use_default_font:
+            font = gaupol.gtk.gaupol.gtk.conf.editor.font
+            font_desc = pango.FontDescription(font)
             self._layout.set_font_description(font_desc)
         self._layout.set_text("M")
         self._em_width = self._layout.get_pixel_size()[0]
@@ -84,9 +84,10 @@ class _Counter(object):
     def _update_length_func(self):
         """Update the length function used."""
 
-        if conf.editor.length_unit == const.LENGTH_UNIT.CHAR:
+        length_unit = gaupol.gtk.gaupol.gtk.conf.editor.length_unit
+        if length_unit == gaupol.gtk.LENGTH_UNIT.CHAR:
             self.get_lengths = self.get_char_lengths
-        elif conf.editor.length_unit == const.LENGTH_UNIT.EM:
+        elif length_unit == gaupol.gtk.LENGTH_UNIT.EM:
             self.get_lengths = self.get_em_lengths
 
     def get_char_lengths(self, text, strip, floor):
@@ -110,7 +111,7 @@ class _Counter(object):
 
 _counter = _Counter()
 
-@util.asserted_return
+@gaupol.util.asserted_return
 def _on_text_view_expose_event(text_view, event):
     """Calculate and show line lengths in the margin."""
 
@@ -146,7 +147,7 @@ def connect_text_view(text_view):
 def disconnect_text_view_require(text_view):
     assert text_view.get_data("lengthlib_handler_id") is not None
 
-@util.contractual
+@gaupol.util.contractual
 def disconnect_text_view(text_view):
     """Disconnect text view from showing line lengths in the margin."""
 

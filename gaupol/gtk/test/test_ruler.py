@@ -16,14 +16,14 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
+import gaupol.gtk
 import gtk
 
-from gaupol.gtk import conf, const
-from gaupol.gtk.unittest import TestCase
-from .. import lengthlib
+from gaupol.gtk import unittest
+from .. import ruler
 
 
-class TestModule(TestCase):
+class TestModule(unittest.TestCase):
 
     def run(self):
 
@@ -35,7 +35,7 @@ class TestModule(TestCase):
             "their meanings\n" + \
             "and meanings their words"
         text_buffer.insert_at_cursor(text)
-        lengthlib.connect_text_view(text_view)
+        ruler.connect_text_view(text_view)
         scroller = gtk.ScrolledWindow()
         scroller.set_shadow_type(gtk.SHADOW_IN)
         scroller.add(text_view)
@@ -50,38 +50,38 @@ class TestModule(TestCase):
 
     def setup_method(self, method):
 
-        reload(conf)
-        reload(lengthlib)
+        gaupol.gtk.conf.read()
+        reload(ruler)
 
     def test_connect_text_view(self):
 
         text_view = gtk.TextView()
-        lengthlib.connect_text_view(text_view)
+        ruler.connect_text_view(text_view)
         text_buffer = text_view.get_buffer()
         text_buffer.insert_at_cursor("test\ntest")
 
     def test_disconnect_text_view(self):
 
         text_view = gtk.TextView()
-        lengthlib.connect_text_view(text_view)
-        lengthlib.disconnect_text_view(text_view)
+        ruler.connect_text_view(text_view)
+        ruler.disconnect_text_view(text_view)
         text_buffer = text_view.get_buffer()
         text_buffer.insert_at_cursor("test\ntest")
 
     def test_func(self):
 
-        conf.editor.length_unit = const.LENGTH_UNIT.CHAR
-        assert lengthlib.func("MMM<i>iii</i>") == 13
+        gaupol.gtk.conf.editor.length_unit = gaupol.gtk.LENGTH_UNIT.CHAR
+        assert ruler.func("MMM<i>iii</i>") == 13
 
     def test_get_lengths__char(self):
 
-        conf.editor.length_unit = const.LENGTH_UNIT.CHAR
-        lengths = lengthlib.get_lengths("MMM\n<i>iii</i>")
+        gaupol.gtk.conf.editor.length_unit = gaupol.gtk.LENGTH_UNIT.CHAR
+        lengths = ruler.get_lengths("MMM\n<i>iii</i>")
         assert lengths == [3, 3]
 
     def test_get_lengths__em(self):
 
-        conf.editor.length_unit = const.LENGTH_UNIT.EM
-        conf.editor.use_default_font = True
-        lengths = lengthlib.get_lengths("MMM\n<i>i</i>")
+        gaupol.gtk.conf.editor.length_unit = gaupol.gtk.LENGTH_UNIT.EM
+        gaupol.gtk.conf.editor.use_default_font = True
+        lengths = ruler.get_lengths("MMM\n<i>i</i>")
         assert lengths == [3, 0]

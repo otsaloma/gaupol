@@ -19,10 +19,10 @@
 import gtk
 
 from gaupol.gtk.errors import Default
-from gaupol.gtk.unittest import TestCase
+from gaupol.gtk import unittest
 
 
-class TestSaveAgent(TestCase):
+class TestSaveAgent(unittest.TestCase):
 
     def setup_method(self, method):
 

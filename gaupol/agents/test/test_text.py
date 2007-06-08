@@ -16,19 +16,19 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol import const, scriptlib
-from gaupol.unittest import TestCase
+import gaupol
+from gaupol import unittest
 
 
-class TestTextAgent(TestCase):
+class TestTextAgent(unittest.TestCase):
 
     def format_lines(self):
 
-        dialogue_pattern = scriptlib.get_dialogue_separator("latin")
-        clause_pattern = scriptlib.get_clause_separator("latin")
+        dialogue_pattern = gaupol.scripts.get_dialogue_separator("latin")
+        clause_pattern = gaupol.scripts.get_clause_separator("latin")
         self.project.format_lines(
             indexes=None,
-            doc=const.DOCUMENT.MAIN,
+            doc=gaupol.DOCUMENT.MAIN,
             dialogue_pattern=dialogue_pattern,
             clause_pattern=clause_pattern,
             ok_dialogue=3,
@@ -46,8 +46,8 @@ class TestTextAgent(TestCase):
     def test_capitalize(self):
 
         self.project.subtitles[0].main_text = "test. test."
-        pattern = scriptlib.get_capitalize_after("latin")
-        self.project.capitalize(None, const.DOCUMENT.MAIN, pattern)
+        pattern = gaupol.scripts.get_capitalize_after("latin")
+        self.project.capitalize(None, gaupol.DOCUMENT.MAIN, pattern)
         assert self.project.subtitles[0].main_text == "Test. Test."
 
     def test_format_lines__legal_lines_and_legal_length(self):

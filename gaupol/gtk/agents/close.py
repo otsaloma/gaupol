@@ -29,7 +29,7 @@ from gaupol.gtk.errors import Default
 from gaupol.gtk.i18n import _
 
 
-class CloseAgent(Delegate):
+class CloseAgent(gaupol.Delegate):
 
     """Closing projects and quitting Gaupol."""
 
@@ -59,7 +59,7 @@ class CloseAgent(Delegate):
 
         Raise Default to abort.
         """
-        doc = const.DOCUMENT.MAIN
+        doc = gaupol.gtk.DOCUMENT.MAIN
         basename = page.get_main_basename()
         response = self._show_close_warning_dialog(doc, basename)
         if response == gtk.RESPONSE_YES:
@@ -85,9 +85,9 @@ class CloseAgent(Delegate):
         docs = self._need_confirmation(page)
         if len(docs) == 2:
             return self._confirm_multiple([page])
-        if const.DOCUMENT.MAIN in docs:
+        if gaupol.gtk.DOCUMENT.MAIN in docs:
             return self._confirm_main(page)
-        if const.DOCUMENT.TRAN in docs:
+        if gaupol.gtk.DOCUMENT.TRAN in docs:
             return self._confirm_translation(page)
 
     def _confirm_translation(self, page):
@@ -95,7 +95,7 @@ class CloseAgent(Delegate):
 
         Raise Default to abort.
         """
-        doc = const.DOCUMENT.TRAN
+        doc = gaupol.gtk.DOCUMENT.TRAN
         basename = page.get_translation_basename()
         response = self._show_close_warning_dialog(doc, basename)
         if response == gtk.RESPONSE_YES:
@@ -108,26 +108,26 @@ class CloseAgent(Delegate):
 
         docs = []
         if page.project.main_changed:
-            docs.append(const.DOCUMENT.MAIN)
+            docs.append(gaupol.gtk.DOCUMENT.MAIN)
         elif page.project.main_file is not None:
             if not os.path.isfile(page.project.main_file.path):
-                docs.append(const.DOCUMENT.MAIN)
+                docs.append(gaupol.gtk.DOCUMENT.MAIN)
         if page.project.tran_active and page.project.tran_changed:
-            docs.append(const.DOCUMENT.TRAN)
+            docs.append(gaupol.gtk.DOCUMENT.TRAN)
         elif page.project.tran_file is not None:
             if not os.path.isfile(page.project.tran_file.path):
-                docs.append(const.DOCUMENT.TRAN)
+                docs.append(gaupol.gtk.DOCUMENT.TRAN)
         return docs
 
     def _save_window_geometry(self):
         """Save the geometry of main and output windows."""
 
-        if not conf.application_window.maximized:
-            domain = conf.application_window
+        if not gaupol.gtk.conf.application_window.maximized:
+            domain = gaupol.gtk.conf.application_window
             domain.size = self.window.get_size()
             domain.position = self.window.get_position()
-        if not conf.output_window.maximized:
-            domain = conf.output_window
+        if not gaupol.gtk.conf.output_window.maximized:
+            domain = gaupol.gtk.conf.output_window
             domain.size = self.output_window.get_size()
             domain.position = self.output_window.get_position()
 
@@ -136,10 +136,10 @@ class CloseAgent(Delegate):
 
         Return response.
         """
-        if doc == const.DOCUMENT.MAIN:
+        if doc == gaupol.gtk.DOCUMENT.MAIN:
             title = _('Save changes to main document "%s" before closing?') \
                 % basename
-        elif doc == const.DOCUMENT.TRAN:
+        elif doc == gaupol.gtk.DOCUMENT.TRAN:
             title = _('Save changes to translation document "%s" before '
                 'closing?') % basename
         message = _("If you don't save, changes will be permanently lost.")
@@ -162,25 +162,25 @@ class CloseAgent(Delegate):
         self.pages.remove(page)
         self.emit("page-closed", page)
 
-    @util.silent(Default)
+    @gaupol.gtk.util.silent(Default)
     def on_close_all_projects_activate(self, *args):
         """Close all open projects."""
 
         self._close_all_pages()
 
-    @util.silent(Default)
+    @gaupol.gtk.util.silent(Default)
     def on_close_project_activate(self, *args):
         """Close project."""
 
         self.close(self.get_current_page())
 
-    @util.silent(Default)
+    @gaupol.gtk.util.silent(Default)
     def on_page_close_request(self, page, *args):
         """Close project."""
 
         self.close(page)
 
-    @util.silent(Default)
+    @gaupol.gtk.util.silent(Default)
     def on_quit_activate(self, *args):
         """Quit Gaupol."""
 

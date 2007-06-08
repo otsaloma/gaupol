@@ -16,14 +16,8 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Dialogs for selecting files to open or save.
+"""Dialogs for selecting files to open or save."""
 
-Imported names:
- * AppendDialog (append)
- * OpenDialog (open)
- * SaveDialog (save)
- * VideoDialog (video)
-"""
 
 from .append import AppendDialog
 from .open   import OpenDialog

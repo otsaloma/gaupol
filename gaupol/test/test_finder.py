@@ -18,11 +18,11 @@
 
 import re
 
-from gaupol.unittest import TestCase
+from gaupol import unittest
 from .. import finder
 
 
-class TestFinder(TestCase):
+class TestFinder(unittest.TestCase):
 
     text = \
         "One only risks it, because\n" \

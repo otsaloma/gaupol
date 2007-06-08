@@ -31,6 +31,7 @@ class ConfigParseError(GaupolError):
 
     pass
 
+
 class Default(GaupolError):
 
     """Cancelled or something of the sort."""

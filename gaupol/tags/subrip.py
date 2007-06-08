@@ -19,9 +19,9 @@
 """SubRip tag library."""
 
 
+import gaupol
 import re
 
-from gaupol import util
 from .taglib import TagLibrary
 
 
@@ -29,21 +29,23 @@ class SubRip(TagLibrary):
 
     """SubRip tag library."""
 
+    format = gaupol.FORMAT.SUBRIP
+
     @property
-    @util.once
+    @gaupol.util.once
     def italic_tag(self):
         """Regular expression for an italic tag."""
 
         return re.compile(r"</?i>", re.IGNORECASE)
 
     @property
-    @util.once
+    @gaupol.util.once
     def tag(self):
         """Regular expression for any tag."""
 
         return re.compile(r"</?(b|i|u)>", re.IGNORECASE)
 
-    @util.once
+    @gaupol.util.once
     def _get_decode_tags(self):
         """Get list of tuples of regular expression, replacement."""
 
@@ -54,7 +56,7 @@ class SubRip(TagLibrary):
             (re.compile(r"(</?)U>"), r"\1u>"),]
         return tags
 
-    @util.once
+    @gaupol.util.once
     def _get_encode_tags(self):
         """Get list of tuples of regular expression, replacement."""
 

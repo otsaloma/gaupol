@@ -16,13 +16,14 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol import const, files
-from gaupol.unittest import TestCase
+import gaupol
+from gaupol import unittest
 
 
-class TestModule(TestCase):
+class TestModule(unittest.TestCase):
 
-    def test_attributes(self):
+    def test_get_class(self):
 
-        for name in const.FORMAT.class_names:
-            assert hasattr(files, name)
+        for format in gaupol.FORMAT.members:
+            value = gaupol.files.get_class(format)
+            assert value.format == format

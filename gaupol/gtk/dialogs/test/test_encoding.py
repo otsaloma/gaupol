@@ -18,11 +18,11 @@
 
 import gtk
 
-from gaupol.gtk.unittest import TestCase
+from gaupol.gtk import unittest
 from .. import encoding
 
 
-class TestEncodingDialog(TestCase):
+class TestEncodingDialog(unittest.TestCase):
 
     def run(self):
 

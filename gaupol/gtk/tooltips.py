@@ -19,16 +19,17 @@
 """Tooltips with markup labels."""
 
 
+import gaupol.gtk
 import gtk
 
-from gaupol.gtk import util
+__all__ = ["Tooltips"]
 
 
 class Tooltips(gtk.Tooltips):
 
     """Tooltips with markup labels."""
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def __init__(self):
 
         # pylint: disable-msg=E1101

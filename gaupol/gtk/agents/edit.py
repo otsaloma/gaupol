@@ -26,7 +26,7 @@ from gaupol.gtk.i18n import _, ngettext
 from gaupol.gtk.index import *
 
 
-class EditAgent(Delegate):
+class EditAgent(gaupol.Delegate):
 
     """Editing subtitle data.
 
@@ -39,7 +39,7 @@ class EditAgent(Delegate):
 
     def __init__(self, master):
 
-        Delegate.__init__(self, master)
+        gaupol.Delegate.__init__(self, master)
         self._pref_dialog = None
 
     def _on_pref_dialog_response(self, *args):
@@ -116,7 +116,7 @@ class EditAgent(Delegate):
 
         if self._pref_dialog is None:
             self._pref_dialog = PreferencesDialog()
-            util.connect(self, "_pref_dialog", "response")
+            gaupol.gtk.util.connect(self, "_pref_dialog", "response")
             self._pref_dialog.show()
         self._pref_dialog.present()
 
@@ -232,7 +232,7 @@ class EditAgent(Delegate):
 
         self.undo()
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def on_view_renderer_edited(self, renderer, path, value, col):
         """Finish editing cell."""
 
@@ -240,15 +240,15 @@ class EditAgent(Delegate):
         self._set_sensitivities(True)
         self.push_message(None)
         page = self.get_current_page()
-        if col in (SHOW, HIDE, DURN):
+        if col in (SHOW, HIDE, gaupol.gtk.COLUMN.DURATION):
             assert value
-            if page.edit_mode == const.MODE.FRAME:
+            if page.edit_mode == gaupol.gtk.MODE.FRAME:
                 assert value.isdigit()
                 value = int(value)
             new_row = page.project.set_position(row, col - 1, value)
             if new_row != row:
                 page.view.set_focus(new_row, col)
-        elif col in (MTXT, TTXT):
+        elif col in (gaupol.gtk.COLUMN.MAIN_TEXT, gaupol.gtk.COLUMN.TRAN_TEXT):
             page.project.set_text(row, col - 4, value)
 
     def on_view_renderer_editing_canceled(self, *args):
@@ -261,22 +261,22 @@ class EditAgent(Delegate):
         """Start editing cell."""
 
         self._set_sensitivities(False)
-        if col in (MTXT, TTXT):
+        if col in (gaupol.gtk.COLUMN.MAIN_TEXT, gaupol.gtk.COLUMN.TRAN_TEXT):
             message = _("Use Shift+Return for line-break")
             self.push_message(message, False)
 
     def redo(self, count=1):
         """Redo actions."""
 
-        util.set_cursor_busy(self.window)
+        gaupol.gtk.util.set_cursor_busy(self.window)
         page = self.get_current_page()
         page.project.redo(count)
-        util.set_cursor_normal(self.window)
+        gaupol.gtk.util.set_cursor_normal(self.window)
 
     def undo(self, count=1):
         """Undo actions."""
 
-        util.set_cursor_busy(self.window)
+        gaupol.gtk.util.set_cursor_busy(self.window)
         page = self.get_current_page()
         page.project.undo(count)
-        util.set_cursor_normal(self.window)
+        gaupol.gtk.util.set_cursor_normal(self.window)

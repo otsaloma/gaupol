@@ -18,10 +18,10 @@
 
 import gtk
 
-from gaupol.gtk.unittest import TestCase
+from gaupol.gtk import unittest
 
 
-class TestMenuAgent(TestCase):
+class TestMenuAgent(unittest.TestCase):
 
     def setup_method(self, method):
 

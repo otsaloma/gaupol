@@ -27,7 +27,7 @@ from gaupol.gtk import conf, const, util
 from gaupol.gtk.i18n import _
 
 
-class MenuAgent(Delegate):
+class MenuAgent(gaupol.Delegate):
 
     """Building and updating menus.
 
@@ -40,7 +40,7 @@ class MenuAgent(Delegate):
 
     def __init__(self, master):
 
-        Delegate.__init__(self, master)
+        gaupol.Delegate.__init__(self, master)
         self._projects_id = None
 
     def _get_action_group(self, name):
@@ -111,12 +111,12 @@ class MenuAgent(Delegate):
         menu_items = []
         menu = gtk.Menu()
         page = self.get_current_page()
-        if register == const.REGISTER.UNDO:
+        if register == gaupol.gtk.REGISTER.UNDO:
             stack = page.project.undoables
             button = self.undo_button
             revert_method = self.undo
             get_tip = lambda desc: _('Undo "%s"') % desc
-        elif register == const.REGISTER.REDO:
+        elif register == gaupol.gtk.REGISTER.REDO:
             stack = page.project.redoables
             button = self.redo_button
             revert_method = self.redo
@@ -147,7 +147,7 @@ class MenuAgent(Delegate):
     def _update_recent_menu(self, menu):
         """Update recent menu item limit."""
 
-        if conf.file.max_recent < 1:
+        if gaupol.gtk.conf.file.max_recent < 1:
             return menu.set_limit(0)
         i = -1
         matches = 0
@@ -157,25 +157,25 @@ class MenuAgent(Delegate):
         for i, item in enumerate(menu.get_items()):
             if not item.has_group(group):
                 continue
-            path = util.uri_to_path(item.get_uri())
+            path = gaupol.gtk.util.uri_to_path(item.get_uri())
             if not os.path.isfile(path):
                 continue
             matches += 1
-            if matches >= conf.file.max_recent:
+            if matches >= gaupol.gtk.conf.file.max_recent:
                 break
         return menu.set_limit(i + 1)
 
     def on_open_button_show_menu(self, *args):
         """Build and attach a new recent menu on the open button."""
 
-        menu = self._get_recent_menu(const.DOCUMENT.MAIN)
+        menu = self._get_recent_menu(gaupol.gtk.DOCUMENT.MAIN)
         callback = self.on_recent_main_menu_item_activated
         menu.connect("item-activated", callback)
         self.open_button.set_menu(menu)
         while gtk.events_pending():
             gtk.main_iteration()
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def on_page_tab_widget_button_press_event(self, button, event):
         """Display a tab pop-up menu."""
 
@@ -186,7 +186,7 @@ class MenuAgent(Delegate):
     def on_redo_button_show_menu(self, *args):
         """Show the redo button menu."""
 
-        self._show_revert_button_menu(const.REGISTER.REDO)
+        self._show_revert_button_menu(gaupol.gtk.REGISTER.REDO)
 
     def on_show_projects_menu_activate(self, *args):
         """Add all open projects to the projects menu."""
@@ -220,7 +220,7 @@ class MenuAgent(Delegate):
         """Show the recent main file menu."""
 
         item = self.uim.get_widget("/ui/menubar/file/recent_main")
-        menu = self._get_recent_menu(const.DOCUMENT.MAIN)
+        menu = self._get_recent_menu(gaupol.gtk.DOCUMENT.MAIN)
         callback = self.on_recent_main_menu_item_activated
         menu.connect("item-activated", callback)
         item.set_submenu(menu)
@@ -231,7 +231,7 @@ class MenuAgent(Delegate):
         """Show the recent translation file menu."""
 
         item = self.uim.get_widget("/ui/menubar/file/recent_translation")
-        menu = self._get_recent_menu(const.DOCUMENT.TRAN)
+        menu = self._get_recent_menu(gaupol.gtk.DOCUMENT.TRAN)
         callback = self.on_recent_translation_menu_item_activated
         menu.connect("item-activated", callback)
         item.set_submenu(menu)
@@ -241,7 +241,7 @@ class MenuAgent(Delegate):
     def on_undo_button_show_menu(self, *args):
         """Show the undo button menu."""
 
-        self._show_revert_button_menu(const.REGISTER.UNDO)
+        self._show_revert_button_menu(gaupol.gtk.REGISTER.UNDO)
 
     def set_menu_notify_events(self, name):
         """Set statusbar tooltips for menu items.

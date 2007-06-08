@@ -19,11 +19,10 @@
 """Time and frame editing actions."""
 
 
+import gaupol.gtk
 import gtk
+_ = gaupol.i18n._
 
-from gaupol.gtk import conf
-from gaupol.gtk.index import *
-from gaupol.i18n import _
 from .action import Action
 
 
@@ -78,12 +77,13 @@ class PreviewAction(Action):
 
         assert page is not None
         assert page.project.video_path is not None
-        if not conf.preview.use_predefined:
-            assert conf.preview.custom_command
+        if not gaupol.gtk.conf.preview.use_predefined:
+            assert gaupol.gtk.conf.preview.custom_command
         col = page.view.get_focus()[1]
         main_file = page.project.main_file
         tran_file = page.project.tran_file
-        file = (tran_file if col == TTXT else main_file)
+        TRAN_TEXT = gaupol.gtk.COLUMN.TRAN_TEXT
+        file = (tran_file if col == TRAN_TEXT else main_file)
         assert file is not None
 
 

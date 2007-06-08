@@ -18,11 +18,11 @@
 
 import re
 
-from gaupol.unittest import TestCase
+from gaupol import unittest
 from .. import parser
 
 
-class TestParser(TestCase):
+class TestParser(unittest.TestCase):
 
     text = \
         "<i>One only risks it, <b>because</b>\n" \

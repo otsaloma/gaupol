@@ -16,34 +16,34 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
+from gaupol import unittest
 from gaupol.i18n import _, dgettext
-from gaupol.unittest import TestCase
-from .. import langlib
+from .. import languages
 
 
-class TestModule(TestCase):
+class TestModule(unittest.TestCase):
 
     def test_get_country(self):
 
-        country = langlib.get_country("af_ZA")
+        country = languages.get_country("af_ZA")
         assert country == dgettext("iso_3166", "South Africa")
-        country = langlib.get_country("af")
+        country = languages.get_country("af")
         assert country is None
 
     def test_get_language(self):
 
-        lang = langlib.get_language("is_IS")
+        lang = languages.get_language("is_IS")
         assert lang == dgettext("iso_639", "Icelandic")
-        lang = langlib.get_language("is")
+        lang = languages.get_language("is")
         assert lang == dgettext("iso_639", "Icelandic")
 
     def test_get_long_name(self):
 
-        name = langlib.get_long_name("mn_MN")
+        name = languages.get_long_name("mn_MN")
         lang = dgettext("iso_639", "Mongolian")
         country = dgettext("iso_3166", "Mongolia")
         assert name == _("%s (%s)") % (lang, country)
 
-        name = langlib.get_long_name("mn")
+        name = languages.get_long_name("mn")
         lang = dgettext("iso_639", "Mongolian")
         assert name == lang

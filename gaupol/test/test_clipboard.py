@@ -16,11 +16,11 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol.unittest import TestCase
+from gaupol import unittest
 from .. import clipboard
 
 
-class TestClipboard(TestCase):
+class TestClipboard(unittest.TestCase):
 
     def setup_method(self, method):
 

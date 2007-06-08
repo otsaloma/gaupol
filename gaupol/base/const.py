@@ -24,10 +24,10 @@ section.
 
 Example usage:
 
-    FRUIT = Section()
-    FRUIT.APPLE = Member()
+    FRUIT = ConstantSection()
+    FRUIT.APPLE = ConstantMember()
     FRUIT.APPLE.color = "green"
-    FRUIT.ORANGE = Member()
+    FRUIT.ORANGE = ConstantMember()
     FRUIT.ORANGE.color = "orange"
     FRUIT.finalize()
 
@@ -43,7 +43,7 @@ end of all new additions, the 'finalize' method will be called.
 """
 
 
-class Member(int):
+class ConstantMember(int):
 
     """Constant member.
 
@@ -54,16 +54,17 @@ class Member(int):
 
     def __new__(cls, value=0, name=""):
 
-        member = int.__new__(cls, value)
-        member.name = name
-        return member
+        instance = int.__new__(cls, value)
+        instance.name = name
+        return instance
 
     def __str__(self):
 
+        # pylint: disable-msg=E1101
         return self.name
 
 
-class Section(object):
+class ConstantSection(object):
 
     """Constant section.
 
@@ -79,8 +80,8 @@ class Section(object):
 
     def __setattr__(self, name, value):
 
-        if isinstance(value, Member):
-            value = Member(len(self.members), name)
+        if isinstance(value, ConstantMember):
+            value = ConstantMember(len(self.members), name)
             self.members.append(value)
         return object.__setattr__(self, name, value)
 

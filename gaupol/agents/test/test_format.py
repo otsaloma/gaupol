@@ -16,11 +16,11 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol import const
-from gaupol.unittest import TestCase
+import gaupol
+from gaupol import unittest
 
 
-class TestFormatAgent(TestCase):
+class TestFormatAgent(unittest.TestCase):
 
     def setup_method(self, method):
 
@@ -31,7 +31,7 @@ class TestFormatAgent(TestCase):
         self.project.subtitles[0].main_text = \
             "- mrs. pavinato?\n" + \
             "- yes, what do you want?"
-        self.project.change_case([0], const.DOCUMENT.MAIN, "title")
+        self.project.change_case([0], gaupol.DOCUMENT.MAIN, "title")
         assert self.project.subtitles[0].main_text == \
             "- Mrs. Pavinato?\n" + \
             "- Yes, What Do You Want?"
@@ -41,7 +41,7 @@ class TestFormatAgent(TestCase):
         self.project.subtitles[0].main_text = \
             "<i>mrs. pavinato?</i>\n" + \
             "<i>yes, what do you want?</i>"
-        self.project.change_case([0], const.DOCUMENT.MAIN, "capitalize")
+        self.project.change_case([0], gaupol.DOCUMENT.MAIN, "capitalize")
         assert self.project.subtitles[0].main_text == \
             "<i>Mrs. pavinato?</i>\n" + \
             "<i>yes, what do you want?</i>"
@@ -51,7 +51,7 @@ class TestFormatAgent(TestCase):
         self.project.subtitles[0].main_text = \
             "mrs. pavinato?\n" + \
             "yes, what do you want?"
-        self.project.change_case([0], const.DOCUMENT.MAIN, "upper")
+        self.project.change_case([0], gaupol.DOCUMENT.MAIN, "upper")
         assert self.project.subtitles[0].main_text == \
             "MRS. PAVINATO?\n" + \
             "YES, WHAT DO YOU WANT?"
@@ -64,7 +64,7 @@ class TestFormatAgent(TestCase):
         self.project.subtitles[1].main_text = \
             "- It was the only beautiful thing you had.\n" + \
             "- Now you seem a different person."
-        self.project.toggle_dialogue_lines([0, 1], const.DOCUMENT.MAIN)
+        self.project.toggle_dialogue_lines([0, 1], gaupol.DOCUMENT.MAIN)
         assert self.project.subtitles[0].main_text == \
             "You have cut your beard?\n" + \
             "Yes, don't you like it?"
@@ -80,7 +80,7 @@ class TestFormatAgent(TestCase):
         self.project.subtitles[1].main_text = \
             "It was the only beautiful thing you had.\n" + \
             "Now you seem a different person."
-        self.project.toggle_dialogue_lines([0, 1], const.DOCUMENT.MAIN)
+        self.project.toggle_dialogue_lines([0, 1], gaupol.DOCUMENT.MAIN)
         assert self.project.subtitles[0].main_text == \
             "- You have cut your beard?\n" + \
             "- Yes, don't you like it?"
@@ -96,7 +96,7 @@ class TestFormatAgent(TestCase):
         self.project.subtitles[1].main_text = \
             "It was the only beautiful thing you had.\n" + \
             "Now you seem a different person."
-        self.project.toggle_dialogue_lines([0, 1], const.DOCUMENT.MAIN)
+        self.project.toggle_dialogue_lines([0, 1], gaupol.DOCUMENT.MAIN)
         assert self.project.subtitles[0].main_text == \
             "- You have cut your beard?\n" + \
             "- Yes, don't you like it?"
@@ -112,7 +112,7 @@ class TestFormatAgent(TestCase):
         self.project.subtitles[1].main_text = \
             "<i>I look like this because\n" + \
             "I'm hunted for by the Germans.</i>"
-        self.project.toggle_italicization([0, 1], const.DOCUMENT.MAIN)
+        self.project.toggle_italicization([0, 1], gaupol.DOCUMENT.MAIN)
         assert self.project.subtitles[0].main_text == \
             "I am no thief, I am an officer\n" + \
             "and a university student."
@@ -128,7 +128,7 @@ class TestFormatAgent(TestCase):
         self.project.subtitles[1].main_text = \
             "I look like this because\n" + \
             "I'm hunted for by the Germans."
-        self.project.toggle_italicization([0, 1], const.DOCUMENT.MAIN)
+        self.project.toggle_italicization([0, 1], gaupol.DOCUMENT.MAIN)
         assert self.project.subtitles[0].main_text == \
             "<i>I am no thief, I am an officer\n" + \
             "and a university student.</i>"
@@ -144,7 +144,7 @@ class TestFormatAgent(TestCase):
         self.project.subtitles[1].main_text = \
             "I look like this because\n" + \
             "I'm hunted for by the Germans."
-        self.project.toggle_italicization([0, 1], const.DOCUMENT.MAIN)
+        self.project.toggle_italicization([0, 1], gaupol.DOCUMENT.MAIN)
         assert self.project.subtitles[0].main_text == \
             "<i>I am no thief, I am an officer\n" + \
             "and a university student.</i>"

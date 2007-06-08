@@ -25,13 +25,13 @@ from gaupol.gtk.index import *
 from gaupol.gtk.view import View
 
 
-class ViewAgent(Delegate):
+class ViewAgent(gaupol.Delegate):
 
     """Changing the visual appearance of the application and its documents."""
 
     # pylint: disable-msg=E0203,W0201
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def _toggle_column(self, col):
         """Show or hide column."""
 
@@ -40,32 +40,32 @@ class ViewAgent(Delegate):
         visible = column.get_visible()
         active = self.uim.get_action(col.uim_path).get_active()
         assert visible is not active
-        util.set_cursor_busy(self.window)
+        gaupol.gtk.util.set_cursor_busy(self.window)
         column.set_visible(not visible)
         visible_columns = []
-        for col in const.COLUMN.members:
+        for col in gaupol.gtk.COLUMN.members:
             if page.view.get_column(col).get_visible():
                 visible_columns.append(col)
-        conf.editor.visible_cols = visible_columns
+        gaupol.gtk.conf.editor.visible_cols = visible_columns
         self.update_gui()
-        util.set_cursor_normal(self.window)
+        gaupol.gtk.util.set_cursor_normal(self.window)
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def on_framerate_combo_changed(self, *args):
         """Change the framerate with which unnative units are calculated."""
 
         page = self.get_current_page()
         index = self.framerate_combo.get_active()
-        framerate = const.FRAMERATE.members[index]
+        framerate = gaupol.gtk.FRAMERATE.members[index]
         assert framerate != page.project.framerate
-        util.set_cursor_busy(self.window)
+        gaupol.gtk.util.set_cursor_busy(self.window)
         page.project.change_framerate(framerate)
-        conf.editor.framerate = framerate
+        gaupol.gtk.conf.editor.framerate = framerate
         self.uim.get_widget(framerate.uim_path).set_active(True)
         if page.edit_mode != page.project.main_file.mode:
             rows = range(len(page.project.times))
-            page.reload_view(rows, [SHOW, HIDE, DURN])
-        util.set_cursor_normal(self.window)
+            page.reload_view(rows, [SHOW, HIDE, gaupol.gtk.COLUMN.DURATION])
+        gaupol.gtk.util.set_cursor_normal(self.window)
 
     def on_output_window_notify_visible(self, *args):
         """Sync the menu item to the output window's visibility."""
@@ -73,36 +73,36 @@ class ViewAgent(Delegate):
         action = self.uim.get_action("/ui/menubar/view/output_window")
         action.set_active(self.output_window.props.visible)
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def on_show_framerate_23_976_activate(self, item, active_item):
         """Change the framerate with which unnative units are calculated."""
 
         page = self.get_current_page()
         name = active_item.get_name()
-        index = const.FRAMERATE.uim_action_names.index(name)
-        framerate = const.FRAMERATE.members[index]
+        index = gaupol.gtk.FRAMERATE.uim_action_names.index(name)
+        framerate = gaupol.gtk.FRAMERATE.members[index]
         assert framerate != page.project.framerate
-        util.set_cursor_busy(self.window)
+        gaupol.gtk.util.set_cursor_busy(self.window)
         page.project.change_framerate(framerate)
-        conf.editor.framerate = framerate
+        gaupol.gtk.conf.editor.framerate = framerate
         self.framerate_combo.set_active(framerate)
         if page.edit_mode != page.project.main_file.mode:
             rows = range(len(page.project.times))
-            page.reload_view(rows, [SHOW, HIDE, DURN])
-        util.set_cursor_normal(self.window)
+            page.reload_view(rows, [SHOW, HIDE, DURATION])
+        gaupol.gtk.util.set_cursor_normal(self.window)
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def on_show_times_activate(self, item, active_item):
         """Change the units in which postions are shown."""
 
         page = self.get_current_page()
         name = active_item.get_name()
-        index = const.MODE.uim_action_names.index(name)
-        edit_mode = const.MODE.members[index]
+        index = gaupol.gtk.MODE.uim_action_names.index(name)
+        edit_mode = gaupol.gtk.MODE.members[index]
         assert edit_mode != page.edit_mode
-        util.set_cursor_busy(self.window)
+        gaupol.gtk.util.set_cursor_busy(self.window)
         page.edit_mode = edit_mode
-        conf.editor.mode = edit_mode
+        gaupol.gtk.conf.editor.mode = edit_mode
         has_focus = page.view.props.has_focus
         focus_row, focus_col = page.view.get_focus()
         selected_rows = page.view.get_selected_rows()
@@ -119,22 +119,22 @@ class ViewAgent(Delegate):
         if focus_row is not None:
             page.view.scroll_to_row(focus_row)
         page.view.props.has_focus = has_focus
-        util.set_cursor_normal(self.window)
+        gaupol.gtk.util.set_cursor_normal(self.window)
 
     def on_toggle_duration_column_activate(self, *args):
         """Show or hide the 'Duration' column."""
 
-        self._toggle_column(const.COLUMN.DURN)
+        self._toggle_column(gaupol.gtk.COLUMN.DURATION)
 
     def on_toggle_hide_column_activate(self, *args):
         """Show or hide the 'Hide' column."""
 
-        self._toggle_column(const.COLUMN.HIDE)
+        self._toggle_column(gaupol.gtk.COLUMN.HIDE)
 
     def on_toggle_main_text_column_activate(self, *args):
         """Show or hide the 'Main Text' column."""
 
-        self._toggle_column(const.COLUMN.MTXT)
+        self._toggle_column(gaupol.gtk.COLUMN.MAIN_TEXT)
 
     def on_toggle_main_toolbar_activate(self, *args):
         """Show or hide the main toolbar."""
@@ -142,12 +142,12 @@ class ViewAgent(Delegate):
         toolbar = self.uim.get_widget("/ui/main_toolbar")
         visible = toolbar.props.visible
         toolbar.props.visible = not visible
-        conf.application_window.show_main_toolbar = not visible
+        gaupol.gtk.conf.application_window.show_main_toolbar = not visible
 
     def on_toggle_number_column_activate(self, *args):
         """Show or hide the 'No.' column."""
 
-        self._toggle_column(const.COLUMN.NO)
+        self._toggle_column(gaupol.gtk.COLUMN.NUMBER)
 
     def on_toggle_output_window_activate(self, *args):
         """Show or hide the output window."""
@@ -163,28 +163,28 @@ class ViewAgent(Delegate):
     def on_toggle_show_column_activate(self, *args):
         """Show or hide the 'Show' column."""
 
-        self._toggle_column(const.COLUMN.SHOW)
+        self._toggle_column(gaupol.gtk.COLUMN.SHOW)
 
     def on_toggle_statusbar_activate(self, *args):
         """Show or hide the statusbar."""
 
         visible = self.statusbar.props.visible
         self.statusbar.props.visible = not visible
-        conf.application_window.show_statusbar = not visible
+        gaupol.gtk.conf.application_window.show_statusbar = not visible
 
     def on_toggle_translation_text_column_activate(self, *args):
         """Show or hide the 'Translation Text' column."""
 
-        self._toggle_column(const.COLUMN.TTXT)
+        self._toggle_column(gaupol.gtk.COLUMN.TRAN_TEXT)
 
     def on_toggle_video_toolbar_activate(self, *args):
         """Show or hide the video toolbar."""
 
         visible = self.video_toolbar.props.visible
         self.video_toolbar.props.visible = not visible
-        conf.application_window.show_video_toolbar = not visible
+        gaupol.gtk.conf.application_window.show_video_toolbar = not visible
 
-    @util.asserted_return
+    @gaupol.gtk.util.asserted_return
     def on_view_header_button_press_event(self, button, event):
         """Display a column visibility pop-up menu."""
 

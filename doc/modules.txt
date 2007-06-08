@@ -2,7 +2,6 @@ Module Dependency Order
 =======================
 
 gaupol.unittest/
-gaupol.opts
 gaupol.paths
 gaupol.urls
 gaupol.util
@@ -10,9 +9,9 @@ gaupol.base/
 gaupol.i18n
 gaupol.errors
 gaupol.const
-gaupol.enclib
-gaupol.langlib
-gaupol.scriptlib
+gaupol.encodings
+gaupol.languages
+gaupol.scripts
 gaupol.calculator
 gaupol.finder
 gaupol.parser
@@ -23,22 +22,22 @@ gaupol.tags/
 gaupol.converter
 gaupol.subtitle
 gaupol.clipboard
-gaupol.project
-gaupol.reversion/
+gaupol.revertable
 gaupol.agents/
+gaupol.project
 gaupol.__init__
 
 gaupol.gtk.unittest/
 gaupol.gtk.const
-gaupol.gtk.index
-gaupol.gtk.conf/
-gaupol.gtk.lengthlib
-gaupol.gtk.util
-gaupol.gtk.runner
 gaupol.gtk.errors
+gaupol.gtk.conf/
+gaupol.gtk.ruler
+gaupol.gtk.util
+gaupol.gtk.meta
+gaupol.gtk.runner
 gaupol.gtk.tooltips
 gaupol.gtk.entries
-gaupol.gtk.cellrend/
+gaupol.gtk.renderers/
 gaupol.gtk.output
 gaupol.gtk.view
 gaupol.gtk.page

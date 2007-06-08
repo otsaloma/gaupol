@@ -16,14 +16,14 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
+import gaupol.gtk
 import gtk
 
-from gaupol.gtk import const
-from gaupol.gtk.unittest import TestCase
+from gaupol.gtk import unittest
 from .. import previewerr
 
 
-class TestPreviewErrorDialog(TestCase):
+class TestPreviewErrorDialog(unittest.TestCase):
 
     def run(self):
 
@@ -32,7 +32,7 @@ class TestPreviewErrorDialog(TestCase):
 
     def setup_method(self, method):
 
-        output = self.get_file_text(const.FORMAT.SUBRIP)
+        output = self.get_file_text(gaupol.gtk.FORMAT.SUBRIP)
         self.dialog = previewerr.PreviewErrorDialog(gtk.Window(), output)
 
     def test___init__(self):

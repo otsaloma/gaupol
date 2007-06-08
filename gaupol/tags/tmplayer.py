@@ -1,4 +1,4 @@
-# Copyright (C) 2006 Osmo Salomaa
+# Copyright (C) 2006-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -19,6 +19,8 @@
 """TMPlayer tag library."""
 
 
+import gaupol
+
 from .taglib import TagLibrary
 
 
@@ -26,4 +28,4 @@ class TMPlayer(TagLibrary):
 
     """TMPlayer tag library."""
 
-    pass
+    format = gaupol.FORMAT.TMPLAYER

@@ -1,4 +1,4 @@
-# Copyright (C) 2007 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,11 +16,10 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Options for run-time behaviour.
-
-Module variables:
- * check_contracts: True to check pre-, postconditions and class invariants
-"""
+"""Cell renderer widgets for subtitle data."""
 
 
-check_contracts = True
+from .multiline import MultilineCellRenderer
+from .time import TimeCellRenderer
+
+__all__ = ["MultilineCellRenderer", "TimeCellRenderer"]

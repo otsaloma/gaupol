@@ -18,11 +18,11 @@
 
 import gtk
 
-from gaupol.gtk.unittest import TestCase
+from gaupol.gtk import unittest
 from .. import tooltips
 
 
-class TestTooltips(TestCase):
+class TestTooltips(unittest.TestCase):
 
     def run(self):
 

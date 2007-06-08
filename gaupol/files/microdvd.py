@@ -23,10 +23,9 @@ from __future__ import with_statement
 
 import codecs
 import contextlib
+import gaupol
 import re
 
-from gaupol import const
-from gaupol.base import Contractual
 from .subfile import SubtitleFile
 
 
@@ -34,9 +33,9 @@ class MicroDVD(SubtitleFile):
 
     """MicroDVD file."""
 
-    __metaclass__ = Contractual
-    format = const.FORMAT.MICRODVD
-    mode = const.MODE.FRAME
+    __metaclass__ = gaupol.Contractual
+    format = gaupol.FORMAT.MICRODVD
+    mode = gaupol.MODE.FRAME
 
     def read(self):
         """Read file.

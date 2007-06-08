@@ -53,8 +53,8 @@ class InsertDialog(GladeDialog):
     def _init_data(self):
         """Initialize default values for widgets."""
 
-        self._amount_spin.set_value(conf.subtitle_insert.amount)
-        active = (0 if conf.subtitle_insert.above else 1)
+        self._amount_spin.set_value(gaupol.gtk.conf.subtitle_insert.amount)
+        active = (0 if gaupol.gtk.conf.subtitle_insert.above else 1)
         self._position_combo.set_active(active)
 
         page = self.application.get_current_page()
@@ -65,7 +65,7 @@ class InsertDialog(GladeDialog):
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
-        util.connect(self, self, "response")
+        gaupol.gtk.util.connect(self, self, "response")
 
     def _insert_subtitles(self, amount, above):
         """Insert subtitles."""
@@ -84,7 +84,7 @@ class InsertDialog(GladeDialog):
 
         amount = self._amount_spin.get_value_as_int()
         above = (self._position_combo.get_active() == 0)
-        conf.subtitle_insert.amount = amount
-        conf.subtitle_insert.above = above
+        gaupol.gtk.conf.subtitle_insert.amount = amount
+        gaupol.gtk.conf.subtitle_insert.above = above
         if response == gtk.RESPONSE_OK:
             self._insert_subtitles(amount, above)
