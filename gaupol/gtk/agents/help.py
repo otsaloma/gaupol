@@ -19,10 +19,7 @@
 """Help and information."""
 
 
-from gaupol import urls
-from gaupol.base import Delegate
-from gaupol.gtk import util
-from gaupol.gtk.dialogs import AboutDialog
+import gaupol.gtk
 
 
 class HelpAgent(gaupol.Delegate):
@@ -34,9 +31,9 @@ class HelpAgent(gaupol.Delegate):
     def on_report_a_bug_activate(self, *args):
         """Submit a bug report."""
 
-        gaupol.gtk.util.browse_url(gaupol.BUG_REPORT)
+        gaupol.gtk.util.browse_url(gaupol.BUG_REPORT_URL)
 
     def on_view_about_dialog_activate(self, *args):
         """Show information about Gaupol."""
 
-        self.flash_dialog(AboutDialog(self.window))
+        self.flash_dialog(gaupol.gtk.AboutDialog(self.window))

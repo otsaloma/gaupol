@@ -23,7 +23,7 @@
 # from .close      import CloseAgent
 # from .edit       import EditAgent
 # from .format     import FormatAgent
-# from .help       import HelpAgent
+from .help       import HelpAgent
 # from .menu       import MenuAgent
 # from .open       import OpenAgent
 # from .position   import PositionAgent

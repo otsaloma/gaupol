@@ -1,5 +1,11 @@
 2007-06-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/agents/help.py:
+	* gaupol/gtk/agents/__init__.py:
+	Fix imports.
+
+2007-06-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/ruler.py:
 	Use proper definition of "em" and pango units.
 
