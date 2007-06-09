@@ -25,6 +25,8 @@ import os
 import pango
 _ = gaupol.i18n._
 
+__all__ = ["Application"]
+
 
 class Application(gaupol.Observable, gaupol.gtk.Runner):
 
