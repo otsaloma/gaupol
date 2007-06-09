@@ -16,22 +16,13 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-import gaupol.gtk
 import gtk
 
 from gaupol.gtk import unittest
 from .. import preferences
 
 
-class _TestPreferencesPage(unittest.TestCase):
-
-    def teardown_method(self, method):
-
-        gaupol.gtk.conf.read()
-        unittest.TestCase.teardown_method(self, method)
-
-
-class TestEditorPage(_TestPreferencesPage):
+class TestEditorPage(unittest.TestCase):
 
     def setup_method(self, method):
 
@@ -64,7 +55,7 @@ class TestEditorPage(_TestPreferencesPage):
         self.page._length_edit_check.emit("toggled")
 
 
-class TestFilePage(_TestPreferencesPage):
+class TestFilePage(unittest.TestCase):
 
     def setup_method(self, method):
 
@@ -111,7 +102,7 @@ class TestFilePage(_TestPreferencesPage):
         self.page._on_up_button_clicked()
 
 
-class TestPreviewPage(_TestPreferencesPage):
+class TestPreviewPage(unittest.TestCase):
 
     def setup_method(self, method):
 

@@ -91,6 +91,9 @@ def read():
     config["general"]["version"] = gaupol.__version__
     globals()["_config"] = config
     for key, value in config.items():
+        if key in globals():
+            globals()[key].update(value)
+            continue
         globals()[key] = Container(value)
 
 def write_ensure(value):

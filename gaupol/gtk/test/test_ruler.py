@@ -48,11 +48,6 @@ class TestModule(unittest.TestCase):
         window.show_all()
         gtk.main()
 
-    def setup_method(self, method):
-
-        gaupol.gtk.conf.read()
-        reload(ruler)
-
     def test_connect_text_view(self):
 
         text_view = gtk.TextView()

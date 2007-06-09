@@ -54,3 +54,4 @@ class TestCase(unittest.TestCase):
 
         while gtk.events_pending():
             gtk.main_iteration(block=False)
+        gaupol.gtk.conf.read()

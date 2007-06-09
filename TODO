@@ -50,7 +50,7 @@ Dependencies:
 Gaupol 0.9
 ==========
 
- * Fix regular expression grouping in scriptlib
+ * Fix regular expression grouping in gaupol.scripts
 
 New:
  [ ] Text correction assistant
@@ -69,8 +69,8 @@ Unscheduled Possibilities
 =========================
 
  * PyGTK 2.12
-    - gtk.Tooltips: New API that allows complex tooltips
     - gtk.AboutDialog: "name" replaced with "program-name"
+    - gtk.Tooltips: New API that allows complex tooltips
  * Interactive search
  * gedit-style message area
  * Document hidden settings (where?)

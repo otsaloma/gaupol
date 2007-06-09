@@ -1,5 +1,14 @@
 2007-06-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/conf/container.py:
+	* gaupol/gtk/conf/__init__.py:
+	Do not break notification connections upon repeated reads.
+
+	* gaupol/gtk/unittest/case.py (teardown_method):
+	Call gaupol.gtk.conf.read.
+
+2007-06-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/ruler.py:
 	Use "sans" instead of conf.editor.font.
 
