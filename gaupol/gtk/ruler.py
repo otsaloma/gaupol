@@ -27,9 +27,9 @@ import pango
 import re
 
 
-class _Counter(object):
+class _Ruler(object):
 
-    """Line length counter.
+    """Measurer of line lengths in various units.
 
     Instance variables:
      * _em_length: Point size of the font used in pango units
@@ -52,33 +52,20 @@ class _Counter(object):
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
-        for option in ("font", "length_unit", "use_default_font"):
-            gaupol.gtk.gaupol.gtk.conf.connect(self, "editor", option)
-
-    def _on_conf_editor_notify_font(self, *args):
-        """Update the width of the letter 'M'."""
-
-        self._update_em_length()
+        gaupol.gtk.gaupol.gtk.conf.connect(self, "editor", "length_unit")
 
     def _on_conf_editor_notify_length_unit(self, *args):
         """Update the length function used."""
 
         self._update_length_func()
 
-    def _on_conf_editor_notify_use_default_font(self, *args):
-        """Update the width of the letter 'M'."""
-
-        self._update_em_length()
-
     def _update_em_length(self):
         """Update the width of the letter 'M'."""
 
         self._layout = gtk.Label().get_layout().copy()
         font_desc = self._layout.get_context().get_font_description()
-        if not gaupol.gtk.gaupol.gtk.conf.editor.use_default_font:
-            font = gaupol.gtk.gaupol.gtk.conf.editor.font
-            custom_font_desc = pango.FontDescription(font)
-            font_desc.merge(custom_font_desc, True)
+        custom_font_desc = pango.FontDescription("sans")
+        font_desc.merge(custom_font_desc, True)
         self._layout.set_font_description(font_desc)
         self._em_length = font_desc.get_size()
 
@@ -110,7 +97,7 @@ class _Counter(object):
         return lengths
 
 
-_counter = _Counter()
+_ruler = _Ruler()
 
 @gaupol.util.asserted_return
 def _on_text_view_expose_event(text_view, event):
@@ -160,9 +147,9 @@ def disconnect_text_view(text_view):
 def func(text):
     """Get the length of text (as float) without stripping tags."""
 
-    return sum(_counter.get_lengths(text, False, False))
+    return sum(_ruler.get_lengths(text, False, False))
 
 def get_lengths(text):
     """Get a list of floored line lengths without tags."""
 
-    return _counter.get_lengths(text, True, True)
+    return _ruler.get_lengths(text, True, True)

@@ -1,5 +1,10 @@
 2007-06-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/ruler.py:
+	Use "sans" instead of conf.editor.font.
+
+2007-06-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/application.py:
 	Add missing __all__ attribute.
 
