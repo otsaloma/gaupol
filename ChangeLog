@@ -1,3 +1,8 @@
+2007-06-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/ruler.py:
+	Use proper definition of "em" and pango units.
+
 2007-06-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* bin/gaupol:

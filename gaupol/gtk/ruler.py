@@ -32,7 +32,7 @@ class _Counter(object):
     """Line length counter.
 
     Instance variables:
-     * _em_width: Width of the letter 'M' in pixels in the current font
+     * _em_length: Point size of the font used in pango units
      * _layout: pango.Layout used for text length calculations
     """
 
@@ -41,11 +41,11 @@ class _Counter(object):
     # pylint: disable-msg=W0231
     def __init__(self):
 
-        self._em_width = None
+        self._em_length = None
         self._layout = None
         self.get_lengths = None
 
-        self._update_em_width()
+        self._update_em_length()
         self._update_length_func()
         self._init_signal_handlers()
 
@@ -58,7 +58,7 @@ class _Counter(object):
     def _on_conf_editor_notify_font(self, *args):
         """Update the width of the letter 'M'."""
 
-        self._update_em_width()
+        self._update_em_length()
 
     def _on_conf_editor_notify_length_unit(self, *args):
         """Update the length function used."""
@@ -68,18 +68,19 @@ class _Counter(object):
     def _on_conf_editor_notify_use_default_font(self, *args):
         """Update the width of the letter 'M'."""
 
-        self._update_em_width()
+        self._update_em_length()
 
-    def _update_em_width(self):
+    def _update_em_length(self):
         """Update the width of the letter 'M'."""
 
         self._layout = gtk.Label().get_layout().copy()
+        font_desc = self._layout.get_context().get_font_description()
         if not gaupol.gtk.gaupol.gtk.conf.editor.use_default_font:
             font = gaupol.gtk.gaupol.gtk.conf.editor.font
-            font_desc = pango.FontDescription(font)
-            self._layout.set_font_description(font_desc)
-        self._layout.set_text("M")
-        self._em_width = self._layout.get_pixel_size()[0]
+            custom_font_desc = pango.FontDescription(font)
+            font_desc.merge(custom_font_desc, True)
+        self._layout.set_font_description(font_desc)
+        self._em_length = font_desc.get_size()
 
     def _update_length_func(self):
         """Update the length function used."""
@@ -103,7 +104,7 @@ class _Counter(object):
         text = (self._re_tag.sub("", text) if strip else text)
         for line in text.split("\n"):
             self._layout.set_text(line)
-            length = self._layout.get_pixel_size()[0] / self._em_width
+            length = self._layout.get_size()[0] / self._em_length
             length = (int(length) if floor else length)
             lengths.append(length)
         return lengths
