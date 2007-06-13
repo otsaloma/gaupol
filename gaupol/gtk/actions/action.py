@@ -73,6 +73,21 @@ class Action(gtk.Action):
         return self.set_sensitive(True)
 
 
+class TopLevelAction(Action):
+
+    """Base class for actions that are top-level menu items."""
+
+    def finalize(self, application):
+        """Connect action to the widgets and methods of application."""
+
+        pass
+
+    def update_sensitivity(self, application, page):
+        """Update the sensitivity of action and all its widgets."""
+
+        pass
+
+
 class ToggleAction(Action, gtk.ToggleAction):
 
     """Base class for UI manager toggle actions."""
@@ -92,8 +107,8 @@ class RadioAction(ToggleAction, gtk.RadioAction):
     """Base class for UI manager radio actions.
 
     Instance variable 'group' should be a unique string to recognize group
-    members by, e.g. the class name of the first of the radio actions. The
-    actual 'group' property is set once all the actions are instantiated.
+    members by the class name of the first of the radio actions. The actual
+    'group' property is set once all the actions are instantiated.
     """
 
     def finalize(self, application):
@@ -101,6 +116,7 @@ class RadioAction(ToggleAction, gtk.RadioAction):
 
         # FIX: Always connect (assume hasattr).
         self.widgets = [getattr(application, x) for x in self.widgets]
+        is_main = (self.__class__.__name__ == self.group)
         callback = "on_%s_changed" % self.props.name
-        if hasattr(application, callback):
+        if is_main and hasattr(application, callback):
             self.connect("changed", getattr(application, callback))

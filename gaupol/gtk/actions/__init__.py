@@ -26,9 +26,9 @@ def _get_actions():
     """Get all Action classes."""
 
     actions = []
+    bases = set(("Action", "TopLevelAction", "ToggleAction", "RadioAction"))
     for module in _get_modules():
-        names = set(x for x in dir(module) if x.endswith("Action"))
-        names -= set(("Action", "ToggleAction", "RadioAction"))
+        names = set(x for x in dir(module) if x.endswith("Action")) - bases
         for value in (getattr(module, x) for x in names):
             globals()[value.__name__] = value
             actions.append(value.__name__)
@@ -41,6 +41,7 @@ def _get_modules():
     from . import file
     from . import format
     from . import help
+    from . import menu
     from . import position
     from . import search
     from . import spellcheck

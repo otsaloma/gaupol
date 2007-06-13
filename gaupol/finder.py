@@ -22,6 +22,8 @@
 import gaupol
 import re
 
+__all__ = ["Finder"]
+
 
 class Finder(object):
 
@@ -204,7 +206,7 @@ class Finder(object):
         self.pattern = re.compile(pattern, flags)
 
     def set_text(self, text, next=True):
-        """Set the text.
+        """Set the text to search in.
 
         next should be True to start at beginning, False for end.
         """

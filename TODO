@@ -1,8 +1,6 @@
 Gaupol 0.8
 ==========
 
- * Review and adapt to various fixes to gtk.Recent* (e.g. #418219)
-
 Changes:
  [D] Configuration file backend and syntax changed
  [D] Fixed numerous bugs with find and replace

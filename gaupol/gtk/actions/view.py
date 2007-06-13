@@ -238,7 +238,7 @@ class ShowTimesAction(RadioAction):
 
 class ToggleDurationColumnAction(ToggleAction):
 
-    """Show or hide the "Duration" column."""
+    """Show or hide the 'Duration' column."""
 
     def __init__(self):
 
@@ -256,7 +256,7 @@ class ToggleDurationColumnAction(ToggleAction):
 
 class ToggleEndColumnAction(ToggleAction):
 
-    """Show or hide the "End" column."""
+    """Show or hide the 'End' column."""
 
     def __init__(self):
 
@@ -274,7 +274,7 @@ class ToggleEndColumnAction(ToggleAction):
 
 class ToggleMainTextColumnAction(ToggleAction):
 
-    """Show or hide the "Main Text" column."""
+    """Show or hide the 'Main Text' column."""
 
     def __init__(self):
 

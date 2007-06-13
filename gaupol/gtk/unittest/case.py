@@ -32,11 +32,12 @@ class TestCase(unittest.TestCase):
     def get_application(self):
         """Get a new application with two open pages."""
 
+        # FIX:
         if not hasattr(TestCase, "application"):
             TestCase.application = gaupol.gtk.Application()
         application = TestCase.application
-        while application.pages:
-            application.close(application.pages[0], False)
+        #while application.pages:
+        #    application.close(application.pages[0], False)
         application.add_new_page(self.get_page())
         application.add_new_page(self.get_page())
         return application

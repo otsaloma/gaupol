@@ -34,11 +34,6 @@ class TestSplitDialog(unittest.TestCase):
         self.application = self.get_application()
         self.dialog = split.SplitDialog(self.application)
 
-    def test__on_response_cancel(self):
-
-        self.dialog._subtitle_spin.set_value(5)
-        self.dialog.response(gtk.RESPONSE_CANCEL)
-
     def test__on_response_ok(self):
 
         self.dialog._subtitle_spin.set_value(5)

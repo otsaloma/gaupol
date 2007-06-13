@@ -190,7 +190,7 @@ def browse_url(url, browser=None):
 
 @once
 def chardet_available():
-    """Return True if chardet is available."""
+    """Return True if chardet module is available."""
 
     try:
         # pylint: disable-msg=W0612
@@ -240,7 +240,7 @@ def connect(observer, observable, signal, *args):
 
 @once
 def enchant_available():
-    """Return True if enchant is available."""
+    """Return True if enchant module is available."""
 
     try:
         # pylint: disable-msg=W0612
@@ -271,8 +271,7 @@ def get_default_encoding():
     """Get the locale encoding or UTF-8 (as fallback)."""
 
     encoding = locale.getpreferredencoding()
-    if encoding is None:
-        return "utf_8"
+    encoding = encoding or "utf_8"
     re_illegal = re.compile(r"[^a-z0-9_]")
     encoding = re_illegal.sub("_", encoding.lower())
     encoding = get_encoding_alias(encoding)
@@ -372,8 +371,7 @@ def handle_read_io(exc_info, path):
 def handle_read_unicode(exc_info, path, encoding):
     """Print Unicode error message to standard output."""
 
-    if encoding is None:
-        encoding = get_default_encoding()
+    encoding = encoding or get_default_encoding()
     print "Failed to decode file '%s' with codec '%s'." % (path, encoding)
 
 def handle_remove_os(exc_info, path):
@@ -389,8 +387,7 @@ def handle_write_io(exc_info, path):
 def handle_write_unicode(exc_info, path, encoding):
     """Print Unicode error message to standard output."""
 
-    if encoding is None:
-        encoding = get_default_encoding()
+    encoding = encoding or get_default_encoding()
     print "Failed to encode file '%s' with codec '%s'." % (path, encoding)
 
 def is_method(function, args):
@@ -421,7 +418,7 @@ def makedirs_ensure(value, directory):
 
 @contractual
 def makedirs(directory):
-    """Make directory if it does not exist.
+    """Recursively make directory if it does not exist.
 
     Raise OSError if unsuccessful.
     """
@@ -439,8 +436,7 @@ def read(path, encoding=None):
     Raise IOError if reading fails.
     Raise UnicodeError if decoding fails.
     """
-    if encoding is None:
-        encoding = get_default_encoding()
+    encoding = encoding or get_default_encoding()
     args = (path, "r", encoding)
     with contextlib.closing(codecs.open(*args)) as fobj:
         return fobj.read().strip()
@@ -492,8 +488,7 @@ def write(path, text, encoding=None):
     Raise IOError if writing fails.
     Raise UnicodeError if encoding fails.
     """
-    if encoding is None:
-        encoding = get_default_encoding()
+    encoding = encoding or get_default_encoding()
     args = (path, "w", encoding)
     with contextlib.closing(codecs.open(*args)) as fobj:
         return fobj.write(text)

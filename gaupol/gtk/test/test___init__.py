@@ -1,4 +1,4 @@
-# Copyright (C) 2007 Osmo Salomaa
+# Copyright (C) 2005-2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,23 +16,17 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Extension delegates of Application."""
+import gaupol.gtk
+from gaupol.gtk import unittest
 
 
-# FIX:
-# from .close      import CloseAgent
-# from .edit       import EditAgent
-# from .format     import FormatAgent
-from .help       import HelpAgent
-# from .menu       import MenuAgent
-from .open       import OpenAgent
-# from .position   import PositionAgent
-# from .preview    import PreviewAgent
-# from .save       import SaveAgent
-# from .search     import SearchAgent
-# from .spellcheck import SpellCheckAgent
-from .update     import UpdateAgent
-from .util       import UtilityAgent
-from .view       import ViewAgent
+class TestModule(unittest.TestCase):
 
-__all__ = [x for x in dir() if x.endswith("Agent")]
+    def test_attributes(self):
+
+        assert hasattr(gaupol.gtk, "COMBO_SEPARATOR")
+        assert hasattr(gaupol.gtk, "EXTRA")
+        assert hasattr(gaupol.gtk, "BUSY_CURSOR")
+        assert hasattr(gaupol.gtk, "HAND_CURSOR")
+        assert hasattr(gaupol.gtk, "INSERT_CURSOR")
+        assert hasattr(gaupol.gtk, "NORMAL_CURSOR")

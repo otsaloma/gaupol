@@ -78,7 +78,7 @@ FRAMERATE = gaupol.ConstantSection()
 FRAMERATE.P24 = gaupol.ConstantMember()
 FRAMERATE.P24.label = _("24 fps")
 FRAMERATE.P24.mpsub = "23.98"
-FRAMERATE.P24.value = 23.976
+FRAMERATE.P24.value = 24 / 1.001
 FRAMERATE.P25 = gaupol.ConstantMember()
 FRAMERATE.P25.label = _("25 fps")
 FRAMERATE.P25.mpsub = "25.00"
@@ -86,7 +86,7 @@ FRAMERATE.P25.value = 25.0
 FRAMERATE.P30 = gaupol.ConstantMember()
 FRAMERATE.P30.label = _("30 fps")
 FRAMERATE.P30.mpsub = "29.97"
-FRAMERATE.P30.value = 29.97
+FRAMERATE.P30.value = 30 / 1.001
 FRAMERATE.finalize()
 
 MODE = gaupol.ConstantSection()

@@ -52,6 +52,6 @@ class PreviewErrorDialog(GladeDialog):
 
         get_size = gaupol.gtk.util.get_text_view_size
         width, height = get_size(self._text_view, "monospace")
-        width = width + 112 + gaupol.gtk.util.EXTRA
-        height = height + 148 + gaupol.gtk.util.EXTRA
+        width = width + 112 + gaupol.gtk.EXTRA
+        height = height + 148 + gaupol.gtk.EXTRA
         gaupol.gtk.util.resize_message_dialog(self, width, height)

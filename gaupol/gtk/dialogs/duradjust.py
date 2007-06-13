@@ -92,7 +92,7 @@ class DurationAdjustDialog(GladeDialog):
                 "Adjusted duration of %d subtitle",
                 "Adjusted durations of %d subtitles",
                 len(rows)) % len(rows)
-            self.application.push_message(message)
+            self.application.flash_message(message)
 
     def _get_target(self):
         """Get the selected target."""

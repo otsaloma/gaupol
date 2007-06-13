@@ -134,8 +134,7 @@ class TestLiner(unittest.TestCase):
 
     def test_set_length_func(self):
 
-        def get_length(arg):
-            return len(arg)**2 + 1
+        get_length = lambda arg: len(arg)**2 + 1
         self.liner.set_length_func(get_length)
         assert self.liner._length_func == get_length
         assert self.liner._space_length == 2

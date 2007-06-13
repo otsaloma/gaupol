@@ -25,15 +25,6 @@ from .. import util
 
 class TestModule(unittest.TestCase):
 
-    def test_attributes(self):
-
-        assert hasattr(util, "COMBO_SEPARATOR")
-        assert hasattr(util, "EXTRA")
-        assert hasattr(util, "BUSY_CURSOR")
-        assert hasattr(util, "HAND_CURSOR")
-        assert hasattr(util, "INSERT_CURSOR")
-        assert hasattr(util, "NORMAL_CURSOR")
-
     def test_document_to_text_column(self):
 
         doc = gaupol.gtk.DOCUMENT.MAIN
@@ -78,6 +69,12 @@ class TestModule(unittest.TestCase):
         gaupol.gtk.conf.editor.show_lengths_edit = False
         gaupol.gtk.conf.editor.use_default_font = False
         gaupol.gtk.conf.editor.font = "Serif 12"
+
+    def test_raise_default(self):
+
+        error = gaupol.gtk.Default
+        self.raises(error, util.raise_default, True)
+        util.raise_default(False)
 
     def test_resize_dialog(self):
 

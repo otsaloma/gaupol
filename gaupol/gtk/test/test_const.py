@@ -26,10 +26,15 @@ class TestModule(unittest.TestCase):
 
         constants = (
             ("COLUMN", (
+                "actions",
                 "labels",
                 "names",)),
+            ("FRAMERATE", (
+                "actions",)),
             ("LENGTH_UNIT", (
                 "names",)),
+            ("MODE", (
+                "actions",)),
             ("TARGET", (
                 "names",)),
             ("TOOLBAR_STYLE", (

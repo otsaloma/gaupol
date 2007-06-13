@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol.gtk import conf, const
+import gaupol.gtk
 from gaupol.gtk import unittest
 
 
@@ -25,6 +25,11 @@ class TestUpdateAgent(unittest.TestCase):
     def setup_method(self, method):
 
         self.application = self.get_application()
+
+    def test_flash_message(self):
+
+        self.application.flash_message("")
+        self.application.flash_message(None)
 
     def test_on_activate_next_project_activate(self):
 
@@ -82,11 +87,12 @@ class TestUpdateAgent(unittest.TestCase):
 
     def test_push_message(self):
 
-        self.application.push_message("test")
-        self.application.push_message(None, False)
+        self.application.push_message("")
+        self.application.push_message(None)
 
     def test_update_gui(self):
 
+        # FIX
         self.application.update_gui()
-        self.application.on_close_all_projects_activate()
-        self.application.update_gui()
+        #self.application.on_close_all_projects_activate()
+        #self.application.update_gui()

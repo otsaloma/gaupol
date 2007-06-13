@@ -30,22 +30,8 @@ class TestApplication(unittest.TestCase):
 
     def setup_method(self, method):
 
-        # FIX:
         self.application = application.Application()
-        #self.application = self.get_application()
 
-    def test_get_current_page(self):
+    def test___init__(self):
 
-        # FIX:
-        #page = self.application.pages[0]
-        #self.application.set_current_page(page)
-        value = self.application.get_current_page()
-        #assert value == page
-
-    def test_set_current_page(self):
-
-        # FIX:
-        #page = self.application.pages[-1]
-        #self.application.set_current_page(page)
-        value = self.application.get_current_page()
-        #assert value == page
+        pass

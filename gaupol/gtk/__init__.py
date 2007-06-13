@@ -16,14 +16,38 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""GTK user interface."""
+"""GTK user interface.
+
+Module variables:
+ * BUSY_CURSOR: gtk.gdk.Cursor used when application not idle
+ * COMBO_SEPARATOR: String rendered as a separator in combo boxes
+ * EXTRA: Extra length to add to size calculations
+ * HAND_CURSOR: gtk.gdk.Cursor for use with hyperlinks
+ * INSERT_CURSOR: gtk.gdk.Cursor for editable text widgets
+ * NORMAL_CURSOR: gtk.gdk.Cursor used by default
+
+When setting dialog sizes based on their content, we get the size request of
+the scrolled window component and add the surroundings to that. For this to
+work neatly we should add some extra to adapt to different widget sizes in
+different themes. Let the EXTRA constant very vaguely account for that.
+"""
 
 
 import gaupol
+import gtk
 import inspect
 
 module = inspect.getmodule(lambda: True)
 gaupol.__dict__["gtk"] = module
+
+EXTRA = 36
+COMBO_SEPARATOR = "<separator/>"
+
+BUSY_CURSOR = gtk.gdk.Cursor(gtk.gdk.WATCH)
+HAND_CURSOR = gtk.gdk.Cursor(gtk.gdk.HAND2)
+INSERT_CURSOR = gtk.gdk.Cursor(gtk.gdk.XTERM)
+NORMAL_CURSOR = gtk.gdk.Cursor(gtk.gdk.LEFT_PTR)
+
 
 from gaupol.gtk.const import *
 from gaupol.gtk.errors import *

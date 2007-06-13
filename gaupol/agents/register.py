@@ -156,7 +156,8 @@ class RegisterAgent(gaupol.Delegate):
         del self.undoables[self.undo_limit:]
 
     def emit_action_signal_require(self, register):
-        assert self._get_destination_stack(register)
+        if  register is not None:
+            assert self._get_destination_stack(register)
 
     @gaupol.util.asserted_return
     def emit_action_signal(self, register):
@@ -219,7 +220,8 @@ class RegisterAgent(gaupol.Delegate):
         self._shift_changed_value(action, action.register.shift)
 
     def set_action_description_require(self, register, description):
-        assert self._get_destination_stack(register)
+        if register is not None:
+            assert self._get_destination_stack(register)
 
     @gaupol.util.asserted_return
     def set_action_description(self, register, description):

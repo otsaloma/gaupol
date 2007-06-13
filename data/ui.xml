@@ -2,7 +2,7 @@
   <menubar name="menubar">
     <menu name="file" action="show_file_menu">
       <menuitem name="new" action="new_project"/>
-      <menuitem name="open_main" action="open_main_file"/>
+      <menuitem name="open_main" action="open_main_files"/>
       <menuitem name="open_translation" action="open_translation_file"/>
       <menuitem name="select_video" action="select_video_file"/>
       <separator/>
@@ -116,7 +116,7 @@
     </menu>
   </menubar>
   <toolbar name="main_toolbar">
-    <toolitem name="open_main" action="open_main_file"/>
+    <toolitem name="open_main" action="open_main_files"/>
     <toolitem name="save_main" action="save_main_document"/>
     <separator/>
     <toolitem name="undo" action="undo_action"/>

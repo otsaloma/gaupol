@@ -19,15 +19,11 @@
 """Updating the application GUI."""
 
 
+import gaupol.gtk
 import gobject
 import gtk
 import os
-
-from gaupol.base import Delegate
-from gaupol.gtk import conf, const, util
-from gaupol.gtk.i18n import _
-from gaupol.gtk._actions import *
-from gaupol.gtk._actions import ACTIONS
+_ = gaupol.i18n._
 
 
 class UpdateAgent(gaupol.Delegate):
@@ -35,12 +31,13 @@ class UpdateAgent(gaupol.Delegate):
     """Updating the application GUI.
 
     Instance attributes:
-
-        _message_id:  Statusbar message ID
-        _message_tag: Statusbar GObject timeout tag
+     * _message_id:  Statusbar message ID
+     * _message_tag: Statusbar GObject timeout tag
     """
 
     # pylint: disable-msg=E0203,W0201
+
+    __metaclass__ = gaupol.Contractual
 
     def __init__(self, master):
 
@@ -48,53 +45,56 @@ class UpdateAgent(gaupol.Delegate):
         self._message_id = None
         self._message_tag = None
 
+    def _disable_widgets(self):
+        """Make widgets unsensitive and blank."""
+
+        self.tooltips.disable()
+        self.window.set_title("Gaupol")
+        self.video_button.get_data("label").set_text("")
+        self.push_message(None)
+
     def _update_actions(self, page):
         """Update sensitivities of all UI manager actions for page."""
 
-        for name in ACTIONS:
-            cls = eval(name)
-            doable = cls.is_doable(self, page)
-            for path in cls.paths:
-                self.uim.get_action(path).set_sensitive(doable)
-            for widget in cls.widgets:
-                getattr(self, widget).set_sensitive(doable)
+        action_group = self.get_action_group("main")
+        for action in action_group.list_actions():
+            action.update_sensitivity(self, page)
 
+    @gaupol.gtk.util.asserted_return
     def _update_revert(self, page):
         """Update tooltips for undo and redo."""
 
-        if page is not None and page.project.can_undo():
+        assert page is not None
+        if page.project.can_undo():
             tip = _('Undo "%s"') % page.project.undoables[0].description
-            self.undo_button.set_tooltip(self.tooltips, tip)
-            self.uim.get_action("/ui/menubar/edit/undo").props.tooltip = tip
-        if page is not None and page.project.can_redo():
+            self.get_action("undo_action").props.tooltip = tip
+        if page.project.can_redo():
             tip = _('Redo "%s"') % page.project.redoables[0].description
-            self.redo_button.set_tooltip(self.tooltips, tip)
-            self.uim.get_action("/ui/menubar/edit/redo").props.tooltip = tip
+            self.get_action("redo_action").props.tooltip = tip
 
     def _update_widgets(self, page):
         """Update the states of widgets."""
 
         if page is None:
-            self.tooltips.disable()
-            self.window.set_title("Gaupol")
-            self.video_button.get_data("label").set_text("")
-            self.push_message(None)
-            return
+            return self._disable_widgets()
         self.tooltips.enable()
         self.window.set_title(page.tab_label.get_text())
-        self.uim.get_action(page.edit_mode.uim_path).set_active(True)
-        path = gaupol.gtk.FRAMERATE.uim_paths[page.project.framerate]
-        self.uim.get_action(path).set_active(True)
+        self.get_action(page.edit_mode.action).set_active(True)
+        self.get_action(page.project.framerate.action).set_active(True)
         self.framerate_combo.set_active(page.project.framerate)
-        for i, path in enumerate(gaupol.gtk.COLUMN.uim_paths):
+        for i, name in enumerate(gaupol.gtk.COLUMN.actions):
             visible = page.view.get_column(i).props.visible
-            self.uim.get_action(path).set_active(visible)
-        if page.project.video_path is not None:
-            basename = os.path.basename(page.project.video_path)
-            self.video_button.get_data("label").set_text(basename)
-        else:
-            self.video_button.get_data("label").set_text("")
+            self.get_action(name).set_active(visible)
+        video = os.path.basename(page.project.video_path or "")
+        self.video_button.get_data("label").set_text(video)
         self.tooltips.set_tip(self.video_button, page.project.video_path)
+
+    def flash_message(self, message):
+        """Show message in the statusbar for a short while."""
+
+        self.push_message(message)
+        method = self.push_message
+        self._message_tag = gobject.timeout_add(6000, method, None)
 
     def on_activate_next_project_activate(self, *args):
         """Activate the project in the next tab."""
@@ -131,14 +131,16 @@ class UpdateAgent(gaupol.Delegate):
         index = self.pages.index(page)
         self.notebook.reorder_child(scroller, index + 1)
 
+    def on_notebook_page_reordered_ensure(self, value, *args, **kwargs):
+        for i, page in enumerate(self.pages):
+            value = self.notebook.get_nth_page(i)
+            assert value.get_child() == page.view
+
     def on_notebook_page_reordered(self, notebook, scroller, index):
         """Update the list of pages to match the new order."""
 
         view = scroller.get_child()
-        for page in self.pages:
-            if page.view == view:
-                break
-        # pylint: disable-msg=W0631
+        page = [x for x in self.pages if x.view == view][0]
         self.pages.remove(page)
         self.pages.insert(index, page)
         self.update_gui()
@@ -153,16 +155,15 @@ class UpdateAgent(gaupol.Delegate):
         self.update_gui()
         page.view.grab_focus()
 
+    @gaupol.gtk.util.asserted_return
     def on_view_button_press_event(self, view, event):
         """Display a pop-up menu to edit data."""
 
-        if event.button != 3:
-            return False
+        assert event.button == 3
         x = int(event.x)
         y = int(event.y)
         value = view.get_path_at_pos(x, y)
-        if value is None:
-            return False
+        assert value is not None
         path, column, x, y = value
         if path[0] not in view.get_selected_rows():
             view.set_cursor(path[0], column)
@@ -188,20 +189,17 @@ class UpdateAgent(gaupol.Delegate):
         maximized = bool(state & gtk.gdk.WINDOW_STATE_MAXIMIZED)
         gaupol.gtk.conf.application_window.maximized = maximized
 
-    def push_message(self, message, clear=True):
-        """Push message to the statusbar."""
+    def push_message(self, message):
+        """Show message in the statusbar."""
 
         if self._message_tag is not None:
             gobject.source_remove(self._message_tag)
         if self._message_id is not None:
             self.statusbar.remove(0, self._message_id)
-        event_box = gaupol.gtk.util.get_event_box(self.statusbar)
+        event_box = self.statusbar.get_ancestor(gtk.EventBox)
         self.tooltips.set_tip(event_box, message)
         if message is not None:
             self._message_id = self.statusbar.push(0, message)
-            if clear:
-                method = self.push_message
-                self._message_tag = gobject.timeout_add(6000, method, None)
         return False
 
     def update_gui(self):

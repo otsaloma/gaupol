@@ -127,11 +127,11 @@ class HeaderDialog(GladeDialog):
 
         label = gtk.Label(("M" * 44 + "\n") * 12)
         width, height = label.size_request()
-        width = width + 166 + gaupol.gtk.util.EXTRA
+        width = width + 166 + gaupol.gtk.EXTRA
         if self._main_vbox.props.visible and self._tran_vbox.props.visible:
-            height = 2 * height + 205 + gaupol.gtk.util.EXTRA
+            height = 2 * height + 205 + gaupol.gtk.EXTRA
         elif self._main_vbox.props.visible or self._tran_vbox.props.visible:
-            height = height + 90 + gaupol.gtk.util.EXTRA
+            height = height + 90 + gaupol.gtk.EXTRA
         gaupol.gtk.util.resize_dialog(self, width, height)
 
     def _on_copy_down_button_clicked(self, *args):

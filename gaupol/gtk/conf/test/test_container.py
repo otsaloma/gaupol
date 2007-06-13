@@ -46,3 +46,7 @@ class TestContainer(unittest.TestCase):
         self.container.show = not value
         assert self.container.show is not value
         assert not "show" in self.root.defaults
+
+    def test_update(self):
+
+        self.container.update(self.root)

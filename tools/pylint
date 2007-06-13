@@ -10,6 +10,7 @@ pylint --rcfile=$(dirname "$0")/data/pylintrc $@ \
     | egrep -v "Module 'gaupol.gtk..?conf' has no '.+?' member" \
     | egrep -v "No name '.+?' in module '.+?\.test\.?'" \
     | egrep -v "Undefined variable 'fobj'" \
+    | egrep -v "functools.partial is not callable" \
 \
     | sed "s/\*\+ Module \(.*\)$/<\1>/" \
     | sed "s/>$/>\n</" \

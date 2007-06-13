@@ -105,8 +105,8 @@ class MultiCloseDialog(GladeDialog):
             tran_width, tran_height = get_size(self._tran_tree_view)
             height_extra += 32
 
-        width = max(main_width, tran_width) + 88 + gaupol.gtk.util.EXTRA
-        height = main_height + tran_height + height_extra + gaupol.gtk.util.EXTRA
+        width = max(main_width, tran_width) + 88 + gaupol.gtk.EXTRA
+        height = main_height + tran_height + height_extra + gaupol.gtk.EXTRA
         gaupol.gtk.util.resize_message_dialog(self._dialog, width, height)
 
     def _init_tran_tree_view(self):

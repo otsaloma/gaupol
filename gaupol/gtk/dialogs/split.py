@@ -19,35 +19,25 @@
 """Dialog for splitting project in two."""
 
 
-import copy
+import gaupol.gtk
 import gtk
+_ = gaupol.i18n._
 
-from gaupol.gtk import const, util
-from gaupol.gtk.i18n import _
-from gaupol.gtk.page import Page
 from .glade import GladeDialog
 
 
 class SplitDialog(GladeDialog):
 
-    """Dialog for splitting a project in two.
-
-    Instance variables:
-
-        _dialog:        gtk.Dialog
-        _subtitle_spin: gtk.SpinButton, first subtitle of new project
-        application:    Associated application
-    """
+    """Dialog for splitting a project in two."""
 
     def __init__(self, application):
 
         GladeDialog.__init__(self, "split-dialog")
-        self._dialog        = self._glade_xml.get_widget("dialog")
         self._subtitle_spin = self._glade_xml.get_widget("subtitle_spin")
-        self.application    = application
+        self.application = application
 
-        self._init_subtitle_spin()
         self._init_signal_handlers()
+        self._init_subtitle_spin()
         self._dialog.set_transient_for(application.window)
         self._dialog.set_default_response(gtk.RESPONSE_OK)
 
@@ -55,29 +45,39 @@ class SplitDialog(GladeDialog):
         """Initialize signal handlers."""
 
         gaupol.gtk.util.connect(self, self, "response")
+        gaupol.gtk.util.connect(self, "_subtitle_spin", "value-changed")
 
     def _init_subtitle_spin(self):
         """Initialize the subtitle spin button."""
 
         page = self.application.get_current_page()
-        self._subtitle_spin.set_range(2, len(page.project.times))
+        self._subtitle_spin.set_range(2, len(page.project.subtitles))
         self._subtitle_spin.set_value(1)
         rows = page.view.get_selected_rows()
         subtitle = (rows[0] + 1 if rows else 1)
         self._subtitle_spin.set_value(subtitle)
+        self._subtitle_spin.emit("value-changed")
 
+    def _on_subtitle_spin_value_changed(self, spin_button):
+        """Select the matching row in the view."""
+
+        page = self.application.get_current_page()
+        row = self._subtitle_spin.get_value_as_int() - 1
+        page.view.set_focus(row, None)
+
+    @gaupol.gtk.util.asserted_return
     def _on_response(self, dialog, response):
-        """Split the current project if OK."""
+        """Split the current project if OK responded."""
 
-        if response == gtk.RESPONSE_OK:
-            self._split_project()
+        assert response == gtk.RESPONSE_OK
+        self._split_project()
 
-    def _remove_from_source(self, source, row):
+    def _remove_from_source(self, source, index):
         """Remove rows from the source page."""
 
-        rows = range(row, len(source.project.times))
+        indexes = range(index, len(source.project.subtitles))
         source.project.block("action-done")
-        source.project.remove_subtitles(rows)
+        source.project.remove_subtitles(indexes)
         source.project.set_action_description(
             gaupol.gtk.REGISTER.DO, _("Splitting project"))
         source.project.unblock("action-done")
@@ -85,41 +85,25 @@ class SplitDialog(GladeDialog):
     def _shift_destination(self, source, destination):
         """Shift subtitles in the destination page."""
 
-        mode = destination.project.get_mode()
-        calc = destination.project.calc
-        if mode == gaupol.gtk.MODE.TIME:
-            count = source.project.times[-1][1]
-            count = -1 * calc.time_to_seconds(count)
-            method = destination.project.shift_seconds
-        elif mode == gaupol.gtk.MODE.FRAME:
-            count = -1 * source.project.frames[-1][1]
-            method = destination.project.shift_frames
-        method([], count, register=None)
+        amount = source.project.subtitles[-1].end
+        destination.project.shift_positions(None, amount, register=None)
 
     def _split_project(self):
         """Split the current project in two."""
 
         gaupol.gtk.util.set_cursor_busy(self.application.window)
-        row = self._subtitle_spin.get_value_as_int() - 1
+        index = self._subtitle_spin.get_value_as_int() - 1
         source = self.application.get_current_page()
         self.application.counter += 1
-        destination = Page(self.application.counter)
-
-        times = copy.deepcopy(source.project.times[row:])
-        frames = copy.deepcopy(source.project.frames[row:])
-        main_texts = copy.deepcopy(source.project.main_texts[row:])
-        tran_texts = copy.deepcopy(source.project.tran_texts[row:])
-        destination.project.times = times
-        destination.project.frames = frames
-        destination.project.main_texts = main_texts
-        destination.project.tran_texts = tran_texts
+        destination = gaupol.gtk.Page(self.application.counter)
+        subtitles = [x.copy() for x in source.project.subtitles[index:]]
+        destination.subtitles = subtitles
         destination.reload_view_all()
-
-        self._remove_from_source(source, row)
+        self._remove_from_source(source, index)
         self._shift_destination(source, destination)
         self.application.add_new_page(destination)
-        amount = len(destination.project.times)
-        fields = {"amount": amount, "name": destination.untitle}
-        self.application.push_message(
-            _('Split %(amount)d subtitles to project "%(name)s"') % fields)
+        amount = len(destination.project.subtitles)
+        name = destination.untitle
+        message = _('Split %(amount)d subtitles to project "%(name)s"')
+        self.application.flash_message(message % locals())
         gaupol.gtk.util.set_cursor_normal(self.application.window)

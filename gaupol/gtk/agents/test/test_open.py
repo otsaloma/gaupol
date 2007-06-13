@@ -16,40 +16,97 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
+import functools
+import gaupol.gtk
 import gtk
 
-from gaupol.gtk import const
-from gaupol.gtk.errors import Default
 from gaupol.gtk import unittest
 
 
 class TestOpenAgent(unittest.TestCase):
 
+#     def run__show_encoding_error_dialog(self):
+
+#         flash_dialog = gaupol.gtk.Runner.flash_dialog
+#         flash_dialog = functools.partial(flash_dialog, self.application)
+#         self.delegate.flash_dialog = flash_dialog
+#         self.delegate._show_encoding_error_dialog("test")
+
+#     def run__show_format_error_dialog(self):
+
+#         flash_dialog = gaupol.gtk.Runner.flash_dialog
+#         flash_dialog = functools.partial(flash_dialog, self.application)
+#         self.delegate.flash_dialog = flash_dialog
+#         self.delegate._show_format_error_dialog("test")
+
+#     def run__show_io_error_dialog(self):
+
+#         flash_dialog = gaupol.gtk.Runner.flash_dialog
+#         flash_dialog = functools.partial(flash_dialog, self.application)
+#         self.delegate.flash_dialog = flash_dialog
+#         self.delegate._show_io_error_dialog("test", "test")
+
+#     def run__show_parse_error_dialog(self):
+
+#         flash_dialog = gaupol.gtk.Runner.flash_dialog
+#         flash_dialog = functools.partial(flash_dialog, self.application)
+#         self.delegate.flash_dialog = flash_dialog
+#         format = gaupol.gtk.FORMAT.SUBRIP
+#         self.delegate._show_parse_error_dialog("test", format)
+
+#     @gaupol.gtk.util.silent(gaupol.gtk.Default)
+#     def run__show_size_warning_dialog(self):
+
+#         flash_dialog = gaupol.gtk.Runner.flash_dialog
+#         flash_dialog = functools.partial(flash_dialog, self.application)
+#         self.delegate.flash_dialog = flash_dialog
+#         self.delegate._show_size_warning_dialog("test", 2)
+
+#     @gaupol.gtk.util.silent(gaupol.gtk.Default)
+#     def run__show_sort_warning_dialog(self):
+
+#         flash_dialog = gaupol.gtk.Runner.flash_dialog
+#         flash_dialog = functools.partial(flash_dialog, self.application)
+#         self.delegate.flash_dialog = flash_dialog
+#         self.delegate._show_sort_warning_dialog("test", 3)
+
+    @gaupol.gtk.util.silent(gaupol.gtk.Default)
+    def run__show_ssa_warning_dialog(self):
+
+        flash_dialog = gaupol.gtk.Runner.flash_dialog
+        flash_dialog = functools.partial(flash_dialog, self.application)
+        self.delegate.flash_dialog = flash_dialog
+        self.delegate._show_ssa_warning_dialog()
+
+#     @gaupol.gtk.util.silent(gaupol.gtk.Default)
+#     def run__show_translation_warning_dialog(self):
+
+#         flash_dialog = gaupol.gtk.Runner.flash_dialog
+#         flash_dialog = functools.partial(flash_dialog, self.application)
+#         self.delegate.flash_dialog = flash_dialog
+#         page = self.application.get_current_page()
+#         self.delegate._show_translation_warning_dialog(page)
+
     def setup_method(self, method):
 
         self.application = self.get_application()
         self.delegate = self.application.open_main_files.im_self
-
         respond = lambda *args: gtk.RESPONSE_DELETE_EVENT
         self.delegate.flash_dialog = respond
         self.delegate.run_dialog = respond
 
-    def test__get_encodings(self):
-
-        encodings = self.delegate._get_encodings()
-        assert encodings
-        for encoding in encodings:
-            assert isinstance(encoding, basestring)
-
-        encodings = self.delegate._get_encodings("johab")
-        assert encodings[0] == "johab"
-
-    def test__get_file_open(self):
+    def test__ensure_file_not_open(self):
 
         path = self.get_subrip_path()
-        assert not self.delegate._get_file_open(path)
-        self.application.open_main_files([path])
-        assert self.delegate._get_file_open(path)
+        self.delegate._ensure_file_not_open(path)
+        self.application.open_main_file(path)
+        function = self.delegate._ensure_file_not_open
+        self.raises(gaupol.gtk.Default, function, path)
+
+    def test__get_encodings(self):
+
+        self.delegate._get_encodings()
+        self.delegate._get_encodings("johab")
 
     def test__show_encoding_error_dialog(self):
 
@@ -63,26 +120,31 @@ class TestOpenAgent(unittest.TestCase):
 
         self.delegate._show_io_error_dialog("test", "test")
 
+    def test__show_parse_error_dialog(self):
+
+        format = gaupol.gtk.FORMAT.SUBRIP
+        self.delegate._show_parse_error_dialog("test", format)
+
+    @gaupol.gtk.util.silent(gaupol.gtk.Default)
     def test__show_size_warning_dialog(self):
 
-        function = self.delegate._show_size_warning_dialog
-        self.raises(Default, function, "test", 10)
+        self.delegate._show_size_warning_dialog("test", 2)
 
+    @gaupol.gtk.util.silent(gaupol.gtk.Default)
     def test__show_sort_warning_dialog(self):
 
-        function = self.delegate._show_sort_warning_dialog
-        self.raises(Default, function, "test", 10)
+        self.delegate._show_sort_warning_dialog("test", 3)
 
+    @gaupol.gtk.util.silent(gaupol.gtk.Default)
     def test__show_ssa_warning_dialog(self):
 
-        function = self.delegate._show_ssa_warning_dialog
-        self.raises(Default, function)
+        self.delegate._show_ssa_warning_dialog()
 
+    @gaupol.gtk.util.silent(gaupol.gtk.Default)
     def test__show_translation_warning_dialog(self):
 
-        function = self.delegate._show_translation_warning_dialog
-        page = self.application.pages[0]
-        self.raises(Default, function, page)
+        page = self.application.get_current_page()
+        self.delegate._show_translation_warning_dialog(page)
 
     def test_add_new_page(self):
 
@@ -107,10 +169,6 @@ class TestOpenAgent(unittest.TestCase):
 
         self.application.on_new_project_activate()
 
-    def test_on_open_button_clicked(self):
-
-        self.application.on_open_button_clicked()
-
     def test_on_open_main_file_activate(self):
 
         self.application.on_open_main_file_activate()
@@ -119,20 +177,25 @@ class TestOpenAgent(unittest.TestCase):
 
         self.application.on_open_translation_file_activate()
 
+    @gaupol.gtk.util.asserted_return
     def test_on_recent_main_menu_item_activated(self):
 
-        menu = self.application.open_button.get_menu()
-        if menu.get_children():
-            item = menu.get_children()[0]
-            menu.activate_item(item, True)
+        # FIX:
+        name = "show_recent_main_menu"
+        #menu = self.application.get_menu_item(name).get_submenu()
+        #assert menu.get_children()
+        #item = menu.get_children()[0]
+        #menu.activate_item(item, True)
 
+    @gaupol.gtk.util.asserted_return
     def test_on_recent_translation_menu_item_activated(self):
 
-        path = "/ui/menubar/file/recent_translation"
-        menu = self.application.uim.get_widget(path).get_submenu()
-        if menu.get_children():
-            item = menu.get_children()[0]
-            menu.activate_item(item, True)
+        # FIX:
+        name = "show_recent_translation_menu"
+        #menu = self.application.get_menu_item(name).get_submenu()
+        #assert menu.get_children()
+        #item = menu.get_children()[0]
+        #menu.activate_item(item, True)
 
     def test_on_select_video_file_activate(self):
 
@@ -141,7 +204,7 @@ class TestOpenAgent(unittest.TestCase):
     def test_on_split_project_activate(self):
 
         responder = iter((gtk.RESPONSE_OK, gtk.RESPONSE_CANCEL))
-        respond = lambda *args: responder.next()
+        flash_dialog = lambda *args: responder.next()
         self.delegate.flash_dialog = flash_dialog
         self.application.pages[0].view.select_rows([3])
         self.application.on_split_project_activate()
@@ -151,9 +214,14 @@ class TestOpenAgent(unittest.TestCase):
 
         self.application.on_video_button_clicked()
 
+    def test_open_main_file(self):
+
+        self.application.open_main_file(self.get_subrip_path())
+        self.application.open_main_file(self.get_subrip_path(), "ascii")
+
     def test_open_main_files(self):
 
-        paths = [self.get_subrip_path(), self.get_microdvd_path()]
+        paths = (self.get_subrip_path(), self.get_microdvd_path())
         self.application.open_main_files(paths)
         self.application.open_main_files(paths, "ascii")
 

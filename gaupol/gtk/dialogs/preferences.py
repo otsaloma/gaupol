@@ -288,7 +288,7 @@ class _PreviewPage(gaupol.Delegate):
         store = self._app_combo.get_model()
         for name in gaupol.gtk.VIDEO_PLAYER.labels:
             store.append([name])
-        store.append([gaupol.gtk.util.COMBO_SEPARATOR])
+        store.append([gaupol.gtk.COMBO_SEPARATOR])
         store.append([_("Custom")])
         function = gaupol.gtk.util.separate_combo
         self._app_combo.set_row_separator_func(function)

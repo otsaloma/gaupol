@@ -69,7 +69,7 @@ class TestEditAgent(unittest.TestCase):
     def test_on_edit_next_value_activate(self):
 
         page = self.application.get_current_page()
-        page.view.set_focus(0, SHOW)
+        page.view.set_focus(0, gaupol.gtk.COLUMN.START)
         self.application.on_edit_next_value_activate()
         page.view.set_focus(0, gaupol.gtk.COLUMN.MAIN_TEXT)
         self.application.on_edit_next_value_activate()
@@ -82,7 +82,7 @@ class TestEditAgent(unittest.TestCase):
     def test_on_edit_value_activate(self):
 
         page = self.application.get_current_page()
-        page.view.set_focus(0, SHOW)
+        page.view.set_focus(0, gaupol.gtk.COLUMN.START)
         self.application.on_edit_value_activate()
         page.view.set_focus(0, gaupol.gtk.COLUMN.MAIN_TEXT)
         self.application.on_edit_value_activate()

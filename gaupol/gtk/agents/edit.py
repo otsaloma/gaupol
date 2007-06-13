@@ -163,7 +163,7 @@ class EditAgent(gaupol.Delegate):
                 "Inserted %d subtitle to fit clipboard contents",
                 "Inserted %d subtitles to fit clipboard contents",
                 count ) % count
-            self.push_message(message)
+            self.flash_message(message)
 
     def on_project_action_done(self, *args):
         """Update GUI after doing action."""
@@ -240,7 +240,7 @@ class EditAgent(gaupol.Delegate):
         self._set_sensitivities(True)
         self.push_message(None)
         page = self.get_current_page()
-        if col in (SHOW, HIDE, gaupol.gtk.COLUMN.DURATION):
+        if col in (gaupol.gtk.COLUMN.START, gaupol.gtk.COLUMN.END, gaupol.gtk.COLUMN.DURATION):
             assert value
             if page.edit_mode == gaupol.gtk.MODE.FRAME:
                 assert value.isdigit()
@@ -263,7 +263,7 @@ class EditAgent(gaupol.Delegate):
         self._set_sensitivities(False)
         if col in (gaupol.gtk.COLUMN.MAIN_TEXT, gaupol.gtk.COLUMN.TRAN_TEXT):
             message = _("Use Shift+Return for line-break")
-            self.push_message(message, False)
+            self.flash_message(message, False)
 
     def redo(self, count=1):
         """Redo actions."""

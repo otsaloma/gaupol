@@ -4,13 +4,13 @@
 # Usage: generate-tests FILE
 
 MODULE=$(basename ${1%%.py})
-UNITTEST_MODULE="gaupol.unittest"
+PARENT_MODULE="gaupol"
 if [[ -n $(echo "$1" | grep "gaupol/gtk") ]]; then
-    UNITTEST_MODULE="gaupol.gtk.unittest"
+    PARENT_MODULE="gaupol.gtk"
 fi
 
 IMPORTS="\n\n\n\
-from $UNITTEST_MODULE import TestCase\n\
+from $PARENT_MODULE import unittest\n\
 from .. import $MODULE"
 SETUP_METHOD="\n    def setup_method(self, method):\n\n        pass"
 
@@ -19,4 +19,4 @@ cat "$1" \
     | egrep -v "_(require|ensure)\(" \
     | sed "s|^\(# .*Boston.*\)$|\1$IMPORTS|" \
     | sed "s|^\(\s*\)def \(\w*\).*$|\n\1def test_\2(self):\n\n\1    pass|" \
-    | sed "s|^class \(\w*\).*$|\n\nclass Test\1(TestCase):\n$SETUP_METHOD|"
+    | sed "s|^class \(\w*\).*$|\n\nclass Test\1(unittest.TestCase):\n$SETUP_METHOD|"

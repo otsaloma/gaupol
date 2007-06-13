@@ -20,7 +20,7 @@
 
 Module variables:
  * countries: Dictionary mapping ISO 3166 codes to country names
- * langs: Dictionary mapping ISO 639 codes to language names
+ * languages: Dictionary mapping ISO 639 codes to language names
  * locales: Frozen set of locale codes
 
 Language codes are ISO 639 two-letter codes. Country codes are ISO 3166 codes.
@@ -293,7 +293,7 @@ countries = {
     "ZM": "Zambia",
     "ZW": "Zimbabwe",}
 
-langs = {
+languages = {
     "aa": "Afar",
     "ab": "Abkhazian",
     "ae": "Avestan",
@@ -693,21 +693,21 @@ locales = frozenset((
     "zu_ZA",))
 
 
+@gaupol.util.asserted_return
 def get_country(locale):
     """Get the localized country name from locale code or None.
 
     Raise KeyError if language not found.
     """
-    if len(locale) == 5:
-        return dgettext("iso_3166", countries[locale[3:]])
-    return None
+    assert len(locale) == 5
+    return dgettext("iso_3166", countries[locale[3:]])
 
 def get_language(locale):
     """Get the localized language name from locale code.
 
     Raise KeyError if language not found.
     """
-    return dgettext("iso_639", langs[locale[:2]])
+    return dgettext("iso_639", languages[locale[:2]])
 
 def get_long_name(locale):
     """Get the localized long name from locale code.
@@ -715,9 +715,8 @@ def get_long_name(locale):
     Raise KeyError if language not found.
     Return 'Language (Country)'.
     """
-    lang = get_language(locale)
+    language = get_language(locale)
     country = get_country(locale)
     if country is None:
-        return lang
-    fields = {"language": lang, "country": country}
-    return _("%(language)s (%(country)s)") % fields
+        return language
+    return _("%(language)s (%(country)s)") % locals()

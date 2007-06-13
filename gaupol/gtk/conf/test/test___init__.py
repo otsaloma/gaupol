@@ -30,6 +30,13 @@ class TestModule(unittest.TestCase):
 
         gaupol.gtk.conf.connect(self, "editor", "font")
         gaupol.gtk.conf.editor.font = "Serif 12"
+        gaupol.gtk.conf.disconnect(self, "editor", "font")
+
+    def test_disconnect(self):
+
+        gaupol.gtk.conf.connect(self, "editor", "font")
+        gaupol.gtk.conf.disconnect(self, "editor", "font")
+        gaupol.gtk.conf.editor.font = "Sans 24"
 
     def test_read(self):
 

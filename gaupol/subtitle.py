@@ -281,7 +281,7 @@ class Subtitle(object):
         raise ValueError
 
     def get_end(self, mode):
-        """Get the start position in mode."""
+        """Get the end position in mode."""
 
         if mode == gaupol.MODE.TIME:
             return self.end_time
@@ -308,7 +308,7 @@ class Subtitle(object):
         raise ValueError
 
     def set_text(self, doc, value):
-        """set the text corresponding to document."""
+        """Set the text corresponding to document."""
 
         if doc == gaupol.DOCUMENT.MAIN:
             return self._set_main_text(value)

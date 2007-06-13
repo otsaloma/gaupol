@@ -48,8 +48,8 @@ class EncodingDialog(GladeDialog):
         """Initialize widget sizes."""
 
         width, height = gaupol.gtk.util.get_tree_view_size(self._tree_view)
-        width = width + 52 + gaupol.gtk.util.EXTRA
-        height = height + 84 + gaupol.gtk.util.EXTRA
+        width = width + 52 + gaupol.gtk.EXTRA
+        height = height + 84 + gaupol.gtk.EXTRA
         gaupol.gtk.util.resize_dialog(self._dialog, width, height, 0.5)
 
     def _init_signal_handlers(self):

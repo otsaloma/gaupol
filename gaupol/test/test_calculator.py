@@ -17,6 +17,7 @@
 
 
 import gaupol
+
 from gaupol import unittest
 from .. import calculator
 
@@ -49,7 +50,7 @@ class TestCalculator(unittest.TestCase):
     def test_frame_to_seconds(self):
 
         seconds = self.calc.frame_to_seconds(127)
-        assert seconds == 127 / 23.976
+        assert seconds == 127 / gaupol.FRAMERATE.P24.value
 
     def test_frame_to_time(self):
 

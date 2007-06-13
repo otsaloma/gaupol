@@ -52,7 +52,7 @@ class _Ruler(object):
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
-        gaupol.gtk.gaupol.gtk.conf.connect(self, "editor", "length_unit")
+        gaupol.gtk.conf.connect(self, "editor", "length_unit")
 
     def _on_conf_editor_notify_length_unit(self, *args):
         """Update the length function used."""
@@ -60,7 +60,7 @@ class _Ruler(object):
         self._update_length_func()
 
     def _update_em_length(self):
-        """Update the width of the letter 'M'."""
+        """Update the length of em based on font description size."""
 
         self._layout = gtk.Label().get_layout().copy()
         font_desc = self._layout.get_context().get_font_description()
@@ -72,7 +72,7 @@ class _Ruler(object):
     def _update_length_func(self):
         """Update the length function used."""
 
-        length_unit = gaupol.gtk.gaupol.gtk.conf.editor.length_unit
+        length_unit = gaupol.gtk.conf.editor.length_unit
         if length_unit == gaupol.gtk.LENGTH_UNIT.CHAR:
             self.get_lengths = self.get_char_lengths
         elif length_unit == gaupol.gtk.LENGTH_UNIT.EM:

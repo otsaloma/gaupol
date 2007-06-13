@@ -105,17 +105,15 @@ class SaveAgent(gaupol.Delegate):
             props[2] = dialog.get_encoding()
             props[3] = dialog.get_newline()
         dialog.destroy()
-        while gtk.events_pending():
-            gtk.main_iteration()
+        gaupol.gtk.util.iterate_main()
         return props
 
     def _show_encoding_error_dialog(self, basename, codec):
         """Show an error dialog after failing to encode file."""
 
         codec = gaupol.encodings.get_display_name(codec)
-        fields = {"filename": basename, "codec": codec}
-        title = _('Failed to encode file "%(filename)s" '
-            'with codec "%(codec)s"') % fields
+        title = _('Failed to encode file "%(basename)s" '
+            'with codec "%(codec)s"') % locals()
         message = _("Please try to save the file with "
             "a different character encoding.")
         dialog = ErrorDialog(self.window, title, message)
@@ -140,7 +138,7 @@ class SaveAgent(gaupol.Delegate):
             save_main(page)
             if page.project.tran_active:
                 save_tran(page)
-        self.push_message(_("Saved all open documents"))
+        self.flash_message(_("Saved all open documents"))
         self.update_gui()
 
     @gaupol.gtk.util.silent(Default)
@@ -184,7 +182,7 @@ class SaveAgent(gaupol.Delegate):
         if None in props:
             return self.save_main_as(page)
         self._save_document(page, gaupol.gtk.DOCUMENT.MAIN, props)
-        self.push_message(_("Saved main document"))
+        self.flash_message(_("Saved main document"))
 
     def save_main_as(self, page):
         """Save the main document of page to a selected file.
@@ -204,7 +202,7 @@ class SaveAgent(gaupol.Delegate):
                 page.reload_view_all()
         self.add_to_recent_files(props[0], gaupol.gtk.DOCUMENT.MAIN)
         basename = os.path.basename(props[0])
-        self.push_message(_('Saved main document as "%s"') % basename)
+        self.flash_message(_('Saved main document as "%s"') % basename)
 
     def save_translation(self, page):
         """Save the translation document of page.
@@ -215,7 +213,7 @@ class SaveAgent(gaupol.Delegate):
         if None in props:
             return self.save_translation_as(page)
         self._save_document(page, gaupol.gtk.DOCUMENT.TRAN, props)
-        self.push_message(_("Saved translation document"))
+        self.flash_message(_("Saved translation document"))
 
     def save_translation_as(self, page):
         """Save the translation document of page to a selected file.
@@ -236,4 +234,4 @@ class SaveAgent(gaupol.Delegate):
                 page.reload_view(rows, [gaupol.gtk.COLUMN.TRAN_TEXT])
         self.add_to_recent_files(props[0], gaupol.gtk.DOCUMENT.TRAN)
         basename = os.path.basename(props[0])
-        self.push_message(_('Saved translation document as "%s"') % basename)
+        self.flash_message(_('Saved translation document as "%s"') % basename)

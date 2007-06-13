@@ -120,7 +120,7 @@ class EditNextValueAction(Action):
         assert page is not None
         row, col = page.view.get_focus()
         assert not None in (row, col)
-        assert row < len(page.project.times) - 1
+        assert row < len(page.project.subtitles) - 1
         assert col != gaupol.gtk.COLUMN.NUMBER
 
 

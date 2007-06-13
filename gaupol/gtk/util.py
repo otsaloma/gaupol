@@ -16,21 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Miscellaneous functions and decorators.
-
-Module variables:
- * BUSY_CURSOR: gtk.gdk.Cursor used when application not idle
- * COMBO_SEPARATOR: String rendered as a separator in combo boxes
- * EXTRA: Extra length to add to size calculations
- * HAND_CURSOR: gtk.gdk.Cursor for use with hyperlinks
- * INSERT_CURSOR: gtk.gdk.Cursor for editable text widgets
- * NORMAL_CURSOR: gtk.gdk.Cursor used by default
-
-When setting dialog sizes based on their content, we get the size request of
-the scrolled window component and add the surroundings to that. For this to
-work neatly we should add some extra to adapt to different widget sizes in
-different themes. Let the EXTRA constant very vaguely account for that.
-"""
+"""Miscellaneous functions and decorators."""
 
 
 import functools
@@ -41,14 +27,6 @@ import os
 import pango
 
 from gaupol.util import *
-
-
-BUSY_CURSOR = gtk.gdk.Cursor(gtk.gdk.WATCH)
-COMBO_SEPARATOR = "<separator/>"
-EXTRA = 36
-HAND_CURSOR = gtk.gdk.Cursor(gtk.gdk.HAND2)
-INSERT_CURSOR = gtk.gdk.Cursor(gtk.gdk.XTERM)
-NORMAL_CURSOR = gtk.gdk.Cursor(gtk.gdk.LEFT_PTR)
 
 
 def idle_method(function):
@@ -63,9 +41,8 @@ def idle_method(function):
 
     return wrapper
 
-@memoize
 def document_to_text_column(doc):
-    """Translate document index to text column index."""
+    """Translate DOCUMENT constant to COLUMN constant."""
 
     if doc == gaupol.gtk.DOCUMENT.MAIN:
         return gaupol.gtk.COLUMN.MAIN_TEXT
@@ -76,8 +53,8 @@ def document_to_text_column(doc):
 def get_font():
     """Get custom font or blank string."""
 
-    if not gaupol.gtk.gaupol.gtk.conf.editor.use_default_font:
-        return gaupol.gtk.gaupol.gtk.conf.editor.font
+    if not gaupol.gtk.conf.editor.use_default_font:
+        return gaupol.gtk.conf.editor.font
     return ""
 
 def get_glade_xml(name, root=None, directory=None):
@@ -112,20 +89,32 @@ def get_tree_view_size(tree_view):
     scroller.set_policy(*policy)
     return width, height
 
+def iterate_main():
+    """Iterate the GTK main loop while events are pending."""
+
+    while gtk.events_pending():
+        gtk.main_iteration()
+
 def prepare_text_view(text_view):
     """Connect text view to font and length margin updates."""
 
     def update_margin(*args):
-        if gaupol.gtk.gaupol.gtk.conf.editor.show_lengths_edit:
+        if gaupol.gtk.conf.editor.show_lengths_edit:
             return gaupol.gtk.ruler.connect_text_view(text_view)
         return gaupol.gtk.ruler.disconnect_text_view(text_view)
-    gaupol.gtk.gaupol.gtk.conf.editor.connect("notify::show_lengths_edit", update_margin)
+    gaupol.gtk.conf.editor.connect("notify::show_lengths_edit", update_margin)
     update_margin()
 
     update_font = lambda *args: set_widget_font(text_view, get_font())
-    gaupol.gtk.gaupol.gtk.conf.editor.connect("notify::use_default_font", update_font)
-    gaupol.gtk.gaupol.gtk.conf.editor.connect("notify::font", update_font)
+    gaupol.gtk.conf.editor.connect("notify::use_default_font", update_font)
+    gaupol.gtk.conf.editor.connect("notify::font", update_font)
     update_font()
+
+def raise_default(expression):
+    """Raise Default if expression evaluates to True."""
+
+    if bool(expression):
+        raise gaupol.gtk.Default
 
 def resize_dialog(dialog, width, height, max_size=0.6):
     """Resize dialog to size required by its widgets.
@@ -150,7 +139,7 @@ def resize_message_dialog(dialog, width, height, max_size=0.5):
 def separate_combo(store, itr):
     """Separator function for combo box models."""
 
-    return store.get_value(itr, 0) == COMBO_SEPARATOR
+    return store.get_value(itr, 0) == gaupol.gtk.COMBO_SEPARATOR
 
 def set_button(button, text, stock=None):
     """Set the label and the image on button."""
@@ -174,9 +163,8 @@ def set_cursor_busy_require(window):
 def set_cursor_busy(window):
     """Set cursor busy when above window."""
 
-    window.window.set_cursor(BUSY_CURSOR)
-    while gtk.events_pending():
-        gtk.main_iteration()
+    window.window.set_cursor(gaupol.gtk.BUSY_CURSOR)
+    iterate_main()
 
 def set_cursor_normal_require(window):
     assert hasattr(window, "window")
@@ -185,9 +173,8 @@ def set_cursor_normal_require(window):
 def set_cursor_normal(window):
     """Set cursor normal when above window."""
 
-    window.window.set_cursor(NORMAL_CURSOR)
-    while gtk.events_pending():
-        gtk.main_iteration()
+    window.window.set_cursor(gaupol.gtk.NORMAL_CURSOR)
+    iterate_main()
 
 def set_label_font(label, font):
     """Set the font on label."""
@@ -210,9 +197,8 @@ def set_widget_font(widget, font):
     font_desc.merge(custom_font_desc, True)
     widget.modify_font(font_desc)
 
-@memoize
 def text_column_to_document(col):
-    """Translate text column constant to document constant."""
+    """Translate COLUMN constant to DOCUMENT constant."""
 
     if col == gaupol.gtk.COLUMN.MAIN_TEXT:
         return gaupol.gtk.DOCUMENT.MAIN

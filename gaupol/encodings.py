@@ -151,14 +151,15 @@ def _translate(name):
     raise ValueError
 
 def _detect_ensure(value, path):
-    assert is_valid(value)
+    if value is not None:
+        assert is_valid(value)
 
 @gaupol.util.contractual
+@gaupol.util.asserted_return
 def detect(path):
-    """Detect the character encoding in file.
+    """Detect the encoding of file or return None.
 
     Raise IOError if reading fails.
-    Raise ValueError if not found.
     Return python name.
     """
     from chardet import universaldetector
@@ -170,8 +171,7 @@ def detect(path):
                 break
     detector.close()
     encoding = detector.result["encoding"]
-    if encoding is None:
-        raise ValueError
+    assert encoding is not None
     return _translate(encoding)
 
 def get_description(python_name):

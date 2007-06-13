@@ -75,6 +75,7 @@ class SearchAgent(gaupol.Delegate):
         self._match_passed = False
         indexes = self._indexes or range(len(self.subtitles))
         while True:
+
             try:
                 # Return match in document after position.
                 return find(index, doc, pos)

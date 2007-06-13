@@ -25,7 +25,7 @@ import gtk
 
 class TimeCellRenderer(gtk.CellRendererText):
 
-    """Cell renderer for time data in format HH:MM:SS.SSS."""
+    """Cell renderer for time data in format [-]HH:MM:SS.SSS."""
 
     __gtype_name__ = "TimeCellRenderer"
 

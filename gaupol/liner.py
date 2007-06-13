@@ -25,6 +25,8 @@ import copy
 import gaupol
 import re
 
+__all__ = ["Liner"]
+
 
 class Liner(gaupol.Parser):
 
@@ -265,7 +267,7 @@ class Liner(gaupol.Parser):
         self._space_length = func(" ")
 
     def set_text(self, text, next=True):
-        """Set the text and parse it.
+        """Set the text to search in and parse it.
 
         next should be True to start at beginning, False for end.
         """

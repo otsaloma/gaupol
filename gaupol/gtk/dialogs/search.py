@@ -147,7 +147,7 @@ class SearchDialog(GladeDialog):
         self._text_view.set_sensitive(False)
         pattern = self._pattern_entry.get_text()
         message = _('"%s" not found') % pattern
-        self.application.push_message(message)
+        self.application.flash_message(message)
 
     def _admit_success(self, page, row, doc, match_span, next):
         """Update data and text view."""
@@ -515,4 +515,4 @@ class SearchDialog(GladeDialog):
         self._add_pattern()
         self._add_replacement()
         message = _("Found and replaced %d occurences") % count
-        self.application.push_message(message)
+        self.application.flash_message(message)

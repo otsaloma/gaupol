@@ -53,9 +53,14 @@ class Clipboard(object):
         return "\n\n".join(strings)
 
     def get_texts(self):
-        """Get the texts."""
+        """Get the texts as a list."""
 
         return self._texts[:]
+
+    def set_texts(self, texts):
+        """Set the list of texts."""
+
+        self._texts = list(texts)
 
     def is_empty(self):
         """Return True is the clipboard is empty."""

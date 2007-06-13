@@ -62,15 +62,15 @@ class OutputWindow(gtk.Window):
         gaupol.gtk.util.connect(self, self, "window-state-event")
 
         def save_visibility(*args):
-            gaupol.gtk.gaupol.gtk.conf.output_window.show = self.props.visible
+            gaupol.gtk.conf.output_window.show = self.props.visible
         self.connect("notify::visible", save_visibility)
 
     def _init_sizes(self):
         """Initialize widget sizes."""
 
-        self.resize(*gaupol.gtk.gaupol.gtk.conf.output_window.size)
-        self.move(*gaupol.gtk.gaupol.gtk.conf.output_window.position)
-        if gaupol.gtk.gaupol.gtk.conf.output_window.maximized:
+        self.resize(*gaupol.gtk.conf.output_window.size)
+        self.move(*gaupol.gtk.conf.output_window.position)
+        if gaupol.gtk.conf.output_window.maximized:
             self.maximize()
 
     def _init_widgets(self):
@@ -85,7 +85,7 @@ class OutputWindow(gtk.Window):
         gaupol.gtk.util.set_widget_font(self._text_view, "monospace")
 
         scroller = gtk.ScrolledWindow()
-        scroller.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+        scroller.set_policy(*((gtk.POLICY_AUTOMATIC,) * 2))
         scroller.set_shadow_type(gtk.SHADOW_ETCHED_IN)
         scroller.add(self._text_view)
 
@@ -124,15 +124,15 @@ class OutputWindow(gtk.Window):
 
         state = event.new_window_state
         maximized = bool(state & gtk.gdk.WINDOW_STATE_MAXIMIZED)
-        gaupol.gtk.gaupol.gtk.conf.output_window.maximized = maximized
+        gaupol.gtk.conf.output_window.maximized = maximized
 
     @gaupol.gtk.util.asserted_return
     def _save_geometry(self):
         """Save window size and position."""
 
-        assert not gaupol.gtk.gaupol.gtk.conf.output_window.maximized
-        gaupol.gtk.gaupol.gtk.conf.output_window.size = self.get_size()
-        gaupol.gtk.gaupol.gtk.conf.output_window.position = self.get_position()
+        assert not gaupol.gtk.conf.output_window.maximized
+        gaupol.gtk.conf.output_window.size = self.get_size()
+        gaupol.gtk.conf.output_window.position = self.get_position()
 
     def set_output(self, output):
         """Set output to the text view."""

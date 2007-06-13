@@ -144,10 +144,6 @@ class View(gtk.TreeView):
         gaupol.gtk.conf.connect(self, "editor", "show_lengths_cell")
         gaupol.gtk.conf.connect(self, "editor", "use_default_font")
 
-    def _invariant(self):
-        if self._active_col is not None:
-            assert self._active_col in gaupol.gtk.COLUMN.members
-
     @gaupol.gtk.util.asserted_return
     def _on_conf_editor_notify_font(self, *args):
         """Apply the new font."""

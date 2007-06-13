@@ -154,7 +154,7 @@ class TestSubtitle(unittest.TestCase):
 
         self.time_sub.framerate = gaupol.FRAMERATE.P30
         assert self.time_sub.framerate == gaupol.FRAMERATE.P30
-        assert self.time_sub._calc.framerate == 29.97
+        assert self.time_sub._calc.framerate == gaupol.FRAMERATE.P30.value
 
     def test__set_main_text(self):
 

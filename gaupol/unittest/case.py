@@ -92,9 +92,9 @@ class TestCase(object):
 
         try:
             function(*args, **kwargs)
-            raise AssertionError
         except exception:
-            pass
+            return
+        raise AssertionError
 
     # pylint: disable-msg=C0103
     def setUp(self):

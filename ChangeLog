@@ -1,3 +1,63 @@
+2007-06-13  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/split-dialog.glade:
+	* data/ui.xml:
+	* gaupol/agents/register.py:
+	* gaupol/agents/search.py:
+	* gaupol/clipboard.py:
+	* gaupol/const.py:
+	* gaupol/encodings.py:
+	* gaupol/finder.py:
+	* gaupol/gtk/actions/action.py:
+	* gaupol/gtk/actions/edit.py:
+	* gaupol/gtk/actions/file.py:
+	* gaupol/gtk/actions/__init__.py:
+	* gaupol/gtk/actions/menu.py:
+	* gaupol/gtk/actions/view.py:
+	* gaupol/gtk/agents/edit.py:
+	* gaupol/gtk/agents/help.py:
+	* gaupol/gtk/agents/__init__.py:
+	* gaupol/gtk/agents/menu.py:
+	* gaupol/gtk/agents/open.py:
+	* gaupol/gtk/agents/save.py:
+	* gaupol/gtk/agents/update.py:
+	* gaupol/gtk/agents/util.py:
+	* gaupol/gtk/agents/view.py:
+	* gaupol/gtk/application.py:
+	* gaupol/gtk/conf/__init__.py:
+	* gaupol/gtk/const.py:
+	* gaupol/gtk/dialogs/debug.py:
+	* gaupol/gtk/dialogs/duradjust.py:
+	* gaupol/gtk/dialogs/encoding.py:
+	* gaupol/gtk/dialogs/file/subtitle.py:
+	* gaupol/gtk/dialogs/header.py:
+	* gaupol/gtk/dialogs/__init__.py:
+	* gaupol/gtk/dialogs/language.py:
+	* gaupol/gtk/dialogs/multiclose.py:
+	* gaupol/gtk/dialogs/posadjust.py:
+	* gaupol/gtk/dialogs/preferences.py:
+	* gaupol/gtk/dialogs/previewerr.py:
+	* gaupol/gtk/dialogs/search.py:
+	* gaupol/gtk/dialogs/split.py:
+	* gaupol/gtk/dialogs/textedit.py:
+	* gaupol/gtk/entries.py:
+	* gaupol/gtk/__init__.py:
+	* gaupol/gtk/main.py:
+	* gaupol/gtk/output.py:
+	* gaupol/gtk/renderers/time.py:
+	* gaupol/gtk/ruler.py:
+	* gaupol/gtk/unittest/case.py:
+	* gaupol/gtk/util.py:
+	* gaupol/gtk/view.py:
+	* gaupol/languages.py:
+	* gaupol/liner.py:
+	* gaupol/parser.py:
+	* gaupol/project.py:
+	* gaupol/subtitle.py:
+	* gaupol/unittest/case.py:
+	* gaupol/util.py:
+	Add contracts and clean up code.
+
 2007-06-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/conf/container.py:

@@ -107,7 +107,6 @@ class SubtitleFileDialog(object):
             encodings.remove(None)
         encodings = gaupol.gtk.util.get_unique(encodings)
         encodings = encodings or ["utf_8"]
-
         for i, encoding in enumerate(encodings):
             name = gaupol.encodings.get_long_name(encoding)
             encodings[i] = (encoding, name)
@@ -117,7 +116,7 @@ class SubtitleFileDialog(object):
         a = (0 if locale is None else 1)
         encodings[a:] = sorted(encodings[a:], key=lambda x: x[1])
 
-        separator = gaupol.gtk.util.COMBO_SEPARATOR
+        separator = gaupol.gtk.COMBO_SEPARATOR
         if self._use_autodetection:
             encodings.append((separator, separator))
             encodings.append(("auto", _("Auto-detected")))

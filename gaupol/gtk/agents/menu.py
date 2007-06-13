@@ -43,16 +43,6 @@ class MenuAgent(gaupol.Delegate):
         gaupol.Delegate.__init__(self, master)
         self._projects_id = None
 
-    def _get_action_group(self, name):
-        """Get action group from the UI manager.
-
-        name should be 'main' or 'projects'.
-        """
-        for group in self.uim.get_action_groups():
-            if group.get_name() == name:
-                return group
-        raise ValueError
-
     def _get_project_actions(self):
         """Get a list of UI manager actions for the projects menu."""
 
@@ -131,7 +121,7 @@ class MenuAgent(gaupol.Delegate):
         def on_leave(menu_item, event, index):
             for i in range(index):
                 menu_items[i].set_state(gtk.STATE_NORMAL)
-            self.push_message(None)
+            self.flash_message(None)
 
         for i, action in enumerate(stack):
             tip = get_tip(action.description)
@@ -172,8 +162,7 @@ class MenuAgent(gaupol.Delegate):
         callback = self.on_recent_main_menu_item_activated
         menu.connect("item-activated", callback)
         self.open_button.set_menu(menu)
-        while gtk.events_pending():
-            gtk.main_iteration()
+        gaupol.gtk.util.iterate_main()
 
     @gaupol.gtk.util.asserted_return
     def on_page_tab_widget_button_press_event(self, button, event):
@@ -224,8 +213,7 @@ class MenuAgent(gaupol.Delegate):
         callback = self.on_recent_main_menu_item_activated
         menu.connect("item-activated", callback)
         item.set_submenu(menu)
-        while gtk.events_pending():
-            gtk.main_iteration()
+        gaupol.gtk.util.iterate_main()
 
     def on_show_recent_translation_menu_activate(self, *args):
         """Show the recent translation file menu."""
@@ -235,8 +223,7 @@ class MenuAgent(gaupol.Delegate):
         callback = self.on_recent_translation_menu_item_activated
         menu.connect("item-activated", callback)
         item.set_submenu(menu)
-        while gtk.events_pending():
-            gtk.main_iteration()
+        gaupol.gtk.util.iterate_main()
 
     def on_undo_button_show_menu(self, *args):
         """Show the undo button menu."""
@@ -251,7 +238,7 @@ class MenuAgent(gaupol.Delegate):
         def on_enter(menu_item, event, action):
             self.push_message(action.props.tooltip, False)
         def on_leave(menu_item, event, action):
-            self.push_message(None)
+            self.flash_message(None)
 
         for action in self._get_action_group(name).list_actions():
             for widget in action.get_proxies():

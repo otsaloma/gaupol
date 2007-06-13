@@ -60,7 +60,7 @@ class TextEditDialog(gtk.Dialog):
 
         scroller = gtk.ScrolledWindow()
         scroller.set_border_width(6)
-        scroller.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+        scroller.set_policy(*((gtk.POLICY_AUTOMATIC,) * 2))
         scroller.set_shadow_type(gtk.SHADOW_IN)
         scroller.add(self._text_view)
         vbox = self.get_child()

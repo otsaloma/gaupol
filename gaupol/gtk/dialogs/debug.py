@@ -124,9 +124,9 @@ class DebugDialog(GladeDialog):
         window = text_view.get_window(gtk.TEXT_WINDOW_TEXT)
         for tag in text_view.get_iter_at_location(x, y).get_tags():
             if tag.get_data("path") is not None:
-                window.set_cursor(gaupol.gtk.util.HAND_CURSOR)
+                window.set_cursor(gaupol.gtk.HAND_CURSOR)
                 return text_view.window.get_pointer()
-        window.set_cursor(gaupol.gtk.util.INSERT_CURSOR)
+        window.set_cursor(gaupol.gtk.INSERT_CURSOR)
         text_view.window.get_pointer()
 
     def _open_link(self, tag):
@@ -192,8 +192,8 @@ class DebugDialog(GladeDialog):
         label = gtk.Label("\n".join(self._code_lines))
         gaupol.gtk.util.set_label_font(label, "monospace")
         code_width = label.size_request()[0]
-        width = max(text_width, code_width) + 150 + gaupol.gtk.util.EXTRA
-        height = height + 160 + gaupol.gtk.util.EXTRA
+        width = max(text_width, code_width) + 150 + gaupol.gtk.EXTRA
+        height = height + 160 + gaupol.gtk.EXTRA
         gaupol.gtk.util.resize_message_dialog(self, width, height)
 
     def _show_editor_error_dialog(self):

@@ -74,6 +74,22 @@ def connect(obj, section, option):
     method = getattr(obj, method_name)
     globals()[section].connect(signal, method)
 
+def disconnect_require(obj, section, option):
+    assert section in globals()
+    assert hasattr(globals()[section], option)
+
+@gaupol.util.contractual
+def disconnect(obj, section, option):
+    """Disconnect option's signal from object's callback method."""
+
+    signal = "notify::%s" % option
+    suffix = signal.replace("::", "_")
+    method_name = "_on_conf_%s_%s" % (section, suffix)
+    if not hasattr(obj, method_name):
+        method_name = method_name[1:]
+    method = getattr(obj, method_name)
+    globals()[section].disconnect(signal, method)
+
 def read_ensure(value):
     assert "_config" in globals()
 

@@ -21,6 +21,8 @@
 
 import gaupol
 
+__all__ = ["Project"]
+
 
 class Project(gaupol.Observable):
 

@@ -21,6 +21,8 @@
 
 import gaupol
 
+__all__ = ["Parser"]
+
 
 class Parser(gaupol.Finder):
 
@@ -153,7 +155,7 @@ class Parser(gaupol.Finder):
 
     @gaupol.util.asserted_return
     def set_text(self, text, next=True):
-        """Set the text and parse it.
+        """Set the text to search in and parse it.
 
         next should be True to start at beginning, False for end.
         """

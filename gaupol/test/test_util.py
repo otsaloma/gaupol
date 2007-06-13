@@ -36,7 +36,7 @@ class TestModule(unittest.TestCase):
         def do_b():
             return do_a()
         assert util.asserted_return(do_a)() is None
-        self.raises(AssertionError, util.asserted_return, do_b)
+        self.raises(AssertionError, util.asserted_return(do_b))
 
     def test_memoize(self):
 

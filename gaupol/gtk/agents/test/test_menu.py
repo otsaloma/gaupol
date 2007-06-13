@@ -28,12 +28,6 @@ class TestMenuAgent(unittest.TestCase):
         self.application = self.get_application()
         self.delegate = self.application.set_menu_notify_events.im_self
 
-    def test__get_action_group(self):
-
-        for name in ("main", "projects"):
-            action_group = self.delegate._get_action_group(name)
-            assert isinstance(action_group, gtk.ActionGroup)
-
     def test_on_open_button_show_menu(self):
 
         self.application.on_open_button_show_menu()

@@ -16,8 +16,11 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
+import gaupol
+_ = gaupol.i18n._
+dgettext = gaupol.i18n.dgettext
+
 from gaupol import unittest
-from gaupol.i18n import _, dgettext
 from .. import languages
 
 

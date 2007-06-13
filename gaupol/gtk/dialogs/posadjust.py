@@ -343,8 +343,7 @@ class TimeAdjustDialog(_PositionAdjustDialog):
         text_buffer.set_text(page.project.main_texts[row])
         self._sub_spin_2.props.adjustment.props.lower = row + 2
         # Allow the slow TimeEntry to update.
-        while gtk.events_pending():
-            gtk.main_iteration()
+        gaupol.gtk.util.iterate_main()
 
     def _on_sub_spin_2_value_changed(self, spin_button):
         """Update data in widgets."""
@@ -357,5 +356,4 @@ class TimeAdjustDialog(_PositionAdjustDialog):
         text_buffer.set_text(page.project.main_texts[row])
         self._sub_spin_1.props.adjustment.props.upper = row
         # Allow the slow TimeEntry to update.
-        while gtk.events_pending():
-            gtk.main_iteration()
+        gaupol.gtk.util.iterate_main()

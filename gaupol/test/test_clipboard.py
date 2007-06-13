@@ -54,6 +54,12 @@ class TestClipboard(unittest.TestCase):
         texts = self.clipboard.get_texts()
         assert texts == ["", None]
 
+    def test_set_texts(self):
+
+        self.clipboard.set_texts(["", None])
+        texts = self.clipboard.get_texts()
+        assert texts == ["", None]
+
     def test_is_empty(self):
 
         assert self.clipboard.is_empty()

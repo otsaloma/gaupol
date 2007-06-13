@@ -191,7 +191,6 @@ def _show_version():
 def _start(opts, args):
     """Start application and open files given as arguments."""
 
-    # FIX:
     import gaupol.gtk
     application = gaupol.gtk.Application()
     jump_row = None
@@ -200,7 +199,7 @@ def _start(opts, args):
         jump_row = (max(0, int(arg[1:]) - 1) if arg[1:] else -1)
         args.remove(arg)
     paths = [os.path.abspath(x) for x in args]
-    #application.open_main_files(paths, opts.encoding)
+    application.open_main_files(paths, opts.encoding)
     page = application.get_current_page()
     if (page is not None) and opts.translation_file:
         path = os.path.abspath(opts.translation_file)

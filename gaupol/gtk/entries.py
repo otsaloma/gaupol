@@ -46,7 +46,7 @@ def _blocked(function):
 
 class TimeEntry(gtk.Entry):
 
-    """Entry for time data in format HH:MM:SS.SSS.
+    """Entry for time data in format [-]HH:MM:SS.SSS.
 
     Instance variables:
      * _delete_handler: Handler for 'delete-text' signal

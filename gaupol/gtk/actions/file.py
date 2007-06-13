@@ -96,14 +96,8 @@ class EditHeadersAction(Action):
         """Raise AssertionError if action cannot be done."""
 
         assert page is not None
-        has_header = False
-        main_file = page.project.main_file
-        tran_file = page.project.tran_file
-        if main_file is not None:
-            has_header = has_header or main_file.has_header
-        if tran_file is not None:
-            has_header = has_header or tran_file.has_header
-        assert has_header
+        files = (page.project.main_file, page.project.tran_file)
+        assert any(x.format.has_header for x in files if x is not None)
 
 
 class NewProjectAction(Action):
@@ -119,15 +113,15 @@ class NewProjectAction(Action):
         self.accelerator = "<Control>N"
 
 
-class OpenMainFileAction(Action):
+class OpenMainFilesAction(Action):
 
     """Open main files."""
 
-    __gtype_name__ = "OpenMainFileAction"
+    __gtype_name__ = "OpenMainFilesAction"
 
     def __init__(self):
 
-        Action.__init__(self, "open_main_file")
+        Action.__init__(self, "open_main_files")
         self.props.is_important = True
         self.props.label = _("_Open\342\200\246")
         self.props.short_label = _("Open")

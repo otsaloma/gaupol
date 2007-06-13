@@ -35,7 +35,6 @@ pydoctor \
     --html-output=$DOC_DIR \
     --html-viewsource-base=gaupol \
     --project-name=Gaupol \
-    --project-url=http://home.gna.org/gaupol/ \
-    --resolve-aliases
+    --project-url=http://home.gna.org/gaupol/
 sed -i "s|gaupol/gaupol|gaupol|" $DOC_DIR/gaupol.html
 cp $DATA_DIR/apidocs.css $DOC_DIR

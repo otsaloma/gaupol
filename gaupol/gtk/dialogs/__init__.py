@@ -35,6 +35,7 @@ from .message     import QuestionDialog
 from .message     import WarningDialog
 from .preferences import PreferencesDialog
 from .previewerr  import PreviewErrorDialog
+from .split       import SplitDialog
 from .textedit    import TextEditDialog
 
 __all__ = [x for x in dir() if x.endswith("Dialog")]
