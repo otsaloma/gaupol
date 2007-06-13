@@ -1,5 +1,10 @@
 2007-06-13  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/agents/open.py:
+	Fix callback name to match UIM action.
+
+2007-06-13  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/split-dialog.glade:
 	* data/ui.xml:
 	* gaupol/agents/register.py:

@@ -455,7 +455,7 @@ class OpenAgent(gaupol.Delegate):
         self.open_main_files(paths)
 
     @gaupol.gtk.util.silent(gaupol.gtk.Default)
-    def on_open_main_file_activate(self, *args):
+    def on_open_main_files_activate(self, *args):
         """Open main files."""
 
         doc = gaupol.gtk.DOCUMENT.MAIN
