@@ -178,8 +178,6 @@ def _prepare_ui():
     gtk.glade.bindtextdomain("gaupol", gaupol.LOCALE_DIR)
     gtk.glade.textdomain("gaupol")
     gobject.threads_init()
-    rc_file = os.path.join(gaupol.DATA_DIR, "gtkrc")
-    gtk.rc_add_default_file(rc_file)
     sys.excepthook = debug.show
 
 def _show_version():

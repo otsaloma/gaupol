@@ -36,9 +36,11 @@ different themes. Let the EXTRA constant very vaguely account for that.
 import gaupol
 import gtk
 import inspect
+import os
 
 module = inspect.getmodule(lambda: True)
 gaupol.__dict__["gtk"] = module
+gtk.rc_add_default_file(os.path.join(gaupol.DATA_DIR, "gtkrc"))
 
 EXTRA = 36
 COMBO_SEPARATOR = "<separator/>"
