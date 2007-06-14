@@ -1,6 +1,12 @@
 2007-06-13  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/agents/open.py:
+	(_show_parse_error_dialog): Extend secondary text.
+	Uncomment interactive tests.
+
+2007-06-13  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/agents/open.py:
 	Fix callback name to match UIM action.
 
 2007-06-13  Osmo Salomaa  <otsaloma@cc.hut.fi>

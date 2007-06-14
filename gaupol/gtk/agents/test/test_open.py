@@ -25,50 +25,50 @@ from gaupol.gtk import unittest
 
 class TestOpenAgent(unittest.TestCase):
 
-#     def run__show_encoding_error_dialog(self):
+    def run__show_encoding_error_dialog(self):
 
-#         flash_dialog = gaupol.gtk.Runner.flash_dialog
-#         flash_dialog = functools.partial(flash_dialog, self.application)
-#         self.delegate.flash_dialog = flash_dialog
-#         self.delegate._show_encoding_error_dialog("test")
+        flash_dialog = gaupol.gtk.Runner.flash_dialog
+        flash_dialog = functools.partial(flash_dialog, self.application)
+        self.delegate.flash_dialog = flash_dialog
+        self.delegate._show_encoding_error_dialog("test")
 
-#     def run__show_format_error_dialog(self):
+    def run__show_format_error_dialog(self):
 
-#         flash_dialog = gaupol.gtk.Runner.flash_dialog
-#         flash_dialog = functools.partial(flash_dialog, self.application)
-#         self.delegate.flash_dialog = flash_dialog
-#         self.delegate._show_format_error_dialog("test")
+        flash_dialog = gaupol.gtk.Runner.flash_dialog
+        flash_dialog = functools.partial(flash_dialog, self.application)
+        self.delegate.flash_dialog = flash_dialog
+        self.delegate._show_format_error_dialog("test")
 
-#     def run__show_io_error_dialog(self):
+    def run__show_io_error_dialog(self):
 
-#         flash_dialog = gaupol.gtk.Runner.flash_dialog
-#         flash_dialog = functools.partial(flash_dialog, self.application)
-#         self.delegate.flash_dialog = flash_dialog
-#         self.delegate._show_io_error_dialog("test", "test")
+        flash_dialog = gaupol.gtk.Runner.flash_dialog
+        flash_dialog = functools.partial(flash_dialog, self.application)
+        self.delegate.flash_dialog = flash_dialog
+        self.delegate._show_io_error_dialog("test", "test")
 
-#     def run__show_parse_error_dialog(self):
+    def run__show_parse_error_dialog(self):
 
-#         flash_dialog = gaupol.gtk.Runner.flash_dialog
-#         flash_dialog = functools.partial(flash_dialog, self.application)
-#         self.delegate.flash_dialog = flash_dialog
-#         format = gaupol.gtk.FORMAT.SUBRIP
-#         self.delegate._show_parse_error_dialog("test", format)
+        flash_dialog = gaupol.gtk.Runner.flash_dialog
+        flash_dialog = functools.partial(flash_dialog, self.application)
+        self.delegate.flash_dialog = flash_dialog
+        format = gaupol.gtk.FORMAT.SUBRIP
+        self.delegate._show_parse_error_dialog("test", format)
 
-#     @gaupol.gtk.util.silent(gaupol.gtk.Default)
-#     def run__show_size_warning_dialog(self):
+    @gaupol.gtk.util.silent(gaupol.gtk.Default)
+    def run__show_size_warning_dialog(self):
 
-#         flash_dialog = gaupol.gtk.Runner.flash_dialog
-#         flash_dialog = functools.partial(flash_dialog, self.application)
-#         self.delegate.flash_dialog = flash_dialog
-#         self.delegate._show_size_warning_dialog("test", 2)
+        flash_dialog = gaupol.gtk.Runner.flash_dialog
+        flash_dialog = functools.partial(flash_dialog, self.application)
+        self.delegate.flash_dialog = flash_dialog
+        self.delegate._show_size_warning_dialog("test", 2)
 
-#     @gaupol.gtk.util.silent(gaupol.gtk.Default)
-#     def run__show_sort_warning_dialog(self):
+    @gaupol.gtk.util.silent(gaupol.gtk.Default)
+    def run__show_sort_warning_dialog(self):
 
-#         flash_dialog = gaupol.gtk.Runner.flash_dialog
-#         flash_dialog = functools.partial(flash_dialog, self.application)
-#         self.delegate.flash_dialog = flash_dialog
-#         self.delegate._show_sort_warning_dialog("test", 3)
+        flash_dialog = gaupol.gtk.Runner.flash_dialog
+        flash_dialog = functools.partial(flash_dialog, self.application)
+        self.delegate.flash_dialog = flash_dialog
+        self.delegate._show_sort_warning_dialog("test", 3)
 
     @gaupol.gtk.util.silent(gaupol.gtk.Default)
     def run__show_ssa_warning_dialog(self):
@@ -78,14 +78,14 @@ class TestOpenAgent(unittest.TestCase):
         self.delegate.flash_dialog = flash_dialog
         self.delegate._show_ssa_warning_dialog()
 
-#     @gaupol.gtk.util.silent(gaupol.gtk.Default)
-#     def run__show_translation_warning_dialog(self):
+    @gaupol.gtk.util.silent(gaupol.gtk.Default)
+    def run__show_translation_warning_dialog(self):
 
-#         flash_dialog = gaupol.gtk.Runner.flash_dialog
-#         flash_dialog = functools.partial(flash_dialog, self.application)
-#         self.delegate.flash_dialog = flash_dialog
-#         page = self.application.get_current_page()
-#         self.delegate._show_translation_warning_dialog(page)
+        flash_dialog = gaupol.gtk.Runner.flash_dialog
+        flash_dialog = functools.partial(flash_dialog, self.application)
+        self.delegate.flash_dialog = flash_dialog
+        page = self.application.get_current_page()
+        self.delegate._show_translation_warning_dialog(page)
 
     def setup_method(self, method):
 
