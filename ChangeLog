@@ -1,5 +1,14 @@
 2007-06-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/application.py (_init_notebook):
+	Remove the border from around the notebook.
+
+	* gaupol/gtk/page.py (_init_widgets):
+	Change the tab label event box to use an invisible child window to
+	remove bizarre gradients in tab label backgrounds.
+
+2007-06-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/__init__.py:
 	* gaupol/gtk/main.py:
 	Move gtk.rc_add_default_file call to __init__.

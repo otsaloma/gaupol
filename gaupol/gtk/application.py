@@ -178,6 +178,7 @@ class Application(gaupol.Observable, gaupol.gtk.Runner):
         # FIX:
         self.notebook = gtk.Notebook()
         self.notebook.set_scrollable(True)
+        self.notebook.set_show_border(False)
         flags = gtk.DEST_DEFAULT_ALL
         targets = [("text/uri-list", 0, 0)]
         types = gtk.gdk.ACTION_COPY

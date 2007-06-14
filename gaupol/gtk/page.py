@@ -156,6 +156,7 @@ class Page(gaupol.Observable):
         self.tab_label.set_ellipsize(pango.ELLIPSIZE_END)
         self.tab_label.set_max_width_chars(24)
         event_box = gtk.EventBox()
+        event_box.set_visible_window(False)
         event_box.add(self.tab_label)
         self.tooltips.set_tip(event_box, self.untitle)
         callback = self._on_tab_event_box_enter_notify_event
