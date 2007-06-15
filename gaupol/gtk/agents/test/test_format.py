@@ -16,7 +16,7 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-from gaupol.gtk.index import *
+import gaupol.gtk
 from gaupol.gtk import unittest
 
 

@@ -1,5 +1,11 @@
 2007-06-15  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/agents/format.py:
+	* gaupol/gtk/agents/__init__.py:
+	Clean up code.
+
+2007-06-15  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/conf.spec:
 	* data/glade/header-dialog.glade:
 	* data/glade/insert-dialog.glade:

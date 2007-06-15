@@ -19,7 +19,7 @@
 """Formatting text."""
 
 
-from gaupol.base import Delegate
+import gaupol.gtk
 
 
 class FormatAgent(gaupol.Delegate):
@@ -36,7 +36,7 @@ class FormatAgent(gaupol.Delegate):
         page = self.get_current_page()
         rows = page.view.get_selected_rows()
         col = page.view.get_focus()[1]
-        doc = page.text_column_to_document(col)
+        doc = gaupol.gtk.util.text_column_to_document(col)
         page.project.change_case(rows, doc, method)
 
     def on_toggle_dialogue_lines_activate(self, *args):
@@ -45,7 +45,7 @@ class FormatAgent(gaupol.Delegate):
         page = self.get_current_page()
         rows = page.view.get_selected_rows()
         col = page.view.get_focus()[1]
-        doc = page.text_column_to_document(col)
+        doc = gaupol.gtk.util.text_column_to_document(col)
         page.project.toggle_dialogue_lines(rows, doc)
 
     def on_toggle_italicization_activate(self, *args):
@@ -54,7 +54,7 @@ class FormatAgent(gaupol.Delegate):
         page = self.get_current_page()
         rows = page.view.get_selected_rows()
         col = page.view.get_focus()[1]
-        doc = page.text_column_to_document(col)
+        doc = gaupol.gtk.util.text_column_to_document(col)
         page.project.toggle_italicization(rows, doc)
 
     def on_use_lower_case_activate(self, *args):
