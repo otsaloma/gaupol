@@ -92,4 +92,3 @@ target = TARGET(default="CURRENT")
 
 [subtitle_insert]
 above = boolean(default=False)
-amount = integer(min=1, default=1)

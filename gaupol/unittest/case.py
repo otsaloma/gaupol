@@ -96,7 +96,6 @@ class TestCase(object):
             return
         raise AssertionError
 
-    # pylint: disable-msg=C0103
     def setUp(self):
         """Compatibility alias for 'setup_method'."""
 
@@ -107,7 +106,6 @@ class TestCase(object):
 
         pass
 
-    # pylint: disable-msg=C0103
     def tearDown(self):
         """Compatibility alias for 'teardown_method'."""
 

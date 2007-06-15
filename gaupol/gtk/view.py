@@ -57,11 +57,10 @@ class View(gtk.TreeView):
         label.show()
         label.set_attributes(self._active_attr)
         width = label.size_request()[0]
-        COLUMN = gaupol.gtk.COLUMN
-        cols = (COLUMN.START, COLUMN.END, COLUMN.DURATION)
-        if (col in cols) and (edit_mode == gaupol.gtk.MODE.FRAME):
+        is_position = gaupol.gtk.util.is_position_column(col)
+        if is_position and (edit_mode == gaupol.gtk.MODE.FRAME):
             spin = gtk.SpinButton()
-            digits = (0 if col == COLUMN.DURATION else 5)
+            digits = (0 if col == gaupol.gtk.COLUMN.DURATION else 5)
             spin.set_digits(digits)
             width = max(width, spin.size_request()[0])
         label.set_size_request(width, -1)
@@ -72,13 +71,10 @@ class View(gtk.TreeView):
         """Initialize and return a new cell renderer."""
 
         font = gaupol.gtk.util.get_font()
-        COLUMN = gaupol.gtk.COLUMN
-        position_cols = (COLUMN.START, COLUMN.END, COLUMN.DURATION)
-        text_cols = (COLUMN.MAIN_TEXT, COLUMN.TRAN_TEXT)
-        if col == COLUMN.NUMBER:
+        if col == gaupol.gtk.COLUMN.NUMBER:
             renderer = gtk.CellRendererText()
             renderer.props.xalign = 1
-        elif col in position_cols:
+        elif gaupol.gtk.util.is_position_column(col):
             if edit_mode == gaupol.gtk.MODE.TIME:
                 renderer = gaupol.gtk.TimeCellRenderer()
             elif edit_mode == gaupol.gtk.MODE.FRAME:
@@ -86,16 +82,15 @@ class View(gtk.TreeView):
                 adjustment = gtk.Adjustment(0, 0, 99999999, 1, 10)
                 renderer.props.adjustment = adjustment
             renderer.props.xalign = 1
-        elif col in text_cols:
+        elif gaupol.gtk.util.is_text_column(col):
             renderer = gaupol.gtk.MultilineCellRenderer()
-        renderer.props.editable = (col != COLUMN.NUMBER)
+        renderer.props.editable = (col != gaupol.gtk.COLUMN.NUMBER)
         renderer.props.font = font
         return renderer
 
     def _init_columns(self, edit_mode):
         """Initialize the tree view columns."""
 
-        text_cols = (gaupol.gtk.COLUMN.MAIN_TEXT, gaupol.gtk.COLUMN.TRAN_TEXT)
         for col in gaupol.gtk.COLUMN.members:
             renderer = self._get_renderer(col, edit_mode)
             column = gtk.TreeViewColumn(col.label, renderer , text=col)
@@ -103,7 +98,7 @@ class View(gtk.TreeView):
             column.set_clickable(True)
             column.set_resizable(True)
             column.set_visible(col in gaupol.gtk.conf.editor.visible_cols)
-            column.set_expand(col in text_cols)
+            column.set_expand(gaupol.gtk.util.is_text_column(col))
             label = self._get_header_label(col, edit_mode)
             column.set_widget(label)
 

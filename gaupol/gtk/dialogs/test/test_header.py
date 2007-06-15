@@ -16,9 +16,10 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
+import functools
+import gaupol.gtk
 import gtk
 
-from gaupol.gtk import const
 from gaupol.gtk import unittest
 from .. import header
 
@@ -27,55 +28,50 @@ class TestHeaderDialog(unittest.TestCase):
 
     # pylint: disable-msg=W0201
 
-    def run_both(self):
+    def run__both(self):
 
         self.dialog.run()
         self.dialog.destroy()
 
-    def run_main(self):
+    def run__main(self):
 
         page = self.application.get_current_page()
-        page.project.save(gaupol.gtk.DOCUMENT.TRAN, (
-            page.project.main_file.path,
-            gaupol.gtk.FORMAT.SUBRIP,
-            "ascii",
-            page.project.main_file.newline))
-        self.dialog = header.HeaderDialog(
-            self.application.window, self.application)
+        path = self.get_file_path(gaupol.gtk.FORMAT.SUBRIP)
+        self.application.open_translation_file(path, "ascii")
+        parent = self.application.window
+        self.dialog = header.HeaderDialog(parent, self.application)
         self.dialog.run()
         self.dialog.destroy()
 
-    def run_translation(self):
+    def run__translation(self):
 
         page = self.application.get_current_page()
-        page.project.save(gaupol.gtk.DOCUMENT.MAIN, (
-            page.project.main_file.path,
-            gaupol.gtk.FORMAT.SUBRIP,
-            "ascii",
-            page.project.main_file.newline))
-        self.dialog = header.HeaderDialog(
-            self.application.window, self.application)
+        path = self.get_file_path(gaupol.gtk.FORMAT.SUBRIP)
+        self.application.open_main_file(path, "ascii")
+        path = self.get_file_path(gaupol.gtk.FORMAT.SUBVIEWER2)
+        self.application.open_translation_file(path, "ascii")
+        parent = self.application.window
+        self.dialog = header.HeaderDialog(parent, self.application)
         self.dialog.run()
         self.dialog.destroy()
+
+    def run__show_mpsub_error_dialog(self):
+
+        flash_dialog = gaupol.gtk.Runner.flash_dialog
+        flash_dialog = functools.partial(flash_dialog, self.application)
+        self.dialog.flash_dialog = flash_dialog
+        self.dialog._show_mpsub_error_dialog()
 
     def setup_method(self, method):
 
-        # pylint: disable-msg=E1101
         self.application = self.get_application()
         page = self.application.get_current_page()
-        page.project.save(gaupol.gtk.DOCUMENT.MAIN, (
-            page.project.main_file.path,
-            gaupol.gtk.FORMAT.SUBVIEWER2,
-            "ascii",
-            page.project.main_file.newline))
-        page.project.save(gaupol.gtk.DOCUMENT.TRAN, (
-            page.project.tran_file.path,
-            gaupol.gtk.FORMAT.ASS,
-            "ascii",
-            page.project.tran_file.newline))
-        self.dialog = header.HeaderDialog(
-            self.application.window, self.application)
-
+        path = self.get_file_path(gaupol.gtk.FORMAT.SUBVIEWER2)
+        self.application.open_main_file(path, "ascii")
+        path = self.get_file_path(gaupol.gtk.FORMAT.MPSUB)
+        self.application.open_translation_file(path, "ascii")
+        parent = self.application.window
+        self.dialog = header.HeaderDialog(parent, self.application)
         respond = lambda *args: gtk.RESPONSE_DELETE_EVENT
         self.dialog.flash_dialog = respond
         self.dialog.run_dialog = respond
@@ -110,9 +106,9 @@ class TestHeaderDialog(unittest.TestCase):
         value = self.dialog._get_main_header()
         assert value == ""
 
-    def test__on_main_temp_button_clicked(self):
+    def test__on_main_template_button_clicked(self):
 
-        self.dialog._on_main_temp_button_clicked()
+        self.dialog._on_main_template_button_clicked()
         value = self.dialog._get_main_header()
         assert value == self.dialog._main_file.get_template_header()
 
@@ -123,15 +119,19 @@ class TestHeaderDialog(unittest.TestCase):
         value = self.dialog._get_main_header()
         assert value == self.dialog._main_file.header
 
+    def test__on_response(self):
+
+        self.dialog.response(gtk.RESPONSE_OK)
+
     def test__on_tran_clear_button_clicked(self):
 
         self.dialog._on_tran_clear_button_clicked()
         value = self.dialog._get_translation_header()
         assert value == ""
 
-    def test__on_tran_temp_button_clicked(self):
+    def test__on_tran_template_button_clicked(self):
 
-        self.dialog._on_tran_temp_button_clicked()
+        self.dialog._on_tran_template_button_clicked()
         value = self.dialog._get_translation_header()
         assert value == self.dialog._tran_file.get_template_header()
 

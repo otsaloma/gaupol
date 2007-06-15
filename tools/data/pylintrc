@@ -3,9 +3,9 @@ ignore=.svn,configobj.py,validate.py
 persistent=no
 
 [MESSAGES CONTROL]
-disable-checker=design,similarities
+disable-checker=basic,design,similarities
 disable-msg-cat=
-disable-msg=C0111,C0203,C0322,F0401,I0011,R0201,W0142,W0212,W0223,W0401,W0402,W0403,W0410,W0614,W0622,W0703,W0704,W1010
+disable-msg=F0401,I0011,R0201,W0142,W0212,W0223,W0401,W0402,W0403,W0410,W0614,W0622,W0703,W0704,W1010
 
 [REPORTS]
 comment=no
@@ -13,18 +13,6 @@ files-output=no
 include-ids=yes
 output-format=text
 reports=no
-
-[BASIC]
-argument-rgx=[a-z_][a-z0-9_]{0,19}$
-attr-rgx=[a-z_][a-z0-9_]{0,19}$
-class-rgx=([A-Z_][A-Za-z0-9]{0,39}$)|(Test)
-const-rgx=[A-Za-z_][A-Za-z0-9_]{0,19}$
-function-rgx=[a-z_][a-z0-9_]{0,39}$
-good-names=
-inlinevar-rgx=[a-z]$
-method-rgx=([a-z_][a-z0-9_]{0,39}$)|((run|test)_)
-module-rgx=(_?[a-z_][a-z0-9_]{0,19}$)|(__.+?__$)|(^$)
-variable-rgx=([a-z_][a-z0-9_]{0,19}$)|([A-Z_][A-Z0-9_]{0,19}$)
 
 [VARIABLES]
 additional-builtins=

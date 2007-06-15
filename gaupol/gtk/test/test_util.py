@@ -58,6 +58,24 @@ class TestModule(unittest.TestCase):
         scroller.add(tree_view)
         width, height = util.get_tree_view_size(tree_view)
 
+    def test_is_position_column(self):
+
+        assert not util.is_position_column(gaupol.gtk.COLUMN.NUMBER)
+        assert util.is_position_column(gaupol.gtk.COLUMN.START)
+        assert util.is_position_column(gaupol.gtk.COLUMN.END)
+        assert util.is_position_column(gaupol.gtk.COLUMN.DURATION)
+        assert not util.is_position_column(gaupol.gtk.COLUMN.MAIN_TEXT)
+        assert not util.is_position_column(gaupol.gtk.COLUMN.TRAN_TEXT)
+
+    def test_is_text_column(self):
+
+        assert not util.is_text_column(gaupol.gtk.COLUMN.NUMBER)
+        assert not util.is_text_column(gaupol.gtk.COLUMN.START)
+        assert not util.is_text_column(gaupol.gtk.COLUMN.END)
+        assert not util.is_text_column(gaupol.gtk.COLUMN.DURATION)
+        assert util.is_text_column(gaupol.gtk.COLUMN.MAIN_TEXT)
+        assert util.is_text_column(gaupol.gtk.COLUMN.TRAN_TEXT)
+
     def test_prepare_text_view(self):
 
         util.prepare_text_view(gtk.TextView())

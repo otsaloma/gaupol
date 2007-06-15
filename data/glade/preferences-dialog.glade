@@ -66,6 +66,7 @@
                                 <property name="can_focus">True</property>
                                 <property name="label" translatable="yes">Curr_ent locale encoding</property>
                                 <property name="use_underline">True</property>
+                                <property name="response_id">0</property>
                                 <property name="draw_indicator">True</property>
                               </widget>
                               <packing>
@@ -126,6 +127,7 @@
                                             <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
                                             <property name="label" translatable="yes">gtk-add</property>
                                             <property name="use_stock">True</property>
+                                            <property name="response_id">0</property>
                                           </widget>
                                         </child>
                                         <child>
@@ -136,6 +138,7 @@
                                             <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
                                             <property name="label" translatable="yes">gtk-remove</property>
                                             <property name="use_stock">True</property>
+                                            <property name="response_id">0</property>
                                           </widget>
                                           <packing>
                                             <property name="position">1</property>
@@ -149,6 +152,7 @@
                                             <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
                                             <property name="label" translatable="yes">gtk-go-up</property>
                                             <property name="use_stock">True</property>
+                                            <property name="response_id">0</property>
                                           </widget>
                                           <packing>
                                             <property name="position">2</property>
@@ -162,6 +166,7 @@
                                             <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
                                             <property name="label" translatable="yes">gtk-go-down</property>
                                             <property name="use_stock">True</property>
+                                            <property name="response_id">0</property>
                                           </widget>
                                           <packing>
                                             <property name="position">3</property>
@@ -190,6 +195,7 @@
                                 <property name="can_focus">True</property>
                                 <property name="label" translatable="yes">Auto-_detection</property>
                                 <property name="use_underline">True</property>
+                                <property name="response_id">0</property>
                                 <property name="draw_indicator">True</property>
                               </widget>
                               <packing>
@@ -273,6 +279,7 @@
                                 <property name="can_focus">True</property>
                                 <property name="label" translatable="yes">Use _default theme font</property>
                                 <property name="use_underline">True</property>
+                                <property name="response_id">0</property>
                                 <property name="draw_indicator">True</property>
                               </widget>
                               <packing>
@@ -300,6 +307,7 @@
                                   <widget class="GtkFontButton" id="editor_font_button">
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
+                                    <property name="response_id">0</property>
                                     <property name="title" translatable="yes">Pick the Editor Font</property>
                                     <property name="use_font">True</property>
                                   </widget>
@@ -356,6 +364,7 @@
                                 <property name="can_focus">True</property>
                                 <property name="label" translatable="yes">_Show line lengths in list cells (slow)</property>
                                 <property name="use_underline">True</property>
+                                <property name="response_id">0</property>
                                 <property name="draw_indicator">True</property>
                               </widget>
                               <packing>
@@ -369,6 +378,7 @@
                                 <property name="can_focus">True</property>
                                 <property name="label" translatable="yes">S_how line lengths in editable text fields</property>
                                 <property name="use_underline">True</property>
+                                <property name="response_id">0</property>
                                 <property name="draw_indicator">True</property>
                               </widget>
                               <packing>
@@ -611,7 +621,7 @@
                                   <widget class="GtkSpinButton" id="preview_offset_spin">
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
-                                    <property name="adjustment">4.2509227628688812e-313 3.3951932667795998e-313 4.2509227628688812e-313 -1.075430665203335e-40 1.0193485182949746e-269 -1.1529673569694987e-40</property>
+                                    <property name="adjustment">4.2509227628688812e-313 -9999 9999 0.5 1 1</property>
                                     <property name="climb_rate">1</property>
                                     <property name="digits">1</property>
                                     <property name="numeric">True</property>

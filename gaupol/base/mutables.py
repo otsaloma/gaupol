@@ -18,8 +18,6 @@
 
 """Observable versions of built-in mutable objects."""
 
-# pylint: disable-msg=C0103
-
 
 import copy
 import functools

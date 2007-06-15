@@ -43,8 +43,6 @@ it exists.
 # [2] http://www.abisource.com/lxr/source/abi/src/af/util/xp/ut_Language.cpp
 # [3] http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/available.lst
 
-# pylint: disable-msg=C0301
-
 
 import gaupol
 _ = gaupol.i18n._

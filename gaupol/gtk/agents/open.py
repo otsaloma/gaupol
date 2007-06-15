@@ -324,7 +324,6 @@ class OpenAgent(gaupol.Delegate):
         Return None if decoding file fails.
         """
         gaupol.gtk.util.set_cursor_busy(self.window)
-        open_method = gaupol.gtk.util.silent(UnicodeError)(open_method)
         basename = os.path.basename(path)
         if encoding == "auto":
             encoding = gaupol.encodings.detect(path)
@@ -337,6 +336,8 @@ class OpenAgent(gaupol.Delegate):
         except IOError, (no, message):
             gaupol.gtk.util.set_cursor_normal(self.window)
             self._show_io_error_dialog(basename, message)
+        except UnicodeError:
+            return None
         except (LookupError, ValueError):
             gaupol.gtk.util.set_cursor_normal(self.window)
             determiner = gaupol.FormatDeterminer()
@@ -353,9 +354,9 @@ class OpenAgent(gaupol.Delegate):
         # FIX:
         self.pages.append(page)
         page.connect("close-request", self.on_page_close_request)
-        #page.project.connect("action-done", self.on_project_action_done)
-        #page.project.connect("action-redone", self.on_project_action_redone)
-        #page.project.connect("action-undone", self.on_project_action_undone)
+        page.project.connect("action-done", self.on_project_action_done)
+        page.project.connect("action-redone", self.on_project_action_redone)
+        page.project.connect("action-undone", self.on_project_action_undone)
         #callback = self.on_page_tab_widget_button_press_event
         #page.tab_widget.connect("button-press-event", callback)
         self.connect_to_view_signals(page.view)
@@ -406,19 +407,18 @@ class OpenAgent(gaupol.Delegate):
     def connect_to_view_signals(self, view):
         """Connect to signals emitted by view."""
 
-        # FIX:
         selection = view.get_selection()
         selection.connect("changed", self.on_view_selection_changed)
         view.connect_after("move-cursor", self.on_view_move_cursor)
         view.connect("button-press-event", self.on_view_button_press_event)
         for i, column in enumerate(view.get_columns()):
             renderer = column.get_cell_renderers()[0]
-            #callback = self.on_view_renderer_edited
-            #renderer.connect("edited", callback, i)
-            #callback = self.on_view_renderer_editing_started
-            #renderer.connect("editing-started", callback, i)
-            #callback = self.on_view_renderer_editing_canceled
-            #renderer.connect("editing-canceled", callback)
+            callback = self.on_view_renderer_edited
+            renderer.connect("edited", callback, i)
+            callback = self.on_view_renderer_editing_started
+            renderer.connect("editing-started", callback, i)
+            callback = self.on_view_renderer_editing_canceled
+            renderer.connect("editing-canceled", callback)
             button = column.get_widget().get_ancestor(gtk.Button)
             callback = self.on_view_header_button_press_event
             button.connect("button-press-event", callback)

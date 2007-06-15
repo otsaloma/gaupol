@@ -1,5 +1,28 @@
 2007-06-15  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/conf.spec:
+	* data/glade/header-dialog.glade:
+	* data/glade/insert-dialog.glade:
+	* data/glade/preferences-dialog.glade:
+	* gaupol/base/mutables.py:
+	* gaupol/const.py:
+	* gaupol/gtk/actions/edit.py:
+	* gaupol/gtk/actions/format.py:
+	* gaupol/gtk/agents/edit.py:
+	* gaupol/gtk/agents/__init__.py:
+	* gaupol/gtk/agents/open.py:
+	* gaupol/gtk/dialogs/header.py:
+	* gaupol/gtk/dialogs/__init__.py:
+	* gaupol/gtk/dialogs/insert.py:
+	* gaupol/gtk/page.py:
+	* gaupol/gtk/util.py:
+	* gaupol/gtk/view.py:
+	* gaupol/languages.py:
+	* gaupol/unittest/case.py:
+	Add contracts and clean up code.
+
+2007-06-15  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/agents/close.py (close_page):
 	Call self.update_gui.
 

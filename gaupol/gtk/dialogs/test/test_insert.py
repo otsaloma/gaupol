@@ -33,9 +33,9 @@ class TestLanguageDialog(unittest.TestCase):
 
         self.application = self.get_application()
         page = self.application.get_current_page()
-        page.view.select_rows([1])
-        self.dialog = insert.InsertDialog(
-            self.application.window, self.application)
+        page.view.select_rows([2])
+        parent = self.application.window
+        self.dialog = insert.InsertDialog(parent, self.application)
 
     def test__on_response(self):
 

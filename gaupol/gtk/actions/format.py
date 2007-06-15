@@ -26,9 +26,6 @@ _ = gaupol.i18n._
 from .action import Action
 
 
-_TEXT_COLUMNS = (gaupol.gtk.COLUMN.MAIN_TEXT, gaupol.gtk.COLUMN.TRAN_TEXT)
-
-
 class ShowCaseMenuAction(Action):
 
     """Show the case format menu."""
@@ -43,7 +40,8 @@ class ShowCaseMenuAction(Action):
 
         assert page is not None
         assert page.view.get_selected_rows()
-        assert page.view.get_focus()[1] in _TEXT_COLUMNS
+        col = page.view.get_focus()[1]
+        assert gaupol.gtk.util.is_text_column(col)
 
 
 class ToggleDialogLinesAction(Action):
@@ -63,7 +61,8 @@ class ToggleDialogLinesAction(Action):
 
         assert page is not None
         assert page.view.get_selected_rows()
-        assert page.view.get_focus()[1] in _TEXT_COLUMNS
+        col = page.view.get_focus()[1]
+        assert gaupol.gtk.util.is_text_column(col)
 
 
 class ToggleItalicizationAction(Action):
@@ -84,7 +83,7 @@ class ToggleItalicizationAction(Action):
         assert page is not None
         assert page.view.get_selected_rows()
         col = page.view.get_focus()[1]
-        assert col in _TEXT_COLUMNS
+        assert gaupol.gtk.util.is_text_column(col)
         doc = gaupol.gtk.util.text_column_to_document(col)
         taglib = page.project.get_tag_library(doc)
         assert taglib is not None
@@ -106,7 +105,8 @@ class UseLowerCaseAction(Action):
 
         assert page is not None
         assert page.view.get_selected_rows()
-        assert page.view.get_focus()[1] in _TEXT_COLUMNS
+        col = page.view.get_focus()[1]
+        assert gaupol.gtk.util.is_text_column(col)
 
 
 class UseSentenceCaseAction(Action):
@@ -124,7 +124,8 @@ class UseSentenceCaseAction(Action):
 
         assert page is not None
         assert page.view.get_selected_rows()
-        assert page.view.get_focus()[1] in _TEXT_COLUMNS
+        col = page.view.get_focus()[1]
+        assert gaupol.gtk.util.is_text_column(col)
 
 
 class UseTitleCaseAction(Action):
@@ -142,7 +143,8 @@ class UseTitleCaseAction(Action):
 
         assert page is not None
         assert page.view.get_selected_rows()
-        assert page.view.get_focus()[1] in _TEXT_COLUMNS
+        col = page.view.get_focus()[1]
+        assert gaupol.gtk.util.is_text_column(col)
 
 
 class UseUpperCaseAction(Action):
@@ -158,4 +160,5 @@ class UseUpperCaseAction(Action):
 
         assert page is not None
         assert page.view.get_selected_rows()
-        assert page.view.get_focus()[1] in _TEXT_COLUMNS
+        col = page.view.get_focus()[1]
+        assert gaupol.gtk.util.is_text_column(col)

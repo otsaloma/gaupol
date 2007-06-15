@@ -16,10 +16,9 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
+import gaupol.gtk
 import gtk
 
-from gaupol.gtk import const
-from gaupol.gtk.index import *
 from gaupol.gtk import unittest
 
 
@@ -53,13 +52,8 @@ class TestEditAgent(unittest.TestCase):
 
     def test_on_edit_headers_activate(self):
 
-        page = self.application.get_current_page()
-        page.project.save(gaupol.gtk.DOCUMENT.MAIN, (
-            page.project.main_file.path,
-            gaupol.gtk.FORMAT.SUBVIEWER2,
-            "ascii",
-            page.project.main_file.newline))
-
+        path = self.get_file_path(gaupol.gtk.FORMAT.SUBVIEWER2)
+        self.application.open_main_file(path)
         responder = iter((gtk.RESPONSE_OK, gtk.RESPONSE_CANCEL))
         respond = lambda *args: responder.next()
         self.application.flash_dialog = respond
@@ -115,7 +109,8 @@ class TestEditAgent(unittest.TestCase):
 
         page.view.set_focus(0, gaupol.gtk.COLUMN.MAIN_TEXT)
         self.application.on_paste_texts_activate()
-        page.view.set_focus(len(page.project.times) - 1, gaupol.gtk.COLUMN.MAIN_TEXT)
+        row = len(page.project.subtitles) - 1
+        page.view.set_focus(0, gaupol.gtk.COLUMN.MAIN_TEXT)
         self.application.on_paste_texts_activate()
 
     def test_on_project_action_done(self):
@@ -143,13 +138,6 @@ class TestEditAgent(unittest.TestCase):
         self.application.on_undo_action_activate()
         self.application.on_redo_action_activate()
 
-    def test_on_redo_button_clicked(self):
-
-        page = self.application.get_current_page()
-        page.project.remove_subtitles([0])
-        self.application.on_undo_button_clicked()
-        self.application.on_redo_button_clicked()
-
     def test_on_remove_subtitles_activate(self):
 
         page = self.application.get_current_page()
@@ -171,12 +159,6 @@ class TestEditAgent(unittest.TestCase):
         page = self.application.get_current_page()
         page.project.remove_subtitles([0])
         self.application.on_undo_action_activate()
-
-    def test_on_undo_button_clicked(self):
-
-        page = self.application.get_current_page()
-        page.project.remove_subtitles([0])
-        self.application.on_undo_button_clicked()
 
     def test_redo(self):
 

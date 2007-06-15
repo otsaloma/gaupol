@@ -35,7 +35,6 @@ class TestConstantSection(unittest.TestCase):
 
     def setup_method(self, method):
 
-        # pylint: disable-msg=C0103
         self.FRUIT = const.ConstantSection()
         self.FRUIT.APPLE = const.ConstantMember()
         self.FRUIT.APPLE.color = "green"

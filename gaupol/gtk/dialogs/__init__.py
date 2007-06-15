@@ -28,6 +28,8 @@ from .file        import OpenDialog
 from .file        import SaveDialog
 from .file        import VideoDialog
 from .glade       import GladeDialog
+from .header      import HeaderDialog
+from .insert      import InsertDialog
 from .language    import LanguageDialog
 from .message     import ErrorDialog
 from .message     import InfoDialog

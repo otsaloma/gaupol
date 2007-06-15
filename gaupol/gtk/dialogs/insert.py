@@ -19,72 +19,59 @@
 """Dialog for inserting new subtitles."""
 
 
+import gaupol.gtk
 import gtk
 
-from gaupol.gtk import conf, util
 from .glade import GladeDialog
 
 
 class InsertDialog(GladeDialog):
 
-    """Dialog for inserting new subtitles.
-
-    Instance variables:
-
-        _amount_spin:    gtk.SpinButton
-        _position_combo: gtk.ComboBox
-        _position_label: gtk.Label
-        application:     Associated application
-    """
+    """Dialog for inserting new subtitles."""
 
     def __init__(self, parent, application):
 
         GladeDialog.__init__(self, "insert-dialog")
-        self._amount_spin    = self._glade_xml.get_widget("amount_spin")
-        self._position_combo = self._glade_xml.get_widget("position_combo")
-        self._position_label = self._glade_xml.get_widget("position_label")
-        self.application     = application
+        get_widget = self._glade_xml.get_widget
+        self._amount_spin = get_widget("amount_spin")
+        self._position_combo = get_widget("position_combo")
+        self._position_label = get_widget("position_label")
+        self.application = application
 
-        self._init_data()
-        self._init_signal_handlers()
+        self._init_values()
+        gaupol.gtk.util.connect(self, self, "response")
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_OK)
 
-    def _init_data(self):
+    def _init_values(self):
         """Initialize default values for widgets."""
 
-        self._amount_spin.set_value(gaupol.gtk.conf.subtitle_insert.amount)
-        active = (0 if gaupol.gtk.conf.subtitle_insert.above else 1)
-        self._position_combo.set_active(active)
+        self._amount_spin.set_value(1)
+        index = (0 if gaupol.gtk.conf.subtitle_insert.above else 1)
+        self._position_combo.set_active(index)
 
         page = self.application.get_current_page()
-        if not page.project.times:
-            self._position_combo.set_sensitive(False)
-            self._position_label.set_sensitive(False)
-
-    def _init_signal_handlers(self):
-        """Initialize signal handlers."""
-
-        gaupol.gtk.util.connect(self, self, "response")
+        sensitive = bool(page.project.subtitles)
+        self._position_combo.set_sensitive(sensitive)
+        self._position_label.set_sensitive(sensitive)
 
     def _insert_subtitles(self, amount, above):
-        """Insert subtitles."""
+        """Insert amount of subtitles to project."""
 
-        row = 0
+        index = 0
         page = self.application.get_current_page()
-        if page.project.times:
-            row = page.view.get_selected_rows()[0]
-            if not above:
-                row += 1
-        rows = range(row, row + amount)
-        page.project.insert_blank_subtitles(rows)
+        if page.project.subtitles:
+            index = page.view.get_selected_rows()[0]
+            index = (index + 1 if not above else index)
+        indexes = range(index, index + amount)
+        page.project.insert_blank_subtitles(indexes)
 
+    @gaupol.gtk.util.asserted_return
     def _on_response(self, dialog, response):
         """Save values and insert subtitles."""
 
         amount = self._amount_spin.get_value_as_int()
         above = (self._position_combo.get_active() == 0)
-        gaupol.gtk.conf.subtitle_insert.amount = amount
         gaupol.gtk.conf.subtitle_insert.above = above
-        if response == gtk.RESPONSE_OK:
-            self._insert_subtitles(amount, above)
+        assert response == gtk.RESPONSE_OK
+        self._insert_subtitles(amount, above)

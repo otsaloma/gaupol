@@ -26,9 +26,6 @@ _ = gaupol.i18n._
 from .action import Action
 
 
-_TEXT_COLUMNS = (gaupol.gtk.COLUMN.MAIN_TEXT, gaupol.gtk.COLUMN.TRAN_TEXT)
-
-
 class ClearTextsAction(Action):
 
     """Clear the selected texts."""
@@ -46,7 +43,8 @@ class ClearTextsAction(Action):
 
         assert page is not None
         assert page.view.get_selected_rows()
-        assert page.view.get_focus()[1] in _TEXT_COLUMNS
+        col = page.view.get_focus()[1]
+        assert gaupol.gtk.util.is_text_column(col)
 
 
 class CopyTextsAction(Action):
@@ -66,7 +64,8 @@ class CopyTextsAction(Action):
 
         assert page is not None
         assert page.view.get_selected_rows()
-        assert page.view.get_focus()[1] in _TEXT_COLUMNS
+        col = page.view.get_focus()[1]
+        assert gaupol.gtk.util.is_text_column(col)
 
 
 class CutTextsAction(Action):
@@ -86,7 +85,8 @@ class CutTextsAction(Action):
 
         assert page is not None
         assert page.view.get_selected_rows()
-        assert page.view.get_focus()[1] in _TEXT_COLUMNS
+        col = page.view.get_focus()[1]
+        assert gaupol.gtk.util.is_text_column(col)
 
 
 class EditPreferencesAction(Action):
@@ -224,7 +224,8 @@ class PasteTextsAction(Action):
         assert page is not None
         assert not application.clipboard.is_empty()
         assert page.view.get_selected_rows()
-        assert page.view.get_focus()[1] in _TEXT_COLUMNS
+        col = page.view.get_focus()[1]
+        assert gaupol.gtk.util.is_text_column(col)
 
 
 class RedoActionAction(Action):

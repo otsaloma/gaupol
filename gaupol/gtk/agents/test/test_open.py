@@ -169,9 +169,9 @@ class TestOpenAgent(unittest.TestCase):
 
         self.application.on_new_project_activate()
 
-    def test_on_open_main_file_activate(self):
+    def test_on_open_main_files_activate(self):
 
-        self.application.on_open_main_file_activate()
+        self.application.on_open_main_files_activate()
 
     def test_on_open_translation_file_activate(self):
 

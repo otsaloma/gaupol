@@ -189,7 +189,7 @@ class Page(gaupol.Observable):
 
         assert rows
         COLUMN = gaupol.gtk.COLUMN
-        cols = [COLUMN.START, COLUMN.END, COLUMN.DURATION]
+        cols = (COLUMN.START, COLUMN.END, COLUMN.DURATION)
         self.reload_view(rows, cols)
         self.view.select_rows(rows)
 

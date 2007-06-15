@@ -89,6 +89,18 @@ def get_tree_view_size(tree_view):
     scroller.set_policy(*policy)
     return width, height
 
+def is_position_column(col):
+    """Return True if column is a position column."""
+
+    COLUMN = gaupol.gtk.COLUMN
+    return col in (COLUMN.START, COLUMN.END, COLUMN.DURATION)
+
+def is_text_column(col):
+    """Return True if column is a text column."""
+
+    COLUMN = gaupol.gtk.COLUMN
+    return col in (COLUMN.MAIN_TEXT, COLUMN.TRAN_TEXT)
+
 def iterate_main():
     """Iterate the GTK main loop while events are pending."""
 
