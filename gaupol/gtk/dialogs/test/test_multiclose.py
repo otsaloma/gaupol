@@ -34,8 +34,11 @@ class TestMultiCloseDialog(unittest.TestCase):
         self.application = self.get_application()
         for page in self.application.pages:
             page.project.remove_subtitles([0])
-        self.dialog = multiclose.MultiCloseDialog(
-            self.application.window, self.application, self.application.pages)
+        cls = multiclose.MultiCloseDialog
+        parent = self.application.window
+        application = self.application
+        pages = self.application.pages
+        self.dialog = cls(parent, application, pages)
 
     def test__on_response(self):
 

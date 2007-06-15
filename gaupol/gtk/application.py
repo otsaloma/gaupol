@@ -347,7 +347,6 @@ class Application(gaupol.Observable, gaupol.gtk.Runner):
     def _init_window(self):
         """Initialize the main window."""
 
-        # FIX:
         self.window = gtk.Window()
         icon_theme = gtk.icon_theme_get_default()
         self.window.set_icon_name("gaupol")
@@ -356,5 +355,5 @@ class Application(gaupol.Observable, gaupol.gtk.Runner):
         self.window.move(*gaupol.gtk.conf.application_window.position)
         if gaupol.gtk.conf.application_window.maximized:
             self.window.maximize()
-        #gaupol.gtk.util.connect(self, "window", "delete-event")
+        gaupol.gtk.util.connect(self, "window", "delete-event")
         gaupol.gtk.util.connect(self, "window", "window-state-event")

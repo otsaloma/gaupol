@@ -20,7 +20,7 @@
 
 
 # FIX:
-# from .close      import CloseAgent
+from .close      import CloseAgent
 # from .edit       import EditAgent
 # from .format     import FormatAgent
 from .help       import HelpAgent
@@ -28,7 +28,7 @@ from .help       import HelpAgent
 from .open       import OpenAgent
 # from .position   import PositionAgent
 # from .preview    import PreviewAgent
-# from .save       import SaveAgent
+from .save       import SaveAgent
 # from .search     import SearchAgent
 # from .spellcheck import SpellCheckAgent
 from .update     import UpdateAgent

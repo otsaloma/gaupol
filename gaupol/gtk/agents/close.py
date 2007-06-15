@@ -19,14 +19,10 @@
 """Closing projects and quitting Gaupol."""
 
 
+import gaupol.gtk
 import gtk
 import os
-
-from gaupol.base import Delegate
-from gaupol.gtk import conf, const, util
-from gaupol.gtk.dialogs import MultiCloseDialog, WarningDialog
-from gaupol.gtk.errors import Default
-from gaupol.gtk.i18n import _
+_ = gaupol.i18n._
 
 
 class CloseAgent(gaupol.Delegate):
@@ -36,72 +32,66 @@ class CloseAgent(gaupol.Delegate):
     # pylint: disable-msg=E0203,W0201
 
     def _close_all_pages(self):
-        """Close all pages after confirmation.
+        """Close all pages after seeking confirmation."""
 
-        Raise Default to abort.
-        """
-        count = 0
-        unsaved = None
-        for page in self.pages:
-            sub_count = len(self._need_confirmation(page))
-            if sub_count > 0:
-                count += sub_count
-                unsaved = page
-        if count == 1:
-            self._confirm_page(unsaved)
-        elif count > 1:
-            self._confirm_multiple(self.pages)
+        if sum([len(self._need_confirmation(x)) for x in self.pages]) > 1:
+            return self._confirm_and_close_pages(self.pages)
         while self.pages:
-            self.close(self.pages[-1], False)
+            self.close_page(self.pages[0])
 
-    def _confirm_main(self, page):
-        """Confirm closing main document.
+    def _confirm_and_close_page(self, page):
+        """Close page after possibly saving its documents."""
 
-        Raise Default to abort.
-        """
-        doc = gaupol.gtk.DOCUMENT.MAIN
-        basename = page.get_main_basename()
-        response = self._show_close_warning_dialog(doc, basename)
-        if response == gtk.RESPONSE_YES:
-            self.save_main(page)
-        elif response != gtk.RESPONSE_NO:
-            raise Default
-
-    def _confirm_multiple(self, pages):
-        """Confirm closing pages.
-
-        Raise Default to abort.
-        """
-        dialog = MultiCloseDialog(self.application, pages)
-        response = self.flash_dialog(dialog)
-        if response not in (gtk.RESPONSE_YES, gtk.RESPONSE_NO):
-            raise Default
-
-    def _confirm_page(self, page):
-        """Confirm closing page.
-
-        Raise Default to abort.
-        """
         docs = self._need_confirmation(page)
         if len(docs) == 2:
-            return self._confirm_multiple([page])
+            return self._confirm_and_close_pages([page])
         if gaupol.gtk.DOCUMENT.MAIN in docs:
-            return self._confirm_main(page)
+            return self._confirm_and_close_page_main(page)
         if gaupol.gtk.DOCUMENT.TRAN in docs:
-            return self._confirm_translation(page)
+            return self._confirm_and_close_page_translation(page)
+        self.close_page(page, False)
 
-    def _confirm_translation(self, page):
-        """Confirm closing translation document.
+    def _confirm_and_close_pages(self, pages):
+        """Close pages after possibly saving their documents."""
 
-        Raise Default to abort.
-        """
-        doc = gaupol.gtk.DOCUMENT.TRAN
-        basename = page.get_translation_basename()
-        response = self._show_close_warning_dialog(doc, basename)
+        dialog = gaupol.gtk.MultiCloseDialog(self.window, self, pages)
+        self.flash_dialog(dialog)
+
+    @gaupol.gtk.util.asserted_return
+    def _confirm_and_close_page_main(self, page):
+        """Close page after possibly saving the main document."""
+
+        title = _('Save changes to main document "%s" before closing?')
+        title = title % page.get_main_basename()
+        message = _("If you don't save, changes will be permanently lost.")
+        dialog = gaupol.gtk.WarningDialog(self.window, title, message)
+        dialog.add_button(_("Close _Without Saving"), gtk.RESPONSE_NO)
+        dialog.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
+        dialog.add_button(gtk.STOCK_SAVE, gtk.RESPONSE_YES)
+        dialog.set_default_response(gtk.RESPONSE_YES)
+        response = self.flash_dialog(dialog)
         if response == gtk.RESPONSE_YES:
-            self.save_translation(page)
-        elif response != gtk.RESPONSE_NO:
-            raise Default
+            self.save_main_document(page)
+        assert response in (gtk.RESPONSE_YES, gtk.RESPONSE_NO)
+        self.close_page(page, False)
+
+    @gaupol.gtk.util.asserted_return
+    def _confirm_and_close_page_translation(self, page):
+        """Close page after possibly saving the translation document."""
+
+        title = _('Save changes to translation document "%s" before closing?')
+        title = title % page.get_translation_basename()
+        message = _("If you don't save, changes will be permanently lost.")
+        dialog = gaupol.gtk.WarningDialog(self.window, title, message)
+        dialog.add_button(_("Close _Without Saving"), gtk.RESPONSE_NO)
+        dialog.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
+        dialog.add_button(gtk.STOCK_SAVE, gtk.RESPONSE_YES)
+        dialog.set_default_response(gtk.RESPONSE_YES)
+        response = self.flash_dialog(dialog)
+        if response == gtk.RESPONSE_YES:
+            self.save_translation_document(page)
+        assert response in (gtk.RESPONSE_YES, gtk.RESPONSE_NO)
+        self.close_page(page, False)
 
     def _need_confirmation(self, page):
         """Return the documents in page that require confirmation."""
@@ -112,7 +102,7 @@ class CloseAgent(gaupol.Delegate):
         elif page.project.main_file is not None:
             if not os.path.isfile(page.project.main_file.path):
                 docs.append(gaupol.gtk.DOCUMENT.MAIN)
-        if page.project.tran_active and page.project.tran_changed:
+        if page.project.tran_changed:
             docs.append(gaupol.gtk.DOCUMENT.TRAN)
         elif page.project.tran_file is not None:
             if not os.path.isfile(page.project.tran_file.path):
@@ -120,7 +110,7 @@ class CloseAgent(gaupol.Delegate):
         return docs
 
     def _save_window_geometry(self):
-        """Save the geometry of main and output windows."""
+        """Save the geometry of the application and output windows."""
 
         if not gaupol.gtk.conf.application_window.maximized:
             domain = gaupol.gtk.conf.application_window
@@ -131,30 +121,11 @@ class CloseAgent(gaupol.Delegate):
             domain.size = self.output_window.get_size()
             domain.position = self.output_window.get_position()
 
-    def _show_close_warning_dialog(self, doc, basename):
-        """Show a warning dialog when trying to close a project.
-
-        Return response.
-        """
-        if doc == gaupol.gtk.DOCUMENT.MAIN:
-            title = _('Save changes to main document "%s" before closing?') \
-                % basename
-        elif doc == gaupol.gtk.DOCUMENT.TRAN:
-            title = _('Save changes to translation document "%s" before '
-                'closing?') % basename
-        message = _("If you don't save, changes will be permanently lost.")
-        dialog = WarningDialog(self.window, title, message)
-        dialog.add_button(_("Close _Without Saving"), gtk.RESPONSE_NO)
-        dialog.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
-        dialog.add_button(gtk.STOCK_SAVE, gtk.RESPONSE_YES)
-        dialog.set_default_response(gtk.RESPONSE_YES)
-        return self.flash_dialog(dialog)
-
-    def close(self, page, confirm=True):
-        """Close page (without confirmation)."""
+    def close_page(self, page, confirm=True):
+        """Close page seeking confirmation if confirm is True."""
 
         if confirm:
-            self._confirm_page(page)
+            return self._confirm_and_close_page(page)
         index = self.pages.index(page)
         if self.notebook.get_current_page() == index:
             self.notebook.next_page()
@@ -162,25 +133,21 @@ class CloseAgent(gaupol.Delegate):
         self.pages.remove(page)
         self.emit("page-closed", page)
 
-    @gaupol.gtk.util.silent(Default)
     def on_close_all_projects_activate(self, *args):
         """Close all open projects."""
 
         self._close_all_pages()
 
-    @gaupol.gtk.util.silent(Default)
     def on_close_project_activate(self, *args):
         """Close project."""
 
-        self.close(self.get_current_page())
+        self.close_page(self.get_current_page())
 
-    @gaupol.gtk.util.silent(Default)
     def on_page_close_request(self, page, *args):
         """Close project."""
 
-        self.close(page)
+        self.close_page(page)
 
-    @gaupol.gtk.util.silent(Default)
     def on_quit_activate(self, *args):
         """Quit Gaupol."""
 
@@ -194,5 +161,5 @@ class CloseAgent(gaupol.Delegate):
     def on_window_delete_event(self, *args):
         """Quit Gaupol."""
 
-        self.on_quit_activate()
+        self.get_action("quit").activate()
         return True

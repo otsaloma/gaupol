@@ -352,7 +352,7 @@ class OpenAgent(gaupol.Delegate):
 
         # FIX:
         self.pages.append(page)
-        #page.connect("close-request", self.on_page_close_request)
+        page.connect("close-request", self.on_page_close_request)
         #page.project.connect("action-done", self.on_project_action_done)
         #page.project.connect("action-redone", self.on_project_action_redone)
         #page.project.connect("action-undone", self.on_project_action_undone)

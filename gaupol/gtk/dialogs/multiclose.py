@@ -19,123 +19,85 @@
 """Dialog for warning when closing multiple documents."""
 
 
+import gaupol.gtk
 import gobject
 import gtk
 
-from gaupol.gtk import util
-from gaupol.gtk.errors import Default
 from .glade import GladeDialog
 
 
 class MultiCloseDialog(GladeDialog):
 
-    """Dialog for warning when closing multiple documents.
-
-    Instance variables:
-
-        _main_pages:     Pages with main documents to save
-        _main_tree_view: gtk.TreeView
-        _tran_pages:     Pages with translation documents to save
-        _tran_tree_view: gtk.TreeView
-        application:     Associated Application
-    """
+    """Dialog for warning when closing multiple documents."""
 
     def __init__(self, parent, application, pages):
 
         GladeDialog.__init__(self, "multiclose-dialog")
         self._main_tree_view = self._glade_xml.get_widget("main_tree_view")
+        self._main_vbox = self._glade_xml.get_widget("main_vbox")
         self._tran_tree_view = self._glade_xml.get_widget("tran_tree_view")
-
-        self._main_pages = []
-        self._tran_pages = []
+        self._tran_vbox = self._glade_xml.get_widget("tran_vbox")
         self.application = application
+        self.pages = pages
 
-        self._init_data(pages)
         self._init_main_tree_view()
         self._init_tran_tree_view()
-        self._init_signal_handlers()
         self._init_sizes()
+        gaupol.gtk.util.connect(self, self, "response")
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_YES)
-
-    def _close_pages(self):
-        """Close all handled pages."""
-
-        pages = set(self._main_pages)
-        pages.update(set(self._tran_pages))
-        for page in pages:
-            self.application.close(page, False)
-
-    def _init_data(self, pages):
-        """Initialize the page lists."""
-
-        for page in pages:
-            if page.project.main_changed:
-                self._main_pages.append(page)
-            if page.project.tran_active and page.project.tran_changed:
-                self._tran_pages.append(page)
 
     def _init_main_tree_view(self):
         """Initialize the main tree view."""
 
         store = self._init_tree_view(self._main_tree_view)
-        for page in self._main_pages:
-            store.append([True, page.get_main_basename()])
-        if len(store) == 0:
-            self._glade_xml.get_widget("main_vbox").hide()
-
-    def _init_signal_handlers(self):
-        """Initialize signal handlers."""
-
-        gaupol.gtk.util.connect(self, self, "response")
+        for page in (x for x in self.pages if x.project.main_changed):
+            store.append([page, True, page.get_main_basename()])
+        self._main_vbox.props.visible = (len(store) > 0)
 
     def _init_sizes(self):
         """Initialize widget sizes."""
 
-        main_width   = 0
-        main_height  = 0
-        tran_width   = 0
-        tran_height  = 0
+        main_size = (0, 0)
+        tran_size = (0, 0)
         height_extra = 136
         get_size = gaupol.gtk.util.get_tree_view_size
-        if self._main_pages:
-            main_width, main_height = get_size(self._main_tree_view)
+        if self._main_vbox.props.visible:
+            main_size = get_size(self._main_tree_view)
             height_extra += 32
-        if self._tran_pages:
-            tran_width, tran_height = get_size(self._tran_tree_view)
+        if self._tran_vbox.props.visible:
+            tran_size = get_size(self._tran_tree_view)
             height_extra += 32
-
-        width = max(main_width, tran_width) + 88 + gaupol.gtk.EXTRA
-        height = main_height + tran_height + height_extra + gaupol.gtk.EXTRA
+        width = max(main_size[0], tran_size[0]) + 88 + gaupol.gtk.EXTRA
+        height = main_size[1] + tran_size[1] + height_extra + gaupol.gtk.EXTRA
         gaupol.gtk.util.resize_message_dialog(self._dialog, width, height)
 
     def _init_tran_tree_view(self):
         """Initialize the translation tree view."""
 
         store = self._init_tree_view(self._tran_tree_view)
-        for page in self._tran_pages:
-            store.append([True, page.get_translation_basename()])
-        if len(store) == 0:
-            self._glade_xml.get_widget("tran_vbox").hide()
+        for page in (x for x in self.pages if x.project.tran_changed):
+            store.append([page, True, page.get_translation_basename()])
+        self._tran_vbox.props.visible = (len(store) > 0)
 
     def _init_tree_view(self, tree_view):
-        """Initialize tree view and return its list store."""
+        """Initialize tree view and return its list store model."""
 
-        tree_view.set_headers_visible(False)
-        store = gtk.ListStore(gobject.TYPE_BOOLEAN, gobject.TYPE_STRING)
+        cols = (object, gobject.TYPE_BOOLEAN, gobject.TYPE_STRING)
+        store = gtk.ListStore(*cols)
         tree_view.set_model(store)
         selection = tree_view.get_selection()
         selection.set_mode(gtk.SELECTION_SINGLE)
-        selection.unselect_all()
 
         renderer = gtk.CellRendererToggle()
         renderer.props.activatable = True
-        renderer.connect("toggled", self._on_tree_view_cell_toggled, store)
-        column = gtk.TreeViewColumn("", renderer, active=0)
+        callback = self._on_tree_view_cell_toggled
+        renderer.connect("toggled", callback, store)
+        column = gtk.TreeViewColumn("", renderer, active=1)
         tree_view.append_column(column)
 
         renderer = gtk.CellRendererText()
-        column = gtk.TreeViewColumn("", renderer, text=1)
+        column = gtk.TreeViewColumn("", renderer, text=2)
         tree_view.append_column(column)
         return store
 
@@ -144,33 +106,35 @@ class MultiCloseDialog(GladeDialog):
         """Save the selected documents and close pages."""
 
         assert response == gtk.RESPONSE_YES
-        try:
-            self._save_documents()
-        except Default:
-            self.stop_emission("response")
-            return self.response(gtk.RESPONSE_CANCEL)
-        self._close_pages()
+        self._save_and_close_pages()
 
     def _on_tree_view_cell_toggled(self, renderer, row, store):
         """Toggle the save check button value."""
 
-        store[row][0] = not store[row][0]
+        store[row][1] = not store[row][1]
         store = self._main_tree_view.get_model()
-        mains = [x for x in range(len(store)) if store[x][0]]
+        mains = [x for x in store if x[1]]
         store = self._tran_tree_view.get_model()
-        trans = [x for x in range(len(store)) if store[x][0]]
+        trans = [x for x in store if x[1]]
         sensitive = bool(mains or trans)
-        self._dialog.set_response_sensitive(gtk.RESPONSE_YES, sensitive)
+        self.set_response_sensitive(gtk.RESPONSE_YES, sensitive)
 
-    def _save_documents(self):
-        """Save the selected documents.
+    @gaupol.gtk.util.silent(gaupol.gtk.Default)
+    def _save_and_close_page(self, page):
+        """Save the selected documents and close page."""
 
-        Raise Default if something goes wrong.
-        """
         store = self._main_tree_view.get_model()
-        for i in (x for x in range(len(store)) if store[x][0]):
-            self.application.save_main(self._main_pages[i])
-
+        pages = [x for x in store if x[0] is page]
+        if pages and pages[0][1]:
+            self.application.save_main_document(page)
         store = self._tran_tree_view.get_model()
-        for i in (x for x in range(len(store)) if store[x][0]):
-            self.application.save_translation(self._tran_pages[i])
+        pages = [x for x in store if x[0] is page]
+        if pages and pages[0][1]:
+            self.application.save_translation_document(page)
+        self.application.close_page(page, False)
+
+    def _save_and_close_pages(self):
+        """Save the selected documents and close all handled pages."""
+
+        for page in self.pages:
+            self._save_and_close_page(page)

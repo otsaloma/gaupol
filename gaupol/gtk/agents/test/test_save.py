@@ -16,20 +16,34 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
+import functools
+import gaupol.gtk
 import gtk
 
-from gaupol.gtk.errors import Default
 from gaupol.gtk import unittest
 
 
 class TestSaveAgent(unittest.TestCase):
 
+    def run__show_encoding_error_dialog(self):
+
+        flash_dialog = gaupol.gtk.Runner.flash_dialog
+        flash_dialog = functools.partial(flash_dialog, self.application)
+        self.delegate.flash_dialog = flash_dialog
+        self.delegate._show_encoding_error_dialog("test", "ascii")
+
+    def run__show_io_error_dialog(self):
+
+        flash_dialog = gaupol.gtk.Runner.flash_dialog
+        flash_dialog = functools.partial(flash_dialog, self.application)
+        self.delegate.flash_dialog = flash_dialog
+        self.delegate._show_io_error_dialog("test", "test")
+
     def setup_method(self, method):
 
         self.application = self.get_application()
-        self.delegate = self.application.save_main.im_self
-
-       respond = lambda *args: gtk.RESPONSE_DELETE_EVENT
+        self.delegate = self.application.save_main_document.im_self
+        respond = lambda *args: gtk.RESPONSE_DELETE_EVENT
         self.delegate.flash_dialog = respond
         self.delegate.run_dialog = respond
 
@@ -61,24 +75,24 @@ class TestSaveAgent(unittest.TestCase):
 
         self.application.on_save_translation_document_as_activate()
 
-    def test_save_main(self):
+    def test_save_main_document(self):
 
         page = self.application.get_current_page()
-        self.application.save_main(page)
+        self.application.save_main_document(page)
 
-    def test_save_main_as(self):
-
-        page = self.application.get_current_page()
-        function = self.application.save_main_as
-        self.raises(Default, function, page)
-
-    def test_save_translation(self):
+    def test_save_main_document_as(self):
 
         page = self.application.get_current_page()
-        self.application.save_translation(page)
+        function = self.application.save_main_document_as
+        self.raises(gaupol.gtk.Default, function, page)
 
-    def test_save_translation_as(self):
+    def test_save_translation_document(self):
 
         page = self.application.get_current_page()
-        function = self.application.save_translation_as
-        self.raises(Default, function, page)
+        self.application.save_translation_document(page)
+
+    def test_save_translation_document_as(self):
+
+        page = self.application.get_current_page()
+        function = self.application.save_translation_document_as
+        self.raises(gaupol.gtk.Default, function, page)

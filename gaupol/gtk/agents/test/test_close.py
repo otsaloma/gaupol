@@ -16,39 +16,78 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
+import functools
+import gaupol.gtk
 import gtk
 
-from gaupol.gtk import const
 from gaupol.gtk import unittest
 
 
 class TestCloseAgent(unittest.TestCase):
 
+    def run__confirm_and_close_page_main(self):
+
+        flash_dialog = gaupol.gtk.Runner.flash_dialog
+        flash_dialog = functools.partial(flash_dialog, self.application)
+        self.delegate.flash_dialog = flash_dialog
+        page = self.application.get_current_page()
+        page.project.remove_subtitles([0])
+        self.delegate._confirm_and_close_page_main(page)
+
+    def run__confirm_and_close_page_translation(self):
+
+        flash_dialog = gaupol.gtk.Runner.flash_dialog
+        flash_dialog = functools.partial(flash_dialog, self.application)
+        self.delegate.flash_dialog = flash_dialog
+        page = self.application.get_current_page()
+        page.project.remove_subtitles([0])
+        self.delegate._confirm_and_close_page_translation(page)
+
     def setup_method(self, method):
 
         self.application = self.get_application()
-        self.delegate = self.application.close.im_self
-
+        self.delegate = self.application.close_page.im_self
         respond = lambda *args: gtk.RESPONSE_DELETE_EVENT
         self.delegate.flash_dialog = respond
         self.delegate.run_dialog = respond
 
-    def test__show_close_warning_dialog(self):
+    def test__save_window_geometry(self):
 
-        self.delegate._show_close_warning_dialog(gaupol.gtk.DOCUMENT.MAIN, "test")
+        self.delegate._save_window_geometry()
 
-    def test_close_confirm(self):
+    def test_close_page(self):
 
-        while self.application.pages:
-            self.application.close(self.application.pages[-1])
+        self.application.open_main_file(self.get_subrip_path())
+        self.application.open_translation_file(self.get_microdvd_path())
+        self.application.close_page(self.application.pages[-1], False)
 
-    def test_close_no_confirm(self):
+        self.application.open_main_file(self.get_subrip_path())
+        self.application.open_translation_file(self.get_microdvd_path())
+        self.application.close_page(self.application.pages[-1], True)
 
-        while self.application.pages:
-            self.application.close(self.application.pages[-1], False)
+        self.application.open_main_file(self.get_subrip_path())
+        self.application.open_translation_file(self.get_microdvd_path())
+        self.application.pages[-1].project.remove_subtitles([0])
+        self.application.close_page(self.application.pages[-1], True)
+
+        doc = gaupol.gtk.DOCUMENT.MAIN
+        self.application.open_main_file(self.get_subrip_path())
+        self.application.open_translation_file(self.get_microdvd_path())
+        self.application.pages[-1].project.clear_texts([0], doc)
+        self.application.close_page(self.application.pages[-1], True)
+
+        doc = gaupol.gtk.DOCUMENT.TRAN
+        self.application.open_main_file(self.get_subrip_path())
+        self.application.open_translation_file(self.get_microdvd_path())
+        self.application.pages[-1].project.clear_texts([0], doc)
+        self.application.close_page(self.application.pages[-1], True)
 
     def test_on_close_all_projects_activate(self):
 
+        page = self.application.get_current_page()
+        page.project.remove_subtitles([0])
+        self.application.on_close_all_projects_activate()
+        self.application.open_main_file(self.get_subrip_path())
         self.application.on_close_all_projects_activate()
 
     def test_on_close_project_activate(self):
@@ -59,10 +98,3 @@ class TestCloseAgent(unittest.TestCase):
 
         page = self.application.get_current_page()
         self.application.on_page_close_request(page)
-
-    def test_on_quit_activate(self):
-
-        try:
-            self.application.on_quit_activate()
-        except SystemExit:
-            pass

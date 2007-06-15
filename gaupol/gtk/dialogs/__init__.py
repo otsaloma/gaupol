@@ -33,6 +33,7 @@ from .message     import ErrorDialog
 from .message     import InfoDialog
 from .message     import QuestionDialog
 from .message     import WarningDialog
+from .multiclose  import MultiCloseDialog
 from .preferences import PreferencesDialog
 from .previewerr  import PreviewErrorDialog
 from .split       import SplitDialog
