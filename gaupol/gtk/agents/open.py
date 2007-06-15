@@ -316,7 +316,6 @@ class OpenAgent(gaupol.Delegate):
             return self.save_translation(page)
         gaupol.gtk.util.raise_default(response != gtk.RESPONSE_NO)
 
-    @gaupol.gtk.util.silent(UnicodeError)
     @gaupol.gtk.util.asserted_return
     def _try_open_file(self, open_method, path, encoding):
         """Try to open file and return sort count.
@@ -325,6 +324,7 @@ class OpenAgent(gaupol.Delegate):
         Return None if decoding file fails.
         """
         gaupol.gtk.util.set_cursor_busy(self.window)
+        open_method = gaupol.gtk.util.silent(UnicodeError)(open_method)
         basename = os.path.basename(path)
         if encoding == "auto":
             encoding = gaupol.encodings.detect(path)

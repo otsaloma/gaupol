@@ -1,5 +1,10 @@
 2007-06-15  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/agents/open.py (_try_open_file):
+	Actually return None on UnicodeError.
+
+2007-06-15  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/multiclose-dialog.glade:
 	* gaupol/gtk/agents/close.py:
 	* gaupol/gtk/agents/__init__.py:
