@@ -1,5 +1,10 @@
 2007-06-15  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/agents/close.py (close_page):
+	Call self.update_gui.
+
+2007-06-15  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/agents/open.py (_try_open_file):
 	Actually return None on UnicodeError.
 

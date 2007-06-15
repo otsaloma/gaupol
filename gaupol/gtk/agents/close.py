@@ -131,6 +131,7 @@ class CloseAgent(gaupol.Delegate):
             self.notebook.next_page()
         self.notebook.remove_page(index)
         self.pages.remove(page)
+        self.update_gui()
         self.emit("page-closed", page)
 
     def on_close_all_projects_activate(self, *args):
