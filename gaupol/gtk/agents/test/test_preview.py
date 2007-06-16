@@ -16,35 +16,35 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
+import functools
+import gaupol.gtk
 import gtk
-import os
 
 from gaupol.gtk import unittest
 
 
 class TestPreviewAgent(unittest.TestCase):
 
+    def run__show_encoding_error_dialog(self):
+
+        flash_dialog = gaupol.gtk.Runner.flash_dialog
+        flash_dialog = functools.partial(flash_dialog, self.application)
+        self.delegate.flash_dialog = flash_dialog
+        self.delegate._show_encoding_error_dialog()
+
+    def run__show_io_error_dialog(self):
+
+        flash_dialog = gaupol.gtk.Runner.flash_dialog
+        flash_dialog = functools.partial(flash_dialog, self.application)
+        self.delegate.flash_dialog = flash_dialog
+        self.delegate._show_io_error_dialog("test")
+
     def setup_method(self, method):
 
         self.application = self.get_application()
         self.delegate = self.application.preview.im_self
-
         respond = lambda *args: gtk.RESPONSE_DELETE_EVENT
         self.delegate.flash_dialog = respond
-        self.delegate.run_dialog = respond
-
-    def test__clean(self):
-
-        path = self.get_subrip_path()
-        self.delegate._clean(path, None)
-        assert not os.path.isfile(path)
-
-    def test__post_process(self):
-
-        data = (self.get_subrip_path(), self.get_subrip_path())
-        self.delegate._post_process(None, 0, data)
-        data = (self.get_subrip_path(), self.get_subrip_path())
-        self.delegate._post_process(None, 1, data)
 
     def test__show_encoding_error_dialog(self):
 

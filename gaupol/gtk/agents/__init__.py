@@ -27,7 +27,7 @@ from .help       import HelpAgent
 # from .menu       import MenuAgent
 from .open       import OpenAgent
 # from .position   import PositionAgent
-# from .preview    import PreviewAgent
+from .preview    import PreviewAgent
 from .save       import SaveAgent
 # from .search     import SearchAgent
 # from .spellcheck import SpellCheckAgent
