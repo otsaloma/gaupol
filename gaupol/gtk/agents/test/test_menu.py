@@ -16,8 +16,6 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-import gtk
-
 from gaupol.gtk import unittest
 
 
@@ -54,5 +52,4 @@ class TestMenuAgent(unittest.TestCase):
 
     def test_set_menu_notify_events(self):
 
-        for name in ("main", "projects"):
-            self.application.set_menu_notify_events(name)
+        self.application.set_menu_notify_events("main")

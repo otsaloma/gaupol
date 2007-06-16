@@ -1,5 +1,14 @@
 2007-06-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/agents/__init__.py:
+	* gaupol/gtk/agents/menu.py:
+	* gaupol/gtk/agents/open.py:
+	* gaupol/gtk/agents/util.py:
+	* gaupol/gtk/application.py:
+	Add contracts and clean up code.
+
+2007-06-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/conf.spec:
 	* gaupol/gtk/dialogs/file/open.py:
 	* gaupol/gtk/dialogs/file/video.py:

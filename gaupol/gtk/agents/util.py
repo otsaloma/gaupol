@@ -63,6 +63,12 @@ class UtilityAgent(gaupol.Delegate):
         widgets = self.get_action(name).get_proxies()
         return [x for x in widgets if isinstance(x, gtk.MenuItem)][0]
 
+    def get_tool_item(self, name):
+        """Get tool item from UI manager by name."""
+
+        widgets = self.get_action(name).get_proxies()
+        return [x for x in widgets if isinstance(x, gtk.ToolItem)][0]
+
     def set_current_page_require(self, page):
         assert page in self.pages
 

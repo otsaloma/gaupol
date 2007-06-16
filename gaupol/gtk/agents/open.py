@@ -351,14 +351,13 @@ class OpenAgent(gaupol.Delegate):
     def add_new_page(self, page):
         """Add a new page to the application."""
 
-        # FIX:
         self.pages.append(page)
         page.connect("close-request", self.on_page_close_request)
         page.project.connect("action-done", self.on_project_action_done)
         page.project.connect("action-redone", self.on_project_action_redone)
         page.project.connect("action-undone", self.on_project_action_undone)
-        #callback = self.on_page_tab_widget_button_press_event
-        #page.tab_widget.connect("button-press-event", callback)
+        callback = self.on_page_tab_widget_button_press_event
+        page.tab_widget.connect("button-press-event", callback)
         self.connect_to_view_signals(page.view)
         page.project.clipboard.set_texts(self.clipboard.get_texts())
 

@@ -49,6 +49,11 @@ class TestUtilityAgent(unittest.TestCase):
         self.application.get_menu_item("show_times")
         self.application.get_menu_item("toggle_number_column")
 
+    def test_get_tool_item(self):
+
+        self.application.get_tool_item("undo_action")
+        self.application.get_tool_item("insert_subtitles")
+
     def test_set_current_page(self):
 
         page = self.application.pages[-1]

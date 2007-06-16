@@ -133,7 +133,6 @@ class Application(gaupol.Observable, gaupol.gtk.Runner):
     def _init_gui(self):
         """Initialize the user interface."""
 
-        # FIX:
         vbox = gtk.VBox()
         self._init_window()
         self._init_uim()
@@ -147,7 +146,7 @@ class Application(gaupol.Observable, gaupol.gtk.Runner):
         self.window.add(vbox)
         vbox.show_all()
         self._init_visibilities()
-        #self.set_menu_notify_events("main")
+        self.set_menu_notify_events("main")
         self._finalize_uim_actions()
         self.update_gui()
         self.window.show()
@@ -155,10 +154,9 @@ class Application(gaupol.Observable, gaupol.gtk.Runner):
     def _init_main_toolbar(self, vbox):
         """Initialize the main toolbar."""
 
-        # FIX:
-        #self._init_open_button()
-        #self._init_redo_button()
-        #self._init_undo_button()
+        self._init_open_button()
+        self._init_redo_button()
+        self._init_undo_button()
         toolbar = self.uim.get_widget("/ui/main_toolbar")
         style = gaupol.gtk.conf.application_window.toolbar_style
         if style != gaupol.gtk.TOOLBAR_STYLE.DEFAULT:
@@ -175,7 +173,6 @@ class Application(gaupol.Observable, gaupol.gtk.Runner):
     def _init_notebook(self, vbox):
         """Initialize the notebook."""
 
-        # FIX:
         self.notebook = gtk.Notebook()
         self.notebook.set_scrollable(True)
         self.notebook.set_show_border(False)
@@ -183,7 +180,7 @@ class Application(gaupol.Observable, gaupol.gtk.Runner):
         targets = [("text/uri-list", 0, 0)]
         types = gtk.gdk.ACTION_COPY
         self.notebook.drag_dest_set(flags, targets, types)
-        #gaupol.gtk.util.connect(self, "notebook", "drag-data-received")
+        gaupol.gtk.util.connect(self, "notebook", "drag-data-received")
         gaupol.gtk.util.connect(self, "notebook", "page-reordered")
         callback = self.on_notebook_switch_page
         self.notebook.connect_after("switch-page", callback)
@@ -192,13 +189,12 @@ class Application(gaupol.Observable, gaupol.gtk.Runner):
     def _init_open_button(self):
         """Initialize the open button on the main toolbar."""
 
-        # FIX:
-        open_button = self.uim.get_widget("/ui/main_toolbar/open_main")
+        open_button = self.get_tool_item("open_main_files")
         open_button.set_menu(gtk.Menu())
         tip =  _("Open a recently used main file")
         open_button.set_arrow_tooltip(self.static_tooltips, tip)
-        #callback = self._on_open_button_show_menu
-        #open_button.connect("show-menu", callback)
+        callback = self.on_open_button_show_menu
+        open_button.connect("show-menu", callback)
 
     def _init_output_window(self):
         """Initialize the output window."""
@@ -210,26 +206,20 @@ class Application(gaupol.Observable, gaupol.gtk.Runner):
     def _init_recent_menus(self):
         """Initialize the recent file menus."""
 
-        # FIX:
-        path = "/ui/menubar/file/recent_main"
-        #self.uim.get_widget(path).set_submenu(gtk.Menu())
-        path = "/ui/menubar/file/recent_translation"
-        #self.uim.get_widget(path).set_submenu(gtk.Menu())
-        #open_button = self.uim.get_widget("/ui/toolbar/open_main")
-        #open_button.set_submenu(gtk.Menu())
-        #callback = self._on_open_button_show_submenu
-        #open_button.connect("show-menu", callback)
+        item = self.get_menu_item("show_recent_main_menu")
+        item.set_submenu(gtk.Menu())
+        item = self.get_menu_item("show_recent_translation_menu")
+        item.set_submenu(gtk.Menu())
 
     def _init_redo_button(self):
         """Initialize the redo button on the main toolbar."""
 
-        # FIX:
-        redo_button = self.uim.get_widget("/ui/main_toolbar/redo")
+        redo_button = self.get_tool_item("redo_action")
         redo_button.set_menu(gtk.Menu())
         tip = _("Redo undone actions")
         redo_button.set_arrow_tooltip(self.tooltips, tip)
-        #callback = self._on_redo_button_show_menu
-        #redo_button.connect("show-menu", callback)
+        callback = self.on_redo_button_show_menu
+        redo_button.connect("show-menu", callback)
 
     def _init_statusbar(self, vbox):
         """Initialize the statusbar."""
@@ -250,8 +240,6 @@ class Application(gaupol.Observable, gaupol.gtk.Runner):
             action_group.add_action_with_accel(action, action.accelerator)
         self._init_uim_radio_groups(action_group)
         self.uim.insert_action_group(action_group, 0)
-        action_group = gtk.ActionGroup("recent")
-        self.uim.insert_action_group(action_group, -1)
         action_group = gtk.ActionGroup("projects")
         self.uim.insert_action_group(action_group, -1)
         ui_xml_file = os.path.join(gaupol.DATA_DIR, "ui.xml")
@@ -274,13 +262,12 @@ class Application(gaupol.Observable, gaupol.gtk.Runner):
     def _init_undo_button(self):
         """Initialize the undo button on the main toolbar."""
 
-        # FIX:
-        undo_button = self.uim.get_widget("/ui/main_toolbar/undo")
+        undo_button = self.get_tool_item("undo_action")
         undo_button.set_menu(gtk.Menu())
         tip = _("Undo actions")
         undo_button.set_arrow_tooltip(self.tooltips, tip)
-        #callback = self._on_undo_button_show_menu
-        #undo_button.connect("show-menu", callback)
+        callback = self.on_undo_button_show_menu
+        undo_button.connect("show-menu", callback)
 
     def _init_visibilities(self):
         """Initialize visibilities of hideable widgets."""
@@ -308,7 +295,6 @@ class Application(gaupol.Observable, gaupol.gtk.Runner):
         image = gtk.image_new_from_stock(gtk.STOCK_OPEN, size)
         hbox.pack_start(image, False, False)
 
-        # FIX:
         self.video_button = gtk.Button()
         self.video_button.add(hbox)
         self.video_button.set_data("label", label)
@@ -316,8 +302,8 @@ class Application(gaupol.Observable, gaupol.gtk.Runner):
         targets = [("text/uri-list", 0, 0)]
         types = gtk.gdk.ACTION_COPY
         self.video_button.drag_dest_set(flags, targets, types)
-        #gaupol.gtk.util.connect(self, "video_button", "clicked")
-        #gaupol.gtk.util.connect(self, "video_button", "drag-data-received")
+        gaupol.gtk.util.connect(self, "video_button", "clicked")
+        gaupol.gtk.util.connect(self, "video_button", "drag-data-received")
 
         tool_item = gtk.ToolItem()
         tool_item.set_border_width(4)

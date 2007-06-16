@@ -16,15 +16,12 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Building and updating menus."""
+"""Building and updating dynamic menus."""
 
 
+import gaupol.gtk
 import gtk
-import os
-
-from gaupol.base import Delegate
-from gaupol.gtk import conf, const, util
-from gaupol.gtk.i18n import _
+_ = gaupol.i18n._
 
 
 class MenuAgent(gaupol.Delegate):
@@ -32,128 +29,109 @@ class MenuAgent(gaupol.Delegate):
     """Building and updating menus.
 
     Instance attributes:
-
-        _projects_id: UI manager merge ID for the projects menu
+     * _projects_id: UI manager merge ID for the projects menu
+     * _redo_menu_items: Redo menu tool button menu items
+     * _undo_menu_items: Undo menu tool button menu items
     """
 
     # pylint: disable-msg=E0203,W0201
+
+    __metaclass__ = gaupol.Contractual
 
     def __init__(self, master):
 
         gaupol.Delegate.__init__(self, master)
         self._projects_id = None
+        self._redo_menu_items = []
+        self._undo_menu_items = []
 
-    def _get_project_actions(self):
-        """Get a list of UI manager actions for the projects menu."""
+    def _add_project_action(self, page):
+        """Add an action to the 'projects' action group."""
 
-        radio_actions = []
-        for i in range(len(self.pages)):
-            name = "activate_project_%d" % i
-            basename  = self.pages[i].get_main_basename()
-            label = self.pages[i].tab_label.get_text()
-            label = "%d. %s" % (i + 1, label)
-            if len(label) > 60:
-                label = label[:60] + "\342\200\246"
-            label = label.replace("_", "__")
-            label = ("_%s" % label if i < 9 else label)
-            key = ("<alt>%d" % (i + 1) if i < 9 else None)
-            tip = _('Activate "%s"') % basename
-            radio_actions.append((name, None, label, key, tip, i))
-        return radio_actions
-
-    def _get_project_ui_string(self):
-        """Get a UI manager layout string for the projects menu."""
-
-        ui = ""
-        for i in range(len(self.pages)):
-            ui += '<menuitem name="%d" action="activate_project_%d"/>' % (i, i)
-        ui = """
-        <ui>
-          <menubar>
-            <menu name="projects" action="show_projects_menu">
-              <placeholder name="open">%s</placeholder>
-            </menu>
-          </menubar>
-        </ui>""" % ui
-        return ui
+        index = self.pages.index(page)
+        basename = page.get_main_basename()
+        name = "activate_project_%d" % index
+        label = page.tab_label.get_text().replace("_", "__")
+        label = "%d. %s" % (index + 1, label)
+        label = ("_%s" % label if index < 9 else label)
+        tooltip = _('Activate "%s"') % basename
+        action = gtk.RadioAction(name, label, tooltip, None, index)
+        action_group = self.get_action_group("projects")
+        group = action_group.get_action("activate_project_0")
+        if group is not None:
+            action.set_group(group)
+        accel = ("<alt>%d" % (index + 1) if index < 9 else None)
+        action_group.add_action_with_accel(action, accel)
+        callback = self._on_projects_action_changed
+        action.connect("changed", callback)
+        action.set_active(page is self.get_current_page())
+        return action.get_name()
 
     def _get_recent_menu(self, doc):
-        """Return a new gtk.RecentChooserMenu."""
+        """Return a new recent chooser menu."""
 
         menu = gtk.RecentChooserMenu(self.recent_manager)
         menu.set_show_not_found(False)
         menu.set_show_tips(False)
         menu.set_sort_type(gtk.RECENT_SORT_MRU)
-
         group = ("gaupol-main", "gaupol-translation")[doc]
         recent_filter = gtk.RecentFilter()
         recent_filter.add_group(group)
         menu.add_filter(recent_filter)
         menu.set_filter(recent_filter)
         menu.set_data("group", group)
-
-        self._update_recent_menu(menu)
+        menu.set_limit(gaupol.gtk.conf.file.max_recent)
         return menu
 
-    def _show_revert_button_menu(self, register):
-        """Show the undo or redo button menu."""
+    def _on_redo_menu_item_activate(self, menu_item):
+        """Redo the selected action and all those above it."""
 
-        menu_items = []
-        menu = gtk.Menu()
-        page = self.get_current_page()
-        if register == gaupol.gtk.REGISTER.UNDO:
-            stack = page.project.undoables
-            button = self.undo_button
-            revert_method = self.undo
-            get_tip = lambda desc: _('Undo "%s"') % desc
-        elif register == gaupol.gtk.REGISTER.REDO:
-            stack = page.project.redoables
-            button = self.redo_button
-            revert_method = self.redo
-            get_tip = lambda desc: _('Redo "%s"') % desc
+        index = menu_item.get_data("index")
+        self.redo(index + 1)
 
-        def on_activate(menu_item, index):
-            revert_method(index + 1)
-        def on_enter(menu_item, event, index, tip):
-            for i in range(index):
-                menu_items[i].set_state(gtk.STATE_PRELIGHT)
-            self.push_message(tip, False)
-        def on_leave(menu_item, event, index):
-            for i in range(index):
-                menu_items[i].set_state(gtk.STATE_NORMAL)
-            self.flash_message(None)
+    def _on_redo_menu_item_enter(self, menu_item, event):
+        """Show tooltip and select all actions above this one."""
 
-        for i, action in enumerate(stack):
-            tip = get_tip(action.description)
-            menu_item = gtk.MenuItem(action.description, False)
-            menu_item.connect("activate", on_activate, i)
-            menu_item.connect("enter-notify-event", on_enter, i, tip)
-            menu_item.connect("leave-notify-event", on_leave, i)
-            menu_items.append(menu_item)
-            menu.append(menu_item)
-        menu.show_all()
-        button.set_menu(menu)
+        index = menu_item.get_data("index")
+        for item in self._redo_menu_items[:index]:
+            item.set_state(gtk.STATE_PRELIGHT)
+        self.push_message(menu_item.get_data("tooltip"))
 
-    def _update_recent_menu(self, menu):
-        """Update recent menu item limit."""
+    def _on_redo_menu_item_leave(self, menu_item, event):
+        """Show tooltip and unselect all actions above this one."""
 
-        if gaupol.gtk.conf.file.max_recent < 1:
-            return menu.set_limit(0)
-        i = -1
-        matches = 0
-        group = menu.get_data("group")
-        menu.set_limit(i)
-        # pylint: disable-msg=W0631
-        for i, item in enumerate(menu.get_items()):
-            if not item.has_group(group):
-                continue
-            path = gaupol.gtk.util.uri_to_path(item.get_uri())
-            if not os.path.isfile(path):
-                continue
-            matches += 1
-            if matches >= gaupol.gtk.conf.file.max_recent:
-                break
-        return menu.set_limit(i + 1)
+        index = menu_item.get_data("index")
+        for item in self._redo_menu_items[:index]:
+            item.set_state(gtk.STATE_NORMAL)
+        self.push_message(None)
+
+    def _on_undo_menu_item_activate(self, menu_item):
+        """Undo the selected action and all those above it."""
+
+        index = menu_item.get_data("index")
+        self.undo(index + 1)
+
+    def _on_undo_menu_item_enter(self, menu_item, event):
+        """Show tooltip and select all actions above this one."""
+
+        index = menu_item.get_data("index")
+        for item in self._undo_menu_items[:index]:
+            item.set_state(gtk.STATE_PRELIGHT)
+        self.push_message(menu_item.get_data("tooltip"))
+
+    def _on_undo_menu_item_leave(self, menu_item, event):
+        """Show tooltip and unselect all actions above this one."""
+
+        index = menu_item.get_data("index")
+        for item in self._undo_menu_items[:index]:
+            item.set_state(gtk.STATE_NORMAL)
+        self.push_message(None)
+
+    def _on_projects_action_changed(self, item, active_item):
+        """Change the page in the notebook to the selected project."""
+
+        index = int(active_item.get_name().split("_")[-1])
+        self.notebook.set_current_page(index)
 
     def on_open_button_show_menu(self, *args):
         """Build and attach a new recent menu on the open button."""
@@ -161,54 +139,64 @@ class MenuAgent(gaupol.Delegate):
         menu = self._get_recent_menu(gaupol.gtk.DOCUMENT.MAIN)
         callback = self.on_recent_main_menu_item_activated
         menu.connect("item-activated", callback)
-        self.open_button.set_menu(menu)
+        self.get_tool_item("open_main_files").set_menu(menu)
         gaupol.gtk.util.iterate_main()
 
     @gaupol.gtk.util.asserted_return
     def on_page_tab_widget_button_press_event(self, button, event):
-        """Display a tab pop-up menu."""
+        """Display a pop-up menu with tab-related actions."""
 
         assert event.button == 3
         menu = self.uim.get_widget("/ui/tab_popup")
         menu.popup(None, None, None, event.button, event.time)
 
     def on_redo_button_show_menu(self, *args):
-        """Show the redo button menu."""
+        """Show the menu listing all redoable actions."""
 
-        self._show_revert_button_menu(gaupol.gtk.REGISTER.REDO)
+        menu = gtk.Menu()
+        self._redo_menu_items = []
+        page = self.get_current_page()
+        for i, action in enumerate(page.project.redoables):
+            item = gtk.MenuItem(action.description, False)
+            item.set_data("index", i)
+            item.set_data("tooltip", _('Redo "%s"') % action.description)
+            callback = self._on_redo_menu_item_activate
+            item.connect("activate", callback)
+            callback = self._on_redo_menu_item_enter
+            item.connect("enter-notify-event", callback)
+            callback = self._on_redo_menu_item_leave
+            item.connect("leave-notify-event", callback)
+            self._redo_menu_items.append(item)
+            menu.append(item)
+        menu.show_all()
+        self.get_tool_item("redo_action").set_menu(menu)
 
+    @gaupol.gtk.util.asserted_return
     def on_show_projects_menu_activate(self, *args):
         """Add all open projects to the projects menu."""
 
-        action_group = self._get_action_group("projects")
+        action_group = self.get_action_group("projects")
         for action in action_group.list_actions():
             action_group.remove_action(action)
         if self._projects_id is not None:
             self.uim.remove_ui(self._projects_id)
         page = self.get_current_page()
-        if page is None:
-            return
-
-        def switch(item, active_item):
-            index = int(active_item.get_name().split("_")[-1])
-            self.notebook.set_current_page(index)
-        radio_actions = self._get_project_actions()
-        active = self.notebook.get_current_page()
-        action_group.add_radio_actions(radio_actions, active, switch)
-        ui = self._get_project_ui_string()
+        assert page is not None
+        ui = '<ui><menubar name="menubar">'
+        ui += '<menu name="projects" action="show_projects_menu">'
+        ui += '<placeholder name="open">'
+        for i, page in enumerate(self.pages):
+            name = self._add_project_action(page)
+            ui += '<menuitem name="%d" action="%s"/>' % (i, name)
+        ui += '</placeholder></menu></menubar></ui>'
         self._projects_id = self.uim.add_ui_from_string(ui)
-
-        for i in range(len(self.pages)):
-            path = "/ui/menubar/projects/open/%d" % i
-            action = self.uim.get_action(path)
-            widget = self.uim.get_widget(path)
-            action.connect_proxy(widget)
+        self.uim.ensure_update()
         self.set_menu_notify_events("projects")
 
     def on_show_recent_main_menu_activate(self, *args):
         """Show the recent main file menu."""
 
-        item = self.uim.get_widget("/ui/menubar/file/recent_main")
+        item = self.get_menu_item("show_recent_main_menu")
         menu = self._get_recent_menu(gaupol.gtk.DOCUMENT.MAIN)
         callback = self.on_recent_main_menu_item_activated
         menu.connect("item-activated", callback)
@@ -218,7 +206,7 @@ class MenuAgent(gaupol.Delegate):
     def on_show_recent_translation_menu_activate(self, *args):
         """Show the recent translation file menu."""
 
-        item = self.uim.get_widget("/ui/menubar/file/recent_translation")
+        item = self.get_menu_item("show_recent_translation_menu")
         menu = self._get_recent_menu(gaupol.gtk.DOCUMENT.TRAN)
         callback = self.on_recent_translation_menu_item_activated
         menu.connect("item-activated", callback)
@@ -226,21 +214,35 @@ class MenuAgent(gaupol.Delegate):
         gaupol.gtk.util.iterate_main()
 
     def on_undo_button_show_menu(self, *args):
-        """Show the undo button menu."""
+        """Show the menu listing all undoable actions."""
 
-        self._show_revert_button_menu(gaupol.gtk.REGISTER.UNDO)
+        menu = gtk.Menu()
+        self._undo_menu_items = []
+        page = self.get_current_page()
+        for i, action in enumerate(page.project.undoables):
+            item = gtk.MenuItem(action.description, False)
+            item.set_data("index", i)
+            item.set_data("tooltip", _('Undo "%s"') % action.description)
+            callback = self._on_undo_menu_item_activate
+            item.connect("activate", callback)
+            callback = self._on_undo_menu_item_enter
+            item.connect("enter-notify-event", callback)
+            callback = self._on_undo_menu_item_leave
+            item.connect("leave-notify-event", callback)
+            self._undo_menu_items.append(item)
+            menu.append(item)
+        menu.show_all()
+        self.get_tool_item("undo_action").set_menu(menu)
 
     def set_menu_notify_events(self, name):
-        """Set statusbar tooltips for menu items.
+        """Set statusbar tooltips for menu items for action group."""
 
-        name should be 'main' or 'projects'.
-        """
         def on_enter(menu_item, event, action):
-            self.push_message(action.props.tooltip, False)
+            self.push_message(action.props.tooltip)
         def on_leave(menu_item, event, action):
-            self.flash_message(None)
-
-        for action in self._get_action_group(name).list_actions():
+            self.push_message(None)
+        action_group = self.get_action_group(name)
+        for action in action_group.list_actions():
             for widget in action.get_proxies():
                 widget.connect("enter-notify-event", on_enter, action)
                 widget.connect("leave-notify-event", on_leave, action)
