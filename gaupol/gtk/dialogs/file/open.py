@@ -48,8 +48,6 @@ class OpenDialog(GladeDialog, SubtitleFileDialog):
     def _init_values(self, doc):
         """Initialize default values for widgets."""
 
-        if all(gaupol.gtk.conf.open_dialog.size):
-            self.set_default_size(*gaupol.gtk.conf.open_dialog.size)
         self.set_select_multiple(doc == gaupol.gtk.DOCUMENT.MAIN)
         if os.path.isdir(gaupol.gtk.conf.file.directory):
             self.set_current_folder(gaupol.gtk.conf.file.directory)
@@ -63,4 +61,3 @@ class OpenDialog(GladeDialog, SubtitleFileDialog):
         gaupol.gtk.conf.file.encoding = self.get_encoding()
         gaupol.gtk.conf.file.directory = self.get_current_folder()
         gaupol.gtk.conf.file.smart_tran = self._smart_check.get_active()
-        gaupol.gtk.conf.open_dialog.size = self.get_size()

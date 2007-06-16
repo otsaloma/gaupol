@@ -1,5 +1,12 @@
 2007-06-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/conf.spec:
+	* gaupol/gtk/dialogs/file/open.py:
+	* gaupol/gtk/dialogs/file/video.py:
+	Do not save open_dialog.size since it doesn't work.
+
+2007-06-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/agents/__init__.py:
 	* gaupol/gtk/agents/preview.py:
 	Clean up code.

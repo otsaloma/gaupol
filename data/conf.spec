@@ -55,9 +55,6 @@ target = TARGET(default="CURRENT")
 [general]
 version = string(default=None)
 
-[open_dialog]
-size = int_list(2, 2, default=list(0, 0))
-
 [output_window]
 maximized = boolean(default=False)
 position = int_list(2, 2, default=list(0, 0))
