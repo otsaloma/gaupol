@@ -49,6 +49,16 @@ class TestUtilityAgent(unittest.TestCase):
         self.application.get_menu_item("show_times")
         self.application.get_menu_item("toggle_number_column")
 
+    def test_get_target_pages(self):
+
+        get_target_pages = self.application.get_target_pages
+        pages = get_target_pages(gaupol.gtk.TARGET.SELECTED)
+        assert pages == [self.application.get_current_page()]
+        pages = get_target_pages(gaupol.gtk.TARGET.CURRENT)
+        assert pages == [self.application.get_current_page()]
+        pages = get_target_pages(gaupol.gtk.TARGET.ALL)
+        assert pages == self.application.pages
+
     def test_get_tool_item(self):
 
         self.application.get_tool_item("undo_action")

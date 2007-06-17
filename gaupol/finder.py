@@ -153,6 +153,7 @@ class Finder(object):
         """Replace the current match.
 
         next should be True to finish at end of match, False for beginning.
+        Raise re.error if bad replacement.
         """
         a, z = self.match_span
         orig_length = len(self.text)
@@ -176,6 +177,7 @@ class Finder(object):
     def replace_all(self):
         """Replace all occurences of pattern.
 
+        Raise re.error if bad replacement.
         Return the amount of substitutions made.
         """
         self.pos = 0

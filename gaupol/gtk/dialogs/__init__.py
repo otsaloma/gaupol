@@ -38,6 +38,7 @@ from .message     import WarningDialog
 from .multiclose  import MultiCloseDialog
 from .preferences import PreferencesDialog
 from .previewerr  import PreviewErrorDialog
+from .search      import SearchDialog
 from .split       import SplitDialog
 from .textedit    import TextEditDialog
 

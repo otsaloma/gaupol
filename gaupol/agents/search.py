@@ -189,8 +189,9 @@ class SearchAgent(gaupol.Delegate):
 
     def find_next_require(self, index=None, doc=None, pos=None):
         assert 0 <= (index or 0) < len(self.subtitles)
-        text = self.subtitles[index or 0].get_text(doc)
-        assert 0 <= (pos or 0) <= len(text)
+        if doc is not None:
+            text = self.subtitles[index or 0].get_text(doc)
+            assert 0 <= (pos or 0) <= len(text)
 
     def find_next_ensure(self, value, index=None, doc=None, pos=None):
         index, doc, match_span = value
@@ -212,8 +213,9 @@ class SearchAgent(gaupol.Delegate):
 
     def find_previous_require(self, index=None, doc=None, pos=None):
         assert 0 <= (index or 0) < len(self.subtitles)
-        text = self.subtitles[index or 0].get_text(doc)
-        assert 0 <= (pos or 0) <= len(text)
+        if doc is not None:
+            text = self.subtitles[index or 0].get_text(doc)
+            assert 0 <= (pos or 0) <= len(text)
 
     def find_previous_ensure(self, value, index=None, doc=None, pos=None):
         index, doc, match_span = value
@@ -242,8 +244,10 @@ class SearchAgent(gaupol.Delegate):
 
     @gaupol.util.revertable
     def replace(self, register=-1):
-        """Replace the current match."""
+        """Replace the current match of pattern.
 
+        Raise re.error if bad replacement.
+        """
         self._finder.replace()
         index = self._match_index
         doc = self._match_doc
@@ -253,8 +257,10 @@ class SearchAgent(gaupol.Delegate):
 
     @gaupol.util.revertable
     def replace_all(self, register=-1):
-        """Replace all matches of pattern and return amount."""
+        """Replace all matches of pattern and return amount.
 
+        Raise re.error if bad replacement.
+        """
         counts = {}
         for doc in self._docs:
             counts[doc] = 0

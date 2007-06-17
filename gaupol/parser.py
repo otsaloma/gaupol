@@ -146,6 +146,7 @@ class Parser(gaupol.Finder):
         """Replace the current match.
 
         next should be True to finish at end of match, False for beginning.
+        Raise re.error if bad replacement.
         """
         a = self.match_span[0]
         orig_text = self.text[:]

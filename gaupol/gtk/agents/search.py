@@ -19,9 +19,7 @@
 """Searching for and replacing text."""
 
 
-from gaupol.base import Delegate
-from gaupol.gtk import util
-from gaupol.gtk.dialogs import SearchDialog
+import gaupol.gtk
 
 
 class SearchAgent(gaupol.Delegate):
@@ -29,8 +27,7 @@ class SearchAgent(gaupol.Delegate):
     """Searching for and replacing text.
 
     Instance variables:
-
-        _pref_dialog: PreferencesDialog or None
+     * _search_dialog: Existing SearchDialog or None
     """
 
     # pylint: disable-msg=E0203,W0201
@@ -41,32 +38,25 @@ class SearchAgent(gaupol.Delegate):
         self._search_dialog = None
 
     def _on_search_dialog_response(self, *args):
-        """Destroy the search dialog."""
+        """Hide the search dialog."""
 
-        self._search_dialog.destroy()
-        self._search_dialog = None
+        self._search_dialog.hide()
 
     def on_find_and_replace_activate(self, *args):
         """Search for and replace text."""
 
-        if self._search_dialog is None:
-            self._search_dialog = SearchDialog(self.master)
-            gaupol.gtk.util.connect(self, "_search_dialog", "response")
-            self._search_dialog.show()
-        self._search_dialog.present()
+        if self._search_dialog is not None:
+            return self._search_dialog.present()
+        self._search_dialog = gaupol.gtk.SearchDialog(self)
+        gaupol.gtk.util.connect(self, "_search_dialog", "response")
+        self._search_dialog.show()
 
     def on_find_next_activate(self, *args):
         """Search forwards for same text."""
 
-        if self._search_dialog is None:
-            self._search_dialog = SearchDialog(self.master)
-            gaupol.gtk.util.connect(self, "_search_dialog", "response")
         self._search_dialog.next()
 
     def on_find_previous_activate(self, *args):
         """Search backwards for same text."""
 
-        if self._search_dialog is None:
-            self._search_dialog = SearchDialog(self.master)
-            gaupol.gtk.util.connect(self, "_search_dialog", "response")
         self._search_dialog.previous()

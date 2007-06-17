@@ -134,8 +134,6 @@
     <menuitem name="close" action="close_project"/>
   </popup>
   <popup name="view_popup">
-    <menuitem name="edit" action="edit_value"/>
-    <separator/>
     <menuitem name="split" action="split_subtitle"/>
     <menuitem name="merge" action="merge_subtitles"/>
     <separator/>

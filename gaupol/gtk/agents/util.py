@@ -63,6 +63,17 @@ class UtilityAgent(gaupol.Delegate):
         widgets = self.get_action(name).get_proxies()
         return [x for x in widgets if isinstance(x, gtk.MenuItem)][0]
 
+    def get_target_pages(self, target):
+        """Get a list of pages corresponding to target."""
+
+        if target == gaupol.gtk.TARGET.SELECTED:
+            return [self.get_current_page()]
+        if target == gaupol.gtk.TARGET.CURRENT:
+            return [self.get_current_page()]
+        if target == gaupol.gtk.TARGET.ALL:
+            return self.pages
+        raise ValueError
+
     def get_tool_item(self, name):
         """Get tool item from UI manager by name."""
 
