@@ -23,6 +23,7 @@ from __future__ import division
 
 import copy
 import gaupol
+import math
 import re
 
 __all__ = ["Liner"]
@@ -38,6 +39,7 @@ class Liner(gaupol.Parser):
     Instance variables:
      * _length_func: A function that returns the length of its argument
      * _space_length: Length of a space according to length_func
+     * max_deviation: Maximum deviation for texts with three or more lines
      * max_length: Maximum length of a line in units of _length_func
      * ok_clauses: Amount of clause lines that need not be joined
      * ok_dialogue: Amount of dialogue lines that need not be joined
@@ -59,6 +61,7 @@ class Liner(gaupol.Parser):
         gaupol.Parser.__init__(self, re_tag)
         self._length_func = len
         self._space_length = 1
+        self.max_deviation = 0.25
         self.max_length = 44
         self.ok_clauses = 2
         self.ok_dialogue = 3
@@ -172,6 +175,17 @@ class Liner(gaupol.Parser):
                 return i - 1
         return 1
 
+    @gaupol.util.asserted_return
+    def _is_deviant(self):
+        """Return True line lengths deviate too much."""
+
+        # Calculate standard deviation / mean.
+        assert self.text.count("\n") > 2
+        lengths = [self._length_func(x) for x in self.text.split("\n")]
+        ave = sum(lengths) / 3
+        std = math.sqrt(sum([(x - ave)**2 for x in lengths]) / 3)
+        return ((std / ave) > self.max_deviation)
+
     def _join_even_ensure(self, value, max_lines):
         assert self.text.count("\n") == (max_lines - 1)
 
@@ -199,10 +213,16 @@ class Liner(gaupol.Parser):
         self.text = self.re_clause.sub(replacement, self.text).strip()
         if not self.text.count("\n"):
             return False
+        if self._is_deviant():
+            self.text = self.text.replace("\n", " ")
+            return False
         line_count = max(self.ok_clauses, max_lines)
         if self.text.count("\n") < line_count:
             return True
         self._join_even(line_count)
+        if self._is_deviant():
+            self.text = self.text.replace("\n", " ")
+            return False
         return True
 
     def _split_on_dialogue(self, max_lines):
