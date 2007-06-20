@@ -39,6 +39,7 @@ from .multiclose  import MultiCloseDialog
 from .preferences import PreferencesDialog
 from .previewerr  import PreviewErrorDialog
 from .search      import SearchDialog
+from .spellcheck  import SpellCheckDialog
 from .split       import SplitDialog
 from .textedit    import TextEditDialog
 

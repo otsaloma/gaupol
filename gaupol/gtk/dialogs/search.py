@@ -213,20 +213,6 @@ class SearchDialog(GladeDialog):
         gaupol.gtk.conf.search.connect("notify::target", callback)
         self._update_search_targets()
 
-    def _init_values(self):
-        """Initialize default values for widgets."""
-
-        self._pattern_entry.set_text(self.application.pattern)
-        self._replacement_entry.set_text(self.application.replacement)
-        self._regex_check.set_active(gaupol.gtk.conf.search.regex)
-        self._ignore_case_check.set_active(gaupol.gtk.conf.search.ignore_case)
-        cols = gaupol.gtk.conf.search.cols
-        self._main_check.set_active(gaupol.gtk.COLUMN.MAIN_TEXT in cols)
-        self._tran_check.set_active(gaupol.gtk.COLUMN.TRAN_TEXT in cols)
-        target = gaupol.gtk.conf.search.target
-        self._all_radio.set_active(target == gaupol.gtk.TARGET.ALL)
-        self._current_radio.set_active(target == gaupol.gtk.TARGET.CURRENT)
-
     def _init_dialog_handlers(self):
         """Initialize dialog signal handlers."""
 
@@ -282,6 +268,20 @@ class SearchDialog(GladeDialog):
             gaupol.gtk.conf.search.target = self._get_target()
         self._current_radio.connect("toggled", save_target)
         self._all_radio.connect("toggled", save_target)
+
+    def _init_values(self):
+        """Initialize default values for widgets."""
+
+        self._pattern_entry.set_text(self.application.pattern)
+        self._replacement_entry.set_text(self.application.replacement)
+        self._regex_check.set_active(gaupol.gtk.conf.search.regex)
+        self._ignore_case_check.set_active(gaupol.gtk.conf.search.ignore_case)
+        cols = gaupol.gtk.conf.search.cols
+        self._main_check.set_active(gaupol.gtk.COLUMN.MAIN_TEXT in cols)
+        self._tran_check.set_active(gaupol.gtk.COLUMN.TRAN_TEXT in cols)
+        target = gaupol.gtk.conf.search.target
+        self._all_radio.set_active(target == gaupol.gtk.TARGET.ALL)
+        self._current_radio.set_active(target == gaupol.gtk.TARGET.CURRENT)
 
     def _on_ignore_case_check_toggled(self, check_button):
         """Save the ignore case setting."""
@@ -408,7 +408,7 @@ class SearchDialog(GladeDialog):
         ins = text_buffer.get_iter_at_offset(match_span[0])
         bound = text_buffer.get_iter_at_offset(match_span[1])
         text_buffer.select_range(ins, bound)
-        mark = text_buffer.create_mark(None, ins, True)
+        mark = text_buffer.create_mark(None, bound, True)
         self._text_view.scroll_to_mark(mark, 0.2)
         self._text_view.set_sensitive(True)
         self._text_view.grab_focus()

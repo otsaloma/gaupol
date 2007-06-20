@@ -16,97 +16,77 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
-"""Dialog for checking spelling.
-
-Instance variables:
-
-    _SPELL_CHECK_DIR: Directory for user dictionary and replacement files
-"""
+"""Dialog for checking spelling."""
 
 
+import gaupol.gtk
 import gobject
 import gtk
 import os
 import sys
 import pango
+_ = gaupol.i18n._
 
-from gaupol import langlib, paths
-from gaupol.gtk import conf, const, util
-from gaupol.gtk.i18n import _
-from gaupol.gtk.index import *
 from .glade import GladeDialog
 from .message import ErrorDialog
 from .textedit import TextEditDialog
-
-try:
-    import enchant
-    import enchant.checker
-except Exception:
-    pass
-
-
-_SPELL_CHECK_DIR = os.path.join(gaupol.PROFILE_DIR, "spell-check")
 
 
 class SpellCheckDialog(GladeDialog):
 
     """Dialog for checking spelling.
 
-    Instance variables:
+    Class variables:
+     * _max_replacemnts: Maximum amount of replacements to save to file
+     * _personal_dir: Directory for user dictionary and replacement files
 
-        _add_button:          gtk.Button
-        _check_button:        gtk.Button
-        _checker:             enchant.checker.SpellChecker
-        _dict_label:          gtk.Label
-        _doc:                 DOCUMENT constant to check
-        _edit_button:         gtk.Button
-        _entry:               gtk.Entry
-        _ignore_all_button:   gtk.Button
-        _ignore_button:       gtk.Button
-        _join_back_button:    gtk.Button
-        _join_forward_button: gtk.Button
-        _lang_label:          gtk.Label
-        _main_vbox:           gtk.VBox
-        _new_rows:            List of rows with changed texts
-        _new_texts:           List of changed texts
-        _page:                Current page
-        _replace_all_button:  gtk.Button
-        _replace_button:      gtk.Button
-        _replacements:        List of used replacements
-        _row:                 Current row
-        _text_view:           gtk.TextView
-        _tree_view:           gtk.TreeView
-        application:          Associated Application
+    Instance variables:
+     * _checker: Enchant spell-checker object
+     * _doc: The document currectly being checked
+     * _entry_handler: Handler for the replacement entry's 'changed' signal
+     * _new_rows: List of rows in the current page with changed texts
+     * _new_texts: List of changed texts in the current page
+     * _page: The page currectly being checked
+     * _pager: Iterator to iterate over all target pages
+     * _replacements: List of misspelled words and their replacements
+     * _row: The row in the current page being checked
     """
+
+    __metaclass__ = gaupol.Contractual
+    _max_replacemnts = 5000
+    _personal_dir = os.path.join(gaupol.PROFILE_DIR, "spell-check")
+
+    def __init___require(self, parent, application):
+        assert gaupol.gtk.util.enchant_available()
 
     def __init__(self, parent, application):
 
         GladeDialog.__init__(self, "spellcheck-dialog")
         get_widget = self._glade_xml.get_widget
-        self._add_button          = get_widget("add_button")
-        self._check_button        = get_widget("check_button")
-        self._dict_label          = get_widget("dict_label")
-        self._edit_button         = get_widget("edit_button")
-        self._entry               = get_widget("entry")
-        self._ignore_all_button   = get_widget("ignore_all_button")
-        self._ignore_button       = get_widget("ignore_button")
-        self._join_back_button    = get_widget("join_back_button")
+        self._add_button = get_widget("add_button")
+        self._edit_button = get_widget("edit_button")
+        self._entry = get_widget("entry")
+        self._ignore_all_button = get_widget("ignore_all_button")
+        self._ignore_button = get_widget("ignore_button")
+        self._join_back_button = get_widget("join_back_button")
         self._join_forward_button = get_widget("join_forward_button")
-        self._lang_label          = get_widget("lang_label")
-        self._main_vbox           = get_widget("main_vbox")
-        self._replace_all_button  = get_widget("replace_all_button")
-        self._replace_button      = get_widget("replace_button")
-        self._text_view           = get_widget("text_view")
-        self._tree_view           = get_widget("tree_view")
+        self._language_label = get_widget("language_label")
+        self._replace_all_button = get_widget("replace_all_button")
+        self._replace_button = get_widget("replace_button")
+        self._table = get_widget("table")
+        self._text_view = get_widget("text_view")
+        self._tree_view = get_widget("tree_view")
 
-        self._checker      = None
-        self._doc          = None
-        self._new_rows     = []
-        self._new_texts    = []
-        self._page         = None
+        self._checker = None
+        self._doc = None
+        self._entry_handler = None
+        self._new_rows = []
+        self._new_texts = []
+        self._page = None
+        self._pager = None
         self._replacements = []
-        self._row          = None
-        self.application   = application
+        self._row = None
+        self.application = application
 
         self._init_spell_check()
         self._init_fonts()
@@ -116,39 +96,40 @@ class SpellCheckDialog(GladeDialog):
         self._init_sizes()
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_CLOSE)
-
-        self.pager = self._get_page()
-        self.pager.next()
-        self._advance()
+        self._start()
 
     def _advance(self):
         """Advance to the next spelling error."""
 
         while True:
             try:
+                # Advance to the next spelling error in the current text.
                 return self._advance_current()
             except StopIteration:
+                # Save the current text if changes were made.
                 text = unicode(self._checker.get_text())
-                texts = self._page.project.get_texts(self._doc)
-                if self._row < len(texts) and text != texts[self._row]:
+                subtitles = self._page.project.subtitles
+                if text != subtitles[self._row].get_text(self._doc):
                     self._new_rows.append(self._row)
                     self._new_texts.append(text)
+            # Move to the next row in the current page, move to the next page
+            # in the list of target pages or end when all pages checked,
             try:
-                self._set_next_text()
+                self._advance_row()
             except StopIteration:
                 try:
-                    self.pager.next()
+                    self._pager.next()
                 except StopIteration:
                     break
         self._set_done()
 
     def _advance_current(self):
-        """Advance to the next spelling error in current text.
+        """Advance to the next spelling error in the current text.
 
-        Raise StopIteration when done with the current text.
+        Raise StopIteration when no more errors in the current text.
         """
         self._checker.next()
-        col = self._page.document_to_text_column(self._doc)
+        col = gaupol.gtk.util.document_to_text_column(self._doc)
         self._page.view.set_focus(self._row, col)
         self._page.view.scroll_to_row(self._row)
 
@@ -160,101 +141,92 @@ class SpellCheckDialog(GladeDialog):
         start = text_buffer.get_iter_at_offset(a)
         end = text_buffer.get_iter_at_offset(z)
         text_buffer.apply_tag_by_name("misspelled", start, end)
+        mark = text_buffer.create_mark(None, end, True)
+        self._text_view.scroll_to_mark(mark, 0.2)
 
         sensitive = text[max(0, a - 1):a].isspace()
         self._join_back_button.set_sensitive(sensitive)
         sensitive = text[z:min(len(text), z + 1)].isspace()
         self._join_forward_button.set_sensitive(sensitive)
-        self._entry.set_text("")
-        self._fill_tree_view(self._checker.suggest())
+        self._set_entry_text("")
+        self._populate_tree_view(self._checker.suggest())
         self._tree_view.grab_focus()
 
-    def _fill_tree_view(self, suggestions, select=True):
-        """Fill the tree view with suggestions."""
+    def _advance_row(self):
+        """Advance to the next subtitle and set its text to the checker.
 
-        suggestions = suggestions[:]
-        store = self._tree_view.get_model()
-        store.clear()
-        word = unicode(self._checker.word)
-        for misspelled, correct in reversed(self._replacements):
-            if misspelled == word:
-                store.append([unicode(correct)])
-                if correct in suggestions:
-                    suggestions.remove(correct)
-        for suggestion in suggestions:
-            store.append([unicode(suggestion)])
+        Raise StopIteration when no more subtitles left in the current page.
+        """
+        subtitles = self._page.project.subtitles
+        self._row += 1
+        if self._row >= len(subtitles):
+            raise StopIteration
+        text = subtitles[self._row].get_text(self._doc)
+        self._checker.set_text(unicode(text))
 
-        if len(store) > 0 and select:
-            self._tree_view.set_cursor(0)
-            self._tree_view.scroll_to_cell(0)
+    def _get_next_page(self):
+        """Get the next page to check the spelling in."""
 
-    def _get_page(self):
-        """Get the next page."""
-
-        for page in self._get_target_pages():
+        col = gaupol.gtk.conf.spell_check.col
+        doc = gaupol.gtk.util.text_column_to_document(col)
+        target = gaupol.gtk.conf.spell_check.target
+        for page in self.application.get_target_pages(target):
             index = self.application.pages.index(page)
             self.application.notebook.set_current_page(index)
             self._page = page
-            self._doc = page.text_column_to_document(gaupol.gtk.conf.spell_check.col)
+            self._doc = doc
             self._row = -1
-            self._set_next_text()
+            self._advance_row()
             yield page
             self._register_changes()
 
-    def _get_target_pages(self):
-        """Get pages corresponding to target."""
-
-        if gaupol.gtk.conf.spell_check.target == gaupol.gtk.TARGET.ALL:
-            return self.application.pages
-        return [self.application.get_current_page()]
-
     def _init_checker(self):
-        """Initialize the checker."""
+        """Initialize the checker or respond close if unsuccessful."""
 
-        lang = gaupol.gtk.conf.spell_check.lang
-        path = os.path.join(_SPELL_CHECK_DIR, lang + ".dict")
-        try:
-            try:
-                dic = enchant.DictWithPWL(str(lang), str(path))
+        import enchant.checker
+        language = gaupol.gtk.conf.spell_check.lang
+        path = os.path.join(self._personal_dir, "%s.dict" % language)
+        try: # Respond CLOSE if dictionary cannot be initialized.
+            try: # Use a dictionary with a personal word list if possible.
+                dict = enchant.DictWithPWL(str(language), str(path))
             except IOError, (no, message):
                 gaupol.gtk.util.handle_write_io(sys.exc_info(), path)
-                self._dict_label.set_sensitive(False)
                 self._add_button.set_sensitive(False)
-                dic = enchant.Dict(str(lang))
+                dict = enchant.Dict(str(language))
         except enchant.Error, message:
             self._show_error_dialog(message)
             self.response(gtk.RESPONSE_CLOSE)
-        self._checker = enchant.checker.SpellChecker(dic, "")
+        self._checker = enchant.checker.SpellChecker(dict, "")
 
     def _init_fonts(self):
-        """Initialize fonts and text tags."""
+        """Initialize widget fonts and text tags."""
 
         if not gaupol.gtk.conf.editor.use_default_font:
-            gaupol.gtk.util.set_widget_font(self._entry    , gaupol.gtk.conf.editor.font)
-            gaupol.gtk.util.set_widget_font(self._text_view, gaupol.gtk.conf.editor.font)
-            gaupol.gtk.util.set_widget_font(self._tree_view, gaupol.gtk.conf.editor.font)
-
+            font = gaupol.gtk.conf.editor.font
+            gaupol.gtk.util.set_widget_font(self._entry, font)
+            gaupol.gtk.util.set_widget_font(self._text_view, font)
+            gaupol.gtk.util.set_widget_font(self._tree_view, font)
         text_buffer = self._text_view.get_buffer()
         text_buffer.create_tag("misspelled", weight=pango.WEIGHT_BOLD)
 
     @gaupol.gtk.util.asserted_return
     def _init_replacements(self):
-        """Read replacements from file."""
+        """Read misspelled words and their replacements from file."""
 
-        lang = gaupol.gtk.conf.spell_check.lang
-        path = os.path.join(_SPELL_CHECK_DIR, lang + ".repl")
+        basename = "%s.repl" % gaupol.gtk.conf.spell_check.lang
+        path = os.path.join(self._personal_dir, basename)
         assert os.path.isfile(path)
-        exceptions = (IOError, UnicodeError)
-        readlines = gaupol.gtk.util.silent(*exceptions)(gaupol.gtk.util.readlines)
+        silent = gaupol.gtk.util.silent(IOError, UnicodeError)
+        readlines = silent(gaupol.gtk.util.readlines)
         lines = readlines(path, "utf_8")
+        assert lines is not None
         for line in gaupol.gtk.util.get_unique(lines):
-            entry = tuple(line.strip().split("|"))
-            self._replacements.append(entry)
+            item = tuple(line.strip().split("|"))
+            self._replacements.append(item)
 
     def _init_sensitivities(self):
         """Initialize widget sensitivities."""
 
-        self._check_button.set_sensitive(False)
         self._join_back_button.set_sensitive(False)
         self._join_forward_button.set_sensitive(False)
         self._replace_all_button.set_sensitive(False)
@@ -263,45 +235,48 @@ class SpellCheckDialog(GladeDialog):
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
-        gaupol.gtk.util.connect(self, "_add_button"         , "clicked")
-        gaupol.gtk.util.connect(self, "_check_button"       , "clicked")
-        gaupol.gtk.util.connect(self, "_edit_button"        , "clicked")
-        gaupol.gtk.util.connect(self, "_entry"              , "changed")
-        gaupol.gtk.util.connect(self, "_ignore_all_button"  , "clicked")
-        gaupol.gtk.util.connect(self, "_ignore_button"      , "clicked")
-        gaupol.gtk.util.connect(self, "_join_back_button"   , "clicked")
+        gaupol.gtk.util.connect(self, "_add_button", "clicked")
+        gaupol.gtk.util.connect(self, "_edit_button", "clicked")
+        gaupol.gtk.util.connect(self, "_ignore_all_button", "clicked")
+        gaupol.gtk.util.connect(self, "_ignore_button", "clicked")
+        gaupol.gtk.util.connect(self, "_join_back_button", "clicked")
         gaupol.gtk.util.connect(self, "_join_forward_button", "clicked")
-        gaupol.gtk.util.connect(self, "_replace_all_button" , "clicked")
-        gaupol.gtk.util.connect(self, "_replace_button"     , "clicked")
+        gaupol.gtk.util.connect(self, "_replace_all_button", "clicked")
+        gaupol.gtk.util.connect(self, "_replace_button", "clicked")
         gaupol.gtk.util.connect(self, self, "response")
+
+        callback = self._on_entry_changed
+        self._entry_handler = self._entry.connect("changed", callback)
 
     def _init_sizes(self):
         """Initialize widget sizes."""
 
         label = gtk.Label("\n".join(["M" * 34] * 4))
         if not gaupol.gtk.conf.editor.use_default_font:
-            gaupol.gtk.util.set_label_font(label, gaupol.gtk.conf.editor.font)
+            font = gaupol.gtk.conf.editor.font
+            gaupol.gtk.util.set_label_font(label, font)
         width, height = label.size_request()
         self._text_view.set_size_request(width + 4, height + 7)
 
         label = gtk.Label("M" * 24)
         if not gaupol.gtk.conf.editor.use_default_font:
-            gaupol.gtk.util.set_label_font(label, gaupol.gtk.conf.editor.font)
+            font = gaupol.gtk.conf.editor.font
+            gaupol.gtk.util.set_label_font(label, font)
         width = label.size_request()[0]
         self._tree_view.set_size_request(width + 4, -1)
 
     def _init_spell_check(self):
-        """Initialize spell-check stuff."""
+        """Initialize spell-check components and related widgets."""
 
-        gaupol.gtk.util.makedirs(_SPELL_CHECK_DIR)
+        gaupol.gtk.util.makedirs(self._personal_dir)
         self._init_checker()
         self._init_replacements()
-
-        name = gaupol.languages.get_long_name(gaupol.gtk.conf.spell_check.lang)
-        self._lang_label.set_text(name)
+        language = gaupol.gtk.conf.spell_check.lang
+        name = gaupol.languages.get_long_name(language)
+        self._language_label.set_markup("<b>%s</b>" % name)
 
     def _init_tree_view(self):
-        """Initialize tree view."""
+        """Initialize the suggestion tree view."""
 
         selection = self._tree_view.get_selection()
         selection.set_mode(gtk.SELECTION_SINGLE)
@@ -314,15 +289,11 @@ class SpellCheckDialog(GladeDialog):
     def _on_add_button_clicked(self, *args):
         """Add the current word to the user dictionary."""
 
-        self._checker.dict.add_to_pwl(unicode(self._checker.word))
+        word = unicode(self._checker.word)
+        self._checker.dict.add_to_pwl(word)
         self._advance()
 
-    def _on_check_button_clicked(self, *args):
-        """Check the current word in the entry."""
-
-        word = unicode(self._entry.get_text())
-        self._fill_tree_view(self._checker.suggest(word), False)
-
+    @gaupol.gtk.util.asserted_return
     def _on_edit_button_clicked(self, *args):
         """Edit the current text in a separate dialog."""
 
@@ -331,17 +302,18 @@ class SpellCheckDialog(GladeDialog):
         response = self.run_dialog(dialog)
         text = unicode(dialog.get_text())
         dialog.destroy()
-        if response == gtk.RESPONSE_OK:
-            self._checker.set_text(text)
-            self._advance()
+        assert response == gtk.RESPONSE_OK
+        self._checker.set_text(text)
+        self._advance()
 
     def _on_entry_changed(self, entry):
-        """Set button sensitivities."""
+        """Populate suggestions based on the word in the entry."""
 
-        sensitive = bool(entry.get_text())
-        self._check_button.set_sensitive(sensitive)
-        self._replace_button.set_sensitive(sensitive)
-        self._replace_all_button.set_sensitive(sensitive)
+        word = unicode(self._entry.get_text())
+        suggestions = self._checker.suggest(word)
+        self._populate_tree_view(suggestions, False)
+        self._replace_button.set_sensitive(bool(word))
+        self._replace_all_button.set_sensitive(bool(word))
 
     def _on_ignore_all_button_clicked(self, *args):
         """Ignore all instances of the current word."""
@@ -404,71 +376,95 @@ class SpellCheckDialog(GladeDialog):
         store, itr = selection.get_selected()
         assert itr is not None
         row = store.get_path(itr)[0]
-        self._entry.set_text(unicode(store[row][0]))
+        self._set_entry_text(unicode(store[row][0]))
+
+    @gaupol.gtk.util.asserted_return
+    def _populate_tree_view(self, suggestions, select=True):
+        """Populate the tree view with suggestions."""
+
+        word = unicode(self._checker.word)
+        iterator = reversed(self._replacements)
+        formers = [x[1] for x in iterator if x[0] == word]
+        get_unique = gaupol.gtk.util.get_unique
+        suggestions = get_unique(formers + suggestions)
+        store = self._tree_view.get_model()
+        store.clear()
+        for suggestion in suggestions:
+            store.append([unicode(suggestion)])
+        assert select and (len(store) > 0)
+        self._tree_view.set_cursor(0)
+        self._tree_view.scroll_to_cell(0)
 
     @gaupol.gtk.util.asserted_return
     def _register_changes(self):
-        """Register changes to current page."""
+        """Register made changes to the current page."""
 
         assert self._new_rows
-        self._page.project.replace_texts(
-            self._new_rows, self._doc, self._new_texts)
+        rows = self._new_rows
+        doc = self._doc
+        texts = self._new_texts
+        self._page.project.replace_texts(rows, doc, texts)
         self._page.project.set_action_description(
             gaupol.gtk.REGISTER.DO, _("Spell-checking"))
-        self.application.update_gui()
         self._new_rows = []
         self._new_texts = []
 
     def _set_done(self):
-        """Finish spell-checking."""
+        """Finish spell-checking and set proper GUI properties."""
 
         self._text_view.get_buffer().set_text("")
-        self._entry.set_text("")
-        self._fill_tree_view([])
-        self._main_vbox.set_sensitive(False)
+        self._set_entry_text("")
+        self._populate_tree_view([])
+        self._table.set_sensitive(False)
         self._write_replacements()
 
-    def _set_next_text(self):
-        """Set the next text in the current page for the checker.
+    def _set_entry_text(self, word):
+        """Set word to the entry with the 'changed' handler blocked."""
 
-        Raise StopIteration when done.
-        """
-        texts = self._page.project.get_texts(self._doc)
-        self._row += 1
-        if self._row >= len(texts):
-            raise StopIteration
-        text = unicode(texts[self._row])
-        self._checker.set_text(text)
+        self._entry.handler_block(self._entry_handler)
+        self._entry.set_text(word)
+        self._entry.handler_unblock(self._entry_handler)
+        self._replace_button.set_sensitive(bool(word))
+        self._replace_all_button.set_sensitive(bool(word))
 
     def _show_error_dialog(self, message):
+        """Show an error dialog after failing to load dictionary."""
 
-        name = gaupol.languages.get_long_name(gaupol.gtk.conf.spell_check.lang)
+        language = gaupol.gtk.conf.spell_check.lang
+        name = gaupol.languages.get_long_name(language)
         title = _('Failed to load dictionary for language "%s"') % name
         message = _("%s.") % message
         dialog = ErrorDialog(self._dialog, title, message)
         dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
         self.flash_dialog(dialog)
 
-    def _store_replacement(self, misspelled, correct):
-        """Store a replacement."""
+    def _start(self):
+        """Start checking the spelling of texts."""
 
-        replacements = self._replacements
-        replacements.append((misspelled, correct))
-        replacements = gaupol.gtk.util.get_unique(replacements)
-        self._replacements = replacements
+        self._pager = self._get_next_page()
+        self._pager.next()
+        self._advance()
+
+    def _store_replacement(self, misspelled, correct):
+        """Store a misspelled word and its replacement."""
+
+        self._replacements.append((misspelled, correct))
+        get_unique = gaupol.gtk.util.get_unique
+        self._replacements = get_unique(self._replacements)
 
     @gaupol.gtk.util.asserted_return
     def _write_replacements(self):
-        """Write replacement files."""
+        """Write misspelled words and their replacements to file."""
 
         assert self._replacements
-        lang = gaupol.gtk.conf.spell_check.lang
-        path = os.path.join(_SPELL_CHECK_DIR, lang + ".repl")
-        text = ""
-        for misspelled, correct in self._replacements:
-            text += "%s|%s%s" % (misspelled, correct, os.linesep)
+        basename = "%s.repl" % gaupol.gtk.conf.spell_check.lang
+        path = os.path.join(self._personal_dir, basename)
+        if len(self._replacements) > self._max_replacemnts:
+            # Discard the *oldest* replacements.
+            self._replacements[- self._max_replacemnts:]
+        get_line = lambda x: "%s|%s%s" % (x[0], x[1], os.linesep)
+        text = "".join([get_line(x) for x in self._replacements])
         try:
             gaupol.gtk.util.write(path, text, "utf_8")
         except (IOError, UnicodeError):
             gaupol.gtk.util.handle_write_io(sys.exc_info(), path)
-

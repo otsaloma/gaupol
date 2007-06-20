@@ -1,3 +1,17 @@
+2007-06-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/spellcheck-dialog.glade:
+	Redesign the whole dialog.
+
+	* gaupol/gtk/agents/__init__.py:
+	* gaupol/gtk/agents/spellcheck.py:
+	* gaupol/gtk/dialogs/__init__.py:
+	* gaupol/gtk/dialogs/spellcheck.py:
+	Add contracts and clean up code.
+
+	* gaupol/gtk/dialogs/search.py (_set_text):
+	Fix scrolling to a mark of the match.
+
 2007-06-19  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/liner.py (_split_on_clauses):

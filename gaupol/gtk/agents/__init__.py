@@ -30,7 +30,7 @@ from .open       import OpenAgent
 from .preview    import PreviewAgent
 from .save       import SaveAgent
 from .search     import SearchAgent
-# from .spellcheck import SpellCheckAgent
+from .spellcheck import SpellCheckAgent
 from .update     import UpdateAgent
 from .util       import UtilityAgent
 from .view       import ViewAgent

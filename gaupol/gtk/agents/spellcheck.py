@@ -19,9 +19,7 @@
 """Checking spelling."""
 
 
-from gaupol.base import Delegate
-from gaupol.gtk import util
-from gaupol.gtk.dialogs import LanguageDialog, SpellCheckDialog
+import gaupol.gtk
 
 
 class SpellCheckAgent(gaupol.Delegate):
@@ -34,16 +32,15 @@ class SpellCheckAgent(gaupol.Delegate):
         """Check for incorrect spelling."""
 
         gaupol.gtk.util.set_cursor_busy(self.window)
-        dialog = SpellCheckDialog(self.window, self)
+        dialog = gaupol.gtk.SpellCheckDialog(self.window, self)
         gaupol.gtk.util.set_cursor_normal(self.window)
         self.flash_dialog(dialog)
-        self.update_gui()
 
     def on_configure_spell_check_activate(self, *args):
         """Set languages and spell-check targets."""
 
         gaupol.gtk.util.set_cursor_busy(self.window)
-        dialog = LanguageDialog(self.window)
+        dialog = gaupol.gtk.LanguageDialog(self.window)
         gaupol.gtk.util.set_cursor_normal(self.window)
         self.flash_dialog(dialog)
         self.update_gui()
