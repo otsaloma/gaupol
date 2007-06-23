@@ -21,12 +21,14 @@
 
 from .about       import AboutDialog
 from .debug       import DebugDialog
+from .duration    import DurationAdjustDialog
 from .encoding    import AdvEncodingDialog
 from .encoding    import EncodingDialog
 from .file        import AppendDialog
 from .file        import OpenDialog
 from .file        import SaveDialog
 from .file        import VideoDialog
+from .framerate   import FramerateConvertDialog
 from .glade       import GladeDialog
 from .header      import HeaderDialog
 from .insert      import InsertDialog
@@ -39,8 +41,12 @@ from .multiclose  import MultiCloseDialog
 from .preferences import PreferencesDialog
 from .previewerr  import PreviewErrorDialog
 from .search      import SearchDialog
+from .shift       import FrameShiftDialog
+from .shift       import TimeShiftDialog
 from .spellcheck  import SpellCheckDialog
 from .split       import SplitDialog
 from .textedit    import TextEditDialog
+from .transform   import FrameTransformDialog
+from .transform   import TimeTransformDialog
 
 __all__ = [x for x in dir() if x.endswith("Dialog")]

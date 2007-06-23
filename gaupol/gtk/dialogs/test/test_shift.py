@@ -16,11 +16,11 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
+import gaupol.gtk
 import gtk
 
-from gaupol.gtk import const
 from gaupol.gtk import unittest
-from .. import posshift
+from .. import shift
 
 
 class _Test_PositionShiftDialog(unittest.TestCase):
@@ -34,27 +34,25 @@ class _Test_PositionShiftDialog(unittest.TestCase):
 
     def test__get_preview_row(self):
 
+        page = self.application.get_current_page()
         row = self.dialog._get_preview_row()
-        assert isinstance(row, int)
+        assert 0 <= row < len(page.project.subtitles)
 
     def test__get_target(self):
 
+        TARGET = gaupol.gtk.TARGET
         target = self.dialog._get_target()
-        assert target in (gaupol.gtk.TARGET.SELECTED, gaupol.gtk.TARGET.CURRENT)
-
-    def test__get_target_rows(self):
-
-        rows = self.dialog._get_target_rows()
-        if rows is not None:
-            assert isinstance(rows, list)
+        assert target in (TARGET.SELECTED, TARGET.CURRENT)
 
     def test__on_response(self):
 
+        self.dialog._amount_spin.spin(gtk.SPIN_STEP_FORWARD)
         self.dialog.response(gtk.RESPONSE_OK)
 
-    def test__shift(self):
+    def test__shift_positions(self):
 
-        self.dialog._shift()
+        self.dialog._amount_spin.spin(gtk.SPIN_STEP_FORWARD)
+        self.dialog._shift_positions()
 
 
 class TestFrameShiftDialog(_Test_PositionShiftDialog):
@@ -62,19 +60,13 @@ class TestFrameShiftDialog(_Test_PositionShiftDialog):
     def setup_method(self, method):
 
         self.application = self.get_application()
-        parent = self.application.window
-        self.dialog = posshift.FrameShiftDialog(parent, self.application)
+        args = (self.application.window, self.application)
+        self.dialog = shift.FrameShiftDialog(*args)
         self.dialog.show()
 
     def test__get_amount(self):
 
-        amount = self.dialog._get_amount()
-        assert isinstance(amount, int)
-
-    def test__get_shift_method(self):
-
-        method = self.dialog._get_shift_method()
-        assert callable(method)
+        self.dialog._get_amount()
 
 
 class TestTimeShiftDialog(_Test_PositionShiftDialog):
@@ -82,16 +74,10 @@ class TestTimeShiftDialog(_Test_PositionShiftDialog):
     def setup_method(self, method):
 
         self.application = self.get_application()
-        parent = self.application.window
-        self.dialog = posshift.TimeShiftDialog(parent, self.application)
+        args = (self.application.window, self.application)
+        self.dialog = shift.TimeShiftDialog(*args)
         self.dialog.show()
 
     def test__get_amount(self):
 
-        amount = self.dialog._get_amount()
-        assert isinstance(amount, float)
-
-    def test__get_shift_method(self):
-
-        method = self.dialog._get_shift_method()
-        assert callable(method)
+        self.dialog._get_amount()

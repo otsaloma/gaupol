@@ -59,6 +59,15 @@ class TestUtilityAgent(unittest.TestCase):
         pages = get_target_pages(gaupol.gtk.TARGET.ALL)
         assert pages == self.application.pages
 
+    def test_get_target_rows(self):
+
+        page = self.application.get_current_page()
+        get_target_rows = self.applicatin.get_target_rows
+        page.view.select_rows([1, 2, 3])
+        assert get_target_rows(gaupol.gtk.TARGET.SELECTED) == [1, 2, 3]
+        assert get_target_rows(gaupol.gtk.TARGET.CURRENT) is None
+        assert get_target_rows(gaupol.gtk.TARGET.ALL) is None
+
     def test_get_tool_item(self):
 
         self.application.get_tool_item("undo_action")

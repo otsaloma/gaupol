@@ -16,11 +16,11 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
+import gaupol.gtk
 import gtk
 
-from gaupol.gtk import const
 from gaupol.gtk import unittest
-from .. import duradjust
+from .. import duration
 
 
 class TestDurationAdjustDialog(unittest.TestCase):
@@ -33,29 +33,19 @@ class TestDurationAdjustDialog(unittest.TestCase):
     def setup_method(self, method):
 
         self.application = self.get_application()
-        parent = self.application.window
-        self.dialog = duradjust.DurationAdjustDialog(parent, self.application)
+        args = (self.application.window, self.application)
+        self.dialog = duration.DurationAdjustDialog(*args)
         self.dialog.show()
 
-    def test__adjust(self):
+    def test__adjust_durations(self):
 
-        self.dialog._adjust()
+        self.dialog._adjust_durations()
 
     def test__get_target(self):
 
+        TARGET = gaupol.gtk.TARGET
         target = self.dialog._get_target()
-        assert target in (gaupol.gtk.TARGET.SELECTED, gaupol.gtk.TARGET.CURRENT)
-
-    def test__get_target_pages(self):
-
-        pages = self.dialog._get_target_pages()
-        assert isinstance(pages, list)
-
-    def test__get_target_rows(self):
-
-        rows = self.dialog._get_target_rows()
-        if rows is not None:
-            assert isinstance(rows, list)
+        assert target in (TARGET.SELECTED, TARGET.CURRENT)
 
     def test__on_gap_check_toggled(self):
 

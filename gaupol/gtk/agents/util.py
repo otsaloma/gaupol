@@ -74,6 +74,14 @@ class UtilityAgent(gaupol.Delegate):
             return self.pages
         raise ValueError
 
+    @gaupol.gtk.util.asserted_return
+    def get_target_rows(self, target):
+        """Get the selected rows or None if targeting all rows."""
+
+        assert target == gaupol.gtk.TARGET.SELECTED
+        page = self.get_current_page()
+        return page.view.get_selected_rows()
+
     def get_tool_item(self, name):
         """Get tool item from UI manager by name."""
 

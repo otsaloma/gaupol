@@ -107,12 +107,12 @@ class TestPositionAgent(unittest.TestCase):
         self.project.open_main(self.get_microdvd_path(), "ascii")
         self.project.subtitles[0].start = 100
         self.project.subtitles[1].start = 200
-        current = gaupol.FRAMERATE.P24
-        correct = gaupol.FRAMERATE.P25
-        self.project.convert_framerate(None, current, correct)
-        assert self.project.framerate == correct
+        input = gaupol.FRAMERATE.P24
+        output = gaupol.FRAMERATE.P25
+        self.project.convert_framerate(None, input, output)
+        assert self.project.framerate == output
         for subtitle in self.project.subtitles:
-            assert subtitle.framerate == correct
+            assert subtitle.framerate == output
         assert self.project.subtitles[0].start == 104
         assert self.project.subtitles[1].start == 209
 
@@ -121,12 +121,12 @@ class TestPositionAgent(unittest.TestCase):
         self.project.open_main(self.get_subrip_path(), "ascii")
         self.project.subtitles[0].start = "00:00:01.000"
         self.project.subtitles[1].start = "00:00:02.000"
-        current = gaupol.FRAMERATE.P24
-        correct = gaupol.FRAMERATE.P25
-        self.project.convert_framerate(None, current, correct)
-        assert self.project.framerate == correct
+        input = gaupol.FRAMERATE.P24
+        output = gaupol.FRAMERATE.P25
+        self.project.convert_framerate(None, input, output)
+        assert self.project.framerate == output
         for subtitle in self.project.subtitles:
-            assert subtitle.framerate == correct
+            assert subtitle.framerate == output
         assert self.project.subtitles[0].start == "00:00:00.959"
         assert self.project.subtitles[1].start == "00:00:01.918"
 

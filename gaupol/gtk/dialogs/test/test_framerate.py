@@ -16,14 +16,14 @@
 # Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 
+import gaupol.gtk
 import gtk
 
-from gaupol.gtk import const
 from gaupol.gtk import unittest
-from .. import frconvert
+from .. import framerate
 
 
-class TestFramerateConvertDialog(unittest.TestCase):
+class TestFramerateConversionDialog(unittest.TestCase):
 
     def run(self):
 
@@ -33,35 +33,36 @@ class TestFramerateConvertDialog(unittest.TestCase):
     def setup_method(self, method):
 
         self.application = self.get_application()
-        parent = self.application.window
-        self.dialog = frconvert.FramerateConvertDialog(
-            parent, self.application)
+        args = (self.application.window, self.application)
+        self.dialog = framerate.FramerateConvertDialog(*args)
         self.dialog.show()
 
-    def test__convert(self):
+    def test__convert_framerates(self):
 
-        self.dialog._convert()
+        self.dialog._input_combo.set_active(0)
+        self.dialog._output_combo.set_active(1)
+        self.dialog._convert_framerates()
 
     def test__get_target(self):
 
+        TARGET = gaupol.gtk.TARGET
         target = self.dialog._get_target()
-        assert target in (gaupol.gtk.TARGET.SELECTED, gaupol.gtk.TARGET.CURRENT)
+        assert target in (TARGET.SELECTED, TARGET.CURRENT)
 
-    def test__get_target_pages(self):
+    def test__on_input_combo_changed(self):
 
-        pages = self.dialog._get_target_pages()
-        assert isinstance(pages, list)
+        self.dialog._input_combo.set_active(0)
+        self.dialog._input_combo.set_active(1)
+        self.dialog._input_combo.set_active(2)
 
-    def test__on_correct_combo_changed(self):
+    def test__on_output_combo_changed(self):
 
-        for framerate in gaupol.gtk.FRAMERATE.members:
-            self.dialog._correct_combo.set_active(framerate)
-
-    def test__on_current_combo_changed(self):
-
-        for framerate in gaupol.gtk.FRAMERATE.members:
-            self.dialog._current_combo.set_active(framerate)
+        self.dialog._output_combo.set_active(0)
+        self.dialog._output_combo.set_active(1)
+        self.dialog._output_combo.set_active(2)
 
     def test__on_response(self):
 
+        self.dialog._input_combo.set_active(0)
+        self.dialog._output_combo.set_active(1)
         self.dialog.response(gtk.RESPONSE_OK)

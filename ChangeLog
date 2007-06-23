@@ -1,3 +1,21 @@
+2007-06-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/duration-dialog.glade:
+	* data/glade/framerate-dialog.glade:
+	* data/glade/shift-dialog.glade:
+	* data/glade/transform-dialog.glade:
+	* gaupol/agents/position.py:
+	* gaupol/gtk/agents/edit.py:
+	* gaupol/gtk/agents/__init__.py:
+	* gaupol/gtk/agents/position.py:
+	* gaupol/gtk/agents/util.py:
+	* gaupol/gtk/dialogs/duration.py:
+	* gaupol/gtk/dialogs/framerate.py:
+	* gaupol/gtk/dialogs/__init__.py:
+	* gaupol/gtk/dialogs/shift.py:
+	* gaupol/gtk/dialogs/transform.py:
+	Add contracts and clean up code.
+
 2007-06-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/glade/spellcheck-dialog.glade:

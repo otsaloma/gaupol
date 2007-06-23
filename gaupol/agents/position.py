@@ -43,8 +43,8 @@ class PositionAgent(gaupol.Delegate):
         Return coefficient and constant, with which all subtitles should be
         scaled and shifted by to apply correction.
         """
-        # Think of this as a linear transformation where current positions
-        # are located on the x-axis and correct positions on the y-axis.
+        # Think of this as a linear transformation where input positions
+        # are located on the x-axis and output positions on the y-axis.
         x_1 = self.subtitles[point_1[0]].start_frame
         x_2 = self.subtitles[point_2[0]].start_frame
         y_1 = point_1[1]
@@ -63,8 +63,8 @@ class PositionAgent(gaupol.Delegate):
         Return coefficient and constant, with which all subtitles should be
         scaled and shifted by to apply correction.
         """
-        # Think of this as a linear transformation where current positions
-        # are located on the x-axis and correct positions on the y-axis.
+        # Think of this as a linear transformation where input positions
+        # are located on the x-axis and output positions on the y-axis.
         x_1 = self.subtitles[point_1[0]].start_seconds
         x_2 = self.subtitles[point_2[0]].start_seconds
         y_1 = point_1[1]
@@ -139,20 +139,20 @@ class PositionAgent(gaupol.Delegate):
             assert 0 <= index < len(self.subtitles)
 
     @gaupol.util.revertable
-    def convert_framerate(self, indexes, current, correct, register=-1):
+    def convert_framerate(self, indexes, input, output, register=-1):
         """Set the value of the framerate and convert subtitles to it.
 
         indexes can be None to process all subtitles.
         """
-        self.set_framerate(current, register=None)
+        self.set_framerate(input, register=None)
         new_subtitles = []
         indexes = indexes or range(len(self.subtitles))
         for index in indexes:
             subtitle = self.subtitles[index].copy()
-            subtitle.convert_framerate(correct)
+            subtitle.convert_framerate(output)
             new_subtitles.append(subtitle)
 
-        self.set_framerate(correct)
+        self.set_framerate(output)
         self.replace_positions(indexes, new_subtitles, register=register)
         self.group_actions(register, 2, _("Converting framerate"))
 

@@ -19,11 +19,7 @@
 """Editing times and frames."""
 
 
-from gaupol.base import Delegate
-from gaupol.gtk.dialogs import DurationAdjustDialog
-from gaupol.gtk.dialogs import FrameAdjustDialog, TimeAdjustDialog
-from gaupol.gtk.dialogs import FrameShiftDialog, TimeShiftDialog
-from gaupol.gtk.dialogs import FramerateConvertDialog
+import gaupol.gtk
 
 
 class PositionAgent(gaupol.Delegate):
@@ -36,14 +32,16 @@ class PositionAgent(gaupol.Delegate):
         """Lengthen or shorten durations."""
 
         page = self.get_current_page()
-        dialog = DurationAdjustDialog(self.window, self)
+        dialog = gaupol.gtk.DurationAdjustDialog(self.window, self)
         self.flash_dialog(dialog)
 
-    def on_adjust_positions_activate(self, *args):
-        """Adjust positions by linear two-point correction."""
+    def on_transform_positions_activate(self, *args):
+        """Change positions by linear two-point correction."""
 
         page = self.get_current_page()
-        cls = (TimeAdjustDialog, FrameAdjustDialog)[page.edit_mode]
+        time_class = gaupol.gtk.TimeTransformDialog
+        frame_class = gaupol.gtk.FrameTransformDialog
+        cls = (time_class, frame_class)[page.edit_mode]
         dialog = cls(self.window, self)
         self.flash_dialog(dialog)
 
@@ -51,13 +49,15 @@ class PositionAgent(gaupol.Delegate):
         """Convert framerate."""
 
         page = self.get_current_page()
-        dialog = FramerateConvertDialog(self.window, self)
+        dialog = gaupol.gtk.FramerateConvertDialog(self.window, self)
         self.flash_dialog(dialog)
 
     def on_shift_positions_activate(self, *args):
         """Make subtitles appear earlier or later."""
 
         page = self.get_current_page()
-        cls = (TimeShiftDialog, FrameShiftDialog)[page.edit_mode]
+        time_class = gaupol.gtk.TimeShiftDialog
+        frame_class = gaupol.gtk.FrameShiftDialog
+        cls = (time_class, frame_class)[page.edit_mode]
         dialog = cls(self.window, self)
         self.flash_dialog(dialog)

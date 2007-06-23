@@ -158,9 +158,10 @@ class EditAgent(gaupol.Delegate):
         rows = page.project.paste_texts(rows[0], doc)
         count = len(page.project.subtitles) - length
         assert count > 0
-        singular = "Inserted %d subtitle to fit clipboard contents"
-        plural = "Inserted %d subtitles to fit clipboard contents"
-        message = ngettext(singular, plural, count) % count
+        message = ngettext(
+            "Inserted %d subtitle to fit clipboard contents",
+            "Inserted %d subtitles to fit clipboard contents",
+            count) % count
         self.flash_message(message)
 
     def on_project_action_done(self, *args):

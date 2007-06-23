@@ -26,11 +26,21 @@ class TestPositionAgent(unittest.TestCase):
     def setup_method(self, method):
 
         self.application = self.get_application()
+        respond = lambda *args: gtk.RESPONSE_CANCEL
+        self.application.flash_dialog = respond
+
+    def test_on_adjust_durations_activate(self):
+
+        self.application.on_adjust_durations_activate()
+
+    def test_on_transform_positions_activate(self):
+
+        self.application.on_transform_positions_activate()
+
+    def test_on_convert_framerate_activate(self):
+
+        self.application.on_convert_framerate_activate()
 
     def test_on_shift_positions_activate(self):
 
-        responder = iter((gtk.RESPONSE_CANCEL, gtk.RESPONSE_OK))
-        respond = lambda *args: responder.next()
-        self.application.flash_dialog = flash_dialog
-        self.application.on_shift_positions_activate()
         self.application.on_shift_positions_activate()

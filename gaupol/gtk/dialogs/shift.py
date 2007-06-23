@@ -19,41 +19,31 @@
 """Dialogs for shifting positions."""
 
 
+import gaupol.gtk
 import gtk
+_ = gaupol.i18n._
 
-from gaupol.gtk import conf, const, util
-from gaupol.gtk.i18n import _
 from .glade import GladeDialog
 
 
 class _PositionShiftDialog(GladeDialog):
 
-    """Base class for dialogs for shifting positions.
-
-    Instance variables:
-
-        _amount_spin:    gtk.SpinButton
-        _current_radio:  gtk.RadioButton
-        _preview_button: gtk.Button
-        _selected_radio: gtk.RadioButton
-        _unit_label:     gtk.Label
-        application:     Associated Application
-    """
+    """Base class for dialogs for shifting positions."""
 
     def __init__(self, parent, application):
 
-        GladeDialog.__init__(self, "posshift-dialog")
+        GladeDialog.__init__(self, "shift-dialog")
         get_widget = self._glade_xml.get_widget
-        self._amount_spin    = get_widget("amount_spin")
-        self._current_radio  = get_widget("current_radio")
+        self._amount_spin = get_widget("amount_spin")
+        self._current_radio = get_widget("current_radio")
         self._preview_button = get_widget("preview_button")
         self._selected_radio = get_widget("selected_radio")
-        self._unit_label     = get_widget("unit_label")
+        self._unit_label = get_widget("unit_label")
         self.application = application
 
         self._init_widgets()
         self._init_signal_handlers()
-        self._init_data()
+        self._init_values()
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_OK)
 
@@ -75,80 +65,81 @@ class _PositionShiftDialog(GladeDialog):
             return gaupol.gtk.TARGET.CURRENT
         raise ValueError
 
-    def _get_target_rows(self):
-        """Get rows corresponding to target."""
+    def _init_signal_handlers(self):
+        """Initialize signal handlers."""
 
-        target = self._get_target()
-        if target == gaupol.gtk.TARGET.SELECTED:
-            page = self.application.get_current_page()
-            return page.view.get_selected_rows()
-        return None
+        gaupol.gtk.util.connect(self, "_amount_spin", "value-changed")
+        gaupol.gtk.util.connect(self, "_preview_button", "clicked" )
+        gaupol.gtk.util.connect(self, self, "response")
 
-    def _init_data(self):
+    def _init_values(self):
         """Intialize default values for widgets."""
 
+        TARGET = gaupol.gtk.TARGET
         target = gaupol.gtk.conf.position_shift.target
-        self._selected_radio.set_active(target == gaupol.gtk.TARGET.SELECTED)
-        self._current_radio.set_active(target == gaupol.gtk.TARGET.CURRENT)
-
+        self._selected_radio.set_active(target == TARGET.SELECTED)
+        self._current_radio.set_active(target == TARGET.CURRENT)
         page = self.application.get_current_page()
         rows = page.view.get_selected_rows()
-        if not rows and target == gaupol.gtk.TARGET.SELECTED:
+        if (not rows) and (target == TARGET.SELECTED):
             self._current_radio.set_active(True)
             self._selected_radio.set_sensitive(False)
-
         if page.project.video_path is None:
             self._preview_button.set_sensitive(False)
         if page.project.main_file is None:
             self._preview_button.set_sensitive(False)
+        self._amount_spin.emit("value-changed")
 
-    def _init_signal_handlers(self):
-        """Initialize signal handlers."""
+    def _on_amount_spin_value_changed(self, spin_button):
+        """Set the response sensitivity."""
 
-        gaupol.gtk.util.connect(self, "_preview_button", "clicked" )
-        gaupol.gtk.util.connect(self, self, "response")
+        sensitive = (spin_button.get_value() != 0.0)
+        self.set_response_sensitive(gtk.RESPONSE_OK, sensitive)
 
     def _on_preview_button_clicked(self, *args):
-        """Preview changes."""
+        """Preview  a temporary file with shifted subtitles."""
 
         page = self.application.get_current_page()
         row = self._get_preview_row()
+        target = self._get_target()
+        rows = self.application.get_target_rows(target)
         doc = gaupol.gtk.DOCUMENT.MAIN
         method = self._get_shift_method()
-        args = [self._get_target_rows(), self._get_amount()]
+        args = (rows, self._get_amount())
         self.application.preview_changes(page, row, doc, method, args)
 
     @gaupol.gtk.util.asserted_return
     def _on_response(self, dialog, response):
         """Save settings and shift positions."""
 
-        gaupol.gtk.conf.position_shift.target = self._get_target()
+        domain = gaupol.gtk.conf.position_shift
+        domain.target = self._get_target()
         assert response == gtk.RESPONSE_OK
-        self._shift()
+        self._shift_positions()
 
-    def _shift(self):
+    def _shift_positions(self):
         """Shift positions in subtitles."""
 
-        method = self._get_shift_method()
-        rows = self._get_target_rows()
+        page = self.application.get_current_page()
+        target = self._get_target()
+        rows = self.application.get_target_rows(target)
         amount = self._get_amount()
-        method(rows, amount)
+        page.project.shift_positions(rows, amount)
 
 
 class FrameShiftDialog(_PositionShiftDialog):
 
     """Dialog for shifting frames."""
 
+    __metaclass__ = gaupol.Contractual
+
+    def _get_amount_ensure(self, value):
+        assert isinstance(value, int)
+
     def _get_amount(self):
         """Get the amount of frames to shift."""
 
         return self._amount_spin.get_value_as_int()
-
-    def _get_shift_method(self):
-        """Get the project method to use for shifting."""
-
-        page = self.application.get_current_page()
-        return page.project.shift_frames
 
     def _init_widgets(self):
         """Initialize the widgets."""
@@ -157,6 +148,7 @@ class FrameShiftDialog(_PositionShiftDialog):
         self._amount_spin.set_digits(0)
         self._amount_spin.set_increments(1, 10)
         self._amount_spin.set_range(-9999999, 9999999)
+        self._amount_spin.set_value(0)
         self._unit_label.set_text(_("frames"))
 
 
@@ -164,16 +156,15 @@ class TimeShiftDialog(_PositionShiftDialog):
 
     """Dialog for shifting times."""
 
+    __metaclass__ = gaupol.Contractual
+
+    def _get_amount_ensure(self, value):
+        assert isinstance(value, float)
+
     def _get_amount(self):
         """Get the amount of seconds to shift."""
 
         return self._amount_spin.get_value()
-
-    def _get_shift_method(self):
-        """Get the project method to use for shifting."""
-
-        page = self.application.get_current_page()
-        return page.project.shift_seconds
 
     def _init_widgets(self):
         """Initialize the widgets."""
@@ -182,4 +173,5 @@ class TimeShiftDialog(_PositionShiftDialog):
         self._amount_spin.set_digits(3)
         self._amount_spin.set_increments(0.1, 1)
         self._amount_spin.set_range(-99999, 99999)
+        self._amount_spin.set_value(0.000)
         self._unit_label.set_text(_("seconds"))
