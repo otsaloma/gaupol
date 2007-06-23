@@ -1,5 +1,11 @@
 2007-06-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/__init__.py:
+	* gaupol/gtk/main.py:
+	Move stuff from main to __init__ and clean up code.
+
+2007-06-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/duration-dialog.glade:
 	* data/glade/framerate-dialog.glade:
 	* data/glade/shift-dialog.glade:

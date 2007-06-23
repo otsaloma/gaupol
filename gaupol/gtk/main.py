@@ -64,10 +64,11 @@ def _list_encodings():
     """List all available character encodings."""
 
     import gaupol
+    encodings = gaupol.encodings.get_valid_encodings()
+    encodings = [x[0] for x in encodings]
     if gaupol.util.chardet_available():
-        print "auto"
-    for item in gaupol.encodings.get_valid_encodings():
-        print item[0]
+        encodings.insert(0, "auto")
+    print "\n".join(encodings)
 
 def _move_eggs():
     """Move eggs to sys.path so that they are importable."""
@@ -156,28 +157,24 @@ def _prepare_config_file(path):
     """Set the configuration file to use."""
 
     import gaupol.gtk
-    if path is None:
-        path = os.path.join(gaupol.PROFILE_DIR, "gaupol.gtk.conf")
+    default = os.path.join(gaupol.PROFILE_DIR, "gaupol.gtk.conf")
+    path = (default if path is None else path)
     gaupol.gtk.conf.config_file = os.path.abspath(path)
     gaupol.gtk.conf.read()
     atexit.register(gaupol.gtk.conf.write)
 
 def _prepare_debug(debug):
-    """Enable or disable debugging checks."""
+    """Enable or disable run-time checks."""
 
     import gaupol
     gaupol.check_contracts = debug
 
 def _prepare_ui():
-    """Prepare user interface stuff."""
+    """Prepare user interface properties."""
 
-    import gaupol
     import gobject
-    import gtk.glade
-    from gaupol.gtk.dialogs import debug
-    gtk.glade.bindtextdomain("gaupol", gaupol.LOCALE_DIR)
-    gtk.glade.textdomain("gaupol")
     gobject.threads_init()
+    from gaupol.gtk.dialogs import debug
     sys.excepthook = debug.show
 
 def _show_version():
