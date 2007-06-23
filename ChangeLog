@@ -1,5 +1,14 @@
 2007-06-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/actions/action.py:
+	* gaupol/gtk/actions/format.py:
+	* gaupol/gtk/actions/__init__.py:
+	* gaupol/gtk/actions/menu.py:
+	* gaupol/gtk/actions/view.py:
+	Fix all unfinished parts marked with "FIX:".
+
+2007-06-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/__init__.py:
 	* gaupol/gtk/main.py:
 	Move stuff from main to __init__ and clean up code.

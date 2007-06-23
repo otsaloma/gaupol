@@ -22,10 +22,10 @@
 import gaupol
 _ = gaupol.i18n._
 
-from .action import Action, TopLevelAction
+from .action import Action, TopMenuAction
 
 
-class ShowEditMenuAction(TopLevelAction):
+class ShowEditMenuAction(TopMenuAction):
 
     """Show the 'Edit' menu."""
 
@@ -35,7 +35,7 @@ class ShowEditMenuAction(TopLevelAction):
         self.props.label = _("_Edit")
 
 
-class ShowFileMenuAction(TopLevelAction):
+class ShowFileMenuAction(TopMenuAction):
 
     """Show the 'File' menu."""
 
@@ -45,7 +45,7 @@ class ShowFileMenuAction(TopLevelAction):
         self.props.label = _("_File")
 
 
-class ShowHelpMenuAction(TopLevelAction):
+class ShowHelpMenuAction(TopMenuAction):
 
     """Show the 'Help' menu."""
 
@@ -65,7 +65,7 @@ class ShowProjectsMenuAction(Action):
         self.props.label = _("_Projects")
 
 
-class ShowTextMenuAction(TopLevelAction):
+class ShowTextMenuAction(TopMenuAction):
 
     """Show the 'Text' menu."""
 
@@ -75,7 +75,7 @@ class ShowTextMenuAction(TopLevelAction):
         self.props.label = _("_Text")
 
 
-class ShowToolsMenuAction(TopLevelAction):
+class ShowToolsMenuAction(TopMenuAction):
 
     """Show the 'Tools' menu."""
 
@@ -85,7 +85,7 @@ class ShowToolsMenuAction(TopLevelAction):
         self.props.label = _("T_ools")
 
 
-class ShowViewMenuAction(TopLevelAction):
+class ShowViewMenuAction(TopMenuAction):
 
     """Show the 'View' menu."""
 

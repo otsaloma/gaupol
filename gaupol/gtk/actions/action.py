@@ -19,7 +19,15 @@
 """Base class for UI manager actions."""
 
 
+import gaupol.gtk
 import gtk
+
+__all__ = [
+    "Action",
+    "MenuAction",
+    "TopMenuAction",
+    "ToggleAction",
+    "RadioAction"]
 
 
 class Action(gtk.Action):
@@ -50,11 +58,9 @@ class Action(gtk.Action):
     def finalize(self, application):
         """Connect action to the widgets and methods of application."""
 
-        # FIX: Always connect (assume hasattr).
         self.widgets = [getattr(application, x) for x in self.widgets]
         callback = "on_%s_activate" % self.props.name
-        if hasattr(application, callback):
-            self.connect("activate", getattr(application, callback))
+        self.connect("activate", getattr(application, callback))
 
     def set_sensitive(self, sensitive):
         """Set the sensitivity of action and all its widgets."""
@@ -73,14 +79,19 @@ class Action(gtk.Action):
         return self.set_sensitive(True)
 
 
-class TopLevelAction(Action):
+class MenuAction(Action):
 
-    """Base class for actions that are top-level menu items."""
+    """Base class for actions that are menu items with a submenu."""
 
     def finalize(self, application):
         """Connect action to the widgets and methods of application."""
 
-        pass
+        self.widgets = [getattr(application, x) for x in self.widgets]
+
+
+class TopMenuAction(MenuAction):
+
+    """Base class for actions that are top-level menu items with a submenu."""
 
     def update_sensitivity(self, application, page):
         """Update the sensitivity of action and all its widgets."""
@@ -95,11 +106,9 @@ class ToggleAction(Action, gtk.ToggleAction):
     def finalize(self, application):
         """Connect action to the widgets and methods of application."""
 
-        # FIX: Always connect (assume hasattr).
         self.widgets = [getattr(application, x) for x in self.widgets]
         callback = "on_%s_toggled" % self.props.name
-        if hasattr(application, callback):
-            self.connect("toggled", getattr(application, callback))
+        self.connect("toggled", getattr(application, callback))
 
 
 class RadioAction(ToggleAction, gtk.RadioAction):
@@ -111,12 +120,11 @@ class RadioAction(ToggleAction, gtk.RadioAction):
     'group' property is set once all the actions are instantiated.
     """
 
+    @gaupol.gtk.util.asserted_return
     def finalize(self, application):
         """Connect action to the widgets and methods of application."""
 
-        # FIX: Always connect (assume hasattr).
         self.widgets = [getattr(application, x) for x in self.widgets]
-        is_main = (self.__class__.__name__ == self.group)
+        assert self.__class__.__name__ == self.group
         callback = "on_%s_changed" % self.props.name
-        if is_main and hasattr(application, callback):
-            self.connect("changed", getattr(application, callback))
+        self.connect("changed", getattr(application, callback))

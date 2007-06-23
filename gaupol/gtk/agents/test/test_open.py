@@ -180,22 +180,20 @@ class TestOpenAgent(unittest.TestCase):
     @gaupol.gtk.util.asserted_return
     def test_on_recent_main_menu_item_activated(self):
 
-        # FIX:
         name = "show_recent_main_menu"
-        #menu = self.application.get_menu_item(name).get_submenu()
-        #assert menu.get_children()
-        #item = menu.get_children()[0]
-        #menu.activate_item(item, True)
+        menu = self.application.get_menu_item(name).get_submenu()
+        assert menu.get_children()
+        item = menu.get_children()[0]
+        menu.activate_item(item, True)
 
     @gaupol.gtk.util.asserted_return
     def test_on_recent_translation_menu_item_activated(self):
 
-        # FIX:
         name = "show_recent_translation_menu"
-        #menu = self.application.get_menu_item(name).get_submenu()
-        #assert menu.get_children()
-        #item = menu.get_children()[0]
-        #menu.activate_item(item, True)
+        menu = self.application.get_menu_item(name).get_submenu()
+        assert menu.get_children()
+        item = menu.get_children()[0]
+        menu.activate_item(item, True)
 
     def test_on_select_video_file_activate(self):
 

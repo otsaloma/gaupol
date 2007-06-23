@@ -23,10 +23,10 @@ import gaupol.gtk
 import gtk
 _ = gaupol.i18n._
 
-from .action import Action
+from .action import Action, MenuAction
 
 
-class ShowCaseMenuAction(Action):
+class ShowCaseMenuAction(MenuAction):
 
     """Show the case format menu."""
 

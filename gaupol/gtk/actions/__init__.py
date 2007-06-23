@@ -26,7 +26,8 @@ def _get_actions():
     """Get all Action classes."""
 
     actions = []
-    bases = set(("Action", "TopLevelAction", "ToggleAction", "RadioAction"))
+    from .action import __all__
+    bases = set((__all__))
     for module in _get_modules():
         names = set(x for x in dir(module) if x.endswith("Action")) - bases
         for value in (getattr(module, x) for x in names):

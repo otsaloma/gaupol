@@ -22,7 +22,7 @@
 import gaupol.gtk
 _ = gaupol.i18n._
 
-from .action import Action, RadioAction, ToggleAction
+from .action import Action, MenuAction, RadioAction, ToggleAction
 
 
 class ActivateNextProjectAction(Action):
@@ -97,7 +97,7 @@ class MoveTabRightAction(Action):
         assert index in range(len(application.pages))
 
 
-class ShowColumnsMenuAction(Action):
+class ShowColumnsMenuAction(MenuAction):
 
     """Show the columns view menu."""
     def __init__(self):
@@ -177,7 +177,7 @@ class ShowFramerate30Action(RadioAction):
         assert page.project.main_file is not None
 
 
-class ShowFramerateMenuAction(Action):
+class ShowFramerateMenuAction(MenuAction):
 
     """Show the framerate view menu."""
 
