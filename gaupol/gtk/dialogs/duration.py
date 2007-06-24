@@ -64,8 +64,8 @@ class DurationAdjustDialog(GladeDialog):
         kwargs["optimal"] = domain.optimal
         kwargs["lengthen"] = domain.lengthen
         kwargs["shorten"] = domain.shorten
-        kwargs["maximum"] = (domain.maximum if domain.use_max else None)
-        kwargs["minimum"] = (domain.minimum if domain.use_min else None)
+        kwargs["maximum"] = (domain.maximum if domain.use_maximum else None)
+        kwargs["minimum"] = (domain.minimum if domain.use_minimum else None)
         kwargs["gap"] = (domain.gap if domain.use_gap else None)
         kwargs["indexes"] = self.application.get_target_rows(target)
         for page in self.application.get_target_pages(target):
@@ -129,9 +129,9 @@ class DurationAdjustDialog(GladeDialog):
         self._gap_check.set_active(domain.use_gap)
         self._gap_spin.set_value(domain.gap)
         self._lengthen_check.set_active(domain.lengthen)
-        self._max_check.set_active(domain.use_max)
+        self._max_check.set_active(domain.use_maximum)
         self._max_spin.set_value(domain.maximum)
-        self._min_check.set_active(domain.use_min)
+        self._min_check.set_active(domain.use_minimum)
         self._min_spin.set_value(domain.minimum)
         self._optimal_spin.set_value(domain.optimal)
         self._shorten_check.set_active(domain.shorten)
@@ -177,8 +177,8 @@ class DurationAdjustDialog(GladeDialog):
         domain.shorten = self._shorten_check.get_active()
         domain.target = self._get_target()
         domain.use_gap = self._gap_check.get_active()
-        domain.use_max = self._max_check.get_active()
-        domain.use_min = self._min_check.get_active()
+        domain.use_maximum = self._max_check.get_active()
+        domain.use_minimum = self._min_check.get_active()
         assert response == gtk.RESPONSE_OK
         self._adjust_durations()
 

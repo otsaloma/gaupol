@@ -32,10 +32,10 @@ class TestConfig(unittest.TestCase):
 
     def test_translate_none(self):
 
-        assert self.config["editor"]["font"] is None
-        self.config.translate_none("editor", "font", "")
-        assert self.config["editor"]["font"] == ""
-        assert "font" in self.config["editor"].defaults
+        assert self.config["editor"]["custom_font"] is None
+        self.config.translate_none("editor", "custom_font", "")
+        assert self.config["editor"]["custom_font"] == ""
+        assert "custom_font" in self.config["editor"].defaults
 
     def test_write_to_file(self):
 

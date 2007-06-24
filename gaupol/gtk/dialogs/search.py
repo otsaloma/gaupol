@@ -178,7 +178,7 @@ class SearchDialog(GladeDialog):
         translate = gaupol.gtk.util.text_column_to_document
         if gaupol.gtk.util.is_text_column(col):
             doc = translate(col)
-        cols = gaupol.gtk.conf.search.cols
+        cols = gaupol.gtk.conf.search.columns
         docs = [translate(x) for x in cols]
         if (doc is None) or (doc not in docs):
             doc = (docs[-1], docs[0])[next]
@@ -251,8 +251,8 @@ class SearchDialog(GladeDialog):
         """Initialize widget sizes."""
 
         label = gtk.Label("\n".join(["M" * 34] * 4))
-        if not gaupol.gtk.conf.editor.use_default_font:
-            font = gaupol.gtk.conf.editor.font
+        if gaupol.gtk.conf.editor.use_custom_font:
+            font = gaupol.gtk.conf.editor.custom_font
             gaupol.gtk.util.set_label_font(label, font)
         width, height = label.size_request()
         self._text_view.set_size_request(width + 4, height + 7)
@@ -261,7 +261,7 @@ class SearchDialog(GladeDialog):
         """Initialize target signal handlers."""
 
         def save_columns(*args):
-            gaupol.gtk.conf.search.cols = self._get_columns()
+            gaupol.gtk.conf.search.columns = self._get_columns()
         self._main_check.connect("toggled", save_columns)
         self._tran_check.connect("toggled", save_columns)
         def save_target(*args):
@@ -276,7 +276,7 @@ class SearchDialog(GladeDialog):
         self._replacement_entry.set_text(self.application.replacement)
         self._regex_check.set_active(gaupol.gtk.conf.search.regex)
         self._ignore_case_check.set_active(gaupol.gtk.conf.search.ignore_case)
-        cols = gaupol.gtk.conf.search.cols
+        cols = gaupol.gtk.conf.search.columns
         self._main_check.set_active(gaupol.gtk.COLUMN.MAIN_TEXT in cols)
         self._tran_check.set_active(gaupol.gtk.COLUMN.TRAN_TEXT in cols)
         target = gaupol.gtk.conf.search.target
@@ -436,7 +436,7 @@ class SearchDialog(GladeDialog):
 
         for page in self.application.pages:
             translate = gaupol.gtk.util.text_column_to_document
-            docs = [translate(x) for x in gaupol.gtk.conf.search.cols]
+            docs = [translate(x) for x in gaupol.gtk.conf.search.columns]
             wrap = (gaupol.gtk.conf.search.target != gaupol.gtk.TARGET.ALL)
             page.project.set_search_target(None, docs, wrap)
 

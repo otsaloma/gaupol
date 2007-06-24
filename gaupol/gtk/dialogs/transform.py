@@ -71,7 +71,7 @@ class _PositionTransformDialog(GladeDialog):
 
         page = self.application.get_current_page()
         rows = page.view.get_selected_rows()
-        target = gaupol.gtk.conf.position_adjust.target
+        target = gaupol.gtk.conf.position_transform.target
         if (not rows) and (target == gaupol.gtk.TARGET.SELECTED):
             self._current_radio.set_active(True)
             self._selected_radio.set_sensitive(False)
@@ -107,7 +107,7 @@ class _PositionTransformDialog(GladeDialog):
         self._subtitle_spin_2.set_value(len(page.project.subtitles))
         self._subtitle_spin_2.emit("value-changed")
         TARGET = gaupol.gtk.TARGET
-        target = gaupol.gtk.conf.position_adjust.target
+        target = gaupol.gtk.conf.position_transform.target
         self._selected_radio.set_active(target == TARGET.SELECTED)
         self._current_radio.set_active(target == TARGET.CURRENT)
 
@@ -149,7 +149,7 @@ class _PositionTransformDialog(GladeDialog):
     def _on_response(self, dialog, response):
         """Save settings and adjust positions."""
 
-        domain = gaupol.gtk.conf.position_adjust
+        domain = gaupol.gtk.conf.position_transform
         domain.target = self._get_target()
         assert response == gtk.RESPONSE_OK
         self._transform_positions()

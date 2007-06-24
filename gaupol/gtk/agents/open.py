@@ -153,7 +153,7 @@ class OpenAgent(gaupol.Delegate):
         elif doc == gaupol.gtk.DOCUMENT.TRAN:
             page = self.get_current_page()
             open_method = page.project.open_translation
-            smart = gaupol.gtk.conf.file.smart_tran
+            smart = gaupol.gtk.conf.file.smart_open_translation
             open_method = functools.partial(open_method, smart=smart)
         for encoding in encodings:
             args = (open_method, path, encoding)

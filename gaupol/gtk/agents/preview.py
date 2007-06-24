@@ -88,7 +88,7 @@ class PreviewAgent(gaupol.Delegate):
 
         try:
             command = gaupol.gtk.conf.preview.video_player.command
-            if not gaupol.gtk.conf.preview.use_predefined:
+            if gaupol.gtk.conf.preview.use_custom:
                 command = gaupol.gtk.conf.preview.custom_command
             offset = gaupol.gtk.conf.preview.offset
             output = page.project.preview(time, doc, command, offset, path)

@@ -243,7 +243,7 @@ class ToggleDurationColumnAction(ToggleAction):
     def __init__(self):
 
         ToggleAction.__init__(self, "toggle_duration_column")
-        cols = gaupol.gtk.conf.editor.visible_cols
+        cols = gaupol.gtk.conf.editor.visible_columns
         self.props.active = gaupol.gtk.COLUMN.DURATION in cols
         self.props.label = _("_Duration")
         self.props.tooltip = _('Show or hide the "Duration" column')
@@ -261,7 +261,7 @@ class ToggleEndColumnAction(ToggleAction):
     def __init__(self):
 
         ToggleAction.__init__(self, "toggle_end_column")
-        cols = gaupol.gtk.conf.editor.visible_cols
+        cols = gaupol.gtk.conf.editor.visible_columns
         self.props.active = gaupol.gtk.COLUMN.END in cols
         self.props.label = _("_End")
         self.props.tooltip = _('Show or hide the "End" column')
@@ -279,7 +279,7 @@ class ToggleMainTextColumnAction(ToggleAction):
     def __init__(self):
 
         ToggleAction.__init__(self, "toggle_main_text_column")
-        cols = gaupol.gtk.conf.editor.visible_cols
+        cols = gaupol.gtk.conf.editor.visible_columns
         self.props.active = gaupol.gtk.COLUMN.MAIN_TEXT in cols
         self.props.label = _("_Main Text")
         self.props.tooltip = _('Show or hide the "Main Text" column')
@@ -310,7 +310,7 @@ class ToggleNumberColumnAction(ToggleAction):
     def __init__(self):
 
         ToggleAction.__init__(self, "toggle_number_column")
-        cols = gaupol.gtk.conf.editor.visible_cols
+        cols = gaupol.gtk.conf.editor.visible_columns
         self.props.active = gaupol.gtk.COLUMN.NUMBER in cols
         self.props.label = _("_No.")
         self.props.tooltip = _('Show or hide the "No." column')
@@ -340,7 +340,7 @@ class ToggleStartColumnAction(ToggleAction):
     def __init__(self):
 
         ToggleAction.__init__(self, "toggle_start_column")
-        cols = gaupol.gtk.conf.editor.visible_cols
+        cols = gaupol.gtk.conf.editor.visible_columns
         self.props.active = gaupol.gtk.COLUMN.START in cols
         self.props.label = _("_Start")
         self.props.tooltip = _('Show or hide the "Start" column')
@@ -370,7 +370,7 @@ class ToggleTranslationTextColumnAction(ToggleAction):
     def __init__(self):
 
         ToggleAction.__init__(self, "toggle_translation_text_column")
-        cols = gaupol.gtk.conf.editor.visible_cols
+        cols = gaupol.gtk.conf.editor.visible_columns
         self.props.active = gaupol.gtk.COLUMN.TRAN_TEXT in cols
         self.props.label = _("_Translation Text")
         self.props.tooltip = _('Show or hide the "Translation Text" column')

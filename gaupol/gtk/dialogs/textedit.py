@@ -71,8 +71,8 @@ class TextEditDialog(gtk.Dialog):
         """Initialize widget sizes."""
 
         label = gtk.Label("\n".join(["M" * 40] * 5))
-        if not gaupol.gtk.conf.editor.use_default_font:
-            font = gaupol.gtk.conf.editor.font
+        if gaupol.gtk.conf.editor.use_custom_font:
+            font = gaupol.gtk.conf.editor.custom_font
             gaupol.gtk.util.set_label_font(label, font)
         width, height = label.size_request()
         self._text_view.set_size_request(width + 4, height + 7)

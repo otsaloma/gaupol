@@ -60,4 +60,4 @@ class CheckSpellingAction(Action):
 
         assert page is not None
         assert gaupol.gtk.util.enchant_available()
-        assert gaupol.gtk.conf.spell_check.lang
+        assert gaupol.gtk.conf.spell_check.language

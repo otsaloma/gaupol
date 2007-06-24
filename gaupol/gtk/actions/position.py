@@ -77,7 +77,7 @@ class PreviewAction(Action):
 
         assert page is not None
         assert page.project.video_path is not None
-        if not gaupol.gtk.conf.preview.use_predefined:
+        if gaupol.gtk.conf.preview.use_custom:
             assert gaupol.gtk.conf.preview.custom_command
         col = page.view.get_focus()[1]
         main_file = page.project.main_file

@@ -91,13 +91,14 @@ class View(gtk.TreeView):
     def _init_columns(self, edit_mode):
         """Initialize the tree view columns."""
 
+        visible_columns = gaupol.gtk.conf.editor.visible_columns
         for col in gaupol.gtk.COLUMN.members:
             renderer = self._get_renderer(col, edit_mode)
             column = gtk.TreeViewColumn(col.label, renderer , text=col)
             self.append_column(column)
             column.set_clickable(True)
             column.set_resizable(True)
-            column.set_visible(col in gaupol.gtk.conf.editor.visible_cols)
+            column.set_visible(col in visible_columns)
             column.set_expand(gaupol.gtk.util.is_text_column(col))
             label = self._get_header_label(col, edit_mode)
             column.set_widget(label)
@@ -134,19 +135,19 @@ class View(gtk.TreeView):
 
         gaupol.gtk.util.connect(self, self, "cursor-changed")
         gaupol.gtk.util.connect(self, self, "key-press-event")
-        gaupol.gtk.conf.connect(self, "editor", "font")
+        gaupol.gtk.conf.connect(self, "editor", "custom_font")
         gaupol.gtk.conf.connect(self, "editor", "length_unit")
         gaupol.gtk.conf.connect(self, "editor", "show_lengths_cell")
-        gaupol.gtk.conf.connect(self, "editor", "use_default_font")
+        gaupol.gtk.conf.connect(self, "editor", "use_custom_font")
 
     @gaupol.gtk.util.asserted_return
     def _on_conf_editor_notify_font(self, *args):
         """Apply the new font."""
 
-        assert not gaupol.gtk.conf.editor.use_default_font
+        assert gaupol.gtk.conf.editor.use_custom_font
         for column in self.get_columns():
             renderer = column.get_cell_renderers()[0]
-            renderer.props.font = gaupol.gtk.conf.editor.font
+            renderer.props.font = gaupol.gtk.conf.editor.custom_font
         self.columns_autosize()
 
     @gaupol.gtk.util.asserted_return
@@ -161,7 +162,7 @@ class View(gtk.TreeView):
 
         self.columns_autosize()
 
-    def _on_conf_editor_notify_use_default_font(self, *args):
+    def _on_conf_editor_notify_use_custom_font(self, *args):
         """Apply the new font."""
 
         font = gaupol.gtk.util.get_font()

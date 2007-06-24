@@ -167,7 +167,7 @@ class SpellCheckDialog(GladeDialog):
     def _get_next_page(self):
         """Get the next page to check the spelling in."""
 
-        col = gaupol.gtk.conf.spell_check.col
+        col = gaupol.gtk.conf.spell_check.column
         doc = gaupol.gtk.util.text_column_to_document(col)
         target = gaupol.gtk.conf.spell_check.target
         for page in self.application.get_target_pages(target):
@@ -184,7 +184,7 @@ class SpellCheckDialog(GladeDialog):
         """Initialize the checker or respond close if unsuccessful."""
 
         import enchant.checker
-        language = gaupol.gtk.conf.spell_check.lang
+        language = gaupol.gtk.conf.spell_check.language
         path = os.path.join(self._personal_dir, "%s.dict" % language)
         try: # Respond CLOSE if dictionary cannot be initialized.
             try: # Use a dictionary with a personal word list if possible.
@@ -201,8 +201,8 @@ class SpellCheckDialog(GladeDialog):
     def _init_fonts(self):
         """Initialize widget fonts and text tags."""
 
-        if not gaupol.gtk.conf.editor.use_default_font:
-            font = gaupol.gtk.conf.editor.font
+        if gaupol.gtk.conf.editor.use_custom_font:
+            font = gaupol.gtk.conf.editor.custom_font
             gaupol.gtk.util.set_widget_font(self._entry, font)
             gaupol.gtk.util.set_widget_font(self._text_view, font)
             gaupol.gtk.util.set_widget_font(self._tree_view, font)
@@ -213,7 +213,7 @@ class SpellCheckDialog(GladeDialog):
     def _init_replacements(self):
         """Read misspelled words and their replacements from file."""
 
-        basename = "%s.repl" % gaupol.gtk.conf.spell_check.lang
+        basename = "%s.repl" % gaupol.gtk.conf.spell_check.language
         path = os.path.join(self._personal_dir, basename)
         assert os.path.isfile(path)
         silent = gaupol.gtk.util.silent(IOError, UnicodeError)
@@ -252,15 +252,15 @@ class SpellCheckDialog(GladeDialog):
         """Initialize widget sizes."""
 
         label = gtk.Label("\n".join(["M" * 34] * 4))
-        if not gaupol.gtk.conf.editor.use_default_font:
-            font = gaupol.gtk.conf.editor.font
+        if gaupol.gtk.conf.editor.use_custom_font:
+            font = gaupol.gtk.conf.editor.custom_font
             gaupol.gtk.util.set_label_font(label, font)
         width, height = label.size_request()
         self._text_view.set_size_request(width + 4, height + 7)
 
         label = gtk.Label("M" * 24)
-        if not gaupol.gtk.conf.editor.use_default_font:
-            font = gaupol.gtk.conf.editor.font
+        if gaupol.gtk.conf.editor.use_custom_font:
+            font = gaupol.gtk.conf.editor.custom_font
             gaupol.gtk.util.set_label_font(label, font)
         width = label.size_request()[0]
         self._tree_view.set_size_request(width + 4, -1)
@@ -271,7 +271,7 @@ class SpellCheckDialog(GladeDialog):
         gaupol.gtk.util.makedirs(self._personal_dir)
         self._init_checker()
         self._init_replacements()
-        language = gaupol.gtk.conf.spell_check.lang
+        language = gaupol.gtk.conf.spell_check.language
         name = gaupol.languages.get_long_name(language)
         self._language_label.set_markup("<b>%s</b>" % name)
 
@@ -430,7 +430,7 @@ class SpellCheckDialog(GladeDialog):
     def _show_error_dialog(self, message):
         """Show an error dialog after failing to load dictionary."""
 
-        language = gaupol.gtk.conf.spell_check.lang
+        language = gaupol.gtk.conf.spell_check.language
         name = gaupol.languages.get_long_name(language)
         title = _('Failed to load dictionary for language "%s"') % name
         message = _("%s.") % message
@@ -457,7 +457,7 @@ class SpellCheckDialog(GladeDialog):
         """Write misspelled words and their replacements to file."""
 
         assert self._replacements
-        basename = "%s.repl" % gaupol.gtk.conf.spell_check.lang
+        basename = "%s.repl" % gaupol.gtk.conf.spell_check.language
         path = os.path.join(self._personal_dir, basename)
         if len(self._replacements) > self._max_replacemnts:
             # Discard the *oldest* replacements.

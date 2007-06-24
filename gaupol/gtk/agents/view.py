@@ -43,7 +43,7 @@ class ViewAgent(gaupol.Delegate):
         for col in gaupol.gtk.COLUMN.members:
             if page.view.get_column(col).get_visible():
                 visible_columns.append(col)
-        gaupol.gtk.conf.editor.visible_cols = visible_columns
+        gaupol.gtk.conf.editor.visible_columns = visible_columns
         self.update_gui()
         gaupol.gtk.util.set_cursor_normal(self.window)
 

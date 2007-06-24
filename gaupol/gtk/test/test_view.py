@@ -83,8 +83,8 @@ class TestView(unittest.TestCase):
 
     def test__on_conf_editor_notify_font(self):
 
-        gaupol.gtk.conf.editor.use_default_font = False
-        gaupol.gtk.conf.editor.font = "Serif 12"
+        gaupol.gtk.conf.editor.use_custom_font = True
+        gaupol.gtk.conf.editor.custom_font = "Serif 12"
 
     def test__on_conf_editor_notify_length_unit(self):
 
@@ -98,12 +98,12 @@ class TestView(unittest.TestCase):
         gaupol.gtk.conf.editor.show_lengths_cell = True
         gaupol.gtk.conf.editor.show_lengths_cell = False
 
-    def test__on_conf_editor_notify_use_default_font(self):
+    def test__on_conf_editor_notify_use_custom_font(self):
 
-        gaupol.gtk.conf.editor.use_default_font = True
-        gaupol.gtk.conf.editor.use_default_font = False
-        gaupol.gtk.conf.editor.use_default_font = True
-        gaupol.gtk.conf.editor.use_default_font = False
+        gaupol.gtk.conf.editor.use_custom_font = True
+        gaupol.gtk.conf.editor.use_custom_font = False
+        gaupol.gtk.conf.editor.use_custom_font = True
+        gaupol.gtk.conf.editor.use_custom_font = False
 
     def test__on_cursor_changed(self):
 

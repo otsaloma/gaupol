@@ -94,9 +94,9 @@ class LanguageDialog(GladeDialog):
         store = self._tree_view.get_model()
         selection = self._tree_view.get_selection()
         for i in range(len(store)):
-            if store[i][0] == gaupol.gtk.conf.spell_check.lang:
+            if store[i][0] == gaupol.gtk.conf.spell_check.language:
                 selection.select_path(i)
-        col = gaupol.gtk.conf.spell_check.col
+        col = gaupol.gtk.conf.spell_check.column
         self._main_radio.set_active(col == gaupol.gtk.COLUMN.MAIN_TEXT)
         self._tran_radio.set_active(col == gaupol.gtk.COLUMN.TRAN_TEXT)
         target = gaupol.gtk.conf.spell_check.target
@@ -110,7 +110,7 @@ class LanguageDialog(GladeDialog):
         store, itr = selection.get_selected()
         assert itr is not None
         value = store.get_value(itr, 0)
-        gaupol.gtk.conf.spell_check.lang = value
+        gaupol.gtk.conf.spell_check.language = value
 
     def _populate_store(self, store):
         """Add all available languages to the list store."""
@@ -131,7 +131,7 @@ class LanguageDialog(GladeDialog):
             col = gaupol.gtk.COLUMN.MAIN_TEXT
         elif self._tran_radio.get_active():
             col = gaupol.gtk.COLUMN.TRAN_TEXT
-        gaupol.gtk.conf.spell_check.col = col
+        gaupol.gtk.conf.spell_check.column = col
 
     def _save_target(self):
         """Save the active target."""

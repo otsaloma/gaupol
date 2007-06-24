@@ -53,7 +53,7 @@ def _handle_transitions(config):
 def _translate_nones(config):
     """Translate Nones to a False value of appropriate type."""
 
-    config.translate_none("editor", "font", "")
+    config.translate_none("editor", "custom_font", "")
     config.translate_none("file", "directory", "")
     config.translate_none("file", "encoding", "")
     config.translate_none("preview", "custom_command", "")

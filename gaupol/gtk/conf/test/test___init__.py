@@ -28,21 +28,21 @@ class TestModule(unittest.TestCase):
 
     def test_connect(self):
 
-        gaupol.gtk.conf.connect(self, "editor", "font")
-        gaupol.gtk.conf.editor.font = "Serif 12"
-        gaupol.gtk.conf.disconnect(self, "editor", "font")
+        gaupol.gtk.conf.connect(self, "editor", "custom_font")
+        gaupol.gtk.conf.editor.custom_font = "Serif 12"
+        gaupol.gtk.conf.disconnect(self, "editor", "custom_font")
 
     def test_disconnect(self):
 
-        gaupol.gtk.conf.connect(self, "editor", "font")
-        gaupol.gtk.conf.disconnect(self, "editor", "font")
-        gaupol.gtk.conf.editor.font = "Sans 24"
+        gaupol.gtk.conf.connect(self, "editor", "custom_font")
+        gaupol.gtk.conf.disconnect(self, "editor", "custom_font")
+        gaupol.gtk.conf.editor.custom_font = "Sans 24"
 
     def test_read(self):
 
         gaupol.gtk.conf.read()
         assert gaupol.gtk.conf.general.version == gaupol.__version__
-        assert gaupol.gtk.conf.editor.font == ""
+        assert gaupol.gtk.conf.editor.custom_font == ""
 
     def test_write(self):
 

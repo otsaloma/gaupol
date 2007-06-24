@@ -37,8 +37,8 @@ class TestModule(unittest.TestCase):
     def test_get_font(self):
 
         assert util.get_font() == ""
-        gaupol.gtk.conf.editor.use_default_font = False
-        gaupol.gtk.conf.editor.font = "Serif 12"
+        gaupol.gtk.conf.editor.use_custom_font = True
+        gaupol.gtk.conf.editor.custom_font = "Serif 12"
         assert util.get_font() == "Serif 12"
 
     def test_get_glade_xml(self):
@@ -80,13 +80,13 @@ class TestModule(unittest.TestCase):
 
         util.prepare_text_view(gtk.TextView())
         gaupol.gtk.conf.editor.show_lengths_edit = True
-        gaupol.gtk.conf.editor.use_default_font = True
-        gaupol.gtk.conf.editor.font = ""
+        gaupol.gtk.conf.editor.use_custom_font = False
+        gaupol.gtk.conf.editor.custom_font = ""
 
         util.prepare_text_view(gtk.TextView())
         gaupol.gtk.conf.editor.show_lengths_edit = False
-        gaupol.gtk.conf.editor.use_default_font = False
-        gaupol.gtk.conf.editor.font = "Serif 12"
+        gaupol.gtk.conf.editor.use_custom_font = True
+        gaupol.gtk.conf.editor.custom_font = "Serif 12"
 
     def test_raise_default(self):
 

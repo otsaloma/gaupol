@@ -77,6 +77,6 @@ class TestModule(unittest.TestCase):
     def test_get_lengths__em(self):
 
         gaupol.gtk.conf.editor.length_unit = gaupol.gtk.LENGTH_UNIT.EM
-        gaupol.gtk.conf.editor.use_default_font = True
+        gaupol.gtk.conf.editor.use_custom_font = False
         lengths = ruler.get_lengths("MMM\n<i>i</i>")
         assert lengths == [3, 0]

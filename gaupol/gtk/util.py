@@ -53,8 +53,8 @@ def document_to_text_column(doc):
 def get_font():
     """Get custom font or blank string."""
 
-    if not gaupol.gtk.conf.editor.use_default_font:
-        return gaupol.gtk.conf.editor.font
+    if gaupol.gtk.conf.editor.use_custom_font:
+        return gaupol.gtk.conf.editor.custom_font
     return ""
 
 def get_glade_xml(name, root=None, directory=None):
@@ -118,7 +118,7 @@ def prepare_text_view(text_view):
     update_margin()
 
     update_font = lambda *args: set_widget_font(text_view, get_font())
-    gaupol.gtk.conf.editor.connect("notify::use_default_font", update_font)
+    gaupol.gtk.conf.editor.connect("notify::use_custom_font", update_font)
     gaupol.gtk.conf.editor.connect("notify::font", update_font)
     update_font()
 

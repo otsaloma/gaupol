@@ -1,3 +1,25 @@
+2007-06-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/conf.spec:
+	* gaupol/gtk/actions/position.py:
+	* gaupol/gtk/actions/spellcheck.py:
+	* gaupol/gtk/actions/view.py:
+	* gaupol/gtk/agents/open.py:
+	* gaupol/gtk/agents/preview.py:
+	* gaupol/gtk/agents/view.py:
+	* gaupol/gtk/conf/__init__.py:
+	* gaupol/gtk/dialogs/duration.py:
+	* gaupol/gtk/dialogs/file/open.py:
+	* gaupol/gtk/dialogs/language.py:
+	* gaupol/gtk/dialogs/preferences.py:
+	* gaupol/gtk/dialogs/search.py:
+	* gaupol/gtk/dialogs/spellcheck.py:
+	* gaupol/gtk/dialogs/textedit.py:
+	* gaupol/gtk/dialogs/transform.py:
+	* gaupol/gtk/util.py:
+	* gaupol/gtk/view.py:
+	Rename several configuration variables.
+
 2007-06-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/actions/action.py:

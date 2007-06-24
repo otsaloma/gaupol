@@ -54,7 +54,7 @@ class _EditorPage(gaupol.Delegate):
 
         context = gtk.Label().get_pango_context()
         font_desc = context.get_font_description()
-        font = gaupol.gtk.conf.editor.font
+        font = gaupol.gtk.conf.editor.custom_font
         custom_font_desc = pango.FontDescription(font)
         font_desc.merge(custom_font_desc, True)
         return font_desc.to_string()
@@ -78,9 +78,9 @@ class _EditorPage(gaupol.Delegate):
     def _init_values(self):
         """Initialize default values for widgets."""
 
-        use_default = gaupol.gtk.conf.editor.use_default_font
-        self._default_font_check.set_active(use_default)
-        self._font_hbox.set_sensitive(not use_default)
+        use_custom = gaupol.gtk.conf.editor.use_custom_font
+        self._default_font_check.set_active(not use_custom)
+        self._font_hbox.set_sensitive(use_custom)
         self._font_button.set_font_name(self._get_custom_font())
 
         cell = gaupol.gtk.conf.editor.show_lengths_cell
@@ -93,14 +93,14 @@ class _EditorPage(gaupol.Delegate):
     def _on_default_font_check_toggled(self, check_button):
         """Save the default font usage."""
 
-        use_default = check_button.get_active()
-        gaupol.gtk.conf.editor.use_default_font = use_default
-        self._font_hbox.set_sensitive(not use_default)
+        use_custom = not check_button.get_active()
+        gaupol.gtk.conf.editor.use_custom_font = use_custom
+        self._font_hbox.set_sensitive(use_custom)
 
     def _on_font_button_font_set(self, font_button):
         """Save the custom font."""
 
-        gaupol.gtk.conf.editor.font = font_button.get_font_name()
+        gaupol.gtk.conf.editor.custom_font = font_button.get_font_name()
 
     def _on_length_cell_check_toggled(self, check_button):
         """Save the line length showage on cells."""
@@ -304,7 +304,7 @@ class _PreviewPage(gaupol.Delegate):
         """Initialize default values for widgets."""
 
         self._offset_spin.set_value(gaupol.gtk.conf.preview.offset)
-        if gaupol.gtk.conf.preview.use_predefined:
+        if not gaupol.gtk.conf.preview.use_custom:
             player = gaupol.gtk.conf.preview.video_player
             self._app_combo.set_active(player)
             self._command_entry.set_text(player.command)
@@ -320,12 +320,12 @@ class _PreviewPage(gaupol.Delegate):
 
         index = combo_box.get_active()
         if index in gaupol.gtk.VIDEO_PLAYER.members:
-            gaupol.gtk.conf.preview.use_predefined = True
+            gaupol.gtk.conf.preview.use_custom = False
             player = gaupol.gtk.VIDEO_PLAYER.members[index]
             gaupol.gtk.conf.preview.video_player = player
             self._command_entry.set_text(player.command)
             return self._command_entry.set_editable(False)
-        gaupol.gtk.conf.preview.use_predefined = False
+        gaupol.gtk.conf.preview.use_custom = True
         command = gaupol.gtk.conf.preview.custom_command
         self._command_entry.set_text(command)
         self._command_entry.set_editable(True)
@@ -334,7 +334,7 @@ class _PreviewPage(gaupol.Delegate):
     def _on_command_entry_changed(self, entry):
         """Save the custom command."""
 
-        assert not gaupol.gtk.conf.preview.use_predefined
+        assert gaupol.gtk.conf.preview.use_custom
         gaupol.gtk.conf.preview.custom_command = entry.get_text()
 
     def _on_offset_spin_value_changed(self, spin_button):
