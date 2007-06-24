@@ -35,7 +35,6 @@ class TestDurationAdjustDialog(unittest.TestCase):
         self.application = self.get_application()
         args = (self.application.window, self.application)
         self.dialog = duration.DurationAdjustDialog(*args)
-        self.dialog.show()
 
     def test__adjust_durations(self):
 

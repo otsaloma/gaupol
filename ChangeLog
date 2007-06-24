@@ -1,5 +1,12 @@
 2007-06-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/conf/container.py:
+	* gaupol/gtk/conf/__init__.py:
+	* gaupol/gtk/unittest/case.py:
+	Try to make the gtk unittests a little bit faster.
+
+2007-06-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/dialogs/search.py:
 	* gaupol/gtk/util.py:
 	Fix more configuration variable renames.

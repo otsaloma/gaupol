@@ -44,6 +44,16 @@ class TestModule(unittest.TestCase):
         assert gaupol.gtk.conf.general.version == gaupol.__version__
         assert gaupol.gtk.conf.editor.custom_font == ""
 
+    def test_read_defaults(self):
+
+        gaupol.gtk.conf.read_defaults()
+
+    def test_restore_defaults(self):
+
+        gaupol.gtk.conf.editor.custom_font = "Serif"
+        gaupol.gtk.conf.restore_defaults()
+        assert gaupol.gtk.conf.editor.custom_font == ""
+
     def test_write(self):
 
         gaupol.gtk.conf.read()

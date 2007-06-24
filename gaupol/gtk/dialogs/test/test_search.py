@@ -47,7 +47,6 @@ class TestSearchDialog(unittest.TestCase):
         assert not hasattr(self, "application")
         self.application = self.get_application()
         self.dialog = search.SearchDialog(self.application)
-        self.dialog.show()
         respond = lambda *args: gtk.RESPONSE_DELETE_EVENT
         self.dialog.flash_dialog = respond
         self.dialog.run_dialog = respond
@@ -97,6 +96,7 @@ class TestSearchDialog(unittest.TestCase):
     def test__on_show(self):
 
         self.dialog.show()
+        self.dialog.hide()
 
     def test__on_text_view_focus_out_event(self):
 

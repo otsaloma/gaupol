@@ -62,7 +62,6 @@ class TestFrameShiftDialog(_Test_PositionShiftDialog):
         self.application = self.get_application()
         args = (self.application.window, self.application)
         self.dialog = shift.FrameShiftDialog(*args)
-        self.dialog.show()
 
     def test__get_amount(self):
 
@@ -76,7 +75,6 @@ class TestTimeShiftDialog(_Test_PositionShiftDialog):
         self.application = self.get_application()
         args = (self.application.window, self.application)
         self.dialog = shift.TimeShiftDialog(*args)
-        self.dialog.show()
 
     def test__get_amount(self):
 

@@ -34,10 +34,10 @@ class TestCase(unittest.TestCase):
 
         if not hasattr(TestCase, "application"):
             TestCase.application = gaupol.gtk.Application()
+            TestCase.application.window.hide()
         application = TestCase.application
         while application.pages:
             application.close_page(application.pages[0], False)
-        application.add_new_page(self.get_page())
         application.add_new_page(self.get_page())
         return application
 
@@ -52,6 +52,4 @@ class TestCase(unittest.TestCase):
     def teardown_method(self, method):
         """Remove state set for executing tests in method."""
 
-        while gtk.events_pending():
-            gtk.main_iteration(block=False)
-        gaupol.gtk.conf.read()
+        gaupol.gtk.conf.restore_defaults()

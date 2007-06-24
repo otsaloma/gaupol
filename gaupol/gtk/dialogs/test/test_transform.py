@@ -54,7 +54,6 @@ class TestFrameTransformDialog(_Test_PositionTransformDialog):
         self.application = self.get_application()
         args = (self.application.window, self.application)
         self.dialog = transform.FrameTransformDialog(*args)
-        self.dialog.show()
 
     def test__get_first_point(self):
 
@@ -86,7 +85,6 @@ class TestTimeTransformDialog(_Test_PositionTransformDialog):
         self.application = self.get_application()
         args = (self.application.window, self.application)
         self.dialog = transform.TimeTransformDialog(*args)
-        self.dialog.show()
 
     def test__get_first_point(self):
 

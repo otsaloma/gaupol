@@ -19,6 +19,8 @@
 """Reading, writing and storing all configurations.
 
 Module variables:
+ * _config: Instance of Config used
+ * _defaults: Instance of Config with default configurations
  * config_file: Path to the configuration file
 
 Importing this module will read the default configurations from the spec file.
@@ -111,6 +113,29 @@ def read():
             globals()[key].update(value)
             continue
         globals()[key] = Container(value)
+
+def read_defaults_ensure(value):
+    assert "_defaults" in globals()
+
+@gaupol.util.contractual
+def read_defaults():
+    """Read the default values of configuration variables."""
+
+    spec_file = os.path.join(gaupol.DATA_DIR, "conf.spec")
+    defaults = Config(None, spec_file)
+    defaults = _handle_transitions(defaults)
+    _translate_nones(defaults)
+    defaults["general"]["version"] = gaupol.__version__
+    globals()["_defaults"] = defaults
+
+def restore_defaults():
+    """Restore the values of configuration variables to their defaults."""
+
+    if not "_defaults" in globals():
+        read_defaults()
+    defaults = globals()["_defaults"]
+    for key, value in defaults.items():
+        globals()[key].update(value)
 
 def write_ensure(value):
     assert "_config" in globals()

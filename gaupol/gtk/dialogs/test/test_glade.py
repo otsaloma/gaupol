@@ -28,8 +28,8 @@ class TestGladeDialog(unittest.TestCase):
 
     def test___getattr__(self):
 
-        self.dialog.hide()
         self.dialog.show()
+        self.dialog.hide()
 
     def test___init__(self):
 

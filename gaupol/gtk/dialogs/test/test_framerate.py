@@ -35,7 +35,6 @@ class TestFramerateConversionDialog(unittest.TestCase):
         self.application = self.get_application()
         args = (self.application.window, self.application)
         self.dialog = framerate.FramerateConvertDialog(*args)
-        self.dialog.show()
 
     def test__convert_framerates(self):
 

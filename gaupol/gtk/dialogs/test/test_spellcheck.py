@@ -45,7 +45,6 @@ class TestSpellCheckDialog(unittest.TestCase):
                 page.project.set_text(i, gaupol.gtk.DOCUMENT.TRAN, text)
         parent = self.application.window
         self.dialog = spellcheck.SpellCheckDialog(parent, self.application)
-        self.dialog.show()
 
     def test__on_edit_button_clicked(self):
 
