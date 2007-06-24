@@ -31,7 +31,7 @@ mode = MODE(default="TIME")
 show_lengths_cell = boolean(default=True)
 show_lengths_edit = boolean(default=True)
 undo_levels = integer(min=0, default=50)
-use_default_font = boolean(default=True)
+use_custom_font = boolean(default=True)
 visible_columns = COLUMN_list(default=list("NUMBER", "START", "END", "DURATION", "MAIN_TEXT"))
 
 [encoding]

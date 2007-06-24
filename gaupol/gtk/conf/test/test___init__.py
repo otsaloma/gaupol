@@ -22,7 +22,7 @@ from gaupol.gtk import unittest
 
 class TestModule(unittest.TestCase):
 
-    def on_conf_editor_notify_font(self, obj, value):
+    def on_conf_editor_notify_custom_font(self, obj, value):
 
         assert value == "Serif 12"
 

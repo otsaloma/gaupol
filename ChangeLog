@@ -1,6 +1,12 @@
 2007-06-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/conf.spec:
+	* gaupol/gtk/view.py:
+	Fix configuration variable renames missed in previous commit.
+
+2007-06-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/conf.spec:
 	* gaupol/gtk/actions/position.py:
 	* gaupol/gtk/actions/spellcheck.py:
 	* gaupol/gtk/actions/view.py:

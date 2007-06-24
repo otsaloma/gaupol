@@ -141,7 +141,7 @@ class View(gtk.TreeView):
         gaupol.gtk.conf.connect(self, "editor", "use_custom_font")
 
     @gaupol.gtk.util.asserted_return
-    def _on_conf_editor_notify_font(self, *args):
+    def _on_conf_editor_notify_custom_font(self, *args):
         """Apply the new font."""
 
         assert gaupol.gtk.conf.editor.use_custom_font

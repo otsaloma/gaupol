@@ -81,7 +81,7 @@ class TestView(unittest.TestCase):
                 subtitle.main_text,
                 subtitle.tran_text,])
 
-    def test__on_conf_editor_notify_font(self):
+    def test__on_conf_editor_notify_custom_font(self):
 
         gaupol.gtk.conf.editor.use_custom_font = True
         gaupol.gtk.conf.editor.custom_font = "Serif 12"
