@@ -209,7 +209,7 @@ class SearchDialog(GladeDialog):
 
         callback = lambda *args: self._update_search_targets()
         self.application.connect("page-added", callback)
-        gaupol.gtk.conf.search.connect("notify::cols", callback)
+        gaupol.gtk.conf.search.connect("notify::columns", callback)
         gaupol.gtk.conf.search.connect("notify::target", callback)
         self._update_search_targets()
 

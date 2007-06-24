@@ -119,7 +119,7 @@ def prepare_text_view(text_view):
 
     update_font = lambda *args: set_widget_font(text_view, get_font())
     gaupol.gtk.conf.editor.connect("notify::use_custom_font", update_font)
-    gaupol.gtk.conf.editor.connect("notify::font", update_font)
+    gaupol.gtk.conf.editor.connect("notify::custom_font", update_font)
     update_font()
 
 def raise_default(expression):
