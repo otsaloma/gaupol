@@ -56,6 +56,6 @@ class Container(gaupol.Observable):
     def update(self, root):
         """Update values from a new root dictionary."""
 
-        self.__root = root.copy()
+        self.__root = root
         for name, value in self.__root.items():
             setattr(self, name, value)

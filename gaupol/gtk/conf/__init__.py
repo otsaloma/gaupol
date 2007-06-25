@@ -133,7 +133,7 @@ def restore_defaults():
 
     if not "_defaults" in globals():
         read_defaults()
-    defaults = globals()["_defaults"]
+    defaults = globals()["_defaults"].copy()
     for key, value in defaults.items():
         globals()[key].update(value)
 
