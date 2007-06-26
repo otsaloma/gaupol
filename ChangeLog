@@ -1,5 +1,10 @@
 2007-06-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* setup.py:
+	Fix OSError with initial change of working directory.
+
+2007-06-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/__init__.py:
 	* gaupol/gtk/main.py:
 	Move move stuff from main to __init__.

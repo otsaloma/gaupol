@@ -38,7 +38,7 @@ from distutils.command.sdist import sdist
 from distutils.core import setup
 from distutils.log import info
 
-os.chdir(os.path.dirname(__file__))
+os.chdir(os.path.dirname(__file__) or ".")
 sys.path.insert(0, os.path.dirname(__file__))
 from gaupol import __version__
 
