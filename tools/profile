@@ -10,8 +10,8 @@ import os
 import pstats
 import sys
 
-FILE_DIR = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.join(FILE_DIR, ".."))
+file_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(file_dir, ".."))
 
 # Unless planning on lazy loading modules,
 # we're not interested in profiling imports.
@@ -54,7 +54,7 @@ import webbrowser
 
 from gaupol.gtk import main
 cProfile.run("main.main(sys.argv[1:])", "gaupol.prof")
-STATS = pstats.Stats("gaupol.prof")
-STATS.sort_stats("cumulative")
-STATS.print_stats("gaupol", .2)
+stats = pstats.Stats("gaupol.prof")
+stats.sort_stats("cumulative")
+stats.print_stats("gaupol", .2)
 os.remove("gaupol.prof")

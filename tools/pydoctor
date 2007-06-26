@@ -1,7 +1,6 @@
-#!/bin/bash
+#!/bin/sh
 
 # Generate API documentation with pydoctor.
-# Usage: pydoctor [browse]
 # Requires highlight and pydoctor.
 # http://www.andre-simon.de/
 # http://codespeak.net/~mwh/pydoctor/
@@ -9,24 +8,24 @@
 cd $(dirname "$0")/..
 DOC_DIR=doc/api
 DATA_DIR=$(dirname "$0")/data
-PATHS=$(find gaupol -type f -name "*.py" | grep -v "/test/")
+PY_FILES=$(find gaupol -type f -name "*.py" | grep -v "/test/")
 rm -rf $DOC_DIR
 
-for path in $PATHS; do
-    echo $DOC_DIR/$path.html
-    dest=$DOC_DIR/$path.html
-    mkdir --parents $(dirname $dest)
+for PY_FILE in $PY_FILES; do
+    echo $DOC_DIR/$PY_FILE.html
+    DESTINATION=$DOC_DIR/$PY_FILE.html
+    mkdir --parents $(dirname $DESTINATION)
     highlight \
-        --output=$dest \
+        --output=$DESTINATION \
         --xhtml \
         --style-outfile=code.css \
         --line-number-width=4 \
         --linenumbers \
         --encoding=ascii \
         --anchors \
-        $path
-    sed -i "s|^\(<a id=.\)l_|\1L|" $dest
-    cp $DATA_DIR/code.css $(dirname $dest)
+        $PY_FILE
+    sed -i "s|^\(<a id=.\)l_|\1L|" $DESTINATION
+    cp $DATA_DIR/code.css $(dirname $DESTINATION)
 done
 
 pydoctor \

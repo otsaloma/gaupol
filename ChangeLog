@@ -1,3 +1,29 @@
+2007-06-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/debug-dialog.glade:
+	* data/glade/open-dialog.glade:
+	* data/glade/preferences-dialog.glade:
+	* data/glade/save-dialog.glade:
+	* data/glade/spellcheck-dialog.glade:
+	Set translatability of gtk-* labels to false.
+	Split preview command fields label in the preferences dialog to
+	translatable and non-translatable labels.
+
+	* setup.py:
+	Remove no longer existing icons from data_files.
+
+	* tools/add-changelog:
+	* tools/generate-tests:
+	* tools/hide:
+	* tools/list-glade:
+	* tools/nose-run:
+	* tools/pydoctor:
+	* tools/pylint:
+	Get rid of bashisms and use /bin/sh.
+
+	* tools/translate:
+	Extract strings directly from Glade XML files.
+
 2007-06-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/conf/container.py:

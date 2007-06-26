@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # List widgets with custom names in Glade XML file.
 # Usage: list-glade FILE

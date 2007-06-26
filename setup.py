@@ -55,8 +55,8 @@ class Clean(clean):
 
         clean.run(self)
 
-        desktop = os.path.join("data", "gaupol.desktop")
-        for path in ("MANIFEST", desktop):
+        desktop_file = os.path.join("data", "gaupol.desktop")
+        for path in ("MANIFEST", desktop_file):
             if os.path.isfile(path):
                 info("removing '%s'" % path)
                 os.remove(path)
@@ -83,8 +83,8 @@ class InstallData(install_data):
 
         mo_files = []
         for po_file in glob.glob("po/*.po"):
-            lang = os.path.basename(po_file[:-3])
-            mo_dir = os.path.join("locale", lang, "LC_MESSAGES")
+            locale = os.path.basename(po_file[:-3])
+            mo_dir = os.path.join("locale", locale, "LC_MESSAGES")
             mo_file = os.path.join(mo_dir, "gaupol.mo")
             dest_dir = os.path.join("share", mo_dir)
             if not os.path.isdir(mo_dir):
@@ -179,21 +179,20 @@ class SDistGna(sdist):
             fobj.write("%s\n" % __version__)
 
 
-PACKAGES = []
+packages = []
 for (root, dirs, files) in os.walk("gaupol"):
     if os.path.isfile(os.path.join(root, "__init__.py")):
         path = root.replace(os.sep, ".")
         path = path[path.find("gaupol"):]
         if not path.endswith(".test"):
-            PACKAGES.append(path)
-PACKAGES.remove("gaupol.unittest")
-PACKAGES.remove("gaupol.gtk.unittest")
+            packages.append(path)
+packages.remove("gaupol.unittest")
+packages.remove("gaupol.gtk.unittest")
 
-DATA_FILES = [
+data_files = [
     ("share/gaupol", ["data/conf.spec", "data/gtkrc", "data/ui.xml"]),
     ("share/gaupol/glade", glob.glob("data/glade/*.glade")),
     ("share/gaupol/headers", glob.glob("data/headers/*.txt")),
-    ("share/gaupol/icons", glob.glob("data/icons/*.png")),
     ("share/icons/hicolor/16x16/apps", ["data/icons/16x16/gaupol.png"]),
     ("share/icons/hicolor/22x22/apps", ["data/icons/22x22/gaupol.png"]),
     ("share/icons/hicolor/24x24/apps", ["data/icons/24x24/gaupol.png"]),
@@ -208,12 +207,12 @@ setup(
     platforms=["Platform Independent"],
     author="Osmo Salomaa",
     author_email="otsaloma@cc.hut.fi",
-    url="http://home.gna.org/gaupol",
+    url="http://home.gna.org/gaupol/",
     description="Subtitle editor",
     license="GPL",
-    packages=PACKAGES,
+    packages=packages,
     scripts=["bin/gaupol"],
-    data_files=DATA_FILES,
+    data_files=data_files,
     cmdclass={
         "clean": Clean,
         "install_data": InstallData,

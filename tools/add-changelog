@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Add a ChangeLog entry.
 # Usage: add-changelog [PATH...]
@@ -10,10 +10,10 @@ svn status -q "$@" | egrep "\w" || exit
 PATHS=$(svn status -q "$@" | sed "s|^.* ||" | egrep -v "test_" | sort)
 
 mv ChangeLog ChangeLog.old
-echo -e "$DATE  $NAME  <$EMAIL>\n" > ChangeLog
+printf "$DATE  $NAME  <$EMAIL>\n\n" > ChangeLog
 for path in $PATHS; do
     echo "Adding $path..."
-    echo -e "\t* $path:" >> ChangeLog
+    printf "\t* $path:\n" >> ChangeLog
 done
 echo >> ChangeLog
 cat ChangeLog.old >> ChangeLog

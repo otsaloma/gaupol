@@ -12,20 +12,19 @@ Set some useful variables.
 
 Search for unfinished code.
 
-    PATHS=$(find . -name "*.py" -print)
-    egrep -A 2 -B 2 -n "(FIX|TODO):" $PATHS | grep -v configobj
+    PY_FILES=$(find . -name "*.py" -print)
+    egrep -A 2 -B 2 -n "(FIX|TODO):" $PY_FILES | grep -v configobj
 
 Run (all) automatic checks.
 
     tools/pylint gaupol
     tools/pylint $(file tools/* | grep python | sed "s|:.*$||")
     py.test --tb=no gaupol
-    [tools/nose-run gaupol]
 
 Make final edits to files and commit changes.
 
     $EDITOR lib/gaupol/__init__.py
-    tools/generate-api-docs
+    tools/pydoctor
     tools/translate -t
     $EDITOR NEWS
     tools/add-changelog
@@ -42,12 +41,12 @@ Build and upload tarballs.
     ./setup.py clean
     ./setup.py sdist_gna --formats bztar,gztar
     cd dist
-    $EDITOR $BRANCH/*.news
-    $EDITOR $BRANCH/*.changes
+    $EDITOR $BRANCH/gaupol-$VERSION.news
+    $EDITOR $BRANCH/gaupol-$VERSION.changes
     rsync -avr --delete --rsh="ssh" $BRANCH $DOWNLOAD_ROOT/$BRANCH/
     scp latest.txt $DOWNLOAD_ROOT
 
-Edit homepage.
+Edit website.
 
 Send announcement mail.
 
