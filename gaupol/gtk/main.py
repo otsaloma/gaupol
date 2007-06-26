@@ -22,9 +22,12 @@
 
 
 import atexit
+import gaupol.gtk
+import optparse
 import os
 import re
 import sys
+_ = gaupol.i18n._
 
 
 def _check_dependencies():
@@ -60,10 +63,46 @@ def _check_dependencies():
         print "Universal Encoding Detector not found;"
         print "character encoding auto-detection not possible."
 
+def _init_application(opts, args):
+    """Initialize application and open files given as arguments."""
+
+    application = gaupol.gtk.Application()
+    jump_row = None
+    re_jump = re.compile(r"\+\d*")
+    for arg in (x for x in args if re_jump.match(x) is not None):
+        jump_row = (max(0, int(arg[1:]) - 1) if arg[1:] else -1)
+        args.remove(arg)
+    paths = [os.path.abspath(x) for x in args]
+    application.open_main_files(paths, opts.encoding)
+    page = application.get_current_page()
+    if (page is not None) and opts.translation_file:
+        path = os.path.abspath(opts.translation_file)
+        application.open_translation_file(path, opts.encoding)
+    if (page is not None) and opts.video_file:
+        path = os.path.abspath(opts.video_file)
+        page.project.video_path = path
+    if (page is not None) and (jump_row is not None):
+        page.view.set_focus(jump_row)
+
+def _init_configuration(path):
+    """Initialize the configuration module from saved values."""
+
+    default = os.path.join(gaupol.PROFILE_DIR, "gaupol.gtk.conf")
+    path = (default if path is None else path)
+    gaupol.gtk.conf.config_file = os.path.abspath(path)
+    gaupol.gtk.conf.read()
+    atexit.register(gaupol.gtk.conf.write)
+
+def _init_debugging(debug):
+    """Initialize run-time checks and traceback handling."""
+
+    from gaupol.gtk import dialogs
+    sys.excepthook = dialogs.debug.show
+    gaupol.check_contracts = debug
+
 def _list_encodings():
     """List all available character encodings."""
 
-    import gaupol
     encodings = gaupol.encodings.get_valid_encodings()
     encodings = [x[0] for x in encodings]
     if gaupol.util.chardet_available():
@@ -86,9 +125,6 @@ def _move_eggs():
 
 def _parse_args(args):
     """Parse and return options and arguments."""
-
-    import optparse
-    from gaupol.i18n import _
 
     parser = optparse.OptionParser(
         formatter=optparse.IndentedHelpFormatter(2, 42),
@@ -153,59 +189,10 @@ def _parse_args(args):
 
     return parser.parse_args(args)
 
-def _prepare_config_file(path):
-    """Set the configuration file to use."""
-
-    import gaupol.gtk
-    default = os.path.join(gaupol.PROFILE_DIR, "gaupol.gtk.conf")
-    path = (default if path is None else path)
-    gaupol.gtk.conf.config_file = os.path.abspath(path)
-    gaupol.gtk.conf.read()
-    atexit.register(gaupol.gtk.conf.write)
-
-def _prepare_debug(debug):
-    """Enable or disable run-time checks."""
-
-    import gaupol
-    gaupol.check_contracts = debug
-
-def _prepare_ui():
-    """Prepare user interface properties."""
-
-    import gobject
-    gobject.threads_init()
-    from gaupol.gtk.dialogs import debug
-    sys.excepthook = debug.show
-
 def _show_version():
     """Show the version number."""
 
-    import gaupol
     print "gaupol %s" % gaupol.__version__
-
-def _start(opts, args):
-    """Start application and open files given as arguments."""
-
-    import gaupol.gtk
-    application = gaupol.gtk.Application()
-    jump_row = None
-    re_jump = re.compile(r"\+\d*")
-    for arg in (x for x in args if re_jump.match(x) is not None):
-        jump_row = (max(0, int(arg[1:]) - 1) if arg[1:] else -1)
-        args.remove(arg)
-    paths = [os.path.abspath(x) for x in args]
-    application.open_main_files(paths, opts.encoding)
-    page = application.get_current_page()
-    if (page is not None) and opts.translation_file:
-        path = os.path.abspath(opts.translation_file)
-        application.open_translation_file(path, opts.encoding)
-    if (page is not None) and opts.video_file:
-        path = os.path.abspath(opts.video_file)
-        page.project.video_path = path
-    if (page is not None) and (jump_row is not None):
-        page.view.set_focus(jump_row)
-    import gtk
-    gtk.main()
 
 def main(args):
     """Parse arguments and start application."""
@@ -217,7 +204,8 @@ def main(args):
         return _list_encodings()
     if opts.version:
         return _show_version()
-    _prepare_debug(opts.debug)
-    _prepare_config_file(opts.config_file)
-    _prepare_ui()
-    _start(opts, args)
+    _init_debugging(opts.debug)
+    _init_configuration(opts.config_file)
+    _init_application(opts, args)
+    import gtk
+    gtk.main()

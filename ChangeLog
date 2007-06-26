@@ -1,5 +1,12 @@
 2007-06-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/__init__.py:
+	* gaupol/gtk/main.py:
+	Move move stuff from main to __init__.
+	Rearrange imports in main.
+
+2007-06-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/debug-dialog.glade:
 	* data/glade/open-dialog.glade:
 	* data/glade/preferences-dialog.glade:

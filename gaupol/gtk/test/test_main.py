@@ -34,10 +34,6 @@ class TestModule(unittest.TestCase):
 
         main._move_eggs()
 
-    def test_prepare_ui(self):
-
-        main._prepare_ui()
-
     def test_show_version(self):
 
         main._show_version()

@@ -34,6 +34,7 @@ different themes. Let the EXTRA constant very vaguely account for that.
 
 
 import gaupol
+import gobject
 import gtk.glade
 import inspect
 import os
@@ -43,6 +44,7 @@ gaupol.__dict__["gtk"] = module
 gtk.rc_add_default_file(os.path.join(gaupol.DATA_DIR, "gtkrc"))
 gtk.glade.bindtextdomain("gaupol", gaupol.LOCALE_DIR)
 gtk.glade.textdomain("gaupol")
+gobject.threads_init()
 
 
 EXTRA = 36
