@@ -1,15 +1,6 @@
 MPsub
 =====
 
-  Extension:
-
-    ".sub"
-
-  Notes:
-
-    No tags.
-
-  Sources:
-
-    http://www.mplayerhq.hu/DOCS/HTML/en/subosd.html#mpsub
-    http://www.mplayerhq.hu/DOCS/tech/mpsub.sub
+Tags: None
+Extension: .sub
+Source: http://www.mplayerhq.hu/DOCS/tech/mpsub.sub

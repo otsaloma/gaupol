@@ -1,80 +1,80 @@
-Legend:
-  W = Work in progress
-  D = Done
-  P = Postponed
-  ? = Questionable
+Gaupol 0.8
+==========
 
-Plans for 0.8.0
-===============
+Changes:
+ [D] Configuration file backend and syntax changed
+ [D] Fixed numerous bugs with find and replace
+ [D] Notify of invalid regular expressions when searching (#6690)
+ [D] Regular expression searches are now always MULTILINE and DOTALL
+ [D] Search notifications moved to main window's statusbar
+ [D] Better (more preserving) handling of blank lines as well as
+     leading and trailing spaces when opening files
+ [D] Position shift amount now always defaults to zero
+ [D] Fixed sensitivity of "Adjust Positions..." menu item (#7255)
+ [D] Show confirmation dialog when closing file that no longer exists
+ [D] Splitting a subtitle no longer duplicates texts
+ [D] Use exact fraction form framerates in calculations and rounded
+     integers in the user interface
+ [D] Subtitle file and video file paths in preview commands are now
+     automatically escaped and quoted
+ [D] Line lengths shown on text elements
+ [D] Fixed a bug in the time entry validation
+ [D] Migrated to gtk.RecentManager and gtk.RecentChooser
+ [D] Added a menu for recent translation files
+ [D] Added "Text" menu to replace "Format", "Search" and part of
+     "Edit" menus
+ [D] Reorderable tabs
+ [D] Added more informative tooltips on tabs
+ [D] Simplified and changed several keycombos
+ [D] Subtitle number search now starts only on numeric key-presses
+ [D] Fixed cropped close button images on tabs
+ [D] Faster list updates when inserting and removing subtitles
+ [D] Spin buttons as editors in frame column cells
+ [D] Allow negative value in time and frame cells
+ [D] Greater contrast in the icon
+ [D] Added --config-file, --debug, --encoding, --list-encodings,
+     --translation-file,  --video-file and +[NUM] options
+ [D] Applied GNOME Goal #3: Remove "Application" category from
+     .desktop files
+ [D] Fixed translatable strings with multiple arguments
+ [D] Added a manual page
+ [D] SRTX support dropped
+ [D] Uninstallation feature removed
+ [D] Source code package structure changed
 
-  * Finder
-      - ^$
-      - . -> ...
-
-  New:
-    [W] Text capitalization assistant
-
-  Changes:
-    [D] Simplified and changed several keycombos
-    [D] Subtitle number search now starts only on numeric key-presses
-    [D] Splitting subtitle no longer duplicates texts
-    [D] Fixed issue of disappearing tags when converting case
-    [D] Find and replace notifications moved to main window's statusbar
-    [D] Find and replace now notifies of wrapping
-    [D] Toolbar style is now configurable in ~/.gaupol/gaupol.gtk.conf
-    [D] Fixed "Replace all" replacing patterns twice
-    [D] Fixed "Replace all" hanging when replacement matches pattern
-
-  Updated translations:
-    [D] Polish (pl)
+Dependencies:
+ [D] Python dependency raised to 2.5 or greater
+ [D] PyGTK dependency raised to 2.10 or greater
 
 
-Plans after 0.8.0
-=================
+Gaupol 0.9
+==========
 
-  * Text correction assistants
-     - Common error correction
-     - Line reformatting
-     - Hearing impaired subtitle removal
+ * Fix regular expression grouping in gaupol.scripts
+
+New:
+ [ ] Text correction assistant
+ [W] Capitalization correction
+ [W] Line split/join
 
 
-Unscheduled
-===========
+Gaupol 1.0
+==========
 
-  * Windows installer
-      - http://svn.berlios.de/svnroot/repos/griffith/griffith
-      - http://trac.gajim.org/wiki/DevWindows
-      - http://www.async.com.br/faq/pygtk/index.py?req=show&file=faq21.005.htp
+ * Common error correction
+ * Hearing impaired subtitle removal
 
-  * Support for SAMI subtitle file format
-      - http://msdn.microsoft.com/library/en-us/dnacc/html/atg_samiarticle.asp
-      - Multilanguage
-      - Paragraph tags
 
-  * PyGTK 2.10
-      - http://live.gnome.org/PyGTK/WhatsNew210
-      - GNOME Goal #1: Move from popt to GOption
-          o http://live.gnome.org/GnomeGoals/PoptGOption
-          o http://bugzilla.gnome.org/show_bug.cgi?id=163645
-          o http://bugzilla.gnome.org/attachment.cgi?id=63515&action=view
-      - Recent files support
-      - GtkAssistant
-      - GtkCellRendererSpin
-      - TreeView grid lines
-      - Notebook tab reordering
+Unscheduled Possibilities
+=========================
 
-  * Python 2.5
-      - http://www.python.org/download/releases/2.5/
-      - http://docs.python.org/dev/whatsnew/whatsnew25.html
-          o 1 PEP 308: Conditional Expressions
-          o 3 PEP 314: Metadata for Python Software Packages v1.1
-          o 6 PEP 341: Unified try/except/finally
-          o 7 PEP 342: New Generator Features
-          o 8 PEP 343: The 'with' statement
-          o 12 Other Language Changes
-
-  * Built-in GStreamer preview
-      - http://gstreamer.freedesktop.org/modules/gst-python.html
-      - http://pygstdocs.berlios.de/
-      - http://jokosher.org
-      - http://pitivi.sourceforge.net/
+ * PyGTK 2.12
+    - gtk.AboutDialog: "name" replaced with "program-name"
+    - gtk.Tooltips: New API that allows complex tooltips
+ * Interactive search
+ * gedit-style message area
+ * Document hidden settings (where?)
+ * Windows installer
+ * Plugin system (see gedit)
+ * Multiple windows and tab drag-dropping between them
+ * Built-in GStreamer preview

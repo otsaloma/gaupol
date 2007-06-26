@@ -1,0 +1,39 @@
+#!/bin/sh
+
+# Generate API documentation with pydoctor.
+# Requires highlight and pydoctor.
+# http://www.andre-simon.de/
+# http://codespeak.net/~mwh/pydoctor/
+
+cd $(dirname "$0")/..
+DOC_DIR=doc/api
+DATA_DIR=$(dirname "$0")/data
+PY_FILES=$(find gaupol -type f -name "*.py" | grep -v "/test/")
+rm -rf $DOC_DIR
+
+for PY_FILE in $PY_FILES; do
+    echo $DOC_DIR/$PY_FILE.html
+    DESTINATION=$DOC_DIR/$PY_FILE.html
+    mkdir --parents $(dirname $DESTINATION)
+    highlight \
+        --output=$DESTINATION \
+        --xhtml \
+        --style-outfile=code.css \
+        --line-number-width=4 \
+        --linenumbers \
+        --encoding=ascii \
+        --anchors \
+        $PY_FILE
+    sed -i "s|^\(<a id=.\)l_|\1L|" $DESTINATION
+    cp $DATA_DIR/code.css $(dirname $DESTINATION)
+done
+
+pydoctor \
+    --make-html \
+    --add-package=gaupol \
+    --html-output=$DOC_DIR \
+    --html-viewsource-base=gaupol \
+    --project-name=Gaupol \
+    --project-url=http://home.gna.org/gaupol/
+sed -i "s|gaupol/gaupol|gaupol|" $DOC_DIR/gaupol.html
+cp $DATA_DIR/apidocs.css $DOC_DIR

@@ -1,15 +1,16 @@
+include bin/*
+include doc/gaupol.1
+include po/*
+recursive-include data *
+recursive-include gaupol *.py
+recursive-include tools *
 include AUTHORS
 include ChangeLog
 include COPYING
-include gaupol
+include CREDITS
 include INSTALL
 include MANIFEST.in
 include NEWS
 include README
-include setup.cfg
 include setup.py
 include TODO
-recursive-include data *
-recursive-include lib *.py
-recursive-include po *
-recursive-include tools *

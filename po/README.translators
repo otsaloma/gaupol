@@ -2,118 +2,55 @@ Translating Gaupol
 ==================
 
 Contents
-
-  1. Introduction
-  2. Creating a new .pot file
-  3. Creating a new .po file
-  4. Updating an existing .po file
-  5. Compiling .mo files
-  6. Testing your translation
-  7. Submitting your translation
-  8. References
+ 1. Introduction
+ 2. Managing translation files
+ 3. Testing your translation
+ 4. Submitting your translation
 
 
 1. Introduction
 ===============
 
-  To avoid doing pointless work, first check the latest list of existing
-  translations at the subversion trunk:
+To avoid doing pointless work, first check the latest list of existing
+translations at the subversion trunk
 
-     http://svn.gna.org/viewcvs/gaupol/trunk/po/
+    http://svn.gna.org/viewcvs/gaupol/trunk/po/
 
-  Gaupol uses the standard gettext system for translations. A script called
-  "translate" (in the "tools" directory) has been written to perform all the
-  necessary file manipulations for the translation files. "translate" relies on
-  the following executables:
+Gaupol uses the standard gettext system for translations.  A .pot file
+for the latest version is provided in the "po" directory.  When run
+from the source directory, Gaupol loads translations from the "locale"
+directory (which does not exist by default).
 
-    * intltool-extract
-    * msgfmt
-    * msginit
-    * msgmerge
-    * xgettext
-
-  To print a help message on using "translate", run command
-
-    tools/translate -h
-
-  The process done by "translate" is modelled after PyGTK FAQ 22.2[1].
+A script called "translate" (in the "tools" directory) has been
+written to perform all the necessary file manipulations for the
+translation files.  "translate" requires packages intltool and
+gettext.
 
 
-2. Creating a new .pot file
+2. Managing Files
+=================
+
+You can use "translate" to create, update and compile translation
+files.  For details on the commands, see
+
+    tools/translate --help
+
+Created .po files are placed in the "po" directory and compiled .mo
+files in the "locale" directory.
+
+
+3. Testing Your Translation
 ===========================
 
-  A .pot file for the latest version is provided in the "po" directory.
-  However, if for some reason, you need to (re)create it, run command
-
-    tools/translate -t
-
-
-3. Creating a new .po file
-==========================
-
-  To create a new .po file, run command
-
-    tools/translate -p LANG
-
-  where LANG is the language code in format "xx" or "xx_YY". The resulting .po
-  file is placed in the "po" directory.
+After you have compiled a .mo file, the translation is available to
+Gaupol.  To start Gaupol with a translation in your current locale,
+run command "bin/gaupol".  To start Gaupol without a translation, run
+command "LANG=C bin/gaupol".
 
 
-4. Updating an existing .po file
-================================
-
-  To update an existing .po file with new strings that have been added since
-  the last update, run command
-
-    tools/translate -u LANG
-
-  To update all .po files, substitute LANG with "all".
-
-
-5. Compiling .mo files
-======================
-
-  To compile a .mo file based on the .po file you have translated, run command
-
-    tools/translate -m LANG
-
-  To compile all languages, substitute LANG with "all". The resulting .mo
-  file is placed in the "locale" directory according to standard locale
-  directory hierarchy.
-
-  The compilation will perform checks on header, format and domain of the .po
-  file. Correct any errors encountered.
-
-
-6. Testing your translation
-===========================
-
-  After you have compiled a .mo file, the translation is available to Gaupol.
-
-  To start Gaupol with a translation in your current locale, run command
-
-    ./gaupol
-
-  To start gaupol without a translation, run command
-
-    ./gaupol -t
-
-
-7. Submitting your translation
+4. Submitting Your Translation
 ==============================
 
-  All .po files should be UTF-8 encoded. If not already, convert to UTF-8
-
-    mv xx.po xx.po.bak
-    msgconv -t UTF-8 xx.po.bak -o xx.po
-
-  When you are done, send the .po file by e-mail to otsaloma@cc.hut.fi or post
-  it as a bug on the bug tracker
-
-    http://gna.org/bugs/?func=additem&group=gaupol
-
-
-8. References
-=============
-
-  [1] http://www.async.com.br/faq/pygtk/index.py?req=show&file=faq22.002.htp
+All .po files should be UTF-8 encoded.  If not already, use msgconv to
+convert the .po file to UTF-8.  When you are done, send the .po file
+by email to Osmo Salomaa <otsaloma@cc.hut.fi>.

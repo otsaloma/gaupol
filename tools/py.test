@@ -1,7 +1,0 @@
-#!/bin/bash
-
-# Run tests with py.test.
-# Usage: See py.test --help.
-
-export PYTHONPATH=$(dirname "$0")/../lib:$PYTHONPATH
-py.test $@

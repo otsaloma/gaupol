@@ -2,46 +2,42 @@
 
 """Print version numbers of dependencies."""
 
-print 'Python:',
+# pylint: disable-msg=W0404
+
+print "Python:",
 import sys
-print '%d.%d.%d' % sys.version_info[:3]
+print "%d.%d.%d" % sys.version_info[:3]
 
-print 'GTK:',
 try:
+    print "GTK:",
     import gtk
-    print '%d.%d.%d' % gtk.gtk_version
+    print "%d.%d.%d" % gtk.gtk_version
 except ImportError:
-    print 'Not found'
+    print "N/A"
 
-print 'PyGTK:',
 try:
+    print "PyGTK:",
     import gtk
-    print '%d.%d.%d' % gtk.pygtk_version
+    print "%d.%d.%d" % gtk.pygtk_version
 except ImportError:
-    print 'Not found'
+    print "N/A"
 
-print 'PyEnchant:',
 try:
+    import pkg_resources
+    pkg_resources.require("pyenchant")
+except Exception:
+    pass
+
+try:
+    print "PyEnchant:",
     import enchant
     print enchant.__version__
-except ImportError:
-    try:
-        import pkg_resources
-        try:
-            pkg_resources.require('pyenchant')
-        except pkg_resources.DistributionNotFound:
-            print 'Not found'
-        else:
-            import enchant
-            print enchant.__version__
-    except ImportError:
-        print 'Not found'
-except enchant.Error, message:
-    print message
+except Exception:
+    print "N/A"
 
-print 'Universal Encoding Detector:',
 try:
+    print "Universal Encoding Detector:",
     import chardet
     print chardet.__version__
 except ImportError:
-    print 'Not found.'
+    print "N/A"

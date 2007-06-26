@@ -1,17 +1,5 @@
 SubRip
 ======
 
-  Extension:
-
-    ".srt"
-
-  Tags:
-
-    <b>bold</b>
-    <i>italic</i>
-    <u>underline</u>
-
-  Notes:
-
-    No documentation available, above list of tags is a generally accepted
-    assumption.
+Tags: <b></b>, <i></i>, <u></u>
+Extension: .srt

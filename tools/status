@@ -1,9 +1,0 @@
-#!/bin/bash
-
-# Show subversion status.
-
-cd $(dirname $0)/..
-svn status \
-    | egrep -v \.pyc$ \
-    | egrep -v \.hidden$ \
-    | sort

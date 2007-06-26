@@ -1,13 +1,12 @@
 Installation
 ============
 
-  The installation process requires that you have Python and intltool
-  installed. Depending on your distro's Python packaging you may also need a
-  package called python-dev or python-devel. For dependencies required to run
-  Gaupol, see the "README" file.
+The installation process requires that you have Python and intltool
+installed.  Depending on your distro's Python packaging you may also
+need a package called python-dev or python-devel.  For dependencies
+required to run Gaupol, see the file "README".
 
-  Gaupol uses the standard Python distutils for installation. To install
-  Gaupol, run command
+To install, run command
 
     ./setup.py install [--prefix=...]
 
@@ -15,12 +14,10 @@ Installation
 Uninstallation
 ==============
 
-  To be able to uninstall, two files are needed: "setup.py" and
-  "installed-files.log", which was generated during installation. If you
-  accidentally deleted the log file, just install the same version again to the
-  same prefix and an appropriate log file will be generated.
+There is no uninstallation feature provided.
 
-  The uninstallation command is not a part of Python distutils, but instead an
-  unstable extension. To uninstall, run command
-
-    ./setup.py uninstall
+To be able to uninstall files manually, you can use the --record=...
+option with the install command to get a list of installed files.
+Advanced users can try one of the bdist commands to setup.py and via
+that create a package that can be installed and uninstalled with one's
+distro's package management tools.

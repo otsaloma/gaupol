@@ -1,11 +1,12 @@
 Subtitle File Format Specifications
 ===================================
 
-  This directory contains notes, samples and specifications of all supported
-  subtitle file formats. In the cases where official specifications are not
-  available, the notes file contains assumptions and observations that our
-  implementation is based on. All samples have geen generated with Gaupol and
-  are therefore victims of any possible incorrect implementation.
+This directory contains notes, samples and specifications of all
+supported subtitle file formats.  In the cases where official
+specifications are not available, the notes file contains assumptions
+and observations that our implementation is based on.  All samples
+have geen generated with Gaupol and are therefore victims of any
+possible incorrect implementation.
 
-  See the file COPYING for license information specific to the contents of this
-  directory.
+See the file "COPYING" for license information specific to the
+contents of this directory.

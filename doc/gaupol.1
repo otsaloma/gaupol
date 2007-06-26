@@ -1,0 +1,43 @@
+.TH GAUPOL 1 "June 25, 2007"
+.SH NAME
+gaupol \- editor for text\-based subtitle files
+.SH SYNOPSIS
+.B gaupol
+[\fIOPTION...\fR] [\fIFILE...\fR] [+[\fINUM\fR]]
+.SH DESCRIPTION
+.PP
+.B gaupol
+is an editor for text-based subtitle files.  It supports multiple subtitle file
+formats and provides means of correcting texts and timing subtitles to match
+video.
+.SH OPTIONS
+.TP
+\fB\+[NUM]\fR
+Go to subtitle number NUM in the opened file.  If NUM is missing go to the last
+subtitle.
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Show command line options.
+.TP
+\fB\-c\fR, \fB\-\-config\-file\fR=\fIFILE\fR
+Set the configuration file to use instead of the default.
+.TP
+\fB\-d\fR, \fB\-\-debug\fR
+Enable additional run-time checks to help in finding and fixing errors.
+.TP
+\fB\-e\fR, \fB\-\-encoding\fR=\fIENCODING\fR
+Set the character encoding to use for opening files.
+.TP
+\fB\-\-list\-encodings\fR
+List possible character encodings to use with \fB\-\-encoding\fR.
+.TP
+\fB\-t\fR, \fB\-\-translation\-file\fR=\fIFILE\fR
+Open translation file.
+.TP
+\fB\-\-version\fR
+Show version number.
+.TP
+\fB\-v\fR, \fB\-\-video\-file\fR=\fIFILE\fR
+Select video file.
+.SH AUTHOR
+Written by Osmo Salomaa <otsaloma@cc.hut.fi>.

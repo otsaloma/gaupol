@@ -1,157 +1,61 @@
 Release Checklist
 =================
 
-Contents
+Set some useful variables.
 
-  0. Preparations
-  1. Create branch
-  2. Make sure Gaupol works
-  3. Bump version number
-  4. Tag subversion
-  5. Prepare files for release
-  6. Spread the word
+    export VERSION=0.8
+    export BRANCH=0.8
+    export USERNAME=osmo
+    export SVN_ROOT=svn+ssh://$USERNAME@svn.gna.org/svn/gaupol
+    export SVN_SOURCE=$SVN_ROOT/trunk
+    export DOWNLOAD_ROOT=$USERNAME@download.gna.org:/upload/gaupol
 
+Search for unfinished code.
 
-0. Preparations
-===============
+    PY_FILES=$(find . -name "*.py" -print)
+    egrep -A 2 -B 2 -n "(FIX|TODO):" $PY_FILES | grep -v configobj
 
-  * Set version number variables
+Run (all) automatic checks.
 
-      $ export x=0 && export y=7 && export z=0
+    tools/pylint gaupol
+    tools/pylint $(file tools/* | grep python | sed "s|:.*$||")
+    py.test --tb=no gaupol
 
+Make final edits to files and commit changes.
 
-1. Create branch (only for x.y.1 bug-fix releases)
-==================================================
+    $EDITOR lib/gaupol/__init__.py
+    tools/pydoctor
+    tools/translate -t
+    $EDITOR NEWS
+    tools/add-changelog
+    $EDITOR ChangeLog
+    tools/commit
 
-  * Create a brach from tagged x.y.0 if it doesn't already exist
+Tag source.
 
-      $ svn copy svn+ssh://osmo@svn.gna.org/svn/gaupol/tags/$x.$y.0   \
-                 svn+ssh://osmo@svn.gna.org/svn/gaupol/branches/$x.$y \
-                 -m "Created branch $x.$y."
+    svn copy $SVN_SOURCE $SVN_ROOT/tags/$VERSION \
+        -m "Tagged release $VERSION."
 
-  * Check out branch
+Build and upload tarballs.
 
-      $ svn co svn+ssh://osmo@svn.gna.org/svn/gaupol/branches/$x.$y
+    ./setup.py clean
+    ./setup.py sdist_gna --formats bztar,gztar
+    cd dist
+    $EDITOR $BRANCH/gaupol-$VERSION.news
+    $EDITOR $BRANCH/gaupol-$VERSION.changes
+    rsync -avr --delete --rsh="ssh" $BRANCH $DOWNLOAD_ROOT/$BRANCH/
+    scp latest.txt $DOWNLOAD_ROOT
 
-  * Bring all bug-fixes from trunk to branch.
+Edit website.
 
-  * Add entry to ChangeLog and commit changes to branch.
+Send announcement mail.
 
+    gaupol-announcements@gna.org
+    http://www.mail-archive.com/gaupol-announcements@gna.org
 
-2. Make sure Gaupol works
-=========================
+Update web sites.
 
-  * Check the "TODO" file for anything undone for this release.
-
-  * Search the source code for tags with regular expression "\s*#\s*[A-Z]{3,}:"
-    and fix anything that needs to be fixed for this release.
-
-  * Check all code
-
-      $ tools/pylint lib/gaupol
-
-  * Run all tests
-
-      $ tools/py.test -xs lib
-
-  * Make sure all files are in the subversion repository
-
-      $ tools/status
-
-  * Run Gaupol from the source directory and check that it works
-
-  * Install Gaupol and check that it works
-
-      $ export PYTHONPATH=/tmp/sandbox/lib/python2.4/site-packages:$PYTHONPATH
-      $ ./setup.py install --prefix=/tmp/sandbox
-      $ /tmp/sandbox/bin/gaupol
-
-  * Check the installation directory /tmp/sandbox. Make sure all files are in
-    right places.
-
-  * Uninstall Gaupol and make sure it works
-
-      $ ./setup.py uninstall
-      $ ./setup.py clean
-
-
-3. Bump version number
-======================
-
-  * Bump version number
-
-      lib/gaupol/__init__.py
-
-  * Update .pot file
-
-      $ tools/translate -t
-
-  * Move items from TODO to NEWS
-
-  * Add ChangeLog entries noting that a release took place
-
-  * Commit changes to subversion.
-
-  * For bug-fix releases, repeat the above for trunk.
-
-
-4. Tag subversion
-=================
-
-  * For major or minor releases
-
-      $ svn copy svn+ssh://osmo@svn.gna.org/svn/gaupol/trunk         \
-                 svn+ssh://osmo@svn.gna.org/svn/gaupol/tags/$x.$y.$z \
-                 -m "Tagged release $x.$y.$z."
-
-  * For bug-fix releases
-
-      $ svn copy svn+ssh://osmo@svn.gna.org/svn/gaupol/branches/$x.$y \
-                 svn+ssh://osmo@svn.gna.org/svn/gaupol/tags/$x.$y.$z
-                 -m "Tagged release $x.$y.$z."
-
-
-5. Prepare files for release
-============================
-
-  * Build tarballs
-
-      $ ./setup.py clean
-      $ ./setup.py sdist_gna --formats bztar,gztar
-
-  * Cut news and and changes files to relevant parts
-
-  * Move tarballs into release directory.
-
-  * Sync release directory x.y with Gna! download area
-
-      $ rsync --delete -avr --rsh="ssh" . \
-              osmo@download.gna.org:/upload/gaupol/$x.$y/
-
-  * Upload latest.txt
-
-      $ scp latest.txt osmo@download.gna.org:/upload/gaupol/
-
-
-6. Spread the word
-==================
-
-  * Edit homepage
-
-      index.html
-      download.html
-      features.html
-
-  * Send e-mail to gaupol-announcements mailing list
-
-      gaupol-announcements@gna.org
-      http://mail.gna.org/public/gaupol-announcements
-
-  * Post a news item at the project page
-
-      http://gna.org/news/?group=gaupol
-
-  * Update third-party sites
-
-      http://www.gnomefiles.com/devs
-      http://freshmeat.net/projects/gaupol
+    http://gna.org/news/?group=gaupol
+    http://www.gnomefiles.com/devs
+    http://freshmeat.net/projects/gaupol
+    http://users.tkk.fi/~otsaloma/gaupol/doc/

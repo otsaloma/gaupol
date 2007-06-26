@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# Generate a unittest code template.
+# Usage: generate-tests FILE
+
+MODULE=$(basename ${1%%.py})
+echo $1
+UNITTEST_MODULE="gaupol"
+if [[ -n $(echo "$1" | grep "gaupol/gtk") ]]; then
+    UNITTEST_MODULE="gaupol.gtk"
+fi
+
+IMPORTS="\n\n\n\
+from $UNITTEST_MODULE import unittest\n\
+from .. import $MODULE"
+BASE="unittest.TestCase"
+SETUP_METHOD="\n\
+    def setup_method(self, method):\n\n\
+        pass"
+
+cat "$1" \
+    | egrep "^(class |\s*def |#)" \
+    | egrep -v "_(require|ensure)\(" \
+    | sed "s|^\(# .*Boston.*\)$|\1$IMPORTS|" \
+    | sed "s|^\(\s*\)def \(\w*\).*$|\n\1def test_\2(self):\n\n\1    pass|" \
+    | sed "s|^class \(\w*\).*$|\n\nclass Test\1($BASE):\n$SETUP_METHOD|"

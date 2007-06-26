@@ -1,0 +1,200 @@
+*
+{
+  margin: 0;
+  padding: 0;
+}
+
+body
+{
+  background-color: white;
+  color: #111111;
+  font-family: sans-serif;
+  font-size: small;
+  padding: 12px;
+}
+
+a
+{
+  background-color: inherit;
+  color: #3465A4;
+  text-decoration: none;
+}
+
+a:hover
+{
+  border-bottom: 1px solid #3465A4;
+}
+
+p, pre
+{
+  line-height: 1.4em;
+  padding-bottom: 12px;
+}
+
+td pre
+{
+  padding-bottom: 0;
+}
+
+ol, ul
+{
+  line-height: 1.8em;
+  padding: 0 0 12px 36px;
+}
+
+table.children
+{
+  border: 1px solid #888a85;
+  margin: 0 0 12px 0;
+  width: 100%;
+}
+
+table.children td
+{
+  padding: 6px 12px;
+}
+
+.undocumented
+{
+  display: none;
+}
+
+h1
+{
+  background: none !important;
+  font-size: 2.0em;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+h2
+{
+  background: none !important;
+  font-size: 1.6em;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+#part
+{
+}
+
+.toplevel
+{
+  background-color: #EEEEEC;
+  border: 1px solid #111111;
+  color: inherit;
+  margin-top: 12px;
+  padding: 12px;
+}
+
+div.toplevel p
+{
+}
+
+.function
+{
+  background-color: #FCEEB5;
+  color: inherit;
+}
+
+.method
+{
+  background-color: #EFF8BA;
+  color: inherit;
+}
+
+.attribute
+{
+  background: red;
+  color: inherit;
+}
+
+.basefunction
+{
+  background: red;
+  color: inherit;
+}
+
+.basemethod
+{
+  background-color: #EFF8BA;
+  color: inherit;
+}
+
+.class
+{
+  background-color: #D4ECDD;
+  color: inherit;
+}
+
+.interface
+{
+  background: red;
+  color: inherit;
+}
+
+.module
+{
+  background-color: #EDF0FF;
+  color: inherit;
+}
+
+.package
+{
+  background-color: #FFF5F4;
+  color: inherit;
+}
+
+div.function
+{
+  background-color: inherit;
+  color: #111111;
+  padding-bottom: 12px;
+}
+
+div.function pre
+{
+  padding: 0;
+}
+
+div.functionHeader
+{
+  font-weight: bold;
+  padding-bottom: 6px;
+}
+
+div.functionHeader a
+{
+  background-color: inherit;
+  border: none;
+  color: #2E3436;
+  font-weight: bold;
+}
+
+div.functionHeader a.functionSourceLink
+{
+  background-color: inherit;
+  color: #3465A4;
+  font-weight: normal;
+}
+
+div.functionHeader a.functionSourceLink:hover
+{
+  border-bottom: 1px solid #3465A4;
+}
+
+.functionBody
+{
+  background-color: #EEEEEC;
+  border: 1px solid #888A85;
+  color: inherit;
+  padding: 12px;
+}
+
+.interfaceinfo
+{
+  border-bottom: 1px solid #888A85;
+  margin-bottom: 6px;
+  padding-bottom: 6px;
+}

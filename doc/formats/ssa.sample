@@ -16,17 +16,17 @@ Timer: 100.0000
 
 [V4 Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, TertiaryColour, BackColour, Bold, Italic, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, AlphaLevel, Encoding
-Style: Default,Arial,18,&Hffffff,&H00ffff,&H000000,&H000000,0,0,1,2,2,2,30,30,10,0,0
+Style: Default,Sans,18,&HFFFFFF,&HFFFF00,&H000000,&H000000,0,0,1,2,2,2,30,30,30,0,0
 
 [Events]
 Format: Marked, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-Dialogue: 0,0:00:31.08,0:00:32.71,Default,,0000,0000,0000,,I'm gonna get those fuckers!
-Dialogue: 0,0:00:33.38,0:00:38.01,Default,,0000,0000,0000,,This ain't the Bronx, right?\nI'm gonna get the motherfuckers!
-Dialogue: 0,0:00:38.65,0:00:42.02,Default,,0000,0000,0000,,I'm gonna corner him,\nthe motherfucker!
-Dialogue: 0,0:00:42.22,0:00:46.06,Default,,0000,0000,0000,,First one we see, straight up,\nwe whack the fucker!
-Dialogue: 0,0:00:46.23,0:00:47.59,Default,,0000,0000,0000,,Kneecap the fucker!
-Dialogue: 0,0:00:47.76,0:00:49.99,Default,,0000,0000,0000,,People just stood and watched.
-Dialogue: 0,0:00:50.27,0:00:52.70,Default,,0000,0000,0000,,- He stared at me.\n- They're fuckin' losers.
-Dialogue: 0,0:00:53.04,0:00:54.97,Default,,0000,0000,0000,,The twins were there.
-Dialogue: 0,0:00:55.14,0:00:57.97,Default,,0000,0000,0000,,I swear on the Koran\nI'll kill 'em both.
-Dialogue: 0,0:00:58.41,0:01:00.57,Default,,0000,0000,0000,,Who are these motherfuckers?
+Dialogue: 0,0:00:59.19,0:01:03.20,Default,,0000,0000,0000,,I always wanted to leave my country\nand go somewhere else.
+Dialogue: 0,0:01:04.58,0:01:07.01,Default,,0000,0000,0000,,I always wanted to come to France.
+Dialogue: 0,0:01:07.28,0:01:09.44,Default,,0000,0000,0000,,So, one day when I was 17, I left.
+Dialogue: 0,0:01:10.72,0:01:12.72,Default,,0000,0000,0000,,{\i1}There I was in Paris.
+Dialogue: 0,0:01:15.71,0:01:19.86,Default,,0000,0000,0000,,{\i1}Since I was a bit naive,
+Dialogue: 0,0:01:20.57,0:01:24.68,Default,,0000,0000,0000,,{\i1}everyone seemed beautiful\nand fabulous.
+Dialogue: 0,0:01:25.12,0:01:29.34,Default,,0000,0000,0000,,{\i1}I couldn't tell cruelty from kindness.
+Dialogue: 0,0:01:29.55,0:01:33.83,Default,,0000,0000,0000,,{\i1}For me, people were\nthe way they were.
+Dialogue: 0,0:01:34.24,0:01:37.82,Default,,0000,0000,0000,,{\i1}You just worked with them\nor talked with them.
+Dialogue: 0,0:01:38.76,0:01:42.11,Default,,0000,0000,0000,,{\i1}Obviously, it was a big shock.

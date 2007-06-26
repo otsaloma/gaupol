@@ -1,35 +1,20 @@
-#!/usr/bin/env python
+#!/bin/sh
 
-"""Add a ChangeLog entry."""
+# Add a ChangeLog entry.
+# Usage: add-changelog [PATH...]
+# Requires environment variables $NAME and $EMAIL.
 
-import os
-import time
+cd $(dirname "$0")/.. || exit
+DATE=$(date --utc +%Y-%m-%d) || exit
+svn status -q "$@" | egrep "\w" || exit
+PATHS=$(svn status -q "$@" | sed "s|^.* ||" | egrep -v "test_" | sort)
 
-TOOL_DIR   = os.path.dirname(os.path.abspath(__file__))
-SOURCE_DIR = os.path.join(TOOL_DIR, '..')
-
-NAME  = 'Osmo Salomaa'
-EMAIL = 'otsaloma@cc.hut.fi'
-DATE  = time.strftime('%Y-%m-%d')
-
-os.chdir(SOURCE_DIR)
-fobj = os.popen('svn status -q')
-output = fobj.read()
-fobj.close()
-if not output:
-    raise SystemExit('No files changed.')
-files = sorted(list(x[2:].strip() for x in output.split('\n')))
-while '' in files:
-    files.remove('')
-
-data = '%s  %s  <%s>\n\n' % (DATE, NAME, EMAIL)
-for path in files:
-    print 'Adding %s...' % path
-    data += '\t* %s:\n' % path
-data += '\n'
-fobj = file('ChangeLog', 'r')
-data += fobj.read()
-fobj.close()
-fobj = file('ChangeLog', 'w')
-fobj.write(data)
-fobj.close()
+mv ChangeLog ChangeLog.old
+printf "$DATE  $NAME  <$EMAIL>\n\n" > ChangeLog
+for path in $PATHS; do
+    echo "Adding $path..."
+    printf "\t* $path:\n" >> ChangeLog
+done
+echo >> ChangeLog
+cat ChangeLog.old >> ChangeLog
+rm ChangeLog.old

@@ -1,3 +1,15 @@
+Gaupol 0.7.1
+============
+
+  Changes:
+    * Fixed cell renderers to work with GTK and PyGTK 2.10
+    * Fixed MicroDVD tag conversion errors (Bug #6938)
+    * Fixed issue of disappearing tags when converting case
+
+  Updated translations:
+    * Polish (pl)
+
+
 Gaupol 0.7.0
 ============
 

@@ -1,26 +1,21 @@
-#!/usr/bin/env python
+#!/bin/sh
 
-"""
-Check code with PyLint and view HTML output.
+# Check code with pylint.
+# Usage: See pylint --help.
 
-Usage: See pylint --help.
-"""
-
-import os
-import sys
-import tempfile
-
-TOOL_DIR = os.path.dirname(os.path.abspath(__file__))
-LIB_DIR  = os.path.join(TOOL_DIR, '..', 'lib')
-os.environ['PYTHONPATH'] = LIB_DIR + ':' + os.environ['PYTHONPATH']
-sys.path.insert(0, LIB_DIR)
-
-from gaupol.base.util import wwwlib
-report = os.path.join(tempfile.gettempdir(), 'gaupol.pylint')
-fobj = os.popen('pylint %s' % ' '.join(sys.argv[1:]))
-output = fobj.read()
-fobj.close()
-fobj = open(report, 'w')
-fobj.write(output)
-fobj.close()
-wwwlib.browse_url(report)
+pylint --rcfile=$(dirname "$0")/data/pylintrc $@ \
+\
+    | egrep -v "Instance of 'ConstantMember' has no '.+?' member" \
+    | egrep -v "Instance of 'ConstantSection' has no '.+?s' member" \
+    | egrep -v "Module 'gaupol.gtk..?conf' has no '.+?' member" \
+    | egrep -v "No name '.+?' in module '.+?\.test\.?'" \
+    | egrep -v "Undefined variable 'fobj'" \
+    | egrep -v "functools.partial is not callable" \
+\
+    | sed "s/\*\+ Module \(.*\)$/<\1>/" \
+    | sed "s/>$/>\n</" \
+    | sed "/<$/{N;/<\n./D}" \
+    | sed "/>$/{N;/>\n</D}" \
+    | sed "s/[<>]$//" \
+    | egrep -v "^$" \
+    | sed "s/^</\n\xE2\x97\x8F /"

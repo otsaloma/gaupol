@@ -1,7 +1,2289 @@
-2007-01-21  Osmo Salomaa  <otsaloma@cc.hut.fi>
+2007-06-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
-	* lib/gaupol/gtk/delegate/guiinit.py:
-	  Fixed segfault.
+	* setup.py:
+	Fix OSError with initial change of working directory.
+
+2007-06-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/__init__.py:
+	* gaupol/gtk/main.py:
+	Move move stuff from main to __init__.
+	Rearrange imports in main.
+
+2007-06-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/debug-dialog.glade:
+	* data/glade/open-dialog.glade:
+	* data/glade/preferences-dialog.glade:
+	* data/glade/save-dialog.glade:
+	* data/glade/spellcheck-dialog.glade:
+	Set translatability of gtk-* labels to false.
+	Split preview command fields label in the preferences dialog to
+	translatable and non-translatable labels.
+
+	* setup.py:
+	Remove no longer existing icons from data_files.
+
+	* tools/add-changelog:
+	* tools/generate-tests:
+	* tools/hide:
+	* tools/list-glade:
+	* tools/nose-run:
+	* tools/pydoctor:
+	* tools/pylint:
+	Get rid of bashisms and use /bin/sh.
+
+	* tools/translate:
+	Extract strings directly from Glade XML files.
+
+2007-06-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/conf/container.py:
+	* gaupol/gtk/conf/__init__.py:
+	Copy defaults dictionary in __init__.restore_defaults instead
+	of Container.update in order to save correct configuration.
+
+2007-06-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/conf/container.py:
+	* gaupol/gtk/conf/__init__.py:
+	* gaupol/gtk/unittest/case.py:
+	Try to make the gtk unittests a little bit faster.
+
+2007-06-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/dialogs/search.py:
+	* gaupol/gtk/util.py:
+	Fix more configuration variable renames.
+
+2007-06-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/conf.spec:
+	* gaupol/gtk/view.py:
+	Fix configuration variable renames missed in previous commit.
+
+2007-06-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/conf.spec:
+	* gaupol/gtk/actions/position.py:
+	* gaupol/gtk/actions/spellcheck.py:
+	* gaupol/gtk/actions/view.py:
+	* gaupol/gtk/agents/open.py:
+	* gaupol/gtk/agents/preview.py:
+	* gaupol/gtk/agents/view.py:
+	* gaupol/gtk/conf/__init__.py:
+	* gaupol/gtk/dialogs/duration.py:
+	* gaupol/gtk/dialogs/file/open.py:
+	* gaupol/gtk/dialogs/language.py:
+	* gaupol/gtk/dialogs/preferences.py:
+	* gaupol/gtk/dialogs/search.py:
+	* gaupol/gtk/dialogs/spellcheck.py:
+	* gaupol/gtk/dialogs/textedit.py:
+	* gaupol/gtk/dialogs/transform.py:
+	* gaupol/gtk/util.py:
+	* gaupol/gtk/view.py:
+	Rename several configuration variables.
+
+2007-06-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/actions/action.py:
+	* gaupol/gtk/actions/format.py:
+	* gaupol/gtk/actions/__init__.py:
+	* gaupol/gtk/actions/menu.py:
+	* gaupol/gtk/actions/view.py:
+	Fix all unfinished parts marked with "FIX:".
+
+2007-06-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/__init__.py:
+	* gaupol/gtk/main.py:
+	Move stuff from main to __init__ and clean up code.
+
+2007-06-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/duration-dialog.glade:
+	* data/glade/framerate-dialog.glade:
+	* data/glade/shift-dialog.glade:
+	* data/glade/transform-dialog.glade:
+	* gaupol/agents/position.py:
+	* gaupol/gtk/agents/edit.py:
+	* gaupol/gtk/agents/__init__.py:
+	* gaupol/gtk/agents/position.py:
+	* gaupol/gtk/agents/util.py:
+	* gaupol/gtk/dialogs/duration.py:
+	* gaupol/gtk/dialogs/framerate.py:
+	* gaupol/gtk/dialogs/__init__.py:
+	* gaupol/gtk/dialogs/shift.py:
+	* gaupol/gtk/dialogs/transform.py:
+	Add contracts and clean up code.
+
+2007-06-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/spellcheck-dialog.glade:
+	Redesign the whole dialog.
+
+	* gaupol/gtk/agents/__init__.py:
+	* gaupol/gtk/agents/spellcheck.py:
+	* gaupol/gtk/dialogs/__init__.py:
+	* gaupol/gtk/dialogs/spellcheck.py:
+	Add contracts and clean up code.
+
+	* gaupol/gtk/dialogs/search.py (_set_text):
+	Fix scrolling to a mark of the match.
+
+2007-06-19  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/liner.py (_split_on_clauses):
+	Check for a variance (actually std/mean) too great in line lengths if
+	text contains three or more lines.
+
+2007-06-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/search-dialog.glade:
+	* data/ui.xml:
+	* gaupol/agents/search.py:
+	* gaupol/finder.py:
+	* gaupol/gtk/agents/__init__.py:
+	* gaupol/gtk/agents/search.py:
+	* gaupol/gtk/agents/util.py:
+	* gaupol/gtk/dialogs/__init__.py:
+	* gaupol/gtk/dialogs/search.py:
+	* gaupol/parser.py:
+	Add contracts and clean up code.
+
+2007-06-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/agents/__init__.py:
+	* gaupol/gtk/agents/menu.py:
+	* gaupol/gtk/agents/open.py:
+	* gaupol/gtk/agents/util.py:
+	* gaupol/gtk/application.py:
+	Add contracts and clean up code.
+
+2007-06-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/conf.spec:
+	* gaupol/gtk/dialogs/file/open.py:
+	* gaupol/gtk/dialogs/file/video.py:
+	Do not save open_dialog.size since it doesn't work.
+
+2007-06-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/agents/__init__.py:
+	* gaupol/gtk/agents/preview.py:
+	Clean up code.
+
+2007-06-15  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/agents/format.py:
+	* gaupol/gtk/agents/__init__.py:
+	Clean up code.
+
+2007-06-15  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/conf.spec:
+	* data/glade/header-dialog.glade:
+	* data/glade/insert-dialog.glade:
+	* data/glade/preferences-dialog.glade:
+	* gaupol/base/mutables.py:
+	* gaupol/const.py:
+	* gaupol/gtk/actions/edit.py:
+	* gaupol/gtk/actions/format.py:
+	* gaupol/gtk/agents/edit.py:
+	* gaupol/gtk/agents/__init__.py:
+	* gaupol/gtk/agents/open.py:
+	* gaupol/gtk/dialogs/header.py:
+	* gaupol/gtk/dialogs/__init__.py:
+	* gaupol/gtk/dialogs/insert.py:
+	* gaupol/gtk/page.py:
+	* gaupol/gtk/util.py:
+	* gaupol/gtk/view.py:
+	* gaupol/languages.py:
+	* gaupol/unittest/case.py:
+	Add contracts and clean up code.
+
+2007-06-15  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/agents/close.py (close_page):
+	Call self.update_gui.
+
+2007-06-15  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/agents/open.py (_try_open_file):
+	Actually return None on UnicodeError.
+
+2007-06-15  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/multiclose-dialog.glade:
+	* gaupol/gtk/agents/close.py:
+	* gaupol/gtk/agents/__init__.py:
+	* gaupol/gtk/agents/open.py:
+	* gaupol/gtk/agents/save.py:
+	* gaupol/gtk/application.py:
+	* gaupol/gtk/dialogs/__init__.py:
+	* gaupol/gtk/dialogs/multiclose.py:
+	* gaupol/gtk/unittest/case.py:
+	Add contracts and clean up code.
+
+2007-06-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/application.py (_init_notebook):
+	Remove the border from around the notebook.
+
+	* gaupol/gtk/page.py (_init_widgets):
+	Change the tab label event box to use an invisible child window to
+	remove bizarre gradients in tab label backgrounds.
+
+2007-06-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/__init__.py:
+	* gaupol/gtk/main.py:
+	Move gtk.rc_add_default_file call to __init__.
+
+2007-06-13  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/agents/open.py:
+	(_show_parse_error_dialog): Extend secondary text.
+	Uncomment interactive tests.
+
+2007-06-13  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/agents/open.py:
+	Fix callback name to match UIM action.
+
+2007-06-13  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/split-dialog.glade:
+	* data/ui.xml:
+	* gaupol/agents/register.py:
+	* gaupol/agents/search.py:
+	* gaupol/clipboard.py:
+	* gaupol/const.py:
+	* gaupol/encodings.py:
+	* gaupol/finder.py:
+	* gaupol/gtk/actions/action.py:
+	* gaupol/gtk/actions/edit.py:
+	* gaupol/gtk/actions/file.py:
+	* gaupol/gtk/actions/__init__.py:
+	* gaupol/gtk/actions/menu.py:
+	* gaupol/gtk/actions/view.py:
+	* gaupol/gtk/agents/edit.py:
+	* gaupol/gtk/agents/help.py:
+	* gaupol/gtk/agents/__init__.py:
+	* gaupol/gtk/agents/menu.py:
+	* gaupol/gtk/agents/open.py:
+	* gaupol/gtk/agents/save.py:
+	* gaupol/gtk/agents/update.py:
+	* gaupol/gtk/agents/util.py:
+	* gaupol/gtk/agents/view.py:
+	* gaupol/gtk/application.py:
+	* gaupol/gtk/conf/__init__.py:
+	* gaupol/gtk/const.py:
+	* gaupol/gtk/dialogs/debug.py:
+	* gaupol/gtk/dialogs/duradjust.py:
+	* gaupol/gtk/dialogs/encoding.py:
+	* gaupol/gtk/dialogs/file/subtitle.py:
+	* gaupol/gtk/dialogs/header.py:
+	* gaupol/gtk/dialogs/__init__.py:
+	* gaupol/gtk/dialogs/language.py:
+	* gaupol/gtk/dialogs/multiclose.py:
+	* gaupol/gtk/dialogs/posadjust.py:
+	* gaupol/gtk/dialogs/preferences.py:
+	* gaupol/gtk/dialogs/previewerr.py:
+	* gaupol/gtk/dialogs/search.py:
+	* gaupol/gtk/dialogs/split.py:
+	* gaupol/gtk/dialogs/textedit.py:
+	* gaupol/gtk/entries.py:
+	* gaupol/gtk/__init__.py:
+	* gaupol/gtk/main.py:
+	* gaupol/gtk/output.py:
+	* gaupol/gtk/renderers/time.py:
+	* gaupol/gtk/ruler.py:
+	* gaupol/gtk/unittest/case.py:
+	* gaupol/gtk/util.py:
+	* gaupol/gtk/view.py:
+	* gaupol/languages.py:
+	* gaupol/liner.py:
+	* gaupol/parser.py:
+	* gaupol/project.py:
+	* gaupol/subtitle.py:
+	* gaupol/unittest/case.py:
+	* gaupol/util.py:
+	Add contracts and clean up code.
+
+2007-06-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/conf/container.py:
+	* gaupol/gtk/conf/__init__.py:
+	Do not break notification connections upon repeated reads.
+
+	* gaupol/gtk/unittest/case.py (teardown_method):
+	Call gaupol.gtk.conf.read.
+
+2007-06-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/ruler.py:
+	Use "sans" instead of conf.editor.font.
+
+2007-06-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/application.py:
+	Add missing __all__ attribute.
+
+2007-06-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/agents/help.py:
+	* gaupol/gtk/agents/__init__.py:
+	Fix imports.
+
+2007-06-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/ruler.py:
+	Use proper definition of "em" and pango units.
+
+2007-06-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* bin/gaupol:
+	* data/conf.spec:
+	* gaupol/agents/clipboard.py:
+	* gaupol/agents/edit.py:
+	* gaupol/agents/format.py:
+	* gaupol/agents/open.py:
+	* gaupol/agents/position.py:
+	* gaupol/agents/preview.py:
+	* gaupol/agents/register.py:
+	* gaupol/agents/save.py:
+	* gaupol/agents/search.py:
+	* gaupol/agents/set.py:
+	* gaupol/agents/text.py:
+	* gaupol/agents/util.py:
+	* gaupol/base/const.py:
+	* gaupol/base/contractual.py:
+	* gaupol/base/__init__.py:
+	* gaupol/calculator.py:
+	* gaupol/clipboard.py:
+	* gaupol/const.py:
+	* gaupol/converter.py:
+	* gaupol/determiner.py:
+	* gaupol/enclib.py:
+	* gaupol/encodings.py:
+	* gaupol/files/ass.py:
+	* gaupol/files/__init__.py:
+	* gaupol/files/microdvd.py:
+	* gaupol/files/mpl2.py:
+	* gaupol/files/mpsub.py:
+	* gaupol/files/ssa.py:
+	* gaupol/files/subfile.py:
+	* gaupol/files/subrip.py:
+	* gaupol/files/subviewer2.py:
+	* gaupol/files/tmplayer.py:
+	* gaupol/finder.py:
+	* gaupol/gtk/actions/edit.py:
+	* gaupol/gtk/actions/file.py:
+	* gaupol/gtk/actions/format.py:
+	* gaupol/gtk/actions/help.py:
+	* gaupol/gtk/actions/__init__.py:
+	* gaupol/gtk/actions/position.py:
+	* gaupol/gtk/actions/search.py:
+	* gaupol/gtk/actions/spellcheck.py:
+	* gaupol/gtk/actions/view.py:
+	* gaupol/gtk/agents/close.py:
+	* gaupol/gtk/agents/edit.py:
+	* gaupol/gtk/agents/format.py:
+	* gaupol/gtk/agents/help.py:
+	* gaupol/gtk/agents/menu.py:
+	* gaupol/gtk/agents/open.py:
+	* gaupol/gtk/agents/position.py:
+	* gaupol/gtk/agents/preview.py:
+	* gaupol/gtk/agents/save.py:
+	* gaupol/gtk/agents/search.py:
+	* gaupol/gtk/agents/spellcheck.py:
+	* gaupol/gtk/agents/update.py:
+	* gaupol/gtk/agents/view.py:
+	* gaupol/gtk/application.py:
+	* gaupol/gtk/conf/config.py:
+	* gaupol/gtk/conf/container.py:
+	* gaupol/gtk/conf/__init__.py:
+	* gaupol/gtk/const.py:
+	* gaupol/gtk/dialogs/about.py:
+	* gaupol/gtk/dialogs/debug.py:
+	* gaupol/gtk/dialogs/duradjust.py:
+	* gaupol/gtk/dialogs/encoding.py:
+	* gaupol/gtk/dialogs/file/append.py:
+	* gaupol/gtk/dialogs/file/__init__.py:
+	* gaupol/gtk/dialogs/file/open.py:
+	* gaupol/gtk/dialogs/file/save.py:
+	* gaupol/gtk/dialogs/file/subtitle.py:
+	* gaupol/gtk/dialogs/file/video.py:
+	* gaupol/gtk/dialogs/frconvert.py:
+	* gaupol/gtk/dialogs/glade.py:
+	* gaupol/gtk/dialogs/header.py:
+	* gaupol/gtk/dialogs/__init__.py:
+	* gaupol/gtk/dialogs/insert.py:
+	* gaupol/gtk/dialogs/language.py:
+	* gaupol/gtk/dialogs/multiclose.py:
+	* gaupol/gtk/dialogs/posadjust.py:
+	* gaupol/gtk/dialogs/posshift.py:
+	* gaupol/gtk/dialogs/preferences.py:
+	* gaupol/gtk/dialogs/previewerr.py:
+	* gaupol/gtk/dialogs/search.py:
+	* gaupol/gtk/dialogs/spellcheck.py:
+	* gaupol/gtk/dialogs/split.py:
+	* gaupol/gtk/dialogs/textedit.py:
+	* gaupol/gtk/entries.py:
+	* gaupol/gtk/errors.py:
+	* gaupol/gtk/index.py:
+	* gaupol/gtk/__init__.py:
+	* gaupol/gtk/main.py:
+	* gaupol/gtk/meta.py:
+	* gaupol/gtk/output.py:
+	* gaupol/gtk/page.py:
+	* gaupol/gtk/renderers:
+	* gaupol/gtk/renderers/__init__.py:
+	* gaupol/gtk/renderers/multiline.py:
+	* gaupol/gtk/renderers/time.py:
+	* gaupol/gtk/ruler.py:
+	* gaupol/gtk/runner.py:
+	* gaupol/gtk/test/__init__.py:
+	* gaupol/gtk/tooltips.py:
+	* gaupol/gtk/unittest/case.py:
+	* gaupol/gtk/util.py:
+	* gaupol/gtk/view.py:
+	* gaupol/i18n.py:
+	* gaupol/__init__.py:
+	* gaupol/languages.py:
+	* gaupol/liner.py:
+	* gaupol/opts.py:
+	* gaupol/parser.py:
+	* gaupol/paths.py:
+	* gaupol/project.py:
+	* gaupol/revertable.py:
+	* gaupol/scripts.py:
+	* gaupol/subtitle.py:
+	* gaupol/tags/ass.py:
+	* gaupol/tags/__init__.py:
+	* gaupol/tags/microdvd.py:
+	* gaupol/tags/mpl2.py:
+	* gaupol/tags/mpsub.py:
+	* gaupol/tags/ssa.py:
+	* gaupol/tags/subrip.py:
+	* gaupol/tags/subviewer2.py:
+	* gaupol/tags/taglib.py:
+	* gaupol/tags/tmplayer.py:
+	* gaupol/unittest/case.py:
+	* gaupol/unittest/__init__.py:
+	* gaupol/urls.py:
+	* gaupol/util.py:
+	Arrange imports to gaupol and gaupol.gtk.
+	Rename and rearrange some modules.
+
+2007-06-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/files/mpl2.py:
+	* gaupol/gtk/dialogs/encoding.py:
+	* gaupol/gtk/dialogs/language.py:
+	* gaupol/gtk/dialogs/preferences.py:
+	* gaupol/gtk/page.py:
+	Use lambda where appropriate.
+
+2007-06-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/application.py (_init_uim):
+	Set radio action groups.
+
+2007-06-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/agents/text.py (capitalize_texts):
+	Only change the case of the first letter of a clause.
+
+2007-06-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/open-dialog.glade:
+	* data/glade/preferences-dialog.glade:
+	* data/glade/save-dialog.glade:
+	Fix mnemonics.
+
+	* data/icons/gaupol.png:
+	Remove as obsolete.
+
+	* gaupol/agents/position.py:
+	* gaupol/clipboard.py:
+	* gaupol/gtk/const.py:
+	* gaupol/gtk/main.py:
+	* gaupol/gtk/unittest/case.py:
+	* gaupol/project.py:
+	Minor changes.
+
+	* data/ui.xml:
+	* gaupol/gtk/actions/action.py:
+	* gaupol/gtk/actions/edit.py:
+	* gaupol/gtk/actions/file.py:
+	* gaupol/gtk/actions/format.py:
+	* gaupol/gtk/actions/help.py:
+	* gaupol/gtk/actions/__init__.py:
+	* gaupol/gtk/actions/position.py:
+	* gaupol/gtk/actions/search.py:
+	* gaupol/gtk/actions/spellcheck.py:
+	* gaupol/gtk/actions/test:
+	* gaupol/gtk/actions/test/___init__.py:
+	* gaupol/gtk/actions/view.py:
+	Rewrite action classes as gtk.Actions.
+
+	* gaupol/gtk/agents/__init__.py:
+	Comment imports out for now.
+
+	* gaupol/gtk/application.py:
+	Add contracts and clean up code.
+
+2007-05-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/agents/menu.py:
+	* gaupol/gtk/dialogs/file/subtitle.py:
+	Replace three dots with ellipsis characters.
+
+2007-05-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/main.py (_start):
+	Remove one level of indentation.
+
+2007-05-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/main.py:
+	Adapt to renamed modules and variables.
+
+2007-05-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/dialogs/file:
+	* gaupol/gtk/dialogs/file/test:
+	Set svn:ignore properties.
+
+2007-05-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/conf.spec:
+	Remove obsolete entries.
+
+	* data/glade/encoding-dialog.glade:
+	* data/glade/language-dialog.glade:
+	* data/glade/preferences-dialog.glade:
+	* data/glade/previewerr-dialog.glade:
+	Set dialog position.
+	Remove unnecessary combo box items.
+
+	* data/glade/open-dialog.glade:
+	* data/glade/save-dialog.glade:
+	New files to replace open-box.glade and save-box.glade.
+
+	* gaupol/gtk/dialogs/file:
+	* gaupol/gtk/dialogs/file/append.py:
+	* gaupol/gtk/dialogs/file/__init__.py:
+	* gaupol/gtk/dialogs/file/open.py:
+	* gaupol/gtk/dialogs/file/save.py:
+	* gaupol/gtk/dialogs/file/subtitle.py:
+	* gaupol/gtk/dialogs/file/video.py:
+	New files for file dialogs.
+
+	* gaupol/gtk/dialogs/language.py:
+	* gaupol/gtk/dialogs/preferences.py:
+	Minor changes.
+
+2007-05-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/preferences-dialog.glade:
+	* gaupol/gtk/dialogs/preferences.py:
+	Use gtk.Alignments to indent sections.
+	Remove undo limiting and level preferences.
+
+2007-05-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/debug-dialog.glade:
+	Set 6 pixel margins to the text view.
+
+	* gaupol/gtk/dialogs/debug.py:
+	Clean up code.
+
+2007-05-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/dialogs/language.py:
+	Fix tree view sorting.
+
+2007-05-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/encoding-dialog.glade:
+	Save with Glade 3.
+
+	* gaupol/enclib.py (get_description):
+	Add missing method.
+
+	* gaupol/gtk/dialogs/encoding.py:
+	Add contracts and clean up code.
+
+2007-05-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/previewerr-dialog.glade:
+	Set 6 pixel margins to the text view.
+
+	* gaupol/gtk/dialogs/previewerr.py:
+	Use util.get_text_view_size.
+
+	* gaupol/gtk/util.py (get_text_view_size):
+	Add font argument with a blank default value.
+
+2007-05-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/language-dialog.glade:
+	Use gtk.Alignments to indent sections.
+
+	* gaupol/gtk/dialogs/glade.py:
+	* gaupol/gtk/dialogs/language.py:
+	* gaupol/gtk/dialogs/message.py:
+	* gaupol/gtk/dialogs/textedit.py:
+	Add contracts and clean up code.
+
+2007-05-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/output.py:
+	Set 6 pixel margins to the text view.
+
+2007-05-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/icons/logo.png:
+	Remove file, use icon instead.
+
+	* gaupol/gtk/dialogs/about.py:
+	Add title, fix website label and use a named icon.
+
+	* gaupol/gtk/dialogs/__init__.py:
+	Comment out imports for now.
+
+	* gaupol/urls.py (HOMEPAGE):
+	Add trailing slash.
+
+2007-05-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/agents/register.py:
+	* gaupol/agents/search.py:
+	* gaupol/base/delegate.py:
+	* gaupol/base/__init__.py:
+	* gaupol/base/mutables.py:
+	* gaupol/base/observable.py:
+	* gaupol/base/singleton.py:
+	* gaupol/calculator.py:
+	* gaupol/clipboard.py:
+	* gaupol/const.py:
+	* gaupol/converter.py:
+	* gaupol/determiner.py:
+	* gaupol/enclib.py:
+	* gaupol/files/__init__.py:
+	* gaupol/files/ssa.py:
+	* gaupol/files/subfile.py:
+	* gaupol/finder.py:
+	* gaupol/gtk/agents/menu.py:
+	* gaupol/gtk/agents/open.py:
+	* gaupol/gtk/agents/update.py:
+	* gaupol/gtk/app.py:
+	* gaupol/gtk/cellrend/__init__.py:
+	* gaupol/gtk/conf/__init__.py:
+	* gaupol/gtk/const.py:
+	* gaupol/gtk/dialogs/debug.py:
+	* gaupol/gtk/dialogs/encoding.py:
+	* gaupol/gtk/dialogs/file.py:
+	* gaupol/gtk/dialogs/glade.py:
+	* gaupol/gtk/dialogs/insert.py:
+	* gaupol/gtk/dialogs/language.py:
+	* gaupol/gtk/dialogs/posadjust.py:
+	* gaupol/gtk/dialogs/pref.py:
+	* gaupol/gtk/dialogs/textedit.py:
+	* gaupol/gtk/entries.py:
+	* gaupol/gtk/lengthlib.py:
+	* gaupol/gtk/page.py:
+	* gaupol/gtk/util.py:
+	* gaupol/__init__.py:
+	* gaupol/langlib.py:
+	* gaupol/liner.py:
+	* gaupol/opts.py:
+	* gaupol/parser.py:
+	* gaupol/paths.py:
+	* gaupol/project.py:
+	* gaupol/reversion/action.py:
+	* gaupol/reversion/group.py:
+	* gaupol/reversion/__init__.py:
+	* gaupol/scriptlib.py:
+	* gaupol/subtitle.py:
+	* gaupol/tags/__init__.py:
+	* gaupol/tags/ssa.py:
+	* gaupol/tags/taglib.py:
+	* gaupol/unittest/case.py:
+	* gaupol/unittest/__init__.py:
+	* gaupol/urls.py:
+	Style fixes to docstrings and variable names.
+
+2007-05-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/conf.spec:
+	* gaupol/gtk/const.py:
+	* gaupol/gtk/index.py:
+	* gaupol/gtk/view.py:
+	Fix column constant names.
+
+	* gaupol/gtk/page.py:
+	Add contracts and use Subtitle class.
+
+	* gaupol/gtk/tooltips.py:
+	New file with markup tooltips; split from page.
+
+	* gaupol/gtk/util.py (document_to_text_column,
+	text_column_to_document):
+	New functions; split from page.
+
+	* gaupol/subtitle.py (get_duration):
+	Add missing method.
+
+2007-05-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/view.py:
+	Lowercase class variables.
+
+2007-05-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/view.py:
+	Add contracts and clean up code.
+
+2007-05-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/output.py:
+	Minor changes.
+
+2007-05-21  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/cellrend/__init__.py:
+	* gaupol/gtk/cellrend/multiline.py:
+	* gaupol/gtk/cellrend/time.py:
+	Minor changes.
+
+2007-05-21  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/entries.py:
+	Allow negative values.
+	Add contracts.
+
+	* gaupol/gtk/util.py (get_contractual_metaclass):
+	New function to help avoid metaclass conflicts.
+
+2007-05-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/errors.py:
+	* gaupol/gtk/index.py:
+	Minor changes.
+
+2007-05-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/util.py (asserted_return):
+	New decorator to replace silent(AssertionError).
+	Fix all references.
+
+2007-05-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/agents/open.py:
+	* gaupol/determiner.py:
+	* gaupol/liner.py:
+	Minor changes to contracts.
+
+	* gaupol/gtk/conf/__init__.py:
+	* gaupol/gtk/conf/config.py:
+	* gaupol/gtk/conf/container.py:
+	* gaupol/gtk/conf/wrappers.py:
+	* gaupol/gtk/const.py:
+	* gaupol/gtk/lengthlib.py:
+	* gaupol/gtk/util.py:
+	Add contracts and clean up code.
+
+	* gaupol/gtk/unittest/case.py:
+	* gaupol/unittest/case.py:
+	Import Project, Page and Application locally.
+
+2007-05-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/i18n.py:
+	* gaupol/gtk/main.py:
+	Remove i18n and move stuff to main.
+
+2007-05-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/unittest/case.py:
+	* gaupol/gtk/unittest/__init__.py:
+	Minor changes.
+
+2007-05-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/reversion:
+	* gaupol/reversion/test:
+	Set svn:ignore properties on directories.
+
+2007-05-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/actions/action.py:
+	Remove leading underscore from filename.
+
+2007-05-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/agents:
+	* gaupol/base/mutables.py:
+	* gaupol/files/subfile.py:
+	* gaupol/gtk/actions:
+	* gaupol/gtk/agents:
+	* gaupol/tags/taglib.py:
+	Remove leading underscore from filename.
+
+2007-05-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/_agents/__init__.py:
+	* gaupol/_agents/clipboard.py:
+	* gaupol/_agents/edit.py:
+	* gaupol/_agents/format.py:
+	* gaupol/_agents/index.py:
+	* gaupol/_agents/open.py:
+	* gaupol/_agents/position.py:
+	* gaupol/_agents/preview.py:
+	* gaupol/_agents/register.py:
+	* gaupol/_agents/save.py:
+	* gaupol/_agents/search.py:
+	* gaupol/_agents/set.py:
+	* gaupol/_agents/support.py:
+	* gaupol/_agents/text.py:
+	* gaupol/_agents/util.py:
+	* gaupol/base/contractual.py:
+	* gaupol/base/delegate.py:
+	* gaupol/base/observable.py:
+	* gaupol/base/singleton.py:
+	* gaupol/calculator.py:
+	* gaupol/clipboard.py:
+	* gaupol/const.py:
+	* gaupol/enclib.py:
+	* gaupol/files/_subfile.py:
+	* gaupol/files/mpsub.py:
+	* gaupol/gtk/cellrend/time.py:
+	* gaupol/gtk/dialogs/encoding.py:
+	* gaupol/gtk/dialogs/pref.py:
+	* gaupol/gtk/dialogs/textedit.py:
+	* gaupol/gtk/entries.py:
+	* gaupol/liner.py:
+	* gaupol/project.py:
+	* gaupol/reversion/__init__.py:
+	* gaupol/reversion/action.py:
+	* gaupol/reversion/deco.py:
+	* gaupol/reversion/group.py:
+	* gaupol/reversion:
+	* gaupol/subtitle.py:
+	* gaupol/tags/_taglib.py:
+	* gaupol/unittest/case.py:
+	* gaupol/unittest/deco.py:
+	* gaupol/urls.py:
+	* gaupol/util.py:
+	Use Subtitle class.
+	Add contracts to agents.
+	Allow negative values of positions.
+
+2007-04-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/const.py:
+	Add FORMAT.*.has_header and FORMAT.*.identifier.
+
+	* gaupol/determiner.py:
+	Subclass from Singleton.
+
+	* gaupol/files/ass.py:
+	* gaupol/files/microdvd.py:
+	* gaupol/files/mpl2.py:
+	* gaupol/files/mpsub.py:
+	* gaupol/files/ssa.py:
+	* gaupol/files/_subfile.py:
+	* gaupol/files/subrip.py:
+	* gaupol/files/subviewer2.py:
+	* gaupol/files/tmplayer.py:
+	Use Contractual metaclass.
+
+	* gaupol/tags/__init__.py:
+	Fix docstring.
+
+2007-04-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/subtitle.py:
+	New file.
+
+2007-04-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/base/contractual.py:
+	* gaupol/opts.py:
+	New files.
+
+	* gaupol/calculator.py:
+	Use one instance per framerate.
+
+	* gaupol/util.py (contractual):
+	Handle only global functions.
+
+2007-04-12  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/determiner.py:
+	Add contracts.
+	Read file one line at a time.
+
+	* gaupol/files/ass.py:
+	* gaupol/files/microdvd.py:
+	* gaupol/files/mpl2.py:
+	* gaupol/files/mpsub.py:
+	* gaupol/files/ssa.py:
+	* gaupol/files/_subfile.py:
+	* gaupol/files/subrip.py:
+	* gaupol/files/subviewer2.py:
+	* gaupol/files/tmplayer.py:
+	Have identifiers be compiled.
+
+2007-04-12  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/liner.py (is_legal):
+	Make this a method again.
+
+2007-04-12  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/enclib.py:
+	* gaupol/util.py:
+	Replace memoize with once where appropriate.
+
+2007-04-12  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/base/singleton.py (__new__):
+	Fix to work with inheritance.
+
+	* gaupol/converter.py:
+	* gaupol/tags/ass.py:
+	* gaupol/tags/__init__.py:
+	* gaupol/tags/internal.py:
+	* gaupol/tags/microdvd.py:
+	* gaupol/tags/mpl2.py:
+	* gaupol/tags/ssa.py:
+	* gaupol/tags/subrip.py:
+	* gaupol/tags/_taglib.py:
+	Simplify TagLibrary interface.
+
+	* gaupol/util.py (once):
+	New decorator.
+
+2007-04-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/const.py:
+	* gaupol/files/__init__.py:
+	* gaupol/i18n.py:
+	* gaupol/liner.py:
+	* gaupol/paths.py:
+	* gaupol/scriptlib.py:
+	Minor changes.
+
+	* tools/nose-cover:
+	Remove file.
+
+2007-04-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/util.py:
+	Remove gc_collected.
+
+2007-04-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/base/__init__.py:
+	Import singleton.Singleton.
+
+	* gaupol/base/singleton.py:
+	New file with a Singleton base class.
+
+2007-04-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* tools/nose-cover:
+	Fix to work with individual modules.
+
+2007-04-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/util.py:
+	Fix module docstring.
+
+2007-04-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/unittest/case.py:
+	Use a set as TestCase.files.
+
+2007-04-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/const.py:
+	* gaupol/files/__init__.py:
+	* gaupol/util.py:
+	Fix value of __all__.
+
+2007-04-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/util.py (memoize):
+	Pickle the id of the self argument of methods.
+
+2007-04-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* tools/nose-cover:
+	New file.
+
+2007-04-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/unittest/case.py:
+	* gaupol/unittest/__init__.py:
+	Use atexit.register to remove temporary files.
+
+2007-04-07  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/_agents/search.py:
+	* gaupol/_agents/text.py:
+	* gaupol/finder.py:
+	* gaupol/gtk/dialogs/search.py:
+	Docstring fixes.
+
+2007-04-07  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/files/__init__.py:
+	* gaupol/files/microdvd.py:
+	* gaupol/files/mpl2.py:
+	* gaupol/files/mpsub.py:
+	* gaupol/files/ssa.py:
+	* gaupol/files/_subfile.py:
+	* gaupol/files/subrip.py:
+	* gaupol/files/subviewer2.py:
+	* gaupol/files/tmplayer.py:
+	* gaupol/finder.py:
+	Add contracts.
+	Use contextlib.closing with codecs.open.
+
+	* gaupol/util.py:
+	Use contextlib.closing with codecs.open.
+
+2007-04-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/unittest/case.py (raises):
+	New function.
+
+2007-04-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/calculator.py:
+	* gaupol/finder.py:
+	* gaupol/liner.py:
+	* gaupol/parser.py:
+	Add contracts.
+
+	* gaupol/util.py (last):
+	New function.
+
+2007-04-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/enclib.py:
+	* gaupol/langlib.py:
+	* gaupol/scriptlib.py:
+	Add contracts.
+
+2007-04-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/i18n.py:
+	* gaupol/i18n.py:
+	New modules.
+
+2007-04-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/const.py:
+	* gaupol/util.py:
+	Minor changes.
+
+2007-04-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/util.py (is_method):
+	New function. Use with contractual and memoize.
+
+2007-04-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/base/observable.py:
+	Add contracts.
+
+2007-04-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/base/_mutables.py:
+	Add contracts.
+
+	* gaupol/util.py (contractual):
+	Handle name mangling of __private methods.
+
+2007-04-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/cons.py:
+	* gaupol/const.py:
+	* gaupol/gtk/cons.py:
+	* gaupol/gtk/const.py:
+	Rename to const.
+
+2007-04-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/base/cons.py:
+	* gaupol/base/const.py:
+	Rename to const.
+
+2007-04-04  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/base/observable.py:
+	* gaupol/util.py:
+	Move notify_frozen to util.
+
+2007-04-04  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/main.py:
+	Set util.CHECK_CONTRACTS based on --debug.
+
+	* gaupol/util.py:
+	Add contractual decorator.
+	Remove old unused crap.
+
+2007-04-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/unittest/case.py (TestCase.get_text):
+	Use util.memoize.
+
+	* gaupol/util.py (memoize):
+	Do not pickle the self argument of methods.
+
+2007-04-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/unittest/case.py:
+	* gaupol/unittest/decorators.py:
+	* gaupol/unittest/__init__.py:
+	Minor changes.
+
+2007-04-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/_actions/edit.py:
+	* gaupol/gtk/_actions/file.py:
+	* gaupol/gtk/_actions/position.py:
+	* gaupol/gtk/_actions/search.py:
+	* gaupol/gtk/_actions/spellcheck.py:
+	Replaced three dots with U+2026 ellipses.
+
+2007-04-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/_agents/edit.py:
+	* gaupol/_agents/open.py:
+	* gaupol/_agents/save.py:
+	* gaupol/_agents/support.py:
+	* gaupol/_agents/text.py:
+	* gaupol/base/cons.py:
+	* gaupol/base/_mutables.py:
+	* gaupol/clipboard.py:
+	* gaupol/files/microdvd.py:
+	* gaupol/files/mpl2.py:
+	* gaupol/files/mpsub.py:
+	* gaupol/files/ssa.py:
+	* gaupol/files/subrip.py:
+	* gaupol/files/subviewer2.py:
+	* gaupol/files/tmplayer.py:
+	* gaupol/gtk/_actions/__init__.py:
+	* gaupol/gtk/_agents/open.py:
+	* gaupol/gtk/conf/wrappers.py:
+	* gaupol/gtk/dialogs/multiclose.py:
+	* gaupol/gtk/dialogs/search.py:
+	* gaupol/gtk/lengthlib.py:
+	* gaupol/gtk/main.py:
+	* gaupol/gtk/view.py:
+	* gaupol/liner.py:
+	* gaupol/parser.py:
+	* gaupol/util.py:
+	* tools/translate:
+	Replace list(...) with [...] in list comprehensions.
+
+2007-04-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* tools/add-changelog:
+	* tools/data/apidocs.css:
+	* tools/data/code.css:
+	* tools/data/pylintrc:
+	* tools/generate-tests:
+	* tools/list-glade:
+	* tools/nose-run:
+	* tools/profile:
+	* tools/pydoctor:
+	* tools/pylint:
+	* tools/translate:
+	Minor changes.
+
+2007-03-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* bin/gaupol:
+	Check if path in sys.path before inserting it.
+
+	* MANIFEST.in:
+	Remove doc/api. Include tools/data.
+
+	* setup.py (SDistGna.run):
+	Fix this to actually work.
+
+2007-03-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/spellcheck-dialog.glade:
+	* data/ui.xml:
+	* gaupol/gtk/_actions/spellcheck.py:
+	* gaupol/gtk/_agents/spellcheck.py:
+	* gaupol/gtk/dialogs/__init__.py:
+	* gaupol/gtk/dialogs/spellcheck.py:
+	Add spell-check.
+
+2007-03-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/ui.xml:
+	* gaupol/gtk/_actions/__init__.py:
+	* gaupol/gtk/_actions/spellcheck.py:
+	* gaupol/gtk/_agents/__init__.py:
+	* gaupol/gtk/_agents/spellcheck.py:
+	Add spell-check configuration.
+
+2007-03-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/frconvert-dialog.glade:
+	* data/ui.xml:
+	* gaupol/gtk/_actions/position.py:
+	* gaupol/gtk/_agents/position.py:
+	* gaupol/gtk/dialogs/frconvert.py:
+	* gaupol/gtk/dialogs/__init__.py:
+	Add framerate conversion.
+
+2007-03-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/duradjust-dialog.glade:
+	* data/ui.xml:
+	* gaupol/gtk/_actions/position.py:
+	* gaupol/gtk/_agents/position.py:
+	* gaupol/gtk/dialogs/duradjust.py:
+	* gaupol/gtk/dialogs/__init__.py:
+	Add duration adjust.
+
+2007-03-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/files/mpsub.py:
+	* gaupol/files/subrip.py:
+	* gaupol/files/subviewer2.py:
+	Use regular expression substitution instead of insane slicing to
+	right-strip the final newline off texts.
+
+2007-03-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/_agents/text.py (capitalize):
+	Use Parser instead of Finder.
+
+2007-03-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/dialogs/posadjust.py:
+	Fix text view widths.
+
+2007-03-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/posadjust-dialog.glade:
+	* data/ui.xml:
+	* gaupol/gtk/_actions/file.py:
+	* gaupol/gtk/_actions/position.py:
+	* gaupol/gtk/_agents/position.py:
+	* gaupol/gtk/_agents/preview.py:
+	* gaupol/gtk/dialogs/__init__.py:
+	* gaupol/gtk/dialogs/posadjust.py:
+	* gaupol/gtk/dialogs/posshift.py:
+	Add position adjust.
+
+2007-03-12  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/base/observable.py (block_all, unblock_all):
+	New methods.
+
+	* gaupol/gtk/_agents/preview.py (preview_changes):
+	Wrap the project method call with a block_all-unblock_all.
+
+2007-03-12  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/posshift-dialog.glade:
+	* data/ui.xml:
+	* gaupol/gtk/_actions/position.py:
+	* gaupol/gtk/_agents/__init__.py:
+	* gaupol/gtk/_agents/position.py:
+	* gaupol/gtk/dialogs/__init__.py:
+	* gaupol/gtk/dialogs/posshift.py:
+	Add position shift.
+
+2007-03-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/util.py (browse_url):
+	Quote url.
+
+2007-03-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/_actions/format.py:
+	* gaupol/gtk/_actions/position.py:
+	Fix imports.
+
+2007-03-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/_actions/edit.py:
+	* gaupol/gtk/_actions/file.py:
+	* gaupol/gtk/_actions/format.py:
+	* gaupol/gtk/_actions/help.py:
+	* gaupol/gtk/_actions/__init__.py:
+	* gaupol/gtk/_actions/position.py:
+	* gaupol/gtk/_actions/projects.py:
+	* gaupol/gtk/_actions/search.py:
+	* gaupol/gtk/_actions/text.py:
+	* gaupol/gtk/_actions/tools.py:
+	* gaupol/gtk/_actions/view.py:
+	Refactor action modules.
+
+2007-03-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/_agents/edit.py:
+	* gaupol/_agents/position.py:
+	* gaupol/_agents/register.py:
+	* gaupol/_agents/set.py:
+	* gaupol/_agents/support.py:
+	* gaupol/base/cons.py:
+	* gaupol/base/__init__.py:
+	* gaupol/base/_mutables.py:
+	* gaupol/base/observable.py:
+	* gaupol/cons.py:
+	* gaupol/files/_subfile.py:
+	* gaupol/gtk/_actions/edit.py:
+	* gaupol/gtk/_actions/file.py:
+	* gaupol/gtk/_actions/help.py:
+	* gaupol/gtk/_actions/projects.py:
+	* gaupol/gtk/_actions/text.py:
+	* gaupol/gtk/_actions/tools.py:
+	* gaupol/gtk/_agents/close.py:
+	* gaupol/gtk/_agents/edit.py:
+	* gaupol/gtk/_agents/menu.py:
+	* gaupol/gtk/_agents/open.py:
+	* gaupol/gtk/_agents/preview.py:
+	* gaupol/gtk/_agents/save.py:
+	* gaupol/gtk/_agents/update.py:
+	* gaupol/gtk/_agents/view.py:
+	* gaupol/gtk/app.py:
+	* gaupol/gtk/cellrend/multiline.py:
+	* gaupol/gtk/cellrend/time.py:
+	* gaupol/gtk/conf/__init__.py:
+	* gaupol/gtk/cons.py:
+	* gaupol/gtk/dialogs/about.py:
+	* gaupol/gtk/dialogs/debug.py:
+	* gaupol/gtk/dialogs/encoding.py:
+	* gaupol/gtk/dialogs/file.py:
+	* gaupol/gtk/dialogs/glade.py:
+	* gaupol/gtk/dialogs/header.py:
+	* gaupol/gtk/dialogs/language.py:
+	* gaupol/gtk/dialogs/multiclose.py:
+	* gaupol/gtk/dialogs/pref.py:
+	* gaupol/gtk/dialogs/search.py:
+	* gaupol/gtk/dialogs/split.py:
+	* gaupol/gtk/entries.py:
+	* gaupol/gtk/lengthlib.py:
+	* gaupol/gtk/main.py:
+	* gaupol/gtk/output.py:
+	* gaupol/gtk/page.py:
+	* gaupol/gtk/unittest/__init__.py:
+	* gaupol/gtk/util.py:
+	* gaupol/gtk/view.py:
+	* gaupol/liner.py:
+	* gaupol/parser.py:
+	* gaupol/paths.py:
+	* gaupol/scriptlib.py:
+	* gaupol/tags/internal.py:
+	* gaupol/unittest/case.py:
+	* gaupol/unittest/decorators.py:
+	* gaupol/unittest/__init__.py:
+	* gaupol/unittest/samples.py:
+	* gaupol/urls.py:
+	* gaupol/util.py:
+	* setup.py:
+	* tools/pylint:
+	* tools/translate:
+	Refactor some stuff.
+
+2007-03-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/_actions/text.py (FindNextAction.is_doable,
+	FindPreviousAction.is_doable):
+	Fix application's pattern check.
+
+2007-03-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/ui.xml:
+	Add separator to the "Text" menu. Flip "Dialogue" and "Italic".
+
+2007-03-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* tools/hide:
+	Add .hidden generator.
+
+2007-03-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/_agents/__init__.py:
+	* gaupol/gtk/_agents/preview.py:
+	* gaupol/gtk/_agents/tools.py:
+	Renamed tools to preview.
+
+2007-03-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/app.py:
+	* gaupol/gtk/conf/__init__.py:
+	* gaupol/gtk/dialogs/about.py:
+	* gaupol/gtk/main.py:
+	* gaupol/gtk/paths.py:
+	* gaupol/gtk/util.py:
+	Do not read the default configuration file upon the import of
+	gaupol.gtk.conf.
+
+2007-03-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/page.py (_on_project_*):
+	Reload, change selection and focus only if rows is not empty.
+
+2007-03-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol:
+	* gaupol/_agents:
+	* gaupol/_agents/test:
+	* gaupol/base:
+	* gaupol/base/test:
+	* gaupol/files:
+	* gaupol/files/test:
+	* gaupol/gtk/_actions/test:
+	* gaupol/gtk/_actions:
+	* gaupol/gtk/_agents/test:
+	* gaupol/gtk/_agents:
+	* gaupol/gtk/cellrend/test:
+	* gaupol/gtk/cellrend:
+	* gaupol/gtk/conf/test:
+	* gaupol/gtk/conf:
+	* gaupol/gtk/dialogs/test:
+	* gaupol/gtk/dialogs:
+	* gaupol/gtk/test:
+	* gaupol/gtk/unittest:
+	* gaupol/gtk:
+	* gaupol/tags/test:
+	* gaupol/tags:
+	* gaupol/test:
+	* gaupol/unittest:
+	Add ".hidden" to svn:ignore properties.
+
+2007-03-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/_agents/close.py:
+	Confirm close if file no longer exists.
+
+2007-03-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/_agents/open.py (OpenAgent._select_files):
+	If possible, set the filechooser directory to that of the current
+	project's main file.
+
+2007-03-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/conf/wrappers.py (Container):
+	Set options as instance variables.
+
+2007-03-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/search-dialog.glade:
+	* gaupol/gtk/dialogs/search.py:
+	Fix initial focus.
+
+2007-03-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/dialogs/search.py:
+	Set cursor busy for "Replace All".
+
+2007-03-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/dialogs/search.py:
+	Fix text view scrolling.
+
+2007-03-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/search-dialog.glade:
+	* gaupol/_agents/search.py:
+	* gaupol/_agents/set.py:
+	* gaupol/gtk/_actions/text.py:
+	* gaupol/gtk/_agents/edit.py:
+	* gaupol/gtk/_agents/search.py:
+	* gaupol/gtk/app.py:
+	* gaupol/gtk/dialogs/__init__.py:
+	* gaupol/gtk/dialogs/search.py:
+	* gaupol/gtk/lengthlib.py:
+	* gaupol/gtk/page.py:
+	Add search. Closes #6690.
+
+2007-03-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/ui.xml:
+	* gaupol/_agents/preview.py:
+	* gaupol/gtk/_actions/tools.py:
+	* gaupol/gtk/_agents/save.py:
+	* gaupol/gtk/_agents/tools.py:
+	Add preview.
+
+2007-03-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/gaupol.desktop.in:
+	Remove Application from Categories and Add Video.
+
+2007-03-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* tools/add-changelog:
+	* tools/nose-run:
+	* tools/pydoctor:
+	Add proper quoting.
+
+2007-03-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/ui.xml:
+	* gaupol/enclib.py:
+	* gaupol/gtk/_actions/edit.py:
+	* gaupol/gtk/_actions/text.py:
+	* gaupol/gtk/_agents/open.py:
+	* gaupol/gtk/_agents/save.py:
+	* gaupol/gtk/app.py:
+	* gaupol/gtk/dialogs/about.py:
+	* gaupol/gtk/dialogs/file.py:
+	* gaupol/gtk/dialogs/split.py:
+	* gaupol/langlib.py:
+	* setup.py:
+	Added "Insert Subtitles...", "Remove Subtitles" and "Find And Replace"
+	to the main toolbar. Fixed minor quotation inconsistensies.
+
+2007-03-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/ui.xml:
+	* gaupol/gtk/_actions/edit.py:
+	* gaupol/gtk/_actions/format.py:
+	* gaupol/gtk/_actions/__init__.py:
+	* gaupol/gtk/_actions/search.py:
+	* gaupol/gtk/_actions/text.py:
+	* gaupol/gtk/_agents/edit.py:
+	* gaupol/gtk/_agents/search.py:
+	* gaupol/gtk/app.py:
+	Add "Text" menu and move items from "Edit", "Format" and "Search"
+	menus there. Relabel some menu items.
+
+2007-03-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/enclib.py:
+	Updated URLs.
+
+2007-03-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* tools/pydoctor:
+	Browse not by default.
+
+2007-03-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/ui.xml:
+	* gaupol/gtk/_actions/edit.py:
+	* gaupol/gtk/_agents/edit.py:
+	Remove Alt+Arrow keybindings and add "edit_next_value" UI manager
+	action bound to the space key.
+
+2007-03-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* tools/data/code.css:
+	* tools/data/footer.html:
+	* tools/data/header.html:
+	* tools/py2html:
+	* tools/pydoctor:
+	Use highlight instead of py2html.
+
+2007-03-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* tools/data/pylintrc:
+	* tools/pylint:
+	Adjust to Pylint 0.13.
+
+2007-03-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/view.py:
+	Right-align number and frame cell contents.
+
+2007-03-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/view.py:
+	Set frame cells wide enough to fit the spin button editor.
+
+2007-03-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/_actions/__init__.py:
+	* gaupol/gtk/_agents/close.py:
+	* gaupol/gtk/_agents/help.py:
+	* gaupol/gtk/_agents/menu.py:
+	* gaupol/gtk/app.py:
+	* gaupol/gtk/dialogs/about.py:
+	* gaupol/gtk/dialogs/insert.py:
+	* gaupol/gtk/entries.py:
+	* gaupol/gtk/page.py:
+	* gaupol/gtk/view.py:
+	Import util from gaupol.gtk.
+
+2007-02-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/_agents/edit.py:
+	* gaupol/gtk/cellrend/multiline.py:
+	* gaupol/gtk/cellrend/time.py:
+	* gaupol/gtk/page.py:
+	Fix inconsistensies and segfaults and rest of the shit between the
+	cell renderers and the edit agent.
+
+2007-02-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/_agents/edit.py:
+	* gaupol/gtk/_agents/open.py:
+	Add cell editing.
+
+2007-02-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/dialogs/about.py:
+	Strip "http://" from website label.
+
+2007-02-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/_agents/format.py:
+	* gaupol/gtk/_agents/view.py:
+	* gaupol/gtk/app.py:
+	Allow UIMAction menu_item callbacks be None.
+
+	* tools/add-changelog:
+	Sort files.
+
+2007-02-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/_agents/format.py:
+	* gaupol/gtk/_actions/format.py:
+	* data/ui.xml:
+	Add format menu items.
+
+2007-02-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/conf/wrappers.py:
+	* gaupol/base/cons.py:
+	* data/conf.spec:
+	Write constants in configuration file as strings instead of integers.
+
+2007-02-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/_agents/menu.py:
+	Add Alt+N accelerators for project menu items.
+
+2007-02-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/pref-dialog.glade:
+	Fix preview command fields and expand settings on the file page.
+
+2007-02-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	Initial svn import of the seija branch leading to 0.8.
+
+2006-12-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/debug-dialog.glade:
+	* data/glade/encoding-dialog.glade:
+	* data/glade/lang-dialog.glade:
+	* data/glade/open-widgets.glade:
+	* data/glade/pref-dialog.glade:
+	* data/glade/previewerr-dialog.glade:
+	* data/glade/save-widgets.glade:
+	* gaupol/gtk/dialogs:
+	* gaupol/gtk/dialogs/__init__.py:
+	* gaupol/gtk/dialogs/about.py:
+	* gaupol/gtk/dialogs/debug.py:
+	* gaupol/gtk/dialogs/encoding.py:
+	* gaupol/gtk/dialogs/file.py:
+	* gaupol/gtk/dialogs/glade.py:
+	* gaupol/gtk/dialogs/lang.py:
+	* gaupol/gtk/dialogs/message.py:
+	* gaupol/gtk/dialogs/pref.py:
+	* gaupol/gtk/dialogs/previewerr.py:
+	* gaupol/gtk/dialogs/test:
+	* gaupol/gtk/dialogs/textedit.py:
+	Added.
+
+2006-12-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* doc/gaupol.1:
+	* gaupol/gtk/main.py:
+	Added new options to select translation and video files.
+
+	* gaupol/common/filelib.py:
+	* gaupol/common/enclib.py (get_locale_encoding):
+	Return None instead of raising ValueError if no locale found.
+
+	* gaupol/common/util.py (chardet_available, enchant_available):
+	New functions.
+
+	* gaupol/gtk/common/gtklib.py:
+	(get_glade_xml): Added 'root' argument.
+	(set_button): New function.
+
+2006-12-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/common/test/test_util.py:
+	* gaupol/common/util.py:
+	* gaupol/common/wwwlib.py:
+	(util.get_chardet_version, util.get_desktop_environment,
+	util.get_enchant_version): New functions.
+
+	* gaupol/gtk/common/gtklib.py (INSERT_CURSOR): New attribute.
+
+2006-12-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/agents/preview.py:
+	* gaupol/agents/register.py:
+	* gaupol/agents/support.py:
+	* gaupol/common/paths.py:
+	* gaupol/common/test/test_util.py:
+	* gaupol/common/util.py:
+	* gaupol/gtk/app.py:
+	* gaupol/gtk/cellrend/multiline.py:
+	* gaupol/gtk/common/conf.py:
+	* gaupol/gtk/common/cons.py:
+	* gaupol/gtk/common/gtklib.py:
+	* gaupol/gtk/common/test/test_gtklib.py:
+	* gaupol/gtk/entries/time.py:
+	* gaupol/gtk/output.py:
+	* gaupol/gtk/page.py:
+	* gaupol/gtk/view.py:
+	Use new util.connect.
+	Other miscellaneous fixes.
+
+2006-12-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/common/test/test_consbase.py:
+	* gaupol/common/test/test_delegate.py:
+	* gaupol/gtk/common/error.py:
+	* gaupol/gtk/common/runner.py:
+	* gaupol/gtk/common/test/test_error.py:
+	* gaupol/gtk/common/test/test_runner.py:
+	* gaupol/gtk/output.py:
+	* gaupol/gtk/test/test_output.py:
+	  Added.
+
+2006-12-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/common/delegate.py:
+	* gaupol/common/enclib.py:
+	* gaupol/common/filelib.py:
+	* gaupol/common/langlib.py:
+	* gaupol/common/listlib.py:
+	* gaupol/common/obs.py:
+	* gaupol/common/scriptlib.py:
+	* gaupol/common/test/test_enclib.py:
+	* gaupol/common/test/test_filelib.py:
+	* gaupol/common/test/test_langlib.py:
+	* gaupol/common/test/test_listlib.py:
+	* gaupol/common/test/test_obs.py:
+	* gaupol/common/test/test_scriptlib.py:
+	* gaupol/common/test/test_wwwlib.py:
+	* gaupol/common/wwwlib.py:
+	* gaupol/gtk/common/gtklib.py:
+	* gaupol/gtk/common/lengthlib.py:
+	* gaupol/gtk/common/test/test_gtklib.py:
+	* gaupol/gtk/common/test/test_lengthlib.py:
+	* bin/gaupol:
+	* data/ui/menubar.xml:
+	* data/ui/toolbar.xml:
+	* doc/formats/ass.sample:
+	* doc/formats/microdvd.sample:
+	* doc/formats/mpl2.sample:
+	* doc/formats/mpsub.sample:
+	* doc/formats/ssa.sample:
+	* doc/formats/subrip.sample:
+	* doc/formats/subviewer2.sample:
+	* doc/formats/tmplayer.sample:
+	* gaupol/agents/__init__.py:
+	* gaupol/agents/delegate.py:
+	* gaupol/agents/edit.py:
+	* gaupol/agents/format.py:
+	* gaupol/agents/index.py:
+	* gaupol/agents/open.py:
+	* gaupol/agents/position.py:
+	* gaupol/agents/preview.py:
+	* gaupol/agents/register.py:
+	* gaupol/agents/save.py:
+	* gaupol/agents/search.py:
+	* gaupol/agents/set.py:
+	* gaupol/agents/support.py:
+	* gaupol/agents/test/test_edit.py:
+	* gaupol/agents/test/test_format.py:
+	* gaupol/agents/test/test_index.py:
+	* gaupol/agents/test/test_init.py:
+	* gaupol/agents/test/test_position.py:
+	* gaupol/agents/test/test_preview.py:
+	* gaupol/agents/test/test_register.py:
+	* gaupol/agents/test/test_save.py:
+	* gaupol/agents/test/test_search.py:
+	* gaupol/agents/test/test_set.py:
+	* gaupol/agents/test/test_support.py:
+	* gaupol/agents/test/test_text.py:
+	* gaupol/agents/text.py:
+	* gaupol/brokers/__init__.py:
+	* gaupol/brokers/determiner.py:
+	* gaupol/brokers/test/test_converter.py:
+	* gaupol/brokers/test/test_determiner.py:
+	* gaupol/common/__init__.py:
+	* gaupol/common/consbase.py:
+	* gaupol/common/paths.py:
+	* gaupol/common/test/test_cons.py:
+	* gaupol/common/test/test_paths.py:
+	* gaupol/common/test/test_urls.py:
+	* gaupol/common/urls.py:
+	* gaupol/data/__init__.py:
+	* gaupol/data/obs.py:
+	* gaupol/data/project.py:
+	* gaupol/data/test/test_clipboard.py:
+	* gaupol/data/test/test_obs.py:
+	* gaupol/data/test/test_project.py:
+	* gaupol/files/__init__.py:
+	* gaupol/files/ass.py:
+	* gaupol/files/microdvd.py:
+	* gaupol/files/mpl2.py:
+	* gaupol/files/mpsub.py:
+	* gaupol/files/ssa.py:
+	* gaupol/files/subfile.py:
+	* gaupol/files/subrip.py:
+	* gaupol/files/subviewer2.py:
+	* gaupol/files/test/test_ass.py:
+	* gaupol/files/test/test_init.py:
+	* gaupol/files/test/test_microdvd.py:
+	* gaupol/files/test/test_mpl2.py:
+	* gaupol/files/test/test_mpsub.py:
+	* gaupol/files/test/test_ssa.py:
+	* gaupol/files/test/test_subfile.py:
+	* gaupol/files/test/test_subrip.py:
+	* gaupol/files/test/test_subviewer2.py:
+	* gaupol/files/test/test_tmplayer.py:
+	* gaupol/files/tmplayer.py:
+	* gaupol/gtk/__init__.py:
+	* gaupol/gtk/app.py:
+	* gaupol/gtk/cellrend/__init__.py:
+	* gaupol/gtk/cellrend/multiline.py:
+	* gaupol/gtk/cellrend/test/test_multiline.py:
+	* gaupol/gtk/cellrend/test/test_time.py:
+	* gaupol/gtk/common/__init__.py:
+	* gaupol/gtk/common/conf.py:
+	* gaupol/gtk/common/confbase.py:
+	* gaupol/gtk/common/cons.py:
+	* gaupol/gtk/common/test/test_conf.py:
+	* gaupol/gtk/common/test/test_confbase.py:
+	* gaupol/gtk/common/test/test_cons.py:
+	* gaupol/gtk/entries/test/test_time.py:
+	* gaupol/gtk/entries/time.py:
+	* gaupol/gtk/index.py:
+	* gaupol/gtk/main.py:
+	* gaupol/gtk/page.py:
+	* gaupol/gtk/test/test_app.py:
+	* gaupol/gtk/test/test_index.py:
+	* gaupol/gtk/test/test_main.py:
+	* gaupol/gtk/test/test_page.py:
+	* gaupol/gtk/test/test_view.py:
+	* gaupol/gtk/util:
+	* gaupol/gtk/util/__init__.py:
+	* gaupol/gtk/util/gtklib.py:
+	* gaupol/gtk/util/lengthlib.py:
+	* gaupol/gtk/util/test:
+	* gaupol/gtk/util/test/__init__.py:
+	* gaupol/gtk/util/test/test_gtklib.py:
+	* gaupol/gtk/util/test/test_lengthlib.py:
+	* gaupol/gtk/view.py:
+	* gaupol/ops/__init__.py:
+	* gaupol/ops/finder.py:
+	* gaupol/ops/liner.py:
+	* gaupol/ops/test/test_calculator.py:
+	* gaupol/ops/test/test_finder.py:
+	* gaupol/ops/test/test_liner.py:
+	* gaupol/ops/test/test_parser.py:
+	* gaupol/tags/__init__.py:
+	* gaupol/tags/microdvd.py:
+	* gaupol/tags/mpl2.py:
+	* gaupol/tags/ssa.py:
+	* gaupol/tags/test/test_ass.py:
+	* gaupol/tags/test/test_init.py:
+	* gaupol/tags/test/test_internal.py:
+	* gaupol/tags/test/test_microdvd.py:
+	* gaupol/tags/test/test_mpl2.py:
+	* gaupol/tags/test/test_mpsub.py:
+	* gaupol/tags/test/test_ssa.py:
+	* gaupol/tags/test/test_subrip.py:
+	* gaupol/tags/test/test_subviewer2.py:
+	* gaupol/tags/test/test_taglib.py:
+	* gaupol/tags/test/test_tmplayer.py:
+	* gaupol/unittest/__init__.py:
+	* gaupol/unittest/samples.py:
+	* gaupol/util:
+	* gaupol/util/__init__.py:
+	* gaupol/util/enclib.py:
+	* gaupol/util/filelib.py:
+	* gaupol/util/langlib.py:
+	* gaupol/util/listlib.py:
+	* gaupol/util/scriptlib.py:
+	* gaupol/util/test:
+	* gaupol/util/test/__init__.py:
+	* gaupol/util/test/test_enclib.py:
+	* gaupol/util/test/test_filelib.py:
+	* gaupol/util/test/test_langlib.py:
+	* gaupol/util/test/test_listlib.py:
+	* gaupol/util/test/test_scriptlib.py:
+	* gaupol/util/test/test_wwwlib.py:
+	* gaupol/util/wwwlib.py:
+	* setup.py:
+	* tools/run:
+	  Moved a lot of stuff around.
+
+2006-12-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/cellrend/multiline.py
+	(MultilineCellRenderer._on_notify_text): Use
+	gobject.markup_escape_text.
+
+2006-12-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/agents/search.py:
+	* gaupol/agents/test/test_search.py:
+	* gaupol/ops/finder.py:
+	* gaupol/ops/test/test_finder.py:
+	Use re.DOTALL automatically.
+
+	* gaupol/common/cons.py:
+	* gaupol/data/project.py:
+	* gaupol/gtk/common/conf.py:
+	* gaupol/gtk/common/confbase.py:
+	* gaupol/gtk/common/cons.py:
+	* gaupol/gtk/util/gtklib.py:
+	* gaupol/gtk/util/lengthlib.py:
+	* gaupol/gtk/util/test/test_gtklib.py:
+	* gaupol/gtk/util/test/test_lengthlib.py:
+	* gaupol/unittest/__init__.py:
+	Cosmetic changes.
+
+	* gaupol/gtk/main.py (_start): Register conf.write() with atexit.
+
+	* tools/run (run): Print less.
+
+2006-11-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/gaupol.desktop.in:
+	* data/glade:
+	* data/gtkrc:
+	* data/icons:
+	* data/icons/gaupol.png:
+	* data/icons/gaupol.svg:
+	* data/icons/logo.png:
+	* data/ui:
+	* data/ui/menubar.xml:
+	* data/ui/popups.xml:
+	* data/ui/toolbar.xml:
+	* gaupol/gtk:
+	* gaupol/gtk/__init__.py:
+	* gaupol/gtk/app.py:
+	* gaupol/gtk/cellrend:
+	* gaupol/gtk/cellrend/__init__.py:
+	* gaupol/gtk/cellrend/multiline.py:
+	* gaupol/gtk/cellrend/test:
+	* gaupol/gtk/cellrend/test/__init__.py:
+	* gaupol/gtk/cellrend/test/test_multiline.py:
+	* gaupol/gtk/cellrend/test/test_time.py:
+	* gaupol/gtk/cellrend/time.py:
+	* gaupol/gtk/common:
+	* gaupol/gtk/common/__init__.py:
+	* gaupol/gtk/common/conf.py:
+	* gaupol/gtk/common/confbase.py:
+	* gaupol/gtk/common/cons.py:
+	* gaupol/gtk/common/test:
+	* gaupol/gtk/common/test/__init__.py:
+	* gaupol/gtk/common/test/test_conf.py:
+	* gaupol/gtk/common/test/test_confbase.py:
+	* gaupol/gtk/common/test/test_cons.py:
+	* gaupol/gtk/entries:
+	* gaupol/gtk/entries/__init__.py:
+	* gaupol/gtk/entries/test:
+	* gaupol/gtk/entries/test/__init__.py:
+	* gaupol/gtk/entries/test/test_time.py:
+	* gaupol/gtk/entries/time.py:
+	* gaupol/gtk/index.py:
+	* gaupol/gtk/main.py:
+	* gaupol/gtk/page.py:
+	* gaupol/gtk/test:
+	* gaupol/gtk/test/__init__.py:
+	* gaupol/gtk/test/test_app.py:
+	* gaupol/gtk/test/test_index.py:
+	* gaupol/gtk/test/test_main.py:
+	* gaupol/gtk/test/test_page.py:
+	* gaupol/gtk/test/test_view.py:
+	* gaupol/gtk/util:
+	* gaupol/gtk/util/__init__.py:
+	* gaupol/gtk/util/gtklib.py:
+	* gaupol/gtk/util/lengthlib.py:
+	* gaupol/gtk/util/test:
+	* gaupol/gtk/util/test/__init__.py:
+	* gaupol/gtk/util/test/test_gtklib.py:
+	* gaupol/gtk/util/test/test_lengthlib.py:
+	* gaupol/gtk/view.py:
+	* tools/run:
+	  Added.
+
+2006-11-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* bin/gaupol:
+	  main.run instead of main.
+
+	* tools/hide:
+	* tools/list-glade:
+	* tools/list-py:
+	  Removed.
+
+	* tools/pylint:
+	* tools/status:
+	* tools/translate:
+	  Minor changes.
+
+2006-11-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* bin/gaupol:
+	  Do not pass sys.argv[0] to main.
+
+	* gaupol/ops/liner.py (Liner._split_on_words):
+	  Bind dialogue lines to the next word.
+
+2006-11-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* doc/gaupol.1:
+	  Added --config-file option.
+
+	* gaupol/agents/register.py:
+	* gaupol/agents/test/test_register.py:
+	* gaupol/data/obs.py:
+	* gaupol/data/test/test_obs.py:
+	  (obs.Observable.emit): Added self to list of arguments passed.
+
+	* gaupol/ops/liner.py:
+	* gaupol/util/scriptlib.py:
+	* gaupol/agents/test/test_text.py:
+	  Renamed 'english' to 'latin-english' and 'English' to
+	  'Latin (English)'.
+
+2006-11-19  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/ops/liner.py (Liner._join_even):
+	  Fixed len-assuming code to work with lengthlib.func and ems.
+
+2006-11-19  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/ops/parser.py (Parser.set_text):
+	  Set margins only if text contains multiple lines.
+
+2006-11-19  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/agents/edit.py:
+	* gaupol/agents/format.py:
+	* gaupol/agents/open.py:
+	* gaupol/agents/position.py:
+	* gaupol/agents/preview.py:
+	* gaupol/agents/register.py:
+	* gaupol/agents/save.py:
+	* gaupol/agents/search.py:
+	* gaupol/agents/set.py:
+	* gaupol/agents/support.py:
+	* gaupol/agents/test/test_edit.py:
+	* gaupol/agents/test/test_format.py:
+	* gaupol/agents/test/test_init.py:
+	* gaupol/agents/test/test_position.py:
+	* gaupol/agents/test/test_preview.py:
+	* gaupol/agents/test/test_register.py:
+	* gaupol/agents/test/test_search.py:
+	* gaupol/agents/test/test_set.py:
+	* gaupol/agents/test/test_support.py:
+	* gaupol/agents/test/test_text.py:
+	* gaupol/agents/text.py:
+	* gaupol/brokers/__init__.py:
+	* gaupol/common/cons.py:
+	* gaupol/data/obs.py:
+	* gaupol/data/project.py:
+	* gaupol/data/test/test_obs.py:
+	* gaupol/files/subfile.py:
+	* gaupol/ops/test/test_calculator.py:
+	* gaupol/unittest/__init__.py:
+	* gaupol/unittest/case.py:
+	* gaupol/unittest/samples.py:
+	* gaupol/util/test/test_filelib.py:
+	  Cosmetic changes.
+	  Repositioned pylint-disable comments.
+	  Notify signals added to obs and used by some agents.
+
+	* setup.py:
+	  Added gtkrc file.
+
+2006-11-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/agents/edit.py:
+	* gaupol/agents/position.py:
+	* gaupol/ops/liner.py:
+	* gaupol/unittest/case.py:
+	* setup.py:
+	  Cosmetic changes.
+
+	* gaupol/data/project.py:
+	  Docstring fixes.
+
+	* gaupol/util/listlib.py:
+	  (get_ranges): Handle empty lists.
+
+	* gaupol/util/scriptlib.py:
+	  (CLAUSE_SEPS): Added proper handling of dialogue lines.
+
+2006-10-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/__init__.py:
+	* gaupol/agents/__init__.py:
+	* gaupol/agents/delegate.py:
+	* gaupol/agents/edit.py:
+	* gaupol/agents/format.py:
+	* gaupol/agents/index.py:
+	* gaupol/agents/open.py:
+	* gaupol/agents/position.py:
+	* gaupol/agents/preview.py:
+	* gaupol/agents/register.py:
+	* gaupol/agents/save.py:
+	* gaupol/agents/search.py:
+	* gaupol/agents/set.py:
+	* gaupol/agents/support.py:
+	* gaupol/agents/test/test_preview.py:
+	* gaupol/agents/test/test_save.py:
+	* gaupol/agents/test/test_support.py:
+	* gaupol/agents/text.py:
+	* gaupol/brokers/__init__.py:
+	* gaupol/brokers/converter.py:
+	* gaupol/brokers/determiner.py:
+	* gaupol/common/cons.py:
+	* gaupol/common/consbase.py:
+	* gaupol/common/paths.py:
+	* gaupol/common/urls.py:
+	* gaupol/data/__init__.py:
+	* gaupol/data/clipboard.py:
+	* gaupol/data/obs.py:
+	* gaupol/data/project.py:
+	* gaupol/files/__init__.py:
+	* gaupol/files/mpsub.py:
+	* gaupol/files/ssa.py:
+	* gaupol/files/subfile.py:
+	* gaupol/ops/__init__.py:
+	* gaupol/ops/calculator.py:
+	* gaupol/ops/finder.py:
+	* gaupol/ops/liner.py:
+	* gaupol/ops/parser.py:
+	* gaupol/tags/__init__.py:
+	* gaupol/tags/ass.py:
+	* gaupol/tags/internal.py:
+	* gaupol/tags/microdvd.py:
+	* gaupol/tags/mpl2.py:
+	* gaupol/tags/ssa.py:
+	* gaupol/tags/subrip.py:
+	* gaupol/tags/taglib.py:
+	* gaupol/unittest/__init__.py:
+	* gaupol/unittest/case.py:
+	* gaupol/unittest/samples.py:
+	* gaupol/util/enclib.py:
+	* gaupol/util/langlib.py:
+	* gaupol/util/scriptlib.py:
+	* gaupol/util/wwwlib.py:
+	* tools/profile:
+	* tools/pylint:
+	* tools/versions:
+	  Added pylint directives.
+	  Cosmetic changes.
+
+	* tools/pydoc:
+	  Removed in favor of pydoctor.
+
+2006-10-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/agents/text.py (TextAgent.format_lines):
+	  Check violations of legal_lines.
+
+	* gaupol/data/obs.py:
+	* gaupol/data/project.py:
+	  Minor changes.
+
+2006-10-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/data/obs.py:
+	* gaupol/data/test/test_obs.py:
+	  (Observable.disconnect): New method.
+
+2006-10-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/data/obs.py:
+	* gaupol/data/test/test_obs.py:
+	  Renamed model to obs.
+
+	* gaupol/__init__.py:
+	* gaupol/agents/__init__.py:
+	* gaupol/agents/delegate.py:
+	* gaupol/agents/edit.py:
+	* gaupol/agents/index.py:
+	* gaupol/agents/open.py:
+	* gaupol/agents/preview.py:
+	* gaupol/agents/register.py:
+	* gaupol/agents/search.py:
+	* gaupol/brokers/__init__.py:
+	* gaupol/brokers/converter.py:
+	* gaupol/brokers/determiner.py:
+	* gaupol/common/cons.py:
+	* gaupol/common/consbase.py:
+	* gaupol/common/paths.py:
+	* gaupol/common/urls.py:
+	* gaupol/data/__init__.py:
+	* gaupol/data/clipboard.py:
+	* gaupol/data/model.py:
+	* gaupol/data/project.py:
+	* gaupol/data/test/test_model.py:
+	* gaupol/files/__init__.py:
+	* gaupol/files/mpsub.py:
+	* gaupol/files/ssa.py:
+	* gaupol/files/subfile.py:
+	* gaupol/ops/__init__.py:
+	* gaupol/ops/calculator.py:
+	* gaupol/ops/finder.py:
+	* gaupol/ops/liner.py:
+	* gaupol/ops/parser.py:
+	* gaupol/tags/__init__.py:
+	* gaupol/tags/ass.py:
+	* gaupol/tags/internal.py:
+	* gaupol/tags/microdvd.py:
+	* gaupol/tags/mpl2.py:
+	* gaupol/tags/ssa.py:
+	* gaupol/tags/subrip.py:
+	* gaupol/tags/taglib.py:
+	* gaupol/unittest/__init__.py:
+	* gaupol/unittest/case.py:
+	* gaupol/unittest/samples.py:
+	* gaupol/util/enclib.py:
+	* gaupol/util/langlib.py:
+	* gaupol/util/scriptlib.py:
+	* gaupol/util/wwwlib.py:
+	* tools/pylint:
+	  Minor changes.
+
+2006-10-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* */.hidden:
+	  Removed mistakenly imported files.
+
+2006-10-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	Lots of changes.
+	Dependecies bumped.
+	GTK stuff missing.
 
 2006-08-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
 

@@ -1,16 +1,9 @@
 MPL2
 ====
 
-  Extension:
+In addition to the documented tags (/, \ and _), MicroDVD tags seem to
+be commonly used with this format, hence we will allow both with a
+preference for the MPL2 tags.
 
-    ".txt"
-
-  Notes:
-
-    In addition to the documented tags (/, \ and _), MicroDVD tags seem to be
-    commonly used with this format, hence we will allow both with a preference
-    to the MPL2 tags.
-
-  Sources:
-
-    http://lexx.eu.org/%7Eizbkp/napisy/mpl2-eng.html (dead)
+Extension: .txt
+Source: http://lexx.eu.org/%7Eizbkp/napisy/mpl2-eng.html (dead)
