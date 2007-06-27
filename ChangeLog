@@ -1,5 +1,10 @@
 2007-06-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/agents/open.py (_show_parse_error_dialog):
+	Change message wording.
+
+2007-06-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/agents/register.py (_shift_changed_value):
 	* gaupol/agents/util.py (_get_format):
 	* gaupol/gtk/agents/save.py (save_translation_document):

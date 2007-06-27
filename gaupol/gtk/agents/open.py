@@ -237,8 +237,8 @@ class OpenAgent(gaupol.Delegate):
 
         title = _('Failed to parse file "%s"') % basename
         message = _("Please check that the file you are trying open is "
-            "a valid %s file. If it is, file a bug report and attach "
-            "the file.") % format.label
+            "a valid %s file. If you think it is, file a bug report and "
+            "attach the file.") % format.label
         dialog = gaupol.gtk.ErrorDialog(self.window, title, message)
         dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
         self.flash_dialog(dialog)
