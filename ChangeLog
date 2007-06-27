@@ -1,5 +1,10 @@
 2007-06-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/agents/open.py (_pre_open_check):
+	Fix order of arguments in _check_file_is_not_open call.
+
+2007-06-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/agents/open.py:
 	* gaupol/errors.py:
 	* gaupol/gtk/agents/open.py:

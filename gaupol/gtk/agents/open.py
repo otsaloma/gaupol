@@ -179,7 +179,7 @@ class OpenAgent(gaupol.Delegate):
         Raise Default if file is not fit for opening.
         """
         self._check_file_exists(path)
-        self._check_file_is_not_open(check_open, path)
+        self._check_file_is_not_open(path, check_open)
         self._check_file_size(path)
 
     def _select_files(self, title, doc):
