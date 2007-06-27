@@ -267,7 +267,7 @@ class Page(gaupol.Observable):
         newline = main_file.newline.label
         tooltip  = _("<b>Path:</b> %s") % path + "\n\n"
         tooltip += _("<b>Format:</b> %s") % format + "\n"
-        tooltip += _("<b>Encoding:</b> %s") % encoding + "\n"
+        tooltip += _("<b>Character encoding:</b> %s") % encoding + "\n"
         tooltip += _("<b>Newlines:</b> %s") % newline
         event_box = self.tab_widget.get_data("event_box")
         self.tooltips.set_tip(event_box, tooltip)
