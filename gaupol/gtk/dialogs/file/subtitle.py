@@ -141,9 +141,11 @@ class SubtitleFileDialog(object):
         store = self._encoding_combo.get_model()
         return store[index][0]
 
+    @gaupol.gtk.util.asserted_return
     def set_encoding(self, encoding):
         """Set the selected encoding."""
 
+        assert encoding is not None
         store = self._encoding_combo.get_model()
         for i in range(len(store)):
             if store[i][0] == encoding:

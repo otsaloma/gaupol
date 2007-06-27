@@ -123,9 +123,11 @@ class SaveDialog(GladeDialog, SubtitleFileDialog):
         index = self._newline_combo.get_active()
         return gaupol.gtk.NEWLINE.members[index]
 
+    @gaupol.gtk.util.asserted_return
     def set_format(self, format):
         """Set the selected format."""
 
+        assert format is not None
         self._format_combo.set_active(format)
 
     def set_name(self, path):
@@ -135,7 +137,9 @@ class SaveDialog(GladeDialog, SubtitleFileDialog):
             return self.set_filename(path)
         return self.set_current_name(path)
 
+    @gaupol.gtk.util.asserted_return
     def set_newline(self, newline):
         """Set the selected newline."""
 
+        assert newline is not None
         self._newline_combo.set_active(newline)

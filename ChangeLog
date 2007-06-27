@@ -1,5 +1,11 @@
 2007-06-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/dialogs/file/save.py (set_format, set_newline):
+	* gaupol/gtk/dialogs/file/subtitle.py (set_encoding):
+	Allow values of None, with which nothing will be done.
+
+2007-06-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/agents/save.py (save_main_document):
 	Update references to renamed variables and methods.
 
