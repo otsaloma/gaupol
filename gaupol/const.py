@@ -133,6 +133,7 @@ VIDEO_PLAYER.MPLAYER.command = " ".join((
     "-identify",
     "-osdlevel 2",
     "-ss $SECONDS",
+    "-slang",
     "-sub $SUBFILE",
     "$VIDEOFILE",))
 VIDEO_PLAYER.MPLAYER.label = "MPlayer"
