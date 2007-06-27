@@ -1,5 +1,10 @@
 2007-06-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/agents/save.py (save_main_document):
+	Update references to renamed variables and methods.
+
+2007-06-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/const.py (VIDEO_PLAYER.MPLAYER.command):
 	Add -slang (without parameters) to avoid loading VobSubs in Matroska
 	video containers such that they would override the Gaupol-edited

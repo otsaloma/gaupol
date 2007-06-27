@@ -178,7 +178,7 @@ class SaveAgent(gaupol.Delegate):
         """
         props = self._get_main_props(page)
         if None in props:
-            return self.save_main_as(page)
+            return self.save_main_document_as(page)
         self._save_document(page, gaupol.gtk.DOCUMENT.MAIN, props)
         self.flash_message(_("Saved main document"))
 
