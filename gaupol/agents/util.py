@@ -40,7 +40,7 @@ class UtilityAgent(gaupol.Delegate):
         if doc == gaupol.DOCUMENT.TRAN:
             if self.tran_file is not None:
                 return self.tran_file.format
-            return self.get_format(gaupol.DOCUMENT.MAIN)
+            return self._get_format(gaupol.DOCUMENT.MAIN)
         raise ValueError
 
     def get_changed(self, doc):

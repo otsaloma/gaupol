@@ -132,7 +132,7 @@ class RegisterAgent(gaupol.Delegate):
             self.main_changed += shift
         if action.docs == [gaupol.DOCUMENT.TRAN]:
             if self.tran_changed is None:
-                self.tran_active = 0
+                self.tran_changed = 0
         if gaupol.DOCUMENT.TRAN in action.docs:
             if self.tran_changed is not None:
                 self.tran_changed += shift

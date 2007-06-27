@@ -202,7 +202,7 @@ class SaveAgent(gaupol.Delegate):
         """
         props = self._get_translation_props(page)
         if None in props:
-            return self.save_translation_as(page)
+            return self.save_translation_document_as(page)
         self._save_document(page, gaupol.gtk.DOCUMENT.TRAN, props)
         self.flash_message(_("Saved translation document"))
 

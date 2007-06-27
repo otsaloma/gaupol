@@ -1,3 +1,15 @@
+2007-06-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/agents/register.py (_shift_changed_value):
+	* gaupol/agents/util.py (_get_format):
+	* gaupol/gtk/agents/save.py (save_translation_document):
+	Update references to renamed variables and methods.
+
+	* gaupol/gtk/agents/close.py:
+	* gaupol/gtk/dialogs/multiclose.py:
+	Actually close pages in proper methods and raise Defaults in proper
+	places to handle cancellations correctly.
+
 2007-06-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* setup.py:

@@ -101,12 +101,15 @@ class MultiCloseDialog(GladeDialog):
         tree_view.append_column(column)
         return store
 
-    @gaupol.gtk.util.asserted_return
     def _on_response(self, dialog, response):
         """Save the selected documents and close pages."""
 
-        assert response == gtk.RESPONSE_YES
-        self._save_and_close_pages()
+        if response == gtk.RESPONSE_YES:
+            for page in self.pages:
+                self._save_and_close_page(page)
+        elif response == gtk.RESPONSE_NO:
+            for page in self.pages:
+                self.application.close_page(page, False)
 
     def _on_tree_view_cell_toggled(self, renderer, row, store):
         """Toggle the save check button value."""
@@ -132,9 +135,3 @@ class MultiCloseDialog(GladeDialog):
         if pages and pages[0][1]:
             self.application.save_translation_document(page)
         self.application.close_page(page, False)
-
-    def _save_and_close_pages(self):
-        """Save the selected documents and close all handled pages."""
-
-        for page in self.pages:
-            self._save_and_close_page(page)
