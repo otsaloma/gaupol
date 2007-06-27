@@ -1,5 +1,10 @@
 2007-06-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/agents/open.py (on_select_video_file_activate):
+	Set filechooser filename to page.project.video_path.
+
+2007-06-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/page.py (_on_tab_event_box_enter_notify_event):
 	Use name "Character encoding" instead of "Encoding".
 

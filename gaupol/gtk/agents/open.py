@@ -495,7 +495,9 @@ class OpenAgent(gaupol.Delegate):
         path = page.project.video_path
         dialog = gaupol.gtk.VideoDialog(self.window)
         dialog.set_filename(page.project.video_path or "")
-        if page.project.main_file is not None:
+        if page.project.video_path is not None:
+            dialog.set_filename(page.project.video_path)
+        elif page.project.main_file is not None:
             directory = os.path.dirname(page.project.main_file.path)
             dialog.set_current_folder(directory)
         gaupol.gtk.util.set_cursor_normal(self.window)
