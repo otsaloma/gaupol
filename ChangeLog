@@ -1,5 +1,12 @@
 2007-06-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/agents/open.py:
+	* gaupol/errors.py:
+	* gaupol/gtk/agents/open.py:
+	Add gaupol.ParseError and raise that in OpenAgent.
+
+2007-06-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/agents/open.py (_show_parse_error_dialog):
 	Change message wording.
 

@@ -69,6 +69,20 @@ class OpenAgent(gaupol.Delegate):
         for i, text in enumerate(texts):
             self.subtitles[i].tran_text = text
 
+    def _read_file(self, file):
+        """Read file and return starts, ends, texts.
+
+        Raise IOError if reading fails.
+        Raise UnicodeError if decoding fails.
+        Raise ParseError if parsing fails.
+        """
+        try:
+            return file.read()
+        except (IOError, UnicodeError):
+            raise
+        except Exception:
+            raise gaupol.ParseError
+
     def _sort(self, starts, ends, texts):
         """Sort and return data based on start positions."""
 
@@ -102,11 +116,13 @@ class OpenAgent(gaupol.Delegate):
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
         Raise FormatError if unable to detect the format.
+        Raise ParseError if parsing fails.
         Return sort count.
         """
         format = gaupol.FormatDeterminer().determine(path, encoding)
         self.main_file = gaupol.files.get_class(format)(path, encoding)
-        starts, ends, texts, sort_count = self._sort(*self.main_file.read())
+        values = self._read_file(self.main_file)
+        starts, ends, texts, sort_count = self._sort(*values)
 
         # Get framerate from MPsub header.
         if self.main_file.format == gaupol.FORMAT.MPSUB:
@@ -141,11 +157,13 @@ class OpenAgent(gaupol.Delegate):
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
         Raise FileFormatError if unable to detect the format.
+        Raise ParseError if parsing fails.
         Return sort count.
         """
         format = gaupol.FormatDeterminer().determine(path, encoding)
         self.tran_file = gaupol.files.get_class(format)(path, encoding)
-        starts, ends, texts, sort_count = self._sort(*self.tran_file.read())
+        values = self._read_file(self.tran_file)
+        starts, ends, texts, sort_count = self._sort(*values)
 
         blocked = self.block("subtitles-inserted")
         method = (self._append_translations, self._adapt_translations)[smart]

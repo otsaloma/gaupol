@@ -38,3 +38,13 @@ class TestFormatError(unittest.TestCase):
             raise errors.FormatError
         except errors.FormatError:
             pass
+
+
+class TestParseError(unittest.TestCase):
+
+    def test_raise(self):
+
+        try:
+            raise errors.ParseError
+        except errors.ParseError:
+            pass

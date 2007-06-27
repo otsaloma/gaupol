@@ -19,7 +19,7 @@
 """All error classes."""
 
 
-__all__ = ["GaupolError", "FormatError"]
+__all__ = ["GaupolError", "FormatError", "ParseError"]
 
 
 
@@ -33,5 +33,12 @@ class GaupolError(Exception):
 class FormatError(GaupolError):
 
     """Unrecognized subtitle file format."""
+
+    pass
+
+
+class ParseError(GaupolError):
+
+    """Failed to parse a subtitle file into positions and texts."""
 
     pass
