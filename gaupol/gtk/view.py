@@ -79,7 +79,7 @@ class View(gtk.TreeView):
                 renderer = gaupol.gtk.TimeCellRenderer()
             elif edit_mode == gaupol.gtk.MODE.FRAME:
                 renderer = gtk.CellRendererSpin()
-                adjustment = gtk.Adjustment(0, 0, 99999999, 1, 10)
+                adjustment = gtk.Adjustment(0, -99999999, 99999999, 1, 10)
                 renderer.props.adjustment = adjustment
             renderer.props.xalign = 1
         elif gaupol.gtk.util.is_text_column(col):

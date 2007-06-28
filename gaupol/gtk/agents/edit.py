@@ -20,6 +20,7 @@
 
 
 import gaupol.gtk
+import re
 _ = gaupol.i18n._
 ngettext = gaupol.i18n.ngettext
 
@@ -35,6 +36,7 @@ class EditAgent(gaupol.Delegate):
     # pylint: disable-msg=E0203,W0201
 
     __metaclass__ = gaupol.Contractual
+    _re_frame = re.compile(r"-?\d+")
 
     def __init__(self, master):
 
@@ -233,7 +235,7 @@ class EditAgent(gaupol.Delegate):
         if gaupol.gtk.util.is_position_column(col):
             assert value
             if page.edit_mode == gaupol.gtk.MODE.FRAME:
-                assert value.isdigit()
+                assert self._re_frame.match(value)
                 value = int(value)
         if col == gaupol.gtk.COLUMN.START:
             return page.project.set_start(row, value)

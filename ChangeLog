@@ -1,5 +1,11 @@
 2007-06-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/agents/edit.py:
+	* gaupol/gtk/view.py:
+	Accept negative values in the frame cell renderer.
+
+2007-06-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/page.py:
 	Move focus, at least the row, when projects emits a *-changed,
 	subtitles-inserted or subtitles-removed signal.
