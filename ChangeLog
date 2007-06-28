@@ -1,5 +1,10 @@
 2007-06-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/view.py (_init_columns):
+	Do not set text columns to expand since it is too slow.
+
+2007-06-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/view.py (_get_header_label, _get_renderer):
 	Use gtk.CellRendererText instead of gtk.CellRendererSpin for frame
 	cells.

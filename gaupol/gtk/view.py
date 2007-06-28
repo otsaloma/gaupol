@@ -91,7 +91,6 @@ class View(gtk.TreeView):
             column.set_clickable(True)
             column.set_resizable(True)
             column.set_visible(col in visible_columns)
-            column.set_expand(gaupol.gtk.util.is_text_column(col))
             label = self._get_header_label(col, edit_mode)
             column.set_widget(label)
 
