@@ -181,7 +181,8 @@ class Page(gaupol.Observable):
         assert rows
         cols = [gaupol.gtk.COLUMN.MAIN_TEXT]
         self.reload_view(rows, cols)
-        self.view.set_focus(rows[0], cols[0])
+        if self.view.get_focus()[0] not in rows:
+            self.view.set_focus(rows[0], cols[0])
         self.view.select_rows(rows)
 
     @gaupol.gtk.util.asserted_return
@@ -192,7 +193,8 @@ class Page(gaupol.Observable):
         COLUMN = gaupol.gtk.COLUMN
         cols = (COLUMN.START, COLUMN.END, COLUMN.DURATION)
         self.reload_view(rows, cols)
-        self.view.set_focus(rows[0])
+        if self.view.get_focus()[0] not in rows:
+            self.view.set_focus(rows[0])
         self.view.select_rows(rows)
 
     @gaupol.gtk.util.asserted_return
@@ -203,7 +205,8 @@ class Page(gaupol.Observable):
         cols = gaupol.gtk.COLUMN.members[:]
         cols.remove(gaupol.gtk.COLUMN.NUMBER)
         self.reload_view(rows, cols)
-        self.view.set_focus(rows[0])
+        if self.view.get_focus()[0] not in rows:
+            self.view.set_focus(rows[0])
         self.view.select_rows(rows)
 
     def _on_project_subtitles_inserted_ensure(self, value, project, rows):
@@ -256,7 +259,8 @@ class Page(gaupol.Observable):
         assert rows
         cols = [gaupol.gtk.COLUMN.TRAN_TEXT]
         self.reload_view(rows, cols)
-        self.view.set_focus(rows[0], cols[0])
+        if self.view.get_focus()[0] not in rows:
+            self.view.set_focus(rows[0], cols[0])
         self.view.select_rows(rows)
 
     @gaupol.gtk.util.asserted_return

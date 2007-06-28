@@ -1,5 +1,11 @@
 2007-06-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/page.py:
+	When the project emits a *-changed signal, move the focus row only if
+	it currently is outside the changed rows.
+
+2007-06-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/view.py (_init_columns):
 	Do not set text columns to expand since it is too slow.
 
