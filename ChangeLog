@@ -1,5 +1,10 @@
 2007-06-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/agents/view.py:
+	Do not register setting framerate with the undo/redo system.
+
+2007-06-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/main.py (_parse_args):
 	Add brackets around NUM in the usage string.
 

@@ -56,7 +56,7 @@ class ViewAgent(gaupol.Delegate):
         framerate = gaupol.gtk.FRAMERATE.members[index]
         assert framerate != page.project.framerate
         gaupol.gtk.util.set_cursor_busy(self.window)
-        page.project.set_framerate(framerate)
+        page.project.set_framerate(framerate, register=None)
         gaupol.gtk.conf.editor.framerate = framerate
         self.get_menu_item(framerate.action).set_active(True)
         if page.edit_mode != page.project.main_file.mode:
@@ -82,7 +82,7 @@ class ViewAgent(gaupol.Delegate):
         framerate = gaupol.gtk.FRAMERATE.members[index]
         assert framerate != page.project.framerate
         gaupol.gtk.util.set_cursor_busy(self.window)
-        page.project.set_framerate(framerate)
+        page.project.set_framerate(framerate, register=None)
         gaupol.gtk.conf.editor.framerate = framerate
         self.framerate_combo.set_active(framerate)
         if page.edit_mode != page.project.main_file.mode:
