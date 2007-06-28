@@ -1,5 +1,10 @@
 2007-06-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/ruler.py (disconnect_text_view):
+	Exit gracefully if text view was never connected.
+
+2007-06-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/preferences-dialog.glade:
 	Unitalicize note about open dialog encoding.
 
