@@ -34,7 +34,7 @@ Make final edits to files and commit changes.
 Tag source.
 
     svn copy $SVN_SOURCE $SVN_ROOT/tags/$VERSION \
-        -m "Tagged release $VERSION."
+        -m "Tag release $VERSION."
 
 Build and upload tarballs.
 

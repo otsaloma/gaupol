@@ -128,7 +128,7 @@ def _parse_args(args):
 
     parser = optparse.OptionParser(
         formatter=optparse.IndentedHelpFormatter(2, 42),
-        usage=_("gaupol [OPTION...] [FILE...] [+NUM]"),)
+        usage=_("gaupol [OPTION...] [FILE...] [+[NUM]]"),)
 
     parser.add_option(
         "-c", "--config-file",

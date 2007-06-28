@@ -1,5 +1,10 @@
 2007-06-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/main.py (_parse_args):
+	Add brackets around NUM in the usage string.
+
+2007-06-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/view.py (_on_key_press_event):
 	Disable Ctrl+PageUp/PageDown to allow them to be used solely for
 	navigation between notebook tabs.
