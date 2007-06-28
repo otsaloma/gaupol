@@ -1,5 +1,10 @@
 2007-06-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/glade/preferences-dialog.glade:
+	Unitalicize note about open dialog encoding.
+
+2007-06-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/agents/save.py (save_main):
 	Update the mode of subtitles if saving in different format.
 
