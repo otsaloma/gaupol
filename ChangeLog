@@ -1,3 +1,8 @@
+2007-06-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/header-dialog.glade:
+	Do not wrap text in text views.
+
 2007-06-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/dialogs/file/save.py (set_format, set_newline):
