@@ -141,6 +141,21 @@ class SaveAgent(gaupol.Delegate):
             elif (not write_success) and file_existed and backup_success:
                 self._move_file(backup_path, file.path)
 
+    @gaupol.util.asserted_return
+    def _update_mode(self, props, keep_changes, new_main_file):
+        """Update the mode of subtitles if main file's format has changed.
+
+        props should be a sequence of path, format, encoding, newline.
+        """
+        assert keep_changes
+        assert props is not None
+        format = props[1]
+        assert format is not None
+        assert format != self.main_file.format
+        for i, subtitle in enumerate(self.subtitles):
+            subtitle.mode = new_main_file.mode
+        self.emit("positions-changed", range(len(self.subtitles)))
+
     def save(self, doc, props, keep_changes=True):
         """Save document's subtitle file.
 
@@ -167,6 +182,7 @@ class SaveAgent(gaupol.Delegate):
         """
         args = (gaupol.DOCUMENT.MAIN, props, keep_changes)
         main_file, texts, changed_indexes = self._save(*args)
+        self._update_mode(props, keep_changes, main_file)
         if keep_changes:
             self.main_file = main_file
             for i, text in enumerate(texts):
