@@ -1,5 +1,11 @@
 2007-06-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/files/mpsub.py (_clean_lines):
+	Remove newlines from the beginning of lines to stop them from being
+	prepended to the header.
+
+2007-06-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/header-dialog.glade:
 	Do not wrap text in text views.
 

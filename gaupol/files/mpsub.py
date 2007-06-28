@@ -58,6 +58,8 @@ class MPsub(SubtitleFile):
                     lines[-1] = line
                     continue
             lines.append(line)
+        while lines[0] == "\n":
+            lines.pop(0)
         return lines
 
     def _get_mpsub_frames(self, starts, ends):
