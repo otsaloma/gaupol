@@ -177,8 +177,16 @@ class View(gtk.TreeView):
         self.update_headers()
 
     def _on_key_press_event(self, widget, event):
-        """Enable or disable the interactive search."""
+        """Handle various special-case key combinations."""
 
+        # Disable Ctrl+PageUp/PageDown to allow them to be
+        # used solely for navigation between notebook tabs.
+        if event.state & gtk.gdk.CONTROL_MASK:
+            if event.keyval in (gtk.keysyms.Page_Up, gtk.keysyms.Page_Down):
+                return widget.stop_emission("key-press-event")
+
+        # Use interactive search for a subtitle number
+        # only if numeric keys have been pressed.
         self.set_enable_search(event.string.isdigit())
 
     def get_focus_ensure(self, value):
