@@ -1,5 +1,11 @@
 2007-06-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/view.py (_get_header_label, _get_renderer):
+	Use gtk.CellRendererText instead of gtk.CellRendererSpin for frame
+	cells.
+
+2007-06-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/agents/edit.py:
 	* gaupol/gtk/view.py:
 	Accept negative values in the frame cell renderer.

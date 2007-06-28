@@ -57,12 +57,6 @@ class View(gtk.TreeView):
         label.show()
         label.set_attributes(self._active_attr)
         width = label.size_request()[0]
-        is_position = gaupol.gtk.util.is_position_column(col)
-        if is_position and (edit_mode == gaupol.gtk.MODE.FRAME):
-            spin = gtk.SpinButton()
-            digits = (0 if col == gaupol.gtk.COLUMN.DURATION else 5)
-            spin.set_digits(digits)
-            width = max(width, spin.size_request()[0])
         label.set_size_request(width, -1)
         label.set_attributes(self._normal_attr)
         return label
@@ -78,9 +72,7 @@ class View(gtk.TreeView):
             if edit_mode == gaupol.gtk.MODE.TIME:
                 renderer = gaupol.gtk.TimeCellRenderer()
             elif edit_mode == gaupol.gtk.MODE.FRAME:
-                renderer = gtk.CellRendererSpin()
-                adjustment = gtk.Adjustment(0, -99999999, 99999999, 1, 10)
-                renderer.props.adjustment = adjustment
+                renderer = gtk.CellRendererText()
             renderer.props.xalign = 1
         elif gaupol.gtk.util.is_text_column(col):
             renderer = gaupol.gtk.MultilineCellRenderer()
