@@ -48,7 +48,9 @@ class DebugDialog(GladeDialog):
     def __init__(self):
 
         GladeDialog.__init__(self, "debug-dialog")
-        self._text_view = self._glade_xml.get_widget("text_view")
+        get_widget = self._glade_xml.get_widget
+        self._message_label = get_widget("message_label")
+        self._text_view = get_widget("text_view")
         self._code_lines = []
 
         self._init_text_tags()
@@ -195,6 +197,7 @@ class DebugDialog(GladeDialog):
         width = max(text_width, code_width) + 150 + gaupol.gtk.EXTRA
         height = height + 160 + gaupol.gtk.EXTRA
         gaupol.gtk.util.resize_message_dialog(self, width, height)
+        self._message_label.set_size_request(width - 150, -1)
 
     def _show_editor_error_dialog(self):
         """Show an error dialog after failing to open editor."""
