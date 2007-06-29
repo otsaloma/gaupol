@@ -75,7 +75,7 @@ class SubRip(SubtitleFile):
         Raise UnicodeError if decoding fails.
         Return start times, end times, texts.
         """
-        time = r"\d\d:\d\d:\d\d,\d\d\d"
+        time = r"-?\d\d:\d\d:\d\d,\d\d\d"
         re_time_line = re.compile(r"^(%s) --> (%s)\s*$" % (time, time))
         lines = self._read_lines()
         lines = self._clean_lines(lines, re_time_line)

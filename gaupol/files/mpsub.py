@@ -154,7 +154,7 @@ class MPsub(SubtitleFile):
         Return starts, ends, texts.
         """
         lines = self._read_lines()
-        re_time_line = re.compile(r"^([\d\.]+) ([\d\.]+)\s*$")
+        re_time_line = re.compile(r"^(-?[\d\.]+) (-?[\d\.]+)\s*$")
         lines = self._clean_lines(lines, re_time_line)
         lines = self._read_header(lines, re_time_line)
         return self._read_components(lines, re_time_line)

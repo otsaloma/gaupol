@@ -48,7 +48,7 @@ class MPL2(SubtitleFile):
         ends = []
         texts = []
         calc = gaupol.Calculator()
-        re_line = re.compile(r"^\[(\d+)\]\[(\d+)\](.*?)$")
+        re_line = re.compile(r"^\[(-?\d+)\]\[(-?\d+)\](.*?)$")
         for line in self._read_lines():
             match = re_line.match(line)
             if match is not None:

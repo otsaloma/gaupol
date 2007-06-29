@@ -43,7 +43,7 @@ class SubViewer2(SubtitleFile):
         starts = []
         ends = []
         texts = []
-        time = r"\d\d:\d\d:\d\d.\d\d"
+        time = r"-?\d\d:\d\d:\d\d.\d\d"
         re_time_line = re.compile(r"^(%s),(%s)\s*$" % (time, time))
         re_trailer = re.compile(r"\n\Z", re.MULTILINE)
         for i, line in enumerate(lines + [""]):
@@ -88,8 +88,11 @@ class SubViewer2(SubtitleFile):
         Raise UnicodeError if encoding fails.
         """
         calc = gaupol.Calculator()
-        starts = [calc.round_time(x, 2)[:11] for x in starts]
-        ends = [calc.round_time(x, 2)[:11] for x in ends]
+        starts = [calc.round_time(x, 2) for x in starts]
+        ends = [calc.round_time(x, 2) for x in ends]
+        re_last_digit = re.compile(r"\d$")
+        starts = [re_last_digit.sub("", x) for x in starts]
+        ends = [re_last_digit.sub("", x) for x in ends]
         texts = [x.replace("\n", "[br]") for x in texts]
 
         args = (self.path, "w", self.encoding)

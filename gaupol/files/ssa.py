@@ -75,8 +75,9 @@ class SubStationAlpha(SubtitleFile):
                 ends.append(fields[hide_index])
                 texts.append(fields[text_index])
 
-        starts = ["0%s0" % x for x in starts]
-        ends = ["0%s0" % x for x in ends]
+        re_time = re.compile(r"^(-?)(.*)$")
+        starts = [re_time.sub(r"\1\060\2\060", x) for x in starts]
+        ends = [re_time.sub(r"\1\060\2\060", x) for x in ends]
         texts = [x.replace("\\n", "\n") for x in texts]
         texts = [x.replace("\\N", "\n") for x in texts]
         return starts, ends, texts
@@ -110,8 +111,11 @@ class SubStationAlpha(SubtitleFile):
         Raise UnicodeError if encoding fails.
         """
         calc = gaupol.Calculator()
-        starts = [calc.round_time(x, 2)[1:11] for x in starts]
-        ends = [calc.round_time(x, 2)[1:11] for x in ends]
+        starts = [calc.round_time(x, 2) for x in starts]
+        ends = [calc.round_time(x, 2) for x in ends]
+        re_time = re.compile(r"(-?)\d(\d:\d\d:\d\d.\d\d)\d")
+        starts = [re_time.sub(r"\1\2", x) for x in starts]
+        ends = [re_time.sub(r"\1\2", x) for x in ends]
         texts = [x.replace("\n", "\\n") for x in texts]
 
         args = (self.path, "w", self.encoding)

@@ -1,5 +1,17 @@
 2007-06-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/const.py:
+	* gaupol/files/microdvd.py:
+	* gaupol/files/mpl2.py:
+	* gaupol/files/mpsub.py:
+	* gaupol/files/ssa.py:
+	* gaupol/files/subrip.py:
+	* gaupol/files/subviewer2.py:
+	* gaupol/files/tmplayer.py:
+	Handle reading and writing neagative positions.
+
+2007-06-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/dialogs/shift.py (_on_preview_button_clicked):
 	Update references to renamed variables and methods.
 

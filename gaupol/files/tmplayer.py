@@ -24,6 +24,7 @@ from __future__ import with_statement
 import codecs
 import contextlib
 import gaupol
+import re
 
 from .subfile import SubtitleFile
 
@@ -47,9 +48,10 @@ class TMPlayer(SubtitleFile):
         ends = []
         texts = []
         for line in self._read_lines():
-            if len(line.strip()) >= 9:
-                starts.append(line[:8] + ".000")
-                texts.append(line[9:-1])
+            z = (10 if line.startswith("-") else 9)
+            if len(line.strip()) >= z:
+                starts.append(line[:z - 1] + ".000")
+                texts.append(line[z:-1])
 
         calc = gaupol.Calculator()
         for i in range(1, len(starts)):
@@ -65,7 +67,9 @@ class TMPlayer(SubtitleFile):
         Raise UnicodeError if encoding fails.
         """
         calc = gaupol.Calculator()
-        starts = [calc.round_time(x, 0)[:8] + ":" for x in starts]
+        starts = [calc.round_time(x, 0) for x in starts]
+        re_milliseconds = re.compile("\.\d\d\d$")
+        starts = [re_milliseconds.sub(r":", x) for x in starts]
         texts = [x.replace("\n", "|") for x in texts]
 
         args = (self.path, "w", self.encoding)
