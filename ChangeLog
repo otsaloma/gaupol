@@ -1,5 +1,10 @@
 2007-06-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/subtitle.py (shift_positions):
+	Allow negative positions as a result.
+
+2007-06-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/const.py (VIDEO_PLAYER.MPLAYER.command):
 	Add -noautosub to load only the specified subtitle file.
 

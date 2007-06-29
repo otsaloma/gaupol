@@ -336,15 +336,11 @@ class Subtitle(object):
             end = self._get_end_time()
             end = self._calc.add_times(end, value)
         elif isinstance(value, int):
-            start = self._get_start_frame()
-            start = max(0, start + value)
-            end = self._get_end_frame()
-            end = max(0, end + value)
+            start = self._get_start_frame() + value
+            end = self._get_end_frame() + value
         elif isinstance(value, float):
-            start = self._get_start_seconds()
-            start = max(0, start + value)
-            end = self._get_end_seconds()
-            end = max(0, end + value)
+            start = self._get_start_seconds() + value
+            end = self._get_end_seconds() + value
         self._set_start(start)
         self._set_end(end)
 
