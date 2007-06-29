@@ -6,9 +6,8 @@ import sys
 
 cwd = os.path.dirname(os.path.abspath(__file__))
 if os.path.isfile(os.path.join(cwd, "..", "data", "gaupol.desktop.in")):
-    path = os.path.join(cwd, "..")
-    if not path in sys.path:
-        sys.path.insert(0, path)
+    path = os.path.abspath(os.path.join(cwd, ".."))
+    sys.path.insert(0, path)
     import gaupol
     icon_theme = gtk.icon_theme_get_default()
     path = os.path.join(gaupol.DATA_DIR, "icons")

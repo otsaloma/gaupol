@@ -1,6 +1,12 @@
 2007-06-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* bin/gaupol:
+	Always modify sys.path when running from source to ensure that the
+	correct directory is at the beginning of the search path.
+
+2007-06-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* bin/gaupol:
 	Add data/icons to icon theme search path if running from source.
 
 	* data/icons/hicolor/16x16/apps/gaupol.png:
