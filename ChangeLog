@@ -1,5 +1,10 @@
 2007-06-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/__init__.py:
+	Parse gtkrc file instead of adding it to defaults.
+
+2007-06-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/agents/open.py (_sort):
 	* gaupol/calculator.py (compare_times):
 	* gaupol/subtitle.py (__cmp__):

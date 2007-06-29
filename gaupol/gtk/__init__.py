@@ -41,7 +41,7 @@ import os
 
 module = inspect.getmodule(lambda: True)
 gaupol.__dict__["gtk"] = module
-gtk.rc_add_default_file(os.path.join(gaupol.DATA_DIR, "gtkrc"))
+gtk.rc_parse(os.path.join(gaupol.DATA_DIR, "gtkrc"))
 gtk.glade.bindtextdomain("gaupol", gaupol.LOCALE_DIR)
 gtk.glade.textdomain("gaupol")
 gobject.threads_init()
