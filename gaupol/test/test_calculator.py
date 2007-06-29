@@ -47,6 +47,27 @@ class TestCalculator(unittest.TestCase):
         time = self.calc.add_times("33:33:33.333", "44:44:44.444")
         assert time == "78:18:17.777"
 
+    def test_compare_times(self):
+
+        times = ("00:00:00.001", "00:00:00.000")
+        assert self.calc.compare_times(*times) == 1
+        times = ("00:00:00.000", "00:00:00.000")
+        assert self.calc.compare_times(*times) == 0
+        times = ("00:00:00.000", "00:00:00.001")
+        assert self.calc.compare_times(*times) == -1
+
+        times = ("-00:00:00.002", "-00:00:00.001")
+        assert self.calc.compare_times(*times) == -1
+        times = ("-00:00:00.001", "-00:00:00.001")
+        assert self.calc.compare_times(*times) == 0
+        times = ("-00:00:00.001", "-00:00:00.002")
+        assert self.calc.compare_times(*times) == 1
+
+        times = ("00:00:00.001", "-00:00:00.001")
+        assert self.calc.compare_times(*times) == 1
+        times = ("-00:00:00.001", "00:00:00.001")
+        assert self.calc.compare_times(*times) == -1
+
     def test_frame_to_seconds(self):
 
         seconds = self.calc.frame_to_seconds(127)

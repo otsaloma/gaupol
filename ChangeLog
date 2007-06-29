@@ -1,5 +1,12 @@
 2007-06-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/agents/open.py (_sort):
+	* gaupol/calculator.py (compare_times):
+	* gaupol/subtitle.py (__cmp__):
+	Compare negative times correctly.
+
+2007-06-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/const.py:
 	* gaupol/files/microdvd.py:
 	* gaupol/files/mpl2.py:

@@ -62,6 +62,12 @@ class Calculator(object):
         y = self.time_to_seconds(y)
         return self.seconds_to_time(x + y)
 
+    def compare_times(self, x, y):
+        """Return 1 if x is greater, 0 if equal and -1 if y greater."""
+
+        negative = (x.startswith("-") and y.startswith("-"))
+        return (negative * -2 + 1) * cmp(x, y)
+
     def frame_to_seconds(self, frame):
         """Convert frame to seconds."""
 

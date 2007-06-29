@@ -87,19 +87,21 @@ class OpenAgent(gaupol.Delegate):
         """Sort and return data based on start positions."""
 
         sorts = []
+        sort_function = cmp
+        if starts and isinstance(starts[0], basestring):
+            sort_function = self.calc.compare_times
         def compare_starts(x, y):
-            value = cmp(x[0], y[0])
-            if value == -1:
-                sorts.append(1)
+            value = sort_function(x[0], y[0])
+            sorts.append(value == -1)
             return value
-        data = []
+        fields = []
         for i in range(len(starts)):
-            data.append((starts[i], ends[i], texts[i]))
-        data.sort(compare_starts)
-        starts = [x[0] for x in data]
-        ends   = [x[1] for x in data]
-        texts  = [x[2] for x in data]
-        return starts, ends, texts, len(sorts)
+            fields.append((starts[i], ends[i], texts[i]))
+        fields.sort(compare_starts)
+        starts = [x[0] for x in fields]
+        ends =   [x[1] for x in fields]
+        texts =  [x[2] for x in fields]
+        return starts, ends, texts, sum(sorts)
 
     def open_main_require(self, path, encoding):
         assert gaupol.encodings.is_valid(encoding)

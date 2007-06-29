@@ -54,7 +54,8 @@ class Subtitle(object):
         """Compare start positions in this subtitle's mode."""
 
         if self.mode == gaupol.MODE.TIME:
-            return cmp(self.start_time, other.start_time)
+            times = (self.start_time, other.start_time)
+            return self._calc.compare_times(*times)
         if self.mode == gaupol.MODE.FRAME:
             return cmp(self.start_frame, other.start_frame)
         raise ValueError
