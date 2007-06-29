@@ -1,5 +1,10 @@
 2007-06-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/dialogs/shift.py (_on_preview_button_clicked):
+	Update references to renamed variables and methods.
+
+2007-06-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* bin/gaupol:
 	Always modify sys.path when running from source to ensure that the
 	correct directory is at the beginning of the search path.

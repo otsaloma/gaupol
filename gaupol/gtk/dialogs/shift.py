@@ -104,7 +104,7 @@ class _PositionShiftDialog(GladeDialog):
         target = self._get_target()
         rows = self.application.get_target_rows(target)
         doc = gaupol.gtk.DOCUMENT.MAIN
-        method = self._get_shift_method()
+        method = page.project.shift_positions
         args = (rows, self._get_amount())
         self.application.preview_changes(page, row, doc, method, args)
 
