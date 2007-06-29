@@ -140,9 +140,9 @@ VIDEO_PLAYER.MPLAYER.label = "MPlayer"
 VIDEO_PLAYER.VLC = gaupol.ConstantMember()
 VIDEO_PLAYER.VLC.command = " ".join((
     get_vlc_executable(),
-    "--start-time=$SECONDS",
-    "--sub-file=$SUBFILE",
-    "$VIDEOFILE",))
+    "$VIDEOFILE",
+    ":start-time=$SECONDS",
+    ":sub-file=$SUBFILE",))
 VIDEO_PLAYER.VLC.label = "VLC"
 VIDEO_PLAYER.finalize()
 

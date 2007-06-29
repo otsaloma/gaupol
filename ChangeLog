@@ -1,3 +1,8 @@
+2007-06-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/const.py (VIDEO_PLAYER.VLC.command):
+	Use per-stream options (starting with ":" instead of "--").
+
 2007-06-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/ruler.py (disconnect_text_view):
