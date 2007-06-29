@@ -83,7 +83,7 @@ class _PositionShiftDialog(GladeDialog):
         rows = page.view.get_selected_rows()
         if (not rows) and (target == TARGET.SELECTED):
             self._current_radio.set_active(True)
-            self._selected_radio.set_sensitive(False)
+        self._selected_radio.set_sensitive(bool(rows))
         if page.project.video_path is None:
             self._preview_button.set_sensitive(False)
         if page.project.main_file is None:

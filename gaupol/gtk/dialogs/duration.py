@@ -97,7 +97,7 @@ class DurationAdjustDialog(GladeDialog):
         target = gaupol.gtk.conf.duration_adjust.target
         if (not rows) and (target == gaupol.gtk.TARGET.SELECTED):
             self._current_radio.set_active(True)
-            self._selected_radio.set_sensitive(False)
+        self._selected_radio.set_sensitive(bool(rows))
 
         self._all_radio.emit("toggled")
         self._current_radio.emit("toggled")

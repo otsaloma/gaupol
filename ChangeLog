@@ -1,5 +1,12 @@
 2007-06-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/dialogs/duration.py:
+	* gaupol/gtk/dialogs/shift.py:
+	* gaupol/gtk/dialogs/transform.py:
+	Set sensitivity of the selected rows radio button.
+
+2007-06-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/__init__.py:
 	Parse gtkrc file instead of adding it to defaults.
 

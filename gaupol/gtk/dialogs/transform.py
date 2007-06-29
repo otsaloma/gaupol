@@ -74,7 +74,7 @@ class _PositionTransformDialog(GladeDialog):
         target = gaupol.gtk.conf.position_transform.target
         if (not rows) and (target == gaupol.gtk.TARGET.SELECTED):
             self._current_radio.set_active(True)
-            self._selected_radio.set_sensitive(False)
+        self._selected_radio.set_sensitive(bool(rows))
         if page.project.video_path is None:
             self._preview_button_1.set_sensitive(False)
             self._preview_button_2.set_sensitive(False)
