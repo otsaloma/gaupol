@@ -193,12 +193,13 @@ data_files = [
     ("share/gaupol", ["data/conf.spec", "data/gtkrc", "data/ui.xml"]),
     ("share/gaupol/glade", glob.glob("data/glade/*.glade")),
     ("share/gaupol/headers", glob.glob("data/headers/*.txt")),
-    ("share/icons/hicolor/16x16/apps", ["data/icons/16x16/gaupol.png"]),
-    ("share/icons/hicolor/22x22/apps", ["data/icons/22x22/gaupol.png"]),
-    ("share/icons/hicolor/24x24/apps", ["data/icons/24x24/gaupol.png"]),
-    ("share/icons/hicolor/32x32/apps", ["data/icons/32x32/gaupol.png"]),
-    ("share/icons/hicolor/scalable/apps", ["data/icons/scalable/gaupol.svg"]),
     ("share/man/man1", ["doc/gaupol.1"]),]
+
+for name in ("16x16", "22x22", "24x24", "32x32", "scalable"):
+    directory = "share/icons/hicolor/%s/apps" % name
+    files = glob.glob("data/icons/hicolor/%s/apps/*.png" % name)
+    files += glob.glob("data/icons/hicolor/%s/apps/*.svg" % name)
+    data_files.append((directory, files))
 
 setup(
     name="gaupol",

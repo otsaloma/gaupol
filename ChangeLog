@@ -1,5 +1,20 @@
 2007-06-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* bin/gaupol:
+	Add data/icons to icon theme search path if running from source.
+
+	* data/icons/hicolor/16x16/apps/gaupol.png:
+	* data/icons/hicolor/22x22/apps/gaupol.png:
+	* data/icons/hicolor/24x24/apps/gaupol.png:
+	* data/icons/hicolor/32x32/apps/gaupol.png:
+	* data/icons/hicolor/scalable/apps/gaupol.svg:
+	Arrange icon directories according to icon theme standards.
+
+	* setup.py:
+	Update icon file paths.
+
+2007-06-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/const.py (VIDEO_PLAYER.VLC.command):
 	Use per-stream options (starting with ":" instead of "--").
 
