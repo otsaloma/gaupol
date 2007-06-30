@@ -126,7 +126,8 @@ class _PositionTransformDialog(GladeDialog):
         row = self._subtitle_spin_1.get_value_as_int() - 1
         doc = gaupol.gtk.DOCUMENT.MAIN
         method = page.project.transform_positions
-        rows = self._get_target_rows()
+        target = self._get_target()
+        rows = self.application.get_target_rows(target)
         point_1 = self._get_first_point()
         point_2 = self._get_second_point()
         args = (rows, point_1, point_2)
@@ -139,7 +140,8 @@ class _PositionTransformDialog(GladeDialog):
         row = self._subtitle_spin_2.get_value_as_int() - 1
         doc = gaupol.gtk.DOCUMENT.MAIN
         method = page.project.transform_positions
-        rows = self._get_target_rows()
+        target = self._get_target()
+        rows = self.application.get_target_rows(target)
         point_1 = self._get_first_point()
         point_2 = self._get_second_point()
         args = (rows, point_1, point_2)

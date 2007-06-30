@@ -1,5 +1,10 @@
 2007-06-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/dialogs/transform.py:
+	Update references to renamed variables and methods.
+
+2007-06-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/subtitle.py (shift_positions):
 	Allow negative positions as a result.
 
