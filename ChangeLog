@@ -1,5 +1,10 @@
 2007-06-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/main.py (_init_application):
+	Update GUI after selecting video file.
+
+2007-06-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* doc/gaupol.1:
 	* gaupol/gtk/main.py:
 	Rearrange the order in which options are listed.

@@ -82,6 +82,7 @@ def _init_application(opts, args):
     if (page is not None) and opts.video_file:
         path = os.path.abspath(opts.video_file)
         page.project.video_path = path
+        application.update_gui()
     if (page is not None) and (jump_row is not None):
         page.view.set_focus(jump_row)
 
