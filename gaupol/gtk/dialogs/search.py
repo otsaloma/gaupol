@@ -381,7 +381,7 @@ class SearchDialog(GladeDialog):
         """
         pattern = self._pattern_entry.get_text()
         gaupol.gtk.util.raise_default(not pattern)
-        ignore_case = self._ignore_case_check.get_active()
+        ignore_case = gaupol.gtk.conf.search.ignore_case
         if not gaupol.gtk.conf.search.regex:
             self._add_pattern_to_history()
             return page.project.set_search_string(pattern, ignore_case)
