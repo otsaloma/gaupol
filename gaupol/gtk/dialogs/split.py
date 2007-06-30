@@ -86,6 +86,10 @@ class SplitDialog(GladeDialog):
         """Shift subtitles in the destination page."""
 
         amount = source.project.subtitles[-1].end
+        if isinstance(amount, basestring):
+            amount = "-" + amount
+        elif isinstance(amount (int, float)):
+            amount = -1 * amount
         destination.project.shift_positions(None, amount, register=None)
 
     def _split_project(self):
@@ -97,7 +101,7 @@ class SplitDialog(GladeDialog):
         self.application.counter += 1
         destination = gaupol.gtk.Page(self.application.counter)
         subtitles = [x.copy() for x in source.project.subtitles[index:]]
-        destination.subtitles = subtitles
+        destination.project.subtitles = subtitles
         destination.reload_view_all()
         self._remove_from_source(source, index)
         self._shift_destination(source, destination)
