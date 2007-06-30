@@ -551,10 +551,12 @@ class OpenAgent(gaupol.Delegate):
             self.open_main_file(path, encoding)
 
     @gaupol.gtk.util.silent(gaupol.gtk.Default)
-    def open_translation_file(self, path, encoding=None):
+    def open_translation_file(self, path, encoding=None, smart=None):
         """Open translation file."""
 
         encodings = self._get_encodings(encoding)
+        if smart is not None:
+            gaupol.gtk.conf.file.smart_open_translation = smart
         page = self._open_file(path, encodings, gaupol.gtk.DOCUMENT.TRAN)
         gaupol.gtk.util.set_cursor_busy(self.window)
         col = gaupol.gtk.COLUMN.TRAN_TEXT

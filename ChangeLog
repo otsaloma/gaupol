@@ -1,5 +1,12 @@
 2007-06-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* doc/gaupol.1:
+	* gaupol/gtk/agents/open.py:
+	* gaupol/gtk/main.py:
+	Add option --adapt-translation.
+
+2007-06-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/dialogs/search.py (_set_pattern):
 	Get value of ignore_case from conf rather than the widget.
 

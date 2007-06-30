@@ -77,7 +77,8 @@ def _init_application(opts, args):
     page = application.get_current_page()
     if (page is not None) and opts.translation_file:
         path = os.path.abspath(opts.translation_file)
-        application.open_translation_file(path, opts.encoding)
+        smart = opts.adapt_translation
+        application.open_translation_file(path, opts.encoding, smart)
     if (page is not None) and opts.video_file:
         path = os.path.abspath(opts.video_file)
         page.project.video_path = path
@@ -129,6 +130,13 @@ def _parse_args(args):
     parser = optparse.OptionParser(
         formatter=optparse.IndentedHelpFormatter(2, 42),
         usage=_("gaupol [OPTION...] [FILE...] [+[NUM]]"),)
+
+    parser.add_option(
+        "-a", "--adapt-translation",
+        action="store_true",
+        dest="adapt_translation",
+        default=False,
+        help=_("open translation file adaptively"),)
 
     parser.add_option(
         "-c", "--config-file",
