@@ -76,14 +76,16 @@ class FramerateConvertDialog(GladeDialog):
     def _init_values(self):
         """Intialize default values for widgets."""
 
-        framerate = gaupol.gtk.conf.editor.framerate
         store = self._input_combo.get_model()
         for name in gaupol.gtk.FRAMERATE.labels:
             store.append([name])
+        page = self.application.get_current_page()
+        framerate = page.project.framerate
         self._input_combo.set_active(framerate)
         store = self._output_combo.get_model()
         for name in gaupol.gtk.FRAMERATE.labels:
             store.append([name])
+        framerate = gaupol.gtk.conf.editor.framerate
         self._output_combo.set_active(framerate)
 
         TARGET = gaupol.gtk.TARGET

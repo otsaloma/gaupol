@@ -1,5 +1,10 @@
 2007-06-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/dialogs/framerate.py (_init_values):
+	Use page.project.framerate as the default input value.
+
+2007-06-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/duration-dialog.glade:
 	Set sensible adjustments to spin buttons.
 
