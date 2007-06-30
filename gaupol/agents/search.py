@@ -199,6 +199,7 @@ class SearchAgent(gaupol.Delegate):
         text = self.subtitles[index].get_text(doc)
         assert 0 <= match_span[0] <= len(text)
         assert 0 <= match_span[1] <= len(text)
+        assert self._docs
 
     def find_next(self, index=None, doc=None, pos=None):
         """Find the next match starting from position.
@@ -208,7 +209,7 @@ class SearchAgent(gaupol.Delegate):
         Return tuple of index, document, match span.
         """
         index = (0 if index is None else index)
-        doc = (gaupol.DOCUMENT.MAIN if doc is None else doc)
+        doc = (self._docs[0] if doc is None else doc)
         return self._find(index, doc, pos, True)
 
     def find_previous_require(self, index=None, doc=None, pos=None):
@@ -223,6 +224,7 @@ class SearchAgent(gaupol.Delegate):
         text = self.subtitles[index].get_text(doc)
         assert 0 <= match_span[0] <= len(text)
         assert 0 <= match_span[1] <= len(text)
+        assert self._docs
 
     def find_previous(self, index=None, doc=None, pos=None):
         """Find the previous match starting from position.
@@ -232,7 +234,7 @@ class SearchAgent(gaupol.Delegate):
         Return tuple of index, document, match span.
         """
         index = (len(self.subtitles) - 1 if index is None else index)
-        doc = (gaupol.DOCUMENT.TRAN if doc is None else doc)
+        doc = (self._docs[-1] if doc is None else doc)
         return self._find(index, doc, pos, False)
 
     def replace_require(self, register=-1):

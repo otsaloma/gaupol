@@ -1,5 +1,10 @@
 2007-06-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/agents/search.py (find_next, find_previous):
+	If document is None, get document from self._docs.
+
+2007-06-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/agents/open.py (_adapt_translations):
 	Fix IndexError with m being too large.
 
