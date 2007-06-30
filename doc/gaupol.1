@@ -1,4 +1,4 @@
-.TH GAUPOL 1 "June 25, 2007"
+.TH GAUPOL 1 "July 1, 2007"
 .SH NAME
 gaupol \- editor for text\-based subtitle files
 .SH SYNOPSIS
@@ -12,22 +12,17 @@ formats and provides means of correcting texts and timing subtitles to match
 video.
 .SH OPTIONS
 .TP
-\fB\+[NUM]\fR
-Go to subtitle number NUM in the opened file.  If NUM is missing go to the last
-subtitle.
-.TP
 \fB\-h\fR, \fB\-\-help\fR
 Show command line options.
 .TP
-\fB\-a\fR, \fB\-\-adapt\-translation\fR
-When opening translation file, adapt to differences between main and
-translation documents.
-.TP
-\fB\-c\fR, \fB\-\-config\-file\fR=\fIFILE\fR
-Set the configuration file to use instead of the default.
+\fB\-\-version\fR
+Show version number.
 .TP
 \fB\-d\fR, \fB\-\-debug\fR
 Enable additional run-time checks to help in finding and fixing errors.
+.TP
+\fB\-c\fR, \fB\-\-config\-file\fR=\fIFILE\fR
+Set the configuration file to use instead of the default.
 .TP
 \fB\-e\fR, \fB\-\-encoding\fR=\fIENCODING\fR
 Set the character encoding to use for opening files.
@@ -35,11 +30,16 @@ Set the character encoding to use for opening files.
 \fB\-\-list\-encodings\fR
 List possible character encodings to use with \fB\-\-encoding\fR.
 .TP
+\fB\+[NUM]\fR
+Go to subtitle number NUM in the opened file.  If NUM is missing go to the last
+subtitle.
+.TP
 \fB\-t\fR, \fB\-\-translation\-file\fR=\fIFILE\fR
 Open translation file.
 .TP
-\fB\-\-version\fR
-Show version number.
+\fB\-a\fR, \fB\-\-adapt\-translation\fR
+When opening translation file, adapt to differences between main and
+translation documents.
 .TP
 \fB\-v\fR, \fB\-\-video\-file\fR=\fIFILE\fR
 Select video file.

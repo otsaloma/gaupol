@@ -132,11 +132,18 @@ def _parse_args(args):
         usage=_("gaupol [OPTION...] [FILE...] [+[NUM]]"),)
 
     parser.add_option(
-        "-a", "--adapt-translation",
+        "--version",
         action="store_true",
-        dest="adapt_translation",
+        dest="version",
         default=False,
-        help=_("open translation file adaptively"),)
+        help=_("show version number and exit"),)
+
+    parser.add_option(
+        "-d", "--debug",
+        action="store_true",
+        dest="debug",
+        default=False,
+        help=_("enable additional run-time checks"),)
 
     parser.add_option(
         "-c", "--config-file",
@@ -146,13 +153,6 @@ def _parse_args(args):
         dest="config_file",
         default=None,
         help=_("set the configuration file used"),)
-
-    parser.add_option(
-        "-d", "--debug",
-        action="store_true",
-        dest="debug",
-        default=False,
-        help=_("enable additional run-time checks"),)
 
     parser.add_option(
         "-e", "--encoding",
@@ -180,11 +180,11 @@ def _parse_args(args):
         help=_("open translation file"),)
 
     parser.add_option(
-        "--version",
+        "-a", "--adapt-translation",
         action="store_true",
-        dest="version",
+        dest="adapt_translation",
         default=False,
-        help=_("show version number and exit"),)
+        help=_("open translation file adaptively"),)
 
     parser.add_option(
         "-v", "--video-file",

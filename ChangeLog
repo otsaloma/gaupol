@@ -1,6 +1,12 @@
 2007-06-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* doc/gaupol.1:
+	* gaupol/gtk/main.py:
+	Rearrange the order in which options are listed.
+
+2007-06-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* doc/gaupol.1:
 	* gaupol/gtk/agents/open.py:
 	* gaupol/gtk/main.py:
 	Add option --adapt-translation.
