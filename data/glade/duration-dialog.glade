@@ -67,7 +67,7 @@
                                   <widget class="GtkSpinButton" id="optimal_spin">
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
-                                    <property name="adjustment">1 0 9 0.01 0.01 0.01</property>
+                                    <property name="adjustment">1 0 9 0.001 0.01 0.01</property>
                                     <property name="climb_rate">1</property>
                                     <property name="digits">3</property>
                                     <property name="numeric">True</property>
@@ -165,60 +165,14 @@
                         <property name="column_spacing">12</property>
                         <property name="row_spacing">6</property>
                         <child>
-                          <widget class="GtkCheckButton" id="min_check">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="label" translatable="yes">_Minimum duration:</property>
-                            <property name="use_underline">True</property>
-                            <property name="response_id">0</property>
-                            <property name="draw_indicator">True</property>
-                          </widget>
-                          <packing>
-                            <property name="x_options">GTK_FILL</property>
-                            <property name="y_options"></property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="GtkCheckButton" id="max_check">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="label" translatable="yes">Ma_ximum duration:</property>
-                            <property name="use_underline">True</property>
-                            <property name="response_id">0</property>
-                            <property name="draw_indicator">True</property>
-                          </widget>
-                          <packing>
-                            <property name="top_attach">1</property>
-                            <property name="bottom_attach">2</property>
-                            <property name="x_options">GTK_FILL</property>
-                            <property name="y_options"></property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="GtkCheckButton" id="gap_check">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="label" translatable="yes">_Gap between subtitles:</property>
-                            <property name="use_underline">True</property>
-                            <property name="response_id">0</property>
-                            <property name="draw_indicator">True</property>
-                          </widget>
-                          <packing>
-                            <property name="top_attach">2</property>
-                            <property name="bottom_attach">3</property>
-                            <property name="x_options">GTK_FILL</property>
-                            <property name="y_options"></property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="GtkHBox" id="hbox19">
+                          <widget class="GtkHBox" id="hbox21">
                             <property name="visible">True</property>
                             <property name="spacing">6</property>
                             <child>
-                              <widget class="GtkSpinButton" id="min_spin">
+                              <widget class="GtkSpinButton" id="gap_spin">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
-                                <property name="adjustment">1 0 9 0.01 0.0099999997764800008 0.0099999997764800008</property>
+                                <property name="adjustment">1 0 99 0.1 1 1</property>
                                 <property name="climb_rate">1</property>
                                 <property name="digits">3</property>
                                 <property name="numeric">True</property>
@@ -228,12 +182,12 @@
                               </packing>
                             </child>
                             <child>
-                              <widget class="GtkLabel" id="label34">
+                              <widget class="GtkLabel" id="label36">
                                 <property name="visible">True</property>
                                 <property name="xalign">0</property>
-                                <property name="label" translatable="yes">s_econds</property>
+                                <property name="label" translatable="yes">secon_ds</property>
                                 <property name="use_underline">True</property>
-                                <property name="mnemonic_widget">min_spin</property>
+                                <property name="mnemonic_widget">gap_spin</property>
                               </widget>
                               <packing>
                                 <property name="expand">False</property>
@@ -245,6 +199,8 @@
                           <packing>
                             <property name="left_attach">1</property>
                             <property name="right_attach">2</property>
+                            <property name="top_attach">2</property>
+                            <property name="bottom_attach">3</property>
                             <property name="x_options">GTK_FILL</property>
                             <property name="y_options"></property>
                           </packing>
@@ -257,7 +213,7 @@
                               <widget class="GtkSpinButton" id="max_spin">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
-                                <property name="adjustment">1 0 9 0.01 0.0099999997764800008 0.0099999997764800008</property>
+                                <property name="adjustment">1 0 99 0.1 1 1</property>
                                 <property name="climb_rate">1</property>
                                 <property name="digits">3</property>
                                 <property name="numeric">True</property>
@@ -291,14 +247,14 @@
                           </packing>
                         </child>
                         <child>
-                          <widget class="GtkHBox" id="hbox21">
+                          <widget class="GtkHBox" id="hbox19">
                             <property name="visible">True</property>
                             <property name="spacing">6</property>
                             <child>
-                              <widget class="GtkSpinButton" id="gap_spin">
+                              <widget class="GtkSpinButton" id="min_spin">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
-                                <property name="adjustment">1 0 9 0.01 0.0099999997764800008 0.0099999997764800008</property>
+                                <property name="adjustment">1 0 99 0.1 1 1</property>
                                 <property name="climb_rate">1</property>
                                 <property name="digits">3</property>
                                 <property name="numeric">True</property>
@@ -308,12 +264,12 @@
                               </packing>
                             </child>
                             <child>
-                              <widget class="GtkLabel" id="label36">
+                              <widget class="GtkLabel" id="label34">
                                 <property name="visible">True</property>
                                 <property name="xalign">0</property>
-                                <property name="label" translatable="yes">secon_ds</property>
+                                <property name="label" translatable="yes">s_econds</property>
                                 <property name="use_underline">True</property>
-                                <property name="mnemonic_widget">gap_spin</property>
+                                <property name="mnemonic_widget">min_spin</property>
                               </widget>
                               <packing>
                                 <property name="expand">False</property>
@@ -325,8 +281,52 @@
                           <packing>
                             <property name="left_attach">1</property>
                             <property name="right_attach">2</property>
+                            <property name="x_options">GTK_FILL</property>
+                            <property name="y_options"></property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="GtkCheckButton" id="gap_check">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="label" translatable="yes">_Gap between subtitles:</property>
+                            <property name="use_underline">True</property>
+                            <property name="response_id">0</property>
+                            <property name="draw_indicator">True</property>
+                          </widget>
+                          <packing>
                             <property name="top_attach">2</property>
                             <property name="bottom_attach">3</property>
+                            <property name="x_options">GTK_FILL</property>
+                            <property name="y_options"></property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="GtkCheckButton" id="max_check">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="label" translatable="yes">Ma_ximum duration:</property>
+                            <property name="use_underline">True</property>
+                            <property name="response_id">0</property>
+                            <property name="draw_indicator">True</property>
+                          </widget>
+                          <packing>
+                            <property name="top_attach">1</property>
+                            <property name="bottom_attach">2</property>
+                            <property name="x_options">GTK_FILL</property>
+                            <property name="y_options"></property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="GtkCheckButton" id="min_check">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="label" translatable="yes">_Minimum duration:</property>
+                            <property name="use_underline">True</property>
+                            <property name="response_id">0</property>
+                            <property name="draw_indicator">True</property>
+                          </widget>
+                          <packing>
                             <property name="x_options">GTK_FILL</property>
                             <property name="y_options"></property>
                           </packing>

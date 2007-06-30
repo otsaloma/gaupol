@@ -1,5 +1,10 @@
 2007-06-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/glade/duration-dialog.glade:
+	Set sensible adjustments to spin buttons.
+
+2007-06-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/dialogs/split.py:
 	(_shift_destination): Fix shift amount sign.
 	(_split_project): Set subtitles to project, not page.
