@@ -1,5 +1,11 @@
 2007-06-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/glade/search-dialog.glade:
+	* gaupol/gtk/dialogs/search.py:
+	Set search_vbox unsensitive if no target columns.
+
+2007-06-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/agents/search.py (find_next, find_previous):
 	If document is None, get document from self._docs.
 

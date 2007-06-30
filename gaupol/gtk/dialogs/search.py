@@ -58,6 +58,7 @@ class SearchDialog(GladeDialog):
         self._replace_button = get_widget("replace_button")
         self._replacement_combo = get_widget("replacement_combo")
         self._replacement_entry = self._replacement_combo.child
+        self._search_vbox = get_widget("search_vbox")
         self._text_view = get_widget("text_view")
         self._tran_check = get_widget("tran_check")
         gaupol.gtk.util.prepare_text_view(self._text_view)
@@ -262,6 +263,7 @@ class SearchDialog(GladeDialog):
 
         def save_columns(*args):
             gaupol.gtk.conf.search.columns = self._get_columns()
+            self._search_vbox.set_sensitive(bool(self._get_columns()))
         self._main_check.connect("toggled", save_columns)
         self._tran_check.connect("toggled", save_columns)
         def save_target(*args):
