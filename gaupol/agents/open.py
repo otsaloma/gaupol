@@ -40,7 +40,8 @@ class OpenAgent(gaupol.Delegate):
         t = 0
         while t < len(starts):
             middle = self.calc.get_middle(starts[t], ends[t])
-            main_start = self.subtitles[m].get_start(mode)
+            if m < len(self.subtitles):
+                main_start = self.subtitles[m].get_start(mode)
             if (m == len(self.subtitles)) or (middle < main_start):
                 subtitle = self.get_subtitle()
                 subtitle.start = starts[t]
