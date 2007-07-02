@@ -1,3 +1,10 @@
+2007-07-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* COPYING:
+	* gaupol/*.py:
+	* gaupol/gtk/dialogs/about.py:
+	Upgrade license to GPL v3 or later.
+
 2007-06-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/main.py (_init_application):
