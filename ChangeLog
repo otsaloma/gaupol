@@ -1,5 +1,16 @@
 2007-07-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/const.py:
+	* gaupol/gtk/actions/format.py:
+	* gaupol/gtk/actions/__init__.py:
+	* gaupol/gtk/actions/menu.py:
+	* gaupol/gtk/actions/view.py:
+	* gaupol/gtk/const.py:
+	* gaupol/gtk/unittest/case.py:
+	Fix or disable all errors reported by pylint.
+
+2007-07-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* tools/data/apidocs.css:
 	* tools/data/code.css:
 	Fix colors to not be too light.

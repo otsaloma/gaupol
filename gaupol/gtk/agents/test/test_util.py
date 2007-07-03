@@ -15,6 +15,7 @@
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import gaupol.gtk
 from gaupol.gtk import unittest
 
 
@@ -61,7 +62,7 @@ class TestUtilityAgent(unittest.TestCase):
     def test_get_target_rows(self):
 
         page = self.application.get_current_page()
-        get_target_rows = self.applicatin.get_target_rows
+        get_target_rows = self.application.get_target_rows
         page.view.select_rows([1, 2, 3])
         assert get_target_rows(gaupol.gtk.TARGET.SELECTED) == [1, 2, 3]
         assert get_target_rows(gaupol.gtk.TARGET.CURRENT) is None

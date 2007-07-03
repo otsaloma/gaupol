@@ -32,8 +32,8 @@ class TestOutputWindow(unittest.TestCase):
             self.window.destroy()
             gtk.main_quit()
         self.window.connect("notify::visible", destroy)
-        output = self.get_file_text(gaupol.gtk.FORMAT.MPSUB)
-        self.window.set_output(output)
+        text = self.get_file_text(gaupol.gtk.FORMAT.MPSUB)
+        self.window.set_output(text)
         self.window.show()
         gtk.main()
 

@@ -32,7 +32,7 @@ class TestUpdateAgent(unittest.TestCase):
         self.application.flash_message(None)
 
     def test_on_activate_next_project_activate(self):
-z
+
         self.application.notebook.set_current_page(0)
         self.application.on_activate_next_project_activate()
 

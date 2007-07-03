@@ -25,6 +25,7 @@ def _get_actions():
     """Get all Action classes."""
 
     actions = []
+    # pylint: disable-msg=W0621
     from .action import __all__
     bases = set((__all__))
     for module in _get_modules():

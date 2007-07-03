@@ -101,7 +101,7 @@ class ShowColumnsMenuAction(MenuAction):
     """Show the columns view menu."""
     def __init__(self):
 
-        Action.__init__(self, "show_columns_menu")
+        MenuAction.__init__(self, "show_columns_menu")
         self.props.label = _("_Columns")
 
     def _assert_doable(self, application, page):
@@ -182,7 +182,7 @@ class ShowFramerateMenuAction(MenuAction):
 
     def __init__(self):
 
-        Action.__init__(self, "show_framerate_menu")
+        MenuAction.__init__(self, "show_framerate_menu")
         self.props.label = _("F_ramerate")
         self.widgets = ["framerate_combo"]
 

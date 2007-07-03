@@ -17,6 +17,8 @@
 
 """Constants."""
 
+# pylint: disable-msg=E1101,W0201
+
 
 import gaupol
 import sys

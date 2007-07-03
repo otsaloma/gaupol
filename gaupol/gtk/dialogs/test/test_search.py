@@ -15,7 +15,6 @@
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import functools
 import gaupol.gtk
 import gtk
 
@@ -24,6 +23,8 @@ from .. import search
 
 
 class TestSearchDialog(unittest.TestCase):
+
+    # pylint: disable-msg=W0201
 
     def run(self):
 

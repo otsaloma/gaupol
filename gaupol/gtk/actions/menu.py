@@ -30,7 +30,7 @@ class ShowEditMenuAction(TopMenuAction):
 
     def __init__(self):
 
-        Action.__init__(self, "show_edit_menu")
+        TopMenuAction.__init__(self, "show_edit_menu")
         self.props.label = _("_Edit")
 
 
@@ -40,7 +40,7 @@ class ShowFileMenuAction(TopMenuAction):
 
     def __init__(self):
 
-        Action.__init__(self, "show_file_menu")
+        TopMenuAction.__init__(self, "show_file_menu")
         self.props.label = _("_File")
 
 
@@ -50,7 +50,7 @@ class ShowHelpMenuAction(TopMenuAction):
 
     def __init__(self):
 
-        Action.__init__(self, "show_help_menu")
+        TopMenuAction.__init__(self, "show_help_menu")
         self.props.label = _("_Help")
 
 
@@ -70,7 +70,7 @@ class ShowTextMenuAction(TopMenuAction):
 
     def __init__(self):
 
-        Action.__init__(self, "show_text_menu")
+        TopMenuAction.__init__(self, "show_text_menu")
         self.props.label = _("_Text")
 
 
@@ -80,7 +80,7 @@ class ShowToolsMenuAction(TopMenuAction):
 
     def __init__(self):
 
-        Action.__init__(self, "show_tools_menu")
+        TopMenuAction.__init__(self, "show_tools_menu")
         self.props.label = _("T_ools")
 
 
@@ -90,5 +90,5 @@ class ShowViewMenuAction(TopMenuAction):
 
     def __init__(self):
 
-        Action.__init__(self, "show_view_menu")
+        TopMenuAction.__init__(self, "show_view_menu")
         self.props.label = _("_View")

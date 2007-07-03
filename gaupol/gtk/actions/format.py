@@ -31,7 +31,7 @@ class ShowCaseMenuAction(MenuAction):
 
     def __init__(self):
 
-        Action.__init__(self, "show_case_menu")
+        MenuAction.__init__(self, "show_case_menu")
         self.props.label = _("Ca_se")
 
     def _assert_doable(self, application, page):

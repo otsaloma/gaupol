@@ -19,8 +19,6 @@
 
 
 import gaupol.gtk
-import gtk
-
 from gaupol import unittest
 
 
