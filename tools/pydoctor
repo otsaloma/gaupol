@@ -35,5 +35,5 @@ pydoctor \
     --html-viewsource-base=gaupol \
     --project-name=Gaupol \
     --project-url=http://home.gna.org/gaupol/
-sed -i "s|gaupol/gaupol|gaupol|" $DOC_DIR/gaupol.html
+sed -i "s|gaupol/gaupol|gaupol|" $DOC_DIR/*.html
 cp $DATA_DIR/apidocs.css $DOC_DIR

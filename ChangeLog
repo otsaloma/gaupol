@@ -1,3 +1,12 @@
+2007-07-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* tools/data/apidocs.css:
+	* tools/data/code.css:
+	Fix colors to not be too light.
+
+	* tools/pydoctor:
+	Fix source code links.
+
 2007-07-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* COPYING:
