@@ -163,7 +163,7 @@ class DebugDialog(GladeDialog):
             self._insert_text("In: %s\n\n" % code.co_name)
             line = linecache.getline(code.co_filename, tb.tb_lineno).strip()
             self._insert_text("    %s\n\n" % line, "monospace")
-            self._code_lines.append(line)
+            self._code_lines.append("    %s" % line)
             tb = tb.tb_next
             depth += 1
 
