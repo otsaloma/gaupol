@@ -237,6 +237,19 @@ def connect(observer, observable, signal, *args):
         observable = getattr(observer, observable)
     return observable.connect(signal, method, *args)
 
+def copy_dict_ensure(source, value):
+    assert source == value
+    assert source is not value
+
+def copy_dict(source):
+    """Copy source dictionary recursively and return copy."""
+
+    destination = source.copy()
+    for key, value in source.items():
+        if isinstance(source[key], dict):
+            destination[key] = copy_dict(source[key])
+    return destination
+
 @once
 def enchant_available():
     """Return True if enchant module is available."""

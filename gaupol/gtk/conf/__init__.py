@@ -132,7 +132,7 @@ def restore_defaults():
 
     if not "_defaults" in globals():
         read_defaults()
-    defaults = globals()["_defaults"].copy()
+    defaults = gaupol.util.copy_dict(globals()["_defaults"])
     for key, value in defaults.items():
         globals()[key].update(value)
 

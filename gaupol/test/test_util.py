@@ -76,6 +76,10 @@ class TestModule(unittest.TestCase):
         assert util.compare_versions("0.4"  , "0.4.1") == -1
         assert util.compare_versions("0.4"  , "0.5"  ) == -1
 
+    def test_copy_dict(self):
+
+        util.copy_dict({1: 2, 3: {1: 2, 3: 4}})
+
     def test_enchant_available(self):
 
         assert util.enchant_available()

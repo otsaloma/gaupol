@@ -54,6 +54,7 @@ class TestCloseAgent(unittest.TestCase):
 
         self.delegate._save_window_geometry()
 
+    @gaupol.gtk.util.silent(gaupol.gtk.Default)
     def test_close_page(self):
 
         self.application.open_main_file(self.get_subrip_path())

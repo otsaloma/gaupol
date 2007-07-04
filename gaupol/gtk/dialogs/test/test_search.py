@@ -50,6 +50,7 @@ class TestSearchDialog(unittest.TestCase):
         respond = lambda *args: gtk.RESPONSE_DELETE_EVENT
         self.dialog.flash_dialog = respond
         self.dialog.run_dialog = respond
+        self.dialog.show()
 
     def test__on_ignore_case_check_toggled(self):
 
@@ -97,6 +98,7 @@ class TestSearchDialog(unittest.TestCase):
 
         self.dialog.show()
         self.dialog.hide()
+        self.dialog.show()
 
     def test__on_text_view_focus_out_event(self):
 

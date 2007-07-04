@@ -148,6 +148,7 @@ class SaveAgent(gaupol.Delegate):
         """
         assert keep_changes
         assert props is not None
+        assert len(props) >= 2
         format = props[1]
         assert format is not None
         assert format != self.main_file.format
