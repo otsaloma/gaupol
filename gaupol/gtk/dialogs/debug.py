@@ -68,7 +68,6 @@ class DebugDialog(GladeDialog):
         text_buffer = self._text_view.get_buffer()
         text_buffer.create_tag("bold", weight=pango.WEIGHT_BOLD)
         text_buffer.create_tag("large", scale=pango.SCALE_LARGE)
-        text_buffer.create_tag("indent", left_margin=24)
         text_buffer.create_tag("monospace", family="monospace")
 
     def _insert_link(self, path, lineno, *tags):
@@ -163,7 +162,7 @@ class DebugDialog(GladeDialog):
             self._insert_text("Line: %s\n" % str(tb.tb_lineno))
             self._insert_text("In: %s\n\n" % code.co_name)
             line = linecache.getline(code.co_filename, tb.tb_lineno).strip()
-            self._insert_text(line + "\n\n", "monospace", "indent")
+            self._insert_text("    %s\n\n" % line, "monospace")
             self._code_lines.append(line)
             tb = tb.tb_next
             depth += 1

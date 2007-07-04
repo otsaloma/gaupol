@@ -1,5 +1,10 @@
 2007-07-04  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/dialogs/debug.py (_print_traceback):
+	Indent code manually to preserve formatting if copied.
+
+2007-07-04  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/agents/save.py:
 	* gaupol/gtk/conf/__init__.py:
 	* gaupol/util.py:
