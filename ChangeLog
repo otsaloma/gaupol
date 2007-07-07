@@ -1,3 +1,8 @@
+2007-07-07  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* TODO:
+	Clean up to reflect what has actually been done.
+
 2007-07-04  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/dialogs/debug.py (_print_traceback):

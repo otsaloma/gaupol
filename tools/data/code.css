@@ -1,108 +1,93 @@
-body
-  {
-    background-color: white;
-    color: #111111;
-    font-family: sans-serif;
-    font-size: small;
+body {
+  background-color: white;
+  color: #111111;
+  font-family: sans-serif;
+  font-size: small;
   }
 
-pre
-  {
-    font-family: monospace;
-    line-height: 160%;
+pre {
+  font-family: monospace;
+  line-height: 160%;
   }
 
 /* Comment */
-.com
-  {
-    background-color: inherit;
-    color: #3366ff;
+.com {
+  background-color: inherit;
+  color: #3366ff;
   }
 
 /* ??? */
-.dir
-  {
-    background-color: inherit;
-    color: inherit;
+.dir {
+  background-color: inherit;
+  color: inherit;
   }
 
 /* ??? */
-.dstr
-  {
-    background-color: inherit;
-    color: inherit;
+.dstr {
+  background-color: inherit;
+  color: inherit;
   }
 
 /* String escape */
-.esc
-  {
-    background-color: inherit;
-    color: #b957ff;
+.esc {
+  background-color: inherit;
+  color: #b957ff;
   }
 
 /* Keyword */
-.kwa
-  {
-    background-color: inherit;
-    color: #ff4433;
+.kwa {
+  background-color: inherit;
+  color: #ff4433;
   }
 
 /* __builtin__ */
-.kwb
-  {
-    background-color: inherit;
-    color: #ff38ac;
+.kwb {
+  background-color: inherit;
+  color: #ff38ac;
   }
 
 /* Exception */
-.kwc
-  {
-    background-color: inherit;
-    color: #00b286;
+.kwc {
+  background-color: inherit;
+  color: #00b286;
   }
 
 /* Function */
-.kwd
-  {
-    background-color: inherit;
-    color: inherit;
+.kwd {
+  background-color: inherit;
+  color: inherit;
   }
 
 /* Line anchor */
-.line
-  {
-    background-color: inherit;
-    color: #babdb6;
-    margin-right: 6px;
-    user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
+.line {
+  background-color: inherit;
+  color: #babdb6;
+  margin-right: 6px;
+  user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
   }
 
 /* Number */
-.num
-  {
-    background-color: inherit;
-    color: #b957ff;
+.num {
+  background-color: inherit;
+  color: #b957ff;
   }
 
 /* Comment */
-.slc
-  {
-    background-color: inherit;
-    color: #3366ff;
+.slc {
+  background-color: inherit;
+  color: #3366ff;
   }
 
 /* String */
-.str
-  {
-    background-color: inherit;
-    color: #b957ff;
+.str {
+  background-color: inherit;
+  color: #b957ff;
   }
 
 /* Symbol */
-.sym
-  {
-    background-color: inherit;
-    color: inherit;
+.sym {
+  background-color: inherit;
+  color: inherit;
   }
