@@ -7,5 +7,5 @@ cat "$1" \
     | grep "id=" \
     | sed "s|.*id=\"||" \
     | sed "s|\">||" \
-    | egrep -v "[a-z][0-9]" \
+    | grep -v "[a-z][0-9]" \
     | sort

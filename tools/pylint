@@ -3,19 +3,19 @@
 # Check code with pylint.
 # Usage: See pylint --help.
 
-pylint --rcfile=$(dirname "$0")/data/pylintrc $@ \
+pylint --rcfile=$(dirname "$0")/data/pylintrc "$@" \
 \
-    | egrep -v "Instance of 'ConstantMember' has no '.+?' member" \
-    | egrep -v "Instance of 'ConstantSection' has no '.+?s' member" \
-    | egrep -v "Module 'gaupol.gtk..?conf' has no '.+?' member" \
-    | egrep -v "No name '.+?' in module '.+?\.test\.?'" \
-    | egrep -v "Undefined variable 'fobj'" \
-    | egrep -v "functools.partial is not callable" \
+    | grep -v "Instance of 'ConstantMember' has no '.+?' member" \
+    | grep -v "Instance of 'ConstantSection' has no '.+?s' member" \
+    | grep -v "Module 'gaupol.gtk..?conf' has no '.+?' member" \
+    | grep -v "No name '.+?' in module '.+?\.test\.?'" \
+    | grep -v "Undefined variable 'fobj'" \
+    | grep -v "functools.partial is not callable" \
 \
     | sed "s/\*\+ Module \(.*\)$/<\1>/" \
     | sed "s/>$/>\n</" \
     | sed "/<$/{N;/<\n./D}" \
     | sed "/>$/{N;/>\n</D}" \
     | sed "s/[<>]$//" \
-    | egrep -v "^$" \
+    | grep -v "^$" \
     | sed "s/^</\n\xE2\x97\x8F /"

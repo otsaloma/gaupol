@@ -1,3 +1,12 @@
+2007-07-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* tools/add-changelog:
+	* tools/generate-tests:
+	* tools/hide:
+	* tools/list-glade:
+	* tools/pylint:
+	Fix minor errors and style issues.
+
 2007-07-07  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* TODO:

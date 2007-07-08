@@ -4,7 +4,6 @@
 # Usage: generate-tests FILE
 
 MODULE=$(basename ${1%%.py})
-echo $1
 UNITTEST_MODULE="gaupol"
 if [[ -n $(echo "$1" | grep "gaupol/gtk") ]]; then
     UNITTEST_MODULE="gaupol.gtk"

@@ -3,10 +3,10 @@
 # Generate ".hidden" files in the "gaupol" directory.
 
 cd $(dirname "$0")/.. || exit
-DIRS=$(find gaupol -type d -print | grep -v .svn | sort)
-for directory in $DIRS; do
-    rm $directory/.hidden
-    for name in $(ls $directory/*.py); do
-        echo $(basename ${name}c) >> $directory/.hidden
+DIRECTORIES=$(find gaupol -type d -print | grep -v .svn | sort)
+for DIRECTORY in $DIRECTORIES; do
+    rm -f $DIRECTORY/.hidden
+    for NAME in $(ls $DIRECTORY/*.py); do
+        echo $(basename ${NAME}c) >> $DIRECTORY/.hidden
     done
 done
