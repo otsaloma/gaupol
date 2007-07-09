@@ -1,5 +1,12 @@
 2007-07-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* lib/gaupol/__init__.py:
+	  Bumped version number to 0.8.
+
+	RELEASE 0.8
+
+2007-07-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/conf.spec:
 	* data/gaupol.gtk.conf.spec:
 	* gaupol/gtk/conf/__init__.py:

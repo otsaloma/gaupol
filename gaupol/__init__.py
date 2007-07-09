@@ -23,7 +23,7 @@ Module variables:
 """
 
 
-__version__ = "0.7.999"
+__version__ = "0.8"
 check_contracts = True
 
 

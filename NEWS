@@ -1,3 +1,56 @@
+Gaupol 0.8
+==========
+
+ * Python dependency raised to 2.5 or greater
+ * PyGTK dependency raised to 2.10 or greater
+ * License changed to GPL v3 or later
+ * Configuration file backend and syntax changed; old configurations
+   are discareded
+ * Line lengths optionally shown on all text elements
+ * Allow negative values in time and frame cells
+ * Better (more preserving) handling of blank lines as well as
+   leading and trailing spaces when opening files
+ * Fixed numerous bugs with find and replace, especially when
+   searching for zero-length regular expressions
+ * Notify of invalid regular expressions when searching (#6690)
+ * Regular expression searches are now always MULTILINE and DOTALL
+ * Search notifications moved to main window's statusbar
+ * Migrated to gtk.RecentManager and gtk.RecentChooser
+ * Added a menu for recent translation files
+ * Added "Text" menu to replace "Format", "Search" and part of "Edit"
+ * Simplified and changed several keycombos
+ * Tabs can now be freely reordered
+ * Added more informative tooltips on tabs
+ * Fixed cropped close button images on tabs
+ * Redesigned search and spell-check dialogs
+ * Redesigned position tranformation dialog to be less tall
+ * Faster updates when inserting and removing subtitles
+ * Subtitle number search now starts only on numeric key-presses
+ * Use per-stream options (:option instead of --option) in default
+   VLC preview command
+ * Subtitle file and video file paths in preview commands are now
+   automatically escaped and quoted
+ * Use exact framerates in calculations (e.g. 24000/1001) and rounded
+   integers in the user interface (e.g. 24)
+ * Splitting a subtitle no longer duplicates texts
+ * Position shift amount now always defaults to zero
+ * Fixed a bug in the time entry validation
+ * Fixed sensitivity of "Adjust Positions..." menu item (#7255)
+ * Show confirmation dialog when closing a file that no longer exists
+ * Applied GNOME Goal #3: Remove "Application" category from
+   .desktop files
+ * Changed icon colors have a bit more contrast
+ * SRTX support dropped
+ * Added --config-file, --debug, --encoding, --list-encodings,
+   --translation-file, --adapt-translation,  --video-file and
+   +[NUM] options
+ * Added a manual page to document all options
+ * Fixed translatable strings with multiple arguments in python files
+   to use named fields and mappings
+ * Source code directory structure changed
+ * Uninstallation feature removed
+
+
 Gaupol 0.7.1
 ============
 

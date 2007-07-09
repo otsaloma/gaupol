@@ -27,13 +27,13 @@ Run (all) automatic checks.
 
 Make final edits to files and commit changes.
 
-    $EDITOR lib/gaupol/__init__.py
+    $EDITOR gaupol/__init__.py
     tools/pydoctor
     tools/translate -t
     $EDITOR NEWS TODO
     tools/add-changelog
-    $EDITOR ChangeLog
-    tools/commit
+    $EDITOR ChangeLog po/ChangeLog
+    svn commit
 
 Tag source [and branch for patch releases].
 
