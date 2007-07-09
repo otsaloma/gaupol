@@ -1,3 +1,8 @@
+2007-07-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* doc/RELEASING:
+	Update branch and tag names.
+
 2007-07-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* tools/add-changelog:

@@ -8,17 +8,21 @@ Set some useful variables.
     export USERNAME=osmo
     export SVN_ROOT=svn+ssh://$USERNAME@svn.gna.org/svn/gaupol
     export SVN_SOURCE=$SVN_ROOT/trunk
+    export SVN_BRANCH=$SVN_ROOT/branches/gaupol-0-8
+    export SVN_TAG=$SVN_ROOT/tags/GAUPOL_0_8
     export DOWNLOAD_ROOT=$USERNAME@download.gna.org:/upload/gaupol
+    export DOWNLOAD_BRANCH=$DOWNLOAD_ROOT/0.8
 
 Search for unfinished code.
 
-    PY_FILES=$(find . -name "*.py" -print)
-    egrep -A 2 -B 2 -n "(FIX|TODO):" $PY_FILES | grep -v configobj
+    export PATTERN="(BUG|FIX|NOTE|TODO):"
+    export FILES=$(find gaupol -name "*.py" -print)
+    export SKIP="(configobj|^--$)"
+    egrep -A 2 -B 2 -n "$PATTERN" $FILES | egrep -v "$SKIP"
 
 Run (all) automatic checks.
 
     tools/pylint gaupol
-    tools/pylint $(file tools/* | grep python | sed "s|:.*$||")
     py.test --tb=no gaupol
 
 Make final edits to files and commit changes.
@@ -26,27 +30,26 @@ Make final edits to files and commit changes.
     $EDITOR lib/gaupol/__init__.py
     tools/pydoctor
     tools/translate -t
-    $EDITOR NEWS
+    $EDITOR NEWS TODO
     tools/add-changelog
     $EDITOR ChangeLog
     tools/commit
 
-Tag source.
+Tag source [and branch for patch releases].
 
-    svn copy $SVN_SOURCE $SVN_ROOT/tags/$VERSION \
-        -m "Tag release $VERSION."
+    svn copy $SVN_SOURCE $SVN_TAG -m "Tagged for release $VERSION."
+    svn copy $SVN_SOURCE $SVN_BRANCH -m "Branched at $BRANCH."
 
 Build and upload tarballs.
 
     ./setup.py clean
-    ./setup.py sdist_gna --formats bztar,gztar
-    cd dist
-    $EDITOR $BRANCH/gaupol-$VERSION.news
+    ./setup.py sdist_gna --formats bztar,gztar && cd dist
     $EDITOR $BRANCH/gaupol-$VERSION.changes
-    rsync -avr --delete --rsh="ssh" $BRANCH $DOWNLOAD_ROOT/$BRANCH/
+    $EDITOR $BRANCH/gaupol-$VERSION.news
+    rsync -avr --delete --rsh=ssh $BRANCH $DOWNLOAD_BRANCH
     scp latest.txt $DOWNLOAD_ROOT
 
-Edit website.
+Edit website under "News", "Features" and "Download".
 
 Send announcement mail.
 
