@@ -1,5 +1,13 @@
 2007-07-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/conf.spec:
+	* data/gaupol.gtk.conf.spec:
+	* gaupol/gtk/conf/__init__.py:
+	* setup.py:
+	Rename conf.spec to gaupol.gtk.conf.spec.
+
+2007-07-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* doc/RELEASING:
 	Update branch and tag names.
 

@@ -26,7 +26,8 @@ class TestConfig(unittest.TestCase):
 
     def setup_method(self, method):
 
-        self.spec_file = os.path.join(gaupol.DATA_DIR, "conf.spec")
+        name = "gaupol.gtk.conf.spec"
+        self.spec_file = os.path.join(gaupol.DATA_DIR, name)
         self.config = config.Config(None, self.spec_file)
 
     def test_translate_none(self):

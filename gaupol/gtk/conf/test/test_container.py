@@ -26,7 +26,8 @@ class TestContainer(unittest.TestCase):
 
     def setup_method(self, method):
 
-        spec_file = os.path.join(gaupol.DATA_DIR, "conf.spec")
+        name = "gaupol.gtk.conf.spec"
+        spec_file = os.path.join(gaupol.DATA_DIR, name)
         root = config.Config(None, spec_file)
         self.root = root["output_window"]
         self.container = container.Container(self.root)

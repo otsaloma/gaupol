@@ -40,6 +40,15 @@ from .container import Container
 config_file = None
 
 
+def _get_spec_file_ensure(value):
+    assert os.path.isfile(value)
+
+@gaupol.util.contractual
+def _get_spec_file():
+    """Get the path to the configuration specification file."""
+
+    return os.path.join(gaupol.DATA_DIR, "gaupol.gtk.conf.spec")
+
 def _handle_transitions(config):
     """Handle transitions of section and option names."""
 
@@ -47,8 +56,7 @@ def _handle_transitions(config):
     if version is not None:
         if gaupol.util.compare_versions(version, "0.7.999") == -1:
             print "Ignoring old-style configuration file entirely."
-            spec_file = os.path.join(gaupol.DATA_DIR, "conf.spec")
-            return Config(None, spec_file)
+            return Config(None, _get_spec_file())
     return config
 
 def _translate_nones(config):
@@ -99,8 +107,7 @@ def read():
     """Read configurations from file."""
 
     try:
-        spec_file = os.path.join(gaupol.DATA_DIR, "conf.spec")
-        config = Config(config_file, spec_file)
+        config = Config(config_file, _get_spec_file())
         config = _handle_transitions(config)
     except gaupol.gtk.ConfigParseError:
         raise SystemExit(1)
@@ -120,8 +127,7 @@ def read_defaults_ensure(value):
 def read_defaults():
     """Read the default values of configuration variables."""
 
-    spec_file = os.path.join(gaupol.DATA_DIR, "conf.spec")
-    defaults = Config(None, spec_file)
+    defaults = Config(None, _get_spec_file())
     defaults = _handle_transitions(defaults)
     _translate_nones(defaults)
     defaults["general"]["version"] = gaupol.__version__

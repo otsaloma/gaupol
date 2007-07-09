@@ -190,7 +190,8 @@ packages.remove("gaupol.unittest")
 packages.remove("gaupol.gtk.unittest")
 
 data_files = [
-    ("share/gaupol", ["data/conf.spec", "data/gtkrc", "data/ui.xml"]),
+    ("share/gaupol", ["data/gaupol.gtk.conf.spec"]),
+    ("share/gaupol", ["data/gtkrc", "data/ui.xml"]),
     ("share/gaupol/glade", glob.glob("data/glade/*.glade")),
     ("share/gaupol/headers", glob.glob("data/headers/*.txt")),
     ("share/man/man1", ["doc/gaupol.1"]),]
