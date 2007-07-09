@@ -1,5 +1,10 @@
 2007-07-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* doc/RELEASING:
+	Fix all remaining errors.
+
+2007-07-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/__init__.py:
 	  Bumped version number to 0.8.
 

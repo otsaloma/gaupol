@@ -46,8 +46,8 @@ Build and upload tarballs.
     ./setup.py sdist_gna --formats bztar,gztar && cd dist
     $EDITOR $BRANCH/gaupol-$VERSION.changes
     $EDITOR $BRANCH/gaupol-$VERSION.news
-    rsync -avr --delete --rsh=ssh $BRANCH $DOWNLOAD_BRANCH
-    scp latest.txt $DOWNLOAD_ROOT
+    rsync -avr --rsh=ssh . $DOWNLOAD_ROOT
+    cd .. && ./setup.py clean
 
 Edit website under "News", "Features" and "Download".
 
