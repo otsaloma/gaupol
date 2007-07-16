@@ -1674,7 +1674,7 @@ class ConfigObj(Section):
                     value)
             elif ((value[0] not in wspace_plus) and
                     (value[-1] not in wspace_plus) and
-                    (',' not in value)):
+                    (',' not in value) and ('#' not in value)):
                 quot = noquot
             else:
                 if ("'" in value) and ('"' in value):

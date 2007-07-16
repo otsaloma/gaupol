@@ -1,3 +1,8 @@
+2007-07-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/conf/configobj.py (ConfigObj._quote):
+	Quote strings containing "#".
+
 2007-07-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* doc/RELEASING:
