@@ -1,3 +1,8 @@
+2007-07-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/ruler.py:
+	Rename lengthlib_handler_id to ruler_handler_id.
+
 2007-07-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/conf/configobj.py (ConfigObj._quote):
