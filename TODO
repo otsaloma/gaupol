@@ -1,11 +1,11 @@
 Gaupol 0.9
 ==========
 
- * Fix regular expression grouping in gaupol.scripts
+ * Rewrite gaupol.scripts, gaupol.agents.text and gaupol.liner
 
  [ ] Text correction assistant
- [W] Capitalization correction
- [W] Line split/join
+ [D] Quote "#"s in configuration file to avoid them being
+     misinterpreted as in-line comments
 
 
 Gaupol 1.0
@@ -13,6 +13,8 @@ Gaupol 1.0
 
  * Common error correction
  * Hearing impaired subtitle removal
+ * Capitalization correction
+ * Line split/join
 
 
 Unscheduled Possibilities

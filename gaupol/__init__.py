@@ -36,6 +36,8 @@ from gaupol.errors import *
 from gaupol.const import *
 from gaupol import encodings
 from gaupol import languages
+from gaupol import countries
+from gaupol import locales
 from gaupol import scripts
 from gaupol.calculator import *
 from gaupol.finder import *

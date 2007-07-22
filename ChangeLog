@@ -1,3 +1,18 @@
+2007-07-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/codes/iso_3166.xml:
+	* data/codes/iso_639.xml:
+	* data/codes/locales.txt:
+	* gaupol/countries.py:
+	* gaupol/languages.py:
+	* gaupol/locales.py:
+	Split languages to three modules.
+	Read codes from files in gaupol.DATA_DIR.
+	Rename functions to be less ambiguous.
+
+	* gaupol/encodings.py:
+	Rename functions to be less ambiguous.
+
 2007-07-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/ruler.py:

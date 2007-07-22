@@ -114,12 +114,12 @@ class OpenAgent(gaupol.Delegate):
 
     def _get_encodings_require(self, first=None):
         if first is not None:
-            assert gaupol.encodings.is_valid(first)
+            assert gaupol.encodings.is_valid_code(first)
 
     def _get_encodings_ensure(self, value, first=None):
         assert value
         for encoding in (set(value) - set(("auto",))):
-            assert gaupol.encodings.is_valid(encoding)
+            assert gaupol.encodings.is_valid_code(encoding)
         if first is not None:
             assert value[0] == first
 
@@ -128,7 +128,7 @@ class OpenAgent(gaupol.Delegate):
 
         encodings = [first]
         if gaupol.gtk.conf.encoding.try_locale:
-            encoding = gaupol.encodings.get_locale_python_name()
+            encoding = gaupol.encodings.get_locale_code()
             encodings.append(encoding)
         encodings += gaupol.gtk.conf.encoding.fallbacks
         try_auto = gaupol.gtk.conf.encoding.try_auto

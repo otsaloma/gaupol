@@ -24,59 +24,59 @@ from .. import encodings
 
 class TestModule(unittest.TestCase):
 
-    def test__translate(self):
+    def test__translate_code(self):
 
-        assert encodings._translate("johab") == "johab"
-        assert encodings._translate("UTF-8") == "utf_8"
-        assert encodings._translate("ISO-8859-1") == "latin_1"
+        assert encodings._translate_code("johab") == "johab"
+        assert encodings._translate_code("UTF-8") == "utf_8"
+        assert encodings._translate_code("ISO-8859-1") == "latin_1"
+
+    def test_code_to_description(self):
+
+        description = encodings.code_to_description("cp1006")
+        assert description == _("Urdu")
+
+    def test_code_to_long_name(self):
+
+        long_name = encodings.code_to_long_name("cp1140")
+        description = _("Western")
+        name = "IBM1140"
+        assert long_name == _("%(description)s (%(name)s)") % locals()
+
+    def test_code_to_name(self):
+
+        name = encodings.code_to_name("mac_roman")
+        assert name == _("MacRoman")
 
     def test_detect(self):
 
         name = encodings.detect(self.get_subrip_path())
-        assert encodings.is_valid(name)
+        assert encodings.is_valid_code(name)
 
-    def test_get_description(self):
+    def test_get_locale_code(self):
 
-        description = encodings.get_description("cp1006")
-        assert description == _("Urdu")
-
-    def test_get_display_name(self):
-
-        name = encodings.get_display_name("mac_roman")
-        assert name == _("MacRoman")
+        code = encodings.get_locale_code()
+        assert encodings.is_valid_code(code)
 
     def test_get_locale_long_name(self):
 
-        name = encodings.get_locale_long_name()
-        encoding = encodings.get_locale_python_name()
-        encoding = encodings.get_display_name(encoding)
-        assert name == _("Current locale (%s)") % encoding
-
-    def test_get_locale_python_name(self):
-
-        name = encodings.get_locale_python_name()
-        assert encodings.is_valid(name)
-
-    def test_get_long_name(self):
-
-        name = encodings.get_long_name("cp1140")
-        assert name == _("%s (%s)") % (_("Western"), "IBM1140")
-
-    def test_get_python_name(self):
-
-        name = encodings.get_python_name(_("GB2312"))
-        assert name == "gb2312"
+        long_name = encodings.get_locale_long_name()
+        code = encodings.get_locale_code()
+        name = encodings.code_to_name(code)
+        assert long_name == _("Current locale (%s)") % name
 
     def test_get_valid_encodings(self):
 
-        items = encodings.get_valid_encodings()
-        assert items
-        for item in items:
-            assert encodings.is_valid(item[0])
+        assert encodings.get_valid_encodings()
+        for item in encodings.get_valid_encodings():
+            assert encodings.is_valid_code(item[0])
             assert isinstance(item[1], basestring)
             assert isinstance(item[2], basestring)
 
-    def test_is_valid(self):
+    def test_is_valid_code(self):
 
-        assert encodings.is_valid("utf_16_be")
-        assert not encodings.is_valid("xxxxx")
+        assert encodings.is_valid_code("utf_16_be")
+        assert not encodings.is_valid_code("xxxxx")
+
+    def test_name_to_code(self):
+
+        assert encodings.name_to_code(_("GB2312")) == "gb2312"

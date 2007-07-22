@@ -49,7 +49,7 @@ class FormatDeterminer(gaupol.Singleton):
 
     def determine_require(self, path, encoding):
         assert os.path.isfile(path)
-        assert gaupol.encodings.is_valid(encoding)
+        assert gaupol.encodings.is_valid_code(encoding)
 
     def determine(self, path, encoding):
         """Determine the format of the file.

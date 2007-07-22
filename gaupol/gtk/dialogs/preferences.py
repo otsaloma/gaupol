@@ -252,7 +252,7 @@ class _FilePage(gaupol.Delegate):
         store = self._tree_view.get_model()
         store.clear()
         for encoding in gaupol.gtk.conf.encoding.fallbacks:
-            store.append([gaupol.encodings.get_long_name(encoding)])
+            store.append([gaupol.encodings.code_to_long_name(encoding)])
         self._set_sensitivities()
 
     def _set_sensitivities(self):

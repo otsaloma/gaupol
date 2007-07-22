@@ -5,12 +5,12 @@
 
 pylint --rcfile=$(dirname "$0")/data/pylintrc "$@" \
 \
-    | grep -v "Instance of 'ConstantMember' has no '.+?' member" \
-    | grep -v "Instance of 'ConstantSection' has no '.+?s' member" \
-    | grep -v "Module 'gaupol.gtk..?conf' has no '.+?' member" \
-    | grep -v "No name '.+?' in module '.+?\.test\.?'" \
-    | grep -v "Undefined variable 'fobj'" \
-    | grep -v "functools.partial is not callable" \
+    | egrep -v "Instance of 'ConstantMember' has no '.+?' member" \
+    | egrep -v "Instance of 'ConstantSection' has no '.+?s' member" \
+    | egrep -v "Module 'gaupol.gtk..?conf' has no '.+?' member" \
+    | egrep -v "No name '.+?' in module '.+?\.test\.?'" \
+    | egrep -v "Undefined variable 'fobj'" \
+    | egrep -v "functools.partial is not callable" \
 \
     | sed "s/\*\+ Module \(.*\)$/<\1>/" \
     | sed "s/>$/>\n</" \

@@ -11,6 +11,8 @@ gaupol.errors
 gaupol.const
 gaupol.encodings
 gaupol.languages
+gaupol.countries
+gaupol.locales
 gaupol.scripts
 gaupol.calculator
 gaupol.finder

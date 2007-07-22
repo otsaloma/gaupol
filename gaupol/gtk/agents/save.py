@@ -107,7 +107,7 @@ class SaveAgent(gaupol.Delegate):
     def _show_encoding_error_dialog(self, basename, codec):
         """Show an error dialog after failing to encode file."""
 
-        codec = gaupol.encodings.get_display_name(codec)
+        codec = gaupol.encodings.code_to_name(codec)
         title = _('Failed to encode file "%(basename)s" '
             'with codec "%(codec)s"') % locals()
         message = _("Please try to save the file with "

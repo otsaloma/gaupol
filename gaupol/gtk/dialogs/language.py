@@ -118,9 +118,9 @@ class LanguageDialog(GladeDialog):
         @gaupol.gtk.util.silent(enchant.Error)
         def append(locale):
             enchant.Dict(locale)
-            name = gaupol.languages.get_long_name(locale)
+            name = gaupol.locales.code_to_name(locale)
             store.append([locale, name])
-        for locale in gaupol.languages.locales:
+        for locale in gaupol.locales.locales:
             append(locale)
 
     def _save_column(self):

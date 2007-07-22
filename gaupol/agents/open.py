@@ -104,7 +104,7 @@ class OpenAgent(gaupol.Delegate):
         return starts, ends, texts, sum(sorts)
 
     def open_main_require(self, path, encoding):
-        assert gaupol.encodings.is_valid(encoding)
+        assert gaupol.encodings.is_valid_code(encoding)
 
     def open_main_ensure(self, value, path, encoding):
         assert self.main_file is not None
@@ -146,7 +146,7 @@ class OpenAgent(gaupol.Delegate):
 
     def open_translation_require(self, path, encoding, smart=True):
         assert self.main_file is not None
-        assert gaupol.encodings.is_valid(encoding)
+        assert gaupol.encodings.is_valid_code(encoding)
 
     def open_translation_ensure(self, value, path, encoding, smart=True):
         assert self.tran_file is not None

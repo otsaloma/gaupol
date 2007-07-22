@@ -63,7 +63,7 @@ class SubtitleFile(object):
             self.header = self.get_template_header()
 
     def _invariant(self):
-        assert gaupol.encodings.is_valid(self.encoding)
+        assert gaupol.encodings.is_valid_code(self.encoding)
 
     def _read_lines_require(self):
         assert os.path.isfile(self.path)

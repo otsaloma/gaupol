@@ -99,7 +99,7 @@ class SubtitleFileDialog(object):
         """Populate the encoding combo box, including custom encoding."""
 
         encodings = list(gaupol.gtk.conf.encoding.visibles)
-        locale = gaupol.encodings.get_locale_python_name()
+        locale = gaupol.encodings.get_locale_code()
         encodings.insert(0, locale)
         encodings.append(custom)
         while None in encodings:
@@ -107,7 +107,7 @@ class SubtitleFileDialog(object):
         encodings = gaupol.gtk.util.get_unique(encodings)
         encodings = encodings or ["utf_8"]
         for i, encoding in enumerate(encodings):
-            name = gaupol.encodings.get_long_name(encoding)
+            name = gaupol.encodings.code_to_long_name(encoding)
             encodings[i] = (encoding, name)
         if locale is not None:
             name = gaupol.encodings.get_locale_long_name()
@@ -129,7 +129,7 @@ class SubtitleFileDialog(object):
 
     def get_encoding_ensure(self, value):
         if value not in ("auto", "other", None):
-            assert gaupol.encodings.is_valid(value)
+            assert gaupol.encodings.is_valid_code(value)
 
     @gaupol.gtk.util.asserted_return
     def get_encoding(self):
@@ -149,7 +149,7 @@ class SubtitleFileDialog(object):
         for i in range(len(store)):
             if store[i][0] == encoding:
                 return self._encoding_combo.set_active(i)
-        if gaupol.encodings.is_valid(encoding):
+        if gaupol.encodings.is_valid_code(encoding):
             self._populate_encoding_combo(encoding)
             return self.set_encoding(encoding)
         self._encoding_combo.set_active(0)

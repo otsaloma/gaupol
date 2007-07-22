@@ -82,7 +82,7 @@ class EncodingDialog(GladeDialog):
 
     def get_encoding_ensure(self, value):
         if value is not None:
-            assert gaupol.encodings.is_valid(value)
+            assert gaupol.encodings.is_valid_code(value)
 
     @gaupol.gtk.util.asserted_return
     def get_encoding(self):
@@ -133,7 +133,7 @@ class AdvEncodingDialog(EncodingDialog):
 
     def get_visible_encodings_ensure(self, value):
         for name in value:
-            assert gaupol.encodings.is_valid(name)
+            assert gaupol.encodings.is_valid_code(name)
 
     def get_visible_encodings(self):
         """Get encodings chosen to be visible."""

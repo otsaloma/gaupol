@@ -17,18 +17,18 @@
 
 import gaupol
 from gaupol import unittest
-from .. import languages
+from .. import countries
 
 
 class TestModule(unittest.TestCase):
 
-    def test__init_languages(self):
+    def test__init_countries(self):
 
-        assert languages.languages
+        assert countries.countries
 
     def test_code_to_name(self):
 
-        name = gaupol.i18n.dgettext("iso_639", "Nauru")
-        assert languages.code_to_name("na") == name
-        name = gaupol.i18n.dgettext("iso_639", "Sindhi")
-        assert languages.code_to_name("sd") == name
+        name = gaupol.i18n.dgettext("iso_3166", "Ireland")
+        assert countries.code_to_name("IE") == name
+        name = gaupol.i18n.dgettext("iso_3166", "Yemen")
+        assert countries.code_to_name("YE") == name

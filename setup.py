@@ -194,6 +194,7 @@ data_files = [
     ("share/gaupol", ["data/gtkrc", "data/ui.xml"]),
     ("share/gaupol/glade", glob.glob("data/glade/*.glade")),
     ("share/gaupol/headers", glob.glob("data/headers/*.txt")),
+    ("share/gaupol/codes", glob.glob("data/codes/*")),
     ("share/man/man1", ["doc/gaupol.1"]),]
 
 for name in ("16x16", "22x22", "24x24", "32x32", "scalable"):

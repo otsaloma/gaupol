@@ -270,7 +270,7 @@ class Page(gaupol.Observable):
         assert main_file is not None
         path = main_file.path
         format = main_file.format.label
-        encoding = gaupol.encodings.get_long_name(main_file.encoding)
+        encoding = gaupol.encodings.code_to_long_name(main_file.encoding)
         newline = main_file.newline.label
         tooltip  = _("<b>Path:</b> %s") % path + "\n\n"
         tooltip += _("<b>Format:</b> %s") % format + "\n"
