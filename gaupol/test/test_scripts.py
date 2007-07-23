@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2007 Osmo Salomaa
+# Copyright (C) 2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -15,7 +15,8 @@
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
 
-import re
+import gaupol
+_ = gaupol.i18n._
 
 from gaupol import unittest
 from .. import scripts
@@ -23,23 +24,8 @@ from .. import scripts
 
 class TestModule(unittest.TestCase):
 
-    def test_get_capitalize_after(self):
+    def test_code_to_name(self):
 
-        assert scripts._cap_afters
-        for script, name, pattern in scripts._cap_afters:
-            value = scripts.get_capitalize_after(script)
-            re.compile(value)
-
-    def test_get_clause_separator(self):
-
-        assert scripts._clause_seps
-        for script, name, pattern in scripts._clause_seps:
-            value = scripts.get_clause_separator(script)
-            re.compile(value)
-
-    def test_get_dialogue_separator(self):
-
-        assert scripts._dialogue_seps
-        for script, name, pattern in scripts._dialogue_seps:
-            value = scripts.get_dialogue_separator(script)
-            re.compile(value)
+        assert scripts.code_to_name("Arab") == _("Arabic")
+        assert scripts.code_to_name("Cher") == _("Cherokee")
+        assert scripts.code_to_name("Latn") == _("Latin")

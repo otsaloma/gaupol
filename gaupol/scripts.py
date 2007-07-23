@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2007 Osmo Salomaa
+# Copyright (C) 2007 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -15,19 +15,14 @@
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
 
-"""Script-specific regular expression patterns.
+"""Names and ISO 15924 codes for scripts and conversions between them.
 
-Module variables:
- * _cap_afters: Tuple of tuples of script, display name, pattern
- * _clause_seps: Tuple of tuples of script, display name, pattern
- * _dialogue_seps: Tuple of tuples of script, display name, pattern
-
-Regular expression patterns in 'clause_seps' and 'dialogue_seps' are required
-to have named groups 'before' and 'after'. Space (or whatever) between those
-groups acts as the separator. Either of the groups can be empty.
+Module variable 'scripts' is a dictionary mapping four-letter ISO 15924 codes
+to localized names scripts.
 """
 
-# TODO: Rewrite as 'before' and 'after' instead of separators.
+# http://www.unicode.org/iso15924/codelists.html
+# http://en.wikipedia.org/wiki/List_of_ISO_15924_codes
 
 
 import gaupol
@@ -35,84 +30,138 @@ import re
 _ = gaupol.i18n._
 
 
-_cap_afters = (
-    ("latin", _("Latin"), r"((?<!(.\.|\..))\.|\?|\!)(\'|\")?( |$)"),)
+scripts = {
+    # Translators: You might find translations of some of the script names in
+    # FontForge .po files [1]. If not, feel free to translate only a couple of
+    # most common ones, e.g. Arabic, Cyrillic, Devanagari, Greek, Hangul,
+    # Simplified Han, Traditional Han, Hebrew, Japanese and Latin. Most of
+    # these scripts will probably never be used with Gaupol.
+    "Arab": _("Arabic"),
+    "Armn": _("Armenian"),
+    "Avst": _("Avestan"),
+    "Bali": _("Balinese"),
+    "Batk": _("Batak"),
+    "Beng": _("Bengali"),
+    "Blis": _("Blissymbols"),
+    "Bopo": _("Bopomofo"),
+    "Brah": _("Brahmi"),
+    "Brai": _("Braille"),
+    "Bugi": _("Buginese"),
+    "Buhd": _("Buhid"),
+    "Cans": _("Unified Canadian Aboriginal Syllabics"),
+    "Cari": _("Carian"),
+    "Cham": _("Cham"),
+    "Cher": _("Cherokee"),
+    "Cirt": _("Cirth"),
+    "Copt": _("Coptic"),
+    "Cprt": _("Cypriot"),
+    "Cyrl": _("Cyrillic"),
+    "Cyrs": _("Old Church Slavonic Cyrillic"),
+    "Deva": _("Devanagari"),
+    "Dsrt": _("Deseret"),
+    "Egyd": _("Egyptian demotic"),
+    "Egyh": _("Egyptian hieratic"),
+    "Egyp": _("Egyptian hieroglyphs"),
+    "Ethi": _("Ethiopic"),
+    "Geor": _("Georgian"),
+    "Geok": _("Khutsuri"),
+    "Glag": _("Glagolitic"),
+    "Goth": _("Gothic"),
+    "Grek": _("Greek"),
+    "Gujr": _("Gujarati"),
+    "Guru": _("Gurmukhi"),
+    "Hang": _("Hangul"),
+    "Hani": _("Han"),
+    "Hano": _("Hanunoo"),
+    "Hans": _("Simplified Han"),
+    "Hant": _("Traditional Han"),
+    "Hebr": _("Hebrew"),
+    "Hira": _("Hiragana"),
+    "Hmng": _("Pahawh Hmong"),
+    "Hrkt": _("Kana"),
+    "Hung": _("Old Hungarian"),
+    "Inds": _("Indus"),
+    "Ital": _("Old Italic"),
+    "Java": _("Javanese"),
+    "Jpan": _("Japanese"),
+    "Kali": _("Kayah Li"),
+    "Kana": _("Katakana"),
+    "Khar": _("Kharoshthi"),
+    "Khmr": _("Khmer"),
+    "Knda": _("Kannada"),
+    "Kore": _("Korean"),
+    "Lana": _("Lanna"),
+    "Laoo": _("Lao"),
+    "Latf": _("Fraktur Latin"),
+    "Latg": _("Gaelic Latin"),
+    "Latn": _("Latin"),
+    "Lepc": _("Lepcha"),
+    "Limb": _("Limbu"),
+    "Lina": _("Linear A"),
+    "Linb": _("Linear B"),
+    "Lyci": _("Lycian"),
+    "Lydi": _("Lydian"),
+    "Mand": _("Mandaic"),
+    "Mani": _("Manichaean"),
+    "Maya": _("Mayan hieroglyphs"),
+    "Mero": _("Meroitic"),
+    "Mlym": _("Malayalam"),
+    "Moon": _("Moon"),
+    "Mong": _("Mongolian"),
+    "Mtei": _("Meitei Mayek"),
+    "Mymr": _("Myanmar"),
+    "Nkoo": _("N'Ko"),
+    "Ogam": _("Ogham"),
+    "Olck": _("Ol Chiki"),
+    "Orkh": _("Orkhon"),
+    "Orya": _("Oriya"),
+    "Osma": _("Osmanya"),
+    "Perm": _("Old Permic"),
+    "Phag": _("Phags-pa"),
+    "Phlv": _("Book Pahlavi"),
+    "Phnx": _("Phoenician"),
+    "Plrd": _("Pollard Phonetic"),
+    "Rjng": _("Rejang"),
+    "Roro": _("Rongorongo"),
+    "Runr": _("Runic"),
+    "Samr": _("Samaritan"),
+    "Sara": _("Sarati"),
+    "Saur": _("Saurashtra"),
+    "Sgnw": _("Sign Writing"),
+    "Shaw": _("Shavian"),
+    "Sinh": _("Sinhala"),
+    "Sund": _("Sundanese"),
+    "Sylo": _("Syloti Nagri"),
+    "Syrc": _("Syriac"),
+    "Syre": _("Estrangelo Syriac"),
+    "Syrj": _("Western Syriac"),
+    "Syrn": _("Eastern Syriac"),
+    "Tagb": _("Tagbanwa"),
+    "Tale": _("Tai Le"),
+    "Talu": _("New Tai Lue"),
+    "Taml": _("Tamil"),
+    "Telu": _("Telugu"),
+    "Teng": _("Tengwar"),
+    "Tfng": _("Tifinagh"),
+    "Tglg": _("Tagalog"),
+    "Thaa": _("Thaana"),
+    "Thai": _("Thai"),
+    "Tibt": _("Tibetan"),
+    "Ugar": _("Ugaritic"),
+    "Vaii": _("Vai"),
+    "Visp": _("Visible Speech"),
+    "Xpeo": _("Old Persian"),
+    "Xsux": _("Cuneiform"),
+    "Yiii": _("Yi"),}
 
-_clause_seps = (
-    ("latin", _("Latin"),
-     r"(?P<before>" + \
-         r"(" + \
-             r"((?<!(.\.|\..))\.|[\?\!])[\'\"]?" + \
-         r"|" + \
-             r"(?<!-)" + \
-             r" [^ ]+?(\.{2,}|[\,\;\:])[\'\"]?" + \
-             r"( [^ ]+?([^\.].\.{3,}|[\,\;\:])[\'\"]?)*" + \
-             r"( [^ ]+?([^\.].\.|[\?\!])[\'\"]?)?" + \
-             r"( [^ ]+$)?" + \
-         r")" + \
-     r")" + \
-     r"( |$)" + \
-     r"(?P<after>)"),
-    ("latin-english", _("Latin (English)"),
-     r"(?P<before>" + \
-         r"(" + \
-             r"(" + \
-                 r"(?<!\b([Dd]r|[Jj]r|[Mm]r|[Mm]s|[Ss]r|[Ss]t))" + \
-                 r"(?<!\b[Mm]rs)" + \
-             r"(?<!(.\.|\..))\.|[\?\!])[\'\"]?" + \
-         r"|" + \
-             r"(?<!-)" + \
-             r" [^ ]+?(\.{2,}|[\,\;\:])[\'\"]?" + \
-             r"( [^ ]+?([^\.].\.{3,}|[\,\;\:])[\'\"]?)*" + \
-             r"( [^ ]+?([^\.].\.|[\?\!])[\'\"]?)?" + \
-             r"( [^ ]+$)?" + \
-         r")" + \
-     r")" + \
-     r"( |$)" + \
-     r"(?P<after>)"),)
 
-_dialogue_seps = (
-    ("latin", _("Latin"), r"(?P<before>) (?P<after>- )"),)
-
-
-def get_capitalize_after_ensure(value, script):
-    re.compile(value)
+def code_to_name_require(code):
+    assert re.match(r"^[A-Z][a-z]{3}$", code)
 
 @gaupol.util.contractual
-def get_capitalize_after(script):
-    """Get the regular expression to capitalize after for script.
+def code_to_name(code):
+    """Convert ISO 15924 code to localized script name.
 
-    Return regular expression pattern.
+    Raise KeyError if code not found.
     """
-    for item in _cap_afters:
-        if item[0] == script:
-            return item[2]
-    raise ValueError
-
-def get_clause_separator_ensure(value, script):
-    re.compile(value)
-
-@gaupol.util.contractual
-def get_clause_separator(script):
-    """Get the regular expression for a clause separator for script.
-
-    Return regular expression pattern.
-    """
-    for item in _clause_seps:
-        if item[0] == script:
-            return item[2]
-    raise ValueError
-
-def get_dialogue_separator_ensure(value, script):
-    re.compile(value)
-
-@gaupol.util.contractual
-def get_dialogue_separator(script):
-    """Get the regular expression for a dialogue separator for script.
-
-    Return regular expression pattern.
-    """
-    for item in _dialogue_seps:
-        if item[0] == script:
-            return item[2]
-    raise ValueError
+    return scripts[code]
