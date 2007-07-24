@@ -45,3 +45,7 @@ class TestModule(unittest.TestCase):
         name = gaupol.i18n._("%(language)s (%(country)s)") % locals()
         assert locales.code_to_name("mn_MN") == name
         assert locales.code_to_name("mn") == language
+
+    def test_get_system_code(self):
+
+        locales.get_system_code()

@@ -1,0 +1,27 @@
+[HearingImpairedPattern]
+_Name=Sounds in brackets
+_Description=Remove descriptions of sounds between square brackets
+Pattern=\[.*?\]
+Flags=D,M,U
+Replacement=
+
+[HearingImpairedPattern]
+_Name=Sounds in parantheses
+_Description=Remove descriptions of sounds between parantheses
+Pattern=\(.*?\)
+Flags=D,M,U
+Replacement=
+
+[HearingImpairedPattern]
+_Name=Speaker
+_Description=Replace speaker names with dialog lines
+Pattern=^.*?:\s
+Flags=U
+Replacement=-\040
+
+[HearingImpairedPattern]
+_Name=Song lyrics
+_Description=Remove song lyrics between number signs
+Pattern=#.*?#
+Flags=D,M,U
+Replacement=

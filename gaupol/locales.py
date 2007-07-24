@@ -78,4 +78,11 @@ def code_to_name(code):
         return language
     return _("%(language)s (%(country)s)") % locals()
 
+@gaupol.util.once
+def get_system_code():
+    """The locale code preferred by system or None."""
+
+    import locale
+    return locale.getdefaultlocale()[0]
+
 _init_locales()

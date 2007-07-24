@@ -38,10 +38,12 @@ def create_pot():
 
     pot_file = os.path.join("po", "gaupol.pot")
     print "Creating '%s'..." % pot_file
-    desktop_file = os.path.join("data", "gaupol.desktop.in")
-    os.system("intltool-extract --type=gettext/ini %s" % desktop_file)
-    os.system("xgettext -o %s --keyword=N_ %s.h" % (pot_file, desktop_file))
-    os.remove("%s.h" % desktop_file)
+    ini_files = [os.path.join("data", "gaupol.desktop.in")]
+    ini_files += glob.glob("data/patterns/*.in")
+    for path in ini_files:
+        os.system("intltool-extract --type=gettext/ini %s" % path)
+        os.system("xgettext -o %s --keyword=N_ %s.h" % (pot_file, path))
+        os.remove("%s.h" % path)
     glade_files = " ".join(glob.glob("data/glade/*.glade"))
     os.system("xgettext -o %s -j -F %s" % (pot_file, glade_files))
     python_files = []

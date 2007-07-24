@@ -48,6 +48,8 @@ from gaupol.determiner import *
 from gaupol import tags
 from gaupol.converter import *
 from gaupol.subtitle import *
+from gaupol.pattern import *
+from gaupol.patternman import *
 from gaupol.clipboard import *
 from gaupol.revertable import *
 from gaupol import agents

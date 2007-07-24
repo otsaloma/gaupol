@@ -61,6 +61,12 @@ class Clean(clean):
                 info("removing '%s'" % path)
                 os.remove(path)
 
+        info("removing translated pattern files under 'data/patterns'")
+        paths = glob.glob("data/patterns/*")
+        paths = [x for x in paths if not x.endswith((".conf", ".in"))]
+        for path in (x for x in paths if not x.startswith(".")):
+            os.remove(path)
+
         info("removing .pyc and .pyo files under 'gaupol'")
         for (root, dirs, files) in os.walk("gaupol"):
             for name in (x for x in files if x.endswith((".pyc", ".pyo"))):
@@ -96,11 +102,20 @@ class InstallData(install_data):
                 mo_files.append((dest_dir, [mo_file]))
         return mo_files
 
+    def __get_pattern_files(self):
+
+        paths = []
+        for path in glob.glob("data/patterns/*.in"):
+            paths.append(path[:-3])
+            os.system("intltool-merge -d po %s %s" % (path, path[:-3]))
+        return [("share/gaupol/patterns", paths)]
+
     def run(self):
 
         # Translate files and add them to data files.
         self.data_files.extend(self.__get_mo_files())
         self.data_files.extend(self.__get_desktop_file())
+        self.data_files.extend(self.__get_pattern_files())
 
         install_data.run(self)
 
@@ -195,6 +210,7 @@ data_files = [
     ("share/gaupol/glade", glob.glob("data/glade/*.glade")),
     ("share/gaupol/headers", glob.glob("data/headers/*.txt")),
     ("share/gaupol/codes", glob.glob("data/codes/*")),
+    ("share/gaupol/patterns", glob.glob("data/patterns/*.conf")),
     ("share/man/man1", ["doc/gaupol.1"]),]
 
 for name in ("16x16", "22x22", "24x24", "32x32", "scalable"):

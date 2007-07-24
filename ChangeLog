@@ -1,3 +1,26 @@
+2007-07-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/patterns:
+	* data/patterns/Latn.hearing-impaired.conf:
+	* data/patterns/Latn.hearing-impaired.in:
+	New files to define hearing impaired patterns for Latin.
+
+	* gaupol/__init__.py:
+	Import Pattern and PatternManager.
+
+	* gaupol/locales.py (get_system_code):
+	New function to get locale from environment variables.
+
+	* gaupol/patternman.py:
+	* gaupol/pattern.py:
+	New files with classes Pattern and PatternManager.
+
+	* setup.py:
+	Translate pattern files.
+
+	* tools/translate:
+	Extract translatable strings from pattern files.
+
 2007-07-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/scripts.py:

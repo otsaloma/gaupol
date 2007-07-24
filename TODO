@@ -1,9 +1,8 @@
 Gaupol 0.9
 ==========
 
- * Rewrite gaupol.scripts, gaupol.agents.text and gaupol.liner
-
  [ ] Text correction assistant
+ [W] Hearing impaired subtitle removal
  [D] Quote "#"s in configuration file to avoid them being
      misinterpreted as in-line comments
 
@@ -12,7 +11,6 @@ Gaupol 1.0
 ==========
 
  * Common error correction
- * Hearing impaired subtitle removal
  * Capitalization correction
  * Line split/join
 
