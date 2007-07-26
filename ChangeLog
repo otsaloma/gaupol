@@ -1,5 +1,14 @@
 2007-07-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/locales.py (get_system_modifier):
+	New function to get locale script modifier.
+
+	* gaupol/pattern.py (_get_localized_field):
+	Add support for handling script modifiers.
+	Adhere to freedesktop.org's Desktop Entry Specification.
+
+2007-07-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/patterns/Latn.hearing-impaired.conf:
 	* data/patterns/Latn.hearing-impaired.in:
 	Add a rule and finetune patterns.

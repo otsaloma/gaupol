@@ -49,3 +49,7 @@ class TestModule(unittest.TestCase):
     def test_get_system_code(self):
 
         locales.get_system_code()
+
+    def test_get_system_modifier(self):
+
+        locales.get_system_modifier()

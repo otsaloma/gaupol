@@ -43,16 +43,28 @@ class Pattern(object):
     def _get_localized_field(self, name):
         """Get the localized value of field."""
 
+        # Handle as in freedesktop.org's Desktop Entry Specification
+        # http://www.freedesktop.org/wiki/Specifications/desktop-entry-spec
         locale = gaupol.locales.get_system_code()
+        modifier = gaupol.locales.get_system_modifier()
         if locale is None:
             return self.get_field(name)
-        key = "%s[%s]" % (name, locale)
-        if key in self.fields:
-            return self.get_field(key)
-        locale = locale.split("_")[0]
-        key = "%s[%s]" % (name, locale)
-        if key in self.fields:
-            return self.get_field(key)
+        if ("_" in locale) and (modifier is not None):
+            key = "%s[%s@%s]" % (name, locale, modifier)
+            if key in self.fields:
+                return self.get_field(key)
+        if "_" in locale:
+            key = "%s[%s]" % (name, locale)
+            if key in self.fields:
+                return self.get_field(key)
+        if (not "_" in locale) and (modifier is not None):
+            key = "%s[%s@%s]" % (name, locale, modifier)
+            if key in self.fields:
+                return self.get_field(key)
+        if (not "_" in locale):
+            key = "%s[%s]" % (name, locale)
+            if key in self.fields:
+                return self.get_field(key)
         return self.get_field(name)
 
     def get_description(self, localize=True):

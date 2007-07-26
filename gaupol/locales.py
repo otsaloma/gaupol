@@ -85,4 +85,17 @@ def get_system_code():
     import locale
     return locale.getdefaultlocale()[0]
 
+@gaupol.util.once
+def get_system_modifier():
+    """Get the script modifier of system or None."""
+
+    import locale
+    names = ["LANGUAGE", "LC_ALL", "LC_MESSAGES", "LANG"]
+    values = [os.environ.get(x) for x in names]
+    values = [x for x in values if x is not None]
+    values = [locale.normalize(x) for x in values]
+    for value in (x for x in values if x.count("@")):
+        return value[value.index("@") + 1:]
+    return None
+
 _init_locales()
