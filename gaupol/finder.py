@@ -194,7 +194,7 @@ class Finder(object):
             count += 1
         return count
 
-    def set_regex(self, pattern, flags=0):
+    def set_regex(self, pattern, flags=0, default_flags=None):
         """Set and use regular expression.
 
         DOTALL, MULTILINE and UNICODE are automatically added to flags.
@@ -204,6 +204,8 @@ class Finder(object):
         if self.ignore_case:
             flags = flags | re.IGNORECASE
         flags = flags | re.DOTALL | re.MULTILINE | re.UNICODE
+        if default_flags is not None:
+            flags = flags | default_flags
         self.pattern = re.compile(pattern, flags)
 
     def set_text(self, text, next=True):

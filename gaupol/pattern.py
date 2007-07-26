@@ -19,6 +19,7 @@
 
 
 import gaupol
+import re
 
 __all__ = ["Pattern"]
 
@@ -65,6 +66,14 @@ class Pattern(object):
         """Get the value of field."""
 
         return self.fields[name]
+
+    def get_flags(self):
+        """Get the evaluated value of the 'Flags' field."""
+
+        flags = 0
+        for name in self.get_field("Flags").split(","):
+            flags = flags | getattr(re, name)
+        return flags
 
     def get_name(self, localize=True):
         """Get the name of pattern."""

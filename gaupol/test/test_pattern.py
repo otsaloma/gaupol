@@ -15,6 +15,7 @@
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import re
 from gaupol import unittest
 from .. import pattern
 
@@ -35,6 +36,12 @@ class TestPattern(unittest.TestCase):
 
         self.pattern.set_field("Test", "test")
         assert self.pattern.get_field("Test") == "test"
+
+    def test_get_flags(self):
+
+        self.pattern.set_field("Flags", "DOTALL,UNICODE")
+        flags = self.pattern.get_flags()
+        assert flags == re.DOTALL | re.UNICODE
 
     def test_get_name(self):
 

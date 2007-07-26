@@ -1,3 +1,19 @@
+2007-07-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/patterns/Latn.hearing-impaired.conf:
+	* data/patterns/Latn.hearing-impaired.in:
+	Add a rule and finetune patterns.
+	Use full names instead of letters for flags.
+
+	* gaupol/agents/text.py (remove_hearing_impaired):
+	New method to remove hearing impaired parts from subtitles.
+
+	* gaupol/finder.py (set_regex):
+	Add a "default_flags" keyword argument.
+
+	* gaupol/pattern.py (get_flags):
+	New method to get evaluated flags.
+
 2007-07-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/patterns:
