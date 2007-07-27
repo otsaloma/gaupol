@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
-
 """Codes, names and descriptions for character encodings.
 
 Module variables:
@@ -29,7 +28,6 @@ Module variables:
 # [2] http://www.iana.org/assignments/character-sets
 # [3] http://svn.gnome.org/viewcvs/gedit/trunk/gedit/gedit-encodings.c
 
-
 from __future__ import with_statement
 
 import codecs
@@ -37,7 +35,6 @@ import gaupol
 import locale
 import re
 _ = gaupol.i18n._
-
 
 _encodings = (
     # Translators: Most of the character encoding descriptions are copied from

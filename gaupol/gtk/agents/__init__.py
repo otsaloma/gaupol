@@ -14,9 +14,7 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
-
 """Extension delegates of Application."""
-
 
 from .close      import CloseAgent
 from .edit       import EditAgent

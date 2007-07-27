@@ -14,12 +14,9 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
-
 """All error classes."""
 
-
 __all__ = ["GaupolError", "FormatError", "ParseError"]
-
 
 
 class GaupolError(Exception):

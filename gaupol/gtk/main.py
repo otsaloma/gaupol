@@ -14,11 +14,9 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
-
 """GTK user interface initialization."""
 
 # pylint: disable-msg=W0612
-
 
 import atexit
 import gaupol.gtk

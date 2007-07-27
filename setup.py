@@ -20,7 +20,6 @@ Relevant customizations in this file
 
 # pylint: disable-msg=W0621
 
-
 from __future__ import with_statement
 
 import glob

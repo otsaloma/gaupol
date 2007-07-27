@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
-
 """Names and ISO 3166 codes for countries and conversions between them.
 
 Module variable 'countries' maps ISO 3166 two letter country codes to their
@@ -22,13 +21,13 @@ English language names. The 'code_to_name' function returns a localized
 version of that country name if the 'iso-codes' gettext domain exists.
 """
 
-
 import gaupol
 import os
 import re
 import xml.etree.ElementTree as ET
 
 countries = {}
+
 
 def _init_countries():
     """Initialize the dictionary mapping codes to names."""

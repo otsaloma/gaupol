@@ -16,7 +16,6 @@
 
 # pylint: disable-msg=E1101
 
-
 from gaupol import unittest
 from .. import observable
 

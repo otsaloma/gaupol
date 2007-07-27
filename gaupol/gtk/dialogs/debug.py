@@ -14,12 +14,10 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
-
 """Dialog for displaying a traceback in case of an unhandled exception."""
 
 # This file has been adapted from Gazpacho with copyright notice
 # Copyright (C) 2005 by Async Open Source and Sicem S.L.
-
 
 import gaupol.gtk
 import gobject

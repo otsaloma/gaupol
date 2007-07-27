@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
-
 """Reading, writing and storing all configurations.
 
 Module variables:
@@ -29,13 +28,11 @@ module variables. See the spec file for a list of those sections, options,
 their default values and types.
 """
 
-
 import gaupol.gtk
 import os
 
 from .config import Config
 from .container import Container
-
 
 config_file = None
 

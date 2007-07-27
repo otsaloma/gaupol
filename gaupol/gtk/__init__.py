@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
-
 """GTK user interface.
 
 Module variables:
@@ -31,7 +30,6 @@ work neatly we should add some extra to adapt to different widget sizes in
 different themes. Let the EXTRA constant very vaguely account for that.
 """
 
-
 import gaupol
 import gobject
 import gtk.glade
@@ -45,7 +43,6 @@ gtk.glade.bindtextdomain("gaupol", gaupol.LOCALE_DIR)
 gtk.glade.textdomain("gaupol")
 gobject.threads_init()
 
-
 EXTRA = 36
 COMBO_SEPARATOR = "<separator/>"
 
@@ -53,7 +50,6 @@ BUSY_CURSOR = gtk.gdk.Cursor(gtk.gdk.WATCH)
 HAND_CURSOR = gtk.gdk.Cursor(gtk.gdk.HAND2)
 INSERT_CURSOR = gtk.gdk.Cursor(gtk.gdk.XTERM)
 NORMAL_CURSOR = gtk.gdk.Cursor(gtk.gdk.LEFT_PTR)
-
 
 from gaupol.gtk.const import *
 from gaupol.gtk.errors import *

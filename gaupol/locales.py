@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
-
 """Names and codes for locales and conversions between them.
 
 Module variable 'locales' is a set of locale codes for which spell-check
@@ -29,6 +28,7 @@ import re
 _ = gaupol.i18n._
 
 locales = set()
+
 
 def _init_locales():
     """Initialize the set of locale codes."""

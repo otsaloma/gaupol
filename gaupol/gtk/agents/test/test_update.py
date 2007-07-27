@@ -14,8 +14,8 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
-
 import gaupol.gtk
+
 from gaupol.gtk import unittest
 
 
@@ -92,7 +92,6 @@ class TestUpdateAgent(unittest.TestCase):
 
     def test_update_gui(self):
 
-        # FIX
         self.application.update_gui()
-        #self.application.on_close_all_projects_activate()
-        #self.application.update_gui()
+        self.application.on_close_all_projects_activate()
+        self.application.update_gui()

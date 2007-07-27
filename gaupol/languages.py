@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
-
 """Names and ISO 639 codes for languages and conversions between them.
 
 Module variable 'languages' maps ISO 639 two letter language codes to their
@@ -22,13 +21,13 @@ English language names. The 'code_to_name' function returns a localized
 version of that language name if the 'iso-codes' gettext domain exists.
 """
 
-
 import gaupol
 import os
 import re
 import xml.etree.ElementTree as ET
 
 languages = {}
+
 
 def _init_languages():
     """Initialize the dictionary mapping codes to languages."""

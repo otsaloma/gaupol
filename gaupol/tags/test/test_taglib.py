@@ -16,7 +16,6 @@
 
 # pylint: disable-msg=W0104
 
-
 from gaupol import unittest
 from .. import taglib
 

@@ -14,9 +14,7 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
-
 """Website URLs."""
-
 
 __all__ = ["BUG_REPORT_URL", "HOMEPAGE_URL", "REGEX_HELP_URL"]
 

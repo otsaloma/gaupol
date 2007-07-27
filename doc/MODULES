@@ -23,6 +23,8 @@ gaupol.determiner
 gaupol.tags/
 gaupol.converter
 gaupol.subtitle
+gaupol.pattern
+gaupol.patternman
 gaupol.clipboard
 gaupol.revertable
 gaupol.agents/

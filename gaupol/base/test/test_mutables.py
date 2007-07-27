@@ -16,7 +16,6 @@
 
 # pylint: disable-msg=E1101
 
-
 import copy
 
 from gaupol import unittest

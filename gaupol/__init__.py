@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
-
 """Editor for text-based subtitle files.
 
 Module variables:
@@ -22,10 +21,8 @@ Module variables:
  * check_contracts: True to check contracts
 """
 
-
 __version__ = "0.8"
 check_contracts = True
-
 
 from gaupol.paths import *
 from gaupol.urls import *

@@ -14,9 +14,7 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
-
 """Cell renderer widgets for subtitle data."""
-
 
 from .multiline import MultilineCellRenderer
 from .time import TimeCellRenderer

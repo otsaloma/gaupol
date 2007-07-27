@@ -14,9 +14,7 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
-
 """Storing text to the clipboard and pasting from it."""
-
 
 from __future__ import division
 

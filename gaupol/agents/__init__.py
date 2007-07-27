@@ -14,9 +14,7 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
-
 """Data editing extension delegates of Project."""
-
 
 from .clipboard import ClipboardAgent
 from .edit      import EditAgent

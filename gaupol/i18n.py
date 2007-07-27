@@ -14,16 +14,13 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
-
 """Internationalization functions."""
-
 
 import gaupol
 import gettext
 import locale
 
 __all__ = ["_", "dgettext", "ngettext"]
-
 
 locale.setlocale(locale.LC_ALL, "")
 gettext.bindtextdomain("gaupol", gaupol.LOCALE_DIR)

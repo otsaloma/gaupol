@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
-
 """Base class for subtitle tag libraries.
 
 Tag conversions are done via an internal format, which has the following tags:
@@ -25,7 +24,6 @@ Tag conversions are done via an internal format, which has the following tags:
  * <font="NAME">FONT FAMILY</font>
  * <size="INTEGER">FONT SIZE</size>
 """
-
 
 import gaupol
 import re

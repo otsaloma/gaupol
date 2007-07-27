@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
-
 """Unit testing system.
 
 All test module names should be prefixed with 'test_', class names with 'Test',
@@ -27,7 +26,6 @@ kept as independent as possible of the application used to run the tests.
 [1] http://codespeak.net/py/dist/test.html
 [2] http://somethingaboutorange.com/mrl/projects/nose/
 """
-
 
 from .case import TestCase
 from .deco import benchmark

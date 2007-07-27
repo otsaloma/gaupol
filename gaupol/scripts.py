@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
-
 """Names and ISO 15924 codes for scripts and conversions between them.
 
 Module variable 'scripts' is a dictionary mapping four-letter ISO 15924 codes
@@ -24,11 +23,9 @@ to localized names scripts.
 # http://www.unicode.org/iso15924/codelists.html
 # http://en.wikipedia.org/wiki/List_of_ISO_15924_codes
 
-
 import gaupol
 import re
 _ = gaupol.i18n._
-
 
 scripts = {
     # Translators: You might find translations of some of the script names in

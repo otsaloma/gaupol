@@ -14,9 +14,7 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
-
 """Commonly used base classes and metaclasses."""
-
 
 from .const       import ConstantMember
 from .const       import ConstantSection

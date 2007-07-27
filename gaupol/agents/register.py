@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
-
 """Managing revertable actions.
 
 To hook a method up with the undo/redo system, the following need to be done:
@@ -40,7 +39,6 @@ If a revertable method needs to be performed without the possibility of
 reverting, the 'register' keyword argument should be given a value of 'None'.
 This way it will not be in any way processed by the undo/redo system.
 """
-
 
 import gaupol
 

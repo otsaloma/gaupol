@@ -14,9 +14,7 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
-
 """Dialogs."""
-
 
 from .about       import AboutDialog
 from .debug       import DebugDialog
