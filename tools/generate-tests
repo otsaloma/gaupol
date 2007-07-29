@@ -9,7 +9,7 @@ if [[ -n $(echo "$1" | grep "gaupol/gtk") ]]; then
     UNITTEST_MODULE="gaupol.gtk"
 fi
 
-IMPORTS="\n\n\n\
+IMPORTS="\n\n\
 from $UNITTEST_MODULE import unittest\n\
 from .. import $MODULE"
 BASE="unittest.TestCase"

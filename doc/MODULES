@@ -46,6 +46,7 @@ gaupol.gtk.output
 gaupol.gtk.view
 gaupol.gtk.page
 gaupol.gtk.dialogs/
+gaupol.gtk.assisstants
 gaupol.gtk.actions/
 gaupol.gtk.agents/
 gaupol.gtk.application

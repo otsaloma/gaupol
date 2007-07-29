@@ -1,3 +1,19 @@
+2007-07-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/text-assistant-confirmation-page.glade:
+	* data/glade/text-assistant-hearing-impaired-page.glade:
+	* data/glade/text-assistant-introduction-page.glade:
+	New files for text assistant pages.
+
+	* gaupol/gtk/application.py:
+	Add signal "text-assistant-request-pages".
+
+	* gaupol/gtk/assistants.py:
+	New file for the text correction assistant.
+
+	* gaupol/gtk/__init__.py:
+	Import TextAssistant and TextAssistantPage.
+
 2007-07-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/agents/clipboard.py:

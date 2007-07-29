@@ -65,6 +65,7 @@ from gaupol.gtk.output import *
 from gaupol.gtk.view import *
 from gaupol.gtk.page import *
 from gaupol.gtk.dialogs import *
+from gaupol.gtk.assistants import *
 from gaupol.gtk import actions
 from gaupol.gtk import agents
 from gaupol.gtk.application import *

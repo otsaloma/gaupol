@@ -5,6 +5,8 @@ Gaupol 0.9
  [W] Hearing impaired subtitle removal
  [D] Quote "#"s in configuration file to avoid them being
      misinterpreted as in-line comments
+ [ ] For reading and writing files in $HOME/.gaupol, always try the
+     locale encoding first and if it fails, use UTF-8
 
 
 Gaupol 1.0

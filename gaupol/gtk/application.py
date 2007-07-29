@@ -42,6 +42,7 @@ class Application(gaupol.Observable, gaupol.gtk.Runner):
      * page-changed (application, page)
      * page-closed (application, page)
      * pages-reordered (application, page, number)
+     * text-assistant-request-pages (application, assistant)
 
     See gaupol.gtk.agents for application methods provided by agents.
     """
@@ -52,7 +53,8 @@ class Application(gaupol.Observable, gaupol.gtk.Runner):
         "page-added",
         "page-changed",
         "page-closed",
-        "pages-reordered",]
+        "pages-reordered",
+        "text-assistant-request-pages"]
 
     def __getattr__(self, name):
 
