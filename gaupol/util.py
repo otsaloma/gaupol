@@ -440,20 +440,27 @@ def path_to_uri(path):
 
     return "file://%s" % urllib.quote(path)
 
-def read(path, encoding=None):
+def read(path, encoding=None, fallback="utf_8"):
     """Read file and return text.
 
+    fallback should be None to not fall back to UTF-8.
     Raise IOError if reading fails.
     Raise UnicodeError if decoding fails.
     """
-    encoding = encoding or get_default_encoding()
-    args = (path, "r", encoding)
-    with contextlib.closing(codecs.open(*args)) as fobj:
-        return fobj.read().strip()
+    try:
+        encoding = encoding or get_default_encoding()
+        args = (path, "r", encoding)
+        with contextlib.closing(codecs.open(*args)) as fobj:
+            return fobj.read().strip()
+    except UnicodeError:
+        if fallback not in (encoding, None):
+            return read(path, "utf_8", None)
+        raise
 
-def readlines(path, encoding=None):
+def readlines(path, encoding=None, fallback="utf_8"):
     """Read file and return lines.
 
+    fallback should be None to not fall back to UTF-8.
     Raise IOError if reading fails.
     Raise UnicodeError if decoding fails.
     """
@@ -488,20 +495,26 @@ def uri_to_path(uri):
 
     return urlparse.urlsplit(urllib.unquote(uri))[2]
 
-def write_ensure(value, path, text, encoding=None):
+def write_ensure(value, path, text, encoding=None, fallback="utf_8"):
     assert os.path.isfile(path)
 
 @contractual
-def write(path, text, encoding=None):
+def write(path, text, encoding=None, fallback="utf_8"):
     """Write text to file.
 
+    fallback should be None to not fall back to UTF-8.
     Raise IOError if writing fails.
     Raise UnicodeError if encoding fails.
     """
-    encoding = encoding or get_default_encoding()
-    args = (path, "w", encoding)
-    with contextlib.closing(codecs.open(*args)) as fobj:
-        return fobj.write(text)
+    try:
+        encoding = encoding or get_default_encoding()
+        args = (path, "w", encoding)
+        with contextlib.closing(codecs.open(*args)) as fobj:
+            return fobj.write(text)
+    except UnicodeError:
+        if fallback not in (encoding, None):
+            return write(path, text, "utf_8", None)
+        raise
 
 # All defined variables and functions.
 __all__ = sorted(list(set(dir()) - __all__))

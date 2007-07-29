@@ -16,10 +16,6 @@
 
 """Manager of Regular expression based corrections to subtitle texts."""
 
-from __future__ import with_statement
-
-import codecs
-import contextlib
 import gaupol
 import os
 import xml.etree.ElementTree as ET
@@ -176,9 +172,7 @@ class PatternManager(object):
         local = path.startswith(gaupol.PROFILE_DIR)
         dictionary, key = self._get_dictionary(name)
         patterns = dictionary.setdefault(key, [])
-        args = (path, "r", encoding)
-        with contextlib.closing(codecs.open(*args)) as fobj:
-            lines = fobj.readlines()
+        lines = gaupol.util.readlines(path, encoding)
         lines = [x.strip() for x in lines]
         for line in (x for x in lines if x):
             if line.startswith("["):
@@ -197,17 +191,16 @@ class PatternManager(object):
         assert os.path.isdir(local_dir)
         basename = "%s.%s.conf" % (name, self.pattern_type)
         path = os.path.join(local_dir, basename)
-        args = (path, "w", encoding)
-        with contextlib.closing(codecs.open(*args)) as fobj:
-            fobj.write('<?xml version="1.0" encoding="utf-8"?>')
-            fobj.write('%s<patterns>%s' % (os.linesep, os.linesep))
-            for pattern in patterns:
-                name = pattern.get_name(False)
-                enabled = ("false", "true")[pattern.enabled]
-                fobj.write('  <pattern name="%s" ' % name)
-                fobj.write('enabled="%s" />' % enabled)
-                fobj.write(os.linesep)
-            fobj.write("</patterns>%s" % (os.linesep))
+        text = '<?xml version="1.0" encoding="utf-8"?>'
+        text += '%s<patterns>%s' % (os.linesep, os.linesep)
+        for pattern in patterns:
+            name = pattern.get_name(False)
+            enabled = ("false", "true")[pattern.enabled]
+            text += '  <pattern name="%s" ' % name
+            text += 'enabled="%s" />' % enabled
+            text += os.linesep
+        text += "</patterns>%s" % os.linesep
+        gaupol.util.write(path, text, encoding)
 
     @gaupol.util.asserted_return
     def _write_patterns_to_file(self, name, encoding, patterns):
@@ -220,10 +213,9 @@ class PatternManager(object):
         pattern_texts = []
         for pattern in (x for x in patterns if x.local):
             pattern_texts.append(self._get_pattern_text(pattern))
-        args = (path, "w", encoding)
-        with contextlib.closing(codecs.open(*args)) as fobj:
-            blank_line = os.linesep + os.linesep
-            fobj.write(blank_line.join(pattern_texts) + os.linesep)
+        blank_line = os.linesep + os.linesep
+        text = blank_line.join(pattern_texts) + os.linesep
+        gaupol.util.write(path, text, encoding)
 
     def get_patterns_require(self, script=None, language=None, country=None):
         self._assert_indentifiers(script, language, country)

@@ -1,5 +1,19 @@
 2007-07-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/conf/config.py (__init__, write_to_file):
+	Fall back to UTF-8 if encoding fails.
+
+	* gaupol/gtk/dialogs/spellcheck.py:
+	Try to read and write replacement files in locale encoding.
+
+	* gaupol/patternman.py:
+	Use gaupol.util.read and gaupol.util.write.
+
+	* gaupol/util.py (read, readlines, write):
+	Fall back to UTF-8 if encoding fails.
+
+2007-07-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/text-assistant-confirmation-page.glade:
 	* data/glade/text-assistant-hearing-impaired-page.glade:
 	* data/glade/text-assistant-introduction-page.glade:

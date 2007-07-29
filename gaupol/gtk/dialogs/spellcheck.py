@@ -214,8 +214,7 @@ class SpellCheckDialog(GladeDialog):
         path = os.path.join(self._personal_dir, basename)
         assert os.path.isfile(path)
         silent = gaupol.gtk.util.silent(IOError, UnicodeError)
-        readlines = silent(gaupol.gtk.util.readlines)
-        lines = readlines(path, "utf_8")
+        lines = silent(gaupol.gtk.util.readlines)(path)
         assert lines is not None
         for line in gaupol.gtk.util.get_unique(lines):
             item = tuple(line.strip().split("|"))
@@ -462,6 +461,6 @@ class SpellCheckDialog(GladeDialog):
         get_line = lambda x: "%s|%s%s" % (x[0], x[1], os.linesep)
         text = "".join([get_line(x) for x in self._replacements])
         try:
-            gaupol.gtk.util.write(path, text, "utf_8")
+            gaupol.gtk.util.write(path, text)
         except (IOError, UnicodeError):
             gaupol.gtk.util.handle_write_io(sys.exc_info(), path)

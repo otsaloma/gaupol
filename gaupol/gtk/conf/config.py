@@ -78,6 +78,11 @@ class Config(configobj.ConfigObj):
             configobj.ConfigObj.__init__(
                 self, None, configspec=spec_file,
                 encoding=gaupol.util.get_default_encoding())
+        except UnicodeError:
+            # pylint: disable-msg=W0233
+            configobj.ConfigObj.__init__(
+                self, config_file, configspec=spec_file,
+                encoding="utf_8", write_empty_values=True)
         except configobj.ConfigObjError, obj:
             print "Errors parsing configuration file '%s':" % config_file
             for error in obj.errors:
@@ -182,3 +187,8 @@ class Config(configobj.ConfigObj):
             configobj.ConfigObj.write(self)
         except (IOError, OSError):
             gaupol.util.handle_write_io(sys.exc_info(), self.filename)
+        except UnicodeError:
+            if self.encoding != "utf_8":
+                self.encoding = "utf_8"
+                return self.write_to_file()
+            raise
