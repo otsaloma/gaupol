@@ -1,3 +1,22 @@
+2007-07-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/gaupol.gtk.conf.spec:
+	Add section "text_assistant".
+
+	* data/glade/text-assistant-introduction-page.glade:
+	Change label wording and accelerators.
+
+	* gaupol/gtk/assistants:
+	* gaupol/gtk/assistants/__init__.py:
+	* gaupol/gtk/assistants/text:
+	* gaupol/gtk/assistants/text/assistant.py:
+	* gaupol/gtk/assistants/text/confirmation.py:
+	* gaupol/gtk/assistants/text/hearing.py:
+	* gaupol/gtk/assistants/text/__init__.py:
+	* gaupol/gtk/assistants/text/introduction.py:
+	* gaupol/gtk/assistants/text/page.py:
+	Refactor the text assistant into multiple modules.
+
 2007-07-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/conf/config.py (__init__, write_to_file):

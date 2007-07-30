@@ -89,3 +89,8 @@ target = TARGET(default="CURRENT")
 
 [subtitle_insert]
 above = boolean(default=False)
+
+[text_assistant]
+column = COLUMN(default="MAIN_TEXT")
+pages = string_list(default=list())
+target = TARGET(default="CURRENT")

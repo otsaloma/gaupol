@@ -17,7 +17,7 @@
 import gtk
 
 from gaupol.gtk import unittest
-from .. import assistants
+from .. import assistant
 
 
 class TestTextAssistant(unittest.TestCase):
@@ -34,4 +34,4 @@ class TestTextAssistant(unittest.TestCase):
 
         self.application = self.get_application()
         args = (self.application.window, self.application)
-        self.assistant = assistants.TextAssistant(*args)
+        self.assistant = assistant.TextAssistant(*args)
