@@ -1,5 +1,10 @@
 2007-08-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/patternman.py:
+	Escape quotation marks in pattern names in conf files.
+
+2007-08-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/spellcheck-dialog.glade:
 	Remove stock buttons to avoid mnemonic conflicts.
 

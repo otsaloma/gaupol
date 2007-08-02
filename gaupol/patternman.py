@@ -19,6 +19,7 @@
 import gaupol
 import os
 import xml.etree.ElementTree as ET
+import xml.sax.saxutils
 
 __all__ = ["PatternManager"]
 
@@ -123,6 +124,7 @@ class PatternManager(object):
         patterns = dictionary[key]
         for element in ET.parse(path).findall("pattern"):
             name = unicode(element.get("name"))
+            name = name.replace("&quot;", '"')
             enabled = (element.get("enabled") == "true")
             for pattern in patterns:
                 if pattern.get_name(False) == name:
@@ -195,6 +197,7 @@ class PatternManager(object):
         text += '%s<patterns>%s' % (os.linesep, os.linesep)
         for pattern in patterns:
             name = pattern.get_name(False)
+            name = name.replace('"', "&quot;")
             enabled = ("false", "true")[pattern.enabled]
             text += '  <pattern name="%s" ' % name
             text += 'enabled="%s" />' % enabled
