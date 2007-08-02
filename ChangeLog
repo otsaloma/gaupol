@@ -1,5 +1,10 @@
 2007-08-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/glade/spellcheck-dialog.glade:
+	Remove stock buttons to avoid mnemonic conflicts.
+
+2007-08-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/gaupol.gtk.conf.spec:
 	* gaupol/gtk/conf/__init__.py:
 	Add hearing impaired page settings.
