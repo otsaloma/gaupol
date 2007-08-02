@@ -13,22 +13,22 @@ Flags=DOTALL,MULTILINE,UNICODE
 Replacement=
 
 [HearingImpairedPattern]
-_Name=Speaker
-_Description=Replace speaker names with dialog lines
-Pattern=^-?\s?.*?:\s
-Flags=UNICODE
+_Name=Speakers
+_Description=Replace names of speakers with dialog lines
+Pattern=^-?\s?[^,;:\.\?\!]*?:\s
+Flags=MULTILINE,UNICODE
 Replacement=-\040
 
 [HearingImpairedPattern]
 _Name=Song lyrics
 _Description=Remove song lyrics between number signs
-Pattern=#.*?(#|\Z)
+Pattern=#[^#]*(#|\Z)
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=
 
 [HearingImpairedPattern]
 _Name=One-line song lyrics
 _Description=Remove one-line song lyrics between number signs
-Pattern=#.*?(#|$)
+Pattern=#[^#\n]*(#|$)
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=

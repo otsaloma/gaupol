@@ -14,21 +14,16 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
-"""Extension delegates of Application."""
+from gaupol.gtk import unittest
+from .. import page
 
-from .close    import CloseAgent
-from .edit     import EditAgent
-from .format   import FormatAgent
-from .help     import HelpAgent
-from .menu     import MenuAgent
-from .open     import OpenAgent
-from .position import PositionAgent
-from .preview  import PreviewAgent
-from .save     import SaveAgent
-from .search   import SearchAgent
-from .text     import TextAgent
-from .update   import UpdateAgent
-from .util     import UtilityAgent
-from .view     import ViewAgent
 
-__all__ = [x for x in dir() if x.endswith("Agent")]
+class TestTextAssistantPage(unittest.TestCase):
+
+    def setup_method(self, method):
+
+        self.page = page.TextAssistantPage()
+
+    def test___init__(self):
+
+        pass

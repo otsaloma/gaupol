@@ -1,3 +1,50 @@
+2007-08-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/gaupol.gtk.conf.spec:
+	* gaupol/gtk/conf/__init__.py:
+	Add hearing impaired page settings.
+
+	* data/glade/text-assistant-confirmation-page.glade:
+	Add buttons for marking accept column and preview.
+
+	* data/glade/text-assistant-hearing-impaired-page.glade:
+	Name labels and make combo boxes empty list stores.
+
+	* data/patterns/Latn.hearing-impaired.conf:
+	* data/patterns/Latn.hearing-impaired.in:
+	Fix names, descriptions and patterns.
+
+	* data/ui.xml:
+	* gaupol/gtk/actions/__init__.py:
+	* gaupol/gtk/actions/text.py:
+	* gaupol/gtk/agents/__init__.py:
+	* gaupol/gtk/agents/text.py:
+	Add an action and a menu item for the text assistant.
+
+	* gaupol/agents/text.py (_remove_leftover_spaces):
+	Add patterns to remove more spaces.
+
+	* gaupol/finder.py (set_regex):
+	Fix usage of default_flags to actually work.
+
+	* gaupol/gtk/assistants:
+	* gaupol/gtk/assistants/text:
+	* gaupol/gtk/assistants/text/test:
+	Set svg:ignore properties.
+
+	* gaupol/gtk/assistants/text/assistant.py:
+	* gaupol/gtk/assistants/text/confirmation.py:
+	* gaupol/gtk/assistants/text/hearing.py:
+	* gaupol/gtk/assistants/text/introduction.py:
+	* gaupol/gtk/assistants/text/page.py:
+	Finetune interfaces and complete basic code.
+
+	* gaupol/gtk/renderers/multiline.py (set_show_lengths):
+	New method to bypass conf changes.
+
+	* gaupol/patternman.py:
+	New functions to get countries, languages and scripts.
+
 2007-07-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/gaupol.gtk.conf.spec:

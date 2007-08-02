@@ -217,6 +217,20 @@ class PatternManager(object):
         text = blank_line.join(pattern_texts) + os.linesep
         gaupol.util.write(path, text, encoding)
 
+    def get_countries(self):
+        """Get a list of countries for which patterns exist."""
+
+        countries = self._country_patterns.keys()
+        countries.remove(None)
+        return countries
+
+    def get_languages(self):
+        """Get a list of languages for which patterns exist."""
+
+        languages = self._language_patterns.keys()
+        languages.remove(None)
+        return languages
+
     def get_patterns_require(self, script=None, language=None, country=None):
         self._assert_indentifiers(script, language, country)
 
@@ -228,6 +242,14 @@ class PatternManager(object):
         patterns += self._language_patterns[language]
         patterns += self._country_patterns[country]
         return patterns
+
+    def get_scripts(self):
+        """Get a list of scripts for which patterns exist."""
+
+        scripts = self._script_patterns.keys()
+        scripts.remove(None)
+        scripts.remove("Zyyy")
+        return scripts
 
     def save_require(self, script=None, language=None, country=None):
         self._assert_indentifiers(script, language, country)
@@ -241,5 +263,6 @@ class PatternManager(object):
         name = "%s-%s-%s" % (script, language, country)
         name = name.replace("-None", "")
         encoding = gaupol.util.get_default_encoding()
-        self._write_patterns_to_file(name, encoding, patterns)
+        # TODO: Uncomment when patterns can be added by a method.
+        # self._write_patterns_to_file(name, encoding, patterns)
         self._write_config_to_file(name, "utf_8", patterns)

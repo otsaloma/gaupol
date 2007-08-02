@@ -46,39 +46,19 @@ class IntroductionPage(TextAssistantPage):
         self._tree_view = get_widget("tree_view")
         get_widget("vbox").reparent(self)
 
-        self._init_properties()
         self._init_tree_view()
+        self._init_values()
         self._init_signal_handlers()
-
-    def _get_column(self):
-        """Get the selected column."""
-
-        if self._main_radio.get_active():
-            return gaupol.gtk.COLUMN.MAIN_TEXT
-        if self._tran_radio.get_active():
-            return gaupol.gtk.COLUMN.TRAN_TEXT
-        raise ValueError
-
-    def _get_target(self):
-        """Get the selected target."""
-
-        if self._selected_radio.get_active():
-            return gaupol.gtk.TARGET.SELECTED
-        if self._current_radio.get_active():
-            return gaupol.gtk.TARGET.CURRENT
-        if self._all_radio.get_active():
-            return gaupol.gtk.TARGET.ALL
-        raise ValueError
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
         def save_column(*args):
-            gaupol.gtk.conf.text_assistant.column = self._get_column()
+            gaupol.gtk.conf.text_assistant.column = self.get_column()
         self._main_radio.connect("toggled", save_column)
         self._tran_radio.connect("toggled", save_column)
         def save_target(*args):
-            gaupol.gtk.conf.text_assistant.target = self._get_target()
+            gaupol.gtk.conf.text_assistant.target = self.get_target()
         self._selected_radio.connect("toggled", save_target)
         self._current_radio.connect("toggled", save_target)
         self._all_radio.connect("toggled", save_target)
@@ -96,7 +76,7 @@ class IntroductionPage(TextAssistantPage):
         renderer.props.activatable = True
         renderer.props.xpad = 6
         callback = self._on_tree_view_cell_toggled
-        renderer.connect("toggled", callback, store)
+        renderer.connect("toggled", callback)
         column = gtk.TreeViewColumn("", renderer, active=1)
         self._tree_view.append_column(column)
 
@@ -105,13 +85,36 @@ class IntroductionPage(TextAssistantPage):
         column = gtk.TreeViewColumn("", renderer, markup=2)
         self._tree_view.append_column(column)
 
-    def _on_tree_view_cell_toggled(self, renderer, row, store):
-        """Toggle the check button value."""
+    def _on_tree_view_cell_toggled(self, renderer, row):
+        """Toggle and save the check button value."""
 
+        store = self._tree_view.get_model()
         store[row][1] = not store[row][1]
         store[row][0].props.visible = store[row][1]
         pages = [x.handle for x in self.get_selected_pages()]
         gaupol.gtk.conf.text_assistant.pages = pages
+
+    def _init_values(self):
+        """Initialize default values for widgets."""
+
+        COLUMN = gaupol.gtk.COLUMN
+        column = gaupol.gtk.conf.text_assistant.column
+        self._main_radio.set_active(column == COLUMN.MAIN_TEXT)
+        self._tran_radio.set_active(column == COLUMN.TRAN_TEXT)
+        TARGET = gaupol.gtk.TARGET
+        target = gaupol.gtk.conf.text_assistant.target
+        self._selected_radio.set_active(target == TARGET.SELECTED)
+        self._current_radio.set_active(target == TARGET.CURRENT)
+        self._all_radio.set_active(target == TARGET.ALL)
+
+    def get_column(self):
+        """Get the selected column."""
+
+        if self._main_radio.get_active():
+            return gaupol.gtk.COLUMN.MAIN_TEXT
+        if self._tran_radio.get_active():
+            return gaupol.gtk.COLUMN.TRAN_TEXT
+        raise ValueError
 
     def get_selected_pages(self):
         """Get the selected content pages."""
@@ -119,14 +122,27 @@ class IntroductionPage(TextAssistantPage):
         store = self._tree_view.get_model()
         return [x[0] for x in store if x[1]]
 
-    def populate_tree_view(self, pages):
-        """Populate the tree view with a list of tasks defined by pages."""
+    def get_target(self):
+        """Get the selected target."""
 
+        if self._selected_radio.get_active():
+            return gaupol.gtk.TARGET.SELECTED
+        if self._current_radio.get_active():
+            return gaupol.gtk.TARGET.CURRENT
+        if self._all_radio.get_active():
+            return gaupol.gtk.TARGET.ALL
+        raise ValueError
+
+    def populate_tree_view(self, content_pages):
+        """Populate the tree view with content pages."""
+
+        self._tree_view.get_model().clear()
         store = self._tree_view.get_model()
-        store.clear()
         domain = gaupol.gtk.conf.text_assistant
-        for page in pages:
-            markup = "<b>%s</b>\n%s" % (page.title, page.description)
-            page.props.visible = page.handle in domain.pages
+        for page in content_pages:
+            title = gobject.markup_escape_text(page.title)
+            description = gobject.markup_escape_text(page.description)
+            markup = "<b>%s</b>\n%s" % (title, description)
+            page.props.visible = (page.handle in domain.pages)
             store.append([page, page.handle in domain.pages, markup])
         self._tree_view.get_selection().unselect_all()

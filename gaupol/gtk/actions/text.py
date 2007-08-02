@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
-"""Spell-checking actions."""
+"""Text processing actions."""
 
 import gaupol.gtk
 import gtk
@@ -58,3 +58,20 @@ class CheckSpellingAction(Action):
         assert page is not None
         assert gaupol.gtk.util.enchant_available()
         assert gaupol.gtk.conf.spell_check.language
+
+
+class CorrectTextsAction(Action):
+
+    """Find and correct errors in texts."""
+
+    def __init__(self):
+
+        Action.__init__(self, "correct_texts")
+        self.props.label = _("C_orrect texts")
+        self.props.tooltip = _("Find and correct errors in texts")
+        self.accelerator = "O"
+
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
+
+        assert page is not None

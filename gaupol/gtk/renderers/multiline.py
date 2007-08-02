@@ -128,3 +128,9 @@ class MultilineCellRenderer(gtk.CellRendererText):
         editor.connect("key-press-event", self._on_editor_key_press_event)
         editor.show()
         return editor
+
+    def set_show_lengths(self, show_lengths):
+        """Show line lengths if show_lengths is True."""
+
+        self._show_lengths = show_lengths
+        gaupol.gtk.conf.disconnect(self, "editor", "show_lengths_cell")

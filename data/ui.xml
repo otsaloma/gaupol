@@ -88,6 +88,7 @@
       <separator/>
       <menuitem name="check_spelling" action="check_spelling"/>
       <menuitem name="configure_spell_check" action="configure_spell_check"/>
+      <menuitem name="correct_texts" action="correct_texts"/>
       <separator/>
       <menuitem name="shift_positions" action="shift_positions"/>
       <menuitem name="transform_positions" action="transform_positions"/>

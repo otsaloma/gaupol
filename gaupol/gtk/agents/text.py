@@ -14,12 +14,12 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
-"""Checking spelling."""
+"""Processing texts."""
 
 import gaupol.gtk
 
 
-class SpellCheckAgent(gaupol.Delegate):
+class TextAgent(gaupol.Delegate):
 
     """Checking spelling."""
 
@@ -41,3 +41,11 @@ class SpellCheckAgent(gaupol.Delegate):
         gaupol.gtk.util.set_cursor_normal(self.window)
         self.flash_dialog(dialog)
         self.update_gui()
+
+    def on_correct_texts_activate(self, *args):
+        """Find and correct errors in texts."""
+
+        gaupol.gtk.util.set_cursor_busy(self.window)
+        assistant = gaupol.gtk.TextAssistant(self.window, self)
+        gaupol.gtk.util.set_cursor_normal(self.window)
+        assistant.show()

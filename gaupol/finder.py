@@ -203,7 +203,7 @@ class Finder(object):
             flags = flags | re.IGNORECASE
         flags = flags | re.DOTALL | re.MULTILINE | re.UNICODE
         if default_flags is not None:
-            flags = flags | default_flags
+            flags = default_flags
         self.pattern = re.compile(pattern, flags)
 
     def set_text(self, text, next=True):

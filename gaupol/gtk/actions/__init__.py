@@ -43,7 +43,7 @@ def _get_modules():
     from . import menu
     from . import position
     from . import search
-    from . import spellcheck
+    from . import text
     from . import view
     return locals().values()
 

@@ -41,9 +41,10 @@ class TextAssistantPage(gtk.VBox):
         self.page_title = None
         self.page_type = None
         self.title = None
-
-    def _init_properties(self):
-        """Initialize the vertical box properties."""
-
         self.set_border_width(12)
-        self.show_all()
+
+    def correct_texts(self, project, indexes, doc):
+        """Correct texts in project."""
+
+        if self.page_type == gtk.ASSISTANT_PAGE_CONTENT:
+            raise NotImplementedError

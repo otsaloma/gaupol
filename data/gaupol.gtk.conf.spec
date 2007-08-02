@@ -92,5 +92,9 @@ above = boolean(default=False)
 
 [text_assistant]
 column = COLUMN(default="MAIN_TEXT")
+hearing_country = string(default=None)
+hearing_language = string(default=None)
+hearing_script = string(default="Latn")
 pages = string_list(default=list())
+remove_blank = boolean(default=True)
 target = TARGET(default="CURRENT")

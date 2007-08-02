@@ -74,21 +74,21 @@ class TextAgent(gaupol.Delegate):
     def _remove_leftover_spaces(self, texts, parser):
         """Remove excess whitespace in texts."""
 
+        def substitute(pattern, replacement):
+            parser.set_regex(pattern)
+            parser.replacement = replacement
+            parser.replace_all()
+
         texts = texts[:]
         for i, text in enumerate(texts):
             parser.set_text(text)
-            parser.set_regex(r"^\W*$")
-            parser.replacement = ""
-            parser.replace_all()
-            parser.set_regex(r"(^\s+|\s+$)")
-            parser.replacement = ""
-            parser.replace_all()
-            parser.set_regex(r" {2,}")
-            parser.replacement = " "
-            parser.replace_all()
-            parser.set_regex(r"(^\n|\n$)")
-            parser.replacement = ""
-            parser.replace_all()
+            substitute(r"(^\s+|\s+$)", "")
+            substitute(r" {2,}", " ")
+            substitute(r"^\W*$", "")
+            substitute(r"(^\n|\n$)", "")
+            substitute(r"^-(\S)", r"- \1")
+            substitute(r"^- (.*?^[^-])", r"\1")
+            substitute(r"\A- ([^\n]*)\Z", r"\1")
             texts[i] = parser.get_text()
         return texts
 

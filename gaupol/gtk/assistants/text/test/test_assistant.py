@@ -35,3 +35,13 @@ class TestTextAssistant(unittest.TestCase):
         self.application = self.get_application()
         args = (self.application.window, self.application)
         self.assistant = assistant.TextAssistant(*args)
+
+    def test__on_apply(self):
+
+        count = self.assistant.get_n_pages()
+        self.assistant.set_current_page(count - 1)
+        self.assistant.emit("apply")
+
+    def test__on_cancel(self):
+
+        self.assistant.emit("cancel")

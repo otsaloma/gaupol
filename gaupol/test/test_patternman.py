@@ -27,6 +27,14 @@ class TestPatternManager(unittest.TestCase):
 
         self.manager = patternman.PatternManager("hearing-impaired")
 
+    def test_get_countries(self):
+
+        self.manager.get_countries()
+
+    def test_get_languages(self):
+
+        self.manager.get_languages()
+
     def test_get_patterns(self):
 
         patterns = self.manager.get_patterns("Latn")
@@ -34,6 +42,10 @@ class TestPatternManager(unittest.TestCase):
         for pattern in patterns:
             pattern.get_name()
             pattern.get_description()
+
+    def test_get_scripts(self):
+
+        self.manager.get_scripts()
 
     def test_save(self):
 

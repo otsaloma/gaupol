@@ -63,6 +63,9 @@ def _translate_nones(config):
     config.translate_none("file", "directory", "")
     config.translate_none("file", "encoding", "")
     config.translate_none("preview", "custom_command", "")
+    config.translate_none("text_assistant", "hearing_country", "")
+    config.translate_none("text_assistant", "hearing_language", "")
+    config.translate_none("text_assistant", "hearing_script", "")
 
 def connect_require(obj, section, option):
     assert section in globals()
