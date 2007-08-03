@@ -17,6 +17,7 @@
 """Assistant to guide through multiple text correction tasks."""
 
 import gaupol.gtk
+import gobject
 import gtk
 _ = gaupol.i18n._
 ngettext = gaupol.i18n.ngettext
@@ -24,6 +25,7 @@ ngettext = gaupol.i18n.ngettext
 from .confirmation import ConfirmationPage
 from .hearing import HearingImpairedPage
 from .introduction import IntroductionPage
+from .progress import ProgressPage
 
 
 class TextAssistant(gtk.Assistant):
@@ -35,6 +37,8 @@ class TextAssistant(gtk.Assistant):
         gtk.Assistant.__init__(self)
         self._confirmation_page = ConfirmationPage()
         self._introduction_page = IntroductionPage()
+        self._previous_page = None
+        self._progress_page = ProgressPage()
         self.application = application
 
         self._init_properties()
@@ -43,6 +47,38 @@ class TextAssistant(gtk.Assistant):
         self.set_modal(True)
         self.set_position(gtk.WIN_POS_CENTER_ON_PARENT)
         self.set_transient_for(parent)
+
+    def _correct_texts(self, assistant_pages):
+        """Correct texts by all pages and present changes."""
+
+        changes = []
+        @gaupol.gtk.util.asserted_return
+        def register_changes(page, index, old_text, new_text):
+            assert old_text != new_text
+            changes.append((page, index, old_text, new_text))
+        target = self._introduction_page.get_target()
+        col = self._introduction_page.get_column()
+        doc = gaupol.gtk.util.text_column_to_document(col)
+        rows = self.application.get_target_rows(target)
+        application_pages = self.application.get_target_pages(target)
+        total = len(application_pages) * len(assistant_pages)
+        self._progress_page.reset(total)
+        for application_page in application_pages:
+            name = application_page.get_main_basename()
+            self._progress_page.set_project_name(name)
+            project = application_page.project
+            dummy = self._get_project_copy(project)
+            static_subtitles = dummy.subtitles[:]
+            for page in assistant_pages:
+                self._progress_page.set_task_name(page.title)
+                page.correct_texts(dummy, rows, doc)
+                self._progress_page.bump_progress()
+            for i in range(len(static_subtitles)):
+                old = project.subtitles[i].get_text(doc)
+                new = static_subtitles[i].get_text(doc)
+                register_changes(application_page, i, old, new)
+        self._prepare_confirmation_page(doc, changes)
+        return False
 
     def _get_project_copy(self, project):
         """Get a copy of project with some same properties."""
@@ -61,6 +97,7 @@ class TextAssistant(gtk.Assistant):
         self.add_page(self._introduction_page)
         self.add_page(HearingImpairedPage())
         self.application.emit("text-assistant-request-pages", self)
+        self.add_page(self._progress_page)
         self.add_page(self._confirmation_page)
 
     def _init_signal_handlers(self):
@@ -89,17 +126,18 @@ class TextAssistant(gtk.Assistant):
         application_pages = self.application.get_target_pages(target)
         col = self._introduction_page.get_column()
         doc = gaupol.gtk.util.text_column_to_document(col)
-        description = _("Correcting texts.")
+        description = _("Correcting texts")
         register = gaupol.gtk.REGISTER.DO
         for page in application_pages:
             indexes = [x[1] for x in changes if x[0] is page]
             texts = [x[3] for x in changes if x[0] is page]
-            page.project.replace_texts(indexes, doc, texts)
-            if gaupol.gtk.conf.text_assistant.remove_blank:
-                indexes = [x[1] for x in changes if not x[3]]
+            if indexes and texts:
+                page.project.replace_texts(indexes, doc, texts)
+                page.project.set_action_description(register, description)
+            indexes = [x for i, x in enumerate(indexes) if not texts[i]]
+            if indexes and gaupol.gtk.conf.text_assistant.remove_blank:
                 page.project.remove_subtitles(indexes)
                 page.project.group_actions(register, 2, description)
-            page.project.set_action_description(register, description)
 
     def _on_cancel(self, *args):
         """Destroy the assistant."""
@@ -114,42 +152,32 @@ class TextAssistant(gtk.Assistant):
     def _on_prepare(self, assistant, page):
         """Prepare the page to be shown next."""
 
+        previous_page = self._previous_page
+        self._previous_page = page
         if page is self._introduction_page:
             return self._prepare_introduction_page()
         pages = self._introduction_page.get_selected_pages()
-        if page is self._confirmation_page:
-            return self._prepare_confirmation_page(pages)
-        self._prepare_page_title(page, pages)
+        if page is self._progress_page:
+            if previous_page is self._confirmation_page:
+                index = self.get_current_page()
+                return self.set_current_page(index - 1)
+            return self._prepare_progress_page(pages)
+        if page is previous_page:
+            index = self.get_current_page()
+            return self.set_current_page(max(0, index - 1))
 
-    def _prepare_confirmation_page(self, assistant_pages):
-        """Correct texts by all pages and present changes."""
+    def _prepare_confirmation_page(self, doc, changes):
+        """Present changes and activate the confirmation page."""
 
-        changes = []
-        @gaupol.gtk.util.asserted_return
-        def register_changes(page, index, old_text, new_text):
-            assert old_text != new_text
-            changes.append((page, index, old_text, new_text))
-        target = self._introduction_page.get_target()
-        col = self._introduction_page.get_column()
-        doc = gaupol.gtk.util.text_column_to_document(col)
-        rows = self.application.get_target_rows(target)
-        application_pages = self.application.get_target_pages(target)
-        for application_page in application_pages:
-            project = application_page.project
-            dummy = self._get_project_copy(project)
-            static_subtitles = dummy.subtitles[:]
-            for page in assistant_pages:
-                page.correct_texts(dummy, rows, doc)
-            for i in range(len(static_subtitles)):
-                old = project.subtitles[i].get_text(doc)
-                new = static_subtitles[i].get_text(doc)
-                register_changes(application_page, i, old, new)
-        self._confirmation_page.application = self.application
-        self._confirmation_page.doc = doc
-        self._confirmation_page.populate_tree_view(changes)
         count = len(changes)
         title = ngettext("Confirm %d Change", "Confirm %d Changes", count)
         self.set_page_title(self._confirmation_page, title % count)
+        self._confirmation_page.application = self.application
+        self._confirmation_page.doc = doc
+        self._confirmation_page.populate_tree_view(changes)
+        self.set_page_complete(self._progress_page, True)
+        index = self.get_current_page()
+        self.set_current_page(index + 1)
 
     def _prepare_introduction_page(self):
         """Prepare the introduction page content."""
@@ -158,17 +186,17 @@ class TextAssistant(gtk.Assistant):
         pages = [self.get_nth_page(x) for x in range(count)]
         pages.remove(self._introduction_page)
         pages.remove(self._confirmation_page)
+        pages.remove(self._progress_page)
         self._introduction_page.populate_tree_view(pages)
 
-    def _prepare_page_title(self, page, pages):
-        """Prepare the title of the page to be shown next."""
+    def _prepare_progress_page(self, pages):
+        """Prepare to show the progress page."""
 
-        title = page.page_title
-        current = pages.index(page) + 2
-        total = len(pages) + 2
-        new_title = _("%(title)s - (%(current)d of %(total)d)")
-        self.set_page_title(page, new_title % locals())
+        self._progress_page.reset(0, True)
+        self.set_page_complete(self._progress_page, False)
+        gobject.timeout_add(10, self._correct_texts, pages)
 
+    @gaupol.gtk.util.asserted_return
     def add_page(self, page):
         """Add page and configure its properties."""
 
@@ -176,4 +204,5 @@ class TextAssistant(gtk.Assistant):
         self.append_page(page)
         self.set_page_type(page, page.page_type)
         self.set_page_title(page, page.page_title)
+        assert page.page_type != gtk.ASSISTANT_PAGE_PROGRESS
         self.set_page_complete(page, True)

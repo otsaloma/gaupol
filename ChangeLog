@@ -1,3 +1,11 @@
+2007-08-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/text-assistant-progress-page.glade:
+	* gaupol/gtk/assistants/text/assistant.py:
+	* gaupol/gtk/assistants/text/hearing.py:
+	* gaupol/gtk/assistants/text/progress.py:
+	Add a progress page before the confirmation page.
+
 2007-08-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/patternman.py:

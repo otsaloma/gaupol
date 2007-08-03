@@ -36,7 +36,7 @@ class HearingImpairedPage(TextAssistantPage):
         self.description = _("Remove explanatory "
             "texts meant for the hearing impaired")
         self.handle = "hearing-impaired"
-        self.page_title = _("Define Hearing Impaired Patterns")
+        self.page_title = _("Select Hearing Impaired Patterns")
         self.page_type = gtk.ASSISTANT_PAGE_CONTENT
         self.title = _("Remove hearing impaired texts")
 
