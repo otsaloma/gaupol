@@ -1,5 +1,10 @@
 2007-08-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/view.py (_get_renderer):
+	Set yalign to 0 for multiline text renderers.
+
+2007-08-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/glade/text-assistant-progress-page.glade:
 	* gaupol/gtk/assistants/text/assistant.py:
 	* gaupol/gtk/assistants/text/hearing.py:

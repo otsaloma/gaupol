@@ -73,6 +73,7 @@ class View(gtk.TreeView):
             renderer.props.xalign = 1
         elif gaupol.gtk.util.is_text_column(col):
             renderer = gaupol.gtk.MultilineCellRenderer()
+            renderer.props.yalign = 0
         renderer.props.editable = (col != gaupol.gtk.COLUMN.NUMBER)
         renderer.props.font = font
         return renderer
