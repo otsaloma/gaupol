@@ -82,6 +82,7 @@ def _init_application(opts, args):
         application.update_gui()
     if (page is not None) and (jump_row is not None):
         page.view.set_focus(jump_row)
+        page.view.scroll_to_row(jump_row)
 
 def _init_configuration(path):
     """Initialize the configuration module from saved values."""

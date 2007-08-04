@@ -1,3 +1,8 @@
+2007-08-04  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/main.py (_init_application):
+	Scroll to jump_row in addition to moving focus.
+
 2007-08-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/view.py (_get_renderer):
