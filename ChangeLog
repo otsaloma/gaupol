@@ -1,5 +1,10 @@
 2007-08-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/actions/text.py (CorrectTextsAction):
+	Fix label to use title case and add ellipsis.
+
+2007-08-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/main.py:
 	Bump Python dependency to 2.5.1 (#9685).
 

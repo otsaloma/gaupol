@@ -67,7 +67,7 @@ class CorrectTextsAction(Action):
     def __init__(self):
 
         Action.__init__(self, "correct_texts")
-        self.props.label = _("C_orrect texts")
+        self.props.label = _("C_orrect Texts\342\200\246")
         self.props.tooltip = _("Find and correct errors in texts")
         self.accelerator = "O"
 

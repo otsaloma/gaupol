@@ -5,9 +5,10 @@ Gaupol 0.9
  * Profile pattern configuration gets written to a single file
  * Test hearing impaired removal with actual files
 
- [D] Raise Python dependency to 2.5.1 or greater (#9685)
- [D] Add a text correction assistant
- [W] Add a hearing impaired subtitle removal task for the text
+ [D] Raise Python dependency to 2.5.1 or greater (#9685, this
+     should have been done already for 0.8.)
+ [D] Add a text correction assistant (Tools / Correct Texts)
+ [W] Add a hearing impaired text removal task for the text
      correction assistant
  [D] Add quoting for number signs in the configuration file to avoid
      them being misinterpreted as in-line comments
