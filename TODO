@@ -5,10 +5,12 @@ Gaupol 0.9
  * Profile pattern configuration gets written to a single file
  * Test hearing impaired removal with actual files
 
- [D] Text correction assistant
- [W] Hearing impaired subtitle removal
- [D] Quote "#"s in configuration file to avoid them being
-     misinterpreted as in-line comments
+ [D] Raise Python dependency to 2.5.1 or greater (#9685)
+ [D] Add a text correction assistant
+ [W] Add a hearing impaired subtitle removal task for the text
+     correction assistant
+ [D] Add quoting for number signs in the configuration file to avoid
+     them being misinterpreted as in-line comments
  [D] For reading and writing non-xml files in $HOME/.gaupol, always
      try the locale encoding first and if it fails, use UTF-8
 
@@ -16,9 +18,9 @@ Gaupol 0.9
 Gaupol 1.0
 ==========
 
- * Common error correction
- * Capitalization correction
- * Line split/join
+ * Fix errors (text assistan task)
+ * Capitalize (text assistant task)
+ * Format lines (text assistant task)
 
 
 Unscheduled Possibilities
@@ -26,11 +28,12 @@ Unscheduled Possibilities
 
  * PyGTK 2.12
     - gtk.AboutDialog: "name" replaced with "program-name"
+    - gtk.Builder: Build an interface from an XML UI definition
     - gtk.Tooltip: New API that allows complex tooltips
- * Interactive search
+ * Interactive search (as plugin?)
  * gedit-style message area
  * Document hidden settings (where?)
  * Windows installer
  * Plugin system (see gedit for interfaces)
  * Multiple windows and tab drag-dropping between them
- * Built-in GStreamer preview
+ * Built-in GStreamer preview (as plugin?)

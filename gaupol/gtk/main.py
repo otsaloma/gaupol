@@ -30,8 +30,8 @@ _ = gaupol.i18n._
 def _check_dependencies():
     """Check existance and versions of dependencies."""
 
-    if sys.version_info[:3] < (2, 5, 0):
-        print "Python 2.5 or greater is required to run Gaupol."
+    if sys.version_info[:3] < (2, 5, 1):
+        print "Python 2.5.1 or greater is required to run Gaupol."
         raise SystemExit(1)
 
     try:
