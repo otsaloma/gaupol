@@ -1,7 +1,11 @@
 Gaupol 0.9
 ==========
 
- [W] Text correction assistant
+ * Rewrite Parser._shift_tags?
+ * Profile pattern configuration gets written to a single file
+ * Test hearing impaired removal with actual files
+
+ [D] Text correction assistant
  [W] Hearing impaired subtitle removal
  [D] Quote "#"s in configuration file to avoid them being
      misinterpreted as in-line comments

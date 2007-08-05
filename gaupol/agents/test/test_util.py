@@ -86,6 +86,12 @@ class TestUtilityAgent(unittest.TestCase):
         format = self.project.tran_file.format
         assert taglib == gaupol.tags.get_class(format)()
 
+    def test_get_tag_redundant_func(self):
+
+        doc = gaupol.DOCUMENT.MAIN
+        redundant_func = self.project.get_tag_redundant_func(doc)
+        assert redundant_func("") == ""
+
     def test_get_tag_regex(self):
 
         re_tag = self.project.get_tag_regex(gaupol.DOCUMENT.MAIN)

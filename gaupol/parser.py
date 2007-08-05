@@ -29,6 +29,7 @@ class Parser(gaupol.Finder):
      * _margins: Start tag, end tag that every line is wrapped in
      * _tags: List of lists of tag, position
      * re_tag: Regular expression object to match any tag
+     * redundant_func: Function to remove redundant tags or None
 
     The purpose of the Parser is to split text to the actual text and its tags,
     allowing the text to be edited while keeping the tags separate and intact.
@@ -42,12 +43,17 @@ class Parser(gaupol.Finder):
 
     __metaclass__ = gaupol.Contractual
 
-    def __init__(self, re_tag=None):
+    def __init__(self, re_tag=None, redundant_func=None):
 
         gaupol.Finder.__init__(self)
         self._margins = None
         self._tags = None
         self.re_tag = re_tag
+        self.redundant_func = redundant_func
+
+    def _invariant(self):
+        if self.redundant_func is not None:
+            assert self.redundant_func("") == ""
 
     def _set_margins_require(self, text):
         assert self.re_tag is not None
@@ -113,17 +119,23 @@ class Parser(gaupol.Finder):
 
         # Get length of tags before position.
         pos_with_tags = pos
-        for pos, tag in self._tags:
-            if opening and pos <= pos_with_tags:
+        for tag_pos, tag in self._tags:
+            if opening and tag_pos <= pos_with_tags:
                 pos_with_tags += len(tag)
-            elif pos < pos_with_tags:
+            elif tag_pos < pos_with_tags:
                 pos_with_tags += len(tag)
 
         # Shift tags.
-        for i in range(len(self._tags)):
-            if opening and self._tags[i][0] > pos_with_tags:
+        between_length = 0
+        for i, (tag_pos, tag) in enumerate(self._tags):
+            orig_end = pos_with_tags - shift + between_length
+            between = pos_with_tags < tag_pos < orig_end
+            if (shift < 0) and between:
+                self._tags[i][0] = pos_with_tags + between_length
+                between_length += len(tag)
+            elif opening and (tag_pos > pos_with_tags):
                 self._tags[i][0] += shift
-            elif self._tags[i][0] >= pos_with_tags:
+            elif tag_pos >= pos_with_tags:
                 self._tags[i][0] += shift
             if self._tags[i][0] < 0:
                 self._tags[i][0] = 0
@@ -131,12 +143,17 @@ class Parser(gaupol.Finder):
     def get_text(self):
         """Reassemble the text and return it."""
 
+        if not self.text:
+            self._margins = []
+            self._tags = []
         text = self.text[:]
         for pos, tag in self._tags:
             text = text[:pos] + tag + text[pos:]
         if self._margins:
             text = text.replace("\n", "%s\n%s" % tuple(self._margins[::-1]))
             text = self._margins[0] + text + self._margins[1]
+        if self.redundant_func is not None:
+            text = self.redundant_func(text)
         return text
 
     def replace(self, next=True):

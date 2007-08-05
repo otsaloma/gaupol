@@ -60,6 +60,15 @@ class SubRip(TagLibrary):
         # Remove all non-style tags.
         return [(re.compile(r"</?[^>]{3,}>"), "")]
 
+    @gaupol.util.once
+    def _get_redundant_tags(self):
+        """Get list of tuples of regular expression, replacement."""
+
+        tags = [
+            (re.compile(r"<(.*?)(=.*?)?>( *)</\1>"), r"\3"),
+            (re.compile(r"</(.*?)>( *)<\1(=.*?)?>"), r"\2"),]
+        return tags
+
     def decode(self, text):
         """Return text with tags converted from this to internal format."""
 
@@ -78,3 +87,10 @@ class SubRip(TagLibrary):
         """Return italicized text."""
 
         return u"<i>%s</i>" % text
+
+    def remove_redundant(self, text):
+        """Return text with redundant tags removed."""
+
+        for regex, replacement in self._get_redundant_tags():
+            text = regex.sub(replacement, text)
+        return text

@@ -82,3 +82,8 @@ class TestTagLibrary(unittest.TestCase):
             'All things weird are normal\n' + \
             'in this whore of <size="12">cities</size>.'
         assert self.taglib.encode(text) == self.plain_text
+
+    def test_remove_redundant(self):
+
+        text = self.taglib.remove_redundant(self.plain_text)
+        assert text == self.plain_text

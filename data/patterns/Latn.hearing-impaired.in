@@ -13,22 +13,36 @@ Flags=DOTALL,MULTILINE,UNICODE
 Replacement=
 
 [HearingImpairedPattern]
-_Name=Speakers
-_Description=Replace names of speakers with dialog lines
-Pattern=^-?\s?[^,;:\.\?\!]*?:\s
+_Name=Speakers before colons
+_Description=Replace names of speakers before colons with dialog lines
+Pattern=^-?\s*?[^\,\;\:\.\?\!]*?:\s
 Flags=MULTILINE,UNICODE
 Replacement=-\040
 
 [HearingImpairedPattern]
-_Name=Song lyrics
-_Description=Remove song lyrics between number signs
-Pattern=#[^#]*(#|\Z)
+_Name=Song lyrics between number signs
+_Description=Remove song lyrics starting with or between number signs
+Pattern=#.*?(#|\Z)
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=
 
 [HearingImpairedPattern]
-_Name=One-line song lyrics
-_Description=Remove one-line song lyrics between number signs
-Pattern=#[^#\n]*(#|$)
+_Name=One-line song lyrics between number signs
+_Description=Remove one-line song lyrics starting with or between number signs
+Pattern=#.*?(#|$)
+Flags=DOTALL,MULTILINE,UNICODE
+Replacement=
+
+[HearingImpairedPattern]
+_Name=Song lyrics between asterisks
+_Description=Remove song lyrics starting with or between asterisks
+Pattern=\*.*?(\*|\Z)
+Flags=DOTALL,MULTILINE,UNICODE
+Replacement=
+
+[HearingImpairedPattern]
+_Name=One-line song lyrics between asterisks
+_Description=Remove one-line song lyrics starting with or between asterisks
+Pattern=\*.*?(\*|$)
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=

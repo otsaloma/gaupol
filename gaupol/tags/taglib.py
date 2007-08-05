@@ -72,3 +72,8 @@ class TagLibrary(gaupol.Singleton):
         """Return italicized text."""
 
         raise NotImplementedError
+
+    def remove_redundant(self, text):
+        """Return text with redundant tags removed."""
+
+        return text

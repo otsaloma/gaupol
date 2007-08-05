@@ -1,3 +1,25 @@
+2007-08-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/patterns/Latn-en.hearing-impaired.conf:
+	* data/patterns/Latn-en.hearing-impaired.in:
+	* data/patterns/Latn.hearing-impaired.conf:
+	* data/patterns/Latn.hearing-impaired.in:
+	Fix patterns based on crude test case results.
+
+	* gaupol/agents/util.py (get_parser):
+	Add redundant_func argument.
+
+	* gaupol/finder.py (set_regex):
+	Fix default_flags argument to actually work (again).
+
+	* gaupol/parser.py:
+	(_shift_tags): Try to fix when shift is negative.
+	(get_text): Remove redundant tags.
+
+	* gaupol/tags/subrip.py (remove_redundant):
+	* gaupol/tags/taglib.py (remove_redundant):
+	Add method to remove redundant tags.
+
 2007-08-04  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/main.py (_init_application):

@@ -201,9 +201,8 @@ class Finder(object):
         """
         if self.ignore_case:
             flags = flags | re.IGNORECASE
-        flags = flags | re.DOTALL | re.MULTILINE | re.UNICODE
-        if default_flags is not None:
-            flags = default_flags
+        if default_flags is None:
+            flags = flags | re.DOTALL | re.MULTILINE | re.UNICODE
         self.pattern = re.compile(pattern, flags)
 
     def set_text(self, text, next=True):
