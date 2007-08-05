@@ -1,5 +1,13 @@
 2007-08-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/assistants/text/hearing.py:
+	* gaupol/patternman.py:
+	Fix PatternManager code handling to keep track of parent codes
+	and write configurations to files matching pattern files.
+	Sort entries HearingImpairedPage combo boxes.
+
+2007-08-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/actions/text.py (CorrectTextsAction):
 	Fix label to use title case and add ellipsis.
 

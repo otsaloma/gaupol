@@ -29,16 +29,15 @@ class TestPatternManager(unittest.TestCase):
 
     def test_get_countries(self):
 
-        self.manager.get_countries()
+        self.manager.get_countries("Latn", "en")
 
     def test_get_languages(self):
 
-        self.manager.get_languages()
+        self.manager.get_languages("Latn")
 
     def test_get_patterns(self):
 
         patterns = self.manager.get_patterns("Latn")
-        assert patterns
         for pattern in patterns:
             pattern.get_name()
             pattern.get_description()

@@ -88,13 +88,13 @@ class HearingImpairedPage(TextAssistantPage):
         assert index < (len(store) - 1)
         return store[index][0]
 
-    def _init_combo(self, combo_box, codes, names, active):
+    def _init_combo(self, combo_box, items, active):
         """Initialize combo box and its values."""
 
         store = gtk.ListStore(*(gobject.TYPE_STRING,) * 2)
         combo_box.set_model(store)
-        for i, code in enumerate(codes):
-            store.append([code, names[i]])
+        for code, name in items:
+            store.append([code, name])
         if len(store) > 0:
             store.append([gaupol.gtk.COMBO_SEPARATOR, ""])
         store.append(["", _("Other")])
@@ -113,28 +113,34 @@ class HearingImpairedPage(TextAssistantPage):
         """Initialize the country combo box."""
 
         combo_box = self._country_combo
-        codes = self._manager.get_countries()
-        names = [gaupol.countries.code_to_name(x) for x in codes]
+        script = self._get_script()
+        language = self._get_language()
+        codes = self._manager.get_countries(script, language)
+        items = [(x, gaupol.countries.code_to_name(x)) for x in codes]
+        items.sort(key=lambda x: x[1])
         active = gaupol.gtk.conf.text_assistant.hearing_country
-        self._init_combo(combo_box, codes, names, active)
+        self._init_combo(combo_box, items, active)
 
     def _init_language_combo(self):
         """Initialize the language combo box."""
 
         combo_box = self._language_combo
-        codes = self._manager.get_languages()
-        names = [gaupol.languages.code_to_name(x) for x in codes]
+        script = self._get_script()
+        codes = self._manager.get_languages(script)
+        items = [(x, gaupol.languages.code_to_name(x)) for x in codes]
+        items.sort(key=lambda x: x[1])
         active = gaupol.gtk.conf.text_assistant.hearing_language
-        self._init_combo(combo_box, codes, names, active)
+        self._init_combo(combo_box, items, active)
 
     def _init_script_combo(self):
         """Initialize the script combo box."""
 
         combo_box = self._script_combo
         codes = self._manager.get_scripts()
-        names = [gaupol.scripts.code_to_name(x) for x in codes]
+        items = [(x, gaupol.scripts.code_to_name(x)) for x in codes]
+        items.sort(key=lambda x: x[1])
         active = gaupol.gtk.conf.text_assistant.hearing_script
-        self._init_combo(combo_box, codes, names, active)
+        self._init_combo(combo_box, items, active)
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""

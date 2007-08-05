@@ -19,7 +19,6 @@
 import gaupol
 import os
 import xml.etree.ElementTree as ET
-import xml.sax.saxutils
 
 __all__ = ["PatternManager"]
 
@@ -30,12 +29,11 @@ class PatternManager(object):
 
     Instance variables:
      * pattern_type: String to indentify what the pattern matches
-     * _country_patterns: Dictionary mapping country codes to pattern lists
-     * _language_patterns: Dictionary mapping language codes to pattern lists
-     * _script_patterns: Dictionary mapping script codes to pattern lists
+     * _patterns: Dictionary mapping codes to pattern lists
 
     pattern_type should be a string with value 'line-break', 'error',
-    'capitalization' or 'hearing-impaired'.
+    'capitalization' or 'hearing-impaired'. Codes are of form
+    Script[-language-[COUNTRY]] using the corresponding ISO codes.
     """
 
     __metaclass__ = gaupol.Contractual
@@ -47,14 +45,7 @@ class PatternManager(object):
     def __init__(self, pattern_type):
 
         self.pattern_type = pattern_type
-        self._country_patterns = {}
-        self._language_patterns = {}
-        self._script_patterns = {}
-
-        self._country_patterns[None] = []
-        self._language_patterns[None] = []
-        self._script_patterns[None] = []
-        self._script_patterns["Zyyy"] = []
+        self._patterns = {}
         self._read_patterns()
 
     def _assert_indentifiers(self, script, language, country):
@@ -69,18 +60,22 @@ class PatternManager(object):
             assert language is not None
             assert country in gaupol.countries.countries
 
-    def _get_dictionary(self, name):
-        """Return destination dictionary and key for name."""
+    def _get_codes_require(self, script=None, language=None, country=None):
+        self._assert_indentifiers(script, language, country)
 
-        identifiers = name.split("-")
-        key = identifiers[-1]
-        if len(identifiers) == 1:
-            return self._script_patterns, key
-        if len(identifiers) == 2:
-            return self._language_patterns, key
-        if len(identifiers) == 3:
-            return self._country_patterns, key
-        raise ValueError
+    def _get_codes(self, script=None, language=None, country=None):
+        """Get a list of all codes to be used by arguments."""
+
+        codes = []
+        if script is not None:
+            codes.append(script)
+        if language is not None:
+            code = "%s-%s" % (script, language)
+            codes.append(code)
+        if country is not None:
+            code = "%s-%s" % (code, country)
+            codes.append(code)
+        return codes
 
     def _get_pattern_text(self, pattern):
         """Get text representation of pattern to write to file."""
@@ -101,8 +96,6 @@ class PatternManager(object):
 
         assert os.path.isdir(directory)
         extension = ".%s.conf" % self.pattern_type
-        common_file = os.path.join(directory, "Zyyy%s" % extension)
-        self._read_config_from_file(common_file, encoding)
         files = os.listdir(directory)
         for name in (x for x in files if x.endswith(extension)):
             path = os.path.join(directory, name)
@@ -118,13 +111,13 @@ class PatternManager(object):
         assert os.path.isfile(path)
         basename = os.path.basename(path)
         extension = ".%s.conf" % self.pattern_type
-        name = basename.replace(extension, "")
-        dictionary, key = self._get_dictionary(name)
-        assert key in dictionary
-        patterns = dictionary[key]
+        code = basename.replace(extension, "")
+        assert code in self._patterns
+        patterns = self._patterns[code]
         for element in ET.parse(path).findall("pattern"):
             name = unicode(element.get("name"))
             name = name.replace("&quot;", '"')
+            name = name.replace("&amp;", "&")
             enabled = (element.get("enabled") == "true")
             for pattern in patterns:
                 if pattern.get_name(False) == name:
@@ -151,8 +144,6 @@ class PatternManager(object):
         assert os.path.isdir(directory)
         extension = ".%s" % self.pattern_type
         extensions = (extension, "%s.in" % extension)
-        common_file = os.path.join(directory, "Zyyy%s" % extension)
-        self._read_patterns_from_file(common_file, encoding)
         files = os.listdir(directory)
         for name in (x for x in files if x.endswith(extensions)):
             path = os.path.join(directory, name)
@@ -170,10 +161,9 @@ class PatternManager(object):
         extension = ".%s" % self.pattern_type
         if basename.endswith(".in"):
             extension = ".%s.in" % self.pattern_type
-        name = basename.replace(extension, "")
+        code = basename.replace(extension, "")
         local = path.startswith(gaupol.PROFILE_DIR)
-        dictionary, key = self._get_dictionary(name)
-        patterns = dictionary.setdefault(key, [])
+        patterns = self._patterns.setdefault(code, [])
         lines = gaupol.util.readlines(path, encoding)
         lines = [x.strip() for x in lines]
         for line in (x for x in lines if x):
@@ -186,53 +176,58 @@ class PatternManager(object):
             patterns[-1].set_field(name, value)
 
     @gaupol.util.asserted_return
-    def _write_config_to_file(self, name, encoding, patterns):
+    def _write_config_to_file(self, code, encoding):
         """Write configurations of all patterns to file."""
 
         local_dir = os.path.join(gaupol.PROFILE_DIR, "patterns")
         assert os.path.isdir(local_dir)
-        basename = "%s.%s.conf" % (name, self.pattern_type)
+        basename = "%s.%s.conf" % (code, self.pattern_type)
         path = os.path.join(local_dir, basename)
         text = '<?xml version="1.0" encoding="utf-8"?>'
         text += '%s<patterns>%s' % (os.linesep, os.linesep)
-        for pattern in patterns:
+        for pattern in self._patterns[code]:
             name = pattern.get_name(False)
+            name = name.replace("&", "&amp;")
             name = name.replace('"', "&quot;")
             enabled = ("false", "true")[pattern.enabled]
             text += '  <pattern name="%s" ' % name
-            text += 'enabled="%s" />' % enabled
+            text += 'enabled="%s"/>' % enabled
             text += os.linesep
         text += "</patterns>%s" % os.linesep
         gaupol.util.write(path, text, encoding)
 
     @gaupol.util.asserted_return
-    def _write_patterns_to_file(self, name, encoding, patterns):
+    def _write_patterns_to_file(self, code, encoding):
         """Write all local pattern to file."""
 
         local_dir = os.path.join(gaupol.PROFILE_DIR, "patterns")
         assert os.path.isdir(local_dir)
-        basename = "%s.%s" % (name, self.pattern_type)
+        basename = "%s.%s" % (code, self.pattern_type)
         path = os.path.join(local_dir, basename)
         pattern_texts = []
-        for pattern in (x for x in patterns if x.local):
+        for pattern in (x for x in self._patterns[code] if x.local):
             pattern_texts.append(self._get_pattern_text(pattern))
         blank_line = os.linesep + os.linesep
         text = blank_line.join(pattern_texts) + os.linesep
         gaupol.util.write(path, text, encoding)
 
-    def get_countries(self):
+    def get_countries(self, script, language):
         """Get a list of countries for which patterns exist."""
 
-        countries = self._country_patterns.keys()
-        countries.remove(None)
-        return countries
+        codes = self._patterns.keys()
+        start = "%s-%s-" % (script, language)
+        codes = [x for x in codes if x.startswith(start)]
+        countries = [x.split("-")[2] for x in codes]
+        return gaupol.util.get_unique(countries)
 
-    def get_languages(self):
+    def get_languages(self, script):
         """Get a list of languages for which patterns exist."""
 
-        languages = self._language_patterns.keys()
-        languages.remove(None)
-        return languages
+        codes = self._patterns.keys()
+        start = "%s-" % script
+        codes = [x for x in codes if x.startswith(start)]
+        languages = [x.split("-")[1] for x in codes]
+        return gaupol.util.get_unique(languages)
 
     def get_patterns_require(self, script=None, language=None, country=None):
         self._assert_indentifiers(script, language, country)
@@ -240,19 +235,20 @@ class PatternManager(object):
     def get_patterns(self, script=None, language=None, country=None):
         """Get patterns for script, language and country."""
 
-        patterns = self._script_patterns["Zyyy"][:]
-        patterns += self._script_patterns[script]
-        patterns += self._language_patterns[language]
-        patterns += self._country_patterns[country]
+        patterns = []
+        patterns += self._patterns.get("Zyyy", [])
+        for code in self._get_codes(script, language, country):
+            patterns += self._patterns.get(code, [])
         return patterns
 
     def get_scripts(self):
         """Get a list of scripts for which patterns exist."""
 
-        scripts = self._script_patterns.keys()
-        scripts.remove(None)
-        scripts.remove("Zyyy")
-        return scripts
+        codes = self._patterns.keys()
+        while "Zyyy" in codes:
+            codes.remove("Zyyy")
+        scripts = [x.split("-")[0] for x in codes]
+        return gaupol.util.get_unique(scripts)
 
     def save_require(self, script=None, language=None, country=None):
         self._assert_indentifiers(script, language, country)
@@ -260,12 +256,10 @@ class PatternManager(object):
     def save(self, script=None, language=None, country=None):
         """Save local patterns and configurations to files."""
 
-        patterns = self.get_patterns(script, language, country)
         local_dir = os.path.join(gaupol.PROFILE_DIR, "patterns")
         gaupol.util.silent(OSError)(gaupol.util.makedirs)(local_dir)
-        name = "%s-%s-%s" % (script, language, country)
-        name = name.replace("-None", "")
         encoding = gaupol.util.get_default_encoding()
-        # TODO: Uncomment when patterns can be added by a method.
-        # self._write_patterns_to_file(name, encoding, patterns)
-        self._write_config_to_file(name, "utf_8", patterns)
+        for code in self._get_codes(script, language, country):
+            # TODO: Uncomment when patterns can be added by a method.
+            # self._write_patterns_to_file(code, encoding)
+            self._write_config_to_file(code, "utf_8")
