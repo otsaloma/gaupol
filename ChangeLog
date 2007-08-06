@@ -1,5 +1,10 @@
 2007-08-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/assistants/text/assistant.py (_init_size):
+	Make the assistant a bit (two text lines) taller.
+
+2007-08-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/assistants/text/assistant.py (_on_apply):
 	Count edits and removals and flash a message in the statusbar.
 

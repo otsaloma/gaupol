@@ -111,7 +111,7 @@ class TextAssistant(gtk.Assistant):
     def _init_size(self):
         """Initialize the window size."""
 
-        label = gtk.Label("\n".join(["M" * 64] * 28))
+        label = gtk.Label("\n".join(["M" * 64] * 30))
         if gaupol.gtk.conf.editor.use_custom_font:
             font = gaupol.gtk.conf.editor.custom_font
             gaupol.gtk.util.set_label_font(label, font)
