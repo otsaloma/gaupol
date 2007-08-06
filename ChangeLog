@@ -1,5 +1,13 @@
 2007-08-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/patterns/Latn-en.hearing-impaired.in:
+	Change pattern to allow digits and spaces.
+
+	* gaupol/gtk/assistants/text/assistant.py (_on_apply):
+	Set the mouse pointer busy while working.
+
+2007-08-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/util.py (notify_frozen):
 	Wrap function call in a try-finally to always thaw.
 

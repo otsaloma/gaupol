@@ -121,6 +121,7 @@ class TextAssistant(gtk.Assistant):
     def _on_apply(self, *args):
         """Apply all confirmed changes."""
 
+        gaupol.gtk.util.set_cursor_busy(self)
         edits = removals = 0
         changes = self._confirmation_page.get_confirmed_changes()
         target = self._introduction_page.get_target()
@@ -145,6 +146,7 @@ class TextAssistant(gtk.Assistant):
         edits = edits - removals
         message = _("Edited %(edits)d and removed %(removals)d subtitles")
         self.application.flash_message(message % locals())
+        gaupol.gtk.util.set_cursor_normal(self)
 
     def _on_cancel(self, *args):
         """Destroy the assistant."""
