@@ -1,13 +1,13 @@
 Gaupol 0.9
 ==========
 
- * Test hearing impaired removal with actual files
-
  [D] Raise Python dependency to 2.5.1 or greater (#9685, this
      should have been done already for 0.8.)
  [D] Add a text correction assistant (Tools / Correct Texts)
- [W] Add a hearing impaired text removal task for the text
+ [D] Add a hearing impaired text removal task for the text
      correction assistant
+ [D] Fix notification issue, which caused at least that in some cases
+     the tab labels and the window title didn't update
  [D] Add quoting for number signs in the configuration file to avoid
      them being misinterpreted as in-line comments
  [D] For reading and writing non-xml files in $HOME/.gaupol, always

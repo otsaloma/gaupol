@@ -105,8 +105,10 @@ def notify_frozen(function):
     @functools.wraps(function)
     def wrapper(*args, **kwargs):
         frozen = args[0].freeze_notify()
-        value = function(*args, **kwargs)
-        args[0].thaw_notify(frozen)
+        try:
+            value = function(*args, **kwargs)
+        finally:
+            args[0].thaw_notify(frozen)
         return value
 
     return wrapper

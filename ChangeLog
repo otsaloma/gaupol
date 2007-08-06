@@ -1,5 +1,10 @@
 2007-08-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/util.py (notify_frozen):
+	Wrap function call in a try-finally to always thaw.
+
+2007-08-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/assistants/text/assistant.py (_init_size):
 	Make the assistant a bit (two text lines) taller.
 
