@@ -1,5 +1,10 @@
 2007-08-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/assistants/text/assistant.py (_on_apply):
+	Count edits and removals and flash a message in the statusbar.
+
+2007-08-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/parser.py (_shift_tags):
 	Partially rewrite and add proper comments.
 

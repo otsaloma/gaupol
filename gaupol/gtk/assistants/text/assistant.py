@@ -121,6 +121,7 @@ class TextAssistant(gtk.Assistant):
     def _on_apply(self, *args):
         """Apply all confirmed changes."""
 
+        edits = removals = 0
         changes = self._confirmation_page.get_confirmed_changes()
         target = self._introduction_page.get_target()
         application_pages = self.application.get_target_pages(target)
@@ -134,10 +135,16 @@ class TextAssistant(gtk.Assistant):
             if indexes and texts:
                 page.project.replace_texts(indexes, doc, texts)
                 page.project.set_action_description(register, description)
+                edits += (len(indexes))
+            edit_indexes = set(indexes)
             indexes = [x for i, x in enumerate(indexes) if not texts[i]]
             if indexes and gaupol.gtk.conf.text_assistant.remove_blank:
                 page.project.remove_subtitles(indexes)
                 page.project.group_actions(register, 2, description)
+                removals += len(set(indexes))
+        edits = edits - removals
+        message = _("Edited %(edits)d and removed %(removals)d subtitles")
+        self.application.flash_message(message % locals())
 
     def _on_cancel(self, *args):
         """Destroy the assistant."""
