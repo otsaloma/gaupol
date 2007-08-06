@@ -1,3 +1,8 @@
+2007-08-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/parser.py (_shift_tags):
+	Partially rewrite and add proper comments.
+
 2007-08-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/assistants/text/hearing.py:

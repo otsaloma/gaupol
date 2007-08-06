@@ -106,39 +106,37 @@ class Parser(gaupol.Finder):
         assert shift
         assert self._tags
 
-        # Shift tags at position if at a closing tag and shift is positive,
-        # otherwise shift only tags after position. This should keep tags at
-        # the very outer edges of words.
+        # Try to determine whether a tag at position pos would be an opening
+        # or a closing tag, i.e. attached to the next or the previous word.
         opening = True
-        if shift > 0:
-            if pos < len(orig_text):
-                if orig_text[pos].isspace():
-                    opening = False
-            elif pos == len(orig_text):
+        if pos < len(orig_text):
+            if orig_text[pos].isspace():
                 opening = False
+        elif pos == len(orig_text):
+            opening = False
+        closing = not opening
 
-        # Get length of tags before position.
+        # Get length of tags *before* position. Try to add strings (positive
+        # shift) inside tags and remove strings (negative shift) after tags.
         pos_with_tags = pos
         for tag_pos, tag in self._tags:
-            if opening and tag_pos <= pos_with_tags:
-                pos_with_tags += len(tag)
-            elif tag_pos < pos_with_tags:
+            if (shift > 0) and closing:
+                if tag_pos < pos_with_tags:
+                    pos_with_tags += len(tag)
+            elif tag_pos <= pos_with_tags:
                 pos_with_tags += len(tag)
 
-        # Shift tags.
         between_length = 0
         for i, (tag_pos, tag) in enumerate(self._tags):
             orig_end = pos_with_tags - shift + between_length
-            between = pos_with_tags < tag_pos < orig_end
-            if (shift < 0) and between:
+            if (shift < 0) and (pos_with_tags < tag_pos < orig_end):
+                # If tag is in the middle of what is being removed, it can be
+                # shifted to the start of the removal block, but not so that it
+                # would overlap with preceding tags.
                 self._tags[i][0] = pos_with_tags + between_length
                 between_length += len(tag)
-            elif opening and (tag_pos > pos_with_tags):
-                self._tags[i][0] += shift
             elif tag_pos >= pos_with_tags:
                 self._tags[i][0] += shift
-            if self._tags[i][0] < 0:
-                self._tags[i][0] = 0
 
     def get_text(self):
         """Reassemble the text and return it."""

@@ -1,7 +1,6 @@
 Gaupol 0.9
 ==========
 
- * Rewrite Parser._shift_tags?
  * Test hearing impaired removal with actual files
 
  [D] Raise Python dependency to 2.5.1 or greater (#9685, this
