@@ -13,9 +13,9 @@ Relevant customizations in this file
     variable stripped if it is given. If doing distro-packaging, make sure this
     file gets correctly written.
 
-(2) During installation, the .po files are compiled and the desktop file is
-    translated. This requires gettext and intltool, more specifically,
-    executables 'msgfmt' and 'intltool-merge' in $PATH.
+(2) During installation, the .po files are compiled and the desktop and pattern
+    files are translated. This requires gettext and intltool, more
+    specifically, executables 'msgfmt' and 'intltool-merge' in $PATH.
 """
 
 # pylint: disable-msg=W0621

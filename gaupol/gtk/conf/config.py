@@ -67,6 +67,7 @@ class Config(configobj.ConfigObj):
         config_file can be None for default configuration.
         Raise ConfigParseError if parsing config_file fails.
         """
+        # pylint: disable-msg=W0233
         try:
             configobj.ConfigObj.__init__(
                 self, config_file, configspec=spec_file,
@@ -74,12 +75,10 @@ class Config(configobj.ConfigObj):
                 write_empty_values=True)
         except IOError:
             gaupol.util.handle_read_io(sys.exc_info(), config_file)
-            # pylint: disable-msg=W0233
             configobj.ConfigObj.__init__(
                 self, None, configspec=spec_file,
                 encoding=gaupol.util.get_default_encoding())
         except UnicodeError:
-            # pylint: disable-msg=W0233
             configobj.ConfigObj.__init__(
                 self, config_file, configspec=spec_file,
                 encoding="utf_8", write_empty_values=True)

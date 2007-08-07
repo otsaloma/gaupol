@@ -138,11 +138,13 @@ def revertable(function):
         if register is None:
             return function(*args, **kwargs)
         blocked = project.block(register.signal)
-        value = function(*args, **kwargs)
         if not blocked:
-            return value
-        project.cut_reversion_stacks()
-        project.unblock(register.signal)
+            return function(*args, **kwargs)
+        try:
+            value = function(*args, **kwargs)
+            project.cut_reversion_stacks()
+        finally:
+            project.unblock(register.signal)
         if (project.main_changed != main_changed) or \
            (project.tran_changed != tran_changed):
             project.emit_action_signal(register)

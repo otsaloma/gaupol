@@ -1,3 +1,11 @@
+2007-08-07  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/conf/config.py (__init__):
+	Relocate pylint: disable-msg.
+
+	* gaupol/util.py (revertable):
+	Wrap function call in a try-finally to always unblock.
+
 2007-08-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/patterns/Latn-en.hearing-impaired.in:

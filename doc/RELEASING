@@ -3,21 +3,21 @@ Release Checklist
 
 Set some useful variables.
 
-    export VERSION=0.8
-    export BRANCH=0.8
+    export VERSION=0.9
+    export BRANCH=0.9
     export USERNAME=osmo
     export SVN_ROOT=svn+ssh://$USERNAME@svn.gna.org/svn/gaupol
     export SVN_SOURCE=$SVN_ROOT/trunk
-    export SVN_BRANCH=$SVN_ROOT/branches/gaupol-0-8
-    export SVN_TAG=$SVN_ROOT/tags/GAUPOL_0_8
+    export SVN_BRANCH=$SVN_ROOT/branches/gaupol-0-9
+    export SVN_TAG=$SVN_ROOT/tags/GAUPOL_0_9
     export DOWNLOAD_ROOT=$USERNAME@download.gna.org:/upload/gaupol
-    export DOWNLOAD_BRANCH=$DOWNLOAD_ROOT/0.8
+    export DOWNLOAD_BRANCH=$DOWNLOAD_ROOT/0.9
 
 Search for unfinished code.
 
     export PATTERN="(BUG|FIX|NOTE|TODO):"
     export FILES=$(find gaupol -name "*.py" -print)
-    export SKIP="(configobj|^--$)"
+    export SKIP="(configobj.py|validate.py|^--$)"
     egrep -A 2 -B 2 -n "$PATTERN" $FILES | egrep -v "$SKIP"
 
 Run (all) automatic checks.
