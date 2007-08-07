@@ -5,7 +5,7 @@
 
 pylint --rcfile=$(dirname "$0")/data/pylintrc "$@" \
 \
-    | egrep -v "Attribute '[A-Z0-9]+' defined outside __init__" \
+    | egrep -v "Attribute '[A-Z0-9_]+' defined outside __init__" \
     | egrep -v "Instance of 'ConstantMember' has no '.+?' member" \
     | egrep -v "Instance of 'ConstantSection' has no '.+?s' member" \
     | egrep -v "Module 'gaupol.gtk..?conf' has no '.+?' member" \

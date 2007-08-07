@@ -1,25 +1,10 @@
-Gaupol 0.9
-==========
-
- [D] Raise Python dependency to 2.5.1 or greater (#9685, this
-     should have been done already for 0.8.)
- [D] Add a text correction assistant (Tools / Correct Texts)
- [D] Add a hearing impaired text removal task for the text
-     correction assistant
- [D] Fix notification issue, which caused at least that in some cases
-     the tab labels and the window title didn't update
- [D] Add quoting for number signs in the configuration file to avoid
-     them being misinterpreted as in-line comments
- [D] For reading and writing non-xml files in $HOME/.gaupol, always
-     try the locale encoding first and if it fails, use UTF-8
-
-
 Gaupol 1.0
 ==========
 
  * Fix errors (text assistant task)
  * Capitalize (text assistant task)
  * Format lines (text assistant task)
+ * Plugin system (see gedit for interfaces)
 
 
 Unscheduled Possibilities
@@ -33,6 +18,5 @@ Unscheduled Possibilities
  * gedit-style message area
  * Document hidden settings (where?)
  * Windows installer
- * Plugin system (see gedit for interfaces)
  * Multiple windows and tab drag-dropping between them
  * Built-in GStreamer preview (as plugin?)
