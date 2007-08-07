@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
-"""Assistants to guide through complicated tasks."""
+"""Assistant to guide through multiple text correction tasks."""
 
 from .assistant import TextAssistant
 from .page import TextAssistantPage

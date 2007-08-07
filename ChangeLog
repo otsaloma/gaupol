@@ -1,5 +1,10 @@
 2007-08-07  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/assistants/text/__init__.py:
+	Fix module docstring.
+
+2007-08-07  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* lib/gaupol/__init__.py:
 	  Bumped version number to 0.9.
 
