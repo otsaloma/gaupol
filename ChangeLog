@@ -1,3 +1,9 @@
+2007-08-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/gaupol.gtk.conf.spec:
+	Change default values of edit.use_custom_font and
+	preview.use_custom to False.
+
 2007-08-07  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/assistants/text/__init__.py:

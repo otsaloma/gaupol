@@ -31,7 +31,7 @@ mode = MODE(default="TIME")
 show_lengths_cell = boolean(default=True)
 show_lengths_edit = boolean(default=True)
 undo_levels = integer(min=0, default=50)
-use_custom_font = boolean(default=True)
+use_custom_font = boolean(default=False)
 visible_columns = COLUMN_list(default=list("NUMBER", "START", "END", "DURATION", "MAIN_TEXT"))
 
 [encoding]
@@ -70,7 +70,7 @@ target = TARGET(default="CURRENT")
 [preview]
 custom_command = string(default=None)
 offset = float(default=5.0)
-use_custom = boolean(default=True)
+use_custom = boolean(default=False)
 video_player = VIDEO_PLAYER(default="MPLAYER")
 
 [search]
