@@ -438,6 +438,8 @@ def makedirs(directory):
 def path_to_uri(path):
     """Convert local filepath to URI."""
 
+    if sys.platform == "win32":
+        path = "/%s" % path.replace("\\", "/")
     return "file://%s" % urllib.quote(path)
 
 def read(path, encoding=None, fallback="utf_8"):
@@ -493,7 +495,13 @@ def start_process(command, **kwargs):
 def uri_to_path(uri):
     """Convert URI to local filepath."""
 
-    return urlparse.urlsplit(urllib.unquote(uri))[2]
+    uri = urllib.unquote(uri)
+    if sys.platform == "win32":
+        path = urlparse.urlsplit(uri)[2]
+        while path.startswith("/"):
+            path = path[1:]
+        return path.replace("/", "\\")
+    return urlparse.urlsplit(uri)[2]
 
 def write_ensure(value, path, text, encoding=None, fallback="utf_8"):
     assert os.path.isfile(path)

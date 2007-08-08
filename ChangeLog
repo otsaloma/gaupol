@@ -1,5 +1,10 @@
 2007-08-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/util.py (path_to_uri, uri_to_path):
+	Fix to work on Windows.
+
+2007-08-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/const.py (VIDEO_PLAYER):
 	Use absolute quoted paths on Windows.
 
