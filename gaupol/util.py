@@ -183,10 +183,6 @@ def browse_url(url, browser=None):
         return start_process("kfmclient exec %s" % qurl)
     if sys.platform == "darwin":
         return start_process("open %s" % qurl)
-    if sys.platform == "win32":
-        # pylint: disable-msg=E1101
-        return os.startfile(url)
-
     return webbrowser.open(url)
 
 @once
@@ -488,7 +484,7 @@ def start_process(command, **kwargs):
     """
     return subprocess.Popen(
         command,
-        shell=True,
+        shell=(sys.platform != "win32"),
         cwd=os.getcwd(),
         env=os.environ.copy(),
         universal_newlines=True,

@@ -2,6 +2,9 @@ Gaupol 0.10
 ===========
 
  [D] Fix default values of two configuration variables
+ [D] Fix text cell renderer font sizes on Windows
+ [D] Fix web browser launch on Windows
+ [D] Partially fix preview on Windows
 
 
 Gaupol 1.0

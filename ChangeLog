@@ -1,5 +1,20 @@
 2007-08-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/const.py (VIDEO_PLAYER):
+	Use absolute quoted paths on Windows.
+
+	* gaupol/gtk/agents/preview.py (preview):
+	Do not call gobject.child_watch_add on Windows.
+
+	* gaupol/gtk/renderers/multiline.py (do_start_editing):
+	Sync editor's font to renderer's to fix a Windows bug.
+
+	* gaupol/util.py:
+	(browse_url): Do not use os.startfile on Windows.
+	(start_process): Do not use shell on Windows.
+
+2007-08-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/gaupol.gtk.conf.spec:
 	Change default values of edit.use_custom_font and
 	preview.use_custom to False.

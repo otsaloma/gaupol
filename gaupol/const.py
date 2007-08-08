@@ -116,12 +116,12 @@ REGISTER.finalize()
 
 def get_mplayer_executable():
     if sys.platform == "win32":
-        return r"%ProgramFiles%\mplayer\mplayer.exe"
+        return r'"C:\Program Files\mplayer\mplayer.exe"'
     return "mplayer"
 
 def get_vlc_executable():
     if sys.platform == "win32":
-        return r"%ProgramFiles%\VideoLAN\vlc\vlc.exe"
+        return r'"C:\Program Files\VideoLAN\VLC\vlc.exe"'
     return "vlc"
 
 VIDEO_PLAYER = gaupol.ConstantSection()

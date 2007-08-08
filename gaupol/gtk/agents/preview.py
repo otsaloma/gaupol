@@ -22,6 +22,7 @@ import gaupol.gtk
 import gobject
 import gtk
 import os
+import sys
 import tempfile
 _ = gaupol.i18n._
 
@@ -80,6 +81,7 @@ class PreviewAgent(gaupol.Delegate):
         doc = gaupol.gtk.util.text_column_to_document(col)
         self.preview(page, time, doc)
 
+    @gaupol.gtk.util.asserted_return
     def preview(self, page, time, doc, path=None):
         """Preview from time with a video player."""
 
@@ -101,6 +103,7 @@ class PreviewAgent(gaupol.Delegate):
         handler = self._handle_output
         if process.poll() is not None:
             return handler(process.pid, process.returncode, output_path)
+        assert sys.platform != "win32"
         gobject.child_watch_add(process.pid, handler, output_path)
 
     def preview_changes(self, page, row, doc, method, args=None, kwargs=None):
