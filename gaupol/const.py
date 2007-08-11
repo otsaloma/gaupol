@@ -19,6 +19,7 @@
 # pylint: disable-msg=E1101,W0201
 
 import gaupol
+import os
 import sys
 _ = gaupol.i18n._
 
@@ -116,12 +117,14 @@ REGISTER.finalize()
 
 def get_mplayer_executable():
     if sys.platform == "win32":
-        return r'"C:\Program Files\mplayer\mplayer.exe"'
+        directory = os.environ.get("PROGRAMFILES", r"C:\Program Files")
+        return os.path.join(directory, "mplayer", "mplayer.exe")
     return "mplayer"
 
 def get_vlc_executable():
     if sys.platform == "win32":
-        return r'"C:\Program Files\VideoLAN\VLC\vlc.exe"'
+        directory = os.environ.get("PROGRAMFILES", r"C:\Program Files")
+        return os.path.join(directory, "VideoLAN", "VLC", "vlc.exe")
     return "vlc"
 
 VIDEO_PLAYER = gaupol.ConstantSection()

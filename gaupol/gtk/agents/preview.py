@@ -33,8 +33,16 @@ class PreviewAgent(gaupol.Delegate):
 
     # pylint: disable-msg=E0203,W0201
 
+    def _check_process_state(self, process, output_path):
+        """Check if the process has terminated or not."""
+
+        if process.poll() is not None:
+            self._handle_output(process, output_path)
+            return False
+        return True
+
     @gaupol.gtk.util.asserted_return
-    def _handle_output(self, pid, return_value, output_path):
+    def _handle_output(self, process, output_path):
         """Handle the output of finished preview process."""
 
         with open(output_path, "r") as fobj:
@@ -42,7 +50,7 @@ class PreviewAgent(gaupol.Delegate):
         silent = gaupol.gtk.util.silent(OSError)
         silent(os.remove)(output_path)
         self.output_window.set_output(output)
-        assert return_value != 0
+        assert process.returncode != 0
         dialog = gaupol.gtk.PreviewErrorDialog(self.window, output)
         self.flash_dialog(dialog)
 
@@ -92,7 +100,7 @@ class PreviewAgent(gaupol.Delegate):
             offset = gaupol.gtk.conf.preview.offset
             output = page.project.preview(time, doc, command, offset, path)
             process, command, output_path = output
-        except IOError, (no, message):
+        except (IOError, OSError), (no, message):
             silent = gaupol.gtk.util.silent(OSError)
             silent(os.remove)(output_path)
             return self._show_io_error_dialog(message)
@@ -100,11 +108,9 @@ class PreviewAgent(gaupol.Delegate):
             silent = gaupol.gtk.util.silent(OSError)
             silent(os.remove)(output_path)
             return self._show_encoding_error_dialog()
-        handler = self._handle_output
-        if process.poll() is not None:
-            return handler(process.pid, process.returncode, output_path)
-        assert sys.platform != "win32"
-        gobject.child_watch_add(process.pid, handler, output_path)
+        function = self._check_process_state
+        args = (process, output_path)
+        gobject.timeout_add(200, function, *args)
 
     def preview_changes(self, page, row, doc, method, args=None, kwargs=None):
         """Preview changes caused by method with a video player."""
