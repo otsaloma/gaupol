@@ -21,7 +21,6 @@ import gaupol
 import os
 import string
 import subprocess
-import tempfile
 
 
 class PreviewAgent(gaupol.Delegate):
@@ -74,7 +73,8 @@ class PreviewAgent(gaupol.Delegate):
         Raise UnicodeError if encoding temporary file fails.
         """
         file = self.get_file(doc)
-        path = tempfile.mkstemp(file.format.extension, "gaupol.")[1]
+        path = gaupol.temp.create(file.format.extension)
+        atexit.register(gaupol.temp.remove, path)
         props = (path, file.format, file.encoding, file.newline)
         self.save(doc, props, False)
         return path
@@ -125,8 +125,9 @@ class PreviewAgent(gaupol.Delegate):
         remove = gaupol.util.silent(OSError)(os.remove)
         if sub_path != self.get_file(doc).path:
             atexit.register(remove, sub_path)
-        output_fd, output_path = tempfile.mkstemp(".output", "gaupol.")
-        atexit.register(remove, output_path)
+        output_path = gaupol.temp.create(".output")
+        output_fd = gaupol.temp.get_handle(output_path)
+        atexit.register(gaupol.temp.remove, output_path)
         seconds = self.calc.time_to_seconds(time)
         seconds = "%.3f" % max(0.0, seconds - float(offset))
         command = string.Template(command).safe_substitute(

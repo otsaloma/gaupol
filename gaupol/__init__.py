@@ -27,6 +27,7 @@ check_contracts = True
 from gaupol.paths import *
 from gaupol.urls import *
 from gaupol import util
+from gaupol import temp
 from gaupol.base import *
 from gaupol import i18n
 from gaupol.errors import *

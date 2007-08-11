@@ -4,8 +4,9 @@ Gaupol 0.10
  [D] Fix default values of two configuration variables
  [D] Fix text cell renderer font sizes on Windows
  [D] Fix web browser launch on Windows
- [D] Fix recent file uri handling on Windows
+ [D] Fix recent file URI handling on Windows
  [D] Fix preview on Windows
+ [D] Fix temporary file removals on Windows
 
 
 Gaupol 1.0

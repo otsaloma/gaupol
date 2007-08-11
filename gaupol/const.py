@@ -118,13 +118,15 @@ REGISTER.finalize()
 def get_mplayer_executable():
     if sys.platform == "win32":
         directory = os.environ.get("PROGRAMFILES", r"C:\Program Files")
-        return os.path.join(directory, "mplayer", "mplayer.exe")
+        path = os.path.join(directory, "mplayer", "mplayer.exe")
+        return gaupol.util.shell_quote(path)
     return "mplayer"
 
 def get_vlc_executable():
     if sys.platform == "win32":
         directory = os.environ.get("PROGRAMFILES", r"C:\Program Files")
-        return os.path.join(directory, "VideoLAN", "VLC", "vlc.exe")
+        path = os.path.join(directory, "VideoLAN", "VLC", "vlc.exe")
+        return gaupol.util.shell_quote(path)
     return "vlc"
 
 VIDEO_PLAYER = gaupol.ConstantSection()

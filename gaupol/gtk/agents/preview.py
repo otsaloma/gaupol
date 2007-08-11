@@ -47,8 +47,7 @@ class PreviewAgent(gaupol.Delegate):
 
         with open(output_path, "r") as fobj:
             output = fobj.read()
-        silent = gaupol.gtk.util.silent(OSError)
-        silent(os.remove)(output_path)
+        gaupol.temp.remove(output_path)
         self.output_window.set_output(output)
         assert process.returncode != 0
         dialog = gaupol.gtk.PreviewErrorDialog(self.window, output)

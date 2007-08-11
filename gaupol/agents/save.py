@@ -20,7 +20,6 @@ import gaupol
 import os
 import shutil
 import sys
-import tempfile
 
 
 class SaveAgent(gaupol.Delegate):
@@ -124,7 +123,8 @@ class SaveAgent(gaupol.Delegate):
         ends = [x.get_end(file.mode) for x in self.subtitles]
         file_existed = os.path.isfile(file.path)
         if file_existed:
-            backup_path = tempfile.mkstemp(".bak", "gaupol.")[1]
+            backup_path = gaupol.temp.create(".bak")
+            gaupol.temp.close(backup_path)
             backup_success = self._copy_file(file.path, backup_path)
         try:
             write_success = False

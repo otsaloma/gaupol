@@ -21,7 +21,6 @@ from __future__ import with_statement
 import atexit
 import gaupol
 import os
-import tempfile
 
 
 class TestCase(object):
@@ -42,8 +41,9 @@ class TestCase(object):
         """Get path to a temporary subtitle file."""
 
         text = self.get_file_text(format)
-        fd, path = tempfile.mkstemp(format.extension, "gaupol.")
-        with os.fdopen(fd, "w") as fobj:
+        path = gaupol.temp.create(format.extension)
+        gaupol.temp.close(path)
+        with open(path, "w") as fobj:
             fobj.write(text)
         self.files.add(path)
         return path
