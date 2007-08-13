@@ -1,3 +1,16 @@
+2007-08-13  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/patterns/Latn-en.error.conf:
+	* data/patterns/Latn-en.error.in:
+	* data/patterns/Latn.error.conf:
+	* data/patterns/Latn.error.in:
+	* data/patterns/Zyyy.error.conf:
+	* data/patterns/Zyyy.error.in:
+	New files for common error patterns.
+
+	* tools/generate-pattern-conf:
+	New script to generate pattern configuration XML files.
+
 2007-08-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/const.py (VIDEO_PLAYER):

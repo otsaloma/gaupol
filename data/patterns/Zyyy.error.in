@@ -1,0 +1,26 @@
+[ErrorPattern]
+_Name=Leading and trailing spaces
+_Description=Remove spaces from the beginnings and ends of lines
+Class=Human,OCR
+Pattern=(^ +| +$)
+Flags=DOTALL,MULTILINE,UNICODE
+Replacement=
+Repeat=False
+
+[ErrorPattern]
+_Name=Multiple spaces
+_Description=Remove multiple consecutive spaces
+Class=Human,OCR
+Pattern= {2,}
+Flags=DOTALL,MULTILINE,UNICODE
+Replacement=\040
+Repeat=False
+
+[ErrorPattern]
+_Name=Spaces between digits
+_Description=Remove spaces between digits of a number
+Class=OCR
+Pattern=(?<=\d) +(?=\d)
+Flags=DOTALL,MULTILINE,UNICODE
+Replacement=
+Repeat=True
