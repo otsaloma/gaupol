@@ -1,6 +1,7 @@
 Gaupol 0.10
 ===========
 
+ [W] Add a common error correction task for the text assistant
  [D] Fix default values of two configuration variables
  [D] Fix text cell renderer font sizes on Windows
  [D] Fix web browser launch on Windows
@@ -12,7 +13,6 @@ Gaupol 0.10
 Gaupol 1.0
 ==========
 
- * Fix errors (text assistant task)
  * Capitalize (text assistant task)
  * Format lines (text assistant task)
  * Plugin system (see gedit for interfaces)

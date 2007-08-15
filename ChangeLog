@@ -1,3 +1,11 @@
+2007-08-15  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/patterns/Latn-en.hearing-impaired.in:
+	Add apostrophe to upper case name pattern.
+
+	* gaupol/agents/search.py (find_next_require):
+	Loosen precondition regarding position.
+
 2007-08-13  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/patterns/Latn-en.error.conf:

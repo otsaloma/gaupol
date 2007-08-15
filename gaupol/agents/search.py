@@ -186,9 +186,6 @@ class SearchAgent(gaupol.Delegate):
 
     def find_next_require(self, index=None, doc=None, pos=None):
         assert 0 <= (index or 0) < len(self.subtitles)
-        if doc is not None:
-            text = self.subtitles[index or 0].get_text(doc)
-            assert 0 <= (pos or 0) <= len(text)
 
     def find_next_ensure(self, value, index=None, doc=None, pos=None):
         index, doc, match_span = value
