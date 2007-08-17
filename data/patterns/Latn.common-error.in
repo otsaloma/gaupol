@@ -2,7 +2,7 @@
 _Name=Letters "O" in numbers
 _Description=Replace letters "O" with zeros in numbers
 Classes=OCR
-Pattern=(((?<=\d)|(?<=\d[\,\.]))[oO]|[oO]((?=\d)|(?=[\,\.]\d)))
+Pattern=(((?<=\d)|(?<=\d[,.]))[oO]|[oO]((?=\d)|(?=[,.]\d)))
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=0
 Repeat=True
@@ -29,7 +29,7 @@ Repeat=False
 _Name=Spaces before punctuation marks
 _Description=Remove excess spaces before various punctuation marks
 Classes=Human,OCR
-Pattern= +(("|')?[\,\;\:\.?\!](?!\d)|["'-\.]+$)
+Pattern= +(("|')?([,;:.?!])(?!(\d|\3)))
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\1
 Repeat=False
@@ -38,7 +38,7 @@ Repeat=False
 _Name=Spaces after punctuation marks
 _Description=Add lacking spaces after various punctuation marks
 Classes=Human,OCR
-Pattern=((\w|^)("|')?[\,\;\:\.\?\!])(("|')?[^\W\d][^\.])
+Pattern=((\w|^)("|')?[,;:.?!])(("|')?[^\W\d][^.])
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\1 \4
 Repeat=False
@@ -74,7 +74,7 @@ Repeat=False
 _Name=Periods around question- and exclamation marks
 _Description=Remove periods around question- and exclamation marks
 Classes=OCR
-Pattern=((?<=[\?\!])\.(?!\.)|(?<!\.\w)\.(?=[\?\!]))
+Pattern=((?<=[?!])\.(?!\.)|(?<!\.\w)\.(?=[?!]))
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=
 Repeat=False

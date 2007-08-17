@@ -464,7 +464,7 @@ class TestFinder(unittest.TestCase):
     def test_replace_shorten_regex_next(self):
 
         self.finder.set_text(self.text)
-        self.finder.set_regex(r"[\.\,]")
+        self.finder.set_regex(r"[.,]")
         self.finder.replacement = ""
 
         self.finder.next()
@@ -485,7 +485,7 @@ class TestFinder(unittest.TestCase):
     def test_replace_shorten_regex_previous(self):
 
         self.finder.set_text(self.text, False)
-        self.finder.set_regex(r"[\.,]")
+        self.finder.set_regex(r"[.,]")
         self.finder.replacement = ""
 
         self.finder.previous()

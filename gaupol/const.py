@@ -48,7 +48,7 @@ FORMAT.MPSUB = gaupol.ConstantMember()
 FORMAT.MPSUB.label = "MPsub"
 FORMAT.MPSUB.extension = ".sub"
 FORMAT.MPSUB.has_header = True
-FORMAT.MPSUB.identifier = r"^FORMAT=(TIME|[\d\.]+)\s*$"
+FORMAT.MPSUB.identifier = r"^FORMAT=(TIME|[\d.]+)\s*$"
 FORMAT.SSA = gaupol.ConstantMember()
 FORMAT.SSA.label = "Sub Station Alpha"
 FORMAT.SSA.extension = ".ssa"

@@ -1,5 +1,13 @@
 2007-08-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/patterns/Latn.common-error.in:
+	* data/patterns/Latn.hearing-impaired.in:
+	* gaupol/const.py:
+	* gaupol/files/mpsub.py:
+	Remove redundant backslashes in regular expressions.
+
+2007-08-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/parser.py (_set_margins):
 	Check for tags in the middle of the line.
 

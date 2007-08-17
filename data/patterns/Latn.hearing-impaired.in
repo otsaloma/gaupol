@@ -15,7 +15,7 @@ Replacement=
 [HearingImpairedPattern]
 _Name=Speakers before colons
 _Description=Replace names of speakers before colons with dialog lines
-Pattern=^-?\s*?[^\,\;\:\.\?\!]*?:\s
+Pattern=^-?\s*?[^,;:.?!]*?:\s
 Flags=MULTILINE,UNICODE
 Replacement=-\040
 
