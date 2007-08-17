@@ -31,7 +31,7 @@ class PatternManager(object):
      * pattern_type: String to indentify what the pattern matches
      * _patterns: Dictionary mapping codes to pattern lists
 
-    pattern_type should be a string with value 'line-break', 'error',
+    pattern_type should be a string with value 'line-break', 'common-error',
     'capitalization' or 'hearing-impaired'. Codes are of form
     Script[-language-[COUNTRY]] using the corresponding ISO codes.
     """
@@ -39,7 +39,8 @@ class PatternManager(object):
     __metaclass__ = gaupol.Contractual
 
     def __init___require(self, pattern_type):
-        types = ("line-break", "error", "capitalization", "hearing-impaired")
+        types = ("line-break", "common-error",
+            "capitalization", "hearing-impaired")
         assert pattern_type in types
 
     def __init__(self, pattern_type):
@@ -66,7 +67,7 @@ class PatternManager(object):
     def _get_codes(self, script=None, language=None, country=None):
         """Get a list of all codes to be used by arguments."""
 
-        codes = []
+        codes = ["Zyyy"]
         if script is not None:
             codes.append(script)
         if language is not None:
@@ -236,7 +237,6 @@ class PatternManager(object):
         """Get patterns for script, language and country."""
 
         patterns = []
-        patterns += self._patterns.get("Zyyy", [])
         for code in self._get_codes(script, language, country):
             patterns += self._patterns.get(code, [])
         return patterns
@@ -259,7 +259,8 @@ class PatternManager(object):
         local_dir = os.path.join(gaupol.PROFILE_DIR, "patterns")
         gaupol.util.silent(OSError)(gaupol.util.makedirs)(local_dir)
         encoding = gaupol.util.get_default_encoding()
-        for code in self._get_codes(script, language, country):
+        codes = self._get_codes(script, language, country)
+        for code in (x for x in codes if x in self._patterns):
             # TODO: Uncomment when patterns can be added by a method.
             # self._write_patterns_to_file(code, encoding)
             self._write_config_to_file(code, "utf_8")

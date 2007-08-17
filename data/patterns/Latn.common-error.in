@@ -1,79 +1,79 @@
-[ErrorPattern]
+[CommonErrorPattern]
 _Name=Letters "O" in numbers
 _Description=Replace letters "O" with zeros in numbers
-Class=OCR
+Classes=OCR
 Pattern=(((?<=\d)|(?<=\d[\,\.]))[oO]|[oO]((?=\d)|(?=[\,\.]\d)))
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=0
 Repeat=True
 
-[ErrorPattern]
+[CommonErrorPattern]
 _Name=Dialogue lines
 _Description=Add spaces after dialogue lines
-Class=Human,OCR
+Classes=Human,OCR
 Pattern=^-(?![- ])
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=-\040
 Repeat=False
 
-[ErrorPattern]
+[CommonErrorPattern]
 _Name=Double apostrophes
 _Description=Replace double apostrophes with a quotation mark
-Class=OCR
+Classes=OCR
 Pattern=''
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement="
 Repeat=False
 
-[ErrorPattern]
+[CommonErrorPattern]
 _Name=Spaces before punctuation marks
 _Description=Remove excess spaces before various punctuation marks
-Class=Human,OCR
+Classes=Human,OCR
 Pattern= +(("|')?[\,\;\:\.?\!](?!\d)|["'-\.]+$)
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\1
 Repeat=False
 
-[ErrorPattern]
+[CommonErrorPattern]
 _Name=Spaces after punctuation marks
 _Description=Add lacking spaces after various punctuation marks
-Class=Human,OCR
+Classes=Human,OCR
 Pattern=((\w|^)("|')?[\,\;\:\.\?\!])(("|')?\w)
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\1 \4
 Repeat=False
 
-[ErrorPattern]
+[CommonErrorPattern]
 _Name=Spaces after ellipses
 _Description=Add lacking spaces after ellipses
-Class=Human,OCR
+Classes=Human,OCR
 Pattern=(\w\W*?\.\.\.)(("|')?\w)
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\1 \2
 Repeat=False
 
-[ErrorPattern]
+[CommonErrorPattern]
 _Name=Spaces after starting ellipses
 _Description=Remove spaces after ellipses that start lines
-Class=Human,OCR
+Classes=Human,OCR
 Pattern=(^\W*?\.\.\.)( +)
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\1
 Repeat=False
 
-[ErrorPattern]
+[CommonErrorPattern]
 _Name=Multiple question- and exclamation marks
 _Description=Remove multiple consequtive question- and exclamation marks
-Class=Human
+Classes=Human
 Pattern=(\!|\?)\1+
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\1
 Repeat=False
 
-[ErrorPattern]
+[CommonErrorPattern]
 _Name=Periods around question- and exclamation marks
 _Description=Remove periods around question- and exclamation marks
-Class=OCR
+Classes=OCR
 Pattern=((?<=[\?\!])\.(?!\.)|(?<!\.\w)\.(?=[\?\!]))
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=

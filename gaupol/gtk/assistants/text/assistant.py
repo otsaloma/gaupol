@@ -23,6 +23,7 @@ _ = gaupol.i18n._
 ngettext = gaupol.i18n.ngettext
 
 from .confirmation import ConfirmationPage
+from .error import CommonErrorPage
 from .hearing import HearingImpairedPage
 from .introduction import IntroductionPage
 from .progress import ProgressPage
@@ -96,6 +97,7 @@ class TextAssistant(gtk.Assistant):
         self.set_title(_("Correct Texts"))
         self.add_page(self._introduction_page)
         self.add_page(HearingImpairedPage())
+        self.add_page(CommonErrorPage())
         self.application.emit("text-assistant-request-pages", self)
         self.add_page(self._progress_page)
         self.add_page(self._confirmation_page)

@@ -1,3 +1,38 @@
+2007-08-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/gaupol.gtk.conf.spec:
+	Split text assistant pages into sections of their own.
+
+	* data/glade/text-assistant-common-error-page.glade:
+	* gaupol/gtk/assistants/text/error.py:
+	New files for a common error correction page.
+
+	* data/patterns/Latn.common-error.conf:
+	* data/patterns/Latn.common-error.in:
+	* data/patterns/Latn-en.common-error.conf:
+	* data/patterns/Latn-en.common-error.in:
+	* data/patterns/Zyyy.common-error.conf:
+	* data/patterns/Zyyy.common-error.in:
+	Rename "error" to "common-error".
+	Rename "Class" to "Classes".
+
+	* gaupol/agents/text.py (correct_common_errors):
+	New method to correct common errors in texts.
+
+	* gaupol/gtk/assistants/text/assistant.py:
+	Add CommonErrorPage.
+
+	* gaupol/gtk/assistants/text/hearing.py:
+	* gaupol/gtk/assistants/text/locale.py:
+	Split locale selections to base class LocalePage.
+
+	* gaupol/patternman.py:
+	Rename "error" to "common-error".
+	Include "Zyyy" script when appropriate.
+
+	* gaupol/pattern.py (get_field_boolean, get_field_list):
+	New functions to get fields with type conversion.
+
 2007-08-15  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/patterns/Latn-en.hearing-impaired.in:

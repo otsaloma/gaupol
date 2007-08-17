@@ -37,6 +37,18 @@ class TestPattern(unittest.TestCase):
         self.pattern.set_field("Test", "test")
         assert self.pattern.get_field("Test") == "test"
 
+    def test_get_field_boolean(self):
+
+        self.pattern.set_field("Test", "True")
+        assert self.pattern.get_field_boolean("Test") is True
+        self.pattern.set_field("Test", "False")
+        assert self.pattern.get_field_boolean("Test") is False
+
+    def test_get_field_list(self):
+
+        self.pattern.set_field("Test", "Yee,Haw")
+        assert self.pattern.get_field_list("Test") == ["Yee", "Haw"]
+
     def test_get_flags(self):
 
         self.pattern.set_field("Flags", "DOTALL,UNICODE")

@@ -1,43 +1,43 @@
-[ErrorPattern]
+[CommonErrorPattern]
 _Name=Letters "I" in lower case words
 _Description=Replace letters "I" with letters "l" in lower case words
-Class=OCR
+Classes=OCR
 Pattern=((?<=[a-z])I|(?<=\b[A-Z])I(?=[a-z])|(?<=')I(?=I))
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=l
 Repeat=True
 
-[ErrorPattern]
+[CommonErrorPattern]
 _Name=Letters "l" in upper case words
 _Description=Replace letters "l" with letters "I" in upper case words
-Class=OCR
+Classes=OCR
 Pattern=((?<=[A-Z][A-Z])l|l(?=[A-Z])|\bl\b)
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=I
 Repeat=True
 
-[ErrorPattern]
+[CommonErrorPattern]
 _Name=Letters "l" starting words
 _Description=Replace letters "l" with letters "I" if followed by a consonant
-Class=OCR
+Classes=OCR
 Pattern=((\s|^)("|')?)l([bcdfghjklmnpqrstvwxz])
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\1I\4
 Repeat=False
 
-[ErrorPattern]
+[CommonErrorPattern]
 _Name=Zeros in upper case words
 _Description=Replace zeros with letters "O" in upper case words
-Class=OCR
+Classes=OCR
 Pattern=((?<=[A-Z])0|0(?=[A-Z]))
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=O
 Repeat=True
 
-[ErrorPattern]
+[CommonErrorPattern]
 _Name=Spaces around apostrophes
 _Description=Remove spaces around apostrophes
-Class=OCR
+Classes=OCR
 Pattern=(\w)(' +| +')(d|ll|m|s|t|ve)\b
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\1'\3

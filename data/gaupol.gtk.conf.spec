@@ -7,6 +7,13 @@ show_video_toolbar = boolean(default=False)
 size = int_list(2, 2, default=list(600, 371))
 toolbar_style = TOOLBAR_STYLE(default="DEFAULT")
 
+[common_error]
+country = string(default=None)
+human = boolean(default=True)
+language = string(default=None)
+ocr = boolean(default=True)
+script = string(default="Latn")
+
 [debug]
 editor = string(default="gedit")
 
@@ -55,6 +62,11 @@ target = TARGET(default="CURRENT")
 [general]
 version = string(default=None)
 
+[hearing_impaired]
+country = string(default=None)
+language = string(default=None)
+script = string(default="Latn")
+
 [output_window]
 maximized = boolean(default=False)
 position = int_list(2, 2, default=list(0, 0))
@@ -92,9 +104,6 @@ above = boolean(default=False)
 
 [text_assistant]
 column = COLUMN(default="MAIN_TEXT")
-hearing_country = string(default=None)
-hearing_language = string(default=None)
-hearing_script = string(default="Latn")
 pages = string_list(default=list())
 remove_blank = boolean(default=True)
 target = TARGET(default="CURRENT")

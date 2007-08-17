@@ -18,10 +18,10 @@ import gaupol.gtk
 import gtk
 
 from gaupol.gtk import unittest
-from .. import hearing
+from .. import error
 
 
-class TestHearingImpairedPage(unittest.TestCase):
+class TestCommonErrorPage(unittest.TestCase):
 
     def run(self):
 
@@ -33,7 +33,17 @@ class TestHearingImpairedPage(unittest.TestCase):
 
     def setup_method(self, method):
 
-        self.page = hearing.HearingImpairedPage()
+        self.page = error.CommonErrorPage()
+
+    def test__on_human_check_toggled(self):
+
+        self.page._human_check.set_active(True)
+        self.page._human_check.set_active(False)
+
+    def test__on_ocr_check_toggled(self):
+
+        self.page._ocr_check.set_active(True)
+        self.page._ocr_check.set_active(False)
 
     def test_correct_texts(self):
 

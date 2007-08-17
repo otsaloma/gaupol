@@ -127,6 +127,42 @@ class TextAgent(gaupol.Delegate):
 #             self.set_action_description(register, _("Capitalizing texts"))
 #         return new_indexes
 
+    def correct_common_errors_require(self, indexes, *args, **kwargs):
+        for index in (indexes or []):
+            assert 0 <= index < len(self.subtitles)
+
+    @gaupol.util.revertable
+    @gaupol.util.asserted_return
+    def correct_common_errors(self, indexes, doc, patterns, register=-1):
+        """Correct common human and OCR errors  in texts.
+
+        indexes can be None to process all subtitles.
+        Raise re.error if bad pattern or replacement.
+        """
+        new_indexes = []
+        new_texts = []
+        parser = self.get_parser(doc)
+        re_patterns = self._get_subtitutions(patterns)
+        repeats = [x.get_field_boolean("Repeat") for x in patterns]
+        indexes = indexes or range(len(self.subtitles))
+        for index in indexes:
+            subtitle = self.subtitles[index]
+            parser.set_text(subtitle.get_text(doc))
+            for i, (string, flags, replacement) in enumerate(re_patterns):
+                parser.set_regex(string, flags, 0)
+                parser.replacement = replacement
+                count = parser.replace_all()
+                while repeats[i] and count:
+                    count = parser.replace_all()
+            text = parser.get_text()
+            if text != subtitle.get_text(doc):
+                new_indexes.append(index)
+                new_texts.append(text)
+        assert new_indexes
+        self.replace_texts(new_indexes, doc, new_texts, register=register)
+        description = _("Correcting common errors")
+        self.set_action_description(register, description)
+
 #     def format_lines_require(self, indexes, *args, **kwargs):
 #         for index in (indexes or []):
 #             assert 0 <= index < len(self.subtitles)

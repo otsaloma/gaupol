@@ -49,6 +49,15 @@ class TestTextAgent(unittest.TestCase):
 #         self.project.capitalize(None, gaupol.DOCUMENT.MAIN, pattern)
 #         assert self.project.subtitles[0].main_text == "Test. Test."
 
+    def test_correct_common_errors(self):
+
+        self.project.subtitles[0].main_text = "''Test''"
+        doc = gaupol.DOCUMENT.MAIN
+        manager = gaupol.PatternManager("common-error")
+        patterns = manager.get_patterns("Latn")
+        self.project.correct_common_errors(None, doc, patterns)
+        assert self.project.subtitles[0].main_text == '"Test"'
+
 #     def test_format_lines__legal_lines_and_legal_length(self):
 
 #         # Liner would break this to one clause per line.

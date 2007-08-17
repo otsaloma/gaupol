@@ -77,6 +77,21 @@ class Pattern(object):
 
         return self.fields[name]
 
+    def get_field_boolean(self, name):
+        """Get the boolean value of field."""
+
+        value = self.fields[name]
+        if value == "True":
+            return True
+        if value == "False":
+            return False
+        raise ValueError
+
+    def get_field_list(self, name):
+        """Get the list value of field."""
+
+        return self.fields[name].split(",")
+
     def get_flags(self):
         """Get the evaluated value of the 'Flags' field."""
 

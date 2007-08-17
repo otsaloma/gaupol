@@ -1,6 +1,8 @@
 Gaupol 0.10
 ===========
 
+ * Test and fix the common error correction task patterns
+
  [W] Add a common error correction task for the text assistant
  [D] Fix default values of two configuration variables
  [D] Fix text cell renderer font sizes on Windows
