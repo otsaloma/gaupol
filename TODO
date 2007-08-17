@@ -5,6 +5,7 @@ Gaupol 0.10
 
  [W] Add a common error correction task for the text assistant
  [D] Fix default values of two configuration variables
+ [D] Fix a selection bug in the text assistant confirmation page
  [D] Fix text cell renderer font sizes on Windows
  [D] Fix web browser launch on Windows
  [D] Fix recent file URI handling on Windows
@@ -27,9 +28,8 @@ Unscheduled Possibilities
     - gtk.AboutDialog: "name" replaced with "program-name"
     - gtk.Builder: Build an interface from an XML UI definition
     - gtk.Tooltip: New API that allows complex tooltips
+ * Windows installer
+ * Built-in GStreamer preview (as plugin?)
  * Interactive search (as plugin?)
  * gedit-style message area
- * Document hidden settings (where?)
- * Windows installer
  * Multiple windows and tab drag-dropping between them
- * Built-in GStreamer preview (as plugin?)

@@ -70,6 +70,7 @@ class ConfirmationPage(TextAssistantPage):
         """Return True if preview is possible."""
 
         row = self._get_selected_row()
+        assert row is not None
         page = self._tree_view.get_model()[row][0]
         assert page is not None
         assert page.project.video_path is not None

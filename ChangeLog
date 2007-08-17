@@ -1,5 +1,13 @@
 2007-08-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/patterns/Latn.common-error.in:
+	Adjust based on preliminary testing.
+
+	* gaupol/gtk/assistants/text/confirmation.py:
+	(_get_preview_sensitivity): Handle None value of row.
+
+2007-08-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/gaupol.gtk.conf.spec:
 	Split text assistant pages into sections of their own.
 
