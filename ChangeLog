@@ -1,5 +1,13 @@
 2007-08-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/patterns/Latn.common-error.conf:
+	* data/patterns/Latn.common-error.in:
+	* data/patterns/Latn-en.common-error.in:
+	Tighten patterns based on a test set of 391 reasonably good subtitle
+	files to remove almost all false positives.
+
+2007-08-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/patterns/Latn.common-error.in:
 	* data/patterns/Latn.hearing-impaired.in:
 	* gaupol/const.py:

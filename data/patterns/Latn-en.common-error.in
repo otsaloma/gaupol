@@ -11,7 +11,7 @@ Repeat=True
 _Name=Letters "l" in upper case words
 _Description=Replace letters "l" with letters "I" in upper case words
 Classes=OCR
-Pattern=((?<=[A-Z][A-Z])l|l(?=[A-Z])|\bl\b)
+Pattern=((?<=[A-Z][A-Z])l|l(?=[A-Z])|(?<=[\s"'\[(.])l\b)
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=I
 Repeat=True
@@ -29,7 +29,7 @@ Repeat=False
 _Name=Zeros in upper case words
 _Description=Replace zeros with letters "O" in upper case words
 Classes=OCR
-Pattern=((?<=[A-Z])0|0(?=[A-Z]))
+Pattern=((?<=[A-Z])0(?!\d)|(?<!\d)0(?=[A-Z]))
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=O
 Repeat=True

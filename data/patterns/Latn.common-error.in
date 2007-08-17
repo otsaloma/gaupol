@@ -38,7 +38,7 @@ Repeat=False
 _Name=Spaces after punctuation marks
 _Description=Add lacking spaces after various punctuation marks
 Classes=Human,OCR
-Pattern=((\w|^)("|')?[,;:.?!])(("|')?[^\W\d][^.])
+Pattern=((\w|^)("|')?[,;?!])(("|')?[^\W\d][\w\s])
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\1 \4
 Repeat=False
@@ -47,7 +47,7 @@ Repeat=False
 _Name=Spaces after ellipses
 _Description=Add lacking spaces after ellipses
 Classes=Human,OCR
-Pattern=(\w\W*?\.\.\.)(("|')?\w)
+Pattern=(\w[^\w\s]*?\.\.\.)(("|')?\w)
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\1 \2
 Repeat=False
@@ -71,10 +71,10 @@ Replacement=\1
 Repeat=False
 
 [CommonErrorPattern]
-_Name=Periods around question- and exclamation marks
-_Description=Remove periods around question- and exclamation marks
+_Name=Periods after question- and exclamation marks
+_Description=Remove periods after question- and exclamation marks
 Classes=OCR
-Pattern=((?<=[?!])\.(?!\.)|(?<!\.\w)\.(?=[?!]))
+Pattern=(?<=[?!])\.(?!\.)
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=
 Repeat=False
