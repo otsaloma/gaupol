@@ -6,6 +6,7 @@ Gaupol 0.10
  [W] Add a common error correction task for the text assistant
  [D] Fix default values of two configuration variables
  [D] Fix a selection bug in the text assistant confirmation page
+ [D] Fix tag parsing error with multiple sets of tags on one line
  [D] Fix text cell renderer font sizes on Windows
  [D] Fix web browser launch on Windows
  [D] Fix recent file URI handling on Windows

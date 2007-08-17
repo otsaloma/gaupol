@@ -31,6 +31,20 @@ class TestParser(unittest.TestCase):
         self.parser = parser.Parser(re.compile(r"<.+?>"))
         self.parser.set_text(self.text)
 
+    def test__set_margins(self):
+
+        text = \
+            "<i>You will find allies there,</i>\n" \
+            "<i>and they will pay more.</i>"
+        self.parser.set_text(text)
+        assert self.parser.get_text() == text
+
+        text = \
+            "<i>You will find allies there,</i>\n" \
+            "<i>and</i> they <i>will pay more.</i>"
+        self.parser.set_text(text)
+        assert self.parser.get_text() == text
+
     def test_get_text(self):
 
         assert self.parser.get_text() == self.text

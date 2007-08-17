@@ -85,9 +85,13 @@ class Parser(gaupol.Finder):
             end_tag = line[a:z] + end_tag
             line = line[:a]
 
-        if all([x.startswith(start_tag) for x in lines]):
-            if all([x.endswith(end_tag) for x in lines]):
-                self._margins = [start_tag, end_tag]
+        assert all([x.startswith(start_tag) for x in lines])
+        assert all([x.endswith(end_tag) for x in lines])
+        lines = [x[len(start_tag):] for x in lines]
+        lines = [x[:-len(end_tag)] for x in lines]
+        for line in lines:
+            assert self.re_tag.search(line) is None
+        self._margins = [start_tag, end_tag]
 
     def _set_tags_require(self, text):
         assert self.re_tag is not None
