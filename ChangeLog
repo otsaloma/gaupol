@@ -1,5 +1,15 @@
 2007-08-18  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/agents/util.py:
+	* gaupol/parser.py:
+	* gaupol/tags/taglib.py:
+	Rename TagLibrary.remove_redundant to TagLibrary.clean.
+
+	* gaupol/tags/subrip.py (_get_clean_tags):
+	Relocate spaces after opening tags and before closing tags.
+
+2007-08-18  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/patterns/Latn.common-error.in:
 	* data/patterns/Zyyy.common-error.in:
 	Tighten patterns to fix remaining false positives.

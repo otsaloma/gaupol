@@ -56,6 +56,11 @@ class TagLibrary(gaupol.Singleton):
         # Remove all tags.
         return [(re.compile(r"<.*?>"), "")]
 
+    def clean(self, text):
+        """Return text with redundant tags removed and remaining cleaned."""
+
+        return text
+
     def decode(self, text):
         """Return text with tags converted from this to internal format."""
 
@@ -72,8 +77,3 @@ class TagLibrary(gaupol.Singleton):
         """Return italicized text."""
 
         raise NotImplementedError
-
-    def remove_redundant(self, text):
-        """Return text with redundant tags removed."""
-
-        return text

@@ -89,16 +89,8 @@ class UtilityAgent(gaupol.Delegate):
         """Get parser with proper properties."""
 
         re_tag = self.get_tag_regex(doc)
-        redundant_func = self.get_tag_redundant_func(doc)
-        return gaupol.Parser(re_tag, redundant_func)
-
-    @gaupol.util.asserted_return
-    def get_tag_redundant_func(self, doc):
-        """Get the function to remove redundant tags or None."""
-
-        format = self._get_format(doc)
-        assert format is not None
-        return gaupol.tags.get_class(format)().remove_redundant
+        clean_func = self.get_tag_clean_func(doc)
+        return gaupol.Parser(re_tag, clean_func)
 
     def get_revertable_action(self, register):
         """Get a new revertable action with proper properties."""
@@ -114,6 +106,14 @@ class UtilityAgent(gaupol.Delegate):
         subtitle.mode = self.get_mode()
         subtitle.framerate = self.framerate
         return subtitle
+
+    @gaupol.util.asserted_return
+    def get_tag_clean_func(self, doc):
+        """Get the function to clean tags or None."""
+
+        format = self._get_format(doc)
+        assert format is not None
+        return gaupol.tags.get_class(format)().clean
 
     @gaupol.util.asserted_return
     def get_tag_library(self, doc):

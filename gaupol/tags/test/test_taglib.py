@@ -40,6 +40,11 @@ class TestTagLibrary(unittest.TestCase):
         if self.taglib.tag is not None:
             self.taglib.tag.findall("test")
 
+    def test_clean(self):
+
+        text = self.taglib.clean(self.plain_text)
+        assert text == self.plain_text
+
     def test_decode(self):
 
         text = self.taglib.decode(self.plain_text)
@@ -82,8 +87,3 @@ class TestTagLibrary(unittest.TestCase):
             'All things weird are normal\n' + \
             'in this whore of <size="12">cities</size>.'
         assert self.taglib.encode(text) == self.plain_text
-
-    def test_remove_redundant(self):
-
-        text = self.taglib.remove_redundant(self.plain_text)
-        assert text == self.plain_text

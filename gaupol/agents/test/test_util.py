@@ -77,6 +77,12 @@ class TestUtilityAgent(unittest.TestCase):
         assert subtitle.mode == self.project.main_file.mode
         assert subtitle.framerate == self.project.framerate
 
+    def test_get_tag_clean_func(self):
+
+        doc = gaupol.DOCUMENT.MAIN
+        clean_func = self.project.get_tag_clean_func(doc)
+        assert clean_func("") == ""
+
     def test_get_tag_library(self):
 
         taglib = self.project.get_tag_library(gaupol.DOCUMENT.MAIN)
@@ -85,12 +91,6 @@ class TestUtilityAgent(unittest.TestCase):
         taglib = self.project.get_tag_library(gaupol.DOCUMENT.TRAN)
         format = self.project.tran_file.format
         assert taglib == gaupol.tags.get_class(format)()
-
-    def test_get_tag_redundant_func(self):
-
-        doc = gaupol.DOCUMENT.MAIN
-        redundant_func = self.project.get_tag_redundant_func(doc)
-        assert redundant_func("") == ""
 
     def test_get_tag_regex(self):
 

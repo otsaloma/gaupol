@@ -28,8 +28,8 @@ class Parser(gaupol.Finder):
     Instance variables:
      * _margins: Start tag, end tag that every line is wrapped in
      * _tags: List of lists of tag, position
+     * clean_func: Function to clean tags or None
      * re_tag: Regular expression object to match any tag
-     * redundant_func: Function to remove redundant tags or None
 
     The purpose of the Parser is to split text to the actual text and its tags,
     allowing the text to be edited while keeping the tags separate and intact.
@@ -43,17 +43,17 @@ class Parser(gaupol.Finder):
 
     __metaclass__ = gaupol.Contractual
 
-    def __init__(self, re_tag=None, redundant_func=None):
+    def __init__(self, re_tag=None, clean_func=None):
 
         gaupol.Finder.__init__(self)
         self._margins = None
         self._tags = None
+        self.clean_func = clean_func
         self.re_tag = re_tag
-        self.redundant_func = redundant_func
 
     def _invariant(self):
-        if self.redundant_func is not None:
-            assert self.redundant_func("") == ""
+        if self.clean_func is not None:
+            assert self.clean_func("") == ""
 
     def _set_margins_require(self, text):
         assert self.re_tag is not None
@@ -154,8 +154,8 @@ class Parser(gaupol.Finder):
         if self._margins:
             text = text.replace("\n", "%s\n%s" % tuple(self._margins[::-1]))
             text = self._margins[0] + text + self._margins[1]
-        if self.redundant_func is not None:
-            text = self.redundant_func(text)
+        if self.clean_func is not None:
+            text = self.clean_func(text)
         return text
 
     def replace(self, next=True):

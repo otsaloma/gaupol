@@ -24,6 +24,13 @@ class TestSubRip(TestTagLibrary):
 
         self.taglib = subrip.SubRip()
 
+    def test_clean(self):
+
+        text = "test<i> </i>test"
+        assert self.taglib.clean(text) == "test test"
+        text = "<i>test </i><i>test</i>"
+        assert self.taglib.clean(text) == "<i>test test</i>"
+
     def test_decode(self):
 
         # Uppercase bold
@@ -93,10 +100,3 @@ class TestSubRip(TestTagLibrary):
         assert self.taglib.italicize(self.plain_text) == \
             "<i>All things weird are normal\n" + \
             "in this whore of cities.</i>"
-
-    def test_remove_redundant(self):
-
-        text = "test<i> </i>test"
-        assert self.taglib.remove_redundant(text) == "test test"
-        text = "<i>test </i><i>test</i>"
-        assert self.taglib.remove_redundant(text) == "<i>test test</i>"
