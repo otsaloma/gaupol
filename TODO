@@ -1,10 +1,6 @@
 Gaupol 0.10
 ===========
- 
- * Spaces between digits
-    - "January 11 2002."
-    - "Let's watch 8 1/2."
- * Letters "O" in numbers: "H2O"
+
  * Parser._shift_tags: "- <i> Hello.</i>"
  * Test common error correction task patterns
 

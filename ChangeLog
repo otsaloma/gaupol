@@ -1,3 +1,9 @@
+2007-08-18  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/patterns/Latn.common-error.in:
+	* data/patterns/Zyyy.common-error.in:
+	Tighten patterns to fix remaining false positives.
+
 2007-08-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/patterns/Latn.common-error.conf:

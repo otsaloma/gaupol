@@ -20,7 +20,7 @@ Repeat=False
 _Name=Spaces between digits
 _Description=Remove spaces between digits of a number
 Classes=OCR
-Pattern=(?<=\d) +(?=\d)
+Pattern=(\b\d+) +(\d+\b)(?![-/])
 Flags=DOTALL,MULTILINE,UNICODE
-Replacement=
+Replacement=\1\2
 Repeat=True

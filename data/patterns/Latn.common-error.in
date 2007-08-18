@@ -2,7 +2,7 @@
 _Name=Letters "O" in numbers
 _Description=Replace letters "O" with zeros in numbers
 Classes=OCR
-Pattern=(((?<=\d)|(?<=\d[,.]))[oO]|[oO]((?=\d)|(?=[,.]\d)))
+Pattern=(((?<=\d)|(?<=\d[,.]))(?<![^\W\d].)[oO]|[oO](?!.[^\W\d])((?=\d)|(?=[,.]\d)))
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=0
 Repeat=True
