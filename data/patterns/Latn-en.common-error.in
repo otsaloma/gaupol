@@ -35,15 +35,6 @@ Replacement=O
 Repeat=True
 
 [CommonErrorPattern]
-_Name=Spaces after capital letters
-_Description=Remove excess spaces after capital letters
-Classes=OCR
-Pattern=((^|[.!?])\W*[BCDEFGHJKLMNPQRSTUVWXYZ]) +([a-z])
-Flags=DOTALL,MULTILINE,UNICODE
-Replacement=\1\3
-Repeat=False
-
-[CommonErrorPattern]
 _Name=Spaces around apostrophes
 _Description=Remove spaces around apostrophes
 Classes=OCR

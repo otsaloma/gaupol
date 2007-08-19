@@ -1,10 +1,7 @@
 Gaupol 0.10
 ===========
 
- * Parser._shift_tags: "- <i> Hello.</i>"
- * Test common error correction task patterns
-
- [W] Add a common error correction task for the text assistant
+ [D] Add a common error correction task for the text assistant
  [D] Fix default values of two configuration variables
  [D] Fix a selection bug in the text assistant confirmation page
  [D] Fix tag parsing error with multiple sets of tags on one line
