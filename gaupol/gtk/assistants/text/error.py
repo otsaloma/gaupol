@@ -32,7 +32,7 @@ class CommonErrorPage(LocalePage):
         LocalePage.__init__(self)
         self._manager = gaupol.PatternManager("common-error")
         self.description = _("Correct common errors "
-            "made by humans and image recognition software")
+            "made by humans or image recognition software")
         self.handle = "common-error"
         self.page_title = _("Select Common Error Patterns")
         self.page_type = gtk.ASSISTANT_PAGE_CONTENT
