@@ -2,7 +2,7 @@
 _Name=Letters "O" in numbers
 _Description=Replace letters "O" with zeros in numbers
 Classes=OCR
-Pattern=(((?<=\d)|(?<=\d[,.]))(?<![^\W\d].)[oO]|[oO](?!.[^\W\d])((?=\d)|(?=[,.]\d)))
+Pattern=(((?<=\d)|(?<=\d[,.]))(?<![^\W\d].)[oO]|[oO](?!2\W)(?!.[^\W\d])((?=\d)|(?=[,.]\d)))
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=0
 Repeat=True
@@ -38,7 +38,7 @@ Repeat=False
 _Name=Spaces after punctuation marks
 _Description=Add lacking spaces after various punctuation marks
 Classes=Human,OCR
-Pattern=((\w|^)("|')?[,;?!])(("|')?[^\W\d][\w\s])
+Pattern=((\w|^)("|')?[,;?!])(?!["'])([^\W\d][\w\s])
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\1 \4
 Repeat=False
@@ -71,10 +71,10 @@ Replacement=\1
 Repeat=False
 
 [CommonErrorPattern]
-_Name=Periods after question- and exclamation marks
-_Description=Remove periods after question- and exclamation marks
+_Name=Periods after punctuation marks
+_Description=Remove periods after various punctuation marks
 Classes=OCR
-Pattern=(?<=[?!])\.(?!\.)
+Pattern=(?<=[:?!])\.(?!\.)
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=
 Repeat=False

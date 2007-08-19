@@ -1,3 +1,15 @@
+2007-08-19  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/text-assistant-common-error-page.glade:
+	Include the check buttons in the table.
+
+	* data/patterns/Latn.common-error.conf:
+	* data/patterns/Latn.common-error.in:
+	* data/patterns/Latn-en.common-error.conf:
+	* data/patterns/Latn-en.common-error.in:
+	Fix regular expression  errors, loosen patterns and add some more based
+	on a test set of 100 lousy subtitle files.
+
 2007-08-18  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/agents/util.py:

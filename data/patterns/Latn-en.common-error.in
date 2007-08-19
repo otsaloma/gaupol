@@ -11,7 +11,7 @@ Repeat=True
 _Name=Letters "l" in upper case words
 _Description=Replace letters "l" with letters "I" in upper case words
 Classes=OCR
-Pattern=((?<=[A-Z][A-Z])l|l(?=[A-Z])|(?<=[\s"'\[(.])l\b)
+Pattern=((?<=[A-Z][A-Z])l|l(?=[A-Z])|(?<![a-hj-z]-)\bl\b(?<!-[a-hj-z]))
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=I
 Repeat=True
@@ -35,10 +35,37 @@ Replacement=O
 Repeat=True
 
 [CommonErrorPattern]
+_Name=Spaces after capital letters
+_Description=Remove excess spaces after capital letters
+Classes=OCR
+Pattern=((^|[.!?])\W*[BCDEFGHJKLMNPQRSTUVWXYZ]) +([a-z])
+Flags=DOTALL,MULTILINE,UNICODE
+Replacement=\1\3
+Repeat=False
+
+[CommonErrorPattern]
 _Name=Spaces around apostrophes
 _Description=Remove spaces around apostrophes
 Classes=OCR
 Pattern=(\w)(' +| +')(d|ll|m|s|t|ve)\b
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\1'\3
+Repeat=False
+
+[CommonErrorPattern]
+_Name=Okays
+_Description=Convert the spelling of okays to "OK"
+Classes=Human
+Pattern=\b(ok|Ok|O.K.)\b
+Flags=DOTALL,MULTILINE,UNICODE
+Replacement=OK
+Repeat=False
+
+[CommonErrorPattern]
+_Name=Periods after titles
+_Description=Add periods after shortened titles, such as "Mr" and "Dr"
+Classes=Human
+Pattern=\b(Dr|Jr|Mr|Mrs|Ms|Sr|St)\b(?!\.)
+Flags=DOTALL,MULTILINE,UNICODE
+Replacement=\1.
 Repeat=False
