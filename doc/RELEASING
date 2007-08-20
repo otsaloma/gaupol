@@ -3,15 +3,15 @@ Release Checklist
 
 Set some useful variables.
 
-    export VERSION=0.9
-    export BRANCH=0.9
+    export VERSION=0.10
+    export BRANCH=0.10
     export USERNAME=osmo
     export SVN_ROOT=svn+ssh://$USERNAME@svn.gna.org/svn/gaupol
     export SVN_SOURCE=$SVN_ROOT/trunk
-    export SVN_BRANCH=$SVN_ROOT/branches/gaupol-0-9
-    export SVN_TAG=$SVN_ROOT/tags/GAUPOL_0_9
+    export SVN_BRANCH=$SVN_ROOT/branches/gaupol-0-10
+    export SVN_TAG=$SVN_ROOT/tags/GAUPOL_0_10
     export DOWNLOAD_ROOT=$USERNAME@download.gna.org:/upload/gaupol
-    export DOWNLOAD_BRANCH=$DOWNLOAD_ROOT/0.9
+    export DOWNLOAD_BRANCH=$DOWNLOAD_ROOT/0.10
 
 Search for unfinished code.
 

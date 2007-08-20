@@ -1,5 +1,12 @@
 2007-08-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/__init__.py:
+	Bump version number to 0.10.
+
+	RELEASE 0.10
+
+2007-08-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/patterns/Latn-en.hearing-impaired.in:
 	Loosen "Uppercase speakers before colons" pattern.
 

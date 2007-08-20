@@ -21,7 +21,7 @@ Module variables:
  * check_contracts: True to check contracts
 """
 
-__version__ = "0.9"
+__version__ = "0.10"
 check_contracts = True
 
 from gaupol.paths import *

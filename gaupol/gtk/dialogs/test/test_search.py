@@ -40,16 +40,19 @@ class TestSearchDialog(unittest.TestCase):
         self.dialog = search.SearchDialog(self.get_application())
         self.dialog._show_regex_error_dialog_replacement("test")
 
-    @gaupol.gtk.util.asserted_return
     def setup_method(self, method):
 
-        assert not hasattr(self, "application")
         self.application = self.get_application()
         self.dialog = search.SearchDialog(self.application)
         respond = lambda *args: gtk.RESPONSE_DELETE_EVENT
         self.dialog.flash_dialog = respond
         self.dialog.run_dialog = respond
         self.dialog.show()
+
+    def teardown_method(self, method):
+
+        unittest.TestCase.teardown_method(self, method)
+        self.dialog.destroy()
 
     def test__on_ignore_case_check_toggled(self):
 

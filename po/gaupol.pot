@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-07 19:19+0300\n"
+"POT-Creation-Date: 2007-08-20 03:53+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -522,6 +522,37 @@ msgstr ""
 msgid "_Split"
 msgstr ""
 
+#: data/glade/text-assistant-common-error-page.glade:19
+msgid "S_elect errors to correct:"
+msgstr ""
+
+#: data/glade/text-assistant-common-error-page.glade:69
+msgid "_Human errors"
+msgstr ""
+
+#: data/glade/text-assistant-common-error-page.glade:83
+msgid "_Image recognition errors"
+msgstr ""
+
+#: data/glade/text-assistant-common-error-page.glade:106
+msgid "Error types:"
+msgstr ""
+
+#: data/glade/text-assistant-common-error-page.glade:120
+#: data/glade/text-assistant-hearing-impaired-page.glade:136
+msgid "_Script:"
+msgstr ""
+
+#: data/glade/text-assistant-common-error-page.glade:134
+#: data/glade/text-assistant-hearing-impaired-page.glade:120
+msgid "_Language:"
+msgstr ""
+
+#: data/glade/text-assistant-common-error-page.glade:150
+#: data/glade/text-assistant-hearing-impaired-page.glade:104
+msgid "C_ountry:"
+msgstr ""
+
 #: data/glade/text-assistant-confirmation-page.glade:18
 msgid "Acc_ept, discard or edit changes:"
 msgstr ""
@@ -545,18 +576,6 @@ msgstr ""
 
 #: data/glade/text-assistant-hearing-impaired-page.glade:19
 msgid "S_elect parts to remove:"
-msgstr ""
-
-#: data/glade/text-assistant-hearing-impaired-page.glade:104
-msgid "C_ountry:"
-msgstr ""
-
-#: data/glade/text-assistant-hearing-impaired-page.glade:120
-msgid "_Language:"
-msgstr ""
-
-#: data/glade/text-assistant-hearing-impaired-page.glade:136
-msgid "_Script:"
 msgstr ""
 
 #: data/glade/text-assistant-introduction-page.glade:23
@@ -627,12 +646,140 @@ msgstr ""
 msgid "_Transform"
 msgstr ""
 
+#: data/patterns/Latn-en.common-error.in.h:1
+msgid "Add periods after shortened titles, such as \"Mr\" and \"Dr\""
+msgstr ""
+
+#: data/patterns/Latn-en.common-error.in.h:2
+msgid "Convert the spelling of okays to \"OK\""
+msgstr ""
+
+#: data/patterns/Latn-en.common-error.in.h:3
+msgid "Letters \"I\" in lower case words"
+msgstr ""
+
+#: data/patterns/Latn-en.common-error.in.h:4
+msgid "Letters \"l\" in upper case words"
+msgstr ""
+
+#: data/patterns/Latn-en.common-error.in.h:5
+msgid "Letters \"l\" starting words"
+msgstr ""
+
+#: data/patterns/Latn-en.common-error.in.h:6
+msgid "Okays"
+msgstr ""
+
+#: data/patterns/Latn-en.common-error.in.h:7
+msgid "Periods after titles"
+msgstr ""
+
+#: data/patterns/Latn-en.common-error.in.h:8
+msgid "Remove spaces around apostrophes"
+msgstr ""
+
+#: data/patterns/Latn-en.common-error.in.h:9
+msgid "Replace letters \"I\" with letters \"l\" in lower case words"
+msgstr ""
+
+#: data/patterns/Latn-en.common-error.in.h:10
+msgid "Replace letters \"l\" with letters \"I\" if followed by a consonant"
+msgstr ""
+
+#: data/patterns/Latn-en.common-error.in.h:11
+msgid "Replace letters \"l\" with letters \"I\" in upper case words"
+msgstr ""
+
+#: data/patterns/Latn-en.common-error.in.h:12
+msgid "Replace zeros with letters \"O\" in upper case words"
+msgstr ""
+
+#: data/patterns/Latn-en.common-error.in.h:13
+msgid "Spaces around apostrophes"
+msgstr ""
+
+#: data/patterns/Latn-en.common-error.in.h:14
+msgid "Zeros in upper case words"
+msgstr ""
+
 #: data/patterns/Latn-en.hearing-impaired.in.h:1
 msgid "Replace uppercase names of speakers before colons with dialog lines"
 msgstr ""
 
 #: data/patterns/Latn-en.hearing-impaired.in.h:2
 msgid "Uppercase speakers before colons"
+msgstr ""
+
+#: data/patterns/Latn.common-error.in.h:1
+msgid "Add lacking spaces after ellipses"
+msgstr ""
+
+#: data/patterns/Latn.common-error.in.h:2
+msgid "Add lacking spaces after various punctuation marks"
+msgstr ""
+
+#: data/patterns/Latn.common-error.in.h:3
+msgid "Add spaces after dialogue lines"
+msgstr ""
+
+#: data/patterns/Latn.common-error.in.h:4
+msgid "Dialogue lines"
+msgstr ""
+
+#: data/patterns/Latn.common-error.in.h:5
+msgid "Double apostrophes"
+msgstr ""
+
+#: data/patterns/Latn.common-error.in.h:6
+msgid "Letters \"O\" in numbers"
+msgstr ""
+
+#: data/patterns/Latn.common-error.in.h:7
+msgid "Multiple question- and exclamation marks"
+msgstr ""
+
+#: data/patterns/Latn.common-error.in.h:8
+msgid "Periods after punctuation marks"
+msgstr ""
+
+#: data/patterns/Latn.common-error.in.h:9
+msgid "Remove excess spaces before various punctuation marks"
+msgstr ""
+
+#: data/patterns/Latn.common-error.in.h:10
+msgid "Remove multiple consequtive question- and exclamation marks"
+msgstr ""
+
+#: data/patterns/Latn.common-error.in.h:11
+msgid "Remove periods after various punctuation marks"
+msgstr ""
+
+#: data/patterns/Latn.common-error.in.h:12
+msgid "Remove spaces after ellipses that start lines"
+msgstr ""
+
+#: data/patterns/Latn.common-error.in.h:13
+msgid "Replace double apostrophes with a quotation mark"
+msgstr ""
+
+#: data/patterns/Latn.common-error.in.h:14
+msgid "Replace letters \"O\" with zeros in numbers"
+msgstr ""
+
+#: data/patterns/Latn.common-error.in.h:15
+msgid "Spaces after ellipses"
+msgstr ""
+
+#: data/patterns/Latn.common-error.in.h:16
+msgid "Spaces after punctuation marks"
+msgstr ""
+
+#: data/patterns/Latn.common-error.in.h:17
+msgid "Spaces after starting ellipses"
+msgstr ""
+
+#: data/patterns/Latn.common-error.in.h:18
+msgid "Spaces before punctuation marks"
 msgstr ""
 
 #: data/patterns/Latn.hearing-impaired.in.h:1
@@ -689,6 +836,30 @@ msgstr ""
 
 #: data/patterns/Latn.hearing-impaired.in.h:14
 msgid "Speakers before colons"
+msgstr ""
+
+#: data/patterns/Zyyy.common-error.in.h:1
+msgid "Leading and trailing spaces"
+msgstr ""
+
+#: data/patterns/Zyyy.common-error.in.h:2
+msgid "Multiple spaces"
+msgstr ""
+
+#: data/patterns/Zyyy.common-error.in.h:3
+msgid "Remove multiple consecutive spaces"
+msgstr ""
+
+#: data/patterns/Zyyy.common-error.in.h:4
+msgid "Remove spaces between digits of a number"
+msgstr ""
+
+#: data/patterns/Zyyy.common-error.in.h:5
+msgid "Remove spaces from the beginnings and ends of lines"
+msgstr ""
+
+#: data/patterns/Zyyy.common-error.in.h:6
+msgid "Spaces between digits"
 msgstr ""
 
 #: gaupol/agents/clipboard.py:63
@@ -759,10 +930,11 @@ msgstr ""
 msgid "Transforming positions"
 msgstr ""
 
-#: gaupol/agents/search.py:255
+#: gaupol/agents/search.py:252 gaupol/agents/search.py:255
 msgid "Replacing"
 msgstr ""
 
+#: gaupol/agents/search.py:277 gaupol/agents/search.py:279
 #: gaupol/agents/search.py:280 gaupol/agents/search.py:282
 msgid "Replacing all"
 msgstr ""
@@ -775,22 +947,29 @@ msgstr ""
 msgid "Editing text"
 msgstr ""
 
-#: gaupol/agents/text.py:222
+#: gaupol/agents/text.py:163
+msgid "Correcting common errors"
+msgstr ""
+
+#: gaupol/agents/text.py:222 gaupol/agents/text.py:258
 msgid "Removing hearing impaired texts"
 msgstr ""
 
-#: gaupol/const.py:75
+#: gaupol/const.py:75 gaupol/const.py:76
 msgid "24 fps"
 msgstr ""
 
-#: gaupol/const.py:79
+#: gaupol/const.py:79 gaupol/const.py:80
 msgid "25 fps"
 msgstr ""
 
-#: gaupol/const.py:83
+#: gaupol/const.py:83 gaupol/const.py:84
 msgid "30 fps"
 msgstr ""
 
+#. Translators: Most of the character encoding descriptions are copied from
+#. gedit, which is translated to very many languages. Check the gedit .po
+#. files for a reference: http://svn.gnome.org/viewcvs/gedit/trunk/po/.
 #. Translators: Most of the character encoding descriptions are copied from
 #. gedit, which is translated to very many languages. Check the gedit .po
 #. files for a reference: http://svn.gnome.org/viewcvs/gedit/trunk/po/.
@@ -860,6 +1039,11 @@ msgstr ""
 msgid "Canadian"
 msgstr ""
 
+#. Translators: You might find translations of some of the script names in
+#. FontForge .po files [1]. If not, feel free to translate only a couple of
+#. most common ones, e.g. Arabic, Cyrillic, Devanagari, Greek, Hangul,
+#. Simplified Han, Traditional Han, Hebrew, Japanese and Latin. Most of
+#. these scripts will probably never be used with Gaupol.
 #. Translators: You might find translations of some of the script names in
 #. FontForge .po files [1]. If not, feel free to translate only a couple of
 #. most common ones, e.g. Arabic, Cyrillic, Devanagari, Greek, Hangul,
@@ -1644,8 +1828,9 @@ msgid "Failed to open file \"%s\""
 msgstr ""
 
 #: gaupol/gtk/agents/open.py:227 gaupol/gtk/agents/preview.py:65
-#: gaupol/gtk/agents/save.py:121 gaupol/gtk/dialogs/search.py:419
-#: gaupol/gtk/dialogs/search.py:428 gaupol/gtk/dialogs/spellcheck.py:432
+#: gaupol/gtk/agents/preview.py:73 gaupol/gtk/agents/save.py:121
+#: gaupol/gtk/dialogs/search.py:419 gaupol/gtk/dialogs/search.py:428
+#: gaupol/gtk/dialogs/spellcheck.py:432
 #, python-format
 msgid "%s."
 msgstr ""
@@ -1723,19 +1908,19 @@ msgstr ""
 msgid "Opened translation file \"%s\""
 msgstr ""
 
-#: gaupol/gtk/agents/preview.py:51
+#: gaupol/gtk/agents/preview.py:51 gaupol/gtk/agents/preview.py:59
 #, python-format
 msgid "Failed to encode subtitle file to temporary directory \"%s\""
 msgstr ""
 
-#: gaupol/gtk/agents/preview.py:53
+#: gaupol/gtk/agents/preview.py:53 gaupol/gtk/agents/preview.py:61
 msgid ""
 "Subtitle data could not be encoded to a temporary file for preview with the "
 "current character encoding. Please first save the subtitle file with a "
 "different character encoding."
 msgstr ""
 
-#: gaupol/gtk/agents/preview.py:63
+#: gaupol/gtk/agents/preview.py:63 gaupol/gtk/agents/preview.py:71
 #, python-format
 msgid "Failed to save subtitle file to temporary directory \"%s\""
 msgstr ""
@@ -1797,19 +1982,23 @@ msgid "Video file:"
 msgstr ""
 
 #: gaupol/gtk/assistants/text/assistant.py:96
+#: gaupol/gtk/assistants/text/assistant.py:97
 msgid "Correct Texts"
 msgstr ""
 
 #: gaupol/gtk/assistants/text/assistant.py:131
+#: gaupol/gtk/assistants/text/assistant.py:133
 msgid "Correcting texts"
 msgstr ""
 
 #: gaupol/gtk/assistants/text/assistant.py:147
+#: gaupol/gtk/assistants/text/assistant.py:149
 #, python-format
 msgid "Edited %(edits)d and removed %(removals)d subtitles"
 msgstr ""
 
 #: gaupol/gtk/assistants/text/assistant.py:182
+#: gaupol/gtk/assistants/text/assistant.py:184
 #, python-format
 msgid "Confirm %d Change"
 msgid_plural "Confirm %d Changes"
@@ -1821,30 +2010,49 @@ msgid "Confirm Changes"
 msgstr ""
 
 #: gaupol/gtk/assistants/text/confirmation.py:115
+#: gaupol/gtk/assistants/text/confirmation.py:116
 msgid "Accept"
 msgstr ""
 
 #: gaupol/gtk/assistants/text/confirmation.py:119
+#: gaupol/gtk/assistants/text/confirmation.py:120
 msgid "Original Text"
 msgstr ""
 
 #: gaupol/gtk/assistants/text/confirmation.py:120
+#: gaupol/gtk/assistants/text/confirmation.py:121
 msgid "Corrected Text"
 msgstr ""
 
+#: gaupol/gtk/assistants/text/error.py:34
+msgid "Correct common errors made by humans or image recognition software"
+msgstr ""
+
+#: gaupol/gtk/assistants/text/error.py:37
+msgid "Select Common Error Patterns"
+msgstr ""
+
+#: gaupol/gtk/assistants/text/error.py:39
+msgid "Correct common errors"
+msgstr ""
+
+#: gaupol/gtk/assistants/text/hearing.py:34
 #: gaupol/gtk/assistants/text/hearing.py:36
 msgid "Remove explanatory texts meant for the hearing impaired"
 msgstr ""
 
+#: gaupol/gtk/assistants/text/hearing.py:37
 #: gaupol/gtk/assistants/text/hearing.py:39
 msgid "Select Hearing Impaired Patterns"
 msgstr ""
 
+#: gaupol/gtk/assistants/text/hearing.py:39
 #: gaupol/gtk/assistants/text/hearing.py:41
 msgid "Remove hearing impaired texts"
 msgstr ""
 
 #: gaupol/gtk/assistants/text/hearing.py:100
+#: gaupol/gtk/assistants/text/locale.py:88
 msgid "Other"
 msgstr ""
 
@@ -1919,6 +2127,12 @@ msgstr ""
 msgid "Gaupol Website"
 msgstr ""
 
+#. Translators: This is a special message that shouldn't be translated
+#. literally. It is used in the about dialog to give credits to the
+#. translators. Thus, you should translate it to your name and email
+#. address. You can also include other translators who have contributed
+#. to this translation; in that case, please write them on separate
+#. lines seperated by newlines (\n).
 #. Translators: This is a special message that shouldn't be translated
 #. literally. It is used in the about dialog to give credits to the
 #. translators. Thus, you should translate it to your name and email

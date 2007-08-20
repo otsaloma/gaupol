@@ -1,3 +1,17 @@
+Gaupol 0.10
+===========
+
+ * Add a common error correction task for the text assistant
+ * Fix default values of two configuration variables
+ * Fix a selection bug in the text assistant confirmation page
+ * Fix tag parsing error with multiple sets of tags on one line
+ * Fix text cell renderer font sizes on Windows
+ * Fix web browser launch on Windows
+ * Fix recent file URI handling on Windows
+ * Fix preview on Windows
+ * Fix temporary file removals on Windows
+
+
 Gaupol 0.9
 ==========
 
