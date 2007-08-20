@@ -1,6 +1,6 @@
 [HearingImpairedPattern]
 _Name=Uppercase speakers before colons
 _Description=Replace uppercase names of speakers before colons with dialog lines
-Pattern=^-?\s*?[A-Z\[][A-Zc\d'\[\] ]+?:\s
+Pattern=^-?\s*?[A-Z\[][A-Zc\d'.\-\[\] ]+?:\s
 Flags=MULTILINE,UNICODE
 Replacement=-\040

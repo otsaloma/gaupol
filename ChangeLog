@@ -1,3 +1,8 @@
+2007-08-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/patterns/Latn-en.hearing-impaired.in:
+	Loosen "Uppercase speakers before colons" pattern.
+
 2007-08-19  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/assistants/text/error.py:
