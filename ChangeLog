@@ -1,5 +1,10 @@
 2007-08-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* setup.py (SDistGna.finalize_options):
+	Fix value of self.dist_dir.
+
+2007-08-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/__init__.py:
 	Bump version number to 0.10.
 

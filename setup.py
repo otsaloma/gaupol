@@ -154,7 +154,8 @@ class SDistGna(sdist):
 
         # Set distribution directory to "dist/X.Y".
         # pylint: disable-msg=W0201
-        self.dist_dir = os.path.join(self.dist_dir, __version__[:3])
+        branch = ".".join(__version__.split(".")[:2])
+        self.dist_dir = os.path.join(self.dist_dir, branch)
 
     def run(self):
 
