@@ -37,6 +37,7 @@ class OpenDialog(GladeDialog, SubtitleFileDialog):
         self._smart_check = get_widget("smart_check")
         self._use_autodetection = gaupol.gtk.util.chardet_available()
 
+        self._init_encoding_combo()
         self._init_values(doc)
         self.set_title(title)
         self.set_transient_for(parent)

@@ -1,3 +1,10 @@
+2007-08-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/dialogs/file/open.py:
+	* gaupol/gtk/dialogs/file/save.py:
+	* gaupol/gtk/dialogs/file/subtitle.py:
+	Add missing "Auto-detected" encoding entry.
+
 2007-08-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* setup.py (SDistGna.finalize_options):

@@ -38,7 +38,6 @@ class SubtitleFileDialog(object):
         self._encoding_combo = get_widget("encoding_combo")
         self._use_autodetection = False
         self._init_filters()
-        self._init_encoding_combo()
 
     def _init_encoding_combo(self):
         """Initialize the encoding combo box."""

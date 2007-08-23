@@ -1,3 +1,10 @@
+Gaupol 0.11
+===========
+
+ [D] Add missing "Auto-detected" encoding entry in file dialogs
+ [D] Add support for creating a windows installer with py2exe
+
+
 Gaupol 1.0
 ==========
 
@@ -13,7 +20,6 @@ Unscheduled Possibilities
     - gtk.AboutDialog: "name" replaced with "program-name"
     - gtk.Builder: Build an interface from an XML UI definition
     - gtk.Tooltip: New API that allows complex tooltips
- * Windows installer
  * Built-in GStreamer preview (as plugin?)
  * Interactive search (as plugin?)
  * gedit-style message area

@@ -38,6 +38,7 @@ class SaveDialog(GladeDialog, SubtitleFileDialog):
         self._newline_combo = get_widget("newline_combo")
 
         self._init_format_combo()
+        self._init_encoding_combo()
         self._init_newline_combo()
         self._init_values()
         self._init_signal_handlers()
