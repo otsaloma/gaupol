@@ -12,6 +12,14 @@ import os
 file_dir = os.path.dirname(os.path.abspath(__file__))
 os.chdir(os.path.abspath(os.path.join(file_dir, "..")))
 
+def compile_data():
+    """Compile data files with strings from .po files."""
+
+    path = os.path.join("data", "gaupol.desktop")
+    os.system("intltool-merge -d po %s.in %s" % (path, path))
+    for path in glob.glob("data/patterns/*.in"):
+        os.system("intltool-merge -d po %s %s" % (path, path[:-3]))
+
 def compile_mo(locale):
     """Compile a .mo file for locale."""
 
@@ -71,6 +79,8 @@ def main():
         return update_po(opts.update_po)
     if opts.compile_mo:
         return compile_mo(opts.compile_mo)
+    if opts.compile_data:
+        return compile_data()
     print "No option given."
     print "Try 'translate --help' for more information."
 
@@ -117,6 +127,13 @@ def parse_args():
         dest="compile_mo",
         default="",
         help="compile a .mo file for LOCALE")
+
+    parser.add_option(
+        "-d", "--compile-data",
+        action="store_true",
+        dest="compile_data",
+        default=False,
+        help="compile data files")
 
     return parser.parse_args()
 

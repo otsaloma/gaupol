@@ -1,5 +1,34 @@
 2007-08-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* bin/gaupol (prepare_paths):
+	Refactor as with py2exe __file__ is not available.
+
+	* data/icons/gaupol.ico:
+	New icon for Windows.
+
+	* doc/RELEASING.win32:
+	New release checklist file.
+
+	* gaupol/paths.py:
+	Handle the special case of py2exe installations.
+
+	* MANIFEST.in:
+	Add doc/MODULES, doc/RELEASING and doc/RELEASING.win32.
+
+	* setup.py:
+	Add py2exe options and refactor file listings.
+
+	* tools/data/gaupol.iss:
+	New file for creating Inno Setup installers.
+
+	* tools/py2exe.bat:
+	New file for creating a Windows executable.
+
+	* tools/translate (compile_data):
+	New function for compiling data files.
+
+2007-08-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/dialogs/file/open.py:
 	* gaupol/gtk/dialogs/file/save.py:
 	* gaupol/gtk/dialogs/file/subtitle.py:

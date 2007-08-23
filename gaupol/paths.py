@@ -17,16 +17,22 @@
 """Paths to files used."""
 
 import os
+import sys
 
 __all__ = ["DATA_DIR", "LOCALE_DIR", "PROFILE_DIR"]
 
-def get_directory(name):
-    cwd = os.path.dirname(os.path.abspath(__file__))
-    prefix = os.path.abspath(os.path.join(cwd, ".."))
-    return os.path.join(prefix, name)
+def get_directory(child):
+    parent = os.path.dirname(os.path.abspath(__file__))
+    prefix = os.path.abspath(os.path.join(parent, ".."))
+    return os.path.abspath(os.path.join(prefix, child))
 
 DATA_DIR = get_directory("data")
 LOCALE_DIR = get_directory("locale")
 PROFILE_DIR = os.path.join(os.path.expanduser("~"), ".gaupol")
+
+if hasattr(sys, "frozen"):
+    # Handle the special case of py2exe installations.
+    DATA_DIR = get_directory(os.path.join("..", "share", "gaupol"))
+    LOCALE_DIR = get_directory(os.path.join("..", "share", "locale"))
 
 del get_directory

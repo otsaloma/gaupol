@@ -1,0 +1,33 @@
+Windows Installer Release Checklist
+===================================
+
+Install the following on Windows.  The hicolor icon theme should be
+installed to C:\GTK\share\icons\hicolor\index.theme.
+
+    http://www.python.org/download/releases/
+    http://ftp.gnome.org/pub/GNOME/binaries/win32/pygobject/
+    http://ftp.gnome.org/pub/GNOME/binaries/win32/pycairo/
+    http://ftp.gnome.org/pub/GNOME/binaries/win32/pygtk/
+    http://gladewin32.sourceforge.net/modules/news/
+    http://chardet.feedparser.org/download/
+    http://pyenchant.sourceforge.net/download.php
+    http://icon-theme.freedesktop.org/releases/
+    http://www.py2exe.org/
+    http://www.jrsoftware.org/isdl.php
+
+Generate translations and update version numbers on Unix.
+
+    ./setup.py clean
+    tools/translate -m all
+    tools/translate -d
+    $EDITOR tools/py2exe.bat tools/data/gaupol.iss
+    cp -r . /mnt/win/gaupol
+
+Boot to Windows.  Run and compile the following files.
+
+    C:\gaupol\tools\py2exe.bat
+    C:\gaupol\tools\data\gaupol.iss
+
+Run the installer from C:\gaupol\win32\.  Copy to Unix and upload.
+
+    scp gaupol-*.exe osmo@download.gna.org:/upload/gaupol/0.10

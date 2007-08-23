@@ -41,6 +41,10 @@ os.chdir(os.path.dirname(__file__) or ".")
 sys.path.insert(0, os.path.dirname(__file__))
 from gaupol import __version__
 
+packages = []
+data_files = []
+kwargs = {}
+
 
 class Clean(clean):
 
@@ -194,46 +198,102 @@ class SDistGna(sdist):
             fobj.write("%s\n" % __version__)
 
 
-packages = []
-for (root, dirs, files) in os.walk("gaupol"):
-    if os.path.isfile(os.path.join(root, "__init__.py")):
-        path = root.replace(os.sep, ".")
-        path = path[path.find("gaupol"):]
-        if not path.endswith(".test"):
-            packages.append(path)
-packages.remove("gaupol.unittest")
-packages.remove("gaupol.gtk.unittest")
+def find_data_files():
+    """Find and add all non-translatable data files."""
 
-data_files = [
-    ("share/gaupol", ["data/gaupol.gtk.conf.spec"]),
-    ("share/gaupol", ["data/gtkrc", "data/ui.xml"]),
-    ("share/gaupol/glade", glob.glob("data/glade/*.glade")),
-    ("share/gaupol/headers", glob.glob("data/headers/*.txt")),
-    ("share/gaupol/codes", glob.glob("data/codes/*")),
-    ("share/gaupol/patterns", glob.glob("data/patterns/*.conf")),
-    ("share/man/man1", ["doc/gaupol.1"]),]
+    add = lambda directory, files: data_files.append((directory, files))
+    add("share/gaupol", ("data/gaupol.gtk.conf.spec",))
+    add("share/gaupol", ("data/gtkrc", "data/ui.xml"))
+    add("share/gaupol/codes", glob.glob("data/codes/*"))
+    add("share/gaupol/glade", glob.glob("data/glade/*.glade"))
+    add("share/gaupol/headers", glob.glob("data/headers/*.txt"))
+    add("share/gaupol/patterns", glob.glob("data/patterns/*.conf"))
+    add("share/man/man1", ("doc/gaupol.1",))
+    for size in ("16x16", "22x22", "24x24", "32x32", "scalable"):
+        files = glob.glob("data/icons/hicolor/%s/apps/*.png" % size)
+        files += glob.glob("data/icons/hicolor/%s/apps/*.svg" % size)
+        add("share/icons/hicolor/%s/apps" % size, files)
 
-for name in ("16x16", "22x22", "24x24", "32x32", "scalable"):
-    directory = "share/icons/hicolor/%s/apps" % name
-    files = glob.glob("data/icons/hicolor/%s/apps/*.png" % name)
-    files += glob.glob("data/icons/hicolor/%s/apps/*.svg" % name)
-    data_files.append((directory, files))
+def find_packages():
+    """Find and add all gaupol packages."""
 
-setup(
-    name="gaupol",
-    version=__version__,
-    requires=["gtk (>=2.10.0)"],
-    platforms=["Platform Independent"],
-    author="Osmo Salomaa",
-    author_email="otsaloma@cc.hut.fi",
-    url="http://home.gna.org/gaupol/",
-    description="Subtitle editor",
-    license="GPL",
-    packages=packages,
-    scripts=["bin/gaupol"],
-    data_files=data_files,
-    cmdclass={
-        "clean": Clean,
-        "install_data": InstallData,
-        "install_lib": InstallLib,
-        "sdist_gna": SDistGna},)
+    for (root, dirs, files) in os.walk("gaupol"):
+        if os.path.isfile(os.path.join(root, "__init__.py")):
+            path = root.replace(os.sep, ".")
+            path = path[path.find("gaupol"):]
+            if not path.endswith(".test"):
+                packages.append(path)
+    packages.remove("gaupol.unittest")
+    packages.remove("gaupol.gtk.unittest")
+
+def main():
+    """Find files, prepare options and run setup."""
+
+    find_packages()
+    find_data_files()
+    if sys.platform == "win32":
+        import py2exe
+        prepare_py2exe_options()
+        prepare_py2exe_data_files()
+    run_setup()
+
+def prepare_py2exe_data_files():
+    """Find and add translated data files."""
+
+    paths = glob.glob("data/patterns/*")
+    paths = [x for x in paths if not x.startswith(".")]
+    paths = [x for x in paths if not x.endswith((".conf", ".in"))]
+    data_files.append(("share/gaupol/patterns", paths))
+    for locale in (x for x in os.listdir("locale") if not x.startswith(".")):
+        destination = "share/locale/%s/LC_MESSAGES" % locale
+        mo_path = "locale/%s/LC_MESSAGES/gaupol.mo" % locale
+        if os.path.isfile(mo_path):
+            data_files.append((destination, (mo_path,)))
+
+def prepare_py2exe_options():
+    """Prepare options specific to the py2exe command."""
+
+    kwargs["windows"] = [{}]
+    kwargs["windows"][0]["script"] = "bin/gaupol"
+    icons = [(0, "data/icons/gaupol.ico")]
+    kwargs["windows"][0]["icon_resources"] = icons
+    kwargs["options"] = {"py2exe": {}}
+    kwargs["options"]["py2exe"]["includes"] = []
+    kwargs["options"]["py2exe"]["packages"] = []
+    def add_python_module(section, module):
+        kwargs["options"]["py2exe"][section].append(module)
+    add_python_module("includes", "atk")
+    add_python_module("packages", "cairo")
+    add_python_module("packages", "chardet")
+    add_python_module("packages", "enchant")
+    add_python_module("packages", "gaupol")
+    add_python_module("packages", "gobject")
+    add_python_module("packages", "gtk")
+    add_python_module("packages", "pangocairo")
+    add_python_module("packages", "pygtk")
+
+
+def run_setup():
+    """Run the specified setup command."""
+
+    setup(
+        name="gaupol",
+        version=__version__,
+        requires=["gtk (>=2.10.0)"],
+        platforms=["Platform Independent"],
+        author="Osmo Salomaa",
+        author_email="otsaloma@cc.hut.fi",
+        url="http://home.gna.org/gaupol/",
+        description="Subtitle editor",
+        license="GPL",
+        packages=packages,
+        scripts=["bin/gaupol"],
+        data_files=data_files,
+        cmdclass={
+            "clean": Clean,
+            "install_data": InstallData,
+            "install_lib": InstallLib,
+            "sdist_gna": SDistGna,},
+        **kwargs)
+
+main()
