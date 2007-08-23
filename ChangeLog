@@ -1,5 +1,11 @@
 2007-08-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/agents/open.py (on_select_video_file_activate):
+	Fix ``GtkWarning: gtk_file_system_win32_get_parent: assertion
+	`g_path_is_absolute (filename)' failed'' on Windows.
+
+2007-08-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* bin/gaupol:
 	Fix errors in previous commit.
 

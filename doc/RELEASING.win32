@@ -15,6 +15,12 @@ installed to C:\GTK\share\icons\hicolor\index.theme.
     http://www.py2exe.org/
     http://www.jrsoftware.org/isdl.php
 
+Edit C:\GTK\share\themes\MS-Windows\gtk-2.0\gtkrc.
+
+    gtk-button-images = 1
+    gtk-toolbar-style = GTK_TOOLBAR_ICONS
+    GtkTreeView::allow-rules = 1
+
 Generate translations and update version numbers on Unix.
 
     ./setup.py clean
@@ -31,4 +37,6 @@ Boot to Windows.  Run and compile the following files.
 
 Run the installer from C:\gaupol\win32\.  Copy to Unix and upload.
 
+    gpg --detach gaupol-*.exe
     scp gaupol-*.exe osmo@download.gna.org:/upload/gaupol/0.10
+    scp gaupol-*.sig osmo@download.gna.org:/upload/gaupol/0.10
