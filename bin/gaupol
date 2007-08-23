@@ -1,22 +1,19 @@
 #!/usr/bin/env python
 
-import gaupol
 import gtk
 import os
 import sys
 
-@gaupol.util.asserted_return
-def prepare_paths():
-    assert "__file__" in globals()
+if "__file__" in globals():
     parent = os.path.dirname(os.path.abspath(__file__))
     path = os.path.join(parent, "..", "data", "gaupol.desktop.in")
-    assert os.path.isfile(path)
-    path = os.path.abspath(os.path.join(parent, ".."))
-    sys.path.insert(0, path)
-    icon_theme = gtk.icon_theme_get_default()
-    path = os.path.join(gaupol.DATA_DIR, "icons")
-    icon_theme.append_search_path(path)
+    if os.path.isfile(path):
+        path = os.path.abspath(os.path.join(parent, ".."))
+        sys.path.insert(0, path)
+        import gaupol
+        icon_theme = gtk.icon_theme_get_default()
+        path = os.path.join(gaupol.DATA_DIR, "icons")
+        icon_theme.append_search_path(path)
 
-prepare_paths()
 import gaupol.gtk
 gaupol.gtk.main.main(sys.argv[1:])

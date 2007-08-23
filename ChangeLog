@@ -1,5 +1,10 @@
 2007-08-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* bin/gaupol:
+	Fix errors in previous commit.
+
+2007-08-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* bin/gaupol (prepare_paths):
 	Refactor as with py2exe __file__ is not available.
 

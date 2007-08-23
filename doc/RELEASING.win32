@@ -22,6 +22,7 @@ Generate translations and update version numbers on Unix.
     tools/translate -d
     $EDITOR tools/py2exe.bat tools/data/gaupol.iss
     cp -r . /mnt/win/gaupol
+    ./setup.py clean
 
 Boot to Windows.  Run and compile the following files.
 
