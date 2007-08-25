@@ -1,3 +1,15 @@
+2007-08-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/dialogs/transform.py:
+	Do not use DOWNWARDS ARROW WITH CORNER LEFTWARDS in text labels,
+	instead strip tags and join lines with spaces.
+
+	* gaupol/gtk/ruler.py (_Ruler):
+	Use gaupol.re_any_tag.
+
+	* gaupol/__init__.py:
+	Add gaupol.re_any_tag.
+
 2007-08-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/agents/open.py (on_select_video_file_activate):

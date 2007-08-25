@@ -226,7 +226,8 @@ class FrameTransformDialog(_PositionTransformDialog):
         subtitle = page.project.subtitles[row]
         self._input_label_1.set_text(str(subtitle.start_frame))
         self._output_spin_1.set_value(subtitle.start_frame)
-        text = subtitle.main_text.replace("\n", "\342\206\265")
+        text = subtitle.main_text.replace("\n", " ")
+        text = gaupol.re_any_tag.sub("", text)
         self._text_label_1.set_text(text)
         event_box = self._text_label_1.get_ancestor(gtk.EventBox)
         self._tooltips.set_tip(event_box, subtitle.main_text)
@@ -240,7 +241,8 @@ class FrameTransformDialog(_PositionTransformDialog):
         subtitle = page.project.subtitles[row]
         self._input_label_2.set_text(str(subtitle.start_frame))
         self._output_spin_2.set_value(subtitle.start_frame)
-        text = subtitle.main_text.replace("\n", "\342\206\265")
+        text = subtitle.main_text.replace("\n", " ")
+        text = gaupol.re_any_tag.sub("", text)
         self._text_label_2.set_text(text)
         event_box = self._text_label_2.get_ancestor(gtk.EventBox)
         self._tooltips.set_tip(event_box, subtitle.main_text)
@@ -303,7 +305,8 @@ class TimeTransformDialog(_PositionTransformDialog):
         subtitle = page.project.subtitles[row]
         self._input_label_1.set_text(subtitle.start_time)
         self._output_entry_1.set_text(subtitle.start_time)
-        text = subtitle.main_text.replace("\n", "\342\206\265")
+        text = subtitle.main_text.replace("\n", " ")
+        text = gaupol.re_any_tag.sub("", text)
         self._text_label_1.set_text(text)
         event_box = self._text_label_1.get_ancestor(gtk.EventBox)
         self._tooltips.set_tip(event_box, subtitle.main_text)
@@ -319,7 +322,8 @@ class TimeTransformDialog(_PositionTransformDialog):
         subtitle = page.project.subtitles[row]
         self._input_label_2.set_text(subtitle.start_time)
         self._output_entry_2.set_text(subtitle.start_time)
-        text = subtitle.main_text.replace("\n", "\342\206\265")
+        text = subtitle.main_text.replace("\n", " ")
+        text = gaupol.re_any_tag.sub("", text)
         self._text_label_2.set_text(text)
         event_box = self._text_label_2.get_ancestor(gtk.EventBox)
         self._tooltips.set_tip(event_box, subtitle.main_text)

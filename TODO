@@ -1,26 +1,24 @@
 Gaupol 0.11
 ===========
 
+ [ ] Add a line-break task to the text correction assistant
  [D] Add missing "Auto-detected" encoding entry in file dialogs
- [D] Add support for creating a windows installer with py2exe
+ [D] Add support for creating a Windows .exe with py2exe and a
+     Windows installer with Inno Setup
 
 
 Gaupol 1.0
 ==========
 
  * Capitalize (text assistant task)
- * Format lines (text assistant task)
  * Plugin system (see gedit for interfaces)
 
 
-Unscheduled Possibilities
-=========================
+Unscheduled Possible Plans
+==========================
 
- * PyGTK 2.12
+ * (Py)GTK 2.12
     - gtk.AboutDialog: "name" replaced with "program-name"
     - gtk.Builder: Build an interface from an XML UI definition
     - gtk.Tooltip: New API that allows complex tooltips
  * Built-in GStreamer preview (as plugin?)
- * Interactive search (as plugin?)
- * gedit-style message area
- * Multiple windows and tab drag-dropping between them

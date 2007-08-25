@@ -78,14 +78,14 @@ class _Ruler(object):
     def get_char_lengths(self, text, strip, floor):
         """Get a list of line lengths measured in characters."""
 
-        text = (self._re_tag.sub("", text) if strip else text)
+        text = (gaupol.re_any_tag.sub("", text) if strip else text)
         return [len(x) for x in text.split("\n")]
 
     def get_em_lengths(self, text, strip, floor):
         """Get a list of line lengths measured in ems."""
 
         lengths = []
-        text = (self._re_tag.sub("", text) if strip else text)
+        text = (gaupol.re_any_tag.sub("", text) if strip else text)
         for line in text.split("\n"):
             self._layout.set_text(line)
             length = self._layout.get_size()[0] / self._em_length

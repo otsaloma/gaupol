@@ -21,8 +21,11 @@ Module variables:
  * check_contracts: True to check contracts
 """
 
+import re
+
 __version__ = "0.10"
 check_contracts = True
+re_any_tag = re.compile(r"(^[/\\_]|<[^<]*?>|\{[^{]*?\})")
 
 from gaupol.paths import *
 from gaupol.urls import *
