@@ -1,3 +1,8 @@
+2007-08-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* tools/py2exe.bat:
+	Copy DLLs from %GTKDIR%\bin.
+
 2007-08-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/dialogs/transform.py:

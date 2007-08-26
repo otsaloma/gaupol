@@ -8,6 +8,7 @@
 @mkdir dist\share
 @%PYDIR%\python.exe setup.py py2exe
 @pause
+@xcopy %GTKDIR%\bin\*.dll dist /E /Y
 @xcopy %GTKDIR%\etc dist\etc /E
 @xcopy %GTKDIR%\lib dist\lib /E
 @xcopy %GTKDIR%\share dist\share /E
