@@ -1,3 +1,15 @@
+2007-08-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/patterns/Latn-en.line-break.conf:
+	* data/patterns/Latn-en.line-break.in:
+	* data/patterns/Latn.line-break.conf:
+	* data/patterns/Latn.line-break.in:
+	New preliminary files for line-break patterns.
+
+	* gaupol/patternman.py (get_patterns):
+	Allow patterns with a more specific code to override those with a less
+	specific code if the names clash.
+
 2007-08-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* tools/py2exe.bat:

@@ -65,8 +65,10 @@ class PatternManager(object):
         self._assert_indentifiers(script, language, country)
 
     def _get_codes(self, script=None, language=None, country=None):
-        """Get a list of all codes to be used by arguments."""
+        """Get a list of all codes to be used by arguments.
 
+        Zyyy is the first code and the most specific one last.
+        """
         codes = ["Zyyy"]
         if script is not None:
             codes.append(script)
@@ -238,7 +240,14 @@ class PatternManager(object):
 
         patterns = []
         for code in self._get_codes(script, language, country):
-            patterns += self._patterns.get(code, [])
+            for pattern in self._patterns.get(code, []):
+                name = pattern.get_name(False)
+                for i in range(len(patterns)):
+                    # Allow patterns with a more specific code to override
+                    # those with a less specific code if the names clash.
+                    if patterns[i].get_name(False) == name:
+                        patterns.pop(i)
+                patterns.append(pattern)
         return patterns
 
     def get_scripts(self):

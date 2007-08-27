@@ -1,0 +1,13 @@
+[LineBreakPattern]
+_Name=Dialogue
+_Description=Break according to dialogue lines
+Pattern= (- )
+Flags=DOTALL,MULTILINE,UNICODE
+Replacement=\n\1
+
+[LineBreakPattern]
+_Name=Clauses
+_Description=Break according to clauses terminated by punctuation marks
+Pattern=((((?<!(.\.|\..))\.|[?!])['"]?|(?<!-) [^ ]+?(\.{2,}|[,;:])['"]?( [^ ]+?([^.].\.{3,}|[,;:])['"]?)*( [^ ]+?([^.].\.|[?!])['"]?)?( [^ ]+$)?))\040
+Flags=DOTALL,MULTILINE,UNICODE
+Replacement=\1\n
