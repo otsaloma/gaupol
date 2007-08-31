@@ -25,22 +25,17 @@ class TestLiner(unittest.TestCase):
     def setup_method(self, method):
 
         self.liner = liner.Liner(re.compile(r"<.+?>"))
-
-    def test__get_length(self):
-
-        assert self.liner._get_length([3]) == 3
-        assert self.liner._get_length([2, 3, 4]) == 11
+        self.liner.break_points.append((re.compile(r" (- )"), r"\n\1"))
+        self.liner.break_points.append((re.compile(r"([.,?!]) "), r"\1\n"))
 
     def test_format(self):
 
         text = \
             "- Isn't he off on Saturdays? " + \
-            "- He changed shifts. " + \
             "- Didn't he tell you?"
         self.liner.set_text(text)
         assert self.liner.format() == \
             "- Isn't he off on Saturdays?\n" + \
-            "- He changed shifts.\n" + \
             "- Didn't he tell you?"
 
         text = \
@@ -101,8 +96,8 @@ class TestLiner(unittest.TestCase):
             "test test test test test test test test\n" + \
             "test test test test test test test test\n" + \
             "test test test test test test test test\n" + \
-            "test test test test test test test test\n" + \
             "test test test test test test test test test\n" + \
+            "test test test test test test test test\n" + \
             "test test test test test test test test test"
 
         text = "test " * 60

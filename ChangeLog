@@ -1,3 +1,9 @@
+2007-08-31  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/liner.py:
+	Rewrite to use arbitrary break patterns.
+	Clean up code and add comments.
+
 2007-08-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/patterns/Latn-en.line-break.conf:
