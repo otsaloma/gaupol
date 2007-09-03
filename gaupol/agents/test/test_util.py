@@ -52,6 +52,12 @@ class TestUtilityAgent(unittest.TestCase):
         lengths = self.project.get_line_lengths(0, gaupol.DOCUMENT.MAIN)
         assert lengths == [4, 5]
 
+    def test_get_liner(self):
+
+        doc = gaupol.DOCUMENT.MAIN
+        liner = self.project.get_liner(doc)
+        assert liner.re_tag == self.project.get_tag_regex(doc)
+
     def test_get_mode(self):
 
         self.project.open_main(self.get_subrip_path(), "ascii")

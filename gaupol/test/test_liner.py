@@ -28,13 +28,13 @@ class TestLiner(unittest.TestCase):
         self.liner.break_points.append((re.compile(r" (- )"), r"\n\1"))
         self.liner.break_points.append((re.compile(r"([.,?!]) "), r"\1\n"))
 
-    def test_format(self):
+    def test_break_lines(self):
 
         text = \
             "- Isn't he off on Saturdays? " + \
             "- Didn't he tell you?"
         self.liner.set_text(text)
-        assert self.liner.format() == \
+        assert self.liner.break_lines() == \
             "- Isn't he off on Saturdays?\n" + \
             "- Didn't he tell you?"
 
@@ -44,7 +44,7 @@ class TestLiner(unittest.TestCase):
             "- Didn't he tell you? " + \
             "- Can you give him this when he next comes?"
         self.liner.set_text(text)
-        assert self.liner.format() == \
+        assert self.liner.break_lines() == \
             "- Isn't he off on Saturdays?\n" + \
             "- He changed shifts. - Didn't he tell you?\n" + \
             "- Can you give him this when he next comes?"
@@ -53,7 +53,7 @@ class TestLiner(unittest.TestCase):
             "Isn't he off on Saturdays? " + \
             "He changed shifts."
         self.liner.set_text(text)
-        assert self.liner.format() == \
+        assert self.liner.break_lines() == \
             "Isn't he off on Saturdays?\n" + \
             "He changed shifts."
 
@@ -62,20 +62,20 @@ class TestLiner(unittest.TestCase):
             "He changed shifts. " + \
             "Didn't he tell you?"
         self.liner.set_text(text)
-        assert self.liner.format() == \
+        assert self.liner.break_lines() == \
             "Isn't he off on Saturdays?\n" + \
             "He changed shifts. Didn't he tell you?"
 
         text = "Isn't he off on Saturdays"
         self.liner.set_text(text)
-        assert self.liner.format() == text
+        assert self.liner.break_lines() == text
 
         text = \
             "Isn't he off on Saturdays " + \
             "He changed shifts " + \
             "Didn't he tell you?"
         self.liner.set_text(text)
-        assert self.liner.format() == \
+        assert self.liner.break_lines() == \
             "Isn't he off on Saturdays He\n" + \
             "changed shifts Didn't he tell you?"
 
@@ -85,14 +85,14 @@ class TestLiner(unittest.TestCase):
             "Didn't he tell you " + \
             "Can you give him this when he next comes"
         self.liner.set_text(text)
-        assert self.liner.format() == \
+        assert self.liner.break_lines() == \
             "Isn't he off on Saturdays He changed\n" + \
             "shifts Didn't he tell you Can you\n" + \
             "give him this when he next comes"
 
         text = "test " * 50
         self.liner.set_text(text)
-        assert self.liner.format() == \
+        assert self.liner.break_lines() == \
             "test test test test test test test test\n" + \
             "test test test test test test test test\n" + \
             "test test test test test test test test\n" + \
@@ -102,7 +102,7 @@ class TestLiner(unittest.TestCase):
 
         text = "test " * 60
         self.liner.set_text(text)
-        assert self.liner.format() == \
+        assert self.liner.break_lines() == \
             "test test test test test test test test\n" + \
             "test test test test test test test test\n" + \
             "test test test test test test test test test\n" + \

@@ -78,6 +78,13 @@ class UtilityAgent(gaupol.Delegate):
             text = re_tag.sub("", text)
         return [len(x) for x in text.split("\n")]
 
+    def get_liner(self, doc):
+        """Get liner with proper properties."""
+
+        re_tag = self.get_tag_regex(doc)
+        clean_func = self.get_tag_clean_func(doc)
+        return gaupol.Liner(re_tag, clean_func)
+
     def get_mode(self):
         """Get the mode of the main file or default."""
 

@@ -46,12 +46,12 @@ class Liner(gaupol.Parser):
     __metaclass__ = gaupol.Contractual
     _re_multi_space = re.compile(r" {2,}")
 
-    def __init__(self, re_tag=None):
+    def __init__(self, re_tag=None, clean_func=None):
         """Initialize a Liner object.
 
         re_tag should be a regular expression object.
         """
-        gaupol.Parser.__init__(self, re_tag)
+        gaupol.Parser.__init__(self, re_tag, clean_func)
         self._length_func = len
         self._space_length = 1
         self.break_points = []
@@ -233,8 +233,8 @@ class Liner(gaupol.Parser):
             text = text + prefix + items[i]
         self.text = text.strip()
 
-    def format(self):
-        """Format lines and return text."""
+    def break_lines(self):
+        """Break lines and return text."""
 
         self.text = self.text.replace("\n", " ")
         self.pattern = self._re_multi_space

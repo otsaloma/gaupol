@@ -30,36 +30,6 @@ class TextAgent(gaupol.Delegate):
     __metaclass__ = gaupol.Contractual
     _re_alphanum = re.compile(r"\w", re.UNICODE)
 
-#     def _capitalize_after(self, parser, cap_next):
-#         """Capitalize all texts following matches of pattern."""
-
-#         try:
-#             z = parser.next()[1]
-#         except StopIteration:
-#             return cap_next
-#         match = self._re_alphanum.search(parser.text[z:])
-#         if match is not None:
-#             z = z + match.start()
-#             prefix = parser.text[:z]
-#             text = parser.text[z:z + 1].capitalize()
-#             suffix = parser.text[z + 1:]
-#             parser.text = prefix + text + suffix
-#             return self._capitalize_after(parser, cap_next)
-#         return True
-
-#     def _capitalize_next(self, parser, cap_next):
-#         """Capitalize the next alphanumeric character."""
-
-#         match = self._re_alphanum.search(parser.text)
-#         if match is not None:
-#             a = match.start()
-#             prefix = parser.text[:a]
-#             text = parser.text[a:a + 1].capitalize()
-#             suffix = parser.text[a + 1:]
-#             parser.text = prefix + text + suffix
-#             cap_next = False
-#         return cap_next
-
     def _get_subtitutions(self, patterns):
         """Get a list of tuples of pattern, flags, replacement."""
 
@@ -92,40 +62,62 @@ class TextAgent(gaupol.Delegate):
             texts[i] = parser.get_text()
         return texts
 
-#     def capitalize_require(self, indexes, doc, pattern, register=-1):
-#         for index in (indexes or []):
-#             assert 0 <= index < len(self.subtitles)
+    def break_lines_require(self, indexes, *args, **kwargs):
+        for index in (indexes or []):
+            assert 0 <= index < len(self.subtitles)
 
-#     @gaupol.util.revertable
-#     def capitalize(self, indexes, doc, pattern, register=-1):
-#         """Capitalize texts following matches of pattern.
+    @gaupol.util.revertable
+    @gaupol.util.asserted_return
+    def break_lines(self, indexes, doc, patterns, length_func, max_length,
+        max_lines, max_deviation, skip_legal, register=-1):
+        """Break lines to fit defined maximum line length and count.
 
-#         indexes can be None to process all subtitles.
-#         Raise re.error if bad pattern.
-#         Return changed indexes.
-#         """
-#         new_indexes = []
-#         new_texts = []
-#         parser = self.get_parser(doc)
-#         parser.set_regex(pattern)
-#         indexes = indexes or range(len(self.subtitles))
-#         for indexes in gaupol.util.get_ranges(indexes):
-#             cap_next = False
-#             for index in indexes:
-#                 orig_text = self.subtitles[index].get_text(doc)
-#                 parser.set_text(orig_text)
-#                 if cap_next or (index == 0):
-#                     cap_next = self._capitalize_next(parser, cap_next)
-#                 cap_next = self._capitalize_after(parser, cap_next)
-#                 text = parser.get_text()
-#                 if text != orig_text:
-#                     new_indexes.append(index)
-#                     new_texts.append(text)
-
-#         if new_indexes:
-#             self.replace_texts(new_indexes, doc, new_texts, register=register)
-#             self.set_action_description(register, _("Capitalizing texts"))
-#         return new_indexes
+        indexes can be None to process all subtitles.
+        length_func should return the length of a string argument.
+        max_lines may be violated to avoid violating max_length.
+        max_deviation is a funky number between 0 and 1.
+        skip_legal should be True to skip texts that don't violate maximums.
+        Raise re.error if bad pattern or replacement.
+        """
+        new_indexes = []
+        new_texts = []
+        patterns = self._get_subtitutions(patterns)
+        patterns = [(re.compile(x, y), z) for x, y, z in patterns]
+        liner = self.get_liner(doc)
+        liner.break_points = patterns
+        liner.max_deviation = max_deviation
+        liner.max_length = max_length
+        liner.max_lines = max_lines
+        liner.set_length_func(length_func)
+        re_tag = self.get_tag_regex(doc)
+        indexes = indexes or range(len(self.subtitles))
+        for index in indexes:
+            subtitle = self.subtitles[index]
+            liner.set_text(subtitle.get_text(doc))
+            tagless_text = subtitle.get_text(doc)
+            if re_tag is not None:
+                tagless_text = re_tag.sub("", tagless_text)
+            length = length_func(tagless_text)
+            line_count = tagless_text.count("\n") + 1
+            if (length <= max_length):
+                if (line_count <= max_lines):
+                    if skip_legal: continue
+            text = liner.break_lines()
+            if re_tag is not None:
+                tagless_text = re_tag.sub("", text)
+            length_reduced = length_func(tagless_text) < length
+            line_count_reduced = tagless_text.count("\n") + 1 < line_count
+            if not length_reduced:
+                if not line_count_reduced:
+                    # Implicitly require reduction of violator
+                    # if only lines in violation are to be broken.
+                    if skip_legal: continue
+            if text != subtitle.get_text(doc):
+                new_indexes.append(index)
+                new_texts.append(text)
+        assert new_indexes
+        self.replace_texts(new_indexes, doc, new_texts, register=register)
+        self.set_action_description(register, _("Breaking lines"))
 
     def correct_common_errors_require(self, indexes, *args, **kwargs):
         for index in (indexes or []):
@@ -162,67 +154,6 @@ class TextAgent(gaupol.Delegate):
         self.replace_texts(new_indexes, doc, new_texts, register=register)
         description = _("Correcting common errors")
         self.set_action_description(register, description)
-
-#     def format_lines_require(self, indexes, *args, **kwargs):
-#         for index in (indexes or []):
-#             assert 0 <= index < len(self.subtitles)
-
-#     @gaupol.util.revertable
-#     def format_lines(self, indexes, doc, dialogue_pattern, clause_pattern,
-#         ok_dialogue, ok_clauses, max_length, length_func, legal_length=None,
-#         legal_lines=None, require_reduction=False, register=-1):
-#         """Split or merge lines based on line length and count rules.
-
-#         ok_dialogue is an acceptable line count if all lines are dialogue,
-#         ok_clauses similarly for lines that are clauses. These are used for to
-#         prefer elegance over compactness. Subtitles that do not violate
-#         legal_length and legal_lines are skipped entirely to preserve an
-#         assumed existing elegant line split. require_reduction should be True
-#         to make changes in case of line count violations only when the line
-#         count can be reduced.
-
-#         indexes can be None to process all subtitles.
-#         Raise re.error if bad pattern.
-#         Return changed indexes.
-#         """
-#         def reduction_ok(check_reduction, text, lines):
-#             if check_reduction and require_reduction:
-#                 return len(text.split("\n")) < len(lines)
-#             return True
-
-#         new_indexes = []
-#         new_texts = []
-#         liner = gaupol.Liner(self.get_tag_regex(doc))
-#         liner.re_dialogue = re.compile(dialogue_pattern, re.UNICODE)
-#         liner.re_clause = re.compile(clause_pattern, re.UNICODE)
-#         liner.ok_dialogue = ok_dialogue
-#         liner.ok_clauses = ok_clauses
-#         liner.max_length = max_length
-#         liner.set_length_func(length_func)
-#         indexes = indexes or range(len(self.subtitles))
-#         for index in indexes:
-#             orig_text = self.subtitles[index].get_text(doc)
-#             lines = orig_text.split("\n")
-#             format = not any((legal_length, legal_lines))
-#             check_reduction = False
-#             if (not format) and (legal_length is not None):
-#                 lengths = [length_func(x) for x in lines]
-#                 format = any([x > legal_length for x in lengths])
-#             if (not format) and (legal_lines is not None):
-#                 format = len(lines) > legal_lines
-#                 check_reduction = True
-#             if format:
-#                 liner.set_text(orig_text)
-#                 text = liner.format()
-#                 if reduction_ok(check_reduction, text, lines):
-#                     if text != orig_text:
-#                         new_indexes.append(index)
-#                         new_texts.append(text)
-
-#         if new_indexes:
-#             self.replace_texts(new_indexes, doc, new_texts, register=register)
-#             self.set_action_description(register, _("Formatting lines"))
-#         return new_indexes
 
     def remove_hearing_impaired_require(self, indexes, *args, **kwargs):
         for index in (indexes or []):

@@ -1,3 +1,17 @@
+2007-09-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/patterns/Latn-en.common-error.in:
+	Add "re" to "Spaces around apostrophes".
+
+	* gaupol/agents/text.py:
+	Add break_lines and remove old crap.
+
+	* gaupol/agents/util.py (get_liner):
+	New method, equivalent to get_parser.
+
+	* gaupol/liner.py (__init__):
+	Add missing clean_func keyword argument.
+
 2007-08-31  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/liner.py:

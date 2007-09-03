@@ -21,33 +21,20 @@ from gaupol import unittest
 
 class TestTextAgent(unittest.TestCase):
 
-#     def format_lines(self):
-
-#         dialogue_pattern = gaupol.scripts.get_dialogue_separator("latin")
-#         clause_pattern = gaupol.scripts.get_clause_separator("latin")
-#         self.project.format_lines(
-#             indexes=None,
-#             doc=gaupol.DOCUMENT.MAIN,
-#             dialogue_pattern=dialogue_pattern,
-#             clause_pattern=clause_pattern,
-#             ok_dialogue=3,
-#             ok_clauses=2,
-#             max_length=32,
-#             length_func=len,
-#             legal_length=46,
-#             legal_lines=2,
-#             require_reduction=True)
-
     def setup_method(self, method):
 
         self.project = self.get_project()
 
-#     def test_capitalize(self):
+    def test_break_lines(self):
 
-#         self.project.subtitles[0].main_text = "test. test."
-#         pattern = gaupol.scripts.get_capitalize_after("latin")
-#         self.project.capitalize(None, gaupol.DOCUMENT.MAIN, pattern)
-#         assert self.project.subtitles[0].main_text == "Test. Test."
+        for subtitle in self.project.subtitles:
+            subtitle.main_text = subtitle.main_text.replace(" ", "\n")
+        doc = gaupol.DOCUMENT.MAIN
+        manager = gaupol.PatternManager("common-error")
+        patterns = manager.get_patterns("Latn")
+        self.project.break_lines(None, doc, patterns, len, 44, 2, 1, True)
+        for subtitle in self.project.subtitles:
+            assert subtitle.main_text.count("\n") <= 2
 
     def test_correct_common_errors(self):
 
@@ -57,30 +44,6 @@ class TestTextAgent(unittest.TestCase):
         patterns = manager.get_patterns("Latn")
         self.project.correct_common_errors(None, doc, patterns)
         assert self.project.subtitles[0].main_text == '"Test"'
-
-#     def test_format_lines__legal_lines_and_legal_length(self):
-
-#         # Liner would break this to one clause per line.
-#         self.project.subtitles[0].main_text = \
-#             "You have stolen salami from\n" + \
-#             "me. Be careful what you say."
-#         self.format_lines()
-#         assert self.project.subtitles[0].main_text == \
-#             "You have stolen salami from\n" + \
-#             "me. Be careful what you say."
-
-#     def test_format_lines__require_reduction(self):
-
-#         # Liner would break this to one clause per line.
-#         self.project.subtitles[0].main_text = \
-#             "You have stolen salami. You\n" + \
-#             "have stolen salami. You have\n" + \
-#             "stolen salami."
-#         self.format_lines()
-#         assert self.project.subtitles[0].main_text == \
-#             "You have stolen salami. You\n" + \
-#             "have stolen salami. You have\n" + \
-#             "stolen salami."
 
     def test_remove_hearing_impaired(self):
 
