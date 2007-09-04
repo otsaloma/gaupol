@@ -97,16 +97,18 @@ class TextAgent(gaupol.Delegate):
             tagless_text = subtitle.get_text(doc)
             if re_tag is not None:
                 tagless_text = re_tag.sub("", tagless_text)
-            length = length_func(tagless_text)
-            line_count = tagless_text.count("\n") + 1
+            lines = tagless_text.split("\n")
+            length = max(length_func(x) for x in lines)
+            line_count = len(lines)
             if (length <= max_length):
                 if (line_count <= max_lines):
                     if skip_legal: continue
             text = liner.break_lines()
             if re_tag is not None:
                 tagless_text = re_tag.sub("", text)
-            length_reduced = length_func(tagless_text) < length
-            line_count_reduced = tagless_text.count("\n") + 1 < line_count
+            lines = tagless_text.split("\n")
+            length_reduced = max(length_func(x) for x in lines) < length
+            line_count_reduced = len(lines) < line_count
             if not length_reduced:
                 if not line_count_reduced:
                     # Implicitly require reduction of violator

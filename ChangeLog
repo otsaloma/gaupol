@@ -1,3 +1,8 @@
+2007-09-04  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/agents/text.py (break_lines):
+	Fix line length calculations.
+
 2007-09-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/patterns/Latn-en.common-error.in:
