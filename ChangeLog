@@ -1,3 +1,8 @@
+2007-09-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/patterns/Latn.hearing-impaired.in:
+	Fine-tune song lyric patterns.
+
 2007-09-04  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/agents/text.py (break_lines):

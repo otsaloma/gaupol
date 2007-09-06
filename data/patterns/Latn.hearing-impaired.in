@@ -22,27 +22,27 @@ Replacement=-\040
 [HearingImpairedPattern]
 _Name=Song lyrics between number signs
 _Description=Remove song lyrics starting with or between number signs
-Pattern=#.*?(#|\Z)
+Pattern=#+.+?(#+|\Z)
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=
 
 [HearingImpairedPattern]
 _Name=One-line song lyrics between number signs
 _Description=Remove one-line song lyrics starting with or between number signs
-Pattern=#.*?(#|$)
+Pattern=#+.+?(#+|$)
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=
 
 [HearingImpairedPattern]
 _Name=Song lyrics between asterisks
 _Description=Remove song lyrics starting with or between asterisks
-Pattern=\*.*?(\*|\Z)
+Pattern=\*+.+?(\*+|\Z)
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=
 
 [HearingImpairedPattern]
 _Name=One-line song lyrics between asterisks
 _Description=Remove one-line song lyrics starting with or between asterisks
-Pattern=\*.*?(\*|$)
+Pattern=\*+.+?(\*+|$)
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=
