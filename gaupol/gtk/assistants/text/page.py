@@ -42,9 +42,3 @@ class TextAssistantPage(gtk.VBox):
         self.page_type = None
         self.title = None
         self.set_border_width(12)
-
-    def correct_texts(self, project, indexes, doc):
-        """Correct texts in project."""
-
-        if self.page_type == gtk.ASSISTANT_PAGE_CONTENT:
-            raise NotImplementedError

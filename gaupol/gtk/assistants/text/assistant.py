@@ -26,6 +26,8 @@ from .confirmation import ConfirmationPage
 from .error import CommonErrorPage
 from .hearing import HearingImpairedPage
 from .introduction import IntroductionPage
+from .line import LineBreakPage
+from .line import LineBreakOptionsPage
 from .progress import ProgressPage
 
 
@@ -99,6 +101,7 @@ class TextAssistant(gtk.Assistant):
         self.add_page(HearingImpairedPage())
         self.add_page(CommonErrorPage())
         self.application.emit("text-assistant-request-pages", self)
+        self.add_pages((LineBreakPage(), LineBreakOptionsPage()))
         self.add_page(self._progress_page)
         self.add_page(self._confirmation_page)
 
@@ -196,8 +199,9 @@ class TextAssistant(gtk.Assistant):
         count = self.get_n_pages()
         pages = [self.get_nth_page(x) for x in range(count)]
         pages.remove(self._introduction_page)
-        pages.remove(self._confirmation_page)
         pages.remove(self._progress_page)
+        pages.remove(self._confirmation_page)
+        pages = [x for x in pages if hasattr(x, "correct_texts")]
         self._introduction_page.populate_tree_view(pages)
 
     def _prepare_progress_page(self, pages):
@@ -217,3 +221,16 @@ class TextAssistant(gtk.Assistant):
         self.set_page_title(page, page.page_title)
         assert page.page_type != gtk.ASSISTANT_PAGE_PROGRESS
         self.set_page_complete(page, True)
+
+    def add_pages(self, pages):
+        """Add associated pages and configure their properties.
+
+        The first one of the pages must have a 'correct_texts' attribute.
+        The visibilities of other pages are synced with the first page.
+        """
+        for page in pages:
+            self.add_page(page)
+        def on_notify_visible(*args):
+            for page in pages[1:]:
+                page.props.visible = pages[0].props.visible
+        pages[0].connect("notify::visible", on_notify_visible)

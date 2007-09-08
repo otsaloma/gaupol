@@ -18,7 +18,7 @@ SETUP_METHOD="\n\
         pass"
 
 cat "$1" \
-    | egrep "^(class |\s*def |#)" \
+    | egrep "^\s*(class|def|#) " \
     | egrep -v "_(require|ensure)\(" \
     | sed "s|^\(# .*licenses/>..*\)$|\1$IMPORTS|" \
     | sed "s|^\(\s*\)def \(\w*\).*$|\n\1def test_\2(self):\n\n\1    pass|" \

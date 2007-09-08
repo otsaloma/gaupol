@@ -139,10 +139,16 @@ def disconnect_text_view(text_view):
     text_view.set_data("ruler_handler_id", None)
     return text_view.disconnect(handler_id)
 
-def func(text):
-    """Get the length of text (as float) without stripping tags."""
+def get_length_function(unit):
+    """Get a function that returns text length in units."""
 
-    return sum(_ruler.get_lengths(text, False, False))
+    if unit == gaupol.gtk.LENGTH_UNIT.CHAR:
+        function = _ruler.get_char_lengths
+        return lambda x: sum(function(x, False, False))
+    if unit == gaupol.gtk.LENGTH_UNIT.EM:
+        function = _ruler.get_em_lengths
+        return lambda x: sum(function(x, False, False))
+    raise ValueError
 
 def get_lengths(text):
     """Get a list of floored line lengths without tags."""

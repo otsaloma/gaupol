@@ -2,7 +2,8 @@ Gaupol 0.11
 ===========
 
  * http://gna.org/bugs/?9895 (Advanced selection features)
- * TextAssistant[Page]: is_task
+ * TextAgent.break_lines: require reduction of violator,
+   not just any reduction
  * Update iso-codes XML files
  * Raise preview gobject timeout?
 

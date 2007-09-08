@@ -61,10 +61,14 @@ class TestModule(unittest.TestCase):
         text_buffer = text_view.get_buffer()
         text_buffer.insert_at_cursor("test\ntest")
 
-    def test_func(self):
+    def test_get_length_function(self):
 
-        gaupol.gtk.conf.editor.length_unit = gaupol.gtk.LENGTH_UNIT.CHAR
-        assert ruler.func("MMM<i>iii</i>") == 13
+        unit = gaupol.gtk.LENGTH_UNIT.CHAR
+        function = ruler.get_length_function(unit)
+        assert function("iii") == 3
+        unit = gaupol.gtk.LENGTH_UNIT.EM
+        function = ruler.get_length_function(unit)
+        assert 0.5 < function("M") < 1.5
 
     def test_get_lengths__char(self):
 
