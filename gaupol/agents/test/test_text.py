@@ -53,6 +53,8 @@ class TestTextAgent(unittest.TestCase):
         doc = gaupol.DOCUMENT.MAIN
         manager = gaupol.PatternManager("hearing-impaired")
         patterns = manager.get_patterns("Latn")
+        for pattern in patterns:
+            pattern.enabled = True
         self.project.remove_hearing_impaired(None, doc, patterns)
         assert self.project.subtitles[0].main_text == "Test."
         assert len(self.project.subtitles) == orig_length - 1

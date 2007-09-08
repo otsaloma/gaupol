@@ -107,13 +107,14 @@ class TextAgent(gaupol.Delegate):
             if re_tag is not None:
                 tagless_text = re_tag.sub("", text)
             lines = tagless_text.split("\n")
-            length_reduced = max(length_func(x) for x in lines) < length
-            line_count_reduced = len(lines) < line_count
-            if not length_reduced:
-                if not line_count_reduced:
-                    # Implicitly require reduction of violator
-                    # if only lines in violation are to be broken.
-                    if skip_legal: continue
+            length_down = max(length_func(x) for x in lines) < length
+            line_count_down = len(lines) < line_count
+            length_fixed = (length > max_length) and length_down
+            line_count_fixed = (line_count > max_lines) and line_count_down
+            if (not length_fixed) and (not line_count_fixed):
+                # Implicitly require reduction of violator
+                # if only lines in violation are to be broken.
+                if skip_legal: continue
             if text != subtitle.get_text(doc):
                 new_indexes.append(index)
                 new_texts.append(text)
