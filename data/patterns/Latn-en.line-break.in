@@ -1,6 +1,6 @@
 [LineBreakPattern]
 _Name=Clauses
 _Description=Break according to clauses terminated by punctuation marks
-Pattern=((((?<!\b([Dd]r|[Jj]r|[Mm]r|[Mm]s|[Ss]r|[Ss]t))(?<!\b[Mm]rs)(?<!(.\.|\..))\.|[?!])['"]?|(?<!-) [^ ]+?(\.{2,}|[,;:])['"]?( [^ ]+?([^.].\.{3,}|[,;:])['"]?)*( [^ ]+?([^.].\.|[?!])['"]?)?( [^ ]+$)?))\040
+Pattern=((((?<!\b([Dd]r|[Jj]r|[Mm]r|[Mm]s|[Ss]r|[Ss]t))(?<!\b[Mm]rs)(?<!(.\.|\..))\.|[?!])['"]?|(?<!-) [^ ]+?(\.{2,}|[,;:])['"]?( [^ ]+?([^.].\.{3,}|[,;:])['"]?)*( [^ ]+?([^.].\.|[?!])['"]?)?( [^ ]+$)?))( |$)
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\1\n

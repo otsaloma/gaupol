@@ -1,5 +1,11 @@
 2007-09-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/patterns/Latn-en.line-break.in:
+	* data/patterns/Latn.line-break.in:
+	Allow "Clauses" patterns to end in $.
+
+2007-09-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/agents/text.py (break_lines):
 	Fix post-break reduction check.
 
