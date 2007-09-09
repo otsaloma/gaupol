@@ -109,7 +109,7 @@ class PreviewAgent(gaupol.Delegate):
             return self._show_encoding_error_dialog()
         function = self._check_process_state
         args = (process, output_path)
-        gobject.timeout_add(200, function, *args)
+        gobject.timeout_add(500, function, *args)
 
     def preview_changes(self, page, row, doc, method, args=None, kwargs=None):
         """Preview changes caused by method with a video player."""

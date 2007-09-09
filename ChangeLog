@@ -1,5 +1,10 @@
 2007-09-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/agents/preview.py (preview):
+	Raise gobject timeout to 500 ms.
+
+2007-09-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/codes/iso_3166.xml:
 	Update from iso-codes 1.4.
 
