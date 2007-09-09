@@ -4,7 +4,7 @@
 <!--										-->
 <!-- Copyright (C) 2002,2006 Alastair McKinstry <mckinstry@debian.org>		-->
 <!--   Additional material: Andreas Jochens <aj@andaco.de>			-->
-<!--    Last updated: 2006-04-02						-->
+<!--    Last updated: 2006-12-01 ISO 3166-3 NEWSLETTER No. I-5                  -->
 <!-- Released under the LGPL							-->
 
 <!DOCTYPE iso_3166_entries [
@@ -35,7 +35,7 @@
 		alpha_3_code="AFG"
 		numeric_code="004"
 		name="Afghanistan"
-		official_name="The Transitional Islamic State of Afghanistan" />
+		official_name="Islamic Republic of Afghanistan" />
 	<iso_3166_entry
 		alpha_2_code="AX"
 		alpha_3_code="ALA"
@@ -130,7 +130,7 @@
 		alpha_3_code="BHR"
 		numeric_code="048"
 		name="Bahrain"
-		official_name="State of Bahrain" />
+		official_name="Kingdom of Bahrain" />
 	<iso_3166_entry
 		alpha_2_code="BD"
 		alpha_3_code="BGD"
@@ -332,7 +332,7 @@
 		alpha_3_code="CIV"
 		numeric_code="384"
 		name="Côte d'Ivoire"
-		official_name="Republic of Cote d'Ivoire" />
+		official_name="Republic of Côte d'Ivoire" />
 	<iso_3166_entry
 		alpha_2_code="HR"
 		alpha_3_code="HRV"
@@ -1440,7 +1440,7 @@
 		alpha_3_code="CTE"
 		numeric_code="128"
 		date_withdrawn="1984"
-		names="Canton &amp; Enderbury Islands" />
+		names="Canton and Enderbury Islands" />
 	<iso_3166_3_entry
 		alpha_4_code="CSHH"
 		alpha_3_code="CSK"
@@ -1507,7 +1507,7 @@
 		alpha_3_code="GEL"
 		numeric_code="296"
 		date_withdrawn="1979"
-		names="Gilbert &amp; Ellice Islands"
+		names="Gilbert and Ellice Islands"
 		comment="now split into Kiribati and Tuvalu" />
 	<iso_3166_3_entry
 		alpha_4_code="JTUM"
@@ -1533,7 +1533,7 @@
 		numeric_code="536"
 		date_withdrawn="1993-07-12"
 		names="Neutral Zone"
-		comment="formerly between Saudi Arabia &amp; Iraq" />
+		comment="formerly between Saudi Arabia and Iraq" />
 	<iso_3166_3_entry
 		alpha_4_code="NHVU"
 		alpha_3_code="NHB"
@@ -1571,6 +1571,12 @@
 		date_withdrawn="1988"
 		names="St. Kitts-Nevis-Anguilla"
 		comment="now St. Kitts and Nevis and Anguilla" />
+	<iso_3166_3_entry
+		alpha_4_code="CSXX"
+		alpha_3_code="SCG"
+		numeric_code="891"
+		date_withdrawn="2006-06-05"
+		names="Serbia and Montenegro" />
 	<iso_3166_3_entry
 		alpha_4_code="SKIN"
 		alpha_3_code="SKM"
