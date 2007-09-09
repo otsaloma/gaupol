@@ -1,3 +1,11 @@
+2007-09-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/gaupol.gtk.conf.spec:
+	* data/glade/text-assistant-line-break-options-page.glade:
+	* gaupol/agents/text.py:
+	* gaupol/gtk/assistants/text/line.py:
+	Add more detailed line-break skip conditions.
+
 2007-09-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/patterns/Latn-en.line-break.in:

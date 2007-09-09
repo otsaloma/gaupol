@@ -32,7 +32,7 @@ class TestTextAgent(unittest.TestCase):
         doc = gaupol.DOCUMENT.MAIN
         manager = gaupol.PatternManager("common-error")
         patterns = manager.get_patterns("Latn")
-        self.project.break_lines(None, doc, patterns, len, 44, 2, 1, True)
+        self.project.break_lines(None, doc, patterns, len, 44, 2, 1)
         for subtitle in self.project.subtitles:
             assert subtitle.main_text.count("\n") <= 2
 

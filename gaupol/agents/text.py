@@ -18,6 +18,7 @@
 
 import gaupol
 import re
+import sys
 _ = gaupol.i18n._
 
 
@@ -69,14 +70,16 @@ class TextAgent(gaupol.Delegate):
     @gaupol.util.revertable
     @gaupol.util.asserted_return
     def break_lines(self, indexes, doc, patterns, length_func, max_length,
-        max_lines, max_deviation, skip_legal, register=-1):
+        max_lines, max_deviation, skip=False, max_skip_length=sys.maxint,
+        max_skip_lines=sys.maxint, register=-1):
         """Break lines to fit defined maximum line length and count.
 
         indexes can be None to process all subtitles.
         length_func should return the length of a string argument.
         max_lines may be violated to avoid violating max_length.
         max_deviation is a funky number between 0 and 1.
-        skip_legal should be True to skip texts that don't violate maximums.
+        If skip is True, subtitles that do not violate or manage to reduce
+        max_skip_length and max_skip_lines are skipped.
         Raise re.error if bad pattern or replacement.
         """
         new_indexes = []
@@ -100,21 +103,23 @@ class TextAgent(gaupol.Delegate):
             lines = tagless_text.split("\n")
             length = max(length_func(x) for x in lines)
             line_count = len(lines)
-            if (length <= max_length):
-                if (line_count <= max_lines):
-                    if skip_legal: continue
+            if (length <= max_skip_length):
+                if (line_count <= max_skip_lines):
+                    # Skip subtitles that do not violate
+                    # any of the defined skip conditions.
+                    if skip: continue
             text = liner.break_lines()
             if re_tag is not None:
                 tagless_text = re_tag.sub("", text)
             lines = tagless_text.split("\n")
             length_down = max(length_func(x) for x in lines) < length
-            line_count_down = len(lines) < line_count
-            length_fixed = (length > max_length) and length_down
-            line_count_fixed = (line_count > max_lines) and line_count_down
-            if (not length_fixed) and (not line_count_fixed):
+            lines_down = len(lines) < line_count
+            length_fixed = (length > max_skip_length) and length_down
+            lines_fixed = (line_count > max_skip_lines) and lines_down
+            if (not length_fixed) and (not lines_fixed):
                 # Implicitly require reduction of violator
                 # if only lines in violation are to be broken.
-                if skip_legal: continue
+                if skip: continue
             if text != subtitle.get_text(doc):
                 new_indexes.append(index)
                 new_texts.append(text)

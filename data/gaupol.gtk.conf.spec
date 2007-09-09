@@ -74,8 +74,11 @@ length_unit = LENGTH_UNIT(default="EM")
 max_deviation = float(default=0.16)
 max_length = integer(min=1, default=29)
 max_lines = integer(min=1, default=2)
+max_skip_length = integer(min=1, default=29)
+max_skip_lines = integer(min=1, default=3)
 script = string(default="Latn")
-skip_legal = boolean(default=True)
+skip_length = boolean(default=True)
+skip_lines = boolean(default=True)
 
 [output_window]
 maximized = boolean(default=False)

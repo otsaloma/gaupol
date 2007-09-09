@@ -18,6 +18,7 @@
 
 import gaupol.gtk
 import gtk
+import sys
 _ = gaupol.i18n._
 
 from .locale import LocalePage
@@ -61,6 +62,22 @@ class LineBreakPage(LocalePage):
 
         return gaupol.gtk.conf.line_break
 
+    def _get_max_skip_length(self):
+        """Return the maximum line length to skip."""
+
+        domain = self._get_conf_domain()
+        if domain.skip_length:
+            return domain.max_skip_length
+        return sys.maxint
+
+    def _get_max_skip_lines(self):
+        """Return the maximum amount of lines to skip."""
+
+        domain = self._get_conf_domain()
+        if domain.skip_lines:
+            return domain.max_skip_lines
+        return sys.maxint
+
     def correct_texts(self, project, indexes, doc):
         """Correct texts in project."""
 
@@ -75,7 +92,8 @@ class LineBreakPage(LocalePage):
             indexes, doc, patterns,
             gaupol.gtk.ruler.get_length_function(domain.length_unit),
             domain.max_length, domain.max_lines, domain.max_deviation,
-            domain.skip_legal)
+            (domain.skip_length or domain.skip_lines),
+            self._get_max_skip_length(), self._get_max_skip_lines())
 
 
 class LineBreakOptionsPage(TextAssistantPage):
@@ -91,13 +109,17 @@ class LineBreakOptionsPage(TextAssistantPage):
         name = "text-assistant-line-break-options-page"
         self._glade_xml = gaupol.gtk.util.get_glade_xml(name)
         get_widget = self._glade_xml.get_widget
-        self._line_count_spin = get_widget("line_count_spin")
-        self._line_length_spin = get_widget("line_length_spin")
-        self._skip_check = get_widget("skip_check")
+        self._max_length_spin = get_widget("max_length_spin")
+        self._max_lines_spin = get_widget("max_lines_spin")
+        self._max_skip_length_spin = get_widget("max_skip_length_spin")
+        self._max_skip_lines_spin = get_widget("max_skip_lines_spin")
+        self._skip_length_check = get_widget("skip_length_check")
+        self._skip_lines_check = get_widget("skip_lines_check")
+        self._skip_unit_combo = get_widget("skip_unit_combo")
         self._unit_combo = get_widget("unit_combo")
         get_widget("vbox").reparent(self)
 
-        self._init_unit_combo()
+        self._init_unit_combos()
         self._init_signal_handlers()
         self._init_values()
 
@@ -109,15 +131,22 @@ class LineBreakOptionsPage(TextAssistantPage):
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
-        gaupol.gtk.util.connect(self, "_line_count_spin", "value-changed")
-        gaupol.gtk.util.connect(self, "_line_length_spin", "value-changed")
-        gaupol.gtk.util.connect(self, "_skip_check", "toggled")
+        gaupol.gtk.util.connect(self, "_max_length_spin", "value-changed")
+        gaupol.gtk.util.connect(self, "_max_lines_spin", "value-changed")
+        gaupol.gtk.util.connect(self, "_max_skip_length_spin", "value-changed")
+        gaupol.gtk.util.connect(self, "_max_skip_lines_spin", "value-changed")
+        gaupol.gtk.util.connect(self, "_skip_length_check", "toggled")
+        gaupol.gtk.util.connect(self, "_skip_lines_check", "toggled")
+        gaupol.gtk.util.connect(self, "_skip_unit_combo", "changed")
         gaupol.gtk.util.connect(self, "_unit_combo", "changed")
 
-    def _init_unit_combo(self):
-        """Initialize the line length unit combo box."""
+    def _init_unit_combos(self):
+        """Initialize the line length unit combo boxes."""
 
         store = self._unit_combo.get_model()
+        for name in gaupol.gtk.LENGTH_UNIT.labels:
+            store.append([name])
+        store = self._skip_unit_combo.get_model()
         for name in gaupol.gtk.LENGTH_UNIT.labels:
             store.append([name])
 
@@ -125,33 +154,65 @@ class LineBreakOptionsPage(TextAssistantPage):
         """Initialize default values for widgets."""
 
         domain = self._get_conf_domain()
-        self._line_count_spin.set_value(domain.max_lines)
-        self._line_length_spin.set_value(domain.max_length)
-        self._skip_check.set_active(domain.skip_legal)
+        self._max_length_spin.set_value(domain.max_length)
+        self._max_lines_spin.set_value(domain.max_lines)
+        self._max_skip_length_spin.set_value(domain.max_skip_length)
+        self._max_skip_lines_spin.set_value(domain.max_skip_lines)
+        self._skip_length_check.set_active(domain.skip_length)
+        self._skip_lines_check.set_active(domain.skip_lines)
+        self._skip_unit_combo.set_active(domain.length_unit)
         self._unit_combo.set_active(domain.length_unit)
 
-    def _on_line_count_spin_value_changed(self, spin_button):
-        """Save the maximum line count value."""
-
-        domain = self._get_conf_domain()
-        domain.max_lines = spin_button.get_value_as_int()
-
-    def _on_line_length_spin_value_changed(self, spin_button):
+    def _on_max_length_spin_value_changed(self, spin_button):
         """Save the maximum line length value."""
 
         domain = self._get_conf_domain()
         domain.max_length = spin_button.get_value_as_int()
 
-    def _on_skip_check_toggled(self, check_button):
-        """Save the skip legal subtitles value."""
+    def _on_max_lines_spin_value_changed(self, spin_button):
+        """Save the maximum line amount value."""
 
         domain = self._get_conf_domain()
-        domain.skip_legal = check_button.get_active()
+        domain.max_lines = spin_button.get_value_as_int()
 
-    def _on_unit_combo_changed(self, combo_box):
-        """Save the selected length unit."""
+    def _on_max_skip_length_spin_value_changed(self, spin_button):
+        """Save the maximum line length to skip value."""
+
+        domain = self._get_conf_domain()
+        domain.max_skip_length = spin_button.get_value_as_int()
+
+    def _on_max_skip_lines_spin_value_changed(self, spin_button):
+        """Save the maximum line amount to skip value."""
+
+        domain = self._get_conf_domain()
+        domain.max_skip_lines = spin_button.get_value_as_int()
+
+    def _on_skip_length_check_toggled(self, check_button):
+        """Save the skip by line length value."""
+
+        domain = self._get_conf_domain()
+        domain.skip_length = check_button.get_active()
+
+    def _on_skip_lines_check_toggled(self, check_button):
+        """Save the skip by line amount value."""
+
+        domain = self._get_conf_domain()
+        domain.skip_lines = check_button.get_active()
+
+    def _on_skip_unit_combo_changed(self, combo_box):
+        """Save and sync the length unit value."""
 
         domain = self._get_conf_domain()
         index = combo_box.get_active()
         length_unit = gaupol.gtk.LENGTH_UNIT.members[index]
         domain.length_unit = length_unit
+        self._unit_combo.set_active(index)
+
+    def _on_unit_combo_changed(self, combo_box):
+        """Save and sync the length unit value."""
+
+        domain = self._get_conf_domain()
+        index = combo_box.get_active()
+        length_unit = gaupol.gtk.LENGTH_UNIT.members[index]
+        domain.length_unit = length_unit
+        self._skip_unit_combo.set_active(index)
