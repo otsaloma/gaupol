@@ -1,3 +1,9 @@
+2007-09-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/patterns/Latn.common-error.in:
+	Add quotation marks and apostrophes at the ends of lines to the
+	"Spaces before punctuation marks" pattern.
+
 2007-09-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/agents/preview.py (preview):
