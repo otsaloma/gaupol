@@ -2,10 +2,11 @@ Gaupol 0.11
 ===========
 
  * http://gna.org/bugs/?9895 (Advanced selection features)
- * Don't save search and replace patterns to config file
 
  [D] Add a line-break task to the text correction assistant
- [D] Add missing "Auto-detected" encoding entry in file dialogs
+ [D] Add missing "Auto-detected" encoding entry in the file dialogs
+ [D] Save search history to $HOME/.gaupol/search instead of the
+     configuration file to avoid quoting problems
  [D] Add support for creating a Windows .exe with py2exe and a
      Windows installer with Inno Setup
 

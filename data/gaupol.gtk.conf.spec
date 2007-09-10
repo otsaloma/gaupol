@@ -102,9 +102,7 @@ video_player = VIDEO_PLAYER(default="MPLAYER")
 columns = COLUMN_list(default=list("MAIN_TEXT"))
 ignore_case = boolean(default=True)
 max_history = integer(min=0, default=10)
-patterns = string_list(default=list())
 regex = boolean(default=False)
-replacements = string_list(default=list())
 target = TARGET(default="CURRENT")
 
 [spell_check]

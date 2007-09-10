@@ -18,6 +18,7 @@
 
 import gaupol.gtk
 import gtk
+import os
 import re
 _ = gaupol.i18n._
 
@@ -34,6 +35,8 @@ class SearchDialog(GladeDialog):
      * _match_row: Row in page of the last match of pattern
      * _match_span: Start, end position of the last match of pattern
      * _was_next: True if the last search was 'next', False for 'previous'
+     * patterns: List of patterns previously searched for
+     * replacements: List of replacements previously used
     """
 
     __metaclass__ = gaupol.Contractual
@@ -66,7 +69,11 @@ class SearchDialog(GladeDialog):
         self._match_span = None
         self._was_next = None
         self.application = application
+        self.patterns = []
+        self.replacements = []
 
+        self._read_history("patterns")
+        self._read_history("replacements")
         self._init_combo_box_entries()
         self._init_values()
         self._init_conf_handlers()
@@ -88,14 +95,15 @@ class SearchDialog(GladeDialog):
         assert pattern != self.application.pattern
         self.application.pattern = pattern
         domain = gaupol.gtk.conf.search
-        domain.patterns.insert(0, pattern)
+        self.patterns.insert(0, pattern)
         get_unique = gaupol.gtk.util.get_unique
-        domain.patterns = get_unique(domain.patterns)
-        while len(domain.patterns) > domain.max_history:
-            domain.patterns.pop()
+        self.patterns = get_unique(self.patterns)
+        while len(self.patterns) > domain.max_history:
+            self.patterns.pop(-1)
         store.clear()
-        for pattern in domain.patterns:
+        for pattern in self.patterns:
             store.append([pattern])
+        self._write_history("patterns")
         self.application.update_gui()
 
     @gaupol.gtk.util.asserted_return
@@ -107,14 +115,15 @@ class SearchDialog(GladeDialog):
         assert replacement != self.application.replacement
         self.application.replacement = replacement
         domain = gaupol.gtk.conf.search
-        domain.replacements.insert(0, replacement)
+        self.replacements.insert(0, replacement)
         get_unique = gaupol.gtk.util.get_unique
-        domain.replacements = get_unique(domain.replacements)
-        while len(domain.replacements) > domain.max_history:
-            domain.replacements.pop()
+        self.replacements = get_unique(self.replacements)
+        while len(self.replacements) > domain.max_history:
+            self.replacements.pop(-1)
         store.clear()
-        for replacement in domain.replacements:
+        for replacement in self.replacements:
             store.append([replacement])
+        self._write_history("replacements")
         self.application.update_gui()
 
     def _admit_failure(self):
@@ -196,10 +205,10 @@ class SearchDialog(GladeDialog):
         """Initialize the history lists in the combo box entries."""
 
         store = self._pattern_combo.get_model()
-        for pattern in gaupol.gtk.conf.search.patterns:
+        for pattern in self.patterns:
             store.append([pattern])
         store = self._replacement_combo.get_model()
-        for replacement in gaupol.gtk.conf.search.replacements:
+        for replacement in self.replacements:
             store.append([replacement])
 
     def _init_conf_handlers(self):
@@ -361,6 +370,17 @@ class SearchDialog(GladeDialog):
         text = text_buffer.get_text(*bounds)
         page.project.set_text(self._match_row, self._match_doc, text)
 
+    @gaupol.gtk.util.asserted_return
+    def _read_history(self, name):
+        """Read history from file, either 'patterns' or 'replacements'."""
+
+        domain = gaupol.gtk.conf.search
+        directory = os.path.join(gaupol.PROFILE_DIR, "search")
+        path = os.path.join(directory, "%s.history" % name)
+        assert os.path.isfile(path)
+        history = gaupol.util.readlines(path)
+        setattr(self, name, history)
+
     def _reset_properties(self):
         """Reset search and GUI properties to defaults."""
 
@@ -438,6 +458,18 @@ class SearchDialog(GladeDialog):
             docs = [translate(x) for x in gaupol.gtk.conf.search.columns]
             wrap = (gaupol.gtk.conf.search.target != gaupol.gtk.TARGET.ALL)
             page.project.set_search_target(None, docs, wrap)
+
+    def _write_history(self, name):
+        """Write history to file, either 'patterns' or 'replacements'."""
+
+        domain = gaupol.gtk.conf.search
+        directory = os.path.join(gaupol.PROFILE_DIR, "search")
+        gaupol.util.silent(OSError)(gaupol.util.makedirs)(directory)
+        assert os.path.isdir(directory)
+        path = os.path.join(directory, "%s.history" % name)
+        history = getattr(self, name)
+        text = os.linesep.join(history) + os.linesep
+        gaupol.util.write(path, text)
 
     def next_require(self):
         assert self._pattern_entry.get_text()
