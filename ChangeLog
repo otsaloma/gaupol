@@ -1,5 +1,13 @@
 2007-09-12  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/ui.xml:
+	* gaupol/gtk/actions/edit.py:
+	* gaupol/gtk/agents/edit.py:
+	Add actions for extending the current selection up to the first or the
+	last subtitle without moving focus or scrolling. (#9895)
+
+2007-09-12  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/view.py (_init_props):
 	Enable rubber-banding.
 

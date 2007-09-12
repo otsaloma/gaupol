@@ -36,8 +36,13 @@
       <menuitem name="insert" action="insert_subtitles"/>
       <menuitem name="remove" action="remove_subtitles"/>
       <separator/>
-      <menuitem name="select_all" action="select_all"/>
-      <menuitem name="invert_selection" action="invert_selection"/>
+      <menu name="selection" action="show_selection_menu">
+        <menuitem name="select_all" action="select_all"/>
+        <menuitem name="invert_selection" action="invert_selection"/>
+        <separator/>
+        <menuitem name="extend_to_beginning" action="extend_selection_to_beginning"/>
+        <menuitem name="extend_to_end" action="extend_selection_to_end"/>
+      </menu>
       <separator/>
       <menuitem name="preferences" action="edit_preferences"/>
     </menu>

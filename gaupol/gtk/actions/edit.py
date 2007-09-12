@@ -20,7 +20,7 @@ import gaupol.gtk
 import gtk
 _ = gaupol.i18n._
 
-from .action import Action
+from .action import Action, MenuAction
 
 
 class ClearTextsAction(Action):
@@ -144,6 +144,46 @@ class EditValueAction(Action):
         assert col != gaupol.gtk.COLUMN.NUMBER
 
 
+class ExtendSelectionToBeginningAction(Action):
+
+    """Extend the selection up to the first subtitle."""
+
+    def __init__(self):
+
+        Action.__init__(self, "extend_selection_to_beginning")
+        self.props.label = _("Extend To _Beginning")
+        tip = _("Extend the current selection up to the first subtitle")
+        self.props.tooltip = tip
+        self.accelerator = "<Shift><Control>Home"
+
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
+
+        assert page is not None
+        assert page.project.subtitles
+        assert page.view.get_selected_rows()
+
+
+class ExtendSelectionToEndAction(Action):
+
+    """Extend the selection up to the last subtitle."""
+
+    def __init__(self):
+
+        Action.__init__(self, "extend_selection_to_end")
+        self.props.label = _("Extend To _End")
+        tip = _("Extend the current selection up to the last subtitle")
+        self.props.tooltip = tip
+        self.accelerator = "<Shift><Control>End"
+
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
+
+        assert page is not None
+        assert page.project.subtitles
+        assert page.view.get_selected_rows()
+
+
 class InsertSubtitlesAction(Action):
 
     """Insert subtitles."""
@@ -172,7 +212,7 @@ class InvertSelectionAction(Action):
     def __init__(self):
 
         Action.__init__(self, "invert_selection")
-        self.props.label = _("In_vert Selection")
+        self.props.label = _("_Invert Selection")
         self.props.tooltip = _("Invert the current selection")
         self.accelerator = "<Control>I"
 
@@ -278,6 +318,22 @@ class SelectAllAction(Action):
         self.props.stock_id = gtk.STOCK_SELECT_ALL
         self.props.tooltip = _("Select all subtitles")
         self.accelerator = "<Control>A"
+
+    def _assert_doable(self, application, page):
+        """Raise AssertionError if action cannot be done."""
+
+        assert page is not None
+        assert page.project.subtitles
+
+
+class ShowSelectionMenuAction(MenuAction):
+
+    """Show the selection menu."""
+
+    def __init__(self):
+
+        MenuAction.__init__(self, "show_selection_menu")
+        self.props.label = _("Sele_ction")
 
     def _assert_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""

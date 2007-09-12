@@ -124,6 +124,22 @@ class EditAgent(gaupol.Delegate):
         row, column = view.get_cursor()
         view.set_cursor(row, column, True)
 
+    def on_extend_selection_to_beginning_activate(self, *args):
+        """Extend the selection up to the first subtitle."""
+
+        page = self.get_current_page()
+        row = page.view.get_selected_rows()[-1]
+        rows = range(0, row + 1)
+        page.view.select_rows(rows)
+
+    def on_extend_selection_to_end_activate(self, *args):
+        """Extend the selection up to the last subtitle."""
+
+        page = self.get_current_page()
+        row = page.view.get_selected_rows()[0]
+        rows = range(row, len(page.project.subtitles))
+        page.view.select_rows(rows)
+
     def on_insert_subtitles_activate(self, *args):
         """Insert subtitles."""
 

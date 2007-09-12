@@ -79,6 +79,18 @@ class TestEditAgent(unittest.TestCase):
         page.view.set_focus(0, gaupol.gtk.COLUMN.MAIN_TEXT)
         self.application.on_edit_value_activate()
 
+    def test_on_extend_selection_to_beginning_activate(self):
+
+        page = self.application.get_current_page()
+        page.view.select_rows((4, 5))
+        self.application.on_extend_selection_to_beginning_activate()
+
+    def test_on_extend_selection_to_end_activate(self):
+
+        page = self.application.get_current_page()
+        page.view.select_rows((4, 5))
+        self.application.on_extend_selection_to_end_activate()
+
     def test_on_insert_subtitles_activate(self):
 
         responder = iter((gtk.RESPONSE_OK, gtk.RESPONSE_CANCEL))

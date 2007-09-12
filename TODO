@@ -1,17 +1,9 @@
 Gaupol 0.11
 ===========
 
- * http://gna.org/bugs/?9895 (Advanced selection features)
- 
-        row = page.view.get_selected_rows()[0]
-        rows = range(row, len(page.project.subtitles))
-        page.view.select_rows(rows)
-
-        row = page.view.get_selected_rows()[-1]
-        rows = range(0, row + 1)
-        page.view.select_rows(rows)
-
  [D] Add a line-break task to the text correction assistant
+ [D] Add ways to extend the current selection up to the first or the
+     last subtitle without moving focus or scrolling (#9895)
  [D] Add missing "Auto-detected" encoding entry in the file dialogs
  [D] Save search history to $HOME/.gaupol/search instead of the
      configuration file to avoid quoting problems
