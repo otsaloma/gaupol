@@ -1,3 +1,8 @@
+2007-09-12  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/view.py (_init_props):
+	Enable rubber-banding.
+
 2007-09-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/gaupol.gtk.conf.spec:

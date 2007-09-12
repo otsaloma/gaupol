@@ -104,6 +104,7 @@ class View(gtk.TreeView):
 
         self.set_headers_visible(True)
         self.set_rules_hint(True)
+        self.set_rubber_banding(True)
         selection = self.get_selection()
         selection.set_mode(gtk.SELECTION_MULTIPLE)
         self.set_enable_search(True)
