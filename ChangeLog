@@ -1,3 +1,10 @@
+2007-09-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/__init__.py:
+	Bump version number.
+
+	RELEASE 0.11
+
 2007-09-12  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/ui.xml:

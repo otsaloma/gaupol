@@ -23,7 +23,7 @@ Module variables:
 
 import re
 
-__version__ = "0.10"
+__version__ = "0.11"
 check_contracts = True
 re_any_tag = re.compile(r"(^[/\\_]|<[^<]*?>|\{[^{]*?\})")
 

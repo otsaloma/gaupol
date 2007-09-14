@@ -1,3 +1,19 @@
+Gaupol 0.11
+===========
+
+ * Add a line-break task to the text correction assistant
+ * Add menu-items and keybindings for extending the current
+   selection up to the first or the last subtitle without moving
+   focus or scrolling (#9895)
+ * Add missing "Auto-detected" encoding entry in the file dialogs
+ * Save search history to $HOME/.gaupol/search instead of the
+   configuration file to avoid quoting problems
+ * Enable rubber-banding (selection of multiple rows by dragging
+   the mouse) in the subtitle list
+ * Add support for creating a Windows .exe with py2exe and a
+   Windows installer with Inno Setup
+
+
 Gaupol 0.10
 ===========
 
