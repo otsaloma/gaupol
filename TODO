@@ -1,9 +1,19 @@
+Gaupol 0.12
+===========
+
+ * Add a capitalization task to the text correction assistant
+
+ [D] Remove license page from the Windows installer
+ [D] Include iso-codes with the Windows installer
+
+
 Gaupol 1.0
 ==========
 
- * Capitalize (text assistant task)
  * Plugin system (see gedit for interfaces)
-
+    - gaupol.gtk.Plugin
+    - gaupol.gtk.PluginManager
+    - Side and bottom panes?
 
 Unscheduled Possible Plans
 ==========================
@@ -12,7 +22,4 @@ Unscheduled Possible Plans
     - gtk.AboutDialog: "name" replaced with "program-name"
     - gtk.Builder: Build an interface from an XML UI definition
     - gtk.Tooltip: New API that allows complex tooltips
- * Rewrite some gaupol.gtk.View related code so that columns could be
-   added, e.g. by plugins; requires columns to not be identified by
-   their indexes, but rather by a TreeViewColumn GObject property (?)
  * Built-in GStreamer preview (as plugin?)

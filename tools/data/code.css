@@ -1,93 +1,108 @@
-body {
+body
+{
   background-color: white;
   color: #111111;
   font-family: sans-serif;
   font-size: small;
-  }
+}
 
-pre {
+pre
+{
   font-family: monospace;
   line-height: 160%;
-  }
+}
 
 /* Comment */
-.com {
+.com
+{
   background-color: inherit;
   color: #3366ff;
-  }
+}
 
 /* ??? */
-.dir {
+.dir
+{
   background-color: inherit;
   color: inherit;
-  }
+}
 
 /* ??? */
-.dstr {
+.dstr
+{
   background-color: inherit;
   color: inherit;
-  }
+}
 
 /* String escape */
-.esc {
+.esc
+{
   background-color: inherit;
   color: #b957ff;
-  }
+}
 
 /* Keyword */
-.kwa {
+.kwa
+{
   background-color: inherit;
   color: #ff4433;
-  }
+}
 
 /* __builtin__ */
-.kwb {
+.kwb
+{
   background-color: inherit;
   color: #ff38ac;
-  }
+}
 
 /* Exception */
-.kwc {
+.kwc
+{
   background-color: inherit;
   color: #00b286;
-  }
+}
 
 /* Function */
-.kwd {
+.kwd
+{
   background-color: inherit;
   color: inherit;
-  }
+}
 
 /* Line anchor */
-.line {
+.line
+{
   background-color: inherit;
   color: #babdb6;
   margin-right: 6px;
   user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
-  }
+}
 
 /* Number */
-.num {
+.num
+{
   background-color: inherit;
   color: #b957ff;
-  }
+}
 
 /* Comment */
-.slc {
+.slc
+{
   background-color: inherit;
   color: #3366ff;
-  }
+}
 
 /* String */
-.str {
+.str
+{
   background-color: inherit;
   color: #b957ff;
-  }
+}
 
 /* Symbol */
-.sym {
+.sym
+{
   background-color: inherit;
   color: inherit;
-  }
+}

@@ -49,7 +49,7 @@ Build and upload tarballs.
     rsync -avr --rsh=ssh . $DOWNLOAD_ROOT
     cd .. && ./setup.py clean
 
-Build Windows installer.
+Build and upload Windows installer, see "RELEASING.win32".
 
 Edit website under "News", "Features" and "Download".
 

@@ -1,3 +1,11 @@
+2007-09-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* tools/data/gaupol.iss:
+	Remove EULAish LicenseFile field.
+
+	* tools/py2exe.bat:
+	Remove unused iso-codes .mo files.
+
 2007-09-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/__init__.py:

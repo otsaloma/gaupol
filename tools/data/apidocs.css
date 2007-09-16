@@ -1,169 +1,200 @@
-* {
+*
+{
   margin: 0;
   padding: 0;
-  }
+}
 
-body {
+body
+{
   background-color: white;
   color: #111111;
   font-family: sans-serif;
   font-size: small;
   padding: 12px;
-  }
+}
 
-a {
+a
+{
   background-color: inherit;
   color: #3465a4;
   text-decoration: none;
-  }
+}
 
-a:hover {
+a:hover
+{
   border-bottom: 1px solid #3465a4;
-  }
+}
 
-p, pre {
+p, pre
+{
   line-height: 160%;
   padding-bottom: 12px;
-  }
+}
 
-td pre {
+td pre
+{
   padding-bottom: 0;
-  }
+}
 
-ol, ul {
+ol, ul
+{
   line-height: 200%;
   padding: 0 0 12px 36px;
-  }
+}
 
-table.children {
+table.children
+{
   border: 1px solid #888a85;
   margin: 0 0 12px 0;
   width: 100%;
-  }
+}
 
-table.children td {
+table.children td
+{
   padding: 6px 12px;
-  }
+}
 
-.undocumented {
+.undocumented
+{
   display: none;
-  }
+}
 
-h1 {
+h1
+{
   background: none !important;
   font-size: 146%;
   font-weight: bold;
   margin-bottom: 12px;
-  }
+}
 
-h2 {
+h2
+{
   background: none !important;
   font-size: 128%;
   font-weight: bold;
   margin-bottom: 12px;
-  }
+}
 
-#part {
-  }
+#part
+{
+}
 
-.toplevel {
+.toplevel
+{
   background-color: #eeeeec;
   border: 1px solid #111111;
   color: inherit;
   margin-top: 12px;
   padding: 12px;
-  }
+}
 
-div.toplevel p {
-  }
+div.toplevel p
+{
+}
 
-.function {
+.function
+{
   background-color: #fcebd1;
   color: inherit;
-  }
+}
 
-.method {
+.method
+{
   background-color: #fcf5c0;
   color: inherit;
-  }
+}
 
-.attribute {
+.attribute
+{
   background: red;
   color: inherit;
-  }
+}
 
-.basefunction {
+.basefunction
+{
   background: red;
   color: inherit;
-  }
+}
 
-.basemethod {
+.basemethod
+{
   background-color: #fcf5c0;
   color: inherit;
-  }
+}
 
-.class {
+.class
+{
   background-color: #d4ecdd;
   color: inherit;
-  }
+}
 
-.interface {
+.interface
+{
   background: red;
   color: inherit;
-  }
+}
 
-.module {
+.module
+{
   background-color: #e6eaff;
   color: inherit;
-  }
+}
 
-.package {
+.package
+{
   background-color: #ffe6fc;
   color: inherit;
-  }
+}
 
-div.function {
+div.function
+{
   background-color: white;
   color: #111111;
   padding-bottom: 12px;
-  }
+}
 
-div.function pre {
-
+div.function pre
+{
   padding: 0;
-  }
+}
 
-div.functionHeader {
+div.functionHeader
+{
   font-weight: bold;
   padding-bottom: 6px;
-  }
+}
 
-div.functionHeader a {
+div.functionHeader a
+{
   background-color: inherit;
   border: none;
   color: #2e3436;
   font-weight: bold;
-  }
+}
 
-div.functionHeader a.functionSourceLink {
+div.functionHeader a.functionSourceLink
+{
   background-color: inherit;
   color: #3465a4;
   font-weight: normal;
-  }
+}
 
-div.functionHeader a.functionSourceLink:hover {
+div.functionHeader a.functionSourceLink:hover
+{
   border-bottom: 1px solid #3465a4;
-  }
+}
 
-.functionBody {
+.functionBody
+{
   background-color: #eeeeec;
   border: 1px solid #888a85;
   color: inherit;
   padding: 12px;
-  }
+}
 
-.interfaceinfo {
+.interfaceinfo
+{
   border-bottom: 1px solid #888a85;
   margin-bottom: 6px;
   padding-bottom: 6px;
-  }
+}
