@@ -1,3 +1,9 @@
+2007-09-18  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/renderers/multiline.py (_on_editor_focus_out_event):
+	* gaupol/gtk/renderers/time.py (_on_editor_focus_out_event):
+	Return False so that the editing widget gets the event as well.
+
 2007-09-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* tools/data/gaupol.iss:

@@ -90,6 +90,7 @@ class MultilineCellRenderer(gtk.CellRendererText):
 
         editor.remove_widget()
         self.emit("editing-canceled")
+        return False
 
     @gaupol.gtk.util.asserted_return
     def _on_editor_key_press_event(self, editor, event):

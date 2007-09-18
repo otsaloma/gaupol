@@ -21,5 +21,6 @@ Unscheduled Possible Plans
  * (Py)GTK 2.12
     - gtk.AboutDialog: "name" replaced with "program-name"
     - gtk.Builder: Build an interface from an XML UI definition
+    - gtk.RecentAction: New class for recent-files menu items
     - gtk.Tooltip: New API that allows complex tooltips
  * Built-in GStreamer preview (as plugin?)
