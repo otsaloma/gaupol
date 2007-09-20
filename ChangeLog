@@ -1,5 +1,11 @@
 2007-09-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/renderers/multiline.py (_on_editor_focus_out_event):
+	* gaupol/gtk/renderers/time.py (_on_editor_focus_out_event):
+	Revert the erroneous 2007-09-18 focus-out-event fixes.
+
+2007-09-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/dialogs/encoding.py:
 	* gaupol/gtk/dialogs/language.py:
 	* gaupol/gtk/dialogs/preferences.py:
