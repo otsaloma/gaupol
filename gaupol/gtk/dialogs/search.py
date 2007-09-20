@@ -214,10 +214,10 @@ class SearchDialog(GladeDialog):
     def _init_conf_handlers(self):
         """Initialize configuration signal handlers."""
 
-        callback = lambda *args: self._update_search_targets()
-        self.application.connect("page-added", callback)
-        gaupol.gtk.conf.search.connect("notify::columns", callback)
-        gaupol.gtk.conf.search.connect("notify::target", callback)
+        callback = lambda *args: args[-1]._update_search_targets()
+        self.application.connect("page-added", callback, self)
+        gaupol.gtk.conf.search.connect("notify::columns", callback, self)
+        gaupol.gtk.conf.search.connect("notify::target", callback, self)
         self._update_search_targets()
 
     def _init_dialog_handlers(self):
@@ -239,8 +239,8 @@ class SearchDialog(GladeDialog):
         gaupol.gtk.util.connect(self, "_ignore_case_check", "toggled")
 
         text_buffer = self._text_view.get_buffer()
-        callback = lambda *args: self._replace_button.set_sensitive(False)
-        text_buffer.connect("changed", callback)
+        callback = lambda x, self: self._replace_button.set_sensitive(False)
+        text_buffer.connect("changed", callback, self)
 
     def _init_sensitivities(self):
         """Initialize widget sensitivities."""

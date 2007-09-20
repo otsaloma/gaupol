@@ -1,3 +1,12 @@
+2007-09-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/dialogs/encoding.py:
+	* gaupol/gtk/dialogs/language.py:
+	* gaupol/gtk/dialogs/preferences.py:
+	* gaupol/gtk/dialogs/search.py:
+	* gaupol/gtk/page.py:
+	Fix NameErrors with lambda functions. (#10034)
+
 2007-09-18  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/renderers/multiline.py (_on_editor_focus_out_event):

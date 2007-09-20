@@ -162,9 +162,9 @@ class _FilePage(gaupol.Delegate):
         gaupol.gtk.util.connect(self, "_remove_button", "clicked")
         gaupol.gtk.util.connect(self, "_up_button", "clicked")
 
-        update = lambda *args: self._set_sensitivities()
+        update = lambda x, self: self._set_sensitivities()
         selection = self._tree_view.get_selection()
-        selection.connect("changed", update)
+        selection.connect("changed", update, self)
 
     def _init_tree_view(self):
         """Initialize the tree view."""

@@ -106,8 +106,8 @@ class Page(gaupol.Observable):
         button.set_name("gaupol-tab-close-button")
         width, height = image.size_request()
         button.set_size_request(width + 2, height + 2)
-        request_close = lambda *args: self.emit("close-request")
-        button.connect("clicked", request_close)
+        request_close = lambda x, self: self.emit("close-request")
+        button.connect("clicked", request_close, self)
         self.tooltips.set_tip(button, _("Close project"))
         return button
 
@@ -132,11 +132,11 @@ class Page(gaupol.Observable):
         gaupol.gtk.util.connect(self, "project", "translation-file-opened")
         gaupol.gtk.util.connect(self, "project", "translation-texts-changed")
 
-        update_label = lambda *args: self.update_tab_label()
-        self.project.connect("main-file-opened", update_label)
-        self.project.connect("main-file-saved", update_label)
-        self.project.connect("notify::main_changed", update_label)
-        self.project.connect("notify::tran_changed", update_label)
+        update_label = lambda *args: args[-1].update_tab_label()
+        self.project.connect("main-file-opened", update_label, self)
+        self.project.connect("main-file-saved", update_label, self)
+        self.project.connect("notify::main_changed", update_label, self)
+        self.project.connect("notify::tran_changed", update_label, self)
 
         def update_levels(*args):
             limit = gaupol.gtk.conf.editor.limit_undo

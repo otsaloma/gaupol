@@ -3,6 +3,7 @@ Gaupol 0.12
 
  * Add a capitalization task to the text correction assistant
 
+ [D] Fix NameErrors with lambda functions (#10034)
  [D] Remove license page from the Windows installer
  [D] Include iso-codes with the Windows installer
 
