@@ -2,7 +2,9 @@ Gaupol 0.12
 ===========
 
  * Add a capitalization task to the text correction assistant
+ * Fix no longer working (gtk 2.12) markup tooltip hack
 
+ [D] Fix error saving after splitting project (#10041)
  [D] Fix NameErrors with lambda functions (#10034)
  [D] Remove license page from the Windows installer
  [D] Include iso-codes with the Windows installer
@@ -15,6 +17,7 @@ Gaupol 1.0
     - gaupol.gtk.Plugin
     - gaupol.gtk.PluginManager
     - Side and bottom panes?
+
 
 Unscheduled Possible Plans
 ==========================

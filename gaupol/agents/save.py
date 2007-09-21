@@ -110,6 +110,23 @@ class SaveAgent(gaupol.Delegate):
         self._write_file(file, texts)
         return file, texts, changed_indexes
 
+    @gaupol.util.asserted_return
+    def _update_mode(self, props, keep_changes, new_main_file):
+        """Update the mode of subtitles if main file's format has changed.
+
+        props should be a sequence of path, format, encoding, newline.
+        """
+        assert keep_changes
+        assert props is not None
+        assert len(props) >= 2
+        format = props[1]
+        assert format is not None
+        assert self.main_file is not None
+        assert format != self.main_file.format
+        for i, subtitle in enumerate(self.subtitles):
+            subtitle.mode = new_main_file.mode
+        self.emit("positions-changed", range(len(self.subtitles)))
+
     def _write_file_ensure(self, value, file, texts):
         assert os.path.isfile(file.path)
 
@@ -137,22 +154,6 @@ class SaveAgent(gaupol.Delegate):
                 self._remove_file(file.path)
             elif (not write_success) and file_existed and backup_success:
                 self._move_file(backup_path, file.path)
-
-    @gaupol.util.asserted_return
-    def _update_mode(self, props, keep_changes, new_main_file):
-        """Update the mode of subtitles if main file's format has changed.
-
-        props should be a sequence of path, format, encoding, newline.
-        """
-        assert keep_changes
-        assert props is not None
-        assert len(props) >= 2
-        format = props[1]
-        assert format is not None
-        assert format != self.main_file.format
-        for i, subtitle in enumerate(self.subtitles):
-            subtitle.mode = new_main_file.mode
-        self.emit("positions-changed", range(len(self.subtitles)))
 
     def save(self, doc, props, keep_changes=True):
         """Save document's subtitle file.
