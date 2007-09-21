@@ -1,5 +1,10 @@
 2007-09-21  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/tooltips.py:
+	Fix markup tooltip hack to work with (Py)GTK 2.12.
+
+2007-09-21  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/agents/save.py:
 	Fix error saving after splitting project. (#10041)
 

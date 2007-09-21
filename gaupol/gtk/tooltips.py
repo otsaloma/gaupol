@@ -42,3 +42,13 @@ class Tooltips(gtk.Tooltips):
         """Reset label to use markup."""
 
         label.set_use_markup(True)
+
+    def set_tip(self, widget, text, tip_private=None):
+        """Set text as markup to tooltip."""
+
+        value = gtk.Tooltips.set_tip(self, widget, text, tip_private)
+        if hasattr(widget, "get_tooltip_text"):
+            text = widget.get_tooltip_text()
+            if hasattr(widget, "set_tooltip_markup"):
+                widget.set_tooltip_markup(text)
+        return value
