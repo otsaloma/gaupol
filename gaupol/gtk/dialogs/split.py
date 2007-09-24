@@ -98,7 +98,8 @@ class SplitDialog(GladeDialog):
         self.application.counter += 1
         destination = gaupol.gtk.Page(self.application.counter)
         subtitles = [x.copy() for x in source.project.subtitles[index:]]
-        destination.project.subtitles = subtitles
+        indexes = range(len(subtitles))
+        destination.project.insert_subtitles(indexes, subtitles)
         destination.reload_view_all()
         self._remove_from_source(source, index)
         self._shift_destination(source, destination)

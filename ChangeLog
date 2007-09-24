@@ -1,3 +1,8 @@
+2007-09-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/dialogs/split.py (_split_project):
+	Call insert_subtitles on destination to mark as changed.
+
 2007-09-21  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/tooltips.py:

@@ -15,7 +15,10 @@ Gaupol 1.0
  * Plugin system (see gedit for interfaces)
     - gaupol.gtk.Plugin
     - gaupol.gtk.PluginManager
-    - Side and bottom panes?
+ * Side and bottom panes?
+ * Allow arbitrary attributes on gaupol.Subtitle?
+ * Allow arbitrary columns in gaupol.gtk.View?
+ * Example plugin: Bookmarks?
 
 
 Unscheduled Possible Plans
