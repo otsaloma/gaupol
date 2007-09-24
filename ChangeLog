@@ -1,5 +1,11 @@
 2007-09-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/dialogs/file/subtitle.py (_init_filters):
+	Replace "Plain text" file filter with an "All supported files" filter
+	and set that active by default.
+
+2007-09-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/dialogs/split.py (_split_project):
 	Call insert_subtitles on destination to mark as changed.
 

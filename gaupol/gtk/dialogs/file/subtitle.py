@@ -62,9 +62,12 @@ class SubtitleFileDialog(object):
         self.add_filter(file_filter)
 
         file_filter = gtk.FileFilter()
-        file_filter.set_name(_("Plain text files"))
-        file_filter.add_mime_type("text/plain")
+        file_filter.set_name(_("All supported files"))
+        for format in gaupol.gtk.FORMAT.members:
+            pattern = "*%s" % format.extension
+            file_filter.add_pattern(pattern)
         self.add_filter(file_filter)
+        self.set_filter(file_filter)
 
         for format in gaupol.gtk.FORMAT.members:
             pattern = "*%s" % format.extension
