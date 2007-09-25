@@ -70,7 +70,7 @@ class SubtitleFile(object):
         """Read file to a unicoded list of lines.
 
         All newlines are converted to '\\n'.
-        All blank lines from the end are removed.
+        All blank lines from beginning and end are removed.
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
         Return a list of the lines.
@@ -79,8 +79,9 @@ class SubtitleFile(object):
         with contextlib.closing(codecs.open(*args)) as fobj:
             lines = fobj.readlines()
             chars = fobj.newlines
-        while lines and lines[-1] == "\n":
-            lines.pop()
+        for index in (0, -1):
+            while lines and (not lines[index].strip()):
+                lines.pop(index)
         if isinstance(chars, tuple):
             chars = chars[0]
         index = gaupol.NEWLINE.values.index(chars)
