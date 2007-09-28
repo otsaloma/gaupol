@@ -29,12 +29,12 @@ class TextAgent(gaupol.Delegate):
     # pylint: disable-msg=E0203,W0201
 
     __metaclass__ = gaupol.Contractual
-    _re_alphanum = re.compile(r"\w", re.UNICODE)
+    _re_capitalizable = re.compile(r"^\W*(?<!\.\.\.)\w", re.UNICODE)
 
     def _capitalize_position(self, parser, pos):
         """Capitalize the first alphanumeric character from position."""
 
-        match = self._re_alphanum.search(parser.text[pos:])
+        match = self._re_capitalizable.search(parser.text[pos:])
         if match is not None:
             a = pos + match.start()
             prefix = parser.text[:a]

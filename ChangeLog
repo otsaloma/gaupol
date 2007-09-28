@@ -1,5 +1,10 @@
 2007-09-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/agents/text.py (_capitalize_position):
+	Do not capitalize after ellipses.
+
+2007-09-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/patterns/Latn-en.common-error.in:
 	Fix a copy-paste error.
 
