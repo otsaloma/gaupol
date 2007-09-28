@@ -7,6 +7,11 @@ show_video_toolbar = boolean(default=False)
 size = int_list(2, 2, default=list(600, 371))
 toolbar_style = TOOLBAR_STYLE(default="DEFAULT")
 
+[capitalization]
+country = string(default=None)
+language = string(default=None)
+script = string(default="Latn")
+
 [common_error]
 country = string(default=None)
 human = boolean(default=True)

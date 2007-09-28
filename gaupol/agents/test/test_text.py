@@ -36,6 +36,17 @@ class TestTextAgent(unittest.TestCase):
         for subtitle in self.project.subtitles:
             assert subtitle.main_text.count("\n") <= 2
 
+    def test_capitalize(self):
+
+        for subtitle in self.project.subtitles:
+            subtitle.main_text = "test. test i."
+        doc = gaupol.DOCUMENT.MAIN
+        manager = gaupol.PatternManager("capitalization")
+        patterns = manager.get_patterns("Latn", "en")
+        self.project.capitalize(None, doc, patterns)
+        for subtitle in self.project.subtitles:
+            assert subtitle.main_text == "Test. Test I."
+
     def test_correct_common_errors(self):
 
         self.project.subtitles[0].main_text = "''Test''"

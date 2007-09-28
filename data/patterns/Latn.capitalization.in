@@ -1,0 +1,6 @@
+[CapitalizationPattern]
+_Name=Sentences
+_Description=Capitalize the first words of sentences
+Capitalize=After
+Pattern=((?<!\..)\.|[?!])["']?( |$)
+Flags=DOTALL,MULTILINE,UNICODE

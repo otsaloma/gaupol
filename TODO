@@ -1,7 +1,7 @@
 Gaupol 0.12
 ===========
 
- [ ] Add a capitalization task to the text correction assistant
+ [D] Add a capitalization task to the text correction assistant
  [D] Add "All supported files" filter to the open dialog
  [D] Fix error saving after splitting project (#10041)
  [D] Fix NameErrors with lambda functions (#10034)

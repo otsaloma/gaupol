@@ -11,7 +11,7 @@ Repeat=True
 _Name=Letters "l" in upper case words
 _Description=Replace letters "l" with letters "I" in upper case words
 Classes=OCR
-Pattern=((?<=[A-Z][A-Z])l|l(?=[A-Z])|(?<![a-hj-z]-)\bl\b(?<!-[a-hj-z]))
+Pattern=((?<=[A-Z][A-Z])l|l(?=[A-Z])|(?<![a-hj-z]-)\bl\b(?!-[a-hj-z]))
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=I
 Repeat=True

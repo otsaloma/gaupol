@@ -22,6 +22,7 @@ import gtk
 _ = gaupol.i18n._
 ngettext = gaupol.i18n.ngettext
 
+from .capitalization import CapitalizationPage
 from .confirmation import ConfirmationPage
 from .error import CommonErrorPage
 from .hearing import HearingImpairedPage
@@ -100,6 +101,7 @@ class TextAssistant(gtk.Assistant):
         self.add_page(self._introduction_page)
         self.add_page(HearingImpairedPage())
         self.add_page(CommonErrorPage())
+        self.add_page(CapitalizationPage())
         self.application.emit("text-assistant-request-pages", self)
         self.add_pages((LineBreakPage(), LineBreakOptionsPage()))
         self.add_page(self._progress_page)

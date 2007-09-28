@@ -31,6 +31,33 @@ class TextAgent(gaupol.Delegate):
     __metaclass__ = gaupol.Contractual
     _re_alphanum = re.compile(r"\w", re.UNICODE)
 
+    def _capitalize_position(self, parser, pos):
+        """Capitalize the first alphanumeric character from position."""
+
+        match = self._re_alphanum.search(parser.text[pos:])
+        if match is not None:
+            a = pos + match.start()
+            prefix = parser.text[:a]
+            text = parser.text[a:a + 1].capitalize()
+            suffix = parser.text[a + 1:]
+            parser.text = prefix + text + suffix
+        return match is not None
+
+    def _capitalize_text(self, parser, pattern, cap_next):
+        """Capitalize all matches of pattern in parser's text.
+
+        Return True if the text of the next subtitle should be capitalized.
+        """
+        try:
+            a, z = parser.next()
+        except StopIteration:
+            return cap_next
+        if pattern.get_field("Capitalize") == "Start":
+            self._capitalize_position(parser, a)
+        elif pattern.get_field("Capitalize") == "After":
+            cap_next = not self._capitalize_position(parser, z)
+        return self._capitalize_text(parser, pattern, cap_next)
+
     def _get_subtitutions(self, patterns):
         """Get a list of tuples of pattern, flags, replacement."""
 
@@ -126,6 +153,46 @@ class TextAgent(gaupol.Delegate):
         assert new_indexes
         self.replace_texts(new_indexes, doc, new_texts, register=register)
         self.set_action_description(register, _("Breaking lines"))
+
+    def capitalize_require(self, indexes, doc, pattern, register=-1):
+        for index in (indexes or []):
+            assert 0 <= index < len(self.subtitles)
+
+    @gaupol.util.revertable
+    @gaupol.util.asserted_return
+    def capitalize(self, indexes, doc, patterns, register=-1):
+        """Capitalize texts as defined by patterns.
+
+        indexes can be None to process all subtitles.
+        Raise re.error if bad pattern or replacement.
+        """
+        new_indexes = []
+        new_texts = []
+        parser = self.get_parser(doc)
+        indexes = indexes or range(len(self.subtitles))
+        for indexes in gaupol.util.get_ranges(indexes):
+            cap_next = False
+            for index in indexes:
+                subtitle = self.subtitles[index]
+                parser.set_text(subtitle.get_text(doc))
+                if cap_next or (index == 0):
+                    self._capitalize_position(parser, 0)
+                    cap_next = False
+                for pattern in (x for x in patterns if x.enabled):
+                    string = pattern.get_field("Pattern")
+                    flags = pattern.get_flags()
+                    parser.set_regex(string, flags, 0)
+                    parser.pos = 0
+                    args = (parser, pattern, cap_next)
+                    cap_next = self._capitalize_text(*args)
+                text = parser.get_text()
+                if text != subtitle.get_text(doc):
+                    new_indexes.append(index)
+                    new_texts.append(text)
+        assert new_indexes
+        self.replace_texts(new_indexes, doc, new_texts, register=register)
+        description = _("Capitalizing texts")
+        self.set_action_description(register, description)
 
     def correct_common_errors_require(self, indexes, *args, **kwargs):
         for index in (indexes or []):
