@@ -1,3 +1,16 @@
+Gaupol 0.12
+===========
+
+ * Add a capitalization task to the text correction assistant
+ * Add "All supported files" filter to the open dialog
+ * Fix error saving after splitting project (#10041)
+ * Fix NameErrors with lambda functions (#10034)
+ * Fix error opening SubRip file if the first line is blank (#10054)
+ * Fix markup tooltip hack to work with (Py)GTK 2.12
+ * Remove license page from the Windows installer
+ * Include iso-codes with the Windows installer
+
+
 Gaupol 0.11
 ===========
 

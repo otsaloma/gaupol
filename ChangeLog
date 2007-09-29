@@ -1,5 +1,12 @@
 2007-09-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/__init__.py:
+	Bump version number.
+
+	RELEASE 0.12
+
+2007-09-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/assistants/text/assistant.py:
 	Move the two lines of automatic post-progress-page page-switching from
 	_prepare_confirmation_page to _correct_texts.

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-15 02:43+0300\n"
+"POT-Creation-Date: 2007-09-30 01:29+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -524,6 +524,31 @@ msgstr ""
 msgid "_Split"
 msgstr ""
 
+#: data/glade/text-assistant-capitalization-page.glade:19
+msgid "S_elect parts to capitalize:"
+msgstr ""
+
+#: data/glade/text-assistant-capitalization-page.glade:104
+#: data/glade/text-assistant-common-error-page.glade:150
+#: data/glade/text-assistant-hearing-impaired-page.glade:104
+#: data/glade/text-assistant-line-break-page.glade:104
+msgid "C_ountry:"
+msgstr ""
+
+#: data/glade/text-assistant-capitalization-page.glade:120
+#: data/glade/text-assistant-common-error-page.glade:134
+#: data/glade/text-assistant-hearing-impaired-page.glade:120
+#: data/glade/text-assistant-line-break-page.glade:120
+msgid "_Language:"
+msgstr ""
+
+#: data/glade/text-assistant-capitalization-page.glade:136
+#: data/glade/text-assistant-common-error-page.glade:120
+#: data/glade/text-assistant-hearing-impaired-page.glade:136
+#: data/glade/text-assistant-line-break-page.glade:136
+msgid "_Script:"
+msgstr ""
+
 #: data/glade/text-assistant-common-error-page.glade:19
 msgid "S_elect errors to correct:"
 msgstr ""
@@ -538,24 +563,6 @@ msgstr ""
 
 #: data/glade/text-assistant-common-error-page.glade:106
 msgid "Error types:"
-msgstr ""
-
-#: data/glade/text-assistant-common-error-page.glade:120
-#: data/glade/text-assistant-hearing-impaired-page.glade:136
-#: data/glade/text-assistant-line-break-page.glade:136
-msgid "_Script:"
-msgstr ""
-
-#: data/glade/text-assistant-common-error-page.glade:134
-#: data/glade/text-assistant-hearing-impaired-page.glade:120
-#: data/glade/text-assistant-line-break-page.glade:120
-msgid "_Language:"
-msgstr ""
-
-#: data/glade/text-assistant-common-error-page.glade:150
-#: data/glade/text-assistant-hearing-impaired-page.glade:104
-#: data/glade/text-assistant-line-break-page.glade:104
-msgid "C_ountry:"
 msgstr ""
 
 #: data/glade/text-assistant-confirmation-page.glade:18
@@ -671,6 +678,14 @@ msgstr ""
 msgid "_Transform"
 msgstr ""
 
+#: data/patterns/Latn-en.capitalization.in.h:1
+msgid "Capitalize the first person pronouns \"I\""
+msgstr ""
+
+#: data/patterns/Latn-en.capitalization.in.h:2
+msgid "First person pronouns"
+msgstr ""
+
 #: data/patterns/Latn-en.common-error.in.h:1
 msgid "Add periods after shortened titles, such as \"Mr\" and \"Dr\""
 msgstr ""
@@ -743,6 +758,14 @@ msgstr ""
 #: data/patterns/Latn-en.line-break.in.h:2
 #: data/patterns/Latn.line-break.in.h:3
 msgid "Clauses"
+msgstr ""
+
+#: data/patterns/Latn.capitalization.in.h:1
+msgid "Capitalize the first words of sentences"
+msgstr ""
+
+#: data/patterns/Latn.capitalization.in.h:2
+msgid "Sentences"
 msgstr ""
 
 #: data/patterns/Latn.common-error.in.h:1
@@ -990,16 +1013,20 @@ msgstr ""
 msgid "Editing text"
 msgstr ""
 
-#: gaupol/agents/text.py:128
+#: gaupol/agents/text.py:128 gaupol/agents/text.py:155
 msgid "Breaking lines"
 msgstr ""
 
-#: gaupol/agents/text.py:163
+#: gaupol/agents/text.py:163 gaupol/agents/text.py:230
 msgid "Correcting common errors"
 msgstr ""
 
+#: gaupol/agents/text.py:194
+msgid "Capitalizing texts"
+msgstr ""
+
 #: gaupol/agents/text.py:197 gaupol/agents/text.py:222
-#: gaupol/agents/text.py:258
+#: gaupol/agents/text.py:258 gaupol/agents/text.py:264
 msgid "Removing hearing impaired texts"
 msgstr ""
 
@@ -1015,6 +1042,9 @@ msgstr ""
 msgid "30 fps"
 msgstr ""
 
+#. Translators: Most of the character encoding descriptions are copied from
+#. gedit, which is translated to very many languages. Check the gedit .po
+#. files for a reference: http://svn.gnome.org/viewcvs/gedit/trunk/po/.
 #. Translators: Most of the character encoding descriptions are copied from
 #. gedit, which is translated to very many languages. Check the gedit .po
 #. files for a reference: http://svn.gnome.org/viewcvs/gedit/trunk/po/.
@@ -1090,6 +1120,11 @@ msgstr ""
 msgid "Canadian"
 msgstr ""
 
+#. Translators: You might find translations of some of the script names in
+#. FontForge .po files [1]. If not, feel free to translate only a couple of
+#. most common ones, e.g. Arabic, Cyrillic, Devanagari, Greek, Hangul,
+#. Simplified Han, Traditional Han, Hebrew, Japanese and Latin. Most of
+#. these scripts will probably never be used with Gaupol.
 #. Translators: You might find translations of some of the script names in
 #. FontForge .po files [1]. If not, feel free to translate only a couple of
 #. most common ones, e.g. Arabic, Cyrillic, Devanagari, Greek, Hangul,
@@ -2065,30 +2100,46 @@ msgstr ""
 #: gaupol/gtk/assistants/text/assistant.py:96
 #: gaupol/gtk/assistants/text/assistant.py:97
 #: gaupol/gtk/assistants/text/assistant.py:99
+#: gaupol/gtk/assistants/text/assistant.py:102
 msgid "Correct Texts"
 msgstr ""
 
 #: gaupol/gtk/assistants/text/assistant.py:131
 #: gaupol/gtk/assistants/text/assistant.py:133
 #: gaupol/gtk/assistants/text/assistant.py:136
+#: gaupol/gtk/assistants/text/assistant.py:140
 msgid "Correcting texts"
 msgstr ""
 
 #: gaupol/gtk/assistants/text/assistant.py:147
 #: gaupol/gtk/assistants/text/assistant.py:149
 #: gaupol/gtk/assistants/text/assistant.py:152
+#: gaupol/gtk/assistants/text/assistant.py:156
 #, python-format
 msgid "Edited %(edits)d and removed %(removals)d subtitles"
 msgstr ""
 
 #: gaupol/gtk/assistants/text/assistant.py:182
 #: gaupol/gtk/assistants/text/assistant.py:184
+#: gaupol/gtk/assistants/text/assistant.py:186
 #: gaupol/gtk/assistants/text/assistant.py:187
 #, python-format
 msgid "Confirm %d Change"
 msgid_plural "Confirm %d Changes"
 msgstr[0] ""
 msgstr[1] ""
+
+#: gaupol/gtk/assistants/text/capitalization.py:34
+msgid "Capitalize texts written in lower case"
+msgstr ""
+
+#: gaupol/gtk/assistants/text/capitalization.py:36
+msgid "Select Capitalization Patterns"
+msgstr ""
+
+#: gaupol/gtk/assistants/text/capitalization.py:38
+msgid "Capitalize texts"
+msgstr ""
 
 #: gaupol/gtk/assistants/text/confirmation.py:37
 msgid "Confirm Changes"
@@ -2264,6 +2315,12 @@ msgstr ""
 #. address. You can also include other translators who have contributed
 #. to this translation; in that case, please write them on separate
 #. lines seperated by newlines (\n).
+#. Translators: This is a special message that shouldn't be translated
+#. literally. It is used in the about dialog to give credits to the
+#. translators. Thus, you should translate it to your name and email
+#. address. You can also include other translators who have contributed
+#. to this translation; in that case, please write them on separate
+#. lines seperated by newlines (\n).
 #: gaupol/gtk/dialogs/about.py:65
 msgid "translator-credits"
 msgstr ""
@@ -2313,23 +2370,30 @@ msgid "All files"
 msgstr ""
 
 #: gaupol/gtk/dialogs/file/subtitle.py:65
+msgid "All supported files"
+msgstr ""
+
+#: gaupol/gtk/dialogs/file/subtitle.py:65
 #: gaupol/gtk/dialogs/file/subtitle.py:66
 msgid "Plain text files"
 msgstr ""
 
 #: gaupol/gtk/dialogs/file/subtitle.py:72
 #: gaupol/gtk/dialogs/file/subtitle.py:73
+#: gaupol/gtk/dialogs/file/subtitle.py:75
 #, python-format
 msgid "%(format)s (%(pattern)s)"
 msgstr ""
 
 #: gaupol/gtk/dialogs/file/subtitle.py:118
 #: gaupol/gtk/dialogs/file/subtitle.py:119
+#: gaupol/gtk/dialogs/file/subtitle.py:121
 msgid "Auto-detected"
 msgstr ""
 
 #: gaupol/gtk/dialogs/file/subtitle.py:120
 #: gaupol/gtk/dialogs/file/subtitle.py:121
+#: gaupol/gtk/dialogs/file/subtitle.py:123
 msgid "Other…"
 msgstr ""
 
@@ -2398,7 +2462,7 @@ msgstr ""
 msgid "Splitting project"
 msgstr ""
 
-#: gaupol/gtk/dialogs/split.py:108
+#: gaupol/gtk/dialogs/split.py:108 gaupol/gtk/dialogs/split.py:109
 #, python-format
 msgid "Split %(amount)d subtitles to project \"%(name)s\""
 msgstr ""

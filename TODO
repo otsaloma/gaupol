@@ -1,16 +1,3 @@
-Gaupol 0.12
-===========
-
- [D] Add a capitalization task to the text correction assistant
- [D] Add "All supported files" filter to the open dialog
- [D] Fix error saving after splitting project (#10041)
- [D] Fix NameErrors with lambda functions (#10034)
- [D] Fix error opening SubRip file if the first line is blank (#10054)
- [D] Fix markup tooltip hack to work with (Py)GTK 2.12
- [D] Remove license page from the Windows installer
- [D] Include iso-codes with the Windows installer
-
-
 Gaupol 0.13
 ===========
 
@@ -19,19 +6,18 @@ Gaupol 0.13
     - gtk.Builder: Build an interface from an XML UI definition
     - gtk.RecentAction: New class for recent-files menu items
     - gtk.Tooltip: New API that allows complex tooltips
-    - Fix changed text assistant backwards movement behaviour
 
 
 Gaupol 1.0
 ==========
 
+ * Side and bottom panes?
+ * Allow arbitrary attributes on gaupol.Subtitle?
+ * Allow arbitrary columns in gaupol.gtk.View?
  * Plugin system (see gedit for interfaces)
     - gaupol.gtk.Plugin
     - gaupol.gtk.PluginManager
     - Dialog or a page in the preferences dialog
- * Side and bottom panes?
- * Allow arbitrary attributes on gaupol.Subtitle?
- * Allow arbitrary columns in gaupol.gtk.View?
  * Example plugin: Bookmarks?
 
 

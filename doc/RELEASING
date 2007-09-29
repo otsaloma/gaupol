@@ -3,22 +3,20 @@ Release Checklist
 
 Set some useful variables.
 
-    export VERSION=0.11
-    export BRANCH=0.11
-    export USERNAME=osmo
-    export SVN_ROOT=svn+ssh://$USERNAME@svn.gna.org/svn/gaupol
-    export SVN_SOURCE=$SVN_ROOT/trunk
-    export SVN_BRANCH=$SVN_ROOT/branches/gaupol-0-11
-    export SVN_TAG=$SVN_ROOT/tags/GAUPOL_0_11
-    export DOWNLOAD_ROOT=$USERNAME@download.gna.org:/upload/gaupol
-    export DOWNLOAD_BRANCH=$DOWNLOAD_ROOT/0.11
+    export VERSION=0.12 \
+      && export BRANCH=0.12 \
+      && export USERNAME=osmo \
+      && export SVN_ROOT=svn+ssh://$USERNAME@svn.gna.org/svn/gaupol \
+      && export SVN_SOURCE=$SVN_ROOT/trunk \
+      && export SVN_BRANCH=$SVN_ROOT/branches/gaupol-0-12 \
+      && export SVN_TAG=$SVN_ROOT/tags/GAUPOL_0_12 \
+      && export DL_ROOT=$USERNAME@download.gna.org:/upload/gaupol
 
 Search for unfinished code.
 
-    export PATTERN="(BUG|FIX|NOTE|TODO):"
-    export FILES=$(find gaupol -name "*.py" -print)
-    export SKIP="(configobj.py|validate.py|^--$)"
-    egrep -A 2 -B 2 -n "$PATTERN" $FILES | egrep -v "$SKIP"
+    egrep -A 2 -B 2 -n "(BUG|FIX|NOTE|TODO):" \
+      $(find gaupol -name "*.py" -print) \
+      | egrep -v "(configobj.py|validate.py|^--$)"
 
 Run (all) automatic checks.
 
@@ -28,8 +26,7 @@ Run (all) automatic checks.
 Make final edits to files and commit changes.
 
     $EDITOR gaupol/__init__.py
-    tools/pydoctor
-    tools/translate -t
+    tools/pydoctor && tools/translate -t
     $EDITOR NEWS TODO
     tools/add-changelog
     $EDITOR ChangeLog po/ChangeLog
@@ -46,7 +43,7 @@ Build and upload tarballs.
     ./setup.py sdist_gna --formats bztar,gztar && cd dist
     $EDITOR $BRANCH/gaupol-$VERSION.changes
     $EDITOR $BRANCH/gaupol-$VERSION.news
-    rsync -avr --rsh=ssh . $DOWNLOAD_ROOT
+    rsync -avr --rsh=ssh . $DL_ROOT
     cd .. && ./setup.py clean
 
 Build and upload Windows installer, see "RELEASING.win32".
