@@ -82,6 +82,8 @@ class TextAssistant(gtk.Assistant):
                 new = static_subtitles[i].get_text(doc)
                 register_changes(application_page, i, old, new)
         self._prepare_confirmation_page(doc, changes)
+        index = self.get_current_page()
+        self.set_current_page(index + 1)
         return False
 
     def _get_project_copy(self, project):
@@ -187,8 +189,6 @@ class TextAssistant(gtk.Assistant):
         self._confirmation_page.doc = doc
         self._confirmation_page.populate_tree_view(changes)
         self.set_page_complete(self._progress_page, True)
-        index = self.get_current_page()
-        self.set_current_page(index + 1)
 
     def _prepare_introduction_page(self):
         """Prepare the introduction page content."""

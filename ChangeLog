@@ -1,5 +1,11 @@
 2007-09-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/assistants/text/assistant.py:
+	Move the two lines of automatic post-progress-page page-switching from
+	_prepare_confirmation_page to _correct_texts.
+
+2007-09-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/assistants/text/assistant.py (_on_prepare):
 	Possibly fix sometimes funky backwards navigation.
 
