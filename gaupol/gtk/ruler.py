@@ -75,13 +75,28 @@ class _Ruler(object):
         elif length_unit == gaupol.gtk.LENGTH_UNIT.EM:
             self.get_lengths = self.get_em_lengths
 
-    def get_char_lengths(self, text, strip, floor):
+    def get_char_length(self, text, strip=False, floor=False):
+        """Get length measured in characters."""
+
+        text = (gaupol.re_any_tag.sub("", text) if strip else text)
+        return len(text.replace("\n", " "))
+
+    def get_char_lengths(self, text, strip=False, floor=False):
         """Get a list of line lengths measured in characters."""
 
         text = (gaupol.re_any_tag.sub("", text) if strip else text)
         return [len(x) for x in text.split("\n")]
 
-    def get_em_lengths(self, text, strip, floor):
+    def get_em_length(self, text, strip=False, floor=False):
+        """Get length measured in ems."""
+
+        text = (gaupol.re_any_tag.sub("", text) if strip else text)
+        text = text.replace("\n", " ")
+        self._layout.set_text(text)
+        length = self._layout.get_size()[0] / self._em_length
+        return (int(length) if floor else length)
+
+    def get_em_lengths(self, text, strip=False, floor=False):
         """Get a list of line lengths measured in ems."""
 
         lengths = []
@@ -143,11 +158,9 @@ def get_length_function(unit):
     """Get a function that returns text length in units."""
 
     if unit == gaupol.gtk.LENGTH_UNIT.CHAR:
-        function = _ruler.get_char_lengths
-        return lambda x: sum(function(x, False, False))
+        return _ruler.get_char_length
     if unit == gaupol.gtk.LENGTH_UNIT.EM:
-        function = _ruler.get_em_lengths
-        return lambda x: sum(function(x, False, False))
+        return _ruler.get_em_length
     raise ValueError
 
 def get_lengths(text):

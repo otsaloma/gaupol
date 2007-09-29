@@ -107,17 +107,20 @@ def iterate_main():
 def prepare_text_view(text_view):
     """Connect text view to font and length margin updates."""
 
-    def update_margin(*args):
+    def update_margin(section, value, text_view):
         if gaupol.gtk.conf.editor.show_lengths_edit:
             return gaupol.gtk.ruler.connect_text_view(text_view)
         return gaupol.gtk.ruler.disconnect_text_view(text_view)
-    gaupol.gtk.conf.editor.connect("notify::show_lengths_edit", update_margin)
-    update_margin()
+    connect_conf = gaupol.gtk.conf.editor.connect
+    connect_conf("notify::show_lengths_edit", update_margin, text_view)
+    update_margin(None, None, text_view)
 
-    update_font = lambda *args: set_widget_font(text_view, get_font())
-    gaupol.gtk.conf.editor.connect("notify::use_custom_font", update_font)
-    gaupol.gtk.conf.editor.connect("notify::custom_font", update_font)
-    update_font()
+    def update_font(section, value, text_view):
+        set_widget_font(text_view, get_font())
+    connect_conf = gaupol.gtk.conf.editor.connect
+    connect_conf("notify::use_custom_font", update_font, text_view)
+    connect_conf("notify::custom_font", update_font, text_view)
+    update_font(None, None, text_view)
 
 def raise_default(expression):
     """Raise Default if expression evaluates to True."""

@@ -11,12 +11,24 @@ Gaupol 0.12
  [D] Include iso-codes with the Windows installer
 
 
+Gaupol 0.13
+===========
+
+ * Migrate to (Py)GTK 2.12
+    - gtk.AboutDialog: "name" replaced with "program-name"
+    - gtk.Builder: Build an interface from an XML UI definition
+    - gtk.RecentAction: New class for recent-files menu items
+    - gtk.Tooltip: New API that allows complex tooltips
+    - Fix changed text assistant backwards movement behaviour
+
+
 Gaupol 1.0
 ==========
 
  * Plugin system (see gedit for interfaces)
     - gaupol.gtk.Plugin
     - gaupol.gtk.PluginManager
+    - Dialog or a page in the preferences dialog
  * Side and bottom panes?
  * Allow arbitrary attributes on gaupol.Subtitle?
  * Allow arbitrary columns in gaupol.gtk.View?
@@ -26,9 +38,4 @@ Gaupol 1.0
 Unscheduled Possible Plans
 ==========================
 
- * (Py)GTK 2.12
-    - gtk.AboutDialog: "name" replaced with "program-name"
-    - gtk.Builder: Build an interface from an XML UI definition
-    - gtk.RecentAction: New class for recent-files menu items
-    - gtk.Tooltip: New API that allows complex tooltips
  * Built-in GStreamer preview (as plugin?)

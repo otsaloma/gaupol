@@ -1,3 +1,9 @@
+2007-09-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/ruler.py (get_length_function):
+	* gaupol/gtk/util.py (prepare_text_view):
+	Fix a few more potential lambda NameErrors.
+
 2007-09-28  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/agents/text.py (_capitalize_position):
