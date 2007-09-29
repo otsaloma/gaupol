@@ -174,13 +174,8 @@ class TextAssistant(gtk.Assistant):
             return self._prepare_introduction_page()
         pages = self._introduction_page.get_selected_pages()
         if page is self._progress_page:
-            if previous_page is self._confirmation_page:
-                index = self.get_current_page()
-                return self.set_current_page(index - 1)
-            return self._prepare_progress_page(pages)
-        if page is previous_page:
-            index = self.get_current_page()
-            return self.set_current_page(max(0, index - 1))
+            if previous_page is not self._confirmation_page:
+                return self._prepare_progress_page(pages)
 
     def _prepare_confirmation_page(self, doc, changes):
         """Present changes and activate the confirmation page."""

@@ -1,5 +1,10 @@
 2007-09-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/assistants/text/assistant.py (_on_prepare):
+	Possibly fix sometimes funky backwards navigation.
+
+2007-09-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/ruler.py (get_length_function):
 	* gaupol/gtk/util.py (prepare_text_view):
 	Fix a few more potential lambda NameErrors.
