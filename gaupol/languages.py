@@ -18,7 +18,7 @@
 
 Module variable 'languages' maps ISO 639 two letter language codes to their
 English language names. The 'code_to_name' function returns a localized
-version of that language name if the 'iso-codes' gettext domain exists.
+version of that language name if the 'iso_639' gettext domain exists.
 """
 
 import gaupol

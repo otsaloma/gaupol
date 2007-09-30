@@ -18,7 +18,7 @@
 
 Module variable 'countries' maps ISO 3166 two letter country codes to their
 English language names. The 'code_to_name' function returns a localized
-version of that country name if the 'iso-codes' gettext domain exists.
+version of that country name if the 'iso_3166' gettext domain exists.
 """
 
 import gaupol

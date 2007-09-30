@@ -26,8 +26,7 @@ Edit C:\GTK\share\themes\MS-Windows\gtk-2.0\gtkrc.
 Generate translations and update version numbers on Unix.
 
     ./setup.py clean
-    tools/translate -m all
-    tools/translate -d
+    tools/translate -m all && tools/translate -d
     $EDITOR tools/py2exe.bat tools/data/gaupol.iss
     cp -rv . /mnt/win/gaupol
     ./setup.py clean
@@ -40,5 +39,5 @@ Boot to Windows.  Run and compile the following files.
 Run the installer from C:\gaupol\win32\.  Copy to Unix and upload.
 
     gpg --detach gaupol-*.exe
-    scp gaupol-*.exe osmo@download.gna.org:/upload/gaupol/0.11
-    scp gaupol-*.sig osmo@download.gna.org:/upload/gaupol/0.11
+    scp gaupol-*.exe osmo@download.gna.org:/upload/gaupol/0.12
+    scp gaupol-*.sig osmo@download.gna.org:/upload/gaupol/0.12
