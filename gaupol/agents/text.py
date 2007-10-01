@@ -36,10 +36,10 @@ class TextAgent(gaupol.Delegate):
 
         match = self._re_capitalizable.search(parser.text[pos:])
         if match is not None:
-            a = pos + match.start()
-            prefix = parser.text[:a]
-            text = parser.text[a:a + 1].capitalize()
-            suffix = parser.text[a + 1:]
+            i = pos + match.end() - 1
+            prefix = parser.text[:i]
+            text = parser.text[i:i + 1].capitalize()
+            suffix = parser.text[i + 1:]
             parser.text = prefix + text + suffix
         return match is not None
 
