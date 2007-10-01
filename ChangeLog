@@ -1,5 +1,17 @@
 2007-10-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/agents/menu.py:
+	* gaupol/gtk/assistants/text/assistant.py:
+	* gaupol/gtk/assistants/text/introduction.py:
+	* gaupol/gtk/dialogs/debug.py:
+	* gaupol/gtk/dialogs/file/save.py:
+	* gaupol/gtk/dialogs/search.py:
+	* gaupol/gtk/output.py:
+	* gaupol/gtk/page.py:
+	Fix remaining NameErrors with function arguments. (#10034)
+
+2007-10-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/agents/text.py (_capitalize_position):
 	Fix match index usage due to change of self._re_capitalizable.
 

@@ -234,12 +234,12 @@ class MenuAgent(gaupol.Delegate):
     def set_menu_notify_events(self, name):
         """Set statusbar tooltips for menu items for action group."""
 
-        def on_enter(menu_item, event, action):
+        def on_enter(menu_item, event, self, action):
             self.push_message(action.props.tooltip)
-        def on_leave(menu_item, event, action):
+        def on_leave(menu_item, event, self, action):
             self.push_message(None)
         action_group = self.get_action_group(name)
         for action in action_group.list_actions():
             for widget in action.get_proxies():
-                widget.connect("enter-notify-event", on_enter, action)
-                widget.connect("leave-notify-event", on_leave, action)
+                widget.connect("enter-notify-event", on_enter, self, action)
+                widget.connect("leave-notify-event", on_leave, self, action)

@@ -267,15 +267,15 @@ class SearchDialog(GladeDialog):
     def _init_target_handlers(self):
         """Initialize target signal handlers."""
 
-        def save_columns(*args):
+        def save_columns(check_button, self):
             gaupol.gtk.conf.search.columns = self._get_columns()
             self._search_vbox.set_sensitive(bool(self._get_columns()))
-        self._main_check.connect("toggled", save_columns)
-        self._tran_check.connect("toggled", save_columns)
-        def save_target(*args):
+        self._main_check.connect("toggled", save_columns, self)
+        self._tran_check.connect("toggled", save_columns, self)
+        def save_target(radio_button, self):
             gaupol.gtk.conf.search.target = self._get_target()
-        self._current_radio.connect("toggled", save_target)
-        self._all_radio.connect("toggled", save_target)
+        self._current_radio.connect("toggled", save_target, self)
+        self._all_radio.connect("toggled", save_target, self)
 
     def _init_values(self):
         """Initialize default values for widgets."""

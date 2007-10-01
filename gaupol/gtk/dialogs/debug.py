@@ -131,13 +131,13 @@ class DebugDialog(GladeDialog):
         """Open linked file in editor."""
 
         @gaupol.gtk.util.asserted_return
-        def on_editor_exit(pid, return_value):
+        def on_editor_exit(pid, return_value, self):
             assert return_value != 0
             self._show_editor_error_dialog()
         path = gaupol.gtk.util.shell_quote(tag.get_data("path"))
         process = gaupol.gtk.util.start_process("%s %s +%d" % (
             gaupol.gtk.conf.debug.editor, path, tag.get_data("lineno")))
-        gobject.child_watch_add(process.pid, on_editor_exit)
+        gobject.child_watch_add(process.pid, on_editor_exit, self)
         tag.props.foreground = "purple"
 
     def _print_platform(self):

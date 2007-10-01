@@ -68,10 +68,10 @@ class SaveDialog(GladeDialog, SubtitleFileDialog):
         gaupol.gtk.util.connect(self, "_format_combo", "changed")
         gaupol.gtk.util.connect(self, "_encoding_combo", "changed")
 
-        def update_filename(*args):
+        def update_filename(button, event, self):
             self._format_combo.emit("changed")
         save_button = self.action_area.get_children()[0]
-        save_button.connect("event", update_filename)
+        save_button.connect("event", update_filename, self)
 
     def _init_values(self):
         """Initialize default values for widgets."""

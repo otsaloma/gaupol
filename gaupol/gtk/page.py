@@ -138,12 +138,13 @@ class Page(gaupol.Observable):
         self.project.connect("notify::main_changed", update_label, self)
         self.project.connect("notify::tran_changed", update_label, self)
 
-        def update_levels(*args):
+        def update_levels(section, value, self):
             limit = gaupol.gtk.conf.editor.limit_undo
             limit = (gaupol.gtk.conf.editor.undo_levels if limit else None)
             self.project.undo_levels = limit
-        gaupol.gtk.conf.editor.connect("notify::limit_undo", update_levels)
-        gaupol.gtk.conf.editor.connect("notify::undo_levels", update_levels)
+        connect = gaupol.gtk.conf.editor.connect
+        connect("notify::limit_undo", update_levels, self)
+        connect("notify::undo_levels", update_levels, self)
 
     def _init_widgets(self):
         """Initialize the widgets to use in a notebook tab."""

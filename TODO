@@ -2,7 +2,7 @@ Gaupol 0.12.1
 =============
 
  [D] Fix text correction assistant's capitalization task
- [ ] Fix remaining NameErrors with function arguments (#10034)
+ [D] Fix remaining NameErrors with function arguments (#10034)
 
 
 Gaupol 0.13

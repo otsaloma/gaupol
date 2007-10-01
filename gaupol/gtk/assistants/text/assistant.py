@@ -227,7 +227,7 @@ class TextAssistant(gtk.Assistant):
         """
         for page in pages:
             self.add_page(page)
-        def on_notify_visible(*args):
+        def on_notify_visible(page, property, pages):
             for page in pages[1:]:
                 page.props.visible = pages[0].props.visible
-        pages[0].connect("notify::visible", on_notify_visible)
+        pages[0].connect("notify::visible", on_notify_visible, pages)

@@ -53,15 +53,15 @@ class IntroductionPage(TextAssistantPage):
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
-        def save_column(*args):
+        def save_column(radio_button, self):
             gaupol.gtk.conf.text_assistant.column = self.get_column()
-        self._main_radio.connect("toggled", save_column)
-        self._tran_radio.connect("toggled", save_column)
-        def save_target(*args):
+        self._main_radio.connect("toggled", save_column, self)
+        self._tran_radio.connect("toggled", save_column, self)
+        def save_target(radio_button, self):
             gaupol.gtk.conf.text_assistant.target = self.get_target()
-        self._selected_radio.connect("toggled", save_target)
-        self._current_radio.connect("toggled", save_target)
-        self._all_radio.connect("toggled", save_target)
+        self._selected_radio.connect("toggled", save_target, self)
+        self._current_radio.connect("toggled", save_target, self)
+        self._all_radio.connect("toggled", save_target, self)
 
     def _init_tree_view(self):
         """Initialize the tree view."""

@@ -58,7 +58,7 @@ class OutputWindow(gtk.Window):
         gaupol.gtk.util.connect(self, self, "delete-event")
         gaupol.gtk.util.connect(self, self, "window-state-event")
 
-        def save_visibility(*args):
+        def save_visibility(self, *args):
             gaupol.gtk.conf.output_window.show = self.props.visible
         self.connect("notify::visible", save_visibility)
 
