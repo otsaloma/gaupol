@@ -1,3 +1,10 @@
+2007-10-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/__init__.py:
+	Bump version number.
+
+	RELEASE 0.12.1
+
 2007-10-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/agents/menu.py:

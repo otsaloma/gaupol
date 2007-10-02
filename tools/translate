@@ -45,10 +45,14 @@ def create_pot():
     """Create a new .pot file."""
 
     pot_file = os.path.join("po", "gaupol.pot")
+    if os.path.isfile(pot_file):
+        os.remove(pot_file)
     print "Creating '%s'..." % pot_file
-    ini_files = [os.path.join("data", "gaupol.desktop.in")]
-    ini_files += glob.glob("data/patterns/*.in")
-    for path in ini_files:
+    path = os.path.join("data", "gaupol.desktop.in")
+    os.system("intltool-extract --type=gettext/ini %s" % path)
+    os.system("xgettext -o %s --keyword=N_ -F %s.h" % (pot_file, path))
+    os.remove("%s.h" % path)
+    for path in glob.glob("data/patterns/*.in"):
         os.system("intltool-extract --type=gettext/ini %s" % path)
         os.system("xgettext -o %s --keyword=N_ -j -F %s.h" % (pot_file, path))
         os.remove("%s.h" % path)

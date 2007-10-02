@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-30 01:29+0300\n"
+"POT-Creation-Date: 2007-10-02 20:21+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -996,12 +996,11 @@ msgstr ""
 msgid "Transforming positions"
 msgstr ""
 
-#: gaupol/agents/search.py:252 gaupol/agents/search.py:255
+#: gaupol/agents/search.py:252
 msgid "Replacing"
 msgstr ""
 
 #: gaupol/agents/search.py:277 gaupol/agents/search.py:279
-#: gaupol/agents/search.py:280 gaupol/agents/search.py:282
 msgid "Replacing all"
 msgstr ""
 
@@ -1013,53 +1012,34 @@ msgstr ""
 msgid "Editing text"
 msgstr ""
 
-#: gaupol/agents/text.py:128 gaupol/agents/text.py:155
+#: gaupol/agents/text.py:155
 msgid "Breaking lines"
-msgstr ""
-
-#: gaupol/agents/text.py:163 gaupol/agents/text.py:230
-msgid "Correcting common errors"
 msgstr ""
 
 #: gaupol/agents/text.py:194
 msgid "Capitalizing texts"
 msgstr ""
 
-#: gaupol/agents/text.py:197 gaupol/agents/text.py:222
-#: gaupol/agents/text.py:258 gaupol/agents/text.py:264
+#: gaupol/agents/text.py:230
+msgid "Correcting common errors"
+msgstr ""
+
+#: gaupol/agents/text.py:264
 msgid "Removing hearing impaired texts"
 msgstr ""
 
-#: gaupol/const.py:75 gaupol/const.py:76
+#: gaupol/const.py:76
 msgid "24 fps"
 msgstr ""
 
-#: gaupol/const.py:79 gaupol/const.py:80
+#: gaupol/const.py:80
 msgid "25 fps"
 msgstr ""
 
-#: gaupol/const.py:83 gaupol/const.py:84
+#: gaupol/const.py:84
 msgid "30 fps"
 msgstr ""
 
-#. Translators: Most of the character encoding descriptions are copied from
-#. gedit, which is translated to very many languages. Check the gedit .po
-#. files for a reference: http://svn.gnome.org/viewcvs/gedit/trunk/po/.
-#. Translators: Most of the character encoding descriptions are copied from
-#. gedit, which is translated to very many languages. Check the gedit .po
-#. files for a reference: http://svn.gnome.org/viewcvs/gedit/trunk/po/.
-#. Translators: Most of the character encoding descriptions are copied from
-#. gedit, which is translated to very many languages. Check the gedit .po
-#. files for a reference: http://svn.gnome.org/viewcvs/gedit/trunk/po/.
-#. Translators: Most of the character encoding descriptions are copied from
-#. gedit, which is translated to very many languages. Check the gedit .po
-#. files for a reference: http://svn.gnome.org/viewcvs/gedit/trunk/po/.
-#. Translators: Most of the character encoding descriptions are copied from
-#. gedit, which is translated to very many languages. Check the gedit .po
-#. files for a reference: http://svn.gnome.org/viewcvs/gedit/trunk/po/.
-#. Translators: Most of the character encoding descriptions are copied from
-#. gedit, which is translated to very many languages. Check the gedit .po
-#. files for a reference: http://svn.gnome.org/viewcvs/gedit/trunk/po/.
 #. Translators: Most of the character encoding descriptions are copied from
 #. gedit, which is translated to very many languages. Check the gedit .po
 #. files for a reference: http://svn.gnome.org/viewcvs/gedit/trunk/po/.
@@ -1120,36 +1100,6 @@ msgstr ""
 msgid "Canadian"
 msgstr ""
 
-#. Translators: You might find translations of some of the script names in
-#. FontForge .po files [1]. If not, feel free to translate only a couple of
-#. most common ones, e.g. Arabic, Cyrillic, Devanagari, Greek, Hangul,
-#. Simplified Han, Traditional Han, Hebrew, Japanese and Latin. Most of
-#. these scripts will probably never be used with Gaupol.
-#. Translators: You might find translations of some of the script names in
-#. FontForge .po files [1]. If not, feel free to translate only a couple of
-#. most common ones, e.g. Arabic, Cyrillic, Devanagari, Greek, Hangul,
-#. Simplified Han, Traditional Han, Hebrew, Japanese and Latin. Most of
-#. these scripts will probably never be used with Gaupol.
-#. Translators: You might find translations of some of the script names in
-#. FontForge .po files [1]. If not, feel free to translate only a couple of
-#. most common ones, e.g. Arabic, Cyrillic, Devanagari, Greek, Hangul,
-#. Simplified Han, Traditional Han, Hebrew, Japanese and Latin. Most of
-#. these scripts will probably never be used with Gaupol.
-#. Translators: You might find translations of some of the script names in
-#. FontForge .po files [1]. If not, feel free to translate only a couple of
-#. most common ones, e.g. Arabic, Cyrillic, Devanagari, Greek, Hangul,
-#. Simplified Han, Traditional Han, Hebrew, Japanese and Latin. Most of
-#. these scripts will probably never be used with Gaupol.
-#. Translators: You might find translations of some of the script names in
-#. FontForge .po files [1]. If not, feel free to translate only a couple of
-#. most common ones, e.g. Arabic, Cyrillic, Devanagari, Greek, Hangul,
-#. Simplified Han, Traditional Han, Hebrew, Japanese and Latin. Most of
-#. these scripts will probably never be used with Gaupol.
-#. Translators: You might find translations of some of the script names in
-#. FontForge .po files [1]. If not, feel free to translate only a couple of
-#. most common ones, e.g. Arabic, Cyrillic, Devanagari, Greek, Hangul,
-#. Simplified Han, Traditional Han, Hebrew, Japanese and Latin. Most of
-#. these scripts will probably never be used with Gaupol.
 #. Translators: You might find translations of some of the script names in
 #. FontForge .po files [1]. If not, feel free to translate only a couple of
 #. most common ones, e.g. Arabic, Cyrillic, Devanagari, Greek, Hangul,
@@ -1288,20 +1238,8 @@ msgstr ""
 msgid "Extend To _Beginning"
 msgstr ""
 
-#: gaupol/gtk/actions/edit.py:154 gaupol/gtk/actions/edit.py:194
-msgid "_Insert Subtitles…"
-msgstr ""
-
 #: gaupol/gtk/actions/edit.py:155
 msgid "Extend the current selection up to the first subtitle"
-msgstr ""
-
-#: gaupol/gtk/actions/edit.py:155 gaupol/gtk/actions/edit.py:195
-msgid "Insert"
-msgstr ""
-
-#: gaupol/gtk/actions/edit.py:157 gaupol/gtk/actions/edit.py:197
-msgid "Insert subtitles"
 msgstr ""
 
 #: gaupol/gtk/actions/edit.py:174
@@ -1312,80 +1250,88 @@ msgstr ""
 msgid "Extend the current selection up to the last subtitle"
 msgstr ""
 
-#: gaupol/gtk/actions/edit.py:175
-msgid "In_vert Selection"
+#: gaupol/gtk/actions/edit.py:194
+msgid "_Insert Subtitles…"
 msgstr ""
 
-#: gaupol/gtk/actions/edit.py:176 gaupol/gtk/actions/edit.py:216
-msgid "Invert the current selection"
+#: gaupol/gtk/actions/edit.py:195
+msgid "Insert"
 msgstr ""
 
-#: gaupol/gtk/actions/edit.py:193 gaupol/gtk/actions/edit.py:233
-msgid "_Merge Subtitles"
-msgstr ""
-
-#: gaupol/gtk/actions/edit.py:194 gaupol/gtk/actions/edit.py:234
-msgid "Merge the selected subtitles"
-msgstr ""
-
-#: gaupol/gtk/actions/edit.py:213 gaupol/gtk/actions/edit.py:253
-msgid "_Paste"
-msgstr ""
-
-#: gaupol/gtk/actions/edit.py:215 gaupol/gtk/actions/edit.py:255
-msgid "Paste texts from the clipboard"
+#: gaupol/gtk/actions/edit.py:197
+msgid "Insert subtitles"
 msgstr ""
 
 #: gaupol/gtk/actions/edit.py:215
 msgid "_Invert Selection"
 msgstr ""
 
-#: gaupol/gtk/actions/edit.py:237 gaupol/gtk/actions/edit.py:277
+#: gaupol/gtk/actions/edit.py:216
+msgid "Invert the current selection"
+msgstr ""
+
+#: gaupol/gtk/actions/edit.py:233
+msgid "_Merge Subtitles"
+msgstr ""
+
+#: gaupol/gtk/actions/edit.py:234
+msgid "Merge the selected subtitles"
+msgstr ""
+
+#: gaupol/gtk/actions/edit.py:253
+msgid "_Paste"
+msgstr ""
+
+#: gaupol/gtk/actions/edit.py:255
+msgid "Paste texts from the clipboard"
+msgstr ""
+
+#: gaupol/gtk/actions/edit.py:277
 msgid "_Redo"
 msgstr ""
 
-#: gaupol/gtk/actions/edit.py:239 gaupol/gtk/actions/edit.py:279
+#: gaupol/gtk/actions/edit.py:279
 msgid "Redo the last undone action"
 msgstr ""
 
-#: gaupol/gtk/actions/edit.py:257 gaupol/gtk/actions/edit.py:297
+#: gaupol/gtk/actions/edit.py:297
 msgid "Rem_ove Subtitles"
 msgstr ""
 
-#: gaupol/gtk/actions/edit.py:258 gaupol/gtk/actions/edit.py:298
+#: gaupol/gtk/actions/edit.py:298
 msgid "Remove"
 msgstr ""
 
-#: gaupol/gtk/actions/edit.py:260 gaupol/gtk/actions/edit.py:300
+#: gaupol/gtk/actions/edit.py:300
 msgid "Remove the selected subtitles"
 msgstr ""
 
-#: gaupol/gtk/actions/edit.py:277 gaupol/gtk/actions/edit.py:317
+#: gaupol/gtk/actions/edit.py:317
 msgid "Select _All"
 msgstr ""
 
-#: gaupol/gtk/actions/edit.py:279 gaupol/gtk/actions/edit.py:319
+#: gaupol/gtk/actions/edit.py:319
 msgid "Select all subtitles"
-msgstr ""
-
-#: gaupol/gtk/actions/edit.py:296 gaupol/gtk/actions/edit.py:352
-msgid "_Split Subtitle"
-msgstr ""
-
-#: gaupol/gtk/actions/edit.py:297 gaupol/gtk/actions/edit.py:353
-msgid "Split the selected subtitle"
-msgstr ""
-
-#: gaupol/gtk/actions/edit.py:317 gaupol/gtk/actions/edit.py:373
-msgid "_Undo"
-msgstr ""
-
-#: gaupol/gtk/actions/edit.py:319 gaupol/gtk/actions/edit.py:375
-msgid "Undo the last action"
 msgstr ""
 
 #: gaupol/gtk/actions/edit.py:336
 msgid "Sele_ction"
+msgstr ""
+
+#: gaupol/gtk/actions/edit.py:352
+msgid "_Split Subtitle"
+msgstr ""
+
+#: gaupol/gtk/actions/edit.py:353
+msgid "Split the selected subtitle"
+msgstr ""
+
+#: gaupol/gtk/actions/edit.py:373
+msgid "_Undo"
+msgstr ""
+
+#: gaupol/gtk/actions/edit.py:375
+msgid "Undo the last action"
 msgstr ""
 
 #: gaupol/gtk/actions/file.py:33
@@ -1882,14 +1828,14 @@ msgstr ""
 msgid "Save changes to translation document \"%s\" before closing?"
 msgstr ""
 
-#: gaupol/gtk/agents/edit.py:161 gaupol/gtk/agents/edit.py:177
+#: gaupol/gtk/agents/edit.py:177
 #, python-format
 msgid "Inserted %d subtitle to fit clipboard contents"
 msgid_plural "Inserted %d subtitles to fit clipboard contents"
 msgstr[0] ""
 msgstr[1] ""
 
-#: gaupol/gtk/agents/edit.py:258 gaupol/gtk/agents/edit.py:274
+#: gaupol/gtk/agents/edit.py:274
 msgid "Use Shift+Return for line-break"
 msgstr ""
 
@@ -1942,11 +1888,9 @@ msgstr ""
 msgid "Failed to open file \"%s\""
 msgstr ""
 
-#: gaupol/gtk/agents/open.py:227 gaupol/gtk/agents/preview.py:65
-#: gaupol/gtk/agents/preview.py:73 gaupol/gtk/agents/save.py:121
-#: gaupol/gtk/dialogs/search.py:419 gaupol/gtk/dialogs/search.py:428
-#: gaupol/gtk/dialogs/search.py:439 gaupol/gtk/dialogs/search.py:448
-#: gaupol/gtk/dialogs/spellcheck.py:432
+#: gaupol/gtk/agents/open.py:227 gaupol/gtk/agents/preview.py:73
+#: gaupol/gtk/agents/save.py:121 gaupol/gtk/dialogs/search.py:439
+#: gaupol/gtk/dialogs/search.py:448 gaupol/gtk/dialogs/spellcheck.py:432
 #, python-format
 msgid "%s."
 msgstr ""
@@ -2014,29 +1958,29 @@ msgstr ""
 msgid "Appended %(amount)d subtitles from \"%(basename)s\""
 msgstr ""
 
-#: gaupol/gtk/agents/open.py:539 gaupol/gtk/agents/open.py:540
+#: gaupol/gtk/agents/open.py:539
 #, python-format
 msgid "Opened main file \"%s\""
 msgstr ""
 
-#: gaupol/gtk/agents/open.py:563 gaupol/gtk/agents/open.py:564
+#: gaupol/gtk/agents/open.py:563
 #, python-format
 msgid "Opened translation file \"%s\""
 msgstr ""
 
-#: gaupol/gtk/agents/preview.py:51 gaupol/gtk/agents/preview.py:59
+#: gaupol/gtk/agents/preview.py:59
 #, python-format
 msgid "Failed to encode subtitle file to temporary directory \"%s\""
 msgstr ""
 
-#: gaupol/gtk/agents/preview.py:53 gaupol/gtk/agents/preview.py:61
+#: gaupol/gtk/agents/preview.py:61
 msgid ""
 "Subtitle data could not be encoded to a temporary file for preview with the "
 "current character encoding. Please first save the subtitle file with a "
 "different character encoding."
 msgstr ""
 
-#: gaupol/gtk/agents/preview.py:63 gaupol/gtk/agents/preview.py:71
+#: gaupol/gtk/agents/preview.py:71
 #, python-format
 msgid "Failed to save subtitle file to temporary directory \"%s\""
 msgstr ""
@@ -2097,32 +2041,20 @@ msgstr ""
 msgid "Video file:"
 msgstr ""
 
-#: gaupol/gtk/assistants/text/assistant.py:96
-#: gaupol/gtk/assistants/text/assistant.py:97
-#: gaupol/gtk/assistants/text/assistant.py:99
 #: gaupol/gtk/assistants/text/assistant.py:102
 msgid "Correct Texts"
 msgstr ""
 
-#: gaupol/gtk/assistants/text/assistant.py:131
-#: gaupol/gtk/assistants/text/assistant.py:133
-#: gaupol/gtk/assistants/text/assistant.py:136
 #: gaupol/gtk/assistants/text/assistant.py:140
 msgid "Correcting texts"
 msgstr ""
 
-#: gaupol/gtk/assistants/text/assistant.py:147
-#: gaupol/gtk/assistants/text/assistant.py:149
-#: gaupol/gtk/assistants/text/assistant.py:152
 #: gaupol/gtk/assistants/text/assistant.py:156
 #, python-format
 msgid "Edited %(edits)d and removed %(removals)d subtitles"
 msgstr ""
 
-#: gaupol/gtk/assistants/text/assistant.py:182
-#: gaupol/gtk/assistants/text/assistant.py:184
 #: gaupol/gtk/assistants/text/assistant.py:186
-#: gaupol/gtk/assistants/text/assistant.py:187
 #, python-format
 msgid "Confirm %d Change"
 msgid_plural "Confirm %d Changes"
@@ -2145,17 +2077,14 @@ msgstr ""
 msgid "Confirm Changes"
 msgstr ""
 
-#: gaupol/gtk/assistants/text/confirmation.py:115
 #: gaupol/gtk/assistants/text/confirmation.py:116
 msgid "Accept"
 msgstr ""
 
-#: gaupol/gtk/assistants/text/confirmation.py:119
 #: gaupol/gtk/assistants/text/confirmation.py:120
 msgid "Original Text"
 msgstr ""
 
-#: gaupol/gtk/assistants/text/confirmation.py:120
 #: gaupol/gtk/assistants/text/confirmation.py:121
 msgid "Corrected Text"
 msgstr ""
@@ -2173,23 +2102,15 @@ msgid "Correct common errors"
 msgstr ""
 
 #: gaupol/gtk/assistants/text/hearing.py:34
-#: gaupol/gtk/assistants/text/hearing.py:36
 msgid "Remove explanatory texts meant for the hearing impaired"
 msgstr ""
 
 #: gaupol/gtk/assistants/text/hearing.py:37
-#: gaupol/gtk/assistants/text/hearing.py:39
 msgid "Select Hearing Impaired Patterns"
 msgstr ""
 
 #: gaupol/gtk/assistants/text/hearing.py:39
-#: gaupol/gtk/assistants/text/hearing.py:41
 msgid "Remove hearing impaired texts"
-msgstr ""
-
-#: gaupol/gtk/assistants/text/hearing.py:100
-#: gaupol/gtk/assistants/text/locale.py:88
-msgid "Other"
 msgstr ""
 
 #: gaupol/gtk/assistants/text/introduction.py:35
@@ -2210,6 +2131,10 @@ msgstr ""
 
 #: gaupol/gtk/assistants/text/line.py:106
 msgid "Set Line-Break Options"
+msgstr ""
+
+#: gaupol/gtk/assistants/text/locale.py:88
+msgid "Other"
 msgstr ""
 
 #: gaupol/gtk/assistants/text/progress.py:38
@@ -2285,42 +2210,6 @@ msgstr ""
 #. address. You can also include other translators who have contributed
 #. to this translation; in that case, please write them on separate
 #. lines seperated by newlines (\n).
-#. Translators: This is a special message that shouldn't be translated
-#. literally. It is used in the about dialog to give credits to the
-#. translators. Thus, you should translate it to your name and email
-#. address. You can also include other translators who have contributed
-#. to this translation; in that case, please write them on separate
-#. lines seperated by newlines (\n).
-#. Translators: This is a special message that shouldn't be translated
-#. literally. It is used in the about dialog to give credits to the
-#. translators. Thus, you should translate it to your name and email
-#. address. You can also include other translators who have contributed
-#. to this translation; in that case, please write them on separate
-#. lines seperated by newlines (\n).
-#. Translators: This is a special message that shouldn't be translated
-#. literally. It is used in the about dialog to give credits to the
-#. translators. Thus, you should translate it to your name and email
-#. address. You can also include other translators who have contributed
-#. to this translation; in that case, please write them on separate
-#. lines seperated by newlines (\n).
-#. Translators: This is a special message that shouldn't be translated
-#. literally. It is used in the about dialog to give credits to the
-#. translators. Thus, you should translate it to your name and email
-#. address. You can also include other translators who have contributed
-#. to this translation; in that case, please write them on separate
-#. lines seperated by newlines (\n).
-#. Translators: This is a special message that shouldn't be translated
-#. literally. It is used in the about dialog to give credits to the
-#. translators. Thus, you should translate it to your name and email
-#. address. You can also include other translators who have contributed
-#. to this translation; in that case, please write them on separate
-#. lines seperated by newlines (\n).
-#. Translators: This is a special message that shouldn't be translated
-#. literally. It is used in the about dialog to give credits to the
-#. translators. Thus, you should translate it to your name and email
-#. address. You can also include other translators who have contributed
-#. to this translation; in that case, please write them on separate
-#. lines seperated by newlines (\n).
 #: gaupol/gtk/dialogs/about.py:65
 msgid "translator-credits"
 msgstr ""
@@ -2364,8 +2253,7 @@ msgstr ""
 msgid "_Append"
 msgstr ""
 
-#: gaupol/gtk/dialogs/file/subtitle.py:60
-#: gaupol/gtk/dialogs/file/subtitle.py:61 gaupol/gtk/dialogs/file/video.py:44
+#: gaupol/gtk/dialogs/file/subtitle.py:60 gaupol/gtk/dialogs/file/video.py:44
 msgid "All files"
 msgstr ""
 
@@ -2373,26 +2261,15 @@ msgstr ""
 msgid "All supported files"
 msgstr ""
 
-#: gaupol/gtk/dialogs/file/subtitle.py:65
-#: gaupol/gtk/dialogs/file/subtitle.py:66
-msgid "Plain text files"
-msgstr ""
-
-#: gaupol/gtk/dialogs/file/subtitle.py:72
-#: gaupol/gtk/dialogs/file/subtitle.py:73
 #: gaupol/gtk/dialogs/file/subtitle.py:75
 #, python-format
 msgid "%(format)s (%(pattern)s)"
 msgstr ""
 
-#: gaupol/gtk/dialogs/file/subtitle.py:118
-#: gaupol/gtk/dialogs/file/subtitle.py:119
 #: gaupol/gtk/dialogs/file/subtitle.py:121
 msgid "Auto-detected"
 msgstr ""
 
-#: gaupol/gtk/dialogs/file/subtitle.py:120
-#: gaupol/gtk/dialogs/file/subtitle.py:121
 #: gaupol/gtk/dialogs/file/subtitle.py:123
 msgid "Other…"
 msgstr ""
@@ -2423,20 +2300,20 @@ msgstr ""
 msgid "Custom"
 msgstr ""
 
-#: gaupol/gtk/dialogs/search.py:125 gaupol/gtk/dialogs/search.py:134
+#: gaupol/gtk/dialogs/search.py:134
 #, python-format
 msgid "\"%s\" not found"
 msgstr ""
 
-#: gaupol/gtk/dialogs/search.py:418 gaupol/gtk/dialogs/search.py:438
+#: gaupol/gtk/dialogs/search.py:438
 msgid "Error in regular expression pattern"
 msgstr ""
 
-#: gaupol/gtk/dialogs/search.py:427 gaupol/gtk/dialogs/search.py:447
+#: gaupol/gtk/dialogs/search.py:447
 msgid "Error in regular expression replacement"
 msgstr ""
 
-#: gaupol/gtk/dialogs/search.py:543 gaupol/gtk/dialogs/search.py:575
+#: gaupol/gtk/dialogs/search.py:575
 #, python-format
 msgid "Found and replaced %d occurences"
 msgstr ""
@@ -2462,7 +2339,7 @@ msgstr ""
 msgid "Splitting project"
 msgstr ""
 
-#: gaupol/gtk/dialogs/split.py:108 gaupol/gtk/dialogs/split.py:109
+#: gaupol/gtk/dialogs/split.py:109
 #, python-format
 msgid "Split %(amount)d subtitles to project \"%(name)s\""
 msgstr ""
@@ -2524,27 +2401,27 @@ msgstr ""
 msgid "Close project"
 msgstr ""
 
-#: gaupol/gtk/page.py:273
+#: gaupol/gtk/page.py:274
 #, python-format
 msgid "<b>Path:</b> %s"
 msgstr ""
 
-#: gaupol/gtk/page.py:274
+#: gaupol/gtk/page.py:275
 #, python-format
 msgid "<b>Format:</b> %s"
 msgstr ""
 
-#: gaupol/gtk/page.py:275
+#: gaupol/gtk/page.py:276
 #, python-format
 msgid "<b>Character encoding:</b> %s"
 msgstr ""
 
-#: gaupol/gtk/page.py:276
+#: gaupol/gtk/page.py:277
 #, python-format
 msgid "<b>Newlines:</b> %s"
 msgstr ""
 
-#: gaupol/gtk/page.py:297
+#: gaupol/gtk/page.py:298
 #, python-format
 msgid "%s translation"
 msgstr ""
