@@ -30,24 +30,24 @@ class EditAgent(gaupol.Delegate):
 
     __metaclass__ = gaupol.Contractual
 
-    def clear_texts_require(self, indexes, doc, register=-1):
-        for index in indexes:
+    def clear_texts_require(self, indices, doc, register=-1):
+        for index in indices:
             assert 0 <= index < len(self.subtitles)
 
     @gaupol.util.revertable
-    def clear_texts(self, indexes, doc, register=-1):
+    def clear_texts(self, indices, doc, register=-1):
         """Set texts to blank strings."""
 
-        new_texts = [""] * len(indexes)
-        self.replace_texts(indexes, doc, new_texts, register=register)
+        new_texts = [""] * len(indices)
+        self.replace_texts(indices, doc, new_texts, register=register)
         self.set_action_description(register, _("Clearing texts"))
 
     @gaupol.util.revertable
     @gaupol.util.notify_frozen
-    def insert_blank_subtitles(self, indexes, register=-1):
+    def insert_blank_subtitles(self, indices, register=-1):
         """Insert blank subtitles with fitting positions."""
 
-        for these_indexes in gaupol.util.get_ranges(indexes):
+        for these_indexes in gaupol.util.get_ranges(indices):
             first_start = 0.0
             if these_indexes[0] > 0:
                 subtitle = self.subtitles[these_indexes[0] - 1]
@@ -67,84 +67,84 @@ class EditAgent(gaupol.Delegate):
         action.docs = gaupol.DOCUMENT.members
         action.description = _("Inserting subtitles")
         action.revert_method = self.remove_subtitles
-        action.revert_args = (indexes,)
+        action.revert_args = (indices,)
         self.register_action(action)
-        self.emit("subtitles-inserted", indexes)
+        self.emit("subtitles-inserted", indices)
 
     @gaupol.util.revertable
     @gaupol.util.notify_frozen
-    def insert_subtitles(self, indexes, subtitles, register=-1):
+    def insert_subtitles(self, indices, subtitles, register=-1):
         """Insert given subtitles."""
 
-        for i, index in enumerate(indexes):
+        for i, index in enumerate(indices):
             self.subtitles.insert(index, subtitles[i])
 
         action = self.get_revertable_action(register)
         action.docs = gaupol.DOCUMENT.members
         action.description = _("Inserting subtitles")
         action.revert_method = self.remove_subtitles
-        action.revert_args = (indexes,)
+        action.revert_args = (indices,)
         self.register_action(action)
-        self.emit("subtitles-inserted", indexes)
+        self.emit("subtitles-inserted", indices)
 
-    def merge_subtitles_require(self, indexes, register=-1):
-        assert len(indexes) > 1
-        for index in indexes:
+    def merge_subtitles_require(self, indices, register=-1):
+        assert len(indices) > 1
+        for index in indices:
             assert 0 <= index < len(self.subtitles)
-        assert indexes == range(indexes[0], indexes[-1] + 1)
+        assert indices == range(indices[0], indices[-1] + 1)
 
     @gaupol.util.revertable
-    def merge_subtitles(self, indexes, register=-1):
-        """Merge subtitles in indexes to form one subtitle."""
+    def merge_subtitles(self, indices, register=-1):
+        """Merge subtitles in indices to form one subtitle."""
 
         subtitle = self.get_subtitle()
-        subtitle.start = self.subtitles[indexes[0]].start
-        subtitle.end = self.subtitles[indexes[-1]].end
-        main_texts = [self.subtitles[x].main_text for x in indexes]
+        subtitle.start = self.subtitles[indices[0]].start
+        subtitle.end = self.subtitles[indices[-1]].end
+        main_texts = [self.subtitles[x].main_text for x in indices]
         main_texts = [x for x in main_texts if x]
         subtitle.main_text = "\n".join(main_texts)
-        tran_texts = [self.subtitles[x].tran_text for x in indexes]
+        tran_texts = [self.subtitles[x].tran_text for x in indices]
         tran_texts = [x for x in tran_texts if x]
         subtitle.tran_text = "\n".join(tran_texts)
 
-        self.remove_subtitles(indexes, register=register)
-        self.insert_subtitles([indexes[0]], [subtitle], register=register)
+        self.remove_subtitles(indices, register=register)
+        self.insert_subtitles([indices[0]], [subtitle], register=register)
         self.group_actions(register, 2, _("Merging subtitles"))
 
-    def remove_subtitles_require(self, indexes, register=-1):
-        for index in indexes:
+    def remove_subtitles_require(self, indices, register=-1):
+        for index in indices:
             assert 0 <= index < len(self.subtitles)
 
     @gaupol.util.revertable
     @gaupol.util.notify_frozen
-    def remove_subtitles(self, indexes, register=-1):
-        """Remove subtitles in indexes."""
+    def remove_subtitles(self, indices, register=-1):
+        """Remove subtitles in indices."""
 
         subtitles = []
-        indexes = sorted(indexes)
-        for index in reversed(indexes):
+        indices = sorted(indices)
+        for index in reversed(indices):
             subtitles.insert(0, self.subtitles.pop(index))
 
         action = self.get_revertable_action(register)
         action.docs = gaupol.DOCUMENT.members
         action.description = _("Removing subtitles")
         action.revert_method = self.insert_subtitles
-        action.revert_args = (indexes, subtitles)
+        action.revert_args = (indices, subtitles)
         self.register_action(action)
-        self.emit("subtitles-removed", indexes)
+        self.emit("subtitles-removed", indices)
 
-    def replace_positions_require(self, indexes, subtitles, register=-1):
-        for index in indexes:
+    def replace_positions_require(self, indices, subtitles, register=-1):
+        for index in indices:
             assert 0 <= index < len(self.subtitles)
-        assert len(indexes) == len(subtitles)
+        assert len(indices) == len(subtitles)
 
     @gaupol.util.revertable
     @gaupol.util.notify_frozen
-    def replace_positions(self, indexes, subtitles, register=-1):
-        """Replace positions in indexes with those in subtitles."""
+    def replace_positions(self, indices, subtitles, register=-1):
+        """Replace positions in indices with those in subtitles."""
 
         orig_subtitles = []
-        for i, index in enumerate(indexes):
+        for i, index in enumerate(indices):
             subtitle = self.subtitles[index]
             orig_subtitles.append(subtitle.copy())
             subtitle.start = subtitles[i].start
@@ -154,22 +154,22 @@ class EditAgent(gaupol.Delegate):
         action.docs = gaupol.DOCUMENT.members
         action.description = _("Replacing positions")
         action.revert_method = self.replace_positions
-        action.revert_args = (indexes, orig_subtitles)
+        action.revert_args = (indices, orig_subtitles)
         self.register_action(action)
-        self.emit("positions-changed", indexes)
+        self.emit("positions-changed", indices)
 
-    def replace_texts_require(self, indexes, doc, texts, register=-1):
-        for index in indexes:
+    def replace_texts_require(self, indices, doc, texts, register=-1):
+        for index in indices:
             assert 0 <= index < len(self.subtitles)
-        assert len(indexes) == len(texts)
+        assert len(indices) == len(texts)
 
     @gaupol.util.revertable
     @gaupol.util.notify_frozen
-    def replace_texts(self, indexes, doc, texts, register=-1):
-        """Replace texts in document's indexes with new_texts."""
+    def replace_texts(self, indices, doc, texts, register=-1):
+        """Replace texts in document's indices with new_texts."""
 
         orig_texts = []
-        for i, index in enumerate(indexes):
+        for i, index in enumerate(indices):
             subtitle = self.subtitles[index]
             orig_texts.append(subtitle.get_text(doc))
             subtitle.set_text(doc, texts[i])
@@ -178,10 +178,10 @@ class EditAgent(gaupol.Delegate):
         action.docs = [doc]
         action.description = _("Replacing texts")
         action.revert_method = self.replace_texts
-        action.revert_args = (indexes, doc, orig_texts)
+        action.revert_args = (indices, doc, orig_texts)
         self.register_action(action)
         signal = self.get_text_signal(doc)
-        self.emit(signal, indexes)
+        self.emit(signal, indices)
 
     def split_subtitle_require(self, index, register=-1):
         assert 0 <= index < len(self.subtitles)
@@ -197,7 +197,7 @@ class EditAgent(gaupol.Delegate):
         tran_text = self.subtitles[index].tran_text
 
         subtitles = []
-        indexes = [index, index + 1]
+        indices = [index, index + 1]
         subtitle = self.get_subtitle()
         subtitle.start = start
         subtitle.end = middle
@@ -210,5 +210,5 @@ class EditAgent(gaupol.Delegate):
         subtitles.append(subtitle)
 
         self.remove_subtitles([index], register=register)
-        self.insert_subtitles(indexes, subtitles, register=register)
+        self.insert_subtitles(indices, subtitles, register=register)
         self.group_actions(register, 2, _("Splitting subtitle"))

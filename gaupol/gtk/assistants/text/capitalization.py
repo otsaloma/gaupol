@@ -60,7 +60,7 @@ class CapitalizationPage(LocalePage):
 
         return gaupol.gtk.conf.capitalization
 
-    def correct_texts(self, project, indexes, doc):
+    def correct_texts(self, project, indices, doc):
         """Correct texts in project."""
 
         script = self._get_script()
@@ -69,4 +69,4 @@ class CapitalizationPage(LocalePage):
         codes = (script, language, country)
         self._manager.save(*codes)
         patterns = self._manager.get_patterns(*codes)
-        project.capitalize(indexes, doc, patterns)
+        project.capitalize(indices, doc, patterns)

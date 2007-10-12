@@ -50,8 +50,8 @@ class TestClipboardAgent(unittest.TestCase):
         subtitles = self.project.subtitles
         self.project.copy_texts([0, 1], gaupol.DOCUMENT.TRAN)
         last_index = len(subtitles) - 1
-        indexes = self.project.paste_texts(last_index, gaupol.DOCUMENT.MAIN)
-        assert indexes == [last_index, last_index + 1]
+        indices = self.project.paste_texts(last_index, gaupol.DOCUMENT.MAIN)
+        assert indices == [last_index, last_index + 1]
         assert len(subtitles) == last_index + 2
 
     @unittest.reversion_test
@@ -59,7 +59,7 @@ class TestClipboardAgent(unittest.TestCase):
 
         subtitles = self.project.subtitles
         self.project.copy_texts([0, 1], gaupol.DOCUMENT.TRAN)
-        indexes = self.project.paste_texts(2, gaupol.DOCUMENT.MAIN)
-        assert indexes == [2, 3]
+        indices = self.project.paste_texts(2, gaupol.DOCUMENT.MAIN)
+        assert indices == [2, 3]
         assert subtitles[0].main_text == subtitles[2].main_text
         assert subtitles[1].main_text == subtitles[3].main_text

@@ -297,7 +297,7 @@ class Page(gaupol.Observable):
                 basename = basename[:-len(extension)]
         return _("%s translation") % basename
 
-    def reload_view_ensure(self, value, indexes, cols):
+    def reload_view_ensure(self, value, indices, cols):
         self._assert_store()
 
     def reload_view(self, rows, cols):

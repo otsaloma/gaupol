@@ -37,8 +37,8 @@ class TestEditAgent(unittest.TestCase):
 
         subtitles = self.project.subtitles
         orig_length = len(subtitles)
-        indexes = range(orig_length, orig_length + 10)
-        self.project.insert_blank_subtitles(indexes)
+        indices = range(orig_length, orig_length + 10)
+        self.project.insert_blank_subtitles(indices)
         assert len(subtitles) == orig_length + 10
         for i in range(0, len(subtitles) - 1):
             assert subtitles[i] <= subtitles[i + 1]

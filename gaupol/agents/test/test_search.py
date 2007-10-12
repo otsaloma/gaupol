@@ -77,8 +77,8 @@ class TestSearchAgent(unittest.TestCase):
             self.project.subtitles[i].main_text = text
             self.project.subtitles[i].tran_text = text
 
-        indexes = range(3, len(self.project.subtitles))
-        self.project.remove_subtitles(indexes, register=None)
+        indices = range(3, len(self.project.subtitles))
+        self.project.remove_subtitles(indices, register=None)
 
     def test_find_next__1(self):
 

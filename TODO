@@ -1,24 +1,28 @@
 Gaupol 0.13
 ===========
 
- * Migrate to (Py)GTK 2.12
+ * Allow arbitrary attributes on gaupol.Subtitle?
+ * Allow arbitrary columns in gaupol.gtk.View?
+
+ [ ] Raise PyGTK dependency to 2.12 or greater
     - gtk.AboutDialog: "name" replaced with "program-name"
-    - gtk.Builder: Build an interface from an XML UI definition
-    - gtk.RecentAction: New class for recent-files menu items
     - gtk.Tooltip: New API that allows complex tooltips
+ [?] Add notebooked panes to the side and bottom
+ [?] Move the output window to the bottom pane
+ [ ] Add a plugin system
+    - gaupol.gtk.Plugin
+    - gaupol.gtk.PluginManager
+    - gaupol.gtk.PreferencesDialog
+ [ ] Add example plugin: Bookmarks?
 
 
 Gaupol 1.0
 ==========
 
- * Side and bottom panes?
- * Allow arbitrary attributes on gaupol.Subtitle?
- * Allow arbitrary columns in gaupol.gtk.View?
- * Plugin system (see gedit for interfaces)
-    - gaupol.gtk.Plugin
-    - gaupol.gtk.PluginManager
-    - Dialog or a page in the preferences dialog
- * Example plugin: Bookmarks?
+ * Add documentation on writing plugins
+ * Add documentation on writing pattern files
+ * Add a wiki page for publishing plugins
+ * Add a wiki page for publishing pattern files
 
 
 Unscheduled Possible Plans

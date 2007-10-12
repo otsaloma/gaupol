@@ -46,14 +46,14 @@ class Project(gaupol.Observable):
      * action-undone (project, action)
      * main-file-opened (project, main_file)
      * main-file-saved (project, main_file)
-     * main-texts-changed (project, indexes)
-     * positions-changed (project, indexes)
-     * subtitles-changed (project, indexes)
-     * subtitles-inserted (project, indexes)
-     * subtitles-removed (project, indexes)
+     * main-texts-changed (project, indices)
+     * positions-changed (project, indices)
+     * subtitles-changed (project, indices)
+     * subtitles-inserted (project, indices)
+     * subtitles-removed (project, indices)
      * translation-file-opened (project, tran_file)
      * translation-file-saved (project, tran_file)
-     * translation-texts-changed (project, indexes)
+     * translation-texts-changed (project, indices)
 
     See gaupol.agents for project methods provided by agents.
     """

@@ -31,7 +31,7 @@ class SaveAgent(gaupol.Delegate):
     __metaclass__ = gaupol.Contractual
 
     def _convert_tags(self, texts, from_format, to_format):
-        """Convert tags in texts and return changed indexes."""
+        """Convert tags in texts and return changed indices."""
 
         changed_indexes = []
         converter = gaupol.TagConverter(from_format, to_format)
@@ -87,7 +87,7 @@ class SaveAgent(gaupol.Delegate):
         props should be a sequence of path, format, encoding, newline.
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
-        Return file, texts, changed indexes.
+        Return file, texts, changed indices.
         """
         file = self.get_file(doc)
         path, format, encoding, newline = props or ([None] * 4)

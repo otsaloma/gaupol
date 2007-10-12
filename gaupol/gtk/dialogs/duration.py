@@ -64,7 +64,7 @@ class DurationAdjustDialog(GladeDialog):
         kwargs["maximum"] = (domain.maximum if domain.use_maximum else None)
         kwargs["minimum"] = (domain.minimum if domain.use_minimum else None)
         kwargs["gap"] = (domain.gap if domain.use_gap else None)
-        kwargs["indexes"] = self.application.get_target_rows(target)
+        kwargs["indices"] = self.application.get_target_rows(target)
         for page in self.application.get_target_pages(target):
             index = self.application.pages.index(page)
             self.application.notebook.set_current_page(index)

@@ -123,7 +123,7 @@ class Liner(gaupol.Parser):
             assert 0 <= index <= len(lengths)
 
     def _get_breaks(self, lengths, max_lines):
-        """Get indexes of breaks with minimum length deviation.
+        """Get indices of breaks with minimum length deviation.
 
         Indexes are brute forced within reason and the result is optimal if
         max_lines is less than six, otherwise result is ugly.
@@ -142,7 +142,7 @@ class Liner(gaupol.Parser):
             assert 0 <= index <= len(lengths)
 
     def _get_breaks_pretty(self, lengths, max_lines):
-        """Get indexes of breaks with minimum length deviation.
+        """Get indices of breaks with minimum length deviation.
 
         Indexes are brute forced within reason and the result is optimal.
         """
@@ -150,9 +150,9 @@ class Liner(gaupol.Parser):
         min_squares = sys.maxint
         start = self._get_start_index(lengths, max_lines)
         for i in range(start, len(lengths) - max_lines + 2):
-            indexes = self._get_breaks(lengths[i:], max_lines - 1)
-            indexes = [i] + [x + i for x in indexes]
-            borders = [0] + indexes + [len(lengths)]
+            indices = self._get_breaks(lengths[i:], max_lines - 1)
+            indices = [i] + [x + i for x in indices]
+            borders = [0] + indices + [len(lengths)]
             line_lengths = []
             for j in range(1, len(borders)):
                 a, z = borders[j - 1:j + 1]
@@ -160,7 +160,7 @@ class Liner(gaupol.Parser):
             mean = sum(line_lengths) / max_lines
             squares = sum([(x - mean)**2 for x in line_lengths])
             if round(min_squares - squares, 6) > 0:
-                min_indexes = indexes
+                min_indexes = indices
                 min_squares = squares
             a = self._get_length(lengths[:i])
             b = self._get_length(lengths[i:])
@@ -176,18 +176,18 @@ class Liner(gaupol.Parser):
             assert 0 <= index <= len(lengths)
 
     def _get_breaks_ugly(self, lengths, max_lines):
-        """Get indexes of breaks with minimum length deviation.
+        """Get indices of breaks with minimum length deviation.
 
         Items are first broken into half of max_lines and then each these
         lines is further broken internally into two. The result is not optimal,
         but is obtained fast.
         """
-        indexes = self._get_breaks(lengths, int(max_lines / 2))
-        borders = [0] + indexes + [len(lengths)]
+        indices = self._get_breaks(lengths, int(max_lines / 2))
+        borders = [0] + indices + [len(lengths)]
         for i in range(1, len(borders)):
             a, z = borders[i - 1:i + 1]
-            indexes.append(self._get_break(lengths[a:z]) + a)
-        return sorted(indexes)
+            indices.append(self._get_break(lengths[a:z]) + a)
+        return sorted(indices)
 
     def _get_start_index_ensure(self, value, lengths, max_lines):
         assert 0 <= value <= len(lengths)
@@ -196,7 +196,7 @@ class Liner(gaupol.Parser):
         """Get the index for the first break candidate for items.
 
         The start index is determined based on the line length mean with the
-        purpose to avoid brute forcing insanely small indexes.
+        purpose to avoid brute forcing insanely small indices.
         """
         if len(lengths) < 3:
             return 1
@@ -227,9 +227,9 @@ class Liner(gaupol.Parser):
         text = ""
         items = self.text.split("\n")
         lengths = [self._length_func(x) for x in items]
-        indexes = self._get_breaks(lengths, max_lines)
+        indices = self._get_breaks(lengths, max_lines)
         for i in range(len(items)):
-            prefix = ("\n" if i in indexes else " ")
+            prefix = ("\n" if i in indices else " ")
             text = text + prefix + items[i]
         self.text = text.strip()
 

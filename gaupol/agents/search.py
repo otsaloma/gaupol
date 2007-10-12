@@ -31,7 +31,7 @@ class SearchAgent(gaupol.Delegate):
      * _match_passed: True if the position of last match has been passed
      * _match_index: The index of the last match
      * _match_span: The start and end positions of the last match
-     * _indexes: List of the target indexes or None for all
+     * _indexes: List of the target indices or None for all
      * _wrap: True to wrap search, False to stop at the last index
 
     Searching is done with the help of an instance of Finder. This agent
@@ -70,7 +70,7 @@ class SearchAgent(gaupol.Delegate):
         self._match_index = index
         self._match_doc = doc
         self._match_passed = False
-        indexes = self._indexes or range(len(self.subtitles))
+        indices = self._indexes or range(len(self.subtitles))
         while True:
 
             try:
@@ -81,7 +81,7 @@ class SearchAgent(gaupol.Delegate):
             # Proceed to the next document or raise StopIteration.
             self._match_passed = True
             doc = self._get_document(doc, next)
-            index = (min(indexes) if next else max(indexes))
+            index = (min(indices) if next else max(indices))
             pos = None
 
     def _get_document(self, doc, next):
@@ -120,8 +120,8 @@ class SearchAgent(gaupol.Delegate):
         Raise ValueError if no match in this document after position.
         Return tuple of index, document, match span.
         """
-        indexes = self._indexes or range(len(self.subtitles))
-        for index in range(index, max(indexes) + 1):
+        indices = self._indexes or range(len(self.subtitles))
+        for index in range(index, max(indices) + 1):
             text = self.subtitles[index].get_text(doc)
             # Avoid resetting finder's match span.
             if text != self._finder.text:
@@ -133,7 +133,7 @@ class SearchAgent(gaupol.Delegate):
                 match_span = self._finder.next()
             except StopIteration:
                 # Raise StopIteration if a full loop around all target
-                # documents and indexes has been made with no matches.
+                # documents and indices has been made with no matches.
                 if doc == self._match_doc:
                     if index == self._match_index:
                         if self._match_passed:
@@ -156,8 +156,8 @@ class SearchAgent(gaupol.Delegate):
         Raise ValueError if no match in this document before position.
         Return tuple of index, document, match span.
         """
-        indexes = self._indexes or range(len(self.subtitles))
-        for index in reversed(range(min(indexes), index + 1)):
+        indices = self._indexes or range(len(self.subtitles))
+        for index in reversed(range(min(indices), index + 1)):
             text = self.subtitles[index].get_text(doc)
             # Avoid resetting finder's match span.
             if text != self._finder.text:
@@ -169,7 +169,7 @@ class SearchAgent(gaupol.Delegate):
                 match_span = self._finder.previous()
             except StopIteration:
                 # Raise StopIteration if a full loop around all target
-                # documents and indexes has been made with no matches.
+                # documents and indices has been made with no matches.
                 if doc == self._match_doc:
                     if index == self._match_index:
                         if self._match_passed:
@@ -299,16 +299,16 @@ class SearchAgent(gaupol.Delegate):
         self._finder.ignore_case = ignore_case
         self._finder.is_regex = False
 
-    def set_search_target_require(self, indexes=None, docs=None, wrap=True):
-        for index in indexes or []:
+    def set_search_target_require(self, indices=None, docs=None, wrap=True):
+        for index in indices or []:
             assert 0 <= index < len(self.subtitles)
 
-    def set_search_target(self, indexes=None, docs=None, wrap=True):
+    def set_search_target(self, indices=None, docs=None, wrap=True):
         """Set the targets to search in.
 
-        indexes can be None to target all subtitles.
+        indices can be None to target all subtitles.
         docs can be None to target all documents.
         """
-        self._indexes = indexes
+        self._indexes = indices
         self._docs = docs or gaupol.DOCUMENT.members
         self._wrap = wrap

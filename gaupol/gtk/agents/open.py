@@ -36,16 +36,16 @@ class OpenAgent(gaupol.Delegate):
     def _append_subtitles(self, current, temp):
         """Append subtitles in temporary page to current.
 
-        Return a list of indexes appended.
+        Return a list of indices appended.
         """
-        indexes = range(len(current.project.subtitles),
+        indices = range(len(current.project.subtitles),
             len(current.project.subtitles) + len(temp.project.subtitles))
         current.project.block("action-done")
-        current.project.insert_subtitles(indexes, temp.project.subtitles)
+        current.project.insert_subtitles(indices, temp.project.subtitles)
         current.project.set_action_description(
             gaupol.gtk.REGISTER.DO, _("Appending file"))
         current.project.unblock("action-done")
-        return indexes
+        return indices
 
     @gaupol.gtk.util.asserted_return
     def _check_file_exists(self, path):

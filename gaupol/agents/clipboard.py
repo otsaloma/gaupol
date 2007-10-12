@@ -30,36 +30,36 @@ class ClipboardAgent(gaupol.Delegate):
 
     __metaclass__ = gaupol.Contractual
 
-    def copy_texts_require(self, indexes, doc):
-        for index in indexes:
+    def copy_texts_require(self, indices, doc):
+        for index in indices:
             assert 0 <= index < len(self.subtitles)
 
-    def copy_texts_ensure(self, value, indexes, doc):
+    def copy_texts_ensure(self, value, indices, doc):
         texts = self.clipboard.get_texts()
-        assert len(texts) == len(range(indexes[0], indexes[-1] + 1))
+        assert len(texts) == len(range(indices[0], indices[-1] + 1))
         while None in texts:
             texts.remove(None)
-        assert len(texts) == len(indexes)
+        assert len(texts) == len(indices)
 
-    def copy_texts(self, indexes, doc):
+    def copy_texts(self, indices, doc):
         """Copy texts to the clipboard."""
 
         self.clipboard.clear()
-        for index in range(min(indexes), max(indexes) + 1):
+        for index in range(min(indices), max(indices) + 1):
             subtitle = self.subtitles[index]
-            text = (subtitle.get_text(doc) if index in indexes else None)
+            text = (subtitle.get_text(doc) if index in indices else None)
             self.clipboard.append(text)
 
-    def cut_texts_require(self, indexes, doc, register=-1):
-        for index in indexes:
+    def cut_texts_require(self, indices, doc, register=-1):
+        for index in indices:
             assert 0 <= index < len(self.subtitles)
 
     @gaupol.util.revertable
-    def cut_texts(self, indexes, doc, register=-1):
+    def cut_texts(self, indices, doc, register=-1):
         """Cut texts to the clipboard."""
 
-        self.copy_texts(indexes, doc)
-        self.clear_texts(indexes, doc, register=register)
+        self.copy_texts(indices, doc)
+        self.clear_texts(indices, doc, register=register)
         self.set_action_description(register, _("Cutting texts"))
 
     def paste_texts_require(self, index, doc, register=-1):
@@ -68,7 +68,7 @@ class ClipboardAgent(gaupol.Delegate):
 
     @gaupol.util.revertable
     def paste_texts(self, index, doc, register=-1):
-        """Paste texts from the clipboard and return pasted indexes."""
+        """Paste texts from the clipboard and return pasted indices."""
 
         texts = self.clipboard.get_texts()
         length = len(self.subtitles)
@@ -78,10 +78,10 @@ class ClipboardAgent(gaupol.Delegate):
             self.insert_blank_subtitles(inserts, register=register)
         entries = [(i, x) for (i, x) in enumerate(texts)]
         entries = [(i, x) for (i, x) in entries if x is not None]
-        indexes = [index + i for (i, x) in entries]
+        indices = [index + i for (i, x) in entries]
         new_texts = [x for (i, x) in entries]
-        self.replace_texts(indexes, doc, new_texts, register=register)
+        self.replace_texts(indices, doc, new_texts, register=register)
         if excess > 0:
             self.group_actions(register, 2, "")
         self.set_action_description(register, _("Pasting texts"))
-        return indexes
+        return indices

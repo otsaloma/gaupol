@@ -104,7 +104,7 @@ class CommonErrorPage(LocalePage):
         domain.ocr = check_button.get_active()
         self._populate_tree_view()
 
-    def correct_texts(self, project, indexes, doc):
+    def correct_texts(self, project, indices, doc):
         """Correct texts in project."""
 
         script = self._get_script()
@@ -113,4 +113,4 @@ class CommonErrorPage(LocalePage):
         codes = (script, language, country)
         self._manager.save(*codes)
         patterns = self._manager.get_patterns(*codes)
-        project.correct_common_errors(indexes, doc, patterns)
+        project.correct_common_errors(indices, doc, patterns)

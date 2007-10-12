@@ -53,8 +53,8 @@ class Config(configobj.ConfigObj):
         names = validator.check("string_list", value)
         section = getattr(gaupol.gtk, section)
         try:
-            indexes = [section.names.index(x) for x in names]
-            return [section.members[x] for x in indexes]
+            indices = [section.names.index(x) for x in names]
+            return [section.members[x] for x in indices]
         except ValueError:
             raise validate.VdtValueError(value)
 

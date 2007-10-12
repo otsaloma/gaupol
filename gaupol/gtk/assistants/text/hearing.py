@@ -61,7 +61,7 @@ class HearingImpairedPage(LocalePage):
 
         return gaupol.gtk.conf.hearing_impaired
 
-    def correct_texts(self, project, indexes, doc):
+    def correct_texts(self, project, indices, doc):
         """Correct texts in project."""
 
         script = self._get_script()
@@ -70,4 +70,4 @@ class HearingImpairedPage(LocalePage):
         codes = (script, language, country)
         self._manager.save(*codes)
         patterns = self._manager.get_patterns(*codes)
-        project.remove_hearing_impaired(indexes, doc, patterns)
+        project.remove_hearing_impaired(indices, doc, patterns)

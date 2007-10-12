@@ -34,7 +34,7 @@ class TestPositionAgent(unittest.TestCase):
         subtitles[1].end = "00:00:03.000"
         subtitles[2].start = "00:00:04.000"
         self.project.adjust_durations(
-            indexes=None, gap=0.3)
+            indices=None, gap=0.3)
         assert subtitles[0].start == "00:00:01.000"
         assert subtitles[0].end == "00:00:01.700"
         assert subtitles[1].start == "00:00:02.000"
@@ -51,7 +51,7 @@ class TestPositionAgent(unittest.TestCase):
         subtitles[1].end = "00:00:02.100"
         subtitles[1].main_text = "12345678901234567890"
         self.project.adjust_durations(
-            indexes=None, optimal=0.05, lengthen=True)
+            indices=None, optimal=0.05, lengthen=True)
         assert subtitles[0].start == "00:00:01.000"
         assert subtitles[0].end == "00:00:01.500"
         assert subtitles[1].start == "00:00:02.000"
@@ -65,7 +65,7 @@ class TestPositionAgent(unittest.TestCase):
         subtitles[1].start = "00:00:02.000"
         subtitles[1].end = "00:00:02.100"
         self.project.adjust_durations(
-            indexes=None, optimal=0.1, lengthen=True, maximum=0.5)
+            indices=None, optimal=0.1, lengthen=True, maximum=0.5)
         assert subtitles[0].start == "00:00:01.000"
         assert subtitles[0].end == "00:00:01.500"
         assert subtitles[1].start == "00:00:02.000"
@@ -79,7 +79,7 @@ class TestPositionAgent(unittest.TestCase):
         subtitles[1].start = "00:00:02.000"
         subtitles[1].end = "00:00:02.900"
         self.project.adjust_durations(
-            indexes=None, optimal=0.001, shorten=True, minimum=0.5)
+            indices=None, optimal=0.001, shorten=True, minimum=0.5)
         assert subtitles[0].start == "00:00:01.000"
         assert subtitles[0].end == "00:00:01.500"
         assert subtitles[1].start == "00:00:02.000"
@@ -95,7 +95,7 @@ class TestPositionAgent(unittest.TestCase):
         subtitles[1].end = "00:00:02.900"
         subtitles[1].main_text = "12345678901234567890"
         self.project.adjust_durations(
-            indexes=None, optimal=0.01, shorten=True)
+            indices=None, optimal=0.01, shorten=True)
         assert subtitles[0].start == "00:00:01.000"
         assert subtitles[0].end == "00:00:01.100"
         assert subtitles[1].start == "00:00:02.000"

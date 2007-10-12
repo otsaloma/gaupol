@@ -62,8 +62,8 @@ class OpenAgent(gaupol.Delegate):
         count = len(self.subtitles)
         excess = len(texts) - count
         if excess > 0:
-            indexes = range(count, count + excess)
-            self.insert_blank_subtitles(indexes, register=None)
+            indices = range(count, count + excess)
+            self.insert_blank_subtitles(indices, register=None)
         for i, text in enumerate(texts):
             self.subtitles[i].tran_text = text
 

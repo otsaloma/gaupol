@@ -111,8 +111,8 @@ class TestPreviewPage(unittest.TestCase):
 
         # pylint: disable-msg=W0631
         store = self.page._app_combo.get_model()
-        indexes = range(len(store) - 2)
-        for index in indexes:
+        indices = range(len(store) - 2)
+        for index in indices:
             self.page._app_combo.set_active(index)
         self.page._app_combo.set_active(index + 2)
 

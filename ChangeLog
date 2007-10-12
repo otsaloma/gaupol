@@ -1,3 +1,28 @@
+2007-10-12  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/agents/clipboard.py:
+	* gaupol/agents/edit.py:
+	* gaupol/agents/format.py:
+	* gaupol/agents/open.py:
+	* gaupol/agents/position.py:
+	* gaupol/agents/save.py:
+	* gaupol/agents/search.py:
+	* gaupol/agents/text.py:
+	* gaupol/gtk/agents/open.py:
+	* gaupol/gtk/assistants/text/assistant.py:
+	* gaupol/gtk/assistants/text/capitalization.py:
+	* gaupol/gtk/assistants/text/error.py:
+	* gaupol/gtk/assistants/text/hearing.py:
+	* gaupol/gtk/assistants/text/line.py:
+	* gaupol/gtk/conf/config.py:
+	* gaupol/gtk/dialogs/duration.py:
+	* gaupol/gtk/dialogs/insert.py:
+	* gaupol/gtk/dialogs/split.py:
+	* gaupol/gtk/page.py:
+	* gaupol/liner.py:
+	* gaupol/project.py:
+	Rename "indexes" to "indices".
+
 2007-10-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/__init__.py:

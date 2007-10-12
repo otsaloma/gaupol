@@ -60,8 +60,8 @@ class InsertDialog(GladeDialog):
         if page.project.subtitles:
             index = page.view.get_selected_rows()[0]
             index = (index + 1 if not above else index)
-        indexes = range(index, index + amount)
-        page.project.insert_blank_subtitles(indexes)
+        indices = range(index, index + amount)
+        page.project.insert_blank_subtitles(indices)
 
     @gaupol.gtk.util.asserted_return
     def _on_response(self, dialog, response):

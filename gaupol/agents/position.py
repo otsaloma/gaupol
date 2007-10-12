@@ -83,24 +83,24 @@ class PositionAgent(gaupol.Delegate):
         point_2[1] = self.calc.time_to_seconds(point_2[1])
         return self._get_seconds_transform(point_1, point_2)
 
-    def adjust_durations_require(self, indexes=None, *args, **kwargs):
-        for index in indexes or []:
+    def adjust_durations_require(self, indices=None, *args, **kwargs):
+        for index in indices or []:
             assert 0 <= index < len(self.subtitles)
 
     @gaupol.util.revertable
-    def adjust_durations(self, indexes=None, optimal=None, lengthen=False,
+    def adjust_durations(self, indices=None, optimal=None, lengthen=False,
         shorten=False, maximum=None, minimum=None, gap=None, register=-1):
         """Lengthen or shorten durations by changing the end positions.
 
-        indexes can be None to process all subtitles.
+        indices can be None to process all subtitles.
         optimal is duration per character in seconds.
         gap is seconds to be left between consecutive subtitles.
-        Return changed indexes.
+        Return changed indices.
         """
         new_indexes = []
         new_subtitles = []
-        indexes = indexes or range(len(self.subtitles))
-        for index in indexes:
+        indices = indices or range(len(self.subtitles))
+        for index in indices:
             start = self.subtitles[index].start_seconds
             end = self.subtitles[index].end_seconds
             end_max = 360000
@@ -131,26 +131,26 @@ class PositionAgent(gaupol.Delegate):
             self.set_action_description(register, _("Adjusting durations"))
         return new_indexes
 
-    def convert_framerate_require(self, indexes, *args, **kwargs):
-        for index in indexes or []:
+    def convert_framerate_require(self, indices, *args, **kwargs):
+        for index in indices or []:
             assert 0 <= index < len(self.subtitles)
 
     @gaupol.util.revertable
-    def convert_framerate(self, indexes, input, output, register=-1):
+    def convert_framerate(self, indices, input, output, register=-1):
         """Set the value of the framerate and convert subtitles to it.
 
-        indexes can be None to process all subtitles.
+        indices can be None to process all subtitles.
         """
         self.set_framerate(input, register=None)
         new_subtitles = []
-        indexes = indexes or range(len(self.subtitles))
-        for index in indexes:
+        indices = indices or range(len(self.subtitles))
+        for index in indices:
             subtitle = self.subtitles[index].copy()
             subtitle.convert_framerate(output)
             new_subtitles.append(subtitle)
 
         self.set_framerate(output)
-        self.replace_positions(indexes, new_subtitles, register=register)
+        self.replace_positions(indices, new_subtitles, register=register)
         self.group_actions(register, 2, _("Converting framerate"))
 
     @gaupol.util.revertable
@@ -170,35 +170,35 @@ class PositionAgent(gaupol.Delegate):
         action.revert_args = (orig_framerate,)
         self.register_action(action)
 
-    def shift_positions_require(self, indexes, count, register=-1):
-        for index in indexes or []:
+    def shift_positions_require(self, indices, count, register=-1):
+        for index in indices or []:
             assert 0 <= index < len(self.subtitles)
 
     @gaupol.util.revertable
-    def shift_positions(self, indexes, value, register=-1):
+    def shift_positions(self, indices, value, register=-1):
         """Make subtitles appear earlier or later.
 
-        indexes can be None to process all subtitles.
+        indices can be None to process all subtitles.
         """
         new_subtitles = []
-        indexes = indexes or range(len(self.subtitles))
-        for index in indexes:
+        indices = indices or range(len(self.subtitles))
+        for index in indices:
             subtitle = self.subtitles[index].copy()
             subtitle.shift_positions(value)
             new_subtitles.append(subtitle)
 
-        self.replace_positions(indexes, new_subtitles, register=register)
+        self.replace_positions(indices, new_subtitles, register=register)
         self.set_action_description(register, _("Shifting positions"))
 
-    def transform_positions_require(self, indexes, *args, **kwargs):
-        for index in indexes or []:
+    def transform_positions_require(self, indices, *args, **kwargs):
+        for index in indices or []:
             assert 0 <= index < len(self.subtitles)
 
     @gaupol.util.revertable
-    def transform_positions(self, indexes, point_1, point_2, register=-1):
+    def transform_positions(self, indices, point_1, point_2, register=-1):
         """Change positions by linear two-point correction.
 
-        indexes can be None to process all subtitles.
+        indices can be None to process all subtitles.
         point_* should be a tuple of index and start position.
         """
         if isinstance(point_1[1], basestring):
@@ -209,12 +209,12 @@ class PositionAgent(gaupol.Delegate):
             method = self._get_seconds_transform
         coefficient, constant = method(point_1, point_2)
         new_subtitles = []
-        indexes = indexes or range(len(self.subtitles))
-        for index in indexes:
+        indices = indices or range(len(self.subtitles))
+        for index in indices:
             subtitle = self.subtitles[index].copy()
             subtitle.scale_positions(coefficient)
             subtitle.shift_positions(constant)
             new_subtitles.append(subtitle)
 
-        self.replace_positions(indexes, new_subtitles, register=register)
+        self.replace_positions(indices, new_subtitles, register=register)
         self.set_action_description(register, _("Transforming positions"))

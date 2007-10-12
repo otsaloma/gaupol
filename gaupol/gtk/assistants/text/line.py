@@ -78,7 +78,7 @@ class LineBreakPage(LocalePage):
             return domain.max_skip_lines
         return sys.maxint
 
-    def correct_texts(self, project, indexes, doc):
+    def correct_texts(self, project, indices, doc):
         """Correct texts in project."""
 
         script = self._get_script()
@@ -89,7 +89,7 @@ class LineBreakPage(LocalePage):
         patterns = self._manager.get_patterns(*codes)
         domain = self._get_conf_domain()
         project.break_lines(
-            indexes, doc, patterns,
+            indices, doc, patterns,
             gaupol.gtk.ruler.get_length_function(domain.length_unit),
             domain.max_length, domain.max_lines, domain.max_deviation,
             (domain.skip_length or domain.skip_lines),

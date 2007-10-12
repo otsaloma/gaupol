@@ -3,11 +3,11 @@ AllowNoIcons=yes
 AppName=Gaupol
 AppPublisher=Osmo Salomaa
 AppPublisherURL=http://home.gna.org/gaupol/
-AppVerName=Gaupol 0.12
+AppVerName=Gaupol 0.12.1
 Compression=lzma
 DefaultDirName={pf}\Gaupol
 DefaultGroupName=Gaupol
-OutputBaseFilename=gaupol-0.12-win32
+OutputBaseFilename=gaupol-0.12.1-win32
 OutputDir=F:\gaupol\win32
 SolidCompression=yes
 

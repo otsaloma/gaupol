@@ -72,9 +72,9 @@ class SplitDialog(GladeDialog):
     def _remove_from_source(self, source, index):
         """Remove rows from the source page."""
 
-        indexes = range(index, len(source.project.subtitles))
+        indices = range(index, len(source.project.subtitles))
         source.project.block("action-done")
-        source.project.remove_subtitles(indexes)
+        source.project.remove_subtitles(indices)
         source.project.set_action_description(
             gaupol.gtk.REGISTER.DO, _("Splitting project"))
         source.project.unblock("action-done")
@@ -98,8 +98,8 @@ class SplitDialog(GladeDialog):
         self.application.counter += 1
         destination = gaupol.gtk.Page(self.application.counter)
         subtitles = [x.copy() for x in source.project.subtitles[index:]]
-        indexes = range(len(subtitles))
-        destination.project.insert_subtitles(indexes, subtitles)
+        indices = range(len(subtitles))
+        destination.project.insert_subtitles(indices, subtitles)
         destination.reload_view_all()
         self._remove_from_source(source, index)
         self._shift_destination(source, destination)

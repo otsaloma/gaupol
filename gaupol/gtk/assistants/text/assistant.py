@@ -140,18 +140,18 @@ class TextAssistant(gtk.Assistant):
         description = _("Correcting texts")
         register = gaupol.gtk.REGISTER.DO
         for page in application_pages:
-            indexes = [x[1] for x in changes if x[0] is page]
+            indices = [x[1] for x in changes if x[0] is page]
             texts = [x[3] for x in changes if x[0] is page]
-            if indexes and texts:
-                page.project.replace_texts(indexes, doc, texts)
+            if indices and texts:
+                page.project.replace_texts(indices, doc, texts)
                 page.project.set_action_description(register, description)
-                edits += (len(indexes))
-            edit_indexes = set(indexes)
-            indexes = [x for i, x in enumerate(indexes) if not texts[i]]
-            if indexes and gaupol.gtk.conf.text_assistant.remove_blank:
-                page.project.remove_subtitles(indexes)
+                edits += (len(indices))
+            edit_indexes = set(indices)
+            indices = [x for i, x in enumerate(indices) if not texts[i]]
+            if indices and gaupol.gtk.conf.text_assistant.remove_blank:
+                page.project.remove_subtitles(indices)
                 page.project.group_actions(register, 2, description)
-                removals += len(set(indexes))
+                removals += len(set(indices))
         edits = edits - removals
         message = _("Edited %(edits)d and removed %(removals)d subtitles")
         self.application.flash_message(message % locals())
