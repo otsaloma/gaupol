@@ -1,12 +1,37 @@
+Gaupol 0.12.2
+=============
+
+ [D] Fix tag conversions that removed text (#10140)
+
+
 Gaupol 0.13
 ===========
 
  * Allow arbitrary attributes on gaupol.Subtitle?
+    ! Default values for additional fields?
+    ! Files handle Subtitle objects?
+    - setattr(subtitle, name, value)
+    - getattr(subtitle, name, default)
+    - gaupol.files.SubStationAlpha
+    - gaupol.files.AdvSubStationAlpha
+    - gaupol.Subtitle.copy
+    - gaupol.agents.OpenAgent
+    - gaupol.agents.SaveAgent
+    - gaupol.agents.SetAgent.set_field
+    - gaupol.gtk.OpenAgent._show_ssa_warning_dialog
+    - gaupol.gtk.conf.file.warn_ssa
+    - gaupol.*: "get_subtitle"
  * Allow arbitrary columns in gaupol.gtk.View?
+    ! How to identify columns if not index?
+    - gaupol.gtk.View
+    - gaupol.gtk.Page
+    - gaupol.gtk.*: "col"
 
+ [?] Preserve additional fields in SSA/ASS files
  [ ] Raise PyGTK dependency to 2.12 or greater
     - gtk.AboutDialog: "name" replaced with "program-name"
     - gtk.Tooltip: New API that allows complex tooltips
+    - Show recent menu item tooltips in the status bar
  [?] Add notebooked panes to the side and bottom
  [?] Move the output window to the bottom pane
  [ ] Add a plugin system

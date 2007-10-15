@@ -32,9 +32,9 @@ class SubStationAlpha(TagLibrary):
      * _re_int_closing_end: Regular expression ... at the end of a subtitle
     """
 
-    _re_int_opening = re.compile(r"<[^/].*?>")
-    _re_int_closing = re.compile(r"</.*?>")
-    _re_int_closing_end = re.compile(r"</.*?>\Z")
+    _re_int_opening = re.compile(r"<[^/][^<]*?>")
+    _re_int_closing = re.compile(r"</[^<]*?>")
+    _re_int_closing_end = re.compile(r"</[^<]*?>\Z")
     format = gaupol.FORMAT.SSA
 
     @property
@@ -49,7 +49,7 @@ class SubStationAlpha(TagLibrary):
     def tag(self):
         """Regular expression for any tag."""
 
-        return re.compile(r"\{.*?\}", 0)
+        return re.compile(r"\{[^{]*?\}", 0)
 
     @gaupol.util.once
     def _get_decode_tags(self):
@@ -72,16 +72,16 @@ class SubStationAlpha(TagLibrary):
             (r"\{\\c&H([a-zA-Z0-9]{6})&\}", FLAGS,
                 r'<color="#\1">', 1),
             # Font
-            (r"\{\\fn(.*?)\}", FLAGS,
+            (r"\{\\fn([^{]*?)\}", FLAGS,
                 r'<font="\1">', 1),
             # Size
-            (r"\{\\fs(.*?)\}", FLAGS,
+            (r"\{\\fs([^{]*?)\}", FLAGS,
                 r'<size="\1">', 1),
             # Reset
             (r"\{\\r\}", FLAGS,
                 r"</>", 1),
             # Remove all else.
-            (r"\{.*?\}", FLAGS,
+            (r"\{[^{]*?\}", FLAGS,
                 r"", 1),]
 
         for i, (pattern, flags, replacement, count) in enumerate(tags):
@@ -99,7 +99,7 @@ class SubStationAlpha(TagLibrary):
             (r"</(b|i|u)>(\n?)<\1>", FLAGS,
                 r"\2", 3),
             # Remove other redundant tags.
-            (r"<(.*?)=(.*?)>(.*?)</\1>(\n?)<\1=\2>", FLAGS,
+            (r"<([^<]*?)=([^<]*?)>(.*?)</\1>(\n?)<\1=\2>", FLAGS,
                 r"<\1=\2>\3\4", 3),
             # Bold and italic, \061 = 1
             (r"<(b|i)>", 0,
@@ -108,13 +108,13 @@ class SubStationAlpha(TagLibrary):
             (r"</(b|i)>", 0,
                 r"{\\\1\060}", 1),
             # Color opening
-            (r'<color="#(.*?)">', 0,
+            (r'<color="#([^<]*?)">', 0,
                 r"{\\c&H\1&}", 1),
             # Font opening
-            (r'<font="(.*?)">', 0,
+            (r'<font="([^<]*?)">', 0,
                 r"{\\fn\1}", 1),
             # Size opening
-            (r'<size="(.*?)">', 0,
+            (r'<size="([^<]*?)">', 0,
                 r"{\\fs\1}", 1),
             # Color, font or size closing
             (r"</[a-z]{3,}>", 0,

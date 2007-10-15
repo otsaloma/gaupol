@@ -40,7 +40,7 @@ class MPL2(MicroDVD):
     def tag(self):
         """Regular expression for any tag."""
 
-        return re.compile(r"(\{[a-z]:.*?\})|(\\|/|_)", re.IGNORECASE)
+        return re.compile(r"(\{[a-z]:[^{]*?\})|(\\|/|_)", re.IGNORECASE)
 
     @gaupol.util.once
     def _get_decode_tags(self):

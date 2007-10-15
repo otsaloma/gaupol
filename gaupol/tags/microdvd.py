@@ -40,7 +40,7 @@ class MicroDVD(TagLibrary):
     def tag(self):
         """Regular expression for any tag."""
 
-        return re.compile(r"\{[a-z]:.*?\}", re.IGNORECASE)
+        return re.compile(r"\{[a-z]:[^{]*?\}", re.IGNORECASE)
 
     @gaupol.util.once
     def _get_decode_tags(self):
@@ -74,10 +74,10 @@ class MicroDVD(TagLibrary):
             (r"\{C:\$([a-zA-Z0-9]{6})\}(.*?)\Z", FLAGS,
                 r'<color="#\1">\2</color>', 1),
             # Font (single line)
-            (r"\{f:(.*?)\}(.*?)$", FLAGS,
+            (r"\{f:([^{]*?)\}(.*?)$", FLAGS,
                 r'<font="\1">\2</font>', 1),
             # Font (whole subtitle)
-            (r"\{F:(.*?)\}(.*?)\Z", FLAGS,
+            (r"\{F:([^{]*?)\}(.*?)\Z", FLAGS,
                 r'<font="\1">\2</font>', 1),
             # Size (single line)
             (r"\{s:(\d+)\}(.*?)$", FLAGS,
@@ -86,7 +86,7 @@ class MicroDVD(TagLibrary):
             (r"\{S:(\d+)\}(.*?)\Z", FLAGS,
                 r'<size="\1">\2</size>', 1),
             # Remove all other tags.
-            (r"\{.:.*?\}", re.IGNORECASE,
+            (r"\{.:[^{]*?\}", re.IGNORECASE,
                 r"", 1),]
 
         for i, (pattern, flags, replacement, count) in enumerate(tags):
@@ -104,7 +104,7 @@ class MicroDVD(TagLibrary):
             (r"</(b|i|u)>(\n?)<\1>", FLAGS,
                 r"\2", 3),
             # Remove other duplicate tags.
-            (r"<(.*?)=(.*?)>(.*?)</\1>(\n?)<\1=\2>", FLAGS,
+            (r"<([^<]*?)=([^<]*?)>(.*?)</\1>(\n?)<\1=\2>", FLAGS,
                 r"<\1=\2>\3\4", 3),
             # Style (affecting a single line subtitle fully)
             (r"\A<(b|i|u)>(.*?)</\1>\Z", re.MULTILINE,
@@ -125,22 +125,22 @@ class MicroDVD(TagLibrary):
             (r'<color="#(.{6})">(.*?)</color>', FLAGS,
                 r"{C:$\1}\2", 1),
             # Font (affecting a single line subtitle fully)
-            (r'\A<font="(.*?)">(.*?)</font>\Z', re.MULTILINE,
+            (r'\A<font="([^<]*?)">(.*?)</font>\Z', re.MULTILINE,
                 r"{F:\1}\2", 1),
             # Font (affecting only one line)
-            (r'<font="(.*?)">(.*?)</font>', re.MULTILINE,
+            (r'<font="([^<]*?)">(.*?)</font>', re.MULTILINE,
                 r"{f:\1}\2", 1),
             # Font (affecting whole subtitle)
-            (r'<font="(.*?)">(.*?)</font>', FLAGS,
+            (r'<font="([^<]*?)">(.*?)</font>', FLAGS,
                 r"{F:\1}\2", 1),
             # Size (affecting a single line subtitle fully)
-            (r'\A<size="(.*?)">(.*?)</size>\Z', re.MULTILINE,
+            (r'\A<size="([^<]*?)">(.*?)</size>\Z', re.MULTILINE,
                 r"{S:\1}\2", 1),
             # Size (affecting only one line)
-            (r'<size="(.*?)">(.*?)</size>', re.MULTILINE,
+            (r'<size="([^<]*?)">(.*?)</size>', re.MULTILINE,
                 r"{s:\1}\2", 1),
             # Size (affecting whole subtitle)
-            (r'<size="(.*?)">(.*?)</size>', FLAGS,
+            (r'<size="([^<]*?)">(.*?)</size>', FLAGS,
                 r"{S:\1}\2", 1),]
 
         for i, (pattern, flags, replacement, count) in enumerate(tags):

@@ -54,7 +54,7 @@ class TagLibrary(gaupol.Singleton):
         """Get list of tuples of regular expression, replacement."""
 
         # Remove all tags.
-        return [(re.compile(r"<.*?>"), "")]
+        return [(re.compile(r"<[^<]*?>"), "")]
 
     def clean(self, text):
         """Return text with redundant tags removed and remaining cleaned."""

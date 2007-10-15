@@ -1,3 +1,15 @@
+2007-10-13  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/ruler.py:
+	* gaupol/tags/microdvd.py:
+	* gaupol/tags/mpl2.py:
+	* gaupol/tags/ssa.py:
+	* gaupol/tags/subrip.py:
+	* gaupol/tags/taglib.py:
+	Fix wild and potentially wild regular expressions for tags that matched
+	text after the tag as well causing that text to be removed when
+	converting tags to a different format. (#10140)
+
 2007-10-12  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/agents/clipboard.py:

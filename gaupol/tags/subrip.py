@@ -66,8 +66,8 @@ class SubRip(TagLibrary):
 
         FLAGS = re.DOTALL | re.MULTILINE | re.UNICODE
         tags = [
-            (re.compile(r"<(.*?)(=.*?)?>( *)</\1>"), r"\3"),
-            (re.compile(r"</(.*?)>( *)<\1(=.*?)?>"), r"\2"),
+            (re.compile(r"<([^<]*?)(=[^<]*?)?>( *)</\1>"), r"\3"),
+            (re.compile(r"</([^<]*?)>( *)<\1(=[^<]*?)?>"), r"\2"),
             (re.compile(r" ?(<(?<!/)[^<]+?>) ", FLAGS), r" \1"),
             (re.compile(r" (</[^<]+?>) ?", FLAGS), r"\1 "),]
         return tags
