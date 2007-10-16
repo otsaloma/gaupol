@@ -1,3 +1,9 @@
+2007-10-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/open-dialog.glade:
+	* data/glade/save-dialog.glade:
+	Fix extra widget spacing on sides.
+
 2007-10-13  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/ruler.py:
