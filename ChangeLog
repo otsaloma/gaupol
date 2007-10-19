@@ -1,3 +1,8 @@
+2007-10-19  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/dialogs/file/save.py (set_name):
+	Set the current folder before setting filename.
+
 2007-10-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/glade/open-dialog.glade:

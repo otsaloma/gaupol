@@ -132,6 +132,7 @@ class SaveDialog(GladeDialog, SubtitleFileDialog):
         """Set either filename or current name."""
 
         if os.path.isfile(path):
+            self.set_current_folder(os.path.dirname(path))
             return self.set_filename(path)
         return self.set_current_name(path)
 
