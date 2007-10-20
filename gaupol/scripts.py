@@ -28,11 +28,10 @@ import re
 _ = gaupol.i18n._
 
 scripts = {
-    # Translators: You might find translations of some of the script names in
-    # FontForge .po files [1]. If not, feel free to translate only a couple of
-    # most common ones, e.g. Arabic, Cyrillic, Devanagari, Greek, Hangul,
-    # Simplified Han, Traditional Han, Hebrew, Japanese and Latin. Most of
-    # these scripts will probably never be used with Gaupol.
+    # Translators: If some of the more bizarre of the following script names
+    # are left untranslated, it's no big deal. You might find translations of
+    # some of the script names in ICU project locale files.
+    # http://source.icu-project.org/repos/icu/icu/trunk/source/data/locales/
     "Arab": _("Arabic"),
     "Armn": _("Armenian"),
     "Avst": _("Avestan"),

@@ -1,3 +1,8 @@
+2007-10-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/scripts.py:
+	Revise translators note.
+
 2007-10-19  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/dialogs/file/save.py (set_name):
