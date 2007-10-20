@@ -1,3 +1,10 @@
+Gaupol 0.12.2
+=============
+
+ * Fix tag conversions that removed text (#10140)
+ * Fix spacing issues in open and save dialogs
+ 
+
 Gaupol 0.12.1
 =============
 
