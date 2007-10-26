@@ -1,9 +1,15 @@
+Gaupol 0.12.3
+=============
+
+ [D] Fix error in splitting frame-based subtitle projects (#10200)
+
+
 Gaupol 0.13
 ===========
 
  [ ] Preserve additional fields in SSA/ASS files
     * Allow arbitrary attributes on gaupol.Subtitle
-       ! SubtitleFile argument data types
+       - gaupol.files.*.{read,write}
        - gaupol.files.SubStationAlpha
        - gaupol.files.AdvSubStationAlpha
        - gaupol.Subtitle
@@ -22,8 +28,8 @@ Gaupol 0.13
     - gtk.AboutDialog: "name" replaced with "program-name"
     - gtk.Tooltip: New API that allows complex tooltips
     - Show recent menu item tooltips in the status bar
-    
-    
+
+
 Gaupol 0.14
 ===========
 

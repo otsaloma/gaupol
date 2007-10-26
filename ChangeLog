@@ -1,3 +1,8 @@
+2007-10-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/dialogs/split.py (_shift_destination):
+	Add missing comma to isinstance call. (#10200)
+
 2007-10-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/__init__.py:

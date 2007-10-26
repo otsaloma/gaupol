@@ -85,7 +85,7 @@ class SplitDialog(GladeDialog):
         amount = source.project.subtitles[-1].end
         if isinstance(amount, basestring):
             amount = "-" + amount
-        elif isinstance(amount (int, float)):
+        elif isinstance(amount, (int, float)):
             amount = -1 * amount
         destination.project.shift_positions(None, amount, register=None)
 
