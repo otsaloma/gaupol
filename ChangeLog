@@ -1,5 +1,11 @@
 2007-10-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/agents/preview.py (preview):
+	Do not remove output_path if an exception is caught, because the path
+	is not available and the file is removed by atexit anyway. (#10203)
+
+2007-10-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/dialogs/split.py (_shift_destination):
 	Add missing comma to isinstance call. (#10200)
 

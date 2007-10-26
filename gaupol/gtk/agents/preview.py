@@ -100,12 +100,8 @@ class PreviewAgent(gaupol.Delegate):
             output = page.project.preview(time, doc, command, offset, path)
             process, command, output_path = output
         except (IOError, OSError), (no, message):
-            silent = gaupol.gtk.util.silent(OSError)
-            silent(os.remove)(output_path)
             return self._show_io_error_dialog(message)
         except UnicodeError:
-            silent = gaupol.gtk.util.silent(OSError)
-            silent(os.remove)(output_path)
             return self._show_encoding_error_dialog()
         function = self._check_process_state
         args = (process, output_path)
