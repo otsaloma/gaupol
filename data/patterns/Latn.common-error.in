@@ -29,7 +29,7 @@ Repeat=False
 _Name=Spaces before punctuation marks
 _Description=Remove excess spaces before various punctuation marks
 Classes=Human,OCR
-Pattern= +((("|')?([,;:.?!])(?!(\d|\4)))|(["']\W*$))
+Pattern= +(("|')?([,;:.?!])(?!(\d|\3)))
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\1
 Repeat=False
@@ -59,6 +59,24 @@ Classes=Human,OCR
 Pattern=(^\W*?\.\.\.)( +)
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\1
+Repeat=False
+
+[CommonErrorPattern]
+_Name=Spaces after quotation marks
+_Description=Remove spaces after starting quotation marks
+Classes=OCR
+Pattern=^(\W*["'])( +)
+Flags=DOTALL,MULTILINE,UNICODE
+Replacement=\1
+Repeat=False
+
+[CommonErrorPattern]
+_Name=Spaces before quotation marks
+_Description=Remove spaces before ending quotation marks
+Classes=OCR
+Pattern=( +)(["']\W*)$
+Flags=DOTALL,MULTILINE,UNICODE
+Replacement=\2
 Repeat=False
 
 [CommonErrorPattern]

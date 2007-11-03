@@ -29,6 +29,9 @@ Gaupol 0.13
     - gtk.AboutDialog: "name" replaced with "program-name"
     - gtk.Tooltip: New API that allows complex tooltips
     - Show recent menu item tooltips in the status bar
+ [ ] Allow comments in pattern files
+    - Add comments to existing pattern files
+    - Remove write capability from gaupol.PatternManager?
 
 
 Gaupol 0.14

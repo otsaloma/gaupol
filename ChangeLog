@@ -1,3 +1,9 @@
+2007-11-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/patterns/Latn.common-error.conf:
+	* data/patterns/Latn.common-error.in:
+	Add patterns to remove spaces around quotation marks.
+
 2007-10-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/agents/preview.py (preview):
