@@ -1,5 +1,10 @@
 2007-11-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/__init__.py:
+	Bump version number to match branch release 0.12.3.
+
+2007-11-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/patterns/Latn.common-error.conf:
 	* data/patterns/Latn.common-error.in:
 	Add patterns to remove spaces around quotation marks.
