@@ -1,3 +1,10 @@
+2007-11-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/patterns/Latn.common-error.in:
+	Change patterns for removing spaces around quotation marks to count
+	the quotation marks to remove the correct space in the middle of text,
+	instead of only at the beginning or end of text.
+
 2007-11-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/__init__.py:

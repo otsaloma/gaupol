@@ -65,18 +65,18 @@ Repeat=False
 _Name=Spaces after quotation marks
 _Description=Remove spaces after starting quotation marks
 Classes=OCR
-Pattern=^(\W*["'])( +)
+Pattern=(\A[^"]*)(" )([^"]*"[^"]*\Z)
 Flags=DOTALL,MULTILINE,UNICODE
-Replacement=\1
+Replacement=\1"\3
 Repeat=False
 
 [CommonErrorPattern]
 _Name=Spaces before quotation marks
 _Description=Remove spaces before ending quotation marks
 Classes=OCR
-Pattern=( +)(["']\W*)$
+Pattern=(\A[^"]*"[^"]*)( ")([^"]*\Z)
 Flags=DOTALL,MULTILINE,UNICODE
-Replacement=\2
+Replacement=\1"\3
 Repeat=False
 
 [CommonErrorPattern]
