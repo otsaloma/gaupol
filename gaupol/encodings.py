@@ -199,7 +199,13 @@ def detect(path):
     detector.close()
     code = detector.result["encoding"]
     assert code is not None
-    return _translate_code(code)
+    try:
+        # chardet returns what seem to be IANA names. They need to be
+        # translated to their Python equivalents. Some of the encodings
+        # returned by chardet are not supported by Python.
+        return _translate_code(code)
+    except ValueError:
+        return None
 
 def get_locale_code_ensure(value):
     if value is not None:

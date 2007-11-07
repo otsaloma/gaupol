@@ -1,3 +1,8 @@
+2007-11-07  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/encodings.py (detect):
+	Handle ValueError from _translate_code. (#10278)
+
 2007-11-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/patterns/Latn.common-error.in:

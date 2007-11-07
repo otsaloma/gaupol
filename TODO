@@ -25,6 +25,7 @@ Gaupol 0.13
  [ ] Allow comments in pattern files
     - Add comments to existing pattern files
     - Remove write capability from gaupol.PatternManager?
+ [D] Fix error with encoding auto-detection (#10278)
 
 
 Gaupol 0.14
