@@ -75,6 +75,7 @@ class MultilineCellRenderer(gtk.CellRendererText):
     def __init__(self):
 
         gtk.CellRendererText.__init__(self)
+        self._in_editor_menu = False
         self._show_lengths = gaupol.gtk.conf.editor.show_lengths_cell
         self._text = ""
         gaupol.gtk.conf.connect(self, "editor", "show_lengths_cell")
@@ -85,9 +86,11 @@ class MultilineCellRenderer(gtk.CellRendererText):
 
         self._show_lengths = gaupol.gtk.conf.editor.show_lengths_cell
 
+    @gaupol.gtk.util.asserted_return
     def _on_editor_focus_out_event(self, editor, *args):
         """End editing."""
 
+        assert not self._in_editor_menu
         editor.remove_widget()
         self.emit("editing-canceled")
 
@@ -102,6 +105,14 @@ class MultilineCellRenderer(gtk.CellRendererText):
         elif event.keyval == gtk.keysyms.Escape:
             editor.remove_widget()
             self.emit("editing-canceled")
+
+    def _on_editor_populate_popup(self, editor, menu):
+        """Disable the ending of editing on focus-out-event."""
+
+        self._in_editor_menu = True
+        def on_menu_unmap(menu, self):
+            self._in_editor_menu = False
+        menu.connect("unmap", on_menu_unmap, self)
 
     @gaupol.gtk.util.asserted_return
     def _on_notify_text(self, *args):
@@ -127,6 +138,7 @@ class MultilineCellRenderer(gtk.CellRendererText):
         editor.set_data("path", path)
         editor.connect("focus-out-event", self._on_editor_focus_out_event)
         editor.connect("key-press-event", self._on_editor_key_press_event)
+        editor.connect("populate-popup", self._on_editor_populate_popup)
         editor.show()
         return editor
 

@@ -1,3 +1,10 @@
+2007-11-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/renderers/multiline.py:
+	* gaupol/gtk/renderers/time.py:
+	End editing in the case of focus-out-event only if the focus is not
+	being shifted to the right-click menu.
+
 2007-11-07  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/encodings.py (detect):

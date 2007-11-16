@@ -26,6 +26,8 @@ Gaupol 0.13
     - Add comments to existing pattern files
     - Remove write capability from gaupol.PatternManager?
  [D] Fix error with encoding auto-detection (#10278)
+ [D] Fix error displaying right-click menu in cell renderers (kitone)
+ [ ] Add available mimetypes to the desktop file
 
 
 Gaupol 0.14
@@ -33,7 +35,7 @@ Gaupol 0.14
 
  [?] Add notebooked panes to the side and bottom
  [?] Move the output window to the bottom pane
- [ ] Add a plugin system
+ [ ] Add a plugin system (or shall they be called extensions?)
     - gaupol.gtk.Plugin
     - gaupol.gtk.PluginManager
     - gaupol.gtk.PreferencesDialog

@@ -26,9 +26,16 @@ class TimeCellRenderer(gtk.CellRendererText):
 
     __gtype_name__ = "TimeCellRenderer"
 
+    def __init__(self):
+
+        gtk.CellRendererText.__init__(self)
+        self._in_editor_menu = False
+
+    @gaupol.gtk.util.asserted_return
     def _on_editor_focus_out_event(self, editor, *args):
         """End editing."""
 
+        assert not self._in_editor_menu
         editor.remove_widget()
         self.emit("editing-canceled")
 
@@ -44,6 +51,14 @@ class TimeCellRenderer(gtk.CellRendererText):
             editor.remove_widget()
             self.emit("editing-canceled")
 
+    def _on_editor_populate_popup(self, editor, menu):
+        """Disable the ending of editing on focus-out-event."""
+
+        self._in_editor_menu = True
+        def on_menu_unmap(menu, self):
+            self._in_editor_menu = False
+        menu.connect("unmap", on_menu_unmap, self)
+
     def do_start_editing(self, event, widget, path, bg_area, cell_area, flags):
         """Initialize and return the editor widget."""
 
@@ -56,5 +71,6 @@ class TimeCellRenderer(gtk.CellRendererText):
         editor.set_data("path", path)
         editor.connect("focus-out-event", self._on_editor_focus_out_event)
         editor.connect("key-press-event", self._on_editor_key_press_event)
+        editor.connect("populate-popup", self._on_editor_populate_popup)
         editor.show()
         return editor
