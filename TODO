@@ -27,6 +27,7 @@ Gaupol 0.13
     - Remove write capability from gaupol.PatternManager?
  [D] Fix error with encoding auto-detection (#10278)
  [D] Fix error displaying right-click menu in cell renderers (kitone)
+ [D] Fix error closing the search dialog from the window titlebar
  [ ] Add available mimetypes to the desktop file
 
 

@@ -1,5 +1,11 @@
 2007-11-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/agents/search.py (on_find_and_replace_activate):
+	Connect to search dialog's delete-event and return True to avoid
+	destroying the dialog instead of just hiding it.
+
+2007-11-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/renderers/multiline.py:
 	* gaupol/gtk/renderers/time.py:
 	End editing in the case of focus-out-event only if the focus is not

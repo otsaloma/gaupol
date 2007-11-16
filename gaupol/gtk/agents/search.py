@@ -46,6 +46,8 @@ class SearchAgent(gaupol.Delegate):
             return self._search_dialog.present()
         self._search_dialog = gaupol.gtk.SearchDialog(self)
         gaupol.gtk.util.connect(self, "_search_dialog", "response")
+        # Do not destroy the dialog, rather hide based on response.
+        self._search_dialog.connect("delete-event", lambda *args: True)
         self._search_dialog.show()
 
     def on_find_next_activate(self, *args):
