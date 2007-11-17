@@ -1,3 +1,9 @@
+2007-11-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/patterns/Latn-en.common-error.in:
+	Remove "l" from the list of consonants in pattern 'Letters "l" starting
+	words' to avoid turning "I' ll" eventually into "I'Il".
+
 2007-11-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/agents/search.py (on_find_and_replace_activate):
