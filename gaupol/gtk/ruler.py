@@ -33,8 +33,6 @@ class _Ruler(object):
      * _layout: pango.Layout used for text length calculations
     """
 
-    _re_tag = re.compile(r"(^[/\\_]|<[^<]*?>|\{[^{]*?\})")
-
     # pylint: disable-msg=W0231
     def __init__(self):
 

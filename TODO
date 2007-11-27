@@ -1,6 +1,8 @@
 Gaupol 0.13
 ===========
 
+ * Update iso-codes XML files
+
  [ ] Preserve additional fields in SSA/ASS files
     * Allow arbitrary attributes on gaupol.Subtitle
        - gaupol.files.*.{read,write}
@@ -13,6 +15,7 @@ Gaupol 0.13
        - gaupol.gtk.OpenAgent._show_ssa_warning_dialog
        - gaupol.gtk.conf.file.warn_ssa
        - gaupol.*: "get_subtitle"
+    * Preserve different line breaks (\n and \N)
     * Allow arbitrary columns in gaupol.gtk.View?
        ! How to identify columns?
        - gaupol.gtk.View
@@ -28,7 +31,9 @@ Gaupol 0.13
  [D] Fix error with encoding auto-detection (#10278)
  [D] Fix error displaying right-click menu in cell renderers (kitone)
  [D] Fix error closing the search dialog from the window titlebar
+ [D] Fix IndexError with multiline tags in the text cell renderer
  [ ] Add available mimetypes to the desktop file
+ [?] Allow Escape key to close the text correction assistant
 
 
 Gaupol 0.14
