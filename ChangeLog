@@ -1,3 +1,11 @@
+2007-12-15  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/dialogs/spellcheck.py (_init_checker):
+	Raise ValueError if dictionary initialization fails.
+
+	* gaupol/gtk/agents/text.py (on_check_spelling_activate):
+	Catch ValueError from SpellCheckDialog.
+
 2007-11-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/ruler.py:

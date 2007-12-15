@@ -29,7 +29,10 @@ class TextAgent(gaupol.Delegate):
         """Check for incorrect spelling."""
 
         gaupol.gtk.util.set_cursor_busy(self.window)
-        dialog = gaupol.gtk.SpellCheckDialog(self.window, self)
+        try: # Fails if no dictionary for conf.spell_check.language.
+            dialog = gaupol.gtk.SpellCheckDialog(self.window, self)
+        except ValueError:
+            return gaupol.gtk.util.set_cursor_normal(self.window)
         gaupol.gtk.util.set_cursor_normal(self.window)
         self.flash_dialog(dialog)
 

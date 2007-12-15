@@ -57,6 +57,7 @@ Send announcement mail.
 
 Update web sites.
 
+    http://bugzilla.gnome.org/editproducts.cgi?action=edit&product=gaupol
     http://gna.org/news/?group=gaupol
     http://www.gnomefiles.com/devs
     http://freshmeat.net/projects/gaupol

@@ -56,8 +56,12 @@ class SpellCheckDialog(GladeDialog):
     def __init___require(self, parent, application):
         assert gaupol.gtk.util.enchant_available()
 
+    @gaupol.gtk.util.asserted_return
     def __init__(self, parent, application):
+        """Initialize a SpellCheckDialog object.
 
+        Raise ValueError if dictionary initialization fails.
+        """
         GladeDialog.__init__(self, "spellcheck-dialog")
         get_widget = self._glade_xml.get_widget
         self._add_button = get_widget("add_button")
@@ -178,8 +182,10 @@ class SpellCheckDialog(GladeDialog):
             self._register_changes()
 
     def _init_checker(self):
-        """Initialize the checker or respond close if unsuccessful."""
+        """Initialize the checker for conf.spell_check.language.
 
+        Raise ValueError if dictionary initialization fails.
+        """
         import enchant.checker
         language = gaupol.gtk.conf.spell_check.language
         path = os.path.join(self._personal_dir, "%s.dict" % language)
@@ -192,7 +198,7 @@ class SpellCheckDialog(GladeDialog):
                 dict = enchant.Dict(str(language))
         except enchant.Error, message:
             self._show_error_dialog(message)
-            self.response(gtk.RESPONSE_CLOSE)
+            raise ValueError
         self._checker = enchant.checker.SpellChecker(dict, "")
 
     def _init_fonts(self):
@@ -262,8 +268,10 @@ class SpellCheckDialog(GladeDialog):
         self._tree_view.set_size_request(width + 4, -1)
 
     def _init_spell_check(self):
-        """Initialize spell-check components and related widgets."""
+        """Initialize spell-check components and related widgets.
 
+        Raise ValueError if dictionary initialization fails.
+        """
         gaupol.gtk.util.makedirs(self._personal_dir)
         self._init_checker()
         self._init_replacements()

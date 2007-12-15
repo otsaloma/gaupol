@@ -1,8 +1,6 @@
 Gaupol 0.13
 ===========
 
- * Update iso-codes XML files
-
  [ ] Preserve additional fields in SSA/ASS files
     * Allow arbitrary attributes on gaupol.Subtitle
        - gaupol.files.*.{read,write}
@@ -32,8 +30,15 @@ Gaupol 0.13
  [D] Fix error displaying right-click menu in cell renderers (kitone)
  [D] Fix error closing the search dialog from the window titlebar
  [D] Fix IndexError with multiline tags in the text cell renderer
+ [D] Fix error starting spell-check if no dictionary (#10526)
  [ ] Add available mimetypes to the desktop file
  [?] Allow Escape key to close the text correction assistant
+ [ ] Fix preview start position with shift dialog
+ [ ] Update iso-codes XML files
+ [?] Allow grouping of correction patterns under the same name
+ [ ] Improve error patterns for spaces around quote marks
+ [ ] Print error messages to sys.stderr, not sys.stdout
+ [?] Include font tags in SubRip and rethink internal syntax
 
 
 Gaupol 0.14
@@ -57,7 +62,7 @@ Gaupol 1.0
  * Add a wiki page for publishing pattern files
 
 
-Unscheduled Possible Plans
-==========================
+Gaupol 3000
+===========
 
  * Built-in GStreamer preview (as plugin?)
