@@ -39,6 +39,7 @@ Gaupol 0.13
  [ ] Improve error patterns for spaces around quote marks
  [ ] Print error messages to sys.stderr, not sys.stdout
  [?] Include font tags in SubRip and rethink internal syntax
+ [ ] Use gobject.idle_add to focus view on notebook page change
 
 
 Gaupol 0.14
@@ -65,4 +66,5 @@ Gaupol 1.0
 Gaupol 3000
 ===========
 
+ * freedesktop.org's XDG Base Directory Specification
  * Built-in GStreamer preview (as plugin?)

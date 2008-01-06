@@ -11,9 +11,9 @@ Repeat=True
 _Name=Dialogue lines
 _Description=Add spaces after dialogue lines
 Classes=Human,OCR
-Pattern=^-(?![- ])
+Pattern=^-([^-\s])
 Flags=DOTALL,MULTILINE,UNICODE
-Replacement=-\040
+Replacement=- \1
 Repeat=False
 
 [CommonErrorPattern]
