@@ -1,3 +1,9 @@
+2008-01-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/dialogs/file/save.py (set_name): Try to work around
+	a set_filename bug, which causes the filename entry to clear,
+	by using set_current_folder and set_current_name.
+
 2008-01-06  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/patterns/Latn.common-error.in (Dialogue lines):

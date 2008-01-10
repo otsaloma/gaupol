@@ -132,8 +132,10 @@ class SaveDialog(GladeDialog, SubtitleFileDialog):
         """Set either filename or current name."""
 
         if os.path.isfile(path):
+            # self.set_filename(path) does not work.
+            # http://bugzilla.gnome.org/show_bug.cgi?id=419737
             self.set_current_folder(os.path.dirname(path))
-            return self.set_filename(path)
+            return self.set_current_name(os.path.basename(path))
         return self.set_current_name(path)
 
     @gaupol.gtk.util.asserted_return
