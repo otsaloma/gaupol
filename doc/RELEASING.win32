@@ -3,13 +3,14 @@ Preparing to Build Windows Installers
 
  * Install the following on a Windows machine. The hicolor icon theme
    should be installed to C:\GTK\share\icons\hicolor\index.theme.
-   iso-codes should be installed to C:\GTK\share\locale.
+   Relevant parts of tarballs should be unpacked to C:\GTK\.
 
+   - http://gladewin32.sourceforge.net/
+   - http://ftp.gnome.org/pub/GNOME/binaries/win32/glib/
    - http://www.python.org/download/releases/
    - http://ftp.gnome.org/pub/GNOME/binaries/win32/pygobject/
    - http://ftp.gnome.org/pub/GNOME/binaries/win32/pycairo/
    - http://ftp.gnome.org/pub/GNOME/binaries/win32/pygtk/
-   - http://gladewin32.sourceforge.net/modules/news/
    - http://chardet.feedparser.org/download/
    - http://pyenchant.sourceforge.net/download.php
    - http://icon-theme.freedesktop.org/releases/
@@ -19,8 +20,9 @@ Preparing to Build Windows Installers
 
  * Edit C:\GTK\share\themes\MS-Windows\gtk-2.0\gtkrc.
 
-     gtk-button-images = 1
+     gtk-icon-sizes="... gtk-button=16,16 ..."
      gtk-toolbar-style = GTK_TOOLBAR_ICONS
+     gtk-button-images = 1
      GtkTreeView::allow-rules = 1
 
 

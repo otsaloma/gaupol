@@ -5,9 +5,10 @@ Gaupol 0.13
    - s/toggle_(\w+)_column/toggle_$1_field/
    - s/toggle_column/toggle_field/
  * Test on Windows with PyGTK 2.12
- * Rename smart_open_translation / Adapt to.. / whatever
+ * Rename smart_open_translation / Adapt to.. / whatever to
    - Align?
  * Rename dialog(ue)? lines to dialogue dashes
+ * Restrict tags strictly to known tags?
 
  [D] Raise PyGTK dependency to 2.12 or greater
  [D] Remove misuse of assertions that broke some parts of Gaupol, when
@@ -26,7 +27,7 @@ Gaupol 0.13
  [ ] Fix preview error with MPlayer (terminal type unknown)
  [ ] Fix subtitle number search after subtitle removals or inserts
  [D] Fix error displaying right-click menu in cells (kitone)
- [D] Fix IndexError with multiline tags in the text cell renderer
+ [D] Fix IndexError with multiline tags in text cells (#547170)
  [ ] Fix window type for preferences and search dialogs
  [D] Fix error closing the search dialog from the window titlebar
  [?] Fix preview start position with shift dialog
