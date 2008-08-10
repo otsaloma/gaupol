@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,163 +9,169 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""MicroDVD tag library."""
+"""Text markup for the MicroDVD format."""
 
 import gaupol
-import re
 
-from .taglib import TagLibrary
+__all__ = ("MicroDVD",)
 
 
-class MicroDVD(TagLibrary):
+class MicroDVD(gaupol.Markup):
 
-    """MicroDVD tag library."""
+    """Text markup for the MicroDVD format.
 
-    format = gaupol.FORMAT.MICRODVD
+    The MicroDVD format contains a lot of markup tags, of which the following
+    are of interest to us. Tags that start with a lower case letter end at the
+    end of the line, upper case ones at the end of the subtitle.
+
+     * {c:$BBGGRR}..., {C:$BBGGRR}... [1]
+     * {f:NAME}......, {F:NAME}......
+     * {s:SIZE}......, {S:SIZE}......
+     * {y:STYLE}....., {Y:STYLE}..... [2]
+
+     [1] Note the reverse order, BBGGRR instead of the normal RRGGBB.
+     [2] STYLE is a string containing one or more of the letters 'b', 'i' and
+         'u' and any amount of any possible separators or other characters.
+    """
+
+    format = gaupol.formats.MICRODVD
+
+    def _main_decode_ensure(self, value, text):
+        assert self.tag.search(value) is None
+
+    def _main_decode(self, text):
+        """Return text with decodable markup decoded."""
+
+        text = self._decode_b(text, r"\{([Yy]:b)\}(.*?)\{/\1\}", 2)
+        text = self._decode_c(text, r"\{([Cc]:#(.*?))\}(.*?)\{/\1\}", 2, 3)
+        text = self._decode_f(text, r"\{([Ff]:(.*?))\}(.*?)\{/\1\}", 2, 3)
+        text = self._decode_i(text, r"\{([Yy]:i)\}(.*?)\{/\1\}", 2)
+        text = self._decode_s(text, r"\{([Ss]:(.*?))\}(.*?)\{/\1\}", 2, 3)
+        return self._decode_u(text, r"\{([Yy]:u)\}(.*?)\{/\1\}", 2)
+
+    def _pre_decode(self, text):
+        """Return text with markup prepared for decoding."""
+
+        text = self._pre_decode_break(text)
+        text = self._pre_decode_color(text)
+        return self._pre_decode_close(text)
+
+    def _pre_decode_break(self, text):
+        """Return text with combined markup tags separated.
+
+        For example, '{y:biu}' is replaced with '{y:b}{y:i}{y:u}'.
+        """
+        pattern = r"\{([Yy]):([^}]{2,})\}"
+        regex = self._get_regex(pattern)
+        match = regex.search(text)
+        if match is None: return text
+        y = match.group(1)
+        replacement = ""
+        for m in ("b", "i", "u"):
+            if m in match.group(2):
+                replacement += "{%s:%s}" % (y, m)
+        text = regex.sub(replacement, text, 1)
+        return self._pre_decode_break(text)
+
+    def _pre_decode_close(self, text):
+        """Return text with all markup tags closed.
+
+        The artificial closing tags are of form '{/x:VALUE}'.
+        """
+        # Add lower case closing tags to the end of each line.
+        lines = text.split("\n")
+        re_tag = self._get_regex(r"\{([cfsy]:.*?)\}")
+        for i, line in enumerate(lines):
+            matches = [x for x in re_tag.finditer(line)]
+            for j in reversed(range(len(matches))):
+                lines[i] += "{/%s}" % matches[j].group(1)
+        text = "\n".join(lines)
+        # Add upper case closing tags to the end of the text.
+        re_tag = self._get_regex(r"\{([CFSY]:.*?)\}")
+        matches = [x for x in re_tag.finditer(text)]
+        for j in reversed(range(len(matches))):
+            text += "{/%s}" % matches[j].group(1)
+        return text
+
+    def _pre_decode_color_ensure(self, value, text):
+        regex = self._get_regex(r"\{([Cc]:)\$([0-9A-Fa-f]{6})\}")
+        assert regex.search(value) is None
+
+    def _pre_decode_color(self, text):
+        """Return text with colors converted to standard hexadecimal form.
+
+        Color tags are converted from '{c:$BBGGRR}' to '{c:#RRGGBB}'.
+        """
+        regex = self._get_regex(r"\{([Cc]:)\$([0-9A-Fa-f]{6})\}")
+        match = regex.search(text)
+        if match is None: return text
+        color = match.group(2)
+        color = "%s%s%s" % (color[4:], color[2:4], color[:2])
+        text = regex.sub(r"{\1#%s}" % color, text, 1)
+        return self._pre_decode_color(text)
+
+    def _style(self, text, upper, lower, value, bounds=None):
+        """Return text wrapped in upper or lower markup tag."""
+
+        a, z = bounds or (0, len(text))
+        prefix = text[:a].split("\n")[-1]
+        suffix = text[z:].split("\n")[0]
+        re_alpha = self._get_regex(r"\w")
+        # Return plain text if bounds does not define an entire line or
+        # subtitle and thus cannot be marked without side-effects.
+        if re_alpha.search(prefix): return text
+        if re_alpha.search(suffix): return text
+        if (not "\n" in text) or ("\n" in text[a:z]):
+            tag = "{%s:%s}" % (upper, value)
+        else: # Single line marked in a multiline subtitle.
+            tag = "{%s:%s}" % (lower, value)
+        return "".join((text[:a], "%s%s" % (tag, text[a:])))
+
+    def bolden(self, text, bounds=None):
+        """Return bolded text."""
+
+        return self._style(text, "Y", "y", "b", bounds)
+
+    def colorize(self, text, color, bounds=None):
+        """Return text colorized to hexadecimal value."""
+
+        # Reverse the color value from RRGGBB to BBGGRR.
+        color = "$%s%s%s" % (color[4:], color[2:4], color[:2])
+        return self._style(text, "C", "c", color, bounds)
+
+    def fontify(self, text, font, bounds=None):
+        """Return text changed to font."""
+
+        return self._style(text, "F", "f", font, bounds)
 
     @property
-    @gaupol.util.once
     def italic_tag(self):
-        """Regular expression for an italic tag."""
+        """Regular expression for an italic markup tag or None."""
 
-        return re.compile(r"\{y:i\}", re.IGNORECASE)
+        return self._get_regex(r"\{[Yy]:i\}")
 
-    @property
-    @gaupol.util.once
-    def tag(self):
-        """Regular expression for any tag."""
-
-        return re.compile(r"\{[a-z]:[^{]*?\}", re.IGNORECASE)
-
-    @gaupol.util.once
-    def _get_decode_tags(self):
-        """Get list of tuples of regular expression, replacement, count."""
-
-        FLAGS = re.MULTILINE | re.DOTALL
-
-        tags = [
-            # Style x3 (single line)
-            (r"\{y:(b|i|u)[^\}]*?(b|i|u)[^\}]*?(b|i|u)\}(.*?)$", FLAGS,
-                r"<\1><\2><\3>\4</\3></\2></\1>", 1),
-            # Style x2 (single line)
-            (r"\{y:(b|i|u)[^\}]*?(b|i|u)\}(.*?)$", FLAGS,
-                r"<\1><\2>\3</\2></\1>", 2),
-            # Style x1 (single line)
-            (r"\{y:(b|i|u)\}(.*?)$", FLAGS,
-                r"<\1>\2</\1>", 3),
-            # Style x3 (whole subtitle)
-            (r"\{Y:(b|i|u)[^\}]*?(b|i|u)[^\}]*?(b|i|u)\}(.*?)\Z", FLAGS,
-                r"<\1><\2><\3>\4</\3></\2></\1>", 1),
-            # Style x2 (whole subtitle)
-            (r"\{Y:(b|i|u)[^\}]*?(b|i|u)\}(.*?)\Z", FLAGS,
-                r"<\1><\2>\3</\2></\1>", 2),
-            # Style x1 (whole subtitle)
-            (r"\{Y:(b|i|u)\}(.*?)\Z", FLAGS,
-                r"<\1>\2</\1>", 3),
-            # Color (single line)
-            (r"\{c:\$([a-zA-Z0-9]{6})\}(.*?)$", FLAGS,
-                r'<color="#\1">\2</color>', 1),
-            # Color (whole subtitle)
-            (r"\{C:\$([a-zA-Z0-9]{6})\}(.*?)\Z", FLAGS,
-                r'<color="#\1">\2</color>', 1),
-            # Font (single line)
-            (r"\{f:([^{]*?)\}(.*?)$", FLAGS,
-                r'<font="\1">\2</font>', 1),
-            # Font (whole subtitle)
-            (r"\{F:([^{]*?)\}(.*?)\Z", FLAGS,
-                r'<font="\1">\2</font>', 1),
-            # Size (single line)
-            (r"\{s:(\d+)\}(.*?)$", FLAGS,
-                r'<size="\1">\2</size>', 1),
-            # Size (whole subtitle)
-            (r"\{S:(\d+)\}(.*?)\Z", FLAGS,
-                r'<size="\1">\2</size>', 1),
-            # Remove all other tags.
-            (r"\{.:[^{]*?\}", re.IGNORECASE,
-                r"", 1),]
-
-        for i, (pattern, flags, replacement, count) in enumerate(tags):
-            tags[i] = (re.compile(pattern, flags), replacement, count)
-        return tags
-
-    @gaupol.util.once
-    def _get_encode_tags(self):
-        """Get list of tuples of regular expression, replacement, count."""
-
-        FLAGS = re.MULTILINE | re.DOTALL
-
-        tags = [
-            # Remove duplicate style tags (e.g. <b>test</b><b>test</b>).
-            (r"</(b|i|u)>(\n?)<\1>", FLAGS,
-                r"\2", 3),
-            # Remove other duplicate tags.
-            (r"<([^<]*?)=([^<]*?)>(.*?)</\1>(\n?)<\1=\2>", FLAGS,
-                r"<\1=\2>\3\4", 3),
-            # Style (affecting a single line subtitle fully)
-            (r"\A<(b|i|u)>(.*?)</\1>\Z", re.MULTILINE,
-                r"{Y:\1}\2", 3),
-            # Style (affecting only one line)
-            (r"<(b|i|u)>(.*?)</\1>", re.MULTILINE,
-                r"{y:\1}\2", 3),
-            # Style (affecting whole subtitle)
-            (r"<(b|i|u)>(.*?)</\1>", FLAGS,
-                r"{Y:\1}\2", 3),
-            # Color (affecting a single line subtitle fully)
-            (r'\A<color="#(.{6})">(.*?)</color>\Z', re.MULTILINE,
-                r"{C:$\1}\2", 1),
-            # Color (affecting only one line)
-            (r'<color="#(.{6})">(.*?)</color>', re.MULTILINE,
-                r"{c:$\1}\2", 1),
-            # Color (affecting whole subtitle)
-            (r'<color="#(.{6})">(.*?)</color>', FLAGS,
-                r"{C:$\1}\2", 1),
-            # Font (affecting a single line subtitle fully)
-            (r'\A<font="([^<]*?)">(.*?)</font>\Z', re.MULTILINE,
-                r"{F:\1}\2", 1),
-            # Font (affecting only one line)
-            (r'<font="([^<]*?)">(.*?)</font>', re.MULTILINE,
-                r"{f:\1}\2", 1),
-            # Font (affecting whole subtitle)
-            (r'<font="([^<]*?)">(.*?)</font>', FLAGS,
-                r"{F:\1}\2", 1),
-            # Size (affecting a single line subtitle fully)
-            (r'\A<size="([^<]*?)">(.*?)</size>\Z', re.MULTILINE,
-                r"{S:\1}\2", 1),
-            # Size (affecting only one line)
-            (r'<size="([^<]*?)">(.*?)</size>', re.MULTILINE,
-                r"{s:\1}\2", 1),
-            # Size (affecting whole subtitle)
-            (r'<size="([^<]*?)">(.*?)</size>', FLAGS,
-                r"{S:\1}\2", 1),]
-
-        for i, (pattern, flags, replacement, count) in enumerate(tags):
-            tags[i] = (re.compile(pattern, flags), replacement, count)
-        return tags
-
-    def decode(self, text):
-        """Return text with tags converted from this to internal format."""
-
-        for regex, replacement, count in self._get_decode_tags():
-            for i in range(count):
-                # pylint: disable-msg=E1101
-                text = regex.sub(replacement, text)
-        return text
-
-    def encode(self, text):
-        """Return text with tags converted from internal to this format."""
-
-        for regex, replacement, count in self._get_encode_tags():
-            for i in range(count):
-                # pylint: disable-msg=E1101
-                text = regex.sub(replacement, text)
-        return text
-
-    def italicize(self, text):
+    def italicize(self, text, bounds=None):
         """Return italicized text."""
 
-        return u"{Y:i}%s" % text
+        return self._style(text, "Y", "y", "i", bounds)
+
+    def sizen(self, text, size, bounds=None):
+        """Return text scaled to size."""
+
+        return self._style(text, "S", "s", str(size), bounds)
+
+    @property
+    def tag(self):
+        """Regular expression for any markup tag or None."""
+
+        return self._get_regex(r"\{[CFSYcfsy]:.*?\}")
+
+    def underline(self, text, bounds=None):
+        """Return underlined text."""
+
+        return self._style(text, "Y", "y", "u", bounds)

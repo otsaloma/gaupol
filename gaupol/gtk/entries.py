@@ -9,10 +9,10 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Entry for time data in format [-]HH:MM:SS.SSS."""
 
@@ -22,7 +22,7 @@ import gobject
 import gtk
 import re
 
-__all__ = ["TimeEntry"]
+__all__ = ("TimeEntry",)
 
 
 def _blocked(function):
@@ -50,7 +50,7 @@ class TimeEntry(gtk.Entry):
      * _insert_handler: Handler for 'insert-text' signal
 
     This widget uses 'gobject.idle_add' a lot, which means that clients may
-    need to call 'gtk.main_iteration' to ensure that proper updating.
+    need to call 'gtk.main_iteration' to ensure proper updating.
     """
 
     __metaclass__ = gaupol.gtk.ContractualGObject
@@ -70,7 +70,7 @@ class TimeEntry(gtk.Entry):
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
-        connect = gaupol.gtk.util.connect
+        connect = gaupol.util.connect
         connect(self, self, "cut-clipboard")
         connect(self, self, "key-press-event")
         connect(self, self, "toggle-overwrite")
@@ -78,7 +78,6 @@ class TimeEntry(gtk.Entry):
         self._insert_handler = connect(self, self, "insert-text")
 
     @_blocked
-    @gaupol.gtk.util.asserted_return
     def _insert_text(self, value):
         """Insert text."""
 
@@ -90,12 +89,12 @@ class TimeEntry(gtk.Entry):
             value = value[1:]
         length = len(value)
         text = text[:pos] + value + text[pos + length:]
-        assert self._re_time.match(text)
+        if not self._re_time.match(text): return
         self.set_text(text)
         self.set_position(pos)
-        assert length == 1
+        if length != 1: return
         self.set_position(pos + 1)
-        assert pos + 1 < len(text)
+        if pos + 1 >= len(text): return
         if text[pos + 1] in (":", "."):
             self.set_position(pos + 2)
 
@@ -123,11 +122,11 @@ class TimeEntry(gtk.Entry):
         text = self.get_text()
         assert (not text) or self._re_time.match(text)
 
-    @gaupol.gtk.util.asserted_return
     def _on_key_press_event(self, entry, event):
         """Change numbers to zero if BackSpace or Delete pressed."""
 
-        assert event.keyval in (gtk.keysyms.BackSpace, gtk.keysyms.Delete)
+        keys = (gtk.keysyms.BackSpace, gtk.keysyms.Delete)
+        if not event.keyval in keys: return
         self.stop_emission("key-press-event")
         if self.get_selection_bounds():
             gobject.idle_add(self._zero_selection)
@@ -152,13 +151,12 @@ class TimeEntry(gtk.Entry):
         self.stop_emission("toggle-overwrite")
 
     @_blocked
-    @gaupol.gtk.util.asserted_return
     def _zero_next(self):
         """Change the next digit to zero."""
 
         pos = self.get_position()
         text = self.get_text()
-        assert pos < len(text)
+        if pos >= len(text): return
         if (pos == 0) and text.startswith("-"):
             self.set_text(text[1:])
             return self.set_position(0)
@@ -170,13 +168,12 @@ class TimeEntry(gtk.Entry):
         self.set_position(pos)
 
     @_blocked
-    @gaupol.gtk.util.asserted_return
     def _zero_previous(self):
         """Change the previous digit to zero."""
 
         pos = self.get_position()
         text = self.get_text()
-        assert pos > 0
+        if pos <= 0: return
         if (pos == 1) and text.startswith("-"):
             self.set_text(text[1:])
             return self.set_position(0)
@@ -189,11 +186,10 @@ class TimeEntry(gtk.Entry):
         self.set_position(pos - 1)
 
     @_blocked
-    @gaupol.gtk.util.asserted_return
     def _zero_selection(self):
         """Change digits in selection to zero."""
 
-        assert self.get_selection_bounds()
+        if not self.get_selection_bounds(): return
         a, z = self.get_selection_bounds()
         text = self.get_text()
         zero = self._re_digit.sub("0", text[a:z])

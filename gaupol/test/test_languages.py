@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,26 +9,25 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
 
-from gaupol import unittest
-from .. import languages
 
-
-class TestModule(unittest.TestCase):
-
-    def test__init_languages(self):
-
-        assert languages.languages
+class TestModule(gaupol.TestCase):
 
     def test_code_to_name(self):
 
         name = gaupol.i18n.dgettext("iso_639", "Nauru")
-        assert languages.code_to_name("na") == name
+        assert gaupol.languages.code_to_name("na") == name
         name = gaupol.i18n.dgettext("iso_639", "Sindhi")
-        assert languages.code_to_name("sd") == name
+        assert gaupol.languages.code_to_name("sd") == name
+        self.raises(KeyError, gaupol.languages.code_to_name, "xx")
+
+    def test_is_valid(self):
+
+        assert gaupol.languages.is_valid("sv")
+        assert not gaupol.languages.is_valid("xx")

@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,27 +9,26 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
+import gaupol.gtk
 import gtk
 
-from gaupol.gtk import unittest
-from .. import about
 
+class TestAboutDialog(gaupol.gtk.TestCase):
 
-class TestAboutDialog(unittest.TestCase):
-
-    def run(self):
+    def run__dialog(self):
 
         self.dialog.run()
         self.dialog.destroy()
 
     def setup_method(self, method):
 
-        self.dialog = about.AboutDialog(gtk.Window())
+        self.dialog = gaupol.gtk.AboutDialog(gtk.Window())
+        self.dialog.show()
 
     def test__on_url_clicked(self):
 

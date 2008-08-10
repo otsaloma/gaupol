@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,126 +9,134 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Sub Station Alpha file."""
 
-from __future__ import with_statement
-
-import codecs
-import contextlib
 import gaupol
 import re
 
-from .subfile import SubtitleFile
+__all__ = ("SubStationAlpha",)
 
 
-class SubStationAlpha(SubtitleFile):
+class SubStationAlpha(gaupol.SubtitleFile):
 
-    """Sub Station Alpha file.
+    """Sub Station Alpha file."""
 
-    Class variables:
-     * event_fields: Tuple of the names of fields under the 'Events' section
-    """
+    _re_file_time = re.compile(r"^(-?)(.+)$")
+    _re_separator = re.compile(r",\s*")
+    _re_subtitle_time = re.compile(r"(-?)\d(.{10})\d")
 
-    __metaclass__ = gaupol.Contractual
-    format = gaupol.FORMAT.SSA
-    mode = gaupol.MODE.TIME
+    format = gaupol.formats.SSA
+    mode = gaupol.modes.TIME
 
-    event_fields = (
-        "Marked",
-        "Start",
-        "End",
-        "Style",
-        "Name",
-        "MarginL",
-        "MarginR",
-        "MarginV",
-        "Effect",
-        "Text",)
+    def __init__(self, path, encoding, newline=None):
 
-    def _read_components(self, lines):
-        """Read and return starts, ends and texts."""
+        gaupol.SubtitleFile.__init__(self, path, encoding, newline)
+        self.event_fields = ("Marked", "Start", "End", "Style", "Name",
+            "MarginL", "MarginR", "MarginV", "Effect", "Text",)
 
-        starts = []
-        ends = []
-        texts = []
-        re_comma = re.compile(r",\s*")
-        for line in lines:
-            if line.startswith("Format:"):
-                line = line.replace("Format:", "").strip()
-                fields = re_comma.split(line)
-                show_index = fields.index("Start")
-                hide_index = fields.index("End")
-                text_index = fields.index("Text")
-                max_split = len(fields) - 1
-            elif line.startswith("Dialogue:"):
-                line = line.replace("Dialogue:", "")[:-1]
-                fields = re_comma.split(line, max_split)
-                starts.append(fields[show_index])
-                ends.append(fields[hide_index])
-                texts.append(fields[text_index])
+    def _decode_field(self, field_name, value, subtitle):
+        """Save string value from file as a subtitle attribute."""
 
-        re_time = re.compile(r"^(-?)(.*)$")
-        starts = [re_time.sub(r"\1\060\2\060", x) for x in starts]
-        ends = [re_time.sub(r"\1\060\2\060", x) for x in ends]
-        texts = [x.replace("\\n", "\n") for x in texts]
-        texts = [x.replace("\\N", "\n") for x in texts]
-        return starts, ends, texts
+        if field_name == "Marked":
+            value = value.split("=")[-1]
+            return setattr(subtitle.ssa, "marked", int(value))
+        if field_name == "Start":
+            value = self._re_file_time.sub(r"\1\060\2\060", value)
+            return setattr(subtitle, "start", value)
+        if field_name == "End":
+            value = self._re_file_time.sub(r"\1\060\2\060", value)
+            return setattr(subtitle, "end", value)
+        if field_name == "Text":
+            value = value.replace("\\n", "\n")
+            value = value.replace("\\N", "\n")
+            return setattr(subtitle, "main_text", value)
+        if field_name in ("MarginL", "MarginR", "MarginV"):
+            name = gaupol.util.title_to_lower_case(field_name)
+            return setattr(subtitle.ssa, name, int(value))
+        # Set plain string container attribute value.
+        name = gaupol.util.title_to_lower_case(field_name)
+        setattr(subtitle.ssa, name, value)
+
+    def _encode_field(self, field_name, subtitle, doc):
+        """Return value of field as string to be written to file."""
+
+        if field_name == "Marked":
+            return "Marked=%d" % subtitle.ssa.marked
+        if field_name == "Start":
+            value = subtitle.calc.round_time(subtitle.start_time, 2)
+            return self._re_subtitle_time.sub(r"\1\2", value)
+        if field_name == "End":
+            value = subtitle.calc.round_time(subtitle.end_time, 2)
+            return self._re_subtitle_time.sub(r"\1\2", value)
+        if field_name == "Text":
+            value = subtitle.get_text(doc)
+            return value.replace("\n", "\\n")
+        if field_name in ("MarginL", "MarginR", "MarginV"):
+            name = gaupol.util.title_to_lower_case(field_name)
+            return "%04d" % getattr(subtitle.ssa, name)
+        # Return plain string container attribute value.
+        name = gaupol.util.title_to_lower_case(field_name)
+        return getattr(subtitle.ssa, name)
 
     def _read_header(self, lines):
-        """Read header and return leftover lines."""
+        """Read header and remove its lines."""
 
-        header = ""
-        lines = lines[:]
+        self.header = ""
         while not lines[0].startswith("[Events]"):
-            header += lines.pop(0)
-        if header:
-            self.header = header.strip()
-        return lines
+            self.header += "\n"
+            self.header += lines.pop(0)
+        self.header = self.header.strip()
+
+    def copy_from(self, other):
+        """Copy generic properties from file of same format."""
+
+        gaupol.SubtitleFile.copy_from(self, other)
+        self.event_fields = tuple(other.event_fields)
 
     def read(self):
-        """Read file.
+        """Read file and return subtitles.
 
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
-        Return start times, end times, texts.
         """
+        subtitles = []
         lines = self._read_lines()
-        lines = self._read_header(lines)
-        return self._read_components(lines)
+        self._read_header(lines)
+        for line in (x for x in lines if x.startswith("Format:")):
+            line = line.replace("Format:", "").strip()
+            fields = self._re_separator.split(line)
+            indices = dict((x, fields.index(x)) for x in fields)
+            max_split = len(fields) - 1
+        for line in (x for x in lines if x.startswith("Dialogue:")):
+            subtitle = self._get_subtitle()
+            line = line.replace("Dialogue:", "").lstrip()
+            values = self._re_separator.split(line, max_split)
+            for name, index in indices.items():
+                self._decode_field(name, values[index], subtitle)
+            subtitles.append(subtitle)
+        self.event_fields = tuple(fields)
+        return subtitles
 
-    def write(self, starts, ends, texts):
-        """Write file.
+    def write_to_file(self, subtitles, doc, fobj):
+        """Write subtitles from document to given file.
 
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
-        calc = gaupol.Calculator()
-        starts = [calc.round_time(x, 2) for x in starts]
-        ends = [calc.round_time(x, 2) for x in ends]
-        re_time = re.compile(r"(-?)\d(\d:\d\d:\d\d.\d\d)\d")
-        starts = [re_time.sub(r"\1\2", x) for x in starts]
-        ends = [re_time.sub(r"\1\2", x) for x in ends]
-        texts = [x.replace("\n", "\\n") for x in texts]
-
-        args = (self.path, "w", self.encoding)
-        with contextlib.closing(codecs.open(*args)) as fobj:
-            fobj.write(self.header)
+        encode = self._encode_field
+        fields = self.event_fields
+        fobj.write(self.header)
+        fobj.write(self.newline.value * 2)
+        fobj.write("[Events]")
+        fobj.write(self.newline.value)
+        fobj.write("Format: %s" % ", ".join(fields))
+        fobj.write(self.newline.value)
+        for subtitle in subtitles:
+            values = [encode(x, subtitle, doc) for x in fields]
+            fobj.write("Dialogue: %s" % ",".join(values))
             fobj.write(self.newline.value)
-            fobj.write(self.newline.value)
-            fobj.write("[Events]")
-            fobj.write(self.newline.value)
-            fobj.write("Format: " + ", ".join(self.event_fields))
-            fobj.write(self.newline.value)
-            for i in range(len(starts)):
-                fobj.write("Dialogue: 0,")
-                fobj.write(starts[i])
-                fobj.write(",")
-                fobj.write(ends[i])
-                fobj.write(",Default,,0000,0000,0000,,")
-                fobj.write(texts[i])
-                fobj.write(self.newline.value)

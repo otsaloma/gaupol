@@ -9,30 +9,28 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
 
-from gaupol import unittest
 
-
-class TestEditAgent(unittest.TestCase):
+class TestEditAgent(gaupol.TestCase):
 
     def setup_method(self, method):
 
         self.project = self.get_project()
 
-    @unittest.reversion_test
+    @gaupol.deco.reversion_test
     def test_clear_texts(self):
 
-        self.project.clear_texts([0, 1], gaupol.DOCUMENT.MAIN)
+        self.project.clear_texts((0, 1), gaupol.documents.MAIN)
         assert self.project.subtitles[0].main_text == ""
         assert self.project.subtitles[1].main_text == ""
 
-    @unittest.reversion_test
+    @gaupol.deco.reversion_test
     def test_insert_blank_subtitles__end(self):
 
         subtitles = self.project.subtitles
@@ -43,7 +41,7 @@ class TestEditAgent(unittest.TestCase):
         for i in range(0, len(subtitles) - 1):
             assert subtitles[i] <= subtitles[i + 1]
 
-    @unittest.reversion_test
+    @gaupol.deco.reversion_test
     def test_insert_blank_subtitles__middle(self):
 
         subtitles = self.project.subtitles
@@ -53,17 +51,17 @@ class TestEditAgent(unittest.TestCase):
         for i in range(0, len(subtitles) - 1):
             assert subtitles[i] <= subtitles[i + 1]
 
-    @unittest.reversion_test
+    @gaupol.deco.reversion_test
     def test_insert_blank_subtitles__start(self):
 
         subtitles = self.project.subtitles
         orig_length = len(subtitles)
-        self.project.insert_blank_subtitles([0, 1])
+        self.project.insert_blank_subtitles((0, 1))
         assert len(subtitles) == orig_length + 2
         for i in range(0, len(subtitles) - 1):
             assert subtitles[i] <= subtitles[i + 1]
 
-    @unittest.reversion_test
+    @gaupol.deco.reversion_test
     def test_insert_subtitles(self):
 
         subtitles = self.project.subtitles
@@ -80,27 +78,27 @@ class TestEditAgent(unittest.TestCase):
         assert len(subtitles) == orig_length + 3
         assert subtitles[0:3] == new_subtitles
 
-    @unittest.reversion_test
+    @gaupol.deco.reversion_test
     def test_merge_subtitles(self):
 
         subtitles = self.project.subtitles
         subtitle_1 = subtitles[1].copy()
         subtitle_2 = subtitles[2].copy()
         orig_length = len(subtitles)
-        self.project.merge_subtitles([1, 2])
+        self.project.merge_subtitles((1, 2))
         assert len(subtitles) == orig_length - 1
         assert subtitles[1].start == subtitle_1.start
         assert subtitles[1].end == subtitle_2.end
 
-    @unittest.reversion_test
+    @gaupol.deco.reversion_test
     def test_remove_subtitles(self):
 
         subtitles = self.project.subtitles
         orig_length = len(subtitles)
-        self.project.remove_subtitles([2, 3])
+        self.project.remove_subtitles((2, 3))
         assert len(subtitles) == orig_length - 2
 
-    @unittest.reversion_test
+    @gaupol.deco.reversion_test
     def test_replace_positions(self):
 
         new_subtitles = []
@@ -115,15 +113,15 @@ class TestEditAgent(unittest.TestCase):
             assert subtitles[i].start == new_subtitles[i].start
             assert subtitles[i].end == new_subtitles[i].end
 
-    @unittest.reversion_test
+    @gaupol.deco.reversion_test
     def test_replace_texts(self):
 
-        doc = gaupol.DOCUMENT.MAIN
-        self.project.replace_texts([1, 2], doc, ["", ""])
+        doc = gaupol.documents.MAIN
+        self.project.replace_texts((1, 2), doc, ("", ""))
         assert self.project.subtitles[1].main_text == ""
         assert self.project.subtitles[2].main_text == ""
 
-    @unittest.reversion_test
+    @gaupol.deco.reversion_test
     def test_split_subtitle(self):
 
         subtitles = self.project.subtitles

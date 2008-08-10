@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,18 +9,31 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-from .test_subfile import TestSubtitleFile
-from .. import mpl2
+import gaupol
 
 
-class TestMPL2(TestSubtitleFile):
+class TestMPL2(gaupol.TestCase):
 
     def setup_method(self, method):
 
-        path = self.get_subrip_path()
-        self.file = mpl2.MPL2(path, "ascii")
+        format = gaupol.formats.MPL2
+        path = self.get_file_path(format)
+        self.file = gaupol.files.new(format, path, "ascii")
+
+    def test_read(self):
+
+        assert self.file.read()
+
+    def test_write(self):
+
+        subtitles = self.file.read()
+        doc = gaupol.documents.MAIN
+        self.file.write(subtitles, doc)
+        text = open(self.file.path, "r").read().strip()
+        reference = self.get_file_text(self.file.format)
+        assert text == reference

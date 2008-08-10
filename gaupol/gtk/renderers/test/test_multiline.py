@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,47 +9,24 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
+import gaupol.gtk
 import gobject
 import gtk
 
-from gaupol.gtk.unittest import TestCase
-from .. import multiline
 
+class TestMultilineCellRenderer(gaupol.gtk.TestCase):
 
-class Test_CellTextView(TestCase):
-
-    def setup_method(self, method):
-
-        self.text_view = multiline._CellTextView()
-
-    def test_editing_done(self):
-
-        self.text_view.editing_done()
-
-    def test_get_text(self):
-
-        self.text_view.set_text("test")
-        assert self.text_view.get_text() == "test"
-
-    def test_set_text(self):
-
-        self.text_view.set_text("test")
-        assert self.text_view.get_text() == "test"
-
-
-class TestMultilineCellRenderer(TestCase):
-
-    def run(self):
+    def run__renderer(self):
 
         tree_view = gtk.TreeView()
         tree_view.set_headers_visible(False)
-        store = gtk.ListStore(gobject.TYPE_STRING)
-        store.append(["test\ntest test"])
+        store = gtk.ListStore(str)
+        store.append(("test\ntest test",))
         tree_view.set_model(store)
         self.renderer.props.editable = True
         column = gtk.TreeViewColumn("", self.renderer, text=0)
@@ -65,8 +42,4 @@ class TestMultilineCellRenderer(TestCase):
 
     def setup_method(self, method):
 
-        self.renderer = multiline.MultilineCellRenderer()
-
-    def test___init__(self):
-
-        pass
+        self.renderer = gaupol.gtk.MultilineCellRenderer()

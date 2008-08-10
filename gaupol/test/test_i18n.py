@@ -1,4 +1,4 @@
-# Copyright (C) 2007 Osmo Salomaa
+# Copyright (C) 2007-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,19 +9,18 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-from gaupol import unittest
-from .. import i18n
+import gaupol
 
 
-class TestModule(unittest.TestCase):
+class TestModule(gaupol.TestCase):
 
     def test_attributes(self):
 
-        assert callable(i18n._)
-        assert callable(i18n.dgettext)
-        assert callable(i18n.ngettext)
+        gaupol.i18n._("message")
+        gaupol.i18n.dgettext("domain", "message")
+        gaupol.i18n.ngettext("singular", "plural", 1)

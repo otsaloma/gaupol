@@ -1,64 +1,34 @@
-Release Checklist
-=================
+Releasing a New Version
+=======================
 
-Set some useful variables.
+ * Make final edits to files
 
-    export VERSION=0.12.1 \
-      && export BRANCH=0.12 \
-      && export USERNAME=osmo \
-      && export SVN_ROOT=svn+ssh://$USERNAME@svn.gna.org/svn/gaupol \
-      && export SVN_SOURCE=$SVN_ROOT/trunk \
-      && export SVN_BRANCH=$SVN_ROOT/branches/gaupol-0-12 \
-      && export SVN_TAG=$SVN_ROOT/tags/GAUPOL_0_12_1 \
-      && export DL_ROOT=$USERNAME@download.gna.org:/upload/gaupol
+     $EDITOR gaupol/__init__.py
+     pylint bin/gaupol gaupol setup.py
+     py.test --tb=no -k -gtk gaupol
+     py.test --tb=no -k gtk gaupol
+     intltool-update -m
+     intltool-update -p -g gaupol
+     $EDITOR NEWS TODO ChangeLog po/ChangeLog
+     svn commit
 
-Search for unfinished code.
+ * Tag the subversion trunk as GAUPOL_X_Y[_Z]
 
-    egrep -A 2 -B 2 -n "(BUG|FIX|NOTE|TODO):" \
-      $(find gaupol -name "*.py" -print) \
-      | egrep -v "(configobj.py|validate.py|^--$)"
+ * Build tarballs and edit related files
 
-Run (all) automatic checks.
+     ./setup.py clean sdist_gna --formats bztar,gztar
+     $EDITOR dist/*/*.news dist/*/*.changes
 
-    tools/pylint gaupol
-    py.test --tb=no gaupol
+ * Upload tarballs to download.gna.org:/upload/gaupol/
 
-Make final edits to files and commit changes.
+ * Build and upload a Windows installer, see "RELEASING.win32"
 
-    $EDITOR gaupol/__init__.py
-    tools/pydoctor && tools/translate -t
-    $EDITOR NEWS TODO
-    tools/add-changelog
-    $EDITOR ChangeLog po/ChangeLog
-    svn commit
+ * Send announcements and update web sites
 
-Tag source [and branch for patch releases].
-
-    svn copy $SVN_SOURCE $SVN_TAG -m "Tagged for release $VERSION."
-    svn copy $SVN_SOURCE $SVN_BRANCH -m "Branched at $BRANCH."
-
-Build and upload tarballs.
-
-    ./setup.py clean
-    ./setup.py sdist_gna --formats bztar,gztar && cd dist
-    $EDITOR $BRANCH/gaupol-$VERSION.changes
-    $EDITOR $BRANCH/gaupol-$VERSION.news
-    rsync -avr --rsh=ssh . $DL_ROOT
-    cd .. && ./setup.py clean
-
-Build and upload Windows installer, see "RELEASING.win32".
-
-Edit website under "News", "Features" and "Download".
-
-Send announcement mail.
-
-    gaupol-announcements@gna.org
-    http://www.mail-archive.com/gaupol-announcements@gna.org
-
-Update web sites.
-
-    http://bugzilla.gnome.org/editproducts.cgi?action=edit&product=gaupol
-    http://gna.org/news/?group=gaupol
-    http://www.gnomefiles.com/devs
-    http://freshmeat.net/projects/gaupol
-    http://users.tkk.fi/~otsaloma/gaupol/doc/
+   - http://home.gna.org/gaupol
+   - http://bugzilla.gnome.org/editproducts.cgi?action=edit&product=gaupol
+   - http://users.tkk.fi/~otsaloma/gaupol/doc/
+   - gaupol-announcements@gna.org
+   - http://gna.org/news/?group=gaupol
+   - http://www.gnomefiles.com/devs
+   - http://freshmeat.net/projects/gaupol

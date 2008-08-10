@@ -9,10 +9,10 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Formatting text."""
 
@@ -33,7 +33,7 @@ class FormatAgent(gaupol.Delegate):
         page = self.get_current_page()
         rows = page.view.get_selected_rows()
         col = page.view.get_focus()[1]
-        doc = gaupol.gtk.util.text_column_to_document(col)
+        doc = page.text_column_to_document(col)
         page.project.change_case(rows, doc, method)
 
     def on_toggle_dialogue_lines_activate(self, *args):
@@ -42,7 +42,7 @@ class FormatAgent(gaupol.Delegate):
         page = self.get_current_page()
         rows = page.view.get_selected_rows()
         col = page.view.get_focus()[1]
-        doc = gaupol.gtk.util.text_column_to_document(col)
+        doc = page.text_column_to_document(col)
         page.project.toggle_dialogue_lines(rows, doc)
 
     def on_toggle_italicization_activate(self, *args):
@@ -51,7 +51,7 @@ class FormatAgent(gaupol.Delegate):
         page = self.get_current_page()
         rows = page.view.get_selected_rows()
         col = page.view.get_focus()[1]
-        doc = gaupol.gtk.util.text_column_to_document(col)
+        doc = page.text_column_to_document(col)
         page.project.toggle_italicization(rows, doc)
 
     def on_use_lower_case_activate(self, *args):

@@ -1,0 +1,43 @@
+1
+-00:00:06,843 --> -00:00:02,850  X1:010 X2:710 Y1:400 Y2:460
+I always wanted to leave my country
+and go somewhere else.
+
+2
+-00:00:01,471 --> 00:00:00,946  X1:010 X2:710 Y1:400 Y2:460
+I always wanted to come to France.
+
+3
+00:00:00,946 --> 00:00:03,364  X1:010 X2:710 Y1:400 Y2:460
+So, one day when I was 17, I left.
+
+4
+00:00:04,635 --> 00:00:06,626  X1:010 X2:710 Y1:400 Y2:460
+There I was in Paris.
+
+5
+00:00:09,606 --> 00:00:13,736  X1:010 X2:710 Y1:400 Y2:460
+Since I was a bit naive,
+
+6
+00:00:14,445 --> 00:00:18,541  X1:010 X2:710 Y1:400 Y2:460
+everyone seemed beautiful
+and fabulous.
+
+7
+00:00:18,982 --> 00:00:23,180  X1:010 X2:710 Y1:400 Y2:460
+<i>I couldn't tell cruelty from kindness.</i>
+
+8
+00:00:23,387 --> 00:00:27,653  X1:010 X2:710 Y1:400 Y2:460
+<i>For me, people were</i>
+<i>the way they were.</i>
+
+9
+00:00:28,058 --> 00:00:31,619  X1:010 X2:710 Y1:400 Y2:460
+<i>You just worked with them</i>
+<i>or talked with them.</i>
+
+10
+00:00:32,563 --> 00:00:35,896  X1:010 X2:710 Y1:400 Y2:460
+Obviously, it was a big shock.

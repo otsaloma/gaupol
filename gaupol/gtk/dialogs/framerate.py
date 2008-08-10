@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,32 +9,33 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Dialog for converting framerates."""
 
 import gaupol.gtk
 import gtk
 
-from .glade import GladeDialog
+__all__ = ("FramerateConvertDialog",)
 
 
-class FramerateConvertDialog(GladeDialog):
+class FramerateConvertDialog(gaupol.gtk.GladeDialog):
 
     """Dialog for converting framerates."""
 
     def __init__(self, parent, application):
 
-        GladeDialog.__init__(self, "framerate-dialog")
+        gaupol.gtk.GladeDialog.__init__(self, "framerate.glade")
         get_widget = self._glade_xml.get_widget
         self._all_radio = get_widget("all_radio")
         self._current_radio = get_widget("current_radio")
         self._input_combo = get_widget("input_combo")
         self._output_combo = get_widget("output_combo")
         self.application = application
+        self.conf = gaupol.gtk.conf.framerate_convert
 
         self._init_signal_handlers()
         self._init_values()
@@ -45,50 +46,46 @@ class FramerateConvertDialog(GladeDialog):
         """Convert framerates in target projects."""
 
         target = self._get_target()
-        input = self._input_combo.get_active()
-        input = gaupol.gtk.FRAMERATE.members[input]
-        output = self._output_combo.get_active()
-        output = gaupol.gtk.FRAMERATE.members[output]
+        input = gaupol.framerates[self._input_combo.get_active()]
+        output = gaupol.framerates[self._output_combo.get_active()]
         for page in self.application.get_target_pages(target):
-            index = self.application.pages.index(page)
-            self.application.notebook.set_current_page(index)
+            self.application.set_current_page(page)
             page.project.convert_framerate(None, input, output)
 
     def _get_target(self):
-        """Get the selected target."""
+        """Return the selected target."""
 
         if self._current_radio.get_active():
-            return gaupol.gtk.TARGET.CURRENT
+            return gaupol.gtk.targets.CURRENT
         if self._all_radio.get_active():
-            return gaupol.gtk.TARGET.ALL
+            return gaupol.gtk.targets.ALL
         raise ValueError
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
-        gaupol.gtk.util.connect(self, "_input_combo", "changed")
-        gaupol.gtk.util.connect(self, "_output_combo", "changed")
-        gaupol.gtk.util.connect(self, self, "response")
+        gaupol.util.connect(self, "_input_combo", "changed")
+        gaupol.util.connect(self, "_output_combo", "changed")
+        gaupol.util.connect(self, self, "response")
 
     def _init_values(self):
         """Intialize default values for widgets."""
 
         store = self._input_combo.get_model()
-        for name in gaupol.gtk.FRAMERATE.labels:
-            store.append([name])
+        for label in (x.label for x in gaupol.framerates):
+            store.append((label,))
         page = self.application.get_current_page()
         framerate = page.project.framerate
         self._input_combo.set_active(framerate)
         store = self._output_combo.get_model()
-        for name in gaupol.gtk.FRAMERATE.labels:
-            store.append([name])
+        for label in (x.label for x in gaupol.framerates):
+            store.append((label,))
         framerate = gaupol.gtk.conf.editor.framerate
         self._output_combo.set_active(framerate)
 
-        TARGET = gaupol.gtk.TARGET
-        target = gaupol.gtk.conf.framerate_convert.target
-        self._current_radio.set_active(target == TARGET.CURRENT)
-        self._all_radio.set_active(target == TARGET.ALL)
+        targets = gaupol.gtk.targets
+        self._current_radio.set_active(self.conf.target == targets.CURRENT)
+        self._all_radio.set_active(self.conf.target == targets.ALL)
 
     def _on_input_combo_changed(self, *args):
         """Set the response sensitivity."""
@@ -106,11 +103,9 @@ class FramerateConvertDialog(GladeDialog):
         sensitive = input != output
         self._dialog.set_response_sensitive(gtk.RESPONSE_OK, sensitive)
 
-    @gaupol.gtk.util.asserted_return
     def _on_response(self, dialog, response):
         """Save settings and convert framerates."""
 
-        domain = gaupol.gtk.conf.position_shift
-        domain.target = self._get_target()
-        assert response == gtk.RESPONSE_OK
-        self._convert_framerates()
+        self.conf.target = self._get_target()
+        if response == gtk.RESPONSE_OK:
+            self._convert_framerates()

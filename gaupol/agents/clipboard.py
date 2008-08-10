@@ -9,10 +9,10 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Storing text to the clipboard and pasting from it."""
 
@@ -54,7 +54,7 @@ class ClipboardAgent(gaupol.Delegate):
         for index in indices:
             assert 0 <= index < len(self.subtitles)
 
-    @gaupol.util.revertable
+    @gaupol.deco.revertable
     def cut_texts(self, indices, doc, register=-1):
         """Cut texts to the clipboard."""
 
@@ -66,7 +66,7 @@ class ClipboardAgent(gaupol.Delegate):
         assert 0 <= index <= len(self.subtitles)
         assert self.clipboard.get_texts()
 
-    @gaupol.util.revertable
+    @gaupol.deco.revertable
     def paste_texts(self, index, doc, register=-1):
         """Paste texts from the clipboard and return pasted indices."""
 
@@ -84,4 +84,4 @@ class ClipboardAgent(gaupol.Delegate):
         if excess > 0:
             self.group_actions(register, 2, "")
         self.set_action_description(register, _("Pasting texts"))
-        return indices
+        return tuple(indices)

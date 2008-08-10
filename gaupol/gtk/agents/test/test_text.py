@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,20 +9,41 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-from gaupol.gtk import unittest
+import gaupol.gtk
+import gtk
 
 
-class TestSpellCheckAgent(unittest.TestCase):
+class TestSpellCheckAgent(gaupol.gtk.TestCase):
 
     def setup_method(self, method):
 
         self.application = self.get_application()
+        respond = lambda *args: gtk.RESPONSE_DELETE_EVENT
+        self.application.flash_dialog = respond
+        gaupol.gtk.SpellCheckDialog.flash_dialog = respond
+
+    def test_on_check_spelling_activate(self):
+
+        respond = lambda *args: gtk.RESPONSE_OK
+        gaupol.gtk.SpellCheckDialog.flash_dialog = respond
+        gaupol.gtk.conf.spell_check.language = "en"
+        self.application.get_action("check_spelling").activate()
+        gaupol.gtk.conf.spell_check.language = "wo"
+        self.application.get_action("check_spelling").activate()
+        del gaupol.gtk.SpellCheckDialog.flash_dialog
 
     def test_on_configure_spell_check_activate(self):
 
-        pass
+        self.application.get_action("configure_spell_check").activate()
+
+    def test_on_correct_texts_activate(self):
+
+        real_show = gaupol.gtk.TextAssistant.show
+        gaupol.gtk.TextAssistant.show = lambda *args: None
+        self.application.get_action("correct_texts").activate()
+        gaupol.gtk.TextAssistant.show = real_show

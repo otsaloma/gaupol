@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2007 Osmo Salomaa
+# Copyright (C) 2006-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,20 +9,18 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
+import gaupol.gtk
 import gtk
 
-from gaupol.gtk import unittest
-from .. import split
 
+class TestSplitDialog(gaupol.gtk.TestCase):
 
-class TestSplitDialog(unittest.TestCase):
-
-    def run(self):
+    def run__dialog(self):
 
         self.dialog.run()
         self.dialog.destroy()
@@ -30,9 +28,50 @@ class TestSplitDialog(unittest.TestCase):
     def setup_method(self, method):
 
         self.application = self.get_application()
-        self.dialog = split.SplitDialog(self.application)
+        args = (self.application.window, self.application)
+        self.dialog = gaupol.gtk.SplitDialog(*args)
+        self.dialog.show()
 
-    def test__on_response_ok(self):
+    def test__on_response__frame__negative(self):
 
+        page = gaupol.gtk.Page()
+        page.project.open_main(self.get_microdvd_path(), "ascii")
+        self.application.add_new_page(page)
+        args = (self.application.window, self.application)
+        self.dialog = gaupol.gtk.SplitDialog(*args)
+        self.dialog.show()
+        self.dialog._subtitle_spin.set_value(2)
+        self.dialog.response(gtk.RESPONSE_OK)
+
+    def test__on_response__frame__positive(self):
+
+        page = gaupol.gtk.Page()
+        page.project.open_main(self.get_microdvd_path(), "ascii")
+        self.application.add_new_page(page)
+        args = (self.application.window, self.application)
+        self.dialog = gaupol.gtk.SplitDialog(*args)
+        self.dialog.show()
+        self.dialog._subtitle_spin.set_value(5)
+        self.dialog.response(gtk.RESPONSE_OK)
+
+    def test__on_response__time__negative(self):
+
+        page = gaupol.gtk.Page()
+        page.project.open_main(self.get_subrip_path(), "ascii")
+        self.application.add_new_page(page)
+        args = (self.application.window, self.application)
+        self.dialog = gaupol.gtk.SplitDialog(*args)
+        self.dialog.show()
+        self.dialog._subtitle_spin.set_value(2)
+        self.dialog.response(gtk.RESPONSE_OK)
+
+    def test__on_response__time__positive(self):
+
+        page = gaupol.gtk.Page()
+        page.project.open_main(self.get_subrip_path(), "ascii")
+        self.application.add_new_page(page)
+        args = (self.application.window, self.application)
+        self.dialog = gaupol.gtk.SplitDialog(*args)
+        self.dialog.show()
         self.dialog._subtitle_spin.set_value(5)
         self.dialog.response(gtk.RESPONSE_OK)

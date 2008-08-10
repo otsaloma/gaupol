@@ -1,43 +1,42 @@
-Windows Installer Release Checklist
+Preparing to Build Windows Installers
+=====================================
+
+ * Install the following on a Windows machine. The hicolor icon theme
+   should be installed to C:\GTK\share\icons\hicolor\index.theme.
+   iso-codes should be installed to C:\GTK\share\locale.
+
+   - http://www.python.org/download/releases/
+   - http://ftp.gnome.org/pub/GNOME/binaries/win32/pygobject/
+   - http://ftp.gnome.org/pub/GNOME/binaries/win32/pycairo/
+   - http://ftp.gnome.org/pub/GNOME/binaries/win32/pygtk/
+   - http://gladewin32.sourceforge.net/modules/news/
+   - http://chardet.feedparser.org/download/
+   - http://pyenchant.sourceforge.net/download.php
+   - http://icon-theme.freedesktop.org/releases/
+   - http://packages.debian.org/sid/iso-codes/all/download
+   - http://www.py2exe.org/
+   - http://www.jrsoftware.org/isdl.php
+
+ * Edit C:\GTK\share\themes\MS-Windows\gtk-2.0\gtkrc.
+
+     gtk-button-images = 1
+     gtk-toolbar-style = GTK_TOOLBAR_ICONS
+     GtkTreeView::allow-rules = 1
+
+
+Releasing a New Version for Windows
 ===================================
 
-Install the following on Windows.  The hicolor icon theme should be
-installed to C:\GTK\share\icons\hicolor\index.theme. iso-codes
-should be installed to C:\GTK\share\locale.
+ * Generate translations and update version numbers on a Unix machine.
 
-    http://www.python.org/download/releases/
-    http://ftp.gnome.org/pub/GNOME/binaries/win32/pygobject/
-    http://ftp.gnome.org/pub/GNOME/binaries/win32/pycairo/
-    http://ftp.gnome.org/pub/GNOME/binaries/win32/pygtk/
-    http://gladewin32.sourceforge.net/modules/news/
-    http://chardet.feedparser.org/download/
-    http://pyenchant.sourceforge.net/download.php
-    http://icon-theme.freedesktop.org/releases/
-    http://packages.debian.org/sid/iso-codes/all/download
-    http://www.py2exe.org/
-    http://www.jrsoftware.org/isdl.php
+     ./setup.py clean install_data -d /tmp
+     $EDITOR tools/py2exe.bat tools/data/gaupol.iss
 
-Edit C:\GTK\share\themes\MS-Windows\gtk-2.0\gtkrc.
+ * Copy the whole top-level gaupol directory to a Windows machine.
+   There, run and compile the following files.
 
-    gtk-button-images = 1
-    gtk-toolbar-style = GTK_TOOLBAR_ICONS
-    GtkTreeView::allow-rules = 1
+     C:\gaupol\tools\py2exe.bat
+     C:\gaupol\tools\data\gaupol.iss
 
-Generate translations and update version numbers on Unix.
-
-    ./setup.py clean
-    tools/translate -m all && tools/translate -d
-    $EDITOR tools/py2exe.bat tools/data/gaupol.iss
-    cp -rv . /mnt/win/gaupol
-    ./setup.py clean
-
-Boot to Windows.  Run and compile the following files.
-
-    C:\gaupol\tools\py2exe.bat
-    C:\gaupol\tools\data\gaupol.iss
-
-Run the installer from C:\gaupol\win32\.  Copy to Unix and upload.
-
-    gpg --detach gaupol-*.exe
-    scp gaupol-*.exe osmo@download.gna.org:/upload/gaupol/0.12
-    scp gaupol-*.sig osmo@download.gna.org:/upload/gaupol/0.12
+ * Run the installer from C:\gaupol\win32\ and make sure it works.
+   Copy it to a Unix machine, sign ('gpg --detach') and upload.

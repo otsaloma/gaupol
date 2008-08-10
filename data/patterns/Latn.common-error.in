@@ -1,24 +1,25 @@
 [CommonErrorPattern]
-_Name=Letters "O" in numbers
-_Description=Replace letters "O" with zeros in numbers
+_Name=Letter "O" in a number
+_Description=Replace letter "O" with a zero in a number
 Classes=OCR
-Pattern=(((?<=\d)|(?<=\d[,.]))(?<![^\W\d].)[oO]|[oO](?!2\W)(?!.[^\W\d])((?=\d)|(?=[,.]\d)))
+Pattern=((?<![^\W\d])(\d|\d[,.]))[oO]
 Flags=DOTALL,MULTILINE,UNICODE
-Replacement=0
+Replacement=\1\060
 Repeat=True
 
 [CommonErrorPattern]
-_Name=Dialogue lines
-_Description=Add spaces after dialogue lines
-Classes=Human,OCR
-Pattern=^-([^-\s])
+_Name=Letter "O" in a number
+_Description=Replace letter "O" with a zero in a number
+Classes=OCR
+# Disallow '2' after the 'O' for the case of Oxygen, 'O2'.
+Pattern=[oO]((?!2\W)(\d|[,.]\d)(?![^\W\d]))
 Flags=DOTALL,MULTILINE,UNICODE
-Replacement=- \1
-Repeat=False
+Replacement=\1\060
+Repeat=True
 
 [CommonErrorPattern]
-_Name=Double apostrophes
-_Description=Replace double apostrophes with a quotation mark
+_Name=Double apostrophe
+_Description=Replace a double apostrophe with a quotation mark
 Classes=OCR
 Pattern=''
 Flags=DOTALL,MULTILINE,UNICODE
@@ -26,35 +27,46 @@ Replacement="
 Repeat=False
 
 [CommonErrorPattern]
-_Name=Spaces before punctuation marks
-_Description=Remove excess spaces before various punctuation marks
+_Name=Space after a dialogue line
+_Description=Add space after a dialogue line
 Classes=Human,OCR
-Pattern= +(("|')?([,;:.?!])(?!(\d|\3)))
+Pattern=^-([^-\s])
+Flags=DOTALL,MULTILINE,UNICODE
+Replacement=- \1
+Repeat=False
+
+[CommonErrorPattern]
+_Name=Space before punctuation marks
+_Description=Remove space before various punctuation marks
+Classes=Human,OCR
+# NOTE: This goes against French spacing, Latn-fr can override.
+# Disallow trailing digits for the case of fractions, e.g. '.45'.
+Pattern= +(["']?(?!\.\.)([,;:.?!])(?!\d))
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\1
 Repeat=False
 
 [CommonErrorPattern]
-_Name=Spaces after punctuation marks
-_Description=Add lacking spaces after various punctuation marks
+_Name=Space after punctuation marks
+_Description=Add space after various punctuation marks
 Classes=Human,OCR
-Pattern=((\w|^)("|')?[,;?!])(?!["'])([^\W\d][\w\s])
+Pattern=((\w|^)["']?[,;?!])(?!["'])([^\W\d][\w\s])
 Flags=DOTALL,MULTILINE,UNICODE
-Replacement=\1 \4
+Replacement=\1 \3
 Repeat=False
 
 [CommonErrorPattern]
-_Name=Spaces after ellipses
-_Description=Add lacking spaces after ellipses
+_Name=Space after an ellipsis
+_Description=Add space after an ellipsis
 Classes=Human,OCR
-Pattern=(\w[^\w\s]*?\.\.\.)(("|')?\w)
+Pattern=(\w[^\w\s]*?\.\.\.)(["']?\w)
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\1 \2
 Repeat=False
 
 [CommonErrorPattern]
-_Name=Spaces after starting ellipses
-_Description=Remove spaces after ellipses that start lines
+_Name=Space after a starting ellipsis
+_Description=Remove space after an ellipsis that starts a line
 Classes=Human,OCR
 Pattern=(^\W*?\.\.\.)( +)
 Flags=DOTALL,MULTILINE,UNICODE
@@ -62,37 +74,81 @@ Replacement=\1
 Repeat=False
 
 [CommonErrorPattern]
-_Name=Spaces after quotation marks
-_Description=Remove spaces after starting quotation marks
+_Name=Spaces around a quotation mark
+_Description=Remove space after a starting- and before an ending quotation mark
 Classes=OCR
-Pattern=(\A[^"]*)(" )([^"]*"[^"]*\Z)
+# Remove space after the starting quotation mark in a subtitle with a total
+# of exactly two quotation marks.
+Pattern=(\A[^"]*)(" +)([^"]*"[^"]*\Z)
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\1"\3
 Repeat=False
 
 [CommonErrorPattern]
-_Name=Spaces before quotation marks
-_Description=Remove spaces before ending quotation marks
+_Name=Spaces around a quotation mark
+_Description=Remove space after a starting- and before an ending quotation mark
 Classes=OCR
-Pattern=(\A[^"]*"[^"]*)( ")([^"]*\Z)
+# Remove space before the ending quotation mark in a subtitle with a total
+# of exactly two quotation marks.
+Pattern=(\A[^"]*"[^"]*)( +")([^"]*\Z)
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\1"\3
 Repeat=False
 
 [CommonErrorPattern]
-_Name=Multiple question- and exclamation marks
-_Description=Remove multiple consequtive question- and exclamation marks
-Classes=Human
-Pattern=(\!|\?)\1+
+_Name=Spaces around a quotation mark
+_Description=Remove space after a starting- and before an ending quotation mark
+Classes=OCR
+# Remove space after a quotation mark at the beginning of the line.
+Pattern=^(\W*?["'])( +)
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\1
 Repeat=False
 
 [CommonErrorPattern]
-_Name=Periods after punctuation marks
-_Description=Remove periods after various punctuation marks
+_Name=Spaces around a quotation mark
+_Description=Remove space after a starting- and before an ending quotation mark
 Classes=OCR
+# Remove space before a quotation mark at the end of the line.
+Pattern=( +)(["']\W*?)$
+Flags=DOTALL,MULTILINE,UNICODE
+Replacement=\2
+Repeat=False
+
+[CommonErrorPattern]
+_Name=Multiple question- and exclamation marks
+_Description=Replace multiple consequtive question- and exclamation marks with only one
+Classes=Human
+Pattern=\?{2,}
+Flags=DOTALL,MULTILINE,UNICODE
+Replacement=?
+Repeat=False
+
+[CommonErrorPattern]
+_Name=Multiple question- and exclamation marks
+_Description=Replace multiple consequtive question- and exclamation marks with only one
+Classes=Human
+Pattern=\!{2,}
+Flags=DOTALL,MULTILINE,UNICODE
+Replacement=!
+Repeat=False
+
+[CommonErrorPattern]
+_Name=Periods around a punctuation mark
+_Description=Remove period before or after various punctuation marks
+Classes=OCR
+# Remove period after the mark.
 Pattern=(?<=[:?!])\.(?!\.)
+Flags=DOTALL,MULTILINE,UNICODE
+Replacement=
+Repeat=False
+
+[CommonErrorPattern]
+_Name=Periods around a punctuation mark
+_Description=Remove period before or after various punctuation marks
+Classes=OCR
+# Remove period before the mark.
+Pattern=(?<!\.\w)(?<!\.)\.(?=[:?!])
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=
 Repeat=False

@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,32 +9,30 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
 
-from gaupol import unittest
-from .. import determiner
 
-
-class TestFormatDeterminer(unittest.TestCase):
+class TestFormatDeterminer(gaupol.TestCase):
 
     def setup_method(self, method):
 
-        self.determiner = determiner.FormatDeterminer()
+        self.determiner = gaupol.FormatDeterminer()
 
     def test_determine(self):
 
-        path = self.get_subrip_path()
-        for format in gaupol.FORMAT.members:
-            text = self.get_file_text(format)
-            gaupol.util.write(path, text, "ascii")
+        for format in gaupol.formats:
+            path = self.get_file_path(format)
             value = self.determiner.determine(path, "ascii")
             assert value == format
 
+    def test_determine__value_error(self):
+
+        path = self.get_subrip_path()
         gaupol.util.write(path, "", "ascii")
         function = self.determiner.determine
         self.raises(gaupol.FormatError, function, path, "ascii")

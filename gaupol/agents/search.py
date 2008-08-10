@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,10 +9,10 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Searching for and replacing text."""
 
@@ -25,18 +25,18 @@ class SearchAgent(gaupol.Delegate):
     """Searching for and replacing text.
 
     Instance variables:
-     * _docs: List of the target DOCUMENT constants
+     * _docs: Sequence of the target document enumerations
      * _finder: Instance of Finder used
-     * _match_doc: DOCUMENT constant of the last match
+     * _match_doc: Document enumeration of the last match
      * _match_passed: True if the position of last match has been passed
      * _match_index: The index of the last match
      * _match_span: The start and end positions of the last match
-     * _indexes: List of the target indices or None for all
+     * _indices: Sequence of the target indices or None for all
      * _wrap: True to wrap search, False to stop at the last index
 
     Searching is done with the help of an instance of Finder. This agent
     provides for looping over the subtitles and their texts feeding those texts
-    to the finder and raising StopIteration when no more matches found.
+    to the finder and raising StopIteration when no more matches are found.
     """
 
     # pylint: disable-msg=E0203,W0201
@@ -48,7 +48,7 @@ class SearchAgent(gaupol.Delegate):
         gaupol.Delegate.__init__(self, master)
         self._docs = None
         self._finder = gaupol.Finder()
-        self._indexes = None
+        self._indices = None
         self._match_doc = None
         self._match_index = None
         self._match_passed = None
@@ -70,9 +70,8 @@ class SearchAgent(gaupol.Delegate):
         self._match_index = index
         self._match_doc = doc
         self._match_passed = False
-        indices = self._indexes or range(len(self.subtitles))
+        indices = self._indices or range(len(self.subtitles))
         while True:
-
             try:
                 # Return match in document after position.
                 return find(index, doc, pos)
@@ -85,7 +84,7 @@ class SearchAgent(gaupol.Delegate):
             pos = None
 
     def _get_document(self, doc, next):
-        """Get the document to proceed to.
+        """Return the document to proceed to.
 
         next should be True to find next, False to find previous.
         Raise StopIteration if nowhere to proceed.
@@ -94,22 +93,22 @@ class SearchAgent(gaupol.Delegate):
             if self._wrap:
                 return doc
             raise StopIteration
-        if next and (doc == gaupol.DOCUMENT.MAIN):
-            return gaupol.DOCUMENT.TRAN
-        if next and (doc == gaupol.DOCUMENT.TRAN):
+        if next and (doc == gaupol.documents.MAIN):
+            return gaupol.documents.TRAN
+        if next and (doc == gaupol.documents.TRAN):
             if self._wrap:
-                return gaupol.DOCUMENT.MAIN
+                return gaupol.documents.MAIN
             raise StopIteration
-        if (not next) and (doc == gaupol.DOCUMENT.MAIN):
+        if (not next) and (doc == gaupol.documents.MAIN):
             if self._wrap:
-                return gaupol.DOCUMENT.TRAN
+                return gaupol.documents.TRAN
             raise StopIteration
-        if (not next) and (doc == gaupol.DOCUMENT.TRAN):
-            return gaupol.DOCUMENT.MAIN
+        if (not next) and (doc == gaupol.documents.TRAN):
+            return gaupol.documents.MAIN
         raise ValueError
 
     def _invariant(self):
-        for index in self._indexes or []:
+        for index in self._indices or []:
             assert 0 <= index < len(self.subtitles)
 
     def _next_in_document(self, index, doc, pos=None):
@@ -120,7 +119,7 @@ class SearchAgent(gaupol.Delegate):
         Raise ValueError if no match in this document after position.
         Return tuple of index, document, match span.
         """
-        indices = self._indexes or range(len(self.subtitles))
+        indices = self._indices or range(len(self.subtitles))
         for index in range(index, max(indices) + 1):
             text = self.subtitles[index].get_text(doc)
             # Avoid resetting finder's match span.
@@ -156,7 +155,7 @@ class SearchAgent(gaupol.Delegate):
         Raise ValueError if no match in this document before position.
         Return tuple of index, document, match span.
         """
-        indices = self._indexes or range(len(self.subtitles))
+        indices = self._indices or range(len(self.subtitles))
         for index in reversed(range(min(indices), index + 1)):
             text = self.subtitles[index].get_text(doc)
             # Avoid resetting finder's match span.
@@ -238,20 +237,22 @@ class SearchAgent(gaupol.Delegate):
         assert 0 <= self._match_span[0] <= len(text)
         assert 0 <= self._match_span[1] <= len(text)
 
-    @gaupol.util.revertable
+    @gaupol.deco.revertable
     def replace(self, register=-1):
         """Replace the current match of pattern.
 
         Raise re.error if bad replacement.
         """
+        orig_text = self._finder.text
         self._finder.replace()
         index = self._match_index
         doc = self._match_doc
         text = self._finder.text
+        if text == orig_text: return
         self.set_text(index, doc, text, register=register)
         self.set_action_description(register, _("Replacing"))
 
-    @gaupol.util.revertable
+    @gaupol.deco.revertable
     def replace_all(self, register=-1):
         """Replace all matches of pattern and return amount.
 
@@ -260,18 +261,18 @@ class SearchAgent(gaupol.Delegate):
         counts = {}
         for doc in self._docs:
             counts[doc] = 0
-            new_indexes = []
+            new_indices = []
             new_texts = []
             for index, subtitle in enumerate(self.subtitles):
                 text = subtitle.get_text(doc)
                 self._finder.set_text(text)
                 sub_count = self._finder.replace_all()
                 if sub_count > 0:
-                    new_indexes.append(index)
+                    new_indices.append(index)
                     new_texts.append(self._finder.text)
                     counts[doc] += sub_count
-            if new_indexes:
-                args = (new_indexes, doc, new_texts)
+            if new_indices:
+                args = (new_indices, doc, new_texts)
                 kwargs = {"register": register}
                 self.replace_texts(*args, **kwargs)
                 self.set_action_description(register, _("Replacing all"))
@@ -309,6 +310,6 @@ class SearchAgent(gaupol.Delegate):
         indices can be None to target all subtitles.
         docs can be None to target all documents.
         """
-        self._indexes = indices
-        self._docs = docs or gaupol.DOCUMENT.members
+        self._indices = (tuple(indices) if indices else None)
+        self._docs = tuple(docs or gaupol.documents)
         self._wrap = wrap

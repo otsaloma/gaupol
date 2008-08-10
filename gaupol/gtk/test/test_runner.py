@@ -9,20 +9,19 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-from gaupol.gtk import unittest
-from .. import runner
+import gaupol.gtk
 
 
-class TestRunner(unittest.TestCase):
+class TestRunner(gaupol.gtk.TestCase):
 
     def setup_method(self, method):
 
-        self.runner = runner.Runner()
+        self.runner = gaupol.gtk.Runner()
 
     def test_attributes(self):
 

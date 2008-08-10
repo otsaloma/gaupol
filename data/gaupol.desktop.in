@@ -1,10 +1,12 @@
 [Desktop Entry]
 Encoding=UTF-8
 _Name=Gaupol Subtitle Editor
+_GenericName=Subtitle Editor
 _Comment=Edit subtitle files
 Exec=gaupol %F
 Terminal=false
 StartupNotify=true
 Icon=gaupol
 Type=Application
+MimeType=application/x-subrip;text/x-microdvd;text/x-mpsub;text/x-ssa;text/x-subviewer;
 Categories=GTK;AudioVideo;Video;

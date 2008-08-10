@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,15 +9,17 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Cell renderer for time data in format [-]HH:MM:SS,SSS."""
 
 import gaupol.gtk
 import gtk
+
+__all__ = ("TimeCellRenderer",)
 
 
 class TimeCellRenderer(gtk.CellRendererText):
@@ -31,19 +33,17 @@ class TimeCellRenderer(gtk.CellRendererText):
         gtk.CellRendererText.__init__(self)
         self._in_editor_menu = False
 
-    @gaupol.gtk.util.asserted_return
     def _on_editor_focus_out_event(self, editor, *args):
         """End editing."""
 
-        assert not self._in_editor_menu
+        if self._in_editor_menu: return
         editor.remove_widget()
         self.emit("editing-canceled")
 
-    @gaupol.gtk.util.asserted_return
     def _on_editor_key_press_event(self, editor, event):
         """End editing if Enter pressed."""
 
-        assert not event.state & (gtk.gdk.SHIFT_MASK | gtk.gdk.CONTROL_MASK)
+        if event.state & (gtk.gdk.SHIFT_MASK | gtk.gdk.CONTROL_MASK): return
         if event.keyval in (gtk.keysyms.Return, gtk.keysyms.KP_Enter):
             editor.remove_widget()
             self.emit("edited", editor.get_data("path"), editor.get_text())

@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,21 +9,19 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
 import re
 
-from gaupol import unittest
-
-MAIN = gaupol.DOCUMENT.MAIN
-TRAN = gaupol.DOCUMENT.TRAN
+MAIN = gaupol.documents.MAIN
+TRAN = gaupol.documents.TRAN
 
 
-class TestSearchAgent(unittest.TestCase):
+class TestSearchAgent(gaupol.TestCase):
 
     def _test_find_next(self, pattern, docs, wrap, matches):
 
@@ -67,12 +65,12 @@ class TestSearchAgent(unittest.TestCase):
         self.delegate = self.project.find_next.im_self
 
         texts = (
-            "God has promised you that\n" + \
-             "you will go to Heaven?",
-            "So you are certain of\n" + \
-             "being saved?",
-            "Be careful,\n" + \
-             "it's a dangerous answer.",)
+            ("God has promised you that\n"
+             "you will go to Heaven?"),
+            ("So you are certain of\n"
+             "being saved?"),
+            ("Be careful,\n"
+             "it's a dangerous answer."),)
         for i, text in enumerate(texts):
             self.project.subtitles[i].main_text = text
             self.project.subtitles[i].tran_text = text
@@ -91,7 +89,7 @@ class TestSearchAgent(unittest.TestCase):
             (2, MAIN, (12, 12)),
             (0, MAIN, ( 0,  0)),)
 
-        self._test_find_next(r"^", [MAIN], True, matches)
+        self._test_find_next(r"^", (MAIN,), True, matches)
 
     def test_find_next__2(self):
 
@@ -110,7 +108,7 @@ class TestSearchAgent(unittest.TestCase):
             (2, TRAN, (36, 36)),
             (0, MAIN, (25, 25)),)
 
-        self._test_find_next(r"$", [MAIN, TRAN], True, matches)
+        self._test_find_next(r"$", (MAIN, TRAN), True, matches)
 
     def test_find_next__3(self):
 
@@ -120,7 +118,7 @@ class TestSearchAgent(unittest.TestCase):
             (2, TRAN, (11, 12)),
             (0, TRAN, (25, 26)),)
 
-        self._test_find_next(r"\n", [TRAN], True, matches)
+        self._test_find_next(r"\n", (TRAN,), True, matches)
 
     def test_find_next__4(self):
 
@@ -129,7 +127,7 @@ class TestSearchAgent(unittest.TestCase):
             (0, MAIN, (37, 39)),
             StopIteration,)
 
-        self._test_find_next(r" t", [MAIN], False, matches)
+        self._test_find_next(r" t", (MAIN,), False, matches)
 
     def test_find_next__5(self):
 
@@ -137,12 +135,17 @@ class TestSearchAgent(unittest.TestCase):
             (0, TRAN, (32, 34)),
             StopIteration,)
 
-        self._test_find_next(r"l{2}", [TRAN], False, matches)
+        self._test_find_next(r"l{2}", (TRAN,), False, matches)
 
     def test_find_next__6(self):
 
         matches = (StopIteration,)
-        self._test_find_next(r"xxx", [MAIN, TRAN], False, matches)
+        self._test_find_next(r"xxx", (MAIN, TRAN), False, matches)
+
+    def test_find_next__7(self):
+
+        matches = (StopIteration,)
+        self._test_find_next(r"xxx", (MAIN, TRAN), True, matches)
 
     def test_find_previous__1(self):
 
@@ -155,7 +158,7 @@ class TestSearchAgent(unittest.TestCase):
             (0, MAIN, ( 0,  0)),
             (2, MAIN, (12, 12)),)
 
-        self._test_find_previous(r"^", [MAIN], True, matches)
+        self._test_find_previous(r"^", (MAIN,), True, matches)
 
     def test_find_previous__2(self):
 
@@ -174,7 +177,7 @@ class TestSearchAgent(unittest.TestCase):
             (0, MAIN, (25, 25)),
             (2, TRAN, (36, 36)),)
 
-        self._test_find_previous(r"$", [MAIN, TRAN], True, matches)
+        self._test_find_previous(r"$", (MAIN, TRAN), True, matches)
 
     def test_find_previous__3(self):
 
@@ -184,7 +187,7 @@ class TestSearchAgent(unittest.TestCase):
             (0, TRAN, (25, 26)),
             (2, TRAN, (11, 12)),)
 
-        self._test_find_previous(r"\n", [TRAN], True, matches)
+        self._test_find_previous(r"\n", (TRAN,), True, matches)
 
     def test_find_previous__4(self):
 
@@ -193,7 +196,7 @@ class TestSearchAgent(unittest.TestCase):
             (0, MAIN, (20, 22)),
             StopIteration,)
 
-        self._test_find_previous(r" t", [MAIN], False, matches)
+        self._test_find_previous(r" t", (MAIN,), False, matches)
 
     def test_find_previous__5(self):
 
@@ -201,17 +204,22 @@ class TestSearchAgent(unittest.TestCase):
             (0, TRAN, (32, 34)),
             StopIteration,)
 
-        self._test_find_previous(r"l{2}", [TRAN], False, matches)
+        self._test_find_previous(r"l{2}", (TRAN,), False, matches)
 
     def test_find_previous__6(self):
 
         matches = (StopIteration,)
-        self._test_find_previous(r"xxx", [MAIN, TRAN], False, matches)
+        self._test_find_previous(r"xxx", (MAIN, TRAN), False, matches)
 
-    @unittest.reversion_test
+    def test_find_previous__7(self):
+
+        matches = (StopIteration,)
+        self._test_find_previous(r"xxx", (MAIN, TRAN), True, matches)
+
+    @gaupol.deco.reversion_test
     def test_replace(self):
 
-        self.project.set_search_target(None, [MAIN])
+        self.project.set_search_target(None, (MAIN,))
         self.project.set_search_regex(r"\b\s")
         self.project.set_search_replacement("")
         self.project.find_next(0, MAIN, 4)
@@ -220,20 +228,20 @@ class TestSearchAgent(unittest.TestCase):
             "God haspromised you that\n" + \
             "you will go to Heaven?"
 
-    @unittest.reversion_test
+    @gaupol.deco.reversion_test
     def test_replace_all(self):
 
-        self.project.set_search_target(None, [MAIN, TRAN])
+        self.project.set_search_target(None, (MAIN, TRAN))
         self.project.set_search_regex(r"$")
         self.project.set_search_replacement("--")
         self.project.replace_all()
         texts = (
-            "God has promised you that--\n" + \
-             "you will go to Heaven?--",
-            "So you are certain of--\n" + \
-             "being saved?--",
-            "Be careful,--\n" + \
-             "it's a dangerous answer.--",)
+            ("God has promised you that--\n"
+             "you will go to Heaven?--"),
+            ("So you are certain of--\n"
+             "being saved?--"),
+            ("Be careful,--\n"
+             "it's a dangerous answer.--"),)
         for i, text in enumerate(texts):
             assert self.project.subtitles[i].main_text == text
             assert self.project.subtitles[i].tran_text == text
@@ -267,10 +275,10 @@ class TestSearchAgent(unittest.TestCase):
     def test_set_search_target(self):
 
         self.project.set_search_target()
-        assert self.delegate._indexes == None
-        assert self.delegate._docs == [MAIN, TRAN]
+        assert self.delegate._indices == None
+        assert self.delegate._docs == (MAIN, TRAN)
         assert self.delegate._wrap == True
-        self.project.set_search_target([1], [MAIN], False)
-        assert self.delegate._indexes == [1]
-        assert self.delegate._docs == [MAIN]
+        self.project.set_search_target((1,), (MAIN,), False)
+        assert self.delegate._indices == (1,)
+        assert self.delegate._docs == (MAIN,)
         assert self.delegate._wrap == False

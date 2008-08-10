@@ -9,10 +9,10 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Help and information."""
 
@@ -28,7 +28,7 @@ class HelpAgent(gaupol.Delegate):
     def on_report_a_bug_activate(self, *args):
         """Open web browser to submit a bug report."""
 
-        gaupol.gtk.util.browse_url(gaupol.BUG_REPORT_URL)
+        gaupol.util.browse_url(gaupol.BUG_REPORT_URL)
 
     def on_view_about_dialog_activate(self, *args):
         """Show information about Gaupol."""

@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,17 +9,16 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
+import gaupol.gtk
 import gtk
 
-from gaupol.gtk import unittest
 
-
-class TestHelpAgent(unittest.TestCase):
+class TestHelpAgent(gaupol.gtk.TestCase):
 
     def setup_method(self, method):
 
@@ -27,10 +26,10 @@ class TestHelpAgent(unittest.TestCase):
 
     def test_on_report_a_bug_activate(self):
 
-        self.application.on_report_a_bug_activate()
+        self.application.get_action("report_a_bug").activate()
 
     def test_on_view_about_dialog_activate(self):
 
         respond = lambda *args: gtk.RESPONSE_DELETE_EVENT
         self.application.flash_dialog = respond
-        self.application.on_view_about_dialog_activate()
+        self.application.get_action("view_about_dialog").activate()

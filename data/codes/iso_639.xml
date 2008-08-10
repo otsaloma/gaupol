@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!-- iso-639.tab							-->
-<!--									-->
-<!-- Copyright (C) 2005 Alastair McKinstry   <mckinstry@computer.org>   -->
-<!-- Released under the GNU License; see file COPYING for details	-->
-<!--									-->
-<!-- Last update: 2006-12-08    					-->
-<!--									-->
-<!-- This file gives a list of all languages in the ISO-639		-->
-<!-- standard, and is used to provide translations (via gettext)	-->
-<!--									-->
-<!-- Status: ISO 639-2:1998 + additions and changes until 2006-06-07	-->
-<!-- Source: http://www.loc.gov/standards/iso639-2/langcodes.html	-->
-<!-- change: http://www.loc.gov/standards/iso639-2/php/code_changes.php -->
+
+<!--
+This file gives a list of all languages in the ISO 639
+standard, and is used to provide translations via gettext
+
+Copyright (C) 2004-2006 Alastair McKinstry <mckinstry@computer.org>
+Copyright (C) 2004-2007 Christian Perrier <bubulle@debian.org>
+Copyright (C) 2005-2006 Tobias Toedter <t.toedter@gmx.net>
+
+    This file is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This file is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this file; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+
+Source: <http://www.loc.gov/standards/iso639-2/>
+-->
 
 <!DOCTYPE iso_639_entries [
 	<!ELEMENT iso_639_entries (iso_639_entry+)>
@@ -119,7 +131,7 @@
 	<iso_639_entry
 		iso_639_2B_code="arc"
 		iso_639_2T_code="arc"
-		name="Aramaic" />
+		name="Official Aramaic (700-300 BCE); Imperial Aramaic (700-300 BCE)" />
 	<iso_639_entry
 		iso_639_2B_code="arg"
 		iso_639_2T_code="arg"
@@ -154,7 +166,7 @@
 	<iso_639_entry
 		iso_639_2B_code="ast"
 		iso_639_2T_code="ast"
-		name="Asturian; Bable" />
+		name="Asturian; Bable; Leonese; Asturleonese" />
 	<iso_639_entry
 		iso_639_2B_code="ath"
 		iso_639_2T_code="ath"
@@ -229,7 +241,7 @@
 	<iso_639_entry
 		iso_639_2B_code="bej"
 		iso_639_2T_code="bej"
-		name="Beja" />
+		name="Beja; Bedawiyet" />
 	<iso_639_entry
 		iso_639_2B_code="bel"
 		iso_639_2T_code="bel"
@@ -389,7 +401,7 @@
 	<iso_639_entry
 		iso_639_2B_code="chp"
 		iso_639_2T_code="chp"
-		name="Chipewyan" />
+		name="Chipewyan; Dene Suline" />
 	<iso_639_entry
 		iso_639_2B_code="chr"
 		iso_639_2T_code="chr"
@@ -745,7 +757,7 @@
 	<iso_639_entry
 		iso_639_2B_code="gsw"
 		iso_639_2T_code="gsw"
-		name="Swiss German; Alemannic" />
+		name="Swiss German; Alemannic; Alsatian" />
 	<iso_639_entry
 		iso_639_2B_code="guj"
 		iso_639_2T_code="guj"
@@ -845,7 +857,7 @@
 		iso_639_2B_code="iii"
 		iso_639_2T_code="iii"
 		iso_639_1_code="ii"
-		name="Sichuan Yi" />
+		name="Sichuan Yi; Nuosu" />
 	<iso_639_entry
 		iso_639_2B_code="ijo"
 		iso_639_2T_code="ijo"
@@ -859,7 +871,7 @@
 		iso_639_2B_code="ile"
 		iso_639_2T_code="ile"
 		iso_639_1_code="ie"
-		name="Interlingue" />
+		name="Interlingue; Occidental" />
 	<iso_639_entry
 		iso_639_2B_code="ilo"
 		iso_639_2T_code="ilo"
@@ -1250,7 +1262,7 @@
 	<iso_639_entry
 		iso_639_2B_code="mis"
 		iso_639_2T_code="mis"
-		name="Miscellaneous languages" />
+		name="Uncoded languages" />
 	<iso_639_entry
 		iso_639_2B_code="mkh"
 		iso_639_2T_code="mkh"
@@ -1497,7 +1509,7 @@
 	<iso_639_entry
 		iso_639_2B_code="pam"
 		iso_639_2T_code="pam"
-		name="Pampanga" />
+		name="Pampanga; Kapampangan" />
 	<iso_639_entry
 		iso_639_2B_code="pan"
 		iso_639_2T_code="pan"
@@ -1559,7 +1571,7 @@
 		iso_639_2B_code="pus"
 		iso_639_2T_code="pus"
 		iso_639_1_code="ps"
-		name="Pushto" />
+		name="Pushto; Pashto" />
 	<iso_639_entry
 		iso_639_2B_code="qaa-qtz"
 		iso_639_2T_code="qaa-qtz"
@@ -2120,6 +2132,10 @@
 		iso_639_2B_code="zap"
 		iso_639_2T_code="zap"
 		name="Zapotec" />
+	<iso_639_entry
+		iso_639_2B_code="zbl"
+		iso_639_2T_code="zbl"
+		name="Blissymbols; Blissymbolics; Bliss" />
 	<iso_639_entry
 		iso_639_2B_code="zen"
 		iso_639_2T_code="zen"

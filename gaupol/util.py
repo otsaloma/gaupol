@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2007 Osmo Salomaa
+# Copyright (C) 2006-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,21 +9,20 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Miscellaneous functions and decorators."""
 
 from __future__ import absolute_import
 from __future__ import with_statement
 
-import cPickle
 import codecs
 import contextlib
-import functools
 import gaupol
+import inspect
 import locale
 import os
 import re
@@ -33,164 +32,37 @@ import urllib
 import urlparse
 import webbrowser
 
-# All defined variables and functions.
-__all__ = set(dir() + ["__all__"])
 
+def affirm(value):
+    """Raise AffirmationError if value evaluates to False."""
 
-def asserted_return(function):
-    """Decorator for ignoring AssertionErrors raised by function.
-
-    Only AssertionErrors from function's level are ignored.
-    Return None if an exception encountered.
-    """
-    def wrapper(*args, **kwargs):
-        try:
-            return function(*args, **kwargs)
-        except AssertionError:
-            depth = 0
-            tb = sys.exc_info()[2]
-            while tb.tb_next is not None:
-                tb = tb.tb_next
-                depth += 1
-                if depth > 1:
-                    raise
-            return None
-    return wrapper
-
-def contractual(function):
-    """Decorator for functions with pre- and/or postconditions.
-
-    function call will be wrapped around 'FUNCTION_NAME_require' and
-    'FUNCTION_NAME_ensure' calls if such functions exist. The require function
-    receives the same arguments as function, the ensure function will in
-    addition receive function's return value as its first argument.
-
-    Works only for module level functions!
-    """
-    @functools.wraps(function)
-    def wrapper(*args, **kwargs):
-        if not gaupol.check_contracts:
-            return function(*args, **kwargs)
-        name = "%s_require" % function.__name__
-        if name in function.func_globals:
-            function.func_globals[name](*args, **kwargs)
-        value = function(*args, **kwargs)
-        name = "%s_ensure" % function.__name__
-        if name in function.func_globals:
-            function.func_globals[name](value, *args, **kwargs)
-        return value
-
-    return wrapper
-
-def memoize(function):
-    """Decorator for functions that cache their return values."""
-
-    cache = {}
-    @functools.wraps(function)
-    def wrapper(*args, **kwargs):
-        params = (args, kwargs)
-        if is_method(function, args):
-            params = (id(args[0]), args[1:], kwargs)
-        key = cPickle.dumps(params)
-        if not key in cache:
-            cache[key] = function(*args, **kwargs)
-        return cache[key]
-
-    wrapper.original = function
-    return wrapper
-
-def notify_frozen(function):
-    """Decorator for methods to be run in notify frozen state."""
-
-    @functools.wraps(function)
-    def wrapper(*args, **kwargs):
-        frozen = args[0].freeze_notify()
-        try:
-            value = function(*args, **kwargs)
-        finally:
-            args[0].thaw_notify(frozen)
-        return value
-
-    return wrapper
-
-def once(function):
-    """Decorator for functions that cache their only return value."""
-
-    cache = []
-    @functools.wraps(function)
-    def wrapper(*args, **kwargs):
-        if not cache:
-            cache.append(function(*args, **kwargs))
-        return cache[0]
-
-    return wrapper
-
-def revertable(function):
-    """Decorator for revertable methods."""
-
-    @functools.wraps(function)
-    def wrapper(*args, **kwargs):
-        project = args[0]
-        main_changed = project.main_changed
-        tran_changed = project.tran_changed
-        kwargs.setdefault("register", gaupol.REGISTER.DO)
-        register = kwargs["register"]
-        if register is None:
-            return function(*args, **kwargs)
-        blocked = project.block(register.signal)
-        if not blocked:
-            return function(*args, **kwargs)
-        try:
-            value = function(*args, **kwargs)
-            project.cut_reversion_stacks()
-        finally:
-            project.unblock(register.signal)
-        if (project.main_changed != main_changed) or \
-           (project.tran_changed != tran_changed):
-            project.emit_action_signal(register)
-        return value
-
-    return wrapper
-
-def silent(*exceptions):
-    """Decorator for ignoring exceptions raised  by function.
-
-    If no exceptions specified, ignore Exception.
-    Return None if an exception encountered.
-    """
-    if not exceptions:
-        exceptions = (Exception,)
-
-    def outer_wrapper(function):
-        @functools.wraps(function)
-        def inner_wrapper(*args, **kwargs):
-            try:
-                return function(*args, **kwargs)
-            except exceptions:
-                return None
-        return inner_wrapper
-
-    return outer_wrapper
+    if not value:
+        raise gaupol.AffirmationError
 
 def browse_url(url, browser=None):
-    """Open URL in browser."""
+    """Open URL in web browser."""
 
-    qurl = shell_quote(url)
-    desktop = get_desktop_environment()
-    if desktop == "GNOME":
-        return start_process("gnome-open %s" % qurl)
-    if desktop == "KDE":
-        return start_process("kfmclient exec %s" % qurl)
+    if browser and isinstance(browser, basestring):
+        return subprocess.Popen((browser, url))
+    if "GNOME_DESKTOP_SESSION_ID" in os.environ:
+        return subprocess.Popen(("gnome-open", url))
+    if "KDE_FULL_SESSION" in os.environ:
+        return subprocess.Popen(("kfmclient", "exec", url))
     if sys.platform == "darwin":
-        return start_process("open %s" % qurl)
+        return subprocess.Popen(("open", url))
+    if sys.platform == "win32":
+        return subprocess.Popen(("start", url))
+    if is_command("xdg-open"):
+        return subprocess.Popen(("xdg-open", url))
+    if is_command("exo-open"):
+        return subprocess.Popen(("exo-open", url))
     return webbrowser.open(url)
 
-@once
+@gaupol.deco.once
 def chardet_available():
     """Return True if chardet module is available."""
 
     try:
-        # pylint: disable-msg=W0612
         import chardet
         return True
     except Exception:
@@ -201,7 +73,7 @@ def compare_versions_require(x, y):
     assert re_version.match(x) is not None
     assert re_version.match(y) is not None
 
-@contractual
+@gaupol.deco.contractual
 def compare_versions(x, y):
     """Compare version strings x and y.
 
@@ -217,7 +89,7 @@ def connect_require(observer, observable, signal, *args):
     if observer is not observable:
         assert hasattr(observer, observable)
 
-@contractual
+@gaupol.deco.contractual
 def connect(observer, observable, signal, *args):
     """Connect observable's signal to observer's callback method.
 
@@ -239,6 +111,7 @@ def copy_dict_ensure(source, value):
     assert source == value
     assert source is not value
 
+@gaupol.deco.contractual
 def copy_dict(source):
     """Copy source dictionary recursively and return copy."""
 
@@ -246,23 +119,61 @@ def copy_dict(source):
     for key, value in source.items():
         if isinstance(source[key], dict):
             destination[key] = copy_dict(source[key])
+        elif isinstance(source[key], list):
+            destination[key] = copy_list(source[key])
+        elif isinstance(source[key], set):
+            destination[key] = set(source[key])
     return destination
 
-@once
+def copy_list_ensure(source, value):
+    assert source == value
+    assert source is not value
+
+@gaupol.deco.contractual
+def copy_list(source):
+    """Copy source list recursively and return copy."""
+
+    destination = list(source)
+    for i, value in enumerate(source):
+        if isinstance(value, dict):
+            destination[i] = copy_dict(value)
+        elif isinstance(value, list):
+            destination[i] = copy_list(value)
+        elif isinstance(value, set):
+            destination[i] = set(value)
+    return destination
+
+@gaupol.deco.once
 def enchant_available():
     """Return True if enchant module is available."""
 
     try:
-        # pylint: disable-msg=W0612
         import enchant
         return True
     except Exception:
         return False
 
-def get_chardet_version_ensure(value):
-    assert isinstance(value, basestring)
+def get_all(names, pattern=None):
+    """Return a tuple of names filtered by pattern to use as __all__."""
 
-@contractual
+    import __future__
+    for i in reversed(range(len(names))):
+        if (names[i].startswith("_")) or \
+           (names[i].endswith("_require")) or \
+           (names[i].endswith("_ensure")) or \
+           (names[i] in sys.modules) or \
+           (names[i] in dir(__future__)):
+            names.pop(i)
+    if pattern is not None:
+        regex = re.compile(pattern, re.UNICODE)
+        names = [x for x in names if regex.search(x)]
+    return tuple(names)
+
+def get_chardet_version_ensure(value):
+    if value is not None:
+        assert isinstance(value, basestring)
+
+@gaupol.deco.contractual
 def get_chardet_version():
     """Return chardet version number as string or None."""
 
@@ -275,10 +186,10 @@ def get_chardet_version():
 def get_default_encoding_ensure(value):
     codecs.lookup(value)
 
-@once
-@contractual
+@gaupol.deco.once
+@gaupol.deco.contractual
 def get_default_encoding():
-    """Get the locale encoding or UTF-8 (as fallback)."""
+    """Return the locale encoding or UTF-8 (as fallback)."""
 
     encoding = locale.getpreferredencoding()
     encoding = encoding or "utf_8"
@@ -287,21 +198,11 @@ def get_default_encoding():
     encoding = get_encoding_alias(encoding)
     return encoding
 
-@once
-def get_desktop_environment():
-    """Return 'GNOME', 'KDE' or None if unknown."""
-
-    if "GNOME_DESKTOP_SESSION_ID" in os.environ:
-        return "GNOME"
-    if "KDE_FULL_SESSION" in os.environ:
-        return "KDE"
-    return None
-
 def get_enchant_version_ensure(value):
-    assert isinstance(value, basestring)
+    if value is not None:
+        assert isinstance(value, basestring)
 
-@once
-@contractual
+@gaupol.deco.contractual
 def get_enchant_version():
     """Return enchant version number as string or None."""
 
@@ -312,7 +213,7 @@ def get_enchant_version():
         return None
 
 def get_encoding_alias(encoding):
-    """Get proper alias for encoding."""
+    """Return proper alias for encoding."""
 
     # pylint: disable-msg=E0611
     from encodings.aliases import aliases
@@ -328,28 +229,27 @@ def get_ranges_ensure(value, lst):
     for item in value:
         assert item == range(item[0], item[-1] + 1)
 
-@contractual
+@gaupol.deco.contractual
 def get_ranges(lst):
-    """Get a list of ranges in list of integers."""
+    """Return a list of ranges in list of integers."""
 
-    if not lst:
-        return []
+    if not lst: return []
     lst = get_sorted_unique(lst)
     ranges = [[lst.pop(0)]]
     for item in lst:
         if item == ranges[-1][-1] + 1:
             ranges[-1].append(item)
-        else:
-            ranges.append([item])
+        else: ranges.append([item])
     return ranges
 
 def get_sorted_unique_ensure(value, lst):
     for item in value:
         assert value.count(item) == 1
+    assert sorted(value) == value
 
-@contractual
+@gaupol.deco.contractual
 def get_sorted_unique(lst):
-    """Get sorted list with duplicates removed."""
+    """Return sorted list with duplicates removed."""
 
     lst = sorted(lst)
     for i in reversed(range(1, len(lst))):
@@ -357,76 +257,54 @@ def get_sorted_unique(lst):
             lst.pop(i)
     return lst
 
-def get_unique_ensure(value, lst):
+def get_unique_ensure(value, lst, keep_last=False):
     for item in value:
         assert value.count(item) == 1
 
-@contractual
-def get_unique(lst):
-    """Get list with duplicates removed."""
+@gaupol.deco.contractual
+def get_unique(lst, keep_last=False):
+    """Return list with duplicates removed.
 
+    Keep the last duplicate if keep_last is True, else keep first.
+    """
     lst = lst[:]
+    if keep_last: lst.reverse()
     for i in reversed(range(len(lst))):
         for j in range(0, i):
             if lst[j] == lst[i]:
                 lst.pop(i)
                 break
+    if keep_last: lst.reverse()
     return lst
 
-def handle_read_io(exc_info, path):
-    """Print IO error message to standard output."""
+def install_module(name, obj):
+    """Install object's module into the gaupol's namespace.
 
-    print "Failed to read file '%s': %s." % (path, exc_info[1].args[1])
-
-def handle_read_unicode(exc_info, path, encoding):
-    """Print Unicode error message to standard output."""
-
-    encoding = encoding or get_default_encoding()
-    print "Failed to decode file '%s' with codec '%s'." % (path, encoding)
-
-def handle_remove_os(exc_info, path):
-    """Print OS error message to standard output."""
-
-    print "Failed to remove file '%s': %s." % (path, exc_info[1].args[1])
-
-def handle_write_io(exc_info, path):
-    """Print IO error message to standard output."""
-
-    print "Failed to write file '%s': %s." % (path, exc_info[1].args[1])
-
-def handle_write_unicode(exc_info, path, encoding):
-    """Print Unicode error message to standard output."""
-
-    encoding = encoding or get_default_encoding()
-    print "Failed to encode file '%s' with codec '%s'." % (path, encoding)
-
-def is_method(function, args):
-    """Return True if function to be decorated is a method.
-
-    Decorator is required to have set an 'original' attribute on the wrapped
-    method pointing to the original unwrapped function.
+    Typical call is of form install_module('foo', lambda: None).
     """
-    try:
-        method = getattr(args[0], function.__name__)
-        return (method.original is function)
-    except (IndexError, AttributeError):
-        return False
+    gaupol.__dict__[name] = inspect.getmodule(obj)
+
+def is_command(command):
+    """Return True if command exists as a file in $PATH."""
+
+    for directory in os.environ.get("PATH", "").split(os.pathsep):
+        path = os.path.join(directory, command)
+        if os.path.isfile(path): return True
+    return False
 
 def last(iterator):
     """Return the last value from iterator or None."""
 
     value = None
     while True:
-        try:
-            value = iterator.next()
-        except StopIteration:
-            break
+        try: value = iterator.next()
+        except StopIteration: break
     return value
 
 def makedirs_ensure(value, directory):
     assert os.path.isdir(directory)
 
-@contractual
+@gaupol.deco.contractual
 def makedirs(directory):
     """Recursively make directory if it does not exist.
 
@@ -442,6 +320,41 @@ def path_to_uri(path):
         path = "/%s" % path.replace("\\", "/")
     return "file://%s" % urllib.quote(path)
 
+def print_read_io(exc_info, path):
+    """Print IO error message to standard output."""
+
+    print "Failed to read file '%s': %s." % (path, exc_info[1].args[1])
+
+def print_read_unicode(exc_info, path, encoding):
+    """Print Unicode error message to standard output."""
+
+    encoding = encoding or get_default_encoding()
+    print "Failed to decode file '%s' with codec '%s'." % (path, encoding)
+
+def print_remove_os(exc_info, path):
+    """Print OS error message to standard output."""
+
+    print "Failed to remove file '%s': %s." % (path, exc_info[1].args[1])
+
+def print_write_io(exc_info, path):
+    """Print IO error message to standard output."""
+
+    print "Failed to write file '%s': %s." % (path, exc_info[1].args[1])
+
+def print_write_unicode(exc_info, path, encoding):
+    """Print Unicode error message to standard output."""
+
+    encoding = encoding or get_default_encoding()
+    print "Failed to encode file '%s' with codec '%s'." % (path, encoding)
+
+
+def read_require(path, encoding=None, fallback="utf_8"):
+    if encoding is not None:
+        codecs.lookup(encoding)
+    if fallback is not None:
+        codecs.lookup(fallback)
+
+@gaupol.deco.contractual
 def read(path, encoding=None, fallback="utf_8"):
     """Read file and return text.
 
@@ -455,10 +368,17 @@ def read(path, encoding=None, fallback="utf_8"):
         with contextlib.closing(codecs.open(*args)) as fobj:
             return fobj.read().strip()
     except UnicodeError:
-        if fallback not in (encoding, None):
+        if not fallback in (encoding, None, ""):
             return read(path, "utf_8", None)
         raise
 
+def readlines_require(path, encoding=None, fallback="utf_8"):
+    if encoding is not None:
+        codecs.lookup(encoding)
+    if fallback is not None:
+        codecs.lookup(fallback)
+
+@gaupol.deco.contractual
 def readlines(path, encoding=None, fallback="utf_8"):
     """Read file and return lines.
 
@@ -466,8 +386,9 @@ def readlines(path, encoding=None, fallback="utf_8"):
     Raise IOError if reading fails.
     Raise UnicodeError if decoding fails.
     """
-    text = read(path, encoding)
-    text = text.replace("\r\n", "\n").replace("\r", "\n")
+    text = read(path, encoding, fallback)
+    text = text.replace("\r\n", "\n")
+    text = text.replace("\r", "\n")
     return text.split("\n")
 
 def shell_quote(path):
@@ -492,6 +413,21 @@ def start_process(command, **kwargs):
         universal_newlines=True,
         **kwargs)
 
+def title_to_lower_case_ensure(value, title_name):
+    assert value.islower()
+
+@gaupol.deco.memoize
+@gaupol.deco.contractual
+def title_to_lower_case(title_name):
+    """Convert title case name to lower case with underscores."""
+
+    lower_name = ""
+    for char in title_name:
+        if char.isupper() and lower_name:
+            lower_name += "_"
+        lower_name += char.lower()
+    return lower_name
+
 def uri_to_path(uri):
     """Convert URI to local filepath."""
 
@@ -503,10 +439,16 @@ def uri_to_path(uri):
         return path.replace("/", "\\")
     return urlparse.urlsplit(uri)[2]
 
+def write_require(path, text, encoding=None, fallback="utf_8"):
+    if encoding is not None:
+        codecs.lookup(encoding)
+    if fallback is not None:
+        codecs.lookup(fallback)
+
 def write_ensure(value, path, text, encoding=None, fallback="utf_8"):
     assert os.path.isfile(path)
 
-@contractual
+@gaupol.deco.contractual
 def write(path, text, encoding=None, fallback="utf_8"):
     """Write text to file.
 
@@ -520,9 +462,6 @@ def write(path, text, encoding=None, fallback="utf_8"):
         with contextlib.closing(codecs.open(*args)) as fobj:
             return fobj.write(text)
     except UnicodeError:
-        if fallback not in (encoding, None):
+        if not fallback in (encoding, None, ""):
             return write(path, text, "utf_8", None)
         raise
-
-# All defined variables and functions.
-__all__ = sorted(list(set(dir()) - __all__))

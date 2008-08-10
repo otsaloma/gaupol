@@ -1,6 +1,6 @@
 [CapitalizationPattern]
-_Name=First person pronouns
-_Description=Capitalize the first person pronouns "I"
+_Name=First person pronoun
+_Description=Capitalize the first person pronoun "I"
 Capitalize=Start
 Pattern=\bi\b
 Flags=DOTALL,MULTILINE,UNICODE

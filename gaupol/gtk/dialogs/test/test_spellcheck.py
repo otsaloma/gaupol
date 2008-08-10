@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,21 +9,19 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol.gtk
 import gtk
-
-from gaupol.gtk import unittest
-from .. import spellcheck
+import os
 
 
-class TestSpellCheckDialog(unittest.TestCase):
+class TestSpellCheckDialog(gaupol.gtk.TestCase):
 
-    def run(self):
+    def run__dialog(self):
 
         self.dialog.run()
         self.dialog.destroy()
@@ -34,15 +32,55 @@ class TestSpellCheckDialog(unittest.TestCase):
 
     def setup_method(self, method):
 
+        gaupol.gtk.conf.editor.use_custom_font = True
+        gaupol.gtk.conf.editor.custom_font = "sans"
         self.application = self.get_application()
         for page in self.application.pages:
             for i, subtitle in enumerate(page.project.subtitles):
                 text = subtitle.main_text.replace("a", "x")
-                page.project.set_text(i, gaupol.gtk.DOCUMENT.MAIN, text)
+                page.project.set_text(i, gaupol.documents.MAIN, text)
                 text = subtitle.tran_text.replace("a", "x")
-                page.project.set_text(i, gaupol.gtk.DOCUMENT.TRAN, text)
-        parent = self.application.window
-        self.dialog = spellcheck.SpellCheckDialog(parent, self.application)
+                page.project.set_text(i, gaupol.documents.TRAN, text)
+        self._temp_dir = gaupol.temp.create_directory()
+        gaupol.gtk.SpellCheckDialog._personal_dir = self._temp_dir
+        args = (self.application.window, self.application)
+        self.dialog = gaupol.gtk.SpellCheckDialog(*args)
+        self.dialog.show()
+
+    def teardown_method(self, method):
+
+        gaupol.temp.remove_directory(self._temp_dir)
+        gaupol.gtk.TestCase.teardown_method(self, method)
+
+    def test__init_checker__enchant_error(self):
+
+        gaupol.gtk.conf.spell_check.language = "wo"
+        cls = gaupol.gtk.SpellCheckDialog
+        respond = lambda *args: gtk.RESPONSE_OK
+        cls.flash_dialog = respond
+        args = (self.application.window, self.application)
+        self.raises(ValueError, cls, *args)
+
+    def test__init_checker__io_error(self):
+
+        os.chmod(self._temp_dir, 0000)
+        args = (self.application.window, self.application)
+        self.dialog = gaupol.gtk.SpellCheckDialog(*args)
+        os.chmod(self._temp_dir, 0777)
+
+    def test__init_replacements(self):
+
+        basename = "%s.repl" % gaupol.gtk.conf.spell_check.language
+        path = os.path.join(self.dialog._personal_dir, basename)
+        open(path, "w").write("a|b\nc|d\n")
+        args = (self.application.window, self.application)
+        self.dialog = gaupol.gtk.SpellCheckDialog(*args)
+
+    def test__on_add_button_clicked(self):
+
+        while True:
+            if not self.dialog._table.props.sensitive: break
+            self.dialog._add_button.emit("clicked")
 
     def test__on_edit_button_clicked(self):
 
@@ -59,19 +97,43 @@ class TestSpellCheckDialog(unittest.TestCase):
 
     def test__on_ignore_all_button_clicked(self):
 
-        self.dialog._ignore_button.emit("clicked")
+        while True:
+            if not self.dialog._table.props.sensitive: break
+            self.dialog._ignore_all_button.emit("clicked")
 
     def test__on_ignore_button_clicked(self):
 
-        self.dialog._ignore_all_button.emit("clicked")
+        while True:
+            if not self.dialog._table.props.sensitive: break
+            self.dialog._ignore_button.emit("clicked")
+
+    def test__on_join_back_button_clicked(self):
+
+        while True:
+            if not self.dialog._table.props.sensitive: break
+            if self.dialog._join_back_button.props.sensitive:
+                self.dialog._join_back_button.emit("clicked")
+            else: self.dialog._ignore_button.emit("clicked")
+
+    def test__on_join_forward_button_clicked(self):
+
+        while True:
+            if not self.dialog._table.props.sensitive: break
+            if self.dialog._join_forward_button.props.sensitive:
+                self.dialog._join_forward_button.emit("clicked")
+            else: self.dialog._ignore_button.emit("clicked")
 
     def test__on_replace_all_button_clicked(self):
 
-        self.dialog._replace_all_button.emit("clicked")
+        while True:
+            if not self.dialog._table.props.sensitive: break
+            self.dialog._replace_all_button.emit("clicked")
 
     def test__on_replace_button_clicked(self):
 
-        self.dialog._replace_button.emit("clicked")
+        while True:
+            if not self.dialog._table.props.sensitive: break
+            self.dialog._replace_button.emit("clicked")
 
     def test__on_response(self):
 
@@ -89,3 +151,16 @@ class TestSpellCheckDialog(unittest.TestCase):
         respond = lambda *args: gtk.RESPONSE_OK
         self.dialog.flash_dialog = respond
         self.dialog._show_error_dialog("test")
+
+    def test__write_replacements(self):
+
+        for i in range(self.dialog._max_replacemnts + 1):
+            self.dialog._replacements.append(("a", "b"))
+        self.dialog._write_replacements()
+
+    def test__write_replacements__io_error(self):
+
+        os.chmod(self._temp_dir, 0000)
+        self.test__on_replace_button_clicked()
+        self.dialog.response(gtk.RESPONSE_CLOSE)
+        os.chmod(self._temp_dir, 0777)

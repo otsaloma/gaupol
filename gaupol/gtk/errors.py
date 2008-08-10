@@ -1,4 +1,4 @@
-# Copyright (C) 2007 Osmo Salomaa
+# Copyright (C) 2007-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,27 +9,26 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """All error classes."""
 
-from gaupol import errors
-from gaupol.errors import *
+import gaupol
 
-__all__ = errors.__all__ + ["ConfigParseError", "Default"]
+__all__ = ("ConfigParseError", "Default")
 
 
-class ConfigParseError(GaupolError):
+class ConfigParseError(gaupol.Error):
 
     """Failed to parse configuration file."""
 
     pass
 
 
-class Default(GaupolError):
+class Default(gaupol.Error):
 
     """Cancelled or something of the sort."""
 

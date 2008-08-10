@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,57 +9,47 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Advanced Sub Station Alpha tag library."""
+"""Text markup for the Advanced Sub Station Alpha format."""
 
 import gaupol
-import re
 
-from .ssa import SubStationAlpha
+__all__ = ("AdvSubStationAlpha",)
 
 
-class AdvSubStationAlpha(SubStationAlpha):
+class AdvSubStationAlpha(gaupol.tags.SubStationAlpha):
 
-    """Advanced Sub Station Alpha tag library."""
+    """Text markup for the Advanced Sub Station Alpha format.
 
-    format = gaupol.FORMAT.ASS
+    In addition to the markup in Sub Station Alpha, Advanced Sub Station Alpha
+    contains a whole lof of markup tags of which the following are of interest
+    to us. The further complicated color tags that define numbered (?) colors
+    and alpha channels are ignored. The reset tag is allowed a style definiton,
+    e.g. '{\\rDefault}' to revert to style 'Default'.
 
-    @gaupol.util.once
-    def _get_decode_tags(self):
-        """Get list of tuples of regular expression, replacement, count."""
+     * {\\bWEIGHT}...{\\b0}
+     * {\\u1}........{\\u0}
+     * ........{\\r[STYLE]}
+    """
 
-        FLAGS = re.IGNORECASE
+    _closing_pattern = r"\{\\([biu])0\}"
+    _opening_pattern = r"\{\\(?![biu]0)(b|i|u|c|fn|fs).*?\}"
+    _reset_pattern = r"\{\\r.*?\}"
+    format = gaupol.formats.ASS
 
-        tags = [
-            # Underline opening
-            (r"\{\\u1\}", FLAGS,
-                r"<u>", 1),
-            # Underline closing
-            (r"\{\\u0\}", FLAGS,
-                r"</u>", 1),]
+    def _main_decode(self, text):
+        """Return text with decodable markup decoded."""
 
-        for i, (pattern, flags, replacement, count) in enumerate(tags):
-            tags[i] = (re.compile(pattern, flags), replacement, count)
-        return tags + SubStationAlpha._get_decode_tags(self)
+        text = self._decode_b(text, r"\{\\b[1-9]\d*\}(.*?)\{\\b[0\\]\}", 1)
+        text = self._decode_u(text, r"\{\\u1\}(.*?)\{\\u[0\\]\}", 1)
+        return gaupol.tags.SubStationAlpha._main_decode(self, text)
 
-    @gaupol.util.once
-    def _get_encode_tags(self):
-        """Get list of tuples of regular expression, replacement, count."""
+    def underline(self, text, bounds=None):
+        """Return underlined text."""
 
-        FLAGS = re.IGNORECASE
-
-        tags = [
-            # Underline opening
-            (r"<u>", FLAGS,
-                r"{\\u1}", 1),
-            # Underline closing
-            (r"</u>", FLAGS,
-                r"{\\u0}", 1),]
-
-        for i, (pattern, flags, replacement, count) in enumerate(tags):
-            tags[i] = (re.compile(pattern, flags), replacement, count)
-        return tags + SubStationAlpha._get_encode_tags(self)
+        a, z = bounds or (0, len(text))
+        return "".join((text[:a], "{\\u1}%s{\\u0}" % text[a:z], text[z:]))

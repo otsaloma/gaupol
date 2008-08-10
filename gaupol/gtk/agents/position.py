@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,10 +9,10 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Editing times and frames."""
 
@@ -28,24 +28,12 @@ class PositionAgent(gaupol.Delegate):
     def on_adjust_durations_activate(self, *args):
         """Lengthen or shorten durations."""
 
-        page = self.get_current_page()
         dialog = gaupol.gtk.DurationAdjustDialog(self.window, self)
-        self.flash_dialog(dialog)
-
-    def on_transform_positions_activate(self, *args):
-        """Change positions by linear two-point correction."""
-
-        page = self.get_current_page()
-        time_class = gaupol.gtk.TimeTransformDialog
-        frame_class = gaupol.gtk.FrameTransformDialog
-        cls = (time_class, frame_class)[page.edit_mode]
-        dialog = cls(self.window, self)
         self.flash_dialog(dialog)
 
     def on_convert_framerate_activate(self, *args):
         """Convert framerate."""
 
-        page = self.get_current_page()
         dialog = gaupol.gtk.FramerateConvertDialog(self.window, self)
         self.flash_dialog(dialog)
 
@@ -53,8 +41,18 @@ class PositionAgent(gaupol.Delegate):
         """Make subtitles appear earlier or later."""
 
         page = self.get_current_page()
-        time_class = gaupol.gtk.TimeShiftDialog
-        frame_class = gaupol.gtk.FrameShiftDialog
-        cls = (time_class, frame_class)[page.edit_mode]
-        dialog = cls(self.window, self)
-        self.flash_dialog(dialog)
+        if page.edit_mode == gaupol.modes.TIME:
+            cls = gaupol.gtk.TimeShiftDialog
+        elif page.edit_mode == gaupol.modes.FRAME:
+            cls = gaupol.gtk.FrameShiftDialog
+        self.flash_dialog(cls(self.window, self))
+
+    def on_transform_positions_activate(self, *args):
+        """Change positions by linear two-point correction."""
+
+        page = self.get_current_page()
+        if page.edit_mode == gaupol.modes.TIME:
+            cls = gaupol.gtk.TimeTransformDialog
+        elif page.edit_mode == gaupol.modes.FRAME:
+            cls = gaupol.gtk.FrameTransformDialog
+        self.flash_dialog(cls(self.window, self))

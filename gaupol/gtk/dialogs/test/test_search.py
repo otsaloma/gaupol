@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2007 Osmo Salomaa
+# Copyright (C) 2006-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,49 +9,50 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
+import gaupol.gtk
 import gtk
 
-from gaupol.gtk import unittest
-from .. import search
 
-
-class TestSearchDialog(unittest.TestCase):
+class TestSearchDialog(gaupol.gtk.TestCase):
 
     # pylint: disable-msg=W0201
 
-    def run(self):
+    def run__dialog(self):
 
         self.dialog.run()
         self.dialog.destroy()
 
     def run__show_regex_error_dialog_pattern(self):
 
-        self.dialog = search.SearchDialog(self.get_application())
+        self.dialog = gaupol.gtk.SearchDialog(self.get_application())
         self.dialog._show_regex_error_dialog_pattern("test")
 
     def run__show_regex_error_dialog_replacement(self):
 
-        self.dialog = search.SearchDialog(self.get_application())
+        self.dialog = gaupol.gtk.SearchDialog(self.get_application())
         self.dialog._show_regex_error_dialog_replacement("test")
 
     def setup_method(self, method):
 
+        gaupol.gtk.conf.search.max_history = 2
+        gaupol.gtk.conf.editor.use_custom_font = True
+        gaupol.gtk.conf.editor.custom_font = "sans"
         self.application = self.get_application()
-        self.dialog = search.SearchDialog(self.application)
+        self.dialog = gaupol.gtk.SearchDialog(self.application)
         respond = lambda *args: gtk.RESPONSE_DELETE_EVENT
         self.dialog.flash_dialog = respond
-        self.dialog.run_dialog = respond
         self.dialog.show()
 
-    def teardown_method(self, method):
+    def test__on_all_radio_toggled(self):
 
-        unittest.TestCase.teardown_method(self, method)
-        self.dialog.destroy()
+        self.dialog._current_radio.set_active(True)
+        self.dialog._all_radio.set_active(True)
+        self.dialog._current_radio.set_active(True)
 
     def test__on_ignore_case_check_toggled(self):
 
@@ -61,7 +62,13 @@ class TestSearchDialog(unittest.TestCase):
     def test__on_next_button_clicked(self):
 
         self.dialog._pattern_entry.set_text("a")
-        self.dialog._on_next_button_clicked()
+        self.dialog._next_button.emit("clicked")
+
+    def test__on_main_check_toggled(self):
+
+        self.dialog._main_check.set_active(True)
+        self.dialog._tran_check.set_active(True)
+        self.dialog._main_check.set_active(True)
 
     def test__on_pattern_entry_changed(self):
 
@@ -71,25 +78,26 @@ class TestSearchDialog(unittest.TestCase):
     def test__on_previous_button_clicked(self):
 
         self.dialog._pattern_entry.set_text("a")
-        self.dialog._on_previous_button_clicked()
+        self.dialog._previous_button.emit("clicked")
 
     def test__on_regex_check_toggled(self):
 
         self.dialog._regex_check.set_active(True)
         self.dialog._regex_check.set_active(False)
+        self.dialog._regex_check.set_active(True)
 
     def test__on_replace_all_button_clicked(self):
 
         self.dialog._pattern_entry.set_text("e")
         self.dialog._replacement_entry.set_text("x")
-        self.dialog._on_replace_all_button_clicked()
+        self.dialog._replace_all_button.emit("clicked")
 
     def test__on_replace_button_clicked(self):
 
         self.dialog._pattern_entry.set_text("a")
         self.dialog._replacement_entry.set_text("x")
         self.dialog._next_button.emit("clicked")
-        self.dialog._on_replace_button_clicked()
+        self.dialog._replace_button.emit("clicked")
 
     def test__on_response(self):
 
@@ -104,8 +112,16 @@ class TestSearchDialog(unittest.TestCase):
     def test__on_text_view_focus_out_event(self):
 
         self.dialog._pattern_entry.set_text("a")
-        self.dialog._on_next_button_clicked()
-        self.dialog._on_next_button_clicked()
+        self.dialog._next_button.emit("clicked")
+        gaupol.gtk.util.iterate_main()
+        self.dialog._next_button.emit("clicked")
+        gaupol.gtk.util.iterate_main()
+
+    def test__set_pattern__re_error(self):
+
+        self.dialog._regex_check.set_active(True)
+        self.dialog._pattern_entry.set_text("*")
+        self.dialog.next()
 
     def test__show_regex_error_dialog_pattern(self):
 
@@ -118,29 +134,57 @@ class TestSearchDialog(unittest.TestCase):
     def test_next(self):
 
         self.dialog._regex_check.set_active(True)
-        self.dialog._pattern_entry.set_text("^")
-        for i in range(10):
+        for char in "aeiouy":
+            self.dialog._pattern_entry.set_text(char)
             self.dialog.next()
+            self.dialog.next()
+        self.dialog._pattern_entry.set_text("xxx")
+        self.dialog.next()
+        self.dialog._all_radio.set_active(True)
+        self.application.open_main_file(self.get_subrip_path())
+        self.dialog.next()
 
     def test_previous(self):
 
         self.dialog._regex_check.set_active(True)
-        self.dialog._pattern_entry.set_text("$")
-        for i in range(10):
+        for char in "aeiouy":
+            self.dialog._pattern_entry.set_text(char)
             self.dialog.previous()
+            self.dialog.previous()
+        self.dialog._pattern_entry.set_text("xxx")
+        self.dialog.previous()
+        self.dialog._all_radio.set_active(True)
+        self.application.open_main_file(self.get_subrip_path())
+        self.dialog.previous()
 
     def test_replace(self):
 
         self.dialog._regex_check.set_active(True)
-        self.dialog._pattern_entry.set_text(" ")
-        self.dialog._replacement_entry.set_text(".")
-        self.dialog.next()
-        for i in range(10):
+        for char in "aeiouy":
+            self.dialog._pattern_entry.set_text(char)
+            self.dialog._replacement_entry.set_text(char)
+            self.dialog.next()
             self.dialog.replace()
+            self.dialog.replace()
+
+    def test_replace__re_error(self):
+
+        self.dialog._regex_check.set_active(True)
+        self.dialog._pattern_entry.set_text(" ")
+        self.dialog._replacement_entry.set_text("\\1")
+        self.dialog.next()
+        self.dialog.replace()
 
     def test_replace_all(self):
 
         self.dialog._regex_check.set_active(True)
         self.dialog._pattern_entry.set_text("^")
         self.dialog._replacement_entry.set_text("-")
+        self.dialog.replace_all()
+
+    def test_replace_all__re_error(self):
+
+        self.dialog._regex_check.set_active(True)
+        self.dialog._pattern_entry.set_text("^")
+        self.dialog._replacement_entry.set_text("\\1")
         self.dialog.replace_all()

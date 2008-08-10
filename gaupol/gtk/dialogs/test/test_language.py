@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,38 +9,43 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
+import gaupol.gtk
 import gtk
 
-from gaupol.gtk import unittest
-from .. import language
 
+class TestLanguageDialog(gaupol.gtk.TestCase):
 
-class TestLanguageDialog(unittest.TestCase):
-
-    def run(self):
+    def run__dialog(self):
 
         self.dialog.run()
         self.dialog.destroy()
 
     def setup_method(self, method):
 
-        self.dialog = language.LanguageDialog(gtk.Window())
+        self.dialog = gaupol.gtk.LanguageDialog(gtk.Window())
+        self.dialog.show()
 
     def test__on_tree_view_selection_changed(self):
 
         store = self.dialog._tree_view.get_model()
         selection = self.dialog._tree_view.get_selection()
-        self.dialog._on_tree_view_selection_changed(selection)
+        store = self.dialog._tree_view.get_model()
+        for i in range(len(store)):
+            selection.select_path(i)
 
-    def test__save_column(self):
+    def test__init_signal_handlers__field(self):
 
-        self.dialog._save_column()
+        self.dialog._main_radio.set_active(True)
+        self.dialog._tran_radio.set_active(True)
+        self.dialog._main_radio.set_active(True)
 
-    def test__save_target(self):
+    def test__init_signal_handlers__target(self):
 
-        self.dialog._save_target()
+        self.dialog._current_radio.set_active(True)
+        self.dialog._all_radio.set_active(True)
+        self.dialog._current_radio.set_active(True)

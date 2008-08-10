@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,30 +9,24 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol.gtk
 import gtk
 
-from gaupol.gtk import unittest
-from .. import previewerr
 
+class TestPreviewErrorDialog(gaupol.gtk.TestCase):
 
-class TestPreviewErrorDialog(unittest.TestCase):
-
-    def run(self):
+    def run__dialog(self):
 
         self.dialog.run()
         self.dialog.destroy()
 
     def setup_method(self, method):
 
-        output = self.get_file_text(gaupol.gtk.FORMAT.SUBRIP)
-        self.dialog = previewerr.PreviewErrorDialog(gtk.Window(), output)
-
-    def test___init__(self):
-
-        pass
+        output = self.get_file_text(gaupol.formats.SUBRIP)
+        self.dialog = gaupol.gtk.PreviewErrorDialog(gtk.Window(), output)
+        self.dialog.show()

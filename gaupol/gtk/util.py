@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,65 +9,63 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Miscellaneous functions and decorators."""
 
-import functools
 import gaupol.gtk
 import gobject
 import gtk.glade
+import inspect
 import os
 import pango
 
-from gaupol.util import *
 
+def delay_add(delay, function, *args):
+    """Call function with arguments once after delay milliseconds.
 
-def idle_method(function):
-    """Decorator for functions to be run in main loop while idle."""
-
-    def do_idle(args, kwargs):
-        function(*args, **kwargs)
+    Return integer ID of the event source from 'gobject.timeout_add'.
+    """
+    def call_function(*args):
+        function(*args)
         return False
-    @functools.wraps(function)
-    def wrapper(*args, **kwargs):
-        gobject.idle_add(do_idle, args, kwargs)
+    return gobject.timeout_add(delay, call_function, *args)
 
-    return wrapper
+def document_to_text_field(doc):
+    """Return text field enumeration corresponding to document enumeration."""
 
-def document_to_text_column(doc):
-    """Translate DOCUMENT constant to COLUMN constant."""
-
-    if doc == gaupol.gtk.DOCUMENT.MAIN:
-        return gaupol.gtk.COLUMN.MAIN_TEXT
-    if doc == gaupol.gtk.DOCUMENT.TRAN:
-        return gaupol.gtk.COLUMN.TRAN_TEXT
+    if doc == gaupol.documents.MAIN:
+        return gaupol.gtk.fields.MAIN_TEXT
+    if doc == gaupol.documents.TRAN:
+        return gaupol.gtk.fields.TRAN_TEXT
     raise ValueError
 
 def get_font():
-    """Get custom font or blank string."""
+    """Return custom font or blank string."""
 
-    if gaupol.gtk.conf.editor.use_custom_font:
-        return gaupol.gtk.conf.editor.custom_font
-    return ""
+    if not gaupol.gtk.conf.editor.use_custom_font: return ""
+    return gaupol.gtk.conf.editor.custom_font
 
-def get_glade_xml(name, root=None, directory=None):
-    """Get gtk.glade.XML object from Glade file path.
+def get_glade_xml_require(*parts):
+    path = os.path.join(gaupol.DATA_DIR, "glade", *parts)
+    assert os.path.isfile(path)
 
-    name should be Glade XML file's basename without extension.
-    directory can be None for the default global directory.
+@gaupol.deco.contractual
+def get_glade_xml(*parts):
+    """Return gtk.glade.XML object from Glade file path.
+
+    parts are pathname components under gaupol.DATA_DIR/glade, i.e. optionally
+    directories and, as the last item, the basename of the glade XML file.
     Raise RuntimeError if unable to load Glade XML file.
     """
-    if directory is None:
-        directory = os.path.join(gaupol.DATA_DIR, "glade")
-    path = os.path.join(directory, "%s.glade" % name)
-    return gtk.glade.XML(path, root)
+    path = os.path.join(gaupol.DATA_DIR, "glade", *parts)
+    return gtk.glade.XML(path)
 
 def get_text_view_size(text_view, font=""):
-    """Get the width and height desired by text view."""
+    """Return the width and height desired by text view."""
 
     text_buffer = text_view.get_buffer()
     bounds = text_buffer.get_bounds()
@@ -77,7 +75,7 @@ def get_text_view_size(text_view, font=""):
     return label.size_request()
 
 def get_tree_view_size(tree_view):
-    """Get the width and height desired by tree view."""
+    """Return the width and height desired by tree view."""
 
     scroller = tree_view.get_parent()
     policy = scroller.get_policy()
@@ -86,17 +84,12 @@ def get_tree_view_size(tree_view):
     scroller.set_policy(*policy)
     return width, height
 
-def is_position_column(col):
-    """Return True if column is a position column."""
+def install_module(name, obj):
+    """Install object's module into the gaupol.gtk's namespace.
 
-    COLUMN = gaupol.gtk.COLUMN
-    return col in (COLUMN.START, COLUMN.END, COLUMN.DURATION)
-
-def is_text_column(col):
-    """Return True if column is a text column."""
-
-    COLUMN = gaupol.gtk.COLUMN
-    return col in (COLUMN.MAIN_TEXT, COLUMN.TRAN_TEXT)
+    Typical call is of form install_module("foo", lambda: None).
+    """
+    gaupol.gtk.__dict__[name] = inspect.getmodule(obj)
 
 def iterate_main():
     """Iterate the GTK main loop while events are pending."""
@@ -111,21 +104,21 @@ def prepare_text_view(text_view):
         if gaupol.gtk.conf.editor.show_lengths_edit:
             return gaupol.gtk.ruler.connect_text_view(text_view)
         return gaupol.gtk.ruler.disconnect_text_view(text_view)
-    connect_conf = gaupol.gtk.conf.editor.connect
-    connect_conf("notify::show_lengths_edit", update_margin, text_view)
+    connect = gaupol.gtk.conf.editor.connect
+    connect("notify::show_lengths_edit", update_margin, text_view)
     update_margin(None, None, text_view)
 
     def update_font(section, value, text_view):
         set_widget_font(text_view, get_font())
-    connect_conf = gaupol.gtk.conf.editor.connect
-    connect_conf("notify::use_custom_font", update_font, text_view)
-    connect_conf("notify::custom_font", update_font, text_view)
+    connect = gaupol.gtk.conf.editor.connect
+    connect("notify::use_custom_font", update_font, text_view)
+    connect("notify::custom_font", update_font, text_view)
     update_font(None, None, text_view)
 
 def raise_default(expression):
     """Raise Default if expression evaluates to True."""
 
-    if bool(expression):
+    if expression:
         raise gaupol.gtk.Default
 
 def resize_dialog(dialog, width, height, max_size=0.6):
@@ -171,21 +164,21 @@ def set_button(button, text, stock=None):
 def set_cursor_busy_require(window):
     assert hasattr(window, "window")
 
-@contractual
+@gaupol.deco.contractual
 def set_cursor_busy(window):
     """Set cursor busy when above window."""
 
-    window.window.set_cursor(gaupol.gtk.BUSY_CURSOR)
+    window.window.set_cursor(gtk.gdk.Cursor(gtk.gdk.WATCH))
     iterate_main()
 
 def set_cursor_normal_require(window):
     assert hasattr(window, "window")
 
-@contractual
+@gaupol.deco.contractual
 def set_cursor_normal(window):
     """Set cursor normal when above window."""
 
-    window.window.set_cursor(gaupol.gtk.NORMAL_CURSOR)
+    window.window.set_cursor(gtk.gdk.Cursor(gtk.gdk.LEFT_PTR))
     iterate_main()
 
 def set_label_font(label, font):
@@ -209,11 +202,11 @@ def set_widget_font(widget, font):
     font_desc.merge(custom_font_desc, True)
     widget.modify_font(font_desc)
 
-def text_column_to_document(col):
-    """Translate COLUMN constant to DOCUMENT constant."""
+def text_field_to_document(field):
+    """Return document enumeration corresponding to text field enumeration."""
 
-    if col == gaupol.gtk.COLUMN.MAIN_TEXT:
-        return gaupol.gtk.DOCUMENT.MAIN
-    if col == gaupol.gtk.COLUMN.TRAN_TEXT:
-        return gaupol.gtk.DOCUMENT.TRAN
+    if field == gaupol.gtk.fields.MAIN_TEXT:
+        return gaupol.documents.MAIN
+    if field == gaupol.gtk.fields.TRAN_TEXT:
+        return gaupol.documents.TRAN
     raise ValueError

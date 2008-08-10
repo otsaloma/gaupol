@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,25 +9,31 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol.gtk
 
-from gaupol.gtk import unittest
 
-
-class TestPage(unittest.TestCase):
+class TestPage(gaupol.gtk.TestCase):
 
     def setup_method(self, method):
 
         self.page = self.get_page()
 
-    def test__assert_store(self):
+    def test__on_conf_editor_notify_limit_undo(self):
 
-        self.page._assert_store()
+        gaupol.gtk.conf.editor.limit_undo = True
+        gaupol.gtk.conf.editor.undo_levels = 1
+        gaupol.gtk.conf.editor.limit_undo = False
+
+    def test__on_conf_editor_notify_undo_levels(self):
+
+        gaupol.gtk.conf.editor.limit_undo = True
+        gaupol.gtk.conf.editor.undo_levels = 1
+        gaupol.gtk.conf.editor.undo_levels = 100
 
     def test__on_project_main_file_opened(self):
 
@@ -36,23 +42,26 @@ class TestPage(unittest.TestCase):
 
     def test__on_project_main_texts_changed(self):
 
-        self.page.project.set_text(0, gaupol.gtk.DOCUMENT.MAIN, "test")
+        doc = gaupol.documents.MAIN
+        self.page.project.set_text(0, doc, "test")
 
     def test__on_project_positions_changed(self):
 
-        self.page.project.set_start(0, "00:00:00,000")
+        self.page.project.shift_positions(None, 3.0)
 
     def test__on_project_subtitles_changed(self):
 
-        self.page.project.set_start(0, "99:59:59,999")
+        project = self.page.project
+        rows = range(len(self.page.project.subtitles))
+        self.page._on_project_subtitles_changed(project, rows)
 
     def test__on_project_subtitles_inserted(self):
 
-        self.page.project.insert_blank_subtitles([0, 1])
+        self.page.project.insert_blank_subtitles((0, 1))
 
     def test__on_project_subtitles_removed(self):
 
-        self.page.project.remove_subtitles([2, 3])
+        self.page.project.remove_subtitles((2, 3))
 
     def test__on_project_translation_file_opened(self):
 
@@ -61,11 +70,19 @@ class TestPage(unittest.TestCase):
 
     def test__on_project_translation_texts_changed(self):
 
-        self.page.project.set_text(0, gaupol.gtk.DOCUMENT.TRAN, "test")
+        doc = gaupol.documents.TRAN
+        self.page.project.set_text(0, doc, "test")
 
-    def test__on_tab_event_box_enter_notify_event(self):
+    def test_document_to_text_column(self):
 
-        self.page._on_tab_event_box_enter_notify_event()
+        doc = gaupol.documents.MAIN
+        col = self.page.document_to_text_column(doc)
+        assert col == self.page.view.columns.MAIN_TEXT
+        doc = gaupol.documents.TRAN
+        col = self.page.document_to_text_column(doc)
+        assert col == self.page.view.columns.TRAN_TEXT
+        function = self.page.document_to_text_column
+        self.raises(ValueError, function, None)
 
     def test_get_main_basename(self):
 
@@ -78,27 +95,39 @@ class TestPage(unittest.TestCase):
 
     def test_get_translation_basename(self):
 
+        translate = gaupol.i18n._
         self.page.project.tran_file.path = "/tmp/root.sub"
         name = self.page.get_translation_basename()
         assert name == "root.sub"
         self.page.project.main_file.path = "/tmp/root.srt"
         self.page.project.tran_file = None
         name = self.page.get_translation_basename()
-        assert name == "root translation"
+        assert name == translate("%s translation") % "root"
         self.page.project.main_file = None
         name = self.page.get_translation_basename()
-        assert name == "%s translation" % self.page.untitle
+        assert name == translate("%s translation") % self.page.untitle
 
     def test_reload_view(self):
 
         rows = range(len(self.page.project.subtitles))
-        cols = gaupol.gtk.COLUMN.members[:]
-        cols.remove(gaupol.gtk.COLUMN.NUMBER)
-        self.page.reload_view(rows, cols)
+        fields = [x for x in gaupol.gtk.fields]
+        fields.remove(gaupol.gtk.fields.NUMBER)
+        self.page.reload_view(rows, fields)
 
     def test_reload_view_all(self):
 
         self.page.reload_view_all()
+
+    def test_text_column_to_document(self):
+
+        col = self.page.view.columns.MAIN_TEXT
+        doc = self.page.text_column_to_document(col)
+        assert doc == gaupol.documents.MAIN
+        col = self.page.view.columns.TRAN_TEXT
+        doc = self.page.text_column_to_document(col)
+        assert doc == gaupol.documents.TRAN
+        function = self.page.text_column_to_document
+        self.raises(ValueError, function, None)
 
     def test_update_tab_label(self):
 
@@ -106,4 +135,4 @@ class TestPage(unittest.TestCase):
         assert title == self.page.get_main_basename()
         self.page.project.remove_subtitles([1])
         title = self.page.update_tab_label()
-        assert title == "*" + self.page.get_main_basename()
+        assert title == "*%s" % self.page.get_main_basename()

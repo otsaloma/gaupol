@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,28 +9,63 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
 
-from .test_subfile import TestSubtitleFile
-from .. import mpsub
 
+class TestMPsubTime(gaupol.TestCase):
 
-class TestMPsub(TestSubtitleFile):
+    name = "mpsub-time"
 
     def setup_method(self, method):
 
-        path = self.get_subrip_path()
-        self.file = mpsub.MPsub(path, "ascii")
+        format = gaupol.formats.MPSUB
+        path = self.get_file_path(format, self.name)
+        self.file = gaupol.files.new(format, path, "ascii")
+
+    def test_copy_from(self):
+
+        self.file.set_header("FORMAT=25.00")
+        path = self.get_file_path(self.file.format, self.name)
+        new_file = gaupol.files.new(self.file.format, path, "ascii")
+        new_file.copy_from(self.file)
+        assert new_file.header == self.file.header
+        assert new_file.framerate == self.file.framerate
+        assert new_file.mode == self.file.mode
+
+    def test_read(self):
+
+        assert self.file.read()
+        assert self.file.header
+        assert self.file.mode in gaupol.modes
+        if self.file.framerate is not None:
+            assert self.file.framerate in gaupol.framerates
 
     def test_set_header(self):
 
-        self.file.set_header("FORMAT=TIME\n")
-        assert self.file.mode == gaupol.MODE.TIME
-        self.file.set_header("FORMAT=23.98\n")
-        assert self.file.mode == gaupol.MODE.FRAME
-        self.raises(ValueError, self.file.set_header, "")
+        self.file.set_header("FORMAT=TIME")
+        assert self.file.mode == gaupol.modes.TIME
+        assert self.file.framerate == gaupol.framerates.NONE
+        self.file.set_header("FORMAT=29.97")
+        assert self.file.mode == gaupol.modes.FRAME
+        assert self.file.framerate == gaupol.framerates.FPS_30
+        function = self.file.set_header
+        self.raises(ValueError, function, "FORMAT=NONE")
+
+    def test_write(self):
+
+        subtitles = self.file.read()
+        doc = gaupol.documents.MAIN
+        self.file.write(subtitles, doc)
+        text = open(self.file.path, "r").read().strip()
+        reference = self.get_file_text(self.file.format, self.name)
+        assert text == reference
+
+
+class TestMPsubFrame(TestMPsubTime):
+
+    name = "mpsub-frame"

@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,44 +9,43 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol.gtk
-from gaupol.gtk import unittest
 
 
-class TestFormatAgent(unittest.TestCase):
+class TestFormatAgent(gaupol.gtk.TestCase):
 
     def setup_method(self, method):
 
         self.application = self.get_application()
         page = self.application.get_current_page()
-        page.view.set_focus(0, gaupol.gtk.COLUMN.MAIN_TEXT)
-        page.view.select_rows([0, 1, 2])
+        page.view.set_focus(0, page.view.columns.MAIN_TEXT)
+        page.view.select_rows((0, 1, 2))
 
     def test_on_toggle_dialogue_lines_activate(self):
 
-        self.application.on_toggle_dialogue_lines_activate()
+        self.application.get_action("toggle_dialogue_lines").activate()
 
     def test_on_toggle_italicization_activate(self):
 
-        self.application.on_toggle_italicization_activate()
+        self.application.get_action("toggle_italicization").activate()
 
     def test_on_use_lower_case_activate(self):
 
-        self.application.on_use_lower_case_activate()
+        self.application.get_action("use_lower_case").activate()
 
     def test_on_use_sentence_case_activate(self):
 
-        self.application.on_use_sentence_case_activate()
+        self.application.get_action("use_sentence_case").activate()
 
     def test_on_use_title_case_activate(self):
 
-        self.application.on_use_title_case_activate()
+        self.application.get_action("use_title_case").activate()
 
     def test_on_use_upper_case_activate(self):
 
-        self.application.on_use_upper_case_activate()
+        self.application.get_action("use_upper_case").activate()

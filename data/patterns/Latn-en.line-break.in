@@ -1,6 +1,11 @@
 [LineBreakPattern]
-_Name=Clauses
-_Description=Break according to clauses terminated by punctuation marks
+_Name=Clause
+_Description=Break according to clauses terminated by a punctuation mark
+# Prefer breaking sentences rather than clauses and multiple clauses rather
+# than single clauses. Require clauses to contain more than one word to avoid
+# breaking itemized lists. Keep a single trailing word at the end of a subtitle
+# attached to the preceding sentence. Do not break after a known title.
 Pattern=((((?<!\b([Dd]r|[Jj]r|[Mm]r|[Mm]s|[Ss]r|[Ss]t))(?<!\b[Mm]rs)(?<!(.\.|\..))\.|[?!])['"]?|(?<!-) [^ ]+?(\.{2,}|[,;:])['"]?( [^ ]+?([^.].\.{3,}|[,;:])['"]?)*( [^ ]+?([^.].\.|[?!])['"]?)?( [^ ]+$)?))( |$)
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\1\n
+Policy=Replace

@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,26 +9,25 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
 
-from gaupol import unittest
-from .. import countries
 
-
-class TestModule(unittest.TestCase):
-
-    def test__init_countries(self):
-
-        assert countries.countries
+class TestModule(gaupol.TestCase):
 
     def test_code_to_name(self):
 
         name = gaupol.i18n.dgettext("iso_3166", "Ireland")
-        assert countries.code_to_name("IE") == name
+        assert gaupol.countries.code_to_name("IE") == name
         name = gaupol.i18n.dgettext("iso_3166", "Yemen")
-        assert countries.code_to_name("YE") == name
+        assert gaupol.countries.code_to_name("YE") == name
+        self.raises(KeyError, gaupol.countries.code_to_name, "XX")
+
+    def test_is_valid(self):
+
+        assert gaupol.countries.is_valid("RU")
+        assert not gaupol.countries.is_valid("XX")

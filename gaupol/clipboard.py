@@ -9,24 +9,23 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Internal text clipboard."""
 
-__all__ = ["Clipboard"]
+__all__ = ("Clipboard",)
 
 
 class Clipboard(object):
 
     """Internal text clipboard.
 
-    Instance variables:
-     * _texts: List of strings or Nones
-
-    Nones in _texts express that those items are to be skipped.
+    Instance variable '_texts' is a list of strings, each being the text of one
+    subtitle. Nones in the list express that those subtitles are skipped, i.e.
+    the range of subtitles is not unified.
     """
 
     def __init__(self):
@@ -44,13 +43,13 @@ class Clipboard(object):
         self._texts = []
 
     def get_string(self):
-        """Get the texts as one string."""
+        """Return the texts as one string."""
 
         strings = [x or "" for x in self._texts]
         return "\n\n".join(strings)
 
     def get_texts(self):
-        """Get the texts as a list."""
+        """Return the texts as a list."""
 
         return self._texts[:]
 

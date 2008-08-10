@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,18 +9,32 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-from .test_subfile import TestSubtitleFile
-from .. import ass
+import gaupol
 
 
-class TestAdvSubStationAlpha(TestSubtitleFile):
+class TestSubStationAlpha(gaupol.TestCase):
 
     def setup_method(self, method):
 
-        path = self.get_subrip_path()
-        self.file = ass.AdvSubStationAlpha(path, "ascii")
+        format = gaupol.formats.ASS
+        path = self.get_file_path(format)
+        self.file = gaupol.files.new(format, path, "ascii")
+
+    def test_read(self):
+
+        assert self.file.read()
+        assert self.file.header
+
+    def test_write(self):
+
+        subtitles = self.file.read()
+        doc = gaupol.documents.MAIN
+        self.file.write(subtitles, doc)
+        text = open(self.file.path, "r").read().strip()
+        reference = self.get_file_text(self.file.format)
+        assert text == reference

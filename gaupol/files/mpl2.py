@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,73 +9,52 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """MPL2 file."""
 
-from __future__ import with_statement
-
-import codecs
-import contextlib
 import gaupol
 import re
 
-from .subfile import SubtitleFile
+__all__ = ("MPL2",)
 
 
-class MPL2(SubtitleFile):
+class MPL2(gaupol.SubtitleFile):
 
     """MPL2 file."""
 
-    __metaclass__ = gaupol.Contractual
-    format = gaupol.FORMAT.MPL2
-    mode = gaupol.MODE.TIME
+    _re_line = re.compile(r"^\[(-?\d+)\]\[(-?\d+)\](.*?)$")
+    format = gaupol.formats.MPL2
+    mode = gaupol.modes.TIME
 
     def read(self):
-        """Read file.
+        """Read file and return subtitles.
 
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
-        Return start times, end times, texts.
         """
-        starts = []
-        ends = []
-        texts = []
-        calc = gaupol.Calculator()
-        re_line = re.compile(r"^\[(-?\d+)\]\[(-?\d+)\](.*?)$")
+        subtitles = []
         for line in self._read_lines():
-            match = re_line.match(line)
-            if match is not None:
-                starts.append(match.group(1))
-                ends.append(match.group(2))
-                texts.append(match.group(3))
+            match = self._re_line.match(line)
+            if match is None: continue
+            subtitle = self._get_subtitle()
+            subtitle.start = float(match.group(1)) / 10
+            subtitle.end = float(match.group(2)) / 10
+            subtitle.main_text = match.group(3).replace("|", "\n")
+            subtitles.append(subtitle)
+        return subtitles
 
-        for times in (starts, ends):
-            for i, time in enumerate(times):
-                seconds = float("%s.%s" % (time[:-1], time[-1]))
-                times[i] = calc.seconds_to_time(seconds)
-        texts = [x.replace("|", "\n") for x in texts]
-        return starts, ends, texts
-
-    def write(self, starts, ends, texts):
-        """Write file.
+    def write_to_file(self, subtitles, doc, fobj):
+        """Write subtitles from document to given file.
 
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
-        calc = gaupol.Calculator()
-        get_deca = lambda x: "%.0f" % (calc.time_to_seconds(x) * 10)
-        starts = [get_deca(x) for x in starts]
-        ends = [get_deca(x) for x in ends]
-        texts = [x.replace("\n", "|") for x in texts]
-
-        args = (self.path, "w", self.encoding)
-        with contextlib.closing(codecs.open(*args)) as fobj:
-            for i in range(len(starts)):
-                fobj.write("[%s]" % starts[i])
-                fobj.write("[%s]" % ends[i])
-                fobj.write(texts[i])
-                fobj.write(self.newline.value)
+        for subtitle in subtitles:
+            fobj.write("[%.0f]" % (subtitle.start_seconds * 10))
+            fobj.write("[%.0f]" % (subtitle.end_seconds * 10))
+            fobj.write(subtitle.get_text(doc).replace("\n", "|"))
+            fobj.write(self.newline.value)

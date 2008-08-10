@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,22 +9,21 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Dialogs for selecting character encodings."""
 
 import gaupol.gtk
-import gobject
 import gtk
 _ = gaupol.i18n._
 
-from .glade import GladeDialog
+__all__ = ("EncodingDialog", "AdvEncodingDialog")
 
 
-class EncodingDialog(GladeDialog):
+class EncodingDialog(gaupol.gtk.GladeDialog):
 
     """Dialog for selecting a character encoding."""
 
@@ -32,7 +31,7 @@ class EncodingDialog(GladeDialog):
 
     def __init__(self, parent):
 
-        GladeDialog.__init__(self, "encoding-dialog")
+        gaupol.gtk.GladeDialog.__init__(self, "encoding.glade")
         self._tree_view = self._glade_xml.get_widget("tree_view")
 
         self._init_tree_view()
@@ -60,9 +59,9 @@ class EncodingDialog(GladeDialog):
 
         selection = self._tree_view.get_selection()
         selection.set_mode(gtk.SELECTION_SINGLE)
-        store = gtk.ListStore(*(gobject.TYPE_STRING,) * 3)
-        for item in gaupol.encodings.get_valid_encodings():
-            store.append([item[0], item[2], item[1]])
+        store = gtk.ListStore(str, str, str)
+        for item in gaupol.encodings.get_valid():
+            store.append((item[0], item[2], item[1]))
         store.set_sort_column_id(1, gtk.SORT_ASCENDING)
         self._tree_view.set_model(store)
 
@@ -82,13 +81,12 @@ class EncodingDialog(GladeDialog):
         if value is not None:
             assert gaupol.encodings.is_valid_code(value)
 
-    @gaupol.gtk.util.asserted_return
     def get_encoding(self):
-        """Get the selected encoding or None."""
+        """Return the selected encoding or None."""
 
         selection = self._tree_view.get_selection()
         store, itr = selection.get_selected()
-        assert itr is not None
+        if itr is None: return
         return store.get_value(itr, 0)
 
 
@@ -101,11 +99,10 @@ class AdvEncodingDialog(EncodingDialog):
 
         selection = self._tree_view.get_selection()
         selection.set_mode(gtk.SELECTION_SINGLE)
-        columns = (gobject.TYPE_STRING,) * 3 + (gobject.TYPE_BOOLEAN,)
-        store = gtk.ListStore(*columns)
+        store = gtk.ListStore(str, str, str, bool)
         visibles = gaupol.gtk.conf.encoding.visibles
-        for item in gaupol.encodings.get_valid_encodings():
-            store.append([item[0], item[2], item[1], item[0] in visibles])
+        for item in gaupol.encodings.get_valid():
+            store.append((item[0], item[2], item[1], item[0] in visibles))
         store.set_sort_column_id(1, gtk.SORT_ASCENDING)
         self._tree_view.set_model(store)
 
@@ -121,20 +118,24 @@ class AdvEncodingDialog(EncodingDialog):
         column.set_sort_column_id(2)
         self._tree_view.append_column(column)
 
-        def on_toggled(renderer, row):
-            store[row][3] = not store[row][3]
         renderer = gtk.CellRendererToggle()
-        renderer.connect("toggled", on_toggled)
+        renderer.connect("toggled", self._on_tree_view_cell_toggled)
         column = gtk.TreeViewColumn(_("Show in Menu"), renderer, active=3)
         column.set_sort_column_id(3)
         self._tree_view.append_column(column)
+
+    def _on_tree_view_cell_toggled(self, renderer, row):
+        """Toggle the value of the 'Show in Menu' column."""
+
+        store = self._tree_view.get_model()
+        store[row][3] = not store[row][3]
 
     def get_visible_encodings_ensure(self, value):
         for name in value:
             assert gaupol.encodings.is_valid_code(name)
 
     def get_visible_encodings(self):
-        """Get encodings chosen to be visible."""
+        """Return encodings chosen to be visible."""
 
         store = self._tree_view.get_model()
         return [store[i][0] for i in range(len(store)) if store[i][3]]

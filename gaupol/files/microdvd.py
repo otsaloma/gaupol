@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,70 +9,57 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """MicroDVD file."""
 
-from __future__ import with_statement
-
-import codecs
-import contextlib
 import gaupol
 import re
 
-from .subfile import SubtitleFile
+__all__ = ("MicroDVD",)
 
 
-class MicroDVD(SubtitleFile):
+class MicroDVD(gaupol.SubtitleFile):
 
     """MicroDVD file."""
 
-    __metaclass__ = gaupol.Contractual
-    format = gaupol.FORMAT.MICRODVD
-    mode = gaupol.MODE.FRAME
+    _re_line = re.compile(r"^\{(-?\d+)\}\{(-?\d+)\}(.*?)$")
+    format = gaupol.formats.MICRODVD
+    mode = gaupol.modes.FRAME
 
     def read(self):
-        """Read file.
+        """Read file and return subtitles.
 
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
-        Return start frames, end frames, texts.
         """
-        starts = []
-        ends = []
-        texts = []
-        re_line = re.compile(r"^\{(-?\d+)\}\{(-?\d+)\}(.*?)$")
+        subtitles = []
         for line in self._read_lines():
-            match = re_line.match(line)
+            match = self._re_line.match(line)
             if match is not None:
-                starts.append(match.group(1))
-                ends.append(match.group(2))
-                texts.append(match.group(3))
+                subtitle = self._get_subtitle()
+                subtitle.start = int(match.group(1))
+                subtitle.end = int(match.group(2))
+                subtitle.main_text = match.group(3).replace("|", "\n")
+                subtitles.append(subtitle)
             elif line.startswith("{DEFAULT}"):
-                self.header = line[:-1]
+                self.header = line
+        return subtitles
 
-        starts = [int(x) for x in starts]
-        ends = [int(x) for x in ends]
-        texts = [x.replace("|", "\n") for x in texts]
-        return starts, ends, texts
-
-    def write(self, starts, ends, texts):
-        """Write file.
+    def write_to_file(self, subtitles, doc, fobj):
+        """Write subtitles from document to given file.
 
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
-        texts = [x.replace("\n", "|") for x in texts]
-        args = (self.path, "w", self.encoding)
-        with contextlib.closing(codecs.open(*args)) as fobj:
-            if self.header:
-                fobj.write(self.header)
-                fobj.write(self.newline.value)
-            for i in range(len(starts)):
-                fobj.write("{%d}" % starts[i])
-                fobj.write("{%d}" % ends[i])
-                fobj.write(texts[i])
-                fobj.write(self.newline.value)
+        if self.header.strip():
+            fobj.write(self.header)
+            fobj.write(self.newline.value)
+        for subtitle in subtitles:
+            fobj.write("{%d}" % subtitle.start_frame)
+            fobj.write("{%d}" % subtitle.end_frame)
+            fobj.write(subtitle.get_text(doc).replace("\n", "|"))
+            fobj.write(self.newline.value)

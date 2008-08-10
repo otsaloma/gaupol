@@ -9,20 +9,23 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""MPsub tag library."""
+"""Text markup for the MPsub format."""
 
 import gaupol
 
-from .taglib import TagLibrary
+__all__ = ("MPsub",)
 
 
-class MPsub(TagLibrary):
+class MPsub(gaupol.Markup):
 
-    """MPsub tag library."""
+    """Text markup for the MPsub format.
 
-    format = gaupol.FORMAT.MPSUB
+    MPsub format is assumed to contain no markup.
+    """
+
+    format = gaupol.formats.MPSUB

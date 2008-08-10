@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,38 +9,38 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Dialog for warning when closing multiple documents."""
 
 import gaupol.gtk
-import gobject
 import gtk
 
-from .glade import GladeDialog
+__all__ = ("MultiCloseDialog",)
 
 
-class MultiCloseDialog(GladeDialog):
+class MultiCloseDialog(gaupol.gtk.GladeDialog):
 
     """Dialog for warning when closing multiple documents."""
 
     def __init__(self, parent, application, pages):
 
-        GladeDialog.__init__(self, "multiclose-dialog")
-        self._main_tree_view = self._glade_xml.get_widget("main_tree_view")
-        self._main_vbox = self._glade_xml.get_widget("main_vbox")
-        self._tran_tree_view = self._glade_xml.get_widget("tran_tree_view")
-        self._tran_vbox = self._glade_xml.get_widget("tran_vbox")
+        gaupol.gtk.GladeDialog.__init__(self, "multiclose.glade")
+        get_widget = self._glade_xml.get_widget
+        self._main_tree_view = get_widget("main_tree_view")
+        self._main_vbox = get_widget("main_vbox")
+        self._tran_tree_view = get_widget("tran_tree_view")
+        self._tran_vbox = get_widget("tran_vbox")
         self.application = application
         self.pages = pages
 
         self._init_main_tree_view()
         self._init_tran_tree_view()
         self._init_sizes()
-        gaupol.gtk.util.connect(self, self, "response")
+        gaupol.util.connect(self, self, "response")
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_YES)
 
@@ -49,7 +49,7 @@ class MultiCloseDialog(GladeDialog):
 
         store = self._init_tree_view(self._main_tree_view)
         for page in (x for x in self.pages if x.project.main_changed):
-            store.append([page, True, page.get_main_basename()])
+            store.append((page, True, page.get_main_basename()))
         self._main_vbox.props.visible = (len(store) > 0)
 
     def _init_sizes(self):
@@ -74,14 +74,13 @@ class MultiCloseDialog(GladeDialog):
 
         store = self._init_tree_view(self._tran_tree_view)
         for page in (x for x in self.pages if x.project.tran_changed):
-            store.append([page, True, page.get_translation_basename()])
+            store.append((page, True, page.get_translation_basename()))
         self._tran_vbox.props.visible = (len(store) > 0)
 
     def _init_tree_view(self, tree_view):
         """Initialize tree view and return its list store model."""
 
-        cols = (object, gobject.TYPE_BOOLEAN, gobject.TYPE_STRING)
-        store = gtk.ListStore(*cols)
+        store = gtk.ListStore(object, bool, str)
         tree_view.set_model(store)
         selection = tree_view.get_selection()
         selection.set_mode(gtk.SELECTION_SINGLE)
@@ -119,7 +118,7 @@ class MultiCloseDialog(GladeDialog):
         sensitive = bool(mains or trans)
         self.set_response_sensitive(gtk.RESPONSE_YES, sensitive)
 
-    @gaupol.gtk.util.silent(gaupol.gtk.Default)
+    @gaupol.deco.silent(gaupol.gtk.Default)
     def _save_and_close_page(self, page):
         """Save the selected documents and close page."""
 

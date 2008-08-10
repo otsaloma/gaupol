@@ -1,21 +1,20 @@
 #!/usr/bin/env python
 
 """
-Relevant customizations in this file
- (1) gaupol.paths module
- (2) Translations
+There are two relevant customizations to the standard distutils installation
+process: (1) writing the gaupol.paths module and (2) handling translations.
 
 (1) Gaupol finds non-Python files based on the paths written in module
     gaupol.paths. In gaupol/paths.py the paths default to the ones in the
-    source directory. During installation the file gets rewritten to
-    build/gaupol/paths.py with the installation paths and that file will be
+    source directory. During the 'install_lib' command the file gets rewritten
+    to build/gaupol/paths.py with the installation paths and that file will be
     installed. The paths are based on variable 'install_data' with the 'root'
     variable stripped if it is given. If doing distro-packaging, make sure this
     file gets correctly written.
 
-(2) During installation, the .po files are compiled and the desktop and pattern
-    files are translated. This requires gettext and intltool, more
-    specifically, executables 'msgfmt' and 'intltool-merge' in $PATH.
+(2) During installation, the .po files are compiled into .mo files, the desktop
+    file and pattern files are translated. This requires gettext and intltool,
+    more specifically, executables 'msgfmt' and 'intltool-merge' in $PATH.
 """
 
 # pylint: disable-msg=W0621
@@ -23,127 +22,152 @@ Relevant customizations in this file
 from __future__ import with_statement
 
 import glob
+import itertools
 import os
 import shutil
+import subprocess
 import sys
 import tarfile
 import tempfile
 
-from distutils import dir_util
+from distutils import dir_util, log
 from distutils.command.clean import clean
+from distutils.command.install import install
 from distutils.command.install_data import install_data
 from distutils.command.install_lib import install_lib
 from distutils.command.sdist import sdist
 from distutils.core import setup
-from distutils.log import info
 
 os.chdir(os.path.dirname(__file__) or ".")
 sys.path.insert(0, os.path.dirname(__file__))
 from gaupol import __version__
 
-packages = []
-data_files = []
-kwargs = {}
-
 
 class Clean(clean):
 
-    def finalize_options(self):
+    """Command to remove files and directories created."""
 
-        clean.finalize_options(self)
-        if self.dry_run:
-            raise SystemExit("--dry-run not supported")
+    __glob_targets = (
+        "build", "dist", "locale", "MANIFEST",
+        "data/gaupol.desktop",
+        "data/patterns/*.common-error",
+        "data/patterns/*.hearing-impaired",
+        "data/patterns/*.line-break",
+        "data/patterns/*.capitalization",)
 
     def run(self):
+        """Remove files and directories listed in self.__targets."""
 
         clean.run(self)
 
-        desktop_file = os.path.join("data", "gaupol.desktop")
-        for path in ("MANIFEST", desktop_file):
-            if os.path.isfile(path):
-                info("removing '%s'" % path)
-                os.remove(path)
-
-        info("removing translated pattern files under 'data/patterns'")
-        paths = glob.glob("data/patterns/*")
-        paths = [x for x in paths if not x.endswith((".conf", ".in"))]
-        for path in (x for x in paths if not x.startswith(".")):
-            os.remove(path)
-
-        info("removing .pyc and .pyo files under 'gaupol'")
+        log.info("removing .pyc and .pyo files under 'gaupol'")
         for (root, dirs, files) in os.walk("gaupol"):
             for name in (x for x in files if x.endswith((".pyc", ".pyo"))):
-                os.remove(os.path.join(root, name))
+                path = os.path.join(root, name)
+                if not self.dry_run: os.remove(path)
 
-        for path in ("build", "dist", "locale"):
-            if os.path.isdir(path):
-                dir_util.remove_tree(path)
+        targets = [glob.glob(x) for x in self.__glob_targets]
+        iterator = itertools.chain(*targets)
+        for target in (x for x in iterator if os.path.isdir(x)):
+            dir_util.remove_tree(target, dry_run=self.dry_run)
+        iterator = itertools.chain(*targets)
+        for target in (x for x in iterator if os.path.isfile(x)):
+            log.info("removing '%s'" % target)
+            if not self.dry_run: os.remove(target)
+
+
+class Install(install):
+
+    """Command to install everything."""
+
+    def run(self):
+        """Install everything and update the desktop file database."""
+
+        install.run(self)
+
+        get_command_obj = self.distribution.get_command_obj
+        root = get_command_obj("install").root
+        data_dir = get_command_obj("install_data").install_dir
+        # Assume we're actually installing if --root was not given.
+        if (root is not None) or (data_dir is None): return
+
+        directory = os.path.join(data_dir, "share", "applications")
+        log.info("updating desktop database in '%s'" % directory)
+        try: subprocess.call(("update-desktop-database", directory))
+        except OSError: log.info("...failed")
 
 
 class InstallData(install_data):
 
+    """Command to install data files."""
+
     def __get_desktop_file(self):
+        """Return a tuple for the translated desktop file."""
 
         path = os.path.join("data", "gaupol.desktop")
         os.system("intltool-merge -d po %s.in %s" % (path, path))
-        return [("share/applications", [path])]
+        return ("share/applications", (path,))
 
-    def __get_mo_files(self):
+    def __get_mo_file(self, po_file):
+        """Return a tuple for the compiled .mo file."""
 
-        mo_files = []
-        for po_file in glob.glob("po/*.po"):
-            locale = os.path.basename(po_file[:-3])
-            mo_dir = os.path.join("locale", locale, "LC_MESSAGES")
-            mo_file = os.path.join(mo_dir, "gaupol.mo")
-            dest_dir = os.path.join("share", mo_dir)
-            if not os.path.isdir(mo_dir):
-                info("creating %s" % mo_dir)
-                os.makedirs(mo_dir)
-            info("compiling '%s'" % mo_file)
-            os.system("msgfmt %s -o %s" % (po_file, mo_file))
-            if os.path.isfile(mo_file):
-                mo_files.append((dest_dir, [mo_file]))
-        return mo_files
+        locale = os.path.basename(po_file[:-3])
+        mo_dir = os.path.join("locale", locale, "LC_MESSAGES")
+        if not os.path.isdir(mo_dir):
+            log.info("creating %s" % mo_dir)
+            os.makedirs(mo_dir)
+        mo_file = os.path.join(mo_dir, "gaupol.mo")
+        dest_dir = os.path.join("share", mo_dir)
+        log.info("compiling '%s'" % mo_file)
+        os.system("msgfmt %s -o %s" % (po_file, mo_file))
+        return (dest_dir, (mo_file,))
 
-    def __get_pattern_files(self):
+    def __get_pattern_file(self, pattern_file):
+        """Return a tuple for the translated pattern file."""
 
-        paths = []
-        for path in glob.glob("data/patterns/*.in"):
-            paths.append(path[:-3])
-            os.system("intltool-merge -d po %s %s" % (path, path[:-3]))
-        return [("share/gaupol/patterns", paths)]
+        assert pattern_file.endswith(".in")
+        path = pattern_file[:-3]
+        os.system("intltool-merge -d po %s.in %s" % (path, path))
+        return ("share/gaupol/patterns", (path,))
 
     def run(self):
+        """Install data files after translating them."""
 
-        # Translate files and add them to data files.
-        self.data_files.extend(self.__get_mo_files())
-        self.data_files.extend(self.__get_desktop_file())
-        self.data_files.extend(self.__get_pattern_files())
-
+        for po_file in glob.glob("po/*.po"):
+            self.data_files.append(self.__get_mo_file(po_file))
+        for pattern_file in glob.glob("data/patterns/*.in"):
+            self.data_files.append(self.__get_pattern_file(pattern_file))
+        self.data_files.append(self.__get_desktop_file())
         install_data.run(self)
 
 
 class InstallLib(install_lib):
 
+    """Command to install library files."""
+
     def install(self):
+        """Install library files after writing changes."""
 
         # Allow --root to be used as a destination directory.
         root = self.distribution.get_command_obj("install").root
         parent = self.distribution.get_command_obj("install").install_data
         if root is not None:
             root = os.path.abspath(root)
-            parent = os.path.abspath(parent).replace(root, "")
+            parent = os.path.abspath(parent)
+            parent = parent.replace(root, "")
         data_dir = os.path.join(parent, "share", "gaupol")
         locale_dir = os.path.join(parent, "share", "locale")
-        profile_dir = 'os.path.join(os.path.expanduser("~"), ".gaupol")'
 
-        # Write gaupol.paths module.
+        # Write changes to the gaupol.paths module.
         path = os.path.join(self.build_dir, "gaupol", "paths.py")
-        with open(path, "w") as fobj:
-            fobj.write("import os\n\n")
-            fobj.write("DATA_DIR = %r\n" % data_dir)
-            fobj.write("LOCALE_DIR = %r\n" % locale_dir)
-            fobj.write("PROFILE_DIR = %s\n" % profile_dir)
+        text = open(path, "r").read()
+        string = 'get_directory("data")'
+        assert text.count(string) == 1
+        text = text.replace(string, repr(data_dir))
+        string = 'get_directory("locale")'
+        assert text.count(string) == 1
+        text = text.replace(string, repr(locale_dir))
+        open(path, "w").write(text)
 
         return install_lib.install(self)
 
@@ -153,11 +177,10 @@ class SDistGna(sdist):
     description = "create source distribution for gna.org"
 
     def finalize_options(self):
+        """Set the distribution directory to 'dist/X.Y'."""
 
-        sdist.finalize_options(self)
-
-        # Set distribution directory to "dist/X.Y".
         # pylint: disable-msg=W0201
+        sdist.finalize_options(self)
         branch = ".".join(__version__.split(".")[:2])
         self.dist_dir = os.path.join(self.dist_dir, branch)
 
@@ -171,129 +194,110 @@ class SDistGna(sdist):
         # Compare tarball contents with working copy.
         temp_dir = tempfile.gettempdir()
         test_dir = os.path.join(temp_dir, basename)
-        tarfile.open(tarballs[-1], "r").extractall(temp_dir)
-        info("comparing tarball (tmp) with working copy (../..)")
+        tobj = tarfile.open(tarballs[-1], "r")
+        for member in tobj.getmembers():
+            tobj.extract(member, temp_dir)
+        log.info("comparing tarball (tmp) with working copy (../..)")
         os.system('diff -qr -x ".*" -x "*.pyc" ../.. %s' % test_dir)
         response = raw_input("Are all files in the tarball [Y/n]? ")
         if response.lower() == "n":
             raise SystemExit("Must edit MANIFEST.in.")
+        dir_util.remove_tree(test_dir)
 
         # Create extra distribution files.
-        info("calculating md5sums")
+        log.info("calculating md5sums")
         os.system("md5sum * > %s.md5sum" % basename)
-        info("creating '%s.changes'" % basename)
+        log.info("creating '%s.changes'" % basename)
         source = os.path.join("..", "..", "ChangeLog")
         shutil.copyfile(source, "%s.changes" % basename)
-        info("creating '%s.news'" % basename)
+        log.info("creating '%s.news'" % basename)
         source = os.path.join("..", "..", "NEWS")
         shutil.copyfile(source, "%s.news" % basename)
         for tarball in tarballs:
-            info("signing '%s'" % tarball)
+            log.info("signing '%s'" % tarball)
             os.system("gpg --detach %s" % tarball)
 
         # Create latest.txt.
         os.chdir("..")
-        info("creating 'latest.txt'")
+        log.info("creating 'latest.txt'")
         with open("latest.txt", "w") as fobj:
             fobj.write("%s\n" % __version__)
 
 
-def find_data_files():
-    """Find and add all non-translatable data files."""
+data_files = [
+    ("share/gaupol", ("data/gaupol.gtk.conf.spec",)),
+    ("share/gaupol/codes", glob.glob("data/codes/*")),
+    ("share/gaupol/glade/dialogs",
+     glob.glob("data/glade/dialogs/*.glade")),
+    ("share/gaupol/glade/assistants/text",
+     glob.glob("data/glade/assistants/text/*.glade")),
+    ("share/gaupol/headers", glob.glob("data/headers/*")),
+    ("share/gaupol/patterns", glob.glob("data/patterns/*.conf")),
+    ("share/gaupol/ui", glob.glob("data/ui/*")),
+    ("share/man/man1", ("doc/gaupol.1",)),]
 
-    add = lambda directory, files: data_files.append((directory, files))
-    add("share/gaupol", ("data/gaupol.gtk.conf.spec",))
-    add("share/gaupol", ("data/gtkrc", "data/ui.xml"))
-    add("share/gaupol/codes", glob.glob("data/codes/*"))
-    add("share/gaupol/glade", glob.glob("data/glade/*.glade"))
-    add("share/gaupol/headers", glob.glob("data/headers/*.txt"))
-    add("share/gaupol/patterns", glob.glob("data/patterns/*.conf"))
-    add("share/man/man1", ("doc/gaupol.1",))
-    for size in ("16x16", "22x22", "24x24", "32x32", "scalable"):
-        files = glob.glob("data/icons/hicolor/%s/apps/*.png" % size)
-        files += glob.glob("data/icons/hicolor/%s/apps/*.svg" % size)
-        add("share/icons/hicolor/%s/apps" % size, files)
+for size in ("16x16", "22x22", "24x24", "32x32", "scalable"):
+    files  = glob.glob("data/icons/hicolor/%s/apps/*.png" % size)
+    files += glob.glob("data/icons/hicolor/%s/apps/*.svg" % size)
+    data_files.append(("share/icons/hicolor/%s/apps" % size, files))
 
-def find_packages():
-    """Find and add all gaupol packages."""
-
-    for (root, dirs, files) in os.walk("gaupol"):
-        if os.path.isfile(os.path.join(root, "__init__.py")):
-            path = root.replace(os.sep, ".")
-            path = path[path.find("gaupol"):]
-            if not path.endswith(".test"):
-                packages.append(path)
-    packages.remove("gaupol.unittest")
-    packages.remove("gaupol.gtk.unittest")
-
-def main():
-    """Find files, prepare options and run setup."""
-
-    find_packages()
-    find_data_files()
-    if sys.platform == "win32":
-        import py2exe
-        prepare_py2exe_options()
-        prepare_py2exe_data_files()
-    run_setup()
-
-def prepare_py2exe_data_files():
-    """Find and add translated data files."""
-
-    paths = glob.glob("data/patterns/*")
-    paths = [x for x in paths if not x.startswith(".")]
-    paths = [x for x in paths if not x.endswith((".conf", ".in"))]
+if (sys.platform == "win32") and ("py2exe" in sys.argv):
+    # Add translated data files, which must have been separately compiled,
+    paths = [x[:-3] for x in glob.glob("data/patterns/*.in")]
     data_files.append(("share/gaupol/patterns", paths))
-    for locale in (x for x in os.listdir("locale") if not x.startswith(".")):
-        destination = "share/locale/%s/LC_MESSAGES" % locale
+    for locale in glob.glob("locale/*"):
         mo_path = "locale/%s/LC_MESSAGES/gaupol.mo" % locale
-        if os.path.isfile(mo_path):
-            data_files.append((destination, (mo_path,)))
+        destination = "share/locale/%s/LC_MESSAGES" % locale
+        data_files.append((destination, (mo_path,)))
 
-def prepare_py2exe_options():
-    """Prepare options specific to the py2exe command."""
+packages = []
 
-    kwargs["windows"] = [{}]
-    kwargs["windows"][0]["script"] = "bin/gaupol"
-    icons = [(0, "data/icons/gaupol.ico")]
-    kwargs["windows"][0]["icon_resources"] = icons
-    kwargs["options"] = {"py2exe": {}}
-    kwargs["options"]["py2exe"]["includes"] = []
-    kwargs["options"]["py2exe"]["packages"] = []
-    def add_python_module(section, module):
-        kwargs["options"]["py2exe"][section].append(module)
-    add_python_module("includes", "atk")
-    add_python_module("packages", "cairo")
-    add_python_module("packages", "chardet")
-    add_python_module("packages", "enchant")
-    add_python_module("packages", "gaupol")
-    add_python_module("packages", "gobject")
-    add_python_module("packages", "gtk")
-    add_python_module("packages", "pangocairo")
-    add_python_module("packages", "pygtk")
+for (root, dirs, files) in os.walk("gaupol"):
+    init_path = os.path.join(root, "__init__.py")
+    if not os.path.isfile(init_path): continue
+    path = root.replace(os.sep, ".")
+    path = path[path.find("gaupol"):]
+    if not path.endswith(".test"):
+        packages.append(path)
+
+kwargs = {}
+
+if (sys.platform == "win32") and ("py2exe" in sys.argv):
+    windows = ({
+        "script": "bin/gaupol",
+        "icon_resources": ((0, "data/icons/gaupol.ico")),})
+    py2exe_options = {
+        "includes": ("atk",),
+        "packages": (
+            "cairo",
+            "chardet",
+            "enchant",
+            "gaupol",
+            "gobject",
+            "gtk",
+            "pangocairo",
+            "pygtk",),}
+    kwargs["windows"] = windows
+    kwargs["options"] = {"py2exe": py2exe_options}
 
 
-def run_setup():
-    """Run the specified setup command."""
-
-    setup(
-        name="gaupol",
-        version=__version__,
-        requires=["gtk (>=2.10.0)"],
-        platforms=["Platform Independent"],
-        author="Osmo Salomaa",
-        author_email="otsaloma@cc.hut.fi",
-        url="http://home.gna.org/gaupol/",
-        description="Subtitle editor",
-        license="GPL",
-        packages=packages,
-        scripts=["bin/gaupol"],
-        data_files=data_files,
-        cmdclass={
-            "clean": Clean,
-            "install_data": InstallData,
-            "install_lib": InstallLib,
-            "sdist_gna": SDistGna,},
-        **kwargs)
-
-main()
+setup(
+    name="gaupol",
+    version=__version__,
+    requires=("gtk (>=2.12.0)",),
+    platforms=("Platform Independent",),
+    author="Osmo Salomaa",
+    author_email="otsaloma@cc.hut.fi",
+    url="http://home.gna.org/gaupol/",
+    description="Subtitle editor",
+    license="GPL",
+    packages=packages,
+    scripts=("bin/gaupol",),
+    data_files=data_files,
+    cmdclass={
+        "clean": Clean,
+        "install": Install,
+        "install_data": InstallData,
+        "install_lib": InstallLib,
+        "sdist_gna": SDistGna,},
+    **kwargs)

@@ -9,31 +9,28 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
+import gaupol
 import re
 
-from gaupol import unittest
-from .. import finder
 
+class TestFinder(gaupol.TestCase):
 
-class TestFinder(unittest.TestCase):
+    text = "One only risks it, because\n" \
+           "one's survival depends on it."
 
-    text = \
-        "One only risks it, because\n" \
-        "one's survival depends on it."
+    def loop_over_find_cases(self, cases, regex, next):
 
-    def loop_find_cases(self, cases, regex, next):
-
-        advance = (self.finder.next if next else self.finder.previous)
+        advance = (self.finder.previous, self.finder.next)[next]
         for pattern, matches in cases:
             self.finder.set_text(self.text, next)
             self.finder.pattern = pattern
             if regex:
-                self.finder.set_regex(pattern, re.DOTALL)
+                self.finder.set_regex(pattern)
             for match in matches:
                 assert advance() == match
                 assert self.finder.pos == match[next]
@@ -41,9 +38,9 @@ class TestFinder(unittest.TestCase):
 
     def setup_method(self, method):
 
-        self.finder = finder.Finder()
+        self.finder = gaupol.Finder()
 
-    def test_next_regex(self):
+    def test_next__regex(self):
 
         cases = (
             (r"a", (
@@ -110,9 +107,9 @@ class TestFinder(unittest.TestCase):
             (r"\W{2}", (
                 (17, 19),)))
 
-        self.loop_find_cases(cases, True, True)
+        self.loop_over_find_cases(cases, True, True)
 
-    def test_next_regex_ignore_case(self):
+    def test_next__regex_ignore_case(self):
 
         cases = (
             (r"O" , (
@@ -125,9 +122,9 @@ class TestFinder(unittest.TestCase):
                 (47, 48),)))
 
         self.finder.ignore_case = True
-        self.loop_find_cases(cases, True, True)
+        self.loop_over_find_cases(cases, True, True)
 
-    def test_next_string(self):
+    def test_next__string(self):
 
         cases = (
             ("a" , (
@@ -152,9 +149,9 @@ class TestFinder(unittest.TestCase):
             ("." , (
                 (55, 56),)))
 
-        self.loop_find_cases(cases, False, True)
+        self.loop_over_find_cases(cases, False, True)
 
-    def test_next_string_ignore_case(self):
+    def test_next__string_ignore_case(self):
 
         cases = (
             ("o" , (
@@ -166,9 +163,9 @@ class TestFinder(unittest.TestCase):
                 (12, 13),)))
 
         self.finder.ignore_case = True
-        self.loop_find_cases(cases, False, True)
+        self.loop_over_find_cases(cases, False, True)
 
-    def test_previous_regex(self):
+    def test_previous__regex(self):
 
         cases = (
             (r"a" , (
@@ -235,9 +232,9 @@ class TestFinder(unittest.TestCase):
             (r"\W{2}", (
                 (17, 19),)))
 
-        self.loop_find_cases(cases, True, False)
+        self.loop_over_find_cases(cases, True, False)
 
-    def test_previous_regex_ignore_case(self):
+    def test_previous__regex_ignore_case(self):
 
         cases = (
             (r"O" , (
@@ -250,9 +247,9 @@ class TestFinder(unittest.TestCase):
                 (42, 43),)))
 
         self.finder.ignore_case = True
-        self.loop_find_cases(cases, True, False)
+        self.loop_over_find_cases(cases, True, False)
 
-    def test_previous_string(self):
+    def test_previous__string(self):
 
         cases = (
             ("a" , (
@@ -277,9 +274,9 @@ class TestFinder(unittest.TestCase):
             ("." , (
                 (55, 56),)))
 
-        self.loop_find_cases(cases, False, False)
+        self.loop_over_find_cases(cases, False, False)
 
-    def test_previous_string_ignore_case(self):
+    def test_previous__string_ignore_case(self):
 
         cases = (
             ("o" , (
@@ -291,9 +288,9 @@ class TestFinder(unittest.TestCase):
                 (12, 13),)))
 
         self.finder.ignore_case = True
-        self.loop_find_cases(cases, False, False)
+        self.loop_over_find_cases(cases, False, False)
 
-    def test_replace_equal_next(self):
+    def test_replace__equal_length_next(self):
 
         self.finder.set_text(self.text)
         self.finder.pattern = "ne"
@@ -301,20 +298,21 @@ class TestFinder(unittest.TestCase):
 
         self.finder.next()
         self.finder.replace()
-        assert self.finder.text == \
-            "O-- only risks it, because\n" + \
-            "one's survival depends on it."
+        assert self.finder.text == (
+            "O-- only risks it, because\n"
+            "one's survival depends on it.")
         assert self.finder.pos == 3
 
         self.finder.next()
         self.finder.replace()
-        assert self.finder.text == \
-            "O-- only risks it, because\n" + \
-            "o--'s survival depends on it."
+        assert self.finder.text == (
+            "O-- only risks it, because\n"
+            "o--'s survival depends on it.")
         assert self.finder.pos == 30
+
         self.raises(StopIteration, self.finder.next)
 
-    def test_replace_equal_previous(self):
+    def test_replace__equal_length_previous(self):
 
         self.finder.set_text(self.text, False)
         self.finder.pattern = "ne"
@@ -322,20 +320,21 @@ class TestFinder(unittest.TestCase):
 
         self.finder.previous()
         self.finder.replace(False)
-        assert self.finder.text == \
-            "One only risks it, because\n" + \
-            "o--'s survival depends on it."
+        assert self.finder.text == (
+            "One only risks it, because\n"
+            "o--'s survival depends on it.")
         assert self.finder.pos == 28
 
         self.finder.previous()
         self.finder.replace(False)
-        assert self.finder.text == \
-            "O-- only risks it, because\n" + \
-            "o--'s survival depends on it."
+        assert self.finder.text == (
+            "O-- only risks it, because\n"
+            "o--'s survival depends on it.")
         assert self.finder.pos == 1
+
         self.raises(StopIteration, self.finder.previous)
 
-    def test_replace_lengthen_regex_dollar_next(self):
+    def test_replace__lengthen_regex_dollar_next(self):
 
         self.finder.set_text(self.text)
         self.finder.set_regex(r"$")
@@ -343,20 +342,21 @@ class TestFinder(unittest.TestCase):
 
         self.finder.next()
         self.finder.replace()
-        assert self.finder.text == \
-            "One only risks it, because--\n" + \
-            "one's survival depends on it."
+        assert self.finder.text == (
+            "One only risks it, because--\n"
+            "one's survival depends on it.")
         assert self.finder.pos == 28
 
         self.finder.next()
         self.finder.replace()
-        assert self.finder.text == \
-            "One only risks it, because--\n" + \
-            "one's survival depends on it.--"
+        assert self.finder.text == (
+            "One only risks it, because--\n"
+            "one's survival depends on it.--")
         assert self.finder.pos == 60
+
         self.raises(StopIteration, self.finder.next)
 
-    def test_replace_lengthen_regex_dollar_previous(self):
+    def test_replace__lengthen_regex_dollar_previous(self):
 
         self.finder.set_text(self.text, False)
         self.finder.set_regex(r"$")
@@ -364,20 +364,21 @@ class TestFinder(unittest.TestCase):
 
         self.finder.previous()
         self.finder.replace(False)
-        assert self.finder.text == \
-            "One only risks it, because\n" + \
-            "one's survival depends on it.--"
+        assert self.finder.text == (
+            "One only risks it, because\n"
+            "one's survival depends on it.--")
         assert self.finder.pos == 56
 
         self.finder.previous()
         self.finder.replace(False)
-        assert self.finder.text == \
-            "One only risks it, because--\n" + \
-            "one's survival depends on it.--"
+        assert self.finder.text == (
+            "One only risks it, because--\n"
+            "one's survival depends on it.--")
         assert self.finder.pos == 26
+
         self.raises(StopIteration, self.finder.previous)
 
-    def test_replace_lengthen_regex_hat_next(self):
+    def test_replace__lengthen_regex_hat_next(self):
 
         self.finder.set_text(self.text)
         self.finder.set_regex(r"^")
@@ -385,20 +386,21 @@ class TestFinder(unittest.TestCase):
 
         self.finder.next()
         self.finder.replace()
-        assert self.finder.text == \
-            "--One only risks it, because\n" + \
-            "one's survival depends on it."
+        assert self.finder.text == (
+            "--One only risks it, because\n"
+            "one's survival depends on it.")
         assert self.finder.pos == 2
 
         self.finder.next()
         self.finder.replace()
-        assert self.finder.text == \
-            "--One only risks it, because\n" + \
-            "--one's survival depends on it."
+        assert self.finder.text == (
+            "--One only risks it, because\n"
+            "--one's survival depends on it.")
         assert self.finder.pos == 31
+
         self.raises(StopIteration, self.finder.next)
 
-    def test_replace_lengthen_regex_hat_previous(self):
+    def test_replace__lengthen_regex_hat_previous(self):
 
         self.finder.set_text(self.text, False)
         self.finder.set_regex(r"^")
@@ -406,20 +408,21 @@ class TestFinder(unittest.TestCase):
 
         self.finder.previous()
         self.finder.replace(False)
-        assert self.finder.text == \
-            "One only risks it, because\n" + \
-            "--one's survival depends on it."
+        assert self.finder.text == (
+            "One only risks it, because\n"
+            "--one's survival depends on it.")
         assert self.finder.pos == 27
 
         self.finder.previous()
         self.finder.replace(False)
-        assert self.finder.text == \
-            "--One only risks it, because\n" + \
-            "--one's survival depends on it."
+        assert self.finder.text == (
+            "--One only risks it, because\n"
+            "--one's survival depends on it.")
         assert self.finder.pos == 0
+
         self.raises(StopIteration, self.finder.previous)
 
-    def test_replace_lengthen_string_match_next(self):
+    def test_replace__lengthen_string_match_next(self):
 
         self.finder.set_text(self.text)
         self.finder.pattern = "v"
@@ -427,20 +430,21 @@ class TestFinder(unittest.TestCase):
 
         self.finder.next()
         self.finder.replace()
-        assert self.finder.text == \
-            "One only risks it, because\n" + \
-            "one's survvival depends on it."
+        assert self.finder.text == (
+            "One only risks it, because\n"
+            "one's survvival depends on it.")
         assert self.finder.pos == 38
 
         self.finder.next()
         self.finder.replace()
-        assert self.finder.text == \
-            "One only risks it, because\n" + \
-            "one's survvivval depends on it."
+        assert self.finder.text == (
+            "One only risks it, because\n"
+            "one's survvivval depends on it.")
         assert self.finder.pos == 41
+
         self.raises(StopIteration, self.finder.next)
 
-    def test_replace_lengthen_string_match_previous(self):
+    def test_replace__lengthen_string_match_previous(self):
 
         self.finder.set_text(self.text, False)
         self.finder.pattern = "v"
@@ -448,20 +452,21 @@ class TestFinder(unittest.TestCase):
 
         self.finder.previous()
         self.finder.replace(False)
-        assert self.finder.text == \
-            "One only risks it, because\n" + \
-            "one's survivval depends on it."
+        assert self.finder.text == (
+            "One only risks it, because\n"
+            "one's survivval depends on it.")
         assert self.finder.pos == 38
 
         self.finder.previous()
         self.finder.replace(False)
-        assert self.finder.text == \
-            "One only risks it, because\n" + \
-            "one's survvivval depends on it."
+        assert self.finder.text == (
+            "One only risks it, because\n"
+            "one's survvivval depends on it.")
         assert self.finder.pos == 36
+
         self.raises(StopIteration, self.finder.previous)
 
-    def test_replace_shorten_regex_next(self):
+    def test_replace__shorten_regex_next(self):
 
         self.finder.set_text(self.text)
         self.finder.set_regex(r"[.,]")
@@ -469,20 +474,21 @@ class TestFinder(unittest.TestCase):
 
         self.finder.next()
         self.finder.replace()
-        assert self.finder.text == \
-            "One only risks it because\n" + \
-            "one's survival depends on it."
+        assert self.finder.text == (
+            "One only risks it because\n"
+            "one's survival depends on it.")
         assert self.finder.pos == 17
 
         self.finder.next()
         self.finder.replace()
-        assert self.finder.text == \
-            "One only risks it because\n" + \
-            "one's survival depends on it"
+        assert self.finder.text == (
+            "One only risks it because\n"
+            "one's survival depends on it")
         assert self.finder.pos == 54
+
         self.raises(StopIteration, self.finder.next)
 
-    def test_replace_shorten_regex_previous(self):
+    def test_replace__shorten_regex_previous(self):
 
         self.finder.set_text(self.text, False)
         self.finder.set_regex(r"[.,]")
@@ -490,78 +496,75 @@ class TestFinder(unittest.TestCase):
 
         self.finder.previous()
         self.finder.replace(False)
-        assert self.finder.text == \
-            "One only risks it, because\n" + \
-            "one's survival depends on it"
+        assert self.finder.text == (
+            "One only risks it, because\n"
+            "one's survival depends on it")
         assert self.finder.pos == 55
 
         self.finder.previous()
         self.finder.replace(False)
-        assert self.finder.text == \
-            "One only risks it because\n" + \
-            "one's survival depends on it"
+        assert self.finder.text == (
+            "One only risks it because\n"
+            "one's survival depends on it")
         assert self.finder.pos == 17
+
         self.raises(StopIteration, self.finder.previous)
 
-    def test_replace_all_regex(self):
+    def test_replace_all__regex(self):
 
         cases = (
             (r"e", r"-", 6,
-                "On- only risks it, b-caus-\n" + \
-                "on-'s survival d-p-nds on it."),
+                ("On- only risks it, b-caus-\n"
+                 "on-'s survival d-p-nds on it.")),
             (r"\b", r"-", 22,
-                "-One- -only- -risks- -it-, -because-\n" + \
-                "-one-'-s- -survival- -depends- -on- -it-."),
+                ("-One- -only- -risks- -it-, -because-\n"
+                 "-one-'-s- -survival- -depends- -on- -it-.")),
             (r"\s", r"", 9,
-                "Oneonlyrisksit,because" + \
-                "one'ssurvivaldependsonit."),
+                ("Oneonlyrisksit,because"
+                 "one'ssurvivaldependsonit.")),
             (r"^", r"-", 2,
-                "-One only risks it, because\n" + \
-                "-one's survival depends on it."),
+                ("-One only risks it, because\n"
+                 "-one's survival depends on it.")),
             (r"\A", r"-", 1,
-                "-One only risks it, because\n" + \
-                "one's survival depends on it."),
+                ("-One only risks it, because\n"
+                 "one's survival depends on it.")),
             (r"$", r"-", 2,
-                "One only risks it, because-\n" + \
-                "one's survival depends on it.-"),
+                ("One only risks it, because-\n"
+                 "one's survival depends on it.-")),
             (r"\Z", r"-", 1,
-                "One only risks it, because\n" + \
-                "one's survival depends on it.-"),
-            (r".", r"-", 56,
-                "---------------------------" + \
-                "-----------------------------"),
-            (r".", r"..", 56,
-                "......................................................" + \
-                ".........................................................."),
+                ("One only risks it, because\n"
+                 "one's survival depends on it.-")),
             (r"\W", r"-", 12,
-                "One-only-risks-it--because-" + \
-                "one-s-survival-depends-on-it-"))
+                ("One-only-risks-it--because-"
+                 "one-s-survival-depends-on-it-")),
+            (r".", r"-" , 56, "-" *  56),
+            (r".", r"..", 56, "." * 112),)
 
         for pattern, replacement, count, text in cases:
             self.finder.set_text(self.text)
-            self.finder.set_regex(pattern, re.DOTALL)
+            self.finder.set_regex(pattern)
             self.finder.replacement = replacement
             assert self.finder.replace_all() == count
             assert self.finder.text == text
 
-    def test_replace_all_string(self):
+    def test_replace_all__string(self):
 
         cases = (
             ("i", "-", 4,
-                "One only r-sks -t, because\n" + \
-                "one's surv-val depends on -t."),
+                ("One only r-sks -t, because\n"
+                 "one's surv-val depends on -t.")),
             (" ", "-", 8,
-                "One-only-risks-it,-because\n" + \
-                "one's-survival-depends-on-it."),
+                ("One-only-risks-it,-because\n"
+                 "one's-survival-depends-on-it.")),
             ("o", "oo", 3,
-                "One oonly risks it, because\n" + \
-                "oone's survival depends oon it."),
+                ("One oonly risks it, because\n"
+                 "oone's survival depends oon it.")),
             ("e", "" , 6,
-                "On only risks it, bcaus\n" + \
-                "on's survival dpnds on it."),
+                ("On only risks it, bcaus\n"
+                 "on's survival dpnds on it.")),
             ("n", "n", 5,
-                "One only risks it, because\n" + \
-                "one's survival depends on it."))
+                ("One only risks it, because\n"
+                 "one's survival depends on it.")))
 
         for pattern, replacement, count, text in cases:
             self.finder.set_text(self.text)
@@ -572,7 +575,9 @@ class TestFinder(unittest.TestCase):
 
     def test_set_regex(self):
 
+        # pylint: disable-msg=E1103
         flags = re.DOTALL | re.MULTILINE | re.UNICODE
+
         self.finder.set_regex("test")
         assert self.finder.pattern.pattern == "test"
         assert self.finder.pattern.flags == flags
@@ -585,10 +590,10 @@ class TestFinder(unittest.TestCase):
 
         self.finder.set_text("test")
         assert self.finder.text == "test"
-        assert self.finder.match_span == None
+        assert self.finder.match_span is None
         assert self.finder.pos == 0
 
         self.finder.set_text("test", False)
         assert self.finder.text == "test"
-        assert self.finder.match_span == None
+        assert self.finder.match_span is None
         assert self.finder.pos == 4

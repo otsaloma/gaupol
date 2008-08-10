@@ -1,12 +1,16 @@
 Subtitle File Format Specifications
 ===================================
 
-This directory contains notes, samples and specifications of all
-supported subtitle file formats.  In the cases where official
-specifications are not available, the notes file contains assumptions
-and observations that our implementation is based on.  All samples
-have geen generated with Gaupol and are therefore victims of any
-possible incorrect implementation.
+This directory contains specifications and documentation saved from
+the dying Internets and realms of broken links. All files are assumed
+to have been in the public domain. The files and sources they were
+retrieved from are as follows.
 
-See the file "COPYING" for license information specific to the
-contents of this directory.
+ * ass-specs.rtf (documenting SSA and ASS formats)
+   http://moodub.free.fr/ass-specs.doc
+
+ * mdvddoc.html (documenting the MicroDVD format)
+   http://netti.nic.fi/~temp/easydivx/help/mdvddoc
+
+ * mpl2-eng.html (documenting the MPL2 format)
+   http://lexx.eu.org/%7Eizbkp/napisy/mpl2-eng.html

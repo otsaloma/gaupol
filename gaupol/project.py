@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,16 +9,16 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Model for subtitle data."""
 
 import gaupol
 
-__all__ = ["Project"]
+__all__ = ("Project",)
 
 
 class Project(gaupol.Observable):
@@ -29,18 +29,18 @@ class Project(gaupol.Observable):
      * _delegations: Dictionary mapping method names to agent methods
      * calc: Position calculator
      * clipboard: Internal subtitle text clipboard
-     * framerate: FRAMERATE constant
+     * framerate: Framerate enumeration of the video file
      * main_changed: Integer, status of main document
-     * main_file: Main SubtitleFile
-     * redoables: Stack of redoable Actions
-     * subtitles: List of Subtitles
-     * tran_changed: Status of the translation document or None if not active
-     * tran_file: Translation SubtitleFile
-     * undoables: Stack of undoable Actions
+     * main_file: Main subtitle file
+     * redoables: Stack of redoable actions
+     * subtitles: List of subtitles
+     * tran_changed: Status of the translation document or None if inactive
+     * tran_file: Translation subtitle file
      * undo_limit: Maximum size of undo/redo stacks or None for no limit
-     * video_path: Path to the video file
+     * undoables: Stack of undoable actions
+     * video_path: Path to the video file or None
 
-    Signals:
+    Signals (arguments):
      * action-done (project, action)
      * action-redone (project, action)
      * action-undone (project, action)
@@ -60,7 +60,7 @@ class Project(gaupol.Observable):
 
     __metaclass__ = gaupol.Contractual
 
-    _signals = [
+    _signals = (
         "action-done",
         "action-redone",
         "action-undone",
@@ -73,15 +73,16 @@ class Project(gaupol.Observable):
         "subtitles-changed",
         "translation-file-opened",
         "translation-file-saved",
-        "translation-texts-changed",]
+        "translation-texts-changed",)
 
     def __getattr__(self, name):
 
         return self._delegations[name]
 
-    def __init__(self, framerate=gaupol.FRAMERATE.P24, undo_limit=None):
+    def __init__(self, framerate=None, undo_limit=None):
 
         gaupol.Observable.__init__(self)
+        framerate = framerate or gaupol.framerates.FPS_24
         self._delegations = {}
         self.calc = gaupol.Calculator(framerate)
         self.clipboard = gaupol.Clipboard()
@@ -98,21 +99,17 @@ class Project(gaupol.Observable):
 
         self._init_delegations()
 
-    def _invariant(self):
-        assert self.calc.framerate == self.framerate.value
-        if self.undo_limit is not None:
-            assert len(self.undoables) <= self.undo_limit
-            assert len(self.redoables) <= self.undo_limit
-
     def _init_delegations(self):
         """Initialize the delegation mappings."""
 
         for agent_class_name in gaupol.agents.__all__:
             agent = getattr(gaupol.agents, agent_class_name)(self)
-            attrs = [x for x in dir(agent) if not x.startswith("_")]
-            attrs = [(x, getattr(agent, x)) for x in attrs]
-            attrs = [(x, y) for (x, y) in attrs if callable(y)]
-            for attr_name, attr in attrs:
+            def is_delegate_method(name):
+                if name.startswith("_"): return False
+                return callable(getattr(agent, name))
+            attr_names = filter(is_delegate_method, dir(agent))
+            for attr_name in attr_names:
+                attr_value = getattr(agent, attr_name)
                 if attr_name in self._delegations:
                     raise ValueError("Agents overlap")
-                self._delegations[attr_name] = attr
+                self._delegations[attr_name] = attr_value

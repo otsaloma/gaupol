@@ -9,10 +9,10 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Setting values of single subtitle fields."""
 
@@ -48,7 +48,7 @@ class SetAgent(gaupol.Delegate):
     def set_duration_require(self, index, value, register=-1):
         assert 0 <= index < len(self.subtitles)
 
-    @gaupol.util.revertable
+    @gaupol.deco.revertable
     def set_duration(self, index, value, register=-1):
         """Set the value of duration position."""
 
@@ -57,7 +57,7 @@ class SetAgent(gaupol.Delegate):
         subtitle.duration = value
 
         action = self.get_revertable_action(register)
-        action.docs = [gaupol.DOCUMENT.MAIN, gaupol.DOCUMENT.TRAN]
+        action.docs = tuple(gaupol.documents)
         action.description = _("Editing position")
         action.revert_method = self.set_end
         action.revert_args = (index, orig_end)
@@ -67,7 +67,7 @@ class SetAgent(gaupol.Delegate):
     def set_end_require(self, index, value, register=-1):
         assert 0 <= index < len(self.subtitles)
 
-    @gaupol.util.revertable
+    @gaupol.deco.revertable
     def set_end(self, index, value, register=-1):
         """Set the value of end position."""
 
@@ -76,7 +76,7 @@ class SetAgent(gaupol.Delegate):
         subtitle.end = value
 
         action = self.get_revertable_action(register)
-        action.docs = [gaupol.DOCUMENT.MAIN, gaupol.DOCUMENT.TRAN]
+        action.docs = tuple(gaupol.documents)
         action.description = _("Editing position")
         action.revert_method = self.set_end
         action.revert_args = (index, orig_value)
@@ -90,8 +90,8 @@ class SetAgent(gaupol.Delegate):
         for i in range(len(self.subtitles) - 1):
             assert self.subtitles[i] <= self.subtitles[i + 1]
 
-    @gaupol.util.revertable
-    @gaupol.util.notify_frozen
+    @gaupol.deco.revertable
+    @gaupol.deco.notify_frozen
     def set_start(self, index, value, register=-1):
         """Set the value of start position."""
 
@@ -101,7 +101,7 @@ class SetAgent(gaupol.Delegate):
         index = self._move_if_needed(index)
 
         action = self.get_revertable_action(register)
-        action.docs = [gaupol.DOCUMENT.MAIN, gaupol.DOCUMENT.TRAN]
+        action.docs = tuple(gaupol.documents)
         action.description = _("Editing position")
         action.revert_method = self.set_start
         action.revert_args = (index, orig_value)
@@ -111,19 +111,18 @@ class SetAgent(gaupol.Delegate):
     def set_text_require(self, index, doc, value, register=-1):
         assert 0 <= index < len(self.subtitles)
 
-    @gaupol.util.revertable
-    @gaupol.util.asserted_return
+    @gaupol.deco.revertable
     def set_text(self, index, doc, value, register=-1):
         """Set the value of document's text."""
 
         value = unicode(value)
         subtitle = self.subtitles[index]
         orig_value = subtitle.get_text(doc)
-        assert value != orig_value
+        if value == orig_value: return
         subtitle.set_text(doc, value)
 
         action = self.get_revertable_action(register)
-        action.docs = [doc]
+        action.docs = (doc,)
         action.description = _("Editing text")
         action.revert_method = self.set_text
         action.revert_args = (index, doc, orig_value)

@@ -1,8 +1,25 @@
-Gaupol includes configobj and validate modules
-by Michael Foord, Mark Andrews and Nicola Larosa.
-http://www.voidspace.org.uk/python/configobj.html
-http://www.voidspace.org.uk/python/validate.html
+Files from Foreign Sources
+==========================
 
-Gaupol includes files "iso_639.xml" and "iso_3166.xml"
-by Alastair McKinstry and Andreas Jochens from iso-codes
-http://alioth.debian.org/projects/pkg-isocodes/
+ * data/codes/iso_15924.xml
+ * data/codes/iso_3166.xml
+ * data/codes/iso_639.xml
+
+   These files written by Ivan Masar, Christian Perrier, Tobias
+   Toedter, Alastair McKinstry and Andreas Jochens, and are copied
+   unmodified from iso-codes [1]. The files are released under the GNU
+   Lesser General Public License (LGPL). See the headers of the files
+   in question for copyright and license information.
+
+ * gaupol/gtk/conf/configobj.py
+ * gaupol/gtk/conf/validate.py
+
+   These files are written by Michael Foord, Nicola Larosa and Mark
+   Andrews, and copied virtually unchanged from ConfigObj [2] and
+   Validate [3]. The files are released under the BSD license. See the
+   headers of the files in question for copyright and license
+   information.
+
+ [1] http://alioth.debian.org/projects/pkg-isocodes/
+ [2] http://www.voidspace.org.uk/python/configobj.html
+ [3] http://www.voidspace.org.uk/python/validate.html

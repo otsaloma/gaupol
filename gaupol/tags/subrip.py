@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,91 +9,85 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""SubRip tag library."""
+"""Text markup for the SubRip format."""
 
 import gaupol
 import re
 
-from .taglib import TagLibrary
+__all__ = ("SubRip",)
 
 
-class SubRip(TagLibrary):
+class SubRip(gaupol.Markup):
 
-    """SubRip tag library."""
+    """Text markup for the SubRip format.
 
-    format = gaupol.FORMAT.SUBRIP
+    SubRip format is assumed (based on the SubRip application GUI) to contain
+    the following HTML-style tags, in either lower- or upper case.
 
-    @property
-    @gaupol.util.once
-    def italic_tag(self):
-        """Regular expression for an italic tag."""
+     * <b>.........................</b>
+     * <i>.........................</i>
+     * <u>.........................</u>
+     * <font color="#RRGGBB">...</font>
+    """
 
-        return re.compile(r"</?i>", re.IGNORECASE)
+    _flags = re.DOTALL | re.MULTILINE | re.UNICODE | re.IGNORECASE
+    format = gaupol.formats.SUBRIP
 
-    @property
-    @gaupol.util.once
-    def tag(self):
-        """Regular expression for any tag."""
+    def _main_decode(self, text):
+        """Return text with decodable markup decoded."""
 
-        return re.compile(r"</?(b|i|u)>", re.IGNORECASE)
+        text = self._decode_b(text, r"<b>(.*?)</b>", 1)
+        text = self._decode_i(text, r"<i>(.*?)</i>", 1)
+        text = self._decode_u(text, r"<u>(.*?)</u>", 1)
+        pattern = r'<font color="#([0-9a-fA-F]{6})">(.*?)</font>'
+        return self._decode_c(text, pattern, 1, 2)
 
-    @gaupol.util.once
-    def _get_decode_tags(self):
-        """Get list of tuples of regular expression, replacement."""
+    def bolden(self, text, bounds=None):
+        """Return bolded text."""
 
-        tags = [
-            # Uppercase style tags
-            (re.compile(r"(</?)B>"), r"\1b>"),
-            (re.compile(r"(</?)I>"), r"\1i>"),
-            (re.compile(r"(</?)U>"), r"\1u>"),]
-        return tags
-
-    @gaupol.util.once
-    def _get_encode_tags(self):
-        """Get list of tuples of regular expression, replacement."""
-
-        # Remove all non-style tags.
-        return [(re.compile(r"</?[^>]{3,}>"), "")]
-
-    @gaupol.util.once
-    def _get_clean_tags(self):
-        """Get list of tuples of regular expression, replacement."""
-
-        FLAGS = re.DOTALL | re.MULTILINE | re.UNICODE
-        tags = [
-            (re.compile(r"<([^<]*?)(=[^<]*?)?>( *)</\1>"), r"\3"),
-            (re.compile(r"</([^<]*?)>( *)<\1(=[^<]*?)?>"), r"\2"),
-            (re.compile(r" ?(<(?<!/)[^<]+?>) ", FLAGS), r" \1"),
-            (re.compile(r" (</[^<]+?>) ?", FLAGS), r"\1 "),]
-        return tags
+        a, z = bounds or (0, len(text))
+        return "".join((text[:a], "<b>%s</b>" % text[a:z], text[z:]))
 
     def clean(self, text):
-        """Return text with redundant tags removed and remaining cleaned."""
+        """Return text with less ugly markup."""
 
-        for regex, replacement in self._get_clean_tags():
-            text = regex.sub(replacement, text)
-        return text
+        # Remove or relocate space right after an opening tag.
+        text = self._substitute(text, r" ?(<(?!/)[^>]+?>) ", r" \1")
+        # Remove or relocate space right before a closing tag.
+        return self._substitute(text, r" (</[^>]+?>) ?", r"\1 ")
 
-    def decode(self, text):
-        """Return text with tags converted from this to internal format."""
+    def colorize(self, text, color, bounds=None):
+        """Return text colorized to hexadecimal value."""
 
-        for regex, replacement in self._get_decode_tags():
-            text = regex.sub(replacement, text)
-        return text
+        a, z = bounds or (0, len(text))
+        target = '<font color="#%s">%s</font>' % (color, text[a:z])
+        return "".join((text[:a], target, text[z:]))
 
-    def encode(self, text):
-        """Return text with tags converted from internal to this format."""
+    @property
+    def italic_tag(self):
+        """Regular expression for an italic markup tag."""
 
-        for regex, replacement in self._get_encode_tags():
-            text = regex.sub(replacement, text)
-        return text
+        return self._get_regex(r"</?i>")
 
-    def italicize(self, text):
+    def italicize(self, text, bounds=None):
         """Return italicized text."""
 
-        return u"<i>%s</i>" % text
+        a, z = bounds or (0, len(text))
+        return "".join((text[:a], "<i>%s</i>" % text[a:z], text[z:]))
+
+    @property
+    def tag(self):
+        """Regular expression for any markup tag."""
+
+        return self._get_regex(r"<.*?>")
+
+    def underline(self, text, bounds=None):
+        """Return underlined text."""
+
+        a, z = bounds or (0, len(text))
+        return "".join((text[:a], "<u>%s</u>" % text[a:z], text[z:]))

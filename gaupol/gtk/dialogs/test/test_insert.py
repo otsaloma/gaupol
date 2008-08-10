@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,20 +9,18 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
+import gaupol.gtk
 import gtk
 
-from gaupol.gtk import unittest
-from .. import insert
 
+class TestInsertDialog(gaupol.gtk.TestCase):
 
-class TestLanguageDialog(unittest.TestCase):
-
-    def run(self):
+    def run__dialog(self):
 
         self.dialog.run()
         self.dialog.destroy()
@@ -31,9 +29,10 @@ class TestLanguageDialog(unittest.TestCase):
 
         self.application = self.get_application()
         page = self.application.get_current_page()
-        page.view.select_rows([2])
-        parent = self.application.window
-        self.dialog = insert.InsertDialog(parent, self.application)
+        page.view.select_rows((2,))
+        args = (self.application.window, self.application)
+        self.dialog = gaupol.gtk.InsertDialog(*args)
+        self.dialog.show()
 
     def test__on_response(self):
 

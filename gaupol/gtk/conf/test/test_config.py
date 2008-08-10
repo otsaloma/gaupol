@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2007 Osmo Salomaa
+# Copyright (C) 2006-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,35 +9,114 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
 import os
 
-from gaupol.gtk import unittest
-from .. import config
 
-
-class TestConfig(unittest.TestCase):
+class TestConfig(gaupol.gtk.TestCase):
 
     def setup_method(self, method):
 
         name = "gaupol.gtk.conf.spec"
         self.spec_file = os.path.join(gaupol.DATA_DIR, name)
-        self.config = config.Config(None, self.spec_file)
+        self.config = gaupol.gtk.conf.Config(None, self.spec_file)
 
-    def test_translate_none(self):
+    def test___check_enum(self):
 
-        assert self.config["editor"]["custom_font"] is None
-        self.config.translate_none("editor", "custom_font", "")
-        assert self.config["editor"]["custom_font"] == ""
-        assert "custom_font" in self.config["editor"].defaults
+        path = self.get_subrip_path()
+        fobj = open(path, "w")
+        fobj.write("[editor]\n")
+        fobj.write("mode = XXX\n")
+        fobj.close()
+        gaupol.gtk.conf.Config(path, self.spec_file)
+
+    def test___check_enum_list(self):
+
+        path = self.get_subrip_path()
+        fobj = open(path, "w")
+        fobj.write("[editor]\n")
+        fobj.write("visible_fields = XXX, YYY, ZZZ\n")
+        fobj.close()
+        gaupol.gtk.conf.Config(path, self.spec_file)
+
+    def test___init____config_obj_error(self):
+
+        path = self.get_subrip_path()
+        function = gaupol.gtk.conf.Config
+        args = (path, self.spec_file)
+        self.raises(gaupol.gtk.ConfigParseError, function, *args)
+
+    def test___init____io_error(self):
+
+        path = self.get_subrip_path()
+        os.chmod(path, 0000)
+        gaupol.gtk.conf.Config(path, self.spec_file)
+        os.chmod(path, 0777)
+
+    def test___init____unicode_error(self):
+
+        path = self.get_subrip_path()
+        fobj = open(path, "w")
+        fobj.write("[file]\n")
+        fobj.write("directory = \303\266\n")
+        fobj.close()
+        get_encoding = gaupol.util.get_default_encoding
+        gaupol.util.get_default_encoding = lambda *args: "ascii"
+        gaupol.gtk.conf.Config(path, self.spec_file)
+        gaupol.util.get_default_encoding = get_encoding
+
+    def test___remove_options(self):
+
+        path = self.get_subrip_path()
+        fobj = open(path, "w")
+        fobj.write("[editor]\n")
+        fobj.write("xxx = yyy\n")
+        fobj.close()
+        gaupol.gtk.conf.Config(path, self.spec_file)
+
+    def test___remove_sections(self):
+
+        path = self.get_subrip_path()
+        fobj = open(path, "w")
+        fobj.write("[xxx]\n")
+        fobj.write("yyy = zzz\n")
+        fobj.close()
+        gaupol.gtk.conf.Config(path, self.spec_file)
+
+    def test___validate(self):
+
+        path = self.get_subrip_path()
+        fobj = open(path, "w")
+        fobj.write("[editor]\n")
+        fobj.write("limit_undo = xxx\n")
+        fobj.close()
+        gaupol.gtk.conf.Config(path, self.spec_file)
 
     def test_write_to_file(self):
 
-        self.config.filename = self.get_subrip_path()
+        path = self.get_subrip_path()
+        self.config.filename = path
         self.config.write_to_file()
-        config.Config(self.config.filename, self.spec_file)
+        gaupol.gtk.conf.Config(path, self.spec_file)
+
+    def test_write_to_file__io_error(self):
+
+        path = self.get_subrip_path()
+        self.config.filename = path
+        os.chmod(path, 0000)
+        self.config.write_to_file()
+        os.chmod(path, 0777)
+
+    def test_write_to_file__unicode_error(self):
+
+        path = self.get_subrip_path()
+        self.config.filename = path
+        self.config.encoding = "ascii"
+        self.config["file"]["directory"] = "\303\266"
+        self.config.write_to_file()
+        gaupol.gtk.conf.Config(path, self.spec_file)

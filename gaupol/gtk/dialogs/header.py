@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,10 +9,10 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Dialog for editing subtitle file headers."""
 
@@ -20,17 +20,29 @@ import gaupol.gtk
 import gtk
 _ = gaupol.i18n._
 
-from .glade import GladeDialog
-from .message import ErrorDialog
+__all__ = ("HeaderDialog",)
 
 
-class HeaderDialog(GladeDialog):
+class HeaderDialog(gaupol.gtk.GladeDialog):
 
     """Dialog for editing subtitle file headers."""
 
+    __metaclass__ = gaupol.Contractual
+
+    def __init___require(self, parent, application):
+        page = application.get_current_page()
+        has_header_count = 0
+        if page.project.main_file is not None:
+            if page.project.main_file.format.has_header:
+                has_header_count += 1
+        if page.project.tran_file is not None:
+            if page.project.tran_file.format.has_header:
+                has_header_count += 1
+        assert has_header_count > 0
+
     def __init__(self, parent, application):
 
-        GladeDialog.__init__(self, "header-dialog")
+        gaupol.gtk.GladeDialog.__init__(self, "header.glade")
         get_widget = self._glade_xml.get_widget
         self._copy_down_button = get_widget("copy_down_button")
         self._copy_hbox = get_widget("copy_hbox")
@@ -45,10 +57,6 @@ class HeaderDialog(GladeDialog):
         self._tran_template_button = get_widget("tran_template_button")
         self._tran_text_view = get_widget("tran_text_view")
         self._tran_vbox = get_widget("tran_vbox")
-
-        page = application.get_current_page()
-        self._main_file = page.project.main_file
-        self._tran_file = page.project.tran_file
         self.application = application
 
         self._init_signal_handlers()
@@ -57,15 +65,29 @@ class HeaderDialog(GladeDialog):
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_OK)
 
+    @property
+    def _main_file(self):
+        """Return the main file of the current page's project."""
+
+        page = self.application.get_current_page()
+        return page.project.main_file
+
+    @property
+    def _tran_file(self):
+        """Return the translation file of the current page's project."""
+
+        page = self.application.get_current_page()
+        return page.project.tran_file
+
     def _get_main_header(self):
-        """Get main header from the text view."""
+        """Return main header from the text view."""
 
         text_buffer = self._main_text_view.get_buffer()
         bounds = text_buffer.get_bounds()
         return text_buffer.get_text(*bounds)
 
     def _get_translation_header(self):
-        """Get translation header from the text view."""
+        """Return translation header from the text view."""
 
         text_buffer = self._tran_text_view.get_buffer()
         bounds = text_buffer.get_bounds()
@@ -79,7 +101,6 @@ class HeaderDialog(GladeDialog):
         self._main_vbox.props.visible = main
         self._tran_vbox.props.visible = tran
         self._copy_hbox.props.visible = (main and tran)
-
         header = (self._main_file.header if main else "")
         self._set_main_header(header)
         header = (self._tran_file.header if tran else "")
@@ -88,20 +109,20 @@ class HeaderDialog(GladeDialog):
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
-        gaupol.gtk.util.connect(self, "_copy_down_button", "clicked")
-        gaupol.gtk.util.connect(self, "_copy_up_button", "clicked")
-        gaupol.gtk.util.connect(self, "_main_clear_button", "clicked")
-        gaupol.gtk.util.connect(self, "_main_revert_button", "clicked")
-        gaupol.gtk.util.connect(self, "_main_template_button", "clicked")
-        gaupol.gtk.util.connect(self, "_tran_clear_button", "clicked")
-        gaupol.gtk.util.connect(self, "_tran_revert_button", "clicked")
-        gaupol.gtk.util.connect(self, "_tran_template_button", "clicked")
-        gaupol.gtk.util.connect(self, self, "response")
+        gaupol.util.connect(self, "_copy_down_button", "clicked")
+        gaupol.util.connect(self, "_copy_up_button", "clicked")
+        gaupol.util.connect(self, "_main_clear_button", "clicked")
+        gaupol.util.connect(self, "_main_revert_button", "clicked")
+        gaupol.util.connect(self, "_main_template_button", "clicked")
+        gaupol.util.connect(self, "_tran_clear_button", "clicked")
+        gaupol.util.connect(self, "_tran_revert_button", "clicked")
+        gaupol.util.connect(self, "_tran_template_button", "clicked")
+        gaupol.util.connect(self, self, "response")
 
     def _init_sizes(self):
         """Initialize widget sizes."""
 
-        label = gtk.Label(("M" * 42 + "\n") * 12)
+        label = gtk.Label(("m" * 40 + "\n") * 12)
         width, height = label.size_request()
         width = width + 166 + gaupol.gtk.EXTRA
         if self._main_vbox.props.visible and self._tran_vbox.props.visible:
@@ -135,12 +156,11 @@ class HeaderDialog(GladeDialog):
 
         self._set_main_header(self._main_file.header)
 
-    @gaupol.gtk.util.asserted_return
     def _on_response(self, dialog, response):
         """Save the subtitle file headers."""
 
-        assert response == gtk.RESPONSE_OK
-        self._save_headers()
+        if response == gtk.RESPONSE_OK:
+            self._save_headers()
 
     def _on_tran_clear_button_clicked(self, *args):
         """Set a blank string as the translation header."""
@@ -160,7 +180,7 @@ class HeaderDialog(GladeDialog):
     def _save_header(self, file, header):
         """Save the subtitle file header."""
 
-        if file.format == gaupol.gtk.FORMAT.MPSUB:
+        if file.format == gaupol.formats.MPSUB:
             return self._save_mpsub_header(file, header)
         file.header = unicode(header)
 
@@ -175,15 +195,14 @@ class HeaderDialog(GladeDialog):
             self._save_header(self._tran_file, header)
         self.application.update_gui()
 
-    @gaupol.gtk.util.asserted_return
     def _save_mpsub_header(self, file, header):
         """Save the MPsub subtitle file header."""
 
-        try:
+        try: # Fails if bad FORMAT line.
             file.set_header(unicode(header))
         except ValueError:
             return self._show_mpsub_error_dialog()
-        assert file.framerate is not None
+        if file.framerate is None: return
         page = self.application.get_current_page()
         page.project.set_framerate(file.framerate, register=None)
 
@@ -201,8 +220,8 @@ class HeaderDialog(GladeDialog):
         """Show an error dialog if MPsub header is invalid."""
 
         title = _("Invalid header")
-        message = _('MPsub header must contain a "FORMAT" line '
-            'with a value of "TIME", "23.98", "25.00" or "29.97".')
-        dialog = ErrorDialog(self._dialog, title, message)
+        message = _('MPsub header must contain a line of form "FORMAT=VALUE", '
+            'where VALUE is any of "TIME", "23.98", "25.00" or "29.97".')
+        dialog = gaupol.gtk.ErrorDialog(self._dialog, title, message)
         dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
         self.flash_dialog(dialog)

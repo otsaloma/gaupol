@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,27 +9,28 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
+import gaupol.gtk
 import gtk
 
-from gaupol.gtk import unittest
-from .. import application
 
+class TestApplication(gaupol.gtk.TestCase):
 
-class TestApplication(unittest.TestCase):
-
-    def run(self):
+    def run__application(self):
 
         gtk.main()
 
     def setup_method(self, method):
 
-        self.application = application.Application()
+        self.conf = gaupol.gtk.conf.application_window
+        self.application = gaupol.gtk.Application()
 
     def test___init__(self):
 
-        pass
+        self.conf.toolbar_style = gaupol.gtk.toolbar_styles.ICONS
+        self.conf.maximized = True
+        self.application = gaupol.gtk.Application()

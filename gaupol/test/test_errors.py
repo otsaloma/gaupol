@@ -9,40 +9,49 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-from gaupol import unittest
-from .. import errors
+import gaupol
 
 
-class TestGaupolError(unittest.TestCase):
+class TestError(gaupol.TestCase):
 
     def test_raise(self):
 
         try:
-            raise errors.GaupolError
-        except errors.GaupolError:
+            raise gaupol.Error
+        except gaupol.Error:
             pass
 
 
-class TestFormatError(unittest.TestCase):
+class TestAffirmationError(gaupol.TestCase):
 
     def test_raise(self):
 
         try:
-            raise errors.FormatError
-        except errors.FormatError:
+            raise gaupol.AffirmationError
+        except gaupol.AffirmationError:
             pass
 
 
-class TestParseError(unittest.TestCase):
+class TestFormatError(gaupol.TestCase):
 
     def test_raise(self):
 
         try:
-            raise errors.ParseError
-        except errors.ParseError:
+            raise gaupol.FormatError
+        except gaupol.FormatError:
+            pass
+
+
+class TestParseError(gaupol.TestCase):
+
+    def test_raise(self):
+
+        try:
+            raise gaupol.ParseError
+        except gaupol.ParseError:
             pass

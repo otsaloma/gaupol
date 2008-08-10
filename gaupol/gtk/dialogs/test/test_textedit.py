@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,27 +9,28 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gtk
-
-from gaupol.gtk import unittest
-from .. import textedit
+import gaupol.gtk
 
 
-class TestTextEditDialog(unittest.TestCase):
+class TestTextEditDialog(gaupol.gtk.TestCase):
 
-    def run(self):
+    def run__dialog(self):
 
         self.dialog.run()
         self.dialog.destroy()
 
     def setup_method(self, method):
 
-        self.dialog = textedit.TextEditDialog(gtk.Window())
+        gaupol.gtk.conf.editor.use_custom_font = True
+        gaupol.gtk.conf.editor.custom_font = "sans"
+        self.dialog = gaupol.gtk.TextEditDialog(gtk.Window())
+        self.dialog.show()
 
     def test_get_text(self):
 

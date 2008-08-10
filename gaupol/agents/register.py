@@ -9,17 +9,17 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Managing revertable actions.
 
 To hook a method up with the undo/redo system, the following need to be done:
 
-(1) The last argument to the method must be keyword argument 'register' with a
-    default value of -1. This argument indicates which of doing, undoing or
+(1) The last argument to the method must be a keyword argument 'register' with
+    a default value of -1. This argument indicates which of doing, undoing or
     redoing is in process.
 
 (2) At the end of the method, 'self.register_action' needs to be called with an
@@ -29,7 +29,7 @@ To hook a method up with the undo/redo system, the following need to be done:
 (3) The method should be marked with the 'revertable' decorator. This decorator
     takes care of emitting an action signal once the method has been run, cuts
     the undo and redo stacks if needed and defaults the 'register' keyword
-    argument to 'gaupol.REGISTER.DO'.
+    argument to 'gaupol.registers.DO'.
 
 Each method marked as revertable should match exactly one action in the undo
 and redo stacks. Hence, if the method calls other revertable methods, the
@@ -47,8 +47,8 @@ class RegisterAgent(gaupol.Delegate):
 
     """Managing revertable actions.
 
-    Instance variables:
-     * _do_description: The original description of the reverted action
+    Instance variable '_do_description' holds the original description of the
+    reverted action, e.g. 'Insert' when the reverting method is 'Remove'.
     """
 
     # pylint: disable-msg=E0203,W0201
@@ -75,7 +75,7 @@ class RegisterAgent(gaupol.Delegate):
         return len(action_group.actions)
 
     def _get_destination_stack(self, register):
-        """Get the stack where the registered action will be placed."""
+        """Return the stack where the registered action will be placed."""
 
         if register.shift == 1:
             return self.undoables
@@ -84,7 +84,7 @@ class RegisterAgent(gaupol.Delegate):
         raise ValueError
 
     def _get_source_stack(self, register):
-        """Get the stack where the action to register is taken from."""
+        """Return the stack where the action to register is taken from."""
 
         if register.shift == 1:
             return self.redoables
@@ -92,11 +92,10 @@ class RegisterAgent(gaupol.Delegate):
             return self.undoables
         raise ValueError
 
-    @gaupol.util.asserted_return
     def _on_notify_undo_limit(self, *args):
         """Cut reversion stacks if limit set."""
 
-        assert self.undo_limit is not None
+        if self.undo_limit is None: return
         self.cut_reversion_stacks()
 
     def _revert_multiple_require(self, count, register):
@@ -125,12 +124,13 @@ class RegisterAgent(gaupol.Delegate):
     def _shift_changed_value(self, action, shift):
         """Shift the values of the changed attributes."""
 
-        if gaupol.DOCUMENT.MAIN in action.docs:
+        if gaupol.documents.MAIN in action.docs:
             self.main_changed += shift
-        if action.docs == [gaupol.DOCUMENT.TRAN]:
+        if tuple(action.docs) == (gaupol.documents.TRAN,):
+            # Make translation document active.
             if self.tran_changed is None:
                 self.tran_changed = 0
-        if gaupol.DOCUMENT.TRAN in action.docs:
+        if gaupol.documents.TRAN in action.docs:
             if self.tran_changed is not None:
                 self.tran_changed += shift
 
@@ -144,11 +144,10 @@ class RegisterAgent(gaupol.Delegate):
 
         return bool(self.undoables)
 
-    @gaupol.util.asserted_return
     def cut_reversion_stacks(self):
         """Cut the undo and redo stacks to their maximum lengths."""
 
-        assert self.undo_limit is not None
+        if self.undo_limit is None: return
         del self.redoables[self.undo_limit:]
         del self.undoables[self.undo_limit:]
 
@@ -156,11 +155,10 @@ class RegisterAgent(gaupol.Delegate):
         if  register is not None:
             assert self._get_destination_stack(register)
 
-    @gaupol.util.asserted_return
     def emit_action_signal(self, register):
         """Emit an action signal for the most recent registered action."""
 
-        assert register is not None
+        if register is None: return
         action = self._get_destination_stack(register)[0]
         self.emit(register.signal, action)
 
@@ -174,11 +172,10 @@ class RegisterAgent(gaupol.Delegate):
             stack = self._get_destination_stack(register)
             assert isinstance(stack[0], gaupol.RevertableActionGroup)
 
-    @gaupol.util.asserted_return
     def group_actions(self, register, count, description):
         """Group the registered actions as one item in the stack."""
 
-        assert register is not None
+        if register is None: return
         actions = []
         stack = self._get_destination_stack(register)
         for i in range(count):
@@ -196,22 +193,21 @@ class RegisterAgent(gaupol.Delegate):
 
         cls = gaupol.RevertableActionGroup
         if count > 1 or isinstance(self.redoables[0], cls):
-            return self._revert_multiple(count, gaupol.REGISTER.REDO)
+            return self._revert_multiple(count, gaupol.registers.REDO)
         self._do_description = self.redoables[0].description
         self.redoables.pop(0).revert()
 
-    @gaupol.util.asserted_return
     def register_action(self, action):
         """Register action done, undone or redone."""
 
-        assert action.register is not None
-        if action.register == gaupol.REGISTER.DO:
+        if action.register is None: return
+        if action.register == gaupol.registers.DO:
             self.undoables.insert(0, action)
             self.redoables = []
-        elif action.register == gaupol.REGISTER.UNDO:
+        elif action.register == gaupol.registers.UNDO:
             self.redoables.insert(0, action)
             action.description = self._do_description
-        elif action.register == gaupol.REGISTER.REDO:
+        elif action.register == gaupol.registers.REDO:
             self.undoables.insert(0, action)
             action.description = self._do_description
         self._shift_changed_value(action, action.register.shift)
@@ -220,11 +216,10 @@ class RegisterAgent(gaupol.Delegate):
         if register is not None:
             assert self._get_destination_stack(register)
 
-    @gaupol.util.asserted_return
     def set_action_description(self, register, description):
         """Set the description of the most recent action."""
 
-        assert register is not None
+        if register is None: return
         stack = self._get_destination_stack(register)
         stack[0].description = description
 
@@ -236,6 +231,6 @@ class RegisterAgent(gaupol.Delegate):
 
         cls = gaupol.RevertableActionGroup
         if count > 1 or isinstance(self.undoables[0], cls):
-            return self._revert_multiple(count, gaupol.REGISTER.UNDO)
+            return self._revert_multiple(count, gaupol.registers.UNDO)
         self._do_description = self.undoables[0].description
         self.undoables.pop(0).revert()

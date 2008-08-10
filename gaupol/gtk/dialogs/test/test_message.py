@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,57 +9,55 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
+import gaupol.gtk
 import gtk
 
-from gaupol.gtk import unittest
-from .. import message
 
+class _TestMessageDialog(gaupol.gtk.TestCase):
 
-class _TestMessageDialog(unittest.TestCase):
-
-    def run(self):
+    def run__dialog(self):
 
         # pylint: disable-msg=E1101
         self.dialog.run()
         self.dialog.destroy()
-
-    def test___init__(self):
-
-        pass
 
 
 class TestErrorDialog(_TestMessageDialog):
 
     def setup_method(self, method):
 
-        self.dialog = message.ErrorDialog(gtk.Window(), "test", "test")
+        self.dialog = gaupol.gtk.ErrorDialog(gtk.Window(), "test", "test")
         self.dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
+        self.dialog.show()
 
 
 class TestInfoDialog(_TestMessageDialog):
 
     def setup_method(self, method):
 
-        self.dialog = message.InfoDialog(gtk.Window(), "test", "test")
+        self.dialog = gaupol.gtk.InfoDialog(gtk.Window(), "test", "test")
         self.dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
+        self.dialog.show()
 
 
 class TestQuestionDialog(_TestMessageDialog):
 
     def setup_method(self, method):
 
-        self.dialog = message.QuestionDialog(gtk.Window(), "test", "test")
+        self.dialog = gaupol.gtk.QuestionDialog(gtk.Window(), "test", "test")
         self.dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
+        self.dialog.show()
 
 
 class TestWarningDialog(_TestMessageDialog):
 
     def setup_method(self, method):
 
-        self.dialog = message.WarningDialog(gtk.Window(), "test", "test")
+        self.dialog = gaupol.gtk.WarningDialog(gtk.Window(), "test", "test")
         self.dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
+        self.dialog.show()

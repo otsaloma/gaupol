@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,10 +9,10 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Dialog for displaying a traceback in case of an unhandled exception."""
 
@@ -30,21 +30,16 @@ import sys
 import traceback
 _ = gaupol.i18n._
 
-from .glade import GladeDialog
-from .message import ErrorDialog
+__all__ = ("DebugDialog",)
 
 
-class DebugDialog(GladeDialog):
+class DebugDialog(gaupol.gtk.GladeDialog):
 
-    """Dialog for displaying a traceback in case of an unhandled exception.
-
-    Instance variables:
-     * _code_lines: List of lines of code displayed in the traceback
-    """
+    """Dialog for displaying a traceback in case of an unhandled exception."""
 
     def __init__(self):
 
-        GladeDialog.__init__(self, "debug-dialog")
+        gaupol.gtk.GladeDialog.__init__(self, "debug.glade")
         get_widget = self._glade_xml.get_widget
         self._message_label = get_widget("message_label")
         self._text_view = get_widget("text_view")
@@ -57,8 +52,8 @@ class DebugDialog(GladeDialog):
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
-        gaupol.gtk.util.connect(self, self, "response")
-        gaupol.gtk.util.connect(self, "_text_view", "motion-notify-event")
+        gaupol.util.connect(self, self, "response")
+        gaupol.util.connect(self, "_text_view", "motion-notify-event")
 
     def _init_text_tags(self):
         """Initialize tags for the text buffer."""
@@ -94,20 +89,18 @@ class DebugDialog(GladeDialog):
         itr = text_buffer.get_end_iter()
         text_buffer.insert_with_tags_by_name(itr, text, *tags)
 
-    @gaupol.gtk.util.asserted_return
     def _on_response(self, dialog, response):
         """Do not send response if reporting bug."""
 
-        assert response == gtk.RESPONSE_YES
-        gaupol.gtk.util.browse_url(gaupol.BUG_REPORT_URL)
+        if response != gtk.RESPONSE_YES: return
+        gaupol.util.browse_url(gaupol.BUG_REPORT_URL)
         self.stop_emission("response")
 
-    @gaupol.gtk.util.asserted_return
     def _on_text_view_link_tag_event(self, tag, text_view, event, itr):
         """Open linked file in editor."""
 
-        assert event.type == gtk.gdk.BUTTON_RELEASE
-        assert event.button == 1
+        if event.type != gtk.gdk.BUTTON_RELEASE: return
+        if event.button != 1: return
         text_buffer = self._text_view.get_buffer()
         assert not text_buffer.get_selection_bounds()
         self._open_link(tag)
@@ -122,20 +115,19 @@ class DebugDialog(GladeDialog):
         window = text_view.get_window(gtk.TEXT_WINDOW_TEXT)
         for tag in text_view.get_iter_at_location(x, y).get_tags():
             if tag.get_data("path") is not None:
-                window.set_cursor(gaupol.gtk.HAND_CURSOR)
+                window.set_cursor(gtk.gdk.Cursor(gtk.gdk.HAND2))
                 return text_view.window.get_pointer()
-        window.set_cursor(gaupol.gtk.INSERT_CURSOR)
+        window.set_cursor(gtk.gdk.Cursor(gtk.gdk.XTERM))
         text_view.window.get_pointer()
 
     def _open_link(self, tag):
         """Open linked file in editor."""
 
-        @gaupol.gtk.util.asserted_return
         def on_editor_exit(pid, return_value, self):
-            assert return_value != 0
+            if return_value == 0: return
             self._show_editor_error_dialog()
-        path = gaupol.gtk.util.shell_quote(tag.get_data("path"))
-        process = gaupol.gtk.util.start_process("%s %s +%d" % (
+        path = gaupol.util.shell_quote(tag.get_data("path"))
+        process = gaupol.util.start_process("%s %s +%d" % (
             gaupol.gtk.conf.debug.editor, path, tag.get_data("lineno")))
         gobject.child_watch_add(process.pid, on_editor_exit, self)
         tag.props.foreground = "purple"
@@ -143,14 +135,13 @@ class DebugDialog(GladeDialog):
     def _print_platform(self):
         """Print platform information."""
 
-        self._insert_text("System: %s\n" % platform.system())
-        desktop = gaupol.gtk.util.get_desktop_environment() or "???"
-        self._insert_text("Desktop environment: %s\n\n" % desktop)
+        self._insert_text("%s\n\n" % platform.platform(True))
 
     def _print_traceback(self, exctype, value, tb, limit=100):
         """Print up to limit stack trace entries from traceback."""
 
         depth = 0
+        indent = "    "
         while (tb is not None) and (depth < limit):
             frame = tb.tb_frame
             code = frame.f_code
@@ -160,8 +151,8 @@ class DebugDialog(GladeDialog):
             self._insert_text("Line: %s\n" % str(tb.tb_lineno))
             self._insert_text("In: %s\n\n" % code.co_name)
             line = linecache.getline(code.co_filename, tb.tb_lineno).strip()
-            self._insert_text("    %s\n\n" % line, "monospace")
-            self._code_lines.append("    %s" % line)
+            self._insert_text("%s%s\n\n" % (indent, line), "monospace")
+            self._code_lines.append("%s%s" % (indent, line))
             tb = tb.tb_next
             depth += 1
 
@@ -175,11 +166,11 @@ class DebugDialog(GladeDialog):
 
         self._insert_text("Gaupol: %s\n" % gaupol.__version__)
         self._insert_text("Python: %d.%d.%d\n" % sys.version_info[:3])
-        self._insert_text("GTK: %d.%d.%d\n" % gtk.gtk_version)
+        self._insert_text("GTK+: %d.%d.%d\n" % gtk.gtk_version)
         self._insert_text("PyGTK: %d.%d.%d\n" % gtk.pygtk_version)
-        version = gaupol.gtk.util.get_enchant_version() or "N/A"
+        version = gaupol.util.get_enchant_version() or "N/A"
         self._insert_text("PyEnchant: %s\n" % version)
-        version = gaupol.gtk.util.get_chardet_version() or "N/A"
+        version = gaupol.util.get_chardet_version() or "N/A"
         self._insert_text("Universal Encoding Detector: %s\n" % version)
 
     def _resize(self):
@@ -201,9 +192,9 @@ class DebugDialog(GladeDialog):
         editor = gaupol.gtk.conf.debug.editor
         title = _('Failed to open editor "%s"') % editor
         config_file = gaupol.gtk.conf.config_file
-        message = _('To change the editor, edit option "editor" under ' \
-            'section "debug" in configuration file "%s".') % config_file
-        dialog = ErrorDialog(self._dialog, title, message)
+        message = _(('To change the editor, edit option "editor" under '
+            'section "debug" in configuration file "%s".')) % config_file
+        dialog = gaupol.gtk.ErrorDialog(self._dialog, title, message)
         dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
         self.flash_dialog(dialog)
 
@@ -222,13 +213,12 @@ class DebugDialog(GladeDialog):
         self._resize()
 
 
-@gaupol.gtk.util.asserted_return
 def show(exctype, value, tb):
     """Show exception traceback in dialog."""
 
     traceback.print_exception(exctype, value, tb)
-    assert isinstance(value, Exception)
-    try:
+    if not isinstance(value, Exception): return
+    try: # Avoid recursion.
         dialog = DebugDialog()
         dialog.set_text(exctype, value, tb)
         response = dialog.run()

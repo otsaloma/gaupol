@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,10 +9,10 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Changing the appearance of texts."""
 
@@ -30,12 +30,11 @@ class FormatAgent(gaupol.Delegate):
     __metaclass__ = gaupol.Contractual
     _re_alphanum = re.compile(r"\w", re.UNICODE)
 
-    @gaupol.util.asserted_return
     def _change_case_first(self, parser, method):
         """Change the case of the alphanumeric substring."""
 
         match = self._re_alphanum.search(parser.text)
-        assert match is not None
+        if match is None: return
         a = match.start()
         prefix = parser.text[:a]
         text = getattr(parser.text[a:], method)()
@@ -44,7 +43,7 @@ class FormatAgent(gaupol.Delegate):
     def _should_dialoguize(self, indices, doc):
         """Return True if dialogue lines should be added to texts."""
 
-        re_tag = self.get_tag_regex(doc)
+        re_tag = self.get_markup_tag_regex(doc)
         for index in indices:
             text = self.subtitles[index].get_text(doc)
             for line in text.split("\n"):
@@ -60,9 +59,9 @@ class FormatAgent(gaupol.Delegate):
     def _should_italicize(self, indices, doc):
         """Return True if texts should be italicized."""
 
-        re_tag = self.get_tag_regex(doc)
-        taglib = self.get_tag_library(doc)
-        re_italic_tag = taglib.italic_tag
+        re_tag = self.get_markup_tag_regex(doc)
+        markup = self.get_markup(doc)
+        re_italic_tag = markup.italic_tag
         for index in indices:
             text = self.subtitles[index].get_text(doc)
             # Remove tags from the start of the text,
@@ -84,7 +83,7 @@ class FormatAgent(gaupol.Delegate):
             assert 0 <= index < len(self.subtitles)
         assert method in ("title", "capitalize", "upper", "lower")
 
-    @gaupol.util.revertable
+    @gaupol.deco.revertable
     def change_case(self, indices, doc, method, register=-1):
         """Change the case of texts with method.
 
@@ -105,7 +104,7 @@ class FormatAgent(gaupol.Delegate):
         for index in indices:
             assert 0 <= index < len(self.subtitles)
 
-    @gaupol.util.revertable
+    @gaupol.deco.revertable
     def toggle_dialogue_lines(self, indices, doc, register=-1):
         """Show or hide dialogue lines on texts."""
 
@@ -131,19 +130,19 @@ class FormatAgent(gaupol.Delegate):
         for index in indices:
             assert 0 <= index < len(self.subtitles)
 
-    @gaupol.util.revertable
+    @gaupol.deco.revertable
     def toggle_italicization(self, indices, doc, register=-1):
         """Italicize or normalize texts."""
 
         new_texts = []
-        taglib = self.get_tag_library(doc)
-        re_italic_tag = taglib.italic_tag
+        markup = self.get_markup(doc)
+        re_italic_tag = markup.italic_tag
         italicize = self._should_italicize(indices, doc)
         for index in indices:
             text = self.subtitles[index].get_text(doc)
             text = re_italic_tag.sub("", text)
             if italicize:
-                text = taglib.italicize(text)
+                text = markup.italicize(text)
             new_texts.append(text)
 
         self.replace_texts(indices, doc, new_texts, register=register)

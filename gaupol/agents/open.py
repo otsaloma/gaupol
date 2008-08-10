@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,13 +9,14 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Opening subtitle files."""
 
+import bisect
 import gaupol
 
 
@@ -27,79 +28,77 @@ class OpenAgent(gaupol.Delegate):
 
     __metaclass__ = gaupol.Contractual
 
-    def _adapt_translations(self, mode, starts, ends, texts):
-        """Open translation file data in an adaptive manner."""
+    def _adapt_translations(self, subtitles):
+        """Add translation texts in an adaptive manner."""
 
-        for subtitle in self.subtitles:
-            subtitle.tran_text = ""
-
-        m = 0
-        t = 0
-        while t < len(starts):
-            middle = self.calc.get_middle(starts[t], ends[t])
+        m = t = 0
+        mode = self.main_file.mode
+        while t < len(subtitles):
+            ts = subtitles[t].get_start(mode)
+            te = subtitles[t].get_end(mode)
+            tt = subtitles[t].main_text
+            tm = self.calc.get_middle(ts, te)
             if m < len(self.subtitles):
-                main_start = self.subtitles[m].get_start(mode)
-            if (m == len(self.subtitles)) or (middle < main_start):
+                ms = self.subtitles[m].get_start(mode)
+                me = self.subtitles[m].get_end(mode)
+                tm_cmp_ms = self.calc.compare(tm, ms)
+                tm_cmp_me = self.calc.compare(tm, me)
+            if (m == len(self.subtitles)) or (tm_cmp_ms == -1):
                 subtitle = self.get_subtitle()
-                subtitle.start = starts[t]
-                subtitle.end = ends[t]
-                subtitle.tran_text = texts[t]
+                subtitle.start = subtitles[t].start
+                subtitle.end = subtitles[t].end
+                subtitle.tran_text = tt
                 self.subtitles.insert(m, subtitle)
-                m += 1
-                t += 1
-                continue
-            main_end = self.subtitles[m].get_end(mode)
-            if middle > main_end:
-                m += 1
-                continue
-            self.subtitles[t].tran_text = texts[t]
-            m += 1
-            t += 1
+                ms = subtitle.get_start(mode)
+                me = subtitle.get_end(mode)
+                tm_cmp_ms = self.calc.compare(tm, ms)
+                tm_cmp_me = self.calc.compare(tm, me)
+            elif (tm_cmp_ms == 1) and (tm_cmp_me == -1):
+                self.subtitles[m].tran_text = tt
+            if tm_cmp_me == -1: t += 1
+            if tm_cmp_ms ==  1: m += 1
 
-    def _append_translations(self, mode, starts, ends, texts):
-        """Open translation file data in a simple appending manner."""
+    def _append_translations(self, subtitles):
+        """Add translation texts in a simple appending manner."""
 
-        count = len(self.subtitles)
-        excess = len(texts) - count
-        if excess > 0:
-            indices = range(count, count + excess)
-            self.insert_blank_subtitles(indices, register=None)
-        for i, text in enumerate(texts):
-            self.subtitles[i].tran_text = text
+        current = len(self.subtitles)
+        excess = len(subtitles) - current
+        indices = range(current, current + excess)
+        self.insert_blank_subtitles(indices, register=None)
+        for i, subtitle in enumerate(subtitles):
+            self.subtitles[i].tran_text = subtitle.main_text
 
     def _read_file(self, file):
-        """Read file and return starts, ends, texts.
+        """Read file and return subtitles.
 
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
         Raise ParseError if parsing fails.
         """
-        try:
-            return file.read()
-        except (IOError, UnicodeError):
-            raise
-        except Exception:
-            raise gaupol.ParseError
+        try: return file.read()
+        except (IOError, UnicodeError): raise
+        except Exception: raise gaupol.ParseError
 
-    def _sort(self, starts, ends, texts):
-        """Sort and return data based on start positions."""
+    def _sort_subtitles_ensure(self, value, unsorted_subtitles):
+        sorted_subtitles, wrong_order_count = value
+        for i in range(len(sorted_subtitles) - 1):
+            assert sorted_subtitles[i] < sorted_subtitles[i + 1]
 
-        sorts = []
-        sort_function = cmp
-        if starts and isinstance(starts[0], basestring):
-            sort_function = self.calc.compare_times
-        def compare_starts(x, y):
-            value = sort_function(x[0], y[0])
-            sorts.append(value == -1)
-            return value
-        fields = []
-        for i in range(len(starts)):
-            fields.append((starts[i], ends[i], texts[i]))
-        fields.sort(compare_starts)
-        starts = [x[0] for x in fields]
-        ends =   [x[1] for x in fields]
-        texts =  [x[2] for x in fields]
-        return starts, ends, texts, sum(sorts)
+    def _sort_subtitles(self, unsorted_subtitles):
+        """Sort and return subtitles and sort count.
+
+        Subtitles are sorted according to their start times.
+        Sort count is the amount of subtitles that needed to be moved.
+        """
+        wrong_order_count = 0
+        sorted_subtitles = []
+        while unsorted_subtitles:
+            subtitle = unsorted_subtitles.pop(0)
+            index = bisect.bisect(sorted_subtitles, subtitle)
+            if index < len(sorted_subtitles):
+                wrong_order_count += 1
+            sorted_subtitles.insert(index, subtitle)
+        return sorted_subtitles, wrong_order_count
 
     def open_main_require(self, path, encoding):
         assert gaupol.encodings.is_valid_code(encoding)
@@ -107,11 +106,12 @@ class OpenAgent(gaupol.Delegate):
     def open_main_ensure(self, value, path, encoding):
         assert self.main_file is not None
         assert self.main_changed == 0
+        assert self.tran_file == None
         assert self.tran_changed == None
 
-    @gaupol.util.notify_frozen
+    @gaupol.deco.notify_frozen
     def open_main(self, path, encoding):
-        """Open main file reading positions and texts.
+        """Open main file reading all subtitle fields.
 
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
@@ -120,24 +120,16 @@ class OpenAgent(gaupol.Delegate):
         Return sort count.
         """
         format = gaupol.FormatDeterminer().determine(path, encoding)
-        self.main_file = gaupol.files.get_class(format)(path, encoding)
-        values = self._read_file(self.main_file)
-        starts, ends, texts, sort_count = self._sort(*values)
-
+        self.main_file = gaupol.files.new(format, path, encoding)
+        subtitles = self._read_file(self.main_file)
+        self.subtitles, sort_count = self._sort_subtitles(subtitles)
+        self.set_framerate(self.framerate, register=None)
         # Get framerate from MPsub header.
-        if self.main_file.format == gaupol.FORMAT.MPSUB:
+        if self.main_file.format == gaupol.formats.MPSUB:
             if self.main_file.framerate is not None:
                 self.set_framerate(self.main_file.framerate, register=None)
-
-        self.subtitles = []
-        for i in range(len(starts)):
-            subtitle = self.get_subtitle()
-            subtitle.start = starts[i]
-            subtitle.end = ends[i]
-            subtitle.main_text = texts[i]
-            self.subtitles.append(subtitle)
-
         self.main_changed = 0
+        self.tran_file = None
         self.tran_changed = None
         self.emit("main-file-opened", self.main_file)
         return sort_count
@@ -150,7 +142,7 @@ class OpenAgent(gaupol.Delegate):
         assert self.tran_file is not None
         assert self.tran_changed == 0
 
-    @gaupol.util.notify_frozen
+    @gaupol.deco.notify_frozen
     def open_translation(self, path, encoding, smart=True):
         """Open translation file reading texts.
 
@@ -161,15 +153,17 @@ class OpenAgent(gaupol.Delegate):
         Return sort count.
         """
         format = gaupol.FormatDeterminer().determine(path, encoding)
-        self.tran_file = gaupol.files.get_class(format)(path, encoding)
-        values = self._read_file(self.tran_file)
-        starts, ends, texts, sort_count = self._sort(*values)
-
+        self.tran_file = gaupol.files.new(format, path, encoding)
+        subtitles = self._read_file(self.tran_file)
+        subtitles, sort_count = self._sort_subtitles(subtitles)
+        for subtitle in subtitles:
+            subtitle.framerate = self.framerate
+        for subtitle in self.subtitles:
+            subtitle.tran_text = ""
         blocked = self.block("subtitles-inserted")
-        method = (self._append_translations, self._adapt_translations)[smart]
-        method(self.tran_file.mode, starts, ends, texts)
+        if smart: self._adapt_translations(subtitles)
+        else: self._append_translations(subtitles)
         self.unblock("subtitles-inserted", blocked)
-
         self.tran_changed = 0
         self.emit("translation-file-opened", self.tran_file)
         return sort_count

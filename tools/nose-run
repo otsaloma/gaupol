@@ -1,7 +1,0 @@
-#!/bin/sh
-
-# Run interactive tests with nose.
-# Usage: See nosetests --help.
-
-export LANG=C
-nosetests --match="^(Test|run)" "$@"

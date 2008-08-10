@@ -1,4 +1,4 @@
-# Copyright (C) 2007 Osmo Salomaa
+# Copyright (C) 2007-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,10 +9,10 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Automatic correcting of texts."""
 
@@ -32,8 +32,10 @@ class TextAgent(gaupol.Delegate):
     _re_capitalizable = re.compile(r"^\W*(?<!\.\.\.)\w", re.UNICODE)
 
     def _capitalize_position(self, parser, pos):
-        """Capitalize the first alphanumeric character from position."""
+        """Capitalize the first alphanumeric character from position.
 
+        Return True if something was capitalized, False if not.
+        """
         match = self._re_capitalizable.search(parser.text[pos:])
         if match is not None:
             i = pos + match.end() - 1
@@ -58,8 +60,11 @@ class TextAgent(gaupol.Delegate):
             cap_next = not self._capitalize_position(parser, z)
         return self._capitalize_text(parser, pattern, cap_next)
 
+    def _get_subtitutions_ensure(self, value, patterns):
+        assert len(value) <= len(patterns)
+
     def _get_subtitutions(self, patterns):
-        """Get a list of tuples of pattern, flags, replacement."""
+        """Return a sequence of tuples of pattern, flags, replacement."""
 
         re_patterns = []
         for pattern in (x for x in patterns if x.enabled):
@@ -67,59 +72,70 @@ class TextAgent(gaupol.Delegate):
             flags = pattern.get_flags()
             replacement = pattern.get_field("Replacement")
             re_patterns.append((string, flags, replacement))
-        return re_patterns
+        return tuple(re_patterns)
 
-    def _remove_leftover_spaces(self, texts, parser):
-        """Remove excess whitespace in texts."""
-
-        def substitute(pattern, replacement):
-            parser.set_regex(pattern)
-            parser.replacement = replacement
-            parser.replace_all()
+    def _remove_leftover_hi(self, texts, parser):
+        """Remove leftover hearing impaired spaces and junk."""
 
         texts = texts[:]
         for i, text in enumerate(texts):
             parser.set_text(text)
-            substitute(r"(^\s+|\s+$)", "")
-            substitute(r" {2,}", " ")
-            substitute(r"^\W*$", "")
-            substitute(r"(^\n|\n$)", "")
-            substitute(r"^-(\S)", r"- \1")
-            substitute(r"^- (.*?^[^-])", r"\1")
-            substitute(r"\A- ([^\n]*)\Z", r"\1")
+            # Remove leading and trailing spaces.
+            self._replace_all(parser, r"(^\s+|\s+$)", "")
+            # Consolidate multiple consequtive spaces.
+            self._replace_all(parser, r" {2,}", " ")
+            # Remove lines with no alphanumeric characters.
+            self._replace_all(parser, r"^\W*$", "")
+            # Remove empty lines.
+            self._replace_all(parser, r"(^\n|\n$)", "")
+            # Add space after dialogue lines.
+            self._replace_all(parser, r"^-(\S)", r"- \1")
+            # Remove dialogue lines if not present on other lines.
+            self._replace_all(parser, r"^- (.*?^[^-])", r"\1")
+            # Remove dialogue lines from single-line subtitles.
+            self._replace_all(parser, r"\A- ([^\n]*)\Z", r"\1")
             texts[i] = parser.get_text()
         return texts
+
+    def _replace_all(self, parser, pattern, replacement):
+        """Replace all matches of pattern in parser's text."""
+
+        parser.set_regex(pattern)
+        parser.replacement = replacement
+        parser.replace_all()
 
     def break_lines_require(self, indices, *args, **kwargs):
         for index in (indices or []):
             assert 0 <= index < len(self.subtitles)
 
-    @gaupol.util.revertable
-    @gaupol.util.asserted_return
+    @gaupol.deco.revertable
     def break_lines(self, indices, doc, patterns, length_func, max_length,
-        max_lines, max_deviation, skip=False, max_skip_length=sys.maxint,
+        max_lines, max_deviation=None, skip=False, max_skip_length=sys.maxint,
         max_skip_lines=sys.maxint, register=-1):
         """Break lines to fit defined maximum line length and count.
 
-        indices can be None to process all subtitles.
-        length_func should return the length of a string argument.
-        max_lines may be violated to avoid violating max_length.
-        max_deviation is a funky number between 0 and 1.
-        If skip is True, subtitles that do not violate or manage to reduce
-        max_skip_length and max_skip_lines are skipped.
-        Raise re.error if bad pattern or replacement.
+        indices can be None to process all subtitles. length_func should return
+        the length of a string argument. max_length is the maximum length of
+        lines as returned by length_func. max_lines may be violated to avoid
+        violating max_length. max_deviation is the maximum allowed value of
+        standard deviation of the line lengths divided by max_length. It is a
+        float between 0 and 1, use None for a sane default. If skip is True,
+        subtitles that do not violate or do not manage to reduce
+        max_skip_length and max_skip_lines are skipped. re.error is raised if
+        pattern or replacement is not proper.
         """
-        new_indexes = []
+        new_indices = []
         new_texts = []
         patterns = self._get_subtitutions(patterns)
         patterns = [(re.compile(x, y), z) for x, y, z in patterns]
         liner = self.get_liner(doc)
         liner.break_points = patterns
-        liner.max_deviation = max_deviation
+        if max_deviation is not None:
+            liner.max_deviation = max_deviation
         liner.max_length = max_length
         liner.max_lines = max_lines
         liner.set_length_func(length_func)
-        re_tag = self.get_tag_regex(doc)
+        re_tag = self.get_markup_tag_regex(doc)
         indices = indices or range(len(self.subtitles))
         for index in indices:
             subtitle = self.subtitles[index]
@@ -148,25 +164,24 @@ class TextAgent(gaupol.Delegate):
                 # if only lines in violation are to be broken.
                 if skip: continue
             if text != subtitle.get_text(doc):
-                new_indexes.append(index)
+                new_indices.append(index)
                 new_texts.append(text)
-        assert new_indexes
-        self.replace_texts(new_indexes, doc, new_texts, register=register)
+        if not new_indices: return
+        self.replace_texts(new_indices, doc, new_texts, register=register)
         self.set_action_description(register, _("Breaking lines"))
 
     def capitalize_require(self, indices, doc, pattern, register=-1):
         for index in (indices or []):
             assert 0 <= index < len(self.subtitles)
 
-    @gaupol.util.revertable
-    @gaupol.util.asserted_return
+    @gaupol.deco.revertable
     def capitalize(self, indices, doc, patterns, register=-1):
         """Capitalize texts as defined by patterns.
 
         indices can be None to process all subtitles.
         Raise re.error if bad pattern or replacement.
         """
-        new_indexes = []
+        new_indices = []
         new_texts = []
         parser = self.get_parser(doc)
         indices = indices or range(len(self.subtitles))
@@ -187,26 +202,24 @@ class TextAgent(gaupol.Delegate):
                     cap_next = self._capitalize_text(*args)
                 text = parser.get_text()
                 if text != subtitle.get_text(doc):
-                    new_indexes.append(index)
+                    new_indices.append(index)
                     new_texts.append(text)
-        assert new_indexes
-        self.replace_texts(new_indexes, doc, new_texts, register=register)
-        description = _("Capitalizing texts")
-        self.set_action_description(register, description)
+        if not new_indices: return
+        self.replace_texts(new_indices, doc, new_texts, register=register)
+        self.set_action_description(register, _("Capitalizing texts"))
 
     def correct_common_errors_require(self, indices, *args, **kwargs):
         for index in (indices or []):
             assert 0 <= index < len(self.subtitles)
 
-    @gaupol.util.revertable
-    @gaupol.util.asserted_return
+    @gaupol.deco.revertable
     def correct_common_errors(self, indices, doc, patterns, register=-1):
         """Correct common human and OCR errors  in texts.
 
         indices can be None to process all subtitles.
         Raise re.error if bad pattern or replacement.
         """
-        new_indexes = []
+        new_indices = []
         new_texts = []
         parser = self.get_parser(doc)
         re_patterns = self._get_subtitutions(patterns)
@@ -223,10 +236,10 @@ class TextAgent(gaupol.Delegate):
                     count = parser.replace_all()
             text = parser.get_text()
             if text != subtitle.get_text(doc):
-                new_indexes.append(index)
+                new_indices.append(index)
                 new_texts.append(text)
-        assert new_indexes
-        self.replace_texts(new_indexes, doc, new_texts, register=register)
+        if not new_indices: return
+        self.replace_texts(new_indices, doc, new_texts, register=register)
         description = _("Correcting common errors")
         self.set_action_description(register, description)
 
@@ -234,15 +247,14 @@ class TextAgent(gaupol.Delegate):
         for index in (indices or []):
             assert 0 <= index < len(self.subtitles)
 
-    @gaupol.util.revertable
-    @gaupol.util.asserted_return
+    @gaupol.deco.revertable
     def remove_hearing_impaired(self, indices, doc, patterns, register=-1):
         """Remove hearing impaired parts from subtitles.
 
         indices can be None to process all subtitles.
         Raise re.error if bad pattern or replacement.
         """
-        new_indexes = []
+        new_indices = []
         new_texts = []
         parser = self.get_parser(doc)
         re_patterns = self._get_subtitutions(patterns)
@@ -256,16 +268,16 @@ class TextAgent(gaupol.Delegate):
                 parser.replace_all()
             text = parser.get_text()
             if text != subtitle.get_text(doc):
-                new_indexes.append(index)
+                new_indices.append(index)
                 new_texts.append(text)
-        new_texts = self._remove_leftover_spaces(new_texts, parser)
-        assert new_indexes
-        self.replace_texts(new_indexes, doc, new_texts, register=register)
+        new_texts = self._remove_leftover_hi(new_texts, parser)
+        if not new_indices: return
+        self.replace_texts(new_indices, doc, new_texts, register=register)
         description = _("Removing hearing impaired texts")
         self.set_action_description(register, description)
-        remove_indexes = []
+        remove_indices = []
         for i, text in (x for x in enumerate(new_texts) if not x[1]):
-            remove_indexes.append(new_indexes[i])
-        assert remove_indexes
-        self.remove_subtitles(remove_indexes, register=register)
+            remove_indices.append(new_indices[i])
+        if not remove_indices: return
+        self.remove_subtitles(remove_indices, register=register)
         self.group_actions(register, 2, description)

@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2007 Osmo Salomaa
+# Copyright (C) 2006-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,31 +9,27 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol.gtk
 import gtk
 
-from gaupol.gtk import unittest
-from .. import ruler
 
+class TestModule(gaupol.gtk.TestCase):
 
-class TestModule(unittest.TestCase):
-
-    def run(self):
+    def run__text_view(self):
 
         text_view = gtk.TextView()
         text_buffer = text_view.get_buffer()
-        text = \
-            "Everything has been said\n" + \
-            "provided words do not change\n" + \
-            "their meanings\n" + \
-            "and meanings their words"
+        text = ("Everything has been said\n"
+                "provided words do not change\n"
+                "their meanings\n"
+                "and meanings their words")
         text_buffer.insert_at_cursor(text)
-        ruler.connect_text_view(text_view)
+        gaupol.gtk.ruler.connect_text_view(text_view)
         scroller = gtk.ScrolledWindow()
         scroller.set_shadow_type(gtk.SHADOW_IN)
         scroller.add(text_view)
@@ -49,36 +45,38 @@ class TestModule(unittest.TestCase):
     def test_connect_text_view(self):
 
         text_view = gtk.TextView()
-        ruler.connect_text_view(text_view)
+        gaupol.gtk.ruler.connect_text_view(text_view)
         text_buffer = text_view.get_buffer()
         text_buffer.insert_at_cursor("test\ntest")
 
     def test_disconnect_text_view(self):
 
         text_view = gtk.TextView()
-        ruler.connect_text_view(text_view)
-        ruler.disconnect_text_view(text_view)
+        gaupol.gtk.ruler.connect_text_view(text_view)
+        gaupol.gtk.ruler.disconnect_text_view(text_view)
         text_buffer = text_view.get_buffer()
         text_buffer.insert_at_cursor("test\ntest")
 
     def test_get_length_function(self):
 
-        unit = gaupol.gtk.LENGTH_UNIT.CHAR
-        function = ruler.get_length_function(unit)
+        unit = gaupol.gtk.length_units.CHAR
+        function = gaupol.gtk.ruler.get_length_function(unit)
         assert function("iii") == 3
-        unit = gaupol.gtk.LENGTH_UNIT.EM
-        function = ruler.get_length_function(unit)
+        unit = gaupol.gtk.length_units.EM
+        function = gaupol.gtk.ruler.get_length_function(unit)
         assert 0.5 < function("M") < 1.5
 
     def test_get_lengths__char(self):
 
-        gaupol.gtk.conf.editor.length_unit = gaupol.gtk.LENGTH_UNIT.CHAR
-        lengths = ruler.get_lengths("MMM\n<i>iii</i>")
-        assert lengths == [3, 3]
+        unit = gaupol.gtk.length_units.CHAR
+        gaupol.gtk.conf.editor.length_unit = unit
+        lengths = gaupol.gtk.ruler.get_lengths("MMM\n<i>iii</i>")
+        assert lengths == (3, 3)
 
     def test_get_lengths__em(self):
 
-        gaupol.gtk.conf.editor.length_unit = gaupol.gtk.LENGTH_UNIT.EM
+        unit = gaupol.gtk.length_units.EM
+        gaupol.gtk.conf.editor.length_unit = unit
         gaupol.gtk.conf.editor.use_custom_font = False
-        lengths = ruler.get_lengths("MMM\n<i>i</i>")
-        assert lengths == [3, 0]
+        lengths = gaupol.gtk.ruler.get_lengths("MMM\n<i>i</i>")
+        assert lengths == (3, 0)

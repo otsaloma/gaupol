@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,94 +9,139 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-from .test_taglib import TestTagLibrary
-from .. import subrip
+import gaupol
 
 
-class TestSubRip(TestTagLibrary):
+class TestSubRip(gaupol.TestCase):
+
+    text = "All things weird are normal\n" \
+           "in this whore of cities."
 
     def setup_method(self, method):
 
-        self.taglib = subrip.SubRip()
+        self.markup = gaupol.tags.new(gaupol.formats.SUBRIP)
 
-    def test_clean(self):
+    def test_bolden(self):
 
-        text = "test<i> </i>test"
-        assert self.taglib.clean(text) == "test test"
-        text = "<i>test </i><i>test</i>"
-        assert self.taglib.clean(text) == "<i>test test</i>"
+        assert self.markup.bolden(self.text) == (
+            "<b>All things weird are normal\n"
+            "in this whore of cities.</b>")
 
-    def test_decode(self):
+    def test_clean__closing(self):
 
-        # Uppercase bold
-        text = \
-            "<B>All things weird are normal\n" + \
-            "in this whore of cities.</B>"
-        assert self.taglib.decode(text) == \
-            "<b>All things weird are normal\n" + \
-            "in this whore of cities.</b>"
+        text = "All<i> things</i> weird are normal\n" \
+               "in <i> this</i> whore of cities."
+        assert self.markup.clean(text) == (
+            "All <i>things</i> weird are normal\n"
+            "in <i>this</i> whore of cities.")
 
-        # Uppercase italic
-        text = \
-            "<I>All</I> things weird are normal\n" + \
-            "in this whore of cities."
-        assert self.taglib.decode(text) == \
-            "<i>All</i> things weird are normal\n" + \
-            "in this whore of cities."
+    def test_clean__opening(self):
 
-        # Uppercase underline
-        text = \
-            "All things weird are normal\n" + \
-            "in this whore of <U>cities</U>."
-        assert self.taglib.decode(text) == \
-            "All things weird are normal\n" + \
-            "in this whore of <u>cities</u>."
+        text = "All <i>things </i>weird are normal\n" \
+               "in <i>this </i> whore of cities."
+        assert self.markup.clean(text) == (
+            "All <i>things</i> weird are normal\n"
+            "in <i>this</i> whore of cities.")
 
-    def test_encode(self):
+    def test_colorize(self):
 
-        # Italic
-        text = \
-            "<i>All things weird are normal\n" + \
-            "in this whore of cities.</i>"
-        assert self.taglib.encode(text) == text
+        assert self.markup.colorize(self.text, "ccffcc") == (
+            '<font color="#ccffcc">All things weird are normal\n'
+            'in this whore of cities.</font>')
 
-        # Bold
-        text = \
-            "<b>All</b> things weird are normal\n" + \
-            "in this whore of cities.</b>"
-        assert self.taglib.encode(text) == text
+    def test_decode__bold(self):
 
-        # Underline
-        text = \
-            "All things weird are normal\n" + \
-            "in this whore of <u>cities</u>."
-        assert self.taglib.encode(text) == text
+        text = "<B>All things weird are normal\n" \
+               "in this whore of cities.</B>"
+        assert self.markup.decode(text) == (
+            "<b>All things weird are normal\n"
+            "in this whore of cities.</b>")
 
-        # Remove font.
-        text = \
-            '<font="Sans">All things weird are normal\n' + \
-            'in this whore of cities.</font>'
-        assert self.taglib.encode(text) == self.plain_text
+    def test_decode__color(self):
 
-        # Remove color.
-        text = \
-            '<color="#ffffff">All</color> things weird are normal\n' + \
-            'in this whore of cities.'
-        assert self.taglib.encode(text) == self.plain_text
+        text = 'All things weird are normal\n' \
+               'in <font color="#ccccff">this whore of cities</font>.'
+        assert self.markup.decode(text) == (
+            "All things weird are normal\n"
+            "in <color=#ccccff>this whore of cities</color>.")
 
-        # Remove size.
-        text = \
-            'All things weird are normal\n' + \
-            'in this whore of <size="12">cities</size>.'
-        assert self.taglib.encode(text) == self.plain_text
+    def test_decode__italic(self):
+
+        text = "<I>All</I> things weird are normal\n" \
+               "in this whore of cities."
+        assert self.markup.decode(text) == (
+            "<i>All</i> things weird are normal\n"
+            "in this whore of cities.")
+
+    def test_decode__underline(self):
+
+        text = "All things weird are normal\n" \
+               "in this <U>whore</U> of cities."
+        assert self.markup.decode(text) == (
+            "All things weird are normal\n"
+            "in this <u>whore</u> of cities.")
+
+    def test_encode__bold(self):
+
+        text = "<b>All things weird are normal\n" \
+               "in this whore of cities.</b>"
+        assert self.markup.encode(text) == text
+
+    def test_encode__color(self):
+
+        text = "<color=#ccccff>All things weird are normal\n" \
+               "in this whore of cities.</color>"
+        assert self.markup.encode(text) == (
+            '<font color="#ccccff">All things weird are normal\n'
+            'in this whore of cities.</font>')
+
+    def test_encode__font(self):
+
+        text = "<font=Sans>All things weird are normal\n" \
+               "in this whore of cities.</font>"
+        assert self.markup.encode(text) == self.text
+
+    def test_encode__italic(self):
+
+        text = "All <i>things</i> weird are normal\n" \
+               "in <i>this</i> whore of cities."
+        assert self.markup.encode(text) == text
+
+    def test_encode__size(self):
+
+        text = "All things weird are normal\n" \
+               "in this whore of <size=12>cities</size>."
+        assert self.markup.encode(text) == self.text
+
+    def test_encode__underline(self):
+
+        text = "All things weird are normal\n" \
+               "<u>in this whore of cities.</u>"
+        assert self.markup.encode(text) == text
+
+    def test_italic_tag(self):
+
+        assert self.markup.italic_tag.match("<i>")
+        assert self.markup.italic_tag.match("</i>")
 
     def test_italicize(self):
 
-        assert self.taglib.italicize(self.plain_text) == \
-            "<i>All things weird are normal\n" + \
-            "in this whore of cities.</i>"
+        assert self.markup.italicize(self.text, (0, 3)) == (
+            "<i>All</i> things weird are normal\n"
+            "in this whore of cities.")
+
+    def test_tag(self):
+
+        assert self.markup.tag.match('<font color="#ffccff">')
+        assert self.markup.tag.match('</font>')
+
+    def test_underline(self):
+
+        assert self.markup.underline(self.text, (45, 51)) == (
+            "All things weird are normal\n"
+            "in this whore of <u>cities</u>.")

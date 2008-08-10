@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,24 +9,12 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Codes, names and descriptions for character encodings.
-
-Module variables:
- * _encodings: Tuple of tuples of code, name, description
- * _re_illegal: Regular expression for illegal characters in codes
-"""
-
-# Codes are the official names used by Python [1]. Names are mostly taken
-# from IANA [2]. Descriptions are mostly copied from Gedit [3].
-#
-# [1] http://docs.python.org/dev/lib/standard-encodings.html
-# [2] http://www.iana.org/assignments/character-sets
-# [3] http://svn.gnome.org/viewcvs/gedit/trunk/gedit/gedit-encodings.c
+"""Codes, names and descriptions for character encodings."""
 
 from __future__ import with_statement
 
@@ -36,10 +24,14 @@ import locale
 import re
 _ = gaupol.i18n._
 
+# Tuples of code, name and description for each supported character encoding.
+# Codes are the official names used by Python. Names are mostly taken from
+# IANA. Descriptions are mostly copied from gedit.
+
 _encodings = (
     # Translators: Most of the character encoding descriptions are copied from
     # gedit, which is translated to very many languages. Check the gedit .po
-    # files for a reference: http://svn.gnome.org/viewcvs/gedit/trunk/po/.
+    # files for a reference: <http://svn.gnome.org/viewvc/gedit/trunk/po/>.
     ("ascii"          , "US-ASCII"        , _("English")            ),
     ("big5"           , "Big5"            , _("Chinese traditional")),
     ("big5hkscs"      , "Big5-HKSCS"      , _("Chinese traditional")),
@@ -126,13 +118,16 @@ _encodings = (
     ("utf_7"          , "UTF-7"           , _("Unicode")            ),
     ("utf_8"          , "UTF-8"           , _("Unicode")            ),)
 
+CODE, NAME, DESC = range(3)
+
+# Characters illegal in encoding codes.
 _re_illegal = re.compile(r"[^a-z0-9_]")
 
 
 def _translate_code_ensure(value, code):
     assert is_valid_code(value)
 
-@gaupol.util.contractual
+@gaupol.deco.contractual
 def _translate_code(code):
     """Translate weird encoding code.
 
@@ -142,8 +137,8 @@ def _translate_code(code):
     code = _re_illegal.sub("_", code.lower())
     code = gaupol.util.get_encoding_alias(code)
     for item in _encodings:
-        if item[0] == code:
-            return item[0]
+        if item[CODE] == code:
+            return item[CODE]
     raise ValueError
 
 def code_to_description(code):
@@ -152,19 +147,19 @@ def code_to_description(code):
     Raise ValueError if not found.
     """
     for item in _encodings:
-        if item[0] == code:
-            return item[2]
+        if item[CODE] == code:
+            return item[DESC]
     raise ValueError
 
 def code_to_long_name(code):
     """Convert encoding code to localized long name.
 
     Raise ValueError if not found.
-    Return 'Description (Display name)'.
+    Return localized 'Description (Display name)'.
     """
     for item in _encodings:
-        if item[0] == code:
-            name, description = item[1:3]
+        if item[CODE] == code:
+            name, description = item[NAME], item[DESC]
             return _("%(description)s (%(name)s)") % locals()
     raise ValueError
 
@@ -174,18 +169,17 @@ def code_to_name(code):
     Raise ValueError if not found.
     """
     for item in _encodings:
-        if item[0] == code:
-            return item[1]
+        if item[CODE] == code:
+            return item[NAME]
     raise ValueError
 
 def detect_ensure(value, path):
     if value is not None:
         assert is_valid_code(value)
 
-@gaupol.util.contractual
-@gaupol.util.asserted_return
+@gaupol.deco.contractual
 def detect(path):
-    """Detect the encoding of file or return code or None.
+    """Detect the encoding of file and return code or None.
 
     Raise IOError if reading fails.
     """
@@ -194,11 +188,10 @@ def detect(path):
     with open(path, "r") as fobj:
         for line in fobj:
             detector.feed(line)
-            if detector.done:
-                break
+            if detector.done: break
     detector.close()
     code = detector.result["encoding"]
-    assert code is not None
+    if code is None: return None
     try:
         # chardet returns what seem to be IANA names. They need to be
         # translated to their Python equivalents. Some of the encodings
@@ -211,14 +204,13 @@ def get_locale_code_ensure(value):
     if value is not None:
         assert is_valid_code(value)
 
-@gaupol.util.once
-@gaupol.util.contractual
-@gaupol.util.asserted_return
+@gaupol.deco.once
+@gaupol.deco.contractual
 def get_locale_code():
-    """Get the encoding code of the locale encoding or None."""
+    """Return the code of the locale encoding or None."""
 
     code = locale.getpreferredencoding()
-    assert code is not None
+    if code is None: return None
     code = _re_illegal.sub("_", code.lower())
     code = gaupol.util.get_encoding_alias(code)
     return code
@@ -226,36 +218,36 @@ def get_locale_code():
 def get_locale_long_name_require():
     assert get_locale_code() is not None
 
-@gaupol.util.once
-@gaupol.util.contractual
+@gaupol.deco.once
+@gaupol.deco.contractual
 def get_locale_long_name():
-    """Get the localized long name for locale encoding.
+    """Return the localized long name for locale encoding.
 
     Raise ValueError if not found.
-    Return 'Current locale (Name)'.
+    Return localized 'Current locale (Name)'.
     """
     name = code_to_name(get_locale_code())
     return _("Current locale (%s)") % name
 
-def get_valid_encodings():
-    """Get a list of valid encodings.
+def get_valid():
+    """Return a sequence of valid encodings.
 
-    Return list of tuples of code, name, description.
+    Return sequence of tuples of code, name, description.
     """
-    valid_encodings = list(_encodings)
-    for i, item in enumerate(reversed(valid_encodings)):
-        if not is_valid_code(item[0]):
-            valid_encodings.pop(i)
-    return valid_encodings
+    valid_encodings = []
+    for i, item in enumerate(_encodings):
+        if is_valid_code(item[CODE]):
+            valid_encodings.append(item)
+    return tuple(valid_encodings)
 
 def is_valid_code(code):
     """Return True is encoding code is valid."""
 
     try:
         codecs.lookup(code)
-        return True
     except LookupError:
         return False
+    return True
 
 def name_to_code(name):
     """Convert encoding name to code.
@@ -263,6 +255,6 @@ def name_to_code(name):
     Raise ValueError if not found.
     """
     for item in _encodings:
-        if item[1] == name:
-            return item[0]
+        if item[NAME] == name:
+            return item[CODE]
     raise ValueError

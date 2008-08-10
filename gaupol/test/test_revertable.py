@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,43 +9,59 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
 
-from gaupol import unittest
-from .. import revertable
 
-
-class TestRevertableAction(unittest.TestCase):
+class TestRevertableAction(gaupol.TestCase):
 
     def setup_method(self, method):
 
-        def revert(register=-1):
-            assert register in gaupol.REGISTER.members
-        self.action = revertable.RevertableAction()
-        self.action.register=gaupol.REGISTER.DO
-        self.action.docs=[gaupol.DOCUMENT.MAIN]
-        self.action.description=""
-        self.action.revert_method=revert
+        self.revert_action_call_count = 0
+        self.revert_action_register = None
+        def revert_action(x, y, z=None, register=-1):
+            self.revert_action_call_count += 1
+            self.revert_action_register = register
+            assert (x, y, z) == (0, 1, 2)
+        self.action = gaupol.RevertableAction(description="")
+        self.action.register = gaupol.registers.DO
+        self.action.docs = (gaupol.documents.MAIN,)
+        self.action.revert_args = (0, 1)
+        self.action.revert_kwargs = {"z": 2}
+        self.action.revert_method = revert_action
 
-    def test__get_reversion_register(self):
+    def test_revert__do(self):
 
-        register = self.action._get_reversion_register()
-        assert register == gaupol.REGISTER.UNDO
-
-    def test_revert(self):
-
+        self.action.register = gaupol.registers.DO
         self.action.revert()
+        assert self.revert_action_call_count == 1
+        register = self.revert_action_register
+        assert register== gaupol.registers.UNDO
+
+    def test_revert__redo(self):
+
+        self.action.register = gaupol.registers.REDO
+        self.action.revert()
+        assert self.revert_action_call_count == 1
+        register = self.revert_action_register
+        assert register== gaupol.registers.UNDO
+
+    def test_revert__undo(self):
+
+        self.action.register = gaupol.registers.UNDO
+        self.action.revert()
+        assert self.revert_action_call_count == 1
+        register = self.revert_action_register
+        assert register== gaupol.registers.REDO
 
 
-class TestRevertableActionGroup(unittest.TestCase):
+class TestRevertableActionGroup(gaupol.TestCase):
 
-    def test___init__(self):
+    def setup_method(self, method):
 
-        action_group = revertable.RevertableActionGroup()
-        action_group.actions = []
-        action_group.description = ""
+        self.action_group = gaupol.RevertableActionGroup(actions=())
+        self.action_group.description = ""

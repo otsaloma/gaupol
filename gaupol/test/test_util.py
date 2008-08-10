@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2007 Osmo Salomaa
+# Copyright (C) 2006-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,206 +9,390 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import codecs
+import gaupol
 import os
 import sys
 import tempfile
-
-from gaupol import unittest
-from .. import util
+import time
 
 
-class TestModule(unittest.TestCase):
+class TestModule(gaupol.TestCase):
 
-    # pylint: disable-msg=E0102
+    url = "http://home.gna.org/gaupol"
 
-    def test_asserted_return(self):
+    @gaupol.deco.silent(OSError)
+    def browse_url_silent(self, url):
 
-        def do_a():
-            assert False
-        def do_b():
-            return do_a()
-        assert util.asserted_return(do_a)() is None
-        self.raises(AssertionError, util.asserted_return(do_b))
+        return gaupol.util.browse_url(url)
 
-    def test_memoize(self):
+    def setup_method(self, method):
 
-        @util.memoize
-        def square(x):
-            return x ** 2
-        assert square(2) == 4
-        assert square(2) == 4
+        self.project = self.get_project()
 
-    def test_once(self):
+    def test_affirm(self):
 
-        @util.once
-        def get_constant():
-            return 5
-        assert get_constant() == 5
-        assert get_constant() == 5
-
-    def test_silent(self):
-
-        @util.silent(ValueError)
-        def erroneous_do():
-            [].remove(None)
-        erroneous_do()
+        gaupol.util.affirm(0 == 0)
+        error = gaupol.AffirmationError
+        self.raises(error, gaupol.util.affirm, 1 == 0)
 
     def test_browse_url(self):
 
-        util.browse_url("http://home.gna.org/gaupol")
+        gaupol.util.browse_url(self.url)
+        gaupol.util.browse_url(self.url, "echo")
+
+    def test_browse_url__command(self):
+
+        environment = os.environ.copy()
+        os.environ.clear()
+        platform = sys.platform
+        sys.platform = "linux2"
+        is_command = gaupol.util.is_command
+        gaupol.util.is_command = lambda x: (x == "xdg-open")
+        self.browse_url_silent(self.url)
+        gaupol.util.is_command = lambda x: (x == "exo-open")
+        self.browse_url_silent(self.url)
+        os.environ = environment
+        sys.platform = platform
+        gaupol.util.is_command = is_command
+
+    def test_browse_url__environment(self):
+
+        environment = os.environ.copy()
+        os.environ.clear()
+        platform = sys.platform
+        sys.platform = "linux2"
+        os.environ["GNOME_DESKTOP_SESSION_ID"] = "1"
+        self.browse_url_silent(self.url)
+        os.environ.clear()
+        os.environ["KDE_FULL_SESSION"] = "1"
+        self.browse_url_silent(self.url)
+        os.environ = environment
+        sys.platform = platform
+
+    def test_browse_url__platform(self):
+
+        environment = os.environ.copy()
+        os.environ.clear()
+        platform = sys.platform
+        sys.platform = "darwin"
+        self.browse_url_silent(self.url)
+        sys.platform = "win32"
+        self.browse_url_silent(self.url)
+        os.environ = environment
+        sys.platform = platform
+
+    def test_browse_url__webbrowser(self):
+
+        environment = os.environ.copy()
+        os.environ.clear()
+        platform = sys.platform
+        sys.platform = "linux2"
+        gaupol.util.browse_url(self.url)
+        os.environ = environment
+        sys.platform = platform
 
     def test_chardet_available(self):
 
-        assert util.chardet_available()
+        assert gaupol.util.chardet_available()
+        assert gaupol.util.chardet_available()
+        reload(gaupol.util)
+        real_import = __builtins__["__import__"]
+        def bad_import(*args):
+            if args[0] == "chardet": raise ImportError
+            return real_import(*args)
+        __builtins__["__import__"] = bad_import
+        assert not gaupol.util.chardet_available()
+        assert not gaupol.util.chardet_available()
+        __builtins__["__import__"] = real_import
+        reload(gaupol.util)
+
+    def test_connect(self):
+
+        # pylint: disable-msg=W0201
+        self._on_project_action_done = lambda *args: None
+        gaupol.util.connect(self, "project", "action-done")
+        self.on_project_action_undone = lambda *args: None
+        gaupol.util.connect(self, "project", "action-undone")
 
     def test_compare_versions(self):
 
-        assert util.compare_versions("0.1.1", "0.1"  ) ==  1
-        assert util.compare_versions("0.2"  , "0.1"  ) ==  1
-        assert util.compare_versions("0.3"  , "0.3"  ) ==  0
-        assert util.compare_versions("0.4"  , "0.4.1") == -1
-        assert util.compare_versions("0.4"  , "0.5"  ) == -1
+        assert gaupol.util.compare_versions("0.1.1", "0.1"  ) ==  1
+        assert gaupol.util.compare_versions("0.2"  , "0.1"  ) ==  1
+        assert gaupol.util.compare_versions("0.3"  , "0.3"  ) ==  0
+        assert gaupol.util.compare_versions("0.4"  , "0.4.1") == -1
+        assert gaupol.util.compare_versions("0.4"  , "0.5"  ) == -1
 
     def test_copy_dict(self):
 
-        util.copy_dict({1: 2, 3: {1: 2, 3: 4}})
+        gaupol.util.copy_dict({1: 2, 3: {1: 2}})
+        gaupol.util.copy_dict({1: 2, 3: [1, 2]})
+        gaupol.util.copy_dict({1: 2, 3: set((1, 2))})
+
+    def test_copy_list(self):
+
+        gaupol.util.copy_list([1, 2, {1: 2}])
+        gaupol.util.copy_list([1, 2, [1, 2]])
+        gaupol.util.copy_list([1, 2, set((1, 2))])
 
     def test_enchant_available(self):
 
-        assert util.enchant_available()
+        assert gaupol.util.enchant_available()
+        assert gaupol.util.enchant_available()
+        reload(gaupol.util)
+        real_import = __builtins__["__import__"]
+        def bad_import(*args):
+            if args[0] == "enchant": raise ImportError
+            return real_import(*args)
+        __builtins__["__import__"] = bad_import
+        assert not gaupol.util.enchant_available()
+        assert not gaupol.util.enchant_available()
+        __builtins__["__import__"] = real_import
+        reload(gaupol.util)
+
+    def test_get_all(self):
+
+        assert gaupol.util.get_all(dir()) == ("self",)
+        assert not gaupol.util.get_all(dir(), r"^[A-Z]")
+        names = gaupol.util.get_all(dir(gaupol.util))
+        assert len(names) < len(dir(gaupol.util))
 
     def test_get_chardet_version(self):
 
-        util.get_chardet_version()
+        assert gaupol.util.get_chardet_version()
+        reload(gaupol.util)
+        real_import = __builtins__["__import__"]
+        def bad_import(*args):
+            if args[0] == "chardet": raise ImportError
+            return real_import(*args)
+        __builtins__["__import__"] = bad_import
+        assert gaupol.util.get_chardet_version() is None
+        __builtins__["__import__"] = real_import
+        reload(gaupol.util)
 
     def test_get_default_encoding(self):
 
-        util.get_default_encoding()
-
-    def test_get_desktop_environment(self):
-
-        desktop = util.get_desktop_environment()
-        assert desktop in ("GNOME", "KDE", None)
+        gaupol.util.get_default_encoding()
 
     def test_get_enchant_version(self):
 
-        util.get_enchant_version()
+        assert gaupol.util.get_enchant_version()
+        reload(gaupol.util)
+        real_import = __builtins__["__import__"]
+        def bad_import(*args):
+            if args[0] == "enchant": raise ImportError
+            return real_import(*args)
+        __builtins__["__import__"] = bad_import
+        assert gaupol.util.get_enchant_version() is None
+        __builtins__["__import__"] = real_import
+        reload(gaupol.util)
 
     def test_get_encoding_alias(self):
 
-        alias = util.get_encoding_alias("utf8")
-        assert alias == "utf_8"
-        alias = util.get_encoding_alias("johab")
-        assert alias == "johab"
+        assert gaupol.util.get_encoding_alias("utf8") == "utf_8"
+        assert gaupol.util.get_encoding_alias("johab") == "johab"
 
     def test_get_ranges(self):
 
         lst = [0, 0, 4, 5, 3, 7, 8, 2, 7]
-        value = util.get_ranges(lst)
+        value = gaupol.util.get_ranges(lst)
         assert value == [[0], [2, 3, 4, 5], [7, 8]]
+        assert gaupol.util.get_ranges([]) == []
 
     def test_get_sorted_unique(self):
 
         lst = [4, 1, 5, 5, 1, 1, 3, 6, 4, 4]
-        value = util.get_sorted_unique(lst)
+        value = gaupol.util.get_sorted_unique(lst)
         assert value == [1, 3, 4, 5, 6]
 
     def test_get_unique(self):
 
         lst = [4, 1, 5, 5, 1, 1, 3, 6, 4, 4]
-        value = util.get_unique(lst)
+        value = gaupol.util.get_unique(lst)
         assert value == [4, 1, 5, 3, 6]
+        lst = [4, 1, 5, 5, 1, 1, 3, 6, 4, 4]
+        value = gaupol.util.get_unique(lst, True)
+        assert value == [5, 1, 3, 6, 4]
 
-    def test_handle_read_io(self):
+    def test_is_command(self):
+
+        if os.path.isfile("/bin/sh"):
+            assert gaupol.util.is_command("sh")
+        assert not gaupol.util.is_command("+?")
+
+    def test_last(self):
+
+        assert gaupol.util.last(iter((1, 2, 3))) == 3
+
+    def test_makedirs(self):
+
+        gaupol.util.makedirs(tempfile.gettempdir())
+        path = "%s-%d" % (self.get_subrip_path(), time.time())
+        gaupol.util.makedirs(path)
+        os.rmdir(path)
+
+    def test_path_to_uri__unix(self):
+
+        platform = sys.platform
+        sys.platform = "linux2"
+        path = "/home/tester/a file.ext"
+        uri = gaupol.util.path_to_uri(path)
+        assert uri == "file:///home/tester/a%20file.ext"
+        sys.platform = platform
+
+    def test_path_to_uri__windows(self):
+
+        platform = sys.platform
+        sys.platform = "win32"
+        path = "c:\\tester\\a file.ext"
+        uri = gaupol.util.path_to_uri(path)
+        assert uri == "file:///c%3A/tester/a%20file.ext"
+        sys.platform = platform
+
+    def test_print_read_io(self):
 
         try:
-            open("/////", "r").read()
+            open("/tmp/1/2/3/4///", "r").read()
             raise AssertionError
         except IOError:
-            util.handle_read_io(sys.exc_info(), "/////")
+            args = (sys.exc_info(), "/tmp/1/2/3/4///")
+            gaupol.util.print_read_io(*args)
 
-    def test_handle_read_unicode(self):
+    def test_print_read_unicode(self):
 
         try:
             path = self.get_subrip_path()
             codecs.open(path, "r", "undefined").read()
             raise AssertionError
         except UnicodeError:
-            util.handle_read_unicode(sys.exc_info(), path, "undefined")
+            args = (sys.exc_info(), path, "undefined")
+            gaupol.util.print_read_unicode(*args)
 
-    def handle_remove_os(self):
+    def test_print_remove_os(self):
 
         try:
-            os.remove("/////")
+            os.remove("/tmp/1/2/3/4///")
         except OSError:
-            util.handle_remove_io(sys.exc_info(), "/////")
+            args = (sys.exc_info(), "/tmp/1/2/3/4///")
+            gaupol.util.print_remove_os(*args)
 
-    def test_handle_write_io(self):
+    def test_print_write_io(self):
 
         try:
             open("/////", "w").write("\n")
             raise AssertionError
         except IOError:
-            util.handle_write_io(sys.exc_info(), "/////")
+            args = (sys.exc_info(), "/////")
+            gaupol.util.print_write_io(*args)
 
-    def test_handle_write_unicode(self):
+    def test_print_write_unicode(self):
 
         try:
             path = self.get_subrip_path()
-            codecs.open(path, "r", "ascii").write(u"\303\266")
+            codecs.open(path, "r", "ascii").write(u"\xc3\xb6\n")
             raise AssertionError
         except UnicodeError:
-            util.handle_write_unicode(sys.exc_info(), path, "ascii")
-
-    def test_last(self):
-
-        assert util.last(iter((1, 2, 3))) == 3
-
-    def test_makedirs(self):
-
-        util.makedirs(tempfile.gettempdir())
-
-    def test_path_to_uri(self):
-
-        uri = util.path_to_uri("/home/tester/my file.ext")
-        assert uri == "file:///home/tester/my%20file.ext"
+            args = (sys.exc_info(), path, "ascii")
+            gaupol.util.print_write_unicode(*args)
 
     def test_read(self):
 
         path = self.get_subrip_path()
-        text = open(path, "r").read().strip()
-        assert util.read(path) == text
+        text = codecs.open(path, "r", "ascii").read().strip()
+        assert gaupol.util.read(path) == text
+
+    def test_read__fallback(self):
+
+        path = self.get_subrip_path()
+        codecs.open(path, "w", "utf_8").write(u"\xc3\xb6\n")
+        assert gaupol.util.read(path, "ascii") == u"\xc3\xb6"
+
+    def test_read__unicode_error(self):
+
+        path = self.get_subrip_path()
+        codecs.open(path, "w", "latin1").write(u"\xc3\xb6\n")
+        args = (path, "ascii", None)
+        self.raises(UnicodeError, gaupol.util.read, *args)
 
     def test_readlines(self):
 
         path = self.get_subrip_path()
         lines = [x.rstrip() for x in open(path, "r").readlines()]
-        assert util.readlines(path) == lines
+        assert gaupol.util.readlines(path) == lines
 
-    def test_shell_quote(self):
+    def test_readlines__fallback(self):
 
-        path = util.shell_quote(r'/home/tester/my "file"\.ext')
-        assert path == r'"/home/tester/my \"file\"\\.ext"'
+        path = self.get_subrip_path()
+        codecs.open(path, "w", "utf_8").write(u"\xc3\xb6\n")
+        assert gaupol.util.readlines(path, "ascii") == [u"\xc3\xb6"]
+
+    def test_shell_quote__unix(self):
+
+        platform = sys.platform
+        sys.platform = "linux2"
+        path = '/home/tester/a "file"\\.ext'
+        path = gaupol.util.shell_quote(path)
+        assert path == '"/home/tester/a \\"file\\"\\\\.ext"'
+        sys.platform = platform
+
+    def test_shell_quote__windows(self):
+
+        platform = sys.platform
+        sys.platform = "win32"
+        path = 'c:\\tester\\a file.ext'
+        path = gaupol.util.shell_quote(path)
+        assert path == '"c:\\tester\\a file.ext"'
+        sys.platform = platform
 
     def test_start_process(self):
 
-        process = util.start_process("echo test")
+        process = gaupol.util.start_process("echo")
         assert process.wait() == 0
 
-    def test_uri_to_path(self):
+    def test_title_to_lower_case(self):
 
-        path = util.uri_to_path("file:///home/tester/my%20file.ext")
-        assert path == "/home/tester/my file.ext"
+        assert gaupol.util.title_to_lower_case("Test") == "test"
+        assert gaupol.util.title_to_lower_case("TestCase") == "test_case"
+
+    def test_uri_to_path__unix(self):
+
+        platform = sys.platform
+        sys.platform = "linux2"
+        uri = "file:///home/tester/a%20file.ext"
+        path = gaupol.util.uri_to_path(uri)
+        assert path == "/home/tester/a file.ext"
+        sys.platform = platform
+
+    def test_uri_to_path__windows(self):
+
+        platform = sys.platform
+        sys.platform = "win32"
+        uri = "file:///c:/tester/a%20file.ext"
+        path = gaupol.util.uri_to_path(uri)
+        assert path == "c:\\tester\\a file.ext"
+        sys.platform = platform
 
     def test_write(self):
 
         text = "test\ntest\n"
         path = self.get_subrip_path()
-        util.write(path, text)
-        assert open(path, "r").read() == text
+        gaupol.util.write(path, text)
+        assert codecs.open(path, "r", "ascii").read() == text
+
+    def test_write__fallback(self):
+
+        text = u"\xc3\xb6\n"
+        path = self.get_subrip_path()
+        gaupol.util.write(path, text, "ascii")
+        assert codecs.open(path, "r", "utf_8").read() == text
+
+    def test_write__unicode_error(self):
+
+        path = self.get_subrip_path()
+        args = (path, u"\xc3\xb6\n", "ascii", None)
+        self.raises(UnicodeError, gaupol.util.write, *args)

@@ -1,27 +1,21 @@
 [HearingImpairedPattern]
-_Name=Sounds in brackets
-_Description=Remove descriptions of sounds between square brackets
+_Name=Sound in brackets
+_Description=Remove description of a sound between square brackets
 Pattern=\[.*?\]
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=
 
 [HearingImpairedPattern]
-_Name=Sounds in parantheses
-_Description=Remove descriptions of sounds between parantheses
+_Name=Sound in parantheses
+_Description=Remove description of a sound between parantheses
 Pattern=\(.*?\)
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=
 
 [HearingImpairedPattern]
-_Name=Speakers before colons
-_Description=Replace names of speakers before colons with dialog lines
-Pattern=^-?\s*?[^,;:.?!]*?:\s
-Flags=MULTILINE,UNICODE
-Replacement=-\040
-
-[HearingImpairedPattern]
 _Name=Song lyrics between number signs
 _Description=Remove song lyrics starting with or between number signs
+# Remove up to the end of the subtitle if no terminating number sign.
 Pattern=#+.+?(#+|\Z)
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=
@@ -29,6 +23,7 @@ Replacement=
 [HearingImpairedPattern]
 _Name=One-line song lyrics between number signs
 _Description=Remove one-line song lyrics starting with or between number signs
+# Remove up to the end of the line if no terminating number sign.
 Pattern=#+.+?(#+|$)
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=
@@ -36,6 +31,7 @@ Replacement=
 [HearingImpairedPattern]
 _Name=Song lyrics between asterisks
 _Description=Remove song lyrics starting with or between asterisks
+# Remove up to the end of the subtitle if no terminating asterisk.
 Pattern=\*+.+?(\*+|\Z)
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=
@@ -43,6 +39,14 @@ Replacement=
 [HearingImpairedPattern]
 _Name=One-line song lyrics between asterisks
 _Description=Remove one-line song lyrics starting with or between asterisks
+# Remove up to the end of the line if no terminating asterisk.
 Pattern=\*+.+?(\*+|$)
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=
+
+[HearingImpairedPattern]
+_Name=Speaker before a colon
+_Description=Replace the name of the speaker before a colon with a dialogue line
+Pattern=^-?\s*?[^,;:.?!]*?:\s
+Flags=MULTILINE,UNICODE
+Replacement=-\040

@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,132 +9,146 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
 
-from gaupol import unittest
-from .. import calculator
 
-
-class TestCalculator(unittest.TestCase):
+class TestCalculator(gaupol.TestCase):
 
     def setup_method(self, method):
 
-        self.calc = calculator.Calculator()
+        self.calc = gaupol.Calculator(gaupol.framerates.FPS_24)
 
     def test___new__(self):
 
-        for framerate in gaupol.FRAMERATE.members:
-            a = calculator.Calculator(framerate)
-            b = calculator.Calculator(framerate)
+        for framerate in gaupol.framerates:
+            a = gaupol.Calculator(framerate)
+            b = gaupol.Calculator(framerate)
             assert a is b
 
     def test_add_seconds_to_time(self):
 
-        time = self.calc.add_seconds_to_time("00:00:00.001", 5)
-        assert time == "00:00:05.001"
-        time = self.calc.add_seconds_to_time("00:00:00.001", -5)
-        assert time == "-00:00:04.999"
+        add_seconds = self.calc.add_seconds_to_time
+        assert add_seconds( "00:00:00.001",  5) ==  "00:00:05.001"
+        assert add_seconds( "00:00:00.001", -5) == "-00:00:04.999"
+        assert add_seconds("-00:00:00.001",  5) ==  "00:00:04.999"
+        assert add_seconds("-00:00:00.001", -5) == "-00:00:05.001"
 
     def test_add_times(self):
 
-        time = self.calc.add_times("33:33:33.333", "44:44:44.444")
-        assert time == "78:18:17.777"
+        for x, y, result in (
+            ( "33:33:33.333",  "44:44:44.444",  "78:18:17.777"),
+            ("-33:33:33.333", "-44:44:44.444", "-78:18:17.777"),
+            ("-33:33:33.333",  "44:44:44.444",  "11:11:11.111"),
+            ( "33:33:33.333", "-44:44:44.444", "-11:11:11.111"),):
+            assert self.calc.add_times(x, y) == result
+
+    def test_compare(self):
+
+        compare = self.calc.compare
+        assert compare("00:00:00.001", "00:00:00.000") ==  1
+        assert compare( 1,  0) ==  1
+        assert compare( 0,  0) ==  0
+        assert compare( 0,  1) == -1
+        assert compare(-2, -1) == -1
+        assert compare(-1, -1) ==  0
+        assert compare(-1, -2) ==  1
+        assert compare( 1, -1) ==  1
+        assert compare(-1,  1) == -1
+        self.raises(ValueError, self.calc.compare, None, None)
 
     def test_compare_times(self):
 
-        times = ("00:00:00.001", "00:00:00.000")
-        assert self.calc.compare_times(*times) == 1
-        times = ("00:00:00.000", "00:00:00.000")
-        assert self.calc.compare_times(*times) == 0
-        times = ("00:00:00.000", "00:00:00.001")
-        assert self.calc.compare_times(*times) == -1
-
-        times = ("-00:00:00.002", "-00:00:00.001")
-        assert self.calc.compare_times(*times) == -1
-        times = ("-00:00:00.001", "-00:00:00.001")
-        assert self.calc.compare_times(*times) == 0
-        times = ("-00:00:00.001", "-00:00:00.002")
-        assert self.calc.compare_times(*times) == 1
-
-        times = ("00:00:00.001", "-00:00:00.001")
-        assert self.calc.compare_times(*times) == 1
-        times = ("-00:00:00.001", "00:00:00.001")
-        assert self.calc.compare_times(*times) == -1
+        compare = self.calc.compare_times
+        assert compare( "00:00:00.001",  "00:00:00.000") ==  1
+        assert compare( "00:00:00.000",  "00:00:00.000") ==  0
+        assert compare( "00:00:00.000",  "00:00:00.001") == -1
+        assert compare("-00:00:00.002", "-00:00:00.001") == -1
+        assert compare("-00:00:00.001", "-00:00:00.001") ==  0
+        assert compare("-00:00:00.001", "-00:00:00.002") ==  1
+        assert compare( "00:00:00.001", "-00:00:00.001") ==  1
+        assert compare("-00:00:00.001",  "00:00:00.001") == -1
 
     def test_frame_to_seconds(self):
 
-        seconds = self.calc.frame_to_seconds(127)
-        assert seconds == 127 / gaupol.FRAMERATE.P24.value
+        calc = gaupol.Calculator(gaupol.framerates.FPS_25)
+        assert calc.frame_to_seconds( 127) ==  5.08
+        assert calc.frame_to_seconds(-127) == -5.08
 
     def test_frame_to_time(self):
 
-        time = self.calc.frame_to_time(2658)
-        assert time == "00:01:50.861"
+        assert self.calc.frame_to_time( 2658) ==  "00:01:50.861"
+        assert self.calc.frame_to_time(-2658) == "-00:01:50.861"
 
     def test_get_frame_duration(self):
 
-        duration = self.calc.get_frame_duration(561, 1048)
-        assert duration == 487
-        duration = self.calc.get_frame_duration(561, 560)
-        assert duration == -1
+        assert self.calc.get_frame_duration( 561,  1048) ==  487
+        assert self.calc.get_frame_duration( 561,   560) ==   -1
+        assert self.calc.get_frame_duration(-561, -1048) == -487
+        assert self.calc.get_frame_duration(-561,  -560) ==    1
 
-    def test_get_middle(self):
+    def test_get_middle__frame(self):
 
-        middle = self.calc.get_middle("00:00:01.000", "00:00:02.000")
-        assert middle == "00:00:01.500"
-        middle = self.calc.get_middle("00:00:01.000", "00:00:02.001")
-        assert middle == "00:00:01.501"
+        assert self.calc.get_middle( 300,  400) ==  350
+        assert self.calc.get_middle( 300,  401) ==  351
+        assert self.calc.get_middle(-300, -400) == -350
+        assert self.calc.get_middle(-300,  401) ==   51
 
-        middle = self.calc.get_middle(300, 400)
-        assert middle == 350
-        middle = self.calc.get_middle(300, 401)
-        assert middle == 351
+    def test_get_middle__time(self):
+
+        for x, y, result in (
+            ( "00:00:01.000",  "00:00:02.000",  "00:00:01.500"),
+            ( "00:00:01.000",  "00:00:02.001",  "00:00:01.501"),
+            ("-00:00:01.000", "-00:00:02.000", "-00:00:01.500"),
+            ( "00:00:01.000", "-00:00:02.002", "-00:00:00.501"),):
+            assert self.calc.get_middle(x, y) == result
+
+    def test_get_middle__value_error(self):
+
+        self.raises(ValueError, self.calc.get_middle, None, None)
 
     def test_get_time_duration(self):
 
-        duration = self.calc.get_time_duration("00:01:22.500", "00:01:45.100")
-        assert duration == "00:00:22.600"
-        duration = self.calc.get_time_duration("00:01:22.500", "00:01:00.100")
-        assert duration == "-00:00:22.400"
+        for x, y, result in (
+            ( "00:01:22.500",  "00:01:45.100",  "00:00:22.600"),
+            ( "00:01:22.500",  "00:01:00.100", "-00:00:22.400"),
+            ("-00:01:22.500",  "00:01:45.100",  "00:03:07.600"),
+            ( "00:01:22.500", "-00:01:00.100", "-00:02:22.600"),):
+            assert self.calc.get_time_duration(x, y) == result
 
     def test_round_time(self):
 
-        time = self.calc.round_time("02:36:35.857", 3)
-        assert time == "02:36:35.857"
-        time = self.calc.round_time("02:36:35.857", 2)
-        assert time == "02:36:35.860"
-        time = self.calc.round_time("02:36:35.857", 1)
-        assert time == "02:36:35.900"
-        time = self.calc.round_time("02:36:35.857", 0)
-        assert time == "02:36:36.000"
+        round_time = self.calc.round_time
+        assert round_time("02:36:35.857", 3) == "02:36:35.857"
+        assert round_time("02:36:35.857", 2) == "02:36:35.860"
+        assert round_time("02:36:35.857", 1) == "02:36:35.900"
+        assert round_time("02:36:35.857", 0) == "02:36:36.000"
 
     def test_seconds_to_frame(self):
 
-        frame = self.calc.seconds_to_frame(6552)
-        assert frame == 157091
+        seconds_to_frame = self.calc.seconds_to_frame
+        assert seconds_to_frame(6552) == 157091
+        assert seconds_to_frame(-337) ==  -8080
 
     def test_seconds_to_time(self):
 
-        time = self.calc.seconds_to_time(68951.15388)
-        assert time == "19:09:11.154"
-        time = self.calc.seconds_to_time(999999.0)
-        assert time == "99:59:59.999"
-        time = self.calc.seconds_to_time(-12.0)
-        assert time == "-00:00:12.000"
+        seconds_to_time = self.calc.seconds_to_time
+        assert seconds_to_time(68951.15388) ==  "19:09:11.154"
+        assert seconds_to_time(-12.0000000) == "-00:00:12.000"
+        assert seconds_to_time(999999.0000) ==  "99:59:59.999"
 
     def test_time_to_frame(self):
 
-        frame = self.calc.time_to_frame("01:22:36.144")
-        assert frame == 118829
+        time_to_frame = self.calc.time_to_frame
+        assert time_to_frame( "01:22:36.144") == 118829
+        assert time_to_frame("-00:13:43.087") == -19734
 
     def test_time_to_seconds(self):
 
-        seconds = self.calc.time_to_seconds("03:45:22.117")
-        assert seconds == 13522.117
-        seconds = self.calc.time_to_seconds("-00:00:45.000")
-        assert seconds == -45.0
+        time_to_seconds = self.calc.time_to_seconds
+        assert time_to_seconds( "03:45:22.117") == 13522.117
+        assert time_to_seconds("-00:00:45.000") ==   -45.000

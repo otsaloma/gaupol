@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,32 +9,42 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Advanced Sub Station Alpha file."""
 
 import gaupol
 
-from .ssa import SubStationAlpha
+__all__ = ("AdvSubStationAlpha",)
 
 
-class AdvSubStationAlpha(SubStationAlpha):
+class AdvSubStationAlpha(gaupol.files.SubStationAlpha):
 
     """Advanced Sub Station Alpha file."""
 
-    format = gaupol.FORMAT.ASS
+    format = gaupol.formats.ASS
 
-    event_fields = (
-        "Layer",
-        "Start",
-        "End",
-        "Style",
-        "Name",
-        "MarginL",
-        "MarginR",
-        "MarginV",
-        "Effect",
-        "Text",)
+    def __init__(self, path, encoding, newline=None):
+
+        gaupol.files.SubStationAlpha.__init__(self, path, encoding, newline)
+        self.event_fields = ("Layer", "Start", "End", "Style", "Name",
+            "MarginL", "MarginR", "MarginV", "Effect", "Text",)
+
+    def _decode_field(self, field_name, value, subtitle):
+        """Save value of field as a subtitle attribute."""
+
+        if field_name == "Layer":
+            return setattr(subtitle.ssa, "layer", int(value))
+        decode = gaupol.files.SubStationAlpha._decode_field
+        return decode(self, field_name, value, subtitle)
+
+    def _encode_field(self, field_name, subtitle, doc):
+        """Return value of field as string to be written to file."""
+
+        if field_name == "Layer":
+            return str(subtitle.ssa.layer)
+        encode = gaupol.files.SubStationAlpha._encode_field
+        return encode(self, field_name, subtitle, doc)

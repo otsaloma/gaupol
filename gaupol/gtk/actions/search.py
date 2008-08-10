@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,10 +9,10 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Text searching actions."""
 
@@ -20,59 +20,60 @@ import gaupol.gtk
 import gtk
 _ = gaupol.i18n._
 
-from .action import Action
 
-
-class FindAndReplaceAction(Action):
+class FindAndReplaceAction(gaupol.gtk.Action):
 
     """Search for and replace text."""
 
     def __init__(self):
 
-        Action.__init__(self, "find_and_replace")
+        gaupol.gtk.Action.__init__(self, "find_and_replace")
         self.props.label = _("_Find And Replace\342\200\246")
         self.props.short_label = _("Find")
         self.props.stock_id = gtk.STOCK_FIND_AND_REPLACE
         self.props.tooltip = _("Search for and replace text")
         self.accelerator = "<Control>F"
 
-    def _assert_doable(self, application, page):
+    def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
 
-        assert page is not None
+        gaupol.util.affirm(page is not None)
 
 
-class FindNextAction(Action):
+class FindNextAction(gaupol.gtk.Action):
 
     """Search forwards for same text."""
 
     def __init__(self):
 
-        Action.__init__(self, "find_next")
+        gaupol.gtk.Action.__init__(self, "find_next")
         self.props.label = _("Find _Next")
         self.props.tooltip = _("Search forwards for same text")
         self.accelerator = "<Control>G"
 
-    def _assert_doable(self, application, page):
+    def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
 
-        assert page is not None
-        assert application.pattern
+        gaupol.util.affirm(page is not None)
+        gaupol.util.affirm(application.pattern)
 
 
-class FindPreviousAction(Action):
+class FindPreviousAction(gaupol.gtk.Action):
 
     """Search backwards for same text."""
 
     def __init__(self):
 
-        Action.__init__(self, "find_previous")
+        gaupol.gtk.Action.__init__(self, "find_previous")
         self.props.label = _("Find Pre_vious")
         self.props.tooltip = _("Search backwards for same text")
         self.accelerator = "<Shift><Control>G"
 
-    def _assert_doable(self, application, page):
+    def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
 
-        assert page is not None
-        assert application.pattern
+        gaupol.util.affirm(page is not None)
+        gaupol.util.affirm(application.pattern)
+
+
+__all__ = gaupol.util.get_all(dir(), r"Action$")

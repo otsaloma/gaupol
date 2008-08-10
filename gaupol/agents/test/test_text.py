@@ -1,4 +1,4 @@
-# Copyright (C) 2007 Osmo Salomaa
+# Copyright (C) 2007-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,17 +9,15 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
 
-from gaupol import unittest
 
-
-class TestTextAgent(unittest.TestCase):
+class TestTextAgent(gaupol.TestCase):
 
     def setup_method(self, method):
 
@@ -29,10 +27,11 @@ class TestTextAgent(unittest.TestCase):
 
         for subtitle in self.project.subtitles:
             subtitle.main_text = subtitle.main_text.replace(" ", "\n")
-        doc = gaupol.DOCUMENT.MAIN
+        rows = range(len(self.project.subtitles))
+        doc = gaupol.documents.MAIN
         manager = gaupol.PatternManager("common-error")
         patterns = manager.get_patterns("Latn")
-        self.project.break_lines(None, doc, patterns, len, 44, 2, 1)
+        self.project.break_lines(rows, doc, patterns, len, 44, 2, 1)
         for subtitle in self.project.subtitles:
             assert subtitle.main_text.count("\n") <= 2
 
@@ -40,20 +39,23 @@ class TestTextAgent(unittest.TestCase):
 
         for subtitle in self.project.subtitles:
             subtitle.main_text = "test. test i."
-        doc = gaupol.DOCUMENT.MAIN
+        rows = range(len(self.project.subtitles))
+        doc = gaupol.documents.MAIN
         manager = gaupol.PatternManager("capitalization")
         patterns = manager.get_patterns("Latn", "en")
-        self.project.capitalize(None, doc, patterns)
+        self.project.capitalize(rows, doc, patterns)
         for subtitle in self.project.subtitles:
             assert subtitle.main_text == "Test. Test I."
 
     def test_correct_common_errors(self):
 
         self.project.subtitles[0].main_text = "''Test''"
-        doc = gaupol.DOCUMENT.MAIN
+        self.project.subtitles[1].main_text = "123o456o789"
+        rows = range(len(self.project.subtitles))
+        doc = gaupol.documents.MAIN
         manager = gaupol.PatternManager("common-error")
         patterns = manager.get_patterns("Latn")
-        self.project.correct_common_errors(None, doc, patterns)
+        self.project.correct_common_errors(rows, doc, patterns)
         assert self.project.subtitles[0].main_text == '"Test"'
 
     def test_remove_hearing_impaired(self):
@@ -61,11 +63,12 @@ class TestTextAgent(unittest.TestCase):
         orig_length = len(self.project.subtitles)
         self.project.subtitles[0].main_text = "[Boo] Test."
         self.project.subtitles[1].main_text = "[Boo]"
-        doc = gaupol.DOCUMENT.MAIN
+        rows = range(len(self.project.subtitles))
+        doc = gaupol.documents.MAIN
         manager = gaupol.PatternManager("hearing-impaired")
         patterns = manager.get_patterns("Latn")
         for pattern in patterns:
             pattern.enabled = True
-        self.project.remove_hearing_impaired(None, doc, patterns)
+        self.project.remove_hearing_impaired(rows, doc, patterns)
         assert self.project.subtitles[0].main_text == "Test."
         assert len(self.project.subtitles) == orig_length - 1

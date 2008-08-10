@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,17 +9,16 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
+import gaupol.gtk
 import gtk
 
-from gaupol.gtk import unittest
 
-
-class TestPositionAgent(unittest.TestCase):
+class TestPositionAgent(gaupol.gtk.TestCase):
 
     def setup_method(self, method):
 
@@ -29,16 +28,24 @@ class TestPositionAgent(unittest.TestCase):
 
     def test_on_adjust_durations_activate(self):
 
-        self.application.on_adjust_durations_activate()
-
-    def test_on_transform_positions_activate(self):
-
-        self.application.on_transform_positions_activate()
+        self.application.get_action("adjust_durations").activate()
 
     def test_on_convert_framerate_activate(self):
 
-        self.application.on_convert_framerate_activate()
+        self.application.get_action("convert_framerate").activate()
 
     def test_on_shift_positions_activate(self):
 
-        self.application.on_shift_positions_activate()
+        page = self.application.get_current_page()
+        page.edit_mode = gaupol.modes.TIME
+        self.application.get_action("shift_positions").activate()
+        page.edit_mode = gaupol.modes.FRAME
+        self.application.get_action("shift_positions").activate()
+
+    def test_on_transform_positions_activate(self):
+
+        page = self.application.get_current_page()
+        page.edit_mode = gaupol.modes.TIME
+        self.application.get_action("transform_positions").activate()
+        page.edit_mode = gaupol.modes.FRAME
+        self.application.get_action("transform_positions").activate()

@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,35 +9,90 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
+import gaupol.gtk
 import gtk
 
-from gaupol.gtk import unittest
-from .. import multiclose
 
+class TestMultiCloseDialog(gaupol.gtk.TestCase):
 
-class TestMultiCloseDialog(unittest.TestCase):
+    def run__dialog__both(self):
 
-    def run(self):
-
+        self.setup_both()
         self.dialog.run()
         self.dialog.destroy()
 
-    def setup_method(self, method):
+    def run__dialog__main(self):
+
+        self.setup_main()
+        self.dialog.run()
+        self.dialog.destroy()
+
+    def run__dialog__translation(self):
+
+        self.setup_translation()
+        self.dialog.run()
+        self.dialog.destroy()
+
+    def setup_both(self):
 
         self.application = self.get_application()
         for page in self.application.pages:
-            page.project.remove_subtitles([0])
-        cls = multiclose.MultiCloseDialog
+            page.project.remove_subtitles((0,))
         parent = self.application.window
-        application = self.application
         pages = self.application.pages
-        self.dialog = cls(parent, application, pages)
+        args = (parent, self.application, pages)
+        self.dialog = gaupol.gtk.MultiCloseDialog(*args)
+        self.dialog.show()
 
-    def test__on_response(self):
+    def setup_main(self):
+
+        self.application = self.get_application()
+        for page in self.application.pages:
+            page.project.set_text(0, gaupol.documents.MAIN, "")
+        parent = self.application.window
+        pages = self.application.pages
+        args = (parent, self.application, pages)
+        self.dialog = gaupol.gtk.MultiCloseDialog(*args)
+        self.dialog.show()
+
+    def setup_method(self, method):
+
+        return self.setup_both()
+
+    def setup_translation(self):
+
+        self.application = self.get_application()
+        for page in self.application.pages:
+            page.project.set_text(0, gaupol.documents.TRAN, "")
+        parent = self.application.window
+        pages = self.application.pages
+        args = (parent, self.application, pages)
+        self.dialog = gaupol.gtk.MultiCloseDialog(*args)
+        self.dialog.show()
+
+    def test__on_response__no(self):
+
+        self.dialog.response(gtk.RESPONSE_NO)
+
+    def test__on_response__yes(self):
 
         self.dialog.response(gtk.RESPONSE_YES)
+
+    def test__on_tree_view_cell_toggled__main(self):
+
+        column = self.dialog._main_tree_view.get_columns()[0]
+        renderer = column.get_cell_renderers()[0]
+        renderer.emit("toggled", 0)
+        renderer.emit("toggled", 0)
+
+    def test__on_tree_view_cell_toggled__translation(self):
+
+        column = self.dialog._tran_tree_view.get_columns()[0]
+        renderer = column.get_cell_renderers()[0]
+        renderer.emit("toggled", 0)
+        renderer.emit("toggled", 0)

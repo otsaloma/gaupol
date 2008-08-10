@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,10 +9,10 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Saving documents."""
 
@@ -29,7 +29,7 @@ class SaveAgent(gaupol.Delegate):
     # pylint: disable-msg=E0203,W0201,E1101
 
     def _get_main_props(self, page):
-        """Get the properties of the main file of page's project.
+        """Return the properties of the main file of page's project.
 
         Return path, format, encoding, newline.
         """
@@ -39,10 +39,10 @@ class SaveAgent(gaupol.Delegate):
             props[1] = page.project.main_file.format
             props[2] = page.project.main_file.encoding
             props[3] = page.project.main_file.newline
-        return props
+        return tuple(props)
 
     def _get_translation_props(self, page):
-        """Get the properties of the translation file of page's project.
+        """Return the properties of the translation file of page's project.
 
         Return path, format, encoding, newline.
         """
@@ -56,17 +56,17 @@ class SaveAgent(gaupol.Delegate):
             props[1] = page.project.main_file.format
             props[2] = page.project.main_file.encoding
             props[3] = page.project.main_file.newline
-        return props
+        return tuple(props)
 
     def _save_document(self, page, doc, props):
         """Save document to a file defined by properties.
 
+        props is a sequence of path, format, encoding, newline.
         Raise Default if an error occurs and document is not saved.
         """
         gaupol.gtk.util.set_cursor_busy(self.window)
         basename = os.path.basename(props[0])
-        try:
-            return page.project.save(doc, props)
+        try: return page.project.save(doc, props)
         except IOError, (no, message):
             gaupol.gtk.util.set_cursor_normal(self.window)
             self._show_io_error_dialog(basename, message)
@@ -100,7 +100,7 @@ class SaveAgent(gaupol.Delegate):
         if response != gtk.RESPONSE_OK:
             raise gaupol.gtk.Default
         gaupol.gtk.util.iterate_main()
-        return props
+        return tuple(props)
 
     def _show_encoding_error_dialog(self, basename, codec):
         """Show an error dialog after failing to encode file."""
@@ -126,17 +126,17 @@ class SaveAgent(gaupol.Delegate):
     def on_save_all_documents_activate(self, *args):
         """Save all open documents."""
 
-        silent = gaupol.gtk.util.silent(gaupol.gtk.Default)
-        save_main = silent(self.save_main_document)
-        save_tran = silent(self.save_translation_document)
+        silent = gaupol.deco.silent(gaupol.gtk.Default)
+        save_main_document = silent(self.save_main_document)
+        save_tran_document = silent(self.save_translation_document)
         for page in self.pages:
-            save_main(page)
+            save_main_document(page)
             if page.project.tran_changed is not None:
-                save_tran(page)
+                save_tran_document(page)
         self.flash_message(_("Saved all open documents"))
         self.update_gui()
 
-    @gaupol.gtk.util.silent(gaupol.gtk.Default)
+    @gaupol.deco.silent(gaupol.gtk.Default)
     def on_save_main_document_activate(self, *args):
         """Save the current main document."""
 
@@ -144,7 +144,7 @@ class SaveAgent(gaupol.Delegate):
         self.save_main_document(page)
         self.update_gui()
 
-    @gaupol.gtk.util.silent(gaupol.gtk.Default)
+    @gaupol.deco.silent(gaupol.gtk.Default)
     def on_save_main_document_as_activate(self, *args):
         """Save the current main document with a different name."""
 
@@ -152,7 +152,7 @@ class SaveAgent(gaupol.Delegate):
         self.save_main_document_as(page)
         self.update_gui()
 
-    @gaupol.gtk.util.silent(gaupol.gtk.Default)
+    @gaupol.deco.silent(gaupol.gtk.Default)
     def on_save_translation_document_activate(self, *args):
         """Save the current translation document."""
 
@@ -160,7 +160,7 @@ class SaveAgent(gaupol.Delegate):
         self.save_translation_document(page)
         self.update_gui()
 
-    @gaupol.gtk.util.silent(gaupol.gtk.Default)
+    @gaupol.deco.silent(gaupol.gtk.Default)
     def on_save_translation_document_as_activate(self, *args):
         """Save the current translation document with a different name."""
 
@@ -176,7 +176,7 @@ class SaveAgent(gaupol.Delegate):
         props = self._get_main_props(page)
         if None in props:
             return self.save_main_document_as(page)
-        self._save_document(page, gaupol.gtk.DOCUMENT.MAIN, props)
+        self._save_document(page, gaupol.documents.MAIN, props)
         self.flash_message(_("Saved main document"))
 
     def save_main_document_as(self, page):
@@ -184,11 +184,11 @@ class SaveAgent(gaupol.Delegate):
 
         Raise Default if cancelled or failed and document is not saved.
         """
-        props = self._get_main_props(page)
+        props = list(self._get_main_props(page))
         props[0] = props[0] or page.get_main_basename()
         props = self._select_file(_("Save As"), props)
-        self._save_document(page, gaupol.gtk.DOCUMENT.MAIN, props)
-        self.add_to_recent_files(props[0], gaupol.gtk.DOCUMENT.MAIN)
+        self._save_document(page, gaupol.documents.MAIN, props)
+        self.add_to_recent_files(props[0], gaupol.documents.MAIN)
         message = _('Saved main document as "%s"')
         self.flash_message(message % os.path.basename(props[0]))
 
@@ -200,7 +200,7 @@ class SaveAgent(gaupol.Delegate):
         props = self._get_translation_props(page)
         if None in props:
             return self.save_translation_document_as(page)
-        self._save_document(page, gaupol.gtk.DOCUMENT.TRAN, props)
+        self._save_document(page, gaupol.documents.TRAN, props)
         self.flash_message(_("Saved translation document"))
 
     def save_translation_document_as(self, page):
@@ -208,10 +208,10 @@ class SaveAgent(gaupol.Delegate):
 
         Raise Default if cancelled or failed and document is not saved.
         """
-        props = self._get_translation_props(page)
+        props = list(self._get_translation_props(page))
         props[0] = props[0] or page.get_translation_basename()
         props = self._select_file(_("Save Translation As"), props)
-        self._save_document(page, gaupol.gtk.DOCUMENT.TRAN, props)
-        self.add_to_recent_files(props[0], gaupol.gtk.DOCUMENT.TRAN)
+        self._save_document(page, gaupol.documents.TRAN, props)
+        self.add_to_recent_files(props[0], gaupol.documents.TRAN)
         message = _('Saved translation document as "%s"')
         self.flash_message(message % os.path.basename(props[0]))

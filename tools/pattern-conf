@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# Generate a pattern configuration file.
+# Usage: pattern-conf PATTERN_FILE
+
+PATTERN_FILE="$1"
+CONF_FILE=$(echo "$1" | sed "s|.in$|.conf|")
+rm -f "$CONF_FILE"
+touch "$CONF_FILE"
+echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>" >> "$CONF_FILE"
+echo "<patterns>" >> "$CONF_FILE"
+cat "$PATTERN_FILE" | grep "^_Name" | uniq \
+    | sed "s|\&|\&amp;|g" \
+    | sed "s|\"|\&quot;|g" \
+    | sed "s|^_Name=|  <pattern name=\"|" \
+    | sed "s|$|\" enabled=\"true\"/>|" \
+    >> "$CONF_FILE"
+echo "</patterns>" >> "$CONF_FILE"

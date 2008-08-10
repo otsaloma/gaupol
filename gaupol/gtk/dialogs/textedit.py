@@ -9,10 +9,10 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Dialog for editing the text of a single subtitle."""
 
@@ -67,7 +67,7 @@ class TextEditDialog(gtk.Dialog):
     def _init_sizes(self):
         """Initialize widget sizes."""
 
-        label = gtk.Label("\n".join(["M" * 40] * 5))
+        label = gtk.Label("\n".join(["m" * 36] * 4))
         if gaupol.gtk.conf.editor.use_custom_font:
             font = gaupol.gtk.conf.editor.custom_font
             gaupol.gtk.util.set_label_font(label, font)
@@ -75,7 +75,7 @@ class TextEditDialog(gtk.Dialog):
         self._text_view.set_size_request(width + 4, height + 7)
 
     def get_text(self):
-        """Get the text in the text view."""
+        """Return the text in the text view."""
 
         text_buffer = self._text_view.get_buffer()
         bounds = text_buffer.get_bounds()

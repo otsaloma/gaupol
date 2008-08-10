@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,130 +9,109 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
+
+import gaupol
 
 from .test_microdvd import TestMicroDVD
-from .. import mpl2
 
 
-class TestMPL2(TestMicroDVD):
+class TestAdvSubStationAlpha(TestMicroDVD):
+
+    text = "All things weird are normal\n" \
+           "in this whore of cities."
 
     def setup_method(self, method):
 
-        self.taglib = mpl2.MPL2()
+        self.markup = gaupol.tags.new(gaupol.formats.MPL2)
 
-    def test_decode(self):
+    def test_bolden(self):
 
-        # Italic
-        text = \
-            "/All things weird are normal\n" + \
-            "in this whore of cities."
-        assert self.taglib.decode(text) == \
-            "<i>All things weird are normal</i>\n" + \
-            "in this whore of cities."
+        assert self.markup.bolden(self.text, (0, 27)) == (
+            "\\All things weird are normal\n"
+            "in this whore of cities.")
 
-        # Italic
-        text = \
-            "/All things weird are normal\n" + \
-            "/in this whore of cities."
-        assert self.taglib.decode(text) == \
-            "<i>All things weird are normal\n" + \
-            "in this whore of cities.</i>"
+    def test_decode__bold(self):
 
-        # Bold
-        text = \
-            "All things \\weird are normal\n" + \
-            "in this whore of cities."
-        assert self.taglib.decode(text) == \
-            "All things <b>weird are normal</b>\n" + \
-            "in this whore of cities."
+        text = "\\All things weird are normal\n" \
+               "\\in this whore of cities."
+        assert self.markup.decode(text) == (
+            "<b>All things weird are normal</b>\n"
+            "<b>in this whore of cities.</b>")
 
-        # Bold
-        text = \
-            "All things \\weird are normal\n" + \
-            "in this \\whore of cities."
-        assert self.taglib.decode(text) == \
-            "All things <b>weird are normal</b>\n" + \
-            "in this <b>whore of cities.</b>"
+    def test_decode__italic(self):
 
-        # Underline
-        text = \
-            "All things weird are normal\n" + \
-            "_in this whore of cities."
-        assert self.taglib.decode(text) == \
-            "All things weird are normal\n" + \
-            "<u>in this whore of cities.</u>"
+        text = "/All things weird are normal\n" \
+               "in this whore of cities."
+        assert self.markup.decode(text) == (
+            "<i>All things weird are normal</i>\n"
+            "in this whore of cities.")
 
-        # Underline
-        text = \
-            "_All things weird are normal\n" + \
-            "in this _whore of cities."
-        assert self.taglib.decode(text) == \
-            "<u>All things weird are normal</u>\n" + \
-            "in this <u>whore of cities.</u>"
+    def test_decode_multiple(self):
 
-        TestMicroDVD.test_decode(self)
+        text = "/_All things weird are normal\n" \
+               "\\/_in this whore of cities."
+        assert self.markup.decode(text) == (
+            "<i><u>All things weird are normal</u></i>\n"
+            "<b><i><u>in this whore of cities.</u></i></b>")
 
-    def test_encode(self):
+    def test_decode__underline(self):
 
-        # Italic
-        text = \
-            "<i>All things weird are normal</i>\n" + \
-            "in this whore of cities."
-        assert self.taglib.encode(text) == \
-            "/All things weird are normal\n" + \
-            "in this whore of cities."
+        text = "All things weird are normal\n" \
+               "_in this whore of cities."
+        assert self.markup.decode(text) == (
+            "All things weird are normal\n"
+            "<u>in this whore of cities.</u>")
 
-        # Italic
-        text = \
-            "<i>All things weird are normal\n" + \
-            "in this whore of cities.</i>"
-        assert self.taglib.encode(text) == \
-            "/All things weird are normal\n" + \
-            "/in this whore of cities."
+    def test_encode__bold(self):
 
-        # Bold
-        text = \
-            "<b>All things weird</b> are normal\n" + \
-            "in this whore of cities."
-        assert self.taglib.encode(text) == \
-            "\\All things weird are normal\n" + \
-            "in this whore of cities."
+        text = "<b>All things weird are normal\n" \
+               "in this whore of cities.</b>"
+        assert self.markup.encode(text) == (
+            "\\All things weird are normal\n"
+            "\\in this whore of cities.")
 
-        # Bold
-        text = \
-            "<b>All things weird are normal\n" + \
-            "in this whore</b> of cities."
-        assert self.taglib.encode(text) == \
-            "\\All things weird are normal\n" + \
-            "\\in this whore of cities."
+    def test_encode__italic(self):
 
-        # Underline
-        text = \
-            "All things <u>weird are normal</u>\n" + \
-            "in this whore of cities."
-        assert self.taglib.encode(text) == \
-            "All things _weird are normal\n" + \
-            "in this whore of cities."
+        text = "All <i>things</i> weird are normal\n" \
+               "in <i>this</i> whore of cities."
+        assert self.markup.encode(text) == (
+            "All things weird are normal\n"
+            "in this whore of cities.")
 
-        # Underline
-        text = \
-            "All things <u>weird are normal\n" + \
-            "in this whore of cities.</u>"
-        assert self.taglib.encode(text) == \
-            "All things _weird are normal\n" + \
-            "_in this whore of cities."
+    def test_encode__underline(self):
 
-        TestMicroDVD.test_encode_non_style(self)
+        text = "All things weird are normal\n" \
+               "<u>in this whore of cities</u>."
+        assert self.markup.encode(text) == (
+            "All things weird are normal\n"
+            "_in this whore of cities.")
+
+    def test_italic_tag(self):
+
+        assert self.markup.italic_tag.match("/")
+        assert self.markup.italic_tag.match("{Y:i}")
+        assert self.markup.italic_tag.match("{y:i}")
 
     def test_italicize(self):
 
-        text = \
-            "All things weird are normal\n" + \
-            "in this whore of cities."
-        assert self.taglib.italicize(text) == \
-            "/All things weird are normal\n" + \
-            "/in this whore of cities."
+        assert self.markup.italicize(self.text) == (
+            "/All things weird are normal\n"
+            "/in this whore of cities.")
+
+    def test_tag(self):
+
+        assert self.markup.tag.match("\\")
+        assert self.markup.tag.match("/")
+        assert self.markup.tag.match("_")
+        assert self.markup.tag.match("{y:ibu}")
+        assert self.markup.tag.match("{c:$000000}")
+
+    def test_underline(self):
+
+        assert self.markup.underline(self.text, (0, 3)) == (
+            "All things weird are normal\n"
+            "in this whore of cities.")

@@ -16,7 +16,7 @@ pre
 .com
 {
   background-color: inherit;
-  color: #3366ff;
+  color: #1293de;
 }
 
 /* ??? */
@@ -37,42 +37,42 @@ pre
 .esc
 {
   background-color: inherit;
-  color: #b957ff;
+  color: #ff6696;
 }
 
 /* Keyword */
 .kwa
 {
   background-color: inherit;
-  color: #ff4433;
+  color: #b76fff;
 }
 
 /* __builtin__ */
 .kwb
 {
   background-color: inherit;
-  color: #ff38ac;
+  color: #ff6fe7;
 }
 
 /* Exception */
 .kwc
 {
   background-color: inherit;
-  color: #00b286;
+  color: #00bb29;
 }
 
-/* Function */
+/* Function (both definitions and calls) */
 .kwd
 {
   background-color: inherit;
-  color: inherit;
+  color: #1d77ff;
 }
 
 /* Line anchor */
 .line
 {
   background-color: inherit;
-  color: #babdb6;
+  color: #bbbbbb;
   margin-right: 6px;
   user-select: none;
   -khtml-user-select: none;
@@ -83,21 +83,21 @@ pre
 .num
 {
   background-color: inherit;
-  color: #b957ff;
+  color: #ff6696;
 }
 
 /* Comment */
 .slc
 {
   background-color: inherit;
-  color: #3366ff;
+  color: #1293de;
 }
 
 /* String */
 .str
 {
   background-color: inherit;
-  color: #b957ff;
+  color: #ff6696;
 }
 
 /* Symbol */

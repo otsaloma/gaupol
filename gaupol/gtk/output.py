@@ -9,10 +9,10 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Window for standard output from external applications."""
 
@@ -20,7 +20,7 @@ import gaupol.gtk
 import gtk
 _ = gaupol.i18n._
 
-__all__ = ["OutputWindow"]
+__all__ = ("OutputWindow",)
 
 
 class OutputWindow(gtk.Window):
@@ -54,9 +54,9 @@ class OutputWindow(gtk.Window):
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
-        gaupol.gtk.util.connect(self, "_close_button", "clicked")
-        gaupol.gtk.util.connect(self, self, "delete-event")
-        gaupol.gtk.util.connect(self, self, "window-state-event")
+        gaupol.util.connect(self, "_close_button", "clicked")
+        gaupol.util.connect(self, self, "delete-event")
+        gaupol.util.connect(self, self, "window-state-event")
 
         def save_visibility(self, *args):
             gaupol.gtk.conf.output_window.show = self.props.visible
@@ -123,11 +123,10 @@ class OutputWindow(gtk.Window):
         maximized = bool(state & gtk.gdk.WINDOW_STATE_MAXIMIZED)
         gaupol.gtk.conf.output_window.maximized = maximized
 
-    @gaupol.gtk.util.asserted_return
     def _save_geometry(self):
         """Save window size and position."""
 
-        assert not gaupol.gtk.conf.output_window.maximized
+        if gaupol.gtk.conf.output_window.maximized: return
         gaupol.gtk.conf.output_window.size = self.get_size()
         gaupol.gtk.conf.output_window.position = self.get_position()
 

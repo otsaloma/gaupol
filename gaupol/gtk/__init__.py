@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,63 +9,82 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""GTK user interface.
+"""GTK+ user interface.
 
-Module variables:
- * BUSY_CURSOR: gtk.gdk.Cursor used when application not idle
- * COMBO_SEPARATOR: String rendered as a separator in combo boxes
- * EXTRA: Extra length to add to size calculations
- * HAND_CURSOR: gtk.gdk.Cursor for use with hyperlinks
- * INSERT_CURSOR: gtk.gdk.Cursor for editable text widgets
- * NORMAL_CURSOR: gtk.gdk.Cursor used by default
+Constant 'COMBO_SEPARATOR' is a string rendered as a separator in combo boxes.
+It can be inserted into the combo box's model, and 'util.separate_combo'
+function will recognize it.
 
+Constant 'EXTRA' is an amount of pixels to add to dialog size calculations.
 When setting dialog sizes based on their content, we get the size request of
-the scrolled window component and add the surroundings to that. For this to
-work neatly we should add some extra to adapt to different widget sizes in
-different themes. Let the EXTRA constant very vaguely account for that.
+the scrolled window components and add the surroundings to that to get a nice
+default dialog size. For this to work neatly we should add some extra to adapt
+to different widget sizes in different themes, e.g. scrollbar widths and the
+sizes of icons in buttons. Let the 'EXTRA' constant very vaguely account for
+that and let it be added to each calculated dialog width and height.
 """
 
 import gaupol
 import gobject
 import gtk.glade
-import inspect
 import os
 
-module = inspect.getmodule(lambda: True)
-gaupol.__dict__["gtk"] = module
-gtk.rc_parse(os.path.join(gaupol.DATA_DIR, "gtkrc"))
+gaupol.util.install_module("gtk", lambda: None)
+gtk.rc_parse(os.path.join(gaupol.DATA_DIR, "ui", "gtkrc"))
 gtk.glade.bindtextdomain("gaupol", gaupol.LOCALE_DIR)
 gtk.glade.textdomain("gaupol")
 gobject.threads_init()
 
-EXTRA = 36
 COMBO_SEPARATOR = "<separator/>"
+EXTRA = 36
 
-BUSY_CURSOR = gtk.gdk.Cursor(gtk.gdk.WATCH)
-HAND_CURSOR = gtk.gdk.Cursor(gtk.gdk.HAND2)
-INSERT_CURSOR = gtk.gdk.Cursor(gtk.gdk.XTERM)
-NORMAL_CURSOR = gtk.gdk.Cursor(gtk.gdk.LEFT_PTR)
-
-from gaupol.gtk.const import *
+from gaupol.gtk.unittest import *
+from gaupol.gtk.fields import *
+from gaupol.gtk.styles import *
+from gaupol.gtk.targets import *
+from gaupol.gtk.units import *
 from gaupol.gtk.errors import *
 from gaupol.gtk import conf
 from gaupol.gtk import ruler
 from gaupol.gtk import util
 from gaupol.gtk.meta import *
 from gaupol.gtk.runner import *
-from gaupol.gtk.tooltips import *
 from gaupol.gtk.entries import *
 from gaupol.gtk.renderers import *
 from gaupol.gtk.output import *
 from gaupol.gtk.view import *
 from gaupol.gtk.page import *
-from gaupol.gtk.dialogs import *
+from gaupol.gtk.dialogs.about import *
+from gaupol.gtk.dialogs.glade import *
+from gaupol.gtk.dialogs.message import *
+from gaupol.gtk.dialogs.debug import *
+from gaupol.gtk.dialogs.encoding import *
+from gaupol.gtk.dialogs.language import *
+from gaupol.gtk.dialogs.previewerr import *
+from gaupol.gtk.dialogs.textedit import *
+from gaupol.gtk.dialogs.file import *
+from gaupol.gtk.dialogs.open import *
+from gaupol.gtk.dialogs.append import *
+from gaupol.gtk.dialogs.save import *
+from gaupol.gtk.dialogs.video import *
+from gaupol.gtk.dialogs.duration import *
+from gaupol.gtk.dialogs.framerate import *
+from gaupol.gtk.dialogs.header import *
+from gaupol.gtk.dialogs.insert import *
+from gaupol.gtk.dialogs.multiclose import *
+from gaupol.gtk.dialogs.preferences import *
+from gaupol.gtk.dialogs.search import *
+from gaupol.gtk.dialogs.shift import *
+from gaupol.gtk.dialogs.spellcheck import *
+from gaupol.gtk.dialogs.split import *
+from gaupol.gtk.dialogs.transform import *
 from gaupol.gtk.assistants import *
+from gaupol.gtk.action import *
 from gaupol.gtk import actions
 from gaupol.gtk import agents
 from gaupol.gtk.application import *

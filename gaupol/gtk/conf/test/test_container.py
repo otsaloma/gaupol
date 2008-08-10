@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2007 Osmo Salomaa
+# Copyright (C) 2006-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,27 +9,24 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
 import os
 
-from gaupol.gtk import unittest
-from .. import config, container
 
-
-class TestContainer(unittest.TestCase):
+class TestContainer(gaupol.gtk.TestCase):
 
     def setup_method(self, method):
 
         name = "gaupol.gtk.conf.spec"
         spec_file = os.path.join(gaupol.DATA_DIR, name)
-        root = config.Config(None, spec_file)
+        root = gaupol.gtk.conf.Config(None, spec_file)
         self.root = root["output_window"]
-        self.container = container.Container(self.root)
+        self.container = gaupol.gtk.conf.Container(self.root)
 
     def test___getattr__(self):
 
@@ -44,7 +41,7 @@ class TestContainer(unittest.TestCase):
         assert "show" in self.root.defaults
         self.container.show = not value
         assert self.container.show is not value
-        assert not "show" in self.root.defaults
+        assert "show" not in self.root.defaults
 
     def test_update(self):
 

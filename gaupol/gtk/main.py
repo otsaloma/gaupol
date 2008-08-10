@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,10 +9,10 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """GTK user interface initialization."""
 
@@ -36,10 +36,10 @@ def _check_dependencies():
 
     try:
         import gtk
-        if gtk.pygtk_version < (2, 10, 0):
+        if gtk.pygtk_version < (2, 12, 0):
             raise ImportError
     except ImportError:
-        print "PyGTK 2.10.0 or greater is required to run Gaupol."
+        print "PyGTK 2.12.0 or greater is required to run Gaupol."
         raise SystemExit(1)
 
     try:
@@ -103,8 +103,7 @@ def _init_debugging(debug):
 def _list_encodings():
     """List all available character encodings."""
 
-    encodings = gaupol.encodings.get_valid_encodings()
-    encodings = [x[0] for x in encodings]
+    encodings = [x[0] for x in gaupol.encodings.get_valid()]
     if gaupol.util.chardet_available():
         encodings.insert(0, "auto")
     print "\n".join(encodings)

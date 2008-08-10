@@ -1,0 +1,33 @@
+[Script Info]
+Title:
+Original Script:
+Original Translation:
+Original Editing:
+Original Timing:
+Synch Point:
+Script Updated By:
+Update Details:
+ScriptType: v4.00+
+Collisions: Normal
+PlayResY:
+PlayResX:
+PlayDepth:
+Timer: 100.0000
+WrapStyle:
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Default, Sans, 18, &H00FFFFFF, &H00FFFF00, &H00000000, &H00000000, 0, 0, 0, 0, 100, 100, 0, 0.00, 1, 2, 2, 2, 30, 30, 30, 0
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,-0:00:06.84,-0:00:02.85,Default,,0000,0000,0000,,I always wanted to leave my country\nand go somewhere else.
+Dialogue: 0,-0:00:01.47,0:00:00.95,Default,,0000,0000,0000,,I always wanted to come to France.
+Dialogue: 0,0:00:00.95,0:00:03.36,Default,,0000,0000,0000,,So, one day when I was 17, I left.
+Dialogue: 0,0:00:04.64,0:00:06.63,Default,,0000,0000,0000,,There I was in Paris.
+Dialogue: 0,0:00:09.61,0:00:13.74,Default,,0000,0000,0000,,Since I was a bit naive,
+Dialogue: 0,0:00:14.45,0:00:18.54,Default,,0000,0000,0000,,everyone seemed beautiful\nand fabulous.
+Dialogue: 0,0:00:18.98,0:00:23.18,Default,,0000,0000,0000,,{\i1}I couldn't tell cruelty from kindness.{\i0}
+Dialogue: 0,0:00:23.39,0:00:27.65,Default,,0000,0000,0000,,{\i1}For me, people were{\i0}\n{\i1}the way they were.{\i0}
+Dialogue: 0,0:00:28.06,0:00:31.62,Default,,0000,0000,0000,,{\i1}You just worked with them{\i0}\n{\i1}or talked with them.{\i0}
+Dialogue: 0,0:00:32.56,0:00:35.90,Default,,0000,0000,0000,,Obviously, it was a big shock.

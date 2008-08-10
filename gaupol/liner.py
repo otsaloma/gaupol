@@ -9,10 +9,10 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Breaker of text into lines according to preferred break points."""
 
@@ -24,20 +24,17 @@ import math
 import re
 import sys
 
-__all__ = ["Liner"]
+__all__ = ("Liner",)
 
 
 class Liner(gaupol.Parser):
 
     """Breaker of text into lines according to preferred break points.
 
-    Class variables:
-     * _re_multi_space: Regular expression for two or more spaces
-
     Instance variables:
      * _length_func: A function that returns the length of its argument
      * _space_length: Length of a space according to length_func
-     * break_points: List of tuples of regular expression object, replacement
+     * break_points: Sequence of tuples of regular expression object, replacement
      * max_deviation: Maximum deviation for texts with three or more lines
      * max_length: Maximum length of a line in units of _length_func
      * max_lines: Maximum preferred amount of lines (may be exceeded)
@@ -64,8 +61,8 @@ class Liner(gaupol.Parser):
 
         Return True if breaks made and result is elegant and legal.
         """
-        # Prefer elegance over compactness by not using a maximum line count
-        # less than the preferred maximum.
+        # Prefer elegance over compactness by not using
+        # a maximum line count less than the preferred maximum.
         max_lines = max(max_lines, self.max_lines)
         self.text = regex.sub(replacement, self.text).strip()
         if 0 < self.text.count("\n") < max_lines:
@@ -86,13 +83,12 @@ class Liner(gaupol.Parser):
         self.text = self.text.replace(" ", "\n")
         self.text = self.text.replace("\n-\n", "\n- ")
         self._join_even(max_lines)
-        if self.is_legal():
-            return True
+        if self.is_legal(): return True
         self.text = self.text.replace("\n", " ")
         return False
 
     def _get_length(self, lengths):
-        """Get the length of items joined by spaces."""
+        """Return the length of items joined by spaces."""
 
         return (sum(lengths) + (len(lengths) - 1) * self._space_length)
 
@@ -100,7 +96,7 @@ class Liner(gaupol.Parser):
         assert 0 <= value <= len(lengths)
 
     def _get_break(self, lengths):
-        """Get index of break in two with minimum length difference.
+        """Return index of break in two with minimum length difference.
 
         Index is brute forced within reason and the result is optimal.
         """
@@ -123,7 +119,7 @@ class Liner(gaupol.Parser):
             assert 0 <= index <= len(lengths)
 
     def _get_breaks(self, lengths, max_lines):
-        """Get indices of breaks with minimum length deviation.
+        """Return indices of breaks with minimum length deviation.
 
         Indexes are brute forced within reason and the result is optimal if
         max_lines is less than six, otherwise result is ugly.
@@ -132,8 +128,8 @@ class Liner(gaupol.Parser):
             return []
         if max_lines == 2:
             return [self._get_break(lengths)]
-        if (max_lines > 5) and (max_lines % 2 == 0):
-            # Avoid brute forcing by combining items.
+        if (max_lines > 5) or (sum(lengths) > (5 * self.max_length)):
+            # Avoid slow brute forcing by combining items.
             return self._get_breaks_ugly(lengths, max_lines)
         return self._get_breaks_pretty(lengths, max_lines)
 
@@ -142,11 +138,11 @@ class Liner(gaupol.Parser):
             assert 0 <= index <= len(lengths)
 
     def _get_breaks_pretty(self, lengths, max_lines):
-        """Get indices of breaks with minimum length deviation.
+        """Return indices of breaks with minimum length deviation.
 
         Indexes are brute forced within reason and the result is optimal.
         """
-        min_indexes = []
+        min_indices = []
         min_squares = sys.maxint
         start = self._get_start_index(lengths, max_lines)
         for i in range(start, len(lengths) - max_lines + 2):
@@ -160,28 +156,28 @@ class Liner(gaupol.Parser):
             mean = sum(line_lengths) / max_lines
             squares = sum([(x - mean)**2 for x in line_lengths])
             if round(min_squares - squares, 6) > 0:
-                min_indexes = indices
+                min_indices = indices
                 min_squares = squares
             a = self._get_length(lengths[:i])
             b = self._get_length(lengths[i:])
             # End if remaining less than average line length.
             if a > (b / (max_lines - 1)): break
-        return min_indexes
-
-    def _get_breaks_ugly_require(self, lengths, max_lines):
-        assert max_lines % 2 == 0
+        return min_indices
 
     def _get_breaks_ugly_ensure(self, value, lengths, max_lines):
         for index in value:
             assert 0 <= index <= len(lengths)
 
     def _get_breaks_ugly(self, lengths, max_lines):
-        """Get indices of breaks with minimum length deviation.
+        """Return indices of breaks with minimum length deviation.
 
         Items are first broken into half of max_lines and then each these
         lines is further broken internally into two. The result is not optimal,
         but is obtained fast.
         """
+         # Splits can only be made to an even number of lines.
+        if (max_lines % 2 != 0):
+            max_lines = max_lines - 1
         indices = self._get_breaks(lengths, int(max_lines / 2))
         borders = [0] + indices + [len(lengths)]
         for i in range(1, len(borders)):
@@ -193,7 +189,7 @@ class Liner(gaupol.Parser):
         assert 0 <= value <= len(lengths)
 
     def _get_start_index(self, lengths, max_lines):
-        """Get the index for the first break candidate for items.
+        """Return the index for the first break candidate for items.
 
         The start index is determined based on the line length mean with the
         purpose to avoid brute forcing insanely small indices.
@@ -207,12 +203,11 @@ class Liner(gaupol.Parser):
                 return i - 1
         return 1
 
-    @gaupol.util.asserted_return
     def _is_deviant(self):
         """Return True if line lengths deviate too much."""
 
         line_count = self.text.count("\n") + 1
-        assert line_count > 2
+        if line_count <= 2: return
         lengths = [self._length_func(x) for x in self.text.split("\n")]
         mean = sum(lengths) / line_count
         std = math.sqrt(sum([(x - mean)**2 for x in lengths]) / line_count)
@@ -276,7 +271,7 @@ class Liner(gaupol.Parser):
         self._space_length = func(" ")
 
     def set_text(self, text, next=True):
-        """Set the text to search in and parse it.
+        """Set the target text to search in and parse it.
 
         next should be True to start at beginning, False for end.
         """

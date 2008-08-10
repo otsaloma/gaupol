@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,97 +9,104 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""MPL2 tag library."""
+"""Text markup for the MPL2 format."""
 
 import gaupol
-import re
 
-from .microdvd import MicroDVD
+__all__ = ("MPL2",)
 
 
-class MPL2(MicroDVD):
+class MPL2(gaupol.tags.MicroDVD):
 
-    """MPL2 tag library."""
+    """Text markup for the MPL2 format.
 
-    format = gaupol.FORMAT.MPL2
+    MPL2 contains the following markup tags, all of which appear at the
+    beginning of the line and affect up to the end of the line. In addition,
+    any MicroDVD markup can be used.
+
+     * \\... (bold)
+     * /.... (italic)
+     * _.... (underline)
+    """
+
+    format = gaupol.formats.MPL2
+
+    def _main_decode_ensure(self, value, text):
+        assert self.tag.search(value) is None
+
+    def _main_decode(self, text):
+        """Return text with decodable markup decoded."""
+
+        text = self._decode_b(text, r"<\\>(.*?)</\\>", 1)
+        text = self._decode_i(text, r"</>(.*?)<//>", 1)
+        text = self._decode_u(text, r"<_>(.*?)</_>", 1)
+        return gaupol.tags.MicroDVD._main_decode(self, text)
+
+    def _pre_decode(self, text):
+        """Return text with markup prepared for decoding."""
+
+        text = self._pre_decode_identify(text)
+        return gaupol.tags.MicroDVD._pre_decode(self, text)
+
+    def _pre_decode_identify(self, text):
+        """Return text with all tags identified and closed.
+
+        '\\', '/' and '_' characters at the beginnings of lines are indentified
+        as tags and replaced with '<\\>', '</>' and '<_>'. Closing tags are
+        added to the ends of lines as '</\\>', '<//>' and '</_>'.
+        """
+        lines = text.split("\n")
+        re_tag = self._get_regex(r"^([\\/_]+)(.*)$")
+        for i, line in enumerate(lines):
+            match = re_tag.search(line)
+            if match is None: continue
+            lines[i] = match.group(2)
+            for tag in reversed(match.group(1)):
+                lines[i] = "<%s>%s</%s>" % (tag, lines[i], tag)
+        return "\n".join(lines)
+
+    def _style_mpl2(self, text, tag, bounds=None):
+        """Return text wrapped in given markup tag."""
+
+        a, z = bounds or (0, len(text))
+        prefix = text[:a].split("\n")[-1]
+        suffix = text[z:].split("\n")[0]
+        re_alpha = self._get_regex(r"\w")
+        # Return plain text if bounds does not define an entire line or
+        # subtitle and thus cannot be marked without side-effects.
+        if re_alpha.search(prefix): return text
+        if re_alpha.search(suffix): return text
+        styled_text = text[a:z].replace("\n", "\n%s" % tag)
+        return "".join((text[:a], tag, styled_text, text[z:]))
+
+    def bolden(self, text, bounds=None):
+        """Return bolded text."""
+
+        return self._style_mpl2(text, "\\", bounds)
 
     @property
-    @gaupol.util.once
     def italic_tag(self):
-        """Regular expression for an italic tag."""
+        """Regular expression for an italic markup tag or None."""
 
-        return re.compile(r"(\{y:i\})|(/)", re.IGNORECASE)
+        return self._get_regex(r"(^/)|(\{[Yy]:i\})")
 
-    @property
-    @gaupol.util.once
-    def tag(self):
-        """Regular expression for any tag."""
-
-        return re.compile(r"(\{[a-z]:[^{]*?\})|(\\|/|_)", re.IGNORECASE)
-
-    @gaupol.util.once
-    def _get_decode_tags(self):
-        """Get list of tuples of regular expression, replacement, count."""
-
-        FLAGS = re.MULTILINE | re.DOTALL
-
-        tags = [
-            # Italic (single line)
-            (r"/(.*?)$", FLAGS,
-                r"<i>\1</i>", 1),
-            # Bold (single line)
-            (r"\\(.*?)$", FLAGS,
-                r"<b>\1</b>", 1),
-            # Underline (single line)
-            (r"_(.*?)$", FLAGS,
-                r"<u>\1</u>", 1),
-            # Remove redundant style tags (e.g. </b><b>).
-            (r"</(b|i|u)>(\n?)<\1>", FLAGS,
-                r"\2", 3),]
-
-        for i, (pattern, flags, replacement, count) in enumerate(tags):
-            tags[i] = (re.compile(pattern, flags), replacement, count)
-        return tags + MicroDVD._get_decode_tags(self)
-
-    def _encode_style(self, text):
-        """Convert style tags to MPL2 style."""
-
-        style_tags = [
-            ("<i>", "</i>", "/" ),
-            ("<b>", "</b>", "\\"),
-            ("<u>", "</u>", "_" ),]
-
-        for opening, closing, replacement in style_tags:
-            opening_lenght = len(opening)
-            closing_length = len(closing)
-            while True:
-                if not opening in text:
-                    break
-                a = text.index(opening)
-                z = (text.index(closing) if closing in text else len(text))
-                before = text[:a]
-                middle = text[a + opening_lenght:z]
-                after = text[z + closing_length:]
-                lines = middle.split("\n")
-                for i in range(1, len(lines)):
-                    if not lines[i].startswith(replacement):
-                        lines[i] = replacement + lines[i]
-                middle = "\n".join(lines)
-                text = before + replacement + middle + after
-        return text
-
-    def encode(self, text):
-        """Return text with tags converted from internal to this format."""
-
-        text = self._encode_style(text)
-        return MicroDVD.encode(self, text)
-
-    def italicize(self, text):
+    def italicize(self, text, bounds=None):
         """Return italicized text."""
 
-        return "/" + text.replace("\n", "\n/")
+        return self._style_mpl2(text, "/", bounds)
+
+    @property
+    def tag(self):
+        """Regular expression for any markup tag or None."""
+
+        return self._get_regex(r"(^[\\/_]+)|(\{[CFSYcfsy]:.*?\})")
+
+    def underline(self, text, bounds=None):
+        """Return underlined text."""
+
+        return self._style_mpl2(text, "_", bounds)

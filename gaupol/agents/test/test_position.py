@@ -9,17 +9,15 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
 
-from gaupol import unittest
 
-
-class TestPositionAgent(unittest.TestCase):
+class TestPositionAgent(gaupol.TestCase):
 
     def setup_method(self, method):
 
@@ -34,7 +32,7 @@ class TestPositionAgent(unittest.TestCase):
         subtitles[1].end = "00:00:03.000"
         subtitles[2].start = "00:00:04.000"
         self.project.adjust_durations(
-            indices=None, gap=0.3)
+            indices=range(len(self.project.subtitles)), gap=0.3)
         assert subtitles[0].start == "00:00:01.000"
         assert subtitles[0].end == "00:00:01.700"
         assert subtitles[1].start == "00:00:02.000"
@@ -106,9 +104,10 @@ class TestPositionAgent(unittest.TestCase):
         self.project.open_main(self.get_microdvd_path(), "ascii")
         self.project.subtitles[0].start = 100
         self.project.subtitles[1].start = 200
-        input = gaupol.FRAMERATE.P24
-        output = gaupol.FRAMERATE.P25
-        self.project.convert_framerate(None, input, output)
+        input = gaupol.framerates.FPS_24
+        output = gaupol.framerates.FPS_25
+        rows = indices=range(len(self.project.subtitles))
+        self.project.convert_framerate(rows, input, output)
         assert self.project.framerate == output
         for subtitle in self.project.subtitles:
             assert subtitle.framerate == output
@@ -120,8 +119,8 @@ class TestPositionAgent(unittest.TestCase):
         self.project.open_main(self.get_subrip_path(), "ascii")
         self.project.subtitles[0].start = "00:00:01.000"
         self.project.subtitles[1].start = "00:00:02.000"
-        input = gaupol.FRAMERATE.P24
-        output = gaupol.FRAMERATE.P25
+        input = gaupol.framerates.FPS_24
+        output = gaupol.framerates.FPS_25
         self.project.convert_framerate(None, input, output)
         assert self.project.framerate == output
         for subtitle in self.project.subtitles:
@@ -131,24 +130,25 @@ class TestPositionAgent(unittest.TestCase):
 
     def test_set_framerate(self):
 
-        framerate = gaupol.FRAMERATE.P25
+        framerate = gaupol.framerates.FPS_25
         self.project.set_framerate(framerate)
         assert self.project.framerate == framerate
         for subtitle in self.project.subtitles:
             assert subtitle.framerate == framerate
 
-    @unittest.reversion_test
+    @gaupol.deco.reversion_test
     def test_shift_positions__frame(self):
 
         orig_subtitles = [x.copy() for x in self.project.subtitles]
-        self.project.shift_positions(None, -10)
+        rows = indices=range(len(self.project.subtitles))
+        self.project.shift_positions(rows, -10)
         for i, subtitle in enumerate(self.project.subtitles):
             start = orig_subtitles[i].start_frame - 10
             assert subtitle.start_frame == start
             end = orig_subtitles[i].end_frame - 10
             assert subtitle.end_frame == end
 
-    @unittest.reversion_test
+    @gaupol.deco.reversion_test
     def test_shift_positions__time(self):
 
         orig_subtitles = [x.copy() for x in self.project.subtitles]
@@ -159,7 +159,7 @@ class TestPositionAgent(unittest.TestCase):
             end = round(orig_subtitles[i].end_seconds + 1.0, 3)
             assert round(subtitle.end_seconds, 3) == end
 
-    @unittest.reversion_test
+    @gaupol.deco.reversion_test
     def test_shift_positions__seconds(self):
 
         orig_subtitles = [x.copy() for x in self.project.subtitles]
@@ -170,16 +170,17 @@ class TestPositionAgent(unittest.TestCase):
             end = round(orig_subtitles[i].end_seconds + 1.0, 3)
             assert round(subtitle.end_seconds, 3) == end
 
-    @unittest.reversion_test
+    @gaupol.deco.reversion_test
     def test_transform_positions__frame(self):
 
-        self.project.transform_positions(None, (2, 10), (6, 100))
+        rows = indices=range(len(self.project.subtitles))
+        self.project.transform_positions(rows, (2, 10), (6, 100))
         assert self.project.subtitles[2].start_frame == 10
         for subtitle in self.project.subtitles[3:6]:
             assert 10 < subtitle.start_frame < 100
         assert self.project.subtitles[6].start_frame == 100
 
-    @unittest.reversion_test
+    @gaupol.deco.reversion_test
     def test_transform_positions__seconds(self):
 
         self.project.transform_positions(None, (2, 20.0), (6, 200.0))
@@ -188,7 +189,7 @@ class TestPositionAgent(unittest.TestCase):
             assert 20.0 < subtitle.start_seconds < 200.0
         assert self.project.subtitles[6].start_seconds == 200.0
 
-    @unittest.reversion_test
+    @gaupol.deco.reversion_test
     def test_transform_positions__time(self):
 
         a, b = "00:00:01.000", "00:00:45.000"

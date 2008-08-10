@@ -1,4 +1,4 @@
-# Copyright (C) 2007 Osmo Salomaa
+# Copyright (C) 2007-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,30 +9,29 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-from gaupol.gtk import unittest
-from .. import errors
+import gaupol.gtk
 
 
-class TestConfigParseError(unittest.TestCase):
+class TestConfigParseError(gaupol.gtk.TestCase):
 
     def test_raise(self):
 
         try:
-            raise errors.ConfigParseError
-        except errors.ConfigParseError:
+            raise gaupol.gtk.ConfigParseError
+        except gaupol.gtk.ConfigParseError:
             pass
 
 
-class TestDefault(unittest.TestCase):
+class TestDefault(gaupol.gtk.TestCase):
 
     def test_raise(self):
 
         try:
-            raise errors.Default
-        except errors.Default:
+            raise gaupol.gtk.Default
+        except gaupol.gtk.Default:
             pass

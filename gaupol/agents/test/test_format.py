@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,17 +9,15 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
 
-from gaupol import unittest
 
-
-class TestFormatAgent(unittest.TestCase):
+class TestFormatAgent(gaupol.TestCase):
 
     def setup_method(self, method):
 
@@ -30,7 +28,7 @@ class TestFormatAgent(unittest.TestCase):
         self.project.subtitles[0].main_text = \
             "- mrs. pavinato?\n" + \
             "- yes, what do you want?"
-        self.project.change_case([0], gaupol.DOCUMENT.MAIN, "title")
+        self.project.change_case((0,), gaupol.documents.MAIN, "title")
         assert self.project.subtitles[0].main_text == \
             "- Mrs. Pavinato?\n" + \
             "- Yes, What Do You Want?"
@@ -40,7 +38,7 @@ class TestFormatAgent(unittest.TestCase):
         self.project.subtitles[0].main_text = \
             "<i>mrs. pavinato?</i>\n" + \
             "<i>yes, what do you want?</i>"
-        self.project.change_case([0], gaupol.DOCUMENT.MAIN, "capitalize")
+        self.project.change_case((0,), gaupol.documents.MAIN, "capitalize")
         assert self.project.subtitles[0].main_text == \
             "<i>Mrs. pavinato?</i>\n" + \
             "<i>yes, what do you want?</i>"
@@ -50,7 +48,7 @@ class TestFormatAgent(unittest.TestCase):
         self.project.subtitles[0].main_text = \
             "mrs. pavinato?\n" + \
             "yes, what do you want?"
-        self.project.change_case([0], gaupol.DOCUMENT.MAIN, "upper")
+        self.project.change_case((0,), gaupol.documents.MAIN, "upper")
         assert self.project.subtitles[0].main_text == \
             "MRS. PAVINATO?\n" + \
             "YES, WHAT DO YOU WANT?"
@@ -63,7 +61,7 @@ class TestFormatAgent(unittest.TestCase):
         self.project.subtitles[1].main_text = \
             "- It was the only beautiful thing you had.\n" + \
             "- Now you seem a different person."
-        self.project.toggle_dialogue_lines([0, 1], gaupol.DOCUMENT.MAIN)
+        self.project.toggle_dialogue_lines((0, 1), gaupol.documents.MAIN)
         assert self.project.subtitles[0].main_text == \
             "You have cut your beard?\n" + \
             "Yes, don't you like it?"
@@ -79,7 +77,7 @@ class TestFormatAgent(unittest.TestCase):
         self.project.subtitles[1].main_text = \
             "It was the only beautiful thing you had.\n" + \
             "Now you seem a different person."
-        self.project.toggle_dialogue_lines([0, 1], gaupol.DOCUMENT.MAIN)
+        self.project.toggle_dialogue_lines((0, 1), gaupol.documents.MAIN)
         assert self.project.subtitles[0].main_text == \
             "- You have cut your beard?\n" + \
             "- Yes, don't you like it?"
@@ -95,7 +93,7 @@ class TestFormatAgent(unittest.TestCase):
         self.project.subtitles[1].main_text = \
             "It was the only beautiful thing you had.\n" + \
             "Now you seem a different person."
-        self.project.toggle_dialogue_lines([0, 1], gaupol.DOCUMENT.MAIN)
+        self.project.toggle_dialogue_lines((0, 1), gaupol.documents.MAIN)
         assert self.project.subtitles[0].main_text == \
             "- You have cut your beard?\n" + \
             "- Yes, don't you like it?"
@@ -106,18 +104,18 @@ class TestFormatAgent(unittest.TestCase):
     def test_toggle_italicization__all(self):
 
         self.project.subtitles[0].main_text = \
-            "<i>I am no thief, I am an officer\n" + \
-            "and a university student.</i>"
+            "<b><i>I am no thief, I am an officer\n" + \
+            "and a university student.</i></b>"
         self.project.subtitles[1].main_text = \
-            "<i>I look like this because\n" + \
-            "I'm hunted for by the Germans.</i>"
-        self.project.toggle_italicization([0, 1], gaupol.DOCUMENT.MAIN)
+            "<i><b>I look like this because\n" + \
+            "I'm hunted for by the Germans.</b></i>"
+        self.project.toggle_italicization((0, 1), gaupol.documents.MAIN)
         assert self.project.subtitles[0].main_text == \
-            "I am no thief, I am an officer\n" + \
-            "and a university student."
+            "<b>I am no thief, I am an officer\n" + \
+            "and a university student.</b>"
         assert self.project.subtitles[1].main_text == \
-            "I look like this because\n" + \
-            "I'm hunted for by the Germans."
+            "<b>I look like this because\n" + \
+            "I'm hunted for by the Germans.</b>"
 
     def test_toggle_italicization__none(self):
 
@@ -127,7 +125,7 @@ class TestFormatAgent(unittest.TestCase):
         self.project.subtitles[1].main_text = \
             "I look like this because\n" + \
             "I'm hunted for by the Germans."
-        self.project.toggle_italicization([0, 1], gaupol.DOCUMENT.MAIN)
+        self.project.toggle_italicization((0, 1), gaupol.documents.MAIN)
         assert self.project.subtitles[0].main_text == \
             "<i>I am no thief, I am an officer\n" + \
             "and a university student.</i>"
@@ -143,7 +141,7 @@ class TestFormatAgent(unittest.TestCase):
         self.project.subtitles[1].main_text = \
             "I look like this because\n" + \
             "I'm hunted for by the Germans."
-        self.project.toggle_italicization([0, 1], gaupol.DOCUMENT.MAIN)
+        self.project.toggle_italicization((0, 1), gaupol.documents.MAIN)
         assert self.project.subtitles[0].main_text == \
             "<i>I am no thief, I am an officer\n" + \
             "and a university student.</i>"

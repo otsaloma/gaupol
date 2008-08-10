@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2007 Osmo Salomaa
+# Copyright (C) 2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,20 +9,23 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""TMPlayer tag library."""
+"""Text markup for the TMPlayer format."""
 
 import gaupol
 
-from .taglib import TagLibrary
+__all__ = ("TMPlayer",)
 
 
-class TMPlayer(TagLibrary):
+class TMPlayer(gaupol.Markup):
 
-    """TMPlayer tag library."""
+    """Text markup for the TMPlayer format.
 
-    format = gaupol.FORMAT.TMPLAYER
+    TMPlayer format is assumed to contain no markup.
+    """
+
+    format = gaupol.formats.TMPLAYER

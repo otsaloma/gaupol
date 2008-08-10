@@ -1,15 +1,24 @@
 [CommonErrorPattern]
 _Name=Leading and trailing spaces
-_Description=Remove spaces from the beginnings and ends of lines
+_Description=Remove spaces from the beginning and end of lines
 Classes=Human,OCR
-Pattern=(^ +| +$)
+Pattern=^ +
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=
 Repeat=False
 
 [CommonErrorPattern]
-_Name=Multiple spaces
-_Description=Remove multiple consecutive spaces
+_Name=Leading and trailing spaces
+_Description=Remove spaces from the beginning and end of lines
+Classes=Human,OCR
+Pattern= +$
+Flags=DOTALL,MULTILINE,UNICODE
+Replacement=
+Repeat=False
+
+[CommonErrorPattern]
+_Name=Multiple consecutive spaces
+_Description=Replace multiple consecutive spaces with only one
 Classes=Human,OCR
 Pattern= {2,}
 Flags=DOTALL,MULTILINE,UNICODE
@@ -17,9 +26,12 @@ Replacement=\040
 Repeat=False
 
 [CommonErrorPattern]
-_Name=Spaces between digits
-_Description=Remove spaces between digits of a number
+_Name=Space between digits
+_Description=Remove space between digits of a number
 Classes=OCR
+# Do not allow a trailing dash, which might connect to the next word,
+# e.g. "20 5-pound cakes", or a trailing slash which might be used to spell out
+# a fraction, e.g. "2 1/2".
 Pattern=(\b\d+) +(\d+\b)(?![-/])
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\1\2

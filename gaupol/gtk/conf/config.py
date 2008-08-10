@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2007 Osmo Salomaa
+# Copyright (C) 2006-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,10 +9,10 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Reading, writing and storing configurations."""
 
@@ -30,32 +30,42 @@ class Config(configobj.ConfigObj):
 
     This is a convenience wrapper around ConfigObj. Methods defined in this
     class are as error-tolerant as possible. Validation includes extensions to
-    handle Gaupol's constants, which can be defined in the spec file as
-    CONSTANT and CONSTANT_list for each CONSTANT.
+    handle Gaupol's enumerations, which can be defined in the spec file as
+    ENUMERATION and ENUMERATION_list for each ENUMERATION.
     """
 
     __metaclass__ = gaupol.Contractual
 
-    def __check_constant(self, validator, section, value):
-        """Validate and return constant or raise VdtValueError."""
+    def __get_enumerations(self):
+        """Return a dictionary mapping enumeration names to values."""
+
+        enumerations = {} # name: value
+        for name in dir(gaupol):
+            value = getattr(gaupol, name)
+            if isinstance(value, gaupol.Enumeration):
+                enumerations[name] = value
+        for name in dir(gaupol.gtk):
+            value = getattr(gaupol.gtk, name)
+            if isinstance(value, gaupol.Enumeration):
+                enumerations[name] = value
+        return enumerations
+
+    def __check_enum(self, validator, enum, value):
+        """Validate and return enumeration item or raise VdtValueError."""
 
         name = validator.check("string", value)
-        section = getattr(gaupol.gtk, section)
         try:
-            index = section.names.index(name)
-            return section.members[index]
-        except ValueError:
+            return getattr(enum, name.upper())
+        except AttributeError:
             raise validate.VdtValueError(value)
 
-    def __check_constant_list(self, validator, section, value):
-        """Validate and return constant list or raise VdtValueError."""
+    def __check_enum_list(self, validator, enum, value):
+        """Validate and return enumeration item list or raise VdtValueError."""
 
         names = validator.check("string_list", value)
-        section = getattr(gaupol.gtk, section)
         try:
-            indices = [section.names.index(x) for x in names]
-            return [section.members[x] for x in indices]
-        except ValueError:
+            return [getattr(enum, x.upper()) for x in names]
+        except AttributeError:
             raise validate.VdtValueError(value)
 
     def __init___require(self, config_file, spec_file):
@@ -74,7 +84,7 @@ class Config(configobj.ConfigObj):
                 encoding=gaupol.util.get_default_encoding(),
                 write_empty_values=True)
         except IOError:
-            gaupol.util.handle_read_io(sys.exc_info(), config_file)
+            gaupol.util.print_read_io(sys.exc_info(), config_file)
             configobj.ConfigObj.__init__(
                 self, None, configspec=spec_file,
                 encoding=gaupol.util.get_default_encoding())
@@ -91,7 +101,8 @@ class Config(configobj.ConfigObj):
         validator = self.__init_validator()
         spec = self.__init_spec(validator, spec_file)
         self.__remove_sections(spec)
-        self.__remove_options(spec)
+        for section in self.keys():
+            self.__remove_options(spec, section)
         self.__validate(validator, spec)
 
     def __init_spec(self, validator, spec_file):
@@ -99,8 +110,7 @@ class Config(configobj.ConfigObj):
 
         spec = configobj.ConfigObj(None, configspec=spec_file)
         result = spec.validate(validator)
-        if result is True:
-            return spec
+        if result is True: return spec
         print "Errors parsing configuration spec file '%s':" % spec_file
         for error in configobj.flatten_errors(spec, result):
             sections, option, message = error
@@ -111,50 +121,43 @@ class Config(configobj.ConfigObj):
     def __init_validator(self):
         """Initialize and return validator."""
 
-        from gaupol.gtk import const
-        partial = functools.partial
         validator = validate.Validator()
-        for name in (x for x in dir(const) if x.isupper()):
-            # pylint: disable-msg=E1102
-            func = partial(self.__check_constant, validator, name)
-            validator.functions[name] = func
-            func = partial(self.__check_constant_list, validator, name)
-            validator.functions["%s_list" % name] = func
+        for name, value in self.__get_enumerations().items():
+            args = (self.__check_enum, validator, value)
+            function = functools.partial(*args)
+            validator.functions[name] = function
+            args = (self.__check_enum_list, validator, value)
+            function = functools.partial(*args)
+            validator.functions["%s_list" % name] = function
         return validator
 
-    @gaupol.util.asserted_return
-    def __remove_options(self, spec):
+    def __remove_options(self, spec, section):
         """Remove options in config, but not in spec."""
 
-        first = True
-        for section in self.iterkeys():
-            options = set(self[section].keys())
-            options -= set(spec[section].keys())
-            if options and first:
-                print "Discarding unrecognized configuration options:"
-                first = False
-            for option in options:
-                print "%s.%s" % (section, option)
-                del self[section][option]
+        options = set(self[section].keys())
+        options -= set(spec[section].keys())
+        if not options: return
+        print "Discarding unrecognized configuration options:"
+        for option in options:
+            print "%s.%s" % (section, option)
+            del self[section][option]
 
-    @gaupol.util.asserted_return
     def __remove_sections(self, spec):
         """Remove sections in config, but not in spec."""
 
         sections = set(self.keys())
         sections -= set(spec.keys())
-        assert sections
+        if not sections: return
         print "Discarding unrecognized configuration sections:"
         for section in sections:
             print section
             del self[section]
 
-    @gaupol.util.asserted_return
     def __validate(self, validator, spec):
         """Validate options according to spec."""
 
         result = self.validate(validator, preserve_errors=True)
-        assert not result
+        if result is True: return
         print "Discarding erroneous configuration options:"
         for error in configobj.flatten_errors(self, result):
             sections, option, message = error
@@ -162,15 +165,6 @@ class Config(configobj.ConfigObj):
                 print "%s.%s: %s" % (section, option, message)
                 self[section][option] = spec[section][option]
                 self[section].defaults.append(option)
-
-    @gaupol.util.asserted_return
-    def translate_none(self, section, option, value):
-        """Translate a default None value to value."""
-
-        assert option in self[section].defaults
-        assert self[section][option] is None
-        self[section][option] = value
-        self[section].defaults.append(option)
 
     def write_to_file_require(self):
         assert self.filename is not None
@@ -181,13 +175,14 @@ class Config(configobj.ConfigObj):
     def write_to_file(self):
         """Write configurations to file."""
 
+        # pylint: disable-msg=W0201
         try:
             gaupol.util.makedirs(os.path.dirname(self.filename))
             configobj.ConfigObj.write(self)
         except (IOError, OSError):
-            gaupol.util.handle_write_io(sys.exc_info(), self.filename)
+            gaupol.util.print_write_io(sys.exc_info(), self.filename)
         except UnicodeError:
             if self.encoding != "utf_8":
                 self.encoding = "utf_8"
                 return self.write_to_file()
-            raise
+            raise # UnicodeError

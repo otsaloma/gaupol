@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,195 +9,180 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Sub Station Alpha tag library."""
+"""Text markup for the Sub Station Alpha format."""
 
 import gaupol
 import re
 
-from .taglib import TagLibrary
+__all__ = ("SubStationAlpha",)
 
 
-class SubStationAlpha(TagLibrary):
+class SubStationAlpha(gaupol.Markup):
 
-    """Sub Station Alpha tag library.
+    """Text markup for the Sub Station Alpha format.
 
-    Class variables:
-     * _re_int_opening: Regular expression for an internal opening tag
-     * _re_int_closing: Regular expression for an internal closing tag
-     * _re_int_closing_end: Regular expression ... at the end of a subtitle
+    Sub Station Alpha format contains a lot of markup tags of which the
+    following are of interest to us. The generic reset '{\\r}' is used to
+    revert to regular text, i.e. to close all open tags. Most of the tagging
+    methods, e.g. 'colorize', leave tags unclosed, instead of explicitly
+    closing them and possibly other tags with '{\\r}'. Usually this is not a
+    problem as such tags tend to be applied to the whole subtitle.
+
+     * {\\b1}...........{\\b0}
+     * {\\i1}...........{\\i0}
+     * {\\fnNAME}.............
+     * {\\fsPOINTS}...........
+     * {\\c&HBBGGRR&}......... [1]
+     * ..................{\\r}
+
+     [1] The hexadecimal color value is in reverse order, BBGGRR instead of the
+         normal RRGGBB. Furthermore, leading zeros can be omitted, e.g. 'ff00'
+         can be used instead of '00ff00'.
     """
 
-    _re_int_opening = re.compile(r"<[^/][^<]*?>")
-    _re_int_closing = re.compile(r"</[^<]*?>")
-    _re_int_closing_end = re.compile(r"</[^<]*?>\Z")
-    format = gaupol.FORMAT.SSA
+    _closing_pattern = r"\{\\([bi])0\}"
+    _flags = re.DOTALL | re.MULTILINE | re.UNICODE | re.IGNORECASE
+    _opening_pattern = r"\{\\(?![bi]0)(b|i|c|fn|fs).*?\}"
+    _reset_pattern = r"\{\\r\}"
+    format = gaupol.formats.SSA
 
-    @property
-    @gaupol.util.once
-    def italic_tag(self):
-        """Regular expression for an italic tag."""
+    def _main_decode(self, text):
+        """Return text with decodable markup decoded."""
 
-        return re.compile(r"\{\\i[01]\}", re.IGNORECASE)
+        text = self._decode_b(text, r"\{\\b1\}(.*?)\{\\b[0\\]\}", 1)
+        text = self._decode_c(text, r"\{\\c#(.+?)\}(.*?)\{\\c\\\}", 1, 2)
+        text = self._decode_f(text, r"\{\\fn(.+?)\}(.*?)\{\\fn\\\}", 1, 2)
+        text = self._decode_i(text, r"\{\\i1\}(.*?)\{\\i[0\\]\}", 1)
+        return self._decode_s(text, r"\{\\fs(\d+)\}(.*?)\{\\fs\\\}", 1, 2)
 
-    @property
-    @gaupol.util.once
-    def tag(self):
-        """Regular expression for any tag."""
-
-        return re.compile(r"\{[^{]*?\}", 0)
-
-    @gaupol.util.once
-    def _get_decode_tags(self):
-        """Get list of tuples of regular expression, replacement, count."""
-
-        FLAGS = re.IGNORECASE
-
-        # These leave </> for reset and a lot of tags unclosed.
-        tags = [
-            # Bold opening
-            (r"\{\\b[1-9]\d*\}", FLAGS,
-                r"<b>", 1),
-            # Italic opening
-            (r"\{\\i1\}", FLAGS,
-                r"<i>", 1),
-            # Bold, Italic closing
-            (r"\{\\(b|i)0\}", FLAGS,
-                r"</\1>", 1),
-            # Color
-            (r"\{\\c&H([a-zA-Z0-9]{6})&\}", FLAGS,
-                r'<color="#\1">', 1),
-            # Font
-            (r"\{\\fn([^{]*?)\}", FLAGS,
-                r'<font="\1">', 1),
-            # Size
-            (r"\{\\fs([^{]*?)\}", FLAGS,
-                r'<size="\1">', 1),
-            # Reset
-            (r"\{\\r\}", FLAGS,
-                r"</>", 1),
-            # Remove all else.
-            (r"\{[^{]*?\}", FLAGS,
-                r"", 1),]
-
-        for i, (pattern, flags, replacement, count) in enumerate(tags):
-            tags[i] = (re.compile(pattern, flags), replacement, count)
-        return tags
-
-    @gaupol.util.once
-    def _get_encode_tags(self):
-        """Get list of tuples of regular expression, replacement, count."""
-
-        FLAGS = re.MULTILINE | re.DOTALL
-
-        tags = [
-            # Remove redundant style tags (e.g. </b><b>).
-            (r"</(b|i|u)>(\n?)<\1>", FLAGS,
-                r"\2", 3),
-            # Remove other redundant tags.
-            (r"<([^<]*?)=([^<]*?)>(.*?)</\1>(\n?)<\1=\2>", FLAGS,
-                r"<\1=\2>\3\4", 3),
-            # Bold and italic, \061 = 1
-            (r"<(b|i)>", 0,
-                r"{\\\1\061}", 1),
-            # Bold and italic, \060 = 0
-            (r"</(b|i)>", 0,
-                r"{\\\1\060}", 1),
-            # Color opening
-            (r'<color="#([^<]*?)">', 0,
-                r"{\\c&H\1&}", 1),
-            # Font opening
-            (r'<font="([^<]*?)">', 0,
-                r"{\\fn\1}", 1),
-            # Size opening
-            (r'<size="([^<]*?)">', 0,
-                r"{\\fs\1}", 1),
-            # Color, font or size closing
-            (r"</[a-z]{3,}>", 0,
-                r"{\\r}", 1),
-            # Remove underline.
-            (r"</?u>", 0,
-                r"", 1),]
-
-        for i, (pattern, flags, replacement, count) in enumerate(tags):
-            tags[i] = (re.compile(pattern, flags), replacement, count)
-        return tags
+    def _post_decode_ensure(self, value, text):
+        regex = self._get_regex(r"\{\\.*?\}")
+        assert regex.search(value) is None
 
     def _post_decode(self, text):
-        """Fix or add closing tags."""
+        """Return text with markup finalized after decoding."""
 
-        parts = text.split("</>")
-        for i, part in enumerate(parts):
-
-            suffix = ""
-            opening_tags = self._re_int_opening.findall(part)
-            closing_tags = self._re_int_closing.findall(part)
-
-            # Find out which tags have already been closed.
-            for j in reversed(range(len(closing_tags))):
-                closing_core = closing_tags[j][2:-1]
-                for k in range(len(opening_tags)):
-                    opening_core = opening_tags[k][1:-1].split("=")[0]
-                    if opening_core == closing_core:
-                        opening_tags.pop(k)
-                        break
-
-            # Assemble suffix string to close remaining tags.
-            for j in reversed(range(len(opening_tags))):
-                tag = "</" + opening_tags[j][1:-1].split("=")[0] + ">"
-                suffix += tag
-
-            parts[i] = part + suffix
-
-        return "".join(parts)
+        # Remove all unsupported markup tags.
+        return self._substitute(text, r"\{\\.*?\}", "")
 
     def _pre_decode(self, text):
-        """Break combined tags, e.g. {\\b1i1} to {\\b1}{\\i1}."""
+        """Return text with markup prepared for decoding."""
 
+        text = self._pre_decode_break(text)
+        text = self._pre_decode_reset(text)
+        return self._pre_decode_color(text)
+
+    def _pre_decode_break(self, text):
+        """Return text with combined markup tags separated.
+
+        For example, '{\\b1\\i1}' is replaced with '{\\b1}{\\i1}'.
+        """
         parts = text.split("\\")
         for i in range(1, len(parts)):
             text_so_far = "\\".join(parts[:i])
-            if text_so_far.endswith("{"):
-                continue
+            if text_so_far.endswith("{"): continue
             opening_index = text_so_far.rfind("{")
             closing_index = text_so_far.rfind("}")
             if opening_index > closing_index:
                 parts[i - 1] += "}{"
         return "\\".join(parts)
 
-    def _pre_encode(self, text):
-        """Remove pointless closing tags at the end of the text."""
+    def _pre_decode_color_ensure(self, value, text):
+        regex = self._get_regex(r"\{\\c&H([0-9a-fA-F]*)&\}")
+        assert regex.search(value) is None
 
-        while self._re_int_closing_end.search(text) is not None:
-            text = self._re_int_closing_end.sub("", text)
-        return text
+    def _pre_decode_color(self, text):
+        """Return text with colors converted to standard hexadecimal form.
 
-    def decode(self, text):
-        """Return text with tags converted from this to internal format."""
+        Color tags are converted from '{\\c&HBBGGRR&}' to '{\\c#RRGGBB}'.
+        """
+        pattern = r"\{\\c&H([0-9a-fA-F]*)&\}"
+        regex = self._get_regex(pattern)
+        match = regex.search(text)
+        if match is None: return text
+        color = ("%06s" % match.group(1)).replace(" ", "0")
+        color = "%s%s%s" % (color[4:], color[2:4], color[:2])
+        text = regex.sub(r"{\\c#%s}" % color, text, 1)
+        return self._pre_decode_color(text)
 
-        text = self._pre_decode(text)
-        for regex, replacement, count in self._get_decode_tags():
-            for i in range(count):
-                # pylint: disable-msg=E1101
-                text = regex.sub(replacement, text)
-        text = self._post_decode(text)
-        return text
+    def _pre_decode_reset_ensure(self, value, text):
+        regex = self._get_regex(self._reset_pattern)
+        assert regex.search(value) is None
 
-    def encode(self, text):
-        """Return text with tags converted from internal to this format."""
+    def _pre_decode_reset(self, text):
+        """Return text with all markup tags closed explicitly.
 
-        text = self._pre_encode(text)
-        for regex, replacement, count in self._get_encode_tags():
-            for i in range(count):
-                # pylint: disable-msg=E1101
-                text = regex.sub(replacement, text)
-        return text
+        Tags of form '{\\nameVALUE}' are closed with '{\\name\\}'.
+        The returned text will not contain reset '{\\r}' tags.
+        """
+        re_opening = self._get_regex(self._opening_pattern)
+        re_closing = self._get_regex(self._closing_pattern)
+        re_reset = self._get_regex(self._reset_pattern)
+        parts = re_reset.split(text + "{\\r}")
+        for i, part in enumerate(parts):
+            opening_matches = [x for x in re_opening.finditer(part)]
+            closing_matches = [x for x in re_closing.finditer(part)]
+            # Find out which tags have already been closed.
+            for j in reversed(range(len(closing_matches))):
+                closing_core = closing_matches[j].group(1)
+                for k in range(len(opening_matches)):
+                    opening_core = opening_matches[k].group(1)
+                    if opening_core == closing_core:
+                        opening_matches.pop(k)
+                        break
+            # Add artificial closing tags to close remaining tags.
+            for j in reversed(range(len(opening_matches))):
+                parts[i] += "{\\%s\\}" % opening_matches[j].group(1)
+        return "".join(parts)
 
-    def italicize(self, text):
+    def bolden(self, text, bounds=None):
+        """Return bolded text."""
+
+        a, z = bounds or (0, len(text))
+        return "".join((text[:a], "{\\b1}%s{\\b0}" % text[a:z], text[z:]))
+
+    def colorize(self, text, color, bounds=None):
+        """Return text colorized to hexadecimal value."""
+
+        a, z = bounds or (0, len(text))
+        # Reverse the color value from RRGGBB to BBGGRR.
+        color = "%s%s%s" % (color[4:], color[2:4], color[:2])
+        target = "{\\c&H%s&}%s" % (color, text[a:z])
+        return "".join((text[:a], target, text[z:]))
+
+    def fontify(self, text, font, bounds=None):
+        """Return text changed to font."""
+
+        a, z = bounds or (0, len(text))
+        target = "{\\fn%s}%s" % (font, text[a:z])
+        return "".join((text[:a], target, text[z:]))
+
+    @property
+    def italic_tag(self):
+        """Regular expression for an italic markup tag."""
+
+        return self._get_regex(r"\{\\i[01]\}")
+
+    def italicize(self, text, bounds=None):
         """Return italicized text."""
 
-        return u"{\\i1}%s" % text
+        a, z = bounds or (0, len(text))
+        return "".join((text[:a], "{\\i1}%s{\\i0}" % text[a:z], text[z:]))
+
+    def sizen(self, text, size, bounds=None):
+        """Return text scaled to size."""
+
+        a, z = bounds or (0, len(text))
+        target = "{\\fs%s}%s" % (str(size), text[a:z])
+        return "".join((text[:a], target, text[z:]))
+
+    @property
+    def tag(self):
+        """Regular expression for any markup tag."""
+
+        return self._get_regex(r"\{\\.*?\}")

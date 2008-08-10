@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,26 +9,24 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Dialog for informing that preview failed."""
 
 import gaupol.gtk
 import gtk
 
-from .glade import GladeDialog
 
-
-class PreviewErrorDialog(GladeDialog):
+class PreviewErrorDialog(gaupol.gtk.GladeDialog):
 
     """Dialog for informing that preview failed."""
 
     def __init__(self, parent, output):
 
-        GladeDialog.__init__(self, "previewerr-dialog")
+        gaupol.gtk.GladeDialog.__init__(self, "previewerr.glade")
         self._text_view = self._glade_xml.get_widget("text_view")
 
         self._init_data(output)
@@ -40,9 +38,9 @@ class PreviewErrorDialog(GladeDialog):
         """Initialize the output text in the text view."""
 
         text_buffer = self._text_view.get_buffer()
-        text_buffer.create_tag("code", family="monospace")
+        text_buffer.create_tag("output", family="monospace")
         itr = text_buffer.get_end_iter()
-        text_buffer.insert_with_tags_by_name(itr, output, "code")
+        text_buffer.insert_with_tags_by_name(itr, output, "output")
 
     def _init_sizes(self):
         """Initialize widget sizes."""

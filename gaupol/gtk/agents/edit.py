@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,31 +9,24 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Editing subtitle data."""
 
 import gaupol.gtk
-import re
 _ = gaupol.i18n._
-ngettext = gaupol.i18n.ngettext
 
 
 class EditAgent(gaupol.Delegate):
 
-    """Editing subtitle data.
-
-    Instance variables:
-     * _pref_dialog: Existing PreferencesDialog or None
-    """
+    """Editing subtitle data."""
 
     # pylint: disable-msg=E0203,W0201
 
     __metaclass__ = gaupol.Contractual
-    _re_frame = re.compile(r"-?\d+")
 
     def __init__(self, master):
 
@@ -72,7 +65,7 @@ class EditAgent(gaupol.Delegate):
         page = self.get_current_page()
         rows = page.view.get_selected_rows()
         col = page.view.get_focus()[1]
-        doc = gaupol.gtk.util.text_column_to_document(col)
+        doc = page.text_column_to_document(col)
         page.project.clear_texts(rows, doc)
 
     def on_copy_texts_activate(self, *args):
@@ -81,7 +74,7 @@ class EditAgent(gaupol.Delegate):
         page = self.get_current_page()
         rows = page.view.get_selected_rows()
         col = page.view.get_focus()[1]
-        doc = gaupol.gtk.util.text_column_to_document(col)
+        doc = page.text_column_to_document(col)
         page.project.copy_texts(rows, doc)
         self._sync_clipboards(page)
 
@@ -91,7 +84,7 @@ class EditAgent(gaupol.Delegate):
         page = self.get_current_page()
         rows = page.view.get_selected_rows()
         col = page.view.get_focus()[1]
-        doc = gaupol.gtk.util.text_column_to_document(col)
+        doc = page.text_column_to_document(col)
         page.project.cut_texts(rows, doc)
         self._sync_clipboards(page)
 
@@ -114,7 +107,7 @@ class EditAgent(gaupol.Delegate):
         if self._pref_dialog is not None:
             return self._pref_dialog.present()
         self._pref_dialog = gaupol.gtk.PreferencesDialog()
-        gaupol.gtk.util.connect(self, "_pref_dialog", "response")
+        gaupol.util.connect(self, "_pref_dialog", "response")
         self._pref_dialog.show()
 
     def on_edit_value_activate(self, *args):
@@ -161,19 +154,18 @@ class EditAgent(gaupol.Delegate):
         rows = page.view.get_selected_rows()
         page.project.merge_subtitles(rows)
 
-    @gaupol.gtk.util.asserted_return
     def on_paste_texts_activate(self, *args):
         """Paste texts from the clipboard."""
 
         page = self.get_current_page()
         rows = page.view.get_selected_rows()
         col = page.view.get_focus()[1]
-        doc = gaupol.gtk.util.text_column_to_document(col)
+        doc = page.text_column_to_document(col)
         length = len(page.project.subtitles)
         rows = page.project.paste_texts(rows[0], doc)
         count = len(page.project.subtitles) - length
-        assert count > 0
-        message = ngettext(
+        if count <= 0: return
+        message = gaupol.i18n.ngettext(
             "Inserted %d subtitle to fit clipboard contents",
             "Inserted %d subtitles to fit clipboard contents",
             count) % count
@@ -237,26 +229,26 @@ class EditAgent(gaupol.Delegate):
 
         self.undo()
 
-    @gaupol.gtk.util.asserted_return
-    def on_view_renderer_edited(self, renderer, path, value, col):
+    def on_view_renderer_edited(self, renderer, path, value, column):
         """Save changes made while editing cell."""
 
-        row = int(path)
-        page = self.get_current_page()
         self._set_sensitivities(True)
         self.push_message(None)
-        if gaupol.gtk.util.is_position_column(col):
-            assert value
-            if page.edit_mode == gaupol.gtk.MODE.FRAME:
-                assert self._re_frame.match(value)
-                value = int(value)
-        if col == gaupol.gtk.COLUMN.START:
+        page = self.get_current_page()
+        row = int(path)
+        col = page.view.get_columns().index(column)
+        if page.view.is_position_column(col):
+            if not value: return
+            if page.edit_mode == gaupol.modes.FRAME:
+                try: value = int(value)
+                except ValueError: return
+        if col == page.view.columns.START:
             return page.project.set_start(row, value)
-        if col == gaupol.gtk.COLUMN.END:
+        if col == page.view.columns.END:
             return page.project.set_end(row, value)
-        if col ==  gaupol.gtk.COLUMN.DURATION:
+        if col ==  page.view.columns.DURATION:
             return page.project.set_duration(row, value)
-        doc = gaupol.gtk.util.text_column_to_document(col)
+        doc = page.text_column_to_document(col)
         page.project.set_text(row, doc, value)
 
     def on_view_renderer_editing_canceled(self, *args):
@@ -265,12 +257,13 @@ class EditAgent(gaupol.Delegate):
         self._set_sensitivities(True)
         self.push_message(None)
 
-    @gaupol.gtk.util.asserted_return
-    def on_view_renderer_editing_started(self, renderer, editor, path, col):
+    def on_view_renderer_editing_started(self, renderer, editor, path, column):
         """Set proper state for editing cell."""
 
         self._set_sensitivities(False)
-        assert gaupol.gtk.util.is_text_column(col)
+        page = self.get_current_page()
+        col = page.view.get_columns().index(column)
+        if not page.view.is_text_column(col): return
         message = _("Use Shift+Return for line-break")
         self.push_message(message)
 

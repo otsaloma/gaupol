@@ -1,19 +1,19 @@
 include bin/*
+include doc/gaupol.1
 include doc/MODULES
 include doc/RELEASING
 include doc/RELEASING.win32
-include doc/gaupol.1
 include po/*
 recursive-include data *
 recursive-include gaupol *.py
 recursive-include tools *
 include AUTHORS
+include ChangeLog
 include COPYING
 include CREDITS
-include ChangeLog
 include INSTALL
 include MANIFEST.in
 include NEWS
 include README
-include TODO
 include setup.py
+include TODO

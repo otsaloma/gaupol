@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,32 +9,32 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Text parser for tag-aware editing."""
+"""Text parser for markup-tag-aware editing."""
 
 import gaupol
 
-__all__ = ["Parser"]
+__all__ = ("Parser",)
 
 
 class Parser(gaupol.Finder):
 
-    """Text parser for tag-aware editing.
+    """Text parser for markup-tag-aware editing.
 
     Instance variables:
      * _margins: Start tag, end tag that every line is wrapped in
-     * _tags: List of lists of tag, position
+     * _tags: List of lists of markup tag, position
      * clean_func: Function to clean tags or None
      * re_tag: Regular expression object to match any tag
 
     The purpose of the Parser is to split text to the actual text and its tags,
     allowing the text to be edited while keeping the tags separate and intact.
     Parser can be used by first setting text to it, then performing operations
-    via the defined methods and finally getting the full text back.
+    via the defined methods and finally reassembling the full text.
 
     The margin system (wrapping each line in the same tags) is only used if no
     other tags are found in the text and if the text has at least two lines.
@@ -58,57 +58,53 @@ class Parser(gaupol.Finder):
     def _set_margins_require(self, text):
         assert self.re_tag is not None
 
-    @gaupol.util.asserted_return
     def _set_margins(self, text):
-        """Find the margin tags in text if such exist."""
+        """Find the margin markup tags in text if such exist."""
 
         lines = text.split("\n")
         line = lines[0]
         start_tag = ""
         while True:
             match = self.re_tag.match(line)
-            if match is None:
-                break
+            if match is None: break
             a, z = match.span()
             start_tag += line[a:z]
             line = line[z:]
-        assert start_tag
+        if not start_tag: return
+        if not all([x.startswith(start_tag) for x in lines]): return
 
         end_tag = ""
         while True:
             iterator = self.re_tag.finditer(line)
             match = gaupol.util.last(iterator)
-            if match is None:
-                break
+            if match is None: break
             a, z = match.span()
-            assert z == len(line)
+            if z != len(line): return
             end_tag = line[a:z] + end_tag
             line = line[:a]
+        if not all([x.endswith(end_tag) for x in lines]): return
 
-        assert all([x.startswith(start_tag) for x in lines])
-        assert all([x.endswith(end_tag) for x in lines])
-        lines = [x[len(start_tag):] for x in lines]
-        lines = [x[:-len(end_tag)] for x in lines]
-        for line in lines:
-            assert self.re_tag.search(line) is None
+        for line in (x[len(start_tag):-len(end_tag)] for x in lines):
+            # Ensure that no other tags exists on any of the lines.
+            if self.re_tag.search(line) is not None: return
+
         self._margins = [start_tag, end_tag]
 
     def _set_tags_require(self, text):
         assert self.re_tag is not None
 
     def _set_tags(self, text):
-        """Find tags in text."""
+        """Find markup tags in text."""
 
         for match in self.re_tag.finditer(text):
             a, z = match.span()
             self._tags.append([a, text[a:z]])
 
-    @gaupol.util.asserted_return
     def _shift_tags(self, pos, shift, orig_text):
-        """Shift all the tags after position."""
+        """Shift all markup tags after position."""
 
-        assert shift
-        assert self._tags
+        if not shift: return
+        if not self._tags: return
 
         # Try to determine whether a tag at position pos would be an opening
         # or a closing tag, i.e. attached to the next or the previous word.
@@ -134,16 +130,16 @@ class Parser(gaupol.Finder):
         for i, (tag_pos, tag) in enumerate(self._tags):
             orig_end = pos_with_tags - shift + between_length
             if (shift < 0) and (pos_with_tags < tag_pos < orig_end):
-                # If tag is in the middle of what is being removed, it can be
-                # shifted to the start of the removal block, but not so that it
-                # would overlap with preceding tags.
+                # If tag is in the middle of what is being removed, it must be
+                # shifted to the start of the removal block, but not so far
+                # that it would overlap with preceding tags.
                 self._tags[i][0] = pos_with_tags + between_length
                 between_length += len(tag)
             elif tag_pos >= pos_with_tags:
                 self._tags[i][0] += shift
 
     def get_text(self):
-        """Reassemble the text and return it."""
+        """Reassemble the full text and return it."""
 
         if not self.text:
             self._margins = []
@@ -159,7 +155,7 @@ class Parser(gaupol.Finder):
         return text
 
     def replace(self, next=True):
-        """Replace the current match.
+        """Replace the current match of pattern.
 
         next should be True to finish at end of match, False for beginning.
         Raise re.error if bad replacement.
@@ -170,16 +166,15 @@ class Parser(gaupol.Finder):
         shift = len(self.text) - len(orig_text)
         self._shift_tags(a, shift, orig_text)
 
-    @gaupol.util.asserted_return
     def set_text(self, text, next=True):
-        """Set the text to search in and parse it.
+        """Set the target text to search in and parse it.
 
         next should be True to start at beginning, False for end.
         """
         gaupol.Finder.set_text(self, text, next)
         self._margins = []
         self._tags = []
-        assert self.re_tag is not None
+        if self.re_tag is None: return
         if text.count("\n"):
             self._set_margins(text)
         if not self._margins:

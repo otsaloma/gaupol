@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,36 +9,31 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Subtitle text tag converter."""
+"""Subtitle text markup converter."""
 
 import gaupol
 
-__all__ = ["TagConverter"]
+__all__ = ("MarkupConverter",)
 
 
-class TagConverter(object):
+class MarkupConverter(object):
 
-    """Subtitle text tag converter.
-
-    Instance variables:
-     * _from: TagLibrary instance for the 'from' format
-     * _to: TagLibrary instance for the 'to' format
-    """
+    """Subtitle text markup converter."""
 
     def __init__(self, from_format, to_format):
-        """Initialize a TagConverter instance.
+        """Initialize a MarkupConverter instance.
 
-        from_format and to_format should be FORMAT constants.
+        from_format and to_format should be gaupol.formats enumerations.
         """
-        self._from = gaupol.tags.get_class(from_format)()
-        self._to = gaupol.tags.get_class(to_format)()
+        self._from = gaupol.tags.new(from_format)
+        self._to = gaupol.tags.new(to_format)
 
     def convert(self, text):
-        """Return text with tags converted."""
+        """Return text with markup converted."""
 
         return self._to.encode(self._from.decode(text))

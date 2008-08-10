@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,17 +9,16 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
+import gaupol.gtk
 import gtk
 
-from gaupol.gtk import unittest
 
-
-class TestSearchAgent(unittest.TestCase):
+class TestSearchAgent(gaupol.gtk.TestCase):
 
     def setup_method(self, method):
 
@@ -28,26 +27,29 @@ class TestSearchAgent(unittest.TestCase):
 
     def test__on_search_dialog_response(self):
 
-        self.application.on_find_and_replace_activate()
+        self.application.get_action("find_and_replace").activate()
         self.delegate._search_dialog.response(gtk.RESPONSE_CLOSE)
 
     def test_on_find_and_replace_activate(self):
 
-        self.application.on_find_and_replace_activate()
-        self.application.on_find_and_replace_activate()
+        self.application.get_action("find_and_replace").activate()
+        self.application.get_action("find_and_replace").activate()
 
     def test_on_find_next_activate(self):
 
-        self.application.on_find_and_replace_activate()
+        self.application.get_action("find_and_replace").activate()
         self.delegate._search_dialog._pattern_entry.set_text("a")
-        self.application.on_find_next_activate()
+        self.delegate._search_dialog.next()
+        self.application.get_action("find_next").activate()
         self.delegate._search_dialog.response(gtk.RESPONSE_CLOSE)
-        self.application.on_find_next_activate()
+        self.application.get_action("find_next").activate()
 
     def test_on_find_previous_activate(self):
 
-        self.application.on_find_and_replace_activate()
+        self.application.get_action("find_and_replace").activate()
         self.delegate._search_dialog._pattern_entry.set_text("a")
-        self.application.on_find_previous_activate()
+        self.delegate._search_dialog.previous()
+        self.delegate._search_dialog.emit("delete-event", None)
+        self.application.get_action("find_previous").activate()
         self.delegate._search_dialog.response(gtk.RESPONSE_CLOSE)
-        self.application.on_find_previous_activate()
+        self.application.get_action("find_previous").activate()

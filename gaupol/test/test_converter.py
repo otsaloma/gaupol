@@ -9,22 +9,19 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
 
-from gaupol import unittest
-from .. import converter
 
-
-class TestTagConverter(unittest.TestCase):
+class TestMarkupConverter(gaupol.TestCase):
 
     def test_convert(self):
 
-        for from_format in gaupol.FORMAT.members:
-            for to_format in gaupol.FORMAT.members:
-                conv = converter.TagConverter(from_format, to_format)
-                assert conv.convert("test") == "test"
+        for from_format in gaupol.formats:
+            for to_format in gaupol.formats:
+                converter = gaupol.MarkupConverter(from_format, to_format)
+                assert converter.convert("test") == "test"

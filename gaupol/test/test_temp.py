@@ -1,4 +1,4 @@
-# Copyright (C) 2007 Osmo Salomaa
+# Copyright (C) 2007-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,39 +9,51 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
+import gaupol
 import os
 
-from gaupol import unittest
-from .. import temp
 
-
-class TestModule(unittest.TestCase):
+class TestModule(gaupol.TestCase):
 
     def test_close(self):
 
-        path = temp.create()
-        temp.close(path)
+        path = gaupol.temp.create()
+        gaupol.temp.close(path)
+        gaupol.temp.remove(path)
 
     def test_create(self):
 
-        path = temp.create()
-        assert os.path.isfile(path)
-        temp.remove(path)
+        path = gaupol.temp.create()
+        gaupol.temp.remove(path)
+
+    def test_create_directory(self):
+
+        path = gaupol.temp.create_directory()
+        gaupol.temp.remove_directory(path)
 
     def test_get_handle(self):
 
-        path = temp.create()
-        temp.get_handle(path)
-        temp.remove(path)
+        path = gaupol.temp.create()
+        gaupol.temp.get_handle(path)
+        gaupol.temp.remove(path)
 
     def test_remove(self):
 
-        path = temp.create()
-        temp.remove(path)
+        path = gaupol.temp.create()
+        gaupol.temp.remove(path)
         assert not os.path.isfile(path)
-        temp.remove(path)
+        gaupol.temp.remove(path)
+
+    def test_remove_directory(self):
+
+        path = gaupol.temp.create_directory()
+        open(os.path.join(path, "a"), "w").write("a")
+        open(os.path.join(path, "b"), "w").write("b")
+        gaupol.temp.remove_directory(path)
+        assert not os.path.isdir(path)
+        gaupol.temp.remove_directory(path)

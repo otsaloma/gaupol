@@ -9,27 +9,27 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Regular expression based correction to subtitle text."""
+"""Regular expression substitutions for subtitle text."""
 
 import gaupol
 import re
 
-__all__ = ["Pattern"]
+__all__ = ("Pattern",)
 
 
 class Pattern(object):
 
-    """Regular expression based correction to subtitle text.
+    """Regular expression substitutions for subtitle text.
 
     Instance variables:
      * enabled: True if pattern should be used, False if not
-     * fields: Dictionary of field names and values
-     * local: True if pattern is defined by user, False for system
+     * fields: Dictionary of all data field names and values
+     * local: True if pattern is defined by user, False if system
     """
 
     def __init__(self, fields=None):
@@ -39,7 +39,7 @@ class Pattern(object):
         self.local = False
 
     def _get_localized_field(self, name):
-        """Get the localized value of field."""
+        """Return the localized value of field."""
 
         # Handle as in freedesktop.org's Desktop Entry Specification
         # http://www.freedesktop.org/wiki/Specifications/desktop-entry-spec
@@ -66,20 +66,24 @@ class Pattern(object):
         return self.get_field(name)
 
     def get_description(self, localize=True):
-        """Get the description of pattern."""
+        """Return the description of pattern."""
 
         if not localize:
             return self.get_field("Description")
         return self._get_localized_field("Description")
 
     def get_field(self, name):
-        """Get the value of field."""
+        """Return the string value of field or None."""
 
+        if not name in self.fields:
+            return None
         return self.fields[name]
 
     def get_field_boolean(self, name):
-        """Get the boolean value of field."""
+        """Return the boolean value of field or None."""
 
+        if not name in self.fields:
+            return None
         value = self.fields[name]
         if value == "True":
             return True
@@ -88,12 +92,14 @@ class Pattern(object):
         raise ValueError
 
     def get_field_list(self, name):
-        """Get the list value of field."""
+        """Return the list of strings value of field or None."""
 
+        if not name in self.fields:
+            return None
         return self.fields[name].split(",")
 
     def get_flags(self):
-        """Get the evaluated value of the 'Flags' field."""
+        """Return the evaluated value of the 'Flags' field."""
 
         flags = 0
         for name in self.get_field("Flags").split(","):
@@ -101,13 +107,13 @@ class Pattern(object):
         return flags
 
     def get_name(self, localize=True):
-        """Get the name of pattern."""
+        """Return the name of pattern."""
 
         if not localize:
             return self.get_field("Name")
         return self._get_localized_field("Name")
 
     def set_field(self, name, value):
-        """Set the value of field."""
+        """Set the string value of field."""
 
         self.fields[unicode(name)] = unicode(value)

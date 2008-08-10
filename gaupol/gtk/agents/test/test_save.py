@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,19 +9,18 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import functools
 import gaupol.gtk
 import gtk
+import os
 
-from gaupol.gtk import unittest
 
-
-class TestSaveAgent(unittest.TestCase):
+class TestSaveAgent(gaupol.gtk.TestCase):
 
     def run__show_encoding_error_dialog(self):
 
@@ -41,9 +40,11 @@ class TestSaveAgent(unittest.TestCase):
 
         self.application = self.get_application()
         self.delegate = self.application.save_main_document.im_self
-        respond = lambda *args: gtk.RESPONSE_DELETE_EVENT
+        respond = lambda *args: gtk.RESPONSE_OK
         self.delegate.flash_dialog = respond
         self.delegate.run_dialog = respond
+        get_filename = lambda *args: self.get_subrip_path()
+        gaupol.gtk.SaveDialog.get_filename = get_filename
 
     def test__show_encoding_error_dialog(self):
 
@@ -55,42 +56,87 @@ class TestSaveAgent(unittest.TestCase):
 
     def test_on_save_all_documents_activate(self):
 
-        self.application.on_save_all_documents_activate()
+        self.application.open_main_file(self.get_subrip_path())
+        self.application.open_main_file(self.get_subrip_path())
+        self.application.get_action("save_all_documents").activate()
 
     def test_on_save_main_document_activate(self):
 
-        self.application.on_save_main_document_activate()
+        self.application.get_action("save_main_document").activate()
 
     def test_on_save_main_document_as_activate(self):
 
-        self.application.on_save_main_document_as_activate()
+        self.application.get_action("save_main_document_as").activate()
 
     def test_on_save_translation_document_activate(self):
 
-        self.application.on_save_translation_document_activate()
+        self.application.get_action("save_translation_document").activate()
 
     def test_on_save_translation_document_as_activate(self):
 
-        self.application.on_save_translation_document_as_activate()
+        self.application.get_action("save_translation_document_as").activate()
 
     def test_save_main_document(self):
 
         page = self.application.get_current_page()
         self.application.save_main_document(page)
 
+    def test_save_main_document__io_error(self):
+
+        page = self.application.get_current_page()
+        os.chmod(page.project.main_file.path, 0000)
+        function = self.application.save_main_document
+        self.raises(gaupol.gtk.Default, function, page)
+        os.chmod(page.project.main_file.path, 0777)
+
+    def test_save_main_document__unicode_error(self):
+
+        page = self.application.get_current_page()
+        page.project.main_file.encoding = "ascii"
+        doc = gaupol.documents.MAIN
+        page.project.set_text(0, doc, "\303\266")
+        function = self.application.save_main_document
+        self.raises(gaupol.gtk.Default, function, page)
+
+    def test_save_main_document__untitled(self):
+
+        self.application.get_action("new_project").activate()
+        page = self.application.get_current_page()
+        self.delegate.run_dialog = lambda *args: gtk.RESPONSE_CANCEL
+        function = self.application.save_main_document
+        self.raises(gaupol.gtk.Default, function, page)
+        self.delegate.run_dialog = lambda *args: gtk.RESPONSE_OK
+        self.application.save_main_document(page)
+
     def test_save_main_document_as(self):
 
         page = self.application.get_current_page()
+        self.delegate.run_dialog = lambda *args: gtk.RESPONSE_CANCEL
         function = self.application.save_main_document_as
         self.raises(gaupol.gtk.Default, function, page)
+        self.delegate.run_dialog = lambda *args: gtk.RESPONSE_OK
+        self.application.save_main_document_as(page)
 
     def test_save_translation_document(self):
 
         page = self.application.get_current_page()
         self.application.save_translation_document(page)
 
+    def test_save_translation_document__untitled(self):
+
+        self.application.open_main_file(self.get_subrip_path())
+        page = self.application.get_current_page()
+        self.delegate.run_dialog = lambda *args: gtk.RESPONSE_CANCEL
+        function = self.application.save_translation_document
+        self.raises(gaupol.gtk.Default, function, page)
+        self.delegate.run_dialog = lambda *args: gtk.RESPONSE_OK
+        self.application.save_translation_document(page)
+
     def test_save_translation_document_as(self):
 
         page = self.application.get_current_page()
+        self.delegate.run_dialog = lambda *args: gtk.RESPONSE_CANCEL
         function = self.application.save_translation_document_as
         self.raises(gaupol.gtk.Default, function, page)
+        self.delegate.run_dialog = lambda *args: gtk.RESPONSE_OK
+        self.application.save_translation_document_as(page)

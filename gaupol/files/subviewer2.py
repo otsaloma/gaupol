@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,99 +9,65 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """SubViewer 2.0 file."""
 
-from __future__ import with_statement
-
-import codecs
-import contextlib
 import gaupol
 import re
 
-from .subfile import SubtitleFile
+__all__ = ("SubViewer2",)
 
 
-class SubViewer2(SubtitleFile):
+class SubViewer2(gaupol.SubtitleFile):
 
     """SubViewer 2.0 file."""
 
-    __metaclass__ = gaupol.Contractual
-    format = gaupol.FORMAT.SUBVIEWER2
-    mode = gaupol.MODE.TIME
-
-    def _read_components(self, lines):
-        """Read and return starts, ends and texts."""
-
-        starts = []
-        ends = []
-        texts = []
-        time = r"-?\d\d:\d\d:\d\d.\d\d"
-        re_time_line = re.compile(r"^(%s),(%s)\s*$" % (time, time))
-        re_trailer = re.compile(r"\n\Z", re.MULTILINE)
-        for i, line in enumerate(lines + [""]):
-            match = re_time_line.match(line)
-            if match is not None:
-                starts.append(match.group(1))
-                ends.append(match.group(2))
-                texts.append(re_trailer.sub("", lines[i + 1]))
-
-        starts = [x + "0" for x in starts]
-        ends = [x + "0" for x in ends]
-        texts = [x.replace("[br]", "\n") for x in texts]
-        return starts, ends, texts
-
-    def _read_header(self, lines):
-        """Read header and return leftover lines."""
-
-        header = ""
-        lines = lines[:]
-        while lines[0].startswith("["):
-            header += lines.pop(0)
-        if header.endswith("\n"):
-            header = header[:-1]
-        self.header = header
-        return lines
+    _re_time_line = re.compile((
+        r"^(-?\d\d:\d\d:\d\d.\d\d)"
+        r",(-?\d\d:\d\d:\d\d.\d\d)\s*$"))
+    format = gaupol.formats.SUBVIEWER2
+    mode = gaupol.modes.TIME
 
     def read(self):
-        """Read file.
+        """Read file and return subtitles.
 
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
-        Return start times, end times, texts.
         """
+        self.header = ""
+        subtitles = []
         lines = self._read_lines()
-        lines = self._read_header(lines)
-        return self._read_components(lines)
+        while lines[0].startswith("["):
+            self.header += "\n"
+            self.header += lines.pop(0)
+        self.header = self.header.lstrip()
+        for i, line in enumerate(lines + [""]):
+            match = self._re_time_line.match(line)
+            if match is None: continue
+            subtitle = self._get_subtitle()
+            subtitle.start = match.group(1) + "0"
+            subtitle.end = match.group(2) + "0"
+            text = lines[i + 1].replace("[br]", "\n")
+            subtitle.main_text = text
+            subtitles.append(subtitle)
+        return subtitles
 
-    def write(self, starts, ends, texts):
-        """Write file.
+    def write_to_file(self, subtitles, doc, fobj):
+        """Write subtitles from document to given file.
 
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
-        calc = gaupol.Calculator()
-        starts = [calc.round_time(x, 2) for x in starts]
-        ends = [calc.round_time(x, 2) for x in ends]
-        re_last_digit = re.compile(r"\d$")
-        starts = [re_last_digit.sub("", x) for x in starts]
-        ends = [re_last_digit.sub("", x) for x in ends]
-        texts = [x.replace("\n", "[br]") for x in texts]
-
-        args = (self.path, "w", self.encoding)
-        with contextlib.closing(codecs.open(*args)) as fobj:
-            fobj.write(self.header)
+        fobj.write(self.header)
+        fobj.write(self.newline.value)
+        for subtitle in subtitles:
             fobj.write(self.newline.value)
+            start = subtitle.calc.round_time(subtitle.start_time, 2)[:-1]
+            end = subtitle.calc.round_time(subtitle.end_time, 2)[:-1]
+            fobj.write("%s,%s%s" % (start, end, self.newline.value))
+            fobj.write(subtitle.get_text(doc).replace("\n", "[br]"))
             fobj.write(self.newline.value)
-            for i in range(len(starts)):
-                fobj.write(starts[i])
-                fobj.write(",")
-                fobj.write(ends[i])
-                fobj.write(self.newline.value)
-                fobj.write(texts[i])
-                fobj.write(self.newline.value)
-                fobj.write(self.newline.value)

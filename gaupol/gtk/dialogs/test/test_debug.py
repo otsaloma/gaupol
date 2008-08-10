@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,26 +9,20 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
+import gaupol.gtk
 import gtk
 import sys
 
-from gaupol.gtk import unittest
-from .. import debug
 
+class TestDebugDialog(gaupol.gtk.TestCase):
 
-class TestDebugDialog(unittest.TestCase):
+    def run__dialog(self):
 
-    def run(self):
-
-        try:
-            self.dialog.foo()
-        except Exception:
-            self.dialog.set_text(*sys.exc_info())
         self.dialog.run()
         self.dialog.destroy()
 
@@ -38,7 +32,12 @@ class TestDebugDialog(unittest.TestCase):
 
     def setup_method(self, method):
 
-        self.dialog = debug.DebugDialog()
+        self.dialog = gaupol.gtk.DebugDialog()
+        try:
+            self.dialog.foo()
+        except AttributeError:
+            self.dialog.set_text(*sys.exc_info())
+        self.dialog.show()
 
     def test__on_response__close(self):
 
@@ -51,3 +50,9 @@ class TestDebugDialog(unittest.TestCase):
     def test__on_response__yes(self):
 
         self.dialog.response(gtk.RESPONSE_YES)
+
+    def test__show_editor_error_dialog(self):
+
+        respond = lambda *args: gtk.RESPONSE_CLOSE
+        self.dialog.flash_dialog = respond
+        self.dialog._show_editor_error_dialog()

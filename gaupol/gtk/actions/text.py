@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,10 +9,10 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Text processing actions."""
 
@@ -20,58 +20,59 @@ import gaupol.gtk
 import gtk
 _ = gaupol.i18n._
 
-from .action import Action
 
-
-class ConfigureSpellCheckAction(Action):
+class ConfigureSpellCheckAction(gaupol.gtk.Action):
 
     """Set languages and spell-check targets."""
 
     def __init__(self):
 
-        Action.__init__(self, "configure_spell_check")
+        gaupol.gtk.Action.__init__(self, "configure_spell_check")
         self.props.label = _("Co_nfigure Spell-check\342\200\246")
         self.props.tooltip = _("Set language and spell-check target")
 
-    def _assert_doable(self, application, page):
+    def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
 
-        assert gaupol.gtk.util.enchant_available()
+        gaupol.util.affirm(gaupol.util.enchant_available())
 
 
-class CheckSpellingAction(Action):
+class CheckSpellingAction(gaupol.gtk.Action):
 
     """Check for incorrect spelling."""
 
     def __init__(self):
 
-        Action.__init__(self, "check_spelling")
+        gaupol.gtk.Action.__init__(self, "check_spelling")
         self.props.label = _("_Check Spelling")
         self.props.short_label = _("Spelling")
         self.props.stock_id = gtk.STOCK_SPELL_CHECK
         self.props.tooltip = _("Check for incorrect spelling")
         self.accelerator = "F7"
 
-    def _assert_doable(self, application, page):
+    def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
 
-        assert page is not None
-        assert gaupol.gtk.util.enchant_available()
-        assert gaupol.gtk.conf.spell_check.language
+        gaupol.util.affirm(page is not None)
+        gaupol.util.affirm(gaupol.util.enchant_available())
+        gaupol.util.affirm(gaupol.gtk.conf.spell_check.language)
 
 
-class CorrectTextsAction(Action):
+class CorrectTextsAction(gaupol.gtk.Action):
 
     """Find and correct errors in texts."""
 
     def __init__(self):
 
-        Action.__init__(self, "correct_texts")
+        gaupol.gtk.Action.__init__(self, "correct_texts")
         self.props.label = _("C_orrect Texts\342\200\246")
         self.props.tooltip = _("Find and correct errors in texts")
         self.accelerator = "O"
 
-    def _assert_doable(self, application, page):
+    def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
 
-        assert page is not None
+        gaupol.util.affirm(page is not None)
+
+
+__all__ = gaupol.util.get_all(dir(), r"Action$")

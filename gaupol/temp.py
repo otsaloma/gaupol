@@ -1,4 +1,4 @@
-# Copyright (C) 2007 Osmo Salomaa
+# Copyright (C) 2007-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,10 +9,10 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Creating and removing temporary files."""
 
@@ -29,22 +29,47 @@ def close(path):
     os.close(_handles[path])
     del _handles[path]
 
+def create_ensure(value, suffix=""):
+    assert os.path.isfile(value)
+
+@gaupol.deco.contractual
 def create(suffix=""):
-    """Create and new temporary file and return its path."""
+    """Create a new temporary file and return its path."""
 
     handle, path = tempfile.mkstemp(suffix, "gaupol.")
     _handles[path] = handle
     return path
 
+def create_directory_ensure(value, suffix=""):
+    assert os.path.isdir(value)
+
+@gaupol.deco.contractual
+def create_directory(suffix=""):
+    """Create a new temporary directory and return its path."""
+
+    return tempfile.mkdtemp(suffix, "gaupol-")
+
 def get_handle(path):
-    """Get the OS-level handle to the file at path."""
+    """Return the OS-level handle to the file at path."""
 
     return _handles[path]
 
-@gaupol.util.silent(OSError)
+@gaupol.deco.silent(OSError)
 def remove(path):
     """Remove remporary file after closing its handle."""
 
     if path in _handles:
         close(path)
     os.remove(path)
+
+@gaupol.deco.silent(OSError)
+def remove_directory(root):
+    """Remove temporary directory and all its contents."""
+
+    for name in os.listdir(root):
+        path = os.path.join(root, name)
+        if os.path.isdir(path):
+            remove_directory(path)
+        elif os.path.isfile(path):
+            remove(path)
+    os.rmdir(root)

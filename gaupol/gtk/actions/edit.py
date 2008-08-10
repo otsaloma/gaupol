@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,10 +9,10 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Simple subtitle data editing actions."""
 
@@ -20,114 +20,112 @@ import gaupol.gtk
 import gtk
 _ = gaupol.i18n._
 
-from .action import Action, MenuAction
 
-
-class ClearTextsAction(Action):
+class ClearTextsAction(gaupol.gtk.Action):
 
     """Clear the selected texts."""
 
     def __init__(self):
 
-        Action.__init__(self, "clear_texts")
+        gaupol.gtk.Action.__init__(self, "clear_texts")
         self.props.label = _("Cl_ear")
         self.props.stock_id = gtk.STOCK_CLEAR
         self.props.tooltip = _("Clear the selected texts")
         self.accelerator = "C"
 
-    def _assert_doable(self, application, page):
+    def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
 
-        assert page is not None
-        assert page.view.get_selected_rows()
+        gaupol.util.affirm(page is not None)
+        gaupol.util.affirm(page.view.get_selected_rows())
         col = page.view.get_focus()[1]
-        assert gaupol.gtk.util.is_text_column(col)
+        gaupol.util.affirm(page.view.is_text_column(col))
 
 
-class CopyTextsAction(Action):
+class CopyTextsAction(gaupol.gtk.Action):
 
     """Copy the selected texts to the clipboard."""
 
     def __init__(self):
 
-        Action.__init__(self, "copy_texts")
+        gaupol.gtk.Action.__init__(self, "copy_texts")
         self.props.label = _("_Copy")
         self.props.stock_id = gtk.STOCK_COPY
         self.props.tooltip = _("Copy the selected texts to the clipboard")
         self.accelerator = "<Control>C"
 
-    def _assert_doable(self, application, page):
+    def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
 
-        assert page is not None
-        assert page.view.get_selected_rows()
+        gaupol.util.affirm(page is not None)
+        gaupol.util.affirm(page.view.get_selected_rows())
         col = page.view.get_focus()[1]
-        assert gaupol.gtk.util.is_text_column(col)
+        gaupol.util.affirm(page.view.is_text_column(col))
 
 
-class CutTextsAction(Action):
+class CutTextsAction(gaupol.gtk.Action):
 
     """Cut the selected texts to the clipboard."""
 
     def __init__(self):
 
-        Action.__init__(self, "cut_texts")
+        gaupol.gtk.Action.__init__(self, "cut_texts")
         self.props.label = _("Cu_t")
         self.props.stock_id = gtk.STOCK_CUT
         self.props.tooltip = _("Cut the selected texts to the clipboard")
         self.accelerator = "<Control>X"
 
-    def _assert_doable(self, application, page):
+    def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
 
-        assert page is not None
-        assert page.view.get_selected_rows()
+        gaupol.util.affirm(page is not None)
+        gaupol.util.affirm(page.view.get_selected_rows())
         col = page.view.get_focus()[1]
-        assert gaupol.gtk.util.is_text_column(col)
+        gaupol.util.affirm(page.view.is_text_column(col))
 
 
-class EditPreferencesAction(Action):
+class EditPreferencesAction(gaupol.gtk.Action):
 
     """Configure Gaupol."""
 
     def __init__(self):
 
-        Action.__init__(self, "edit_preferences")
+        gaupol.gtk.Action.__init__(self, "edit_preferences")
         self.props.label = _("_Preferences")
         self.props.stock_id = gtk.STOCK_PREFERENCES
         self.props.tooltip = _("Configure Gaupol")
 
 
-class EditNextValueAction(Action):
+class EditNextValueAction(gaupol.gtk.Action):
 
     """Edit the focused column of the next subtitle."""
 
     def __init__(self):
 
-        Action.__init__(self, "edit_next_value")
+        gaupol.gtk.Action.__init__(self, "edit_next_value")
         self.props.label = _("Edit _Next Cell")
         self.props.short_label = _("Next")
         self.props.stock_id = gtk.STOCK_EDIT
         self.props.tooltip = _("Edit the focused column of the next subtitle")
         self.accelerator = "space"
 
-    def _assert_doable(self, application, page):
+    def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
 
-        assert page is not None
+        gaupol.util.affirm(page is not None)
         row, col = page.view.get_focus()
-        assert not None in (row, col)
-        assert row < len(page.project.subtitles) - 1
-        assert col != gaupol.gtk.COLUMN.NUMBER
+        gaupol.util.affirm(not None in (row, col))
+        gaupol.util.affirm(row < len(page.project.subtitles) - 1)
+        gaupol.util.affirm(col != page.view.columns.NUMBER)
 
 
-class EditValueAction(Action):
+class EditValueAction(gaupol.gtk.Action):
 
     """Edit the focused cell."""
 
     def __init__(self):
 
-        Action.__init__(self, "edit_value")
+        gaupol.gtk.Action.__init__(self, "edit_value")
         self.props.is_important = True
         self.props.label = _("_Edit Cell")
         self.props.short_label = _("Edit")
@@ -135,137 +133,137 @@ class EditValueAction(Action):
         self.props.tooltip = _("Edit the focused cell")
         self.accelerator = "Return"
 
-    def _assert_doable(self, application, page):
+    def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
 
-        assert page is not None
+        gaupol.util.affirm(page is not None)
         row, col = page.view.get_focus()
-        assert not None in (row, col)
-        assert col != gaupol.gtk.COLUMN.NUMBER
+        gaupol.util.affirm(not None in (row, col))
+        gaupol.util.affirm(col != page.view.columns.NUMBER)
 
 
-class ExtendSelectionToBeginningAction(Action):
+class ExtendSelectionToBeginningAction(gaupol.gtk.Action):
 
     """Extend the selection up to the first subtitle."""
 
     def __init__(self):
 
-        Action.__init__(self, "extend_selection_to_beginning")
+        gaupol.gtk.Action.__init__(self, "extend_selection_to_beginning")
         self.props.label = _("Extend To _Beginning")
         tip = _("Extend the current selection up to the first subtitle")
         self.props.tooltip = tip
         self.accelerator = "<Shift><Control>Home"
 
-    def _assert_doable(self, application, page):
+    def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
 
-        assert page is not None
-        assert page.project.subtitles
-        assert page.view.get_selected_rows()
+        gaupol.util.affirm(page is not None)
+        gaupol.util.affirm(page.project.subtitles)
+        gaupol.util.affirm(page.view.get_selected_rows())
 
 
-class ExtendSelectionToEndAction(Action):
+class ExtendSelectionToEndAction(gaupol.gtk.Action):
 
     """Extend the selection up to the last subtitle."""
 
     def __init__(self):
 
-        Action.__init__(self, "extend_selection_to_end")
+        gaupol.gtk.Action.__init__(self, "extend_selection_to_end")
         self.props.label = _("Extend To _End")
         tip = _("Extend the current selection up to the last subtitle")
         self.props.tooltip = tip
         self.accelerator = "<Shift><Control>End"
 
-    def _assert_doable(self, application, page):
+    def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
 
-        assert page is not None
-        assert page.project.subtitles
-        assert page.view.get_selected_rows()
+        gaupol.util.affirm(page is not None)
+        gaupol.util.affirm(page.project.subtitles)
+        gaupol.util.affirm(page.view.get_selected_rows())
 
 
-class InsertSubtitlesAction(Action):
+class InsertSubtitlesAction(gaupol.gtk.Action):
 
     """Insert subtitles."""
 
     def __init__(self):
 
-        Action.__init__(self, "insert_subtitles")
+        gaupol.gtk.Action.__init__(self, "insert_subtitles")
         self.props.label = _("_Insert Subtitles\342\200\246")
         self.props.short_label = _("Insert")
         self.props.stock_id = gtk.STOCK_ADD
         self.props.tooltip = _("Insert subtitles")
         self.accelerator = "Insert"
 
-    def _assert_doable(self, application, page):
+    def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
 
-        assert page is not None
+        gaupol.util.affirm(page is not None)
         if page.project.subtitles:
-            assert page.view.get_selected_rows()
+            gaupol.util.affirm(page.view.get_selected_rows())
 
 
-class InvertSelectionAction(Action):
+class InvertSelectionAction(gaupol.gtk.Action):
 
     """Invert the current selection."""
 
     def __init__(self):
 
-        Action.__init__(self, "invert_selection")
+        gaupol.gtk.Action.__init__(self, "invert_selection")
         self.props.label = _("_Invert Selection")
         self.props.tooltip = _("Invert the current selection")
         self.accelerator = "<Control>I"
 
-    def _assert_doable(self, application, page):
+    def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
 
-        assert page is not None
-        assert page.project.subtitles
+        gaupol.util.affirm(page is not None)
+        gaupol.util.affirm(page.project.subtitles)
 
 
-class MergeSubtitlesAction(Action):
+class MergeSubtitlesAction(gaupol.gtk.Action):
 
     """Merge the selected subtitles."""
 
     def __init__(self):
 
-        Action.__init__(self, "merge_subtitles")
+        gaupol.gtk.Action.__init__(self, "merge_subtitles")
         self.props.label = _("_Merge Subtitles")
         self.props.tooltip = _("Merge the selected subtitles")
         self.accelerator = "M"
 
-    def _assert_doable(self, application, page):
+    def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
 
-        assert page is not None
+        gaupol.util.affirm(page is not None)
         rows = page.view.get_selected_rows()
-        assert len(rows) > 1
-        assert rows == range(rows[0], rows[-1] + 1)
+        gaupol.util.affirm(len(rows) > 1)
+        gaupol.util.affirm(list(rows) == range(rows[0], rows[-1] + 1))
 
 
-class PasteTextsAction(Action):
+class PasteTextsAction(gaupol.gtk.Action):
 
     """Paste texts from the clipboard."""
 
     def __init__(self):
 
-        Action.__init__(self, "paste_texts")
+        gaupol.gtk.Action.__init__(self, "paste_texts")
         self.props.label = _("_Paste")
         self.props.stock_id = gtk.STOCK_PASTE
         self.props.tooltip = _("Paste texts from the clipboard")
         self.accelerator = "<Control>V"
 
-    def _assert_doable(self, application, page):
+    def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
 
-        assert page is not None
-        assert not application.clipboard.is_empty()
-        assert page.view.get_selected_rows()
+        gaupol.util.affirm(page is not None)
+        gaupol.util.affirm(not application.clipboard.is_empty())
+        gaupol.util.affirm(page.view.get_selected_rows())
         col = page.view.get_focus()[1]
-        assert gaupol.gtk.util.is_text_column(col)
+        gaupol.util.affirm(page.view.is_text_column(col))
 
 
-class RedoActionAction(Action):
+class RedoActionAction(gaupol.gtk.Action):
 
     """Redo the last undone action."""
 
@@ -273,94 +271,94 @@ class RedoActionAction(Action):
 
     def __init__(self):
 
-        Action.__init__(self, "redo_action")
+        gaupol.gtk.Action.__init__(self, "redo_action")
         self.props.label = _("_Redo")
         self.props.stock_id = gtk.STOCK_REDO
         self.props.tooltip = _("Redo the last undone action")
         self.accelerator = "<Shift><Control>Z"
         self.set_tool_item_type(gtk.MenuToolButton)
 
-    def _assert_doable(self, application, page):
+    def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
 
-        assert page is not None
-        assert page.project.can_redo()
+        gaupol.util.affirm(page is not None)
+        gaupol.util.affirm(page.project.can_redo())
 
 
-class RemoveSubtitlesAction(Action):
+class RemoveSubtitlesAction(gaupol.gtk.Action):
 
     """Remove the selected subtitles."""
 
     def __init__(self):
 
-        Action.__init__(self, "remove_subtitles")
+        gaupol.gtk.Action.__init__(self, "remove_subtitles")
         self.props.label = _("Rem_ove Subtitles")
         self.props.short_label = _("Remove")
         self.props.stock_id = gtk.STOCK_REMOVE
         self.props.tooltip = _("Remove the selected subtitles")
         self.accelerator = "Delete"
 
-    def _assert_doable(self, application, page):
+    def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
 
-        assert page is not None
-        assert page.view.get_selected_rows()
+        gaupol.util.affirm(page is not None)
+        gaupol.util.affirm(page.view.get_selected_rows())
 
 
-class SelectAllAction(Action):
+class SelectAllAction(gaupol.gtk.Action):
 
     """Select all subtitles."""
 
     def __init__(self):
 
-        Action.__init__(self, "select_all")
+        gaupol.gtk.Action.__init__(self, "select_all")
         self.props.label = _("Select _All")
         self.props.stock_id = gtk.STOCK_SELECT_ALL
         self.props.tooltip = _("Select all subtitles")
         self.accelerator = "<Control>A"
 
-    def _assert_doable(self, application, page):
+    def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
 
-        assert page is not None
-        assert page.project.subtitles
+        gaupol.util.affirm(page is not None)
+        gaupol.util.affirm(page.project.subtitles)
 
 
-class ShowSelectionMenuAction(MenuAction):
+class ShowSelectionMenuAction(gaupol.gtk.MenuAction):
 
     """Show the selection menu."""
 
     def __init__(self):
 
-        MenuAction.__init__(self, "show_selection_menu")
+        gaupol.gtk.MenuAction.__init__(self, "show_selection_menu")
         self.props.label = _("Sele_ction")
 
-    def _assert_doable(self, application, page):
+    def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
 
-        assert page is not None
-        assert page.project.subtitles
+        gaupol.util.affirm(page is not None)
+        gaupol.util.affirm(page.project.subtitles)
 
 
-class SplitSubtitleAction(Action):
+class SplitSubtitleAction(gaupol.gtk.Action):
 
     """Split the selected subtitle."""
 
     def __init__(self):
 
-        Action.__init__(self, "split_subtitle")
+        gaupol.gtk.Action.__init__(self, "split_subtitle")
         self.props.label = _("_Split Subtitle")
         self.props.tooltip = _("Split the selected subtitle")
         self.accelerator = "S"
 
-    def _assert_doable(self, application, page):
+    def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
 
-        assert page is not None
-        assert len(page.view.get_selected_rows()) == 1
+        gaupol.util.affirm(page is not None)
+        gaupol.util.affirm(len(page.view.get_selected_rows()) == 1)
 
 
-class UndoActionAction(Action):
+class UndoActionAction(gaupol.gtk.Action):
 
     """Undo the last action."""
 
@@ -368,7 +366,7 @@ class UndoActionAction(Action):
 
     def __init__(self):
 
-        Action.__init__(self, "undo_action")
+        gaupol.gtk.Action.__init__(self, "undo_action")
         self.props.is_important = True
         self.props.label = _("_Undo")
         self.props.stock_id = gtk.STOCK_UNDO
@@ -376,8 +374,11 @@ class UndoActionAction(Action):
         self.accelerator = "<Control>Z"
         self.set_tool_item_type(gtk.MenuToolButton)
 
-    def _assert_doable(self, application, page):
+    def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
 
-        assert page is not None
-        assert page.project.can_undo()
+        gaupol.util.affirm(page is not None)
+        gaupol.util.affirm(page.project.can_undo())
+
+
+__all__ = gaupol.util.get_all(dir(), r"Action$")

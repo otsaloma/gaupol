@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,10 +9,10 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Subtitle file format determiner."""
 
@@ -24,29 +24,28 @@ import gaupol
 import os
 import re
 
-__all__ = ["FormatDeterminer"]
+__all__ = ("FormatDeterminer",)
 
 
 class FormatDeterminer(gaupol.Singleton):
 
-    """Subtitle file format determiner.
-
-    Instance variables:
-     * _re_ids: List of tuples of format, regular expression
-    """
+    """Subtitle file format determiner."""
 
     __metaclass__ = gaupol.Contractual
 
-    # pylint: disable-msg=W0231
     def __init__(self):
 
         self._re_ids = []
-        for format in gaupol.FORMAT.members:
+        self._compile_identifiers()
+
+    def _compile_identifiers(self):
+        """Compile regular expressions used to indentify file formats."""
+
+        for format in gaupol.formats:
             re_id = re.compile(format.identifier)
             self._re_ids.append((format, re_id))
 
     def determine_require(self, path, encoding):
-        assert os.path.isfile(path)
         assert gaupol.encodings.is_valid_code(encoding)
 
     def determine(self, path, encoding):
@@ -55,7 +54,7 @@ class FormatDeterminer(gaupol.Singleton):
         Raise IOError if reading fails.
         Raise UnicodeError if decoding fails.
         Raise FormatError if unable to detect the format.
-        Return FORMAT constant.
+        Return a format enumeration.
         """
         args = (path, "r", encoding)
         with contextlib.closing(codecs.open(*args)) as fobj:

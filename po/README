@@ -1,0 +1,16 @@
+Translating Gaupol
+==================
+
+To avoid doing pointless work, first check the latest list of existing
+translations at the subversion trunk
+
+    http://svn.gna.org/viewcvs/gaupol/trunk/po/
+
+To try your translation in the source directory, you can compile it
+to the "locale" directory (which does not exist by default)
+
+    mkdir -p locale/XX/LC_MESSAGES
+    msgfmt -cv po/XX.po -o locale/XX/LC_MESSAGES/gaupol.mo
+    bin/gaupol
+
+When done, send your translation by email to <otsaloma@cc.hut.fi>.

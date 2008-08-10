@@ -9,17 +9,17 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """String and regular expression finder and replacer."""
 
 import gaupol
 import re
 
-__all__ = ["Finder"]
+__all__ = ("Finder",)
 
 
 class Finder(object):
@@ -27,13 +27,13 @@ class Finder(object):
     """String and regular expression finder and replacer.
 
     Instance variables:
-     * ignore_case: True to ignore case
-     * match: Regular expression match object
-     * match_span: Tuple of start and end position
+     * ignore_case: True to ignore case when finding matches
+     * match: Regular expression object for the latest match of pattern
+     * match_span: Tuple of start and end position for match
      * pattern: String or regular expression object to find
-     * pos: Current offset in text
-     * replacement: Replacement string
-     * text: Target text
+     * pos: Current offset from the beginning of the text
+     * replacement: Plain- or regular expression replacement string
+     * text: Target text to find matches of pattern in
     """
 
     __metaclass__ = gaupol.Contractual
@@ -76,7 +76,7 @@ class Finder(object):
             except ValueError:
                 raise StopIteration
             self.match_span = (index, index + len(pattern))
-        else:
+        else: # Regular expression
             match = self.pattern.search(self.text, self.pos)
             if match is None:
                 raise StopIteration
@@ -116,7 +116,7 @@ class Finder(object):
             except ValueError:
                 raise StopIteration
             self.match_span = (index, index + len(pattern))
-        else:
+        else: # Regular expression
             iterator = self.pattern.finditer(self.text)
             match = None
             while True:
@@ -147,7 +147,7 @@ class Finder(object):
         assert self.replacement is not None
 
     def replace(self, next=True):
-        """Replace the current match.
+        """Replace the current match of pattern.
 
         next should be True to finish at end of match, False for beginning.
         Raise re.error if bad replacement.
@@ -162,9 +162,9 @@ class Finder(object):
         shift = len(self.text) - orig_length
         self.pos = ((z + shift) if next else a)
 
-        # Adapt match span to new text length to avoid getting stuck with
-        # zero-length regular expressions.
-        if next and self.match_span[0] == self.match_span[1]:
+        # Adapt match span to new text length
+        # to avoid getting stuck with zero-length regular expressions.
+        if next and (self.match_span[0] == self.match_span[1]):
             self.match_span = (self.pos, self.pos)
 
     def replace_all_require(self):
@@ -187,15 +187,15 @@ class Finder(object):
             except StopIteration:
                 self.pos = len(self.text)
                 self.match_span = None
-                return count
+                break
             self.replace()
             count += 1
         return count
 
     def set_regex(self, pattern, flags=0, default_flags=None):
-        """Set and use regular expression.
+        """Set and use regular expression as pattern.
 
-        DOTALL, MULTILINE and UNICODE are automatically added to flags.
+        If default_flags is None, DOTALL, MULTILINE and UNICODE are used.
         IGNORECASE is automatically added to flags if self.ignore_case is True.
         Raise re.error if bad pattern.
         """
@@ -206,7 +206,7 @@ class Finder(object):
         self.pattern = re.compile(pattern, flags)
 
     def set_text(self, text, next=True):
-        """Set the text to search in.
+        """Set the target text to search in.
 
         next should be True to start at beginning, False for end.
         """

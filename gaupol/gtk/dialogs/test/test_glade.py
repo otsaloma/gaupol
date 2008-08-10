@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2007 Osmo Salomaa
+# Copyright (C) 2006-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,25 +9,26 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-from gaupol.gtk import unittest
-from .. import glade
+import gaupol.gtk
+import gtk
 
 
-class TestGladeDialog(unittest.TestCase):
+class TestGladeDialog(gaupol.gtk.TestCase):
 
     def setup_method(self, method):
 
-        self.dialog = glade.GladeDialog("encoding-dialog")
+        self.dialog = gaupol.gtk.GladeDialog("encoding.glade")
+        self.dialog.show()
 
     def test___getattr__(self):
 
-        self.dialog.show()
         self.dialog.hide()
+        self.dialog.show()
 
     def test___init__(self):
 
@@ -38,3 +39,10 @@ class TestGladeDialog(unittest.TestCase):
 
         self.dialog.props.visible = False
         self.dialog.props.visible = True
+        self.dialog.props.visible = False
+
+    def test_run(self):
+
+        respond = lambda *args: gtk.RESPONSE_DELETE_EVENT
+        self.dialog._dialog.run = respond
+        self.dialog.run()

@@ -9,15 +9,15 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Website URLs."""
 
-__all__ = ["BUG_REPORT_URL", "HOMEPAGE_URL", "REGEX_HELP_URL"]
+__all__ = ("BUG_REPORT_URL", "HOMEPAGE_URL", "REGEX_HELP_URL",)
 
-BUG_REPORT_URL = "http://gna.org/bugs/?func=additem&group=gaupol"
+BUG_REPORT_URL = "http://bugzilla.gnome.org/enter_bug.cgi?product=gaupol"
 HOMEPAGE_URL = "http://home.gna.org/gaupol/"
 REGEX_HELP_URL = "http://docs.python.org/lib/re-syntax.html"

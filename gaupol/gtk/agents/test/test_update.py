@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,22 +9,29 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol.gtk
 
-from gaupol.gtk import unittest
 
-
-class TestUpdateAgent(unittest.TestCase):
+class TestUpdateAgent(gaupol.gtk.TestCase):
 
     def setup_method(self, method):
 
         self.application = self.get_application()
         self.application.add_new_page(self.get_page())
+
+    def test__update_revert(self):
+
+        page = self.application.get_current_page()
+        page.project.remove_subtitles((0,))
+        page.project.remove_subtitles((0,))
+        self.application.update_gui()
+        page.project.undo()
+        self.application.update_gui()
 
     def test_flash_message(self):
 
@@ -34,32 +41,32 @@ class TestUpdateAgent(unittest.TestCase):
     def test_on_activate_next_project_activate(self):
 
         self.application.notebook.set_current_page(0)
-        self.application.on_activate_next_project_activate()
+        self.application.get_action("activate_next_project").activate()
 
     def test_on_activate_previous_project_activate(self):
 
         self.application.notebook.set_current_page(1)
-        self.application.on_activate_previous_project_activate()
+        self.application.get_action("activate_previous_project").activate()
 
     def test_on_conf_application_window_notify_toolbar_style(self):
 
-        for style in gaupol.gtk.TOOLBAR_STYLE.members:
+        for style in gaupol.gtk.toolbar_styles:
             gaupol.gtk.conf.application_window.toolbar_style = style
 
     def test_on_move_tab_left_activate(self):
 
         self.application.notebook.set_current_page(1)
-        self.application.on_move_tab_left_activate()
+        self.application.get_action("move_tab_left").activate()
 
     def test_on_move_tab_right_activate(self):
 
         self.application.notebook.set_current_page(0)
-        self.application.on_move_tab_right_activate()
+        self.application.get_action("move_tab_right").activate()
 
     def test_on_notebook_page_reordered(self):
 
-        self.application.notebook.set_current_page(0)
-        self.application.on_move_tab_right_activate()
+        self.application.notebook.set_current_page(1)
+        self.application.get_action("move_tab_left").activate()
 
     def test_on_notebook_switch_page(self):
 
@@ -69,21 +76,22 @@ class TestUpdateAgent(unittest.TestCase):
     def test_on_view_move_cursor(self):
 
         page = self.application.get_current_page()
-        page.view.set_focus(0, 1)
-        page.view.set_focus(1, 2)
+        page.view.emit("move-cursor", 1, 1)
+        page.view.emit("move-cursor", 1, 1)
+        gaupol.gtk.util.iterate_main()
 
     def test_on_view_selection_changed(self):
 
         page = self.application.get_current_page()
-        page.view.select_rows([0])
-        page.view.select_rows([1])
+        page.view.select_rows((0,))
+        page.view.select_rows((1,))
 
     def test_on_window_window_state_event(self):
 
-        self.application.window.maximize()
         self.application.window.unmaximize()
         self.application.window.maximize()
         self.application.window.unmaximize()
+        gaupol.gtk.util.iterate_main()
 
     def test_push_message(self):
 
@@ -93,5 +101,5 @@ class TestUpdateAgent(unittest.TestCase):
     def test_update_gui(self):
 
         self.application.update_gui()
-        self.application.on_close_all_projects_activate()
+        self.application.get_action("close_all_projects").activate()
         self.application.update_gui()

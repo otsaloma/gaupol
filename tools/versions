@@ -9,7 +9,7 @@ import sys
 print "%d.%d.%d" % sys.version_info[:3]
 
 try:
-    print "GTK:",
+    print "GTK+:",
     import gtk
     print "%d.%d.%d" % gtk.gtk_version
 except ImportError:

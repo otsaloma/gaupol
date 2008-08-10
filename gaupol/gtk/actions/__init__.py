@@ -1,4 +1,4 @@
-# Copyright (C) 2007 Osmo Salomaa
+# Copyright (C) 2007-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,42 +9,23 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """UI manager actions."""
 
 import gaupol.gtk
 
+from gaupol.gtk.actions.edit import *
+from gaupol.gtk.actions.file import *
+from gaupol.gtk.actions.format import *
+from gaupol.gtk.actions.help import *
+from gaupol.gtk.actions.menu import *
+from gaupol.gtk.actions.position import *
+from gaupol.gtk.actions.search import *
+from gaupol.gtk.actions.text import *
+from gaupol.gtk.actions.view import *
 
-def _get_actions():
-    """Get all Action classes."""
-
-    actions = []
-    # pylint: disable-msg=W0621
-    from .action import __all__
-    bases = set((__all__))
-    for module in _get_modules():
-        names = set(x for x in dir(module) if x.endswith("Action")) - bases
-        for value in (getattr(module, x) for x in names):
-            globals()[value.__name__] = value
-            actions.append(value.__name__)
-    return gaupol.gtk.util.get_sorted_unique(actions)
-
-def _get_modules():
-    """Get all modules that define Actions."""
-
-    from . import edit
-    from . import file
-    from . import format
-    from . import help
-    from . import menu
-    from . import position
-    from . import search
-    from . import text
-    from . import view
-    return locals().values()
-
-__all__ = _get_actions()
+__all__ = gaupol.util.get_all(dir(), r"Action$")

@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,10 +9,10 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Saving subtitle files."""
 
@@ -30,17 +30,18 @@ class SaveAgent(gaupol.Delegate):
 
     __metaclass__ = gaupol.Contractual
 
-    def _convert_tags(self, texts, from_format, to_format):
+    def _convert_tags(self, subtitles, doc, from_format, to_format):
         """Convert tags in texts and return changed indices."""
 
-        changed_indexes = []
-        converter = gaupol.TagConverter(from_format, to_format)
-        for i, text in enumerate(texts):
+        changed_indices = []
+        converter = gaupol.MarkupConverter(from_format, to_format)
+        for i, subtitle in enumerate(subtitles):
+            text = subtitle.get_text(doc)
             new_text = converter.convert(text)
             if new_text != text:
-                texts[i] = new_text
-                changed_indexes.append(i)
-        return changed_indexes
+                subtitle.set_text(doc, new_text)
+                changed_indices.append(i)
+        return changed_indices
 
     def _copy_file_ensure(self, value, source, destination):
         assert (not value) or os.path.isfile(destination)
@@ -52,7 +53,7 @@ class SaveAgent(gaupol.Delegate):
             shutil.copyfile(source, destination)
             return True
         except IOError:
-            gaupol.util.handle_write_io(sys.exc_info(), destination)
+            gaupol.util.print_write_io(sys.exc_info(), destination)
         return False
 
     def _move_file_ensure(self, value, source, destination):
@@ -65,7 +66,7 @@ class SaveAgent(gaupol.Delegate):
             shutil.move(source, destination)
             return True
         except (IOError, OSError):
-            gaupol.util.handle_write_io(sys.exc_info(), destination)
+            gaupol.util.print_write_io(sys.exc_info(), destination)
         return False
 
     def _remove_file_ensure(self, value, path):
@@ -78,7 +79,7 @@ class SaveAgent(gaupol.Delegate):
             os.remove(path)
             return True
         except OSError:
-            gaupol.util.handle_remove_os(sys.exc_info(), path)
+            gaupol.util.print_remove_os(sys.exc_info(), path)
         return False
 
     def _save(self, doc, props, keep_changes):
@@ -87,73 +88,62 @@ class SaveAgent(gaupol.Delegate):
         props should be a sequence of path, format, encoding, newline.
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
-        Return file, texts, changed indices.
+        Return file, changed indices.
         """
         file = self.get_file(doc)
         path, format, encoding, newline = props or ([None] * 4)
-        texts = [x.get_text(doc) for x in self.subtitles]
-
-        changed_indexes = []
-        # Convert tags if saving in different format.
+        orig_texts = [x.get_text(doc) for x in self.subtitles]
+        changed_indices = []
         if (not None in (file, format)) and (file.format != format):
-            args = (texts, file.format, format)
-            changed_indexes = self._convert_tags(*args)
-
-        # Create new file if needed.
+            args = (self.subtitles, doc, file.format, format)
+            changed_indices = self._convert_tags(*args)
         if not None in (path, format, encoding, newline):
-            cls = gaupol.files.get_class(format)
-            new_file = cls(path, encoding, newline)
+            new_file = gaupol.files.new(format, path, encoding, newline)
             if (file is not None) and (file.format == format):
                 new_file.copy_from(file)
             file = new_file
+        self._write_file(file, self.subtitles, doc)
+        if not keep_changes:
+            for i in changed_indices:
+                self.subtitles[i].set_text(doc, orig_texts[i])
+            changed_indices = []
+        return file, changed_indices
 
-        self._write_file(file, texts)
-        return file, texts, changed_indexes
-
-    @gaupol.util.asserted_return
-    def _update_mode(self, props, keep_changes, new_main_file):
+    def _update_mode(self, new_main_file):
         """Update the mode of subtitles if main file's format has changed.
 
         props should be a sequence of path, format, encoding, newline.
         """
-        assert keep_changes
-        assert props is not None
-        assert len(props) >= 2
-        format = props[1]
-        assert format is not None
-        assert self.main_file is not None
-        assert format != self.main_file.format
+        if self.main_file is None: return
+        if new_main_file.mode == self.main_file.mode: return
         for i, subtitle in enumerate(self.subtitles):
             subtitle.mode = new_main_file.mode
         self.emit("positions-changed", range(len(self.subtitles)))
 
-    def _write_file_ensure(self, value, file, texts):
+    def _write_file_ensure(self, value, file, subtitles, doc):
         assert os.path.isfile(file.path)
 
-    def _write_file(self, file, texts):
+    def _write_file(self, file, subtitles, doc):
         """Write subtitle file.
 
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
-        starts = [x.get_start(file.mode) for x in self.subtitles]
-        ends = [x.get_end(file.mode) for x in self.subtitles]
         file_existed = os.path.isfile(file.path)
-        if file_existed:
+        if os.path.isfile(file.path):
             backup_path = gaupol.temp.create(".bak")
             gaupol.temp.close(backup_path)
             backup_success = self._copy_file(file.path, backup_path)
         try:
-            write_success = False
-            file.write(starts, ends, texts)
-            write_success = True
-        finally:
-            if write_success and file_existed and backup_success:
-                self._remove_file(backup_path)
-            elif (not write_success) and (not file_existed):
-                self._remove_file(file.path)
-            elif (not write_success) and file_existed and backup_success:
+            file.write(subtitles, doc)
+        except (IOError, UnicodeError):
+            if file_existed and backup_success:
                 self._move_file(backup_path, file.path)
+            elif (not file_existed):
+                self._remove_file(file.path)
+            raise
+        if file_existed and backup_success:
+            self._remove_file(backup_path)
 
     def save(self, doc, props, keep_changes=True):
         """Save document's subtitle file.
@@ -162,9 +152,9 @@ class SaveAgent(gaupol.Delegate):
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
-        if doc == gaupol.DOCUMENT.MAIN:
+        if doc == gaupol.documents.MAIN:
             return self.save_main(props, keep_changes)
-        if doc == gaupol.DOCUMENT.TRAN:
+        if doc == gaupol.documents.TRAN:
             return self.save_translation(props, keep_changes)
         raise ValueError
 
@@ -179,15 +169,13 @@ class SaveAgent(gaupol.Delegate):
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
-        args = (gaupol.DOCUMENT.MAIN, props, keep_changes)
-        main_file, texts, changed_indexes = self._save(*args)
-        self._update_mode(props, keep_changes, main_file)
+        args = (gaupol.documents.MAIN, props, keep_changes)
+        main_file, changed_indices = self._save(*args)
         if keep_changes:
+            self._update_mode(main_file)
             self.main_file = main_file
-            for i, text in enumerate(texts):
-                self.subtitles[i].main_text = text
             self.main_changed = 0
-            self.emit("main-texts-changed", changed_indexes)
+            self.emit("main-texts-changed", changed_indices)
         self.emit("main-file-saved", self.main_file)
 
     def save_translation_ensure(self, value, props=None, keep_changes=True):
@@ -201,12 +189,10 @@ class SaveAgent(gaupol.Delegate):
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
-        args = (gaupol.DOCUMENT.TRAN, props, keep_changes)
-        tran_file, texts, changed_indexes = self._save(*args)
+        args = (gaupol.documents.TRAN, props, keep_changes)
+        tran_file, changed_indices = self._save(*args)
         if keep_changes:
             self.tran_file = tran_file
-            for i, text in enumerate(texts):
-                self.subtitles[i].tran_text = text
             self.tran_changed = 0
-            self.emit("translation-texts-changed", changed_indexes)
+            self.emit("translation-texts-changed", changed_indices)
         self.emit("translation-file-saved", self.tran_file)

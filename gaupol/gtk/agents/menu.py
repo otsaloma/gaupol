@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,10 +9,10 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Building and updating dynamic menus."""
 
@@ -69,9 +69,12 @@ class MenuAgent(gaupol.Delegate):
 
         menu = gtk.RecentChooserMenu(self.recent_manager)
         menu.set_show_not_found(False)
-        menu.set_show_tips(False)
+        menu.set_show_tips(True)
         menu.set_sort_type(gtk.RECENT_SORT_MRU)
-        group = ("gaupol-main", "gaupol-translation")[doc]
+        if doc == gaupol.documents.MAIN:
+            group = "gaupol-main"
+        elif doc == gaupol.documents.TRAN:
+            group = "gaupol-translation"
         recent_filter = gtk.RecentFilter()
         recent_filter.add_group(group)
         menu.add_filter(recent_filter)
@@ -133,17 +136,16 @@ class MenuAgent(gaupol.Delegate):
     def on_open_button_show_menu(self, *args):
         """Build and attach a new recent menu on the open button."""
 
-        menu = self._get_recent_menu(gaupol.gtk.DOCUMENT.MAIN)
+        menu = self._get_recent_menu(gaupol.documents.MAIN)
         callback = self.on_recent_main_menu_item_activated
         menu.connect("item-activated", callback)
         self.get_tool_item("open_main_files").set_menu(menu)
         gaupol.gtk.util.iterate_main()
 
-    @gaupol.gtk.util.asserted_return
     def on_page_tab_widget_button_press_event(self, button, event):
         """Display a pop-up menu with tab-related actions."""
 
-        assert event.button == 3
+        if event.button != 3: return
         menu = self.uim.get_widget("/ui/tab_popup")
         menu.popup(None, None, None, event.button, event.time)
 
@@ -168,7 +170,6 @@ class MenuAgent(gaupol.Delegate):
         menu.show_all()
         self.get_tool_item("redo_action").set_menu(menu)
 
-    @gaupol.gtk.util.asserted_return
     def on_show_projects_menu_activate(self, *args):
         """Add all open projects to the projects menu."""
 
@@ -178,8 +179,8 @@ class MenuAgent(gaupol.Delegate):
         if self._projects_id is not None:
             self.uim.remove_ui(self._projects_id)
         page = self.get_current_page()
-        assert page is not None
-        ui = '<ui><menubar name="menubar">'
+        if page is None: return
+        ui  = '<ui><menubar name="menubar">'
         ui += '<menu name="projects" action="show_projects_menu">'
         ui += '<placeholder name="open">'
         for i, page in enumerate(self.pages):
@@ -194,7 +195,7 @@ class MenuAgent(gaupol.Delegate):
         """Show the recent main file menu."""
 
         item = self.get_menu_item("show_recent_main_menu")
-        menu = self._get_recent_menu(gaupol.gtk.DOCUMENT.MAIN)
+        menu = self._get_recent_menu(gaupol.documents.MAIN)
         callback = self.on_recent_main_menu_item_activated
         menu.connect("item-activated", callback)
         item.set_submenu(menu)
@@ -204,7 +205,7 @@ class MenuAgent(gaupol.Delegate):
         """Show the recent translation file menu."""
 
         item = self.get_menu_item("show_recent_translation_menu")
-        menu = self._get_recent_menu(gaupol.gtk.DOCUMENT.TRAN)
+        menu = self._get_recent_menu(gaupol.documents.TRAN)
         callback = self.on_recent_translation_menu_item_activated
         menu.connect("item-activated", callback)
         item.set_submenu(menu)

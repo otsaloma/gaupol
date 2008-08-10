@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,15 +9,16 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-from gaupol.gtk import unittest
+import gaupol.gtk
+import gtk
 
 
-class TestMenuAgent(unittest.TestCase):
+class TestMenuAgent(gaupol.gtk.TestCase):
 
     def setup_method(self, method):
 
@@ -26,28 +27,51 @@ class TestMenuAgent(unittest.TestCase):
 
     def test_on_open_button_show_menu(self):
 
-        self.application.on_open_button_show_menu()
+        item = self.application.get_tool_item("open_main_files")
+        item.emit("show-menu")
 
     def test_on_redo_button_show_menu(self):
 
-        self.application.on_redo_button_show_menu()
+        page = self.application.get_current_page()
+        page.project.remove_subtitles((0,))
+        page.project.remove_subtitles((0,))
+        page.project.undo(2)
+        item = self.application.get_tool_item("redo_action")
+        item.emit("show-menu")
+        item.get_menu().get_children()[0].activate()
 
     def test_on_show_projects_menu_activate(self):
 
-        self.application.on_show_projects_menu_activate()
+        self.application.open_main_file(self.get_subrip_path())
+        self.application.open_main_file(self.get_subrip_path())
+        self.application.get_action("show_projects_menu").activate()
+        self.application.get_action("show_file_menu").activate()
+        self.application.get_action("show_projects_menu").activate()
 
     def test_on_show_recent_main_menu_activate(self):
 
-        self.application.on_show_recent_main_menu_activate()
+        self.application.open_main_file(self.get_subrip_path())
+        self.application.open_main_file(self.get_subrip_path())
+        self.application.get_action("show_recent_main_menu").activate()
 
     def test_on_show_recent_translation_menu_activate(self):
 
-        self.application.on_show_recent_translation_menu_activate()
+        self.application.open_main_file(self.get_subrip_path())
+        self.application.open_translation_file(self.get_subrip_path())
+        self.application.open_main_file(self.get_subrip_path())
+        self.application.open_translation_file(self.get_subrip_path())
+        self.application.get_action("show_recent_translation_menu").activate()
 
     def test_on_undo_button_show_menu(self):
 
-        self.application.on_undo_button_show_menu()
+        page = self.application.get_current_page()
+        page.project.remove_subtitles((0,))
+        page.project.remove_subtitles((0,))
+        item = self.application.get_tool_item("undo_action")
+        item.emit("show-menu")
+        item.get_menu().get_children()[0].activate()
 
     def test_set_menu_notify_events(self):
 
         self.application.set_menu_notify_events("main")
+        self.application.set_menu_notify_events("projects")

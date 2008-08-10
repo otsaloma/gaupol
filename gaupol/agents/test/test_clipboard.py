@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,17 +9,15 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
 
-from gaupol import unittest
 
-
-class TestClipboardAgent(unittest.TestCase):
+class TestClipboardAgent(gaupol.TestCase):
 
     def setup_method(self, method):
 
@@ -29,37 +27,37 @@ class TestClipboardAgent(unittest.TestCase):
 
         text_0 = self.project.subtitles[0].main_text
         text_2 = self.project.subtitles[2].main_text
-        self.project.copy_texts([0, 2], gaupol.DOCUMENT.MAIN)
+        self.project.copy_texts((0, 2), gaupol.documents.MAIN)
         texts = self.project.clipboard.get_texts()
         assert texts == [text_0, None, text_2]
 
-    @unittest.reversion_test
+    @gaupol.deco.reversion_test
     def test_cut_texts(self):
 
         text_0 = self.project.subtitles[0].main_text
         text_2 = self.project.subtitles[2].main_text
-        self.project.cut_texts([0, 2], gaupol.DOCUMENT.MAIN)
+        self.project.cut_texts((0, 2), gaupol.documents.MAIN)
         texts = self.project.clipboard.get_texts()
         assert texts == [text_0, None, text_2]
         assert self.project.subtitles[0].main_text == ""
         assert self.project.subtitles[2].main_text == ""
 
-    @unittest.reversion_test
+    @gaupol.deco.reversion_test
     def test_paste_texts__excess(self):
 
         subtitles = self.project.subtitles
-        self.project.copy_texts([0, 1], gaupol.DOCUMENT.TRAN)
+        self.project.copy_texts((0, 1), gaupol.documents.TRAN)
         last_index = len(subtitles) - 1
-        indices = self.project.paste_texts(last_index, gaupol.DOCUMENT.MAIN)
-        assert indices == [last_index, last_index + 1]
+        indices = self.project.paste_texts(last_index, gaupol.documents.MAIN)
+        assert list(indices) == [last_index, last_index + 1]
         assert len(subtitles) == last_index + 2
 
-    @unittest.reversion_test
+    @gaupol.deco.reversion_test
     def test_paste_texts__fit(self):
 
         subtitles = self.project.subtitles
-        self.project.copy_texts([0, 1], gaupol.DOCUMENT.TRAN)
-        indices = self.project.paste_texts(2, gaupol.DOCUMENT.MAIN)
-        assert indices == [2, 3]
-        assert subtitles[0].main_text == subtitles[2].main_text
-        assert subtitles[1].main_text == subtitles[3].main_text
+        self.project.copy_texts((0, 1), gaupol.documents.TRAN)
+        indices = self.project.paste_texts(2, gaupol.documents.MAIN)
+        assert indices == (2, 3)
+        assert subtitles[0].tran_text == subtitles[2].main_text
+        assert subtitles[1].tran_text == subtitles[3].main_text

@@ -9,21 +9,19 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
+import gaupol
 import urllib
 
-from gaupol import unittest
-from .. import urls
 
-
-class TestModule(unittest.TestCase):
+class TestModule(gaupol.TestCase):
 
     def test_attributes(self):
 
-        urllib.urlopen(urls.BUG_REPORT_URL)
-        urllib.urlopen(urls.HOMEPAGE_URL)
-        urllib.urlopen(urls.REGEX_HELP_URL)
+        urllib.urlopen(gaupol.BUG_REPORT_URL)
+        urllib.urlopen(gaupol.HOMEPAGE_URL)
+        urllib.urlopen(gaupol.REGEX_HELP_URL)

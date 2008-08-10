@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2007 Osmo Salomaa
+# Copyright (C) 2006-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,29 +9,53 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-from gaupol.gtk import unittest
-from .. import main
+import gaupol.gtk
 
 
-class TestModule(unittest.TestCase):
+class TestModule(gaupol.gtk.TestCase):
 
-    def test_check_dependencies(self):
+    def test__check_dependencies(self):
 
-        main._check_dependencies()
+        gaupol.gtk.main._check_dependencies()
 
-    def test_list_encodings(self):
+    def test__init_application(self):
 
-        main._list_encodings()
+        opts = type("", (object,), {})
+        opts.encoding = "ascii"
+        opts.translation_file = self.get_subrip_path()
+        opts.adapt_translation = True
+        opts.video_file = self.get_subrip_path()
+        args = [self.get_subrip_path(), "+3"]
+        gaupol.gtk.main._init_application(opts, args)
 
-    def test_move_eggs(self):
+    def test__init_configuration(self):
 
-        main._move_eggs()
+        path = self.get_subrip_path()
+        open(path, "w").write("\n")
+        gaupol.gtk.main._init_configuration(path)
 
-    def test_show_version(self):
+    def test__init_debugging(self):
 
-        main._show_version()
+        gaupol.gtk.main._init_debugging(True)
+        gaupol.gtk.main._init_debugging(False)
+
+    def test__list_encodings(self):
+
+        gaupol.gtk.main._list_encodings()
+
+    def test__move_eggs(self):
+
+        gaupol.gtk.main._move_eggs()
+
+    def test__parse_args(self):
+
+        gaupol.gtk.main._parse_args([])
+
+    def test__show_version(self):
+
+        gaupol.gtk.main._show_version()

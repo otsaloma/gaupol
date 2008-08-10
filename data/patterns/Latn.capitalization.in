@@ -1,6 +1,6 @@
 [CapitalizationPattern]
-_Name=Sentences
-_Description=Capitalize the first words of sentences
+_Name=Sentence
+_Description=Capitalize the first word of a sentence
 Capitalize=After
 Pattern=((?<!\..)\.|[?!])["']?( |$)
 Flags=DOTALL,MULTILINE,UNICODE

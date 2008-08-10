@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,84 +9,85 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Actions that provide top-level menus."""
 
 import gaupol
 _ = gaupol.i18n._
 
-from .action import Action, TopMenuAction
 
-
-class ShowEditMenuAction(TopMenuAction):
+class ShowEditMenuAction(gaupol.gtk.TopMenuAction):
 
     """Show the 'Edit' menu."""
 
     def __init__(self):
 
-        TopMenuAction.__init__(self, "show_edit_menu")
+        gaupol.gtk.TopMenuAction.__init__(self, "show_edit_menu")
         self.props.label = _("_Edit")
 
 
-class ShowFileMenuAction(TopMenuAction):
+class ShowFileMenuAction(gaupol.gtk.TopMenuAction):
 
     """Show the 'File' menu."""
 
     def __init__(self):
 
-        TopMenuAction.__init__(self, "show_file_menu")
+        gaupol.gtk.TopMenuAction.__init__(self, "show_file_menu")
         self.props.label = _("_File")
 
 
-class ShowHelpMenuAction(TopMenuAction):
+class ShowHelpMenuAction(gaupol.gtk.TopMenuAction):
 
     """Show the 'Help' menu."""
 
     def __init__(self):
 
-        TopMenuAction.__init__(self, "show_help_menu")
+        gaupol.gtk.TopMenuAction.__init__(self, "show_help_menu")
         self.props.label = _("_Help")
 
 
-class ShowProjectsMenuAction(Action):
+class ShowProjectsMenuAction(gaupol.gtk.Action):
 
     """Show the 'Projects' menu."""
 
     def __init__(self):
 
-        Action.__init__(self, "show_projects_menu")
+        gaupol.gtk.Action.__init__(self, "show_projects_menu")
         self.props.label = _("_Projects")
 
 
-class ShowTextMenuAction(TopMenuAction):
+class ShowTextMenuAction(gaupol.gtk.TopMenuAction):
 
     """Show the 'Text' menu."""
 
     def __init__(self):
 
-        TopMenuAction.__init__(self, "show_text_menu")
+        gaupol.gtk.TopMenuAction.__init__(self, "show_text_menu")
         self.props.label = _("_Text")
 
 
-class ShowToolsMenuAction(TopMenuAction):
+class ShowToolsMenuAction(gaupol.gtk.TopMenuAction):
 
     """Show the 'Tools' menu."""
 
     def __init__(self):
 
-        TopMenuAction.__init__(self, "show_tools_menu")
+        gaupol.gtk.TopMenuAction.__init__(self, "show_tools_menu")
         self.props.label = _("T_ools")
 
 
-class ShowViewMenuAction(TopMenuAction):
+class ShowViewMenuAction(gaupol.gtk.TopMenuAction):
 
     """Show the 'View' menu."""
 
     def __init__(self):
 
-        TopMenuAction.__init__(self, "show_view_menu")
+        gaupol.gtk.TopMenuAction.__init__(self, "show_view_menu")
         self.props.label = _("_View")
+
+
+__all__ = gaupol.util.get_all(dir(), r"Action$")

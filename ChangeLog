@@ -1,3 +1,751 @@
+2008-08-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* setup.py: Update with correct paths for moved files.
+
+2008-08-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/assistants.py (_LocalePage._on_tree_view_cell_toggled):
+	Fix row to point to child model instead of the filter.
+
+	* gaupol/gtk/assistants.py (_LocalePage._on_language_combo_changed)
+	(_LocalePage._on_script_combo_changed ): Fix updates of lower combo
+	boxes.
+
+	* gaupol/gtk/assistants.py (_ProgressPage): Fix progress bar updating
+	with multiple pages.
+
+2008-08-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/tags/subrip.py (SubRip.clean): Fix regular expressions that
+	matched from the start of one tag to the end of another.
+
+2008-08-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/patterns/: Comment patterns. Split regular expressions to
+	multiple patterns. Improve common error patterns for spaces around
+	quotation marks.
+
+	* data/patterns/Latn-en-US.common-error.in: New file for US English
+	Latin patterns.
+
+2008-08-04  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/patternman.py (PatternManager._write_config_to_file): Write
+	only one entry per pattern name.
+
+2008-08-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/assistants.py (_LocalePage): Fix the tree view model
+	filter.
+
+2008-08-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/samples/: Regenerate samples and move them away from the doc dir
+	as they're used as data for unit tests.
+
+	* gaupol/unittest.py (TestCase.get_file_text): Read sample files from
+	gaupol.DATA_DIR/samples.
+
+2008-08-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/files/mpsub.py (MPsub.write_to_file): Do not add two newlines
+	to the end of the file.
+
+2008-08-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/util.py (delay_add): Fix the passing of arguments to
+	'call_function'.
+
+2008-07-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/gaupol.desktop.in: Add GenericName field and mimetypes
+	application/x-subrip, text/x-microdvd, text/x-mpsub, text/x-ssa and
+	text/x-subviewer.
+
+2008-07-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* tools/add-changelog:
+	* tools/data/pylintrc:
+	* tools/generate-tests:
+	* tools/hide:
+	* tools/list-glade:
+	* tools/nose-run:
+	* tools/pylint:
+	* tools/translate:
+	Remove and obsolete unecessary tools.
+
+2008-07-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/enumeration.py (EnumerationItem.__cmp__): Use isinstance to
+	check if other is an enumeration item. Return 1 if other is not an
+	integer at all.
+
+	* gaupol/enumeration.py (Enumeration.__contains__): Use isinstance to
+	check if item is an enumeration item.
+
+2008-07-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/__init__.py: Remove cursor attributes.
+
+2008-07-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/dialogs/spellcheck.py (SpellCheckDialog._init_checker):
+	Fix handling of enchant.Error's message.
+
+2008-07-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/dialogs/append.py:
+	* gaupol/gtk/dialogs/file.py:
+	* gaupol/gtk/dialogs/open.py:
+	* gaupol/gtk/dialogs/save.py:
+	* gaupol/gtk/dialogs/video.py:
+	Move from gaupol/gtk/dialogs/file/.
+
+2008-07-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/util.py (delay_add): New function.
+
+2008-07-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/assistants.py: Refactor and move from
+	gaupol/gtk/assistants/. Use a tree model filter to show only the first
+	of many patterns that have the same name.
+
+2008-07-21  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/temp.py (create_directory, remove_directory): New functions.
+
+2008-07-18  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/util.py (document_to_text_field, text_field_to_document):
+	New functions.
+
+2008-07-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/enumeration.py (Enumeration.__contains__): Allow checks for
+	plain integers.
+
+	* gaupol/gtk/fields.py: Add attributes 'is_position' and 'is_text' and
+	remove attributes 'identifier' and 'source'.
+
+	* gaupol/gtk/view.py: Rewrite handling of columns and fields.
+
+2008-07-15  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/fields.py: Rename from gaupol/gtk/columns.py.
+
+2008-07-15  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/containers.py: Rename from gaupol/fields.py.
+
+2008-07-15  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/agents/util.py (get_column_action, get_framerate_action)
+	(get_mode_action): New methods.
+
+2008-07-15  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/enumeration.py (Enumeration.__contains__): Return True only
+	for items of the enumeration, i.e. check for identity, not value.
+
+2008-07-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/action.py: Move from gaupol/gtk/actions/action.py.
+
+2008-07-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/errors.py (AffirmationError): New error.
+
+	* gaupol/util.py (affirm): New function.
+
+	* gaupol/gtk/actions/action.py (Action): Use AffirmationError instead
+	of AssertionError with sensitivity updates.
+
+2008-07-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/view.py (View._on_columns_changed): Save the new column
+	order to conf only for default columns.
+
+2008-07-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/view.py (View._init_columns): Add only default columns.
+
+2008-07-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/enumeration.py (Enumeration): Make this an actual list.
+
+	* gaupol/gtk/columns.py: Add attribute 'source'.
+
+	* gaupol/gtk/view.py (View._on_columns_changed): Save the new column
+	order to conf if the amount of columns did not change.
+
+2008-07-13  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/glade/open-dialog.glade:
+	* data/glade/save-dialog.glade:
+	Fix 'GtkWarning: gtk_widget_grab_default: assertion
+	`GTK_WIDGET_CAN_DEFAULT (widget)' failed'.
+
+	* gaupol/gtk/dialogs/file/save.py (SaveDialog.set_name): Remove
+	workaround of GTK+ bug #419737.
+
+2008-07-13  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/enumeration.py (Enumeration.__contains__): New method.
+
+2008-07-13  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/columns.py: Restore module.
+
+2008-07-13  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/enumeration.py (EnumerationItem.__cmp__): Raise ValueError if
+	trying to compare enumeration items of different enumerations.
+
+2008-07-13  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/dialogs/__init__.py: Empty this file and import dialogs
+	directly in gaupol/gtk/__init__.py.
+
+2008-07-13  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/util.py (install_module):
+	* gaupol/gtk/util.py (install_module):
+	New functions.
+
+	* gaupol/files/__init__.py:
+	* gaupol/gtk/__init__.py:
+	* gaupol/tags/__init__.py:
+	Call gaupol.util.install_module and remove relative imports.
+
+2008-07-12  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/page.py: Rewrite handling of columns and their indices.
+	Migrate from gaupol.Tooltips to gtk.Tooltip.
+
+2008-07-09  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/columns.py: Remove.
+
+	* gaupol/gtk/view.py: Rewrite handling of columns and their indices.
+
+2008-07-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/tooltips.py: Remove in favor of gtk.Tooltip.
+
+2008-07-05  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/util.py: Don't import from gaupol.util.
+	(idle_method): Remove unused function.
+
+	* gaupol/gtk/page.py (document_to_text_column, is_position_column)
+	(is_text_column, text_column_to_document): Move from
+	gaupol/gtk/util.py.
+
+2008-07-04  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/gaupol.gtk.conf.spec: Update enumeration names. Change default
+	values of None of string options to blank strings.
+
+	* gaupol/gtk/conf/config.py: Update enumeration names.
+	(translate_none): Remove as no longer needed.
+
+	* gaupol/gtk/conf/configobj.py:
+	* gaupol/gtk/conf/validate.py:
+	Update to version 4.5.3.
+
+2008-07-04  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/columns.py: Split from gaupol/gtk/const.py.
+
+2008-07-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/errors.py: Don't import from gaupol.errors.
+
+2008-07-02  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/styles.py:
+	* gaupol/gtk/targets.py:
+	* gaupol/gtk/units.py:
+	Split from gaupol/gtk/const.py.
+
+	* gaupol/gtk/const.py: Remove.
+
+2008-07-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/unittest.py: Move from unittest/case.py.
+
+2008-06-29  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/agents/text.py (TextAgent.break_lines): Add a default value of
+	None to argument 'max_deviation' to use liner's default.
+
+2008-06-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/file.py (SubtitleFile._get_subtitle): New method.
+
+	* gaupol/files/*.py (*.read): Use _get_subtitle.
+
+2008-06-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/agents/preview.py (PreviewAgent.guess_video_path): Use
+	case-insensitive match for video file extensions.
+
+2008-06-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/agents/edit.py (EditAgent.insert_blank_subtitles): Fix
+	handling of negative positions.
+
+2008-06-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/agents/open.py (OpenAgent.open_main): Set self.tran_file to
+	None after successful opening.
+
+	* gaupol/agents/util.py (UtilityAgent.get_line_lengths): Remove unused
+	method.
+
+	* gaupol/agents/util.py (UtilityAgent.get_markup)
+	(.get_markup_clean_func, get_markup_tag_regex): Rename.
+
+2008-06-22  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/agents/save.py: Adapt to the new SubtitleFile inteface.
+
+2008-06-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/agents/open.py: Adapt to the new SubtitleFile inteface.
+
+	* gaupol/files/tmplayer.py (TMPlayer.read): Fix the value set to the
+	end time of the last subtitle.
+
+	* gaupol/calculator.py (Calculator.compare): New method.
+
+2008-06-08  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/patternman.py (PatternManager._read_patterns_from_file): Allow
+	comments starting with number signs in pattern files.
+
+	* gaupol/patternman.py (PatternManager.save_config): Rename from save
+	and save only configuration files.
+
+	* gaupol/patternman.py (PatternManager.get_patterns): Resolve name
+	clashes using the 'Policy' field in patterns.
+
+2008-06-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/converter.py (MarkupConverter): Rename from TagConverter.
+
+2008-06-01  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/markup.py: Rewrite with a better internal interface.
+
+	* gaupol/tags/*.py: Adapt to the new Markup interface.
+
+2008-05-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/countries.py (is_valid): New function.
+	(countries): Make private.
+
+	* gaupol/languages.py (is_valid): New function.
+	(languages): Make private.
+
+	* gaupol/locales.py (get_all): New function.
+
+	* gaupol/scripts.py (is_valid): New function.
+	(scripts): Make private.
+
+2008-05-12  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/deco.py: New Module for decorators.
+
+	* gaupol/util.py: Move decorators to gaupol/deco.py.
+
+2008-03-27  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/codes/iso_15924.xml: New file.
+
+	* data/codes/iso_3166.xml: Update.
+
+	* data/codes/iso_639.xml: Update.
+
+	* gaupol/scripts.py: Initiliaze the scripts dictionary from
+	iso_15924.xml and get translations from the 'iso_15924' domain.
+
+2008-03-26  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/markup.py: Move from gaupol/tags/taglib.py. Use HTML-style
+	tags for font color, font face and font size tags.
+	(Markup): Rename from TagLibrary.
+
+	* gaupol/__init__.py: Import Markup.
+
+2008-03-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/util.py (title_to_lower_case): New method.
+
+2008-03-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/subtitle.py (Subtitle.calc): Make public.
+	(Subtitle.has_container): New method.
+
+2008-03-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/files/__init__.py (add_class): New method.
+	(new) New method to replace get_class.
+
+2008-03-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/files/mpsub.py: Adapt to new SubtitleFile API.
+	(MPsub._get_frames): Fix to return strings.
+
+2008-03-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/unittest.py (TestCase. get_file_path, get_file_text): Add
+	optional argument 'name' to use arbitrary sample file.
+
+2008-03-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/files/ssa.py: Rewrite to handle arbitrary ordering of known
+	event fields. Adapt to new SubtitleFile API.
+
+	* gaupol/files/ass.py: Adapt to new ssa.py.
+
+2008-03-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/files/subviewer2.py: Adapt to new SubtitleFile API.
+
+2008-03-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/files/subrip.py: Adapt to new SubtitleFile API.
+	(SubRip.read): Read extended SubRip coordinates if they exist.
+	(SubRip.write_to_file): Write extended SubRip coordinates if the
+	container has been initialized and the coordinates make some sense.
+
+2008-03-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/fields.py (SubStationAlpha. margin_l, margin_r, margin_v):
+	Use integers instead of strings and a default value of 0.
+
+2008-03-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/files/microdvd.py: Adapt to new SubtitleFile API.
+
+2008-03-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/files/mpl2.py: Adapt to new SubtitleFile API.
+
+2008-03-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/files/tmplayer.py: Adapt to new SubtitleFile API.
+
+2008-03-24  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/__init__.py: Import SubtitleFile.
+
+	* gaupol/file.py: Moved from gaupol/files/subfile.py.
+	(SubtitleFile.read): Return subtitles.
+	(SubtitleFile.write): Take subtitles and doc as arguments.
+	(SubtitleFile.write_to_file): New unimplemented method.
+
+2008-03-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/enumeration.py (Enumeration.NONE): New attribute.
+	(Enumeration.find_item): New method.
+
+2008-01-31  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/agents/util.py (get_file_class): Remove unused method.
+
+2008-01-31  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/fields.py (SubRip): Add class for the pixel coordinates used
+	in the extended version of the SubRip format.
+
+	* gaupol/formats.py: Define container and add coordinates as an
+	optional part to identifier.
+
+2008-01-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/subtitle.py (copy): Copy all instantiated containers using
+	copy.deepcopy, which is assumed to work.
+
+	* gaupol/test/test_subtitle.py: Improve unit test code coverage.
+
+2008-01-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/subtitle.py:
+	* gaupol/fields.py:
+	Move class SubStationAlpha from the subtitle module to the new fields
+	module, which is lazily used by Subtitle.__getattr__.
+
+	* gaupol/formats.py: Add "container" attributes.
+
+2008-01-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/liner.py (_get_breaks, _get_breaks_ugly): Use ugly breaking
+	even with small max_lines if the sum of lengths if big enough to not
+	possibly fit on max_lines. Handle odd max_lines in _get_breaks_ugly
+	instead of _get_breaks by rounding it down to an even number.
+
+	* gaupol/parser.py (_set_margins): Fix an asserted_return leftover
+	AssertionError while looking for ending markup tag.
+
+	* gaupol/test/test_finder.py:
+	* gaupol/test/test_liner.py:
+	* gaupol/test/test_parser.py:
+	Improve unit test code coverage.
+
+2008-01-21  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/paths.py (PROFILE_DIR, get_profile_directory): Use
+	%APPDATA%\\Gaupol on Windows.
+
+2008-01-21  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/calculator.py:
+	* gaupol/test/test_calculator.py:
+	Improve unit test code coverage.
+
+2008-01-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/scripts.py:
+	* gaupol/test/test_scripts.py:
+	Improve unit test code coverage.
+
+2008-01-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/locales.py:
+	* gaupol/test/test_locales.py:
+	Improve unit test code coverage.
+
+2008-01-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/countries.py:
+	* gaupol/test/test_countries.py:
+	Improve unit test code coverage.
+
+2008-01-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/languages.py:
+	* gaupol/test/test_languages.py:
+	Improve unit test code coverage.
+
+2008-01-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/encodings.py (get_valid_encodings): Fix erroneous for-loop
+	that would raise IndexErrors if actually executed.
+
+	* gaupol/test/test_encodings.py: Improve unit test code coverage.
+
+2008-01-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/constants.py: Remove.
+
+	* gaupol/documents.py:
+	* gaupol/formats.py:
+	* gaupol/framerates.py:
+	* gaupol/modes.py:
+	* gaupol/newlines.py:
+	* gaupol/players.py:
+	* gaupol/registers.py:
+	Split enumerations to separate files.
+	Rename enumerations to lower case.
+
+2008-01-19  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/enumeration.py: Rename module "const" to "enumeration",
+	class "ConstantSection" to "Enumeration" and class "ConstantMember"
+	to "EnumerationItem".
+	(__getitem__): Add method for accessing a item by integer value.
+
+2008-01-19  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/util.py (browse_url): Use subprocess.Popen instead of
+	start_process since the environment and shell customizations defined
+	in start_process are not needed.
+
+2008-01-18  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/errors.py: Rename GaupolError to Error.
+
+2008-01-18  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/i18n.py (__all__): Remove as redundant.
+
+2008-01-18  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/test/test_temp.py: Fix imports.
+
+2008-01-18  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/test/test_util.py: Improve unit test code coverage.
+
+2008-01-18  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/mutables.py (__all__): Fix value.
+
+2008-01-18  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/const.py:
+	* gaupol/contractual.py:
+	* gaupol/delegate.py:
+	* gaupol/mutables.py:
+	* gaupol/observable.py:
+	* gaupol/singleton.py:
+	Add missing __all__s.
+
+2008-01-18  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/const.py:
+	* gaupol/test/test_const.py:
+	Add accidentally lost modules.
+
+2008-01-18  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/__init__.py: Fix imports from gaupol.base.
+
+	* gaupol/test/test_obsservable.py:
+	* gaupol/test/test_observable.py:
+	Rename to fix typo.
+
+2008-01-18  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/const.py:
+	* gaupol/contractual.py:
+	* gaupol/delegate.py:
+	* gaupol/mutables.py:
+	* gaupol/observable.py:
+	* gaupol/singleton.py:
+	Remove the base package and move modules to the main package.
+
+2008-01-18  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/constants.py:
+	* gaupol/__init__.py:
+	Rename const module to constants for now.
+
+2008-01-18  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/*.py: Unify boolean wording.
+
+2008-01-18  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/util.py (__all__): Remove as redundant.
+
+2008-01-18  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/base/const.py (ConstantSection): Remove attribute lists.
+
+	* gaupol/base/__init__.py: Import Observable* from mutables.
+
+	* gaupol/base/test/*.py: Improve unit test code coverage.
+
+2008-01-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/*.py: Docstring fixes.
+
+2008-01-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/util.py:
+	(asserted_return, get_desktop_environment): Remove.
+	(get_all, copy_list): New functions.
+	(handle_*): Rename to print_*.
+	Improve unit test code coverage.
+
+2008-01-13  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/urls.py (BUG_REPORT_URL): Update to point to the new bug
+	tracker at bugzilla.gnome.org.
+
+2008-01-13  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/paths.py:
+	* gaupol/test/test_paths.py:
+	Improve unit test code coverage.
+
+2008-01-12  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/base/const.py (ConstantSection.__iter__): Add magic method to
+	allow the section itself to be iterated over. This deprecates direct
+	use of the "members" attribute.
+
+	* gaupol/const.py:
+	* gaupol/gtk/const.py:
+	Rename all constant sections to plural form.
+	Fix all references.
+
+2008-01-12  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/agents/test/test_preview.py: Remove TestCase.files and
+	remove_files. Instead register files for removal with atexit in
+	TestCase.get_file_path.
+
+2008-01-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/*.py: Rewrap license notices.
+
+2008-01-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/__init__.py:
+	* gaupol/unittest/case.py:
+	* gaupol/unittest/__init__.py:
+	* gaupol/unittest.py:
+	Move TestCase to new gaupol.unittest module.
+	Fix all references in unit test code.
+
+	* gaupol/unittest/deco.py:
+	* gaupol/util.py:
+	Move decorators to gaupol.util module.
+	Fix all references in unit test code.
+
+2008-01-11  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/agents/__init__.py:
+	* gaupol/base/__init__.py:
+	* gaupol/calculator.py:
+	* gaupol/clipboard.py:
+	* gaupol/const.py:
+	* gaupol/converter.py:
+	* gaupol/determiner.py:
+	* gaupol/errors.py:
+	* gaupol/files/__init__.py:
+	* gaupol/finder.py:
+	* gaupol/gtk/actions/action.py:
+	* gaupol/gtk/agents/__init__.py:
+	* gaupol/gtk/application.py:
+	* gaupol/gtk/assistants/__init__.py:
+	* gaupol/gtk/assistants/text/__init__.py:
+	* gaupol/gtk/const.py:
+	* gaupol/gtk/dialogs/file/__init__.py:
+	* gaupol/gtk/dialogs/__init__.py:
+	* gaupol/gtk/entries.py:
+	* gaupol/gtk/errors.py:
+	* gaupol/gtk/meta.py:
+	* gaupol/gtk/output.py:
+	* gaupol/gtk/page.py:
+	* gaupol/gtk/renderers/__init__.py:
+	* gaupol/gtk/runner.py:
+	* gaupol/gtk/tooltips.py:
+	* gaupol/gtk/view.py:
+	* gaupol/i18n.py:
+	* gaupol/liner.py:
+	* gaupol/parser.py:
+	* gaupol/paths.py:
+	* gaupol/patternman.py:
+	* gaupol/pattern.py:
+	* gaupol/project.py:
+	* gaupol/revertable.py:
+	* gaupol/subtitle.py:
+	* gaupol/tags/__init__.py:
+	* gaupol/unittest/__init__.py:
+	* gaupol/urls.py:
+	Change __all__s to be tuples instead of lists.
+
+2008-01-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/subtitle.py (SubStationAlpha): Add container class for SSA and
+	ASS attributes and instantiate it in Subtitle.__init__.
+
 2008-01-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/dialogs/file/save.py (set_name): Try to work around

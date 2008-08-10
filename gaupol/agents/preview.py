@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,10 +9,10 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Previewing subtitles with a video player."""
 
@@ -46,10 +46,10 @@ class PreviewAgent(gaupol.Delegate):
         Raise UnicodeError if encoding temporary file fails.
         Return subtitle file path, True if file is temporary.
         """
-        if doc == gaupol.DOCUMENT.MAIN:
+        if doc == gaupol.documents.MAIN:
             if not self.main_changed:
                 return self.main_file.path
-        if doc == gaupol.DOCUMENT.TRAN:
+        if doc == gaupol.documents.TRAN:
             if not self.tran_changed:
                 return self.tran_file.path
         return self.get_temp_file_path(doc)
@@ -60,10 +60,10 @@ class PreviewAgent(gaupol.Delegate):
         if not self.video_path:
             self.guess_video_path()
 
-    def _get_temp_file_path_require(self, doc):
+    def get_temp_file_path_require(self, doc):
         assert self.get_file(doc) is not None
 
-    def _get_temp_file_path_ensure(self, value, doc):
+    def get_temp_file_path_ensure(self, value, doc):
         assert os.path.isfile(value)
 
     def get_temp_file_path(self, doc):
@@ -79,21 +79,21 @@ class PreviewAgent(gaupol.Delegate):
         self.save(doc, props, False)
         return path
 
-    @gaupol.util.asserted_return
     def guess_video_path(self, extensions=None):
         """Guess and return the video file path based on main file's path.
 
-        extensions should be a list of video file extensions or None for
+        extensions should be a sequence of video file extensions or None for
         defaults. The video file is searched for in the same directory as the
         subtitle file. The subtitle file's filename without extension is
         assumed to start with or match the video file's filename without
         extension.
         """
-        assert self.main_file is not None
-        extensions = extensions or (
-            ".3ivx", ".asf", ".avi", ".dat", ".divx", ".m2v", ".mkv", ".mov",
-            ".mp4", ".mpeg", ".mpg", ".ogg", ".ogm", ".qt", ".rm", ".rmvb",
-            ".swf", ".vob", ".wmv",)
+        if self.main_file is None: return
+        extensions = list(extensions or (
+            ".3ivx", ".asf", ".avi", ".dat", ".divx", ".flv", ".m2v", ".mkv",
+            ".mov", ".mp4", ".mpeg", ".mpg", ".ogg", ".ogm", ".qt", ".rm",
+            ".rmvb", ".swf", ".vob", ".wmv",))
+        extensions += [x.upper() for x in extensions]
         subroot = os.path.splitext(self.main_file.path)[0]
         dirname = os.path.dirname(self.main_file.path)
         for filename in os.listdir(dirname):
@@ -122,7 +122,7 @@ class PreviewAgent(gaupol.Delegate):
         Return subprocess.POpen instance, command, output path.
         """
         sub_path = sub_path or self._get_subtitle_path(doc)
-        remove = gaupol.util.silent(OSError)(os.remove)
+        remove = gaupol.deco.silent(OSError)(os.remove)
         if sub_path != self.get_file(doc).path:
             atexit.register(remove, sub_path)
         output_path = gaupol.temp.create(".output")

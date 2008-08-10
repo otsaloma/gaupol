@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,10 +9,10 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Searching for and replacing text."""
 
@@ -21,11 +21,7 @@ import gaupol.gtk
 
 class SearchAgent(gaupol.Delegate):
 
-    """Searching for and replacing text.
-
-    Instance variables:
-     * _search_dialog: Existing SearchDialog or None
-    """
+    """Searching for and replacing text."""
 
     # pylint: disable-msg=E0203,W0201
 
@@ -45,7 +41,7 @@ class SearchAgent(gaupol.Delegate):
         if self._search_dialog is not None:
             return self._search_dialog.present()
         self._search_dialog = gaupol.gtk.SearchDialog(self)
-        gaupol.gtk.util.connect(self, "_search_dialog", "response")
+        gaupol.util.connect(self, "_search_dialog", "response")
         # Do not destroy the dialog, rather hide based on response.
         self._search_dialog.connect("delete-event", lambda *args: True)
         self._search_dialog.show()

@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,16 +9,18 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Cell renderer for multiline text data."""
 
 import gaupol.gtk
 import gobject
 import gtk
+
+__all__ = ("MultilineCellRenderer",)
 
 
 class _CellTextView(gtk.TextView, gtk.CellEditable):
@@ -29,7 +31,6 @@ class _CellTextView(gtk.TextView, gtk.CellEditable):
 
     def __init__(self, text_buffer=None):
 
-        # pylint: disable-msg=W0231
         gtk.TextView.__init__(self, text_buffer)
         gaupol.gtk.util.prepare_text_view(self)
 
@@ -49,7 +50,7 @@ class _CellTextView(gtk.TextView, gtk.CellEditable):
         pass
 
     def get_text(self):
-        """Get the text."""
+        """Return the text."""
 
         text_buffer = self.get_buffer()
         bounds = text_buffer.get_bounds()
@@ -78,27 +79,26 @@ class MultilineCellRenderer(gtk.CellRendererText):
         self._in_editor_menu = False
         self._show_lengths = gaupol.gtk.conf.editor.show_lengths_cell
         self._text = ""
+
         gaupol.gtk.conf.connect(self, "editor", "show_lengths_cell")
-        gaupol.gtk.util.connect(self, self, "notify::text")
+        gaupol.util.connect(self, self, "notify::text")
 
     def _on_conf_editor_notify_show_lengths_cell(self, *args):
         """Synch the '_show_lengths' attribute with conf."""
 
         self._show_lengths = gaupol.gtk.conf.editor.show_lengths_cell
 
-    @gaupol.gtk.util.asserted_return
     def _on_editor_focus_out_event(self, editor, *args):
         """End editing."""
 
-        assert not self._in_editor_menu
+        if self._in_editor_menu: return
         editor.remove_widget()
         self.emit("editing-canceled")
 
-    @gaupol.gtk.util.asserted_return
     def _on_editor_key_press_event(self, editor, event):
         """End editing if Enter pressed."""
 
-        assert not event.state & (gtk.gdk.SHIFT_MASK | gtk.gdk.CONTROL_MASK)
+        if event.state & (gtk.gdk.SHIFT_MASK | gtk.gdk.CONTROL_MASK): return
         if event.keyval in (gtk.keysyms.Return, gtk.keysyms.KP_Enter):
             editor.remove_widget()
             self.emit("edited", editor.get_data("path"), editor.get_text())
@@ -114,12 +114,11 @@ class MultilineCellRenderer(gtk.CellRendererText):
             self._in_editor_menu = False
         menu.connect("unmap", on_menu_unmap, self)
 
-    @gaupol.gtk.util.asserted_return
     def _on_notify_text(self, *args):
         """Set markup by adding line lengths to text."""
 
         self._text = text = self.props.text
-        assert text and self._show_lengths
+        if not (text and self._show_lengths): return
         lengths = gaupol.gtk.ruler.get_lengths(text)
         text = gobject.markup_escape_text(text)
         lines = text.split("\n")

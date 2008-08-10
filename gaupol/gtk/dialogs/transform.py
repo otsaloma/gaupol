@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,10 +9,10 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Dialogs for applying linear tranfromations to positions."""
 
@@ -20,16 +20,16 @@ import gaupol.gtk
 import gtk
 _ = gaupol.i18n._
 
-from .glade import GladeDialog
+__all__ = ("FrameTransformDialog", "TimeTransformDialog")
 
 
-class _PositionTransformDialog(GladeDialog):
+class _PositionTransformDialog(gaupol.gtk.GladeDialog):
 
     """Base class for dialogs for transforming positions."""
 
     def __init__(self, parent, application):
 
-        GladeDialog.__init__(self, "transform-dialog")
+        gaupol.gtk.GladeDialog.__init__(self, "transform.glade")
         get_widget = self._glade_xml.get_widget
         self._correction_hbox_1 = get_widget("correction_hbox_1")
         self._correction_hbox_2 = get_widget("correction_hbox_2")
@@ -45,8 +45,8 @@ class _PositionTransformDialog(GladeDialog):
         self._subtitle_spin_2 = get_widget("subtitle_spin_2")
         self._text_label_1 = get_widget("text_label_1")
         self._text_label_2 = get_widget("text_label_2")
-        self._tooltips = gtk.Tooltips()
         self.application = application
+        self.conf = gaupol.gtk.conf.position_transform
 
         self._init_sensitivities()
         self._init_signal_handlers()
@@ -55,12 +55,12 @@ class _PositionTransformDialog(GladeDialog):
         self._dialog.set_default_response(gtk.RESPONSE_OK)
 
     def _get_target(self):
-        """Get the selected target."""
+        """Return the selected target."""
 
         if self._selected_radio.get_active():
-            return gaupol.gtk.TARGET.SELECTED
+            return gaupol.gtk.targets.SELECTED
         if self._current_radio.get_active():
-            return gaupol.gtk.TARGET.CURRENT
+            return gaupol.gtk.targets.CURRENT
         raise ValueError
 
     def _init_sensitivities(self):
@@ -68,8 +68,8 @@ class _PositionTransformDialog(GladeDialog):
 
         page = self.application.get_current_page()
         rows = page.view.get_selected_rows()
-        target = gaupol.gtk.conf.position_transform.target
-        if (not rows) and (target == gaupol.gtk.TARGET.SELECTED):
+        targets = gaupol.gtk.targets
+        if (not rows) and (self.conf.target == targets.SELECTED):
             self._current_radio.set_active(True)
         self._selected_radio.set_sensitive(bool(rows))
         if page.project.video_path is None:
@@ -82,16 +82,16 @@ class _PositionTransformDialog(GladeDialog):
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
-        gaupol.gtk.util.connect(self, "_preview_button_1", "clicked")
-        gaupol.gtk.util.connect(self, "_preview_button_2", "clicked")
-        gaupol.gtk.util.connect(self, "_subtitle_spin_1", "value-changed")
-        gaupol.gtk.util.connect(self, "_subtitle_spin_2", "value-changed")
-        gaupol.gtk.util.connect(self, self, "response")
+        gaupol.util.connect(self, "_preview_button_1", "clicked")
+        gaupol.util.connect(self, "_preview_button_2", "clicked")
+        gaupol.util.connect(self, "_subtitle_spin_1", "value-changed")
+        gaupol.util.connect(self, "_subtitle_spin_2", "value-changed")
+        gaupol.util.connect(self, self, "response")
 
     def _init_sizes(self):
         """Initialize widget sizes."""
 
-        width = gtk.Label("M" * 26).size_request()[0]
+        width = gtk.Label("m" * 24).size_request()[0]
         self._text_label_1.set_size_request(width, -1)
         self._text_label_2.set_size_request(width, -1)
 
@@ -103,10 +103,9 @@ class _PositionTransformDialog(GladeDialog):
         self._subtitle_spin_1.emit("value-changed")
         self._subtitle_spin_2.set_value(len(page.project.subtitles))
         self._subtitle_spin_2.emit("value-changed")
-        TARGET = gaupol.gtk.TARGET
-        target = gaupol.gtk.conf.position_transform.target
-        self._selected_radio.set_active(target == TARGET.SELECTED)
-        self._current_radio.set_active(target == TARGET.CURRENT)
+        targets = gaupol.gtk.targets
+        self._selected_radio.set_active(self.conf.target == targets.SELECTED)
+        self._current_radio.set_active(self.conf.target == targets.CURRENT)
 
     def _init_widgets(self):
         """Initialize the properties of widgets."""
@@ -121,7 +120,7 @@ class _PositionTransformDialog(GladeDialog):
 
         page = self.application.get_current_page()
         row = self._subtitle_spin_1.get_value_as_int() - 1
-        doc = gaupol.gtk.DOCUMENT.MAIN
+        doc = gaupol.documents.MAIN
         method = page.project.transform_positions
         target = self._get_target()
         rows = self.application.get_target_rows(target)
@@ -135,7 +134,7 @@ class _PositionTransformDialog(GladeDialog):
 
         page = self.application.get_current_page()
         row = self._subtitle_spin_2.get_value_as_int() - 1
-        doc = gaupol.gtk.DOCUMENT.MAIN
+        doc = gaupol.documents.MAIN
         method = page.project.transform_positions
         target = self._get_target()
         rows = self.application.get_target_rows(target)
@@ -144,14 +143,12 @@ class _PositionTransformDialog(GladeDialog):
         args = (rows, point_1, point_2)
         self.application.preview_changes(page, row, doc, method, args)
 
-    @gaupol.gtk.util.asserted_return
     def _on_response(self, dialog, response):
         """Save settings and adjust positions."""
 
-        domain = gaupol.gtk.conf.position_transform
-        domain.target = self._get_target()
-        assert response == gtk.RESPONSE_OK
-        self._transform_positions()
+        self.conf.target = self._get_target()
+        if response == gtk.RESPONSE_OK:
+            self._transform_positions()
 
     def _transform_positions(self):
         """Transform positions in subtitles."""
@@ -183,7 +180,7 @@ class FrameTransformDialog(_PositionTransformDialog):
         assert isinstance(value[1], int)
 
     def _get_first_point(self):
-        """Get row, output frame of the first sync point."""
+        """Return row, output frame of the first sync point."""
 
         row = self._subtitle_spin_1.get_value_as_int() - 1
         frame = self._output_spin_1.get_value_as_int()
@@ -193,7 +190,7 @@ class FrameTransformDialog(_PositionTransformDialog):
         assert isinstance(value[1], int)
 
     def _get_second_point(self):
-        """Get row, output frame of the second sync point."""
+        """Return row, output frame of the second sync point."""
 
         row = self._subtitle_spin_2.get_value_as_int() - 1
         frame = self._output_spin_2.get_value_as_int()
@@ -229,8 +226,7 @@ class FrameTransformDialog(_PositionTransformDialog):
         text = subtitle.main_text.replace("\n", " ")
         text = gaupol.re_any_tag.sub("", text)
         self._text_label_1.set_text(text)
-        event_box = self._text_label_1.get_ancestor(gtk.EventBox)
-        self._tooltips.set_tip(event_box, subtitle.main_text)
+        self._text_label_1.set_tooltip_text(subtitle.main_text)
         self._subtitle_spin_2.props.adjustment.props.lower = row + 2
 
     def _on_subtitle_spin_2_value_changed(self, spin_button):
@@ -244,8 +240,7 @@ class FrameTransformDialog(_PositionTransformDialog):
         text = subtitle.main_text.replace("\n", " ")
         text = gaupol.re_any_tag.sub("", text)
         self._text_label_2.set_text(text)
-        event_box = self._text_label_2.get_ancestor(gtk.EventBox)
-        self._tooltips.set_tip(event_box, subtitle.main_text)
+        self._text_label_2.set_tooltip_text(subtitle.main_text)
         self._subtitle_spin_1.props.adjustment.props.upper = row
 
 
@@ -268,7 +263,7 @@ class TimeTransformDialog(_PositionTransformDialog):
         assert isinstance(value[1], basestring)
 
     def _get_first_point(self):
-        """Get row, output time of the first sync point."""
+        """Return row, output time of the first sync point."""
 
         row = self._subtitle_spin_1.get_value_as_int() - 1
         time = self._output_entry_1.get_text()
@@ -278,7 +273,7 @@ class TimeTransformDialog(_PositionTransformDialog):
         assert isinstance(value[1], basestring)
 
     def _get_second_point(self):
-        """Get row, output time of the second sync point."""
+        """Return row, output time of the second sync point."""
 
         row = self._subtitle_spin_2.get_value_as_int() - 1
         time = self._output_entry_2.get_text()
@@ -308,8 +303,7 @@ class TimeTransformDialog(_PositionTransformDialog):
         text = subtitle.main_text.replace("\n", " ")
         text = gaupol.re_any_tag.sub("", text)
         self._text_label_1.set_text(text)
-        event_box = self._text_label_1.get_ancestor(gtk.EventBox)
-        self._tooltips.set_tip(event_box, subtitle.main_text)
+        self._text_label_1.set_tooltip_text(subtitle.main_text)
         self._subtitle_spin_2.props.adjustment.props.lower = row + 2
         # Allow the slow TimeEntry to update.
         gaupol.gtk.util.iterate_main()
@@ -325,8 +319,7 @@ class TimeTransformDialog(_PositionTransformDialog):
         text = subtitle.main_text.replace("\n", " ")
         text = gaupol.re_any_tag.sub("", text)
         self._text_label_2.set_text(text)
-        event_box = self._text_label_2.get_ancestor(gtk.EventBox)
-        self._tooltips.set_tip(event_box, subtitle.main_text)
+        self._text_label_2.set_tooltip_text(subtitle.main_text)
         self._subtitle_spin_1.props.adjustment.props.upper = row
         # Allow the slow TimeEntry to update.
         gaupol.gtk.util.iterate_main()

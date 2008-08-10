@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,10 +9,10 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Dialogs for shifting positions."""
 
@@ -20,16 +20,16 @@ import gaupol.gtk
 import gtk
 _ = gaupol.i18n._
 
-from .glade import GladeDialog
+__all__ = ("FrameShiftDialog", "TimeShiftDialog")
 
 
-class _PositionShiftDialog(GladeDialog):
+class _PositionShiftDialog(gaupol.gtk.GladeDialog):
 
     """Base class for dialogs for shifting positions."""
 
     def __init__(self, parent, application):
 
-        GladeDialog.__init__(self, "shift-dialog")
+        gaupol.gtk.GladeDialog.__init__(self, "shift.glade")
         get_widget = self._glade_xml.get_widget
         self._amount_spin = get_widget("amount_spin")
         self._current_radio = get_widget("current_radio")
@@ -37,6 +37,7 @@ class _PositionShiftDialog(GladeDialog):
         self._selected_radio = get_widget("selected_radio")
         self._unit_label = get_widget("unit_label")
         self.application = application
+        self.conf = gaupol.gtk.conf.position_shift
 
         self._init_widgets()
         self._init_signal_handlers()
@@ -45,40 +46,39 @@ class _PositionShiftDialog(GladeDialog):
         self._dialog.set_default_response(gtk.RESPONSE_OK)
 
     def _get_preview_row(self):
-        """Get the row to start preview from."""
+        """Return the row to start preview from."""
 
         target = self._get_target()
-        if target == gaupol.gtk.TARGET.SELECTED:
+        if target == gaupol.gtk.targets.SELECTED:
             page = self.application.get_current_page()
             return page.view.get_selected_rows()[0]
         return 0
 
     def _get_target(self):
-        """Get the selected target."""
+        """Return the selected target."""
 
         if self._selected_radio.get_active():
-            return gaupol.gtk.TARGET.SELECTED
+            return gaupol.gtk.targets.SELECTED
         if self._current_radio.get_active():
-            return gaupol.gtk.TARGET.CURRENT
+            return gaupol.gtk.targets.CURRENT
         raise ValueError
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
-        gaupol.gtk.util.connect(self, "_amount_spin", "value-changed")
-        gaupol.gtk.util.connect(self, "_preview_button", "clicked" )
-        gaupol.gtk.util.connect(self, self, "response")
+        gaupol.util.connect(self, "_amount_spin", "value-changed")
+        gaupol.util.connect(self, "_preview_button", "clicked" )
+        gaupol.util.connect(self, self, "response")
 
     def _init_values(self):
         """Intialize default values for widgets."""
 
-        TARGET = gaupol.gtk.TARGET
-        target = gaupol.gtk.conf.position_shift.target
-        self._selected_radio.set_active(target == TARGET.SELECTED)
-        self._current_radio.set_active(target == TARGET.CURRENT)
+        targets = gaupol.gtk.targets
+        self._selected_radio.set_active(self.conf.target == targets.SELECTED)
+        self._current_radio.set_active(self.conf.target == targets.CURRENT)
         page = self.application.get_current_page()
         rows = page.view.get_selected_rows()
-        if (not rows) and (target == TARGET.SELECTED):
+        if (not rows) and (self.conf.target == targets.SELECTED):
             self._current_radio.set_active(True)
         self._selected_radio.set_sensitive(bool(rows))
         if page.project.video_path is None:
@@ -100,19 +100,17 @@ class _PositionShiftDialog(GladeDialog):
         row = self._get_preview_row()
         target = self._get_target()
         rows = self.application.get_target_rows(target)
-        doc = gaupol.gtk.DOCUMENT.MAIN
+        doc = gaupol.documents.MAIN
         method = page.project.shift_positions
         args = (rows, self._get_amount())
         self.application.preview_changes(page, row, doc, method, args)
 
-    @gaupol.gtk.util.asserted_return
     def _on_response(self, dialog, response):
         """Save settings and shift positions."""
 
-        domain = gaupol.gtk.conf.position_shift
-        domain.target = self._get_target()
-        assert response == gtk.RESPONSE_OK
-        self._shift_positions()
+        self.conf.target = self._get_target()
+        if response == gtk.RESPONSE_OK:
+            self._shift_positions()
 
     def _shift_positions(self):
         """Shift positions in subtitles."""
@@ -134,7 +132,7 @@ class FrameShiftDialog(_PositionShiftDialog):
         assert isinstance(value, int)
 
     def _get_amount(self):
-        """Get the amount of frames to shift."""
+        """Return the amount of frames to shift."""
 
         return self._amount_spin.get_value_as_int()
 
@@ -159,7 +157,7 @@ class TimeShiftDialog(_PositionShiftDialog):
         assert isinstance(value, float)
 
     def _get_amount(self):
-        """Get the amount of seconds to shift."""
+        """Return the amount of seconds to shift."""
 
         return self._amount_spin.get_value()
 

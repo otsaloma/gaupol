@@ -9,16 +9,16 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Actions that can be reverted, i.e. undone and redone."""
 
 import gaupol
 
-__all__ = ["RevertableAction", "RevertableActionGroup"]
+__all__ = ("RevertableAction", "RevertableActionGroup",)
 
 
 class RevertableAction(object):
@@ -27,8 +27,8 @@ class RevertableAction(object):
 
     Instance variables:
      * description: Short one line description
-     * docs: List of DOCUMENT constants affected
-     * register: REGISTER constant corresponding to doing
+     * docs: Sequence of document enumerations affected
+     * register: Register enumeration corresponding to the action taken
      * revert_args: Arguments passed to the revert method
      * revert_kwargs: Keyword arguments passed to the revert method
      * revert_method: Method called to revert this action
@@ -42,12 +42,12 @@ class RevertableAction(object):
     def __init__(self, **kwargs):
         """Initialize a RevertableAction object.
 
-        kwargs can contain any of the names of public instance variables,
+        kwargs can contain any of the names of public instance variables.
         """
         self.description = None
         self.docs = None
         self.register = None
-        self.revert_args = []
+        self.revert_args = ()
         self.revert_kwargs = {}
         self.revert_method = None
 
@@ -55,15 +55,15 @@ class RevertableAction(object):
             setattr(self, key, value)
 
     def _get_reversion_register_require(self):
-        assert self.register in gaupol.REGISTER.members
+        assert self.register in gaupol.registers
 
     def _get_reversion_register(self):
-        """Get the REGISTER constant corresponding to reversion."""
+        """Return the register enumeration corresponding to reversion."""
 
         if self.register.shift == 1:
-            return gaupol.REGISTER.UNDO
+            return gaupol.registers.UNDO
         if self.register.shift == -1:
-            return gaupol.REGISTER.REDO
+            return gaupol.registers.REDO
         raise ValueError
 
     def revert_require(self):
@@ -83,11 +83,11 @@ class RevertableActionGroup(object):
     """Group of revertable actions.
 
     Instance variables:
-     * actions: List of actions in group
+     * actions: Sequence of actions in group
      * description: Short one line description
 
-    Instance variables are required to be set eventually, either upon
-    instantiation or directly after.
+    Instance variables 'actions' and 'description' are required to be set
+    eventually, either upon instantiation or directly after.
     """
 
     def __init__(self, **kwargs):

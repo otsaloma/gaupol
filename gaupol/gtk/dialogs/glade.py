@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2007 Osmo Salomaa
+# Copyright (C) 2006-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,29 +9,29 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Wrapper for Glade constructed dialogs."""
 
 import gaupol.gtk
+
+__all__ = ("GladeDialog",)
 
 
 class GladeDialog(gaupol.Delegate, gaupol.gtk.Runner):
 
     """Wrapper for Glade constructed dialogs.
 
-    Instance variables:
-     * _dialog: gtk.Dialog (from widget named "dialog")
-     * _glade_xml: gtk.glade.XML widget tree
+    The gtk.glade.XML widget tree is saved as instance variable '_glade_xml'
+    and from the tree the widget name 'dialog' as '_dialog'.
     """
 
     def __init__(self, name):
 
-        # pylint: disable-msg=W0231
-        glade_xml = gaupol.gtk.util.get_glade_xml(name)
+        glade_xml = gaupol.gtk.util.get_glade_xml("dialogs", name)
         dialog = glade_xml.get_widget("dialog")
         gaupol.Delegate.__init__(self, dialog)
         self._dialog = dialog

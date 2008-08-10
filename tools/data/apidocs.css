@@ -6,7 +6,7 @@
 
 body
 {
-  background-color: white;
+  background-color: #ffffff;
   color: #111111;
   font-family: sans-serif;
   font-size: small;
@@ -39,12 +39,12 @@ td pre
 ol, ul
 {
   line-height: 200%;
-  padding: 0 0 12px 36px;
+  padding: 0 0 0 36px;
 }
 
 table.children
 {
-  border: 1px solid #888a85;
+  border: 1px solid #888888;
   margin: 0 0 12px 0;
   width: 100%;
 }
@@ -81,7 +81,7 @@ h2
 
 .toplevel
 {
-  background-color: #eeeeec;
+  background-color: #eeeeee;
   border: 1px solid #111111;
   color: inherit;
   margin-top: 12px;
@@ -106,7 +106,7 @@ div.toplevel p
 
 .attribute
 {
-  background: red;
+  background: #fcf5c0;
   color: inherit;
 }
 
@@ -130,7 +130,7 @@ div.toplevel p
 
 .interface
 {
-  background: red;
+  background: #d4ecdd;
   color: inherit;
 }
 
@@ -148,7 +148,7 @@ div.toplevel p
 
 div.function
 {
-  background-color: white;
+  background-color: #ffffff;
   color: #111111;
   padding-bottom: 12px;
 }

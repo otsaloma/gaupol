@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,20 +9,25 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
 
-from gaupol import unittest
 
+class TestModule(gaupol.TestCase):
 
-class TestModule(unittest.TestCase):
+    def test_add_class(self):
 
-    def test_get_class(self):
+        gaupol.tags.add_class(gaupol.tags.SubRip)
 
-        for format in gaupol.FORMAT.members:
-            value = gaupol.tags.get_class(format)
-            assert value.format == format
+    def test_new(self):
+
+        file = gaupol.tags.new(gaupol.formats.SUBRIP)
+        assert isinstance(file, gaupol.tags.SubRip)
+
+    def test_new__value_error(self):
+
+        self.raises(ValueError, gaupol.tags.new, None)

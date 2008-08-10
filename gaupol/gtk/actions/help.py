@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,10 +9,10 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Help actions."""
 
@@ -20,27 +20,28 @@ import gaupol
 import gtk
 _ = gaupol.i18n._
 
-from .action import Action
 
-
-class ReportABugAction(Action):
+class ReportABugAction(gaupol.gtk.Action):
 
     """Submit a bug report."""
 
     def __init__(self):
 
-        Action.__init__(self, "report_a_bug")
+        gaupol.gtk.Action.__init__(self, "report_a_bug")
         self.props.label = _("_Report A Bug")
         self.props.tooltip = _("Submit a bug report")
 
 
-class ViewAboutDialogAction(Action):
+class ViewAboutDialogAction(gaupol.gtk.Action):
 
     """Show information about Gaupol."""
 
     def __init__(self):
 
-        Action.__init__(self, "view_about_dialog")
+        gaupol.gtk.Action.__init__(self, "view_about_dialog")
         self.props.label = _("_About")
         self.props.stock_id = gtk.STOCK_ABOUT
         self.props.tooltip = _("Show information about Gaupol")
+
+
+__all__ = gaupol.util.get_all(dir(), r"Action$")

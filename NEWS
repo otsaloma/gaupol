@@ -4,20 +4,17 @@ Gaupol 0.12.3
  * Fix error in splitting frame-based subtitle projects (#10200)
  * Fix UnboundLocalError with preview (#10203)
 
-
 Gaupol 0.12.2
 =============
 
  * Fix tag conversions that removed text (#10140)
  * Fix spacing issues in open and save dialogs
- 
 
 Gaupol 0.12.1
 =============
 
  * Fix text correction assistant's capitalization task
  * Fix remaining NameErrors with function arguments (#10034)
-
 
 Gaupol 0.12
 ===========
@@ -30,7 +27,6 @@ Gaupol 0.12
  * Fix markup tooltip hack to work with (Py)GTK 2.12
  * Remove license page from the Windows installer
  * Include iso-codes with the Windows installer
-
 
 Gaupol 0.11
 ===========
@@ -47,7 +43,6 @@ Gaupol 0.11
  * Add support for creating a Windows .exe with py2exe and a
    Windows installer with Inno Setup
 
-
 Gaupol 0.10
 ===========
 
@@ -60,7 +55,6 @@ Gaupol 0.10
  * Fix recent file URI handling on Windows
  * Fix preview on Windows
  * Fix temporary file removals on Windows
-
 
 Gaupol 0.9
 ==========
@@ -76,7 +70,6 @@ Gaupol 0.9
    them being misinterpreted as in-line comments
  * For reading and writing non-xml files in $HOME/.gaupol, always
    try the locale encoding first and if it fails, use UTF-8
-
 
 Gaupol 0.8
 ==========
@@ -129,7 +122,6 @@ Gaupol 0.8
    to use named fields and mappings
  * Source code directory structure changed
  * Uninstallation feature removed
-
 
 Gaupol 0.7.1
 ============

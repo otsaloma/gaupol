@@ -9,10 +9,10 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Data editing extension delegates of Project."""
 
@@ -29,4 +29,4 @@ from .set       import SetAgent
 from .text      import TextAgent
 from .util      import UtilityAgent
 
-__all__ = [x for x in dir() if x.endswith("Agent")]
+__all__ = tuple(x for x in dir() if x.endswith("Agent"))

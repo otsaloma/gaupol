@@ -19,6 +19,7 @@ rmdir /S /Q dist\share\applications
 rmdir /S /Q dist\share\gtk-2.0
 rmdir /S /Q dist\share\gtkthemeselector
 rmdir /S /Q dist\share\man
+rem Remove unused translation files included in iso-codes.
 for /R dist\share\locale %%f in (iso_3166_2.mo*) do del /Q %%f
 for /R dist\share\locale %%f in (iso_4217.mo*) do del /Q %%f
 for /R dist\share\locale %%f in (iso_639_3.mo*) do del /Q %%f

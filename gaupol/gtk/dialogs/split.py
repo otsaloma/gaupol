@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2007 Osmo Salomaa
+# Copyright (C) 2006-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,10 +9,10 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Dialog for splitting project in two."""
 
@@ -20,29 +20,36 @@ import gaupol.gtk
 import gtk
 _ = gaupol.i18n._
 
-from .glade import GladeDialog
+__all__ = ("SplitDialog",)
 
 
-class SplitDialog(GladeDialog):
+class SplitDialog(gaupol.gtk.GladeDialog):
 
     """Dialog for splitting a project in two."""
 
-    def __init__(self, application):
+    __metaclass__ = gaupol.Contractual
 
-        GladeDialog.__init__(self, "split-dialog")
+    def __init___require(self, parent, application):
+        page = application.get_current_page()
+        assert page is not None
+        assert len(page.project.subtitles) > 1
+
+    def __init__(self, parent, application):
+
+        gaupol.gtk.GladeDialog.__init__(self, "split.glade")
         self._subtitle_spin = self._glade_xml.get_widget("subtitle_spin")
         self.application = application
 
         self._init_signal_handlers()
         self._init_subtitle_spin()
-        self._dialog.set_transient_for(application.window)
+        self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_OK)
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
-        gaupol.gtk.util.connect(self, self, "response")
-        gaupol.gtk.util.connect(self, "_subtitle_spin", "value-changed")
+        gaupol.util.connect(self, self, "response")
+        gaupol.util.connect(self, "_subtitle_spin", "value-changed")
 
     def _init_subtitle_spin(self):
         """Initialize the subtitle spin button."""
@@ -62,12 +69,11 @@ class SplitDialog(GladeDialog):
         row = self._subtitle_spin.get_value_as_int() - 1
         page.view.set_focus(row, None)
 
-    @gaupol.gtk.util.asserted_return
     def _on_response(self, dialog, response):
         """Split the current project if OK responded."""
 
-        assert response == gtk.RESPONSE_OK
-        self._split_project()
+        if response == gtk.RESPONSE_OK:
+            self._split_project()
 
     def _remove_from_source(self, source, index):
         """Remove rows from the source page."""
@@ -76,7 +82,7 @@ class SplitDialog(GladeDialog):
         source.project.block("action-done")
         source.project.remove_subtitles(indices)
         source.project.set_action_description(
-            gaupol.gtk.REGISTER.DO, _("Splitting project"))
+            gaupol.registers.DO, _("Splitting project"))
         source.project.unblock("action-done")
 
     def _shift_destination(self, source, destination):
@@ -84,7 +90,10 @@ class SplitDialog(GladeDialog):
 
         amount = source.project.subtitles[-1].end
         if isinstance(amount, basestring):
-            amount = "-" + amount
+            if amount.startswith("-"):
+                amount = amount[1:]
+            else: # amount is positive.
+                amount = "-%s" % amount
         elif isinstance(amount, (int, float)):
             amount = -1 * amount
         destination.project.shift_positions(None, amount, register=None)
@@ -95,8 +104,7 @@ class SplitDialog(GladeDialog):
         gaupol.gtk.util.set_cursor_busy(self.application.window)
         index = self._subtitle_spin.get_value_as_int() - 1
         source = self.application.get_current_page()
-        self.application.counter += 1
-        destination = gaupol.gtk.Page(self.application.counter)
+        destination = gaupol.gtk.Page(self.application.counter.next())
         subtitles = [x.copy() for x in source.project.subtitles[index:]]
         indices = range(len(subtitles))
         destination.project.insert_subtitles(indices, subtitles)

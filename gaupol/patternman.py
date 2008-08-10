@@ -1,4 +1,4 @@
-# Copyright (C) 2007 Osmo Salomaa
+# Copyright (C) 2007-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,23 +9,24 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Manager of Regular expression based corrections to subtitle texts."""
+"""Manager of regular expression substitutions for subtitle texts."""
 
 import gaupol
 import os
+import re
 import xml.etree.ElementTree as ET
 
-__all__ = ["PatternManager"]
+__all__ = ("PatternManager",)
 
 
 class PatternManager(object):
 
-    """Manager of Regular expression based corrections to subtitle texts.
+    """Manager of regular expression substitutions for subtitle texts.
 
     Instance variables:
      * pattern_type: String to indentify what the pattern matches
@@ -37,6 +38,7 @@ class PatternManager(object):
     """
 
     __metaclass__ = gaupol.Contractual
+    _re_comment = re.compile(r"#.*$")
 
     def __init___require(self, pattern_type):
         types = ("line-break", "common-error",
@@ -53,19 +55,39 @@ class PatternManager(object):
         """Assert that codes are valid and parents are defined."""
 
         if script is not None:
-            assert script in gaupol.scripts.scripts
+            assert gaupol.scripts.is_valid(script)
         if language is not None:
             assert script is not None
-            assert language in gaupol.languages.languages
+            assert gaupol.languages.is_valid(language)
         if country is not None:
             assert language is not None
-            assert country in gaupol.countries.countries
+            assert gaupol.countries.is_valid(country)
+
+    def _filter_patterns(self, patterns):
+        """Return patterns with name-clashes resolved.
+
+        Patterns with a more specific code replace those with a less specific
+        code if they have the same name and the more specific pattern's policy
+        is explicitly set to 'Replace' (instead of the implicit 'Append').
+        """
+        filtered_patterns = []
+        for i, pattern in enumerate(patterns):
+            replacement_found = False
+            name = pattern.get_name(False)
+            for j in range(i + 1, len(patterns)):
+                j_name = patterns[j].get_name(False)
+                j_policy = patterns[j].get_field("Policy")
+                if (j_name == name) and (j_policy == "Replace"):
+                    replacement_found = True
+            if not replacement_found:
+                filtered_patterns.append(pattern)
+        return filtered_patterns
 
     def _get_codes_require(self, script=None, language=None, country=None):
         self._assert_indentifiers(script, language, country)
 
     def _get_codes(self, script=None, language=None, country=None):
-        """Get a list of all codes to be used by arguments.
+        """Return a sequence of all codes to be used by arguments.
 
         Zyyy is the first code and the most specific one last.
         """
@@ -78,26 +100,15 @@ class PatternManager(object):
         if country is not None:
             code = "%s-%s" % (code, country)
             codes.append(code)
-        return codes
-
-    def _get_pattern_text(self, pattern):
-        """Get text representation of pattern to write to file."""
-
-        words = ("%s-pattern" % self.pattern_type).split("-")
-        words = [x.capitalize() for x in words]
-        text = "[%s]%s" % ("".join(words), os.linesep)
-        for key, value in pattern.fields.items():
-            text += "%s=%s%s" % (key, value, os.linesep)
-        return text.strip()
+        return tuple(codes)
 
     def _read_config_from_directory_require(self, directory, encoding):
         assert gaupol.encodings.is_valid_code(encoding)
 
-    @gaupol.util.asserted_return
     def _read_config_from_directory(self, directory, encoding):
         """Read configurations from files in directory."""
 
-        assert os.path.isdir(directory)
+        if not os.path.isdir(directory): return
         extension = ".%s.conf" % self.pattern_type
         files = os.listdir(directory)
         for name in (x for x in files if x.endswith(extension)):
@@ -107,11 +118,10 @@ class PatternManager(object):
     def _read_config_from_file_require(self, path, encoding):
         assert gaupol.encodings.is_valid_code(encoding)
 
-    @gaupol.util.asserted_return
     def _read_config_from_file(self, path, encoding):
         """Read configurations from file."""
 
-        assert os.path.isfile(path)
+        if not os.path.isfile(path): return
         basename = os.path.basename(path)
         extension = ".%s.conf" % self.pattern_type
         code = basename.replace(extension, "")
@@ -140,11 +150,10 @@ class PatternManager(object):
     def _read_patterns_from_directory_require(self, directory, encoding):
         assert gaupol.encodings.is_valid_code(encoding)
 
-    @gaupol.util.asserted_return
     def _read_patterns_from_directory(self, directory, encoding):
         """Read all patterns from files in directory."""
 
-        assert os.path.isdir(directory)
+        if not os.path.isdir(directory): return
         extension = ".%s" % self.pattern_type
         extensions = (extension, "%s.in" % extension)
         files = os.listdir(directory)
@@ -155,11 +164,10 @@ class PatternManager(object):
     def _read_patterns_from_file_require(self, directory, encoding):
         assert gaupol.encodings.is_valid_code(encoding)
 
-    @gaupol.util.asserted_return
     def _read_patterns_from_file(self, path, encoding):
         """Read all patterns from file."""
 
-        assert os.path.isfile(path)
+        if not os.path.isfile(path): return
         basename = os.path.basename(path)
         extension = ".%s" % self.pattern_type
         if basename.endswith(".in"):
@@ -168,28 +176,31 @@ class PatternManager(object):
         local = path.startswith(gaupol.PROFILE_DIR)
         patterns = self._patterns.setdefault(code, [])
         lines = gaupol.util.readlines(path, encoding)
+        lines = [self._re_comment.sub("", x) for x in lines]
         lines = [x.strip() for x in lines]
         for line in (x for x in lines if x):
-            if line.startswith("["):
+            if line.startswith("["): # [HEADER]
                 patterns.append(gaupol.Pattern())
                 patterns[-1].local = local
-                continue
-            name, value = unicode(line).split("=", 1)
-            name = (name[1:] if name.startswith("_") else name)
-            patterns[-1].set_field(name, value)
+            else: # KEY=VALUE. Discard possible leading underscore.
+                name, value = unicode(line).split("=", 1)
+                name = (name[1:] if name.startswith("_") else name)
+                patterns[-1].set_field(name, value)
 
-    @gaupol.util.asserted_return
     def _write_config_to_file(self, code, encoding):
         """Write configurations of all patterns to file."""
 
         local_dir = os.path.join(gaupol.PROFILE_DIR, "patterns")
-        assert os.path.isdir(local_dir)
+        if not os.path.isdir(local_dir): return
         basename = "%s.%s.conf" % (code, self.pattern_type)
         path = os.path.join(local_dir, basename)
         text = '<?xml version="1.0" encoding="utf-8"?>'
         text += '%s<patterns>%s' % (os.linesep, os.linesep)
+        written_names = set(())
         for pattern in self._patterns[code]:
             name = pattern.get_name(False)
+            if name in written_names: continue
+            written_names.add(name)
             name = name.replace("&", "&amp;")
             name = name.replace('"', "&quot;")
             enabled = ("false", "true")[pattern.enabled]
@@ -199,77 +210,55 @@ class PatternManager(object):
         text += "</patterns>%s" % os.linesep
         gaupol.util.write(path, text, encoding)
 
-    @gaupol.util.asserted_return
-    def _write_patterns_to_file(self, code, encoding):
-        """Write all local pattern to file."""
-
-        local_dir = os.path.join(gaupol.PROFILE_DIR, "patterns")
-        assert os.path.isdir(local_dir)
-        basename = "%s.%s" % (code, self.pattern_type)
-        path = os.path.join(local_dir, basename)
-        pattern_texts = []
-        for pattern in (x for x in self._patterns[code] if x.local):
-            pattern_texts.append(self._get_pattern_text(pattern))
-        blank_line = os.linesep + os.linesep
-        text = blank_line.join(pattern_texts) + os.linesep
-        gaupol.util.write(path, text, encoding)
-
     def get_countries(self, script, language):
-        """Get a list of countries for which patterns exist."""
+        """Return a sequence of countries for which patterns exist."""
 
         codes = self._patterns.keys()
         start = "%s-%s-" % (script, language)
         codes = [x for x in codes if x.startswith(start)]
         countries = [x.split("-")[2] for x in codes]
-        return gaupol.util.get_unique(countries)
+        return tuple(gaupol.util.get_unique(countries))
 
     def get_languages(self, script):
-        """Get a list of languages for which patterns exist."""
+        """Return a sequence of languages for which patterns exist."""
 
         codes = self._patterns.keys()
         start = "%s-" % script
         codes = [x for x in codes if x.startswith(start)]
         languages = [x.split("-")[1] for x in codes]
-        return gaupol.util.get_unique(languages)
+        return tuple(gaupol.util.get_unique(languages))
 
     def get_patterns_require(self, script=None, language=None, country=None):
         self._assert_indentifiers(script, language, country)
 
     def get_patterns(self, script=None, language=None, country=None):
-        """Get patterns for script, language and country."""
+        """Return patterns for script, language and country."""
 
         patterns = []
         for code in self._get_codes(script, language, country):
             for pattern in self._patterns.get(code, []):
-                name = pattern.get_name(False)
-                for i in range(len(patterns)):
-                    # Allow patterns with a more specific code to override
-                    # those with a less specific code if the names clash.
-                    if patterns[i].get_name(False) == name:
-                        patterns.pop(i)
                 patterns.append(pattern)
+        patterns = self._filter_patterns(patterns)
         return patterns
 
     def get_scripts(self):
-        """Get a list of scripts for which patterns exist."""
+        """Return a sequence of scripts for which patterns exist."""
 
         codes = self._patterns.keys()
         while "Zyyy" in codes:
             codes.remove("Zyyy")
         scripts = [x.split("-")[0] for x in codes]
-        return gaupol.util.get_unique(scripts)
+        return tuple(gaupol.util.get_unique(scripts))
 
-    def save_require(self, script=None, language=None, country=None):
+    def save_config_require(self, script=None, language=None, country=None):
         self._assert_indentifiers(script, language, country)
 
-    def save(self, script=None, language=None, country=None):
-        """Save local patterns and configurations to files."""
+    def save_config(self, script=None, language=None, country=None):
+        """Save pattern configurations to files."""
 
         local_dir = os.path.join(gaupol.PROFILE_DIR, "patterns")
-        gaupol.util.silent(OSError)(gaupol.util.makedirs)(local_dir)
+        gaupol.deco.silent(OSError)(gaupol.util.makedirs)(local_dir)
         encoding = gaupol.util.get_default_encoding()
         codes = self._get_codes(script, language, country)
         for code in (x for x in codes if x in self._patterns):
-            # TODO: Uncomment when patterns can be added by a method.
-            # self._write_patterns_to_file(code, encoding)
             self._write_config_to_file(code, "utf_8")

@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,236 +9,169 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-from .test_taglib import TestTagLibrary
-from .. import microdvd
+import gaupol
 
 
-class TestMicroDVD(TestTagLibrary):
+class TestMicroDVD(gaupol.TestCase):
+
+    text = "All things weird are normal\n" \
+           "in this whore of cities."
 
     def setup_method(self, method):
 
-        self.taglib = microdvd.MicroDVD()
+        self.markup = gaupol.tags.new(gaupol.formats.MICRODVD)
 
-    def test_decode(self):
+    def test_bolden(self):
 
-        # Style x3 (single line)
-        text = \
-            "{y:biu}All things weird are normal\n" + \
-            "in this whore of cities."
-        assert self.taglib.decode(text) == \
-            "<b><i><u>All things weird are normal</u></i></b>\n" + \
-            "in this whore of cities."
+        assert self.markup.bolden(self.text, (0, 27)) == (
+            "{y:b}All things weird are normal\n"
+            "in this whore of cities.")
 
-        # Style x2 (single line)
-        text = \
-            "All things {y:bi}weird are normal\n" + \
-            "in this whore of cities."
-        assert self.taglib.decode(text) == \
-            "All things <b><i>weird are normal</i></b>\n" + \
-            "in this whore of cities."
+    def test_colorize(self):
 
-        # Style x1 (single line)
-        text = \
-            "All things weird are normal\n" + \
-            "in this {y:i}whore of cities."
-        assert self.taglib.decode(text) == \
-            "All things weird are normal\n" + \
-            "in this <i>whore of cities.</i>"
+        assert self.markup.colorize(self.text, "ccff00") == (
+            "{C:$00ffcc}All things weird are normal\n"
+            "in this whore of cities.")
 
-        # Style x1x2 (single lines)
-        text = \
-            "{y:i}All things weird are normal\n" + \
-            "{y:i}in this whore of cities."
-        assert self.taglib.decode(text) == \
-            "<i>All things weird are normal</i>\n" + \
-            "<i>in this whore of cities.</i>"
+    def test_decode__bold(self):
 
-        # Style x3 (whole subtitle)
-        text = \
-            "{Y:biu}All things weird are normal\n" + \
-            "in this whore of cities."
-        assert self.taglib.decode(text) == \
-            "<b><i><u>All things weird are normal\n" + \
-            "in this whore of cities.</u></i></b>"
+        text = "{Y:b}All things weird are normal\n" \
+               "in this whore of cities."
+        assert self.markup.decode(text) == (
+            "<b>All things weird are normal\n"
+            "in this whore of cities.</b>")
 
-        # Style x2 (whole subtitle)
-        text = \
-            "All things {Y:bi}weird are normal\n" + \
-            "in this whore of cities."
-        assert self.taglib.decode(text) == \
-            "All things <b><i>weird are normal\n" + \
-            "in this whore of cities.</i></b>"
+    def test_decode__color(self):
 
-        # Style x1 (whole subtitle)
-        text = \
-            "All things weird are normal\n" + \
-            "in this {Y:i}whore of cities."
-        assert self.taglib.decode(text) == \
-            "All things weird are normal\n" + \
-            "in this <i>whore of cities.</i>"
+        text = "All things weird are normal\n" \
+               "{c:$0000ff}in this whore of cities."
+        assert self.markup.decode(text) == (
+            "All things weird are normal\n"
+            "<color=#ff0000>in this whore of cities.</color>")
 
-        # Color (single line)
-        text = \
-            "{c:$ffffff}All things weird are normal\n" + \
-            "in this whore of cities."
-        assert self.taglib.decode(text) == \
-            '<color="#ffffff">All things weird are normal</color>\n' + \
-            'in this whore of cities.'
+    def test_decode__combined(self):
 
-        # Color (whole subtitle)
-        text = \
-            "{C:$ffffff}All things weird are normal\n" + \
-            "in this whore of cities."
-        assert self.taglib.decode(text) == \
-            '<color="#ffffff">All things weird are normal\n' + \
-            'in this whore of cities.</color>'
+        text = "{Y:bi}All things weird are normal\n" \
+               "{y:u}in this whore of cities."
+        assert self.markup.decode(text) == (
+            "<b><i>All things weird are normal\n"
+            "<u>in this whore of cities.</u></i></b>")
 
-        # Font (single line)
-        text = \
-            "All things {f:Sans}weird are normal\n" + \
-            "in this whore of cities."
-        assert self.taglib.decode(text) == \
-            'All things <font="Sans">weird are normal</font>\n' + \
-            'in this whore of cities.'
+    def test_decode__font(self):
 
-        # Font (whole subtitle)
-        text = \
-            "All things {F:Sans}weird are normal\n" + \
-            "in this whore of cities."
-        assert self.taglib.decode(text) == \
-            'All things <font="Sans">weird are normal\n' + \
-            'in this whore of cities.</font>'
+        text = "{f:Sans}All things weird are normal\n" \
+               "in this whore of cities."
+        assert self.markup.decode(text) == (
+            "<font=Sans>All things weird are normal</font>\n"
+            "in this whore of cities.")
 
-        # Size (single line)
-        text = \
-            "All things weird are normal\n" + \
-            "in this {s:12}whore of cities."
-        assert self.taglib.decode(text) == \
-            'All things weird are normal\n' + \
-            'in this <size="12">whore of cities.</size>'
+    def test_decode__italic(self):
 
-        # Size (whole subtitle)
-        text = \
-            "All things weird are normal\n" + \
-            "in this {S:12}whore of cities."
-        assert self.taglib.decode(text) == \
-            'All things weird are normal\n' + \
-            'in this <size="12">whore of cities.</size>'
+        text = "{y:i}All things weird are normal\n" \
+               "{y:i}in this whore of cities."
+        assert self.markup.decode(text) == (
+            "<i>All things weird are normal</i>\n"
+            "<i>in this whore of cities.</i>")
 
-        # Remove all other tags: position
-        text = \
-            "{P:0}All things weird are normal\n" + \
-            "in this whore of cities."
-        assert self.taglib.decode(text) == \
-            "All things weird are normal\n" + \
-            "in this whore of cities."
+    def test_decode__size(self):
 
-        # Remove all other tags: coordinate
-        text = \
-            "{o:5,5}All things weird are normal\n" + \
-            "in this whore of cities."
-        assert self.taglib.decode(text) == \
-            "All things weird are normal\n" + \
-            "in this whore of cities."
+        text = "All things weird are normal\n" \
+               "{s:12}in this whore of cities."
+        assert self.markup.decode(text) == (
+            "All things weird are normal\n"
+            "<size=12>in this whore of cities.</size>")
 
-    def test_encode(self):
+    def test_decode__underline(self):
 
-        # Style (affecting a single line subtitle fully)
-        text = "<i>All things weird are normal</i>"
-        assert self.taglib.encode(text) == \
-            "{Y:i}All things weird are normal"
+        text = "{Y:u}All things weird are normal\n" \
+               "in this whore of cities."
+        assert self.markup.decode(text) == (
+            "<u>All things weird are normal\n"
+            "in this whore of cities.</u>")
 
-        # Style (affecting only one line)
-        text = \
-            "<b>All things weird are normal</b>\n" + \
-            "in this whore of cities."
-        assert self.taglib.encode(text) == \
-            "{y:b}All things weird are normal\n" + \
-            "in this whore of cities."
+    def test_encode__bold(self):
 
-        # Style (affecting whole subtitle)
-        text = \
-            "<u>All things weird are normal</u>\n" + \
-            "<u>in this whore of cities.</u>"
-        assert self.taglib.encode(text) == \
-            "{Y:u}All things weird are normal\n" + \
-            "in this whore of cities."
+        text = "<b>All things weird are normal\n" \
+               "in this whore of cities.</b>"
+        assert self.markup.encode(text) == (
+            "{Y:b}All things weird are normal\n"
+            "in this whore of cities.")
 
-    def test_encode_non_style(self):
+    def test_encode__color(self):
 
-        # Color (affecting a single line subtitle fully)
-        text = '<color="#ffffff">All things weird are normal</color>'
-        assert self.taglib.encode(text) == \
-            "{C:$ffffff}All things weird are normal"
+        text = "<color=#ccccff>All things weird are normal\n" \
+               "in this whore of cities.</color>"
+        assert self.markup.encode(text) == (
+            "{C:$ffcccc}All things weird are normal\n"
+            "in this whore of cities.")
 
-        # Color (affecting only one line)
-        text = \
-            'All things <color="#ffffff">weird are normal</color>\n' + \
-            'in this whore of cities.'
-        assert self.taglib.encode(text) == \
-            "All things {c:$ffffff}weird are normal\n" + \
-            "in this whore of cities."
+    def test_encode__font(self):
 
-        # Color (affecting whole subtitle)
-        text = \
-            'All things <color="#ffffff">weird are normal\n' + \
-            'in this whore of cities.</color>'
-        assert self.taglib.encode(text) == \
-            "All things {C:$ffffff}weird are normal\n" + \
-            "in this whore of cities."
+        text = "<font=Sans>All things weird are normal\n" \
+               "in this whore of cities.</font>"
+        assert self.markup.encode(text) == (
+            "{F:Sans}All things weird are normal\n"
+            "in this whore of cities.")
 
-        # Font (affecting a single line subtitle fully)
-        text = '<font="Sans">All things weird are normal</font>'
-        assert self.taglib.encode(text) == \
-            "{F:Sans}All things weird are normal"
+    def test_encode__italic(self):
 
-        # Font (affecting only one line)
-        text = \
-            '<font="Sans">All things</font> weird are normal\n' + \
-            'in this whore of cities.'
-        assert self.taglib.encode(text) == \
-            "{f:Sans}All things weird are normal\n" + \
-            "in this whore of cities."
+        text = "All <i>things</i> weird are normal\n" \
+               "in <i>this</i> whore of cities."
+        assert self.markup.encode(text) == (
+            "All things weird are normal\n"
+            "in this whore of cities.")
 
-        # Font (affecting whole subtitle)
-        text = \
-            '<font="Sans">All things weird are normal\n' + \
-            'in this whore</font> of cities.'
-        assert self.taglib.encode(text) == \
-            "{F:Sans}All things weird are normal\n" + \
-            "in this whore of cities."
+    def test_encode__size(self):
 
-        # Size (affecting a single line subtitle fully)
-        text = '<size="12">All things weird are normal</size>'
-        assert self.taglib.encode(text) == \
-            "{S:12}All things weird are normal"
+        text = "All things weird are normal\n" \
+               "<size=12>in this whore of cities</size>."
+        assert self.markup.encode(text) == (
+            "All things weird are normal\n"
+            "{s:12}in this whore of cities.")
 
-        # Size (affecting only one line)
-        text = \
-            'All things weird are normal\n' + \
-            'in this <size="12">whore of cities.</size>'
-        assert self.taglib.encode(text) == \
-            "All things weird are normal\n" + \
-            "in this {s:12}whore of cities."
+    def test_encode__underline(self):
 
-        # Size (affecting whole subtitle)
-        text = \
-            'All things <size="12">weird are normal\n' + \
-            'in this whore of cities.</size>'
-        assert self.taglib.encode(text) == \
-            "All things {S:12}weird are normal\n" + \
-            "in this whore of cities."
+        text = "All things weird are normal\n" \
+               "<u>in this whore of cities</u>."
+        assert self.markup.encode(text) == (
+            "All things weird are normal\n"
+            "{y:u}in this whore of cities.")
+
+    def test_fontify(self):
+
+        assert self.markup.fontify(self.text, "Sans") == (
+            "{F:Sans}All things weird are normal\n"
+            "in this whore of cities.")
+
+    def test_italic_tag(self):
+
+        assert self.markup.italic_tag.match("{Y:i}")
+        assert self.markup.italic_tag.match("{y:i}")
 
     def test_italicize(self):
 
-        text = \
-            "All things weird are normal\n" + \
-            "in this whore of cities."
-        assert self.taglib.italicize(text) == \
-            "{Y:i}All things weird are normal\n" + \
-            "in this whore of cities."
+        assert self.markup.italicize(self.text) == (
+            "{Y:i}All things weird are normal\n"
+            "in this whore of cities.")
+
+    def test_sizen(self):
+
+        assert self.markup.sizen(self.text, 12) == (
+            "{S:12}All things weird are normal\n"
+            "in this whore of cities.")
+
+    def test_tag(self):
+
+        assert self.markup.tag.match("{y:ibu}")
+        assert self.markup.tag.match("{c:$000000}")
+
+    def test_underline(self):
+
+        assert self.markup.underline(self.text, (0, 3)) == (
+            "All things weird are normal\n"
+            "in this whore of cities.")
