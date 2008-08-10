@@ -30,6 +30,9 @@ import sys
 import tarfile
 import tempfile
 
+if "py2exe" in sys.argv:
+    import py2exe
+
 from distutils import dir_util, log
 from distutils.command.clean import clean
 from distutils.command.install import install
@@ -133,12 +136,16 @@ class InstallData(install_data):
     def run(self):
         """Install data files after translating them."""
 
+        if "py2exe" in sys.argv:
+            # Do not try compiling translations on Windows,
+            # instead expect them to have been precompiled.
+            return install_data.run(self)
         for po_file in glob.glob("po/*.po"):
             self.data_files.append(self.__get_mo_file(po_file))
         for pattern_file in glob.glob("data/patterns/*.in"):
             self.data_files.append(self.__get_pattern_file(pattern_file))
         self.data_files.append(self.__get_desktop_file())
-        install_data.run(self)
+        return install_data.run(self)
 
 
 class InstallLib(install_lib):
@@ -241,11 +248,11 @@ for size in ("16x16", "22x22", "24x24", "32x32", "scalable"):
     files += glob.glob("data/icons/hicolor/%s/apps/*.svg" % size)
     data_files.append(("share/icons/hicolor/%s/apps" % size, files))
 
-if (sys.platform == "win32") and ("py2exe" in sys.argv):
+if "py2exe" in sys.argv:
     # Add translated data files, which must have been separately compiled,
     paths = [x[:-3] for x in glob.glob("data/patterns/*.in")]
     data_files.append(("share/gaupol/patterns", paths))
-    for locale in glob.glob("locale/*"):
+    for locale in os.listdir("locale"):
         mo_path = "locale/%s/LC_MESSAGES/gaupol.mo" % locale
         destination = "share/locale/%s/LC_MESSAGES" % locale
         data_files.append((destination, (mo_path,)))
@@ -262,10 +269,10 @@ for (root, dirs, files) in os.walk("gaupol"):
 
 kwargs = {}
 
-if (sys.platform == "win32") and ("py2exe" in sys.argv):
-    windows = ({
+if "py2exe" in sys.argv:
+    windows = [{
         "script": "bin/gaupol",
-        "icon_resources": ((0, "data/icons/gaupol.ico")),})
+        "icon_resources": [(0, "data/icons/gaupol.ico")],}]
     py2exe_options = {
         "includes": ("atk",),
         "packages": (

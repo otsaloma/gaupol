@@ -1,5 +1,10 @@
 2008-08-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* setup.py: Import py2exe. Fix values of data_files and kwargs.
+	(InstallData.run): Do not try compiling translations on Windows.
+
+2008-08-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/view.py (View._init_columns): Set text columns to expand
 	and other columns to not expand.
 
