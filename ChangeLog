@@ -1,5 +1,13 @@
 2008-08-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/paths.py (get_py2exe_directory): Fix.
+
+2008-08-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/util.py (browse_url): Don't try 'start' on Windows.
+
+2008-08-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* setup.py: Import py2exe. Fix values of data_files and kwargs.
 	(InstallData.run): Do not try compiling translations on Windows.
 

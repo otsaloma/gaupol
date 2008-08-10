@@ -50,8 +50,6 @@ def browse_url(url, browser=None):
         return subprocess.Popen(("kfmclient", "exec", url))
     if sys.platform == "darwin":
         return subprocess.Popen(("open", url))
-    if sys.platform == "win32":
-        return subprocess.Popen(("start", url))
     if is_command("xdg-open"):
         return subprocess.Popen(("xdg-open", url))
     if is_command("exo-open"):
