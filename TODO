@@ -1,14 +1,9 @@
 Gaupol 0.13
 ===========
 
- * Test excess field handling of SSA/ASS files
- * Test opening and saving extended SubRip files
- * Adapt to changes in PyEnchant 1.4.0
- * Test opening translation files
  * Rename columns to fields in GUI (Glade files) as well
    - s/toggle_(\w+)_column/toggle_$1_field/
    - s/toggle_column/toggle_field/
- * Avoid gaupol.gtk.util.resize_dialog
  * Check tools/profile results
  * Test on Windows with PyGTK 2.12
  * Test column reordering
@@ -89,3 +84,7 @@ Gaupol 3000
  * PyGObject 2.16
    - Try gobject.option.OptionParser (see #378704)
    - Try gio.AppInfo for launching web browser and video player
+ * PyEnchant 1.4
+   - All dictionary providers now use a shared default personal word
+     file (largely obsoleting the DictWithPWL class)
+   - Dict.add_to_pwl renamed to Dict.add

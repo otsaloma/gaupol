@@ -1,5 +1,10 @@
 2008-08-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/subtitle.py (Subtitle.__cmp__): Speed up by using direct
+	attribute access instead of property access.
+
+2008-08-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* setup.py: Update with correct paths for moved files.
 
 2008-08-09  Osmo Salomaa  <otsaloma@cc.hut.fi>

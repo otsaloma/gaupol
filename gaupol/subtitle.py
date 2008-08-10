@@ -61,10 +61,10 @@ class Subtitle(object):
         time and -1 if other appears later.
         """
         if self.mode == gaupol.modes.TIME:
-            times = (self.start_time, other.start_time)
+            times = (self._start, other.start_time)
             return self.calc.compare_times(*times)
         if self.mode == gaupol.modes.FRAME:
-            return cmp(self.start_frame, other.start_frame)
+            return cmp(self._start, other.start_frame)
         raise ValueError
 
     def __getattr__(self, name):
