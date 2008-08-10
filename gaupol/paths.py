@@ -33,8 +33,10 @@ def get_profile_directory():
     return os.path.join(os.path.expanduser("~"), ".gaupol")
 
 def get_py2exe_directory(child):
-    directory = os.path.join("..", "share")
-    return os.path.abspath(os.path.join(directory, child))
+    parent = os.path.dirname(sys.argv[0])
+    if child == "data": child = "gaupol"
+    directory = os.path.join(parent, "share", child)
+    return os.path.abspath(directory)
 
 def get_source_directory(child):
     parent = os.path.dirname(os.path.abspath(__file__))
