@@ -113,6 +113,7 @@ class View(gtk.TreeView):
             column.set_clickable(True)
             column.set_resizable(True)
             column.set_reorderable(True)
+            column.set_expand(field.is_text)
             column.set_visible(field in visible_fields)
             label = self._get_header_label(field, edit_mode)
             column.set_widget(label)

@@ -4,9 +4,7 @@ Gaupol 0.13
  * Rename columns to fields in GUI (Glade files) as well
    - s/toggle_(\w+)_column/toggle_$1_field/
    - s/toggle_column/toggle_field/
- * Check tools/profile results
  * Test on Windows with PyGTK 2.12
- * Test column reordering
  * Rename smart_open_translation / Adapt to.. / whatever
    - Align?
  * Rename dialog(ue)? lines to dialogue dashes

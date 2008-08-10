@@ -1,5 +1,10 @@
 2008-08-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/view.py (View._init_columns): Set text columns to expand
+	and other columns to not expand.
+
+2008-08-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/subtitle.py (Subtitle.__cmp__): Speed up by using direct
 	attribute access instead of property access.
 
