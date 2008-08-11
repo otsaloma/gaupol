@@ -118,6 +118,7 @@ class PreviewAgent(gaupol.Delegate):
         offset is the amount of seconds before time to start.
         sub_path can be a temporary subtitle file path.
         Raise IOError if writing to temporary file fails.
+        Raise IOError if unable to start process.
         Raise UnicodeError if encoding temporary file fails.
         Return subprocess.POpen instance, command, output path.
         """
