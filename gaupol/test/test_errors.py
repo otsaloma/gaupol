@@ -55,3 +55,13 @@ class TestParseError(gaupol.TestCase):
             raise gaupol.ParseError
         except gaupol.ParseError:
             pass
+
+
+class TestProcessError(gaupol.TestCase):
+
+    def test_raise(self):
+
+        try:
+            raise gaupol.ProcessError
+        except gaupol.ProcessError:
+            pass

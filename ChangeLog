@@ -1,3 +1,26 @@
+2008-08-12  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/dialogs/transform.py: Gray out the current position
+	entries to signal that they are not editable.
+
+2008-08-12  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/agents/preview.py (PreviewAgent._handle_output): Add
+	command to the beginning of the output.
+
+2008-08-12  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/errors.py (ProcessError): New error class.
+
+	* gaupol/util.py (start_process): Raise gaupol.ProcessError instead of
+	OSError if something goes wrong.
+
+	* gaupol/agents/preview.py (PreviewAgent.preview): Raise
+	gaupol.ProcessError instead of OSError if unable to start process.
+
+	* gaupol/gtk/agents/preview.py (PreviewAgent.preview): Handle
+	gaupol.ProcessError. Fixes #518981.
+
 2008-08-10  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/paths.py (get_py2exe_directory): Fix.

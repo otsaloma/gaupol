@@ -31,18 +31,19 @@ class PreviewAgent(gaupol.Delegate):
 
     # pylint: disable-msg=E0203,W0201
 
-    def _check_process_state(self, process, output_path):
+    def _check_process_state(self, process, output_path, command):
         """Check if the process has terminated or not."""
 
         if process.poll() is None: return True
-        self._handle_output(process, output_path)
+        self._handle_output(process, output_path, command)
         return False # to not check again.
 
-    def _handle_output(self, process, output_path):
+    def _handle_output(self, process, output_path, command):
         """Handle the output of finished preview process."""
 
         with open(output_path, "r") as fobj:
             output = fobj.read()
+        output = command + "\n\n" + output
         gaupol.temp.remove(output_path)
         self.output_window.set_output(output)
         if process.returncode == 0: return
@@ -66,6 +67,15 @@ class PreviewAgent(gaupol.Delegate):
 
         title = _('Failed to save subtitle file to '
             'temporary directory "%s"') % tempfile.gettempdir()
+        message = _("%s.") % message
+        dialog = gaupol.gtk.ErrorDialog(self.window, title, message)
+        dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
+        self.flash_dialog(dialog)
+
+    def _show_process_error_dialog(self, message):
+        """Show an error dialog after failing to launch video player."""
+
+        title = _("Failed to launch video player")
         message = _("%s.") % message
         dialog = gaupol.gtk.ErrorDialog(self.window, title, message)
         dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
@@ -95,6 +105,8 @@ class PreviewAgent(gaupol.Delegate):
         preview = page.project.preview
         args = (time, doc, command, offset, path)
         try: process, command, output_path = preview(*args)
+        except gaupol.ProcessError, message:
+            return self._show_process_error_dialog(message)
         except (IOError, OSError), (no, message):
             return self._show_io_error_dialog(message)
         except UnicodeError:
@@ -102,7 +114,7 @@ class PreviewAgent(gaupol.Delegate):
         # 'gobject.child_watch_add' does not appear to work on Windows,
         # so let's watch the process by polling it at regular intervals.
         function = self._check_process_state
-        args = (process, output_path)
+        args = (process, output_path, command)
         gobject.timeout_add(1000, function, *args)
 
     def preview_changes(self, page, row, doc, method, args=None, kwargs=None):

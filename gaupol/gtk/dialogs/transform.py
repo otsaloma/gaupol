@@ -36,8 +36,8 @@ class _PositionTransformDialog(gaupol.gtk.GladeDialog):
         self._correction_label_1 = get_widget("correction_label_1")
         self._correction_label_2 = get_widget("correction_label_2")
         self._current_radio = get_widget("current_radio")
-        self._input_label_1 = get_widget("input_label_1")
-        self._input_label_2 = get_widget("input_label_2")
+        self._input_entry_1 = get_widget("input_entry_1")
+        self._input_entry_2 = get_widget("input_entry_2")
         self._preview_button_1 = get_widget("preview_button_1")
         self._preview_button_2 = get_widget("preview_button_2")
         self._selected_radio = get_widget("selected_radio")
@@ -48,6 +48,7 @@ class _PositionTransformDialog(gaupol.gtk.GladeDialog):
         self.application = application
         self.conf = gaupol.gtk.conf.position_transform
 
+        self._init_input_labels()
         self._init_sensitivities()
         self._init_signal_handlers()
         self._init_sizes()
@@ -62,6 +63,17 @@ class _PositionTransformDialog(gaupol.gtk.GladeDialog):
         if self._current_radio.get_active():
             return gaupol.gtk.targets.CURRENT
         raise ValueError
+
+    def _init_input_labels(self):
+        """Initialize the input labels."""
+
+        style = self._correction_label_1.get_style()
+        text_color = style.fg[gtk.STATE_NORMAL]
+        base_color = style.bg[gtk.STATE_NORMAL]
+        self._input_entry_1.modify_text(gtk.STATE_NORMAL, text_color)
+        self._input_entry_1.modify_base(gtk.STATE_NORMAL, base_color)
+        self._input_entry_2.modify_text(gtk.STATE_NORMAL, text_color)
+        self._input_entry_2.modify_base(gtk.STATE_NORMAL, base_color)
 
     def _init_sensitivities(self):
         """Initialize the sensitivities of widgets."""
@@ -200,8 +212,8 @@ class FrameTransformDialog(_PositionTransformDialog):
         """Initialize the properties of widgets."""
 
         _PositionTransformDialog._init_widgets(self)
-        self._input_label_1.set_width_chars(6)
-        self._input_label_2.set_width_chars(6)
+        self._input_entry_1.set_width_chars(6)
+        self._input_entry_2.set_width_chars(6)
         self._output_spin_1.set_digits(0)
         self._output_spin_1.set_increments(1, 10)
         self._output_spin_1.set_range(0, 999999)
@@ -221,7 +233,7 @@ class FrameTransformDialog(_PositionTransformDialog):
         page = self.application.get_current_page()
         row = spin_button.get_value_as_int() - 1
         subtitle = page.project.subtitles[row]
-        self._input_label_1.set_text(str(subtitle.start_frame))
+        self._input_entry_1.set_text(str(subtitle.start_frame))
         self._output_spin_1.set_value(subtitle.start_frame)
         text = subtitle.main_text.replace("\n", " ")
         text = gaupol.re_any_tag.sub("", text)
@@ -235,7 +247,7 @@ class FrameTransformDialog(_PositionTransformDialog):
         page = self.application.get_current_page()
         row = spin_button.get_value_as_int() - 1
         subtitle = page.project.subtitles[row]
-        self._input_label_2.set_text(str(subtitle.start_frame))
+        self._input_entry_2.set_text(str(subtitle.start_frame))
         self._output_spin_2.set_value(subtitle.start_frame)
         text = subtitle.main_text.replace("\n", " ")
         text = gaupol.re_any_tag.sub("", text)
@@ -283,8 +295,8 @@ class TimeTransformDialog(_PositionTransformDialog):
         """Initialize the properties of widgets."""
 
         _PositionTransformDialog._init_widgets(self)
-        self._input_label_1.set_width_chars(13)
-        self._input_label_2.set_width_chars(13)
+        self._input_entry_1.set_width_chars(13)
+        self._input_entry_2.set_width_chars(13)
         self._correction_hbox_1.pack_start(self._output_entry_1)
         self._correction_hbox_2.pack_start(self._output_entry_2)
         self._correction_hbox_1.show_all()
@@ -298,7 +310,7 @@ class TimeTransformDialog(_PositionTransformDialog):
         page = self.application.get_current_page()
         row = spin_button.get_value_as_int() - 1
         subtitle = page.project.subtitles[row]
-        self._input_label_1.set_text(subtitle.start_time)
+        self._input_entry_1.set_text(subtitle.start_time)
         self._output_entry_1.set_text(subtitle.start_time)
         text = subtitle.main_text.replace("\n", " ")
         text = gaupol.re_any_tag.sub("", text)
@@ -314,7 +326,7 @@ class TimeTransformDialog(_PositionTransformDialog):
         page = self.application.get_current_page()
         row = spin_button.get_value_as_int() - 1
         subtitle = page.project.subtitles[row]
-        self._input_label_2.set_text(subtitle.start_time)
+        self._input_entry_2.set_text(subtitle.start_time)
         self._output_entry_2.set_text(subtitle.start_time)
         text = subtitle.main_text.replace("\n", " ")
         text = gaupol.re_any_tag.sub("", text)

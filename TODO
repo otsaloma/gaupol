@@ -23,12 +23,12 @@ Gaupol 0.13
  [?] Resize columns when their visibility is toggled
  [D] Fix error with encoding auto-detection (#10278)
  [D] Fix error starting spell-check if no dictionary (#10526)
- [ ] Fix preview error dialog if video player not found (#518981)
+ [D] Fix preview error dialog if video player not found (#518981)
  [ ] Fix preview error with MPlayer (terminal type unknown)
  [ ] Fix subtitle number search after subtitle removals or inserts
  [D] Fix error displaying right-click menu in cells (kitone)
  [D] Fix IndexError with multiline tags in text cells (#547170)
- [ ] Fix window type for preferences and search dialogs
+ [?] Fix window type for preferences and search dialogs
  [D] Fix error closing the search dialog from the window titlebar
  [?] Fix preview start position with shift dialog
  [?] Allow Escape key to close the text correction assistant

@@ -16,7 +16,12 @@
 
 """All error classes."""
 
-__all__ = ("Error", "AffirmationError", "FormatError", "ParseError",)
+__all__ = (
+    "Error",
+    "AffirmationError",
+    "FormatError",
+    "ParseError",
+    "ProcessError",)
 
 
 class Error(Exception):
@@ -52,5 +57,12 @@ class ParseError(Error):
     The error is either a syntax error in the file being parsed or a
     programming error in the code doing the parsing.
     """
+
+    pass
+
+
+class ProcessError(Error):
+
+    """Error in an external process."""
 
     pass

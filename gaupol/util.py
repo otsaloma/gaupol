@@ -401,15 +401,19 @@ def start_process(command, **kwargs):
     """Start command as a new background subprocess.
 
     command and kwargs are passed to subprocess.Popen.__init__.
+    raise ProcessError if something goes wrong.
     Return subprocess.Popen instance.
     """
-    return subprocess.Popen(
-        command,
-        shell=(sys.platform != "win32"),
-        cwd=os.getcwd(),
-        env=os.environ.copy(),
-        universal_newlines=True,
-        **kwargs)
+    try:
+        return subprocess.Popen(
+            command,
+            shell=(sys.platform != "win32"),
+            cwd=os.getcwd(),
+            env=os.environ.copy(),
+            universal_newlines=True,
+            **kwargs)
+    except OSError, (no, message):
+        raise gaupol.ProcessError(message)
 
 def title_to_lower_case_ensure(value, title_name):
     assert value.islower()

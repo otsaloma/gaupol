@@ -36,6 +36,13 @@ class TestPreviewAgent(gaupol.gtk.TestCase):
         self.delegate.flash_dialog = flash_dialog
         self.delegate._show_io_error_dialog("test")
 
+    def run__show_process_error_dialog(self):
+
+        flash_dialog = gaupol.gtk.Runner.flash_dialog
+        flash_dialog = functools.partial(flash_dialog, self.application)
+        self.delegate.flash_dialog = flash_dialog
+        self.delegate._show_process_error_dialog("test")
+
     def setup_method(self, method):
 
         gaupol.gtk.conf.preview.custom_command = "echo $SUBFILE"
@@ -54,6 +61,10 @@ class TestPreviewAgent(gaupol.gtk.TestCase):
     def test__show_io_error_dialog(self):
 
         self.delegate._show_io_error_dialog("test")
+
+    def test__show_process_error_dialog(self):
+
+        self.delegate._show_process_error_dialog("test")
 
     def test_on_preview_activate(self):
 
