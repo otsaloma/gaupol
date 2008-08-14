@@ -24,7 +24,7 @@ Gaupol 0.13
  [D] Fix error starting spell-check if no dictionary (#10526)
  [D] Fix preview error dialog if video player not found (#518981)
  [ ] Fix preview error with MPlayer (terminal type unknown)
- [ ] Fix subtitle number search after subtitle removals or inserts
+ [D] Fix subtitle number search after subtitle removals or inserts
  [D] Fix error displaying right-click menu in cells (kitone)
  [D] Fix IndexError with multiline tags in text cells (#547170)
  [?] Fix window type for preferences and search dialogs

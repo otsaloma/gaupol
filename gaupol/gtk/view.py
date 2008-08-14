@@ -134,8 +134,17 @@ class View(gtk.TreeView):
         self.set_rubber_banding(True)
         selection = self.get_selection()
         selection.set_mode(gtk.SELECTION_MULTIPLE)
+        self._init_search()
+
+    def _init_search(self):
+        """Initialize the interactive search properties."""
+
         self.set_enable_search(True)
         self.set_search_column(self.columns.NUMBER)
+        def equals_subtitle_number(store, column, key, itr):
+            # Return False if key matches subtitle number.
+            return store.get_path(itr)[0] != (int(key) - 1)
+        self.set_search_equal_func(equals_subtitle_number)
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""

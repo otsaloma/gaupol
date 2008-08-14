@@ -1,5 +1,10 @@
 2008-08-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/view.py (View): Fix subtitle number search after subtitle
+	removals or inserts.
+
+2008-08-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/agents/view.py (ViewAgent._toggle_column): Autosize
 	columns after changing visibility.
 
