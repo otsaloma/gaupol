@@ -4,9 +4,7 @@ Gaupol 0.13
  * Rename columns to fields in GUI (Glade files) as well
    - s/toggle_(\w+)_column/toggle_$1_field/
    - s/toggle_column/toggle_field/
- * Rename smart_open_translation / Adapt to.. / whatever to
-   - Align?
- * Rename dialog(ue)? lines to dialogue dashes
+ * Rename smart_open_translation / Adapt to.. / whatever to... Align?
  * Restrict tags strictly to known tags?
 
  [D] Raise PyGTK dependency to 2.12 or greater

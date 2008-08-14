@@ -1,5 +1,14 @@
 2008-08-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/page.py (Page._init_widgets): Put the tab widget in an
+	event box to be able to recieve events.
+
+	* gaupol/gtk/agents/menu.py
+	(MenuAgent.on_page_tab_widget_button_press_event):  Activate the page,
+	whose tab was right-clicked.
+
+2008-08-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/patterns/*:
 	* data/ui/ui.xml:
 	* gaupol/*:

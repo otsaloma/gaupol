@@ -317,7 +317,7 @@ class OpenAgent(gaupol.Delegate):
         callback = self.on_project_action_undone
         page.project.connect("action-undone", callback)
         callback = self.on_page_tab_widget_button_press_event
-        page.tab_widget.connect("button-press-event", callback)
+        page.tab_widget.connect("button-press-event", callback, page)
         self.connect_to_view_signals(page.view)
         page.project.clipboard.set_texts(self.clipboard.get_texts())
 

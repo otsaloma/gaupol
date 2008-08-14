@@ -164,10 +164,12 @@ class Page(gaupol.Observable):
         self.tab_label.set_max_width_chars(24)
         self.tab_label.set_tooltip_text(self.untitle)
         button = self._get_tab_close_button()
-        self.tab_widget = gtk.HBox(False, 4)
-        self.tab_widget.pack_start(self.tab_label, True, True, 0)
-        self.tab_widget.pack_start(button, False, False, 0)
-        self.tab_widget.set_data("button", button)
+        hbox = gtk.HBox(False, 4)
+        hbox.pack_start(self.tab_label, True, True, 0)
+        hbox.pack_start(button, False, False, 0)
+        hbox.set_data("button", button)
+        self.tab_widget = gtk.EventBox()
+        self.tab_widget.add(hbox)
         self.tab_widget.show_all()
 
     def _on_project_main_file_opened(self, *args):

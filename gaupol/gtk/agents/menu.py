@@ -142,10 +142,12 @@ class MenuAgent(gaupol.Delegate):
         self.get_tool_item("open_main_files").set_menu(menu)
         gaupol.gtk.util.iterate_main()
 
-    def on_page_tab_widget_button_press_event(self, button, event):
+    def on_page_tab_widget_button_press_event(self, button, event, page):
         """Display a pop-up menu with tab-related actions."""
 
         if event.button != 3: return
+        if page is not self.get_current_page():
+            self.set_current_page(page)
         menu = self.uim.get_widget("/ui/tab_popup")
         menu.popup(None, None, None, event.button, event.time)
 
