@@ -88,11 +88,11 @@ class TextAgent(gaupol.Delegate):
             self._replace_all(parser, r"^\W*$", "")
             # Remove empty lines.
             self._replace_all(parser, r"(^\n|\n$)", "")
-            # Add space after dialogue lines.
+            # Add space after dialogue dashes.
             self._replace_all(parser, r"^-(\S)", r"- \1")
-            # Remove dialogue lines if not present on other lines.
+            # Remove dialogue dashes if not present on other lines.
             self._replace_all(parser, r"^- (.*?^[^-])", r"\1")
-            # Remove dialogue lines from single-line subtitles.
+            # Remove dialogue dashes from single-line subtitles.
             self._replace_all(parser, r"\A- ([^\n]*)\Z", r"\1")
             texts[i] = parser.get_text()
         return texts

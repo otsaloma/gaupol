@@ -1,5 +1,12 @@
 2008-08-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/patterns/*:
+	* data/ui/ui.xml:
+	* gaupol/*:
+	Rename dialogue lines to dialogue dashes.
+
+2008-08-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/dialogs/preferences.py (PreferencesDialog.__init__): Add
 	argument parent and make the dialog transient for that.
 

@@ -53,7 +53,7 @@ class TestFormatAgent(gaupol.TestCase):
             "MRS. PAVINATO?\n" + \
             "YES, WHAT DO YOU WANT?"
 
-    def test_toggle_dialogue_lines__all(self):
+    def test_toggle_dialogue_dashes__all(self):
 
         self.project.subtitles[0].main_text = \
             "- You have cut your beard?\n" + \
@@ -61,7 +61,7 @@ class TestFormatAgent(gaupol.TestCase):
         self.project.subtitles[1].main_text = \
             "- It was the only beautiful thing you had.\n" + \
             "- Now you seem a different person."
-        self.project.toggle_dialogue_lines((0, 1), gaupol.documents.MAIN)
+        self.project.toggle_dialogue_dashes((0, 1), gaupol.documents.MAIN)
         assert self.project.subtitles[0].main_text == \
             "You have cut your beard?\n" + \
             "Yes, don't you like it?"
@@ -69,7 +69,7 @@ class TestFormatAgent(gaupol.TestCase):
             "It was the only beautiful thing you had.\n" + \
             "Now you seem a different person."
 
-    def test_toggle_dialogue_lines__none(self):
+    def test_toggle_dialogue_dashes__none(self):
 
         self.project.subtitles[0].main_text = \
             "You have cut your beard?\n" + \
@@ -77,7 +77,7 @@ class TestFormatAgent(gaupol.TestCase):
         self.project.subtitles[1].main_text = \
             "It was the only beautiful thing you had.\n" + \
             "Now you seem a different person."
-        self.project.toggle_dialogue_lines((0, 1), gaupol.documents.MAIN)
+        self.project.toggle_dialogue_dashes((0, 1), gaupol.documents.MAIN)
         assert self.project.subtitles[0].main_text == \
             "- You have cut your beard?\n" + \
             "- Yes, don't you like it?"
@@ -85,7 +85,7 @@ class TestFormatAgent(gaupol.TestCase):
             "- It was the only beautiful thing you had.\n" + \
             "- Now you seem a different person."
 
-    def test_toggle_dialogue_lines__some(self):
+    def test_toggle_dialogue_dashes__some(self):
 
         self.project.subtitles[0].main_text = \
             "- You have cut your beard?\n" + \
@@ -93,7 +93,7 @@ class TestFormatAgent(gaupol.TestCase):
         self.project.subtitles[1].main_text = \
             "It was the only beautiful thing you had.\n" + \
             "Now you seem a different person."
-        self.project.toggle_dialogue_lines((0, 1), gaupol.documents.MAIN)
+        self.project.toggle_dialogue_dashes((0, 1), gaupol.documents.MAIN)
         assert self.project.subtitles[0].main_text == \
             "- You have cut your beard?\n" + \
             "- Yes, don't you like it?"

@@ -39,15 +39,15 @@ class ShowCaseMenuAction(gaupol.gtk.MenuAction):
         gaupol.util.affirm(page.view.is_text_column(col))
 
 
-class ToggleDialogLinesAction(gaupol.gtk.Action):
+class ToggleDialogDashesAction(gaupol.gtk.Action):
 
-    """Toggle dialogue lines on the selected texts."""
+    """Toggle dialogue dashes on the selected texts."""
 
     def __init__(self):
 
-        gaupol.gtk.Action.__init__(self, "toggle_dialogue_lines")
+        gaupol.gtk.Action.__init__(self, "toggle_dialogue_dashes")
         self.props.label = _("_Dialogue")
-        tooltip = _("Add or remove dialogue lines on the selected texts")
+        tooltip = _("Add or remove dialogue dashes on the selected texts")
         self.props.tooltip = tooltip
         self.accelerator = "D"
 

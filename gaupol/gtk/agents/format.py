@@ -36,14 +36,14 @@ class FormatAgent(gaupol.Delegate):
         doc = page.text_column_to_document(col)
         page.project.change_case(rows, doc, method)
 
-    def on_toggle_dialogue_lines_activate(self, *args):
-        """Toggle dialogue lines on the selected texts."""
+    def on_toggle_dialogue_dashes_activate(self, *args):
+        """Toggle dialogue dashes on the selected texts."""
 
         page = self.get_current_page()
         rows = page.view.get_selected_rows()
         col = page.view.get_focus()[1]
         doc = page.text_column_to_document(col)
-        page.project.toggle_dialogue_lines(rows, doc)
+        page.project.toggle_dialogue_dashes(rows, doc)
 
     def on_toggle_italicization_activate(self, *args):
         """Toggle italicization of the selected texts."""

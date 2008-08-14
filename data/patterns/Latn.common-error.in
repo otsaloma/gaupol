@@ -27,8 +27,8 @@ Replacement="
 Repeat=False
 
 [CommonErrorPattern]
-_Name=Space after a dialogue line
-_Description=Add space after a dialogue line
+_Name=Space after a dialogue dash
+_Description=Add space after a dialogue dash
 Classes=Human,OCR
 Pattern=^-([^-\s])
 Flags=DOTALL,MULTILINE,UNICODE

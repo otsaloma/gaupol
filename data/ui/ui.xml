@@ -203,7 +203,7 @@
          action="toggle_italicization"/>
       <menuitem
          name="dialogue"
-         action="toggle_dialogue_lines"/>
+         action="toggle_dialogue_dashes"/>
       <menu
          name="case"
          action="show_case_menu">

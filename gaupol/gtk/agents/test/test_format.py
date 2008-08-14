@@ -26,9 +26,9 @@ class TestFormatAgent(gaupol.gtk.TestCase):
         page.view.set_focus(0, page.view.columns.MAIN_TEXT)
         page.view.select_rows((0, 1, 2))
 
-    def test_on_toggle_dialogue_lines_activate(self):
+    def test_on_toggle_dialogue_dashes_activate(self):
 
-        self.application.get_action("toggle_dialogue_lines").activate()
+        self.application.get_action("toggle_dialogue_dashes").activate()
 
     def test_on_toggle_italicization_activate(self):
 

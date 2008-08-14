@@ -1,6 +1,6 @@
 [LineBreakPattern]
 _Name=Dialogue
-_Description=Break according to dialogue lines
+_Description=Break according to dialogue separated by dashes
 Pattern= (- )
 Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\n\1

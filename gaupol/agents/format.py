@@ -41,7 +41,7 @@ class FormatAgent(gaupol.Delegate):
         parser.text = prefix + text
 
     def _should_dialoguize(self, indices, doc):
-        """Return True if dialogue lines should be added to texts."""
+        """Return True if dialogue dashes should be added to texts."""
 
         re_tag = self.get_markup_tag_regex(doc)
         for index in indices:
@@ -49,7 +49,7 @@ class FormatAgent(gaupol.Delegate):
             for line in text.split("\n"):
                 # Strip all tags from line.
                 # If leftover doesn't start with "-",
-                # dialogue lines should be added.
+                # dialogue dashes should be added.
                 if re_tag is not None:
                     line = re_tag.sub("", line)
                 if not line.startswith("-"):
@@ -100,13 +100,13 @@ class FormatAgent(gaupol.Delegate):
         self.replace_texts(indices, doc, new_texts, register=register)
         self.set_action_description(register, _("Changing case"))
 
-    def toggle_dialogue_lines_require(self, indices, doc, register=-1):
+    def toggle_dialogue_dashes_require(self, indices, doc, register=-1):
         for index in indices:
             assert 0 <= index < len(self.subtitles)
 
     @gaupol.deco.revertable
-    def toggle_dialogue_lines(self, indices, doc, register=-1):
-        """Show or hide dialogue lines on texts."""
+    def toggle_dialogue_dashes(self, indices, doc, register=-1):
+        """Show or hide dialogue dashes on texts."""
 
         new_texts = []
         parser = self.get_parser(doc)
@@ -124,7 +124,7 @@ class FormatAgent(gaupol.Delegate):
             new_texts.append(parser.get_text())
 
         self.replace_texts(indices, doc, new_texts, register=register)
-        self.set_action_description(register, _("Toggling dialogue lines"))
+        self.set_action_description(register, _("Toggling dialogue dashes"))
 
     def toggle_italicization_require(self, indices, doc, register=-1):
         for index in indices:
