@@ -43,7 +43,7 @@ class PreviewAgent(gaupol.Delegate):
 
         with open(output_path, "r") as fobj:
             output = fobj.read()
-        output = command + "\n\n" + output
+        output = "$ %s\n\n%s" % (command, output)
         gaupol.temp.remove(output_path)
         self.output_window.set_output(output)
         if process.returncode == 0: return
