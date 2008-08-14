@@ -1,3 +1,8 @@
+2008-08-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/agents/view.py (ViewAgent._toggle_column): Autosize
+	columns after changing visibility.
+
 2008-08-12  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/gtk/dialogs/transform.py: Gray out the current position

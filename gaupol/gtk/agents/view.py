@@ -43,6 +43,7 @@ class ViewAgent(gaupol.Delegate):
                 visible_fields.append(field)
         gaupol.gtk.conf.editor.visible_fields = visible_fields
         self.update_gui()
+        page.view.columns_autosize()
         gaupol.gtk.util.set_cursor_normal(self.window)
 
     def on_framerate_combo_changed(self, *args):

@@ -4,7 +4,6 @@ Gaupol 0.13
  * Rename columns to fields in GUI (Glade files) as well
    - s/toggle_(\w+)_column/toggle_$1_field/
    - s/toggle_column/toggle_field/
- * Test on Windows with PyGTK 2.12
  * Rename smart_open_translation / Adapt to.. / whatever to
    - Align?
  * Rename dialog(ue)? lines to dialogue dashes
@@ -20,7 +19,7 @@ Gaupol 0.13
  [D] Allow grouping of correction patterns under the same name
  [D] Improve commmon error patterns for spaces around quote marks
  [D] Allow reordering of columns
- [?] Resize columns when their visibility is toggled
+ [D] Resize columns when their visibility is toggled
  [D] Fix error with encoding auto-detection (#10278)
  [D] Fix error starting spell-check if no dictionary (#10526)
  [D] Fix preview error dialog if video player not found (#518981)
