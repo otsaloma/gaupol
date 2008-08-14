@@ -1,5 +1,12 @@
 2008-08-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/dialogs/preferences.py (PreferencesDialog.__init__): Add
+	argument parent and make the dialog transient for that.
+
+	* data/glade/dialogs/preferences.glade: Center on parent.
+
+2008-08-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/view.py (View): Fix subtitle number search after subtitle
 	removals or inserts.
 

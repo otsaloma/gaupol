@@ -22,7 +22,7 @@ class TestEditorPage(gaupol.gtk.TestCase):
 
     def setup_method(self, method):
 
-        self.dialog = gaupol.gtk.PreferencesDialog()
+        self.dialog = gaupol.gtk.PreferencesDialog(gtk.Window())
         self.page = self.dialog._editor_page
         self.dialog.show()
 
@@ -60,7 +60,7 @@ class TestFilePage(gaupol.gtk.TestCase):
 
     def setup_method(self, method):
 
-        self.dialog = gaupol.gtk.PreferencesDialog()
+        self.dialog = gaupol.gtk.PreferencesDialog(gtk.Window())
         self.page = self.dialog._file_page
         self.dialog.show()
 
@@ -111,16 +111,16 @@ class TestPreviewPage(gaupol.gtk.TestCase):
 
     def setup_method(self, method):
 
-        self.dialog = gaupol.gtk.PreferencesDialog()
+        self.dialog = gaupol.gtk.PreferencesDialog(gtk.Window())
         self.page = self.dialog._preview_page
         self.dialog.show()
 
     def test__init_values(self):
 
         gaupol.gtk.conf.preview.use_custom = False
-        self.dialog = gaupol.gtk.PreferencesDialog()
+        self.dialog = gaupol.gtk.PreferencesDialog(gtk.Window())
         gaupol.gtk.conf.preview.use_custom = True
-        self.dialog = gaupol.gtk.PreferencesDialog()
+        self.dialog = gaupol.gtk.PreferencesDialog(gtk.Window())
 
     def test__on_app_combo_changed(self):
 
@@ -150,5 +150,5 @@ class TestPreferencesDialog(gaupol.gtk.TestCase):
 
     def setup_method(self, method):
 
-        self.dialog = gaupol.gtk.PreferencesDialog()
+        self.dialog = gaupol.gtk.PreferencesDialog(gtk.Window())
         self.dialog.show()

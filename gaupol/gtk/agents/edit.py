@@ -106,7 +106,7 @@ class EditAgent(gaupol.Delegate):
 
         if self._pref_dialog is not None:
             return self._pref_dialog.present()
-        self._pref_dialog = gaupol.gtk.PreferencesDialog()
+        self._pref_dialog = gaupol.gtk.PreferencesDialog(self.window)
         gaupol.util.connect(self, "_pref_dialog", "response")
         self._pref_dialog.show()
 

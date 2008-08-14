@@ -356,13 +356,12 @@ class PreferencesDialog(gaupol.gtk.GladeDialog):
 
     """Dialog for editing preferences."""
 
-    def __init__(self):
+    def __init__(self, parent):
 
         gaupol.gtk.GladeDialog.__init__(self, "preferences.glade")
         self._editor_page = _EditorPage(self)
         self._file_page = _FilePage(self)
         self._preview_page = _PreviewPage(self)
 
-        self.set_transient_for(None)
-        self.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_NORMAL)
+        self.set_transient_for(parent)
         self.set_default_response(gtk.RESPONSE_CLOSE)
