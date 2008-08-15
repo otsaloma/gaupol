@@ -5,6 +5,7 @@ Gaupol 0.13
    - s/toggle_(\w+)_column/toggle_$1_field/
    - s/toggle_column/toggle_field/
  * Rename smart_open_translation / Adapt to.. / whatever to... Align?
+   - Align by: [ Subtitle number | v ]
  * Restrict tags strictly to known tags?
 
  [D] Raise PyGTK dependency to 2.12 or greater

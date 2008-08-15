@@ -20,6 +20,7 @@ import gaupol.gtk
 import gtk
 import os
 import pango
+import sys
 _ = gaupol.i18n._
 
 __all__ = ("Page",)
@@ -96,14 +97,15 @@ class Page(gaupol.Observable):
         """Initialize and return a tab close button."""
 
         button = gtk.Button()
+        button.set_name("gaupol-tab-close-button")
         args = gtk.STOCK_CLOSE, gtk.ICON_SIZE_MENU
         image = gtk.image_new_from_stock(*args)
         button.add(image)
         button.set_relief(gtk.RELIEF_NONE)
         button.set_focus_on_click(False)
-        button.set_name("gaupol-tab-close-button")
         width, height = image.size_request()
-        button.set_size_request(width + 2, height + 2)
+        padding = (6 if sys.platform == "win32" else 2)
+        button.set_size_request(width + padding, height + padding)
         request_close = lambda x, self: self.emit("close-request")
         button.connect("clicked", request_close, self)
         button.set_tooltip_text(_("Close project"))
