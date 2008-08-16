@@ -32,8 +32,9 @@ class OpenDialog(gaupol.gtk.FileDialog):
 
         gaupol.gtk.FileDialog.__init__(self, "open.glade")
         get_widget = self._glade_xml.get_widget
+        self._align_combo = get_widget("align_combo")
+        self._align_label = get_widget("align_label")
         self._encoding_combo = get_widget("encoding_combo")
-        self._smart_check = get_widget("smart_check")
         self._use_autodetection = gaupol.util.chardet_available()
         self.conf = gaupol.gtk.conf.file
 
@@ -51,12 +52,17 @@ class OpenDialog(gaupol.gtk.FileDialog):
         if os.path.isdir(self.conf.directory):
             self.set_current_folder(self.conf.directory)
         self.set_encoding(self.conf.encoding)
-        self._smart_check.set_active(self.conf.smart_open_translation)
-        self._smart_check.props.visible = (doc == gaupol.documents.TRAN)
+        store = self._align_combo.get_model()
+        for align_method in gaupol.align_methods:
+            store.append((align_method.label,))
+        self._align_combo.set_active(self.conf.align_method)
+        self._align_combo.props.visible = (doc == gaupol.documents.TRAN)
+        self._align_label.props.visible = (doc == gaupol.documents.TRAN)
 
     def _on_response(self, dialog, response):
         """Save widget values and dialog size."""
 
         self.conf.encoding = self.get_encoding()
         self.conf.directory = self.get_current_folder()
-        self.conf.smart_open_translation = self._smart_check.get_active()
+        index = self._align_combo.get_active()
+        self.conf.align_method = gaupol.align_methods[index]

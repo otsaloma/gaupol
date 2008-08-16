@@ -28,8 +28,8 @@ class OpenAgent(gaupol.Delegate):
 
     __metaclass__ = gaupol.Contractual
 
-    def _adapt_translations(self, subtitles):
-        """Add translation texts in an adaptive manner."""
+    def _align_translations(self, subtitles):
+        """Add translation texts aligned with main document."""
 
         m = t = 0
         mode = self.main_file.mode
@@ -59,7 +59,7 @@ class OpenAgent(gaupol.Delegate):
             if tm_cmp_ms ==  1: m += 1
 
     def _append_translations(self, subtitles):
-        """Add translation texts in a simple appending manner."""
+        """Add translation texts by appending them."""
 
         current = len(self.subtitles)
         excess = len(subtitles) - current
@@ -134,16 +134,16 @@ class OpenAgent(gaupol.Delegate):
         self.emit("main-file-opened", self.main_file)
         return sort_count
 
-    def open_translation_require(self, path, encoding, smart=True):
+    def open_translation_require(self, path, encoding, align_method=None):
         assert self.main_file is not None
         assert gaupol.encodings.is_valid_code(encoding)
 
-    def open_translation_ensure(self, value, path, encoding, smart=True):
+    def open_translation_ensure(self, *args, **kwargs):
         assert self.tran_file is not None
         assert self.tran_changed == 0
 
     @gaupol.deco.notify_frozen
-    def open_translation(self, path, encoding, smart=True):
+    def open_translation(self, path, encoding, align_method=None):
         """Open translation file reading texts.
 
         Raise IOError if reading fails.
@@ -152,6 +152,8 @@ class OpenAgent(gaupol.Delegate):
         Raise ParseError if parsing fails.
         Return sort count.
         """
+        if align_method is None:
+            align_method = gaupol.align_methods.POSITION
         format = gaupol.FormatDeterminer().determine(path, encoding)
         self.tran_file = gaupol.files.new(format, path, encoding)
         subtitles = self._read_file(self.tran_file)
@@ -161,8 +163,10 @@ class OpenAgent(gaupol.Delegate):
         for subtitle in self.subtitles:
             subtitle.tran_text = ""
         blocked = self.block("subtitles-inserted")
-        if smart: self._adapt_translations(subtitles)
-        else: self._append_translations(subtitles)
+        if align_method == gaupol.align_methods.POSITION:
+            self._align_translations(subtitles)
+        elif align_method == gaupol.align_methods.NUMBER:
+            self._append_translations(subtitles)
         self.unblock("subtitles-inserted", blocked)
         self.tran_changed = 0
         self.emit("translation-file-opened", self.tran_file)

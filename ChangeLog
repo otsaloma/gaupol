@@ -1,5 +1,27 @@
 2008-08-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/gaupol.gtk.conf.spec: Remove option 'smart_open_translation' and
+	add option 'align_method'.
+
+	* data/glade/dialogs/open.glade:
+	* gaupol/gtk/dialogs/open.py:
+	Replace adapt check button with an align method combo box.
+
+	* gaupol/agents/open.py (OpenAgent.open_translation):
+	* gaupol/gtk/agents/open.py (OpenAgent.open_translation_file):
+	Replace keyword argument 'smart' with 'align_method'.
+
+	* gaupol/align.py: New file for align method enumerations.
+
+	* gaupol/gtk/agents/open.py
+	(OpenAgent.on_recent_translation_menu_item_activated): Always use align
+	method 'position'.
+
+	* gaupol/gtk/main.py: Replace '--adapt-translation' option with
+	'--align-method'.
+
+2008-08-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* data/codes/locales.txt: Remove 'ns_ZA', for 'ns' is not found in
 	'iso_639.xml'.
 

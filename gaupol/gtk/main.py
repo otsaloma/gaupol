@@ -74,8 +74,9 @@ def _init_application(opts, args):
     page = application.get_current_page()
     if (page is not None) and opts.translation_file:
         path = os.path.abspath(opts.translation_file)
-        smart = opts.adapt_translation
-        application.open_translation_file(path, opts.encoding, smart)
+        align_method = opts.align_method.upper()
+        align_method = getattr(gaupol.align_methods, align_method)
+        application.open_translation_file(path, opts.encoding, align_method)
     if (page is not None) and opts.video_file:
         path = os.path.abspath(opts.video_file)
         page.project.video_path = path
@@ -178,11 +179,14 @@ def _parse_args(args):
         help=_("open translation file"),)
 
     parser.add_option(
-        "-a", "--adapt-translation",
-        action="store_true",
-        dest="adapt_translation",
-        default=False,
-        help=_("open translation file adaptively"),)
+        "-a", "--align-method",
+        action="store",
+        type="string",
+        metavar=_("METHOD"),
+        dest="align_method",
+        default="position",
+        help=_("Method used to align translation subtitles: "
+            "'number' or 'position'"),)
 
     parser.add_option(
         "-v", "--video-file",

@@ -135,9 +135,9 @@ class OpenAgent(gaupol.Delegate):
             open_method = page.project.open_main
         elif doc == gaupol.documents.TRAN:
             page = self.get_current_page()
-            open_method = page.project.open_translation
-            smart = gaupol.gtk.conf.file.smart_open_translation
-            open_method = functools.partial(open_method, smart=smart)
+            open_method = functools.partial(
+                page.project.open_translation,
+                align_method=gaupol.gtk.conf.file.align_method)
         for encoding in encodings:
             args = (open_method, path, encoding)
             sort_count = self._try_open_file(*args)
@@ -445,7 +445,8 @@ class OpenAgent(gaupol.Delegate):
 
         uri = chooser.get_current_uri()
         path = gaupol.util.uri_to_path(uri)
-        self.open_translation_file(path)
+        align_method = gaupol.align_methods.POSITION
+        self.open_translation_file(path, None, align_method)
 
     def on_select_video_file_activate(self, *args):
         """Select a video file."""
@@ -509,12 +510,12 @@ class OpenAgent(gaupol.Delegate):
             self.open_main_file(path, encoding)
 
     @gaupol.deco.silent(gaupol.gtk.Default)
-    def open_translation_file(self, path, encoding=None, smart=None):
+    def open_translation_file(self, path, encoding=None, align_method=None):
         """Open translation file."""
 
+        if align_method is not None:
+            gaupol.gtk.conf.file.align_method = align_method
         encodings = self._get_encodings(encoding)
-        if smart is not None:
-            gaupol.gtk.conf.file.smart_open_translation = smart
         page = self._open_file(path, encodings, gaupol.documents.TRAN)
         gaupol.gtk.util.set_cursor_busy(self.window)
         col = page.view.columns.TRAN_TEXT

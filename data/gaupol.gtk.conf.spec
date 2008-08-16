@@ -54,12 +54,12 @@ try_locale = boolean(default=True)
 visibles = string_list(default=list("utf_8", "cp1252"))
 
 [file]
+align_method = align_methods(default="POSITION")
 directory = string(default="")
 encoding = string(default="")
 format = formats(default="SUBRIP")
 max_recent = integer(min=0, default=10)
 newline = newlines(default="UNIX")
-smart_open_translation = boolean(default=True)
 
 [framerate_convert]
 target = targets(default="CURRENT")

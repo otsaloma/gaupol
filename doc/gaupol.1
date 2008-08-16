@@ -1,4 +1,4 @@
-.TH GAUPOL 1 "July 1, 2007"
+.TH GAUPOL 1 "August 16, 2008"
 .SH NAME
 gaupol \- editor for text\-based subtitle files
 .SH SYNOPSIS
@@ -37,9 +37,14 @@ subtitle.
 \fB\-t\fR, \fB\-\-translation\-file\fR=\fIFILE\fR
 Open translation file.
 .TP
-\fB\-a\fR, \fB\-\-adapt\-translation\fR
-When opening translation file, adapt to differences between main and
-translation documents.
+\fB\-a\fR, \fB\-\-align\-method\fR=\fIMETHOD\fR
+Method used to align translation file's subtitle texts with main
+document's subtitles. Possible values are 'number' and 'position'. The
+default is 'position', which compares the positions in the main
+document and the translation file and inserts the translation texts so
+that those positions match. Existing subtitles are skipped and new
+ones inserted as needed. 'number' discards position information and
+inserts the N translation texts into the first N subtitles.
 .TP
 \fB\-v\fR, \fB\-\-video\-file\fR=\fIFILE\fR
 Select video file.

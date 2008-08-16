@@ -36,6 +36,7 @@ from gaupol.observable import *
 from gaupol.enumeration import *
 from gaupol import i18n
 from gaupol.errors import *
+from gaupol.align import *
 from gaupol.documents import *
 from gaupol.formats import *
 from gaupol.framerates import *

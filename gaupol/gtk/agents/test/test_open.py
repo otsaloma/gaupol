@@ -268,6 +268,6 @@ class TestOpenAgent(gaupol.gtk.TestCase):
     def test_open_translation_file(self):
 
         path = self.get_subrip_path()
-        self.application.open_translation_file(path, smart=True)
+        self.application.open_translation_file(path)
         path = self.get_subrip_path()
         self.application.open_translation_file(path, "ascii")

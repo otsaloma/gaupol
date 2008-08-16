@@ -73,16 +73,18 @@ class TestOpenAgent(gaupol.TestCase):
         fobj.close()
         assert self.project.open_main(path, "ascii") == 1
 
-    def test_open_translation__smart(self):
+    def test_open_translation__align_number(self):
 
+        align_method = gaupol.align_methods.NUMBER
         for format in gaupol.formats:
             path = self.get_file_path(format)
             self.project.remove_subtitles([0])
-            self.project.open_translation(path, "ascii", True)
+            self.project.open_translation(path, "ascii", align_method)
 
-    def test_open_translation__stupid(self):
+    def test_open_translation__align_position(self):
 
+        align_method = gaupol.align_methods.POSITION
         for format in gaupol.formats:
             path = self.get_file_path(format)
             self.project.remove_subtitles([0])
-            self.project.open_translation(path, "ascii", False)
+            self.project.open_translation(path, "ascii", align_method)

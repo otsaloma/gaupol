@@ -74,7 +74,7 @@ class TestCase(object):
 
         project = gaupol.Project()
         project.open_main(self.get_subrip_path(), "ascii")
-        project.open_translation(self.get_microdvd_path(), "ascii", False)
+        project.open_translation(self.get_microdvd_path(), "ascii")
         return project
 
     def get_subrip_path_ensure(self, value):

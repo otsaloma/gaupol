@@ -15,6 +15,7 @@ gaupol.observable
 gaupol.enumeration
 gaupol.i18n
 gaupol.errors
+gaupol.align
 gaupol.documents
 gaupol.formats
 gaupol.framerates

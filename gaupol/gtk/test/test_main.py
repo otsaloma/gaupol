@@ -28,7 +28,7 @@ class TestModule(gaupol.gtk.TestCase):
         opts = type("", (object,), {})
         opts.encoding = "ascii"
         opts.translation_file = self.get_subrip_path()
-        opts.adapt_translation = True
+        opts.align_method = "position"
         opts.video_file = self.get_subrip_path()
         args = [self.get_subrip_path(), "+3"]
         gaupol.gtk.main._init_application(opts, args)
