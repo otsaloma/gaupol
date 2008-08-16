@@ -113,7 +113,7 @@ class LanguageDialog(gaupol.gtk.GladeDialog):
 
         import enchant
         for locale in gaupol.locales.get_all():
-            try: enchant.Dict(locale)
+            try: enchant.Dict(locale).check("1")
             except enchant.Error: continue
             name = gaupol.locales.code_to_name(locale)
             store.append((locale, name))

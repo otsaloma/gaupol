@@ -134,7 +134,6 @@ nn
 nn_NO
 no
 nr_ZA
-ns_ZA
 oc_FR
 or
 pa

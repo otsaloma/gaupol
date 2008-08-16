@@ -5,7 +5,7 @@ Gaupol 0.13
    - s/toggle_(\w+)_column/toggle_$1_field/
    - s/toggle_column/toggle_field/
  * Rename smart_open_translation / Adapt to.. / whatever to... Align?
-   - Align by: [ Subtitle number | v ]
+   - Align with main document by: [ Subtitle number | v ]
  * Restrict tags strictly to known tags?
 
  [D] Raise PyGTK dependency to 2.12 or greater
@@ -33,6 +33,7 @@ Gaupol 0.13
  [D] Add mimetypes application/x-subrip, text/x-microdvd,
      text/x-mpsub, text/x-ssa and text/x-subviewer to the desktop file
  [ ] Print error messages to sys.stderr, not sys.stdout
+ [D] Fix spell-check language listing with recent versions of Enchant
  [D] Run 'update-desktop-database' in setup.py if --root not given
  [D] Move profile directory on Windows to %APPDATA%/Gaupol
 

@@ -1,5 +1,22 @@
 2008-08-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/codes/locales.txt: Remove 'ns_ZA', for 'ns' is not found in
+	'iso_639.xml'.
+
+	* gaupol/gtk/dialogs/language.py (LanguageDialog._populate_store): Call
+	'check' on the dictionary once to test that it works.
+
+2008-08-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/codes/locales.txt: Remove file.
+
+	* gaupol/locales.py (get_all): Remove function.
+
+	* gaupol/gtk/dialogs/language.py (LanguageDialog._populate_store): Use
+	enchant.list_languages.
+
+2008-08-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/page.py (Page._get_tab_close_button): Possibly fix cropped
 	tab close buttons on Windows.
 
