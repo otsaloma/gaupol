@@ -14,7 +14,7 @@ Classes=OCR
 # Disallow '2' after the 'O' for the case of Oxygen, 'O2'.
 Pattern=[oO]((?!2\W)(\d|[,.]\d)(?![^\W\d]))
 Flags=DOTALL,MULTILINE,UNICODE
-Replacement=\1\060
+Replacement=\060\1
 Repeat=True
 
 [CommonErrorPattern]

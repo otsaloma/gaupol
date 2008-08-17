@@ -1,3 +1,8 @@
+2008-08-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* data/patterns/Latn.common-error.in (Letter "O" in a number): Fix
+	replacement.
+
 2008-08-16  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/gaupol.gtk.conf.spec: Remove option 'smart_open_translation' and
