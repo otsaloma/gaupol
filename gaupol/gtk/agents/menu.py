@@ -42,6 +42,10 @@ class MenuAgent(gaupol.Delegate):
         self._redo_menu_items = []
         self._undo_menu_items = []
 
+        update = lambda self, *args: self.update_project_actions()
+        self.connect("page-added", update)
+        self.connect("page-closed", update)
+
     def _add_project_action(self, page):
         """Add an action to the 'projects' action group."""
 
@@ -172,27 +176,6 @@ class MenuAgent(gaupol.Delegate):
         menu.show_all()
         self.get_tool_item("redo_action").set_menu(menu)
 
-    def on_show_projects_menu_activate(self, *args):
-        """Add all open projects to the projects menu."""
-
-        action_group = self.get_action_group("projects")
-        for action in action_group.list_actions():
-            action_group.remove_action(action)
-        if self._projects_id is not None:
-            self.uim.remove_ui(self._projects_id)
-        page = self.get_current_page()
-        if page is None: return
-        ui  = '<ui><menubar name="menubar">'
-        ui += '<menu name="projects" action="show_projects_menu">'
-        ui += '<placeholder name="open">'
-        for i, page in enumerate(self.pages):
-            name = self._add_project_action(page)
-            ui += '<menuitem name="%d" action="%s"/>' % (i, name)
-        ui += '</placeholder></menu></menubar></ui>'
-        self._projects_id = self.uim.add_ui_from_string(ui)
-        self.uim.ensure_update()
-        self.set_menu_notify_events("projects")
-
     def on_show_recent_main_menu_activate(self, *args):
         """Show the recent main file menu."""
 
@@ -246,3 +229,24 @@ class MenuAgent(gaupol.Delegate):
             for widget in action.get_proxies():
                 widget.connect("enter-notify-event", on_enter, self, action)
                 widget.connect("leave-notify-event", on_leave, self, action)
+
+    def update_project_actions(self):
+        """Update all project actions in the projects menu."""
+
+        action_group = self.get_action_group("projects")
+        for action in action_group.list_actions():
+            action_group.remove_action(action)
+        if self._projects_id is not None:
+            self.uim.remove_ui(self._projects_id)
+        page = self.get_current_page()
+        if page is None: return
+        ui  = '<ui><menubar name="menubar">'
+        ui += '<menu name="projects" action="show_projects_menu">'
+        ui += '<placeholder name="open">'
+        for i, page in enumerate(self.pages):
+            name = self._add_project_action(page)
+            ui += '<menuitem name="%d" action="%s"/>' % (i, name)
+        ui += '</placeholder></menu></menubar></ui>'
+        self._projects_id = self.uim.add_ui_from_string(ui)
+        self.uim.ensure_update()
+        self.set_menu_notify_events("projects")

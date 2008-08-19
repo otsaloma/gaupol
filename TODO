@@ -6,7 +6,8 @@ Gaupol 0.13
      used with Python's optimization (-O switch)
  [D] Preserve additional fields in SSA/ASS files
  [D] Preserve coordinate fields in extended SubRip format
- [ ] Use UTF-8 encoding for preview (#522868, Beni Cherniavsky)
+ [ ] By default always use UTF-8 character encoding for preview
+     (#522868, Beni Cherniavsky, Osmo Salomaa)
  [D] Allow comments (starting with number signs) in pattern files
  [D] Allow grouping of correction patterns under the same name
  [D] Improve commmon error patterns for spaces around quote marks
@@ -20,6 +21,7 @@ Gaupol 0.13
  [D] Fix IndexError with multiline tags in text cells (#547170)
  [D] Fix window type and transientness for preferences dialog
  [D] Fix error closing the search dialog from the window titlebar
+ [D] Fix updating of Alt+NUM shortcut keys
  [D] Fix color markup tag conversions with various formats
  [D] Fix conversions of font tags with the SubRip format
  [D] Replace --adapt-translation option with --align-method

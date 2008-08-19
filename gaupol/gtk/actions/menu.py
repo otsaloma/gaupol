@@ -50,7 +50,7 @@ class ShowHelpMenuAction(gaupol.gtk.TopMenuAction):
         self.props.label = _("_Help")
 
 
-class ShowProjectsMenuAction(gaupol.gtk.Action):
+class ShowProjectsMenuAction(gaupol.gtk.TopMenuAction):
 
     """Show the 'Projects' menu."""
 

@@ -40,14 +40,6 @@ class TestMenuAgent(gaupol.gtk.TestCase):
         item.emit("show-menu")
         item.get_menu().get_children()[0].activate()
 
-    def test_on_show_projects_menu_activate(self):
-
-        self.application.open_main_file(self.get_subrip_path())
-        self.application.open_main_file(self.get_subrip_path())
-        self.application.get_action("show_projects_menu").activate()
-        self.application.get_action("show_file_menu").activate()
-        self.application.get_action("show_projects_menu").activate()
-
     def test_on_show_recent_main_menu_activate(self):
 
         self.application.open_main_file(self.get_subrip_path())
@@ -75,3 +67,10 @@ class TestMenuAgent(gaupol.gtk.TestCase):
 
         self.application.set_menu_notify_events("main")
         self.application.set_menu_notify_events("projects")
+
+    def test_update_project_actions(self):
+
+        self.application.open_main_file(self.get_subrip_path())
+        self.application.open_main_file(self.get_subrip_path())
+        self.application.update_project_actions()
+        self.application.update_project_actions()
