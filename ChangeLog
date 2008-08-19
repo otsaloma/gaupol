@@ -1,5 +1,10 @@
 2008-08-19  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/gtk/page.py (Page._on_project_*): Call
+	gaupol.gtk.util.iterate_main to update view.
+
+2008-08-19  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/agents/menu.py (MenuAgent): Update project actions on
 	page-added and page-closed signals.
 

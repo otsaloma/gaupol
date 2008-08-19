@@ -178,6 +178,7 @@ class Page(gaupol.Observable):
         """Reload the entire view."""
 
         self.reload_view_all()
+        gaupol.gtk.util.iterate_main()
 
     def _on_project_main_texts_changed(self, project, rows):
         """Reload and select main texts in rows."""
@@ -189,6 +190,7 @@ class Page(gaupol.Observable):
             col = self.view.columns.MAIN_TEXT
             self.view.set_focus(rows[0], col)
         self.view.select_rows(rows)
+        gaupol.gtk.util.iterate_main()
 
     def _on_project_positions_changed(self, project, rows):
         """Reload and select positions in rows."""
@@ -200,6 +202,7 @@ class Page(gaupol.Observable):
         if self.view.get_focus()[0] not in rows:
             self.view.set_focus(rows[0])
         self.view.select_rows(rows)
+        gaupol.gtk.util.iterate_main()
 
     def _on_project_subtitles_changed(self, project, rows):
         """Reload and select subtitles in rows."""
@@ -211,6 +214,7 @@ class Page(gaupol.Observable):
         if self.view.get_focus()[0] not in rows:
             self.view.set_focus(rows[0])
         self.view.select_rows(rows)
+        gaupol.gtk.util.iterate_main()
 
     def _on_project_subtitles_inserted_ensure(self, value, project, rows):
         self._assert_store()
@@ -232,6 +236,7 @@ class Page(gaupol.Observable):
             store[row][5] = subtitle.tran_text
         self.view.set_focus(rows[0])
         self.view.select_rows(rows)
+        gaupol.gtk.util.iterate_main()
 
     def _on_project_subtitles_removed_ensure(self, value, project, rows):
         self._assert_store()
@@ -247,11 +252,13 @@ class Page(gaupol.Observable):
             row = min(rows[0], len(self.project.subtitles) - 1)
             col = self.view.get_focus()[1]
             self.view.set_focus(row, col)
+        gaupol.gtk.util.iterate_main()
 
     def _on_project_translation_file_opened(self, *args):
         """Reload the entire view."""
 
         self.reload_view_all()
+        gaupol.gtk.util.iterate_main()
 
     def _on_project_translation_texts_changed(self, project, rows):
         """Reload and select translation texts in rows."""
@@ -263,6 +270,7 @@ class Page(gaupol.Observable):
             col = self.view.columns.TRAN_TEXT
             self.view.set_focus(rows[0], col)
         self.view.select_rows(rows)
+        gaupol.gtk.util.iterate_main()
 
     def _on_tab_label_query_tooltip(self, label, x, y, keyboard, tooltip):
         """Update the text in the tab tooltip."""
