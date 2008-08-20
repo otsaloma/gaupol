@@ -40,8 +40,8 @@ class SplitDialog(gaupol.gtk.GladeDialog):
         self._subtitle_spin = self._glade_xml.get_widget("subtitle_spin")
         self.application = application
 
-        self._init_signal_handlers()
         self._init_subtitle_spin()
+        self._init_signal_handlers()
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_OK)
 
@@ -60,7 +60,6 @@ class SplitDialog(gaupol.gtk.GladeDialog):
         rows = page.view.get_selected_rows()
         subtitle = (rows[0] + 1 if rows else 1)
         self._subtitle_spin.set_value(subtitle)
-        self._subtitle_spin.emit("value-changed")
 
     def _on_subtitle_spin_value_changed(self, spin_button):
         """Select the matching row in the view."""

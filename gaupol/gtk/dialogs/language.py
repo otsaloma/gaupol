@@ -66,9 +66,8 @@ class LanguageDialog(gaupol.gtk.GladeDialog):
         """Initialize widget sizes."""
 
         width, height = gaupol.gtk.util.get_tree_view_size(self._tree_view)
-        width = width + 42 + gaupol.gtk.EXTRA
-        height = height + 259 + gaupol.gtk.EXTRA
-        gaupol.gtk.util.resize_dialog(self, width, height, 0.5)
+        width = min(width, int(0.5 * gtk.gdk.screen_width()))
+        self._tree_view.set_size_request(width + gaupol.gtk.EXTRA, -1)
 
     def _init_tree_view(self):
         """Initialize the tree view."""

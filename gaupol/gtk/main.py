@@ -185,7 +185,7 @@ def _parse_args(args):
         metavar=_("METHOD"),
         dest="align_method",
         default="position",
-        help=_("Method used to align translation subtitles: "
+        help=_("method used to align translation subtitles: "
             "'number' or 'position'"),)
 
     parser.add_option(
