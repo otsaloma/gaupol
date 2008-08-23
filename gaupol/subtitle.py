@@ -60,10 +60,10 @@ class Subtitle(object):
         Return 1 if this subtitle appears later, 0 if they appear at the same
         time and -1 if other appears later.
         """
-        if self.mode == gaupol.modes.TIME:
+        if self._mode == gaupol.modes.TIME:
             times = (self._start, other.start_time)
             return self.calc.compare_times(*times)
-        if self.mode == gaupol.modes.FRAME:
+        if self._mode == gaupol.modes.FRAME:
             return cmp(self._start, other.start_frame)
         raise ValueError
 
@@ -76,43 +76,43 @@ class Subtitle(object):
             return container
         raise AttributeError
 
-    def __init__(self):
+    def __init__(self, mode=None, framerate=None):
 
         self._start = "00:00:00.000"
         self._end = "00:00:00.000"
         self._main_text = ""
         self._tran_text = ""
 
-        self._mode = gaupol.modes.TIME
-        self._framerate = gaupol.framerates.FPS_24
+        self._mode = mode or gaupol.modes.TIME
+        self._framerate = framerate or gaupol.framerates.FPS_24
         self.calc = gaupol.Calculator(self._framerate)
 
     def _convert_position(self, value):
         """Return value of position in correct mode."""
 
         if isinstance(value, basestring):
-            if self.mode == gaupol.modes.TIME:
+            if self._mode == gaupol.modes.TIME:
                 return value
-            if self.mode == gaupol.modes.FRAME:
+            if self._mode == gaupol.modes.FRAME:
                 return self.calc.time_to_frame(value)
         if isinstance(value, int):
-            if self.mode == gaupol.modes.TIME:
+            if self._mode == gaupol.modes.TIME:
                 return self.calc.frame_to_time(value)
-            if self.mode == gaupol.modes.FRAME:
+            if self._mode == gaupol.modes.FRAME:
                 return value
         if isinstance(value, float):
-            if self.mode == gaupol.modes.TIME:
+            if self._mode == gaupol.modes.TIME:
                 return self.calc.seconds_to_time(value)
-            if self.mode == gaupol.modes.FRAME:
+            if self._mode == gaupol.modes.FRAME:
                 return self.calc.seconds_to_frame(value)
         raise ValueError
 
     def _get_duration(self):
         """Return the duration in correct mode."""
 
-        if self.mode == gaupol.modes.TIME:
+        if self._mode == gaupol.modes.TIME:
             return self._get_duration_time()
-        if self.mode == gaupol.modes.FRAME:
+        if self._mode == gaupol.modes.FRAME:
             return self._get_duration_frame()
         raise ValueError
 
@@ -142,9 +142,9 @@ class Subtitle(object):
     def _get_end_frame(self):
         """Return the end position as frames."""
 
-        if self.mode == gaupol.modes.TIME:
+        if self._mode == gaupol.modes.TIME:
             return self.calc.time_to_frame(self._end)
-        if self.mode == gaupol.modes.FRAME:
+        if self._mode == gaupol.modes.FRAME:
             return self._end
         raise ValueError
 
@@ -157,9 +157,9 @@ class Subtitle(object):
     def _get_end_time(self):
         """Return the end position as time."""
 
-        if self.mode == gaupol.modes.TIME:
+        if self._mode == gaupol.modes.TIME:
             return self._end
-        if self.mode == gaupol.modes.FRAME:
+        if self._mode == gaupol.modes.FRAME:
             return self.calc.frame_to_time(self._end)
         raise ValueError
 
@@ -186,9 +186,9 @@ class Subtitle(object):
     def _get_start_frame(self):
         """Return the start position as frames."""
 
-        if self.mode == gaupol.modes.TIME:
+        if self._mode == gaupol.modes.TIME:
             return self.calc.time_to_frame(self._start)
-        if self.mode == gaupol.modes.FRAME:
+        if self._mode == gaupol.modes.FRAME:
             return self._start
         raise ValueError
 
@@ -201,9 +201,9 @@ class Subtitle(object):
     def _get_start_time(self):
         """Return the start positions as time."""
 
-        if self.mode == gaupol.modes.TIME:
+        if self._mode == gaupol.modes.TIME:
             return self._start
-        if self.mode == gaupol.modes.FRAME:
+        if self._mode == gaupol.modes.FRAME:
             return self.calc.frame_to_time(self._start)
         raise ValueError
 
@@ -216,10 +216,10 @@ class Subtitle(object):
         """Set the duration from value."""
 
         value = self._convert_position(value)
-        if self.mode == gaupol.modes.TIME:
+        if self._mode == gaupol.modes.TIME:
             times = (self.start_time, value)
             self._end = self.calc.add_times(*times)
-        elif self.mode == gaupol.modes.FRAME:
+        elif self._mode == gaupol.modes.FRAME:
             self._end = self.start_frame + value
 
     def _set_end(self, value):
@@ -264,10 +264,10 @@ class Subtitle(object):
 
         coefficient = framerate.value / self._framerate.value
         self._set_framerate(framerate)
-        if self.mode == gaupol.modes.TIME:
+        if self._mode == gaupol.modes.TIME:
             self.start = self.start_seconds / coefficient
             self.end = self.end_seconds / coefficient
-        elif self.mode == gaupol.modes.FRAME:
+        elif self._mode == gaupol.modes.FRAME:
             convert = lambda x: int(round(x, 0))
             self.start = convert(coefficient * self.start_frame)
             self.end = convert(coefficient * self.end_frame)
@@ -275,14 +275,11 @@ class Subtitle(object):
     def copy(self):
         """Return a new subtitle instance with the same values."""
 
-        subtitle = Subtitle()
+        subtitle = Subtitle(self._mode, self._framerate)
         subtitle._start = self._start
         subtitle._end = self._end
         subtitle._main_text = self._main_text
         subtitle._tran_text = self._tran_text
-        subtitle._mode = self._mode
-        subtitle._framerate = self._framerate
-        subtitle.calc = self.calc
         # Copy all containers that have been instantiated.
         containers = (x.container for x in gaupol.formats)
         for name in (set(dir(self)) & set(containers)):
@@ -321,9 +318,9 @@ class Subtitle(object):
         """Return the text corresponding to document."""
 
         if doc == gaupol.documents.MAIN:
-            return self.main_text
+            return self._main_text
         if doc == gaupol.documents.TRAN:
-            return self.tran_text
+            return self._tran_text
         raise ValueError
 
     def has_container(self, name):
@@ -343,10 +340,10 @@ class Subtitle(object):
     def scale_positions(self, value):
         """Multiply start and end positions by value."""
 
-        if self.mode == gaupol.modes.TIME:
+        if self._mode == gaupol.modes.TIME:
             self.start = self._get_start_seconds() * value
             self.end = self._get_end_seconds() * value
-        elif self.mode == gaupol.modes.FRAME:
+        elif self._mode == gaupol.modes.FRAME:
             self.start = int(round(self._start * value, 0))
             self.end = int(round(self._end * value, 0))
 

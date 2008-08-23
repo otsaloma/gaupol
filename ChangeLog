@@ -1,3 +1,11 @@
+2008-08-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/subtitle.py (__init__): Add optional keyword arguments 'mode'
+	and 'framerate'.
+
+	* gaupol/subtitle.py: Access the '_mode' attribute directly instead of
+	accessing it as the property 'mode'.
+
 2008-08-20  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/glade/dialogs/language.glade:

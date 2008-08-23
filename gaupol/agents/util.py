@@ -110,10 +110,7 @@ class UtilityAgent(gaupol.Delegate):
     def get_subtitle(self):
         """Return a new subtitle with proper properties."""
 
-        subtitle = gaupol.Subtitle()
-        subtitle.mode = self.get_mode()
-        subtitle.framerate = self.framerate
-        return subtitle
+        return gaupol.Subtitle(self.get_mode(), self.framerate)
 
     def get_text_length_require(self, index, doc):
         assert 0 <= index < len(self.subtitles)

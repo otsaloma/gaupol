@@ -61,9 +61,7 @@ class SubtitleFile(object):
     def _get_subtitle(self):
         """Return a new subtitle instance with proper properties."""
 
-        subtitle = gaupol.Subtitle()
-        subtitle.mode = self.mode
-        return subtitle
+        return gaupol.Subtitle(self.mode)
 
     def _invariant(self):
         assert gaupol.encodings.is_valid_code(self.encoding)
