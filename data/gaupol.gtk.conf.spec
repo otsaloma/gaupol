@@ -99,6 +99,7 @@ target = targets(default="CURRENT")
 
 [preview]
 custom_command = string(default="")
+force_utf_8 = boolean(default=True)
 offset = float(default=5.0)
 use_custom = boolean(default=False)
 video_player = players(default="MPLAYER")

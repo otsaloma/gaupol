@@ -135,6 +135,12 @@ class TestPreviewPage(gaupol.gtk.TestCase):
         self.page._app_combo.set_active(0)
         self.page._command_entry.set_text("test")
 
+    def test__on_force_utf_8_check_toggled(self):
+
+        self.page._force_utf_8_check.set_active(True)
+        self.page._force_utf_8_check.set_active(False)
+        self.page._force_utf_8_check.set_active(True)
+
     def test__on_offset_spin_value_changed(self):
 
         self.page._offset_spin.set_value(13)

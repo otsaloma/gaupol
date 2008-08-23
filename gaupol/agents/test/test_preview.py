@@ -37,10 +37,10 @@ class TestPreviewAgent(gaupol.TestCase):
     def test__get_subtitle_path__translation(self):
 
         doc = gaupol.documents.TRAN
-        value = self.delegate._get_subtitle_path(doc)
+        value = self.delegate._get_subtitle_path(doc, "ascii")
         assert value == self.project.tran_file.path
         self.project.clear_texts((0,), doc)
-        value = self.delegate._get_subtitle_path(doc)
+        value = self.delegate._get_subtitle_path(doc, "utf_8")
         assert value != self.project.tran_file.path
 
     def test__on_notify_main_file(self):
@@ -51,7 +51,9 @@ class TestPreviewAgent(gaupol.TestCase):
 
         get_temp_file_path = self.project.get_temp_file_path
         path = get_temp_file_path(gaupol.documents.MAIN)
+        path = get_temp_file_path(gaupol.documents.MAIN, "ascii")
         path = get_temp_file_path(gaupol.documents.TRAN)
+        path = get_temp_file_path(gaupol.documents.TRAN, "ascii")
 
     def test_guess_video_path(self):
 
@@ -75,7 +77,7 @@ class TestPreviewAgent(gaupol.TestCase):
         self.project.preview("00:00:00.000", doc, "echo", 0)
         assert os.path.isfile(self.project.get_file(doc).path)
         path = self.get_subrip_path()
-        self.project.preview("00:00:00.000", doc, "echo", 0, path)
+        self.project.preview("00:00:00.000", doc, "echo", 0, path, "utf_8")
         assert os.path.isfile(self.project.get_file(doc).path)
         self.project.clear_texts((0,), gaupol.documents.MAIN)
         self.project.preview("00:00:00.000", doc, "echo", 0)

@@ -98,12 +98,11 @@ class PreviewAgent(gaupol.Delegate):
     def preview(self, page, time, doc, path=None):
         """Preview from time with a video player."""
 
-        command = gaupol.gtk.conf.preview.video_player.command
-        if gaupol.gtk.conf.preview.use_custom:
-            command = gaupol.gtk.conf.preview.custom_command
+        command = gaupol.gtk.util.get_preview_command()
         offset = gaupol.gtk.conf.preview.offset
+        encoding = ("utf_8" if gaupol.gtk.conf.preview.force_utf_8 else None)
         preview = page.project.preview
-        args = (time, doc, command, offset, path)
+        args = (time, doc, command, offset, path, encoding)
         try: process, command, output_path = preview(*args)
         except gaupol.ProcessError, message:
             return self._show_process_error_dialog(message)

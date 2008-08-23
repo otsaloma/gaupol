@@ -49,6 +49,16 @@ class MPlayer(gaupol.EnumerationItem):
         "-noautosub",
         "-sub $SUBFILE",
         "$VIDEOFILE",))
+    command_utf_8 = " ".join((
+        _get_mplayer_executable(),
+        "-identify",
+        "-osdlevel 2",
+        "-ss $SECONDS",
+        "-slang",
+        "-noautosub",
+        "-sub $SUBFILE",
+        "-utf8",
+        "$VIDEOFILE",))
     label = "MPlayer"
 
 
@@ -59,6 +69,12 @@ class VLC(gaupol.EnumerationItem):
         "$VIDEOFILE",
         ":start-time=$SECONDS",
         ":sub-file=$SUBFILE",))
+    command_utf_8 = " ".join((
+        _get_vlc_executable(),
+        "$VIDEOFILE",
+        ":start-time=$SECONDS",
+        ":sub-file=$SUBFILE",
+        ":subsdec-encoding=UTF-8",))
     label = "VLC"
 
 

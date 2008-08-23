@@ -64,6 +64,16 @@ def get_glade_xml(*parts):
     path = os.path.join(gaupol.DATA_DIR, "glade", *parts)
     return gtk.glade.XML(path)
 
+def get_preview_command():
+    """Return command to use for lauching video player for preview."""
+
+    if gaupol.gtk.conf.preview.use_custom:
+        return gaupol.gtk.conf.preview.custom_command
+    player = gaupol.gtk.conf.preview.video_player
+    if gaupol.gtk.conf.preview.force_utf_8:
+        return player.command_utf_8
+    return player.command
+
 def get_text_view_size(text_view, font=""):
     """Return the width and height desired by text view."""
 

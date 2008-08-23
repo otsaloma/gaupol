@@ -285,6 +285,7 @@ class _PreviewPage(gaupol.Delegate):
         get_widget = self._glade_xml.get_widget
         self._app_combo = get_widget("preview_app_combo")
         self._command_entry = get_widget("preview_command_entry")
+        self._force_utf_8_check = get_widget("preview_force_utf_8_check")
         self._offset_spin = get_widget("preview_offset_spin")
         self.conf = gaupol.gtk.conf.preview
 
@@ -308,43 +309,48 @@ class _PreviewPage(gaupol.Delegate):
 
         gaupol.util.connect(self, "_app_combo", "changed")
         gaupol.util.connect(self, "_command_entry", "changed")
+        gaupol.util.connect(self, "_force_utf_8_check", "toggled")
         gaupol.util.connect(self, "_offset_spin", "value-changed")
 
     def _init_values(self):
         """Initialize default values for widgets."""
 
-        self._offset_spin.set_value(self.conf.offset)
         if not self.conf.use_custom:
             player = self.conf.video_player
             self._app_combo.set_active(player)
-            self._command_entry.set_text(player.command)
-            return self._command_entry.set_editable(False)
-        store = self._app_combo.get_model()
-        self._app_combo.set_active(len(store) - 1)
-        command = self.conf.custom_command
+        else: # Use custom command.
+            store = self._app_combo.get_model()
+            self._app_combo.set_active(len(store) - 1)
+        command = gaupol.gtk.util.get_preview_command()
         self._command_entry.set_text(command)
-        self._command_entry.set_editable(True)
+        self._command_entry.set_editable(self.conf.use_custom)
+        self._force_utf_8_check.set_active(self.conf.force_utf_8)
+        self._offset_spin.set_value(self.conf.offset)
 
     def _on_app_combo_changed(self, combo_box):
         """Save the video player and show it's command."""
 
         index = combo_box.get_active()
+        self.conf.use_custom = not (index in gaupol.players)
         if index in gaupol.players:
             player = gaupol.players[index]
-            self.conf.use_custom = False
             self.conf.video_player = player
-            self._command_entry.set_text(player.command)
-            return self._command_entry.set_editable(False)
-        self.conf.use_custom = True
-        command = self.conf.custom_command
+        command = gaupol.gtk.util.get_preview_command()
         self._command_entry.set_text(command)
-        self._command_entry.set_editable(True)
+        self._command_entry.set_editable(self.conf.use_custom)
 
     def _on_command_entry_changed(self, entry):
         """Save the custom command."""
 
         if not self.conf.use_custom: return
         self.conf.custom_command = entry.get_text()
+
+    def _on_force_utf_8_check_toggled(self, check_button):
+        """Save forced UTF-8 preview setting."""
+
+        self.conf.force_utf_8 = check_button.get_active()
+        command = gaupol.gtk.util.get_preview_command()
+        self._command_entry.set_text(command)
 
     def _on_offset_spin_value_changed(self, spin_button):
         """Save the start position offset."""

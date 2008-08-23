@@ -44,6 +44,21 @@ class TestModule(gaupol.gtk.TestCase):
 
         gaupol.gtk.util.get_glade_xml("dialogs", "debug.glade")
 
+    def test_get_preview_command(self):
+
+        gaupol.gtk.conf.preview.use_custom = False
+        for player in gaupol.players:
+            gaupol.gtk.conf.preview.video_player = player
+            gaupol.gtk.conf.preview.force_utf_8 = True
+            command = gaupol.gtk.util.get_preview_command()
+            assert command == player.command_utf_8
+            gaupol.gtk.conf.preview.force_utf_8 = False
+            command = gaupol.gtk.util.get_preview_command()
+            assert command == player.command
+        gaupol.gtk.conf.preview.use_custom = True
+        command = gaupol.gtk.util.get_preview_command()
+        assert command == gaupol.gtk.conf.preview.custom_command
+
     def test_get_text_view_size(self):
 
         text_view = gtk.TextView(gtk.TextBuffer())

@@ -36,16 +36,21 @@ class PreviewAgent(gaupol.Delegate):
         gaupol.Delegate.__init__(self, master)
         gaupol.util.connect(self, self, "notify::main_file")
 
-    def _get_subtitle_path_require(self, doc):
+    def _get_subtitle_path_require(self, doc, encoding=None):
         assert self.get_file(doc) is not None
+        if encoding is not None:
+            assert gaupol.encodings.is_valid_code(encoding)
 
-    def _get_subtitle_path(self, doc):
+    def _get_subtitle_path(self, doc, encoding=None):
         """Save the subtitle data to a temporary file if needed.
 
         Raise IOError if writing to temporary file fails.
         Raise UnicodeError if encoding temporary file fails.
         Return subtitle file path, True if file is temporary.
         """
+        if encoding is not None:
+            if encoding != self.get_file(doc).encoding:
+                return self.get_temp_file_path(doc, encoding)
         if doc == gaupol.documents.MAIN:
             if not self.main_changed:
                 return self.main_file.path
@@ -60,13 +65,15 @@ class PreviewAgent(gaupol.Delegate):
         if not self.video_path:
             self.guess_video_path()
 
-    def get_temp_file_path_require(self, doc):
+    def get_temp_file_path_require(self, doc, encoding=None):
         assert self.get_file(doc) is not None
+        if encoding is not None:
+            assert gaupol.encodings.is_valid_code(encoding)
 
-    def get_temp_file_path_ensure(self, value, doc):
+    def get_temp_file_path_ensure(self, value, doc, encoding=None):
         assert os.path.isfile(value)
 
-    def get_temp_file_path(self, doc):
+    def get_temp_file_path(self, doc, encoding=None):
         """Save the subtitle data to a temporary file and return path.
 
         Raise IOError if writing to temporary file fails.
@@ -75,7 +82,8 @@ class PreviewAgent(gaupol.Delegate):
         file = self.get_file(doc)
         path = gaupol.temp.create(file.format.extension)
         atexit.register(gaupol.temp.remove, path)
-        props = (path, file.format, file.encoding, file.newline)
+        encoding = encoding or file.encoding
+        props = (path, file.format, encoding, file.newline)
         self.save(doc, props, False)
         return path
 
@@ -104,25 +112,28 @@ class PreviewAgent(gaupol.Delegate):
                 return self.video_path
         return None
 
-    def preview_require(self, time, doc, command, offset, sub_path=None):
+    def preview_require(
+        self, time, doc, command, offset, sub_path=None, encoding=None):
         assert self.get_file(doc) is not None
         assert self.video_path is not None
 
     def preview_ensure(self, value, *args, **kwargs):
         assert os.path.isfile(value[2])
 
-    def preview(self, time, doc, command, offset, sub_path=None):
+    def preview(
+        self, time, doc, command, offset, sub_path=None, encoding=None):
         """Preview subtitles with a video player.
 
         command should have variables $SECONDS, $SUBFILE and $VIDEOFILE.
         offset is the amount of seconds before time to start.
         sub_path can be a temporary subtitle file path.
+        encoding can be specified if different from file encoding.
         Raise IOError if writing to temporary file fails.
         Raise ProcessError if unable to start process.
         Raise UnicodeError if encoding temporary file fails.
         Return subprocess.POpen instance, command, output path.
         """
-        sub_path = sub_path or self._get_subtitle_path(doc)
+        sub_path = sub_path or self._get_subtitle_path(doc, encoding)
         remove = gaupol.deco.silent(OSError)(os.remove)
         if sub_path != self.get_file(doc).path:
             atexit.register(remove, sub_path)

@@ -1,5 +1,23 @@
 2008-08-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/gaupol.gtk.conf.spec (preview.force_utf_8): Add option.
+
+	* data/glade/dialogs/preferences.glade:
+	* gaupol/gtk/dialogs/preferences.py:
+	Add force UTF-8 check box.
+
+	* gaupol/agents/preview.py (PreviewAgent.get_temp_file_path)
+	(PreviewAgent.preview): Add optional 'encoding' keyword argument.
+
+	* gaupol/gtk/agents/preview.py (PreviewAgent.preview): Set encoding
+	argument for preview to 'utf_8' if force_utf_8 is True.
+
+	* gaupol/gtk/util.py (get_preview_command): New function.
+
+	* gaupol/players.py: Add attribute 'command_utf_8'.
+
+2008-08-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/__init__.py (debug): Rename from 'check_contracts' now that it
 	checks more than that. Initiliaze value from environment variable
 	'GAUPOL_DEBUG', defaulting to False.

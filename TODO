@@ -6,7 +6,7 @@ Gaupol 0.13
      used with Python's optimization (-O switch)
  [D] Preserve additional fields in SSA/ASS files
  [D] Preserve coordinate fields in extended SubRip format
- [ ] By default always use UTF-8 character encoding for preview
+ [D] By default always use UTF-8 character encoding for preview
      (#522868, Beni Cherniavsky, Osmo Salomaa)
  [D] Allow comments (starting with number signs) in pattern files
  [D] Allow grouping of correction patterns under the same name
