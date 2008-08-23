@@ -21,6 +21,8 @@ string value of an item will be the name that it was defined with in its set.
 New items can always be added to a list.
 """
 
+import gaupol
+
 __all__ = ("EnumerationItem", "Enumeration",)
 
 
@@ -43,6 +45,8 @@ class EnumerationItem(int):
                     raise ValueError
             return int.__cmp__(int(self), int(other))
         return 1
+
+    if not gaupol.debug: del __cmp__
 
     def __new__(cls, value=0, name="", parent=None):
 
@@ -73,6 +77,8 @@ class Enumeration(list):
             if item.parent is not self:
                 return False
         return list.__contains__(self, item)
+
+    if not gaupol.debug: del __contains__
 
     def __delitem__(self, *args, **kwargs):
         raise NotImplementedError

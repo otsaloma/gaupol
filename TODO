@@ -25,6 +25,7 @@ Gaupol 0.13
  [D] Fix color markup tag conversions with various formats
  [D] Fix conversions of font tags with the SubRip format
  [D] Replace --adapt-translation option with --align-method
+ [D] Replace --debug option with using environment variable GAUPOL_DEBUG
  [D] Add GenericName field to the desktop file
  [D] Add mimetypes application/x-subrip, text/x-microdvd,
      text/x-mpsub, text/x-ssa and text/x-subviewer to the desktop file

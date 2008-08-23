@@ -25,6 +25,7 @@ class TestEnumerationItem(gaupol.TestCase):
 
     def test___cmp__(self):
 
+        if not gaupol.debug: return
         assert self.item == self.item
         assert self.item == 0
         other_item = gaupol.EnumerationItem(0, "rest", object())
@@ -47,6 +48,7 @@ class TestEnumeration(gaupol.TestCase):
 
     def test___contains__(self):
 
+        if not gaupol.debug: return
         assert self.fruits.APPLE in self.fruits
         assert self.fruits.MANGO in self.fruits
         assert 0 in self.fruits

@@ -1,4 +1,4 @@
-.TH GAUPOL 1 "August 16, 2008"
+.TH GAUPOL 1 "August 23, 2008"
 .SH NAME
 gaupol \- editor for text\-based subtitle files
 .SH SYNOPSIS
@@ -17,9 +17,6 @@ Show command line options.
 .TP
 \fB\-\-version\fR
 Show version number.
-.TP
-\fB\-d\fR, \fB\-\-debug\fR
-Enable additional run-time checks to help in finding and fixing errors.
 .TP
 \fB\-c\fR, \fB\-\-config\-file\fR=\fIFILE\fR
 Set the configuration file to use instead of the default.
@@ -48,5 +45,12 @@ inserts the N translation texts into the first N subtitles.
 .TP
 \fB\-v\fR, \fB\-\-video\-file\fR=\fIFILE\fR
 Select video file.
+.SH ENVIRONMENT VARIABLES
+The behaviour of gaupol is affected by the following environment
+variables.
+.TP
+\fBGAUPOL_DEBUG\fR
+If set to a non-empty string, gaupol will perform additional checks
+during run-time that may help in finding and locating bugs.
 .SH AUTHOR
 Written by Osmo Salomaa <otsaloma@cc.hut.fi>.

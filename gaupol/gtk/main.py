@@ -63,6 +63,8 @@ def _check_dependencies():
 def _init_application(opts, args):
     """Initialize application and open files given as arguments."""
 
+    from gaupol.gtk import dialogs
+    sys.excepthook = dialogs.debug.show
     application = gaupol.gtk.Application()
     jump_row = None
     re_jump = re.compile(r"\+\d*")
@@ -93,13 +95,6 @@ def _init_configuration(path):
     gaupol.gtk.conf.config_file = os.path.abspath(path)
     gaupol.gtk.conf.read()
     atexit.register(gaupol.gtk.conf.write)
-
-def _init_debugging(debug):
-    """Initialize run-time checks and traceback handling."""
-
-    from gaupol.gtk import dialogs
-    sys.excepthook = dialogs.debug.show
-    gaupol.check_contracts = debug
 
 def _list_encodings():
     """List all available character encodings."""
@@ -136,13 +131,6 @@ def _parse_args(args):
         dest="version",
         default=False,
         help=_("show version number and exit"),)
-
-    parser.add_option(
-        "-d", "--debug",
-        action="store_true",
-        dest="debug",
-        default=False,
-        help=_("enable additional run-time checks"),)
 
     parser.add_option(
         "-c", "--config-file",
@@ -214,7 +202,6 @@ def main(args):
         return _list_encodings()
     if opts.version:
         return _show_version()
-    _init_debugging(opts.debug)
     _init_configuration(opts.config_file)
     _init_application(opts, args)
     import gtk

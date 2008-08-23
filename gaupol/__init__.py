@@ -16,11 +16,12 @@
 
 """Editor for text-based subtitle files."""
 
+import os
 import re
 
 __version__ = "0.12.99"
 
-check_contracts = True
+debug = bool(os.environ.get("GAUPOL_DEBUG", ""))
 re_any_tag = re.compile(r"(^[/\\_]+|<.*?>|\{.*?\})")
 
 from gaupol.paths import *

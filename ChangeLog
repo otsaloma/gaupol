@@ -1,5 +1,17 @@
 2008-08-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/__init__.py (debug): Rename from 'check_contracts' now that it
+	checks more than that. Initiliaze value from environment variable
+	'GAUPOL_DEBUG', defaulting to False.
+
+	* gaupol/enumeration.py (EnumerationItem.__cmp__):
+	* gaupol/enumeration.py (Enumeration.__contains__):
+	Delete methods for performance reasons if gaupol.debug is False.
+
+	* gaupol/gtk/main.py: Remove --debug option.
+
+2008-08-23  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/subtitle.py (__init__): Add optional keyword arguments 'mode'
 	and 'framerate'.
 

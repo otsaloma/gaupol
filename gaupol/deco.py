@@ -70,7 +70,7 @@ def contractual(function):
     """
     @functools.wraps(function)
     def wrapper(*args, **kwargs):
-        if not gaupol.check_contracts:
+        if not gaupol.debug:
             return function(*args, **kwargs)
         name = "%s_require" % function.__name__
         if name in function.func_globals:

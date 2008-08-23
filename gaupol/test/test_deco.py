@@ -31,19 +31,19 @@ class TestModule(gaupol.TestCase):
 
     def test_contractual__check(self):
 
-        check = gaupol.check_contracts
-        gaupol.check_contracts = True
+        debug = gaupol.debug
+        gaupol.debug = True
         reload(gaupol.util)
         gaupol.util.get_ranges([1, 2, 3])
-        gaupol.check_contracts = check
+        gaupol.debug = debug
 
     def test_contractual__skip(self):
 
-        check = gaupol.check_contracts
-        gaupol.check_contracts = False
+        debug = gaupol.debug
+        gaupol.debug = False
         reload(gaupol.util)
         gaupol.util.get_ranges([1, 2, 3])
-        gaupol.check_contracts = check
+        gaupol.debug = debug
 
     def test_memoize(self):
 
