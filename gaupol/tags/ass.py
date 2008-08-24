@@ -35,6 +35,7 @@ class AdvSubStationAlpha(gaupol.tags.SubStationAlpha):
      * {\\u1}........{\\u0}
      * ........{\\r[STYLE]}
     """
+    # pylint: disable-msg=E1101
 
     _closing_pattern = r"\{\\([biu])0\}"
     _opening_pattern = r"\{\\(?![biu]0)(b|i|u|c|fn|fs).*?\}"

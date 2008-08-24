@@ -56,7 +56,7 @@ class ShowProjectsMenuAction(gaupol.gtk.TopMenuAction):
 
     def __init__(self):
 
-        gaupol.gtk.Action.__init__(self, "show_projects_menu")
+        gaupol.gtk.TopMenuAction.__init__(self, "show_projects_menu")
         self.props.label = _("_Projects")
 
 

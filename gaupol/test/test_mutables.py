@@ -16,7 +16,6 @@
 
 import copy
 import gaupol
-import inspect
 
 
 class PuppetMaster(object):

@@ -49,6 +49,7 @@ class TestCase(gaupol.TestCase):
     def teardown_method(self, method):
         """Remove state set for executing tests in method."""
 
+        # pylint: disable-msg=E1101
         gaupol.gtk.util.iterate_main()
         if hasattr(self, "dialog"):
             self.dialog.destroy()

@@ -10,6 +10,7 @@ def get_running_from_source():
     return os.path.isfile(path)
 
 def prepare_paths():
+    # pylint: disable-msg=W0621
     if not get_running_from_source(): return
     parent = os.path.dirname(os.path.abspath(__file__))
     path = os.path.abspath(os.path.join(parent, ".."))

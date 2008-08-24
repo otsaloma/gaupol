@@ -40,7 +40,7 @@ class TestRevertableAction(gaupol.TestCase):
         self.action.revert()
         assert self.revert_action_call_count == 1
         register = self.revert_action_register
-        assert register== gaupol.registers.UNDO
+        assert register == gaupol.registers.UNDO
 
     def test_revert__redo(self):
 
@@ -48,7 +48,7 @@ class TestRevertableAction(gaupol.TestCase):
         self.action.revert()
         assert self.revert_action_call_count == 1
         register = self.revert_action_register
-        assert register== gaupol.registers.UNDO
+        assert register == gaupol.registers.UNDO
 
     def test_revert__undo(self):
 
@@ -56,7 +56,7 @@ class TestRevertableAction(gaupol.TestCase):
         self.action.revert()
         assert self.revert_action_call_count == 1
         register = self.revert_action_register
-        assert register== gaupol.registers.REDO
+        assert register == gaupol.registers.REDO
 
 
 class TestRevertableActionGroup(gaupol.TestCase):

@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
+import enchant
 import gaupol.gtk
 import gtk
 import os
@@ -59,7 +60,7 @@ class TestSpellCheckDialog(gaupol.gtk.TestCase):
         respond = lambda *args: gtk.RESPONSE_OK
         cls.flash_dialog = respond
         args = (self.application.window, self.application)
-        self.raises(ValueError, cls, *args)
+        self.raises(enchant.Error, cls, *args)
 
     def test__init_checker__io_error(self):
 

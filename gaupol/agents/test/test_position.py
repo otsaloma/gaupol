@@ -106,8 +106,8 @@ class TestPositionAgent(gaupol.TestCase):
         self.project.subtitles[1].start = 200
         input = gaupol.framerates.FPS_24
         output = gaupol.framerates.FPS_25
-        rows = indices=range(len(self.project.subtitles))
-        self.project.convert_framerate(rows, input, output)
+        indices = range(len(self.project.subtitles))
+        self.project.convert_framerate(indices, input, output)
         assert self.project.framerate == output
         for subtitle in self.project.subtitles:
             assert subtitle.framerate == output
@@ -140,8 +140,8 @@ class TestPositionAgent(gaupol.TestCase):
     def test_shift_positions__frame(self):
 
         orig_subtitles = [x.copy() for x in self.project.subtitles]
-        rows = indices=range(len(self.project.subtitles))
-        self.project.shift_positions(rows, -10)
+        indices = range(len(self.project.subtitles))
+        self.project.shift_positions(indices, -10)
         for i, subtitle in enumerate(self.project.subtitles):
             start = orig_subtitles[i].start_frame - 10
             assert subtitle.start_frame == start
@@ -173,8 +173,8 @@ class TestPositionAgent(gaupol.TestCase):
     @gaupol.deco.reversion_test
     def test_transform_positions__frame(self):
 
-        rows = indices=range(len(self.project.subtitles))
-        self.project.transform_positions(rows, (2, 10), (6, 100))
+        indices = range(len(self.project.subtitles))
+        self.project.transform_positions(indices, (2, 10), (6, 100))
         assert self.project.subtitles[2].start_frame == 10
         for subtitle in self.project.subtitles[3:6]:
             assert 10 < subtitle.start_frame < 100

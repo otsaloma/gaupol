@@ -40,18 +40,16 @@ Gaupol 0.13
 Gaupol 0.14
 ===========
 
- [ ] Switch to Git, find a host for master branch
+ [ ] Switch to git, find a host for master branch
  [?] Handle fancy quotes, dashes and ellipses in text corrections
-     - As bogus regular expression groups?
-       o (?gaupol-dash)
-       o (?gaupol-quote)
-       o (?gaupol-ellipsis)
+     - As bogus regular expression groups, e.g. (?gaupol-quote)?
  [?] Add notebooked panes to the side and bottom
  [?] Move the output window to the bottom pane
  [ ] Add an extension system
      - gaupol.gtk.Extension
      - gaupol.gtk.ExtensionManager
      - gaupol.gtk.PreferencesDialog
+     - UI manager placeholders
  [ ] Add an example extension (bookmark/notes column?)
 
 
@@ -69,7 +67,7 @@ Gaupol 3000
 
  * Migrate from Glade to gtk.Builder
  * Adher to freedesktop.org's XDG Base Directory Specification
- * Add built-in GStreamer preview (as plugin?)
+ * Add a built-in GStreamer video player (as extension?)
  * Replace the headers-dialog with a more general properties-dialog
    - SubRip: Write coordinates (extended SubRip format)
    - MicroDVD: Write framerate information subtitle

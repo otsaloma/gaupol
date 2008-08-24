@@ -39,11 +39,6 @@ class TestModule(gaupol.gtk.TestCase):
         open(path, "w").write("\n")
         gaupol.gtk.main._init_configuration(path)
 
-    def test__init_debugging(self):
-
-        gaupol.gtk.main._init_debugging(True)
-        gaupol.gtk.main._init_debugging(False)
-
     def test__list_encodings(self):
 
         gaupol.gtk.main._list_encodings()

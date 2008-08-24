@@ -15,7 +15,6 @@
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol.gtk
-import gobject
 import gtk
 
 

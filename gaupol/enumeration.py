@@ -21,6 +21,8 @@ string value of an item will be the name that it was defined with in its set.
 New items can always be added to a list.
 """
 
+# pylint: disable-msg=W0201
+
 import gaupol
 
 __all__ = ("EnumerationItem", "Enumeration",)

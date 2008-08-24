@@ -33,6 +33,7 @@ class MPL2(gaupol.tags.MicroDVD):
      * /.... (italic)
      * _.... (underline)
     """
+    # pylint: disable-msg=E1101
 
     format = gaupol.formats.MPL2
 

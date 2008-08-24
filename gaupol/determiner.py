@@ -21,7 +21,6 @@ from __future__ import with_statement
 import codecs
 import contextlib
 import gaupol
-import os
 import re
 
 __all__ = ("FormatDeterminer",)
