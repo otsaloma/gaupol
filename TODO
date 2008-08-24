@@ -8,11 +8,11 @@ Gaupol 0.13
  [D] Preserve coordinate fields in extended SubRip format
  [D] By default always use UTF-8 character encoding for preview
      (#522868, Beni Cherniavsky, Osmo Salomaa)
+ [D] Allow reordering of columns
+ [D] Resize columns when their visibility is toggled
  [D] Allow comments (starting with number signs) in pattern files
  [D] Allow grouping of correction patterns under the same name
  [D] Improve commmon error patterns for spaces around quote marks
- [D] Allow reordering of columns
- [D] Resize columns when their visibility is toggled
  [D] Fix error with encoding auto-detection (#10278)
  [D] Fix error starting spell-check if no dictionary (#10526)
  [D] Fix preview error dialog if video player not found (#518981)
