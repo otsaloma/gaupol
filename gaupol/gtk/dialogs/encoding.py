@@ -43,10 +43,11 @@ class EncodingDialog(gaupol.gtk.GladeDialog):
     def _init_sizes(self):
         """Initialize widget sizes."""
 
-        width, height = gaupol.gtk.util.get_tree_view_size(self._tree_view)
-        width = width + 52 + gaupol.gtk.EXTRA
-        height = height + 84 + gaupol.gtk.EXTRA
-        gaupol.gtk.util.resize_dialog(self._dialog, width, height, 0.5)
+        width = gaupol.gtk.util.get_tree_view_size(self._tree_view)[0]
+        width = min(width, int(0.5 * gtk.gdk.screen_width()))
+        height = gtk.Label(18 * "m\n").size_request()[1]
+        height = min(height, int(0.9 * gtk.gdk.screen_height()))
+        self._tree_view.set_size_request(width + gaupol.gtk.EXTRA, height)
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""

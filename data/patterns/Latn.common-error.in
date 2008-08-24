@@ -119,18 +119,18 @@ Repeat=False
 _Name=Multiple question- and exclamation marks
 _Description=Replace multiple consequtive question- and exclamation marks with only one
 Classes=Human
-Pattern=\?{2,}
+Pattern=(\w\W*)(?<!^)(?<!\?)\?{2,}
 Flags=DOTALL,MULTILINE,UNICODE
-Replacement=?
+Replacement=\1?
 Repeat=False
 
 [CommonErrorPattern]
 _Name=Multiple question- and exclamation marks
 _Description=Replace multiple consequtive question- and exclamation marks with only one
 Classes=Human
-Pattern=\!{2,}
+Pattern=(\w\W*)(?<!^)(?<!\!)\!{2,}
 Flags=DOTALL,MULTILINE,UNICODE
-Replacement=!
+Replacement=\1!
 Repeat=False
 
 [CommonErrorPattern]
