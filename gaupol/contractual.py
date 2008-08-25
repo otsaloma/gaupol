@@ -29,8 +29,7 @@ def _ensured(ensure_func):
         @functools.wraps(function)
         def inner_wrapper(*args, **kwargs):
             value = function(*args, **kwargs)
-            if gaupol.debug:
-                ensure_func(args[0], value, *args[1:], **kwargs)
+            ensure_func(args[0], value, *args[1:], **kwargs)
             return value
         return inner_wrapper
 
@@ -43,8 +42,7 @@ def _invariated(invariant_func):
         @functools.wraps(function)
         def inner_wrapper(*args, **kwargs):
             value = function(*args, **kwargs)
-            if gaupol.debug:
-                invariant_func(args[0])
+            invariant_func(args[0])
             return value
         return inner_wrapper
 
@@ -56,8 +54,7 @@ def _required(require_func):
     def outer_wrapper(function):
         @functools.wraps(function)
         def inner_wrapper(*args, **kwargs):
-            if gaupol.debug:
-                require_func(*args, **kwargs)
+            require_func(*args, **kwargs)
             return function(*args, **kwargs)
         return inner_wrapper
 
@@ -128,3 +125,5 @@ class Contractual(type):
             new_dict[name] = attr
 
         return type.__new__(meta, class_name, bases, new_dict)
+
+    if not gaupol.debug: del __new__

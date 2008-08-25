@@ -68,10 +68,11 @@ def contractual(function):
     receives the same arguments as function, the ensure function will in
     addition receive function's return value as its first argument.
     """
+    if not gaupol.debug:
+        return function
+
     @functools.wraps(function)
     def wrapper(*args, **kwargs):
-        if not gaupol.debug:
-            return function(*args, **kwargs)
         name = "%s_require" % function.__name__
         if name in function.func_globals:
             function.func_globals[name](*args, **kwargs)
