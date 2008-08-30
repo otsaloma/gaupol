@@ -3,7 +3,7 @@ Gaupol 0.13
 
  * Raise PyGTK dependency to 2.12 or greater
  * Remove misuse of assertions that broke some parts of Gaupol, when
-     used with Python's optimization (-O switch)
+   used with Python's optimization (-O switch)
  * Preserve additional fields in SSA/ASS files
  * Preserve coordinate fields in extended SubRip format
  * By default always use UTF-8 character encoding for preview

@@ -1,5 +1,10 @@
 2008-08-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* setup.py: Make py2exe includes and packages be lists instead of
+	tuples to actually be able to build the exe.
+
+2008-08-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/__init__.py: Bump version number.
 
 	RELEASE 0.13

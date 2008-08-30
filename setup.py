@@ -274,8 +274,8 @@ if "py2exe" in sys.argv:
         "script": "bin/gaupol",
         "icon_resources": [(0, "data/icons/gaupol.ico")],}]
     py2exe_options = {
-        "includes": ("atk",),
-        "packages": (
+        "includes": ["atk",],
+        "packages": [
             "cairo",
             "chardet",
             "enchant",
@@ -283,7 +283,7 @@ if "py2exe" in sys.argv:
             "gobject",
             "gtk",
             "pangocairo",
-            "pygtk",),}
+            "pygtk",],}
     kwargs["windows"] = windows
     kwargs["options"] = {"py2exe": py2exe_options}
 
