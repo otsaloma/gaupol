@@ -1,3 +1,41 @@
+Gaupol 0.13
+===========
+
+ * Raise PyGTK dependency to 2.12 or greater
+ * Remove misuse of assertions that broke some parts of Gaupol, when
+     used with Python's optimization (-O switch)
+ * Preserve additional fields in SSA/ASS files
+ * Preserve coordinate fields in extended SubRip format
+ * By default always use UTF-8 character encoding for preview
+   (#522868, Beni Cherniavsky, Osmo Salomaa)
+ * Allow reordering of columns
+ * Resize columns when their visibility is toggled
+ * Allow comments (starting with number signs) in pattern files
+ * Allow grouping of correction patterns under the same name
+ * Improve commmon error patterns for spaces around quote marks
+ * Fix error with encoding auto-detection (#10278)
+ * Fix error starting spell-check if no dictionary (#10526)
+ * Fix preview error dialog if video player not found (#518981)
+ * Fix subtitle number search after subtitle removals or inserts
+ * Fix error displaying right-click menu in cells (kitone)
+ * Fix IndexError with multiline tags in text cells (#547170)
+ * Fix window type and transientness for preferences dialog
+ * Fix error closing the search dialog from the window titlebar
+ * Fix updating of Alt+NUM shortcut keys
+ * Fix color markup tag conversions with various formats
+ * Fix conversions of font tags with the SubRip format
+ * Replace --adapt-translation option with --align-method
+ * Replace --debug option with using environment variable GAUPOL_DEBUG
+ * Add GenericName field to the desktop file
+ * Add mimetypes application/x-subrip, text/x-microdvd,
+   text/x-mpsub, text/x-ssa and text/x-subviewer to the desktop file
+ * Fix spell-check language listing with recent versions of Enchant
+ * Run 'update-desktop-database' in setup.py if --root not given
+ * Move profile directory on Windows to %APPDATA%/Gaupol
+
+ The five digit bug numbers refer to the old bug tracker at Gna
+ and the six digit ones to the new bug tracker at GNOME Bugzilla.
+
 Gaupol 0.12.3
 =============
 

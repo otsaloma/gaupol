@@ -19,7 +19,7 @@
 import os
 import re
 
-__version__ = "0.12.99"
+__version__ = "0.13"
 
 debug = bool(os.environ.get("GAUPOL_DEBUG", ""))
 re_any_tag = re.compile(r"(^[/\\_]+|<.*?>|\{.*?\})")

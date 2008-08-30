@@ -1,5 +1,11 @@
 2008-08-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* gaupol/__init__.py: Bump version number.
+
+	RELEASE 0.13
+
+2008-08-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/agents/search.py (SearchAgent.set_search_string): Don't set
 	non-existent finder attribute 'is_regex'.
 

@@ -32,6 +32,7 @@ gaupol/agents/position.py
 gaupol/agents/search.py
 gaupol/agents/set.py
 gaupol/agents/text.py
+gaupol/align.py
 gaupol/encodings.py
 gaupol/framerates.py
 gaupol/gtk/actions/edit.py

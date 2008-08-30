@@ -1,42 +1,3 @@
-Gaupol 0.13
-===========
-
- [D] Raise PyGTK dependency to 2.12 or greater
- [D] Remove misuse of assertions that broke some parts of Gaupol, when
-     used with Python's optimization (-O switch)
- [D] Preserve additional fields in SSA/ASS files
- [D] Preserve coordinate fields in extended SubRip format
- [D] By default always use UTF-8 character encoding for preview
-     (#522868, Beni Cherniavsky, Osmo Salomaa)
- [D] Allow reordering of columns
- [D] Resize columns when their visibility is toggled
- [D] Allow comments (starting with number signs) in pattern files
- [D] Allow grouping of correction patterns under the same name
- [D] Improve commmon error patterns for spaces around quote marks
- [D] Fix error with encoding auto-detection (#10278)
- [D] Fix error starting spell-check if no dictionary (#10526)
- [D] Fix preview error dialog if video player not found (#518981)
- [D] Fix subtitle number search after subtitle removals or inserts
- [D] Fix error displaying right-click menu in cells (kitone)
- [D] Fix IndexError with multiline tags in text cells (#547170)
- [D] Fix window type and transientness for preferences dialog
- [D] Fix error closing the search dialog from the window titlebar
- [D] Fix updating of Alt+NUM shortcut keys
- [D] Fix color markup tag conversions with various formats
- [D] Fix conversions of font tags with the SubRip format
- [D] Replace --adapt-translation option with --align-method
- [D] Replace --debug option with using environment variable GAUPOL_DEBUG
- [D] Add GenericName field to the desktop file
- [D] Add mimetypes application/x-subrip, text/x-microdvd,
-     text/x-mpsub, text/x-ssa and text/x-subviewer to the desktop file
- [D] Fix spell-check language listing with recent versions of Enchant
- [D] Run 'update-desktop-database' in setup.py if --root not given
- [D] Move profile directory on Windows to %APPDATA%/Gaupol
-
- Note: The five digit bug numbers refer to the old bug tracker at Gna
- and the six digit ones to the new bug tracker at GNOME Bugzilla.
-
-
 Gaupol 0.14
 ===========
 
@@ -48,10 +9,9 @@ Gaupol 0.14
  [ ] Add an extension system
      - gaupol.gtk.Extension
      - gaupol.gtk.ExtensionManager
-     - gaupol.gtk.PreferencesDialog
+     - New tab in the preferences dialog
      - UI manager placeholders
  [ ] Add an example extension (bookmark/notes column?)
-
 
 Gaupol 1.0
 ==========
@@ -60,7 +20,6 @@ Gaupol 1.0
  * Add documentation on writing pattern files
  * Add a wiki page for publishing extensions
  * Add a wiki page for publishing pattern files
-
 
 Gaupol 3000
 ===========
