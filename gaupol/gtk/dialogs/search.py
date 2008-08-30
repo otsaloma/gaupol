@@ -400,8 +400,7 @@ class SearchDialog(gaupol.gtk.GladeDialog):
             self._add_pattern_to_history()
             return page.project.set_search_string(pattern, ignore_case)
         flags = (re.IGNORECASE if ignore_case else 0)
-        try:
-            page.project.set_search_regex(pattern, flags)
+        try: page.project.set_search_regex(pattern, flags)
         except re.error, message:
             self._show_regex_error_dialog_pattern(message)
             raise gaupol.gtk.Default

@@ -1,12 +1,15 @@
 Releasing a New Version
 =======================
 
+ * Do final quality checks
+
+     pylint bin/gaupol gaupol/ setup.py
+     py.test --tb=no -k -gtk gaupol
+     py.test --tb=no -k gtk gaupol
+
  * Make final edits to files
 
      $EDITOR gaupol/__init__.py
-     pylint bin/gaupol gaupol setup.py
-     py.test --tb=no -k -gtk gaupol
-     py.test --tb=no -k gtk gaupol
      intltool-update -m
      intltool-update -p -g gaupol
      $EDITOR NEWS TODO ChangeLog po/ChangeLog

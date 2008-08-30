@@ -71,7 +71,6 @@ class TestFilePage(gaupol.gtk.TestCase):
             selection = dialog._tree_view.get_selection()
             selection.select_path(0)
             return responder.next()
-        # pylint: disable-msg=W0201
         self.page.run_dialog = run_dialog
         self.page._add_button.emit("clicked")
         self.page._add_button.emit("clicked")

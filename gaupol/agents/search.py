@@ -298,7 +298,6 @@ class SearchAgent(gaupol.Delegate):
 
         self._finder.pattern = unicode(pattern)
         self._finder.ignore_case = ignore_case
-        self._finder.is_regex = False
 
     def set_search_target_require(self, indices=None, docs=None, wrap=True):
         for index in indices or []:

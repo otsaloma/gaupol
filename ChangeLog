@@ -1,3 +1,11 @@
+2008-08-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/agents/search.py (SearchAgent.set_search_string): Don't set
+	non-existent finder attribute 'is_regex'.
+
+	* gaupol/gtk/page.py (Page._update_undo_levels): Set the correct
+	project attribute for undo limit.
+
 2008-08-25  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/contractual.py (Contractual.__new__): Delete entire method if

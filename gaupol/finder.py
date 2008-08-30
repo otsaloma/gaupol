@@ -35,6 +35,7 @@ class Finder(object):
      * replacement: Plain- or regular expression replacement string
      * text: Target text to find matches of pattern in
     """
+    # pylint: disable-msg=E1103
 
     __metaclass__ = gaupol.Contractual
 

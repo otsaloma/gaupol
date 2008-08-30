@@ -290,7 +290,7 @@ class Page(gaupol.Observable):
 
         limit = gaupol.gtk.conf.editor.limit_undo
         limit = (gaupol.gtk.conf.editor.undo_levels if limit else None)
-        self.project.undo_levels = limit
+        self.project.undo_limit = limit
 
     def document_to_text_column(self, doc):
         """Translate document enumeration to view's column enumeration."""
