@@ -1,3 +1,8 @@
+2008-09-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/tags/subrip.py (SubRip.clean): Remove tags immeadiately closed
+	after opening or vice versa.
+
 2008-08-30  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* setup.py: Make py2exe includes and packages be lists instead of
