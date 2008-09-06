@@ -2,9 +2,11 @@ Gaupol 0.14
 ===========
 
  [ ] Switch to git, find a host for master branch
+ [ ] Use weakref.WeakValueDictionary in gaupol.Observable
+ [ ] Implement clean-methods for Markup classes
+
  [?] Handle fancy quotes, dashes and ellipses in text corrections
      - As bogus regular expression groups, e.g. (?gaupol-quote)?
- [ ] Use weakref.WeakValueDictionary in gaupol.Observable
  [?] Add notebooked panes to the side and bottom
  [?] Move the output window to the bottom pane
  [ ] Add an extension system

@@ -3,7 +3,11 @@ include doc/gaupol.1
 include doc/MODULES
 include doc/RELEASING
 include doc/RELEASING.win32
-include po/*
+include po/*.po
+include po/ChangeLog
+include po/gaupol.pot
+include po/POTFILES.*
+include po/README
 recursive-include data *
 recursive-include gaupol *.py
 recursive-include tools *
