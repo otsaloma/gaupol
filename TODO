@@ -1,3 +1,11 @@
+Gaupol 0.13.1
+=============
+
+ * Fix error saving subtitle files when trying to quit with unsaved
+   changes in multiple documents (#552129)
+ * Remove redundant tags with the SubRip format when doing automatic
+   text corrections, e.g. removing hearing impaired texts
+
 Gaupol 0.14
 ===========
 

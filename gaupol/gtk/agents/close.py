@@ -34,7 +34,7 @@ class CloseAgent(gaupol.Delegate):
         Raise Default if cancelled and (all) pages were not closed.
         """
         if sum((len(self._need_confirmation(x)) for x in self.pages)) > 1:
-            return self._confirm_and_close_pages(self.pages)
+            return self._confirm_and_close_pages(tuple(self.pages))
         while self.pages:
             self.close_page(self.pages[-1])
 

@@ -1,3 +1,13 @@
+2008-09-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/gtk/agents/close.py (CloseAgent._close_all_pages): Take a copy
+	of self.pages to pass to _confirm_and_close_pages.
+
+	* gaupol/gtk/dialogs/multiclose.py (MultiCloseDialog.__init__): Take a
+	copy of the pages argument and assign that to self.pages.
+
+	Fixes #552129.
+
 2008-09-03  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* gaupol/tags/subrip.py (SubRip.clean): Remove tags immeadiately closed

@@ -35,7 +35,7 @@ class MultiCloseDialog(gaupol.gtk.GladeDialog):
         self._tran_tree_view = get_widget("tran_tree_view")
         self._tran_vbox = get_widget("tran_vbox")
         self.application = application
-        self.pages = pages
+        self.pages = tuple(pages)
 
         self._init_main_tree_view()
         self._init_tran_tree_view()

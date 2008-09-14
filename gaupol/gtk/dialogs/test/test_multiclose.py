@@ -77,6 +77,10 @@ class TestMultiCloseDialog(gaupol.gtk.TestCase):
         self.dialog = gaupol.gtk.MultiCloseDialog(*args)
         self.dialog.show()
 
+    def test___init__(self):
+
+        assert self.dialog.pages is not self.application.pages
+
     def test__on_response__no(self):
 
         self.dialog.response(gtk.RESPONSE_NO)
