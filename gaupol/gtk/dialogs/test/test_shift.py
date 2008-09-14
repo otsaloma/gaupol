@@ -57,8 +57,7 @@ class _TestPositionShiftDialog(gaupol.gtk.TestCase):
 
     def test__on_response(self):
 
-        targets = gaupol.gtk.targets
-        for target in (targets.SELECTED, targets.CURRENT):
+        for target in gaupol.gtk.targets:
             self.conf.target = target
             args = (self.application.window, self.application)
             self.dialog = self.dialog.__class__(*args)

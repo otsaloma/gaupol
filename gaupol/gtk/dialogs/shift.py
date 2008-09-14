@@ -31,6 +31,7 @@ class _PositionShiftDialog(gaupol.gtk.GladeDialog):
 
         gaupol.gtk.GladeDialog.__init__(self, "shift.glade")
         get_widget = self._glade_xml.get_widget
+        self._all_radio = get_widget("all_radio")
         self._amount_spin = get_widget("amount_spin")
         self._current_radio = get_widget("current_radio")
         self._preview_button = get_widget("preview_button")
@@ -61,6 +62,8 @@ class _PositionShiftDialog(gaupol.gtk.GladeDialog):
             return gaupol.gtk.targets.SELECTED
         if self._current_radio.get_active():
             return gaupol.gtk.targets.CURRENT
+        if self._all_radio.get_active():
+            return gaupol.gtk.targets.ALL
         raise ValueError
 
     def _init_signal_handlers(self):
@@ -76,6 +79,7 @@ class _PositionShiftDialog(gaupol.gtk.GladeDialog):
         targets = gaupol.gtk.targets
         self._selected_radio.set_active(self.conf.target == targets.SELECTED)
         self._current_radio.set_active(self.conf.target == targets.CURRENT)
+        self._all_radio.set_active(self.conf.target == targets.ALL)
         page = self.application.get_current_page()
         rows = page.view.get_selected_rows()
         if (not rows) and (self.conf.target == targets.SELECTED):
@@ -115,11 +119,13 @@ class _PositionShiftDialog(gaupol.gtk.GladeDialog):
     def _shift_positions(self):
         """Shift positions in subtitles."""
 
-        page = self.application.get_current_page()
+        gaupol.gtk.util.set_cursor_busy(self)
         target = self._get_target()
         rows = self.application.get_target_rows(target)
         amount = self._get_amount()
-        page.project.shift_positions(rows, amount)
+        for page in self.application.get_target_pages(target):
+            page.project.shift_positions(rows, amount)
+        gaupol.gtk.util.set_cursor_normal(self)
 
 
 class FrameShiftDialog(_PositionShiftDialog):

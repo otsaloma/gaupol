@@ -1,5 +1,11 @@
 2008-09-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
+	* data/glade/dialogs/shift.glade:
+	* gaupol/gtk/dialogs/shift.py:
+	Add all open projects as a target to the position shift dialog.
+
+2008-09-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
 	* gaupol/gtk/agents/close.py (CloseAgent._close_all_pages): Take a copy
 	of self.pages to pass to _confirm_and_close_pages.
 
