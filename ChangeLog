@@ -1,3 +1,9 @@
+2008-09-17  Osmo Salomaa  <otsaloma@cc.hut.fi>
+
+	* gaupol/__init__.py: Bump version number.
+
+	RELEASE 0.13.1
+
 2008-09-14  Osmo Salomaa  <otsaloma@cc.hut.fi>
 
 	* data/glade/dialogs/shift.glade:

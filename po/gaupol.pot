@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-30 12:43+0300\n"
+"POT-Creation-Date: 2008-09-17 20:12+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -325,7 +325,7 @@ msgid "Insert Subtitles"
 msgstr ""
 
 #: ../data/glade/dialogs/insert.glade.h:4
-#: ../data/glade/dialogs/shift.glade.h:6
+#: ../data/glade/dialogs/shift.glade.h:7
 msgid "_Amount:"
 msgstr ""
 
@@ -580,19 +580,23 @@ msgid "Shift Positions"
 msgstr ""
 
 #: ../data/glade/dialogs/shift.glade.h:4
-msgid "Shift c_urrent project"
+msgid "Shift all _open projects"
 msgstr ""
 
 #: ../data/glade/dialogs/shift.glade.h:5
+msgid "Shift c_urrent project"
+msgstr ""
+
+#: ../data/glade/dialogs/shift.glade.h:6
 msgid "Shift s_elected subtitles"
 msgstr ""
 
-#: ../data/glade/dialogs/shift.glade.h:7
+#: ../data/glade/dialogs/shift.glade.h:8
 #: ../data/glade/dialogs/transform.glade.h:10
 msgid "_Preview Changes"
 msgstr ""
 
-#: ../data/glade/dialogs/shift.glade.h:8
+#: ../data/glade/dialogs/shift.glade.h:9
 msgid "_Shift"
 msgstr ""
 
@@ -2028,11 +2032,11 @@ msgstr ""
 msgid "Found and replaced %d occurences"
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/shift.py:147
+#: ../gaupol/gtk/dialogs/shift.py:153
 msgid "frames"
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/shift.py:172
+#: ../gaupol/gtk/dialogs/shift.py:178
 msgid "seconds"
 msgstr ""
 
