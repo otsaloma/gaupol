@@ -1,0 +1,12 @@
+*.py[co]
+build/
+data/gaupol.desktop
+data/patterns/*.capitalization
+data/patterns/*.common-error
+data/patterns/*.hearing-impaired
+data/patterns/*.line-break
+dist/
+doc/api/
+locale/
+MANIFEST
+PKG-INFO
