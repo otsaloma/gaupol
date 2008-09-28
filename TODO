@@ -13,8 +13,8 @@ Gaupol 0.14
      - Add signals to observable classes
      - Allow extensions to use gaupol.gtk.conf?
  [ ] Add an example extension (bookmark/notes column?)
- [ ] Remove deprecated Encoding-field from desktop file
- [ ] Switch version-control from subversion to git
+ [D] Remove deprecated Encoding-field from desktop file
+ [W] Switch version-control from subversion to git
  [ ] Use weakref.WeakValueDictionary in gaupol.Observable
  [ ] Implement clean-methods for Markup classes
 
