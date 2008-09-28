@@ -146,7 +146,7 @@ class Observable(object):
         """Remove registration to receive notifications of signal."""
 
         for i in reversed(range(len(self._signal_handlers[signal]))):
-            if self._signal_handlers[signal][i][0] == method:
+            if self._signal_handlers[signal][i][0] is method:
                 self._signal_handlers[signal].pop(i)
 
     def emit_require(self, signal, *args):
