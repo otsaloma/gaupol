@@ -7,15 +7,14 @@ Releasing a New Version
      py.test --tb=no -k -gtk gaupol
      py.test --tb=no -k gtk gaupol
 
- * Make final edits to files
+ * Make final edits to files, commit and tag
 
      $EDITOR gaupol/__init__.py
-     intltool-update -m
-     intltool-update -p -g gaupol
-     $EDITOR NEWS TODO ChangeLog po/ChangeLog
-     svn commit
-
- * Tag the subversion trunk as GAUPOL_X_Y[_Z]
+     po: intltool-update -m
+     po: intltool-update -p -g gaupol
+     $EDITOR NEWS TODO
+     git commit -a
+     git tag -s X.Y.Z
 
  * Build tarballs and edit related files
 

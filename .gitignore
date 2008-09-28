@@ -1,5 +1,6 @@
 *.py[co]
 build/
+ChangeLog
 data/gaupol.desktop
 data/patterns/*.capitalization
 data/patterns/*.common-error
@@ -9,4 +10,3 @@ dist/
 doc/api/
 locale/
 MANIFEST
-PKG-INFO

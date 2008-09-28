@@ -9,7 +9,7 @@ Files from Foreign Sources
    Toedter, Alastair McKinstry and Andreas Jochens, and are copied
    unmodified from iso-codes [1]. The files are released under the GNU
    Lesser General Public License (LGPL). See the headers of the files
-   in question for copyright and license information.
+   in question for full copyright and license information.
 
  * gaupol/gtk/conf/configobj.py
  * gaupol/gtk/conf/validate.py
@@ -17,9 +17,17 @@ Files from Foreign Sources
    These files are written by Michael Foord, Nicola Larosa and Mark
    Andrews, and copied virtually unchanged from ConfigObj [2] and
    Validate [3]. The files are released under the BSD license. See the
-   headers of the files in question for copyright and license
+   headers of the files in question for full copyright and license
    information.
+
+ * tools/git2cl
+
+   This file is written by Simon Josefsson and Luis Mondesi, and is
+   copied unmodified from git2cl [4]. The file is licensed under the
+   GNU General Public License. See the header of the file for
+   full copyright and license information.
 
  [1] http://alioth.debian.org/projects/pkg-isocodes/
  [2] http://www.voidspace.org.uk/python/configobj.html
  [3] http://www.voidspace.org.uk/python/validate.html
+ [4] http://josefsson.org/git2cl/

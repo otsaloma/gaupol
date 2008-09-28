@@ -1,10 +1,6 @@
 Gaupol 0.14
 ===========
 
- [ ] Switch to git, find a host for master branch
- [ ] Use weakref.WeakValueDictionary in gaupol.Observable
- [ ] Implement clean-methods for Markup classes
-
  [?] Handle fancy quotes, dashes and ellipses in text corrections
      - As bogus regular expression groups, e.g. (?gaupol-quote)?
  [?] Add notebooked panes to the side and bottom
@@ -17,6 +13,10 @@ Gaupol 0.14
      - Add signals to observable classes
      - Allow extensions to use gaupol.gtk.conf?
  [ ] Add an example extension (bookmark/notes column?)
+ [ ] Remove deprecated Encoding-field from desktop file
+ [ ] Switch version-control from subversion to git
+ [ ] Use weakref.WeakValueDictionary in gaupol.Observable
+ [ ] Implement clean-methods for Markup classes
 
 Gaupol 1.0
 ==========

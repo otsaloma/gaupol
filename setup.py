@@ -51,7 +51,8 @@ class Clean(clean):
     """Command to remove files and directories created."""
 
     __glob_targets = (
-        "build", "dist", "locale", "MANIFEST",
+        "build", "dist", "locale",
+        "ChangeLog", "MANIFEST",
         "data/gaupol.desktop",
         "data/patterns/*.common-error",
         "data/patterns/*.hearing-impaired",
@@ -193,6 +194,8 @@ class SDistGna(sdist):
 
     def run(self):
 
+        os.system("tools/change-log")
+        assert os.path.isfile("ChangeLog")
         sdist.run(self)
         basename = "gaupol-%s" % __version__
         tarballs = os.listdir(self.dist_dir)
