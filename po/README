@@ -2,9 +2,9 @@ Translating Gaupol
 ==================
 
 To avoid doing pointless work, first check the latest list of existing
-translations at the subversion trunk
+translations at the head of the master branch
 
-    http://svn.gna.org/viewcvs/gaupol/trunk/po/
+    http://gitorious.org/projects/gaupol/repos/mainline/trees/master/po
 
 To try your translation in the source directory, you can compile it
 to the "locale" directory (which does not exist by default)
