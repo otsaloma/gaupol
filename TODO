@@ -34,6 +34,14 @@ Gaupol 3000
  * Replace the headers-dialog with a more general properties-dialog
    - SubRip: Write coordinates (extended SubRip format)
    - MicroDVD: Write framerate information subtitle
+ * Python 2.6
+   - Use 'with' without importing from __future__
+   - from __future__ import print_function
+   - except Exception as exception_instance
+   - from __future__ import unicode_literals
+   - Abstract Base Classes: abc.ABCMeta
+   - Properties now have three attributes, getter, setter and deleter
+   - On Windows, os.path.expandvars() will now expand environment variables
  * PyGObject 2.16
    - Try gobject.option.OptionParser (see #378704)
    - Try gio.AppInfo for launching web browser and video player
