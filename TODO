@@ -16,6 +16,7 @@ Gaupol 0.14
  [D] Remove deprecated Encoding-field from desktop file
  [W] Switch version-control from subversion to git
  [ ] Implement clean-methods for Markup classes
+ [D] Fix AssertionError when installing multiple times
 
 Gaupol 1.0
 ==========

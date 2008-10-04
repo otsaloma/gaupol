@@ -170,11 +170,11 @@ class InstallLib(install_lib):
         path = os.path.join(self.build_dir, "gaupol", "paths.py")
         text = open(path, "r").read()
         string = 'get_directory("data")'
-        assert text.count(string) == 1
         text = text.replace(string, repr(data_dir))
+        assert text.count(repr(data_dir)) > 0
         string = 'get_directory("locale")'
-        assert text.count(string) == 1
         text = text.replace(string, repr(locale_dir))
+        assert text.count(repr(locale_dir)) > 0
         open(path, "w").write(text)
 
         return install_lib.install(self)
