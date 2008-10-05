@@ -1,4 +1,4 @@
-[CommonErrorPattern]
+[Common Error Pattern]
 _Name=Letter "O" in a number
 _Description=Replace letter "O" with a zero in a number
 Classes=OCR
@@ -7,7 +7,7 @@ Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\1\060
 Repeat=True
 
-[CommonErrorPattern]
+[Common Error Pattern]
 _Name=Letter "O" in a number
 _Description=Replace letter "O" with a zero in a number
 Classes=OCR
@@ -17,7 +17,7 @@ Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\060\1
 Repeat=True
 
-[CommonErrorPattern]
+[Common Error Pattern]
 _Name=Double apostrophe
 _Description=Replace a double apostrophe with a quotation mark
 Classes=OCR
@@ -26,7 +26,7 @@ Flags=DOTALL,MULTILINE,UNICODE
 Replacement="
 Repeat=False
 
-[CommonErrorPattern]
+[Common Error Pattern]
 _Name=Space after a dialogue dash
 _Description=Add space after a dialogue dash
 Classes=Human,OCR
@@ -35,7 +35,7 @@ Flags=DOTALL,MULTILINE,UNICODE
 Replacement=- \1
 Repeat=False
 
-[CommonErrorPattern]
+[Common Error Pattern]
 _Name=Space before punctuation marks
 _Description=Remove space before various punctuation marks
 Classes=Human,OCR
@@ -46,7 +46,7 @@ Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\1
 Repeat=False
 
-[CommonErrorPattern]
+[Common Error Pattern]
 _Name=Space after punctuation marks
 _Description=Add space after various punctuation marks
 Classes=Human,OCR
@@ -55,7 +55,7 @@ Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\1 \3
 Repeat=False
 
-[CommonErrorPattern]
+[Common Error Pattern]
 _Name=Space after an ellipsis
 _Description=Add space after an ellipsis
 Classes=Human,OCR
@@ -64,7 +64,7 @@ Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\1 \2
 Repeat=False
 
-[CommonErrorPattern]
+[Common Error Pattern]
 _Name=Space after a starting ellipsis
 _Description=Remove space after an ellipsis that starts a line
 Classes=Human,OCR
@@ -73,7 +73,7 @@ Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\1
 Repeat=False
 
-[CommonErrorPattern]
+[Common Error Pattern]
 _Name=Spaces around a quotation mark
 _Description=Remove space after a starting- and before an ending quotation mark
 Classes=OCR
@@ -84,7 +84,7 @@ Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\1"\3
 Repeat=False
 
-[CommonErrorPattern]
+[Common Error Pattern]
 _Name=Spaces around a quotation mark
 _Description=Remove space after a starting- and before an ending quotation mark
 Classes=OCR
@@ -95,7 +95,7 @@ Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\1"\3
 Repeat=False
 
-[CommonErrorPattern]
+[Common Error Pattern]
 _Name=Spaces around a quotation mark
 _Description=Remove space after a starting- and before an ending quotation mark
 Classes=OCR
@@ -105,7 +105,7 @@ Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\1
 Repeat=False
 
-[CommonErrorPattern]
+[Common Error Pattern]
 _Name=Spaces around a quotation mark
 _Description=Remove space after a starting- and before an ending quotation mark
 Classes=OCR
@@ -115,7 +115,7 @@ Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\2
 Repeat=False
 
-[CommonErrorPattern]
+[Common Error Pattern]
 _Name=Multiple question- and exclamation marks
 _Description=Replace multiple consequtive question- and exclamation marks with only one
 Classes=Human
@@ -124,7 +124,7 @@ Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\1?
 Repeat=False
 
-[CommonErrorPattern]
+[Common Error Pattern]
 _Name=Multiple question- and exclamation marks
 _Description=Replace multiple consequtive question- and exclamation marks with only one
 Classes=Human
@@ -133,7 +133,7 @@ Flags=DOTALL,MULTILINE,UNICODE
 Replacement=\1!
 Repeat=False
 
-[CommonErrorPattern]
+[Common Error Pattern]
 _Name=Periods around a punctuation mark
 _Description=Remove period before or after various punctuation marks
 Classes=OCR
@@ -143,7 +143,7 @@ Flags=DOTALL,MULTILINE,UNICODE
 Replacement=
 Repeat=False
 
-[CommonErrorPattern]
+[Common Error Pattern]
 _Name=Periods around a punctuation mark
 _Description=Remove period before or after various punctuation marks
 Classes=OCR

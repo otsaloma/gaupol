@@ -1,4 +1,4 @@
-[LineBreakPattern]
+[Line Break Pattern]
 _Name=Clause
 _Description=Break according to clauses terminated by a punctuation mark
 # Prefer breaking sentences rather than clauses and multiple clauses rather
