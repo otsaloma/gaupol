@@ -194,7 +194,9 @@ class SDistGna(sdist):
 
     def run(self):
 
-        os.system("tools/change-log")
+        if os.path.isfile("ChangeLog"):
+            os.remove("ChangeLog")
+        os.system("tools/git2cl > ChangeLog")
         assert os.path.isfile("ChangeLog")
         sdist.run(self)
         basename = "gaupol-%s" % __version__
