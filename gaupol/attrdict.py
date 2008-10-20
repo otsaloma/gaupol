@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2007 Osmo Salomaa
+# Copyright (C) 2006-2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,22 +14,16 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Configuration data container."""
+"""Observable dictionary with attribute access to keys."""
 
 import gaupol
 
+__all__ = ("AttrDict",)
 
-class Container(gaupol.Observable):
 
-    """Configuration data container.
+class AttrDict(gaupol.Observable):
 
-    This class can be a configuration section or a container for the entire
-    configuration data if there are no sections. Container is instantiated with
-    a 'root', which is a lowest (sub)dictionary of a ConfigObj instance.
-    Instance attributes are created for each key in 'root' and their values are
-    kept in sync. The configuration variables are thus available conveniently
-    as instance attributes with notifications as per the Observable interface.
-    """
+    """Observable dictionary with attribute access to keys."""
 
     def __init__(self, root):
 
@@ -48,6 +42,8 @@ class Container(gaupol.Observable):
     def _on_notify(self, obj, value, name):
         """Synchronize attribute value with root dictionary."""
 
+        if name == "custom_font":
+            print "_on_notify", obj, value, name
         if value != self.__root[name]:
             self.__root[name] = value
 

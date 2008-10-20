@@ -12,6 +12,7 @@ gaupol.delegate
 gaupol.singleton
 gaupol.mutables
 gaupol.observable
+gaupol.attrdict
 gaupol.enumeration
 gaupol.i18n
 gaupol.errors

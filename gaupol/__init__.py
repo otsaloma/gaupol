@@ -34,6 +34,7 @@ from gaupol.delegate import *
 from gaupol.singleton import *
 from gaupol.mutables import *
 from gaupol.observable import *
+from gaupol.attrdict import *
 from gaupol.enumeration import *
 from gaupol import i18n
 from gaupol.errors import *

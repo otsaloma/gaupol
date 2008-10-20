@@ -17,6 +17,7 @@ Gaupol 0.14
  [W] Switch version-control from subversion to git
  [ ] Implement clean-methods for Markup classes
  [D] Fix AssertionError when installing multiple times
+ [ ] Handle reading and writing files with a Unicode BOM (#556956)
 
 Gaupol 1.0
 ==========

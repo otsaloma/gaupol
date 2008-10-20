@@ -31,7 +31,6 @@ import gaupol.gtk
 import os
 
 from .config import Config
-from .container import Container
 
 config_file = None
 
@@ -106,12 +105,12 @@ def read():
         raise SystemExit(1)
     config["general"]["version"] = gaupol.__version__
     globals()["_config"] = config
-    # Create or update containers on the module level for each section.
+    # Create or update AttrDicts on the module level for each section.
     for key, value in config.items():
         if key in globals():
             globals()[key].update(value)
             continue
-        globals()[key] = Container(value)
+        globals()[key] = gaupol.AttrDict(value)
 
 def read_defaults_ensure(value):
     assert "_defaults" in globals()

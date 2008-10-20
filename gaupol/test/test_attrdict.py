@@ -15,34 +15,27 @@
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
-import os
 
 
-class TestContainer(gaupol.gtk.TestCase):
+class TestAttrDict(gaupol.TestCase):
 
     def setup_method(self, method):
 
-        name = "gaupol.gtk.conf.spec"
-        spec_file = os.path.join(gaupol.DATA_DIR, name)
-        root = gaupol.gtk.conf.Config(None, spec_file)
-        self.root = root["output_window"]
-        self.container = gaupol.gtk.conf.Container(self.root)
+        self.root = {"test": 1, "rest": 0}
+        self.attrdict = gaupol.AttrDict(self.root)
 
     def test___getattr__(self):
 
-        assert isinstance(self.container.show, bool)
-        assert isinstance(self.container.size, list)
+        assert isinstance(self.attrdict.test, int)
+        assert isinstance(self.attrdict.rest, int)
 
     def test___setattr__(self):
 
-        value = self.container.show
-        self.container.show = value
-        assert self.root["show"] is value
-        assert "show" in self.root.defaults
-        self.container.show = not value
-        assert self.container.show is not value
-        assert "show" not in self.root.defaults
+        self.attrdict.test = 5
+        assert self.root["test"] == 5
+        self.attrdict.test = 9
+        assert self.attrdict.test == 9
 
     def test_update(self):
 
-        self.container.update(self.root)
+        self.attrdict.update(self.root)
