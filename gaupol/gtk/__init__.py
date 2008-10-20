@@ -56,6 +56,8 @@ from gaupol.gtk.meta import *
 from gaupol.gtk.runner import *
 from gaupol.gtk.entries import *
 from gaupol.gtk.renderers import *
+from gaupol.gtk.extension import *
+from gaupol.gtk.extensionman import *
 from gaupol.gtk.output import *
 from gaupol.gtk.view import *
 from gaupol.gtk.page import *
