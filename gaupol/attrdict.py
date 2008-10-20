@@ -42,8 +42,6 @@ class AttrDict(gaupol.Observable):
     def _on_notify(self, obj, value, name):
         """Synchronize attribute value with root dictionary."""
 
-        if name == "custom_font":
-            print "_on_notify", obj, value, name
         if value != self.__root[name]:
             self.__root[name] = value
 
