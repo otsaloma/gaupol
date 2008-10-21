@@ -26,15 +26,20 @@ class AttrDict(gaupol.Observable):
     """Observable dictionary with attribute access to keys."""
 
     def __init__(self, root):
+        """Initialize an AttrDict object.
 
+        All child dictionaries of root are initialized as AttrDicts as well.
+        """
         gaupol.Observable.__init__(self)
         self.__root = root
-        self._init_signal_handlers()
+        self._init_attributes()
 
-    def _init_signal_handlers(self):
-        """Initialize signal handlers."""
+    def _init_attributes(self):
+        """Initialize attributes and signal handlers."""
 
-        for name, value in self.__root.items():
+        for name, value in self.__root.iteritems():
+            if isinstance(value, dict):
+                value = AttrDict(value)
             setattr(self, name, value)
             signal = "notify::%s" % name
             self.connect(signal, self._on_notify, name)
@@ -43,11 +48,15 @@ class AttrDict(gaupol.Observable):
         """Synchronize attribute value with root dictionary."""
 
         if value != self.__root[name]:
+            if isinstance(value, dict):
+                value = AttrDict(value)
             self.__root[name] = value
 
     def update(self, root):
         """Update values from a new root dictionary."""
 
         self.__root = root
-        for name, value in self.__root.items():
+        for name, value in self.__root.iteritems():
+            if isinstance(value, dict):
+                value = AttrDict(value)
             setattr(self, name, value)
