@@ -16,6 +16,8 @@
 
 """Separate object that can be activated and deactivated during runtime."""
 
+import gaupol
+
 __all__ = ("Extension",)
 
 
@@ -23,7 +25,9 @@ class Extension(object):
 
     """Separate object that can be activated and deactivated during runtime."""
 
-    def read_config(self, spec_file):
+    spec_file = None
+
+    def read_config(self):
         """Read configurations from file according to spec_file.
 
         The configurations are read from the global gaupol configuration file
@@ -31,7 +35,16 @@ class Extension(object):
         Options are stored as global variables under gaupol.gtk.conf and are
         written to the global configuration file automatically.
         """
-        pass
+        conf = gaupol.gtk.conf.extensions
+        config_file = gaupol.gtk.conf.config_file
+        config = gaupol.gtk.Config(config_file, self.spec_file)
+        config = config["extensions"]
+        # Create or update AttrDicts at conf module level.
+        for key, value in config.items():
+            if hasattr(gaupol.gtk.conf.extensions, key):
+                getattr(conf, key).update(value)
+            else: # Create AttrDict.
+                setattr(conf, key, gaupol.AttrDict(value))
 
     def setup(self, application):
         """Setup extension for use with application.

@@ -53,6 +53,9 @@ try_auto = boolean(default=True)
 try_locale = boolean(default=True)
 visibles = string_list(default=list("utf_8", "cp1252"))
 
+[extensions]
+active = string_list(default=list())
+
 [file]
 align_method = align_methods(default="POSITION")
 directory = string(default="")

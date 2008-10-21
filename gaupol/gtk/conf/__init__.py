@@ -32,6 +32,8 @@ import os
 
 from .config import Config
 
+__all__ = ("Config",)
+
 config_file = None
 
 

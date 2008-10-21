@@ -17,6 +17,43 @@
 import gaupol.gtk
 
 
-class TestExtension(gaupol.gtk.TestCase):
+class PuppetExtension(gaupol.gtk.Extension):
 
     pass
+
+
+class TestExtension(gaupol.gtk.TestCase):
+
+    def setup_method(self, method):
+
+        self.application = self.get_application()
+        self.extension = PuppetExtension()
+        self.conf = gaupol.gtk.conf.extensions
+
+    def test_read_config(self):
+
+        path = gaupol.temp.create()
+        fobj = open(path, "w")
+        fobj.write("[extensions]\n")
+        fobj.write("[[test]]\n")
+        fobj.write("x = integer(default=5)\n")
+        fobj.close()
+        self.extension.spec_file = path
+        self.extension.read_config()
+        assert self.conf.test.x == 5
+        self.conf.test.x = 6
+        assert self.conf.test.x == 6
+        gaupol.temp.remove(path)
+
+    def test_setup_method(self):
+
+        self.extension.setup(self.application)
+
+    def test_teardown_method(self):
+
+        self.extension.teardown(self.application)
+
+    def test_update(self):
+
+        page = self.application.get_current_page()
+        self.extension.update(self.application, page)

@@ -50,6 +50,7 @@ from gaupol.gtk.targets import *
 from gaupol.gtk.units import *
 from gaupol.gtk.errors import *
 from gaupol.gtk import conf
+from gaupol.gtk.conf import *
 from gaupol.gtk import ruler
 from gaupol.gtk import util
 from gaupol.gtk.meta import *
