@@ -1,14 +1,12 @@
 Gaupol 0.14
 ===========
 
-[ ] Add an extension system
+ [W] Add an extension system
      - gaupol.gtk.Extension
      - gaupol.gtk.ExtensionManager
      - New tab in the preferences dialog
      - UI manager placeholders
      - Add signals to observable classes
-     - Allow extensions to use gaupol.gtk.conf?
-       o Make sure nested AttrDicts work
  [ ] Add an example extension (bookmark/notes column?)
  [ ] Handle reading and writing files with a Unicode BOM (#556956)
  [?] Handle fancy quotes, dashes and ellipses in text corrections
