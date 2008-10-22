@@ -13,6 +13,7 @@ Gaupol 0.14
      - As bogus regular expression groups, e.g. (?gaupol-quote)?
  [D] Remove deprecated Encoding-field from desktop file
  [ ] Implement clean-methods for Markup classes
+ [D] Fix character count error with Unicode text
  [D] Fix AssertionError when installing multiple times
  [D] Switch version-control from subversion to git
 
