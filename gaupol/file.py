@@ -33,6 +33,7 @@ class SubtitleFile(object):
     Class or instance variables:
      * encoding: Character encoding used to read and write file
      * format: Format enumeration corresponding to file
+     * has_bom_utf8: True if an UTF-8 BOM was read
      * header: String of generic information at the top of the file
      * mode: Mode enumeration corresponding to the native positions
      * newline: Newline enumeration, detected upon read and written as such
@@ -51,6 +52,7 @@ class SubtitleFile(object):
     def __init__(self, path, encoding, newline=None):
 
         self.encoding = encoding
+        self.has_bom_utf8 = False
         self.header = ""
         self.newline = newline
         self.path = os.path.abspath(path)
@@ -86,6 +88,9 @@ class SubtitleFile(object):
         if isinstance(chars, tuple):
             chars = chars[0]
         self.newline = gaupol.newlines.find_item("value", chars)
+        if lines and lines[0].startswith(codecs.BOM_UTF8):
+            self.has_bom_utf8 = True
+            lines[0] = lines[0].replace(codecs.BOM_UTF8, "")
         return lines
 
     def copy_from_require(self, other):
@@ -94,6 +99,7 @@ class SubtitleFile(object):
     def copy_from(self, other):
         """Copy generic properties from file of same format."""
 
+        self.has_bom_utf8 = other.has_bom_utf8
         self.header = other.header
 
     def get_template_header_require(self):
@@ -131,6 +137,8 @@ class SubtitleFile(object):
         """
         args = (self.path, "w", self.encoding)
         with contextlib.closing(codecs.open(*args)) as fobj:
+            if (self.encoding == "utf_8") and self.has_bom_utf8:
+                fobj.write(codecs.BOM_UTF8)
             self.write_to_file(subtitles, doc, fobj)
 
     def write_to_file_require(self, subtitles, doc, fobj):
