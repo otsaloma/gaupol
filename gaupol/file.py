@@ -88,7 +88,8 @@ class SubtitleFile(object):
         if isinstance(chars, tuple):
             chars = chars[0]
         self.newline = gaupol.newlines.find_item("value", chars)
-        if lines and lines[0].startswith(codecs.BOM_UTF8):
+        if ((self.encoding == "utf_8") and lines and
+            lines[0].startswith(codecs.BOM_UTF8)):
             self.has_bom_utf_8 = True
             lines[0] = lines[0].replace(codecs.BOM_UTF8, "")
         return lines
