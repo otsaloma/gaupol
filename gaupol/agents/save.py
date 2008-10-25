@@ -99,7 +99,7 @@ class SaveAgent(gaupol.Delegate):
             changed_indices = self._convert_tags(*args)
         if not None in (path, format, encoding, newline):
             new_file = gaupol.files.new(format, path, encoding, newline)
-            if (file is not None) and (file.format == format):
+            if (file is not None):
                 new_file.copy_from(file)
             file = new_file
         self._write_file(file, self.subtitles, doc)

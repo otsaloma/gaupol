@@ -96,7 +96,8 @@ class SubStationAlpha(gaupol.SubtitleFile):
         """Copy generic properties from file of same format."""
 
         gaupol.SubtitleFile.copy_from(self, other)
-        self.event_fields = tuple(other.event_fields)
+        if self.format == other.format:
+            self.event_fields = tuple(other.event_fields)
 
     def read(self):
         """Read file and return subtitles.

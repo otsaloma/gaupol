@@ -106,8 +106,9 @@ class MPsub(gaupol.SubtitleFile):
         """Copy generic properties from file of same format."""
 
         gaupol.SubtitleFile.copy_from(self, other)
-        self.mode = other.mode
-        self.framerate = other.framerate
+        if self.format == other.format:
+            self.mode = other.mode
+            self.framerate = other.framerate
 
     def read(self):
         """Read file and return subtitles.

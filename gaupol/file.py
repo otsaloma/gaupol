@@ -94,13 +94,14 @@ class SubtitleFile(object):
         return lines
 
     def copy_from_require(self, other):
-        assert isinstance(other, self.__class__)
+        assert isinstance(other, SubtitleFile)
 
     def copy_from(self, other):
-        """Copy generic properties from file of same format."""
+        """Copy generic properties from other file."""
 
+        if self.format == other.format:
+            self.header = other.header
         self.has_bom_utf8 = other.has_bom_utf8
-        self.header = other.header
 
     def get_template_header_require(self):
         assert self.format.has_header
