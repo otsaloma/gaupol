@@ -103,7 +103,7 @@ class MPsub(gaupol.SubtitleFile):
         return lines
 
     def copy_from(self, other):
-        """Copy generic properties from file of same format."""
+        """Copy generic properties from other file."""
 
         gaupol.SubtitleFile.copy_from(self, other)
         if self.format == other.format:
