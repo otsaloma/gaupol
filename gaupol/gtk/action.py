@@ -84,6 +84,9 @@ class MenuAction(Action):
         """Connect action to the widgets and methods of application."""
 
         self.widgets = tuple(getattr(application, x) for x in self.widgets)
+        callback = "on_%s_activate" % self.props.name
+        if hasattr(application, callback):
+            self.connect("activate", getattr(application, callback))
 
 
 class ToggleAction(Action, gtk.ToggleAction):

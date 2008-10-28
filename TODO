@@ -14,6 +14,7 @@ Gaupol 0.14
  [D] Remove deprecated Encoding-field from desktop file
  [ ] Implement clean-methods for Markup classes
  [D] Fix character count error with Unicode text
+ [D] Fix updating of filenames in the projects menu
  [D] Fix AssertionError when installing multiple times
  [D] Switch version-control from subversion to git
 
