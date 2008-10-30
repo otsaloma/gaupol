@@ -57,9 +57,9 @@ class SubRip(gaupol.Markup):
         """Return text with less ugly markup."""
 
         # Remove tags that are immeadiately closed after opening.
-        text = self._substitute(text, r"<([a-z]+)[^<]*?>( *)</\1>", "\2")
+        text = self._substitute(text, r"<([a-z]+)[^<]*?>( *)</\1>", r"\2")
         # Remove tags that are immeadiately opened after closing.
-        text = self._substitute(text, r"</([a-z]+)>( *)<\1[^<]*?>", "\2")
+        text = self._substitute(text, r"</([a-z]+)>( *)<\1[^<]*?>", r"\2")
         # Remove or relocate space right after an opening tag.
         text = self._substitute(text, r" ?(<(?!/)[^>]+?>) ", r" \1")
         # Remove or relocate space right before a closing tag.

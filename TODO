@@ -15,6 +15,8 @@ Gaupol 0.14
  [ ] Implement clean-methods for Markup classes
  [D] Fix character count error with Unicode text
  [D] Fix updating of filenames in the projects menu
+ [D] Fix erroneous cleaning of SubRip markup after removing hearing
+     impaired subtitles
  [D] Fix AssertionError when installing multiple times
  [D] Switch version-control from subversion to git
 
