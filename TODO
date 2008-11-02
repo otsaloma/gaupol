@@ -17,6 +17,7 @@ Gaupol 0.14
  [D] Fix updating of filenames in the projects menu
  [D] Fix erroneous cleaning of SubRip markup after removing hearing
      impaired subtitles
+ [D] Save SSA and ASS files with '\N' linebreaks instead of '\n'
  [D] Fix AssertionError when installing multiple times
  [D] Switch version-control from subversion to git
 

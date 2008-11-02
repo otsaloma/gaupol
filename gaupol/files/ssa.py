@@ -75,7 +75,7 @@ class SubStationAlpha(gaupol.SubtitleFile):
             return self._re_subtitle_time.sub(r"\1\2", value)
         if field_name == "Text":
             value = subtitle.get_text(doc)
-            return value.replace("\n", "\\n")
+            return value.replace("\n", "\\N")
         if field_name in ("MarginL", "MarginR", "MarginV"):
             name = gaupol.util.title_to_lower_case(field_name)
             return "%04d" % getattr(subtitle.ssa, name)
