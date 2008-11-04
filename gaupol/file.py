@@ -92,6 +92,12 @@ class SubtitleFile(object):
             lines[0].startswith(codecs.BOM_UTF8)):
             self.has_bom_utf_8 = True
             lines[0] = lines[0].replace(codecs.BOM_UTF8, "")
+        if self.encoding.startswith("utf_16"):
+            # Handle erroneous (?) UTF-16 encoded subtitles that use
+            # NULL-character filled linebreaks '\x00\r\x00\n', which
+            # Python interprets as two separate linebreaks.
+            if not any(lines[i] for i in range(1, len(lines), 2)):
+                lines = [lines[i] for i in range(0, len(lines), 2)]
         return lines
 
     def copy_from_require(self, other):
