@@ -8,8 +8,6 @@ Gaupol 0.14
      - UI manager placeholders
      - Add signals to observable classes
  [ ] Add an example extension (bookmark/notes column?)
- [?] Migrate from Glade to gtk.Builder
- [?] Adher to freedesktop.org's XDG Base Directory Specification
  [D] Handle reading and writing files with a UTF-8 BOM (#556956)
  [?] Handle fancy quotes, dashes and ellipses in text corrections
      - As bogus regular expression groups, e.g. (?gaupol-quote)?
@@ -20,6 +18,7 @@ Gaupol 0.14
  [D] Fix erroneous cleaning of SubRip markup after removing hearing
      impaired subtitles
  [D] Save SSA and ASS files with '\N' linebreaks instead of '\n'
+ [D] Resize columns after running text corrections
  [D] Fix AssertionError when installing multiple times
  [D] Switch version-control from subversion to git
 
@@ -34,6 +33,10 @@ Gaupol 1.0
 Gaupol 3000
 ===========
 
+ * Migrate from Glade to gtk.Builder
+   - http://live.gnome.org/GnomeGoals/RemoveLibGladeUseGtkBuilder
+ * Adher to freedesktop.org's XDG Base Directory Specification
+   - http://live.gnome.org/GnomeGoals/XDGConfigFolders
  * Add a built-in GStreamer video player (as extension?)
  * Replace the headers-dialog with a more general properties-dialog
    - SubRip: Write coordinates (extended SubRip format)

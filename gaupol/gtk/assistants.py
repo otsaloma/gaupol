@@ -1064,6 +1064,7 @@ class TextAssistant(gtk.Assistant):
                 page.project.remove_subtitles(indices)
                 page.project.group_actions(register, 2, description)
                 removals += len(set(indices))
+            page.view.columns_autosize()
         edits = edits - removals
         message = _("Edited %(edits)d and removed %(removals)d subtitles")
         self.application.flash_message(message % locals())
