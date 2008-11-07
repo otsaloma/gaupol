@@ -29,6 +29,7 @@ gaupol.languages
 gaupol.countries
 gaupol.locales
 gaupol.scripts
+gaupol.metadata
 gaupol.calculator
 gaupol.finder
 gaupol.parser

@@ -51,6 +51,7 @@ from gaupol import languages
 from gaupol import countries
 from gaupol import locales
 from gaupol import scripts
+from gaupol.metadata import *
 from gaupol.unittest import *
 from gaupol.calculator import *
 from gaupol.finder import *
