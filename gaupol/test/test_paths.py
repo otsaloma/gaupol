@@ -32,6 +32,7 @@ class TestModule(gaupol.TestCase):
         reload(gaupol.paths)
         reload(gaupol)
         assert hasattr(gaupol, "DATA_DIR")
+        assert hasattr(gaupol, "LIB_DIR")
         assert hasattr(gaupol, "LOCALE_DIR")
         assert hasattr(gaupol, "PROFILE_DIR")
         del sys.frozen
@@ -41,6 +42,7 @@ class TestModule(gaupol.TestCase):
         reload(gaupol.paths)
         reload(gaupol)
         assert os.path.isdir(gaupol.DATA_DIR)
+        assert os.path.isdir(gaupol.LIB_DIR)
         assert hasattr(gaupol, "LOCALE_DIR")
         assert hasattr(gaupol, "PROFILE_DIR")
 
