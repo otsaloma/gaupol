@@ -104,6 +104,11 @@ class MetadataItem(object):
             return self.get_field("Name")
         return self._get_localized_field("Name")
 
+    def has_field(self, name):
+        """Return True if field exists."""
+
+        return (name in self.fields)
+
     def set_field(self, name, value):
         """Set the string value of field."""
 

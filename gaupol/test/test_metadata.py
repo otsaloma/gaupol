@@ -86,6 +86,12 @@ class TestMetadataItem(gaupol.TestCase):
         assert self.item.get_name() == "system"
         gaupol.locales.get_system_code = get_code
 
+    def test_has_field(self):
+
+        assert not self.item.has_field("Test")
+        self.item.set_field("Test", "")
+        assert self.item.has_field("Test")
+
     def test_set_field(self):
 
         self.item.set_field("Test", "test")

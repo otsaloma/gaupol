@@ -9,8 +9,6 @@ Gaupol 0.14
      - Add signals to observable classes
  [ ] Add an example extension (bookmark/notes column?)
  [D] Handle reading and writing files with a UTF-8 BOM (#556956)
- [?] Handle fancy quotes, dashes and ellipses in text corrections
-     - As bogus regular expression groups, e.g. (?gaupol-quote)?
  [D] Remove deprecated Encoding-field from desktop file
  [ ] Implement clean-methods for Markup classes
  [D] Fix character count error with Unicode text
@@ -20,7 +18,7 @@ Gaupol 0.14
  [D] Save SSA and ASS files with '\N' linebreaks instead of '\n'
  [D] Resize columns after running text corrections
  [D] Fix AssertionError when installing multiple times
- [D] Switch version-control from subversion to git
+ [D] Switch version-control systems from subversion to git
 
 Gaupol 1.0
 ==========
@@ -33,6 +31,8 @@ Gaupol 1.0
 Gaupol 3000
 ===========
 
+ * Handle fancy quotes, dashes and ellipses in text corrections
+   - As bogus regular expression groups, e.g. (?gaupol-quote)?
  * Migrate from Glade to gtk.Builder
    - http://live.gnome.org/GnomeGoals/RemoveLibGladeUseGtkBuilder
  * Adher to freedesktop.org's XDG Base Directory Specification
@@ -41,17 +41,16 @@ Gaupol 3000
  * Replace the headers-dialog with a more general properties-dialog
    - SubRip: Write coordinates (extended SubRip format)
    - MicroDVD: Write framerate information subtitle
- * Python 2.6
+ * Bump Python dependency to 2.6
    - Use 'with' without importing from __future__
    - except Exception as exception_instance
    - from __future__ import unicode_literals
    - Abstract Base Classes: abc.ABCMeta
    - Properties now have three attributes, getter, setter and deleter
-   - On Windows, os.path.expandvars() will now expand environment variables
- * PyGObject 2.16
+ * Bump PyGObject dependency to 2.16
    - Try gobject.option.OptionParser (see #378704)
    - Try gio.AppInfo for launching web browser and video player
- * PyEnchant 1.4
+ * Bump PyEnchant dependency to 1.4
    - All dictionary providers now use a shared default personal word
      file (largely obsoleting the DictWithPWL class)
    - Dict.add_to_pwl renamed to Dict.add
