@@ -19,4 +19,24 @@ import gaupol.gtk
 
 class TestExtensionManager(gaupol.gtk.TestCase):
 
-    pass
+    def setup_method(self, method):
+
+        self.manager = gaupol.gtk.ExtensionManager(self.get_application())
+        gaupol.gtk.conf.extensions.active = ["null"]
+
+    def test_find_extensions(self):
+
+        self.manager.find_extensions()
+
+    def test_setup_extensions(self):
+
+        self.manager.setup_extensions()
+
+    def test_teardown_extensions(self):
+
+        self.manager.teardown_extensions()
+
+    def test_update_extensions(self):
+
+        page = self.manager.application.get_current_page()
+        self.manager.update_extensions(page)

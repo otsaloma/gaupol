@@ -43,13 +43,13 @@ class Extension(object):
         for key, value in config.items():
             if hasattr(gaupol.gtk.conf.extensions, key):
                 getattr(conf, key).update(value)
-            else: # Create AttrDict.
+            else: # Create new AttrDict.
                 setattr(conf, key, gaupol.AttrDict(value))
 
     def setup(self, application):
         """Setup extension for use with application.
 
-        This method is called every time when the extension if associated with
+        This method is called every time when the extension is associated with
         the application, i.e. both when it is manually activated and also every
         time right after application start.
         """

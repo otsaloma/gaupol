@@ -66,6 +66,8 @@ gaupol.gtk.renderers/
 gaupol.gtk.output
 gaupol.gtk.view
 gaupol.gtk.page
+gaupol.gtk.extension
+gaupol.gtk.extensionman
 gaupol.gtk.dialogs/
 gaupol.gtk.assistants
 gaupol.gtk.action

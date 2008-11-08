@@ -67,6 +67,7 @@ class Application(gaupol.Observable, gaupol.gtk.Runner):
         self._delegations = {}
         self.clipboard = gaupol.Clipboard()
         self.counter = itertools.count(1)
+        self.extension_manager = gaupol.gtk.ExtensionManager(self)
         self.framerate_combo = None
         self.notebook = None
         self.output_window = None
@@ -83,6 +84,8 @@ class Application(gaupol.Observable, gaupol.gtk.Runner):
 
         self._init_delegations()
         self._init_gui()
+        self.extension_manager.find_extensions()
+        self.extension_manager.setup_extensions()
 
     def _finalize_uim_actions(self):
         """Connect actions to widgets and methods."""

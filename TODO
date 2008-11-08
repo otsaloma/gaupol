@@ -2,8 +2,6 @@ Gaupol 0.14
 ===========
 
  [W] Add an extension system
-     - gaupol.gtk.Extension
-     - gaupol.gtk.ExtensionManager
      - New tab in the preferences dialog
      - UI manager placeholders
      - Add signals to observable classes

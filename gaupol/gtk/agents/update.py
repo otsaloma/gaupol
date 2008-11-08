@@ -199,6 +199,7 @@ class UpdateAgent(gaupol.Delegate):
         """Update widget sensitivities and states for the current page."""
 
         page = self.get_current_page()
+        self.extension_manager.update_extensions(page)
         self._update_actions(page)
         self._update_widgets(page)
         self._update_revert(page)

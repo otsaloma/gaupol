@@ -168,6 +168,7 @@ class CloseAgent(gaupol.Delegate):
         """Quit Gaupol."""
 
         self._close_all_pages()
+        self.extension_manager.teardown_extensions()
         self._save_window_geometry()
         try:
             gtk.main_quit()

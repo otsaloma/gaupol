@@ -43,6 +43,7 @@ class TestExtension(gaupol.gtk.TestCase):
         assert self.conf.test.x == 5
         self.conf.test.x = 6
         assert self.conf.test.x == 6
+        self.extension.read_config()
         gaupol.temp.remove(path)
 
     def test_setup_method(self):
