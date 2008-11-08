@@ -48,6 +48,7 @@ class Project(gaupol.Observable):
      * main-file-saved (project, main_file)
      * main-texts-changed (project, indices)
      * positions-changed (project, indices)
+     * preview-started (project, video_path, sub_path, output_path)
      * subtitles-changed (project, indices)
      * subtitles-inserted (project, indices)
      * subtitles-removed (project, indices)
@@ -68,6 +69,7 @@ class Project(gaupol.Observable):
         "main-file-saved",
         "main-texts-changed",
         "positions-changed",
+        "preview-started",
         "subtitles-inserted",
         "subtitles-removed",
         "subtitles-changed",
