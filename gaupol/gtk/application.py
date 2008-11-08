@@ -43,6 +43,9 @@ class Application(gaupol.Observable, gaupol.gtk.Runner):
      * page-changed (application, page)
      * page-closed (application, page)
      * pages-reordered (application, page, number)
+     * preview-completed (application, page)
+     * preview-started (application, page)
+     * quit (application)
      * text-assistant-request-pages (application, assistant)
 
     See gaupol.gtk.agents for application methods provided by agents.
@@ -55,6 +58,9 @@ class Application(gaupol.Observable, gaupol.gtk.Runner):
         "page-changed",
         "page-closed",
         "pages-reordered",
+        "preview-completed",
+        "preview-started",
+        "quit",
         "text-assistant-request-pages",)
 
     def __getattr__(self, name):

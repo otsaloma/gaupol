@@ -31,11 +31,12 @@ class PreviewAgent(gaupol.Delegate):
 
     # pylint: disable-msg=E0203,W0201
 
-    def _check_process_state(self, process, output_path, command):
+    def _check_process_state(self, page, process, output_path, command):
         """Check if the process has terminated or not."""
 
         if process.poll() is None: return True
         self._handle_output(process, output_path, command)
+        self.emit("preview-completed", page)
         return False # to not check again.
 
     def _handle_output(self, process, output_path, command):
@@ -110,10 +111,11 @@ class PreviewAgent(gaupol.Delegate):
             return self._show_io_error_dialog(message)
         except UnicodeError:
             return self._show_encoding_error_dialog()
+        self.emit("preview-started", page)
         # 'gobject.child_watch_add' does not appear to work on Windows,
         # so let's watch the process by polling it at regular intervals.
         function = self._check_process_state
-        args = (process, output_path, command)
+        args = (page, process, output_path, command)
         gobject.timeout_add(1000, function, *args)
 
     def preview_changes(self, page, row, doc, method, args=None, kwargs=None):

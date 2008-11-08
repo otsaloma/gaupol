@@ -147,5 +147,5 @@ class PreviewAgent(gaupol.Delegate):
             VIDEOFILE=gaupol.util.shell_quote(self.video_path))
         process = gaupol.util.start_process(
             command, stderr=subprocess.STDOUT, stdout=output_fd)
-        self.emit("preview-started", video_path, sub_path, output_path)
+        self.emit("preview-started", self.video_path, sub_path, output_path)
         return process, command, output_path

@@ -167,6 +167,7 @@ class CloseAgent(gaupol.Delegate):
     def on_quit_activate(self, *args):
         """Quit Gaupol."""
 
+        self.emit("quit")
         self._close_all_pages()
         self.extension_manager.teardown_extensions()
         self._save_window_geometry()
