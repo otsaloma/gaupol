@@ -4,6 +4,7 @@ Gaupol 0.14
  [W] Add an extension system
      - New tab in the preferences dialog
      - Add signals to observable classes
+     - i18n and setup.py
  [ ] Add an example extension (bookmark/notes column?)
  [D] Handle reading and writing files with a UTF-8 BOM (#556956)
  [D] Remove deprecated Encoding-field from desktop file
@@ -20,6 +21,10 @@ Gaupol 0.14
 Gaupol 1.0
 ==========
 
+ * Migrate from Glade to gtk.Builder
+   - http://live.gnome.org/GnomeGoals/RemoveLibGladeUseGtkBuilder
+ * Adher to freedesktop.org's XDG Base Directory Specification
+   - http://live.gnome.org/GnomeGoals/XDGConfigFolders
  * Add documentation on writing extensions
  * Add documentation on writing pattern files
  * Add a wiki page for publishing extensions
@@ -28,16 +33,12 @@ Gaupol 1.0
 Gaupol 3000
 ===========
 
- * Handle fancy quotes, dashes and ellipses in text corrections
-   - As bogus regular expression groups, e.g. (?gaupol-quote)?
- * Migrate from Glade to gtk.Builder
-   - http://live.gnome.org/GnomeGoals/RemoveLibGladeUseGtkBuilder
- * Adher to freedesktop.org's XDG Base Directory Specification
-   - http://live.gnome.org/GnomeGoals/XDGConfigFolders
  * Add a built-in GStreamer video player (as extension?)
  * Replace the headers-dialog with a more general properties-dialog
    - SubRip: Write coordinates (extended SubRip format)
    - MicroDVD: Write framerate information subtitle
+ * Handle fancy quotes, dashes and ellipses in text corrections
+   - As bogus regular expression groups, e.g. (?gaupol-quote)?
  * Bump Python dependency to 2.6
    - Use 'with' without importing from __future__
    - except Exception as exception_instance
