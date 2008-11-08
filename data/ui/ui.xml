@@ -16,6 +16,9 @@
       <menuitem
          name="select_video"
          action="select_video_file"/>
+      <placeholder
+         name="1">
+      </placeholder>
       <separator/>
       <menu
          name="recent_main"
@@ -35,6 +38,9 @@
            name="open_translation"
            action="open_translation_file"/>
       </menu>
+      <placeholder
+         name="2">
+      </placeholder>
       <separator/>
       <menuitem
          name="save_main"
@@ -48,10 +54,16 @@
       <menuitem
          name="save_translation_as"
          action="save_translation_document_as"/>
+      <placeholder
+         name="3">
+      </placeholder>
       <separator/>
       <menuitem
          name="headers"
          action="edit_headers"/>
+      <placeholder
+         name="4">
+      </placeholder>
       <separator/>
       <menuitem
          name="close"
@@ -59,6 +71,9 @@
       <menuitem
          name="quit"
          action="quit"/>
+      <placeholder
+         name="5">
+      </placeholder>
     </menu>
     <menu
        name="edit"
@@ -69,6 +84,9 @@
       <menuitem
          name="redo"
          action="redo_action"/>
+      <placeholder
+         name="1">
+      </placeholder>
       <separator/>
       <menuitem
          name="value"
@@ -76,6 +94,9 @@
       <menuitem
          name="next_value"
          action="edit_next_value"/>
+      <placeholder
+         name="2">
+      </placeholder>
       <separator/>
       <menuitem
          name="split"
@@ -83,6 +104,9 @@
       <menuitem
          name="merge"
          action="merge_subtitles"/>
+      <placeholder
+         name="3">
+      </placeholder>
       <separator/>
       <menuitem
          name="insert"
@@ -90,6 +114,9 @@
       <menuitem
          name="remove"
          action="remove_subtitles"/>
+      <placeholder
+         name="4">
+      </placeholder>
       <separator/>
       <menu
          name="selection"
@@ -107,11 +134,20 @@
         <menuitem
            name="extend_to_end"
            action="extend_selection_to_end"/>
+        <placeholder
+           name="1">
+        </placeholder>
       </menu>
+      <placeholder
+         name="5">
+      </placeholder>
       <separator/>
       <menuitem
          name="preferences"
          action="edit_preferences"/>
+      <placeholder
+         name="6">
+      </placeholder>
     </menu>
     <menu
        name="view"
@@ -128,6 +164,9 @@
       <menuitem
          name="output_window"
          action="toggle_output_window"/>
+      <placeholder
+         name="1">
+      </placeholder>
       <separator/>
       <menuitem
          name="times"
@@ -135,6 +174,9 @@
       <menuitem
          name="frames"
          action="show_frames"/>
+      <placeholder
+         name="2">
+      </placeholder>
       <separator/>
       <menu
          name="framerate"
@@ -148,6 +190,9 @@
         <menuitem
            name="30"
            action="show_framerate_30"/>
+        <placeholder
+           name="1">
+        </placeholder>
       </menu>
       <menu
          name="columns"
@@ -170,7 +215,13 @@
         <menuitem
            name="translation_text"
            action="toggle_translation_text_column"/>
+        <placeholder
+           name="1">
+        </placeholder>
       </menu>
+      <placeholder
+         name="3">
+      </placeholder>
     </menu>
     <menu
        name="text"
@@ -187,6 +238,9 @@
       <menuitem
          name="clear"
          action="clear_texts"/>
+      <placeholder
+         name="1">
+      </placeholder>
       <separator/>
       <menuitem
          name="find_and_replace"
@@ -197,6 +251,9 @@
       <menuitem
          name="find_previous"
          action="find_previous"/>
+      <placeholder
+         name="2">
+      </placeholder>
       <separator/>
       <menuitem
          name="italic"
@@ -219,7 +276,13 @@
         <menuitem
            name="lower"
            action="use_lower_case"/>
+        <placeholder
+           name="1">
+        </placeholder>
       </menu>
+      <placeholder
+         name="3">
+      </placeholder>
     </menu>
     <menu
        name="tools"
@@ -227,6 +290,9 @@
       <menuitem
          name="preview"
          action="preview"/>
+      <placeholder
+         name="1">
+      </placeholder>
       <separator/>
       <menuitem
          name="check_spelling"
@@ -237,6 +303,9 @@
       <menuitem
          name="correct_texts"
          action="correct_texts"/>
+      <placeholder
+         name="2">
+      </placeholder>
       <separator/>
       <menuitem
          name="shift_positions"
@@ -250,6 +319,9 @@
       <menuitem
          name="convert_framerate"
          action="convert_framerate"/>
+      <placeholder
+         name="3">
+      </placeholder>
       <separator/>
       <menuitem
          name="append_file"
@@ -257,6 +329,9 @@
       <menuitem
          name="split_project"
          action="split_project"/>
+      <placeholder
+         name="4">
+      </placeholder>
     </menu>
     <menu
        name="projects"
@@ -267,6 +342,9 @@
       <menuitem
          name="close_all"
          action="close_all_projects"/>
+      <placeholder
+         name="1">
+      </placeholder>
       <separator/>
       <menuitem
          name="previous"
@@ -274,6 +352,9 @@
       <menuitem
          name="next"
          action="activate_next_project"/>
+      <placeholder
+         name="2">
+      </placeholder>
       <separator/>
       <menuitem
          name="move_tab_left"
@@ -281,9 +362,15 @@
       <menuitem
          name="move_tab_right"
          action="move_tab_right"/>
+      <placeholder
+         name="3">
+      </placeholder>
       <separator/>
       <placeholder
          name="open">
+      </placeholder>
+      <placeholder
+         name="4">
       </placeholder>
     </menu>
     <menu
@@ -295,6 +382,9 @@
       <menuitem
          name="about"
          action="view_about_dialog"/>
+      <placeholder
+         name="1">
+      </placeholder>
     </menu>
   </menubar>
   <toolbar
@@ -305,6 +395,9 @@
     <toolitem
        name="save_main"
        action="save_main_document"/>
+    <placeholder
+       name="1">
+    </placeholder>
     <separator/>
     <toolitem
        name="undo"
@@ -312,6 +405,9 @@
     <toolitem
        name="redo"
        action="redo_action"/>
+    <placeholder
+       name="2">
+    </placeholder>
     <separator/>
     <toolitem
        name="insert"
@@ -319,6 +415,9 @@
     <toolitem
        name="remove"
        action="remove_subtitles"/>
+    <placeholder
+       name="3">
+    </placeholder>
     <separator/>
     <toolitem
        name="preview"
@@ -332,10 +431,16 @@
     <menuitem
        name="move_tab_right"
        action="move_tab_right"/>
+    <placeholder
+       name="1">
+    </placeholder>
     <separator/>
     <menuitem
        name="close"
        action="close_project"/>
+    <placeholder
+       name="2">
+    </placeholder>
   </popup>
   <popup
      name="view_popup">
@@ -345,6 +450,9 @@
     <menuitem
        name="merge"
        action="merge_subtitles"/>
+    <placeholder
+       name="1">
+    </placeholder>
     <separator/>
     <menuitem
        name="insert"
@@ -352,10 +460,16 @@
     <menuitem
        name="remove"
        action="remove_subtitles"/>
+    <placeholder
+       name="2">
+    </placeholder>
     <separator/>
     <menuitem
        name="preview"
        action="preview"/>
+    <placeholder
+       name="3">
+    </placeholder>
   </popup>
   <popup
      name="view_header_popup">
@@ -377,5 +491,8 @@
     <menuitem
        name="translation_text"
        action="toggle_translation_text_column"/>
+    <placeholder
+       name="4">
+    </placeholder>
   </popup>
 </ui>

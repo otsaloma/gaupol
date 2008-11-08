@@ -3,7 +3,6 @@ Gaupol 0.14
 
  [W] Add an extension system
      - New tab in the preferences dialog
-     - UI manager placeholders
      - Add signals to observable classes
  [ ] Add an example extension (bookmark/notes column?)
  [D] Handle reading and writing files with a UTF-8 BOM (#556956)
