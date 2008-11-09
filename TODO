@@ -2,8 +2,6 @@ Gaupol 0.14
 ===========
 
  [W] Add an extension system
-     - New tab in the preferences dialog
-     - Add signals to observable classes
      - i18n and setup.py
  [ ] Add an example extension (bookmark/notes column?)
  [D] Handle reading and writing files with a UTF-8 BOM (#556956)

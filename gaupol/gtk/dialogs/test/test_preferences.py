@@ -18,11 +18,13 @@ import gaupol.gtk
 import gtk
 
 
-class TestEditorPage(gaupol.gtk.TestCase):
+class Test_EditorPage(gaupol.gtk.TestCase):
 
     def setup_method(self, method):
 
-        self.dialog = gaupol.gtk.PreferencesDialog(gtk.Window())
+        self.application = self.get_application()
+        args = (self.application.window, self.application)
+        self.dialog = gaupol.gtk.PreferencesDialog(*args)
         self.page = self.dialog._editor_page
         self.dialog.show()
 
@@ -56,11 +58,68 @@ class TestEditorPage(gaupol.gtk.TestCase):
         self.page._length_edit_check.set_active(True)
 
 
-class TestFilePage(gaupol.gtk.TestCase):
+class Test_ExtensionPage(gaupol.gtk.TestCase):
 
     def setup_method(self, method):
 
-        self.dialog = gaupol.gtk.PreferencesDialog(gtk.Window())
+        self.application = self.get_application()
+        args = (self.application.window, self.application)
+        self.dialog = gaupol.gtk.PreferencesDialog(*args)
+        self.page = self.dialog._extension_page
+        self.dialog.show()
+
+    def test__on_about_button_clicked(self):
+
+        self.page.flash_dialog = lambda *args: gtk.RESPONSE_CLOSE
+        selection = self.page._tree_view.get_selection()
+        selection.select_path(0)
+        self.page._about_button.clicked()
+
+    def test__on_about_dialog_url_clicked(self):
+
+        self.page._on_about_dialog_url_clicked(None, gaupol.HOMEPAGE_URL)
+
+    def test__on_help_button_clicked(self):
+
+        selection = self.page._tree_view.get_selection()
+        selection.select_path(0)
+        try: self.page._help_button.clicked()
+        except NotImplementedError: pass
+
+    def test__on_preferences_button_clicked(self):
+
+        selection = self.page._tree_view.get_selection()
+        selection.select_path(0)
+        try: self.page._preferences_button.clicked()
+        except NotImplementedError: pass
+
+    def test__on_tree_view_cell_toggled(self):
+
+        column = self.page._tree_view.get_columns()[0]
+        renderer = column.get_cell_renderers()[0]
+        renderer.emit("toggled", 0)
+        renderer.emit("toggled", 0)
+        renderer.emit("toggled", 0)
+
+    def test__on_tree_view_selection_changed(self):
+
+        selection = self.page._tree_view.get_selection()
+        selection.unselect_all()
+        selection.select_path(0)
+        column = self.page._tree_view.get_columns()[0]
+        renderer = column.get_cell_renderers()[0]
+        renderer.emit("toggled", 0)
+        selection.unselect_all()
+        selection.select_path(0)
+
+
+class Test_FilePage(gaupol.gtk.TestCase):
+
+    def setup_method(self, method):
+
+        self.application = self.get_application()
+        args = (self.application.window, self.application)
+        self.dialog = gaupol.gtk.PreferencesDialog(*args)
         self.page = self.dialog._file_page
         self.dialog.show()
 
@@ -106,20 +165,24 @@ class TestFilePage(gaupol.gtk.TestCase):
         self.page._up_button.emit("clicked")
 
 
-class TestPreviewPage(gaupol.gtk.TestCase):
+class Test_PreviewPage(gaupol.gtk.TestCase):
 
     def setup_method(self, method):
 
-        self.dialog = gaupol.gtk.PreferencesDialog(gtk.Window())
+        self.application = self.get_application()
+        args = (self.application.window, self.application)
+        self.dialog = gaupol.gtk.PreferencesDialog(*args)
         self.page = self.dialog._preview_page
         self.dialog.show()
 
     def test__init_values(self):
 
         gaupol.gtk.conf.preview.use_custom = False
-        self.dialog = gaupol.gtk.PreferencesDialog(gtk.Window())
+        args = (self.application.window, self.application)
+        self.dialog = gaupol.gtk.PreferencesDialog(*args)
         gaupol.gtk.conf.preview.use_custom = True
-        self.dialog = gaupol.gtk.PreferencesDialog(gtk.Window())
+        args = (self.application.window, self.application)
+        self.dialog = gaupol.gtk.PreferencesDialog(*args)
 
     def test__on_app_combo_changed(self):
 
@@ -155,5 +218,7 @@ class TestPreferencesDialog(gaupol.gtk.TestCase):
 
     def setup_method(self, method):
 
-        self.dialog = gaupol.gtk.PreferencesDialog(gtk.Window())
+        self.application = self.get_application()
+        args = (self.application.window, self.application)
+        self.dialog = gaupol.gtk.PreferencesDialog(*args)
         self.dialog.show()

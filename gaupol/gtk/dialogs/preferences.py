@@ -121,6 +121,160 @@ class _EditorPage(gaupol.Delegate):
         self._length_hbox.set_sensitive(cell or edit)
 
 
+class _ExtensionPage(gaupol.Delegate):
+
+    """Extension activation and preferences page."""
+
+    def __init__(self, master, application):
+
+        gaupol.Delegate.__init__(self, master)
+        get_widget = self._glade_xml.get_widget
+        self._about_button = get_widget("extensions_about_button")
+        self._help_button = get_widget("extensions_help_button")
+        self._preferences_button = get_widget("extensions_preferences_button")
+        self._tree_view = get_widget("extensions_tree_view")
+        self.application = application
+        self.conf = gaupol.gtk.conf.extensions
+        self.manager = self.application.extension_manager
+
+        self._init_tree_view()
+        self._init_values()
+        self._init_sensitivities()
+        self._init_signal_handlers()
+
+    def _get_selected_module(self):
+        """Return the selected module in the tree view or None."""
+
+        selection = self._tree_view.get_selection()
+        store, itr = selection.get_selected()
+        if itr is None: return None
+        return store.get_value(itr, 0)
+
+    def _init_sensitivities(self):
+        """Initialize button sensitivities."""
+
+        self._about_button.set_sensitive(False)
+        self._help_button.set_sensitive(False)
+        self._preferences_button.set_sensitive(False)
+
+    def _init_signal_handlers(self):
+        """Initialize signal handlers."""
+
+        gaupol.util.connect(self, "_about_button", "clicked")
+        gaupol.util.connect(self, "_help_button", "clicked")
+        gaupol.util.connect(self, "_preferences_button", "clicked")
+
+    def _init_tree_view(self):
+        """Initialize the tree view."""
+
+        store = gtk.ListStore(str, bool, str)
+        self._tree_view.set_model(store)
+        selection = self._tree_view.get_selection()
+        selection.set_mode(gtk.SELECTION_SINGLE)
+        callback = self._on_tree_view_selection_changed
+        selection.connect("changed", callback)
+
+        renderer = gtk.CellRendererToggle()
+        renderer.props.activatable = True
+        renderer.props.xpad = 6
+        callback = self._on_tree_view_cell_toggled
+        renderer.connect("toggled", callback)
+        column = gtk.TreeViewColumn("", renderer, active=1)
+        self._tree_view.append_column(column)
+
+        renderer = gtk.CellRendererText()
+        renderer.props.ellipsize = pango.ELLIPSIZE_END
+        column = gtk.TreeViewColumn("", renderer, markup=2)
+        self._tree_view.append_column(column)
+
+    def _init_values(self):
+        """Initialize default values for widgets."""
+
+        store = self._tree_view.get_model()
+        extensions = []
+        for module in self.manager.get_modules():
+            metadata = self.manager.get_metadata(module)
+            name = metadata.get_name()
+            description = metadata.get_description()
+            markup = "<b>%s</b>\n%s" % (name, description)
+            extensions.append((module, markup))
+        extensions.sort(key=lambda x: x[1])
+        for module, markup in extensions:
+            active = module in self.conf.active
+            store.append((module, active, markup))
+
+    def _on_about_button_clicked(self, *args):
+        """Show an automatically constructed about dialog."""
+
+        module = self._get_selected_module()
+        metadata = self.manager.get_metadata(module)
+        dialog = gtk.AboutDialog()
+        dialog.set_transient_for(self._dialog)
+        gtk.about_dialog_set_url_hook(self._on_about_dialog_url_clicked)
+        dialog.set_program_name(metadata.get_name())
+        dialog.set_comments(metadata.get_description())
+        dialog.set_logo_icon_name("gaupol")
+        if metadata.has_field("Version"):
+            dialog.set_version(metadata.get_field("Version"))
+        if metadata.has_field("Copyright"):
+            dialog.set_copyright(metadata.get_field("Copyright"))
+        if metadata.has_field("Website"):
+            dialog.set_website(metadata.get_field("Website"))
+            label = _("%s Website") %  metadata.get_name()
+            dialog.set_website_label(label)
+        if metadata.has_field("Authors"):
+            dialog.set_authors(metadata.get_field_list("Authors"))
+        self.flash_dialog(dialog)
+
+    def _on_about_dialog_url_clicked(self, dialog, url):
+        """Open website in a web browser."""
+
+        gaupol.util.browse_url(url)
+
+    def _on_help_button_clicked(self, *args):
+        """Show whatever form documentation the extension has."""
+
+        module = self._get_selected_module()
+        self.manager.show_help(module)
+
+    def _on_preferences_button_clicked(self, *args):
+        """Show the extension's preferences dialog."""
+
+        module = self._get_selected_module()
+        self.manager.show_preferences_dialog(module, self._dialog)
+
+    def _on_tree_view_cell_toggled(self, renderer, path):
+        """Toggle the check button value."""
+
+        store = self._tree_view.get_model()
+        module = store[path][0]
+        active = store[path][1]
+        if active:
+            self.manager.teardown_extension(module)
+            self.conf.active.remove(module)
+        else:
+            self.manager.setup_extension(module)
+            self.conf.active.append(module)
+        store[path][1] = not active
+        selection = self._tree_view.get_selection()
+        selection.emit("changed")
+
+    def _on_tree_view_selection_changed(self, *args):
+        """Set the sensitivities of the buttons."""
+
+        module = self._get_selected_module()
+        sensitive = module in self.conf.active
+        self._about_button.set_sensitive(sensitive)
+        if module in self.conf.active:
+            sensitive = self.manager.has_help(module)
+            self._help_button.set_sensitive(sensitive)
+            sensitive = self.manager.has_preferences_dialog(module)
+            self._preferences_button.set_sensitive(sensitive)
+        else: # Cannot query unimported extensions.
+            self._help_button.set_sensitive(False)
+            self._preferences_button.set_sensitive(False)
+
+
 class _FilePage(gaupol.Delegate):
 
     """File preferences page."""
@@ -149,7 +303,7 @@ class _FilePage(gaupol.Delegate):
 
         selection = self._tree_view.get_selection()
         store, itr = selection.get_selected()
-        if itr is None: return
+        if itr is None: return None
         return store.get_path(itr)[0]
 
     def _init_signal_handlers(self):
@@ -362,10 +516,11 @@ class PreferencesDialog(gaupol.gtk.GladeDialog):
 
     """Dialog for editing preferences."""
 
-    def __init__(self, parent):
+    def __init__(self, parent, application):
 
         gaupol.gtk.GladeDialog.__init__(self, "preferences.glade")
         self._editor_page = _EditorPage(self)
+        self._extension_page = _ExtensionPage(self, application)
         self._file_page = _FilePage(self)
         self._preview_page = _PreviewPage(self)
 
