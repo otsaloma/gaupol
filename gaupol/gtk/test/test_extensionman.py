@@ -15,6 +15,7 @@
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol.gtk
+import gtk
 
 
 class TestExtensionManager(gaupol.gtk.TestCase):
@@ -46,6 +47,14 @@ class TestExtensionManager(gaupol.gtk.TestCase):
         modules = self.manager.get_modules()
         assert "null" in modules
 
+    def test_has_help(self):
+
+        assert self.manager.has_help("null")
+
+    def test_has_preferences_dialog(self):
+
+        assert self.manager.has_preferences_dialog("null")
+
     def test_setup_extension(self):
 
         self.manager.setup_extension("null")
@@ -53,6 +62,14 @@ class TestExtensionManager(gaupol.gtk.TestCase):
     def test_setup_extensions(self):
 
         self.manager.setup_extensions()
+
+    def test_show_help(self):
+
+        self.manager.show_help("null")
+
+    def test_show_preferences_dialog(self):
+
+        self.manager.show_preferences_dialog("null", gtk.Window())
 
     def test_teardown_extension(self):
 

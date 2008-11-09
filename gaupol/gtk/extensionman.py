@@ -100,6 +100,30 @@ class ExtensionManager(object):
 
         return self._metadata.keys()
 
+    def has_help_require(self, module):
+        assert module in self._active
+        assert module in self._metadata
+
+    def has_help(self, module):
+        """Return True if extension can display documentation."""
+
+        extension = self._active[module]
+        child = extension.show_help.im_func
+        parent = gaupol.gtk.Extension.show_help.im_func
+        return child is not parent
+
+    def has_preferences_dialog_require(self, module):
+        assert module in self._active
+        assert module in self._metadata
+
+    def has_preferences_dialog(self, module):
+        """Return True if extension can display a preferences dialog."""
+
+        extension = self._active[module]
+        child = extension.show_preferences_dialog.im_func
+        parent = gaupol.gtk.Extension.show_preferences_dialog.im_func
+        return child is not parent
+
     def setup_extension_require(self, module):
         assert module in self._metadata
 
@@ -128,6 +152,26 @@ class ExtensionManager(object):
             if not module in self._metadata:
                 gaupol.gtk.conf.extensions.active.remove(module)
             else: self.setup_extension(module)
+
+    def show_help_require(self, module):
+        assert module in self._active
+        assert module in self._metadata
+
+    def show_help(self, module):
+        """Show documentation on using extension."""
+
+        extension = self._active[module]
+        extension.show_help()
+
+    def show_preferences_dialog_require(self, module, parent):
+        assert module in self._active
+        assert module in self._metadata
+
+    def show_preferences_dialog(self, module, parent):
+        """Show a preferences dialog for configuring extension."""
+
+        extension = self._active[module]
+        extension.show_preferences_dialog(parent)
 
     def teardown_extension_require(self, module):
         assert module in self._active
