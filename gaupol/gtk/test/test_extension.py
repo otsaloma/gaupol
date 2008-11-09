@@ -15,6 +15,7 @@
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol.gtk
+import gtk
 
 
 class PuppetExtension(gaupol.gtk.Extension):
@@ -49,6 +50,16 @@ class TestExtension(gaupol.gtk.TestCase):
     def test_setup_method(self):
 
         self.extension.setup(self.application)
+
+    def test_show_help(self):
+
+        function = self.extension.show_help
+        self.raises(NotImplementedError, function)
+
+    def test_show_preferences_dialog(self):
+
+        function = self.extension.show_preferences_dialog
+        self.raises(NotImplementedError, function, gtk.Window())
 
     def test_teardown_method(self):
 

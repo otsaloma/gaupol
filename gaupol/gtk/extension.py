@@ -25,7 +25,11 @@ class Extension(object):
 
     """Separate object that can be activated and deactivated during runtime."""
 
-    spec_file = None
+    __metaclass__ = gaupol.Contractual
+    _spec_file = None
+
+    def read_config_require(self):
+        assert self._spec_file is not None
 
     def read_config(self):
         """Read configurations from file according to spec_file.
@@ -37,7 +41,7 @@ class Extension(object):
         """
         conf = gaupol.gtk.conf.extensions
         config_file = gaupol.gtk.conf.config_file
-        config = gaupol.gtk.Config(config_file, self.spec_file)
+        config = gaupol.gtk.Config(config_file, self._spec_file)
         config = config["extensions"]
         # Create or update AttrDicts at conf module level.
         for key, value in config.items():
@@ -54,6 +58,21 @@ class Extension(object):
         time right after application start.
         """
         pass
+
+    def show_help(self):
+        """Show documentation on using extension.
+
+        Subclasses can override this to, for example, launch a web browser with
+        gaupol.util.browse_url to view HTML documentation.
+        """
+        raise NotImplementedError
+
+    def show_preferences_dialog(self, parent):
+        """Show a preferences dialog for configuring extension.
+
+        parent is the parent window that the dialog can be centered on.
+        """
+        raise NotImplementedError
 
     def teardown(self, application):
         """End use of extension with application.

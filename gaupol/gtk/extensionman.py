@@ -29,6 +29,7 @@ class ExtensionManager(object):
 
     """Finding activating, storing and deactivating extensions."""
 
+    __metaclass__ = gaupol.Contractual
     _global_dir = os.path.join(gaupol.LIB_DIR, "extensions")
     _local_dir = os.path.join(gaupol.PROFILE_DIR, "extensions")
     _re_comment = re.compile(r"#.*$")
@@ -89,26 +90,55 @@ class ExtensionManager(object):
         self._find_extensions_in_directory(self._global_dir)
         self._find_extensions_in_directory(self._local_dir)
 
-    def setup_extensions(self):
-        """Setup all extensions configured as active."""
+    def get_metadata(self, module):
+        """Return the metadata instance for module."""
 
-        for module_name in gaupol.gtk.conf.extensions.active:
-            if not module_name in self._metadata:
-                gaupol.gtk.conf.extensions.active.remove(module_name)
-                continue
-            metadata_path = self._metadata[module_name].path
-            directory = os.path.dirname(metadata_path)
-            sys.path.insert(0, directory)
-            module = __import__(module_name, {}, {}, [])
-            sys.path.pop(0)
-            for attr_name in dir(module):
-                if attr_name.startswith("_"): continue
-                value = getattr(module, attr_name)
-                if not inspect.isclass(value): continue
-                if issubclass(value, gaupol.gtk.Extension):
-                    extension = value()
-                    extension.setup(self.application)
-                    self._active[module_name] = extension
+        return self._metadata[module]
+
+    def get_modules(self):
+        """Return a list of all extension module names."""
+
+        return self._metadata.keys()
+
+    def setup_extension_require(self, module):
+        assert module in self._metadata
+
+    def setup_extension(self, module):
+        """Import and setup extension by module name."""
+
+        metadata_path = self._metadata[module].path
+        directory = os.path.dirname(metadata_path)
+        sys.path.insert(0, directory)
+        try: mobj = __import__(module, {}, {}, [])
+        except ImportError: return
+        finally: sys.path.pop(0)
+        for attribute in dir(mobj):
+            if attribute.startswith("_"): continue
+            value = getattr(mobj, attribute)
+            if not inspect.isclass(value): continue
+            if issubclass(value, gaupol.gtk.Extension):
+                extension = value()
+                extension.setup(self.application)
+                self._active[module] = extension
+
+    def setup_extensions(self):
+        """Import and setup all extensions configured as active."""
+
+        for module in gaupol.gtk.conf.extensions.active:
+            if not module in self._metadata:
+                gaupol.gtk.conf.extensions.active.remove(module)
+            else: self.setup_extension(module)
+
+    def teardown_extension_require(self, module):
+        assert module in self._active
+        assert module in self._metadata
+
+    def teardown_extension(self, module):
+        """Teardown extension by module name."""
+
+        extension = self._active[module]
+        extension.teardown(self.application)
+        del self._active[module]
 
     def teardown_extensions(self):
         """Teardown all active extensions."""
