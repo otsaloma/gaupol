@@ -2,7 +2,7 @@
 _Name=Dialogue
 _Description=Break according to dialogue separated by dashes
 Pattern= (- )
-Flags=DOTALL,MULTILINE,UNICODE
+Flags=DOTALL;MULTILINE;UNICODE;
 Replacement=\n\1
 
 [Line Break Pattern]
@@ -13,5 +13,5 @@ _Description=Break according to clauses terminated by a punctuation mark
 # breaking itemized lists. Keep a single trailing word at the end of a subtitle
 # attached to the preceding sentence.
 Pattern=((((?<!(.\.|\..))\.|[?!])['"]?|(?<!-) [^ ]+?(\.{2,}|[,;:])['"]?( [^ ]+?([^.].\.{3,}|[,;:])['"]?)*( [^ ]+?([^.].\.|[?!])['"]?)?( [^ ]+$)?))( |$)
-Flags=DOTALL,MULTILINE,UNICODE
+Flags=DOTALL;MULTILINE;UNICODE;
 Replacement=\1\n

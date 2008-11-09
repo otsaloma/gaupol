@@ -1,103 +1,103 @@
 [Common Error Pattern]
 _Name=Letter "I" in a lower case word
 _Description=Replace letter "I" with letter "l" in a lower case word
-Classes=OCR
+Classes=OCR;
 Pattern=(?<=[a-z])I
-Flags=DOTALL,MULTILINE,UNICODE
+Flags=DOTALL;MULTILINE;UNICODE;
 Replacement=l
 Repeat=True
 
 [Common Error Pattern]
 _Name=Letter "I" in a lower case word
 _Description=Replace letter "I" with letter "l" in a lower case word
-Classes=OCR
+Classes=OCR;
 Pattern=(?<=\b[A-Z])I(?=[a-z])
-Flags=DOTALL,MULTILINE,UNICODE
+Flags=DOTALL;MULTILINE;UNICODE;
 Replacement=l
 Repeat=True
 
 [Common Error Pattern]
 _Name=Letter "I" in a lower case word
 _Description=Replace letter "I" with letter "l" in a lower case word
-Classes=OCR
+Classes=OCR;
 Pattern='[Il][Il]\b
-Flags=DOTALL,MULTILINE,UNICODE
+Flags=DOTALL;MULTILINE;UNICODE;
 Replacement='ll
 Repeat=False
 
 [Common Error Pattern]
 _Name=Letter "l" in an upper case word
 _Description=Replace letter "l" with letter "I" in an upper case word
-Classes=OCR
+Classes=OCR;
 Pattern=(?<=[A-Z][A-Z])l
-Flags=DOTALL,MULTILINE,UNICODE
+Flags=DOTALL;MULTILINE;UNICODE;
 Replacement=I
 Repeat=True
 
 [Common Error Pattern]
 _Name=Letter "l" in an upper case word
 _Description=Replace letter "l" with letter "I" in an upper case word
-Classes=OCR
+Classes=OCR;
 Pattern=l(?=[A-Z])
-Flags=DOTALL,MULTILINE,UNICODE
+Flags=DOTALL;MULTILINE;UNICODE;
 Replacement=I
 Repeat=True
 
 [Common Error Pattern]
 _Name=Letter "l" in an upper case word
 _Description=Replace letter "l" with letter "I" in an upper case word
-Classes=OCR
+Classes=OCR;
 # Handle the case of the first person pronoun 'I'.
 # Disallow dashes for the case of spelling out a word, but allow them for
 # the case of stuttering.
 Pattern=(?<![a-hj-z]-)\bl\b(?!-[a-hj-z])
-Flags=DOTALL,MULTILINE,UNICODE
+Flags=DOTALL;MULTILINE;UNICODE;
 Replacement=I
 Repeat=True
 
 [Common Error Pattern]
 _Name=Letter "l" in an upper case word
 _Description=Replace letter "l" with letter "I" in an upper case word
-Classes=OCR
+Classes=OCR;
 # Replace with 'I' if 'l' is the the first letter of a word
 # and is followed by a consonant.
 Pattern=((\s|^)["']?)l(?!bs)(?!lama)([bcdfghjklmnpqrstvwxz])
-Flags=DOTALL,MULTILINE,UNICODE
+Flags=DOTALL;MULTILINE;UNICODE;
 Replacement=\1I\3
 Repeat=False
 
 [Common Error Pattern]
 _Name=Zero in an upper case word
 _Description=Replace zero with letter "O" in an upper case word
-Classes=OCR
+Classes=OCR;
 Pattern=(?<=[A-Z])0(?!\d)
-Flags=DOTALL,MULTILINE,UNICODE
+Flags=DOTALL;MULTILINE;UNICODE;
 Replacement=O
 Repeat=True
 
 [Common Error Pattern]
 _Name=Zero in an upper case word
 _Description=Replace zero with letter "O" in an upper case word
-Classes=OCR
+Classes=OCR;
 Pattern=(?<!\d)0(?=[A-Z])
-Flags=DOTALL,MULTILINE,UNICODE
+Flags=DOTALL;MULTILINE;UNICODE;
 Replacement=O
 Repeat=True
 
 [Common Error Pattern]
 _Name=Spaces around an apostrophe
 _Description=Remove spaces around an apostrophe
-Classes=OCR
+Classes=OCR;
 Pattern=(\w)(' +| +')(d|ll|m|re|s|t|ve)\b
-Flags=DOTALL,MULTILINE,UNICODE
+Flags=DOTALL;MULTILINE;UNICODE;
 Replacement=\1'\3
 Repeat=False
 
 [Common Error Pattern]
 _Name=Okay
 _Description=Convert various two-letter spellings of okay to "OK"
-Classes=Human
+Classes=Human;
 Pattern=\b(ok|Ok|O\.K\.)\b
-Flags=DOTALL,MULTILINE,UNICODE
+Flags=DOTALL;MULTILINE;UNICODE;
 Replacement=OK
 Repeat=False

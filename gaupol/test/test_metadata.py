@@ -62,7 +62,7 @@ class TestMetadataItem(gaupol.TestCase):
     def test_get_field_list(self):
 
         assert self.item.get_field("Xxxx") is None
-        self.item.set_field("Test", "Yee,Haw")
+        self.item.set_field("Test", "Yee;Haw")
         assert self.item.get_field_list("Test") == ["Yee", "Haw"]
 
     def test_get_name(self):

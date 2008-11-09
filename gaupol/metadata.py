@@ -95,7 +95,9 @@ class MetadataItem(object):
 
         if not name in self.fields:
             return None
-        return self.fields[name].split(",")
+        lst = self.fields[name].split(";")
+        if not lst[-1]: lst.pop(-1)
+        return lst
 
     def get_name(self, localize=True):
         """Return the name of item."""

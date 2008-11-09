@@ -1,8 +1,8 @@
 [Common Error Pattern]
 _Name=Period after title
 _Description=Add period after a shortened title, such as "Mr" and "Dr"
-Classes=Human
+Classes=Human;
 Pattern=\b(Dr|Jr|Mr|Mrs|Ms|Sr|St)\b(?!\.)
-Flags=DOTALL,MULTILINE,UNICODE
+Flags=DOTALL;MULTILINE;UNICODE;
 Replacement=\1.
 Repeat=False
