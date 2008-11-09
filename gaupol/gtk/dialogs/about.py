@@ -65,7 +65,7 @@ class AboutDialog(gtk.AboutDialog):
         # lines seperated by newlines (\n).
         self.set_translator_credits(_("translator-credits"))
 
-    def _on_url_clicked(self, *args):
+    def _on_url_clicked(self, dialog, url):
         """Open website in a web browser."""
 
-        gaupol.util.browse_url(gaupol.HOMEPAGE_URL)
+        gaupol.util.browse_url(url)
