@@ -92,6 +92,8 @@ class Application(gaupol.Observable, gaupol.gtk.Runner):
         self._init_gui()
         self.extension_manager.find_extensions()
         self.extension_manager.setup_extensions()
+        self.update_gui()
+        self.window.show()
 
     def _finalize_uim_actions(self):
         """Connect actions to widgets and methods."""
@@ -155,8 +157,6 @@ class Application(gaupol.Observable, gaupol.gtk.Runner):
         self._init_visibilities()
         self.set_menu_notify_events("main")
         self._finalize_uim_actions()
-        self.update_gui()
-        self.window.show()
 
     def _init_main_toolbar(self, vbox):
         """Initialize the main toolbar."""
