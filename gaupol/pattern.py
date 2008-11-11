@@ -42,6 +42,6 @@ class Pattern(gaupol.MetadataItem):
         """Return the evaluated value of the 'Flags' field."""
 
         flags = 0
-        for name in self.get_field("Flags").split(","):
+        for name in self.get_field_list("Flags"):
             flags = flags | getattr(re, name)
         return flags

@@ -2,7 +2,7 @@ Gaupol 0.14
 ===========
 
  [W] Add an extension system
-     - i18n and setup.py
+     - i18n and setup.py (build and installation)
  [ ] Add an example extension (bookmark/notes column?)
  [D] Handle reading and writing files with a UTF-8 BOM (#556956)
  [D] Remove deprecated Encoding-field from desktop file
