@@ -220,7 +220,7 @@ class _ExtensionPage(gaupol.Delegate):
             dialog.set_copyright(metadata.get_field("Copyright"))
         if metadata.has_field("Website"):
             dialog.set_website(metadata.get_field("Website"))
-            label = _("%s Website") %  metadata.get_name()
+            label = _("%s Extension Website") %  metadata.get_name()
             dialog.set_website_label(label)
         if metadata.has_field("Authors"):
             dialog.set_authors(metadata.get_field_list("Authors"))

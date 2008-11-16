@@ -2,6 +2,8 @@ Gaupol 0.14
 ===========
 
  [W] Add an extension system
+     - Add dependency handling to ExtensionManager
+     - Do not list Hidden=True extensions in PreferencesDialog
      - i18n and setup.py (build and installation)
  [ ] Add an example extension (bookmark/notes column?)
  [D] Handle reading and writing files with a UTF-8 BOM (#556956)
@@ -11,7 +13,7 @@ Gaupol 0.14
  [D] Fix updating of filenames in the projects menu
  [D] Fix erroneous cleaning of SubRip markup after removing hearing
      impaired subtitles
- [D] Save SSA and ASS files with '\N' linebreaks instead of '\n'
+ [?] Save SSA and ASS files with '\N' linebreaks instead of '\n'
  [D] Resize columns after running text corrections
  [D] Fix AssertionError when installing multiple times
  [D] Switch version-control systems from subversion to git
