@@ -68,10 +68,10 @@ class Config(configobj.ConfigObj):
         except AttributeError:
             raise validate.VdtValueError(value)
 
-    def __init___require(self, config_file, spec_file):
+    def __init___require(self, config_file, spec_file, **kwargs):
         assert os.path.isfile(spec_file)
 
-    def __init__(self, config_file, spec_file):
+    def __init__(self, config_file, spec_file, print_unrecognized=True):
         """Initialize a Config object.
 
         config_file can be None for default configuration.
@@ -98,6 +98,7 @@ class Config(configobj.ConfigObj):
                 print "Line %d: %s" % (error.line_number, error.message)
             raise gaupol.gtk.ConfigParseError(obj)
 
+        self.__print_unrecognized = print_unrecognized
         validator = self.__init_validator()
         spec = self.__init_spec(validator, spec_file)
         self.__remove_sections(spec)
@@ -137,9 +138,11 @@ class Config(configobj.ConfigObj):
         options = set(self[section].keys())
         options -= set(spec[section].keys())
         if not options: return
-        print "Discarding unrecognized configuration options:"
+        if self.__print_unrecognized:
+            print "Discarding unrecognized configuration options:"
         for option in options:
-            print "%s.%s" % (section, option)
+            if self.__print_unrecognized:
+                print "%s.%s" % (section, option)
             del self[section][option]
 
     def __remove_sections(self, spec):
@@ -148,9 +151,11 @@ class Config(configobj.ConfigObj):
         sections = set(self.keys())
         sections -= set(spec.keys())
         if not sections: return
-        print "Discarding unrecognized configuration sections:"
+        if self.__print_unrecognized:
+            print "Discarding unrecognized configuration sections:"
         for section in sections:
-            print section
+            if self.__print_unrecognized:
+                print section
             del self[section]
 
     def __validate(self, validator, spec):

@@ -38,7 +38,7 @@ class Extension(object):
         if self._spec_file is None: return
         conf = gaupol.gtk.conf.extensions
         config_file = gaupol.gtk.conf.config_file
-        config = gaupol.gtk.Config(config_file, self._spec_file)
+        config = gaupol.gtk.Config(config_file, self._spec_file, False)
         config = config["extensions"]
         # Create or update AttrDicts at conf module level.
         for key, value in config.items():
