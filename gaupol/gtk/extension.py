@@ -25,11 +25,7 @@ class Extension(object):
 
     """Separate object that can be activated and deactivated during runtime."""
 
-    __metaclass__ = gaupol.Contractual
     _spec_file = None
-
-    def read_config_require(self):
-        assert self._spec_file is not None
 
     def read_config(self):
         """Read configurations from file according to spec_file.
@@ -39,6 +35,7 @@ class Extension(object):
         Options are stored as global variables under gaupol.gtk.conf and are
         written to the global configuration file automatically.
         """
+        if self._spec_file is None: return
         conf = gaupol.gtk.conf.extensions
         config_file = gaupol.gtk.conf.config_file
         config = gaupol.gtk.Config(config_file, self._spec_file)
