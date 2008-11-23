@@ -137,6 +137,13 @@ class Config(configobj.ConfigObj):
 
         options = set(self[section].keys())
         options -= set(spec[section].keys())
+        if section == "extensions":
+            # Keep all options of extensions, i.e. subsections of the
+            # extensions section to allow extensions to be activated at a later
+            # time and to defer processing of those options to that time.
+            for option in tuple(options):
+                if isinstance(self[section][option], dict):
+                    options.remove(option)
         if not options: return
         if self.__print_unrecognized:
             print "Discarding unrecognized configuration options:"
