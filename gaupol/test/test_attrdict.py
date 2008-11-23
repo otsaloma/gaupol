@@ -17,25 +17,70 @@
 import gaupol
 
 
+class PuppetDict(dict):
+
+    def __init__(self, *args, **kwargs):
+
+        dict.__init__(self, *args, **kwargs)
+        self.defaults = []
+
+
 class TestAttrDict(gaupol.TestCase):
+
+    # pylint: disable-msg=E1101
 
     def setup_method(self, method):
 
-        self.root = {"test": 1, "rest": 0}
-        self.attrdict = gaupol.AttrDict(self.root)
+        self.root = PuppetDict((("test", 1), ("rest", 0)))
+        self.root.defaults = ["test", "rest"]
+        self.attr_dict = gaupol.AttrDict(self.root)
 
     def test___getattr__(self):
 
-        assert isinstance(self.attrdict.test, int)
-        assert isinstance(self.attrdict.rest, int)
+        assert self.attr_dict.test == 1
+        assert self.attr_dict.rest == 0
 
     def test___setattr__(self):
 
-        self.attrdict.test = 5
+        self.attr_dict.test = 5
+        assert self.attr_dict.test == 5
         assert self.root["test"] == 5
-        self.attrdict.test = 9
-        assert self.attrdict.test == 9
+
+    def test_add_attribute(self):
+
+        self.attr_dict.add_attribute("best", 2)
+        assert self.attr_dict.best == 2
+        assert self.root["best"] == 2
+        root = PuppetDict(self.root)
+        self.attr_dict.add_attribute("nest", root)
+        assert self.attr_dict.nest.best == 2
+        assert self.root["nest"]["best"] == 2
+
+    def test_remove_attribute(self):
+
+        self.attr_dict.remove_attribute("test")
+        assert not hasattr(self.attr_dict, "test")
+        assert "test" not in self.root
+
+    def test_replace(self):
+
+        root = PuppetDict((("test", 3), ("pest", 4)))
+        self.attr_dict.replace(root)
+        assert self.attr_dict.test == 3
+        assert self.attr_dict.pest == 4
+        assert not hasattr(self.attr_dict, "rest")
+        self.attr_dict.test = 5
+        assert self.attr_dict.test == 5
+        assert root["test"] == 5
 
     def test_update(self):
 
-        self.attrdict.update(self.root)
+        root = PuppetDict((("test", 3), ("pest", 4)))
+        root.defaults.append("pest")
+        self.attr_dict.update(root)
+        assert self.attr_dict.test == 3
+        assert self.attr_dict.pest == 4
+        assert self.attr_dict.rest == 0
+        assert self.root["test"] == 3
+        assert self.root["pest"] == 4
+        assert self.root["rest"] == 0

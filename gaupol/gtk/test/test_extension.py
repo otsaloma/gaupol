@@ -39,7 +39,7 @@ class TestExtension(gaupol.gtk.TestCase):
         fobj.write("[[test]]\n")
         fobj.write("x = integer(default=5)\n")
         fobj.close()
-        self.extension.spec_file = path
+        self.extension._spec_file = path
         self.extension.read_config()
         assert self.conf.test.x == 5
         self.conf.test.x = 6

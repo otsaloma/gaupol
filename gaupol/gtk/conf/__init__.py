@@ -110,9 +110,9 @@ def read():
     # Create or update AttrDicts on the module level for each section.
     for key, value in config.items():
         if key in globals():
-            globals()[key].update(value)
-            continue
-        globals()[key] = gaupol.AttrDict(value)
+            globals()[key].replace(value)
+        else: # Create a new attribute dictionary.
+            globals()[key] = gaupol.AttrDict(value)
 
 def read_defaults_ensure(value):
     assert "_defaults" in globals()

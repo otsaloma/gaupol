@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Observable dictionary with attribute access to keys."""
+"""Observable configuration dictionary with attribute access to keys."""
 
 import gaupol
 
@@ -23,40 +23,85 @@ __all__ = ("AttrDict",)
 
 class AttrDict(gaupol.Observable):
 
-    """Observable dictionary with attribute access to keys."""
+    """Observable configuration dictionary with attribute access to keys.
+
+    Attribute dictionary is initialized from a root dictionary, which is kept
+    in sync with attribute values. This allows convenient attribute access to
+    dictionary keys and notifications via the Observable interface, The root
+    dictionary is expected to be a ConfigObj dictionary, i.e. a ConfigObj
+    instance or any child dictionary of that instance.
+    """
 
     def __init__(self, root):
         """Initialize an AttrDict object.
 
-        All child dictionaries of root are initialized as AttrDicts as well.
+        All attributes of corresponding child dictionaries of root are
+        initialized as AttrDicts as well.
         """
         gaupol.Observable.__init__(self)
+        self.__keys = set(())
         self.__root = root
-        self._init_attributes()
-
-    def _init_attributes(self):
-        """Initialize attributes and signal handlers."""
-
-        for name, value in self.__root.iteritems():
-            if isinstance(value, dict):
-                value = AttrDict(value)
-            setattr(self, name, value)
-            signal = "notify::%s" % name
-            self.connect(signal, self._on_notify, name)
+        self.update(root)
 
     def _on_notify(self, obj, value, name):
-        """Synchronize attribute value with root dictionary."""
+        """Synchronize changed attribute value with root dictionary."""
 
         if value != self.__root[name]:
-            if isinstance(value, dict):
-                value = AttrDict(value)
+            # Only set root dictionary key value if diffent than currently to
+            # avoid ConfigObj registering it as set, i.e. non-default.
             self.__root[name] = value
 
-    def update(self, root):
-        """Update values from a new root dictionary."""
+    def add_attribute(self, name, value):
+        """Add instance attribute and corresponding root dictionary key."""
 
+        self.__root[name] = value
+        # In the case of dictionaries, i.e. subsections of the current section,
+        # set the original dictionary to the root dictionary, but instanctiate
+        # an AttrDict instance for use as the corresponding attribute.
+        if isinstance(value, dict):
+            value = AttrDict(value)
+        setattr(self, name, value)
+        signal = "notify::%s" % name
+        self.connect(signal, self._on_notify, name)
+        self.__keys.add(name)
+
+    def remove_attribute(self, name):
+        """Remove instance attribute and corresponding root dictionary key."""
+
+        self.__keys.remove(name)
+        signal = "notify::%s" % name
+        self.disconnect(signal, self._on_notify)
+        delattr(self, name)
+        if name in self.__root:
+            del self.__root[name]
+
+    def replace(self, root):
+        """Replace root dictionary and update attribute values.
+
+        Attribute values are updated to match values of corresponding keys in
+        the new root dictionary and attributes that do not exist in the new
+        root dictionary are removed (Use with care!). Using this method is
+        usually a better idea than instantiating a new AttrDict, because there
+        may already be attribute notification signal connections made with the
+        existing instance of AttrDict, which may not want to be lost.
+        """
         self.__root = root
-        for name, value in self.__root.iteritems():
-            if isinstance(value, dict):
-                value = AttrDict(value)
-            setattr(self, name, value)
+        self.update(root)
+        for name in (self.__keys - set(root.keys())):
+            self.remove_attribute(name)
+
+    def update(self, root):
+        """Update values from another root dictionary."""
+
+        new_defaults = set(root.defaults)
+        for name, value in root.iteritems():
+            if not hasattr(self, name):
+                self.add_attribute(name, value)
+            else: # Update current value.
+                if isinstance(value, dict):
+                    getattr(self, name).update(value)
+                else: setattr(self, name, value)
+        # Update ConfigObj default value tracking list.
+        old_defaults = set(self.__root.defaults)
+        for name in (new_defaults - old_defaults):
+            self.__root.defaults.append(name)

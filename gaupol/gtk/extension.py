@@ -36,16 +36,9 @@ class Extension(object):
         written to the global configuration file automatically.
         """
         if self._spec_file is None: return
-        conf = gaupol.gtk.conf.extensions
         config_file = gaupol.gtk.conf.config_file
         config = gaupol.gtk.Config(config_file, self._spec_file, False)
-        config = config["extensions"]
-        # Create or update AttrDicts at conf module level.
-        for key, value in config.items():
-            if hasattr(gaupol.gtk.conf.extensions, key):
-                getattr(conf, key).update(value)
-            else: # Create new AttrDict.
-                setattr(conf, key, gaupol.AttrDict(value))
+        gaupol.gtk.conf.extensions.update(config["extensions"])
 
     def setup(self, application):
         """Setup extension for use with application.
