@@ -21,6 +21,7 @@ import inspect
 import os
 import re
 import sys
+import traceback
 
 __all__ = ("ExtensionManager", "ExtensionMetadata",)
 
@@ -134,7 +135,8 @@ class ExtensionManager(object):
         directory = os.path.dirname(metadata_path)
         sys.path.insert(0, directory)
         try: mobj = __import__(module, {}, {}, [])
-        except ImportError: return
+        except ImportError:
+            return traceback.print_exc()
         finally: sys.path.pop(0)
         for attribute in dir(mobj):
             if attribute.startswith("_"): continue
