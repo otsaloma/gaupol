@@ -33,7 +33,7 @@ class TestAttrDict(gaupol.TestCase):
 
         self.root = PuppetDict((("test", 1), ("rest", 0)))
         self.root.defaults = ["test", "rest"]
-        self.attr_dict = gaupol.AttrDict(self.root)
+        self.attr_dict = gaupol.gtk.ConfigAttrDict(self.root)
 
     def test___getattr__(self):
 

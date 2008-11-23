@@ -18,10 +18,8 @@
 
 import gaupol
 
-__all__ = ("AttrDict",)
 
-
-class AttrDict(gaupol.Observable):
+class ConfigAttrDict(gaupol.Observable):
 
     """Observable configuration dictionary with attribute access to keys.
 
@@ -33,10 +31,10 @@ class AttrDict(gaupol.Observable):
     """
 
     def __init__(self, root):
-        """Initialize an AttrDict object.
+        """Initialize an ConfigAttrDict object.
 
         All attributes of corresponding child dictionaries of root are
-        initialized as AttrDicts as well.
+        initialized as ConfigAttrDicts as well.
         """
         gaupol.Observable.__init__(self)
         self.__keys = set(())
@@ -57,9 +55,9 @@ class AttrDict(gaupol.Observable):
         self.__root[name] = value
         # In the case of dictionaries, i.e. subsections of the current section,
         # set the original dictionary to the root dictionary, but instanctiate
-        # an AttrDict instance for use as the corresponding attribute.
+        # an ConfigAttrDict instance for use as the corresponding attribute.
         if isinstance(value, dict):
-            value = AttrDict(value)
+            value = ConfigAttrDict(value)
         setattr(self, name, value)
         signal = "notify::%s" % name
         self.connect(signal, self._on_notify, name)
@@ -81,9 +79,9 @@ class AttrDict(gaupol.Observable):
         Attribute values are updated to match values of corresponding keys in
         the new root dictionary and attributes that do not exist in the new
         root dictionary are removed (Use with care!). Using this method is
-        usually a better idea than instantiating a new AttrDict, because there
-        may already be attribute notification signal connections made with the
-        existing instance of AttrDict, which may not want to be lost.
+        usually a better idea than instantiating a new ConfigAttrDict, because
+        there may already be attribute notification signal connections with the
+        existing instance of ConfigAttrDict, which may not want to be lost.
         """
         self.__root = root
         self.update(root)
@@ -91,8 +89,11 @@ class AttrDict(gaupol.Observable):
             self.remove_attribute(name)
 
     def update(self, root):
-        """Update values from another root dictionary."""
+        """Update values from another root dictionary.
 
+        The root dictionary given as argument is not deep-copied. If it
+        contains any subdictionaries, those will be used as is.
+        """
         new_defaults = set(root.defaults)
         for name, value in root.iteritems():
             if not hasattr(self, name):

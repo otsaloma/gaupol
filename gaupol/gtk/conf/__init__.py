@@ -30,9 +30,10 @@ options, their default values and types.
 import gaupol.gtk
 import os
 
+from .attrdict import ConfigAttrDict
 from .config import Config
 
-__all__ = ("Config",)
+__all__ = ("Config", "ConfigAttrDict")
 
 config_file = None
 
@@ -107,12 +108,13 @@ def read():
         raise SystemExit(1)
     config["general"]["version"] = gaupol.__version__
     globals()["_config"] = config
-    # Create or update AttrDicts on the module level for each section.
+    # Create or update attribute dictionaries on the module level for each
+    # section to have an attribute-based interface for configurations.
     for key, value in config.items():
         if key in globals():
             globals()[key].replace(value)
         else: # Create a new attribute dictionary.
-            globals()[key] = gaupol.AttrDict(value)
+            globals()[key] = ConfigAttrDict(value)
 
 def read_defaults_ensure(value):
     assert "_defaults" in globals()
@@ -131,9 +133,12 @@ def restore_defaults():
 
     if "_defaults" not in globals():
         read_defaults()
-    defaults = gaupol.util.copy_dict(globals()["_defaults"])
+    defaults = globals()["_defaults"]
     for key, value in defaults.items():
         globals()[key].update(value)
+    # Reread defaults to get an unconnected dictionary of defaults values
+    # unaffected by any possible changes in attribute dictionaries.
+    read_defaults()
 
 def write_ensure(value):
     assert "_config" in globals()
