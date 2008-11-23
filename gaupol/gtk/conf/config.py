@@ -68,7 +68,7 @@ class Config(configobj.ConfigObj):
         except AttributeError:
             raise validate.VdtValueError(value)
 
-    def __init___require(self, config_file, spec_file, **kwargs):
+    def __init___require(self, config_file, spec_file, *args, **kwargs):
         assert os.path.isfile(spec_file)
 
     def __init__(self, config_file, spec_file, print_unrecognized=True):
