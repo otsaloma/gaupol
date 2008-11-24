@@ -147,7 +147,6 @@ class Application(gaupol.Observable, gaupol.gtk.Runner):
         self._init_uim()
         self._init_menubar(vbox)
         self._init_main_toolbar(vbox)
-        self._init_recent_menus()
         self._init_notebook(vbox)
         self._init_video_toolbar(vbox)
         self._init_statusbar(vbox)
@@ -209,14 +208,6 @@ class Application(gaupol.Observable, gaupol.gtk.Runner):
         self.output_window = gaupol.gtk.OutputWindow()
         gaupol.util.connect(self, "output_window", "notify::visible")
         self.output_window.props.visible = gaupol.gtk.conf.output_window.show
-
-    def _init_recent_menus(self):
-        """Initialize the recent file menus."""
-
-        item = self.get_menu_item("show_recent_main_menu")
-        item.set_submenu(gtk.Menu())
-        item = self.get_menu_item("show_recent_translation_menu")
-        item.set_submenu(gtk.Menu())
 
     def _init_redo_button(self):
         """Initialize the redo button on the main toolbar."""

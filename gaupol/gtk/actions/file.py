@@ -287,6 +287,7 @@ class ShowRecentMainMenuAction(gaupol.gtk.Action):
 
         gaupol.gtk.Action.__init__(self, "show_recent_main_menu")
         self.props.label = _("Open _Recent")
+        self.props.is_important = True
 
 
 class ShowRecentTranslationMenuAction(gaupol.gtk.Action):
@@ -297,6 +298,7 @@ class ShowRecentTranslationMenuAction(gaupol.gtk.Action):
 
         gaupol.gtk.Action.__init__(self, "show_recent_translation_menu")
         self.props.label = _("Open R_ecent Translation")
+        self.props.is_important = True
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""

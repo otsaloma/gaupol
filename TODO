@@ -5,7 +5,9 @@ Gaupol 0.14
      - Add dependency handling to ExtensionManager
      - Do not list Hidden=True extensions in PreferencesDialog
      - i18n and setup.py (build and installation)
- [ ] Add an example extension (bookmark/notes column?)
+ [ ] Add a side pane extension
+ [ ] Add a bookmarks extension
+ [ ] Add notes column extension
  [D] Handle reading and writing files with a UTF-8 BOM (#556956)
  [D] Remove deprecated Encoding-field from desktop file
  [ ] Implement clean-methods for Markup classes
