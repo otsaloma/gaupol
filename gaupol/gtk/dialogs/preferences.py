@@ -264,8 +264,9 @@ class _ExtensionPage(gaupol.Delegate):
         """Set the sensitivities of the buttons."""
 
         module = self._get_selected_module()
-        sensitive = module in self.conf.active
-        self._about_button.set_sensitive(sensitive)
+        have_selection = self._get_selected_module() is not None
+        self._about_button.set_sensitive(have_selection)
+        sensitive = have_selection and (module in self.conf.active)
         if module in self.conf.active:
             sensitive = self.manager.has_help(module)
             self._help_button.set_sensitive(sensitive)
