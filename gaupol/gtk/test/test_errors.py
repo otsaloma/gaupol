@@ -35,3 +35,13 @@ class TestDefault(gaupol.gtk.TestCase):
             raise gaupol.gtk.Default
         except gaupol.gtk.Default:
             pass
+
+
+class TestDependencyError(gaupol.gtk.TestCase):
+
+    def test_raise(self):
+
+        try:
+            raise gaupol.gtk.DependencyError
+        except gaupol.gtk.DependencyError:
+            pass

@@ -28,7 +28,18 @@ __all__ = ("ExtensionManager", "ExtensionMetadata",)
 
 class ExtensionManager(object):
 
-    """Finding activating, storing and deactivating extensions."""
+    """Finding activating, storing and deactivating extensions.
+
+    Instance attribute '_active' is a dictionary mapping module names to
+    Extension instances for active extensions. '_metadata' is a dictionary
+    mapping module names to Metadata instances, which are available regarless
+    of whether the extensions is active or not.
+
+    '_dependants' is a dictionary mapping modules to a list of other modules
+    depending on them. '_inferior' is a list of modules activated just to
+    satisfy a dependency of another module. Dependency handling is done
+    automatically with 'setup_extension[s]' and 'teardown_extension[s]'.
+    """
 
     __metaclass__ = gaupol.Contractual
     _global_dir = os.path.join(gaupol.LIB_DIR, "extensions")
@@ -39,6 +50,8 @@ class ExtensionManager(object):
 
         self.application = application
         self._active = {}
+        self._dependants = {}
+        self._inferior = []
         self._metadata = {}
 
     def _find_extensions_in_directory(self, directory):
@@ -125,18 +138,22 @@ class ExtensionManager(object):
         parent = gaupol.gtk.Extension.show_preferences_dialog.im_func
         return child is not parent
 
-    def setup_extension_require(self, module):
+    def setup_extension_require(self, module, inferior=False):
         assert module in self._metadata
 
-    def setup_extension(self, module):
+    def setup_extension(self, module, inferior=False):
         """Import and setup extension by module name.
 
-        All modules required by module will be setup automatically.
+        inferior should be True if called just to satisfy a dependency.
+        Setup all modules required by module.
+        Return silently if module is already set up.
         """
+        if module in self._active: return
         metadata = self._metadata[module]
         for m in metadata.get_field_list("Requires", ()):
             if not m in self._active:
-                self.setup_extension(m)
+                self.setup_extension(m, True)
+            self._dependants[m].append(module)
         directory = os.path.dirname(metadata.path)
         sys.path.insert(0, directory)
         try: mobj = __import__(module, {}, {}, [])
@@ -152,6 +169,11 @@ class ExtensionManager(object):
                 extension.read_config()
                 extension.setup(self.application)
                 self._active[module] = extension
+                self._dependants[module] = []
+        if inferior:
+            self._inferior.append(module)
+        elif module in self._inferior:
+            self._inferior.remove(module)
 
     def setup_extensions(self):
         """Import and setup all extensions configured as active."""
@@ -181,23 +203,41 @@ class ExtensionManager(object):
         extension = self._active[module]
         extension.show_preferences_dialog(parent)
 
-    def teardown_extension_require(self, module):
-        assert module in self._active
+    def teardown_extension_require(self, module, force=True):
         assert module in self._metadata
 
-    def teardown_extension(self, module):
-        """Teardown extension by module name."""
+    def teardown_extension(self, module, force=True):
+        """Teardown extension by module name.
 
+        If not using force (which should only be used with care),
+        raise DependencyError if module is required by other modules.
+        Teardown no longer used dependencies of module.
+        Return silently if module is already torn down.
+        """
+        if not module in self._active: return
+        if self._dependants[module]:
+            if not force: raise gaupol.gtk.DependencyError
+            for user in self._dependants[module]:
+                self.teardown_extension(user)
         extension = self._active[module]
         extension.teardown(self.application)
         del self._active[module]
+        del self._dependants[module]
+        for dependency in self._dependants.keys():
+            # Teardown no longer used dependencies.
+            if module in self._dependants[dependency]:
+                self._dependants[dependency].remove(module)
+            if self._dependants[dependency]: continue
+            if not dependency in self._inferior: continue
+            self.teardown_extension(dependency)
+        if module in self._inferior:
+            self._inferior.remove(module)
 
     def teardown_extensions(self):
         """Teardown all active extensions."""
 
-        for name, extension in self._active.iteritems():
-            extension.teardown(self.application)
-        self._active = {}
+        for module in self._active.keys():
+            self.teardown_extension(module, True)
 
     def update_extensions(self, page):
 

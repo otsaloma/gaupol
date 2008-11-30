@@ -18,7 +18,7 @@
 
 import gaupol
 
-__all__ = ("ConfigParseError", "Default")
+__all__ = ("ConfigParseError", "Default", "DependencyError")
 
 
 class ConfigParseError(gaupol.Error):
@@ -31,5 +31,12 @@ class ConfigParseError(gaupol.Error):
 class Default(gaupol.Error):
 
     """Cancelled or something of the sort."""
+
+    pass
+
+
+class DependencyError(gaupol.Error):
+
+    """Unsatisfiable dependecies too many side-effects due to dependencies."""
 
     pass
