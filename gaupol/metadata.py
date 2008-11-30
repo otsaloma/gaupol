@@ -71,18 +71,18 @@ class MetadataItem(object):
             return self.get_field("Description")
         return self._get_localized_field("Description")
 
-    def get_field(self, name):
-        """Return the string value of field or None."""
+    def get_field(self, name, fallback=None):
+        """Return the string value of field or fallback."""
 
         if not name in self.fields:
-            return None
+            return fallback
         return self.fields[name]
 
-    def get_field_boolean(self, name):
-        """Return the boolean value of field or None."""
+    def get_field_boolean(self, name, fallback=None):
+        """Return the boolean value of field or fallback."""
 
         if not name in self.fields:
-            return None
+            return fallback
         value = self.fields[name]
         if value == "True":
             return True
@@ -90,11 +90,11 @@ class MetadataItem(object):
             return False
         raise ValueError
 
-    def get_field_list(self, name):
-        """Return the list of strings value of field or None."""
+    def get_field_list(self, name, fallback=None):
+        """Return the list of strings value of field or fallback."""
 
         if not name in self.fields:
-            return None
+            return fallback
         lst = self.fields[name].split(";")
         if not lst[-1]: lst.pop(-1)
         return lst
