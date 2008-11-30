@@ -29,6 +29,11 @@ class TestExtensionManager(gaupol.gtk.TestCase):
         self.manager.find_extensions()
         self.manager.setup_extensions()
 
+    def teardown_method(self, method):
+
+        self.manager.teardown_extensions()
+        gaupol.gtk.TestCase.teardown_method(self, method)
+
     def test_find_extensions(self):
 
         self.manager.find_extensions()

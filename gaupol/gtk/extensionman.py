@@ -129,10 +129,15 @@ class ExtensionManager(object):
         assert module in self._metadata
 
     def setup_extension(self, module):
-        """Import and setup extension by module name."""
+        """Import and setup extension by module name.
 
-        metadata_path = self._metadata[module].path
-        directory = os.path.dirname(metadata_path)
+        All modules required by module will be setup automatically.
+        """
+        metadata = self._metadata[module]
+        for m in metadata.get_field_list("Requires", ()):
+            if not m in self._active:
+                self.setup_extension(m)
+        directory = os.path.dirname(metadata.path)
         sys.path.insert(0, directory)
         try: mobj = __import__(module, {}, {}, [])
         except ImportError:
