@@ -194,6 +194,7 @@ class _ExtensionPage(gaupol.Delegate):
         extensions = []
         for module in self.manager.get_modules():
             metadata = self.manager.get_metadata(module)
+            if metadata.get_field_boolean("Hidden", False): continue
             name = metadata.get_name()
             description = metadata.get_description()
             markup = "<b>%s</b>\n%s" % (name, description)
