@@ -46,7 +46,7 @@ class SidePane(gaupol.Observable):
 
         gaupol.Observable.__init__(self)
         self._conf = gaupol.gtk.conf.extensions.side_pane
-        self._label = gtk.Label(_("(No content)"))
+        self._label = gtk.Label(_("(Empty)"))
         self._notebook = gtk.Notebook()
         self._paned = gtk.HPaned()
         self._toggle_button = gtk.ToggleButton()
@@ -295,7 +295,7 @@ class SidePaneExtension(gaupol.gtk.Extension):
         """End use of extension with application."""
 
         application.side_pane.remove()
-        delattr(application, "side_pane")
+        del application.side_pane
         self.application.uim.remove_ui(self._uim_id)
         self.application.uim.remove_action_group(self._action_group)
         self.application.uim.ensure_update()
