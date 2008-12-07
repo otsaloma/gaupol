@@ -138,6 +138,11 @@ class ExtensionManager(object):
         parent = gaupol.gtk.Extension.show_preferences_dialog.im_func
         return child is not parent
 
+    def is_active(self, module):
+        """Return True if extension is active, False if not."""
+
+        return (module in self._active)
+
     def setup_extension_require(self, module, inferior=False):
         assert module in self._metadata
 

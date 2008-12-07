@@ -4,7 +4,7 @@ Gaupol 0.14
  [W] Add an extension system
      - i18n and setup.py (build and installation)
      - Test ExtensionManager dependency handling
- [ ] Add a side pane extension
+ [D] Add a side pane extension
  [ ] Add a bookmarks extension
  [ ] Add notes column extension
  [D] Handle reading and writing files with a UTF-8 BOM (#556956)

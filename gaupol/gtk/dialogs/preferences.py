@@ -250,13 +250,21 @@ class _ExtensionPage(gaupol.Delegate):
         store = self._tree_view.get_model()
         module = store[path][0]
         active = store[path][1]
-        if active:
-            self.manager.teardown_extension(module)
-            self.conf.active.remove(module)
-        else:
+        if active: # Deactivating extension.
+            try: self.manager.teardown_extension(module)
+            except gaupol.gtk.DependencyError:
+                title = _("Cannot deactivate extension")
+                message = _('Extension "%s" is required by other extensions.')
+                message = message % store[path][2]
+                dialog = gaupol.gtk.ErrorDialog(self._dialog, title, message)
+                dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
+                self.flash_dialog(dialog)
+            else: self.conf.active.remove(module)
+        else: # Activating extension.
             self.manager.setup_extension(module)
             self.conf.active.append(module)
-        store[path][1] = not active
+        for row in store:
+            row[1] = self.manager.is_active(row[0])
         selection = self._tree_view.get_selection()
         selection.emit("changed")
 

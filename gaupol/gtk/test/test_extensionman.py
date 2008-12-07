@@ -60,6 +60,13 @@ class TestExtensionManager(gaupol.gtk.TestCase):
 
         assert self.manager.has_preferences_dialog("null")
 
+    def test_is_active(self):
+
+        self.manager.setup_extension("null")
+        assert self.manager.is_active("null")
+        self.manager.teardown_extension("null")
+        assert not self.manager.is_active("null")
+
     def test_setup_extension(self):
 
         self.manager.setup_extension("null")
