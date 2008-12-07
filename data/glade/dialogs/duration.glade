@@ -67,7 +67,7 @@
                                   <widget class="GtkSpinButton" id="optimal_spin">
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
-                                    <property name="adjustment">1 0 9 0.001 0.01 0.01</property>
+                                    <property name="adjustment">1 0 9 0.001 0.01 0</property>
                                     <property name="climb_rate">1</property>
                                     <property name="digits">3</property>
                                     <property name="numeric">True</property>
@@ -218,7 +218,7 @@
                               <widget class="GtkSpinButton" id="min_spin">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
-                                <property name="adjustment">1 0 99 0.10000000000000001 1 1</property>
+                                <property name="adjustment">1 0 99 0.10000000000000001 1 0</property>
                                 <property name="climb_rate">1</property>
                                 <property name="digits">3</property>
                                 <property name="numeric">True</property>
@@ -257,7 +257,7 @@
                               <widget class="GtkSpinButton" id="max_spin">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
-                                <property name="adjustment">1 0 99 0.10000000000000001 1 1</property>
+                                <property name="adjustment">1 0 99 0.10000000000000001 1 0</property>
                                 <property name="climb_rate">1</property>
                                 <property name="digits">3</property>
                                 <property name="numeric">True</property>
@@ -298,7 +298,7 @@
                               <widget class="GtkSpinButton" id="gap_spin">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
-                                <property name="adjustment">1 0 99 0.10000000000000001 1 1</property>
+                                <property name="adjustment">1 0 99 0.10000000000000001 1 0</property>
                                 <property name="climb_rate">1</property>
                                 <property name="digits">3</property>
                                 <property name="numeric">True</property>
