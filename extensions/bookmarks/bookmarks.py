@@ -27,7 +27,7 @@ class BookmarksExtension(gaupol.gtk.Extension):
     """Marking subtitles for easy navigation."""
 
     _directory = os.path.dirname(__file__)
-    _spec_file = os.path.join(_directory, "bookmarks.conf.spec")
+    _conf_spec_file = os.path.join(_directory, "bookmarks.conf.spec")
 
     def __init__(self):
         """Initialize a BookmarksExtension object."""

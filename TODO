@@ -1,15 +1,14 @@
 Gaupol 0.14
 ===========
 
- [W] Add an extension system
+ [W] Add an extension system (undocumented for now)
      - i18n and setup.py (build and installation)
      - Test ExtensionManager dependency handling
- [D] Add a side pane extension
- [ ] Add a bookmarks extension
- [ ] Add notes column extension
+ [W] Add two extensions: side pane and bookmarks
+ [?] Adher to freedesktop.org's XDG Base Directory Specification
+     - http://live.gnome.org/GnomeGoals/XDGConfigFolders
  [D] Handle reading and writing files with a UTF-8 BOM (#556956)
- [ ] Implement clean-methods for Markup classes
- [?] Save SSA and ASS files with '\N' linebreaks instead of '\n'
+ [D] Save SSA and ASS files with '\N' linebreaks instead of '\n'
  [D] Resize columns after running text corrections
  [D] Fix GtkWarning: GtkSpinButton: setting an adjustment with
      non-zero page size is deprecated
@@ -26,8 +25,6 @@ Gaupol 1.0
 
  * Migrate from Glade to gtk.Builder
    - http://live.gnome.org/GnomeGoals/RemoveLibGladeUseGtkBuilder
- * Adher to freedesktop.org's XDG Base Directory Specification
-   - http://live.gnome.org/GnomeGoals/XDGConfigFolders
  * Add documentation on writing extensions
  * Add documentation on writing pattern files
  * Add a wiki page for publishing extensions
@@ -43,11 +40,11 @@ Gaupol 3000
  * Handle fancy quotes, dashes and ellipses in text corrections
    - As bogus regular expression groups, e.g. (?gaupol-quote)?
  * Bump Python dependency to 2.6
-   - Use 'with' without importing from __future__
-   - except Exception as exception_instance
-   - from __future__ import unicode_literals
-   - Abstract Base Classes: abc.ABCMeta
-   - Properties now have three attributes, getter, setter and deleter
+   - Remove imports from __future__
+   - http://docs.python.org/whatsnew/2.6.html
+ * Bump Python dependency to 3.0
+   - Remove imports from __future__
+   - http://docs.python.org/3.0/whatsnew/3.0.html
  * Bump PyGObject dependency to 2.16
    - Try gobject.option.OptionParser (see #378704)
    - Try gio.AppInfo for launching web browser and video player

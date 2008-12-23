@@ -249,7 +249,7 @@ class SidePaneExtension(gaupol.gtk.Extension):
     """A side pane that can be used by other extensions."""
 
     _directory = os.path.dirname(__file__)
-    _spec_file = os.path.join(_directory, "side-pane.conf.spec")
+    _conf_spec_file = os.path.join(_directory, "side-pane.conf.spec")
 
     def __init__(self):
         """Initialize a SidePaneExtension object."""
