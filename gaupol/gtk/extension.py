@@ -25,7 +25,7 @@ class Extension(object):
 
     """Separate object that can be activated and deactivated during runtime."""
 
-    _spec_file = None
+    _conf_spec_file = None
 
     def read_config(self):
         """Read configurations from file according to spec_file.
@@ -38,6 +38,13 @@ class Extension(object):
         if self._spec_file is None: return
         config_file = gaupol.gtk.conf.config_file
         config = gaupol.gtk.Config(config_file, self._spec_file, False)
+        dummy = gaupol.gtk.Config(None, self._spec_file, False)
+        config_sections = set(config["extensions"].keys())
+        dummy_sections = set(dummy["extensions"].keys())
+        for section in (config_sections - dummy_sections):
+            # Remove all sections not in the spec file,
+            # which should mostly be sections of other extensions.
+            del config["extensions"][section]
         gaupol.gtk.conf.extensions.update(config["extensions"])
 
     def setup(self, application):
@@ -74,7 +81,7 @@ class Extension(object):
         pass
 
     def update(self, application, page):
-        """Update state of plugin for application and active page.
+        """Update state of extension for application and active page.
 
         The main purpose of this method is to update sensitivities of UI
         manager actions associated with this extension.
