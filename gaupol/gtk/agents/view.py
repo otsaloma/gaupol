@@ -112,6 +112,7 @@ class ViewAgent(gaupol.Delegate):
         page.view.select_rows(selected_rows)
         page.view.props.has_focus = has_focus
         gaupol.gtk.util.set_cursor_normal(self.window)
+        page.emit("view-created", page.view)
 
     def on_toggle_duration_column_toggled(self, *args):
         """Show or hide the 'Duration' column."""

@@ -40,13 +40,14 @@ class Page(gaupol.Observable):
 
     Signals (arguments):
      * close-request (page)
+     * view-created (page, view)
 
     This class represents one page in a notebook of user interfaces for
     projects. The view is updated automatically when project data changes.
     """
 
     __metaclass__ = gaupol.Contractual
-    _signals = ("close-request",)
+    _signals = ("close-request", "view-created")
 
     def __init__(self, count=0):
 
@@ -62,6 +63,7 @@ class Page(gaupol.Observable):
         self._init_widgets()
         self._init_signal_handlers()
         self.update_tab_label()
+        self.emit("view-created", self.view)
 
     def _assert_store(self):
         """Assert that store's data matches project's."""
