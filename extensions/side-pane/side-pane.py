@@ -248,9 +248,11 @@ class SidePaneExtension(gaupol.gtk.Extension):
 
     """A side pane that can be used by other extensions."""
 
-    _spec_file = os.path.join(os.path.dirname(__file__), "sidepane.conf.spec")
+    _directory = os.path.dirname(__file__)
+    _spec_file = os.path.join(_directory, "side-pane.conf.spec")
 
     def __init__(self):
+        """Initialize a SidePaneExtension object."""
 
         self._action_group = None
         self._conf = None
@@ -285,8 +287,7 @@ class SidePaneExtension(gaupol.gtk.Extension):
              _("Show or hide the side pane"),
              self._on_toggle_side_pane_toggled, self._conf.visible),))
         application.uim.insert_action_group(self._action_group, -1)
-        directory = os.path.dirname(__file__)
-        ui_file = os.path.join(directory, "sidepane.ui.xml")
+        ui_file = os.path.join(self._directory, "side-pane.ui.xml")
         self._uim_id = application.uim.add_ui_from_file(ui_file)
         callback = self._on_side_pane_close_button_clicked
         application.side_pane.connect("close-button-clicked", callback)
