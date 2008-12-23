@@ -281,7 +281,7 @@ class SidePaneExtension(gaupol.gtk.Extension):
         self.application = application
         application.side_pane = SidePane(application)
         self._conf = gaupol.gtk.conf.extensions.side_pane
-        self._action_group = gtk.ActionGroup(self.__class__.__name__)
+        self._action_group = gtk.ActionGroup("side-pane")
         self._action_group.add_toggle_actions((
             ("toggle_side_pane", None, "Si_de Pane", None,
              _("Show or hide the side pane"),

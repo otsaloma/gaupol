@@ -67,7 +67,7 @@ class BookmarksExtension(gaupol.gtk.Extension):
 
         self.application = application
         self._conf = gaupol.gtk.conf.extensions.bookmarks
-        self._action_group = gtk.ActionGroup(self.__class__.__name__)
+        self._action_group = gtk.ActionGroup("bookmarks")
         self._action_group.add_actions((
             ("show_bookmarks_menu", None, "_Bookmarks"),
             ("add_bookmark", gtk.STOCK_ADD, "_Add\342\200\246", "<Control>D",
