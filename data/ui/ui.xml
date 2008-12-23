@@ -1,498 +1,267 @@
 <ui>
-  <menubar
-     name="menubar">
-    <menu
-       name="file"
-       action="show_file_menu">
-      <menuitem
-         name="new"
-         action="new_project"/>
-      <menuitem
-         name="open_main"
-         action="open_main_files"/>
-      <menuitem
-         name="open_translation"
-         action="open_translation_file"/>
-      <menuitem
-         name="select_video"
-         action="select_video_file"/>
-      <placeholder
-         name="1">
+  <menubar name="menubar">
+    <menu name="file" action="show_file_menu">
+      <menuitem name="new" action="new_project"/>
+      <menuitem name="open_main" action="open_main_files"/>
+      <menuitem name="open_translation" action="open_translation_file"/>
+      <menuitem name="select_video" action="select_video_file"/>
+      <placeholder name="1">
       </placeholder>
       <separator/>
-      <menu
-         name="recent_main"
-         action="show_recent_main_menu">
+      <menu name="recent_main" action="show_recent_main_menu">
         <!-- Add some item, so that UI manager will not hide this
           -- menu. The actual menu will created dynamically. -->
-        <menuitem
-           name="open_main"
-           action="open_main_files"/>
+        <menuitem name="open_main" action="open_main_files"/>
       </menu>
-      <menu
-         name="recent_translation"
-         action="show_recent_translation_menu">
+      <menu name="recent_translation" action="show_recent_translation_menu">
         <!-- Add some item, so that UI manager will not hide this
           -- menu. The actual menu will created dynamically. -->
-        <menuitem
-           name="open_translation"
-           action="open_translation_file"/>
+        <menuitem name="open_translation" action="open_translation_file"/>
       </menu>
-      <placeholder
-         name="2">
+      <placeholder name="2">
       </placeholder>
       <separator/>
-      <menuitem
-         name="save_main"
-         action="save_main_document"/>
-      <menuitem
-         name="save_main_as"
-         action="save_main_document_as"/>
-      <menuitem
-         name="save_translation"
-         action="save_translation_document"/>
-      <menuitem
-         name="save_translation_as"
-         action="save_translation_document_as"/>
-      <placeholder
-         name="3">
+      <menuitem name="save_main" action="save_main_document"/>
+      <menuitem name="save_main_as" action="save_main_document_as"/>
+      <menuitem name="save_translation" action="save_translation_document"/>
+      <menuitem name="save_translation_as" action="save_translation_document_as"/>
+      <placeholder name="3">
       </placeholder>
       <separator/>
-      <menuitem
-         name="headers"
-         action="edit_headers"/>
-      <placeholder
-         name="4">
+      <menuitem name="headers" action="edit_headers"/>
+      <placeholder name="4">
       </placeholder>
       <separator/>
-      <menuitem
-         name="close"
-         action="close_project"/>
-      <menuitem
-         name="quit"
-         action="quit"/>
-      <placeholder
-         name="5">
+      <menuitem name="close" action="close_project"/>
+      <menuitem name="quit" action="quit"/>
+      <placeholder name="5">
       </placeholder>
     </menu>
-    <menu
-       name="edit"
-       action="show_edit_menu">
-      <menuitem
-         name="undo"
-         action="undo_action"/>
-      <menuitem
-         name="redo"
-         action="redo_action"/>
-      <placeholder
-         name="1">
+    <menu name="edit" action="show_edit_menu">
+      <menuitem name="undo" action="undo_action"/>
+      <menuitem name="redo" action="redo_action"/>
+      <placeholder name="1">
       </placeholder>
       <separator/>
-      <menuitem
-         name="value"
-         action="edit_value"/>
-      <menuitem
-         name="next_value"
-         action="edit_next_value"/>
-      <placeholder
-         name="2">
+      <menuitem name="value" action="edit_value"/>
+      <menuitem name="next_value" action="edit_next_value"/>
+      <placeholder name="2">
       </placeholder>
       <separator/>
-      <menuitem
-         name="split"
-         action="split_subtitle"/>
-      <menuitem
-         name="merge"
-         action="merge_subtitles"/>
-      <placeholder
-         name="3">
+      <menuitem name="split" action="split_subtitle"/>
+      <menuitem name="merge" action="merge_subtitles"/>
+      <placeholder name="3">
       </placeholder>
       <separator/>
-      <menuitem
-         name="insert"
-         action="insert_subtitles"/>
-      <menuitem
-         name="remove"
-         action="remove_subtitles"/>
-      <placeholder
-         name="4">
+      <menuitem name="insert" action="insert_subtitles"/>
+      <menuitem name="remove" action="remove_subtitles"/>
+      <placeholder name="4">
       </placeholder>
       <separator/>
-      <menu
-         name="selection"
-         action="show_selection_menu">
-        <menuitem
-           name="select_all"
-           action="select_all"/>
-        <menuitem
-           name="invert_selection"
-           action="invert_selection"/>
+      <menu name="selection" action="show_selection_menu">
+        <menuitem name="select_all" action="select_all"/>
+        <menuitem name="invert_selection" action="invert_selection"/>
         <separator/>
-        <menuitem
-           name="extend_to_beginning"
-           action="extend_selection_to_beginning"/>
-        <menuitem
-           name="extend_to_end"
-           action="extend_selection_to_end"/>
-        <placeholder
-           name="1">
+        <menuitem name="extend_to_beginning" action="extend_selection_to_beginning"/>
+        <menuitem name="extend_to_end" action="extend_selection_to_end"/>
+        <placeholder name="1">
         </placeholder>
       </menu>
-      <placeholder
-         name="5">
+      <placeholder name="5">
       </placeholder>
       <separator/>
-      <menuitem
-         name="preferences"
-         action="edit_preferences"/>
-      <placeholder
-         name="6">
+      <menuitem name="preferences" action="edit_preferences"/>
+      <placeholder name="6">
       </placeholder>
     </menu>
-    <menu
-       name="view"
-       action="show_view_menu">
-      <menuitem
-         name="main_toolbar"
-         action="toggle_main_toolbar"/>
-      <menuitem
-         name="video_toolbar"
-         action="toggle_video_toolbar"/>
-      <menuitem
-         name="statusbar"
-         action="toggle_statusbar"/>
-      <menuitem
-         name="output_window"
-         action="toggle_output_window"/>
-      <placeholder
-         name="1">
+    <menu name="view" action="show_view_menu">
+      <menuitem name="main_toolbar" action="toggle_main_toolbar"/>
+      <menuitem name="video_toolbar" action="toggle_video_toolbar"/>
+      <menuitem name="statusbar" action="toggle_statusbar"/>
+      <menuitem name="output_window" action="toggle_output_window"/>
+      <placeholder name="1">
       </placeholder>
       <separator/>
-      <menuitem
-         name="times"
-         action="show_times"/>
-      <menuitem
-         name="frames"
-         action="show_frames"/>
-      <placeholder
-         name="2">
+      <menuitem name="times" action="show_times"/>
+      <menuitem name="frames" action="show_frames"/>
+      <placeholder name="2">
       </placeholder>
       <separator/>
-      <menu
-         name="framerate"
-         action="show_framerate_menu">
-        <menuitem
-           name="24"
-           action="show_framerate_24"/>
-        <menuitem
-           name="25"
-           action="show_framerate_25"/>
-        <menuitem
-           name="30"
-           action="show_framerate_30"/>
-        <placeholder
-           name="1">
+      <menu name="framerate" action="show_framerate_menu">
+        <menuitem name="24" action="show_framerate_24"/>
+        <menuitem name="25" action="show_framerate_25"/>
+        <menuitem name="30" action="show_framerate_30"/>
+        <placeholder name="1">
         </placeholder>
       </menu>
-      <menu
-         name="columns"
-         action="show_columns_menu">
-        <menuitem
-           name="number"
-           action="toggle_number_column"/>
-        <menuitem
-           name="start"
-           action="toggle_start_column"/>
-        <menuitem
-           name="end"
-           action="toggle_end_column"/>
-        <menuitem
-           name="duration"
-           action="toggle_duration_column"/>
-        <menuitem
-           name="main_text"
-           action="toggle_main_text_column"/>
-        <menuitem
-           name="translation_text"
-           action="toggle_translation_text_column"/>
-        <placeholder
-           name="1">
+      <menu name="columns" action="show_columns_menu">
+        <placeholder name="0">
+        </placeholder>
+        <menuitem name="number" action="toggle_number_column"/>
+        <placeholder name="1">
+        </placeholder>
+        <menuitem name="start" action="toggle_start_column"/>
+        <placeholder name="2">
+        </placeholder>
+        <menuitem name="end" action="toggle_end_column"/>
+        <placeholder name="3">
+        </placeholder>
+        <menuitem name="duration" action="toggle_duration_column"/>
+        <placeholder name="4">
+        </placeholder>
+        <menuitem name="main_text" action="toggle_main_text_column"/>
+        <placeholder name="5">
+        </placeholder>
+        <menuitem name="translation_text" action="toggle_translation_text_column"/>
+        <placeholder name="6">
         </placeholder>
       </menu>
-      <placeholder
-         name="3">
+      <placeholder name="3">
       </placeholder>
     </menu>
-    <menu
-       name="text"
-       action="show_text_menu">
-      <menuitem
-         name="cut"
-         action="cut_texts"/>
-      <menuitem
-         name="copy"
-         action="copy_texts"/>
-      <menuitem
-         name="paste"
-         action="paste_texts"/>
-      <menuitem
-         name="clear"
-         action="clear_texts"/>
-      <placeholder
-         name="1">
+    <menu name="text" action="show_text_menu">
+      <menuitem name="cut" action="cut_texts"/>
+      <menuitem name="copy" action="copy_texts"/>
+      <menuitem name="paste" action="paste_texts"/>
+      <menuitem name="clear" action="clear_texts"/>
+      <placeholder name="1">
       </placeholder>
       <separator/>
-      <menuitem
-         name="find_and_replace"
-         action="find_and_replace"/>
-      <menuitem
-         name="find_next"
-         action="find_next"/>
-      <menuitem
-         name="find_previous"
-         action="find_previous"/>
-      <placeholder
-         name="2">
+      <menuitem name="find_and_replace" action="find_and_replace"/>
+      <menuitem name="find_next" action="find_next"/>
+      <menuitem name="find_previous" action="find_previous"/>
+      <placeholder name="2">
       </placeholder>
       <separator/>
-      <menuitem
-         name="italic"
-         action="toggle_italicization"/>
-      <menuitem
-         name="dialogue"
-         action="toggle_dialogue_dashes"/>
-      <menu
-         name="case"
-         action="show_case_menu">
-        <menuitem
-           name="title"
-           action="use_title_case"/>
-        <menuitem
-           name="sentence"
-           action="use_sentence_case"/>
-        <menuitem
-           name="upper"
-           action="use_upper_case"/>
-        <menuitem
-           name="lower"
-           action="use_lower_case"/>
-        <placeholder
-           name="1">
+      <menuitem name="italic" action="toggle_italicization"/>
+      <menuitem name="dialogue" action="toggle_dialogue_dashes"/>
+      <menu name="case" action="show_case_menu">
+        <menuitem name="title" action="use_title_case"/>
+        <menuitem name="sentence" action="use_sentence_case"/>
+        <menuitem name="upper" action="use_upper_case"/>
+        <menuitem name="lower" action="use_lower_case"/>
+        <placeholder name="1">
         </placeholder>
       </menu>
-      <placeholder
-         name="3">
+      <placeholder name="3">
       </placeholder>
     </menu>
-    <menu
-       name="tools"
-       action="show_tools_menu">
-      <menuitem
-         name="preview"
-         action="preview"/>
-      <placeholder
-         name="1">
+    <menu name="tools" action="show_tools_menu">
+      <menuitem name="preview" action="preview"/>
+      <placeholder name="1">
       </placeholder>
       <separator/>
-      <menuitem
-         name="check_spelling"
-         action="check_spelling"/>
-      <menuitem
-         name="configure_spell_check"
-         action="configure_spell_check"/>
-      <menuitem
-         name="correct_texts"
-         action="correct_texts"/>
-      <placeholder
-         name="2">
+      <menuitem name="check_spelling" action="check_spelling"/>
+      <menuitem name="configure_spell_check" action="configure_spell_check"/>
+      <menuitem name="correct_texts" action="correct_texts"/>
+      <placeholder name="2">
       </placeholder>
       <separator/>
-      <menuitem
-         name="shift_positions"
-         action="shift_positions"/>
-      <menuitem
-         name="transform_positions"
-         action="transform_positions"/>
-      <menuitem
-         name="adjust_durations"
-         action="adjust_durations"/>
-      <menuitem
-         name="convert_framerate"
-         action="convert_framerate"/>
-      <placeholder
-         name="3">
+      <menuitem name="shift_positions" action="shift_positions"/>
+      <menuitem name="transform_positions" action="transform_positions"/>
+      <menuitem name="adjust_durations" action="adjust_durations"/>
+      <menuitem name="convert_framerate" action="convert_framerate"/>
+      <placeholder name="3">
       </placeholder>
       <separator/>
-      <menuitem
-         name="append_file"
-         action="append_file"/>
-      <menuitem
-         name="split_project"
-         action="split_project"/>
-      <placeholder
-         name="4">
+      <menuitem name="append_file" action="append_file"/>
+      <menuitem name="split_project" action="split_project"/>
+      <placeholder name="4">
       </placeholder>
     </menu>
-    <menu
-       name="projects"
-       action="show_projects_menu">
-      <menuitem
-         name="save_all"
-         action="save_all_documents"/>
-      <menuitem
-         name="close_all"
-         action="close_all_projects"/>
-      <placeholder
-         name="1">
+    <placeholder name="1">
+    </placeholder>
+    <menu name="projects" action="show_projects_menu">
+      <menuitem name="save_all" action="save_all_documents"/>
+      <menuitem name="close_all" action="close_all_projects"/>
+      <placeholder name="1">
       </placeholder>
       <separator/>
-      <menuitem
-         name="previous"
-         action="activate_previous_project"/>
-      <menuitem
-         name="next"
-         action="activate_next_project"/>
-      <placeholder
-         name="2">
+      <menuitem name="previous" action="activate_previous_project"/>
+      <menuitem name="next" action="activate_next_project"/>
+      <placeholder name="2">
       </placeholder>
       <separator/>
-      <menuitem
-         name="move_tab_left"
-         action="move_tab_left"/>
-      <menuitem
-         name="move_tab_right"
-         action="move_tab_right"/>
-      <placeholder
-         name="3">
+      <menuitem name="move_tab_left" action="move_tab_left"/>
+      <menuitem name="move_tab_right" action="move_tab_right"/>
+      <placeholder name="3">
       </placeholder>
       <separator/>
-      <placeholder
-         name="open">
+      <placeholder name="open">
       </placeholder>
-      <placeholder
-         name="4">
+      <placeholder name="4">
       </placeholder>
     </menu>
-    <menu
-       name="help"
-       action="show_help_menu">
-      <menuitem
-         name="report_a_bug"
-         action="report_a_bug"/>
-      <menuitem
-         name="about"
-         action="view_about_dialog"/>
-      <placeholder
-         name="1">
+    <menu name="help" action="show_help_menu">
+      <menuitem name="report_a_bug" action="report_a_bug"/>
+      <menuitem name="about" action="view_about_dialog"/>
+      <placeholder name="1">
       </placeholder>
     </menu>
   </menubar>
-  <toolbar
-     name="main_toolbar">
-    <toolitem
-       name="open_main"
-       action="open_main_files"/>
-    <toolitem
-       name="save_main"
-       action="save_main_document"/>
-    <placeholder
-       name="1">
+  <toolbar name="main_toolbar">
+    <toolitem name="open_main" action="open_main_files"/>
+    <toolitem name="save_main" action="save_main_document"/>
+    <placeholder name="1">
     </placeholder>
     <separator/>
-    <toolitem
-       name="undo"
-       action="undo_action"/>
-    <toolitem
-       name="redo"
-       action="redo_action"/>
-    <placeholder
-       name="2">
+    <toolitem name="undo" action="undo_action"/>
+    <toolitem name="redo" action="redo_action"/>
+    <placeholder name="2">
     </placeholder>
     <separator/>
-    <toolitem
-       name="insert"
-       action="insert_subtitles"/>
-    <toolitem
-       name="remove"
-       action="remove_subtitles"/>
-    <placeholder
-       name="3">
+    <toolitem name="insert" action="insert_subtitles"/>
+    <toolitem name="remove" action="remove_subtitles"/>
+    <placeholder name="3">
     </placeholder>
     <separator/>
-    <toolitem
-       name="preview"
-       action="preview"/>
+    <toolitem name="preview" action="preview"/>
   </toolbar>
-  <popup
-     name="tab_popup">
-    <menuitem
-       name="move_tab_left"
-       action="move_tab_left"/>
-    <menuitem
-       name="move_tab_right"
-       action="move_tab_right"/>
-    <placeholder
-       name="1">
+  <popup name="tab_popup">
+    <menuitem name="move_tab_left" action="move_tab_left"/>
+    <menuitem name="move_tab_right" action="move_tab_right"/>
+    <placeholder name="1">
     </placeholder>
     <separator/>
-    <menuitem
-       name="close"
-       action="close_project"/>
-    <placeholder
-       name="2">
+    <menuitem name="close" action="close_project"/>
+    <placeholder name="2">
     </placeholder>
   </popup>
-  <popup
-     name="view_popup">
-    <menuitem
-       name="split"
-       action="split_subtitle"/>
-    <menuitem
-       name="merge"
-       action="merge_subtitles"/>
-    <placeholder
-       name="1">
+  <popup name="view_popup">
+    <menuitem name="split" action="split_subtitle"/>
+    <menuitem name="merge" action="merge_subtitles"/>
+    <placeholder name="1">
     </placeholder>
     <separator/>
-    <menuitem
-       name="insert"
-       action="insert_subtitles"/>
-    <menuitem
-       name="remove"
-       action="remove_subtitles"/>
-    <placeholder
-       name="2">
+    <menuitem name="insert" action="insert_subtitles"/>
+    <menuitem name="remove" action="remove_subtitles"/>
+    <placeholder name="2">
     </placeholder>
     <separator/>
-    <menuitem
-       name="preview"
-       action="preview"/>
-    <placeholder
-       name="3">
+    <menuitem name="preview" action="preview"/>
+    <placeholder name="3">
     </placeholder>
   </popup>
-  <popup
-     name="view_header_popup">
-    <menuitem
-       name="number"
-       action="toggle_number_column"/>
-    <menuitem
-       name="start"
-       action="toggle_start_column"/>
-    <menuitem
-       name="end"
-       action="toggle_end_column"/>
-    <menuitem
-       name="duration"
-       action="toggle_duration_column"/>
-    <menuitem
-       name="main_text"
-       action="toggle_main_text_column"/>
-    <menuitem
-       name="translation_text"
-       action="toggle_translation_text_column"/>
-    <placeholder
-       name="4">
+  <popup name="view_header_popup">
+    <placeholder name="0">
+    </placeholder>
+    <menuitem name="number" action="toggle_number_column"/>
+    <placeholder name="1">
+    </placeholder>
+    <menuitem name="start" action="toggle_start_column"/>
+    <placeholder name="2">
+    </placeholder>
+    <menuitem name="end" action="toggle_end_column"/>
+    <placeholder name="3">
+    </placeholder>
+    <menuitem name="duration" action="toggle_duration_column"/>
+    <placeholder name="4">
+    </placeholder>
+    <menuitem name="main_text" action="toggle_main_text_column"/>
+    <placeholder name="5">
+    </placeholder>
+    <menuitem name="translation_text" action="toggle_translation_text_column"/>
+    <placeholder name="6">
     </placeholder>
   </popup>
 </ui>
