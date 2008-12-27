@@ -25,9 +25,7 @@ class Extension(object):
 
     """Separate object that can be activated and deactivated during runtime."""
 
-    _conf_spec_file = None
-
-    def read_config(self):
+    def read_config(self, spec_file):
         """Read configurations from file according to spec_file.
 
         The configurations are read from the global gaupol configuration file
@@ -35,10 +33,9 @@ class Extension(object):
         Options are stored as global variables under gaupol.gtk.conf and are
         written to the global configuration file automatically.
         """
-        if self._conf_spec_file is None: return
         config_file = gaupol.gtk.conf.config_file
-        config = gaupol.gtk.Config(config_file, self._conf_spec_file, False)
-        dummy = gaupol.gtk.Config(None, self._conf_spec_file, False)
+        config = gaupol.gtk.Config(config_file, spec_file, False)
+        dummy = gaupol.gtk.Config(None, spec_file, False)
         config_sections = set(config["extensions"].keys())
         dummy_sections = set(dummy["extensions"].keys())
         for section in (config_sections - dummy_sections):

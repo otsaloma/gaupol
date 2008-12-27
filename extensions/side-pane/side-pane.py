@@ -248,9 +248,6 @@ class SidePaneExtension(gaupol.gtk.Extension):
 
     """A side pane that can be used by other extensions."""
 
-    _directory = os.path.dirname(__file__)
-    _conf_spec_file = os.path.join(_directory, "side-pane.conf.spec")
-
     def __init__(self):
         """Initialize a SidePaneExtension object."""
 
@@ -278,19 +275,24 @@ class SidePaneExtension(gaupol.gtk.Extension):
     def setup(self, application):
         """Setup extension for use with application."""
 
-        self.application = application
+        directory = os.path.dirname(__file__)
+        spec_file = os.path.join(directory, "side-pane.conf.spec")
+        self.read_config(spec_file)
         application.side_pane = SidePane(application)
         self._conf = gaupol.gtk.conf.extensions.side_pane
         self._action_group = gtk.ActionGroup("side-pane")
         self._action_group.add_toggle_actions((
-            ("toggle_side_pane", None, "Si_de Pane", None,
-             _("Show or hide the side pane"),
+            ("toggle_side_pane", None, "Si_de Pane",
+             None, _("Show or hide the side pane"),
              self._on_toggle_side_pane_toggled, self._conf.visible),))
         application.uim.insert_action_group(self._action_group, -1)
-        ui_file = os.path.join(self._directory, "side-pane.ui.xml")
+        ui_file = os.path.join(directory, "side-pane.ui.xml")
         self._uim_id = application.uim.add_ui_from_file(ui_file)
         callback = self._on_side_pane_close_button_clicked
         application.side_pane.connect("close-button-clicked", callback)
+        application.uim.ensure_update()
+        application.set_menu_notify_events("side-pane")
+        self.application = application
 
     def teardown(self, application):
         """End use of extension with application."""

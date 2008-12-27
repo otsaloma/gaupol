@@ -171,7 +171,6 @@ class ExtensionManager(object):
             if not inspect.isclass(value): continue
             if issubclass(value, gaupol.gtk.Extension):
                 extension = value()
-                extension.read_config()
                 extension.setup(self.application)
                 self._active[module] = extension
                 self._dependants[module] = []
