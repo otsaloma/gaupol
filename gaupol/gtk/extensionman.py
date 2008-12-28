@@ -57,7 +57,9 @@ class ExtensionManager(object):
     def _find_extensions_in_directory(self, directory):
         """Find all extensions in directory and parse their metadata files."""
 
-        is_metadata_file = lambda x: x.endswith(".gaupol-extension")
+        def is_metadata_file(path):
+            return (path.endswith(".gaupol-extension") or
+                    path.endswith(".gaupol-extension.in"))
         for (root, dirs, files) in os.walk(directory):
             for name in filter(is_metadata_file, files):
                 path = os.path.abspath(os.path.join(root, name))
@@ -178,6 +180,7 @@ class ExtensionManager(object):
             self._inferior.append(module)
         elif module in self._inferior:
             self._inferior.remove(module)
+        self.application.update_gui()
 
     def setup_extensions(self):
         """Import and setup all extensions configured as active."""
