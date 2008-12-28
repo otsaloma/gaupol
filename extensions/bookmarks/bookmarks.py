@@ -89,15 +89,15 @@ class BookmarksExtension(gaupol.gtk.Extension):
         """Add a bookmark for the current subtitle."""
 
         page = self.application.get_current_page()
-        if not id(page) in self._bookmarks:
-            self._bookmarks[id(page)] = {}
+        if not page in self._bookmarks:
+            self._bookmarks[page] = {}
         dialog = AddBookmarkDialog(self.application.window, page)
         response = dialog.run()
         row = dialog.get_row()
         description = dialog.get_description()
         dialog.destroy()
         if response != gtk.RESPONSE_OK: return
-        self._bookmarks[id(page)][row] = description
+        self._bookmarks[page][row] = description
 
     def _on_edit_bookmarks_activate(self, *args):
         """Show the bookmarks side pane."""
@@ -107,12 +107,28 @@ class BookmarksExtension(gaupol.gtk.Extension):
     def _on_next_bookmark_activate(self, *args):
         """Go to the next bookmarked subtitle."""
 
-        pass
+        page = self.application.get_current_page()
+        row = page.view.get_selected_rows()[0]
+        bookmarks = sorted(self._bookmarks[page].keys())
+        bookmarks.append(bookmarks[0])
+        for bookmark in bookmarks:
+            if bookmark > row: break
+        col = page.view.get_focus()[1]
+        page.view.set_focus(bookmark, col)
+        page.view.scroll_to_row(bookmark)
 
     def _on_previous_bookmark_activate(self, *args):
         """Go to the previous bookmarked subtitle."""
 
-        pass
+        page = self.application.get_current_page()
+        row = page.view.get_selected_rows()[0]
+        bookmarks = sorted(self._bookmarks[page].keys())
+        bookmarks.insert(0, bookmarks[-1])
+        for bookmark in reversed(bookmarks):
+            if bookmark < row: break
+        col = page.view.get_focus()[1]
+        page.view.set_focus(bookmark, col)
+        page.view.scroll_to_row(bookmark)
 
     def _on_toggle_bookmark_column_toggled(self, action, *args):
         """Show or hide the bookmark column."""
