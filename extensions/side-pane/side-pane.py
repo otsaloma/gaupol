@@ -96,7 +96,7 @@ class SidePane(gaupol.Observable):
     def _init_notebook(self, side_vbox):
         """Initialize the side pane notebook."""
 
-        self._notebook.set_show_border(True)
+        self._notebook.set_show_border(False)
         self._notebook.set_show_tabs(False)
         side_vbox.pack_start(self._notebook, True, True)
 
@@ -105,10 +105,10 @@ class SidePane(gaupol.Observable):
 
         main_vbox = self.application.window.get_children()[0]
         main_notebook = main_vbox.get_children()[2]
-        self._paned.add1(side_vbox)
+        self._paned.pack1(side_vbox, False, False)
         main_notebook_vbox = gtk.VBox()
         main_notebook.reparent(main_notebook_vbox)
-        self._paned.add2(main_notebook_vbox)
+        self._paned.pack2(main_notebook_vbox, True, False)
         main_vbox.pack_start(self._paned)
         main_vbox.reorder_child(self._paned, 2)
         self._paned.set_position(self._conf.width)
