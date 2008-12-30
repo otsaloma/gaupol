@@ -19,6 +19,7 @@
 import gaupol.gtk
 import gtk
 import os
+import pango
 _ = gaupol.i18n._
 
 
@@ -82,8 +83,71 @@ class BookmarksExtension(gaupol.gtk.Extension):
         self._action_group = None
         self._bookmarks = {}
         self._conf = None
+        self._edit_button = gtk.Button(stock=gtk.STOCK_EDIT)
+        self._jump_button = gtk.Button(stock=gtk.STOCK_JUMP_TO)
+        self._remove_button = gtk.Button(stock=gtk.STOCK_REMOVE)
+        self._search_entry = gtk.Entry()
+        self._tree_view = gtk.TreeView()
+        self._side_vbox = gtk.VBox(False, 12)
         self._uim_id = None
         self.application = None
+        self._init_tree_view()
+        self._init_signal_handlers()
+        self._init_side_pane_widget()
+
+    def _connect_page(self, page):
+        """Connect to signals emitted by page."""
+
+        pass
+
+    def _init_side_pane_widget(self):
+        """Initialize the side pane widget."""
+
+        self._side_vbox.set_border_width(6)
+        hbox = gtk.HBox(False, 6)
+        label = gtk.Label(_("_Search:"))
+        label.set_use_underline(True)
+        label.set_mnemonic_widget(self._search_entry)
+        hbox.pack_start(label, False, False)
+        hbox.pack_start(self._search_entry, True, True)
+        self._side_vbox.pack_start(hbox, False, False)
+        scroller = gtk.ScrolledWindow()
+        scroller.set_policy(*((gtk.POLICY_AUTOMATIC,) * 2))
+        scroller.set_shadow_type(gtk.SHADOW_ETCHED_IN)
+        scroller.add(self._tree_view)
+        self._side_vbox.pack_start(scroller, True, True)
+        hbox = gtk.HBox(False, 6)
+        hbox.pack_start(self._edit_button, False, False)
+        hbox.pack_start(self._remove_button, False, False)
+        hbox.pack_start(self._jump_button, False, False)
+        self._side_vbox.pack_start(hbox, False, False)
+        self._side_vbox.show_all()
+
+    def _init_signal_handlers(self):
+        """Initialize signal handlers."""
+
+        pass
+
+    def _init_tree_view(self):
+        """Initialize the side pane tree view."""
+
+        store = gtk.ListStore(bool, int, str)
+        store_filter = store.filter_new()
+        store_filter.set_visible_column(0)
+        self._tree_view.set_model(store_filter)
+        self._tree_view.set_headers_visible(False)
+        self._tree_view.set_rules_hint(True)
+        self._tree_view.set_enable_search(False)
+        selection = self._tree_view.get_selection()
+        selection.set_mode(gtk.SELECTION_SINGLE)
+        renderer = gtk.CellRendererText()
+        renderer.props.xalign = 1
+        column = gtk.TreeViewColumn("", renderer, text=1)
+        self._tree_view.append_column(column)
+        renderer = gtk.CellRendererText()
+        renderer.props.ellipsize = pango.ELLIPSIZE_END
+        column = gtk.TreeViewColumn("", renderer, text=2)
+        self._tree_view.append_column(column)
 
     def _on_add_bookmark_activate(self, *args):
         """Add a bookmark for the current subtitle."""
@@ -98,6 +162,18 @@ class BookmarksExtension(gaupol.gtk.Extension):
         dialog.destroy()
         if response != gtk.RESPONSE_OK: return
         self._bookmarks[page][row] = description
+        self._update_tree_view()
+
+    def _on_application_page_added(self, application, page):
+        """Connect to signals in added page."""
+
+        self._connect_page(page)
+
+    def _on_application_page_closed(self, application, page):
+        """Remove all data stored for closed page."""
+
+        if page in self._bookmarks:
+            del self._bookmarks[page]
 
     def _on_edit_bookmarks_activate(self, *args):
         """Show the bookmarks side pane."""
@@ -135,9 +211,23 @@ class BookmarksExtension(gaupol.gtk.Extension):
 
         self._conf.show_column = action.get_active()
 
+    def _update_tree_view(self):
+        """Update the tree view to display bookmarks for the current page."""
+
+        store_filter = self._tree_view.get_model()
+        store = store_filter.get_model()
+        store.clear()
+        page = self.application.get_current_page()
+        pattern = self._search_entry.get_text().lower()
+        for row in sorted(self._bookmarks[page].keys()):
+            description = self._bookmarks[page][row]
+            visible = (description.lower().find(pattern) >= 0)
+            store.append((visible, row + 1, description))
+
     def setup(self, application):
         """Setup extension for use with application."""
 
+        self.application = application
         directory = os.path.dirname(__file__)
         spec_file = os.path.join(directory, "bookmarks.conf.spec")
         self.read_config(spec_file)
@@ -167,7 +257,12 @@ class BookmarksExtension(gaupol.gtk.Extension):
         self._uim_id = application.uim.add_ui_from_file(ui_file)
         application.uim.ensure_update()
         application.set_menu_notify_events("bookmarks")
-        self.application = application
+        for page in application.pages:
+            self._connect_page(page)
+        gaupol.util.connect(self, "application", "page-added")
+        gaupol.util.connect(self, "application", "page-closed")
+        args = (self._side_vbox, "bookmarks", _("Bookmarks"))
+        application.side_pane.add_page(*args)
 
     def teardown(self, application):
         """End use of extension with application."""
