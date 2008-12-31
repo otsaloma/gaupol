@@ -174,6 +174,7 @@ class SidePane(gaupol.Observable):
             callback = self._on_header_menu_item_activate
             menu_item.connect("activate", callback)
             menu.append(menu_item)
+        menu.connect("deactivate", self._on_header_menu_deactivate)
         menu.show_all()
         self._toggle_button.set_active(True)
         function = self._position_header_menu
