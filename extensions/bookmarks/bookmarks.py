@@ -51,9 +51,8 @@ class AddBookmarkDialog(gaupol.Delegate):
         description = page.project.subtitles[row].main_text
         description = description.replace("\n", " ")
         description = gaupol.re_any_tag.sub("", description)
-        description = description[:24]
         self._description_entry.set_text(description)
-        self._description_entry.set_width_chars(26)
+        self._description_entry.set_width_chars(30)
 
     def get_description(self):
         """Return description of the bookmarked subtitle."""
@@ -126,7 +125,9 @@ class BookmarksExtension(gaupol.gtk.Extension):
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
-        pass
+        gaupol.util.connect(self, "_search_entry", "changed")
+        gaupol.util.connect(self, "_search_entry", "focus-in-event")
+        gaupol.util.connect(self, "_search_entry", "focus-out-event")
 
     def _init_tree_view(self):
         """Initialize the side pane tree view."""
@@ -205,6 +206,27 @@ class BookmarksExtension(gaupol.gtk.Extension):
         col = page.view.get_focus()[1]
         page.view.set_focus(bookmark, col)
         page.view.scroll_to_row(bookmark)
+
+    def _on_search_entry_changed(self, entry):
+        """Check which bookmark descriptions match the new search string."""
+
+        store_filter = self._tree_view.get_model()
+        store = store_filter.get_model()
+        pattern = entry.get_text().lower()
+        for i, (visible, number, description) in enumerate(store):
+            store[i][0] = (description.lower().find(pattern) >= 0)
+
+    def _on_search_entry_focus_in_event(self, *args):
+        """Disable unsafe UI manager actions."""
+
+        action_group = self.application.get_action_group("main-unsafe")
+        action_group.set_sensitive(False)
+
+    def _on_search_entry_focus_out_event(self, *args):
+        """Enable unsafe UI manager actions."""
+
+        action_group = self.application.get_action_group("main-unsafe")
+        action_group.set_sensitive(True)
 
     def _on_toggle_bookmark_column_toggled(self, action, *args):
         """Show or hide the bookmark column."""
