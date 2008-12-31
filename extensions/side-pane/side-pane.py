@@ -56,7 +56,7 @@ class SidePane(gaupol.Observable):
     def _init_gui(self):
         """Initialize all user interface widgets."""
 
-        side_vbox = gtk.VBox()
+        side_vbox = gtk.VBox(False, 0)
         self._init_paned(side_vbox)
         self._init_header(side_vbox)
         self._init_notebook(side_vbox)

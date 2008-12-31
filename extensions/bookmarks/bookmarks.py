@@ -87,7 +87,8 @@ class BookmarksExtension(gaupol.gtk.Extension):
         self._remove_button = gtk.Button(stock=gtk.STOCK_REMOVE)
         self._search_entry = gtk.Entry()
         self._tree_view = gtk.TreeView()
-        self._side_vbox = gtk.VBox(False, 12)
+        self._side_container = gtk.Alignment(0, 0, 1, 1)
+        self._side_vbox = gtk.VBox(False, 6)
         self._uim_id = None
         self.application = None
         self._init_tree_view()
@@ -102,7 +103,7 @@ class BookmarksExtension(gaupol.gtk.Extension):
     def _init_side_pane_widget(self):
         """Initialize the side pane widget."""
 
-        self._side_vbox.set_border_width(6)
+        self._side_vbox.set_border_width(2)
         hbox = gtk.HBox(False, 6)
         label = gtk.Label(_("_Search:"))
         label.set_use_underline(True)
@@ -120,7 +121,9 @@ class BookmarksExtension(gaupol.gtk.Extension):
         hbox.pack_start(self._remove_button, False, False)
         hbox.pack_start(self._jump_button, False, False)
         self._side_vbox.pack_start(hbox, False, False)
-        self._side_vbox.show_all()
+        self._side_container.set_padding(0, 6, 2, 0)
+        self._side_container.add(self._side_vbox)
+        self._side_container.show_all()
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
@@ -283,7 +286,7 @@ class BookmarksExtension(gaupol.gtk.Extension):
             self._connect_page(page)
         gaupol.util.connect(self, "application", "page-added")
         gaupol.util.connect(self, "application", "page-closed")
-        args = (self._side_vbox, "bookmarks", _("Bookmarks"))
+        args = (self._side_container, "bookmarks", _("Bookmarks"))
         application.side_pane.add_page(*args)
 
     def teardown(self, application):
