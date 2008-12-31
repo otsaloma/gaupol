@@ -40,13 +40,9 @@ class EditAgent(gaupol.Delegate):
         self._pref_dialog = None
 
     def _set_sensitivities(self, sensitive):
-        """Set menubar and toolbar sensitivities."""
+        """Set sensitivities of unsafe UI manager actions."""
 
-        for group in self.uim.get_action_groups():
-            group.set_sensitive(sensitive)
-        self.uim.get_widget("/ui/menubar").set_sensitive(sensitive)
-        self.uim.get_widget("/ui/main_toolbar").set_sensitive(sensitive)
-        self.video_toolbar.set_sensitive(sensitive)
+        self.get_action_group("main-unsafe").set_sensitive(sensitive)
 
     def _sync_clipboards(self, page):
         """Synchronize all clipboards to match that of page."""

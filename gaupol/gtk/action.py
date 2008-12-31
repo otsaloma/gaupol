@@ -36,11 +36,17 @@ class Action(gtk.Action):
     or undefined to use a blank string as a fallback. The 'widgets' instance
     variable defines a tuple of names of application widgets, acquirable with
     from application getattr, whose sensitivities should be synced with action.
+
+    'action_group' defines the name of the action group that the action should
+    be placed into: 'main-safe' for actions that do not conflict with widgets'
+    own built-in keybindings (e.g. clipboard keybindings in entries) and
+    'main-unsafe' for ones that do.
     """
 
     # pylint: disable-msg=W0232
 
     accelerator = ""
+    action_group = "main-unsafe"
     widgets = ()
 
     def __init__(self, name):

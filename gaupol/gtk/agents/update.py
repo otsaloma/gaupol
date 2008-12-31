@@ -52,7 +52,10 @@ class UpdateAgent(gaupol.Delegate):
     def _update_actions(self, page):
         """Update sensitivities of all UI manager actions for page."""
 
-        action_group = self.get_action_group("main")
+        action_group = self.get_action_group("main-safe")
+        for action in action_group.list_actions():
+            action.update_sensitivity(self, page)
+        action_group = self.get_action_group("main-unsafe")
         for action in action_group.list_actions():
             action.update_sensitivity(self, page)
 

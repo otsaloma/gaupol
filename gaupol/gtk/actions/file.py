@@ -32,6 +32,7 @@ class AppendFileAction(gaupol.gtk.Action):
         self.props.stock_id = gtk.STOCK_ADD
         tooltip = _("Append subtitles from file to the current project")
         self.props.tooltip = tooltip
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -50,6 +51,7 @@ class CloseAllProjectsAction(gaupol.gtk.Action):
         self.props.stock_id = gtk.STOCK_CLOSE
         self.props.tooltip =  _("Close all open projects")
         self.accelerator = "<Shift><Control>W"
+        self.action_group = "main-safe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -68,6 +70,7 @@ class CloseProjectAction(gaupol.gtk.Action):
         self.props.stock_id = gtk.STOCK_CLOSE
         self.props.tooltip = _("Close the current project")
         self.accelerator = "<Control>W"
+        self.action_group = "main-safe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -86,6 +89,7 @@ class EditHeadersAction(gaupol.gtk.Action):
         self.props.stock_id = gtk.STOCK_PROPERTIES
         self.props.tooltip = _("Edit file headers")
         self.accelerator = "<Alt>Return"
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -112,6 +116,7 @@ class NewProjectAction(gaupol.gtk.Action):
         self.props.stock_id = gtk.STOCK_NEW
         self.props.tooltip = _("Create a new project")
         self.accelerator = "<Control>N"
+        self.action_group = "main-safe"
 
 
 class OpenMainFilesAction(gaupol.gtk.Action):
@@ -129,6 +134,7 @@ class OpenMainFilesAction(gaupol.gtk.Action):
         self.props.stock_id = gtk.STOCK_OPEN
         self.props.tooltip = _("Open main files")
         self.accelerator = "<Control>O"
+        self.action_group = "main-safe"
         self.set_tool_item_type(gtk.MenuToolButton)
 
 
@@ -143,6 +149,7 @@ class OpenTranslationFileAction(gaupol.gtk.Action):
         self.props.short_label = _("Open Translation")
         self.props.stock_id = gtk.STOCK_OPEN
         self.props.tooltip = _("Open a translation file")
+        self.action_group = "main-safe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -162,6 +169,7 @@ class QuitAction(gaupol.gtk.Action):
         self.props.stock_id = gtk.STOCK_QUIT
         self.props.tooltip = _("Quit Gaupol")
         self.accelerator = "<Control>Q"
+        self.action_group = "main-safe"
 
 
 class SaveAllDocumentsAction(gaupol.gtk.Action):
@@ -175,6 +183,7 @@ class SaveAllDocumentsAction(gaupol.gtk.Action):
         self.props.stock_id = gtk.STOCK_SAVE
         self.props.tooltip = _("Save all open documents")
         self.accelerator = "<Shift><Control>L"
+        self.action_group = "main-safe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -194,6 +203,7 @@ class SaveMainDocumentAction(gaupol.gtk.Action):
         self.props.stock_id = gtk.STOCK_SAVE
         self.props.tooltip = _("Save the current main document")
         self.accelerator = "<Control>S"
+        self.action_group = "main-safe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -214,6 +224,7 @@ class SaveMainDocumentAsAction(gaupol.gtk.Action):
         tooltip = _("Save the current main document with a different name")
         self.props.tooltip = tooltip
         self.accelerator = "<Shift><Control>S"
+        self.action_group = "main-safe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -232,6 +243,7 @@ class SaveTranslationDocumentAction(gaupol.gtk.Action):
         self.props.stock_id = gtk.STOCK_SAVE
         self.props.tooltip = _("Save the current translation document")
         self.accelerator = "<Control>T"
+        self.action_group = "main-safe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -252,6 +264,7 @@ class SaveTranslationDocumentAsAction(gaupol.gtk.Action):
         tip = _("Save the current translation document with a different name")
         self.props.tooltip = tip
         self.accelerator = "<Shift><Control>T"
+        self.action_group = "main-safe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -270,6 +283,7 @@ class SelectVideoFileAction(gaupol.gtk.Action):
         self.props.short_label = _("Video")
         self.props.stock_id = gtk.STOCK_FILE
         self.props.tooltip = _("Select a video file")
+        self.action_group = "main-safe"
         self.widgets = ("video_button",)
 
     def _affirm_doable(self, application, page):
@@ -288,6 +302,7 @@ class ShowRecentMainMenuAction(gaupol.gtk.Action):
         gaupol.gtk.Action.__init__(self, "show_recent_main_menu")
         self.props.label = _("Open _Recent")
         self.props.is_important = True
+        self.action_group = "main-safe"
 
 
 class ShowRecentTranslationMenuAction(gaupol.gtk.Action):
@@ -299,6 +314,7 @@ class ShowRecentTranslationMenuAction(gaupol.gtk.Action):
         gaupol.gtk.Action.__init__(self, "show_recent_translation_menu")
         self.props.label = _("Open R_ecent Translation")
         self.props.is_important = True
+        self.action_group = "main-safe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -315,6 +331,7 @@ class SplitProjectAction(gaupol.gtk.Action):
         gaupol.gtk.Action.__init__(self, "split_project")
         self.props.label = _("Spli_t Project\342\200\246")
         self.props.tooltip = _("Split the current project in two")
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""

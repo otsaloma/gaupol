@@ -29,6 +29,7 @@ class ShowCaseMenuAction(gaupol.gtk.MenuAction):
 
         gaupol.gtk.MenuAction.__init__(self, "show_case_menu")
         self.props.label = _("Ca_se")
+        self.action_group = "main-safe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -50,6 +51,7 @@ class ToggleDialogDashesAction(gaupol.gtk.Action):
         tooltip = _("Add or remove dialogue dashes on the selected texts")
         self.props.tooltip = tooltip
         self.accelerator = "D"
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -71,6 +73,7 @@ class ToggleItalicizationAction(gaupol.gtk.Action):
         self.props.stock_id = gtk.STOCK_ITALIC
         self.props.tooltip = _("Italicize or unitalicize the selected texts")
         self.accelerator = "I"
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -94,6 +97,7 @@ class UseLowerCaseAction(gaupol.gtk.Action):
         gaupol.gtk.Action.__init__(self, "use_lower_case")
         self.props.label = _("_Lower")
         self.props.tooltip = _("Change the selected texts to lower case")
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -113,6 +117,7 @@ class UseSentenceCaseAction(gaupol.gtk.Action):
         gaupol.gtk.Action.__init__(self, "use_sentence_case")
         self.props.label = _("_Sentence")
         self.props.tooltip = _("Change the selected texts to sentence case")
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -132,6 +137,7 @@ class UseTitleCaseAction(gaupol.gtk.Action):
         gaupol.gtk.Action.__init__(self, "use_title_case")
         self.props.label = _("_Title")
         self.props.tooltip = _("Change the selected texts to title case")
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -149,6 +155,7 @@ class UseUpperCaseAction(gaupol.gtk.Action):
         gaupol.gtk.Action.__init__(self, "use_upper_case")
         self.props.label = _("_Upper")
         self.props.tooltip = _("Change the selected texts to upper case")
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""

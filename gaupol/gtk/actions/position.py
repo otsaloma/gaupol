@@ -30,6 +30,7 @@ class AdjustDurationsAction(gaupol.gtk.Action):
         gaupol.gtk.Action.__init__(self, "adjust_durations")
         self.props.label = _("Adjust _Durations\342\200\246")
         self.props.tooltip = _("Lengthen or shorten durations")
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -46,6 +47,7 @@ class ConvertFramerateAction(gaupol.gtk.Action):
         gaupol.gtk.Action.__init__(self, "convert_framerate")
         self.props.label = _("Convert _Framerate\342\200\246")
         self.props.tooltip = _("Change positions for a different framerate")
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -66,6 +68,7 @@ class PreviewAction(gaupol.gtk.Action):
         tooltip = _("Preview from selected position with a video player")
         self.props.tooltip = tooltip
         self.accelerator = "P"
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -91,6 +94,7 @@ class ShiftPositionsAction(gaupol.gtk.Action):
         self.props.label = _("_Shift Positions\342\200\246")
         self.props.tooltip = _("Make subtitles appear earlier or later")
         self.accelerator = "H"
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -108,6 +112,7 @@ class TransformPositionsAction(gaupol.gtk.Action):
         self.props.label = _("_Transform Positions\342\200\246")
         tooltip = _("Change positions by linear two-point correction")
         self.props.tooltip = tooltip
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""

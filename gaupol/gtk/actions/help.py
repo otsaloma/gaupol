@@ -30,6 +30,7 @@ class ReportABugAction(gaupol.gtk.Action):
         gaupol.gtk.Action.__init__(self, "report_a_bug")
         self.props.label = _("_Report A Bug")
         self.props.tooltip = _("Submit a bug report")
+        self.action_group = "main-safe"
 
 
 class ViewAboutDialogAction(gaupol.gtk.Action):
@@ -42,6 +43,7 @@ class ViewAboutDialogAction(gaupol.gtk.Action):
         self.props.label = _("_About")
         self.props.stock_id = gtk.STOCK_ABOUT
         self.props.tooltip = _("Show information about Gaupol")
+        self.action_group = "main-safe"
 
 
 __all__ = gaupol.util.get_all(dir(), r"Action$")

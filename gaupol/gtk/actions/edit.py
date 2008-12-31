@@ -32,6 +32,7 @@ class ClearTextsAction(gaupol.gtk.Action):
         self.props.stock_id = gtk.STOCK_CLEAR
         self.props.tooltip = _("Clear the selected texts")
         self.accelerator = "C"
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -53,6 +54,7 @@ class CopyTextsAction(gaupol.gtk.Action):
         self.props.stock_id = gtk.STOCK_COPY
         self.props.tooltip = _("Copy the selected texts to the clipboard")
         self.accelerator = "<Control>C"
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -74,6 +76,7 @@ class CutTextsAction(gaupol.gtk.Action):
         self.props.stock_id = gtk.STOCK_CUT
         self.props.tooltip = _("Cut the selected texts to the clipboard")
         self.accelerator = "<Control>X"
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -94,6 +97,7 @@ class EditPreferencesAction(gaupol.gtk.Action):
         self.props.label = _("_Preferences")
         self.props.stock_id = gtk.STOCK_PREFERENCES
         self.props.tooltip = _("Configure Gaupol")
+        self.action_group = "main-safe"
 
 
 class EditNextValueAction(gaupol.gtk.Action):
@@ -108,6 +112,7 @@ class EditNextValueAction(gaupol.gtk.Action):
         self.props.stock_id = gtk.STOCK_EDIT
         self.props.tooltip = _("Edit the focused column of the next subtitle")
         self.accelerator = "space"
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -132,6 +137,7 @@ class EditValueAction(gaupol.gtk.Action):
         self.props.stock_id = gtk.STOCK_EDIT
         self.props.tooltip = _("Edit the focused cell")
         self.accelerator = "Return"
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -153,6 +159,7 @@ class ExtendSelectionToBeginningAction(gaupol.gtk.Action):
         tip = _("Extend the current selection up to the first subtitle")
         self.props.tooltip = tip
         self.accelerator = "<Shift><Control>Home"
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -173,6 +180,7 @@ class ExtendSelectionToEndAction(gaupol.gtk.Action):
         tip = _("Extend the current selection up to the last subtitle")
         self.props.tooltip = tip
         self.accelerator = "<Shift><Control>End"
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -194,6 +202,7 @@ class InsertSubtitlesAction(gaupol.gtk.Action):
         self.props.stock_id = gtk.STOCK_ADD
         self.props.tooltip = _("Insert subtitles")
         self.accelerator = "Insert"
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -213,6 +222,7 @@ class InvertSelectionAction(gaupol.gtk.Action):
         self.props.label = _("_Invert Selection")
         self.props.tooltip = _("Invert the current selection")
         self.accelerator = "<Control>I"
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -231,6 +241,7 @@ class MergeSubtitlesAction(gaupol.gtk.Action):
         self.props.label = _("_Merge Subtitles")
         self.props.tooltip = _("Merge the selected subtitles")
         self.accelerator = "M"
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -252,6 +263,7 @@ class PasteTextsAction(gaupol.gtk.Action):
         self.props.stock_id = gtk.STOCK_PASTE
         self.props.tooltip = _("Paste texts from the clipboard")
         self.accelerator = "<Control>V"
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -276,6 +288,7 @@ class RedoActionAction(gaupol.gtk.Action):
         self.props.stock_id = gtk.STOCK_REDO
         self.props.tooltip = _("Redo the last undone action")
         self.accelerator = "<Shift><Control>Z"
+        self.action_group = "main-unsafe"
         self.set_tool_item_type(gtk.MenuToolButton)
 
     def _affirm_doable(self, application, page):
@@ -297,6 +310,7 @@ class RemoveSubtitlesAction(gaupol.gtk.Action):
         self.props.stock_id = gtk.STOCK_REMOVE
         self.props.tooltip = _("Remove the selected subtitles")
         self.accelerator = "Delete"
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -316,6 +330,7 @@ class SelectAllAction(gaupol.gtk.Action):
         self.props.stock_id = gtk.STOCK_SELECT_ALL
         self.props.tooltip = _("Select all subtitles")
         self.accelerator = "<Control>A"
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -332,6 +347,7 @@ class ShowSelectionMenuAction(gaupol.gtk.MenuAction):
 
         gaupol.gtk.MenuAction.__init__(self, "show_selection_menu")
         self.props.label = _("Sele_ction")
+        self.action_group = "main-safe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -350,6 +366,7 @@ class SplitSubtitleAction(gaupol.gtk.Action):
         self.props.label = _("_Split Subtitle")
         self.props.tooltip = _("Split the selected subtitle")
         self.accelerator = "S"
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -372,6 +389,7 @@ class UndoActionAction(gaupol.gtk.Action):
         self.props.stock_id = gtk.STOCK_UNDO
         self.props.tooltip = _("Undo the last action")
         self.accelerator = "<Control>Z"
+        self.action_group = "main-unsafe"
         self.set_tool_item_type(gtk.MenuToolButton)
 
     def _affirm_doable(self, application, page):

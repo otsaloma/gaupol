@@ -30,6 +30,7 @@ class ActivateNextProjectAction(gaupol.gtk.Action):
         self.props.label = _("_Next")
         self.props.tooltip = _("Activate the project in the next tab")
         self.accelerator = "<Control>Page_Down"
+        self.action_group = "main-safe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -49,6 +50,7 @@ class ActivatePreviousProjectAction(gaupol.gtk.Action):
         self.props.label = _("_Previous")
         self.props.tooltip = _("Activate the project in the previous tab")
         self.accelerator = "<Control>Page_Up"
+        self.action_group = "main-safe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -66,6 +68,7 @@ class MoveTabLeftAction(gaupol.gtk.Action):
         gaupol.gtk.Action.__init__(self, "move_tab_left")
         self.props.label = _("Move Tab _Left")
         self.props.tooltip = _("Move the current tab to the left")
+        self.action_group = "main-safe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -83,6 +86,7 @@ class MoveTabRightAction(gaupol.gtk.Action):
         gaupol.gtk.Action.__init__(self, "move_tab_right")
         self.props.label = _("Move Tab _Right")
         self.props.tooltip = _("Move the current tab to the right")
+        self.action_group = "main-safe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -99,6 +103,7 @@ class ShowColumnsMenuAction(gaupol.gtk.MenuAction):
 
         gaupol.gtk.MenuAction.__init__(self, "show_columns_menu")
         self.props.label = _("_Columns")
+        self.action_group = "main-safe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -119,6 +124,7 @@ class ShowFramerate24Action(gaupol.gtk.RadioAction):
         tooltip = _("Calculate nonnative units with framerate 24 fps")
         self.props.tooltip = tooltip
         self.props.value = gaupol.framerates.FPS_24
+        self.action_group = "main-unsafe"
         self.framerate = gaupol.framerates.FPS_24
         self.group = "ShowFramerate24Action"
 
@@ -142,6 +148,7 @@ class ShowFramerate25Action(gaupol.gtk.RadioAction):
         tooltip = _("Calculate nonnative units with framerate 25 fps")
         self.props.tooltip = tooltip
         self.props.value = gaupol.framerates.FPS_25
+        self.action_group = "main-unsafe"
         self.framerate = gaupol.framerates.FPS_25
         self.group = "ShowFramerate24Action"
 
@@ -165,6 +172,7 @@ class ShowFramerate30Action(gaupol.gtk.RadioAction):
         tooltip = _("Calculate nonnative units with framerate 30 fps")
         self.props.tooltip = tooltip
         self.props.value = gaupol.framerates.FPS_30
+        self.action_group = "main-unsafe"
         self.framerate = gaupol.framerates.FPS_30
         self.group = "ShowFramerate24Action"
 
@@ -183,6 +191,7 @@ class ShowFramerateMenuAction(gaupol.gtk.MenuAction):
 
         gaupol.gtk.MenuAction.__init__(self, "show_framerate_menu")
         self.props.label = _("F_ramerate")
+        self.action_group = "main-safe"
         self.widgets = ("framerate_combo",)
 
     def _affirm_doable(self, application, page):
@@ -205,6 +214,7 @@ class ShowFramesAction(gaupol.gtk.RadioAction):
         self.props.tooltip = _("Show positions as frames")
         self.props.value = gaupol.modes.FRAME
         self.accelerator = "<Shift>T"
+        self.action_group = "main-unsafe"
         self.group = "ShowTimesAction"
         self.mode = gaupol.modes.FRAME
 
@@ -227,6 +237,7 @@ class ShowTimesAction(gaupol.gtk.RadioAction):
         self.props.tooltip = _("Show positions as times")
         self.props.value = gaupol.modes.TIME
         self.accelerator = "T"
+        self.action_group = "main-unsafe"
         self.group = "ShowTimesAction"
         self.mode = gaupol.modes.TIME
 
@@ -247,6 +258,7 @@ class ToggleDurationColumnAction(gaupol.gtk.ToggleAction):
         self.props.active = gaupol.gtk.fields.DURATION in fields
         self.props.label = _("_Duration")
         self.props.tooltip = _('Show or hide the "Duration" column')
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -265,6 +277,7 @@ class ToggleEndColumnAction(gaupol.gtk.ToggleAction):
         self.props.active = gaupol.gtk.fields.END in fields
         self.props.label = _("_End")
         self.props.tooltip = _('Show or hide the "End" column')
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -283,6 +296,7 @@ class ToggleMainTextColumnAction(gaupol.gtk.ToggleAction):
         self.props.active = gaupol.gtk.fields.MAIN_TEXT in fields
         self.props.label = _("_Main Text")
         self.props.tooltip = _('Show or hide the "Main Text" column')
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -301,6 +315,7 @@ class ToggleMainToolbarAction(gaupol.gtk.ToggleAction):
         self.props.active = show
         self.props.label = _("_Main Toolbar")
         self.props.tooltip = _("Show or hide the main toolbar")
+        self.action_group = "main-safe"
 
 
 class ToggleNumberColumnAction(gaupol.gtk.ToggleAction):
@@ -314,6 +329,7 @@ class ToggleNumberColumnAction(gaupol.gtk.ToggleAction):
         self.props.active = gaupol.gtk.fields.NUMBER in fields
         self.props.label = _("_No.")
         self.props.tooltip = _('Show or hide the "No." column')
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -331,6 +347,7 @@ class ToggleOutputWindowAction(gaupol.gtk.ToggleAction):
         self.props.active = gaupol.gtk.conf.output_window.show
         self.props.label = _("_Output Window")
         self.props.tooltip = _("Show or hide the output window")
+        self.action_group = "main-safe"
 
 
 class ToggleStartColumnAction(gaupol.gtk.ToggleAction):
@@ -344,6 +361,7 @@ class ToggleStartColumnAction(gaupol.gtk.ToggleAction):
         self.props.active = gaupol.gtk.fields.START in fields
         self.props.label = _("_Start")
         self.props.tooltip = _('Show or hide the "Start" column')
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -361,6 +379,7 @@ class ToggleStatusbarAction(gaupol.gtk.ToggleAction):
         self.props.active = gaupol.gtk.conf.application_window.show_statusbar
         self.props.label = _("_Statusbar")
         self.props.tooltip = _("Show or hide the statusbar")
+        self.action_group = "main-safe"
 
 
 class ToggleTranslationTextColumnAction(gaupol.gtk.ToggleAction):
@@ -375,6 +394,7 @@ class ToggleTranslationTextColumnAction(gaupol.gtk.ToggleAction):
         self.props.active = gaupol.gtk.fields.TRAN_TEXT in fields
         self.props.label = _("_Translation Text")
         self.props.tooltip = _('Show or hide the "Translation Text" column')
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -393,6 +413,7 @@ class ToggleVideoToolbarAction(gaupol.gtk.ToggleAction):
         self.props.active = show
         self.props.label = _("_Video Toolbar")
         self.props.tooltip = _("Show or hide the video toolbar")
+        self.action_group = "main-safe"
 
 
 __all__ = gaupol.util.get_all(dir(), r"Action$")

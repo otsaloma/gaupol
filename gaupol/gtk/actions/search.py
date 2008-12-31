@@ -33,6 +33,7 @@ class FindAndReplaceAction(gaupol.gtk.Action):
         self.props.stock_id = gtk.STOCK_FIND_AND_REPLACE
         self.props.tooltip = _("Search for and replace text")
         self.accelerator = "<Control>F"
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -50,6 +51,7 @@ class FindNextAction(gaupol.gtk.Action):
         self.props.label = _("Find _Next")
         self.props.tooltip = _("Search forwards for same text")
         self.accelerator = "<Control>G"
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -68,6 +70,7 @@ class FindPreviousAction(gaupol.gtk.Action):
         self.props.label = _("Find Pre_vious")
         self.props.tooltip = _("Search backwards for same text")
         self.accelerator = "<Shift><Control>G"
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""

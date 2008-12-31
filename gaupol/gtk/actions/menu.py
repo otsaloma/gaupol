@@ -28,6 +28,7 @@ class ShowEditMenuAction(gaupol.gtk.TopMenuAction):
 
         gaupol.gtk.TopMenuAction.__init__(self, "show_edit_menu")
         self.props.label = _("_Edit")
+        self.action_group = "main-safe"
 
 
 class ShowFileMenuAction(gaupol.gtk.TopMenuAction):
@@ -38,6 +39,7 @@ class ShowFileMenuAction(gaupol.gtk.TopMenuAction):
 
         gaupol.gtk.TopMenuAction.__init__(self, "show_file_menu")
         self.props.label = _("_File")
+        self.action_group = "main-safe"
 
 
 class ShowHelpMenuAction(gaupol.gtk.TopMenuAction):
@@ -48,6 +50,7 @@ class ShowHelpMenuAction(gaupol.gtk.TopMenuAction):
 
         gaupol.gtk.TopMenuAction.__init__(self, "show_help_menu")
         self.props.label = _("_Help")
+        self.action_group = "main-safe"
 
 
 class ShowProjectsMenuAction(gaupol.gtk.TopMenuAction):
@@ -58,6 +61,7 @@ class ShowProjectsMenuAction(gaupol.gtk.TopMenuAction):
 
         gaupol.gtk.TopMenuAction.__init__(self, "show_projects_menu")
         self.props.label = _("_Projects")
+        self.action_group = "main-safe"
 
 
 class ShowTextMenuAction(gaupol.gtk.TopMenuAction):
@@ -68,6 +72,7 @@ class ShowTextMenuAction(gaupol.gtk.TopMenuAction):
 
         gaupol.gtk.TopMenuAction.__init__(self, "show_text_menu")
         self.props.label = _("_Text")
+        self.action_group = "main-safe"
 
 
 class ShowToolsMenuAction(gaupol.gtk.TopMenuAction):
@@ -78,6 +83,7 @@ class ShowToolsMenuAction(gaupol.gtk.TopMenuAction):
 
         gaupol.gtk.TopMenuAction.__init__(self, "show_tools_menu")
         self.props.label = _("T_ools")
+        self.action_group = "main-safe"
 
 
 class ShowViewMenuAction(gaupol.gtk.TopMenuAction):
@@ -88,6 +94,7 @@ class ShowViewMenuAction(gaupol.gtk.TopMenuAction):
 
         gaupol.gtk.TopMenuAction.__init__(self, "show_view_menu")
         self.props.label = _("_View")
+        self.action_group = "main-safe"
 
 
 __all__ = gaupol.util.get_all(dir(), r"Action$")

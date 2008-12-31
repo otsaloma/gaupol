@@ -98,7 +98,10 @@ class Application(gaupol.Observable, gaupol.gtk.Runner):
     def _finalize_uim_actions(self):
         """Connect actions to widgets and methods."""
 
-        action_group = self.get_action_group("main")
+        action_group = self.get_action_group("main-safe")
+        for action in action_group.list_actions():
+            action.finalize(self)
+        action_group = self.get_action_group("main-unsafe")
         for action in action_group.list_actions():
             action.finalize(self)
 
@@ -154,7 +157,8 @@ class Application(gaupol.Observable, gaupol.gtk.Runner):
         self.window.add(vbox)
         vbox.show_all()
         self._init_visibilities()
-        self.set_menu_notify_events("main")
+        self.set_menu_notify_events("main-safe")
+        self.set_menu_notify_events("main-unsafe")
         self._finalize_uim_actions()
 
     def _init_main_toolbar(self, vbox):
@@ -230,12 +234,19 @@ class Application(gaupol.Observable, gaupol.gtk.Runner):
         """Initialize the UI manager."""
 
         self.uim = gtk.UIManager()
-        action_group = gtk.ActionGroup("main")
+        safe_group = gtk.ActionGroup("main-safe")
+        unsafe_group = gtk.ActionGroup("main-unsafe")
         for name in gaupol.gtk.actions.__all__:
             action = getattr(gaupol.gtk.actions, name)()
-            action_group.add_action_with_accel(action, action.accelerator)
-        self._init_uim_radio_groups(action_group)
-        self.uim.insert_action_group(action_group, 0)
+            args = (action, action.accelerator)
+            if action.action_group == "main-safe":
+                safe_group.add_action_with_accel(*args)
+            elif action.action_group == "main-unsafe":
+                unsafe_group.add_action_with_accel(*args)
+        self._init_uim_radio_groups(safe_group)
+        self._init_uim_radio_groups(unsafe_group)
+        self.uim.insert_action_group(safe_group, 0)
+        self.uim.insert_action_group(unsafe_group, 1)
         action_group = gtk.ActionGroup("projects")
         self.uim.insert_action_group(action_group, -1)
         ui_xml_file = os.path.join(gaupol.DATA_DIR, "ui", "ui.xml")

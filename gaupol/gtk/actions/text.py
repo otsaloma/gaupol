@@ -30,6 +30,7 @@ class ConfigureSpellCheckAction(gaupol.gtk.Action):
         gaupol.gtk.Action.__init__(self, "configure_spell_check")
         self.props.label = _("Co_nfigure Spell-check\342\200\246")
         self.props.tooltip = _("Set language and spell-check target")
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -49,6 +50,7 @@ class CheckSpellingAction(gaupol.gtk.Action):
         self.props.stock_id = gtk.STOCK_SPELL_CHECK
         self.props.tooltip = _("Check for incorrect spelling")
         self.accelerator = "F7"
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -68,6 +70,7 @@ class CorrectTextsAction(gaupol.gtk.Action):
         self.props.label = _("C_orrect Texts\342\200\246")
         self.props.tooltip = _("Find and correct errors in texts")
         self.accelerator = "O"
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
