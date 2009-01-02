@@ -103,7 +103,7 @@ class ShowColumnsMenuAction(gaupol.gtk.MenuAction):
 
         gaupol.gtk.MenuAction.__init__(self, "show_columns_menu")
         self.props.label = _("_Columns")
-        self.action_group = "main-safe"
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
@@ -191,7 +191,7 @@ class ShowFramerateMenuAction(gaupol.gtk.MenuAction):
 
         gaupol.gtk.MenuAction.__init__(self, "show_framerate_menu")
         self.props.label = _("F_ramerate")
-        self.action_group = "main-safe"
+        self.action_group = "main-unsafe"
         self.widgets = ("framerate_combo",)
 
     def _affirm_doable(self, application, page):

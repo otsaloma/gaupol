@@ -347,7 +347,7 @@ class ShowSelectionMenuAction(gaupol.gtk.MenuAction):
 
         gaupol.gtk.MenuAction.__init__(self, "show_selection_menu")
         self.props.label = _("Sele_ction")
-        self.action_group = "main-safe"
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""

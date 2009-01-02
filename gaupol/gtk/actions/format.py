@@ -29,7 +29,7 @@ class ShowCaseMenuAction(gaupol.gtk.MenuAction):
 
         gaupol.gtk.MenuAction.__init__(self, "show_case_menu")
         self.props.label = _("Ca_se")
-        self.action_group = "main-safe"
+        self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
         """Raise AssertionError if action cannot be done."""
