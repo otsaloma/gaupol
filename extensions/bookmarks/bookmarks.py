@@ -82,9 +82,6 @@ class BookmarksExtension(gaupol.gtk.Extension):
         self._action_group = None
         self._bookmarks = {}
         self._conf = None
-        self._edit_button = gtk.Button(stock=gtk.STOCK_EDIT)
-        self._jump_button = gtk.Button(stock=gtk.STOCK_JUMP_TO)
-        self._remove_button = gtk.Button(stock=gtk.STOCK_REMOVE)
         self._search_entry = gtk.Entry()
         self._tree_view = gtk.TreeView()
         self._side_container = gtk.Alignment(0, 0, 1, 1)
@@ -105,9 +102,7 @@ class BookmarksExtension(gaupol.gtk.Extension):
 
         self._side_vbox.set_border_width(2)
         hbox = gtk.HBox(False, 6)
-        label = gtk.Label(_("_Search:"))
-        label.set_use_underline(True)
-        label.set_mnemonic_widget(self._search_entry)
+        label = gtk.Label(_("Search:"))
         hbox.pack_start(label, False, False)
         hbox.pack_start(self._search_entry, True, True)
         self._side_vbox.pack_start(hbox, False, False)
@@ -116,11 +111,6 @@ class BookmarksExtension(gaupol.gtk.Extension):
         scroller.set_shadow_type(gtk.SHADOW_ETCHED_IN)
         scroller.add(self._tree_view)
         self._side_vbox.pack_start(scroller, True, True)
-        hbox = gtk.HBox(False, 6)
-        hbox.pack_start(self._edit_button, False, False)
-        hbox.pack_start(self._remove_button, False, False)
-        hbox.pack_start(self._jump_button, False, False)
-        self._side_vbox.pack_start(hbox, False, False)
         self._side_container.set_padding(0, 6, 2, 0)
         self._side_container.add(self._side_vbox)
         self._side_container.show_all()
