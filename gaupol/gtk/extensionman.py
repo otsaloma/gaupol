@@ -247,6 +247,7 @@ class ExtensionManager(object):
             self.teardown_extension(module, True)
 
     def update_extensions(self, page):
+        """Call update on all active extensions."""
 
         for name, extension in self._active.iteritems():
             extension.update(self.application, page)
