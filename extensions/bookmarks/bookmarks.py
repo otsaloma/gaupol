@@ -83,9 +83,9 @@ class BookmarksExtension(gaupol.gtk.Extension):
         self._bookmarks = {}
         self._conf = None
         self._search_entry = gtk.Entry()
-        self._tree_view = gtk.TreeView()
         self._side_container = gtk.Alignment(0, 0, 1, 1)
         self._side_vbox = gtk.VBox(False, 6)
+        self._tree_view = gtk.TreeView()
         self._uim_id = None
         self.application = None
         self._init_tree_view()
@@ -119,8 +119,6 @@ class BookmarksExtension(gaupol.gtk.Extension):
         """Initialize signal handlers."""
 
         gaupol.util.connect(self, "_search_entry", "changed")
-        gaupol.util.connect(self, "_search_entry", "focus-in-event")
-        gaupol.util.connect(self, "_search_entry", "focus-out-event")
 
     def _init_tree_view(self):
         """Initialize the side pane tree view."""
@@ -138,7 +136,7 @@ class BookmarksExtension(gaupol.gtk.Extension):
         renderer.props.xalign = 1
         column = gtk.TreeViewColumn("", renderer, text=1)
         self._tree_view.append_column(column)
-        renderer = gtk.CellRendererText()
+        renderer.props.editable = True
         renderer.props.ellipsize = pango.ELLIPSIZE_END
         column = gtk.TreeViewColumn("", renderer, text=2)
         self._tree_view.append_column(column)
@@ -208,18 +206,6 @@ class BookmarksExtension(gaupol.gtk.Extension):
         pattern = entry.get_text().lower()
         for i, (visible, number, description) in enumerate(store):
             store[i][0] = (description.lower().find(pattern) >= 0)
-
-    def _on_search_entry_focus_in_event(self, *args):
-        """Disable unsafe UI manager actions."""
-
-        action_group = self.application.get_action_group("main-unsafe")
-        action_group.set_sensitive(False)
-
-    def _on_search_entry_focus_out_event(self, *args):
-        """Enable unsafe UI manager actions."""
-
-        action_group = self.application.get_action_group("main-unsafe")
-        action_group.set_sensitive(True)
 
     def _on_toggle_bookmark_column_toggled(self, action, *args):
         """Show or hide the bookmark column."""

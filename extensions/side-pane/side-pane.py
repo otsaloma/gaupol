@@ -52,6 +52,7 @@ class SidePane(gaupol.Observable):
         self._toggle_button = gtk.ToggleButton()
         self.application = application
         self._init_gui()
+        self._init_signal_handlers()
 
     def _init_gui(self):
         """Initialize all user interface widgets."""
@@ -63,6 +64,12 @@ class SidePane(gaupol.Observable):
         self._paned.show_all()
         child = self._paned.get_child1()
         child.props.visible = self._conf.visible
+
+    def _init_signal_handlers(self):
+        """Initialize signal handlers."""
+
+        callback = self._on_application_window_set_focus
+        self.application.window.connect("set-focus", callback)
 
     def _init_header(self, side_vbox):
         """Initialize the side pane header."""
@@ -112,6 +119,18 @@ class SidePane(gaupol.Observable):
         main_vbox.pack_start(self._paned)
         main_vbox.reorder_child(self._paned, 2)
         self._paned.set_position(self._conf.width)
+
+    def _on_application_window_set_focus(self, window, widget):
+        """Disable unsafe UI manager actions.
+
+        Disabling unsafe UI manager actions allows the side pane to contain any
+        widgets that can have input focus and can have their own keybindings,
+        without being in conflict with the keybindings of UI manager actions.
+        """
+        if widget is None: return
+        action_group = self.application.get_action_group("main-unsafe")
+        sensitive = not widget.is_ancestor(self._paned.get_child1())
+        action_group.set_sensitive(sensitive)
 
     def _on_header_close_button_clicked(self, button):
         """Hide the side pane from the main window."""
