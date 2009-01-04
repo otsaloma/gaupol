@@ -119,6 +119,7 @@ class BookmarksExtension(gaupol.gtk.Extension):
         """Initialize signal handlers."""
 
         gaupol.util.connect(self, "_search_entry", "changed")
+        gaupol.util.connect(self, "_tree_view", "key-press-event")
 
     def _init_tree_view(self):
         """Initialize the side pane tree view."""
@@ -132,12 +133,15 @@ class BookmarksExtension(gaupol.gtk.Extension):
         self._tree_view.set_enable_search(False)
         selection = self._tree_view.get_selection()
         selection.set_mode(gtk.SELECTION_SINGLE)
+        selection.connect("changed", self._on_tree_view_selection_changed)
         renderer = gtk.CellRendererText()
         renderer.props.xalign = 1
         column = gtk.TreeViewColumn("", renderer, text=1)
         self._tree_view.append_column(column)
+        renderer.props.xalign = 0
         renderer.props.editable = True
         renderer.props.ellipsize = pango.ELLIPSIZE_END
+        renderer.connect("edited", self._on_tree_view_cell_edited)
         column = gtk.TreeViewColumn("", renderer, text=2)
         self._tree_view.append_column(column)
 
@@ -211,6 +215,37 @@ class BookmarksExtension(gaupol.gtk.Extension):
         """Show or hide the bookmark column."""
 
         self._conf.show_column = action.get_active()
+
+    def _on_tree_view_cell_edited(self, renderer, path, new_text):
+        """Update the description in the list store model of the tree view."""
+
+        store = self._tree_view.get_model().get_model()
+        store[path][2] = unicode(new_text)
+
+    def _on_tree_view_key_press_event(self, tree_view, event):
+        """Remove selected bookmark if Delete key pressed."""
+
+        if event.keyval != gtk.keysyms.Delete: return
+        selection = self._tree_view.get_selection()
+        store, tree_iter = selection.get_selected()
+        if tree_iter is None: return
+        path = store.get_path(tree_iter)
+        del store[path]
+        row = store[path][1] - 1
+        page = self.application.get_current_page()
+        del self._bookmarks[page][row]
+
+    def _on_tree_view_selection_changed(self, selection):
+        """Jump to the subtitle of the selected bookmark."""
+
+        store, tree_iter = selection.get_selected()
+        if tree_iter is None: return
+        path = store.get_path(tree_iter)
+        row = store[path][1] - 1
+        page = self.application.get_current_page()
+        col = page.view.get_focus()[1]
+        page.view.set_focus(row, col)
+        page.view.scroll_to_row(row)
 
     def _update_tree_view(self):
         """Update the tree view to display bookmarks for the current page."""
