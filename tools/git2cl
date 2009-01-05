@@ -366,7 +366,7 @@ while (my $_l = <$fh>) {
             $msg = Text::Wrap::fill("\t", "\t", $msg);
             $msg =~ s/\s+$//g;
             print "$files:\n$msg\n\n";
-        } else {
+        } elsif (scalar(@files) == 1) {
             # For only one changed file, put the log message on the same line
             # as the filename and fill that combination as paragraphs.
             print (strftime "%Y-%m-%d  $author\n\n", @date);
@@ -375,6 +375,9 @@ while (my $_l = <$fh>) {
             $entry =~ s/\s+$//g;
             $entry =~ s/^\t /\t/g;
             print "$entry\n\n";
+        } elsif (scalar(@files) == 0) {
+            # If no files changed, do not print anything. Usually these
+            # messages are related to some version control management.
         }
 
         @date = ();
@@ -387,10 +390,10 @@ while (my $_l = <$fh>) {
     }
 }
 
-if (@date + 0)
-{
-    print (strftime "%Y-%m-%d  $author\n\n", @date);
-    my $msg = wrap_log_entry($comment, "\t", 69, 69);
-    $msg =~ s/[ \t]+\n/\n/g;
-    print "\t* $msg\n";
-}
+# if (@date + 0)
+# {
+#     print (strftime "%Y-%m-%d  $author\n\n", @date);
+#     my $msg = wrap_log_entry($comment, "\t", 69, 69);
+#     $msg =~ s/[ \t]+\n/\n/g;
+#     print "\t* $msg\n";
+# }
