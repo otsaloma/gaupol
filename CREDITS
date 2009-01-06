@@ -11,23 +11,31 @@ Files from Foreign Sources
    Lesser General Public License (LGPL). See the headers of the files
    in question for full copyright and license information.
 
+ * extensions/bookmarks/bookmark.png
+
+   This bookmark icon is copied unmodified from the document-manager
+   plugin of Anjuta [2]. Image made by "tpgww onepost net" (see [3])
+   and licensed under the GNU General Public License (GPL).
+
  * gaupol/gtk/conf/configobj.py
  * gaupol/gtk/conf/validate.py
 
    These files are written by Michael Foord, Nicola Larosa and Mark
-   Andrews, and copied virtually unchanged from ConfigObj [2] and
-   Validate [3]. The files are released under the BSD license. See the
+   Andrews, and copied virtually unchanged from ConfigObj [4] and
+   Validate [5]. The files are released under the BSD license. See the
    headers of the files in question for full copyright and license
    information.
 
  * tools/git2cl
 
    This file is written by Simon Josefsson and Luis Mondesi, and is
-   copied from git2cl [4] and since slightly modified. The file is
+   copied from git2cl [6] and since slightly modified. The file is
    licensed under the GNU General Public License. See the header of
    the file for full copyright and license information.
 
  [1] http://alioth.debian.org/projects/pkg-isocodes/
- [2] http://www.voidspace.org.uk/python/configobj.html
- [3] http://www.voidspace.org.uk/python/validate.html
- [4] http://josefsson.org/git2cl/
+ [2] http://anjuta.sourceforge.net/
+ [3] http://bugzilla.gnome.org/show_bug.cgi?id=480093
+ [4] http://www.voidspace.org.uk/python/configobj.html
+ [5] http://www.voidspace.org.uk/python/validate.html
+ [6] http://josefsson.org/git2cl/

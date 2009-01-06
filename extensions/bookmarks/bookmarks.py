@@ -92,10 +92,36 @@ class BookmarksExtension(gaupol.gtk.Extension):
         self._init_signal_handlers()
         self._init_side_pane_widget()
 
+    def _add_bookmark_column(self, page):
+        """Add the bookmark column to the subtitle tree view."""
+
+        def set_pixbuf(column, renderer, store, tree_iter):
+            pixbuf = None
+            if page in self._bookmarks:
+                row = store.get_path(tree_iter)[0]
+                if row in self._bookmarks[page]:
+                    pixbuf = column.get_data("pixbuf")
+            renderer.props.pixbuf = pixbuf
+        renderer = gtk.CellRendererPixbuf()
+        directory = os.path.dirname(__file__)
+        pixbuf_path = os.path.join(directory, "bookmark.png")
+        pixbuf = gtk.gdk.pixbuf_new_from_file(pixbuf_path)
+        column = gtk.TreeViewColumn(_("Bm."), renderer)
+        column.set_clickable(True)
+        column.set_resizable(False)
+        column.set_reorderable(True)
+        column.set_visible(self._conf.show_column)
+        label = page.view.get_header_label(_("Bm."))
+        column.set_widget(label)
+        column.set_data("pixbuf", pixbuf)
+        column.set_data("identifier", "bookmark")
+        column.set_cell_data_func(renderer, set_pixbuf)
+        page.view.insert_column(column, 0)
+
     def _connect_page(self, page):
         """Connect to signals emitted by page."""
 
-        pass
+        page.connect("view-created", self._on_page_view_created)
 
     def _init_side_pane_widget(self):
         """Initialize the side pane widget."""
@@ -138,6 +164,7 @@ class BookmarksExtension(gaupol.gtk.Extension):
         renderer.props.xalign = 1
         column = gtk.TreeViewColumn("", renderer, text=1)
         self._tree_view.append_column(column)
+        renderer = gtk.CellRendererText()
         renderer.props.xalign = 0
         renderer.props.editable = True
         renderer.props.ellipsize = pango.ELLIPSIZE_END
@@ -164,6 +191,7 @@ class BookmarksExtension(gaupol.gtk.Extension):
         """Connect to signals in added page."""
 
         self._connect_page(page)
+        self._add_bookmark_column(page)
 
     def _on_application_page_closed(self, application, page):
         """Remove all data stored for closed page."""
@@ -188,6 +216,11 @@ class BookmarksExtension(gaupol.gtk.Extension):
         col = page.view.get_focus()[1]
         page.view.set_focus(bookmark, col)
         page.view.scroll_to_row(bookmark)
+
+    def _on_page_view_created(self, page, view):
+        """Add the bookmark column to the subtitle tree view."""
+
+        self._add_bookmark_column(page)
 
     def _on_previous_bookmark_activate(self, *args):
         """Go to the previous bookmarked subtitle."""
@@ -214,6 +247,9 @@ class BookmarksExtension(gaupol.gtk.Extension):
     def _on_toggle_bookmark_column_toggled(self, action, *args):
         """Show or hide the bookmark column."""
 
+        page = self.application.get_current_page()
+        col = page.view.columns.BOOKMARK
+        page.view.get_column(col).set_visible(action.get_active())
         self._conf.show_column = action.get_active()
 
     def _on_tree_view_cell_edited(self, renderer, path, new_text):

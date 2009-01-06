@@ -49,18 +49,6 @@ class View(gtk.TreeView):
         self._init_signal_handlers()
         self._init_props(edit_mode)
 
-    def _get_header_label(self, field, edit_mode):
-        """Return a column header label that's wide enough."""
-
-        label = gtk.Label(field.label)
-        label.props.xalign = 0
-        label.show()
-        label.set_attributes(self._active_attr)
-        width = label.size_request()[0]
-        label.set_size_request(width, -1)
-        label.set_attributes(self._normal_attr)
-        return label
-
     def _get_renderer(self, field, edit_mode):
         """Initialize and return a new cell renderer."""
 
@@ -115,7 +103,7 @@ class View(gtk.TreeView):
             column.set_reorderable(True)
             column.set_expand(field.is_text)
             column.set_visible(field in visible_fields)
-            label = self._get_header_label(field, edit_mode)
+            label = self.get_header_label(field.label)
             column.set_widget(label)
 
     def _init_props(self, edit_mode):
@@ -251,6 +239,18 @@ class View(gtk.TreeView):
         if col is not None:
             col = self.get_columns().index(col)
         return row, col
+
+    def get_header_label(self, text):
+        """Return a column header label that's wide enough."""
+
+        label = gtk.Label(text)
+        label.props.xalign = 0
+        label.show()
+        label.set_attributes(self._active_attr)
+        width = label.size_request()[0]
+        label.set_size_request(width, -1)
+        label.set_attributes(self._normal_attr)
+        return label
 
     def get_selected_rows_ensure(self, value):
         store = self.get_model()
