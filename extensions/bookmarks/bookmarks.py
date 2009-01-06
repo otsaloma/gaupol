@@ -266,8 +266,8 @@ class BookmarksExtension(gaupol.gtk.Extension):
         store, tree_iter = selection.get_selected()
         if tree_iter is None: return
         path = store.get_path(tree_iter)
-        del store[path]
         row = store[path][1] - 1
+        del store[path]
         page = self.application.get_current_page()
         del self._bookmarks[page][row]
 
