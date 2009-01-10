@@ -46,6 +46,7 @@ class SidePane(gaupol.Observable):
 
         gaupol.Observable.__init__(self)
         self._conf = gaupol.gtk.conf.extensions.side_pane
+        self._has_focus = False
         self._label = gtk.Label(_("(Empty)"))
         self._notebook = gtk.Notebook()
         self._paned = gtk.HPaned()
@@ -129,8 +130,10 @@ class SidePane(gaupol.Observable):
         """
         if widget is None: return
         action_group = self.application.get_action_group("main-unsafe")
-        sensitive = not widget.is_ancestor(self._paned.get_child1())
-        action_group.set_sensitive(sensitive)
+        in_side_pane = widget.is_ancestor(self._paned.get_child1())
+        if self._has_focus or in_side_pane:
+            action_group.set_sensitive(in_side_pane)
+        self._has_focus = in_side_pane
 
     def _on_header_close_button_clicked(self, button):
         """Hide the side pane from the main window."""

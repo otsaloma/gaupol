@@ -42,7 +42,8 @@ class EditAgent(gaupol.Delegate):
     def _set_sensitivities(self, sensitive):
         """Set sensitivities of unsafe UI manager actions."""
 
-        self.get_action_group("main-unsafe").set_sensitive(sensitive)
+        action_group = self.get_action_group("main-unsafe")
+        action_group.set_sensitive(sensitive)
 
     def _sync_clipboards(self, page):
         """Synchronize all clipboards to match that of page."""
