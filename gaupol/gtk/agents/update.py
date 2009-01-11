@@ -152,6 +152,7 @@ class UpdateAgent(gaupol.Delegate):
         page = self.pages[index]
         self.update_gui()
         page.view.grab_focus()
+        self.emit("page-switched", page)
 
     def on_view_button_press_event(self, view, event):
         """Display a right-click pop-up menu to edit data."""

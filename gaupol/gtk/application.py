@@ -42,6 +42,7 @@ class Application(gaupol.Observable, gaupol.gtk.Runner):
      * page-added (application, page)
      * page-changed (application, page)
      * page-closed (application, page)
+     * page-switched (application, page)
      * pages-reordered (application, page, number)
      * preview-completed (application, page)
      * preview-started (application, page)
@@ -57,6 +58,7 @@ class Application(gaupol.Observable, gaupol.gtk.Runner):
         "page-added",
         "page-changed",
         "page-closed",
+        "page-switched",
         "pages-reordered",
         "preview-completed",
         "preview-started",

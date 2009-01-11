@@ -190,6 +190,8 @@ class BookmarksExtension(gaupol.gtk.Extension):
     def _on_application_page_added(self, application, page):
         """Connect to signals in added page."""
 
+        if not page in self._bookmarks:
+            self._bookmarks[page] = {}
         self._connect_page(page)
         self._add_bookmark_column(page)
 
@@ -198,6 +200,11 @@ class BookmarksExtension(gaupol.gtk.Extension):
 
         if page in self._bookmarks:
             del self._bookmarks[page]
+
+    def _on_application_page_switched(self, application, page):
+        """Update the side pane to show page's bookmarks."""
+
+        self._update_tree_view()
 
     def _on_edit_bookmarks_activate(self, *args):
         """Show the bookmarks side pane."""
@@ -290,6 +297,7 @@ class BookmarksExtension(gaupol.gtk.Extension):
         store = store_filter.get_model()
         store.clear()
         page = self.application.get_current_page()
+        if not page in self._bookmarks: return
         pattern = self._search_entry.get_text().lower()
         for row in sorted(self._bookmarks[page].keys()):
             description = self._bookmarks[page][row]
@@ -330,9 +338,12 @@ class BookmarksExtension(gaupol.gtk.Extension):
         application.uim.ensure_update()
         application.set_menu_notify_events("bookmarks")
         for page in application.pages:
+            if not page in self._bookmarks:
+                self._bookmarks[page] = {}
             self._connect_page(page)
         gaupol.util.connect(self, "application", "page-added")
         gaupol.util.connect(self, "application", "page-closed")
+        gaupol.util.connect(self, "application", "page-switched")
         args = (self._side_container, "bookmarks", _("Bookmarks"))
         application.side_pane.add_page(*args)
 
