@@ -213,7 +213,10 @@ class BookmarksExtension(gaupol.gtk.Extension):
     def _on_edit_bookmarks_activate(self, *args):
         """Show the bookmarks side pane."""
 
-        pass
+        action = self.application.get_action("toggle_side_pane")
+        action.set_active(True)
+        self.application.side_pane.set_current_page(self._side_container)
+        self._search_entry.grab_focus()
 
     def _on_next_bookmark_activate(self, *args):
         """Go to the next bookmarked subtitle."""

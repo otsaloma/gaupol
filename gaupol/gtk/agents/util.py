@@ -34,9 +34,10 @@ class UtilityAgent(gaupol.Delegate):
     def get_action(self, name):
         """Return action from the UI manager by name."""
 
-        safe = self.get_action_group("main-safe")
-        unsafe = self.get_action_group("main-unsafe")
-        return safe.get_action(name) or unsafe.get_action(name)
+        for action_group in self.uim.get_action_groups():
+            action = action_group.get_action(name)
+            if action is not None: return action
+        raise ValueError
 
     def get_action_group_require(self, name):
         assert name in ("main-safe", "main-unsafe", "projects")
