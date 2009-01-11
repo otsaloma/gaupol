@@ -132,7 +132,7 @@ class SidePane(gaupol.Observable):
         action_group = self.application.get_action_group("main-unsafe")
         in_side_pane = widget.is_ancestor(self._paned.get_child1())
         if self._has_focus or in_side_pane:
-            action_group.set_sensitive(in_side_pane)
+            action_group.set_sensitive(not in_side_pane)
         self._has_focus = in_side_pane
 
     def _on_header_close_button_clicked(self, button):
