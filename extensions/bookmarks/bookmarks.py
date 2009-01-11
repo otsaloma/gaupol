@@ -122,6 +122,10 @@ class BookmarksExtension(gaupol.gtk.Extension):
         """Connect to signals emitted by page."""
 
         page.connect("view-created", self._on_page_view_created)
+        callback = self._on_project_subtitles_inserted
+        page.project.connect("subtitles-inserted", callback, page)
+        callback = self._on_project_subtitles_removed
+        page.project.connect("subtitles-removed", callback, page)
 
     def _init_side_pane_widget(self):
         """Initialize the side pane widget."""
@@ -228,6 +232,36 @@ class BookmarksExtension(gaupol.gtk.Extension):
         """Add the bookmark column to the subtitle tree view."""
 
         self._add_bookmark_column(page)
+
+    def _on_project_subtitles_inserted(self, project, rows, page):
+        """Update rows of bookmarks with rows inserted before them."""
+
+        if not page in self._bookmarks: return
+        store_filter = self._tree_view.get_model()
+        store = store_filter.get_model()
+        for irow in rows:
+            for crow in sorted(self._bookmarks[page].keys(), reverse=True):
+                if crow < irow: continue
+                description = self._bookmarks[page][crow]
+                del self._bookmarks[page][crow]
+                self._bookmarks[page][crow + 1] = description
+        self._update_tree_view()
+
+    def _on_project_subtitles_removed(self, project, rows, page):
+        """Remove bookmarks and update rows of those remaining."""
+
+        if not page in self._bookmarks: return
+        store_filter = self._tree_view.get_model()
+        store = store_filter.get_model()
+        for crow in self._bookmarks[page].keys():
+            if crow in rows: del self._bookmarks[page][crow]
+        for crow in sorted(self._bookmarks[page].keys()):
+            count = sum(1 for x in rows if x < crow)
+            if count == 0: continue
+            description = self._bookmarks[page][crow]
+            del self._bookmarks[page][crow]
+            self._bookmarks[page][crow - count] = description
+        self._update_tree_view()
 
     def _on_previous_bookmark_activate(self, *args):
         """Go to the previous bookmarked subtitle."""
