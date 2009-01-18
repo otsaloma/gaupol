@@ -46,6 +46,7 @@ class SidePane(gaupol.Observable):
 
         gaupol.Observable.__init__(self)
         self._conf = gaupol.gtk.conf.extensions.side_pane
+        self._focus_handler_id = None
         self._has_focus = False
         self._label = gtk.Label(_("(Empty)"))
         self._notebook = gtk.Notebook()
@@ -69,8 +70,9 @@ class SidePane(gaupol.Observable):
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
+        connect = self.application.window.connect
         callback = self._on_application_window_set_focus
-        self.application.window.connect("set-focus", callback)
+        self._focus_handler_id = connect("set-focus", callback)
 
     def _init_header(self, side_vbox):
         """Initialize the side pane header."""
@@ -234,6 +236,7 @@ class SidePane(gaupol.Observable):
     def remove(self):
         """Remove the entire side pane from the application window."""
 
+        self.application.window.disconnect(self._focus_handler_id)
         self._conf.width = self._paned.get_position()
         child = self.get_current_page()
         if child is not None:

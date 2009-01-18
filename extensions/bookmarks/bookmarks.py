@@ -80,17 +80,14 @@ class BookmarksExtension(gaupol.gtk.Extension):
         """Initialize a BookmarksExtension object."""
 
         self._action_group = None
-        self._bookmarks = {}
+        self._bookmarks = None
         self._conf = None
-        self._search_entry = gtk.Entry()
-        self._side_container = gtk.Alignment(0, 0, 1, 1)
-        self._side_vbox = gtk.VBox(False, 6)
-        self._tree_view = gtk.TreeView()
+        self._search_entry = None
+        self._side_container = None
+        self._side_vbox = None
+        self._tree_view = None
         self._uim_id = None
         self.application = None
-        self._init_tree_view()
-        self._init_signal_handlers()
-        self._init_side_pane_widget()
 
     def _add_bookmark_column(self, page):
         """Add the bookmark column to the subtitle tree view."""
@@ -126,6 +123,10 @@ class BookmarksExtension(gaupol.gtk.Extension):
         page.project.connect("subtitles-inserted", callback, page)
         callback = self._on_project_subtitles_removed
         page.project.connect("subtitles-removed", callback, page)
+        callback = self._on_project_main_file_opened
+        page.project.connect("main-file-opened", callback, page)
+        callback = self._on_project_main_file_saved
+        page.project.connect("main-file-saved", callback, page)
 
     def _init_side_pane_widget(self):
         """Initialize the side pane widget."""
@@ -199,6 +200,10 @@ class BookmarksExtension(gaupol.gtk.Extension):
         self._connect_page(page)
         self._add_bookmark_column(page)
 
+        # TODO: Fix.
+        main_file = page.project.main_file
+        self._on_project_main_file_opened(page.project, main_file, page)
+
     def _on_application_page_closed(self, application, page):
         """Remove all data stored for closed page."""
 
@@ -235,6 +240,37 @@ class BookmarksExtension(gaupol.gtk.Extension):
         """Add the bookmark column to the subtitle tree view."""
 
         self._add_bookmark_column(page)
+
+    def _on_project_main_file_opened(self, project, main_file, page):
+        """Read bookmarks from .gaupol-bookmarks file."""
+
+        if not page in self._bookmarks:
+            self._bookmarks[page] = {}
+        self._bookmarks[page].clear()
+        path = main_file.path
+        if path.endswith(main_file.format.extension):
+            path = path[:-len(main_file.format.extension)]
+        path = "%s.gaupol-bookmarks" % path
+        if not os.path.isfile(path): return
+        for line in gaupol.util.readlines(path, main_file.encoding):
+            row, description = line.split(" ", 1)
+            self._bookmarks[page][int(row) - 1] = description
+        self._update_tree_view()
+
+    def _on_project_main_file_saved(self, project, main_file, page):
+        """Write bookmarks to .gaupol-bookmarks file."""
+
+        if not page in self._bookmarks: return
+        if not self._bookmarks[page]: return
+        lines = []
+        for row in sorted(self._bookmarks[page].keys()):
+            lines.append("%d %s" % (row + 1, self._bookmarks[page][row]))
+        text = os.linesep.join(lines) + os.linesep
+        path = main_file.path
+        if path.endswith(main_file.format.extension):
+            path = path[:-len(main_file.format.extension)]
+        path = "%s.gaupol-bookmarks" % path
+        gaupol.util.write(path, text, main_file.encoding)
 
     def _on_project_subtitles_inserted(self, project, rows, page):
         """Update rows of bookmarks with rows inserted before them."""
@@ -344,7 +380,19 @@ class BookmarksExtension(gaupol.gtk.Extension):
     def setup(self, application):
         """Setup extension for use with application."""
 
+        self._action_group = None
+        self._bookmarks = {}
+        self._conf = None
+        self._search_entry = gtk.Entry()
+        self._side_container = gtk.Alignment(0, 0, 1, 1)
+        self._side_vbox = gtk.VBox(False, 6)
+        self._tree_view = gtk.TreeView()
+        self._uim_id = None
         self.application = application
+        self._init_tree_view()
+        self._init_signal_handlers()
+        self._init_side_pane_widget()
+
         directory = os.path.dirname(__file__)
         spec_file = os.path.join(directory, "bookmarks.conf.spec")
         self.read_config(spec_file)
@@ -378,6 +426,11 @@ class BookmarksExtension(gaupol.gtk.Extension):
             if not page in self._bookmarks:
                 self._bookmarks[page] = {}
             self._connect_page(page)
+            # TODO: Fix.
+            self._on_application_page_added(application, page)
+            main_file = page.project.main_file
+            if main_file is None: continue
+            self._on_project_main_file_opened(page.project, main_file, page)
         gaupol.util.connect(self, "application", "page-added")
         gaupol.util.connect(self, "application", "page-closed")
         gaupol.util.connect(self, "application", "page-switched")
@@ -390,6 +443,39 @@ class BookmarksExtension(gaupol.gtk.Extension):
         self.application.uim.remove_ui(self._uim_id)
         self.application.uim.remove_action_group(self._action_group)
         self.application.uim.ensure_update()
+
+        for page in self.application.pages:
+            col = page.view.columns.BOOKMARK
+            column = page.view.get_column(col)
+            page.view.remove_column(column)
+            callback = self._on_page_view_created
+            page.disconnect("view-created", callback)
+            callback = self._on_project_subtitles_inserted
+            page.project.disconnect("subtitles-inserted", callback)
+            callback = self._on_project_subtitles_removed
+            page.project.disconnect("subtitles-removed", callback)
+            callback = self._on_project_main_file_opened
+            page.project.disconnect("main-file-opened", callback)
+            callback = self._on_project_main_file_saved
+            page.project.disconnect("main-file-saved", callback)
+
+        callback = self._on_application_page_added
+        self.application.disconnect("page-added", callback)
+        callback = self._on_application_page_closed
+        self.application.disconnect("page-closed", callback)
+        callback = self._on_application_page_switched
+        self.application.disconnect("page-switched", callback)
+        self.application.side_pane.remove_page(self._side_container)
+
+        self._action_group = None
+        self._bookmarks = None
+        self._conf = None
+        self._search_entry = None
+        self._side_container = None
+        self._side_vbox = None
+        self._tree_view = None
+        self._uim_id = None
+        self.application = None
 
     def update(self, application, page):
         """Update state of extension for application and active page."""
