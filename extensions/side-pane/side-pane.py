@@ -43,6 +43,7 @@ class SidePane(gaupol.Observable):
     _signals = ("close-button-clicked", "page-switched")
 
     def __init__(self, application):
+        """Initialize a SidePane object."""
 
         gaupol.Observable.__init__(self)
         self._conf = gaupol.gtk.conf.extensions.side_pane
@@ -75,7 +76,7 @@ class SidePane(gaupol.Observable):
         self._focus_handler_id = connect("set-focus", callback)
 
     def _init_header(self, side_vbox):
-        """Initialize the side pane header."""
+        """Initialize the side pane button header."""
 
         header_hbox = gtk.HBox(False, 12)
         header_hbox.set_border_width(1)
@@ -150,7 +151,7 @@ class SidePane(gaupol.Observable):
         menu.destroy()
 
     def _on_header_menu_item_activate(self, menu_item):
-        """Set the currently active page to correspond to menu_item."""
+        """Set the currently active page to the activated to menu_item."""
 
         child = menu_item.get_data("child")
         self.set_current_page(child)
@@ -178,8 +179,9 @@ class SidePane(gaupol.Observable):
         return True
 
     def _position_header_menu(self, menu):
-        """Return x-coordinate, y-coordinate and boolean push value."""
+        """Return coordinates for menu.popup below the toggle button."""
 
+        # pylint: disable-msg=E1101
         x, y, = self._toggle_button.window.get_origin()
         allocation = self._toggle_button.get_allocation()
         x += allocation.x
@@ -229,13 +231,17 @@ class SidePane(gaupol.Observable):
         return self._notebook.get_nth_page(page_num)
 
     def hide(self):
-        """Hide the side pane from the main window."""
+        """Hide the side pane from the application window."""
 
         self._paned.get_child1().hide()
 
     def remove(self):
-        """Remove the entire side pane from the application window."""
+        """Remove the entire side pane from the application window.
 
+        Use 'hide' unless you really know that you really want to remove the
+        side pane. Usually this is used only once the side pane extension is
+        deactivated, which is when all extensions using it are deactivated.
+        """
         self.application.window.disconnect(self._focus_handler_id)
         self._conf.width = self._paned.get_position()
         child = self.get_current_page()
@@ -265,7 +271,7 @@ class SidePane(gaupol.Observable):
         self._label.set_text(title)
 
     def show(self):
-        """Show the side pane in the main window."""
+        """Show the side pane in the application window."""
 
         self._paned.get_child1().show()
 
