@@ -218,7 +218,8 @@ class _ExtensionPage(gaupol.Delegate):
         if metadata.has_field("Version"):
             dialog.set_version(metadata.get_field("Version"))
         if metadata.has_field("Copyright"):
-            dialog.set_copyright(metadata.get_field("Copyright"))
+            copyright = "\n".join(metadata.get_field_list("Copyright"))
+            dialog.set_copyright(copyright)
         if metadata.has_field("Website"):
             dialog.set_website(metadata.get_field("Website"))
             label = _("%s Extension Website") %  metadata.get_name()
