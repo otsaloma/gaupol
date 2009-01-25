@@ -29,6 +29,7 @@ class EditAgent(gaupol.Delegate):
     __metaclass__ = gaupol.Contractual
 
     def __init__(self, master):
+        """Initialize an EditAgent object."""
 
         gaupol.Delegate.__init__(self, master)
         self._pref_dialog = None

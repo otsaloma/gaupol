@@ -29,6 +29,7 @@ class TimeCellRenderer(gtk.CellRendererText):
     __gtype_name__ = "TimeCellRenderer"
 
     def __init__(self):
+        """Initialize a TimeCellRenderer object."""
 
         gtk.CellRendererText.__init__(self)
         self._in_editor_menu = False

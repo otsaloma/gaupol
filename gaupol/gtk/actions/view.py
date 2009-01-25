@@ -25,6 +25,7 @@ class ActivateNextProjectAction(gaupol.gtk.Action):
     """Activate the project in the next tab."""
 
     def __init__(self):
+        """Initialize an ActivateNextProjectAction object."""
 
         gaupol.gtk.Action.__init__(self, "activate_next_project")
         self.props.label = _("_Next")
@@ -45,6 +46,7 @@ class ActivatePreviousProjectAction(gaupol.gtk.Action):
     """Activate the project in the previous tab."""
 
     def __init__(self):
+        """Initialize an ActivatePreviousProjectAction object."""
 
         gaupol.gtk.Action.__init__(self, "activate_previous_project")
         self.props.label = _("_Previous")
@@ -64,6 +66,7 @@ class MoveTabLeftAction(gaupol.gtk.Action):
     """Move the current tab to the left."""
 
     def __init__(self):
+        """Initialize a MoveTabLeftAction object."""
 
         gaupol.gtk.Action.__init__(self, "move_tab_left")
         self.props.label = _("Move Tab _Left")
@@ -82,6 +85,7 @@ class MoveTabRightAction(gaupol.gtk.Action):
     """Move the current tab to the right."""
 
     def __init__(self):
+        """Initialize a MoveTabRightAction object."""
 
         gaupol.gtk.Action.__init__(self, "move_tab_right")
         self.props.label = _("Move Tab _Right")
@@ -100,6 +104,7 @@ class ShowColumnsMenuAction(gaupol.gtk.MenuAction):
 
     """Show the columns view menu."""
     def __init__(self):
+        """Initialize a ShowColumnsMenuAction object."""
 
         gaupol.gtk.MenuAction.__init__(self, "show_columns_menu")
         self.props.label = _("_Columns")
@@ -116,6 +121,7 @@ class ShowFramerate24Action(gaupol.gtk.RadioAction):
     """Change the framerate to 24 fps."""
 
     def __init__(self):
+        """Initialize a ShowFramerate24Action object."""
 
         gaupol.gtk.RadioAction.__init__(self, "show_framerate_24")
         framerate = gaupol.gtk.conf.editor.framerate
@@ -140,6 +146,7 @@ class ShowFramerate25Action(gaupol.gtk.RadioAction):
     """Change the framerate to 25 fps."""
 
     def __init__(self):
+        """Initialize a ShowFramerate25Action object."""
 
         gaupol.gtk.RadioAction.__init__(self, "show_framerate_25")
         framerate = gaupol.gtk.conf.editor.framerate
@@ -164,6 +171,7 @@ class ShowFramerate30Action(gaupol.gtk.RadioAction):
     """Change the framerate to 30 fps."""
 
     def __init__(self):
+        """Initialize a ShowFramerate30Action object."""
 
         gaupol.gtk.RadioAction.__init__(self, "show_framerate_30")
         framerate = gaupol.gtk.conf.editor.framerate
@@ -188,6 +196,7 @@ class ShowFramerateMenuAction(gaupol.gtk.MenuAction):
     """Show the framerate view menu."""
 
     def __init__(self):
+        """Initialize a ShowFramerateMenuAction object."""
 
         gaupol.gtk.MenuAction.__init__(self, "show_framerate_menu")
         self.props.label = _("F_ramerate")
@@ -206,6 +215,7 @@ class ShowFramesAction(gaupol.gtk.RadioAction):
     """Show positions as frames."""
 
     def __init__(self):
+        """Initialize a ShowFramesAction object."""
 
         gaupol.gtk.RadioAction.__init__(self, "show_frames")
         mode = gaupol.gtk.conf.editor.mode
@@ -229,6 +239,7 @@ class ShowTimesAction(gaupol.gtk.RadioAction):
     """Show positions as times."""
 
     def __init__(self):
+        """Initialize a ShowTimesAction object."""
 
         gaupol.gtk.RadioAction.__init__(self, "show_times")
         mode = gaupol.gtk.conf.editor.mode
@@ -252,6 +263,7 @@ class ToggleDurationColumnAction(gaupol.gtk.ToggleAction):
     """Show or hide the 'Duration' column."""
 
     def __init__(self):
+        """Initialize a ToggleDurationColumnAction object."""
 
         gaupol.gtk.ToggleAction.__init__(self, "toggle_duration_column")
         fields = gaupol.gtk.conf.editor.visible_fields
@@ -271,6 +283,7 @@ class ToggleEndColumnAction(gaupol.gtk.ToggleAction):
     """Show or hide the 'End' column."""
 
     def __init__(self):
+        """Initialize a ToggleEndColumnAction object."""
 
         gaupol.gtk.ToggleAction.__init__(self, "toggle_end_column")
         fields = gaupol.gtk.conf.editor.visible_fields
@@ -290,6 +303,7 @@ class ToggleMainTextColumnAction(gaupol.gtk.ToggleAction):
     """Show or hide the 'Main Text' column."""
 
     def __init__(self):
+        """Initialize a ToggleMainTextColumnAction object."""
 
         gaupol.gtk.ToggleAction.__init__(self, "toggle_main_text_column")
         fields = gaupol.gtk.conf.editor.visible_fields
@@ -309,6 +323,7 @@ class ToggleMainToolbarAction(gaupol.gtk.ToggleAction):
     """Show or hide the main toolbar."""
 
     def __init__(self):
+        """Initialize a ToggleMainToolbarAction object."""
 
         gaupol.gtk.ToggleAction.__init__(self, "toggle_main_toolbar")
         show = gaupol.gtk.conf.application_window.show_main_toolbar
@@ -323,6 +338,7 @@ class ToggleNumberColumnAction(gaupol.gtk.ToggleAction):
     """Show or hide the 'No.' column."""
 
     def __init__(self):
+        """Initialize a ToggleNumberColumnAction object."""
 
         gaupol.gtk.ToggleAction.__init__(self, "toggle_number_column")
         fields = gaupol.gtk.conf.editor.visible_fields
@@ -342,6 +358,7 @@ class ToggleOutputWindowAction(gaupol.gtk.ToggleAction):
     """Show or hide the output window."""
 
     def __init__(self):
+        """Initialize a ToggleOutputWindowAction object."""
 
         gaupol.gtk.ToggleAction.__init__(self, "toggle_output_window")
         self.props.active = gaupol.gtk.conf.output_window.show
@@ -355,6 +372,7 @@ class ToggleStartColumnAction(gaupol.gtk.ToggleAction):
     """Show or hide the 'Start' column."""
 
     def __init__(self):
+        """Initialize a ToggleStartColumnAction object."""
 
         gaupol.gtk.ToggleAction.__init__(self, "toggle_start_column")
         fields = gaupol.gtk.conf.editor.visible_fields
@@ -374,6 +392,7 @@ class ToggleStatusbarAction(gaupol.gtk.ToggleAction):
     """Show or hide the statusbar."""
 
     def __init__(self):
+        """Initialize a ToggleStatusbarAction object."""
 
         gaupol.gtk.ToggleAction.__init__(self, "toggle_statusbar")
         self.props.active = gaupol.gtk.conf.application_window.show_statusbar
@@ -387,6 +406,7 @@ class ToggleTranslationTextColumnAction(gaupol.gtk.ToggleAction):
     """Show or hide the 'Translation Text' column."""
 
     def __init__(self):
+        """Initialize a ToggleTranslationTextColumnAction object."""
 
         name = "toggle_translation_text_column"
         gaupol.gtk.ToggleAction.__init__(self, name)
@@ -407,6 +427,7 @@ class ToggleVideoToolbarAction(gaupol.gtk.ToggleAction):
     """Show or hide the video toolbar."""
 
     def __init__(self):
+        """Initialize a ToggleVideoToolbarAction object."""
 
         gaupol.gtk.ToggleAction.__init__(self, "toggle_video_toolbar")
         show = gaupol.gtk.conf.application_window.show_video_toolbar

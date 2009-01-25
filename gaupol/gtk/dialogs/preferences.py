@@ -29,6 +29,7 @@ class _EditorPage(gaupol.Delegate):
     """Editor preferences page."""
 
     def __init__(self, master):
+        """Initialize a _EditorPage object."""
 
         gaupol.Delegate.__init__(self, master)
         get_widget = self._glade_xml.get_widget
@@ -126,6 +127,7 @@ class _ExtensionPage(gaupol.Delegate):
     """Extension activation and preferences page."""
 
     def __init__(self, master, application):
+        """Initialize an _ExtensionPage object."""
 
         gaupol.Delegate.__init__(self, master)
         get_widget = self._glade_xml.get_widget
@@ -293,6 +295,7 @@ class _FilePage(gaupol.Delegate):
     __metaclass__ = gaupol.Contractual
 
     def __init__(self, master):
+        """Initialize a _FilePage object."""
 
         gaupol.Delegate.__init__(self, master)
         get_widget = self._glade_xml.get_widget
@@ -445,6 +448,7 @@ class _PreviewPage(gaupol.Delegate):
     """Preview preferences page."""
 
     def __init__(self, master):
+        """Initialize a _PreviewPage object."""
 
         gaupol.Delegate.__init__(self, master)
         get_widget = self._glade_xml.get_widget
@@ -528,6 +532,7 @@ class PreferencesDialog(gaupol.gtk.GladeDialog):
     """Dialog for editing preferences."""
 
     def __init__(self, parent, application):
+        """Initialize a PreferencesDialog object."""
 
         gaupol.gtk.GladeDialog.__init__(self, "preferences.glade")
         self._editor_page = _EditorPage(self)

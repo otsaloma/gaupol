@@ -36,6 +36,7 @@ class MetadataItem(object):
     """
 
     def __init__(self, fields=None):
+        """Initialize a MetadataItem object."""
 
         self.fields = fields or {}
 

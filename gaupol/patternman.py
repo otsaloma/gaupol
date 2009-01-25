@@ -46,6 +46,7 @@ class PatternManager(object):
         assert pattern_type in types
 
     def __init__(self, pattern_type):
+        """Initialize a PatternManager object."""
 
         self.pattern_type = pattern_type
         self._patterns = {}

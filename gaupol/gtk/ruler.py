@@ -34,6 +34,7 @@ class _Ruler(object):
     """
 
     def __init__(self):
+        """Initialize a _Ruler object."""
 
         self._em_length = None
         self._layout = None

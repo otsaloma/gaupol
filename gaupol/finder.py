@@ -40,6 +40,7 @@ class Finder(object):
     __metaclass__ = gaupol.Contractual
 
     def __init__(self):
+        """Initialize a Finder object."""
 
         self.ignore_case = False
         self.match = None

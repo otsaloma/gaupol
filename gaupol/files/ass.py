@@ -28,6 +28,7 @@ class AdvSubStationAlpha(gaupol.files.SubStationAlpha):
     format = gaupol.formats.ASS
 
     def __init__(self, path, encoding, newline=None):
+        """Initialize an AdvSubStationAlpha object."""
 
         gaupol.files.SubStationAlpha.__init__(self, path, encoding, newline)
         self.event_fields = ("Layer", "Start", "End", "Style", "Name",

@@ -30,6 +30,7 @@ class AppendDialog(gaupol.gtk.OpenDialog):
     # pylint: disable-msg=E1101
 
     def __init__(self, parent):
+        """Initialize an AppendDialog object."""
 
         doc = gaupol.documents.MAIN
         gaupol.gtk.OpenDialog.__init__(self, parent, _("Append File"), doc)

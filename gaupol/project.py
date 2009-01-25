@@ -78,10 +78,12 @@ class Project(gaupol.Observable):
         "translation-texts-changed",)
 
     def __getattr__(self, name):
+        """Return methods delegated to an agent."""
 
         return self._delegations[name]
 
     def __init__(self, framerate=None, undo_limit=None):
+        """Initialize a Project object."""
 
         gaupol.Observable.__init__(self)
         framerate = framerate or gaupol.framerates.FPS_24

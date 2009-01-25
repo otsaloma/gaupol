@@ -50,6 +50,7 @@ class Page(gaupol.Observable):
     _signals = ("close-request", "view-created")
 
     def __init__(self, count=0):
+        """Initialize a Page object."""
 
         gaupol.Observable.__init__(self)
         self.edit_mode = gaupol.gtk.conf.editor.mode

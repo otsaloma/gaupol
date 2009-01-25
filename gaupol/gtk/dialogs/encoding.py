@@ -30,6 +30,7 @@ class EncodingDialog(gaupol.gtk.GladeDialog):
     __metaclass__ = gaupol.Contractual
 
     def __init__(self, parent):
+        """Initialize an EncodingDialog object."""
 
         gaupol.gtk.GladeDialog.__init__(self, "encoding.glade")
         self._tree_view = self._glade_xml.get_widget("tree_view")

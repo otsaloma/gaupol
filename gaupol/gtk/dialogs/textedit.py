@@ -25,6 +25,7 @@ class TextEditDialog(gtk.Dialog):
     """Dialog for editing the text of a single subtitle."""
 
     def __init__(self, parent, text=""):
+        """Initialize a TextEditDialog object."""
 
         gtk.Dialog.__init__(self)
         self._text_view = None

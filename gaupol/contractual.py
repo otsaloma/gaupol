@@ -76,9 +76,12 @@ class Contractual(type):
     inheritance tree is used. Postconditions and class invariants may be
     strengthened; all preconditions and class invariant checks found in the
     inheritance tree will be used.
+
+    This is a debug metaclass that is in use only if gaupol.debug is True.
     """
 
     def __new__(meta, class_name, bases, dic):
+        """Return instance with method calls wrapped in condition calls."""
 
         new_dict = dic.copy()
         for name, attr in dic.items():

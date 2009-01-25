@@ -32,6 +32,7 @@ class LanguageDialog(gaupol.gtk.GladeDialog):
         assert gaupol.util.enchant_available()
 
     def __init__(self, parent):
+        """Initialize a LanguageDialog object."""
 
         gaupol.gtk.GladeDialog.__init__(self, "language.glade")
         get_widget = self._glade_xml.get_widget

@@ -50,6 +50,7 @@ class SubtitleFile(object):
     mode = gaupol.modes.NONE
 
     def __init__(self, path, encoding, newline=None):
+        """Initialize a SubtitleFile object."""
 
         self.encoding = encoding
         self.has_bom_utf_8 = False

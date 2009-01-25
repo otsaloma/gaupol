@@ -56,6 +56,7 @@ class RegisterAgent(gaupol.Delegate):
     __metaclass__ = gaupol.Contractual
 
     def __init__(self, master):
+        """Initialize a RegisterAgent object."""
 
         gaupol.Delegate.__init__(self, master)
         self._do_description = None

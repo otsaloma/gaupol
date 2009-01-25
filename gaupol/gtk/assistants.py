@@ -44,6 +44,7 @@ class TextAssistantPage(gtk.VBox):
     """
 
     def __init__(self):
+        """Initialize a TextAssistantPage object."""
 
         gtk.VBox.__init__(self)
         self.description = None
@@ -59,6 +60,7 @@ class _GladePage(TextAssistantPage):
     """Baseclass for Glade pages in the text correction assistant."""
 
     def __init__(self, glade_basename):
+        """Initialize a _GladePage object."""
 
         TextAssistantPage.__init__(self)
         parts = ("assistants", "text", glade_basename)
@@ -71,6 +73,7 @@ class _IntroductionPage(_GladePage):
     """Page for listing all text correction tasks."""
 
     def __init__(self):
+        """Initialize a _IntroductionPage object."""
 
         _GladePage.__init__(self, "introduction.glade")
         get_widget = self._glade_xml.get_widget
@@ -192,6 +195,7 @@ class _LocalePage(_GladePage):
     _glade_basename = None
 
     def __init__(self):
+        """Initialize a _LocalePage object."""
 
         _GladePage.__init__(self, self._glade_basename)
         get_widget = self._glade_xml.get_widget
@@ -611,6 +615,7 @@ class _LineBreakOptionsPage(_GladePage):
     """Page for editing line-break options."""
 
     def __init__(self):
+        """Initialize a _LineBreakOptionsPage object."""
 
         _GladePage.__init__(self, "line-break-options.glade")
         get_widget = self._glade_xml.get_widget
@@ -717,6 +722,7 @@ class _ProgressPage(_GladePage):
     """Page for showing progress of text corrections."""
 
     def __init__(self):
+        """Initialize a _ProgressPage object."""
 
         _GladePage.__init__(self, "progress.glade")
         get_widget = self._glade_xml.get_widget
@@ -789,6 +795,7 @@ class _ConfirmationPage(_GladePage):
     """Page to confirm changes made after performing all tasks."""
 
     def __init__(self):
+        """Initialize a _ConfirmationPage object."""
 
         _GladePage.__init__(self, "confirmation.glade")
         get_widget = self._glade_xml.get_widget
@@ -952,6 +959,7 @@ class TextAssistant(gtk.Assistant):
     """Assistant to guide through multiple text correction tasks."""
 
     def __init__(self, parent, application):
+        """Initialize a TextAssistant object."""
 
         gtk.Assistant.__init__(self)
         self._confirmation_page = _ConfirmationPage()

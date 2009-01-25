@@ -25,6 +25,7 @@ class PreviewErrorDialog(gaupol.gtk.GladeDialog):
     """Dialog for informing that preview failed."""
 
     def __init__(self, parent, output):
+        """Initialize a PreviewErrorDialog object."""
 
         gaupol.gtk.GladeDialog.__init__(self, "previewerr.glade")
         self._text_view = self._glade_xml.get_widget("text_view")

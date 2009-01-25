@@ -36,6 +36,7 @@ class MenuAgent(gaupol.Delegate):
     __metaclass__ = gaupol.Contractual
 
     def __init__(self, master):
+        """Initialize a MenuAgent object."""
 
         gaupol.Delegate.__init__(self, master)
         self._projects_id = None

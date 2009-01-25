@@ -37,6 +37,7 @@ class UpdateAgent(gaupol.Delegate):
     __metaclass__ = gaupol.Contractual
 
     def __init__(self, master):
+        """Initialize an UpdateAgent object."""
 
         gaupol.Delegate.__init__(self, master)
         self._message_id = None

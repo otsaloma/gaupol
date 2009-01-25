@@ -33,6 +33,7 @@ class FormatDeterminer(gaupol.Singleton):
     __metaclass__ = gaupol.Contractual
 
     def __init__(self):
+        """Initialize a FormatDeterminer object."""
 
         self._re_ids = []
         self._compile_identifiers()

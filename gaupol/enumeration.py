@@ -40,7 +40,13 @@ class EnumerationItem(int):
     # pylint: disable-msg=E1101
 
     def __cmp__(self, other):
+        """Compare enumeration item equality by value.
 
+        If other is an integer, return integer comparison value.
+        Raise ValueError if other is an EnumerationItem of a different parent.
+        If other is not an integer, return -1.
+        This is a debug method that exists only if gaupol.debug is True.
+        """
         if isinstance(other, int):
             if isinstance(other, EnumerationItem):
                 if self.parent is not other.parent:
@@ -51,6 +57,7 @@ class EnumerationItem(int):
     if not gaupol.debug: del __cmp__
 
     def __new__(cls, value=0, name="", parent=None):
+        """Return integer instance with additional attributes."""
 
         instance = int.__new__(cls, value)
         instance.name = name
@@ -58,6 +65,7 @@ class EnumerationItem(int):
         return instance
 
     def __str__(self):
+        """Return name as the string representation."""
 
         return self.name
 
@@ -74,7 +82,10 @@ class Enumeration(list):
     NONE = None
 
     def __contains__(self, item):
+        """Return True if item belongs to enumeration.
 
+        This is a debug method that exists only if gaupol.debug is True.
+        """
         if isinstance(item, EnumerationItem):
             if item.parent is not self:
                 return False
@@ -95,6 +106,7 @@ class Enumeration(list):
         raise NotImplementedError
 
     def __setattr__(self, name, value):
+        """Set value of enumeration item with correct attributes."""
 
         if isinstance(value, EnumerationItem):
             value = value.__class__(len(self), name, self)

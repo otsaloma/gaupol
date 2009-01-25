@@ -30,6 +30,7 @@ class GladeDialog(gaupol.Delegate, gaupol.gtk.Runner):
     """
 
     def __init__(self, name):
+        """Initialize a GladeDialog object."""
 
         glade_xml = gaupol.gtk.util.get_glade_xml("dialogs", name)
         dialog = glade_xml.get_widget("dialog")

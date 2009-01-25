@@ -41,6 +41,7 @@ class HeaderDialog(gaupol.gtk.GladeDialog):
         assert has_header_count > 0
 
     def __init__(self, parent, application):
+        """Initialize an HeaderDialog object."""
 
         gaupol.gtk.GladeDialog.__init__(self, "header.glade")
         get_widget = self._glade_xml.get_widget

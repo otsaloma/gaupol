@@ -38,6 +38,7 @@ class View(gtk.TreeView):
     __metaclass__ = gaupol.gtk.ContractualGObject
 
     def __init__(self, edit_mode):
+        """Initialize a View object."""
 
         gtk.TreeView.__init__(self)
         self._active_attr = None

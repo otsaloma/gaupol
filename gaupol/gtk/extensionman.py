@@ -47,6 +47,7 @@ class ExtensionManager(object):
     _re_comment = re.compile(r"#.*$")
 
     def __init__(self, application):
+        """Initialize an ExtensionManager object."""
 
         self.application = application
         self._active = {}
@@ -258,6 +259,7 @@ class ExtensionMetadata(gaupol.MetadataItem):
     """Extension metadata specified in a separate desktop-style file."""
 
     def __init__(self, fields=None):
+        """Initialize an ExtensionMetadata object."""
 
         gaupol.MetadataItem.__init__(self, fields)
         self.path = None

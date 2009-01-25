@@ -28,6 +28,7 @@ class OutputWindow(gtk.Window):
     """Window for standard output from external applications."""
 
     def __init__(self):
+        """Initialize an OutputWindow object."""
 
         gtk.Window.__init__(self)
         self._close_button = None

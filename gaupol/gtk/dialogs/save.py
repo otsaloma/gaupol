@@ -29,6 +29,7 @@ class SaveDialog(gaupol.gtk.FileDialog):
     # pylint: disable-msg=E1101
 
     def __init__(self, parent, title):
+        """Initialize a SaveDialog object."""
 
         gaupol.gtk.FileDialog.__init__(self, "save.glade")
         get_widget = self._glade_xml.get_widget

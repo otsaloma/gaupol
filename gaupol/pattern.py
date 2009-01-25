@@ -33,6 +33,7 @@ class Pattern(gaupol.MetadataItem):
     """
 
     def __init__(self, fields=None):
+        """Initialize a Pattern object."""
 
         gaupol.MetadataItem.__init__(self, fields)
         self.enabled = True

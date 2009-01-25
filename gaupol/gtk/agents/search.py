@@ -26,6 +26,7 @@ class SearchAgent(gaupol.Delegate):
     # pylint: disable-msg=E0203,W0201
 
     def __init__(self, master):
+        """Initialize a SearchAgent object."""
 
         gaupol.Delegate.__init__(self, master)
         self._search_dialog = None

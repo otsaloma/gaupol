@@ -44,6 +44,7 @@ class Parser(gaupol.Finder):
     __metaclass__ = gaupol.Contractual
 
     def __init__(self, re_tag=None, clean_func=None):
+        """Initialize a Parser object."""
 
         gaupol.Finder.__init__(self)
         self._margins = None

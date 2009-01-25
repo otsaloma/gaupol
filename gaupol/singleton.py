@@ -24,6 +24,7 @@ class Singleton(object):
     """Base class for single-instance classes."""
 
     def __new__(cls, *args, **kwargs):
+        """Return possibly existing instance."""
 
         if "_instance" not in cls.__dict__:
             cls._instance = object.__new__(cls, *args, **kwargs)

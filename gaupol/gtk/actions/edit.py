@@ -26,6 +26,7 @@ class ClearTextsAction(gaupol.gtk.Action):
     """Clear the selected texts."""
 
     def __init__(self):
+        """Initialize a ClearTextsAction object."""
 
         gaupol.gtk.Action.__init__(self, "clear_texts")
         self.props.label = _("Cl_ear")
@@ -48,6 +49,7 @@ class CopyTextsAction(gaupol.gtk.Action):
     """Copy the selected texts to the clipboard."""
 
     def __init__(self):
+        """Initialize a CopyTextsAction object."""
 
         gaupol.gtk.Action.__init__(self, "copy_texts")
         self.props.label = _("_Copy")
@@ -70,6 +72,7 @@ class CutTextsAction(gaupol.gtk.Action):
     """Cut the selected texts to the clipboard."""
 
     def __init__(self):
+        """Initialize a CutTextsAction object."""
 
         gaupol.gtk.Action.__init__(self, "cut_texts")
         self.props.label = _("Cu_t")
@@ -92,6 +95,7 @@ class EditPreferencesAction(gaupol.gtk.Action):
     """Configure Gaupol."""
 
     def __init__(self):
+        """Initialize an EditPreferencesAction object."""
 
         gaupol.gtk.Action.__init__(self, "edit_preferences")
         self.props.label = _("_Preferences")
@@ -105,6 +109,7 @@ class EditNextValueAction(gaupol.gtk.Action):
     """Edit the focused column of the next subtitle."""
 
     def __init__(self):
+        """Initialize an EditNextValueAction object."""
 
         gaupol.gtk.Action.__init__(self, "edit_next_value")
         self.props.label = _("Edit _Next Cell")
@@ -129,6 +134,7 @@ class EditValueAction(gaupol.gtk.Action):
     """Edit the focused cell."""
 
     def __init__(self):
+        """Initialize an EditValueAction object."""
 
         gaupol.gtk.Action.__init__(self, "edit_value")
         self.props.is_important = True
@@ -153,6 +159,7 @@ class ExtendSelectionToBeginningAction(gaupol.gtk.Action):
     """Extend the selection up to the first subtitle."""
 
     def __init__(self):
+        """Initialize an ExtendSelectionToBeginningAction object."""
 
         gaupol.gtk.Action.__init__(self, "extend_selection_to_beginning")
         self.props.label = _("Extend To _Beginning")
@@ -174,6 +181,7 @@ class ExtendSelectionToEndAction(gaupol.gtk.Action):
     """Extend the selection up to the last subtitle."""
 
     def __init__(self):
+        """Initialize an ExtendSelectionToEndAction object."""
 
         gaupol.gtk.Action.__init__(self, "extend_selection_to_end")
         self.props.label = _("Extend To _End")
@@ -195,6 +203,7 @@ class InsertSubtitlesAction(gaupol.gtk.Action):
     """Insert subtitles."""
 
     def __init__(self):
+        """Initialize an InsertSubtitlesAction object."""
 
         gaupol.gtk.Action.__init__(self, "insert_subtitles")
         self.props.label = _("_Insert Subtitles\342\200\246")
@@ -217,6 +226,7 @@ class InvertSelectionAction(gaupol.gtk.Action):
     """Invert the current selection."""
 
     def __init__(self):
+        """Initialize an InvertSelectionAction object."""
 
         gaupol.gtk.Action.__init__(self, "invert_selection")
         self.props.label = _("_Invert Selection")
@@ -236,6 +246,7 @@ class MergeSubtitlesAction(gaupol.gtk.Action):
     """Merge the selected subtitles."""
 
     def __init__(self):
+        """Initialize a MergeSubtitlesAction object."""
 
         gaupol.gtk.Action.__init__(self, "merge_subtitles")
         self.props.label = _("_Merge Subtitles")
@@ -257,6 +268,7 @@ class PasteTextsAction(gaupol.gtk.Action):
     """Paste texts from the clipboard."""
 
     def __init__(self):
+        """Initialize a PasteTextsAction object."""
 
         gaupol.gtk.Action.__init__(self, "paste_texts")
         self.props.label = _("_Paste")
@@ -282,6 +294,7 @@ class RedoActionAction(gaupol.gtk.Action):
     __gtype_name__ = "RedoActionAction"
 
     def __init__(self):
+        """Initialize a RedoActionAction object."""
 
         gaupol.gtk.Action.__init__(self, "redo_action")
         self.props.label = _("_Redo")
@@ -303,6 +316,7 @@ class RemoveSubtitlesAction(gaupol.gtk.Action):
     """Remove the selected subtitles."""
 
     def __init__(self):
+        """Initialize a RemoveSubtitlesAction object."""
 
         gaupol.gtk.Action.__init__(self, "remove_subtitles")
         self.props.label = _("Rem_ove Subtitles")
@@ -324,6 +338,7 @@ class SelectAllAction(gaupol.gtk.Action):
     """Select all subtitles."""
 
     def __init__(self):
+        """Initialize a SelectAllAction object."""
 
         gaupol.gtk.Action.__init__(self, "select_all")
         self.props.label = _("Select _All")
@@ -344,6 +359,7 @@ class ShowSelectionMenuAction(gaupol.gtk.MenuAction):
     """Show the selection menu."""
 
     def __init__(self):
+        """Initialize a ShowSelectionMenuAction object."""
 
         gaupol.gtk.MenuAction.__init__(self, "show_selection_menu")
         self.props.label = _("Sele_ction")
@@ -361,6 +377,7 @@ class SplitSubtitleAction(gaupol.gtk.Action):
     """Split the selected subtitle."""
 
     def __init__(self):
+        """Initialize a SplitSubtitleAction object."""
 
         gaupol.gtk.Action.__init__(self, "split_subtitle")
         self.props.label = _("_Split Subtitle")
@@ -382,6 +399,7 @@ class UndoActionAction(gaupol.gtk.Action):
     __gtype_name__ = "UndoActionAction"
 
     def __init__(self):
+        """Initialize an UndoActionAction object."""
 
         gaupol.gtk.Action.__init__(self, "undo_action")
         self.props.is_important = True

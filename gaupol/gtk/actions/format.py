@@ -26,6 +26,7 @@ class ShowCaseMenuAction(gaupol.gtk.MenuAction):
     """Show the case format menu."""
 
     def __init__(self):
+        """Initialize a ShowCaseMenuAction object."""
 
         gaupol.gtk.MenuAction.__init__(self, "show_case_menu")
         self.props.label = _("Ca_se")
@@ -45,6 +46,7 @@ class ToggleDialogDashesAction(gaupol.gtk.Action):
     """Toggle dialogue dashes on the selected texts."""
 
     def __init__(self):
+        """Initialize a ToggleDialogDashesAction object."""
 
         gaupol.gtk.Action.__init__(self, "toggle_dialogue_dashes")
         self.props.label = _("_Dialogue")
@@ -67,6 +69,7 @@ class ToggleItalicizationAction(gaupol.gtk.Action):
     """Toggle italicization of the selected texts."""
 
     def __init__(self):
+        """Initialize a ToggleItalicizationAction object."""
 
         gaupol.gtk.Action.__init__(self, "toggle_italicization")
         self.props.label = _("_Italic")
@@ -93,6 +96,7 @@ class UseLowerCaseAction(gaupol.gtk.Action):
     """Change the selected texts to lower case."""
 
     def __init__(self):
+        """Initialize a UseLowerCaseAction object."""
 
         gaupol.gtk.Action.__init__(self, "use_lower_case")
         self.props.label = _("_Lower")
@@ -113,6 +117,7 @@ class UseSentenceCaseAction(gaupol.gtk.Action):
     """Change the selected texts to sentence case."""
 
     def __init__(self):
+        """Initialize a UseSentenceCaseAction object."""
 
         gaupol.gtk.Action.__init__(self, "use_sentence_case")
         self.props.label = _("_Sentence")
@@ -133,6 +138,7 @@ class UseTitleCaseAction(gaupol.gtk.Action):
     """Change the selected texts to title case."""
 
     def __init__(self):
+        """Initialize a UseTitleCaseAction object."""
 
         gaupol.gtk.Action.__init__(self, "use_title_case")
         self.props.label = _("_Title")
@@ -151,6 +157,7 @@ class UseTitleCaseAction(gaupol.gtk.Action):
 class UseUpperCaseAction(gaupol.gtk.Action):
 
     def __init__(self):
+        """Initialize a UseUpperCaseAction object."""
 
         gaupol.gtk.Action.__init__(self, "use_upper_case")
         self.props.label = _("_Upper")

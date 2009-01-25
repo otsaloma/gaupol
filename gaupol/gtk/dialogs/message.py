@@ -26,6 +26,7 @@ class ErrorDialog(gtk.MessageDialog):
     """Base class for error dialogs."""
 
     def __init__(self, parent, title, message=None):
+        """Initialize an ErrorDialog object."""
 
         gtk.MessageDialog.__init__(
             self, parent, gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
@@ -39,6 +40,7 @@ class InfoDialog(gtk.MessageDialog):
     """Base class for info dialogs."""
 
     def __init__(self, parent, title, message=None):
+        """Initialize an InfoDialog object."""
 
         gtk.MessageDialog.__init__(
             self, parent, gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
@@ -52,6 +54,7 @@ class QuestionDialog(gtk.MessageDialog):
     """Base class for question dialogs."""
 
     def __init__(self, parent, title, message=None):
+        """Initialize a QuestionDialog object."""
 
         gtk.MessageDialog.__init__(
             self, parent, gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
@@ -65,6 +68,7 @@ class WarningDialog(gtk.MessageDialog):
     """Base class for warning dialogs."""
 
     def __init__(self, parent, title, message=None):
+        """Initialize a WarningDialog object."""
 
         gtk.MessageDialog.__init__(
             self, parent, gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,

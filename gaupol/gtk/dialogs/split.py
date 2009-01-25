@@ -35,6 +35,7 @@ class SplitDialog(gaupol.gtk.GladeDialog):
         assert len(page.project.subtitles) > 1
 
     def __init__(self, parent, application):
+        """Initialize a SplitDialog object."""
 
         gaupol.gtk.GladeDialog.__init__(self, "split.glade")
         self._subtitle_spin = self._glade_xml.get_widget("subtitle_spin")

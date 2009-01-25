@@ -34,6 +34,7 @@ class SubStationAlpha(gaupol.SubtitleFile):
     mode = gaupol.modes.TIME
 
     def __init__(self, path, encoding, newline=None):
+        """Initialize a SubStationAlpha object."""
 
         gaupol.SubtitleFile.__init__(self, path, encoding, newline)
         self.event_fields = ("Marked", "Start", "End", "Style", "Name",

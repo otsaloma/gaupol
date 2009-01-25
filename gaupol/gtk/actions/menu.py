@@ -25,6 +25,7 @@ class ShowEditMenuAction(gaupol.gtk.TopMenuAction):
     """Show the 'Edit' menu."""
 
     def __init__(self):
+        """Initialize a ShowEditMenuAction object."""
 
         gaupol.gtk.TopMenuAction.__init__(self, "show_edit_menu")
         self.props.label = _("_Edit")
@@ -36,6 +37,7 @@ class ShowFileMenuAction(gaupol.gtk.TopMenuAction):
     """Show the 'File' menu."""
 
     def __init__(self):
+        """Initialize a ShowFileMenuAction object."""
 
         gaupol.gtk.TopMenuAction.__init__(self, "show_file_menu")
         self.props.label = _("_File")
@@ -47,6 +49,7 @@ class ShowHelpMenuAction(gaupol.gtk.TopMenuAction):
     """Show the 'Help' menu."""
 
     def __init__(self):
+        """Initialize a ShowHelpMenuAction object."""
 
         gaupol.gtk.TopMenuAction.__init__(self, "show_help_menu")
         self.props.label = _("_Help")
@@ -58,6 +61,7 @@ class ShowProjectsMenuAction(gaupol.gtk.TopMenuAction):
     """Show the 'Projects' menu."""
 
     def __init__(self):
+        """Initialize a ShowProjectsMenuAction object."""
 
         gaupol.gtk.TopMenuAction.__init__(self, "show_projects_menu")
         self.props.label = _("_Projects")
@@ -69,6 +73,7 @@ class ShowTextMenuAction(gaupol.gtk.TopMenuAction):
     """Show the 'Text' menu."""
 
     def __init__(self):
+        """Initialize a ShowTextMenuAction object."""
 
         gaupol.gtk.TopMenuAction.__init__(self, "show_text_menu")
         self.props.label = _("_Text")
@@ -80,6 +85,7 @@ class ShowToolsMenuAction(gaupol.gtk.TopMenuAction):
     """Show the 'Tools' menu."""
 
     def __init__(self):
+        """Initialize a ShowToolsMenuAction object."""
 
         gaupol.gtk.TopMenuAction.__init__(self, "show_tools_menu")
         self.props.label = _("T_ools")
@@ -91,6 +97,7 @@ class ShowViewMenuAction(gaupol.gtk.TopMenuAction):
     """Show the 'View' menu."""
 
     def __init__(self):
+        """Initialize a ShowViewMenuAction object."""
 
         gaupol.gtk.TopMenuAction.__init__(self, "show_view_menu")
         self.props.label = _("_View")

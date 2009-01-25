@@ -26,6 +26,7 @@ class FindAndReplaceAction(gaupol.gtk.Action):
     """Search for and replace text."""
 
     def __init__(self):
+        """Initialize a FindAndReplaceAction object."""
 
         gaupol.gtk.Action.__init__(self, "find_and_replace")
         self.props.label = _("_Find And Replace\342\200\246")
@@ -46,6 +47,7 @@ class FindNextAction(gaupol.gtk.Action):
     """Search forwards for same text."""
 
     def __init__(self):
+        """Initialize a FindNextAction object."""
 
         gaupol.gtk.Action.__init__(self, "find_next")
         self.props.label = _("Find _Next")
@@ -65,6 +67,7 @@ class FindPreviousAction(gaupol.gtk.Action):
     """Search backwards for same text."""
 
     def __init__(self):
+        """Initialize a FindPreviousAction object."""
 
         gaupol.gtk.Action.__init__(self, "find_previous")
         self.props.label = _("Find Pre_vious")

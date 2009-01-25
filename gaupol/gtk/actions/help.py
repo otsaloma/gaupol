@@ -26,6 +26,7 @@ class ReportABugAction(gaupol.gtk.Action):
     """Submit a bug report."""
 
     def __init__(self):
+        """Initialize a ReportABugAction object."""
 
         gaupol.gtk.Action.__init__(self, "report_a_bug")
         self.props.label = _("_Report A Bug")
@@ -38,6 +39,7 @@ class ViewAboutDialogAction(gaupol.gtk.Action):
     """Show information about Gaupol."""
 
     def __init__(self):
+        """Initialize a ViewAboutDialogAction object."""
 
         gaupol.gtk.Action.__init__(self, "view_about_dialog")
         self.props.label = _("_About")

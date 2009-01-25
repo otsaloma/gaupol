@@ -32,6 +32,7 @@ class PreviewAgent(gaupol.Delegate):
     __metaclass__ = gaupol.Contractual
 
     def __init__(self, master):
+        """Initialize a PreviewAgent object."""
 
         gaupol.Delegate.__init__(self, master)
         gaupol.util.connect(self, self, "notify::main_file")

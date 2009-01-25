@@ -26,6 +26,7 @@ class AdjustDurationsAction(gaupol.gtk.Action):
     """Lengthen or shorten durations."""
 
     def __init__(self):
+        """Initialize an AdjustDurationsAction object."""
 
         gaupol.gtk.Action.__init__(self, "adjust_durations")
         self.props.label = _("Adjust _Durations\342\200\246")
@@ -43,6 +44,7 @@ class ConvertFramerateAction(gaupol.gtk.Action):
     """Convert framerate."""
 
     def __init__(self):
+        """Initialize a ConvertFramerateAction object."""
 
         gaupol.gtk.Action.__init__(self, "convert_framerate")
         self.props.label = _("Convert _Framerate\342\200\246")
@@ -61,6 +63,7 @@ class PreviewAction(gaupol.gtk.Action):
     """Preview from selected position with a video player."""
 
     def __init__(self):
+        """Initialize a PreviewAction object."""
 
         gaupol.gtk.Action.__init__(self, "preview")
         self.props.label = _("_Preview")
@@ -89,6 +92,7 @@ class ShiftPositionsAction(gaupol.gtk.Action):
     """Make subtitles appear earlier or later."""
 
     def __init__(self):
+        """Initialize a ShiftPositionsAction object."""
 
         gaupol.gtk.Action.__init__(self, "shift_positions")
         self.props.label = _("_Shift Positions\342\200\246")
@@ -107,6 +111,7 @@ class TransformPositionsAction(gaupol.gtk.Action):
     """Change positions by linear two-point correction."""
 
     def __init__(self):
+        """Initialize a TransformPositionsAction object."""
 
         gaupol.gtk.Action.__init__(self, "transform_positions")
         self.props.label = _("_Transform Positions\342\200\246")

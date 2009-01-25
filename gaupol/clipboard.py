@@ -29,6 +29,7 @@ class Clipboard(object):
     """
 
     def __init__(self):
+        """Initialize a Clipboard object."""
 
         self._texts = []
 

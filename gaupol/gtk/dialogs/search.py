@@ -42,6 +42,7 @@ class SearchDialog(gaupol.gtk.GladeDialog):
     __metaclass__ = gaupol.Contractual
 
     def __init__(self, application):
+        """Initialize a SearchDialog object."""
 
         gaupol.gtk.GladeDialog.__init__(self, "search.glade")
         get_widget = self._glade_xml.get_widget

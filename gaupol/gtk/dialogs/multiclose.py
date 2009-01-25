@@ -27,6 +27,7 @@ class MultiCloseDialog(gaupol.gtk.GladeDialog):
     """Dialog for warning when closing multiple documents."""
 
     def __init__(self, parent, application, pages):
+        """Initialize a MultiCloseDialog object."""
 
         gaupol.gtk.GladeDialog.__init__(self, "multiclose.glade")
         get_widget = self._glade_xml.get_widget

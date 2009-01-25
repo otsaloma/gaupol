@@ -61,6 +61,7 @@ class Observable(object):
     _signals = ()
 
     def __init__(self):
+        """Initialize an Observable object."""
 
         self._blocked_signals = []
         self._blocked_state = False
@@ -72,6 +73,7 @@ class Observable(object):
             self._add_signal(signal)
 
     def __setattr__(self, name, value):
+        """Set value of observable attribute."""
 
         if (name in self.__slots__) or name.startswith("_"):
             return object.__setattr__(self, name, value)

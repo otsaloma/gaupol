@@ -66,10 +66,12 @@ class Application(gaupol.Observable, gaupol.gtk.Runner):
         "text-assistant-request-pages",)
 
     def __getattr__(self, name):
+        """Return method delegated to an agent."""
 
         return self._delegations[name]
 
     def __init__(self):
+        """Initialize an Application object."""
 
         gaupol.Observable.__init__(self)
         self._delegations = {}

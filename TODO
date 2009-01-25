@@ -4,8 +4,7 @@ Gaupol 0.14
  [W] Add an extension system (undocumented for now)
      - API documentation (SidePane!)
      - i18n and setup.py (build and installation)
-     - Test ExtensionManager dependency handling
- [W] Add two extensions: side pane and bookmarks
+ [D] Add two extensions: side pane and bookmarks
  [?] Adher to freedesktop.org's XDG Base Directory Specification
      - http://live.gnome.org/GnomeGoals/XDGConfigFolders
  [D] Handle reading and writing files with a UTF-8 BOM (#556956)
@@ -26,8 +25,8 @@ Gaupol 1.0
 
  * Migrate from Glade to gtk.Builder
    - http://live.gnome.org/GnomeGoals/RemoveLibGladeUseGtkBuilder
- * Add documentation on writing extensions
- * Add documentation on writing pattern files
+ * Add wiki documentation on writing extensions
+ * Add wiki documentation on writing pattern files
  * Add a wiki page for publishing extensions
  * Add a wiki page for publishing pattern files
 

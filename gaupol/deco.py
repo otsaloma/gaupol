@@ -67,6 +67,7 @@ def contractual(function):
     'FUNCTION_NAME_ensure' calls if such functions exist. The require function
     receives the same arguments as function, the ensure function will in
     addition receive function's return value as its first argument.
+    This is a debug decorator that is in use only if gaupol.debug is True.
     """
     if not gaupol.debug:
         return function

@@ -68,6 +68,7 @@ class Subtitle(object):
         raise ValueError
 
     def __getattr__(self, name):
+        """Return lazily instantiated format-specific attribute container."""
 
         if name in (x.container for x in gaupol.formats):
             # Lazily instantiate a new container.
@@ -77,6 +78,7 @@ class Subtitle(object):
         raise AttributeError
 
     def __init__(self, mode=None, framerate=None):
+        """Initialize a Subtitle object."""
 
         self._start = "00:00:00.000"
         self._end = "00:00:00.000"

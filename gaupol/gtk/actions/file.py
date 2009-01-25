@@ -26,6 +26,7 @@ class AppendFileAction(gaupol.gtk.Action):
     """Append subtitles from file to the current project."""
 
     def __init__(self):
+        """Initialize an AppendFileAction object."""
 
         gaupol.gtk.Action.__init__(self, "append_file")
         self.props.label = _("_Append File\342\200\246")
@@ -45,6 +46,7 @@ class CloseAllProjectsAction(gaupol.gtk.Action):
     """Close all open projects."""
 
     def __init__(self):
+        """Initialize a CloseAllProjectsAction object."""
 
         gaupol.gtk.Action.__init__(self, "close_all_projects")
         self.props.label = _("_Close All")
@@ -64,6 +66,7 @@ class CloseProjectAction(gaupol.gtk.Action):
     """Close project."""
 
     def __init__(self):
+        """Initialize a CloseProjectAction object."""
 
         gaupol.gtk.Action.__init__(self, "close_project")
         self.props.label = _("_Close")
@@ -83,6 +86,7 @@ class EditHeadersAction(gaupol.gtk.Action):
     """Edit file headers."""
 
     def __init__(self):
+        """Initialize an EditHeadersAction object."""
 
         gaupol.gtk.Action.__init__(self, "edit_headers")
         self.props.label = _("_Headers")
@@ -110,6 +114,7 @@ class NewProjectAction(gaupol.gtk.Action):
     """Create a new project."""
 
     def __init__(self):
+        """Initialize a NewProjectAction object."""
 
         gaupol.gtk.Action.__init__(self, "new_project")
         self.props.label = _("_New")
@@ -126,6 +131,7 @@ class OpenMainFilesAction(gaupol.gtk.Action):
     __gtype_name__ = "OpenMainFilesAction"
 
     def __init__(self):
+        """Initialize an OpenMainFilesAction object."""
 
         gaupol.gtk.Action.__init__(self, "open_main_files")
         self.props.is_important = True
@@ -143,6 +149,7 @@ class OpenTranslationFileAction(gaupol.gtk.Action):
     """Open a translation file."""
 
     def __init__(self):
+        """Initialize an OpenTranslationFileAction object."""
 
         gaupol.gtk.Action.__init__(self, "open_translation_file")
         self.props.label = _("Open _Translation\342\200\246")
@@ -163,6 +170,7 @@ class QuitAction(gaupol.gtk.Action):
     """Quit Gaupol."""
 
     def __init__(self):
+        """Initialize a QuitAction object."""
 
         gaupol.gtk.Action.__init__(self, "quit")
         self.props.label = _("_Quit")
@@ -177,6 +185,7 @@ class SaveAllDocumentsAction(gaupol.gtk.Action):
     """Save all open documents."""
 
     def __init__(self):
+        """Initialize a SaveAllDocumentsAction object."""
 
         gaupol.gtk.Action.__init__(self, "save_all_documents")
         self.props.label = _("_Save All")
@@ -196,6 +205,7 @@ class SaveMainDocumentAction(gaupol.gtk.Action):
     """Save the current main document."""
 
     def __init__(self):
+        """Initialize a SaveMainDocumentAction object."""
 
         gaupol.gtk.Action.__init__(self, "save_main_document")
         self.props.is_important = True
@@ -216,6 +226,7 @@ class SaveMainDocumentAsAction(gaupol.gtk.Action):
     """Save the current main document with a different name."""
 
     def __init__(self):
+        """Initialize a SaveMainDocumentAsAction object."""
 
         gaupol.gtk.Action.__init__(self, "save_main_document_as")
         self.props.label = _("Save _As\342\200\246")
@@ -237,6 +248,7 @@ class SaveTranslationDocumentAction(gaupol.gtk.Action):
     """Save the current translation document."""
 
     def __init__(self):
+        """Initialize a SaveTranslationDocumentAction object."""
 
         gaupol.gtk.Action.__init__(self, "save_translation_document")
         self.props.label = _("Save Trans_lation")
@@ -256,6 +268,7 @@ class SaveTranslationDocumentAsAction(gaupol.gtk.Action):
     """Save the current translation document with a different name."""
 
     def __init__(self):
+        """Initialize a SaveTranslationDocumentAsAction object."""
 
         gaupol.gtk.Action.__init__(self, "save_translation_document_as")
         self.props.label = _("Save Translat_ion As\342\200\246")
@@ -277,6 +290,7 @@ class SelectVideoFileAction(gaupol.gtk.Action):
     """Select a video file."""
 
     def __init__(self):
+        """Initialize a SelectVideoFileAction object."""
 
         gaupol.gtk.Action.__init__(self, "select_video_file")
         self.props.label = _("Select _Video\342\200\246")
@@ -298,6 +312,7 @@ class ShowRecentMainMenuAction(gaupol.gtk.Action):
     """Show the recent main file menu."""
 
     def __init__(self):
+        """Initialize a ShowRecentMainMenuAction object."""
 
         gaupol.gtk.Action.__init__(self, "show_recent_main_menu")
         self.props.label = _("Open _Recent")
@@ -310,6 +325,7 @@ class ShowRecentTranslationMenuAction(gaupol.gtk.Action):
     """Show the recent translation file menu."""
 
     def __init__(self):
+        """Initialize a ShowRecentTranslationMenuAction object."""
 
         gaupol.gtk.Action.__init__(self, "show_recent_translation_menu")
         self.props.label = _("Open R_ecent Translation")
@@ -327,6 +343,7 @@ class SplitProjectAction(gaupol.gtk.Action):
     """Split the current project in two."""
 
     def __init__(self):
+        """Initialize a SplitProjectAction object."""
 
         gaupol.gtk.Action.__init__(self, "split_project")
         self.props.label = _("Spli_t Project\342\200\246")

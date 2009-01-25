@@ -28,6 +28,7 @@ class _PositionShiftDialog(gaupol.gtk.GladeDialog):
     """Base class for dialogs for shifting positions."""
 
     def __init__(self, parent, application):
+        """Initialize a _PositionShiftDialog object."""
 
         gaupol.gtk.GladeDialog.__init__(self, "shift.glade")
         get_widget = self._glade_xml.get_widget

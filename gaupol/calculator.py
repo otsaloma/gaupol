@@ -34,11 +34,13 @@ class Calculator(object):
     _instances = {}
 
     def __init__(self, framerate=None):
+        """Initialize a Calculator object."""
 
         framerate = framerate or gaupol.framerates.FPS_24
         self._framerate = framerate.value
 
     def __new__(cls, framerate=None):
+        """Return possibly existing instance for framerate."""
 
         framerate = framerate or gaupol.framerates.FPS_24
         if not framerate in cls._instances:

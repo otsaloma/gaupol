@@ -28,6 +28,7 @@ class DurationAdjustDialog(gaupol.gtk.GladeDialog):
     """Dialog for lengthening or shortening durations."""
 
     def __init__(self, parent, application):
+        """Initialize a DurationAdjustDialog object."""
 
         gaupol.gtk.GladeDialog.__init__(self, "duration.glade")
         get_widget = self._glade_xml.get_widget

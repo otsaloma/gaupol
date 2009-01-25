@@ -58,6 +58,7 @@ class TimeEntry(gtk.Entry):
     _re_time = re.compile(r"^-?\d\d:[0-5]\d:[0-5]\d\.\d\d\d$")
 
     def __init__(self):
+        """Initialize a TimeEntry object."""
 
         gtk.Entry.__init__(self)
         self._delete_handler = None

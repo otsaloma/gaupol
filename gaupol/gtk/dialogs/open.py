@@ -29,6 +29,7 @@ class OpenDialog(gaupol.gtk.FileDialog):
     # pylint: disable-msg=E1101
 
     def __init__(self, parent, title, doc):
+        """Initialize an OpenDialog object."""
 
         gaupol.gtk.FileDialog.__init__(self, "open.glade")
         get_widget = self._glade_xml.get_widget

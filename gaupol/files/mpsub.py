@@ -36,6 +36,7 @@ class MPsub(gaupol.SubtitleFile):
     mode = gaupol.modes.TIME
 
     def __init__(self, path, encoding, newline=None):
+        """Initialize an MPsub object."""
 
         gaupol.SubtitleFile.__init__(self, path, encoding, newline)
         self.framerate = gaupol.framerates.NONE

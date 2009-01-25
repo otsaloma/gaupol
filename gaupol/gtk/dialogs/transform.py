@@ -28,6 +28,7 @@ class _PositionTransformDialog(gaupol.gtk.GladeDialog):
     """Base class for dialogs for transforming positions."""
 
     def __init__(self, parent, application):
+        """Initialize a _PositionTransformDialog object."""
 
         gaupol.gtk.GladeDialog.__init__(self, "transform.glade")
         get_widget = self._glade_xml.get_widget
@@ -180,6 +181,7 @@ class FrameTransformDialog(_PositionTransformDialog):
     __metaclass__ = gaupol.Contractual
 
     def __init__(self, parent, application):
+        """Initialize a FrameTransformDialog object."""
 
         _PositionTransformDialog.__init__(self, parent, application)
         self._output_spin_1 = gtk.SpinButton()
@@ -263,6 +265,7 @@ class TimeTransformDialog(_PositionTransformDialog):
     __metaclass__ = gaupol.Contractual
 
     def __init__(self, parent, application):
+        """Initialize a TimeTransformDialog object."""
 
         _PositionTransformDialog.__init__(self, parent, application)
         self._output_entry_1 = gaupol.gtk.TimeEntry()

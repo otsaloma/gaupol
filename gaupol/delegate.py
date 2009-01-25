@@ -28,14 +28,17 @@ class Delegate(object):
     """
 
     def __getattr__(self, name):
+        """Return value of master attribute."""
 
         return getattr(self.master, name)
 
     def __init__(self, master):
+        """Initialize a Delegate object."""
 
         object.__setattr__(self, "master", master)
 
     def __setattr__(self, name, value):
+        """Set value of master attribute."""
 
         # Do not create new attributes for master.
         if hasattr(self.master, name):

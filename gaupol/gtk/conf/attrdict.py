@@ -31,7 +31,7 @@ class ConfigAttrDict(gaupol.Observable):
     """
 
     def __init__(self, root):
-        """Initialize an ConfigAttrDict object.
+        """Initialize a ConfigAttrDict object.
 
         All attributes of corresponding child dictionaries of root are
         initialized as ConfigAttrDicts as well.

@@ -27,6 +27,7 @@ class FramerateConvertDialog(gaupol.gtk.GladeDialog):
     """Dialog for converting framerates."""
 
     def __init__(self, parent, application):
+        """Initialize a FramerateConvertDialog object."""
 
         gaupol.gtk.GladeDialog.__init__(self, "framerate.glade")
         get_widget = self._glade_xml.get_widget

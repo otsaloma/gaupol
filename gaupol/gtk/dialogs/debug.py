@@ -38,6 +38,7 @@ class DebugDialog(gaupol.gtk.GladeDialog):
     """Dialog for displaying a traceback in case of an unhandled exception."""
 
     def __init__(self):
+        """Initialize a DebugDialog object."""
 
         gaupol.gtk.GladeDialog.__init__(self, "debug.glade")
         get_widget = self._glade_xml.get_widget

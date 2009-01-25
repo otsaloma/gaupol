@@ -40,6 +40,7 @@ class AboutDialog(gtk.AboutDialog):
     """Dialog for displaying credits and information."""
 
     def __init__(self, parent):
+        """Initialize an AboutDialog object."""
 
         gtk.AboutDialog.__init__(self)
         gtk.about_dialog_set_url_hook(self._on_url_clicked)

@@ -50,6 +50,7 @@ class Action(gtk.Action):
     widgets = ()
 
     def __init__(self, name):
+        """Initialize an Action object."""
 
         gtk.Action.__init__(self, name, None, None, None)
 

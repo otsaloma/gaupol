@@ -28,6 +28,7 @@ class VideoDialog(gtk.FileChooserDialog):
     """Dialog for selecting a video file."""
 
     def __init__(self, parent):
+        """Initialize a VideoDialog object."""
 
         gtk.FileChooserDialog.__init__(self)
         self.set_title(_("Select Video"))

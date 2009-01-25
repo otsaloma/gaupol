@@ -26,6 +26,7 @@ class ConfigureSpellCheckAction(gaupol.gtk.Action):
     """Set languages and spell-check targets."""
 
     def __init__(self):
+        """Initialize a ConfigureSpellCheckAction object."""
 
         gaupol.gtk.Action.__init__(self, "configure_spell_check")
         self.props.label = _("Co_nfigure Spell-check\342\200\246")
@@ -43,6 +44,7 @@ class CheckSpellingAction(gaupol.gtk.Action):
     """Check for incorrect spelling."""
 
     def __init__(self):
+        """Initialize a CheckSpellingAction object."""
 
         gaupol.gtk.Action.__init__(self, "check_spelling")
         self.props.label = _("_Check Spelling")
@@ -65,6 +67,7 @@ class CorrectTextsAction(gaupol.gtk.Action):
     """Find and correct errors in texts."""
 
     def __init__(self):
+        """Initialize a CorrectTextsAction object."""
 
         gaupol.gtk.Action.__init__(self, "correct_texts")
         self.props.label = _("C_orrect Texts\342\200\246")
