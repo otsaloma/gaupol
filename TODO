@@ -2,7 +2,6 @@ Gaupol 0.14
 ===========
 
  [W] Add an extension system (undocumented for now)
-     - API documentation (SidePane!)
      - i18n and setup.py (build and installation)
  [D] Add two extensions: side pane and bookmarks
  [?] Adher to freedesktop.org's XDG Base Directory Specification

@@ -39,9 +39,6 @@ class UtilityAgent(gaupol.Delegate):
             if action is not None: return action
         raise ValueError
 
-    def get_action_group_require(self, name):
-        assert name in ("main-safe", "main-unsafe", "projects")
-
     def get_action_group(self, name):
         """Return action group from the UI manager."""
 
