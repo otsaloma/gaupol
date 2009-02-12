@@ -66,18 +66,26 @@ class Page(gaupol.Observable):
         self.update_tab_label()
         self.emit("view-created", self.view)
 
-    def _assert_store(self):
+    def _assert_store(self, fields=None):
         """Assert that store's data matches project's."""
 
+        if fields is None:
+            fields = list(gaupol.gtk.fields)
+            fields.remove(gaupol.gtk.fields.NUMBER)
         mode = self.edit_mode
         store = self.view.get_model()
         assert len(store) == len(self.project.subtitles)
         for i, subtitle in enumerate(self.project.subtitles):
-            assert store[i][1] == subtitle.get_start(mode)
-            assert store[i][2] == subtitle.get_end(mode)
-            assert store[i][3] == subtitle.get_duration(mode)
-            assert store[i][4] == subtitle.main_text
-            assert store[i][5] == subtitle.tran_text
+            if gaupol.gtk.fields.START in fields:
+                assert store[i][1] == subtitle.get_start(mode)
+            if gaupol.gtk.fields.END in fields:
+                assert store[i][2] == subtitle.get_end(mode)
+            if gaupol.gtk.fields.DURATION in fields:
+                assert store[i][3] == subtitle.get_duration(mode)
+            if gaupol.gtk.fields.MAIN_TEXT in fields:
+                assert store[i][4] == subtitle.main_text
+            if gaupol.gtk.fields.TRAN_TEXT in fields:
+                assert store[i][5] == subtitle.tran_text
 
     def _get_subtitle_value(self, row, field):
         """Return value of subtitle data corresponding to row and field."""
@@ -323,8 +331,8 @@ class Page(gaupol.Observable):
                 basename = basename[:-len(extension)]
         return _("%s translation") % basename
 
-    def reload_view_ensure(self, value, indices, cols):
-        self._assert_store()
+    def reload_view_ensure(self, value, rows, fields):
+        self._assert_store(fields)
 
     def reload_view(self, rows, fields):
         """Reload the view in rows and columns."""
