@@ -396,3 +396,11 @@ class TestModule(gaupol.TestCase):
         path = self.get_subrip_path()
         args = (path, u"\xc3\xb6\n", "ascii", None)
         self.raises(UnicodeError, gaupol.util.write, *args)
+
+    def test_writelines(self):
+
+        lines = ["test", "test"]
+        path = self.get_subrip_path()
+        gaupol.util.writelines(path, lines)
+        text = "test\ntest\n"
+        assert codecs.open(path, "r", "ascii").read() == text

@@ -467,3 +467,23 @@ def write(path, text, encoding=None, fallback="utf_8"):
         if not fallback in (encoding, None, ""):
             return write(path, text, "utf_8", None)
         raise
+
+def writelines_require(path, lines, encoding=None, fallback="utf_8"):
+    if encoding is not None:
+        codecs.lookup(encoding)
+    if fallback is not None:
+        codecs.lookup(fallback)
+
+def writelines_ensure(value, path, lines, encoding=None, fallback="utf_8"):
+    assert os.path.isfile(path)
+
+@gaupol.deco.contractual
+def writelines(path, lines, encoding=None, fallback="utf_8"):
+    """Write lines of text to file.
+
+    fallback should be None to not fall back to UTF-8.
+    Raise IOError if writing fails.
+    Raise UnicodeError if encoding fails.
+    """
+    text = os.linesep.join(lines) + os.linesep
+    return write(path, text, encoding, fallback)
