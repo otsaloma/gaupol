@@ -48,7 +48,7 @@ class SpellCheckDialog(gaupol.gtk.GladeDialog):
 
     __metaclass__ = gaupol.Contractual
     _max_replacemnts = 5000
-    _personal_dir = os.path.join(gaupol.PROFILE_DIR, "spell-check")
+    _personal_dir = os.path.join(gaupol.CONFIG_HOME_DIR, "spell-check")
 
     def __init___require(self, parent, application):
         assert gaupol.util.enchant_available()

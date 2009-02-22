@@ -42,8 +42,8 @@ class ExtensionManager(object):
     """
 
     __metaclass__ = gaupol.Contractual
-    _global_dir = os.path.join(gaupol.LIB_DIR, "extensions")
-    _local_dir = os.path.join(gaupol.PROFILE_DIR, "extensions")
+    _global_dir = os.path.join(gaupol.EXTENSION_DIR)
+    _local_dir = os.path.join(gaupol.DATA_HOME_DIR, "extensions")
     _re_comment = re.compile(r"#.*$")
 
     def __init__(self, application):

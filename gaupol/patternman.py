@@ -140,13 +140,14 @@ class PatternManager(object):
     def _read_patterns(self):
         """Read all patterns of self.pattern_type from files."""
 
-        global_dir = os.path.join(gaupol.DATA_DIR, "patterns")
-        self._read_patterns_from_directory(global_dir, "utf_8")
-        local_dir = os.path.join(gaupol.PROFILE_DIR, "patterns")
+        data_dir = os.path.join(gaupol.DATA_DIR, "patterns")
+        data_home_dir = os.path.join(gaupol.DATA_HOME_DIR, "patterns")
+        config_home_dir = os.path.join(gaupol.CONFIG_HOME_DIR, "patterns")
         encoding = gaupol.util.get_default_encoding()
-        self._read_patterns_from_directory(local_dir, encoding)
-        self._read_config_from_directory(global_dir, "utf_8")
-        self._read_config_from_directory(local_dir, encoding)
+        self._read_patterns_from_directory(data_dir, "utf_8")
+        self._read_patterns_from_directory(data_home_dir, encoding)
+        self._read_config_from_directory(data_dir, "utf_8")
+        self._read_config_from_directory(config_home_dir, encoding)
 
     def _read_patterns_from_directory_require(self, directory, encoding):
         assert gaupol.encodings.is_valid_code(encoding)
@@ -174,7 +175,7 @@ class PatternManager(object):
         if basename.endswith(".in"):
             extension = ".%s.in" % self.pattern_type
         code = basename.replace(extension, "")
-        local = path.startswith(gaupol.PROFILE_DIR)
+        local = path.startswith(gaupol.DATA_HOME_DIR)
         patterns = self._patterns.setdefault(code, [])
         lines = gaupol.util.readlines(path, encoding)
         lines = [self._re_comment.sub("", x) for x in lines]
@@ -191,7 +192,7 @@ class PatternManager(object):
     def _write_config_to_file(self, code, encoding):
         """Write configurations of all patterns to file."""
 
-        local_dir = os.path.join(gaupol.PROFILE_DIR, "patterns")
+        local_dir = os.path.join(gaupol.CONFIG_HOME_DIR, "patterns")
         if not os.path.isdir(local_dir): return
         basename = "%s.%s.conf" % (code, self.pattern_type)
         path = os.path.join(local_dir, basename)
@@ -257,7 +258,7 @@ class PatternManager(object):
     def save_config(self, script=None, language=None, country=None):
         """Save pattern configurations to files."""
 
-        local_dir = os.path.join(gaupol.PROFILE_DIR, "patterns")
+        local_dir = os.path.join(gaupol.CONFIG_HOME_DIR, "patterns")
         gaupol.deco.silent(OSError)(gaupol.util.makedirs)(local_dir)
         encoding = gaupol.util.get_default_encoding()
         codes = self._get_codes(script, language, country)

@@ -90,7 +90,7 @@ def _init_application(opts, args):
 def _init_configuration(path):
     """Initialize the configuration module from saved values."""
 
-    default = os.path.join(gaupol.PROFILE_DIR, "gaupol.gtk.conf")
+    default = os.path.join(gaupol.CONFIG_HOME_DIR, "gaupol.gtk.conf")
     path = (default if path is None else path)
     gaupol.gtk.conf.config_file = os.path.abspath(path)
     gaupol.gtk.conf.read()
@@ -202,6 +202,7 @@ def main(args):
         return _list_encodings()
     if opts.version:
         return _show_version()
+    gaupol.paths.xdg_copy_if_applicable()
     _init_configuration(opts.config_file)
     _init_application(opts, args)
     import gtk

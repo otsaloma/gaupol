@@ -50,8 +50,8 @@ class TestPatternManager(gaupol.TestCase):
 
     def test_save_config(self):
 
-        directory = gaupol.PROFILE_DIR
-        gaupol.PROFILE_DIR = tempfile.gettempdir()
+        directory = gaupol.CONFIG_HOME_DIR
+        gaupol.CONFIG_HOME_DIR = tempfile.gettempdir()
         self.manager.save_config("Latn")
         self.manager._read_patterns()
-        gaupol.PROFILE_DIR = directory
+        gaupol.CONFIG_HOME_DIR = directory

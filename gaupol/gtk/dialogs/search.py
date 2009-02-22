@@ -373,7 +373,7 @@ class SearchDialog(gaupol.gtk.GladeDialog):
     def _read_history(self, name):
         """Read history from file, either 'patterns' or 'replacements'."""
 
-        directory = os.path.join(gaupol.PROFILE_DIR, "search")
+        directory = os.path.join(gaupol.CONFIG_HOME_DIR, "search")
         path = os.path.join(directory, "%s.history" % name)
         if not os.path.isfile(path): return
         history = gaupol.util.readlines(path)
@@ -459,7 +459,7 @@ class SearchDialog(gaupol.gtk.GladeDialog):
     def _write_history(self, name):
         """Write history to file, either 'patterns' or 'replacements'."""
 
-        directory = os.path.join(gaupol.PROFILE_DIR, "search")
+        directory = os.path.join(gaupol.CONFIG_HOME_DIR, "search")
         gaupol.deco.silent(OSError)(gaupol.util.makedirs)(directory)
         assert os.path.isdir(directory)
         path = os.path.join(directory, "%s.history" % name)

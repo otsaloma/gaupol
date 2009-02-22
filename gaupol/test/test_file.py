@@ -55,13 +55,13 @@ class TestSubtitleFile(gaupol.TestCase):
     def test_get_template_header(self):
 
         assert self.file.get_template_header()
-        data_dir = gaupol.DATA_DIR
-        profile_dir = gaupol.PROFILE_DIR
-        gaupol.DATA_DIR = profile_dir
-        gaupol.PROFILE_DIR = data_dir
+        global_dir = gaupol.DATA_DIR
+        local_dir = gaupol.DATA_HOME_DIR
+        gaupol.DATA_DIR = local_dir
+        gaupol.DATA_HOME_DIR = global_dir
         assert self.file.get_template_header()
-        gaupol.DATA_DIR = data_dir
-        gaupol.PROFILE_DIR = profile_dir
+        gaupol.DATA_DIR = global_dir
+        gaupol.DATA_HOME_DIR = local_dir
 
     def test_read(self):
 

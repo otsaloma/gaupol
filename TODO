@@ -4,8 +4,8 @@ Gaupol 0.14
  [W] Add an extension system (undocumented for now)
      - i18n and setup.py (build and installation)
  [D] Add two extensions: side pane and bookmarks
- [?] Adher to freedesktop.org's XDG Base Directory Specification
-     - http://live.gnome.org/GnomeGoals/XDGConfigFolders
+ [D] Adher to the home directory part of freedesktop.org's
+     XDG Base Directory Specification
  [D] Handle reading and writing files with a UTF-8 BOM (#556956)
  [D] Save SSA and ASS files with '\N' linebreaks instead of '\n'
  [D] Resize columns after running text corrections
@@ -18,6 +18,8 @@ Gaupol 0.14
      impaired subtitles
  [D] Fix AssertionError when installing multiple times
  [D] Switch version-control systems from subversion to git
+ [ ] Update files from foreign sources
+ [ ] Use enchant.list_languages() in addition to locales.txt
 
 Gaupol 1.0
 ==========

@@ -41,7 +41,7 @@ class SubtitleFile(object):
 
     If the file format contains a header, it will default to a fairly blank
     template header read upon instantiation of the class, from either
-    paths.PROFILE_DIR/headers or paths.DATA_DIR/headers. If the read file
+    paths.DATA_DIR/headers or paths.DATA_HOME_DIR/headers. If the read file
     contains a header, it will replace the template.
     """
 
@@ -119,7 +119,7 @@ class SubtitleFile(object):
 
         basename = self.format.name.lower()
         read = gaupol.deco.silent(IOError, UnicodeError)(gaupol.util.read)
-        directory = os.path.join(gaupol.PROFILE_DIR, "headers")
+        directory = os.path.join(gaupol.DATA_HOME_DIR, "headers")
         path = os.path.join(directory, basename)
         if os.path.isfile(path):
             return read(path, None)
