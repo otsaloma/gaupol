@@ -12,10 +12,13 @@ Gaupol 0.14
  [D] Fix GtkWarning: GtkSpinButton: setting an adjustment with
      non-zero page size is deprecated
  [D] Remove deprecated Encoding-field from desktop file
+ [ ] http://bugzilla.gnome.org/show_bug.cgi?id=572676
  [D] Fix character count error with Unicode text
  [D] Fix updating of filenames in the projects menu
  [D] Fix erroneous cleaning of SubRip markup after removing hearing
      impaired subtitles
+ [D] Fix open dialog file filter to list files with upper- and mixed
+     case extensions as well
  [D] Fix AssertionError when installing multiple times
  [D] Switch version-control systems from subversion to git
  [ ] Update files from foreign sources

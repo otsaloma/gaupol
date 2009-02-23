@@ -57,7 +57,9 @@ class FileDialog(gaupol.gtk.GladeDialog):
         file_filter = gtk.FileFilter()
         file_filter.set_name(_("All supported files"))
         for format in gaupol.formats:
-            pattern = "*%s" % format.extension
+            pattern = "*."
+            for x in format.extension[1:]:
+                pattern += "[%s%s]" % (x.upper(), x.lower())
             file_filter.add_pattern(pattern)
         self.add_filter(file_filter)
         self.set_filter(file_filter)
