@@ -115,7 +115,8 @@ class LanguageDialog(gaupol.gtk.GladeDialog):
         for locale in gaupol.locales.get_all():
             try: enchant.Dict(locale).check("1")
             except enchant.Error: continue
-            name = gaupol.locales.code_to_name(locale)
+            try: name = gaupol.locales.code_to_name(locale)
+            except LookupError: name = locale
             store.append((locale, name))
 
     def _save_field(self):

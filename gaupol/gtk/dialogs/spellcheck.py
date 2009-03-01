@@ -266,7 +266,8 @@ class SpellCheckDialog(gaupol.gtk.GladeDialog):
         gaupol.util.makedirs(self._personal_dir)
         self._init_checker()
         self._init_replacements()
-        name = gaupol.locales.code_to_name(self.conf.language)
+        try: name = gaupol.locales.code_to_name(self.conf.language)
+        except LookupError: name = self.conf.language
         self._language_label.set_markup("<b>%s</b>" % name)
 
     def _init_tree_view(self):
@@ -420,7 +421,8 @@ class SpellCheckDialog(gaupol.gtk.GladeDialog):
     def _show_error_dialog(self, message):
         """Show an error dialog after failing to load dictionary."""
 
-        name = gaupol.locales.code_to_name(self.conf.language)
+        try: name = gaupol.locales.code_to_name(self.conf.language)
+        except LookupError: name = self.conf.language
         title = _('Failed to load dictionary for language "%s"') % name
         dialog = gaupol.gtk.ErrorDialog(self._dialog, title, message)
         dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
