@@ -38,7 +38,7 @@ class PatternManager(object):
     """
 
     __metaclass__ = gaupol.Contractual
-    _re_comment = re.compile(r"#.*$")
+    _re_comment = re.compile(r"^\s*#.*$")
 
     def __init___require(self, pattern_type):
         types = ("line-break", "common-error",
