@@ -25,6 +25,21 @@ data/glade/dialogs/shift.glade
 data/glade/dialogs/spellcheck.glade
 data/glade/dialogs/split.glade
 data/glade/dialogs/transform.glade
+[type: gettext/ini]data/patterns/Latn-en.line-break.in
+[type: gettext/ini]data/patterns/Latn-en.hearing-impaired.in
+[type: gettext/ini]data/patterns/Latn.hearing-impaired.in
+[type: gettext/ini]data/patterns/Zyyy.common-error.in
+[type: gettext/ini]data/patterns/Latn.common-error.in
+[type: gettext/ini]data/patterns/Latn-en-US.common-error.in
+[type: gettext/ini]data/patterns/Latn.line-break.in
+[type: gettext/ini]data/patterns/Latn.capitalization.in
+[type: gettext/ini]data/patterns/Latn-en.common-error.in
+[type: gettext/ini]data/patterns/Latn-en.capitalization.in
+extensions/bookmarks/add-bookmark-dialog.glade
+[type: gettext/ini]extensions/bookmarks/bookmarks.gaupol-extension.in
+extensions/bookmarks/bookmarks.py
+[type: gettext/ini]extensions/side-pane/side-pane.gaupol-extension.in
+extensions/side-pane/side-pane.py
 gaupol/agents/clipboard.py
 gaupol/agents/edit.py
 gaupol/agents/format.py

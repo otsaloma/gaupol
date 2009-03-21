@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-17 20:12+0300\n"
+"POT-Creation-Date: 2009-02-22 18:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -79,7 +79,7 @@ msgid "_Mark All"
 msgstr ""
 
 #: ../data/glade/assistants/text/confirmation.glade.h:3
-#: ../gaupol/gtk/actions/position.py:64
+#: ../gaupol/gtk/actions/position.py:69
 msgid "_Preview"
 msgstr ""
 
@@ -270,7 +270,7 @@ msgstr ""
 msgid "_Output:"
 msgstr ""
 
-#: ../data/glade/dialogs/header.glade.h:1 ../gaupol/gtk/actions/edit.py:31
+#: ../data/glade/dialogs/header.glade.h:1 ../gaupol/gtk/actions/edit.py:32
 msgid "Cl_ear"
 msgstr ""
 
@@ -410,86 +410,106 @@ msgid "<b>Video Player</b>"
 msgstr ""
 
 #: ../data/glade/dialogs/preferences.glade.h:6
-msgid "Al_ways use UTF-8 character encoding"
+msgid "A_vailable extensions:"
 msgstr ""
 
 #: ../data/glade/dialogs/preferences.glade.h:7
-msgid "Auto-detecti_on"
+msgid "Al_ways use UTF-8 character encoding"
 msgstr ""
 
 #: ../data/glade/dialogs/preferences.glade.h:8
-msgid "Co_mmand:"
+msgid "Auto-detecti_on"
 msgstr ""
 
 #: ../data/glade/dialogs/preferences.glade.h:9
-msgid "Curr_ent locale encoding"
+msgid "Co_mmand:"
 msgstr ""
 
 #: ../data/glade/dialogs/preferences.glade.h:10
-msgid "Editor"
+msgid "Curr_ent locale encoding"
 msgstr ""
 
 #: ../data/glade/dialogs/preferences.glade.h:11
-msgid "Encoding specified in the open dialog will always be tried first."
+msgid "Editor"
 msgstr ""
 
 #: ../data/glade/dialogs/preferences.glade.h:12
-msgid "Fields:"
+msgid "Encoding specified in the open dialog will always be tried first."
 msgstr ""
 
 #: ../data/glade/dialogs/preferences.glade.h:13
-msgid "File"
+msgid "Extensions"
 msgstr ""
 
 #: ../data/glade/dialogs/preferences.glade.h:14
-msgid "Pick the Editor Font"
+msgid "Fields:"
 msgstr ""
 
 #: ../data/glade/dialogs/preferences.glade.h:15
-msgid "Preferences"
+msgid "File"
 msgstr ""
 
 #: ../data/glade/dialogs/preferences.glade.h:16
-msgid "Preview"
+msgid "Pick the Editor Font"
 msgstr ""
 
 #: ../data/glade/dialogs/preferences.glade.h:17
-msgid "S_how line lengths in editable text fields"
+msgid "Preferences"
 msgstr ""
 
 #: ../data/glade/dialogs/preferences.glade.h:18
-msgid "Use _default theme font"
+msgid "Preview"
 msgstr ""
 
 #: ../data/glade/dialogs/preferences.glade.h:19
-msgid "When opening files, try encodings in the following order:"
+msgid "S_how line lengths in editable text fields"
 msgstr ""
 
 #: ../data/glade/dialogs/preferences.glade.h:20
-msgid "_Application:"
+msgid "Use _default theme font"
 msgstr ""
 
 #: ../data/glade/dialogs/preferences.glade.h:21
-msgid "_Editor font:"
+msgid "When opening files, try encodings in the following order:"
 msgstr ""
 
 #: ../data/glade/dialogs/preferences.glade.h:22
-msgid "_Fallback encodings:"
+msgid "_Application:"
 msgstr ""
 
 #: ../data/glade/dialogs/preferences.glade.h:23
-msgid "_Length unit:"
+msgid "_Editor font:"
 msgstr ""
 
 #: ../data/glade/dialogs/preferences.glade.h:24
-msgid "_Offset:"
+msgid "_Fallback encodings:"
 msgstr ""
 
 #: ../data/glade/dialogs/preferences.glade.h:25
-msgid "_Show line lengths in list cells (slow)"
+msgid "_Length unit:"
 msgstr ""
 
 #: ../data/glade/dialogs/preferences.glade.h:26
+msgid "_Offset:"
+msgstr ""
+
+#: ../data/glade/dialogs/preferences.glade.h:27
+msgid "_Show line lengths in list cells (slow)"
+msgstr ""
+
+#: ../data/glade/dialogs/preferences.glade.h:28
+msgid "gtk-about"
+msgstr ""
+
+#: ../data/glade/dialogs/preferences.glade.h:29
+msgid "gtk-help"
+msgstr ""
+
+#: ../data/glade/dialogs/preferences.glade.h:30
+msgid "gtk-preferences"
+msgstr ""
+
+#: ../data/glade/dialogs/preferences.glade.h:31
 msgid "seconds before selection"
 msgstr ""
 
@@ -509,7 +529,7 @@ msgstr ""
 msgid "Ne_wlines:"
 msgstr ""
 
-#: ../data/glade/dialogs/search.glade.h:3 ../gaupol/gtk/actions/search.py:32
+#: ../data/glade/dialogs/search.glade.h:3 ../gaupol/gtk/actions/search.py:33
 msgid "Find"
 msgstr ""
 
@@ -517,7 +537,7 @@ msgstr ""
 msgid "Find And Replace"
 msgstr ""
 
-#: ../data/glade/dialogs/search.glade.h:5 ../gaupol/gtk/actions/search.py:50
+#: ../data/glade/dialogs/search.glade.h:5 ../gaupol/gtk/actions/search.py:53
 msgid "Find _Next"
 msgstr ""
 
@@ -633,7 +653,7 @@ msgid "_Add"
 msgstr ""
 
 #: ../data/glade/dialogs/spellcheck.glade.h:10
-#: ../gaupol/gtk/actions/menu.py:30
+#: ../gaupol/gtk/actions/menu.py:31
 msgid "_Edit"
 msgstr ""
 
@@ -690,11 +710,360 @@ msgid "Transform se_lected subtitles"
 msgstr ""
 
 #: ../data/glade/dialogs/transform.glade.h:11
+#: ../extensions/bookmarks/add-bookmark-dialog.glade.h:3
 msgid "_Subtitle:"
 msgstr ""
 
 #: ../data/glade/dialogs/transform.glade.h:12
 msgid "_Transform"
+msgstr ""
+
+#: ../data/patterns/Latn-en.line-break.in.h:1
+#: ../data/patterns/Latn.line-break.in.h:1
+msgid "Break according to clauses terminated by a punctuation mark"
+msgstr ""
+
+#: ../data/patterns/Latn-en.line-break.in.h:2
+#: ../data/patterns/Latn.line-break.in.h:3
+msgid "Clause"
+msgstr ""
+
+#: ../data/patterns/Latn-en.hearing-impaired.in.h:1
+msgid ""
+"Replace the uppercase name of the speaker before a colon with a dialogue dash"
+msgstr ""
+
+#: ../data/patterns/Latn-en.hearing-impaired.in.h:2
+msgid "Uppercase speaker before a colon"
+msgstr ""
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:1
+msgid "One-line song lyrics between asterisks"
+msgstr ""
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:2
+msgid "One-line song lyrics between number signs"
+msgstr ""
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:3
+msgid "Remove description of a sound between parantheses"
+msgstr ""
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:4
+msgid "Remove description of a sound between square brackets"
+msgstr ""
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:5
+msgid "Remove one-line song lyrics starting with or between asterisks"
+msgstr ""
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:6
+msgid "Remove one-line song lyrics starting with or between number signs"
+msgstr ""
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:7
+msgid "Remove song lyrics starting with or between asterisks"
+msgstr ""
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:8
+msgid "Remove song lyrics starting with or between number signs"
+msgstr ""
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:9
+msgid "Replace the name of the speaker before a colon with a dialogue dash"
+msgstr ""
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:10
+msgid "Song lyrics between asterisks"
+msgstr ""
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:11
+msgid "Song lyrics between number signs"
+msgstr ""
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:12
+msgid "Sound in brackets"
+msgstr ""
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:13
+msgid "Sound in parantheses"
+msgstr ""
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:14
+msgid "Speaker before a colon"
+msgstr ""
+
+#: ../data/patterns/Zyyy.common-error.in.h:1
+msgid "Leading and trailing spaces"
+msgstr ""
+
+#: ../data/patterns/Zyyy.common-error.in.h:2
+msgid "Multiple consecutive spaces"
+msgstr ""
+
+#: ../data/patterns/Zyyy.common-error.in.h:3
+msgid "Remove space between digits of a number"
+msgstr ""
+
+#: ../data/patterns/Zyyy.common-error.in.h:4
+msgid "Remove spaces from the beginning and end of lines"
+msgstr ""
+
+#: ../data/patterns/Zyyy.common-error.in.h:5
+msgid "Replace multiple consecutive spaces with only one"
+msgstr ""
+
+#: ../data/patterns/Zyyy.common-error.in.h:6
+msgid "Space between digits"
+msgstr ""
+
+#: ../data/patterns/Latn.common-error.in.h:1
+msgid "Add space after a dialogue dash"
+msgstr ""
+
+#: ../data/patterns/Latn.common-error.in.h:2
+msgid "Add space after an ellipsis"
+msgstr ""
+
+#: ../data/patterns/Latn.common-error.in.h:3
+msgid "Add space after various punctuation marks"
+msgstr ""
+
+#: ../data/patterns/Latn.common-error.in.h:4
+msgid "Double apostrophe"
+msgstr ""
+
+#: ../data/patterns/Latn.common-error.in.h:5
+msgid "Letter \"O\" in a number"
+msgstr ""
+
+#: ../data/patterns/Latn.common-error.in.h:6
+msgid "Multiple question- and exclamation marks"
+msgstr ""
+
+#: ../data/patterns/Latn.common-error.in.h:7
+msgid "Periods around a punctuation mark"
+msgstr ""
+
+#: ../data/patterns/Latn.common-error.in.h:8
+msgid "Remove period before or after various punctuation marks"
+msgstr ""
+
+#: ../data/patterns/Latn.common-error.in.h:9
+msgid "Remove space after a starting- and before an ending quotation mark"
+msgstr ""
+
+#: ../data/patterns/Latn.common-error.in.h:10
+msgid "Remove space after an ellipsis that starts a line"
+msgstr ""
+
+#: ../data/patterns/Latn.common-error.in.h:11
+msgid "Remove space before various punctuation marks"
+msgstr ""
+
+#: ../data/patterns/Latn.common-error.in.h:12
+msgid "Replace a double apostrophe with a quotation mark"
+msgstr ""
+
+#: ../data/patterns/Latn.common-error.in.h:13
+msgid "Replace letter \"O\" with a zero in a number"
+msgstr ""
+
+#: ../data/patterns/Latn.common-error.in.h:14
+msgid ""
+"Replace multiple consequtive question- and exclamation marks with only one"
+msgstr ""
+
+#: ../data/patterns/Latn.common-error.in.h:15
+msgid "Space after a dialogue dash"
+msgstr ""
+
+#: ../data/patterns/Latn.common-error.in.h:16
+msgid "Space after a starting ellipsis"
+msgstr ""
+
+#: ../data/patterns/Latn.common-error.in.h:17
+msgid "Space after an ellipsis"
+msgstr ""
+
+#: ../data/patterns/Latn.common-error.in.h:18
+msgid "Space after punctuation marks"
+msgstr ""
+
+#: ../data/patterns/Latn.common-error.in.h:19
+msgid "Space before punctuation marks"
+msgstr ""
+
+#: ../data/patterns/Latn.common-error.in.h:20
+msgid "Spaces around a quotation mark"
+msgstr ""
+
+#: ../data/patterns/Latn-en-US.common-error.in.h:1
+msgid "Add period after a shortened title, such as \"Mr\" and \"Dr\""
+msgstr ""
+
+#: ../data/patterns/Latn-en-US.common-error.in.h:2
+msgid "Period after title"
+msgstr ""
+
+#: ../data/patterns/Latn.line-break.in.h:2
+msgid "Break according to dialogue separated by dashes"
+msgstr ""
+
+#: ../data/patterns/Latn.line-break.in.h:4
+msgid "Dialogue"
+msgstr ""
+
+#: ../data/patterns/Latn.capitalization.in.h:1
+msgid "Capitalize the first word of a sentence"
+msgstr ""
+
+#: ../data/patterns/Latn.capitalization.in.h:2
+msgid "Sentence"
+msgstr ""
+
+#: ../data/patterns/Latn-en.common-error.in.h:1
+msgid "Convert various two-letter spellings of okay to \"OK\""
+msgstr ""
+
+#: ../data/patterns/Latn-en.common-error.in.h:2
+msgid "Letter \"I\" in a lower case word"
+msgstr ""
+
+#: ../data/patterns/Latn-en.common-error.in.h:3
+msgid "Letter \"l\" in an upper case word"
+msgstr ""
+
+#: ../data/patterns/Latn-en.common-error.in.h:4
+msgid "Okay"
+msgstr ""
+
+#: ../data/patterns/Latn-en.common-error.in.h:5
+msgid "Remove spaces around an apostrophe"
+msgstr ""
+
+#: ../data/patterns/Latn-en.common-error.in.h:6
+msgid "Replace letter \"I\" with letter \"l\" in a lower case word"
+msgstr ""
+
+#: ../data/patterns/Latn-en.common-error.in.h:7
+msgid "Replace letter \"l\" with letter \"I\" in an upper case word"
+msgstr ""
+
+#: ../data/patterns/Latn-en.common-error.in.h:8
+msgid "Replace zero with letter \"O\" in an upper case word"
+msgstr ""
+
+#: ../data/patterns/Latn-en.common-error.in.h:9
+msgid "Spaces around an apostrophe"
+msgstr ""
+
+#: ../data/patterns/Latn-en.common-error.in.h:10
+msgid "Zero in an upper case word"
+msgstr ""
+
+#: ../data/patterns/Latn-en.capitalization.in.h:1
+msgid "Capitalize the first person pronoun \"I\""
+msgstr ""
+
+#: ../data/patterns/Latn-en.capitalization.in.h:2
+msgid "First person pronoun"
+msgstr ""
+
+#: ../extensions/bookmarks/add-bookmark-dialog.glade.h:1
+msgid "Add Bookmark"
+msgstr ""
+
+#: ../extensions/bookmarks/add-bookmark-dialog.glade.h:2
+msgid "_Description:"
+msgstr ""
+
+#: ../extensions/bookmarks/add-bookmark-dialog.glade.h:4
+msgid "gtk-add"
+msgstr ""
+
+#: ../extensions/bookmarks/add-bookmark-dialog.glade.h:5
+msgid "gtk-cancel"
+msgstr ""
+
+#: ../extensions/bookmarks/bookmarks.gaupol-extension.in.h:1
+#: ../extensions/bookmarks/bookmarks.py:506
+msgid "Bookmarks"
+msgstr ""
+
+#: ../extensions/bookmarks/bookmarks.gaupol-extension.in.h:2
+msgid "Marking subtitles for easy navigation"
+msgstr ""
+
+#. Translators: 'Bm.' is short for 'Bookmark'. It is used in the header
+#. of a tree view column that contains 16 pixels wide pixbufs.
+#: ../extensions/bookmarks/bookmarks.py:101
+#: ../extensions/bookmarks/bookmarks.py:106
+msgid "Bm."
+msgstr ""
+
+#: ../extensions/bookmarks/bookmarks.py:177
+msgid "_Bookmarks"
+msgstr ""
+
+#: ../extensions/bookmarks/bookmarks.py:178
+msgid "_Add…"
+msgstr ""
+
+#: ../extensions/bookmarks/bookmarks.py:179
+msgid "Add a bookmark for the current subtitle"
+msgstr ""
+
+#: ../extensions/bookmarks/bookmarks.py:181
+msgid "_Edit Bookmarks"
+msgstr ""
+
+#: ../extensions/bookmarks/bookmarks.py:184 ../gaupol/gtk/actions/view.py:31
+msgid "_Next"
+msgstr ""
+
+#: ../extensions/bookmarks/bookmarks.py:185
+msgid "Go to the next bookmarked subtitle"
+msgstr ""
+
+#: ../extensions/bookmarks/bookmarks.py:187 ../gaupol/gtk/actions/view.py:52
+msgid "_Previous"
+msgstr ""
+
+#: ../extensions/bookmarks/bookmarks.py:188
+msgid "Go to the previous bookmarked subtitle"
+msgstr ""
+
+#: ../extensions/bookmarks/bookmarks.py:191
+msgid "_Bookmark"
+msgstr ""
+
+#: ../extensions/bookmarks/bookmarks.py:192
+msgid "Show or hide the bookmark column"
+msgstr ""
+
+#: ../extensions/bookmarks/bookmarks.py:220
+msgid "Search:"
+msgstr ""
+
+#: ../extensions/side-pane/side-pane.gaupol-extension.in.h:1
+msgid "A side pane that can be used by other extensions"
+msgstr ""
+
+#: ../extensions/side-pane/side-pane.gaupol-extension.in.h:2
+msgid "Side Pane"
+msgstr ""
+
+#: ../extensions/side-pane/side-pane.py:52
+msgid "(Empty)"
+msgstr ""
+
+#: ../extensions/side-pane/side-pane.py:317
+msgid "Si_de Pane"
+msgstr ""
+
+#: ../extensions/side-pane/side-pane.py:318
+msgid "Show or hide the side pane"
 msgstr ""
 
 #: ../gaupol/agents/clipboard.py:63
@@ -765,11 +1134,11 @@ msgstr ""
 msgid "Transforming positions"
 msgstr ""
 
-#: ../gaupol/agents/search.py:253
+#: ../gaupol/agents/search.py:254
 msgid "Replacing"
 msgstr ""
 
-#: ../gaupol/agents/search.py:278 ../gaupol/agents/search.py:280
+#: ../gaupol/agents/search.py:279 ../gaupol/agents/search.py:281
 msgid "Replacing all"
 msgstr ""
 
@@ -963,639 +1332,631 @@ msgstr ""
 msgid "30 fps"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:33
+#: ../gaupol/gtk/actions/edit.py:34
 msgid "Clear the selected texts"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:52
+#: ../gaupol/gtk/actions/edit.py:55
 msgid "_Copy"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:54
+#: ../gaupol/gtk/actions/edit.py:57
 msgid "Copy the selected texts to the clipboard"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:73
+#: ../gaupol/gtk/actions/edit.py:78
 msgid "Cu_t"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:75
+#: ../gaupol/gtk/actions/edit.py:80
 msgid "Cut the selected texts to the clipboard"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:94
+#: ../gaupol/gtk/actions/edit.py:101
 msgid "_Preferences"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:96
+#: ../gaupol/gtk/actions/edit.py:103
 msgid "Configure Gaupol"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:106
+#: ../gaupol/gtk/actions/edit.py:115
 msgid "Edit _Next Cell"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:107
+#: ../gaupol/gtk/actions/edit.py:116
 msgid "Next"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:109
+#: ../gaupol/gtk/actions/edit.py:118
 msgid "Edit the focused column of the next subtitle"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:130
+#: ../gaupol/gtk/actions/edit.py:141
 msgid "_Edit Cell"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:131
+#: ../gaupol/gtk/actions/edit.py:142
 msgid "Edit"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:133
+#: ../gaupol/gtk/actions/edit.py:144
 msgid "Edit the focused cell"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:152
+#: ../gaupol/gtk/actions/edit.py:165
 msgid "Extend To _Beginning"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:153
+#: ../gaupol/gtk/actions/edit.py:166
 msgid "Extend the current selection up to the first subtitle"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:172
+#: ../gaupol/gtk/actions/edit.py:187
 msgid "Extend To _End"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:173
+#: ../gaupol/gtk/actions/edit.py:188
 msgid "Extend the current selection up to the last subtitle"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:192
+#: ../gaupol/gtk/actions/edit.py:209
 msgid "_Insert Subtitles…"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:193
+#: ../gaupol/gtk/actions/edit.py:210
 msgid "Insert"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:195
+#: ../gaupol/gtk/actions/edit.py:212
 msgid "Insert subtitles"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:213
+#: ../gaupol/gtk/actions/edit.py:232
 msgid "_Invert Selection"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:214
+#: ../gaupol/gtk/actions/edit.py:233
 msgid "Invert the current selection"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:231
+#: ../gaupol/gtk/actions/edit.py:252
 msgid "_Merge Subtitles"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:232
+#: ../gaupol/gtk/actions/edit.py:253
 msgid "Merge the selected subtitles"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:251
+#: ../gaupol/gtk/actions/edit.py:274
 msgid "_Paste"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:253
+#: ../gaupol/gtk/actions/edit.py:276
 msgid "Paste texts from the clipboard"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:275
+#: ../gaupol/gtk/actions/edit.py:300
 msgid "_Redo"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:277
+#: ../gaupol/gtk/actions/edit.py:302
 msgid "Redo the last undone action"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:295
+#: ../gaupol/gtk/actions/edit.py:322
 msgid "Rem_ove Subtitles"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:296
+#: ../gaupol/gtk/actions/edit.py:323
 msgid "Remove"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:298
+#: ../gaupol/gtk/actions/edit.py:325
 msgid "Remove the selected subtitles"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:315
+#: ../gaupol/gtk/actions/edit.py:344
 msgid "Select _All"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:317
+#: ../gaupol/gtk/actions/edit.py:346
 msgid "Select all subtitles"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:334
+#: ../gaupol/gtk/actions/edit.py:365
 msgid "Sele_ction"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:350
+#: ../gaupol/gtk/actions/edit.py:383
 msgid "_Split Subtitle"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:351
+#: ../gaupol/gtk/actions/edit.py:384
 msgid "Split the selected subtitle"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:371
+#: ../gaupol/gtk/actions/edit.py:406
 msgid "_Undo"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:373
+#: ../gaupol/gtk/actions/edit.py:408
 msgid "Undo the last action"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:31
+#: ../gaupol/gtk/actions/file.py:32
 msgid "_Append File…"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:33
+#: ../gaupol/gtk/actions/file.py:34
 msgid "Append subtitles from file to the current project"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:49
+#: ../gaupol/gtk/actions/file.py:52
 msgid "_Close All"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:51
+#: ../gaupol/gtk/actions/file.py:54
 msgid "Close all open projects"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:67
+#: ../gaupol/gtk/actions/file.py:72
 msgid "_Close"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:69
+#: ../gaupol/gtk/actions/file.py:74
 msgid "Close the current project"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:85
+#: ../gaupol/gtk/actions/file.py:92
 msgid "_Headers"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:87
+#: ../gaupol/gtk/actions/file.py:94
 msgid "Edit file headers"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:111
+#: ../gaupol/gtk/actions/file.py:120
 msgid "_New"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:113
+#: ../gaupol/gtk/actions/file.py:122
 msgid "Create a new project"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:127
+#: ../gaupol/gtk/actions/file.py:138
 msgid "_Open…"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:128 ../gaupol/gtk/agents/open.py:422
+#: ../gaupol/gtk/actions/file.py:139 ../gaupol/gtk/agents/open.py:422
 msgid "Open"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:130
+#: ../gaupol/gtk/actions/file.py:141
 msgid "Open main files"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:142
+#: ../gaupol/gtk/actions/file.py:155
 msgid "Open _Translation…"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:143 ../gaupol/gtk/agents/open.py:433
+#: ../gaupol/gtk/actions/file.py:156 ../gaupol/gtk/agents/open.py:433
 msgid "Open Translation"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:145
+#: ../gaupol/gtk/actions/file.py:158
 msgid "Open a translation file"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:161
+#: ../gaupol/gtk/actions/file.py:176
 msgid "_Quit"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:163
+#: ../gaupol/gtk/actions/file.py:178
 msgid "Quit Gaupol"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:174
+#: ../gaupol/gtk/actions/file.py:191
 msgid "_Save All"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:176
+#: ../gaupol/gtk/actions/file.py:193
 msgid "Save all open documents"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:193
+#: ../gaupol/gtk/actions/file.py:212
 msgid "_Save"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:195
+#: ../gaupol/gtk/actions/file.py:214
 msgid "Save the current main document"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:211
+#: ../gaupol/gtk/actions/file.py:232
 msgid "Save _As…"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:212 ../gaupol/gtk/agents/save.py:189
+#: ../gaupol/gtk/actions/file.py:233 ../gaupol/gtk/agents/save.py:189
 msgid "Save As"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:214
+#: ../gaupol/gtk/actions/file.py:235
 msgid "Save the current main document with a different name"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:231
+#: ../gaupol/gtk/actions/file.py:254
 msgid "Save Trans_lation"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:233
+#: ../gaupol/gtk/actions/file.py:256
 msgid "Save the current translation document"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:249
+#: ../gaupol/gtk/actions/file.py:274
 msgid "Save Translat_ion As…"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:250 ../gaupol/gtk/agents/save.py:213
+#: ../gaupol/gtk/actions/file.py:275 ../gaupol/gtk/agents/save.py:213
 msgid "Save Translation As"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:252
+#: ../gaupol/gtk/actions/file.py:277
 msgid "Save the current translation document with a different name"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:269
+#: ../gaupol/gtk/actions/file.py:296
 msgid "Select _Video…"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:270
+#: ../gaupol/gtk/actions/file.py:297
 msgid "Video"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:272
+#: ../gaupol/gtk/actions/file.py:299
 msgid "Select a video file"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:289
+#: ../gaupol/gtk/actions/file.py:318
 msgid "Open _Recent"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:299
+#: ../gaupol/gtk/actions/file.py:331
 msgid "Open R_ecent Translation"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:314
+#: ../gaupol/gtk/actions/file.py:349
 msgid "Spli_t Project…"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:315
+#: ../gaupol/gtk/actions/file.py:350
 msgid "Split the current project in two"
 msgstr ""
 
-#: ../gaupol/gtk/actions/format.py:31
+#: ../gaupol/gtk/actions/format.py:32
 msgid "Ca_se"
 msgstr ""
 
-#: ../gaupol/gtk/actions/format.py:49
+#: ../gaupol/gtk/actions/format.py:52
 msgid "_Dialogue"
 msgstr ""
 
-#: ../gaupol/gtk/actions/format.py:50
+#: ../gaupol/gtk/actions/format.py:53
 msgid "Add or remove dialogue dashes on the selected texts"
 msgstr ""
 
-#: ../gaupol/gtk/actions/format.py:70
+#: ../gaupol/gtk/actions/format.py:75
 msgid "_Italic"
 msgstr ""
 
-#: ../gaupol/gtk/actions/format.py:72
+#: ../gaupol/gtk/actions/format.py:77
 msgid "Italicize or unitalicize the selected texts"
 msgstr ""
 
-#: ../gaupol/gtk/actions/format.py:95
+#: ../gaupol/gtk/actions/format.py:102
 msgid "_Lower"
 msgstr ""
 
-#: ../gaupol/gtk/actions/format.py:96
+#: ../gaupol/gtk/actions/format.py:103
 msgid "Change the selected texts to lower case"
 msgstr ""
 
-#: ../gaupol/gtk/actions/format.py:114
+#: ../gaupol/gtk/actions/format.py:123
 msgid "_Sentence"
 msgstr ""
 
-#: ../gaupol/gtk/actions/format.py:115
+#: ../gaupol/gtk/actions/format.py:124
 msgid "Change the selected texts to sentence case"
 msgstr ""
 
-#: ../gaupol/gtk/actions/format.py:133
+#: ../gaupol/gtk/actions/format.py:144
 msgid "_Title"
 msgstr ""
 
-#: ../gaupol/gtk/actions/format.py:134
+#: ../gaupol/gtk/actions/format.py:145
 msgid "Change the selected texts to title case"
 msgstr ""
 
-#: ../gaupol/gtk/actions/format.py:150
+#: ../gaupol/gtk/actions/format.py:163
 msgid "_Upper"
 msgstr ""
 
-#: ../gaupol/gtk/actions/format.py:151
+#: ../gaupol/gtk/actions/format.py:164
 msgid "Change the selected texts to upper case"
 msgstr ""
 
-#: ../gaupol/gtk/actions/help.py:31
+#: ../gaupol/gtk/actions/help.py:32
 msgid "_Report A Bug"
 msgstr ""
 
-#: ../gaupol/gtk/actions/help.py:32
+#: ../gaupol/gtk/actions/help.py:33
 msgid "Submit a bug report"
 msgstr ""
 
-#: ../gaupol/gtk/actions/help.py:42
+#: ../gaupol/gtk/actions/help.py:45
 msgid "_About"
 msgstr ""
 
-#: ../gaupol/gtk/actions/help.py:44
+#: ../gaupol/gtk/actions/help.py:47
 msgid "Show information about Gaupol"
 msgstr ""
 
-#: ../gaupol/gtk/actions/menu.py:40
+#: ../gaupol/gtk/actions/menu.py:43
 msgid "_File"
 msgstr ""
 
-#: ../gaupol/gtk/actions/menu.py:50
+#: ../gaupol/gtk/actions/menu.py:55
 msgid "_Help"
 msgstr ""
 
-#: ../gaupol/gtk/actions/menu.py:60
+#: ../gaupol/gtk/actions/menu.py:67
 msgid "_Projects"
 msgstr ""
 
-#: ../gaupol/gtk/actions/menu.py:70
+#: ../gaupol/gtk/actions/menu.py:79
 msgid "_Text"
 msgstr ""
 
-#: ../gaupol/gtk/actions/menu.py:80
+#: ../gaupol/gtk/actions/menu.py:91
 msgid "T_ools"
 msgstr ""
 
-#: ../gaupol/gtk/actions/menu.py:90
+#: ../gaupol/gtk/actions/menu.py:103
 msgid "_View"
 msgstr ""
 
-#: ../gaupol/gtk/actions/position.py:31
+#: ../gaupol/gtk/actions/position.py:32
 msgid "Adjust _Durations…"
 msgstr ""
 
-#: ../gaupol/gtk/actions/position.py:32
+#: ../gaupol/gtk/actions/position.py:33
 msgid "Lengthen or shorten durations"
 msgstr ""
 
-#: ../gaupol/gtk/actions/position.py:47
+#: ../gaupol/gtk/actions/position.py:50
 msgid "Convert _Framerate…"
 msgstr ""
 
-#: ../gaupol/gtk/actions/position.py:48
+#: ../gaupol/gtk/actions/position.py:51
 msgid "Change positions for a different framerate"
 msgstr ""
 
-#: ../gaupol/gtk/actions/position.py:66
+#: ../gaupol/gtk/actions/position.py:71
 msgid "Preview from selected position with a video player"
 msgstr ""
 
-#: ../gaupol/gtk/actions/position.py:91
+#: ../gaupol/gtk/actions/position.py:98
 msgid "_Shift Positions…"
 msgstr ""
 
-#: ../gaupol/gtk/actions/position.py:92
+#: ../gaupol/gtk/actions/position.py:99
 msgid "Make subtitles appear earlier or later"
 msgstr ""
 
-#: ../gaupol/gtk/actions/position.py:108
+#: ../gaupol/gtk/actions/position.py:117
 msgid "_Transform Positions…"
 msgstr ""
 
-#: ../gaupol/gtk/actions/position.py:109
+#: ../gaupol/gtk/actions/position.py:118
 msgid "Change positions by linear two-point correction"
 msgstr ""
 
-#: ../gaupol/gtk/actions/search.py:31
+#: ../gaupol/gtk/actions/search.py:32
 msgid "_Find And Replace…"
 msgstr ""
 
-#: ../gaupol/gtk/actions/search.py:34
+#: ../gaupol/gtk/actions/search.py:35
 msgid "Search for and replace text"
 msgstr ""
 
-#: ../gaupol/gtk/actions/search.py:51
+#: ../gaupol/gtk/actions/search.py:54
 msgid "Search forwards for same text"
 msgstr ""
 
-#: ../gaupol/gtk/actions/search.py:68
+#: ../gaupol/gtk/actions/search.py:73
 msgid "Find Pre_vious"
 msgstr ""
 
-#: ../gaupol/gtk/actions/search.py:69
+#: ../gaupol/gtk/actions/search.py:74
 msgid "Search backwards for same text"
 msgstr ""
 
-#: ../gaupol/gtk/actions/text.py:31
+#: ../gaupol/gtk/actions/text.py:32
 msgid "Co_nfigure Spell-check…"
 msgstr ""
 
-#: ../gaupol/gtk/actions/text.py:32
+#: ../gaupol/gtk/actions/text.py:33
 msgid "Set language and spell-check target"
 msgstr ""
 
-#: ../gaupol/gtk/actions/text.py:47
+#: ../gaupol/gtk/actions/text.py:50
 msgid "_Check Spelling"
 msgstr ""
 
-#: ../gaupol/gtk/actions/text.py:48
+#: ../gaupol/gtk/actions/text.py:51
 msgid "Spelling"
 msgstr ""
 
-#: ../gaupol/gtk/actions/text.py:50
+#: ../gaupol/gtk/actions/text.py:53
 msgid "Check for incorrect spelling"
 msgstr ""
 
-#: ../gaupol/gtk/actions/text.py:68
+#: ../gaupol/gtk/actions/text.py:73
 msgid "C_orrect Texts…"
 msgstr ""
 
-#: ../gaupol/gtk/actions/text.py:69
+#: ../gaupol/gtk/actions/text.py:74
 msgid "Find and correct errors in texts"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:30
-msgid "_Next"
-msgstr ""
-
-#: ../gaupol/gtk/actions/view.py:31
+#: ../gaupol/gtk/actions/view.py:32
 msgid "Activate the project in the next tab"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:49
-msgid "_Previous"
-msgstr ""
-
-#: ../gaupol/gtk/actions/view.py:50
+#: ../gaupol/gtk/actions/view.py:53
 msgid "Activate the project in the previous tab"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:67
+#: ../gaupol/gtk/actions/view.py:72
 msgid "Move Tab _Left"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:68
+#: ../gaupol/gtk/actions/view.py:73
 msgid "Move the current tab to the left"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:84
+#: ../gaupol/gtk/actions/view.py:91
 msgid "Move Tab _Right"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:85
+#: ../gaupol/gtk/actions/view.py:92
 msgid "Move the current tab to the right"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:101
+#: ../gaupol/gtk/actions/view.py:110
 msgid "_Columns"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:118
+#: ../gaupol/gtk/actions/view.py:129
 msgid "2_4 fps"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:119
+#: ../gaupol/gtk/actions/view.py:130
 msgid "Calculate nonnative units with framerate 24 fps"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:141
+#: ../gaupol/gtk/actions/view.py:154
 msgid "2_5 fps"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:142
+#: ../gaupol/gtk/actions/view.py:155
 msgid "Calculate nonnative units with framerate 25 fps"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:164
+#: ../gaupol/gtk/actions/view.py:179
 msgid "_30 fps"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:165
+#: ../gaupol/gtk/actions/view.py:180
 msgid "Calculate nonnative units with framerate 30 fps"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:185
+#: ../gaupol/gtk/actions/view.py:202
 msgid "F_ramerate"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:204
+#: ../gaupol/gtk/actions/view.py:223
 msgid "_Frames"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:205
+#: ../gaupol/gtk/actions/view.py:224
 msgid "Show positions as frames"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:226
+#: ../gaupol/gtk/actions/view.py:247
 msgid "_Times"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:227
+#: ../gaupol/gtk/actions/view.py:248
 msgid "Show positions as times"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:248
+#: ../gaupol/gtk/actions/view.py:271
 msgid "_Duration"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:249
+#: ../gaupol/gtk/actions/view.py:272
 msgid "Show or hide the \"Duration\" column"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:266
+#: ../gaupol/gtk/actions/view.py:291
 msgid "_End"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:267
+#: ../gaupol/gtk/actions/view.py:292
 msgid "Show or hide the \"End\" column"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:284
+#: ../gaupol/gtk/actions/view.py:311
 msgid "_Main Text"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:285
+#: ../gaupol/gtk/actions/view.py:312
 msgid "Show or hide the \"Main Text\" column"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:302
+#: ../gaupol/gtk/actions/view.py:331
 msgid "_Main Toolbar"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:303
+#: ../gaupol/gtk/actions/view.py:332
 msgid "Show or hide the main toolbar"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:315
+#: ../gaupol/gtk/actions/view.py:346
 msgid "_No."
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:316
+#: ../gaupol/gtk/actions/view.py:347
 msgid "Show or hide the \"No.\" column"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:332
+#: ../gaupol/gtk/actions/view.py:365
 msgid "_Output Window"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:333
+#: ../gaupol/gtk/actions/view.py:366
 msgid "Show or hide the output window"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:345
+#: ../gaupol/gtk/actions/view.py:380
 msgid "_Start"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:346
+#: ../gaupol/gtk/actions/view.py:381
 msgid "Show or hide the \"Start\" column"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:362
+#: ../gaupol/gtk/actions/view.py:399
 msgid "_Statusbar"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:363
+#: ../gaupol/gtk/actions/view.py:400
 msgid "Show or hide the statusbar"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:376
+#: ../gaupol/gtk/actions/view.py:415
 msgid "_Translation Text"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:377
+#: ../gaupol/gtk/actions/view.py:416
 msgid "Show or hide the \"Translation Text\" column"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:394
+#: ../gaupol/gtk/actions/view.py:435
 msgid "_Video Toolbar"
 msgstr ""
 
-#: ../gaupol/gtk/actions/view.py:395
+#: ../gaupol/gtk/actions/view.py:436
 msgid "Show or hide the video toolbar"
 msgstr ""
 
@@ -1609,28 +1970,28 @@ msgstr ""
 msgid "Save changes to translation document \"%s\" before closing?"
 msgstr ""
 
-#: ../gaupol/gtk/agents/edit.py:169
+#: ../gaupol/gtk/agents/edit.py:167
 #, python-format
 msgid "Inserted %d subtitle to fit clipboard contents"
 msgid_plural "Inserted %d subtitles to fit clipboard contents"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../gaupol/gtk/agents/edit.py:267
+#: ../gaupol/gtk/agents/edit.py:265
 msgid "Use Shift+Return for line-break"
 msgstr ""
 
-#: ../gaupol/gtk/agents/menu.py:58
+#: ../gaupol/gtk/agents/menu.py:55
 #, python-format
 msgid "Activate \"%s\""
 msgstr ""
 
-#: ../gaupol/gtk/agents/menu.py:167 ../gaupol/gtk/agents/update.py:69
+#: ../gaupol/gtk/agents/menu.py:164 ../gaupol/gtk/agents/update.py:73
 #, python-format
 msgid "Redo \"%s\""
 msgstr ""
 
-#: ../gaupol/gtk/agents/menu.py:208 ../gaupol/gtk/agents/update.py:65
+#: ../gaupol/gtk/agents/menu.py:226 ../gaupol/gtk/agents/update.py:69
 #, python-format
 msgid "Undo \"%s\""
 msgstr ""
@@ -1669,9 +2030,9 @@ msgstr ""
 msgid "Failed to open file \"%s\""
 msgstr ""
 
-#: ../gaupol/gtk/agents/open.py:212 ../gaupol/gtk/agents/preview.py:70
-#: ../gaupol/gtk/agents/preview.py:79 ../gaupol/gtk/agents/save.py:121
-#: ../gaupol/gtk/dialogs/search.py:435 ../gaupol/gtk/dialogs/search.py:444
+#: ../gaupol/gtk/agents/open.py:212 ../gaupol/gtk/agents/preview.py:71
+#: ../gaupol/gtk/agents/preview.py:80 ../gaupol/gtk/agents/save.py:121
+#: ../gaupol/gtk/dialogs/search.py:436 ../gaupol/gtk/dialogs/search.py:445
 #, python-format
 msgid "%s."
 msgstr ""
@@ -1736,24 +2097,24 @@ msgstr ""
 msgid "Opened translation file \"%s\""
 msgstr ""
 
-#: ../gaupol/gtk/agents/preview.py:56
+#: ../gaupol/gtk/agents/preview.py:57
 #, python-format
 msgid "Failed to encode subtitle file to temporary directory \"%s\""
 msgstr ""
 
-#: ../gaupol/gtk/agents/preview.py:58
+#: ../gaupol/gtk/agents/preview.py:59
 msgid ""
 "Subtitle data could not be encoded to a temporary file for preview with the "
 "current character encoding. Please first save the subtitle file with a "
 "different character encoding."
 msgstr ""
 
-#: ../gaupol/gtk/agents/preview.py:68
+#: ../gaupol/gtk/agents/preview.py:69
 #, python-format
 msgid "Failed to save subtitle file to temporary directory \"%s\""
 msgstr ""
 
-#: ../gaupol/gtk/agents/preview.py:78
+#: ../gaupol/gtk/agents/preview.py:79
 msgid "Failed to launch video player"
 msgstr ""
 
@@ -1793,154 +2154,154 @@ msgstr ""
 msgid "Saved translation document as \"%s\""
 msgstr ""
 
-#: ../gaupol/gtk/application.py:125
+#: ../gaupol/gtk/application.py:143
 msgid "Framerate:"
 msgstr ""
 
-#: ../gaupol/gtk/application.py:192
+#: ../gaupol/gtk/application.py:208
 msgid "Open a recently used main file"
 msgstr ""
 
-#: ../gaupol/gtk/application.py:217
+#: ../gaupol/gtk/application.py:225
 msgid "Redo undone actions"
 msgstr ""
 
-#: ../gaupol/gtk/application.py:263
+#: ../gaupol/gtk/application.py:278
 msgid "Undo actions"
 msgstr ""
 
-#: ../gaupol/gtk/application.py:313
+#: ../gaupol/gtk/application.py:328
 msgid "Video file:"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:85
+#: ../gaupol/gtk/assistants.py:88
 msgid "Select Tasks and Target"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:272
+#: ../gaupol/gtk/assistants.py:276
 msgid "Other"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:438
+#: ../gaupol/gtk/assistants.py:442
 msgid "Capitalize texts written in lower case"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:440
+#: ../gaupol/gtk/assistants.py:444
 msgid "Select Capitalization Patterns"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:442
+#: ../gaupol/gtk/assistants.py:446
 msgid "Capitalize texts"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:467
+#: ../gaupol/gtk/assistants.py:471
 msgid "Correct common errors made by humans or image recognition software"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:470
+#: ../gaupol/gtk/assistants.py:474
 msgid "Select Common Error Patterns"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:472
+#: ../gaupol/gtk/assistants.py:476
 msgid "Correct common errors"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:539
+#: ../gaupol/gtk/assistants.py:543
 msgid "Remove explanatory texts meant for the hearing impaired"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:542
+#: ../gaupol/gtk/assistants.py:546
 msgid "Select Hearing Impaired Patterns"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:544
+#: ../gaupol/gtk/assistants.py:548
 msgid "Remove hearing impaired texts"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:569
+#: ../gaupol/gtk/assistants.py:573
 msgid "Break text into lines of defined length"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:571
+#: ../gaupol/gtk/assistants.py:575
 msgid "Select Line-Break Patterns"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:573
+#: ../gaupol/gtk/assistants.py:577
 msgid "Break lines"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:627
+#: ../gaupol/gtk/assistants.py:632
 msgid "Set Line-Break Options"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:730
+#: ../gaupol/gtk/assistants.py:736
 msgid "Correcting Texts"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:737
+#: ../gaupol/gtk/assistants.py:743
 msgid "Each task is now being run on each project."
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:764
+#: ../gaupol/gtk/assistants.py:770
 #, python-format
 msgid "%(current)d of %(total)d tasks complete"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:773
+#: ../gaupol/gtk/assistants.py:779
 #, python-format
 msgid "Project: %s"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:781
+#: ../gaupol/gtk/assistants.py:787
 #, python-format
 msgid "Task: %s"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:804
+#: ../gaupol/gtk/assistants.py:811
 msgid "Confirm Changes"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:867
+#: ../gaupol/gtk/assistants.py:874
 msgid "Accept"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:871
+#: ../gaupol/gtk/assistants.py:878
 msgid "Original Text"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:872
+#: ../gaupol/gtk/assistants.py:879
 msgid "Corrected Text"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:1014
+#: ../gaupol/gtk/assistants.py:1022
 msgid "Correct Texts"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:1052
+#: ../gaupol/gtk/assistants.py:1060
 msgid "Correcting texts"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:1068
+#: ../gaupol/gtk/assistants.py:1077
 #, python-format
 msgid "Edited %(edits)d and removed %(removals)d subtitles"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:1099
+#: ../gaupol/gtk/assistants.py:1108
 #, python-format
 msgid "Confirm %d Change"
 msgid_plural "Confirm %d Changes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../gaupol/gtk/dialogs/about.py:47
+#: ../gaupol/gtk/dialogs/about.py:48
 msgid "About Gaupol"
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/about.py:51
+#: ../gaupol/gtk/dialogs/about.py:52
 msgid "Subtitle editor"
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/about.py:55
+#: ../gaupol/gtk/dialogs/about.py:56
 msgid "Gaupol Website"
 msgstr ""
 
@@ -1950,36 +2311,36 @@ msgstr ""
 #. address. You can also include other translators who have contributed
 #. to this translation; in that case, please write them on separate
 #. lines seperated by newlines (\n).
-#: ../gaupol/gtk/dialogs/about.py:66
+#: ../gaupol/gtk/dialogs/about.py:67
 msgid "translator-credits"
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/append.py:35
+#: ../gaupol/gtk/dialogs/append.py:36
 msgid "Append File"
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/append.py:38
+#: ../gaupol/gtk/dialogs/append.py:39
 msgid "_Append"
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/debug.py:193
+#: ../gaupol/gtk/dialogs/debug.py:194
 #, python-format
 msgid "Failed to open editor \"%s\""
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/encoding.py:70 ../gaupol/gtk/dialogs/encoding.py:111
+#: ../gaupol/gtk/dialogs/encoding.py:71 ../gaupol/gtk/dialogs/encoding.py:112
 msgid "Description"
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/encoding.py:76 ../gaupol/gtk/dialogs/encoding.py:117
+#: ../gaupol/gtk/dialogs/encoding.py:77 ../gaupol/gtk/dialogs/encoding.py:118
 msgid "Encoding"
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/encoding.py:124
+#: ../gaupol/gtk/dialogs/encoding.py:125
 msgid "Show in Menu"
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/file.py:53 ../gaupol/gtk/dialogs/video.py:46
+#: ../gaupol/gtk/dialogs/file.py:53 ../gaupol/gtk/dialogs/video.py:47
 msgid "All files"
 msgstr ""
 
@@ -2000,43 +2361,57 @@ msgstr ""
 msgid "Other…"
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/header.py:222
+#: ../gaupol/gtk/dialogs/header.py:223
 msgid "Invalid header"
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/header.py:223
+#: ../gaupol/gtk/dialogs/header.py:224
 msgid ""
 "MPsub header must contain a line of form \"FORMAT=VALUE\", where VALUE is "
 "any of \"TIME\", \"23.98\", \"25.00\" or \"29.97\"."
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/preferences.py:303
+#: ../gaupol/gtk/dialogs/preferences.py:227
+#, python-format
+msgid "%s Extension Website"
+msgstr ""
+
+#: ../gaupol/gtk/dialogs/preferences.py:259
+msgid "Cannot deactivate extension"
+msgstr ""
+
+#: ../gaupol/gtk/dialogs/preferences.py:260
+#, python-format
+msgid "Extension \"%s\" is required by other extensions."
+msgstr ""
+
+#: ../gaupol/gtk/dialogs/preferences.py:472
 msgid "Custom"
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/search.py:128
+#: ../gaupol/gtk/dialogs/search.py:129
 #, python-format
 msgid "\"%s\" not found"
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/search.py:434
+#: ../gaupol/gtk/dialogs/search.py:435
 msgid "Error in regular expression pattern"
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/search.py:443
+#: ../gaupol/gtk/dialogs/search.py:444
 msgid "Error in regular expression replacement"
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/search.py:569
+#: ../gaupol/gtk/dialogs/search.py:570
 #, python-format
 msgid "Found and replaced %d occurences"
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/shift.py:153
+#: ../gaupol/gtk/dialogs/shift.py:154
 msgid "frames"
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/shift.py:178
+#: ../gaupol/gtk/dialogs/shift.py:179
 msgid "seconds"
 msgstr ""
 
@@ -2049,24 +2424,24 @@ msgstr ""
 msgid "Failed to load dictionary for language \"%s\""
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/split.py:84
+#: ../gaupol/gtk/dialogs/split.py:85
 msgid "Splitting project"
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/split.py:116
+#: ../gaupol/gtk/dialogs/split.py:117
 #, python-format
 msgid "Split %(amount)d subtitles to project \"%(name)s\""
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/video.py:33
+#: ../gaupol/gtk/dialogs/video.py:34
 msgid "Select Video"
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/video.py:37
+#: ../gaupol/gtk/dialogs/video.py:38
 msgid "_Select"
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/video.py:51
+#: ../gaupol/gtk/dialogs/video.py:52
 msgid "Video files"
 msgstr ""
 
@@ -2139,40 +2514,40 @@ msgstr ""
 msgid "select video file"
 msgstr ""
 
-#: ../gaupol/gtk/output.py:37
+#: ../gaupol/gtk/output.py:38
 msgid "Output"
 msgstr ""
 
-#: ../gaupol/gtk/page.py:58
+#: ../gaupol/gtk/page.py:60
 #, python-format
 msgid "Untitled %d"
 msgstr ""
 
-#: ../gaupol/gtk/page.py:111
+#: ../gaupol/gtk/page.py:122
 msgid "Close project"
 msgstr ""
 
-#: ../gaupol/gtk/page.py:281
+#: ../gaupol/gtk/page.py:292
 #, python-format
 msgid "<b>Path:</b> %s"
 msgstr ""
 
-#: ../gaupol/gtk/page.py:282
+#: ../gaupol/gtk/page.py:293
 #, python-format
 msgid "<b>Format:</b> %s"
 msgstr ""
 
-#: ../gaupol/gtk/page.py:283
+#: ../gaupol/gtk/page.py:294
 #, python-format
 msgid "<b>Character encoding:</b> %s"
 msgstr ""
 
-#: ../gaupol/gtk/page.py:284
+#: ../gaupol/gtk/page.py:295
 #, python-format
 msgid "<b>Newlines:</b> %s"
 msgstr ""
 
-#: ../gaupol/gtk/page.py:321
+#: ../gaupol/gtk/page.py:332
 #, python-format
 msgid "%s translation"
 msgstr ""

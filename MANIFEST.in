@@ -8,7 +8,9 @@ include po/gaupol.pot
 include po/POTFILES.*
 include po/README
 recursive-include data *
+recursive-include extensions *
 recursive-include gaupol *.py
+recursive-include manifest *
 recursive-include tools *
 include AUTHORS
 include ChangeLog

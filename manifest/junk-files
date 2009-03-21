@@ -1,0 +1,17 @@
+build
+ChangeLog
+data/gaupol.desktop
+data/patterns/*.capitalization
+data/patterns/*.common-error
+data/patterns/*.hearing-impaired
+data/patterns/*.line-break
+dist
+extensions/*/*.gaupol-extension
+extensions/*/*.py[co]
+gaupol/*.py[co]
+gaupol/*/*.py[co]
+gaupol/*/*/*.py[co]
+gaupol/*/*/*/*.py[co]
+locale
+MANIFEST
+setup.py[co]

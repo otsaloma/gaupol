@@ -1,4 +1,4 @@
-echo off
+@echo off
 set GTKDIR=F:\GTK
 set PYDIR=F:\Python25
 cd ..

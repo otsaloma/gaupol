@@ -1,8 +1,7 @@
 Gaupol 0.14
 ===========
 
- [W] Add an extension system (undocumented for now)
-     - i18n and setup.py (build and installation)
+ [D] Add an extension system (undocumented for now)
  [D] Add two extensions: side pane and bookmarks
  [D] Adher to the home directory part of freedesktop.org's
      XDG Base Directory Specification
@@ -12,7 +11,7 @@ Gaupol 0.14
  [D] Fix GtkWarning: GtkSpinButton: setting an adjustment with
      non-zero page size is deprecated
  [D] Remove deprecated Encoding-field from desktop file
- [ ] http://bugzilla.gnome.org/show_bug.cgi?id=572676
+ [ ] Fix search to modify text of the correct subtitle (#572676)
  [D] Fix character count error with Unicode text
  [D] Fix updating of filenames in the projects menu
  [D] Fix erroneous cleaning of SubRip markup after removing hearing
@@ -28,7 +27,6 @@ Gaupol 1.0
 ==========
 
  * Migrate from Glade to gtk.Builder
-   - http://live.gnome.org/GnomeGoals/RemoveLibGladeUseGtkBuilder
  * Add wiki documentation on writing extensions
  * Add wiki documentation on writing pattern files
  * Add a wiki page for publishing extensions
@@ -52,6 +50,8 @@ Gaupol 3000
  * Bump PyGObject dependency to 2.16
    - Try gobject.option.OptionParser (see #378704)
    - Try gio.AppInfo for launching web browser and video player
+ * Bump PyGTK dependency to 2.14
+   - Try gtk.show_uri for launching web browser
  * Bump PyEnchant dependency to 1.4
    - All dictionary providers now use a shared default personal word
      file (largely obsoleting the DictWithPWL class)
