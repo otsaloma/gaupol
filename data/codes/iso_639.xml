@@ -5,8 +5,8 @@ This file gives a list of all languages in the ISO 639
 standard, and is used to provide translations via gettext
 
 Copyright (C) 2004-2006 Alastair McKinstry <mckinstry@computer.org>
-Copyright (C) 2004-2007 Christian Perrier <bubulle@debian.org>
-Copyright (C) 2005-2006 Tobias Toedter <t.toedter@gmx.net>
+Copyright (C) 2004-2009 Christian Perrier <bubulle@debian.org>
+Copyright (C) 2005-2008 Tobias Quathamer <toddy@debian.org>
 
     This file is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
@@ -66,7 +66,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="afa"
 		iso_639_2T_code="afa"
-		name="Afro-Asiatic (Other)" />
+		name="Afro-Asiatic languages" />
 	<iso_639_entry
 		iso_639_2B_code="afh"
 		iso_639_2T_code="afh"
@@ -153,7 +153,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="art"
 		iso_639_2T_code="art"
-		name="Artificial (Other)" />
+		name="Artificial languages" />
 	<iso_639_entry
 		iso_639_2B_code="arw"
 		iso_639_2T_code="arw"
@@ -237,7 +237,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="bat"
 		iso_639_2T_code="bat"
-		name="Baltic (Other)" />
+		name="Baltic languages" />
 	<iso_639_entry
 		iso_639_2B_code="bej"
 		iso_639_2T_code="bej"
@@ -259,7 +259,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="ber"
 		iso_639_2T_code="ber"
-		name="Berber (Other)" />
+		name="Berber languages" />
 	<iso_639_entry
 		iso_639_2B_code="bho"
 		iso_639_2T_code="bho"
@@ -289,7 +289,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="bnt"
 		iso_639_2T_code="bnt"
-		name="Bantu (Other)" />
+		name="Bantu languages" />
 	<iso_639_entry
 		iso_639_2B_code="bos"
 		iso_639_2T_code="bos"
@@ -337,7 +337,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="cai"
 		iso_639_2T_code="cai"
-		name="Central American Indian (Other)" />
+		name="Central American Indian languages" />
 	<iso_639_entry
 		iso_639_2B_code="car"
 		iso_639_2T_code="car"
@@ -350,7 +350,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="cau"
 		iso_639_2T_code="cau"
-		name="Caucasian (Other)" />
+		name="Caucasian languages" />
 	<iso_639_entry
 		iso_639_2B_code="ceb"
 		iso_639_2T_code="ceb"
@@ -358,7 +358,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="cel"
 		iso_639_2T_code="cel"
-		name="Celtic (Other)" />
+		name="Celtic languages" />
 	<iso_639_entry
 		iso_639_2B_code="cha"
 		iso_639_2T_code="cha"
@@ -441,15 +441,15 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="cpe"
 		iso_639_2T_code="cpe"
-		name="Creoles and pidgins, English based (Other)" />
+		name="Creoles and pidgins, English based" />
 	<iso_639_entry
 		iso_639_2B_code="cpf"
 		iso_639_2T_code="cpf"
-		name="Creoles and pidgins, French-based (Other)" />
+		name="Creoles and pidgins, French-based" />
 	<iso_639_entry
 		iso_639_2B_code="cpp"
 		iso_639_2T_code="cpp"
-		name="Creoles and pidgins, Portuguese-based (Other)" />
+		name="Creoles and pidgins, Portuguese-based" />
 	<iso_639_entry
 		iso_639_2B_code="cre"
 		iso_639_2T_code="cre"
@@ -462,7 +462,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="crp"
 		iso_639_2T_code="crp"
-		name="Creoles and pidgins (Other)" />
+		name="Creoles and pidgins" />
 	<iso_639_entry
 		iso_639_2B_code="csb"
 		iso_639_2T_code="csb"
@@ -470,7 +470,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="cus"
 		iso_639_2T_code="cus"
-		name="Cushitic (Other)" />
+		name="Cushitic languages" />
 	<iso_639_entry
 		iso_639_2B_code="cze"
 		iso_639_2T_code="ces"
@@ -521,7 +521,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="dra"
 		iso_639_2T_code="dra"
-		name="Dravidian (Other)" />
+		name="Dravidian languages" />
 	<iso_639_entry
 		iso_639_2B_code="dsb"
 		iso_639_2T_code="dsb"
@@ -622,7 +622,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="fiu"
 		iso_639_2T_code="fiu"
-		name="Finno-Ugrian (Other)" />
+		name="Finno-Ugrian languages" />
 	<iso_639_entry
 		iso_639_2B_code="fon"
 		iso_639_2T_code="fon"
@@ -677,7 +677,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="gem"
 		iso_639_2T_code="gem"
-		name="Germanic (Other)" />
+		name="Germanic languages" />
 	<iso_639_entry
 		iso_639_2B_code="geo"
 		iso_639_2T_code="kat"
@@ -766,7 +766,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="gwi"
 		iso_639_2T_code="gwi"
-		name="Gwich´in" />
+		name="Gwich'in" />
 	<iso_639_entry
 		iso_639_2B_code="hai"
 		iso_639_2T_code="hai"
@@ -821,6 +821,11 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 		iso_639_2T_code="hmo"
 		iso_639_1_code="ho"
 		name="Hiri Motu" />
+	<iso_639_entry
+		iso_639_2B_code="hrv"
+		iso_639_2T_code="hrv"
+		iso_639_1_code="hr"
+		name="Croatian" />
 	<iso_639_entry
 		iso_639_2B_code="hsb"
 		iso_639_2T_code="hsb"
@@ -884,7 +889,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="inc"
 		iso_639_2T_code="inc"
-		name="Indic (Other)" />
+		name="Indic languages" />
 	<iso_639_entry
 		iso_639_2B_code="ind"
 		iso_639_2T_code="ind"
@@ -893,7 +898,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="ine"
 		iso_639_2T_code="ine"
-		name="Indo-European (Other)" />
+		name="Indo-European languages" />
 	<iso_639_entry
 		iso_639_2B_code="inh"
 		iso_639_2T_code="inh"
@@ -906,7 +911,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="ira"
 		iso_639_2T_code="ira"
-		name="Iranian (Other)" />
+		name="Iranian languages" />
 	<iso_639_entry
 		iso_639_2B_code="iro"
 		iso_639_2T_code="iro"
@@ -998,7 +1003,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="khi"
 		iso_639_2T_code="khi"
-		name="Khoisan (Other)" />
+		name="Khoisan languages" />
 	<iso_639_entry
 		iso_639_2B_code="khm"
 		iso_639_2T_code="khm"
@@ -1007,7 +1012,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="kho"
 		iso_639_2T_code="kho"
-		name="Khotanese" />
+		name="Khotanese;Sakan" />
 	<iso_639_entry
 		iso_639_2B_code="kik"
 		iso_639_2T_code="kik"
@@ -1220,7 +1225,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="map"
 		iso_639_2T_code="map"
-		name="Austronesian (Other)" />
+		name="Austronesian languages" />
 	<iso_639_entry
 		iso_639_2B_code="mar"
 		iso_639_2T_code="mar"
@@ -1266,7 +1271,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="mkh"
 		iso_639_2T_code="mkh"
-		name="Mon-Khmer (Other)" />
+		name="Mon-Khmer languages" />
 	<iso_639_entry
 		iso_639_2B_code="mlg"
 		iso_639_2T_code="mlg"
@@ -1297,7 +1302,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 		iso_639_2B_code="mol"
 		iso_639_2T_code="mol"
 		iso_639_1_code="mo"
-		name="Moldavian" />
+		name="Moldavian; Moldovan" />
 	<iso_639_entry
 		iso_639_2B_code="mon"
 		iso_639_2T_code="mon"
@@ -1342,7 +1347,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="nai"
 		iso_639_2T_code="nai"
-		name="North American Indian" />
+		name="North American Indian languages" />
 	<iso_639_entry
 		iso_639_2B_code="nap"
 		iso_639_2T_code="nap"
@@ -1384,7 +1389,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="new"
 		iso_639_2T_code="new"
-		name="Newari; Nepal Bhasa" />
+		name="Nepal Bhasa; Newari" />
 	<iso_639_entry
 		iso_639_2B_code="nia"
 		iso_639_2T_code="nia"
@@ -1392,7 +1397,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="nic"
 		iso_639_2T_code="nic"
-		name="Niger-Kordofanian (Other)" />
+		name="Niger-Kordofanian languages" />
 	<iso_639_entry
 		iso_639_2B_code="niu"
 		iso_639_2T_code="niu"
@@ -1406,7 +1411,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 		iso_639_2B_code="nob"
 		iso_639_2T_code="nob"
 		iso_639_1_code="nb"
-		name="Norwegian Bokmål; Bokmål, Norwegian" />
+		name="Bokmål, Norwegian; Norwegian Bokmål" />
 	<iso_639_entry
 		iso_639_2B_code="nog"
 		iso_639_2T_code="nog"
@@ -1423,11 +1428,11 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="nqo"
 		iso_639_2T_code="nqo"
-		name="N'ko" />
+		name="N'Ko" />
 	<iso_639_entry
 		iso_639_2B_code="nso"
 		iso_639_2T_code="nso"
-		name="Northern Sotho, Pedi; Sepedi" />
+		name="Pedi; Sepedi; Northern Sotho" />
 	<iso_639_entry
 		iso_639_2B_code="nub"
 		iso_639_2T_code="nub"
@@ -1461,7 +1466,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 		iso_639_2B_code="oci"
 		iso_639_2T_code="oci"
 		iso_639_1_code="oc"
-		name="Occitan (post 1500); Provençal" />
+		name="Occitan (post 1500)" />
 	<iso_639_entry
 		iso_639_2B_code="oji"
 		iso_639_2T_code="oji"
@@ -1497,7 +1502,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="paa"
 		iso_639_2T_code="paa"
-		name="Papuan (Other)" />
+		name="Papuan languages" />
 	<iso_639_entry
 		iso_639_2B_code="pag"
 		iso_639_2T_code="pag"
@@ -1535,7 +1540,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="phi"
 		iso_639_2T_code="phi"
-		name="Philippine (Other)" />
+		name="Philippine languages" />
 	<iso_639_entry
 		iso_639_2B_code="phn"
 		iso_639_2T_code="phn"
@@ -1566,7 +1571,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="pro"
 		iso_639_2T_code="pro"
-		name="Provençal, Old (to 1500)" />
+		name="Provençal, Old (to 1500); Occitan, Old (to 1500)" />
 	<iso_639_entry
 		iso_639_2B_code="pus"
 		iso_639_2T_code="pus"
@@ -1592,11 +1597,11 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="rar"
 		iso_639_2T_code="rar"
-		name="Rarotongan; Cook Island Maori" />
+		name="Rarotongan; Cook Islands Maori" />
 	<iso_639_entry
 		iso_639_2B_code="roa"
 		iso_639_2T_code="roa"
-		name="Romance (Other)" />
+		name="Romance languages" />
 	<iso_639_entry
 		iso_639_2B_code="roh"
 		iso_639_2T_code="roh"
@@ -1641,7 +1646,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="sai"
 		iso_639_2T_code="sai"
-		name="South American Indian (Other)" />
+		name="South American Indian languages" />
 	<iso_639_entry
 		iso_639_2B_code="sal"
 		iso_639_2T_code="sal"
@@ -1664,11 +1669,6 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 		iso_639_2T_code="sat"
 		name="Santali" />
 	<iso_639_entry
-		iso_639_2B_code="scc"
-		iso_639_2T_code="srp"
-		iso_639_1_code="sr"
-		name="Serbian" />
-	<iso_639_entry
 		iso_639_2B_code="scn"
 		iso_639_2T_code="scn"
 		name="Sicilian" />
@@ -1677,18 +1677,13 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 		iso_639_2T_code="sco"
 		name="Scots" />
 	<iso_639_entry
-		iso_639_2B_code="scr"
-		iso_639_2T_code="hrv"
-		iso_639_1_code="hr"
-		name="Croatian" />
-	<iso_639_entry
 		iso_639_2B_code="sel"
 		iso_639_2T_code="sel"
 		name="Selkup" />
 	<iso_639_entry
 		iso_639_2B_code="sem"
 		iso_639_2T_code="sem"
-		name="Semitic (Other)" />
+		name="Semitic languages" />
 	<iso_639_entry
 		iso_639_2B_code="sga"
 		iso_639_2T_code="sga"
@@ -1717,11 +1712,11 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="sit"
 		iso_639_2T_code="sit"
-		name="Sino-Tibetan (Other)" />
+		name="Sino-Tibetan languages" />
 	<iso_639_entry
 		iso_639_2B_code="sla"
 		iso_639_2T_code="sla"
-		name="Slavic (Other)" />
+		name="Slavic languages" />
 	<iso_639_entry
 		iso_639_2B_code="slo"
 		iso_639_2T_code="slk"
@@ -1744,7 +1739,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="smi"
 		iso_639_2T_code="smi"
-		name="Sami languages (Other)" />
+		name="Sami languages" />
 	<iso_639_entry
 		iso_639_2B_code="smj"
 		iso_639_2T_code="smj"
@@ -1809,13 +1804,18 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 		iso_639_2T_code="srn"
 		name="Sranan Tongo" />
 	<iso_639_entry
+		iso_639_2B_code="srp"
+		iso_639_2T_code="srp"
+		iso_639_1_code="sr"
+		name="Serbian" />
+	<iso_639_entry
 		iso_639_2B_code="srr"
 		iso_639_2T_code="srr"
 		name="Serer" />
 	<iso_639_entry
 		iso_639_2B_code="ssa"
 		iso_639_2T_code="ssa"
-		name="Nilo-Saharan (Other)" />
+		name="Nilo-Saharan languages" />
 	<iso_639_entry
 		iso_639_2B_code="ssw"
 		iso_639_2T_code="ssw"
@@ -1864,7 +1864,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="tai"
 		iso_639_2T_code="tai"
-		name="Tai (Other)" />
+		name="Tai languages" />
 	<iso_639_entry
 		iso_639_2B_code="tam"
 		iso_639_2T_code="tam"
@@ -1989,7 +1989,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="tut"
 		iso_639_2T_code="tut"
-		name="Altaic (Other)" />
+		name="Altaic languages" />
 	<iso_639_entry
 		iso_639_2B_code="tvl"
 		iso_639_2T_code="tvl"
@@ -2069,7 +2069,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="wal"
 		iso_639_2T_code="wal"
-		name="Walamo" />
+		name="Wolaitta; Wolaytta" />
 	<iso_639_entry
 		iso_639_2B_code="war"
 		iso_639_2T_code="war"
@@ -2161,7 +2161,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="zxx"
 		iso_639_2T_code="zxx"
-		name="No linguistic content" />
+		name="No linguistic content; Not applicable" />
 	<iso_639_entry
 		iso_639_2B_code="zza"
 		iso_639_2T_code="zza"

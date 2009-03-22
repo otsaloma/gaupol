@@ -7,7 +7,7 @@ standard, and is used to provide translations via gettext
 Copyright (C) 2002, 2004, 2006 Alastair McKinstry <mckinstry@computer.org>
 Copyright (C) 2004 Andreas Jochens <aj@andaco.de>
 Copyright (C) 2004, 2007 Christian Perrier <bubulle@debian.org>
-Copyright (C) 2005, 2006, 2007 Tobias Toedter <t.toedter@gmx.net>
+Copyright (C) 2005, 2006, 2007 Tobias Quathamer <toddy@debian.org>
 
     This file is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
@@ -863,7 +863,7 @@ Source: <http://www.iso.org/iso/country_codes>
 		alpha_2_code="MD"
 		alpha_3_code="MDA"
 		numeric_code="498"
-		name="Moldova, Republic of"
+		name="Moldova"
 		official_name="Republic of Moldova" />
 	<iso_3166_entry
 		alpha_2_code="MC"
@@ -881,7 +881,7 @@ Source: <http://www.iso.org/iso/country_codes>
 		alpha_3_code="MNE"
 		numeric_code="499"
 		name="Montenegro"
-		official_name="Republic of Montenegro" />
+		official_name="Montenegro" />
 	<iso_3166_entry
 		alpha_2_code="MS"
 		alpha_3_code="MSR"
@@ -922,7 +922,7 @@ Source: <http://www.iso.org/iso/country_codes>
 		alpha_3_code="NPL"
 		numeric_code="524"
 		name="Nepal"
-		official_name="Kingdom of Nepal" />
+		official_name="Federal Democratic Republic of Nepal" />
 	<iso_3166_entry
 		alpha_2_code="NL"
 		alpha_3_code="NLD"
