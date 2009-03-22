@@ -21,7 +21,6 @@ Gaupol 0.14
  [D] Fix AssertionError when installing multiple times
  [D] Switch version-control systems from subversion to git
  [ ] Update files from foreign sources
- [ ] Use enchant.list_languages() in addition to locales.txt
 
 Gaupol 1.0
 ==========

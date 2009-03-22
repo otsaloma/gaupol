@@ -112,7 +112,10 @@ class LanguageDialog(gaupol.gtk.GladeDialog):
         """Add all available languages to the list store."""
 
         import enchant
-        for locale in gaupol.locales.get_all():
+        locales = list(gaupol.locales.get_all())
+        try: locales += list(enchant.list_languages())
+        except enchant.Error: pass
+        for locale in set(locales):
             try: enchant.Dict(locale).check("1")
             except enchant.Error: continue
             try: name = gaupol.locales.code_to_name(locale)
