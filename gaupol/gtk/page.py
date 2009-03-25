@@ -257,8 +257,15 @@ class Page(gaupol.Observable):
 
         if not rows: return
         store = self.view.get_model()
+        if len(rows) > 50:
+            # Unset and later reset the model if removing a large amount of
+            # rows, because a large batch of separate live updates directly
+            # made to the view are slow, 50 being a rough empirical border.
+            self.view.set_model(None)
         for row in reversed(sorted(rows)):
             store.remove(store.get_iter(row))
+        if len(rows) > 50:
+            self.view.set_model(store)
         if self.project.subtitles:
             row = min(rows[0], len(self.project.subtitles) - 1)
             col = self.view.get_focus()[1]
