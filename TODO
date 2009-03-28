@@ -12,7 +12,7 @@ Gaupol 0.14
  [D] Fix GtkWarning: GtkSpinButton: setting an adjustment with
      non-zero page size is deprecated
  [D] Remove deprecated Encoding-field from desktop file
- [D] Fix search to modify text of the correct subtitle (#572676)
+ [D] Fix search dialog to not modify obsolete data (#572676)
  [D] Fix character count error with Unicode text
  [D] Fix updating of filenames in the projects menu
  [D] Fix erroneous cleaning of SubRip markup after removing hearing

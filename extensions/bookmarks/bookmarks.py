@@ -412,6 +412,9 @@ class BookmarksExtension(gaupol.gtk.Extension):
         del store[path]
         page = self.application.get_current_page()
         del self._bookmarks[page][row]
+        # Update the pixbuf column immeadiately.
+        page_store = page.view.get_model()
+        page_store.row_changed(row, page_store.get_iter(row))
 
     def _on_tree_view_selection_changed(self, selection):
         """Jump to the subtitle of the selected bookmark."""

@@ -5,7 +5,7 @@ Files from Foreign Sources
  * data/codes/iso_3166.xml
  * data/codes/iso_639.xml
 
-   These files written by Ivan Masar, Christian Perrier, Tobias
+   These files are written by Ivan Masar, Christian Perrier, Tobias
    Toedter, Alastair McKinstry and Andreas Jochens, and are copied
    unmodified from iso-codes [1]. The files are released under the GNU
    Lesser General Public License (LGPL). See the headers of the files
