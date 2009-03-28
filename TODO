@@ -1,7 +1,7 @@
 Gaupol 0.14
 ===========
 
- [D] Add an extension system (undocumented for now)
+ [D] Add an extension system (documentation to follow later)
  [D] Add two extensions: side pane and bookmarks
  [D] Adher to the home directory part of freedesktop.org's
      XDG Base Directory Specification
@@ -21,6 +21,9 @@ Gaupol 0.14
      case extensions as well
  [D] Fix AssertionError when installing multiple times
  [D] Switch version-control systems from subversion to git
+
+ Packagers: Please read comment (3) at the top of the setup.py file
+ reagarding installation and compilation of extensions.
 
 Gaupol 1.0
 ==========

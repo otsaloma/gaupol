@@ -20,7 +20,9 @@ various files and (3) installing extensions.
 
 (3) Extensions are installed under the data directory. All python code included
     in the extensions is compiled during the 'install_data' command, using the
-    same arguments for 'byte_compile' as used by the 'build_py' command.
+    same arguments for 'byte_compile' as used by the 'install_lib' command. If
+    the 'install_lib' command was given '--no-compile' option, then the
+    extensions are not compiled either.
 """
 
 from __future__ import with_statement
@@ -34,7 +36,6 @@ import tarfile
 import tempfile
 
 from distutils import log
-from distutils.command.build_py import build_py
 from distutils.command.clean import clean
 from distutils.command.install import install
 from distutils.command.install_data import install_data
@@ -46,18 +47,6 @@ from distutils.util import byte_compile
 os.chdir(os.path.dirname(__file__) or ".")
 sys.path.insert(0, os.path.dirname(__file__))
 from gaupol import __version__
-
-
-class BuildPy(build_py):
-
-    """Command to build Python code files."""
-
-    def run(self):
-        """Build all Python code and save build arguments."""
-
-        self.distribution.gaupol_build_py_optimize = self.optimize
-        self.distribution.gaupol_build_py_force = self.force
-        build_py.run(self)
 
 
 class Clean(clean):
@@ -109,15 +98,13 @@ class InstallData(install_data):
         """Build all Python code files in extensions."""
 
         get_command_obj = self.distribution.get_command_obj
+        if not get_command_obj("install_lib").compile: return
+        optimize = get_command_obj("install_lib").optimize
         data_dir = get_command_obj("install_data").install_dir
         data_dir = os.path.join(data_dir, "share", "gaupol")
         files = glob.glob("extensions/*/*.py")
         files = [os.path.join(data_dir, x) for x in files]
-        try: optimize = self.distribution.gaupol_build_py_optimize
-        except AttributeError: optimize = 0
-        try: force = self.distribution.gaupol_build_py_force
-        except AttributeError: force = None
-        byte_compile(files, optimize, force, self.dry_run)
+        byte_compile(files, optimize, self.force, self.dry_run)
 
     def __get_desktop_file(self):
         """Return a tuple for the translated desktop file."""
@@ -312,7 +299,6 @@ setup_kwargs = dict(
     scripts=("bin/gaupol",),
     data_files=get_data_files(),
     cmdclass={
-        "build_py": BuildPy,
         "clean": Clean,
         "install": Install,
         "install_data": InstallData,
