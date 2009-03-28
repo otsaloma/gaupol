@@ -12,7 +12,7 @@ Gaupol 0.14
  [D] Fix GtkWarning: GtkSpinButton: setting an adjustment with
      non-zero page size is deprecated
  [D] Remove deprecated Encoding-field from desktop file
- [ ] Fix search to modify text of the correct subtitle (#572676)
+ [D] Fix search to modify text of the correct subtitle (#572676)
  [D] Fix character count error with Unicode text
  [D] Fix updating of filenames in the projects menu
  [D] Fix erroneous cleaning of SubRip markup after removing hearing
@@ -25,6 +25,8 @@ Gaupol 0.14
 Gaupol 1.0
 ==========
 
+ * Try to remove excessive magic that fails with new pylint?
+   - http://www.logilab.org/blogentry/8554
  * Migrate from Glade to gtk.Builder
  * Add wiki documentation on writing extensions
  * Add wiki documentation on writing pattern files

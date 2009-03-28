@@ -16,6 +16,7 @@
 
 """Dialog for searching for and replacing text."""
 
+import functools
 import gaupol.gtk
 import gtk
 import os
@@ -25,11 +26,26 @@ _ = gaupol.i18n._
 __all__ = ("SearchDialog",)
 
 
+def page_changing(function):
+    """Decorator for SearchDialog methods that edit data."""
+
+    @functools.wraps(function)
+    def wrapper(*args, **kwargs):
+        self = args[0]
+        self._handle_page_changes = False
+        value = function(*args, **kwargs)
+        self._handle_page_changes = True
+        return value
+
+    return wrapper
+
+
 class SearchDialog(gaupol.gtk.GladeDialog):
 
     """Dialog for searching for and replacing text.
 
     Instance variables:
+     * _handle_page_changes: True to invalidate search on page changes
      * _match_doc: Document enumeration of the last match of pattern
      * _match_page: Page of the last match of pattern
      * _match_row: Row in page of the last match of pattern
@@ -64,6 +80,7 @@ class SearchDialog(gaupol.gtk.GladeDialog):
         self._tran_check = get_widget("tran_check")
         gaupol.gtk.util.prepare_text_view(self._text_view)
 
+        self._handle_page_changes = True
         self._match_doc = None
         self._match_page = None
         self._match_row = None
@@ -234,6 +251,7 @@ class SearchDialog(gaupol.gtk.GladeDialog):
         text_buffer = self._text_view.get_buffer()
         callback = lambda x, self: self._replace_button.set_sensitive(False)
         text_buffer.connect("changed", callback, self)
+        gaupol.util.connect(self, "application", "page-changed")
 
     def _init_sensitivities(self):
         """Initialize widget sensitivities."""
@@ -292,6 +310,18 @@ class SearchDialog(gaupol.gtk.GladeDialog):
         targets = gaupol.gtk.targets
         self._all_radio.set_active(self.conf.target == targets.ALL)
         self._current_radio.set_active(self.conf.target == targets.CURRENT)
+
+    def _on_application_page_changed(self, application, page):
+        """Invalidate the current search if underlying data has changed.
+
+        If data in the page was changed from outside the search dialog, the
+        current search must be invalidated to avoid making edits (especially
+        via the text view's focus-out handler) based on data that no longer
+        exists. All SearchDialog's data changing methods should be wrapped to
+        disable this handling of application's page-changed signals.
+        """
+        if self._handle_page_changes and (self._match_page is not None):
+            self._reset_properties()
 
     def _on_ignore_case_check_toggled(self, check_button):
         """Save the ignore case setting."""
@@ -356,6 +386,7 @@ class SearchDialog(gaupol.gtk.GladeDialog):
         self._pattern_entry.select_region(0, -1)
         self._pattern_entry.grab_focus()
 
+    @page_changing
     def _on_text_view_focus_out_event(self, text_view, event):
         """Save changes made in the text view."""
 
@@ -532,6 +563,7 @@ class SearchDialog(gaupol.gtk.GladeDialog):
         assert self._match_span is not None
         assert self._was_next is not None
 
+    @page_changing
     @gaupol.deco.silent(gaupol.gtk.Default)
     def replace(self):
         """Replace the current match of pattern."""
@@ -541,8 +573,7 @@ class SearchDialog(gaupol.gtk.GladeDialog):
         self._set_replacement(page)
         subtitle = page.project.subtitles[self._match_row]
         length = len(subtitle.get_text(self._match_doc))
-        try:
-            page.project.replace()
+        try: page.project.replace()
         except re.error, message:
             return self._show_regex_error_dialog_replacement(message)
         shift = (len(subtitle.get_text(self._match_doc)) - length)
@@ -552,6 +583,7 @@ class SearchDialog(gaupol.gtk.GladeDialog):
     def replace_all_require(self):
         assert self._pattern_entry.get_text()
 
+    @page_changing
     @gaupol.deco.silent(gaupol.gtk.Default)
     def replace_all(self):
         """Replace all matches of pattern."""
@@ -561,8 +593,7 @@ class SearchDialog(gaupol.gtk.GladeDialog):
         for page in self.application.get_target_pages(target):
             self._set_pattern(page)
             self._set_replacement(page)
-            try:
-                count += page.project.replace_all()
+            try: count += page.project.replace_all()
             except re.error, message:
                 self._show_regex_error_dialog_replacement(message)
                 break

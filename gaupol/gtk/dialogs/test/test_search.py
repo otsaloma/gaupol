@@ -54,6 +54,17 @@ class TestSearchDialog(gaupol.gtk.TestCase):
         self.dialog._all_radio.set_active(True)
         self.dialog._current_radio.set_active(True)
 
+    def test__on_application_page_changed(self):
+
+        # Ensure that editing obsolete data is not possible.
+        # http://bugzilla.gnome.org/show_bug.cgi?id=572676
+        self.dialog._pattern_entry.set_text("a")
+        self.dialog.next()
+        page = self.application.get_current_page()
+        page.project.remove_subtitles((self.dialog._match_row,))
+        assert not self.dialog._text_view.props.sensitive
+        assert not self.dialog._replace_button.props.sensitive
+
     def test__on_ignore_case_check_toggled(self):
 
         self.dialog._ignore_case_check.set_active(True)
