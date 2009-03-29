@@ -60,7 +60,7 @@ class TestSpellCheckDialog(gaupol.gtk.TestCase):
         respond = lambda *args: gtk.RESPONSE_OK
         cls.flash_dialog = respond
         args = (self.application.window, self.application)
-        self.raises(enchant.Error, cls, *args)
+        self.raises(ValueError, cls, *args)
 
     def test__init_checker__io_error(self):
 

@@ -288,7 +288,11 @@ class SpellCheckDialog(gaupol.gtk.GladeDialog):
         """Add the current word to the user dictionary."""
 
         word = unicode(self._checker.word)
-        self._checker.dict.add_to_pwl(word)
+        # Dict.add_to_pwl is deprecated, please use Dict.add.
+        if hasattr(self._checker, "add"):
+            self._checker.dict.add(word)
+        elif hasattr(self._checker, "add_to_pwl"):
+            self._checker.dict.add_to_pwl(word)
         self._advance()
 
     def _on_edit_button_clicked(self, *args):
