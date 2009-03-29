@@ -178,7 +178,7 @@ class SpellCheckDialog(gaupol.gtk.GladeDialog):
     def _init_checker(self):
         """Initialize the checker for conf.spell_check.language.
 
-        Raise ValueError if dictionary initialization fails.
+        Raise ValueError or if dictionary initialization fails.
         """
         import enchant.checker
         language = self.conf.language
@@ -189,6 +189,9 @@ class SpellCheckDialog(gaupol.gtk.GladeDialog):
                 gaupol.util.print_write_io(sys.exc_info(), path)
                 self._add_button.set_sensitive(False)
                 dict = enchant.Dict(str(language))
+            # Sometimes enchant will initialize a dictionary that will not
+            # actually work when trying to use it, hence check something.
+            dict.check("gaupol")
         except enchant.Error, (message,):
             self._show_error_dialog(message)
             raise ValueError
