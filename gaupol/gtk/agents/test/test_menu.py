@@ -67,10 +67,3 @@ class TestMenuAgent(gaupol.gtk.TestCase):
         self.application.set_menu_notify_events("main-safe")
         self.application.set_menu_notify_events("main-unsafe")
         self.application.set_menu_notify_events("projects")
-
-    def test_update_project_actions(self):
-
-        self.application.open_main_file(self.get_subrip_path())
-        self.application.open_main_file(self.get_subrip_path())
-        self.application.update_project_actions()
-        self.application.update_project_actions()
