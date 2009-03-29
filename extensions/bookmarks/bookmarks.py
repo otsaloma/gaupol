@@ -496,13 +496,13 @@ class BookmarksExtension(gaupol.gtk.Extension):
     def setup(self, application):
         """Setup extension for use with application."""
 
+        directory = os.path.dirname(__file__)
+        spec_file = os.path.join(directory, "bookmarks.conf.spec")
+        self.read_config(spec_file)
         self._init_attributes(application)
         self._init_tree_view()
         self._init_signal_handlers()
         self._init_side_pane_widget()
-        directory = os.path.dirname(__file__)
-        spec_file = os.path.join(directory, "bookmarks.conf.spec")
-        self.read_config(spec_file)
         self._init_actions()
         for page in application.pages:
             self._prepare_page(page)

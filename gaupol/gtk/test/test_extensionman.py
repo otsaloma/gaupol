@@ -20,12 +20,10 @@ import gtk
 
 class TestExtensionManager(gaupol.gtk.TestCase):
 
-    # TODO: Change 'null' to whatever module we ship with gaupol.
-
     def setup_method(self, method):
 
         self.manager = gaupol.gtk.ExtensionManager(self.get_application())
-        gaupol.gtk.conf.extensions.active = ["null", "none"]
+        gaupol.gtk.conf.extensions.active = ["bookmarks", "none"]
         self.manager.find_extensions()
         self.manager.setup_extensions()
 
@@ -41,7 +39,7 @@ class TestExtensionManager(gaupol.gtk.TestCase):
 
     def test_get_metadata(self):
 
-        metadata = self.manager.get_metadata("null")
+        metadata = self.manager.get_metadata("bookmarks")
         assert metadata.has_field("GaupolVersion")
         assert metadata.has_field("Module")
         assert metadata.has_field("Name")
@@ -50,26 +48,26 @@ class TestExtensionManager(gaupol.gtk.TestCase):
     def test_get_modules(self):
 
         modules = self.manager.get_modules()
-        assert "null" in modules
+        assert "bookmarks" in modules
 
     def test_has_help(self):
 
-        assert self.manager.has_help("null")
+        self.manager.has_help("bookmarks")
 
     def test_has_preferences_dialog(self):
 
-        assert self.manager.has_preferences_dialog("null")
+        self.manager.has_preferences_dialog("bookmarks")
 
     def test_is_active(self):
 
-        self.manager.setup_extension("null")
-        assert self.manager.is_active("null")
-        self.manager.teardown_extension("null")
-        assert not self.manager.is_active("null")
+        self.manager.setup_extension("bookmarks")
+        assert self.manager.is_active("bookmarks")
+        self.manager.teardown_extension("bookmarks")
+        assert not self.manager.is_active("bookmarks")
 
     def test_setup_extension(self):
 
-        self.manager.setup_extension("null")
+        self.manager.setup_extension("bookmarks")
 
     def test_setup_extensions(self):
 
@@ -77,16 +75,18 @@ class TestExtensionManager(gaupol.gtk.TestCase):
 
     def test_show_help(self):
 
-        self.manager.show_help("null")
+        try: self.manager.show_help("bookmarks")
+        except NotImplementedError: pass
 
     def test_show_preferences_dialog(self):
 
-        self.manager.show_preferences_dialog("null", gtk.Window())
+        try: self.manager.show_preferences_dialog("bookmarks", gtk.Window())
+        except NotImplementedError: pass
 
     def test_teardown_extension(self):
 
-        self.manager.setup_extension("null")
-        self.manager.teardown_extension("null")
+        self.manager.setup_extension("bookmarks")
+        self.manager.teardown_extension("bookmarks")
 
     def test_teardown_extensions(self):
 

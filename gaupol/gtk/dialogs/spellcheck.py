@@ -111,7 +111,7 @@ class SpellCheckDialog(gaupol.gtk.GladeDialog):
                     self._new_rows.append(self._row)
                     self._new_texts.append(text)
             # Move to the next row in the current page, move to the next page
-            # in the sequence of target pages or end when all pages checked,
+            # in the sequence of target pages or end when all pages checked.
             try:
                 self._advance_row()
             except StopIteration:
