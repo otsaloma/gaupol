@@ -83,15 +83,27 @@ class Test_ExtensionPage(gaupol.gtk.TestCase):
 
         selection = self.page._tree_view.get_selection()
         selection.select_path(0)
-        try: self.page._help_button.clicked()
-        except NotImplementedError: pass
+        store = self.page._tree_view.get_model()
+        module = store[0][0]
+        column = self.page._tree_view.get_columns()[0]
+        renderer = column.get_cell_renderers()[0]
+        if not store[0][1]:
+            renderer.emit("toggled", 0)
+        if self.page.manager.has_help(module):
+            self.page._help_button.clicked()
 
     def test__on_preferences_button_clicked(self):
 
         selection = self.page._tree_view.get_selection()
         selection.select_path(0)
-        try: self.page._preferences_button.clicked()
-        except NotImplementedError: pass
+        store = self.page._tree_view.get_model()
+        module = store[0][0]
+        column = self.page._tree_view.get_columns()[0]
+        renderer = column.get_cell_renderers()[0]
+        if not store[0][1]:
+            renderer.emit("toggled", 0)
+        if self.page.manager.has_preferences_dialog(module):
+            self.page._preferences_button.clicked()
 
     def test__on_tree_view_cell_toggled(self):
 
