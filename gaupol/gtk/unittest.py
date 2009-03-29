@@ -25,17 +25,15 @@ class TestCase(gaupol.TestCase):
 
     """Base class for GTK unit test cases."""
 
+    application = None
+
     def get_application(self):
         """Return a new application with two open pages."""
 
-        if not hasattr(TestCase, "application"):
-            TestCase.application = gaupol.gtk.Application()
-            TestCase.application.window.hide()
-        application = TestCase.application
-        while application.pages:
-            application.close_page(application.pages[0], False)
+        application = gaupol.gtk.Application()
         application.add_new_page(self.get_page())
         application.window.show()
+        TestCase.application = application
         return application
 
     def get_page(self):
@@ -55,4 +53,10 @@ class TestCase(gaupol.TestCase):
             self.dialog.destroy()
         if hasattr(self, "window"):
             self.window.destroy()
+        if self.application is not None:
+            for page in self.application.pages:
+                self.application.close_page(page, False)
+            self.application.window.destroy()
+        TestCase.application = None
+        gaupol.gtk.util.iterate_main()
         gaupol.gtk.conf.restore_defaults()
