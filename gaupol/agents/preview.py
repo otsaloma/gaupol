@@ -99,15 +99,19 @@ class PreviewAgent(gaupol.Delegate):
         """
         if self.main_file is None: return
         extensions = list(extensions or (
-            ".3ivx", ".asf", ".avi", ".dat", ".divx", ".flv", ".m2v", ".mkv",
-            ".mov", ".mp4", ".mpeg", ".mpg", ".ogg", ".ogm", ".qt", ".rm",
-            ".rmvb", ".swf", ".vob", ".wmv",))
-        extensions += [x.upper() for x in extensions]
+            ".3ivx", ".asf", ".avi", ".divx", ".flv", ".m2v", ".mkv", ".mov",
+            ".mp4", ".mpeg", ".mpg", ".ogm", ".qt", ".rm", ".rmvb", ".swf",
+            ".vob", ".wmv",
+            # Keep extensions that are used by other file types than videos at
+            # the end of the list, so that if there are multiple matches, these
+            # ambiguous extensions would not be the ones chosen.
+            ".ogg", ".dat"))
         subroot = os.path.splitext(self.main_file.path)[0]
         dirname = os.path.dirname(self.main_file.path)
         for filename in os.listdir(dirname):
             filepath = os.path.join(dirname, filename)
             fileroot, extension = os.path.splitext(filepath)
+            extension = extension.lower()
             if (extension in extensions) and subroot.startswith(fileroot):
                 self.video_path = filepath
                 return self.video_path
