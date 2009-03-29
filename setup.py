@@ -19,7 +19,7 @@ various files and (3) installing extensions.
     'intltool-merge' in $PATH.
 
 (3) Extensions are installed under the data directory. All python code included
-    in the extensions is compiled during the 'install_data' command, using the
+    in the extensions are compiled during the 'install_data' command, using the
     same arguments for 'byte_compile' as used by the 'install_lib' command. If
     the 'install_lib' command was given '--no-compile' option, then the
     extensions are not compiled either.

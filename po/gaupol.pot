@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-22 18:58+0200\n"
+"POT-Creation-Date: 2009-03-29 05:51+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -978,16 +978,8 @@ msgstr ""
 msgid "_Description:"
 msgstr ""
 
-#: ../extensions/bookmarks/add-bookmark-dialog.glade.h:4
-msgid "gtk-add"
-msgstr ""
-
-#: ../extensions/bookmarks/add-bookmark-dialog.glade.h:5
-msgid "gtk-cancel"
-msgstr ""
-
 #: ../extensions/bookmarks/bookmarks.gaupol-extension.in.h:1
-#: ../extensions/bookmarks/bookmarks.py:506
+#: ../extensions/bookmarks/bookmarks.py:509
 msgid "Bookmarks"
 msgstr ""
 
@@ -2032,7 +2024,7 @@ msgstr ""
 
 #: ../gaupol/gtk/agents/open.py:212 ../gaupol/gtk/agents/preview.py:71
 #: ../gaupol/gtk/agents/preview.py:80 ../gaupol/gtk/agents/save.py:121
-#: ../gaupol/gtk/dialogs/search.py:436 ../gaupol/gtk/dialogs/search.py:445
+#: ../gaupol/gtk/dialogs/search.py:467 ../gaupol/gtk/dialogs/search.py:476
 #, python-format
 msgid "%s."
 msgstr ""
@@ -2348,16 +2340,16 @@ msgstr ""
 msgid "All supported files"
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/file.py:68
+#: ../gaupol/gtk/dialogs/file.py:70
 #, python-format
 msgid "%(format)s (%(pattern)s)"
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/file.py:112
+#: ../gaupol/gtk/dialogs/file.py:114
 msgid "Auto-detected"
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/file.py:114
+#: ../gaupol/gtk/dialogs/file.py:116
 msgid "Other…"
 msgstr ""
 
@@ -2389,20 +2381,20 @@ msgstr ""
 msgid "Custom"
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/search.py:129
+#: ../gaupol/gtk/dialogs/search.py:146
 #, python-format
 msgid "\"%s\" not found"
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/search.py:435
+#: ../gaupol/gtk/dialogs/search.py:466
 msgid "Error in regular expression pattern"
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/search.py:444
+#: ../gaupol/gtk/dialogs/search.py:475
 msgid "Error in regular expression replacement"
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/search.py:570
+#: ../gaupol/gtk/dialogs/search.py:601
 #, python-format
 msgid "Found and replaced %d occurences"
 msgstr ""
@@ -2415,11 +2407,11 @@ msgstr ""
 msgid "seconds"
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/spellcheck.py:398
+#: ../gaupol/gtk/dialogs/spellcheck.py:399
 msgid "Spell-checking"
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/spellcheck.py:424
+#: ../gaupol/gtk/dialogs/spellcheck.py:426
 #, python-format
 msgid "Failed to load dictionary for language \"%s\""
 msgstr ""
@@ -2527,27 +2519,27 @@ msgstr ""
 msgid "Close project"
 msgstr ""
 
-#: ../gaupol/gtk/page.py:292
+#: ../gaupol/gtk/page.py:299
 #, python-format
 msgid "<b>Path:</b> %s"
 msgstr ""
 
-#: ../gaupol/gtk/page.py:293
+#: ../gaupol/gtk/page.py:300
 #, python-format
 msgid "<b>Format:</b> %s"
 msgstr ""
 
-#: ../gaupol/gtk/page.py:294
+#: ../gaupol/gtk/page.py:301
 #, python-format
 msgid "<b>Character encoding:</b> %s"
 msgstr ""
 
-#: ../gaupol/gtk/page.py:295
+#: ../gaupol/gtk/page.py:302
 #, python-format
 msgid "<b>Newlines:</b> %s"
 msgstr ""
 
-#: ../gaupol/gtk/page.py:332
+#: ../gaupol/gtk/page.py:339
 #, python-format
 msgid "%s translation"
 msgstr ""

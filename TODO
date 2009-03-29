@@ -22,14 +22,22 @@ Gaupol 0.14
  [D] Fix AssertionError when installing multiple times
  [D] Switch version-control systems from subversion to git
 
- Packagers: Please read comment (3) at the top of the setup.py file
- reagarding installation and compilation of extensions.
+Distro-packagers: Please read comment (3) at the top of the setup.py
+file reagarding installation and compilation of extensions.
+
+Gaupol 0.15
+===========
+
+ * Add text correction task to split joined words or to join split
+   words using spell-check suggestions
+   - http://bugzilla.gnome.org/show_bug.cgi?id=572667
+ * Try to remove excessive magic that fails with new pylint?
+   - http://www.logilab.org/blogentry/8554
 
 Gaupol 1.0
 ==========
 
- * Try to remove excessive magic that fails with new pylint?
-   - http://www.logilab.org/blogentry/8554
+
  * Migrate from Glade to gtk.Builder
  * Add wiki documentation on writing extensions
  * Add wiki documentation on writing pattern files

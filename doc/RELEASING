@@ -2,32 +2,28 @@ Releasing a New Version
 =======================
 
  * Do final quality checks
-
-     pylint bin/gaupol gaupol/ setup.py
-     py.test --tb=no -k -gtk gaupol
-     py.test --tb=no -k gtk gaupol
+   $ pylint bin/gaupol gaupol/ setup.py
+   $ py.test --tb=no -k -gtk gaupol
+   $ py.test --tb=no -k gtk gaupol
 
  * Make final edits to files, commit and tag
-
-     $EDITOR gaupol/__init__.py
-     $EDITOR extensions/*/*.gaupol-extension.in
-     po: intltool-update -m
-     po: intltool-update -p -g gaupol
-     $EDITOR NEWS TODO
-     git commit -a
-     git tag -s X.Y.Z
+   $ $EDITOR gaupol/__init__.py
+   $ $EDITOR extensions/*/*.gaupol-extension.in
+   po$ intltool-update -m
+   po$ intltool-update -p -g gaupol
+   $ $EDITOR NEWS TODO
+   $ git commit -a
+   $ git tag -s X.Y.Z
 
  * Build tarballs and edit related files
-
-     ./setup.py clean sdist_gna --formats bztar,gztar
-     $EDITOR dist/*/*.news dist/*/*.changes
+   $ ./setup.py clean sdist_gna --formats bztar,gztar
+   $ $EDITOR dist/*/*.news dist/*/*.changes
 
  * Upload tarballs to download.gna.org:/upload/gaupol/
 
  * Build and upload a Windows installer, see "RELEASING.win32"
 
  * Send announcements and update web sites
-
    - http://home.gna.org/gaupol
    - http://bugzilla.gnome.org/editproducts.cgi?action=edit&product=gaupol
    - http://users.tkk.fi/~otsaloma/gaupol/doc/
