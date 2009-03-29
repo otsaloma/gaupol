@@ -7,5 +7,5 @@ Terminal=false
 StartupNotify=true
 Icon=gaupol
 Type=Application
-MimeType=application/x-subrip;text/x-microdvd;text/x-mpsub;text/x-ssa;text/x-subviewer;
+MimeType=text/x-microdvd;text/x-mpsub;text/x-ssa;application/x-subrip;text/x-subviewer;
 Categories=GTK;AudioVideo;Video;

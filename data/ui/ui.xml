@@ -10,12 +10,12 @@
       <separator/>
       <menu name="recent_main" action="show_recent_main_menu">
         <!-- Add some item, so that UI manager will not hide this
-          -- menu. The actual menu will created dynamically. -->
+          -- menu. The actual menu will be created dynamically. -->
         <menuitem name="open_main" action="open_main_files"/>
       </menu>
       <menu name="recent_translation" action="show_recent_translation_menu">
         <!-- Add some item, so that UI manager will not hide this
-          -- menu. The actual menu will created dynamically. -->
+          -- menu. The actual menu will be created dynamically. -->
         <menuitem name="open_translation" action="open_translation_file"/>
       </menu>
       <placeholder name="2">

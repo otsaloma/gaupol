@@ -19,7 +19,7 @@ for PY_FILE in $PY_FILES; do
     highlight --output=$DESTINATION \
               --xhtml \
               --style-outfile=code.css \
-              --line-number-width=4 \
+              --line-number-length=4 \
               --linenumbers \
               --encoding=ascii \
               --anchors \
