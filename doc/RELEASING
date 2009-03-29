@@ -10,6 +10,7 @@ Releasing a New Version
  * Make final edits to files, commit and tag
 
      $EDITOR gaupol/__init__.py
+     $EDITOR extensions/*/*.gaupol-extension.in
      po: intltool-update -m
      po: intltool-update -p -g gaupol
      $EDITOR NEWS TODO
