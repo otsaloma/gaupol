@@ -153,7 +153,8 @@ class View(gtk.TreeView):
         if not gaupol.gtk.conf.editor.use_custom_font: return
         for column in self.get_columns():
             renderer = column.get_cell_renderers()[0]
-            renderer.props.font = gaupol.gtk.conf.editor.custom_font
+            if hasattr(renderer.props, "font"):
+                renderer.props.font = gaupol.gtk.conf.editor.custom_font
         self.columns_autosize()
 
     def _on_conf_editor_notify_length_unit(self, *args):
@@ -173,7 +174,8 @@ class View(gtk.TreeView):
         font = gaupol.gtk.util.get_font()
         for column in self.get_columns():
             renderer = column.get_cell_renderers()[0]
-            renderer.props.font = font
+            if hasattr(renderer.props, "font"):
+                renderer.props.font = font
         self.columns_autosize()
 
     def _on_columns_changed(self, *args):
