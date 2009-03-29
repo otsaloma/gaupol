@@ -88,7 +88,6 @@ class TestSetAgent(gaupol.TestCase):
 
         subtitles = self.project.subtitles
         self.project.set_start(0, -100.0)
-        print subtitles[0].start_seconds
         assert subtitles[0].start_seconds == -100.0
 
     @gaupol.deco.reversion_test
