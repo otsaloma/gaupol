@@ -27,22 +27,22 @@ class TestParser(gaupol.TestCase):
 
     def test_get_text__margins(self):
 
-        text = "<i>You will find allies there,</i>\n" \
-               "<i>and they will pay more.</i>"
+        text = ("<i>You will find allies there,</i>\n"
+                "<i>and they will pay more.</i>")
         self.parser.set_text(text)
         assert self.parser.get_text() == text
 
     def test_get_text__tags(self):
 
-        text = "<i>You will find allies there,</i>\n" \
-               "<i>and</i> they <i>will pay more.</i>"
+        text = ("<i>You will find allies there,</i>\n"
+                "<i>and</i> they <i>will pay more.</i>")
         self.parser.set_text(text)
         assert self.parser.get_text() == text
 
     def test_replace_all__regex(self):
 
-        text = "<i>One only risks it, <b>because</b>\n" \
-               "one's survival depends on it.</i>"
+        text = ("<i>One only risks it, <b>because</b>\n"
+                "one's survival depends on it.</i>")
 
         cases = (
             (r"^", r"--",
@@ -85,8 +85,8 @@ class TestParser(gaupol.TestCase):
 
     def test_replace_all__string(self):
 
-        text = "<i>One only risks it, <b>because</b>\n" \
-               "one's survival depends on it.</i>"
+        text = ("<i>One only risks it, <b>because</b>\n"
+                "one's survival depends on it.</i>")
 
         cases = (
             ("i", "-",
@@ -133,8 +133,8 @@ class TestParser(gaupol.TestCase):
 
     def test_set_text__margins(self):
 
-        text = "<i>One only risks it, because</i>\n" \
-               "<i>one's survival depends on it.</i>"
+        text = ("<i>One only risks it, because</i>\n"
+                "<i>one's survival depends on it.</i>")
         self.parser.set_text(text)
         assert self.parser._margins == ["<i>", "</i>"]
         assert not self.parser._tags
@@ -144,8 +144,8 @@ class TestParser(gaupol.TestCase):
 
     def test_set_text__tags(self):
 
-        text = "<i>One only risks it, <b>because</b>\n" \
-               "one's survival depends on it.</i>"
+        text = ("<i>One only risks it, <b>because</b>\n"
+                "one's survival depends on it.</i>")
         self.parser.set_text(text)
         assert not self.parser._margins
         assert self.parser._tags

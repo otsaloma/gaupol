@@ -20,8 +20,8 @@ import re
 
 class TestFinder(gaupol.TestCase):
 
-    text = "One only risks it, because\n" \
-           "one's survival depends on it."
+    text = ("One only risks it, because\n"
+            "one's survival depends on it.")
 
     def loop_over_find_cases(self, cases, regex, next):
 

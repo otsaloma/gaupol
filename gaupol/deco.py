@@ -170,8 +170,8 @@ def revertable(function):
         try: value = function(*args, **kwargs)
         finally: project.unblock(register.signal)
         project.cut_reversion_stacks()
-        if (project.main_changed != main_changed) or \
-           (project.tran_changed != tran_changed):
+        if ((project.main_changed != main_changed) or
+            (project.tran_changed != tran_changed)):
             project.emit_action_signal(register)
         return value
 

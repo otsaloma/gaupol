@@ -21,8 +21,8 @@ from .test_microdvd import TestMicroDVD
 
 class TestMPL2(TestMicroDVD):
 
-    text = "All things weird are normal\n" \
-           "in this whore of cities."
+    text = ("All things weird are normal\n"
+            "in this whore of cities.")
 
     def setup_method(self, method):
 
@@ -36,56 +36,56 @@ class TestMPL2(TestMicroDVD):
 
     def test_decode__bold(self):
 
-        text = "\\All things weird are normal\n" \
-               "\\in this whore of cities."
+        text = ("\\All things weird are normal\n"
+                "\\in this whore of cities.")
         assert self.markup.decode(text) == (
             "<b>All things weird are normal</b>\n"
             "<b>in this whore of cities.</b>")
 
     def test_decode__italic(self):
 
-        text = "/All things weird are normal\n" \
-               "in this whore of cities."
+        text = ("/All things weird are normal\n"
+                "in this whore of cities.")
         assert self.markup.decode(text) == (
             "<i>All things weird are normal</i>\n"
             "in this whore of cities.")
 
     def test_decode_multiple(self):
 
-        text = "/_All things weird are normal\n" \
-               "\\/_in this whore of cities."
+        text = ("/_All things weird are normal\n"
+                "\\/_in this whore of cities.")
         assert self.markup.decode(text) == (
             "<i><u>All things weird are normal</u></i>\n"
             "<b><i><u>in this whore of cities.</u></i></b>")
 
     def test_decode__underline(self):
 
-        text = "All things weird are normal\n" \
-               "_in this whore of cities."
+        text = ("All things weird are normal\n"
+                "_in this whore of cities.")
         assert self.markup.decode(text) == (
             "All things weird are normal\n"
             "<u>in this whore of cities.</u>")
 
     def test_encode__bold(self):
 
-        text = "<b>All things weird are normal\n" \
-               "in this whore of cities.</b>"
+        text = ("<b>All things weird are normal\n"
+                "in this whore of cities.</b>")
         assert self.markup.encode(text) == (
             "\\All things weird are normal\n"
             "\\in this whore of cities.")
 
     def test_encode__italic(self):
 
-        text = "All <i>things</i> weird are normal\n" \
-               "in <i>this</i> whore of cities."
+        text = ("All <i>things</i> weird are normal\n"
+                "in <i>this</i> whore of cities.")
         assert self.markup.encode(text) == (
             "All things weird are normal\n"
             "in this whore of cities.")
 
     def test_encode__underline(self):
 
-        text = "All things weird are normal\n" \
-               "<u>in this whore of cities</u>."
+        text = ("All things weird are normal\n"
+                "<u>in this whore of cities</u>.")
         assert self.markup.encode(text) == (
             "All things weird are normal\n"
             "_in this whore of cities.")

@@ -224,9 +224,9 @@ class TestSearchAgent(gaupol.TestCase):
         self.project.set_search_replacement("")
         self.project.find_next(0, MAIN, 4)
         self.project.replace()
-        assert self.project.subtitles[0].main_text == \
-            "God haspromised you that\n" + \
-            "you will go to Heaven?"
+        assert self.project.subtitles[0].main_text == (
+            "God haspromised you that\n"
+            "you will go to Heaven?")
 
     @gaupol.deco.reversion_test
     def test_replace_all(self):

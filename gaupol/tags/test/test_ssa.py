@@ -19,8 +19,8 @@ import gaupol
 
 class TestSubStationAlpha(gaupol.TestCase):
 
-    text = "All things weird are normal\n" \
-           "in this whore of cities."
+    text = ("All things weird are normal\n"
+            "in this whore of cities.")
 
     def setup_method(self, method):
 
@@ -40,104 +40,104 @@ class TestSubStationAlpha(gaupol.TestCase):
 
     def test_decode__bold(self):
 
-        text = "{\\b1}All things weird are normal\n" \
-               "in this whore of cities.{\\b0}"
+        text = ("{\\b1}All things weird are normal\n"
+                "in this whore of cities.{\\b0}")
         assert self.markup.decode(text) == (
             "<b>All things weird are normal\n"
             "in this whore of cities.</b>")
 
     def test_decode__color(self):
 
-        text = "All things weird are normal\n" \
-               "in {\\c&Hff&}this whore of cities."
+        text = ("All things weird are normal\n"
+                "in {\\c&Hff&}this whore of cities.")
         assert self.markup.decode(text) == (
             "All things weird are normal\n"
             "in <color=#ff0000>this whore of cities.</color>")
 
     def test_decode__combined(self):
 
-        text = "{\\b1\\i1}All things weird are normal\n" \
-               "in this{\\i0\\b0} whore of cities."
+        text = ("{\\b1\\i1}All things weird are normal\n"
+                "in this{\\i0\\b0} whore of cities.")
         assert self.markup.decode(text) == (
             "<b><i>All things weird are normal\n"
             "in this</i></b> whore of cities.")
 
     def test_decode__font(self):
 
-        text = "All things {\\fnSans}weird{\\r} are normal\n" \
-               "in this whore of cities."
+        text = ("All things {\\fnSans}weird{\\r} are normal\n"
+                "in this whore of cities.")
         assert self.markup.decode(text) == (
             "All things <font=Sans>weird</font> are normal\n"
             "in this whore of cities.")
 
     def test_decode__italic(self):
 
-        text = "{\\i1}All{\\r} things weird are normal\n" \
-               "in this whore of cities."
+        text = ("{\\i1}All{\\r} things weird are normal\n"
+                "in this whore of cities.")
         assert self.markup.decode(text) == (
             "<i>All</i> things weird are normal\n"
             "in this whore of cities.")
 
     def test_decode__reset(self):
 
-        text = "{\\b1\\i1}All{\\i0} things weird are normal\n" \
-               "{\\fs12}in this whore of cities{\\r}."
+        text = ("{\\b1\\i1}All{\\i0} things weird are normal\n"
+                "{\\fs12}in this whore of cities{\\r}.")
         assert self.markup.decode(text) == (
             "<b><i>All</i> things weird are normal\n"
             "<size=12>in this whore of cities</size></b>.")
 
     def test_decode__size(self):
 
-        text = "All things weird are normal\n" \
-               "{\\fs12}in this whore of cities."
+        text = ("All things weird are normal\n"
+                "{\\fs12}in this whore of cities.")
         assert self.markup.decode(text) == (
             "All things weird are normal\n"
             "<size=12>in this whore of cities.</size>")
 
     def test_encode__bold(self):
 
-        text = "<b>All things weird are normal\n" \
-               "in this whore of cities.</b>"
+        text = ("<b>All things weird are normal\n"
+                "in this whore of cities.</b>")
         assert self.markup.encode(text) == (
             "{\\b1}All things weird are normal\n"
             "in this whore of cities.{\\b0}")
 
     def test_encode__color(self):
 
-        text = "<color=#ccccff>All things weird are normal\n" \
-               "in this whore of cities.</color>"
+        text = ("<color=#ccccff>All things weird are normal\n"
+                "in this whore of cities.</color>")
         assert self.markup.encode(text) == (
             "{\\c&Hffcccc&}All things weird are normal\n"
             "in this whore of cities.")
 
     def test_encode__font(self):
 
-        text = "<font=Sans>All things weird are normal\n" \
-               "in this whore of cities.</font>"
+        text = ("<font=Sans>All things weird are normal\n"
+                "in this whore of cities.</font>")
         assert self.markup.encode(text) == (
             "{\\fnSans}All things weird are normal\n"
             "in this whore of cities.")
 
     def test_encode__italic(self):
 
-        text = "All <i>things</i> weird are normal\n" \
-               "in <i>this</i> whore of cities."
+        text = ("All <i>things</i> weird are normal\n"
+                "in <i>this</i> whore of cities.")
         assert self.markup.encode(text) == (
             "All {\\i1}things{\\i0} weird are normal\n"
             "in {\\i1}this{\\i0} whore of cities.")
 
     def test_encode__size(self):
 
-        text = "All things weird are normal\n" \
-               "in this whore of <size=12>cities</size>."
+        text = ("All things weird are normal\n"
+                "in this whore of <size=12>cities</size>.")
         assert self.markup.encode(text) == (
             "All things weird are normal\n"
             "in this whore of {\\fs12}cities.")
 
     def test_encode__underline(self):
 
-        text = "All things weird are normal\n" \
-               "<u>in this whore of cities.</u>"
+        text = ("All things weird are normal\n"
+                "<u>in this whore of cities.</u>")
         assert self.markup.encode(text) == self.text
 
     def test_fontify(self):

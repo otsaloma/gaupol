@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Miscellaneous functions and decorators."""
+"""Miscellaneous functions."""
 
 from __future__ import absolute_import
 from __future__ import with_statement
@@ -156,11 +156,11 @@ def get_all(names, pattern=None):
 
     import __future__
     for i in reversed(range(len(names))):
-        if (names[i].startswith("_")) or \
-           (names[i].endswith("_require")) or \
-           (names[i].endswith("_ensure")) or \
-           (names[i] in sys.modules) or \
-           (names[i] in dir(__future__)):
+        if ((names[i].startswith("_")) or
+            (names[i].endswith("_require")) or
+            (names[i].endswith("_ensure")) or
+            (names[i] in sys.modules) or
+            (names[i] in dir(__future__))):
             names.pop(i)
     if pattern is not None:
         regex = re.compile(pattern, re.UNICODE)
@@ -285,10 +285,9 @@ def install_module(name, obj):
 def is_command(command):
     """Return True if command exists as a file in $PATH."""
 
-    for directory in os.environ.get("PATH", "").split(os.pathsep):
-        path = os.path.join(directory, command)
-        if os.path.isfile(path): return True
-    return False
+    dirs = os.environ.get("PATH", "").split(os.pathsep)
+    paths = [os.path.join(x, command) for x in dirs]
+    return any(map(os.path.isfile, paths))
 
 def last(iterator):
     """Return the last value from iterator or None."""

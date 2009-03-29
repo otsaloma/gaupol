@@ -21,8 +21,8 @@ from .test_ssa import TestSubStationAlpha
 
 class TestAdvSubStationAlpha(TestSubStationAlpha):
 
-    text = "All things weird are normal\n" \
-           "in this whore of cities."
+    text = ("All things weird are normal\n"
+            "in this whore of cities.")
 
     def setup_method(self, method):
 
@@ -30,24 +30,24 @@ class TestAdvSubStationAlpha(TestSubStationAlpha):
 
     def test_decode__bold_weight(self):
 
-        text = "All things weird are normal\n" \
-               "in {\\b500}this{\\b0} whore of cities."
+        text = ("All things weird are normal\n"
+                "in {\\b500}this{\\b0} whore of cities.")
         assert self.markup.decode(text) == (
             "All things weird are normal\n"
             "in <b>this</b> whore of cities.")
 
     def test_decode__underline(self):
 
-        text = "{\\u1}All things weird are normal\n" \
-               "in this whore of cities{\\rDefault}."
+        text = ("{\\u1}All things weird are normal\n"
+                "in this whore of cities{\\rDefault}.")
         assert self.markup.decode(text) == (
             "<u>All things weird are normal\n"
             "in this whore of cities</u>.")
 
     def test_encode__underline(self):
 
-        text = "All things weird are normal\n" \
-               "<u>in this whore of cities.</u>"
+        text = ("All things weird are normal\n"
+                "<u>in this whore of cities.</u>")
         assert self.markup.encode(text) == (
             "All things weird are normal\n"
             "{\\u1}in this whore of cities.{\\u0}")

@@ -28,8 +28,8 @@ class TestLiner(gaupol.TestCase):
 
     def test_break_lines__01(self):
 
-        text = "- Isn't he off on Saturdays? " \
-               "- Didn't he tell you?"
+        text = ("- Isn't he off on Saturdays? "
+                "- Didn't he tell you?")
         self.liner.set_text(text)
         assert self.liner.break_lines() == (
             "- Isn't he off on Saturdays?\n"
@@ -37,10 +37,10 @@ class TestLiner(gaupol.TestCase):
 
     def test_break_lines__02(self):
 
-        text = "- Isn't he off on Saturdays? " \
-               "- He changed shifts. " \
-               "- Didn't he tell you? " \
-               "- Can you give him this when he next comes?"
+        text = ("- Isn't he off on Saturdays? "
+                "- He changed shifts. "
+                "- Didn't he tell you? "
+                "- Can you give him this when he next comes?")
         self.liner.set_text(text)
         assert self.liner.break_lines() == (
             "- Isn't he off on Saturdays?\n"
@@ -49,8 +49,8 @@ class TestLiner(gaupol.TestCase):
 
     def test_break_lines__03(self):
 
-        text = "Isn't he off on Saturdays? " \
-               "He changed shifts."
+        text = ("Isn't he off on Saturdays? "
+                "He changed shifts.")
         self.liner.set_text(text)
         assert self.liner.break_lines() == (
             "Isn't he off on Saturdays?\n"
@@ -58,9 +58,9 @@ class TestLiner(gaupol.TestCase):
 
     def test_break_lines__04(self):
 
-        text = "Isn't he off on Saturdays? " \
-               "He changed shifts. " \
-               "Didn't he tell you?"
+        text = ("Isn't he off on Saturdays? "
+                "He changed shifts. "
+                "Didn't he tell you?")
         self.liner.set_text(text)
         assert self.liner.break_lines() == (
             "Isn't he off on Saturdays?\n"
@@ -74,9 +74,9 @@ class TestLiner(gaupol.TestCase):
 
     def test_break_lines__06(self):
 
-        text = "Isn't he off on Saturdays " \
-               "He changed shifts " \
-               "Didn't he tell you?"
+        text = ("Isn't he off on Saturdays "
+                "He changed shifts "
+                "Didn't he tell you?")
         self.liner.set_text(text)
         assert self.liner.break_lines() == (
             "Isn't he off on Saturdays He\n"
@@ -84,10 +84,10 @@ class TestLiner(gaupol.TestCase):
 
     def test_break_lines__07(self):
 
-        text = "Isn't he off on Saturdays " \
-               "He changed shifts " \
-               "Didn't he tell you " \
-               "Can you give him this when he next comes"
+        text = ("Isn't he off on Saturdays "
+                "He changed shifts "
+                "Didn't he tell you "
+                "Can you give him this when he next comes")
         self.liner.set_text(text)
         assert self.liner.break_lines() == (
             "Isn't he off on Saturdays He changed\n"

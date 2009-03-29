@@ -19,8 +19,8 @@ import gaupol
 
 class TestMarkup(gaupol.TestCase):
 
-    text = "All things weird are normal\n" \
-           "in this whore of cities."
+    text = ("All things weird are normal\n"
+            "in this whore of cities.")
 
     def setup_method(self, method):
 
@@ -48,38 +48,38 @@ class TestMarkup(gaupol.TestCase):
 
     def test_encode__b(self):
 
-        text = "<b>All</b> things weird are normal\n" \
-               "in this whore of cities."
+        text = ("<b>All</b> things weird are normal\n"
+                "in this whore of cities.")
         assert self.markup.encode(text) == self.text
 
     def test_encode__color(self):
 
-        text = '<color=#ffffff>All</color> things weird are normal\n' \
-               'in this whore of cities.'
+        text = ('<color=#ffffff>All</color> things weird are normal\n'
+                'in this whore of cities.')
         assert self.markup.encode(text) == self.text
 
     def test_encode__font(self):
 
-        text = '<font=Sans>All things weird are normal\n' \
-               'in this whore of cities.</font>'
+        text = ('<font=Sans>All things weird are normal\n'
+                'in this whore of cities.</font>')
         assert self.markup.encode(text) == self.text
 
     def test_encode__i(self):
 
-        text = "<i>All things weird are normal\n" \
-               "in this whore of cities.</i>"
+        text = ("<i>All things weird are normal\n"
+                "in this whore of cities.</i>")
         assert self.markup.encode(text) == self.text
 
     def test_encode__size(self):
 
-        text = 'All things weird are normal\n' \
-               'in this whore of <size=12>cities</size>.'
+        text = ('All things weird are normal\n'
+                'in this whore of <size=12>cities</size>.')
         assert self.markup.encode(text) == self.text
 
     def test_encode__u(self):
 
-        text = "All things weird are normal\n" \
-               "in this whore of <u>cities</u>."
+        text = ("All things weird are normal\n"
+                "in this whore of <u>cities</u>.")
         assert self.markup.encode(text) == self.text
 
     def test_fontify(self):
