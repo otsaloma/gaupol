@@ -19,7 +19,7 @@ import gaupol
 from .test_microdvd import TestMicroDVD
 
 
-class TestAdvSubStationAlpha(TestMicroDVD):
+class TestMPL2(TestMicroDVD):
 
     text = "All things weird are normal\n" \
            "in this whore of cities."
