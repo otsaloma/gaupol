@@ -260,7 +260,7 @@ def get_data_files():
     """Return a list of data files read from file."""
 
     data_files = []
-    fok = lambda x: not x.endswith(".in")
+    fok = lambda x: not x.endswith((".in", ".pyc"))
     fobj = open(os.path.join("manifest", "data-files"), "r")
     for line in (x.strip() for x in fobj):
         if not line: continue
