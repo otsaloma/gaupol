@@ -22,9 +22,6 @@ Gaupol 0.14
  [D] Fix AssertionError when installing multiple times
  [D] Switch version-control systems from subversion to git
 
-Distro-packagers: Please read comment (3) at the top of the setup.py
-file reagarding installation and compilation of extensions.
-
 Gaupol 0.15
 ===========
 
@@ -36,7 +33,6 @@ Gaupol 0.15
 
 Gaupol 1.0
 ==========
-
 
  * Migrate from Glade to gtk.Builder
  * Add wiki documentation on writing extensions
