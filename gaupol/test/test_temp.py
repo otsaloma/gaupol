@@ -49,6 +49,14 @@ class TestModule(gaupol.TestCase):
         assert not os.path.isfile(path)
         gaupol.temp.remove(path)
 
+    def test_remove_all(self):
+
+        path_1 = gaupol.temp.create()
+        path_2 = gaupol.temp.create()
+        gaupol.temp.remove_all()
+        assert not os.path.isfile(path_1)
+        assert not os.path.isfile(path_2)
+
     def test_remove_directory(self):
 
         path = gaupol.temp.create_directory()

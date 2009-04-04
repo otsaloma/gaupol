@@ -16,6 +16,7 @@
 
 """Creating and removing temporary files."""
 
+import atexit
 import gaupol
 import os
 import tempfile
@@ -56,11 +57,17 @@ def get_handle(path):
 
 @gaupol.deco.silent(OSError)
 def remove(path):
-    """Remove remporary file after closing its handle."""
+    """Remove temporary file after closing its handle."""
 
     if path in _handles:
         close(path)
     os.remove(path)
+
+def remove_all():
+    """Remove all temporary files after closing their handles."""
+
+    for path in set(_handles.keys()):
+        remove(path)
 
 @gaupol.deco.silent(OSError)
 def remove_directory(root):
@@ -73,3 +80,5 @@ def remove_directory(root):
         elif os.path.isfile(path):
             remove(path)
     os.rmdir(root)
+
+atexit.register(remove_all)
