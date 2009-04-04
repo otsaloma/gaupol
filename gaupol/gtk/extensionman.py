@@ -240,6 +240,7 @@ class ExtensionManager(object):
             self.teardown_extension(dependency)
         if module in self._inferior:
             self._inferior.remove(module)
+        gaupol.gtk.conf.write()
 
     def teardown_extensions(self):
         """Teardown all active extensions."""

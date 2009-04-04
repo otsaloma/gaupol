@@ -22,6 +22,7 @@ class TestExtensionManager(gaupol.gtk.TestCase):
 
     def setup_method(self, method):
 
+        gaupol.gtk.conf.config_file = gaupol.temp.create(".conf")
         self.manager = gaupol.gtk.ExtensionManager(self.get_application())
         gaupol.gtk.conf.extensions.active = ["bookmarks", "none"]
         self.manager.find_extensions()
