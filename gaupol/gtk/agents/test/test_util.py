@@ -40,7 +40,7 @@ class TestUtilityAgent(gaupol.gtk.TestCase):
         for field in gaupol.gtk.fields:
             self.application.get_column_action(field)
         function = self.application.get_column_action
-        self.raises(ValueError, function, None)
+        self.raises(KeyError, function, None)
 
     def test_get_current_page(self):
 
@@ -54,7 +54,7 @@ class TestUtilityAgent(gaupol.gtk.TestCase):
         for framerate in gaupol.framerates:
             self.application.get_framerate_action(framerate)
         function = self.application.get_framerate_action
-        self.raises(ValueError, function, None)
+        self.raises(KeyError, function, None)
 
     def test_get_menu_item(self):
 
@@ -67,7 +67,7 @@ class TestUtilityAgent(gaupol.gtk.TestCase):
         for mode in gaupol.modes:
             self.application.get_mode_action(mode)
         function = self.application.get_mode_action
-        self.raises(ValueError, function, None)
+        self.raises(KeyError, function, None)
 
     def test_get_target_pages(self):
 

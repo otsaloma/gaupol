@@ -48,6 +48,7 @@ from gaupol.gtk.fields import *
 from gaupol.gtk.styles import *
 from gaupol.gtk.targets import *
 from gaupol.gtk.units import *
+from gaupol.gtk.enumuim import *
 from gaupol.gtk.errors import *
 from gaupol.gtk import conf
 from gaupol.gtk.conf import *

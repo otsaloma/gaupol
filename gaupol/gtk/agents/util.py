@@ -48,19 +48,8 @@ class UtilityAgent(gaupol.Delegate):
     def get_column_action(self, field):
         """Return action from UI manager to toggle visibility of column."""
 
-        if field == gaupol.gtk.fields.NUMBER:
-            return self.get_action("toggle_number_column")
-        if field == gaupol.gtk.fields.START:
-            return self.get_action("toggle_start_column")
-        if field == gaupol.gtk.fields.END:
-            return self.get_action("toggle_end_column")
-        if field == gaupol.gtk.fields.DURATION:
-            return self.get_action("toggle_duration_column")
-        if field == gaupol.gtk.fields.MAIN_TEXT:
-            return self.get_action("toggle_main_text_column")
-        if field == gaupol.gtk.fields.TRAN_TEXT:
-            return self.get_action("toggle_translation_text_column")
-        raise ValueError
+        name = gaupol.gtk.field_actions[field]
+        return self.get_action(name)
 
     def get_current_page(self):
         """Return the currently active page or None."""
@@ -72,13 +61,8 @@ class UtilityAgent(gaupol.Delegate):
     def get_framerate_action(self, framerate):
         """Return action from UI manager to select framerate."""
 
-        if framerate == gaupol.framerates.FPS_24:
-            return self.get_action("show_framerate_24")
-        if framerate == gaupol.framerates.FPS_25:
-            return self.get_action("show_framerate_25")
-        if framerate == gaupol.framerates.FPS_30:
-            return self.get_action("show_framerate_30")
-        raise ValueError
+        name = gaupol.gtk.framerate_actions[framerate]
+        return self.get_action(name)
 
     def get_menu_item(self, name):
         """Return menu item from UI manager by name."""
@@ -89,11 +73,8 @@ class UtilityAgent(gaupol.Delegate):
     def get_mode_action(self, mode):
         """Return action from UI manager to select mode."""
 
-        if mode == gaupol.modes.TIME:
-            return self.get_action("show_times")
-        if mode == gaupol.modes.FRAME:
-            return self.get_action("show_frames")
-        raise ValueError
+        name = gaupol.gtk.mode_actions[mode]
+        return self.get_action(name)
 
     def get_target_pages(self, target):
         """Return a sequence of pages corresponding to target."""

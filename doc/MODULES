@@ -54,6 +54,7 @@ gaupol.gtk.fields
 gaupol.gtk.styles
 gaupol.gtk.targets
 gaupol.gtk.units
+gaupol.gtk.enumuim
 gaupol.gtk.errors
 gaupol.gtk.conf/
 gaupol.gtk.ruler
