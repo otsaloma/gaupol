@@ -116,6 +116,7 @@ class SpellCheckDialog(gaupol.gtk.GladeDialog):
                 self._advance_row()
             except StopIteration:
                 try:
+                    # pylint: disable-msg=E1101
                     self._pager.next()
                 except StopIteration:
                     break
