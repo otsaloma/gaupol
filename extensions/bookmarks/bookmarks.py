@@ -278,6 +278,7 @@ class BookmarksExtension(gaupol.gtk.Extension):
         if response != gtk.RESPONSE_OK: return
         self._bookmarks[page][row] = description
         self._update_tree_view()
+        self.update(self.application, page)
 
     def _on_application_page_added(self, application, page):
         """Connect to signals in added page and read bookmarks."""
@@ -415,6 +416,7 @@ class BookmarksExtension(gaupol.gtk.Extension):
         # Update the pixbuf column immeadiately.
         page_store = page.view.get_model()
         page_store.row_changed(row, page_store.get_iter(row))
+        self.update(self.application, page)
 
     def _on_tree_view_selection_changed(self, selection):
         """Jump to the subtitle of the selected bookmark."""

@@ -2,7 +2,7 @@ Releasing a New Version
 =======================
 
  * Do final quality checks
-   $ pylint bin/gaupol gaupol/ setup.py
+   $ pylint bin/gaupol extensions/ gaupol/ setup.py
    $ py.test --tb=no -k -gtk gaupol
    $ py.test --tb=no -k gtk gaupol
 
