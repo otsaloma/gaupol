@@ -7,7 +7,7 @@ rmdir /S /Q dist
 mkdir dist\etc
 mkdir dist\lib
 mkdir dist\share
-%PYDIR%\python.exe setup.py py2exe
+%PYDIR%\python.exe winsetup.py py2exe
 pause
 xcopy %GTKDIR%\bin\*.dll dist /E /Y
 xcopy %GTKDIR%\etc dist\etc /E

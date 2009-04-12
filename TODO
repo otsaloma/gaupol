@@ -28,6 +28,8 @@ Gaupol 0.15
  * Add text correction task to split joined words or to join split
    words using spell-check suggestions
    - http://bugzilla.gnome.org/show_bug.cgi?id=572667
+ * Merge patterns from subtitleeditor (kitone)
+   - http://svn.gna.org/viewcvs/subtitleeditor/trunk/plugins/actions/textcorrection/
 
 Gaupol 1.0
 ==========
