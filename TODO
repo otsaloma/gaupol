@@ -1,34 +1,10 @@
-Gaupol 0.14
-===========
-
- [D] Add an extension system (documentation to follow later)
- [D] Add two extensions: side pane and bookmarks
- [D] Adher to the home directory part of freedesktop.org's
-     XDG Base Directory Specification
- [D] Handle reading and writing files with a UTF-8 BOM (#556956)
- [D] Save SSA and ASS files with '\N' linebreaks instead of '\n'
- [D] Resize columns after running text corrections
- [D] Make removing a large amount of subtitles significantly faster
- [D] Fix GtkWarning: GtkSpinButton: setting an adjustment with
-     non-zero page size is deprecated
- [D] Remove deprecated Encoding-field from desktop file
- [D] Fix search dialog to not modify obsolete data (#572676)
- [D] Fix character count error with Unicode text
- [D] Fix updating of filenames in the projects menu
- [D] Fix erroneous cleaning of SubRip markup after removing hearing
-     impaired subtitles
- [D] Fix open dialog file filter to list files with upper- and mixed
-     case extensions as well
- [D] Fix AssertionError when installing multiple times
- [D] Switch version-control systems from subversion to git
-
 Gaupol 0.15
 ===========
 
  * Add text correction task to split joined words or to join split
    words using spell-check suggestions
    - http://bugzilla.gnome.org/show_bug.cgi?id=572667
- * Merge patterns from subtitleeditor (kitone)
+ * Merge text correction patterns from subtitleeditor (kitone)
    - http://svn.gna.org/viewcvs/subtitleeditor/trunk/plugins/actions/textcorrection/
 
 Gaupol 1.0

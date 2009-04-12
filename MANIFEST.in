@@ -8,7 +8,12 @@ include po/gaupol.pot
 include po/POTFILES.*
 include po/README
 recursive-include data *
-recursive-include extensions *
+recursive-include extensions *.glade
+recursive-include extensions *.in
+recursive-include extensions *.png
+recursive-include extensions *.py
+recursive-include extensions *.spec
+recursive-include extensions *.xml
 recursive-include gaupol *.py
 recursive-include manifest *
 recursive-include tools *
@@ -22,3 +27,4 @@ include NEWS
 include README
 include setup.py
 include TODO
+include winsetup.py
