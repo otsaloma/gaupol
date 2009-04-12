@@ -10,11 +10,11 @@ Gaupol 0.15
 Gaupol 1.0
 ==========
 
- * Migrate from Glade to gtk.Builder
  * Add wiki documentation on writing extensions
  * Add wiki documentation on writing pattern files
  * Add a wiki page for publishing extensions
  * Add a wiki page for publishing pattern files
+ * Migrate from Glade to gtk.Builder
 
 Gaupol 3000
 ===========
@@ -23,8 +23,6 @@ Gaupol 3000
  * Replace the headers-dialog with a more general properties-dialog
    - SubRip: Write coordinates (extended SubRip format)
    - MicroDVD: Write framerate information subtitle
- * Handle fancy quotes, dashes and ellipses in text corrections
-   - As bogus regular expression groups, e.g. (?gaupol-quote)?
  * Bump Python dependency to 2.6
    - Remove imports from __future__
    - http://docs.python.org/whatsnew/2.6.html
