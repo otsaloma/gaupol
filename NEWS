@@ -1,3 +1,27 @@
+Gaupol 0.14
+===========
+
+ * Add an extension system (documentation to follow later)
+ * Add two extensions: side pane and bookmarks
+ * Adher to the home directory part of freedesktop.org's
+   XDG Base Directory Specification
+ * Handle reading and writing files with a UTF-8 BOM (#556956)
+ * Save SSA and ASS files with '\N' linebreaks instead of '\n'
+ * Resize columns after running text corrections
+ * Make removing a large amount of subtitles significantly faster
+ * Fix GtkWarning: GtkSpinButton: setting an adjustment with
+   non-zero page size is deprecated
+ * Remove deprecated Encoding-field from desktop file
+ * Fix search dialog to not modify obsolete data (#572676)
+ * Fix character count error with Unicode text
+ * Fix updating of filenames in the projects menu
+ * Fix erroneous cleaning of SubRip markup after removing hearing
+   impaired subtitles
+ * Fix open dialog file filter to list files with upper- and mixed
+   case extensions as well
+ * Fix AssertionError when installing multiple times
+ * Switch version-control systems from subversion to git
+
 Gaupol 0.13.1
 =============
 
