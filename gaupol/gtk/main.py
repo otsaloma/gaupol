@@ -75,7 +75,7 @@ def _init_application(opts, args):
     if not opts.encoding in (None, "auto"):
         try: opts.encoding = gaupol.encodings.translate_code(opts.encoding)
         except ValueError:
-            raise SystemExit("Unrecognized encoding '%s'." % opts.encoding)
+            raise SystemExit("Unrecognized encoding: '%s'." % opts.encoding)
     application.open_main_files(paths, opts.encoding)
     page = application.get_current_page()
     if (page is not None) and opts.translation_file:
