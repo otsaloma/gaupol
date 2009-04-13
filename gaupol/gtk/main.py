@@ -72,6 +72,10 @@ def _init_application(opts, args):
         jump_row = (max(0, int(arg[1:]) - 1) if arg[1:] else -1)
         args.remove(arg)
     paths = [os.path.abspath(x) for x in args]
+    if not opts.encoding in (None, "auto"):
+        try: opts.encoding = gaupol.encodings.translate_code(opts.encoding)
+        except ValueError:
+            raise SystemExit("Unrecognized encoding '%s'." % opts.encoding)
     application.open_main_files(paths, opts.encoding)
     page = application.get_current_page()
     if (page is not None) and opts.translation_file:

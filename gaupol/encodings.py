@@ -124,23 +124,6 @@ CODE, NAME, DESC = range(3)
 _re_illegal = re.compile(r"[^a-z0-9_]")
 
 
-def _translate_code_ensure(value, code):
-    assert is_valid_code(value)
-
-@gaupol.deco.contractual
-def _translate_code(code):
-    """Translate weird encoding code.
-
-    Raise ValueError if not found.
-    Return normalized encoding code.
-    """
-    code = _re_illegal.sub("_", code.lower())
-    code = gaupol.util.get_encoding_alias(code)
-    for item in _encodings:
-        if item[CODE] == code:
-            return item[CODE]
-    raise ValueError
-
 def code_to_description(code):
     """Convert encoding code to localized description.
 
@@ -196,7 +179,7 @@ def detect(path):
         # chardet returns what seem to be IANA names. They need to be
         # translated to their Python equivalents. Some of the encodings
         # returned by chardet are not supported by Python.
-        return _translate_code(code)
+        return translate_code(code)
     except ValueError:
         return None
 
@@ -256,5 +239,22 @@ def name_to_code(name):
     """
     for item in _encodings:
         if item[NAME] == name:
+            return item[CODE]
+    raise ValueError
+
+def translate_code_ensure(value, code):
+    assert is_valid_code(value)
+
+@gaupol.deco.contractual
+def translate_code(code):
+    """Translate weird encoding code.
+
+    Raise ValueError if not found.
+    Return normalized encoding code.
+    """
+    code = _re_illegal.sub("_", code.lower())
+    code = gaupol.util.get_encoding_alias(code)
+    for item in _encodings:
+        if item[CODE] == code:
             return item[CODE]
     raise ValueError

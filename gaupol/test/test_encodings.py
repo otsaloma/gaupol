@@ -20,14 +20,6 @@ _ = gaupol.i18n._
 
 class TestModule(gaupol.TestCase):
 
-    def test__translate_code(self):
-
-        translate_code = gaupol.encodings._translate_code
-        assert translate_code("johab") == "johab"
-        assert translate_code("UTF-8") == "utf_8"
-        assert translate_code("ISO-8859-1") == "latin_1"
-        self.raises(ValueError, translate_code, "xxxxx")
-
     def test_code_to_description(self):
 
         code_to_description = gaupol.encodings.code_to_description
@@ -58,11 +50,11 @@ class TestModule(gaupol.TestCase):
 
     def test_detect__value_error(self):
 
-        translate_code = gaupol.encodings._translate_code
+        translate_code = gaupol.encodings.translate_code
         def bad_translate_code(code): raise ValueError
-        gaupol.encodings._translate_code = bad_translate_code
+        gaupol.encodings.translate_code = bad_translate_code
         assert gaupol.encodings.detect(self.get_subrip_path()) is None
-        gaupol.encodings._translate_code = translate_code
+        gaupol.encodings.translate_code = translate_code
 
     def test_get_locale_code(self):
 
@@ -105,3 +97,11 @@ class TestModule(gaupol.TestCase):
         assert name_to_code("GB2312") == "gb2312"
         assert name_to_code("PTCP154") == "ptcp154"
         self.raises(ValueError, name_to_code, "XXXXX")
+
+    def test_translate_code(self):
+
+        translate_code = gaupol.encodings.translate_code
+        assert translate_code("johab") == "johab"
+        assert translate_code("UTF-8") == "utf_8"
+        assert translate_code("ISO-8859-1") == "latin_1"
+        self.raises(ValueError, translate_code, "xxxxx")

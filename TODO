@@ -1,11 +1,14 @@
 Gaupol 0.15
 ===========
 
- * Add text correction task to split joined words or to join split
-   words using spell-check suggestions
-   - http://bugzilla.gnome.org/show_bug.cgi?id=572667
- * Merge text correction patterns from subtitleeditor (kitone)
-   - http://svn.gna.org/viewcvs/subtitleeditor/trunk/plugins/actions/textcorrection/
+ [ ] Add text correction task to split joined words or to join split
+     words using spell-check suggestions
+     - http://bugzilla.gnome.org/show_bug.cgi?id=572667
+ [ ] Merge text correction patterns from subtitleeditor (kitone)
+     - http://svn.gna.org/viewcvs/subtitleeditor/trunk/plugins/actions/textcorrection/
+ [D] Add validation for encoding given as an argument on the command
+     line using the '-e' option
+ [ ] Add messages for raised exceptions
 
 Gaupol 1.0
 ==========
