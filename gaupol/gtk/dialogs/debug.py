@@ -128,8 +128,8 @@ class DebugDialog(gaupol.gtk.GladeDialog):
             if return_value == 0: return
             self._show_editor_error_dialog()
         path = gaupol.util.shell_quote(tag.get_data("path"))
-        process = gaupol.util.start_process("%s %s +%d" % (
-            gaupol.gtk.conf.debug.editor, path, tag.get_data("lineno")))
+        process = gaupol.util.start_process("%s +%d %s" % (
+            gaupol.gtk.conf.debug.editor, tag.get_data("lineno"), path))
         gobject.child_watch_add(process.pid, on_editor_exit, self)
         tag.props.foreground = "purple"
 
