@@ -110,7 +110,8 @@ class InstallData(install_data):
         """Return a tuple for the translated desktop file."""
 
         path = os.path.join("data", "gaupol.desktop")
-        os.system("intltool-merge -d po %s.in %s" % (path, path))
+        command = "intltool-merge -d po %s.in %s" % (path, path)
+        run_command_or_exit(command)
         return ("share/applications", (path,))
 
     def __get_extension_file(self, extension, extension_file):
@@ -118,7 +119,8 @@ class InstallData(install_data):
 
         assert extension_file.endswith(".in")
         path = extension_file[:-3]
-        os.system("intltool-merge -d po %s.in %s" % (path, path))
+        command = "intltool-merge -d po %s.in %s" % (path, path)
+        run_command_or_exit(command)
         return ("share/gaupol/extensions/%s" % extension, (path,))
 
     def __get_mo_file(self, po_file):
@@ -132,7 +134,8 @@ class InstallData(install_data):
         mo_file = os.path.join(mo_dir, "gaupol.mo")
         dest_dir = os.path.join("share", mo_dir)
         log.info("compiling '%s'" % mo_file)
-        os.system("msgfmt %s -o %s" % (po_file, mo_file))
+        command = "msgfmt %s -o %s" % (po_file, mo_file)
+        run_command_or_exit(command)
         return (dest_dir, (mo_file,))
 
     def __get_pattern_file(self, pattern_file):
@@ -140,7 +143,8 @@ class InstallData(install_data):
 
         assert pattern_file.endswith(".in")
         path = pattern_file[:-3]
-        os.system("intltool-merge -d po %s.in %s" % (path, path))
+        command = "intltool-merge -d po %s.in %s" % (path, path)
+        run_command_or_exit(command)
         return ("share/gaupol/patterns", (path,))
 
     def run(self):
@@ -284,6 +288,12 @@ def get_packages():
         if path.endswith(".test"): continue
         packages.append(path[path.find("gaupol"):])
     return packages
+
+def run_command_or_exit(command):
+    """Run command in shell and raise SystemExit if it fails."""
+
+    if os.system(command) != 0:
+        raise SystemExit("Error: Command '%s' failed." % command)
 
 setup_kwargs = dict(
     name="gaupol",

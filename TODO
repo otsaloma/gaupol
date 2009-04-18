@@ -9,6 +9,7 @@ Gaupol 0.15
      - http://svn.gna.org/viewcvs/subtitleeditor/trunk/plugins/actions/textcorrection/
  [D] Add validation for encoding given as an argument on the command
      line using the '-e' option
+ [D] Abort installation if an intltool-merge or msgfmt call fails
  [ ] Add messages for raised exceptions
 
 Gaupol 1.0
