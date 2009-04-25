@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--*- mode: xml -*-->
+<?xml version="1.0"?>
 <glade-interface>
+  <requires-version lib="gtk+" version="2.12"/>
   <widget class="GtkDialog" id="dialog">
     <property name="border_width">6</property>
     <property name="title" translatable="yes">Configure Spell-check</property>
@@ -25,7 +24,7 @@
                     <property name="visible">True</property>
                     <property name="spacing">6</property>
                     <child>
-                      <widget class="GtkLabel" id="label1">
+                      <widget class="GtkLabel" id="language_title_label">
                         <property name="visible">True</property>
                         <property name="xalign">0</property>
                         <property name="label" translatable="yes">&lt;b&gt;Language&lt;/b&gt;</property>
@@ -37,7 +36,7 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkAlignment" id="alignment1">
+                      <widget class="GtkAlignment" id="language_alignment">
                         <property name="visible">True</property>
                         <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
                         <property name="left_padding">12</property>
@@ -66,7 +65,7 @@
                   </widget>
                 </child>
                 <child>
-                  <widget class="GtkVBox" id="vbox7">
+                  <widget class="GtkVBox" id="target_vbox">
                     <property name="visible">True</property>
                     <property name="spacing">18</property>
                     <child>
@@ -230,6 +229,10 @@
                 <property name="use_stock">True</property>
                 <property name="response_id">-7</property>
               </widget>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+              </packing>
             </child>
           </widget>
           <packing>

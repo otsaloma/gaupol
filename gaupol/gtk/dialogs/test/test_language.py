@@ -20,7 +20,14 @@ import gtk
 
 class TestLanguageDialog(gaupol.gtk.TestCase):
 
-    def run__dialog(self):
+    def run__dialog_no_target(self):
+
+        # pylint: disable-msg=W0201
+        self.dialog = gaupol.gtk.LanguageDialog(gtk.Window(), False)
+        self.dialog.run()
+        self.dialog.destroy()
+
+    def run__dialog_target(self):
 
         self.dialog.run()
         self.dialog.destroy()
@@ -28,6 +35,11 @@ class TestLanguageDialog(gaupol.gtk.TestCase):
     def setup_method(self, method):
 
         self.dialog = gaupol.gtk.LanguageDialog(gtk.Window())
+        self.dialog.show()
+
+    def test___init___no_target(self):
+
+        self.dialog = gaupol.gtk.LanguageDialog(gtk.Window(), False)
         self.dialog.show()
 
     def test__on_tree_view_selection_changed(self):

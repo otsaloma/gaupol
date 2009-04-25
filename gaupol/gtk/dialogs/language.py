@@ -18,6 +18,7 @@
 
 import gaupol.gtk
 import gtk
+_ = gaupol.i18n._
 
 __all__ = ("LanguageDialog",)
 
@@ -28,10 +29,10 @@ class LanguageDialog(gaupol.gtk.GladeDialog):
 
     __metaclass__ = gaupol.Contractual
 
-    def __init___require(self, parent):
+    def __init___require(self, parent, show_target=True):
         assert gaupol.util.enchant_available()
 
-    def __init__(self, parent):
+    def __init__(self, parent, show_target=True):
         """Initialize a LanguageDialog object."""
 
         gaupol.gtk.GladeDialog.__init__(self, "language.glade")
@@ -43,6 +44,7 @@ class LanguageDialog(gaupol.gtk.GladeDialog):
         self._tree_view = get_widget("tree_view")
         self.conf = gaupol.gtk.conf.spell_check
 
+        self._init_visibilities(show_target)
         self._init_tree_view()
         self._init_values()
         self._init_signal_handlers()
@@ -103,6 +105,16 @@ class LanguageDialog(gaupol.gtk.GladeDialog):
         targets = gaupol.gtk.targets
         self._all_radio.set_active(self.conf.target == targets.ALL)
         self._current_radio.set_active(self.conf.target == targets.CURRENT)
+
+    def _init_visibilities(self, show_target):
+        """Initialize visibilities of target widgets."""
+
+        if show_target: return
+        get_widget = self._glade_xml.get_widget
+        get_widget("language_title_label").hide()
+        get_widget("target_vbox").hide()
+        get_widget("language_alignment").set_padding(0, 0, 0, 0)
+        self._dialog.set_title(_("Set Language"))
 
     def _on_tree_view_selection_changed(self, selection):
         """Save the active language."""
