@@ -1,4 +1,4 @@
-# Copyright (C) 2007-2008 Osmo Salomaa
+# Copyright (C) 2007-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -17,6 +17,7 @@
 """Automatic correcting of texts."""
 
 import gaupol
+import os
 import re
 import sys
 _ = gaupol.i18n._
@@ -59,6 +60,32 @@ class TextAgent(gaupol.Delegate):
         elif pattern.get_field("Capitalize") == "After":
             cap_next = not self._capitalize_position(parser, z)
         return self._capitalize_text(parser, pattern, cap_next)
+
+    def _get_enchant_checker_require(self, language):
+        assert gaupol.util.enchant_available()
+
+    def _get_enchant_checker(self, language):
+        """Return an enchant spell-checker for language.
+
+        Raise enchant.error if dictionary instatiation fails.
+        """
+        import enchant.checker
+        directory = os.path.join(gaupol.CONFIG_HOME_DIR, "spell-check")
+        path = os.path.join(directory, "%s.dict" % language)
+        try: dictionary = enchant.DictWithPWL(str(language), str(path))
+        except IOError, (no, message):
+            gaupol.util.print_write_io(sys.exc_info(), path)
+            dictionary = enchant.Dict(str(language))
+        # Sometimes enchant will initialize a dictionary that will not
+        # actually work when trying to use it, hence check something.
+        dictionary.check("gaupol")
+        return enchant.checker.SpellChecker(dictionary, "")
+
+    def _get_misspelled_indices(self, checker):
+        """Return a list of misspelled indices in checker's text."""
+
+        ii = [range(x.wordpos, x.wordpos + len(x.word)) for x in checker]
+        return gaupol.util.flatten(ii)
 
     def _get_subtitutions_ensure(self, value, patterns):
         assert len(value) <= len(patterns)
@@ -281,3 +308,105 @@ class TextAgent(gaupol.Delegate):
         if not remove_indices: return
         self.remove_subtitles(remove_indices, register=register)
         self.group_actions(register, 2, description)
+
+    def spell_check_join_words_require(self, indices, *args, **kwargs):
+        for index in (indices or []):
+            assert 0 <= index < len(self.subtitles)
+        assert gaupol.util.enchant_available()
+
+    @gaupol.deco.revertable
+    def spell_check_join_words(self, indices, doc, language, register=-1):
+        """Join misspelled words based on spell-checker suggestions.
+
+        Raise enchant.Error if dictionary instatiation fails.
+        """
+        new_indices = []
+        new_texts = []
+        re_multispace = re.compile(r" +")
+        checker = self._get_enchant_checker(language)
+        seeker = self._get_enchant_checker(language)
+        indices = indices or range(len(self.subtitles))
+        for index in indices:
+            subtitle = self.subtitles[index]
+            text = subtitle.get_text(doc)
+            text = re_multispace.sub(" ", text)
+            checker.set_text(unicode(text))
+            while True:
+                try: checker.next()
+                except StopIteration: break
+                text = checker.get_text()
+                a = checker.wordpos
+                z = checker.wordpos + len(checker.word)
+                ok_with_prev = ok_with_next = False
+                if checker.leading_context(1) == " ":
+                    seeker.set_text(text[:a - 1] + text[a:])
+                    poss = self._get_misspelled_indices(seeker)
+                    ok_with_prev = not (a - 1) in poss
+                if checker.trailing_context(1) == " ":
+                    seeker.set_text(text[:z] + text[z + 1:])
+                    poss = self._get_misspelled_indices(seeker)
+                    ok_with_next = not a in poss
+                # Join backwards or forwards if only either,
+                # but not both, produce a correctly spelled result.
+                if ok_with_prev and not ok_with_next:
+                    checker.set_text(text[:a - 1] + text[a:])
+                if ok_with_next and not ok_with_prev:
+                    checker.set_text(text[:z] + text[z + 1:])
+            new_text = unicode(checker.get_text())
+            if new_text != text:
+                new_indices.append(index)
+                new_texts.append(new_text)
+        if not new_indices: return
+        self.replace_texts(new_indices, doc, new_texts, register=register)
+        description = _("Joining words by spell-check suggestions")
+        self.set_action_description(register, description)
+
+    def spell_check_split_words_require(self, indices, *args, **kwargs):
+        for index in (indices or []):
+            assert 0 <= index < len(self.subtitles)
+        assert gaupol.util.enchant_available()
+
+    @gaupol.deco.revertable
+    def spell_check_split_words(self, indices, doc, language, register=-1):
+        """Split misspelled words based on spell-checker suggestions.
+
+        Raise enchant.Error if dictionary instatiation fails.
+        """
+        new_indices = []
+        new_texts = []
+        re_multispace = re.compile(r" +")
+        checker = self._get_enchant_checker(language)
+        indices = indices or range(len(self.subtitles))
+        for index in indices:
+            subtitle = self.subtitles[index]
+            text = subtitle.get_text(doc)
+            text = re_multispace.sub(" ", text)
+            checker.set_text(unicode(text))
+            while True:
+                try: checker.next()
+                except StopIteration: break
+                # Skip capitalized names.
+                if checker.word.capitalize() == checker.word:
+                    continue
+                length = len(checker.word)
+                suggestions = []
+                for i, suggestion in enumerate(checker.suggest()):
+                    if suggestion.find(" ") > 0:
+                        if suggestion.replace(" ", "") == checker.word:
+                            suggestions.append(suggestion)
+                # Split word only if only one two-word suggestion found that
+                # has all the same characters as the original unsplit word.
+                if len(suggestions) != 1:
+                    continue
+                text = checker.get_text()
+                a = checker.wordpos
+                z = checker.wordpos + len(checker.word)
+                checker.set_text(text[:a] + suggestions[0] + text[z:])
+            new_text = unicode(checker.get_text())
+            if new_text != text:
+                new_indices.append(index)
+                new_texts.append(new_text)
+        if not new_indices: return
+        self.replace_texts(new_indices, doc, new_texts, register=register)
+        description = _("Splitting words by spell-check suggestions")
+        self.set_action_description(register, description)

@@ -29,7 +29,7 @@ ngettext = gaupol.i18n.ngettext
 __all__ = ("TextAssistant", "TextAssistantPage")
 
 
-class TextAssistantPage(gtk.VBox):
+class TextAssistantPage(gtk.VBox, gaupol.gtk.Runner):
 
     """Baseclass for pages in the text correction assistant.
 
@@ -43,10 +43,11 @@ class TextAssistantPage(gtk.VBox):
     'description', 'handle' and 'title' are only required for content pages.
     """
 
-    def __init__(self):
+    def __init__(self, assistant):
         """Initialize a TextAssistantPage object."""
 
         gtk.VBox.__init__(self)
+        self.assistant = assistant
         self.description = None
         self.handle = None
         self.page_title = None
@@ -59,10 +60,10 @@ class _GladePage(TextAssistantPage):
 
     """Baseclass for Glade pages in the text correction assistant."""
 
-    def __init__(self, glade_basename):
+    def __init__(self, assistant, glade_basename):
         """Initialize a _GladePage object."""
 
-        TextAssistantPage.__init__(self)
+        TextAssistantPage.__init__(self, assistant)
         parts = ("assistants", "text", glade_basename)
         self._glade_xml = gaupol.gtk.util.get_glade_xml(*parts)
         self._glade_xml.get_widget("vbox").reparent(self)
@@ -72,10 +73,10 @@ class _IntroductionPage(_GladePage):
 
     """Page for listing all text correction tasks."""
 
-    def __init__(self):
+    def __init__(self, assistant):
         """Initialize a _IntroductionPage object."""
 
-        _GladePage.__init__(self, "introduction.glade")
+        _GladePage.__init__(self, assistant, "introduction.glade")
         get_widget = self._glade_xml.get_widget
         self._all_radio = get_widget("all_radio")
         self._current_radio = get_widget("current_radio")
@@ -194,10 +195,10 @@ class _LocalePage(_GladePage):
     __metaclass__ = gaupol.gtk.ContractualGObject
     _glade_basename = None
 
-    def __init__(self):
+    def __init__(self, assistant):
         """Initialize a _LocalePage object."""
 
-        _GladePage.__init__(self, self._glade_basename)
+        _GladePage.__init__(self, assistant, self._glade_basename)
         get_widget = self._glade_xml.get_widget
         self._country_combo = get_widget("country_combo")
         self._country_label = get_widget("country_label")
@@ -559,6 +560,111 @@ class _HearingImpairedPage(_LocalePage):
         project.remove_hearing_impaired(indices, doc, patterns)
 
 
+class _JoinSplitWordsPage(_GladePage):
+
+    """Page for joining or splitting words based on spell-check suggestions."""
+
+    __metaclass__ = gaupol.gtk.ContractualGObject
+
+    def __init___require(self, assistant):
+        assert gaupol.util.enchant_available()
+
+    def __init__(self, assistant):
+        """Initialize a _JoinSplitWordsPage object."""
+
+        _GladePage.__init__(self, assistant, "join-split-words.glade")
+        get_widget = self._glade_xml.get_widget
+        self._language_button = get_widget("language_button")
+        self._join_check = get_widget("join_check")
+        self._split_check = get_widget("split_check")
+        self._init_attributes()
+        self._init_values()
+        self._init_signal_handlers()
+
+    def _init_attributes(self):
+        """Initialize values of page attributes."""
+
+        self.description = _("Use spell-check suggestions to fix "
+            "whitespace detection errors of image recognition software")
+        self.handle = "join-split-words"
+        self.page_title = _("Set Options for Joining and Splitting Words")
+        self.page_type = gtk.ASSISTANT_PAGE_CONTENT
+        self.title = _("Join or Split Words")
+
+    def _init_signal_handlers(self):
+        """Initialize signal handlers."""
+
+        gaupol.util.connect(self, "_language_button", "clicked")
+        gaupol.util.connect(self, "_join_check", "toggled")
+        gaupol.util.connect(self, "_split_check", "toggled")
+
+    def _init_values(self):
+        """Initialize default values for widgets."""
+
+        language = gaupol.gtk.conf.spell_check.language
+        try: label = gaupol.locales.code_to_name(language)
+        except LookupError: label = self._language_button.get_label()
+        self._set_language_button_label(label)
+        self._join_check.set_active(gaupol.gtk.conf.join_split_words.join)
+        self._split_check.set_active(gaupol.gtk.conf.join_split_words.split)
+
+    def _on_join_check_toggled(self, check_button, *args):
+        """Set value of configuration option."""
+
+        active = check_button.get_active()
+        gaupol.gtk.conf.join_split_words.join = active
+
+    def _on_language_button_clicked(self, button, *args):
+        """Show the language dialog and update button label."""
+
+        gaupol.gtk.util.set_cursor_busy(self.assistant)
+        dialog = gaupol.gtk.LanguageDialog(self.assistant, False)
+        gaupol.gtk.util.set_cursor_normal(self.assistant)
+        self.flash_dialog(dialog)
+        language = gaupol.gtk.conf.spell_check.language
+        try: label = gaupol.locales.code_to_name(language)
+        except LookupError: label = self._language_button.get_label()
+        self._set_language_button_label(label)
+
+    def _on_split_check_toggled(self, check_button, *args):
+        """Set value of configuration option."""
+
+        active = check_button.get_active()
+        gaupol.gtk.conf.join_split_words.split = active
+
+    def _set_language_button_label(self, text):
+        """Set the text in the language button label."""
+
+        hbox = self._language_button.get_child()
+        label = hbox.get_children()[0]
+        label.set_text(text)
+
+    def _show_error_dialog(self, message):
+        """Show an error dialog after failing to load dictionary."""
+
+        language = gaupol.gtk.conf.spell_check.language
+        try: name = gaupol.locales.code_to_name(language)
+        except LookupError: name = language
+        title = _('Failed to load dictionary for language "%s"') % name
+        dialog = gaupol.gtk.ErrorDialog(self.parent, title, message)
+        dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
+        self.flash_dialog(dialog)
+
+    def correct_texts(self, project, indices, doc):
+        """Correct texts in project."""
+
+        import enchant
+        language = gaupol.gtk.conf.spell_check.language
+        if gaupol.gtk.conf.join_split_words.join:
+            try: project.spell_check_join_words(indices, doc, language)
+            except enchant.Error, message:
+                return self._show_error_dialog(message)
+        if gaupol.gtk.conf.join_split_words.split:
+            try: project.spell_check_split_words(indices, doc, language)
+            except enchant.Error, message:
+                return self._show_error_dialog(message)
+
+
 class _LineBreakPage(_LocalePage):
 
     """Page for breaking text into lines."""
@@ -614,10 +720,10 @@ class _LineBreakOptionsPage(_GladePage):
 
     """Page for editing line-break options."""
 
-    def __init__(self):
+    def __init__(self, assistant):
         """Initialize a _LineBreakOptionsPage object."""
 
-        _GladePage.__init__(self, "line-break-options.glade")
+        _GladePage.__init__(self, assistant, "line-break-options.glade")
         get_widget = self._glade_xml.get_widget
         self._max_length_spin = get_widget("max_length_spin")
         self._max_lines_spin = get_widget("max_lines_spin")
@@ -721,10 +827,10 @@ class _ProgressPage(_GladePage):
 
     """Page for showing progress of text corrections."""
 
-    def __init__(self):
+    def __init__(self, assistant):
         """Initialize a _ProgressPage object."""
 
-        _GladePage.__init__(self, "progress.glade")
+        _GladePage.__init__(self, assistant, "progress.glade")
         get_widget = self._glade_xml.get_widget
         self._message_label = get_widget("message_label")
         self._progress_bar = get_widget("progress_bar")
@@ -794,10 +900,10 @@ class _ConfirmationPage(_GladePage):
 
     """Page to confirm changes made after performing all tasks."""
 
-    def __init__(self):
+    def __init__(self, assistant):
         """Initialize a _ConfirmationPage object."""
 
-        _GladePage.__init__(self, "confirmation.glade")
+        _GladePage.__init__(self, assistant, "confirmation.glade")
         get_widget = self._glade_xml.get_widget
         self._mark_all_button = get_widget("mark_all_button")
         self._preview_button = get_widget("preview_button")
@@ -962,10 +1068,10 @@ class TextAssistant(gtk.Assistant):
         """Initialize a TextAssistant object."""
 
         gtk.Assistant.__init__(self)
-        self._confirmation_page = _ConfirmationPage()
-        self._introduction_page = _IntroductionPage()
+        self._confirmation_page = _ConfirmationPage(self)
+        self._introduction_page = _IntroductionPage(self)
         self._previous_page = None
-        self._progress_page = _ProgressPage()
+        self._progress_page = _ProgressPage(self)
         self.application = application
         self.conf = gaupol.gtk.conf.text_assistant
 
@@ -1021,11 +1127,13 @@ class TextAssistant(gtk.Assistant):
         self.set_border_width(12)
         self.set_title(_("Correct Texts"))
         self.add_page(self._introduction_page)
-        self.add_page(_HearingImpairedPage())
-        self.add_page(_CommonErrorPage())
-        self.add_page(_CapitalizationPage())
+        self.add_page(_HearingImpairedPage(self))
+        if gaupol.util.enchant_available():
+            self.add_page(_JoinSplitWordsPage(self))
+        self.add_page(_CommonErrorPage(self))
+        self.add_page(_CapitalizationPage(self))
         self.application.emit("text-assistant-request-pages", self)
-        self.add_pages((_LineBreakPage(), _LineBreakOptionsPage()))
+        self.add_pages((_LineBreakPage(self), _LineBreakOptionsPage(self)))
         self.add_page(self._progress_page)
         self.add_page(self._confirmation_page)
 

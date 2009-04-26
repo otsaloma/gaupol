@@ -155,6 +155,12 @@ class TestModule(gaupol.TestCase):
         __builtins__["__import__"] = real_import
         reload(gaupol.util)
 
+    def test_flatten(self):
+
+        lst = [1, 2, [3, 4, [5, 6, [7]], 8], 9]
+        flat_lst = gaupol.util.flatten(lst)
+        assert flat_lst == [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
     def test_get_all(self):
 
         assert gaupol.util.get_all(dir()) == ("self",)

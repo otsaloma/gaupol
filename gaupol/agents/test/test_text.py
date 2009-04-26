@@ -1,4 +1,4 @@
-# Copyright (C) 2007-2008 Osmo Salomaa
+# Copyright (C) 2007-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -72,3 +72,19 @@ class TestTextAgent(gaupol.TestCase):
         self.project.remove_hearing_impaired(rows, doc, patterns)
         assert self.project.subtitles[0].main_text == "Test."
         assert len(self.project.subtitles) == orig_length - 1
+
+    def test_spell_check_join_words(self):
+
+        for subtitle in self.project.subtitles:
+            subtitle.main_text = subtitle.main_text.replace("a", " a")
+            subtitle.main_text = subtitle.main_text.replace("e", "e ")
+        doc = gaupol.documents.MAIN
+        self.project.spell_check_join_words(None, doc, "en")
+
+    def test_spell_check_split_words(self):
+
+        for subtitle in self.project.subtitles:
+            subtitle.main_text = subtitle.main_text.replace("s ", "s")
+            subtitle.main_text = subtitle.main_text.replace("y ", "y")
+        doc = gaupol.documents.MAIN
+        self.project.spell_check_split_words(None, doc, "en")

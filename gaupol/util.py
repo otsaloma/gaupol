@@ -151,6 +151,17 @@ def enchant_available():
     except Exception:
         return False
 
+def flatten(lst):
+    """Return a shallow version of lst."""
+
+    flat_lst = []
+    for item in lst:
+        if isinstance(item, list):
+            flat_lst.extend(flatten(item))
+        else: # Non-list item.
+            flat_lst.append(item)
+    return flat_lst
+
 def get_all(names, pattern=None):
     """Return a tuple of names filtered by pattern to use as __all__."""
 

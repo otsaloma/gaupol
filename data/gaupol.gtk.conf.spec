@@ -75,6 +75,10 @@ country = string(default="")
 language = string(default="")
 script = string(default="Latn")
 
+[join_split_words]
+join = boolean(default=True)
+split = boolean(default=True)
+
 [line_break]
 country = string(default="")
 language = string(default="")

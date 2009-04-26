@@ -23,6 +23,7 @@ from ..assistants import _CommonErrorPage
 from ..assistants import _ConfirmationPage
 from ..assistants import _HearingImpairedPage
 from ..assistants import _IntroductionPage
+from ..assistants import _JoinSplitWordsPage
 from ..assistants import _LineBreakPage
 from ..assistants import _LineBreakOptionsPage
 from ..assistants import _ProgressPage
@@ -32,7 +33,7 @@ class TestTextAssistantPage(gaupol.gtk.TestCase):
 
     def setup_method(self, method):
 
-        self.page = gaupol.gtk.TextAssistantPage()
+        self.page = gaupol.gtk.TextAssistantPage(gtk.Window())
 
 
 class _Test_GladePage(gaupol.gtk.TestCase):
@@ -53,7 +54,7 @@ class Test_IntroductionPage(_Test_GladePage):
 
     def setup_method(self, method):
 
-        self.page = _IntroductionPage()
+        self.page = _IntroductionPage(gtk.Window())
         self.test_populate_tree_view()
 
     def test__on_all_radio_toggled(self):
@@ -105,7 +106,8 @@ class Test_IntroductionPage(_Test_GladePage):
 
     def test_populate_tree_view(self):
 
-        pages = (_CapitalizationPage(), _CommonErrorPage())
+        pages = (_CapitalizationPage(gtk.Window()),
+                 _CommonErrorPage(gtk.Window()))
         self.page.populate_tree_view(pages)
 
 
@@ -174,14 +176,14 @@ class Test_CapitalizationPage(_Test_LocalePage):
 
     def setup_method(self, method):
 
-        self.page = _CapitalizationPage()
+        self.page = _CapitalizationPage(gtk.Window())
 
 
 class Test_CommonErrorPage(_Test_LocalePage):
 
     def setup_method(self, method):
 
-        self.page = _CommonErrorPage()
+        self.page = _CommonErrorPage(gtk.Window())
 
     def test__on_human_check_toggled(self):
 
@@ -200,14 +202,52 @@ class Test_HearingImpairedPage(_Test_LocalePage):
 
     def setup_method(self, method):
 
-        self.page = _HearingImpairedPage()
+        self.page = _HearingImpairedPage(gtk.Window())
+
+
+class Test_JoinSplitWordsPage(_Test_GladePage):
+
+    def run__show_error_dialog(self):
+
+        self.page._show_error_dialog("test")
+
+    def setup_method(self, method):
+
+        self.project = self.get_project()
+        self.page = _JoinSplitWordsPage(gtk.Window())
+        self.page.flash_dialog = lambda *args: gtk.RESPONSE_OK
+
+    def test_on_join_check_toggled(self):
+
+        self.page._join_check.set_active(True)
+        self.page._join_check.set_active(False)
+        self.page._join_check.set_active(True)
+
+    def test__on_language_button_clicked(self):
+
+        self.page._language_button.clicked()
+
+    def test_on_split_check_toggled(self):
+
+        self.page._split_check.set_active(True)
+        self.page._split_check.set_active(False)
+        self.page._split_check.set_active(True)
+
+    def test__show_error_dialog(self):
+
+        self.page._show_error_dialog("test")
+
+    def test_correct_texts(self):
+
+        doc = gaupol.documents.MAIN
+        self.page.correct_texts(self.project, None, doc)
 
 
 class Test_LineBreakPage(_Test_LocalePage):
 
     def setup_method(self, method):
 
-        self.page = _LineBreakPage()
+        self.page = _LineBreakPage(gtk.Window())
 
     def test__max_skip_length(self):
 
@@ -228,7 +268,7 @@ class TestLineBreakOptionsPage(_Test_GladePage):
 
     def setup_method(self, method):
 
-        self.page = _LineBreakOptionsPage()
+        self.page = _LineBreakOptionsPage(gtk.Window())
 
     def test__on_max_length_spin_value_changed(self):
 
@@ -277,7 +317,7 @@ class Test_ProgressPage(_Test_GladePage):
 
     def setup_method(self, method):
 
-        self.page = _ProgressPage()
+        self.page = _ProgressPage(gtk.Window())
         self.page.reset(100)
         self.test_set_progress()
         self.test_set_project_name()
@@ -310,7 +350,7 @@ class Test_ConfirmationPage(_Test_GladePage):
 
     def setup_method(self, method):
 
-        self.page = _ConfirmationPage()
+        self.page = _ConfirmationPage(gtk.Window())
         self.page.application = self.get_application()
         self.page.doc = gaupol.documents.MAIN
         gaupol.gtk.conf.preview.use_custom = True
