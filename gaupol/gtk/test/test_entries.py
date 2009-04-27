@@ -39,3 +39,4 @@ class TestTimeEntry(gaupol.gtk.TestCase):
 
         self.entry.set_text("12:34:56.789")
         self.entry.set_text("-12:34:56.789")
+        self.entry.set_text("12:34:56,789")

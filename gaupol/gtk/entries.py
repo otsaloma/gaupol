@@ -56,6 +56,7 @@ class TimeEntry(gtk.Entry):
     __metaclass__ = gaupol.gtk.ContractualGObject
     _re_digit = re.compile(r"\d")
     _re_time = re.compile(r"^-?\d\d:[0-5]\d:[0-5]\d\.\d\d\d$")
+    _re_time_comma = re.compile(r"^-?\d\d:[0-5]\d:[0-5]\d\,\d\d\d$")
 
     def __init__(self):
         """Initialize a TimeEntry object."""
@@ -90,7 +91,10 @@ class TimeEntry(gtk.Entry):
             value = value[1:]
         length = len(value)
         text = text[:pos] + value + text[pos + length:]
-        if not self._re_time.match(text): return
+        if not self._re_time.match(text):
+            if not self._re_time_comma.match(text): return
+            # Allow pasting text with comma as decimal separator.
+            text = text.replace(",", ".")
         self.set_text(text)
         self.set_position(pos)
         if length != 1: return
