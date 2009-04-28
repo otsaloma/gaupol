@@ -126,7 +126,10 @@ class EditNextValueAction(gaupol.gtk.Action):
         row, col = page.view.get_focus()
         gaupol.util.affirm(not None in (row, col))
         gaupol.util.affirm(row < len(page.project.subtitles) - 1)
-        gaupol.util.affirm(col != page.view.columns.NUMBER)
+        column = page.view.get_column(col)
+        renderer = column.get_cell_renderers()[0]
+        mode = renderer.props.mode
+        gaupol.util.affirm(mode == gtk.CELL_RENDERER_MODE_EDITABLE)
 
 
 class EditValueAction(gaupol.gtk.Action):
@@ -151,7 +154,10 @@ class EditValueAction(gaupol.gtk.Action):
         gaupol.util.affirm(page is not None)
         row, col = page.view.get_focus()
         gaupol.util.affirm(not None in (row, col))
-        gaupol.util.affirm(col != page.view.columns.NUMBER)
+        column = page.view.get_column(col)
+        renderer = column.get_cell_renderers()[0]
+        mode = renderer.props.mode
+        gaupol.util.affirm(mode == gtk.CELL_RENDERER_MODE_EDITABLE)
 
 
 class ExtendSelectionToBeginningAction(gaupol.gtk.Action):

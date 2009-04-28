@@ -7,7 +7,7 @@ Gaupol 0.15
  [ ] Merge text correction patterns from subtitleeditor (kitone)
      - http://svn.gna.org/viewcvs/subtitleeditor/trunk/plugins/actions/textcorrection/
  [D] Allow pasting times with comma as a decimal separator (#580339)
- [ ] Allow bookmarks to be added or removed by double-clicking or
+ [D] Allow bookmarks to be added or removed by double-clicking or
      pressing enter in the bookmark column (#580346)
  [D] Add validation for encoding given as an argument on the command
      line using the '-e' option
