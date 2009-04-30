@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -72,7 +72,7 @@ class TestView(gaupol.gtk.TestCase):
             store.append((0,
                 subtitle.start_time,
                 subtitle.end_time,
-                subtitle.duration_time,
+                subtitle.duration_seconds,
                 subtitle.main_text,
                 subtitle.tran_text,))
 

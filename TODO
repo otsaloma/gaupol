@@ -3,7 +3,7 @@ Gaupol 0.15
 
  [D] Add text correction task to split joined words or to join split
      words using spell-check suggestions (#572667)
- [?] Show duration in time mode as seconds
+ [D] Show duration in time mode as seconds
  [ ] Merge text correction patterns from subtitleeditor (kitone)
      - http://svn.gna.org/viewcvs/subtitleeditor/trunk/plugins/actions/textcorrection/
  [D] Allow pasting times with comma as a decimal separator (#580339)

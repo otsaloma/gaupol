@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -81,7 +81,10 @@ class Page(gaupol.Observable):
             if gaupol.gtk.fields.END in fields:
                 assert store[i][2] == subtitle.get_end(mode)
             if gaupol.gtk.fields.DURATION in fields:
-                assert store[i][3] == subtitle.get_duration(mode)
+                if mode == gaupol.modes.TIME:
+                    assert store[i][3] == subtitle.duration_seconds
+                elif mode == gaupol.modes.FRAME:
+                    assert store[i][3] == subtitle.duration_frame
             if gaupol.gtk.fields.MAIN_TEXT in fields:
                 assert store[i][4] == subtitle.main_text
             if gaupol.gtk.fields.TRAN_TEXT in fields:
@@ -97,7 +100,9 @@ class Page(gaupol.Observable):
         if field == gaupol.gtk.fields.END:
             return subtitle.get_end(mode)
         if field == gaupol.gtk.fields.DURATION:
-            return subtitle.get_duration(mode)
+            if mode == gaupol.modes.TIME:
+                return subtitle.duration_seconds
+            return subtitle.duration_frame
         if field == gaupol.gtk.fields.MAIN_TEXT:
             return subtitle.main_text
         if field == gaupol.gtk.fields.TRAN_TEXT:
@@ -242,7 +247,10 @@ class Page(gaupol.Observable):
             store[row][0] = row + 1
             store[row][1] = subtitle.get_start(mode)
             store[row][2] = subtitle.get_end(mode)
-            store[row][3] = subtitle.get_duration(mode)
+            if mode == gaupol.modes.TIME:
+                store[row][3] = subtitle.duration_seconds
+            elif mode == gaupol.modes.FRAME:
+                store[row][3] = subtitle.duration_frame
             store[row][4] = subtitle.main_text
             store[row][5] = subtitle.tran_text
         self.view.set_focus(rows[0])
@@ -365,7 +373,10 @@ class Page(gaupol.Observable):
             store[i][0] = i + 1
             store[i][1] = subtitle.get_start(mode)
             store[i][2] = subtitle.get_end(mode)
-            store[i][3] = subtitle.get_duration(mode)
+            if mode == gaupol.modes.TIME:
+                store[i][3] = subtitle.duration_seconds
+            elif mode == gaupol.modes.FRAME:
+                store[i][3] = subtitle.duration_frame
             store[i][4] = subtitle.main_text
             store[i][5] = subtitle.tran_text
         self.view.set_model(store)

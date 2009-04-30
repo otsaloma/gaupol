@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -27,6 +27,7 @@ class Number(gaupol.EnumerationItem):
     is_position = False
     is_text = False
     label = _("No.")
+    tooltip = _("Subtitle number")
 
 
 class Start(gaupol.EnumerationItem):
@@ -34,6 +35,7 @@ class Start(gaupol.EnumerationItem):
     is_position = True
     is_text = False
     label = _("Start")
+    tooltip = _("Start position")
 
 
 class End(gaupol.EnumerationItem):
@@ -41,13 +43,15 @@ class End(gaupol.EnumerationItem):
     is_position = True
     is_text = False
     label = _("End")
+    tooltip = _("End position")
 
 
 class Duration(gaupol.EnumerationItem):
 
     is_position = True
     is_text = False
-    label = _("Duration")
+    label = _("Dur.")
+    tooltip = _("Duration")
 
 
 class MainText(gaupol.EnumerationItem):
@@ -55,6 +59,7 @@ class MainText(gaupol.EnumerationItem):
     is_position = False
     is_text = True
     label = _("Main Text")
+    tooltip = _("Main text")
 
 
 class TranslationText(gaupol.EnumerationItem):
@@ -62,6 +67,7 @@ class TranslationText(gaupol.EnumerationItem):
     is_position = False
     is_text = True
     label = _("Translation Text")
+    tooltip = _("Translation text")
 
 
 fields = gaupol.Enumeration()

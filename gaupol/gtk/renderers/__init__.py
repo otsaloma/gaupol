@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,7 +16,8 @@
 
 """Cell renderer widgets for subtitle data."""
 
+from .float     import FloatCellRenderer
 from .multiline import MultilineCellRenderer
 from .time      import TimeCellRenderer
 
-__all__ = ("MultilineCellRenderer", "TimeCellRenderer",)
+__all__ = ("FloatCellRenderer", "MultilineCellRenderer", "TimeCellRenderer",)

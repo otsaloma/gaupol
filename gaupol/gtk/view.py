@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -59,7 +59,9 @@ class View(gtk.TreeView):
             renderer.props.xalign = 1
         elif field.is_position:
             if edit_mode == gaupol.modes.TIME:
-                renderer = gaupol.gtk.TimeCellRenderer()
+                if field == gaupol.gtk.fields.DURATION:
+                    renderer = gaupol.gtk.FloatCellRenderer()
+                else: renderer = gaupol.gtk.TimeCellRenderer()
             elif edit_mode == gaupol.modes.FRAME:
                 renderer = gtk.CellRendererText()
             renderer.props.xalign = 1
@@ -68,6 +70,7 @@ class View(gtk.TreeView):
             renderer.props.yalign = 0
         renderer.props.editable = (field != gaupol.gtk.fields.NUMBER)
         renderer.props.font = font
+        renderer.props.xpad = 4
         return renderer
 
     def _init_cell_data_functions(self):
@@ -105,13 +108,14 @@ class View(gtk.TreeView):
             column.set_expand(field.is_text)
             column.set_visible(field in visible_fields)
             label = self.get_header_label(field.label)
+            label.set_tooltip_text(field.tooltip)
             column.set_widget(label)
 
     def _init_props(self, edit_mode):
         """Initialize properties."""
 
         if edit_mode == gaupol.modes.TIME:
-            columns = (int, str, str, str, str, str)
+            columns = (int, str, str, float, str, str)
         elif edit_mode == gaupol.modes.FRAME:
             columns = (int, int, int, int, str, str)
         store = gtk.ListStore(*columns)

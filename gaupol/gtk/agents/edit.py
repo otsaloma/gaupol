@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -245,6 +245,11 @@ class EditAgent(gaupol.Delegate):
         if col == page.view.columns.END:
             return page.project.set_end(row, value)
         if col ==  page.view.columns.DURATION:
+            if page.edit_mode == gaupol.modes.TIME:
+                # pylint: disable-msg=E1103
+                value = value.replace(",", ".")
+                try: value = float(value)
+                except ValueError: return
             return page.project.set_duration(row, value)
         doc = page.text_column_to_document(col)
         page.project.set_text(row, doc, value)
