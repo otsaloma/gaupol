@@ -120,6 +120,7 @@ class BookmarksExtension(gaupol.gtk.Extension):
         column.set_reorderable(True)
         column.set_visible(self._conf.show_column)
         label = page.view.get_header_label(_("Bm."))
+        label.set_tooltip_text(_("Bookmark"))
         column.set_widget(label)
         column.set_data("pixbuf", pixbuf)
         column.set_data("identifier", "bookmark")
