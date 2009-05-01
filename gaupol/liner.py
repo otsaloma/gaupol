@@ -34,7 +34,7 @@ class Liner(gaupol.Parser):
     Instance variables:
      * _length_func: A function that returns the length of its argument
      * _space_length: Length of a space according to length_func
-     * break_points: Sequence of tuples of regular expression object, replacement
+     * break_points: List of tuples of regular expression object, replacement
      * max_deviation: Maximum deviation for texts with three or more lines
      * max_length: Maximum length of a line in units of _length_func
      * max_lines: Maximum preferred amount of lines (may be exceeded)

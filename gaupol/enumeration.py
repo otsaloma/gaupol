@@ -50,7 +50,8 @@ class EnumerationItem(int):
         if isinstance(other, int):
             if isinstance(other, EnumerationItem):
                 if self.parent is not other.parent:
-                    raise ValueError
+                    raise ValueError("Cannot compare %s with %s" 
+                        % (repr(self), repr(other)))
             return int.__cmp__(int(self), int(other))
         return 1
 
@@ -131,7 +132,7 @@ class Enumeration(list):
         for item in self:
             if getattr(item, name) == value:
                 return item
-        raise ValueError
+        raise ValueError("Name %s not found" % repr(name))
 
     def insert(self, *args, **kwargs):
         raise NotImplementedError

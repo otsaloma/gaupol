@@ -132,7 +132,7 @@ def code_to_description(code):
     for item in _encodings:
         if item[CODE] == code:
             return item[DESC]
-    raise ValueError
+    raise ValueError("Code %s not found" % repr(code))
 
 def code_to_long_name(code):
     """Convert encoding code to localized long name.
@@ -144,7 +144,7 @@ def code_to_long_name(code):
         if item[CODE] == code:
             name, description = item[NAME], item[DESC]
             return _("%(description)s (%(name)s)") % locals()
-    raise ValueError
+    raise ValueError("Code %s not found" % repr(code))
 
 def code_to_name(code):
     """Convert encoding code to name.
@@ -154,7 +154,7 @@ def code_to_name(code):
     for item in _encodings:
         if item[CODE] == code:
             return item[NAME]
-    raise ValueError
+    raise ValueError("Code %s not found" % repr(code))
 
 def detect_ensure(value, path):
     if value is not None:
@@ -240,7 +240,7 @@ def name_to_code(name):
     for item in _encodings:
         if item[NAME] == name:
             return item[CODE]
-    raise ValueError
+    raise ValueError("Name %s not found" % repr(name))
 
 def translate_code_ensure(value, code):
     assert is_valid_code(value)
@@ -257,4 +257,4 @@ def translate_code(code):
     for item in _encodings:
         if item[CODE] == code:
             return item[CODE]
-    raise ValueError
+    raise ValueError("Code %s not found" % repr(code))

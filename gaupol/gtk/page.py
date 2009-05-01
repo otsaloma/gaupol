@@ -107,7 +107,7 @@ class Page(gaupol.Observable):
             return subtitle.main_text
         if field == gaupol.gtk.fields.TRAN_TEXT:
             return subtitle.tran_text
-        raise ValueError
+        raise ValueError("Invalid field: %s" % repr(field))
 
     def _get_tab_close_button(self):
         """Initialize and return a tab close button."""
@@ -325,7 +325,7 @@ class Page(gaupol.Observable):
             return self.view.columns.MAIN_TEXT
         if doc == gaupol.documents.TRAN:
             return self.view.columns.TRAN_TEXT
-        raise ValueError
+        raise ValueError("Invalid document: %s" % repr(doc))
 
     def get_main_basename(self):
         """Return the basename of the main document."""
@@ -388,7 +388,7 @@ class Page(gaupol.Observable):
             return gaupol.documents.MAIN
         if col == self.view.columns.TRAN_TEXT:
             return gaupol.documents.TRAN
-        raise ValueError
+        raise ValueError("Invalid column: %s" % repr(col))
 
     def update_tab_label(self):
         """Update the notebook tab label and return the title."""

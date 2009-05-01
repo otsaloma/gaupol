@@ -141,7 +141,7 @@ class SaveAgent(gaupol.Delegate):
                 self._move_file(backup_path, file.path)
             elif (not file_existed):
                 self._remove_file(file.path)
-            raise
+            raise # (IOError, UnicodeError)
         if file_existed and backup_success:
             self._remove_file(backup_path)
 
@@ -156,7 +156,7 @@ class SaveAgent(gaupol.Delegate):
             return self.save_main(props, keep_changes)
         if doc == gaupol.documents.TRAN:
             return self.save_translation(props, keep_changes)
-        raise ValueError
+        raise ValueError("Invalid document: %s" % repr(doc))
 
     def save_main_ensure(self, value, props=None, keep_changes=True):
         assert self.main_file is not None

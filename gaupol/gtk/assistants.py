@@ -155,7 +155,7 @@ class _IntroductionPage(_GladePage):
             return gaupol.gtk.fields.MAIN_TEXT
         if self._tran_radio.get_active():
             return gaupol.gtk.fields.TRAN_TEXT
-        raise ValueError
+        raise ValueError("Invalid target radio state")
 
     def get_selected_pages(self):
         """Return the selected content pages."""
@@ -172,7 +172,7 @@ class _IntroductionPage(_GladePage):
             return gaupol.gtk.targets.CURRENT
         if self._all_radio.get_active():
             return gaupol.gtk.targets.ALL
-        raise ValueError
+        raise ValueError("Invalid target radio state")
 
     def populate_tree_view(self, content_pages):
         """Populate the tree view with content pages."""

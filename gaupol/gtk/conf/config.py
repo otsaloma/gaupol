@@ -117,7 +117,7 @@ class Config(configobj.ConfigObj):
             sections, option, message = error
             for section in sections:
                 print "%s.%s: %s" % (section, option, message)
-        raise SystemExit("Must exit.")
+        raise SystemExit("Must edit %s" % repr(spec_file))
 
     def __init_validator(self):
         """Initialize and return validator."""

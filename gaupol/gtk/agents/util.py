@@ -37,7 +37,7 @@ class UtilityAgent(gaupol.Delegate):
         for action_group in self.uim.get_action_groups():
             action = action_group.get_action(name)
             if action is not None: return action
-        raise ValueError
+        raise ValueError("Action group %s not found" % repr(name))
 
     def get_action_group(self, name):
         """Return action group from the UI manager."""
@@ -85,7 +85,7 @@ class UtilityAgent(gaupol.Delegate):
             return (self.get_current_page(),)
         if target == gaupol.gtk.targets.ALL:
             return tuple(self.pages)
-        raise ValueError
+        raise ValueError("Invalid target: %s" % repr(target))
 
     def get_target_rows(self, target):
         """Return the selected rows or None if targeting all rows."""

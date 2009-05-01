@@ -77,7 +77,8 @@ class OpenAgent(gaupol.Delegate):
         """
         try: return file.read()
         except (IOError, UnicodeError): raise
-        except Exception: raise gaupol.ParseError
+        except Exception:
+            raise gaupol.ParseError("Failed to parse file %s" % repr(file))
 
     def _sort_subtitles_ensure(self, value, unsorted_subtitles):
         sorted_subtitles, wrong_order_count = value

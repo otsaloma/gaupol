@@ -121,7 +121,8 @@ class Application(gaupol.Observable, gaupol.gtk.Runner):
             for attr_name in attr_names:
                 attr_value = getattr(agent, attr_name)
                 if attr_name in self._delegations:
-                    raise ValueError("Agents overlap")
+                    raise ValueError("Multiple definitions of %s" 
+                        % repr(attr_name))
                 self._delegations[attr_name] = attr_value
 
     def _init_framerate_combo(self):

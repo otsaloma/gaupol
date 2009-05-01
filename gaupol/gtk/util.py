@@ -41,7 +41,7 @@ def document_to_text_field(doc):
         return gaupol.gtk.fields.MAIN_TEXT
     if doc == gaupol.documents.TRAN:
         return gaupol.gtk.fields.TRAN_TEXT
-    raise ValueError
+    raise ValueError("Invalid document: %s" % repr(doc))
 
 def get_font():
     """Return custom font or blank string."""
@@ -219,4 +219,4 @@ def text_field_to_document(field):
         return gaupol.documents.MAIN
     if field == gaupol.gtk.fields.TRAN_TEXT:
         return gaupol.documents.TRAN
-    raise ValueError
+    raise ValueError("Invalid field: %s" % repr(field))

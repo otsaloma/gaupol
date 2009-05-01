@@ -65,7 +65,7 @@ class Subtitle(object):
             return self.calc.compare_times(*times)
         if self._mode == gaupol.modes.FRAME:
             return cmp(self._start, other.start_frame)
-        raise ValueError
+        raise ValueError("Invalid mode: %s" % repr(self._mode))
 
     def __getattr__(self, name):
         """Return lazily instantiated format-specific attribute container."""
@@ -75,7 +75,7 @@ class Subtitle(object):
             container = gaupol.containers.new(name)
             object.__setattr__(self, name, container)
             return container
-        raise AttributeError
+        raise AttributeError("Invalid container name: %s" % repr(name))
 
     def __init__(self, mode=None, framerate=None):
         """Initialize a Subtitle object."""
@@ -107,7 +107,7 @@ class Subtitle(object):
                 return self.calc.seconds_to_time(value)
             if self._mode == gaupol.modes.FRAME:
                 return self.calc.seconds_to_frame(value)
-        raise ValueError
+        raise ValueError("Invalid type for value: %s" % repr(type(value)))
 
     def _get_duration(self):
         """Return the duration in correct mode."""
@@ -116,7 +116,7 @@ class Subtitle(object):
             return self._get_duration_time()
         if self._mode == gaupol.modes.FRAME:
             return self._get_duration_frame()
-        raise ValueError
+        raise ValueError("Invalid mode: %s" % repr(self._mode))
 
     def _get_duration_frame(self):
         """Return the duration as frames."""
@@ -148,7 +148,7 @@ class Subtitle(object):
             return self.calc.time_to_frame(self._end)
         if self._mode == gaupol.modes.FRAME:
             return self._end
-        raise ValueError
+        raise ValueError("Invalid mode: %s" % repr(self._mode))
 
     def _get_end_seconds(self):
         """Return the end position as seconds."""
@@ -163,7 +163,7 @@ class Subtitle(object):
             return self._end
         if self._mode == gaupol.modes.FRAME:
             return self.calc.frame_to_time(self._end)
-        raise ValueError
+        raise ValueError("Invalid mode: %s" % repr(self._mode))
 
     def _get_framerate(self):
         """Return the framerate."""
@@ -192,7 +192,7 @@ class Subtitle(object):
             return self.calc.time_to_frame(self._start)
         if self._mode == gaupol.modes.FRAME:
             return self._start
-        raise ValueError
+        raise ValueError("Invalid mode: %s" % repr(self._mode))
 
     def _get_start_seconds(self):
         """Return the start position as seconds."""
@@ -207,7 +207,7 @@ class Subtitle(object):
             return self._start
         if self._mode == gaupol.modes.FRAME:
             return self.calc.frame_to_time(self._start)
-        raise ValueError
+        raise ValueError("Invalid mode: %s" % repr(self._mode))
 
     def _get_tran_text(self):
         """Return the translation text."""
@@ -296,7 +296,7 @@ class Subtitle(object):
             return self.duration_time
         if mode == gaupol.modes.FRAME:
             return self.duration_frame
-        raise ValueError
+        raise ValueError("Invalid mode: %s" % repr(mode))
 
     def get_end(self, mode):
         """Return the end position in mode."""
@@ -305,7 +305,7 @@ class Subtitle(object):
             return self.end_time
         if mode == gaupol.modes.FRAME:
             return self.end_frame
-        raise ValueError
+        raise ValueError("Invalid mode: %s" % repr(mode))
 
     def get_start(self, mode):
         """Return the start position in mode."""
@@ -314,7 +314,7 @@ class Subtitle(object):
             return self.start_time
         if mode == gaupol.modes.FRAME:
             return self.start_frame
-        raise ValueError
+        raise ValueError("Invalid mode: %s" % repr(mode))
 
     def get_text(self, doc):
         """Return the text corresponding to document."""
@@ -323,7 +323,7 @@ class Subtitle(object):
             return self._main_text
         if doc == gaupol.documents.TRAN:
             return self._tran_text
-        raise ValueError
+        raise ValueError("Invalid document: %s" % repr(doc))
 
     def has_container(self, name):
         """Return True if container has been instantiated."""
@@ -337,7 +337,7 @@ class Subtitle(object):
             return self._set_main_text(value)
         if doc == gaupol.documents.TRAN:
             return self._set_tran_text(value)
-        raise ValueError
+        raise ValueError("Invalid document: %s" % repr(doc))
 
     def scale_positions(self, value):
         """Multiply start and end positions by value."""

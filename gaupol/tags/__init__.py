@@ -45,4 +45,4 @@ def new(format):
     for cls in map(eval, __all__):
         if cls.format == format:
             return cls()
-    raise ValueError
+    raise ValueError("Format %s not found" % repr(format))

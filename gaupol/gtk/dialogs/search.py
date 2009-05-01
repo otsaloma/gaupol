@@ -209,7 +209,7 @@ class SearchDialog(gaupol.gtk.GladeDialog):
             return gaupol.gtk.targets.CURRENT
         if self._all_radio.get_active():
             return gaupol.gtk.targets.ALL
-        raise ValueError
+        raise ValueError("Invalid target radio state")
 
     def _init_combo_box_entries(self):
         """Initialize the history lists in the combo box entries."""

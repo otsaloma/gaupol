@@ -38,7 +38,7 @@ class UtilityAgent(gaupol.Delegate):
             if self.tran_file is not None:
                 return self.tran_file.format
             return self._get_format(gaupol.documents.MAIN)
-        raise ValueError
+        raise ValueError("Invalid document: %s" % repr(doc))
 
     def get_changed(self, doc):
         """Return the changed value corresponding to document."""
@@ -47,7 +47,7 @@ class UtilityAgent(gaupol.Delegate):
             return self.main_changed
         if doc == gaupol.documents.TRAN:
             return self.tran_changed
-        raise ValueError
+        raise ValueError("Invalid document: %s" % repr(doc))
 
     def get_file(self, doc):
         """Return the file corresponding to document."""
@@ -56,7 +56,7 @@ class UtilityAgent(gaupol.Delegate):
             return self.main_file
         if doc == gaupol.documents.TRAN:
             return self.tran_file
-        raise ValueError
+        raise ValueError("Invalid document: %s" % repr(doc))
 
     def get_liner(self, doc):
         """Return liner with proper properties."""
@@ -131,4 +131,4 @@ class UtilityAgent(gaupol.Delegate):
             return "main-texts-changed"
         if doc == gaupol.documents.TRAN:
             return "translation-texts-changed"
-        raise ValueError
+        raise ValueError("Invalid document: %s" % repr(doc))

@@ -65,7 +65,7 @@ class _PositionShiftDialog(gaupol.gtk.GladeDialog):
             return gaupol.gtk.targets.CURRENT
         if self._all_radio.get_active():
             return gaupol.gtk.targets.ALL
-        raise ValueError
+        raise ValueError("Invalid target radio state")
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""

@@ -378,7 +378,7 @@ def read(path, encoding=None, fallback="utf_8"):
     except UnicodeError:
         if not fallback in (encoding, None, ""):
             return read(path, "utf_8", None)
-        raise
+        raise # UnicodeError
 
 def readlines_require(path, encoding=None, fallback="utf_8"):
     if encoding is not None:
@@ -476,7 +476,7 @@ def write(path, text, encoding=None, fallback="utf_8"):
     except UnicodeError:
         if not fallback in (encoding, None, ""):
             return write(path, text, "utf_8", None)
-        raise
+        raise # UnicodeError
 
 def writelines_require(path, lines, encoding=None, fallback="utf_8"):
     if encoding is not None:

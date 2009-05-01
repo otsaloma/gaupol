@@ -60,7 +60,7 @@ class MPsub(gaupol.SubtitleFile):
             return self._get_times(subtitles)
         if self.mode == gaupol.modes.FRAME:
             return self._get_frames(subtitles)
-        raise ValueError
+        raise ValueError("Invalid mode: %s" % repr(mode))
 
     def _get_times(self, subtitles):
         """Return MPsub style start and end times."""
@@ -153,7 +153,7 @@ class MPsub(gaupol.SubtitleFile):
         elif mode in framerates.keys():
             self.mode = gaupol.modes.FRAME
             self.framerate = framerates[mode]
-        else: raise ValueError
+        else: raise ValueError("Invalid FORMAT line: %s" % repr(header))
         self.header = header
 
     def write_to_file(self, subtitles, doc, fobj):

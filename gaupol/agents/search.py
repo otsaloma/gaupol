@@ -106,7 +106,8 @@ class SearchAgent(gaupol.Delegate):
             raise StopIteration
         if (not next) and (doc == gaupol.documents.TRAN):
             return gaupol.documents.MAIN
-        raise ValueError
+        raise ValueError("Invalid document: %s or invalid next: %s" % (
+            repr(doc), repr(next)))
 
     def _invariant(self):
         for index in self._indices or []:
@@ -146,7 +147,7 @@ class SearchAgent(gaupol.Delegate):
             self._match_passed = False
             return index, doc, match_span
         # Raise ValueError if no match found in this document after position.
-        raise ValueError
+        raise ValueError("No more matches in document: %s" % repr(doc))
 
     def _previous_in_document(self, index, doc, pos=None):
         """Find the previous match in document starting from position.
@@ -182,7 +183,7 @@ class SearchAgent(gaupol.Delegate):
             self._match_passed = False
             return index, doc, match_span
         # Raise ValueError if no match found in this document after position.
-        raise ValueError
+        raise ValueError("No more matches in document: %s" % repr(doc))
 
     def find_next_require(self, index=None, doc=None, pos=None):
         assert 0 <= (index or 0) < len(self.subtitles)

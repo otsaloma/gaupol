@@ -63,7 +63,7 @@ class _PositionTransformDialog(gaupol.gtk.GladeDialog):
             return gaupol.gtk.targets.SELECTED
         if self._current_radio.get_active():
             return gaupol.gtk.targets.CURRENT
-        raise ValueError
+        raise ValueError("Invalid target radio state")
 
     def _init_input_labels(self):
         """Initialize the input labels."""

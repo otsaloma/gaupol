@@ -67,7 +67,7 @@ class Calculator(object):
             return self.compare_times(x, y)
         if isinstance(x, int):
             return cmp(x, y)
-        raise ValueError
+        raise ValueError("Invalid type for x: %s" % repr(type(x)))
 
     def compare_times(self, x, y):
         """Return 1 if x is greater, 0 if equal and -1 if y greater."""
@@ -100,7 +100,7 @@ class Calculator(object):
             return self.seconds_to_time((x + y) / 2)
         if isinstance(x, int):
             return int(round((x + y) / 2, 0))
-        raise ValueError
+        raise ValueError("Invalid type for x: %s" % repr(type(x)))
 
     def get_time_duration(self, x, y):
         """Return duration from time x to time y."""

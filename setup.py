@@ -239,7 +239,7 @@ class SDistGna(sdist):
         os.system('diff -qr -x ".*" -x "*.pyc" ../.. %s' % test_dir)
         response = raw_input("Are all files in the tarball [Y/n]? ")
         if response.lower() == "n":
-            raise SystemExit("Must edit MANIFEST.in.")
+            raise SystemExit("Must edit MANIFEST.in")
         shutil.rmtree(test_dir)
 
         # Create extra distribution files.

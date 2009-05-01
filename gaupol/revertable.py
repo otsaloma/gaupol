@@ -64,7 +64,7 @@ class RevertableAction(object):
             return gaupol.registers.UNDO
         if self.register.shift == -1:
             return gaupol.registers.REDO
-        raise ValueError
+        raise ValueError("Invalid register: %s" % repr(self.register))
 
     def revert_require(self):
         assert callable(self.revert_method)

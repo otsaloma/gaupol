@@ -108,7 +108,7 @@ class _Ruler(object):
             return self.get_char_lengths(text, strip, floor)
         if self._length_unit == gaupol.gtk.length_units.EM:
             return self.get_em_lengths(text, strip, floor)
-        raise ValueError
+        raise ValueError("Invalid length unit: %s" % repr(self._length_unit))
 
 
 _ruler = _Ruler()
@@ -161,7 +161,7 @@ def get_length_function(unit):
         return _ruler.get_char_length
     if unit == gaupol.gtk.length_units.EM:
         return _ruler.get_em_length
-    raise ValueError
+    raise ValueError("Invalid length unit: %s" % repr(unit))
 
 def get_lengths(text):
     """Return a sequence of floored line lengths without tags."""

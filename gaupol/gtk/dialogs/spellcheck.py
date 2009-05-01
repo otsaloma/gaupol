@@ -195,7 +195,8 @@ class SpellCheckDialog(gaupol.gtk.GladeDialog):
             dict.check("gaupol")
         except enchant.Error, (message,):
             self._show_error_dialog(message)
-            raise ValueError
+            raise ValueError("Dictionary initialization failed "
+                "for language %s" % repr(language))
         self._checker = enchant.checker.SpellChecker(dict, "")
 
     def _init_fonts(self):

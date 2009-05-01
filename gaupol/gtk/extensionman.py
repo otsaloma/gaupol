@@ -224,7 +224,9 @@ class ExtensionManager(object):
         """
         if not module in self._active: return
         if self._dependants[module]:
-            if not force: raise gaupol.gtk.DependencyError
+            if not force:
+                raise gaupol.gtk.DependencyError("Module %s is "
+                    "required by other modules" % repr(module))
             for user in self._dependants[module]:
                 self.teardown_extension(user)
         extension = self._active[module]
