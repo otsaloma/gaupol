@@ -87,14 +87,14 @@ class TextAgent(gaupol.Delegate):
         ii = [range(x.wordpos, x.wordpos + len(x.word)) for x in checker]
         return gaupol.util.flatten(ii)
 
-    def _get_subtitutions_ensure(self, value, patterns):
+    def _get_substitutions_ensure(self, value, patterns):
         assert len(value) <= len(patterns)
 
-    def _get_subtitutions(self, patterns):
+    def _get_substitutions(self, patterns):
         """Return a sequence of tuples of pattern, flags, replacement."""
 
         re_patterns = []
-        for pattern in (x for x in patterns if x.enabled):
+        for pattern in patterns:
             string = pattern.get_field("Pattern")
             flags = pattern.get_flags()
             replacement = pattern.get_field("Replacement")
@@ -153,7 +153,8 @@ class TextAgent(gaupol.Delegate):
         """
         new_indices = []
         new_texts = []
-        patterns = self._get_subtitutions(patterns)
+        patterns = [x for x in patterns if x.enabled]
+        patterns = self._get_substitutions(patterns)
         patterns = [(re.compile(x, y), z) for x, y, z in patterns]
         liner = self.get_liner(doc)
         liner.break_points = patterns
@@ -211,6 +212,7 @@ class TextAgent(gaupol.Delegate):
         new_indices = []
         new_texts = []
         parser = self.get_parser(doc)
+        patterns = [x for x in patterns if x.enabled]
         indices = indices or range(len(self.subtitles))
         for indices in gaupol.util.get_ranges(indices):
             cap_next = False
@@ -220,7 +222,7 @@ class TextAgent(gaupol.Delegate):
                 if cap_next or (index == 0):
                     self._capitalize_position(parser, 0)
                     cap_next = False
-                for pattern in (x for x in patterns if x.enabled):
+                for pattern in patterns:
                     string = pattern.get_field("Pattern")
                     flags = pattern.get_flags()
                     parser.set_regex(string, flags, 0)
@@ -249,7 +251,8 @@ class TextAgent(gaupol.Delegate):
         new_indices = []
         new_texts = []
         parser = self.get_parser(doc)
-        re_patterns = self._get_subtitutions(patterns)
+        patterns = [x for x in patterns if x.enabled]
+        re_patterns = self._get_substitutions(patterns)
         repeats = [x.get_field_boolean("Repeat") for x in patterns]
         indices = indices or range(len(self.subtitles))
         for index in indices:
@@ -284,7 +287,8 @@ class TextAgent(gaupol.Delegate):
         new_indices = []
         new_texts = []
         parser = self.get_parser(doc)
-        re_patterns = self._get_subtitutions(patterns)
+        patterns = [x for x in patterns if x.enabled]
+        re_patterns = self._get_substitutions(patterns)
         indices = indices or range(len(self.subtitles))
         for index in indices:
             subtitle = self.subtitles[index]

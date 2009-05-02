@@ -12,6 +12,7 @@ Gaupol 0.15
      pressing enter in the bookmark column (#580346)
  [D] Add validation for encoding given as an argument on the command
      line using the '-e' option
+ [D] Fix incorrect handling of common error patterns (#581003)
  [D] Abort installation if an intltool-merge or msgfmt call fails
  [D] Add messages for raised exceptions
 
