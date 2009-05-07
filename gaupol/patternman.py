@@ -126,7 +126,7 @@ class PatternManager(object):
         basename = os.path.basename(path)
         extension = ".%s.conf" % self.pattern_type
         code = basename.replace(extension, "")
-        assert code in self._patterns
+        if not code in self._patterns: return
         patterns = self._patterns[code]
         for element in ET.parse(path).findall("pattern"):
             name = unicode(element.get("name"))
