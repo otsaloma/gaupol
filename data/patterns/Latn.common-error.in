@@ -41,7 +41,7 @@ _Description=Remove space before various punctuation marks
 Classes=Human;OCR;
 # NOTE: This goes against French spacing, Latn-fr can override.
 # Disallow trailing digits for the case of fractions, e.g. '.45'.
-Pattern= +(["']?(?!\.\.)([,;:.?!])(?!\d))
+Pattern= +(["'«»]?(?!\.\.)([,;:.?!])(?!\d))
 Flags=DOTALL;MULTILINE;UNICODE;
 Replacement=\1
 Repeat=False
@@ -50,7 +50,7 @@ Repeat=False
 _Name=Space after punctuation marks
 _Description=Add space after various punctuation marks
 Classes=Human;OCR;
-Pattern=((\w|^)["']?[,;:?!])(?!["'])([^\W\d][\w\s])
+Pattern=((\w|^|["'«»])[,;:?!])(?!["'«»])([^\W\d][\w\s])
 Flags=DOTALL;MULTILINE;UNICODE;
 Replacement=\1 \3
 Repeat=False
@@ -59,7 +59,7 @@ Repeat=False
 _Name=Space after an ellipsis
 _Description=Add space after an ellipsis
 Classes=Human;OCR;
-Pattern=(\w[^\w\s]*?\.\.\.)(["']?\w)
+Pattern=(\w[^\w\s]*?\.\.\.)(["'«»]?\w)
 Flags=DOTALL;MULTILINE;UNICODE;
 Replacement=\1 \2
 Repeat=False
