@@ -83,7 +83,7 @@ class OpenAgent(gaupol.Delegate):
     def _sort_subtitles_ensure(self, value, unsorted_subtitles):
         sorted_subtitles, wrong_order_count = value
         for i in range(len(sorted_subtitles) - 1):
-            assert sorted_subtitles[i] < sorted_subtitles[i + 1]
+            assert sorted_subtitles[i] <= sorted_subtitles[i + 1]
 
     def _sort_subtitles(self, unsorted_subtitles):
         """Sort and return subtitles and sort count.
@@ -120,6 +120,13 @@ class OpenAgent(gaupol.Delegate):
         Raise ParseError if parsing fails.
         Return sort count.
         """
+        # Check for a Unicode BOM first to avoid getting a FormatError in the
+        # case where an unsuitable encoding decodes a file into garbage without
+        # raising a UnicodeDecodeError. If a Unicode BOM is found, use the
+        # corresponding encoding to open the file.
+        bom_encoding = gaupol.encodings.detect_bom(path)
+        if bom_encoding not in (encoding, None):
+            return self.open_main(path, bom_encoding)
         format = gaupol.FormatDeterminer().determine(path, encoding)
         self.main_file = gaupol.files.new(format, path, encoding)
         subtitles = self._read_file(self.main_file)
@@ -155,6 +162,13 @@ class OpenAgent(gaupol.Delegate):
         """
         if align_method is None:
             align_method = gaupol.align_methods.POSITION
+        # Check for a Unicode BOM first to avoid getting a FormatError in the
+        # case where an unsuitable encoding decodes a file into garbage without
+        # raising a UnicodeDecodeError. If a Unicode BOM is found, use the
+        # corresponding encoding to open the file.
+        bom_encoding = gaupol.encodings.detect_bom(path)
+        if bom_encoding not in (encoding, None):
+            return self.open_main(path, bom_encoding)
         format = gaupol.FormatDeterminer().determine(path, encoding)
         self.tran_file = gaupol.files.new(format, path, encoding)
         subtitles = self._read_file(self.tran_file)

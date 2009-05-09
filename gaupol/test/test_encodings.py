@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
+import codecs
 import gaupol
 _ = gaupol.i18n._
 
@@ -55,6 +56,57 @@ class TestModule(gaupol.TestCase):
         gaupol.encodings.translate_code = bad_translate_code
         assert gaupol.encodings.detect(self.get_subrip_path()) is None
         gaupol.encodings.translate_code = translate_code
+
+    def test_detect_bom__none(self):
+
+        path = self.get_subrip_path()
+        encoding = gaupol.encodings.detect_bom(path)
+        assert encoding is None
+
+    def test_detect_bom__utf_8(self):
+
+        path = self.get_subrip_path()
+        text = open(path, "r").read()
+        open(path, "w").write(codecs.BOM_UTF8 + text)
+        encoding = gaupol.encodings.detect_bom(path)
+        if gaupol.encodings.is_valid_code("utf_8_sig"):
+            assert encoding == "utf_8_sig"
+
+    def test_detect_bom__utf_16_be(self):
+
+        path = self.get_subrip_path()
+        text = open(path, "r").read()
+        open(path, "w").write(codecs.BOM_UTF16_BE + text)
+        encoding = gaupol.encodings.detect_bom(path)
+        if gaupol.encodings.is_valid_code("utf_16_be"):
+            assert encoding == "utf_16_be"
+
+    def test_detect_bom__utf_16_le(self):
+
+        path = self.get_subrip_path()
+        text = open(path, "r").read()
+        open(path, "w").write(codecs.BOM_UTF16_LE + text)
+        encoding = gaupol.encodings.detect_bom(path)
+        if gaupol.encodings.is_valid_code("utf_16_le"):
+            assert encoding == "utf_16_le"
+
+    def test_detect_bom__utf_32_be(self):
+
+        path = self.get_subrip_path()
+        text = open(path, "r").read()
+        open(path, "w").write(codecs.BOM_UTF32_BE + text)
+        encoding = gaupol.encodings.detect_bom(path)
+        if gaupol.encodings.is_valid_code("utf_32_be"):
+            assert encoding == "utf_32_be"
+
+    def test_detect_bom__utf_32_le(self):
+
+        path = self.get_subrip_path()
+        text = open(path, "r").read()
+        open(path, "w").write(codecs.BOM_UTF32_LE + text)
+        encoding = gaupol.encodings.detect_bom(path)
+        if gaupol.encodings.is_valid_code("utf_32_le"):
+            assert encoding == "utf_32_le"
 
     def test_get_locale_code(self):
 

@@ -116,7 +116,8 @@ _encodings = (
     ("utf_16_be"      , "UTF-16BE"        , _("Unicode")            ),
     ("utf_16_le"      , "UTF-16LE"        , _("Unicode")            ),
     ("utf_7"          , "UTF-7"           , _("Unicode")            ),
-    ("utf_8"          , "UTF-8"           , _("Unicode")            ),)
+    ("utf_8"          , "UTF-8"           , _("Unicode")            ),
+    ("utf_8_sig"      , "UTF-8-SIG"       , _("Unicode")            ),)
 
 CODE, NAME, DESC = range(3)
 
@@ -182,6 +183,32 @@ def detect(path):
         return translate_code(code)
     except ValueError:
         return None
+
+def detect_bom_ensure(value, path):
+    if value is not None:
+        assert is_valid_code(value)
+
+@gaupol.deco.contractual
+def detect_bom(path):
+    """Return corresponding encoding if BOM found, else None."""
+
+    line = open(path, "r").readline()
+    if (line.startswith(codecs.BOM_UTF32_BE) and
+        is_valid_code("utf_32_be")):
+        return "utf_32_be"
+    if (line.startswith(codecs.BOM_UTF32_LE) and
+        is_valid_code("utf_32_le")):
+        return "utf_32_le"
+    if (line.startswith(codecs.BOM_UTF8) and
+        is_valid_code("utf_8_sig")):
+        return "utf_8_sig"
+    if (line.startswith(codecs.BOM_UTF16_BE) and
+        is_valid_code("utf_16_be")):
+        return "utf_16_be"
+    if (line.startswith(codecs.BOM_UTF16_LE) and
+        is_valid_code("utf_16_le")):
+        return "utf_16_le"
+    return None
 
 def get_locale_code_ensure(value):
     if value is not None:

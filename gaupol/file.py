@@ -33,7 +33,7 @@ class SubtitleFile(object):
     Class or instance variables:
      * encoding: Character encoding used to read and write file
      * format: Format enumeration corresponding to file
-     * has_bom_utf_8: True if an UTF-8 BOM was read
+     * has_utf_16_bom: True if BOM found for UTF-16-BE or UTF-16-LE
      * header: String of generic information at the top of the file
      * mode: Mode enumeration corresponding to the native positions
      * newline: Newline enumeration, detected upon read and written as such
@@ -53,7 +53,7 @@ class SubtitleFile(object):
         """Initialize a SubtitleFile object."""
 
         self.encoding = encoding
-        self.has_bom_utf_8 = False
+        self.has_utf_16_bom = False
         self.header = ""
         self.newline = newline
         self.path = os.path.abspath(path)
@@ -89,11 +89,23 @@ class SubtitleFile(object):
         if isinstance(chars, tuple):
             chars = chars[0]
         self.newline = gaupol.newlines.find_item("value", chars)
-        if ((self.encoding == "utf_8") and lines and
-            lines[0].startswith(codecs.BOM_UTF8)):
-            self.has_bom_utf_8 = True
-            lines[0] = lines[0].replace(codecs.BOM_UTF8, "")
+        if self.encoding == "utf_8":
+            bom = unicode(codecs.BOM_UTF8, "utf_8")
+            if lines and lines[0].startswith(bom):
+                # If a UTF-8 BOM (a.k.a. signature) is found, reread file with
+                # UTF-8-SIG encoding, which automatically strips the BOM when
+                # reading and adds it when writing.
+                self.encoding = "utf_8_sig"
+                return SubtitleFile._read_lines(self)
         if self.encoding.startswith("utf_16"):
+            # Python automatically strips the UTF-16 BOM when reading, but only
+            # when using UTF-16. If using UTF-16-BE or UTF-16-LE, the BOM is
+            # kept at the beginning of the first line. It is read correctly, so
+            # it should FE FF for both BE and LE.
+            bom = unicode(codecs.BOM_UTF16_BE, "utf_16_be")
+            if lines and lines[0].startswith(bom):
+                self.has_utf_16_bom = True
+                lines[0] = lines[0].replace(bom, "")
             # Handle erroneous (?) UTF-16 encoded subtitles that use
             # NULL-character filled linebreaks '\x00\r\x00\n', which
             # readlines interprets as two separate linebreaks.
@@ -109,7 +121,7 @@ class SubtitleFile(object):
 
         if self.format == other.format:
             self.header = other.header
-        self.has_bom_utf_8 = other.has_bom_utf_8
+        self.has_utf_16_bom = other.has_utf_16_bom
 
     def get_template_header_require(self):
         assert self.format.has_header
@@ -146,8 +158,14 @@ class SubtitleFile(object):
         """
         args = (self.path, "w", self.encoding)
         with contextlib.closing(codecs.open(*args)) as fobj:
-            if (self.encoding == "utf_8") and self.has_bom_utf_8:
-                fobj.write(codecs.BOM_UTF8)
+            # UTF-8-SIG automatically adds the UTF-8 signature BOM. Likewise,
+            # UTF-16 automatically adds the system default BOM, but
+            # UTF-16-BE and UTF-16-LE don't. For the latter two, add the BOM,
+            # if it was originally read in the file.
+            if self.has_utf_16_bom and (self.encoding == "utf_16_be"):
+                fobj.write(unicode(codecs.BOM_UTF16_BE, "utf_16_be"))
+            if self.has_utf_16_bom and (self.encoding == "utf_16_le"):
+                fobj.write(unicode(codecs.BOM_UTF16_LE, "utf_16_le"))
             self.write_to_file(subtitles, doc, fobj)
 
     def write_to_file_require(self, subtitles, doc, fobj):

@@ -11,6 +11,9 @@ Gaupol 0.15
      pressing enter in the bookmark column (#580346)
  [D] Add validation for encoding given as an argument on the command
      line using the '-e' option
+ [D] Fix handling of Unicode BOMs (#568906)
+ [D] Add UTF-8-SIG character encoding for opening and saving files
+     with a UTF-8 signature/BOM
  [D] Fix incorrect handling of common error patterns (#581003)
  [D] Abort installation if an intltool-merge or msgfmt call fails
  [D] Add messages for raised exceptions

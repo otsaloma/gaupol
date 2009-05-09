@@ -62,5 +62,5 @@ class FormatDeterminer(gaupol.Singleton):
                 for format, re_id in self._re_ids:
                     if re_id.search(line) is not None:
                         return format
-        raise gaupol.FormatError("Failed to detect format of file %s" 
+        raise gaupol.FormatError("Failed to detect format of file %s"
             % repr(path))

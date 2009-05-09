@@ -296,6 +296,8 @@ class OpenAgent(gaupol.Delegate):
             self._show_io_error_dialog(basename, message)
         except gaupol.ParseError:
             gaupol.gtk.util.set_cursor_normal(self.window)
+            bom_encoding = gaupol.encodings.detect_bom(path)
+            encoding = bom_encoding or encoding
             determiner = gaupol.FormatDeterminer()
             silent = gaupol.deco.silent(Exception)
             format = silent(determiner.determine)(path, encoding)
