@@ -70,18 +70,22 @@ class PatternManager(object):
         Patterns with a more specific code replace those with a less specific
         code if they have the same name and the more specific pattern's policy
         is explicitly set to 'Replace' (instead of the implicit 'Append').
+        Maintain order so that all patterns with the same name are always
+        located in the position of the earliest of such patterns.
         """
         filtered_patterns = []
         for i, pattern in enumerate(patterns):
-            replacement_found = False
             name = pattern.get_name(False)
-            for j in range(i + 1, len(patterns)):
-                j_name = patterns[j].get_name(False)
-                j_policy = patterns[j].get_field("Policy")
-                if (j_name == name) and (j_policy == "Replace"):
-                    replacement_found = True
-            if not replacement_found:
-                filtered_patterns.append(pattern)
+            policy = pattern.get_field("Policy")
+            last_index = len(filtered_patterns) - 1
+            for j, filtered_pattern in enumerate(filtered_patterns):
+                if filtered_pattern.get_name() == name:
+                    last_index = j
+                    if policy == "Replace":
+                        filtered_patterns[j] = None
+            filtered_patterns.insert(last_index + 1, pattern)
+            while None in filtered_patterns:
+                filtered_patterns.remove(None)
         return filtered_patterns
 
     def _get_codes_require(self, script=None, language=None, country=None):
