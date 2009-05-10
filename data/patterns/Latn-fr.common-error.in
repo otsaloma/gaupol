@@ -1,0 +1,45 @@
+[Common Error Pattern]
+_Name=Spaces around guillemets
+_Description=Add spaces around guillemets
+Classes=Human;OCR;
+Pattern=(\S)(«)
+Flags=DOTALL;MULTILINE;UNICODE;
+Replacement=\1 \2
+Repeat=False
+
+[Common Error Pattern]
+_Name=Spaces around guillemets
+_Description=Add spaces around guillemets
+Classes=Human;OCR;
+Pattern=(»)(\w)
+Flags=DOTALL;MULTILINE;UNICODE;
+Replacement=\1 \2
+Repeat=False
+
+[Common Error Pattern]
+_Name=Spaces around guillemets
+_Description=Add spaces around guillemets
+Classes=Human;OCR;
+Pattern=(«)(\S)
+Flags=DOTALL;MULTILINE;UNICODE;
+Replacement=\1 \2
+Repeat=False
+
+[Common Error Pattern]
+_Name=Spaces around guillemets
+_Description=Add spaces around guillemets
+Classes=Human;OCR;
+Pattern=(\S)(»)
+Flags=DOTALL;MULTILINE;UNICODE;
+Replacement=\1 \2
+Repeat=False
+
+[Common Error Pattern]
+_Name=Space before punctuation marks
+_Description=Remove space before various punctuation marks
+Classes=Human;OCR;
+# Readd space removed by the corresponding pattern in Latn.
+Pattern=([^\s?!;:])([?!;:])(?!\d)
+Flags=DOTALL;MULTILINE;UNICODE;
+Replacement=\1 \2
+Repeat=False

@@ -27,6 +27,42 @@ Replacement="
 Repeat=False
 
 [Common Error Pattern]
+_Name=Spaces around brackets
+_Description=Add or remove spaces around parantheses and square brackets
+Classes=Human;OCR;
+Pattern=(\S)(\(|\[)
+Flags=DOTALL;MULTILINE;UNICODE;
+Replacement=\1 \2
+Repeat=False
+
+[Common Error Pattern]
+_Name=Spaces around brackets
+_Description=Add or remove spaces around parantheses and square brackets
+Classes=Human;OCR;
+Pattern=(\)|\])(\w)
+Flags=DOTALL;MULTILINE;UNICODE;
+Replacement=\1 \2
+Repeat=False
+
+[Common Error Pattern]
+_Name=Spaces around brackets
+_Description=Add or remove spaces around parantheses and square brackets
+Classes=Human;OCR;
+Pattern=(\(|\[)( )
+Flags=DOTALL;MULTILINE;UNICODE;
+Replacement=\1
+Repeat=False
+
+[Common Error Pattern]
+_Name=Spaces around brackets
+_Description=Add or remove spaces around parantheses and square brackets
+Classes=Human;OCR;
+Pattern=( )(\)|\])
+Flags=DOTALL;MULTILINE;UNICODE;
+Replacement=\2
+Repeat=False
+
+[Common Error Pattern]
 _Name=Space after a dialogue dash
 _Description=Add space after a dialogue dash
 Classes=Human;OCR;

@@ -5,6 +5,7 @@
 
 for PATTERN_FILE; do
     CONF_FILE=$(echo "$PATTERN_FILE" | sed "s|.in$|.conf|")
+    [ "$CONF_FILE" = "$PATTERN_FILE" ] && CONF_FILE="$CONF_FILE.conf"
     echo "$CONF_FILE"
     rm -f "$CONF_FILE"
     touch "$CONF_FILE"
