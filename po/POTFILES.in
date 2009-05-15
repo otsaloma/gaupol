@@ -5,6 +5,7 @@ data/glade/assistants/text/common-error.glade
 data/glade/assistants/text/confirmation.glade
 data/glade/assistants/text/hearing-impaired.glade
 data/glade/assistants/text/introduction.glade
+data/glade/assistants/text/join-split-words.glade
 data/glade/assistants/text/line-break-options.glade
 data/glade/assistants/text/line-break.glade
 data/glade/assistants/text/progress.glade
@@ -74,6 +75,7 @@ gaupol/gtk/dialogs/debug.py
 gaupol/gtk/dialogs/encoding.py
 gaupol/gtk/dialogs/file.py
 gaupol/gtk/dialogs/header.py
+gaupol/gtk/dialogs/language.py
 gaupol/gtk/dialogs/preferences.py
 gaupol/gtk/dialogs/search.py
 gaupol/gtk/dialogs/shift.py

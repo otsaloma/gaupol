@@ -1,3 +1,24 @@
+Gaupol 0.15
+===========
+
+ * Add text correction task to split joined words or to join split
+   words using spell-check suggestions (#572667)
+ * Show duration in time mode as seconds
+ * Merge Latin and French common error text correction patterns from
+   subtitleeditor (kitone)
+ * Allow pasting times with comma as a decimal separator (#580339)
+ * Allow bookmarks to be added or removed by double-clicking or
+   pressing enter in the bookmark column (#580346)
+ * Add validation for character encoding given as an argument on the
+   command line using the '-e' option
+ * Fix handling of Unicode BOMs (#568906)
+ * Add UTF-8-SIG character encoding for opening and saving files
+   with a UTF-8 signature/BOM
+ * Fix incorrect handling of common error patterns that at worst
+   caused gaupol to hang due to an eternal loop (#581003)
+ * Abort installation if an intltool-merge or msgfmt call fails
+ * Add messages for raised exceptions
+
 Gaupol 0.14
 ===========
 

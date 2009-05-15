@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-04-13 00:33+0300\n"
+"POT-Creation-Date: 2009-05-15 21:47+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,6 +43,7 @@ msgstr ""
 #: ../data/glade/assistants/text/capitalization.glade.h:3
 #: ../data/glade/assistants/text/common-error.glade.h:6
 #: ../data/glade/assistants/text/hearing-impaired.glade.h:3
+#: ../data/glade/assistants/text/join-split-words.glade.h:5
 #: ../data/glade/assistants/text/line-break.glade.h:3
 msgid "_Language:"
 msgstr ""
@@ -137,6 +138,26 @@ msgstr ""
 
 #: ../data/glade/assistants/text/introduction.glade.h:9
 msgid "_Select corrections to perform on texts:"
+msgstr ""
+
+#: ../data/glade/assistants/text/join-split-words.glade.h:1
+msgid "(None)"
+msgstr ""
+
+#: ../data/glade/assistants/text/join-split-words.glade.h:2
+msgid "<b>Corrections</b>"
+msgstr ""
+
+#: ../data/glade/assistants/text/join-split-words.glade.h:3
+msgid "<b>Spell-check Dictionary</b>"
+msgstr ""
+
+#: ../data/glade/assistants/text/join-split-words.glade.h:4
+msgid "_Join words not found in spell-check dictionary"
+msgstr ""
+
+#: ../data/glade/assistants/text/join-split-words.glade.h:6
+msgid "_Split words not found in spell-check dictionary"
 msgstr ""
 
 #: ../data/glade/assistants/text/line-break-options.glade.h:1
@@ -818,84 +839,92 @@ msgid "Space between digits"
 msgstr ""
 
 #: ../data/patterns/Latn.common-error.in.h:1
-msgid "Add space after a dialogue dash"
+msgid "Add or remove spaces around parantheses and square brackets"
 msgstr ""
 
 #: ../data/patterns/Latn.common-error.in.h:2
-msgid "Add space after an ellipsis"
+msgid "Add space after a dialogue dash"
 msgstr ""
 
 #: ../data/patterns/Latn.common-error.in.h:3
-msgid "Add space after various punctuation marks"
+msgid "Add space after an ellipsis"
 msgstr ""
 
 #: ../data/patterns/Latn.common-error.in.h:4
-msgid "Double apostrophe"
+msgid "Add space after various punctuation marks"
 msgstr ""
 
 #: ../data/patterns/Latn.common-error.in.h:5
-msgid "Letter \"O\" in a number"
+msgid "Double apostrophe"
 msgstr ""
 
 #: ../data/patterns/Latn.common-error.in.h:6
-msgid "Multiple question- and exclamation marks"
+msgid "Letter \"O\" in a number"
 msgstr ""
 
 #: ../data/patterns/Latn.common-error.in.h:7
-msgid "Periods around a punctuation mark"
+msgid "Multiple question- and exclamation marks"
 msgstr ""
 
 #: ../data/patterns/Latn.common-error.in.h:8
-msgid "Remove period before or after various punctuation marks"
+msgid "Periods around a punctuation mark"
 msgstr ""
 
 #: ../data/patterns/Latn.common-error.in.h:9
-msgid "Remove space after a starting- and before an ending quotation mark"
+msgid "Remove period before or after various punctuation marks"
 msgstr ""
 
 #: ../data/patterns/Latn.common-error.in.h:10
-msgid "Remove space after an ellipsis that starts a line"
+msgid "Remove space after a starting- and before an ending quotation mark"
 msgstr ""
 
 #: ../data/patterns/Latn.common-error.in.h:11
-msgid "Remove space before various punctuation marks"
+msgid "Remove space after an ellipsis that starts a line"
 msgstr ""
 
 #: ../data/patterns/Latn.common-error.in.h:12
-msgid "Replace a double apostrophe with a quotation mark"
+msgid "Remove space before various punctuation marks"
 msgstr ""
 
 #: ../data/patterns/Latn.common-error.in.h:13
-msgid "Replace letter \"O\" with a zero in a number"
+msgid "Replace a double apostrophe with a quotation mark"
 msgstr ""
 
 #: ../data/patterns/Latn.common-error.in.h:14
+msgid "Replace letter \"O\" with a zero in a number"
+msgstr ""
+
+#: ../data/patterns/Latn.common-error.in.h:15
 msgid ""
 "Replace multiple consequtive question- and exclamation marks with only one"
 msgstr ""
 
-#: ../data/patterns/Latn.common-error.in.h:15
+#: ../data/patterns/Latn.common-error.in.h:16
 msgid "Space after a dialogue dash"
 msgstr ""
 
-#: ../data/patterns/Latn.common-error.in.h:16
+#: ../data/patterns/Latn.common-error.in.h:17
 msgid "Space after a starting ellipsis"
 msgstr ""
 
-#: ../data/patterns/Latn.common-error.in.h:17
+#: ../data/patterns/Latn.common-error.in.h:18
 msgid "Space after an ellipsis"
 msgstr ""
 
-#: ../data/patterns/Latn.common-error.in.h:18
+#: ../data/patterns/Latn.common-error.in.h:19
 msgid "Space after punctuation marks"
 msgstr ""
 
-#: ../data/patterns/Latn.common-error.in.h:19
+#: ../data/patterns/Latn.common-error.in.h:20
 msgid "Space before punctuation marks"
 msgstr ""
 
-#: ../data/patterns/Latn.common-error.in.h:20
+#: ../data/patterns/Latn.common-error.in.h:21
 msgid "Spaces around a quotation mark"
+msgstr ""
+
+#: ../data/patterns/Latn.common-error.in.h:22
+msgid "Spaces around brackets"
 msgstr ""
 
 #: ../data/patterns/Latn-en-US.common-error.in.h:1
@@ -979,7 +1008,7 @@ msgid "_Description:"
 msgstr ""
 
 #: ../extensions/bookmarks/bookmarks.gaupol-extension.in.h:1
-#: ../extensions/bookmarks/bookmarks.py:511
+#: ../extensions/bookmarks/bookmarks.py:540
 msgid "Bookmarks"
 msgstr ""
 
@@ -989,52 +1018,56 @@ msgstr ""
 
 #. Translators: 'Bm.' is short for 'Bookmark'. It is used in the header
 #. of a tree view column that contains 16 pixels wide pixbufs.
-#: ../extensions/bookmarks/bookmarks.py:101
-#: ../extensions/bookmarks/bookmarks.py:106
+#: ../extensions/bookmarks/bookmarks.py:117
+#: ../extensions/bookmarks/bookmarks.py:122
 msgid "Bm."
 msgstr ""
 
-#: ../extensions/bookmarks/bookmarks.py:177
+#: ../extensions/bookmarks/bookmarks.py:123
+msgid "Bookmark"
+msgstr ""
+
+#: ../extensions/bookmarks/bookmarks.py:198
 msgid "_Bookmarks"
 msgstr ""
 
-#: ../extensions/bookmarks/bookmarks.py:178
+#: ../extensions/bookmarks/bookmarks.py:199
 msgid "_Add…"
 msgstr ""
 
-#: ../extensions/bookmarks/bookmarks.py:179
+#: ../extensions/bookmarks/bookmarks.py:200
 msgid "Add a bookmark for the current subtitle"
 msgstr ""
 
-#: ../extensions/bookmarks/bookmarks.py:181
+#: ../extensions/bookmarks/bookmarks.py:202
 msgid "_Edit Bookmarks"
 msgstr ""
 
-#: ../extensions/bookmarks/bookmarks.py:184 ../gaupol/gtk/actions/view.py:31
+#: ../extensions/bookmarks/bookmarks.py:205 ../gaupol/gtk/actions/view.py:31
 msgid "_Next"
 msgstr ""
 
-#: ../extensions/bookmarks/bookmarks.py:185
+#: ../extensions/bookmarks/bookmarks.py:206
 msgid "Go to the next bookmarked subtitle"
 msgstr ""
 
-#: ../extensions/bookmarks/bookmarks.py:187 ../gaupol/gtk/actions/view.py:52
+#: ../extensions/bookmarks/bookmarks.py:208 ../gaupol/gtk/actions/view.py:52
 msgid "_Previous"
 msgstr ""
 
-#: ../extensions/bookmarks/bookmarks.py:188
+#: ../extensions/bookmarks/bookmarks.py:209
 msgid "Go to the previous bookmarked subtitle"
 msgstr ""
 
-#: ../extensions/bookmarks/bookmarks.py:191
+#: ../extensions/bookmarks/bookmarks.py:212
 msgid "_Bookmark"
 msgstr ""
 
-#: ../extensions/bookmarks/bookmarks.py:192
+#: ../extensions/bookmarks/bookmarks.py:213
 msgid "Show or hide the bookmark column"
 msgstr ""
 
-#: ../extensions/bookmarks/bookmarks.py:220
+#: ../extensions/bookmarks/bookmarks.py:241
 msgid "Search:"
 msgstr ""
 
@@ -1126,11 +1159,11 @@ msgstr ""
 msgid "Transforming positions"
 msgstr ""
 
-#: ../gaupol/agents/search.py:254
+#: ../gaupol/agents/search.py:255
 msgid "Replacing"
 msgstr ""
 
-#: ../gaupol/agents/search.py:279 ../gaupol/agents/search.py:281
+#: ../gaupol/agents/search.py:280 ../gaupol/agents/search.py:282
 msgid "Replacing all"
 msgstr ""
 
@@ -1143,23 +1176,31 @@ msgstr ""
 msgid "Editing text"
 msgstr ""
 
-#: ../gaupol/agents/text.py:171
+#: ../gaupol/agents/text.py:199
 msgid "Breaking lines"
 msgstr ""
 
-#: ../gaupol/agents/text.py:209
+#: ../gaupol/agents/text.py:238
 msgid "Capitalizing texts"
 msgstr ""
 
-#: ../gaupol/agents/text.py:243
+#: ../gaupol/agents/text.py:273
 msgid "Correcting common errors"
 msgstr ""
 
-#: ../gaupol/agents/text.py:276
+#: ../gaupol/agents/text.py:307
 msgid "Removing hearing impaired texts"
 msgstr ""
 
-#: ../gaupol/align.py:27
+#: ../gaupol/agents/text.py:365
+msgid "Joining words by spell-check suggestions"
+msgstr ""
+
+#: ../gaupol/agents/text.py:415
+msgid "Splitting words by spell-check suggestions"
+msgstr ""
+
+#: ../gaupol/align.py:27 ../gaupol/gtk/fields.py:30
 msgid "Subtitle number"
 msgstr ""
 
@@ -1298,16 +1339,16 @@ msgstr ""
 
 #: ../gaupol/encodings.py:115 ../gaupol/encodings.py:116
 #: ../gaupol/encodings.py:117 ../gaupol/encodings.py:118
-#: ../gaupol/encodings.py:119
+#: ../gaupol/encodings.py:119 ../gaupol/encodings.py:120
 msgid "Unicode"
 msgstr ""
 
-#: ../gaupol/encodings.py:163
+#: ../gaupol/encodings.py:147
 #, python-format
 msgid "%(description)s (%(name)s)"
 msgstr ""
 
-#: ../gaupol/encodings.py:230
+#: ../gaupol/encodings.py:240
 #, python-format
 msgid "Current locale (%s)"
 msgstr ""
@@ -1364,115 +1405,115 @@ msgstr ""
 msgid "Edit the focused column of the next subtitle"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:141
+#: ../gaupol/gtk/actions/edit.py:144
 msgid "_Edit Cell"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:142
+#: ../gaupol/gtk/actions/edit.py:145
 msgid "Edit"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:144
+#: ../gaupol/gtk/actions/edit.py:147
 msgid "Edit the focused cell"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:165
+#: ../gaupol/gtk/actions/edit.py:171
 msgid "Extend To _Beginning"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:166
+#: ../gaupol/gtk/actions/edit.py:172
 msgid "Extend the current selection up to the first subtitle"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:187
+#: ../gaupol/gtk/actions/edit.py:193
 msgid "Extend To _End"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:188
+#: ../gaupol/gtk/actions/edit.py:194
 msgid "Extend the current selection up to the last subtitle"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:209
+#: ../gaupol/gtk/actions/edit.py:215
 msgid "_Insert Subtitles…"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:210
+#: ../gaupol/gtk/actions/edit.py:216
 msgid "Insert"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:212
+#: ../gaupol/gtk/actions/edit.py:218
 msgid "Insert subtitles"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:232
+#: ../gaupol/gtk/actions/edit.py:238
 msgid "_Invert Selection"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:233
+#: ../gaupol/gtk/actions/edit.py:239
 msgid "Invert the current selection"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:252
+#: ../gaupol/gtk/actions/edit.py:258
 msgid "_Merge Subtitles"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:253
+#: ../gaupol/gtk/actions/edit.py:259
 msgid "Merge the selected subtitles"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:274
+#: ../gaupol/gtk/actions/edit.py:280
 msgid "_Paste"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:276
+#: ../gaupol/gtk/actions/edit.py:282
 msgid "Paste texts from the clipboard"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:300
+#: ../gaupol/gtk/actions/edit.py:306
 msgid "_Redo"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:302
+#: ../gaupol/gtk/actions/edit.py:308
 msgid "Redo the last undone action"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:322
+#: ../gaupol/gtk/actions/edit.py:328
 msgid "Rem_ove Subtitles"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:323
+#: ../gaupol/gtk/actions/edit.py:329
 msgid "Remove"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:325
+#: ../gaupol/gtk/actions/edit.py:331
 msgid "Remove the selected subtitles"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:344
+#: ../gaupol/gtk/actions/edit.py:350
 msgid "Select _All"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:346
+#: ../gaupol/gtk/actions/edit.py:352
 msgid "Select all subtitles"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:365
+#: ../gaupol/gtk/actions/edit.py:371
 msgid "Sele_ction"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:383
+#: ../gaupol/gtk/actions/edit.py:389
 msgid "_Split Subtitle"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:384
+#: ../gaupol/gtk/actions/edit.py:390
 msgid "Split the selected subtitle"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:406
+#: ../gaupol/gtk/actions/edit.py:412
 msgid "_Undo"
 msgstr ""
 
-#: ../gaupol/gtk/actions/edit.py:408
+#: ../gaupol/gtk/actions/edit.py:414
 msgid "Undo the last action"
 msgstr ""
 
@@ -1520,7 +1561,7 @@ msgstr ""
 msgid "_Open…"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:139 ../gaupol/gtk/agents/open.py:422
+#: ../gaupol/gtk/actions/file.py:139 ../gaupol/gtk/agents/open.py:424
 msgid "Open"
 msgstr ""
 
@@ -1532,7 +1573,7 @@ msgstr ""
 msgid "Open _Translation…"
 msgstr ""
 
-#: ../gaupol/gtk/actions/file.py:156 ../gaupol/gtk/agents/open.py:433
+#: ../gaupol/gtk/actions/file.py:156 ../gaupol/gtk/agents/open.py:435
 msgid "Open Translation"
 msgstr ""
 
@@ -1969,7 +2010,7 @@ msgid_plural "Inserted %d subtitles to fit clipboard contents"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../gaupol/gtk/agents/edit.py:265
+#: ../gaupol/gtk/agents/edit.py:270
 msgid "Use Shift+Return for line-break"
 msgstr ""
 
@@ -2074,17 +2115,17 @@ msgstr ""
 msgid "Open _Without Saving"
 msgstr ""
 
-#: ../gaupol/gtk/agents/open.py:363
+#: ../gaupol/gtk/agents/open.py:365
 #, python-format
 msgid "Appended %(amount)d subtitles from \"%(basename)s\""
 msgstr ""
 
-#: ../gaupol/gtk/agents/open.py:502
+#: ../gaupol/gtk/agents/open.py:504
 #, python-format
 msgid "Opened main file \"%s\""
 msgstr ""
 
-#: ../gaupol/gtk/agents/open.py:526
+#: ../gaupol/gtk/agents/open.py:528
 #, python-format
 msgid "Opened translation file \"%s\""
 msgstr ""
@@ -2146,139 +2187,158 @@ msgstr ""
 msgid "Saved translation document as \"%s\""
 msgstr ""
 
-#: ../gaupol/gtk/application.py:143
+#: ../gaupol/gtk/application.py:144
 msgid "Framerate:"
 msgstr ""
 
-#: ../gaupol/gtk/application.py:208
+#: ../gaupol/gtk/application.py:209
 msgid "Open a recently used main file"
 msgstr ""
 
-#: ../gaupol/gtk/application.py:225
+#: ../gaupol/gtk/application.py:226
 msgid "Redo undone actions"
 msgstr ""
 
-#: ../gaupol/gtk/application.py:278
+#: ../gaupol/gtk/application.py:279
 msgid "Undo actions"
 msgstr ""
 
-#: ../gaupol/gtk/application.py:328
+#: ../gaupol/gtk/application.py:329
 msgid "Video file:"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:88
+#: ../gaupol/gtk/assistants.py:89
 msgid "Select Tasks and Target"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:276
+#: ../gaupol/gtk/assistants.py:277
 msgid "Other"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:442
+#: ../gaupol/gtk/assistants.py:443
 msgid "Capitalize texts written in lower case"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:444
+#: ../gaupol/gtk/assistants.py:445
 msgid "Select Capitalization Patterns"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:446
+#: ../gaupol/gtk/assistants.py:447
 msgid "Capitalize texts"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:471
+#: ../gaupol/gtk/assistants.py:472
 msgid "Correct common errors made by humans or image recognition software"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:474
+#: ../gaupol/gtk/assistants.py:475
 msgid "Select Common Error Patterns"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:476
+#: ../gaupol/gtk/assistants.py:477
 msgid "Correct common errors"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:543
+#: ../gaupol/gtk/assistants.py:544
 msgid "Remove explanatory texts meant for the hearing impaired"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:546
+#: ../gaupol/gtk/assistants.py:547
 msgid "Select Hearing Impaired Patterns"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:548
+#: ../gaupol/gtk/assistants.py:549
 msgid "Remove hearing impaired texts"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:573
+#: ../gaupol/gtk/assistants.py:587
+msgid ""
+"Use spell-check suggestions to fix whitespace detection errors of image "
+"recognition software"
+msgstr ""
+
+#: ../gaupol/gtk/assistants.py:590
+msgid "Set Options for Joining and Splitting Words"
+msgstr ""
+
+#: ../gaupol/gtk/assistants.py:592
+msgid "Join or Split Words"
+msgstr ""
+
+#: ../gaupol/gtk/assistants.py:648 ../gaupol/gtk/dialogs/spellcheck.py:435
+#, python-format
+msgid "Failed to load dictionary for language \"%s\""
+msgstr ""
+
+#: ../gaupol/gtk/assistants.py:679
 msgid "Break text into lines of defined length"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:575
+#: ../gaupol/gtk/assistants.py:681
 msgid "Select Line-Break Patterns"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:577
+#: ../gaupol/gtk/assistants.py:683
 msgid "Break lines"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:632
+#: ../gaupol/gtk/assistants.py:738
 msgid "Set Line-Break Options"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:736
+#: ../gaupol/gtk/assistants.py:842
 msgid "Correcting Texts"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:743
+#: ../gaupol/gtk/assistants.py:849
 msgid "Each task is now being run on each project."
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:770
+#: ../gaupol/gtk/assistants.py:876
 #, python-format
 msgid "%(current)d of %(total)d tasks complete"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:779
+#: ../gaupol/gtk/assistants.py:885
 #, python-format
 msgid "Project: %s"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:787
+#: ../gaupol/gtk/assistants.py:893
 #, python-format
 msgid "Task: %s"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:811
+#: ../gaupol/gtk/assistants.py:917
 msgid "Confirm Changes"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:874
+#: ../gaupol/gtk/assistants.py:980
 msgid "Accept"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:878
+#: ../gaupol/gtk/assistants.py:984
 msgid "Original Text"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:879
+#: ../gaupol/gtk/assistants.py:985
 msgid "Corrected Text"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:1022
+#: ../gaupol/gtk/assistants.py:1128
 msgid "Correct Texts"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:1060
+#: ../gaupol/gtk/assistants.py:1168
 msgid "Correcting texts"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:1077
+#: ../gaupol/gtk/assistants.py:1185
 #, python-format
 msgid "Edited %(edits)d and removed %(removals)d subtitles"
 msgstr ""
 
-#: ../gaupol/gtk/assistants.py:1108
+#: ../gaupol/gtk/assistants.py:1216
 #, python-format
 msgid "Confirm %d Change"
 msgid_plural "Confirm %d Changes"
@@ -2363,6 +2423,10 @@ msgid ""
 "any of \"TIME\", \"23.98\", \"25.00\" or \"29.97\"."
 msgstr ""
 
+#: ../gaupol/gtk/dialogs/language.py:117
+msgid "Set Language"
+msgstr ""
+
 #: ../gaupol/gtk/dialogs/preferences.py:227
 #, python-format
 msgid "%s Extension Website"
@@ -2407,13 +2471,8 @@ msgstr ""
 msgid "seconds"
 msgstr ""
 
-#: ../gaupol/gtk/dialogs/spellcheck.py:407
+#: ../gaupol/gtk/dialogs/spellcheck.py:408
 msgid "Spell-checking"
-msgstr ""
-
-#: ../gaupol/gtk/dialogs/spellcheck.py:434
-#, python-format
-msgid "Failed to load dictionary for language \"%s\""
 msgstr ""
 
 #: ../gaupol/gtk/dialogs/split.py:85
@@ -2441,68 +2500,90 @@ msgstr ""
 msgid "No."
 msgstr ""
 
-#: ../gaupol/gtk/fields.py:36
+#: ../gaupol/gtk/fields.py:37
 msgid "Start"
 msgstr ""
 
-#: ../gaupol/gtk/fields.py:43
+#: ../gaupol/gtk/fields.py:38
+msgid "Start position"
+msgstr ""
+
+#: ../gaupol/gtk/fields.py:45
 msgid "End"
 msgstr ""
 
-#: ../gaupol/gtk/fields.py:50
+#: ../gaupol/gtk/fields.py:46
+msgid "End position"
+msgstr ""
+
+#. Translators: 'Dur.' is short for duration. It is used in the header of a
+#. tree view column that contains five characters wide numbers.
+#: ../gaupol/gtk/fields.py:55
+msgid "Dur."
+msgstr ""
+
+#: ../gaupol/gtk/fields.py:56
 msgid "Duration"
 msgstr ""
 
-#: ../gaupol/gtk/fields.py:57
+#: ../gaupol/gtk/fields.py:63
 msgid "Main Text"
 msgstr ""
 
 #: ../gaupol/gtk/fields.py:64
+msgid "Main text"
+msgstr ""
+
+#: ../gaupol/gtk/fields.py:71
 msgid "Translation Text"
 msgstr ""
 
-#: ../gaupol/gtk/main.py:126
+#: ../gaupol/gtk/fields.py:72
+msgid "Translation text"
+msgstr ""
+
+#: ../gaupol/gtk/main.py:130
 msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
 msgstr ""
 
-#: ../gaupol/gtk/main.py:133
+#: ../gaupol/gtk/main.py:137
 msgid "show version number and exit"
 msgstr ""
 
-#: ../gaupol/gtk/main.py:139 ../gaupol/gtk/main.py:164
-#: ../gaupol/gtk/main.py:183
+#: ../gaupol/gtk/main.py:143 ../gaupol/gtk/main.py:168
+#: ../gaupol/gtk/main.py:187
 msgid "FILE"
 msgstr ""
 
-#: ../gaupol/gtk/main.py:142
+#: ../gaupol/gtk/main.py:146
 msgid "set the configuration file used"
 msgstr ""
 
-#: ../gaupol/gtk/main.py:148
+#: ../gaupol/gtk/main.py:152
 msgid "ENCODING"
 msgstr ""
 
-#: ../gaupol/gtk/main.py:151
+#: ../gaupol/gtk/main.py:155
 msgid "set the encoding used to open files"
 msgstr ""
 
-#: ../gaupol/gtk/main.py:158
+#: ../gaupol/gtk/main.py:162
 msgid "list all available character encodings"
 msgstr ""
 
-#: ../gaupol/gtk/main.py:167
+#: ../gaupol/gtk/main.py:171
 msgid "open translation file"
 msgstr ""
 
-#: ../gaupol/gtk/main.py:173
+#: ../gaupol/gtk/main.py:177
 msgid "METHOD"
 msgstr ""
 
-#: ../gaupol/gtk/main.py:176
+#: ../gaupol/gtk/main.py:180
 msgid "method used to align translation subtitles: 'number' or 'position'"
 msgstr ""
 
-#: ../gaupol/gtk/main.py:186
+#: ../gaupol/gtk/main.py:190
 msgid "select video file"
 msgstr ""
 
@@ -2515,31 +2596,31 @@ msgstr ""
 msgid "Untitled %d"
 msgstr ""
 
-#: ../gaupol/gtk/page.py:122
+#: ../gaupol/gtk/page.py:127
 msgid "Close project"
 msgstr ""
 
-#: ../gaupol/gtk/page.py:299
+#: ../gaupol/gtk/page.py:307
 #, python-format
 msgid "<b>Path:</b> %s"
 msgstr ""
 
-#: ../gaupol/gtk/page.py:300
+#: ../gaupol/gtk/page.py:308
 #, python-format
 msgid "<b>Format:</b> %s"
 msgstr ""
 
-#: ../gaupol/gtk/page.py:301
+#: ../gaupol/gtk/page.py:309
 #, python-format
 msgid "<b>Character encoding:</b> %s"
 msgstr ""
 
-#: ../gaupol/gtk/page.py:302
+#: ../gaupol/gtk/page.py:310
 #, python-format
 msgid "<b>Newlines:</b> %s"
 msgstr ""
 
-#: ../gaupol/gtk/page.py:339
+#: ../gaupol/gtk/page.py:347
 #, python-format
 msgid "%s translation"
 msgstr ""
