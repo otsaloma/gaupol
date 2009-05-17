@@ -136,7 +136,8 @@ class View(gtk.TreeView):
         self.set_search_column(self.columns.NUMBER)
         def equals_subtitle_number(store, column, key, itr):
             # Return False if key matches subtitle number.
-            return store.get_path(itr)[0] != (int(key) - 1)
+            try: return store.get_path(itr)[0] != (int(key) - 1)
+            except ValueError: return False
         self.set_search_equal_func(equals_subtitle_number)
 
     def _init_signal_handlers(self):
