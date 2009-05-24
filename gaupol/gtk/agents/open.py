@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -332,7 +332,7 @@ class OpenAgent(gaupol.Delegate):
         self.set_current_page(page)
         self.emit("page-added", page)
 
-    def add_to_recent_files(self, path, doc):
+    def add_to_recent_files(self, path, format, doc):
         """Add path to recent files managed by the recent manager."""
 
         uri = gaupol.util.path_to_uri(path)
@@ -340,8 +340,10 @@ class OpenAgent(gaupol.Delegate):
             group = "gaupol-main"
         elif doc == gaupol.documents.TRAN:
             group = "gaupol-translation"
-        metadata = {"mime_type": "text/plain", "app_name": "gaupol",
-            "app_exec": "gaupol %F", "groups": (group,),}
+        metadata = {"mime_type": format.mime_type,
+                    "app_name": "gaupol",
+                    "app_exec": "gaupol %F",
+                    "groups": (group,),}
         self.recent_manager.add_full(uri, metadata)
 
     def append_file(self, path, encoding=None):
@@ -499,7 +501,8 @@ class OpenAgent(gaupol.Delegate):
         page = self._open_file(path, encodings, gaupol.documents.MAIN)
         gaupol.gtk.util.set_cursor_busy(self.window)
         self.add_new_page(page)
-        self.add_to_recent_files(path, gaupol.documents.MAIN)
+        format = page.project.main_file.format
+        self.add_to_recent_files(path, format, gaupol.documents.MAIN)
         basename = page.get_main_basename()
         self.flash_message(_('Opened main file "%s"') % basename)
         gaupol.gtk.util.iterate_main()
@@ -523,7 +526,8 @@ class OpenAgent(gaupol.Delegate):
         col = page.view.columns.TRAN_TEXT
         if not page.view.get_column(col).get_visible():
             self.get_column_action(gaupol.gtk.fields.TRAN_TEXT).activate()
-        self.add_to_recent_files(path, gaupol.documents.TRAN)
+        format = page.project.tran_file.format
+        self.add_to_recent_files(path, format, gaupol.documents.TRAN)
         basename = page.get_translation_basename()
         self.flash_message(_('Opened translation file "%s"') % basename)
         gaupol.gtk.util.set_cursor_normal(self.window)

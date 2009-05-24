@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -188,7 +188,8 @@ class SaveAgent(gaupol.Delegate):
         props[0] = props[0] or page.get_main_basename()
         props = self._select_file(_("Save As"), props)
         self._save_document(page, gaupol.documents.MAIN, props)
-        self.add_to_recent_files(props[0], gaupol.documents.MAIN)
+        format = page.project.main_file.format
+        self.add_to_recent_files(props[0], format, gaupol.documents.MAIN)
         message = _('Saved main document as "%s"')
         self.flash_message(message % os.path.basename(props[0]))
 
@@ -212,6 +213,7 @@ class SaveAgent(gaupol.Delegate):
         props[0] = props[0] or page.get_translation_basename()
         props = self._select_file(_("Save Translation As"), props)
         self._save_document(page, gaupol.documents.TRAN, props)
-        self.add_to_recent_files(props[0], gaupol.documents.TRAN)
+        format = page.project.tran_file.format
+        self.add_to_recent_files(props[0], format, gaupol.documents.TRAN)
         message = _('Saved translation document as "%s"')
         self.flash_message(message % os.path.basename(props[0]))

@@ -1,3 +1,9 @@
+Gaupol 0.16
+===========
+
+ [D] Use existing subtitle file mime-types instead of text/plain when
+     adding files to the recent files database
+
 Gaupol 1.0
 ==========
 

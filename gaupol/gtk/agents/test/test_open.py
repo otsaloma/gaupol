@@ -147,9 +147,10 @@ class TestOpenAgent(gaupol.gtk.TestCase):
 
     def test_add_to_recent_files(self):
 
-        path = self.get_subrip_path()
-        self.delegate.add_to_recent_files(path, gaupol.documents.MAIN)
-        self.delegate.add_to_recent_files(path, gaupol.documents.TRAN)
+        add = self.delegate.add_to_recent_files
+        format = gaupol.formats.SUBRIP
+        add(self.get_subrip_path(), format, gaupol.documents.MAIN)
+        add(self.get_subrip_path(), format, gaupol.documents.TRAN)
 
     @adds_pages(0)
     def test_append_file(self):

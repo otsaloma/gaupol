@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,7 +14,14 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Enumerations for subtitle file format types."""
+"""Enumerations for subtitle file format types.
+
+Mime-types of subtitle file formats conform to those defined in
+freedesktop.org's shared-mime-info package [1]. For all formats not included in
+shared-mime-info, 'text/plain' is used as the mime-type.
+
+ [1] http://freedesktop.org/wiki/Software/shared-mime-info
+"""
 
 import gaupol
 
@@ -28,6 +35,7 @@ class AdvSubStationAlpha(gaupol.EnumerationItem):
     has_header = True
     identifier = r"^ScriptType:\s*[vV]4.00\+\s*$"
     label = "Advanced Sub Station Alpha"
+    mime_type = "text/x-ssa"
 
 
 class MicroDVD(gaupol.EnumerationItem):
@@ -37,6 +45,7 @@ class MicroDVD(gaupol.EnumerationItem):
     has_header = True
     identifier = r"^\{-?\d+\}\{-?\d+\}"
     label = "MicroDVD"
+    mime_type = "text/x-microdvd"
 
 
 class MPL2(gaupol.EnumerationItem):
@@ -46,6 +55,7 @@ class MPL2(gaupol.EnumerationItem):
     has_header = False
     identifier = r"^\[-?\d+\]\[-?\d+\]"
     label = "MPL2"
+    mime_type = "text/plain"
 
 
 class MPsub(gaupol.EnumerationItem):
@@ -55,6 +65,7 @@ class MPsub(gaupol.EnumerationItem):
     has_header = True
     identifier = r"^FORMAT=(TIME|[\d.]+)\s*$"
     label = "MPsub"
+    mime_type = "text/x-mpsub"
 
 
 class SubRip(gaupol.EnumerationItem):
@@ -67,6 +78,7 @@ class SubRip(gaupol.EnumerationItem):
         r" -?\d\d:\d\d:\d\d,\d\d\d"
         r"(  X1:\d+ X2:\d+ Y1:\d+ Y2:\d+)?\s*$")
     label = "SubRip"
+    mime_type = "application/x-subrip"
 
 
 class SubStationAlpha(gaupol.EnumerationItem):
@@ -76,6 +88,7 @@ class SubStationAlpha(gaupol.EnumerationItem):
     has_header = True
     identifier = r"^ScriptType:\s*[vV]4.00\s*$"
     label = "Sub Station Alpha"
+    mime_type = "text/x-ssa"
 
 
 class SubViewer2(gaupol.EnumerationItem):
@@ -87,6 +100,7 @@ class SubViewer2(gaupol.EnumerationItem):
         r"^-?\d\d:\d\d:\d\d\.\d\d"
         r",-?\d\d:\d\d:\d\d\.\d\d\s*$")
     label = "SubViewer 2.0"
+    mime_type = "text/x-subviewer"
 
 
 class TMPlayer(gaupol.EnumerationItem):
@@ -96,6 +110,7 @@ class TMPlayer(gaupol.EnumerationItem):
     has_header = False
     identifier = r"^-?\d\d:\d\d:\d\d:"
     label = "TMPlayer"
+    mime_type = "text/plain"
 
 
 formats = gaupol.Enumeration()
