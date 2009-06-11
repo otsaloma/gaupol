@@ -12,12 +12,13 @@ Gaupol 1.0
  * Add a wiki page for publishing extensions
  * Add a wiki page for publishing pattern files
  * Migrate from Glade to gtk.Builder
+ * Add a built-in GStreamer-based video player
 
 Gaupol 3000
 ===========
 
- * Add a built-in GStreamer video player (as extension?)
  * Replace the headers-dialog with a more general properties-dialog
+   with format-specific fields to fill (?)
    - SubRip: Write coordinates (extended SubRip format)
    - MicroDVD: Write framerate information subtitle
  * Bump Python dependency to 2.6

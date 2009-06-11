@@ -55,6 +55,7 @@ class SetAgent(gaupol.Delegate):
         subtitle = self.subtitles[index]
         orig_end = subtitle.end
         subtitle.duration = value
+        if subtitle.end == orig_end: return
 
         action = self.get_revertable_action(register)
         action.docs = tuple(gaupol.documents)
@@ -74,6 +75,7 @@ class SetAgent(gaupol.Delegate):
         subtitle = self.subtitles[index]
         orig_value = subtitle.end
         subtitle.end = value
+        if subtitle.end == orig_value: return
 
         action = self.get_revertable_action(register)
         action.docs = tuple(gaupol.documents)
@@ -98,6 +100,7 @@ class SetAgent(gaupol.Delegate):
         subtitle = self.subtitles[index]
         orig_value = subtitle.start
         subtitle.start = value
+        if subtitle.start == orig_value: return
         index = self._move_if_needed(index)
 
         action = self.get_revertable_action(register)
