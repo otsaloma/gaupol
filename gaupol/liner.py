@@ -276,3 +276,4 @@ class Liner(gaupol.Parser):
         next should be True to start at beginning, False for end.
         """
         gaupol.Parser.set_text(self, text.strip(), next)
+        self.text = self.text.strip()
