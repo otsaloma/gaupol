@@ -22,6 +22,7 @@ import codecs
 import contextlib
 import gaupol
 import os
+import sys
 
 __all__ = ("SubtitleFile",)
 
@@ -127,17 +128,21 @@ class SubtitleFile(object):
         assert self.format.has_header
 
     def get_template_header(self):
-        """Read and return the header from a template file."""
+        """Read and return the header from a template file.
 
+        Raise IOError if reading global header file fails.
+        Raise UnicodeError if decoding global header file fails.
+        """
         basename = self.format.name.lower()
-        read = gaupol.deco.silent(IOError, UnicodeError)(gaupol.util.read)
         directory = os.path.join(gaupol.DATA_HOME_DIR, "headers")
         path = os.path.join(directory, basename)
         if os.path.isfile(path):
-            return read(path, None)
+            try: return gaupol.util.read(path, None)
+            except (IOError, UnicodeError):
+                gaupol.util.print_read_io(sys.exc_info(), path)
         directory = os.path.join(gaupol.DATA_DIR, "headers")
         path = os.path.join(directory, basename)
-        return read(path, "ascii")
+        return gaupol.util.read(path, "ascii")
 
     def read(self):
         """Read file and return subtitles.
