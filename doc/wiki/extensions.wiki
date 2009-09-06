@@ -1,0 +1,32 @@
+= Gaupol Extensions =
+
+<<TableOfContents(2)>>
+
+This page contains a list of third party extensions. If you have written an extension that may be of interest for others, you can post a description of the extension and a link to where it can be downloaded from. If you have an idea for what would make an excellent extension, but cannot implement it yourself you can post that idea in the hope that someone would pick it up.
+
+To install one of the extensions, place the files in a directory under `~/.local/share/gaupol/extensions` on Unix or under `C:\Documents and Settings\USERNAME\Application Data\Gaupol\extensions` on Windows XP or under `C:\Users\USERNAME\AppData\Roaming\Gaupol\extensions` on Windows Vista. The files should include at least a `.gaupol-extension` file and one or more `.py` files. To activate the extension, select ''Preferences'' from the ''Edit'' menu and go to the ''Extensions'' tab.
+
+== Available Extensions ==
+
+Please use the following template to post your extension. If you need to add screenshots or a description longer than a couple lines, please add a short entry here with a link to a subpage with the detailed information.
+
+{{{
+=== Name of the Extension ===
+Description of the extension
+Author: Your Name
+[[http://link.to.download.location/]]
+}}}
+
+...
+
+== Ideas for Extensions ==
+
+=== Format-Specific Editing ===
+
+Gaupol supports editing of a limited amount of fields common to all subtitle file formats: start position, end position, duration and text. For editing markup, Gaupol provides only means to toggle italicization. While these should be sufficient for normal subtitles and good limits to ensure readability, some may wish to utilize the bling-features of bling-formats. Editing format-specific fields and format-specific markup can be implemented with extensions. For example, for Sub Station Alpha formats the following could be done with an extension.
+
+* Add columns to the subtitle view for all additional fields in Sub Station Alpha formats. This may require writing custom cell renderers, e.g. a color cell renderer, which displays the color and where editing happens with a color picker dialog, while the data is saved as hexadecimal strings.
+
+* Add dialogs for editing the header and styles.
+
+* Add tools for manipulating markup, e.g. applying certain markup on a subtitle or removing it.
