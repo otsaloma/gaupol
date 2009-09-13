@@ -66,31 +66,31 @@ Copyright=Copyright (C) 2008-2009 Osmo Salomaa;
 Website=http://home.gna.org/gaupol
 }}}
 
-* `GaupolVersion` defines the version of Gaupol that the extension has been verified to function properly with. You don't need to check compatibility with each new version of Gaupol or keep bumping this number; Gaupol currently does nothing with this information. It will, however, be used in the future to refuse to load old extensions if there have been some major API changes.
+ * '''`GaupolVersion`''' defines the version of Gaupol that the extension has been verified to function properly with. You don't need to check compatibility with each new version of Gaupol or keep bumping this number; Gaupol currently does nothing with this information. It will, however, be used in the future to refuse to load old extensions if there have been some major API changes.
 
-* `Module` defines the name (sans extension) of the file that the code can be found in. It is passed to the `__import__` function in Python. This means that it can actually be a package instead of a module if you have a lot of code. In the case of a package, you need to import the extension class in your package's `__init__` file.
+ * '''`Module`''' defines the name (sans extension) of the file that the code can be found in. It is passed to the `__import__` function in Python. This means that it can actually be a package instead of a module if you have a lot of code. In the case of a package, you need to import the extension class in your package's `__init__` file.
 
-* `Requires` defines a semicolon-separated list of other extension modules that the extension depends on. In this example, the bookmarks extension adds a page to the side pane widget provided by the side-pane extension.
+ * '''`Requires`''' defines a semicolon-separated list of other extension modules that the extension depends on. In this example, the bookmarks extension adds a page to the side pane widget provided by the side-pane extension.
 
-* `Name` defines the name of the extension as it is shown to the user in the list of available extensions in the preferences dialog.
+ * '''`Name`''' defines the name of the extension as it is shown to the user in the list of available extensions in the preferences dialog.
 
-* `Description` defines a short, one-line description of the extension as it is shown to the user in the list of available extensions in the preferences dialog.
+ * '''`Description`''' defines a short, one-line description of the extension as it is shown to the user in the list of available extensions in the preferences dialog.
 
-* `Version` is the version number of the extension and is shown to the user in the extension's about dialog. If developing a large extension with frequent releases, using version numbers may help the users keep track of the changes.
+ * '''`Version`''' is the version number of the extension and is shown to the user in the extension's about dialog. If developing a large extension with frequent releases, using version numbers may help the users keep track of the changes.
 
-* `Authors` defines a semicolon-separated list of authors' names and email addresses in the common format ''NAME <EMAIL>'', which are shown to the user in the extension's about dialog.
+ * '''`Authors`''' defines a semicolon-separated list of authors' names and email addresses in the common format ''NAME <EMAIL>'', which are shown to the user in the extension's about dialog.
 
-* `Copyright` defines a semicolon-separated list of copyright strings, which are shown to the user in the extension's about dialog.
+ * '''`Copyright`''' defines a semicolon-separated list of copyright strings, which are shown to the user in the extension's about dialog.
 
-* `Website` defines a URL pointing to where the extension can be downloaded from. It is shown as a clickable link in the extension's about dialog.
+ * '''`Website`''' defines a URL pointing to where the extension can be downloaded from. It is shown as a clickable link in the extension's about dialog.
 
-* `Hidden` defines whether or not the extension should be visible in the extension list in the preferences dialog or not. The implicit default value is `False`; you can use `True` to hide the extension. This is useful if the extension by itself does nothing, but is required by other extensions that actually do something. For example, the side pane extension is hidden, because nobody needs a blank side pane. The bookmarks extension uses the side pane and when it is activated, the side pane extension is automatically activated as well.
+ * '''`Hidden`''' defines whether or not the extension should be visible in the extension list in the preferences dialog or not. The implicit default value is `False`; you can use `True` to hide the extension. This is useful if the extension by itself does nothing, but is required by other extensions that actually do something. For example, the side pane extension is hidden, because nobody needs a blank side pane. The bookmarks extension uses the side pane and when it is activated, the side pane extension is automatically activated as well.
 
 == Important Gaupol API ==
 
-The `setup`, `teardown` and `update` methods give you access to the application instance, which contains the user interface common to all projects. The `get_current_page` method of application returns the page instance corresponding to the currently active tab in the user interface. Page gives you access to the data (project) and a subclass of gtk.TreeView to display that data (view). The actual subtitles are accessible via a project instance variable, but most of the time, you'll rather want to use methods in the Project class to modify the subtitles, because that way the modifications will be registered with the undo/redo-system. These are the main classes of gaupol and their relations are presented in the below UML-diagram.
+The `setup`, `teardown` and `update` methods give you access to the application instance, which contains the user interface common to all projects. The `get_current_page` method of application returns the page instance corresponding to the currently active tab in the user interface. Page gives you access to the data (project) and a subclass of gtk.!TreeView to display that data (view). The actual subtitles are accessible via a project instance variable, but most of the time, you'll rather want to use methods in the Project class to modify the subtitles, because that way the modifications will be registered with the undo/redo-system. These are the main classes of gaupol and their relations are presented in the below UML-diagram.
 
-{{http://somewhere/classes.png}}
+{{attachment:classes.png}}
 
 Note, that when viewing the automatically generated, non-magic-aware [[http://users.tkk.fi/~otsaloma/gaupol/doc/api/|API documentation]], the methods of `gaupol.gtk.Application` are implemented by classes under `gaupol.gtk.agents` and similarly for `gaupol.Project` under `gaupol.agents`.
 
@@ -133,23 +133,23 @@ The ''Extensions'' tab of Gaupol's preferences dialog allows the user to view do
 
 === Adding Menu- and Toolbar Items ===
 
-`gtk.UIManager` is used to add menu- and toolbar items. In the `setup` method, the UI manager instance is available as `application.uim`. Consult the documentation on `[[http://library.gnome.org/devel/pygtk/stable/class-gtkuimanager.html|gtk.UIManager]]` or see the extensions shipped with Gaupol for an example on how to use UI manager.
+`gtk.UIManager` is used to add menu- and toolbar items. In the `setup` method, the UI manager instance is available as `application.uim`. Consult the documentation on [[http://library.gnome.org/devel/pygtk/stable/class-gtkuimanager.html|gtk.UIManager]] or see the extensions shipped with Gaupol for an example on how to use UI manager.
 
 === Adding a Column to the Subtitle View ===
 
 Adding a column to the subtitle view is fairly easy if you're familiar with `gtk.TreeView`. Below is an adapted piece of code from the bookmarks extension that adds one pixbuf column to `page.view`. Apart from the usual tree view routines, there is an `identifier` attribute set on the column, which is used to update the `page.view.columns` enumeration.
 
 {{{#!python
-        renderer = gtk.CellRendererPixbuf()
-        column = gtk.TreeViewColumn("Bm.", renderer)
-        column.set_clickable(True)
-        column.set_reorderable(True)
-        label = page.view.get_header_label("Bm.")
-        label.set_tooltip_text("Bookmark")
-        column.set_widget(label)
-        column.set_data("identifier", "bookmark")
-        column.set_cell_data_func(renderer, func)
-        page.view.insert_column(column, 0)
+renderer = gtk.CellRendererPixbuf()
+column = gtk.TreeViewColumn("Bm.", renderer)
+column.set_clickable(True)
+column.set_reorderable(True)
+label = page.view.get_header_label("Bm.")
+label.set_tooltip_text("Bookmark")
+column.set_widget(label)
+column.set_data("identifier", "bookmark")
+column.set_cell_data_func(renderer, func)
+page.view.insert_column(column, 0)
 }}}
 
 The bookmarks extension uses `set_cell_data_func` to display data in the column. `set_cell_data_func` is known to be very inefficient, it results in a very large amount of calls to the defined function. This is fine for bookmarks, where most rows are empty, and in the rest, the same preloaded icon is shown. But, if adding columns with more complicated data, you may wish to explore more efficient ways of loading that data and if such ways require any changes to gaupol, they will be welcomed.
@@ -164,7 +164,7 @@ Requires=side-pane;
 }}}
 
 {{{#!python
-        application.side_pane.add_page(widget, "foo", "Foo")
+application.side_pane.add_page(widget, "foo", "Foo")
 }}}
 
 === Adding a Text View or an Entry to the Main Window ===
@@ -172,6 +172,7 @@ Requires=side-pane;
 Gaupol contains a lot of keybindings that do not require a modifier (e.g. the Control key). If adding some text input widget in the main window, it is needed to disable an action group to avoid triggering UI manager actions when typing text. You need to keep track of where the focus is in the main window and depending on that, enable or disable the `main-unsafe` action group. Below is how it is done in the side pane extension.
 
 {{{#!python
+    def setup(self, application):
         callback = self._on_application_window_set_focus
         handler_id = application.window.connect("set-focus", callback)
 

@@ -17,16 +17,14 @@ Author: Your Name
 [[http://link.to.download.location/]]
 }}}
 
-...
-
 == Ideas for Extensions ==
 
 === Format-Specific Editing ===
 
 Gaupol supports editing of a limited amount of fields common to all subtitle file formats: start position, end position, duration and text. For editing markup, Gaupol provides only means to toggle italicization. While these should be sufficient for normal subtitles and good limits to ensure readability, some may wish to utilize the bling-features of bling-formats. Editing format-specific fields and format-specific markup can be implemented with extensions. For example, for Sub Station Alpha formats the following could be done with an extension.
 
-* Add columns to the subtitle view for all additional fields in Sub Station Alpha formats. This may require writing custom cell renderers, e.g. a color cell renderer, which displays the color and where editing happens with a color picker dialog, while the data is saved as hexadecimal strings.
+ * Add columns to the subtitle view for all additional fields in Sub Station Alpha formats. This may require writing custom cell renderers, e.g. a color cell renderer, which displays the color and where editing happens with a color picker dialog, while the data is saved as hexadecimal strings.
 
-* Add dialogs for editing the header and styles.
+ * Add dialogs for editing the header and styles.
 
-* Add tools for manipulating markup, e.g. applying certain markup on a subtitle or removing it.
+ * Add tools for manipulating markup, e.g. applying certain markup on a subtitle or removing it.

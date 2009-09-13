@@ -4,10 +4,10 @@ Gaupol is an editor for text-based subtitle files. See the [[http://home.gna.org
 
 == Third Party Components ==
 
-* [[/Extensions|Extensions]]
-* [[/PatternFiles|Pattern Files]]
+ * [[/Extensions|Extensions]]
+ * [[/PatternFiles|Pattern Files]]
 
 == Documentation for Developers ==
 
-* [[/WritingExtensions|Writing Extensions]]
-* [[/WritingPatternFiles|Writing Pattern Files]]
+ * [[/WritingExtensions|Writing Extensions]]
+ * [[/WritingPatternFiles|Writing Pattern Files]]

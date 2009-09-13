@@ -17,16 +17,9 @@ Author: Your Name
 
 == Common Error Patterns ==
 
-...
-
 == Line-Break Patterns ==
-
-...
 
 == Capitalization Patterns ==
 
-...
-
 == Hearing Impaired Text Removal Patterns ==
 
-...
