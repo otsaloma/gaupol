@@ -30,8 +30,8 @@ _Name=Space between digits
 _Description=Remove space between digits of a number
 Classes=OCR;
 # Do not allow a trailing dash, which might connect to the next word,
-# e.g. "20 5-pound cakes", or a trailing slash which might be used to spell out
-# a fraction, e.g. "2 1/2".
+# e.g. "20 5-pound cakes", or a trailing slash which might be used to
+# spell out a fraction, e.g. "2 1/2".
 Pattern=(\b\d+) +(\d+\b)(?![-/])
 Flags=DOTALL;MULTILINE;UNICODE;
 Replacement=\1\2

@@ -48,8 +48,8 @@ _Name=Letter "l" in an upper case word
 _Description=Replace letter "l" with letter "I" in an upper case word
 Classes=OCR;
 # Handle the case of the first person pronoun 'I'.
-# Disallow dashes for the case of spelling out a word, but allow them for
-# the case of stuttering.
+# Disallow dashes for the case of spelling out a word, but allow them
+# for the case of stuttering.
 Pattern=(?<![a-hj-z]-)\bl\b(?!-[a-hj-z])
 Flags=DOTALL;MULTILINE;UNICODE;
 Replacement=I

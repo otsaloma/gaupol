@@ -114,8 +114,8 @@ Repeat=False
 _Name=Spaces around a quotation mark
 _Description=Remove space after a starting- and before an ending quotation mark
 Classes=OCR;
-# Remove space after the starting quotation mark in a subtitle with a total
-# of exactly two quotation marks.
+# Remove space after the starting quotation mark in a subtitle with
+# a total of exactly two quotation marks.
 Pattern=(\A[^"]*)(" +)([^"]*"[^"]*\Z)
 Flags=DOTALL;MULTILINE;UNICODE;
 Replacement=\1"\3
@@ -125,8 +125,8 @@ Repeat=False
 _Name=Spaces around a quotation mark
 _Description=Remove space after a starting- and before an ending quotation mark
 Classes=OCR;
-# Remove space before the ending quotation mark in a subtitle with a total
-# of exactly two quotation marks.
+# Remove space before the ending quotation mark in a subtitle with
+# a total of exactly two quotation marks.
 Pattern=(\A[^"]*"[^"]*)( +")([^"]*\Z)
 Flags=DOTALL;MULTILINE;UNICODE;
 Replacement=\1"\3
