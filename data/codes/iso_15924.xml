@@ -5,7 +5,7 @@ This file gives a list of all script names in the ISO 15924
 standard, and is used to provide translations via gettext
 
 Copyright (C) 2007 Ivan Masar <helix84@centrum.sk>
-Copyright (C) 2007 Christian Perrier <bubulle@debian.org>
+Copyright (C) 2007-2009 Christian Perrier <bubulle@debian.org>
 Copyright (C) 2007 Tobias Quathamer <toddy@debian.org>
 
     This file is free software; you can redistribute it and/or
@@ -23,6 +23,7 @@ Copyright (C) 2007 Tobias Quathamer <toddy@debian.org>
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 Source: <http://unicode.org/iso15924/>
+Source for changes: <http://unicode.org/iso15924/codechanges.html>
 -->
 
 <!DOCTYPE iso_15924_entries [
@@ -267,7 +268,7 @@ Source: <http://unicode.org/iso15924/>
 	<iso_15924_entry
 		alpha_4_code="Lana"
 		numeric_code="351"
-		name="Lanna, Tai Tham" />
+		name="Tai Thal (Lanna)" />
 	<iso_15924_entry
 		alpha_4_code="Laoo"
 		numeric_code="356"
@@ -300,6 +301,10 @@ Source: <http://unicode.org/iso15924/>
 		alpha_4_code="Linb"
 		numeric_code="401"
 		name="Linear B" />
+	<iso_15924_entry
+		alpha_4_code="Lisu"
+		numeric_code="399"
+		name="Lisu (Fraser)" />
 	<iso_15924_entry
 		alpha_4_code="Lyci"
 		numeric_code="202"
@@ -344,6 +349,10 @@ Source: <http://unicode.org/iso15924/>
 		alpha_4_code="Mymr"
 		numeric_code="350"
 		name="Myanmar (Burmese)" />
+	<iso_15924_entry
+		alpha_4_code="Nkgb"
+		numeric_code="420"
+		name="Nakhi Geba ('Na-'Khi ²Ggŏ-¹baw, Naxi Geba)" />
 	<iso_15924_entry
 		alpha_4_code="Nkoo"
 		numeric_code="165"
@@ -395,7 +404,7 @@ Source: <http://unicode.org/iso15924/>
 	<iso_15924_entry
 		alpha_4_code="Plrd"
 		numeric_code="282"
-		name="Pollard Phonetic" />
+		name="Miao (Pollard)" />
 	<iso_15924_entry
 		alpha_4_code="Prti"
 		numeric_code="13O"
@@ -411,7 +420,7 @@ Source: <http://unicode.org/iso15924/>
 	<iso_15924_entry
 		alpha_4_code="Rjng"
 		numeric_code="363"
-		name="Rejang, Redjang, Kaganga" />
+		name="Rejang (Redjang, Kaganga)" />
 	<iso_15924_entry
 		alpha_4_code="Roro"
 		numeric_code="620"
@@ -503,7 +512,7 @@ Source: <http://unicode.org/iso15924/>
 	<iso_15924_entry
 		alpha_4_code="Tglg"
 		numeric_code="370"
-		name="Tagalog" />
+		name="Tagalog (Baybayin, Alibata)" />
 	<iso_15924_entry
 		alpha_4_code="Thaa"
 		numeric_code="170"
@@ -540,6 +549,10 @@ Source: <http://unicode.org/iso15924/>
 		alpha_4_code="Yiii"
 		numeric_code="460"
 		name="Yi" />
+	<iso_15924_entry
+		alpha_4_code="Zinh"
+		numeric_code="994"
+		name="Code for inherited script" />
 	<iso_15924_entry
 		alpha_4_code="Zmth"
 		numeric_code="995"

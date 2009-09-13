@@ -199,8 +199,9 @@ Source: <http://www.iso.org/iso/country_codes>
 		alpha_2_code="BO"
 		alpha_3_code="BOL"
 		numeric_code="068"
-		name="Bolivia"
-		official_name="Republic of Bolivia" />
+		common_name="Bolivia"
+		name="Bolivia, Plurinational State of"
+		official_name="Plurinational State of Bolivia" />
 	<iso_3166_entry
 		alpha_2_code="BA"
 		alpha_3_code="BIH"
@@ -752,6 +753,7 @@ Source: <http://www.iso.org/iso/country_codes>
 		alpha_2_code="LY"
 		alpha_3_code="LBY"
 		numeric_code="434"
+		common_name="Libya"
 		name="Libyan Arab Jamahiriya"
 		official_name="Socialist People's Libyan Arab Jamahiriya" />
 	<iso_3166_entry
@@ -863,7 +865,8 @@ Source: <http://www.iso.org/iso/country_codes>
 		alpha_2_code="MD"
 		alpha_3_code="MDA"
 		numeric_code="498"
-		name="Moldova"
+		common_name="Moldova"
+		name="Moldova, Republic of"
 		official_name="Republic of Moldova" />
 	<iso_3166_entry
 		alpha_2_code="MC"
@@ -1398,7 +1401,8 @@ Source: <http://www.iso.org/iso/country_codes>
 		alpha_2_code="VE"
 		alpha_3_code="VEN"
 		numeric_code="862"
-		name="Venezuela"
+		common_name="Venezuela"
+		name="Venezuela, Bolivarian republic of"
 		official_name="Bolivarian Republic of Venezuela" />
 	<iso_3166_entry
 		alpha_2_code="VN"
