@@ -3,19 +3,15 @@ Gaupol 0.16
 
  [D] Use existing subtitle file mime-types instead of text/plain when
      adding files to the recent files database
+ [ ] Migrate from Glade to gtk.Builder
+ [ ] Adapt to GNOME Goal: Correct Desktop Files
+ [ ] Adapt to new GTK+/GNOME anti-icon policy for buttons
+ [ ] Code cleanup, attribute and signals checks
  [ ] Merge experimental local patterns
 
 Gaupol 1.0
 ==========
 
- * Add wiki documentation on writing extensions
- * Add wiki documentation on writing pattern files
- * Add a wiki page for publishing extensions
- * Add a wiki page for publishing pattern files
- * Migrate from Glade to gtk.Builder
- * Adapt to GNOME Goal: Correct Desktop Files
- * Adapt to new GTK+/GNOME anti-icon policy for buttons
- * Code cleanup, attribute and signals checks
  * Add a built-in GStreamer-based video player
 
 Gaupol 3000

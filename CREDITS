@@ -26,16 +26,8 @@ Files from Foreign Sources
    headers of the files in question for full copyright and license
    information.
 
- * tools/git2cl
-
-   This file is written by Simon Josefsson and Luis Mondesi, and is
-   copied from git2cl [6] and since slightly modified. The file is
-   licensed under the GNU General Public License. See the header of
-   the file for full copyright and license information.
-
  [1] http://alioth.debian.org/projects/pkg-isocodes/
  [2] http://anjuta.sourceforge.net/
  [3] http://bugzilla.gnome.org/show_bug.cgi?id=480093
  [4] http://www.voidspace.org.uk/python/configobj.html
  [5] http://www.voidspace.org.uk/python/validate.html
- [6] http://josefsson.org/git2cl/
