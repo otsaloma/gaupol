@@ -3,11 +3,14 @@ Gaupol 0.16
 
  [D] Use existing subtitle file mime-types instead of text/plain when
      adding files to the recent files database
+ [ ] Split gaupol to gaupol and gaupol-gtk
+ [ ] Add gaupol.gtk.View.add_column, which creates a new model
  [ ] Migrate from Glade to gtk.Builder
  [ ] Adapt to GNOME Goal: Correct Desktop Files
  [ ] Adapt to new GTK+/GNOME anti-icon policy for buttons
  [ ] Code cleanup, attribute and signals checks
  [ ] Merge experimental local patterns
+ [D] Add German translation (Chris Leick)
 
 Gaupol 1.0
 ==========
