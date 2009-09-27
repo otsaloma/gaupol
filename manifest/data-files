@@ -1,8 +1,8 @@
 [share/gaupol]
 data/gaupol.gtk.conf.spec
 
-[share/gaupol/codes]
-data/codes/*
+[share/gaupol/iso-codes]
+data/iso-codes/*
 
 [share/gaupol/extensions/bookmarks]
 extensions/bookmarks/*
