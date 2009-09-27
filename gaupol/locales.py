@@ -23,19 +23,6 @@ import os
 import re
 _ = gaupol.i18n._
 
-# Contains a set of locales for which spell-check dictionaries are known to
-# exist. Does not contain every language listed in gaupol.languages!
-_locales = set()
-
-
-def _init_locales():
-    """Initialize the set of locale codes."""
-
-    path = os.path.join(gaupol.DATA_DIR, "codes", "locales.txt")
-    with open(path, "r") as fobj:
-        lines = [x.strip() for x in fobj.readlines()]
-        for line in (x for x in lines if x):
-            _locales.add(line)
 
 def code_to_country_require(code):
     assert re.match(r"^[a-z][a-z](_[A-Z][A-Z])?$", code)
@@ -75,11 +62,6 @@ def code_to_name(code):
     if country is None: return language
     return _("%(language)s (%(country)s)") % locals()
 
-def get_all():
-    """Return a sequence of all locales."""
-
-    return tuple(_locales)
-
 @gaupol.deco.once
 def get_system_code():
     """Return the locale code preferred by system or None."""
@@ -99,5 +81,3 @@ def get_system_modifier():
     for value in (x for x in values if x.count("@")):
         return value[value.index("@") + 1:]
     return None
-
-_init_locales()

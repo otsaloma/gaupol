@@ -45,13 +45,6 @@ class TestModule(gaupol.TestCase):
         self.raises(KeyError, gaupol.locales.code_to_name, "xx_XX")
         self.raises(KeyError, gaupol.locales.code_to_name, "xx")
 
-    def test_get_all(self):
-
-        assert gaupol.locales.get_all()
-        for locale in gaupol.locales.get_all():
-            gaupol.locales.code_to_country(locale)
-            gaupol.locales.code_to_language(locale)
-
     def test_get_system_code(self):
 
         gaupol.locales.get_system_code()
