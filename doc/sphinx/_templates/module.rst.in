@@ -1,0 +1,48 @@
+``{{ module }}``
+===={{ module_double_underline }}
+
+.. currentmodule:: {{ module }}
+{% if source_doc %}
+Source: :doc:`{{ source_fname }} <{{ source_doc }}>`
+{%- endif %}
+
+{% if source_doc -%}
+.. toctree::
+   :hidden:
+
+   {{ source_doc }}
+{%- endif %}
+
+..
+
+   .. automodule:: {{ module }}
+{%- if modules %}
+
+Modules
+-------
+
+.. toctree::
+   :maxdepth: 1
+{% for item in modules %}
+   /{{ root }}/{{ module }}.{{ item -}}
+{% endfor %}
+{%- endif %}
+{%- if classes %}
+
+Classes
+-------
+
+.. toctree::
+   :maxdepth: 1
+{% for item in classes %}
+   /{{ root }}/{{ module }}.{{ item -}}
+{% endfor %}
+{%- endif %}
+{%- if functions %}
+
+Functions
+---------
+{% for item in functions %}
+.. autofunction:: {{ module }}.{{ item -}}
+{% endfor %}
+{%- endif %}

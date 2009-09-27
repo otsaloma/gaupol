@@ -5,22 +5,24 @@ import os
 import sys
 
 def get_running_from_source():
+    # '__file__' attribute is not available with py2exe.
     if not "__file__" in globals(): return False
     parent = os.path.dirname(os.path.abspath(__file__))
     path = os.path.join(parent, "..", "data", "gaupol.desktop.in")
     return os.path.isfile(path)
 
 def prepare_paths():
-    # pylint: disable-msg=W0621
-    if not get_running_from_source(): return
+    # Add source root directory to sys.path.
     parent = os.path.dirname(os.path.abspath(__file__))
-    path = os.path.abspath(os.path.join(parent, ".."))
-    sys.path.insert(0, path)
-    import gaupol
+    path = os.path.join(parent, "..")
+    sys.path.insert(0, os.path.abspath(path))
+    # Add icon directory to icon theme search path.
     icon_theme = gtk.icon_theme_get_default()
-    path = os.path.join(gaupol.DATA_DIR, "icons")
-    icon_theme.append_search_path(path)
+    path = os.path.join(parent, "..", "data", "icons")
+    icon_theme.append_search_path(os.path.abspath(path))
 
-prepare_paths()
+if get_running_from_source():
+    prepare_paths()
+
 import gaupol.gtk
 gaupol.gtk.main.main(sys.argv[1:])

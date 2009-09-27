@@ -8,7 +8,9 @@ data/patterns/*.common-error
 data/patterns/*.hearing-impaired
 data/patterns/*.line-break
 dist/
-doc/api/
+doc/sphinx/_build
+doc/sphinx/api
+doc/sphinx/index.rst
 extensions/*.gaupol-extension
 locale/
 MANIFEST

@@ -1,0 +1,8 @@
+``{{ source_fname }}``
+===={{ source_fname_double_underline }}
+
+Source code for module :mod:`{{ module }}` from file
+:file:`{{ source_fname }}`.
+
+.. literalinclude:: {{ source_include }}
+   :linenos:

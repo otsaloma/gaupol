@@ -1,0 +1,24 @@
+``{{ project }}`` Documentation
+=================={{ project_double_underline }}
+
+This is documentation for `{{ project }} <{{ project_url }}>`_ that
+has been automatically generated from documentation strings in the
+source code. Please note that this documentation is not human-composed
+nor human-reviewed and may contain erros. If in doubt, read the full
+source code or contact the authors.
+
+API Documentation
+-----------------
+
+.. toctree::
+   :maxdepth: 1
+{% for item in modules %}
+   /{{ root }}/{{ item -}}
+{% endfor %}
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
