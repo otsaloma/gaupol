@@ -1,9 +1,9 @@
 Files from Foreign Sources
 ==========================
 
- * data/codes/iso_15924.xml
- * data/codes/iso_3166.xml
- * data/codes/iso_639.xml
+ * data/iso-codes/iso_15924.xml
+ * data/iso-codes/iso_3166.xml
+ * data/iso-codes/iso_639.xml
 
    These files are written by Ivan Masar, Christian Perrier, Tobias
    Toedter, Alastair McKinstry and Andreas Jochens, and are copied

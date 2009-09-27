@@ -27,7 +27,7 @@ def _init_languages():
     """Initialize the dictionary mapping codes to languages."""
 
     import xml.etree.ElementTree as ET
-    path = os.path.join(gaupol.DATA_DIR, "codes", "iso_639.xml")
+    path = os.path.join(gaupol.DATA_DIR, "iso-codes", "iso_639.xml")
     for element in ET.parse(path).findall("iso_639_entry"):
         code = element.get("iso_639_1_code")
         name = element.get("name")
