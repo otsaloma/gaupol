@@ -21,7 +21,7 @@ class TestPositionAgent(gaupol.TestCase):
 
     def setup_method(self, method):
 
-        self.project = self.get_project()
+        self.project = self.new_project()
 
     def test_adjust_durations__gap(self):
 
@@ -101,7 +101,7 @@ class TestPositionAgent(gaupol.TestCase):
 
     def test_convert_framerate__frame(self):
 
-        self.project.open_main(self.get_microdvd_path(), "ascii")
+        self.project.open_main(self.new_microdvd_file(), "ascii")
         self.project.subtitles[0].start = 100
         self.project.subtitles[1].start = 200
         input = gaupol.framerates.FPS_24
@@ -116,7 +116,7 @@ class TestPositionAgent(gaupol.TestCase):
 
     def test_convert_framerate__time(self):
 
-        self.project.open_main(self.get_subrip_path(), "ascii")
+        self.project.open_main(self.new_subrip_file(), "ascii")
         self.project.subtitles[0].start = "00:00:01.000"
         self.project.subtitles[1].start = "00:00:02.000"
         input = gaupol.framerates.FPS_24

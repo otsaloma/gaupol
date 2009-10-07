@@ -23,8 +23,6 @@ class SearchAgent(gaupol.Delegate):
 
     """Searching for and replacing text."""
 
-    # pylint: disable-msg=E0203,W0201
-
     def __init__(self, master):
         """Initialize a SearchAgent object."""
 

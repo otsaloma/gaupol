@@ -23,8 +23,6 @@ class UtilityAgent(gaupol.Delegate):
 
     """Miscellaneous methods for subtitle data editing."""
 
-    # pylint: disable-msg=E0203,W0201
-
     __metaclass__ = gaupol.Contractual
 
     def _get_format(self, doc):

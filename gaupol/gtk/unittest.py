@@ -40,14 +40,13 @@ class TestCase(gaupol.TestCase):
         """Return a new page with two open documents."""
 
         page = gaupol.gtk.Page()
-        page.project.open_main(self.get_subrip_path(), "ascii")
-        page.project.open_translation(self.get_microdvd_path(), "ascii", False)
+        page.project.open_main(self.new_subrip_file(), "ascii")
+        page.project.open_translation(self.new_microdvd_file(), "ascii", False)
         return page
 
     def teardown_method(self, method):
         """Remove state set for executing tests in method."""
 
-        # pylint: disable-msg=E1101
         gaupol.gtk.util.iterate_main()
         if hasattr(self, "dialog"):
             self.dialog.destroy()

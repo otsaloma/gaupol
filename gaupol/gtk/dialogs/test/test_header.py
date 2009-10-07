@@ -21,8 +21,6 @@ import gtk
 
 class TestHeaderDialog(gaupol.gtk.TestCase):
 
-    # pylint: disable-msg=W0201
-
     def run__dialog__both(self):
 
         self.setup_both()
@@ -52,9 +50,9 @@ class TestHeaderDialog(gaupol.gtk.TestCase):
 
         self.application = self.get_application()
         page = self.application.get_current_page()
-        path = self.get_file_path(gaupol.formats.SUBVIEWER2)
+        path = self.new_temp_file(gaupol.formats.SUBVIEWER2)
         self.application.open_main_file(path, "ascii")
-        path = self.get_file_path(gaupol.formats.MPSUB)
+        path = self.new_temp_file(gaupol.formats.MPSUB)
         self.application.open_translation_file(path, "ascii")
         args = (self.application.window, self.application)
         self.dialog = gaupol.gtk.HeaderDialog(*args)
@@ -64,9 +62,9 @@ class TestHeaderDialog(gaupol.gtk.TestCase):
 
         self.application = self.get_application()
         page = self.application.get_current_page()
-        path = self.get_file_path(gaupol.formats.SUBVIEWER2)
+        path = self.new_temp_file(gaupol.formats.SUBVIEWER2)
         self.application.open_main_file(path, "ascii")
-        path = self.get_file_path(gaupol.formats.SUBRIP)
+        path = self.new_temp_file(gaupol.formats.SUBRIP)
         self.application.open_translation_file(path, "ascii")
         args = (self.application.window, self.application)
         self.dialog = gaupol.gtk.HeaderDialog(*args)
@@ -80,9 +78,9 @@ class TestHeaderDialog(gaupol.gtk.TestCase):
 
         self.application = self.get_application()
         page = self.application.get_current_page()
-        path = self.get_file_path(gaupol.formats.SUBRIP)
+        path = self.new_temp_file(gaupol.formats.SUBRIP)
         self.application.open_main_file(path, "ascii")
-        path = self.get_file_path(gaupol.formats.SUBVIEWER2)
+        path = self.new_temp_file(gaupol.formats.SUBVIEWER2)
         self.application.open_translation_file(path, "ascii")
         args = (self.application.window, self.application)
         self.dialog = gaupol.gtk.HeaderDialog(*args)

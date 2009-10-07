@@ -22,7 +22,7 @@ class TestTMPlayer(gaupol.TestCase):
     def setup_method(self, method):
 
         format = gaupol.formats.TMPLAYER
-        path = self.get_file_path(format)
+        path = self.new_temp_file(format)
         self.file = gaupol.files.new(format, path, "ascii")
 
     def test_read(self):
@@ -35,5 +35,5 @@ class TestTMPlayer(gaupol.TestCase):
         doc = gaupol.documents.MAIN
         self.file.write(subtitles, doc)
         text = open(self.file.path, "r").read().strip()
-        reference = self.get_file_text(self.file.format)
+        reference = self.get_sample_text(self.file.format)
         assert text == reference

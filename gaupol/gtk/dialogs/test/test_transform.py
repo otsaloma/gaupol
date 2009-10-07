@@ -20,8 +20,6 @@ import gtk
 
 class _TestPositionTransformDialog(gaupol.gtk.TestCase):
 
-    # pylint: disable-msg=E1101,W0201
-
     def run__dialog(self):
 
         self.dialog.run()
@@ -35,7 +33,7 @@ class _TestPositionTransformDialog(gaupol.gtk.TestCase):
         page.view.select_rows((1, 2, 3))
         gaupol.gtk.conf.preview.use_custom = True
         gaupol.gtk.conf.preview.custom_command = "echo"
-        page.project.video_path = self.get_subrip_path()
+        page.project.video_path = self.new_subrip_file()
 
     def test__init_sensitivities(self):
 

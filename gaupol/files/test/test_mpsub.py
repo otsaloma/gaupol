@@ -24,13 +24,13 @@ class TestMPsubTime(gaupol.TestCase):
     def setup_method(self, method):
 
         format = gaupol.formats.MPSUB
-        path = self.get_file_path(format, self.name)
+        path = self.new_temp_file(format, self.name)
         self.file = gaupol.files.new(format, path, "ascii")
 
     def test_copy_from(self):
 
         self.file.set_header("FORMAT=25.00")
-        path = self.get_file_path(self.file.format, self.name)
+        path = self.new_temp_file(self.file.format, self.name)
         new_file = gaupol.files.new(self.file.format, path, "ascii")
         new_file.copy_from(self.file)
         assert new_file.header == self.file.header
@@ -62,7 +62,7 @@ class TestMPsubTime(gaupol.TestCase):
         doc = gaupol.documents.MAIN
         self.file.write(subtitles, doc)
         text = open(self.file.path, "r").read().strip()
-        reference = self.get_file_text(self.file.format, self.name)
+        reference = self.get_sample_text(self.file.format, self.name)
         assert text == reference
 
 

@@ -1,4 +1,4 @@
-# Copyright (C) 2007-2008 Osmo Salomaa
+# Copyright (C) 2007-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,47 +14,56 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gaupol
+import aeidon
 
 
 class PuppetBaseClass(object):
 
-    __metaclass__ = gaupol.Contractual
+    __metaclass__ = aeidon.Contractual
 
     def _invariant(self):
-
-        assert True
-
-    def do_ensure(self, value):
-
-        assert value is None
-
-
-class PuppetClass(PuppetBaseClass):
-
-    def _invariant(self):
-
         assert True
 
     def do_require(self):
-
         assert True
 
     def do_ensure(self, value):
-
         assert value is None
 
     def do(self):
-
         return None
 
 
-class TestContractual(gaupol.TestCase):
+class PuppetClassImplemented(PuppetBaseClass):
+
+    def _invariant(self):
+        assert True
+
+    def do_require(self):
+        assert True
+
+    def do_ensure(self, value):
+        assert value is None
+
+    def do(self):
+        return None
+
+
+class PuppetClassNotImplemented(PuppetBaseClass):
+
+    def do(self):
+        return None
+
+
+class TestContractual(aeidon.TestCase):
 
     def setup_method(self, method):
+        self.contractual = PuppetClassImplemented()
 
-        self.contractual = PuppetClass()
+    def test___new____implemented(self):
+        self.contractual = PuppetClassImplemented()
+        self.contractual.do()
 
-    def test___new__(self):
-
+    def test___new____not_implemented(self):
+        self.contractual = PuppetClassNotImplemented()
         self.contractual.do()

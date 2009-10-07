@@ -28,7 +28,7 @@ class TestSubtitleFile(gaupol.TestCase):
 
     def setup_method(self, method):
 
-        path = self.get_file_path(PuppetSubtitleFile.format)
+        path = self.new_temp_file(PuppetSubtitleFile.format)
         newline = gaupol.newlines.UNIX
         self.file = PuppetSubtitleFile(path, "ascii", newline)
 
@@ -47,7 +47,7 @@ class TestSubtitleFile(gaupol.TestCase):
 
         self.file.header = "test"
         format = gaupol.formats.SUBVIEWER2
-        path = self.get_file_path(PuppetSubtitleFile.format)
+        path = self.new_temp_file(PuppetSubtitleFile.format)
         new_file = PuppetSubtitleFile(path, "ascii")
         new_file.copy_from(self.file)
         assert new_file.header == "test"

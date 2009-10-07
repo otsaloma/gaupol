@@ -21,29 +21,29 @@ class TestSaveAgent(gaupol.TestCase):
 
     def setup_method(self, method):
 
-        self.project = self.get_project()
+        self.project = self.new_project()
         self.delegate = self.project.save_main.im_self
 
     def test__copy_file(self):
 
         copy_file = self.delegate._copy_file
-        source = self.get_subrip_path()
-        destination = self.get_subrip_path()
+        source = self.new_subrip_file()
+        destination = self.new_subrip_file()
         assert copy_file(source, destination)
         assert not copy_file(source, "/////")
 
     def test__move_file(self):
 
         move_file = self.delegate._move_file
-        source = self.get_subrip_path()
-        destination = self.get_subrip_path()
+        source = self.new_subrip_file()
+        destination = self.new_subrip_file()
         assert move_file(source, destination)
         assert not move_file(source, "/////")
 
     def test__remove_file(self):
 
         remove_file = self.delegate._remove_file
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         assert remove_file(path)
         assert not remove_file("/////")
 
@@ -67,7 +67,7 @@ class TestSaveAgent(gaupol.TestCase):
 
     def test_save_main__copy_from(self):
 
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         format = self.project.main_file.format
         newline = gaupol.newlines.UNIX
         props = (path, format, "ascii", newline)
@@ -84,7 +84,7 @@ class TestSaveAgent(gaupol.TestCase):
     def test_save_main__unicode_error(self):
 
         function = self.project.save_main
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         format = gaupol.formats.SUBRIP
         newline = gaupol.newlines.UNIX
         props = (path, format, "undefined", newline)

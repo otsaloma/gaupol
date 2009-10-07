@@ -45,10 +45,9 @@ class TestView(gaupol.gtk.TestCase):
 
     def setup_frame(self):
 
-        # pylint: disable-msg=W0201
         self.view = gaupol.gtk.View(gaupol.modes.FRAME)
         store = self.view.get_model()
-        self.project = self.get_project()
+        self.project = self.new_project()
         for subtitle in self.project.subtitles:
             store.append((0,
                 subtitle.start_frame,
@@ -64,10 +63,9 @@ class TestView(gaupol.gtk.TestCase):
 
     def setup_time(self):
 
-        # pylint: disable-msg=W0201
         self.view = gaupol.gtk.View(gaupol.modes.TIME)
         store = self.view.get_model()
-        self.project = self.get_project()
+        self.project = self.new_project()
         for subtitle in self.project.subtitles:
             store.append((0,
                 subtitle.start_time,

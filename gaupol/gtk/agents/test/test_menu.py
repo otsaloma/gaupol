@@ -41,16 +41,16 @@ class TestMenuAgent(gaupol.gtk.TestCase):
 
     def test_on_show_recent_main_menu_activate(self):
 
-        self.application.open_main_file(self.get_subrip_path())
-        self.application.open_main_file(self.get_subrip_path())
+        self.application.open_main_file(self.new_subrip_file())
+        self.application.open_main_file(self.new_subrip_file())
         self.application.get_action("show_recent_main_menu").activate()
 
     def test_on_show_recent_translation_menu_activate(self):
 
-        self.application.open_main_file(self.get_subrip_path())
-        self.application.open_translation_file(self.get_subrip_path())
-        self.application.open_main_file(self.get_subrip_path())
-        self.application.open_translation_file(self.get_subrip_path())
+        self.application.open_main_file(self.new_subrip_file())
+        self.application.open_translation_file(self.new_subrip_file())
+        self.application.open_main_file(self.new_subrip_file())
+        self.application.open_translation_file(self.new_subrip_file())
         self.application.get_action("show_recent_translation_menu").activate()
 
     def test_on_undo_button_show_menu(self):

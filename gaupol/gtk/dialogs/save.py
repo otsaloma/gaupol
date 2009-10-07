@@ -26,8 +26,6 @@ class SaveDialog(gaupol.gtk.FileDialog):
 
     """Dialog for selecting a subtitle file to save."""
 
-    # pylint: disable-msg=E1101
-
     def __init__(self, parent, title):
         """Initialize a SaveDialog object."""
 

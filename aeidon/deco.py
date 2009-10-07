@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2008 Osmo Salomaa
+# Copyright (C) 2006-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,29 +16,24 @@
 
 """Miscellaneous decorators for functions and methods."""
 
+import aeidon
 import cPickle
 import functools
-import gaupol
 import time
 
 
 def _dump_subtitles(subtitles):
-    """Return a tuple of the essential attributes of subtitles."""
-
-    values = []
-    for subtitle in subtitles:
-        values.append((
-            subtitle._start,
-            subtitle._end,
-            subtitle._main_text,
-            subtitle._tran_text,
-            subtitle._framerate,))
-    return tuple(values)
+    """Return a tuple of essential attributes of subtitles."""
+    return tuple((subtitle._start,
+                  subtitle._end,
+                  subtitle._main_text,
+                  subtitle._tran_text,
+                  subtitle._framerate) for subtitle in subtitles)
 
 def _is_method(function, args):
-    """Return True if function to be decorated is a method.
+    """Return ``True`` if `function` to be decorated is a method.
 
-    Decorator is required to have set an 'original' attribute on the wrapped
+    Decorator is required to have set an `original` attribute on the wrapped
     method pointing to the original unwrapped function.
     """
     try:
@@ -49,7 +44,6 @@ def _is_method(function, args):
 
 def benchmark(function):
     """Decorator for benchmarking functions and methods."""
-
     @functools.wraps(function)
     def wrapper(*args, **kwargs):
         a = time.time()
@@ -57,21 +51,19 @@ def benchmark(function):
         z = time.time()
         print "%.3f %s" % (z - a, function.__name__)
         return value
-
     return wrapper
 
 def contractual(function):
     """Decorator for module level functions with pre- and/or postconditions.
 
-    function call will be wrapped around 'FUNCTION_NAME_require' and
-    'FUNCTION_NAME_ensure' calls if such functions exist. The require function
-    receives the same arguments as function, the ensure function will in
-    addition receive function's return value as its first argument.
-    This is a debug decorator that is in use only if gaupol.debug is True.
+    `function` call will be wrapped around ``FUNCTION_NAME_require`` and
+    ``FUNCTION_NAME_ensure`` calls if such functions exist. The require
+    function receives the same arguments as function, the ensure function will
+    in addition receive function's return value as its first argument. This is
+    a debug decorator that is in use only if :data:`aeidon.debug` is ``True``.
     """
-    if not gaupol.debug:
+    if not aeidon.debug:
         return function
-
     @functools.wraps(function)
     def wrapper(*args, **kwargs):
         name = "%s_require" % function.__name__
@@ -82,12 +74,10 @@ def contractual(function):
         if name in function.func_globals:
             function.func_globals[name](value, *args, **kwargs)
         return value
-
     return wrapper
 
 def memoize(function):
     """Decorator for functions that cache their return values."""
-
     cache = {}
     @functools.wraps(function)
     def wrapper(*args, **kwargs):
@@ -98,37 +88,65 @@ def memoize(function):
         if not key in cache:
             cache[key] = function(*args, **kwargs)
         return cache[key]
-
     wrapper.original = function
     return wrapper
 
+def monkey_patch(obj, name):
+    """Decorator for functions that change `obj`'s `name` attribute.
+
+    Any changes done will be reverted after the function is run, i.e. `name`
+    attribute is either restored to its original value or deleted, if it didn't
+    originally exist. The attribute in question must be able to correctly
+    handle a :func:`copy.deepcopy` operation.
+
+    Typical use would be unit testing code under legitimately unachievable
+    conditions, e.g. pseudo-testing behaviour on Windows, while not actually
+    using Windows::
+
+        @aeidon.deco.monkey_patch(sys, "platform")
+        def test_do_something():
+            sys.platform = "win32"
+            do_something()
+    """
+    def outer_wrapper(function):
+        @functools.wraps(function)
+        def inner_wrapper(*args, **kwargs):
+            has_attr = hasattr(obj, name)
+            attr = getattr(obj, name, None)
+            setattr(obj, name, copy.deepcopy(attr))
+            try: return function(*args, **kwargs)
+            finally:
+                setattr(obj, name, attr)
+                assert getattr(obj, name) == attr
+                assert getattr(obj, name) is attr
+                if not has_attr:
+                    delattr(obj, name)
+                    assert not hasattr(obj, name)
+        return inner_wrapper
+    return outer_wrapper
+
 def notify_frozen(function):
     """Decorator for methods to be run in notify frozen state."""
-
     @functools.wraps(function)
     def wrapper(*args, **kwargs):
         frozen = args[0].freeze_notify()
         try: value = function(*args, **kwargs)
         finally: args[0].thaw_notify(frozen)
         return value
-
     return wrapper
 
 def once(function):
     """Decorator for functions that cache their only return value."""
-
     cache = []
     @functools.wraps(function)
     def wrapper(*args, **kwargs):
         if not cache:
             cache.append(function(*args, **kwargs))
         return cache[0]
-
     return wrapper
 
 def reversion_test(function):
     """Decorator for unit testing reversions of one action."""
-
     @functools.wraps(function)
     def wrapper(*args, **kwargs):
         project = args[0].project
@@ -144,19 +162,16 @@ def reversion_test(function):
             current = _dump_subtitles(project.subtitles)
             assert current == changed
         return value
-
     return wrapper
 
 def revertable(function):
-    """Decorator for revertable project methods."""
-
+    """Decorator for revertable methods of :class:`aeidon.Project`."""
     @functools.wraps(function)
     def wrapper(*args, **kwargs):
-
         project = args[0]
         main_changed = project.main_changed
         tran_changed = project.tran_changed
-        kwargs.setdefault("register", gaupol.registers.DO)
+        kwargs.setdefault("register", aeidon.registers.DO)
         register = kwargs["register"]
         if register is None:
             # Execute plain function for special-case actions
@@ -174,23 +189,20 @@ def revertable(function):
             (project.tran_changed != tran_changed)):
             project.emit_action_signal(register)
         return value
-
     return wrapper
 
 def silent(*exceptions):
-    """Decorator for ignoring exceptions raised  by function.
+    """Decorator for ignoring `exceptions` raised  by function.
 
-    If no exceptions specified, ignore Exception.
-    Return None if an exception encountered.
+    If no exceptions specified, ignore :exc:`Exception`.
+    Return ``None`` if an exception encountered.
     """
     if not exceptions:
         exceptions = (Exception,)
-
     def outer_wrapper(function):
         @functools.wraps(function)
         def inner_wrapper(*args, **kwargs):
             try: return function(*args, **kwargs)
             except exceptions: return None
         return inner_wrapper
-
     return outer_wrapper

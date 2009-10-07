@@ -27,15 +27,15 @@ class TestModule(gaupol.gtk.TestCase):
 
         opts = type("", (object,), {})
         opts.encoding = "ascii"
-        opts.translation_file = self.get_subrip_path()
+        opts.translation_file = self.new_subrip_file()
         opts.align_method = "position"
-        opts.video_file = self.get_subrip_path()
-        args = [self.get_subrip_path(), "+3"]
+        opts.video_file = self.new_subrip_file()
+        args = [self.new_subrip_file(), "+3"]
         gaupol.gtk.main._init_application(opts, args)
 
     def test__init_configuration(self):
 
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         open(path, "w").write("\n")
         gaupol.gtk.main._init_configuration(path)
 

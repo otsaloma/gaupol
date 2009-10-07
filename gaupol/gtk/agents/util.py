@@ -24,8 +24,6 @@ class UtilityAgent(gaupol.Delegate):
 
     """Miscellaneous methods for use with application data editing."""
 
-    # pylint: disable-msg=E0203,W0201
-
     __metaclass__ = gaupol.Contractual
 
     def get_action_ensure(self, value, name):

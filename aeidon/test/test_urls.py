@@ -1,4 +1,4 @@
-# Copyright (C) 2006 Osmo Salomaa
+# Copyright (C) 2006,2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,14 +14,17 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gaupol
+import aeidon
 import urllib
 
 
-class TestModule(gaupol.TestCase):
+class TestModule(aeidon.TestCase):
 
-    def test_attributes(self):
+    def test_bug_report_url(self):
+        urllib.urlopen(aeidon.BUG_REPORT_URL)
 
-        urllib.urlopen(gaupol.BUG_REPORT_URL)
-        urllib.urlopen(gaupol.HOMEPAGE_URL)
-        urllib.urlopen(gaupol.REGEX_HELP_URL)
+    def test_homepage_url(self):
+        urllib.urlopen(aeidon.HOMEPAGE_URL)
+
+    def test_regex_help_url(self):
+        urllib.urlopen(aeidon.REGEX_HELP_URL)

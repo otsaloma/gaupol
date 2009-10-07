@@ -99,7 +99,7 @@ class TestOpenAgent(gaupol.gtk.TestCase):
         respond = lambda *args: gtk.RESPONSE_OK
         self.delegate.flash_dialog = respond
         self.delegate.run_dialog = respond
-        get_filenames = lambda *args: [self.get_subrip_path()]
+        get_filenames = lambda *args: [self.new_subrip_file()]
         gaupol.gtk.FileDialog.get_filenames = get_filenames
 
     def test__show_encoding_error_dialog(self):
@@ -149,14 +149,14 @@ class TestOpenAgent(gaupol.gtk.TestCase):
 
         add = self.delegate.add_to_recent_files
         format = gaupol.formats.SUBRIP
-        add(self.get_subrip_path(), format, gaupol.documents.MAIN)
-        add(self.get_subrip_path(), format, gaupol.documents.TRAN)
+        add(self.new_subrip_file(), format, gaupol.documents.MAIN)
+        add(self.new_subrip_file(), format, gaupol.documents.TRAN)
 
     @adds_pages(0)
     def test_append_file(self):
 
-        self.application.append_file(self.get_subrip_path())
-        self.application.append_file(self.get_subrip_path(), "ascii")
+        self.application.append_file(self.new_subrip_file())
+        self.application.append_file(self.new_subrip_file(), "ascii")
 
     def test_connect_to_view_signals(self):
 
@@ -188,7 +188,7 @@ class TestOpenAgent(gaupol.gtk.TestCase):
     def test_on_select_video_file_activate(self):
 
         page = self.application.get_current_page()
-        page.project.video_path = self.get_subrip_path()
+        page.project.video_path = self.new_subrip_file()
         self.application.get_action("select_video_file").activate()
 
     def test_on_split_project_activate(self):
@@ -209,28 +209,28 @@ class TestOpenAgent(gaupol.gtk.TestCase):
     def test__open_file(self):
 
         function = self.delegate._open_file
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         doc = gaupol.documents.MAIN
         self.raises(gaupol.gtk.Default, function, path, (), doc)
 
     @adds_pages(3)
     def test_open_main_file(self):
 
-        self.application.open_main_file(self.get_subrip_path())
-        self.application.open_main_file(self.get_subrip_path(), "ascii")
-        self.application.open_main_file(self.get_subrip_path(), "auto")
+        self.application.open_main_file(self.new_subrip_file())
+        self.application.open_main_file(self.new_subrip_file(), "ascii")
+        self.application.open_main_file(self.new_subrip_file(), "auto")
 
     @adds_pages(0)
     def test_open_main_file__format_error(self):
 
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         open(path, "w").write("xxx\n")
         self.application.open_main_file(path)
 
     @adds_pages(0)
     def test_open_main_file__io_error(self):
 
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         os.chmod(path, 0000)
         self.application.open_main_file(path)
         os.chmod(path, 0777)
@@ -241,14 +241,14 @@ class TestOpenAgent(gaupol.gtk.TestCase):
         read = lambda *args: 1 / 0
         real_read = gaupol.files.SubRip.read
         gaupol.files.SubRip.read = read
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         self.application.open_main_file(path)
         gaupol.files.SubRip.read = real_read
 
     @adds_pages(0)
     def test_open_main_file__size(self):
 
-        path = self.get_microdvd_path()
+        path = self.new_microdvd_file()
         fobj = open(path, "w")
         fobj.write("{30}{40}Testing...\n")
         fobj.write("{40}{50}Testing...\n")
@@ -260,15 +260,15 @@ class TestOpenAgent(gaupol.gtk.TestCase):
     @adds_pages(4)
     def test_open_main_files(self):
 
-        paths = (self.get_subrip_path(), self.get_microdvd_path())
+        paths = (self.new_subrip_file(), self.new_microdvd_file())
         self.application.open_main_files(paths)
-        paths = (self.get_subrip_path(), self.get_microdvd_path())
+        paths = (self.new_subrip_file(), self.new_microdvd_file())
         self.application.open_main_files(paths, "ascii")
         self.application.open_main_files(paths)
 
     def test_open_translation_file(self):
 
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         self.application.open_translation_file(path)
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         self.application.open_translation_file(path, "ascii")

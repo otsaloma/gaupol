@@ -27,8 +27,6 @@ class FileDialog(gaupol.gtk.GladeDialog):
 
     """Base class for dialogs for selecting subtitle files."""
 
-    # pylint: disable-msg=E1101
-
     __metaclass__ = gaupol.Contractual
     _use_autodetection = False
 

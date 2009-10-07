@@ -21,8 +21,6 @@ string value of an item will be the name that it was defined with in its set.
 New items can always be added to a list.
 """
 
-# pylint: disable-msg=W0201
-
 import gaupol
 
 __all__ = ("EnumerationItem", "Enumeration",)
@@ -36,8 +34,6 @@ class EnumerationItem(int):
     not bother with them. Instantiation with correct values harmonous with the
     rest of the items should be left up to the parent list.
     """
-
-    # pylint: disable-msg=E1101
 
     def __cmp__(self, other):
         """Compare enumeration item equality by value.

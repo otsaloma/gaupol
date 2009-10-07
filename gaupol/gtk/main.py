@@ -16,8 +16,6 @@
 
 """GTK user interface initialization."""
 
-# pylint: disable-msg=W0612
-
 import atexit
 import gaupol.gtk
 import optparse

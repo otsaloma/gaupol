@@ -14,42 +14,35 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gaupol
+import aeidon
 
 
 class PuppetMaster(object):
 
     def __init__(self):
-
         self.name = "master"
 
     def _invariant(self):
-
         pass
 
 
-class TestDelegate(gaupol.TestCase):
+class TestDelegate(aeidon.TestCase):
 
     def setup_method(self, method):
-
         self.master = PuppetMaster()
-        self.delegate = gaupol.Delegate(self.master)
+        self.delegate = aeidon.Delegate(self.master)
 
     def test___getattr__(self):
-
         assert self.delegate.name == "master"
 
     def test___setattr____master(self):
-
         self.delegate.name = "slave"
         assert self.master.name == "slave"
 
     def test___setattr____delegate(self):
-
         self.delegate.none = None
         assert "none" in self.delegate.__dict__
         assert "none" not in self.master.__dict__
 
     def test__invariant(self):
-
         self.delegate._invariant()

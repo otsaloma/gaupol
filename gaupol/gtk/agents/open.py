@@ -29,8 +29,6 @@ class OpenAgent(gaupol.Delegate):
 
     """Opening files and creating new projects."""
 
-    # pylint: disable-msg=E1101,E0203,W0201
-
     __metaclass__ = gaupol.Contractual
 
     def _append_subtitles(self, current, temp):

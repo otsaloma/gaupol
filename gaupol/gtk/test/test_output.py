@@ -29,7 +29,7 @@ class TestOutputWindow(gaupol.gtk.TestCase):
 
         self.conf = gaupol.gtk.conf.output_window
         self.window = gaupol.gtk.OutputWindow()
-        text = self.get_file_text(gaupol.formats.MPSUB)
+        text = self.get_sample_text(gaupol.formats.MPSUB)
         self.window.set_output(text)
         self.window.show()
 

@@ -198,7 +198,6 @@ class Test_PreviewPage(gaupol.gtk.TestCase):
 
     def test__on_app_combo_changed(self):
 
-        # pylint: disable-msg=W0631
         store = self.page._app_combo.get_model()
         for i in range(len(store) - 2):
             self.page._app_combo.set_active(i)

@@ -11,7 +11,7 @@ Repeat=True
 _Name=Letter "O" in a number
 _Description=Replace letter "O" with a zero in a number
 Classes=OCR;
-# Disallow '2' after the 'O' for the case of Oxygen, 'O2'.
+# Disallow "2" after the "O" for the case of Oxygen, "O2".
 Pattern=[oO]((?!2\W)(\d|[,.]\d)(?![^\W\d]))
 Flags=DOTALL;MULTILINE;UNICODE;
 Replacement=\060\1
@@ -76,7 +76,7 @@ _Name=Space before punctuation marks
 _Description=Remove space before various punctuation marks
 Classes=Human;OCR;
 # NOTE: Unsuitable for French, see Latn-fr.
-# Disallow trailing digits for the case of fractions, e.g. '.45'.
+# Disallow trailing digits for the case of fractions, e.g. ".45".
 Pattern= +(["'«»]?(?!\.\.)([,;:.?!])(?!\d))
 Flags=DOTALL;MULTILINE;UNICODE;
 Replacement=\1

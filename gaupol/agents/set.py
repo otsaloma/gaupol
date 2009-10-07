@@ -25,8 +25,6 @@ class SetAgent(gaupol.Delegate):
 
     """Setting values of single subtitle data units."""
 
-    # pylint: disable-msg=E0203,W0201
-
     __metaclass__ = gaupol.Contractual
 
     def _move_if_needed_require(self, index):

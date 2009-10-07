@@ -27,8 +27,6 @@ class TextAgent(gaupol.Delegate):
 
     """Automatic correcting of texts."""
 
-    # pylint: disable-msg=E0203,W0201
-
     __metaclass__ = gaupol.Contractual
     _re_capitalizable = re.compile(r"^\W*(?<!\.\.\.)\w", re.UNICODE)
 

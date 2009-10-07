@@ -10,6 +10,12 @@ Gaupol 0.16
  [ ] Adapt to new GTK+/GNOME anti-icon policy for buttons
  [ ] Code cleanup, attribute and signals checks
  [ ] Merge experimental local patterns
+ [ ] Use decorator module to preserve signatures in API documentation
+     http://pypi.python.org/pypi/decorator/
+ [ ] Fix focus changing when pasting subtitles
+     http://www.mail-archive.com/gaupol-list@gna.org/msg00022.html
+ [ ] Use gtk.accel_map_load and gtk.accel_map_save
+ [?] Use transifex.net (or something) for translations
  [D] Add German translation (Chris Leick)
 
 Gaupol 1.0
@@ -22,20 +28,21 @@ Gaupol 3000
 
  * Replace the headers-dialog with a more general properties-dialog
    with format-specific fields to fill (?)
-   - SubRip: Write coordinates (extended SubRip format)
-   - MicroDVD: Write framerate information subtitle
+    - SubRip: Write coordinates (extended SubRip format)
+    - MicroDVD: Write framerate information subtitle
  * Bump Python dependency to 2.6
-   - Remove imports from __future__
-   - http://docs.python.org/whatsnew/2.6.html
+    - Remove imports from __future__
+    - http://docs.python.org/whatsnew/2.6.html
  * Bump Python dependency to 3.0
-   - Remove imports from __future__
-   - http://docs.python.org/3.0/whatsnew/3.0.html
+    - Remove imports from __future__
+    - http://docs.python.org/3.0/whatsnew/3.0.html
+    - http://diveintopython3.org/whats-new.html
  * Bump PyGObject dependency to 2.16
-   - Try gobject.option.OptionParser (see #378704)
-   - Try gio.AppInfo for launching web browser and video player
+    - Try gobject.option.OptionParser (see #378704)
+    - Try gio.AppInfo for launching web browser and video player
  * Bump PyGTK dependency to 2.14
-   - Try gtk.show_uri for launching web browser
+    - Try gtk.show_uri for launching web browser
  * Bump PyEnchant dependency to 1.4
-   - All dictionary providers now use a shared default personal word
-     file (largely obsoleting the DictWithPWL class)
-   - Dict.add_to_pwl renamed to Dict.add
+    - All dictionary providers now use a shared default personal word
+      file (largely obsoleting the DictWithPWL class)
+    - Dict.add_to_pwl renamed to Dict.add

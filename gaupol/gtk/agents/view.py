@@ -23,8 +23,6 @@ class ViewAgent(gaupol.Delegate):
 
     """Changing the visual appearance of the application and its documents."""
 
-    # pylint: disable-msg=E0203,W0201
-
     def _toggle_column(self, field):
         """Show or hide column."""
 

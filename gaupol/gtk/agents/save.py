@@ -26,8 +26,6 @@ class SaveAgent(gaupol.Delegate):
 
     """Saving documents."""
 
-    # pylint: disable-msg=E0203,W0201,E1101
-
     def _get_main_props(self, page):
         """Return the properties of the main file of page's project.
 

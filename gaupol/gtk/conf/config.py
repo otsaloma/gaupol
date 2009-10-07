@@ -77,7 +77,6 @@ class Config(configobj.ConfigObj):
         config_file can be None for default configuration.
         Raise ConfigParseError if parsing config_file fails.
         """
-        # pylint: disable-msg=W0233
         try:
             configobj.ConfigObj.__init__(
                 self, config_file, configspec=spec_file,
@@ -187,7 +186,6 @@ class Config(configobj.ConfigObj):
     def write_to_file(self):
         """Write configurations to file."""
 
-        # pylint: disable-msg=W0201
         try:
             gaupol.util.makedirs(os.path.dirname(self.filename))
             configobj.ConfigObj.write(self)

@@ -26,8 +26,6 @@ class PositionAgent(gaupol.Delegate):
 
     """Manipulating times and frames."""
 
-    # pylint: disable-msg=E0203,W0201
-
     __metaclass__ = gaupol.Contractual
 
     def _get_frame_transform_ensure(self, value, point_1, point_2):

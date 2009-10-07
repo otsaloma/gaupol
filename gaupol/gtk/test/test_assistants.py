@@ -17,7 +17,6 @@
 import gaupol.gtk
 import gtk
 
-# pylint: disable-msg=F0401
 from ..assistants import _CapitalizationPage
 from ..assistants import _CommonErrorPage
 from ..assistants import _ConfirmationPage
@@ -37,8 +36,6 @@ class TestTextAssistantPage(gaupol.gtk.TestCase):
 
 
 class _Test_GladePage(gaupol.gtk.TestCase):
-
-    # pylint: disable-msg=E1101
 
     def run__page(self):
 
@@ -113,8 +110,6 @@ class Test_IntroductionPage(_Test_GladePage):
 
 class _Test_LocalePage(_Test_GladePage):
 
-    # pylint: disable-msg=E1101
-
     def test__get_country(self):
 
         self.page._country_combo.set_active(0)
@@ -167,7 +162,7 @@ class _Test_LocalePage(_Test_GladePage):
 
     def test_correct_texts(self):
 
-        project = self.get_project()
+        project = self.new_project()
         doc = gaupol.documents.MAIN
         self.page.correct_texts(project, None, doc)
 
@@ -213,7 +208,7 @@ class Test_JoinSplitWordsPage(_Test_GladePage):
 
     def setup_method(self, method):
 
-        self.project = self.get_project()
+        self.project = self.new_project()
         self.page = _JoinSplitWordsPage(gtk.Window())
         self.page.flash_dialog = lambda *args: gtk.RESPONSE_OK
 
@@ -356,7 +351,7 @@ class Test_ConfirmationPage(_Test_GladePage):
         gaupol.gtk.conf.preview.use_custom = True
         gaupol.gtk.conf.preview.custom_command = "echo"
         page = self.page.application.get_current_page()
-        page.project.video_path = self.get_subrip_path()
+        page.project.video_path = self.new_subrip_file()
         self.test_populate_tree_view()
 
     def test__on_mark_all_button_clicked(self):

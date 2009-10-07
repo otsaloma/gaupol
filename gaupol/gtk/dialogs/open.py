@@ -26,8 +26,6 @@ class OpenDialog(gaupol.gtk.FileDialog):
 
     """Dialog for selecting subtitle files to open."""
 
-    # pylint: disable-msg=E1101
-
     def __init__(self, parent, title, doc):
         """Initialize an OpenDialog object."""
 

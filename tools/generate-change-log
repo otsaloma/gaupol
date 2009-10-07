@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
-# Print GNU-style ChangeLog to stadard output based on git log.
+# Print GNU-style ChangeLog to standard output based on git log.
 #
 # git commit messages are left untouched to avoid ruining formatting, so they
 # are expected to have been wrapped at 72 characters. All commit messages that
-# appear to be full ChangeLog messages are used as is, i.e. git log information
-# is not used for those entries.
+# appear to be full ChangeLog messages are used as is, i.e. date and author
+# information from git log is not used for those entries.
 
 import os
 import re
@@ -24,9 +24,7 @@ re_commit = re.compile((r"^commit \w+?\n"
                        re.UNICODE | re.MULTILINE)
 
 re_change_log_message = re.compile(r"^\d\d\d\d-\d\d-\d\d  ")
-
 re_trailing_space = re.compile(r"\s*$", re.MULTILINE)
-
 wrapper = textwrap.TextWrapper(initial_indent="\t", subsequent_indent="\t")
 
 def write_commit(match):
@@ -39,6 +37,7 @@ def write_commit(match):
                       match.group("email"),
                       match.group("files").splitlines(),
                       message)
+
     sys.stdout.write("\n")
 
 def write_message(date, name, email, files, message):

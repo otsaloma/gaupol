@@ -39,8 +39,6 @@ class SearchAgent(gaupol.Delegate):
     to the finder and raising StopIteration when no more matches are found.
     """
 
-    # pylint: disable-msg=E0203,W0201
-
     __metaclass__ = gaupol.Contractual
 
     def __init__(self, master):

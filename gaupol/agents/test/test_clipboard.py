@@ -21,7 +21,7 @@ class TestClipboardAgent(gaupol.TestCase):
 
     def setup_method(self, method):
 
-        self.project = self.get_project()
+        self.project = self.new_project()
 
     def test_copy_texts(self):
 

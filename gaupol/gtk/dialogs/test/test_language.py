@@ -22,7 +22,6 @@ class TestLanguageDialog(gaupol.gtk.TestCase):
 
     def run__dialog_no_target(self):
 
-        # pylint: disable-msg=W0201
         self.dialog = gaupol.gtk.LanguageDialog(gtk.Window(), False)
         self.dialog.run()
         self.dialog.destroy()

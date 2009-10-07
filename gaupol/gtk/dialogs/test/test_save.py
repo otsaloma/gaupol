@@ -31,7 +31,7 @@ class TestSaveDialog(_TestFileDialog):
 
     def test__on_format_combo_changed(self):
 
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         self.dialog.set_filename(path)
         gaupol.gtk.util.iterate_main()
         for format in gaupol.formats:
@@ -72,4 +72,4 @@ class TestSaveDialog(_TestFileDialog):
     def test_set_name(self):
 
         self.dialog.set_name("test")
-        self.dialog.set_name(self.get_subrip_path())
+        self.dialog.set_name(self.new_subrip_file())

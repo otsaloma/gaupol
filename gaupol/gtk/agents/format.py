@@ -23,8 +23,6 @@ class FormatAgent(gaupol.Delegate):
 
     """Formatting text."""
 
-    # pylint: disable-msg=E0203,W0201
-
     def _change_case(self, method):
         """Change the case of the selected texts.
 

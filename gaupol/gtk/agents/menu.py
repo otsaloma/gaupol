@@ -31,8 +31,6 @@ class MenuAgent(gaupol.Delegate):
      * _undo_menu_items: Undo menu tool button menu items
     """
 
-    # pylint: disable-msg=E0203,W0201
-
     __metaclass__ = gaupol.Contractual
 
     def __init__(self, master):

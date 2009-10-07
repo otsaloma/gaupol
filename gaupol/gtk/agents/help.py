@@ -23,8 +23,6 @@ class HelpAgent(gaupol.Delegate):
 
     """Help and information."""
 
-    # pylint: disable-msg=E0203,W0201
-
     def on_report_a_bug_activate(self, *args):
         """Open web browser to submit a bug report."""
 

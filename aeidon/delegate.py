@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2007,2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,39 +14,34 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Base class for objects that dispatch self-lookups."""
+"""Base class for objects that dispatch ``self``-lookups."""
 
 __all__ = ("Delegate",)
 
 
 class Delegate(object):
 
-    """Base class for objects that dispatch self-lookups.
+    """Base class for objects that dispatch ``self``-lookups.
 
-    Calls for all attributes not found in self are dispatched to the object
-    defined as instance variable 'master'.
+    :ivar master: Object to where attribute calls are dispatched
     """
 
     def __getattr__(self, name):
         """Return value of master attribute."""
-
         return getattr(self.master, name)
 
     def __init__(self, master):
-        """Initialize a Delegate object."""
-
+        """Initialize a :class:`Delegate` object."""
         object.__setattr__(self, "master", master)
 
     def __setattr__(self, name, value):
         """Set value of master attribute."""
-
         # Do not create new attributes for master.
         if hasattr(self.master, name):
             return setattr(self.master, name, value)
         return object.__setattr__(self, name, value)
 
     def _invariant(self):
-
         # Default to checking master's class invariant.
         if hasattr(self.master, "_invariant"):
             return self.master._invariant()

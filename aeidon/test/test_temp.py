@@ -1,4 +1,4 @@
-# Copyright (C) 2007-2008 Osmo Salomaa
+# Copyright (C) 2007-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,54 +14,48 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gaupol
+import aeidon
 import os
 
 
-class TestModule(gaupol.TestCase):
+class TestModule(aeidon.TestCase):
 
     def test_close(self):
-
-        path = gaupol.temp.create()
-        gaupol.temp.close(path)
-        gaupol.temp.remove(path)
+        path = aeidon.temp.create()
+        aeidon.temp.close(path)
+        aeidon.temp.remove(path)
 
     def test_create(self):
-
-        path = gaupol.temp.create()
-        gaupol.temp.remove(path)
+        path = aeidon.temp.create()
+        aeidon.temp.remove(path)
 
     def test_create_directory(self):
-
-        path = gaupol.temp.create_directory()
-        gaupol.temp.remove_directory(path)
+        path = aeidon.temp.create_directory()
+        aeidon.temp.remove_directory(path)
 
     def test_get_handle(self):
-
-        path = gaupol.temp.create()
-        gaupol.temp.get_handle(path)
-        gaupol.temp.remove(path)
+        path = aeidon.temp.create()
+        aeidon.temp.get_handle(path)
+        aeidon.temp.remove(path)
 
     def test_remove(self):
-
-        path = gaupol.temp.create()
-        gaupol.temp.remove(path)
+        path = aeidon.temp.create()
+        aeidon.temp.remove(path)
         assert not os.path.isfile(path)
-        gaupol.temp.remove(path)
+        aeidon.temp.remove(path)
 
     def test_remove_all(self):
-
-        path_1 = gaupol.temp.create()
-        path_2 = gaupol.temp.create()
-        gaupol.temp.remove_all()
+        path_1 = aeidon.temp.create()
+        path_2 = aeidon.temp.create()
+        aeidon.temp.remove_all()
         assert not os.path.isfile(path_1)
         assert not os.path.isfile(path_2)
 
     def test_remove_directory(self):
-
-        path = gaupol.temp.create_directory()
+        path = aeidon.temp.create_directory()
         open(os.path.join(path, "a"), "w").write("a")
         open(os.path.join(path, "b"), "w").write("b")
-        gaupol.temp.remove_directory(path)
+        os.makedirs(os.path.join(path, "c"))
+        aeidon.temp.remove_directory(path)
         assert not os.path.isdir(path)
-        gaupol.temp.remove_directory(path)
+        aeidon.temp.remove_directory(path)

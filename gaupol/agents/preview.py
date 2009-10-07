@@ -27,8 +27,6 @@ class PreviewAgent(gaupol.Delegate):
 
     """Previewing subtitles with a video player."""
 
-    # pylint: disable-msg=E0203,W0201
-
     __metaclass__ = gaupol.Contractual
 
     def __init__(self, master):

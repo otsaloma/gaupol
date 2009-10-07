@@ -26,8 +26,6 @@ class EditAgent(gaupol.Delegate):
 
     """Basic subtitle data editing."""
 
-    # pylint: disable-msg=E0203,W0201
-
     __metaclass__ = gaupol.Contractual
 
     def clear_texts_require(self, indices, doc, register=-1):

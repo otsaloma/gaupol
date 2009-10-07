@@ -46,7 +46,7 @@ class TestModule(gaupol.TestCase):
 
     def test_detect(self):
 
-        name = gaupol.encodings.detect(self.get_subrip_path())
+        name = gaupol.encodings.detect(self.new_subrip_file())
         assert gaupol.encodings.is_valid_code(name)
 
     def test_detect__value_error(self):
@@ -54,18 +54,18 @@ class TestModule(gaupol.TestCase):
         translate_code = gaupol.encodings.translate_code
         def bad_translate_code(code): raise ValueError
         gaupol.encodings.translate_code = bad_translate_code
-        assert gaupol.encodings.detect(self.get_subrip_path()) is None
+        assert gaupol.encodings.detect(self.new_subrip_file()) is None
         gaupol.encodings.translate_code = translate_code
 
     def test_detect_bom__none(self):
 
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         encoding = gaupol.encodings.detect_bom(path)
         assert encoding is None
 
     def test_detect_bom__utf_8(self):
 
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         text = open(path, "r").read()
         open(path, "w").write(codecs.BOM_UTF8 + text)
         encoding = gaupol.encodings.detect_bom(path)
@@ -74,7 +74,7 @@ class TestModule(gaupol.TestCase):
 
     def test_detect_bom__utf_16_be(self):
 
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         text = open(path, "r").read()
         open(path, "w").write(codecs.BOM_UTF16_BE + text)
         encoding = gaupol.encodings.detect_bom(path)
@@ -83,7 +83,7 @@ class TestModule(gaupol.TestCase):
 
     def test_detect_bom__utf_16_le(self):
 
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         text = open(path, "r").read()
         open(path, "w").write(codecs.BOM_UTF16_LE + text)
         encoding = gaupol.encodings.detect_bom(path)
@@ -92,7 +92,7 @@ class TestModule(gaupol.TestCase):
 
     def test_detect_bom__utf_32_be(self):
 
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         text = open(path, "r").read()
         open(path, "w").write(codecs.BOM_UTF32_BE + text)
         encoding = gaupol.encodings.detect_bom(path)
@@ -101,7 +101,7 @@ class TestModule(gaupol.TestCase):
 
     def test_detect_bom__utf_32_le(self):
 
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         text = open(path, "r").read()
         open(path, "w").write(codecs.BOM_UTF32_LE + text)
         encoding = gaupol.encodings.detect_bom(path)

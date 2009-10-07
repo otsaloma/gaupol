@@ -72,7 +72,6 @@ class RevertableAction(object):
     def revert(self):
         """Call the revert method."""
 
-        # pylint: disable-msg=E1102
         kwargs = self.revert_kwargs.copy()
         kwargs["register"] = self._get_reversion_register()
         return self.revert_method(*self.revert_args, **kwargs)

@@ -21,7 +21,7 @@ class TestSetAgent(gaupol.TestCase):
 
     def setup_method(self, method):
 
-        self.project = self.get_project()
+        self.project = self.new_project()
 
     @gaupol.deco.reversion_test
     def test_set_duration__frame(self):

@@ -35,7 +35,7 @@ class TestSplitDialog(gaupol.gtk.TestCase):
     def test__on_response__frame__negative(self):
 
         page = gaupol.gtk.Page()
-        page.project.open_main(self.get_microdvd_path(), "ascii")
+        page.project.open_main(self.new_microdvd_file(), "ascii")
         self.application.add_new_page(page)
         args = (self.application.window, self.application)
         self.dialog = gaupol.gtk.SplitDialog(*args)
@@ -46,7 +46,7 @@ class TestSplitDialog(gaupol.gtk.TestCase):
     def test__on_response__frame__positive(self):
 
         page = gaupol.gtk.Page()
-        page.project.open_main(self.get_microdvd_path(), "ascii")
+        page.project.open_main(self.new_microdvd_file(), "ascii")
         self.application.add_new_page(page)
         args = (self.application.window, self.application)
         self.dialog = gaupol.gtk.SplitDialog(*args)
@@ -57,7 +57,7 @@ class TestSplitDialog(gaupol.gtk.TestCase):
     def test__on_response__time__negative(self):
 
         page = gaupol.gtk.Page()
-        page.project.open_main(self.get_subrip_path(), "ascii")
+        page.project.open_main(self.new_subrip_file(), "ascii")
         self.application.add_new_page(page)
         args = (self.application.window, self.application)
         self.dialog = gaupol.gtk.SplitDialog(*args)
@@ -68,7 +68,7 @@ class TestSplitDialog(gaupol.gtk.TestCase):
     def test__on_response__time__positive(self):
 
         page = gaupol.gtk.Page()
-        page.project.open_main(self.get_subrip_path(), "ascii")
+        page.project.open_main(self.new_subrip_file(), "ascii")
         self.application.add_new_page(page)
         args = (self.application.window, self.application)
         self.dialog = gaupol.gtk.SplitDialog(*args)

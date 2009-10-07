@@ -26,8 +26,6 @@ class CloseAgent(gaupol.Delegate):
 
     """Closing projects and quitting Gaupol."""
 
-    # pylint: disable-msg=E0203,W0201
-
     def _close_all_pages(self):
         """Close all pages after seeking confirmation.
 

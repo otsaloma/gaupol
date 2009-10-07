@@ -1,7 +1,7 @@
 [Hearing Impaired Pattern]
 _Name=Uppercase speaker before a colon
 _Description=Replace the uppercase name of the speaker before a colon with a dialogue dash
-# Allow lower case 'c' for McNAMES.
+# Allow lower case "c" for McNAMES.
 Pattern=^-?\s*?[A-Z\[][A-Zc\d'.\-\[\] ]+?:\s
 Flags=MULTILINE;UNICODE;
 Replacement=-\040

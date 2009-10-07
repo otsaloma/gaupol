@@ -24,7 +24,7 @@ class TestRegisterAgent(gaupol.TestCase):
 
     def setup_method(self, method):
 
-        self.project = self.get_project()
+        self.project = self.new_project()
         self.delegate = self.project.undo.im_self
 
     def test__break_action_group(self):
@@ -82,7 +82,7 @@ class TestRegisterAgent(gaupol.TestCase):
         assert self.project.main_changed == 1
         self.project.clear_texts((1,), TRAN)
         assert self.project.tran_changed == 1
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         self.project.open_main(path, "ascii")
         self.project.clear_texts((1,), TRAN)
         assert self.project.tran_changed == 1

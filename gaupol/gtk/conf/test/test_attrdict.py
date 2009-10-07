@@ -27,8 +27,6 @@ class PuppetDict(dict):
 
 class TestAttrDict(gaupol.TestCase):
 
-    # pylint: disable-msg=E1101
-
     def setup_method(self, method):
 
         self.root = PuppetDict((("test", 1), ("rest", 0)))

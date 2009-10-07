@@ -90,7 +90,6 @@ def disconnect(obj, section, option):
     globals()[section].disconnect(signal, method)
 
 def read_ensure(value):
-    # pylint: disable-msg=E0602
     assert "_config" in globals()
     config = globals()["_config"]
     version = gaupol.__version__
@@ -148,7 +147,6 @@ def write_ensure(value):
 def write():
     """Write configurations to file."""
 
-    # pylint: disable-msg=E0602
     _config.filename = config_file
     _config.write_to_file()
 

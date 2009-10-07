@@ -43,8 +43,6 @@ class Action(gtk.Action):
     'main-unsafe' for ones that do.
     """
 
-    # pylint: disable-msg=W0232
-
     accelerator = ""
     action_group = "main-unsafe"
     widgets = ()

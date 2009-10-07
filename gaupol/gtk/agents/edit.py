@@ -24,8 +24,6 @@ class EditAgent(gaupol.Delegate):
 
     """Editing subtitle data."""
 
-    # pylint: disable-msg=E0203,W0201
-
     __metaclass__ = gaupol.Contractual
 
     def __init__(self, master):
@@ -246,7 +244,6 @@ class EditAgent(gaupol.Delegate):
             return page.project.set_end(row, value)
         if col ==  page.view.columns.DURATION:
             if page.edit_mode == gaupol.modes.TIME:
-                # pylint: disable-msg=E1103
                 value = value.replace(",", ".")
                 try: value = float(value)
                 except ValueError: return

@@ -49,7 +49,7 @@ class TestPreviewAgent(gaupol.gtk.TestCase):
         gaupol.gtk.conf.preview.use_custom = True
         self.application = self.get_application()
         page = self.application.get_current_page()
-        page.project.video_path = self.get_subrip_path()
+        page.project.video_path = self.new_subrip_file()
         self.delegate = self.application.preview.im_self
         respond = lambda *args: gtk.RESPONSE_DELETE_EVENT
         self.delegate.flash_dialog = respond
@@ -82,7 +82,7 @@ class TestPreviewAgent(gaupol.gtk.TestCase):
         time = page.project.subtitles[3].start_time
         for doc in gaupol.documents:
             self.application.preview(page, time, doc)
-            path = self.get_subrip_path()
+            path = self.new_subrip_file()
             self.application.preview(page, time, doc, path)
 
     def test_preview__io_error(self):

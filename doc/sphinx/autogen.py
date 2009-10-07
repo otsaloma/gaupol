@@ -103,6 +103,8 @@ def filter_members(members):
                    if (not x.startswith("_") or
                        x in conf.include_members)]
     members = set(members) - set(conf.exclude_members)
+    members = [x for x in members
+               if not x.endswith(tuple(conf.exclude_members_endswith))]
     return sorted(list(members))
 
 def get_anchestors(cls):

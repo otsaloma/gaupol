@@ -28,6 +28,7 @@ directory = os.path.join(directory, "..", "..")
 directory = os.path.abspath(directory)
 sys.path.insert(0, directory)
 
+import aeidon
 import gaupol
 
 # -- General configuration -----------------------------------------------------
@@ -104,7 +105,8 @@ private_members = False
 
 # Always include or exclude objects these names.
 include_members = ['__init__']
-exclude_members = []
+exclude_members = ['_invariant']
+exclude_members_endswith = ['_require', '_ensure']
 
 # Path to the project root directory, relative to this directory.
 project_root = os.path.join('..', '..')

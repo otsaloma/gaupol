@@ -26,8 +26,6 @@ class ClipboardAgent(gaupol.Delegate):
 
     """Storing text to the clipboard and pasting from it."""
 
-    # pylint: disable-msg=E0203,W0201
-
     __metaclass__ = gaupol.Contractual
 
     def copy_texts_require(self, indices, doc):

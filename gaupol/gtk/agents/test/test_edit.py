@@ -48,7 +48,7 @@ class TestEditAgent(gaupol.gtk.TestCase):
 
     def test_on_edit_headers_activate(self):
 
-        path = self.get_file_path(gaupol.formats.SUBVIEWER2)
+        path = self.new_temp_file(gaupol.formats.SUBVIEWER2)
         self.application.open_main_file(path)
         respond = lambda *args: gtk.RESPONSE_OK
         self.application.flash_dialog = respond

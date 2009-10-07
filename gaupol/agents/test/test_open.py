@@ -22,20 +22,20 @@ class TestOpenAgent(gaupol.TestCase):
 
     def setup_method(self, method):
 
-        self.project = self.get_project()
+        self.project = self.new_project()
         self.delegate = self.project.open_main.im_self
 
     def test_open_main(self):
 
         for format in gaupol.formats:
-            path = self.get_file_path(format)
+            path = self.new_temp_file(format)
             self.project.remove_subtitles([0])
             self.project.open_main(path, "ascii")
             assert self.project.subtitles
 
     def test_open_main__io_error(self):
 
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         os.chmod(path, 0000)
         function = self.project.open_main
         self.raises(IOError, function, path, "ascii")
@@ -43,13 +43,13 @@ class TestOpenAgent(gaupol.TestCase):
 
     def test_open_main__mpsub(self):
 
-        path = self.get_file_path(gaupol.formats.MPSUB, "mpsub-frame")
+        path = self.new_temp_file(gaupol.formats.MPSUB, "mpsub-frame")
         self.project.open_main(path, "ascii")
         assert self.project.framerate == self.project.main_file.framerate
 
     def test_open_main__parse_error(self):
 
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         fobj = open(path, "w")
         fobj.write("00:00:01,000 --> 00:00:02,000\n\n")
         fobj.write("00:00:03,000 >>> 00:00:04,000\n\n")
@@ -59,13 +59,13 @@ class TestOpenAgent(gaupol.TestCase):
 
     def test_open_main__unicode_error(self):
 
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         function = self.project.open_main
         self.raises(UnicodeError, function, path, "punycode")
 
     def test_open_main__unsorted(self):
 
-        path = self.get_microdvd_path()
+        path = self.new_microdvd_file()
         fobj = open(path, "w")
         fobj.write("{100}{200}\n")
         fobj.write("{500}{600}\n")
@@ -77,7 +77,7 @@ class TestOpenAgent(gaupol.TestCase):
 
         align_method = gaupol.align_methods.NUMBER
         for format in gaupol.formats:
-            path = self.get_file_path(format)
+            path = self.new_temp_file(format)
             self.project.remove_subtitles([0])
             self.project.open_translation(path, "ascii", align_method)
 
@@ -85,6 +85,6 @@ class TestOpenAgent(gaupol.TestCase):
 
         align_method = gaupol.align_methods.POSITION
         for format in gaupol.formats:
-            path = self.get_file_path(format)
+            path = self.new_temp_file(format)
             self.project.remove_subtitles([0])
             self.project.open_translation(path, "ascii", align_method)

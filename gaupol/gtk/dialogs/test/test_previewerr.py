@@ -27,6 +27,6 @@ class TestPreviewErrorDialog(gaupol.gtk.TestCase):
 
     def setup_method(self, method):
 
-        output = self.get_file_text(gaupol.formats.SUBRIP)
+        output = self.get_sample_text(gaupol.formats.SUBRIP)
         self.dialog = gaupol.gtk.PreviewErrorDialog(gtk.Window(), output)
         self.dialog.show()

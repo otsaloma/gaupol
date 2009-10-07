@@ -23,8 +23,6 @@ class TextAgent(gaupol.Delegate):
 
     """Checking spelling."""
 
-    # pylint: disable-msg=E0203,W0201
-
     def on_check_spelling_activate(self, *args):
         """Check for incorrect spelling."""
 

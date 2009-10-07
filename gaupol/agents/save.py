@@ -26,8 +26,6 @@ class SaveAgent(gaupol.Delegate):
 
     """Saving subtitle files."""
 
-    # pylint: disable-msg=E0203,W0201
-
     __metaclass__ = gaupol.Contractual
 
     def _convert_tags(self, subtitles, doc, from_format, to_format):

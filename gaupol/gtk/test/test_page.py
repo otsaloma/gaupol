@@ -37,7 +37,7 @@ class TestPage(gaupol.gtk.TestCase):
 
     def test__on_project_main_file_opened(self):
 
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         self.page.project.open_main(path, "ascii")
 
     def test__on_project_main_texts_changed(self):
@@ -65,7 +65,7 @@ class TestPage(gaupol.gtk.TestCase):
 
     def test__on_project_translation_file_opened(self):
 
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         self.page.project.open_translation(path, "ascii")
 
     def test__on_project_translation_texts_changed(self):

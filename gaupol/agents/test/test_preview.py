@@ -22,7 +22,7 @@ class TestPreviewAgent(gaupol.TestCase):
 
     def setup_method(self, method):
 
-        self.project = self.get_project()
+        self.project = self.new_project()
         self.delegate = self.project.preview.im_self
 
     def test__get_subtitle_path__main(self):
@@ -73,10 +73,10 @@ class TestPreviewAgent(gaupol.TestCase):
     def test_preview(self):
 
         doc = gaupol.documents.MAIN
-        self.project.video_path = self.get_subrip_path()
+        self.project.video_path = self.new_subrip_file()
         self.project.preview("00:00:00.000", doc, "echo", 0)
         assert os.path.isfile(self.project.get_file(doc).path)
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         self.project.preview("00:00:00.000", doc, "echo", 0, path, "utf_8")
         assert os.path.isfile(self.project.get_file(doc).path)
         self.project.clear_texts((0,), gaupol.documents.MAIN)

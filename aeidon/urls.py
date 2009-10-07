@@ -1,4 +1,4 @@
-# Copyright (C) 2007 Osmo Salomaa
+# Copyright (C) 2007,2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,9 +14,14 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Website URLs."""
+"""Website URLs.
 
-__all__ = ("BUG_REPORT_URL", "HOMEPAGE_URL", "REGEX_HELP_URL",)
+:var BUG_REPORT_URL: Web page where to submit new bug reports
+:var HOMEPAGE_URL: Web page of the Gaupol project
+:var REGEX_HELP_URL: Web page with documentation on regular expressions
+"""
+
+__all__ = ("BUG_REPORT_URL", "HOMEPAGE_URL", "REGEX_HELP_URL")
 
 BUG_REPORT_URL = "http://bugzilla.gnome.org/enter_bug.cgi?product=gaupol"
 HOMEPAGE_URL = "http://home.gna.org/gaupol/"

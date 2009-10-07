@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2008 Osmo Salomaa
+# Copyright (C) 2006-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -19,9 +19,9 @@
 from __future__ import absolute_import
 from __future__ import with_statement
 
+import aeidon
 import codecs
 import contextlib
-import gaupol
 import inspect
 import locale
 import os
@@ -34,14 +34,12 @@ import webbrowser
 
 
 def affirm(value):
-    """Raise AffirmationError if value evaluates to False."""
-
+    """Raise :exc:`aeidon.AffirmationError` if value evaluates to ``False``."""
     if not value:
-        raise gaupol.AffirmationError
+        raise aeidon.AffirmationError
 
 def browse_url(url, browser=None):
-    """Open URL in web browser."""
-
+    """Open `url` in web browser."""
     if browser and isinstance(browser, basestring):
         return subprocess.Popen((browser, url))
     if "GNOME_DESKTOP_SESSION_ID" in os.environ:
@@ -56,10 +54,9 @@ def browse_url(url, browser=None):
         return subprocess.Popen(("exo-open", url))
     return webbrowser.open(url)
 
-@gaupol.deco.once
+@aeidon.deco.once
 def chardet_available():
-    """Return True if chardet module is available."""
-
+    """Return ``True`` if :mod:`chardet` module is available."""
     try:
         import chardet
         return True
@@ -71,28 +68,27 @@ def compare_versions_require(x, y):
     assert re_version.match(x) is not None
     assert re_version.match(y) is not None
 
-@gaupol.deco.contractual
+@aeidon.deco.contractual
 def compare_versions(x, y):
-    """Compare version strings x and y.
+    """Compare version strings `x` and `y`.
 
-    Used version number formats are MAJOR.MINOR, MAJOR.MINOR.PATCH and
-    MAJOR.MINOR.PATCH.{DATE/REVISION/...}, where all items are integers.
-    Return 1 if x newer, 0 if equal or -1 if y newer.
+    Used version number formats are ``MAJOR.MINOR``, ``MAJOR.MINOR.PATCH`` and
+    ``MAJOR.MINOR.PATCH.{DATE/REVISION/...}``, where all items are integers.
+    Return 1 if `x` newer, 0 if equal or -1 if `y` newer.
     """
-    x = [int(d) for d in x.split(".")]
-    y = [int(d) for d in y.split(".")]
-    return cmp(x, y)
+    return cmp(map(int, x.split(".")),
+               map(int, y.split(".")))
 
 def connect_require(observer, observable, signal, *args):
     if observer is not observable:
         assert hasattr(observer, observable)
 
-@gaupol.deco.contractual
+@aeidon.deco.contractual
 def connect(observer, observable, signal, *args):
-    """Connect observable's signal to observer's callback method.
+    """Connect `observable`'s signal to `observer`'s callback method.
 
-    If observable is a string, it should be an attribute of observer. If
-    observable is not a string it should be the same as observer.
+    If `observable` is a string, it should be an attribute of `observer`.
+    If `observable` is not a string it should be the same as `observer`.
     """
     method_name = signal.replace("-", "_").replace("::", "_")
     if observer is not observable:
@@ -105,46 +101,43 @@ def connect(observer, observable, signal, *args):
         observable = getattr(observer, observable)
     return observable.connect(signal, method, *args)
 
-def copy_dict_ensure(source, value):
-    assert source == value
-    assert source is not value
+def copy_dict_ensure(src, value):
+    assert src == value
+    assert src is not value
 
-@gaupol.deco.contractual
-def copy_dict(source):
-    """Copy source dictionary recursively and return copy."""
+@aeidon.deco.contractual
+def copy_dict(src):
+    """Copy `src` dictionary recursively and return copy."""
+    dst = src.copy()
+    for key, value in src.iteritems():
+        if isinstance(src[key], dict):
+            dst[key] = copy_dict(src[key])
+        if isinstance(src[key], list):
+            dst[key] = copy_list(src[key])
+        if isinstance(src[key], set):
+            dst[key] = set(src[key])
+    return dst
 
-    destination = source.copy()
-    for key, value in source.items():
-        if isinstance(source[key], dict):
-            destination[key] = copy_dict(source[key])
-        elif isinstance(source[key], list):
-            destination[key] = copy_list(source[key])
-        elif isinstance(source[key], set):
-            destination[key] = set(source[key])
-    return destination
+def copy_list_ensure(src, value):
+    assert src == value
+    assert src is not value
 
-def copy_list_ensure(source, value):
-    assert source == value
-    assert source is not value
-
-@gaupol.deco.contractual
-def copy_list(source):
-    """Copy source list recursively and return copy."""
-
-    destination = list(source)
-    for i, value in enumerate(source):
+@aeidon.deco.contractual
+def copy_list(src):
+    """Copy `src` list recursively and return copy."""
+    dst = list(src)
+    for i, value in enumerate(src):
         if isinstance(value, dict):
-            destination[i] = copy_dict(value)
-        elif isinstance(value, list):
-            destination[i] = copy_list(value)
-        elif isinstance(value, set):
-            destination[i] = set(value)
-    return destination
+            dst[i] = copy_dict(value)
+        if isinstance(value, list):
+            dst[i] = copy_list(value)
+        if isinstance(value, set):
+            dst[i] = set(value)
+    return dst
 
-@gaupol.deco.once
+@aeidon.deco.once
 def enchant_available():
-    """Return True if enchant module is available."""
-
+    """Return ``True`` if :mod:`enchant` module is available."""
     try:
         import enchant
         return True
@@ -152,8 +145,11 @@ def enchant_available():
         return False
 
 def flatten(lst):
-    """Return a shallow version of lst."""
+    """Return a shallow version of `lst`.
 
+    >>> aeidon.util.flatten([1, 2, 3, [4, 5, [6]]])
+    [1, 2, 3, 4, 5, 6]
+    """
     flat_lst = []
     for item in lst:
         if isinstance(item, list):
@@ -163,8 +159,7 @@ def flatten(lst):
     return flat_lst
 
 def get_all(names, pattern=None):
-    """Return a tuple of names filtered by pattern to use as __all__."""
-
+    """Return a tuple of `names` filtered by pattern to use as ``__all__``."""
     import __future__
     for i in reversed(range(len(names))):
         if ((names[i].startswith("_")) or
@@ -175,17 +170,16 @@ def get_all(names, pattern=None):
             names.pop(i)
     if pattern is not None:
         regex = re.compile(pattern, re.UNICODE)
-        names = [x for x in names if regex.search(x)]
+        names = filter(regex.search, names)
     return tuple(names)
 
 def get_chardet_version_ensure(value):
     if value is not None:
         assert isinstance(value, basestring)
 
-@gaupol.deco.contractual
+@aeidon.deco.contractual
 def get_chardet_version():
-    """Return chardet version number as string or None."""
-
+    """Return :mod:`chardet` version number as string or ``None``."""
     try:
         import chardet
         return chardet.__version__
@@ -195,11 +189,10 @@ def get_chardet_version():
 def get_default_encoding_ensure(value):
     codecs.lookup(value)
 
-@gaupol.deco.once
-@gaupol.deco.contractual
+@aeidon.deco.once
+@aeidon.deco.contractual
 def get_default_encoding():
     """Return the locale encoding or UTF-8 (as fallback)."""
-
     encoding = locale.getpreferredencoding()
     encoding = encoding or "utf_8"
     re_illegal = re.compile(r"[^a-z0-9_]")
@@ -211,10 +204,9 @@ def get_enchant_version_ensure(value):
     if value is not None:
         assert isinstance(value, basestring)
 
-@gaupol.deco.contractual
+@aeidon.deco.contractual
 def get_enchant_version():
-    """Return enchant version number as string or None."""
-
+    """Return :mod:`enchant` version number as string or ``None``."""
     try:
         import enchant
         return enchant.__version__
@@ -222,9 +214,7 @@ def get_enchant_version():
         return None
 
 def get_encoding_alias(encoding):
-    """Return proper alias for encoding."""
-
-    # pylint: disable-msg=E0611
+    """Return proper Python alias for `encoding`."""
     from encodings.aliases import aliases
     if encoding in aliases:
         return aliases[encoding]
@@ -238,10 +228,13 @@ def get_ranges_ensure(value, lst):
     for item in value:
         assert item == range(item[0], item[-1] + 1)
 
-@gaupol.deco.contractual
+@aeidon.deco.contractual
 def get_ranges(lst):
-    """Return a list of ranges in list of integers."""
+    """Return a list of ranges in list of integers.
 
+    >>> aeidon.util.get_ranges([1, 2, 3, 5, 6, 7, 9, 11, 12])
+    [[1, 2, 3], [5, 6, 7], [9], [11, 12]]
+    """
     if not lst: return []
     lst = get_sorted_unique(lst)
     ranges = [[lst.pop(0)]]
@@ -256,10 +249,13 @@ def get_sorted_unique_ensure(value, lst):
         assert value.count(item) == 1
     assert sorted(value) == value
 
-@gaupol.deco.contractual
+@aeidon.deco.contractual
 def get_sorted_unique(lst):
-    """Return sorted list with duplicates removed."""
+    """Return sorted `lst` with duplicates removed.
 
+    >>> aeidon.util.get_sorted_unique([3, 2, 1, 2, 4, 4])
+    [1, 2, 3, 4]
+    """
     lst = sorted(lst)
     for i in reversed(range(1, len(lst))):
         if lst[i] == lst[i - 1]:
@@ -270,91 +266,89 @@ def get_unique_ensure(value, lst, keep_last=False):
     for item in value:
         assert value.count(item) == 1
 
-@gaupol.deco.contractual
+@aeidon.deco.contractual
 def get_unique(lst, keep_last=False):
-    """Return list with duplicates removed.
+    """Return `lst` with duplicates removed.
 
-    Keep the last duplicate if keep_last is True, else keep first.
+    Keep the last duplicate if `keep_last` is ``True``, else keep first.
+
+    >>> aeidon.util.get_unique([3, 2, 1, 2, 4, 4])
+    [3, 2, 1, 4]
+    >>> aeidon.util.get_unique([3, 2, 1, 2, 4, 4], True)
+    [3, 1, 2, 4]
     """
     lst = lst[:]
-    if keep_last: lst.reverse()
+    if keep_last:
+        lst.reverse()
     for i in reversed(range(len(lst))):
         for j in range(0, i):
             if lst[j] == lst[i]:
                 lst.pop(i)
                 break
-    if keep_last: lst.reverse()
+    if keep_last:
+        lst.reverse()
     return lst
 
 def install_module(name, obj):
-    """Install object's module into the gaupol's namespace.
+    """Install `obj`'s module into the :mod:`aeidon` namespace.
 
-    Typical call is of form install_module('foo', lambda: None).
+    Typical call is of form::
+
+        aeidon.util.install_module("foo", lambda: None)
     """
-    gaupol.__dict__[name] = inspect.getmodule(obj)
+    aeidon.__dict__[name] = inspect.getmodule(obj)
 
 def is_command(command):
-    """Return True if command exists as a file in $PATH."""
-
+    """Return ``True`` if `command` exists as a file in ``$PATH``."""
     dirs = os.environ.get("PATH", "").split(os.pathsep)
     paths = [os.path.join(x, command) for x in dirs]
     return any(map(os.path.isfile, paths))
 
 def last(iterator):
-    """Return the last value from iterator or None."""
-
+    """Return the last value from `iterator` or ``None``."""
     value = None
-    while True:
-        try: value = iterator.next()
-        except StopIteration: break
+    for value in iterator: pass
     return value
 
 def makedirs_ensure(value, directory):
     assert os.path.isdir(directory)
 
-@gaupol.deco.contractual
+@aeidon.deco.contractual
 def makedirs(directory):
-    """Recursively make directory if it does not exist.
+    """Recursively make `directory` if it does not exist.
 
-    Raise OSError if unsuccessful.
+    Raise :exc:`OSError` if unsuccessful.
     """
     if not os.path.isdir(directory):
         os.makedirs(directory)
 
 def path_to_uri(path):
     """Convert local filepath to URI."""
-
     if sys.platform == "win32":
         path = "/%s" % path.replace("\\", "/")
     return "file://%s" % urllib.quote(path)
 
 def print_read_io(exc_info, path):
-    """Print IO error message to standard output."""
-
+    """Print :exc:`IOError` message to standard output."""
     print "Failed to read file '%s': %s." % (path, exc_info[1].args[1])
 
 def print_read_unicode(exc_info, path, encoding):
-    """Print Unicode error message to standard output."""
-
+    """Print :exc:`UnicodeError` message to standard output."""
     encoding = encoding or get_default_encoding()
     print "Failed to decode file '%s' with codec '%s'." % (path, encoding)
 
 def print_remove_os(exc_info, path):
-    """Print OS error message to standard output."""
-
+    """Print :exc:`OSError` message to standard output."""
     print "Failed to remove file '%s': %s." % (path, exc_info[1].args[1])
 
 def print_write_io(exc_info, path):
-    """Print IO error message to standard output."""
-
+    """Print :exc:`IOError` message to standard output."""
     print "Failed to write file '%s': %s." % (path, exc_info[1].args[1])
 
 def print_write_unicode(exc_info, path, encoding):
-    """Print Unicode error message to standard output."""
-
+    """Print :exc:`UnicodeError` message to standard output."""
     encoding = encoding or get_default_encoding()
     print "Failed to encode file '%s' with codec '%s'." % (path, encoding)
-
 
 def read_require(path, encoding=None, fallback="utf_8"):
     if encoding is not None:
@@ -362,18 +356,17 @@ def read_require(path, encoding=None, fallback="utf_8"):
     if fallback is not None:
         codecs.lookup(fallback)
 
-@gaupol.deco.contractual
+@aeidon.deco.contractual
 def read(path, encoding=None, fallback="utf_8"):
-    """Read file and return text.
+    """Read file at `path` and return text.
 
-    fallback should be None to not fall back to UTF-8.
-    Raise IOError if reading fails.
-    Raise UnicodeError if decoding fails.
+    `fallback` should be ``None`` to not fall back to UTF-8.
+    Raise :exc:`IOError` if reading fails.
+    Raise :exc:`UnicodeError` if decoding fails.
     """
+    encoding = encoding or get_default_encoding()
     try:
-        encoding = encoding or get_default_encoding()
-        args = (path, "r", encoding)
-        with contextlib.closing(codecs.open(*args)) as fobj:
+        with contextlib.closing(codecs.open((path, "r", encoding))) as fobj:
             return fobj.read().strip()
     except UnicodeError:
         if not fallback in (encoding, None, ""):
@@ -386,13 +379,13 @@ def readlines_require(path, encoding=None, fallback="utf_8"):
     if fallback is not None:
         codecs.lookup(fallback)
 
-@gaupol.deco.contractual
+@aeidon.deco.contractual
 def readlines(path, encoding=None, fallback="utf_8"):
-    """Read file and return lines.
+    """Read file at `path` and return lines.
 
-    fallback should be None to not fall back to UTF-8.
-    Raise IOError if reading fails.
-    Raise UnicodeError if decoding fails.
+    `fallback` should be ``None`` to not fall back to UTF-8.
+    Raise :exc:`IOError` if reading fails.
+    Raise :exc:`UnicodeError` if decoding fails.
     """
     text = read(path, encoding, fallback)
     text = text.replace("\r\n", "\n")
@@ -400,39 +393,40 @@ def readlines(path, encoding=None, fallback="utf_8"):
     return text.split("\n")
 
 def shell_quote(path):
-    """Quote and escape path for shell use."""
-
+    """Quote and escape `path` for shell use."""
     if sys.platform != "win32":
         path = path.replace("\\", "\\\\")
         path = path.replace('"', '\\"')
     return '"%s"' % path
 
 def start_process(command, **kwargs):
-    """Start command as a new background subprocess.
+    """Start `command` as a new background subprocess.
 
-    command and kwargs are passed to subprocess.Popen.__init__.
-    raise ProcessError if something goes wrong.
-    Return subprocess.Popen instance.
+    `command` and `kwargs` are passed to :meth:`subprocess.Popen.__init__`.
+    Raise :exc:`aeidon.ProcessError` if something goes wrong.
+    Return :class:`subprocess.Popen` instance.
     """
     try:
-        return subprocess.Popen(
-            command,
-            shell=(sys.platform != "win32"),
-            cwd=os.getcwd(),
-            env=os.environ.copy(),
-            universal_newlines=True,
-            **kwargs)
+        return subprocess.Popen(command,
+                                shell=(sys.platform != "win32"),
+                                cwd=os.getcwd(),
+                                env=os.environ.copy(),
+                                universal_newlines=True,
+                                **kwargs)
     except OSError, (no, message):
-        raise gaupol.ProcessError(message)
+        raise aeidon.ProcessError(message)
 
 def title_to_lower_case_ensure(value, title_name):
     assert value.islower()
 
-@gaupol.deco.memoize
-@gaupol.deco.contractual
+@aeidon.deco.memoize
+@aeidon.deco.contractual
 def title_to_lower_case(title_name):
-    """Convert title case name to lower case with underscores."""
+    """Convert title case name to lower case with underscores.
 
+    >>> aeidon.util.title_to_lower_case("TitleCase")
+    'title_case'
+    """
     lower_name = ""
     for char in title_name:
         if char.isupper() and lower_name:
@@ -441,8 +435,7 @@ def title_to_lower_case(title_name):
     return lower_name
 
 def uri_to_path(uri):
-    """Convert URI to local filepath."""
-
+    """Convert `uri` to local filepath."""
     uri = urllib.unquote(uri)
     if sys.platform == "win32":
         path = urlparse.urlsplit(uri)[2]
@@ -460,18 +453,17 @@ def write_require(path, text, encoding=None, fallback="utf_8"):
 def write_ensure(value, path, text, encoding=None, fallback="utf_8"):
     assert os.path.isfile(path)
 
-@gaupol.deco.contractual
+@aeidon.deco.contractual
 def write(path, text, encoding=None, fallback="utf_8"):
-    """Write text to file.
+    """Write `text` to file at `path`.
 
-    fallback should be None to not fall back to UTF-8.
-    Raise IOError if writing fails.
-    Raise UnicodeError if encoding fails.
+    `fallback` should be ``None`` to not fall back to UTF-8.
+    Raise :exc:`IOError` if writing fails.
+    Raise :exc:`UnicodeError` if encoding fails.
     """
+    encoding = encoding or get_default_encoding()
     try:
-        encoding = encoding or get_default_encoding()
-        args = (path, "w", encoding)
-        with contextlib.closing(codecs.open(*args)) as fobj:
+        with contextlib.closing(codecs.open(path, "w", encoding)) as fobj:
             return fobj.write(text)
     except UnicodeError:
         if not fallback in (encoding, None, ""):
@@ -487,13 +479,13 @@ def writelines_require(path, lines, encoding=None, fallback="utf_8"):
 def writelines_ensure(value, path, lines, encoding=None, fallback="utf_8"):
     assert os.path.isfile(path)
 
-@gaupol.deco.contractual
+@aeidon.deco.contractual
 def writelines(path, lines, encoding=None, fallback="utf_8"):
-    """Write lines of text to file.
+    """Write `lines` of text to file at `path`.
 
-    fallback should be None to not fall back to UTF-8.
-    Raise IOError if writing fails.
-    Raise UnicodeError if encoding fails.
+    `fallback` should be ``None`` to not fall back to UTF-8.
+    Raise :exc:`IOError` if writing fails.
+    Raise :exc:`UnicodeError` if encoding fails.
     """
     text = os.linesep.join(lines) + os.linesep
     return write(path, text, encoding, fallback)

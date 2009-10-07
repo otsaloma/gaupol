@@ -42,7 +42,7 @@ class ExtensionManager(object):
     """
 
     __metaclass__ = gaupol.Contractual
-    _global_dir = os.path.join(gaupol.EXTENSION_DIR)
+    _global_dir = os.path.join(gaupol.DATA_DIR, "extensions")
     _local_dir = os.path.join(gaupol.DATA_HOME_DIR, "extensions")
     _re_comment = re.compile(r"#.*$")
 

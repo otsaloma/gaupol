@@ -27,8 +27,6 @@ class AppendDialog(gaupol.gtk.OpenDialog):
 
     """Dialog for selecting a subtitle file to append to project."""
 
-    # pylint: disable-msg=E1101
-
     def __init__(self, parent):
         """Initialize an AppendDialog object."""
 

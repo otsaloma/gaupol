@@ -29,8 +29,6 @@ class PreviewAgent(gaupol.Delegate):
 
     """Previewing subtitles with a video player."""
 
-    # pylint: disable-msg=E0203,W0201
-
     def _check_process_state(self, page, process, output_path, command):
         """Check if the process has terminated or not."""
 

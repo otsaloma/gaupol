@@ -51,8 +51,6 @@ class RegisterAgent(gaupol.Delegate):
     reverted action, e.g. 'Insert' when the reverting method is 'Remove'.
     """
 
-    # pylint: disable-msg=E0203,W0201
-
     __metaclass__ = gaupol.Contractual
 
     def __init__(self, master):
@@ -125,7 +123,6 @@ class RegisterAgent(gaupol.Delegate):
     def _shift_changed_value(self, action, shift):
         """Shift the values of the changed attributes."""
 
-        # pylint: disable-msg=E1101
         if gaupol.documents.MAIN in action.docs:
             self.main_changed += shift
         if tuple(action.docs) == (gaupol.documents.TRAN,):

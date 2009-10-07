@@ -575,7 +575,6 @@ class TestFinder(gaupol.TestCase):
 
     def test_set_regex(self):
 
-        # pylint: disable-msg=E1103
         flags = re.DOTALL | re.MULTILINE | re.UNICODE
 
         self.finder.set_regex("test")

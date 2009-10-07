@@ -28,7 +28,7 @@ class TestConfig(gaupol.gtk.TestCase):
 
     def test___check_enum(self):
 
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         fobj = open(path, "w")
         fobj.write("[editor]\n")
         fobj.write("mode = XXX\n")
@@ -37,7 +37,7 @@ class TestConfig(gaupol.gtk.TestCase):
 
     def test___check_enum_list(self):
 
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         fobj = open(path, "w")
         fobj.write("[editor]\n")
         fobj.write("visible_fields = XXX, YYY, ZZZ\n")
@@ -46,21 +46,21 @@ class TestConfig(gaupol.gtk.TestCase):
 
     def test___init____config_obj_error(self):
 
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         function = gaupol.gtk.conf.Config
         args = (path, self.spec_file)
         self.raises(gaupol.gtk.ConfigParseError, function, *args)
 
     def test___init____io_error(self):
 
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         os.chmod(path, 0000)
         gaupol.gtk.conf.Config(path, self.spec_file)
         os.chmod(path, 0777)
 
     def test___init____unicode_error(self):
 
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         fobj = open(path, "w")
         fobj.write("[file]\n")
         fobj.write("directory = \303\266\n")
@@ -72,7 +72,7 @@ class TestConfig(gaupol.gtk.TestCase):
 
     def test___remove_options(self):
 
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         fobj = open(path, "w")
         fobj.write("[editor]\n")
         fobj.write("xxx = yyy\n")
@@ -81,7 +81,7 @@ class TestConfig(gaupol.gtk.TestCase):
 
     def test___remove_sections(self):
 
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         fobj = open(path, "w")
         fobj.write("[xxx]\n")
         fobj.write("yyy = zzz\n")
@@ -90,7 +90,7 @@ class TestConfig(gaupol.gtk.TestCase):
 
     def test___validate(self):
 
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         fobj = open(path, "w")
         fobj.write("[editor]\n")
         fobj.write("limit_undo = xxx\n")
@@ -99,14 +99,14 @@ class TestConfig(gaupol.gtk.TestCase):
 
     def test_write_to_file(self):
 
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         self.config.filename = path
         self.config.write_to_file()
         gaupol.gtk.conf.Config(path, self.spec_file)
 
     def test_write_to_file__io_error(self):
 
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         self.config.filename = path
         os.chmod(path, 0000)
         self.config.write_to_file()
@@ -114,7 +114,7 @@ class TestConfig(gaupol.gtk.TestCase):
 
     def test_write_to_file__unicode_error(self):
 
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         self.config.filename = path
         self.config.encoding = "ascii"
         self.config["file"]["directory"] = "\303\266"

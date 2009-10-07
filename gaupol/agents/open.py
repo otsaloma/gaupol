@@ -24,8 +24,6 @@ class OpenAgent(gaupol.Delegate):
 
     """Opening subtitle files."""
 
-    # pylint: disable-msg=E0203,W0201
-
     __metaclass__ = gaupol.Contractual
 
     def _align_translations(self, subtitles):

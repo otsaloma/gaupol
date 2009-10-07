@@ -25,8 +25,6 @@ class FormatAgent(gaupol.Delegate):
 
     """Changing the appearance of texts."""
 
-    # pylint: disable-msg=E0203,W0201
-
     __metaclass__ = gaupol.Contractual
     _re_alphanum = re.compile(r"\w", re.UNICODE)
 

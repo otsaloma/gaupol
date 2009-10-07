@@ -47,7 +47,7 @@ Repeat=True
 _Name=Letter "l" in an upper case word
 _Description=Replace letter "l" with letter "I" in an upper case word
 Classes=OCR;
-# Handle the case of the first person pronoun 'I'.
+# Handle the case of the first person pronoun "I".
 # Disallow dashes for the case of spelling out a word, but allow them
 # for the case of stuttering.
 Pattern=(?<![a-hj-z]-)\bl\b(?!-[a-hj-z])
@@ -59,7 +59,7 @@ Repeat=True
 _Name=Letter "l" in an upper case word
 _Description=Replace letter "l" with letter "I" in an upper case word
 Classes=OCR;
-# Replace with 'I' if 'l' is the the first letter of a word
+# Replace with "I" if "l" is the the first letter of a word
 # and is followed by a consonant.
 Pattern=((\s|^)["'«»]?)l(?!bs)(?!lama)([bcdfghjklmnpqrstvwxz])
 Flags=DOTALL;MULTILINE;UNICODE;

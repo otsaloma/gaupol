@@ -1,4 +1,4 @@
-# Copyright (C) 2007 Osmo Salomaa
+# Copyright (C) 2007,2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,17 +14,20 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Design by contract metaclass."""
+"""Metaclass for design-by-contract_ pre- and postcondition checks.
 
+.. _design-by-contract:
+   http://www.eiffel.com/developers/design_by_contract.html
+"""
+
+import aeidon
 import functools
-import gaupol
 
 __all__ = ("Contractual",)
 
 
 def _ensured(ensure_func):
     """Decorator for checking a postcondition."""
-
     def outer_wrapper(function):
         @functools.wraps(function)
         def inner_wrapper(*args, **kwargs):
@@ -32,12 +35,10 @@ def _ensured(ensure_func):
             ensure_func(args[0], value, *args[1:], **kwargs)
             return value
         return inner_wrapper
-
     return outer_wrapper
 
 def _invariated(invariant_func):
-    """Decorator for checking class invariants."""
-
+    """Decorator for checking a class invariant."""
     def outer_wrapper(function):
         @functools.wraps(function)
         def inner_wrapper(*args, **kwargs):
@@ -45,29 +46,26 @@ def _invariated(invariant_func):
             invariant_func(args[0])
             return value
         return inner_wrapper
-
     return outer_wrapper
 
 def _required(require_func):
     """Decorator for checking a precondition."""
-
     def outer_wrapper(function):
         @functools.wraps(function)
         def inner_wrapper(*args, **kwargs):
             require_func(*args, **kwargs)
             return function(*args, **kwargs)
         return inner_wrapper
-
     return outer_wrapper
 
 
 class Contractual(type):
 
-    """Design by contract metaclass.
+    """Metaclass for design-by-contract_ pre- and postcondition checks.
 
-    Method calls are automatically wrapped in 'METHOD_NAME_require'
-    precondition call, 'METHOD_NAME_ensure' postcondition call and public
-    method calls in '_invariant' class invariant check call if such methods
+    Method calls are automatically wrapped in ``METHOD_NAME_require``
+    precondition call, ``METHOD_NAME_ensure`` postcondition call and public
+    method calls in ``_invariant`` class invariant check call if such methods
     exist. The require method receives the same arguments as method, the ensure
     method will in addition receive method's return value as its first argument
     after self.
@@ -77,12 +75,14 @@ class Contractual(type):
     strengthened; all preconditions and class invariant checks found in the
     inheritance tree will be used.
 
-    This is a debug metaclass that is in use only if gaupol.debug is True.
+    This is a debug metaclass that is in use only if aeidon.debug is True.
+
+    .. _design-by-contract:
+       http://www.eiffel.com/developers/design_by_contract.html
     """
 
     def __new__(meta, class_name, bases, dic):
         """Return instance with method calls wrapped in condition calls."""
-
         new_dict = dic.copy()
         for name, attr in dic.items():
             if not callable(attr): continue
@@ -129,4 +129,4 @@ class Contractual(type):
 
         return type.__new__(meta, class_name, bases, new_dict)
 
-    if not gaupol.debug: del __new__
+    if not aeidon.debug: del __new__

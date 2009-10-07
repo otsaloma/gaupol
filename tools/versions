@@ -4,9 +4,9 @@
 
 # pylint: disable-msg=W0404
 
-print "Python:",
 import sys
-print "%d.%d.%d" % sys.version_info[:3]
+
+print "Python: %d.%d.%d" % sys.version_info[:3]
 
 try:
     print "GTK+:",

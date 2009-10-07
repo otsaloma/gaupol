@@ -20,8 +20,6 @@ import gtk
 
 class TestMultiCloseDialog(gaupol.gtk.TestCase):
 
-    # pylint: disable-msg=W0201
-
     def run__dialog__both(self):
 
         self.setup_both()

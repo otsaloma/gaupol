@@ -25,7 +25,7 @@ class TestModule(gaupol.gtk.TestCase):
 
     def test__handle_transitions(self):
 
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         fobj = open(path, "w")
         fobj.write("[general]\n")
         fobj.write("version = 0.7\n")
@@ -67,6 +67,6 @@ class TestModule(gaupol.gtk.TestCase):
     def test_write(self):
 
         gaupol.gtk.conf.read()
-        gaupol.gtk.conf.config_file = self.get_subrip_path()
+        gaupol.gtk.conf.config_file = self.new_subrip_file()
         gaupol.gtk.conf.write()
         gaupol.gtk.conf.read()

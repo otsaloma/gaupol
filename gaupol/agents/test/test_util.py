@@ -21,7 +21,7 @@ class TestUtilityAgent(gaupol.TestCase):
 
     def setup_method(self, method):
 
-        self.project = self.get_project()
+        self.project = self.new_project()
         self.delegate = self.project.get_changed.im_self
 
     def test__get_format(self):
@@ -86,9 +86,9 @@ class TestUtilityAgent(gaupol.TestCase):
 
     def test_get_mode(self):
 
-        self.project.open_main(self.get_subrip_path(), "ascii")
+        self.project.open_main(self.new_subrip_file(), "ascii")
         assert self.project.get_mode() == gaupol.modes.TIME
-        self.project.open_main(self.get_microdvd_path(), "ascii")
+        self.project.open_main(self.new_microdvd_file(), "ascii")
         assert self.project.get_mode() == gaupol.modes.FRAME
         self.project.main_file = None
         assert self.project.get_mode() == gaupol.modes.TIME

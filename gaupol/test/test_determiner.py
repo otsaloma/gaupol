@@ -26,13 +26,13 @@ class TestFormatDeterminer(gaupol.TestCase):
     def test_determine(self):
 
         for format in gaupol.formats:
-            path = self.get_file_path(format)
+            path = self.new_temp_file(format)
             value = self.determiner.determine(path, "ascii")
             assert value == format
 
     def test_determine__value_error(self):
 
-        path = self.get_subrip_path()
+        path = self.new_subrip_file()
         gaupol.util.write(path, "", "ascii")
         function = self.determiner.determine
         self.raises(gaupol.FormatError, function, path, "ascii")

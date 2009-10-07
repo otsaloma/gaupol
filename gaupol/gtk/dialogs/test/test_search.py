@@ -20,8 +20,6 @@ import gtk
 
 class TestSearchDialog(gaupol.gtk.TestCase):
 
-    # pylint: disable-msg=W0201
-
     def run__dialog(self):
 
         self.dialog.run()
@@ -152,7 +150,7 @@ class TestSearchDialog(gaupol.gtk.TestCase):
         self.dialog._pattern_entry.set_text("xxx")
         self.dialog.next()
         self.dialog._all_radio.set_active(True)
-        self.application.open_main_file(self.get_subrip_path())
+        self.application.open_main_file(self.new_subrip_file())
         self.dialog.next()
 
     def test_previous(self):
@@ -165,7 +163,7 @@ class TestSearchDialog(gaupol.gtk.TestCase):
         self.dialog._pattern_entry.set_text("xxx")
         self.dialog.previous()
         self.dialog._all_radio.set_active(True)
-        self.application.open_main_file(self.get_subrip_path())
+        self.application.open_main_file(self.new_subrip_file())
         self.dialog.previous()
 
     def test_replace(self):
