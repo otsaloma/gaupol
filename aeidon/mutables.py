@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2007 Osmo Salomaa
+# Copyright (C) 2006-2007,2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,35 +16,32 @@
 
 """Observable versions of built-in mutable objects."""
 
+import aeidon
 import copy
 import functools
-import gaupol
 
 __all__ = ("ObservableDict", "ObservableList", "ObservableSet",)
 
 
 def _mutation(function):
     """Decorator for sending a notification after mutating object."""
-
     @functools.wraps(function)
     def wrapper(*args, **kwargs):
         value = function(*args, **kwargs)
         args[0].master.notify(args[0].name)
         return value
-
     return wrapper
 
 
 class ObservableDict(dict):
 
-    """Observable version of dict.
+    """Observable version of ``dict``.
 
-    Instance variables:
-     * master: Master instance with a 'notify' method
-     * name: Argument given when calling master's 'notify' method
+    :ivar master: Master instance with a ``notify`` method
+    :ivar name: Argument passed when calling :attr:`master`'s ``notify`` method
     """
 
-    __metaclass__ = gaupol.Contractual
+    __metaclass__ = aeidon.Contractual
 
     def __copy__(self):
         dic = dict(copy.copy(x) for  x in self.items())
@@ -93,14 +90,13 @@ class ObservableDict(dict):
 
 class ObservableList(list):
 
-    """Observable version of list.
+    """Observable version of ``list``.
 
-    Instance variables:
-     * master: Master instance with a 'notify' method
-     * name: Argument given when calling master's 'notify' method
+    :ivar master: Master instance with a ``notify`` method
+    :ivar name: Argument passed when calling :attr:`master`'s ``notify`` method
     """
 
-    __metaclass__ = gaupol.Contractual
+    __metaclass__ = aeidon.Contractual
 
     def __copy__(self):
         lst = list(copy.copy(x) for x in self)
@@ -173,14 +169,13 @@ class ObservableList(list):
 
 class ObservableSet(set):
 
-    """Observable version of set.
+    """Observable version of ``set``.
 
-    Instance variables:
-     * master: Master instance with a 'notify' method
-     * name: Argument given when calling master's 'notify' method
+    :ivar master: Master instance with a ``notify`` method
+    :ivar name: Argument passed when calling :attr:`master`'s ``notify`` method
     """
 
-    __metaclass__ = gaupol.Contractual
+    __metaclass__ = aeidon.Contractual
 
     def __copy__(self):
         zet = set(copy.copy(x) for x in self)
