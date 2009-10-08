@@ -8,10 +8,9 @@ aeidon.util
 aeidon.temp
 aeidon.contractual
 aeidon.delegate
+aeidon.singleton
 aeidon.unittest
 
-
-aeidon.singleton
 aeidon.mutables
 aeidon.observable
 aeidon.enumeration

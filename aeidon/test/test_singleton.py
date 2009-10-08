@@ -1,4 +1,4 @@
-# Copyright (C) 2007 Osmo Salomaa
+# Copyright (C) 2008 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,18 +14,13 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Base class for single-instance classes."""
-
-__all__ = ("Singleton",)
+import aeidon
 
 
-class Singleton(object):
+class TestSingleton(aeidon.TestCase):
 
-    """Base class for single-instance classes."""
+    def setup_method(self, method):
+        self.cls = type("", (aeidon.Singleton,), {})
 
-    def __new__(cls, *args, **kwargs):
-        """Return possibly existing instance."""
-
-        if "_instance" not in cls.__dict__:
-            cls._instance = object.__new__(cls, *args, **kwargs)
-        return cls._instance
+    def test___new__(self):
+        assert self.cls() is self.cls()

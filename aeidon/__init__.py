@@ -37,4 +37,5 @@ from aeidon import util
 from aeidon import temp
 from aeidon.contractual import *
 from aeidon.delegate import *
+from aeidon.singleton import *
 from aeidon.unittest import *
