@@ -39,4 +39,5 @@ from aeidon.contractual import *
 from aeidon.delegate import *
 from aeidon.singleton import *
 from aeidon.mutables import *
+from aeidon.observable import *
 from aeidon.unittest import *

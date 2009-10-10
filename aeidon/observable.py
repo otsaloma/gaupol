@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,7 +16,7 @@
 
 """Base class for observable objects."""
 
-import gaupol
+import aeidon
 
 __all__ = ("Observable",)
 
@@ -25,56 +25,46 @@ class Observable(object):
 
     """Base class for observable objects.
 
-    Class variables:
-     * _signals: Tuple of emittable signals added automatically
+    :cvar signals: Tuple of emittable signals added automatically
 
-    Instance variables:
-     * _blocked_signals: List of blocked signals
-     * _blocked_state: True if all signals are blocked
-     * _notify_frozen: If True notify signals will be queued, not emitted
-     * _notify_queue: List of queued notify signals
-     * _signal_handlers: Dictionary mapping signals to observers and data
-
-    In addition to the signals defined in '_signals', all public instance
-    variables will have a 'notify::name' signal generated automatically based
-    on the name of the variable. 'notify::name' signals will be emitted
+    In addition to the signals defined in :attr:`signals`, all public instance
+    variables will have a ``notify::NAME`` signal generated automatically based
+    on the ``NAME`` of the variable. ``notify::NAME`` signals will be emitted
     whenever the value of the instance variable changes.
 
     Notify signals will be emitted for mutable variables as well, which means
     that care should be taken not to emit thousands of signals when appending
-    one-by-one to a large list. 'freeze_notify' and 'thaw_notify' methods will
-    queue notify signals and emit only one of each once thawed.
+    one-by-one to a large list. :meth:`freeze_notify` and :meth:`thaw_notify`
+    will queue notify signals and emit only one of each once thawed.
+
+    The Observable philosophy and API is highly inspired by GObject_.
+
+    .. _GObject: http://www.pygtk.org/docs/pygobject/class-gobject.html
     """
 
-    # The Observable philosophy and API is highly inspired by (Py)GObject.
-    # <http://www.pygtk.org/docs/pygobject/class-gobject.html>
+    __metaclass__ = aeidon.Contractual
 
-    __metaclass__ = gaupol.Contractual
+    __slots__ = ("_blocked_signals",
+                 "_blocked_state",
+                 "_notify_frozen",
+                 "_notify_queue",
+                 "_signal_handlers",)
 
-    __slots__ = (
-        "_blocked_signals",
-        "_blocked_state",
-        "_notify_frozen",
-        "_notify_queue",
-        "_signal_handlers",)
-
-    _signals = ()
+    signals = ()
 
     def __init__(self):
-        """Initialize an Observable object."""
-
+        """Initialize an :class:`Observable` object."""
         self._blocked_signals = []
         self._blocked_state = False
         self._notify_frozen = False
         self._notify_queue = []
         self._signal_handlers = {}
 
-        for signal in self._signals:
+        for signal in self.signals:
             self._add_signal(signal)
 
     def __setattr__(self, name, value):
         """Set value of observable attribute."""
-
         if (name in self.__slots__) or name.startswith("_"):
             return object.__setattr__(self, name, value)
         value = self._validate(name, value)
@@ -90,32 +80,30 @@ class Observable(object):
         assert not signal in self._signal_handlers
 
     def _add_signal(self, signal):
-        """Add signal to the list of signals."""
-
+        """Add `signal` to the list of signals emitted."""
         self._signal_handlers[signal] = []
 
     def _validate_ensure(self, return_value, name, value):
         assert return_value == value
 
     def _validate(self, name, value):
-        """Return value or an observable version of mutable value."""
-
+        """Return `value` or an observable version if `value` is mutable."""
         args = (value, self, name)
         if isinstance(value, dict):
-            return gaupol.ObservableDict(*args)
+            return aeidon.ObservableDict(*args)
         if isinstance(value, list):
-            return gaupol.ObservableList(*args)
+            return aeidon.ObservableList(*args)
         if isinstance(value, set):
-            return gaupol.ObservableSet(*args)
+            return aeidon.ObservableSet(*args)
         return value
 
     def block_require(self, signal):
         assert signal in self._signal_handlers
 
     def block(self, signal):
-        """Block all emissions of signal.
+        """Block all emissions of `signal`.
 
-        Return False if already blocked, otherwise True.
+        Return ``False`` if already blocked, otherwise ``True``.
         """
         if not signal in self._blocked_signals:
             self._blocked_signals.append(signal)
@@ -125,7 +113,7 @@ class Observable(object):
     def block_all(self):
         """Block all emissions of all signals.
 
-        Return False if already blocked, otherwise True.
+        Return ``False`` if already blocked, otherwise ``True``.
         """
         if not self._blocked_state:
             self._blocked_state = True
@@ -137,16 +125,14 @@ class Observable(object):
         assert callable(method)
 
     def connect(self, signal, method, *args):
-        """Register to receive notifications of signal."""
-
+        """Register to receive notifications of ``signal``."""
         self._signal_handlers[signal].append((method, args))
 
     def disconnect_require(self, signal, method):
         assert signal in self._signal_handlers
 
     def disconnect(self, signal, method):
-        """Remove registration to receive notifications of signal."""
-
+        """Remove registration to receive notifications of ``signal``."""
         for i in reversed(range(len(self._signal_handlers[signal]))):
             if self._signal_handlers[signal][i][0] == method:
                 self._signal_handlers[signal].pop(i)
@@ -155,14 +141,14 @@ class Observable(object):
         assert signal in self._signal_handlers
 
     def emit(self, signal, *args):
-        """Send notification of signal to all registered observers."""
-
+        """Send notification of ``signal`` to all registered observers."""
         if signal.startswith("notify::") and self._notify_frozen:
             if not signal in self._notify_queue:
                 self._notify_queue.append(signal)
             return
 
-        if (not self._blocked_state) and (not signal in self._blocked_signals):
+        if ((not self._blocked_state) and
+            (not signal in self._blocked_signals)):
             if signal.startswith("notify::"):
                 name = signal.replace("notify::", "")
                 args = (getattr(self, name),)
@@ -172,7 +158,7 @@ class Observable(object):
     def freeze_notify(self):
         """Queue notify signals instead of emitting them.
 
-        Return False if already frozen, otherwise True.
+        Return ``False`` if already frozen, otherwise ``True``.
         """
         if not self._notify_frozen:
             self._notify_frozen = True
@@ -184,7 +170,6 @@ class Observable(object):
 
     def notify(self, name):
         """Emit notification signal for variable."""
-
         return self.emit("notify::%s" % name)
 
     def thaw_notify_ensure(self, value, do=True):
@@ -193,11 +178,12 @@ class Observable(object):
     def thaw_notify(self, do=True):
         """Emit all queued notify signals and queue no more.
 
-        The optional 'do' keyword argument should be the return value from
-        'freeze_notify' to avoid problems with nested functions where
-        notifications were frozen at a higher level. If 'do' is False, nothing
-        will be done.
-        Return False if already thawed, otherwise True.
+        The optional `do` keyword argument should be the return value from
+        :meth:`freeze_notify` to avoid problems with nested functions where
+        notifications were frozen at a higher level. If `do` is ``False``,
+        nothing will be done.
+
+        Return ``False`` if already thawed, otherwise ``True``.
         """
         if do and self._notify_frozen:
             self._notify_frozen = False
@@ -212,12 +198,14 @@ class Observable(object):
         assert signal in self._signal_handlers
 
     def unblock(self, signal, do=True):
-        """Unblock all emissions of signal.
+        """Unblock all emissions of `signal`.
 
-        The optional 'do' keyword argument should be the return value from
-        'block' to avoid problems with nested functions where signals were
-        blocked at a higher level. If 'do' is False, nothing will be done.
-        Return False if already unblocked, otherwise True.
+        The optional `do` keyword argument should be the return value from
+        :meth:`block` to avoid problems with nested functions where signals
+        were blocked at a higher level. If `do` is ``False``, nothing will be
+        done.
+
+        Return ``False`` if already unblocked, otherwise ``True``.
         """
         if do and (signal in self._blocked_signals):
             self._blocked_signals.remove(signal)
@@ -227,10 +215,12 @@ class Observable(object):
     def unblock_all(self, do=True):
         """Unblock all emissions of all signals.
 
-        The optional 'do' keyword argument should be the return value from
-        'block_all' to avoid problems with nested functions where signals were
-        blocked at a higher level. If 'do' is False, nothing will be done.
-        Return False if already unblocked, otherwise True.
+        The optional `do` keyword argument should be the return value from
+        :meth:`block_all` to avoid problems with nested functions where signals
+        were blocked at a higher level. If `do` is ``False``, nothing will be
+        done.
+
+        Return ``False`` if already unblocked, otherwise ``True``.
         """
         if do and self._blocked_state:
             self._blocked_state = False

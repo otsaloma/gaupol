@@ -61,7 +61,7 @@ class Project(gaupol.Observable):
 
     __metaclass__ = gaupol.Contractual
 
-    _signals = (
+    signals = (
         "action-done",
         "action-redone",
         "action-undone",

@@ -10,9 +10,9 @@ aeidon.contractual
 aeidon.delegate
 aeidon.singleton
 aeidon.mutables
+aeidon.observable
 aeidon.unittest
 
-aeidon.observable
 aeidon.enumeration
 aeidon.i18n
 aeidon.errors

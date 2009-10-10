@@ -47,7 +47,7 @@ class Page(gaupol.Observable):
     """
 
     __metaclass__ = gaupol.Contractual
-    _signals = ("close-request", "view-created")
+    signals = ("close-request", "view-created")
 
     def __init__(self, count=0):
         """Initialize a Page object."""

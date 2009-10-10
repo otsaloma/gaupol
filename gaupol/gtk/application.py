@@ -54,7 +54,7 @@ class Application(gaupol.Observable, gaupol.gtk.Runner):
 
     __metaclass__ = gaupol.Contractual
 
-    _signals = (
+    signals = (
         "page-added",
         "page-changed",
         "page-closed",
