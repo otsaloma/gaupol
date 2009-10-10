@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,50 +14,54 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gaupol
+import aeidon
 
 
-class TestEnumerationItem(gaupol.TestCase):
+class TestEnumerationItem(aeidon.TestCase):
 
     def setup_method(self, method):
+        self.item = aeidon.EnumerationItem(0, "test", object())
 
-        self.item = gaupol.EnumerationItem(0, "test", object())
-
-    def test___cmp__(self):
-
-        if not gaupol.debug: return
+    def test___cmp____equal(self):
+        if not aeidon.debug: return
         assert self.item == self.item
         assert self.item == 0
-        other_item = gaupol.EnumerationItem(0, "rest", object())
-        self.raises(ValueError, cmp, self.item, other_item)
+
+    def test___cmp____value_error(self):
+        if not aeidon.debug: return
+        other = aeidon.EnumerationItem(0, "rest", object())
+        self.raises(ValueError, cmp, self.item, other)
+        self.raises(ValueError, cmp, self.item, "xxx")
 
     def test___str__(self):
-
         assert str(self.item) == "test"
 
 
-class TestEnumeration(gaupol.TestCase):
+class TestEnumeration(aeidon.TestCase):
 
     def setup_method(self, method):
-
-        self.fruits = gaupol.Enumeration()
-        self.fruits.APPLE = gaupol.EnumerationItem()
+        self.fruits = aeidon.Enumeration()
+        self.fruits.APPLE = aeidon.EnumerationItem()
         self.fruits.APPLE.size = 10
-        self.fruits.MANGO = gaupol.EnumerationItem()
+        self.fruits.MANGO = aeidon.EnumerationItem()
         self.fruits.MANGO.size = 15
 
-    def test___contains__(self):
-
-        if not gaupol.debug: return
-        assert self.fruits.APPLE in self.fruits
-        assert self.fruits.MANGO in self.fruits
-        assert 0 in self.fruits
-        assert 1 in self.fruits
-        item = gaupol.EnumerationItem(0, "test", object())
+    def test___contains____different(self):
+        if not aeidon.debug: return
+        item = aeidon.EnumerationItem(0, "test", object())
         assert not item in self.fruits
 
-    def test___setattr__(self):
+    def test___contains____int(self):
+        if not aeidon.debug: return
+        assert 0 in self.fruits
+        assert 1 in self.fruits
 
+    def test___contains____item(self):
+        if not aeidon.debug: return
+        assert self.fruits.APPLE in self.fruits
+        assert self.fruits.MANGO in self.fruits
+
+    def test___setattr__(self):
         assert self.fruits.APPLE == 0
         assert self.fruits.MANGO == 1
         assert self.fruits.APPLE.name == "APPLE"
@@ -66,8 +70,10 @@ class TestEnumeration(gaupol.TestCase):
         assert self.fruits.MANGO.size == 15
 
     def test_find_item(self):
-
         find_item = self.fruits.find_item
         assert find_item("size", 10) == self.fruits.APPLE
         assert find_item("size", 15) == self.fruits.MANGO
+
+    def test_find_item__value_error(self):
+        find_item = self.fruits.find_item
         self.raises(ValueError, find_item, "size", 20)

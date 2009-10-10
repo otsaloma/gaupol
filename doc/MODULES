@@ -11,9 +11,9 @@ aeidon.delegate
 aeidon.singleton
 aeidon.mutables
 aeidon.observable
+aeidon.enumeration
 aeidon.unittest
 
-aeidon.enumeration
 aeidon.i18n
 aeidon.errors
 aeidon.align

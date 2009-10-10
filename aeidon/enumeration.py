@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,12 +16,12 @@
 
 """Lists of named constants with integer values.
 
-EnumerationItems are subclassed from 'int', so they are actual integers. The
-string value of an item will be the name that it was defined with in its set.
-New items can always be added to a list.
+:class:`EnumerationItem`s are subclassed from :class:`int`, so they are actual
+integers. The string value of an item will be the name that it was defined with
+in its set. New items can always be added to an enumeration.
 """
 
-import gaupol
+import aeidon
 
 __all__ = ("EnumerationItem", "Enumeration",)
 
@@ -35,27 +35,29 @@ class EnumerationItem(int):
     rest of the items should be left up to the parent list.
     """
 
+    # pylint: disable-msg=E1101
+
     def __cmp__(self, other):
         """Compare enumeration item equality by value.
 
-        If other is an integer, return integer comparison value.
-        Raise ValueError if other is an EnumerationItem of a different parent.
-        If other is not an integer, return -1.
-        This is a debug method that exists only if gaupol.debug is True.
+        If `other` is an integer, return integer comparison value. Raise
+        :exc:`ValueError` if `other` is an :class:`EnumerationItem` of a
+        different parent. If `other` is not an integer, return -1. This is a
+        debug method that exists only if :data:`aeidon.debug` is ``True``.
         """
         if isinstance(other, int):
             if isinstance(other, EnumerationItem):
                 if self.parent is not other.parent:
-                    raise ValueError("Cannot compare %s with %s" 
-                        % (repr(self), repr(other)))
+                    raise ValueError("Cannot compare %s with %s"
+                                     % (repr(self), repr(other)))
             return int.__cmp__(int(self), int(other))
-        return 1
+        raise ValueError("Cannot compare %s with %s"
+                         % (repr(self), repr(other)))
 
-    if not gaupol.debug: del __cmp__
+    if not aeidon.debug: del __cmp__
 
     def __new__(cls, value=0, name="", parent=None):
         """Return integer instance with additional attributes."""
-
         instance = int.__new__(cls, value)
         instance.name = name
         instance.parent = parent
@@ -63,7 +65,6 @@ class EnumerationItem(int):
 
     def __str__(self):
         """Return name as the string representation."""
-
         return self.name
 
 
@@ -71,24 +72,32 @@ class Enumeration(list):
 
     """List of named constants with integer values.
 
-    This class is an actual list where enumeration items are stored as both
-    list items and instance attributes. New items should be added by setting an
-    instance attribute. Data-changing list methods raise NotImplementedError.
+    This class is an actual :class:`list` where enumeration items are stored as
+    both list items and instance attributes. New items should be added by
+    setting an instance attribute. Data-changing list methods raise
+    :exc:`NotImplementedError`.
+
+    Typical use to create a new enumeration would be something like::
+
+        fruits = aeidon.Enumeration()
+        fruits.APPLE = aeidon.EnumerationItem()
+        fruits.APPLE.size = 10
+        fruits.MANGO = aeidon.EnumerationItem()
+        fruits.MANGO.size = 15
+
+    Note that there is no finalization of an enumeration. New items can always
+    be added just by assigning a new attribute to the enumeration.
     """
 
     NONE = None
 
     def __contains__(self, item):
-        """Return True if item belongs to enumeration.
-
-        This is a debug method that exists only if gaupol.debug is True.
-        """
         if isinstance(item, EnumerationItem):
             if item.parent is not self:
                 return False
         return list.__contains__(self, item)
 
-    if not gaupol.debug: del __contains__
+    if not aeidon.debug: del __contains__
 
     def __delitem__(self, *args, **kwargs):
         raise NotImplementedError
@@ -104,7 +113,6 @@ class Enumeration(list):
 
     def __setattr__(self, name, value):
         """Set value of enumeration item with correct attributes."""
-
         if isinstance(value, EnumerationItem):
             value = value.__class__(len(self), name, self)
             list.append(self, value)
@@ -123,8 +131,7 @@ class Enumeration(list):
         raise NotImplementedError
 
     def find_item(self, name, value):
-        """Return the first found item with the given attribute value."""
-
+        """Return the first found item with the given attribute `value`."""
         for item in self:
             if getattr(item, name) == value:
                 return item
