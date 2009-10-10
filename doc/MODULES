@@ -4,6 +4,7 @@ Module Dependency Order
 aeidon.paths
 aeidon.urls
 aeidon.deco
+aeidon.i18n
 aeidon.util
 aeidon.temp
 aeidon.contractual
@@ -14,7 +15,6 @@ aeidon.observable
 aeidon.enumeration
 aeidon.unittest
 
-aeidon.i18n
 aeidon.errors
 aeidon.align
 aeidon.documents

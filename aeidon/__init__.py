@@ -33,6 +33,7 @@ debug = (bool(os.environ.get("AEIDON_DEBUG", "")) or
 from aeidon.paths import *
 from aeidon.urls import *
 from aeidon import deco
+from aeidon import i18n
 from aeidon import util
 from aeidon import temp
 from aeidon.contractual import *

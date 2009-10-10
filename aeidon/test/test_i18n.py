@@ -1,4 +1,4 @@
-# Copyright (C) 2007 Osmo Salomaa
+# Copyright (C) 2007-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,16 +14,16 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Internationalization functions."""
+import aeidon
 
-import gaupol
-import gettext
-import locale
 
-locale.setlocale(locale.LC_ALL, "")
-gettext.bindtextdomain("gaupol", gaupol.LOCALE_DIR)
-gettext.textdomain("gaupol")
+class TestModule(aeidon.TestCase):
 
-_ = gettext.gettext
-ngettext = gettext.ngettext
-dgettext = gettext.dgettext
+    def test__(self):
+        aeidon.i18n._("message")
+
+    def test_dgettext(self):
+        aeidon.i18n.dgettext("domain", "message")
+
+    def test_ngettext(self):
+        aeidon.i18n.ngettext("singular", "plural", 1)
