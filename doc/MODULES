@@ -13,9 +13,9 @@ aeidon.singleton
 aeidon.mutables
 aeidon.observable
 aeidon.enumeration
+aeidon.errors
 aeidon.unittest
 
-aeidon.errors
 aeidon.align
 aeidon.documents
 aeidon.formats

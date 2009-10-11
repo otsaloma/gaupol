@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2007,2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,30 +14,31 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""All error classes."""
+"""All :mod:`aeidon` error classes."""
 
-__all__ = (
-    "Error",
-    "AffirmationError",
-    "FormatError",
-    "ParseError",
-    "ProcessError",)
+__all__ = ("Error",
+           "AffirmationError",
+           "FormatError",
+           "ParseError",
+           "ProcessError",)
 
 
 class Error(Exception):
 
-    """Base class for all Gaupol errors."""
+    """Base class for all :mod:`aeidon` errors."""
 
     pass
 
 
 class AffirmationError(Error):
 
-    """Something expected to be True was False.
+    """Something expected to be ``True`` was ``False``.
 
-    This is similar to AssertionError, but without the special reliance on
-    __debug__ and given optimization options. AffirmationError is used to
-    provide essential checks instead of optional debug checks.
+    :exc:`AffirmationError` is by nature similar to the built-in
+    :exc:`AssertionError`, but without the special reliance on
+    :const:`__debug__` and given optimization options. :exc:`AffirmationError`
+    is used to provide essential checks of boolean values instead of optional
+    debug checks.
     """
 
     pass
@@ -54,8 +55,8 @@ class ParseError(Error):
 
     """Failed to parse a subtitle file into positions and texts.
 
-    The error is either a syntax error in the file being parsed or a
-    programming error in the code doing the parsing.
+    :exc:`ParseError` is caused by either a syntax error in the file being
+    parsed or a programming error in the code doing the parsing.
     """
 
     pass

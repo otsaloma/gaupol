@@ -42,4 +42,5 @@ from aeidon.singleton import *
 from aeidon.mutables import *
 from aeidon.observable import *
 from aeidon.enumeration import *
+from aeidon.errors import *
 from aeidon.unittest import *
