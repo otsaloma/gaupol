@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,26 +14,26 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gaupol
+import aeidon
 
 
-class TestModule(gaupol.TestCase):
+class TestModule(aeidon.TestCase):
 
     def test_attributes(self):
-
-        for format in gaupol.formats:
+        for format in aeidon.formats:
+            assert hasattr(format, "container")
             assert hasattr(format, "extension")
             assert hasattr(format, "has_header")
             assert hasattr(format, "identifier")
             assert hasattr(format, "label")
+            assert hasattr(format, "mime_type")
 
     def test_items(self):
-
-        assert hasattr(gaupol.formats, "ASS")
-        assert hasattr(gaupol.formats, "MICRODVD")
-        assert hasattr(gaupol.formats, "MPL2")
-        assert hasattr(gaupol.formats, "MPSUB")
-        assert hasattr(gaupol.formats, "SSA")
-        assert hasattr(gaupol.formats, "SUBRIP")
-        assert hasattr(gaupol.formats, "SUBVIEWER2")
-        assert hasattr(gaupol.formats, "TMPLAYER")
+        assert hasattr(aeidon.formats, "ASS")
+        assert hasattr(aeidon.formats, "MICRODVD")
+        assert hasattr(aeidon.formats, "MPL2")
+        assert hasattr(aeidon.formats, "MPSUB")
+        assert hasattr(aeidon.formats, "SSA")
+        assert hasattr(aeidon.formats, "SUBRIP")
+        assert hasattr(aeidon.formats, "SUBVIEWER2")
+        assert hasattr(aeidon.formats, "TMPLAYER")

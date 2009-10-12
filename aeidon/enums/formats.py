@@ -17,18 +17,19 @@
 """Enumerations for subtitle file format types.
 
 Mime-types of subtitle file formats conform to those defined in
-freedesktop.org's shared-mime-info package [1]. For all formats not included in
-shared-mime-info, 'text/plain' is used as the mime-type.
+freedesktop.org_'s shared-mime-info_ package. For all formats not included in
+``shared-mime-info``, ``text/plain`` is used as the mime-type.
 
- [1] http://freedesktop.org/wiki/Software/shared-mime-info
+.. _freedesktop.org: http://www.freedesktop.org/
+.. _shared-mime-info: http://freedesktop.org/wiki/Software/shared-mime-info
 """
 
-import gaupol
+import aeidon
 
 __all__ = ("formats",)
 
 
-class AdvSubStationAlpha(gaupol.EnumerationItem):
+class AdvSubStationAlpha(aeidon.EnumerationItem):
 
     container = "ssa"
     extension = ".ass"
@@ -38,7 +39,7 @@ class AdvSubStationAlpha(gaupol.EnumerationItem):
     mime_type = "text/x-ssa"
 
 
-class MicroDVD(gaupol.EnumerationItem):
+class MicroDVD(aeidon.EnumerationItem):
 
     container = None
     extension = ".sub"
@@ -48,7 +49,7 @@ class MicroDVD(gaupol.EnumerationItem):
     mime_type = "text/x-microdvd"
 
 
-class MPL2(gaupol.EnumerationItem):
+class MPL2(aeidon.EnumerationItem):
 
     container = None
     extension = ".txt"
@@ -58,7 +59,7 @@ class MPL2(gaupol.EnumerationItem):
     mime_type = "text/plain"
 
 
-class MPsub(gaupol.EnumerationItem):
+class MPsub(aeidon.EnumerationItem):
 
     container = None
     extension = ".sub"
@@ -68,20 +69,20 @@ class MPsub(gaupol.EnumerationItem):
     mime_type = "text/x-mpsub"
 
 
-class SubRip(gaupol.EnumerationItem):
+class SubRip(aeidon.EnumerationItem):
 
     container = "subrip"
     extension = ".srt"
     has_header = False
-    identifier = (
-        r"^-?\d\d:\d\d:\d\d,\d\d\d -->"
-        r" -?\d\d:\d\d:\d\d,\d\d\d"
-        r"(  X1:\d+ X2:\d+ Y1:\d+ Y2:\d+)?\s*$")
+    identifier = (r"^-?\d\d:\d\d:\d\d,\d\d\d -->"
+                  r" -?\d\d:\d\d:\d\d,\d\d\d"
+                  r"(  X1:\d+ X2:\d+ Y1:\d+ Y2:\d+)?\s*$")
+
     label = "SubRip"
     mime_type = "application/x-subrip"
 
 
-class SubStationAlpha(gaupol.EnumerationItem):
+class SubStationAlpha(aeidon.EnumerationItem):
 
     container = "ssa"
     extension = ".ssa"
@@ -91,19 +92,19 @@ class SubStationAlpha(gaupol.EnumerationItem):
     mime_type = "text/x-ssa"
 
 
-class SubViewer2(gaupol.EnumerationItem):
+class SubViewer2(aeidon.EnumerationItem):
 
     container = None
     extension = ".sub"
     has_header = True
-    identifier = (
-        r"^-?\d\d:\d\d:\d\d\.\d\d"
-        r",-?\d\d:\d\d:\d\d\.\d\d\s*$")
+    identifier = (r"^-?\d\d:\d\d:\d\d\.\d\d"
+                  r",-?\d\d:\d\d:\d\d\.\d\d\s*$")
+
     label = "SubViewer 2.0"
     mime_type = "text/x-subviewer"
 
 
-class TMPlayer(gaupol.EnumerationItem):
+class TMPlayer(aeidon.EnumerationItem):
 
     container = None
     extension = ".txt"
@@ -113,7 +114,7 @@ class TMPlayer(gaupol.EnumerationItem):
     mime_type = "text/plain"
 
 
-formats = gaupol.Enumeration()
+formats = aeidon.Enumeration()
 formats.ASS = AdvSubStationAlpha()
 formats.MICRODVD = MicroDVD()
 formats.MPL2 = MPL2()

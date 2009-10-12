@@ -14,18 +14,16 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
-"""Miscellanous enumerations.
-
-:var align_methods: Enumerations for subtitle align methods
-Enumerations for document types
-"""
+"""Miscellanous enumerations."""
 
 import aeidon
 
 aeidon.util.install_module("enums", lambda: None)
 
 __all__ = ("align_methods",
-           "documents",)
+           "documents",
+           "formats",)
 
 from aeidon.enums.align import *
 from aeidon.enums.documents import *
+from aeidon.enums.formats import *

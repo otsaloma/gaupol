@@ -26,6 +26,7 @@
 
 :var align_methods: Enumerations for subtitle align methods
 :var documents: Enumerations for document types
+:var formats: Enumerations for subtitle file format types
 """
 
 import os
