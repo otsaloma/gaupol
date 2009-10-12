@@ -12,18 +12,11 @@ aeidon.delegate
 aeidon.singleton
 aeidon.mutables
 aeidon.observable
-aeidon.enumeration
 aeidon.errors
+aeidon.enum
+aeidon.enums
 aeidon.unittest
 
-aeidon.align
-aeidon.documents
-aeidon.formats
-aeidon.framerates
-aeidon.modes
-aeidon.newlines
-aeidon.players
-aeidon.registers
 aeidon.encodings
 aeidon.languages
 aeidon.countries

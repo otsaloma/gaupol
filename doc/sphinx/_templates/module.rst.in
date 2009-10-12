@@ -16,15 +16,12 @@ Source: :doc:`{{ source_fname }} <{{ source_doc }}>`
 ..
 
    .. automodule:: {{ module }}
-{%- if modules %}
+{%- if functions %}
 
-Modules
--------
-
-.. toctree::
-   :maxdepth: 1
-{% for item in modules %}
-   /{{ root }}/{{ module }}.{{ item -}}
+Functions
+---------
+{% for item in functions %}
+.. autofunction:: {{ module }}.{{ item -}}
 {% endfor %}
 {%- endif %}
 {%- if classes %}
@@ -38,11 +35,14 @@ Classes
    /{{ root }}/{{ module }}.{{ item -}}
 {% endfor %}
 {%- endif %}
-{%- if functions %}
+{%- if modules %}
 
-Functions
----------
-{% for item in functions %}
-.. autofunction:: {{ module }}.{{ item -}}
+Modules
+-------
+
+.. toctree::
+   :maxdepth: 1
+{% for item in modules %}
+   /{{ root }}/{{ module }}.{{ item -}}
 {% endfor %}
 {%- endif %}

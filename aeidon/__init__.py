@@ -23,6 +23,8 @@
 :var HOMEPAGE_URL: Web page of the Gaupol project
 :var LOCALE_DIR: Path to the global locale directory
 :var REGEX_HELP_URL: Web page with documentation on regular expressions
+
+:var align_methods: Enumerations for subtitle align methods
 """
 
 import os
@@ -41,6 +43,7 @@ from aeidon.delegate import *
 from aeidon.singleton import *
 from aeidon.mutables import *
 from aeidon.observable import *
-from aeidon.enumeration import *
 from aeidon.errors import *
+from aeidon.enum import *
+from aeidon.enums import *
 from aeidon.unittest import *

@@ -104,7 +104,7 @@ add_function_parentheses = False
 private_members = False
 
 # Always include or exclude objects these names.
-include_members = ['__init__', '_']
+include_members = ['__init__']
 exclude_members = ['_invariant']
 exclude_members_endswith = ['_require', '_ensure']
 

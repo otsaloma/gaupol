@@ -1,4 +1,4 @@
-# Copyright (C) 2008 Osmo Salomaa
+# Copyright (C) 2008-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,24 +14,15 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Enumerations for subtitle align methods."""
-
-import gaupol
-_ = gaupol.i18n._
-
-__all__ = ("align_methods",)
+import aeidon
 
 
-class Number(gaupol.EnumerationItem):
+class TestModule(aeidon.TestCase):
 
-    label = _("Subtitle number")
+    def test_attributes(self):
+        for align_method in aeidon.align_methods:
+            assert hasattr(align_method, "label")
 
-
-class Position(gaupol.EnumerationItem):
-
-    label = _("Subtitle position")
-
-
-align_methods = gaupol.Enumeration()
-align_methods.NUMBER = Number()
-align_methods.POSITION = Position()
+    def test_items(self):
+        assert hasattr(aeidon.align_methods, "NUMBER")
+        assert hasattr(aeidon.align_methods, "POSITION")

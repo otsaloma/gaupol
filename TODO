@@ -16,6 +16,7 @@ Gaupol 0.16
      http://www.mail-archive.com/gaupol-list@gna.org/msg00022.html
  [ ] Use gtk.accel_map_load and gtk.accel_map_save
  [?] Use transifex.net (or something) for translations
+ [ ] Use gtk.RecentAction for the recent file menus
  [D] Add German translation (Chris Leick)
 
 Gaupol 1.0
