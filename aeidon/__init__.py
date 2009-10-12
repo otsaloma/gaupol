@@ -28,6 +28,7 @@
 :var documents: Enumerations for document types
 :var formats: Enumerations for subtitle file format types
 :var framerates: Enumerations for framerate types
+:var modes: Enumerations for position unit types
 """
 
 import os

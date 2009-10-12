@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,10 +16,10 @@
 
 """Enumerations for position unit types."""
 
-import gaupol
+import aeidon
 
 __all__ = ("modes",)
 
-modes = gaupol.Enumeration()
-modes.TIME = gaupol.EnumerationItem()
-modes.FRAME = gaupol.EnumerationItem()
+modes = aeidon.Enumeration()
+modes.TIME = aeidon.EnumerationItem()
+modes.FRAME = aeidon.EnumerationItem()

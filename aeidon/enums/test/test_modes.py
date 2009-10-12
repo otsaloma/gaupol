@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,12 +14,11 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gaupol
+import aeidon
 
 
-class TestModule(gaupol.TestCase):
+class TestModule(aeidon.TestCase):
 
     def test_items(self):
-
-        assert hasattr(gaupol.modes, "TIME")
-        assert hasattr(gaupol.modes, "FRAME")
+        assert hasattr(aeidon.modes, "TIME")
+        assert hasattr(aeidon.modes, "FRAME")
