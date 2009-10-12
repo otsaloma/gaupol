@@ -17,6 +17,7 @@
 """Miscellaneous decorators for functions and methods."""
 
 import aeidon
+import copy
 import cPickle
 import functools
 import time

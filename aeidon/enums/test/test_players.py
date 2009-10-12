@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,40 +14,30 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gaupol
+import aeidon
 import sys
 
 
-class TestModule(gaupol.TestCase):
+class TestModule(aeidon.TestCase):
 
-    def teardown_method(self, method):
-
-        del sys.modules["gaupol.players"]
-        reload(gaupol)
-
+    @aeidon.deco.monkey_patch(sys, "platform")
     def test_attributes__unix(self):
-
-        platform = sys.platform
         sys.platform = "linux2"
-        del sys.modules["gaupol.players"]
-        reload(gaupol)
-        for player in gaupol.players:
+        reload(aeidon)
+        for player in aeidon.players:
             assert hasattr(player, "command")
+            assert hasattr(player, "command_utf_8")
             assert hasattr(player, "label")
-        sys.platform = platform
 
+    @aeidon.deco.monkey_patch(sys, "platform")
     def test_attributes__windows(self):
-
-        platform = sys.platform
         sys.platform = "win32"
-        del sys.modules["gaupol.players"]
-        reload(gaupol)
-        for player in gaupol.players:
+        reload(aeidon)
+        for player in aeidon.players:
             assert hasattr(player, "command")
+            assert hasattr(player, "command_utf_8")
             assert hasattr(player, "label")
-        sys.platform = platform
 
     def test_items(self):
-
-        assert hasattr(gaupol.players, "MPLAYER")
-        assert hasattr(gaupol.players, "VLC")
+        assert hasattr(aeidon.players, "MPLAYER")
+        assert hasattr(aeidon.players, "VLC")
