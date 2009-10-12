@@ -29,6 +29,7 @@
 :var formats: Enumerations for subtitle file format types
 :var framerates: Enumerations for framerate types
 :var modes: Enumerations for position unit types
+:var newlines: Enumerations for newline character types
 """
 
 import os

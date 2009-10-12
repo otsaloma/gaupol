@@ -24,10 +24,12 @@ __all__ = ("align_methods",
            "documents",
            "formats",
            "framerates",
-           "modes",)
+           "modes",
+           "newlines",)
 
 from aeidon.enums.align import *
 from aeidon.enums.documents import *
 from aeidon.enums.formats import *
 from aeidon.enums.framerates import *
 from aeidon.enums.modes import *
+from aeidon.enums.newlines import *

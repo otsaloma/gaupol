@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,31 +16,31 @@
 
 """Enumerations for newline character types."""
 
-import gaupol
-_ = gaupol.i18n._
+import aeidon
+_ = aeidon.i18n._
 
 __all__ = ("newlines",)
 
 
-class Mac(gaupol.EnumerationItem):
+class Mac(aeidon.EnumerationItem):
 
     label = _("Mac (classic)")
     value = "\r"
 
 
-class Unix(gaupol.EnumerationItem):
+class Unix(aeidon.EnumerationItem):
 
     label = "Unix"
     value = "\n"
 
 
-class Windows(gaupol.EnumerationItem):
+class Windows(aeidon.EnumerationItem):
 
     label = "Windows"
     value = "\r\n"
 
 
-newlines = gaupol.Enumeration()
+newlines = aeidon.Enumeration()
 newlines.MAC = Mac()
 newlines.UNIX = Unix()
 newlines.WINDOWS = Windows()
