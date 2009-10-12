@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,19 +14,36 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gaupol
+"""Enumerations for framerate types."""
+
+import aeidon
+_ = aeidon.i18n._
+
+__all__ = ("framerates",)
 
 
-class TestModule(gaupol.TestCase):
+class Framerate24(aeidon.EnumerationItem):
 
-    def test_attributes(self):
+    label = _("24 fps")
+    mpsub = "23.98"
+    value = 24 / 1.001
 
-        for framerate in gaupol.framerates:
-            assert hasattr(framerate, "label")
-            assert hasattr(framerate, "value")
 
-    def test_items(self):
+class Framerate25(aeidon.EnumerationItem):
 
-        assert hasattr(gaupol.framerates, "FPS_24")
-        assert hasattr(gaupol.framerates, "FPS_25")
-        assert hasattr(gaupol.framerates, "FPS_30")
+    label = _("25 fps")
+    mpsub = "25.00"
+    value = 25.0
+
+
+class Framerate30(aeidon.EnumerationItem):
+
+    label = _("30 fps")
+    mpsub = "29.97"
+    value = 30 / 1.001
+
+
+framerates = aeidon.Enumeration()
+framerates.FPS_24 = Framerate24()
+framerates.FPS_25 = Framerate25()
+framerates.FPS_30 = Framerate30()

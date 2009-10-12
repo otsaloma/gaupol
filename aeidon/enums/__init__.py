@@ -22,8 +22,10 @@ aeidon.util.install_module("enums", lambda: None)
 
 __all__ = ("align_methods",
            "documents",
-           "formats",)
+           "formats",
+           "framerates",)
 
 from aeidon.enums.align import *
 from aeidon.enums.documents import *
 from aeidon.enums.formats import *
+from aeidon.enums.framerates import *
