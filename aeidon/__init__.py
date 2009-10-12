@@ -31,6 +31,7 @@
 :var modes: Enumerations for position unit types
 :var newlines: Enumerations for newline character types
 :var players: Enumerations for video player application types
+:var registers: Enumerations for action action reversion register types
 """
 
 import os

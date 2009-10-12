@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,32 +14,32 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Enumerations for action register types."""
+"""Enumerations for action action reversion register types."""
 
-import gaupol
+import aeidon
 
 __all__ = ("registers",)
 
 
-class Do(gaupol.EnumerationItem):
+class Do(aeidon.EnumerationItem):
 
     shift = 1
     signal = "action-done"
 
 
-class Undo(gaupol.EnumerationItem):
+class Undo(aeidon.EnumerationItem):
 
     shift = -1
     signal = "action-undone"
 
 
-class Redo(gaupol.EnumerationItem):
+class Redo(aeidon.EnumerationItem):
 
     shift = 1
     signal = "action-redone"
 
 
-registers = gaupol.Enumeration()
+registers = aeidon.Enumeration()
 registers.DO = Do()
 registers.UNDO = Undo()
 registers.REDO = Redo()

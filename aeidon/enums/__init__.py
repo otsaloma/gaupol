@@ -26,7 +26,8 @@ __all__ = ("align_methods",
            "framerates",
            "modes",
            "newlines",
-           "players",)
+           "players",
+           "registers",)
 
 from aeidon.enums.align import *
 from aeidon.enums.documents import *
@@ -35,3 +36,4 @@ from aeidon.enums.framerates import *
 from aeidon.enums.modes import *
 from aeidon.enums.newlines import *
 from aeidon.enums.players import *
+from aeidon.enums.registers import *
