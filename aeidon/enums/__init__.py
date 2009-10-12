@@ -17,12 +17,15 @@
 """Miscellanous enumerations.
 
 :var align_methods: Enumerations for subtitle align methods
+Enumerations for document types
 """
 
 import aeidon
 
 aeidon.util.install_module("enums", lambda: None)
 
-__all__ = ("align_methods",)
+__all__ = ("align_methods",
+           "documents",)
 
 from aeidon.enums.align import *
+from aeidon.enums.documents import *

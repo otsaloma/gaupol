@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,12 +14,12 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gaupol
+"""Enumerations for document types."""
 
+import aeidon
 
-class TestModule(gaupol.TestCase):
+__all__ = ("documents",)
 
-    def test_items(self):
-
-        assert hasattr(gaupol.documents, "MAIN")
-        assert hasattr(gaupol.documents, "TRAN")
+documents = aeidon.Enumeration()
+documents.MAIN = aeidon.EnumerationItem()
+documents.TRAN = aeidon.EnumerationItem()

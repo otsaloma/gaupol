@@ -25,6 +25,7 @@
 :var REGEX_HELP_URL: Web page with documentation on regular expressions
 
 :var align_methods: Enumerations for subtitle align methods
+:var documents: Enumerations for document types
 """
 
 import os
