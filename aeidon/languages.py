@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,7 +16,7 @@
 
 """Names and ISO 639 codes for languages and conversions between them."""
 
-import gaupol
+import aeidon
 import os
 import re
 
@@ -24,34 +24,33 @@ _languages = {}
 
 
 def _init_languages():
-    """Initialize the dictionary mapping codes to languages."""
-
+    """Initialize the dictionary mapping codes to names."""
     import xml.etree.ElementTree as ET
-    path = os.path.join(gaupol.DATA_DIR, "iso-codes", "iso_639.xml")
+    path = os.path.join(aeidon.DATA_DIR, "iso-codes", "iso_639.xml")
     for element in ET.parse(path).findall("iso_639_entry"):
         code = element.get("iso_639_1_code")
         name = element.get("name")
-        if not all((code, name)): continue
-        _languages[code] = name
+        if code and name:
+            _languages[code] = name
 
 def code_to_name_require(code):
     assert re.match(r"^[a-z][a-z]$", code)
 
-@gaupol.deco.contractual
+@aeidon.deco.contractual
 def code_to_name(code):
-    """Convert ISO 639 code to localized language name.
+    """Convert ISO 639 `code` to localized language name.
 
-    Raise KeyError if code not found.
+    Raise :exc:`KeyError` if code not found.
     """
-    return gaupol.i18n.dgettext("iso_639", _languages[code])
+    return aeidon.i18n.dgettext("iso_639", _languages[code])
 
 def is_valid_require(code):
     assert re.match(r"^[a-z][a-z]$", code)
 
-@gaupol.deco.contractual
+@aeidon.deco.contractual
 def is_valid(code):
-    """Return True if code is a valid ISO 639 language code."""
-
+    """Return ``True`` if `code` is a valid ISO 639 language code."""
     return (code in _languages)
+
 
 _init_languages()

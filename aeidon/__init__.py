@@ -61,4 +61,5 @@ from aeidon.enums.newlines import *
 from aeidon.enums.players import *
 from aeidon.enums.registers import *
 from aeidon import encodings
+from aeidon import languages
 from aeidon.unittest import *

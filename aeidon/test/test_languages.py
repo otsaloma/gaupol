@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,20 +14,20 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gaupol
+import aeidon
 
 
-class TestModule(gaupol.TestCase):
+class TestModule(aeidon.TestCase):
 
     def test_code_to_name(self):
+        name = aeidon.i18n.dgettext("iso_639", "Nauru")
+        assert aeidon.languages.code_to_name("na") == name
+        name = aeidon.i18n.dgettext("iso_639", "Sindhi")
+        assert aeidon.languages.code_to_name("sd") == name
 
-        name = gaupol.i18n.dgettext("iso_639", "Nauru")
-        assert gaupol.languages.code_to_name("na") == name
-        name = gaupol.i18n.dgettext("iso_639", "Sindhi")
-        assert gaupol.languages.code_to_name("sd") == name
-        self.raises(KeyError, gaupol.languages.code_to_name, "xx")
+    def test_code_to_name__key_error(self):
+        self.raises(KeyError, aeidon.languages.code_to_name, "xx")
 
     def test_is_valid(self):
-
-        assert gaupol.languages.is_valid("sv")
-        assert not gaupol.languages.is_valid("xx")
+        assert aeidon.languages.is_valid("sv")
+        assert not aeidon.languages.is_valid("xx")
