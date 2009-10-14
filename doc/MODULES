@@ -15,9 +15,9 @@ aeidon.observable
 aeidon.errors
 aeidon.enum
 aeidon.enums
+aeidon.encodings
 aeidon.unittest
 
-aeidon.encodings
 aeidon.languages
 aeidon.countries
 aeidon.locales

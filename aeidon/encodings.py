@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,15 +14,18 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Codes, names and descriptions for character encodings."""
+"""Codes, names and descriptions for character encodings.
+
+For functions dealing with character encodings, see also :mod:`aeidon.util`.
+"""
 
 from __future__ import with_statement
 
+import aeidon
 import codecs
-import gaupol
 import locale
 import re
-_ = gaupol.i18n._
+_ = aeidon.i18n._
 
 # Tuples of code, name and description for each supported character encoding.
 # Codes are the official names used by Python. Names are mostly taken from
@@ -31,7 +34,7 @@ _ = gaupol.i18n._
 _encodings = (
     # Translators: Most of the character encoding descriptions are copied from
     # gedit, which is translated to very many languages. Check the gedit .po
-    # files for a reference: <http://svn.gnome.org/viewvc/gedit/trunk/po/>.
+    # files for a reference: <http://git.gnome.org/cgit/gedit/tree/po/>.
     ("ascii"          , "US-ASCII"        , _("English")            ),
     ("big5"           , "Big5"            , _("Chinese traditional")),
     ("big5hkscs"      , "Big5-HKSCS"      , _("Chinese traditional")),
@@ -126,9 +129,12 @@ _re_illegal = re.compile(r"[^a-z0-9_]")
 
 
 def code_to_description(code):
-    """Convert encoding code to localized description.
+    """Convert encoding `code` to localized description.
 
-    Raise ValueError if not found.
+    Raise :exc:`ValueError` if not found.
+
+    >>> aeidon.encodings.code_to_description("utf_8")
+    'Unicode'
     """
     for item in _encodings:
         if item[CODE] == code:
@@ -136,10 +142,13 @@ def code_to_description(code):
     raise ValueError("Code %s not found" % repr(code))
 
 def code_to_long_name(code):
-    """Convert encoding code to localized long name.
+    """Convert encoding `code` to localized long name.
 
-    Raise ValueError if not found.
-    Return localized 'Description (Display name)'.
+    Raise :exc:`ValueError` if not found.
+    Return localized ``DESCRIPTION (DISPLAY NAME)``.
+
+    >>> aeidon.encodings.code_to_long_name("utf_8")
+    'Unicode (UTF-8)'
     """
     for item in _encodings:
         if item[CODE] == code:
@@ -148,9 +157,12 @@ def code_to_long_name(code):
     raise ValueError("Code %s not found" % repr(code))
 
 def code_to_name(code):
-    """Convert encoding code to name.
+    """Convert encoding `code` to name.
 
-    Raise ValueError if not found.
+    Raise :exc:`ValueError` if not found.
+
+    >>> aeidon.encodings.code_to_name("utf_8")
+    'UTF-8'
     """
     for item in _encodings:
         if item[CODE] == code:
@@ -161,11 +173,11 @@ def detect_ensure(value, path):
     if value is not None:
         assert is_valid_code(value)
 
-@gaupol.deco.contractual
+@aeidon.deco.contractual
 def detect(path):
-    """Detect the encoding of file and return code or None.
+    """Detect the encoding of file at `path` and return code or ``None``.
 
-    Raise IOError if reading fails.
+    Raise :exc:`IOError` if reading fails.
     """
     from chardet import universaldetector
     detector = universaldetector.UniversalDetector()
@@ -188,10 +200,9 @@ def detect_bom_ensure(value, path):
     if value is not None:
         assert is_valid_code(value)
 
-@gaupol.deco.contractual
+@aeidon.deco.contractual
 def detect_bom(path):
-    """Return corresponding encoding if BOM found, else None."""
-
+    """Return corresponding encoding if BOM found, else ``None``."""
     line = open(path, "r").readline()
     if (line.startswith(codecs.BOM_UTF32_BE) and
         is_valid_code("utf_32_be")):
@@ -214,35 +225,35 @@ def get_locale_code_ensure(value):
     if value is not None:
         assert is_valid_code(value)
 
-@gaupol.deco.once
-@gaupol.deco.contractual
+@aeidon.deco.once
+@aeidon.deco.contractual
 def get_locale_code():
-    """Return the code of the locale encoding or None."""
-
+    """Return code of the locale encoding or ``None``."""
     code = locale.getpreferredencoding()
     if code is None: return None
     code = _re_illegal.sub("_", code.lower())
-    code = gaupol.util.get_encoding_alias(code)
+    code = aeidon.util.get_encoding_alias(code)
     return code
 
 def get_locale_long_name_require():
     assert get_locale_code() is not None
 
-@gaupol.deco.once
-@gaupol.deco.contractual
+@aeidon.deco.once
+@aeidon.deco.contractual
 def get_locale_long_name():
-    """Return the localized long name for locale encoding.
+    """Return localized long name for locale encoding.
 
-    Raise ValueError if not found.
-    Return localized 'Current locale (Name)'.
+    Raise :exc:`ValueError` if not found.
+    Return localized ``CURRENT LOCALE (NAME)``.
     """
     name = code_to_name(get_locale_code())
     return _("Current locale (%s)") % name
 
+@aeidon.deco.once
 def get_valid():
     """Return a sequence of valid encodings.
 
-    Return sequence of tuples of code, name, description.
+    Return a tuple of tuples of code, name, description.
     """
     valid_encodings = []
     for i, item in enumerate(_encodings):
@@ -251,8 +262,7 @@ def get_valid():
     return tuple(valid_encodings)
 
 def is_valid_code(code):
-    """Return True is encoding code is valid."""
-
+    """Return ``True`` if encoding `code` is valid."""
     try:
         codecs.lookup(code)
     except LookupError:
@@ -260,9 +270,12 @@ def is_valid_code(code):
     return True
 
 def name_to_code(name):
-    """Convert encoding name to code.
+    """Convert encoding `name` to code.
 
-    Raise ValueError if not found.
+    Raise :exc:`ValueError` if not found.
+
+    >>> aeidon.encodings.name_to_code("UTF-8")
+    'utf_8'
     """
     for item in _encodings:
         if item[NAME] == name:
@@ -272,15 +285,18 @@ def name_to_code(name):
 def translate_code_ensure(value, code):
     assert is_valid_code(value)
 
-@gaupol.deco.contractual
+@aeidon.deco.contractual
 def translate_code(code):
-    """Translate weird encoding code.
+    """Translate weird encoding `code`.
 
-    Raise ValueError if not found.
+    Raise :exc:`ValueError` if not found.
     Return normalized encoding code.
+
+    >>> aeidon.encodings.translate_code("ISO-8859-1")
+    'latin_1'
     """
     code = _re_illegal.sub("_", code.lower())
-    code = gaupol.util.get_encoding_alias(code)
+    code = aeidon.util.get_encoding_alias(code)
     for item in _encodings:
         if item[CODE] == code:
             return item[CODE]

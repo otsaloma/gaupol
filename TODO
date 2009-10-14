@@ -17,6 +17,7 @@ Gaupol 0.16
  [ ] Use gtk.accel_map_load and gtk.accel_map_save
  [?] Use transifex.net (or something) for translations
  [ ] Use gtk.RecentAction for the recent file menus
+ [ ] Save text correction assistant window size
  [D] Add German translation (Chris Leick)
 
 Gaupol 1.0
