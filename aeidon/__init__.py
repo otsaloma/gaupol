@@ -62,4 +62,5 @@ from aeidon.enums.players import *
 from aeidon.enums.registers import *
 from aeidon import encodings
 from aeidon import languages
+from aeidon import countries
 from aeidon.unittest import *

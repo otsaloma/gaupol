@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,7 +16,7 @@
 
 """Names and ISO 3166 codes for countries and conversions between them."""
 
-import gaupol
+import aeidon
 import os
 import re
 
@@ -25,33 +25,32 @@ _countries = {}
 
 def _init_countries():
     """Initialize the dictionary mapping codes to names."""
-
     import xml.etree.ElementTree as ET
-    path = os.path.join(gaupol.DATA_DIR, "iso-codes", "iso_3166.xml")
+    path = os.path.join(aeidon.DATA_DIR, "iso-codes", "iso_3166.xml")
     for element in ET.parse(path).findall("iso_3166_entry"):
         code = element.get("alpha_2_code")
         name = element.get("name")
-        if not all((code, name)): continue
-        _countries[code] = name
+        if code and name:
+            _countries[code] = name
 
 def code_to_name_require(code):
     assert re.match(r"^[A-Z][A-Z]$", code)
 
-@gaupol.deco.contractual
+@aeidon.deco.contractual
 def code_to_name(code):
-    """Convert ISO 639 code to localized country name.
+    """Convert ISO 639 `code` to localized country name.
 
-    Raise KeyError if code not found.
+    Raise :exc:`KeyError` if `code` not found.
     """
-    return gaupol.i18n.dgettext("iso_3166", _countries[code])
+    return aeidon.i18n.dgettext("iso_3166", _countries[code])
 
 def is_valid_require(code):
     assert re.match(r"^[A-Z][A-Z]$", code)
 
-@gaupol.deco.contractual
+@aeidon.deco.contractual
 def is_valid(code):
-    """Return True if code is a valid ISO 3166 country code."""
-
+    """Return ``True`` if `code` is a valid ISO 3166 country code."""
     return (code in _countries)
+
 
 _init_countries()
