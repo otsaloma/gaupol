@@ -64,4 +64,5 @@ from aeidon import encodings
 from aeidon import languages
 from aeidon import countries
 from aeidon import locales
+from aeidon import scripts
 from aeidon.unittest import *

@@ -14,7 +14,12 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Names and codes for locales and conversions between them."""
+"""Names and codes for locales and conversions between them.
+
+Locale codes are of form ``aa[_BB][@Cccc]``, where ``aa`` is a language code,
+``BB`` a country code and ``Cccc`` a script. See :mod:`aeidon.languages`,
+:mod:`aeidon.countries` and :mod:`aeidon.scripts` for the details.
+"""
 
 from __future__ import with_statement
 
