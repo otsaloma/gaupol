@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -18,65 +18,63 @@
 
 from __future__ import with_statement
 
-import gaupol
+import aeidon
 import os
 import re
-_ = gaupol.i18n._
+_ = aeidon.i18n._
 
 
 def code_to_country_require(code):
     assert re.match(r"^[a-z][a-z](_[A-Z][A-Z])?$", code)
 
-@gaupol.deco.contractual
+@aeidon.deco.contractual
 def code_to_country(code):
-    """Convert locale code to localized country name or None.
+    """Convert locale `code` to localized country name or ``None``.
 
-    Raise KeyError if code not found.
+    Raise :exc:`KeyError` if `code` not found.
     """
     if len(code) < 5: return None
-    return gaupol.countries.code_to_name(code[-2:])
+    return aeidon.countries.code_to_name(code[-2:])
 
 def code_to_language_require(code):
     assert re.match(r"^[a-z][a-z](_[A-Z][A-Z])?$", code)
 
-@gaupol.deco.contractual
+@aeidon.deco.contractual
 def code_to_language(code):
-    """Convert locale code to localized language name.
+    """Convert locale `code` to localized language name.
 
-    Raise KeyError if code not found.
+    Raise :exc:`KeyError` if `code` not found.
     """
-    return gaupol.languages.code_to_name(code[:2])
+    return aeidon.languages.code_to_name(code[:2])
 
 def code_to_name_require(code):
     assert re.match(r"^[a-z][a-z](_[A-Z][A-Z])?$", code)
 
-@gaupol.deco.contractual
+@aeidon.deco.contractual
 def code_to_name(code):
-    """Convert locale code to localized name.
+    """Convert locale `code` to localized name.
 
-    Raise KeyError if code not found.
-    Return localized 'Language (Country)'.
+    Raise :exc:`KeyError` if `code` not found.
+    Return localized ``LANGUAGE (COUNTRY)``.
     """
     language = code_to_language(code)
     country = code_to_country(code)
     if country is None: return language
     return _("%(language)s (%(country)s)") % locals()
 
-@gaupol.deco.once
+@aeidon.deco.once
 def get_system_code():
-    """Return the locale code preferred by system or None."""
-
+    """Return the locale code preferred by system or ``None``."""
     import locale
     return locale.getdefaultlocale()[0]
 
-@gaupol.deco.once
+@aeidon.deco.once
 def get_system_modifier():
-    """Return the script modifier of system or None."""
-
+    """Return the script modifier of system or ``None``."""
     import locale
     names = ("LANGUAGE", "LC_ALL", "LC_MESSAGES", "LANG")
     values = map(os.environ.get, names)
-    values = filter(lambda x: x is not None, values)
+    values = filter(None, values)
     values = map(locale.normalize, values)
     for value in (x for x in values if x.count("@")):
         return value[value.index("@") + 1:]

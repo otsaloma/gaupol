@@ -40,7 +40,7 @@ def code_to_name_require(code):
 def code_to_name(code):
     """Convert ISO 639 `code` to localized language name.
 
-    Raise :exc:`KeyError` if code not found.
+    Raise :exc:`KeyError` if `code` not found.
     """
     return aeidon.i18n.dgettext("iso_639", _languages[code])
 

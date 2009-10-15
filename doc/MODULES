@@ -18,9 +18,9 @@ aeidon.enums
 aeidon.encodings
 aeidon.languages
 aeidon.countries
+aeidon.locales
 aeidon.unittest
 
-aeidon.locales
 aeidon.scripts
 aeidon.metadata
 aeidon.calculator
