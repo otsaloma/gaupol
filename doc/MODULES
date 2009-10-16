@@ -20,9 +20,9 @@ aeidon.languages
 aeidon.countries
 aeidon.locales
 aeidon.scripts
+aeidon.metadata
 aeidon.unittest
 
-aeidon.metadata
 aeidon.calculator
 aeidon.finder
 aeidon.parser

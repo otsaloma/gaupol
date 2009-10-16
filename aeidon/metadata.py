@@ -1,4 +1,4 @@
-# Copyright (C) 2007-2008 Osmo Salomaa
+# Copyright (C) 2007-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,7 +16,7 @@
 
 """Metadata store for one item in a desktop-style file."""
 
-import gaupol
+import aeidon
 
 __all__ = ("MetadataItem",)
 
@@ -25,26 +25,27 @@ class MetadataItem(object):
 
     """Metadata store for one item in a desktop-style file.
 
-    Instance variable 'field' is a dictionary mapping field names to their
-    string values. Common localized fields with custom handling are 'Name' and
-    'Description'; arbitrary fields are accessible with 'get_field'. Strings
-    'True' and 'False' are used for boolean fields.
+    :ivar fields: Dictionary mapping field names to their string values
+
+    Common localized fields with custom handling are ``Name`` and
+    ``Description``; arbitrary fields are accessible with :meth:`get_field`.
+    Strings ``True`` and ``False`` are used for boolean fields.
 
     For the string syntax and especially the localization handling, see
-    freedesktop.org's Desktop Entry Specification.
-    http://www.freedesktop.org/wiki/Specifications/desktop-entry-spec
+    freedesktop.org_'s Desktop Entry Specification_.
+
+    .. _freedesktop.org: http://www.freedesktop.org/
+    .. _Specification: http://www.freedesktop.org/wiki/Specifications/desktop-entry-spec
     """
 
     def __init__(self, fields=None):
-        """Initialize a MetadataItem object."""
-
+        """Initialize a :class:`MetadataItem` object."""
         self.fields = fields or {}
 
     def _get_localized_field(self, name):
         """Return the localized value of field."""
-
-        locale = gaupol.locales.get_system_code()
-        modifier = gaupol.locales.get_system_modifier()
+        locale = aeidon.locales.get_system_code()
+        modifier = aeidon.locales.get_system_modifier()
         if locale is None:
             return self.get_field(name)
         if ("_" in locale) and (modifier is not None):
@@ -67,21 +68,18 @@ class MetadataItem(object):
 
     def get_description(self, localize=True):
         """Return the description of item."""
-
         if not localize:
             return self.get_field("Description")
         return self._get_localized_field("Description")
 
     def get_field(self, name, fallback=None):
-        """Return the string value of field or fallback."""
-
+        """Return the string value of field or `fallback`."""
         if not name in self.fields:
             return fallback
         return self.fields[name]
 
     def get_field_boolean(self, name, fallback=None):
-        """Return the boolean value of field or fallback."""
-
+        """Return the boolean value of field or `fallback`."""
         if not name in self.fields:
             return fallback
         value = self.fields[name]
@@ -92,8 +90,7 @@ class MetadataItem(object):
         raise ValueError("Invalid boolean value: %s" % repr(value))
 
     def get_field_list(self, name, fallback=None):
-        """Return the list of strings value of field or fallback."""
-
+        """Return the list of strings value of field or `fallback`."""
         if not name in self.fields:
             return fallback
         lst = self.fields[name].split(";")
@@ -102,17 +99,14 @@ class MetadataItem(object):
 
     def get_name(self, localize=True):
         """Return the name of item."""
-
         if not localize:
             return self.get_field("Name")
         return self._get_localized_field("Name")
 
     def has_field(self, name):
-        """Return True if field exists."""
-
+        """Return ``True`` if field exists."""
         return (name in self.fields)
 
     def set_field(self, name, value):
         """Set the string value of field."""
-
         self.fields[unicode(name)] = unicode(value)

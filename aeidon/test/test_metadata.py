@@ -1,4 +1,4 @@
-# Copyright (C) 2007-2008 Osmo Salomaa
+# Copyright (C) 2007-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,85 +14,81 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gaupol
+import aeidon
 
 
-class TestMetadataItem(gaupol.TestCase):
+class TestMetadataItem(aeidon.TestCase):
 
+    @aeidon.deco.monkey_patch(aeidon.locales, "get_system_code")
+    @aeidon.deco.monkey_patch(aeidon.locales, "get_system_modifier")
     def assert_name_in_locale(self, code, modifier=None):
-
-        get_code = gaupol.locales.get_system_code
-        get_modifier = gaupol.locales.get_system_modifier
-        gaupol.locales.get_system_code = lambda: code
-        gaupol.locales.get_system_modifier = lambda: modifier
+        aeidon.locales.get_system_code = lambda: code
+        aeidon.locales.get_system_modifier = lambda: modifier
         self.item.set_field("Name", "system")
         key = (code if modifier is None else "%s@%s" % (code, modifier))
         self.item.set_field("Name[%s]" % key, "local")
         assert self.item.get_name() == "local"
-        gaupol.locales.get_system_code = get_code
-        gaupol.locales.get_system_modifier = get_modifier
 
     def setup_method(self, method):
-
-        self.item = gaupol.MetadataItem()
+        self.item = aeidon.MetadataItem()
 
     def test_get_description(self):
-
         self.item.set_field("Description", "test")
         assert self.item.get_description(False) == "test"
         assert self.item.get_description(True) == "test"
 
     def test_get_field(self):
-
         assert self.item.get_field("Xxxx") is None
         self.item.set_field("Test", "test")
         assert self.item.get_field("Test") == "test"
 
     def test_get_field_boolean(self):
-
         assert self.item.get_field("Xxxx") is None
         self.item.set_field("Test", "True")
         assert self.item.get_field_boolean("Test") is True
         self.item.set_field("Test", "False")
         assert self.item.get_field_boolean("Test") is False
+
+    def test_get_field_boolean__fallback(self):
+        assert self.item.get_field("Xxxx", False) is False
+
+    def test_get_field_boolean__value_error(self):
         self.item.set_field("Test", "Xxxx")
         function = self.item.get_field_boolean
         self.raises(ValueError, function, "Test")
 
     def test_get_field_list(self):
-
         assert self.item.get_field("Xxxx") is None
         self.item.set_field("Test", "Yee;Haw")
         assert self.item.get_field_list("Test") == ["Yee", "Haw"]
+        self.item.set_field("Test", "Yee;Haw;")
+        assert self.item.get_field_list("Test") == ["Yee", "Haw"]
+
+    def test_get_field_list__fallback(self):
+        assert self.item.get_field("Xxxx", []) == []
 
     def test_get_name(self):
-
         self.item.set_field("Name", "test")
         assert self.item.get_name(False) == "test"
         assert self.item.get_name(True) == "test"
 
     def test_get_name__localize(self):
-
         self.assert_name_in_locale("en_US", "Latn")
         self.assert_name_in_locale("en_US", None)
         self.assert_name_in_locale("en", "Latn")
         self.assert_name_in_locale("en", None)
 
+    @aeidon.deco.monkey_patch(aeidon.locales, "get_system_code")
     def test_get_name__no_locale(self):
-
-        get_code = gaupol.locales.get_system_code
-        gaupol.locales.get_system_code = lambda: None
+        aeidon.locales.get_system_code = lambda: None
         self.item.set_field("Name", "system")
         assert self.item.get_name() == "system"
-        gaupol.locales.get_system_code = get_code
 
     def test_has_field(self):
-
         assert not self.item.has_field("Test")
         self.item.set_field("Test", "")
         assert self.item.has_field("Test")
 
     def test_set_field(self):
-
         self.item.set_field("Test", "test")
         assert self.item.get_field("Test") == "test"
