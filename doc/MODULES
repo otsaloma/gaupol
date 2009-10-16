@@ -21,9 +21,9 @@ aeidon.countries
 aeidon.locales
 aeidon.scripts
 aeidon.metadata
+aeidon.calculator
 aeidon.unittest
 
-aeidon.calculator
 aeidon.finder
 aeidon.parser
 aeidon.liner
