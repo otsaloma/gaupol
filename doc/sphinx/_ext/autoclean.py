@@ -26,7 +26,9 @@
 import re
 
 def on_autodoc_process_docstring(app, what, name, obj, options, lines):
-    """Replace inline ':var:' markup with '.. attribute:' paragraphs."""
+    """Reformat inline variable markup (':[ci]?var:')."""
+    re_private = re.compile(r"^:[ci]?var _(\w+):")
+    lines[:] = [x for x in lines if not re_private.search(x)]
     parent = (name.split(".")[-1] if what == "class" else name)
     pattern = r"^:[ci]?var +(\w+): +(.*?)$"
     replacement = r".. attribute:: %s.\1\n\n   \2\n" % parent

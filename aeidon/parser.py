@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,39 +14,38 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Text parser for markup-tag-aware editing."""
+"""Text parser for markup-tag-aware text editing."""
 
-import gaupol
+import aeidon
 
 __all__ = ("Parser",)
 
 
-class Parser(gaupol.Finder):
+class Parser(aeidon.Finder):
 
-    """Text parser for markup-tag-aware editing.
+    """Text parser for markup-tag-aware text editing.
 
-    Instance variables:
-     * _margins: Start tag, end tag that every line is wrapped in
-     * _tags: List of lists of markup tag, position
-     * clean_func: Function to clean tags or None
-     * re_tag: Regular expression object to match any tag
+    :ivar _margins: Start tag, end tag that every line is wrapped in
+    :ivar _tags: List of lists of markup tag, position
+    :ivar clean_func: Function to clean tags or ``None``
+    :ivar re_tag: Regular expression object to match any tag
 
-    The purpose of the Parser is to split text to the actual text and its tags,
-    allowing the text to be edited while keeping the tags separate and intact.
-    Parser can be used by first setting text to it, then performing operations
-    via the defined methods and finally reassembling the full text.
+    The purpose of the :class:`Parser` is to split text to the actual text and
+    its markup tags, allowing the text to be edited while keeping the tags
+    separate and intact. Parser can be used by first setting text to it, then
+    performing operations via the defined methods and finally reassembling the
+    full text.
 
-    The margin system (wrapping each line in the same tags) is only used if no
-    other tags are found in the text and if the text has at least two lines.
-    Either margins or tags will always be empty.
+    The margin system (wrapping each line in the same set of tags) is only used
+    if no other tags are found in the text and if the text has at least two
+    lines. Either margins or tags will always be empty.
     """
 
-    __metaclass__ = gaupol.Contractual
+    __metaclass__ = aeidon.Contractual
 
     def __init__(self, re_tag=None, clean_func=None):
-        """Initialize a Parser object."""
-
-        gaupol.Finder.__init__(self)
+        """Initialize a :class:`Parser` object."""
+        aeidon.Finder.__init__(self)
         self._margins = None
         self._tags = None
         self.clean_func = clean_func
@@ -60,8 +59,7 @@ class Parser(gaupol.Finder):
         assert self.re_tag is not None
 
     def _set_margins(self, text):
-        """Find the margin markup tags in text if such exist."""
-
+        """Find the margin markup tags in `text` if such exist."""
         lines = text.split("\n")
         line = lines[0]
         start_tag = ""
@@ -77,7 +75,7 @@ class Parser(gaupol.Finder):
         end_tag = ""
         while True:
             iterator = self.re_tag.finditer(line)
-            match = gaupol.util.last(iterator)
+            match = aeidon.util.last(iterator)
             if match is None: break
             a, z = match.span()
             if z != len(line): return
@@ -95,14 +93,13 @@ class Parser(gaupol.Finder):
         assert self.re_tag is not None
 
     def _set_tags(self, text):
-        """Find markup tags in text."""
-
+        """Find markup tags in `text`."""
         for match in self.re_tag.finditer(text):
             a, z = match.span()
             self._tags.append([a, text[a:z]])
 
     def _shift_tags(self, pos, shift, orig_text):
-        """Shift all markup tags after position."""
+        """Shift all markup tags after `pos`."""
 
         if not shift: return
         if not self._tags: return
@@ -141,7 +138,6 @@ class Parser(gaupol.Finder):
 
     def get_text(self):
         """Reassemble the full text and return it."""
-
         if not self.text:
             self._margins = []
             self._tags = []
@@ -158,21 +154,21 @@ class Parser(gaupol.Finder):
     def replace(self, next=True):
         """Replace the current match of pattern.
 
-        next should be True to finish at end of match, False for beginning.
-        Raise re.error if bad replacement.
+        `next` should be ``True`` to finish at end of match, ``False`` for
+        beginning. Raise :exc:`re.error` if bad replacement.
         """
         a = self.match_span[0]
         orig_text = self.text[:]
-        gaupol.Finder.replace(self, next)
+        aeidon.Finder.replace(self, next)
         shift = len(self.text) - len(orig_text)
         self._shift_tags(a, shift, orig_text)
 
     def set_text(self, text, next=True):
         """Set the target text to search in and parse it.
 
-        next should be True to start at beginning, False for end.
+        `next` should be ``True`` to start at beginning, ``False`` for end.
         """
-        gaupol.Finder.set_text(self, text, next)
+        aeidon.Finder.set_text(self, text, next)
         self._margins = []
         self._tags = []
         if self.re_tag is None: return

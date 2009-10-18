@@ -23,9 +23,9 @@ aeidon.scripts
 aeidon.metadata
 aeidon.calculator
 aeidon.finder
+aeidon.parser
 aeidon.unittest
 
-aeidon.parser
 aeidon.liner
 aeidon.containers
 aeidon.subtitle
