@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2007,2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,7 +16,7 @@
 
 """String and regular expression finder and replacer."""
 
-import gaupol
+import aeidon
 import re
 
 __all__ = ("Finder",)
@@ -26,21 +26,19 @@ class Finder(object):
 
     """String and regular expression finder and replacer.
 
-    Instance variables:
-     * ignore_case: True to ignore case when finding matches
-     * match: Regular expression object for the latest match of pattern
-     * match_span: Tuple of start and end position for match
-     * pattern: String or regular expression object to find
-     * pos: Current offset from the beginning of the text
-     * replacement: Plain- or regular expression replacement string
-     * text: Target text to find matches of pattern in
+    :ivar ignore_case: ``True`` to ignore case when finding matches
+    :ivar match: Regular expression object for the latest match of pattern
+    :ivar match_span: Tuple of start and end position for match
+    :ivar pattern: String or regular expression object to find
+    :ivar pos: Current offset from the beginning of the text
+    :ivar replacement: Plain- or regular expression replacement string
+    :ivar text: Target text to find matches of pattern in
     """
 
-    __metaclass__ = gaupol.Contractual
+    __metaclass__ = aeidon.Contractual
 
     def __init__(self):
         """Initialize a Finder object."""
-
         self.ignore_case = False
         self.match = None
         self.match_span = None
@@ -63,7 +61,7 @@ class Finder(object):
     def next(self):
         """Find the next match of pattern.
 
-        Raise StopIteration if no next match found.
+        Raise :exc:`StopIteration` if no next match found.
         Return tuple of match start, end position.
         """
         if isinstance(self.pattern, basestring):
@@ -103,7 +101,7 @@ class Finder(object):
     def previous(self):
         """Find the previous match of pattern.
 
-        Raise StopIteration if no previous match found.
+        Raise :exc:`StopIteration` if no previous match found.
         Return tuple of match start, end position.
         """
         if isinstance(self.pattern, basestring):
@@ -150,8 +148,8 @@ class Finder(object):
     def replace(self, next=True):
         """Replace the current match of pattern.
 
-        next should be True to finish at end of match, False for beginning.
-        Raise re.error if bad replacement.
+        `next` should be ``True`` to finish at end of match, ``False`` for
+        beginning. Raise :exc:`re.error` if bad replacement.
         """
         a, z = self.match_span
         orig_length = len(self.text)
@@ -175,7 +173,7 @@ class Finder(object):
     def replace_all(self):
         """Replace all occurences of pattern.
 
-        Raise re.error if bad replacement.
+        Raise :exc:`re.error` if bad replacement.
         Return the amount of substitutions made.
         """
         self.pos = 0
@@ -196,9 +194,11 @@ class Finder(object):
     def set_regex(self, pattern, flags=0, default_flags=None):
         """Set and use regular expression as pattern.
 
-        If default_flags is None, DOTALL, MULTILINE and UNICODE are used.
-        IGNORECASE is automatically added to flags if self.ignore_case is True.
-        Raise re.error if bad pattern.
+        If `default_flags` is ``None``, all of ``DOTALL``, ``MULTILINE`` and
+        ``UNICODE`` are used. ``IGNORECASE`` is automatically added to flags if
+        :attr:`ignore_case` is ``True``.
+
+        Raise :exc:`re.error` if bad pattern.
         """
         if self.ignore_case:
             flags = flags | re.IGNORECASE
@@ -209,7 +209,7 @@ class Finder(object):
     def set_text(self, text, next=True):
         """Set the target text to search in.
 
-        next should be True to start at beginning, False for end.
+        `next` should be ``True`` to start at beginning, ``False`` for end.
         """
         self.text = text
         self.match = None

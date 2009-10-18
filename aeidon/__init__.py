@@ -67,4 +67,5 @@ from aeidon import locales
 from aeidon import scripts
 from aeidon.metadata import *
 from aeidon.calculator import *
+from aeidon.finder import *
 from aeidon.unittest import *
