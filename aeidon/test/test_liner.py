@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2007 Osmo Salomaa
+# Copyright (C) 2006-2007,2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,20 +14,18 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gaupol
+import aeidon
 import re
 
 
-class TestLiner(gaupol.TestCase):
+class TestLiner(aeidon.TestCase):
 
     def setup_method(self, method):
-
-        self.liner = gaupol.Liner(re.compile(r"<.+?>"))
+        self.liner = aeidon.Liner(re.compile(r"<.+?>"))
         self.liner.break_points.append((re.compile(r" (- )"), r"\n\1"))
         self.liner.break_points.append((re.compile(r"([.,?!]) "), r"\1\n"))
 
     def test_break_lines__01(self):
-
         text = ("- Isn't he off on Saturdays? "
                 "- Didn't he tell you?")
         self.liner.set_text(text)
@@ -36,7 +34,6 @@ class TestLiner(gaupol.TestCase):
             "- Didn't he tell you?")
 
     def test_break_lines__02(self):
-
         text = ("- Isn't he off on Saturdays? "
                 "- He changed shifts. "
                 "- Didn't he tell you? "
@@ -48,7 +45,6 @@ class TestLiner(gaupol.TestCase):
             "- Can you give him this when he next comes?")
 
     def test_break_lines__03(self):
-
         text = ("Isn't he off on Saturdays? "
                 "He changed shifts.")
         self.liner.set_text(text)
@@ -57,7 +53,6 @@ class TestLiner(gaupol.TestCase):
             "He changed shifts.")
 
     def test_break_lines__04(self):
-
         text = ("Isn't he off on Saturdays? "
                 "He changed shifts. "
                 "Didn't he tell you?")
@@ -67,13 +62,11 @@ class TestLiner(gaupol.TestCase):
             "He changed shifts. Didn't he tell you?")
 
     def test_break_lines__05(self):
-
         text = "Isn't he off on Saturdays"
         self.liner.set_text(text)
         assert self.liner.break_lines() == text
 
     def test_break_lines__06(self):
-
         text = ("Isn't he off on Saturdays "
                 "He changed shifts "
                 "Didn't he tell you?")
@@ -83,7 +76,6 @@ class TestLiner(gaupol.TestCase):
             "changed shifts Didn't he tell you?")
 
     def test_break_lines__07(self):
-
         text = ("Isn't he off on Saturdays "
                 "He changed shifts "
                 "Didn't he tell you "
@@ -95,7 +87,6 @@ class TestLiner(gaupol.TestCase):
             "give him this when he next comes")
 
     def test_break_lines__08(self):
-
         text = "test " * 50
         self.liner.set_text(text)
         assert self.liner.break_lines() == (
@@ -107,7 +98,6 @@ class TestLiner(gaupol.TestCase):
             "test test test test test test test test test")
 
     def test_break_lines__09(self):
-
         text = "test " * 60
         self.liner.set_text(text)
         assert self.liner.break_lines() == (
@@ -121,33 +111,31 @@ class TestLiner(gaupol.TestCase):
             "test test test test test test test test")
 
     def test_break_lines__10(self):
-
         text = "testtesttesttest " * 101
         self.liner.set_text(text)
         assert self.liner.break_lines()
 
-    def test_is_legal(self):
-
-        text = "<i>I got to the restaurant a little early.</i>"
-        self.liner.set_text(text)
-        assert self.liner.is_legal()
-
-        text = "He'soffdutytodayHe'soffdutytodayHe'soffdutytoday."
-        self.liner.set_text(text)
-        assert self.liner.is_legal()
-
+    def test_is_legal__long(self):
         text = "<i>I got to the restaurant a little early little early.</i>"
         self.liner.set_text(text)
         assert not self.liner.is_legal()
 
-    def test_set_length_func(self):
+    def test_is_legal__ok(self):
+        text = "<i>I got to the restaurant a little early.</i>"
+        self.liner.set_text(text)
+        assert self.liner.is_legal()
 
+    def test_is_legal__unbreakable(self):
+        text = "He'soffdutytodayHe'soffdutytodayHe'soffdutytoday."
+        self.liner.set_text(text)
+        assert self.liner.is_legal()
+
+    def test_set_length_func(self):
         get_length = lambda x: len(x)**2 + 1
         self.liner.set_length_func(get_length)
         assert self.liner._length_func == get_length
         assert self.liner._space_length == 2
 
     def test_set_text(self):
-
         self.liner.set_text(" <i>foo</i> ")
         assert self.liner.text == "foo"

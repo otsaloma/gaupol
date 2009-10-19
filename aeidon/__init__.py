@@ -69,4 +69,5 @@ from aeidon.metadata import *
 from aeidon.calculator import *
 from aeidon.finder import *
 from aeidon.parser import *
+from aeidon.liner import *
 from aeidon.unittest import *

@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2007 Osmo Salomaa
+# Copyright (C) 2006-2007,2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -18,8 +18,8 @@
 
 from __future__ import division
 
+import aeidon
 import copy
-import gaupol
 import math
 import re
 import sys
@@ -27,28 +27,39 @@ import sys
 __all__ = ("Liner",)
 
 
-class Liner(gaupol.Parser):
+class Liner(aeidon.Parser):
 
     """Breaker of text into lines according to preferred break points.
 
-    Instance variables:
-     * _length_func: A function that returns the length of its argument
-     * _space_length: Length of a space according to length_func
-     * break_points: List of tuples of regular expression object, replacement
-     * max_deviation: Maximum deviation for texts with three or more lines
-     * max_length: Maximum length of a line in units of _length_func
-     * max_lines: Maximum preferred amount of lines (may be exceeded)
+    :class:`Breaker` operates by first joining all lines by spaces and then
+    trying different breaks. Breaks are tried first from :attr:`break_points`
+    in the order they are defined and if that fails, lines are split at word
+    boundaries. Lines are attempted to be broken so that the variance of line
+    lengths is minimized, while satisfying legality constraints, of which
+    :attr:`max_length` is never broken and :attr:`max_lines` is broken if
+    absolutely necessary. Variance minimizing splits are sought using a brute
+    force algorithm as long as the text is not abnormally long.
+    :attr:`max_deviation` can be used to control the threshold for discarding
+    legal solutions for subtitles with three or more lines and a variance too
+    great for the subtitle to be typeset elegantly.
+
+    :ivar _length_func: A function that returns the length of its argument
+    :ivar _space_length: Length of a space according to :attr:`length_func`
+    :ivar break_points: List of tuples of regex object, replacement
+    :ivar max_deviation: Maximum deviation for texts with three or more lines
+    :ivar max_length: Maximum length of a line in units of :attr:`_length_func`
+    :ivar max_lines: Maximum preferred amount of lines (may be exceeded)
     """
 
-    __metaclass__ = gaupol.Contractual
+    __metaclass__ = aeidon.Contractual
     _re_multi_space = re.compile(r" {2,}")
 
     def __init__(self, re_tag=None, clean_func=None):
-        """Initialize a Liner object.
+        """Initialize a :class:`Liner` object.
 
-        re_tag should be a regular expression object.
+        `re_tag` should be a regular expression object.
         """
-        gaupol.Parser.__init__(self, re_tag, clean_func)
+        aeidon.Parser.__init__(self, re_tag, clean_func)
         self._length_func = len
         self._space_length = 1
         self.break_points = []
@@ -57,9 +68,9 @@ class Liner(gaupol.Parser):
         self.max_lines = 2
 
     def _break_on_pattern(self, max_lines, regex, replacement):
-        """Break the text into lines based on regular expression.
+        """Break the text into lines based on `regex`.
 
-        Return True if breaks made and result is elegant and legal.
+        Return ``True`` if breaks made and result is elegant and legal.
         """
         # Prefer elegance over compactness by not using
         # a maximum line count less than the preferred maximum.
@@ -79,7 +90,6 @@ class Liner(gaupol.Parser):
 
     def _break_on_words(self, max_lines):
         """Break the text into lines based on words."""
-
         self.text = self.text.replace(" ", "\n")
         self.text = self.text.replace("\n-\n", "\n- ")
         self._join_even(max_lines)
@@ -89,7 +99,6 @@ class Liner(gaupol.Parser):
 
     def _get_length(self, lengths):
         """Return the length of items joined by spaces."""
-
         return (sum(lengths) + (len(lengths) - 1) * self._space_length)
 
     def _get_break_ensure(self, value, lengths):
@@ -119,10 +128,10 @@ class Liner(gaupol.Parser):
             assert 0 <= index <= len(lengths)
 
     def _get_breaks(self, lengths, max_lines):
-        """Return indices of breaks with minimum length deviation.
+        """Return indices of breaks with minimum length variance.
 
         Indexes are brute forced within reason and the result is optimal if
-        max_lines is less than six, otherwise result is ugly.
+        ``max_lines`` is less than six, otherwise result is (potentially) ugly.
         """
         if max_lines == 1:
             return []
@@ -138,7 +147,7 @@ class Liner(gaupol.Parser):
             assert 0 <= index <= len(lengths)
 
     def _get_breaks_pretty(self, lengths, max_lines):
-        """Return indices of breaks with minimum length deviation.
+        """Return indices of breaks with minimum length variance.
 
         Indexes are brute forced within reason and the result is optimal.
         """
@@ -169,9 +178,9 @@ class Liner(gaupol.Parser):
             assert 0 <= index <= len(lengths)
 
     def _get_breaks_ugly(self, lengths, max_lines):
-        """Return indices of breaks with minimum length deviation.
+        """Return indices of breaks with minimum length variance.
 
-        Items are first broken into half of max_lines and then each these
+        Items are first broken into half of ``max_lines`` and then each these
         lines is further broken internally into two. The result is not optimal,
         but is obtained fast.
         """
@@ -204,8 +213,7 @@ class Liner(gaupol.Parser):
         return 1
 
     def _is_deviant(self):
-        """Return True if line lengths deviate too much."""
-
+        """Return ``True`` if line lengths deviate too much."""
         line_count = self.text.count("\n") + 1
         if line_count <= 2: return
         lengths = [self._length_func(x) for x in self.text.split("\n")]
@@ -217,8 +225,7 @@ class Liner(gaupol.Parser):
         assert self.text.count("\n") + 1 <= max_lines
 
     def _join_even(self, max_lines):
-        """Join lines evenly so that max_lines is not violated."""
-
+        """Join lines evenly so that ``max_lines`` is not violated."""
         text = ""
         items = self.text.split("\n")
         lengths = [self._length_func(x) for x in items]
@@ -230,7 +237,6 @@ class Liner(gaupol.Parser):
 
     def break_lines(self):
         """Break lines and return text."""
-
         self.text = self.text.replace("\n", " ")
         self.pattern = self._re_multi_space
         self.replacement = " "
@@ -253,8 +259,7 @@ class Liner(gaupol.Parser):
         return self.get_text()
 
     def is_legal(self):
-        """Return True if the text does not violate self.max_length."""
-
+        """Return ``True`` if the text does not violate :attr:`max_length`."""
         for line in self.text.split("\n"):
             length = self._length_func(line)
             if (" " in line) and (length > self.max_length):
@@ -266,14 +271,13 @@ class Liner(gaupol.Parser):
 
     def set_length_func(self, func):
         """Set the length function to use."""
-
         self._length_func = func
         self._space_length = func(" ")
 
     def set_text(self, text, next=True):
         """Set the target text to search in and parse it.
 
-        next should be True to start at beginning, False for end.
+        `next` should be ``True`` to start at beginning, ``False`` for end.
         """
-        gaupol.Parser.set_text(self, text.strip(), next)
+        aeidon.Parser.set_text(self, text.strip(), next)
         self.text = self.text.strip()
