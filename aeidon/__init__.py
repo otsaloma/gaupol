@@ -71,4 +71,5 @@ from aeidon.finder import *
 from aeidon.parser import *
 from aeidon.liner import *
 from aeidon import containers
+from aeidon.subtitle import *
 from aeidon.unittest import *
