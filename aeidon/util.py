@@ -366,7 +366,7 @@ def read(path, encoding=None, fallback="utf_8"):
     """
     encoding = encoding or get_default_encoding()
     try:
-        with contextlib.closing(codecs.open((path, "r", encoding))) as fobj:
+        with contextlib.closing(codecs.open(path, "r", encoding)) as fobj:
             return fobj.read().strip()
     except UnicodeError:
         if not fallback in (encoding, None, ""):

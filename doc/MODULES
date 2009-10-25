@@ -27,9 +27,9 @@ aeidon.parser
 aeidon.liner
 aeidon.containers
 aeidon.subtitle
+aeidon.file
 aeidon.unittest
 
-aeidon.file
 aeidon.files/
 aeidon.determiner
 aeidon.markup

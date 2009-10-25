@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -18,9 +18,9 @@
 
 from __future__ import with_statement
 
+import aeidon
 import codecs
 import contextlib
-import gaupol
 import os
 import sys
 
@@ -31,53 +31,49 @@ class SubtitleFile(object):
 
     """Base class for subtitle files.
 
-    Class or instance variables:
-     * encoding: Character encoding used to read and write file
-     * format: Format enumeration corresponding to file
-     * has_utf_16_bom: True if BOM found for UTF-16-BE or UTF-16-LE
-     * header: String of generic information at the top of the file
-     * mode: Mode enumeration corresponding to the native positions
-     * newline: Newline enumeration, detected upon read and written as such
-     * path: Full, absolute path to the file on disk
+    :cvar format: :attr:`aeidon.formats` item corresponding to file format
+    :cvar mode: :attr:`aeidon.modes` item corresponding to the native positions
+    :ivar encoding: Character encoding used to read and write file
+    :ivar has_utf_16_bom: True if BOM found for UTF-16-BE or UTF-16-LE
+    :ivar header: String of generic information at the top of the file
+    :ivar newline: :attr:`aeidon.newlines` item, detected upon read
+    :ivar path: Full, absolute path to the file on disk
 
     If the file format contains a header, it will default to a fairly blank
     template header read upon instantiation of the class, from either
-    paths.DATA_DIR/headers or paths.DATA_HOME_DIR/headers. If the read file
-    contains a header, it will replace the template.
+    ``aeidon.DATA_DIR/headers`` or ``aeidon.DATA_HOME_DIR/headers``. If the
+    read file contains a header, it will replace the template.
     """
 
-    __metaclass__ = gaupol.Contractual
-    format = gaupol.formats.NONE
-    mode = gaupol.modes.NONE
+    __metaclass__ = aeidon.Contractual
+    format = aeidon.formats.NONE
+    mode = aeidon.modes.NONE
 
     def __init__(self, path, encoding, newline=None):
-        """Initialize a SubtitleFile object."""
-
+        """Initialize a :class:`SubtitleFile` object."""
         self.encoding = encoding
         self.has_utf_16_bom = False
         self.header = ""
         self.newline = newline
         self.path = os.path.abspath(path)
-
         if self.format.has_header:
             self.header = self.get_template_header()
 
     def _get_subtitle(self):
         """Return a new subtitle instance with proper properties."""
-
-        return gaupol.Subtitle(self.mode)
+        return aeidon.Subtitle(self.mode)
 
     def _invariant(self):
-        assert gaupol.encodings.is_valid_code(self.encoding)
+        assert aeidon.encodings.is_valid_code(self.encoding)
 
     def _read_lines(self):
         """Read file to a unicoded list of lines.
 
         All newlines are stripped.
         All blank lines from beginning and end are removed.
-        Raise IOError if reading fails.
-        Raise UnicodeError if decoding fails.
-        Return a list of the lines.
+        Raise :exc:`IOError` if reading fails.
+        Raise :exc:`UnicodeError` if decoding fails.
+        Return a list of lines read.
         """
         args = (self.path, "rU", self.encoding)
         with contextlib.closing(codecs.open(*args)) as fobj:
@@ -89,7 +85,7 @@ class SubtitleFile(object):
                 lines.pop(index)
         if isinstance(chars, tuple):
             chars = chars[0]
-        self.newline = gaupol.newlines.find_item("value", chars)
+        self.newline = aeidon.newlines.find_item("value", chars)
         if self.encoding == "utf_8":
             bom = unicode(codecs.BOM_UTF8, "utf_8")
             if lines and lines[0].startswith(bom):
@@ -119,7 +115,6 @@ class SubtitleFile(object):
 
     def copy_from(self, other):
         """Copy generic properties from other file."""
-
         if self.format == other.format:
             self.header = other.header
         self.has_utf_16_bom = other.has_utf_16_bom
@@ -130,25 +125,25 @@ class SubtitleFile(object):
     def get_template_header(self):
         """Read and return the header from a template file.
 
-        Raise IOError if reading global header file fails.
-        Raise UnicodeError if decoding global header file fails.
+        Raise :exc:`IOError` if reading global header file fails.
+        Raise :exc:`UnicodeError` if decoding global header file fails.
         """
         basename = self.format.name.lower()
-        directory = os.path.join(gaupol.DATA_HOME_DIR, "headers")
+        directory = os.path.join(aeidon.DATA_HOME_DIR, "headers")
         path = os.path.join(directory, basename)
         if os.path.isfile(path):
-            try: return gaupol.util.read(path, None)
+            try: return aeidon.util.read(path, None)
             except (IOError, UnicodeError):
-                gaupol.util.print_read_io(sys.exc_info(), path)
-        directory = os.path.join(gaupol.DATA_DIR, "headers")
+                aeidon.util.print_read_io(sys.exc_info(), path)
+        directory = os.path.join(aeidon.DATA_DIR, "headers")
         path = os.path.join(directory, basename)
-        return gaupol.util.read(path, "ascii")
+        return aeidon.util.read(path, "ascii")
 
     def read(self):
         """Read file and return subtitles.
 
-        Raise IOError if reading fails.
-        Raise UnicodeError if decoding fails.
+        Raise :exc:`IOError` if reading fails.
+        Raise :exc:`UnicodeError` if decoding fails.
         """
         raise NotImplementedError
 
@@ -156,10 +151,10 @@ class SubtitleFile(object):
         assert self.newline is not None
 
     def write(self, subtitles, doc):
-        """Write subtitles from document to file.
+        """Write `subtitles` from `doc` to file.
 
-        Raise IOError if writing fails.
-        Raise UnicodeError if encoding fails.
+        Raise :exc:`IOError` if writing fails.
+        Raise :exc:`UnicodeError` if encoding fails.
         """
         args = (self.path, "w", self.encoding)
         with contextlib.closing(codecs.open(*args)) as fobj:
@@ -178,9 +173,9 @@ class SubtitleFile(object):
         assert self.newline is not None
 
     def write_to_file(self, subtitles, doc, fobj):
-        """Write subtitles from document to given file.
+        """Write `subtitles` from `doc` to `fobj`.
 
-        Raise IOError if writing fails.
-        Raise UnicodeError if encoding fails.
+        Raise :exc:`IOError` if writing fails.
+        Raise :exc:`UnicodeError` if encoding fails.
         """
         raise NotImplementedError
