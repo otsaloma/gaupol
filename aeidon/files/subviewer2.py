@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,27 +16,27 @@
 
 """SubViewer 2.0 file."""
 
-import gaupol
+import aeidon
 import re
 
 __all__ = ("SubViewer2",)
 
 
-class SubViewer2(gaupol.SubtitleFile):
+class SubViewer2(aeidon.SubtitleFile):
 
     """SubViewer 2.0 file."""
 
-    _re_time_line = re.compile((
-        r"^(-?\d\d:\d\d:\d\d.\d\d)"
-        r",(-?\d\d:\d\d:\d\d.\d\d)\s*$"))
-    format = gaupol.formats.SUBVIEWER2
-    mode = gaupol.modes.TIME
+    _re_time_line = re.compile((r"^(-?\d\d:\d\d:\d\d.\d\d)"
+                                r",(-?\d\d:\d\d:\d\d.\d\d)\s*$"))
+
+    format = aeidon.formats.SUBVIEWER2
+    mode = aeidon.modes.TIME
 
     def read(self):
         """Read file and return subtitles.
 
-        Raise IOError if reading fails.
-        Raise UnicodeError if decoding fails.
+        Raise :exc:`IOError` if reading fails.
+        Raise :exc:`UnicodeError` if decoding fails.
         """
         self.header = ""
         subtitles = []
@@ -57,10 +57,10 @@ class SubViewer2(gaupol.SubtitleFile):
         return subtitles
 
     def write_to_file(self, subtitles, doc, fobj):
-        """Write subtitles from document to given file.
+        """Write `subtitles` from `doc` to `fobj`.
 
-        Raise IOError if writing fails.
-        Raise UnicodeError if encoding fails.
+        Raise :exc:`IOError` if writing fails.
+        Raise :exc:`UnicodeError` if encoding fails.
         """
         fobj.write(self.header)
         fobj.write(self.newline.value)

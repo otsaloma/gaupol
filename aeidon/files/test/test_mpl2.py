@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,22 +14,23 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gaupol
+import aeidon
 
 
-class TestModule(gaupol.TestCase):
+class TestMPL2(aeidon.TestCase):
 
-    def test_add_class(self):
+    format = aeidon.formats.MPL2
 
-        gaupol.files.add_class(gaupol.files.SubRip)
+    def setup_method(self, method):
+        self.file = aeidon.files.new(self.format,
+                                     self.new_temp_file(self.format),
+                                     "ascii")
 
-    def test_new(self):
+    def test_read(self):
+        assert self.file.read()
 
-        format = gaupol.formats.SUBRIP
-        file = gaupol.files.new(format, "", "ascii")
-        assert isinstance(file, gaupol.files.SubRip)
-
-    def test_new__value_error(self):
-
-        function = gaupol.files.new
-        self.raises(ValueError, function, None, "", "ascii")
+    def test_write(self):
+        self.file.write(self.file.read(), aeidon.documents.MAIN)
+        text = open(self.file.path, "r").read().strip()
+        reference = self.get_sample_text(self.format)
+        assert text == reference

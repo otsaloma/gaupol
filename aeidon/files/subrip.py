@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,28 +16,28 @@
 
 """SubRip file."""
 
-import gaupol
+import aeidon
 import re
 
 __all__ = ("SubRip",)
 
 
-class SubRip(gaupol.SubtitleFile):
+class SubRip(aeidon.SubtitleFile):
 
     """SubRip file."""
 
     _re_time_line = re.compile((
-        r"^(-?\d\d:\d\d:\d\d,\d\d\d) -->"
-        r" (-?\d\d:\d\d:\d\d,\d\d\d)"
-        r"(  X1:(\d+) X2:(\d+) Y1:(\d+) Y2:(\d+))?\s*$"))
-    format = gaupol.formats.SUBRIP
-    mode = gaupol.modes.TIME
+            r"^(-?\d\d:\d\d:\d\d,\d\d\d) -->"
+            r" (-?\d\d:\d\d:\d\d,\d\d\d)"
+            r"(  X1:(\d+) X2:(\d+) Y1:(\d+) Y2:(\d+))?\s*$"))
+
+    format = aeidon.formats.SUBRIP
+    mode = aeidon.modes.TIME
 
     def _read_lines(self):
         """Read file to a unicoded list of lines."""
-
         lines = ["\n"]
-        for line in gaupol.SubtitleFile._read_lines(self):
+        for line in aeidon.SubtitleFile._read_lines(self):
             lines.append(line)
             match = self._re_time_line.match(line)
             if match is None: continue
@@ -50,8 +50,8 @@ class SubRip(gaupol.SubtitleFile):
     def read(self):
         """Read file and return subtitles.
 
-        Raise IOError if reading fails.
-        Raise UnicodeError if decoding fails.
+        Raise :exc:`IOError` if reading fails.
+        Raise :exc:`UnicodeError` if decoding fails.
         """
         subtitles = []
         for line in self._read_lines():
@@ -73,10 +73,10 @@ class SubRip(gaupol.SubtitleFile):
         return subtitles
 
     def write_to_file(self, subtitles, doc, fobj):
-        """Write subtitles from document to given file.
+        """Write `subtitles` from `doc` to `fobj`.
 
-        Raise IOError if writing fails.
-        Raise UnicodeError if encoding fails.
+        Raise :exc:`IOError` if writing fails.
+        Raise :exc:`UnicodeError` if encoding fails.
         """
         n = self.newline.value
         for i, subtitle in enumerate(subtitles):

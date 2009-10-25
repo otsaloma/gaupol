@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,26 +14,18 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gaupol
+import aeidon
 
 
-class TestTMPlayer(gaupol.TestCase):
+class TestModule(aeidon.TestCase):
 
-    def setup_method(self, method):
+    def test_add(self):
+        aeidon.files.add(aeidon.files.SubRip)
 
-        format = gaupol.formats.MICRODVD
-        path = self.new_temp_file(format)
-        self.file = gaupol.files.new(format, path, "ascii")
+    def test_new(self):
+        format = aeidon.formats.SUBRIP
+        file = aeidon.files.new(format, "", "ascii")
+        assert isinstance(file, aeidon.files.SubRip)
 
-    def test_read(self):
-
-        assert self.file.read()
-
-    def test_write(self):
-
-        subtitles = self.file.read()
-        doc = gaupol.documents.MAIN
-        self.file.write(subtitles, doc)
-        text = open(self.file.path, "r").read().strip()
-        reference = self.get_sample_text(self.file.format)
-        assert text == reference
+    def test_new__value_error(self):
+        self.raises(ValueError, aeidon.files.new, None, "", "ascii")

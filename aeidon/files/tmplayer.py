@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2008 Osmo Salomaa
+# Copyright (C) 2006-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,23 +16,23 @@
 
 """TMPlayer file."""
 
-import gaupol
+import aeidon
 
 __all__ = ("TMPlayer",)
 
 
-class TMPlayer(gaupol.SubtitleFile):
+class TMPlayer(aeidon.SubtitleFile):
 
     """TMPlayer file."""
 
-    format = gaupol.formats.TMPLAYER
-    mode = gaupol.modes.TIME
+    format = aeidon.formats.TMPLAYER
+    mode = aeidon.modes.TIME
 
     def read(self):
         """Read file and return subtitles.
 
-        Raise IOError if reading fails.
-        Raise UnicodeError if decoding fails.
+        Raise :exc:`IOError` if reading fails.
+        Raise :exc:`UnicodeError` if decoding fails.
         """
         subtitles = [self._get_subtitle()]
         for line in self._read_lines():
@@ -51,14 +51,13 @@ class TMPlayer(gaupol.SubtitleFile):
         return subtitles
 
     def write_to_file(self, subtitles, doc, fobj):
-        """Write subtitles from document to given file.
+        """Write `subtitles` from `doc` to `fobj`.
 
-        Raise IOError if writing fails.
-        Raise UnicodeError if encoding fails.
+        Raise :exc:`IOError` if writing fails.
+        Raise :exc:`UnicodeError` if encoding fails.
         """
         for subtitle in subtitles:
-            round_time = subtitle.calc.round_time
-            start = round_time(subtitle.start_time, 0)
+            start = subtitle.calc.round_time(subtitle.start_time, 0)
             fobj.write("%s:" % start[:-4])
             fobj.write(subtitle.get_text(doc).replace("\n", "|"))
             fobj.write(self.newline.value)

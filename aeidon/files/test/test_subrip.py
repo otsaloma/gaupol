@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,30 +14,25 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gaupol
+import aeidon
 
 
-class TestSubRip(gaupol.TestCase):
+class TestSubRip(aeidon.TestCase):
 
+    format = aeidon.formats.SUBRIP
     name = "subrip"
 
     def setup_method(self, method):
-
-        format = gaupol.formats.SUBRIP
-        path = self.new_temp_file(format, self.name)
-        self.file = gaupol.files.new(format, path, "ascii")
+        path = self.new_temp_file(self.format, self.name)
+        self.file = aeidon.files.new(self.format, path, "ascii")
 
     def test_read(self):
-
         assert self.file.read()
 
     def test_write(self):
-
-        subtitles = self.file.read()
-        doc = gaupol.documents.MAIN
-        self.file.write(subtitles, doc)
+        self.file.write(self.file.read(), aeidon.documents.MAIN)
         text = open(self.file.path, "r").read().strip()
-        reference = self.get_sample_text(self.file.format, self.name)
+        reference = self.get_sample_text(self.format, self.name)
         assert text == reference
 
 

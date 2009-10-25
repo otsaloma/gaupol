@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2008 Osmo Salomaa
+# Copyright (C) 2006-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,35 +16,36 @@
 
 """MPsub file."""
 
-import gaupol
+import aeidon
 import re
 
 __all__ = ("MPsub",)
 
 
-class MPsub(gaupol.SubtitleFile):
+class MPsub(aeidon.SubtitleFile):
 
     """MPsub file.
 
-    Instance variables framerate and mode depend on what is written on the
-    first line of the file header. They will be determined when the file is
-    read and are changed when the 'set_header' method is called.
+    :ivar framerate: :attr:`aeidon.framerates` item for current framerate
+    :ivar mode: :attr:`aeidon.modes` item for current native mode
+
+    Instance variables :attr:`framerate` and :attr:`mode` depend on what is
+    written on the first line of the file header. They will be determined when
+    the file is read and are changed when :meth:`set_header` is called.
     """
 
     _re_position_line = re.compile(r"^(-?[\d.]+) (-?[\d.]+)\s*$")
-    format = gaupol.formats.MPSUB
-    mode = gaupol.modes.TIME
+    format = aeidon.formats.MPSUB
+    mode = aeidon.modes.TIME
 
     def __init__(self, path, encoding, newline=None):
-        """Initialize an MPsub object."""
-
-        gaupol.SubtitleFile.__init__(self, path, encoding, newline)
-        self.framerate = gaupol.framerates.NONE
-        self.mode = gaupol.modes.TIME
+        """Initialize an :class:`MPsub` object."""
+        aeidon.SubtitleFile.__init__(self, path, encoding, newline)
+        self.framerate = aeidon.framerates.NONE
+        self.mode = aeidon.modes.TIME
 
     def _get_frames(self, subtitles):
-        """Return MPsub style start and end frames."""
-
+        """Return MPsub-style start and end frames."""
         starts = [x.start_frame for x in subtitles]
         ends = [x.end_frame for x in subtitles]
         for i in reversed(range(1, len(subtitles))):
@@ -54,17 +55,15 @@ class MPsub(gaupol.SubtitleFile):
         return map(str, starts), map(str, ends)
 
     def _get_positions(self, subtitles):
-        """Return MPsub style start and end positions."""
-
-        if self.mode == gaupol.modes.TIME:
+        """Return MPsub-style start and end positions."""
+        if self.mode == aeidon.modes.TIME:
             return self._get_times(subtitles)
-        if self.mode == gaupol.modes.FRAME:
+        if self.mode == aeidon.modes.FRAME:
             return self._get_frames(subtitles)
-        raise ValueError("Invalid mode: %s" % repr(mode))
+        raise ValueError("Invalid mode: %s" % repr(self.mode))
 
     def _get_times(self, subtitles):
-        """Return MPsub style start and end times."""
-
+        """Return MPsub-style start and end times."""
         starts = [x.start_seconds for x in subtitles]
         ends = [x.end_seconds for x in subtitles]
         deviation = 0
@@ -83,7 +82,6 @@ class MPsub(gaupol.SubtitleFile):
 
     def _read_header(self, lines):
         """Read header and remove its lines."""
-
         header = ""
         while not self._re_position_line.match(lines[0]):
             header += "\n"
@@ -93,20 +91,19 @@ class MPsub(gaupol.SubtitleFile):
 
     def _read_lines(self):
         """Read file to a unicoded list of lines."""
-
         lines = ["\n"]
-        for line in gaupol.SubtitleFile._read_lines(self):
+        for line in aeidon.SubtitleFile._read_lines(self):
             lines.append(line)
             match = self._re_position_line.match(line)
             if match is None: continue
             # Remove blank lines above position lines.
-            if not lines[-2].strip(): lines.pop(-2)
+            if not lines[-2].strip():
+                lines.pop(-2)
         return lines
 
     def copy_from(self, other):
-        """Copy generic properties from other file."""
-
-        gaupol.SubtitleFile.copy_from(self, other)
+        """Copy generic properties from `other`."""
+        aeidon.SubtitleFile.copy_from(self, other)
         if self.format == other.format:
             self.mode = other.mode
             self.framerate = other.framerate
@@ -114,13 +111,13 @@ class MPsub(gaupol.SubtitleFile):
     def read(self):
         """Read file and return subtitles.
 
-        Raise IOError if reading fails.
-        Raise UnicodeError if decoding fails.
+        Raise :exc:`IOError` if reading fails.
+        Raise :exc:`UnicodeError` if decoding fails.
         """
         subtitles = []
         lines = self._read_lines()
         self._read_header(lines)
-        convert = (float if self.mode == gaupol.modes.TIME else int)
+        convert = (float if self.mode == aeidon.modes.TIME else int)
         end = convert("0")
         for line in lines:
             match = self._re_position_line.match(line)
@@ -140,27 +137,28 @@ class MPsub(gaupol.SubtitleFile):
     def set_header(self, header):
         """Parse and set header, mode and framerate.
 
-        Raise ValueError if FORMAT line is invalid.
+        Raise :exc:`ValueError` if ``FORMAT`` line is invalid.
         """
-        mode = gaupol.modes.NONE
-        framerates = dict((x.mpsub, x) for x in gaupol.framerates)
+        mode = aeidon.modes.NONE
+        framerates = dict((x.mpsub, x) for x in aeidon.framerates)
         for line in header.split("\n"):
             if line.startswith("FORMAT="):
                 mode = line[7:].strip()
         if mode == "TIME":
-            self.mode = gaupol.modes.TIME
-            self.framerate = gaupol.framerates.NONE
-        elif mode in framerates.keys():
-            self.mode = gaupol.modes.FRAME
+            self.mode = aeidon.modes.TIME
+            self.framerate = aeidon.framerates.NONE
+            return setattr(self, "header", header)
+        if mode in framerates.keys():
+            self.mode = aeidon.modes.FRAME
             self.framerate = framerates[mode]
-        else: raise ValueError("Invalid FORMAT line: %s" % repr(header))
-        self.header = header
+            return setattr(self, "header", header)
+        raise ValueError("Invalid FORMAT line: %s" % repr(header))
 
     def write_to_file(self, subtitles, doc, fobj):
-        """Write subtitles from document to given file.
+        """Write `subtitles` from `doc` to `fobj`.
 
-        Raise IOError if writing fails.
-        Raise UnicodeError if encoding fails.
+        Raise :exc:`IOError` if writing fails.
+        Raise :exc:`UnicodeError` if encoding fails.
         """
         n = self.newline.value
         starts, ends = self._get_positions(subtitles)

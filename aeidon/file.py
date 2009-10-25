@@ -114,7 +114,7 @@ class SubtitleFile(object):
         assert isinstance(other, SubtitleFile)
 
     def copy_from(self, other):
-        """Copy generic properties from other file."""
+        """Copy generic properties from `other`."""
         if self.format == other.format:
             self.header = other.header
         self.has_utf_16_bom = other.has_utf_16_bom

@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,27 +14,33 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gaupol
+import aeidon
 
 
-class TestSubStationAlpha(gaupol.TestCase):
+class TestSubStationAlpha(aeidon.TestCase):
+
+    format = aeidon.formats.SSA
 
     def setup_method(self, method):
+        self.file = aeidon.files.new(self.format,
+                                     self.new_temp_file(self.format),
+                                     "ascii")
 
-        format = gaupol.formats.ASS
-        path = self.new_temp_file(format)
-        self.file = gaupol.files.new(format, path, "ascii")
+    def test_copy_from(self):
+        self.file.header = "test"
+        self.file.event_fields = ("Marked",)
+        path = self.new_temp_file(self.format)
+        new_file = aeidon.files.new(self.format, path, "ascii")
+        new_file.copy_from(self.file)
+        assert new_file.header == "test"
+        assert new_file.event_fields == ("Marked",)
 
     def test_read(self):
-
         assert self.file.read()
         assert self.file.header
 
     def test_write(self):
-
-        subtitles = self.file.read()
-        doc = gaupol.documents.MAIN
-        self.file.write(subtitles, doc)
+        self.file.write(self.file.read(), aeidon.documents.MAIN)
         text = open(self.file.path, "r").read().strip()
-        reference = self.get_sample_text(self.file.format)
+        reference = self.get_sample_text(self.format)
         assert text == reference

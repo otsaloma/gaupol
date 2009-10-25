@@ -28,9 +28,9 @@ aeidon.liner
 aeidon.containers
 aeidon.subtitle
 aeidon.file
+aeidon.files
 aeidon.unittest
 
-aeidon.files/
 aeidon.determiner
 aeidon.markup
 aeidon.tags/

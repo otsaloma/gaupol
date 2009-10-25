@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,25 +16,25 @@
 
 """MicroDVD file."""
 
-import gaupol
+import aeidon
 import re
 
 __all__ = ("MicroDVD",)
 
 
-class MicroDVD(gaupol.SubtitleFile):
+class MicroDVD(aeidon.SubtitleFile):
 
     """MicroDVD file."""
 
     _re_line = re.compile(r"^\{(-?\d+)\}\{(-?\d+)\}(.*?)$")
-    format = gaupol.formats.MICRODVD
-    mode = gaupol.modes.FRAME
+    format = aeidon.formats.MICRODVD
+    mode = aeidon.modes.FRAME
 
     def read(self):
         """Read file and return subtitles.
 
-        Raise IOError if reading fails.
-        Raise UnicodeError if decoding fails.
+        Raise :exc:`IOError` if reading fails.
+        Raise :exc:`UnicodeError` if decoding fails.
         """
         subtitles = []
         for line in self._read_lines():
@@ -50,10 +50,10 @@ class MicroDVD(gaupol.SubtitleFile):
         return subtitles
 
     def write_to_file(self, subtitles, doc, fobj):
-        """Write subtitles from document to given file.
+        """Write `subtitles` from `doc` to `fobj`.
 
-        Raise IOError if writing fails.
-        Raise UnicodeError if encoding fails.
+        Raise :exc:`IOError` if writing fails.
+        Raise :exc:`UnicodeError` if encoding fails.
         """
         if self.header.strip():
             fobj.write(self.header)

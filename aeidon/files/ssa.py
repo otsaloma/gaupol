@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,33 +16,42 @@
 
 """Sub Station Alpha file."""
 
-import gaupol
+import aeidon
 import re
 
 __all__ = ("SubStationAlpha",)
 
 
-class SubStationAlpha(gaupol.SubtitleFile):
+class SubStationAlpha(aeidon.SubtitleFile):
 
-    """Sub Station Alpha file."""
+    """Sub Station Alpha file.
+
+    :ivar event_fields: Tuple of field names for the ``[Events]`` section
+    """
 
     _re_file_time = re.compile(r"^(-?)(.+)$")
     _re_separator = re.compile(r",\s*")
     _re_subtitle_time = re.compile(r"(-?)\d(.{10})\d")
 
-    format = gaupol.formats.SSA
-    mode = gaupol.modes.TIME
+    format = aeidon.formats.SSA
+    mode = aeidon.modes.TIME
 
     def __init__(self, path, encoding, newline=None):
-        """Initialize a SubStationAlpha object."""
-
-        gaupol.SubtitleFile.__init__(self, path, encoding, newline)
-        self.event_fields = ("Marked", "Start", "End", "Style", "Name",
-            "MarginL", "MarginR", "MarginV", "Effect", "Text",)
+        """Initialize a :class:`SubStationAlpha` object."""
+        aeidon.SubtitleFile.__init__(self, path, encoding, newline)
+        self.event_fields = ("Marked",
+                             "Start",
+                             "End",
+                             "Style",
+                             "Name",
+                             "MarginL",
+                             "MarginR",
+                             "MarginV",
+                             "Effect",
+                             "Text",)
 
     def _decode_field(self, field_name, value, subtitle):
-        """Save string value from file as a subtitle attribute."""
-
+        """Save string `value` from file as a subtitle attribute."""
         if field_name == "Marked":
             value = value.split("=")[-1]
             return setattr(subtitle.ssa, "marked", int(value))
@@ -57,15 +66,14 @@ class SubStationAlpha(gaupol.SubtitleFile):
             value = value.replace("\\N", "\n")
             return setattr(subtitle, "main_text", value)
         if field_name in ("MarginL", "MarginR", "MarginV"):
-            name = gaupol.util.title_to_lower_case(field_name)
+            name = aeidon.util.title_to_lower_case(field_name)
             return setattr(subtitle.ssa, name, int(value))
         # Set plain string container attribute value.
-        name = gaupol.util.title_to_lower_case(field_name)
+        name = aeidon.util.title_to_lower_case(field_name)
         setattr(subtitle.ssa, name, value)
 
     def _encode_field(self, field_name, subtitle, doc):
         """Return value of field as string to be written to file."""
-
         if field_name == "Marked":
             return "Marked=%d" % subtitle.ssa.marked
         if field_name == "Start":
@@ -78,15 +86,14 @@ class SubStationAlpha(gaupol.SubtitleFile):
             value = subtitle.get_text(doc)
             return value.replace("\n", "\\N")
         if field_name in ("MarginL", "MarginR", "MarginV"):
-            name = gaupol.util.title_to_lower_case(field_name)
+            name = aeidon.util.title_to_lower_case(field_name)
             return "%04d" % getattr(subtitle.ssa, name)
         # Return plain string container attribute value.
-        name = gaupol.util.title_to_lower_case(field_name)
+        name = aeidon.util.title_to_lower_case(field_name)
         return getattr(subtitle.ssa, name)
 
     def _read_header(self, lines):
         """Read header and remove its lines."""
-
         self.header = ""
         while not lines[0].startswith("[Events]"):
             self.header += "\n"
@@ -94,17 +101,16 @@ class SubStationAlpha(gaupol.SubtitleFile):
         self.header = self.header.strip()
 
     def copy_from(self, other):
-        """Copy generic properties from other file."""
-
-        gaupol.SubtitleFile.copy_from(self, other)
+        """Copy generic properties from `other` file."""
+        aeidon.SubtitleFile.copy_from(self, other)
         if self.format == other.format:
             self.event_fields = tuple(other.event_fields)
 
     def read(self):
         """Read file and return subtitles.
 
-        Raise IOError if reading fails.
-        Raise UnicodeError if decoding fails.
+        Raise :exc:`IOError` if reading fails.
+        Raise :exc:`UnicodeError` if decoding fails.
         """
         subtitles = []
         lines = self._read_lines()
@@ -125,20 +131,20 @@ class SubStationAlpha(gaupol.SubtitleFile):
         return subtitles
 
     def write_to_file(self, subtitles, doc, fobj):
-        """Write subtitles from document to given file.
+        """Write `subtitles` from `doc` to `fobj`.
 
-        Raise IOError if writing fails.
-        Raise UnicodeError if encoding fails.
+        Raise :exc:`IOError` if writing fails.
+        Raise :exc:`UnicodeError` if encoding fails.
         """
-        encode = self._encode_field
-        fields = self.event_fields
         fobj.write(self.header)
         fobj.write(self.newline.value * 2)
         fobj.write("[Events]")
         fobj.write(self.newline.value)
-        fobj.write("Format: %s" % ", ".join(fields))
+        fobj.write("Format: %s" % ", ".join(self.event_fields))
         fobj.write(self.newline.value)
         for subtitle in subtitles:
-            values = [encode(x, subtitle, doc) for x in fields]
+            values = [self._encode_field(x, subtitle, doc)
+                      for x in self.event_fields]
+
             fobj.write("Dialogue: %s" % ",".join(values))
             fobj.write(self.newline.value)

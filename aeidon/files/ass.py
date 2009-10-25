@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,36 +16,44 @@
 
 """Advanced Sub Station Alpha file."""
 
-import gaupol
+import aeidon
 
 __all__ = ("AdvSubStationAlpha",)
 
 
-class AdvSubStationAlpha(gaupol.files.SubStationAlpha):
+class AdvSubStationAlpha(aeidon.files.SubStationAlpha):
 
-    """Advanced Sub Station Alpha file."""
+    """Advanced Sub Station Alpha file.
 
-    format = gaupol.formats.ASS
+    :ivar event_fields: Tuple of field names for the ``[Events]`` section
+    """
+
+    format = aeidon.formats.ASS
 
     def __init__(self, path, encoding, newline=None):
-        """Initialize an AdvSubStationAlpha object."""
-
-        gaupol.files.SubStationAlpha.__init__(self, path, encoding, newline)
-        self.event_fields = ("Layer", "Start", "End", "Style", "Name",
-            "MarginL", "MarginR", "MarginV", "Effect", "Text",)
+        """Initialize an :class:`AdvSubStationAlpha` object."""
+        aeidon.files.SubStationAlpha.__init__(self, path, encoding, newline)
+        self.event_fields = ("Layer",
+                             "Start",
+                             "End",
+                             "Style",
+                             "Name",
+                             "MarginL",
+                             "MarginR",
+                             "MarginV",
+                             "Effect",
+                             "Text",)
 
     def _decode_field(self, field_name, value, subtitle):
-        """Save value of field as a subtitle attribute."""
-
+        """Save `value` of field as a subtitle attribute."""
         if field_name == "Layer":
             return setattr(subtitle.ssa, "layer", int(value))
-        decode = gaupol.files.SubStationAlpha._decode_field
+        decode = aeidon.files.SubStationAlpha._decode_field
         return decode(self, field_name, value, subtitle)
 
     def _encode_field(self, field_name, subtitle, doc):
         """Return value of field as string to be written to file."""
-
         if field_name == "Layer":
             return str(subtitle.ssa.layer)
-        encode = gaupol.files.SubStationAlpha._encode_field
+        encode = aeidon.files.SubStationAlpha._encode_field
         return encode(self, field_name, subtitle, doc)
