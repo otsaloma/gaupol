@@ -60,7 +60,6 @@ __version__ = "0.15"
 # from gaupol.subtitle import *
 # from gaupol.file import *
 # from gaupol import files
-# from gaupol.determiner import *
 # from gaupol.markup import *
 # from gaupol import tags
 # from gaupol.converter import *

@@ -125,7 +125,7 @@ class OpenAgent(gaupol.Delegate):
         bom_encoding = gaupol.encodings.detect_bom(path)
         if bom_encoding not in (encoding, None):
             return self.open_main(path, bom_encoding)
-        format = gaupol.FormatDeterminer().determine(path, encoding)
+        format = gaupol.util.detect_format(path, encoding)
         self.main_file = gaupol.files.new(format, path, encoding)
         subtitles = self._read_file(self.main_file)
         self.subtitles, sort_count = self._sort_subtitles(subtitles)
@@ -167,7 +167,7 @@ class OpenAgent(gaupol.Delegate):
         bom_encoding = gaupol.encodings.detect_bom(path)
         if bom_encoding not in (encoding, None):
             return self.open_main(path, bom_encoding)
-        format = gaupol.FormatDeterminer().determine(path, encoding)
+        format = gaupol.util.detect_format(path, encoding)
         self.tran_file = gaupol.files.new(format, path, encoding)
         subtitles = self._read_file(self.tran_file)
         subtitles, sort_count = self._sort_subtitles(subtitles)

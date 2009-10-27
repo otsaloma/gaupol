@@ -135,6 +135,28 @@ def copy_list(src):
             dst[i] = set(value)
     return dst
 
+def detect_format(path, encoding):
+    assert aeidon.encodings.is_valid_code(encoding)
+
+@aeidon.deco.contractual
+def detect_format(path, encoding):
+    """Detect and return format of file at `path`.
+
+    Raise :exc:`IOError` if reading fails.
+    Raise :exc:`UnicodeError` if decoding fails.
+    Raise :exc:`aeidon.FormatError` if unable to detect format.
+    Return an :attr:`aeidon.formats` enumeration item.
+    """
+    re_ids = [(x, re.compile(x.identifier)) for x in aeidon.formats]
+    args = (path, "r", encoding)
+    with contextlib.closing(codecs.open(*args)) as fobj:
+        for line in fobj:
+            for format, re_id in re_ids:
+                if re_id.search(line) is not None:
+                    return format
+    raise aeidon.FormatError("Failed to detect format of file %s"
+                             % repr(path))
+
 @aeidon.deco.once
 def enchant_available():
     """Return ``True`` if :mod:`enchant` module is available."""

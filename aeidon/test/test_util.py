@@ -136,6 +136,17 @@ class TestModule(aeidon.TestCase):
         aeidon.util.copy_list([1, 2, [1, 2]])
         aeidon.util.copy_list([1, 2, set((1, 2))])
 
+    def test_detect_format(self):
+        for format in aeidon.formats:
+            path = self.new_temp_file(format)
+            assert aeidon.util.detect_format(path, "ascii") == format
+
+    def test_detect_format__format_error(self):
+        path = self.new_subrip_file()
+        aeidon.util.write(path, "xxx\n", "ascii")
+        self.raises(aeidon.FormatError,
+                    aeidon.util.detect_format, path, "ascii")
+
     @aeidon.deco.monkey_patch(__builtins__, "__import__")
     def test_enchant_available__false(self):
         def raise_exception(*args):
