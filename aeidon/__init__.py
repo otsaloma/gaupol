@@ -74,4 +74,5 @@ from aeidon import containers
 from aeidon.subtitle import *
 from aeidon.file import *
 from aeidon import files
+from aeidon.markup import *
 from aeidon.unittest import *
