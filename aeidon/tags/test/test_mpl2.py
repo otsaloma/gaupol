@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gaupol
+import aeidon
 
 from .test_microdvd import TestMicroDVD
 
@@ -26,16 +26,14 @@ class TestMPL2(TestMicroDVD):
 
     def setup_method(self, method):
 
-        self.markup = gaupol.tags.new(gaupol.formats.MPL2)
+        self.markup = aeidon.tags.new(aeidon.formats.MPL2)
 
     def test_bolden(self):
-
         assert self.markup.bolden(self.text, (0, 27)) == (
             "\\All things weird are normal\n"
             "in this whore of cities.")
 
     def test_decode__bold(self):
-
         text = ("\\All things weird are normal\n"
                 "\\in this whore of cities.")
         assert self.markup.decode(text) == (
@@ -43,15 +41,13 @@ class TestMPL2(TestMicroDVD):
             "<b>in this whore of cities.</b>")
 
     def test_decode__italic(self):
-
         text = ("/All things weird are normal\n"
                 "in this whore of cities.")
         assert self.markup.decode(text) == (
             "<i>All things weird are normal</i>\n"
             "in this whore of cities.")
 
-    def test_decode_multiple(self):
-
+    def test_decode__multiple(self):
         text = ("/_All things weird are normal\n"
                 "\\/_in this whore of cities.")
         assert self.markup.decode(text) == (
@@ -59,7 +55,6 @@ class TestMPL2(TestMicroDVD):
             "<b><i><u>in this whore of cities.</u></i></b>")
 
     def test_decode__underline(self):
-
         text = ("All things weird are normal\n"
                 "_in this whore of cities.")
         assert self.markup.decode(text) == (
@@ -67,7 +62,6 @@ class TestMPL2(TestMicroDVD):
             "<u>in this whore of cities.</u>")
 
     def test_encode__bold(self):
-
         text = ("<b>All things weird are normal\n"
                 "in this whore of cities.</b>")
         assert self.markup.encode(text) == (
@@ -75,7 +69,6 @@ class TestMPL2(TestMicroDVD):
             "\\in this whore of cities.")
 
     def test_encode__italic(self):
-
         text = ("All <i>things</i> weird are normal\n"
                 "in <i>this</i> whore of cities.")
         assert self.markup.encode(text) == (
@@ -83,7 +76,6 @@ class TestMPL2(TestMicroDVD):
             "in this whore of cities.")
 
     def test_encode__underline(self):
-
         text = ("All things weird are normal\n"
                 "<u>in this whore of cities</u>.")
         assert self.markup.encode(text) == (
@@ -91,19 +83,16 @@ class TestMPL2(TestMicroDVD):
             "_in this whore of cities.")
 
     def test_italic_tag(self):
-
         assert self.markup.italic_tag.match("/")
         assert self.markup.italic_tag.match("{Y:i}")
         assert self.markup.italic_tag.match("{y:i}")
 
     def test_italicize(self):
-
         assert self.markup.italicize(self.text) == (
             "/All things weird are normal\n"
             "/in this whore of cities.")
 
     def test_tag(self):
-
         assert self.markup.tag.match("\\")
         assert self.markup.tag.match("/")
         assert self.markup.tag.match("_")
@@ -111,7 +100,6 @@ class TestMPL2(TestMicroDVD):
         assert self.markup.tag.match("{c:$000000}")
 
     def test_underline(self):
-
         assert self.markup.underline(self.text, (0, 3)) == (
             "All things weird are normal\n"
             "in this whore of cities.")

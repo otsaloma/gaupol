@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,20 +14,10 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gaupol
+import aeidon
 
 
-class TestModule(gaupol.TestCase):
+class TestMPsub(aeidon.TestCase):
 
-    def test_add_class(self):
-
-        gaupol.tags.add_class(gaupol.tags.SubRip)
-
-    def test_new(self):
-
-        file = gaupol.tags.new(gaupol.formats.SUBRIP)
-        assert isinstance(file, gaupol.tags.SubRip)
-
-    def test_new__value_error(self):
-
-        self.raises(ValueError, gaupol.tags.new, None)
+    def setup_method(self, method):
+        self.markup = aeidon.tags.new(aeidon.formats.MPSUB)

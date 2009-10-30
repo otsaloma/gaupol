@@ -30,9 +30,9 @@ aeidon.subtitle
 aeidon.file
 aeidon.files
 aeidon.markup
+aeidon.tags
 aeidon.unittest
 
-aeidon.tags
 aeidon.converter
 aeidon.pattern
 aeidon.patternman

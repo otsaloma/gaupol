@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,32 +16,29 @@
 
 """Text markup of all formats."""
 
-import gaupol
+import aeidon
 
-gaupol.util.install_module("tags", lambda: None)
+aeidon.util.install_module("tags", lambda: None)
 
+from .ssa        import SubStationAlpha
+from .ass        import AdvSubStationAlpha
 from .microdvd   import MicroDVD
 from .mpl2       import MPL2
 from .mpsub      import MPsub
-from .ssa        import SubStationAlpha
-from .ass        import AdvSubStationAlpha
 from .subrip     import SubRip
 from .subviewer2 import SubViewer2
 from .tmplayer   import TMPlayer
 
-__all__ = gaupol.util.get_all(dir(), r"^[A-Z]")
+__all__ = aeidon.util.get_all(dir(), r"^[A-Z]")
 
 
-def add_class(cls):
-    """Add a new Markup class to ones returned by new."""
-
+def add(cls):
+    """Add a new :class:`aeidon.Markup` class."""
     globals()[cls.__name__] = cls
-    names = set(__all__ + (cls.__name__,))
-    globals()["__all__"] = tuple(names)
+    globals()["__all__"] = tuple(set(__all__ + (cls.__name__,)))
 
 def new(format):
-    """Return a new Markup instance given its format."""
-
+    """Return a new :class:`aeidon.Markup` instance given `format`."""
     for cls in map(eval, __all__):
         if cls.format == format:
             return cls()

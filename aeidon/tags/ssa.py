@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,44 +16,43 @@
 
 """Text markup for the Sub Station Alpha format."""
 
-import gaupol
+import aeidon
 import re
 
 __all__ = ("SubStationAlpha",)
 
 
-class SubStationAlpha(gaupol.Markup):
+class SubStationAlpha(aeidon.Markup):
 
     """Text markup for the Sub Station Alpha format.
 
     Sub Station Alpha format contains a lot of markup tags of which the
-    following are of interest to us. The generic reset '{\\r}' is used to
+    following are of interest to us. The generic reset ``{\\r}`` is used to
     revert to regular text, i.e. to close all open tags. Most of the tagging
-    methods, e.g. 'colorize', leave tags unclosed, instead of explicitly
-    closing them and possibly other tags with '{\\r}'. Usually this is not a
+    methods, e.g. :meth:`colorize`, leave tags unclosed, instead of explicitly
+    closing them and possibly other tags with ``{\\r}``. Usually this is not a
     problem as such tags tend to be applied to the whole subtitle.
 
-     * {\\b1}...........{\\b0}
-     * {\\i1}...........{\\i0}
-     * {\\fnNAME}.............
-     * {\\fsPOINTS}...........
-     * {\\c&HBBGGRR&}......... [1]
-     * ..................{\\r}
+     * ``{\\b1}...........{\\b0}``
+     * ``{\\i1}...........{\\i0}``
+     * ``{\\fnNAME}.............``
+     * ``{\\fsPOINTS}...........``
+     * ``{\\c&HBBGGRR&}.........``
+     * ``..................{\\r}``
 
-     [1] The hexadecimal color value is in reverse order, BBGGRR instead of the
-         normal RRGGBB. Furthermore, leading zeros can be omitted, e.g. 'ff00'
-         can be used instead of '00ff00'.
+     The hexadecimal color value is in reverse order, ``BBGGRR`` instead of the
+     normal ``RRGGBB``. Furthermore, leading zeros can be omitted,
+     e.g. ``ff00`` can be used instead of ``00ff00``.
     """
 
     _closing_pattern = r"\{\\([bi])0\}"
     _flags = re.DOTALL | re.MULTILINE | re.UNICODE | re.IGNORECASE
     _opening_pattern = r"\{\\(?![bi]0)(b|i|c|fn|fs).*?\}"
     _reset_pattern = r"\{\\r\}"
-    format = gaupol.formats.SSA
+    format = aeidon.formats.SSA
 
     def _main_decode(self, text):
-        """Return text with decodable markup decoded."""
-
+        """Return `text` with decodable markup decoded."""
         text = self._decode_b(text, r"\{\\b1\}(.*?)\{\\b[0\\]\}", 1)
         text = self._decode_c(text, r"\{\\c#(.+?)\}(.*?)\{\\c\\\}", 1, 2)
         text = self._decode_f(text, r"\{\\fn(.+?)\}(.*?)\{\\fn\\\}", 1, 2)
@@ -65,22 +64,20 @@ class SubStationAlpha(gaupol.Markup):
         assert regex.search(value) is None
 
     def _post_decode(self, text):
-        """Return text with markup finalized after decoding."""
-
+        """Return `text` with markup finalized after decoding."""
         # Remove all unsupported markup tags.
         return self._substitute(text, r"\{\\.*?\}", "")
 
     def _pre_decode(self, text):
-        """Return text with markup prepared for decoding."""
-
+        """Return `text` with markup prepared for decoding."""
         text = self._pre_decode_break(text)
         text = self._pre_decode_reset(text)
         return self._pre_decode_color(text)
 
     def _pre_decode_break(self, text):
-        """Return text with combined markup tags separated.
+        """Return `text` with combined markup tags separated.
 
-        For example, '{\\b1\\i1}' is replaced with '{\\b1}{\\i1}'.
+        For example, ``{\\b1\\i1}`` is replaced with ``{\\b1}{\\i1}``.
         """
         parts = text.split("\\")
         for i in range(1, len(parts)):
@@ -97,9 +94,9 @@ class SubStationAlpha(gaupol.Markup):
         assert regex.search(value) is None
 
     def _pre_decode_color(self, text):
-        """Return text with colors converted to standard hexadecimal form.
+        """Return `text` with colors converted to standard hexadecimal form.
 
-        Color tags are converted from '{\\c&HBBGGRR&}' to '{\\c#RRGGBB}'.
+        Color tags are converted from ``{\\c&HBBGGRR&}`` to ``{\\c#RRGGBB}``.
         """
         pattern = r"\{\\c&H([0-9a-fA-F]*)&\}"
         regex = self._get_regex(pattern)
@@ -115,10 +112,10 @@ class SubStationAlpha(gaupol.Markup):
         assert regex.search(value) is None
 
     def _pre_decode_reset(self, text):
-        """Return text with all markup tags closed explicitly.
+        """Return `text` with all markup tags closed explicitly.
 
-        Tags of form '{\\nameVALUE}' are closed with '{\\name\\}'.
-        The returned text will not contain reset '{\\r}' tags.
+        Tags of form ``{\\nameVALUE}`` are closed with ``{\\name\\}``.
+        The returned text will not contain reset ``{\\r}`` tags.
         """
         re_opening = self._get_regex(self._opening_pattern)
         re_closing = self._get_regex(self._closing_pattern)
@@ -141,14 +138,12 @@ class SubStationAlpha(gaupol.Markup):
         return "".join(parts)
 
     def bolden(self, text, bounds=None):
-        """Return bolded text."""
-
+        """Return bolded `text`."""
         a, z = bounds or (0, len(text))
         return "".join((text[:a], "{\\b1}%s{\\b0}" % text[a:z], text[z:]))
 
     def colorize(self, text, color, bounds=None):
-        """Return text colorized to hexadecimal value."""
-
+        """Return `text` colorized to hexadecimal value."""
         a, z = bounds or (0, len(text))
         # Reverse the color value from RRGGBB to BBGGRR.
         color = "%s%s%s" % (color[4:], color[2:4], color[:2])
@@ -156,8 +151,7 @@ class SubStationAlpha(gaupol.Markup):
         return "".join((text[:a], target, text[z:]))
 
     def fontify(self, text, font, bounds=None):
-        """Return text changed to font."""
-
+        """Return `text` changed to `font`."""
         a, z = bounds or (0, len(text))
         target = "{\\fn%s}%s" % (font, text[a:z])
         return "".join((text[:a], target, text[z:]))
@@ -165,18 +159,15 @@ class SubStationAlpha(gaupol.Markup):
     @property
     def italic_tag(self):
         """Regular expression for an italic markup tag."""
-
         return self._get_regex(r"\{\\i[01]\}")
 
     def italicize(self, text, bounds=None):
-        """Return italicized text."""
-
+        """Return italicized `text`."""
         a, z = bounds or (0, len(text))
         return "".join((text[:a], "{\\i1}%s{\\i0}" % text[a:z], text[z:]))
 
     def sizen(self, text, size, bounds=None):
-        """Return text scaled to size."""
-
+        """Return `text` scaled to `size`."""
         a, z = bounds or (0, len(text))
         target = "{\\fs%s}%s" % (str(size), text[a:z])
         return "".join((text[:a], target, text[z:]))
@@ -184,5 +175,4 @@ class SubStationAlpha(gaupol.Markup):
     @property
     def tag(self):
         """Regular expression for any markup tag."""
-
         return self._get_regex(r"\{\\.*?\}")

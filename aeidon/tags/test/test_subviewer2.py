@@ -1,4 +1,4 @@
-# Copyright (C) 2006 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,18 +14,10 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Text markup for the MPsub format."""
-
-import gaupol
-
-__all__ = ("MPsub",)
+import aeidon
 
 
-class MPsub(gaupol.Markup):
+class TestSubViewer2(aeidon.TestCase):
 
-    """Text markup for the MPsub format.
-
-    MPsub format is assumed to contain no markup.
-    """
-
-    format = gaupol.formats.MPSUB
+    def setup_method(self, method):
+        self.markup = aeidon.tags.new(aeidon.formats.SUBVIEWER2)

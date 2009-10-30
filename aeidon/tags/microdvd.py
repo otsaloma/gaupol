@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,12 +16,12 @@
 
 """Text markup for the MicroDVD format."""
 
-import gaupol
+import aeidon
 
 __all__ = ("MicroDVD",)
 
 
-class MicroDVD(gaupol.Markup):
+class MicroDVD(aeidon.Markup):
 
     """Text markup for the MicroDVD format.
 
@@ -29,24 +29,24 @@ class MicroDVD(gaupol.Markup):
     are of interest to us. Tags that start with a lower case letter end at the
     end of the line, upper case ones at the end of the subtitle.
 
-     * {c:$BBGGRR}..., {C:$BBGGRR}... [1]
-     * {f:NAME}......, {F:NAME}......
-     * {s:SIZE}......, {S:SIZE}......
-     * {y:STYLE}....., {Y:STYLE}..... [2]
+     * ``{c:$BBGGRR}..., {C:$BBGGRR}...``
+     * ``{f:NAME}......, {F:NAME}......``
+     * ``{s:SIZE}......, {S:SIZE}......``
+     * ``{y:STYLE}....., {Y:STYLE}.....``
 
-     [1] Note the reverse order, BBGGRR instead of the normal RRGGBB.
-     [2] STYLE is a string containing one or more of the letters 'b', 'i' and
-         'u' and any amount of any possible separators or other characters.
+    Note the reverse order of the color tag, ``BBGGRR`` instead of the normal
+    ``RRGGBB``. ``STYLE`` in the ``y`` is a string containing one or more of
+    the letters "b", "i" and "u" and any amount of any possible separators or
+    other characters.
     """
 
-    format = gaupol.formats.MICRODVD
+    format = aeidon.formats.MICRODVD
 
     def _main_decode_ensure(self, value, text):
         assert self.tag.search(value) is None
 
     def _main_decode(self, text):
-        """Return text with decodable markup decoded."""
-
+        """Return `text` with decodable markup decoded."""
         text = self._decode_b(text, r"\{([Yy]:b)\}(.*?)\{/\1\}", 2)
         text = self._decode_c(text, r"\{([Cc]:#(.*?))\}(.*?)\{/\1\}", 2, 3)
         text = self._decode_f(text, r"\{([Ff]:(.*?))\}(.*?)\{/\1\}", 2, 3)
@@ -55,16 +55,15 @@ class MicroDVD(gaupol.Markup):
         return self._decode_u(text, r"\{([Yy]:u)\}(.*?)\{/\1\}", 2)
 
     def _pre_decode(self, text):
-        """Return text with markup prepared for decoding."""
-
+        """Return `text` with markup prepared for decoding."""
         text = self._pre_decode_break(text)
         text = self._pre_decode_color(text)
         return self._pre_decode_close(text)
 
     def _pre_decode_break(self, text):
-        """Return text with combined markup tags separated.
+        """Return `text` with combined markup tags separated.
 
-        For example, '{y:biu}' is replaced with '{y:b}{y:i}{y:u}'.
+        For example, ``{y:biu}`` is replaced with ``{y:b}{y:i}{y:u}``.
         """
         pattern = r"\{([Yy]):([^}]{2,})\}"
         regex = self._get_regex(pattern)
@@ -79,9 +78,9 @@ class MicroDVD(gaupol.Markup):
         return self._pre_decode_break(text)
 
     def _pre_decode_close(self, text):
-        """Return text with all markup tags closed.
+        """Return `text` with all markup tags closed.
 
-        The artificial closing tags are of form '{/x:VALUE}'.
+        The artificial closing tags are of form ``{/X:VALUE}``.
         """
         # Add lower case closing tags to the end of each line.
         lines = text.split("\n")
@@ -103,9 +102,9 @@ class MicroDVD(gaupol.Markup):
         assert regex.search(value) is None
 
     def _pre_decode_color(self, text):
-        """Return text with colors converted to standard hexadecimal form.
+        """Return `text` with colors converted to standard hexadecimal form.
 
-        Color tags are converted from '{c:$BBGGRR}' to '{c:#RRGGBB}'.
+        Color tags are converted from ``{c:$BBGGRR}`` to ``{c:#RRGGBB}``.
         """
         regex = self._get_regex(r"\{([Cc]:)\$([0-9A-Fa-f]{6})\}")
         match = regex.search(text)
@@ -116,8 +115,7 @@ class MicroDVD(gaupol.Markup):
         return self._pre_decode_color(text)
 
     def _style(self, text, upper, lower, value, bounds=None):
-        """Return text wrapped in upper or lower markup tag."""
-
+        """Return `text` wrapped in ``upper`` or ``lower`` markup tag."""
         a, z = bounds or (0, len(text))
         prefix = text[:a].split("\n")[-1]
         suffix = text[z:].split("\n")[0]
@@ -133,45 +131,37 @@ class MicroDVD(gaupol.Markup):
         return "".join((text[:a], "%s%s" % (tag, text[a:])))
 
     def bolden(self, text, bounds=None):
-        """Return bolded text."""
-
+        """Return bolded `text`."""
         return self._style(text, "Y", "y", "b", bounds)
 
     def colorize(self, text, color, bounds=None):
-        """Return text colorized to hexadecimal value."""
-
+        """Return `text` colorized to hexadecimal value."""
         # Reverse the color value from RRGGBB to BBGGRR.
         color = "$%s%s%s" % (color[4:], color[2:4], color[:2])
         return self._style(text, "C", "c", color, bounds)
 
     def fontify(self, text, font, bounds=None):
-        """Return text changed to font."""
-
+        """Return `text` changed to `font`."""
         return self._style(text, "F", "f", font, bounds)
 
     @property
     def italic_tag(self):
-        """Regular expression for an italic markup tag or None."""
-
+        """Regular expression for an italic markup tag."""
         return self._get_regex(r"\{[Yy]:i\}")
 
     def italicize(self, text, bounds=None):
-        """Return italicized text."""
-
+        """Return italicized `text`."""
         return self._style(text, "Y", "y", "i", bounds)
 
     def sizen(self, text, size, bounds=None):
-        """Return text scaled to size."""
-
+        """Return `text` scaled to `size`."""
         return self._style(text, "S", "s", str(size), bounds)
 
     @property
     def tag(self):
-        """Regular expression for any markup tag or None."""
-
+        """Regular expression for any markup tag."""
         return self._get_regex(r"\{[CFSYcfsy]:.*?\}")
 
     def underline(self, text, bounds=None):
-        """Return underlined text."""
-
+        """Return underlined `text`."""
         return self._style(text, "Y", "y", "u", bounds)

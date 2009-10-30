@@ -1,4 +1,4 @@
-# Copyright (C) 2006 Osmo Salomaa
+# Copyright (C) 2005-2006 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,18 +14,18 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Text markup for the TMPlayer format."""
+"""Text markup for the SubViewer 2.0 format."""
 
-import gaupol
+import aeidon
 
-__all__ = ("TMPlayer",)
+__all__ = ("SubViewer2",)
 
 
-class TMPlayer(gaupol.Markup):
+class SubViewer2(aeidon.tags.SubRip):
 
-    """Text markup for the TMPlayer format.
+    """Text markup for the SubViewer 2.0 format.
 
-    TMPlayer format is assumed to contain no markup.
+    SubViewer 2.0 format is assumed to contain the same markup as SubRip.
     """
 
-    format = gaupol.formats.TMPLAYER
+    format = aeidon.formats.SUBVIEWER2

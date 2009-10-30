@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,12 +16,14 @@
 
 """Text markup for the Advanced Sub Station Alpha format."""
 
-import gaupol
+import aeidon
 
 __all__ = ("AdvSubStationAlpha",)
 
 
-class AdvSubStationAlpha(gaupol.tags.SubStationAlpha):
+# pylint: disable-msg=E1101,W0232
+
+class AdvSubStationAlpha(aeidon.tags.SubStationAlpha):
 
     """Text markup for the Advanced Sub Station Alpha format.
 
@@ -29,27 +31,25 @@ class AdvSubStationAlpha(gaupol.tags.SubStationAlpha):
     contains a whole lof of markup tags of which the following are of interest
     to us. The further complicated color tags that define numbered (?) colors
     and alpha channels are ignored. The reset tag is allowed a style definiton,
-    e.g. '{\\rDefault}' to revert to style 'Default'.
+    e.g. ``{\\rDefault}`` to revert to style "Default".
 
-     * {\\bWEIGHT}...{\\b0}
-     * {\\u1}........{\\u0}
-     * ........{\\r[STYLE]}
+     * ``{\\bWEIGHT}...{\\b0}``
+     * ``{\\u1}........{\\u0}``
+     * ``........{\\r[STYLE]}``
     """
 
     _closing_pattern = r"\{\\([biu])0\}"
     _opening_pattern = r"\{\\(?![biu]0)(b|i|u|c|fn|fs).*?\}"
     _reset_pattern = r"\{\\r.*?\}"
-    format = gaupol.formats.ASS
+    format = aeidon.formats.ASS
 
     def _main_decode(self, text):
-        """Return text with decodable markup decoded."""
-
+        """Return `text` with decodable markup decoded."""
         text = self._decode_b(text, r"\{\\b[1-9]\d*\}(.*?)\{\\b[0\\]\}", 1)
         text = self._decode_u(text, r"\{\\u1\}(.*?)\{\\u[0\\]\}", 1)
-        return gaupol.tags.SubStationAlpha._main_decode(self, text)
+        return aeidon.tags.SubStationAlpha._main_decode(self, text)
 
     def underline(self, text, bounds=None):
-        """Return underlined text."""
-
+        """Return underlined `text`."""
         a, z = bounds or (0, len(text))
         return "".join((text[:a], "{\\u1}%s{\\u0}" % text[a:z], text[z:]))

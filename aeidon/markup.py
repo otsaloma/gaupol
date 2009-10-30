@@ -14,20 +14,7 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Base class for text markup.
-
-Markup conversions between different formats are done via an internal format,
-which has the following BBcode-style tags with angle brackets. Conversions are
-best done via the ``decode_*`` and ``encode_*`` methods rather than hard-coding
-the internal tags in regular expression substitutions.
-
- * ``<b>...................</b>``
- * ``<i>...................</i>``
- * ``<u>...................</u>``
- * ``<color=#RRGGBB>...</color>``
- * ``<font=NAME>........</font>``
- * ``<size=POINTS>......</size>``
-"""
+"""Base class for text markup."""
 
 import aeidon
 import re
@@ -38,6 +25,19 @@ __all__ = ("Markup",)
 class Markup(aeidon.Singleton):
 
     """Base class for text markup.
+
+    Markup conversions between different formats are done via an internal
+    format, which has the following BBcode-style tags with angle brackets.
+    Conversions are best done via the ``decode_*`` and ``encode_*`` methods
+    rather than hard-coding the internal tags in regular expression
+    substitutions.
+
+     * ``<b>...................</b>``
+     * ``<i>...................</i>``
+     * ``<u>...................</u>``
+     * ``<color=#RRGGBB>...</color>``
+     * ``<font=NAME>........</font>``
+     * ``<size=POINTS>......</size>``
 
     This class is effectively equivalent to a format with no markup and can
     therefore be merely subclassed with a ``pass``-statement by formats that do

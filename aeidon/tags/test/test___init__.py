@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,11 +14,17 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gaupol
+import aeidon
 
 
-class TestTMPlayer(gaupol.TestCase):
+class TestModule(aeidon.TestCase):
 
-    def setup_method(self, method):
+    def test_add(self):
+        aeidon.tags.add(aeidon.tags.SubRip)
 
-        self.markup = gaupol.tags.new(gaupol.formats.TMPLAYER)
+    def test_new(self):
+        markup = aeidon.tags.new(aeidon.formats.SUBRIP)
+        assert isinstance(markup, aeidon.tags.SubRip)
+
+    def test_new__value_error(self):
+        self.raises(ValueError, aeidon.tags.new, None)

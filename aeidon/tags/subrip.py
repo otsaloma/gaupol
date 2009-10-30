@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,31 +16,30 @@
 
 """Text markup for the SubRip format."""
 
-import gaupol
+import aeidon
 import re
 
 __all__ = ("SubRip",)
 
 
-class SubRip(gaupol.Markup):
+class SubRip(aeidon.Markup):
 
     """Text markup for the SubRip format.
 
     SubRip format is assumed (based on the SubRip application GUI) to contain
     the following HTML-style tags, in either lower- or upper case.
 
-     * <b>.........................</b>
-     * <i>.........................</i>
-     * <u>.........................</u>
-     * <font color="#RRGGBB">...</font>
+     * ``<b>.........................</b>``
+     * ``<i>.........................</i>``
+     * ``<u>.........................</u>``
+     * ``<font color="#RRGGBB">...</font>``
     """
 
     _flags = re.DOTALL | re.MULTILINE | re.UNICODE | re.IGNORECASE
-    format = gaupol.formats.SUBRIP
+    format = aeidon.formats.SUBRIP
 
     def _main_decode(self, text):
-        """Return text with decodable markup decoded."""
-
+        """Return `text` with decodable markup decoded."""
         text = self._decode_b(text, r"<b>(.*?)</b>", 1)
         text = self._decode_i(text, r"<i>(.*?)</i>", 1)
         text = self._decode_u(text, r"<u>(.*?)</u>", 1)
@@ -48,14 +47,12 @@ class SubRip(gaupol.Markup):
         return self._decode_c(text, pattern, 1, 2)
 
     def bolden(self, text, bounds=None):
-        """Return bolded text."""
-
+        """Return bolded `text`."""
         a, z = bounds or (0, len(text))
         return "".join((text[:a], "<b>%s</b>" % text[a:z], text[z:]))
 
     def clean(self, text):
-        """Return text with less ugly markup."""
-
+        """Return `text` with less ugly markup."""
         # Remove tags that are immeadiately closed after opening.
         text = self._substitute(text, r"<([a-z]+)[^<]*?>( *)</\1>", r"\2")
         # Remove tags that are immeadiately opened after closing.
@@ -66,8 +63,7 @@ class SubRip(gaupol.Markup):
         return self._substitute(text, r" (</[^>]+?>) ?", r"\1 ")
 
     def colorize(self, text, color, bounds=None):
-        """Return text colorized to hexadecimal value."""
-
+        """Return `text` colorized to hexadecimal value."""
         a, z = bounds or (0, len(text))
         target = '<font color="#%s">%s</font>' % (color, text[a:z])
         return "".join((text[:a], target, text[z:]))
@@ -75,23 +71,19 @@ class SubRip(gaupol.Markup):
     @property
     def italic_tag(self):
         """Regular expression for an italic markup tag."""
-
         return self._get_regex(r"</?i>")
 
     def italicize(self, text, bounds=None):
-        """Return italicized text."""
-
+        """Return italicized `text`."""
         a, z = bounds or (0, len(text))
         return "".join((text[:a], "<i>%s</i>" % text[a:z], text[z:]))
 
     @property
     def tag(self):
         """Regular expression for any markup tag."""
-
         return self._get_regex(r"<.*?>")
 
     def underline(self, text, bounds=None):
-        """Return underlined text."""
-
+        """Return underlined `text`."""
         a, z = bounds or (0, len(text))
         return "".join((text[:a], "<u>%s</u>" % text[a:z], text[z:]))

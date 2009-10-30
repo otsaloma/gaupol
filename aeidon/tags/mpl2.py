@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,12 +16,14 @@
 
 """Text markup for the MPL2 format."""
 
-import gaupol
+import aeidon
 
 __all__ = ("MPL2",)
 
 
-class MPL2(gaupol.tags.MicroDVD):
+# pylint: disable-msg=E1101,W0232
+
+class MPL2(aeidon.tags.MicroDVD):
 
     """Text markup for the MPL2 format.
 
@@ -29,36 +31,35 @@ class MPL2(gaupol.tags.MicroDVD):
     beginning of the line and affect up to the end of the line. In addition,
     any MicroDVD markup can be used.
 
-     * \\... (bold)
-     * /.... (italic)
-     * _.... (underline)
+     * ``\\...`` (bold)
+     * ``/....`` (italic)
+     * ``_....`` (underline)
     """
 
-    format = gaupol.formats.MPL2
+    format = aeidon.formats.MPL2
 
     def _main_decode_ensure(self, value, text):
         assert self.tag.search(value) is None
 
     def _main_decode(self, text):
-        """Return text with decodable markup decoded."""
-
+        """Return `text` with decodable markup decoded."""
         text = self._decode_b(text, r"<\\>(.*?)</\\>", 1)
         text = self._decode_i(text, r"</>(.*?)<//>", 1)
         text = self._decode_u(text, r"<_>(.*?)</_>", 1)
-        return gaupol.tags.MicroDVD._main_decode(self, text)
+        return aeidon.tags.MicroDVD._main_decode(self, text)
 
     def _pre_decode(self, text):
-        """Return text with markup prepared for decoding."""
-
+        """Return `text` with markup prepared for decoding."""
         text = self._pre_decode_identify(text)
-        return gaupol.tags.MicroDVD._pre_decode(self, text)
+        return aeidon.tags.MicroDVD._pre_decode(self, text)
 
     def _pre_decode_identify(self, text):
-        """Return text with all tags identified and closed.
+        """Return `text` with all tags identified and closed.
 
-        '\\', '/' and '_' characters at the beginnings of lines are indentified
-        as tags and replaced with '<\\>', '</>' and '<_>'. Closing tags are
-        added to the ends of lines as '</\\>', '<//>' and '</_>'.
+        ``\\``, ``/`` and ``_`` characters at the beginnings of lines are
+        identified as tags and replaced with artificial tags ``<\\>``, ``</>``
+        and ``<_>``. Closing tags are added to the ends of lines as artificial
+        tags ``</\\>``, ``<//>`` and ``</_>``.
         """
         lines = text.split("\n")
         re_tag = self._get_regex(r"^([\\/_]+)(.*)$")
@@ -71,8 +72,7 @@ class MPL2(gaupol.tags.MicroDVD):
         return "\n".join(lines)
 
     def _style_mpl2(self, text, tag, bounds=None):
-        """Return text wrapped in given markup tag."""
-
+        """Return `text` wrapped in markup `tag`."""
         a, z = bounds or (0, len(text))
         prefix = text[:a].split("\n")[-1]
         suffix = text[z:].split("\n")[0]
@@ -85,28 +85,23 @@ class MPL2(gaupol.tags.MicroDVD):
         return "".join((text[:a], tag, styled_text, text[z:]))
 
     def bolden(self, text, bounds=None):
-        """Return bolded text."""
-
+        """Return bolded `text`."""
         return self._style_mpl2(text, "\\", bounds)
 
     @property
     def italic_tag(self):
-        """Regular expression for an italic markup tag or None."""
-
+        """Regular expression for an italic markup tag."""
         return self._get_regex(r"(^/)|(\{[Yy]:i\})")
 
     def italicize(self, text, bounds=None):
-        """Return italicized text."""
-
+        """Return italicized `text`."""
         return self._style_mpl2(text, "/", bounds)
 
     @property
     def tag(self):
-        """Regular expression for any markup tag or None."""
-
+        """Regular expression for any markup tag."""
         return self._get_regex(r"(^[\\/_]+)|(\{[CFSYcfsy]:.*?\})")
 
     def underline(self, text, bounds=None):
-        """Return underlined text."""
-
+        """Return underlined `text`."""
         return self._style_mpl2(text, "_", bounds)
