@@ -1,4 +1,4 @@
-# Copyright (C) 2007-2008 Osmo Salomaa
+# Copyright (C) 2007-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,18 +14,16 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gaupol
+import aeidon
 import re
 
 
-class TestPattern(gaupol.TestCase):
+class TestPattern(aeidon.TestCase):
 
     def setup_method(self, method):
-
-        self.pattern = gaupol.Pattern()
+        self.pattern = aeidon.Pattern()
 
     def test_get_flags(self):
-
         self.pattern.set_field("Flags", "DOTALL;UNICODE")
         flags = self.pattern.get_flags()
         assert flags == re.DOTALL | re.UNICODE
