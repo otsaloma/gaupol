@@ -1,4 +1,4 @@
-# Copyright (C) 2007-2008 Osmo Salomaa
+# Copyright (C) 2007-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,44 +14,37 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gaupol
-import tempfile
+import aeidon
 
 
-class TestPatternManager(gaupol.TestCase):
+class TestPatternManager(aeidon.TestCase):
 
     def setup_method(self, method):
-
-        self.manager = gaupol.PatternManager("hearing-impaired")
+        self.manager = aeidon.PatternManager("common-error")
 
     def test_get_countries(self):
-
-        self.manager.get_countries("Latn", "en")
+        countries = self.manager.get_countries("Latn", "en")
+        assert "US" in countries
 
     def test_get_languages(self):
-
-        assert self.manager.get_languages("Latn")
+        languages = self.manager.get_languages("Latn")
+        assert "en" in languages
 
     def test_get_patterns(self):
-
         assert self.manager.get_patterns("Latn")
         assert self.manager.get_patterns("Latn", "en")
-        assert self.manager.get_patterns("Latn", "en", "GB")
+        assert self.manager.get_patterns("Latn", "en", "US")
 
     def test_get_patterns__policy_replace(self):
-
-        self.manager = gaupol.PatternManager("line-break")
+        self.manager = aeidon.PatternManager("line-break")
         assert self.manager.get_patterns("Latn", "en")
 
     def test_get_scripts(self):
+        scripts = self.manager.get_scripts()
+        assert "Latn" in scripts
 
-        self.manager = gaupol.PatternManager("common-error")
-        assert self.manager.get_scripts()
-
+    @aeidon.deco.monkey_patch(aeidon, "CONFIG_HOME_DIR")
     def test_save_config(self):
-
-        directory = gaupol.CONFIG_HOME_DIR
-        gaupol.CONFIG_HOME_DIR = tempfile.gettempdir()
+        aeidon.CONFIG_HOME_DIR = aeidon.temp.create_directory()
         self.manager.save_config("Latn")
         self.manager._read_patterns()
-        gaupol.CONFIG_HOME_DIR = directory

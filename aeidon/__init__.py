@@ -78,4 +78,5 @@ from aeidon.markup import *
 from aeidon import tags
 from aeidon.converter import *
 from aeidon.pattern import *
+from aeidon.patternman import *
 from aeidon.unittest import *

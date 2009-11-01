@@ -33,9 +33,9 @@ aeidon.markup
 aeidon.tags
 aeidon.converter
 aeidon.pattern
+aeidon.patternman
 aeidon.unittest
 
-aeidon.patternman
 aeidon.clipboard
 aeidon.revertable
 aeidon.agents
