@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,7 +16,7 @@
 
 """Subtitle text markup converter."""
 
-import gaupol
+import aeidon
 
 __all__ = ("MarkupConverter",)
 
@@ -26,14 +26,14 @@ class MarkupConverter(object):
     """Subtitle text markup converter."""
 
     def __init__(self, from_format, to_format):
-        """Initialize a MarkupConverter instance.
+        """Initialize a :class:`MarkupConverter` instance.
 
-        from_format and to_format should be gaupol.formats enumerations.
+        `from_format` and `to_format` should be :attr:`aeidon.formats`
+        enumeration items.
         """
-        self._from = gaupol.tags.new(from_format)
-        self._to = gaupol.tags.new(to_format)
+        self._from = aeidon.tags.new(from_format)
+        self._to = aeidon.tags.new(to_format)
 
     def convert(self, text):
-        """Return text with markup converted."""
-
+        """Return `text` with markup converted."""
         return self._to.encode(self._from.decode(text))

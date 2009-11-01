@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2007,2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,14 +14,13 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gaupol
+import aeidon
 
 
-class TestMarkupConverter(gaupol.TestCase):
+class TestMarkupConverter(aeidon.TestCase):
 
     def test_convert(self):
-
-        for from_format in gaupol.formats:
-            for to_format in gaupol.formats:
-                converter = gaupol.MarkupConverter(from_format, to_format)
+        for from_format in aeidon.formats:
+            for to_format in aeidon.formats:
+                converter = aeidon.MarkupConverter(from_format, to_format)
                 assert converter.convert("test") == "test"

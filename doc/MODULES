@@ -31,9 +31,9 @@ aeidon.file
 aeidon.files
 aeidon.markup
 aeidon.tags
+aeidon.converter
 aeidon.unittest
 
-aeidon.converter
 aeidon.pattern
 aeidon.patternman
 aeidon.clipboard
