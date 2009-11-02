@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2007,2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -21,45 +21,36 @@ __all__ = ("Clipboard",)
 
 class Clipboard(object):
 
-    """Internal text clipboard.
-
-    Instance variable '_texts' is a list of strings, each being the text of one
-    subtitle. Nones in the list express that those subtitles are skipped, i.e.
-    the range of subtitles is not unified.
-    """
+    """Internal text clipboard."""
 
     def __init__(self):
         """Initialize a Clipboard object."""
-
+        # List of strings, each being the text of one subtitle. Nones in the
+        # list express that those subtitles are skipped, i.e. the range of
+        # subtitles is not unified, but contains gaps.
         self._texts = []
 
     def append(self, item):
-        """Append item to texts."""
-
+        """Append `item` to texts."""
         self._texts.append(item)
 
     def clear(self):
-        """Clear the texts."""
-
+        """Clear texts."""
         self._texts = []
 
     def get_string(self):
-        """Return the texts as one string."""
-
+        """Return texts as one string."""
         strings = [x or "" for x in self._texts]
         return "\n\n".join(strings)
 
     def get_texts(self):
-        """Return the texts as a list."""
-
+        """Return texts as a list of strings."""
         return self._texts[:]
 
     def set_texts(self, texts):
         """Set the list of texts."""
-
         self._texts = list(texts)
 
     def is_empty(self):
-        """Return True is the clipboard is empty."""
-
+        """Return ``True`` if empty."""
         return not bool(self._texts)

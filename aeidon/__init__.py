@@ -79,4 +79,5 @@ from aeidon import tags
 from aeidon.converter import *
 from aeidon.pattern import *
 from aeidon.patternman import *
+from aeidon.clipboard import *
 from aeidon.unittest import *
