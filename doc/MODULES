@@ -35,9 +35,9 @@ aeidon.converter
 aeidon.pattern
 aeidon.patternman
 aeidon.clipboard
+aeidon.revertable
 aeidon.unittest
 
-aeidon.revertable
 aeidon.agents
 aeidon.project
 aeidon.__init__

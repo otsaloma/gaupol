@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2007,2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,7 +16,7 @@
 
 """Actions that can be reverted, i.e. undone and redone."""
 
-import gaupol
+import aeidon
 
 __all__ = ("RevertableAction", "RevertableActionGroup",)
 
@@ -25,24 +25,23 @@ class RevertableAction(object):
 
     """Action that can be reverted, i.e. undone and redone.
 
-    Instance variables:
-     * description: Short one line description
-     * docs: Sequence of document enumerations affected
-     * register: Register enumeration corresponding to the action taken
-     * revert_args: Arguments passed to the revert method
-     * revert_kwargs: Keyword arguments passed to the revert method
-     * revert_method: Method called to revert this action
-
-    'description', 'docs', 'register' and 'revert_method' are required to be
-    set eventually, either upon instantiation or directly after.
+    :ivar description: Short one line description
+    :ivar docs: Sequence of :attr:`aeidon.documents` items affected
+    :ivar register: :attr:`aeidon.registers` item for action taken
+    :ivar revert_args: Arguments passed to the revert method
+    :ivar revert_kwargs: Keyword arguments passed to the revert method
+    :ivar revert_method: Method called to revert this action
     """
 
-    __metaclass__ = gaupol.Contractual
+    __metaclass__ = aeidon.Contractual
 
     def __init__(self, **kwargs):
-        """Initialize a RevertableAction object.
+        """Initialize a :class:`RevertableAction` object.
 
-        kwargs can contain any of the names of public instance variables.
+        `kwargs` can contain any of the names of public instance variables, of
+        which :attr:`description`, :attr:`docs`, :attr:`register` and
+        :attr:`revert_method` are required to be set eventually, either with
+        `kwargs` or direct assignment later.
         """
         self.description = None
         self.docs = None
@@ -50,28 +49,25 @@ class RevertableAction(object):
         self.revert_args = ()
         self.revert_kwargs = {}
         self.revert_method = None
-
         for key, value in kwargs.items():
             setattr(self, key, value)
 
     def _get_reversion_register_require(self):
-        assert self.register in gaupol.registers
+        assert self.register in aeidon.registers
 
     def _get_reversion_register(self):
-        """Return the register enumeration corresponding to reversion."""
-
+        """Return the :attr:`aeidon.registers` item for reversion."""
         if self.register.shift == 1:
-            return gaupol.registers.UNDO
+            return aeidon.registers.UNDO
         if self.register.shift == -1:
-            return gaupol.registers.REDO
+            return aeidon.registers.REDO
         raise ValueError("Invalid register: %s" % repr(self.register))
 
     def revert_require(self):
         assert callable(self.revert_method)
 
     def revert(self):
-        """Call the revert method."""
-
+        """Call the reversion method."""
         kwargs = self.revert_kwargs.copy()
         kwargs["register"] = self._get_reversion_register()
         return self.revert_method(*self.revert_args, **kwargs)
@@ -79,23 +75,20 @@ class RevertableAction(object):
 
 class RevertableActionGroup(object):
 
-    """Group of revertable actions.
+    """Group of :class:`RevertableAction`.
 
-    Instance variables:
-     * actions: Sequence of actions in group
-     * description: Short one line description
-
-    Instance variables 'actions' and 'description' are required to be set
-    eventually, either upon instantiation or directly after.
+    :ivar actions: Sequence of :class:`RevertableAction` in group
+    :ivar description: Short one line description
     """
 
     def __init__(self, **kwargs):
-        """Initialize a RevertableAction object.
+        """Initialize a :class:`RevertableAction` object.
 
-        kwargs can contain any of the names of public instance variables,
+        `kwargs` can contain any of the names of public instance variables, of
+        which :attr:`actions` and :attr:`description` are required to be set
+        eventually, either with `kwargs` or direct assignment later.
         """
         self.actions = None
         self.description = None
-
         for key, value in kwargs.items():
             setattr(self, key, value)

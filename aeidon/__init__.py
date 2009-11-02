@@ -80,4 +80,5 @@ from aeidon.converter import *
 from aeidon.pattern import *
 from aeidon.patternman import *
 from aeidon.clipboard import *
+from aeidon.revertable import *
 from aeidon.unittest import *

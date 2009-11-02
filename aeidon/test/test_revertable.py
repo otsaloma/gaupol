@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,54 +14,49 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gaupol
+import aeidon
 
 
-class TestRevertableAction(gaupol.TestCase):
+class TestRevertableAction(aeidon.TestCase):
 
     def setup_method(self, method):
-
         self.revert_action_call_count = 0
         self.revert_action_register = None
         def revert_action(x, y, z=None, register=-1):
             self.revert_action_call_count += 1
             self.revert_action_register = register
             assert (x, y, z) == (0, 1, 2)
-        self.action = gaupol.RevertableAction(description="")
-        self.action.register = gaupol.registers.DO
-        self.action.docs = (gaupol.documents.MAIN,)
+        self.action = aeidon.RevertableAction(description="")
+        self.action.register = aeidon.registers.DO
+        self.action.docs = (aeidon.documents.MAIN,)
         self.action.revert_args = (0, 1)
         self.action.revert_kwargs = {"z": 2}
         self.action.revert_method = revert_action
 
     def test_revert__do(self):
-
-        self.action.register = gaupol.registers.DO
+        self.action.register = aeidon.registers.DO
         self.action.revert()
         assert self.revert_action_call_count == 1
         register = self.revert_action_register
-        assert register == gaupol.registers.UNDO
+        assert register == aeidon.registers.UNDO
 
     def test_revert__redo(self):
-
-        self.action.register = gaupol.registers.REDO
+        self.action.register = aeidon.registers.REDO
         self.action.revert()
         assert self.revert_action_call_count == 1
         register = self.revert_action_register
-        assert register == gaupol.registers.UNDO
+        assert register == aeidon.registers.UNDO
 
     def test_revert__undo(self):
-
-        self.action.register = gaupol.registers.UNDO
+        self.action.register = aeidon.registers.UNDO
         self.action.revert()
         assert self.revert_action_call_count == 1
         register = self.revert_action_register
-        assert register == gaupol.registers.REDO
+        assert register == aeidon.registers.REDO
 
 
-class TestRevertableActionGroup(gaupol.TestCase):
+class TestRevertableActionGroup(aeidon.TestCase):
 
     def setup_method(self, method):
-
-        self.action_group = gaupol.RevertableActionGroup(actions=())
+        self.action_group = aeidon.RevertableActionGroup(actions=())
         self.action_group.description = ""
