@@ -1,44 +1,79 @@
 Preparing to Build Windows Installers
 =====================================
 
- * Install the following on a Windows machine. The hicolor icon theme
-   should be installed to C:\GTK\share\icons\hicolor\index.theme.
-   Relevant parts of tarballs should be unpacked to C:\GTK\.
+ 1. Install the latest Python 2.x [1.1].
 
-   - http://gladewin32.sourceforge.net/
-   - http://ftp.gnome.org/pub/GNOME/binaries/win32/glib/
-   - http://www.python.org/download/releases/
-   - http://ftp.gnome.org/pub/GNOME/binaries/win32/pygobject/
-   - http://ftp.gnome.org/pub/GNOME/binaries/win32/pycairo/
-   - http://ftp.gnome.org/pub/GNOME/binaries/win32/pygtk/
-   - http://chardet.feedparser.org/download/
-   - http://pyenchant.sourceforge.net/download.php
-   - http://icon-theme.freedesktop.org/releases/
-   - http://packages.debian.org/sid/iso-codes/all/download
-   - http://www.py2exe.org/
-   - http://www.jrsoftware.org/isdl.php
+     [1.1] http://www.python.org/download/releases/
 
- * Edit C:\GTK\share\themes\MS-Windows\gtk-2.0\gtkrc.
+ 2. Install all necessary Python packages of the GTK+ stack [2.1-2.4].
+    At the time of writing this (20091109) the official packages are
+    broken and newer packages from [2.5] appear to work.
 
-     gtk-icon-sizes="... gtk-button=16,16 ..."
-     gtk-toolbar-style = GTK_TOOLBAR_ICONS
-     gtk-button-images = 1
-     GtkTreeView::allow-rules = 1
+     [2.2] http://ftp.gnome.org/pub/GNOME/binaries/win32/pygobject/
+     [2.3] http://ftp.gnome.org/pub/GNOME/binaries/win32/pycairo/
+     [2.4] http://ftp.gnome.org/pub/GNOME/binaries/win32/pygtk/
+     [2.5] http://www.optionexplicit.be/projects/gnome-windows
 
+ 3. Install chardet from source [3.1]. Use 'install_lib' command [3.2]
+    instead of the usual 'install' command to avoid laying an egg.
+
+     [3.1] http://chardet.feedparser.org/
+     [3.2] c:\python26\python.exe setup.py install_lib
+
+ 4. Install PyEnchant and the enchant library [4.1].
+
+     [4.1] http://www.rfk.id.au/software/pyenchant/download.html
+
+ 5. Install GTK+ and libglade. At the time of writing this (20091109)
+    the easiest method appears to be to use the Glade application
+    installer. It might include some unnecessary DLLs. Install to
+    '%SYSTEMDRIVE%\gtk+'. To run gaupol from source, you may need to
+    add the 'bin' directory to %PATH%.
+
+     [5.1] http://ftp.gnome.org/pub/GNOME/binaries/win32/glade3/
+
+    Edit file 'share\themes\MS-Windows\gtk-2.0\gtkrc' according to the
+    following lines. TODO: Discard button images with gaupol-0.16.
+
+        gtk-icon-sizes="... gtk-button=16,16 ..."
+        gtk-toolbar-style = GTK_TOOLBAR_ICONS
+        gtk-button-images = 1
+        GtkTreeView::allow-rules = 1
+
+ 6. Install py2exe [6.1] and Inno Setup [6.2].
+
+     [6.1] http://www.py2exe.org/
+     [6.2] http://www.jrsoftware.org/isdl.php
+
+ 7. Test that everything has been installed correctly. Importing
+    'gtk', 'chardet' and 'enchant' at the Python console is a good
+    minimal test. At this point you should also be able to run gaupol
+    from the source directory.
 
 Releasing a New Version for Windows
 ===================================
 
- * Generate translations and update version numbers on a Unix machine.
+ 1. Generate translations on a Unix machine (or wherever you have
+    gettext and intltool available) [1.1].
 
-     ./setup.py clean install_data -d /tmp
-     $EDITOR tools/py2exe.bat tools/data/gaupol.iss
+     [1.1] ./setup.py clean install_data -d /tmp
 
- * Copy the whole top-level gaupol directory to a Windows machine.
-   There, run and compile the following files.
+ 2. Copy the whole top-level gaupol directory to a Windows machine, to
+    %SYSTEMDRIVE%\gaupol-xx.
 
-     C:\gaupol\tools\py2exe.bat
-     C:\gaupol\tools\data\gaupol.iss
+ 3. Run the 'tools\py2exe.bat' installation script. This places a
+    whole lot of files under the 'dist' directory. You should be able
+    to run gaupol from 'gaupol.exe' in that directory. If you get a
+    missing DLL error, you will need to edit 'tools\py2exe.bat' to
+    copy the necessary DLLs from wherever to somewhere under 'dist'.
+    If you get a Python ImportError, you will need to edit
+    'winsetup.py' to include the missing module or package.
 
- * Run the installer from C:\gaupol\win32\ and make sure it works.
-   Copy it to a Unix machine, sign ('gpg --detach') and upload.
+ 4. Open 'tools\gaupol.iss' using Inno Setup. Update version numbers
+    and file names. Compile the installer. Run the installer and run
+    the installed version of gaupol to make sure that they work. Check
+    that extensions, pattern files, spell-check and encoding
+    auto-detection work.
+
+ 5. Copy the installer to a Unix machine (or wherever you have gpg
+    available), sign ('gpg --detach') and upload.

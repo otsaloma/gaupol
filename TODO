@@ -18,6 +18,12 @@ Gaupol 0.16
  [?] Use transifex.net (or something) for translations
  [ ] Use gtk.RecentAction for the recent file menus
  [ ] Save text correction assistant window size
+ [ ] http://tecnocode.co.uk/2009/10/01/unicode-in-gnome/
+ [ ] Mark strings containing Unicode ellipses as unicode strings (u"")
+     or add unicode function calls for i18n functions
+ [ ] MetadataItem._get_localized_field should try 'xx' if 'xx_YY'
+     fails
+ [ ] Add help menu item for wiki page
  [D] Add German translation (Chris Leick)
 
 Gaupol 1.0

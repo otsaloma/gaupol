@@ -1,26 +1,17 @@
-@echo off
-set GTKDIR=F:\GTK
-set PYDIR=F:\Python25
-cd ..
-rmdir /S /Q build
-rmdir /S /Q dist
-mkdir dist\etc
-mkdir dist\lib
-mkdir dist\share
+:: Build a Windows distribution of Gaupol and include
+:: all necessary dependencies in that distribution.
+cd "%~dp0\.."
+rmdir /S /Q build dist
+set GTKDIR=%SYSTEMDRIVE%\gtk+
+set PYDIR=%SYSTEMDRIVE%\python26
 %PYDIR%\python.exe winsetup.py py2exe
-pause
-xcopy %GTKDIR%\bin\*.dll dist /E /Y
-xcopy %GTKDIR%\etc dist\etc /E
-xcopy %GTKDIR%\lib dist\lib /E
-xcopy %GTKDIR%\share dist\share /E
-xcopy %PYDIR%\Lib\site-packages\enchant\lib dist\lib /E
-xcopy %PYDIR%\Lib\site-packages\enchant\share dist\share /E
-rmdir /S /Q dist\share\applications
-rmdir /S /Q dist\share\gtk-2.0
-rmdir /S /Q dist\share\gtkthemeselector
-rmdir /S /Q dist\share\man
-rem Remove unused translation files included in iso-codes.
-for /R dist\share\locale %%f in (iso_3166_2.mo*) do del /Q %%f
-for /R dist\share\locale %%f in (iso_4217.mo*) do del /Q %%f
-for /R dist\share\locale %%f in (iso_639_3.mo*) do del /Q %%f
+xcopy %GTKDIR%\bin\*.dll dist\bin /i /y
+xcopy %GTKDIR%\etc dist\etc /s /i /y
+xcopy %GTKDIR%\lib\*.dll dist\lib /i /y
+xcopy %GTKDIR%\lib\gtk-2.0 dist\lib\gtk-2.0 /s /i /y
+xcopy %GTKDIR%\share\icons\hicolor\*.theme dist\share\icons\hicolor /i /y
+xcopy %GTKDIR%\share\themes dist\share\themes /s /i /y
+xcopy %PYDIR%\Lib\site-packages\enchant\lib dist\lib /s /i /y
+xcopy %PYDIR%\Lib\site-packages\enchant\libenchant.dll dist /i /y
+xcopy %PYDIR%\Lib\site-packages\enchant\share dist\share /s /i /y
 pause

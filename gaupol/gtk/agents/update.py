@@ -192,7 +192,7 @@ class UpdateAgent(gaupol.Delegate):
         if self._message_tag is not None:
             gobject.source_remove(self._message_tag)
         if self._message_id is not None:
-            self.statusbar.remove(0, self._message_id)
+            self.statusbar.remove_message(0, self._message_id)
         event_box = self.statusbar.get_ancestor(gtk.EventBox)
         self.statusbar.set_tooltip_text(message)
         if message is not None:
