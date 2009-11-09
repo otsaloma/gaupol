@@ -1,0 +1,11 @@
+= Adding Spell-Check Dictionaries =
+
+Gaupol uses the [[http://www.abisource.com/projects/enchant/|enchant]] library through the [[http://www.rfk.id.au/software/pyenchant/|PyEnchant]] wrapper. enchant uses different backends (currently Aspell/Pspell, Ispell, My''''''Spell/Hunspell, Uspell, Hspell, Zemberek, Voikko and Apple''''''Spell) and thus allows the use of spell-check dictionaries made for any of the supported backends.
+
+== Unix ==
+
+On Unix-style operating systems, Gaupol will use whatever dictionaries installed (for any of the supported backends) using your operating system's package management tools. In most cases you may already have dictionaries installed if you have used other Applications, that use the enchant spell-check library. If not, search for packages by backend names; most distributions will have package names such as `aspell-en` for the `aspell` backend English (`en`) dictionary.
+
+== Windows ==
+
+The Windows version of Gaupol ships with the default Py''''''Enchant package of four dictionaries: British English, American English, German and French. For instructions on installing additional dictionaries, consult the [[http://www.rfk.id.au/software/pyenchant/tutorial.html#installation-dicts-windows|PyEnchant documentation]], with the exception, that the dictionary installation directory should be under `C:\Program Files\Gaupol\share\enchant`.
