@@ -1,7 +1,10 @@
 Preparing to Build Windows Installers
 =====================================
 
- 1. Install the latest Python 2.x [1.1].
+ 1. Install the latest Python 2.x [1.1]. Do not install Tcl/Tk; it is
+    a horrendous size monster that for some reason gets pulled in by
+    py2exe. Not sure if Documentation, Utility Scripts and Test Suite
+    do any harm; if you don't need them, leave them out.
 
      [1.1] http://www.python.org/download/releases/
 
