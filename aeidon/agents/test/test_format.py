@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,54 +14,49 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gaupol
+import aeidon
 
 
-class TestFormatAgent(gaupol.TestCase):
+class TestFormatAgent(aeidon.TestCase):
 
     def setup_method(self, method):
-
         self.project = self.new_project()
 
     def test_change_case__dialogue(self):
-
         self.project.subtitles[0].main_text = (
             "- mrs. pavinato?\n"
             "- yes, what do you want?")
-        self.project.change_case((0,), gaupol.documents.MAIN, "title")
+        self.project.change_case((0,), aeidon.documents.MAIN, "title")
         assert self.project.subtitles[0].main_text == (
             "- Mrs. Pavinato?\n"
             "- Yes, What Do You Want?")
 
     def test_change_case__italic(self):
-
         self.project.subtitles[0].main_text = (
             "<i>mrs. pavinato?</i>\n"
             "<i>yes, what do you want?</i>")
-        self.project.change_case((0,), gaupol.documents.MAIN, "capitalize")
+        self.project.change_case((0,), aeidon.documents.MAIN, "capitalize")
         assert self.project.subtitles[0].main_text == (
             "<i>Mrs. pavinato?</i>\n"
             "<i>yes, what do you want?</i>")
 
     def test_change_case__plain(self):
-
         self.project.subtitles[0].main_text = (
             "mrs. pavinato?\n"
             "yes, what do you want?")
-        self.project.change_case((0,), gaupol.documents.MAIN, "upper")
+        self.project.change_case((0,), aeidon.documents.MAIN, "upper")
         assert self.project.subtitles[0].main_text == (
             "MRS. PAVINATO?\n"
             "YES, WHAT DO YOU WANT?")
 
     def test_toggle_dialogue_dashes__all(self):
-
         self.project.subtitles[0].main_text = (
             "- You have cut your beard?\n"
             "- Yes, don't you like it?")
         self.project.subtitles[1].main_text = (
             "- It was the only beautiful thing you had.\n"
             "- Now you seem a different person.")
-        self.project.toggle_dialogue_dashes((0, 1), gaupol.documents.MAIN)
+        self.project.toggle_dialogue_dashes((0, 1), aeidon.documents.MAIN)
         assert self.project.subtitles[0].main_text == (
             "You have cut your beard?\n"
             "Yes, don't you like it?")
@@ -70,14 +65,13 @@ class TestFormatAgent(gaupol.TestCase):
             "Now you seem a different person.")
 
     def test_toggle_dialogue_dashes__none(self):
-
         self.project.subtitles[0].main_text = (
             "You have cut your beard?\n"
             "Yes, don't you like it?")
         self.project.subtitles[1].main_text = (
             "It was the only beautiful thing you had.\n"
             "Now you seem a different person.")
-        self.project.toggle_dialogue_dashes((0, 1), gaupol.documents.MAIN)
+        self.project.toggle_dialogue_dashes((0, 1), aeidon.documents.MAIN)
         assert self.project.subtitles[0].main_text == (
             "- You have cut your beard?\n"
             "- Yes, don't you like it?")
@@ -86,14 +80,13 @@ class TestFormatAgent(gaupol.TestCase):
             "- Now you seem a different person.")
 
     def test_toggle_dialogue_dashes__some(self):
-
         self.project.subtitles[0].main_text = (
             "- You have cut your beard?\n"
             "- Yes, don't you like it?")
         self.project.subtitles[1].main_text = (
             "It was the only beautiful thing you had.\n"
             "Now you seem a different person.")
-        self.project.toggle_dialogue_dashes((0, 1), gaupol.documents.MAIN)
+        self.project.toggle_dialogue_dashes((0, 1), aeidon.documents.MAIN)
         assert self.project.subtitles[0].main_text == (
             "- You have cut your beard?\n"
             "- Yes, don't you like it?")
@@ -102,14 +95,13 @@ class TestFormatAgent(gaupol.TestCase):
             "- Now you seem a different person.")
 
     def test_toggle_italicization__all(self):
-
         self.project.subtitles[0].main_text = (
             "<b><i>I am no thief, I am an officer\n"
             "and a university student.</i></b>")
         self.project.subtitles[1].main_text = (
             "<i><b>I look like this because\n"
             "I'm hunted for by the Germans.</b></i>")
-        self.project.toggle_italicization((0, 1), gaupol.documents.MAIN)
+        self.project.toggle_italicization((0, 1), aeidon.documents.MAIN)
         assert self.project.subtitles[0].main_text == (
             "<b>I am no thief, I am an officer\n"
             "and a university student.</b>")
@@ -118,14 +110,13 @@ class TestFormatAgent(gaupol.TestCase):
             "I'm hunted for by the Germans.</b>")
 
     def test_toggle_italicization__none(self):
-
         self.project.subtitles[0].main_text = (
             "I am no thief, I am an officer\n"
             "and a university student.")
         self.project.subtitles[1].main_text = (
             "I look like this because\n"
             "I'm hunted for by the Germans.")
-        self.project.toggle_italicization((0, 1), gaupol.documents.MAIN)
+        self.project.toggle_italicization((0, 1), aeidon.documents.MAIN)
         assert self.project.subtitles[0].main_text == (
             "<i>I am no thief, I am an officer\n"
             "and a university student.</i>")
@@ -134,14 +125,13 @@ class TestFormatAgent(gaupol.TestCase):
             "I'm hunted for by the Germans.</i>")
 
     def test_toggle_italicization__some(self):
-
         self.project.subtitles[0].main_text = (
             "<i>I am no thief, I am an officer\n"
             "and a university student.</i>")
         self.project.subtitles[1].main_text = (
             "I look like this because\n"
             "I'm hunted for by the Germans.")
-        self.project.toggle_italicization((0, 1), gaupol.documents.MAIN)
+        self.project.toggle_italicization((0, 1), aeidon.documents.MAIN)
         assert self.project.subtitles[0].main_text == (
             "<i>I am no thief, I am an officer\n"
             "and a university student.</i>")

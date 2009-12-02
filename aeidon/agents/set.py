@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2007,2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,72 +16,69 @@
 
 """Setting values of single subtitle fields."""
 
+import aeidon
 import bisect
-import gaupol
-_ = gaupol.i18n._
+_ = aeidon.i18n._
 
 
-class SetAgent(gaupol.Delegate):
+class SetAgent(aeidon.Delegate):
 
-    """Setting values of single subtitle data units."""
+    """Setting values of single subtitle fields."""
 
-    __metaclass__ = gaupol.Contractual
+    __metaclass__ = aeidon.Contractual
 
     def _move_if_needed_require(self, index):
         assert 0 <= index < len(self.subtitles)
 
     def _move_if_needed(self, index):
         """Move subtitle for correct order and return new index."""
-
         subtitle = self.subtitles[index]
         subtitles = self.subtitles[:index] + self.subtitles[index + 1:]
         new_index = bisect.bisect_right(subtitles, subtitle)
         if new_index != index:
             subtitle = self.subtitles.pop(index)
-            self.emit("subtitles-removed", [index])
+            self.emit("subtitles-removed", (index,))
             self.subtitles.insert(new_index, subtitle)
-            self.emit("subtitles-inserted", [new_index])
+            self.emit("subtitles-inserted", (new_index,))
         return new_index
 
     def set_duration_require(self, index, value, register=-1):
         assert 0 <= index < len(self.subtitles)
 
-    @gaupol.deco.revertable
+    @aeidon.deco.revertable
     def set_duration(self, index, value, register=-1):
         """Set the value of duration position."""
-
         subtitle = self.subtitles[index]
         orig_end = subtitle.end
         subtitle.duration = value
         if subtitle.end == orig_end: return
 
         action = self.get_revertable_action(register)
-        action.docs = tuple(gaupol.documents)
+        action.docs = tuple(aeidon.documents)
         action.description = _("Editing position")
         action.revert_method = self.set_end
         action.revert_args = (index, orig_end)
         self.register_action(action)
-        self.emit("positions-changed", [index])
+        self.emit("positions-changed", (index,))
 
     def set_end_require(self, index, value, register=-1):
         assert 0 <= index < len(self.subtitles)
 
-    @gaupol.deco.revertable
+    @aeidon.deco.revertable
     def set_end(self, index, value, register=-1):
         """Set the value of end position."""
-
         subtitle = self.subtitles[index]
         orig_value = subtitle.end
         subtitle.end = value
         if subtitle.end == orig_value: return
 
         action = self.get_revertable_action(register)
-        action.docs = tuple(gaupol.documents)
+        action.docs = tuple(aeidon.documents)
         action.description = _("Editing position")
         action.revert_method = self.set_end
         action.revert_args = (index, orig_value)
         self.register_action(action)
-        self.emit("positions-changed", [index])
+        self.emit("positions-changed", (index,))
 
     def set_start_require(self, index, value, register=-1):
         assert 0 <= index < len(self.subtitles)
@@ -90,11 +87,10 @@ class SetAgent(gaupol.Delegate):
         for i in range(len(self.subtitles) - 1):
             assert self.subtitles[i] <= self.subtitles[i + 1]
 
-    @gaupol.deco.revertable
-    @gaupol.deco.notify_frozen
+    @aeidon.deco.revertable
+    @aeidon.deco.notify_frozen
     def set_start(self, index, value, register=-1):
         """Set the value of start position."""
-
         subtitle = self.subtitles[index]
         orig_value = subtitle.start
         subtitle.start = value
@@ -102,20 +98,19 @@ class SetAgent(gaupol.Delegate):
         index = self._move_if_needed(index)
 
         action = self.get_revertable_action(register)
-        action.docs = tuple(gaupol.documents)
+        action.docs = tuple(aeidon.documents)
         action.description = _("Editing position")
         action.revert_method = self.set_start
         action.revert_args = (index, orig_value)
         self.register_action(action)
-        self.emit("positions-changed", [index])
+        self.emit("positions-changed", (index,))
 
     def set_text_require(self, index, doc, value, register=-1):
         assert 0 <= index < len(self.subtitles)
 
-    @gaupol.deco.revertable
+    @aeidon.deco.revertable
     def set_text(self, index, doc, value, register=-1):
         """Set the value of document's text."""
-
         value = unicode(value)
         subtitle = self.subtitles[index]
         orig_value = subtitle.get_text(doc)
@@ -129,4 +124,4 @@ class SetAgent(gaupol.Delegate):
         action.revert_args = (index, doc, orig_value)
         self.register_action(action)
         signal = self.get_text_signal(doc)
-        self.emit(signal, [index])
+        self.emit(signal, (index,))

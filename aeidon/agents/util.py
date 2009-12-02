@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,106 +16,94 @@
 
 """Miscellaneous methods for use with subtitle data editing."""
 
-import gaupol
+import aeidon
 
 
-class UtilityAgent(gaupol.Delegate):
+class UtilityAgent(aeidon.Delegate):
 
     """Miscellaneous methods for subtitle data editing."""
 
-    __metaclass__ = gaupol.Contractual
+    __metaclass__ = aeidon.Contractual
 
     def _get_format(self, doc):
-        """Return the format of document's file or None."""
-
-        if doc == gaupol.documents.MAIN:
+        """Return the format of `doc`'s file or ``None``."""
+        if doc == aeidon.documents.MAIN:
             if self.main_file is not None:
                 return self.main_file.format
             return None
-        if doc == gaupol.documents.TRAN:
+        if doc == aeidon.documents.TRAN:
             if self.tran_file is not None:
                 return self.tran_file.format
-            return self._get_format(gaupol.documents.MAIN)
+            return self._get_format(aeidon.documents.MAIN)
         raise ValueError("Invalid document: %s" % repr(doc))
 
     def get_changed(self, doc):
-        """Return the changed value corresponding to document."""
-
-        if doc == gaupol.documents.MAIN:
+        """Return the changed value corresponding to `doc`."""
+        if doc == aeidon.documents.MAIN:
             return self.main_changed
-        if doc == gaupol.documents.TRAN:
+        if doc == aeidon.documents.TRAN:
             return self.tran_changed
         raise ValueError("Invalid document: %s" % repr(doc))
 
     def get_file(self, doc):
-        """Return the file corresponding to document."""
-
-        if doc == gaupol.documents.MAIN:
+        """Return the file corresponding to `doc`."""
+        if doc == aeidon.documents.MAIN:
             return self.main_file
-        if doc == gaupol.documents.TRAN:
+        if doc == aeidon.documents.TRAN:
             return self.tran_file
         raise ValueError("Invalid document: %s" % repr(doc))
 
     def get_liner(self, doc):
-        """Return liner with proper properties."""
-
+        """Return a new :class:`aeidon.Liner` instance."""
         re_tag = self.get_markup_tag_regex(doc)
         clean_func = self.get_markup_clean_func(doc)
-        return gaupol.Liner(re_tag, clean_func)
+        return aeidon.Liner(re_tag, clean_func)
 
     def get_markup(self, doc):
-        """Return document's markup instance or None."""
-
+        """Return `doc`'s markup instance or ``None``."""
         format = self._get_format(doc)
         if format is None: return None
-        return gaupol.tags.new(format)
+        return aeidon.tags.new(format)
 
     def get_markup_clean_func(self, doc):
-        """Return the function to clean markup or None."""
-
+        """Return the function to clean markup or ``None``."""
         format = self._get_format(doc)
         if format is None: return None
-        return gaupol.tags.new(format).clean
+        return aeidon.tags.new(format).clean
 
     def get_markup_tag_regex(self, doc):
-        """Return the regular expression for a markup tag or None."""
-
+        """Return the regular expression for a markup tag or ``None``."""
         format = self._get_format(doc)
         if format is None: return None
-        return gaupol.tags.new(format).tag
+        return aeidon.tags.new(format).tag
 
     def get_mode(self):
         """Return the mode of the main file or default."""
-
         if self.main_file is not None:
             return self.main_file.mode
-        return gaupol.modes.TIME
+        return aeidon.modes.TIME
 
     def get_parser(self, doc):
-        """Return parser with proper properties."""
-
+        """Return a new :class:`aeidon.Parser` instance."""
         re_tag = self.get_markup_tag_regex(doc)
         clean_func = self.get_markup_clean_func(doc)
-        return gaupol.Parser(re_tag, clean_func)
+        return aeidon.Parser(re_tag, clean_func)
 
     def get_revertable_action(self, register):
-        """Return a new revertable action with proper properties."""
-
-        action = gaupol.RevertableAction()
+        """Return a new :class:`aeidon.RevertableAction` instance."""
+        action = aeidon.RevertableAction()
         action.register = register
         return action
 
     def get_subtitle(self):
-        """Return a new subtitle with proper properties."""
-
-        return gaupol.Subtitle(self.get_mode(), self.framerate)
+        """Return a new :class:`aeidon.Subtitle` instance."""
+        return aeidon.Subtitle(self.get_mode(), self.framerate)
 
     def get_text_length_require(self, index, doc):
         assert 0 <= index < len(self.subtitles)
 
     def get_text_length(self, index, doc):
         """Return the amount of characters in text excluding markup."""
-
         text = self.subtitles[index].get_text(doc)
         re_tag = self.get_markup_tag_regex(doc)
         if re_tag is not None:
@@ -123,10 +111,9 @@ class UtilityAgent(gaupol.Delegate):
         return len(text)
 
     def get_text_signal(self, doc):
-        """Return the 'texts-changed' signal corresponding to document."""
-
-        if doc == gaupol.documents.MAIN:
+        """Return the "*-texts-changed" signal corresponding to `doc`."""
+        if doc == aeidon.documents.MAIN:
             return "main-texts-changed"
-        if doc == gaupol.documents.TRAN:
+        if doc == aeidon.documents.TRAN:
             return "translation-texts-changed"
         raise ValueError("Invalid document: %s" % repr(doc))

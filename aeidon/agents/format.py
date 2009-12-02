@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,21 +16,20 @@
 
 """Changing the appearance of texts."""
 
-import gaupol
+import aeidon
 import re
-_ = gaupol.i18n._
+_ = aeidon.i18n._
 
 
-class FormatAgent(gaupol.Delegate):
+class FormatAgent(aeidon.Delegate):
 
     """Changing the appearance of texts."""
 
-    __metaclass__ = gaupol.Contractual
+    __metaclass__ = aeidon.Contractual
     _re_alphanum = re.compile(r"\w", re.UNICODE)
 
     def _change_case_first(self, parser, method):
         """Change the case of the alphanumeric substring."""
-
         match = self._re_alphanum.search(parser.text)
         if match is None: return
         a = match.start()
@@ -39,8 +38,7 @@ class FormatAgent(gaupol.Delegate):
         parser.text = prefix + text
 
     def _should_dialoguize(self, indices, doc):
-        """Return True if dialogue dashes should be added to texts."""
-
+        """Return ``True`` if dialogue dashes should be added to texts."""
         re_tag = self.get_markup_tag_regex(doc)
         for index in indices:
             text = self.subtitles[index].get_text(doc)
@@ -55,8 +53,7 @@ class FormatAgent(gaupol.Delegate):
         return False
 
     def _should_italicize(self, indices, doc):
-        """Return True if texts should be italicized."""
-
+        """Return ``True`` if texts should be italicized."""
         re_tag = self.get_markup_tag_regex(doc)
         markup = self.get_markup(doc)
         re_italic_tag = markup.italic_tag
@@ -81,11 +78,11 @@ class FormatAgent(gaupol.Delegate):
             assert 0 <= index < len(self.subtitles)
         assert method in ("title", "capitalize", "upper", "lower")
 
-    @gaupol.deco.revertable
+    @aeidon.deco.revertable
     def change_case(self, indices, doc, method, register=-1):
-        """Change the case of texts with method.
+        """Change the case of texts with `method`.
 
-        method should be 'title', 'capitalize', 'upper' or 'lower'.
+        `method` should be "title", "capitalize", "upper" or "lower".
         """
         new_texts = []
         parser = self.get_parser(doc)
@@ -102,10 +99,9 @@ class FormatAgent(gaupol.Delegate):
         for index in indices:
             assert 0 <= index < len(self.subtitles)
 
-    @gaupol.deco.revertable
+    @aeidon.deco.revertable
     def toggle_dialogue_dashes(self, indices, doc, register=-1):
         """Show or hide dialogue dashes on texts."""
-
         new_texts = []
         parser = self.get_parser(doc)
         dialoguize = self._should_dialoguize(indices, doc)
@@ -128,10 +124,9 @@ class FormatAgent(gaupol.Delegate):
         for index in indices:
             assert 0 <= index < len(self.subtitles)
 
-    @gaupol.deco.revertable
+    @aeidon.deco.revertable
     def toggle_italicization(self, indices, doc, register=-1):
         """Italicize or normalize texts."""
-
         new_texts = []
         markup = self.get_markup(doc)
         re_italic_tag = markup.italic_tag

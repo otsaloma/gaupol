@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2007 Osmo Salomaa
+# Copyright (C) 2006-2007,2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Data editing extension delegates of Project."""
+"""Data editing extension delegates of :class:`aeidon.Project`."""
 
 from .clipboard import ClipboardAgent
 from .edit      import EditAgent

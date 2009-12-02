@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,58 +16,57 @@
 
 """Previewing subtitles with a video player."""
 
+import aeidon
 import atexit
-import gaupol
 import os
 import string
 import subprocess
 
 
-class PreviewAgent(gaupol.Delegate):
+class PreviewAgent(aeidon.Delegate):
 
     """Previewing subtitles with a video player."""
 
-    __metaclass__ = gaupol.Contractual
+    # pylint: disable-msg=W0201
+
+    __metaclass__ = aeidon.Contractual
 
     def __init__(self, master):
-        """Initialize a PreviewAgent object."""
-
-        gaupol.Delegate.__init__(self, master)
-        gaupol.util.connect(self, self, "notify::main_file")
+        """Initialize a :class:`aeidon.PreviewAgent` object."""
+        aeidon.Delegate.__init__(self, master)
+        aeidon.util.connect(self, self, "notify::main_file")
 
     def _get_subtitle_path_require(self, doc, encoding=None):
         assert self.get_file(doc) is not None
         if encoding is not None:
-            assert gaupol.encodings.is_valid_code(encoding)
+            assert aeidon.encodings.is_valid_code(encoding)
 
     def _get_subtitle_path(self, doc, encoding=None):
-        """Save the subtitle data to a temporary file if needed.
+        """Return path to file to preview, either real or temporary.
 
-        Raise IOError if writing to temporary file fails.
-        Raise UnicodeError if encoding temporary file fails.
-        Return subtitle file path, True if file is temporary.
+        Raise :exc:`IOError` if writing to temporary file fails.
+        Raise :exc:`UnicodeError` if encoding temporary file fails.
         """
         if encoding is not None:
             if encoding != self.get_file(doc).encoding:
                 return self.get_temp_file_path(doc, encoding)
-        if doc == gaupol.documents.MAIN:
+        if doc == aeidon.documents.MAIN:
             if not self.main_changed:
                 return self.main_file.path
-        if doc == gaupol.documents.TRAN:
+        if doc == aeidon.documents.TRAN:
             if not self.tran_changed:
                 return self.tran_file.path
         return self.get_temp_file_path(doc)
 
     def _on_notify_main_file(self, *args):
         """Guess the video file path if unset."""
-
         if not self.video_path:
             self.guess_video_path()
 
     def get_temp_file_path_require(self, doc, encoding=None):
         assert self.get_file(doc) is not None
         if encoding is not None:
-            assert gaupol.encodings.is_valid_code(encoding)
+            assert aeidon.encodings.is_valid_code(encoding)
 
     def get_temp_file_path_ensure(self, value, doc, encoding=None):
         assert os.path.isfile(value)
@@ -75,23 +74,23 @@ class PreviewAgent(gaupol.Delegate):
     def get_temp_file_path(self, doc, encoding=None):
         """Save the subtitle data to a temporary file and return path.
 
-        Raise IOError if writing to temporary file fails.
-        Raise UnicodeError if encoding temporary file fails.
+        Raise :exc:`IOError` if writing to temporary file fails.
+        Raise :exc:`UnicodeError` if encoding temporary file fails.
         """
-        file = self.get_file(doc)
-        path = gaupol.temp.create(file.format.extension)
-        atexit.register(gaupol.temp.remove, path)
-        encoding = encoding or file.encoding
-        props = (path, file.format, encoding, file.newline)
+        sfile = self.get_file(doc)
+        path = aeidon.temp.create(sfile.format.extension)
+        atexit.register(aeidon.temp.remove, path)
+        encoding = encoding or sfile.encoding
+        props = (path, sfile.format, encoding, sfile.newline)
         self.save(doc, props, False)
         return path
 
     def guess_video_path(self, extensions=None):
         """Guess and return the video file path based on main file's path.
 
-        extensions should be a sequence of video file extensions or None for
-        defaults. The video file is searched for in the same directory as the
-        subtitle file. The subtitle file's filename without extension is
+        `extensions` should be a sequence of video file extensions or ``None``
+        for defaults. The video file is searched for in the same directory as
+        the subtitle file. The subtitle file's filename without extension is
         assumed to start with or match the video file's filename without
         extension.
         """
@@ -115,40 +114,45 @@ class PreviewAgent(gaupol.Delegate):
                 return self.video_path
         return None
 
-    def preview_require(
-        self, time, doc, command, offset, sub_path=None, encoding=None):
+    def preview_require(self, time, doc, command, offset, **kwargs):
         assert self.get_file(doc) is not None
         assert self.video_path is not None
 
     def preview_ensure(self, value, *args, **kwargs):
         assert os.path.isfile(value[2])
 
-    def preview(
-        self, time, doc, command, offset, sub_path=None, encoding=None):
+    def preview(self,
+                time,
+                doc,
+                command,
+                offset,
+                sub_path=None,
+                encoding=None):
         """Preview subtitles with a video player.
 
-        command should have variables $SECONDS, $SUBFILE and $VIDEOFILE.
-        offset is the amount of seconds before time to start.
-        sub_path can be a temporary subtitle file path.
-        encoding can be specified if different from file encoding.
-        Raise IOError if writing to temporary file fails.
-        Raise ProcessError if unable to start process.
-        Raise UnicodeError if encoding temporary file fails.
-        Return subprocess.POpen instance, command, output path.
+        `command` should have variables ``$SECONDS``, ``$SUBFILE`` and
+        ``$VIDEOFILE``. `offset` is the amount of seconds before `time` to
+        start. `sub_path` can be specified, e.g., if using a separately saved
+        temporary file. `encoding` can be specified if different from file
+        encoding. Raise :exc:`IOError` if writing to temporary file fails.
+        Raise :exc:`aeidon.ProcessError` if unable to start process. Raise
+        :exc:`UnicodeError` if encoding temporary file fails. Return
+        (:class:`subprocess.POpen` instance, command, output path).
         """
         sub_path = sub_path or self._get_subtitle_path(doc, encoding)
-        remove = gaupol.deco.silent(OSError)(os.remove)
-        if sub_path != self.get_file(doc).path:
-            atexit.register(remove, sub_path)
-        output_path = gaupol.temp.create(".output")
-        output_fd = gaupol.temp.get_handle(output_path)
-        atexit.register(gaupol.temp.remove, output_path)
+        output_path = aeidon.temp.create(".output")
+        output_fd = aeidon.temp.get_handle(output_path)
+        atexit.register(aeidon.temp.remove, output_path)
         seconds = self.calc.time_to_seconds(time)
         seconds = "%.3f" % max(0.0, seconds - float(offset))
         command = string.Template(command).safe_substitute(
-            SECONDS=seconds, SUBFILE=gaupol.util.shell_quote(sub_path),
-            VIDEOFILE=gaupol.util.shell_quote(self.video_path))
-        process = gaupol.util.start_process(
-            command, stderr=subprocess.STDOUT, stdout=output_fd)
+            SECONDS=seconds,
+            SUBFILE=aeidon.util.shell_quote(sub_path),
+            VIDEOFILE=aeidon.util.shell_quote(self.video_path))
+
+        process = aeidon.util.start_process(command,
+                                            stderr=subprocess.STDOUT,
+                                            stdout=output_fd)
+
         self.emit("preview-started", self.video_path, sub_path, output_path)
         return process, command, output_path

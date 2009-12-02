@@ -51,6 +51,7 @@ includes = ("atk",
 setup_kwargs.update(dict(
     windows=[dict(script="bin/gaupol",
                   icon_resources=[(0, "data/icons/gaupol.ico")])],
+
     options=dict(py2exe=dict(includes=list(includes),
                              packages=list(includes)))))
 

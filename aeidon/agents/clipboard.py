@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2007,2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -18,15 +18,15 @@
 
 from __future__ import division
 
-import gaupol
-_ = gaupol.i18n._
+import aeidon
+_ = aeidon.i18n._
 
 
-class ClipboardAgent(gaupol.Delegate):
+class ClipboardAgent(aeidon.Delegate):
 
     """Storing text to the clipboard and pasting from it."""
 
-    __metaclass__ = gaupol.Contractual
+    __metaclass__ = aeidon.Contractual
 
     def copy_texts_require(self, indices, doc):
         for index in indices:
@@ -41,7 +41,6 @@ class ClipboardAgent(gaupol.Delegate):
 
     def copy_texts(self, indices, doc):
         """Copy texts to the clipboard."""
-
         self.clipboard.clear()
         for index in range(min(indices), max(indices) + 1):
             subtitle = self.subtitles[index]
@@ -52,10 +51,9 @@ class ClipboardAgent(gaupol.Delegate):
         for index in indices:
             assert 0 <= index < len(self.subtitles)
 
-    @gaupol.deco.revertable
+    @aeidon.deco.revertable
     def cut_texts(self, indices, doc, register=-1):
         """Cut texts to the clipboard."""
-
         self.copy_texts(indices, doc)
         self.clear_texts(indices, doc, register=register)
         self.set_action_description(register, _("Cutting texts"))
@@ -64,22 +62,20 @@ class ClipboardAgent(gaupol.Delegate):
         assert 0 <= index <= len(self.subtitles)
         assert self.clipboard.get_texts()
 
-    @gaupol.deco.revertable
+    @aeidon.deco.revertable
     def paste_texts(self, index, doc, register=-1):
         """Paste texts from the clipboard and return pasted indices."""
-
         texts = self.clipboard.get_texts()
         length = len(self.subtitles)
-        excess = len(texts) - (length - index)
-        if excess > 0:
-            inserts = range(length, length + excess)
+        new_count = len(texts) - (length - index)
+        if new_count > 0:
+            inserts = range(length, length + new_count)
             self.insert_blank_subtitles(inserts, register=register)
-        entries = [(i, x) for (i, x) in enumerate(texts)]
-        entries = [(i, x) for (i, x) in entries if x is not None]
+        entries = [(i, x) for (i, x) in enumerate(texts) if x is not None]
         indices = [index + i for (i, x) in entries]
         new_texts = [x for (i, x) in entries]
         self.replace_texts(indices, doc, new_texts, register=register)
-        if excess > 0:
+        if new_count > 0:
             self.group_actions(register, 2, "")
         self.set_action_description(register, _("Pasting texts"))
         return tuple(indices)
