@@ -11,9 +11,9 @@ Gaupol 0.16
  [ ] Code cleanup, attribute and signals checks
  [ ] Merge experimental local patterns
  [ ] Use decorator module to preserve signatures in API documentation
-     http://pypi.python.org/pypi/decorator/
+      - http://pypi.python.org/pypi/decorator/
  [ ] Fix focus changing when pasting subtitles
-     http://www.mail-archive.com/gaupol-list@gna.org/msg00022.html
+      - http://www.mail-archive.com/gaupol-list@gna.org/msg00022.html
  [ ] Use gtk.accel_map_load and gtk.accel_map_save
  [?] Use transifex.net (or something) for translations
  [ ] Use gtk.RecentAction for the recent file menus
@@ -24,7 +24,11 @@ Gaupol 0.16
  [ ] MetadataItem._get_localized_field should try 'xx' if 'xx_YY'
      fails
  [ ] Add help menu item for wiki page
+ [?] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=555338
+ [?] Copy key-event hack from gedit for sidepane
+      - http://mail.gnome.org/archives/desktop-devel-list/2009-November/msg00263.html
  [D] Add German translation (Chris Leick)
+ [D] Add Hungarian translation (László Andrássy)
 
 Gaupol 1.0
 ==========
