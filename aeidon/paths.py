@@ -26,7 +26,7 @@ Of the directory attributes defined in this module, :data:`CONFIG_HOME_DIR` and
 they adher to freedesktop.org_'s `XDG Base Directory Specification`_ and on
 Windows they are both under the ``%APPDATA%`` directory.
 
-The values of :data:`DATA_DIR` and :data:`LOCALE_DIR` as defined in this file
+The values of :data:`DATA_DIR` and :data:`LOCALE_DIR` as defined in this module
 depend on whether Gaupol is run from the source directory or from a frozen
 ``py2exe`` installation. In other cases, i.e. a proper installation on a
 non-Windows system, the values of these attributes are overwritten during
@@ -44,6 +44,69 @@ import sys
 
 __all__ = ("CONFIG_HOME_DIR", "DATA_DIR", "DATA_HOME_DIR", "LOCALE_DIR",)
 
+
+def _xdg_copy_config_files():
+    """Copy config files from ``OBSOLETE_HOME_DIR`` to ``CONFIG_HOME_DIR``."""
+    dst_directory = os.path.join(CONFIG_HOME_DIR, "patterns")
+    try: aeidon.util.makedirs(CONFIG_HOME_DIR)
+    except (IOError, OSError): pass
+    # $XDG_CONFIG_HOME_DIR/patterns/*.conf
+    src_directory = os.path.join(OBSOLETE_HOME_DIR, "patterns")
+    try: files = os.listdir(src_directory)
+    except (IOError, OSError): files = []
+    files = [x for x in files if x.endswith(".conf")]
+    for basename in files:
+        src = os.path.join(src_directory, basename)
+        dst = os.path.join(dst_directory, basename)
+        try: shutil.copyfile(src, dst)
+        except (IOError, OSError): pass
+    # $XDG_CONFIG_HOME_DIR/gaupol.gtk.conf
+    src = os.path.join(OBSOLETE_HOME_DIR, "gaupol.gtk.conf")
+    dst = os.path.join(CONFIG_HOME_DIR, "gaupol.gtk.conf")
+    try: shutil.copyfile(src, dst)
+    except (IOError, OSError): pass
+    # $XDG_CONFIG_HOME_DIR/search/
+    # $XDG_CONFIG_HOME_DIR/spell-check/
+    for basename in ("search", "spell-check"):
+        src = os.path.join(OBSOLETE_HOME_DIR, basename)
+        dst = os.path.join(CONFIG_HOME_DIR, basename)
+        try: shutil.copytree(src, dst)
+        except (IOError, OSError): pass
+    path = os.path.join(OBSOLETE_HOME_DIR, "README")
+    aeidon.util.writelines(path, (
+        "This directory is obsolete since gaupol version 0.14",
+        "and can be safely removed."))
+
+def _xdg_copy_data_files():
+    """Copy data files from ``OBSOLETE_HOME_DIR`` to ``DATA_HOME_DIR``."""
+    # $XDG_DATA_HOME/extensions/
+    # $XDG_DATA_HOME/headers/
+    for basename in ("extensions", "headers"):
+        src = os.path.join(OBSOLETE_HOME_DIR, basename)
+        dst = os.path.join(DATA_HOME_DIR, basename)
+        try: shutil.copytree(src, dst)
+        except (IOError, OSError): pass
+    # $XDG_DATA_HOME/patterns/
+    dst_directory = os.path.join(DATA_HOME_DIR, "patterns")
+    try: aeidon.util.makedirs(dst_directory)
+    except (IOError, OSError): pass
+    src_directory = os.path.join(OBSOLETE_HOME_DIR, "patterns")
+    try: files = os.listdir(src_directory)
+    except (IOError, OSError): files = []
+    files = [x for x in files if x.endswith((".capitalization",
+                                             ".common-error",
+                                             ".hearing-impaired",
+                                             ".line-break"))]
+
+    for basename in files:
+        src = os.path.join(src_directory, basename)
+        dst = os.path.join(dst_directory, basename)
+        try: shutil.copyfile(src, dst)
+        except (IOError, OSError): pass
+    path = os.path.join(OBSOLETE_HOME_DIR, "README")
+    aeidon.util.writelines(path, (
+        "This directory is obsolete since gaupol version 0.14",
+        "and can be safely removed."))
 
 def get_config_home_directory():
     """Return path to the user's configuration directory."""
@@ -129,77 +192,16 @@ def get_obsolete_profile_directory():
     directory = os.path.join(directory, ".gaupol")
     return os.path.abspath(directory)
 
-def xdg_copy_config_files():
-    """Copy config files from ``OBSOLETE_HOME_DIR`` to ``CONFIG_HOME_DIR``."""
-    dst_directory = os.path.join(CONFIG_HOME_DIR, "patterns")
-    try: aeidon.util.makedirs(CONFIG_HOME_DIR)
-    except (IOError, OSError): pass
-    # $XDG_CONFIG_HOME_DIR/patterns/*.conf
-    src_directory = os.path.join(OBSOLETE_HOME_DIR, "patterns")
-    try: files = os.listdir(src_directory)
-    except (IOError, OSError): files = []
-    files = [x for x in files if x.endswith(".conf")]
-    for basename in files:
-        src = os.path.join(src_directory, basename)
-        dst = os.path.join(dst_directory, basename)
-        try: shutil.copyfile(src, dst)
-        except (IOError, OSError): pass
-    # $XDG_CONFIG_HOME_DIR/gaupol.gtk.conf
-    src = os.path.join(OBSOLETE_HOME_DIR, "gaupol.gtk.conf")
-    dst = os.path.join(CONFIG_HOME_DIR, "gaupol.gtk.conf")
-    try: shutil.copyfile(src, dst)
-    except (IOError, OSError): pass
-    # $XDG_CONFIG_HOME_DIR/search/
-    # $XDG_CONFIG_HOME_DIR/spell-check/
-    for basename in ("search", "spell-check"):
-        src = os.path.join(OBSOLETE_HOME_DIR, basename)
-        dst = os.path.join(CONFIG_HOME_DIR, basename)
-        try: shutil.copytree(src, dst)
-        except (IOError, OSError): pass
-    path = os.path.join(OBSOLETE_HOME_DIR, "README")
-    aeidon.util.writelines(path, (
-        "This directory is obsolete since gaupol version 0.14",
-        "and can be safely removed."))
-
-def xdg_copy_data_files():
-    """Copy data files from ``OBSOLETE_HOME_DIR`` to ``DATA_HOME_DIR``."""
-    # $XDG_DATA_HOME/extensions/
-    # $XDG_DATA_HOME/headers/
-    for basename in ("extensions", "headers"):
-        src = os.path.join(OBSOLETE_HOME_DIR, basename)
-        dst = os.path.join(DATA_HOME_DIR, basename)
-        try: shutil.copytree(src, dst)
-        except (IOError, OSError): pass
-    # $XDG_DATA_HOME/patterns/
-    dst_directory = os.path.join(DATA_HOME_DIR, "patterns")
-    try: aeidon.util.makedirs(dst_directory)
-    except (IOError, OSError): pass
-    src_directory = os.path.join(OBSOLETE_HOME_DIR, "patterns")
-    try: files = os.listdir(src_directory)
-    except (IOError, OSError): files = []
-    files = [x for x in files if x.endswith((".capitalization",
-                                             ".common-error",
-                                             ".hearing-impaired",
-                                             ".line-break"))]
-
-    for basename in files:
-        src = os.path.join(src_directory, basename)
-        dst = os.path.join(dst_directory, basename)
-        try: shutil.copyfile(src, dst)
-        except (IOError, OSError): pass
-    path = os.path.join(OBSOLETE_HOME_DIR, "README")
-    aeidon.util.writelines(path, (
-        "This directory is obsolete since gaupol version 0.14",
-        "and can be safely removed."))
-
 def xdg_copy_if_applicable():
     """Copy config and data files to XDG folders if applicable."""
     if (os.path.isdir(OBSOLETE_HOME_DIR)
-        and sys.platform != "win32"):
-        if not os.path.isdir(CONFIG_HOME_DIR):
-            xdg_copy_config_files()
-        if not os.path.isdir(DATA_HOME_DIR):
-            xdg_copy_data_files()
+        and sys.platform != "win32"
+        and not os.path.isdir(CONFIG_HOME_DIR)):
+        _xdg_copy_config_files()
+    if (os.path.isdir(OBSOLETE_HOME_DIR)
+        and sys.platform != "win32"
+        and not os.path.isdir(DATA_HOME_DIR)):
+        _xdg_copy_data_files()
 
 
 CONFIG_HOME_DIR = get_config_home_directory()

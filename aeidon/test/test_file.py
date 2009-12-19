@@ -81,14 +81,6 @@ class TestSubtitleFile(aeidon.TestCase):
         assert new_file.has_utf_16_bom == False
         assert new_file.header == "test"
 
-    @aeidon.deco.monkey_patch(aeidon, "DATA_DIR")
-    @aeidon.deco.monkey_patch(aeidon, "DATA_HOME_DIR")
-    def test_get_template_header(self):
-        assert self.file.get_template_header()
-        data = aeidon.DATA_DIR, aeidon.DATA_HOME_DIR
-        aeidon.DATA_HOME_DIR, aeidon.DATA_DIR = data
-        assert self.file.get_template_header()
-
     def test_read(self):
         self.raises(NotImplementedError,
                     self.file.read)

@@ -31,7 +31,7 @@ class Liner(aeidon.Parser):
 
     """Breaker of text into lines according to preferred break points.
 
-    :class:`Breaker` operates by first joining all lines by spaces and then
+    :class:`Liner` operates by first joining all lines by spaces and then
     trying different breaks. Breaks are tried first from :attr:`break_points`
     in the order they are defined and if that fails, lines are split at word
     boundaries. Lines are attempted to be broken so that the variance of line
@@ -43,9 +43,9 @@ class Liner(aeidon.Parser):
     legal solutions for subtitles with three or more lines and a variance too
     great for the subtitle to be typeset elegantly.
 
-    :ivar _length_func: A function that returns the length of its argument
     :ivar _space_length: Length of a space according to :attr:`length_func`
     :ivar break_points: List of tuples of regex object, replacement
+    :ivar length_func: A function that returns the length of its argument
     :ivar max_deviation: Maximum deviation for texts with three or more lines
     :ivar max_length: Maximum length of a line in units of :attr:`_length_func`
     :ivar max_lines: Maximum preferred amount of lines (may be exceeded)
@@ -194,6 +194,10 @@ class Liner(aeidon.Parser):
             indices.append(self._get_break(lengths[a:z]) + a)
         return sorted(indices)
 
+    def _get_length_func(self):
+        """Return the length function used."""
+        return self._length_func
+
     def _get_start_index_ensure(self, value, lengths, max_lines):
         assert 0 <= value <= len(lengths)
 
@@ -235,6 +239,14 @@ class Liner(aeidon.Parser):
             text = text + prefix + items[i]
         self.text = text.strip()
 
+    def _set_length_func_require(self, func):
+        assert isinstance(func(""), (int, float))
+
+    def _set_length_func(self, func):
+        """Set the length function to use."""
+        self._length_func = func
+        self._space_length = func(" ")
+
     def break_lines(self):
         """Break lines and return text."""
         self.text = self.text.replace("\n", " ")
@@ -266,14 +278,6 @@ class Liner(aeidon.Parser):
                 return False
         return True
 
-    def set_length_func_require(self, func):
-        assert isinstance(func(""), (int, float))
-
-    def set_length_func(self, func):
-        """Set the length function to use."""
-        self._length_func = func
-        self._space_length = func(" ")
-
     def set_text(self, text, next=True):
         """Set the target text to search in and parse it.
 
@@ -281,3 +285,5 @@ class Liner(aeidon.Parser):
         """
         aeidon.Parser.set_text(self, text.strip(), next)
         self.text = self.text.strip()
+
+    length_func = property(_get_length_func, _set_length_func)

@@ -126,7 +126,8 @@ class TestHeaderDialog(gaupol.gtk.TestCase):
 
         self.dialog._main_template_button.clicked()
         value = self.dialog._get_main_header()
-        assert value == self.dialog._main_file.get_template_header()
+        format = self.dialog._main_file.format
+        assert value == aeidon.util.get_template_header(format)
 
     def test__on_main_revert_button_clicked(self):
 
@@ -149,7 +150,8 @@ class TestHeaderDialog(gaupol.gtk.TestCase):
 
         self.dialog._tran_template_button.clicked()
         value = self.dialog._get_translation_header()
-        assert value == self.dialog._tran_file.get_template_header()
+        format = self.dialog._tran_file.format
+        assert value == aeidon.util.get_template_header(format)
 
     def test__on_tran_revert_button_clicked(self):
 

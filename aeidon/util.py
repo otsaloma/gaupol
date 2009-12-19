@@ -140,7 +140,7 @@ def detect_format(path, encoding):
 
 @aeidon.deco.contractual
 def detect_format(path, encoding):
-    """Detect and return format of file at `path`.
+    """Detect and return format of subtitle file at `path`.
 
     Raise :exc:`IOError` if reading fails.
     Raise :exc:`UnicodeError` if decoding fails.
@@ -283,6 +283,22 @@ def get_sorted_unique(lst):
         if lst[i] == lst[i - 1]:
             lst.pop(i)
     return lst
+
+def get_template_header(format):
+    """Read and return the template header for `format`.
+
+    Raise :exc:`IOError` if reading global header file fails.
+    Raise :exc:`UnicodeError` if decoding global header file fails.
+    """
+    directory = os.path.join(aeidon.DATA_HOME_DIR, "headers")
+    path = os.path.join(directory, format.name.lower())
+    if os.path.isfile(path):
+        try: return read(path, None)
+        except (IOError, UnicodeError):
+            print_read_io(sys.exc_info(), path)
+    directory = os.path.join(aeidon.DATA_DIR, "headers")
+    path = os.path.join(directory, format.name.lower())
+    return read(path, "ascii")
 
 def get_unique_ensure(value, lst, keep_last=False):
     for item in value:
@@ -435,6 +451,7 @@ def start_process(command, **kwargs):
                                 env=os.environ.copy(),
                                 universal_newlines=True,
                                 **kwargs)
+
     except OSError, (no, message):
         raise aeidon.ProcessError(message)
 

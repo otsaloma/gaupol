@@ -23,8 +23,6 @@ import time
 
 class TestModule(aeidon.TestCase):
 
-    url = "http://home.gna.org/gaupol"
-
     def browse_url_silent(self, url):
         try:
             return aeidon.util.browse_url(url)
@@ -44,7 +42,7 @@ class TestModule(aeidon.TestCase):
 
     def test_browse_url__command(self):
         if aeidon.util.is_command("echo"):
-            aeidon.util.browse_url(self.url, "echo")
+            aeidon.util.browse_url(aeidon.HOMEPAGE_URL, "echo")
 
     @aeidon.deco.monkey_patch(os, "environ")
     @aeidon.deco.monkey_patch(sys, "platform")
@@ -52,7 +50,7 @@ class TestModule(aeidon.TestCase):
         os.environ.clear()
         os.environ["GNOME_DESKTOP_SESSION_ID"] = "1"
         sys.platform = "linux2"
-        self.browse_url_silent(self.url)
+        self.browse_url_silent(aeidon.HOMEPAGE_URL)
 
     @aeidon.deco.monkey_patch(os, "environ")
     @aeidon.deco.monkey_patch(sys, "platform")
@@ -60,14 +58,14 @@ class TestModule(aeidon.TestCase):
         os.environ.clear()
         os.environ["KDE_FULL_SESSION"] = "1"
         sys.platform = "linux2"
-        self.browse_url_silent(self.url)
+        self.browse_url_silent(aeidon.HOMEPAGE_URL)
 
     @aeidon.deco.monkey_patch(os, "environ")
     @aeidon.deco.monkey_patch(sys, "platform")
     def test_browse_url__mac_os_x(self):
         os.environ.clear()
         sys.platform = "darwin"
-        self.browse_url_silent(self.url)
+        self.browse_url_silent(aeidon.HOMEPAGE_URL)
 
     @aeidon.deco.monkey_patch(os, "environ")
     @aeidon.deco.monkey_patch(sys, "platform")
@@ -76,7 +74,7 @@ class TestModule(aeidon.TestCase):
         os.environ.clear()
         sys.platform = "commodore_64"
         aeidon.util.is_command = lambda x: False
-        self.browse_url_silent(self.url)
+        self.browse_url_silent(aeidon.HOMEPAGE_URL)
 
     @aeidon.deco.monkey_patch(os, "environ")
     @aeidon.deco.monkey_patch(sys, "platform")
@@ -85,7 +83,7 @@ class TestModule(aeidon.TestCase):
         os.environ.clear()
         sys.platform = "linux2"
         aeidon.util.is_command = lambda x: (x == "xdg-open")
-        self.browse_url_silent(self.url)
+        self.browse_url_silent(aeidon.HOMEPAGE_URL)
 
     @aeidon.deco.monkey_patch(os, "environ")
     @aeidon.deco.monkey_patch(sys, "platform")
@@ -94,7 +92,7 @@ class TestModule(aeidon.TestCase):
         os.environ.clear()
         sys.platform = "linux2"
         aeidon.util.is_command = lambda x: (x == "exo-open")
-        self.browse_url_silent(self.url)
+        self.browse_url_silent(aeidon.HOMEPAGE_URL)
 
     @aeidon.deco.monkey_patch(__builtins__, "__import__")
     def test_chardet_available__false(self):
@@ -214,6 +212,15 @@ class TestModule(aeidon.TestCase):
         lst = aeidon.util.get_sorted_unique(lst)
         assert lst == [1, 3, 4, 5, 6]
 
+    @aeidon.deco.monkey_patch(aeidon, "DATA_DIR")
+    @aeidon.deco.monkey_patch(aeidon, "DATA_HOME_DIR")
+    def test_get_template_header(self):
+        for format in filter(lambda x: x.has_header, aeidon.formats):
+            assert aeidon.util.get_template_header(format)
+            dirs = aeidon.DATA_DIR, aeidon.DATA_HOME_DIR
+            aeidon.DATA_HOME_DIR, aeidon.DATA_DIR = dirs
+            assert aeidon.util.get_template_header(format)
+
     def test_get_unique__first(self):
         lst = [4, 1, 5, 5, 1, 1, 3, 6, 4, 4]
         lst = aeidon.util.get_unique(lst)
@@ -310,7 +317,8 @@ class TestModule(aeidon.TestCase):
         path = self.new_subrip_file()
         codecs.open(path, "w", "latin1").write(u"\xc3\xb6\n")
         self.raises(UnicodeError,
-                    aeidon.util.read, path, "ascii", None)
+                    aeidon.util.read,
+                    path, "ascii", None)
 
     def test_readlines__basic(self):
         path = self.new_subrip_file()
@@ -326,7 +334,8 @@ class TestModule(aeidon.TestCase):
         path = self.new_subrip_file()
         codecs.open(path, "w", "latin1").write(u"\xc3\xb6\n")
         self.raises(UnicodeError,
-                    aeidon.util.readlines, path, "ascii", None)
+                    aeidon.util.readlines,
+                    path, "ascii", None)
 
     @aeidon.deco.monkey_patch(sys, "platform")
     def test_shell_quote__unix(self):

@@ -41,6 +41,13 @@ body
   padding: 0;
 }
 
+dd
+{
+  margin-bottom: 10px;
+  margin-left: 20px;
+  margin-top: 3px;
+}
+
 div.admonition p.admonition-title + p
 {
   display: inline;
@@ -264,6 +271,11 @@ div.warning
 dt:target
 {
   background-color: #fff5aa;
+}
+
+ol, ul
+{
+  padding-left: 20px;
 }
 
 p.admonition-title

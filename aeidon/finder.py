@@ -207,7 +207,7 @@ class Finder(object):
         self.pattern = re.compile(pattern, flags)
 
     def set_text(self, text, next=True):
-        """Set the target text to search in.
+        """Set the target text to search in and reset position.
 
         `next` should be ``True`` to start at beginning, ``False`` for end.
         """

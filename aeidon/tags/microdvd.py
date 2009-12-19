@@ -153,7 +153,7 @@ class MicroDVD(aeidon.Markup):
         """Return italicized `text`."""
         return self._style(text, "Y", "y", "i", bounds)
 
-    def sizen(self, text, size, bounds=None):
+    def scale(self, text, size, bounds=None):
         """Return `text` scaled to `size`."""
         return self._style(text, "S", "s", str(size), bounds)
 

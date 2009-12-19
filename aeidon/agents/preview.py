@@ -154,5 +154,4 @@ class PreviewAgent(aeidon.Delegate):
                                             stderr=subprocess.STDOUT,
                                             stdout=output_fd)
 
-        self.emit("preview-started", self.video_path, sub_path, output_path)
         return process, command, output_path

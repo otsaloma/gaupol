@@ -18,15 +18,15 @@
 
 from __future__ import division
 
-import gaupol
-_ = gaupol.i18n._
+import aeidon
+_ = aeidon.i18n._
 
 
-class PositionAgent(gaupol.Delegate):
+class PositionAgent(aeidon.Delegate):
 
     """Manipulating times and frames."""
 
-    __metaclass__ = gaupol.Contractual
+    __metaclass__ = aeidon.Contractual
 
     def _get_frame_transform_ensure(self, value, point_1, point_2):
         assert isinstance(value[1], int)
@@ -85,7 +85,7 @@ class PositionAgent(gaupol.Delegate):
         for index in indices or []:
             assert 0 <= index < len(self.subtitles)
 
-    @gaupol.deco.revertable
+    @aeidon.deco.revertable
     def adjust_durations(self, indices=None, optimal=None, lengthen=False,
         shorten=False, maximum=None, minimum=None, gap=None, register=-1):
         """Lengthen or shorten durations by changing the end positions.
@@ -105,7 +105,7 @@ class PositionAgent(gaupol.Delegate):
             if index < (len(self.subtitles) - 1):
                 end_max = self.subtitles[index + 1].start_seconds
             if optimal is not None:
-                length = self.get_text_length(index, gaupol.documents.MAIN)
+                length = self.get_text_length(index, aeidon.documents.MAIN)
                 optimal_duration = optimal * length
                 if ((end - start) < optimal_duration) and lengthen:
                     end = start + optimal_duration
@@ -133,7 +133,7 @@ class PositionAgent(gaupol.Delegate):
         for index in indices or []:
             assert 0 <= index < len(self.subtitles)
 
-    @gaupol.deco.revertable
+    @aeidon.deco.revertable
     def convert_framerate(self, indices, input, output, register=-1):
         """Set the value of the framerate and convert subtitles to it.
 
@@ -151,20 +151,20 @@ class PositionAgent(gaupol.Delegate):
         self.replace_positions(indices, new_subtitles, register=register)
         self.group_actions(register, 2, _("Converting framerate"))
 
-    @gaupol.deco.revertable
+    @aeidon.deco.revertable
     def set_framerate(self, framerate, register=-1):
         """Set the value of the framerate."""
 
         orig_framerate = self.framerate
         self.framerate = framerate
-        self.calc = gaupol.Calculator(framerate)
+        self.calc = aeidon.Calculator(framerate)
         for subtitle in self.subtitles:
             subtitle.framerate = framerate
 
         action = self.get_revertable_action(register)
-        action.docs = tuple(gaupol.documents)
+        action.docs = tuple(aeidon.documents)
         action.description = _("Setting framerate")
-        action.revert_method = self.set_framerate
+        action.revert_function = self.set_framerate
         action.revert_args = (orig_framerate,)
         self.register_action(action)
 
@@ -172,7 +172,7 @@ class PositionAgent(gaupol.Delegate):
         for index in indices or []:
             assert 0 <= index < len(self.subtitles)
 
-    @gaupol.deco.revertable
+    @aeidon.deco.revertable
     def shift_positions(self, indices, value, register=-1):
         """Make subtitles appear earlier or later.
 
@@ -192,7 +192,7 @@ class PositionAgent(gaupol.Delegate):
         for index in indices or []:
             assert 0 <= index < len(self.subtitles)
 
-    @gaupol.deco.revertable
+    @aeidon.deco.revertable
     def transform_positions(self, indices, point_1, point_2, register=-1):
         """Change positions by linear two-point correction.
 

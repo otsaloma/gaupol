@@ -67,7 +67,7 @@ class MetadataItem(object):
         return self.get_field(name)
 
     def get_description(self, localize=True):
-        """Return the description of item."""
+        """Return description as defined by the ``Description`` field."""
         if not localize:
             return self.get_field("Description")
         return self._get_localized_field("Description")
@@ -98,7 +98,7 @@ class MetadataItem(object):
         return lst
 
     def get_name(self, localize=True):
-        """Return the name of item."""
+        """Return name as defined by the ``Name`` field."""
         if not localize:
             return self.get_field("Name")
         return self._get_localized_field("Name")

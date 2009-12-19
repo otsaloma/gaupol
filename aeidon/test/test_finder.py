@@ -23,7 +23,7 @@ class TestFinder(aeidon.TestCase):
     text = ("One only risks it, because\n"
             "one's survival depends on it.")
 
-    def loop_over_find_cases(self, cases, regex, next):
+    def assert_find_cases(self, cases, regex, next):
         advance = (self.finder.next if next else self.finder.previous)
         for pattern, matches in cases:
             self.finder.set_text(self.text, next)
@@ -36,7 +36,7 @@ class TestFinder(aeidon.TestCase):
                 assert self.finder.pos == match[next]
             self.raises(StopIteration, advance)
 
-    def loop_over_replace_all_cases(self, cases, regex):
+    def assert_replace_all_cases(self, cases, regex):
         for pattern, replacement, count, text in cases:
             self.finder.set_text(self.text)
             if regex:
@@ -115,7 +115,7 @@ class TestFinder(aeidon.TestCase):
                  (r"\W{2}", (
                     (17, 19),)))
 
-        self.loop_over_find_cases(cases, True, True)
+        self.assert_find_cases(cases, True, True)
 
     def test_next__regex_ignore_case(self):
         cases = ((r"O" , (
@@ -128,7 +128,7 @@ class TestFinder(aeidon.TestCase):
                     (47, 48),)))
 
         self.finder.ignore_case = True
-        self.loop_over_find_cases(cases, True, True)
+        self.assert_find_cases(cases, True, True)
 
     def test_next__string(self):
         cases = (("a" , (
@@ -153,7 +153,7 @@ class TestFinder(aeidon.TestCase):
                  ("." , (
                     (55, 56),)))
 
-        self.loop_over_find_cases(cases, False, True)
+        self.assert_find_cases(cases, False, True)
 
     def test_next__string_ignore_case(self):
         cases = (("o" , (
@@ -165,7 +165,7 @@ class TestFinder(aeidon.TestCase):
                     (12, 13),)))
 
         self.finder.ignore_case = True
-        self.loop_over_find_cases(cases, False, True)
+        self.assert_find_cases(cases, False, True)
 
     def test_previous__regex(self):
         cases = ((r"a" , (
@@ -232,7 +232,7 @@ class TestFinder(aeidon.TestCase):
                  (r"\W{2}", (
                     (17, 19),)))
 
-        self.loop_over_find_cases(cases, True, False)
+        self.assert_find_cases(cases, True, False)
 
     def test_previous__regex_ignore_case(self):
         cases = ((r"O" , (
@@ -245,7 +245,7 @@ class TestFinder(aeidon.TestCase):
                     (42, 43),)))
 
         self.finder.ignore_case = True
-        self.loop_over_find_cases(cases, True, False)
+        self.assert_find_cases(cases, True, False)
 
     def test_previous__string(self):
         cases = (("a" , (
@@ -270,7 +270,7 @@ class TestFinder(aeidon.TestCase):
                  ("." , (
                     (55, 56),)))
 
-        self.loop_over_find_cases(cases, False, False)
+        self.assert_find_cases(cases, False, False)
 
     def test_previous__string_ignore_case(self):
         cases = (("o" , (
@@ -282,7 +282,7 @@ class TestFinder(aeidon.TestCase):
                     (12, 13),)))
 
         self.finder.ignore_case = True
-        self.loop_over_find_cases(cases, False, False)
+        self.assert_find_cases(cases, False, False)
 
     def test_replace__equal_length_next(self):
         self.finder.set_text(self.text)
@@ -492,7 +492,7 @@ class TestFinder(aeidon.TestCase):
                  (r".", r"-" , 56, "-" *  56),
                  (r".", r"..", 56, "." * 112),)
 
-        self.loop_over_replace_all_cases(cases, True)
+        self.assert_replace_all_cases(cases, True)
 
     def test_replace_all__string(self):
         cases = (("i", "-", 4,
@@ -511,7 +511,7 @@ class TestFinder(aeidon.TestCase):
                   ("One only risks it, because\n"
                    "one's survival depends on it.")))
 
-        self.loop_over_replace_all_cases(cases, False)
+        self.assert_replace_all_cases(cases, False)
 
     def test_set_regex(self):
         # pylint: disable-msg=E1103

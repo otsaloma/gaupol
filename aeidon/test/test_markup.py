@@ -82,8 +82,8 @@ class TestMarkup(aeidon.TestCase):
         args = (self.markup.italicize, self.text)
         self.raises(NotImplementedError, *args)
 
-    def test_sizen(self):
-        args = (self.markup.sizen, self.text, 12)
+    def test_scale(self):
+        args = (self.markup.scale, self.text, 12)
         self.raises(NotImplementedError, *args)
 
     def test_tag(self):

@@ -28,7 +28,7 @@ class Markup(aeidon.Singleton):
 
     Markup conversions between different formats are done via an internal
     format, which has the following BBcode-style tags with angle brackets.
-    Conversions are best done via the ``decode_*`` and ``encode_*`` methods
+    Conversions are best done via the ``_decode_*`` and ``_encode_*`` methods
     rather than hard-coding the internal tags in regular expression
     substitutions.
 
@@ -143,7 +143,7 @@ class Markup(aeidon.Singleton):
     def _encode_s(self, text):
         """Return `text` with size markup converted to this format."""
         regex = self._get_regex(r"<size=(\d+)>(.*?)</size>")
-        return self._encode_apply(text, regex, self.sizen, 2, 1)
+        return self._encode_apply(text, regex, self.scale, 2, 1)
 
     def _encode_u(self, text):
         """Return `text` with underline markup converted to this format."""
@@ -236,12 +236,12 @@ class Markup(aeidon.Singleton):
         """Return italicized `text`."""
         raise NotImplementedError
 
-    def sizen_require(self, text, size, bounds=None):
+    def scale_require(self, text, size, bounds=None):
         assert isinstance(size, int) or size.isdigit()
         if bounds is not None:
             assert 0 <= bounds[0] <= bounds[1] <= len(text)
 
-    def sizen(self, text, size, bounds=None):
+    def scale(self, text, size, bounds=None):
         """Return `text` scaled to `size`."""
         raise NotImplementedError
 

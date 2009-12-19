@@ -24,6 +24,6 @@ class TestPattern(aeidon.TestCase):
         self.pattern = aeidon.Pattern()
 
     def test_get_flags(self):
-        self.pattern.set_field("Flags", "DOTALL;UNICODE")
+        self.pattern.set_field("Flags", "DOTALL;UNICODE;")
         flags = self.pattern.get_flags()
         assert flags == re.DOTALL | re.UNICODE

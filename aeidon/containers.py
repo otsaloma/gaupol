@@ -44,10 +44,10 @@ class SubStationAlpha(object):
     :ivar layer: Layer used by collusion detection (default 0)
     :ivar style: Style name (default "Default")
     :ivar name: Name of the character speaking (default "")
-    :ivar margin_l: Left margin override (default 0, uses default margins)
-    :ivar margin_r: Right margin override (default 0, uses default margins)
-    :ivar margin_v: Bottom margin override (default 0, uses default margins)
-    :ivar effect: Transition effect (default "", no effect)
+    :ivar margin_l: Left margin override (default 0, i.e. default margins)
+    :ivar margin_r: Right margin override (default 0, i.e. default margins)
+    :ivar margin_v: Bottom margin override (default 0, i.e. default margins)
+    :ivar effect: Transition effect (default "", i.e. no effect)
     """
 
     marked = 0

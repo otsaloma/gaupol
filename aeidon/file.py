@@ -53,11 +53,11 @@ class SubtitleFile(object):
         """Initialize a :class:`SubtitleFile` object."""
         self.encoding = encoding
         self.has_utf_16_bom = False
-        self.header = ""
+        self.header = (aeidon.util.get_template_header(self.format)
+                       if self.format.has_header else "")
+
         self.newline = newline
         self.path = os.path.abspath(path)
-        if self.format.has_header:
-            self.header = self.get_template_header()
 
     def _get_subtitle(self):
         """Return a new subtitle instance with proper properties."""
@@ -118,26 +118,6 @@ class SubtitleFile(object):
         if self.format == other.format:
             self.header = other.header
         self.has_utf_16_bom = other.has_utf_16_bom
-
-    def get_template_header_require(self):
-        assert self.format.has_header
-
-    def get_template_header(self):
-        """Read and return the header from a template file.
-
-        Raise :exc:`IOError` if reading global header file fails.
-        Raise :exc:`UnicodeError` if decoding global header file fails.
-        """
-        basename = self.format.name.lower()
-        directory = os.path.join(aeidon.DATA_HOME_DIR, "headers")
-        path = os.path.join(directory, basename)
-        if os.path.isfile(path):
-            try: return aeidon.util.read(path, None)
-            except (IOError, UnicodeError):
-                aeidon.util.print_read_io(sys.exc_info(), path)
-        directory = os.path.join(aeidon.DATA_DIR, "headers")
-        path = os.path.join(directory, basename)
-        return aeidon.util.read(path, "ascii")
 
     def read(self):
         """Read file and return subtitles.

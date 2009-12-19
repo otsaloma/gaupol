@@ -3,6 +3,10 @@ Gaupol 0.16
 
  [D] Use existing subtitle file mime-types instead of text/plain when
      adding files to the recent files database
+ [D] Fix opening a translation file with a Unicode BOM
+ [D] Add German translation (Chris Leick)
+ [D] Add Hungarian translation (László Andrássy)
+
  [ ] Split gaupol to gaupol and gaupol-gtk
  [ ] Add gaupol.gtk.View.add_column, which creates a new model
  [ ] Migrate from Glade to gtk.Builder
@@ -27,8 +31,6 @@ Gaupol 0.16
  [?] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=555338
  [?] Copy key-event hack from gedit for sidepane
       - http://mail.gnome.org/archives/desktop-devel-list/2009-November/msg00263.html
- [D] Add German translation (Chris Leick)
- [D] Add Hungarian translation (László Andrássy)
 
 Gaupol 1.0
 ==========
@@ -42,12 +44,12 @@ Gaupol 3000
    with format-specific fields to fill (?)
     - SubRip: Write coordinates (extended SubRip format)
     - MicroDVD: Write framerate information subtitle
- * Bump Python dependency to 2.6
+ * Bump Python dependency to something
     - Remove imports from __future__
-    - http://docs.python.org/whatsnew/2.6.html
- * Bump Python dependency to 3.0
-    - Remove imports from __future__
-    - http://docs.python.org/3.0/whatsnew/3.0.html
+    - http://docs.python.org/dev/whatsnew/2.6.html
+    - http://docs.python.org/dev/whatsnew/2.7.html
+    - http://docs.python.org/dev/whatsnew/3.0.html
+    - http://docs.python.org/dev/whatsnew/3.1.html
     - http://diveintopython3.org/whats-new.html
  * Bump PyGObject dependency to 2.16
     - Try gobject.option.OptionParser (see #378704)

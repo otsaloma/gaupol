@@ -16,23 +16,23 @@
 
 """Saving subtitle files."""
 
-import gaupol
+import aeidon
 import os
 import shutil
 import sys
 
 
-class SaveAgent(gaupol.Delegate):
+class SaveAgent(aeidon.Delegate):
 
     """Saving subtitle files."""
 
-    __metaclass__ = gaupol.Contractual
+    __metaclass__ = aeidon.Contractual
 
     def _convert_tags(self, subtitles, doc, from_format, to_format):
         """Convert tags in texts and return changed indices."""
 
         changed_indices = []
-        converter = gaupol.MarkupConverter(from_format, to_format)
+        converter = aeidon.MarkupConverter(from_format, to_format)
         for i, subtitle in enumerate(subtitles):
             text = subtitle.get_text(doc)
             new_text = converter.convert(text)
@@ -51,7 +51,7 @@ class SaveAgent(gaupol.Delegate):
             shutil.copyfile(source, destination)
             return True
         except IOError:
-            gaupol.util.print_write_io(sys.exc_info(), destination)
+            aeidon.util.print_write_io(sys.exc_info(), destination)
         return False
 
     def _move_file_ensure(self, value, source, destination):
@@ -64,7 +64,7 @@ class SaveAgent(gaupol.Delegate):
             shutil.move(source, destination)
             return True
         except (IOError, OSError):
-            gaupol.util.print_write_io(sys.exc_info(), destination)
+            aeidon.util.print_write_io(sys.exc_info(), destination)
         return False
 
     def _remove_file_ensure(self, value, path):
@@ -77,7 +77,7 @@ class SaveAgent(gaupol.Delegate):
             os.remove(path)
             return True
         except OSError:
-            gaupol.util.print_remove_os(sys.exc_info(), path)
+            aeidon.util.print_remove_os(sys.exc_info(), path)
         return False
 
     def _save(self, doc, props, keep_changes):
@@ -96,7 +96,7 @@ class SaveAgent(gaupol.Delegate):
             args = (self.subtitles, doc, file.format, format)
             changed_indices = self._convert_tags(*args)
         if not None in (path, format, encoding, newline):
-            new_file = gaupol.files.new(format, path, encoding, newline)
+            new_file = aeidon.files.new(format, path, encoding, newline)
             if file is not None:
                 new_file.copy_from(file)
             file = new_file
@@ -129,8 +129,8 @@ class SaveAgent(gaupol.Delegate):
         """
         file_existed = os.path.isfile(file.path)
         if os.path.isfile(file.path):
-            backup_path = gaupol.temp.create(".bak")
-            gaupol.temp.close(backup_path)
+            backup_path = aeidon.temp.create(".bak")
+            aeidon.temp.close(backup_path)
             backup_success = self._copy_file(file.path, backup_path)
         try:
             file.write(subtitles, doc)
@@ -150,9 +150,9 @@ class SaveAgent(gaupol.Delegate):
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
-        if doc == gaupol.documents.MAIN:
+        if doc == aeidon.documents.MAIN:
             return self.save_main(props, keep_changes)
-        if doc == gaupol.documents.TRAN:
+        if doc == aeidon.documents.TRAN:
             return self.save_translation(props, keep_changes)
         raise ValueError("Invalid document: %s" % repr(doc))
 
@@ -167,7 +167,7 @@ class SaveAgent(gaupol.Delegate):
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
-        args = (gaupol.documents.MAIN, props, keep_changes)
+        args = (aeidon.documents.MAIN, props, keep_changes)
         main_file, changed_indices = self._save(*args)
         if keep_changes:
             self._update_mode(main_file)
@@ -187,7 +187,7 @@ class SaveAgent(gaupol.Delegate):
         Raise IOError if writing fails.
         Raise UnicodeError if encoding fails.
         """
-        args = (gaupol.documents.TRAN, props, keep_changes)
+        args = (aeidon.documents.TRAN, props, keep_changes)
         tran_file, changed_indices = self._save(*args)
         if keep_changes:
             self.tran_file = tran_file

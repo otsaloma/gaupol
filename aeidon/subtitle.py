@@ -26,23 +26,23 @@ class Subtitle(object):
 
     """Data store and basic position manipulation of a single subtitle.
 
-    :ivar start: Read/write
-    :ivar start_time: Read
-    :ivar start_frame: Read
-    :ivar start_seconds: Read
-    :ivar end: Read/write
-    :ivar end_time: Read
-    :ivar end_frame: Read
-    :ivar end_seconds: Read
-    :ivar duration: Read/write
-    :ivar duration_time: Read
-    :ivar duration_frame: Read
-    :ivar duration_seconds: Read
-    :ivar main_text: Read/write
-    :ivar tran_text: Read/write
-    :ivar calc: Read/write
-    :ivar framerate: Read/write
-    :ivar mode: Read/write
+    :ivar start: Start position in native units (read/write)
+    :ivar start_time: Start time as string (read)
+    :ivar start_frame: Start frame as integer (read)
+    :ivar start_seconds: Start seconds as float (read)
+    :ivar end: End position in native units (read/write)
+    :ivar end_time: End time as string (read)
+    :ivar end_frame: End frame as integer (read)
+    :ivar end_seconds: End seconds as float (read)
+    :ivar duration: Duration in native units (read/write)
+    :ivar duration_time: Duration in time as string (read)
+    :ivar duration_frame: Duration in frames as integer (read)
+    :ivar duration_seconds: Duration in seconds as float (read)
+    :ivar main_text: Main text (read/write)
+    :ivar tran_text: Translation text (read/write)
+    :ivar calc: :class:`aeidon.Calculator` instance used (read/write)
+    :ivar framerate: :attr:`aeidon.framerates` item (read/write)
+    :ivar mode: :attr:`aeidon.modes` item (read/write)
 
     Positions can be set as strings for times, integers for frames or floats
     for seconds. Positions are saved internally in only one mode.

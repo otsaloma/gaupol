@@ -18,21 +18,21 @@
 
 from __future__ import division
 
-import gaupol
-_ = gaupol.i18n._
+import aeidon
+_ = aeidon.i18n._
 
 
-class EditAgent(gaupol.Delegate):
+class EditAgent(aeidon.Delegate):
 
     """Basic subtitle data editing."""
 
-    __metaclass__ = gaupol.Contractual
+    __metaclass__ = aeidon.Contractual
 
     def clear_texts_require(self, indices, doc, register=-1):
         for index in indices:
             assert 0 <= index < len(self.subtitles)
 
-    @gaupol.deco.revertable
+    @aeidon.deco.revertable
     def clear_texts(self, indices, doc, register=-1):
         """Set texts to blank strings."""
 
@@ -40,12 +40,12 @@ class EditAgent(gaupol.Delegate):
         self.replace_texts(indices, doc, new_texts, register=register)
         self.set_action_description(register, _("Clearing texts"))
 
-    @gaupol.deco.revertable
-    @gaupol.deco.notify_frozen
+    @aeidon.deco.revertable
+    @aeidon.deco.notify_frozen
     def insert_blank_subtitles(self, indices, register=-1):
         """Insert blank subtitles with fitting positions."""
 
-        for rindices in gaupol.util.get_ranges(indices):
+        for rindices in aeidon.util.get_ranges(indices):
             first_start = 0.0
             if self.subtitles and (rindices[0] == 0):
                 start = self.subtitles[0].start_seconds
@@ -65,15 +65,15 @@ class EditAgent(gaupol.Delegate):
                 self.subtitles.insert(index, subtitle)
 
         action = self.get_revertable_action(register)
-        action.docs = tuple(gaupol.documents)
+        action.docs = tuple(aeidon.documents)
         action.description = _("Inserting subtitles")
-        action.revert_method = self.remove_subtitles
+        action.revert_function = self.remove_subtitles
         action.revert_args = (indices,)
         self.register_action(action)
         self.emit("subtitles-inserted", indices)
 
-    @gaupol.deco.revertable
-    @gaupol.deco.notify_frozen
+    @aeidon.deco.revertable
+    @aeidon.deco.notify_frozen
     def insert_subtitles(self, indices, subtitles, register=-1):
         """Insert given subtitles."""
 
@@ -81,9 +81,9 @@ class EditAgent(gaupol.Delegate):
             self.subtitles.insert(index, subtitles[i])
 
         action = self.get_revertable_action(register)
-        action.docs = tuple(gaupol.documents)
+        action.docs = tuple(aeidon.documents)
         action.description = _("Inserting subtitles")
-        action.revert_method = self.remove_subtitles
+        action.revert_function = self.remove_subtitles
         action.revert_args = (indices,)
         self.register_action(action)
         self.emit("subtitles-inserted", indices)
@@ -94,7 +94,7 @@ class EditAgent(gaupol.Delegate):
             assert 0 <= index < len(self.subtitles)
         assert list(indices) == range(indices[0], indices[-1] + 1)
 
-    @gaupol.deco.revertable
+    @aeidon.deco.revertable
     def merge_subtitles(self, indices, register=-1):
         """Merge subtitles in indices to form one subtitle."""
 
@@ -116,8 +116,8 @@ class EditAgent(gaupol.Delegate):
         for index in indices:
             assert 0 <= index < len(self.subtitles)
 
-    @gaupol.deco.revertable
-    @gaupol.deco.notify_frozen
+    @aeidon.deco.revertable
+    @aeidon.deco.notify_frozen
     def remove_subtitles(self, indices, register=-1):
         """Remove subtitles in indices."""
 
@@ -127,9 +127,9 @@ class EditAgent(gaupol.Delegate):
             subtitles.insert(0, self.subtitles.pop(index))
 
         action = self.get_revertable_action(register)
-        action.docs = tuple(gaupol.documents)
+        action.docs = tuple(aeidon.documents)
         action.description = _("Removing subtitles")
-        action.revert_method = self.insert_subtitles
+        action.revert_function = self.insert_subtitles
         action.revert_args = (indices, subtitles)
         self.register_action(action)
         self.emit("subtitles-removed", indices)
@@ -139,8 +139,8 @@ class EditAgent(gaupol.Delegate):
             assert 0 <= index < len(self.subtitles)
         assert len(indices) == len(subtitles)
 
-    @gaupol.deco.revertable
-    @gaupol.deco.notify_frozen
+    @aeidon.deco.revertable
+    @aeidon.deco.notify_frozen
     def replace_positions(self, indices, subtitles, register=-1):
         """Replace positions in indices with those in subtitles."""
 
@@ -152,9 +152,9 @@ class EditAgent(gaupol.Delegate):
             subtitle.end = subtitles[i].end
 
         action = self.get_revertable_action(register)
-        action.docs = tuple(gaupol.documents)
+        action.docs = tuple(aeidon.documents)
         action.description = _("Replacing positions")
-        action.revert_method = self.replace_positions
+        action.revert_function = self.replace_positions
         action.revert_args = (indices, orig_subtitles)
         self.register_action(action)
         self.emit("positions-changed", indices)
@@ -164,8 +164,8 @@ class EditAgent(gaupol.Delegate):
             assert 0 <= index < len(self.subtitles)
         assert len(indices) == len(texts)
 
-    @gaupol.deco.revertable
-    @gaupol.deco.notify_frozen
+    @aeidon.deco.revertable
+    @aeidon.deco.notify_frozen
     def replace_texts(self, indices, doc, texts, register=-1):
         """Replace texts in document's indices with new_texts."""
 
@@ -178,7 +178,7 @@ class EditAgent(gaupol.Delegate):
         action = self.get_revertable_action(register)
         action.docs = (doc,)
         action.description = _("Replacing texts")
-        action.revert_method = self.replace_texts
+        action.revert_function = self.replace_texts
         action.revert_args = (indices, doc, orig_texts)
         self.register_action(action)
         signal = self.get_text_signal(doc)
@@ -187,7 +187,7 @@ class EditAgent(gaupol.Delegate):
     def split_subtitle_require(self, index, register=-1):
         assert 0 <= index < len(self.subtitles)
 
-    @gaupol.deco.revertable
+    @aeidon.deco.revertable
     def split_subtitle(self, index, register=-1):
         """Split subtitle in two subtitles with the same durations."""
 

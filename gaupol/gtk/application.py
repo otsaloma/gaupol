@@ -44,8 +44,6 @@ class Application(gaupol.Observable, gaupol.gtk.Runner):
      * page-closed (application, page)
      * page-switched (application, page)
      * pages-reordered (application, page, number)
-     * preview-completed (application, page)
-     * preview-started (application, page)
      * quit (application)
      * text-assistant-request-pages (application, assistant)
 
@@ -60,8 +58,6 @@ class Application(gaupol.Observable, gaupol.gtk.Runner):
         "page-closed",
         "page-switched",
         "pages-reordered",
-        "preview-completed",
-        "preview-started",
         "quit",
         "text-assistant-request-pages",)
 

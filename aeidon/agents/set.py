@@ -56,7 +56,7 @@ class SetAgent(aeidon.Delegate):
         action = self.get_revertable_action(register)
         action.docs = tuple(aeidon.documents)
         action.description = _("Editing position")
-        action.revert_method = self.set_end
+        action.revert_function = self.set_end
         action.revert_args = (index, orig_end)
         self.register_action(action)
         self.emit("positions-changed", (index,))
@@ -75,7 +75,7 @@ class SetAgent(aeidon.Delegate):
         action = self.get_revertable_action(register)
         action.docs = tuple(aeidon.documents)
         action.description = _("Editing position")
-        action.revert_method = self.set_end
+        action.revert_function = self.set_end
         action.revert_args = (index, orig_value)
         self.register_action(action)
         self.emit("positions-changed", (index,))
@@ -100,7 +100,7 @@ class SetAgent(aeidon.Delegate):
         action = self.get_revertable_action(register)
         action.docs = tuple(aeidon.documents)
         action.description = _("Editing position")
-        action.revert_method = self.set_start
+        action.revert_function = self.set_start
         action.revert_args = (index, orig_value)
         self.register_action(action)
         self.emit("positions-changed", (index,))
@@ -120,7 +120,7 @@ class SetAgent(aeidon.Delegate):
         action = self.get_revertable_action(register)
         action.docs = (doc,)
         action.description = _("Editing text")
-        action.revert_method = self.set_text
+        action.revert_function = self.set_text
         action.revert_args = (index, doc, orig_value)
         self.register_action(action)
         signal = self.get_text_signal(doc)

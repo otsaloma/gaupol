@@ -34,7 +34,6 @@ class PreviewAgent(gaupol.Delegate):
 
         if process.poll() is None: return True
         self._handle_output(process, output_path, command)
-        self.emit("preview-completed", page)
         return False # to not check again.
 
     def _handle_output(self, process, output_path, command):
@@ -109,7 +108,6 @@ class PreviewAgent(gaupol.Delegate):
             return self._show_io_error_dialog(message)
         except UnicodeError:
             return self._show_encoding_error_dialog()
-        self.emit("preview-started", page)
         # 'gobject.child_watch_add' does not appear to work on Windows,
         # so let's watch the process by polling it at regular intervals.
         function = self._check_process_state

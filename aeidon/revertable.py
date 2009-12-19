@@ -29,8 +29,8 @@ class RevertableAction(object):
     :ivar docs: Sequence of :attr:`aeidon.documents` items affected
     :ivar register: :attr:`aeidon.registers` item for action taken
     :ivar revert_args: Arguments passed to the revert method
+    :ivar revert_function: Method called to revert this action
     :ivar revert_kwargs: Keyword arguments passed to the revert method
-    :ivar revert_method: Method called to revert this action
     """
 
     __metaclass__ = aeidon.Contractual
@@ -40,15 +40,15 @@ class RevertableAction(object):
 
         `kwargs` can contain any of the names of public instance variables, of
         which :attr:`description`, :attr:`docs`, :attr:`register` and
-        :attr:`revert_method` are required to be set eventually, either with
+        :attr:`revert_function` are required to be set eventually, either with
         `kwargs` or direct assignment later.
         """
         self.description = None
         self.docs = None
         self.register = None
         self.revert_args = ()
+        self.revert_function = None
         self.revert_kwargs = {}
-        self.revert_method = None
         for key, value in kwargs.items():
             setattr(self, key, value)
 
@@ -64,13 +64,14 @@ class RevertableAction(object):
         raise ValueError("Invalid register: %s" % repr(self.register))
 
     def revert_require(self):
-        assert callable(self.revert_method)
+        assert callable(self.revert_function)
 
     def revert(self):
-        """Call the reversion method."""
+        """Call the reversion function."""
         kwargs = self.revert_kwargs.copy()
         kwargs["register"] = self._get_reversion_register()
-        return self.revert_method(*self.revert_args, **kwargs)
+        # pylint: disable-msg=E1102
+        return self.revert_function(*self.revert_args, **kwargs)
 
 
 class RevertableActionGroup(object):

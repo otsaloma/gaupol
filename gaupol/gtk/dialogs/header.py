@@ -150,7 +150,8 @@ class HeaderDialog(gaupol.gtk.GladeDialog):
     def _on_main_template_button_clicked(self, *args):
         """Set main header to the template of its format."""
 
-        self._set_main_header(self._main_file.get_template_header())
+        format = self._main_file.format
+        self._set_main_header(aeidon.util.get_template_header(format))
 
     def _on_main_revert_button_clicked(self, *args):
         """Restore the original main header."""
@@ -171,7 +172,8 @@ class HeaderDialog(gaupol.gtk.GladeDialog):
     def _on_tran_template_button_clicked(self, *args):
         """Set translation header to the template of its format."""
 
-        self._set_translation_header(self._tran_file.get_template_header())
+        format = self._tran_file.format
+        self._set_translation_header(aeidon.util.get_template_header(format))
 
     def _on_tran_revert_button_clicked(self, *args):
         """Restore the original translation header."""

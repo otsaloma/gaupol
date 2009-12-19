@@ -25,6 +25,12 @@ class TestLiner(aeidon.TestCase):
         self.liner.break_points.append((re.compile(r" (- )"), r"\n\1"))
         self.liner.break_points.append((re.compile(r"([.,?!]) "), r"\1\n"))
 
+    def test__set_length_func(self):
+        get_length = lambda x: len(x)**2 + 1
+        self.liner.length_func = get_length
+        assert self.liner.length_func == get_length
+        assert self.liner._space_length == 2
+
     def test_break_lines__01(self):
         text = ("- Isn't he off on Saturdays? "
                 "- Didn't he tell you?")
@@ -129,12 +135,6 @@ class TestLiner(aeidon.TestCase):
         text = "He'soffdutytodayHe'soffdutytodayHe'soffdutytoday."
         self.liner.set_text(text)
         assert self.liner.is_legal()
-
-    def test_set_length_func(self):
-        get_length = lambda x: len(x)**2 + 1
-        self.liner.set_length_func(get_length)
-        assert self.liner._length_func == get_length
-        assert self.liner._space_length == 2
 
     def test_set_text(self):
         self.liner.set_text(" <i>foo</i> ")

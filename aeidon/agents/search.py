@@ -16,11 +16,11 @@
 
 """Searching for and replacing text."""
 
-import gaupol
-_ = gaupol.i18n._
+import aeidon
+_ = aeidon.i18n._
 
 
-class SearchAgent(gaupol.Delegate):
+class SearchAgent(aeidon.Delegate):
 
     """Searching for and replacing text.
 
@@ -39,14 +39,14 @@ class SearchAgent(gaupol.Delegate):
     to the finder and raising StopIteration when no more matches are found.
     """
 
-    __metaclass__ = gaupol.Contractual
+    __metaclass__ = aeidon.Contractual
 
     def __init__(self, master):
         """Initialize a SearchAgent object."""
 
-        gaupol.Delegate.__init__(self, master)
+        aeidon.Delegate.__init__(self, master)
         self._docs = None
-        self._finder = gaupol.Finder()
+        self._finder = aeidon.Finder()
         self._indices = None
         self._match_doc = None
         self._match_index = None
@@ -92,18 +92,18 @@ class SearchAgent(gaupol.Delegate):
             if self._wrap:
                 return doc
             raise StopIteration
-        if next and (doc == gaupol.documents.MAIN):
-            return gaupol.documents.TRAN
-        if next and (doc == gaupol.documents.TRAN):
+        if next and (doc == aeidon.documents.MAIN):
+            return aeidon.documents.TRAN
+        if next and (doc == aeidon.documents.TRAN):
             if self._wrap:
-                return gaupol.documents.MAIN
+                return aeidon.documents.MAIN
             raise StopIteration
-        if (not next) and (doc == gaupol.documents.MAIN):
+        if (not next) and (doc == aeidon.documents.MAIN):
             if self._wrap:
-                return gaupol.documents.TRAN
+                return aeidon.documents.TRAN
             raise StopIteration
-        if (not next) and (doc == gaupol.documents.TRAN):
-            return gaupol.documents.MAIN
+        if (not next) and (doc == aeidon.documents.TRAN):
+            return aeidon.documents.MAIN
         raise ValueError("Invalid document: %s or invalid next: %s" % (
             repr(doc), repr(next)))
 
@@ -237,7 +237,7 @@ class SearchAgent(gaupol.Delegate):
         assert 0 <= self._match_span[0] <= len(text)
         assert 0 <= self._match_span[1] <= len(text)
 
-    @gaupol.deco.revertable
+    @aeidon.deco.revertable
     def replace(self, register=-1):
         """Replace the current match of pattern.
 
@@ -252,7 +252,7 @@ class SearchAgent(gaupol.Delegate):
         self.set_text(index, doc, text, register=register)
         self.set_action_description(register, _("Replacing"))
 
-    @gaupol.deco.revertable
+    @aeidon.deco.revertable
     def replace_all(self, register=-1):
         """Replace all matches of pattern and return amount.
 
@@ -310,5 +310,5 @@ class SearchAgent(gaupol.Delegate):
         docs can be None to target all documents.
         """
         self._indices = (tuple(indices) if indices else None)
-        self._docs = tuple(docs or gaupol.documents)
+        self._docs = tuple(docs or aeidon.documents)
         self._wrap = wrap

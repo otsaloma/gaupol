@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,81 +14,26 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gaupol
+import aeidon
 
-MAIN = gaupol.documents.MAIN
-TRAN = gaupol.documents.TRAN
+MAIN = aeidon.documents.MAIN
+TRAN = aeidon.documents.TRAN
 
 
-class TestRegisterAgent(gaupol.TestCase):
+class TestRegisterAgent(aeidon.TestCase):
 
     def setup_method(self, method):
-
         self.project = self.new_project()
         self.delegate = self.project.undo.im_self
 
-    def test__break_action_group(self):
-
-        self.project.clear_texts((0,), MAIN)
-        self.project.clear_texts((1,), MAIN)
-        self.project.clear_texts((2,), MAIN)
-        self.project.group_actions(gaupol.registers.DO, 3, "")
-        self.delegate._break_action_group(self.project.undoables)
-        assert len(self.project.undoables) == 3
-
-    def test__get_destination_stack(self):
-
-        get_stack = self.delegate._get_destination_stack
-        stack = get_stack(gaupol.registers.DO)
-        assert stack is self.project.undoables
-        stack = get_stack(gaupol.registers.UNDO)
-        assert stack is self.project.redoables
-        stack = get_stack(gaupol.registers.REDO)
-        assert stack is self.project.undoables
-        register = type("", (object,), {"shift": None})
-        self.raises(ValueError, get_stack, register)
-
-    def test__get_source_stack(self):
-
-        get_stack = self.delegate._get_source_stack
-        stack = get_stack(gaupol.registers.UNDO)
-        assert stack is self.project.undoables
-        stack = get_stack(gaupol.registers.REDO)
-        assert stack is self.project.redoables
-        register = type("", (object,), {"shift": None})
-        self.raises(ValueError, get_stack, register)
-
     def test__on_notify_undo_limit(self):
-
         self.project.clear_texts((0,), MAIN)
         self.project.clear_texts((1,), MAIN)
         assert len(self.project.undoables) == 2
         self.project.undo_limit = 1
         assert len(self.project.undoables) == 1
 
-    def test__revert_multiple(self):
-
-        for i in range(6):
-            self.project.clear_texts([i], MAIN)
-        self.project.group_actions(gaupol.registers.DO, 3, "")
-        self.project.remove_subtitles((3, 4))
-        self.project.insert_blank_subtitles((3,))
-        self.project.undo(6)
-        self.project.redo(6)
-
-    def test__shift_changed_value(self):
-
-        self.project.clear_texts((0,), MAIN)
-        assert self.project.main_changed == 1
-        self.project.clear_texts((1,), TRAN)
-        assert self.project.tran_changed == 1
-        path = self.new_subrip_file()
-        self.project.open_main(path, "ascii")
-        self.project.clear_texts((1,), TRAN)
-        assert self.project.tran_changed == 1
-
     def test_can_redo(self):
-
         assert not self.project.can_redo()
         self.project.clear_texts((0,), MAIN)
         assert not self.project.can_redo()
@@ -96,7 +41,6 @@ class TestRegisterAgent(gaupol.TestCase):
         assert self.project.can_redo()
 
     def test_can_undo(self):
-
         assert not self.project.can_undo()
         self.project.clear_texts((0,), MAIN)
         assert self.project.can_undo()
@@ -104,7 +48,6 @@ class TestRegisterAgent(gaupol.TestCase):
         assert not self.project.can_undo()
 
     def test_cut_reversion_stacks(self):
-
         self.project.clear_texts((0,), MAIN)
         self.project.clear_texts((1,), MAIN)
         self.project.cut_reversion_stacks()
@@ -112,22 +55,19 @@ class TestRegisterAgent(gaupol.TestCase):
         self.project.cut_reversion_stacks()
 
     def test_emit_action_signal(self):
-
         self.project.clear_texts((0,), MAIN)
-        self.delegate.emit_action_signal(gaupol.registers.DO)
+        self.project.emit_action_signal(aeidon.registers.DO)
 
     def test_group_actions(self):
-
         self.project.clear_texts((0,), MAIN)
         self.project.clear_texts((1,), MAIN)
         self.project.clear_texts((2,), MAIN)
-        self.project.group_actions(gaupol.registers.DO, 2, "")
+        self.project.group_actions(aeidon.registers.DO, 2, "")
         assert len(self.project.undoables) == 2
         assert self.project.undoables[0].description == ""
         assert len(self.project.undoables[0].actions) == 2
 
     def test_redo(self):
-
         self.project.clear_texts((0,), MAIN)
         self.project.clear_texts((1,), MAIN)
         self.project.clear_texts((2,), MAIN)
@@ -135,8 +75,16 @@ class TestRegisterAgent(gaupol.TestCase):
         self.project.redo(1)
         self.project.redo(2)
 
-    def test_register_action(self):
+    def test_redo__multiple(self):
+        for i in range(6):
+            self.project.clear_texts([i], MAIN)
+        self.project.group_actions(aeidon.registers.DO, 3, "")
+        self.project.remove_subtitles((3, 4))
+        self.project.insert_blank_subtitles((3,))
+        self.project.undo(6)
+        self.project.redo(6)
 
+    def test_register_action(self):
         self.project.clear_texts((0,), TRAN)
         self.project.clear_texts((1,), MAIN)
         self.project.clear_texts((2,), MAIN)
@@ -145,17 +93,31 @@ class TestRegisterAgent(gaupol.TestCase):
         assert len(self.project.undoables) == 2
         assert len(self.project.redoables) == 1
 
-    def test_set_action_description(self):
+    def test_register_action__activate_translation(self):
+        path = self.new_subrip_file()
+        self.project.open_main(path, "ascii")
+        assert self.project.tran_changed is None
+        self.project.clear_texts((1,), TRAN)
+        assert self.project.tran_changed == 1
 
+    def test_set_action_description(self):
         self.project.clear_texts((0,), MAIN)
-        self.project.set_action_description(gaupol.registers.DO, "")
+        self.project.set_action_description(aeidon.registers.DO, "")
         assert self.project.undoables[0].description == ""
 
     def test_undo(self):
-
         self.project.clear_texts((0,), MAIN)
         self.project.clear_texts((1,), MAIN)
         self.project.clear_texts((2,), MAIN)
         self.project.undo(1)
         self.project.undo(2)
         self.project.redo(3)
+
+    def test_undo__multiple(self):
+        for i in range(6):
+            self.project.clear_texts([i], MAIN)
+        self.project.group_actions(aeidon.registers.DO, 3, "")
+        self.project.remove_subtitles((3, 4))
+        self.project.insert_blank_subtitles((3,))
+        self.project.undo(6)
+        self.project.redo(6)

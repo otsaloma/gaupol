@@ -31,7 +31,7 @@ class TestRevertableAction(aeidon.TestCase):
         self.action.docs = (aeidon.documents.MAIN,)
         self.action.revert_args = (0, 1)
         self.action.revert_kwargs = {"z": 2}
-        self.action.revert_method = revert_action
+        self.action.revert_function = revert_action
 
     def test_revert__do(self):
         self.action.register = aeidon.registers.DO

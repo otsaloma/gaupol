@@ -140,8 +140,8 @@ class TestMicroDVD(aeidon.TestCase):
             "{Y:i}All things weird are normal\n"
             "in this whore of cities.")
 
-    def test_sizen(self):
-        assert self.markup.sizen(self.text, 12) == (
+    def test_scale(self):
+        assert self.markup.scale(self.text, 12) == (
             "{S:12}All things weird are normal\n"
             "in this whore of cities.")
 

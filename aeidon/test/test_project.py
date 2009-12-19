@@ -14,11 +14,10 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gaupol
+import aeidon
 
 
-class TestProject(gaupol.TestCase):
+class TestProject(aeidon.TestCase):
 
     def setup_method(self, method):
-
         self.project = self.new_project()

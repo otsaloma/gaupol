@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,21 +14,29 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Opening subtitle files."""
+"""Reading and parsing data from subtitle files."""
 
+import aeidon
 import bisect
-import gaupol
 
 
-class OpenAgent(gaupol.Delegate):
+class OpenAgent(aeidon.Delegate):
 
-    """Opening subtitle files."""
+    """Reading and parsing data from subtitle files."""
 
-    __metaclass__ = gaupol.Contractual
+    # pylint: disable-msg=E1101,W0201
 
-    def _align_translations(self, subtitles):
-        """Add translation texts aligned with main document."""
+    __metaclass__ = aeidon.Contractual
 
+    def _align_translations_by_number(self, subtitles):
+        """Add translation texts by aligning subtitle numbers."""
+        indices = range(len(self.subtitles), len(subtitles))
+        self.insert_blank_subtitles(indices, register=None)
+        for i, subtitle in enumerate(subtitles):
+            self.subtitles[i].tran_text = subtitle.main_text
+
+    def _align_translations_by_position(self, subtitles):
+        """Add translation texts by aligning subtitle positions."""
         m = t = 0
         mode = self.main_file.mode
         while t < len(subtitles):
@@ -56,85 +64,86 @@ class OpenAgent(gaupol.Delegate):
             if tm_cmp_me == -1: t += 1
             if tm_cmp_ms ==  1: m += 1
 
-    def _append_translations(self, subtitles):
-        """Add translation texts by appending them."""
+    def _read_file(self, sfile):
+        """Read `sfile` and return subtitles.
 
-        current = len(self.subtitles)
-        excess = len(subtitles) - current
-        indices = range(current, current + excess)
-        self.insert_blank_subtitles(indices, register=None)
-        for i, subtitle in enumerate(subtitles):
-            self.subtitles[i].tran_text = subtitle.main_text
-
-    def _read_file(self, file):
-        """Read file and return subtitles.
-
-        Raise IOError if reading fails.
-        Raise UnicodeError if decoding fails.
-        Raise ParseError if parsing fails.
+        Raise :exc:`IOError` if reading fails.
+        Raise :exc:`UnicodeError` if decoding fails.
+        Raise :exc:`aeidon.ParseError` if parsing fails.
         """
-        try: return file.read()
-        except (IOError, UnicodeError): raise
+        try:
+            return sfile.read()
+        except (IOError, UnicodeError):
+            raise
         except Exception:
-            raise gaupol.ParseError("Failed to parse file %s" % repr(file))
+            raise aeidon.ParseError("Failed to parse sfile %s" % repr(sfile))
 
-    def _sort_subtitles_ensure(self, value, unsorted_subtitles):
+    def _sort_subtitles_ensure(self, value, subtitles):
         sorted_subtitles, wrong_order_count = value
         for i in range(len(sorted_subtitles) - 1):
             assert sorted_subtitles[i] <= sorted_subtitles[i + 1]
 
-    def _sort_subtitles(self, unsorted_subtitles):
-        """Sort and return subtitles and sort count.
+    def _sort_subtitles(self, subtitles):
+        """Sort and return `subtitles` and sort count.
 
-        Subtitles are sorted according to their start times.
-        Sort count is the amount of subtitles that needed to be moved.
+        `subtitles` are sorted according to their start positions. Sort count
+        is the amount of subtitles that needed to be moved in order to arrange
+        them in ascending chronological order.
         """
         wrong_order_count = 0
         sorted_subtitles = []
-        while unsorted_subtitles:
-            subtitle = unsorted_subtitles.pop(0)
+        while subtitles:
+            subtitle = subtitles.pop(0)
             index = bisect.bisect(sorted_subtitles, subtitle)
             if index < len(sorted_subtitles):
                 wrong_order_count += 1
             sorted_subtitles.insert(index, subtitle)
         return sorted_subtitles, wrong_order_count
 
+    @aeidon.deco.notify_frozen
+    def open(self, *args, **kwargs):
+        """Alias for :meth:`open_main`."""
+        return self.open_main(*args, **kwargs)
+
     def open_main_require(self, path, encoding):
-        assert gaupol.encodings.is_valid_code(encoding)
+        assert aeidon.encodings.is_valid_code(encoding)
 
     def open_main_ensure(self, value, path, encoding):
         assert self.main_file is not None
         assert self.main_changed == 0
-        assert self.tran_file == None
-        assert self.tran_changed == None
+        assert self.tran_file is None
+        assert self.tran_changed is None
 
-    @gaupol.deco.notify_frozen
+    @aeidon.deco.notify_frozen
     def open_main(self, path, encoding):
-        """Open main file reading all subtitle fields.
+        """Read and parse subtitle data for main file from `path`.
 
-        Raise IOError if reading fails.
-        Raise UnicodeError if decoding fails.
-        Raise FormatError if unable to detect the format.
-        Raise ParseError if parsing fails.
-        Return sort count.
+        Raise :exc:`IOError` if reading fails.
+        Raise :exc:`UnicodeError` if decoding fails.
+        Raise :exc:`aeidon.FormatError` if unable to detect format.
+        Raise :exc:`aeidon.ParseError` if parsing fails.
+
+        Return the amount of subtitles that needed to be moved in order to
+        arrange them in ascending chronological order.
         """
         # Check for a Unicode BOM first to avoid getting a FormatError in the
         # case where an unsuitable encoding decodes a file into garbage without
         # raising a UnicodeDecodeError. If a Unicode BOM is found, use the
-        # corresponding encoding to open the file.
-        bom_encoding = gaupol.encodings.detect_bom(path)
-        if bom_encoding not in (encoding, None):
+        # corresponding Unicode encoding to open the file.
+        bom_encoding = aeidon.encodings.detect_bom(path)
+        if not bom_encoding in (encoding, None):
             return self.open_main(path, bom_encoding)
-        format = gaupol.util.detect_format(path, encoding)
-        self.main_file = gaupol.files.new(format, path, encoding)
+        format = aeidon.util.detect_format(path, encoding)
+        self.main_file = aeidon.files.new(format, path, encoding)
         subtitles = self._read_file(self.main_file)
         self.subtitles, sort_count = self._sort_subtitles(subtitles)
         self.set_framerate(self.framerate, register=None)
-        # Get framerate from MPsub header.
-        if self.main_file.format == gaupol.formats.MPSUB:
+        if self.main_file.format == aeidon.formats.MPSUB:
+            # Get framerate from MPsub header.
             if self.main_file.framerate is not None:
                 self.set_framerate(self.main_file.framerate, register=None)
         self.main_changed = 0
+        # Deactivate possible translation file.
         self.tran_file = None
         self.tran_changed = None
         self.emit("main-file-opened", self.main_file)
@@ -142,33 +151,46 @@ class OpenAgent(gaupol.Delegate):
 
     def open_translation_require(self, path, encoding, align_method=None):
         assert self.main_file is not None
-        assert gaupol.encodings.is_valid_code(encoding)
+        assert aeidon.encodings.is_valid_code(encoding)
 
     def open_translation_ensure(self, *args, **kwargs):
         assert self.tran_file is not None
         assert self.tran_changed == 0
 
-    @gaupol.deco.notify_frozen
+    @aeidon.deco.notify_frozen
     def open_translation(self, path, encoding, align_method=None):
-        """Open translation file reading texts.
+        """Read and parse subtitle data for translation file from `path`.
 
-        Raise IOError if reading fails.
-        Raise UnicodeError if decoding fails.
-        Raise FileFormatError if unable to detect the format.
-        Raise ParseError if parsing fails.
-        Return sort count.
+        `align_method` specifies how translation texts are attached to the
+        existing subtitles. :attr:`aeidon.align_methods.NUMBER` is the simple
+        way, which adds the translation texts in order, one-by-one to the
+        exising subtitles. :attr:`aeidon.align_methods.POSITION` (the default)
+        is the smarter way, which compares the position data in the translation
+        subtitles with the existing subtitles, skips and inserts subtitles as
+        needed to have at least a rough chronological match. The latter thus
+        takes into account that not all subtitles are translated, or vice versa
+        and that one main subtitle may correspond to two translation subtitles,
+        or vice versa, as per length restrictions or whatever.
+
+        Raise :exc:`IOError` if reading fails.
+        Raise :exc:`UnicodeError` if decoding fails.
+        Raise :exc:`aeidon.FormatError` if unable to detect format.
+        Raise :exc:`aeidon.ParseError` if parsing fails.
+
+        Return the amount of subtitles that needed to be moved in order to
+        arrange them in ascending chronological order.
         """
         if align_method is None:
-            align_method = gaupol.align_methods.POSITION
+            align_method = aeidon.align_methods.POSITION
         # Check for a Unicode BOM first to avoid getting a FormatError in the
         # case where an unsuitable encoding decodes a file into garbage without
         # raising a UnicodeDecodeError. If a Unicode BOM is found, use the
-        # corresponding encoding to open the file.
-        bom_encoding = gaupol.encodings.detect_bom(path)
+        # corresponding Unicode encoding to open the file.
+        bom_encoding = aeidon.encodings.detect_bom(path)
         if bom_encoding not in (encoding, None):
-            return self.open_main(path, bom_encoding)
-        format = gaupol.util.detect_format(path, encoding)
-        self.tran_file = gaupol.files.new(format, path, encoding)
+            return self.open_translation(path, bom_encoding)
+        format = aeidon.util.detect_format(path, encoding)
+        self.tran_file = aeidon.files.new(format, path, encoding)
         subtitles = self._read_file(self.tran_file)
         subtitles, sort_count = self._sort_subtitles(subtitles)
         for subtitle in subtitles:
@@ -176,10 +198,10 @@ class OpenAgent(gaupol.Delegate):
         for subtitle in self.subtitles:
             subtitle.tran_text = ""
         blocked = self.block("subtitles-inserted")
-        if align_method == gaupol.align_methods.POSITION:
-            self._align_translations(subtitles)
-        elif align_method == gaupol.align_methods.NUMBER:
-            self._append_translations(subtitles)
+        if align_method == aeidon.align_methods.POSITION:
+            self._align_translations_by_position(subtitles)
+        if align_method == aeidon.align_methods.NUMBER:
+            self._align_translations_by_number(subtitles)
         self.unblock("subtitles-inserted", blocked)
         self.tran_changed = 0
         self.emit("translation-file-opened", self.tran_file)

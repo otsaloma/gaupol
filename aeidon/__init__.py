@@ -32,6 +32,8 @@
 :var newlines: Enumerations for newline character types
 :var players: Enumerations for video player application types
 :var registers: Enumerations for action action reversion register types
+
+:var debug: ``True`` to perform additional run-time checks
 """
 
 import os
@@ -82,4 +84,5 @@ from aeidon.patternman import *
 from aeidon.clipboard import *
 from aeidon.revertable import *
 from aeidon import agents
+from aeidon.project import *
 from aeidon.unittest import *

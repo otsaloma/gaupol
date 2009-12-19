@@ -32,9 +32,17 @@ class Parser(aeidon.Finder):
 
     The purpose of the :class:`Parser` is to split text to the actual text and
     its markup tags, allowing the text to be edited while keeping the tags
-    separate and intact. Parser can be used by first setting text to it, then
-    performing operations via the defined methods and finally reassembling the
-    full text.
+    separate and intact. An example would be replacing all "i"s with "j"s
+    without changing italic markup::
+
+        >>> parser = aeidon.Parser(re.compile(r"<.+?>"))
+        >>> parser.set_text("<i>iii</i>")
+        >>> parser.pattern = "i"
+        >>> parser.replacement = "j"
+        >>> parser.replace_all()
+        3
+        >>> parser.get_text()
+        '<i>jjj</i>'
 
     The margin system (wrapping each line in the same set of tags) is only used
     if no other tags are found in the text and if the text has at least two

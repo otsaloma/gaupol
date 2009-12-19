@@ -16,18 +16,18 @@
 
 """Automatic correcting of texts."""
 
-import gaupol
+import aeidon
 import os
 import re
 import sys
-_ = gaupol.i18n._
+_ = aeidon.i18n._
 
 
-class TextAgent(gaupol.Delegate):
+class TextAgent(aeidon.Delegate):
 
     """Automatic correcting of texts."""
 
-    __metaclass__ = gaupol.Contractual
+    __metaclass__ = aeidon.Contractual
     _re_capitalizable = re.compile(r"^\W*(?<!\.\.\.)\w", re.UNICODE)
 
     def _capitalize_position(self, parser, pos):
@@ -60,7 +60,7 @@ class TextAgent(gaupol.Delegate):
         return self._capitalize_text(parser, pattern, cap_next)
 
     def _get_enchant_checker_require(self, language):
-        assert gaupol.util.enchant_available()
+        assert aeidon.util.enchant_available()
 
     def _get_enchant_checker(self, language):
         """Return an enchant spell-checker for language.
@@ -68,22 +68,22 @@ class TextAgent(gaupol.Delegate):
         Raise enchant.error if dictionary instatiation fails.
         """
         import enchant.checker
-        directory = os.path.join(gaupol.CONFIG_HOME_DIR, "spell-check")
+        directory = os.path.join(aeidon.CONFIG_HOME_DIR, "spell-check")
         path = os.path.join(directory, "%s.dict" % language)
         try: dictionary = enchant.DictWithPWL(str(language), str(path))
         except IOError, (no, message):
-            gaupol.util.print_write_io(sys.exc_info(), path)
+            aeidon.util.print_write_io(sys.exc_info(), path)
             dictionary = enchant.Dict(str(language))
         # Sometimes enchant will initialize a dictionary that will not
         # actually work when trying to use it, hence check something.
-        dictionary.check("gaupol")
+        dictionary.check("aeidon")
         return enchant.checker.SpellChecker(dictionary, "")
 
     def _get_misspelled_indices(self, checker):
         """Return a list of misspelled indices in checker's text."""
 
         ii = [range(x.wordpos, x.wordpos + len(x.word)) for x in checker]
-        return gaupol.util.flatten(ii)
+        return aeidon.util.flatten(ii)
 
     def _get_substitutions_ensure(self, value, patterns):
         assert len(value) <= len(patterns)
@@ -133,7 +133,7 @@ class TextAgent(gaupol.Delegate):
         for index in (indices or []):
             assert 0 <= index < len(self.subtitles)
 
-    @gaupol.deco.revertable
+    @aeidon.deco.revertable
     def break_lines(self, indices, doc, patterns, length_func, max_length,
         max_lines, max_deviation=None, skip=False, max_skip_length=sys.maxint,
         max_skip_lines=sys.maxint, register=-1):
@@ -160,7 +160,7 @@ class TextAgent(gaupol.Delegate):
             liner.max_deviation = max_deviation
         liner.max_length = max_length
         liner.max_lines = max_lines
-        liner.set_length_func(length_func)
+        liner.length_func = length_func
         re_tag = self.get_markup_tag_regex(doc)
         indices = indices or range(len(self.subtitles))
         for index in indices:
@@ -200,7 +200,7 @@ class TextAgent(gaupol.Delegate):
         for index in (indices or []):
             assert 0 <= index < len(self.subtitles)
 
-    @gaupol.deco.revertable
+    @aeidon.deco.revertable
     def capitalize(self, indices, doc, patterns, register=-1):
         """Capitalize texts as defined by patterns.
 
@@ -212,7 +212,7 @@ class TextAgent(gaupol.Delegate):
         parser = self.get_parser(doc)
         patterns = [x for x in patterns if x.enabled]
         indices = indices or range(len(self.subtitles))
-        for indices in gaupol.util.get_ranges(indices):
+        for indices in aeidon.util.get_ranges(indices):
             cap_next = False
             for index in indices:
                 subtitle = self.subtitles[index]
@@ -239,7 +239,7 @@ class TextAgent(gaupol.Delegate):
         for index in (indices or []):
             assert 0 <= index < len(self.subtitles)
 
-    @gaupol.deco.revertable
+    @aeidon.deco.revertable
     def correct_common_errors(self, indices, doc, patterns, register=-1):
         """Correct common human and OCR errors  in texts.
 
@@ -275,7 +275,7 @@ class TextAgent(gaupol.Delegate):
         for index in (indices or []):
             assert 0 <= index < len(self.subtitles)
 
-    @gaupol.deco.revertable
+    @aeidon.deco.revertable
     def remove_hearing_impaired(self, indices, doc, patterns, register=-1):
         """Remove hearing impaired parts from subtitles.
 
@@ -314,9 +314,9 @@ class TextAgent(gaupol.Delegate):
     def spell_check_join_words_require(self, indices, *args, **kwargs):
         for index in (indices or []):
             assert 0 <= index < len(self.subtitles)
-        assert gaupol.util.enchant_available()
+        assert aeidon.util.enchant_available()
 
-    @gaupol.deco.revertable
+    @aeidon.deco.revertable
     def spell_check_join_words(self, indices, doc, language, register=-1):
         """Join misspelled words based on spell-checker suggestions.
 
@@ -366,9 +366,9 @@ class TextAgent(gaupol.Delegate):
     def spell_check_split_words_require(self, indices, *args, **kwargs):
         for index in (indices or []):
             assert 0 <= index < len(self.subtitles)
-        assert gaupol.util.enchant_available()
+        assert aeidon.util.enchant_available()
 
-    @gaupol.deco.revertable
+    @aeidon.deco.revertable
     def spell_check_split_words(self, indices, doc, language, register=-1):
         """Split misspelled words based on spell-checker suggestions.
 

@@ -50,6 +50,7 @@ class EnumerationItem(int):
                 if self.parent is not other.parent:
                     raise ValueError("Cannot compare %s with %s"
                                      % (repr(self), repr(other)))
+
             return int.__cmp__(int(self), int(other))
         raise ValueError("Cannot compare %s with %s"
                          % (repr(self), repr(other)))

@@ -32,8 +32,8 @@ class MPL2(aeidon.tags.MicroDVD):
     any MicroDVD markup can be used.
 
      * ``\\...`` (bold)
-     * ``/....`` (italic)
-     * ``_....`` (underline)
+     * ``/...`` (italic)
+     * ``_...`` (underline)
     """
 
     format = aeidon.formats.MPL2

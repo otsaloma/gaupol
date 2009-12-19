@@ -35,10 +35,10 @@ class SubStationAlpha(aeidon.Markup):
 
      * ``{\\b1}...........{\\b0}``
      * ``{\\i1}...........{\\i0}``
-     * ``{\\fnNAME}.............``
-     * ``{\\fsPOINTS}...........``
-     * ``{\\c&HBBGGRR&}.........``
-     * ``..................{\\r}``
+     * ``{\\fnNAME}............``
+     * ``{\\fsPOINTS}..........``
+     * ``{\\c&HBBGGRR&}........``
+     * ``.................{\\r}``
 
      The hexadecimal color value is in reverse order, ``BBGGRR`` instead of the
      normal ``RRGGBB``. Furthermore, leading zeros can be omitted,
@@ -166,7 +166,7 @@ class SubStationAlpha(aeidon.Markup):
         a, z = bounds or (0, len(text))
         return "".join((text[:a], "{\\i1}%s{\\i0}" % text[a:z], text[z:]))
 
-    def sizen(self, text, size, bounds=None):
+    def scale(self, text, size, bounds=None):
         """Return `text` scaled to `size`."""
         a, z = bounds or (0, len(text))
         target = "{\\fs%s}%s" % (str(size), text[a:z])

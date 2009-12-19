@@ -14,28 +14,16 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Miscellaneous methods for use with subtitle data editing."""
+"""Miscellaneous helper methods."""
 
 import aeidon
 
 
 class UtilityAgent(aeidon.Delegate):
 
-    """Miscellaneous methods for subtitle data editing."""
+    """Miscellaneous helper methods."""
 
     __metaclass__ = aeidon.Contractual
-
-    def _get_format(self, doc):
-        """Return the format of `doc`'s file or ``None``."""
-        if doc == aeidon.documents.MAIN:
-            if self.main_file is not None:
-                return self.main_file.format
-            return None
-        if doc == aeidon.documents.TRAN:
-            if self.tran_file is not None:
-                return self.tran_file.format
-            return self._get_format(aeidon.documents.MAIN)
-        raise ValueError("Invalid document: %s" % repr(doc))
 
     def get_changed(self, doc):
         """Return the changed value corresponding to `doc`."""
@@ -53,6 +41,22 @@ class UtilityAgent(aeidon.Delegate):
             return self.tran_file
         raise ValueError("Invalid document: %s" % repr(doc))
 
+    def get_format(self, doc):
+        """Return format of the file corresponding to `doc`.
+
+        For translation file that is ``None``, return format of main file.
+        If main file is ``None``, return ``None``.
+        """
+        if doc == aeidon.documents.MAIN:
+            if self.main_file is not None:
+                return self.main_file.format
+            return None
+        if doc == aeidon.documents.TRAN:
+            if self.tran_file is not None:
+                return self.tran_file.format
+            return self.get_format(aeidon.documents.MAIN)
+        raise ValueError("Invalid document: %s" % repr(doc))
+
     def get_liner(self, doc):
         """Return a new :class:`aeidon.Liner` instance."""
         re_tag = self.get_markup_tag_regex(doc)
@@ -61,19 +65,19 @@ class UtilityAgent(aeidon.Delegate):
 
     def get_markup(self, doc):
         """Return `doc`'s markup instance or ``None``."""
-        format = self._get_format(doc)
+        format = self.get_format(doc)
         if format is None: return None
         return aeidon.tags.new(format)
 
     def get_markup_clean_func(self, doc):
         """Return the function to clean markup or ``None``."""
-        format = self._get_format(doc)
+        format = self.get_format(doc)
         if format is None: return None
         return aeidon.tags.new(format).clean
 
     def get_markup_tag_regex(self, doc):
         """Return the regular expression for a markup tag or ``None``."""
-        format = self._get_format(doc)
+        format = self.get_format(doc)
         if format is None: return None
         return aeidon.tags.new(format).tag
 
@@ -111,7 +115,7 @@ class UtilityAgent(aeidon.Delegate):
         return len(text)
 
     def get_text_signal(self, doc):
-        """Return the "*-texts-changed" signal corresponding to `doc`."""
+        """Return the ``texts-changed`` signal corresponding to `doc`."""
         if doc == aeidon.documents.MAIN:
             return "main-texts-changed"
         if doc == aeidon.documents.TRAN:

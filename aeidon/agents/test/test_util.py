@@ -24,32 +24,47 @@ class TestUtilityAgent(aeidon.TestCase):
         self.delegate = self.project.get_changed.im_self
 
     def test_get_changed__main(self):
-        get_changed = self.project.get_changed
-        changed = get_changed(aeidon.documents.MAIN)
+        changed = self.project.get_changed(aeidon.documents.MAIN)
         assert changed == self.project.main_changed
 
     def test_get_changed__translation(self):
-        get_changed = self.project.get_changed
-        changed = get_changed(aeidon.documents.TRAN)
+        changed = self.project.get_changed(aeidon.documents.TRAN)
         assert changed == self.project.tran_changed
 
     def test_get_changed__value_error(self):
-        get_changed = self.project.get_changed
-        self.raises(ValueError, get_changed, None)
+        self.raises(ValueError, self.project.get_changed, None)
 
     def test_get_file__main(self):
-        get_file = self.project.get_file
-        file = get_file(aeidon.documents.MAIN)
-        assert file == self.project.main_file
+        sfile = self.project.get_file(aeidon.documents.MAIN)
+        assert sfile is self.project.main_file
 
     def test_get_file__translation(self):
-        get_file = self.project.get_file
-        file = get_file(aeidon.documents.TRAN)
-        assert file == self.project.tran_file
+        sfile = self.project.get_file(aeidon.documents.TRAN)
+        assert sfile is self.project.tran_file
 
     def test_get_file__value_error(self):
-        get_file = self.project.get_file
-        self.raises(ValueError, get_file, None)
+        self.raises(ValueError, self.project.get_file, None)
+
+    def test_get_format__main(self):
+        format = self.project.get_format(aeidon.documents.MAIN)
+        assert format == self.project.main_file.format
+
+    def test_get_format__main_is_none(self):
+        self.project.main_file = None
+        format = self.project.get_format(aeidon.documents.MAIN)
+        assert format is None
+
+    def test_get_format__translation(self):
+        format = self.project.get_format(aeidon.documents.TRAN)
+        assert format == self.project.tran_file.format
+
+    def test_get_format__translation_is_none(self):
+        self.project.tran_file = None
+        format = self.project.get_format(aeidon.documents.TRAN)
+        assert format == self.project.main_file.format
+
+    def test_get_format__value_error(self):
+        self.raises(ValueError, self.project.get_format, None)
 
     def test_get_liner(self):
         doc = aeidon.documents.MAIN
@@ -71,28 +86,29 @@ class TestUtilityAgent(aeidon.TestCase):
         clean_func = self.project.get_markup_clean_func(doc)
         assert clean_func("") == ""
 
-    def test_get_markup_tag_regex__none(self):
-        get_regex = self.project.get_markup_tag_regex
-        self.project.main_file = None
-        re_tag = get_regex(aeidon.documents.MAIN)
-        assert re_tag is None
-
-    def test_get_markup_tag_regex__re(self):
-        get_regex = self.project.get_markup_tag_regex
-        re_tag = get_regex(aeidon.documents.MAIN)
+    def test_get_markup_tag_regex(self):
+        re_tag = self.project.get_markup_tag_regex(aeidon.documents.MAIN)
         assert re_tag is not None
+
+    def test_get_markup_tag_regex__none(self):
+        self.project.main_file = None
+        re_tag = self.project.get_markup_tag_regex(aeidon.documents.MAIN)
+        assert re_tag is None
 
     def test_get_mode__default(self):
         self.project.main_file = None
-        assert self.project.get_mode() == aeidon.modes.TIME
+        mode = self.project.get_mode()
+        assert mode == aeidon.modes.TIME
 
     def test_get_mode__frame(self):
         self.project.open_main(self.new_microdvd_file(), "ascii")
-        assert self.project.get_mode() == aeidon.modes.FRAME
+        mode = self.project.get_mode()
+        assert mode == aeidon.modes.FRAME
 
     def test_get_mode__time(self):
         self.project.open_main(self.new_subrip_file(), "ascii")
-        assert self.project.get_mode() == aeidon.modes.TIME
+        mode = self.project.get_mode()
+        assert mode == aeidon.modes.TIME
 
     def test_get_parser(self):
         doc = aeidon.documents.MAIN
@@ -115,12 +131,12 @@ class TestUtilityAgent(aeidon.TestCase):
         assert length == 10
 
     def test_get_text_signal__main(self):
-        get_text_signal = self.project.get_text_signal
-        signal = get_text_signal(aeidon.documents.MAIN)
+        signal = self.project.get_text_signal(aeidon.documents.MAIN)
         assert signal == "main-texts-changed"
 
     def test_get_text_signal__translation(self):
-        get_text_signal = self.project.get_text_signal
-        signal = get_text_signal(aeidon.documents.TRAN)
+        signal = self.project.get_text_signal(aeidon.documents.TRAN)
         assert signal == "translation-texts-changed"
-        self.raises(ValueError, get_text_signal, None)
+
+    def test_get_text_signal__value_error(self):
+        self.raises(ValueError, self.project.get_text_signal, None)

@@ -30,7 +30,7 @@ class Observable(object):
     In addition to the signals defined in :attr:`signals`, all public instance
     variables will have a ``notify::NAME`` signal generated automatically based
     on the ``NAME`` of the variable. ``notify::NAME`` signals will be emitted
-    whenever the value of the instance variable changes.
+    whenever the value of the corresponding instance variable changes.
 
     Notify signals will be emitted for mutable variables as well, which means
     that care should be taken not to emit thousands of signals when appending

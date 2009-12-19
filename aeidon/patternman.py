@@ -40,10 +40,10 @@ class PatternManager(object):
     _re_comment = re.compile(r"^\s*#.*$")
 
     def __init___require(self, pattern_type):
-        assert pattern_type in ("line-break",
+        assert pattern_type in ("capitalization",
                                 "common-error",
-                                "capitalization",
-                                "hearing-impaired")
+                                "hearing-impaired",
+                                "line-break")
 
     def __init__(self, pattern_type):
         """Initialize a :class:`PatternManager` object."""

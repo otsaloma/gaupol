@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,57 +14,72 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gaupol
+import aeidon
+import codecs
 import os
 
 
-class TestOpenAgent(gaupol.TestCase):
+class TestOpenAgent(aeidon.TestCase):
 
     def setup_method(self, method):
-
         self.project = self.new_project()
         self.delegate = self.project.open_main.im_self
 
-    def test_open_main(self):
+    def test_open(self):
+        for format in aeidon.formats:
+            self.project.remove_subtitles((0,))
+            self.project.open(self.new_temp_file(format),
+                              "ascii")
 
-        for format in gaupol.formats:
-            path = self.new_temp_file(format)
-            self.project.remove_subtitles([0])
-            self.project.open_main(path, "ascii")
             assert self.project.subtitles
 
-    def test_open_main__io_error(self):
+    def test_open_main(self):
+        for format in aeidon.formats:
+            self.project.remove_subtitles((0,))
+            self.project.open_main(self.new_temp_file(format),
+                                   "ascii")
 
+            assert self.project.subtitles
+
+    def test_open_main__bom(self):
         path = self.new_subrip_file()
-        os.chmod(path, 0000)
-        function = self.project.open_main
-        self.raises(IOError, function, path, "ascii")
-        os.chmod(path, 0777)
+        text = open(path, "r").read()
+        open(path, "w").write(codecs.BOM_UTF8 + text)
+        self.project.open_main(path, "ascii")
+        assert self.project.subtitles
+        assert self.project.main_file.encoding == "utf_8_sig"
 
     def test_open_main__mpsub(self):
-
-        path = self.new_temp_file(gaupol.formats.MPSUB, "mpsub-frame")
+        self.project.remove_subtitles((0,))
+        path = self.new_temp_file(aeidon.formats.MPSUB, "mpsub-frame")
         self.project.open_main(path, "ascii")
-        assert self.project.framerate == self.project.main_file.framerate
+        assert self.project.subtitles
+
+    def test_open_main__io_error(self):
+        path = self.new_subrip_file()
+        os.chmod(path, 0000)
+        self.raises(IOError,
+                    self.project.open_main,
+                    path, "ascii")
+
+        os.chmod(path, 0777)
 
     def test_open_main__parse_error(self):
-
         path = self.new_subrip_file()
         fobj = open(path, "w")
         fobj.write("00:00:01,000 --> 00:00:02,000\n\n")
-        fobj.write("00:00:03,000 >>> 00:00:04,000\n\n")
+        fobj.write("00:00:03,000 <-- 00:00:04,000\n\n")
         fobj.close()
-        function = self.project.open_main
-        self.raises(gaupol.ParseError, function, path, "ascii")
+        self.raises(aeidon.ParseError,
+                    self.project.open_main,
+                    path, "ascii")
 
     def test_open_main__unicode_error(self):
-
-        path = self.new_subrip_file()
-        function = self.project.open_main
-        self.raises(UnicodeError, function, path, "punycode")
+        self.raises(UnicodeError,
+                    self.project.open_main,
+                    self.new_subrip_file(), "punycode")
 
     def test_open_main__unsorted(self):
-
         path = self.new_microdvd_file()
         fobj = open(path, "w")
         fobj.write("{100}{200}\n")
@@ -74,17 +89,22 @@ class TestOpenAgent(gaupol.TestCase):
         assert self.project.open_main(path, "ascii") == 1
 
     def test_open_translation__align_number(self):
-
-        align_method = gaupol.align_methods.NUMBER
-        for format in gaupol.formats:
-            path = self.new_temp_file(format)
-            self.project.remove_subtitles([0])
-            self.project.open_translation(path, "ascii", align_method)
+        for format in aeidon.formats:
+            self.project.remove_subtitles((0,))
+            self.project.open_translation(self.new_temp_file(format),
+                                          "ascii",
+                                          aeidon.align_methods.NUMBER)
 
     def test_open_translation__align_position(self):
+        for format in aeidon.formats:
+            self.project.remove_subtitles((0,))
+            self.project.open_translation(self.new_temp_file(format),
+                                          "ascii",
+                                          aeidon.align_methods.POSITION)
 
-        align_method = gaupol.align_methods.POSITION
-        for format in gaupol.formats:
-            path = self.new_temp_file(format)
-            self.project.remove_subtitles([0])
-            self.project.open_translation(path, "ascii", align_method)
+    def test_open_translation__bom(self):
+        path = self.new_subrip_file()
+        text = open(path, "r").read()
+        open(path, "w").write(codecs.BOM_UTF8 + text)
+        self.project.open_translation(path, "ascii")
+        assert self.project.tran_file.encoding == "utf_8_sig"

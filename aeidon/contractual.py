@@ -72,10 +72,11 @@ class Contractual(type):
 
     Preconditions may be weakened; only the first precondition found in the
     inheritance tree is used. Postconditions and class invariants may be
-    strengthened; all preconditions and class invariant checks found in the
+    strengthened; all postconditions and class invariant checks found in the
     inheritance tree will be used.
 
-    This is a debug metaclass that is in use only if aeidon.debug is True.
+    This is a debug metaclass that is in use only if :data:`aeidon.debug` is
+    ``True``.
 
     .. _design-by-contract:
        http://www.eiffel.com/developers/design_by_contract.html
