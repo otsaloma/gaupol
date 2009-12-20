@@ -284,6 +284,7 @@ def get_sorted_unique(lst):
             lst.pop(i)
     return lst
 
+@aeidon.deco.memoize
 def get_template_header(format):
     """Read and return the template header for `format`.
 
