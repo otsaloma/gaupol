@@ -37,6 +37,10 @@ class EnumerationItem(int):
 
     # pylint: disable-msg=E1101
 
+    def __bool__(self):
+        """For consistency, always return True."""
+        return True
+
     def __cmp__(self, other):
         """Compare enumeration item equality by value.
 
@@ -63,6 +67,10 @@ class EnumerationItem(int):
         instance.name = name
         instance.parent = parent
         return instance
+
+    def __nonzero__(self):
+        """For consistency, always return True."""
+        return True
 
     def __str__(self):
         """Return name as the string representation."""

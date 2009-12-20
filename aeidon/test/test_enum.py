@@ -22,6 +22,9 @@ class TestEnumerationItem(aeidon.TestCase):
     def setup_method(self, method):
         self.item = aeidon.EnumerationItem(0, "test", object())
 
+    def test___bool__(self):
+        assert self.item
+
     def test___cmp____equal(self):
         if not aeidon.debug: return
         assert self.item == self.item
