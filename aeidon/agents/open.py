@@ -100,10 +100,24 @@ class OpenAgent(aeidon.Delegate):
             sorted_subtitles.insert(index, subtitle)
         return sorted_subtitles, wrong_order_count
 
-    @aeidon.deco.notify_frozen
-    def open(self, *args, **kwargs):
-        """Alias for :meth:`open_main`."""
-        return self.open_main(*args, **kwargs)
+    def open(self, doc, path, encoding=None, *args, **kwargs):
+        """Read and parse subtitle data for `doc` from `path`.
+
+        `encoding` can be ``None`` to use the system default encoding.
+
+        Raise :exc:`IOError` if reading fails.
+        Raise :exc:`UnicodeError` if decoding fails.
+        Raise :exc:`aeidon.FormatError` if unable to detect format.
+        Raise :exc:`aeidon.ParseError` if parsing fails.
+
+        Return the amount of subtitles that needed to be moved in order to
+        arrange them in ascending chronological order.
+        """
+        if doc == aeidon.documents.MAIN:
+            return self.open_main(path, encoding, *args, **kwargs)
+        if doc == aeidon.documents.TRAN:
+            return self.open_translation(path, encoding, *args, **kwargs)
+        raise ValueError("Invalid document: %s" % repr(doc))
 
     def open_main_require(self, path, encoding):
         assert aeidon.encodings.is_valid_code(encoding)
@@ -115,8 +129,10 @@ class OpenAgent(aeidon.Delegate):
         assert self.tran_changed is None
 
     @aeidon.deco.notify_frozen
-    def open_main(self, path, encoding):
+    def open_main(self, path, encoding=None):
         """Read and parse subtitle data for main file from `path`.
+
+        `encoding` can be ``None`` to use the system default encoding.
 
         Raise :exc:`IOError` if reading fails.
         Raise :exc:`UnicodeError` if decoding fails.
@@ -126,6 +142,7 @@ class OpenAgent(aeidon.Delegate):
         Return the amount of subtitles that needed to be moved in order to
         arrange them in ascending chronological order.
         """
+        encoding = encoding or aeidon.util.get_default_encoding()
         # Check for a Unicode BOM first to avoid getting a FormatError in the
         # case where an unsuitable encoding decodes a file into garbage without
         # raising a UnicodeDecodeError. If a Unicode BOM is found, use the
@@ -158,8 +175,10 @@ class OpenAgent(aeidon.Delegate):
         assert self.tran_changed == 0
 
     @aeidon.deco.notify_frozen
-    def open_translation(self, path, encoding, align_method=None):
+    def open_translation(self, path, encoding=None, align_method=None):
         """Read and parse subtitle data for translation file from `path`.
+
+        `encoding` can be ``None`` to use the system default encoding.
 
         `align_method` specifies how translation texts are attached to the
         existing subtitles. :attr:`aeidon.align_methods.NUMBER` is the simple
@@ -180,8 +199,8 @@ class OpenAgent(aeidon.Delegate):
         Return the amount of subtitles that needed to be moved in order to
         arrange them in ascending chronological order.
         """
-        if align_method is None:
-            align_method = aeidon.align_methods.POSITION
+        encoding = encoding or aeidon.util.get_default_encoding()
+        align_method = align_method or aeidon.align_methods.POSITION
         # Check for a Unicode BOM first to avoid getting a FormatError in the
         # case where an unsuitable encoding decodes a file into garbage without
         # raising a UnicodeDecodeError. If a Unicode BOM is found, use the

@@ -25,13 +25,21 @@ class TestOpenAgent(aeidon.TestCase):
         self.project = self.new_project()
         self.delegate = self.project.open_main.im_self
 
-    def test_open(self):
+    def test_open__main(self):
         for format in aeidon.formats:
             self.project.remove_subtitles((0,))
-            self.project.open(self.new_temp_file(format),
+            self.project.open(aeidon.documents.MAIN,
+                              self.new_temp_file(format),
                               "ascii")
 
             assert self.project.subtitles
+
+    def test_open__translation(self):
+        for format in aeidon.formats:
+            self.project.remove_subtitles((0,))
+            self.project.open(aeidon.documents.TRAN,
+                              self.new_temp_file(format),
+                              "ascii")
 
     def test_open_main(self):
         for format in aeidon.formats:
