@@ -104,7 +104,6 @@ class OpenAgent(aeidon.Delegate):
         """Read and parse subtitle data for `doc` from `path`.
 
         `encoding` can be ``None`` to use the system default encoding.
-
         Raise :exc:`IOError` if reading fails.
         Raise :exc:`UnicodeError` if decoding fails.
         Raise :exc:`aeidon.FormatError` if unable to detect format.
@@ -133,7 +132,6 @@ class OpenAgent(aeidon.Delegate):
         """Read and parse subtitle data for main file from `path`.
 
         `encoding` can be ``None`` to use the system default encoding.
-
         Raise :exc:`IOError` if reading fails.
         Raise :exc:`UnicodeError` if decoding fails.
         Raise :exc:`aeidon.FormatError` if unable to detect format.
@@ -207,7 +205,7 @@ class OpenAgent(aeidon.Delegate):
         # corresponding Unicode encoding to open the file.
         bom_encoding = aeidon.encodings.detect_bom(path)
         if bom_encoding not in (encoding, None):
-            return self.open_translation(path, bom_encoding)
+            return self.open_translation(path, bom_encoding, align_method)
         format = aeidon.util.detect_format(path, encoding)
         self.tran_file = aeidon.files.new(format, path, encoding)
         subtitles = self._read_file(self.tran_file)
