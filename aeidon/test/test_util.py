@@ -181,7 +181,10 @@ class TestModule(aeidon.TestCase):
         assert aeidon.util.get_chardet_version()
 
     def test_get_default_encoding(self):
-        aeidon.util.get_default_encoding()
+        assert aeidon.util.get_default_encoding()
+
+    def test_get_default_newline(self):
+        assert aeidon.util.get_default_newline()
 
     @aeidon.deco.monkey_patch(__builtins__, "__import__")
     def test_get_enchant_version__none(self):

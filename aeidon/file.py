@@ -56,7 +56,7 @@ class SubtitleFile(object):
         self.header = (aeidon.util.get_template_header(self.format)
                        if self.format.has_header else "")
 
-        self.newline = newline
+        self.newline = newline or aeidon.util.get_default_newline()
         self.path = os.path.abspath(path)
 
     def _get_subtitle(self):

@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,18 +14,16 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gaupol
+import aeidon
 
 
-class TestSaveAgent(gaupol.TestCase):
+class TestSaveAgent(aeidon.TestCase):
 
     def setup_method(self, method):
-
         self.project = self.new_project()
         self.delegate = self.project.save_main.im_self
 
     def test__copy_file(self):
-
         copy_file = self.delegate._copy_file
         source = self.new_subrip_file()
         destination = self.new_subrip_file()
@@ -33,7 +31,6 @@ class TestSaveAgent(gaupol.TestCase):
         assert not copy_file(source, "/////")
 
     def test__move_file(self):
-
         move_file = self.delegate._move_file
         source = self.new_subrip_file()
         destination = self.new_subrip_file()
@@ -41,63 +38,46 @@ class TestSaveAgent(gaupol.TestCase):
         assert not move_file(source, "/////")
 
     def test__remove_file(self):
-
         remove_file = self.delegate._remove_file
         path = self.new_subrip_file()
         assert remove_file(path)
         assert not remove_file("/////")
 
-    def test_save(self):
+    def test_save__main(self):
+        self.project.save(aeidon.documents.MAIN)
 
-        self.project.save(gaupol.documents.MAIN, ())
-        self.project.save(gaupol.documents.TRAN, ())
-        self.raises(ValueError, self.project.save, 99, ())
+    def test_save__translation(self):
+        self.project.save(aeidon.documents.TRAN)
+
+    def test_save__value_error(self):
+        self.raises(ValueError, self.project.save, None)
 
     def test_save_main(self):
-
-        path = self.project.main_file.path
-        newline = gaupol.newlines.UNIX
-        for format in gaupol.formats:
-            self.project.clear_texts((0,), gaupol.documents.MAIN)
-            props = (path, format, "ascii", newline)
-            self.project.save_main(props, False)
+        for format in aeidon.formats:
+            self.project.clear_texts((0,), aeidon.documents.MAIN)
+            path = self.project.main_file.path
+            sfile = aeidon.files.new(format, path, "ascii")
+            self.project.save_main(sfile, False)
             assert self.project.main_changed == 1
-            self.project.save_main(props, True)
+            sfile = aeidon.files.new(format, path, "ascii")
+            self.project.save_main(sfile, True)
             assert self.project.main_changed == 0
 
-    def test_save_main__copy_from(self):
-
-        path = self.new_subrip_file()
-        format = self.project.main_file.format
-        newline = gaupol.newlines.UNIX
-        props = (path, format, "ascii", newline)
-        self.project.save_main(props)
-
     def test_save_main__io_error(self):
-
-        function = self.project.save_main
-        format = gaupol.formats.SUBRIP
-        newline = gaupol.newlines.UNIX
-        props = ("/////", format, "ascii", newline)
-        self.raises(IOError, function, props)
+        sfile = aeidon.files.new(aeidon.formats.SUBRIP, "/////", "ascii")
+        self.raises(IOError, self.project.save_main, sfile)
 
     def test_save_main__unicode_error(self):
-
-        function = self.project.save_main
-        path = self.new_subrip_file()
-        format = gaupol.formats.SUBRIP
-        newline = gaupol.newlines.UNIX
-        props = (path, format, "undefined", newline)
-        self.raises(UnicodeError, function, props)
+        path = self.project.main_file.path
+        sfile = aeidon.files.new(aeidon.formats.SUBRIP, path, "undefined")
+        self.raises(UnicodeError, self.project.save_main, sfile)
 
     def test_save_translation(self):
-
-        path = self.project.tran_file.path
-        newline = gaupol.newlines.UNIX
-        for format in gaupol.formats:
-            self.project.clear_texts((0,), gaupol.documents.TRAN)
-            props = (path, format, "ascii", newline)
-            self.project.save_translation(props, False)
+        for format in aeidon.formats:
+            self.project.clear_texts((0,), aeidon.documents.TRAN)
+            path = self.project.tran_file.path
+            sfile = aeidon.files.new(format, path, "ascii")
+            self.project.save_translation(sfile, False)
             assert self.project.tran_changed == 1
-            self.project.save_translation(props, True)
+            self.project.save_translation(sfile, True)
             assert self.project.tran_changed == 0

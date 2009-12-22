@@ -222,6 +222,11 @@ def get_default_encoding():
     encoding = get_encoding_alias(encoding)
     return encoding
 
+@aeidon.deco.once
+def get_default_newline():
+    """Return system default newline as :attr:`aeidon.newlines` item."""
+    return aeidon.newlines.find_item("value", os.linesep)
+
 def get_enchant_version_ensure(value):
     if value is not None:
         assert isinstance(value, basestring)
