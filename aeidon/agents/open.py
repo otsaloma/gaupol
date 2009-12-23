@@ -50,7 +50,7 @@ class OpenAgent(aeidon.Delegate):
                 tm_cmp_ms = self.calc.compare(tm, ms)
                 tm_cmp_me = self.calc.compare(tm, me)
             if (m == len(self.subtitles)) or (tm_cmp_ms == -1):
-                subtitle = self.get_subtitle()
+                subtitle = self.new_subtitle()
                 subtitle.start = subtitles[t].start
                 subtitle.end = subtitles[t].end
                 subtitle.tran_text = tt

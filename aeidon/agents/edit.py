@@ -59,12 +59,12 @@ class EditAgent(aeidon.Delegate):
                 window = subtitle.start_seconds - first_start
                 duration = window / len(rindices)
             for i, index in enumerate(rindices):
-                subtitle = self.get_subtitle()
+                subtitle = self.new_subtitle()
                 subtitle.start = first_start + (i * duration)
                 subtitle.end = first_start + ((i + 1) * duration)
                 self.subtitles.insert(index, subtitle)
 
-        action = self.get_revertable_action(register)
+        action = self.new_revertable_action(register)
         action.docs = tuple(aeidon.documents)
         action.description = _("Inserting subtitles")
         action.revert_function = self.remove_subtitles
@@ -80,7 +80,7 @@ class EditAgent(aeidon.Delegate):
         for i, index in enumerate(indices):
             self.subtitles.insert(index, subtitles[i])
 
-        action = self.get_revertable_action(register)
+        action = self.new_revertable_action(register)
         action.docs = tuple(aeidon.documents)
         action.description = _("Inserting subtitles")
         action.revert_function = self.remove_subtitles
@@ -98,7 +98,7 @@ class EditAgent(aeidon.Delegate):
     def merge_subtitles(self, indices, register=-1):
         """Merge subtitles in indices to form one subtitle."""
 
-        subtitle = self.get_subtitle()
+        subtitle = self.new_subtitle()
         subtitle.start = self.subtitles[indices[0]].start
         subtitle.end = self.subtitles[indices[-1]].end
         main_texts = [self.subtitles[x].main_text for x in indices]
@@ -126,7 +126,7 @@ class EditAgent(aeidon.Delegate):
         for index in reversed(indices):
             subtitles.insert(0, self.subtitles.pop(index))
 
-        action = self.get_revertable_action(register)
+        action = self.new_revertable_action(register)
         action.docs = tuple(aeidon.documents)
         action.description = _("Removing subtitles")
         action.revert_function = self.insert_subtitles
@@ -151,7 +151,7 @@ class EditAgent(aeidon.Delegate):
             subtitle.start = subtitles[i].start
             subtitle.end = subtitles[i].end
 
-        action = self.get_revertable_action(register)
+        action = self.new_revertable_action(register)
         action.docs = tuple(aeidon.documents)
         action.description = _("Replacing positions")
         action.revert_function = self.replace_positions
@@ -175,7 +175,7 @@ class EditAgent(aeidon.Delegate):
             orig_texts.append(subtitle.get_text(doc))
             subtitle.set_text(doc, texts[i])
 
-        action = self.get_revertable_action(register)
+        action = self.new_revertable_action(register)
         action.docs = (doc,)
         action.description = _("Replacing texts")
         action.revert_function = self.replace_texts
@@ -199,13 +199,13 @@ class EditAgent(aeidon.Delegate):
 
         subtitles = []
         indices = [index, index + 1]
-        subtitle = self.get_subtitle()
+        subtitle = self.new_subtitle()
         subtitle.start = start
         subtitle.end = middle
         subtitle.main_text = main_text
         subtitle.tran_text = tran_text
         subtitles.append(subtitle)
-        subtitle = self.get_subtitle()
+        subtitle = self.new_subtitle()
         subtitle.start = middle
         subtitle.end = end
         subtitles.append(subtitle)

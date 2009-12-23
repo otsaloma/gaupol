@@ -115,16 +115,6 @@ class TestUtilityAgent(aeidon.TestCase):
         parser = self.project.get_parser(doc)
         assert parser.re_tag == self.project.get_markup_tag_regex(doc)
 
-    def test_get_revertable_action(self):
-        register = aeidon.registers.DO
-        action = self.project.get_revertable_action(register)
-        assert action.register == register
-
-    def test_get_subtitle(self):
-        subtitle = self.project.get_subtitle()
-        assert subtitle.mode == self.project.main_file.mode
-        assert subtitle.framerate == self.project.framerate
-
     def test_get_text_length(self):
         self.project.subtitles[0].main_text = "<i>test\ntest.</i>"
         length = self.project.get_text_length(0, aeidon.documents.MAIN)
@@ -140,3 +130,13 @@ class TestUtilityAgent(aeidon.TestCase):
 
     def test_get_text_signal__value_error(self):
         self.raises(ValueError, self.project.get_text_signal, None)
+
+    def test_new_revertable_action(self):
+        register = aeidon.registers.DO
+        action = self.project.new_revertable_action(register)
+        assert action.register == register
+
+    def test_new_subtitle(self):
+        subtitle = self.project.new_subtitle()
+        assert subtitle.mode == self.project.main_file.mode
+        assert subtitle.framerate == self.project.framerate

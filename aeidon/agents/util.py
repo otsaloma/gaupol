@@ -93,16 +93,6 @@ class UtilityAgent(aeidon.Delegate):
         clean_func = self.get_markup_clean_func(doc)
         return aeidon.Parser(re_tag, clean_func)
 
-    def get_revertable_action(self, register):
-        """Return a new :class:`aeidon.RevertableAction` instance."""
-        action = aeidon.RevertableAction()
-        action.register = register
-        return action
-
-    def get_subtitle(self):
-        """Return a new :class:`aeidon.Subtitle` instance."""
-        return aeidon.Subtitle(self.get_mode(), self.framerate)
-
     def get_text_length_require(self, index, doc):
         assert 0 <= index < len(self.subtitles)
 
@@ -121,3 +111,13 @@ class UtilityAgent(aeidon.Delegate):
         if doc == aeidon.documents.TRAN:
             return "translation-texts-changed"
         raise ValueError("Invalid document: %s" % repr(doc))
+
+    def new_revertable_action(self, register):
+        """Return a new :class:`aeidon.RevertableAction` instance."""
+        action = aeidon.RevertableAction()
+        action.register = register
+        return action
+
+    def new_subtitle(self):
+        """Return a new :class:`aeidon.Subtitle` instance."""
+        return aeidon.Subtitle(self.get_mode(), self.framerate)

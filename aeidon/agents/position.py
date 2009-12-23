@@ -161,7 +161,7 @@ class PositionAgent(aeidon.Delegate):
         for subtitle in self.subtitles:
             subtitle.framerate = framerate
 
-        action = self.get_revertable_action(register)
+        action = self.new_revertable_action(register)
         action.docs = tuple(aeidon.documents)
         action.description = _("Setting framerate")
         action.revert_function = self.set_framerate

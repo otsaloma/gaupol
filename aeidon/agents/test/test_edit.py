@@ -68,7 +68,7 @@ class TestEditAgent(gaupol.TestCase):
         orig_length = len(subtitles)
         new_subtitles = []
         for i in range(3):
-            subtitle = self.project.get_subtitle()
+            subtitle = self.project.new_subtitle()
             subtitle.start = i
             subtitle.end = i + 1
             subtitle.main_text = str(i)
@@ -103,7 +103,7 @@ class TestEditAgent(gaupol.TestCase):
 
         new_subtitles = []
         for i in range(3):
-            subtitle = self.project.get_subtitle()
+            subtitle = self.project.new_subtitle()
             subtitle.start = i
             subtitle.end = i + 1
             new_subtitles.append(subtitle)

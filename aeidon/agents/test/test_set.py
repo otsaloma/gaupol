@@ -58,6 +58,10 @@ class TestSetAgent(aeidon.TestCase):
         self.project.set_end(0, "00:22:00.000")
         assert subtitles[0].end_time == "00:22:00.000"
 
+    def test_set_main_text(self):
+        self.project.subtitles[0].main_text = "a"
+        self.project.set_main_text(0, "m")
+
     @aeidon.deco.reversion_test
     def test_set_start__frame(self):
         subtitles = self.project.subtitles
@@ -65,7 +69,7 @@ class TestSetAgent(aeidon.TestCase):
         assert subtitles[0].start_frame == -1000
 
     @aeidon.deco.reversion_test
-    def test_set_start__frame_reorder(self):
+    def test_set_start__reorder(self):
         subtitles = self.project.subtitles
         text_0 = subtitles[0].main_text
         text_3 = subtitles[3].main_text
@@ -94,4 +98,8 @@ class TestSetAgent(aeidon.TestCase):
     @aeidon.deco.reversion_test
     def test_set_text__translation(self):
         self.project.set_text(0, aeidon.documents.TRAN, "t")
+        assert self.project.subtitles[0].tran_text == "t"
+
+    def test_set_translation_text(self):
+        self.project.set_translation_text(0, "t")
         assert self.project.subtitles[0].tran_text == "t"
