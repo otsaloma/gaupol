@@ -69,11 +69,13 @@ class ClipboardAgent(aeidon.Delegate):
         length = len(self.subtitles)
         new_count = len(texts) - (length - index)
         if new_count > 0:
-            inserts = range(length, length + new_count)
-            self.insert_blank_subtitles(inserts, register=register)
-        entries = [(i, x) for (i, x) in enumerate(texts) if x is not None]
-        indices = [index + i for (i, x) in entries]
-        new_texts = [x for (i, x) in entries]
+            self.insert_blank_subtitles(range(length, length + new_count),
+                                        register=register)
+
+        indices = [index + i for i in range(len(texts))
+                   if texts[i] is not None]
+
+        new_texts = [x for x in texts if x is not None]
         self.replace_texts(indices, doc, new_texts, register=register)
         if new_count > 0:
             self.group_actions(register, 2, "")

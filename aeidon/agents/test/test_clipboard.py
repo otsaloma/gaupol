@@ -28,6 +28,8 @@ class TestClipboardAgent(aeidon.TestCase):
         self.project.copy_texts((0, 2), aeidon.documents.MAIN)
         texts = self.project.clipboard.get_texts()
         assert texts == [text_0, None, text_2]
+        assert self.project.subtitles[0].main_text == text_0
+        assert self.project.subtitles[2].main_text == text_2
 
     @aeidon.deco.reversion_test
     def test_cut_texts(self):
@@ -52,7 +54,7 @@ class TestClipboardAgent(aeidon.TestCase):
     def test_paste_texts__new(self):
         subtitles = self.project.subtitles
         self.project.copy_texts((0, 1), aeidon.documents.TRAN)
-        last_index = len(subtitles) - 1
-        indices = self.project.paste_texts(last_index, aeidon.documents.MAIN)
-        assert list(indices) == [last_index, last_index + 1]
-        assert len(subtitles) == last_index + 2
+        z = len(subtitles) - 1
+        indices = self.project.paste_texts(z, aeidon.documents.MAIN)
+        assert list(indices) == [z, z + 1]
+        assert len(subtitles) == z + 2
