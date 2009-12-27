@@ -69,8 +69,8 @@ class ClipboardAgent(aeidon.Delegate):
         length = len(self.subtitles)
         new_count = len(texts) - (length - index)
         if new_count > 0:
-            self.insert_blank_subtitles(range(length, length + new_count),
-                                        register=register)
+            self.insert_subtitles(range(length, length + new_count),
+                                  register=register)
 
         indices = [index + i for i in range(len(texts))
                    if texts[i] is not None]

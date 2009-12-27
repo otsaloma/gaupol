@@ -69,7 +69,7 @@ class TestModule(aeidon.TestCase):
         assert sys.platform == platform
 
     def test_notify_frozen(self):
-        self.project.insert_blank_subtitles((0,))
+        self.project.insert_subtitles((0,))
         assert not self.project.thaw_notify(True)
 
     def test_once(self):

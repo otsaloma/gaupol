@@ -62,7 +62,7 @@ class InsertDialog(gaupol.gtk.GladeDialog):
             index = page.view.get_selected_rows()[0]
             if not above: index += 1
         indices = range(index, index + amount)
-        page.project.insert_blank_subtitles(indices)
+        page.project.insert_subtitles(indices)
 
     def _on_response(self, dialog, response):
         """Save values and insert subtitles."""

@@ -57,7 +57,7 @@ class TestPage(gaupol.gtk.TestCase):
 
     def test__on_project_subtitles_inserted(self):
 
-        self.page.project.insert_blank_subtitles((0, 1))
+        self.page.project.insert_subtitles((0, 1))
 
     def test__on_project_subtitles_removed(self):
 

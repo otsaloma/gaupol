@@ -404,7 +404,7 @@ class OpenAgent(gaupol.Delegate):
         """Create a new project and add a page for it in the application."""
 
         page = gaupol.gtk.Page(self.counter.next())
-        page.project.insert_blank_subtitles((0,), register=None)
+        page.project.insert_subtitles((0,), register=None)
         self.add_new_page(page)
 
     def on_notebook_drag_data_received(

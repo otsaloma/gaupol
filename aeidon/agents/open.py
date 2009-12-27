@@ -31,7 +31,7 @@ class OpenAgent(aeidon.Delegate):
     def _align_translations_by_number(self, subtitles):
         """Add translation texts by aligning subtitle numbers."""
         indices = range(len(self.subtitles), len(subtitles))
-        self.insert_blank_subtitles(indices, register=None)
+        self.insert_subtitles(indices, register=None)
         for i, subtitle in enumerate(subtitles):
             self.subtitles[i].tran_text = subtitle.main_text
 

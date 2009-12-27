@@ -80,7 +80,7 @@ class TestRegisterAgent(aeidon.TestCase):
             self.project.clear_texts([i], MAIN)
         self.project.group_actions(aeidon.registers.DO, 3, "")
         self.project.remove_subtitles((3, 4))
-        self.project.insert_blank_subtitles((3,))
+        self.project.insert_subtitles((3,))
         self.project.undo(6)
         self.project.redo(6)
 
@@ -118,6 +118,6 @@ class TestRegisterAgent(aeidon.TestCase):
             self.project.clear_texts([i], MAIN)
         self.project.group_actions(aeidon.registers.DO, 3, "")
         self.project.remove_subtitles((3, 4))
-        self.project.insert_blank_subtitles((3,))
+        self.project.insert_subtitles((3,))
         self.project.undo(6)
         self.project.redo(6)

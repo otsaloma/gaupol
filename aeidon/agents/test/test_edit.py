@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2007,2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,56 +14,22 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gaupol
+import aeidon
 
 
-class TestEditAgent(gaupol.TestCase):
+class TestEditAgent(aeidon.TestCase):
 
     def setup_method(self, method):
-
         self.project = self.new_project()
 
-    @gaupol.deco.reversion_test
+    @aeidon.deco.reversion_test
     def test_clear_texts(self):
-
-        self.project.clear_texts((0, 1), gaupol.documents.MAIN)
+        self.project.clear_texts((0, 1), aeidon.documents.MAIN)
         assert self.project.subtitles[0].main_text == ""
         assert self.project.subtitles[1].main_text == ""
 
-    @gaupol.deco.reversion_test
-    def test_insert_blank_subtitles__end(self):
-
-        subtitles = self.project.subtitles
-        orig_length = len(subtitles)
-        indices = range(orig_length, orig_length + 10)
-        self.project.insert_blank_subtitles(indices)
-        assert len(subtitles) == orig_length + 10
-        for i in range(0, len(subtitles) - 1):
-            assert subtitles[i] <= subtitles[i + 1]
-
-    @gaupol.deco.reversion_test
-    def test_insert_blank_subtitles__middle(self):
-
-        subtitles = self.project.subtitles
-        orig_length = len(subtitles)
-        self.project.insert_blank_subtitles([1, 2, 3])
-        assert len(subtitles) == orig_length + 3
-        for i in range(0, len(subtitles) - 1):
-            assert subtitles[i] <= subtitles[i + 1]
-
-    @gaupol.deco.reversion_test
-    def test_insert_blank_subtitles__start(self):
-
-        subtitles = self.project.subtitles
-        orig_length = len(subtitles)
-        self.project.insert_blank_subtitles((0, 1))
-        assert len(subtitles) == orig_length + 2
-        for i in range(0, len(subtitles) - 1):
-            assert subtitles[i] <= subtitles[i + 1]
-
-    @gaupol.deco.reversion_test
+    @aeidon.deco.reversion_test
     def test_insert_subtitles(self):
-
         subtitles = self.project.subtitles
         orig_length = len(subtitles)
         new_subtitles = []
@@ -74,13 +40,37 @@ class TestEditAgent(gaupol.TestCase):
             subtitle.main_text = str(i)
             subtitle.tran_text = str(i)
             new_subtitles.append(subtitle)
-        self.project.insert_subtitles([0, 1, 2], new_subtitles)
+        self.project.insert_subtitles((0, 1, 2), new_subtitles)
         assert len(subtitles) == orig_length + 3
         assert subtitles[0:3] == new_subtitles
 
-    @gaupol.deco.reversion_test
-    def test_merge_subtitles(self):
+    @aeidon.deco.reversion_test
+    def test_insert_subtitles__blank_end(self):
+        subtitles = self.project.subtitles
+        orig_length = len(subtitles)
+        indices = range(orig_length, orig_length + 10)
+        self.project.insert_subtitles(indices)
+        assert len(subtitles) == orig_length + 10
+        assert subtitles == sorted(subtitles)
 
+    @aeidon.deco.reversion_test
+    def test_insert_subtitles__blank_middle(self):
+        subtitles = self.project.subtitles
+        orig_length = len(subtitles)
+        self.project.insert_subtitles((1, 2, 3))
+        assert len(subtitles) == orig_length + 3
+        assert subtitles == sorted(subtitles)
+
+    @aeidon.deco.reversion_test
+    def test_insert_subtitles__blank_start(self):
+        subtitles = self.project.subtitles
+        orig_length = len(subtitles)
+        self.project.insert_subtitles((0, 1))
+        assert len(subtitles) == orig_length + 2
+        assert subtitles == sorted(subtitles)
+
+    @aeidon.deco.reversion_test
+    def test_merge_subtitles(self):
         subtitles = self.project.subtitles
         subtitle_1 = subtitles[1].copy()
         subtitle_2 = subtitles[2].copy()
@@ -90,40 +80,36 @@ class TestEditAgent(gaupol.TestCase):
         assert subtitles[1].start == subtitle_1.start
         assert subtitles[1].end == subtitle_2.end
 
-    @gaupol.deco.reversion_test
+    @aeidon.deco.reversion_test
     def test_remove_subtitles(self):
-
         subtitles = self.project.subtitles
         orig_length = len(subtitles)
         self.project.remove_subtitles((2, 3))
         assert len(subtitles) == orig_length - 2
 
-    @gaupol.deco.reversion_test
+    @aeidon.deco.reversion_test
     def test_replace_positions(self):
-
         new_subtitles = []
         for i in range(3):
             subtitle = self.project.new_subtitle()
             subtitle.start = i
             subtitle.end = i + 1
             new_subtitles.append(subtitle)
-        self.project.replace_positions([0, 1, 2], new_subtitles)
+        self.project.replace_positions((0, 1, 2), new_subtitles)
         subtitles = self.project.subtitles
         for i in range(3):
             assert subtitles[i].start == new_subtitles[i].start
             assert subtitles[i].end == new_subtitles[i].end
 
-    @gaupol.deco.reversion_test
+    @aeidon.deco.reversion_test
     def test_replace_texts(self):
-
-        doc = gaupol.documents.MAIN
+        doc = aeidon.documents.MAIN
         self.project.replace_texts((1, 2), doc, ("", ""))
         assert self.project.subtitles[1].main_text == ""
         assert self.project.subtitles[2].main_text == ""
 
-    @gaupol.deco.reversion_test
+    @aeidon.deco.reversion_test
     def test_split_subtitle(self):
-
         subtitles = self.project.subtitles
         subtitle = subtitles[1].copy()
         orig_length = len(subtitles)

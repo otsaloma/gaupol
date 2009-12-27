@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Basic subtitle data editing."""
+"""Basic editing of entire subtitles."""
 
 from __future__ import division
 
@@ -24,27 +24,18 @@ _ = aeidon.i18n._
 
 class EditAgent(aeidon.Delegate):
 
-    """Basic subtitle data editing."""
+    """Basic editing of entire subtitles."""
 
     __metaclass__ = aeidon.Contractual
 
-    def clear_texts_require(self, indices, doc, register=-1):
-        for index in indices:
-            assert 0 <= index < len(self.subtitles)
-
-    @aeidon.deco.revertable
-    def clear_texts(self, indices, doc, register=-1):
-        """Set texts to blank strings."""
-
-        new_texts =  ["" for x in indices]
-        self.replace_texts(indices, doc, new_texts, register=register)
-        self.set_action_description(register, _("Clearing texts"))
-
     @aeidon.deco.revertable
     @aeidon.deco.notify_frozen
-    def insert_blank_subtitles(self, indices, register=-1):
-        """Insert blank subtitles with fitting positions."""
+    def _insert_blank_subtitles(self, indices, register=-1):
+        """Insert new blank subtitles.
 
+        Set sensible equal duration positions within given window or with 3
+        second durations if window not limited.
+        """
         for rindices in aeidon.util.get_ranges(indices):
             first_start = 0.0
             if self.subtitles and (rindices[0] == 0):
@@ -61,9 +52,8 @@ class EditAgent(aeidon.Delegate):
             for i, index in enumerate(rindices):
                 subtitle = self.new_subtitle()
                 subtitle.start = first_start + (i * duration)
-                subtitle.end = first_start + ((i + 1) * duration)
+                subtitle.duration = duration
                 self.subtitles.insert(index, subtitle)
-
         action = self.new_revertable_action(register)
         action.docs = tuple(aeidon.documents)
         action.description = _("Inserting subtitles")
@@ -72,14 +62,30 @@ class EditAgent(aeidon.Delegate):
         self.register_action(action)
         self.emit("subtitles-inserted", indices)
 
+    def clear_texts_require(self, indices, doc, register=-1):
+        for index in indices:
+            assert 0 <= index < len(self.subtitles)
+
+    @aeidon.deco.revertable
+    def clear_texts(self, indices, doc, register=-1):
+        """Set texts to blank strings."""
+        new_texts =  [""] * len(indices)
+        self.replace_texts(indices, doc, new_texts, register=register)
+        self.set_action_description(register, _("Clearing texts"))
+
     @aeidon.deco.revertable
     @aeidon.deco.notify_frozen
-    def insert_subtitles(self, indices, subtitles, register=-1):
-        """Insert given subtitles."""
+    def insert_subtitles(self, indices, subtitles=None, register=-1):
+        """Insert `subtitles` at indices.
 
+        If `subtitles` is None, insert new blank subtitles at indices with
+        sensible equal duration positions within given window or with 3 second
+        durations if window not limited.
+        """
+        if subtitles is None:
+            return self._insert_blank_subtitles(indices, register=register)
         for i, index in enumerate(indices):
             self.subtitles.insert(index, subtitles[i])
-
         action = self.new_revertable_action(register)
         action.docs = tuple(aeidon.documents)
         action.description = _("Inserting subtitles")
@@ -96,18 +102,14 @@ class EditAgent(aeidon.Delegate):
 
     @aeidon.deco.revertable
     def merge_subtitles(self, indices, register=-1):
-        """Merge subtitles in indices to form one subtitle."""
-
+        """Merge subtitles at `indices` to form one subtitle."""
         subtitle = self.new_subtitle()
         subtitle.start = self.subtitles[indices[0]].start
         subtitle.end = self.subtitles[indices[-1]].end
-        main_texts = [self.subtitles[x].main_text for x in indices]
-        main_texts = [x for x in main_texts if x]
-        subtitle.main_text = "\n".join(main_texts)
+        main_texts = [self.subtitles[i].main_text for i in indices]
+        subtitle.main_text = "\n".join(filter(None, main_texts))
         tran_texts = [self.subtitles[x].tran_text for x in indices]
-        tran_texts = [x for x in tran_texts if x]
-        subtitle.tran_text = "\n".join(tran_texts)
-
+        subtitle.tran_text = "\n".join(filter(None, tran_texts))
         self.remove_subtitles(indices, register=register)
         self.insert_subtitles([indices[0]], [subtitle], register=register)
         self.group_actions(register, 2, _("Merging subtitles"))
@@ -119,12 +121,10 @@ class EditAgent(aeidon.Delegate):
     @aeidon.deco.revertable
     @aeidon.deco.notify_frozen
     def remove_subtitles(self, indices, register=-1):
-        """Remove subtitles in indices."""
-
-        subtitles = []
+        """Remove subtitles at `indices`."""
         indices = sorted(indices)
-        for index in reversed(indices):
-            subtitles.insert(0, self.subtitles.pop(index))
+        subtitles = list(reversed([self.subtitles.pop(i)
+                                   for i in reversed(indices)]))
 
         action = self.new_revertable_action(register)
         action.docs = tuple(aeidon.documents)
@@ -142,15 +142,11 @@ class EditAgent(aeidon.Delegate):
     @aeidon.deco.revertable
     @aeidon.deco.notify_frozen
     def replace_positions(self, indices, subtitles, register=-1):
-        """Replace positions in indices with those in subtitles."""
-
-        orig_subtitles = []
+        """Replace positions at `indices` with those from `subtitles`."""
+        orig_subtitles = [self.subtitles[i].copy() for i in indices]
         for i, index in enumerate(indices):
-            subtitle = self.subtitles[index]
-            orig_subtitles.append(subtitle.copy())
-            subtitle.start = subtitles[i].start
-            subtitle.end = subtitles[i].end
-
+            self.subtitles[index].start = subtitles[i].start
+            self.subtitles[index].end = subtitles[i].end
         action = self.new_revertable_action(register)
         action.docs = tuple(aeidon.documents)
         action.description = _("Replacing positions")
@@ -167,49 +163,38 @@ class EditAgent(aeidon.Delegate):
     @aeidon.deco.revertable
     @aeidon.deco.notify_frozen
     def replace_texts(self, indices, doc, texts, register=-1):
-        """Replace texts in document's indices with new_texts."""
-
-        orig_texts = []
+        """Replace texts in `doc`'s `indices` with `texts`."""
+        orig_texts = [self.subtitles[i].get_text(doc) for i in indices]
         for i, index in enumerate(indices):
-            subtitle = self.subtitles[index]
-            orig_texts.append(subtitle.get_text(doc))
-            subtitle.set_text(doc, texts[i])
-
+            self.subtitles[index].set_text(doc, texts[i])
         action = self.new_revertable_action(register)
         action.docs = (doc,)
         action.description = _("Replacing texts")
         action.revert_function = self.replace_texts
         action.revert_args = (indices, doc, orig_texts)
         self.register_action(action)
-        signal = self.get_text_signal(doc)
-        self.emit(signal, indices)
+        self.emit(self.get_text_signal(doc), indices)
 
     def split_subtitle_require(self, index, register=-1):
         assert 0 <= index < len(self.subtitles)
 
     @aeidon.deco.revertable
     def split_subtitle(self, index, register=-1):
-        """Split subtitle in two subtitles with the same durations."""
+        """Split subtitle in two equal duration ones."""
+        middle = self.calc.get_middle(self.subtitles[index].start,
+                                      self.subtitles[index].end)
 
-        start = self.subtitles[index].start
-        end = self.subtitles[index].end
-        middle = self.calc.get_middle(start, end)
-        main_text = self.subtitles[index].main_text
-        tran_text = self.subtitles[index].tran_text
-
-        subtitles = []
-        indices = [index, index + 1]
-        subtitle = self.new_subtitle()
-        subtitle.start = start
-        subtitle.end = middle
-        subtitle.main_text = main_text
-        subtitle.tran_text = tran_text
-        subtitles.append(subtitle)
-        subtitle = self.new_subtitle()
-        subtitle.start = middle
-        subtitle.end = end
-        subtitles.append(subtitle)
-
+        subtitle_1 = self.new_subtitle()
+        subtitle_1.start = self.subtitles[index].start
+        subtitle_1.end = middle
+        subtitle_1.main_text = self.subtitles[index].main_text
+        subtitle_1.tran_text = self.subtitles[index].tran_text
+        subtitle_2 = self.new_subtitle()
+        subtitle_2.start = middle
+        subtitle_2.end = self.subtitles[index].end
         self.remove_subtitles([index], register=register)
-        self.insert_subtitles(indices, subtitles, register=register)
+        self.insert_subtitles((index, index + 1),
+                              (subtitle_1, subtitle_2),
+                              register=register)
+
         self.group_actions(register, 2, _("Splitting subtitle"))
