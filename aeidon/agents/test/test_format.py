@@ -49,6 +49,51 @@ class TestFormatAgent(aeidon.TestCase):
             "MRS. PAVINATO?\n"
             "YES, WHAT DO YOU WANT?")
 
+    def test_add_dialogue_dashes(self):
+        self.project.subtitles[0].main_text = (
+            "- You have cut your beard?\n"
+            "- Yes, don't you like it?")
+        self.project.subtitles[1].main_text = (
+            "It was the only beautiful thing you had.\n"
+            "Now you seem a different person.")
+        self.project.add_dialogue_dashes((0, 1), aeidon.documents.MAIN)
+        assert self.project.subtitles[0].main_text == (
+            "- You have cut your beard?\n"
+            "- Yes, don't you like it?")
+        assert self.project.subtitles[1].main_text == (
+            "- It was the only beautiful thing you had.\n"
+            "- Now you seem a different person.")
+
+    def test_italicize(self):
+        self.project.subtitles[0].main_text = (
+            "<i>I am no thief, I am an officer\n"
+            "and a university student.</i>")
+        self.project.subtitles[1].main_text = (
+            "I look like this because\n"
+            "I'm hunted for by the Germans.")
+        self.project.italicize((0, 1), aeidon.documents.MAIN)
+        assert self.project.subtitles[0].main_text == (
+            "<i>I am no thief, I am an officer\n"
+            "and a university student.</i>")
+        assert self.project.subtitles[1].main_text == (
+            "<i>I look like this because\n"
+            "I'm hunted for by the Germans.</i>")
+
+    def test_remove_dialogue_dashes(self):
+        self.project.subtitles[0].main_text = (
+            "- You have cut your beard?\n"
+            "- Yes, don't you like it?")
+        self.project.subtitles[1].main_text = (
+            "It was the only beautiful thing you had.\n"
+            "Now you seem a different person.")
+        self.project.remove_dialogue_dashes((0, 1), aeidon.documents.MAIN)
+        assert self.project.subtitles[0].main_text == (
+            "You have cut your beard?\n"
+            "Yes, don't you like it?")
+        assert self.project.subtitles[1].main_text == (
+            "It was the only beautiful thing you had.\n"
+            "Now you seem a different person.")
+
     def test_toggle_dialogue_dashes__all(self):
         self.project.subtitles[0].main_text = (
             "- You have cut your beard?\n"
@@ -138,3 +183,33 @@ class TestFormatAgent(aeidon.TestCase):
         assert self.project.subtitles[1].main_text == (
             "<i>I look like this because\n"
             "I'm hunted for by the Germans.</i>")
+
+    def test_remove_dialogue_dashes__all(self):
+        self.project.subtitles[0].main_text = (
+            "- You have cut your beard?\n"
+            "- Yes, don't you like it?")
+        self.project.subtitles[1].main_text = (
+            "- It was the only beautiful thing you had.\n"
+            "- Now you seem a different person.")
+        self.project.remove_dialogue_dashes((0, 1), aeidon.documents.MAIN)
+        assert self.project.subtitles[0].main_text == (
+            "You have cut your beard?\n"
+            "Yes, don't you like it?")
+        assert self.project.subtitles[1].main_text == (
+            "It was the only beautiful thing you had.\n"
+            "Now you seem a different person.")
+
+    def test_unitalicize(self):
+        self.project.subtitles[0].main_text = (
+            "<i>I am no thief, I am an officer\n"
+            "and a university student.</i>")
+        self.project.subtitles[1].main_text = (
+            "I look like this because\n"
+            "I'm hunted for by the Germans.")
+        self.project.unitalicize((0, 1), aeidon.documents.MAIN)
+        assert self.project.subtitles[0].main_text == (
+            "I am no thief, I am an officer\n"
+            "and a university student.")
+        assert self.project.subtitles[1].main_text == (
+            "I look like this because\n"
+            "I'm hunted for by the Germans.")

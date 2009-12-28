@@ -37,7 +37,7 @@ class FormatAgent(aeidon.Delegate):
         text = getattr(parser.text[a:], method)()
         parser.text = prefix + text
 
-    def _should_dialoguize(self, indices, doc):
+    def _should_add_dialogue_dashes(self, indices, doc):
         """Return ``True`` if dialogue dashes should be added to texts."""
         re_tag = self.get_markup_tag_regex(doc)
         for index in indices:
@@ -73,6 +73,28 @@ class FormatAgent(aeidon.Delegate):
                 return True
         return False
 
+    def add_dialogue_dashes_require(self, indices, doc, register=-1):
+        for index in indices:
+            assert 0 <= index < len(self.subtitles)
+
+    @aeidon.deco.revertable
+    def add_dialogue_dashes(self, indices, doc, register=-1):
+        """Add dialogue dashes to all lines of texts."""
+        new_texts = []
+        parser = self.get_parser(doc)
+        for index in indices:
+            subtitle = self.subtitles[index]
+            parser.set_text(subtitle.get_text(doc))
+            parser.set_regex(r"^-\s*")
+            parser.replacement = ""
+            parser.replace_all()
+            parser.set_regex(r"^")
+            parser.replacement = r"- "
+            parser.replace_all()
+            new_texts.append(parser.get_text())
+        self.replace_texts(indices, doc, new_texts, register=register)
+        self.set_action_description(register, _("Adding dialogue dashes"))
+
     def change_case_require(self, indices, doc, method, register=-1):
         for index in indices:
             assert 0 <= index < len(self.subtitles)
@@ -82,7 +104,8 @@ class FormatAgent(aeidon.Delegate):
     def change_case(self, indices, doc, method, register=-1):
         """Change the case of texts with `method`.
 
-        `method` should be "title", "capitalize", "upper" or "lower".
+        `method` should be "title", "capitalize", "upper" or "lower", which
+        correspond to the built-in Python string methods.
         """
         new_texts = []
         parser = self.get_parser(doc)
@@ -91,9 +114,45 @@ class FormatAgent(aeidon.Delegate):
             parser.set_text(subtitle.get_text(doc))
             self._change_case_first(parser, method)
             new_texts.append(parser.get_text())
-
         self.replace_texts(indices, doc, new_texts, register=register)
         self.set_action_description(register, _("Changing case"))
+
+    def italicize_require(self, indices, doc, register=-1):
+        for index in indices:
+            assert 0 <= index < len(self.subtitles)
+
+    @aeidon.deco.revertable
+    def italicize(self, indices, doc, register=-1):
+        """Surround texts with italic markup."""
+        new_texts = []
+        markup = self.get_markup(doc)
+        re_italic_tag = markup.italic_tag
+        for index in indices:
+            text = self.subtitles[index].get_text(doc)
+            text = re_italic_tag.sub("", text)
+            text = markup.italicize(text)
+            new_texts.append(text)
+        self.replace_texts(indices, doc, new_texts, register=register)
+        self.set_action_description(register, _("Italicizing"))
+
+    def remove_dialogue_dashes_require(self, indices, doc, register=-1):
+        for index in indices:
+            assert 0 <= index < len(self.subtitles)
+
+    @aeidon.deco.revertable
+    def remove_dialogue_dashes(self, indices, doc, register=-1):
+        """Remove dialogue dashes from all lines of texts."""
+        new_texts = []
+        parser = self.get_parser(doc)
+        for index in indices:
+            subtitle = self.subtitles[index]
+            parser.set_text(subtitle.get_text(doc))
+            parser.set_regex(r"^-\s*")
+            parser.replacement = ""
+            parser.replace_all()
+            new_texts.append(parser.get_text())
+        self.replace_texts(indices, doc, new_texts, register=register)
+        self.set_action_description(register, _("Removing dialogue dashes"))
 
     def toggle_dialogue_dashes_require(self, indices, doc, register=-1):
         for index in indices:
@@ -102,23 +161,9 @@ class FormatAgent(aeidon.Delegate):
     @aeidon.deco.revertable
     def toggle_dialogue_dashes(self, indices, doc, register=-1):
         """Show or hide dialogue dashes on texts."""
-        new_texts = []
-        parser = self.get_parser(doc)
-        dialoguize = self._should_dialoguize(indices, doc)
-        for index in indices:
-            subtitle = self.subtitles[index]
-            parser.set_text(subtitle.get_text(doc))
-            parser.set_regex(r"^-\s*")
-            parser.replacement = ""
-            parser.replace_all()
-            if dialoguize:
-                parser.set_regex(r"^")
-                parser.replacement = r"- "
-                parser.replace_all()
-            new_texts.append(parser.get_text())
-
-        self.replace_texts(indices, doc, new_texts, register=register)
-        self.set_action_description(register, _("Toggling dialogue dashes"))
+        if self._should_add_dialogue_dashes(indices, doc):
+            return self.add_dialogue_dashes(indices, doc, register=register)
+        return self.remove_dialogue_dashes(indices, doc, register=register)
 
     def toggle_italicization_require(self, indices, doc, register=-1):
         for index in indices:
@@ -126,17 +171,24 @@ class FormatAgent(aeidon.Delegate):
 
     @aeidon.deco.revertable
     def toggle_italicization(self, indices, doc, register=-1):
-        """Italicize or normalize texts."""
+        """Add or remove italic markup surrounding texts."""
+        if self._should_italicize(indices, doc):
+            return self.italicize(indices, doc, register=register)
+        return self.unitalicize(indices, doc, register=register)
+
+    def unitalicize_require(self, indices, doc, register=-1):
+        for index in indices:
+            assert 0 <= index < len(self.subtitles)
+
+    @aeidon.deco.revertable
+    def unitalicize(self, indices, doc, register=-1):
+        """Remove any italic markup surrounding texts."""
         new_texts = []
         markup = self.get_markup(doc)
         re_italic_tag = markup.italic_tag
-        italicize = self._should_italicize(indices, doc)
         for index in indices:
             text = self.subtitles[index].get_text(doc)
             text = re_italic_tag.sub("", text)
-            if italicize:
-                text = markup.italicize(text)
             new_texts.append(text)
-
         self.replace_texts(indices, doc, new_texts, register=register)
-        self.set_action_description(register, _("Toggling italicization"))
+        self.set_action_description(register, _("Unitalicizing"))
