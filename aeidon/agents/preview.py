@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008,2009 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -17,7 +17,6 @@
 """Previewing subtitles with a video player."""
 
 import aeidon
-import atexit
 import os
 import string
 import subprocess
@@ -42,59 +41,37 @@ class PreviewAgent(aeidon.Delegate):
             assert aeidon.encodings.is_valid_code(encoding)
 
     def _get_subtitle_path(self, doc, encoding=None):
-        """Return path to file to preview, either real or temporary.
+        """Return path to a file to preview, either real or temporary.
 
         Raise :exc:`IOError` if writing to temporary file fails.
         Raise :exc:`UnicodeError` if encoding temporary file fails.
         """
         if encoding is not None:
             if encoding != self.get_file(doc).encoding:
-                return self.get_temp_file_path(doc, encoding)
+                return self.new_temp_file(doc, encoding)
         if doc == aeidon.documents.MAIN:
             if not self.main_changed:
                 return self.main_file.path
         if doc == aeidon.documents.TRAN:
             if not self.tran_changed:
                 return self.tran_file.path
-        return self.get_temp_file_path(doc)
+        return self.new_temp_file(doc)
 
     def _on_notify_main_file(self, *args):
-        """Guess the video file path if unset."""
+        """Try to find the video file path if unset."""
         if not self.video_path:
-            self.guess_video_path()
+            self.find_video()
 
-    def get_temp_file_path_require(self, doc, encoding=None):
-        assert self.get_file(doc) is not None
-        if encoding is not None:
-            assert aeidon.encodings.is_valid_code(encoding)
+    def find_video(self, extensions=None):
+        """Find and return the video file path based on main file's path.
 
-    def get_temp_file_path_ensure(self, value, doc, encoding=None):
-        assert os.path.isfile(value)
-
-    def get_temp_file_path(self, doc, encoding=None):
-        """Save the subtitle data to a temporary file and return path.
-
-        Raise :exc:`IOError` if writing to temporary file fails.
-        Raise :exc:`UnicodeError` if encoding temporary file fails.
+        `extensions` should be a sequence of video filename extensions or
+        ``None`` for defaults. The video file is searched for in the same
+        directory as the subtitle file. The subtitle file's filename without
+        extension is assumed to start with or match the video file's filename
+        without extension.
         """
-        sfile = self.get_file(doc)
-        path = aeidon.temp.create(sfile.format.extension)
-        atexit.register(aeidon.temp.remove, path)
-        encoding = encoding or sfile.encoding
-        props = (path, sfile.format, encoding, sfile.newline)
-        self.save(doc, props, False)
-        return path
-
-    def guess_video_path(self, extensions=None):
-        """Guess and return the video file path based on main file's path.
-
-        `extensions` should be a sequence of video file extensions or ``None``
-        for defaults. The video file is searched for in the same directory as
-        the subtitle file. The subtitle file's filename without extension is
-        assumed to start with or match the video file's filename without
-        extension.
-        """
-        if self.main_file is None: return
+        if self.main_file is None: return None
         extensions = list(extensions or (
             ".3ivx", ".asf", ".avi", ".divx", ".flv", ".m2v", ".mkv", ".mov",
             ".mp4", ".mpeg", ".mpg", ".ogm", ".qt", ".rm", ".rmvb", ".swf",
@@ -103,6 +80,7 @@ class PreviewAgent(aeidon.Delegate):
             # the end of the list, so that if there are multiple matches, these
             # ambiguous extensions would not be the ones chosen.
             ".ogg", ".dat"))
+
         subroot = os.path.splitext(self.main_file.path)[0]
         dirname = os.path.dirname(self.main_file.path)
         for filename in os.listdir(dirname):
@@ -114,36 +92,34 @@ class PreviewAgent(aeidon.Delegate):
                 return self.video_path
         return None
 
-    def preview_require(self, time, doc, command, offset, **kwargs):
+    def preview_require(self, position, doc, command, offset, encoding=None):
         assert self.get_file(doc) is not None
         assert self.video_path is not None
 
     def preview_ensure(self, value, *args, **kwargs):
         assert os.path.isfile(value[2])
 
-    def preview(self,
-                time,
-                doc,
-                command,
-                offset,
-                sub_path=None,
-                encoding=None):
-        """Preview subtitles with a video player.
+    def preview(self, position, doc, command, offset, encoding=None):
+        """Start video player with `command` from `position`.
 
         `command` should have variables ``$SECONDS``, ``$SUBFILE`` and
-        ``$VIDEOFILE``. `offset` is the amount of seconds before `time` to
-        start. `sub_path` can be specified, e.g., if using a separately saved
-        temporary file. `encoding` can be specified if different from file
-        encoding. Raise :exc:`IOError` if writing to temporary file fails.
-        Raise :exc:`aeidon.ProcessError` if unable to start process. Raise
-        :exc:`UnicodeError` if encoding temporary file fails. Return
-        (:class:`subprocess.POpen` instance, command, output path).
+        ``$VIDEOFILE``. `offset` should be the amount of seconds before
+        `position` to start, which can be used to take into account that video
+        player's can usually seek only to keyframes, which exist maybe ten
+        seconds or so apart. `encoding` can be specified if different from
+        `doc` file encoding.
+
+        Raise :exc:`IOError` if writing to temporary file fails.
+        Raise :exc:`UnicodeError` if encoding temporary file fails.
+        Raise :exc:`aeidon.ProcessError` if unable to start process.
+
+        Return a three tuple of :class:`subprocess.POpen` instance, command
+        with variables expanded and process standard output and error path.
         """
-        sub_path = sub_path or self._get_subtitle_path(doc, encoding)
+        sub_path = self._get_subtitle_path(doc, encoding)
         output_path = aeidon.temp.create(".output")
         output_fd = aeidon.temp.get_handle(output_path)
-        atexit.register(aeidon.temp.remove, output_path)
-        seconds = self.calc.time_to_seconds(time)
+        seconds = self.calc.to_seconds(position)
         seconds = "%.3f" % max(0.0, seconds - float(offset))
         command = string.Template(command).safe_substitute(
             SECONDS=seconds,

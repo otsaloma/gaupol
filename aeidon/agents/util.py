@@ -17,6 +17,7 @@
 """Miscellaneous helper methods."""
 
 import aeidon
+import os
 
 
 class UtilityAgent(aeidon.Delegate):
@@ -125,3 +126,26 @@ class UtilityAgent(aeidon.Delegate):
     def new_subtitle(self):
         """Return a new :class:`aeidon.Subtitle` instance."""
         return aeidon.Subtitle(self.get_mode(), self.framerate)
+
+    def new_temp_file_require(self, doc, encoding=None):
+        assert self.get_file(doc) is not None
+        if encoding is not None:
+            assert aeidon.encodings.is_valid_code(encoding)
+
+    def new_temp_file_ensure(self, value, doc, encoding=None):
+        assert os.path.isfile(value)
+
+    def new_temp_file(self, doc, encoding=None):
+        """Return path to a new temporary file with subtitles from `doc`.
+
+        Raise :exc:`IOError` if writing to temporary file fails.
+        Raise :exc:`UnicodeError` if encoding temporary file fails.
+        """
+        sfile = self.get_file(doc)
+        sfile = aeidon.files.new(sfile.format,
+                                 aeidon.temp.create(sfile.format.extension),
+                                 encoding or sfile.encoding)
+
+        sfile.copy_from(self.get_file(doc))
+        self.save(doc, sfile, False)
+        return sfile.path

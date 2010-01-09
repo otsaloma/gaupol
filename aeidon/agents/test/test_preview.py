@@ -24,47 +24,36 @@ class TestPreviewAgent(aeidon.TestCase):
         self.project = self.new_project()
         self.delegate = self.project.preview.im_self
 
-    def test_get_temp_file_path__main(self):
-        get_temp_file_path = self.project.get_temp_file_path
-        path = get_temp_file_path(aeidon.documents.MAIN)
-        path = get_temp_file_path(aeidon.documents.MAIN, "ascii")
-
-    def test_get_temp_file_path__translation(self):
-        get_temp_file_path = self.project.get_temp_file_path
-        path = get_temp_file_path(aeidon.documents.TRAN)
-        path = get_temp_file_path(aeidon.documents.TRAN, "ascii")
-
-    def test_guess_video_path__avi(self):
+    def test_find_video__avi(self):
         video_path = aeidon.temp.create(".avi")
         sub_path = video_path.replace(".avi", ".srt")
-        self.project.save_main((sub_path,
-                                aeidon.formats.SUBRIP,
-                                "ascii",
-                                aeidon.newlines.UNIX))
+        sfile = aeidon.files.new(aeidon.formats.SUBRIP,
+                                 sub_path,
+                                 "ascii")
 
-        self.project.guess_video_path()
+        self.project.save_main(sfile)
+        self.project.find_video()
         assert self.project.video_path == video_path
-        aeidon.temp.remove(video_path)
         os.remove(sub_path)
 
-    def test_guess_video_path__none(self):
-        self.project.guess_video_path()
+    def test_find_video__none(self):
+        self.project.find_video()
         assert self.project.video_path is None
 
-    def test_preview(self):
+    def test_preview__encoding(self):
         doc = aeidon.documents.MAIN
         self.project.video_path = self.new_subrip_file()
-        self.project.preview("00:00:00.000", doc, "echo", 0)
+        value = self.project.preview("00:00:00.000", doc, "echo", 0, "utf_8")
         assert os.path.isfile(self.project.get_file(doc).path)
 
-    def test_preview__sub_path(self):
+    def test_preview__main(self):
         doc = aeidon.documents.MAIN
-        path = self.new_subrip_file()
-        self.project.preview("00:00:00.000", doc, "echo", 0, path, "utf_8")
+        self.project.video_path = self.new_subrip_file()
+        value = self.project.preview("00:00:00.000", doc, "echo", 0)
         assert os.path.isfile(self.project.get_file(doc).path)
 
-    def test_preview__temp(self):
-        doc = aeidon.documents.MAIN
-        self.project.clear_texts((0,), doc)
-        self.project.preview("00:00:00.000", doc, "echo", 0)
+    def test_preview__translation(self):
+        doc = aeidon.documents.TRAN
+        self.project.video_path = self.new_subrip_file()
+        value = self.project.preview("00:00:00.000", doc, "echo", 0)
         assert os.path.isfile(self.project.get_file(doc).path)

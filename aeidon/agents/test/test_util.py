@@ -144,3 +144,11 @@ class TestUtilityAgent(aeidon.TestCase):
         subtitle = self.project.new_subtitle()
         assert subtitle.mode == self.project.main_file.mode
         assert subtitle.framerate == self.project.framerate
+
+    def test_new_temp_file__main(self):
+        self.project.new_temp_file(aeidon.documents.MAIN)
+        self.project.new_temp_file(aeidon.documents.MAIN, "ascii")
+
+    def test_new_temp_file__translation(self):
+        self.project.new_temp_file(aeidon.documents.TRAN)
+        self.project.new_temp_file(aeidon.documents.TRAN, "ascii")

@@ -121,7 +121,7 @@ class PreviewAgent(gaupol.Delegate):
         framerate = page.project.framerate
         blocked = page.project.block_all()
         method(register=None, *(args or ()), **(kwargs or {}))
-        path = page.project.get_temp_file_path(doc)
+        path = page.project.new_temp_file(doc)
         time = page.project.subtitles[row].start_time
         page.project.unblock_all(blocked)
         page.project.subtitles = subtitles

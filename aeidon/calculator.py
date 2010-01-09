@@ -139,3 +139,37 @@ class Calculator(object):
                                   float(time[3:5]) * 60,
                                   float(time[6:8]),
                                   float(time[9: ]) / 1000,))
+
+
+    def to_frame(self, position):
+        """Convert `position` to frame."""
+        if isinstance(position, basestring):
+            return self.time_to_frame(position)
+        if isinstance(position, int):
+            return position
+        if isinstance(position, float):
+            return self.seconds_to_frame(position)
+        raise ValueError("Invalid type for position: %s"
+                         % repr(type(position)))
+
+    def to_seconds(self, position):
+        """Convert `position` to secods."""
+        if isinstance(position, basestring):
+            return self.time_to_seconds(position)
+        if isinstance(position, int):
+            return self.frame_to_seconds(position)
+        if isinstance(position, float):
+            return position
+        raise ValueError("Invalid type for position: %s"
+                         % repr(type(position)))
+
+    def to_time(self, position):
+        """Convert `position` to time."""
+        if isinstance(position, basestring):
+            return position
+        if isinstance(position, int):
+            return self.frame_to_time(position)
+        if isinstance(position, float):
+            return self.seconds_to_time(position)
+        raise ValueError("Invalid type for position: %s"
+                         % repr(type(position)))

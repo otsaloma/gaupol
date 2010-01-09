@@ -133,3 +133,30 @@ class TestCalculator(aeidon.TestCase):
         time_to_seconds = self.calc.time_to_seconds
         assert time_to_seconds( "03:45:22.117") == 13522.117
         assert time_to_seconds("-00:00:45.000") ==   -45.000
+
+    def test_to_frame(self):
+        self.calc = aeidon.Calculator(aeidon.framerates.FPS_25)
+        assert self.calc.to_frame("00:00:01.000") == 25
+        assert self.calc.to_frame(25) == 25
+        assert self.calc.to_frame(1.0) == 25
+
+    def test_to_frame__value_error(self):
+        self.raises(ValueError, self.calc.to_frame, None)
+
+    def test_to_seconds(self):
+        self.calc = aeidon.Calculator(aeidon.framerates.FPS_25)
+        assert self.calc.to_seconds("00:00:01.000") == 1.0
+        assert self.calc.to_seconds(25) == 1.0
+        assert self.calc.to_seconds(1.0) == 1.0
+
+    def test_to_seconds__value_error(self):
+        self.raises(ValueError, self.calc.to_seconds, None)
+
+    def test_to_time(self):
+        self.calc = aeidon.Calculator(aeidon.framerates.FPS_25)
+        assert self.calc.to_time("00:00:01.000") == "00:00:01.000"
+        assert self.calc.to_time(25) == "00:00:01.000"
+        assert self.calc.to_time(1.0) == "00:00:01.000"
+
+    def test_to_time__value_error(self):
+        self.raises(ValueError, self.calc.to_time, None)
