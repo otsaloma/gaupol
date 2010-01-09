@@ -25,6 +25,10 @@ class UtilityAgent(aeidon.Delegate):
 
     __metaclass__ = aeidon.Contractual
 
+    def get_all_indices(self):
+        """Return a list of all indices of subtitles."""
+        return range(len(self.subtitles))
+
     def get_changed(self, doc):
         """Return the changed value corresponding to `doc`."""
         if doc == aeidon.documents.MAIN:

@@ -14,77 +14,89 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gaupol
+import aeidon
 
 
-class TestTextAgent(gaupol.TestCase):
+class TestTextAgent(aeidon.TestCase):
 
     def setup_method(self, method):
-
         self.project = self.new_project()
 
     def test_break_lines(self):
-
         for subtitle in self.project.subtitles:
             subtitle.main_text = subtitle.main_text.replace(" ", "\n")
-        rows = range(len(self.project.subtitles))
-        doc = gaupol.documents.MAIN
-        manager = gaupol.PatternManager("common-error")
-        patterns = manager.get_patterns("Latn")
-        self.project.break_lines(rows, doc, patterns, len, 44, 2, 1)
+        manager = aeidon.PatternManager("common-error")
+        self.project.break_lines(self.project.get_all_indices(),
+                                 aeidon.documents.MAIN,
+                                 manager.get_patterns("Latn"),
+                                 length_func=len,
+                                 max_length=44,
+                                 max_lines=2,
+                                 max_deviation=1)
+
         for subtitle in self.project.subtitles:
             assert subtitle.main_text.count("\n") <= 2
 
     def test_capitalize(self):
-
         for subtitle in self.project.subtitles:
             subtitle.main_text = "test. test i."
-        rows = range(len(self.project.subtitles))
-        doc = gaupol.documents.MAIN
-        manager = gaupol.PatternManager("capitalization")
-        patterns = manager.get_patterns("Latn", "en")
-        self.project.capitalize(rows, doc, patterns)
+        manager = aeidon.PatternManager("capitalization")
+        self.project.capitalize(self.project.get_all_indices(),
+                                aeidon.documents.MAIN,
+                                manager.get_patterns("Latn", "en"))
+
         for subtitle in self.project.subtitles:
             assert subtitle.main_text == "Test. Test I."
 
     def test_correct_common_errors(self):
-
         self.project.subtitles[0].main_text = "''Test''"
         self.project.subtitles[1].main_text = "123o456o789"
-        rows = range(len(self.project.subtitles))
-        doc = gaupol.documents.MAIN
-        manager = gaupol.PatternManager("common-error")
-        patterns = manager.get_patterns("Latn")
-        self.project.correct_common_errors(rows, doc, patterns)
+        manager = aeidon.PatternManager("common-error")
+        self.project.correct_common_errors(self.project.get_all_indices(),
+                                           aeidon.documents.MAIN,
+                                           manager.get_patterns("Latn"))
+
         assert self.project.subtitles[0].main_text == '"Test"'
 
     def test_remove_hearing_impaired(self):
-
         orig_length = len(self.project.subtitles)
         self.project.subtitles[0].main_text = "[Boo] Test."
         self.project.subtitles[1].main_text = "[Boo]"
-        rows = range(len(self.project.subtitles))
-        doc = gaupol.documents.MAIN
-        manager = gaupol.PatternManager("hearing-impaired")
+        manager = aeidon.PatternManager("hearing-impaired")
         patterns = manager.get_patterns("Latn")
         for pattern in patterns:
             pattern.enabled = True
-        self.project.remove_hearing_impaired(rows, doc, patterns)
+        self.project.remove_hearing_impaired(self.project.get_all_indices(),
+                                             aeidon.documents.MAIN,
+                                             patterns)
+
         assert self.project.subtitles[0].main_text == "Test."
         assert len(self.project.subtitles) == orig_length - 1
 
     def test_spell_check_join_words(self):
-
         for subtitle in self.project.subtitles:
             subtitle.main_text = subtitle.main_text.replace("a", " a")
             subtitle.main_text = subtitle.main_text.replace("e", "e ")
-        doc = gaupol.documents.MAIN
-        self.project.spell_check_join_words(None, doc, "en")
+        self.project.spell_check_join_words(self.project.get_all_indices(),
+                                            aeidon.documents.MAIN,
+                                            "en")
+
+    def test_spell_check_join_words__enchant_error(self):
+        import enchant
+        self.raises(enchant.Error,
+                    self.project.spell_check_join_words,
+                    None, aeidon.documents.MAIN, "xx")
 
     def test_spell_check_split_words(self):
-
         for subtitle in self.project.subtitles:
             subtitle.main_text = subtitle.main_text.replace("s ", "s")
             subtitle.main_text = subtitle.main_text.replace("y ", "y")
-        doc = gaupol.documents.MAIN
-        self.project.spell_check_split_words(None, doc, "en")
+        self.project.spell_check_split_words(self.project.get_all_indices(),
+                                             aeidon.documents.MAIN,
+                                             "en")
+
+    def test_spell_check_split_words__enchant_error(self):
+        import enchant
+        self.raises(enchant.Error,
+                    self.project.spell_check_split_words,
+                    None, aeidon.documents.MAIN, "xx")

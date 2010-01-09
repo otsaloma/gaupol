@@ -60,7 +60,7 @@ class SaveAgent(aeidon.Delegate):
         if mode == self.main_file.mode: return
         for i, subtitle in enumerate(self.subtitles):
             subtitle.mode = mode
-        self.emit("positions-changed", range(len(self.subtitles)))
+        self.emit("positions-changed", self.get_all_indices())
 
     def _move_file_ensure(self, value, source, destination):
         assert (not value) or os.path.isfile(destination)

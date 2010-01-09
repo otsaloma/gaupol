@@ -23,6 +23,10 @@ class TestUtilityAgent(aeidon.TestCase):
         self.project = self.new_project()
         self.delegate = self.project.get_changed.im_self
 
+    def test_get_all_indices(self):
+        indices = self.project.get_all_indices()
+        assert indices == range(len(self.project.subtitles))
+
     def test_get_changed__main(self):
         changed = self.project.get_changed(aeidon.documents.MAIN)
         assert changed == self.project.main_changed

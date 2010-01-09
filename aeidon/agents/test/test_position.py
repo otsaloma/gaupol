@@ -29,7 +29,7 @@ class TestPositionAgent(aeidon.TestCase):
         subtitles[1].start = "00:00:02.000"
         subtitles[1].end = "00:00:03.000"
         subtitles[2].start = "00:00:04.000"
-        self.project.adjust_durations(range(len(self.project.subtitles)),
+        self.project.adjust_durations(self.project.get_all_indices(),
                                       gap=0.3)
 
         assert subtitles[0].start == "00:00:01.000"
@@ -108,7 +108,7 @@ class TestPositionAgent(aeidon.TestCase):
         self.project.open_main(self.new_microdvd_file(), "ascii")
         self.project.subtitles[0].start = 100
         self.project.subtitles[1].start = 200
-        self.project.convert_framerate(range(len(self.project.subtitles)),
+        self.project.convert_framerate(self.project.get_all_indices(),
                                        aeidon.framerates.FPS_24,
                                        aeidon.framerates.FPS_25)
 
@@ -141,7 +141,7 @@ class TestPositionAgent(aeidon.TestCase):
     @aeidon.deco.reversion_test
     def test_shift_positions__frame(self):
         orig_subtitles = [x.copy() for x in self.project.subtitles]
-        indices = range(len(self.project.subtitles))
+        indices = self.project.get_all_indices()
         self.project.shift_positions(indices, -10)
         for i, subtitle in enumerate(self.project.subtitles):
             start = orig_subtitles[i].start_frame - 10
@@ -171,7 +171,7 @@ class TestPositionAgent(aeidon.TestCase):
 
     @aeidon.deco.reversion_test
     def test_transform_positions__frame(self):
-        indices = range(len(self.project.subtitles))
+        indices = self.project.get_all_indices()
         self.project.transform_positions(indices, (2, 10), (6, 100))
         assert self.project.subtitles[2].start_frame == 10
         for subtitle in self.project.subtitles[3:6]:

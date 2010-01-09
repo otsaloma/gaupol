@@ -79,7 +79,7 @@ class PositionAgent(aeidon.Delegate):
         return self._get_seconds_transform(p1, p2)
 
     def adjust_durations_require(self, indices=None, *args, **kwargs):
-        for index in indices or []:
+        for index in indices or ():
             assert 0 <= index < len(self.subtitles)
 
     @aeidon.deco.revertable
@@ -107,7 +107,7 @@ class PositionAgent(aeidon.Delegate):
         """
         new_indices = []
         new_subtitles = []
-        for index in indices or range(len(self.subtitles)):
+        for index in indices or self.get_all_indices():
             start = self.subtitles[index].start_seconds
             end = self.subtitles[index].end_seconds
             end_max = (self.subtitles[index + 1].start_seconds if
@@ -155,7 +155,7 @@ class PositionAgent(aeidon.Delegate):
         """
         self.set_framerate(framerate_in, register=None)
         new_subtitles = []
-        indices = indices or range(len(self.subtitles))
+        indices = indices or self.get_all_indices()
         for index in indices:
             subtitle = self.subtitles[index].copy()
             subtitle.convert_framerate(framerate_out)
@@ -191,7 +191,7 @@ class PositionAgent(aeidon.Delegate):
         string for time, a float for seconds or an integer for frames.
         """
         new_subtitles = []
-        indices = indices or range(len(self.subtitles))
+        indices = indices or self.get_all_indices()
         for index in indices:
             subtitle = self.subtitles[index].copy()
             subtitle.shift_positions(value)
@@ -219,7 +219,7 @@ class PositionAgent(aeidon.Delegate):
             method = self._get_seconds_transform
         coefficient, constant = method(p1, p2)
         new_subtitles = []
-        indices = indices or range(len(self.subtitles))
+        indices = indices or self.get_all_indices()
         for index in indices:
             subtitle = self.subtitles[index].copy()
             subtitle.scale_positions(coefficient)

@@ -69,7 +69,7 @@ class SearchAgent(aeidon.Delegate):
         self._match_index = index
         self._match_doc = doc
         self._match_passed = False
-        indices = self._indices or range(len(self.subtitles))
+        indices = self._indices or self.get_all_indices()
         while True:
             try:
                 # Return match in document after location.
@@ -108,7 +108,7 @@ class SearchAgent(aeidon.Delegate):
                          % (repr(doc), repr(next)))
 
     def _invariant(self):
-        for index in self._indices or []:
+        for index in self._indices or ():
             assert 0 <= index < len(self.subtitles)
 
     def _next_in_document(self, index, doc, pos=None):
@@ -119,7 +119,7 @@ class SearchAgent(aeidon.Delegate):
         Raise :exc:`ValueError` if no match in this `doc` after `pos`.
         Return tuple of index, document, match span.
         """
-        indices = self._indices or range(len(self.subtitles))
+        indices = self._indices or self.get_all_indices()
         for index in range(index, max(indices) + 1):
             text = self.subtitles[index].get_text(doc)
             # Avoid resetting finder's match span.
@@ -155,7 +155,7 @@ class SearchAgent(aeidon.Delegate):
         Raise :exc:`ValueError` if no match in this `doc` before `pos`.
         Return tuple of index, document, match span.
         """
-        indices = self._indices or range(len(self.subtitles))
+        indices = self._indices or self.get_all_indices()
         for index in reversed(range(min(indices), index + 1)):
             text = self.subtitles[index].get_text(doc)
             # Avoid resetting finder's match span.
@@ -301,7 +301,7 @@ class SearchAgent(aeidon.Delegate):
         self._finder.ignore_case = ignore_case
 
     def set_search_target_require(self, indices=None, docs=None, wrap=True):
-        for index in indices or []:
+        for index in indices or ():
             assert 0 <= index < len(self.subtitles)
 
     def set_search_target(self, indices=None, docs=None, wrap=True):
