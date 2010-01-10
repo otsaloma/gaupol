@@ -73,9 +73,10 @@ def _xdg_copy_config_files():
         try: shutil.copytree(src, dst)
         except (IOError, OSError): pass
     path = os.path.join(OBSOLETE_HOME_DIR, "README")
-    aeidon.util.writelines(path, (
-        "This directory is obsolete since gaupol version 0.14",
-        "and can be safely removed."))
+    try: aeidon.util.writelines(path, (
+            "This directory is obsolete since gaupol version 0.14",
+            "and can be safely removed."))
+    except (IOError, OSError): pass
 
 def _xdg_copy_data_files():
     """Copy data files from ``OBSOLETE_HOME_DIR`` to ``DATA_HOME_DIR``."""
@@ -104,9 +105,10 @@ def _xdg_copy_data_files():
         try: shutil.copyfile(src, dst)
         except (IOError, OSError): pass
     path = os.path.join(OBSOLETE_HOME_DIR, "README")
-    aeidon.util.writelines(path, (
-        "This directory is obsolete since gaupol version 0.14",
-        "and can be safely removed."))
+    try: aeidon.util.writelines(path, (
+            "This directory is obsolete since gaupol version 0.14",
+            "and can be safely removed."))
+    except (IOError, OSError): pass
 
 def get_config_home_directory():
     """Return path to the user's configuration directory."""

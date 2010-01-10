@@ -22,6 +22,28 @@ import sys
 class TestModule(aeidon.TestCase):
 
     @aeidon.deco.monkey_patch(sys, "platform")
+    def test__xdg_copy_config_files(self):
+        sys.platform = "linux2"
+        mkdir = aeidon.temp.create_directory
+        rmdir = aeidon.temp.remove_directory
+        aeidon.paths.OBSOLETE_PROFILE_DIR = mkdir()
+        aeidon.paths.CONFIG_HOME_DIR = mkdir()
+        aeidon.paths._xdg_copy_config_files()
+        rmdir(aeidon.paths.OBSOLETE_PROFILE_DIR)
+        rmdir(aeidon.paths.CONFIG_HOME_DIR)
+
+    @aeidon.deco.monkey_patch(sys, "platform")
+    def test__xdg_copy_data_files(self):
+        sys.platform = "linux2"
+        mkdir = aeidon.temp.create_directory
+        rmdir = aeidon.temp.remove_directory
+        aeidon.paths.OBSOLETE_PROFILE_DIR = mkdir()
+        aeidon.paths.DATA_HOME_DIR = mkdir()
+        aeidon.paths._xdg_copy_data_files()
+        rmdir(aeidon.paths.OBSOLETE_PROFILE_DIR)
+        rmdir(aeidon.paths.DATA_HOME_DIR)
+
+    @aeidon.deco.monkey_patch(sys, "platform")
     def test_config_home_dir__win32(self):
         sys.platform = "win32"
         reload(aeidon.paths)
@@ -46,7 +68,7 @@ class TestModule(aeidon.TestCase):
         assert hasattr(aeidon, "DATA_DIR")
 
     def test_data_dir__source(self):
-        assert os.path.isdir(nfoview.DATA_DIR)
+        assert os.path.isdir(aeidon.DATA_DIR)
 
     @aeidon.deco.monkey_patch(sys, "platform")
     def test_data_home_dir__win32(self):
@@ -74,28 +96,6 @@ class TestModule(aeidon.TestCase):
 
     def test_locale_dir__source(self):
         assert hasattr(aeidon, "LOCALE_DIR")
-
-    @aeidon.deco.monkey_patch(sys, "platform")
-    def test_xdg_copy_config_files(self):
-        sys.platform = "linux2"
-        mkdir = aeidon.temp.create_directory
-        rmdir = aeidon.temp.remove_directory
-        aeidon.paths.OBSOLETE_PROFILE_DIR = mkdir()
-        aeidon.paths.CONFIG_HOME_DIR = mkdir()
-        aeidon.paths.xdg_copy_config_files()
-        rmdir(aeidon.paths.OBSOLETE_PROFILE_DIR)
-        rmdir(aeidon.paths.CONFIG_HOME_DIR)
-
-    @aeidon.deco.monkey_patch(sys, "platform")
-    def test_xdg_copy_data_files(self):
-        sys.platform = "linux2"
-        mkdir = aeidon.temp.create_directory
-        rmdir = aeidon.temp.remove_directory
-        aeidon.paths.OBSOLETE_PROFILE_DIR = mkdir()
-        aeidon.paths.DATA_HOME_DIR = mkdir()
-        aeidon.paths.xdg_copy_data_files()
-        rmdir(aeidon.paths.OBSOLETE_PROFILE_DIR)
-        rmdir(aeidon.paths.DATA_HOME_DIR)
 
     @aeidon.deco.monkey_patch(sys, "platform")
     def test_xdg_copy_if_applicable(self):

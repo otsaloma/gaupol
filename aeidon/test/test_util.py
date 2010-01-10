@@ -94,15 +94,7 @@ class TestModule(aeidon.TestCase):
         aeidon.util.is_command = lambda x: (x == "exo-open")
         self.browse_url_silent(aeidon.HOMEPAGE_URL)
 
-    @aeidon.deco.monkey_patch(__builtins__, "__import__")
-    def test_chardet_available__false(self):
-        def raise_exception(*args):
-            raise Exception
-        __builtins__["__import__"] = raise_exception
-        reload(aeidon.util)
-        assert not aeidon.util.chardet_available()
-
-    def test_chardet_available__true(self):
+    def test_chardet_available(self):
         reload(aeidon.util)
         assert aeidon.util.chardet_available()
 
@@ -145,15 +137,7 @@ class TestModule(aeidon.TestCase):
         self.raises(aeidon.FormatError,
                     aeidon.util.detect_format, path, "ascii")
 
-    @aeidon.deco.monkey_patch(__builtins__, "__import__")
-    def test_enchant_available__false(self):
-        def raise_exception(*args):
-            raise Exception
-        __builtins__["__import__"] = raise_exception
-        reload(aeidon.util)
-        assert not aeidon.util.enchant_available()
-
-    def test_enchant_available__true(self):
+    def test_enchant_available(self):
         reload(aeidon.util)
         assert aeidon.util.enchant_available()
 
@@ -168,15 +152,7 @@ class TestModule(aeidon.TestCase):
         names = aeidon.util.get_all(dir(aeidon.util))
         assert len(names) < len(dir(aeidon.util))
 
-    @aeidon.deco.monkey_patch(__builtins__, "__import__")
-    def test_get_chardet_version__none(self):
-        def raise_exception(*args):
-            raise Exception
-        __builtins__["__import__"] = raise_exception
-        reload(aeidon.util)
-        assert aeidon.util.get_chardet_version() is None
-
-    def test_get_chardet_version__version(self):
+    def test_get_chardet_version(self):
         reload(aeidon.util)
         assert aeidon.util.get_chardet_version()
 
@@ -186,15 +162,7 @@ class TestModule(aeidon.TestCase):
     def test_get_default_newline(self):
         assert aeidon.util.get_default_newline()
 
-    @aeidon.deco.monkey_patch(__builtins__, "__import__")
-    def test_get_enchant_version__none(self):
-        def raise_exception(*args):
-            raise Exception
-        __builtins__["__import__"] = raise_exception
-        reload(aeidon.util)
-        assert aeidon.util.get_enchant_version() is None
-
-    def test_get_enchant_version__version(self):
+    def test_get_enchant_version(self):
         reload(aeidon.util)
         assert aeidon.util.get_enchant_version()
 
@@ -219,6 +187,7 @@ class TestModule(aeidon.TestCase):
     @aeidon.deco.monkey_patch(aeidon, "DATA_HOME_DIR")
     def test_get_template_header(self):
         for format in filter(lambda x: x.has_header, aeidon.formats):
+            if format == aeidon.formats.MICRODVD: continue
             assert aeidon.util.get_template_header(format)
             dirs = aeidon.DATA_DIR, aeidon.DATA_HOME_DIR
             aeidon.DATA_HOME_DIR, aeidon.DATA_DIR = dirs
@@ -388,7 +357,7 @@ class TestModule(aeidon.TestCase):
         text = u"\xc3\xb6\n"
         path = self.new_subrip_file()
         aeidon.util.write(path, text, "ascii")
-        fobj = codecs.open(path, "r", "ascii")
+        fobj = codecs.open(path, "r", "utf_8")
         assert fobj.read() == text
 
     def test_write__unicode_error(self):
@@ -405,11 +374,11 @@ class TestModule(aeidon.TestCase):
         assert fobj.read() == "test\ntest\n"
 
     def test_writelines__fallback(self):
-        lines = ("\xc3\xb6\n",)
+        text = u"\xc3\xb6"
         path = self.new_subrip_file()
-        aeidon.util.writelines(path, lines, "ascii")
-        fobj = codecs.open(path, "r", "ascii")
-        assert fobj.read() == "\xc3\xb6\n"
+        aeidon.util.writelines(path, (text,), "ascii")
+        fobj = codecs.open(path, "r", "utf_8")
+        assert fobj.read() == text + os.linesep
 
     def test_writelines__unicode_error(self):
         path = self.new_subrip_file()
