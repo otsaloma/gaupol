@@ -16,6 +16,54 @@
 
 """Reading, writing and manipulating text-based subtitle files.
 
+:mod:`aeidon` is a Python package that provides classes and functions for
+dealing with text-based subtitle files of many different formats. Functions
+exist for reading and writing subtitle files as well as manipulating subtitle
+data, i.e. positions (times or frames) and texts. Three examples of basic use
+of the :mod:`aeidon` package follow below.
+
+Converting a file from the SubRip format to the MicroDVD format::
+
+    project = aeidon.Project()
+    project.open_main("/path/to/file.srt", "utf_8")
+    project.set_framerate(aeidon.framerates.FPS_24)
+    project.save_main(aeidon.files.new(aeidon.formats.MICRODVD,
+                                       "/path/to/file.sub",
+                                       "utf_8"))
+
+Making all subtitles in a file appear two seconds earlier::
+
+    project = aeidon.Project()
+    project.open_main("/path/to/file.srt", "utf_8")
+    project.shift_positions(None, -2.0)
+    project.save_main()
+
+Removing all blank subtitles::
+
+    project = aeidon.Project()
+    project.open_main("/path/to/file.srt", "utf_8")
+    indices = [i for i, x in enumerate(project.subtitles)
+               if not x.main_text]
+
+    project.remove_subtitles(indices)
+    project.save_main()
+
+:mod:`aeidon` handles positions as either times (as strings of form
+``HH:MM:SS.SSS``), frames (as integers) or in some cases seconds (as floats).
+All these can be used with functions that edit subtitle data regardless of what
+the native position type of the file format used is.
+
+Due to translation of subtitles being a major feature of Gaupol, :mod:`aeidon`
+handles two separate documents that comprise a project -- a main and a
+translation document. These correspond to separate files, but the subtitles are
+common since the positions are shared.
+
+:mod:`aeidon` includes an undo/redo-system. Any subtitle data-editing methods
+of :class:`aeidon.Project` (ones marked with the :func:`aeidon.deco.revertable`
+decorator) are revertable. If using :mod:`aeidon` in a context where reverting
+actions is never needed, a greater flexibility can be achieved by accessing the
+subtitles directly (via :attr:`aeidon.Project.subtitles`).
+
 :var BUG_REPORT_URL: Web page where to submit new bug reports
 :var CONFIG_HOME_DIR: Path to the user's local configuration directory
 :var DATA_DIR: Path to the global data directory
@@ -34,6 +82,10 @@
 :var registers: Enumerations for action action reversion register types
 
 :var debug: ``True`` to perform additional run-time checks
+
+   `debug` is used in many cases at import time and should thus not be set
+   directly, but rather by setting a non-blank value, e.g. "1", to either of
+   environment variables ``AEIDON_DEBUG`` or ``GAUPOL_DEBUG``.
 """
 
 import os
