@@ -14,58 +14,82 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Editor for text-based subtitle files."""
+"""GTK+ user interface.
 
+Constant 'COMBO_SEPARATOR' is a string rendered as a separator in combo boxes.
+It can be inserted into the combo box's model, and 'util.separate_combo'
+function will recognize it.
+
+Constant 'EXTRA' is an amount of pixels to add to dialog size calculations.
+When setting dialog sizes based on their content, we get the size request of
+the scrolled window components and add the surroundings to that to get a nice
+default dialog size. For this to work neatly we should add some extra to adapt
+to different widget sizes in different themes, e.g. scrollbar widths and the
+sizes of icons in buttons. Let the 'EXTRA' constant very vaguely account for
+that and let it be added to each calculated dialog width and height.
+"""
+
+import aeidon
+import gobject
+import gtk.glade
 import os
-import re
 
-__version__ = "0.15"
+aeidon.util.install_module("gtk", lambda: None)
+gtk.rc_parse(os.path.join(aeidon.DATA_DIR, "ui", "gtkrc"))
+gtk.glade.bindtextdomain("aeidon", aeidon.LOCALE_DIR)
+gtk.glade.textdomain("aeidon")
+gobject.threads_init()
 
-# debug = bool(os.environ.get("GAUPOL_DEBUG", ""))
-# re_any_tag = re.compile(r"(^[/\\_]+|<.*?>|\{.*?\})")
+COMBO_SEPARATOR = "<separator/>"
+EXTRA = 36
 
-# from gaupol.paths import *
-# from gaupol.urls import *
-# from gaupol import deco
-# from gaupol import util
-# from gaupol import temp
-# from gaupol.contractual import *
-# from gaupol.delegate import *
-# from gaupol.singleton import *
-# from gaupol.mutables import *
-# from gaupol.observable import *
-# from gaupol.enumeration import *
-# from gaupol import i18n
-# from gaupol.errors import *
-# from gaupol.align import *
-# from gaupol.documents import *
-# from gaupol.formats import *
-# from gaupol.framerates import *
-# from gaupol.modes import *
-# from gaupol.newlines import *
-# from gaupol.players import *
-# from gaupol.registers import *
-# from gaupol import encodings
-# from gaupol import languages
-# from gaupol import countries
-# from gaupol import locales
-# from gaupol import scripts
-# from gaupol.metadata import *
-# from gaupol.unittest import *
-# from gaupol.calculator import *
-# from gaupol.finder import *
-# from gaupol.parser import *
-# from gaupol.liner import *
-# from gaupol import containers
-# from gaupol.subtitle import *
-# from gaupol.file import *
-# from gaupol import files
-# from gaupol.markup import *
-# from gaupol import tags
-# from gaupol.converter import *
-# from gaupol.pattern import *
-# from gaupol.patternman import *
-# from gaupol.clipboard import *
-# from gaupol.revertable import *
-# from gaupol import agents
-# from gaupol.project import *
+from gaupol.unittest import *
+from gaupol.fields import *
+from gaupol.styles import *
+from gaupol.targets import *
+from gaupol.units import *
+from gaupol.enumuim import *
+from gaupol.errors import *
+from gaupol import conf
+from gaupol.conf import *
+from gaupol import ruler
+from gaupol import util
+from gaupol.meta import *
+from gaupol.runner import *
+from gaupol.entries import *
+from gaupol.renderers import *
+from gaupol.extension import *
+from gaupol.extensionman import *
+from gaupol.output import *
+from gaupol.view import *
+from gaupol.page import *
+from gaupol.dialogs.about import *
+from gaupol.dialogs.glade import *
+from gaupol.dialogs.message import *
+from gaupol.dialogs.debug import *
+from gaupol.dialogs.encoding import *
+from gaupol.dialogs.language import *
+from gaupol.dialogs.previewerr import *
+from gaupol.dialogs.textedit import *
+from gaupol.dialogs.file import *
+from gaupol.dialogs.open import *
+from gaupol.dialogs.append import *
+from gaupol.dialogs.save import *
+from gaupol.dialogs.video import *
+from gaupol.dialogs.duration import *
+from gaupol.dialogs.framerate import *
+from gaupol.dialogs.header import *
+from gaupol.dialogs.insert import *
+from gaupol.dialogs.multiclose import *
+from gaupol.dialogs.preferences import *
+from gaupol.dialogs.search import *
+from gaupol.dialogs.shift import *
+from gaupol.dialogs.spellcheck import *
+from gaupol.dialogs.split import *
+from gaupol.dialogs.transform import *
+from gaupol.assistants import *
+from gaupol.action import *
+from gaupol import actions
+from gaupol import agents
+from gaupol.application import *
+from gaupol import main
