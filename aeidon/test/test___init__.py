@@ -14,11 +14,10 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gaupol
+import aeidon
 
 
-class TestModule(gaupol.TestCase):
+class TestModule(aeidon.TestCase):
 
     def test___version__(self):
-
-        [int(x) for x in gaupol.__version__.split(".")]
+        [int(x) for x in aeidon.__version__.split(".")]
