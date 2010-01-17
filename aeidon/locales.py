@@ -80,7 +80,6 @@ def get_system_modifier():
     names = ("LANGUAGE", "LC_ALL", "LC_MESSAGES", "LANG")
     values = map(os.environ.get, names)
     values = filter(None, values)
-    values = map(locale.normalize, values)
     for value in (x for x in values if x.count("@")):
-        return value[value.index("@") + 1:]
+        return value[value.index("@") + 1:value.index("@") + 5]
     return None
