@@ -21,7 +21,7 @@ class TestPage(gaupol.TestCase):
 
     def setup_method(self, method):
 
-        self.page = self.get_page()
+        self.page = self.new_page()
 
     def test__on_conf_editor_notify_limit_undo(self):
 

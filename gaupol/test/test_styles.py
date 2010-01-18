@@ -17,7 +17,7 @@
 import aeidon
 
 
-class TestModule(aeidon.TestCase):
+class TestModule(gaupol.TestCase):
 
     def test_attributes(self):
 

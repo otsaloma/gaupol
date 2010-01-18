@@ -28,7 +28,7 @@ class TestFramerateConversionDialog(gaupol.TestCase):
     def setup_method(self, method):
 
         self.conf = gaupol.conf.framerate_convert
-        self.application = self.get_application()
+        self.application = self.new_application()
         args = (self.application.window, self.application)
         self.dialog = gaupol.FramerateConvertDialog(*args)
         self.dialog.show()

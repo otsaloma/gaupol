@@ -28,7 +28,7 @@ class TestDurationAdjustDialog(gaupol.TestCase):
     def setup_method(self, method):
 
         self.conf = gaupol.conf.duration_adjust
-        self.application = self.get_application()
+        self.application = self.new_application()
         page = self.application.get_current_page()
         page.view.select_rows((1, 2, 3))
         args = (self.application.window, self.application)

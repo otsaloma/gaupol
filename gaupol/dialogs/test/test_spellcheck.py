@@ -34,7 +34,7 @@ class TestSpellCheckDialog(gaupol.TestCase):
 
         gaupol.conf.editor.use_custom_font = True
         gaupol.conf.editor.custom_font = "sans"
-        self.application = self.get_application()
+        self.application = self.new_application()
         for page in self.application.pages:
             for i, subtitle in enumerate(page.project.subtitles):
                 text = subtitle.main_text.replace("a", "x")

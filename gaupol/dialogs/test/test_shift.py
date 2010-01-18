@@ -28,7 +28,7 @@ class _TestPositionShiftDialog(gaupol.TestCase):
     def setup_method(self, method):
 
         self.conf = gaupol.conf.position_shift
-        self.application = self.get_application()
+        self.application = self.new_application()
         page = self.application.get_current_page()
         page.view.select_rows((1, 2, 3))
         gaupol.conf.preview.use_custom = True

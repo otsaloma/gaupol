@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,8 +14,9 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Base class for GTK unit test cases."""
+"""Base class for GTK+ unit test cases."""
 
+import aeidon
 import gaupol
 
 __all__ = ("TestCase",)
@@ -23,36 +24,37 @@ __all__ = ("TestCase",)
 
 class TestCase(aeidon.TestCase):
 
-    """Base class for GTK unit test cases."""
+    """Base class for GTK+ unit test cases.
 
-    application = None
+    Unit tests are designed to be run with ``py.test``, ``nose`` or something
+    compatible. Tests should use plain ``assert`` statements to allow multiple
+    different tools to be used to run the tests.
+    """
 
-    def get_application(self):
+    def new_application(self):
         """Return a new application with two open pages."""
-
         application = gaupol.Application()
-        application.add_new_page(self.get_page())
+        application.add_new_page(self.new_page())
         application.window.show()
         TestCase.application = application
         return application
 
-    def get_page(self):
+    def new_page(self):
         """Return a new page with two open documents."""
-
         page = gaupol.Page()
         page.project.open_main(self.new_subrip_file(), "ascii")
         page.project.open_translation(self.new_microdvd_file(), "ascii", False)
         return page
 
     def teardown_method(self, method):
-        """Remove state set for executing tests in method."""
-
+        """Remove state set for executing tests in `method`."""
+        # pylint: disable-msg=E1101
         gaupol.util.iterate_main()
         if hasattr(self, "dialog"):
             self.dialog.destroy()
         if hasattr(self, "window"):
             self.window.destroy()
-        if self.application is not None:
+        if hasattr(self, "application"):
             for page in self.application.pages:
                 self.application.close_page(page, False)
             self.application.window.destroy()

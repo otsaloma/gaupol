@@ -22,7 +22,7 @@ class TestPositionAgent(gaupol.TestCase):
 
     def setup_method(self, method):
 
-        self.application = self.get_application()
+        self.application = self.new_application()
         respond = lambda *args: gtk.RESPONSE_CANCEL
         self.application.flash_dialog = respond
 

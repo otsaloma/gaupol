@@ -94,7 +94,7 @@ class TestOpenAgent(gaupol.TestCase):
 
     def setup_method(self, method):
 
-        self.application = self.get_application()
+        self.application = self.new_application()
         self.delegate = self.application.open_main_files.im_self
         respond = lambda *args: gtk.RESPONSE_OK
         self.delegate.flash_dialog = respond
@@ -143,7 +143,7 @@ class TestOpenAgent(gaupol.TestCase):
     @adds_pages(1)
     def test_add_new_page(self):
 
-        self.application.add_new_page(self.get_page())
+        self.application.add_new_page(self.new_page())
 
     def test_add_to_recent_files(self):
 

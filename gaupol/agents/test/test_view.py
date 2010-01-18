@@ -21,7 +21,7 @@ class TestViewAgent(gaupol.TestCase):
 
     def setup_method(self, method):
 
-        self.application = self.get_application()
+        self.application = self.new_application()
 
     def test_on_framerate_combo_changed(self):
 

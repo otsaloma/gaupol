@@ -22,7 +22,7 @@ class Test_EditorPage(gaupol.TestCase):
 
     def setup_method(self, method):
 
-        self.application = self.get_application()
+        self.application = self.new_application()
         args = (self.application.window, self.application)
         self.dialog = gaupol.PreferencesDialog(*args)
         self.page = self.dialog._editor_page
@@ -62,7 +62,7 @@ class Test_ExtensionPage(gaupol.TestCase):
 
     def setup_method(self, method):
 
-        self.application = self.get_application()
+        self.application = self.new_application()
         args = (self.application.window, self.application)
         self.dialog = gaupol.PreferencesDialog(*args)
         self.page = self.dialog._extension_page
@@ -129,7 +129,7 @@ class Test_FilePage(gaupol.TestCase):
 
     def setup_method(self, method):
 
-        self.application = self.get_application()
+        self.application = self.new_application()
         args = (self.application.window, self.application)
         self.dialog = gaupol.PreferencesDialog(*args)
         self.page = self.dialog._file_page
@@ -181,7 +181,7 @@ class Test_PreviewPage(gaupol.TestCase):
 
     def setup_method(self, method):
 
-        self.application = self.get_application()
+        self.application = self.new_application()
         args = (self.application.window, self.application)
         self.dialog = gaupol.PreferencesDialog(*args)
         self.page = self.dialog._preview_page
@@ -229,7 +229,7 @@ class TestPreferencesDialog(gaupol.TestCase):
 
     def setup_method(self, method):
 
-        self.application = self.get_application()
+        self.application = self.new_application()
         args = (self.application.window, self.application)
         self.dialog = gaupol.PreferencesDialog(*args)
         self.dialog.show()

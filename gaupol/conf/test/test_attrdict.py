@@ -25,7 +25,7 @@ class PuppetDict(dict):
         self.defaults = []
 
 
-class TestAttrDict(aeidon.TestCase):
+class TestAttrDict(gaupol.TestCase):
 
     def setup_method(self, method):
 

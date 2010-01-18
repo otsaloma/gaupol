@@ -48,7 +48,7 @@ class TestHeaderDialog(gaupol.TestCase):
 
     def setup_both(self):
 
-        self.application = self.get_application()
+        self.application = self.new_application()
         page = self.application.get_current_page()
         path = self.new_temp_file(aeidon.formats.SUBVIEWER2)
         self.application.open_main_file(path, "ascii")
@@ -60,7 +60,7 @@ class TestHeaderDialog(gaupol.TestCase):
 
     def setup_main(self):
 
-        self.application = self.get_application()
+        self.application = self.new_application()
         page = self.application.get_current_page()
         path = self.new_temp_file(aeidon.formats.SUBVIEWER2)
         self.application.open_main_file(path, "ascii")
@@ -76,7 +76,7 @@ class TestHeaderDialog(gaupol.TestCase):
 
     def setup_translation(self):
 
-        self.application = self.get_application()
+        self.application = self.new_application()
         page = self.application.get_current_page()
         path = self.new_temp_file(aeidon.formats.SUBRIP)
         self.application.open_main_file(path, "ascii")

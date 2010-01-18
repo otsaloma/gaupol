@@ -22,7 +22,7 @@ class TestEditAgent(gaupol.TestCase):
 
     def setup_method(self, method):
 
-        self.application = self.get_application()
+        self.application = self.new_application()
         self.delegate = self.application.undo.im_self
 
     def test_on_clear_texts_activate(self):

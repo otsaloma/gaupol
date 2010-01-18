@@ -47,7 +47,7 @@ class TestPreviewAgent(gaupol.TestCase):
 
         gaupol.conf.preview.custom_command = "echo $SUBFILE"
         gaupol.conf.preview.use_custom = True
-        self.application = self.get_application()
+        self.application = self.new_application()
         page = self.application.get_current_page()
         page.project.video_path = self.new_subrip_file()
         self.delegate = self.application.preview.im_self

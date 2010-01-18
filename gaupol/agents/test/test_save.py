@@ -38,7 +38,7 @@ class TestSaveAgent(gaupol.TestCase):
 
     def setup_method(self, method):
 
-        self.application = self.get_application()
+        self.application = self.new_application()
         self.delegate = self.application.save_main_document.im_self
         respond = lambda *args: gtk.RESPONSE_OK
         self.delegate.flash_dialog = respond

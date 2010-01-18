@@ -21,8 +21,8 @@ class TestUpdateAgent(gaupol.TestCase):
 
     def setup_method(self, method):
 
-        self.application = self.get_application()
-        self.application.add_new_page(self.get_page())
+        self.application = self.new_application()
+        self.application.add_new_page(self.new_page())
 
     def test__update_revert(self):
 

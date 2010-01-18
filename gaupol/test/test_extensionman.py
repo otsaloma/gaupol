@@ -23,7 +23,7 @@ class TestExtensionManager(gaupol.TestCase):
     def setup_method(self, method):
 
         gaupol.conf.config_file = aeidon.temp.create(".conf")
-        self.manager = gaupol.ExtensionManager(self.get_application())
+        self.manager = gaupol.ExtensionManager(self.new_application())
         gaupol.conf.extensions.active = ["bookmarks", "none"]
         self.manager.find_extensions()
         self.manager.setup_extensions()

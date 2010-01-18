@@ -40,7 +40,7 @@ class TestMultiCloseDialog(gaupol.TestCase):
 
     def setup_both(self):
 
-        self.application = self.get_application()
+        self.application = self.new_application()
         for page in self.application.pages:
             page.project.remove_subtitles((0,))
         parent = self.application.window
@@ -51,7 +51,7 @@ class TestMultiCloseDialog(gaupol.TestCase):
 
     def setup_main(self):
 
-        self.application = self.get_application()
+        self.application = self.new_application()
         for page in self.application.pages:
             page.project.set_text(0, aeidon.documents.MAIN, "")
         parent = self.application.window
@@ -66,7 +66,7 @@ class TestMultiCloseDialog(gaupol.TestCase):
 
     def setup_translation(self):
 
-        self.application = self.get_application()
+        self.application = self.new_application()
         for page in self.application.pages:
             page.project.set_text(0, aeidon.documents.TRAN, "")
         parent = self.application.window

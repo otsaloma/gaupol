@@ -21,7 +21,7 @@ class TestMenuAgent(gaupol.TestCase):
 
     def setup_method(self, method):
 
-        self.application = self.get_application()
+        self.application = self.new_application()
         self.delegate = self.application.set_menu_notify_events.im_self
 
     def test_on_open_button_show_menu(self):

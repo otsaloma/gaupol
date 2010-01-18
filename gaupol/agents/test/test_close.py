@@ -42,7 +42,7 @@ class TestCloseAgent(gaupol.TestCase):
 
     def setup_method(self, method):
 
-        self.application = self.get_application()
+        self.application = self.new_application()
         self.delegate = self.application.close_page.im_self
         respond = lambda *args: gtk.RESPONSE_DELETE_EVENT
         self.delegate.flash_dialog = respond

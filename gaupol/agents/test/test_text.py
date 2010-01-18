@@ -22,7 +22,7 @@ class TestSpellCheckAgent(gaupol.TestCase):
 
     def setup_method(self, method):
 
-        self.application = self.get_application()
+        self.application = self.new_application()
         respond = lambda *args: gtk.RESPONSE_DELETE_EVENT
         self.application.flash_dialog = respond
         gaupol.SpellCheckDialog.flash_dialog = respond

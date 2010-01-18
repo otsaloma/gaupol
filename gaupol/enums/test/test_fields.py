@@ -14,20 +14,18 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import aeidon
+import gaupol
 
 
-class TestModule(aeidon.TestCase):
+class TestModule(gaupol.TestCase):
 
     def test_attributes(self):
-
         for field in gaupol.fields:
             assert hasattr(field, "is_position")
             assert hasattr(field, "is_text")
             assert hasattr(field, "label")
 
     def test_items(self):
-
         assert hasattr(gaupol.fields, "NUMBER")
         assert hasattr(gaupol.fields, "START")
         assert hasattr(gaupol.fields, "END")

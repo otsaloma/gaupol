@@ -346,7 +346,7 @@ class Test_ConfirmationPage(_Test_GladePage):
     def setup_method(self, method):
 
         self.page = _ConfirmationPage(gtk.Window())
-        self.page.application = self.get_application()
+        self.page.application = self.new_application()
         self.page.doc = aeidon.documents.MAIN
         gaupol.conf.preview.use_custom = True
         gaupol.conf.preview.custom_command = "echo"
@@ -435,7 +435,7 @@ class TestTextAssistant(gaupol.TestCase):
         gaupol.conf.line_break.skip_length = False
         gaupol.conf.line_break.skip_lines = False
         gaupol.conf.text_assistant.pages = ["line-break"]
-        self.application = self.get_application()
+        self.application = self.new_application()
         args = (self.application.window, self.application)
         self.assistant = gaupol.TextAssistant(*args)
         self.assistant.show()

@@ -21,7 +21,7 @@ class TestModule(gaupol.TestCase):
 
     def setup_method(self, method):
 
-        self.application = self.get_application()
+        self.application = self.new_application()
 
     def test_field_actions(self):
 

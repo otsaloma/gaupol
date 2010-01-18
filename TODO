@@ -7,7 +7,19 @@ Gaupol 0.16
  [D] Add German translation (Chris Leick)
  [D] Add Hungarian translation (László Andrássy)
 
- [ ] Split gaupol to gaupol and gaupol-gtk
+ [ ] Split gaupol to aeidon and gaupol
+ [ ] Bump Python dependency to 2.6
+      - Remove imports from __future__
+      - http://docs.python.org/dev/whatsnew/2.6.html
+ [ ] Bump PyGObject dependency to 2.16
+      - Try gobject.option.OptionParser (see #378704)
+      - Try gio.AppInfo for launching web browser and video player
+ [ ] Bump PyGTK dependency to 2.14
+      - Try gtk.show_uri for launching web browser
+ [ ] Bump PyEnchant dependency to 1.4
+      - All dictionary providers now use a shared default personal word
+        file (largely obsoleting the DictWithPWL class)
+      - Dict.add_to_pwl renamed to Dict.add
  [ ] Add gaupol.gtk.View.add_column, which creates a new model
  [ ] Migrate from Glade to gtk.Builder
  [ ] Adapt to GNOME Goal: Correct Desktop Files
@@ -27,7 +39,7 @@ Gaupol 0.16
      or add unicode function calls for i18n functions
  [ ] MetadataItem._get_localized_field should try 'xx' if 'xx_YY'
      fails
- [ ] Add help menu item for wiki page
+ [?] Add help menu item for wiki page
  [?] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=555338
  [?] Copy key-event hack from gedit for sidepane
       - http://mail.gnome.org/archives/desktop-devel-list/2009-November/msg00263.html
@@ -53,12 +65,3 @@ Gaupol 3000
     - http://docs.python.org/dev/whatsnew/3.0.html
     - http://docs.python.org/dev/whatsnew/3.1.html
     - http://diveintopython3.org/whats-new.html
- * Bump PyGObject dependency to 2.16
-    - Try gobject.option.OptionParser (see #378704)
-    - Try gio.AppInfo for launching web browser and video player
- * Bump PyGTK dependency to 2.14
-    - Try gtk.show_uri for launching web browser
- * Bump PyEnchant dependency to 1.4
-    - All dictionary providers now use a shared default personal word
-      file (largely obsoleting the DictWithPWL class)
-    - Dict.add_to_pwl renamed to Dict.add

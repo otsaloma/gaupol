@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,22 +9,13 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol. If not, see <http://www.gnu.org/licenses/>.
+# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
-import aeidon
+"""Miscellanous enumerations."""
 
+import gaupol
 
-class TestModule(gaupol.TestCase):
-
-    def test_attributes(self):
-
-        for unit in gaupol.length_units:
-            assert hasattr(unit, "label")
-
-    def test_items(self):
-
-        assert hasattr(gaupol.length_units, "CHAR")
-        assert hasattr(gaupol.length_units, "EM")
+gaupol.util.install_module("enums", lambda: None)

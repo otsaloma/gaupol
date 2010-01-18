@@ -27,7 +27,7 @@ class TestExtension(gaupol.TestCase):
 
     def setup_method(self, method):
 
-        self.application = self.get_application()
+        self.application = self.new_application()
         self.extension = PuppetExtension()
         self.conf = gaupol.conf.extensions
 

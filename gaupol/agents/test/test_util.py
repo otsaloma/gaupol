@@ -21,7 +21,7 @@ class TestUtilityAgent(gaupol.TestCase):
 
     def setup_method(self, method):
 
-        self.application = self.get_application()
+        self.application = self.new_application()
 
     def test_get_action(self):
 

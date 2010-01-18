@@ -27,12 +27,12 @@ class TestSearchDialog(gaupol.TestCase):
 
     def run__show_regex_error_dialog_pattern(self):
 
-        self.dialog = gaupol.SearchDialog(self.get_application())
+        self.dialog = gaupol.SearchDialog(self.new_application())
         self.dialog._show_regex_error_dialog_pattern("test")
 
     def run__show_regex_error_dialog_replacement(self):
 
-        self.dialog = gaupol.SearchDialog(self.get_application())
+        self.dialog = gaupol.SearchDialog(self.new_application())
         self.dialog._show_regex_error_dialog_replacement("test")
 
     def setup_method(self, method):
@@ -40,7 +40,7 @@ class TestSearchDialog(gaupol.TestCase):
         gaupol.conf.search.max_history = 2
         gaupol.conf.editor.use_custom_font = True
         gaupol.conf.editor.custom_font = "sans"
-        self.application = self.get_application()
+        self.application = self.new_application()
         self.dialog = gaupol.SearchDialog(self.application)
         respond = lambda *args: gtk.RESPONSE_DELETE_EVENT
         self.dialog.flash_dialog = respond

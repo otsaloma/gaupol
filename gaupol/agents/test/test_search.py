@@ -22,7 +22,7 @@ class TestSearchAgent(gaupol.TestCase):
 
     def setup_method(self, method):
 
-        self.application = self.get_application()
+        self.application = self.new_application()
         self.delegate = self.application.on_find_next_activate.im_self
 
     def test__on_search_dialog_response(self):
