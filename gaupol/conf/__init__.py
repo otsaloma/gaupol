@@ -27,6 +27,7 @@ module variables after reading. See the spec file for a list of those sections,
 options, their default values and types.
 """
 
+import aeidon
 import gaupol
 import os
 

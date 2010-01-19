@@ -32,6 +32,9 @@
    width and height.
 
 :var fields: Enumerations for subtitle field types
+:var length_units: Enumerations for length unit types
+:var targets: Enumerations for action target types
+:var toolbar_styles: Enumerations for toolbar style types
 """
 
 import aeidon
@@ -48,4 +51,9 @@ gtk.rc_parse(os.path.join(aeidon.DATA_DIR, "ui", "gtkrc"))
 gobject.threads_init()
 
 from gaupol.unittest import *
+from gaupol import util
 from gaupol.enums.fields import *
+from gaupol.enums.styles import *
+from gaupol.enums.targets import *
+from gaupol.enums.units import *
+from gaupol import conf

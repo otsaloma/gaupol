@@ -16,6 +16,7 @@
 
 """Reading, writing and storing configurations."""
 
+import aeidon
 import functools
 import gaupol
 import os

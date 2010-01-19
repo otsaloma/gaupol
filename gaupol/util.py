@@ -16,6 +16,7 @@
 
 """Miscellaneous functions and decorators."""
 
+import aeidon
 import gaupol
 import gobject
 import gtk.glade

@@ -43,10 +43,10 @@ aeidon.__init__
 
 gaupol.unittest
 gaupol.fields
-
 gaupol.styles
 gaupol.targets
 gaupol.units
+
 gaupol.enumuim
 gaupol.errors
 gaupol.conf

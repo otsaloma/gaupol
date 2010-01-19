@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
-"""Enumerations for target types."""
+"""Enumerations for action target types."""
 
 import aeidon
 

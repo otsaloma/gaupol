@@ -14,17 +14,18 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import aeidon
+import gaupol
 
 
 class TestModule(gaupol.TestCase):
 
     def test_attributes(self):
-
-        for unit in gaupol.length_units:
-            assert hasattr(unit, "label")
+        for style in gaupol.toolbar_styles:
+            assert hasattr(style, "value")
 
     def test_items(self):
-
-        assert hasattr(gaupol.length_units, "CHAR")
-        assert hasattr(gaupol.length_units, "EM")
+        assert hasattr(gaupol.toolbar_styles, "DEFAULT")
+        assert hasattr(gaupol.toolbar_styles, "ICONS")
+        assert hasattr(gaupol.toolbar_styles, "TEXT")
+        assert hasattr(gaupol.toolbar_styles, "BOTH")
+        assert hasattr(gaupol.toolbar_styles, "BOTH_HORIZ")

@@ -14,13 +14,12 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import aeidon
+import gaupol
 
 
 class TestModule(gaupol.TestCase):
 
     def test_items(self):
-
         assert hasattr(gaupol.targets, "SELECTED")
         assert hasattr(gaupol.targets, "CURRENT")
         assert hasattr(gaupol.targets, "ALL")
