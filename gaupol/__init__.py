@@ -61,4 +61,5 @@ from gaupol.enums.styles import *
 from gaupol.enums.targets import *
 from gaupol.enums.units import *
 from gaupol.enumuim import *
+from gaupol.errors import *
 from gaupol import conf

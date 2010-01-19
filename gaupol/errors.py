@@ -1,4 +1,4 @@
-# Copyright (C) 2007-2008 Osmo Salomaa
+# Copyright (C) 2007-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""All error classes."""
+"""All :mod:`gaupol` error classes."""
 
 import aeidon
 
@@ -37,6 +37,6 @@ class Default(aeidon.Error):
 
 class DependencyError(aeidon.Error):
 
-    """Unsatisfiable dependecies too many side-effects due to dependencies."""
+    """Unsatisfiable dependecies or dependants."""
 
     pass

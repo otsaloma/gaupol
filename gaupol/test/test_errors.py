@@ -20,7 +20,6 @@ import gaupol
 class TestConfigParseError(gaupol.TestCase):
 
     def test_raise(self):
-
         try:
             raise gaupol.ConfigParseError
         except gaupol.ConfigParseError:
@@ -30,7 +29,6 @@ class TestConfigParseError(gaupol.TestCase):
 class TestDefault(gaupol.TestCase):
 
     def test_raise(self):
-
         try:
             raise gaupol.Default
         except gaupol.Default:
@@ -40,7 +38,6 @@ class TestDefault(gaupol.TestCase):
 class TestDependencyError(gaupol.TestCase):
 
     def test_raise(self):
-
         try:
             raise gaupol.DependencyError
         except gaupol.DependencyError:
