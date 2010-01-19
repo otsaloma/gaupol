@@ -14,29 +14,26 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol.  If not, see <http://www.gnu.org/licenses/>.
 
+import aeidon
 import gaupol
 
 
 class TestModule(gaupol.TestCase):
 
     def setup_method(self, method):
-
         self.application = self.new_application()
 
     def test_field_actions(self):
-
         for field in gaupol.fields:
             name = gaupol.field_actions[field]
             assert self.application.get_action(name) is not None
 
     def test_framerate_actions(self):
-
         for framerate in aeidon.framerates:
             name = gaupol.framerate_actions[framerate]
             assert self.application.get_action(name) is not None
 
     def test_mode_actions(self):
-
         for mode in aeidon.modes:
             name = gaupol.mode_actions[mode]
             assert self.application.get_action(name) is not None

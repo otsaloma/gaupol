@@ -35,6 +35,10 @@
 :var length_units: Enumerations for length unit types
 :var targets: Enumerations for action target types
 :var toolbar_styles: Enumerations for toolbar style types
+
+:var field_actions: Dictionary mapping :attr:`gaupol.formats` to actions
+:var framerate_actions: Dictionary mapping :attr:`aeidon.framerates` to actions
+:var mode_actions: Dictionary mapping :attr:`aeidon.modes` to actions
 """
 
 import aeidon
@@ -56,4 +60,5 @@ from gaupol.enums.fields import *
 from gaupol.enums.styles import *
 from gaupol.enums.targets import *
 from gaupol.enums.units import *
+from gaupol.enumuim import *
 from gaupol import conf
