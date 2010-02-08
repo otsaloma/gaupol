@@ -58,6 +58,5 @@ class TestCase(aeidon.TestCase):
             for page in self.application.pages:
                 self.application.close_page(page, False)
             self.application.window.destroy()
-        TestCase.application = None
         gaupol.util.iterate_main()
         gaupol.conf.restore_defaults()

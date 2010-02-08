@@ -24,12 +24,12 @@
 :var EXTRA: Amount of pixels to add to dialog size calculations
 
    When setting dialog sizes based on their content, we get the size request of
-   the scrolled window components and add the surroundings to that to get a
-   nice default dialog size. For this to work neatly we should add some extra
-   to adapt to different widget sizes in different themes, e.g. scrollbar
-   widths and the sizes of icons in buttons. Let the :attr:`EXTRA` constant
-   very vaguely account for that and let it be added to each calculated dialog
-   width and height.
+   the scrolled window component and add the surroundings to that to get a nice
+   default dialog size. For this to work neatly we should add some extra to
+   adapt to different widget sizes in different themes, e.g. scrollbar widths
+   and the sizes of icons in buttons. Let the :attr:`EXTRA` constant very
+   vaguely account for that and let it be added to each calculated dialog width
+   and height.
 
 :var fields: Enumerations for subtitle field types
 :var length_units: Enumerations for length unit types
@@ -62,4 +62,6 @@ from gaupol.enums.targets import *
 from gaupol.enums.units import *
 from gaupol.enumuim import *
 from gaupol.errors import *
-from gaupol import conf
+from gaupol.attrdict import *
+from gaupol.config import *
+conf = ConfigurationStore()

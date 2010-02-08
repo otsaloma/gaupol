@@ -48,8 +48,9 @@ gaupol.targets
 gaupol.units
 gaupol.enumuim
 gaupol.errors
+gaupol.attrdict
 
-gaupol.conf
+gaupol.config
 gaupol.ruler
 gaupol.util
 gaupol.meta

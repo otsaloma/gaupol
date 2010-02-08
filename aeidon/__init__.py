@@ -61,7 +61,7 @@ common since the positions are shared.
 :mod:`aeidon` includes an undo/redo-system. Any subtitle data-editing methods
 of :class:`aeidon.Project` (ones marked with the :func:`aeidon.deco.revertable`
 decorator) are revertable. If using :mod:`aeidon` in a context where reverting
-actions is never needed, a greater flexibility can be achieved by accessing the
+actions is never needed, greater flexibility can be achieved by accessing the
 subtitles directly (via :attr:`aeidon.Project.subtitles`).
 
 :var BUG_REPORT_URL: Web page where to submit new bug reports
