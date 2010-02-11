@@ -32,6 +32,13 @@ class TestConfigurationStore(gaupol.TestCase):
     def teardown_method(self, method):
         shutil.rmtree(self.directory)
 
+    def test_connect_notify(self):
+        class PuppetObserver(object):
+            def _on_conf_application_window_notify_size(self, value):
+                assert value == [99, 99]
+        puppet = PuppetObserver()
+        self.conf.connect_notify("application_window", "size", puppet)
+
     def test_read_from_file(self):
         self.conf.write_to_file()
         self.conf.restore_defaults()
