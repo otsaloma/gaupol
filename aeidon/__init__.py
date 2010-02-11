@@ -86,14 +86,19 @@ subtitles directly (via :attr:`aeidon.Project.subtitles`).
    `debug` is used in many cases at import time and should thus not be set
    directly, but rather by setting a non-blank value, e.g. "1", to either of
    environment variables ``AEIDON_DEBUG`` or ``GAUPOL_DEBUG``.
+
+:var re_any_tag: Regular expression for markup tags of any format
 """
 
 import os
+import re
 
 __version__ = "0.15.99"
 
 debug = (bool(os.environ.get("AEIDON_DEBUG", "")) or
          bool(os.environ.get("GAUPOL_DEBUG", "")))
+
+re_any_tag = re.compile(r"(^[/\\_]+|<.*?>|\{.*?\})")
 
 from aeidon.paths import *
 from aeidon.urls import *
