@@ -34,10 +34,11 @@ class TestConfigurationStore(gaupol.TestCase):
 
     def test_connect_notify(self):
         class PuppetObserver(object):
-            def _on_conf_application_window_notify_size(self, value):
+            def _on_conf_application_window_notify_size(self, obj, value):
                 assert value == [99, 99]
         puppet = PuppetObserver()
         self.conf.connect_notify("application_window", "size", puppet)
+        self.conf.application_window.size = [99, 99]
 
     def test_read_from_file(self):
         self.conf.write_to_file()
