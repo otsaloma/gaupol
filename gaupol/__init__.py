@@ -65,3 +65,5 @@ from gaupol.errors import *
 from gaupol.attrdict import *
 from gaupol.config import *
 conf = ConfigurationStore()
+
+from gaupol import ruler
