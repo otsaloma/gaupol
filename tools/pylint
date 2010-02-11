@@ -1,0 +1,7 @@
+#!/bin/sh
+
+DIRNAME=$(dirname "$0")
+cd "$DIRNAME/.." || exit 1
+
+pylint -f parseable "$@" \
+ | egrep -v  "Instance of 'ConfigurationStore' has no '[a-z_]*' member"
