@@ -34,4 +34,5 @@ class AppendDialog(gaupol.OpenDialog):
         gaupol.OpenDialog.__init__(self, parent, _("Append File"), doc)
         self.set_select_multiple(False)
         button = self.action_area.get_children()[0]
-        gaupol.util.set_button(button, _("_Append"), gtk.STOCK_ADD)
+        # TODO: FIX!
+        # gaupol.util.set_button(button, _("_Append"), gtk.STOCK_ADD)

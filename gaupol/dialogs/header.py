@@ -130,7 +130,8 @@ class HeaderDialog(gaupol.GladeDialog):
             height = 2 * height + 205 + gaupol.EXTRA
         elif self._main_vbox.props.visible or self._tran_vbox.props.visible:
             height = height + 90 + gaupol.EXTRA
-        gaupol.util.resize_dialog(self, width, height)
+        # TODO: FIX!
+        # gaupol.util.resize_dialog(self, width, height)
 
     def _on_copy_down_button_clicked(self, *args):
         """Copy the main header to the translation header."""

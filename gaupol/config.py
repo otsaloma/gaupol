@@ -293,7 +293,7 @@ class ConfigurationStore(gaupol.AttributeDictionary):
                 final_dict[key] = value
         return final_dict
 
-    def connect_notify(self, sections, option, obj):
+    def connect_notify(self, sections, option, obj, *args):
         """Connect `option`'s notify signal to `obj`'s callback method."""
         if isinstance(sections, basestring):
             sections = (sections,)
@@ -307,7 +307,7 @@ class ConfigurationStore(gaupol.AttributeDictionary):
         if not hasattr(obj, method_name):
             method_name = method_name[1:]
         method = getattr(obj, method_name)
-        container.connect(signal, method)
+        container.connect(signal, method, *args)
 
     def read_from_file(self):
         """Read values of configuration options from file.

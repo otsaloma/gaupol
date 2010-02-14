@@ -184,7 +184,8 @@ class DebugDialog(gaupol.GladeDialog):
         code_width = label.size_request()[0]
         width = max(text_width, code_width) + 150 + gaupol.EXTRA
         height = height + 160 + gaupol.EXTRA
-        gaupol.util.resize_message_dialog(self, width, height)
+        # TODO: FIX!
+        # gaupol.util.resize_message_dialog(self, width, height)
         self._message_label.set_size_request(width - 150, -1)
 
     def _show_editor_error_dialog(self):

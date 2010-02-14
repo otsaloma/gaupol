@@ -68,7 +68,8 @@ class MultiCloseDialog(gaupol.GladeDialog):
             height_extra += 32
         width = max(main_size[0], tran_size[0]) + 88 + gaupol.EXTRA
         height = main_size[1] + tran_size[1] + height_extra + gaupol.EXTRA
-        gaupol.util.resize_message_dialog(self._dialog, width, height)
+        # TODO: FIX!
+        # gaupol.util.resize_message_dialog(self._dialog, width, height)
 
     def _init_tran_tree_view(self):
         """Initialize the translation tree view."""

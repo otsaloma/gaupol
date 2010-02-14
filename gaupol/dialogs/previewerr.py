@@ -50,4 +50,5 @@ class PreviewErrorDialog(gaupol.GladeDialog):
         width, height = get_size(self._text_view, "monospace")
         width = width + 112 + gaupol.EXTRA
         height = height + 148 + gaupol.EXTRA
-        gaupol.util.resize_message_dialog(self, width, height)
+        # TODO: FIX!
+        # gaupol.util.resize_message_dialog(self, width, height)

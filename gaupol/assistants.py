@@ -1153,7 +1153,8 @@ class TextAssistant(gtk.Assistant):
             font = gaupol.conf.editor.custom_font
             gaupol.util.set_label_font(label, font)
         width, height = label.size_request()
-        gaupol.util.resize_dialog(self, width, height, 0.8)
+        # TODO: FIX!
+        # gaupol.util.resize_dialog(self, width, height, 0.8)
 
     def _on_apply(self, *args):
         """Apply all confirmed changes."""
