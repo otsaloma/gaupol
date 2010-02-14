@@ -309,6 +309,22 @@ class ConfigurationStore(gaupol.AttributeDictionary):
         method = getattr(obj, method_name)
         container.connect(signal, method, *args)
 
+    def disconnect_notify(self, sections, option, obj):
+        """Disconnect `option`'s notify signal from `obj`'s callback method."""
+        if isinstance(sections, basestring):
+            sections = (sections,)
+        container = self
+        for section in sections:
+            container = getattr(container, section)
+        signal = "notify::%s" % option
+        method_name = "_on_conf_%s_%s" % ("_".join(sections),
+                                          signal.replace("::", "_"))
+
+        if not hasattr(obj, method_name):
+            method_name = method_name[1:]
+        method = getattr(obj, method_name)
+        container.disconnect(signal, method)
+
     def read_from_file(self):
         """Read values of configuration options from file.
 
