@@ -67,3 +67,4 @@ from gaupol.config import *
 conf = ConfigurationStore()
 
 from gaupol import ruler
+from gaupol.meta import *
