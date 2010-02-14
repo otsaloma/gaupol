@@ -312,7 +312,7 @@ table.highlighttable pre
 
 tt
 {
-  background-color: {{ theme_bgcolor }};
+  background-color: {{ theme_codebgcolor }};
   font-size: 1em;
   padding: 0 1px 0 1px;
 }

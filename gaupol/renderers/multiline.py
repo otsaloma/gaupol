@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,50 +16,45 @@
 
 """Cell renderer for multiline text data."""
 
+import aeidon
 import gaupol
-import gobject
+import glib
 import gtk
 
 __all__ = ("MultilineCellRenderer",)
 
 
-class _CellTextView(gtk.TextView, gtk.CellEditable):
+class CellTextView(gtk.TextView, gtk.CellEditable):
 
-    """Text view suitable for cell renderer use."""
+    """A :class:`gtk.TextView` suitable for cell renderer use."""
 
     __gtype_name__ = "CellTextView"
 
     def __init__(self, text_buffer=None):
-        """Initialize a _CellTextView object."""
-
+        """Initialize a :class:`CellTextView` object."""
         gtk.TextView.__init__(self, text_buffer)
         gaupol.util.prepare_text_view(self)
 
     def do_editing_done(self, *args):
         """End editing."""
-
         self.remove_widget()
 
     def do_remove_widget(self, *args):
         """Remove widget."""
-
         pass
 
     def do_start_editing(self, *args):
         """Start editing."""
-
         pass
 
     def get_text(self):
-        """Return the text."""
-
+        """Return text."""
         text_buffer = self.get_buffer()
         bounds = text_buffer.get_bounds()
         return text_buffer.get_text(*bounds)
 
     def set_text(self, text):
-        """Set the text."""
-
+        """Set text."""
         self.get_buffer().set_text(text)
 
 
@@ -67,50 +62,43 @@ class MultilineCellRenderer(gtk.CellRendererText):
 
     """Cell renderer for multiline text data.
 
-    If conf.editor.show_lengths_cell is True, line lengths are shown as
-    superscripts at the end of each line. The original text without those
-    superscripts is stored in instance variable '_text'.
+    If :attr:`gaupol.conf.editor.show_lengths_cell` is ``True``, line lengths
+    are shown as superscripts at the end of each line.
     """
 
     __gtype_name__ = "MultilineCellRenderer"
 
     def __init__(self):
         """Initialize a MultilineCellRenderer object."""
-
         gtk.CellRendererText.__init__(self)
         self._in_editor_menu = False
         self._show_lengths = gaupol.conf.editor.show_lengths_cell
         self._text = ""
-
-        gaupol.conf.connect(self, "editor", "show_lengths_cell")
+        gaupol.conf.connect_notify("editor", "show_lengths_cell", self)
         aeidon.util.connect(self, self, "notify::text")
 
     def _on_conf_editor_notify_show_lengths_cell(self, *args):
-        """Synch the '_show_lengths' attribute with conf."""
-
+        """Hide or show line lengths if ``conf`` changed."""
         self._show_lengths = gaupol.conf.editor.show_lengths_cell
 
     def _on_editor_focus_out_event(self, editor, *args):
         """End editing."""
-
         if self._in_editor_menu: return
         editor.remove_widget()
         self.emit("editing-canceled")
 
     def _on_editor_key_press_event(self, editor, event):
-        """End editing if Enter pressed."""
-
+        """End editing if ``Enter`` or ``Escape`` pressed."""
         if event.state & (gtk.gdk.SHIFT_MASK | gtk.gdk.CONTROL_MASK): return
         if event.keyval in (gtk.keysyms.Return, gtk.keysyms.KP_Enter):
             editor.remove_widget()
             self.emit("edited", editor.get_data("path"), editor.get_text())
-        elif event.keyval == gtk.keysyms.Escape:
+        if event.keyval == gtk.keysyms.Escape:
             editor.remove_widget()
             self.emit("editing-canceled")
 
     def _on_editor_populate_popup(self, editor, menu):
-        """Disable the ending of editing on focus-out-event."""
-
+        """Disable "focus-out-event" ending editing."""
         self._in_editor_menu = True
         def on_menu_unmap(menu, self):
             self._in_editor_menu = False
@@ -118,20 +106,18 @@ class MultilineCellRenderer(gtk.CellRendererText):
 
     def _on_notify_text(self, *args):
         """Set markup by adding line lengths to text."""
-
         self._text = text = unicode(self.props.text)
         if not (text and self._show_lengths): return
         lengths = gaupol.ruler.get_lengths(text)
-        text = gobject.markup_escape_text(text)
+        text = glib.markup_escape_text(text)
         lines = text.split("\n")
-        for i in (x for x in range(len(lines)) if lines[x]):
+        for i, line in filter(lambda x: x[1], enumerate(lines)):
             lines[i] += " <small><sup>%d</sup></small>" % lengths[i]
         self.props.markup = "\n".join(lines)
 
     def do_start_editing(self, event, widget, path, bg_area, cell_area, flags):
-        """Initialize and return the editor widget."""
-
-        editor = _CellTextView()
+        """Initialize and return a :class:`CellTextView` widget."""
+        editor = CellTextView()
         editor.modify_font(self.props.font_desc)
         editor.set_text(self._text)
         editor.set_size_request(cell_area.width, cell_area.height)
@@ -144,7 +130,6 @@ class MultilineCellRenderer(gtk.CellRendererText):
         return editor
 
     def set_show_lengths(self, show_lengths):
-        """Show line lengths if show_lengths is True."""
-
+        """Show or hide line lengths overriding ``conf``."""
         self._show_lengths = show_lengths
-        gaupol.conf.disconnect(self, "editor", "show_lengths_cell")
+        gaupol.conf.disconnect_notify("editor", "show_lengths_cell", self)

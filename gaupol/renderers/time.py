@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Cell renderer for time data in format [-]HH:MM:SS,SSS."""
+"""Cell renderer for time data in format ``[-]HH:MM:SS,SSS``."""
 
 import gaupol
 import gtk
@@ -24,45 +24,40 @@ __all__ = ("TimeCellRenderer",)
 
 class TimeCellRenderer(gtk.CellRendererText):
 
-    """Cell renderer for time data in format [-]HH:MM:SS.SSS."""
+    """Cell renderer for time data in format ``[-]HH:MM:SS.SSS``."""
 
     __gtype_name__ = "TimeCellRenderer"
 
     def __init__(self):
-        """Initialize a TimeCellRenderer object."""
-
+        """Initialize a :class:`TimeCellRenderer` object."""
         gtk.CellRendererText.__init__(self)
         self._in_editor_menu = False
 
     def _on_editor_focus_out_event(self, editor, *args):
         """End editing."""
-
         if self._in_editor_menu: return
         editor.remove_widget()
         self.emit("editing-canceled")
 
     def _on_editor_key_press_event(self, editor, event):
-        """End editing if Enter pressed."""
-
+        """End editing if ``Enter`` or ``Escape`` pressed."""
         if event.state & (gtk.gdk.SHIFT_MASK | gtk.gdk.CONTROL_MASK): return
         if event.keyval in (gtk.keysyms.Return, gtk.keysyms.KP_Enter):
             editor.remove_widget()
             self.emit("edited", editor.get_data("path"), editor.get_text())
-        elif event.keyval == gtk.keysyms.Escape:
+        if event.keyval == gtk.keysyms.Escape:
             editor.remove_widget()
             self.emit("editing-canceled")
 
     def _on_editor_populate_popup(self, editor, menu):
-        """Disable the ending of editing on focus-out-event."""
-
+        """Disable "focus-out-event" ending editing."""
         self._in_editor_menu = True
         def on_menu_unmap(menu, self):
             self._in_editor_menu = False
         menu.connect("unmap", on_menu_unmap, self)
 
     def do_start_editing(self, event, widget, path, bg_area, cell_area, flags):
-        """Initialize and return the editor widget."""
-
+        """Initialize and a :class:`gaupol.TimeEntry` widget."""
         editor = gaupol.TimeEntry()
         editor.set_has_frame(False)
         editor.set_alignment(self.props.xalign)

@@ -70,3 +70,4 @@ from gaupol import ruler
 from gaupol.meta import *
 from gaupol.runner import *
 from gaupol.entries import *
+from gaupol.renderers import *

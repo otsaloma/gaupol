@@ -21,7 +21,6 @@ import gtk
 class TestTimeCellRenderer(gaupol.TestCase):
 
     def run__renderer(self):
-
         tree_view = gtk.TreeView()
         tree_view.set_headers_visible(False)
         store = gtk.ListStore(str)
@@ -30,7 +29,6 @@ class TestTimeCellRenderer(gaupol.TestCase):
         self.renderer.props.editable = True
         column = gtk.TreeViewColumn("", self.renderer, text=0)
         tree_view.append_column(column)
-
         window = gtk.Window()
         window.connect("delete-event", gtk.main_quit)
         window.set_position(gtk.WIN_POS_CENTER)
@@ -40,5 +38,4 @@ class TestTimeCellRenderer(gaupol.TestCase):
         gtk.main()
 
     def setup_method(self, method):
-
         self.renderer = gaupol.TimeCellRenderer()
