@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# Update the PO template file and all existing PO-files with new strings.
+# Requires gettext and intltool.
+
+DIRNAME=$(dirname "$0")
+cd "$DIRNAME/../po" || exit 1
+
+echo "Checking for missing source files..."
+intltool-update -m &> /dev/null
+[ -f missing ] && exit 1
+
+echo "Updating gaupol.pot..."
+intltool-update -p -g gaupol
+
+for FNAME in *.po; do
+    echo "Updating $FNAME..."
+    msgmerge -U -N -v "$FNAME" gaupol.pot
+done
