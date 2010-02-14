@@ -30,12 +30,10 @@ class Runner(object):
 
     def flash_dialog(self, dialog):
         """Run dialog, destroy it and return response."""
-
         response = dialog.run()
         dialog.destroy()
         return response
 
     def run_dialog(self, dialog):
         """Run dialog and return response."""
-
         return dialog.run()

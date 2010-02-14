@@ -20,10 +20,8 @@ import gaupol
 class TestRunner(gaupol.TestCase):
 
     def setup_method(self, method):
-
         self.runner = gaupol.Runner()
 
     def test_attributes(self):
-
         assert hasattr(self.runner, "flash_dialog")
         assert hasattr(self.runner, "run_dialog")
