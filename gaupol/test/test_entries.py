@@ -14,14 +14,13 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gtk
 import gaupol
+import gtk
 
 
 class TestTimeEntry(gaupol.TestCase):
 
     def run__entry(self):
-
         self.entry.set_text("12:34:56.789")
         window = gtk.Window()
         window.connect("delete-event", gtk.main_quit)
@@ -32,11 +31,9 @@ class TestTimeEntry(gaupol.TestCase):
         gtk.main()
 
     def setup_method(self, method):
-
         self.entry = gaupol.TimeEntry()
 
     def test_set_text(self):
-
         self.entry.set_text("12:34:56.789")
         self.entry.set_text("-12:34:56.789")
         self.entry.set_text("12:34:56,789")

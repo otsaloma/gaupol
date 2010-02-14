@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2007,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,11 +14,12 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Entry for time data in format [-]HH:MM:SS.SSS."""
+"""Entry for time data in format ``[-]HH:MM:SS.SSS``."""
 
+import aeidon
 import functools
 import gaupol
-import gobject
+import glib
 import gtk
 import re
 
@@ -26,14 +27,12 @@ __all__ = ("TimeEntry",)
 
 
 def _blocked(function):
-    """Decorator for methods to be run blocked."""
-
+    """Decorator for methods to be run blocked to avoid recursion."""
     @functools.wraps(function)
-    def wrapper(*args, **kwargs):
-        entry = args[0]
+    def wrapper(entry, *args, **kwargs):
         entry.handler_block(entry._delete_handler)
         entry.handler_block(entry._insert_handler)
-        value = function(*args, **kwargs)
+        value = function(entry, *args, **kwargs)
         entry.handler_unblock(entry._insert_handler)
         entry.handler_unblock(entry._delete_handler)
         return value
@@ -43,64 +42,52 @@ def _blocked(function):
 
 class TimeEntry(gtk.Entry):
 
-    """Entry for time data in format [-]HH:MM:SS.SSS.
+    """Entry for time data in format ``[-]HH:MM:SS.SSS``.
 
-    Instance variables:
-     * _delete_handler: Handler for 'delete-text' signal
-     * _insert_handler: Handler for 'insert-text' signal
+    :ivar _delete_handler: Handler for "delete-text" signal
+    :ivar _insert_handler: Handler for "insert-text" signal
 
-    This widget uses 'gobject.idle_add' a lot, which means that clients may
-    need to call 'gtk.main_iteration' to ensure proper updating.
+    This widget uses :func:`glib.idle_add` a lot, which means that clients may
+    need to call :func:`gtk.main_iteration` to ensure proper updating.
     """
 
     __metaclass__ = gaupol.ContractualGObject
     _re_digit = re.compile(r"\d")
     _re_time = re.compile(r"^-?\d\d:[0-5]\d:[0-5]\d\.\d\d\d$")
-    _re_time_comma = re.compile(r"^-?\d\d:[0-5]\d:[0-5]\d\,\d\d\d$")
 
     def __init__(self):
-        """Initialize a TimeEntry object."""
-
+        """Initialize a :class:`TimeEntry` object."""
         gtk.Entry.__init__(self)
         self._delete_handler = None
         self._insert_handler = None
-
         self.set_width_chars(13)
         self.set_max_length(13)
         self._init_signal_handlers()
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
-
-        connect = aeidon.util.connect
-        connect(self, self, "cut-clipboard")
-        connect(self, self, "key-press-event")
-        connect(self, self, "toggle-overwrite")
-        self._delete_handler = connect(self, self, "delete-text")
-        self._insert_handler = connect(self, self, "insert-text")
+        aeidon.util.connect(self, self, "cut-clipboard")
+        aeidon.util.connect(self, self, "key-press-event")
+        aeidon.util.connect(self, self, "toggle-overwrite")
+        self._delete_handler = aeidon.util.connect(self, self, "delete-text")
+        self._insert_handler = aeidon.util.connect(self, self, "insert-text")
 
     @_blocked
     def _insert_text(self, value):
-        """Insert text."""
-
+        """Insert `value` as text after validation."""
         pos = self.get_position()
         text = self.get_text()
         if (pos == 0) and value.startswith("-"):
-            text = "-%s" % text
-            pos += 1
-            value = value[1:]
+            text = (text if text.startswith("-") else "-%s" % text)
         length = len(value)
         text = text[:pos] + value + text[pos + length:]
-        if not self._re_time.match(text):
-            if not self._re_time_comma.match(text): return
-            # Allow pasting text with comma as decimal separator.
-            text = text.replace(",", ".")
+        text = text.replace(",", ".")
+        if not self._re_time.match(text): return
         self.set_text(text)
         self.set_position(pos)
         if length != 1: return
         self.set_position(pos + 1)
-        if pos + 1 >= len(text): return
-        if text[pos + 1] in (":", "."):
+        if (len(text) > (pos + 1)) and (text[pos + 1] in (":", ".")):
             self.set_position(pos + 2)
 
     def _on_cut_clipboard_ensure(self, *args, **kwargs):
@@ -108,8 +95,7 @@ class TimeEntry(gtk.Entry):
         assert (not text) or self._re_time.match(text)
 
     def _on_cut_clipboard(self, entry):
-        """Transform cut signal to a copy signal."""
-
+        """Change "cut-clipboard" signal to "copy-clipboard"."""
         self.stop_emission("cut-clipboard")
         self.emit("copy-clipboard")
 
@@ -119,7 +105,6 @@ class TimeEntry(gtk.Entry):
 
     def _on_delete_text(self, entry, start_pos, end_pos):
         """Do not allow deleting text."""
-
         self.stop_emission("delete-text")
         self.set_position(start_pos)
 
@@ -128,54 +113,46 @@ class TimeEntry(gtk.Entry):
         assert (not text) or self._re_time.match(text)
 
     def _on_key_press_event(self, entry, event):
-        """Change numbers to zero if BackSpace or Delete pressed."""
-
+        """Change numbers to zero if ``BackSpace`` or ``Delete`` pressed."""
         keys = (gtk.keysyms.BackSpace, gtk.keysyms.Delete)
         if not event.keyval in keys: return
         self.stop_emission("key-press-event")
         if self.get_selection_bounds():
-            gobject.idle_add(self._zero_selection)
+            glib.idle_add(self._zero_selection)
         elif event.keyval == gtk.keysyms.BackSpace:
-            gobject.idle_add(self._zero_previous)
+            glib.idle_add(self._zero_previous)
         elif event.keyval == gtk.keysyms.Delete:
-            gobject.idle_add(self._zero_next)
+            glib.idle_add(self._zero_next)
 
     def _on_insert_text_ensure(self, *args, **kwargs):
         text = self.get_text()
         assert (not text) or self._re_time.match(text)
 
     def _on_insert_text(self, entry, text, length, pos):
-        """Insert text if it is proper."""
-
+        """Insert `text` after validation."""
         self.stop_emission("insert-text")
-        gobject.idle_add(self._insert_text, text)
+        glib.idle_add(self._insert_text, text)
 
     def _on_toggle_overwrite(self, entry):
         """Do not allow toggling overwrite."""
-
         self.stop_emission("toggle-overwrite")
 
     @_blocked
     def _zero_next(self):
         """Change the next digit to zero."""
-
         pos = self.get_position()
         text = self.get_text()
         if pos >= len(text): return
         if (pos == 0) and text.startswith("-"):
             self.set_text(text[1:])
             return self.set_position(0)
-        assert text[pos].isdigit()
-        before = text[:pos]
-        after = text[pos + 1:]
-        text = before + "0" + after
-        self.set_text(text)
+        if not text[pos].isdigit(): return
+        self.set_text(text[:pos] + "0" + text[pos + 1:])
         self.set_position(pos)
 
     @_blocked
     def _zero_previous(self):
         """Change the previous digit to zero."""
-
         pos = self.get_position()
         text = self.get_text()
         if pos <= 0: return
@@ -184,20 +161,15 @@ class TimeEntry(gtk.Entry):
             return self.set_position(0)
         if not text[pos - 1].isdigit():
             return self.set_position(pos - 1)
-        before = text[:pos - 1]
-        after = text[pos:]
-        text = before + "0" + after
-        self.set_text(text)
+        self.set_text(text[:pos - 1] + "0" + text[pos:])
         self.set_position(pos - 1)
 
     @_blocked
     def _zero_selection(self):
         """Change digits in selection to zero."""
-
         if not self.get_selection_bounds(): return
         a, z = self.get_selection_bounds()
         text = self.get_text()
         zero = self._re_digit.sub("0", text[a:z])
-        text = text[:a] + zero + text[z:]
-        self.set_text(text)
+        self.set_text(text[:a] + zero + text[z:])
         self.set_position(a)
