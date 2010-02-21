@@ -76,3 +76,4 @@ from gaupol.view import *
 from gaupol.page import *
 from gaupol.extension import *
 from gaupol.dialogs.builder import *
+from gaupol.dialogs.about import *

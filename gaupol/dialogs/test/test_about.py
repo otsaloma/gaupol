@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
+import aeidon
 import gaupol
 import gtk
 
@@ -21,15 +22,12 @@ import gtk
 class TestAboutDialog(gaupol.TestCase):
 
     def run__dialog(self):
-
         self.dialog.run()
         self.dialog.destroy()
 
     def setup_method(self, method):
-
         self.dialog = gaupol.AboutDialog(gtk.Window())
         self.dialog.show()
 
     def test__on_url_clicked(self):
-
         self.dialog._on_url_clicked(self.dialog, aeidon.HOMEPAGE_URL)
