@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2007,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -26,11 +26,16 @@ class ErrorDialog(gtk.MessageDialog):
     """Base class for error dialogs."""
 
     def __init__(self, parent, title, message=None):
-        """Initialize an ErrorDialog object."""
+        """Initialize an :class:`ErrorDialog` object."""
+        gtk.MessageDialog.__init__(self,
+                                   parent=parent,
+                                   flags=(gtk.DIALOG_MODAL |
+                                          gtk.DIALOG_DESTROY_WITH_PARENT),
 
-        gtk.MessageDialog.__init__(
-            self, parent, gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
-            gtk.MESSAGE_ERROR, gtk.BUTTONS_NONE, title)
+                                   type=gtk.MESSAGE_ERROR,
+                                   buttons=gtk.BUTTONS_NONE,
+                                   message_format=title)
+
         if message is not None:
             self.format_secondary_text(message)
 
@@ -40,11 +45,17 @@ class InfoDialog(gtk.MessageDialog):
     """Base class for info dialogs."""
 
     def __init__(self, parent, title, message=None):
-        """Initialize an InfoDialog object."""
+        """Initialize an :class:`InfoDialog` object."""
+        gtk.MessageDialog.__init__(self,
+                                   parent=parent,
+                                   flags=(gtk.DIALOG_MODAL |
+                                          gtk.DIALOG_DESTROY_WITH_PARENT),
 
-        gtk.MessageDialog.__init__(
-            self, parent, gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
-            gtk.MESSAGE_INFO, gtk.BUTTONS_NONE, title)
+
+                                   type=gtk.MESSAGE_INFO,
+                                   buttons=gtk.BUTTONS_NONE,
+                                   message_format=title)
+
         if message is not None:
             self.format_secondary_text(message)
 
@@ -54,11 +65,16 @@ class QuestionDialog(gtk.MessageDialog):
     """Base class for question dialogs."""
 
     def __init__(self, parent, title, message=None):
-        """Initialize a QuestionDialog object."""
+        """Initialize a :class:`QuestionDialog` object."""
+        gtk.MessageDialog.__init__(self,
+                                   parent=parent,
+                                   flags=(gtk.DIALOG_MODAL |
+                                          gtk.DIALOG_DESTROY_WITH_PARENT),
 
-        gtk.MessageDialog.__init__(
-            self, parent, gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
-            gtk.MESSAGE_QUESTION, gtk.BUTTONS_NONE, title)
+                                   type=gtk.MESSAGE_QUESTION,
+                                   buttons=gtk.BUTTONS_NONE,
+                                   message_format=title)
+
         if message is not None:
             self.format_secondary_text(message)
 
@@ -68,10 +84,15 @@ class WarningDialog(gtk.MessageDialog):
     """Base class for warning dialogs."""
 
     def __init__(self, parent, title, message=None):
-        """Initialize a WarningDialog object."""
+        """Initialize a :class:`WarningDialog` object."""
+        gtk.MessageDialog.__init__(self,
+                                   parent=parent,
+                                   flags=(gtk.DIALOG_MODAL |
+                                          gtk.DIALOG_DESTROY_WITH_PARENT),
 
-        gtk.MessageDialog.__init__(
-            self, parent, gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
-            gtk.MESSAGE_WARNING, gtk.BUTTONS_NONE, title)
+                                   type=gtk.MESSAGE_WARNING,
+                                   buttons=gtk.BUTTONS_NONE,
+                                   message_format=title)
+
         if message is not None:
             self.format_secondary_text(message)

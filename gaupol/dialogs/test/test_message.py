@@ -21,7 +21,7 @@ import gtk
 class _TestMessageDialog(gaupol.TestCase):
 
     def run__dialog(self):
-
+        # pylint: disable-msg=E1101
         self.dialog.run()
         self.dialog.destroy()
 
@@ -29,7 +29,6 @@ class _TestMessageDialog(gaupol.TestCase):
 class TestErrorDialog(_TestMessageDialog):
 
     def setup_method(self, method):
-
         self.dialog = gaupol.ErrorDialog(gtk.Window(), "test", "test")
         self.dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
         self.dialog.show()
@@ -38,7 +37,6 @@ class TestErrorDialog(_TestMessageDialog):
 class TestInfoDialog(_TestMessageDialog):
 
     def setup_method(self, method):
-
         self.dialog = gaupol.InfoDialog(gtk.Window(), "test", "test")
         self.dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
         self.dialog.show()
@@ -47,7 +45,6 @@ class TestInfoDialog(_TestMessageDialog):
 class TestQuestionDialog(_TestMessageDialog):
 
     def setup_method(self, method):
-
         self.dialog = gaupol.QuestionDialog(gtk.Window(), "test", "test")
         self.dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
         self.dialog.show()
@@ -56,7 +53,6 @@ class TestQuestionDialog(_TestMessageDialog):
 class TestWarningDialog(_TestMessageDialog):
 
     def setup_method(self, method):
-
         self.dialog = gaupol.WarningDialog(gtk.Window(), "test", "test")
         self.dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
         self.dialog.show()
