@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2009 Osmo Salomaa
+# Copyright (C) 2005-2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,6 +16,7 @@
 
 """Widget to display subtitle data in the form of a list."""
 
+import aeidon
 import gaupol
 import gtk
 import pango
@@ -28,31 +29,29 @@ class View(gtk.TreeView):
 
     """Widget to display subtitle data in the form of a list.
 
-    Instance variable 'columns' is an enumeration of the columns as shown
-    currently in the view. The values of the enumeration items correspond to
-    the column indices and are updated when columns are added, removed or
-    reordered. Note that these indices are not necessarily the same as the
-    column indices in the underlying list store data model.
+    :ivar columns: Enumeration for columns currently shown
+
+       The values of the enumeration items correspond to the column indices and
+       are updated when columns are added, removed or reordered. Note that
+       these indices are not necessarily the same as the column indices in the
+       underlying :class:`gtk.ListStore` data model.
     """
 
     __metaclass__ = gaupol.ContractualGObject
 
     def __init__(self, edit_mode):
-        """Initialize a View object."""
-
+        """Initialize a :class:`View` object."""
         gtk.TreeView.__init__(self)
         self._active_attr = None
         self._active_col_name = ""
         self._normal_attr = None
         self.columns = aeidon.Enumeration()
-
         self._init_column_attributes()
         self._init_signal_handlers()
         self._init_props(edit_mode)
 
     def _get_renderer(self, field, edit_mode):
-        """Initialize and return a new cell renderer."""
-
+        """Initialize and return a new cell renderer for `field`."""
         font = gaupol.util.get_font()
         if field == gaupol.fields.NUMBER:
             renderer = gtk.CellRendererText()
@@ -75,7 +74,6 @@ class View(gtk.TreeView):
 
     def _init_cell_data_functions(self):
         """Initialize functions to automatically update cell data."""
-
         # Set the data in the number column automatically.
         def set_number(column, renderer, store, itr):
             renderer.props.text = store.get_path(itr)[0] + 1
@@ -84,8 +82,7 @@ class View(gtk.TreeView):
         column.set_cell_data_func(renderer, set_number)
 
     def _init_column_attributes(self):
-        """Initialize the column header pango attribute lists."""
-
+        """Initialize the column header :class:`pango.AttrList`."""
         self._active_attr = pango.AttrList()
         attr = pango.AttrWeight(pango.WEIGHT_BOLD, 0, -1)
         self._active_attr.insert(attr)
@@ -95,7 +92,6 @@ class View(gtk.TreeView):
 
     def _init_columns(self, edit_mode):
         """Initialize the tree view columns."""
-
         visible_fields = gaupol.conf.editor.visible_fields
         for field in gaupol.conf.editor.field_order:
             renderer = self._get_renderer(field, edit_mode)
@@ -113,10 +109,9 @@ class View(gtk.TreeView):
 
     def _init_props(self, edit_mode):
         """Initialize properties."""
-
         if edit_mode == aeidon.modes.TIME:
             columns = (int, str, str, float, str, str)
-        elif edit_mode == aeidon.modes.FRAME:
+        if edit_mode == aeidon.modes.FRAME:
             columns = (int, int, int, int, str, str)
         store = gtk.ListStore(*columns)
         self.set_model(store)
@@ -131,30 +126,26 @@ class View(gtk.TreeView):
 
     def _init_search(self):
         """Initialize the interactive search properties."""
-
-        self.set_enable_search(True)
-        self.set_search_column(self.columns.NUMBER)
         def equals_subtitle_number(store, column, key, itr):
             # Return False if key matches subtitle number.
             try: return store.get_path(itr)[0] != (int(key) - 1)
             except ValueError: return False
+        self.set_enable_search(True)
+        self.set_search_column(self.columns.NUMBER)
         self.set_search_equal_func(equals_subtitle_number)
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
-
         aeidon.util.connect(self, self, "columns-changed")
         aeidon.util.connect(self, self, "cursor-changed")
         aeidon.util.connect(self, self, "key-press-event")
-
-        gaupol.conf.connect(self, "editor", "custom_font")
-        gaupol.conf.connect(self, "editor", "length_unit")
-        gaupol.conf.connect(self, "editor", "show_lengths_cell")
-        gaupol.conf.connect(self, "editor", "use_custom_font")
+        gaupol.conf.connect_notify("editor", "custom_font", self)
+        gaupol.conf.connect_notify("editor", "length_unit", self)
+        gaupol.conf.connect_notify("editor", "show_lengths_cell", self)
+        gaupol.conf.connect_notify("editor", "use_custom_font", self)
 
     def _on_conf_editor_notify_custom_font(self, *args):
         """Apply the new font to all columns."""
-
         if not gaupol.conf.editor.use_custom_font: return
         for column in self.get_columns():
             renderer = column.get_cell_renderers()[0]
@@ -164,29 +155,25 @@ class View(gtk.TreeView):
 
     def _on_conf_editor_notify_length_unit(self, *args):
         """Repaint the cells to update line length display."""
-
         if gaupol.conf.editor.show_lengths_cell:
             self.columns_autosize()
 
     def _on_conf_editor_notify_show_lengths_cell(self, *args):
         """Repaint the cells to update line length display."""
-
         self.columns_autosize()
 
     def _on_conf_editor_notify_use_custom_font(self, *args):
         """Apply the new font to all columns."""
-
-        font = gaupol.util.get_font()
+        if not gaupol.conf.editor.use_custom_font: return
         for column in self.get_columns():
             renderer = column.get_cell_renderers()[0]
             if hasattr(renderer.props, "font"):
-                renderer.props.font = font
+                renderer.props.font = gaupol.conf.editor.custom_font
         self.columns_autosize()
 
     def _on_columns_changed(self, *args):
         """Reset the columns enumeration to match new column layout."""
-
-        count_changed = len(self.columns) != len(self.get_columns())
+        count_changed = (len(self.columns) != len(self.get_columns()))
         self._reset_columns()
         field_order = []
         for column in self.get_columns():
@@ -202,27 +189,23 @@ class View(gtk.TreeView):
 
     def _on_cursor_changed(self, *args):
         """Update the column header labels to refelect changed focus."""
-
         self.update_headers()
 
     def _on_key_press_event(self, widget, event):
         """Handle various special-case key combinations."""
-
         # Disable Ctrl+PageUp/PageDown to allow them to be
         # used solely for navigation between notebook tabs.
         if event.state & gtk.gdk.CONTROL_MASK:
             if event.keyval in (gtk.keysyms.Page_Up, gtk.keysyms.Page_Down):
                 return widget.stop_emission("key-press-event")
-
         # Use interactive search for a subtitle number
         # only if numeric keys have been pressed.
         self.set_enable_search(event.string.isdigit())
 
     def _reset_columns(self):
-        """Recreate the columns enumeration and set all items to None."""
-
+        """Recreate the columns enumeration and set all items to ``None``."""
         # Set default cell enumeration items to None without magic to silence
-        # false Pylint positives about referencing a missing attribute.
+        # false pylint positives about referencing a missing attribute.
         self.columns = aeidon.Enumeration()
         self.columns.NUMBER = None
         self.columns.START = None
@@ -240,7 +223,6 @@ class View(gtk.TreeView):
 
     def get_focus(self):
         """Return the row and column of the current focus."""
-
         row, col = self.get_cursor()
         if row is not None:
             row = row[0]
@@ -250,7 +232,6 @@ class View(gtk.TreeView):
 
     def get_header_label(self, text):
         """Return a column header label that's wide enough."""
-
         label = gtk.Label(text)
         label.props.xalign = 0
         label.show()
@@ -267,29 +248,26 @@ class View(gtk.TreeView):
 
     def get_selected_rows(self):
         """Return a sequence of the selected rows."""
-
         rows = self.get_selection().get_selected_rows()[1]
         return tuple(x[0] for x in rows)
 
     def is_position_column(self, col):
-        """Return True if column is a position column."""
-
-        columns = self.columns
-        return col in (columns.START, columns.END, columns.DURATION)
+        """Return ``True`` if `col` is a position column."""
+        return col in (self.columns.START,
+                       self.columns.END,
+                       self.columns.DURATION)
 
     def is_text_column(self, col):
-        """Return True if column is a text column."""
-
-        columns = self.columns
-        return col in (columns.MAIN_TEXT, columns.TRAN_TEXT)
+        """Return True if `col` is a text column."""
+        return col in (self.columns.MAIN_TEXT,
+                       self.columns.TRAN_TEXT)
 
     def scroll_to_row_require(self, row):
         store = self.get_model()
         assert 0 <= row < len(store)
 
     def scroll_to_row(self, row):
-        """Scroll view until row is visible."""
-
+        """Scroll view until `row` is visible."""
         self.scroll_to_cell(row, None, True, 0.5, 0)
 
     def select_rows_require(self, rows):
@@ -298,8 +276,7 @@ class View(gtk.TreeView):
             assert 0 <= row < len(store)
 
     def select_rows(self, rows):
-        """Select rows, clearing previous selection."""
-
+        """Select `rows`, clearing previous selection."""
         # Select by ranges to avoid sending too many 'changed' signals.
         selection = self.get_selection()
         selection.unselect_all()
@@ -313,8 +290,7 @@ class View(gtk.TreeView):
             assert col in self.columns
 
     def set_focus(self, row, col=None):
-        """Set the focus to row (-1 for last), col."""
-
+        """Set the focus to `row` (-1 for last), `col`."""
         if row == -1:
             row = len(self.get_model()) - 1
         if col is not None:
@@ -323,7 +299,6 @@ class View(gtk.TreeView):
 
     def update_headers(self):
         """Update the attributes of the column header labels."""
-
         fcol = self.get_focus()[1]
         acol = getattr(self.columns, self._active_col_name, None)
         if fcol == acol: return
