@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2009 Osmo Salomaa
+# Copyright (C) 2005-2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,8 +14,9 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""User interface container and controller for a single project."""
+"""User interface container and controller for :class:`aeidon.Project`."""
 
+import aeidon
 import gaupol
 import gtk
 import os
@@ -28,19 +29,18 @@ __all__ = ("Page",)
 
 class Page(aeidon.Observable):
 
-    """User interface container and controller for a single project.
+    """User interface container and controller for :class:`aeidon.Project`.
 
-    Instance variables:
-     * edit_mode: Enumeration of the mode currently used in the view
-     * project: The associated project instance
-     * tab_label: gtk.Label contained in the tab_widget
-     * tab_widget: Widget to use for page in a notebook tab
-     * untitle: Title used if the main document is unsaved
-     * view: The associated view instance
+    :ivar edit_mode: :attr:`aeidon.modes` item corresponding to editing mode
+    :ivar project: The associated :class:`aeidon.Project` instance
+    :ivar tab_label: :class:`gtk.Label` contained in :attr:`tab_widget`
+    :ivar tab_widget: Widget that can be placed in a notebook tab
+    :ivar untitle: Title used if the :attr:`project.main_file` is unsaved
+    :ivar view: The associated :class:`gaupol.View` instance
 
-    Signals (arguments):
-     * close-request (page)
-     * view-created (page, view)
+    Signals and their arguments for callback functions:
+     * ``close-request``: page
+     * ``view-created``: page view
 
     This class represents one page in a notebook of user interfaces for
     projects. The view is updated automatically when project data changes.
@@ -50,8 +50,7 @@ class Page(aeidon.Observable):
     signals = ("close-request", "view-created")
 
     def __init__(self, count=0):
-        """Initialize a Page object."""
-
+        """Initialize a :class:`Page` object."""
         aeidon.Observable.__init__(self)
         self.edit_mode = gaupol.conf.editor.mode
         self.project = None
@@ -59,7 +58,6 @@ class Page(aeidon.Observable):
         self.tab_widget = None
         self.untitle = _("Untitled %d") % count
         self.view = gaupol.View(self.edit_mode)
-
         self._init_project()
         self._init_widgets()
         self._init_signal_handlers()
@@ -68,7 +66,6 @@ class Page(aeidon.Observable):
 
     def _assert_store(self, fields=None):
         """Assert that store's data matches project's."""
-
         if fields is None:
             fields = list(gaupol.fields)
             fields.remove(gaupol.fields.NUMBER)
@@ -83,7 +80,7 @@ class Page(aeidon.Observable):
             if gaupol.fields.DURATION in fields:
                 if mode == aeidon.modes.TIME:
                     assert store[i][3] == subtitle.duration_seconds
-                elif mode == aeidon.modes.FRAME:
+                if mode == aeidon.modes.FRAME:
                     assert store[i][3] == subtitle.duration_frame
             if gaupol.fields.MAIN_TEXT in fields:
                 assert store[i][4] == subtitle.main_text
@@ -91,8 +88,7 @@ class Page(aeidon.Observable):
                 assert store[i][5] == subtitle.tran_text
 
     def _get_subtitle_value(self, row, field):
-        """Return value of subtitle data corresponding to row and field."""
-
+        """Return value of subtitle data for `row` and `field`."""
         mode = self.edit_mode
         subtitle = self.project.subtitles[row]
         if field == gaupol.fields.START:
@@ -102,7 +98,9 @@ class Page(aeidon.Observable):
         if field == gaupol.fields.DURATION:
             if mode == aeidon.modes.TIME:
                 return subtitle.duration_seconds
-            return subtitle.duration_frame
+            if mode == aeidon.modes.FRAME:
+                return subtitle.duration_frame
+            raise ValueError("Invalid mode: %s" % repr(mode))
         if field == gaupol.fields.MAIN_TEXT:
             return subtitle.main_text
         if field == gaupol.fields.TRAN_TEXT:
@@ -111,11 +109,9 @@ class Page(aeidon.Observable):
 
     def _get_tab_close_button(self):
         """Initialize and return a tab close button."""
-
         button = gtk.Button()
-        button.set_name("aeidon-tab-close-button")
-        args = gtk.STOCK_CLOSE, gtk.ICON_SIZE_MENU
-        image = gtk.image_new_from_stock(*args)
+        button.set_name("gaupol-tab-close-button")
+        image = gtk.image_new_from_stock(gtk.STOCK_CLOSE, gtk.ICON_SIZE_MENU)
         button.add(image)
         button.set_relief(gtk.RELIEF_NONE)
         button.set_focus_on_click(False)
@@ -128,24 +124,21 @@ class Page(aeidon.Observable):
         return button
 
     def _init_project(self):
-        """Initialize the project with proper properties."""
-
-        framerate = gaupol.conf.editor.framerate
-        limit = gaupol.conf.editor.limit_undo
-        levels = gaupol.conf.editor.undo_levels
-        undo_levels = (levels if limit else None)
-        self.project = aeidon.Project(framerate, undo_levels)
+        """Initialize :class:`aeidon.Project` with proper properties."""
+        limit = gaupol.conf.editor.use_undo_limit
+        levels = gaupol.conf.editor.undo_limit
+        undo_limit = (levels if limit else None)
+        self.project = aeidon.Project(gaupol.conf.editor.framerate,
+                                      undo_limit)
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
-
         self._init_signal_handlers_for_data()
         self._init_signal_handlers_for_tab_label()
         self._init_signal_handlers_for_undo()
 
     def _init_signal_handlers_for_data(self):
         """Initialize signal handlers for project data updates."""
-
         aeidon.util.connect(self, "project", "main-file-opened")
         aeidon.util.connect(self, "project", "main-texts-changed")
         aeidon.util.connect(self, "project", "positions-changed")
@@ -157,7 +150,6 @@ class Page(aeidon.Observable):
 
     def _init_signal_handlers_for_tab_label(self):
         """Initialize signal handlers for tab label updates."""
-
         aeidon.util.connect(self, "tab_label", "query-tooltip")
         update_label = lambda *args: args[-1].update_tab_label()
         self.project.connect("main-file-opened", update_label, self)
@@ -167,15 +159,13 @@ class Page(aeidon.Observable):
 
     def _init_signal_handlers_for_undo(self):
         """Initialize signal handlers for undo level updates."""
-
         connect = gaupol.conf.editor.connect
-        update_levels = lambda *args: args[-1]._update_undo_levels()
-        connect("notify::limit_undo", update_levels, self)
-        connect("notify::undo_levels", update_levels, self)
+        update_levels = lambda *args: args[-1]._update_undo_limit()
+        connect("notify::use_undo_limit", update_levels, self)
+        connect("notify::undo_limit", update_levels, self)
 
     def _init_widgets(self):
-        """Initialize the widgets to use in a notebook tab."""
-
+        """Initialize widgets to use in a notebook tab."""
         self.tab_label = gtk.Label()
         self.tab_label.props.xalign = 0
         self.tab_label.set_ellipsize(pango.ELLIPSIZE_END)
@@ -192,13 +182,11 @@ class Page(aeidon.Observable):
 
     def _on_project_main_file_opened(self, *args):
         """Reload the entire view."""
-
         self.reload_view_all()
         gaupol.util.iterate_main()
 
     def _on_project_main_texts_changed(self, project, rows):
         """Reload and select main texts in rows."""
-
         if not rows: return
         fields = (gaupol.fields.MAIN_TEXT,)
         self.reload_view(rows, fields)
@@ -210,7 +198,6 @@ class Page(aeidon.Observable):
 
     def _on_project_positions_changed(self, project, rows):
         """Reload and select positions in rows."""
-
         if not rows: return
         enum = gaupol.fields
         fields = (enum.START, enum.END, enum.DURATION)
@@ -222,7 +209,6 @@ class Page(aeidon.Observable):
 
     def _on_project_subtitles_changed(self, project, rows):
         """Reload and select subtitles in rows."""
-
         if not rows: return
         fields = [x for x in gaupol.fields]
         fields.remove(gaupol.fields.NUMBER)
@@ -237,7 +223,6 @@ class Page(aeidon.Observable):
 
     def _on_project_subtitles_inserted(self, project, rows):
         """Insert rows to the view and select them."""
-
         if not rows: return
         mode = self.edit_mode
         store = self.view.get_model()
@@ -249,7 +234,7 @@ class Page(aeidon.Observable):
             store[row][2] = subtitle.get_end(mode)
             if mode == aeidon.modes.TIME:
                 store[row][3] = subtitle.duration_seconds
-            elif mode == aeidon.modes.FRAME:
+            if mode == aeidon.modes.FRAME:
                 store[row][3] = subtitle.duration_frame
             store[row][4] = subtitle.main_text
             store[row][5] = subtitle.tran_text
@@ -262,7 +247,6 @@ class Page(aeidon.Observable):
 
     def _on_project_subtitles_removed(self, project, rows):
         """Remove rows from the view."""
-
         if not rows: return
         store = self.view.get_model()
         if len(rows) > 50:
@@ -282,13 +266,11 @@ class Page(aeidon.Observable):
 
     def _on_project_translation_file_opened(self, *args):
         """Reload the entire view."""
-
         self.reload_view_all()
         gaupol.util.iterate_main()
 
     def _on_project_translation_texts_changed(self, project, rows):
         """Reload and select translation texts in rows."""
-
         if not rows: return
         fields = (gaupol.fields.TRAN_TEXT,)
         self.reload_view(rows, fields)
@@ -300,27 +282,27 @@ class Page(aeidon.Observable):
 
     def _on_tab_label_query_tooltip(self, label, x, y, keyboard, tooltip):
         """Update the text in the tab tooltip."""
+        if self.project.main_file is None: return
+        encoding = self.project.main_file.encoding
+        markup = ("<b>Path:</b> %s\n\n"
+                  "<b>Format:</b> %s\n"
+                  "<b>Character encoding:</b> %s\n"
+                  "<b>Newlines:</b> %s") % (
+            self.project.main_file.path,
+            self.project.main_file.format.label,
+            aeidon.encodings.code_to_long_name(encoding),
+            self.project.main_file.newline.label)
 
-        main_file = self.project.main_file
-        if main_file is None: return
-        encoding = aeidon.encodings.code_to_long_name(main_file.encoding)
-        markup  = _("<b>Path:</b> %s") % main_file.path + "\n\n"
-        markup += _("<b>Format:</b> %s") % main_file.format.label + "\n"
-        markup += _("<b>Character encoding:</b> %s") % encoding + "\n"
-        markup += _("<b>Newlines:</b> %s") % main_file.newline.label
         tooltip.set_markup(markup)
         return True # to show the tooltip.
 
-    def _update_undo_levels(self):
+    def _update_undo_limit(self):
         """Update project's undo level count to match global configuration."""
-
-        limit = gaupol.conf.editor.limit_undo
-        limit = (gaupol.conf.editor.undo_levels if limit else None)
-        self.project.undo_limit = limit
+        self.project.undo_limit = (gaupol.conf.editor.undo_limit if
+                                   gaupol.conf.editor.use_undo_limit else None)
 
     def document_to_text_column(self, doc):
         """Translate document enumeration to view's column enumeration."""
-
         if doc == aeidon.documents.MAIN:
             return self.view.columns.MAIN_TEXT
         if doc == aeidon.documents.TRAN:
@@ -328,15 +310,13 @@ class Page(aeidon.Observable):
         raise ValueError("Invalid document: %s" % repr(doc))
 
     def get_main_basename(self):
-        """Return the basename of the main document."""
-
+        """Return basename of the main document."""
         if self.project.main_file is not None:
             return os.path.basename(self.project.main_file.path)
         return self.untitle
 
     def get_translation_basename(self):
-        """Return the basename of the translation document."""
-
+        """Return basename of the translation document."""
         if self.project.tran_file is not None:
             return os.path.basename(self.project.tran_file.path)
         basename = self.get_main_basename()
@@ -350,9 +330,7 @@ class Page(aeidon.Observable):
         self._assert_store(fields)
 
     def reload_view(self, rows, fields):
-        """Reload the view in rows and columns."""
-
-        mode = self.edit_mode
+        """Reload the view in `rows` and `fields`."""
         store = self.view.get_model()
         for row, field in ((x, y) for x in rows for y in fields):
             value = self._get_subtitle_value(row, field)
@@ -363,7 +341,6 @@ class Page(aeidon.Observable):
 
     def reload_view_all(self):
         """Clear and repopulate the entire view."""
-
         store = self.view.get_model()
         self.view.set_model(None)
         store.clear()
@@ -375,7 +352,7 @@ class Page(aeidon.Observable):
             store[i][2] = subtitle.get_end(mode)
             if mode == aeidon.modes.TIME:
                 store[i][3] = subtitle.duration_seconds
-            elif mode == aeidon.modes.FRAME:
+            if mode == aeidon.modes.FRAME:
                 store[i][3] = subtitle.duration_frame
             store[i][4] = subtitle.main_text
             store[i][5] = subtitle.tran_text
@@ -383,7 +360,6 @@ class Page(aeidon.Observable):
 
     def text_column_to_document(self, col):
         """Translate view's column enumeration to document enumeration."""
-
         if col == self.view.columns.MAIN_TEXT:
             return aeidon.documents.MAIN
         if col == self.view.columns.TRAN_TEXT:
@@ -391,8 +367,7 @@ class Page(aeidon.Observable):
         raise ValueError("Invalid column: %s" % repr(col))
 
     def update_tab_label(self):
-        """Update the notebook tab label and return the title."""
-
+        """Update the notebook tab label and return title."""
         title = self.get_main_basename()
         if self.project.main_changed or self.project.tran_changed:
             title = "*%s" % title

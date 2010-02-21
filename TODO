@@ -11,18 +11,26 @@ Gaupol 0.16
 
  [W] Split gaupol to aeidon and gaupol
  [W] Bump Python dependency to 2.6
-      - Remove imports from __future__
-      - http://docs.python.org/dev/whatsnew/2.6.html
+      - Remove from __future__ import with_statement
+      - try ... except Exception as exc
+      - property(...) -> @property, @x.setter, @x.deleter
+      - Use collections.namedtuple for all return values
+      - urllib.urlopen(url, timeout=10)?
  [ ] Bump PyGObject dependency to 2.16
       - Try gobject.option.OptionParser (see #378704)
       - Try gio.AppInfo for launching web browser and video player
+      - gobject.set_application_name
+      - gobject.set_prgname
  [ ] Bump PyGTK dependency to 2.16 or 2.18
       - Try gtk.show_uri for launching web browser
+      - gtk.show_about_dialog?
+      - gtk.Activatable?
+      - gtk.Statusbar.remove -> remove_message
+      - gtk.InfoBar?
  [ ] Bump PyEnchant dependency to 1.4
       - All dictionary providers now use a shared default personal word
         file (largely obsoleting the DictWithPWL class)
       - Dict.add_to_pwl renamed to Dict.add
- [ ] Add gaupol.gtk.View.add_column, which creates a new model
  [ ] Migrate from Glade to gtk.Builder
  [ ] Adapt to GNOME Goal: Correct Desktop Files
  [ ] Adapt to new GTK+/GNOME anti-icon policy for buttons
@@ -41,12 +49,17 @@ Gaupol 0.16
      or add unicode function calls for i18n functions
  [ ] MetadataItem._get_localized_field should try 'xx' if 'xx_YY'
      fails
- [?] Add help menu item for wiki page
  [?] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=555338
- [?] Copy key-event hack from gedit for sidepane
-      - http://mail.gnome.org/archives/desktop-devel-list/2009-November/msg00263.html
  [?] http://gmane.org/
  [ ] Update extension documentation
+
+Gaupol 0.17
+===========
+
+ * Add gaupol.View.add_column, which creates a new model
+ * Add help menu item for wiki page
+ [?] Copy key-event hack from gedit for sidepane
+      - http://mail.gnome.org/archives/desktop-devel-list/2009-November/msg00263.html
 
 Gaupol 1.0
 ==========
