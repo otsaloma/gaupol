@@ -37,11 +37,10 @@ aeidon.patternman
 aeidon.clipboard
 aeidon.revertable
 aeidon.agents
-aeidon.unittest
 aeidon.project
+aeidon.unittest
 aeidon.__init__
 
-gaupol.unittest
 gaupol.util
 gaupol.fields
 gaupol.styles
@@ -60,13 +59,14 @@ gaupol.output
 gaupol.view
 gaupol.page
 
-gaupol.extension
-gaupol.extensionman
 gaupol.dialogs
 gaupol.assistants
 gaupol.action
 gaupol.actions
 gaupol.agents
 gaupol.application
+gaupol.extension
+gaupol.extensionman
 gaupol.main
+gaupol.unittest
 gaupol.__init__

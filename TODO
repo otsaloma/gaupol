@@ -58,8 +58,8 @@ Gaupol 0.17
 
  * Add gaupol.View.add_column, which creates a new model
  * Add help menu item for wiki page
- [?] Copy key-event hack from gedit for sidepane
-      - http://mail.gnome.org/archives/desktop-devel-list/2009-November/msg00263.html
+ ? Copy key-event hack from gedit for sidepane
+    - http://mail.gnome.org/archives/desktop-devel-list/2009-November/msg00263.html
 
 Gaupol 1.0
 ==========

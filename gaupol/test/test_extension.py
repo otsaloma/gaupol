@@ -1,4 +1,4 @@
-# Copyright (C) 2008 Osmo Salomaa
+# Copyright (C) 2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -9,62 +9,37 @@
 #
 # Gaupol is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+# A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License along with
-# Gaupol.  If not, see <http://www.gnu.org/licenses/>.
+# Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
 import gtk
 
 
-class PuppetExtension(gaupol.Extension):
-
-    pass
-
-
 class TestExtension(gaupol.TestCase):
 
     def setup_method(self, method):
-
         self.application = self.new_application()
+        class PuppetExtension(gaupol.Extension): pass
         self.extension = PuppetExtension()
-        self.conf = gaupol.conf.extensions
-
-    def test_read_config(self):
-
-        path = aeidon.temp.create()
-        fobj = open(path, "w")
-        fobj.write("[extensions]\n")
-        fobj.write("[[test]]\n")
-        fobj.write("x = integer(default=5)\n")
-        fobj.close()
-        self.extension.read_config(path)
-        assert self.conf.test.x == 5
-        self.conf.test.x = 6
-        assert self.conf.test.x == 6
-        self.extension.read_config(path)
-        aeidon.temp.remove(path)
 
     def test_setup_method(self):
-
         self.extension.setup(self.application)
 
     def test_show_help(self):
-
-        function = self.extension.show_help
-        self.raises(NotImplementedError, function)
+        self.raises(NotImplementedError,
+                    self.extension.show_help)
 
     def test_show_preferences_dialog(self):
-
-        function = self.extension.show_preferences_dialog
-        self.raises(NotImplementedError, function, gtk.Window())
+        self.raises(NotImplementedError,
+                    self.extension.show_preferences_dialog,
+                    gtk.Window())
 
     def test_teardown_method(self):
-
         self.extension.teardown(self.application)
 
     def test_update(self):
-
-        page = self.application.get_current_page()
-        self.extension.update(self.application, page)
+        self.extension.update(self.application,
+                              self.application.get_current_page())

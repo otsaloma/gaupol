@@ -29,7 +29,7 @@
 .mo  { color: #e072cd; } /* Literal.Number.Oct */
 .na  { color: #c4a000; } /* Name.Attribute */
 .nb  { color: #ff6f87; } /* Name.Builtin */
-.bp  { color: #00ba88; } /* Name.Builtin.Pseudo */
+.bp  { color: #c4a000; } /* Name.Builtin.Pseudo */
 .nc  { color: #1d77ff; } /* Name.Class */
 .no  { color: #00ba88; } /* Name.Constant */
 .nd  { color: #00bb29; } /* Name.Decorator */

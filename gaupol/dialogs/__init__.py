@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -15,3 +15,7 @@
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 """Dialogs."""
+
+import gaupol
+
+gaupol.util.install_module("dialogs", lambda: None)

@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2008 Osmo Salomaa
+# Copyright (C) 2006-2009 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,35 +14,29 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import gaupol
 import gtk
+import gaupol
 
 
-class TestGladeDialog(gaupol.TestCase):
+class TestBuilderDialog(gaupol.TestCase):
 
     def setup_method(self, method):
-
-        self.dialog = gaupol.GladeDialog("encoding.glade")
+        self.dialog = gaupol.PreferencesDialog(gtk.Window())
         self.dialog.show()
 
     def test___getattr__(self):
-
         self.dialog.hide()
         self.dialog.show()
 
     def test___init__(self):
-
+        assert hasattr(self.dialog, "_builder")
         assert hasattr(self.dialog, "_dialog")
-        assert hasattr(self.dialog, "_glade_xml")
 
     def test___setattr__(self):
-
         self.dialog.props.visible = False
         self.dialog.props.visible = True
         self.dialog.props.visible = False
 
     def test_run(self):
-
-        respond = lambda *args: gtk.RESPONSE_DELETE_EVENT
-        self.dialog._dialog.run = respond
+        self.dialog._dialog.run = lambda: None
         self.dialog.run()
