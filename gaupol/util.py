@@ -151,6 +151,15 @@ def set_label_font(label, font):
     attr_list.insert(attr)
     label.set_attributes(attr_list)
 
+def set_size_request(widget, sans_ems, mono_ems, lines):
+    """Set widget size request based on size taken by text."""
+    ems = (mono_ems if is_monospace(get_font()) else sans_ems)
+    label = gtk.Label("\n".join(("m" * ems,) * lines))
+    set_label_font(label, get_font())
+    width, height = label.size_request()
+    widget.set_size_request(width, height)
+    return width, height
+
 def set_widget_font(widget, font):
     """Use `font` for `widget`."""
     context = widget.get_pango_context()

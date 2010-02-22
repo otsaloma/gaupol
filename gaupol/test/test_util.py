@@ -109,6 +109,10 @@ class TestModule(gaupol.TestCase):
         label = gtk.Label("testing...")
         gaupol.util.set_label_font(label, "Serif 12")
 
+    def test_set_size_request(self):
+        text_view = gtk.TextView()
+        gaupol.util.set_size_request(text_view, 35, 70, 4)
+
     def test_set_widget_font(self):
         label = gtk.Label("testing...")
         gaupol.util.set_label_font(label, "Serif 12")
