@@ -83,6 +83,14 @@ def install_module(name, obj):
     """
     gaupol.__dict__[name] = inspect.getmodule(obj)
 
+def is_monospace(font):
+    """Return ``True`` if font is a monospace font."""
+    mlabel = gtk.Label("mmmmmmmmmm")
+    ilabel = gtk.Label("iiiiiiiiii")
+    set_label_font(mlabel, font)
+    set_label_font(ilabel, font)
+    return (mlabel.size_request() == ilabel.size_request())
+
 def iterate_main():
     """Iterate the GTK+ main loop while events are pending."""
     while gtk.events_pending():

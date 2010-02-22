@@ -64,6 +64,13 @@ class TestModule(gaupol.TestCase):
         scroller.add(tree_view)
         gaupol.util.get_tree_view_size(tree_view)
 
+    def test_is_monospace__no(self):
+        assert not gaupol.util.is_monospace("sans")
+        assert not gaupol.util.is_monospace("serif")
+
+    def test_is_monospace__yes(self):
+        assert gaupol.util.is_monospace("monospace")
+
     def test_prepare_text_view__hide_lengths(self):
         gaupol.util.prepare_text_view(gtk.TextView())
         gaupol.conf.editor.show_lengths_edit = False
