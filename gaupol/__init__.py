@@ -78,3 +78,4 @@ from gaupol.extension import *
 from gaupol.dialogs.builder import *
 from gaupol.dialogs.about import *
 from gaupol.dialogs.message import *
+from gaupol.dialogs.textedit import *

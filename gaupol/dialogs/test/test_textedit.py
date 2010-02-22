@@ -21,25 +21,21 @@ import gaupol
 class TestTextEditDialog(gaupol.TestCase):
 
     def run__dialog(self):
-
         self.dialog.run()
         self.dialog.destroy()
 
     def setup_method(self, method):
-
         gaupol.conf.editor.use_custom_font = True
         gaupol.conf.editor.custom_font = "sans"
         self.dialog = gaupol.TextEditDialog(gtk.Window())
         self.dialog.show()
 
     def test_get_text(self):
-
         self.dialog.set_text("test")
         text = self.dialog.get_text()
         assert text == "test"
 
     def test_set_text(self):
-
         self.dialog.set_text("test")
         text = self.dialog.get_text()
         assert text == "test"

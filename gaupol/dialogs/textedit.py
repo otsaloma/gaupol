@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2007,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Dialog for editing the text of a single subtitle."""
+"""Dialog for editing text of a single subtitle."""
 
 import gaupol
 import gtk
@@ -22,22 +22,18 @@ import gtk
 
 class TextEditDialog(gtk.Dialog):
 
-    """Dialog for editing the text of a single subtitle."""
+    """Dialog for editing text of a single subtitle."""
 
     def __init__(self, parent, text=""):
-        """Initialize a TextEditDialog object."""
-
+        """Initialize a :class:`TextEditDialog` object."""
         gtk.Dialog.__init__(self)
         self._text_view = None
-
         self._init_dialog(parent)
         self._init_text_view()
-        self._init_sizes()
         self.set_text(text)
 
     def _init_dialog(self, parent):
         """Initialize the dialog."""
-
         self.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
         self.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
         self.set_default_response(gtk.RESPONSE_OK)
@@ -48,14 +44,13 @@ class TextEditDialog(gtk.Dialog):
 
     def _init_text_view(self):
         """Initialize the text view."""
-
         self._text_view = gtk.TextView()
         gaupol.util.prepare_text_view(self._text_view)
         self._text_view.set_wrap_mode(gtk.WRAP_NONE)
         self._text_view.set_accepts_tab(False)
         self._text_view.set_left_margin(6)
         self._text_view.set_right_margin(6)
-
+        gaupol.util.set_size_request(self._text_view, 35, 70, 5)
         scroller = gtk.ScrolledWindow()
         scroller.set_border_width(6)
         scroller.set_policy(*((gtk.POLICY_AUTOMATIC,) * 2))
@@ -65,25 +60,13 @@ class TextEditDialog(gtk.Dialog):
         vbox.add(scroller)
         vbox.show_all()
 
-    def _init_sizes(self):
-        """Initialize widget sizes."""
-
-        label = gtk.Label("\n".join(["m" * 36] * 4))
-        if gaupol.conf.editor.use_custom_font:
-            font = gaupol.conf.editor.custom_font
-            gaupol.util.set_label_font(label, font)
-        width, height = label.size_request()
-        self._text_view.set_size_request(width + 4, height + 7)
-
     def get_text(self):
-        """Return the text in the text view."""
-
+        """Return text in the text view."""
         text_buffer = self._text_view.get_buffer()
         bounds = text_buffer.get_bounds()
         return text_buffer.get_text(*bounds)
 
     def set_text(self, text):
-        """Set text to the text view."""
-
+        """Set `text` to the text view."""
         text_buffer = self._text_view.get_buffer()
         text_buffer.set_text(text)
