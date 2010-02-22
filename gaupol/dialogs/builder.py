@@ -16,7 +16,9 @@
 
 """Baseclass and wrapper for :class:`gtk.Builder` constructed dialogs."""
 
+import aeidon
 import gtk
+import os
 
 __all__ = ("BuilderDialog",)
 
@@ -42,6 +44,8 @@ class BuilderDialog(object):
 
     def __init__(self, ui_file_path):
         """Initialize a :class:`BuilderDialog` object from `ui_file_path`."""
+        if not os.path.isabs(ui_file_path):
+            ui_file_path = os.path.join(aeidon.DATA_DIR, "ui", ui_file_path)
         self._builder = gtk.Builder()
         self._builder.set_translation_domain("gaupol")
         self._builder.add_from_file(ui_file_path)

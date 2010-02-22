@@ -21,7 +21,7 @@ import gaupol
 class TestBuilderDialog(gaupol.TestCase):
 
     def setup_method(self, method):
-        self.dialog = gaupol.PreferencesDialog(gtk.Window())
+        self.dialog = gaupol.LanguageDialog(gtk.Window())
         self.dialog.show()
 
     def test___getattr__(self):

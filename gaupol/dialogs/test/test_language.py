@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -20,43 +20,46 @@ import gtk
 
 class TestLanguageDialog(gaupol.TestCase):
 
-    def run__dialog_no_target(self):
-
+    def run__dialog_hide_target(self):
+        # pylint: disable-msg=W0201
         self.dialog = gaupol.LanguageDialog(gtk.Window(), False)
         self.dialog.run()
         self.dialog.destroy()
 
-    def run__dialog_target(self):
-
+    def run__dialog_show_target(self):
+        # pylint: disable-msg=W0201
+        self.dialog = gaupol.LanguageDialog(gtk.Window(), True)
         self.dialog.run()
         self.dialog.destroy()
 
     def setup_method(self, method):
-
         self.dialog = gaupol.LanguageDialog(gtk.Window())
         self.dialog.show()
 
-    def test___init___no_target(self):
+    def test___init__(self):
+        gaupol.conf.spell_check.language = "en"
+        gaupol.LanguageDialog(gtk.Window(), True)
+        gaupol.LanguageDialog(gtk.Window(), False)
 
-        self.dialog = gaupol.LanguageDialog(gtk.Window(), False)
-        self.dialog.show()
+    def test__on_all_radio_toggled(self):
+        self.dialog._all_radio.set_active(True)
+        self.dialog._all_radio.set_active(False)
+
+    def test__on_current_radio_toggled(self):
+        self.dialog._current_radio.set_active(True)
+        self.dialog._current_radio.set_active(False)
+
+    def test__on_main_radio_toggled(self):
+        self.dialog._main_radio.set_active(True)
+        self.dialog._main_radio.set_active(False)
+
+    def test__on_tran_radio_toggled(self):
+        self.dialog._tran_radio.set_active(True)
+        self.dialog._tran_radio.set_active(False)
 
     def test__on_tree_view_selection_changed(self):
-
         store = self.dialog._tree_view.get_model()
         selection = self.dialog._tree_view.get_selection()
         store = self.dialog._tree_view.get_model()
         for i in range(len(store)):
             selection.select_path(i)
-
-    def test__init_signal_handlers__field(self):
-
-        self.dialog._main_radio.set_active(True)
-        self.dialog._tran_radio.set_active(True)
-        self.dialog._main_radio.set_active(True)
-
-    def test__init_signal_handlers__target(self):
-
-        self.dialog._current_radio.set_active(True)
-        self.dialog._all_radio.set_active(True)
-        self.dialog._current_radio.set_active(True)
