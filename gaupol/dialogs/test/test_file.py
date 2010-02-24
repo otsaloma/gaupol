@@ -39,7 +39,7 @@ class _TestFileDialog(gaupol.TestCase):
 
     def test_get_encoding(self):
 
-        encoding = gaupol.conf.encoding.visibles[0]
+        encoding = gaupol.conf.encoding.visible[0]
         self.dialog.set_encoding(encoding)
         assert self.dialog.get_encoding() == encoding
         self.dialog.set_encoding("johab")
@@ -47,7 +47,7 @@ class _TestFileDialog(gaupol.TestCase):
 
     def test_set_encoding(self):
 
-        encoding = gaupol.conf.encoding.visibles[0]
+        encoding = gaupol.conf.encoding.visible[0]
         self.dialog.set_encoding(encoding)
         assert self.dialog.get_encoding() == encoding
         self.dialog.set_encoding("johab")

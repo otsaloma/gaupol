@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,49 +16,40 @@
 
 """Dialogs for selecting character encodings."""
 
+import aeidon
 import gaupol
 import gtk
 _ = aeidon.i18n._
 
-__all__ = ("EncodingDialog", "AdvEncodingDialog")
+__all__ = ("EncodingDialog", "MenuEncodingDialog")
 
 
-class EncodingDialog(gaupol.GladeDialog):
+class EncodingDialog(gaupol.BuilderDialog):
 
     """Dialog for selecting a character encoding."""
 
     __metaclass__ = aeidon.Contractual
 
+    widgets = ("tree_view",)
+
     def __init__(self, parent):
-        """Initialize an EncodingDialog object."""
-
-        gaupol.GladeDialog.__init__(self, "encoding.glade")
-        self._tree_view = self._glade_xml.get_widget("tree_view")
-
+        """Initialize an :class:`EncodingDialog` object."""
+        gaupol.BuilderDialog.__init__(self, "encoding-dialog.ui")
         self._init_tree_view()
-        self._init_signal_handlers()
         self._init_sizes()
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_OK)
 
     def _init_sizes(self):
         """Initialize widget sizes."""
-
         width = gaupol.util.get_tree_view_size(self._tree_view)[0]
-        width = min(width, int(0.5 * gtk.gdk.screen_width()))
-        height = gtk.Label(18 * "m\n").size_request()[1]
-        height = min(height, int(0.9 * gtk.gdk.screen_height()))
-        self._tree_view.set_size_request(width + gaupol.EXTRA, height)
-
-    def _init_signal_handlers(self):
-        """Initialize signal handlers."""
-
-        respond = lambda x, y, z, self: self.response(gtk.RESPONSE_OK)
-        self._tree_view.connect("row-activated", respond, self)
+        width = min(width + gaupol.EXTRA, int(0.5 * gtk.gdk.screen_width()))
+        height = gtk.Label("m\n" * 18).size_request()[1]
+        height = min(height + gaupol.EXTRA, int(0.9 * gtk.gdk.screen_height()))
+        self._tree_view.set_size_request(width, height)
 
     def _init_tree_view(self):
         """Initialize the tree view."""
-
         selection = self._tree_view.get_selection()
         selection.set_mode(gtk.SELECTION_SINGLE)
         store = gtk.ListStore(str, str, str)
@@ -66,60 +57,58 @@ class EncodingDialog(gaupol.GladeDialog):
             store.append((item[0], item[2], item[1]))
         store.set_sort_column_id(1, gtk.SORT_ASCENDING)
         self._tree_view.set_model(store)
-
         renderer = gtk.CellRendererText()
         column = gtk.TreeViewColumn(_("Description"), renderer, text=1)
         column.set_clickable(True)
         column.set_sort_column_id(1)
         self._tree_view.append_column(column)
-
         renderer = gtk.CellRendererText()
         column = gtk.TreeViewColumn(_("Encoding"), renderer, text=2)
         column.set_clickable(True)
         column.set_sort_column_id(2)
         self._tree_view.append_column(column)
+
+    def _on_tree_view_row_activated(self, *args):
+        """Send response to select activated character encoding."""
+        print "ACTIVATED"
+        self.response(gtk.RESPONSE_OK)
 
     def get_encoding_ensure(self, value):
         if value is not None:
             assert aeidon.encodings.is_valid_code(value)
 
     def get_encoding(self):
-        """Return the selected encoding or None."""
-
+        """Return the selected encoding or ``None``."""
         selection = self._tree_view.get_selection()
         store, itr = selection.get_selected()
         if itr is None: return
         return store.get_value(itr, 0)
 
 
-class AdvEncodingDialog(EncodingDialog):
+class MenuEncodingDialog(EncodingDialog):
 
     """Dialog for selecting character encodings."""
 
     def _init_tree_view(self):
         """Initialize the tree view."""
-
         selection = self._tree_view.get_selection()
         selection.set_mode(gtk.SELECTION_SINGLE)
         store = gtk.ListStore(str, str, str, bool)
-        visibles = gaupol.conf.encoding.visibles
+        visible = gaupol.conf.encoding.visible
         for item in aeidon.encodings.get_valid():
-            store.append((item[0], item[2], item[1], item[0] in visibles))
+            store.append((item[0], item[2], item[1], item[0] in visible))
         store.set_sort_column_id(1, gtk.SORT_ASCENDING)
         self._tree_view.set_model(store)
-
         renderer = gtk.CellRendererText()
         column = gtk.TreeViewColumn(_("Description"), renderer, text=1)
         column.set_clickable(True)
         column.set_sort_column_id(1)
         self._tree_view.append_column(column)
-
         renderer = gtk.CellRendererText()
         column = gtk.TreeViewColumn(_("Encoding"), renderer, text=2)
         column.set_clickable(True)
         column.set_sort_column_id(2)
         self._tree_view.append_column(column)
-
         renderer = gtk.CellRendererToggle()
         renderer.connect("toggled", self._on_tree_view_cell_toggled)
         column = gtk.TreeViewColumn(_("Show in Menu"), renderer, active=3)
@@ -127,8 +116,7 @@ class AdvEncodingDialog(EncodingDialog):
         self._tree_view.append_column(column)
 
     def _on_tree_view_cell_toggled(self, renderer, row):
-        """Toggle the value of the 'Show in Menu' column."""
-
+        """Toggle the value of the "Show in Menu" column."""
         store = self._tree_view.get_model()
         store[row][3] = not store[row][3]
 
@@ -138,6 +126,5 @@ class AdvEncodingDialog(EncodingDialog):
 
     def get_visible_encodings(self):
         """Return encodings chosen to be visible."""
-
         store = self._tree_view.get_model()
         return [store[i][0] for i in range(len(store)) if store[i][3]]

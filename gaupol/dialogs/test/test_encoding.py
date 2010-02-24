@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -21,17 +21,18 @@ import gtk
 class TestEncodingDialog(gaupol.TestCase):
 
     def run__dialog(self):
-
         self.dialog.run()
         self.dialog.destroy()
 
     def setup_method(self, method):
-
         self.dialog = gaupol.EncodingDialog(gtk.Window())
         self.dialog.show()
 
-    def test_get_encoding(self):
+    def test__on_tree_view_row_activated(self):
+        column = self.dialog._tree_view.get_columns()[-1]
+        self.dialog._tree_view.row_activated(1, column)
 
+    def test_get_encoding(self):
         store = self.dialog._tree_view.get_model()
         selection = self.dialog._tree_view.get_selection()
         selection.select_path(10)
@@ -39,20 +40,16 @@ class TestEncodingDialog(gaupol.TestCase):
         assert name is not None
 
 
-class TestAdvEncodingDialog(TestEncodingDialog):
+class TestMenuEncodingDialog(TestEncodingDialog):
 
     def setup_method(self, method):
-
-        self.dialog = gaupol.AdvEncodingDialog(gtk.Window())
+        self.dialog = gaupol.MenuEncodingDialog(gtk.Window())
         self.dialog.show()
 
     def test__on_tree_view_cell_toggled(self):
-
         column = self.dialog._tree_view.get_columns()[-1]
         renderer = column.get_cell_renderers()[0]
         renderer.emit("toggled", 0)
 
     def test_get_visible_encodings(self):
-
-        encodings = self.dialog.get_visible_encodings()
-        assert set(encodings) == set(("cp1252", "utf_8"))
+        self.dialog.get_visible_encodings()

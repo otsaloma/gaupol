@@ -76,21 +76,21 @@ class FileDialog(gaupol.GladeDialog):
 
         encoding = self.get_encoding()
         if encoding != "other": return
-        dialog = gaupol.AdvEncodingDialog(self._dialog)
+        dialog = gaupol.MenuEncodingDialog(self._dialog)
         response = self.run_dialog(dialog)
         encoding = dialog.get_encoding()
-        visibles = dialog.get_visible_encodings()
+        visible = dialog.get_visible_encodings()
         dialog.destroy()
         self._encoding_combo.set_active(0)
         if response != gtk.RESPONSE_OK: return
-        gaupol.conf.encoding.visibles = visibles
+        gaupol.conf.encoding.visible = visible
         self._populate_encoding_combo(encoding)
         self.set_encoding(encoding)
 
     def _populate_encoding_combo(self, custom=None):
         """Populate the encoding combo box, including custom encoding."""
 
-        encodings = list(gaupol.conf.encoding.visibles)
+        encodings = list(gaupol.conf.encoding.visible)
         locale = aeidon.encodings.get_locale_code()
         encodings.insert(0, locale)
         encodings.append(custom)

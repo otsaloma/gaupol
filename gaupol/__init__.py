@@ -80,3 +80,4 @@ from gaupol.dialogs.about import *
 from gaupol.dialogs.language import *
 from gaupol.dialogs.message import *
 from gaupol.dialogs.textedit import *
+from gaupol.dialogs.encoding import *
