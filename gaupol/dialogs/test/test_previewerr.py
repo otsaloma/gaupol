@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
+import aeidon
 import gaupol
 import gtk
 
@@ -21,12 +22,10 @@ import gtk
 class TestPreviewErrorDialog(gaupol.TestCase):
 
     def run__dialog(self):
-
         self.dialog.run()
         self.dialog.destroy()
 
     def setup_method(self, method):
-
         output = self.get_sample_text(aeidon.formats.SUBRIP)
         self.dialog = gaupol.PreviewErrorDialog(gtk.Window(), output)
         self.dialog.show()

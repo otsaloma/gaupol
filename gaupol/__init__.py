@@ -77,7 +77,8 @@ from gaupol.page import *
 from gaupol.extension import *
 from gaupol.dialogs.builder import *
 from gaupol.dialogs.about import *
+from gaupol.dialogs.encoding import *
 from gaupol.dialogs.language import *
 from gaupol.dialogs.message import *
+from gaupol.dialogs.previewerr import *
 from gaupol.dialogs.textedit import *
-from gaupol.dialogs.encoding import *
