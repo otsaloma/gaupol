@@ -21,16 +21,6 @@
    :attr:`COMBO_SEPARATOR` can be inserted into a combo box's model, and
    :func:`gaupol.util.separate_combo` will recognize it.
 
-:var EXTRA: Amount of pixels to add to dialog size calculations
-
-   When setting dialog sizes based on their content, we get the size request of
-   the scrolled window component and add the surroundings to that to get a nice
-   default dialog size. For this to work neatly we should add some extra to
-   adapt to different widget sizes in different themes, e.g. scrollbar widths
-   and the sizes of icons in buttons. Let the :attr:`EXTRA` constant very
-   vaguely account for that and let it be added to each calculated dialog width
-   and height.
-
 :var fields: Enumerations for subtitle field types
 :var length_units: Enumerations for length unit types
 :var targets: Enumerations for action target types
@@ -49,7 +39,6 @@ import os
 __version__ = "0.15.99"
 
 COMBO_SEPARATOR = "<separator/>"
-EXTRA = 36
 
 gtk.rc_parse(os.path.join(aeidon.DATA_DIR, "ui", "gtkrc"))
 gobject.threads_init()

@@ -30,7 +30,12 @@ class PreviewErrorDialog(gaupol.BuilderDialog):
         """Initialize a :class:`PreviewErrorDialog` object."""
         gaupol.BuilderDialog.__init__(self, "previewerr-dialog.ui")
         self._init_data(output)
-        self._init_sizes()
+        gaupol.util.scale_to_content(self._text_view,
+                                     min_nlines=5,
+                                     max_nchar=100,
+                                     max_nlines=30,
+                                     font="monospace")
+
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_OK)
 
@@ -40,13 +45,3 @@ class PreviewErrorDialog(gaupol.BuilderDialog):
         text_buffer.create_tag("output", family="monospace")
         itr = text_buffer.get_end_iter()
         text_buffer.insert_with_tags_by_name(itr, output, "output")
-
-    def _init_sizes(self):
-        """Initialize widget sizes."""
-        get_size = gaupol.util.get_text_view_size
-        width, height = get_size(self._text_view, "monospace")
-        width = width + 112 + gaupol.EXTRA
-        width = min(width, int(0.5 * gtk.gdk.screen_width()))
-        height = height + 148 + gaupol.EXTRA
-        height = min(height, int(0.5 * gtk.gdk.screen_height()))
-        self.set_default_size(width, height)

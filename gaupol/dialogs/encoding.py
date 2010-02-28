@@ -36,17 +36,14 @@ class EncodingDialog(gaupol.BuilderDialog):
         """Initialize an :class:`EncodingDialog` object."""
         gaupol.BuilderDialog.__init__(self, "encoding-dialog.ui")
         self._init_tree_view()
-        self._init_sizes()
+        gaupol.util.scale_to_content(self._tree_view,
+                                     min_nchar=10,
+                                     min_nlines=5,
+                                     max_nchar=100,
+                                     max_nlines=30)
+
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_OK)
-
-    def _init_sizes(self):
-        """Initialize widget sizes."""
-        width = gaupol.util.get_tree_view_size(self._tree_view)[0]
-        width = min(width + gaupol.EXTRA, int(0.5 * gtk.gdk.screen_width()))
-        height = gtk.Label("m\n" * 18).size_request()[1]
-        height = min(height + gaupol.EXTRA, int(0.9 * gtk.gdk.screen_height()))
-        self._tree_view.set_size_request(width, height)
 
     def _init_tree_view(self):
         """Initialize the tree view."""

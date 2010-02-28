@@ -20,14 +20,16 @@ import gtk
 
 class TestLanguageDialog(gaupol.TestCase):
 
-    def run__dialog_hide_target(self):
+    def run__dialog__hide_target(self):
         # pylint: disable-msg=W0201
+        self.dialog.destroy()
         self.dialog = gaupol.LanguageDialog(gtk.Window(), False)
         self.dialog.run()
         self.dialog.destroy()
 
-    def run__dialog_show_target(self):
+    def run__dialog__show_target(self):
         # pylint: disable-msg=W0201
+        self.dialog.destroy()
         self.dialog = gaupol.LanguageDialog(gtk.Window(), True)
         self.dialog.run()
         self.dialog.destroy()

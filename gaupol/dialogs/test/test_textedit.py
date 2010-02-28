@@ -20,14 +20,28 @@ import gaupol
 
 class TestTextEditDialog(gaupol.TestCase):
 
-    def run__dialog(self):
+    def run__dialog__monospace(self):
+        # pylint: disable-msg=W0201
+        gaupol.conf.editor.custom_font = "monospace"
+        gaupol.conf.editor.use_custom_font = True
+        self.dialog.destroy()
+        self.dialog = gaupol.TextEditDialog(gtk.Window(), self.text)
+        self.dialog.run()
+        self.dialog.destroy()
+
+    def run__dialog__sans(self):
+        # pylint: disable-msg=W0201
+        gaupol.conf.editor.custom_font = "sans"
+        gaupol.conf.editor.use_custom_font = True
+        self.dialog.destroy()
+        self.dialog = gaupol.TextEditDialog(gtk.Window(), self.text)
         self.dialog.run()
         self.dialog.destroy()
 
     def setup_method(self, method):
-        gaupol.conf.editor.use_custom_font = True
-        gaupol.conf.editor.custom_font = "sans"
-        self.dialog = gaupol.TextEditDialog(gtk.Window())
+        gaupol.conf.editor.length_unit = gaupol.length_units.CHAR
+        self.text = "etaoin shrdlu etaoin shrdlu etaoin shrdlu etaoin shrdlu"
+        self.dialog = gaupol.TextEditDialog(gtk.Window(), self.text)
         self.dialog.show()
 
     def test_get_text(self):

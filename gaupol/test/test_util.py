@@ -21,6 +21,10 @@ import gtk
 
 class TestModule(gaupol.TestCase):
 
+    def test_char_to_px(self):
+        assert gaupol.util.char_to_px(1) > 0
+        assert gaupol.util.char_to_px(1, "monospace") > 0
+
     def test_delay_add(self):
         gaupol.util.delay_add(10, lambda: None)
 
@@ -64,12 +68,8 @@ class TestModule(gaupol.TestCase):
         scroller.add(tree_view)
         gaupol.util.get_tree_view_size(tree_view)
 
-    def test_is_monospace__no(self):
-        assert not gaupol.util.is_monospace("sans")
-        assert not gaupol.util.is_monospace("serif")
-
-    def test_is_monospace__yes(self):
-        assert gaupol.util.is_monospace("monospace")
+    def test_lines_to_px(self):
+        assert gaupol.util.lines_to_px(1) > 0
 
     def test_prepare_text_view__hide_lengths(self):
         gaupol.util.prepare_text_view(gtk.TextView())
@@ -86,6 +86,22 @@ class TestModule(gaupol.TestCase):
     def test_raise_default(self):
         self.raises(gaupol.Default, gaupol.util.raise_default, True)
         gaupol.util.raise_default(False)
+
+    def test_scale_to_content__text_view(self):
+        text_view = gtk.TextView()
+        scroller = gtk.ScrolledWindow()
+        scroller.add(text_view)
+        gaupol.util.scale_to_content(text_view, 1, 2, 80, 10)
+
+    def test_scale_to_content__tree_view(self):
+        tree_view = gtk.TreeView()
+        scroller = gtk.ScrolledWindow()
+        scroller.add(tree_view)
+        gaupol.util.scale_to_content(tree_view, 1, 2, 80, 10, "monospace")
+
+    def test_scale_to_size(self):
+        gaupol.util.scale_to_size(gtk.TextView(), 40, 5)
+        gaupol.util.scale_to_size(gtk.TreeView(), 40, 5, "monospace")
 
     def test_separate_combo(self):
         combo_box = gtk.ComboBox()
@@ -108,10 +124,6 @@ class TestModule(gaupol.TestCase):
     def test_set_label_font(self):
         label = gtk.Label("testing...")
         gaupol.util.set_label_font(label, "Serif 12")
-
-    def test_set_size_request(self):
-        text_view = gtk.TextView()
-        gaupol.util.set_size_request(text_view, 35, 70, 4)
 
     def test_set_widget_font(self):
         label = gtk.Label("testing...")

@@ -16,6 +16,8 @@
 
 """Miscellaneous functions and decorators."""
 
+from __future__ import division
+
 import aeidon
 import gaupol
 import glib
@@ -23,6 +25,14 @@ import gtk
 import inspect
 import pango
 
+
+def char_to_px(nchar, font=None):
+    """Convert characters to pixels."""
+    label = gtk.Label("etaoin shrdlu")
+    if font is not None:
+        set_label_font(label, font)
+    width = label.get_layout().get_pixel_size()[0]
+    return int(round(nchar * (width / 13)))
 
 def delay_add(delay, function, *args, **kwargs):
     """Call `function` with `args` and `kwargs` once after `delay` (ms).
@@ -83,18 +93,18 @@ def install_module(name, obj):
     """
     gaupol.__dict__[name] = inspect.getmodule(obj)
 
-def is_monospace(font):
-    """Return ``True`` if font is a monospace font."""
-    mlabel = gtk.Label("mmmmmmmmmm")
-    ilabel = gtk.Label("iiiiiiiiii")
-    set_label_font(mlabel, font)
-    set_label_font(ilabel, font)
-    return (mlabel.size_request() == ilabel.size_request())
-
 def iterate_main():
     """Iterate the GTK+ main loop while events are pending."""
     while gtk.events_pending():
         gtk.main_iteration()
+
+def lines_to_px(nlines, font=None):
+    """Convert lines to pixels."""
+    label = gtk.Label("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
+    if font is not None:
+        set_label_font(label, font)
+    height = label.get_layout().get_pixel_size()[1]
+    return int(round(nlines * height))
 
 def prepare_text_view(text_view):
     """Connect `text_view` to font and length margin updates."""
@@ -117,6 +127,43 @@ def raise_default(expression):
     """Raise :exc:`gaupol.Default` if expression evaluates to ``True``."""
     if expression:
         raise gaupol.Default
+
+def scale_to_content(container,
+                     min_nchar=None,
+                     min_nlines=None,
+                     max_nchar=None,
+                     max_nlines=None,
+                     font=None):
+
+    """Set `container`'s size by content, but limited by `min` and `max`."""
+    # Vaguely account for possible scrollbars.
+    bump = lambda x: x + 36
+    if isinstance(container, gtk.TextView):
+        width, height = map(bump, get_text_view_size(container))
+    elif isinstance(container, gtk.TreeView):
+        width, height = map(bump, get_tree_view_size(container))
+    else:
+        raise ValueError("Don't know what to do with container of type %s"
+                         % repr(type(container)))
+
+    if min_nchar is not None:
+        min_width = char_to_px(min_nchar, font)
+        width = max(width, min_width)
+    if max_nchar is not None:
+        max_width = char_to_px(max_nchar, font)
+        width = min(width, max_width)
+    if min_nlines is not None:
+        min_height = lines_to_px(min_nlines, font)
+        height = max(height, min_height)
+    if max_nlines is not None:
+        max_height = lines_to_px(max_nlines, font)
+        height = min(height, max_height)
+    container.set_size_request(width, height)
+
+def scale_to_size(container, nchar, nlines, font=None):
+    """Set `container`'s size to `nchar` and `nlines`."""
+    container.set_size_request(char_to_px(nchar, font),
+                               lines_to_px(nlines, font))
 
 def separate_combo(store, itr):
     """Separator function for combo box models."""
@@ -150,15 +197,6 @@ def set_label_font(label, font):
     attr_list = pango.AttrList()
     attr_list.insert(attr)
     label.set_attributes(attr_list)
-
-def set_size_request(widget, sans_ems, mono_ems, lines):
-    """Set widget size request based on size taken by text."""
-    ems = (mono_ems if is_monospace(get_font()) else sans_ems)
-    label = gtk.Label("\n".join(("m" * ems,) * lines))
-    set_label_font(label, get_font())
-    width, height = label.size_request()
-    widget.set_size_request(width, height)
-    return width, height
 
 def set_widget_font(widget, font):
     """Use `font` for `widget`."""
