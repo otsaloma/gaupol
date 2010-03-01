@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,16 +16,18 @@
 
 """Dialog for displaying a traceback in case of an unhandled exception."""
 
-# This file has been adapted from Gazpacho with copyright notice
+# This file has been originally adapted from Gazpacho with copyright notice
 # Copyright (C) 2005 by Async Open Source and Sicem S.L.
 
+import aeidon
 import gaupol
-import gobject
+import glib
 import gtk
 import linecache
 import os
 import pango
 import platform
+import string
 import sys
 import traceback
 _ = aeidon.i18n._
@@ -33,40 +35,33 @@ _ = aeidon.i18n._
 __all__ = ("DebugDialog",)
 
 
-class DebugDialog(gaupol.GladeDialog):
+class DebugDialog(gaupol.BuilderDialog):
 
     """Dialog for displaying a traceback in case of an unhandled exception."""
 
+    widgets = ("message_label", "text_view")
+
     def __init__(self):
-        """Initialize a DebugDialog object."""
-
-        gaupol.GladeDialog.__init__(self, "debug.glade")
-        get_widget = self._glade_xml.get_widget
-        self._message_label = get_widget("message_label")
-        self._text_view = get_widget("text_view")
-        self._code_lines = []
-
+        """Initialize a :class:`DebugDialog` object."""
+        gaupol.BuilderDialog.__init__(self, "debug-dialog.ui")
         self._init_text_tags()
         self._init_signal_handlers()
         self._dialog.set_default_response(gtk.RESPONSE_CLOSE)
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
-
         aeidon.util.connect(self, self, "response")
         aeidon.util.connect(self, "_text_view", "motion-notify-event")
 
     def _init_text_tags(self):
         """Initialize tags for the text buffer."""
-
         text_buffer = self._text_view.get_buffer()
         text_buffer.create_tag("bold", weight=pango.WEIGHT_BOLD)
         text_buffer.create_tag("large", scale=pango.SCALE_LARGE)
         text_buffer.create_tag("monospace", family="monospace")
 
     def _insert_link(self, path, lineno, *tags):
-        """Insert path into the text view."""
-
+        """Insert `path` as a link into the text view."""
         text_buffer = self._text_view.get_buffer()
         tag = text_buffer.create_tag(None, foreground="blue")
         tag.props.underline = pango.UNDERLINE_SINGLE
@@ -76,30 +71,77 @@ class DebugDialog(gaupol.GladeDialog):
         tag.set_data("lineno", lineno)
         if path.startswith(os.getcwd()):
             path = path.replace(os.getcwd(), "")
-        if path.startswith(os.sep):
+        while path.startswith(os.sep):
             path = path.replace(os.sep, "", 1)
         itr = text_buffer.get_end_iter()
         tag_table = text_buffer.get_tag_table()
-        tags = tuple(tag_table.lookup(x) for x in tags)
+        tags = map(tag_table.lookup, tags + ("monospace",))
         text_buffer.insert_with_tags(itr, path, tag, *tags)
 
-    def _insert_text(self, text, *tags):
-        """Insert text with tags to the text view."""
+    def _insert_platform(self):
+        """Insert platform information."""
+        self._insert_text("%s\n\n" % platform.platform(True))
 
+    def _insert_text(self, text, *tags):
+        """Insert `text` with `tags` to the text view."""
         text_buffer = self._text_view.get_buffer()
         itr = text_buffer.get_end_iter()
+        tags = tags + ("monospace",)
         text_buffer.insert_with_tags_by_name(itr, text, *tags)
+
+    def _insert_title(self, text):
+        """Insert `text` as a title to the text view."""
+        self._insert_text(text, "large", "bold")
+        self._insert_text("\n\n")
+
+    def _insert_traceback(self, exctype, value, tb, limit=100):
+        """Insert up to `limit` stack trace entries from `tb`."""
+        for i in range(limit):
+            if tb is None: break
+            frame = tb.tb_frame
+            code = frame.f_code
+            line = linecache.getline(code.co_filename,
+                                     tb.tb_lineno).strip()
+
+            self._insert_text("File: ")
+            self._insert_link(code.co_filename, tb.tb_lineno)
+            self._insert_text("\n")
+            self._insert_text("Line: %s\n" % str(tb.tb_lineno))
+            self._insert_text("In: %s\n\n" % code.co_name)
+            self._insert_text("    %s\n\n" % line)
+            tb = tb.tb_next
+        exception = traceback.format_exception_only(exctype, value)[0]
+        exception, space, message = exception.partition(" ")
+        self._insert_text(exception, "bold")
+        self._insert_text("%s%s\n" % (space, message))
+
+    def _insert_versions(self):
+        """Insert version numbers of dependencies."""
+        self._insert_text("Aeidon: %s\n" % aeidon.__version__)
+        self._insert_text("Gaupol: %s\n" % gaupol.__version__)
+        self._insert_text("Python: %d.%d.%d\n" % sys.version_info[:3])
+        self._insert_text("GTK+: %d.%d.%d\n" % gtk.gtk_version)
+        self._insert_text("PyGTK: %d.%d.%d\n" % gtk.pygtk_version)
+        self._insert_text("PyEnchant: %s\n"
+                          % aeidon.util.get_enchant_version() or "N/A")
+
+        self._insert_text("Universal Encoding Detector: %s\n"
+                          % aeidon.util.get_chardet_version() or "N/A")
+
+    def _on_editor_exit(self, pid, return_value, command):
+        """Print an error message if editor process failed."""
+        if return_value == 0: return
+        print ("Command '%s' failed with return value %d"
+               % (command, return_value))
 
     def _on_response(self, dialog, response):
         """Do not send response if reporting bug."""
-
         if response != gtk.RESPONSE_YES: return
         aeidon.util.browse_url(aeidon.BUG_REPORT_URL)
         self.stop_emission("response")
 
     def _on_text_view_link_tag_event(self, tag, text_view, event, itr):
         """Open linked file in editor."""
-
         if event.type != gtk.gdk.BUTTON_RELEASE: return
         if event.button != 1: return
         text_buffer = self._text_view.get_buffer()
@@ -108,7 +150,6 @@ class DebugDialog(gaupol.GladeDialog):
 
     def _on_text_view_motion_notify_event(self, text_view, event):
         """Change mouse pointer when hovering over a link."""
-
         x = int(event.x)
         y = int(event.y)
         window = gtk.TEXT_WINDOW_WIDGET
@@ -123,109 +164,26 @@ class DebugDialog(gaupol.GladeDialog):
 
     def _open_link(self, tag):
         """Open linked file in editor."""
-
-        def on_editor_exit(pid, return_value, self):
-            if return_value == 0: return
-            self._show_editor_error_dialog()
         path = aeidon.util.shell_quote(tag.get_data("path"))
-        process = aeidon.util.start_process("%s +%d %s" % (
-            gaupol.conf.debug.editor, tag.get_data("lineno"), path))
-        gobject.child_watch_add(process.pid, on_editor_exit, self)
+        command = string.Template(gaupol.conf.debug.text_editor)
+        command = command.safe_substitute(LINENO=tag.get_data("lineno"),
+                                          FILE=path)
+
+        process = aeidon.util.start_process(command)
+        glib.child_watch_add(process.pid, self._on_editor_exit, command)
         tag.props.foreground = "purple"
 
-    def _print_platform(self):
-        """Print platform information."""
-
-        self._insert_text("%s\n\n" % platform.platform(True))
-
-    def _print_traceback(self, exctype, value, tb, limit=100):
-        """Print up to limit stack trace entries from traceback."""
-
-        depth = 0
-        indent = "    "
-        while (tb is not None) and (depth < limit):
-            frame = tb.tb_frame
-            code = frame.f_code
-            self._insert_text("File: ")
-            self._insert_link(code.co_filename, tb.tb_lineno)
-            self._insert_text("\n")
-            self._insert_text("Line: %s\n" % str(tb.tb_lineno))
-            self._insert_text("In: %s\n\n" % code.co_name)
-            line = linecache.getline(code.co_filename, tb.tb_lineno).strip()
-            self._insert_text("%s%s\n\n" % (indent, line), "monospace")
-            self._code_lines.append("%s%s" % (indent, line))
-            tb = tb.tb_next
-            depth += 1
-
-        exception = traceback.format_exception_only(exctype, value)[0]
-        exception, space, message = exception.partition(" ")
-        self._insert_text(exception, "bold")
-        self._insert_text("%s%s\n" % (space, message))
-
-    def _print_versions(self):
-        """Print version numbers of dependencies."""
-
-        self._insert_text("Gaupol: %s\n" % aeidon.__version__)
-        self._insert_text("Python: %d.%d.%d\n" % sys.version_info[:3])
-        self._insert_text("GTK+: %d.%d.%d\n" % gtk.gtk_version)
-        self._insert_text("PyGTK: %d.%d.%d\n" % gtk.pygtk_version)
-        version = aeidon.util.get_enchant_version() or "N/A"
-        self._insert_text("PyEnchant: %s\n" % version)
-        version = aeidon.util.get_chardet_version() or "N/A"
-        self._insert_text("Universal Encoding Detector: %s\n" % version)
-
-    def _resize(self):
-        """Resize dialog based on the text view's content."""
-
-        get_size = gaupol.util.get_text_view_size
-        text_width, height = get_size(self._text_view)
-        label = gtk.Label("\n".join(self._code_lines))
-        gaupol.util.set_label_font(label, "monospace")
-        code_width = label.size_request()[0]
-        width = max(text_width, code_width) + 150 + gaupol.EXTRA
-        height = height + 160 + gaupol.EXTRA
-        # TODO: FIX!
-        # gaupol.util.resize_message_dialog(self, width, height)
-        self._message_label.set_size_request(width - 150, -1)
-
-    def _show_editor_error_dialog(self):
-        """Show an error dialog after failing to open editor."""
-
-        editor = gaupol.conf.debug.editor
-        title = _('Failed to open editor "%s"') % editor
-        config_file = gaupol.conf.config_file
-        message = _(('To change the editor, edit option "editor" under '
-            'section "debug" in configuration file "%s".')) % config_file
-        dialog = gaupol.ErrorDialog(self._dialog, title, message)
-        dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
-        self.flash_dialog(dialog)
-
     def set_text(self, exctype, value, tb):
-        """Set text to the text view."""
-
-        self._insert_text("Traceback", "large", "bold")
-        self._insert_text("\n\n")
-        self._print_traceback(exctype, value, tb)
-        self._insert_text("Platform", "large", "bold")
-        self._insert_text("\n\n")
-        self._print_platform()
-        self._insert_text("Versions", "large", "bold")
-        self._insert_text("\n\n")
-        self._print_versions()
-        self._resize()
-
-
-def show(exctype, value, tb):
-    """Show exception traceback in dialog."""
-
-    traceback.print_exception(exctype, value, tb)
-    if not isinstance(value, Exception): return
-    try: # Avoid recursion.
-        dialog = DebugDialog()
-        dialog.set_text(exctype, value, tb)
-        response = dialog.run()
-        dialog.destroy()
-        if response == gtk.RESPONSE_NO:
-            raise SystemExit(1)
-    except Exception:
-        traceback.print_exc()
+        """Set text from `tb` to the text view."""
+        self._insert_title("Traceback")
+        self._insert_traceback(exctype, value, tb)
+        self._insert_title("Platform")
+        self._insert_platform()
+        self._insert_title("Versions")
+        self._insert_versions()
+        gaupol.util.scale_to_content(self._text_view,
+                                     min_nchar=10,
+                                     min_nlines=5,
+                                     max_nchar=85,
+                                     max_nlines=35,
+                                     font="monospace")

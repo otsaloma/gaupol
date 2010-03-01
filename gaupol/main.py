@@ -61,8 +61,8 @@ def _check_dependencies():
 def _init_application(opts, args):
     """Initialize application and open files given as arguments."""
 
-    from gaupol import dialogs
-    sys.excepthook = dialogs.debug.show
+    import gaupol
+    sys.excepthook = gaupol.util.show_exception
     application = gaupol.Application()
     jump_row = None
     re_jump = re.compile(r"\+\d*")

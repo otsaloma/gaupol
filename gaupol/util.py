@@ -24,6 +24,7 @@ import glib
 import gtk
 import inspect
 import pango
+import traceback
 
 
 def char_to_px(nchar, font=None):
@@ -205,6 +206,20 @@ def set_widget_font(widget, font):
     custom_font_desc = pango.FontDescription(font)
     font_desc.merge(custom_font_desc, True)
     widget.modify_font(font_desc)
+
+def show_exception(exctype, value, tb):
+    """Show exception traceback in :class:`gaupol.DebugDialog`."""
+    traceback.print_exception(exctype, value, tb)
+    if not isinstance(value, Exception): return
+    try: # Avoid recursion.
+        dialog = gaupol.DebugDialog()
+        dialog.set_text(exctype, value, tb)
+        response = dialog.run()
+        dialog.destroy()
+        if response == gtk.RESPONSE_NO:
+            raise SystemExit(1)
+    except Exception:
+        traceback.print_exc()
 
 def text_field_to_document(field):
     """Return :attr:`aeidon.documents` item corresponding to `field`."""

@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -22,16 +22,10 @@ import sys
 class TestDebugDialog(gaupol.TestCase):
 
     def run__dialog(self):
-
         self.dialog.run()
         self.dialog.destroy()
 
-    def run__show_editor_error_dialog(self):
-
-        self.dialog._show_editor_error_dialog()
-
     def setup_method(self, method):
-
         self.dialog = gaupol.DebugDialog()
         try:
             self.dialog.foo()
@@ -40,19 +34,10 @@ class TestDebugDialog(gaupol.TestCase):
         self.dialog.show()
 
     def test__on_response__close(self):
-
         self.dialog.response(gtk.RESPONSE_CLOSE)
 
     def test__on_response__no(self):
-
         self.dialog.response(gtk.RESPONSE_NO)
 
     def test__on_response__yes(self):
-
         self.dialog.response(gtk.RESPONSE_YES)
-
-    def test__show_editor_error_dialog(self):
-
-        respond = lambda *args: gtk.RESPONSE_CLOSE
-        self.dialog.flash_dialog = respond
-        self.dialog._show_editor_error_dialog()

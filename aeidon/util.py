@@ -28,6 +28,7 @@ import os
 import re
 import subprocess
 import sys
+import traceback
 import urllib
 import urlparse
 import webbrowser
