@@ -208,7 +208,10 @@ def set_widget_font(widget, font):
     widget.modify_font(font_desc)
 
 def show_exception(exctype, value, tb):
-    """Show exception traceback in :class:`gaupol.DebugDialog`."""
+    """Show exception traceback in :class:`gaupol.DebugDialog`.
+
+    This function can be set as a :func:`sys.excepthook`.
+    """
     traceback.print_exception(exctype, value, tb)
     if not isinstance(value, Exception): return
     try: # Avoid recursion.
