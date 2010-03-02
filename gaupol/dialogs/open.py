@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,7 +16,9 @@
 
 """Dialog for selecting subtitle files to open."""
 
+import aeidon
 import gaupol
+import gtk
 import os
 
 __all__ = ("OpenDialog",)
@@ -26,42 +28,44 @@ class OpenDialog(gaupol.FileDialog):
 
     """Dialog for selecting subtitle files to open."""
 
+    widgets = ("align_combo", "align_label", "encoding_combo")
+
     def __init__(self, parent, title, doc):
-        """Initialize an OpenDialog object."""
-
-        gaupol.FileDialog.__init__(self, "open.glade")
-        get_widget = self._glade_xml.get_widget
-        self._align_combo = get_widget("align_combo")
-        self._align_label = get_widget("align_label")
-        self._encoding_combo = get_widget("encoding_combo")
+        """Initialize an :class:`OpenDialog` object."""
+        gaupol.FileDialog.__init__(self, "open-dialog.ui")
         self._use_autodetection = aeidon.util.chardet_available()
-        self.conf = gaupol.conf.file
-
         self._init_filters()
         self._init_encoding_combo()
+        self._init_align_combo()
         self._init_values(doc)
         self.set_title(title)
         self.set_transient_for(parent)
-        aeidon.util.connect(self, self, "response")
+
+    def _init_align_combo(self):
+        """Initialize the align method combo box."""
+        store = gtk.ListStore(str)
+        self._align_combo.set_model(store)
+        for align_method in aeidon.align_methods:
+            store.append((align_method.label,))
+        view = self._align_combo.get_child()
+        view.set_displayed_row(0)
+        renderer = gtk.CellRendererText()
+        self._align_combo.pack_start(renderer, True)
+        self._align_combo.add_attribute(renderer, "text", 0)
 
     def _init_values(self, doc):
         """Initialize default values for widgets."""
-
         self.set_select_multiple(doc == aeidon.documents.MAIN)
-        if os.path.isdir(self.conf.directory):
-            self.set_current_folder(self.conf.directory)
-        self.set_encoding(self.conf.encoding)
-        store = self._align_combo.get_model()
-        for align_method in aeidon.align_methods:
-            store.append((align_method.label,))
-        self._align_combo.set_active(self.conf.align_method)
+        if os.path.isdir(gaupol.conf.file.directory):
+            self.set_current_folder(gaupol.conf.file.directory)
+        self.set_encoding(gaupol.conf.file.encoding)
+        self._align_combo.set_active(gaupol.conf.file.align_method)
         self._align_combo.props.visible = (doc == aeidon.documents.TRAN)
         self._align_label.props.visible = (doc == aeidon.documents.TRAN)
 
     def _on_response(self, dialog, response):
-        """Save widget values and dialog size."""
-
-        self.conf.encoding = self.get_encoding()
-        self.conf.directory = self.get_current_folder()
+        """Save default values for widgets."""
+        gaupol.conf.file.encoding = self.get_encoding()
+        gaupol.conf.file.directory = self.get_current_folder()
         index = self._align_combo.get_active()
-        self.conf.align_method = aeidon.align_methods[index]
+        gaupol.conf.file.align_method = aeidon.align_methods[index]

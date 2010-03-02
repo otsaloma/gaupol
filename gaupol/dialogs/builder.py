@@ -17,13 +17,14 @@
 """Baseclass and wrapper for :class:`gtk.Builder` constructed dialogs."""
 
 import aeidon
+import gaupol
 import gtk
 import os
 
 __all__ = ("BuilderDialog",)
 
 
-class BuilderDialog(object):
+class BuilderDialog(gaupol.Runner):
 
     """Baseclass and wrapper for `gtk.Builder` constructed dialogs.
 

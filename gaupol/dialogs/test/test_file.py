@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -20,13 +20,13 @@ import gtk
 
 class _TestFileDialog(gaupol.TestCase):
 
-    def run__dialog(self):
+    # pylint: disable-msg=E1101
 
+    def run__dialog(self):
         self.dialog.run()
         self.dialog.destroy()
 
     def test__on_encoding_combo_changed(self):
-
         responder = iter((gtk.RESPONSE_OK, gtk.RESPONSE_CANCEL))
         def run_dialog(dialog):
             selection = dialog._tree_view.get_selection()
@@ -38,7 +38,6 @@ class _TestFileDialog(gaupol.TestCase):
         self.dialog._encoding_combo.set_active(len(store) - 1)
 
     def test_get_encoding(self):
-
         encoding = gaupol.conf.encoding.visible[0]
         self.dialog.set_encoding(encoding)
         assert self.dialog.get_encoding() == encoding
@@ -46,7 +45,6 @@ class _TestFileDialog(gaupol.TestCase):
         assert self.dialog.get_encoding() == "johab"
 
     def test_set_encoding(self):
-
         encoding = gaupol.conf.encoding.visible[0]
         self.dialog.set_encoding(encoding)
         assert self.dialog.get_encoding() == encoding
