@@ -54,7 +54,6 @@ from gaupol.errors import *
 from gaupol.attrdict import *
 from gaupol.config import *
 conf = ConfigurationStore()
-
 from gaupol import ruler
 from gaupol.meta import *
 from gaupol.entries import *
@@ -73,3 +72,4 @@ from gaupol.dialogs.message import *
 from gaupol.dialogs.open import *
 from gaupol.dialogs.previewerr import *
 from gaupol.dialogs.textedit import *
+from gaupol.dialogs.video import *

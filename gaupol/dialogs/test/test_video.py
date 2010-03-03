@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -21,15 +21,9 @@ import gtk
 class TestVideoDialog(gaupol.TestCase):
 
     def run__dialog(self):
-
         self.dialog.run()
         self.dialog.destroy()
 
     def setup_method(self, method):
-
         self.dialog = gaupol.VideoDialog(gtk.Window())
         self.dialog.show()
-
-    def test__on_response(self):
-
-        self.dialog.response(gtk.RESPONSE_CANCEL)

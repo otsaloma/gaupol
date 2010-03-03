@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,7 +16,7 @@
 
 """Dialog for selecting a video file."""
 
-import gaupol
+import aeidon
 import gtk
 _ = aeidon.i18n._
 
@@ -28,8 +28,7 @@ class VideoDialog(gtk.FileChooserDialog):
     """Dialog for selecting a video file."""
 
     def __init__(self, parent):
-        """Initialize a VideoDialog object."""
-
+        """Initialize a :class:`VideoDialog` object."""
         gtk.FileChooserDialog.__init__(self)
         self.set_title(_("Select Video"))
         self.set_transient_for(parent)
@@ -41,12 +40,10 @@ class VideoDialog(gtk.FileChooserDialog):
 
     def _init_filters(self):
         """Intialize the file filters."""
-
         file_filter = gtk.FileFilter()
         file_filter.add_pattern("*")
         file_filter.set_name(_("All files"))
         self.add_filter(file_filter)
-
         file_filter = gtk.FileFilter()
         file_filter.add_mime_type("video/*")
         file_filter.set_name(_("Video files"))
