@@ -29,7 +29,7 @@ ngettext = aeidon.i18n.ngettext
 __all__ = ("TextAssistant", "TextAssistantPage")
 
 
-class TextAssistantPage(gtk.VBox, gaupol.Runner):
+class TextAssistantPage(gtk.VBox):
 
     """Baseclass for pages in the text correction assistant.
 
@@ -620,7 +620,7 @@ class _JoinSplitWordsPage(_GladePage):
         gaupol.util.set_cursor_busy(self.assistant)
         dialog = gaupol.LanguageDialog(self.assistant, False)
         gaupol.util.set_cursor_normal(self.assistant)
-        self.flash_dialog(dialog)
+        gaupol.util.flash_dialog(dialog)
         language = gaupol.conf.spell_check.language
         try: label = aeidon.locales.code_to_name(language)
         except LookupError: label = self._language_button.get_label()
@@ -648,7 +648,7 @@ class _JoinSplitWordsPage(_GladePage):
         title = _('Failed to load dictionary for language "%s"') % name
         dialog = gaupol.ErrorDialog(self.parent, title, message)
         dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
-        self.flash_dialog(dialog)
+        gaupol.util.flash_dialog(dialog)
 
     def correct_texts(self, project, indices, doc):
         """Correct texts in project."""

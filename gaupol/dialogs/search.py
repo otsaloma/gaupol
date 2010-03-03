@@ -467,7 +467,7 @@ class SearchDialog(gaupol.GladeDialog):
         message = _("%s.") % message
         dialog = gaupol.ErrorDialog(self._dialog, title, message)
         dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
-        self.flash_dialog(dialog)
+        gaupol.util.flash_dialog(dialog)
 
     def _show_regex_error_dialog_replacement(self, message):
         """Show an error dialog if replacement is invalid."""
@@ -476,7 +476,7 @@ class SearchDialog(gaupol.GladeDialog):
         message = _("%s.") % message
         dialog = gaupol.ErrorDialog(self._dialog, title, message)
         dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
-        self.flash_dialog(dialog)
+        gaupol.util.flash_dialog(dialog)
 
     def _update_search_targets(self):
         """Update the search targets in all application's pages."""

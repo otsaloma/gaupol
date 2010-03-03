@@ -89,7 +89,7 @@ class SaveAgent(aeidon.Delegate):
         dialog.set_encoding(encoding)
         dialog.set_newline(newline)
         gaupol.util.set_cursor_normal(self.window)
-        response = self.run_dialog(dialog)
+        response = gaupol.util.run_dialog(dialog)
         props[0] = dialog.get_filename()
         props[1] = dialog.get_format()
         props[2] = dialog.get_encoding()
@@ -110,7 +110,7 @@ class SaveAgent(aeidon.Delegate):
             "a different character encoding.")
         dialog = gaupol.ErrorDialog(self.window, title, message)
         dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
-        self.flash_dialog(dialog)
+        gaupol.util.flash_dialog(dialog)
 
     def _show_io_error_dialog(self, basename, message):
         """Show an error dialog after failing to write file."""
@@ -119,7 +119,7 @@ class SaveAgent(aeidon.Delegate):
         message = _("%s.") % message
         dialog = gaupol.ErrorDialog(self.window, title, message)
         dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
-        self.flash_dialog(dialog)
+        gaupol.util.flash_dialog(dialog)
 
     def on_save_all_documents_activate(self, *args):
         """Save all open documents."""

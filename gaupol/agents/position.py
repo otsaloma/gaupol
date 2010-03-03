@@ -27,13 +27,13 @@ class PositionAgent(aeidon.Delegate):
         """Lengthen or shorten durations."""
 
         dialog = gaupol.DurationAdjustDialog(self.window, self)
-        self.flash_dialog(dialog)
+        gaupol.util.flash_dialog(dialog)
 
     def on_convert_framerate_activate(self, *args):
         """Convert framerate."""
 
         dialog = gaupol.FramerateConvertDialog(self.window, self)
-        self.flash_dialog(dialog)
+        gaupol.util.flash_dialog(dialog)
 
     def on_shift_positions_activate(self, *args):
         """Make subtitles appear earlier or later."""
@@ -43,7 +43,7 @@ class PositionAgent(aeidon.Delegate):
             cls = gaupol.TimeShiftDialog
         elif page.edit_mode == aeidon.modes.FRAME:
             cls = gaupol.FrameShiftDialog
-        self.flash_dialog(cls(self.window, self))
+        gaupol.util.flash_dialog(cls(self.window, self))
 
     def on_transform_positions_activate(self, *args):
         """Change positions by linear two-point correction."""
@@ -53,4 +53,4 @@ class PositionAgent(aeidon.Delegate):
             cls = gaupol.TimeTransformDialog
         elif page.edit_mode == aeidon.modes.FRAME:
             cls = gaupol.FrameTransformDialog
-        self.flash_dialog(cls(self.window, self))
+        gaupol.util.flash_dialog(cls(self.window, self))

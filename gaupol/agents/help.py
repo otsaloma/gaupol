@@ -31,4 +31,4 @@ class HelpAgent(aeidon.Delegate):
     def on_view_about_dialog_activate(self, *args):
         """Show information about Gaupol."""
 
-        self.flash_dialog(gaupol.AboutDialog(self.window))
+        gaupol.util.flash_dialog(gaupol.AboutDialog(self.window))

@@ -53,6 +53,17 @@ def document_to_text_field(doc):
         return gaupol.fields.TRAN_TEXT
     raise ValueError("Invalid document: %s" % repr(doc))
 
+def flash_dialog(dialog):
+    """Run `dialog`, destroy it and return response.
+
+    This function is to be used always when a :class:`gtk.Dialog` is run so
+    that unit tests can monkey patch this function with one that returns a
+    specified response without waiting for user input.
+    """
+    response = dialog.run()
+    dialog.destroy()
+    return response
+
 def get_font():
     """Return custom font or blank string."""
     return (gaupol.conf.editor.custom_font if
@@ -128,6 +139,15 @@ def raise_default(expression):
     """Raise :exc:`gaupol.Default` if expression evaluates to ``True``."""
     if expression:
         raise gaupol.Default
+
+def run_dialog(self, dialog):
+    """Run `dialog` and return response.
+
+    This function is to be used always when a :class:`gtk.Dialog` is run so
+    that unit tests can monkey patch this function with one that returns a
+    specified response without waiting for user input.
+    """
+    return dialog.run()
 
 def scale_to_content(container,
                      min_nchar=None,

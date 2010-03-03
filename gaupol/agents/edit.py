@@ -88,7 +88,7 @@ class EditAgent(aeidon.Delegate):
         """Edit file headers."""
 
         dialog = gaupol.HeaderDialog(self.window, self)
-        self.flash_dialog(dialog)
+        gaupol.util.flash_dialog(dialog)
 
     def on_edit_next_value_activate(self, *args):
         """Edit the focused column of the next subtitle."""
@@ -133,7 +133,7 @@ class EditAgent(aeidon.Delegate):
         """Insert subtitles."""
 
         dialog = gaupol.InsertDialog(self.window, self)
-        self.flash_dialog(dialog)
+        gaupol.util.flash_dialog(dialog)
 
     def on_invert_selection_activate(self, *args):
         """Invert the current selection."""

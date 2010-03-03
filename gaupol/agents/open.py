@@ -174,7 +174,7 @@ class OpenAgent(aeidon.Delegate):
             directory = os.path.dirname(page.project.main_file.path)
             dialog.set_current_folder(directory)
         gaupol.util.set_cursor_normal(self.window)
-        response = self.run_dialog(dialog)
+        response = gaupol.util.run_dialog(dialog)
         paths = dialog.get_filenames()
         encoding = dialog.get_encoding()
         dialog.destroy()
@@ -191,7 +191,7 @@ class OpenAgent(aeidon.Delegate):
             "different character encoding.")
         dialog = gaupol.ErrorDialog(self.window, title, message)
         dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
-        self.flash_dialog(dialog)
+        gaupol.util.flash_dialog(dialog)
 
     def _show_format_error_dialog(self, basename):
         """Show an error dialog after failing to recognize file format."""
@@ -201,7 +201,7 @@ class OpenAgent(aeidon.Delegate):
             "subtitle file of a format supported by Gaupol.")
         dialog = gaupol.ErrorDialog(self.window, title, message)
         dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
-        self.flash_dialog(dialog)
+        gaupol.util.flash_dialog(dialog)
 
     def _show_io_error_dialog(self, basename, message):
         """Show an error dialog after failing to read file."""
@@ -210,7 +210,7 @@ class OpenAgent(aeidon.Delegate):
         message = _("%s.") % message
         dialog = gaupol.ErrorDialog(self.window, title, message)
         dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
-        self.flash_dialog(dialog)
+        gaupol.util.flash_dialog(dialog)
 
     def _show_parse_error_dialog(self, basename, format):
         """Show an error dialog after failing to parse file."""
@@ -221,7 +221,7 @@ class OpenAgent(aeidon.Delegate):
             "bug report and attach the file.") % format.label
         dialog = gaupol.ErrorDialog(self.window, title, message)
         dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
-        self.flash_dialog(dialog)
+        gaupol.util.flash_dialog(dialog)
 
     def _show_size_warning_dialog(self, basename, size):
         """Show a warning dialog when trying to open a big file.
@@ -236,7 +236,7 @@ class OpenAgent(aeidon.Delegate):
         dialog.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_NO)
         dialog.add_button(gtk.STOCK_OPEN, gtk.RESPONSE_YES)
         dialog.set_default_response(gtk.RESPONSE_NO)
-        response = self.flash_dialog(dialog)
+        response = gaupol.util.flash_dialog(dialog)
         gaupol.util.raise_default(response != gtk.RESPONSE_YES)
 
     def _show_sort_warning_dialog(self, basename, count):
@@ -252,7 +252,7 @@ class OpenAgent(aeidon.Delegate):
         dialog.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_NO)
         dialog.add_button(gtk.STOCK_OPEN, gtk.RESPONSE_YES)
         dialog.set_default_response(gtk.RESPONSE_YES)
-        response = self.flash_dialog(dialog)
+        response = gaupol.util.flash_dialog(dialog)
         gaupol.util.raise_default(response != gtk.RESPONSE_YES)
 
     def _show_translation_warning_dialog(self, page):
@@ -268,7 +268,7 @@ class OpenAgent(aeidon.Delegate):
         dialog.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
         dialog.add_button(gtk.STOCK_SAVE, gtk.RESPONSE_YES)
         dialog.set_default_response(gtk.RESPONSE_YES)
-        response = self.flash_dialog(dialog)
+        response = gaupol.util.flash_dialog(dialog)
         if response == gtk.RESPONSE_YES:
             return self.save_translation_document(page)
         gaupol.util.raise_default(response != gtk.RESPONSE_NO)
@@ -391,7 +391,7 @@ class OpenAgent(aeidon.Delegate):
         gaupol.util.set_cursor_busy(self.window)
         dialog = gaupol.AppendDialog(self.window)
         gaupol.util.set_cursor_normal(self.window)
-        response = self.run_dialog(dialog)
+        response = gaupol.util.run_dialog(dialog)
         paths = dialog.get_filenames()
         encoding = dialog.get_encoding()
         dialog.destroy()
@@ -462,7 +462,7 @@ class OpenAgent(aeidon.Delegate):
             directory = os.path.dirname(page.project.main_file.path)
             dialog.set_current_folder(directory)
         gaupol.util.set_cursor_normal(self.window)
-        response = self.run_dialog(dialog)
+        response = gaupol.util.run_dialog(dialog)
         path = dialog.get_filename()
         dialog.destroy()
         if response != gtk.RESPONSE_OK: return
@@ -472,7 +472,7 @@ class OpenAgent(aeidon.Delegate):
     def on_split_project_activate(self, *args):
         """Split the current project in two."""
 
-        self.flash_dialog(gaupol.SplitDialog(self.window, self))
+        gaupol.util.flash_dialog(gaupol.SplitDialog(self.window, self))
 
     def on_video_button_clicked(self, *args):
         """Select a video file."""

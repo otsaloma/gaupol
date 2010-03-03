@@ -56,7 +56,7 @@ class CloseAgent(aeidon.Delegate):
         Raise Default if cancelled and (all) pages were not closed.
         """
         dialog = gaupol.MultiCloseDialog(self.window, self, pages)
-        response = self.flash_dialog(dialog)
+        response = gaupol.util.flash_dialog(dialog)
         if not response in (gtk.RESPONSE_YES, gtk.RESPONSE_NO):
             raise gaupol.Default
 
@@ -73,7 +73,7 @@ class CloseAgent(aeidon.Delegate):
         dialog.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
         dialog.add_button(gtk.STOCK_SAVE, gtk.RESPONSE_YES)
         dialog.set_default_response(gtk.RESPONSE_YES)
-        response = self.flash_dialog(dialog)
+        response = gaupol.util.flash_dialog(dialog)
         if not response in (gtk.RESPONSE_YES, gtk.RESPONSE_NO):
             raise gaupol.Default
         if response == gtk.RESPONSE_YES:
@@ -93,7 +93,7 @@ class CloseAgent(aeidon.Delegate):
         dialog.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
         dialog.add_button(gtk.STOCK_SAVE, gtk.RESPONSE_YES)
         dialog.set_default_response(gtk.RESPONSE_YES)
-        response = self.flash_dialog(dialog)
+        response = gaupol.util.flash_dialog(dialog)
         if not response in (gtk.RESPONSE_YES, gtk.RESPONSE_NO):
             raise gaupol.Default
         if response == gtk.RESPONSE_YES:

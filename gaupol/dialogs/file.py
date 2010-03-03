@@ -75,7 +75,7 @@ class FileDialog(gaupol.BuilderDialog):
         encoding = self.get_encoding()
         if encoding != "other": return
         dialog = gaupol.MenuEncodingDialog(self._dialog)
-        response = self.run_dialog(dialog)
+        response = gaupol.util.run_dialog(dialog)
         encoding = dialog.get_encoding()
         visible = dialog.get_visible_encodings()
         dialog.destroy()

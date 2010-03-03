@@ -228,7 +228,7 @@ class _ExtensionPage(aeidon.Delegate):
             dialog.set_website_label(label)
         if metadata.has_field("Authors"):
             dialog.set_authors(metadata.get_field_list("Authors"))
-        self.flash_dialog(dialog)
+        gaupol.util.flash_dialog(dialog)
 
     def _on_about_dialog_url_clicked(self, dialog, url):
         """Open website in a web browser."""
@@ -261,7 +261,7 @@ class _ExtensionPage(aeidon.Delegate):
                 message = message % store[path][2]
                 dialog = gaupol.ErrorDialog(self._dialog, title, message)
                 dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
-                self.flash_dialog(dialog)
+                gaupol.util.flash_dialog(dialog)
             else: self.conf.active.remove(module)
         else: # Activating extension.
             self.manager.setup_extension(module)
@@ -357,7 +357,7 @@ class _FilePage(aeidon.Delegate):
         """Add a new fallback encoding."""
 
         dialog = gaupol.EncodingDialog(self._dialog)
-        response = self.run_dialog(dialog)
+        response = gaupol.util.run_dialog(dialog)
         encoding = dialog.get_encoding()
         dialog.destroy()
         if response != gtk.RESPONSE_OK: return

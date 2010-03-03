@@ -26,7 +26,7 @@ _ = aeidon.i18n._
 __all__ = ("Application",)
 
 
-class Application(aeidon.Observable, gaupol.Runner):
+class Application(aeidon.Observable):
 
     """GTK user interface controller.
 

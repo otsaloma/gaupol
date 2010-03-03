@@ -301,7 +301,7 @@ class SpellCheckDialog(gaupol.GladeDialog):
 
         text = unicode(self._checker.get_text())
         dialog = gaupol.TextEditDialog(self._dialog, text)
-        response = self.run_dialog(dialog)
+        response = gaupol.util.run_dialog(dialog)
         text = unicode(dialog.get_text())
         dialog.destroy()
         if response == gtk.RESPONSE_OK:
@@ -434,7 +434,7 @@ class SpellCheckDialog(gaupol.GladeDialog):
         title = _('Failed to load dictionary for language "%s"') % name
         dialog = gaupol.ErrorDialog(self._dialog, title, message)
         dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
-        self.flash_dialog(dialog)
+        gaupol.util.flash_dialog(dialog)
 
     def _start(self):
         """Start checking the spelling of texts."""

@@ -24,7 +24,7 @@ import os
 __all__ = ("BuilderDialog",)
 
 
-class BuilderDialog(gaupol.Runner):
+class BuilderDialog(object):
 
     """Baseclass and wrapper for `gtk.Builder` constructed dialogs.
 

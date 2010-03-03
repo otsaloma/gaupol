@@ -32,7 +32,7 @@ class TextAgent(aeidon.Delegate):
         except ValueError:
             return gaupol.util.set_cursor_normal(self.window)
         gaupol.util.set_cursor_normal(self.window)
-        self.flash_dialog(dialog)
+        gaupol.util.flash_dialog(dialog)
 
     def on_configure_spell_check_activate(self, *args):
         """Set languages and spell-check targets."""
@@ -40,7 +40,7 @@ class TextAgent(aeidon.Delegate):
         gaupol.util.set_cursor_busy(self.window)
         dialog = gaupol.LanguageDialog(self.window)
         gaupol.util.set_cursor_normal(self.window)
-        self.flash_dialog(dialog)
+        gaupol.util.flash_dialog(dialog)
         self.update_gui()
 
     def on_correct_texts_activate(self, *args):

@@ -228,4 +228,4 @@ class HeaderDialog(gaupol.GladeDialog):
             'where VALUE is any of "TIME", "23.98", "25.00" or "29.97".')
         dialog = gaupol.ErrorDialog(self._dialog, title, message)
         dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
-        self.flash_dialog(dialog)
+        gaupol.util.flash_dialog(dialog)
