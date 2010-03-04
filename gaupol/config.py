@@ -100,7 +100,7 @@ config_defaults = {
     "file": {
         "align_method": aeidon.align_methods.POSITION,
         "directory": None,
-        "encoding": None,
+        "encoding": aeidon.util.get_default_encoding() or "utf_8",
         "format": aeidon.formats.SUBRIP,
         "max_recent": 10,
         "newline": aeidon.util.get_default_newline(),
@@ -142,7 +142,7 @@ config_defaults = {
         "target": gaupol.targets.CURRENT,
         },
     "preview": {
-        "custom_command": None,
+        "custom_command": "",
         "force_utf_8": True,
         "offset": 5.0,
         "use_custom_command": False,

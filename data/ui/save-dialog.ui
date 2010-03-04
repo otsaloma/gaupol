@@ -8,9 +8,9 @@
     <property name="window_position">center-on-parent</property>
     <property name="type_hint">dialog</property>
     <property name="has_separator">False</property>
+    <property name="preview_widget_active">False</property>
     <property name="do_overwrite_confirmation">True</property>
     <property name="action">save</property>
-    <property name="preview_widget_active">False</property>
     <signal name="response" handler="_on_response"/>
     <child internal-child="vbox">
       <object class="GtkVBox" id="vbox">
@@ -147,7 +147,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="button2">
+              <object class="GtkButton" id="save_button">
                 <property name="label">gtk-save</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -155,6 +155,7 @@
                 <property name="receives_default">True</property>
                 <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
                 <property name="use_stock">True</property>
+                <signal name="event" handler="_on_save_button_event"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -173,7 +174,7 @@
     </child>
     <action-widgets>
       <action-widget response="-6">button1</action-widget>
-      <action-widget response="-5">button2</action-widget>
+      <action-widget response="-5">save_button</action-widget>
     </action-widgets>
   </object>
 </interface>

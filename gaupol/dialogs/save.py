@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,7 +16,9 @@
 
 """Dialog for selecting a subtitle file to save."""
 
+import aeidon
 import gaupol
+import gtk
 import os
 
 __all__ = ("SaveDialog",)
@@ -26,67 +28,53 @@ class SaveDialog(gaupol.FileDialog):
 
     """Dialog for selecting a subtitle file to save."""
 
+    widgets = ("encoding_combo", "format_combo", "newline_combo")
+
     def __init__(self, parent, title):
-        """Initialize a SaveDialog object."""
-
-        gaupol.FileDialog.__init__(self, "save.glade")
-        get_widget = self._glade_xml.get_widget
-        self._encoding_combo = get_widget("encoding_combo")
-        self._format_combo = get_widget("format_combo")
-        self._newline_combo = get_widget("newline_combo")
-        self.conf = gaupol.conf.file
-
+        """Initialize a :class:`SaveDialog` object."""
+        gaupol.FileDialog.__init__(self, "save-dialog.ui")
         self._init_filters()
         self._init_format_combo()
         self._init_encoding_combo()
         self._init_newline_combo()
         self._init_values()
-        self._init_signal_handlers()
         self.set_title(title)
         self.set_transient_for(parent)
 
     def _init_format_combo(self):
         """Initialize the format combo box."""
-
-        store = self._format_combo.get_model()
+        store = gtk.ListStore(str)
+        self._format_combo.set_model(store)
         for name in (x.label for x in aeidon.formats):
             store.append((name,))
-        self._format_combo.set_active(0)
+        view = self._format_combo.get_child()
+        view.set_displayed_row(0)
+        renderer = gtk.CellRendererText()
+        self._format_combo.pack_start(renderer, True)
+        self._format_combo.add_attribute(renderer, "text", 0)
 
     def _init_newline_combo(self):
         """Initialize the newline combo box."""
-
-        store = self._newline_combo.get_model()
+        store = gtk.ListStore(str)
+        self._newline_combo.set_model(store)
         for name in (x.label for x in aeidon.newlines):
             store.append((name,))
-        self._newline_combo.set_active(0)
-
-    def _init_signal_handlers(self):
-        """Initialize signal handlers."""
-
-        aeidon.util.connect(self, self, "response")
-        aeidon.util.connect(self, "_format_combo", "changed")
-        aeidon.util.connect(self, "_encoding_combo", "changed")
-
-        def update_filename(button, event, self):
-            self._format_combo.emit("changed")
-        # Use an ugly way to add the lacking extension to the filename
-        # so that the overwrite confirmation check is done correctly.
-        save_button = self.action_area.get_children()[0]
-        save_button.connect("event", update_filename, self)
+        view = self._newline_combo.get_child()
+        view.set_displayed_row(0)
+        renderer = gtk.CellRendererText()
+        self._newline_combo.pack_start(renderer, True)
+        self._newline_combo.add_attribute(renderer, "text", 0)
 
     def _init_values(self):
         """Initialize default values for widgets."""
-
-        if os.path.isdir(self.conf.directory):
-            self.set_current_folder(self.conf.directory)
-        self.set_encoding(self.conf.encoding)
-        self.set_format(self.conf.format)
-        self.set_newline(self.conf.newline)
+        if os.path.isdir(gaupol.conf.file.directory):
+            self.set_current_folder(gaupol.conf.file.directory)
+        self.set_encoding(gaupol.conf.file.encoding)
+        self.set_format(gaupol.conf.file.format)
+        self.set_newline(gaupol.conf.file.newline)
 
     def _on_format_combo_changed(self, combo_box):
         """Change the extension of the current filename."""
-
         path = self.get_filename()
         if path is None: return
         self.unselect_filename(path)
@@ -103,40 +91,41 @@ class SaveDialog(gaupol.FileDialog):
         self.set_filename(path)
 
     def _on_response(self, dialog, response):
-        """Save widget values."""
+        """Save default values for widgets."""
+        gaupol.conf.file.encoding = self.get_encoding()
+        gaupol.conf.file.format = self.get_format()
+        gaupol.conf.file.newline = self.get_newline()
+        gaupol.conf.file.directory = self.get_current_folder()
 
-        self.conf.encoding = self.get_encoding()
-        self.conf.format = self.get_format()
-        self.conf.newline = self.get_newline()
-        self.conf.directory = self.get_current_folder()
+    def _on_save_button_event(self, button, event):
+        """Ensure that the filename contains an extension."""
+        # Catch all events on save button to ensure that all mouse and keyboard
+        # events are handled and that a possibly lacking extension is added to
+        # the filename so that overwrite confirmation check is done correctly.
+        self._format_combo.emit("changed")
 
     def get_format(self):
         """Return the selected format."""
-
         index = self._format_combo.get_active()
         return aeidon.formats[index]
 
     def get_newline(self):
         """Return the selected newline."""
-
         index = self._newline_combo.get_active()
         return aeidon.newlines[index]
 
     def set_format(self, format):
         """Set the selected format."""
-
         if format is None: return
         self._format_combo.set_active(format)
 
     def set_name(self, path):
-        """Set either filename or current name."""
-
+        """Set the selected filename."""
         if os.path.isfile(path):
             return self.set_filename(path)
         return self.set_current_name(path)
 
     def set_newline(self, newline):
         """Set the selected newline."""
-
         if newline is None: return
         self._newline_combo.set_active(newline)

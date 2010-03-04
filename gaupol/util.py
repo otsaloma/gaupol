@@ -140,7 +140,7 @@ def raise_default(expression):
     if expression:
         raise gaupol.Default
 
-def run_dialog(self, dialog):
+def run_dialog(dialog):
     """Run `dialog` and return response.
 
     This function is to be used always when a :class:`gtk.Dialog` is run so
