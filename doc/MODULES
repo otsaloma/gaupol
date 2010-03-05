@@ -58,7 +58,6 @@ gaupol.renderers
 gaupol.output
 gaupol.view
 gaupol.page
-
 gaupol.dialogs
 gaupol.assistants
 gaupol.action

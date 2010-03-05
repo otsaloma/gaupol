@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,33 +14,39 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Base classes for UI manager actions."""
+"""Base classes for :class:`gtk.UIManager` actions."""
 
-import gaupol
+import aeidon
 import gtk
 
-__all__ = (
-    "Action",
-    "MenuAction",
-    "RadioAction",
-    "ToggleAction",
-    "TopMenuAction",)
+__all__ = ("Action",
+           "MenuAction",
+           "RadioAction",
+           "ToggleAction",
+           "TopMenuAction",
+           )
 
 
 class Action(gtk.Action):
 
-    """Base class for UI manager actions.
+    """Base classes for :class:`gtk.UIManager` actions.
 
-    Instance variable 'accelerator' defines a string string in the format
-    understood by the gtk.accelerator_parse, None to use the stock accelerator
-    or undefined to use a blank string as a fallback. The 'widgets' instance
-    variable defines a tuple of names of application widgets, acquirable with
-    from application getattr, whose sensitivities should be synced with action.
+    :ivar accelerator: Accelerator string or ``None``
 
-    'action_group' defines the name of the action group that the action should
-    be placed into: 'main-safe' for actions that do not conflict with widgets'
-    own built-in keybindings (e.g. clipboard keybindings in entries) and
-    'main-unsafe' for ones that do.
+       :attr:`accelerator` defines a string in the format understood by the
+       :func:`gtk.accelerator_parse`, ``None`` to use the stock accelerator or
+       undefined to use a blank string.
+
+    :ivar action_group: Name of action group to place action into
+
+       Use "main-safe" for actions that do not conflict with widgets' own
+       built-in keybindings (e.g. clipboard keybindings in entries) and
+       "main-unsafe" for ones that do.
+
+    :ivar widgets: Tuple of names of related application widgets
+
+       :attr:`widgets` should be acquirable with :func:`getattr` from
+       :class:`gaupol.Application`. Their sensitivities will be kep in sync.
     """
 
     accelerator = ""
@@ -48,32 +54,27 @@ class Action(gtk.Action):
     widgets = ()
 
     def __init__(self, name):
-        """Initialize an Action object."""
-
+        """Initialize an :class:`Action` object."""
         gtk.Action.__init__(self, name, None, None, None)
 
     def _affirm_doable(self, application, page):
-        """Raise AffirmationError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         pass
 
     def finalize(self, application):
-        """Connect action to the widgets and methods of application."""
-
+        """Connect action to widgets and methods of `application`."""
         self.widgets = tuple(getattr(application, x) for x in self.widgets)
         callback = "on_%s_activate" % self.props.name
         self.connect("activate", getattr(application, callback))
 
     def set_sensitive(self, sensitive):
         """Set the sensitivity of action and all its widgets."""
-
         for widget in self.widgets:
             widget.set_sensitive(sensitive)
         return gtk.Action.set_sensitive(self, sensitive)
 
     def update_sensitivity(self, application, page):
         """Update the sensitivity of action and all its widgets."""
-
         try:
             self._affirm_doable(application, page)
         except aeidon.AffirmationError:
@@ -86,8 +87,7 @@ class MenuAction(Action):
     """Base class for actions that are menu items with a submenu."""
 
     def finalize(self, application):
-        """Connect action to the widgets and methods of application."""
-
+        """Connect action to widgets and methods of `application`."""
         self.widgets = tuple(getattr(application, x) for x in self.widgets)
         callback = "on_%s_activate" % self.props.name
         if hasattr(application, callback):
@@ -99,8 +99,7 @@ class ToggleAction(Action, gtk.ToggleAction):
     """Base class for UI manager toggle actions."""
 
     def finalize(self, application):
-        """Connect action to the widgets and methods of application."""
-
+        """Connect action to widgets and methods of `application`."""
         self.widgets = tuple(getattr(application, x) for x in self.widgets)
         callback = "on_%s_toggled" % self.props.name
         self.connect("toggled", getattr(application, callback))
@@ -112,22 +111,20 @@ class TopMenuAction(MenuAction):
 
     def update_sensitivity(self, application, page):
         """Update the sensitivity of action and all its widgets."""
-
         pass
 
 
 class RadioAction(ToggleAction, gtk.RadioAction):
 
-    """Base class for UI manager radio actions.
+    """Base class for :class:`gtk.UIManager` radio actions.
 
-    Instance variable 'group' should be a unique string to recognize group
-    members by the class name of the first of the radio actions. The actual
-    'group' property is set once all the actions are instantiated.
+    :ivar group: Class name of one action in the radio group
     """
 
-    def finalize(self, application):
-        """Connect action to the widgets and methods of application."""
+    group = NotImplementedError
 
+    def finalize(self, application):
+        """Connect action to widgets and methods of `application`."""
         self.widgets = tuple(getattr(application, x) for x in self.widgets)
         if self.__class__.__name__ != self.group: return
         callback = "on_%s_changed" % self.props.name

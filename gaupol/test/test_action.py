@@ -20,7 +20,6 @@ import gaupol
 class TestAction(gaupol.TestCase):
 
     def setup_method(self, method):
-
         self.action = gaupol.Action("test")
         self.action.accelerator = "X"
         self.action.widgets = ("notebook",)
@@ -29,19 +28,16 @@ class TestAction(gaupol.TestCase):
         self.action.finalize(self.application)
 
     def test_set_sensitive(self):
-
         self.action.set_sensitive(False)
         self.action.set_sensitive(True)
 
     def test_update_sensitivity(self):
-
         self.action.update_sensitivity(self.application, None)
 
 
 class TestMenuAction(gaupol.TestCase):
 
     def setup_method(self, method):
-
         self.action = gaupol.MenuAction("test")
         self.action.widgets = ("notebook",)
         self.application = gaupol.Application()
@@ -52,7 +48,6 @@ class TestMenuAction(gaupol.TestCase):
 class TestToggleAction(gaupol.TestCase):
 
     def setup_method(self, method):
-
         self.action = gaupol.ToggleAction("test")
         self.action.widgets = ("notebook",)
         self.application = gaupol.Application()
@@ -63,7 +58,6 @@ class TestToggleAction(gaupol.TestCase):
 class TestTopMenuAction(gaupol.TestCase):
 
     def setup_method(self, method):
-
         self.action = gaupol.TopMenuAction("test")
         self.action.widgets = ("notebook",)
         self.application = gaupol.Application()
@@ -73,7 +67,6 @@ class TestTopMenuAction(gaupol.TestCase):
 class TestRadioAction(gaupol.TestCase):
 
     def setup_method(self, method):
-
         self.action = gaupol.RadioAction("test")
         self.action.widgets = ("notebook",)
         self.action.group = self.action.__class__.__name__

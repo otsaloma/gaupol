@@ -74,3 +74,4 @@ from gaupol.dialogs.previewerr import *
 from gaupol.dialogs.save import *
 from gaupol.dialogs.textedit import *
 from gaupol.dialogs.video import *
+from gaupol.action import *
