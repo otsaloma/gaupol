@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,8 +14,9 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""View menu UI manager actions."""
+"""View menu UI manager actions for :class:`gaupol.Application`."""
 
+import aeidon
 import gaupol
 _ = aeidon.i18n._
 
@@ -25,8 +26,7 @@ class ActivateNextProjectAction(gaupol.Action):
     """Activate the project in the next tab."""
 
     def __init__(self):
-        """Initialize an ActivateNextProjectAction object."""
-
+        """Initialize an :class:`ActivateNextProjectAction` object."""
         gaupol.Action.__init__(self, "activate_next_project")
         self.props.label = _("_Next")
         self.props.tooltip = _("Activate the project in the next tab")
@@ -34,8 +34,7 @@ class ActivateNextProjectAction(gaupol.Action):
         self.action_group = "main-safe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         index = application.pages.index(page) + 1
         aeidon.util.affirm(index in range(len(application.pages)))
@@ -46,8 +45,7 @@ class ActivatePreviousProjectAction(gaupol.Action):
     """Activate the project in the previous tab."""
 
     def __init__(self):
-        """Initialize an ActivatePreviousProjectAction object."""
-
+        """Initialize an :class:`ActivatePreviousProjectAction` object."""
         gaupol.Action.__init__(self, "activate_previous_project")
         self.props.label = _("_Previous")
         self.props.tooltip = _("Activate the project in the previous tab")
@@ -55,8 +53,7 @@ class ActivatePreviousProjectAction(gaupol.Action):
         self.action_group = "main-safe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(application.pages.index(page) > 0)
 
@@ -66,16 +63,14 @@ class MoveTabLeftAction(gaupol.Action):
     """Move the current tab to the left."""
 
     def __init__(self):
-        """Initialize a MoveTabLeftAction object."""
-
+        """Initialize a :class:`MoveTabLeftAction` object."""
         gaupol.Action.__init__(self, "move_tab_left")
         self.props.label = _("Move Tab _Left")
         self.props.tooltip = _("Move the current tab to the left")
         self.action_group = "main-safe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(application.pages.index(page) > 0)
 
@@ -85,16 +80,14 @@ class MoveTabRightAction(gaupol.Action):
     """Move the current tab to the right."""
 
     def __init__(self):
-        """Initialize a MoveTabRightAction object."""
-
+        """Initialize a :class:`MoveTabRightAction` object."""
         gaupol.Action.__init__(self, "move_tab_right")
         self.props.label = _("Move Tab _Right")
         self.props.tooltip = _("Move the current tab to the right")
         self.action_group = "main-safe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         index = application.pages.index(page) + 1
         aeidon.util.affirm(index in range(len(application.pages)))
@@ -102,110 +95,103 @@ class MoveTabRightAction(gaupol.Action):
 
 class ShowColumnsMenuAction(gaupol.MenuAction):
 
-    """Show the columns view menu."""
+    """Show the "Columns" menu."""
     def __init__(self):
-        """Initialize a ShowColumnsMenuAction object."""
-
+        """Initialize a :class:`ShowColumnsMenuAction` object."""
         gaupol.MenuAction.__init__(self, "show_columns_menu")
         self.props.label = _("_Columns")
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
 
 
 class ShowFramerate24Action(gaupol.RadioAction):
 
-    """Change the framerate to 24 fps."""
+    """Calculate nonnative units with a framerate of 24 fps."""
 
     def __init__(self):
-        """Initialize a ShowFramerate24Action object."""
-
+        """Initialize a :class:`ShowFramerate24Action` object."""
         gaupol.RadioAction.__init__(self, "show_framerate_24")
         framerate = gaupol.conf.editor.framerate
         self.props.active = (framerate == aeidon.framerates.FPS_24)
         self.props.label = _("2_4 fps")
-        tooltip = _("Calculate nonnative units with framerate 24 fps")
-        self.props.tooltip = tooltip
+        self.props.tooltip = _("Calculate nonnative units "
+                               "with a framerate of 24 fps")
+
         self.props.value = aeidon.framerates.FPS_24
         self.action_group = "main-unsafe"
         self.framerate = aeidon.framerates.FPS_24
         self.group = "ShowFramerate24Action"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.main_file is not None)
 
 
 class ShowFramerate25Action(gaupol.RadioAction):
 
-    """Change the framerate to 25 fps."""
+    """Calculate nonnative units with a framerate of 25 fps."""
 
     def __init__(self):
-        """Initialize a ShowFramerate25Action object."""
-
+        """Initialize a :class:`ShowFramerate25Action` object."""
         gaupol.RadioAction.__init__(self, "show_framerate_25")
         framerate = gaupol.conf.editor.framerate
         self.props.active = (framerate == aeidon.framerates.FPS_25)
         self.props.label = _("2_5 fps")
-        tooltip = _("Calculate nonnative units with framerate 25 fps")
-        self.props.tooltip = tooltip
+        self.props.tooltip = _("Calculate nonnative units "
+                               "with a framerate of 25 fps")
+
         self.props.value = aeidon.framerates.FPS_25
         self.action_group = "main-unsafe"
         self.framerate = aeidon.framerates.FPS_25
         self.group = "ShowFramerate24Action"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.main_file is not None)
 
 
 class ShowFramerate30Action(gaupol.RadioAction):
 
-    """Change the framerate to 30 fps."""
+    """Calculate nonnative units with a framerate of 30 fps."""
 
     def __init__(self):
-        """Initialize a ShowFramerate30Action object."""
-
+        """Initialize a :class:`ShowFramerate30Action` object."""
         gaupol.RadioAction.__init__(self, "show_framerate_30")
         framerate = gaupol.conf.editor.framerate
         self.props.active = (framerate == aeidon.framerates.FPS_30)
         self.props.label = _("_30 fps")
-        tooltip = _("Calculate nonnative units with framerate 30 fps")
-        self.props.tooltip = tooltip
+        self.props.tooltip = _("Calculate nonnative units "
+                               "with a framerate of 30 fps")
+
         self.props.value = aeidon.framerates.FPS_30
         self.action_group = "main-unsafe"
         self.framerate = aeidon.framerates.FPS_30
         self.group = "ShowFramerate24Action"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.main_file is not None)
 
 
 class ShowFramerateMenuAction(gaupol.MenuAction):
 
-    """Show the framerate view menu."""
+    """Show the "Framerate" menu."""
 
     def __init__(self):
-        """Initialize a ShowFramerateMenuAction object."""
-
+        """Initialize a :class:`ShowFramerateMenuAction` object."""
         gaupol.MenuAction.__init__(self, "show_framerate_menu")
         self.props.label = _("F_ramerate")
         self.action_group = "main-unsafe"
         self.widgets = ("framerate_combo",)
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.main_file is not None)
 
@@ -215,8 +201,7 @@ class ShowFramesAction(gaupol.RadioAction):
     """Show positions as frames."""
 
     def __init__(self):
-        """Initialize a ShowFramesAction object."""
-
+        """Initialize a :class:`ShowFramesAction` object."""
         gaupol.RadioAction.__init__(self, "show_frames")
         mode = gaupol.conf.editor.mode
         self.props.active = (mode == aeidon.modes.FRAME)
@@ -229,8 +214,7 @@ class ShowFramesAction(gaupol.RadioAction):
         self.mode = aeidon.modes.FRAME
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
 
 
@@ -239,8 +223,7 @@ class ShowTimesAction(gaupol.RadioAction):
     """Show positions as times."""
 
     def __init__(self):
-        """Initialize a ShowTimesAction object."""
-
+        """Initialize a :class:`ShowTimesAction` object."""
         gaupol.RadioAction.__init__(self, "show_times")
         mode = gaupol.conf.editor.mode
         self.props.active = (mode == aeidon.modes.TIME)
@@ -253,18 +236,16 @@ class ShowTimesAction(gaupol.RadioAction):
         self.mode = aeidon.modes.TIME
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
 
 
 class ToggleDurationColumnAction(gaupol.ToggleAction):
 
-    """Show or hide the 'Duration' column."""
+    """Show or hide the "Duration" column."""
 
     def __init__(self):
-        """Initialize a ToggleDurationColumnAction object."""
-
+        """Initialize a :class:`ToggleDurationColumnAction` object."""
         gaupol.ToggleAction.__init__(self, "toggle_duration_column")
         fields = gaupol.conf.editor.visible_fields
         self.props.active = gaupol.fields.DURATION in fields
@@ -273,18 +254,16 @@ class ToggleDurationColumnAction(gaupol.ToggleAction):
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
 
 
 class ToggleEndColumnAction(gaupol.ToggleAction):
 
-    """Show or hide the 'End' column."""
+    """Show or hide the "End" column."""
 
     def __init__(self):
-        """Initialize a ToggleEndColumnAction object."""
-
+        """Initialize a :class:`ToggleEndColumnAction` object."""
         gaupol.ToggleAction.__init__(self, "toggle_end_column")
         fields = gaupol.conf.editor.visible_fields
         self.props.active = gaupol.fields.END in fields
@@ -293,18 +272,16 @@ class ToggleEndColumnAction(gaupol.ToggleAction):
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
 
 
 class ToggleMainTextColumnAction(gaupol.ToggleAction):
 
-    """Show or hide the 'Main Text' column."""
+    """Show or hide the "Main Text" column."""
 
     def __init__(self):
-        """Initialize a ToggleMainTextColumnAction object."""
-
+        """Initialize a :class:`ToggleMainTextColumnAction` object."""
         gaupol.ToggleAction.__init__(self, "toggle_main_text_column")
         fields = gaupol.conf.editor.visible_fields
         self.props.active = gaupol.fields.MAIN_TEXT in fields
@@ -313,8 +290,7 @@ class ToggleMainTextColumnAction(gaupol.ToggleAction):
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
 
 
@@ -323,8 +299,7 @@ class ToggleMainToolbarAction(gaupol.ToggleAction):
     """Show or hide the main toolbar."""
 
     def __init__(self):
-        """Initialize a ToggleMainToolbarAction object."""
-
+        """Initialize a :class:`ToggleMainToolbarAction` object."""
         gaupol.ToggleAction.__init__(self, "toggle_main_toolbar")
         show = gaupol.conf.application_window.show_main_toolbar
         self.props.active = show
@@ -335,11 +310,10 @@ class ToggleMainToolbarAction(gaupol.ToggleAction):
 
 class ToggleNumberColumnAction(gaupol.ToggleAction):
 
-    """Show or hide the 'No.' column."""
+    """Show or hide the "No." column."""
 
     def __init__(self):
-        """Initialize a ToggleNumberColumnAction object."""
-
+        """Initialize a :class:`ToggleNumberColumnAction` object."""
         gaupol.ToggleAction.__init__(self, "toggle_number_column")
         fields = gaupol.conf.editor.visible_fields
         self.props.active = gaupol.fields.NUMBER in fields
@@ -348,8 +322,7 @@ class ToggleNumberColumnAction(gaupol.ToggleAction):
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
 
 
@@ -358,8 +331,7 @@ class ToggleOutputWindowAction(gaupol.ToggleAction):
     """Show or hide the output window."""
 
     def __init__(self):
-        """Initialize a ToggleOutputWindowAction object."""
-
+        """Initialize a :class:`ToggleOutputWindowAction` object."""
         gaupol.ToggleAction.__init__(self, "toggle_output_window")
         self.props.active = gaupol.conf.output_window.show
         self.props.label = _("_Output Window")
@@ -369,11 +341,10 @@ class ToggleOutputWindowAction(gaupol.ToggleAction):
 
 class ToggleStartColumnAction(gaupol.ToggleAction):
 
-    """Show or hide the 'Start' column."""
+    """Show or hide the "Start" column."""
 
     def __init__(self):
-        """Initialize a ToggleStartColumnAction object."""
-
+        """Initialize a :class:`ToggleStartColumnAction` object."""
         gaupol.ToggleAction.__init__(self, "toggle_start_column")
         fields = gaupol.conf.editor.visible_fields
         self.props.active = gaupol.fields.START in fields
@@ -382,8 +353,7 @@ class ToggleStartColumnAction(gaupol.ToggleAction):
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
 
 
@@ -392,8 +362,7 @@ class ToggleStatusbarAction(gaupol.ToggleAction):
     """Show or hide the statusbar."""
 
     def __init__(self):
-        """Initialize a ToggleStatusbarAction object."""
-
+        """Initialize a :class:`ToggleStatusbarAction` object."""
         gaupol.ToggleAction.__init__(self, "toggle_statusbar")
         self.props.active = gaupol.conf.application_window.show_statusbar
         self.props.label = _("_Statusbar")
@@ -403,11 +372,10 @@ class ToggleStatusbarAction(gaupol.ToggleAction):
 
 class ToggleTranslationTextColumnAction(gaupol.ToggleAction):
 
-    """Show or hide the 'Translation Text' column."""
+    """Show or hide the "Translation Text" column."""
 
     def __init__(self):
-        """Initialize a ToggleTranslationTextColumnAction object."""
-
+        """Initialize a :class:`ToggleTranslationTextColumnAction` object."""
         name = "toggle_translation_text_column"
         gaupol.ToggleAction.__init__(self, name)
         fields = gaupol.conf.editor.visible_fields
@@ -417,8 +385,7 @@ class ToggleTranslationTextColumnAction(gaupol.ToggleAction):
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
 
 
@@ -427,8 +394,7 @@ class ToggleVideoToolbarAction(gaupol.ToggleAction):
     """Show or hide the video toolbar."""
 
     def __init__(self):
-        """Initialize a ToggleVideoToolbarAction object."""
-
+        """Initialize a :class:`ToggleVideoToolbarAction` object."""
         gaupol.ToggleAction.__init__(self, "toggle_video_toolbar")
         show = gaupol.conf.application_window.show_video_toolbar
         self.props.active = show

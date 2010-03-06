@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,8 +14,9 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Simple subtitle data editing actions."""
+"""Simple subtitle data editing actions for :class:`gaupol.Application`."""
 
+import aeidon
 import gaupol
 import gtk
 _ = aeidon.i18n._
@@ -26,8 +27,7 @@ class ClearTextsAction(gaupol.Action):
     """Clear the selected texts."""
 
     def __init__(self):
-        """Initialize a ClearTextsAction object."""
-
+        """Initialize a :class:`ClearTextsAction` object."""
         gaupol.Action.__init__(self, "clear_texts")
         self.props.label = _("Cl_ear")
         self.props.stock_id = gtk.STOCK_CLEAR
@@ -36,8 +36,7 @@ class ClearTextsAction(gaupol.Action):
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.view.get_selected_rows())
         col = page.view.get_focus()[1]
@@ -49,8 +48,7 @@ class CopyTextsAction(gaupol.Action):
     """Copy the selected texts to the clipboard."""
 
     def __init__(self):
-        """Initialize a CopyTextsAction object."""
-
+        """Initialize a :class:`CopyTextsAction` object."""
         gaupol.Action.__init__(self, "copy_texts")
         self.props.label = _("_Copy")
         self.props.stock_id = gtk.STOCK_COPY
@@ -59,8 +57,7 @@ class CopyTextsAction(gaupol.Action):
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.view.get_selected_rows())
         col = page.view.get_focus()[1]
@@ -72,8 +69,7 @@ class CutTextsAction(gaupol.Action):
     """Cut the selected texts to the clipboard."""
 
     def __init__(self):
-        """Initialize a CutTextsAction object."""
-
+        """Initialize a :class:`CutTextsAction` object."""
         gaupol.Action.__init__(self, "cut_texts")
         self.props.label = _("Cu_t")
         self.props.stock_id = gtk.STOCK_CUT
@@ -82,8 +78,7 @@ class CutTextsAction(gaupol.Action):
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.view.get_selected_rows())
         col = page.view.get_focus()[1]
@@ -95,8 +90,7 @@ class EditPreferencesAction(gaupol.Action):
     """Configure Gaupol."""
 
     def __init__(self):
-        """Initialize an EditPreferencesAction object."""
-
+        """Initialize an :class:`EditPreferencesAction` object."""
         gaupol.Action.__init__(self, "edit_preferences")
         self.props.label = _("_Preferences")
         self.props.stock_id = gtk.STOCK_PREFERENCES
@@ -109,8 +103,7 @@ class EditNextValueAction(gaupol.Action):
     """Edit the focused column of the next subtitle."""
 
     def __init__(self):
-        """Initialize an EditNextValueAction object."""
-
+        """Initialize an :class:`EditNextValueAction` object."""
         gaupol.Action.__init__(self, "edit_next_value")
         self.props.label = _("Edit _Next Cell")
         self.props.short_label = _("Next")
@@ -120,8 +113,7 @@ class EditNextValueAction(gaupol.Action):
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         row, col = page.view.get_focus()
         aeidon.util.affirm(not None in (row, col))
@@ -137,8 +129,7 @@ class EditValueAction(gaupol.Action):
     """Edit the focused cell."""
 
     def __init__(self):
-        """Initialize an EditValueAction object."""
-
+        """Initialize an :class:`EditValueAction` object."""
         gaupol.Action.__init__(self, "edit_value")
         self.props.is_important = True
         self.props.label = _("_Edit Cell")
@@ -149,8 +140,7 @@ class EditValueAction(gaupol.Action):
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         row, col = page.view.get_focus()
         aeidon.util.affirm(not None in (row, col))
@@ -165,18 +155,17 @@ class ExtendSelectionToBeginningAction(gaupol.Action):
     """Extend the selection up to the first subtitle."""
 
     def __init__(self):
-        """Initialize an ExtendSelectionToBeginningAction object."""
-
+        """Initialize an :class:`ExtendSelectionToBeginningAction` object."""
         gaupol.Action.__init__(self, "extend_selection_to_beginning")
         self.props.label = _("Extend To _Beginning")
-        tip = _("Extend the current selection up to the first subtitle")
-        self.props.tooltip = tip
+        self.props.tooltip = _("Extend the current selection "
+                               "up to the first subtitle")
+
         self.accelerator = "<Shift><Control>Home"
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.subtitles)
         aeidon.util.affirm(page.view.get_selected_rows())
@@ -187,18 +176,17 @@ class ExtendSelectionToEndAction(gaupol.Action):
     """Extend the selection up to the last subtitle."""
 
     def __init__(self):
-        """Initialize an ExtendSelectionToEndAction object."""
-
+        """Initialize an :class:`ExtendSelectionToEndAction` object."""
         gaupol.Action.__init__(self, "extend_selection_to_end")
         self.props.label = _("Extend To _End")
-        tip = _("Extend the current selection up to the last subtitle")
-        self.props.tooltip = tip
+        self.props.tooltip = _("Extend the current selection "
+                               "up to the last subtitle")
+
         self.accelerator = "<Shift><Control>End"
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.subtitles)
         aeidon.util.affirm(page.view.get_selected_rows())
@@ -209,8 +197,7 @@ class InsertSubtitlesAction(gaupol.Action):
     """Insert subtitles."""
 
     def __init__(self):
-        """Initialize an InsertSubtitlesAction object."""
-
+        """Initialize an :class:`InsertSubtitlesAction` object."""
         gaupol.Action.__init__(self, "insert_subtitles")
         self.props.label = _("_Insert Subtitles\342\200\246")
         self.props.short_label = _("Insert")
@@ -220,8 +207,7 @@ class InsertSubtitlesAction(gaupol.Action):
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         if page.project.subtitles:
             aeidon.util.affirm(page.view.get_selected_rows())
@@ -232,8 +218,7 @@ class InvertSelectionAction(gaupol.Action):
     """Invert the current selection."""
 
     def __init__(self):
-        """Initialize an InvertSelectionAction object."""
-
+        """Initialize an :class:`InvertSelectionAction` object."""
         gaupol.Action.__init__(self, "invert_selection")
         self.props.label = _("_Invert Selection")
         self.props.tooltip = _("Invert the current selection")
@@ -241,8 +226,7 @@ class InvertSelectionAction(gaupol.Action):
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.subtitles)
 
@@ -252,8 +236,7 @@ class MergeSubtitlesAction(gaupol.Action):
     """Merge the selected subtitles."""
 
     def __init__(self):
-        """Initialize a MergeSubtitlesAction object."""
-
+        """Initialize a :class:`MergeSubtitlesAction` object."""
         gaupol.Action.__init__(self, "merge_subtitles")
         self.props.label = _("_Merge Subtitles")
         self.props.tooltip = _("Merge the selected subtitles")
@@ -261,8 +244,7 @@ class MergeSubtitlesAction(gaupol.Action):
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         rows = page.view.get_selected_rows()
         aeidon.util.affirm(len(rows) > 1)
@@ -274,8 +256,7 @@ class PasteTextsAction(gaupol.Action):
     """Paste texts from the clipboard."""
 
     def __init__(self):
-        """Initialize a PasteTextsAction object."""
-
+        """Initialize a :class:`PasteTextsAction` object."""
         gaupol.Action.__init__(self, "paste_texts")
         self.props.label = _("_Paste")
         self.props.stock_id = gtk.STOCK_PASTE
@@ -284,8 +265,7 @@ class PasteTextsAction(gaupol.Action):
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(not application.clipboard.is_empty())
         aeidon.util.affirm(page.view.get_selected_rows())
@@ -300,8 +280,7 @@ class RedoActionAction(gaupol.Action):
     __gtype_name__ = "RedoActionAction"
 
     def __init__(self):
-        """Initialize a RedoActionAction object."""
-
+        """Initialize a :class:`RedoActionAction` object."""
         gaupol.Action.__init__(self, "redo_action")
         self.props.label = _("_Redo")
         self.props.stock_id = gtk.STOCK_REDO
@@ -311,8 +290,7 @@ class RedoActionAction(gaupol.Action):
         self.set_tool_item_type(gtk.MenuToolButton)
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.can_redo())
 
@@ -322,8 +300,7 @@ class RemoveSubtitlesAction(gaupol.Action):
     """Remove the selected subtitles."""
 
     def __init__(self):
-        """Initialize a RemoveSubtitlesAction object."""
-
+        """Initialize a :class:`RemoveSubtitlesAction` object."""
         gaupol.Action.__init__(self, "remove_subtitles")
         self.props.label = _("Rem_ove Subtitles")
         self.props.short_label = _("Remove")
@@ -333,8 +310,7 @@ class RemoveSubtitlesAction(gaupol.Action):
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.view.get_selected_rows())
 
@@ -344,8 +320,7 @@ class SelectAllAction(gaupol.Action):
     """Select all subtitles."""
 
     def __init__(self):
-        """Initialize a SelectAllAction object."""
-
+        """Initialize a :class:`SelectAllAction` object."""
         gaupol.Action.__init__(self, "select_all")
         self.props.label = _("Select _All")
         self.props.stock_id = gtk.STOCK_SELECT_ALL
@@ -354,8 +329,7 @@ class SelectAllAction(gaupol.Action):
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.subtitles)
 
@@ -365,15 +339,13 @@ class ShowSelectionMenuAction(gaupol.MenuAction):
     """Show the selection menu."""
 
     def __init__(self):
-        """Initialize a ShowSelectionMenuAction object."""
-
+        """Initialize a :class:`ShowSelectionMenuAction` object."""
         gaupol.MenuAction.__init__(self, "show_selection_menu")
         self.props.label = _("Sele_ction")
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.subtitles)
 
@@ -383,8 +355,7 @@ class SplitSubtitleAction(gaupol.Action):
     """Split the selected subtitle."""
 
     def __init__(self):
-        """Initialize a SplitSubtitleAction object."""
-
+        """Initialize a :class:`SplitSubtitleAction` object."""
         gaupol.Action.__init__(self, "split_subtitle")
         self.props.label = _("_Split Subtitle")
         self.props.tooltip = _("Split the selected subtitle")
@@ -392,8 +363,7 @@ class SplitSubtitleAction(gaupol.Action):
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(len(page.view.get_selected_rows()) == 1)
 
@@ -405,8 +375,7 @@ class UndoActionAction(gaupol.Action):
     __gtype_name__ = "UndoActionAction"
 
     def __init__(self):
-        """Initialize an UndoActionAction object."""
-
+        """Initialize an :class:`UndoActionAction` object."""
         gaupol.Action.__init__(self, "undo_action")
         self.props.is_important = True
         self.props.label = _("_Undo")
@@ -417,8 +386,7 @@ class UndoActionAction(gaupol.Action):
         self.set_tool_item_type(gtk.MenuToolButton)
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.can_undo())
 

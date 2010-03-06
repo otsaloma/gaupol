@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,8 +14,9 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Text searching actions."""
+"""Text searching actions for :class:`gaupol.Application`."""
 
+import aeidon
 import gaupol
 import gtk
 _ = aeidon.i18n._
@@ -26,8 +27,7 @@ class FindAndReplaceAction(gaupol.Action):
     """Search for and replace text."""
 
     def __init__(self):
-        """Initialize a FindAndReplaceAction object."""
-
+        """Initialize a :class:`FindAndReplaceAction` object."""
         gaupol.Action.__init__(self, "find_and_replace")
         self.props.label = _("_Find And Replace\342\200\246")
         self.props.short_label = _("Find")
@@ -37,8 +37,7 @@ class FindAndReplaceAction(gaupol.Action):
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
 
 
@@ -47,8 +46,7 @@ class FindNextAction(gaupol.Action):
     """Search forwards for same text."""
 
     def __init__(self):
-        """Initialize a FindNextAction object."""
-
+        """Initialize a :class:`FindNextAction` object."""
         gaupol.Action.__init__(self, "find_next")
         self.props.label = _("Find _Next")
         self.props.tooltip = _("Search forwards for same text")
@@ -56,8 +54,7 @@ class FindNextAction(gaupol.Action):
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(application.pattern)
 
@@ -67,8 +64,7 @@ class FindPreviousAction(gaupol.Action):
     """Search backwards for same text."""
 
     def __init__(self):
-        """Initialize a FindPreviousAction object."""
-
+        """Initialize a :class:`FindPreviousAction` object."""
         gaupol.Action.__init__(self, "find_previous")
         self.props.label = _("Find Pre_vious")
         self.props.tooltip = _("Search backwards for same text")
@@ -76,8 +72,7 @@ class FindPreviousAction(gaupol.Action):
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(application.pattern)
 

@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,19 +14,19 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Actions that provide top-level menus."""
+"""Actions that provide top-level menus for :class:`gaupol.Application`."""
 
 import aeidon
+import gaupol
 _ = aeidon.i18n._
 
 
 class ShowEditMenuAction(gaupol.TopMenuAction):
 
-    """Show the 'Edit' menu."""
+    """Show the "Edit" menu."""
 
     def __init__(self):
-        """Initialize a ShowEditMenuAction object."""
-
+        """Initialize a :class:`ShowEditMenuAction` object."""
         gaupol.TopMenuAction.__init__(self, "show_edit_menu")
         self.props.label = _("_Edit")
         self.action_group = "main-safe"
@@ -34,11 +34,10 @@ class ShowEditMenuAction(gaupol.TopMenuAction):
 
 class ShowFileMenuAction(gaupol.TopMenuAction):
 
-    """Show the 'File' menu."""
+    """Show the "File" menu."""
 
     def __init__(self):
-        """Initialize a ShowFileMenuAction object."""
-
+        """Initialize a :class:`ShowFileMenuAction` object."""
         gaupol.TopMenuAction.__init__(self, "show_file_menu")
         self.props.label = _("_File")
         self.action_group = "main-safe"
@@ -46,11 +45,10 @@ class ShowFileMenuAction(gaupol.TopMenuAction):
 
 class ShowHelpMenuAction(gaupol.TopMenuAction):
 
-    """Show the 'Help' menu."""
+    """Show the "Help" menu."""
 
     def __init__(self):
-        """Initialize a ShowHelpMenuAction object."""
-
+        """Initialize a :class:`ShowHelpMenuAction` object."""
         gaupol.TopMenuAction.__init__(self, "show_help_menu")
         self.props.label = _("_Help")
         self.action_group = "main-safe"
@@ -58,11 +56,10 @@ class ShowHelpMenuAction(gaupol.TopMenuAction):
 
 class ShowProjectsMenuAction(gaupol.TopMenuAction):
 
-    """Show the 'Projects' menu."""
+    """Show the "Projects" menu."""
 
     def __init__(self):
-        """Initialize a ShowProjectsMenuAction object."""
-
+        """Initialize a :class:`ShowProjectsMenuAction` object."""
         gaupol.TopMenuAction.__init__(self, "show_projects_menu")
         self.props.label = _("_Projects")
         self.action_group = "main-safe"
@@ -70,11 +67,10 @@ class ShowProjectsMenuAction(gaupol.TopMenuAction):
 
 class ShowTextMenuAction(gaupol.TopMenuAction):
 
-    """Show the 'Text' menu."""
+    """Show the "Text" menu."""
 
     def __init__(self):
-        """Initialize a ShowTextMenuAction object."""
-
+        """Initialize a :class:`ShowTextMenuAction` object."""
         gaupol.TopMenuAction.__init__(self, "show_text_menu")
         self.props.label = _("_Text")
         self.action_group = "main-safe"
@@ -82,11 +78,10 @@ class ShowTextMenuAction(gaupol.TopMenuAction):
 
 class ShowToolsMenuAction(gaupol.TopMenuAction):
 
-    """Show the 'Tools' menu."""
+    """Show the "Tools" menu."""
 
     def __init__(self):
-        """Initialize a ShowToolsMenuAction object."""
-
+        """Initialize a :class:`ShowToolsMenuAction` object."""
         gaupol.TopMenuAction.__init__(self, "show_tools_menu")
         self.props.label = _("T_ools")
         self.action_group = "main-safe"
@@ -94,11 +89,10 @@ class ShowToolsMenuAction(gaupol.TopMenuAction):
 
 class ShowViewMenuAction(gaupol.TopMenuAction):
 
-    """Show the 'View' menu."""
+    """Show the "View" menu."""
 
     def __init__(self):
-        """Initialize a ShowViewMenuAction object."""
-
+        """Initialize a :class:`ShowViewMenuAction` object."""
         gaupol.TopMenuAction.__init__(self, "show_view_menu")
         self.props.label = _("_View")
         self.action_group = "main-safe"

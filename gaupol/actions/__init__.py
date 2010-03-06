@@ -1,4 +1,4 @@
-# Copyright (C) 2007-2008 Osmo Salomaa
+# Copyright (C) 2007-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,9 +14,9 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""UI manager actions."""
+""":class:`gtk.UIManager` actions for :class:`gaupol.Application`."""
 
-import gaupol
+import aeidon
 
 from gaupol.actions.edit import *
 from gaupol.actions.file import *

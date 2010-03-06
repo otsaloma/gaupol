@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,8 +14,9 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Text formatting actions."""
+"""Text formatting actions for :class:`gaupol.Application`."""
 
+import aeidon
 import gaupol
 import gtk
 _ = aeidon.i18n._
@@ -26,15 +27,13 @@ class ShowCaseMenuAction(gaupol.MenuAction):
     """Show the case format menu."""
 
     def __init__(self):
-        """Initialize a ShowCaseMenuAction object."""
-
+        """Initialize a :class:`ShowCaseMenuAction` object."""
         gaupol.MenuAction.__init__(self, "show_case_menu")
         self.props.label = _("Ca_se")
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.view.get_selected_rows())
         col = page.view.get_focus()[1]
@@ -43,21 +42,20 @@ class ShowCaseMenuAction(gaupol.MenuAction):
 
 class ToggleDialogDashesAction(gaupol.Action):
 
-    """Toggle dialogue dashes on the selected texts."""
+    """Add or remove dialogue dashes on the selected texts."""
 
     def __init__(self):
-        """Initialize a ToggleDialogDashesAction object."""
-
+        """Initialize a :class:`ToggleDialogDashesAction` object."""
         gaupol.Action.__init__(self, "toggle_dialogue_dashes")
         self.props.label = _("_Dialogue")
-        tooltip = _("Add or remove dialogue dashes on the selected texts")
-        self.props.tooltip = tooltip
+        self.props.tooltip = _("Add or remove dialogue dashes "
+                               "on the selected texts")
+
         self.accelerator = "D"
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.view.get_selected_rows())
         col = page.view.get_focus()[1]
@@ -66,11 +64,10 @@ class ToggleDialogDashesAction(gaupol.Action):
 
 class ToggleItalicizationAction(gaupol.Action):
 
-    """Toggle italicization of the selected texts."""
+    """Italicize or unitalicize the selected texts."""
 
     def __init__(self):
-        """Initialize a ToggleItalicizationAction object."""
-
+        """Initialize a :class:`ToggleItalicizationAction` object."""
         gaupol.Action.__init__(self, "toggle_italicization")
         self.props.label = _("_Italic")
         self.props.stock_id = gtk.STOCK_ITALIC
@@ -79,8 +76,7 @@ class ToggleItalicizationAction(gaupol.Action):
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.view.get_selected_rows())
         col = page.view.get_focus()[1]
@@ -96,16 +92,14 @@ class UseLowerCaseAction(gaupol.Action):
     """Change the selected texts to lower case."""
 
     def __init__(self):
-        """Initialize a UseLowerCaseAction object."""
-
+        """Initialize a :class:`UseLowerCaseAction` object."""
         gaupol.Action.__init__(self, "use_lower_case")
         self.props.label = _("_Lower")
         self.props.tooltip = _("Change the selected texts to lower case")
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.view.get_selected_rows())
         col = page.view.get_focus()[1]
@@ -117,16 +111,14 @@ class UseSentenceCaseAction(gaupol.Action):
     """Change the selected texts to sentence case."""
 
     def __init__(self):
-        """Initialize a UseSentenceCaseAction object."""
-
+        """Initialize a :class:`UseSentenceCaseAction` object."""
         gaupol.Action.__init__(self, "use_sentence_case")
         self.props.label = _("_Sentence")
         self.props.tooltip = _("Change the selected texts to sentence case")
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.view.get_selected_rows())
         col = page.view.get_focus()[1]
@@ -138,16 +130,14 @@ class UseTitleCaseAction(gaupol.Action):
     """Change the selected texts to title case."""
 
     def __init__(self):
-        """Initialize a UseTitleCaseAction object."""
-
+        """Initialize a :class:`UseTitleCaseAction` object."""
         gaupol.Action.__init__(self, "use_title_case")
         self.props.label = _("_Title")
         self.props.tooltip = _("Change the selected texts to title case")
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.view.get_selected_rows())
         col = page.view.get_focus()[1]
@@ -156,17 +146,17 @@ class UseTitleCaseAction(gaupol.Action):
 
 class UseUpperCaseAction(gaupol.Action):
 
-    def __init__(self):
-        """Initialize a UseUpperCaseAction object."""
+    """Change the selected texts to upper case."""
 
+    def __init__(self):
+        """Initialize a :class:`UseUpperCaseAction` object."""
         gaupol.Action.__init__(self, "use_upper_case")
         self.props.label = _("_Upper")
         self.props.tooltip = _("Change the selected texts to upper case")
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
-        """Raise AssertionError if action cannot be done."""
-
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.view.get_selected_rows())
         col = page.view.get_focus()[1]
