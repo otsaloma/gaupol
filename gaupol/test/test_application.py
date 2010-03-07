@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -21,16 +21,13 @@ import gtk
 class TestApplication(gaupol.TestCase):
 
     def run__application(self):
-
         gtk.main()
 
     def setup_method(self, method):
-
-        self.conf = gaupol.conf.application_window
         self.application = gaupol.Application()
 
     def test___init__(self):
-
-        self.conf.toolbar_style = gaupol.toolbar_styles.ICONS
-        self.conf.maximized = True
+        conf = gaupol.conf.application_window
+        conf.toolbar_style = gaupol.toolbar_styles.ICONS
+        conf.maximized = True
         self.application = gaupol.Application()

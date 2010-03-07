@@ -16,6 +16,7 @@
 
 """Building and updating dynamic menus."""
 
+import aeidon
 import gaupol
 import gtk
 _ = aeidon.i18n._

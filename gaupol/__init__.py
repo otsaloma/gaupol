@@ -76,3 +76,7 @@ from gaupol.dialogs.textedit import *
 from gaupol.dialogs.video import *
 from gaupol.action import *
 from gaupol import actions
+from gaupol.extension import *
+from gaupol.extensionman import *
+from gaupol import agents
+from gaupol.application import *

@@ -17,6 +17,7 @@
 """Finding activating, storing and deactivating extensions."""
 
 import aeidon
+import gaupol
 import inspect
 import os
 import re
@@ -186,10 +187,11 @@ class ExtensionManager(object):
     def setup_extensions(self):
         """Import and setup all extensions configured as active."""
 
-        for module in gaupol.conf.extensions.active:
-            if not module in self._metadata:
-                gaupol.conf.extensions.active.remove(module)
-            else: self.setup_extension(module)
+        pass
+        # for module in gaupol.conf.extensions.active:
+        #     if not module in self._metadata:
+        #         gaupol.conf.extensions.active.remove(module)
+        #     else: self.setup_extension(module)
 
     def show_help_require(self, module):
         assert module in self._active

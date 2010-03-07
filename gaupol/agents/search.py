@@ -16,6 +16,7 @@
 
 """Searching for and replacing text."""
 
+import aeidon
 import gaupol
 
 

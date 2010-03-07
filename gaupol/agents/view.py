@@ -16,6 +16,7 @@
 
 """Changing the visual appearance of the application and its documents."""
 
+import aeidon
 import gaupol
 
 

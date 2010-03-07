@@ -16,6 +16,7 @@
 
 """Closing projects and quitting Gaupol."""
 
+import aeidon
 import gaupol
 import gtk
 import os

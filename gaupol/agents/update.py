@@ -16,6 +16,7 @@
 
 """Updating the application GUI."""
 
+import aeidon
 import gaupol
 import gobject
 import gtk

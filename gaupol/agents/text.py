@@ -16,6 +16,7 @@
 
 """Processing texts."""
 
+import aeidon
 import gaupol
 
 

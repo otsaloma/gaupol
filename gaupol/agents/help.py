@@ -16,6 +16,7 @@
 
 """Help and information."""
 
+import aeidon
 import gaupol
 
 

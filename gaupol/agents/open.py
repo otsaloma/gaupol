@@ -18,6 +18,7 @@
 
 from __future__ import division
 
+import aeidon
 import functools
 import gaupol
 import gtk

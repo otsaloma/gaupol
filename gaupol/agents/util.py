@@ -16,6 +16,7 @@
 
 """Miscellaneous methods for use with application data editing."""
 
+import aeidon
 import gaupol
 import gtk
 

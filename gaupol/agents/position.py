@@ -16,6 +16,7 @@
 
 """Editing times and frames."""
 
+import aeidon
 import gaupol
 
 

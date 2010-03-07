@@ -16,6 +16,7 @@
 
 """Editing subtitle data."""
 
+import aeidon
 import gaupol
 _ = aeidon.i18n._
 

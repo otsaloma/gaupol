@@ -16,6 +16,7 @@
 
 """Formatting text."""
 
+import aeidon
 import gaupol
 
 

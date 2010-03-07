@@ -16,6 +16,7 @@
 
 """Saving documents."""
 
+import aeidon
 import gaupol
 import gtk
 import os
