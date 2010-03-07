@@ -21,8 +21,6 @@ Locale codes are of form ``aa[_BB][@Cccc]``, where ``aa`` is a language code,
 :mod:`aeidon.countries` and :mod:`aeidon.scripts` for the details.
 """
 
-from __future__ import with_statement
-
 import aeidon
 import os
 import re

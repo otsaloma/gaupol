@@ -16,8 +16,6 @@
 
 """Base class for subtitle files."""
 
-from __future__ import with_statement
-
 import aeidon
 import codecs
 import contextlib

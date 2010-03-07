@@ -16,8 +16,6 @@
 
 """Base class for unit test cases."""
 
-from __future__ import with_statement
-
 import aeidon
 import os
 

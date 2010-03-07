@@ -16,8 +16,6 @@
 
 """Previewing subtitles with a video player."""
 
-from __future__ import with_statement
-
 import aeidon
 import gaupol
 import gobject

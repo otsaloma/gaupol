@@ -11,7 +11,6 @@ Gaupol 0.16
 
  [W] Split gaupol to aeidon and gaupol
  [W] Bump Python dependency to 2.6
-      - Remove from __future__ import with_statement
       - try ... except Exception as exc
       - property(...) -> @property, @x.setter, @x.deleter
       - Use collections.namedtuple for all return values
@@ -29,9 +28,8 @@ Gaupol 0.16
       - All dictionary providers now use a shared default personal word
         file (largely obsoleting the DictWithPWL class)
       - Dict.add_to_pwl renamed to Dict.add
- [ ] Migrate from Glade to gtk.Builder
+ [W] Migrate from Glade to gtk.Builder
  [ ] Adapt to GNOME Goal: Correct Desktop Files
- [ ] Adapt to new GTK+/GNOME anti-icon policy for buttons
  [W] Code cleanup, attribute and signals checks
  [ ] Merge experimental local patterns
  [ ] Use decorator module to preserve signatures in API documentation
@@ -73,7 +71,6 @@ Gaupol 3000
     - MicroDVD: Write framerate information subtitle
  * Bump Python dependency to something
     - Remove imports from __future__
-    - http://docs.python.org/dev/whatsnew/2.6.html
     - http://docs.python.org/dev/whatsnew/2.7.html
     - http://docs.python.org/dev/whatsnew/3.0.html
     - http://docs.python.org/dev/whatsnew/3.1.html

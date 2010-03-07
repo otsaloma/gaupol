@@ -19,8 +19,6 @@
 For functions dealing with character encodings, see also :mod:`aeidon.util`.
 """
 
-from __future__ import with_statement
-
 import aeidon
 import codecs
 import locale

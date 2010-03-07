@@ -25,8 +25,6 @@ various files and (3) installing extensions.
     extensions are not compiled either.
 """
 
-from __future__ import with_statement
-
 import glob
 import os
 import shutil
