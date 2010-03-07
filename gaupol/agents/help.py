@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2007,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -26,10 +26,8 @@ class HelpAgent(aeidon.Delegate):
 
     def on_report_a_bug_activate(self, *args):
         """Open web browser to submit a bug report."""
-
-        aeidon.util.browse_url(aeidon.BUG_REPORT_URL)
+        gaupol.util.show_uri(gaupol.BUG_REPORT_URL)
 
     def on_view_about_dialog_activate(self, *args):
         """Show information about Gaupol."""
-
         gaupol.util.flash_dialog(gaupol.AboutDialog(self.window))

@@ -36,7 +36,7 @@ class Extension(object):
         """Show documentation on using extension.
 
         Subclasses can override this to, for example, launch a web browser with
-        :func:`aeidon.util.browse_url` to view HTML documentation.
+        :func:`gaupol.util.show_uri` to view HTML documentation.
         """
         raise NotImplementedError
 

@@ -137,7 +137,7 @@ class DebugDialog(gaupol.BuilderDialog):
     def _on_response(self, dialog, response):
         """Do not send response if reporting bug."""
         if response != gtk.RESPONSE_YES: return
-        aeidon.util.browse_url(aeidon.BUG_REPORT_URL)
+        gaupol.util.show_uri(gaupol.BUG_REPORT_URL)
         self.stop_emission("response")
 
     def _on_text_view_link_tag_event(self, tag, text_view, event, itr):

@@ -16,10 +16,14 @@
 
 """GTK+ user interface for the Gaupol subtitle editor.
 
+:var BUG_REPORT_URL: Web page where to submit new bug reports
 :var COMBO_SEPARATOR: String used as a separator for :class:`gtk.ComboBox`
 
    :attr:`COMBO_SEPARATOR` can be inserted into a combo box's model, and
    :func:`gaupol.util.separate_combo` will recognize it.
+
+:var HOMEPAGE_URL: Web page of the Gaupol project
+:var REGEX_HELP_URL: Web page with documentation on regular expressions
 
 :var fields: Enumerations for subtitle field types
 :var length_units: Enumerations for length unit types
@@ -43,7 +47,7 @@ COMBO_SEPARATOR = "<separator/>"
 gtk.rc_parse(os.path.join(aeidon.DATA_DIR, "ui", "gtkrc"))
 gobject.threads_init()
 
-from gaupol.unittest import *
+from gaupol.urls import *
 from gaupol import util
 from gaupol.enums.fields import *
 from gaupol.enums.styles import *
@@ -80,3 +84,4 @@ from gaupol.extension import *
 from gaupol.extensionman import *
 from gaupol import agents
 from gaupol.application import *
+from gaupol.unittest import *

@@ -23,12 +23,6 @@ import time
 
 class TestModule(aeidon.TestCase):
 
-    def browse_url_silent(self, url):
-        try:
-            return aeidon.util.browse_url(url)
-        except OSError:
-            return None
-
     def setup_method(self, method):
         self.project = self.new_project()
 
@@ -39,60 +33,6 @@ class TestModule(aeidon.TestCase):
 
     def test_affirm__true(self):
         aeidon.util.affirm(0 == 0)
-
-    def test_browse_url__command(self):
-        if aeidon.util.is_command("echo"):
-            aeidon.util.browse_url(aeidon.HOMEPAGE_URL, "echo")
-
-    @aeidon.deco.monkey_patch(os, "environ")
-    @aeidon.deco.monkey_patch(sys, "platform")
-    def test_browse_url__gnome(self):
-        os.environ.clear()
-        os.environ["GNOME_DESKTOP_SESSION_ID"] = "1"
-        sys.platform = "linux2"
-        self.browse_url_silent(aeidon.HOMEPAGE_URL)
-
-    @aeidon.deco.monkey_patch(os, "environ")
-    @aeidon.deco.monkey_patch(sys, "platform")
-    def test_browse_url__kde(self):
-        os.environ.clear()
-        os.environ["KDE_FULL_SESSION"] = "1"
-        sys.platform = "linux2"
-        self.browse_url_silent(aeidon.HOMEPAGE_URL)
-
-    @aeidon.deco.monkey_patch(os, "environ")
-    @aeidon.deco.monkey_patch(sys, "platform")
-    def test_browse_url__mac_os_x(self):
-        os.environ.clear()
-        sys.platform = "darwin"
-        self.browse_url_silent(aeidon.HOMEPAGE_URL)
-
-    @aeidon.deco.monkey_patch(os, "environ")
-    @aeidon.deco.monkey_patch(sys, "platform")
-    @aeidon.deco.monkey_patch(aeidon.util, "is_command")
-    def test_browse_url__webbrowser(self):
-        os.environ.clear()
-        sys.platform = "commodore_64"
-        aeidon.util.is_command = lambda x: False
-        self.browse_url_silent(aeidon.HOMEPAGE_URL)
-
-    @aeidon.deco.monkey_patch(os, "environ")
-    @aeidon.deco.monkey_patch(sys, "platform")
-    @aeidon.deco.monkey_patch(aeidon.util, "is_command")
-    def test_browse_url__xdg(self):
-        os.environ.clear()
-        sys.platform = "linux2"
-        aeidon.util.is_command = lambda x: (x == "xdg-open")
-        self.browse_url_silent(aeidon.HOMEPAGE_URL)
-
-    @aeidon.deco.monkey_patch(os, "environ")
-    @aeidon.deco.monkey_patch(sys, "platform")
-    @aeidon.deco.monkey_patch(aeidon.util, "is_command")
-    def test_browse_url__xfce(self):
-        os.environ.clear()
-        sys.platform = "linux2"
-        aeidon.util.is_command = lambda x: (x == "exo-open")
-        self.browse_url_silent(aeidon.HOMEPAGE_URL)
 
     def test_chardet_available(self):
         reload(aeidon.util)

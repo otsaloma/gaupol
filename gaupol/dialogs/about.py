@@ -52,7 +52,7 @@ class AboutDialog(gtk.AboutDialog):
         self.set_comments(_("Subtitle editor"))
         self.set_license(_license)
         self.set_wrap_license(True)
-        self.set_website(aeidon.HOMEPAGE_URL)
+        self.set_website(gaupol.HOMEPAGE_URL)
         self.set_website_label(_("Gaupol Website"))
         self.set_authors(("Osmo Salomaa <otsaloma@cc.hut.fi>",))
         self.set_artists(("Osmo Salomaa <otsaloma@cc.hut.fi>",))
@@ -68,4 +68,4 @@ class AboutDialog(gtk.AboutDialog):
 
     def _on_url_clicked(self, dialog, url):
         """Open website in a web browser."""
-        aeidon.util.browse_url(url)
+        gaupol.util.show_uri(url)

@@ -14,17 +14,17 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import aeidon
+import gaupol
 import urllib
 
 
-class TestModule(aeidon.TestCase):
+class TestModule(gaupol.TestCase):
 
     def test_bug_report_url(self):
-        urllib.urlopen(aeidon.BUG_REPORT_URL)
+        urllib.urlopen(gaupol.BUG_REPORT_URL)
 
     def test_homepage_url(self):
-        urllib.urlopen(aeidon.HOMEPAGE_URL)
+        urllib.urlopen(gaupol.HOMEPAGE_URL)
 
     def test_regex_help_url(self):
-        urllib.urlopen(aeidon.REGEX_HELP_URL)
+        urllib.urlopen(gaupol.REGEX_HELP_URL)

@@ -129,6 +129,9 @@ class TestModule(gaupol.TestCase):
         label = gtk.Label("testing...")
         gaupol.util.set_label_font(label, "Serif 12")
 
+    def test_show_uri(self):
+        gaupol.util.show_uri(gaupol.HOMEPAGE_URL)
+
     def test_text_field_to_document(self):
         field2doc = gaupol.util.text_field_to_document
         doc = field2doc(gaupol.fields.MAIN_TEXT)

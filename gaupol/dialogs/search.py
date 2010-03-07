@@ -377,7 +377,7 @@ class SearchDialog(gaupol.GladeDialog):
         """Do not send response if browsing help."""
 
         if response == gtk.RESPONSE_HELP:
-            aeidon.util.browse_url(aeidon.REGEX_HELP_URL)
+            gaupol.util.show_uri(gaupol.REGEX_HELP_URL)
             self.stop_emission("response")
 
     def _on_show(self, *args):

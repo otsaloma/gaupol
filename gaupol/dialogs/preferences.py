@@ -233,7 +233,7 @@ class _ExtensionPage(aeidon.Delegate):
     def _on_about_dialog_url_clicked(self, dialog, url):
         """Open website in a web browser."""
 
-        aeidon.util.browse_url(url)
+        gaupol.util.show_uri(url)
 
     def _on_help_button_clicked(self, *args):
         """Show whatever form documentation the extension has."""

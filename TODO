@@ -22,8 +22,6 @@ Gaupol 0.16
       - gobject.set_application_name
       - gobject.set_prgname
  [ ] Bump PyGTK dependency to 2.16 or 2.18
-      - Try gtk.show_uri for launching web browser
-      - gtk.show_about_dialog?
       - gtk.Activatable?
       - gtk.Statusbar.remove -> remove_message
       - gtk.InfoBar?

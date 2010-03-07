@@ -77,7 +77,7 @@ class Test_ExtensionPage(gaupol.TestCase):
 
     def test__on_about_dialog_url_clicked(self):
 
-        self.page._on_about_dialog_url_clicked(None, aeidon.HOMEPAGE_URL)
+        self.page._on_about_dialog_url_clicked(None, gaupol.HOMEPAGE_URL)
 
     def test__on_help_button_clicked(self):
 

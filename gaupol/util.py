@@ -244,6 +244,10 @@ def show_exception(exctype, value, tb):
     except Exception:
         traceback.print_exc()
 
+def show_uri(uri):
+    """Open `uri` in default application."""
+    return gtk.show_uri(None, uri, gtk.gdk.CURRENT_TIME)
+
 def text_field_to_document(field):
     """Return :attr:`aeidon.documents` item corresponding to `field`."""
     if field == gaupol.fields.MAIN_TEXT:

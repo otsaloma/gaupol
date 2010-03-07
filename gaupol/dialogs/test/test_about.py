@@ -30,4 +30,4 @@ class TestAboutDialog(gaupol.TestCase):
         self.dialog.show()
 
     def test__on_url_clicked(self):
-        self.dialog._on_url_clicked(self.dialog, aeidon.HOMEPAGE_URL)
+        self.dialog._on_url_clicked(self.dialog, gaupol.HOMEPAGE_URL)

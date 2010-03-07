@@ -64,13 +64,10 @@ decorator) are revertable. If using :mod:`aeidon` in a context where reverting
 actions is never needed, greater flexibility can be achieved by accessing the
 subtitles directly (via :attr:`aeidon.Project.subtitles`).
 
-:var BUG_REPORT_URL: Web page where to submit new bug reports
 :var CONFIG_HOME_DIR: Path to the user's local configuration directory
 :var DATA_DIR: Path to the global data directory
 :var DATA_HOME_DIR: Path to the user's local data directory
-:var HOMEPAGE_URL: Web page of the Gaupol project
 :var LOCALE_DIR: Path to the global locale directory
-:var REGEX_HELP_URL: Web page with documentation on regular expressions
 
 :var align_methods: Enumerations for subtitle align methods
 :var documents: Enumerations for document types
@@ -101,7 +98,6 @@ debug = (bool(os.environ.get("AEIDON_DEBUG", "")) or
 re_any_tag = re.compile(r"(^[/\\_]+|<.*?>|\{.*?\})")
 
 from aeidon.paths import *
-from aeidon.urls import *
 from aeidon import deco
 from aeidon import i18n
 from aeidon import util

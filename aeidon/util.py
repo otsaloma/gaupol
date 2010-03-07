@@ -39,22 +39,6 @@ def affirm(value):
     if not value:
         raise aeidon.AffirmationError
 
-def browse_url(url, browser=None):
-    """Open `url` in web browser."""
-    if browser and isinstance(browser, basestring):
-        return subprocess.Popen((browser, url))
-    if "GNOME_DESKTOP_SESSION_ID" in os.environ:
-        return subprocess.Popen(("gnome-open", url))
-    if "KDE_FULL_SESSION" in os.environ:
-        return subprocess.Popen(("kfmclient", "exec", url))
-    if sys.platform == "darwin":
-        return subprocess.Popen(("open", url))
-    if is_command("xdg-open"):
-        return subprocess.Popen(("xdg-open", url))
-    if is_command("exo-open"):
-        return subprocess.Popen(("exo-open", url))
-    return webbrowser.open(url)
-
 @aeidon.deco.once
 def chardet_available():
     """Return ``True`` if :mod:`chardet` module is available."""

@@ -2,7 +2,6 @@ Module Dependency Order
 =======================
 
 aeidon.paths
-aeidon.urls
 aeidon.deco
 aeidon.i18n
 aeidon.util
@@ -41,6 +40,7 @@ aeidon.project
 aeidon.unittest
 aeidon.__init__
 
+gaupol.urls
 gaupol.util
 gaupol.fields
 gaupol.styles
