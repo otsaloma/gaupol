@@ -119,4 +119,4 @@ class TransformPositionsAction(gaupol.Action):
         aeidon.util.affirm(len(page.project.subtitles) > 1)
 
 
-__all__ = aeidon.util.get_all(dir(), r"Action$")
+__all__ = tuple(filter(lambda x: x.endswith("Action"), dir()))

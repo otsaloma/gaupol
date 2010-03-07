@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Miscellaneous methods for use with application data editing."""
+"""Miscellaneous helper methods."""
 
 import aeidon
 import gaupol
@@ -23,7 +23,7 @@ import gtk
 
 class UtilityAgent(aeidon.Delegate):
 
-    """Miscellaneous methods for use with application data editing."""
+    """Miscellaneous helper methods."""
 
     __metaclass__ = aeidon.Contractual
 
@@ -31,53 +31,45 @@ class UtilityAgent(aeidon.Delegate):
         assert value is not None
 
     def get_action(self, name):
-        """Return action from the UI manager by name."""
-
+        """Return action from UI manager by `name`."""
         for action_group in self.uim.get_action_groups():
             action = action_group.get_action(name)
             if action is not None: return action
-        raise ValueError("Action group %s not found" % repr(name))
+        raise ValueError("Action %s not found" % repr(name))
 
     def get_action_group(self, name):
-        """Return action group from the UI manager."""
-
+        """Return action group from UI manager by `name`."""
         groups = self.uim.get_action_groups()
         return [x for x in groups if x.get_name() == name][0]
 
     def get_column_action(self, field):
-        """Return action from UI manager to toggle visibility of column."""
-
+        """Return action from UI manager to hide or show column."""
         name = gaupol.field_actions[field]
         return self.get_action(name)
 
     def get_current_page(self):
-        """Return the currently active page or None."""
-
+        """Return the currently active page or ``None``."""
         index = self.notebook.get_current_page()
         if index < 0: return None
         return self.pages[index]
 
     def get_framerate_action(self, framerate):
         """Return action from UI manager to select framerate."""
-
         name = gaupol.framerate_actions[framerate]
         return self.get_action(name)
 
     def get_menu_item(self, name):
-        """Return menu item from UI manager by name."""
-
+        """Return menu item from UI manager by `name`."""
         widgets = self.get_action(name).get_proxies()
         return [x for x in widgets if isinstance(x, gtk.MenuItem)][0]
 
     def get_mode_action(self, mode):
         """Return action from UI manager to select mode."""
-
         name = gaupol.mode_actions[mode]
         return self.get_action(name)
 
     def get_target_pages(self, target):
-        """Return a sequence of pages corresponding to target."""
-
+        """Return a sequence of pages corresponding to `target`."""
         if target == gaupol.targets.SELECTED:
             return (self.get_current_page(),)
         if target == gaupol.targets.CURRENT:
@@ -87,15 +79,13 @@ class UtilityAgent(aeidon.Delegate):
         raise ValueError("Invalid target: %s" % repr(target))
 
     def get_target_rows(self, target):
-        """Return the selected rows or None if targeting all rows."""
-
+        """Return rows corresponding to `target` or ``None`` for all."""
         if target != gaupol.targets.SELECTED: return None
         page = self.get_current_page()
         return page.view.get_selected_rows()
 
     def get_tool_item(self, name):
-        """Return tool item from UI manager by name."""
-
+        """Return tool item from UI manager by `name`."""
         widgets = self.get_action(name).get_proxies()
         return [x for x in widgets if isinstance(x, gtk.ToolItem)][0]
 
@@ -104,6 +94,5 @@ class UtilityAgent(aeidon.Delegate):
 
     def set_current_page(self, page):
         """Set the currently active page."""
-
         index = self.pages.index(page)
         self.notebook.set_current_page(index)

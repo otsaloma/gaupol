@@ -77,4 +77,4 @@ class FindPreviousAction(gaupol.Action):
         aeidon.util.affirm(application.pattern)
 
 
-__all__ = aeidon.util.get_all(dir(), r"Action$")
+__all__ = tuple(filter(lambda x: x.endswith("Action"), dir()))

@@ -72,7 +72,7 @@ class Application(aeidon.Observable):
     :ivar statusbar: A :class:`gtk.Statusbar` used to hold messages
     :ivar uim: Instance of :class:`gtk.UIManager` used
     :ivar video_button: A :class:`gtk.Button` used to select a video file
-    :ivar video_toolbar: A :class: `gtk.Toolbar` for video actions
+    :ivar video_toolbar: A :class:`gtk.Toolbar` for video actions
     :ivar window: A :class:`gtk.Window` used to hold all the widgets
 
     Signals and their arguments for callback functions:

@@ -98,4 +98,4 @@ class ShowViewMenuAction(gaupol.TopMenuAction):
         self.action_group = "main-safe"
 
 
-__all__ = aeidon.util.get_all(dir(), r"Action$")
+__all__ = tuple(filter(lambda x: x.endswith("Action"), dir()))

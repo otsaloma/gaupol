@@ -163,4 +163,4 @@ class UseUpperCaseAction(gaupol.Action):
         aeidon.util.affirm(page.view.is_text_column(col))
 
 
-__all__ = aeidon.util.get_all(dir(), r"Action$")
+__all__ = tuple(filter(lambda x: x.endswith("Action"), dir()))

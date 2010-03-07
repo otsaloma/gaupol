@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Extension delegates of Application."""
+"""Extension delegates of of :class:`gaupol.Application`."""
 
 from .close    import CloseAgent
 from .edit     import EditAgent
@@ -31,4 +31,4 @@ from .update   import UpdateAgent
 from .util     import UtilityAgent
 from .view     import ViewAgent
 
-__all__ = tuple(x for x in dir() if x.endswith("Agent"))
+__all__ = tuple(filter(lambda x: x.endswith("Agent"), dir()))
