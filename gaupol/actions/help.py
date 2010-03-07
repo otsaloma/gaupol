@@ -22,6 +22,19 @@ import gtk
 _ = aeidon.i18n._
 
 
+class BrowseWikiDocumentationAction(gaupol.Action):
+
+    """Browse wiki documentation."""
+
+    def __init__(self):
+        """Initialize a :class:`BrowseWikiDocumentationAction` object."""
+        gaupol.Action.__init__(self, "browse_wiki_documentation")
+        self.props.label = _("_Wiki Documentation")
+        self.props.stock_id = gtk.STOCK_HELP
+        self.props.tooltip = _("Browse wiki documentation")
+        self.action_group = "main-safe"
+
+
 class ReportABugAction(gaupol.Action):
 
     """Submit a bug report."""

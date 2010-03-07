@@ -6,6 +6,7 @@ Gaupol 0.16
  [D] Fix opening a translation file with a Unicode BOM
  [D] Use Python's JSON module instead of ConfigObj for reading and
      writing configuration files
+ [D] Add help menu item to browse wiki documentation
  [D] Add German translation (Chris Leick)
  [D] Add Hungarian translation (László Andrássy)
 
@@ -47,7 +48,6 @@ Gaupol 0.16
      fails
  [?] http://gmane.org/
  [ ] Update extension documentation
- [ ] Add help menu item for wiki page
 
 Gaupol 0.17
 ===========

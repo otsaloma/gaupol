@@ -24,6 +24,10 @@ class HelpAgent(aeidon.Delegate):
 
     """Help and information."""
 
+    def on_browse_wiki_documentation_activate(self, *args):
+        """Open web browser to view wiki documentation."""
+        gaupol.util.show_uri(gaupol.WIKI_URL)
+
     def on_report_a_bug_activate(self, *args):
         """Open web browser to submit a bug report."""
         gaupol.util.show_uri(gaupol.BUG_REPORT_URL)

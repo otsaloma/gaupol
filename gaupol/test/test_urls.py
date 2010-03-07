@@ -28,3 +28,6 @@ class TestModule(gaupol.TestCase):
 
     def test_regex_help_url(self):
         urllib.urlopen(gaupol.REGEX_HELP_URL)
+
+    def test_wiki_url(self):
+        urllib.urlopen(gaupol.WIKI_URL)

@@ -193,6 +193,7 @@
       </placeholder>
     </menu>
     <menu name="help" action="show_help_menu">
+      <menuitem name="wiki_documentation" action="browse_wiki_documentation"/>
       <menuitem name="report_a_bug" action="report_a_bug"/>
       <menuitem name="about" action="view_about_dialog"/>
       <placeholder name="1">

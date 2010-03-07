@@ -24,6 +24,7 @@
 
 :var HOMEPAGE_URL: Web page of the Gaupol project
 :var REGEX_HELP_URL: Web page with documentation on regular expressions
+:var WIKI_URL: Web page with wiki documentation
 
 :var fields: Enumerations for subtitle field types
 :var length_units: Enumerations for length unit types

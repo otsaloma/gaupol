@@ -24,6 +24,9 @@ class TestHelpAgent(gaupol.TestCase):
     def setup_method(self, method):
         self.application = self.new_application()
 
+    def test_on_browse_wiki_documentation_activate(self):
+        self.application.get_action("browse_wiki_documentation").activate()
+
     def test_on_report_a_bug_activate(self):
         self.application.get_action("report_a_bug").activate()
 
