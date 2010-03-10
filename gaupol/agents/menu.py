@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -17,7 +17,6 @@
 """Building and updating dynamic menus."""
 
 import aeidon
-import gaupol
 import gtk
 _ = aeidon.i18n._
 
@@ -26,25 +25,22 @@ class MenuAgent(aeidon.Delegate):
 
     """Building and updating menus.
 
-    Instance attributes:
-     * _projects_id: UI manager merge ID for the projects menu
-     * _redo_menu_items: Redo menu tool button menu items
-     * _undo_menu_items: Undo menu tool button menu items
+    :ivar _projects_id: :class:`gtk.UIManager` merge ID for projects menu
+    :ivar _redo_menu_items: Redo menu tool button menu items
+    :ivar _undo_menu_items: Undo menu tool button menu items
     """
 
     __metaclass__ = aeidon.Contractual
 
     def __init__(self, master):
         """Initialize a MenuAgent object."""
-
         aeidon.Delegate.__init__(self, master)
         self._projects_id = None
         self._redo_menu_items = []
         self._undo_menu_items = []
 
     def _add_project_action(self, page):
-        """Add an action to the 'projects' action group."""
-
+        """Add an action to the "projects" action group for `page`."""
         index = self.pages.index(page)
         basename = page.get_main_basename()
         name = "activate_project_%d" % index
@@ -59,28 +55,24 @@ class MenuAgent(aeidon.Delegate):
             action.set_group(group)
         accel = ("<alt>%d" % (index + 1) if index < 9 else None)
         action_group.add_action_with_accel(action, accel)
-        callback = self._on_projects_action_changed
-        action.connect("changed", callback)
+        action.connect("changed", self._on_projects_action_changed)
         action.set_active(page is self.get_current_page())
         return action.get_name()
 
     def _on_redo_menu_item_activate(self, menu_item):
         """Redo the selected action and all those above it."""
-
         index = menu_item.get_data("index")
         self.redo(index + 1)
 
-    def _on_redo_menu_item_enter(self, menu_item, event):
-        """Show tooltip and select all actions above this one."""
-
+    def _on_redo_menu_item_enter_notify_event(self, menu_item, event):
+        """Show tooltip and select all actions above `menu_item`."""
         index = menu_item.get_data("index")
         for item in self._redo_menu_items[:index]:
             item.set_state(gtk.STATE_PRELIGHT)
         self.push_message(menu_item.get_data("tooltip"))
 
-    def _on_redo_menu_item_leave(self, menu_item, event):
-        """Show tooltip and unselect all actions above this one."""
-
+    def _on_redo_menu_item_leave_notify_event(self, menu_item, event):
+        """Hide tooltip and unselect all actions above `menu_item`."""
         index = menu_item.get_data("index")
         for item in self._redo_menu_items[:index]:
             item.set_state(gtk.STATE_NORMAL)
@@ -88,21 +80,18 @@ class MenuAgent(aeidon.Delegate):
 
     def _on_undo_menu_item_activate(self, menu_item):
         """Undo the selected action and all those above it."""
-
         index = menu_item.get_data("index")
         self.undo(index + 1)
 
-    def _on_undo_menu_item_enter(self, menu_item, event):
-        """Show tooltip and select all actions above this one."""
-
+    def _on_undo_menu_item_enter_notify_event(self, menu_item, event):
+        """Show tooltip and select all actions above `menu_item`."""
         index = menu_item.get_data("index")
         for item in self._undo_menu_items[:index]:
             item.set_state(gtk.STATE_PRELIGHT)
         self.push_message(menu_item.get_data("tooltip"))
 
-    def _on_undo_menu_item_leave(self, menu_item, event):
-        """Show tooltip and unselect all actions above this one."""
-
+    def _on_undo_menu_item_leave_notify_event(self, menu_item, event):
+        """Hide tooltip and unselect all actions above `menu_item`."""
         index = menu_item.get_data("index")
         for item in self._undo_menu_items[:index]:
             item.set_state(gtk.STATE_NORMAL)
@@ -110,13 +99,11 @@ class MenuAgent(aeidon.Delegate):
 
     def _on_projects_action_changed(self, item, active_item):
         """Change the page in the notebook to the selected project."""
-
         index = int(active_item.get_name().split("_")[-1])
         self.notebook.set_current_page(index)
 
     def on_page_tab_widget_button_press_event(self, button, event, page):
         """Display a pop-up menu with tab-related actions."""
-
         if event.button != 3: return
         if page is not self.get_current_page():
             self.set_current_page(page)
@@ -124,8 +111,7 @@ class MenuAgent(aeidon.Delegate):
         menu.popup(None, None, None, event.button, event.time)
 
     def on_redo_button_show_menu(self, *args):
-        """Show the menu listing all redoable actions."""
-
+        """Show a menu listing all redoable actions."""
         menu = gtk.Menu()
         self._redo_menu_items = []
         page = self.get_current_page()
@@ -135,9 +121,9 @@ class MenuAgent(aeidon.Delegate):
             item.set_data("tooltip", _('Redo "%s"') % action.description)
             callback = self._on_redo_menu_item_activate
             item.connect("activate", callback)
-            callback = self._on_redo_menu_item_enter
+            callback = self._on_redo_menu_item_enter_notify_event
             item.connect("enter-notify-event", callback)
-            callback = self._on_redo_menu_item_leave
+            callback = self._on_redo_menu_item_leave_notify_event
             item.connect("leave-notify-event", callback)
             self._redo_menu_items.append(item)
             menu.append(item)
@@ -146,7 +132,6 @@ class MenuAgent(aeidon.Delegate):
 
     def on_show_projects_menu_activate(self, *args):
         """Update all project actions in the projects menu."""
-
         action_group = self.get_action_group("projects")
         for action in action_group.list_actions():
             action_group.remove_action(action)
@@ -166,8 +151,7 @@ class MenuAgent(aeidon.Delegate):
         self.set_menu_notify_events("projects")
 
     def on_undo_button_show_menu(self, *args):
-        """Show the menu listing all undoable actions."""
-
+        """Show a menu listing all undoable actions."""
         menu = gtk.Menu()
         self._undo_menu_items = []
         page = self.get_current_page()
@@ -177,9 +161,9 @@ class MenuAgent(aeidon.Delegate):
             item.set_data("tooltip", _('Undo "%s"') % action.description)
             callback = self._on_undo_menu_item_activate
             item.connect("activate", callback)
-            callback = self._on_undo_menu_item_enter
+            callback = self._on_undo_menu_item_enter_notify_event
             item.connect("enter-notify-event", callback)
-            callback = self._on_undo_menu_item_leave
+            callback = self._on_undo_menu_item_leave_notify_event
             item.connect("leave-notify-event", callback)
             self._undo_menu_items.append(item)
             menu.append(item)
@@ -187,8 +171,7 @@ class MenuAgent(aeidon.Delegate):
         self.get_tool_item("undo_action").set_menu(menu)
 
     def set_menu_notify_events(self, name):
-        """Set statusbar tooltips for menu items for action group."""
-
+        """Set statusbar tooltips for menu items of action group."""
         def on_enter(menu_item, event, self, action):
             self.push_message(action.props.tooltip)
         def on_leave(menu_item, event, self, action):

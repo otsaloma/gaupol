@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -20,17 +20,10 @@ import gaupol
 class TestMenuAgent(gaupol.TestCase):
 
     def setup_method(self, method):
-
         self.application = self.new_application()
         self.delegate = self.application.set_menu_notify_events.im_self
 
-    def test_on_open_button_show_menu(self):
-
-        item = self.application.get_tool_item("open_main_files")
-        item.emit("show-menu")
-
     def test_on_redo_button_show_menu(self):
-
         page = self.application.get_current_page()
         page.project.remove_subtitles((0,))
         page.project.remove_subtitles((0,))
@@ -39,22 +32,12 @@ class TestMenuAgent(gaupol.TestCase):
         item.emit("show-menu")
         item.get_menu().get_children()[0].activate()
 
-    def test_on_show_recent_main_menu_activate(self):
-
-        self.application.open_main_file(self.new_subrip_file())
-        self.application.open_main_file(self.new_subrip_file())
-        self.application.get_action("show_recent_main_menu").activate()
-
-    def test_on_show_recent_translation_menu_activate(self):
-
-        self.application.open_main_file(self.new_subrip_file())
-        self.application.open_translation_file(self.new_subrip_file())
-        self.application.open_main_file(self.new_subrip_file())
-        self.application.open_translation_file(self.new_subrip_file())
-        self.application.get_action("show_recent_translation_menu").activate()
+    def test_on_show_projects_menu_activate(self):
+        self.application.get_action("show_projects_menu").activate()
+        self.application.get_action("show_projects_menu").activate()
+        self.application.get_action("show_projects_menu").activate()
 
     def test_on_undo_button_show_menu(self):
-
         page = self.application.get_current_page()
         page.project.remove_subtitles((0,))
         page.project.remove_subtitles((0,))
@@ -63,7 +46,6 @@ class TestMenuAgent(gaupol.TestCase):
         item.get_menu().get_children()[0].activate()
 
     def test_set_menu_notify_events(self):
-
         self.application.set_menu_notify_events("main-safe")
         self.application.set_menu_notify_events("main-unsafe")
         self.application.set_menu_notify_events("projects")
