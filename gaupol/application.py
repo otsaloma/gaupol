@@ -195,7 +195,6 @@ class Application(aeidon.Observable):
 
     def _init_main_toolbar(self, vbox):
         """Initialize the main toolbar."""
-        self._init_open_button()
         self._init_redo_button()
         self._init_undo_button()
         toolbar = self.uim.get_widget("/ui/main_toolbar")
@@ -224,15 +223,6 @@ class Application(aeidon.Observable):
         callback = self.on_notebook_switch_page
         self.notebook.connect_after("switch-page", callback)
         vbox.pack_start(self.notebook, True , True , 0)
-
-    def _init_open_button(self):
-        """Initialize the open button on the main toolbar."""
-        open_button = self.get_tool_item("open_main_files")
-        open_button.set_menu(gtk.Menu())
-        tip =  _("Open a recently used main file")
-        open_button.set_arrow_tooltip_text(tip)
-        callback = self.on_open_button_show_menu
-        open_button.connect("show-menu", callback)
 
     def _init_output_window(self):
         """Initialize the output window."""

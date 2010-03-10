@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
+import aeidon
 import gaupol
 
 
@@ -39,6 +40,18 @@ class TestMenuAction(gaupol.TestCase):
 
     def setup_method(self, method):
         self.action = gaupol.MenuAction("test")
+        self.action.widgets = ("notebook",)
+        self.application = gaupol.Application()
+        self.application.on_test_activate = lambda *args: None
+        self.action.finalize(self.application)
+
+
+class TestRecentAction(gaupol.TestCase):
+
+    @aeidon.deco.monkey_patch(gaupol.RecentAction, "group")
+    def setup_method(self, method):
+        gaupol.RecentAction.group = "gaupol-main"
+        self.action = gaupol.RecentAction("test")
         self.action.widgets = ("notebook",)
         self.application = gaupol.Application()
         self.application.on_test_activate = lambda *args: None

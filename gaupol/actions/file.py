@@ -136,6 +136,56 @@ class OpenMainFilesAction(gaupol.Action):
         self.set_tool_item_type(gtk.MenuToolButton)
 
 
+class OpenMainFilesRecentAction(gaupol.RecentAction):
+
+    """Open main files."""
+
+    group = "gaupol-main"
+
+    def __init__(self):
+        """Initialize an :class:`OpenMainFilesRecentAction` object."""
+        gaupol.RecentAction.__init__(self, "open_main_files_recent")
+        self.props.is_important = True
+        self.props.label = _("_Open\342\200\246")
+        self.props.short_label = _("Open")
+        self.props.stock_id = gtk.STOCK_OPEN
+        self.props.tooltip = _("Open main files")
+        self.action_group = "main-safe"
+        self.set_show_numbers(False)
+
+
+class OpenRecentMainFileAction(gaupol.RecentAction):
+
+    """Show the recent main file menu."""
+
+    group = "gaupol-main"
+
+    def __init__(self):
+        """Initialize a :class:`OpenRecentMainFileAction` object."""
+        gaupol.RecentAction.__init__(self, "open_recent_main_file")
+        self.props.is_important = True
+        self.props.label = _("Open _Recent")
+        self.action_group = "main-safe"
+
+
+class OpenRecentTranslationFileAction(gaupol.RecentAction):
+
+    """Show the recent translation file menu."""
+
+    group = "gaupol-translation"
+
+    def __init__(self):
+        """Initialize a :class:`OpenRecentTranslationFileAction` object."""
+        gaupol.RecentAction.__init__(self, "open_recent_translation_file")
+        self.props.is_important = False
+        self.props.label = _("Open R_ecent Translation")
+        self.action_group = "main-safe"
+
+    def _affirm_doable(self, application, page):
+        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
+        aeidon.util.affirm(page is not None)
+
+
 class OpenTranslationFileAction(gaupol.Action):
 
     """Open a translation file."""
@@ -284,34 +334,6 @@ class SelectVideoFileAction(gaupol.Action):
         """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.project.main_file is not None)
-
-
-class ShowRecentMainMenuAction(gaupol.Action):
-
-    """Show the recent main file menu."""
-
-    def __init__(self):
-        """Initialize a :class:`ShowRecentMainMenuAction` object."""
-        gaupol.Action.__init__(self, "show_recent_main_menu")
-        self.props.label = _("Open _Recent")
-        self.props.is_important = True
-        self.action_group = "main-safe"
-
-
-class ShowRecentTranslationMenuAction(gaupol.Action):
-
-    """Show the recent translation file menu."""
-
-    def __init__(self):
-        """Initialize a :class:`ShowRecentTranslationMenuAction` object."""
-        gaupol.Action.__init__(self, "show_recent_translation_menu")
-        self.props.label = _("Open R_ecent Translation")
-        self.props.is_important = True
-        self.action_group = "main-safe"
-
-    def _affirm_doable(self, application, page):
-        """Raise :exc:`aeidon.AffirmationError` if action cannot be done."""
-        aeidon.util.affirm(page is not None)
 
 
 class SplitProjectAction(gaupol.Action):

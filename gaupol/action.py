@@ -17,11 +17,13 @@
 """Base classes for :class:`gtk.UIManager` actions."""
 
 import aeidon
+import gaupol
 import gtk
 
 __all__ = ("Action",
            "MenuAction",
            "RadioAction",
+           "RecentAction",
            "ToggleAction",
            "TopMenuAction",
            )
@@ -92,6 +94,34 @@ class MenuAction(Action):
         callback = "on_%s_activate" % self.props.name
         if hasattr(application, callback):
             self.connect("activate", getattr(application, callback))
+
+
+class RecentAction(Action, gtk.RecentAction):
+
+    """Base class for :class:`gtk.UIManager` recent file actions.
+
+    :ivar group: Name of :class:`gtk.RecentFilter` group
+    """
+
+    group = NotImplementedError
+
+    def __init__(self, name):
+        """Initialize an :class:`RecentAction` object."""
+        gtk.RecentAction.__init__(self, name, None, None, None)
+        self.set_show_numbers(True)
+        self.set_show_not_found(False)
+        self.set_show_tips(True)
+        self.set_sort_type(gtk.RECENT_SORT_MRU)
+        recent_filter = gtk.RecentFilter()
+        recent_filter.add_group(self.group)
+        self.add_filter(recent_filter)
+        self.set_filter(recent_filter)
+        self.set_data("group", self.group)
+        self.set_limit(gaupol.conf.file.max_recent)
+
+    def finalize(self, application):
+        """Connect action to widgets of `application`."""
+        self.widgets = tuple(getattr(application, x) for x in self.widgets)
 
 
 class ToggleAction(Action, gtk.ToggleAction):

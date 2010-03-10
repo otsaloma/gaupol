@@ -8,16 +8,8 @@
       <placeholder name="1">
       </placeholder>
       <separator/>
-      <menu name="recent_main" action="show_recent_main_menu">
-        <!-- Add some item, so that UI manager will not hide this
-          -- menu. The actual menu will be created dynamically. -->
-        <menuitem name="open_main" action="open_main_files"/>
-      </menu>
-      <menu name="recent_translation" action="show_recent_translation_menu">
-        <!-- Add some item, so that UI manager will not hide this
-          -- menu. The actual menu will be created dynamically. -->
-        <menuitem name="open_translation" action="open_translation_file"/>
-      </menu>
+      <menuitem name="recent_main" action="open_recent_main_file"/>
+      <menuitem name="recent_translation" action="open_recent_translation_file"/>
       <placeholder name="2">
       </placeholder>
       <separator/>
@@ -201,7 +193,7 @@
     </menu>
   </menubar>
   <toolbar name="main_toolbar">
-    <toolitem name="open_main" action="open_main_files"/>
+    <toolitem name="open_main_recent" action="open_main_files_recent"/>
     <toolitem name="save_main" action="save_main_document"/>
     <placeholder name="1">
     </placeholder>

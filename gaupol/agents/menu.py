@@ -64,25 +64,6 @@ class MenuAgent(aeidon.Delegate):
         action.set_active(page is self.get_current_page())
         return action.get_name()
 
-    def _get_recent_menu(self, doc):
-        """Return a new recent chooser menu."""
-
-        menu = gtk.RecentChooserMenu(self.recent_manager)
-        menu.set_show_not_found(False)
-        menu.set_show_tips(True)
-        menu.set_sort_type(gtk.RECENT_SORT_MRU)
-        if doc == aeidon.documents.MAIN:
-            group = "aeidon-main"
-        elif doc == aeidon.documents.TRAN:
-            group = "aeidon-translation"
-        recent_filter = gtk.RecentFilter()
-        recent_filter.add_group(group)
-        menu.add_filter(recent_filter)
-        menu.set_filter(recent_filter)
-        menu.set_data("group", group)
-        menu.set_limit(gaupol.conf.file.max_recent)
-        return menu
-
     def _on_redo_menu_item_activate(self, menu_item):
         """Redo the selected action and all those above it."""
 
@@ -132,15 +113,6 @@ class MenuAgent(aeidon.Delegate):
 
         index = int(active_item.get_name().split("_")[-1])
         self.notebook.set_current_page(index)
-
-    def on_open_button_show_menu(self, *args):
-        """Build and attach a new recent menu on the open button."""
-
-        menu = self._get_recent_menu(aeidon.documents.MAIN)
-        callback = self.on_recent_main_menu_item_activated
-        menu.connect("item-activated", callback)
-        self.get_tool_item("open_main_files").set_menu(menu)
-        gaupol.util.iterate_main()
 
     def on_page_tab_widget_button_press_event(self, button, event, page):
         """Display a pop-up menu with tab-related actions."""
@@ -192,26 +164,6 @@ class MenuAgent(aeidon.Delegate):
         self._projects_id = self.uim.add_ui_from_string(ui)
         self.uim.ensure_update()
         self.set_menu_notify_events("projects")
-
-    def on_show_recent_main_menu_activate(self, *args):
-        """Show the recent main file menu."""
-
-        item = self.get_menu_item("show_recent_main_menu")
-        menu = self._get_recent_menu(aeidon.documents.MAIN)
-        callback = self.on_recent_main_menu_item_activated
-        menu.connect("item-activated", callback)
-        item.set_submenu(menu)
-        gaupol.util.iterate_main()
-
-    def on_show_recent_translation_menu_activate(self, *args):
-        """Show the recent translation file menu."""
-
-        item = self.get_menu_item("show_recent_translation_menu")
-        menu = self._get_recent_menu(aeidon.documents.TRAN)
-        callback = self.on_recent_translation_menu_item_activated
-        menu.connect("item-activated", callback)
-        item.set_submenu(menu)
-        gaupol.util.iterate_main()
 
     def on_undo_button_show_menu(self, *args):
         """Show the menu listing all undoable actions."""
