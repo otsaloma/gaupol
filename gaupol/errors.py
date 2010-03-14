@@ -18,14 +18,7 @@
 
 import aeidon
 
-__all__ = ("ConfigParseError", "Default", "DependencyError")
-
-
-class ConfigParseError(aeidon.Error):
-
-    """Failed to parse configuration file."""
-
-    pass
+__all__ = ("Default", "DependencyError")
 
 
 class Default(aeidon.Error):

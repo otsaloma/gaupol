@@ -57,7 +57,7 @@ def flash_dialog(dialog):
     """Run `dialog`, destroy it and return response.
 
     This function is to be used always when a :class:`gtk.Dialog` is run so
-    that unit tests can monkey patch this function with one that returns a
+    that unit tests can monkey-patch this function with one that returns a
     specified response without waiting for user input.
     """
     response = dialog.run()

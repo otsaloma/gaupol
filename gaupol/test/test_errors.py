@@ -17,15 +17,6 @@
 import gaupol
 
 
-class TestConfigParseError(gaupol.TestCase):
-
-    def test_raise(self):
-        try:
-            raise gaupol.ConfigParseError
-        except gaupol.ConfigParseError:
-            pass
-
-
 class TestDefault(gaupol.TestCase):
 
     def test_raise(self):
