@@ -34,7 +34,7 @@ def _check_dependencies():
 
     try:
         import gtk
-        if gtk.pygtk_version < (2, 12, 0):
+        if gtk.pygtk_version < (2, 16, 0):
             raise ImportError
     except ImportError:
         print "PyGTK 2.12.0 or greater is required to run Gaupol."

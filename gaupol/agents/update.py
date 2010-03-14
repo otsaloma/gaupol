@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -18,7 +18,7 @@
 
 import aeidon
 import gaupol
-import gobject
+import glib
 import gtk
 import os
 _ = aeidon.i18n._
@@ -28,54 +28,47 @@ class UpdateAgent(aeidon.Delegate):
 
     """Updating the application GUI.
 
-    Instance attribute '_message_id' stores the statusbar message ID as
-    returned by 'statusbar.push' and '_message_tag' the statusbar message
-    timeout tag as returned by 'gobject.timeout_add'.
+    :ivar _message_id: A :class:`gtk.Statusbar` message ID
+    :ivar _message_tag: A timeout from :func:`glib.timeout_add`
     """
 
     __metaclass__ = aeidon.Contractual
 
     def __init__(self, master):
-        """Initialize an UpdateAgent object."""
-
+        """Initialize an :class:`UpdateAgent` object."""
         aeidon.Delegate.__init__(self, master)
         self._message_id = None
         self._message_tag = None
 
     def _disable_widgets(self):
         """Make widgets insensitive and blank."""
-
         self.window.set_title("Gaupol")
         self.video_button.get_data("label").set_text("")
         self.push_message(None)
 
     def _update_actions(self, page):
-        """Update sensitivities of all UI manager actions for page."""
-
-        action_group = self.get_action_group("main-safe")
-        for action in action_group.list_actions():
-            action.update_sensitivity(self, page)
-        action_group = self.get_action_group("main-unsafe")
-        for action in action_group.list_actions():
-            action.update_sensitivity(self, page)
+        """Update sensitivities of all actions for page."""
+        for name in ("main-safe", "main-unsafe"):
+            action_group = self.get_action_group(name)
+            for action in action_group.list_actions():
+                action.update_sensitivity(self, page)
 
     def _update_revert(self, page):
-        """Update tooltips for undo and redo."""
-
+        """Update tooltips for undo and redo actions."""
         if page is None: return
         if page.project.can_undo():
-            description = page.project.undoables[0].description
-            tooltip = _('Undo "%s"') % description
-            self.get_action("undo_action").props.tooltip = tooltip
+            action = self.get_action("undo_action")
+            action.props.tooltip = _('Undo "%s"') % (
+                page.project.undoables[0].description)
         if page.project.can_redo():
-            description = page.project.redoables[0].description
-            tooltip = _('Redo "%s"') % description
-            self.get_action("redo_action").props.tooltip = tooltip
+            action = self.get_action("redo_action")
+            action.props.tooltip = _('Redo "%s"') % (
+                page.project.redoables[0].description)
 
     def _update_widgets(self, page):
-        """Update the states of widgets."""
-
-        if page is None: return self._disable_widgets()
+        """Update states of all widgets for `page`."""
+        if page is None:
+            return self._disable_widgets()
         self.window.set_title(page.tab_label.get_text())
         self.get_mode_action(page.edit_mode).set_active(True)
         self.get_framerate_action(page.project.framerate).set_active(True)
@@ -89,25 +82,22 @@ class UpdateAgent(aeidon.Delegate):
         self.video_button.set_tooltip_text(video or None)
 
     def flash_message(self, message):
-        """Show message in the statusbar for a short while."""
-
+        """Show `message` in statusbar for a short while."""
         self.push_message(message)
-        push = self.push_message
-        self._message_tag = gaupol.util.delay_add(6000, push, None)
+        self._message_tag = gaupol.util.delay_add(6000,
+                                                  self.push_message,
+                                                  None)
 
     def on_activate_next_project_activate(self, *args):
         """Activate the project in the next tab."""
-
         self.notebook.next_page()
 
     def on_activate_previous_project_activate(self, *args):
         """Activate the project in the previous tab."""
-
         self.notebook.prev_page()
 
     def on_conf_application_window_notify_toolbar_style(self, *args):
         """Change the style of the main toolbar."""
-
         toolbar = self.uim.get_widget("/ui/main_toolbar")
         style = gaupol.conf.application_window.toolbar_style
         if style == gaupol.toolbar_styles.DEFAULT:
@@ -116,7 +106,6 @@ class UpdateAgent(aeidon.Delegate):
 
     def on_move_tab_left_activate(self, *args):
         """Move the current tab to the left."""
-
         page = self.get_current_page()
         scroller = page.view.get_parent()
         index = self.pages.index(page)
@@ -124,7 +113,6 @@ class UpdateAgent(aeidon.Delegate):
 
     def on_move_tab_right_activate(self, *args):
         """Move the current tab to the right."""
-
         page = self.get_current_page()
         scroller = page.view.get_parent()
         index = self.pages.index(page)
@@ -137,9 +125,8 @@ class UpdateAgent(aeidon.Delegate):
 
     def on_notebook_page_reordered(self, notebook, scroller, index):
         """Update the list of pages to match the new order."""
-
         view = scroller.get_child()
-        page = [x for x in self.pages if x.view is view][0]
+        page = filter(lambda x: x.view is view, self.pages)[0]
         self.pages.remove(page)
         self.pages.insert(index, page)
         self.update_gui()
@@ -147,16 +134,14 @@ class UpdateAgent(aeidon.Delegate):
 
     def on_notebook_switch_page(self, notebook, pointer, index):
         """Update GUI for the page switched to."""
-
         if not self.pages: return
-        page = self.pages[index]
         self.update_gui()
+        page = self.pages[index]
         page.view.grab_focus()
         self.emit("page-switched", page)
 
     def on_view_button_press_event(self, view, event):
         """Display a right-click pop-up menu to edit data."""
-
         if event.button != 3: return
         x = int(event.x)
         y = int(event.y)
@@ -172,26 +157,22 @@ class UpdateAgent(aeidon.Delegate):
 
     def on_view_move_cursor(self, *args):
         """Update GUI after moving cursor in the view."""
-
         self.update_gui()
 
     def on_view_selection_changed(self, *args):
         """Update GUI after changing selection in the view."""
-
         self.update_gui()
 
     def on_window_window_state_event(self, window, event):
         """Save window maximization."""
-
         state = event.new_window_state
         maximized = bool(state & gtk.gdk.WINDOW_STATE_MAXIMIZED)
         gaupol.conf.application_window.maximized = maximized
 
     def push_message(self, message):
-        """Show message in the statusbar."""
-
+        """Show `message` in the statusbar."""
         if self._message_tag is not None:
-            gobject.source_remove(self._message_tag)
+            glib.source_remove(self._message_tag)
         if self._message_id is not None:
             self.statusbar.remove_message(0, self._message_id)
         event_box = self.statusbar.get_ancestor(gtk.EventBox)
@@ -201,9 +182,8 @@ class UpdateAgent(aeidon.Delegate):
 
     def update_gui(self):
         """Update widget sensitivities and states for the current page."""
-
         page = self.get_current_page()
-        self.extension_manager.update_extensions(page)
         self._update_actions(page)
         self._update_widgets(page)
         self._update_revert(page)
+        self.extension_manager.update_extensions(page)

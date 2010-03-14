@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -20,86 +20,73 @@ import gaupol
 class TestUpdateAgent(gaupol.TestCase):
 
     def setup_method(self, method):
-
         self.application = self.new_application()
         self.application.add_new_page(self.new_page())
 
-    def test__update_revert(self):
-
-        page = self.application.get_current_page()
-        page.project.remove_subtitles((0,))
-        page.project.remove_subtitles((0,))
-        self.application.update_gui()
-        page.project.undo()
-        self.application.update_gui()
-
     def test_flash_message(self):
-
         self.application.flash_message("")
         self.application.flash_message(None)
 
     def test_on_activate_next_project_activate(self):
-
         self.application.notebook.set_current_page(0)
         self.application.get_action("activate_next_project").activate()
 
     def test_on_activate_previous_project_activate(self):
-
-        self.application.notebook.set_current_page(1)
+        self.application.notebook.set_current_page(-1)
         self.application.get_action("activate_previous_project").activate()
 
     def test_on_conf_application_window_notify_toolbar_style(self):
-
         for style in gaupol.toolbar_styles:
             gaupol.conf.application_window.toolbar_style = style
 
     def test_on_move_tab_left_activate(self):
-
-        self.application.notebook.set_current_page(1)
+        self.application.notebook.set_current_page(-1)
         self.application.get_action("move_tab_left").activate()
 
     def test_on_move_tab_right_activate(self):
-
         self.application.notebook.set_current_page(0)
         self.application.get_action("move_tab_right").activate()
 
     def test_on_notebook_page_reordered(self):
-
-        self.application.notebook.set_current_page(1)
+        self.application.notebook.set_current_page(-1)
         self.application.get_action("move_tab_left").activate()
 
     def test_on_notebook_switch_page(self):
-
         self.application.notebook.set_current_page(0)
-        self.application.notebook.set_current_page(1)
+        self.application.notebook.set_current_page(-1)
 
     def test_on_view_move_cursor(self):
-
         page = self.application.get_current_page()
         page.view.emit("move-cursor", 1, 1)
         page.view.emit("move-cursor", 1, 1)
         gaupol.util.iterate_main()
 
     def test_on_view_selection_changed(self):
-
         page = self.application.get_current_page()
         page.view.select_rows((0,))
         page.view.select_rows((1,))
 
     def test_on_window_window_state_event(self):
-
         self.application.window.unmaximize()
         self.application.window.maximize()
         self.application.window.unmaximize()
         gaupol.util.iterate_main()
 
     def test_push_message(self):
-
         self.application.push_message("")
         self.application.push_message(None)
 
     def test_update_gui(self):
-
         self.application.update_gui()
+
+    def test_update_gui__close_all(self):
         self.application.get_action("close_all_projects").activate()
+        self.application.update_gui()
+
+    def test_update_gui__revert(self):
+        page = self.application.get_current_page()
+        page.project.remove_subtitles((0,))
+        page.project.remove_subtitles((0,))
+        self.application.update_gui()
+        page.project.undo()
         self.application.update_gui()
