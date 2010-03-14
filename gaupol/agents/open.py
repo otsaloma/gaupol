@@ -318,7 +318,7 @@ class OpenAgent(aeidon.Delegate):
         page.project.connect("action-undone", callback)
         callback = self.on_page_tab_widget_button_press_event
         page.tab_widget.connect("button-press-event", callback, page)
-        self.connect_to_view_signals(page.view)
+        self.connect_view_signals(page.view)
         page.project.clipboard.set_texts(self.clipboard.get_texts())
 
         scroller = gtk.ScrolledWindow()
@@ -366,7 +366,7 @@ class OpenAgent(aeidon.Delegate):
         self.flash_message(message % locals())
         gaupol.util.set_cursor_normal(self.window)
 
-    def connect_to_view_signals(self, view):
+    def connect_view_signals(self, view):
         """Connect to signals emitted by view."""
 
         selection = view.get_selection()

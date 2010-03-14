@@ -158,10 +158,10 @@ class TestOpenAgent(gaupol.TestCase):
         self.application.append_file(self.new_subrip_file())
         self.application.append_file(self.new_subrip_file(), "ascii")
 
-    def test_connect_to_view_signals(self):
+    def test_connect_view_signals(self):
 
         view = self.application.pages[0].view
-        self.application.connect_to_view_signals(view)
+        self.application.connect_view_signals(view)
 
     @adds_pages(0)
     def test_on_append_file_activate(self):
