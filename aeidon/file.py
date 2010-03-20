@@ -73,10 +73,11 @@ class SubtitleFile(object):
         Raise :exc:`UnicodeError` if decoding fails.
         Return a list of lines read.
         """
-        args = (self.path, "rU", self.encoding)
-        with contextlib.closing(codecs.open(*args)) as fobj:
-            lines = fobj.readlines()
+        decode = lambda x: x.decode(self.encoding)
+        with contextlib.closing(open(self.path, "rU")) as fobj:
+            lines = map(decode, fobj.readlines())
             chars = fobj.newlines
+            assert chars is not None
         lines = [x[:-1] if x.endswith("\n") else x for x in lines]
         for index in (0, -1):
             while lines and (not lines[index].strip()):
