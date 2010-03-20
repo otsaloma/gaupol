@@ -172,6 +172,8 @@ class SaveAgent(aeidon.Delegate):
 
         Raise Default if cancelled or failed and document is not saved.
         """
+        ## FIX
+        return
         props = self._get_main_props(page)
         if None in props:
             return self.save_main_document_as(page)
@@ -197,6 +199,8 @@ class SaveAgent(aeidon.Delegate):
 
         Raise Default if cancelled or failed and document is not saved.
         """
+        # FIX
+        return
         props = self._get_translation_props(page)
         if None in props:
             return self.save_translation_document_as(page)

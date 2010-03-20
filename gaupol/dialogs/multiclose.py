@@ -89,7 +89,7 @@ class MultiCloseDialog(gaupol.BuilderDialog):
         if response == gtk.RESPONSE_YES:
             map(self._save_and_close_page, self.pages)
         if response == gtk.RESPONSE_NO:
-            map(lambda x: self.application.close_page(x, False), self.pages)
+            map(lambda x: self.application.close(x, False), self.pages)
 
     def _on_tree_view_cell_toggled(self, renderer, row, store):
         """Toggle save document check button value."""
@@ -112,4 +112,4 @@ class MultiCloseDialog(gaupol.BuilderDialog):
         pages = [x for x in store if x[0] is page]
         if pages and pages[0][1]:
             self.application.save_translation_document(page)
-        self.application.close_page(page, False)
+        self.application.close(page, False)

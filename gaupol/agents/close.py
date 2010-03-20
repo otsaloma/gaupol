@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""Closing projects and quitting Gaupol."""
+"""Closing pages and quitting Gaupol."""
 
 import aeidon
 import gaupol
@@ -25,46 +25,25 @@ _ = aeidon.i18n._
 
 class CloseAgent(aeidon.Delegate):
 
-    """Closing projects and quitting Gaupol."""
+    """Closing pages and quitting Gaupol."""
 
-    def _close_all_pages(self):
-        """Close all pages after seeking confirmation.
+    def _confirm_close(self, page):
+        """Close `page` after asking to save its documents.
 
-        Raise Default if cancelled and (all) pages were not closed.
-        """
-        if sum((len(self._need_confirmation(x)) for x in self.pages)) > 1:
-            return self._confirm_and_close_pages(tuple(self.pages))
-        while self.pages:
-            self.close_page(self.pages[-1])
-
-    def _confirm_and_close_page(self, page):
-        """Close page after possibly saving its documents.
-
-        Raise Default if cancelled and page was not closed.
+        Raise :exc:`gaupol.Default` if cancelled and `page` not closed.
         """
         docs = self._need_confirmation(page)
         if len(docs) == 2:
-            return self._confirm_and_close_pages((page,))
+            return self._confirm_close_multiple((page,))
         if aeidon.documents.MAIN in docs:
-            return self._confirm_and_close_page_main(page)
+            return self._confirm_close_main(page)
         if aeidon.documents.TRAN in docs:
-            return self._confirm_and_close_page_translation(page)
-        self.close_page(page, False)
+            return self._confirm_close_translation(page)
 
-    def _confirm_and_close_pages(self, pages):
-        """Close pages after possibly saving their documents.
+    def _confirm_close_main(self, page):
+        """Close `page` after asking to save its main document.
 
-        Raise Default if cancelled and (all) pages were not closed.
-        """
-        dialog = gaupol.MultiCloseDialog(self.window, self, pages)
-        response = gaupol.util.flash_dialog(dialog)
-        if not response in (gtk.RESPONSE_YES, gtk.RESPONSE_NO):
-            raise gaupol.Default
-
-    def _confirm_and_close_page_main(self, page):
-        """Close page after possibly saving the main document.
-
-        Raise Default if cancelled and page was not closed.
+        Raise :exc:`gaupol.Default` if cancelled and page not closed.
         """
         title = _('Save changes to main document "%s" before closing?')
         title = title % page.get_main_basename()
@@ -79,12 +58,21 @@ class CloseAgent(aeidon.Delegate):
             raise gaupol.Default
         if response == gtk.RESPONSE_YES:
             self.save_main_document(page)
-        self.close_page(page, False)
 
-    def _confirm_and_close_page_translation(self, page):
-        """Close page after possibly saving the translation document.
+    def _confirm_close_multiple(self, pages):
+        """Close `pages` after asking to save their documents.
 
-        Raise Default if cancelled and page was not closed.
+        Raise :exc:`gaupol.Default` if cancelled and `pages` not closed.
+        """
+        dialog = gaupol.MultiCloseDialog(self.window, self, pages)
+        response = gaupol.util.flash_dialog(dialog)
+        if not response in (gtk.RESPONSE_YES, gtk.RESPONSE_NO):
+            raise gaupol.Default
+
+    def _confirm_close_translation(self, page):
+        """Close `page` after asking to save its translation document.
+
+        Raise :exc:`gaupol.Default` if cancelled and page not closed.
         """
         title = _('Save changes to translation document "%s" before closing?')
         title = title % page.get_translation_basename()
@@ -99,11 +87,9 @@ class CloseAgent(aeidon.Delegate):
             raise gaupol.Default
         if response == gtk.RESPONSE_YES:
             self.save_translation_document(page)
-        self.close_page(page, False)
 
     def _need_confirmation(self, page):
-        """Return the documents in page that require confirmation."""
-
+        """Return documents in `page` with unsaved changes."""
         docs = []
         if page.project.main_changed:
             docs.append(aeidon.documents.MAIN)
@@ -119,23 +105,34 @@ class CloseAgent(aeidon.Delegate):
 
     def _save_window_geometry(self):
         """Save the geometry of the application and output windows."""
-
         if not gaupol.conf.application_window.maximized:
             conf = gaupol.conf.application_window
-            conf.size = self.window.get_size()
-            conf.position = self.window.get_position()
+            conf.size = list(self.window.get_size())
+            conf.position = list(self.window.get_position())
         if not gaupol.conf.output_window.maximized:
             conf = gaupol.conf.output_window
-            conf.size = self.output_window.get_size()
-            conf.position = self.output_window.get_position()
+            conf.size = list(self.output_window.get_size())
+            conf.position = list(self.output_window.get_position())
 
-    def close_page(self, page, confirm=True):
-        """Close page seeking confirmation if confirm is True.
+    def close_all(self):
+        """Close all pages after asking to save their documents.
 
-        Raise Default if cancelled and page was not closed.
+        Raise :exc:`gaupol.Default` if cancelled and all pages not closed.
+        """
+        if sum((len(self._need_confirmation(x)) for x in self.pages)) > 1:
+            return self._confirm_close_multiple(tuple(self.pages))
+        while self.pages:
+            self.close(self.pages[-1], False)
+
+    def close(self, page, confirm=True):
+        """Close `page` after asking to save its documents.
+
+        If `confirm` is ``False`` do not ask to save documents.
+        Raise :exc:`gaupol.Default` if cancelled and page was not closed.
         """
         if confirm:
-            return self._confirm_and_close_page(page)
+            self._confirm_close(page)
+        if page not in self.pages: return
         index = self.pages.index(page)
         if self.notebook.get_current_page() == index:
             self.notebook.next_page()
@@ -147,36 +144,38 @@ class CloseAgent(aeidon.Delegate):
     @aeidon.deco.silent(gaupol.Default)
     def on_close_all_projects_activate(self, *args):
         """Close all open projects."""
-
-        self._close_all_pages()
+        self.close_all()
 
     @aeidon.deco.silent(gaupol.Default)
     def on_close_project_activate(self, *args):
         """Close project."""
-
-        self.close_page(self.get_current_page())
+        self.close(self.get_current_page())
 
     @aeidon.deco.silent(gaupol.Default)
     def on_page_close_request(self, page, *args):
         """Close project."""
-
-        self.close_page(page)
+        self.close(page)
 
     @aeidon.deco.silent(gaupol.Default)
     def on_quit_activate(self, *args):
         """Quit Gaupol."""
+        self.quit()
 
-        self.emit("quit")
-        self._close_all_pages()
-        self.extension_manager.teardown_extensions()
-        self._save_window_geometry()
-        try:
-            gtk.main_quit()
-        except RuntimeError:
-            raise SystemExit(1)
-
+    @aeidon.deco.silent(gaupol.Default)
     def on_window_delete_event(self, *args):
         """Quit Gaupol."""
-
-        self.get_action("quit").activate()
+        self.quit()
         return True
+
+    def quit(self):
+        """Quit Gaupol.
+
+        Raise :exc:`gaupol.Default` if cancelled.
+        """
+        self.emit("quit")
+        self.close_all()
+        self.extension_manager.teardown_extensions()
+        self._save_window_geometry()
+        try: gtk.main_quit()
+        except RuntimeError:
+            raise SystemExit(1)

@@ -113,7 +113,7 @@ class OpenAgent(aeidon.Delegate):
         if gaupol.conf.encoding.try_locale:
             encoding = aeidon.encodings.get_locale_code()
             encodings.append(encoding)
-        encodings += gaupol.conf.encoding.fallbacks
+        encodings += gaupol.conf.encoding.fallback
         try_auto = gaupol.conf.encoding.try_auto
         if try_auto and aeidon.util.chardet_available():
             encodings.append("auto")
