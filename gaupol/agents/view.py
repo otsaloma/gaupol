@@ -24,27 +24,8 @@ class ViewAgent(aeidon.Delegate):
 
     """Changing the visual appearance of application and its documents."""
 
-    def _toggle_column(self, field):
-        """Show or hide column corresponding to `field`."""
-        page = self.get_current_page()
-        col = getattr(page.view.columns, field.name)
-        column = page.view.get_column(col)
-        visible = column.get_visible()
-        active = self.get_column_action(field).get_active()
-        if visible is active: return
-        gaupol.util.set_cursor_busy(self.window)
-        column.set_visible(not visible)
-        visible_fields = []
-        for field in gaupol.fields:
-            col = getattr(page.view.columns, field.name)
-            if page.view.get_column(col).get_visible():
-                visible_fields.append(field)
-        gaupol.conf.editor.visible_fields = visible_fields
-        self.update_gui()
-        page.view.columns_autosize()
-        gaupol.util.set_cursor_normal(self.window)
-
-    def on_framerate_combo_changed(self, combo_box):
+    @aeidon.deco.export
+    def _on_framerate_combo_changed(self, combo_box):
         """Change the framerate with which nonnative units are calculated."""
         page = self.get_current_page()
         index = combo_box.get_active()
@@ -60,12 +41,14 @@ class ViewAgent(aeidon.Delegate):
             page.reload_view(rows, fields)
         gaupol.util.set_cursor_normal(self.window)
 
-    def on_output_window_notify_visible(self, output_window, visible):
+    @aeidon.deco.export
+    def _on_output_window_notify_visible(self, output_window, visible):
         """Sync menu item to output window's visibility."""
         action = self.get_action("toggle_output_window")
         action.set_active(output_window.props.visible)
 
-    def on_show_framerate_24_changed(self, item, active_item):
+    @aeidon.deco.export
+    def _on_show_framerate_24_changed(self, item, active_item):
         """Change the framerate with which nonnative units are calculated."""
         page = self.get_current_page()
         framerate = active_item.framerate
@@ -80,7 +63,8 @@ class ViewAgent(aeidon.Delegate):
             page.reload_view(rows, fields)
         gaupol.util.set_cursor_normal(self.window)
 
-    def on_show_times_changed(self, item, active_item):
+    @aeidon.deco.export
+    def _on_show_times_changed(self, item, active_item):
         """Change the units in which positions are shown."""
         page = self.get_current_page()
         edit_mode = active_item.mode
@@ -106,30 +90,36 @@ class ViewAgent(aeidon.Delegate):
         gaupol.util.set_cursor_normal(self.window)
         page.emit("view-created", page.view)
 
-    def on_toggle_duration_column_toggled(self, *args):
+    @aeidon.deco.export
+    def _on_toggle_duration_column_toggled(self, *args):
         """Show or hide the "Duration" column."""
         self._toggle_column(gaupol.fields.DURATION)
 
-    def on_toggle_end_column_toggled(self, *args):
+    @aeidon.deco.export
+    def _on_toggle_end_column_toggled(self, *args):
         """Show or hide the "End" column."""
         self._toggle_column(gaupol.fields.END)
 
-    def on_toggle_main_text_column_toggled(self, *args):
+    @aeidon.deco.export
+    def _on_toggle_main_text_column_toggled(self, *args):
         """Show or hide the "Main Text" column."""
         self._toggle_column(gaupol.fields.MAIN_TEXT)
 
-    def on_toggle_main_toolbar_toggled(self, *args):
+    @aeidon.deco.export
+    def _on_toggle_main_toolbar_toggled(self, *args):
         """Show or hide the main toolbar."""
         toolbar = self.uim.get_widget("/ui/main_toolbar")
         visible = toolbar.props.visible
         toolbar.props.visible = not visible
         gaupol.conf.application_window.show_main_toolbar = not visible
 
-    def on_toggle_number_column_toggled(self, *args):
+    @aeidon.deco.export
+    def _on_toggle_number_column_toggled(self, *args):
         """Show or hide the "No." column."""
         self._toggle_column(gaupol.fields.NUMBER)
 
-    def on_toggle_output_window_toggled(self, *args):
+    @aeidon.deco.export
+    def _on_toggle_output_window_toggled(self, *args):
         """Show or hide the output window."""
         visible = self.output_window.props.visible
         action = self.get_action("toggle_output_window")
@@ -139,28 +129,53 @@ class ViewAgent(aeidon.Delegate):
             return self.output_window.hide()
         self.output_window.show()
 
-    def on_toggle_start_column_toggled(self, *args):
+    @aeidon.deco.export
+    def _on_toggle_start_column_toggled(self, *args):
         """Show or hide the "Start" column."""
         self._toggle_column(gaupol.fields.START)
 
-    def on_toggle_statusbar_toggled(self, *args):
+    @aeidon.deco.export
+    def _on_toggle_statusbar_toggled(self, *args):
         """Show or hide the statusbar."""
         visible = self.statusbar.props.visible
         self.statusbar.props.visible = not visible
         gaupol.conf.application_window.show_statusbar = not visible
 
-    def on_toggle_translation_text_column_toggled(self, *args):
+    @aeidon.deco.export
+    def _on_toggle_translation_text_column_toggled(self, *args):
         """Show or hide the "Translation Text" column."""
         self._toggle_column(gaupol.fields.TRAN_TEXT)
 
-    def on_toggle_video_toolbar_toggled(self, *args):
+    @aeidon.deco.export
+    def _on_toggle_video_toolbar_toggled(self, *args):
         """Show or hide the video toolbar."""
         visible = self.video_toolbar.props.visible
         self.video_toolbar.props.visible = not visible
         gaupol.conf.application_window.show_video_toolbar = not visible
 
-    def on_view_header_button_press_event(self, button, event):
+    @aeidon.deco.export
+    def _on_view_header_button_press_event(self, button, event):
         """Display a column visibility pop-up menu."""
         if event.button != 3: return
         menu = self.uim.get_widget("/ui/view_header_popup")
         menu.popup(None, None, None, event.button, event.time)
+
+    def _toggle_column(self, field):
+        """Show or hide column corresponding to `field`."""
+        page = self.get_current_page()
+        col = getattr(page.view.columns, field.name)
+        column = page.view.get_column(col)
+        visible = column.get_visible()
+        active = self.get_column_action(field).get_active()
+        if visible is active: return
+        gaupol.util.set_cursor_busy(self.window)
+        column.set_visible(not visible)
+        visible_fields = []
+        for field in gaupol.fields:
+            col = getattr(page.view.columns, field.name)
+            if page.view.get_column(col).get_visible():
+                visible_fields.append(field)
+        gaupol.conf.editor.visible_fields = visible_fields
+        self.update_gui()
+        page.view.columns_autosize()
+        gaupol.util.set_cursor_normal(self.window)

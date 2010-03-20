@@ -77,6 +77,14 @@ def contractual(function):
         return value
     return wrapper
 
+def export(function):
+    """Decorator for delegate functions that are exported to master."""
+    function.export = True
+    @functools.wraps(function)
+    def wrapper(*args, **kwargs):
+        return function(*args, **kwargs)
+    return wrapper
+
 def memoize(function):
     """Decorator for functions that cache their return values."""
     cache = {}

@@ -24,14 +24,17 @@ class HelpAgent(aeidon.Delegate):
 
     """Help and information."""
 
-    def on_browse_wiki_documentation_activate(self, *args):
+    @aeidon.deco.export
+    def _on_browse_wiki_documentation_activate(self, *args):
         """Open web browser to view wiki documentation."""
         gaupol.util.show_uri(gaupol.WIKI_URL)
 
-    def on_report_a_bug_activate(self, *args):
+    @aeidon.deco.export
+    def _on_report_a_bug_activate(self, *args):
         """Open web browser to submit a bug report."""
         gaupol.util.show_uri(gaupol.BUG_REPORT_URL)
 
-    def on_view_about_dialog_activate(self, *args):
+    @aeidon.deco.export
+    def _on_view_about_dialog_activate(self, *args):
         """Show information about Gaupol."""
         gaupol.util.flash_dialog(gaupol.AboutDialog(self.window))

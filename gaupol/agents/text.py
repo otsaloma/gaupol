@@ -24,7 +24,8 @@ class TextAgent(aeidon.Delegate):
 
     """Checking spelling."""
 
-    def on_check_spelling_activate(self, *args):
+    @aeidon.deco.export
+    def _on_check_spelling_activate(self, *args):
         """Check for incorrect spelling."""
 
         gaupol.util.set_cursor_busy(self.window)
@@ -35,7 +36,8 @@ class TextAgent(aeidon.Delegate):
         gaupol.util.set_cursor_normal(self.window)
         gaupol.util.flash_dialog(dialog)
 
-    def on_configure_spell_check_activate(self, *args):
+    @aeidon.deco.export
+    def _on_configure_spell_check_activate(self, *args):
         """Set languages and spell-check targets."""
 
         gaupol.util.set_cursor_busy(self.window)
@@ -44,7 +46,8 @@ class TextAgent(aeidon.Delegate):
         gaupol.util.flash_dialog(dialog)
         self.update_gui()
 
-    def on_correct_texts_activate(self, *args):
+    @aeidon.deco.export
+    def _on_correct_texts_activate(self, *args):
         """Find and correct errors in texts."""
 
         gaupol.util.set_cursor_busy(self.window)

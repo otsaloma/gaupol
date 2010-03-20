@@ -26,10 +26,12 @@ class UtilityAgent(aeidon.Delegate):
 
     __metaclass__ = aeidon.Contractual
 
+    @aeidon.deco.export
     def get_all_indices(self):
         """Return a list of all indices of subtitles."""
         return range(len(self.subtitles))
 
+    @aeidon.deco.export
     def get_changed(self, doc):
         """Return the changed value corresponding to `doc`."""
         if doc == aeidon.documents.MAIN:
@@ -38,6 +40,7 @@ class UtilityAgent(aeidon.Delegate):
             return self.tran_changed
         raise ValueError("Invalid document: %s" % repr(doc))
 
+    @aeidon.deco.export
     def get_file(self, doc):
         """Return the file corresponding to `doc`."""
         if doc == aeidon.documents.MAIN:
@@ -46,6 +49,7 @@ class UtilityAgent(aeidon.Delegate):
             return self.tran_file
         raise ValueError("Invalid document: %s" % repr(doc))
 
+    @aeidon.deco.export
     def get_format(self, doc):
         """Return format of the file corresponding to `doc`.
 
@@ -62,36 +66,42 @@ class UtilityAgent(aeidon.Delegate):
             return self.get_format(aeidon.documents.MAIN)
         raise ValueError("Invalid document: %s" % repr(doc))
 
+    @aeidon.deco.export
     def get_liner(self, doc):
         """Return a new :class:`aeidon.Liner` instance."""
         re_tag = self.get_markup_tag_regex(doc)
         clean_func = self.get_markup_clean_func(doc)
         return aeidon.Liner(re_tag, clean_func)
 
+    @aeidon.deco.export
     def get_markup(self, doc):
         """Return `doc`'s markup instance or ``None``."""
         format = self.get_format(doc)
         if format is None: return None
         return aeidon.tags.new(format)
 
+    @aeidon.deco.export
     def get_markup_clean_func(self, doc):
         """Return the function to clean markup or ``None``."""
         format = self.get_format(doc)
         if format is None: return None
         return aeidon.tags.new(format).clean
 
+    @aeidon.deco.export
     def get_markup_tag_regex(self, doc):
         """Return the regular expression for a markup tag or ``None``."""
         format = self.get_format(doc)
         if format is None: return None
         return aeidon.tags.new(format).tag
 
+    @aeidon.deco.export
     def get_mode(self):
         """Return the mode of the main file or default."""
         if self.main_file is not None:
             return self.main_file.mode
         return aeidon.modes.TIME
 
+    @aeidon.deco.export
     def get_parser(self, doc):
         """Return a new :class:`aeidon.Parser` instance."""
         re_tag = self.get_markup_tag_regex(doc)
@@ -101,6 +111,7 @@ class UtilityAgent(aeidon.Delegate):
     def get_text_length_require(self, index, doc):
         assert 0 <= index < len(self.subtitles)
 
+    @aeidon.deco.export
     def get_text_length(self, index, doc):
         """Return the amount of characters in text excluding markup."""
         text = self.subtitles[index].get_text(doc)
@@ -109,6 +120,7 @@ class UtilityAgent(aeidon.Delegate):
             text = re_tag.sub("", text)
         return len(text)
 
+    @aeidon.deco.export
     def get_text_signal(self, doc):
         """Return the ``texts-changed`` signal corresponding to `doc`."""
         if doc == aeidon.documents.MAIN:
@@ -117,12 +129,14 @@ class UtilityAgent(aeidon.Delegate):
             return "translation-texts-changed"
         raise ValueError("Invalid document: %s" % repr(doc))
 
+    @aeidon.deco.export
     def new_revertable_action(self, register):
         """Return a new :class:`aeidon.RevertableAction` instance."""
         action = aeidon.RevertableAction()
         action.register = register
         return action
 
+    @aeidon.deco.export
     def new_subtitle(self):
         """Return a new :class:`aeidon.Subtitle` instance."""
         return aeidon.Subtitle(self.get_mode(), self.framerate)
@@ -135,6 +149,7 @@ class UtilityAgent(aeidon.Delegate):
     def new_temp_file_ensure(self, value, doc, encoding=None):
         assert os.path.isfile(value)
 
+    @aeidon.deco.export
     def new_temp_file(self, doc, encoding=None):
         """Return path to a new temporary file with subtitles from `doc`.
 

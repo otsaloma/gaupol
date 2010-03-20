@@ -78,7 +78,8 @@ class PreviewAgent(aeidon.Delegate):
         dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
         gaupol.util.flash_dialog(dialog)
 
-    def on_preview_activate(self, *args):
+    @aeidon.deco.export
+    def _on_preview_activate(self, *args):
         """Preview from selected position with a video player."""
 
         page = self.get_current_page()
@@ -92,6 +93,7 @@ class PreviewAgent(aeidon.Delegate):
             doc = aeidon.documents.MAIN
         self.preview(page, time, doc)
 
+    @aeidon.deco.export
     def preview(self, page, time, doc, path=None):
         """Preview from time with a video player."""
 
@@ -113,6 +115,7 @@ class PreviewAgent(aeidon.Delegate):
         args = (page, process, output_path, command)
         gobject.timeout_add(1000, function, *args)
 
+    @aeidon.deco.export
     def preview_changes(self, page, row, doc, method, args=None, kwargs=None):
         """Preview changes caused by method with a video player."""
 

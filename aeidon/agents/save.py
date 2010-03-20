@@ -135,6 +135,7 @@ class SaveAgent(aeidon.Delegate):
         if file_existed and backup_success:
             aeidon.temp.remove(backup_path)
 
+    @aeidon.deco.export
     def save(self, doc, sfile=None, keep_changes=True):
         """Write subtitle data from `doc` to `sfile`.
 
@@ -153,6 +154,7 @@ class SaveAgent(aeidon.Delegate):
         assert self.main_file is not None
         assert (not keep_changes) or (self.main_changed == 0)
 
+    @aeidon.deco.export
     def save_main(self, sfile=None, keep_changes=True):
         """Write subtitle data from main document to `sfile`.
 
@@ -173,6 +175,7 @@ class SaveAgent(aeidon.Delegate):
         assert self.tran_file is not None
         assert (not keep_changes) or (self.tran_changed == 0)
 
+    @aeidon.deco.export
     def save_translation(self, sfile=None, keep_changes=True):
         """Write subtitle data from translation document to `sfile`.
 

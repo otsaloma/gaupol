@@ -45,6 +45,7 @@ class SetAgent(aeidon.Delegate):
     def set_duration_require(self, index, value, register=-1):
         assert 0 <= index < len(self.subtitles)
 
+    @aeidon.deco.export
     @aeidon.deco.revertable
     def set_duration(self, index, value, register=-1):
         """Set the value of duration position.
@@ -67,6 +68,7 @@ class SetAgent(aeidon.Delegate):
     def set_end_require(self, index, value, register=-1):
         assert 0 <= index < len(self.subtitles)
 
+    @aeidon.deco.export
     @aeidon.deco.revertable
     def set_end(self, index, value, register=-1):
         """Set the value of end position.
@@ -89,6 +91,7 @@ class SetAgent(aeidon.Delegate):
     def set_main_text_require(self, index, value, register=-1):
         assert 0 <= index < len(self.subtitles)
 
+    @aeidon.deco.export
     @aeidon.deco.revertable
     def set_main_text(self, index, value, register=-1):
         """Set the value of main document's text."""
@@ -104,6 +107,7 @@ class SetAgent(aeidon.Delegate):
         for i in range(len(self.subtitles) - 1):
             assert self.subtitles[i] <= self.subtitles[i + 1]
 
+    @aeidon.deco.export
     @aeidon.deco.revertable
     @aeidon.deco.notify_frozen
     def set_start(self, index, value, register=-1):
@@ -128,6 +132,7 @@ class SetAgent(aeidon.Delegate):
     def set_text_require(self, index, doc, value, register=-1):
         assert 0 <= index < len(self.subtitles)
 
+    @aeidon.deco.export
     @aeidon.deco.revertable
     def set_text(self, index, doc, value, register=-1):
         """Set the value of `doc`'s text."""
@@ -148,6 +153,7 @@ class SetAgent(aeidon.Delegate):
     def set_translation_text_require(self, index, value, register=-1):
         assert 0 <= index < len(self.subtitles)
 
+    @aeidon.deco.export
     @aeidon.deco.revertable
     def set_translation_text(self, index, value, register=-1):
         """Set the value of translation document's text."""

@@ -25,7 +25,7 @@ class ProjectMeta(aeidon.Contractual):
 
     """Project metaclass with delegated methods added.
 
-    Delegated methods are added to the class dictionary during :meth:`__new__`
+    Public methods are added to the class dictionary during :meth:`__new__`
     in order to fool Sphinx (and perhaps other API documentation generators)
     into thinking that the resulting instantiated class actually contains those
     methods, which it does not since the methods are be removed during
@@ -36,13 +36,11 @@ class ProjectMeta(aeidon.Contractual):
         new_dict = dic.copy()
         for agent_class_name in aeidon.agents.__all__:
             agent_class = getattr(aeidon.agents, agent_class_name)
-            def is_delegate_method(name):
-                if (name.startswith("_") or
-                    name.endswith("_require") or
-                    name.endswith("_ensure")):
-                    return False
-                return callable(getattr(agent_class, name))
-            attr_names = filter(is_delegate_method, dir(agent_class))
+            def is_public_method(name):
+                return (not name.startswith("_") and
+                        callable(getattr(agent_class, name)))
+
+            attr_names = filter(is_public_method, dir(agent_class))
             for attr_name in attr_names:
                 new_dict[attr_name] = getattr(agent_class, attr_name)
         return type.__new__(meta, class_name, bases, new_dict)
@@ -136,11 +134,11 @@ class Project(aeidon.Observable):
         for agent_class_name in aeidon.agents.__all__:
             agent = getattr(aeidon.agents, agent_class_name)(self)
             def is_delegate_method(name):
-                if (name.startswith("_") or
-                    name.endswith("_require") or
-                    name.endswith("_ensure")):
-                    return False
-                return callable(getattr(agent, name))
+                value = getattr(agent, name)
+                return (callable(value) and
+                        hasattr(value, "export") and
+                        value.export is True)
+
             attr_names = filter(is_delegate_method, dir(agent))
             for attr_name in attr_names:
                 attr_value = getattr(agent, attr_name)

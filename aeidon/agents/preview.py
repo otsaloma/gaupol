@@ -62,6 +62,7 @@ class PreviewAgent(aeidon.Delegate):
         if not self.video_path:
             self.find_video()
 
+    @aeidon.deco.export
     def find_video(self, extensions=None):
         """Find and return the video file path based on main file's path.
 
@@ -99,6 +100,7 @@ class PreviewAgent(aeidon.Delegate):
     def preview_ensure(self, value, *args, **kwargs):
         assert os.path.isfile(value[2])
 
+    @aeidon.deco.export
     def preview(self, position, doc, command, offset, encoding=None):
         """Start video player with `command` from `position`.
 

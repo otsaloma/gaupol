@@ -46,6 +46,98 @@ class UpdateAgent(aeidon.Delegate):
         self.video_button.get_data("label").set_text("")
         self.push_message(None)
 
+    @aeidon.deco.export
+    def _on_activate_next_project_activate(self, *args):
+        """Activate the project in the next tab."""
+        self.notebook.next_page()
+
+    @aeidon.deco.export
+    def _on_activate_previous_project_activate(self, *args):
+        """Activate the project in the previous tab."""
+        self.notebook.prev_page()
+
+    @aeidon.deco.export
+    def _on_conf_application_window_notify_toolbar_style(self, *args):
+        """Change the style of the main toolbar."""
+        toolbar = self.uim.get_widget("/ui/main_toolbar")
+        style = gaupol.conf.application_window.toolbar_style
+        if style == gaupol.toolbar_styles.DEFAULT:
+            return toolbar.unset_style()
+        toolbar.set_style(style.value)
+
+    @aeidon.deco.export
+    def _on_move_tab_left_activate(self, *args):
+        """Move the current tab to the left."""
+        page = self.get_current_page()
+        scroller = page.view.get_parent()
+        index = self.pages.index(page)
+        self.notebook.reorder_child(scroller, index - 1)
+
+    @aeidon.deco.export
+    def _on_move_tab_right_activate(self, *args):
+        """Move the current tab to the right."""
+        page = self.get_current_page()
+        scroller = page.view.get_parent()
+        index = self.pages.index(page)
+        self.notebook.reorder_child(scroller, index + 1)
+
+    def _on_notebook_page_reordered_ensure(self, value, *args, **kwargs):
+        for i, page in enumerate(self.pages):
+            ith_page = self.notebook.get_nth_page(i)
+            assert ith_page.get_child() == page.view
+
+    @aeidon.deco.export
+    def _on_notebook_page_reordered(self, notebook, scroller, index):
+        """Update the list of pages to match the new order."""
+        view = scroller.get_child()
+        page = filter(lambda x: x.view is view, self.pages)[0]
+        self.pages.remove(page)
+        self.pages.insert(index, page)
+        self.update_gui()
+        self.emit("pages-reordered", page, index)
+
+    @aeidon.deco.export
+    def _on_notebook_switch_page(self, notebook, pointer, index):
+        """Update GUI for the page switched to."""
+        if not self.pages: return
+        self.update_gui()
+        page = self.pages[index]
+        page.view.grab_focus()
+        self.emit("page-switched", page)
+
+    @aeidon.deco.export
+    def _on_view_button_press_event(self, view, event):
+        """Display a right-click pop-up menu to edit data."""
+        if event.button != 3: return
+        x = int(event.x)
+        y = int(event.y)
+        value = view.get_path_at_pos(x, y)
+        if value is None: return
+        path, column, x, y = value
+        if path[0] not in view.get_selected_rows():
+            view.set_cursor(path[0], column)
+            view.update_headers()
+        menu = self.uim.get_widget("/ui/view_popup")
+        menu.popup(None, None, None, event.button, event.time)
+        return True
+
+    @aeidon.deco.export
+    def _on_view_move_cursor(self, *args):
+        """Update GUI after moving cursor in the view."""
+        self.update_gui()
+
+    @aeidon.deco.export
+    def _on_view_selection_changed(self, *args):
+        """Update GUI after changing selection in the view."""
+        self.update_gui()
+
+    @aeidon.deco.export
+    def _on_window_window_state_event(self, window, event):
+        """Save window maximization."""
+        state = event.new_window_state
+        maximized = bool(state & gtk.gdk.WINDOW_STATE_MAXIMIZED)
+        gaupol.conf.application_window.maximized = maximized
+
     def _update_actions(self, page):
         """Update sensitivities of all actions for page."""
         for name in ("main-safe", "main-unsafe"):
@@ -81,6 +173,7 @@ class UpdateAgent(aeidon.Delegate):
         self.video_button.get_data("label").set_text(video)
         self.video_button.set_tooltip_text(video or None)
 
+    @aeidon.deco.export
     def flash_message(self, message):
         """Show `message` in statusbar for a short while."""
         self.push_message(message)
@@ -88,87 +181,7 @@ class UpdateAgent(aeidon.Delegate):
                                                   self.push_message,
                                                   None)
 
-    def on_activate_next_project_activate(self, *args):
-        """Activate the project in the next tab."""
-        self.notebook.next_page()
-
-    def on_activate_previous_project_activate(self, *args):
-        """Activate the project in the previous tab."""
-        self.notebook.prev_page()
-
-    def on_conf_application_window_notify_toolbar_style(self, *args):
-        """Change the style of the main toolbar."""
-        toolbar = self.uim.get_widget("/ui/main_toolbar")
-        style = gaupol.conf.application_window.toolbar_style
-        if style == gaupol.toolbar_styles.DEFAULT:
-            return toolbar.unset_style()
-        toolbar.set_style(style.value)
-
-    def on_move_tab_left_activate(self, *args):
-        """Move the current tab to the left."""
-        page = self.get_current_page()
-        scroller = page.view.get_parent()
-        index = self.pages.index(page)
-        self.notebook.reorder_child(scroller, index - 1)
-
-    def on_move_tab_right_activate(self, *args):
-        """Move the current tab to the right."""
-        page = self.get_current_page()
-        scroller = page.view.get_parent()
-        index = self.pages.index(page)
-        self.notebook.reorder_child(scroller, index + 1)
-
-    def on_notebook_page_reordered_ensure(self, value, *args, **kwargs):
-        for i, page in enumerate(self.pages):
-            ith_page = self.notebook.get_nth_page(i)
-            assert ith_page.get_child() == page.view
-
-    def on_notebook_page_reordered(self, notebook, scroller, index):
-        """Update the list of pages to match the new order."""
-        view = scroller.get_child()
-        page = filter(lambda x: x.view is view, self.pages)[0]
-        self.pages.remove(page)
-        self.pages.insert(index, page)
-        self.update_gui()
-        self.emit("pages-reordered", page, index)
-
-    def on_notebook_switch_page(self, notebook, pointer, index):
-        """Update GUI for the page switched to."""
-        if not self.pages: return
-        self.update_gui()
-        page = self.pages[index]
-        page.view.grab_focus()
-        self.emit("page-switched", page)
-
-    def on_view_button_press_event(self, view, event):
-        """Display a right-click pop-up menu to edit data."""
-        if event.button != 3: return
-        x = int(event.x)
-        y = int(event.y)
-        value = view.get_path_at_pos(x, y)
-        if value is None: return
-        path, column, x, y = value
-        if path[0] not in view.get_selected_rows():
-            view.set_cursor(path[0], column)
-            view.update_headers()
-        menu = self.uim.get_widget("/ui/view_popup")
-        menu.popup(None, None, None, event.button, event.time)
-        return True
-
-    def on_view_move_cursor(self, *args):
-        """Update GUI after moving cursor in the view."""
-        self.update_gui()
-
-    def on_view_selection_changed(self, *args):
-        """Update GUI after changing selection in the view."""
-        self.update_gui()
-
-    def on_window_window_state_event(self, window, event):
-        """Save window maximization."""
-        state = event.new_window_state
-        maximized = bool(state & gtk.gdk.WINDOW_STATE_MAXIMIZED)
-        gaupol.conf.application_window.maximized = maximized
-
+    @aeidon.deco.export
     def push_message(self, message):
         """Show `message` in the statusbar."""
         if self._message_tag is not None:
@@ -180,6 +193,7 @@ class UpdateAgent(aeidon.Delegate):
         if message is not None:
             self._message_id = self.statusbar.push(0, message)
 
+    @aeidon.deco.export
     def update_gui(self):
         """Update widget sensitivities and states for the current page."""
         page = self.get_current_page()

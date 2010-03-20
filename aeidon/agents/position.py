@@ -82,6 +82,7 @@ class PositionAgent(aeidon.Delegate):
         for index in indices or ():
             assert 0 <= index < len(self.subtitles)
 
+    @aeidon.deco.export
     @aeidon.deco.revertable
     def adjust_durations(self,
                          indices=None,
@@ -143,6 +144,7 @@ class PositionAgent(aeidon.Delegate):
         for index in indices or ():
             assert 0 <= index < len(self.subtitles)
 
+    @aeidon.deco.export
     @aeidon.deco.revertable
     def convert_framerate(self,
                           indices,
@@ -164,6 +166,7 @@ class PositionAgent(aeidon.Delegate):
         self.replace_positions(indices, new_subtitles, register=register)
         self.group_actions(register, 2, _("Converting framerate"))
 
+    @aeidon.deco.export
     @aeidon.deco.revertable
     def set_framerate(self, framerate, register=-1):
         """Set the value of framerate."""
@@ -183,6 +186,7 @@ class PositionAgent(aeidon.Delegate):
         for index in indices or ():
             assert 0 <= index < len(self.subtitles)
 
+    @aeidon.deco.export
     @aeidon.deco.revertable
     def shift_positions(self, indices, value, register=-1):
         """Make subtitles appear earlier or later.
@@ -203,6 +207,7 @@ class PositionAgent(aeidon.Delegate):
         for index in indices or ():
             assert 0 <= index < len(self.subtitles)
 
+    @aeidon.deco.export
     @aeidon.deco.revertable
     def transform_positions(self, indices, p1, p2, register=-1):
         """Change positions by linear two-point corrections.

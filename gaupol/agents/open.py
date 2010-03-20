@@ -304,6 +304,7 @@ class OpenAgent(aeidon.Delegate):
             gaupol.util.set_cursor_normal(self.window)
         raise gaupol.Default
 
+    @aeidon.deco.export
     def add_new_page(self, page):
         """Add a new page to the application."""
 
@@ -330,6 +331,7 @@ class OpenAgent(aeidon.Delegate):
         self.set_current_page(page)
         self.emit("page-added", page)
 
+    @aeidon.deco.export
     def add_to_recent_files(self, path, format, doc):
         """Add path to recent files managed by the recent manager."""
 
@@ -344,6 +346,7 @@ class OpenAgent(aeidon.Delegate):
                     "groups": (group,),}
         self.recent_manager.add_full(uri, metadata)
 
+    @aeidon.deco.export
     def append_file(self, path, encoding=None):
         """Append subtitles from file to the current project.
 
@@ -366,6 +369,7 @@ class OpenAgent(aeidon.Delegate):
         self.flash_message(message % locals())
         gaupol.util.set_cursor_normal(self.window)
 
+    @aeidon.deco.export
     def connect_view_signals(self, view):
         """Connect to signals emitted by view."""
 
@@ -385,8 +389,9 @@ class OpenAgent(aeidon.Delegate):
             callback = self.on_view_header_button_press_event
             button.connect("button-press-event", callback)
 
+    @aeidon.deco.export
     @aeidon.deco.silent(gaupol.Default)
-    def on_append_file_activate(self, *args):
+    def _on_append_file_activate(self, *args):
         """Append subtitles from file to the current project."""
 
         gaupol.util.set_cursor_busy(self.window)
@@ -401,14 +406,16 @@ class OpenAgent(aeidon.Delegate):
         gaupol.util.iterate_main()
         self.append_file(paths[0], encoding)
 
-    def on_new_project_activate(self, *args):
+    @aeidon.deco.export
+    def _on_new_project_activate(self, *args):
         """Create a new project and add a page for it in the application."""
 
         page = gaupol.Page(self.counter.next())
         page.project.insert_subtitles((0,), register=None)
         self.add_new_page(page)
 
-    def on_notebook_drag_data_received(
+    @aeidon.deco.export
+    def _on_notebook_drag_data_received(
         self, notebook, context, x, y, selection_data, info, time):
         """Open main files from dragged URIs."""
 
@@ -416,16 +423,18 @@ class OpenAgent(aeidon.Delegate):
         paths = [aeidon.util.uri_to_path(x) for x in uris]
         self.open_main_files(paths)
 
+    @aeidon.deco.export
     @aeidon.deco.silent(gaupol.Default)
-    def on_open_main_files_activate(self, *args):
+    def _on_open_main_files_activate(self, *args):
         """Open main files."""
 
         doc = aeidon.documents.MAIN
         paths, encoding = self._select_files(_("Open"), doc)
         self.open_main_files(paths, encoding)
 
+    @aeidon.deco.export
     @aeidon.deco.silent(gaupol.Default)
-    def on_open_translation_file_activate(self, *args):
+    def _on_open_translation_file_activate(self, *args):
         """Open a translation file."""
 
         page = self.get_current_page()
@@ -435,14 +444,16 @@ class OpenAgent(aeidon.Delegate):
         paths, encoding = self._select_files(_("Open Translation"), doc)
         self.open_translation_file(paths[0], encoding)
 
-    def on_recent_main_menu_item_activated(self, chooser):
+    @aeidon.deco.export
+    def _on_recent_main_menu_item_activated(self, chooser):
         """Open a recent main file."""
 
         uri = chooser.get_current_uri()
         path = aeidon.util.uri_to_path(uri)
         self.open_main_file(path)
 
-    def on_recent_translation_menu_item_activated(self, chooser):
+    @aeidon.deco.export
+    def _on_recent_translation_menu_item_activated(self, chooser):
         """Open a recent translation file."""
 
         uri = chooser.get_current_uri()
@@ -450,7 +461,8 @@ class OpenAgent(aeidon.Delegate):
         align_method = aeidon.align_methods.POSITION
         self.open_translation_file(path, None, align_method)
 
-    def on_select_video_file_activate(self, *args):
+    @aeidon.deco.export
+    def _on_select_video_file_activate(self, *args):
         """Select a video file."""
 
         gaupol.util.set_cursor_busy(self.window)
@@ -470,17 +482,20 @@ class OpenAgent(aeidon.Delegate):
         page.project.video_path = path
         self.update_gui()
 
-    def on_split_project_activate(self, *args):
+    @aeidon.deco.export
+    def _on_split_project_activate(self, *args):
         """Split the current project in two."""
 
         gaupol.util.flash_dialog(gaupol.SplitDialog(self.window, self))
 
-    def on_video_button_clicked(self, *args):
+    @aeidon.deco.export
+    def _on_video_button_clicked(self, *args):
         """Select a video file."""
 
         self.get_action("select_video_file").activate()
 
-    def on_video_button_drag_data_received(
+    @aeidon.deco.export
+    def _on_video_button_drag_data_received(
         self, notebook, context, x, y, selection_data, info, time):
         """Set the video file from dragged URI."""
 
@@ -491,6 +506,7 @@ class OpenAgent(aeidon.Delegate):
         page.project.video_path = path
         self.update_gui()
 
+    @aeidon.deco.export
     @aeidon.deco.silent(gaupol.Default)
     def open_main_file(self, path, encoding=None):
         """Open main file."""
@@ -506,12 +522,14 @@ class OpenAgent(aeidon.Delegate):
         gaupol.util.iterate_main()
         gaupol.util.set_cursor_normal(self.window)
 
+    @aeidon.deco.export
     def open_main_files(self, paths, encoding=None):
         """Open main files."""
 
         for path in sorted(paths):
             self.open_main_file(path, encoding)
 
+    @aeidon.deco.export
     @aeidon.deco.silent(gaupol.Default)
     def open_translation_file(self, path, encoding=None, align_method=None):
         """Open translation file."""

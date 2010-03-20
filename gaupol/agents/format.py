@@ -23,7 +23,8 @@ class FormatAgent(aeidon.Delegate):
 
     """Formatting text."""
 
-    def on_toggle_dialogue_dashes_activate(self, *args):
+    @aeidon.deco.export
+    def _on_toggle_dialogue_dashes_activate(self, *args):
         """Add or remove dialogue dashes on the selected texts."""
         page = self.get_current_page()
         rows = page.view.get_selected_rows()
@@ -31,7 +32,8 @@ class FormatAgent(aeidon.Delegate):
         doc = page.text_column_to_document(col)
         page.project.toggle_dialogue_dashes(rows, doc)
 
-    def on_toggle_italicization_activate(self, *args):
+    @aeidon.deco.export
+    def _on_toggle_italicization_activate(self, *args):
         """Italicize or unitalicize the selected texts."""
         page = self.get_current_page()
         rows = page.view.get_selected_rows()
@@ -39,7 +41,8 @@ class FormatAgent(aeidon.Delegate):
         doc = page.text_column_to_document(col)
         page.project.toggle_italicization(rows, doc)
 
-    def on_use_lower_case_activate(self, *args):
+    @aeidon.deco.export
+    def _on_use_lower_case_activate(self, *args):
         """Change the selected texts to lower case."""
         page = self.get_current_page()
         rows = page.view.get_selected_rows()
@@ -47,7 +50,8 @@ class FormatAgent(aeidon.Delegate):
         doc = page.text_column_to_document(col)
         page.project.change_case(rows, doc, "lower")
 
-    def on_use_sentence_case_activate(self, *args):
+    @aeidon.deco.export
+    def _on_use_sentence_case_activate(self, *args):
         """Change the selected texts to sentence case."""
         page = self.get_current_page()
         rows = page.view.get_selected_rows()
@@ -55,7 +59,8 @@ class FormatAgent(aeidon.Delegate):
         doc = page.text_column_to_document(col)
         page.project.change_case(rows, doc, "capitalize")
 
-    def on_use_title_case_activate(self, *args):
+    @aeidon.deco.export
+    def _on_use_title_case_activate(self, *args):
         """Change the selected texts to title case."""
         page = self.get_current_page()
         rows = page.view.get_selected_rows()
@@ -63,7 +68,8 @@ class FormatAgent(aeidon.Delegate):
         doc = page.text_column_to_document(col)
         page.project.change_case(rows, doc, "title")
 
-    def on_use_upper_case_activate(self, *args):
+    @aeidon.deco.export
+    def _on_use_upper_case_activate(self, *args):
         """Change the selected texts to upper case."""
         page = self.get_current_page()
         rows = page.view.get_selected_rows()

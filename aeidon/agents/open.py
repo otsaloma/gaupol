@@ -100,6 +100,7 @@ class OpenAgent(aeidon.Delegate):
             sorted_subtitles.insert(index, subtitle)
         return sorted_subtitles, wrong_order_count
 
+    @aeidon.deco.export
     def open(self, doc, path, encoding=None, *args, **kwargs):
         """Read and parse subtitle data for `doc` from `path`.
 
@@ -127,6 +128,7 @@ class OpenAgent(aeidon.Delegate):
         assert self.tran_file is None
         assert self.tran_changed is None
 
+    @aeidon.deco.export
     @aeidon.deco.notify_frozen
     def open_main(self, path, encoding=None):
         """Read and parse subtitle data for main file from `path`.
@@ -172,6 +174,7 @@ class OpenAgent(aeidon.Delegate):
         assert self.tran_file is not None
         assert self.tran_changed == 0
 
+    @aeidon.deco.export
     @aeidon.deco.notify_frozen
     def open_translation(self, path, encoding=None, align_method=None):
         """Read and parse subtitle data for translation file from `path`.

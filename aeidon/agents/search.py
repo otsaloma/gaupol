@@ -194,6 +194,7 @@ class SearchAgent(aeidon.Delegate):
         assert 0 <= match_span[1] <= len(text)
         assert self._docs
 
+    @aeidon.deco.export
     def find_next(self, index=None, doc=None, pos=None):
         """Find the next match starting from given location.
 
@@ -219,6 +220,7 @@ class SearchAgent(aeidon.Delegate):
         assert 0 <= match_span[1] <= len(text)
         assert self._docs
 
+    @aeidon.deco.export
     def find_previous(self, index=None, doc=None, pos=None):
         """Find the previous match starting from given location.
 
@@ -237,6 +239,7 @@ class SearchAgent(aeidon.Delegate):
         assert 0 <= self._match_span[0] <= len(text)
         assert 0 <= self._match_span[1] <= len(text)
 
+    @aeidon.deco.export
     @aeidon.deco.revertable
     def replace(self, register=-1):
         """Replace the current match of pattern.
@@ -253,6 +256,7 @@ class SearchAgent(aeidon.Delegate):
 
         self.set_action_description(register, _("Replacing"))
 
+    @aeidon.deco.export
     @aeidon.deco.revertable
     def replace_all(self, register=-1):
         """Replace all matches of pattern and return amount.
@@ -283,6 +287,7 @@ class SearchAgent(aeidon.Delegate):
             self.group_actions(register, 2, _("Replacing all"))
         return sum(counts.values())
 
+    @aeidon.deco.export
     def set_search_regex(self, pattern, flags=0):
         """Set the regular expression pattern to find.
 
@@ -291,10 +296,12 @@ class SearchAgent(aeidon.Delegate):
         """
         self._finder.set_regex(unicode(pattern), flags)
 
+    @aeidon.deco.export
     def set_search_replacement(self, replacement):
         """Set the replacement string."""
         self._finder.replacement = unicode(replacement)
 
+    @aeidon.deco.export
     def set_search_string(self, pattern, ignore_case=False):
         """Set the string pattern to find."""
         self._finder.pattern = unicode(pattern)
@@ -304,6 +311,7 @@ class SearchAgent(aeidon.Delegate):
         for index in indices or ():
             assert 0 <= index < len(self.subtitles)
 
+    @aeidon.deco.export
     def set_search_target(self, indices=None, docs=None, wrap=True):
         """Set the targets to search in.
 

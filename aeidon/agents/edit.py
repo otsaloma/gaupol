@@ -66,6 +66,7 @@ class EditAgent(aeidon.Delegate):
         for index in indices:
             assert 0 <= index < len(self.subtitles)
 
+    @aeidon.deco.export
     @aeidon.deco.revertable
     def clear_texts(self, indices, doc, register=-1):
         """Set texts to blank strings."""
@@ -73,6 +74,7 @@ class EditAgent(aeidon.Delegate):
         self.replace_texts(indices, doc, new_texts, register=register)
         self.set_action_description(register, _("Clearing texts"))
 
+    @aeidon.deco.export
     @aeidon.deco.revertable
     @aeidon.deco.notify_frozen
     def insert_subtitles(self, indices, subtitles=None, register=-1):
@@ -100,6 +102,7 @@ class EditAgent(aeidon.Delegate):
             assert 0 <= index < len(self.subtitles)
         assert list(indices) == range(indices[0], indices[-1] + 1)
 
+    @aeidon.deco.export
     @aeidon.deco.revertable
     def merge_subtitles(self, indices, register=-1):
         """Merge subtitles at `indices` to form one subtitle."""
@@ -118,6 +121,7 @@ class EditAgent(aeidon.Delegate):
         for index in indices:
             assert 0 <= index < len(self.subtitles)
 
+    @aeidon.deco.export
     @aeidon.deco.revertable
     @aeidon.deco.notify_frozen
     def remove_subtitles(self, indices, register=-1):
@@ -139,6 +143,7 @@ class EditAgent(aeidon.Delegate):
             assert 0 <= index < len(self.subtitles)
         assert len(indices) == len(subtitles)
 
+    @aeidon.deco.export
     @aeidon.deco.revertable
     @aeidon.deco.notify_frozen
     def replace_positions(self, indices, subtitles, register=-1):
@@ -160,6 +165,7 @@ class EditAgent(aeidon.Delegate):
             assert 0 <= index < len(self.subtitles)
         assert len(indices) == len(texts)
 
+    @aeidon.deco.export
     @aeidon.deco.revertable
     @aeidon.deco.notify_frozen
     def replace_texts(self, indices, doc, texts, register=-1):
@@ -178,6 +184,7 @@ class EditAgent(aeidon.Delegate):
     def split_subtitle_require(self, index, register=-1):
         assert 0 <= index < len(self.subtitles)
 
+    @aeidon.deco.export
     @aeidon.deco.revertable
     def split_subtitle(self, index, register=-1):
         """Split subtitle in two equal duration ones."""

@@ -125,6 +125,7 @@ class TextAgent(aeidon.Delegate):
         for index in (indices or ()):
             assert 0 <= index < len(self.subtitles)
 
+    @aeidon.deco.export
     @aeidon.deco.revertable
     def break_lines(self,
                     indices,
@@ -203,6 +204,7 @@ class TextAgent(aeidon.Delegate):
         for index in (indices or ()):
             assert 0 <= index < len(self.subtitles)
 
+    @aeidon.deco.export
     @aeidon.deco.revertable
     def capitalize(self, indices, doc, patterns, register=-1):
         """Capitalize texts as defined by `patterns`.
@@ -245,6 +247,7 @@ class TextAgent(aeidon.Delegate):
         for index in (indices or ()):
             assert 0 <= index < len(self.subtitles)
 
+    @aeidon.deco.export
     @aeidon.deco.revertable
     def correct_common_errors(self, indices, doc, patterns, register=-1):
         """Correct common human and OCR errors in texts.
@@ -280,6 +283,7 @@ class TextAgent(aeidon.Delegate):
         for index in (indices or ()):
             assert 0 <= index < len(self.subtitles)
 
+    @aeidon.deco.export
     @aeidon.deco.revertable
     def remove_hearing_impaired(self, indices, doc, patterns, register=-1):
         """Remove hearing impaired parts from subtitles.
@@ -321,6 +325,7 @@ class TextAgent(aeidon.Delegate):
             assert 0 <= index < len(self.subtitles)
         assert aeidon.util.enchant_available()
 
+    @aeidon.deco.export
     @aeidon.deco.revertable
     def spell_check_join_words(self, indices, doc, language, register=-1):
         """Join misspelled words based on spell-checker suggestions.
@@ -372,6 +377,7 @@ class TextAgent(aeidon.Delegate):
             assert 0 <= index < len(self.subtitles)
         assert aeidon.util.enchant_available()
 
+    @aeidon.deco.export
     @aeidon.deco.revertable
     def spell_check_split_words(self, indices, doc, language, register=-1):
         """Split misspelled words based on spell-checker suggestions.

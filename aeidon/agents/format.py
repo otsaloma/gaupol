@@ -77,6 +77,7 @@ class FormatAgent(aeidon.Delegate):
         for index in indices:
             assert 0 <= index < len(self.subtitles)
 
+    @aeidon.deco.export
     @aeidon.deco.revertable
     def add_dialogue_dashes(self, indices, doc, register=-1):
         """Add dialogue dashes to all lines of texts."""
@@ -100,6 +101,7 @@ class FormatAgent(aeidon.Delegate):
             assert 0 <= index < len(self.subtitles)
         assert method in ("title", "capitalize", "upper", "lower")
 
+    @aeidon.deco.export
     @aeidon.deco.revertable
     def change_case(self, indices, doc, method, register=-1):
         """Change the case of texts with `method`.
@@ -121,6 +123,7 @@ class FormatAgent(aeidon.Delegate):
         for index in indices:
             assert 0 <= index < len(self.subtitles)
 
+    @aeidon.deco.export
     @aeidon.deco.revertable
     def italicize(self, indices, doc, register=-1):
         """Surround texts with italic markup."""
@@ -139,6 +142,7 @@ class FormatAgent(aeidon.Delegate):
         for index in indices:
             assert 0 <= index < len(self.subtitles)
 
+    @aeidon.deco.export
     @aeidon.deco.revertable
     def remove_dialogue_dashes(self, indices, doc, register=-1):
         """Remove dialogue dashes from all lines of texts."""
@@ -158,6 +162,7 @@ class FormatAgent(aeidon.Delegate):
         for index in indices:
             assert 0 <= index < len(self.subtitles)
 
+    @aeidon.deco.export
     @aeidon.deco.revertable
     def toggle_dialogue_dashes(self, indices, doc, register=-1):
         """Show or hide dialogue dashes on texts."""
@@ -169,6 +174,7 @@ class FormatAgent(aeidon.Delegate):
         for index in indices:
             assert 0 <= index < len(self.subtitles)
 
+    @aeidon.deco.export
     @aeidon.deco.revertable
     def toggle_italicization(self, indices, doc, register=-1):
         """Add or remove italic markup surrounding texts."""
@@ -180,6 +186,7 @@ class FormatAgent(aeidon.Delegate):
         for index in indices:
             assert 0 <= index < len(self.subtitles)
 
+    @aeidon.deco.export
     @aeidon.deco.revertable
     def unitalicize(self, indices, doc, register=-1):
         """Remove any italic markup surrounding texts."""

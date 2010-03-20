@@ -59,50 +59,8 @@ class MenuAgent(aeidon.Delegate):
         action.set_active(page is self.get_current_page())
         return action.get_name()
 
-    def _on_redo_menu_item_activate(self, menu_item):
-        """Redo the selected action and all those above it."""
-        index = menu_item.get_data("index")
-        self.redo(index + 1)
-
-    def _on_redo_menu_item_enter_notify_event(self, menu_item, event):
-        """Show tooltip and select all actions above `menu_item`."""
-        index = menu_item.get_data("index")
-        for item in self._redo_menu_items[:index]:
-            item.set_state(gtk.STATE_PRELIGHT)
-        self.push_message(menu_item.get_data("tooltip"))
-
-    def _on_redo_menu_item_leave_notify_event(self, menu_item, event):
-        """Hide tooltip and unselect all actions above `menu_item`."""
-        index = menu_item.get_data("index")
-        for item in self._redo_menu_items[:index]:
-            item.set_state(gtk.STATE_NORMAL)
-        self.push_message(None)
-
-    def _on_undo_menu_item_activate(self, menu_item):
-        """Undo the selected action and all those above it."""
-        index = menu_item.get_data("index")
-        self.undo(index + 1)
-
-    def _on_undo_menu_item_enter_notify_event(self, menu_item, event):
-        """Show tooltip and select all actions above `menu_item`."""
-        index = menu_item.get_data("index")
-        for item in self._undo_menu_items[:index]:
-            item.set_state(gtk.STATE_PRELIGHT)
-        self.push_message(menu_item.get_data("tooltip"))
-
-    def _on_undo_menu_item_leave_notify_event(self, menu_item, event):
-        """Hide tooltip and unselect all actions above `menu_item`."""
-        index = menu_item.get_data("index")
-        for item in self._undo_menu_items[:index]:
-            item.set_state(gtk.STATE_NORMAL)
-        self.push_message(None)
-
-    def _on_projects_action_changed(self, item, active_item):
-        """Change the page in the notebook to the selected project."""
-        index = int(active_item.get_name().split("_")[-1])
-        self.notebook.set_current_page(index)
-
-    def on_page_tab_widget_button_press_event(self, button, event, page):
+    @aeidon.deco.export
+    def _on_page_tab_widget_button_press_event(self, button, event, page):
         """Display a pop-up menu with tab-related actions."""
         if event.button != 3: return
         if page is not self.get_current_page():
@@ -110,7 +68,13 @@ class MenuAgent(aeidon.Delegate):
         menu = self.uim.get_widget("/ui/tab_popup")
         menu.popup(None, None, None, event.button, event.time)
 
-    def on_redo_button_show_menu(self, *args):
+    def _on_projects_action_changed(self, item, active_item):
+        """Change the page in the notebook to the selected project."""
+        index = int(active_item.get_name().split("_")[-1])
+        self.notebook.set_current_page(index)
+
+    @aeidon.deco.export
+    def _on_redo_button_show_menu(self, *args):
         """Show a menu listing all redoable actions."""
         menu = gtk.Menu()
         self._redo_menu_items = []
@@ -130,7 +94,27 @@ class MenuAgent(aeidon.Delegate):
         menu.show_all()
         self.get_tool_item("redo_action").set_menu(menu)
 
-    def on_show_projects_menu_activate(self, *args):
+    def _on_redo_menu_item_activate(self, menu_item):
+        """Redo the selected action and all those above it."""
+        index = menu_item.get_data("index")
+        self.redo(index + 1)
+
+    def _on_redo_menu_item_enter_notify_event(self, menu_item, event):
+        """Show tooltip and select all actions above `menu_item`."""
+        index = menu_item.get_data("index")
+        for item in self._redo_menu_items[:index]:
+            item.set_state(gtk.STATE_PRELIGHT)
+        self.push_message(menu_item.get_data("tooltip"))
+
+    def _on_redo_menu_item_leave_notify_event(self, menu_item, event):
+        """Hide tooltip and unselect all actions above `menu_item`."""
+        index = menu_item.get_data("index")
+        for item in self._redo_menu_items[:index]:
+            item.set_state(gtk.STATE_NORMAL)
+        self.push_message(None)
+
+    @aeidon.deco.export
+    def _on_show_projects_menu_activate(self, *args):
         """Update all project actions in the projects menu."""
         action_group = self.get_action_group("projects")
         for action in action_group.list_actions():
@@ -150,7 +134,8 @@ class MenuAgent(aeidon.Delegate):
         self.uim.ensure_update()
         self.set_menu_notify_events("projects")
 
-    def on_undo_button_show_menu(self, *args):
+    @aeidon.deco.export
+    def _on_undo_button_show_menu(self, *args):
         """Show a menu listing all undoable actions."""
         menu = gtk.Menu()
         self._undo_menu_items = []
@@ -169,7 +154,26 @@ class MenuAgent(aeidon.Delegate):
             menu.append(item)
         menu.show_all()
         self.get_tool_item("undo_action").set_menu(menu)
+    def _on_undo_menu_item_activate(self, menu_item):
+        """Undo the selected action and all those above it."""
+        index = menu_item.get_data("index")
+        self.undo(index + 1)
 
+    def _on_undo_menu_item_enter_notify_event(self, menu_item, event):
+        """Show tooltip and select all actions above `menu_item`."""
+        index = menu_item.get_data("index")
+        for item in self._undo_menu_items[:index]:
+            item.set_state(gtk.STATE_PRELIGHT)
+        self.push_message(menu_item.get_data("tooltip"))
+
+    def _on_undo_menu_item_leave_notify_event(self, menu_item, event):
+        """Hide tooltip and unselect all actions above `menu_item`."""
+        index = menu_item.get_data("index")
+        for item in self._undo_menu_items[:index]:
+            item.set_state(gtk.STATE_NORMAL)
+        self.push_message(None)
+
+    @aeidon.deco.export
     def set_menu_notify_events(self, name):
         """Set statusbar tooltips for menu items of action group."""
         def on_enter(menu_item, event, self, action):

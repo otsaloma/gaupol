@@ -103,6 +103,37 @@ class CloseAgent(aeidon.Delegate):
                 docs.append(aeidon.documents.TRAN)
         return tuple(docs)
 
+    @aeidon.deco.export
+    @aeidon.deco.silent(gaupol.Default)
+    def _on_close_all_projects_activate(self, *args):
+        """Close all open projects."""
+        self.close_all()
+
+    @aeidon.deco.export
+    @aeidon.deco.silent(gaupol.Default)
+    def _on_close_project_activate(self, *args):
+        """Close project."""
+        self.close(self.get_current_page())
+
+    @aeidon.deco.export
+    @aeidon.deco.silent(gaupol.Default)
+    def _on_page_close_request(self, page, *args):
+        """Close project."""
+        self.close(page)
+
+    @aeidon.deco.export
+    @aeidon.deco.silent(gaupol.Default)
+    def _on_quit_activate(self, *args):
+        """Quit Gaupol."""
+        self.quit()
+
+    @aeidon.deco.export
+    @aeidon.deco.silent(gaupol.Default)
+    def _on_window_delete_event(self, *args):
+        """Quit Gaupol."""
+        self.quit()
+        return True
+
     def _save_window_geometry(self):
         """Save the geometry of the application and output windows."""
         if not gaupol.conf.application_window.maximized:
@@ -114,6 +145,7 @@ class CloseAgent(aeidon.Delegate):
             conf.size = list(self.output_window.get_size())
             conf.position = list(self.output_window.get_position())
 
+    @aeidon.deco.export
     def close_all(self):
         """Close all pages after asking to save their documents.
 
@@ -124,6 +156,7 @@ class CloseAgent(aeidon.Delegate):
         while self.pages:
             self.close(self.pages[-1], False)
 
+    @aeidon.deco.export
     def close(self, page, confirm=True):
         """Close `page` after asking to save its documents.
 
@@ -141,32 +174,7 @@ class CloseAgent(aeidon.Delegate):
         self.update_gui()
         self.emit("page-closed", page)
 
-    @aeidon.deco.silent(gaupol.Default)
-    def on_close_all_projects_activate(self, *args):
-        """Close all open projects."""
-        self.close_all()
-
-    @aeidon.deco.silent(gaupol.Default)
-    def on_close_project_activate(self, *args):
-        """Close project."""
-        self.close(self.get_current_page())
-
-    @aeidon.deco.silent(gaupol.Default)
-    def on_page_close_request(self, page, *args):
-        """Close project."""
-        self.close(page)
-
-    @aeidon.deco.silent(gaupol.Default)
-    def on_quit_activate(self, *args):
-        """Quit Gaupol."""
-        self.quit()
-
-    @aeidon.deco.silent(gaupol.Default)
-    def on_window_delete_event(self, *args):
-        """Quit Gaupol."""
-        self.quit()
-        return True
-
+    @aeidon.deco.export
     def quit(self):
         """Quit Gaupol.
 

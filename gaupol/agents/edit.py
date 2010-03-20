@@ -56,7 +56,8 @@ class EditAgent(aeidon.Delegate):
         self.x_clipboard.set_text(text)
         self.update_gui()
 
-    def on_clear_texts_activate(self, *args):
+    @aeidon.deco.export
+    def _on_clear_texts_activate(self, *args):
         """Clear the selected texts."""
 
         page = self.get_current_page()
@@ -65,7 +66,8 @@ class EditAgent(aeidon.Delegate):
         doc = page.text_column_to_document(col)
         page.project.clear_texts(rows, doc)
 
-    def on_copy_texts_activate(self, *args):
+    @aeidon.deco.export
+    def _on_copy_texts_activate(self, *args):
         """Copy the selected texts to the clipboard."""
 
         page = self.get_current_page()
@@ -75,7 +77,8 @@ class EditAgent(aeidon.Delegate):
         page.project.copy_texts(rows, doc)
         self._sync_clipboards(page)
 
-    def on_cut_texts_activate(self, *args):
+    @aeidon.deco.export
+    def _on_cut_texts_activate(self, *args):
         """Cut the selected texts to the clipboard."""
 
         page = self.get_current_page()
@@ -85,20 +88,23 @@ class EditAgent(aeidon.Delegate):
         page.project.cut_texts(rows, doc)
         self._sync_clipboards(page)
 
-    def on_edit_headers_activate(self, *args):
+    @aeidon.deco.export
+    def _on_edit_headers_activate(self, *args):
         """Edit file headers."""
 
         dialog = gaupol.HeaderDialog(self.window, self)
         gaupol.util.flash_dialog(dialog)
 
-    def on_edit_next_value_activate(self, *args):
+    @aeidon.deco.export
+    def _on_edit_next_value_activate(self, *args):
         """Edit the focused column of the next subtitle."""
 
         view = self.get_current_page().view
         path, column = view.get_cursor()
         view.set_cursor((path[0] + 1,), column, True)
 
-    def on_edit_preferences_activate(self, *args):
+    @aeidon.deco.export
+    def _on_edit_preferences_activate(self, *args):
         """Configure Gaupol."""
 
         if self._pref_dialog is not None:
@@ -107,14 +113,16 @@ class EditAgent(aeidon.Delegate):
         aeidon.util.connect(self, "_pref_dialog", "response")
         self._pref_dialog.show()
 
-    def on_edit_value_activate(self, *args):
+    @aeidon.deco.export
+    def _on_edit_value_activate(self, *args):
         """Edit the focused cell."""
 
         view = self.get_current_page().view
         row, column = view.get_cursor()
         view.set_cursor(row, column, True)
 
-    def on_extend_selection_to_beginning_activate(self, *args):
+    @aeidon.deco.export
+    def _on_extend_selection_to_beginning_activate(self, *args):
         """Extend the selection up to the first subtitle."""
 
         page = self.get_current_page()
@@ -122,7 +130,8 @@ class EditAgent(aeidon.Delegate):
         rows = range(0, row + 1)
         page.view.select_rows(rows)
 
-    def on_extend_selection_to_end_activate(self, *args):
+    @aeidon.deco.export
+    def _on_extend_selection_to_end_activate(self, *args):
         """Extend the selection up to the last subtitle."""
 
         page = self.get_current_page()
@@ -130,13 +139,15 @@ class EditAgent(aeidon.Delegate):
         rows = range(row, len(page.project.subtitles))
         page.view.select_rows(rows)
 
-    def on_insert_subtitles_activate(self, *args):
+    @aeidon.deco.export
+    def _on_insert_subtitles_activate(self, *args):
         """Insert subtitles."""
 
         dialog = gaupol.InsertDialog(self.window, self)
         gaupol.util.flash_dialog(dialog)
 
-    def on_invert_selection_activate(self, *args):
+    @aeidon.deco.export
+    def _on_invert_selection_activate(self, *args):
         """Invert the current selection."""
 
         page = self.get_current_page()
@@ -144,14 +155,16 @@ class EditAgent(aeidon.Delegate):
         rows -= set(page.view.get_selected_rows())
         page.view.select_rows(rows)
 
-    def on_merge_subtitles_activate(self, *args):
+    @aeidon.deco.export
+    def _on_merge_subtitles_activate(self, *args):
         """Merge the selected subtitles."""
 
         page = self.get_current_page()
         rows = page.view.get_selected_rows()
         page.project.merge_subtitles(rows)
 
-    def on_paste_texts_activate(self, *args):
+    @aeidon.deco.export
+    def _on_paste_texts_activate(self, *args):
         """Paste texts from the clipboard."""
 
         page = self.get_current_page()
@@ -168,14 +181,16 @@ class EditAgent(aeidon.Delegate):
             count) % count
         self.flash_message(message)
 
-    def on_project_action_done(self, *args):
+    @aeidon.deco.export
+    def _on_project_action_done(self, *args):
         """Update GUI after doing action."""
 
         page = self.get_current_page()
         self.update_gui()
         self.emit("page-changed", page)
 
-    def on_project_action_redone(self, *args):
+    @aeidon.deco.export
+    def _on_project_action_redone(self, *args):
         """Update GUI after redoing action."""
 
         page = self.get_current_page()
@@ -185,7 +200,8 @@ class EditAgent(aeidon.Delegate):
         self.update_gui()
         self.emit("page-changed", page)
 
-    def on_project_action_undone(self, *args):
+    @aeidon.deco.export
+    def _on_project_action_undone(self, *args):
         """Update GUI after undoing action."""
 
         page = self.get_current_page()
@@ -195,38 +211,44 @@ class EditAgent(aeidon.Delegate):
         self.update_gui()
         self.emit("page-changed", page)
 
-    def on_redo_action_activate(self, *args):
+    @aeidon.deco.export
+    def _on_redo_action_activate(self, *args):
         """Redo the last undone action."""
 
         self.redo()
 
-    def on_remove_subtitles_activate(self, *args):
+    @aeidon.deco.export
+    def _on_remove_subtitles_activate(self, *args):
         """Remove the selected subtitles."""
 
         page = self.get_current_page()
         rows = page.view.get_selected_rows()
         page.project.remove_subtitles(rows)
 
-    def on_select_all_activate(self, *args):
+    @aeidon.deco.export
+    def _on_select_all_activate(self, *args):
         """Select all subtitles."""
 
         page = self.get_current_page()
         selection = page.view.get_selection()
         selection.select_all()
 
-    def on_split_subtitle_activate(self, *args):
+    @aeidon.deco.export
+    def _on_split_subtitle_activate(self, *args):
         """Split the selected subtitle."""
 
         page = self.get_current_page()
         row = page.view.get_selected_rows()[0]
         page.project.split_subtitle(row)
 
-    def on_undo_action_activate(self, *args):
+    @aeidon.deco.export
+    def _on_undo_action_activate(self, *args):
         """Undo the last action."""
 
         self.undo()
 
-    def on_view_renderer_edited(self, renderer, path, value, column):
+    @aeidon.deco.export
+    def _on_view_renderer_edited(self, renderer, path, value, column):
         """Save changes made while editing cell."""
 
         self._set_sensitivities(True)
@@ -252,13 +274,15 @@ class EditAgent(aeidon.Delegate):
         doc = page.text_column_to_document(col)
         page.project.set_text(row, doc, value)
 
-    def on_view_renderer_editing_canceled(self, *args):
+    @aeidon.deco.export
+    def _on_view_renderer_editing_canceled(self, *args):
         """Unset state set for editing cell."""
 
         self._set_sensitivities(True)
         self.push_message(None)
 
-    def on_view_renderer_editing_started(self, renderer, editor, path, column):
+    @aeidon.deco.export
+    def _on_view_renderer_editing_started(self, renderer, editor, path, column):
         """Set proper state for editing cell."""
 
         self._set_sensitivities(False)
@@ -272,6 +296,7 @@ class EditAgent(aeidon.Delegate):
         page = self.get_current_page()
         assert page.project.can_redo()
 
+    @aeidon.deco.export
     def redo(self, count=1):
         """Redo actions."""
 
@@ -284,6 +309,7 @@ class EditAgent(aeidon.Delegate):
         page = self.get_current_page()
         assert page.project.can_undo()
 
+    @aeidon.deco.export
     def undo(self, count=1):
         """Undo actions."""
 

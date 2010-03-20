@@ -122,7 +122,8 @@ class SaveAgent(aeidon.Delegate):
         dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
         gaupol.util.flash_dialog(dialog)
 
-    def on_save_all_documents_activate(self, *args):
+    @aeidon.deco.export
+    def _on_save_all_documents_activate(self, *args):
         """Save all open documents."""
 
         silent = aeidon.deco.silent(gaupol.Default)
@@ -135,38 +136,43 @@ class SaveAgent(aeidon.Delegate):
         self.flash_message(_("Saved all open documents"))
         self.update_gui()
 
+    @aeidon.deco.export
     @aeidon.deco.silent(gaupol.Default)
-    def on_save_main_document_activate(self, *args):
+    def _on_save_main_document_activate(self, *args):
         """Save the current main document."""
 
         page = self.get_current_page()
         self.save_main_document(page)
         self.update_gui()
 
+    @aeidon.deco.export
     @aeidon.deco.silent(gaupol.Default)
-    def on_save_main_document_as_activate(self, *args):
+    def _on_save_main_document_as_activate(self, *args):
         """Save the current main document with a different name."""
 
         page = self.get_current_page()
         self.save_main_document_as(page)
         self.update_gui()
 
+    @aeidon.deco.export
     @aeidon.deco.silent(gaupol.Default)
-    def on_save_translation_document_activate(self, *args):
+    def _on_save_translation_document_activate(self, *args):
         """Save the current translation document."""
 
         page = self.get_current_page()
         self.save_translation_document(page)
         self.update_gui()
 
+    @aeidon.deco.export
     @aeidon.deco.silent(gaupol.Default)
-    def on_save_translation_document_as_activate(self, *args):
+    def _on_save_translation_document_as_activate(self, *args):
         """Save the current translation document with a different name."""
 
         page = self.get_current_page()
         self.save_translation_document_as(page)
         self.update_gui()
 
+    @aeidon.deco.export
     def save_main_document(self, page):
         """Save the main document of page.
 
@@ -180,6 +186,7 @@ class SaveAgent(aeidon.Delegate):
         self._save_document(page, aeidon.documents.MAIN, props)
         self.flash_message(_("Saved main document"))
 
+    @aeidon.deco.export
     def save_main_document_as(self, page):
         """Save the main document of page to a selected file.
 
@@ -194,6 +201,7 @@ class SaveAgent(aeidon.Delegate):
         message = _('Saved main document as "%s"')
         self.flash_message(message % os.path.basename(props[0]))
 
+    @aeidon.deco.export
     def save_translation_document(self, page):
         """Save the translation document of page.
 
@@ -207,6 +215,7 @@ class SaveAgent(aeidon.Delegate):
         self._save_document(page, aeidon.documents.TRAN, props)
         self.flash_message(_("Saved translation document"))
 
+    @aeidon.deco.export
     def save_translation_document_as(self, page):
         """Save the translation document of page to a selected file.
 

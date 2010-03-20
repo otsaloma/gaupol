@@ -66,7 +66,7 @@ class Action(gtk.Action):
     def finalize(self, application):
         """Connect action to widgets and methods of `application`."""
         self.widgets = tuple(getattr(application, x) for x in self.widgets)
-        callback = "on_%s_activate" % self.props.name
+        callback = "_on_%s_activate" % self.props.name
         self.connect("activate", getattr(application, callback))
 
     def set_sensitive(self, sensitive):
@@ -91,7 +91,7 @@ class MenuAction(Action):
     def finalize(self, application):
         """Connect action to widgets and methods of `application`."""
         self.widgets = tuple(getattr(application, x) for x in self.widgets)
-        callback = "on_%s_activate" % self.props.name
+        callback = "_on_%s_activate" % self.props.name
         if hasattr(application, callback):
             self.connect("activate", getattr(application, callback))
 
@@ -131,7 +131,7 @@ class ToggleAction(Action, gtk.ToggleAction):
     def finalize(self, application):
         """Connect action to widgets and methods of `application`."""
         self.widgets = tuple(getattr(application, x) for x in self.widgets)
-        callback = "on_%s_toggled" % self.props.name
+        callback = "_on_%s_toggled" % self.props.name
         self.connect("toggled", getattr(application, callback))
 
 
@@ -157,5 +157,5 @@ class RadioAction(ToggleAction, gtk.RadioAction):
         """Connect action to widgets and methods of `application`."""
         self.widgets = tuple(getattr(application, x) for x in self.widgets)
         if self.__class__.__name__ != self.group: return
-        callback = "on_%s_changed" % self.props.name
+        callback = "_on_%s_changed" % self.props.name
         self.connect("changed", getattr(application, callback))

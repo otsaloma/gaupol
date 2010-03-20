@@ -41,6 +41,10 @@ class TestModule(aeidon.TestCase):
         reload(aeidon.util)
         aeidon.util.get_ranges((1, 2, 3))
 
+    def test_export(self):
+        function = aeidon.deco.export(lambda x: x ** 2)
+        assert function.export is True
+
     def test_memoize(self):
         function = aeidon.deco.memoize(lambda x: x ** 2)
         assert function(2) == 4

@@ -35,7 +35,8 @@ class SearchAgent(aeidon.Delegate):
 
         self._search_dialog.hide()
 
-    def on_find_and_replace_activate(self, *args):
+    @aeidon.deco.export
+    def _on_find_and_replace_activate(self, *args):
         """Search for and replace text."""
 
         if self._search_dialog is not None:
@@ -46,12 +47,14 @@ class SearchAgent(aeidon.Delegate):
         self._search_dialog.connect("delete-event", lambda *args: True)
         self._search_dialog.show()
 
-    def on_find_next_activate(self, *args):
+    @aeidon.deco.export
+    def _on_find_next_activate(self, *args):
         """Search forwards for same text."""
 
         self._search_dialog.next()
 
-    def on_find_previous_activate(self, *args):
+    @aeidon.deco.export
+    def _on_find_previous_activate(self, *args):
         """Search backwards for same text."""
 
         self._search_dialog.previous()
