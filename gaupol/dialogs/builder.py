@@ -28,16 +28,16 @@ class BuilderDialog(object):
 
     """Baseclass and wrapper for `gtk.Builder` constructed dialogs.
 
-    :cvar widgets: List of names of widgets to be assigned as attributes
+    :cvar _widgets: List of names of widgets to be assigned as attributes
 
-    All widgets defined in :attr:`widgets` are assigned as instance variables
+    All widgets defined in :attr:`_widgets` are assigned as instance variables
     with names preceded by a single underscore. All signals defined in the UI
     definition file are connected to ``self``. All :func:`getattr` calls not
     found in ``self`` are delegated to :attr:`self._dialog` allowing ``self``
     to look and act like a :class:`gtk.Dialog`.
     """
 
-    widgets = (NotImplementedError,)
+    _widgets = (NotImplementedError,)
 
     def __getattr__(self, name):
         """Return attribute from either ``self`` or :attr:`self._dialog`."""
@@ -53,7 +53,7 @@ class BuilderDialog(object):
         self._builder.connect_signals(self)
         self._dialog = self._builder.get_object("dialog")
 
-        for name in self.widgets:
+        for name in self._widgets:
             widget = self._builder.get_object(name)
             setattr(self, "_%s" % name, widget)
 

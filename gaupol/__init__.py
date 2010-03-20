@@ -74,6 +74,7 @@ from gaupol.dialogs.encoding import *
 from gaupol.dialogs.file import *
 from gaupol.dialogs.language import *
 from gaupol.dialogs.message import *
+from gaupol.dialogs.multiclose import *
 from gaupol.dialogs.open import *
 from gaupol.dialogs.previewerr import *
 from gaupol.dialogs.save import *

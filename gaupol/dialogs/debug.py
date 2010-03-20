@@ -39,7 +39,7 @@ class DebugDialog(gaupol.BuilderDialog):
 
     """Dialog for displaying a traceback in case of an unhandled exception."""
 
-    widgets = ("message_label", "text_view")
+    _widgets = ("message_label", "text_view")
 
     def __init__(self):
         """Initialize a :class:`DebugDialog` object."""

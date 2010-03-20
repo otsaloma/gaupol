@@ -24,7 +24,7 @@ class PreviewErrorDialog(gaupol.BuilderDialog):
 
     """Dialog for informing that preview failed."""
 
-    widgets = ("text_view",)
+    _widgets = ("text_view",)
 
     def __init__(self, parent, output):
         """Initialize a :class:`PreviewErrorDialog` object."""

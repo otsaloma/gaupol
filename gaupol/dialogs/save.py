@@ -28,7 +28,7 @@ class SaveDialog(gaupol.FileDialog):
 
     """Dialog for selecting a subtitle file to save."""
 
-    widgets = ("encoding_combo", "format_combo", "newline_combo")
+    _widgets = ("encoding_combo", "format_combo", "newline_combo")
 
     def __init__(self, parent, title):
         """Initialize a :class:`SaveDialog` object."""

@@ -30,7 +30,7 @@ class EncodingDialog(gaupol.BuilderDialog):
 
     __metaclass__ = aeidon.Contractual
 
-    widgets = ("tree_view",)
+    _widgets = ("tree_view",)
 
     def __init__(self, parent):
         """Initialize an :class:`EncodingDialog` object."""

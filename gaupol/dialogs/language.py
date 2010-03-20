@@ -30,14 +30,14 @@ class LanguageDialog(gaupol.BuilderDialog):
 
     __metaclass__ = aeidon.Contractual
 
-    widgets = ("all_radio",
-               "current_radio",
-               "language_alignment",
-               "language_title_label",
-               "main_radio",
-               "target_vbox",
-               "tran_radio",
-               "tree_view",)
+    _widgets = ("all_radio",
+                "current_radio",
+                "language_alignment",
+                "language_title_label",
+                "main_radio",
+                "target_vbox",
+                "tran_radio",
+                "tree_view",)
 
     def __init___require(self, parent, show_target=True):
         assert aeidon.util.enchant_available()

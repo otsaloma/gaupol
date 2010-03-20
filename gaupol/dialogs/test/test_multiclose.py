@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
+import aeidon
 import gaupol
 import gtk
 
@@ -21,81 +22,72 @@ import gtk
 class TestMultiCloseDialog(gaupol.TestCase):
 
     def run__dialog__both(self):
-
         self.setup_both()
         self.dialog.run()
         self.dialog.destroy()
 
     def run__dialog__main(self):
-
         self.setup_main()
         self.dialog.run()
         self.dialog.destroy()
 
     def run__dialog__translation(self):
-
         self.setup_translation()
         self.dialog.run()
         self.dialog.destroy()
 
     def setup_both(self):
-
+        # pylint: disable-msg=W0201
         self.application = self.new_application()
         for page in self.application.pages:
             page.project.remove_subtitles((0,))
-        parent = self.application.window
-        pages = self.application.pages
-        args = (parent, self.application, pages)
-        self.dialog = gaupol.MultiCloseDialog(*args)
+        self.dialog = gaupol.MultiCloseDialog(self.application.window,
+                                              self.application,
+                                              self.application.pages)
+
         self.dialog.show()
 
     def setup_main(self):
-
+        # pylint: disable-msg=W0201
         self.application = self.new_application()
         for page in self.application.pages:
             page.project.set_text(0, aeidon.documents.MAIN, "")
-        parent = self.application.window
-        pages = self.application.pages
-        args = (parent, self.application, pages)
-        self.dialog = gaupol.MultiCloseDialog(*args)
+        self.dialog = gaupol.MultiCloseDialog(self.application.window,
+                                              self.application,
+                                              self.application.pages)
+
         self.dialog.show()
 
     def setup_method(self, method):
-
         return self.setup_both()
 
     def setup_translation(self):
-
+        # pylint: disable-msg=W0201
         self.application = self.new_application()
         for page in self.application.pages:
             page.project.set_text(0, aeidon.documents.TRAN, "")
-        parent = self.application.window
-        pages = self.application.pages
-        args = (parent, self.application, pages)
-        self.dialog = gaupol.MultiCloseDialog(*args)
+        self.dialog = gaupol.MultiCloseDialog(self.application.window,
+                                              self.application,
+                                              self.application.pages)
+
         self.dialog.show()
 
     def test___init__(self):
-
         assert self.dialog.pages is not self.application.pages
 
     def test__on_response__no(self):
-
         self.dialog.response(gtk.RESPONSE_NO)
 
     def test__on_response__yes(self):
-
         self.dialog.response(gtk.RESPONSE_YES)
 
     def test__on_tree_view_cell_toggled__main(self):
-
         column = self.dialog._main_tree_view.get_columns()[0]
         renderer = column.get_cell_renderers()[0]
         renderer.emit("toggled", 0)
         renderer.emit("toggled", 0)
 
     def test__on_tree_view_cell_toggled__translation(self):
-
         column = self.dialog._tran_tree_view.get_columns()[0]
         renderer = column.get_cell_renderers()[0]
         renderer.emit("toggled", 0)
