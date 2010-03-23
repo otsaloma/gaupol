@@ -1,0 +1,2627 @@
+# Translation of gaupol to Hungarian
+# Copyright (C) 2005-2007 Osmo Salomaa.
+# This file is distributed under the same license as the gaupol package.
+# László Andrássy <andrassy.laszlo@gmail.com>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gaupol 0.15\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-05-15 21:47+0300\n"
+"PO-Revision-Date: 2009-12-02 11:07+0100\n"
+"Last-Translator: Laszlo Andrassy <andrassy.laszlo@gmail.com>\n"
+"Language-Team: Hungarian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../data/gaupol.desktop.in.h:1
+msgid "Edit subtitle files"
+msgstr "Felirat fájl szerkesztése"
+
+#: ../data/gaupol.desktop.in.h:2
+msgid "Gaupol Subtitle Editor"
+msgstr "Gaupol felirat szerkesztő"
+
+#: ../data/gaupol.desktop.in.h:3
+msgid "Subtitle Editor"
+msgstr "Felirat szerkesztő"
+
+#: ../data/glade/assistants/text/capitalization.glade.h:1
+#: ../data/glade/assistants/text/common-error.glade.h:1
+#: ../data/glade/assistants/text/hearing-impaired.glade.h:1
+#: ../data/glade/assistants/text/line-break.glade.h:1
+msgid "C_ountry:"
+msgstr "_Ország:"
+
+#: ../data/glade/assistants/text/capitalization.glade.h:2
+msgid "S_elect parts to capitalize:"
+msgstr "A kiválasztott rész_ek nagybetűssé alakítása:"
+
+#: ../data/glade/assistants/text/capitalization.glade.h:3
+#: ../data/glade/assistants/text/common-error.glade.h:6
+#: ../data/glade/assistants/text/hearing-impaired.glade.h:3
+#: ../data/glade/assistants/text/join-split-words.glade.h:5
+#: ../data/glade/assistants/text/line-break.glade.h:3
+msgid "_Language:"
+msgstr "_Nyelv:"
+
+#: ../data/glade/assistants/text/capitalization.glade.h:4
+#: ../data/glade/assistants/text/common-error.glade.h:7
+#: ../data/glade/assistants/text/hearing-impaired.glade.h:4
+#: ../data/glade/assistants/text/line-break.glade.h:4
+msgid "_Script:"
+msgstr "_Szkript:"
+
+#: ../data/glade/assistants/text/common-error.glade.h:2
+msgid "Error types:"
+msgstr "Hiba típus:"
+
+#: ../data/glade/assistants/text/common-error.glade.h:3
+msgid "S_elect errors to correct:"
+msgstr "H_ibák kijelölése javításra:"
+
+#: ../data/glade/assistants/text/common-error.glade.h:4
+msgid "_Human errors"
+msgstr "_Emberi hibák"
+
+#: ../data/glade/assistants/text/common-error.glade.h:5
+msgid "_Image recognition errors"
+msgstr "_Képfelismerési (OCR) hibák"
+
+#: ../data/glade/assistants/text/confirmation.glade.h:1
+msgid "Acc_ept, discard or edit changes:"
+msgstr "_Elfogad, visszavon vagy a javított szöveg módosítása:"
+
+#: ../data/glade/assistants/text/confirmation.glade.h:2
+msgid "_Mark All"
+msgstr "_Összes kijelölése"
+
+#: ../data/glade/assistants/text/confirmation.glade.h:3
+#: ../gaupol/gtk/actions/position.py:69
+msgid "_Preview"
+msgstr "_Előnézet"
+
+#: ../data/glade/assistants/text/confirmation.glade.h:4
+msgid "_Remove all blank subtitles"
+msgstr "Az összes ü_res feliratsor törlése"
+
+#: ../data/glade/assistants/text/confirmation.glade.h:5
+msgid "_Unmark All"
+msgstr "Az ö_sszes kijelölés törlése"
+
+#: ../data/glade/assistants/text/hearing-impaired.glade.h:2
+msgid "S_elect parts to remove:"
+msgstr "Kij_elölt részeket törölni:"
+
+#: ../data/glade/assistants/text/introduction.glade.h:1
+#: ../data/glade/dialogs/search.glade.h:1
+msgid "<b>Columns</b>"
+msgstr "<b>Oszlopok</b>"
+
+#: ../data/glade/assistants/text/introduction.glade.h:2
+#: ../data/glade/assistants/text/line-break-options.glade.h:2
+#: ../data/glade/dialogs/duration.glade.h:3
+#: ../data/glade/dialogs/framerate.glade.h:2
+#: ../data/glade/dialogs/language.glade.h:2
+#: ../data/glade/dialogs/search.glade.h:2
+#: ../data/glade/dialogs/shift.glade.h:2
+#: ../data/glade/dialogs/transform.glade.h:3
+msgid "<b>Subtitles</b>"
+msgstr "<b>Feliratok</b>"
+
+#: ../data/glade/assistants/text/introduction.glade.h:3
+msgid "<b>Tasks</b>"
+msgstr "<b>Feladatok</b>"
+
+#: ../data/glade/assistants/text/introduction.glade.h:4
+msgid "Correct texts in _all open projects"
+msgstr "Szöveg j_avítása az összes nyitott projekt-ben"
+
+#: ../data/glade/assistants/text/introduction.glade.h:5
+msgid "Correct texts in _main text column"
+msgstr "Szöveg javí_tása az alap szöveg oszlopban"
+
+#: ../data/glade/assistants/text/introduction.glade.h:6
+msgid "Correct texts in _translation text column"
+msgstr "Szöveg javítása a _fordítási szöveg oszlopban"
+
+#: ../data/glade/assistants/text/introduction.glade.h:7
+msgid "Correct texts in c_urrent project"
+msgstr "Szöveg javítása az a_ktuális projekt-ben"
+
+#: ../data/glade/assistants/text/introduction.glade.h:8
+msgid "Correct texts in s_elected subtitles"
+msgstr "Szöveg javítása az k_ijelölt feliratokban"
+
+#: ../data/glade/assistants/text/introduction.glade.h:9
+msgid "_Select corrections to perform on texts:"
+msgstr "Ja_vítási feladatok kijelölése és végrehajtása a szövegen:"
+
+#: ../data/glade/assistants/text/join-split-words.glade.h:1
+msgid "(None)"
+msgstr "(Egyik sem)"
+
+#: ../data/glade/assistants/text/join-split-words.glade.h:2
+msgid "<b>Corrections</b>"
+msgstr "<b>Javítások</b>"
+
+#: ../data/glade/assistants/text/join-split-words.glade.h:3
+msgid "<b>Spell-check Dictionary</b>"
+msgstr "<b>Helyesírás-ellenőrző szótár</b>"
+
+#: ../data/glade/assistants/text/join-split-words.glade.h:4
+msgid "_Join words not found in spell-check dictionary"
+msgstr "_Szavak összevonása, melyek nem találhatók a helyesírás-ellenőrző szótárban"
+
+#: ../data/glade/assistants/text/join-split-words.glade.h:6
+msgid "_Split words not found in spell-check dictionary"
+msgstr "S_zavak elválasztása, melyek nem találhatók a helyesírás-ellenőrző szótárban"
+
+#: ../data/glade/assistants/text/line-break-options.glade.h:1
+#: ../data/glade/dialogs/duration.glade.h:1
+msgid "<b>Limits</b>"
+msgstr "<b>Korlátozások</b>"
+
+#: ../data/glade/assistants/text/line-break-options.glade.h:3
+msgid "S_kip subtitles with maximum line amount of:"
+msgstr "Felirat átlépése ha a soro_k száma nagyobb mint:"
+
+#: ../data/glade/assistants/text/line-break-options.glade.h:4
+msgid "_Maximum line length:"
+msgstr "_Maximális sorhossz:"
+
+#: ../data/glade/assistants/text/line-break-options.glade.h:5
+msgid "_Preferred maximum amount of lines:"
+msgstr "_Preferált maximális sor szám:"
+
+#: ../data/glade/assistants/text/line-break-options.glade.h:6
+msgid "_Skip subtitles with maximum line length of:"
+msgstr "Feli_rat átlépése ha a sorhossz nagyobb mint:"
+
+#: ../data/glade/assistants/text/line-break.glade.h:2
+msgid "S_elect preferred line-break points:"
+msgstr "Pre_ferált sortördelési pont kiválasztása:"
+
+#: ../data/glade/dialogs/debug.glade.h:1
+msgid "<big><b>An unhandled exception occured</b></big>"
+msgstr "<big><b>Nem kezelt kivétel történt</b></big>"
+
+#: ../data/glade/dialogs/debug.glade.h:2
+msgid "You have probably discovered a bug. Please report it by providing the above information and a description of what you were doing."
+msgstr "Valószínűleg felfedezett egy hibát. Kérjük jelentse a hibalistán a fenti információt és annak leírását, hogy éppen mit csinált."
+
+#: ../data/glade/dialogs/duration.glade.h:2
+msgid "<b>Optimal</b>"
+msgstr "<b>Optimális</b>"
+
+#: ../data/glade/dialogs/duration.glade.h:4
+msgid "Adj_ust selected subtitles"
+msgstr "Ki_jelölt felirat igazítása"
+
+#: ../data/glade/dialogs/duration.glade.h:5
+msgid "Adjus_t current project"
+msgstr "Ak_tuális projekt igazítása"
+
+#: ../data/glade/dialogs/duration.glade.h:6
+msgid "Adjust Durations"
+msgstr "Időtartam igazítása"
+
+#: ../data/glade/dialogs/duration.glade.h:7
+msgid "Adjust all open p_rojects"
+msgstr "Összes nyitott p_rojekt igazítása"
+
+#: ../data/glade/dialogs/duration.glade.h:8
+msgid "Ma_ximum duration:"
+msgstr "Ma_ximum időtartam:"
+
+#: ../data/glade/dialogs/duration.glade.h:9
+msgid "_Adjust"
+msgstr "_Igazítás"
+
+#: ../data/glade/dialogs/duration.glade.h:10
+msgid "_Gap between subtitles:"
+msgstr "S_zünet a feliratok között:"
+
+#: ../data/glade/dialogs/duration.glade.h:11
+msgid "_Lengthen duration if shorter than optimal"
+msgstr "Az időtartam növe_lése ha rövidebb mint az optimális"
+
+#: ../data/glade/dialogs/duration.glade.h:12
+msgid "_Minimum duration:"
+msgstr "_Minimum időtartam:"
+
+#: ../data/glade/dialogs/duration.glade.h:13
+msgid "_Optimal duration:"
+msgstr "_Optimális időtartam:"
+
+#: ../data/glade/dialogs/duration.glade.h:14
+msgid "_Shorten duration if longer than optimal"
+msgstr "Az időtartam c_sökkentése ha hosszabb mint az optimális"
+
+#: ../data/glade/dialogs/duration.glade.h:15
+msgid "s_econds"
+msgstr "másodp_erc"
+
+#: ../data/glade/dialogs/duration.glade.h:16
+msgid "seco_nds"
+msgstr "_másodperc"
+
+#: ../data/glade/dialogs/duration.glade.h:17
+msgid "secon_ds"
+msgstr "máso_dperc"
+
+#: ../data/glade/dialogs/duration.glade.h:18
+msgid "seconds per character"
+msgstr "másodperc / karakter"
+
+#: ../data/glade/dialogs/encoding.glade.h:1
+msgid "Character Encodings"
+msgstr "Karakterkódolás"
+
+#: ../data/glade/dialogs/framerate.glade.h:1
+msgid "<b>Framerate</b>"
+msgstr "<b>Képfrissítés</b>"
+
+#: ../data/glade/dialogs/framerate.glade.h:3
+msgid "Co_nvert"
+msgstr "_Konvertálás"
+
+#: ../data/glade/dialogs/framerate.glade.h:4
+msgid "Convert Framerate"
+msgstr "Képfrissítés konvertálása"
+
+#: ../data/glade/dialogs/framerate.glade.h:5
+msgid "Convert _all open projects"
+msgstr "Összes nyitott projekt konvertálás_a"
+
+#: ../data/glade/dialogs/framerate.glade.h:6
+msgid "Convert c_urrent project"
+msgstr "Aktuális pro_jekt konvertálása"
+
+#: ../data/glade/dialogs/framerate.glade.h:7
+msgid "_Input:"
+msgstr "_Bemenet:"
+
+#: ../data/glade/dialogs/framerate.glade.h:8
+msgid "_Output:"
+msgstr "_Kimenet:"
+
+#: ../data/glade/dialogs/header.glade.h:1
+msgid "Cl_ear"
+msgstr "_Törlés"
+
+#: ../data/glade/dialogs/header.glade.h:2
+msgid "Cle_ar"
+msgstr "Tö_rlés"
+
+#: ../data/glade/dialogs/header.glade.h:3
+msgid "Copy _Down"
+msgstr "Másolás _le"
+
+#: ../data/glade/dialogs/header.glade.h:4
+msgid "Copy _Up"
+msgstr "Másolás _fel"
+
+#: ../data/glade/dialogs/header.glade.h:5
+msgid "Headers"
+msgstr "Fejek"
+
+#: ../data/glade/dialogs/header.glade.h:6
+msgid "I_nsert Template"
+msgstr "_Sablon beszúrása"
+
+#: ../data/glade/dialogs/header.glade.h:7
+msgid "In_sert Template"
+msgstr "Sa_blon beszúrása"
+
+#: ../data/glade/dialogs/header.glade.h:8
+msgid "Re_vert"
+msgstr "_Visszavonás"
+
+#: ../data/glade/dialogs/header.glade.h:9
+msgid "_Main file:"
+msgstr "_Alap fájl:"
+
+#: ../data/glade/dialogs/header.glade.h:10
+msgid "_Revert"
+msgstr "Viss_zavonás"
+
+#: ../data/glade/dialogs/header.glade.h:11
+msgid "_Translation file:"
+msgstr "Fordí_tási fájl:"
+
+#: ../data/glade/dialogs/insert.glade.h:1
+msgid ""
+"Above selection\n"
+"Below selection"
+msgstr ""
+"Kijelölés felett\n"
+"Kijelölés alatt"
+
+#: ../data/glade/dialogs/insert.glade.h:3
+msgid "Insert Subtitles"
+msgstr "Feliratsor beszúrása"
+
+#: ../data/glade/dialogs/insert.glade.h:4
+#: ../data/glade/dialogs/shift.glade.h:7
+msgid "_Amount:"
+msgstr "_Mennyiség:"
+
+#: ../data/glade/dialogs/insert.glade.h:5
+msgid "_Position:"
+msgstr "_Pozíció:"
+
+#: ../data/glade/dialogs/language.glade.h:1
+msgid "<b>Language</b>"
+msgstr "<b>Nyelv</b>"
+
+#: ../data/glade/dialogs/language.glade.h:3
+msgid "Check _all open projects"
+msgstr "Összes nyitott projekt ellenőrzése"
+
+#: ../data/glade/dialogs/language.glade.h:4
+msgid "Check _main text column"
+msgstr "Az ala_p szöveg oszlop ellenőrzése"
+
+#: ../data/glade/dialogs/language.glade.h:5
+msgid "Check _translation text column"
+msgstr "A fordítási s_zöveg oszlop ellenőrzése"
+
+#: ../data/glade/dialogs/language.glade.h:6
+msgid "Check c_urrent project"
+msgstr "Aktuális projekt ellenőrzése"
+
+#: ../data/glade/dialogs/language.glade.h:7
+msgid "Configure Spell-check"
+msgstr "Helyesírás-ellenőrző beállítása"
+
+#: ../data/glade/dialogs/multiclose.glade.h:1
+msgid "<span weight=\"bold\" size=\"larger\">Save changes to documents before closing?</span>"
+msgstr "<span weight=\"bold\" size=\"larger\">Menti a változtatásokat a dokumentumba mielőtt bezárja?</span>"
+
+#: ../data/glade/dialogs/multiclose.glade.h:2
+#: ../gaupol/gtk/agents/close.py:74
+msgid "Close _Without Saving"
+msgstr "Bezárás _mentés nélkül"
+
+#: ../data/glade/dialogs/multiclose.glade.h:3
+#: ../gaupol/gtk/agents/close.py:72
+#: ../gaupol/gtk/agents/open.py:267
+msgid "If you don't save, changes will be permanently lost."
+msgstr "Ha nem menti akkor a változtatások véglegesen elvesznek"
+
+#: ../data/glade/dialogs/multiclose.glade.h:4
+msgid "Select the _main documents you want to save:"
+msgstr "_Válassza ki az alap dokumentumot ha menteni akarja:"
+
+#: ../data/glade/dialogs/multiclose.glade.h:5
+msgid "Select the _translation documents you want to save:"
+msgstr "Válassza ki a fordí_tási dokumentumot ha menteni akarja:"
+
+#: ../data/glade/dialogs/open.glade.h:1
+msgid "Align _method:"
+msgstr "Igazítás _módszere:"
+
+#: ../data/glade/dialogs/open.glade.h:2
+msgid "Character _encoding:"
+msgstr "Karakt_erkódolás:"
+
+#: ../data/glade/dialogs/preferences.glade.h:1
+msgid "<b>Character Encodings</b>"
+msgstr "<b>Karakterkódolás</b>"
+
+#: ../data/glade/dialogs/preferences.glade.h:2
+msgid "<b>Font</b>"
+msgstr "<b>Betűtípus</b>"
+
+#: ../data/glade/dialogs/preferences.glade.h:3
+msgid "<b>Line Lengths</b>"
+msgstr "<b>Sorhossz</b>"
+
+#: ../data/glade/dialogs/preferences.glade.h:4
+msgid "<b>Start Position</b>"
+msgstr "<b>Kezdő pozíció</b>"
+
+#: ../data/glade/dialogs/preferences.glade.h:5
+msgid "<b>Video Player</b>"
+msgstr "<b>Video lejátszó</b>"
+
+#: ../data/glade/dialogs/preferences.glade.h:6
+msgid "A_vailable extensions:"
+msgstr "Elérhető bő_vítmények:"
+
+#: ../data/glade/dialogs/preferences.glade.h:7
+msgid "Al_ways use UTF-8 character encoding"
+msgstr "Mi_ndig UTF-8 karakterkódolást használjon"
+
+#: ../data/glade/dialogs/preferences.glade.h:8
+msgid "Auto-detecti_on"
+msgstr "Aut_omatikus felismerés"
+
+#: ../data/glade/dialogs/preferences.glade.h:9
+msgid "Co_mmand:"
+msgstr "Para_ncs:"
+
+#: ../data/glade/dialogs/preferences.glade.h:10
+msgid "Curr_ent locale encoding"
+msgstr "Aktuális h_elyi kódolás"
+
+#: ../data/glade/dialogs/preferences.glade.h:11
+msgid "Editor"
+msgstr "Szerkesztő"
+
+#: ../data/glade/dialogs/preferences.glade.h:12
+msgid "Encoding specified in the open dialog will always be tried first."
+msgstr "Mindig a párbeszéd-ablakban megadott kódolásokat próbálja először."
+
+#: ../data/glade/dialogs/preferences.glade.h:13
+msgid "Extensions"
+msgstr "Bővítmények"
+
+#: ../data/glade/dialogs/preferences.glade.h:14
+msgid "Fields:"
+msgstr "Mezők:"
+
+#: ../data/glade/dialogs/preferences.glade.h:15
+msgid "File"
+msgstr "Fájl"
+
+#: ../data/glade/dialogs/preferences.glade.h:16
+msgid "Pick the Editor Font"
+msgstr "Betűtípus kiválasztása"
+
+#: ../data/glade/dialogs/preferences.glade.h:17
+msgid "Preferences"
+msgstr "Tulajdonságok"
+
+#: ../data/glade/dialogs/preferences.glade.h:18
+msgid "Preview"
+msgstr "Előnézet"
+
+#: ../data/glade/dialogs/preferences.glade.h:19
+msgid "S_how line lengths in editable text fields"
+msgstr "Sor_hossz megjelenítése a szerkeszthető szövegmezőkben"
+
+#: ../data/glade/dialogs/preferences.glade.h:20
+msgid "Use _default theme font"
+msgstr "Ala_pértelmezett téma betűtípus használata"
+
+#: ../data/glade/dialogs/preferences.glade.h:21
+msgid "When opening files, try encodings in the following order:"
+msgstr "Fájl megnyitásakor a karakterkódolást próbája az alábbi sorrendben:"
+
+#: ../data/glade/dialogs/preferences.glade.h:22
+msgid "_Application:"
+msgstr "_Alkalmazás:"
+
+#: ../data/glade/dialogs/preferences.glade.h:23
+msgid "_Editor font:"
+msgstr "_Szerkesztő betűtípusa:"
+
+#: ../data/glade/dialogs/preferences.glade.h:24
+msgid "_Fallback encodings:"
+msgstr "Elé_rhető kódolások:"
+
+#: ../data/glade/dialogs/preferences.glade.h:25
+msgid "_Length unit:"
+msgstr "_Hossz egység:"
+
+#: ../data/glade/dialogs/preferences.glade.h:26
+msgid "_Offset:"
+msgstr "_Offset:"
+
+#: ../data/glade/dialogs/preferences.glade.h:27
+msgid "_Show line lengths in list cells (slow)"
+msgstr "_Sorhossz megjelenítése a mezőkben (lassú)"
+
+#: ../data/glade/dialogs/preferences.glade.h:28
+msgid "gtk-about"
+msgstr "gtk-about"
+
+#: ../data/glade/dialogs/preferences.glade.h:29
+msgid "gtk-help"
+msgstr "gtk-help"
+
+#: ../data/glade/dialogs/preferences.glade.h:30
+msgid "gtk-preferences"
+msgstr "gtk-preferences"
+
+#: ../data/glade/dialogs/preferences.glade.h:31
+msgid "seconds before selection"
+msgstr "kijelölés előtti másodpercek"
+
+#: ../data/glade/dialogs/previewerr.glade.h:1
+msgid "<big><b>Preview in video player failed</b></big>"
+msgstr "<big><b>Előnézet a videó-lejátszóval nem sikerült</b></big>"
+
+#: ../data/glade/dialogs/previewerr.glade.h:2
+msgid "O_utput:"
+msgstr "_Kimenet:"
+
+#: ../data/glade/dialogs/save.glade.h:2
+msgid "For_mat:"
+msgstr "_Formátum:"
+
+#: ../data/glade/dialogs/save.glade.h:3
+msgid "Ne_wlines:"
+msgstr "Új s_or:"
+
+#: ../data/glade/dialogs/search.glade.h:3
+msgid "Find"
+msgstr "Keresés"
+
+#: ../data/glade/dialogs/search.glade.h:4
+msgid "Find And Replace"
+msgstr "Keresés és csere"
+
+#: ../data/glade/dialogs/search.glade.h:5
+msgid "Find _Next"
+msgstr "Kö_vetkező találat"
+
+#: ../data/glade/dialogs/search.glade.h:6
+msgid "Find _Previous"
+msgstr "Elő_ző találat"
+
+#: ../data/glade/dialogs/search.glade.h:7
+msgid "Find in _all open projects"
+msgstr "Ke_resés az összes nyitott projektben"
+
+#: ../data/glade/dialogs/search.glade.h:8
+msgid "Find in _main text column"
+msgstr "Keresés az alap szöveg oszlopba_n"
+
+#: ../data/glade/dialogs/search.glade.h:9
+msgid "Find in _translation text column"
+msgstr "Keresés a fordí_tási szöveg oszlopban"
+
+#: ../data/glade/dialogs/search.glade.h:10
+msgid "Find in c_urrent project"
+msgstr "Keresés az aktuális projektben"
+
+#: ../data/glade/dialogs/search.glade.h:11
+msgid "R_egular expression"
+msgstr "Általános kif_ejezés"
+
+#: ../data/glade/dialogs/search.glade.h:12
+msgid "Replace _All"
+msgstr "Összes _cseréje"
+
+#: ../data/glade/dialogs/search.glade.h:13
+#: ../data/glade/dialogs/spellcheck.glade.h:8
+msgid "Replace _with:"
+msgstr "Cse_re erre:"
+
+#: ../data/glade/dialogs/search.glade.h:14
+msgid "Target"
+msgstr "Cél"
+
+#: ../data/glade/dialogs/search.glade.h:15
+msgid "_Ignore case"
+msgstr "K_is- és nagybetű nem számít"
+
+#: ../data/glade/dialogs/search.glade.h:16
+#: ../data/glade/dialogs/spellcheck.glade.h:12
+msgid "_Replace"
+msgstr "Cse_re"
+
+#: ../data/glade/dialogs/search.glade.h:17
+msgid "_Search for:"
+msgstr "Kere_sés:"
+
+#: ../data/glade/dialogs/shift.glade.h:1
+msgid "<b>Shift</b>"
+msgstr "<b>Eltolás</b>"
+
+#: ../data/glade/dialogs/shift.glade.h:3
+msgid "Shift Positions"
+msgstr "Időpozíciók eltolása"
+
+#: ../data/glade/dialogs/shift.glade.h:4
+msgid "Shift all _open projects"
+msgstr "Összes nyit_ott projekt eltolása"
+
+#: ../data/glade/dialogs/shift.glade.h:5
+msgid "Shift c_urrent project"
+msgstr "Akt_uális projekt eltolása"
+
+#: ../data/glade/dialogs/shift.glade.h:6
+msgid "Shift s_elected subtitles"
+msgstr "Kijelölt feli_rat eltolása"
+
+#: ../data/glade/dialogs/shift.glade.h:8
+#: ../data/glade/dialogs/transform.glade.h:10
+msgid "_Preview Changes"
+msgstr "Mó_dosítások előnézete"
+
+#: ../data/glade/dialogs/shift.glade.h:9
+msgid "_Shift"
+msgstr "Eltolá_s"
+
+#: ../data/glade/dialogs/spellcheck.glade.h:1
+msgid "<b>Language (Country)</b>"
+msgstr "<b>Nyelv (Ország)</b>"
+
+#: ../data/glade/dialogs/spellcheck.glade.h:2
+msgid "Check Spelling"
+msgstr "Helyesírás-ellenőrzés"
+
+#: ../data/glade/dialogs/spellcheck.glade.h:3
+msgid "Ig_nore All"
+msgstr "Mi_nden visszavonása"
+
+#: ../data/glade/dialogs/spellcheck.glade.h:4
+msgid "Join _Back"
+msgstr "Mö_gé (illesztés)"
+
+#: ../data/glade/dialogs/spellcheck.glade.h:5
+msgid "Join _Forward"
+msgstr "E_lé (illesztés)"
+
+#: ../data/glade/dialogs/spellcheck.glade.h:6
+msgid "Language:"
+msgstr "Nyelv:"
+
+#: ../data/glade/dialogs/spellcheck.glade.h:7
+msgid "Rep_lace All"
+msgstr "Összes cse_réje"
+
+#: ../data/glade/dialogs/spellcheck.glade.h:9
+msgid "_Add"
+msgstr "_Hozzáadás"
+
+#: ../data/glade/dialogs/spellcheck.glade.h:10
+#: ../gaupol/gtk/actions/menu.py:31
+msgid "_Edit"
+msgstr "_Szerkesztés"
+
+#: ../data/glade/dialogs/spellcheck.glade.h:11
+msgid "_Ignore"
+msgstr "_Mellőzés"
+
+#: ../data/glade/dialogs/spellcheck.glade.h:13
+msgid "_Suggestions:"
+msgstr "Java_slat:"
+
+#: ../data/glade/dialogs/split.glade.h:1
+msgid "Split Project"
+msgstr "Projekt felosztása"
+
+#: ../data/glade/dialogs/split.glade.h:2
+msgid "_First subtitle of new project:"
+msgstr "Új projekt első _felirata:"
+
+#: ../data/glade/dialogs/split.glade.h:3
+msgid "_Split"
+msgstr "Felo_sztás"
+
+#: ../data/glade/dialogs/transform.glade.h:1
+msgid "<b>First Point</b>"
+msgstr "<b>Első pont</b>"
+
+#: ../data/glade/dialogs/transform.glade.h:2
+msgid "<b>Second Point</b>"
+msgstr "<b>Második pont</b>"
+
+#: ../data/glade/dialogs/transform.glade.h:4
+msgid "Pre_view Changes"
+msgstr "Mó_dosítások előnézete"
+
+#: ../data/glade/dialogs/transform.glade.h:5
+msgid "Su_btitle:"
+msgstr "_Felirat:"
+
+#: ../data/glade/dialogs/transform.glade.h:6
+msgid "Text:"
+msgstr "Szöveg:"
+
+#: ../data/glade/dialogs/transform.glade.h:7
+msgid "Transform Positions"
+msgstr "Pozíciók átalakítása"
+
+#: ../data/glade/dialogs/transform.glade.h:8
+msgid "Transform c_urrent project"
+msgstr "Akt_uális projekt átalakítása"
+
+#: ../data/glade/dialogs/transform.glade.h:9
+msgid "Transform se_lected subtitles"
+msgstr "Kije_lölt felirat átalakítása"
+
+#: ../data/glade/dialogs/transform.glade.h:11
+#: ../extensions/bookmarks/add-bookmark-dialog.glade.h:3
+msgid "_Subtitle:"
+msgstr "Feli_rat:"
+
+#: ../data/glade/dialogs/transform.glade.h:12
+msgid "_Transform"
+msgstr "Á_talakítás"
+
+#: ../data/patterns/Latn-en.line-break.in.h:1
+#: ../data/patterns/Latn.line-break.in.h:1
+msgid "Break according to clauses terminated by a punctuation mark"
+msgstr "Tördelés a mondatban szereplő írásjelek alapján"
+
+#: ../data/patterns/Latn-en.line-break.in.h:2
+#: ../data/patterns/Latn.line-break.in.h:3
+msgid "Clause"
+msgstr "Feltétel"
+
+#: ../data/patterns/Latn-en.hearing-impaired.in.h:1
+msgid "Replace the uppercase name of the speaker before a colon with a dialogue dash"
+msgstr "Lecserélni a beszélő nagybetűs neve előtti kettőspontot, gondolatjelre."
+
+#: ../data/patterns/Latn-en.hearing-impaired.in.h:2
+msgid "Uppercase speaker before a colon"
+msgstr "Nagybetűs beszélő a kettőspont előtt"
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:1
+msgid "One-line song lyrics between asterisks"
+msgstr "Egysoros dalszövegek csillagok között"
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:2
+msgid "One-line song lyrics between number signs"
+msgstr "Egysoros dalszövegek számjegyek között"
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:3
+msgid "Remove description of a sound between parantheses"
+msgstr "Zárójelek közötti hang leírásának eltávolítása"
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:4
+msgid "Remove description of a sound between square brackets"
+msgstr "Szögletes-zárójelek közötti hang leírásának eltávolítása"
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:5
+msgid "Remove one-line song lyrics starting with or between asterisks"
+msgstr "Olyan egysoros dalszövegek eltávolítása melyek csillaggal kezdődnek vagy csillagok között vannak"
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:6
+msgid "Remove one-line song lyrics starting with or between number signs"
+msgstr "Olyan egysoros dalszövegek eltávolítása melyek számjegyekkel kezdődnek vagy számjegyek között vannak"
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:7
+msgid "Remove song lyrics starting with or between asterisks"
+msgstr "Olyan egysoros dalszövegek eltávolítása melyek csillaggal kezdődnek vagy csillagok között vannak"
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:8
+msgid "Remove song lyrics starting with or between number signs"
+msgstr "Olyan dalszövegek eltávolítása melyek számjegyekkel kezdődnek vagy számjegyek között vannak"
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:9
+msgid "Replace the name of the speaker before a colon with a dialogue dash"
+msgstr "Cserélje ki beszélő nevét a kettőspont előtt egy párbeszéd kötőjelre"
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:10
+msgid "Song lyrics between asterisks"
+msgstr "Dalszöveg csillagok között"
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:11
+msgid "Song lyrics between number signs"
+msgstr "Dalszöveg számjegyek között"
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:12
+msgid "Sound in brackets"
+msgstr "Hang zárójelben"
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:13
+msgid "Sound in parantheses"
+msgstr "Hang kapcsos-zárójelben"
+
+#: ../data/patterns/Latn.hearing-impaired.in.h:14
+msgid "Speaker before a colon"
+msgstr "Beszélő a kettőspont előtt"
+
+#: ../data/patterns/Zyyy.common-error.in.h:1
+msgid "Leading and trailing spaces"
+msgstr "Vezető és záró szóközök"
+
+#: ../data/patterns/Zyyy.common-error.in.h:2
+msgid "Multiple consecutive spaces"
+msgstr "Több egymást követő szóköz"
+
+#: ../data/patterns/Zyyy.common-error.in.h:3
+msgid "Remove space between digits of a number"
+msgstr "Számjegyek közötti szóközök eltávolítása"
+
+#: ../data/patterns/Zyyy.common-error.in.h:4
+msgid "Remove spaces from the beginning and end of lines"
+msgstr "Sorok vezető és záró szóközeinek eltávolítása"
+
+#: ../data/patterns/Zyyy.common-error.in.h:5
+msgid "Replace multiple consecutive spaces with only one"
+msgstr "Több egymást követő szóköz cseréje egyre"
+
+#: ../data/patterns/Zyyy.common-error.in.h:6
+msgid "Space between digits"
+msgstr "Szóköz a számjegyek között"
+
+#: ../data/patterns/Latn.common-error.in.h:1
+msgid "Add or remove spaces around parantheses and square brackets"
+msgstr "Szóközök hozzáadása vagy eltávolítása a zárójelek és a szögletes zárójelek körül"
+
+#: ../data/patterns/Latn.common-error.in.h:2
+msgid "Add space after a dialogue dash"
+msgstr "Szóköz hozzáadása a párbeszéd kötőjel után"
+
+#: ../data/patterns/Latn.common-error.in.h:3
+msgid "Add space after an ellipsis"
+msgstr "Szóköz hozzáadása pontozás (...) után"
+
+#: ../data/patterns/Latn.common-error.in.h:4
+msgid "Add space after various punctuation marks"
+msgstr "Szóköz hozzáadása a különböző írásjelek után"
+
+#: ../data/patterns/Latn.common-error.in.h:5
+msgid "Double apostrophe"
+msgstr "Dupla idézőjel"
+
+#: ../data/patterns/Latn.common-error.in.h:6
+msgid "Letter \"O\" in a number"
+msgstr "»O« betű a számokban"
+
+#: ../data/patterns/Latn.common-error.in.h:7
+msgid "Multiple question- and exclamation marks"
+msgstr "Több kérdőjel és felkiáltójel"
+
+#: ../data/patterns/Latn.common-error.in.h:8
+msgid "Periods around a punctuation mark"
+msgstr "Pont az írásjelek körül"
+
+#: ../data/patterns/Latn.common-error.in.h:9
+msgid "Remove period before or after various punctuation marks"
+msgstr "Pont eltávolítása a különböző írásjelek mellől"
+
+#: ../data/patterns/Latn.common-error.in.h:10
+msgid "Remove space after a starting- and before an ending quotation mark"
+msgstr "Kezdő idézőjel utáni és záró idézőjel előtti szóközök eltávolítása"
+
+#: ../data/patterns/Latn.common-error.in.h:11
+msgid "Remove space after an ellipsis that starts a line"
+msgstr "Sort elindító pontozás (...) utáni szóköz eltávolítása"
+
+#: ../data/patterns/Latn.common-error.in.h:12
+msgid "Remove space before various punctuation marks"
+msgstr "Szóközök eltávolítása a különböző írásjelek elől"
+
+#: ../data/patterns/Latn.common-error.in.h:13
+msgid "Replace a double apostrophe with a quotation mark"
+msgstr "Dupla idézőjel cseréje szimpla idézőjelre"
+
+#: ../data/patterns/Latn.common-error.in.h:14
+msgid "Replace letter \"O\" with a zero in a number"
+msgstr "»O« betű cseréje 0-ra a számokban"
+
+#: ../data/patterns/Latn.common-error.in.h:15
+msgid "Replace multiple consequtive question- and exclamation marks with only one"
+msgstr "Többszörös kérdőjel és felkiáltójel cseréje egyre"
+
+#: ../data/patterns/Latn.common-error.in.h:16
+msgid "Space after a dialogue dash"
+msgstr "Szóköz a párbeszéd kötőjel után"
+
+#: ../data/patterns/Latn.common-error.in.h:17
+msgid "Space after a starting ellipsis"
+msgstr "Szóköz a pontozás indítása után"
+
+#: ../data/patterns/Latn.common-error.in.h:18
+msgid "Space after an ellipsis"
+msgstr "Szóköz a pontozás után"
+
+#: ../data/patterns/Latn.common-error.in.h:19
+msgid "Space after punctuation marks"
+msgstr "Szóköz hozzáadása írásjelek után"
+
+#: ../data/patterns/Latn.common-error.in.h:20
+msgid "Space before punctuation marks"
+msgstr "Szóköz hozzáadása írásjelek elé"
+
+#: ../data/patterns/Latn.common-error.in.h:21
+msgid "Spaces around a quotation mark"
+msgstr "Szóközök az idézőjelek körül"
+
+#: ../data/patterns/Latn.common-error.in.h:22
+msgid "Spaces around brackets"
+msgstr "Szóközök az zárójelek körül"
+
+#: ../data/patterns/Latn-en-US.common-error.in.h:1
+msgid "Add period after a shortened title, such as \"Mr\" and \"Dr\""
+msgstr "Pont hozzáadása olyan rövidített megszólításhoz mint »Mr« és »Dr«"
+
+#: ../data/patterns/Latn-en-US.common-error.in.h:2
+msgid "Period after title"
+msgstr "Pont cím után"
+
+#: ../data/patterns/Latn.line-break.in.h:2
+msgid "Break according to dialogue separated by dashes"
+msgstr "Kötőjellel elválasztott párbeszédek tördelése"
+
+#: ../data/patterns/Latn.line-break.in.h:4
+msgid "Dialogue"
+msgstr "Párbeszéd"
+
+#: ../data/patterns/Latn.capitalization.in.h:1
+msgid "Capitalize the first word of a sentence"
+msgstr "A mondat nagybetűvel kezdődjön"
+
+#: ../data/patterns/Latn.capitalization.in.h:2
+msgid "Sentence"
+msgstr "Mondat"
+
+#: ../data/patterns/Latn-en.common-error.in.h:1
+msgid "Convert various two-letter spellings of okay to \"OK\""
+msgstr "Különboző kétbetűs megfelelői az Okay-nak legyenek átalakítva »OK«-ra"
+
+#: ../data/patterns/Latn-en.common-error.in.h:2
+msgid "Letter \"I\" in a lower case word"
+msgstr "Az »I« betű egy kisbetűs szóban (Angol)"
+
+#: ../data/patterns/Latn-en.common-error.in.h:3
+msgid "Letter \"l\" in an upper case word"
+msgstr "Az »l« betű egy nagybetűs szóban (Angol)"
+
+#: ../data/patterns/Latn-en.common-error.in.h:4
+msgid "Okay"
+msgstr "Okay"
+
+#: ../data/patterns/Latn-en.common-error.in.h:5
+msgid "Remove spaces around an apostrophe"
+msgstr "Szóközök eltávolítása az idézőjelek körül"
+
+#: ../data/patterns/Latn-en.common-error.in.h:6
+msgid "Replace letter \"I\" with letter \"l\" in a lower case word"
+msgstr "Az »I« betű cseréje »l« betűre kisbetűs szavakban (Angol)"
+
+#: ../data/patterns/Latn-en.common-error.in.h:7
+msgid "Replace letter \"l\" with letter \"I\" in an upper case word"
+msgstr "Az »l« betű cseréje »I« betűre nagybetűs szavakban (Angol)"
+
+#: ../data/patterns/Latn-en.common-error.in.h:8
+msgid "Replace zero with letter \"O\" in an upper case word"
+msgstr "Nulla (0) cseréje »O« betűre a nagybetűs szavakban"
+
+#: ../data/patterns/Latn-en.common-error.in.h:9
+msgid "Spaces around an apostrophe"
+msgstr "Szóközök az idézőjelek körül"
+
+#: ../data/patterns/Latn-en.common-error.in.h:10
+msgid "Zero in an upper case word"
+msgstr "Nulla (0) egy nagybetűs szóban"
+
+#: ../data/patterns/Latn-en.capitalization.in.h:1
+msgid "Capitalize the first person pronoun \"I\""
+msgstr "Az »I« (én) névmás cseréje nagy betűre (Angol)"
+
+#: ../data/patterns/Latn-en.capitalization.in.h:2
+msgid "First person pronoun"
+msgstr "Egyes szám első személy"
+
+#: ../extensions/bookmarks/add-bookmark-dialog.glade.h:1
+msgid "Add Bookmark"
+msgstr "Könyvjelzőkhöz ad"
+
+#: ../extensions/bookmarks/add-bookmark-dialog.glade.h:2
+msgid "_Description:"
+msgstr "_Leírás:"
+
+#: ../extensions/bookmarks/bookmarks.gaupol-extension.in.h:1
+#: ../extensions/bookmarks/bookmarks.py:540
+msgid "Bookmarks"
+msgstr "Könyvjelzők"
+
+#: ../extensions/bookmarks/bookmarks.gaupol-extension.in.h:2
+msgid "Marking subtitles for easy navigation"
+msgstr "Feliratok megjelölése a könnyű navigáció érdekében"
+
+#. Translators: 'Bm.' is short for 'Bookmark'. It is used in the header
+#. of a tree view column that contains 16 pixels wide pixbufs.
+#: ../extensions/bookmarks/bookmarks.py:117
+#: ../extensions/bookmarks/bookmarks.py:122
+msgid "Bm."
+msgstr "Kj."
+
+#: ../extensions/bookmarks/bookmarks.py:123
+msgid "Bookmark"
+msgstr "Könyvjelző"
+
+#: ../extensions/bookmarks/bookmarks.py:198
+msgid "_Bookmarks"
+msgstr "_Könyvjelzők"
+
+#: ../extensions/bookmarks/bookmarks.py:199
+msgid "_Add…"
+msgstr "_Hozzáadás…"
+
+#: ../extensions/bookmarks/bookmarks.py:200
+msgid "Add a bookmark for the current subtitle"
+msgstr "Könyvjelző hozzáadása a felirathoz"
+
+#: ../extensions/bookmarks/bookmarks.py:202
+msgid "_Edit Bookmarks"
+msgstr "Kön_yvjelzők szerkesztése"
+
+#: ../extensions/bookmarks/bookmarks.py:205
+msgid "_Next"
+msgstr "_Következő"
+
+#: ../extensions/bookmarks/bookmarks.py:206
+msgid "Go to the next bookmarked subtitle"
+msgstr "Ugrás az következő könyvjelzőzött feliratra"
+
+#: ../extensions/bookmarks/bookmarks.py:208
+msgid "_Previous"
+msgstr "_Előző"
+
+#: ../extensions/bookmarks/bookmarks.py:209
+msgid "Go to the previous bookmarked subtitle"
+msgstr "Ugrás az előző könyvjelzőzött feliratra"
+
+#: ../extensions/bookmarks/bookmarks.py:212
+msgid "_Bookmark"
+msgstr "_Könyvjelző"
+
+#: ../extensions/bookmarks/bookmarks.py:213
+msgid "Show or hide the bookmark column"
+msgstr "Könyvjelző oszlop megjelenítése vagy elrejtése"
+
+#: ../extensions/bookmarks/bookmarks.py:241
+msgid "Search:"
+msgstr "Keres:"
+
+#: ../extensions/side-pane/side-pane.gaupol-extension.in.h:1
+msgid "A side pane that can be used by other extensions"
+msgstr "Oldalsáv melyet használhatnak a bővítmények"
+
+#: ../extensions/side-pane/side-pane.gaupol-extension.in.h:2
+msgid "Side Pane"
+msgstr "Oldalsáv"
+
+#: ../extensions/side-pane/side-pane.py:52
+msgid "(Empty)"
+msgstr "(Üres)"
+
+#: ../extensions/side-pane/side-pane.py:317
+msgid "Si_de Pane"
+msgstr "_Oldalsáv"
+
+#: ../extensions/side-pane/side-pane.py:318
+msgid "Show or hide the side pane"
+msgstr "Oldalsáv megjelenítése vagy elrejtése"
+
+#: ../gaupol/agents/clipboard.py:63
+msgid "Cutting texts"
+msgstr "Szöveg kivágása"
+
+#: ../gaupol/agents/clipboard.py:86
+msgid "Pasting texts"
+msgstr "Szöveg beillesztése"
+
+#: ../gaupol/agents/edit.py:43
+msgid "Clearing texts"
+msgstr "Szöveg törlése"
+
+#: ../gaupol/agents/edit.py:71
+msgid "Inserting subtitles"
+msgstr "Feliratsor beszúrása"
+
+#: ../gaupol/agents/edit.py:115
+msgid "Merging subtitles"
+msgstr "Feliratsorok egyesítése"
+
+#: ../gaupol/agents/edit.py:133
+msgid "Removing subtitles"
+msgstr "Feliratsor eltávolítása"
+
+#: ../gaupol/agents/edit.py:158
+msgid "Replacing positions"
+msgstr "Pozíció cseréje"
+
+#: ../gaupol/agents/edit.py:182
+msgid "Replacing texts"
+msgstr "Szöveg cseréje"
+
+#: ../gaupol/agents/edit.py:217
+msgid "Splitting subtitle"
+msgstr "Felirat felosztása"
+
+#: ../gaupol/agents/format.py:101
+msgid "Changing case"
+msgstr "Kis- és nagybetűk cseréje"
+
+#: ../gaupol/agents/format.py:127
+msgid "Toggling dialogue dashes"
+msgstr "Párbeszéd kötőjel ki-be"
+
+#: ../gaupol/agents/format.py:149
+msgid "Toggling italicization"
+msgstr "Döntött írásmód ki-be"
+
+#: ../gaupol/agents/position.py:131
+msgid "Adjusting durations"
+msgstr "Időtartam igazítása"
+
+#: ../gaupol/agents/position.py:154
+msgid "Converting framerate"
+msgstr "Képfrissítés konvertálása"
+
+#: ../gaupol/agents/position.py:168
+msgid "Setting framerate"
+msgstr "Képfrissítés beállítása"
+
+#: ../gaupol/agents/position.py:191
+msgid "Shifting positions"
+msgstr "Időpozíciók eltolása"
+
+#: ../gaupol/agents/position.py:220
+msgid "Transforming positions"
+msgstr "Időpozíciók átalakítása"
+
+#: ../gaupol/agents/search.py:255
+msgid "Replacing"
+msgstr "Csere"
+
+#: ../gaupol/agents/search.py:280
+msgid "Replacing all"
+msgstr "Összes cseréje"
+
+#: ../gaupol/agents/set.py:61
+#: ../gaupol/agents/set.py:105
+msgid "Editing position"
+msgstr "Pozíció szerkesztése"
+
+#: ../gaupol/agents/set.py:126
+msgid "Editing text"
+msgstr "Szöveg szerkesztése"
+
+#: ../gaupol/agents/text.py:199
+msgid "Breaking lines"
+msgstr "Sortördelés"
+
+#: ../gaupol/agents/text.py:238
+msgid "Capitalizing texts"
+msgstr "Szöveg nagybetűssé alakítása"
+
+#: ../gaupol/agents/text.py:273
+msgid "Correcting common errors"
+msgstr "Általános hibák javítása"
+
+#: ../gaupol/agents/text.py:307
+msgid "Removing hearing impaired texts"
+msgstr "Halláskárosult szövegek törlése"
+
+#: ../gaupol/agents/text.py:365
+msgid "Joining words by spell-check suggestions"
+msgstr "Szavak egyesítése a helyesírás-ellenőrző javaslata alapján"
+
+#: ../gaupol/agents/text.py:415
+msgid "Splitting words by spell-check suggestions"
+msgstr "Szavak elválasztása a helyesírás-ellenőrző javaslata alapján"
+
+#: ../gaupol/align.py:27
+msgid "Subtitle number"
+msgstr "Felirat sorszám"
+
+#: ../gaupol/align.py:32
+msgid "Subtitle position"
+msgstr "Felirat pozíció"
+
+#. Translators: Most of the character encoding descriptions are copied from
+#. gedit, which is translated to very many languages. Check the gedit .po
+#. files for a reference: <http://svn.gnome.org/viewvc/gedit/trunk/po/>.
+#: ../gaupol/encodings.py:35
+#: ../gaupol/encodings.py:40
+msgid "English"
+msgstr "Angol"
+
+#: ../gaupol/encodings.py:36
+#: ../gaupol/encodings.py:61
+msgid "Chinese traditional"
+msgstr "Hagyományos kínai"
+
+#: ../gaupol/encodings.py:39
+#: ../gaupol/encodings.py:51
+#: ../gaupol/encodings.py:96
+msgid "Hebrew"
+msgstr "Héber"
+
+#: ../gaupol/encodings.py:41
+#: ../gaupol/encodings.py:64
+#: ../gaupol/encodings.py:89
+#: ../gaupol/encodings.py:109
+msgid "Western"
+msgstr "Nyugati"
+
+#: ../gaupol/encodings.py:42
+#: ../gaupol/encodings.py:58
+#: ../gaupol/encodings.py:95
+msgid "Greek"
+msgstr "Görög"
+
+#: ../gaupol/encodings.py:43
+#: ../gaupol/encodings.py:92
+msgid "Baltic"
+msgstr "Balti"
+
+#: ../gaupol/encodings.py:45
+#: ../gaupol/encodings.py:90
+msgid "Central European"
+msgstr "Közép-Európai"
+
+#: ../gaupol/encodings.py:46
+#: ../gaupol/encodings.py:93
+msgid "Cyrillic"
+msgstr "Cirill"
+
+#: ../gaupol/encodings.py:48
+#: ../gaupol/encodings.py:69
+#: ../gaupol/encodings.py:110
+msgid "Turkish"
+msgstr "Török"
+
+#: ../gaupol/encodings.py:49
+msgid "Portugese"
+msgstr "Portugál"
+
+#: ../gaupol/encodings.py:50
+msgid "Icelandic"
+msgstr "Izlandi"
+
+#: ../gaupol/encodings.py:52
+msgid "Canadian"
+msgstr "Kanadai"
+
+#: ../gaupol/encodings.py:53
+#: ../gaupol/encodings.py:94
+msgid "Arabic"
+msgstr "Arab"
+
+#: ../gaupol/encodings.py:54
+msgid "Nordic"
+msgstr "Északi"
+
+#: ../gaupol/encodings.py:55
+msgid "Russian"
+msgstr "Cirill/Orosz"
+
+#: ../gaupol/encodings.py:57
+msgid "Thai"
+msgstr "Thai"
+
+#: ../gaupol/encodings.py:59
+#: ../gaupol/encodings.py:75
+#: ../gaupol/encodings.py:82
+#: ../gaupol/encodings.py:84
+#: ../gaupol/encodings.py:86
+#: ../gaupol/encodings.py:112
+#: ../gaupol/encodings.py:114
+msgid "Japanese"
+msgstr "Japán"
+
+#: ../gaupol/encodings.py:60
+#: ../gaupol/encodings.py:88
+msgid "Korean"
+msgstr "Koreai"
+
+#: ../gaupol/encodings.py:62
+msgid "Urdu"
+msgstr "Urdu"
+
+#: ../gaupol/encodings.py:73
+msgid "Vietnamese"
+msgstr "Vietnámi"
+
+#: ../gaupol/encodings.py:78
+msgid "Chinese simplified"
+msgstr "Egyszerűsített kínai"
+
+#: ../gaupol/encodings.py:79
+msgid "Chinese unified"
+msgstr "Egységes kínai"
+
+#: ../gaupol/encodings.py:91
+msgid "South European"
+msgstr "Dél-Európai"
+
+#: ../gaupol/encodings.py:100
+msgid "Celtic"
+msgstr "Kelta"
+
+#: ../gaupol/encodings.py:104
+msgid "Ukrainian"
+msgstr "Cirill/Ukrán"
+
+#: ../gaupol/encodings.py:111
+msgid "Cyrillic Asian"
+msgstr "Ázsiai cirill"
+
+#: ../gaupol/encodings.py:115
+#: ../gaupol/encodings.py:117
+#: ../gaupol/encodings.py:119
+msgid "Unicode"
+msgstr "Unicode"
+
+#: ../gaupol/encodings.py:147
+#, python-format
+msgid "%(description)s (%(name)s)"
+msgstr "%(description)s (%(name)s)"
+
+#: ../gaupol/encodings.py:240
+#, python-format
+msgid "Current locale (%s)"
+msgstr "Aktuális hely (%s)"
+
+#: ../gaupol/framerates.py:27
+msgid "24 fps"
+msgstr "24 fps"
+
+#: ../gaupol/framerates.py:34
+msgid "25 fps"
+msgstr "25 fps"
+
+#: ../gaupol/framerates.py:41
+msgid "30 fps"
+msgstr "30 fps"
+
+#: ../gaupol/gtk/actions/edit.py:34
+msgid "Clear the selected texts"
+msgstr "Kijelölt szöveg(ek) törlése"
+
+#: ../gaupol/gtk/actions/edit.py:55
+msgid "_Copy"
+msgstr "_Másolás"
+
+#: ../gaupol/gtk/actions/edit.py:57
+msgid "Copy the selected texts to the clipboard"
+msgstr "Kijelölt szöveg másolása vágólapra"
+
+#: ../gaupol/gtk/actions/edit.py:78
+msgid "Cu_t"
+msgstr "_Kivágás"
+
+#: ../gaupol/gtk/actions/edit.py:80
+msgid "Cut the selected texts to the clipboard"
+msgstr "Kijelölt szöveg kivágása és másolása vágólapra"
+
+#: ../gaupol/gtk/actions/edit.py:101
+msgid "_Preferences"
+msgstr "_Beállítások"
+
+#: ../gaupol/gtk/actions/edit.py:103
+msgid "Configure Gaupol"
+msgstr "Gaupol beállítása"
+
+#: ../gaupol/gtk/actions/edit.py:115
+msgid "Edit _Next Cell"
+msgstr "Kö_vetkező mező szerkesztése"
+
+#: ../gaupol/gtk/actions/edit.py:116
+msgid "Next"
+msgstr "Következő"
+
+#: ../gaupol/gtk/actions/edit.py:118
+msgid "Edit the focused column of the next subtitle"
+msgstr "A következő feliratsor szerkesztése a kiválasztott oszlopban"
+
+#: ../gaupol/gtk/actions/edit.py:144
+msgid "_Edit Cell"
+msgstr "M_ező szerkesztése"
+
+#: ../gaupol/gtk/actions/edit.py:145
+msgid "Edit"
+msgstr "Szerkesztés"
+
+#: ../gaupol/gtk/actions/edit.py:147
+msgid "Edit the focused cell"
+msgstr "A kiválasztott mező szerkesztése"
+
+#: ../gaupol/gtk/actions/edit.py:171
+msgid "Extend To _Beginning"
+msgstr "Ki_bővíti az első feliratig"
+
+#: ../gaupol/gtk/actions/edit.py:172
+msgid "Extend the current selection up to the first subtitle"
+msgstr "Kibővíti az aktuális kijelölést az első feliratig"
+
+#: ../gaupol/gtk/actions/edit.py:193
+msgid "Extend To _End"
+msgstr "Kibő_víti az utolsó feliratig"
+
+#: ../gaupol/gtk/actions/edit.py:194
+msgid "Extend the current selection up to the last subtitle"
+msgstr "Kibővíti az aktuális kijelölést az utolsó feliratig"
+
+#: ../gaupol/gtk/actions/edit.py:215
+msgid "_Insert Subtitles…"
+msgstr "Fel_irat beszúrása…"
+
+#: ../gaupol/gtk/actions/edit.py:216
+msgid "Insert"
+msgstr "Beszúrás"
+
+#: ../gaupol/gtk/actions/edit.py:218
+msgid "Insert subtitles"
+msgstr "Feliratsor(ok) beszúrása"
+
+#: ../gaupol/gtk/actions/edit.py:238
+msgid "_Invert Selection"
+msgstr "K_ijelölés invertálása"
+
+#: ../gaupol/gtk/actions/edit.py:239
+msgid "Invert the current selection"
+msgstr "Aktuális kijelölés invertálása"
+
+#: ../gaupol/gtk/actions/edit.py:258
+msgid "_Merge Subtitles"
+msgstr "Fel_iratsorok egyesítése"
+
+#: ../gaupol/gtk/actions/edit.py:259
+msgid "Merge the selected subtitles"
+msgstr "Kijelölt feliratsorok egyesítése"
+
+#: ../gaupol/gtk/actions/edit.py:280
+msgid "_Paste"
+msgstr "Bei_llesztés"
+
+#: ../gaupol/gtk/actions/edit.py:282
+msgid "Paste texts from the clipboard"
+msgstr "Szöveg beillesztése vágólapról"
+
+#: ../gaupol/gtk/actions/edit.py:306
+msgid "_Redo"
+msgstr "Új_ra"
+
+#: ../gaupol/gtk/actions/edit.py:308
+msgid "Redo the last undone action"
+msgstr "Visszavont művelet ismételt végrehajtása"
+
+#: ../gaupol/gtk/actions/edit.py:328
+msgid "Rem_ove Subtitles"
+msgstr "Feliratsor eltávolítása"
+
+#: ../gaupol/gtk/actions/edit.py:329
+msgid "Remove"
+msgstr "Eltávolítás"
+
+#: ../gaupol/gtk/actions/edit.py:331
+msgid "Remove the selected subtitles"
+msgstr "Kijelölt feliratsor(ok) eltávolítása"
+
+#: ../gaupol/gtk/actions/edit.py:350
+msgid "Select _All"
+msgstr "Mindent ki_jelöl"
+
+#: ../gaupol/gtk/actions/edit.py:352
+msgid "Select all subtitles"
+msgstr "Minden felirat kijelölése"
+
+#: ../gaupol/gtk/actions/edit.py:371
+msgid "Sele_ction"
+msgstr "Ki_jelölés"
+
+#: ../gaupol/gtk/actions/edit.py:389
+msgid "_Split Subtitle"
+msgstr "Feli_ratsor felosztása"
+
+#: ../gaupol/gtk/actions/edit.py:390
+msgid "Split the selected subtitle"
+msgstr "Kijelölt feliratsor felosztása"
+
+#: ../gaupol/gtk/actions/edit.py:412
+msgid "_Undo"
+msgstr "_Visszavonás"
+
+#: ../gaupol/gtk/actions/edit.py:414
+msgid "Undo the last action"
+msgstr "Utolsó művelet visszavonása"
+
+#: ../gaupol/gtk/actions/file.py:32
+msgid "_Append File…"
+msgstr "Fájl hozzá_fűzése…"
+
+#: ../gaupol/gtk/actions/file.py:34
+msgid "Append subtitles from file to the current project"
+msgstr "Felirat hozzáfűzése fájlból az aktuális projekthez"
+
+#: ../gaupol/gtk/actions/file.py:52
+msgid "_Close All"
+msgstr "Mi_nden bezárása"
+
+#: ../gaupol/gtk/actions/file.py:54
+msgid "Close all open projects"
+msgstr "Minden nyitott projekt bezárása"
+
+#: ../gaupol/gtk/actions/file.py:72
+msgid "_Close"
+msgstr "Be_zárás"
+
+#: ../gaupol/gtk/actions/file.py:74
+msgid "Close the current project"
+msgstr "Aktuális projekt bezárása"
+
+#: ../gaupol/gtk/actions/file.py:92
+msgid "_Headers"
+msgstr "Fe_jlécek"
+
+#: ../gaupol/gtk/actions/file.py:94
+msgid "Edit file headers"
+msgstr "Fájl fejléc szerkesztése"
+
+#: ../gaupol/gtk/actions/file.py:120
+msgid "_New"
+msgstr "Ú_j"
+
+#: ../gaupol/gtk/actions/file.py:122
+msgid "Create a new project"
+msgstr "Új projekt létrehozása"
+
+#: ../gaupol/gtk/actions/file.py:138
+msgid "_Open…"
+msgstr "Me_gnyitás…"
+
+#: ../gaupol/gtk/actions/file.py:139
+msgid "Open"
+msgstr "Megnyitás"
+
+#: ../gaupol/gtk/actions/file.py:141
+msgid "Open main files"
+msgstr "Alap fájl megnyitása"
+
+#: ../gaupol/gtk/actions/file.py:155
+msgid "Open _Translation…"
+msgstr "Fordí_tási fájl megnyitása…"
+
+#: ../gaupol/gtk/actions/file.py:156
+msgid "Open Translation"
+msgstr "Fordítás megnyitása"
+
+#: ../gaupol/gtk/actions/file.py:158
+msgid "Open a translation file"
+msgstr "Fordítási fájl megnyitása"
+
+#: ../gaupol/gtk/actions/file.py:176
+msgid "_Quit"
+msgstr "_Kilépés"
+
+#: ../gaupol/gtk/actions/file.py:178
+msgid "Quit Gaupol"
+msgstr "Gaupol bezárása"
+
+#: ../gaupol/gtk/actions/file.py:191
+msgid "_Save All"
+msgstr "Ö_sszes mentése"
+
+#: ../gaupol/gtk/actions/file.py:193
+msgid "Save all open documents"
+msgstr "Az összes nyitott dokumentum mentése"
+
+#: ../gaupol/gtk/actions/file.py:212
+msgid "_Save"
+msgstr "Menté_s"
+
+#: ../gaupol/gtk/actions/file.py:214
+msgid "Save the current main document"
+msgstr "Az aktuális dokumentum mentése"
+
+#: ../gaupol/gtk/actions/file.py:232
+msgid "Save _As…"
+msgstr "Me_ntés másként…"
+
+#: ../gaupol/gtk/actions/file.py:233
+msgid "Save As"
+msgstr "Mentés másként"
+
+#: ../gaupol/gtk/actions/file.py:235
+msgid "Save the current main document with a different name"
+msgstr "Az aktuális dokumentum mentése más néven"
+
+#: ../gaupol/gtk/actions/file.py:254
+msgid "Save Trans_lation"
+msgstr "Fordítás mentése"
+
+#: ../gaupol/gtk/actions/file.py:256
+msgid "Save the current translation document"
+msgstr "Az aktuális fordítási dokumentum mentése"
+
+#: ../gaupol/gtk/actions/file.py:274
+msgid "Save Translat_ion As…"
+msgstr "A fordítás_i dokumentum mentése más néven…"
+
+#: ../gaupol/gtk/actions/file.py:275
+msgid "Save Translation As"
+msgstr "Fordítás mentése másként"
+
+#: ../gaupol/gtk/actions/file.py:277
+msgid "Save the current translation document with a different name"
+msgstr "Az aktuális fordítási dokumentum mentése más néven"
+
+#: ../gaupol/gtk/actions/file.py:296
+msgid "Select _Video…"
+msgstr "_Videó kiválasztása…"
+
+#: ../gaupol/gtk/actions/file.py:297
+msgid "Video"
+msgstr "Videó"
+
+#: ../gaupol/gtk/actions/file.py:299
+msgid "Select a video file"
+msgstr "Videó fájl kiválasztása"
+
+#: ../gaupol/gtk/actions/file.py:318
+msgid "Open _Recent"
+msgstr "Le_gutóbbi fájl megnyitása"
+
+#: ../gaupol/gtk/actions/file.py:331
+msgid "Open R_ecent Translation"
+msgstr "Leg_utóbbi fordítási fájl megnyitása"
+
+#: ../gaupol/gtk/actions/file.py:349
+msgid "Spli_t Project…"
+msgstr "Projek_t felosztása…"
+
+#: ../gaupol/gtk/actions/file.py:350
+msgid "Split the current project in two"
+msgstr "Az aktuális projekt felosztása két részre"
+
+#: ../gaupol/gtk/actions/format.py:32
+msgid "Ca_se"
+msgstr "Ki_s- és nagybetű"
+
+#: ../gaupol/gtk/actions/format.py:52
+msgid "_Dialogue"
+msgstr "_Párbeszéd"
+
+#: ../gaupol/gtk/actions/format.py:53
+msgid "Add or remove dialogue dashes on the selected texts"
+msgstr "Párbeszéd kötőjel hozzáadása vagy eltávolítása a kiválasztott szövegnél"
+
+#: ../gaupol/gtk/actions/format.py:75
+msgid "_Italic"
+msgstr "_Dőltbetű"
+
+#: ../gaupol/gtk/actions/format.py:77
+msgid "Italicize or unitalicize the selected texts"
+msgstr "A kiválasztott szöveg döntése vagy visszaállítása"
+
+#: ../gaupol/gtk/actions/format.py:102
+msgid "_Lower"
+msgstr "_Kisbetűs"
+
+#: ../gaupol/gtk/actions/format.py:103
+msgid "Change the selected texts to lower case"
+msgstr "A kijelölt szöveg kisbetűssé alakítása"
+
+#: ../gaupol/gtk/actions/format.py:123
+msgid "_Sentence"
+msgstr "M_ondat"
+
+#: ../gaupol/gtk/actions/format.py:124
+msgid "Change the selected texts to sentence case"
+msgstr "A kiválaszott szöveg mondattá alakítása"
+
+#: ../gaupol/gtk/actions/format.py:144
+msgid "_Title"
+msgstr "_Fejléc"
+
+#: ../gaupol/gtk/actions/format.py:145
+msgid "Change the selected texts to title case"
+msgstr "A kiválaszott szöveg fejléccé alakítása"
+
+#: ../gaupol/gtk/actions/format.py:163
+msgid "_Upper"
+msgstr "_Nagybetűs"
+
+#: ../gaupol/gtk/actions/format.py:164
+msgid "Change the selected texts to upper case"
+msgstr "A kijelölt szöveg nagybetűssé alakítása"
+
+#: ../gaupol/gtk/actions/help.py:32
+msgid "_Report A Bug"
+msgstr "Hi_ba jelentése"
+
+#: ../gaupol/gtk/actions/help.py:33
+msgid "Submit a bug report"
+msgstr "Hibajelentés"
+
+#: ../gaupol/gtk/actions/help.py:45
+msgid "_About"
+msgstr "Névjeg_y"
+
+#: ../gaupol/gtk/actions/help.py:47
+msgid "Show information about Gaupol"
+msgstr "Informaciók a Gaupol-ról"
+
+#: ../gaupol/gtk/actions/menu.py:43
+msgid "_File"
+msgstr "_Fájl"
+
+#: ../gaupol/gtk/actions/menu.py:55
+msgid "_Help"
+msgstr "_Súgó"
+
+#: ../gaupol/gtk/actions/menu.py:67
+msgid "_Projects"
+msgstr "_Projektek"
+
+#: ../gaupol/gtk/actions/menu.py:79
+msgid "_Text"
+msgstr "_Szöveg"
+
+#: ../gaupol/gtk/actions/menu.py:91
+msgid "T_ools"
+msgstr "_Eszközök"
+
+#: ../gaupol/gtk/actions/menu.py:103
+msgid "_View"
+msgstr "_Nézet"
+
+#: ../gaupol/gtk/actions/position.py:32
+msgid "Adjust _Durations…"
+msgstr "I_dőtartam beállítása…"
+
+#: ../gaupol/gtk/actions/position.py:33
+msgid "Lengthen or shorten durations"
+msgstr "Rövidebb vagy hosszabb időtartam"
+
+#: ../gaupol/gtk/actions/position.py:50
+msgid "Convert _Framerate…"
+msgstr "Kép_frissítés módosítása…"
+
+#: ../gaupol/gtk/actions/position.py:51
+msgid "Change positions for a different framerate"
+msgstr "Pozíció módosítása különböző képfrissítéssel"
+
+#: ../gaupol/gtk/actions/position.py:71
+msgid "Preview from selected position with a video player"
+msgstr "A kiválasztott pozíció előnézete videó-lejátszóval"
+
+#: ../gaupol/gtk/actions/position.py:98
+msgid "_Shift Positions…"
+msgstr "Időpozíciók eltolá_sa…"
+
+#: ../gaupol/gtk/actions/position.py:99
+msgid "Make subtitles appear earlier or later"
+msgstr "Feliratok megjelenítése korábban vagy később"
+
+#: ../gaupol/gtk/actions/position.py:117
+msgid "_Transform Positions…"
+msgstr "Idő_pozíciók átalakítása…"
+
+#: ../gaupol/gtk/actions/position.py:118
+msgid "Change positions by linear two-point correction"
+msgstr "Pozíció cseréje lineáris kétpontos korrekcióval"
+
+#: ../gaupol/gtk/actions/search.py:32
+msgid "_Find And Replace…"
+msgstr "_Keresés és csere…"
+
+#: ../gaupol/gtk/actions/search.py:35
+msgid "Search for and replace text"
+msgstr "Keresés és csere a szövegben"
+
+#: ../gaupol/gtk/actions/search.py:54
+msgid "Search forwards for same text"
+msgstr "Tovább keresés a szövegben"
+
+#: ../gaupol/gtk/actions/search.py:73
+msgid "Find Pre_vious"
+msgstr "Elő_ző találat"
+
+#: ../gaupol/gtk/actions/search.py:74
+msgid "Search backwards for same text"
+msgstr "Visszafelé keresés a szövegben"
+
+#: ../gaupol/gtk/actions/text.py:32
+msgid "Co_nfigure Spell-check…"
+msgstr "Helyesírás-elle_nőrző beállítása"
+
+#: ../gaupol/gtk/actions/text.py:33
+msgid "Set language and spell-check target"
+msgstr "Nyelv és helyesírás-ellenőrző beállítása"
+
+#: ../gaupol/gtk/actions/text.py:50
+msgid "_Check Spelling"
+msgstr "Hel_yesírás-ellenőrzés"
+
+#: ../gaupol/gtk/actions/text.py:51
+msgid "Spelling"
+msgstr "Helyesírás"
+
+#: ../gaupol/gtk/actions/text.py:53
+msgid "Check for incorrect spelling"
+msgstr "Helyesírás ellenőrzése"
+
+#: ../gaupol/gtk/actions/text.py:73
+msgid "C_orrect Texts…"
+msgstr "Szöveg _javítása…"
+
+#: ../gaupol/gtk/actions/text.py:74
+msgid "Find and correct errors in texts"
+msgstr "Hibák keresése és javítása a szövegben"
+
+#: ../gaupol/gtk/actions/view.py:32
+msgid "Activate the project in the next tab"
+msgstr "Projekt aktiválása a következő lapon"
+
+#: ../gaupol/gtk/actions/view.py:53
+msgid "Activate the project in the previous tab"
+msgstr "Projekt aktiválása az előző lapon"
+
+#: ../gaupol/gtk/actions/view.py:72
+msgid "Move Tab _Left"
+msgstr "_Lap mozgatása balra"
+
+#: ../gaupol/gtk/actions/view.py:73
+msgid "Move the current tab to the left"
+msgstr "Az aktuális lap mozgatása balra"
+
+#: ../gaupol/gtk/actions/view.py:91
+msgid "Move Tab _Right"
+msgstr "Lap mozgatása jobb_ra"
+
+#: ../gaupol/gtk/actions/view.py:92
+msgid "Move the current tab to the right"
+msgstr "Az aktuális lap mozgatása jobbra"
+
+#: ../gaupol/gtk/actions/view.py:110
+msgid "_Columns"
+msgstr "_Oszlop"
+
+#: ../gaupol/gtk/actions/view.py:129
+msgid "2_4 fps"
+msgstr "2_4 fps"
+
+#: ../gaupol/gtk/actions/view.py:130
+msgid "Calculate nonnative units with framerate 24 fps"
+msgstr "Egység számítása 24 fps képfrissítéssel"
+
+#: ../gaupol/gtk/actions/view.py:154
+msgid "2_5 fps"
+msgstr "2_5 fps"
+
+#: ../gaupol/gtk/actions/view.py:155
+msgid "Calculate nonnative units with framerate 25 fps"
+msgstr "Egység számítása 25 fps képfrissítéssel"
+
+#: ../gaupol/gtk/actions/view.py:179
+msgid "_30 fps"
+msgstr "_30 fps"
+
+#: ../gaupol/gtk/actions/view.py:180
+msgid "Calculate nonnative units with framerate 30 fps"
+msgstr "Egység számítása 30 fps képfrissítéssel"
+
+#: ../gaupol/gtk/actions/view.py:202
+msgid "F_ramerate"
+msgstr "Képf_rissítés"
+
+#: ../gaupol/gtk/actions/view.py:223
+msgid "_Frames"
+msgstr "Ké_pkocka"
+
+#: ../gaupol/gtk/actions/view.py:224
+msgid "Show positions as frames"
+msgstr "Pozíció megjelenítése képkocka adatokkal"
+
+#: ../gaupol/gtk/actions/view.py:247
+msgid "_Times"
+msgstr "_Idő"
+
+#: ../gaupol/gtk/actions/view.py:248
+msgid "Show positions as times"
+msgstr "Pozíció megjelenítése idő adatokkal"
+
+#: ../gaupol/gtk/actions/view.py:271
+msgid "_Duration"
+msgstr "I_dőtartam"
+
+#: ../gaupol/gtk/actions/view.py:272
+msgid "Show or hide the \"Duration\" column"
+msgstr "Időtartam oszlop megjelenítése vagy elrejtése"
+
+#: ../gaupol/gtk/actions/view.py:291
+msgid "_End"
+msgstr "_Vég"
+
+#: ../gaupol/gtk/actions/view.py:292
+msgid "Show or hide the \"End\" column"
+msgstr "Vége oszlop megjelenítése vagy elrejtése"
+
+#: ../gaupol/gtk/actions/view.py:311
+msgid "_Main Text"
+msgstr "_Alap szöveg"
+
+#: ../gaupol/gtk/actions/view.py:312
+msgid "Show or hide the \"Main Text\" column"
+msgstr "Alap szöveg oszlop megjelenítése vagy elrejtése"
+
+#: ../gaupol/gtk/actions/view.py:331
+msgid "_Main Toolbar"
+msgstr "Esz_köztár"
+
+#: ../gaupol/gtk/actions/view.py:332
+msgid "Show or hide the main toolbar"
+msgstr "Eszköztár megjelenítése vagy elrejtése"
+
+#: ../gaupol/gtk/actions/view.py:346
+msgid "_No."
+msgstr "_Sorszám"
+
+#: ../gaupol/gtk/actions/view.py:347
+msgid "Show or hide the \"No.\" column"
+msgstr "Sorszám oszlop megjelenítése vagy elrejtése"
+
+#: ../gaupol/gtk/actions/view.py:365
+msgid "_Output Window"
+msgstr "_Kimeneti ablak"
+
+#: ../gaupol/gtk/actions/view.py:366
+msgid "Show or hide the output window"
+msgstr "Kimeneti ablak megjelenítése vagy elrejtése"
+
+#: ../gaupol/gtk/actions/view.py:380
+msgid "_Start"
+msgstr "Ke_zdet"
+
+#: ../gaupol/gtk/actions/view.py:381
+msgid "Show or hide the \"Start\" column"
+msgstr "Kezdet oszlop megjelenítése vagy elrejtése"
+
+#: ../gaupol/gtk/actions/view.py:399
+msgid "_Statusbar"
+msgstr "Álla_potsor"
+
+#: ../gaupol/gtk/actions/view.py:400
+msgid "Show or hide the statusbar"
+msgstr "Állapotsor megjelenítése vagy elrejtése"
+
+#: ../gaupol/gtk/actions/view.py:415
+msgid "_Translation Text"
+msgstr "Fordí_tási szöveg"
+
+#: ../gaupol/gtk/actions/view.py:416
+msgid "Show or hide the \"Translation Text\" column"
+msgstr "Fordítási szöveg oszlop megjelenítése vagy elrejtése"
+
+#: ../gaupol/gtk/actions/view.py:435
+msgid "_Video Toolbar"
+msgstr "_Videó-eszköztár"
+
+#: ../gaupol/gtk/actions/view.py:436
+msgid "Show or hide the video toolbar"
+msgstr "Videó-eszköztár megjelenítése vagy elrejtése"
+
+#: ../gaupol/gtk/agents/close.py:70
+#, python-format
+msgid "Save changes to main document \"%s\" before closing?"
+msgstr "Menti a dokumentumot »%s« bezárás előtt?"
+
+#: ../gaupol/gtk/agents/close.py:90
+#, python-format
+msgid "Save changes to translation document \"%s\" before closing?"
+msgstr "Menti a fordítási dokumentumot »%s« bezárás előtt?"
+
+#: ../gaupol/gtk/agents/edit.py:167
+#, python-format
+msgid "Inserted %d subtitle to fit clipboard contents"
+msgid_plural "Inserted %d subtitles to fit clipboard contents"
+msgstr[0] "%d feliratsor beszúrása vágólapról"
+msgstr[1] "%d feliratsor beszúrása vágólapról"
+
+#: ../gaupol/gtk/agents/edit.py:270
+msgid "Use Shift+Return for line-break"
+msgstr "Shift+Enter - Sortörés"
+
+#: ../gaupol/gtk/agents/menu.py:55
+#, python-format
+msgid "Activate \"%s\""
+msgstr "»%s« aktiválása"
+
+#: ../gaupol/gtk/agents/menu.py:164
+#, python-format
+msgid "Redo \"%s\""
+msgstr "»%s« ismétlése"
+
+#: ../gaupol/gtk/agents/menu.py:226
+#, python-format
+msgid "Undo \"%s\""
+msgstr "»%s« visszavonása"
+
+#: ../gaupol/gtk/agents/open.py:46
+msgid "Appending file"
+msgstr "Fájl hozzáfűzése"
+
+#: ../gaupol/gtk/agents/open.py:95
+#, python-format
+msgid "File \"%s\" is already open"
+msgstr "A fájl »%s« már megnyitva"
+
+#: ../gaupol/gtk/agents/open.py:190
+#, python-format
+msgid "Failed to decode file \"%s\" with all attempted codecs"
+msgstr "A fájl dekódolása »%s« a megadott Kodek-kel nem sikerült"
+
+#: ../gaupol/gtk/agents/open.py:192
+msgid "Please try to open the file with a different character encoding."
+msgstr "Próbálja megnyitni a fájlt más karakterkódolással."
+
+#: ../gaupol/gtk/agents/open.py:201
+#, python-format
+msgid "Failed to recognize format of file \"%s\""
+msgstr "A fájl formátuma »%s« ismeretlen"
+
+#: ../gaupol/gtk/agents/open.py:202
+msgid "Please check that the file you are trying to open is a subtitle file of a format supported by Gaupol."
+msgstr "Ellenőrizze, hogy a fájl a Gaupol által támogatott felirat fájl-e."
+
+#: ../gaupol/gtk/agents/open.py:211
+#, python-format
+msgid "Failed to open file \"%s\""
+msgstr "A fájl megnyitása »%s« nem sikerült"
+
+#: ../gaupol/gtk/agents/open.py:212
+#: ../gaupol/gtk/agents/preview.py:80
+#: ../gaupol/gtk/dialogs/search.py:467
+#, python-format
+msgid "%s."
+msgstr "%s."
+
+#: ../gaupol/gtk/agents/open.py:220
+#, python-format
+msgid "Failed to parse file \"%s\""
+msgstr "A fájl elemzése »%s« nem sikerült"
+
+#: ../gaupol/gtk/agents/open.py:221
+#, python-format
+msgid "Please check, e.g. with a text editor, that the file you are trying open is a valid %s file. If you think it is, file a bug report and attach the file."
+msgstr "Ellenőrizze, pl. szövegszerkesztővel, hogy a megnyitandó fájl érvényes %s fájl-e. Ha úgy gondolja igen, küldje a hibalistára csatolmányként. "
+
+#: ../gaupol/gtk/agents/open.py:233
+#, python-format
+msgid "Open abnormally large file \"%s\"?"
+msgstr "Ez túl nagy fájl »%s«, megnyitja?"
+
+#: ../gaupol/gtk/agents/open.py:234
+#, python-format
+msgid "Size of the file is %.1f MB, which is abnormally large for a text-based subtitle file. Please, check that you are not trying to open a binary file."
+msgstr "A fájl mérete %.1f MB. Ez túl nagy méretű ahhoz, hogy szöveg alapú felirat fájl legyen! Ellenőrizze, hogy nem bináris fájlt akart-e megnyitni!"
+
+#: ../gaupol/gtk/agents/open.py:249
+#, python-format
+msgid "Open unsorted file \"%s\"?"
+msgstr "Nem támogatott fájl »%s«. megnyitja?"
+
+#: ../gaupol/gtk/agents/open.py:250
+#, python-format
+msgid "The order of %d subtitles needs to be changed. If %d sounds like a lot, the file may be erroneously composed."
+msgstr "Utasítás szerint %d fájlon változtatni kell. Ha %d soknak tűnik, akkor lehet, hogy a fájl hibásan lett összeállítva"
+
+#: ../gaupol/gtk/agents/open.py:265
+#, python-format
+msgid "Save changes to translation document \"%s\" before opening a new one?"
+msgstr "Menti a fordítási dokumentumot »%s« mielőtt megnyit egy újat?"
+
+#: ../gaupol/gtk/agents/open.py:269
+msgid "Open _Without Saving"
+msgstr "Megnyitás _mentés nélkül"
+
+#: ../gaupol/gtk/agents/open.py:365
+#, python-format
+msgid "Appended %(amount)d subtitles from \"%(basename)s\""
+msgstr "%(amount)d felirat hozzáfűzve »%(basename)s«-ból"
+
+#: ../gaupol/gtk/agents/open.py:504
+#, python-format
+msgid "Opened main file \"%s\""
+msgstr "Alap fájl megnyitása »%s«"
+
+#: ../gaupol/gtk/agents/open.py:528
+#, python-format
+msgid "Opened translation file \"%s\""
+msgstr "Fordítási fájl megnyitása »%s«"
+
+#: ../gaupol/gtk/agents/preview.py:57
+#, python-format
+msgid "Failed to encode subtitle file to temporary directory \"%s\""
+msgstr "A felirat fájl átkódolása az átmeneti könyvtárba »%s« sikertelen"
+
+#: ../gaupol/gtk/agents/preview.py:59
+msgid "Subtitle data could not be encoded to a temporary file for preview with the current character encoding. Please first save the subtitle file with a different character encoding."
+msgstr "A felirat adatok átkódolása átmeneti könyvtárba az előnézethez, nem sikerült a megadott karakterkódolással. Előszőr mentse ki a felirat fájlt más karakter kódolással!"
+
+#: ../gaupol/gtk/agents/preview.py:69
+#, python-format
+msgid "Failed to save subtitle file to temporary directory \"%s\""
+msgstr "A felirat fájl mentése az átmeneti könyvtárba »%s« sikertelen"
+
+#: ../gaupol/gtk/agents/preview.py:79
+msgid "Failed to launch video player"
+msgstr "A videó-lejátszó elindítása sikertelen"
+
+#: ../gaupol/gtk/agents/save.py:109
+#, python-format
+msgid "Failed to encode file \"%(basename)s\" with codec \"%(codec)s\""
+msgstr "A fájl átkódolása »%(basename)s« ezzel a kodekkel »%(codec)s« nem sikerült"
+
+#: ../gaupol/gtk/agents/save.py:111
+msgid "Please try to save the file with a different character encoding."
+msgstr "Próbálja más karakterkódolással menteni a fájlt!"
+
+#: ../gaupol/gtk/agents/save.py:120
+#, python-format
+msgid "Failed to save file \"%s\""
+msgstr "A fájl mentése »%s« sikertelen"
+
+#: ../gaupol/gtk/agents/save.py:136
+msgid "Saved all open documents"
+msgstr "Az összes nyitott dokumentum mentve"
+
+#: ../gaupol/gtk/agents/save.py:180
+msgid "Saved main document"
+msgstr "A dokumentum mentve"
+
+#: ../gaupol/gtk/agents/save.py:192
+#, python-format
+msgid "Saved main document as \"%s\""
+msgstr "A dokumentum mentése »%s« néven"
+
+#: ../gaupol/gtk/agents/save.py:204
+msgid "Saved translation document"
+msgstr "Fordítási dokumentum mentve"
+
+#: ../gaupol/gtk/agents/save.py:216
+#, python-format
+msgid "Saved translation document as \"%s\""
+msgstr "A fordítási dokumentum mentve »%s« néven"
+
+#: ../gaupol/gtk/application.py:144
+msgid "Framerate:"
+msgstr "Képfrissítés:"
+
+#: ../gaupol/gtk/application.py:209
+msgid "Open a recently used main file"
+msgstr "Legutóbbi fájl megnyitása"
+
+#: ../gaupol/gtk/application.py:226
+msgid "Redo undone actions"
+msgstr "Utolsó visszavont művelet ismétlése"
+
+#: ../gaupol/gtk/application.py:279
+msgid "Undo actions"
+msgstr "Művelet visszavonása"
+
+#: ../gaupol/gtk/application.py:329
+msgid "Video file:"
+msgstr "Videó fájl:"
+
+#: ../gaupol/gtk/assistants.py:89
+msgid "Select Tasks and Target"
+msgstr "Feladatok és cél kiválasztása"
+
+#: ../gaupol/gtk/assistants.py:277
+msgid "Other"
+msgstr "Egyéb"
+
+#: ../gaupol/gtk/assistants.py:443
+msgid "Capitalize texts written in lower case"
+msgstr "Kisbetűs szöveg nagybetűssé alakítása"
+
+#: ../gaupol/gtk/assistants.py:445
+msgid "Select Capitalization Patterns"
+msgstr "Szövegátalakítási sablon kiválasztása"
+
+#: ../gaupol/gtk/assistants.py:447
+msgid "Capitalize texts"
+msgstr "Szöveg nagybetűssé alakítása"
+
+#: ../gaupol/gtk/assistants.py:472
+msgid "Correct common errors made by humans or image recognition software"
+msgstr "Emberi és képfelismerési (OCR) általános hibák javítása"
+
+#: ../gaupol/gtk/assistants.py:475
+msgid "Select Common Error Patterns"
+msgstr "Általános hibák sablonjának kiválasztása"
+
+#: ../gaupol/gtk/assistants.py:477
+msgid "Correct common errors"
+msgstr "Általános hibák javítása"
+
+#: ../gaupol/gtk/assistants.py:544
+msgid "Remove explanatory texts meant for the hearing impaired"
+msgstr "Halláskárosultak magyarázó szövegének eltávolítása"
+
+#: ../gaupol/gtk/assistants.py:547
+msgid "Select Hearing Impaired Patterns"
+msgstr "Halláskárosultak sablonjának kiválasztása"
+
+#: ../gaupol/gtk/assistants.py:549
+msgid "Remove hearing impaired texts"
+msgstr "Halláskárosultak szövegének eltávolítása"
+
+#: ../gaupol/gtk/assistants.py:587
+msgid "Use spell-check suggestions to fix whitespace detection errors of image recognition software"
+msgstr "Helyesírás-ellenőrző javaslatainak használata a képfelismerő szoftver (OCR), szóköz észlelési hibáinak javítására"
+
+#: ../gaupol/gtk/assistants.py:590
+msgid "Set Options for Joining and Splitting Words"
+msgstr "Szavak egyesítésének és szétválasztásának beállítása"
+
+#: ../gaupol/gtk/assistants.py:592
+msgid "Join or Split Words"
+msgstr "Szavak egyesítése vagy szétválasztása"
+
+#: ../gaupol/gtk/assistants.py:648
+#, python-format
+msgid "Failed to load dictionary for language \"%s\""
+msgstr "A megadott nyelvhez »%s« tartozó szótár beolvasása sikertelen."
+
+#: ../gaupol/gtk/assistants.py:679
+msgid "Break text into lines of defined length"
+msgstr "Szöveg tördelése a megadott sorhosszra"
+
+#: ../gaupol/gtk/assistants.py:681
+msgid "Select Line-Break Patterns"
+msgstr "Sortördelési sablon kiválasztása"
+
+#: ../gaupol/gtk/assistants.py:683
+msgid "Break lines"
+msgstr "Sortördelés"
+
+#: ../gaupol/gtk/assistants.py:738
+msgid "Set Line-Break Options"
+msgstr "Sortördelés beállítása"
+
+#: ../gaupol/gtk/assistants.py:842
+msgid "Correcting Texts"
+msgstr "Szöveg javítása"
+
+#: ../gaupol/gtk/assistants.py:849
+msgid "Each task is now being run on each project."
+msgstr "Kiválasztott feladat(ok) futatása a projekten."
+
+#: ../gaupol/gtk/assistants.py:876
+#, python-format
+msgid "%(current)d of %(total)d tasks complete"
+msgstr "%(current)d a(z) %(total)d feladatból kész"
+
+#: ../gaupol/gtk/assistants.py:885
+#, python-format
+msgid "Project: %s"
+msgstr "Projekt: %s"
+
+#: ../gaupol/gtk/assistants.py:893
+#, python-format
+msgid "Task: %s"
+msgstr "Feladat: %s"
+
+#: ../gaupol/gtk/assistants.py:917
+msgid "Confirm Changes"
+msgstr "Változások elfogadása"
+
+#: ../gaupol/gtk/assistants.py:980
+msgid "Accept"
+msgstr "Elfogad"
+
+#: ../gaupol/gtk/assistants.py:984
+msgid "Original Text"
+msgstr "Eredeti szöveg"
+
+#: ../gaupol/gtk/assistants.py:985
+msgid "Corrected Text"
+msgstr "Javított szöveg"
+
+#: ../gaupol/gtk/assistants.py:1128
+msgid "Correct Texts"
+msgstr "Helyes szövegek"
+
+#: ../gaupol/gtk/assistants.py:1168
+msgid "Correcting texts"
+msgstr "Szövegek javítása"
+
+#: ../gaupol/gtk/assistants.py:1185
+#, python-format
+msgid "Edited %(edits)d and removed %(removals)d subtitles"
+msgstr "Szerkesztett %(edits)d és eltávolított %(removals)d feliratok"
+
+#: ../gaupol/gtk/assistants.py:1216
+#, python-format
+msgid "Confirm %d Change"
+msgid_plural "Confirm %d Changes"
+msgstr[0] "%d módosítás elfogadása"
+msgstr[1] "%d módosítás elfogadása"
+
+#: ../gaupol/gtk/dialogs/about.py:48
+msgid "About Gaupol"
+msgstr "Gaupol névjegye"
+
+#: ../gaupol/gtk/dialogs/about.py:52
+msgid "Subtitle editor"
+msgstr "Felirat szerkesztő"
+
+#: ../gaupol/gtk/dialogs/about.py:56
+msgid "Gaupol Website"
+msgstr "Gaupol-Honlap"
+
+#. Translators: This is a special message that shouldn't be translated
+#. literally. It is used in the about dialog to give credits to the
+#. translators. Thus, you should translate it to your name and email
+#. address. You can also include other translators who have contributed
+#. to this translation; in that case, please write them on separate
+#. lines seperated by newlines (\n).
+#: ../gaupol/gtk/dialogs/about.py:67
+msgid "translator-credits"
+msgstr "Andrássy László <andrassy.laszlo@gmail.com>, 2009"
+
+#: ../gaupol/gtk/dialogs/append.py:36
+msgid "Append File"
+msgstr "Fájl hozzáfűzése"
+
+#: ../gaupol/gtk/dialogs/append.py:39
+msgid "_Append"
+msgstr "_Hozzáfűzés"
+
+#: ../gaupol/gtk/dialogs/debug.py:194
+#, python-format
+msgid "Failed to open editor \"%s\""
+msgstr "A szerkesztő megnyitása »%s« sikertelen"
+
+#: ../gaupol/gtk/dialogs/encoding.py:71
+#: ../gaupol/gtk/dialogs/encoding.py:112
+msgid "Description"
+msgstr "Leírás"
+
+#: ../gaupol/gtk/dialogs/encoding.py:77
+#: ../gaupol/gtk/dialogs/encoding.py:118
+msgid "Encoding"
+msgstr "Kódolás"
+
+#: ../gaupol/gtk/dialogs/encoding.py:125
+msgid "Show in Menu"
+msgstr "Megjelenít a menüben"
+
+#: ../gaupol/gtk/dialogs/file.py:53
+msgid "All files"
+msgstr "Összes fájl"
+
+#: ../gaupol/gtk/dialogs/file.py:58
+msgid "All supported files"
+msgstr "Összes támogatott fájl"
+
+#: ../gaupol/gtk/dialogs/file.py:70
+#, python-format
+msgid "%(format)s (%(pattern)s)"
+msgstr "%(format)s (%(pattern)s)"
+
+#: ../gaupol/gtk/dialogs/file.py:114
+msgid "Auto-detected"
+msgstr "Automatikus felismerés"
+
+#: ../gaupol/gtk/dialogs/file.py:116
+msgid "Other…"
+msgstr "Egyéb…"
+
+#: ../gaupol/gtk/dialogs/header.py:223
+msgid "Invalid header"
+msgstr "Érvénytelen fejléc"
+
+#: ../gaupol/gtk/dialogs/header.py:224
+msgid "MPsub header must contain a line of form \"FORMAT=VALUE\", where VALUE is any of \"TIME\", \"23.98\", \"25.00\" or \"29.97\"."
+msgstr "MPsub-fejlécnek tartalmaznia kell a »FORMAT=érték« formátum sort, ahol az érték »TIME«, »23.98«, »25.00« vagy »29.97« lehet."
+
+#: ../gaupol/gtk/dialogs/language.py:117
+msgid "Set Language"
+msgstr "Nyelv beállítása"
+
+#: ../gaupol/gtk/dialogs/preferences.py:227
+#, python-format
+msgid "%s Extension Website"
+msgstr "%s Bővitmények Honlap"
+
+#: ../gaupol/gtk/dialogs/preferences.py:259
+msgid "Cannot deactivate extension"
+msgstr "Bővítmény kikapcsolása sikertelen"
+
+#: ../gaupol/gtk/dialogs/preferences.py:260
+#, python-format
+msgid "Extension \"%s\" is required by other extensions."
+msgstr "A bővítmény »%s« szükséges egyéb bővítmény(ek)hez."
+
+#: ../gaupol/gtk/dialogs/preferences.py:472
+msgid "Custom"
+msgstr "Egyéni"
+
+#: ../gaupol/gtk/dialogs/search.py:146
+#, python-format
+msgid "\"%s\" not found"
+msgstr "»%s« nem található"
+
+#: ../gaupol/gtk/dialogs/search.py:466
+msgid "Error in regular expression pattern"
+msgstr "Hiba az általános kifejezés sablonban"
+
+#: ../gaupol/gtk/dialogs/search.py:475
+msgid "Error in regular expression replacement"
+msgstr "Hiba az általános kifejezés cseréjében"
+
+#: ../gaupol/gtk/dialogs/search.py:601
+#, python-format
+msgid "Found and replaced %d occurences"
+msgstr "%d egyezés megtalálva és kicserélve "
+
+#: ../gaupol/gtk/dialogs/shift.py:154
+msgid "frames"
+msgstr "képkocka"
+
+#: ../gaupol/gtk/dialogs/shift.py:179
+msgid "seconds"
+msgstr "másodperc"
+
+#: ../gaupol/gtk/dialogs/spellcheck.py:408
+msgid "Spell-checking"
+msgstr "Helyesírás-ellenőrzés"
+
+#: ../gaupol/gtk/dialogs/split.py:85
+msgid "Splitting project"
+msgstr "Projekt felosztása"
+
+#: ../gaupol/gtk/dialogs/split.py:117
+#, python-format
+msgid "Split %(amount)d subtitles to project \"%(name)s\""
+msgstr "%(amount)d felirat felosztása a »%(name)s« projektbe"
+
+#: ../gaupol/gtk/dialogs/video.py:34
+msgid "Select Video"
+msgstr "Videó kiválasztása"
+
+#: ../gaupol/gtk/dialogs/video.py:38
+msgid "_Select"
+msgstr "_Kiválasztás"
+
+#: ../gaupol/gtk/dialogs/video.py:52
+msgid "Video files"
+msgstr "Videó fájlok"
+
+#: ../gaupol/gtk/fields.py:29
+msgid "No."
+msgstr "Sorszám"
+
+#: ../gaupol/gtk/fields.py:37
+msgid "Start"
+msgstr "Kezdet"
+
+#: ../gaupol/gtk/fields.py:38
+msgid "Start position"
+msgstr "Kezdő pozíció"
+
+#: ../gaupol/gtk/fields.py:45
+msgid "End"
+msgstr "Vég"
+
+#: ../gaupol/gtk/fields.py:46
+msgid "End position"
+msgstr "Vég pozíció"
+
+#. Translators: 'Dur.' is short for duration. It is used in the header of a
+#. tree view column that contains five characters wide numbers.
+#: ../gaupol/gtk/fields.py:55
+msgid "Dur."
+msgstr "Hossz"
+
+#: ../gaupol/gtk/fields.py:56
+msgid "Duration"
+msgstr "Időtartam"
+
+#: ../gaupol/gtk/fields.py:63
+msgid "Main Text"
+msgstr "Alap szöveg"
+
+#: ../gaupol/gtk/fields.py:64
+msgid "Main text"
+msgstr "Alap szöveg"
+
+#: ../gaupol/gtk/fields.py:71
+msgid "Translation Text"
+msgstr "Fordítási szöveg"
+
+#: ../gaupol/gtk/fields.py:72
+msgid "Translation text"
+msgstr "Fordítási szöveg"
+
+#: ../gaupol/gtk/main.py:130
+msgid "gaupol [OPTION...] [FILE...] [+[NUM]]"
+msgstr "gaupol [OPCIÓK...] [FÁJL...] [+[SZÁM]]"
+
+#: ../gaupol/gtk/main.py:137
+msgid "show version number and exit"
+msgstr "Verziószám és kilépés"
+
+#: ../gaupol/gtk/main.py:143
+#: ../gaupol/gtk/main.py:187
+msgid "FILE"
+msgstr "FÁJL"
+
+#: ../gaupol/gtk/main.py:146
+msgid "set the configuration file used"
+msgstr "Konfigurációs fájl megadása"
+
+#: ../gaupol/gtk/main.py:152
+msgid "ENCODING"
+msgstr "KÓDOLÁS"
+
+#: ../gaupol/gtk/main.py:155
+msgid "set the encoding used to open files"
+msgstr "kódolás használata fájlmegnyitásnál"
+
+#: ../gaupol/gtk/main.py:162
+msgid "list all available character encodings"
+msgstr "összes elérhető karakterkódolás megjelenítése"
+
+#: ../gaupol/gtk/main.py:171
+msgid "open translation file"
+msgstr "fordítási fájl megnyitása"
+
+#: ../gaupol/gtk/main.py:177
+msgid "METHOD"
+msgstr "MÓDSZER"
+
+#: ../gaupol/gtk/main.py:180
+msgid "method used to align translation subtitles: 'number' or 'position'"
+msgstr "Igazítás módszere a fordítási szövegben: »Szám» vagy »Pozíció«"
+
+#: ../gaupol/gtk/main.py:190
+msgid "select video file"
+msgstr "Videó fájl kiválasztása"
+
+#: ../gaupol/gtk/output.py:38
+msgid "Output"
+msgstr "Kimenet"
+
+#: ../gaupol/gtk/page.py:60
+#, python-format
+msgid "Untitled %d"
+msgstr "Felirat nélkül %d"
+
+#: ../gaupol/gtk/page.py:127
+msgid "Close project"
+msgstr "Projekt bezárása"
+
+#: ../gaupol/gtk/page.py:307
+#, python-format
+msgid "<b>Path:</b> %s"
+msgstr "<b>Útvonal:</b> %s"
+
+#: ../gaupol/gtk/page.py:308
+#, python-format
+msgid "<b>Format:</b> %s"
+msgstr "<b>Formátum:</b> %s"
+
+#: ../gaupol/gtk/page.py:309
+#, python-format
+msgid "<b>Character encoding:</b> %s"
+msgstr "<b>Karakterkódolás:</b> %s"
+
+#: ../gaupol/gtk/page.py:310
+#, python-format
+msgid "<b>Newlines:</b> %s"
+msgstr "<b>Új sorok:</b> %s"
+
+#: ../gaupol/gtk/page.py:347
+#, python-format
+msgid "%s translation"
+msgstr "%s fordítás"
+
+#: ../gaupol/gtk/units.py:27
+msgid "characters"
+msgstr "karakter"
+
+#: ../gaupol/gtk/units.py:32
+msgid "ems"
+msgstr "ems"
+
+#: ../gaupol/locales.py:76
+#, python-format
+msgid "%(language)s (%(country)s)"
+msgstr "%(language)s (%(country)s)"
+
+#: ../gaupol/newlines.py:27
+msgid "Mac (classic)"
+msgstr "Mac (klasszikus)"
+
