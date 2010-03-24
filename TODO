@@ -1,13 +1,3 @@
-Gaupol 0.15.1
-=============
-
- [D] Fix complete breakage of opening subtitle files due to a change
-     in newline handling of codecs.open in Python 2.6.5
- [D] Use existing subtitle file mime-types instead of text/plain when
-     adding files to the recent files database
- [D] Add German translation (Chris Leick)
- [D] Add Hungarian translation (László Andrássy)
-
 Gaupol 1.0
 ==========
 
