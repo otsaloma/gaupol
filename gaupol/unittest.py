@@ -34,7 +34,7 @@ class TestCase(aeidon.TestCase):
     def new_application(self):
         """Return a new application with two open pages."""
         application = gaupol.Application()
-        application.add_new_page(self.new_page())
+        application.add_page(self.new_page())
         application.window.show()
         TestCase.application = application
         return application

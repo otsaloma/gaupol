@@ -59,15 +59,6 @@ class MenuAgent(aeidon.Delegate):
         action.set_active(page is self.get_current_page())
         return action.get_name()
 
-    @aeidon.deco.export
-    def _on_page_tab_widget_button_press_event(self, button, event, page):
-        """Display a pop-up menu with tab-related actions."""
-        if event.button != 3: return
-        if page is not self.get_current_page():
-            self.set_current_page(page)
-        menu = self.uim.get_widget("/ui/tab_popup")
-        menu.popup(None, None, None, event.button, event.time)
-
     def _on_projects_action_changed(self, item, active_item):
         """Change the page in the notebook to the selected project."""
         index = int(active_item.get_name().split("_")[-1])
@@ -133,6 +124,15 @@ class MenuAgent(aeidon.Delegate):
         self._projects_id = self.uim.add_ui_from_string(ui)
         self.uim.ensure_update()
         self.set_menu_notify_events("projects")
+
+    @aeidon.deco.export
+    def _on_tab_widget_button_press_event(self, button, event, page):
+        """Display a pop-up menu with tab-related actions."""
+        if event.button != 3: return
+        if page is not self.get_current_page():
+            self.set_current_page(page)
+        menu = self.uim.get_widget("/ui/tab_popup")
+        menu.popup(None, None, None, event.button, event.time)
 
     @aeidon.deco.export
     def _on_undo_button_show_menu(self, *args):

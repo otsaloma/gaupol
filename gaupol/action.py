@@ -108,7 +108,7 @@ class RecentAction(Action, gtk.RecentAction):
     def __init__(self, name):
         """Initialize an :class:`RecentAction` object."""
         gtk.RecentAction.__init__(self, name, None, None, None)
-        self.set_show_numbers(True)
+        self.set_show_numbers(False)
         self.set_show_not_found(False)
         self.set_show_tips(True)
         self.set_sort_type(gtk.RECENT_SORT_MRU)
@@ -122,6 +122,8 @@ class RecentAction(Action, gtk.RecentAction):
     def finalize(self, application):
         """Connect action to widgets of `application`."""
         self.widgets = tuple(getattr(application, x) for x in self.widgets)
+        callback = "_on_%s_item_activated" % self.props.name
+        self.connect("item-activated", getattr(application, callback))
 
 
 class ToggleAction(Action, gtk.ToggleAction):

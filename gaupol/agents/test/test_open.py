@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,240 +14,235 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import functools
+import aeidon
 import gaupol
 import gtk
 import os
 
 
-def adds_pages(count):
-
-    def outer_wrapper(function):
-        @functools.wraps(function)
-        def inner_wrapper(*args, **kwargs):
-            application = args[0].application
-            orig_length = len(application.pages)
-            value = function(*args, **kwargs)
-            final_length = len(application.pages)
-            assert final_length == (orig_length + count)
-            return value
-        return inner_wrapper
-
-    return outer_wrapper
-
-
 class TestOpenAgent(gaupol.TestCase):
 
     def run__show_encoding_error_dialog(self):
-
-        flash_dialog = gaupol.Runner.flash_dialog
-        flash_dialog = functools.partial(flash_dialog, self.application)
-        self.delegate.flash_dialog = flash_dialog
         self.delegate._show_encoding_error_dialog("test")
 
     def run__show_format_error_dialog(self):
-
-        flash_dialog = gaupol.Runner.flash_dialog
-        flash_dialog = functools.partial(flash_dialog, self.application)
-        self.delegate.flash_dialog = flash_dialog
         self.delegate._show_format_error_dialog("test")
 
     def run__show_io_error_dialog(self):
-
-        flash_dialog = gaupol.Runner.flash_dialog
-        flash_dialog = functools.partial(flash_dialog, self.application)
-        self.delegate.flash_dialog = flash_dialog
         self.delegate._show_io_error_dialog("test", "test")
 
     def run__show_parse_error_dialog(self):
-
-        flash_dialog = gaupol.Runner.flash_dialog
-        flash_dialog = functools.partial(flash_dialog, self.application)
-        self.delegate.flash_dialog = flash_dialog
-        format = aeidon.formats.SUBRIP
-        self.delegate._show_parse_error_dialog("test", format)
+        self.delegate._show_parse_error_dialog("test", aeidon.formats.SUBRIP)
 
     @aeidon.deco.silent(gaupol.Default)
     def run__show_size_warning_dialog(self):
-
-        flash_dialog = gaupol.Runner.flash_dialog
-        flash_dialog = functools.partial(flash_dialog, self.application)
-        self.delegate.flash_dialog = flash_dialog
         self.delegate._show_size_warning_dialog("test", 2)
 
     @aeidon.deco.silent(gaupol.Default)
     def run__show_sort_warning_dialog(self):
-
-        flash_dialog = gaupol.Runner.flash_dialog
-        flash_dialog = functools.partial(flash_dialog, self.application)
-        self.delegate.flash_dialog = flash_dialog
         self.delegate._show_sort_warning_dialog("test", 3)
 
     @aeidon.deco.silent(gaupol.Default)
     def run__show_translation_warning_dialog(self):
-
-        flash_dialog = gaupol.Runner.flash_dialog
-        flash_dialog = functools.partial(flash_dialog, self.application)
-        self.delegate.flash_dialog = flash_dialog
         page = self.application.get_current_page()
         self.delegate._show_translation_warning_dialog(page)
 
     def setup_method(self, method):
-
         self.application = self.new_application()
-        self.delegate = self.application.open_main_files.im_self
-        respond = lambda *args: gtk.RESPONSE_OK
-        self.delegate.flash_dialog = respond
-        self.delegate.run_dialog = respond
-        get_filenames = lambda *args: [self.new_subrip_file()]
+        self.delegate = self.application.open_main.im_self
+
+    @aeidon.deco.monkey_patch(gaupol.FileDialog, "get_filenames")
+    @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
+    def test__on_append_file_activate(self):
+        get_filenames = lambda *args: (self.new_subrip_file(),)
         gaupol.FileDialog.get_filenames = get_filenames
-
-    def test__show_encoding_error_dialog(self):
-
-        self.delegate._show_encoding_error_dialog("test")
-
-    def test__show_format_error_dialog(self):
-
-        self.delegate._show_format_error_dialog("test")
-
-    def test__show_io_error_dialog(self):
-
-        self.delegate._show_io_error_dialog("test", "test")
-
-    def test__show_parse_error_dialog(self):
-
-        format = aeidon.formats.SUBRIP
-        self.delegate._show_parse_error_dialog("test", format)
-
-    @aeidon.deco.silent(gaupol.Default)
-    def test__show_size_warning_dialog(self):
-
-        self.delegate._show_size_warning_dialog("test", 2)
-
-    @aeidon.deco.silent(gaupol.Default)
-    def test__show_sort_warning_dialog(self):
-
-        self.delegate._show_sort_warning_dialog("test", 3)
-
-    @aeidon.deco.silent(gaupol.Default)
-    def test__show_translation_warning_dialog(self):
-
-        page = self.application.get_current_page()
-        respond = lambda *args: gtk.RESPONSE_YES
-        self.delegate.flash_dialog = respond
-        self.delegate._show_translation_warning_dialog(page)
-        respond = lambda *args: gtk.RESPONSE_NO
-        self.delegate.flash_dialog = respond
-        self.delegate._show_translation_warning_dialog(page)
-
-    @adds_pages(1)
-    def test_add_new_page(self):
-
-        self.application.add_new_page(self.new_page())
-
-    def test_add_to_recent_files(self):
-
-        add = self.delegate.add_to_recent_files
-        format = aeidon.formats.SUBRIP
-        add(self.new_subrip_file(), format, aeidon.documents.MAIN)
-        add(self.new_subrip_file(), format, aeidon.documents.TRAN)
-
-    @adds_pages(0)
-    def test_append_file(self):
-
-        self.application.append_file(self.new_subrip_file())
-        self.application.append_file(self.new_subrip_file(), "ascii")
-
-    def test_connect_view_signals(self):
-
-        view = self.application.pages[0].view
-        self.application.connect_view_signals(view)
-
-    @adds_pages(0)
-    def test_on_append_file_activate(self):
-
+        gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_OK
         self.application.get_action("append_file").activate()
 
-    @adds_pages(1)
-    def test_on_new_project_activate(self):
-
+    def test__on_new_project_activate(self):
         self.application.get_action("new_project").activate()
 
-    @adds_pages(1)
-    def test_on_open_main_files_activate(self):
-
+    @aeidon.deco.monkey_patch(gaupol.FileDialog, "get_filenames")
+    @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
+    def test__on_open_main_files_activate(self):
+        get_filenames = lambda *args: (self.new_subrip_file(),)
+        gaupol.FileDialog.get_filenames = get_filenames
+        gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_OK
         self.application.get_action("open_main_files").activate()
 
-    def test_on_open_translation_file_activate(self):
+    @aeidon.deco.monkey_patch(gaupol.FileDialog, "get_filenames")
+    @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
+    def test__on_open_translation_file_activate(self):
+        get_filenames = lambda *args: (self.new_subrip_file(),)
+        gaupol.FileDialog.get_filenames = get_filenames
+        gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_OK
+        page = self.application.get_current_page()
+        self.application.get_action("open_translation_file").activate()
 
+    @aeidon.deco.monkey_patch(gaupol.FileDialog, "get_filenames")
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
+    def test__on_open_translation_file_activate__changed(self):
+        get_filenames = lambda *args: (self.new_subrip_file(),)
+        gaupol.FileDialog.get_filenames = get_filenames
+        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_YES
+        gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_OK
         page = self.application.get_current_page()
         self.application.get_action("open_translation_file").activate()
         page.project.set_text(0, aeidon.documents.TRAN, "")
         self.application.get_action("open_translation_file").activate()
 
-    def test_on_select_video_file_activate(self):
-
+    @aeidon.deco.monkey_patch(gaupol.FileDialog, "get_filenames")
+    @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
+    def test__on_select_video_file_activate(self):
+        get_filenames = lambda *args: (self.new_subrip_file(),)
+        gaupol.FileDialog.get_filenames = get_filenames
+        gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_OK
         page = self.application.get_current_page()
         page.project.video_path = self.new_subrip_file()
         self.application.get_action("select_video_file").activate()
 
-    def test_on_split_project_activate(self):
-
-        responder = iter((gtk.RESPONSE_OK, gtk.RESPONSE_CANCEL))
-        flash_dialog = lambda *args: responder.next()
-        self.delegate.flash_dialog = flash_dialog
-        self.application.get_current_page().view.select_rows((3,))
-        self.application.get_action("split_project").activate()
-        self.application.get_current_page().view.select_rows((3,))
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    def test__on_split_project_activate(self):
+        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        page = self.application.get_current_page()
+        page.view.select_rows((3,))
         self.application.get_action("split_project").activate()
 
-    def test_on_video_button_clicked(self):
-
+    @aeidon.deco.monkey_patch(gaupol.FileDialog, "get_filenames")
+    @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
+    def test__on_video_button_clicked(self):
+        get_filenames = lambda *args: (self.new_subrip_file(),)
+        gaupol.FileDialog.get_filenames = get_filenames
+        gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_OK
         self.application.video_button.emit("clicked")
 
-    @adds_pages(0)
-    def test__open_file(self):
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    def test__show_encoding_error_dialog(self):
+        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        self.delegate._show_encoding_error_dialog("test")
 
-        function = self.delegate._open_file
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    def test__show_format_error_dialog(self):
+        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        self.delegate._show_format_error_dialog("test")
+
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    def test__show_io_error_dialog(self):
+        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        self.delegate._show_io_error_dialog("test", "test")
+
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    def test__show_parse_error_dialog(self):
+        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        self.delegate._show_parse_error_dialog("test", aeidon.formats.SUBRIP)
+
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    @aeidon.deco.silent(gaupol.Default)
+    def test__show_size_warning_dialog(self):
+        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        self.delegate._show_size_warning_dialog("test", 2)
+
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    @aeidon.deco.silent(gaupol.Default)
+    def test__show_sort_warning_dialog__no(self):
+        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_NO
+        self.delegate._show_sort_warning_dialog("test", 3)
+
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    @aeidon.deco.silent(gaupol.Default)
+    def test__show_sort_warning_dialog__yes(self):
+        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_YES
+        self.delegate._show_sort_warning_dialog("test", 3)
+
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    @aeidon.deco.silent(gaupol.Default)
+    def test__show_translation_warning_dialog__no(self):
+        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_NO
+        page = self.application.get_current_page()
+        self.delegate._show_translation_warning_dialog(page)
+
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    @aeidon.deco.silent(gaupol.Default)
+    def test__show_translation_warning_dialog__yes(self):
+        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_YES
+        page = self.application.get_current_page()
+        self.delegate._show_translation_warning_dialog(page)
+
+    def test_add_page(self):
+        self.application.add_page(self.new_page())
+
+    def test_add_to_recent_files__main(self):
+        self.application.add_to_recent_files(self.new_subrip_file(),
+                                             aeidon.formats.SUBRIP,
+                                             aeidon.documents.MAIN)
+
+    def test_add_to_recent_files__translation(self):
+        self.application.add_to_recent_files(self.new_subrip_file(),
+                                             aeidon.formats.SUBRIP,
+                                             aeidon.documents.TRAN)
+
+    def test_append_file(self):
+        self.application.append_file(self.new_subrip_file())
+        self.application.append_file(self.new_subrip_file(), "ascii")
+
+    def test_connect_view_signals(self):
+        page = self.application.get_current_page()
+        self.application.connect_view_signals(page.view)
+
+    def test_open_main(self):
         path = self.new_subrip_file()
-        doc = aeidon.documents.MAIN
-        self.raises(gaupol.Default, function, path, (), doc)
+        self.application.open_main(path)
 
-    @adds_pages(3)
-    def test_open_main_file(self):
+    def test_open_main__again(self):
+        path = self.new_subrip_file()
+        self.application.open_main(path)
+        self.application.open_main(path)
 
-        self.application.open_main_file(self.new_subrip_file())
-        self.application.open_main_file(self.new_subrip_file(), "ascii")
-        self.application.open_main_file(self.new_subrip_file(), "auto")
+    def test_open_main__ascii(self):
+        path = self.new_subrip_file()
+        self.application.open_main(path, "ascii")
 
-    @adds_pages(0)
-    def test_open_main_file__format_error(self):
+    def test_open_main__auto(self):
+        path = self.new_subrip_file()
+        self.application.open_main(path, "auto")
 
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    def test_open_main__format_error(self):
+        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
         path = self.new_subrip_file()
         open(path, "w").write("xxx\n")
-        self.application.open_main_file(path)
+        self.application.open_main(path)
 
-    @adds_pages(0)
-    def test_open_main_file__io_error(self):
-
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    def test_open_main__io_error(self):
+        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
         path = self.new_subrip_file()
         os.chmod(path, 0000)
-        self.application.open_main_file(path)
+        self.application.open_main(path)
         os.chmod(path, 0777)
 
-    @adds_pages(0)
-    def test_open_main_file__parse_error(self):
+    def test_open_main__multiple(self):
+        self.application.open_main((self.new_subrip_file(),
+                                    self.new_subrip_file(),
+                                    self.new_microdvd_file(),
+                                    self.new_microdvd_file()))
 
-        read = lambda *args: 1 / 0
-        real_read = aeidon.files.SubRip.read
-        aeidon.files.SubRip.read = read
-        path = self.new_subrip_file()
-        self.application.open_main_file(path)
-        aeidon.files.SubRip.read = real_read
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    def test_open_main__parse_error(self):
+        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_YES
+        path = self.new_microdvd_file()
+        fobj = open(path, "w")
+        fobj.write("{10}{20}Testing...\n")
+        fobj.write("{20}{30}Testing...\n")
+        fobj.write("{30}{40}Testing...\n")
+        fobj.write("{xx}{yy}Testing...\n")
+        fobj.close()
+        self.application.open_main(path)
 
-    @adds_pages(0)
-    def test_open_main_file__size(self):
-
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    def test_open_main__sort_warning(self):
+        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_YES
         path = self.new_microdvd_file()
         fobj = open(path, "w")
         fobj.write("{30}{40}Testing...\n")
@@ -255,20 +250,13 @@ class TestOpenAgent(gaupol.TestCase):
         fobj.write("{10}{20}Testing...\n")
         fobj.write("{20}{30}Testing...\n")
         fobj.close()
-        self.application.open_main_file(path)
+        self.application.open_main(path)
 
-    @adds_pages(4)
-    def test_open_main_files(self):
-
-        paths = (self.new_subrip_file(), self.new_microdvd_file())
-        self.application.open_main_files(paths)
-        paths = (self.new_subrip_file(), self.new_microdvd_file())
-        self.application.open_main_files(paths, "ascii")
-        self.application.open_main_files(paths)
-
-    def test_open_translation_file(self):
-
+    def test_open_translation(self):
         path = self.new_subrip_file()
-        self.application.open_translation_file(path)
+        self.application.open_translation(path)
+
+    def test_open_translation__align_method(self):
         path = self.new_subrip_file()
-        self.application.open_translation_file(path, "ascii")
+        align_method = aeidon.align_methods.POSITION
+        self.application.open_translation(path, align_method=align_method)

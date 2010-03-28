@@ -21,7 +21,7 @@ class TestUpdateAgent(gaupol.TestCase):
 
     def setup_method(self, method):
         self.application = self.new_application()
-        self.application.add_new_page(self.new_page())
+        self.application.add_page(self.new_page())
 
     def test_flash_message(self):
         self.application.flash_message("")

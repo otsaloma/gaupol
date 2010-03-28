@@ -56,8 +56,8 @@ class TestSaveAgent(gaupol.TestCase):
 
     def test_on_save_all_documents_activate(self):
 
-        self.application.open_main_file(self.new_subrip_file())
-        self.application.open_main_file(self.new_subrip_file())
+        self.application.open_main(self.new_subrip_file())
+        self.application.open_main(self.new_subrip_file())
         self.application.get_action("save_all_documents").activate()
 
     def test_on_save_main_document_activate(self):
@@ -124,7 +124,7 @@ class TestSaveAgent(gaupol.TestCase):
 
     def test_save_translation_document__untitled(self):
 
-        self.application.open_main_file(self.new_subrip_file())
+        self.application.open_main(self.new_subrip_file())
         page = self.application.get_current_page()
         self.delegate.run_dialog = lambda *args: gtk.RESPONSE_CANCEL
         function = self.application.save_translation_document

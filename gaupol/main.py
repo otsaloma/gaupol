@@ -74,13 +74,13 @@ def _init_application(opts, args):
         try: opts.encoding = aeidon.encodings.translate_code(opts.encoding)
         except ValueError:
             raise SystemExit("Unrecognized encoding: %s" % repr(opts.encoding))
-    application.open_main_files(paths, opts.encoding)
+    application.open_main(paths, opts.encoding)
     page = application.get_current_page()
     if (page is not None) and opts.translation_file:
         path = os.path.abspath(opts.translation_file)
         align_method = opts.align_method.upper()
         align_method = getattr(aeidon.align_methods, align_method)
-        application.open_translation_file(path, opts.encoding, align_method)
+        application.open_translation(path, opts.encoding, align_method)
     if (page is not None) and opts.video_file:
         path = os.path.abspath(opts.video_file)
         page.project.video_path = path

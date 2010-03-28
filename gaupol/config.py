@@ -99,7 +99,7 @@ config_defaults = {
         },
     "file": {
         "align_method": aeidon.align_methods.POSITION,
-        "directory": None,
+        "directory": "",
         "encoding": aeidon.util.get_default_encoding() or "utf_8",
         "format": aeidon.formats.SUBRIP,
         "max_recent": 10,

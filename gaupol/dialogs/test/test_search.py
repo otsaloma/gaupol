@@ -150,7 +150,7 @@ class TestSearchDialog(gaupol.TestCase):
         self.dialog._pattern_entry.set_text("xxx")
         self.dialog.next()
         self.dialog._all_radio.set_active(True)
-        self.application.open_main_file(self.new_subrip_file())
+        self.application.open_main(self.new_subrip_file())
         self.dialog.next()
 
     def test_previous(self):
@@ -163,7 +163,7 @@ class TestSearchDialog(gaupol.TestCase):
         self.dialog._pattern_entry.set_text("xxx")
         self.dialog.previous()
         self.dialog._all_radio.set_active(True)
-        self.application.open_main_file(self.new_subrip_file())
+        self.application.open_main(self.new_subrip_file())
         self.dialog.previous()
 
     def test_replace(self):

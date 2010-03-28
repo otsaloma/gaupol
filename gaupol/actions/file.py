@@ -151,7 +151,6 @@ class OpenMainFilesRecentAction(gaupol.RecentAction):
         self.props.stock_id = gtk.STOCK_OPEN
         self.props.tooltip = _("Open main files")
         self.action_group = "main-safe"
-        self.set_show_numbers(False)
 
 
 class OpenRecentMainFileAction(gaupol.RecentAction):

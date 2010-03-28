@@ -49,7 +49,7 @@ class TestEditAgent(gaupol.TestCase):
     def test_on_edit_headers_activate(self):
 
         path = self.new_temp_file(aeidon.formats.SUBVIEWER2)
-        self.application.open_main_file(path)
+        self.application.open_main(path)
         respond = lambda *args: gtk.RESPONSE_OK
         self.application.flash_dialog = respond
         self.application.get_action("edit_headers").activate()
