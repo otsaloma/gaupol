@@ -23,6 +23,5 @@ from .test_open import TestOpenDialog
 class TestAppendDialog(TestOpenDialog):
 
     def setup_method(self, method):
-
         self.dialog = gaupol.AppendDialog(gtk.Window())
         self.dialog.show()

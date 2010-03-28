@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,8 +16,8 @@
 
 """Dialog for selecting a subtitle file to append to project."""
 
+import aeidon
 import gaupol
-import gtk
 _ = aeidon.i18n._
 
 __all__ = ("AppendDialog",)
@@ -28,11 +28,7 @@ class AppendDialog(gaupol.OpenDialog):
     """Dialog for selecting a subtitle file to append to project."""
 
     def __init__(self, parent):
-        """Initialize an AppendDialog object."""
-
+        """Initialize an :class:`AppendDialog` object."""
         doc = aeidon.documents.MAIN
         gaupol.OpenDialog.__init__(self, parent, _("Append File"), doc)
         self.set_select_multiple(False)
-        button = self.action_area.get_children()[0]
-        # TODO: FIX!
-        # gaupol.util.set_button(button, _("_Append"), gtk.STOCK_ADD)
