@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-import functools
+import aeidon
 import gaupol
 import gtk
 import os
@@ -23,120 +23,114 @@ import os
 class TestSaveAgent(gaupol.TestCase):
 
     def run__show_encoding_error_dialog(self):
-
-        flash_dialog = gaupol.Runner.flash_dialog
-        flash_dialog = functools.partial(flash_dialog, self.application)
-        self.delegate.flash_dialog = flash_dialog
         self.delegate._show_encoding_error_dialog("test", "ascii")
 
     def run__show_io_error_dialog(self):
-
-        flash_dialog = gaupol.Runner.flash_dialog
-        flash_dialog = functools.partial(flash_dialog, self.application)
-        self.delegate.flash_dialog = flash_dialog
         self.delegate._show_io_error_dialog("test", "test")
 
     def setup_method(self, method):
-
         self.application = self.new_application()
-        self.delegate = self.application.save_main_document.im_self
-        respond = lambda *args: gtk.RESPONSE_OK
-        self.delegate.flash_dialog = respond
-        self.delegate.run_dialog = respond
-        get_filename = lambda *args: self.new_subrip_file()
-        gaupol.SaveDialog.get_filename = get_filename
+        self.delegate = self.application.save_main.im_self
 
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test__show_encoding_error_dialog(self):
-
+        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
         self.delegate._show_encoding_error_dialog("test", "ascii")
 
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test__show_io_error_dialog(self):
-
+        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
         self.delegate._show_io_error_dialog("test", "test")
 
-    def test_on_save_all_documents_activate(self):
-
-        self.application.open_main(self.new_subrip_file())
-        self.application.open_main(self.new_subrip_file())
+    def test__on_save_all_documents_activate(self):
         self.application.get_action("save_all_documents").activate()
 
-    def test_on_save_main_document_activate(self):
-
+    def test__on_save_main_document_activate(self):
         self.application.get_action("save_main_document").activate()
 
-    def test_on_save_main_document_as_activate(self):
-
+    @aeidon.deco.monkey_patch(gaupol.SaveDialog, "get_filename")
+    @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
+    def test__on_save_main_document_as_activate(self):
+        get_filename = lambda *args: self.new_subrip_file()
+        gaupol.SaveDialog.get_filename = get_filename
+        gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_OK
         self.application.get_action("save_main_document_as").activate()
 
-    def test_on_save_translation_document_activate(self):
-
+    def test__on_save_translation_document_activate(self):
         self.application.get_action("save_translation_document").activate()
 
-    def test_on_save_translation_document_as_activate(self):
-
+    @aeidon.deco.monkey_patch(gaupol.SaveDialog, "get_filename")
+    @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
+    def test__on_save_translation_document_as_activate(self):
+        get_filename = lambda *args: self.new_subrip_file()
+        gaupol.SaveDialog.get_filename = get_filename
+        gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_OK
         self.application.get_action("save_translation_document_as").activate()
 
-    def test_save_main_document(self):
-
+    def test_save_main(self):
         page = self.application.get_current_page()
-        self.application.save_main_document(page)
+        self.application.save_main(page)
 
-    def test_save_main_document__io_error(self):
-
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    def test_save_main__io_error(self):
+        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
         page = self.application.get_current_page()
         os.chmod(page.project.main_file.path, 0000)
-        function = self.application.save_main_document
-        self.raises(gaupol.Default, function, page)
+        self.raises(gaupol.Default, self.application.save_main, page)
         os.chmod(page.project.main_file.path, 0777)
 
-    def test_save_main_document__unicode_error(self):
-
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    def test_save_main__unicode_error(self):
+        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
         page = self.application.get_current_page()
         page.project.main_file.encoding = "ascii"
-        doc = aeidon.documents.MAIN
-        page.project.set_text(0, doc, "\303\266")
-        function = self.application.save_main_document
-        self.raises(gaupol.Default, function, page)
+        page.project.set_text(0, aeidon.documents.MAIN, "\303\266")
+        self.raises(gaupol.Default, self.application.save_main, page)
 
-    def test_save_main_document__untitled(self):
-
+    @aeidon.deco.monkey_patch(gaupol.SaveDialog, "get_filename")
+    @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
+    def test_save_main__untitled(self):
+        get_filename = lambda *args: self.new_subrip_file()
+        gaupol.SaveDialog.get_filename = get_filename
+        gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_OK
         self.application.get_action("new_project").activate()
         page = self.application.get_current_page()
-        self.delegate.run_dialog = lambda *args: gtk.RESPONSE_CANCEL
-        function = self.application.save_main_document
-        self.raises(gaupol.Default, function, page)
-        self.delegate.run_dialog = lambda *args: gtk.RESPONSE_OK
-        self.application.save_main_document(page)
+        self.application.save_main(page)
 
-    def test_save_main_document_as(self):
-
+    @aeidon.deco.monkey_patch(gaupol.SaveDialog, "get_filename")
+    @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
+    def test_save_main_as(self):
+        get_filename = lambda *args: self.new_subrip_file()
+        gaupol.SaveDialog.get_filename = get_filename
+        gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_OK
         page = self.application.get_current_page()
-        self.delegate.run_dialog = lambda *args: gtk.RESPONSE_CANCEL
-        function = self.application.save_main_document_as
-        self.raises(gaupol.Default, function, page)
-        self.delegate.run_dialog = lambda *args: gtk.RESPONSE_OK
-        self.application.save_main_document_as(page)
+        self.application.save_main_as(page)
 
-    def test_save_translation_document(self):
-
+    @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
+    def test_save_main_as__cancel(self):
+        gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_CANCEL
         page = self.application.get_current_page()
-        self.application.save_translation_document(page)
+        self.raises(gaupol.Default, self.application.save_main_as, page)
 
-    def test_save_translation_document__untitled(self):
-
-        self.application.open_main(self.new_subrip_file())
+    def test_save_translation(self):
         page = self.application.get_current_page()
-        self.delegate.run_dialog = lambda *args: gtk.RESPONSE_CANCEL
-        function = self.application.save_translation_document
-        self.raises(gaupol.Default, function, page)
-        self.delegate.run_dialog = lambda *args: gtk.RESPONSE_OK
-        self.application.save_translation_document(page)
+        self.application.save_translation(page)
 
-    def test_save_translation_document_as(self):
-
+    @aeidon.deco.monkey_patch(gaupol.SaveDialog, "get_filename")
+    @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
+    def test_save_translation__untitled(self):
+        get_filename = lambda *args: self.new_subrip_file()
+        gaupol.SaveDialog.get_filename = get_filename
+        gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_OK
+        self.application.get_action("new_project").activate()
         page = self.application.get_current_page()
-        self.delegate.run_dialog = lambda *args: gtk.RESPONSE_CANCEL
-        function = self.application.save_translation_document_as
-        self.raises(gaupol.Default, function, page)
-        self.delegate.run_dialog = lambda *args: gtk.RESPONSE_OK
-        self.application.save_translation_document_as(page)
+        self.application.save_translation(page)
+
+    @aeidon.deco.monkey_patch(gaupol.SaveDialog, "get_filename")
+    @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
+    def test_save_translation_as(self):
+        get_filename = lambda *args: self.new_subrip_file()
+        gaupol.SaveDialog.get_filename = get_filename
+        gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_OK
+        page = self.application.get_current_page()
+        self.application.save_translation_as(page)

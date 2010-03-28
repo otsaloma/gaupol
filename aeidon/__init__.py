@@ -53,10 +53,9 @@ Removing all blank subtitles::
 All these can be used with functions that edit subtitle data regardless of what
 the native position type of the file format used is.
 
-Due to translation of subtitles being a major feature of Gaupol, :mod:`aeidon`
-handles two separate documents that comprise a project -- a main and a
-translation document. These correspond to separate files, but the subtitles are
-common since the positions are shared.
+:mod:`aeidon` handles two separate documents that comprise a project -- a main
+and a translation document. These correspond to separate files, but the
+subtitles are common since the positions are shared.
 
 :mod:`aeidon` includes an undo/redo-system. Any subtitle data-editing methods
 of :class:`aeidon.Project` (ones marked with the :func:`aeidon.deco.revertable`

@@ -344,7 +344,7 @@ class OpenAgent(aeidon.Delegate):
         dialog.set_default_response(gtk.RESPONSE_YES)
         response = gaupol.util.flash_dialog(dialog)
         if response == gtk.RESPONSE_YES:
-            return self.save_translation_document(page)
+            return self.save_translation(page)
         gaupol.util.raise_default(response != gtk.RESPONSE_NO)
 
     def _try_open_file(self, page, doc, path, encoding, **kwargs):

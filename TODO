@@ -37,7 +37,7 @@ Gaupol 0.16
  [ ] Fix focus changing when pasting subtitles
       - http://www.mail-archive.com/gaupol-list@gna.org/msg00022.html
  [ ] Use gtk.accel_map_load and gtk.accel_map_save
- [?] Use transifex.net (or something) for translations
+ [ ] Use transifex.net for translations
  [ ] Save text correction assistant window size
  [ ] http://tecnocode.co.uk/2009/10/01/unicode-in-gnome/
  [ ] Mark strings containing Unicode ellipses as unicode strings (u"")

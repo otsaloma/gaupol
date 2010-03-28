@@ -57,7 +57,7 @@ class CloseAgent(aeidon.Delegate):
         if not response in (gtk.RESPONSE_YES, gtk.RESPONSE_NO):
             raise gaupol.Default
         if response == gtk.RESPONSE_YES:
-            self.save_main_document(page)
+            self.save_main(page)
 
     def _confirm_close_multiple(self, pages):
         """Close `pages` after asking to save their documents.
@@ -86,7 +86,7 @@ class CloseAgent(aeidon.Delegate):
         if not response in (gtk.RESPONSE_YES, gtk.RESPONSE_NO):
             raise gaupol.Default
         if response == gtk.RESPONSE_YES:
-            self.save_translation_document(page)
+            self.save_translation(page)
 
     def _need_confirmation(self, page):
         """Return documents in `page` with unsaved changes."""

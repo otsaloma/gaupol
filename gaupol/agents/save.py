@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2009 Osmo Salomaa
+# Copyright (C) 2005-2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -27,83 +27,97 @@ class SaveAgent(aeidon.Delegate):
 
     """Saving documents."""
 
-    def _get_main_props(self, page):
-        """Return the properties of the main file of page's project.
+    @aeidon.deco.export
+    def _on_save_all_documents_activate(self, *args):
+        """Save all open documents."""
+        silent = aeidon.deco.silent(gaupol.Default)
+        save_main = silent(self.save_main)
+        save_tran = silent(self.save_translation)
+        for page in self.pages:
+            save_main(page)
+            if page.project.tran_changed is not None:
+                save_tran(page)
+        self.flash_message(_("Saved all open documents"))
+        self.update_gui()
 
-        Return path, format, encoding, newline.
+    @aeidon.deco.export
+    @aeidon.deco.silent(gaupol.Default)
+    def _on_save_main_document_activate(self, *args):
+        """Save the current main document."""
+        page = self.get_current_page()
+        self.save_main(page)
+        self.update_gui()
+
+    @aeidon.deco.export
+    @aeidon.deco.silent(gaupol.Default)
+    def _on_save_main_document_as_activate(self, *args):
+        """Save the current main document with a different name."""
+        page = self.get_current_page()
+        self.save_main_as(page)
+        self.update_gui()
+
+    @aeidon.deco.export
+    @aeidon.deco.silent(gaupol.Default)
+    def _on_save_translation_document_activate(self, *args):
+        """Save the current translation document."""
+        page = self.get_current_page()
+        self.save_translation(page)
+        self.update_gui()
+
+    @aeidon.deco.export
+    @aeidon.deco.silent(gaupol.Default)
+    def _on_save_translation_document_as_activate(self, *args):
+        """Save the current translation document with a different name."""
+        page = self.get_current_page()
+        self.save_translation_as(page)
+        self.update_gui()
+
+    def _save_document(self, page, doc, sfile=None):
+        """Save `doc` of `page` to `sfile`.
+
+        Raise :exc:`gaupol.Default` if saving failed.
         """
-        props = [None, None, None, None]
-        if page.project.main_file is not None:
-            props[0] = page.project.main_file.path
-            props[1] = page.project.main_file.format
-            props[2] = page.project.main_file.encoding
-            props[3] = page.project.main_file.newline
-        return tuple(props)
-
-    def _get_translation_props(self, page):
-        """Return the properties of the translation file of page's project.
-
-        Return path, format, encoding, newline.
-        """
-        props = [None, None, None, None]
-        if page.project.tran_file is not None:
-            props[0] = page.project.tran_file.path
-            props[1] = page.project.tran_file.format
-            props[2] = page.project.tran_file.encoding
-            props[3] = page.project.tran_file.newline
-        elif page.project.main_file is not None:
-            props[1] = page.project.main_file.format
-            props[2] = page.project.main_file.encoding
-            props[3] = page.project.main_file.newline
-        return tuple(props)
-
-    def _save_document(self, page, doc, props):
-        """Save document to a file defined by properties.
-
-        props is a sequence of path, format, encoding, newline.
-        Raise Default if an error occurs and document is not saved.
-        """
+        sfile = sfile or page.project.get_file(doc)
         gaupol.util.set_cursor_busy(self.window)
-        basename = os.path.basename(props[0])
-        try: return page.project.save(doc, props)
+        try: return page.project.save(doc, sfile)
         except IOError, (no, message):
             gaupol.util.set_cursor_normal(self.window)
+            basename = os.path.basename(sfile.path)
             self._show_io_error_dialog(basename, message)
         except UnicodeError:
             gaupol.util.set_cursor_normal(self.window)
-            self._show_encoding_error_dialog(basename, props[2])
+            basename = os.path.basename(sfile.path)
+            self._show_encoding_error_dialog(basename, sfile.encoding)
         finally:
             gaupol.util.set_cursor_normal(self.window)
         raise gaupol.Default
 
-    def _select_file(self, title, props):
-        """Select a file and return path, format, encoding, newline.
+    def _select_file(self, title, sfile=None):
+        """Select a file and return a :class:`aeidon.SubtitleFile`.
 
-        Raise Default if cancelled and file should not be opened.
+        Raise :exc:`gaupol.Default` if cancelled.
         """
-        path, format, encoding, newline = props
-        props = [None, None, None, None]
         gaupol.util.set_cursor_busy(self.window)
         dialog = gaupol.SaveDialog(self.window, title)
-        dialog.set_name(path)
-        dialog.set_format(format)
-        dialog.set_encoding(encoding)
-        dialog.set_newline(newline)
+        if sfile is not None:
+            dialog.set_name(sfile.path)
+            dialog.set_format(sfile.format)
+            dialog.set_encoding(sfile.encoding)
+            dialog.set_newline(sfile.newline)
         gaupol.util.set_cursor_normal(self.window)
         response = gaupol.util.run_dialog(dialog)
-        props[0] = dialog.get_filename()
-        props[1] = dialog.get_format()
-        props[2] = dialog.get_encoding()
-        props[3] = dialog.get_newline()
+        format = dialog.get_format()
+        path = dialog.get_filename()
+        encoding = dialog.get_encoding()
+        newline = dialog.get_newline()
         dialog.destroy()
         if response != gtk.RESPONSE_OK:
             raise gaupol.Default
         gaupol.util.iterate_main()
-        return tuple(props)
+        return aeidon.files.new(format, path, encoding, newline)
 
     def _show_encoding_error_dialog(self, basename, codec):
         """Show an error dialog after failing to encode file."""
-
         codec = aeidon.encodings.code_to_name(codec)
         title = _('Failed to encode file "%(basename)s" '
             'with codec "%(codec)s"') % locals()
@@ -115,117 +129,69 @@ class SaveAgent(aeidon.Delegate):
 
     def _show_io_error_dialog(self, basename, message):
         """Show an error dialog after failing to write file."""
-
         title = _('Failed to save file "%s"') % basename
-        message = _("%s.") % message
         dialog = gaupol.ErrorDialog(self.window, title, message)
         dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
         gaupol.util.flash_dialog(dialog)
 
     @aeidon.deco.export
-    def _on_save_all_documents_activate(self, *args):
-        """Save all open documents."""
+    def save_main(self, page):
+        """Save the main document of `page`.
 
-        silent = aeidon.deco.silent(gaupol.Default)
-        save_main_document = silent(self.save_main_document)
-        save_tran_document = silent(self.save_translation_document)
-        for page in self.pages:
-            save_main_document(page)
-            if page.project.tran_changed is not None:
-                save_tran_document(page)
-        self.flash_message(_("Saved all open documents"))
-        self.update_gui()
-
-    @aeidon.deco.export
-    @aeidon.deco.silent(gaupol.Default)
-    def _on_save_main_document_activate(self, *args):
-        """Save the current main document."""
-
-        page = self.get_current_page()
-        self.save_main_document(page)
-        self.update_gui()
-
-    @aeidon.deco.export
-    @aeidon.deco.silent(gaupol.Default)
-    def _on_save_main_document_as_activate(self, *args):
-        """Save the current main document with a different name."""
-
-        page = self.get_current_page()
-        self.save_main_document_as(page)
-        self.update_gui()
-
-    @aeidon.deco.export
-    @aeidon.deco.silent(gaupol.Default)
-    def _on_save_translation_document_activate(self, *args):
-        """Save the current translation document."""
-
-        page = self.get_current_page()
-        self.save_translation_document(page)
-        self.update_gui()
-
-    @aeidon.deco.export
-    @aeidon.deco.silent(gaupol.Default)
-    def _on_save_translation_document_as_activate(self, *args):
-        """Save the current translation document with a different name."""
-
-        page = self.get_current_page()
-        self.save_translation_document_as(page)
-        self.update_gui()
-
-    @aeidon.deco.export
-    def save_main_document(self, page):
-        """Save the main document of page.
-
-        Raise Default if cancelled or failed and document is not saved.
+        Raise :exc:`gaupol.Default` if cancelled or saving failed.
         """
-        ## FIX
-        return
-        props = self._get_main_props(page)
-        if None in props:
-            return self.save_main_document_as(page)
-        self._save_document(page, aeidon.documents.MAIN, props)
+        if (page.project.main_file is None or
+            page.project.main_file.path is None or
+            page.project.main_file.encoding is None):
+            return self.save_main_as(page)
+
+        self._save_document(page, aeidon.documents.MAIN)
         self.flash_message(_("Saved main document"))
 
     @aeidon.deco.export
-    def save_main_document_as(self, page):
-        """Save the main document of page to a selected file.
+    def save_main_as(self, page):
+        """Save the main document of `page` to a selected file.
 
-        Raise Default if cancelled or failed and document is not saved.
+        Raise :exc:`gaupol.Default` if cancelled or saving failed.
         """
-        props = list(self._get_main_props(page))
-        props[0] = props[0] or page.get_main_basename()
-        props = self._select_file(_("Save As"), props)
-        self._save_document(page, aeidon.documents.MAIN, props)
-        format = page.project.main_file.format
-        self.add_to_recent_files(props[0], format, aeidon.documents.MAIN)
-        message = _('Saved main document as "%s"')
-        self.flash_message(message % os.path.basename(props[0]))
+        sfile = self._select_file(_("Save As"),
+                                  page.project.main_file)
+
+        self._save_document(page, aeidon.documents.MAIN, sfile)
+        self.add_to_recent_files(page.project.main_file.path,
+                                 page.project.main_file.format,
+                                 aeidon.documents.MAIN)
+
+        self.flash_message(_('Saved main document as "%s"')
+                           % os.path.basename(page.project.main_file.path))
 
     @aeidon.deco.export
-    def save_translation_document(self, page):
-        """Save the translation document of page.
+    def save_translation(self, page):
+        """Save the translation document of `page`.
 
-        Raise Default if cancelled or failed and document is not saved.
+        Raise :exc:`gaupol.Default` if cancelled or saving failed.
         """
-        # FIX
-        return
-        props = self._get_translation_props(page)
-        if None in props:
-            return self.save_translation_document_as(page)
-        self._save_document(page, aeidon.documents.TRAN, props)
+        if (page.project.tran_file is None or
+            page.project.tran_file.path is None or
+            page.project.tran_file.encoding is None):
+            return self.save_translation_as(page)
+
+        self._save_document(page, aeidon.documents.TRAN)
         self.flash_message(_("Saved translation document"))
 
     @aeidon.deco.export
-    def save_translation_document_as(self, page):
-        """Save the translation document of page to a selected file.
+    def save_translation_as(self, page):
+        """Save the translation document of `page` to a selected file.
 
-        Raise Default if cancelled or failed and document is not saved.
+        Raise :exc:`gaupol.Default` if cancelled or saving failed.
         """
-        props = list(self._get_translation_props(page))
-        props[0] = props[0] or page.get_translation_basename()
-        props = self._select_file(_("Save Translation As"), props)
-        self._save_document(page, aeidon.documents.TRAN, props)
-        format = page.project.tran_file.format
-        self.add_to_recent_files(props[0], format, aeidon.documents.TRAN)
-        message = _('Saved translation document as "%s"')
-        self.flash_message(message % os.path.basename(props[0]))
+        sfile = self._select_file(_("Save Translation As"),
+                                  page.project.tran_file)
+
+        self._save_document(page, aeidon.documents.TRAN, sfile)
+        self.add_to_recent_files(page.project.tran_file.path,
+                                 page.project.tran_file.format,
+                                 aeidon.documents.TRAN)
+
+        self.flash_message(_('Saved translation document as "%s"')
+                           % os.path.basename(page.project.tran_file.path))

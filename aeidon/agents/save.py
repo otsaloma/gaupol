@@ -97,7 +97,7 @@ class SaveAgent(aeidon.Delegate):
         current_format = self.get_format(doc)
         orig_texts = [x.get_text(doc) for x in self.subtitles]
         indices = []
-        if sfile.format != current_format:
+        if (current_format is not None) and (sfile.format != current_format):
             indices = self._convert_markup(doc, current_format, sfile.format)
         self._write_file(sfile, self.subtitles, doc)
         if keep_changes: return indices

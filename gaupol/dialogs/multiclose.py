@@ -107,9 +107,9 @@ class MultiCloseDialog(gaupol.BuilderDialog):
         store = self._main_tree_view.get_model()
         pages = [x for x in store if x[0] is page]
         if pages and pages[0][1]:
-            self.application.save_main_document(page)
+            self.application.save_main(page)
         store = self._tran_tree_view.get_model()
         pages = [x for x in store if x[0] is page]
         if pages and pages[0][1]:
-            self.application.save_translation_document(page)
+            self.application.save_translation(page)
         self.application.close(page, False)
