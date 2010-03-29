@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,37 +16,43 @@
 
 """Dialog for inserting new subtitles."""
 
+import aeidon
 import gaupol
 import gtk
+_ = aeidon.i18n._
 
 __all__ = ("InsertDialog",)
 
 
-class InsertDialog(gaupol.GladeDialog):
+class InsertDialog(gaupol.BuilderDialog):
 
     """Dialog for inserting new subtitles."""
 
+    _widgets = ("amount_spin", "position_combo", "position_label")
+
     def __init__(self, parent, application):
-        """Initialize an InsertDialog object."""
-
-        gaupol.GladeDialog.__init__(self, "insert.glade")
-        get_widget = self._glade_xml.get_widget
-        self._amount_spin = get_widget("amount_spin")
-        self._position_combo = get_widget("position_combo")
-        self._position_label = get_widget("position_label")
+        """Initialize an :class:`InsertDialog` object."""
+        gaupol.BuilderDialog.__init__(self, "insert-dialog.ui")
         self.application = application
-        self.conf = gaupol.conf.subtitle_insert
-
+        self._init_position_combo()
         self._init_values()
-        aeidon.util.connect(self, self, "response")
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_OK)
 
+    def _init_position_combo(self):
+        """Initialize the position combo box."""
+        store = gtk.ListStore(str)
+        self._position_combo.set_model(store)
+        store.append((_("Above selection"),))
+        store.append((_("Below selection"),))
+        renderer = gtk.CellRendererText()
+        self._position_combo.pack_start(renderer, True)
+        self._position_combo.add_attribute(renderer, "text", 0)
+
     def _init_values(self):
         """Initialize default values for widgets."""
-
         self._amount_spin.set_value(1)
-        index = (0 if self.conf.above else 1)
+        index = (0 if gaupol.conf.subtitle_insert.above else 1)
         self._position_combo.set_active(index)
         page = self.application.get_current_page()
         sensitive = bool(page.project.subtitles)
@@ -54,21 +60,20 @@ class InsertDialog(gaupol.GladeDialog):
         self._position_label.set_sensitive(sensitive)
 
     def _insert_subtitles(self, amount, above):
-        """Insert amount of subtitles to project."""
-
-        index = 0
+        """Insert `amount` of subtitles to project."""
         page = self.application.get_current_page()
         if page.project.subtitles:
-            index = page.view.get_selected_rows()[0]
+            index = page.view.get_selected_rows()[-1]
             if not above: index += 1
+        else: # No subtitles in project.
+            index = 0
         indices = range(index, index + amount)
         page.project.insert_subtitles(indices)
 
     def _on_response(self, dialog, response):
-        """Save values and insert subtitles."""
-
+        """Save default values and insert subtitles."""
         amount = self._amount_spin.get_value_as_int()
         above = (self._position_combo.get_active() == 0)
-        self.conf.above = above
+        gaupol.conf.subtitle_insert.above = above
         if response == gtk.RESPONSE_OK:
             self._insert_subtitles(amount, above)

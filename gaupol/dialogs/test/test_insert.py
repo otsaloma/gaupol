@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -21,19 +21,22 @@ import gtk
 class TestInsertDialog(gaupol.TestCase):
 
     def run__dialog(self):
-
         self.dialog.run()
         self.dialog.destroy()
 
     def setup_method(self, method):
-
         self.application = self.new_application()
         page = self.application.get_current_page()
         page.view.select_rows((2,))
-        args = (self.application.window, self.application)
-        self.dialog = gaupol.InsertDialog(*args)
+        self.dialog = gaupol.InsertDialog(self.application.window,
+                                          self.application)
+
         self.dialog.show()
 
     def test__on_response(self):
+        self.dialog.response(gtk.RESPONSE_OK)
 
+    def test__on_response__no_subtitles(self):
+        page = self.application.get_current_page()
+        page.project.remove_subtitles(range(len(page.project.subtitles)))
         self.dialog.response(gtk.RESPONSE_OK)
