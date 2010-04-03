@@ -72,11 +72,11 @@ def get_font():
 
 def get_preview_command():
     """Return command to use for lauching video player."""
-    if gaupol.conf.preview.use_custom:
+    if gaupol.conf.preview.use_custom_command:
         return gaupol.conf.preview.custom_command
     if gaupol.conf.preview.force_utf_8:
-        return gaupol.conf.preview.video_player.command_utf_8
-    return gaupol.conf.preview.video_player.command
+        return gaupol.conf.preview.player.command_utf_8
+    return gaupol.conf.preview.player.command
 
 def get_text_view_size(text_view, font=""):
     """Return the width and height desired by `text_view`."""

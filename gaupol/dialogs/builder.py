@@ -17,7 +17,6 @@
 """Baseclass and wrapper for :class:`gtk.Builder` constructed dialogs."""
 
 import aeidon
-import gaupol
 import gtk
 import os
 
@@ -37,24 +36,30 @@ class BuilderDialog(object):
     to look and act like a :class:`gtk.Dialog`.
     """
 
-    _widgets = (NotImplementedError,)
+    _widgets = ()
 
     def __getattr__(self, name):
-        """Return attribute from either ``self`` or :attr:`self._dialog`."""
+        """Return attribute from :attr:`_dialog`."""
         return getattr(self._dialog, name)
 
-    def __init__(self, ui_file_path):
+    def __init__(self, ui_file_path, connect_signals=True):
         """Initialize a :class:`BuilderDialog` object from `ui_file_path`."""
         if not os.path.isabs(ui_file_path):
             ui_file_path = os.path.join(aeidon.DATA_DIR, "ui", ui_file_path)
         self._builder = gtk.Builder()
         self._builder.set_translation_domain("gaupol")
         self._builder.add_from_file(ui_file_path)
-        self._builder.connect_signals(self)
+        if connect_signals:
+            self._builder.connect_signals(self)
         self._dialog = self._builder.get_object("dialog")
+        self._set_attributes(self._widgets)
 
-        for name in self._widgets:
+    def _set_attributes(self, widgets, prefix=None):
+        """Assign all names in `widgets` as attributes of `self`."""
+        for name in widgets:
             widget = self._builder.get_object(name)
+            if (prefix is not None) and (name.startswith(prefix)):
+                name = name.replace(prefix, "")
             setattr(self, "_%s" % name, widget)
 
     def run(self):

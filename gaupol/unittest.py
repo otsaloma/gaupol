@@ -36,7 +36,6 @@ class TestCase(aeidon.TestCase):
         application = gaupol.Application()
         application.add_page(self.new_page())
         application.window.show()
-        TestCase.application = application
         return application
 
     def new_page(self):

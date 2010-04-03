@@ -48,13 +48,13 @@ class TestModule(gaupol.TestCase):
         assert gaupol.util.get_font() == ""
 
     def test_get_preview_command(self):
-        gaupol.conf.preview.use_custom = True
+        gaupol.conf.preview.use_custom_command = True
         gaupol.conf.preview.force_utf_8 = False
         gaupol.util.get_preview_command()
-        gaupol.conf.preview.use_custom = False
+        gaupol.conf.preview.use_custom_command = False
         gaupol.conf.preview.force_utf_8 = True
         gaupol.util.get_preview_command()
-        gaupol.conf.preview.use_custom = False
+        gaupol.conf.preview.use_custom_command = False
         gaupol.conf.preview.force_utf_8 = False
         gaupol.util.get_preview_command()
 

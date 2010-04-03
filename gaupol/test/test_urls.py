@@ -15,19 +15,19 @@
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
 import gaupol
-import urllib
+import urllib2
 
 
 class TestModule(gaupol.TestCase):
 
     def test_bug_report_url(self):
-        urllib.urlopen(gaupol.BUG_REPORT_URL)
+        urllib2.urlopen(gaupol.BUG_REPORT_URL, timeout=10)
 
     def test_homepage_url(self):
-        urllib.urlopen(gaupol.HOMEPAGE_URL)
+        urllib2.urlopen(gaupol.HOMEPAGE_URL, timeout=10)
 
     def test_regex_help_url(self):
-        urllib.urlopen(gaupol.REGEX_HELP_URL)
+        urllib2.urlopen(gaupol.REGEX_HELP_URL, timeout=10)
 
     def test_wiki_url(self):
-        urllib.urlopen(gaupol.WIKI_URL)
+        urllib2.urlopen(gaupol.WIKI_URL, timeout=10)

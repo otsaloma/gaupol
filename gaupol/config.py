@@ -145,9 +145,10 @@ config_defaults = {
         "custom_command": "",
         "force_utf_8": True,
         "offset": 5.0,
+        "player": (aeidon.players.VLC if sys.platform == "win32"
+                   else aeidon.players.MPLAYER),
+
         "use_custom_command": False,
-        "video_player": (aeidon.players.VLC if sys.platform == "win32"
-                         else aeidon.players.MPLAYER),
         },
     "search": {
         "fields": [gaupol.fields.MAIN_TEXT],
@@ -206,7 +207,7 @@ config_enums = {
         "target": gaupol.targets,
         },
     "preview": {
-        "video_player": aeidon.players,
+        "player": aeidon.players,
         },
     "search": {
         "fields": gaupol.fields,

@@ -348,7 +348,7 @@ class Test_ConfirmationPage(_Test_GladePage):
         self.page = _ConfirmationPage(gtk.Window())
         self.page.application = self.new_application()
         self.page.doc = aeidon.documents.MAIN
-        gaupol.conf.preview.use_custom = True
+        gaupol.conf.preview.use_custom_command = True
         gaupol.conf.preview.custom_command = "echo"
         page = self.page.application.get_current_page()
         page.project.video_path = self.new_subrip_file()

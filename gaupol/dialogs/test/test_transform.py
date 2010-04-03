@@ -31,7 +31,7 @@ class _TestPositionTransformDialog(gaupol.TestCase):
         self.application = self.new_application()
         page = self.application.get_current_page()
         page.view.select_rows((1, 2, 3))
-        gaupol.conf.preview.use_custom = True
+        gaupol.conf.preview.use_custom_command = True
         gaupol.conf.preview.custom_command = "echo"
         page.project.video_path = self.new_subrip_file()
 

@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,6 +16,7 @@
 
 """Dialog for editing preferences."""
 
+import aeidon
 import gaupol
 import gtk
 import pango
@@ -24,129 +25,109 @@ _ = aeidon.i18n._
 __all__ = ("PreferencesDialog",)
 
 
-class _EditorPage(aeidon.Delegate):
+class EditorPage(aeidon.Delegate, gaupol.BuilderDialog):
 
     """Editor preferences page."""
 
-    def __init__(self, master):
-        """Initialize a _EditorPage object."""
+    _widgets = ("editor_default_font_check",
+                "editor_font_button",
+                "editor_font_hbox",
+                "editor_length_cell_check",
+                "editor_length_combo",
+                "editor_length_edit_check",
+                "editor_length_hbox")
 
+    def __init__(self, master, application):
+        """Initialize an :class:`EditorPage` object."""
         aeidon.Delegate.__init__(self, master)
-        get_widget = self._glade_xml.get_widget
-        self._default_font_check = get_widget("editor_default_font_check")
-        self._font_button = get_widget("editor_font_button")
-        self._font_hbox = get_widget("editor_font_hbox")
-        self._length_cell_check = get_widget("editor_length_cell_check")
-        self._length_combo = get_widget("editor_length_combo")
-        self._length_edit_check = get_widget("editor_length_edit_check")
-        self._length_hbox = get_widget("editor_length_hbox")
-        self.conf = gaupol.conf.editor
-
+        self._set_attributes(self._widgets, "editor_")
+        self.application = application
         self._init_length_combo()
         self._init_values()
-        self._init_signal_handlers()
 
     def _get_custom_font(self):
         """Return custom font as string."""
-
         context = gtk.Label().get_pango_context()
         font_desc = context.get_font_description()
-        font = self.conf.custom_font
+        font = gaupol.conf.editor.custom_font
         custom_font_desc = pango.FontDescription(font)
         font_desc.merge(custom_font_desc, True)
         return font_desc.to_string()
 
     def _init_length_combo(self):
         """Initialize the line length combo box."""
-
-        store = self._length_combo.get_model()
+        store = gtk.ListStore(str)
         for label in (x.label for x in gaupol.length_units):
             store.append((label,))
-
-    def _init_signal_handlers(self):
-        """Initialize signal handlers."""
-
-        aeidon.util.connect(self, "_default_font_check", "toggled")
-        aeidon.util.connect(self, "_font_button", "font-set")
-        aeidon.util.connect(self, "_length_cell_check", "toggled")
-        aeidon.util.connect(self, "_length_combo", "changed")
-        aeidon.util.connect(self, "_length_edit_check", "toggled")
+        self._length_combo.set_model(store)
+        renderer = gtk.CellRendererText()
+        self._length_combo.pack_start(renderer, True)
+        self._length_combo.add_attribute(renderer, "text", 0)
 
     def _init_values(self):
         """Initialize default values for widgets."""
-
-        use_custom = self.conf.use_custom_font
+        use_custom = gaupol.conf.editor.use_custom_font
         self._default_font_check.set_active(not use_custom)
         self._font_hbox.set_sensitive(use_custom)
         self._font_button.set_font_name(self._get_custom_font())
-
-        cell = self.conf.show_lengths_cell
-        edit = self.conf.show_lengths_edit
-        self._length_hbox.set_sensitive(cell or edit)
-        self._length_cell_check.set_active(cell)
-        self._length_edit_check.set_active(edit)
-        self._length_combo.set_active(self.conf.length_unit)
+        show_cell = gaupol.conf.editor.show_lengths_cell
+        show_edit = gaupol.conf.editor.show_lengths_edit
+        self._length_hbox.set_sensitive(show_cell or show_edit)
+        self._length_cell_check.set_active(show_cell)
+        self._length_edit_check.set_active(show_edit)
+        self._length_combo.set_active(gaupol.conf.editor.length_unit)
 
     def _on_default_font_check_toggled(self, check_button):
-        """Save the default font usage."""
-
+        """Save default font usage."""
         use_custom = not check_button.get_active()
-        self.conf.use_custom_font = use_custom
+        gaupol.conf.editor.use_custom_font = use_custom
         self._font_hbox.set_sensitive(use_custom)
 
     def _on_font_button_font_set(self, font_button):
-        """Save the custom font."""
-
-        self.conf.custom_font = font_button.get_font_name()
+        """Save custom font."""
+        gaupol.conf.editor.custom_font = font_button.get_font_name()
 
     def _on_length_cell_check_toggled(self, check_button):
-        """Save the line length showage on cells."""
-
-        self.conf.show_lengths_cell = check_button.get_active()
-        cell = self.conf.show_lengths_cell
-        edit = self.conf.show_lengths_edit
-        self._length_hbox.set_sensitive(cell or edit)
+        """Save line length display on cells."""
+        gaupol.conf.editor.show_lengths_cell = check_button.get_active()
+        show_cell = gaupol.conf.editor.show_lengths_cell
+        show_edit = gaupol.conf.editor.show_lengths_edit
+        self._length_hbox.set_sensitive(show_cell or show_edit)
 
     def _on_length_combo_changed(self, combo_box):
-        """Save the line length unit."""
-
+        """Save line length unit."""
         index = combo_box.get_active()
-        self.conf.length_unit = gaupol.length_units[index]
+        gaupol.conf.editor.length_unit = gaupol.length_units[index]
 
     def _on_length_edit_check_toggled(self, check_button):
-        """Save the line length showage on text views."""
+        """Save line length display on text views."""
+        gaupol.conf.editor.show_lengths_edit = check_button.get_active()
+        show_cell = gaupol.conf.editor.show_lengths_cell
+        show_edit = gaupol.conf.editor.show_lengths_edit
+        self._length_hbox.set_sensitive(show_cell or show_edit)
 
-        self.conf.show_lengths_edit = check_button.get_active()
-        cell = self.conf.show_lengths_cell
-        edit = self.conf.show_lengths_edit
-        self._length_hbox.set_sensitive(cell or edit)
 
-
-class _ExtensionPage(aeidon.Delegate):
+class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
 
     """Extension activation and preferences page."""
 
+    _widgets = ("extensions_about_button",
+                "extensions_help_button",
+                "extensions_preferences_button",
+                "extensions_tree_view")
+
     def __init__(self, master, application):
-        """Initialize an _ExtensionPage object."""
-
+        """Initialize an :class:`ExtensionPage` object."""
         aeidon.Delegate.__init__(self, master)
-        get_widget = self._glade_xml.get_widget
-        self._about_button = get_widget("extensions_about_button")
-        self._help_button = get_widget("extensions_help_button")
-        self._preferences_button = get_widget("extensions_preferences_button")
-        self._tree_view = get_widget("extensions_tree_view")
+        self._set_attributes(self._widgets, "extensions_")
         self.application = application
-        self.conf = gaupol.conf.extensions
         self.manager = self.application.extension_manager
-
         self._init_tree_view()
         self._init_values()
         self._init_sensitivities()
-        self._init_signal_handlers()
 
     def _get_selected_module(self):
-        """Return the selected module in the tree view or None."""
-
+        """Return the selected module in the tree view or ``None``."""
         selection = self._tree_view.get_selection()
         store, itr = selection.get_selected()
         if itr is None: return None
@@ -154,36 +135,23 @@ class _ExtensionPage(aeidon.Delegate):
 
     def _init_sensitivities(self):
         """Initialize button sensitivities."""
-
         self._about_button.set_sensitive(False)
         self._help_button.set_sensitive(False)
         self._preferences_button.set_sensitive(False)
 
-    def _init_signal_handlers(self):
-        """Initialize signal handlers."""
-
-        aeidon.util.connect(self, "_about_button", "clicked")
-        aeidon.util.connect(self, "_help_button", "clicked")
-        aeidon.util.connect(self, "_preferences_button", "clicked")
-
     def _init_tree_view(self):
         """Initialize the tree view."""
-
         store = gtk.ListStore(str, bool, str)
         self._tree_view.set_model(store)
         selection = self._tree_view.get_selection()
         selection.set_mode(gtk.SELECTION_SINGLE)
-        callback = self._on_tree_view_selection_changed
-        selection.connect("changed", callback)
-
+        selection.connect("changed", self._on_tree_view_selection_changed)
         renderer = gtk.CellRendererToggle()
         renderer.props.activatable = True
         renderer.props.xpad = 6
-        callback = self._on_tree_view_cell_toggled
-        renderer.connect("toggled", callback)
+        renderer.connect("toggled", self._on_tree_view_cell_toggled)
         column = gtk.TreeViewColumn("", renderer, active=1)
         self._tree_view.append_column(column)
-
         renderer = gtk.CellRendererText()
         renderer.props.ellipsize = pango.ELLIPSIZE_END
         column = gtk.TreeViewColumn("", renderer, markup=2)
@@ -191,15 +159,14 @@ class _ExtensionPage(aeidon.Delegate):
 
     def _init_values(self):
         """Initialize default values for widgets."""
-
         store = self._tree_view.get_model()
         extensions = []
         for module in self.manager.get_modules():
             metadata = self.manager.get_metadata(module)
             if metadata.get_field_boolean("Hidden", False): continue
-            name = metadata.get_name()
-            description = metadata.get_description()
-            markup = "<b>%s</b>\n%s" % (name, description)
+            markup = "<b>%s</b>\n%s" % (metadata.get_name(),
+                                        metadata.get_description())
+
             extensions.append((module, markup))
         extensions.sort(key=lambda x: x[1])
         for module, markup in extensions:
@@ -207,8 +174,7 @@ class _ExtensionPage(aeidon.Delegate):
             store.append((module, active, markup))
 
     def _on_about_button_clicked(self, *args):
-        """Show an automatically constructed about dialog."""
-
+        """Construct and show a :class:`gtk.AboutDialog` for extension."""
         module = self._get_selected_module()
         metadata = self.manager.get_metadata(module)
         dialog = gtk.AboutDialog()
@@ -216,7 +182,7 @@ class _ExtensionPage(aeidon.Delegate):
         gtk.about_dialog_set_url_hook(self._on_about_dialog_url_clicked)
         dialog.set_program_name(metadata.get_name())
         dialog.set_comments(metadata.get_description())
-        dialog.set_logo_icon_name("aeidon")
+        dialog.set_logo_icon_name("gaupol")
         if metadata.has_field("Version"):
             dialog.set_version(metadata.get_field("Version"))
         if metadata.has_field("Copyright"):
@@ -232,24 +198,20 @@ class _ExtensionPage(aeidon.Delegate):
 
     def _on_about_dialog_url_clicked(self, dialog, url):
         """Open website in a web browser."""
-
         gaupol.util.show_uri(url)
 
     def _on_help_button_clicked(self, *args):
-        """Show whatever form documentation the extension has."""
-
+        """Show extension's own documentation."""
         module = self._get_selected_module()
         self.manager.show_help(module)
 
     def _on_preferences_button_clicked(self, *args):
-        """Show the extension's preferences dialog."""
-
+        """Show extension's preferences dialog."""
         module = self._get_selected_module()
         self.manager.show_preferences_dialog(module, self._dialog)
 
     def _on_tree_view_cell_toggled(self, renderer, path):
-        """Toggle the check button value."""
-
+        """Activate or deactivate toggled extension."""
         store = self._tree_view.get_model()
         module = store[path][0]
         active = store[path][1]
@@ -262,7 +224,8 @@ class _ExtensionPage(aeidon.Delegate):
                 dialog = gaupol.ErrorDialog(self._dialog, title, message)
                 dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
                 gaupol.util.flash_dialog(dialog)
-            else: self.conf.active.remove(module)
+            else: # Deactivation successful.
+                self.conf.active.remove(module)
         else: # Activating extension.
             self.manager.setup_extension(module)
             self.conf.active.append(module)
@@ -272,73 +235,55 @@ class _ExtensionPage(aeidon.Delegate):
         selection.emit("changed")
 
     def _on_tree_view_selection_changed(self, *args):
-        """Set the sensitivities of the buttons."""
-
+        """Set sensitivities of buttons."""
         module = self._get_selected_module()
         have_selection = self._get_selected_module() is not None
         self._about_button.set_sensitive(have_selection)
-        sensitive = have_selection and (module in self.conf.active)
         if module in self.conf.active:
-            sensitive = self.manager.has_help(module)
-            self._help_button.set_sensitive(sensitive)
-            sensitive = self.manager.has_preferences_dialog(module)
-            self._preferences_button.set_sensitive(sensitive)
+            has_help = self.manager.has_help(module)
+            self._help_button.set_sensitive(has_help)
+            has_preferences = self.manager.has_preferences_dialog(module)
+            self._preferences_button.set_sensitive(has_preferences)
         else: # Cannot query unimported extensions.
             self._help_button.set_sensitive(False)
             self._preferences_button.set_sensitive(False)
 
 
-class _FilePage(aeidon.Delegate):
+class FilePage(aeidon.Delegate, gaupol.BuilderDialog):
 
     """File preferences page."""
 
     __metaclass__ = aeidon.Contractual
 
-    def __init__(self, master):
-        """Initialize a _FilePage object."""
+    _widgets = ("file_add_button",
+                "file_auto_check",
+                "file_down_button",
+                "file_tree_view",
+                "file_locale_check",
+                "file_remove_button",
+                "file_up_button")
 
+    def __init__(self, master, application):
+        """Initialize a :class:`FilePage` object."""
         aeidon.Delegate.__init__(self, master)
-        get_widget = self._glade_xml.get_widget
-        self._add_button = get_widget("file_add_button")
-        self._auto_check = get_widget("file_auto_check")
-        self._down_button = get_widget("file_down_button")
-        self._tree_view = get_widget("file_tree_view")
-        self._locale_check = get_widget("file_locale_check")
-        self._remove_button = get_widget("file_remove_button")
-        self._up_button = get_widget("file_up_button")
-        self.conf = gaupol.conf.encoding
-
+        self._set_attributes(self._widgets, "file_")
+        self.application = application
         self._init_tree_view()
         self._init_values()
-        self._init_signal_handlers()
 
     def _get_selected_row(self):
-        """Return the selected row in the tree view or None."""
-
+        """Return the selected row in the tree view or ``None``."""
         selection = self._tree_view.get_selection()
         store, itr = selection.get_selected()
         if itr is None: return None
         return store.get_path(itr)[0]
 
-    def _init_signal_handlers(self):
-        """Initialize signal handlers."""
-
-        aeidon.util.connect(self, "_add_button", "clicked")
-        aeidon.util.connect(self, "_auto_check", "toggled")
-        aeidon.util.connect(self, "_down_button", "clicked")
-        aeidon.util.connect(self, "_locale_check", "toggled")
-        aeidon.util.connect(self, "_remove_button", "clicked")
-        aeidon.util.connect(self, "_up_button", "clicked")
-
-        update = lambda x, self: self._set_sensitivities()
-        selection = self._tree_view.get_selection()
-        selection.connect("changed", update, self)
-
     def _init_tree_view(self):
-        """Initialize the tree view."""
-
+        """Initialize the fallback encoding tree view."""
         selection = self._tree_view.get_selection()
         selection.set_mode(gtk.SELECTION_SINGLE)
+        update = lambda x, self: self._set_sensitivities()
+        selection.connect("changed", update, self)
         store = gtk.ListStore(str)
         self._tree_view.set_model(store)
         renderer = gtk.CellRendererText()
@@ -347,23 +292,21 @@ class _FilePage(aeidon.Delegate):
 
     def _init_values(self):
         """Initialize default values for widgets."""
-
-        self._auto_check.set_active(self.conf.try_auto)
+        self._auto_check.set_active(gaupol.conf.encoding.try_auto)
         self._auto_check.set_sensitive(aeidon.util.chardet_available())
-        self._locale_check.set_active(self.conf.try_locale)
+        self._locale_check.set_active(gaupol.conf.encoding.try_locale)
         self._reload_tree_view()
 
     def _on_add_button_clicked(self, *args):
         """Add a new fallback encoding."""
-
         dialog = gaupol.EncodingDialog(self._dialog)
         response = gaupol.util.run_dialog(dialog)
         encoding = dialog.get_encoding()
         dialog.destroy()
         if response != gtk.RESPONSE_OK: return
         if encoding is None: return
-        if encoding in self.conf.fallbacks: return
-        self.conf.fallbacks.append(encoding)
+        if encoding in gaupol.conf.encoding.fallback: return
+        gaupol.conf.encoding.fallback.append(encoding)
         self._reload_tree_view()
         self._tree_view.grab_focus()
         store = self._tree_view.get_model()
@@ -373,9 +316,8 @@ class _FilePage(aeidon.Delegate):
         assert aeidon.util.chardet_available()
 
     def _on_auto_check_toggled(self, check_button):
-        """Save the encoding auto-detection usage."""
-
-        self.conf.try_auto = check_button.get_active()
+        """Save encoding auto-detection usage."""
+        gaupol.conf.encoding.try_auto = check_button.get_active()
 
     def _on_down_button_clicked_require(self, *args):
         row = self._get_selected_row()
@@ -384,27 +326,24 @@ class _FilePage(aeidon.Delegate):
 
     def _on_down_button_clicked(self, *args):
         """Move the selected fallback encoding down."""
-
         row = self._get_selected_row()
-        encodings = self.conf.fallbacks
+        encodings = gaupol.conf.encoding.fallback
         encodings.insert(row + 1, encodings.pop(row))
         self._reload_tree_view()
         self._tree_view.grab_focus()
         self._tree_view.set_cursor(row + 1)
 
     def _on_locale_check_toggled(self, check_button):
-        """Save the locale encoding usage."""
-
-        self.conf.try_locale = check_button.get_active()
+        """Save locale encoding usage."""
+        gaupol.conf.encoding.try_locale = check_button.get_active()
 
     def _on_remove_button_clicked_require(self, *args):
         self._get_selected_row() is not None
 
     def _on_remove_button_clicked(self, *args):
-        """Remove the selected encoding."""
-
+        """Remove the selected fallback encoding."""
         row = self._get_selected_row()
-        self.conf.fallbacks.pop(row)
+        gaupol.conf.encoding.fallback.pop(row)
         self._reload_tree_view()
         self._tree_view.grab_focus()
         store = self._tree_view.get_model()
@@ -415,27 +354,24 @@ class _FilePage(aeidon.Delegate):
         self._get_selected_row() > 0
 
     def _on_up_button_clicked(self, *args):
-        """Move the selected encoding up."""
-
+        """Move the selected fallback encoding up."""
         row = self._get_selected_row()
-        encodings = self.conf.fallbacks
+        encodings = gaupol.conf.encoding.fallback
         encodings.insert(row - 1, encodings.pop(row))
         self._reload_tree_view()
         self._tree_view.grab_focus()
         self._tree_view.set_cursor(row - 1)
 
     def _reload_tree_view(self):
-        """Reload the tree view."""
-
+        """Reload the fallback encoding tree view."""
         store = self._tree_view.get_model()
         store.clear()
-        for encoding in self.conf.fallbacks:
+        for encoding in gaupol.conf.encoding.fallback:
             store.append((aeidon.encodings.code_to_long_name(encoding),))
         self._set_sensitivities()
 
     def _set_sensitivities(self):
-        """Set the tree view button sensitivities."""
-
+        """Set the fallback tree view button sensitivities."""
         store = self._tree_view.get_model()
         row = self._get_selected_row()
         self._remove_button.set_sensitive(row >= 0)
@@ -443,102 +379,102 @@ class _FilePage(aeidon.Delegate):
         self._down_button.set_sensitive(0 <= row < len(store) - 1)
 
 
-class _PreviewPage(aeidon.Delegate):
+class PreviewPage(aeidon.Delegate, gaupol.BuilderDialog):
 
     """Preview preferences page."""
 
-    def __init__(self, master):
-        """Initialize a _PreviewPage object."""
+    _widgets = ("preview_app_combo",
+                "preview_command_entry",
+                "preview_force_utf_8_check",
+                "preview_offset_spin")
 
+    def __init__(self, master, application):
+        """Initialize a :class:`PreviewPage` object."""
         aeidon.Delegate.__init__(self, master)
-        get_widget = self._glade_xml.get_widget
-        self._app_combo = get_widget("preview_app_combo")
-        self._command_entry = get_widget("preview_command_entry")
-        self._force_utf_8_check = get_widget("preview_force_utf_8_check")
-        self._offset_spin = get_widget("preview_offset_spin")
-        self.conf = gaupol.conf.preview
-
+        self._set_attributes(self._widgets, "preview_")
+        self.application = application
         self._init_app_combo()
         self._init_values()
-        self._init_signal_handlers()
 
     def _init_app_combo(self):
         """Initialize the application combo box."""
-
-        store = self._app_combo.get_model()
+        store = gtk.ListStore(str)
+        self._app_combo.set_model(store)
         for label in (x.label for x in aeidon.players):
             store.append((label,))
         store.append((gaupol.COMBO_SEPARATOR,))
         store.append((_("Custom"),))
-        function = gaupol.util.separate_combo
-        self._app_combo.set_row_separator_func(function)
-
-    def _init_signal_handlers(self):
-        """Initialize signal handlers."""
-
-        aeidon.util.connect(self, "_app_combo", "changed")
-        aeidon.util.connect(self, "_command_entry", "changed")
-        aeidon.util.connect(self, "_force_utf_8_check", "toggled")
-        aeidon.util.connect(self, "_offset_spin", "value-changed")
+        renderer = gtk.CellRendererText()
+        self._app_combo.pack_start(renderer, True)
+        self._app_combo.add_attribute(renderer, "text", 0)
+        self._app_combo.set_row_separator_func(gaupol.util.separate_combo)
 
     def _init_values(self):
         """Initialize default values for widgets."""
+        store = self._app_combo.get_model()
+        self._app_combo.set_active((len(store) - 1 if
+                                    gaupol.conf.preview.use_custom_command else
+                                    gaupol.conf.preview.player))
 
-        if not self.conf.use_custom:
-            player = self.conf.video_player
-            self._app_combo.set_active(player)
-        else: # Use custom command.
-            store = self._app_combo.get_model()
-            self._app_combo.set_active(len(store) - 1)
-        command = gaupol.util.get_preview_command()
-        self._command_entry.set_text(command)
-        self._command_entry.set_editable(self.conf.use_custom)
-        self._force_utf_8_check.set_active(self.conf.force_utf_8)
-        self._offset_spin.set_value(self.conf.offset)
+        self._command_entry.set_text(gaupol.util.get_preview_command())
+        editable = gaupol.conf.preview.use_custom_command
+        self._command_entry.set_editable(editable)
+        self._force_utf_8_check.set_active(gaupol.conf.preview.force_utf_8)
+        self._offset_spin.set_value(gaupol.conf.preview.offset)
 
     def _on_app_combo_changed(self, combo_box):
-        """Save the video player and show it's command."""
-
+        """Save video player and show it's command."""
         index = combo_box.get_active()
-        self.conf.use_custom = not (index in aeidon.players)
-        if index in aeidon.players:
-            player = aeidon.players[index]
-            self.conf.video_player = player
-        command = gaupol.util.get_preview_command()
-        self._command_entry.set_text(command)
-        self._command_entry.set_editable(self.conf.use_custom)
+        use_custom = not index in aeidon.players
+        gaupol.conf.preview.use_custom_command = use_custom
+        if not use_custom:
+            gaupol.conf.preview.player = aeidon.players[index]
+        self._command_entry.set_text(gaupol.util.get_preview_command())
+        editable = gaupol.conf.preview.use_custom_command
+        self._command_entry.set_editable(editable)
 
     def _on_command_entry_changed(self, entry):
-        """Save the custom command."""
-
-        if not self.conf.use_custom: return
-        self.conf.custom_command = entry.get_text()
+        """Save custom command."""
+        if not gaupol.conf.preview.use_custom_command: return
+        gaupol.conf.preview.custom_command = entry.get_text()
 
     def _on_force_utf_8_check_toggled(self, check_button):
         """Save forced UTF-8 preview setting."""
-
-        self.conf.force_utf_8 = check_button.get_active()
-        command = gaupol.util.get_preview_command()
-        self._command_entry.set_text(command)
+        gaupol.conf.preview.force_utf_8 = check_button.get_active()
+        self._command_entry.set_text(gaupol.util.get_preview_command())
 
     def _on_offset_spin_value_changed(self, spin_button):
-        """Save the start position offset."""
+        """Save start position offset."""
+        gaupol.conf.preview.offset = spin_button.get_value()
 
-        self.conf.offset = spin_button.get_value()
 
-
-class PreferencesDialog(gaupol.GladeDialog):
+class PreferencesDialog(gaupol.BuilderDialog):
 
     """Dialog for editing preferences."""
 
     def __init__(self, parent, application):
-        """Initialize a PreferencesDialog object."""
+        """Initialize a :class:`PreferencesDialog` object."""
+        gaupol.BuilderDialog.__init__(self,
+                                      "preferences-dialog.ui",
+                                      connect_signals=False)
 
-        gaupol.GladeDialog.__init__(self, "preferences.glade")
-        self._editor_page = _EditorPage(self)
-        self._extension_page = _ExtensionPage(self, application)
-        self._file_page = _FilePage(self)
-        self._preview_page = _PreviewPage(self)
-
+        self._editor_page = EditorPage(self, application)
+        self._extension_page = ExtensionPage(self, application)
+        self._file_page = FilePage(self, application)
+        self._preview_page = PreviewPage(self, application)
+        self._builder.connect_signals(self._get_callbacks())
         self.set_transient_for(parent)
         self.set_default_response(gtk.RESPONSE_CLOSE)
+
+
+    def _get_callbacks(self):
+        """Return a dictionary mapping names to callback methods."""
+        callbacks = {}
+        for page in (self._editor_page,
+                     self._extension_page,
+                     self._file_page,
+                     self._preview_page):
+
+            for name in filter(lambda x: x.startswith("_on_"), dir(page)):
+                callbacks[name] = getattr(page, name)
+        return callbacks

@@ -16,10 +16,8 @@ Gaupol 0.16
       - try ... except Exception as exc
       - property(...) -> @property, @x.setter, @x.deleter
       - Use collections.namedtuple for all return values
-      - urllib.urlopen(url, timeout=10)?
  [ ] Bump PyGObject dependency to 2.16
       - Try gobject.option.OptionParser (see #378704)
-      - Try gio.AppInfo for launching web browser and video player
       - gobject.set_application_name
       - gobject.set_prgname
  [ ] Bump PyGTK dependency to 2.16 or 2.18
@@ -46,6 +44,10 @@ Gaupol 0.16
      fails
  [?] http://gmane.org/
  [ ] Update extension documentation
+ [ ] Fix possibly broken BOM-handling caused by moving from
+     codecs.open to open + decode and add some fucking tests
+ [ ] Rethink when and if at all to raise ParseErrors
+ [ ] Fix remaining open bugs
 
 Gaupol 0.17
 ===========
