@@ -83,6 +83,7 @@ from gaupol.dialogs.message import *
 from gaupol.dialogs.multiclose import *
 from gaupol.dialogs.preferences import *
 from gaupol.dialogs.previewerr import *
+from gaupol.dialogs.search import *
 from gaupol.dialogs.split import *
 from gaupol.dialogs.textedit import *
 from gaupol.action import *
