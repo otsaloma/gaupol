@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2009 Osmo Salomaa
+# Copyright (C) 2005-2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -28,26 +28,22 @@ class EditAgent(aeidon.Delegate):
     __metaclass__ = aeidon.Contractual
 
     def __init__(self, master):
-        """Initialize an EditAgent object."""
-
+        """Initialize an :class:`EditAgent` object."""
         aeidon.Delegate.__init__(self, master)
         self._pref_dialog = None
 
     def _on_pref_dialog_response(self, *args):
         """Destroy the preferences dialog."""
-
         self._pref_dialog.destroy()
         self._pref_dialog = None
 
-    def _set_sensitivities(self, sensitive):
+    def _set_unsafe_sensitivities(self, sensitive):
         """Set sensitivities of unsafe UI manager actions."""
-
         action_group = self.get_action_group("main-unsafe")
         action_group.set_sensitive(sensitive)
 
     def _sync_clipboards(self, page):
-        """Synchronize all clipboards to match that of page."""
-
+        """Synchronize all clipboards to match that of `page`."""
         texts = page.project.clipboard.get_texts()
         self.clipboard.set_texts(texts)
         for item in self.pages:
@@ -59,7 +55,6 @@ class EditAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_clear_texts_activate(self, *args):
         """Clear the selected texts."""
-
         page = self.get_current_page()
         rows = page.view.get_selected_rows()
         col = page.view.get_focus()[1]
@@ -69,7 +64,6 @@ class EditAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_copy_texts_activate(self, *args):
         """Copy the selected texts to the clipboard."""
-
         page = self.get_current_page()
         rows = page.view.get_selected_rows()
         col = page.view.get_focus()[1]
@@ -80,7 +74,6 @@ class EditAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_cut_texts_activate(self, *args):
         """Cut the selected texts to the clipboard."""
-
         page = self.get_current_page()
         rows = page.view.get_selected_rows()
         col = page.view.get_focus()[1]
@@ -91,22 +84,19 @@ class EditAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_edit_headers_activate(self, *args):
         """Edit file headers."""
-
         dialog = gaupol.HeaderDialog(self.window, self)
         gaupol.util.flash_dialog(dialog)
 
     @aeidon.deco.export
     def _on_edit_next_value_activate(self, *args):
         """Edit the focused column of the next subtitle."""
-
-        view = self.get_current_page().view
-        path, column = view.get_cursor()
-        view.set_cursor((path[0] + 1,), column, True)
+        page = self.get_current_page()
+        path, column = page.view.get_cursor()
+        page.view.set_cursor((path[0] + 1,), column, True)
 
     @aeidon.deco.export
     def _on_edit_preferences_activate(self, *args):
         """Configure Gaupol."""
-
         if self._pref_dialog is not None:
             return self._pref_dialog.present()
         self._pref_dialog = gaupol.PreferencesDialog(self.window, self)
@@ -116,15 +106,13 @@ class EditAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_edit_value_activate(self, *args):
         """Edit the focused cell."""
-
-        view = self.get_current_page().view
-        row, column = view.get_cursor()
-        view.set_cursor(row, column, True)
+        page = self.get_current_page()
+        row, column = page.view.get_cursor()
+        page.view.set_cursor(row, column, True)
 
     @aeidon.deco.export
     def _on_extend_selection_to_beginning_activate(self, *args):
         """Extend the selection up to the first subtitle."""
-
         page = self.get_current_page()
         row = page.view.get_selected_rows()[-1]
         rows = range(0, row + 1)
@@ -133,7 +121,6 @@ class EditAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_extend_selection_to_end_activate(self, *args):
         """Extend the selection up to the last subtitle."""
-
         page = self.get_current_page()
         row = page.view.get_selected_rows()[0]
         rows = range(row, len(page.project.subtitles))
@@ -142,14 +129,12 @@ class EditAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_insert_subtitles_activate(self, *args):
         """Insert subtitles."""
-
         dialog = gaupol.InsertDialog(self.window, self)
         gaupol.util.flash_dialog(dialog)
 
     @aeidon.deco.export
     def _on_invert_selection_activate(self, *args):
         """Invert the current selection."""
-
         page = self.get_current_page()
         rows = set(range(0, len(page.project.subtitles)))
         rows -= set(page.view.get_selected_rows())
@@ -158,7 +143,6 @@ class EditAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_merge_subtitles_activate(self, *args):
         """Merge the selected subtitles."""
-
         page = self.get_current_page()
         rows = page.view.get_selected_rows()
         page.project.merge_subtitles(rows)
@@ -166,7 +150,6 @@ class EditAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_paste_texts_activate(self, *args):
         """Paste texts from the clipboard."""
-
         page = self.get_current_page()
         rows = page.view.get_selected_rows()
         col = page.view.get_focus()[1]
@@ -175,24 +158,21 @@ class EditAgent(aeidon.Delegate):
         rows = page.project.paste_texts(rows[0], doc)
         count = len(page.project.subtitles) - length
         if count <= 0: return
-        message = aeidon.i18n.ngettext(
-            "Inserted %d subtitle to fit clipboard contents",
-            "Inserted %d subtitles to fit clipboard contents",
-            count) % count
-        self.flash_message(message)
+        self.flash_message(aeidon.i18n.ngettext(
+                "Inserted %d subtitle to fit clipboard contents",
+                "Inserted %d subtitles to fit clipboard contents",
+                count) % count)
 
     @aeidon.deco.export
     def _on_project_action_done(self, *args):
-        """Update GUI after doing action."""
-
+        """Update user interface and send a signal."""
         page = self.get_current_page()
         self.update_gui()
         self.emit("page-changed", page)
 
     @aeidon.deco.export
     def _on_project_action_redone(self, *args):
-        """Update GUI after redoing action."""
-
+        """Update user interface and send a signal."""
         page = self.get_current_page()
         row = page.view.get_focus()[0]
         if row is not None:
@@ -202,8 +182,7 @@ class EditAgent(aeidon.Delegate):
 
     @aeidon.deco.export
     def _on_project_action_undone(self, *args):
-        """Update GUI after undoing action."""
-
+        """Update user interface and send a signal."""
         page = self.get_current_page()
         row = page.view.get_focus()[0]
         if row is not None:
@@ -214,13 +193,11 @@ class EditAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_redo_action_activate(self, *args):
         """Redo the last undone action."""
-
         self.redo()
 
     @aeidon.deco.export
     def _on_remove_subtitles_activate(self, *args):
         """Remove the selected subtitles."""
-
         page = self.get_current_page()
         rows = page.view.get_selected_rows()
         page.project.remove_subtitles(rows)
@@ -228,7 +205,6 @@ class EditAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_select_all_activate(self, *args):
         """Select all subtitles."""
-
         page = self.get_current_page()
         selection = page.view.get_selection()
         selection.select_all()
@@ -236,7 +212,6 @@ class EditAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_split_subtitle_activate(self, *args):
         """Split the selected subtitle."""
-
         page = self.get_current_page()
         row = page.view.get_selected_rows()[0]
         page.project.split_subtitle(row)
@@ -244,14 +219,12 @@ class EditAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_undo_action_activate(self, *args):
         """Undo the last action."""
-
         self.undo()
 
     @aeidon.deco.export
     def _on_view_renderer_edited(self, renderer, path, value, column):
         """Save changes made while editing cell."""
-
-        self._set_sensitivities(True)
+        self._set_unsafe_sensitivities(True)
         self.push_message(None)
         page = self.get_current_page()
         row = int(path)
@@ -267,6 +240,7 @@ class EditAgent(aeidon.Delegate):
             return page.project.set_end(row, value)
         if col ==  page.view.columns.DURATION:
             if page.edit_mode == aeidon.modes.TIME:
+                # pylint: disable-msg=E1103
                 value = value.replace(",", ".")
                 try: value = float(value)
                 except ValueError: return
@@ -277,20 +251,22 @@ class EditAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_view_renderer_editing_canceled(self, *args):
         """Unset state set for editing cell."""
-
-        self._set_sensitivities(True)
+        self._set_unsafe_sensitivities(True)
         self.push_message(None)
 
     @aeidon.deco.export
-    def _on_view_renderer_editing_started(self, renderer, editor, path, column):
-        """Set proper state for editing cell."""
+    def _on_view_renderer_editing_started(self,
+                                          renderer,
+                                          editor,
+                                          path,
+                                          column):
 
-        self._set_sensitivities(False)
+        """Set proper state for editing cell."""
+        self._set_unsafe_sensitivities(False)
         page = self.get_current_page()
         col = page.view.get_columns().index(column)
         if not page.view.is_text_column(col): return
-        message = _("Use Shift+Return for line-break")
-        self.push_message(message)
+        self.push_message(_("Use Shift+Return for line-break"))
 
     def redo_require(self, count=1):
         page = self.get_current_page()
@@ -298,8 +274,7 @@ class EditAgent(aeidon.Delegate):
 
     @aeidon.deco.export
     def redo(self, count=1):
-        """Redo actions."""
-
+        """Redo `count` amount of actions."""
         gaupol.util.set_cursor_busy(self.window)
         page = self.get_current_page()
         page.project.redo(count)
@@ -311,8 +286,7 @@ class EditAgent(aeidon.Delegate):
 
     @aeidon.deco.export
     def undo(self, count=1):
-        """Undo actions."""
-
+        """Undo `count` amount of actions."""
         gaupol.util.set_cursor_busy(self.window)
         page = self.get_current_page()
         page.project.undo(count)

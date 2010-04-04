@@ -37,6 +37,7 @@ class ShowCaseMenuAction(gaupol.MenuAction):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.view.get_selected_rows())
         col = page.view.get_focus()[1]
+        aeidon.util.affirm(col is not None)
         aeidon.util.affirm(page.view.is_text_column(col))
 
 
@@ -59,6 +60,7 @@ class ToggleDialogDashesAction(gaupol.Action):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.view.get_selected_rows())
         col = page.view.get_focus()[1]
+        aeidon.util.affirm(col is not None)
         aeidon.util.affirm(page.view.is_text_column(col))
 
 
@@ -80,6 +82,7 @@ class ToggleItalicizationAction(gaupol.Action):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.view.get_selected_rows())
         col = page.view.get_focus()[1]
+        aeidon.util.affirm(col is not None)
         aeidon.util.affirm(page.view.is_text_column(col))
         doc = page.text_column_to_document(col)
         markup = page.project.get_markup(doc)
@@ -103,6 +106,7 @@ class UseLowerCaseAction(gaupol.Action):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.view.get_selected_rows())
         col = page.view.get_focus()[1]
+        aeidon.util.affirm(col is not None)
         aeidon.util.affirm(page.view.is_text_column(col))
 
 
@@ -122,6 +126,7 @@ class UseSentenceCaseAction(gaupol.Action):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.view.get_selected_rows())
         col = page.view.get_focus()[1]
+        aeidon.util.affirm(col is not None)
         aeidon.util.affirm(page.view.is_text_column(col))
 
 
@@ -141,6 +146,7 @@ class UseTitleCaseAction(gaupol.Action):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.view.get_selected_rows())
         col = page.view.get_focus()[1]
+        aeidon.util.affirm(col is not None)
         aeidon.util.affirm(page.view.is_text_column(col))
 
 
@@ -160,6 +166,7 @@ class UseUpperCaseAction(gaupol.Action):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.view.get_selected_rows())
         col = page.view.get_focus()[1]
+        aeidon.util.affirm(col is not None)
         aeidon.util.affirm(page.view.is_text_column(col))
 
 

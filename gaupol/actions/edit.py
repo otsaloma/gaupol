@@ -40,6 +40,7 @@ class ClearTextsAction(gaupol.Action):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.view.get_selected_rows())
         col = page.view.get_focus()[1]
+        aeidon.util.affirm(col is not None)
         aeidon.util.affirm(page.view.is_text_column(col))
 
 
@@ -61,6 +62,7 @@ class CopyTextsAction(gaupol.Action):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.view.get_selected_rows())
         col = page.view.get_focus()[1]
+        aeidon.util.affirm(col is not None)
         aeidon.util.affirm(page.view.is_text_column(col))
 
 
@@ -82,6 +84,7 @@ class CutTextsAction(gaupol.Action):
         aeidon.util.affirm(page is not None)
         aeidon.util.affirm(page.view.get_selected_rows())
         col = page.view.get_focus()[1]
+        aeidon.util.affirm(col is not None)
         aeidon.util.affirm(page.view.is_text_column(col))
 
 
@@ -270,6 +273,7 @@ class PasteTextsAction(gaupol.Action):
         aeidon.util.affirm(not application.clipboard.is_empty())
         aeidon.util.affirm(page.view.get_selected_rows())
         col = page.view.get_focus()[1]
+        aeidon.util.affirm(col is not None)
         aeidon.util.affirm(page.view.is_text_column(col))
 
 
