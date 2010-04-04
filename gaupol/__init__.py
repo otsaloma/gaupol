@@ -76,6 +76,7 @@ from gaupol.dialogs.append import *
 from gaupol.dialogs.about import *
 from gaupol.dialogs.debug import *
 from gaupol.dialogs.encoding import *
+from gaupol.dialogs.framerate import *
 from gaupol.dialogs.header import *
 from gaupol.dialogs.insert import *
 from gaupol.dialogs.language import *
