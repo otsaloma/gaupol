@@ -117,7 +117,7 @@
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="receives_default">False</property>
-                <property name="image">image1</property>
+                <property name="image">insert_button_image</property>
                 <property name="use_underline">True</property>
               </object>
               <packing>
@@ -140,7 +140,7 @@
       <action-widget response="-5">button2</action-widget>
     </action-widgets>
   </object>
-  <object class="GtkImage" id="image1">
+  <object class="GtkImage" id="insert_button_image">
     <property name="visible">True</property>
     <property name="stock">gtk-add</property>
   </object>
