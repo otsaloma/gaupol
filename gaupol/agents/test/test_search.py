@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -21,22 +21,18 @@ import gtk
 class TestSearchAgent(gaupol.TestCase):
 
     def setup_method(self, method):
-
         self.application = self.new_application()
-        self.delegate = self.application.on_find_next_activate.im_self
+        self.delegate = self.application._on_find_next_activate.im_self
 
     def test__on_search_dialog_response(self):
-
         self.application.get_action("find_and_replace").activate()
         self.delegate._search_dialog.response(gtk.RESPONSE_CLOSE)
 
     def test_on_find_and_replace_activate(self):
-
         self.application.get_action("find_and_replace").activate()
         self.application.get_action("find_and_replace").activate()
 
     def test_on_find_next_activate(self):
-
         self.application.get_action("find_and_replace").activate()
         self.delegate._search_dialog._pattern_entry.set_text("a")
         self.delegate._search_dialog.next()
@@ -45,7 +41,6 @@ class TestSearchAgent(gaupol.TestCase):
         self.application.get_action("find_next").activate()
 
     def test_on_find_previous_activate(self):
-
         self.application.get_action("find_and_replace").activate()
         self.delegate._search_dialog._pattern_entry.set_text("a")
         self.delegate._search_dialog.previous()

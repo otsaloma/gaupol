@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -25,36 +25,31 @@ class SearchAgent(aeidon.Delegate):
     """Searching for and replacing text."""
 
     def __init__(self, master):
-        """Initialize a SearchAgent object."""
-
+        """Initialize a :class:`SearchAgent` object."""
         aeidon.Delegate.__init__(self, master)
         self._search_dialog = None
 
     def _on_search_dialog_response(self, *args):
         """Hide the search dialog."""
-
         self._search_dialog.hide()
 
     @aeidon.deco.export
     def _on_find_and_replace_activate(self, *args):
         """Search for and replace text."""
-
         if self._search_dialog is not None:
             return self._search_dialog.present()
         self._search_dialog = gaupol.SearchDialog(self)
         aeidon.util.connect(self, "_search_dialog", "response")
-        # Do not destroy the dialog, rather hide based on response.
+        # Do not destroy the dialog, but rather hide based on response.
         self._search_dialog.connect("delete-event", lambda *args: True)
         self._search_dialog.show()
 
     @aeidon.deco.export
     def _on_find_next_activate(self, *args):
         """Search forwards for same text."""
-
         self._search_dialog.next()
 
     @aeidon.deco.export
     def _on_find_previous_activate(self, *args):
         """Search backwards for same text."""
-
         self._search_dialog.previous()
