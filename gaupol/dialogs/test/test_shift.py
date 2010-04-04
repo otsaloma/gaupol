@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -21,13 +21,10 @@ import gtk
 class _TestPositionShiftDialog(gaupol.TestCase):
 
     def run__dialog(self):
-
         self.dialog.run()
         self.dialog.destroy()
 
     def setup_method(self, method):
-
-        self.conf = gaupol.conf.position_shift
         self.application = self.new_application()
         page = self.application.get_current_page()
         page.view.select_rows((1, 2, 3))
@@ -35,50 +32,63 @@ class _TestPositionShiftDialog(gaupol.TestCase):
         gaupol.conf.preview.custom_command = "echo"
         page.project.video_path = self.new_subrip_file()
 
-    def test__init_values(self):
-
+    def test__init____no(self):
+        # pylint: disable-msg=W0201
         page = self.application.get_current_page()
         page.project.video_path = None
         page.project.main_file = None
         page.view.select_rows(())
-        self.conf.target = gaupol.targets.SELECTED
-        args = (self.application.window, self.application)
-        self.dialog = self.dialog.__class__(*args)
+        gaupol.conf.position_shift.target = gaupol.targets.SELECTED
+        self.dialog = self.dialog.__class__(self.application.window,
+                                            self.application)
 
-    def test__on_preview_button_clicked(self):
+    def test__on_amount_spin_value_changed(self):
+        self.dialog._amount_spin.spin(gtk.SPIN_STEP_FORWARD)
+        self.dialog._amount_spin.spin(gtk.SPIN_STEP_FORWARD)
+        self.dialog._amount_spin.spin(gtk.SPIN_STEP_BACKWARD)
+        self.dialog._amount_spin.spin(gtk.SPIN_STEP_BACKWARD)
 
+    def test__on_preview_button_clicked__0(self):
         self.dialog._amount_spin.spin(gtk.SPIN_STEP_FORWARD)
         self.dialog._current_radio.set_active(True)
         self.dialog._preview_button.emit("clicked")
+
+    def test__on_preview_button_clicked__selection(self):
+        self.dialog._amount_spin.spin(gtk.SPIN_STEP_FORWARD)
         self.dialog._selected_radio.set_active(True)
         self.dialog._preview_button.emit("clicked")
 
-    def test__on_response(self):
+    def test__on_response__all(self):
+        self.dialog._all_radio.set_active(True)
+        self.dialog._amount_spin.spin(gtk.SPIN_STEP_FORWARD)
+        self.dialog.response(gtk.RESPONSE_OK)
 
-        for target in gaupol.targets:
-            self.conf.target = target
-            args = (self.application.window, self.application)
-            self.dialog = self.dialog.__class__(*args)
-            self.dialog.show()
-            self.dialog._amount_spin.spin(gtk.SPIN_STEP_FORWARD)
-            self.dialog.response(gtk.RESPONSE_OK)
+    def test__on_response__current(self):
+        self.dialog._current_radio.set_active(True)
+        self.dialog._amount_spin.spin(gtk.SPIN_STEP_FORWARD)
+        self.dialog.response(gtk.RESPONSE_OK)
+
+    def test__on_response__selected(self):
+        self.dialog._selected_radio.set_active(True)
+        self.dialog._amount_spin.spin(gtk.SPIN_STEP_FORWARD)
+        self.dialog.response(gtk.RESPONSE_OK)
 
 
 class TestFrameShiftDialog(_TestPositionShiftDialog):
 
     def setup_method(self, method):
-
         _TestPositionShiftDialog.setup_method(self, method)
-        args = (self.application.window, self.application)
-        self.dialog = gaupol.FrameShiftDialog(*args)
+        self.dialog = gaupol.FrameShiftDialog(self.application.window,
+                                              self.application)
+
         self.dialog.show()
 
 
 class TestTimeShiftDialog(_TestPositionShiftDialog):
 
     def setup_method(self, method):
-
         _TestPositionShiftDialog.setup_method(self, method)
-        args = (self.application.window, self.application)
-        self.dialog = gaupol.TimeShiftDialog(*args)
+        self.dialog = gaupol.TimeShiftDialog(self.application.window,
+                                             self.application)
+
         self.dialog.show()
