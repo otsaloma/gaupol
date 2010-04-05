@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -21,62 +21,58 @@ import gtk
 class TestDurationAdjustDialog(gaupol.TestCase):
 
     def run__dialog(self):
-
         self.dialog.run()
         self.dialog.destroy()
 
     def setup_method(self, method):
-
-        self.conf = gaupol.conf.duration_adjust
         self.application = self.new_application()
         page = self.application.get_current_page()
         page.view.select_rows((1, 2, 3))
-        args = (self.application.window, self.application)
-        self.dialog = gaupol.DurationAdjustDialog(*args)
+        self.dialog = gaupol.DurationAdjustDialog(self.application.window,
+                                                  self.application)
+
         self.dialog.show()
 
-    def test__init_sensitivities(self):
-
+    def test___init____no_selection(self):
         page = self.application.get_current_page()
         page.view.select_rows(())
-        self.conf.target = gaupol.targets.SELECTED
-        args = (self.application.window, self.application)
-        self.dialog = gaupol.DurationAdjustDialog(*args)
+        gaupol.conf.duration_adjust.target = gaupol.targets.SELECTED
+        self.dialog = gaupol.DurationAdjustDialog(self.application.window,
+                                                  self.application)
 
     def test__on_gap_check_toggled(self):
-
         self.dialog._gap_check.set_active(True)
         self.dialog._gap_check.set_active(False)
         self.dialog._gap_check.set_active(True)
 
     def test__on_lengthen_check_toggled(self):
-
         self.dialog._lengthen_check.set_active(True)
         self.dialog._lengthen_check.set_active(False)
         self.dialog._lengthen_check.set_active(True)
 
     def test__on_max_check_toggled(self):
-
         self.dialog._max_check.set_active(True)
         self.dialog._max_check.set_active(False)
         self.dialog._max_check.set_active(True)
 
     def test__on_min_check_toggled(self):
-
         self.dialog._min_check.set_active(True)
         self.dialog._min_check.set_active(False)
         self.dialog._min_check.set_active(True)
 
-    def test__on_response(self):
+    def test__on_response__all(self):
+        self.dialog._all_radio.set_active(True)
+        self.dialog.response(gtk.RESPONSE_OK)
 
-        for target in gaupol.targets:
-            self.conf.target = target
-            args = (self.application.window, self.application)
-            self.dialog = gaupol.DurationAdjustDialog(*args)
-            self.dialog.response(gtk.RESPONSE_OK)
+    def test__on_response__current(self):
+        self.dialog._current_radio.set_active(True)
+        self.dialog.response(gtk.RESPONSE_OK)
+
+    def test__on_response__selected(self):
+        self.dialog._selected_radio.set_active(True)
+        self.dialog.response(gtk.RESPONSE_OK)
 
     def test__on_shorten_check_toggled(self):
-
         self.dialog._shorten_check.set_active(True)
         self.dialog._shorten_check.set_active(False)
         self.dialog._shorten_check.set_active(True)

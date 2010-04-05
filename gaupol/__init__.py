@@ -75,6 +75,7 @@ from gaupol.dialogs.video import *
 from gaupol.dialogs.append import *
 from gaupol.dialogs.about import *
 from gaupol.dialogs.debug import *
+from gaupol.dialogs.duration import *
 from gaupol.dialogs.encoding import *
 from gaupol.dialogs.framerate import *
 from gaupol.dialogs.header import *

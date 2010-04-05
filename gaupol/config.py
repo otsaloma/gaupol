@@ -52,15 +52,15 @@ config_defaults = {
         },
     "duration_adjust": {
         "gap": 0.0,
+        "lengthen": True,
         "maximum": 6.0,
         "minimum": 1.5,
         "optimal": 0.07,
+        "shorten": False,
         "target": gaupol.targets.CURRENT,
-        "use minimum": True,
+        "use_minimum": True,
         "use_gap": True,
         "use_maximum": False,
-        "use_optimal_lengthen": True,
-        "use_optimal_shorten": False,
         },
     "general": {
         "extensions": [],

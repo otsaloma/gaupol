@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -16,6 +16,7 @@
 
 """Dialog for lengthening or shortening durations."""
 
+import aeidon
 import gaupol
 import gtk
 _ = aeidon.i18n._
@@ -23,59 +24,54 @@ _ = aeidon.i18n._
 __all__ = ("DurationAdjustDialog",)
 
 
-class DurationAdjustDialog(gaupol.GladeDialog):
+class DurationAdjustDialog(gaupol.BuilderDialog):
 
     """Dialog for lengthening or shortening durations."""
 
+    _widgets = ("all_radio",
+                "current_radio",
+                "gap_check",
+                "gap_spin",
+                "lengthen_check",
+                "max_check",
+                "max_spin",
+                "min_check",
+                "min_spin",
+                "optimal_spin",
+                "selected_radio",
+                "shorten_check")
+
     def __init__(self, parent, application):
-        """Initialize a DurationAdjustDialog object."""
-
-        gaupol.GladeDialog.__init__(self, "duration.glade")
-        get_widget = self._glade_xml.get_widget
-        self._all_radio = get_widget("all_radio")
-        self._current_radio = get_widget("current_radio")
-        self._gap_check = get_widget("gap_check")
-        self._gap_spin = get_widget("gap_spin")
-        self._lengthen_check = get_widget("lengthen_check")
-        self._max_check = get_widget("max_check")
-        self._max_spin = get_widget("max_spin")
-        self._min_check = get_widget("min_check")
-        self._min_spin = get_widget("min_spin")
-        self._optimal_spin = get_widget("optimal_spin")
-        self._selected_radio = get_widget("selected_radio")
-        self._shorten_check = get_widget("shorten_check")
+        """Initialize a :class:`DurationAdjustDialog` object."""
+        gaupol.BuilderDialog.__init__(self, "duration-dialog.ui")
         self.application = application
-        self.conf = gaupol.conf.duration_adjust
-
-        self._init_signal_handlers()
         self._init_values()
         self._init_sensitivities()
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_OK)
 
     def _adjust_durations(self):
-        """Adjust durations in subtitles."""
-
+        """Adjust durations of subtitles."""
+        conf = gaupol.conf.duration_adjust
         target = self._get_target()
         for page in self.application.get_target_pages(target):
             self.application.set_current_page(page)
             rows = page.project.adjust_durations(
                 indices=self.application.get_target_rows(target),
-                optimal=self.conf.optimal,
-                lengthen=self.conf.lengthen,
-                shorten=self.conf.shorten,
-                maximum=(self.conf.maximum if self.conf.use_maximum else None),
-                minimum=(self.conf.minimum if self.conf.use_minimum else None),
-                gap=(self.conf.gap if self.conf.use_gap else None),)
-            message = aeidon.i18n.ngettext(
-                "Adjusted duration of %d subtitle",
-                "Adjusted durations of %d subtitles",
-                len(rows)) % len(rows)
-            self.application.flash_message(message)
+                optimal=conf.optimal,
+                lengthen=conf.lengthen,
+                shorten=conf.shorten,
+                maximum=(conf.maximum if conf.use_maximum else None),
+                minimum=(conf.minimum if conf.use_minimum else None),
+                gap=(conf.gap if conf.use_gap else None))
+
+            self.application.flash_message(aeidon.i18n.ngettext(
+                    "Adjusted duration of %d subtitle",
+                    "Adjusted durations of %d subtitles",
+                    len(rows)) % len(rows))
 
     def _get_target(self):
         """Return the selected target."""
-
         if self._selected_radio.get_active():
             return gaupol.targets.SELECTED
         if self._current_radio.get_active():
@@ -85,15 +81,7 @@ class DurationAdjustDialog(gaupol.GladeDialog):
         raise ValueError("Invalid target radio state")
 
     def _init_sensitivities(self):
-        """Initialize the sensitivities of widgets."""
-
-        page = self.application.get_current_page()
-        rows = page.view.get_selected_rows()
-        target = self.conf.target
-        if (not rows) and (target == gaupol.targets.SELECTED):
-            self._current_radio.set_active(True)
-        self._selected_radio.set_sensitive(bool(rows))
-
+        """Initialize sensitivities of widgets."""
         self._all_radio.emit("toggled")
         self._current_radio.emit("toggled")
         self._gap_check.emit("toggled")
@@ -107,75 +95,63 @@ class DurationAdjustDialog(gaupol.GladeDialog):
         self._selected_radio.emit("toggled")
         self._shorten_check.emit("toggled")
 
-    def _init_signal_handlers(self):
-        """Initialize signal handlers."""
-
-        aeidon.util.connect(self, "_gap_check", "toggled")
-        aeidon.util.connect(self, "_lengthen_check", "toggled")
-        aeidon.util.connect(self, "_max_check", "toggled")
-        aeidon.util.connect(self, "_min_check", "toggled")
-        aeidon.util.connect(self, "_shorten_check", "toggled")
-        aeidon.util.connect(self, self, "response")
-
     def _init_values(self):
         """Intialize default values for widgets."""
-
-        self._gap_check.set_active(self.conf.use_gap)
-        self._gap_spin.set_value(self.conf.gap)
-        self._lengthen_check.set_active(self.conf.lengthen)
-        self._max_check.set_active(self.conf.use_maximum)
-        self._max_spin.set_value(self.conf.maximum)
-        self._min_check.set_active(self.conf.use_minimum)
-        self._min_spin.set_value(self.conf.minimum)
-        self._optimal_spin.set_value(self.conf.optimal)
-        self._shorten_check.set_active(self.conf.shorten)
-
-        targets = gaupol.targets
-        self._selected_radio.set_active(self.conf.target == targets.SELECTED)
-        self._current_radio.set_active(self.conf.target == targets.CURRENT)
-        self._all_radio.set_active(self.conf.target == targets.ALL)
+        conf = gaupol.conf.duration_adjust
+        self._gap_check.set_active(conf.use_gap)
+        self._gap_spin.set_value(conf.gap)
+        self._lengthen_check.set_active(conf.lengthen)
+        self._max_check.set_active(conf.use_maximum)
+        self._max_spin.set_value(conf.maximum)
+        self._min_check.set_active(conf.use_minimum)
+        self._min_spin.set_value(conf.minimum)
+        self._optimal_spin.set_value(conf.optimal)
+        self._shorten_check.set_active(conf.shorten)
+        self._selected_radio.set_active(conf.target == gaupol.targets.SELECTED)
+        self._current_radio.set_active(conf.target == gaupol.targets.CURRENT)
+        self._all_radio.set_active(conf.target == gaupol.targets.ALL)
+        page = self.application.get_current_page()
+        rows = page.view.get_selected_rows()
+        if (not rows) and (conf.target == gaupol.targets.SELECTED):
+            self._current_radio.set_active(True)
+        self._selected_radio.set_sensitive(bool(rows))
 
     def _on_gap_check_toggled(self, check_button):
-        """Set the sensitivity of the gap spin button."""
-
+        """Set sensitivity of the gap spin button."""
         self._gap_spin.set_sensitive(check_button.get_active())
 
     def _on_lengthen_check_toggled(self, *args):
-        """Set the sensitivity of the optimal spin button."""
-
+        """Set sensitivity of the optimal spin button."""
         lengthen = self._lengthen_check.get_active()
         shorten = self._shorten_check.get_active()
         self._optimal_spin.set_sensitive(lengthen or shorten)
 
     def _on_max_check_toggled(self, check_button):
-        """Set the sensitivity of the maximum spin button."""
-
+        """Set sensitivity of the maximum spin button."""
         self._max_spin.set_sensitive(check_button.get_active())
 
     def _on_min_check_toggled(self, check_button):
-        """Set the sensitivity of the minimum spin button."""
-
+        """Set sensitivity of the minimum spin button."""
         self._min_spin.set_sensitive(check_button.get_active())
 
     def _on_response(self, dialog, response):
         """Save settings and adjust durations."""
-
-        self.conf.gap = self._gap_spin.get_value()
-        self.conf.lengthen = self._lengthen_check.get_active()
-        self.conf.maximum = self._max_spin.get_value()
-        self.conf.minimum = self._min_spin.get_value()
-        self.conf.optimal = self._optimal_spin.get_value()
-        self.conf.shorten = self._shorten_check.get_active()
-        self.conf.target = self._get_target()
-        self.conf.use_gap = self._gap_check.get_active()
-        self.conf.use_maximum = self._max_check.get_active()
-        self.conf.use_minimum = self._min_check.get_active()
+        conf = gaupol.conf.duration_adjust
+        conf.gap = self._gap_spin.get_value()
+        conf.lengthen = self._lengthen_check.get_active()
+        conf.maximum = self._max_spin.get_value()
+        conf.minimum = self._min_spin.get_value()
+        conf.optimal = self._optimal_spin.get_value()
+        conf.shorten = self._shorten_check.get_active()
+        conf.target = self._get_target()
+        conf.use_gap = self._gap_check.get_active()
+        conf.use_maximum = self._max_check.get_active()
+        conf.use_minimum = self._min_check.get_active()
         if response == gtk.RESPONSE_OK:
             self._adjust_durations()
 
     def _on_shorten_check_toggled(self, *args):
-        """Set the sensitivity of the optimal spin button."""
-
+        """Set sensitivity of the optimal spin button."""
         lengthen = self._lengthen_check.get_active()
         shorten = self._shorten_check.get_active()
         self._optimal_spin.set_sensitive(lengthen or shorten)
