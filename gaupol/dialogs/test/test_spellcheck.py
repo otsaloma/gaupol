@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,153 +14,124 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
+import aeidon
+import functools
 import gaupol
 import gtk
 import os
 
 
+def while_errors(function):
+    @functools.wraps(function)
+    def wrapper(*args, **kwargs):
+        while True:
+            value = function(*args, **kwargs)
+            # Break when no more errors left.
+            if not args[0].dialog._table.props.sensitive: break
+        return value
+    return wrapper
+
+
 class TestSpellCheckDialog(gaupol.TestCase):
 
     def run__dialog(self):
-
         self.dialog.run()
         self.dialog.destroy()
 
     def run__show_error_dialog(self):
-
         self.dialog._show_error_dialog("test")
 
     def setup_method(self, method):
-
         gaupol.conf.editor.use_custom_font = True
-        gaupol.conf.editor.custom_font = "sans"
+        gaupol.conf.editor.custom_font = "monospace"
+        gaupol.conf.spell_check.language = "en"
         self.application = self.new_application()
         for page in self.application.pages:
-            for i, subtitle in enumerate(page.project.subtitles):
-                text = subtitle.main_text.replace("a", "x")
-                page.project.set_text(i, aeidon.documents.MAIN, text)
-                text = subtitle.tran_text.replace("a", "x")
-                page.project.set_text(i, aeidon.documents.TRAN, text)
+            for subtitle in page.project.subtitles:
+                subtitle.main_text = subtitle.main_text.replace("a", "x")
+                subtitle.tran_text = subtitle.tran_text.replace("a", "x")
+            page.reload_view_all()
+        self.dialog = gaupol.SpellCheckDialog(self.application.window,
+                                              self.application)
+
+        # Avoid adding words to either enchant's or a backend's
+        # personal word list or gaupol's personal replacement list.
+        self.dialog._checker.dict.add = lambda *args: None
         self._temp_dir = aeidon.temp.create_directory()
-        gaupol.SpellCheckDialog._personal_dir = self._temp_dir
-        args = (self.application.window, self.application)
-        self.dialog = gaupol.SpellCheckDialog(*args)
+        self.dialog._personal_dir = self._temp_dir
         self.dialog.show()
 
-    def teardown_method(self, method):
-
-        aeidon.temp.remove_directory(self._temp_dir)
-        gaupol.TestCase.teardown_method(self, method)
-
-    def test__init_checker__enchant_error(self):
-
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    def test___init____enchant_error(self):
+        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
         gaupol.conf.spell_check.language = "wo"
-        cls = gaupol.SpellCheckDialog
-        respond = lambda *args: gtk.RESPONSE_OK
-        cls.flash_dialog = respond
-        args = (self.application.window, self.application)
-        self.raises(ValueError, cls, *args)
+        self.raises(ValueError,
+                    gaupol.SpellCheckDialog,
+                    self.application.window,
+                    self.application)
 
-    def test__init_checker__io_error(self):
-
-        os.chmod(self._temp_dir, 0000)
-        args = (self.application.window, self.application)
-        self.dialog = gaupol.SpellCheckDialog(*args)
-        os.chmod(self._temp_dir, 0777)
-
-    def test__init_replacements(self):
-
+    def test___init____replacements(self):
         basename = "%s.repl" % gaupol.conf.spell_check.language
         path = os.path.join(self.dialog._personal_dir, basename)
         open(path, "w").write("a|b\nc|d\n")
-        args = (self.application.window, self.application)
-        self.dialog = gaupol.SpellCheckDialog(*args)
+        gaupol.SpellCheckDialog(self.application.window,
+                                self.application)
 
+    @while_errors
     def test__on_add_button_clicked(self):
+        self.dialog._checker.dict.add = lambda *args: None
+        self.dialog._add_button.emit("clicked")
 
-        while True:
-            if not self.dialog._table.props.sensitive: break
-            self.dialog._add_button.emit("clicked")
-
+    @aeidon.deco.monkey_patch(gaupol.util, "run_dialog")
     def test__on_edit_button_clicked(self):
-
-        respond = lambda *args: gtk.RESPONSE_OK
-        self.dialog.run_dialog = respond
+        gaupol.util.run_dialog = lambda *args: gtk.RESPONSE_OK
         self.dialog._edit_button.emit("clicked")
 
     def test__on_entry_changed(self):
-
         self.dialog._entry.set_text("t")
         self.dialog._entry.set_text("te")
         self.dialog._entry.set_text("tes")
         self.dialog._entry.set_text("test")
 
+    @while_errors
     def test__on_ignore_all_button_clicked(self):
+        self.dialog._ignore_all_button.emit("clicked")
 
-        while True:
-            if not self.dialog._table.props.sensitive: break
-            self.dialog._ignore_all_button.emit("clicked")
-
+    @while_errors
     def test__on_ignore_button_clicked(self):
+        self.dialog._ignore_button.emit("clicked")
 
-        while True:
-            if not self.dialog._table.props.sensitive: break
-            self.dialog._ignore_button.emit("clicked")
-
+    @while_errors
     def test__on_join_back_button_clicked(self):
+        if self.dialog._join_back_button.props.sensitive:
+            self.dialog._join_back_button.emit("clicked")
+        else: self.dialog._ignore_button.emit("clicked")
 
-        while True:
-            if not self.dialog._table.props.sensitive: break
-            if self.dialog._join_back_button.props.sensitive:
-                self.dialog._join_back_button.emit("clicked")
-            else: self.dialog._ignore_button.emit("clicked")
-
+    @while_errors
     def test__on_join_forward_button_clicked(self):
+        if self.dialog._join_forward_button.props.sensitive:
+            self.dialog._join_forward_button.emit("clicked")
+        else: self.dialog._ignore_button.emit("clicked")
 
-        while True:
-            if not self.dialog._table.props.sensitive: break
-            if self.dialog._join_forward_button.props.sensitive:
-                self.dialog._join_forward_button.emit("clicked")
-            else: self.dialog._ignore_button.emit("clicked")
-
+    @while_errors
     def test__on_replace_all_button_clicked(self):
+        self.dialog._replace_all_button.emit("clicked")
 
-        while True:
-            if not self.dialog._table.props.sensitive: break
-            self.dialog._replace_all_button.emit("clicked")
-
+    @while_errors
     def test__on_replace_button_clicked(self):
-
-        while True:
-            if not self.dialog._table.props.sensitive: break
-            self.dialog._replace_button.emit("clicked")
+        self.dialog._replace_button.emit("clicked")
 
     def test__on_response(self):
-
+        self.dialog._replace_button.emit("clicked")
         self.dialog.response(gtk.RESPONSE_CLOSE)
 
     def test__on_tree_view_selection_changed(self):
-
         store = self.dialog._tree_view.get_model()
         selection = self.dialog._tree_view.get_selection()
         for i in range(len(store)):
             selection.select_path(i)
 
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test__show_error_dialog(self):
-
-        respond = lambda *args: gtk.RESPONSE_OK
-        self.dialog.flash_dialog = respond
+        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
         self.dialog._show_error_dialog("test")
-
-    def test__write_replacements(self):
-
-        for i in range(self.dialog._max_replacemnts + 1):
-            self.dialog._replacements.append(("a", "b"))
-        self.dialog._write_replacements()
-
-    def test__write_replacements__io_error(self):
-
-        os.chmod(self._temp_dir, 0000)
-        self.test__on_replace_button_clicked()
-        self.dialog.response(gtk.RESPONSE_CLOSE)
-        os.chmod(self._temp_dir, 0777)

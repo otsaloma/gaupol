@@ -22,11 +22,13 @@ Gaupol 0.16
       - gobject.set_prgname
  [ ] Bump PyGTK dependency to 2.16 or 2.18
       - gtk.InfoBar?
- [ ] Bump PyEnchant dependency to 1.4
+ [ ] Bump PyEnchant dependency to 1.4.0
       - All dictionary providers now use a shared default personal word
         file (largely obsoleting the DictWithPWL class)
       - Dict.add_to_pwl renamed to Dict.add
+      - Dict.store_replacement
  [W] Migrate from Glade to gtk.Builder
+ [W] Fix Glade buttons
  [ ] Adapt to GNOME Goal: Correct Desktop Files
  [W] Code cleanup, attribute and signals checks
  [ ] Merge experimental local patterns

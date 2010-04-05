@@ -159,7 +159,7 @@ config_defaults = {
         },
     "spell_check": {
         "field": gaupol.fields.MAIN_TEXT,
-        "language": None,
+        "language": aeidon.locales.get_system_code() or "en",
         "target": gaupol.targets.CURRENT,
         },
     "subtitle_insert": {
