@@ -89,6 +89,7 @@ from gaupol.dialogs.search import *
 from gaupol.dialogs.shift import *
 from gaupol.dialogs.split import *
 from gaupol.dialogs.textedit import *
+from gaupol.dialogs.transform import *
 from gaupol.action import *
 from gaupol import actions
 from gaupol.extension import *

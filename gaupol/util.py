@@ -29,6 +29,7 @@ import traceback
 
 def char_to_px(nchar, font=None):
     """Convert characters to pixels."""
+    if nchar < 0: return nchar
     label = gtk.Label("etaoin shrdlu")
     if font is not None:
         set_label_font(label, font)
@@ -112,6 +113,7 @@ def iterate_main():
 
 def lines_to_px(nlines, font=None):
     """Convert lines to pixels."""
+    if nlines < 0: return nlines
     label = gtk.Label("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
     if font is not None:
         set_label_font(label, font)
@@ -181,10 +183,10 @@ def scale_to_content(container,
         height = min(height, max_height)
     container.set_size_request(width, height)
 
-def scale_to_size(container, nchar, nlines, font=None):
-    """Set `container`'s size to `nchar` and `nlines`."""
-    container.set_size_request(char_to_px(nchar, font),
-                               lines_to_px(nlines, font))
+def scale_to_size(widget, nchar, nlines, font=None):
+    """Set `widget`'s size to `nchar` and `nlines`."""
+    widget.set_size_request(char_to_px(nchar, font),
+                            lines_to_px(nlines, font))
 
 def separate_combo(store, itr):
     """Separator function for combo box models."""
