@@ -168,7 +168,6 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
-                    <property name="image">join_back_button_image</property>
                     <property name="use_underline">True</property>
                     <signal name="clicked" handler="_on_join_back_button_clicked"/>
                   </object>
@@ -184,7 +183,6 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
-                    <property name="image">join_forward_button_image</property>
                     <property name="use_underline">True</property>
                     <signal name="clicked" handler="_on_join_forward_button_clicked"/>
                   </object>
@@ -216,7 +214,6 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
-                    <property name="image">ignore_button_image</property>
                     <property name="use_underline">True</property>
                     <signal name="clicked" handler="_on_ignore_button_clicked"/>
                   </object>
@@ -232,7 +229,6 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
-                    <property name="image">ignore_all_button_image</property>
                     <property name="use_underline">True</property>
                     <signal name="clicked" handler="_on_ignore_all_button_clicked"/>
                   </object>
@@ -336,25 +332,9 @@
       <action-widget response="-7">button1</action-widget>
     </action-widgets>
   </object>
-  <object class="GtkImage" id="join_back_button_image">
-    <property name="visible">True</property>
-    <property name="stock">gtk-go-back</property>
-  </object>
-  <object class="GtkImage" id="join_forward_button_image">
-    <property name="visible">True</property>
-    <property name="stock">gtk-go-forward</property>
-  </object>
   <object class="GtkImage" id="edit_button_image">
     <property name="visible">True</property>
     <property name="stock">gtk-edit</property>
-  </object>
-  <object class="GtkImage" id="ignore_button_image">
-    <property name="visible">True</property>
-    <property name="stock">gtk-go-down</property>
-  </object>
-  <object class="GtkImage" id="ignore_all_button_image">
-    <property name="visible">True</property>
-    <property name="stock">gtk-goto-bottom</property>
   </object>
   <object class="GtkImage" id="add_button_image">
     <property name="visible">True</property>
