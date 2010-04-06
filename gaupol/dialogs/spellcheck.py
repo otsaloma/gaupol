@@ -233,7 +233,7 @@ class SpellCheckDialog(gaupol.BuilderDialog):
         text_buffer = self._text_view.get_buffer()
         text_buffer.create_tag("misspelled", weight=pango.WEIGHT_BOLD)
         gaupol.util.scale_to_size(self._text_view, 60, 5, font)
-        gaupol.util.scale_to_size(self._tree_view, 20, 6, font)
+        gaupol.util.scale_to_size(self._tree_view, 20, 9, font)
         self._entry_handler = self._entry.connect("changed",
                                                   self._on_entry_changed)
 
