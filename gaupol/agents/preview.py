@@ -18,7 +18,7 @@
 
 import aeidon
 import gaupol
-import gobject
+import glib
 import gtk
 import tempfile
 _ = aeidon.i18n._
@@ -105,12 +105,12 @@ class PreviewAgent(aeidon.Delegate):
             return self._show_encoding_error_dialog()
         # glib.child_watch_add does not appear to work on Windows,
         # so let's watch the process by polling it at regular intervals.
-        gobject.timeout_add(1000,
-                            self._check_process_state,
-                            page,
-                            process,
-                            output_path,
-                            command)
+        glib.timeout_add(1000,
+                         self._check_process_state,
+                         page,
+                         process,
+                         output_path,
+                         command)
 
     @aeidon.deco.export
     def preview_changes(self, page, row, doc, method, args=None, kwargs=None):
