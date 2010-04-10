@@ -51,7 +51,7 @@ class PatternManager(object):
         self._patterns = {}
         self._read_patterns()
 
-    def _assert_indentifiers(self, script, language, country):
+    def _assert_identifiers(self, script, language, country):
         """Assert that codes are valid and parents are defined."""
         if script is not None:
             assert aeidon.scripts.is_valid(script)
@@ -87,7 +87,7 @@ class PatternManager(object):
         return filtered_patterns
 
     def _get_codes_require(self, script=None, language=None, country=None):
-        self._assert_indentifiers(script, language, country)
+        self._assert_identifiers(script, language, country)
 
     def _get_codes(self, script=None, language=None, country=None):
         """Return a sequence of all codes to be used by arguments.
@@ -225,7 +225,7 @@ class PatternManager(object):
         return tuple(aeidon.util.get_unique(languages))
 
     def get_patterns_require(self, script=None, language=None, country=None):
-        self._assert_indentifiers(script, language, country)
+        self._assert_identifiers(script, language, country)
 
     def get_patterns(self, script=None, language=None, country=None):
         """Return patterns for `script`, `language` and `country`."""
@@ -245,7 +245,7 @@ class PatternManager(object):
         return tuple(aeidon.util.get_unique(scripts))
 
     def save_config_require(self, script=None, language=None, country=None):
-        self._assert_indentifiers(script, language, country)
+        self._assert_identifiers(script, language, country)
 
     def save_config(self, script=None, language=None, country=None):
         """Save pattern configurations to files."""

@@ -49,13 +49,13 @@ class TestCase(aeidon.TestCase):
         """Remove state set for executing tests in `method`."""
         # pylint: disable-msg=E1101
         gaupol.util.iterate_main()
-        if hasattr(self, "dialog"):
-            self.dialog.destroy()
-        if hasattr(self, "window"):
-            self.window.destroy()
+        for name in ("assistant", "dialog", "window"):
+            if hasattr(self, name):
+                getattr(self, name).destroy()
         if hasattr(self, "application"):
             for page in self.application.pages:
                 self.application.close(page, False)
+            self.application.window.hide()
             self.application.window.destroy()
         gaupol.util.iterate_main()
         gaupol.conf.restore_defaults()

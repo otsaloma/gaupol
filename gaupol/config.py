@@ -127,7 +127,8 @@ config_defaults = {
         "script": "Latn",
         "skip_max_length": 28,
         "skip_max_lines": 3,
-        "use_skip_max": True,
+        "use_skip_max_length": True,
+        "use_skip_max_lines": True,
         },
     "output_window": {
         "maximized": False,
