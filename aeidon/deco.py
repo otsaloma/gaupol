@@ -31,6 +31,12 @@ def _dump_subtitles(subtitles):
                   subtitle._tran_text,
                   subtitle._framerate) for subtitle in subtitles)
 
+def _hasattr_def(obj, name):
+    """Return ``True`` if `obj` has attribute `name` defined."""
+    if hasattr(obj, "__dict__"):
+        return name in obj.__dict__
+    return hasattr(obj, name)
+
 def _is_method(function, args):
     """Return ``True`` if `function` to be decorated is a method.
 
@@ -120,17 +126,20 @@ def monkey_patch(obj, name):
     def outer_wrapper(function):
         @functools.wraps(function)
         def inner_wrapper(*args, **kwargs):
-            has_attr = hasattr(obj, name)
-            attr = getattr(obj, name, None)
-            setattr(obj, name, copy.deepcopy(attr))
-            try: return function(*args, **kwargs)
+            has_attr_def = _hasattr_def(obj, name)
+            if has_attr_def:
+                attr = getattr(obj, name)
+                setattr(obj, name, copy.deepcopy(attr))
+            try:
+                return function(*args, **kwargs)
             finally:
-                setattr(obj, name, attr)
-                assert getattr(obj, name) == attr
-                assert getattr(obj, name) is attr
-                if not has_attr:
+                if has_attr_def:
+                    setattr(obj, name, attr)
+                    assert getattr(obj, name) == attr
+                    assert getattr(obj, name) is attr
+                else:
                     delattr(obj, name)
-                    assert not hasattr(obj, name)
+                    assert not _hasattr_def(obj, name)
         return inner_wrapper
     return outer_wrapper
 
