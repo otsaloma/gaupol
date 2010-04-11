@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2007 Osmo Salomaa
+# Copyright (C) 2005-2007,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -22,12 +22,11 @@ import gaupol
 
 class TextAgent(aeidon.Delegate):
 
-    """Checking spelling."""
+    """Processing texts."""
 
     @aeidon.deco.export
     def _on_check_spelling_activate(self, *args):
         """Check for incorrect spelling."""
-
         gaupol.util.set_cursor_busy(self.window)
         try: # Fails if no dictionary for conf.spell_check.language.
             dialog = gaupol.SpellCheckDialog(self.window, self)
@@ -39,7 +38,6 @@ class TextAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_configure_spell_check_activate(self, *args):
         """Set languages and spell-check targets."""
-
         gaupol.util.set_cursor_busy(self.window)
         dialog = gaupol.LanguageDialog(self.window)
         gaupol.util.set_cursor_normal(self.window)
@@ -49,7 +47,6 @@ class TextAgent(aeidon.Delegate):
     @aeidon.deco.export
     def _on_correct_texts_activate(self, *args):
         """Find and correct errors in texts."""
-
         gaupol.util.set_cursor_busy(self.window)
         assistant = gaupol.TextAssistant(self.window, self)
         gaupol.util.set_cursor_normal(self.window)

@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
+import aeidon
 import gaupol
 import gtk
 
@@ -21,29 +22,26 @@ import gtk
 class TestSpellCheckAgent(gaupol.TestCase):
 
     def setup_method(self, method):
-
         self.application = self.new_application()
-        respond = lambda *args: gtk.RESPONSE_DELETE_EVENT
-        self.application.flash_dialog = respond
-        gaupol.SpellCheckDialog.flash_dialog = respond
 
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test_on_check_spelling_activate(self):
-
-        respond = lambda *args: gtk.RESPONSE_OK
-        gaupol.SpellCheckDialog.flash_dialog = respond
+        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
         gaupol.conf.spell_check.language = "en"
         self.application.get_action("check_spelling").activate()
-        gaupol.conf.spell_check.language = "wo"
+
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
+    def test_on_check_spelling_activate__value_error(self):
+        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
+        gaupol.conf.spell_check.language = "xx"
         self.application.get_action("check_spelling").activate()
-        del gaupol.SpellCheckDialog.flash_dialog
 
+    @aeidon.deco.monkey_patch(gaupol.util, "flash_dialog")
     def test_on_configure_spell_check_activate(self):
-
+        gaupol.util.flash_dialog = lambda *args: gtk.RESPONSE_OK
         self.application.get_action("configure_spell_check").activate()
 
+    @aeidon.deco.monkey_patch(gaupol.TextAssistant, "show")
     def test_on_correct_texts_activate(self):
-
-        real_show = gaupol.TextAssistant.show
         gaupol.TextAssistant.show = lambda *args: None
         self.application.get_action("correct_texts").activate()
-        gaupol.TextAssistant.show = real_show
