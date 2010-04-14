@@ -16,14 +16,15 @@
 
 """Marking subtitles for easy navigation."""
 
-import gaupol.gtk
+import aeidon
+import gaupol
 import gtk
 import os
 import pango
-_ = gaupol.i18n._
+_ = aeidon.i18n._
 
 
-class AddBookmarkDialog(gaupol.Delegate):
+class AddBookmarkDialog(aeidon.Delegate):
 
     """Dialog for editing the metadata for a bookmark to be added."""
 
@@ -34,7 +35,7 @@ class AddBookmarkDialog(gaupol.Delegate):
         glade_file = os.path.join(directory, "add-bookmark-dialog.glade")
         glade_xml = gtk.glade.XML(glade_file)
         dialog = glade_xml.get_widget("dialog")
-        gaupol.Delegate.__init__(self, dialog)
+        aeidon.Delegate.__init__(self, dialog)
         self._dialog = dialog
         self._description_entry = glade_xml.get_widget("description_entry")
         self._subtitle_spin = glade_xml.get_widget("subtitle_spin")
@@ -50,7 +51,7 @@ class AddBookmarkDialog(gaupol.Delegate):
         self._subtitle_spin.set_value(row + 1)
         description = page.project.subtitles[row].main_text
         description = description.replace("\n", " ")
-        description = gaupol.re_any_tag.sub("", description)
+        description = aeidon.re_any_tag.sub("", description)
         self._description_entry.set_text(description)
         self._description_entry.set_width_chars(30)
 
@@ -72,7 +73,7 @@ class AddBookmarkDialog(gaupol.Delegate):
         return self._dialog.run()
 
 
-class BookmarksExtension(gaupol.gtk.Extension):
+class BookmarksExtension(gaupol.Extension):
 
     """Marking subtitles for easy navigation."""
 
@@ -118,7 +119,7 @@ class BookmarksExtension(gaupol.gtk.Extension):
         column.set_clickable(True)
         column.set_resizable(False)
         column.set_reorderable(True)
-        column.set_visible(self._conf.show_column)
+        # column.set_visible(self._conf.show_column)
         label = page.view.get_header_label(_("Bm."))
         label.set_tooltip_text(_("Bookmark"))
         column.set_widget(label)
@@ -212,7 +213,8 @@ class BookmarksExtension(gaupol.gtk.Extension):
             ("toggle_bookmark_column", None, _("_Bookmark"),
              None, _("Show or hide the bookmark column"),
              self._on_toggle_bookmark_column_toggled,
-             self._conf.show_column),))
+             # self._conf.show_column),))
+             True),))
         self.application.uim.insert_action_group(self._action_group, -1)
         directory = os.path.dirname(__file__)
         ui_file = os.path.join(directory, "bookmarks.ui.xml")
@@ -225,7 +227,7 @@ class BookmarksExtension(gaupol.gtk.Extension):
 
         self._action_group = gtk.ActionGroup("bookmarks")
         self._bookmarks = {}
-        self._conf = gaupol.gtk.conf.extensions.bookmarks
+        # self._conf = gaupol.conf.extensions.bookmarks
         self._search_entry = gtk.Entry()
         self._side_container = gtk.Alignment(0, 0, 1, 1)
         self._side_vbox = gtk.VBox(False, 6)
@@ -254,11 +256,11 @@ class BookmarksExtension(gaupol.gtk.Extension):
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
 
-        gaupol.util.connect(self, "_search_entry", "changed")
-        gaupol.util.connect(self, "_tree_view", "key-press-event")
-        gaupol.util.connect(self, "application", "page-added")
-        gaupol.util.connect(self, "application", "page-closed")
-        gaupol.util.connect(self, "application", "page-switched")
+        aeidon.util.connect(self, "_search_entry", "changed")
+        aeidon.util.connect(self, "_tree_view", "key-press-event")
+        aeidon.util.connect(self, "application", "page-added")
+        aeidon.util.connect(self, "application", "page-closed")
+        aeidon.util.connect(self, "application", "page-switched")
 
     def _init_tree_view(self):
         """Initialize the side pane tree view."""
@@ -452,7 +454,7 @@ class BookmarksExtension(gaupol.gtk.Extension):
         if path is None: return
         if not os.path.isfile(path): return
         encoding = page.project.main_file.encoding
-        for line in gaupol.util.readlines(path, encoding):
+        for line in aeidon.util.readlines(path, encoding):
             row, description = line.split(" ", 1)
             self._bookmarks[page][int(row) - 1] = description
         self._update_tree_view()
@@ -522,14 +524,14 @@ class BookmarksExtension(gaupol.gtk.Extension):
             lines.append("%d %s" % (row + 1, self._bookmarks[page][row]))
         text = os.linesep.join(lines) + os.linesep
         encoding = page.project.main_file.encoding
-        gaupol.util.write(path, text, encoding)
+        aeidon.util.write(path, text, encoding)
 
     def setup(self, application):
         """Setup extension for use with application."""
 
         directory = os.path.dirname(__file__)
         spec_file = os.path.join(directory, "bookmarks.conf.spec")
-        self.read_config(spec_file)
+        # self.read_config(spec_file)
         self._init_attributes(application)
         self._init_tree_view()
         self._init_signal_handlers()
@@ -559,13 +561,13 @@ class BookmarksExtension(gaupol.gtk.Extension):
         """Update state of extension for application and active page."""
 
         action = self._action_group.get_action("add_bookmark")
-        try: action.set_sensitive(len(page.view.get_selected_rows()) == 1)
-        except AttributeError: action.set_sensitive(False)
-        action = self._action_group.get_action("edit_bookmarks")
-        action.set_sensitive(page is not None)
-        action = self._action_group.get_action("next_bookmark")
-        try: action.set_sensitive(bool(self._bookmarks[page]))
-        except KeyError: action.set_sensitive(False)
-        action = self._action_group.get_action("previous_bookmark")
-        try: action.set_sensitive(bool(self._bookmarks[page]))
-        except KeyError: action.set_sensitive(False)
+        # try: action.set_sensitive(len(page.view.get_selected_rows()) == 1)
+        # except AttributeError: action.set_sensitive(False)
+        # action = self._action_group.get_action("edit_bookmarks")
+        # action.set_sensitive(page is not None)
+        # action = self._action_group.get_action("next_bookmark")
+        # try: action.set_sensitive(bool(self._bookmarks[page]))
+        # except KeyError: action.set_sensitive(False)
+        # action = self._action_group.get_action("previous_bookmark")
+        # try: action.set_sensitive(bool(self._bookmarks[page]))
+        # except KeyError: action.set_sensitive(False)

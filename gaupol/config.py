@@ -63,7 +63,6 @@ config_defaults = {
         "use_maximum": False,
         },
     "general": {
-        "extensions": [],
         "version": None,
         },
     "editor": {
@@ -96,6 +95,7 @@ config_defaults = {
         "visible": ["utf_8", "cp1252"],
         },
     "extensions": {
+        "active": [],
         },
     "file": {
         "align_method": aeidon.align_methods.POSITION,

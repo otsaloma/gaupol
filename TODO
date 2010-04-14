@@ -1,62 +1,60 @@
 Gaupol 0.16
 ===========
 
- [D] Use existing subtitle file mime-types instead of text/plain when
-     adding files to the recent files database
- [D] Fix opening a translation file with a Unicode BOM
- [D] Use Python's JSON module instead of ConfigObj for reading and
-     writing configuration files
- [D] Use gtk.RecentAction for recent file menus
- [D] Add help menu item to browse wiki documentation
- [D] Add German translation (Chris Leick)
- [D] Add Hungarian translation (László Andrássy)
+ * Use existing subtitle file mime-types instead of text/plain when
+   adding files to the recent files database
+ * Migrate from Glade to GtkBuilder
+ * Use attributes instead of markup in GtkBuilder files
+ * Fix GtkBuilder constructed buttons to respect user preferences
+   regarding whether or not to show icons in buttons
+ * Use Python's JSON module instead of ConfigObj for reading and
+   writing configuration files
+ * Use gtk.RecentAction for recent file menus (fixes #615372 and
+   probably #608951)
+ * Add help menu item to browse wiki documentation at
+   http://live.gnome.org/Gaupol
+ * Use enchant's user spell-check dictionaries (usually stored in
+   $HOME/.config/enchant) instead gaupol-specific ones
+ * Raise Python dependency to 2.6
+ * Raise PyGTK dependency to 2.16
+ * Raise PyEnchant dependency to 1.4.0
+ * Add German translation (Chris Leick)
+ * Add Hungarian translation (László Andrássy)
 
- [W] Split gaupol to aeidon and gaupol
- [W] Bump Python dependency to 2.6
-      - try ... except Exception as exc
-      - property(...) -> @property, @x.setter, @x.deleter
-      - Use collections.namedtuple for all return values
- [ ] Bump PyGObject dependency to 2.16
-      - Try gobject.option.OptionParser (see #378704)
-      - gobject.set_application_name
-      - gobject.set_prgname
- [ ] Bump PyGTK dependency to 2.16 or 2.18
-      - gtk.InfoBar?
- [ ] Bump PyEnchant dependency to 1.4.0
-      - All dictionary providers now use a shared default personal word
-        file (largely obsoleting the DictWithPWL class)
-      - Dict.add_to_pwl renamed to Dict.add
-      - Dict.store_replacement
- [W] Migrate from Glade to gtk.Builder
- [W] Fix Glade buttons
- [ ] Adapt to GNOME Goal: Correct Desktop Files
- [W] Code cleanup, attribute and signals checks
- [ ] Merge experimental local patterns
- [ ] Use decorator module to preserve signatures in API documentation
-      - http://pypi.python.org/pypi/decorator/
- [ ] Fix focus changing when pasting subtitles
-      - http://www.mail-archive.com/gaupol-list@gna.org/msg00022.html
- [ ] Use gtk.accel_map_load and gtk.accel_map_save
- [ ] Use transifex.net for translations
- [ ] Save search dialog and text correction assistant window size
- [ ] http://tecnocode.co.uk/2009/10/01/unicode-in-gnome/
- [ ] Mark strings containing Unicode ellipses as unicode strings (u"")
-     or add unicode function calls for i18n functions
- [ ] MetadataItem._get_localized_field should try 'xx' if 'xx_YY'
-     fails
- [?] http://gmane.org/
- [ ] Update extension documentation
- [ ] Fix possibly broken BOM-handling caused by moving from
-     codecs.open to open + decode and add some fucking tests
- [ ] Rethink when and if at all to raise ParseErrors
- [ ] Fix remaining open bugs
+ --- Done above, todo below ---
+
+ * Split gaupol to aeidon and gaupol
+ * try ... except Exception as exc
+ * property(...) -> @property, @x.setter, @x.deleter
+ * Use collections.namedtuple for all return values
+ * Try gobject.option.OptionParser (see #378704)
+ * Use gtk.InfoBar
+ * Adapt to GNOME Goal: Correct Desktop Files
+ * Merge experimental local patterns
+ * Use decorator module to preserve signatures in API documentation
+   - http://pypi.python.org/pypi/decorator/
+ * Fix focus changing when pasting subtitles
+   - http://www.mail-archive.com/gaupol-list@gna.org/msg00022.html
+ * Use gtk.accel_map_load and gtk.accel_map_save
+ * Use transifex.net for translations
+ * Save search dialog and text correction assistant window size
+ * http://tecnocode.co.uk/2009/10/01/unicode-in-gnome/
+ * Mark strings containing Unicode ellipses as unicode strings (u"")
+   or add unicode function calls for i18n functions
+ * MetadataItem._get_localized_field should try 'xx' if 'xx_YY' fails
+ * http://gmane.org/
+ * Update extension documentation
+ * Fix possibly broken BOM-handling caused by moving from codecs.open
+   to open + decode and add some fucking tests
+ * Rethink when and if at all to raise ParseErrors
+ * Fix remaining open bugs
 
 Gaupol 0.17
 ===========
 
  * Add gaupol.View.add_column, which creates a new model
  ? Copy key-event hack from gedit for sidepane
-    - http://mail.gnome.org/archives/desktop-devel-list/2009-November/msg00263.html
+   - http://mail.gnome.org/archives/desktop-devel-list/2009-November/msg00263.html
 
 Gaupol 1.0
 ==========
@@ -69,11 +67,11 @@ Gaupol 3000
 
  * Replace the headers-dialog with a more general properties-dialog
    with format-specific fields to fill (?)
-    - SubRip: Write coordinates (extended SubRip format)
-    - MicroDVD: Write framerate information subtitle
+   - SubRip: Write coordinates (extended SubRip format)
+   - MicroDVD: Write framerate information subtitle
  * Bump Python dependency to something
-    - Remove imports from __future__
-    - http://docs.python.org/dev/whatsnew/2.7.html
-    - http://docs.python.org/dev/whatsnew/3.0.html
-    - http://docs.python.org/dev/whatsnew/3.1.html
-    - http://diveintopython3.org/whats-new.html
+   - Remove imports from __future__
+   - http://docs.python.org/dev/whatsnew/2.7.html
+   - http://docs.python.org/dev/whatsnew/3.0.html
+   - http://docs.python.org/dev/whatsnew/3.1.html
+   - http://diveintopython3.org/whats-new.html

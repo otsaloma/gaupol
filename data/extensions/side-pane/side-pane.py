@@ -16,17 +16,18 @@
 
 """A side pane that can be used by other extensions."""
 
-import gaupol.gtk
+import aeidon
+import gaupol
 import gtk
 import os
-_ = gaupol.i18n._
+_ = aeidon.i18n._
 
 
-class SidePane(gaupol.Observable):
+class SidePane(aeidon.Observable):
 
     """A side pane object for the main window.
 
-    The side pane is installed as an attribute to gaupol.gtk.Application and
+    The side pane is installed as an attribute to gaupol.Application and
     thus accessible to extensions as application.side_pane.
 
     Signals (arguments):
@@ -45,8 +46,8 @@ class SidePane(gaupol.Observable):
     def __init__(self, application):
         """Initialize a SidePane object."""
 
-        gaupol.Observable.__init__(self)
-        self._conf = gaupol.gtk.conf.extensions.side_pane
+        aeidon.Observable.__init__(self)
+        # self._conf = gaupol.conf.extensions.side_pane
         self._focus_handler_id = None
         self._has_focus = False
         self._label = gtk.Label(_("(Empty)"))
@@ -66,7 +67,7 @@ class SidePane(gaupol.Observable):
         self._init_notebook(side_vbox)
         self._paned.show_all()
         child = self._paned.get_child1()
-        child.props.visible = self._conf.visible
+        # child.props.visible = self._conf.visible
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
@@ -122,7 +123,7 @@ class SidePane(gaupol.Observable):
         self._paned.pack2(main_notebook_vbox, True, False)
         main_vbox.pack_start(self._paned)
         main_vbox.reorder_child(self._paned, 2)
-        self._paned.set_position(self._conf.width)
+        # self._paned.set_position(self._conf.width)
 
     def _on_application_window_set_focus(self, window, widget):
         """Disable unsafe UI manager actions.
@@ -243,12 +244,12 @@ class SidePane(gaupol.Observable):
         deactivated, which is when all extensions using it are deactivated.
         """
         self.application.window.disconnect(self._focus_handler_id)
-        self._conf.width = self._paned.get_position()
+        # self._conf.width = self._paned.get_position()
         child = self.get_current_page()
         if child is not None:
             self._conf.page = child.get_data("side_pane_extension_name")
         child = self._paned.get_child1()
-        self._conf.visible = child.props.visible
+        # self._conf.visible = child.props.visible
         main_vbox = self.application.window.get_children()[0]
         main_notebook = self._paned.get_child2().get_children()[0]
         main_vbox.remove(self._paned)
@@ -276,7 +277,7 @@ class SidePane(gaupol.Observable):
         self._paned.get_child1().show()
 
 
-class SidePaneExtension(gaupol.gtk.Extension):
+class SidePaneExtension(gaupol.Extension):
 
     """A side pane that can be used by other extensions."""
 
@@ -309,19 +310,20 @@ class SidePaneExtension(gaupol.gtk.Extension):
 
         directory = os.path.dirname(__file__)
         spec_file = os.path.join(directory, "side-pane.conf.spec")
-        self.read_config(spec_file)
+        # self.read_config(spec_file)
         application.side_pane = SidePane(application)
-        self._conf = gaupol.gtk.conf.extensions.side_pane
+        # self._conf = gaupol.conf.extensions.side_pane
         self._action_group = gtk.ActionGroup("side-pane")
         self._action_group.add_toggle_actions((
             ("toggle_side_pane", None, _("Si_de Pane"),
              None, _("Show or hide the side pane"),
-             self._on_toggle_side_pane_toggled, self._conf.visible),))
+             # self._on_toggle_side_pane_toggled, self._conf.visible),))
+             self._on_toggle_side_pane_toggled, True),))
         application.uim.insert_action_group(self._action_group, -1)
         ui_file = os.path.join(directory, "side-pane.ui.xml")
         self._uim_id = application.uim.add_ui_from_file(ui_file)
         callback = self._on_side_pane_close_button_clicked
-        application.side_pane.connect("close-button-clicked", callback)
+        # application.side_pane.connect("close-button-clicked", callback)
         application.uim.ensure_update()
         application.set_menu_notify_events("side-pane")
         self.application = application

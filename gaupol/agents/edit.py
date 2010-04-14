@@ -36,6 +36,7 @@ class EditAgent(aeidon.Delegate):
         """Destroy the preferences dialog."""
         self._pref_dialog.destroy()
         self._pref_dialog = None
+        gaupol.conf.write_to_file()
 
     def _set_unsafe_sensitivities(self, sensitive):
         """Set sensitivities of unsafe UI manager actions."""
