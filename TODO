@@ -15,6 +15,7 @@ Gaupol 0.16
    http://live.gnome.org/Gaupol
  * Use enchant's user spell-check dictionaries (usually stored in
    $HOME/.config/enchant) instead gaupol-specific ones
+ * Apply GNOME Goal: Correct Desktop Files
  * Raise Python dependency to 2.6
  * Raise PyGTK dependency to 2.16
  * Raise PyEnchant dependency to 1.4.0
@@ -29,7 +30,6 @@ Gaupol 0.16
  * Use collections.namedtuple for all return values
  * Try gobject.option.OptionParser (see #378704)
  * Use gtk.InfoBar
- * Adapt to GNOME Goal: Correct Desktop Files
  * Merge experimental local patterns
  * Use decorator module to preserve signatures in API documentation
    - http://pypi.python.org/pypi/decorator/
