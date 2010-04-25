@@ -1,4 +1,4 @@
-# Copyright (C) 2008 Osmo Salomaa
+# Copyright (C) 2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -25,14 +25,14 @@ _ = aeidon.i18n._
 
 class SidePane(aeidon.Observable):
 
-    """A side pane object for the main window.
+    """A side pane object for the application window.
 
-    The side pane is installed as an attribute to gaupol.Application and
-    thus accessible to extensions as application.side_pane.
+    Side pane is installed as an attribute of :class:`gaupol.Application` and
+    thus accessible to extensions as ``application.side_pane``.
 
-    Signals (arguments):
-     * close-button-clicked (side_pane)
-     * page-switched (side_pane, new_page)
+    Signals and their arguments for callback functions:
+     * ``close-button-clicked``: side_pane
+     * ``page-switched``: side_pane, new_page
     """
 
     # Parts of the code dealing with the header's toggle button and the menu
@@ -44,10 +44,9 @@ class SidePane(aeidon.Observable):
     _signals = ("close-button-clicked", "page-switched")
 
     def __init__(self, application):
-        """Initialize a SidePane object."""
-
+        """Initialize a :class:`SidePane` object."""
         aeidon.Observable.__init__(self)
-        # self._conf = gaupol.conf.extensions.side_pane
+        self._conf = gaupol.conf.extensions.side_pane
         self._focus_handler_id = None
         self._has_focus = False
         self._label = gtk.Label(_("(Empty)"))
@@ -59,26 +58,17 @@ class SidePane(aeidon.Observable):
         self._init_signal_handlers()
 
     def _init_gui(self):
-        """Initialize all user interface widgets."""
-
+        """Initialize all widgets."""
         side_vbox = gtk.VBox(False, 0)
         self._init_paned(side_vbox)
         self._init_header(side_vbox)
         self._init_notebook(side_vbox)
         self._paned.show_all()
         child = self._paned.get_child1()
-        # child.props.visible = self._conf.visible
-
-    def _init_signal_handlers(self):
-        """Initialize signal handlers."""
-
-        connect = self.application.window.connect
-        callback = self._on_application_window_set_focus
-        self._focus_handler_id = connect("set-focus", callback)
+        child.props.visible = self._conf.visible
 
     def _init_header(self, side_vbox):
         """Initialize the side pane button header."""
-
         header_hbox = gtk.HBox(False, 12)
         header_hbox.set_border_width(1)
         self._toggle_button.set_relief(gtk.RELIEF_NONE)
@@ -95,8 +85,7 @@ class SidePane(aeidon.Observable):
         header_hbox.pack_start(self._toggle_button, False, False)
         header_hbox.pack_start(gtk.Alignment(), True, True)
         close_button = gtk.Button()
-        args = (gtk.STOCK_CLOSE, gtk.ICON_SIZE_MENU)
-        image = gtk.image_new_from_stock(*args)
+        image = gtk.image_new_from_stock(gtk.STOCK_CLOSE, gtk.ICON_SIZE_MENU)
         close_button.add(image)
         close_button.set_relief(gtk.RELIEF_NONE)
         close_button.set_focus_on_click(False)
@@ -107,14 +96,12 @@ class SidePane(aeidon.Observable):
 
     def _init_notebook(self, side_vbox):
         """Initialize the side pane notebook."""
-
         self._notebook.set_show_border(False)
         self._notebook.set_show_tabs(False)
         side_vbox.pack_start(self._notebook, True, True)
 
     def _init_paned(self, side_vbox):
         """Initialize the horizontal pane container."""
-
         main_vbox = self.application.window.get_children()[0]
         main_notebook = main_vbox.get_children()[2]
         self._paned.pack1(side_vbox, False, False)
@@ -123,7 +110,12 @@ class SidePane(aeidon.Observable):
         self._paned.pack2(main_notebook_vbox, True, False)
         main_vbox.pack_start(self._paned)
         main_vbox.reorder_child(self._paned, 2)
-        # self._paned.set_position(self._conf.width)
+        self._paned.set_position(self._conf.width)
+
+    def _init_signal_handlers(self):
+        """Initialize signal handlers."""
+        self._focus_handler_id = self.application.window.connect(
+            "set-focus", self._on_application_window_set_focus)
 
     def _on_application_window_set_focus(self, window, widget):
         """Disable unsafe UI manager actions.
@@ -141,19 +133,16 @@ class SidePane(aeidon.Observable):
 
     def _on_header_close_button_clicked(self, button):
         """Hide the side pane from the main window."""
-
         self.hide()
         self.emit("close-button-clicked")
 
     def _on_header_menu_deactivate(self, menu):
         """Set the header toggle button back to inactive."""
-
         self._toggle_button.set_active(False)
         menu.destroy()
 
     def _on_header_menu_item_activate(self, menu_item):
-        """Set the currently active page to the activated to menu_item."""
-
+        """Set the currently active page to activated `menu_item`."""
         child = menu_item.get_data("child")
         self.set_current_page(child)
         self._toggle_button.set_active(False)
@@ -165,14 +154,12 @@ class SidePane(aeidon.Observable):
 
     def _on_header_toggle_button_button_press_event(self, button, event):
         """Show a menu listing all side pane pages."""
-
         if event.button != 1: return False
         self._show_header_menu(event)
         return True
 
     def _on_header_toggle_button_key_press_event(self, key, event):
         """Show a menu listing all side pane pages."""
-
         spaces = (gtk.keysyms.space, gtk.keysyms.KP_Space)
         enters = (gtk.keysyms.Return, gtk.keysyms.KP_Enter)
         if not event.keyval in (spaces + enters): return False
@@ -180,8 +167,7 @@ class SidePane(aeidon.Observable):
         return True
 
     def _position_header_menu(self, menu):
-        """Return coordinates for menu.popup below the toggle button."""
-
+        """Return coordinates for ``menu.popup`` below the toggle button."""
         # pylint: disable-msg=E1101
         x, y, = self._toggle_button.window.get_origin()
         allocation = self._toggle_button.get_allocation()
@@ -191,30 +177,27 @@ class SidePane(aeidon.Observable):
 
     def _show_header_menu(self, event):
         """Show a menu listing all side pane pages."""
-
         menu = gtk.Menu()
         for i in range(self._notebook.get_n_pages()):
             child = self._notebook.get_nth_page(i)
             title = self._notebook.get_tab_label_text(child)
             menu_item = gtk.MenuItem(title, False)
             menu_item.set_data("child", child)
-            callback = self._on_header_menu_item_activate
-            menu_item.connect("activate", callback)
+            menu_item.connect("activate", self._on_header_menu_item_activate)
             menu.append(menu_item)
         menu.connect("deactivate", self._on_header_menu_deactivate)
         menu.show_all()
         self._toggle_button.set_active(True)
-        function = self._position_header_menu
-        menu.popup(None, None, function, 1, event.time)
+        menu.popup(None, None, self._position_header_menu, 1, event.time)
 
     def add_page(self, child, name, title):
-        """Add child as a page to the side pane.
+        """Add `child` as a page to the side pane.
 
-        name should be a unique string and is used internally for saving the
+        `name` should be a unique string and is used internally for saving the
         active page name to the configuration file. Using the extension's
         module name is a good idea since that should be unique anyway, or if
         having multiple side pane pages per extension, then a name prefixed
-        with the module name. title is a translated string shown to the user.
+        with the module name. `title` is a string shown to the user.
         """
         child.set_data("side_pane_extension_name", name)
         self._notebook.append_page(child)
@@ -225,31 +208,29 @@ class SidePane(aeidon.Observable):
             self.set_current_page(child)
 
     def get_current_page(self):
-        """Return the child widget of the currently active page or None."""
-
+        """Return the child widget of the currently active page or ``None``."""
         if self._notebook.get_n_pages() == 0: return None
         page_num = self._notebook.get_current_page()
         return self._notebook.get_nth_page(page_num)
 
     def hide(self):
         """Hide the side pane from the application window."""
-
         self._paned.get_child1().hide()
 
     def remove(self):
         """Remove the entire side pane from the application window.
 
-        Use 'hide' unless you really know that you really want to remove the
-        side pane. Usually this is used only once the side pane extension is
-        deactivated, which is when all extensions using it are deactivated.
+        Use :meth:`hide` unless you really know that you really want to remove
+        the side pane. Usually this is used only once the side pane extension
+        is deactivated, which is when all extensions using it are deactivated.
         """
         self.application.window.disconnect(self._focus_handler_id)
-        # self._conf.width = self._paned.get_position()
+        self._conf.width = self._paned.get_position()
         child = self.get_current_page()
         if child is not None:
             self._conf.page = child.get_data("side_pane_extension_name")
         child = self._paned.get_child1()
-        # self._conf.visible = child.props.visible
+        self._conf.visible = child.props.visible
         main_vbox = self.application.window.get_children()[0]
         main_notebook = self._paned.get_child2().get_children()[0]
         main_vbox.remove(self._paned)
@@ -258,14 +239,12 @@ class SidePane(aeidon.Observable):
         self._paned.destroy()
 
     def remove_page(self, child):
-        """Remove child page from the side pane."""
-
+        """Remove `child` page from the side pane."""
         page_num = self._notebook.page_num(child)
         self._notebook.remove_page(page_num)
 
     def set_current_page(self, child):
-        """Set the currently active page to child widget."""
-
+        """Set the currently active page to `child`."""
         page_num = self._notebook.page_num(child)
         self._notebook.set_current_page(page_num)
         title = self._notebook.get_tab_label_text(child)
@@ -273,7 +252,6 @@ class SidePane(aeidon.Observable):
 
     def show(self):
         """Show the side pane in the application window."""
-
         self._paned.get_child1().show()
 
 
@@ -282,8 +260,7 @@ class SidePaneExtension(gaupol.Extension):
     """A side pane that can be used by other extensions."""
 
     def __init__(self):
-        """Initialize a SidePaneExtension object."""
-
+        """Initialize a :class:`SidePaneExtension` object."""
         self._action_group = None
         self._conf = None
         self._uim_id = None
@@ -291,14 +268,12 @@ class SidePaneExtension(gaupol.Extension):
 
     def _on_side_pane_close_button_clicked(self, side_pane):
         """Update the state of the corresponding menu item."""
-
         path = "/ui/menubar/view/1/side_pane"
         action = self.application.uim.get_action(path)
         action.set_active(False)
 
     def _on_toggle_side_pane_toggled(self, *args):
         """Show or hide the side pane."""
-
         if not self._conf.visible:
             self.application.side_pane.show()
         else: # Is visible.
@@ -306,31 +281,32 @@ class SidePaneExtension(gaupol.Extension):
         self._conf.visible = not self._conf.visible
 
     def setup(self, application):
-        """Setup extension for use with application."""
+        """Setup extension for use with `application`."""
+        gaupol.conf.register_extension("side_pane",
+                                       {"width": 200,
+                                        "page": "",
+                                        "visible": True})
 
-        directory = os.path.dirname(__file__)
-        spec_file = os.path.join(directory, "side-pane.conf.spec")
-        # self.read_config(spec_file)
+        self._conf = gaupol.conf.extensions.side_pane
         application.side_pane = SidePane(application)
-        # self._conf = gaupol.conf.extensions.side_pane
         self._action_group = gtk.ActionGroup("side-pane")
         self._action_group.add_toggle_actions((
             ("toggle_side_pane", None, _("Si_de Pane"),
              None, _("Show or hide the side pane"),
-             # self._on_toggle_side_pane_toggled, self._conf.visible),))
-             self._on_toggle_side_pane_toggled, True),))
+             self._on_toggle_side_pane_toggled, self._conf.visible),))
+
         application.uim.insert_action_group(self._action_group, -1)
+        directory = os.path.abspath(os.path.dirname(__file__))
         ui_file = os.path.join(directory, "side-pane.ui.xml")
         self._uim_id = application.uim.add_ui_from_file(ui_file)
         callback = self._on_side_pane_close_button_clicked
-        # application.side_pane.connect("close-button-clicked", callback)
+        application.side_pane.connect("close-button-clicked", callback)
         application.uim.ensure_update()
         application.set_menu_notify_events("side-pane")
         self.application = application
 
     def teardown(self, application):
-        """End use of extension with application."""
-
+        """End use of extension with `application`."""
         application.side_pane.remove()
         del application.side_pane
         self.application.uim.remove_ui(self._uim_id)

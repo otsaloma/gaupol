@@ -170,7 +170,7 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
             extensions.append((module, markup))
         extensions.sort(key=lambda x: x[1])
         for module, markup in extensions:
-            active = module in self.conf.active
+            active = module in gaupol.conf.extensions.active
             store.append((module, active, markup))
 
     def _on_about_button_clicked(self, *args):
@@ -239,7 +239,7 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
         module = self._get_selected_module()
         have_selection = self._get_selected_module() is not None
         self._about_button.set_sensitive(have_selection)
-        if module in self.conf.active:
+        if module in gaupol.conf.extensions.active:
             has_help = self.manager.has_help(module)
             self._help_button.set_sensitive(has_help)
             has_preferences = self.manager.has_preferences_dialog(module)
