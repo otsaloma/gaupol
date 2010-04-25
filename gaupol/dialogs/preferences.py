@@ -225,10 +225,10 @@ class ExtensionPage(aeidon.Delegate, gaupol.BuilderDialog):
                 dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
                 gaupol.util.flash_dialog(dialog)
             else: # Deactivation successful.
-                self.conf.active.remove(module)
+                gaupol.conf.extensions.active.remove(module)
         else: # Activating extension.
             self.manager.setup_extension(module)
-            self.conf.active.append(module)
+            gaupol.conf.extensions.active.append(module)
         for row in store:
             row[1] = self.manager.is_active(row[0])
         selection = self._tree_view.get_selection()

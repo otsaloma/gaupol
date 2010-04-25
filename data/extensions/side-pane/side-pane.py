@@ -41,7 +41,7 @@ class SidePane(aeidon.Observable):
     # Copyright (C) 2002 Ximian Inc.
     # Author: Dave Camp <dave@ximian.com>
 
-    _signals = ("close-button-clicked", "page-switched")
+    signals = ("close-button-clicked", "page-switched")
 
     def __init__(self, application):
         """Initialize a :class:`SidePane` object."""
@@ -297,8 +297,8 @@ class SidePaneExtension(gaupol.Extension):
 
         application.uim.insert_action_group(self._action_group, -1)
         directory = os.path.abspath(os.path.dirname(__file__))
-        ui_file = os.path.join(directory, "side-pane.ui.xml")
-        self._uim_id = application.uim.add_ui_from_file(ui_file)
+        ui_file_path = os.path.join(directory, "side-pane.ui.xml")
+        self._uim_id = application.uim.add_ui_from_file(ui_file_path)
         callback = self._on_side_pane_close_button_clicked
         application.side_pane.connect("close-button-clicked", callback)
         application.uim.ensure_update()

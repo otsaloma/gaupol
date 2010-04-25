@@ -1,4 +1,4 @@
-# Copyright (C) 2008-2009 Osmo Salomaa
+# Copyright (C) 2008-2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -24,28 +24,23 @@ import pango
 _ = aeidon.i18n._
 
 
-class AddBookmarkDialog(aeidon.Delegate):
+class AddBookmarkDialog(gaupol.BuilderDialog):
 
-    """Dialog for editing the metadata for a bookmark to be added."""
+    """Dialog for editing metadata for a bookmark to be added."""
+
+    _widgets = ("description_entry", "subtitle_spin")
 
     def __init__(self, parent, page):
-        """Initialize an AddBookmarkDialog object."""
-
-        directory = os.path.dirname(__file__)
-        glade_file = os.path.join(directory, "add-bookmark-dialog.glade")
-        glade_xml = gtk.glade.XML(glade_file)
-        dialog = glade_xml.get_widget("dialog")
-        aeidon.Delegate.__init__(self, dialog)
-        self._dialog = dialog
-        self._description_entry = glade_xml.get_widget("description_entry")
-        self._subtitle_spin = glade_xml.get_widget("subtitle_spin")
+        """Initialize an :class:`AddBookmarkDialog` object."""
+        directory = os.path.abspath(os.path.dirname(__file__))
+        ui_file_path = os.path.join(directory, "add-bookmark-dialog.ui")
+        gaupol.BuilderDialog.__init__(self, ui_file_path)
         self._init_values(page)
         self._dialog.set_transient_for(parent)
         self._dialog.set_default_response(gtk.RESPONSE_OK)
 
     def _init_values(self, page):
         """Initialize default values for widgets."""
-
         self._subtitle_spin.set_range(1, len(page.project.subtitles))
         row = page.view.get_selected_rows()[0]
         self._subtitle_spin.set_value(row + 1)
@@ -57,20 +52,16 @@ class AddBookmarkDialog(aeidon.Delegate):
 
     def get_description(self):
         """Return description of the bookmarked subtitle."""
-
         return self._description_entry.get_text()
 
     def get_row(self):
-        """Return the index of the bookmarked subtitle."""
-
+        """Return index of the bookmarked subtitle."""
         return self._subtitle_spin.get_value_as_int() - 1
 
     def run(self):
         """Show the dialog, run it and return response."""
-
         self._description_entry.grab_focus()
-        self._dialog.show()
-        return self._dialog.run()
+        return gaupol.BuilderDialog.run(self)
 
 
 class BookmarksExtension(gaupol.Extension):
@@ -78,8 +69,7 @@ class BookmarksExtension(gaupol.Extension):
     """Marking subtitles for easy navigation."""
 
     def __init__(self):
-        """Initialize a BookmarksExtension object."""
-
+        """Initialize a :class:`BookmarksExtension` object."""
         self._action_group = None
         self._bookmarks = None
         self._conf = None
@@ -92,7 +82,6 @@ class BookmarksExtension(gaupol.Extension):
 
     def _add_bookmark(self):
         """Add a bookmark for the selected subtitle in the current page."""
-
         page = self.application.get_current_page()
         if not page in self._bookmarks:
             self._bookmarks[page] = {}
@@ -108,9 +97,8 @@ class BookmarksExtension(gaupol.Extension):
 
     def _add_bookmark_column(self, page):
         """Add a bookmark column to the subtitle tree view of page."""
-
         renderer = gtk.CellRendererPixbuf()
-        directory = os.path.dirname(__file__)
+        directory = os.path.abspath(os.path.dirname(__file__))
         pixbuf_path = os.path.join(directory, "bookmark.png")
         pixbuf = gtk.gdk.pixbuf_new_from_file(pixbuf_path)
         # Translators: 'Bm.' is short for 'Bookmark'. It is used in the header
@@ -119,7 +107,7 @@ class BookmarksExtension(gaupol.Extension):
         column.set_clickable(True)
         column.set_resizable(False)
         column.set_reorderable(True)
-        # column.set_visible(self._conf.show_column)
+        column.set_visible(self._conf.show_column)
         label = page.view.get_header_label(_("Bm."))
         label.set_tooltip_text(_("Bookmark"))
         column.set_widget(label)
@@ -133,8 +121,7 @@ class BookmarksExtension(gaupol.Extension):
         page.view.connect("row-activated", toggle_bookmark, column)
 
     def _clear_attributes(self):
-        """Set values of attributes to None."""
-
+        """Set values of attributes to ``None``."""
         self._action_group = None
         self._bookmarks = None
         self._conf = None
@@ -146,8 +133,7 @@ class BookmarksExtension(gaupol.Extension):
         self.application = None
 
     def _connect_page(self, page):
-        """Connect to signals emitted by page."""
-
+        """Connect to signals emitted by `page`."""
         page.connect("view-created", self._on_page_view_created)
         callback = self._on_project_subtitles_inserted
         page.project.connect("subtitles-inserted", callback, page)
@@ -159,8 +145,7 @@ class BookmarksExtension(gaupol.Extension):
         page.project.connect("main-file-saved", callback, page)
 
     def _disconnect_application(self, application):
-        """Disconnect from signals emitted by application."""
-
+        """Disconnect from signals emitted by ``application``."""
         callback = self._on_application_page_added
         self.application.disconnect("page-added", callback)
         callback = self._on_application_page_closed
@@ -169,8 +154,7 @@ class BookmarksExtension(gaupol.Extension):
         self.application.disconnect("page-switched", callback)
 
     def _disconnect_page(self, page):
-        """Disconnect from signals emitted by page."""
-
+        """Disconnect from signals emitted by ``page``."""
         callback = self._on_page_view_created
         page.disconnect("view-created", callback)
         callback = self._on_project_subtitles_inserted
@@ -183,8 +167,7 @@ class BookmarksExtension(gaupol.Extension):
         page.project.disconnect("main-file-saved", callback)
 
     def _get_bookmark_file_path(self, page):
-        """Return the path to .gaupol-bookmarks file or None."""
-
+        """Return the path to ``.gaupol-bookmarks`` file or ``None``."""
         main_file = page.project.main_file
         if main_file is None: return None
         path = main_file.path
@@ -194,7 +177,6 @@ class BookmarksExtension(gaupol.Extension):
 
     def _init_actions(self):
         """Initialize UI manager actions."""
-
         self._action_group.add_actions((
             ("show_bookmarks_menu", None, _("_Bookmarks")),
             ("add_bookmark", gtk.STOCK_ADD, _("_Add\342\200\246"),
@@ -209,25 +191,25 @@ class BookmarksExtension(gaupol.Extension):
             ("previous_bookmark", None, _("_Previous"),
              None, _("Go to the previous bookmarked subtitle"),
              self._on_previous_bookmark_activate),))
+
         self._action_group.add_toggle_actions((
             ("toggle_bookmark_column", None, _("_Bookmark"),
              None, _("Show or hide the bookmark column"),
              self._on_toggle_bookmark_column_toggled,
-             # self._conf.show_column),))
-             True),))
+             self._conf.show_column),))
+
         self.application.uim.insert_action_group(self._action_group, -1)
-        directory = os.path.dirname(__file__)
-        ui_file = os.path.join(directory, "bookmarks.ui.xml")
-        self._uim_id = self.application.uim.add_ui_from_file(ui_file)
+        directory = os.path.abspath(os.path.dirname(__file__))
+        ui_file_path = os.path.join(directory, "bookmarks.ui.xml")
+        self._uim_id = self.application.uim.add_ui_from_file(ui_file_path)
         self.application.uim.ensure_update()
         self.application.set_menu_notify_events("bookmarks")
 
     def _init_attributes(self, application):
         """Initialize default values for attributes."""
-
         self._action_group = gtk.ActionGroup("bookmarks")
         self._bookmarks = {}
-        # self._conf = gaupol.conf.extensions.bookmarks
+        self._conf = gaupol.conf.extensions.bookmarks
         self._search_entry = gtk.Entry()
         self._side_container = gtk.Alignment(0, 0, 1, 1)
         self._side_vbox = gtk.VBox(False, 6)
@@ -237,7 +219,6 @@ class BookmarksExtension(gaupol.Extension):
 
     def _init_side_pane_widget(self):
         """Initialize the side pane widget."""
-
         self._side_vbox.set_border_width(2)
         hbox = gtk.HBox(False, 6)
         label = gtk.Label(_("Search:"))
@@ -255,7 +236,6 @@ class BookmarksExtension(gaupol.Extension):
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
-
         aeidon.util.connect(self, "_search_entry", "changed")
         aeidon.util.connect(self, "_tree_view", "key-press-event")
         aeidon.util.connect(self, "application", "page-added")
@@ -264,7 +244,6 @@ class BookmarksExtension(gaupol.Extension):
 
     def _init_tree_view(self):
         """Initialize the side pane tree view."""
-
         store = gtk.ListStore(bool, int, str)
         store_filter = store.filter_new()
         store_filter.set_visible_column(0)
@@ -289,28 +268,23 @@ class BookmarksExtension(gaupol.Extension):
 
     def _on_add_bookmark_activate(self, *args):
         """Add a bookmark for the selected subtitle in the current page."""
-
         self._add_bookmark()
 
     def _on_application_page_added(self, application, page):
-        """Connect to signals in added page and read bookmarks."""
-
+        """Connect to signals in `page` and read bookmarks."""
         self._prepare_page(page)
 
     def _on_application_page_closed(self, application, page):
-        """Remove all data stored for closed page."""
-
+        """Remove all data stored for `page`."""
         if page in self._bookmarks:
             del self._bookmarks[page]
 
     def _on_application_page_switched(self, application, page):
-        """Update the side pane to show page's bookmarks."""
-
+        """Update the side pane to show `page`'s bookmarks."""
         self._update_tree_view()
 
     def _on_edit_bookmarks_activate(self, *args):
         """Show the bookmarks page in the side pane."""
-
         action = self.application.get_action("toggle_side_pane")
         action.set_active(True)
         self.application.side_pane.set_current_page(self._side_container)
@@ -318,7 +292,6 @@ class BookmarksExtension(gaupol.Extension):
 
     def _on_next_bookmark_activate(self, *args):
         """Go to the next bookmarked subtitle."""
-
         # pylint: disable-msg=W0631
         page = self.application.get_current_page()
         row = page.view.get_selected_rows()[0]
@@ -331,23 +304,19 @@ class BookmarksExtension(gaupol.Extension):
         page.view.scroll_to_row(bookmark)
 
     def _on_page_view_created(self, page, view):
-        """Add the bookmark column to the subtitle tree view."""
-
+        """Add a bookmark column to `view`."""
         self._add_bookmark_column(page)
 
     def _on_project_main_file_opened(self, project, main_file, page):
-        """Read bookmarks from .gaupol-bookmarks file."""
-
+        """Read bookmarks from ``.gaupol-bookmarks`` file."""
         self._read_bookmarks(page)
 
     def _on_project_main_file_saved(self, project, main_file, page):
-        """Write bookmarks to .gaupol-bookmarks file."""
-
+        """Write bookmarks to a ``.gaupol-bookmarks`` file."""
         self._write_bookmarks(page)
 
     def _on_project_subtitles_inserted(self, project, rows, page):
-        """Update rows of bookmarks with rows inserted before them."""
-
+        """Update rows of bookmarks with `rows` inserted before them."""
         if not page in self._bookmarks: return
         store_filter = self._tree_view.get_model()
         store = store_filter.get_model()
@@ -361,7 +330,6 @@ class BookmarksExtension(gaupol.Extension):
 
     def _on_project_subtitles_removed(self, project, rows, page):
         """Remove bookmarks and update rows of those remaining."""
-
         if not page in self._bookmarks: return
         store_filter = self._tree_view.get_model()
         store = store_filter.get_model()
@@ -377,7 +345,6 @@ class BookmarksExtension(gaupol.Extension):
 
     def _on_previous_bookmark_activate(self, *args):
         """Go to the previous bookmarked subtitle."""
-
         # pylint: disable-msg=W0631
         page = self.application.get_current_page()
         row = page.view.get_selected_rows()[0]
@@ -390,8 +357,7 @@ class BookmarksExtension(gaupol.Extension):
         page.view.scroll_to_row(bookmark)
 
     def _on_search_entry_changed(self, entry):
-        """Check which bookmark descriptions match the new search string."""
-
+        """Check which bookmark descriptions match with new search string."""
         store_filter = self._tree_view.get_model()
         store = store_filter.get_model()
         pattern = entry.get_text().lower()
@@ -400,22 +366,19 @@ class BookmarksExtension(gaupol.Extension):
 
     def _on_toggle_bookmark_column_toggled(self, action, *args):
         """Show or hide the bookmark column."""
-
         page = self.application.get_current_page()
         col = page.view.columns.BOOKMARK
         page.view.get_column(col).set_visible(action.get_active())
         self._conf.show_column = action.get_active()
 
     def _on_tree_view_cell_edited(self, renderer, path, new_text):
-        """Update the description in the list store model of the tree view."""
-
+        """Update description in the list store model of the tree view."""
         store = self._tree_view.get_model().get_model()
         store[path][2] = unicode(new_text)
         page = self.application.get_current_page()
 
     def _on_tree_view_key_press_event(self, tree_view, event):
-        """Remove selected bookmark if Delete key pressed."""
-
+        """Remove selected bookmark if ``Delete`` key pressed."""
         if event.keyval != gtk.keysyms.Delete: return
         selection = self._tree_view.get_selection()
         store, tree_iter = selection.get_selected()
@@ -425,7 +388,6 @@ class BookmarksExtension(gaupol.Extension):
 
     def _on_tree_view_selection_changed(self, selection):
         """Jump to the subtitle of the selected bookmark."""
-
         store, tree_iter = selection.get_selected()
         if tree_iter is None: return
         path = store.get_path(tree_iter)
@@ -436,8 +398,7 @@ class BookmarksExtension(gaupol.Extension):
         page.view.scroll_to_row(row)
 
     def _prepare_page(self, page):
-        """Prepare data structures and signal handlers for page."""
-
+        """Prepare data structures and signal handlers for `page`."""
         if not page in self._bookmarks:
             self._bookmarks[page] = {}
         self._connect_page(page)
@@ -445,8 +406,7 @@ class BookmarksExtension(gaupol.Extension):
         self._read_bookmarks(page)
 
     def _read_bookmarks(self, page):
-        """Read bookmarks for page from .gaupol-bookmarks file."""
-
+        """Read bookmarks for `page` from ``.gaupol-bookmarks`` file."""
         if not page in self._bookmarks:
             self._bookmarks[page] = {}
         self._bookmarks[page].clear()
@@ -460,8 +420,7 @@ class BookmarksExtension(gaupol.Extension):
         self._update_tree_view()
 
     def _remove_bookmark(self, row):
-        """Remove existing bookmark in row of the current page."""
-
+        """Remove existing bookmark in `row` of the current page."""
         store = self._tree_view.get_model()
         path = None
         for i in range(len(store)):
@@ -472,14 +431,13 @@ class BookmarksExtension(gaupol.Extension):
         page = self.application.get_current_page()
         if row in self._bookmarks[page]:
             del self._bookmarks[page][row]
-        # Update the pixbuf column immeadiately.
+        # Update the pixbuf column immediately.
         page_store = page.view.get_model()
         page_store.row_changed(row, page_store.get_iter(row))
         self.update(self.application, page)
 
     def _set_cell_pixbuf(self, column, renderer, store, tree_iter, page):
-        """Set the pixbuf property of cell renderer."""
-
+        """Set the pixbuf property of `renderer`."""
         pixbuf = None
         if page in self._bookmarks:
             row = store.get_path(tree_iter)[0]
@@ -489,15 +447,13 @@ class BookmarksExtension(gaupol.Extension):
 
     def _toggle_bookmark(self, row):
         """Remove existing bookmark or add new bookmark to the current page."""
-
         page = self.application.get_current_page()
         if row in self._bookmarks[page]:
             return self._remove_bookmark(row)
         return self._add_bookmark()
 
     def _update_tree_view(self):
-        """Update the tree view to display bookmarks for the current page."""
-
+        """Update tree view to display bookmarks for the current page."""
         store_filter = self._tree_view.get_model()
         store = store_filter.get_model()
         store.clear()
@@ -510,8 +466,7 @@ class BookmarksExtension(gaupol.Extension):
             store.append((visible, row + 1, description))
 
     def _write_bookmarks(self, page):
-        """Write bookmarks from page to .gaupol-bookmarks file."""
-
+        """Write bookmarks from `page` to a ``.gaupol-bookmarks`` file."""
         if not page in self._bookmarks: return
         path = self._get_bookmark_file_path(page)
         if path is None: return
@@ -527,11 +482,8 @@ class BookmarksExtension(gaupol.Extension):
         aeidon.util.write(path, text, encoding)
 
     def setup(self, application):
-        """Setup extension for use with application."""
-
-        directory = os.path.dirname(__file__)
-        spec_file = os.path.join(directory, "bookmarks.conf.spec")
-        # self.read_config(spec_file)
+        """Setup extension for use with `application`."""
+        gaupol.conf.register_extension("bookmarks", {"show_column": True})
         self._init_attributes(application)
         self._init_tree_view()
         self._init_signal_handlers()
@@ -539,12 +491,12 @@ class BookmarksExtension(gaupol.Extension):
         self._init_actions()
         for page in application.pages:
             self._prepare_page(page)
-        args = (self._side_container, "bookmarks", _("Bookmarks"))
-        application.side_pane.add_page(*args)
+        application.side_pane.add_page(self._side_container,
+                                       "bookmarks",
+                                       _("Bookmarks"))
 
     def teardown(self, application):
-        """End use of extension with application."""
-
+        """End use of extension with `application`."""
         application.uim.remove_ui(self._uim_id)
         application.uim.remove_action_group(self._action_group)
         application.uim.ensure_update()
@@ -558,16 +510,15 @@ class BookmarksExtension(gaupol.Extension):
         self._clear_attributes()
 
     def update(self, application, page):
-        """Update state of extension for application and active page."""
-
+        """Update state of extension for `application` and active `page`."""
         action = self._action_group.get_action("add_bookmark")
-        # try: action.set_sensitive(len(page.view.get_selected_rows()) == 1)
-        # except AttributeError: action.set_sensitive(False)
-        # action = self._action_group.get_action("edit_bookmarks")
-        # action.set_sensitive(page is not None)
-        # action = self._action_group.get_action("next_bookmark")
-        # try: action.set_sensitive(bool(self._bookmarks[page]))
-        # except KeyError: action.set_sensitive(False)
-        # action = self._action_group.get_action("previous_bookmark")
-        # try: action.set_sensitive(bool(self._bookmarks[page]))
-        # except KeyError: action.set_sensitive(False)
+        try: action.set_sensitive(len(page.view.get_selected_rows()) == 1)
+        except AttributeError: action.set_sensitive(False)
+        action = self._action_group.get_action("edit_bookmarks")
+        action.set_sensitive(page is not None)
+        action = self._action_group.get_action("next_bookmark")
+        try: action.set_sensitive(bool(self._bookmarks[page]))
+        except KeyError: action.set_sensitive(False)
+        action = self._action_group.get_action("previous_bookmark")
+        try: action.set_sensitive(bool(self._bookmarks[page]))
+        except KeyError: action.set_sensitive(False)
