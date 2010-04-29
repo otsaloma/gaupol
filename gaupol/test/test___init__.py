@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -20,6 +20,6 @@ import gaupol
 class TestModule(gaupol.TestCase):
 
     def test_attributes(self):
-
+        assert hasattr(gaupol, "__version__")
         assert hasattr(gaupol, "COMBO_SEPARATOR")
-        assert hasattr(gaupol, "EXTRA")
+        assert hasattr(gaupol, "conf")
