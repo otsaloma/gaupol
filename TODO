@@ -28,7 +28,6 @@ Gaupol 0.16
  * try ... except Exception as exc
  * property(...) -> @property, @x.setter, @x.deleter
  * Use collections.namedtuple for all return values
- * Try gobject.option.OptionParser (see #378704)
  * Use gtk.InfoBar
  * Merge experimental local patterns
  * Use decorator module to preserve signatures in API documentation

@@ -99,3 +99,4 @@ from gaupol.extensionman import *
 from gaupol import agents
 from gaupol.application import *
 from gaupol.unittest import *
+from gaupol import main

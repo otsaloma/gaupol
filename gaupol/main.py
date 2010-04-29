@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2008 Osmo Salomaa
+# Copyright (C) 2005-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -14,8 +14,9 @@
 # You should have received a copy of the GNU General Public License along with
 # Gaupol. If not, see <http://www.gnu.org/licenses/>.
 
-"""GTK user interface initialization."""
+"""GTK+ user interface initialization."""
 
+import aeidon
 import atexit
 import gaupol
 import optparse
@@ -27,31 +28,21 @@ _ = aeidon.i18n._
 
 def _check_dependencies():
     """Check existance and versions of dependencies."""
-
-    if sys.version_info[:3] < (2, 5, 1):
-        print "Python 2.5.1 or greater is required to run Gaupol."
+    if sys.version_info[:3] < (2, 6, 0):
+        print "Python 2.6 or greater is required to run Gaupol."
         raise SystemExit(1)
-
     try:
         import gtk
         if gtk.pygtk_version < (2, 16, 0):
             raise ImportError
     except ImportError:
-        print "PyGTK 2.12.0 or greater is required to run Gaupol."
+        print "PyGTK 2.16 or greater is required to run Gaupol."
         raise SystemExit(1)
-
-    try:
-        import gtk.glade
-    except ImportError:
-        print "Glade support in PyGTK is required to run Gaupol."
-        raise SystemExit(1)
-
     try:
         import enchant
     except ImportError:
         print "PyEnchant not found;"
         print "spell-checking not possible."
-
     try:
         import chardet
     except ImportError:
@@ -59,17 +50,14 @@ def _check_dependencies():
         print "character encoding auto-detection not possible."
 
 def _init_application(opts, args):
-    """Initialize application and open files given as arguments."""
-
-    import gaupol
-    sys.excepthook = gaupol.util.show_exception
+    """Initialize application and open files from `args`."""
     application = gaupol.Application()
     jump_row = None
     re_jump = re.compile(r"\+\d*")
-    for arg in (x for x in args if re_jump.match(x) is not None):
+    for arg in filter(re_jump.match, args):
         jump_row = (max(0, int(arg[1:]) - 1) if arg[1:] else -1)
         args.remove(arg)
-    paths = [os.path.abspath(x) for x in args]
+    paths = map(os.path.abspath, args)
     if not opts.encoding in (None, "auto"):
         try: opts.encoding = aeidon.encodings.translate_code(opts.encoding)
         except ValueError:
@@ -90,48 +78,35 @@ def _init_application(opts, args):
         page.view.scroll_to_row(jump_row)
 
 def _init_configuration(path):
-    """Initialize the configuration module from saved values."""
+    """Read configuration values from file at `path`."""
+    if path is not None:
+        gaupol.conf.path = path
+        gaupol.conf.read_from_file()
+    atexit.register(gaupol.conf.write_to_file)
 
-    default = os.path.join(aeidon.CONFIG_HOME_DIR, "gaupol.conf")
-    path = (default if path is None else path)
-    gaupol.conf.config_file = os.path.abspath(path)
-    gaupol.conf.read()
-    atexit.register(gaupol.conf.write)
-
-def _list_encodings():
-    """List all available character encodings."""
-
+def _on_parser_list_encodings(*args):
+    """List all available character encodings and exit."""
     encodings = [x[0] for x in aeidon.encodings.get_valid()]
     if aeidon.util.chardet_available():
         encodings.insert(0, "auto")
     print "\n".join(encodings)
+    raise SystemExit(0)
 
-def _move_eggs():
-    """Move eggs to sys.path so that they are importable."""
-
-    try:
-        import enchant
-        return
-    except Exception:
-        pass
-    try:
-        import pkg_resources
-        pkg_resources.require("pyenchant")
-    except Exception:
-        pass
+def _on_parser_version(*args):
+    """Show the version number and exit."""
+    print "gaupol %s" % gaupol.__version__
+    raise SystemExit(0)
 
 def _parse_args(args):
-    """Parse and return options and arguments."""
-
+    """Parse and return options and arguments from `args`."""
     parser = optparse.OptionParser(
         formatter=optparse.IndentedHelpFormatter(2, 42),
-        usage=_("aeidon [OPTION...] [FILE...] [+[NUM]]"),)
+        usage=_("gaupol [OPTION...] [FILE...] [+[NUM]]"))
 
     parser.add_option(
         "--version",
-        action="store_true",
-        dest="version",
-        default=False,
+        action="callback",
+        callback=_on_parser_version,
         help=_("show version number and exit"),)
 
     parser.add_option(
@@ -150,13 +125,12 @@ def _parse_args(args):
         metavar=_("ENCODING"),
         dest="encoding",
         default=None,
-        help=_("set the encoding used to open files"),)
+        help=_("set the character encoding used to open files"),)
 
     parser.add_option(
         "--list-encodings",
-        action="store_true",
-        dest="list_encodings",
-        default=False,
+        action="callback",
+        callback=_on_parser_list_encodings,
         help=_("list all available character encodings"),)
 
     parser.add_option(
@@ -176,7 +150,7 @@ def _parse_args(args):
         dest="align_method",
         default="position",
         help=_("method used to align translation subtitles: "
-            "'number' or 'position'"),)
+               "'number' or 'position'"),)
 
     parser.add_option(
         "-v", "--video-file",
@@ -189,22 +163,12 @@ def _parse_args(args):
 
     return parser.parse_args(args)
 
-def _show_version():
-    """Show the version number."""
-
-    print "aeidon %s" % aeidon.__version__
-
 def main(args):
-    """Parse arguments and start application."""
-
-    _move_eggs()
+    """Parse arguments from `args` and start application."""
     _check_dependencies()
-    opts, args = _parse_args(args)
-    if opts.list_encodings:
-        return _list_encodings()
-    if opts.version:
-        return _show_version()
     aeidon.paths.xdg_copy_if_applicable()
+    opts, args = _parse_args(args)
+    sys.excepthook = gaupol.util.show_exception
     _init_configuration(opts.config_file)
     _init_application(opts, args)
     import gtk

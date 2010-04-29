@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2008 Osmo Salomaa
+# Copyright (C) 2006-2008,2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -20,11 +20,9 @@ import gaupol
 class TestModule(gaupol.TestCase):
 
     def test__check_dependencies(self):
-
         gaupol.main._check_dependencies()
 
     def test__init_application(self):
-
         opts = type("", (object,), {})
         opts.encoding = "ascii"
         opts.translation_file = self.new_subrip_file()
@@ -34,23 +32,15 @@ class TestModule(gaupol.TestCase):
         gaupol.main._init_application(opts, args)
 
     def test__init_configuration(self):
-
         path = self.new_subrip_file()
         open(path, "w").write("\n")
         gaupol.main._init_configuration(path)
 
-    def test__list_encodings(self):
+    def test__on_parser_list_encodings(self):
+        self.raises(SystemExit, gaupol.main._on_parser_list_encodings)
 
-        gaupol.main._list_encodings()
-
-    def test__move_eggs(self):
-
-        gaupol.main._move_eggs()
+    def test__on_parser_version(self):
+        self.raises(SystemExit, gaupol.main._on_parser_version)
 
     def test__parse_args(self):
-
         gaupol.main._parse_args([])
-
-    def test__show_version(self):
-
-        gaupol.main._show_version()
