@@ -1,6 +1,8 @@
 Gaupol 0.16
 ===========
 
+ * Save menu item keybindings to a GtkAccelMap rc-file in the user's
+   configuration directory
  * Use existing subtitle file mime-types instead of text/plain when
    adding files to the recent files database
  * Migrate from Glade to GtkBuilder
@@ -30,18 +32,15 @@ Gaupol 0.16
  * Use collections.namedtuple for all return values
  * Use gtk.InfoBar
  * Merge experimental local patterns
- * Use decorator module to preserve signatures in API documentation
-   - http://pypi.python.org/pypi/decorator/
  * Fix focus changing when pasting subtitles
    - http://www.mail-archive.com/gaupol-list@gna.org/msg00022.html
- * Use gtk.accel_map_load and gtk.accel_map_save
  * Use transifex.net for translations
  * Save search dialog and text correction assistant window size
  * http://tecnocode.co.uk/2009/10/01/unicode-in-gnome/
  * Mark strings containing Unicode ellipses as unicode strings (u"")
    or add unicode function calls for i18n functions
  * MetadataItem._get_localized_field should try 'xx' if 'xx_YY' fails
- * http://gmane.org/
+ * http://gmane.org/?
  * Update extension documentation
  * Fix possibly broken BOM-handling caused by moving from codecs.open
    to open + decode and add some fucking tests
@@ -52,8 +51,10 @@ Gaupol 0.17
 ===========
 
  * Add gaupol.View.add_column, which creates a new model
- ? Copy key-event hack from gedit for sidepane
+ * Copy key-event hack from gedit for sidepane?
    - http://mail.gnome.org/archives/desktop-devel-list/2009-November/msg00263.html
+ * Use decorator module to preserve signatures in API documentation?
+   - http://pypi.python.org/pypi/decorator/
 
 Gaupol 1.0
 ==========

@@ -17,6 +17,7 @@
 """GTK+ user interface controller for :class:`aeidon.Project`."""
 
 import aeidon
+import atexit
 import gaupol
 import gtk
 import itertools
@@ -264,6 +265,10 @@ class Application(aeidon.Observable):
         ui_xml_file = os.path.join(aeidon.DATA_DIR, "ui", "ui.xml")
         self.uim.add_ui_from_file(ui_xml_file)
         self.window.add_accel_group(self.uim.get_accel_group())
+        path = os.path.join(aeidon.CONFIG_HOME_DIR, "accels.conf")
+        if os.path.isfile(path):
+            gtk.accel_map_load(path)
+        atexit.register(gtk.accel_map_save, path)
         self.uim.ensure_update()
 
     def _init_uim_radio_groups(self, action_group):
