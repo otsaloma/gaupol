@@ -194,10 +194,6 @@ class Liner(aeidon.Parser):
             indices.append(self._get_break(lengths[a:z]) + a)
         return sorted(indices)
 
-    def _get_length_func(self):
-        """Return the length function used."""
-        return self._length_func
-
     def _get_start_index_ensure(self, value, lengths, max_lines):
         assert 0 <= value <= len(lengths)
 
@@ -215,6 +211,9 @@ class Liner(aeidon.Parser):
             if a > mean:
                 return i - 1
         return 1
+
+    def _invariant(self):
+        assert isinstance(self._length_func(""), (int, float))
 
     def _is_deviant(self):
         """Return ``True`` if line lengths deviate too much."""
@@ -238,14 +237,6 @@ class Liner(aeidon.Parser):
             prefix = ("\n" if i in indices else " ")
             text = text + prefix + items[i]
         self.text = text.strip()
-
-    def _set_length_func_require(self, func):
-        assert isinstance(func(""), (int, float))
-
-    def _set_length_func(self, func):
-        """Set the length function to use."""
-        self._length_func = func
-        self._space_length = func(" ")
 
     def break_lines(self):
         """Break lines and return text."""
@@ -278,6 +269,17 @@ class Liner(aeidon.Parser):
                 return False
         return True
 
+    @property
+    def length_func(self):
+        """Return the length function used."""
+        return self._length_func
+
+    @length_func.setter
+    def length_func(self, func):
+        """Set the length function to use."""
+        self._length_func = func
+        self._space_length = func(" ")
+
     def set_text(self, text, next=True):
         """Set the target text to search in and parse it.
 
@@ -285,5 +287,3 @@ class Liner(aeidon.Parser):
         """
         aeidon.Parser.set_text(self, text.strip(), next)
         self.text = self.text.strip()
-
-    length_func = property(_get_length_func, _set_length_func)

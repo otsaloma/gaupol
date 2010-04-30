@@ -28,24 +28,23 @@ Gaupol 0.16
 
  * Split gaupol to aeidon and gaupol
  * try ... except Exception as exc
- * property(...) -> @property, @x.setter, @x.deleter
  * Use collections.namedtuple for all return values
  * Use gtk.InfoBar
  * Merge experimental local patterns
  * Fix focus changing when pasting subtitles
    - http://www.mail-archive.com/gaupol-list@gna.org/msg00022.html
- * Use transifex.net for translations
  * Save search dialog and text correction assistant window size
  * http://tecnocode.co.uk/2009/10/01/unicode-in-gnome/
  * Mark strings containing Unicode ellipses as unicode strings (u"")
    or add unicode function calls for i18n functions
  * MetadataItem._get_localized_field should try 'xx' if 'xx_YY' fails
- * http://gmane.org/?
- * Update extension documentation
  * Fix possibly broken BOM-handling caused by moving from codecs.open
    to open + decode and add some fucking tests
  * Rethink when and if at all to raise ParseErrors
  * Fix remaining open bugs
+ * Update extension documentation
+ * Use transifex.net for translations
+ * http://gmane.org/?
 
 Gaupol 0.17
 ===========

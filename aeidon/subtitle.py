@@ -104,143 +104,14 @@ class Subtitle(object):
                 return self.calc.seconds_to_frame(value)
         raise ValueError("Invalid type for value: %s" % repr(type(value)))
 
-    def _get_duration(self):
-        """Return duration in correct mode."""
-        if self._mode == aeidon.modes.TIME:
-            return self._get_duration_time()
-        if self._mode == aeidon.modes.FRAME:
-            return self._get_duration_frame()
-        raise ValueError("Invalid mode: %s" % repr(self._mode))
-
-    def _get_duration_frame(self):
-        """Return duration as frames."""
-        bounds = (self.start_frame, self.end_frame)
-        return self.calc.get_frame_duration(*bounds)
-
-    def _get_duration_seconds(self):
-        """Return duration as seconds."""
-        time = self._get_duration_time()
-        return self.calc.time_to_seconds(time)
-
-    def _get_duration_time(self):
-        """Return duration as time."""
-        bounds = (self.start_time, self.end_time)
-        return self.calc.get_time_duration(*bounds)
-
-    def _get_end(self):
-        """Return end position in correct mode."""
-        return self._end
-
-    def _get_end_frame(self):
-        """Return end position as frames."""
-        if self._mode == aeidon.modes.TIME:
-            return self.calc.time_to_frame(self._end)
-        if self._mode == aeidon.modes.FRAME:
-            return self._end
-        raise ValueError("Invalid mode: %s" % repr(self._mode))
-
-    def _get_end_seconds(self):
-        """Return end position as seconds."""
-        time = self._get_end_time()
-        return self.calc.time_to_seconds(time)
-
-    def _get_end_time(self):
-        """Return end position as time."""
-        if self._mode == aeidon.modes.TIME:
-            return self._end
-        if self._mode == aeidon.modes.FRAME:
-            return self.calc.frame_to_time(self._end)
-        raise ValueError("Invalid mode: %s" % repr(self._mode))
-
-    def _get_framerate(self):
-        """Return framerate."""
-        return self._framerate
-
-    def _get_main_text(self):
-        """Return main text."""
-        return self._main_text
-
-    def _get_mode(self):
-        """Return current position mode."""
-        return self._mode
-
-    def _get_start(self):
-        """Return start position in correct mode."""
-        return self._start
-
-    def _get_start_frame(self):
-        """Return start position as frames."""
-        if self._mode == aeidon.modes.TIME:
-            return self.calc.time_to_frame(self._start)
-        if self._mode == aeidon.modes.FRAME:
-            return self._start
-        raise ValueError("Invalid mode: %s" % repr(self._mode))
-
-    def _get_start_seconds(self):
-        """Return start position as seconds."""
-        time = self._get_start_time()
-        return self.calc.time_to_seconds(time)
-
-    def _get_start_time(self):
-        """Return start position as time."""
-        if self._mode == aeidon.modes.TIME:
-            return self._start
-        if self._mode == aeidon.modes.FRAME:
-            return self.calc.frame_to_time(self._start)
-        raise ValueError("Invalid mode: %s" % repr(self._mode))
-
-    def _get_tran_text(self):
-        """Return translation text."""
-        return self._tran_text
-
-    def _set_duration(self, value):
-        """Set duration from `value`."""
-        value = self._convert_position(value)
-        if self._mode == aeidon.modes.TIME:
-            times = (self.start_time, value)
-            self._end = self.calc.add_times(*times)
-        elif self._mode == aeidon.modes.FRAME:
-            self._end = self.start_frame + value
-
-    def _set_end(self, value):
-        """Set end position from `value`."""
-        self._end = self._convert_position(value)
-
-    def _set_framerate(self, value):
-        """Set framerate from `value`."""
-        self._framerate = value
-        self.calc = aeidon.Calculator(value)
-
-    def _set_main_text(self, value):
-        """Set main text from `value`."""
-        self._main_text = unicode(value)
-
-    def _set_mode(self, mode):
-        """Set current position mode."""
-        if mode == aeidon.modes.TIME:
-            self._start = self.start_time
-            self._end = self.end_time
-        elif mode == aeidon.modes.FRAME:
-            self._start = self.start_frame
-            self._end = self.end_frame
-        self._mode = mode
-
-    def _set_start(self, value):
-        """Set start position from `value`."""
-        self._start = self._convert_position(value)
-
-    def _set_tran_text(self, value):
-        """Set translation text from `value`."""
-        self._tran_text = unicode(value)
-
     def convert_framerate(self, framerate):
         """Set framerate and convert positions to it."""
         coefficient = framerate.value / self._framerate.value
-        self._set_framerate(framerate)
+        self.framerate = framerate
         if self._mode == aeidon.modes.TIME:
             self.start = self.start_seconds / coefficient
             self.end = self.end_seconds / coefficient
-        elif self._mode == aeidon.modes.FRAME:
+        if self._mode == aeidon.modes.FRAME:
             self.start = int(round(coefficient * self.start_frame, 0))
             self.end = int(round(coefficient * self.end_frame, 0))
 
@@ -257,6 +128,88 @@ class Subtitle(object):
             container = copy.deepcopy(getattr(self, name))
             setattr(subtitle, name, container)
         return subtitle
+
+    @property
+    def duration(self):
+        """Return duration in correct mode."""
+        if self._mode == aeidon.modes.TIME:
+            return self.duration_time
+        if self._mode == aeidon.modes.FRAME:
+            return self.duration_frame
+        raise ValueError("Invalid mode: %s" % repr(self._mode))
+
+    @duration.setter
+    def duration(self, value):
+        """Set duration from `value`."""
+        value = self._convert_position(value)
+        if self._mode == aeidon.modes.TIME:
+            times = (self.start_time, value)
+            self._end = self.calc.add_times(*times)
+        if self._mode == aeidon.modes.FRAME:
+            self._end = self.start_frame + value
+
+    @property
+    def duration_frame(self):
+        """Return duration as frames."""
+        bounds = (self.start_frame, self.end_frame)
+        return self.calc.get_frame_duration(*bounds)
+
+    @property
+    def duration_seconds(self):
+        """Return duration as seconds."""
+        time = self.duration_time
+        return self.calc.time_to_seconds(time)
+
+    @property
+    def duration_time(self):
+        """Return duration as time."""
+        bounds = (self.start_time, self.end_time)
+        return self.calc.get_time_duration(*bounds)
+
+    @property
+    def end(self):
+        """Return end position in correct mode."""
+        return self._end
+
+    @end.setter
+    def end(self, value):
+        """Set end position from `value`."""
+        self._end = self._convert_position(value)
+
+    @property
+    def end_frame(self):
+        """Return end position as frames."""
+        if self._mode == aeidon.modes.TIME:
+            return self.calc.time_to_frame(self._end)
+        if self._mode == aeidon.modes.FRAME:
+            return self._end
+        raise ValueError("Invalid mode: %s" % repr(self._mode))
+
+    @property
+    def end_seconds(self):
+        """Return end position as seconds."""
+        time = self.end_time
+        return self.calc.time_to_seconds(time)
+
+    @property
+    def end_time(self):
+        """Return end position as time."""
+        if self._mode == aeidon.modes.TIME:
+            return self._end
+        if self._mode == aeidon.modes.FRAME:
+            return self.calc.frame_to_time(self._end)
+        raise ValueError("Invalid mode: %s" % repr(self._mode))
+
+    @property
+    def framerate(self):
+        """Return framerate."""
+        return self._framerate
+
+    @framerate.setter
+    def framerate(self, value):
+        """Set framerate from `value`."""
+        self._framerate = value
+        self.calc = aeidon.Calculator(value)
 
     def get_duration(self, mode):
         """Return duration in `mode`."""
@@ -294,20 +247,45 @@ class Subtitle(object):
         """Return ``True`` if container has been instantiated."""
         return name in dir(self)
 
+    @property
+    def main_text(self):
+        """Return main text."""
+        return self._main_text
+
+    @main_text.setter
+    def main_text(self, value):
+        """Set main text from `value`."""
+        self._main_text = unicode(value)
+
+    @property
+    def mode(self):
+        """Return current position mode."""
+        return self._mode
+
+    @mode.setter
+    def mode(self, mode):
+        """Set current position mode."""
+        if mode == aeidon.modes.TIME:
+            self._start = self.start_time
+            self._end = self.end_time
+        if mode == aeidon.modes.FRAME:
+            self._start = self.start_frame
+            self._end = self.end_frame
+        self._mode = mode
+
     def set_text(self, doc, value):
         """Set text corresponding to `doc` to `value`."""
         if doc == aeidon.documents.MAIN:
-            return self._set_main_text(value)
+            self.main_text = value
         if doc == aeidon.documents.TRAN:
-            return self._set_tran_text(value)
-        raise ValueError("Invalid document: %s" % repr(doc))
+            self.tran_text = value
 
     def scale_positions(self, value):
         """Multiply start and end positions by `value`."""
         if self._mode == aeidon.modes.TIME:
-            self.start = self._get_start_seconds() * value
-            self.end = self._get_end_seconds() * value
-        elif self._mode == aeidon.modes.FRAME:
+            self.start = self.start_seconds * value
+            self.end = self.end_seconds * value
+        if self._mode == aeidon.modes.FRAME:
             self.start = int(round(self._start * value, 0))
             self.end = int(round(self._end * value, 0))
 
@@ -316,32 +294,59 @@ class Subtitle(object):
         if isinstance(value, basestring):
             start = self.calc.add_times(self.start_time, value)
             end = self.calc.add_times(self.end_time, value)
-            self._set_start(start)
-            self._set_end(end)
+            self.start = start
+            self.end = end
         elif isinstance(value, int):
             start = self.start_frame + value
             end = self.end_frame + value
-            self._set_start(start)
-            self._set_end(end)
+            self.start = start
+            self.end = end
         elif isinstance(value, float):
             start = self.start_seconds + value
             end = self.end_seconds + value
-            self._set_start(start)
-            self._set_end(end)
+            self.start = start
+            self.end = end
 
-    start = property(_get_start, _set_start)
-    start_frame = property(_get_start_frame, None)
-    start_time = property(_get_start_time, None)
-    start_seconds = property(_get_start_seconds, None)
-    end = property(_get_end, _set_end)
-    end_frame = property(_get_end_frame, None)
-    end_time = property(_get_end_time, None)
-    end_seconds = property(_get_end_seconds, None)
-    duration = property(_get_duration, _set_duration)
-    duration_frame = property(_get_duration_frame, None)
-    duration_time = property(_get_duration_time, None)
-    duration_seconds = property(_get_duration_seconds, None)
-    main_text = property(_get_main_text, _set_main_text)
-    tran_text = property(_get_tran_text, _set_tran_text)
-    mode = property(_get_mode, _set_mode)
-    framerate = property(_get_framerate, _set_framerate)
+    @property
+    def start(self):
+        """Return start position in correct mode."""
+        return self._start
+
+    @start.setter
+    def start(self, value):
+        """Set start position from `value`."""
+        self._start = self._convert_position(value)
+
+    @property
+    def start_frame(self):
+        """Return start position as frames."""
+        if self._mode == aeidon.modes.TIME:
+            return self.calc.time_to_frame(self._start)
+        if self._mode == aeidon.modes.FRAME:
+            return self._start
+        raise ValueError("Invalid mode: %s" % repr(self._mode))
+
+    @property
+    def start_seconds(self):
+        """Return start position as seconds."""
+        time = self.start_time
+        return self.calc.time_to_seconds(time)
+
+    @property
+    def start_time(self):
+        """Return start position as time."""
+        if self._mode == aeidon.modes.TIME:
+            return self._start
+        if self._mode == aeidon.modes.FRAME:
+            return self.calc.frame_to_time(self._start)
+        raise ValueError("Invalid mode: %s" % repr(self._mode))
+
+    @property
+    def tran_text(self):
+        """Return translation text."""
+        return self._tran_text
+
+    @tran_text.setter
+    def tran_text(self, value):
+        """Set translation text from `value`."""
+        self._tran_text = unicode(value)
