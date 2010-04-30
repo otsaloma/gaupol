@@ -81,7 +81,7 @@ def _init_configuration(path):
     """Read configuration values from file at `path`."""
     if path is not None:
         gaupol.conf.path = path
-        gaupol.conf.read_from_file()
+    gaupol.conf.read_from_file()
     atexit.register(gaupol.conf.write_to_file)
 
 def _on_parser_list_encodings(*args):
