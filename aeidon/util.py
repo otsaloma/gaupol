@@ -139,6 +139,19 @@ def detect_format(path, encoding):
     raise aeidon.FormatError("Failed to detect format of file %s"
                              % repr(path))
 
+def detect_newlines(path):
+    """Detect and return the newline type of file at `path` or ``None``."""
+    try:
+        fobj = open(path, "rU")
+        fobj.read()
+        chars = fobj.newlines
+    except Exception:
+        return None
+    if chars is None: return None
+    if isinstance(chars, tuple):
+        chars = chars[0]
+    return aeidon.newlines.find_item("value", chars)
+
 @aeidon.deco.once
 def enchant_available():
     """Return ``True`` if :mod:`enchant` module is available."""

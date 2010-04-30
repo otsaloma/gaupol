@@ -77,6 +77,9 @@ class TestModule(aeidon.TestCase):
         self.raises(aeidon.FormatError,
                     aeidon.util.detect_format, path, "ascii")
 
+    def test_detect_newlines(self):
+        aeidon.util.detect_newlines(self.new_subrip_file())
+
     def test_enchant_available(self):
         reload(aeidon.util)
         assert aeidon.util.enchant_available()

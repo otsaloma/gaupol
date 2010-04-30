@@ -20,7 +20,7 @@ import aeidon
 import codecs
 import contextlib
 import os
-import sys
+import re
 
 __all__ = ("SubtitleFile",)
 
@@ -73,18 +73,17 @@ class SubtitleFile(object):
         Raise :exc:`UnicodeError` if decoding fails.
         Return a list of lines read.
         """
-        decode = lambda x: x.decode(self.encoding)
-        with contextlib.closing(open(self.path, "rU")) as fobj:
-            lines = map(decode, fobj.readlines())
-            chars = fobj.newlines
-            assert chars is not None
-        lines = [x[:-1] if x.endswith("\n") else x for x in lines]
+        re_newline_char = re.compile(r"\r?\n?$")
+        args = (self.path, "r", self.encoding)
+        with contextlib.closing(codecs.open(*args)) as fobj:
+            lines = fobj.readlines()
+            lines = [re_newline_char.sub("", x) for x in lines]
         for index in (0, -1):
             while lines and (not lines[index].strip()):
                 lines.pop(index)
-        if isinstance(chars, tuple):
-            chars = chars[0]
-        self.newline = aeidon.newlines.find_item("value", chars)
+        newline = aeidon.util.detect_newlines(self.path)
+        if newline is not None:
+            self.newline = newline
         if self.encoding == "utf_8":
             bom = unicode(codecs.BOM_UTF8, "utf_8")
             if lines and lines[0].startswith(bom):

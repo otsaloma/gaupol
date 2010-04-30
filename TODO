@@ -21,6 +21,8 @@ Gaupol 0.16
    $HOME/.config/enchant) instead gaupol-specific ones
  * Fix preview error on Windows (TypeError: environment can only
    contain strings, fixes #605805)
+ * Fix handling of Unicode BOMs that broke as a result of fixing
+   subtitle file reading functions for 0.15.1
  * Possibly fix i18n issues with Unicode ellipses of menu items
  * Fix i18n issues with pattern file names and descriptions
  * Apply GNOME Goal: Correct Desktop Files
@@ -32,11 +34,9 @@ Gaupol 0.16
 
  --- Done above, todo below ---
 
- * Split gaupol to aeidon and gaupol
- * Fix possibly broken BOM-handling caused by moving from codecs.open
-   to open + decode and add some fucking tests
+ * Split gaupol to aeidon and gaupol (#595809)
  * Rethink when and if at all to raise ParseErrors
- * Bug 609176 - Allow interactive search to find times
+ * Allow interactive search to find times
    - https://bugzilla.gnome.org/show_bug.cgi?id=609176
  * Update extension documentation
  * Use transifex.net for translations
@@ -52,6 +52,8 @@ Gaupol 0.17
    - http://pypi.python.org/pypi/decorator/
  * Use gtk.InfoBar instead of gaupol.ErrorDialog
    - PreviewAgent._show_*_error_dialog
+ * Batch convert multiple subtitles to an other file format
+   - https://bugzilla.gnome.org/show_bug.cgi?id=595685
 
 Gaupol 1.0
 ==========

@@ -42,33 +42,6 @@ class TestSubtitleFile(aeidon.TestCase):
             assert not line.endswith("\n")
         assert lines[-1]
 
-    def test__read_lines__utf_16_be(self):
-        with open(self.file.path, "r") as fobj:
-            text = fobj.read()
-        with codecs.open(self.file.path, "w", "utf_16_be") as fobj:
-            fobj.write(unicode(codecs.BOM_UTF16_BE, "utf_16_be"))
-            fobj.write(text)
-        self.file.encoding = "utf_16_be"
-        lines = self.file._read_lines()
-
-    def test__read_lines__utf_16_le(self):
-        with open(self.file.path, "r") as fobj:
-            text = fobj.read()
-        with codecs.open(self.file.path, "w", "utf_16_le") as fobj:
-            fobj.write(unicode(codecs.BOM_UTF16_LE, "utf_16_le"))
-            fobj.write(text)
-        self.file.encoding = "utf_16_le"
-        lines = self.file._read_lines()
-
-    def test__read_lines__utf_8_sig(self):
-        with open(self.file.path, "r") as fobj:
-            text = fobj.read()
-        with codecs.open(self.file.path, "w", "utf_8_sig") as fobj:
-            fobj.write(text)
-        self.file.encoding = "utf_8"
-        lines = self.file._read_lines()
-        assert self.file.encoding == "utf_8_sig"
-
     def test_copy_from(self):
         self.file.has_utf_16_bom = False
         self.file.header = "test"
@@ -82,6 +55,44 @@ class TestSubtitleFile(aeidon.TestCase):
     def test_read(self):
         self.raises(NotImplementedError,
                     self.file.read)
+
+    def test_read__utf_16(self):
+        path = self.new_subrip_file()
+        with open(path, "r") as fobj:
+            text = fobj.read()
+        with codecs.open(path, "w", "utf_16") as fobj:
+            fobj.write(text)
+        sfile = aeidon.files.new(aeidon.formats.SUBRIP, path, "utf_16")
+        sfile.read()
+
+    def test_read__utf_16_be(self):
+        path = self.new_subrip_file()
+        with open(path, "r") as fobj:
+            text = fobj.read()
+        with codecs.open(path, "w", "utf_16_be") as fobj:
+            fobj.write(unicode(codecs.BOM_UTF16_BE, "utf_16_be"))
+            fobj.write(text)
+        sfile = aeidon.files.new(aeidon.formats.SUBRIP, path, "utf_16_be")
+        sfile.read()
+
+    def test_read__utf_16_le(self):
+        path = self.new_subrip_file()
+        with open(path, "r") as fobj:
+            text = fobj.read()
+        with codecs.open(path, "w", "utf_16_le") as fobj:
+            fobj.write(unicode(codecs.BOM_UTF16_LE, "utf_16_le"))
+            fobj.write(text)
+        sfile = aeidon.files.new(aeidon.formats.SUBRIP, path, "utf_16_le")
+        sfile.read()
+
+    def test_read__utf_8_sig(self):
+        path = self.new_subrip_file()
+        with open(path, "r") as fobj:
+            text = fobj.read()
+        with codecs.open(path, "w", "utf_8_sig") as fobj:
+            fobj.write(text)
+        sfile = aeidon.files.new(aeidon.formats.SUBRIP, path, "utf_8_sig")
+        sfile.read()
 
     def test_write(self):
         self.raises(NotImplementedError,
