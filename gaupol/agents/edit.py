@@ -153,10 +153,20 @@ class EditAgent(aeidon.Delegate):
         """Paste texts from the clipboard."""
         page = self.get_current_page()
         rows = page.view.get_selected_rows()
-        col = page.view.get_focus()[1]
+        row, col = page.view.get_focus()
         doc = page.text_column_to_document(col)
         length = len(page.project.subtitles)
+        # Ensure that even if new subtitles need to be inserted,
+        # focus and scroll position are not moved to the end.
+        rect = page.view.get_visible_rect()
+        window = page.view.get_bin_window()
+        window.freeze_updates()
         rows = page.project.paste_texts(rows[0], doc)
+        rows = page.view.get_selected_rows()
+        page.view.set_focus(row, col)
+        page.view.select_rows(rows)
+        page.view.scroll_to_point(rect.x, rect.y)
+        window.thaw_updates()
         count = len(page.project.subtitles) - length
         if count <= 0: return
         self.flash_message(aeidon.i18n.ngettext(

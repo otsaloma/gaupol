@@ -5,6 +5,7 @@ Gaupol 0.16
    configuration directory
  * Use existing subtitle file mime-types instead of text/plain when
    adding files to the recent files database
+ * Fix focus changing when pasting subtitles
  * Migrate from Glade to GtkBuilder
  * Use attributes instead of markup in GtkBuilder files
  * Fix GtkBuilder constructed buttons to respect user preferences
@@ -28,10 +29,7 @@ Gaupol 0.16
 
  * Split gaupol to aeidon and gaupol
  * Use collections.namedtuple for all return values
- * Use gtk.InfoBar
  * Merge experimental local patterns
- * Fix focus changing when pasting subtitles
-   - http://www.mail-archive.com/gaupol-list@gna.org/msg00022.html
  * Save search dialog and text correction assistant window size
  * http://tecnocode.co.uk/2009/10/01/unicode-in-gnome/
  * Mark strings containing Unicode ellipses as unicode strings (u"")
@@ -53,6 +51,8 @@ Gaupol 0.17
    - http://mail.gnome.org/archives/desktop-devel-list/2009-November/msg00263.html
  * Use decorator module to preserve signatures in API documentation?
    - http://pypi.python.org/pypi/decorator/
+ * Use gtk.InfoBar instead of gaupol.ErrorDialog
+   - PreviewAgent._show_*_error_dialog
 
 Gaupol 1.0
 ==========
