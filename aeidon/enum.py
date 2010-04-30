@@ -56,6 +56,8 @@ class EnumerationItem(int):
                                      % (repr(self), repr(other)))
 
             return int.__cmp__(int(self), int(other))
+        if other is None:
+            return -1
         raise ValueError("Cannot compare %s with %s"
                          % (repr(self), repr(other)))
 
