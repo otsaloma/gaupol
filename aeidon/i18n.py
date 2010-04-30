@@ -37,12 +37,12 @@ gettext.textdomain("gaupol")
 
 def _(message):
     """Return the localized translation of `message`."""
-    return gettext.gettext(message)
+    return gettext.gettext(unicode(message))
 
 def dgettext(domain, message):
     """Return the localized translation of `message` from `domain`."""
-    return gettext.dgettext(domain, message)
+    return gettext.dgettext(domain, unicode(message))
 
 def ngettext(singular, plural, n):
     """Return the localized translation of `singular` or `plural`."""
-    return gettext.ngettext(singular, plural, n)
+    return gettext.ngettext(unicode(singular), unicode(plural), n)
