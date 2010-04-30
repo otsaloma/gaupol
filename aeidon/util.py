@@ -442,7 +442,7 @@ def start_process(command, **kwargs):
                                 universal_newlines=True,
                                 **kwargs)
 
-    except OSError, (no, message):
+    except OSError as (no, message):
         raise aeidon.ProcessError(message)
 
 def title_to_lower_case_ensure(value, title_name):

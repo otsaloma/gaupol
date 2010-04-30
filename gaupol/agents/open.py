@@ -362,7 +362,7 @@ class OpenAgent(aeidon.Delegate):
         except aeidon.FormatError:
             gaupol.util.set_cursor_normal(self.window)
             self._show_format_error_dialog(basename)
-        except IOError, (no, message):
+        except IOError as (no, message):
             gaupol.util.set_cursor_normal(self.window)
             self._show_io_error_dialog(basename, message)
         except aeidon.ParseError:

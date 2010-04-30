@@ -71,7 +71,7 @@ class TextAgent(aeidon.Delegate):
         directory = os.path.join(aeidon.CONFIG_HOME_DIR, "spell-check")
         path = os.path.join(directory, "%s.dict" % language)
         try: dictionary = enchant.DictWithPWL(str(language), str(path))
-        except IOError, (no, message):
+        except IOError:
             aeidon.util.print_write_io(sys.exc_info(), path)
             dictionary = enchant.Dict(str(language))
         # Sometimes enchant will initialize a dictionary that will not

@@ -371,7 +371,7 @@ class SearchDialog(gaupol.BuilderDialog):
             return page.project.set_search_string(pattern, ignore_case)
         flags = (re.IGNORECASE if ignore_case else 0)
         try: page.project.set_search_regex(pattern, flags)
-        except re.error, message:
+        except re.error as message:
             self._show_regex_error_dialog_pattern(str(message))
             raise gaupol.Default
         self._add_pattern_to_history()
@@ -516,7 +516,7 @@ class SearchDialog(gaupol.BuilderDialog):
         subtitle = page.project.subtitles[self._match_row]
         length = len(subtitle.get_text(self._match_doc))
         try: page.project.replace()
-        except re.error, message:
+        except re.error as message:
             return self._show_regex_error_dialog_replacement(str(message))
         shift = (len(subtitle.get_text(self._match_doc)) - length)
         self._match_span[1] += shift
@@ -535,7 +535,7 @@ class SearchDialog(gaupol.BuilderDialog):
             self._set_pattern(page)
             self._set_replacement(page)
             try: count += page.project.replace_all()
-            except re.error, message:
+            except re.error as message:
                 self._show_regex_error_dialog_replacement(str(message))
                 break
         self._reset_properties()

@@ -97,9 +97,9 @@ class PreviewAgent(aeidon.Delegate):
                                                                   offset,
                                                                   encoding)
 
-        except aeidon.ProcessError, message:
+        except aeidon.ProcessError as message:
             return self._show_process_error_dialog(message)
-        except (IOError, OSError), (no, message):
+        except (IOError, OSError) as (no, message):
             return self._show_io_error_dialog(message)
         except UnicodeError:
             return self._show_encoding_error_dialog()
