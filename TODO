@@ -5,6 +5,9 @@ Gaupol 0.16
    configuration directory
  * Use existing subtitle file mime-types instead of text/plain when
    adding files to the recent files database
+ * Add miscellaneous Latin common error corrections patterns
+ * Add help menu item to browse wiki documentation at
+   http://live.gnome.org/Gaupol
  * Fix focus changing when pasting subtitles
  * Migrate from Glade to GtkBuilder
  * Use attributes instead of markup in GtkBuilder files
@@ -14,8 +17,6 @@ Gaupol 0.16
    writing configuration files
  * Use gtk.RecentAction for recent file menus (fixes #615372 and
    probably #608951)
- * Add help menu item to browse wiki documentation at
-   http://live.gnome.org/Gaupol
  * Use enchant's user spell-check dictionaries (usually stored in
    $HOME/.config/enchant) instead gaupol-specific ones
  * Apply GNOME Goal: Correct Desktop Files
@@ -28,8 +29,6 @@ Gaupol 0.16
  --- Done above, todo below ---
 
  * Split gaupol to aeidon and gaupol
- * Use collections.namedtuple for all return values
- * Merge experimental local patterns
  * Save search dialog and text correction assistant window size
  * http://tecnocode.co.uk/2009/10/01/unicode-in-gnome/
  * Mark strings containing Unicode ellipses as unicode strings (u"")

@@ -1,4 +1,13 @@
 [Common Error Pattern]
+_Name=Spelling of a.m. and p.m.
+_Description=Change the various spellings 12-hour periods to "a.m." and "p.m."
+Classes=Human;OCR;
+Pattern=(\d)(\s*p\.? ?m\.?)(\W|$)
+Flags=DOTALL;MULTILINE;UNICODE;IGNORECASE;
+Replacement=\1 p.m.\3
+Repeat=False
+
+[Common Error Pattern]
 _Name=Letter "O" in a number
 _Description=Replace letter "O" with a zero in a number
 Classes=OCR;
@@ -16,6 +25,33 @@ Pattern=[oO]((?!2\W)(\d|[,.]\d)(?![^\W\d]))
 Flags=DOTALL;MULTILINE;UNICODE;
 Replacement=\060\1
 Repeat=True
+
+[Common Error Pattern]
+_Name=Space between number and unit
+_Description=Add or remove space between a number and the associated unit
+Classes=Human;OCR;
+Pattern=([$£€]) (\d+)
+Flags=DOTALL;MULTILINE;UNICODE;
+Replacement=\1\2
+Repeat=False
+
+[Common Error Pattern]
+_Name=Space between number and unit
+_Description=Add or remove space between a number and the associated unit
+Classes=Human;OCR;
+Pattern=(\d+) (st|nd|rd|th)\b
+Flags=DOTALL;MULTILINE;UNICODE;
+Replacement=\1\2
+Repeat=False
+
+[Common Error Pattern]
+_Name=Space between number and unit
+_Description=Add or remove space between a number and the associated unit
+Classes=Human;OCR;
+Pattern=(\d+)(%)
+Flags=DOTALL;MULTILINE;UNICODE;
+Replacement=\1 \2
+Repeat=False
 
 [Common Error Pattern]
 _Name=Double apostrophe
@@ -188,4 +224,13 @@ Classes=OCR;
 Pattern=(?<!\.\w)(?<!\.)\.(?=[:?!])
 Flags=DOTALL;MULTILINE;UNICODE;
 Replacement=
+Repeat=False
+
+[Common Error Pattern]
+_Name=Terminating double-dashes
+_Description=Replace a single clause-terminating dash with two dashes
+Classes=Human;OCR;
+Pattern=([\w"'«»])(?<!-)-(?!-)([^\w']|$)
+Flags=DOTALL;MULTILINE;UNICODE;
+Replacement=\1--\2
 Repeat=False
