@@ -19,6 +19,8 @@ Gaupol 0.16
    probably #608951)
  * Use enchant's user spell-check dictionaries (usually stored in
    $HOME/.config/enchant) instead gaupol-specific ones
+ * Fix preview error on Windows (TypeError: environment can only
+   contain strings, fixes #605805)
  * Possibly fix i18n issues with Unicode ellipses of menu items
  * Fix i18n issues with pattern file names and descriptions
  * Apply GNOME Goal: Correct Desktop Files
@@ -34,7 +36,8 @@ Gaupol 0.16
  * Fix possibly broken BOM-handling caused by moving from codecs.open
    to open + decode and add some fucking tests
  * Rethink when and if at all to raise ParseErrors
- * Fix remaining open bugs
+ * Bug 609176 - Allow interactive search to find times
+   - https://bugzilla.gnome.org/show_bug.cgi?id=609176
  * Update extension documentation
  * Use transifex.net for translations
  * http://gmane.org/?

@@ -27,10 +27,8 @@ import os
 import re
 import subprocess
 import sys
-import traceback
 import urllib
 import urlparse
-import webbrowser
 
 
 def affirm(value):
@@ -438,7 +436,9 @@ def start_process(command, **kwargs):
         return subprocess.Popen(command,
                                 shell=(sys.platform != "win32"),
                                 cwd=os.getcwd(),
-                                env=os.environ.copy(),
+                                env=(os.environ.copy()
+                                     if sys.platform != "win32" else None),
+
                                 universal_newlines=True,
                                 **kwargs)
 
