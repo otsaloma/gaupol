@@ -48,22 +48,30 @@ class MetadataItem(object):
         modifier = aeidon.locales.get_system_modifier()
         if locale is None:
             return self.get_field(name)
+        # 'xx_YY@Zzzz', fall back to 'xx@Zzzz'.
         if ("_" in locale) and (modifier is not None):
             key = "%s[%s@%s]" % (name, locale, modifier)
             if key in self.fields:
                 return self.get_field(key)
-        if "_" in locale:
+            locale = locale[0:2]
+        # 'xx_YY', fall back to 'xx'.
+        if ("_" in locale) and (modifier is None):
             key = "%s[%s]" % (name, locale)
             if key in self.fields:
                 return self.get_field(key)
+            locale = locale[0:2]
+        ## 'xx@Zzzz', fall back to unlocalized.
         if (not "_" in locale) and (modifier is not None):
             key = "%s[%s@%s]" % (name, locale, modifier)
             if key in self.fields:
                 return self.get_field(key)
-        if (not "_" in locale):
+            return self.get_field(name)
+        ## 'xx', fall back to unlocalized.
+        if (not "_" in locale) and (modifier is None):
             key = "%s[%s]" % (name, locale)
             if key in self.fields:
                 return self.get_field(key)
+            return self.get_field(name)
         return self.get_field(name)
 
     def get_description(self, localize=True):

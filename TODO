@@ -20,6 +20,7 @@ Gaupol 0.16
  * Use enchant's user spell-check dictionaries (usually stored in
    $HOME/.config/enchant) instead gaupol-specific ones
  * Possibly fix i18n issues with Unicode ellipses of menu items
+ * Fix i18n issues with pattern file names and descriptions
  * Apply GNOME Goal: Correct Desktop Files
  * Raise Python dependency to 2.6
  * Raise PyGTK dependency to 2.16
@@ -30,7 +31,6 @@ Gaupol 0.16
  --- Done above, todo below ---
 
  * Split gaupol to aeidon and gaupol
- * MetadataItem._get_localized_field should try 'xx' if 'xx_YY' fails
  * Fix possibly broken BOM-handling caused by moving from codecs.open
    to open + decode and add some fucking tests
  * Rethink when and if at all to raise ParseErrors
