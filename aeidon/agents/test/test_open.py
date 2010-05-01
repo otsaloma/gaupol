@@ -72,7 +72,9 @@ class TestOpenAgent(aeidon.TestCase):
 
         os.chmod(path, 0777)
 
+    @aeidon.deco.monkey_patch(aeidon, "debug")
     def test_open_main__parse_error(self):
+        aeidon.debug = False
         path = self.new_subrip_file()
         fobj = open(path, "w")
         fobj.write("00:00:01,000 --> 00:00:02,000\n\n")

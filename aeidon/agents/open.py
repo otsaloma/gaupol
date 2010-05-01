@@ -76,7 +76,11 @@ class OpenAgent(aeidon.Delegate):
         except (IOError, UnicodeError):
             raise
         except Exception:
-            raise aeidon.ParseError("Failed to parse sfile %s" % repr(sfile))
+            if not aeidon.debug:
+                raise aeidon.ParseError("Failed to parse sfile %s"
+                                        % repr(sfile))
+
+            raise
 
     def _sort_subtitles_ensure(self, value, subtitles):
         sorted_subtitles, wrong_order_count = value
