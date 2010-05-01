@@ -1,91 +1,196 @@
 [encoding: UTF-8]
-data/gaupol.desktop.in
-data/glade/assistants/text/capitalization.glade
-data/glade/assistants/text/common-error.glade
-data/glade/assistants/text/confirmation.glade
-data/glade/assistants/text/hearing-impaired.glade
-data/glade/assistants/text/introduction.glade
-data/glade/assistants/text/join-split-words.glade
-data/glade/assistants/text/line-break-options.glade
-data/glade/assistants/text/line-break.glade
-data/glade/assistants/text/progress.glade
-data/glade/dialogs/debug.glade
-data/glade/dialogs/duration.glade
-data/glade/dialogs/encoding.glade
-data/glade/dialogs/framerate.glade
-data/glade/dialogs/header.glade
-data/glade/dialogs/insert.glade
-data/glade/dialogs/language.glade
-data/glade/dialogs/multiclose.glade
-data/glade/dialogs/open.glade
-data/glade/dialogs/preferences.glade
-data/glade/dialogs/previewerr.glade
-data/glade/dialogs/save.glade
-data/glade/dialogs/search.glade
-data/glade/dialogs/shift.glade
-data/glade/dialogs/spellcheck.glade
-data/glade/dialogs/split.glade
-data/glade/dialogs/transform.glade
-[type: gettext/ini]data/patterns/Latn-en.line-break.in
-[type: gettext/ini]data/patterns/Latn-en.hearing-impaired.in
-[type: gettext/ini]data/patterns/Latn.hearing-impaired.in
-[type: gettext/ini]data/patterns/Zyyy.common-error.in
-[type: gettext/ini]data/patterns/Latn.common-error.in
+[type: gettext/glade]data/extensions/bookmarks/add-bookmark-dialog.ui
+[type: gettext/glade]data/ui/debug-dialog.ui
+[type: gettext/glade]data/ui/duration-dialog.ui
+[type: gettext/glade]data/ui/encoding-dialog.ui
+[type: gettext/glade]data/ui/framerate-dialog.ui
+[type: gettext/glade]data/ui/header-dialog.ui
+[type: gettext/glade]data/ui/insert-dialog.ui
+[type: gettext/glade]data/ui/language-dialog.ui
+[type: gettext/glade]data/ui/multiclose-dialog.ui
+[type: gettext/glade]data/ui/open-dialog.ui
+[type: gettext/glade]data/ui/preferences-dialog.ui
+[type: gettext/glade]data/ui/previewerr-dialog.ui
+[type: gettext/glade]data/ui/save-dialog.ui
+[type: gettext/glade]data/ui/search-dialog.ui
+[type: gettext/glade]data/ui/shift-dialog.ui
+[type: gettext/glade]data/ui/spellcheck-dialog.ui
+[type: gettext/glade]data/ui/split-dialog.ui
+[type: gettext/glade]data/ui/text-assistant/capitalization-page.ui
+[type: gettext/glade]data/ui/text-assistant/common-error-page.ui
+[type: gettext/glade]data/ui/text-assistant/confirmation-page.ui
+[type: gettext/glade]data/ui/text-assistant/hearing-impaired-page.ui
+[type: gettext/glade]data/ui/text-assistant/intro-page.ui
+[type: gettext/glade]data/ui/text-assistant/join-split-page.ui
+[type: gettext/glade]data/ui/text-assistant/line-break-opts-page.ui
+[type: gettext/glade]data/ui/text-assistant/line-break-page.ui
+[type: gettext/glade]data/ui/text-assistant/progress-page.ui
+[type: gettext/glade]data/ui/transform-dialog.ui
+[type: gettext/ini]data/extensions/bookmarks/bookmarks.gaupol-extension.in
+[type: gettext/ini]data/extensions/side-pane/side-pane.gaupol-extension.in
 [type: gettext/ini]data/patterns/Latn-en-US.common-error.in
-[type: gettext/ini]data/patterns/Latn.line-break.in
-[type: gettext/ini]data/patterns/Latn.capitalization.in
-[type: gettext/ini]data/patterns/Latn-en.common-error.in
 [type: gettext/ini]data/patterns/Latn-en.capitalization.in
-extensions/bookmarks/add-bookmark-dialog.glade
-[type: gettext/ini]extensions/bookmarks/bookmarks.gaupol-extension.in
-extensions/bookmarks/bookmarks.py
-[type: gettext/ini]extensions/side-pane/side-pane.gaupol-extension.in
-extensions/side-pane/side-pane.py
-gaupol/agents/clipboard.py
+[type: gettext/ini]data/patterns/Latn-en.common-error.in
+[type: gettext/ini]data/patterns/Latn-en.hearing-impaired.in
+[type: gettext/ini]data/patterns/Latn-en.line-break.in
+[type: gettext/ini]data/patterns/Latn.capitalization.in
+[type: gettext/ini]data/patterns/Latn.common-error.in
+[type: gettext/ini]data/patterns/Latn.hearing-impaired.in
+[type: gettext/ini]data/patterns/Latn.line-break.in
+[type: gettext/ini]data/patterns/Zyyy.common-error.in
+aeidon/__init__.py
+aeidon/agents/__init__.py
+aeidon/agents/clipboard.py
+aeidon/agents/edit.py
+aeidon/agents/format.py
+aeidon/agents/open.py
+aeidon/agents/position.py
+aeidon/agents/preview.py
+aeidon/agents/register.py
+aeidon/agents/save.py
+aeidon/agents/search.py
+aeidon/agents/set.py
+aeidon/agents/text.py
+aeidon/agents/util.py
+aeidon/calculator.py
+aeidon/clipboard.py
+aeidon/containers.py
+aeidon/contractual.py
+aeidon/converter.py
+aeidon/countries.py
+aeidon/deco.py
+aeidon/delegate.py
+aeidon/encodings.py
+aeidon/enum.py
+aeidon/enums/__init__.py
+aeidon/enums/align.py
+aeidon/enums/documents.py
+aeidon/enums/formats.py
+aeidon/enums/framerates.py
+aeidon/enums/modes.py
+aeidon/enums/newlines.py
+aeidon/enums/players.py
+aeidon/enums/registers.py
+aeidon/errors.py
+aeidon/file.py
+aeidon/files/__init__.py
+aeidon/files/ass.py
+aeidon/files/microdvd.py
+aeidon/files/mpl2.py
+aeidon/files/mpsub.py
+aeidon/files/ssa.py
+aeidon/files/subrip.py
+aeidon/files/subviewer2.py
+aeidon/files/tmplayer.py
+aeidon/finder.py
+aeidon/i18n.py
+aeidon/languages.py
+aeidon/liner.py
+aeidon/locales.py
+aeidon/markup.py
+aeidon/metadata.py
+aeidon/mutables.py
+aeidon/observable.py
+aeidon/parser.py
+aeidon/paths.py
+aeidon/pattern.py
+aeidon/patternman.py
+aeidon/project.py
+aeidon/revertable.py
+aeidon/scripts.py
+aeidon/singleton.py
+aeidon/subtitle.py
+aeidon/tags/__init__.py
+aeidon/tags/ass.py
+aeidon/tags/microdvd.py
+aeidon/tags/mpl2.py
+aeidon/tags/mpsub.py
+aeidon/tags/ssa.py
+aeidon/tags/subrip.py
+aeidon/tags/subviewer2.py
+aeidon/tags/tmplayer.py
+aeidon/temp.py
+aeidon/unittest.py
+aeidon/util.py
+data/extensions/bookmarks/bookmarks.py
+data/extensions/side-pane/side-pane.py
+data/gaupol.desktop.in
+gaupol/__init__.py
+gaupol/action.py
+gaupol/actions/__init__.py
+gaupol/actions/edit.py
+gaupol/actions/file.py
+gaupol/actions/format.py
+gaupol/actions/help.py
+gaupol/actions/menu.py
+gaupol/actions/position.py
+gaupol/actions/search.py
+gaupol/actions/text.py
+gaupol/actions/view.py
+gaupol/agents/__init__.py
+gaupol/agents/close.py
 gaupol/agents/edit.py
 gaupol/agents/format.py
+gaupol/agents/help.py
+gaupol/agents/menu.py
+gaupol/agents/open.py
 gaupol/agents/position.py
+gaupol/agents/preview.py
+gaupol/agents/save.py
 gaupol/agents/search.py
-gaupol/agents/set.py
 gaupol/agents/text.py
-gaupol/align.py
-gaupol/encodings.py
-gaupol/framerates.py
-gaupol/gtk/actions/edit.py
-gaupol/gtk/actions/file.py
-gaupol/gtk/actions/format.py
-gaupol/gtk/actions/help.py
-gaupol/gtk/actions/menu.py
-gaupol/gtk/actions/position.py
-gaupol/gtk/actions/search.py
-gaupol/gtk/actions/text.py
-gaupol/gtk/actions/view.py
-gaupol/gtk/agents/close.py
-gaupol/gtk/agents/edit.py
-gaupol/gtk/agents/menu.py
-gaupol/gtk/agents/open.py
-gaupol/gtk/agents/preview.py
-gaupol/gtk/agents/save.py
-gaupol/gtk/agents/update.py
-gaupol/gtk/application.py
-gaupol/gtk/assistants.py
-gaupol/gtk/dialogs/about.py
-gaupol/gtk/dialogs/append.py
-gaupol/gtk/dialogs/debug.py
-gaupol/gtk/dialogs/encoding.py
-gaupol/gtk/dialogs/file.py
-gaupol/gtk/dialogs/header.py
-gaupol/gtk/dialogs/language.py
-gaupol/gtk/dialogs/preferences.py
-gaupol/gtk/dialogs/search.py
-gaupol/gtk/dialogs/shift.py
-gaupol/gtk/dialogs/spellcheck.py
-gaupol/gtk/dialogs/split.py
-gaupol/gtk/dialogs/video.py
-gaupol/gtk/fields.py
-gaupol/gtk/main.py
-gaupol/gtk/output.py
-gaupol/gtk/page.py
-gaupol/gtk/units.py
-gaupol/locales.py
-gaupol/newlines.py
+gaupol/agents/update.py
+gaupol/agents/util.py
+gaupol/agents/view.py
+gaupol/application.py
+gaupol/assistants.py
+gaupol/attrdict.py
+gaupol/config.py
+gaupol/dialogs/__init__.py
+gaupol/dialogs/about.py
+gaupol/dialogs/append.py
+gaupol/dialogs/builder.py
+gaupol/dialogs/debug.py
+gaupol/dialogs/duration.py
+gaupol/dialogs/encoding.py
+gaupol/dialogs/file.py
+gaupol/dialogs/framerate.py
+gaupol/dialogs/header.py
+gaupol/dialogs/insert.py
+gaupol/dialogs/language.py
+gaupol/dialogs/message.py
+gaupol/dialogs/multiclose.py
+gaupol/dialogs/open.py
+gaupol/dialogs/preferences.py
+gaupol/dialogs/previewerr.py
+gaupol/dialogs/save.py
+gaupol/dialogs/search.py
+gaupol/dialogs/shift.py
+gaupol/dialogs/spellcheck.py
+gaupol/dialogs/split.py
+gaupol/dialogs/textedit.py
+gaupol/dialogs/transform.py
+gaupol/dialogs/video.py
+gaupol/entries.py
+gaupol/enums/__init__.py
+gaupol/enums/fields.py
+gaupol/enums/styles.py
+gaupol/enums/targets.py
+gaupol/enums/units.py
+gaupol/enumuim.py
+gaupol/errors.py
+gaupol/extension.py
+gaupol/extensionman.py
+gaupol/main.py
+gaupol/meta.py
+gaupol/output.py
+gaupol/page.py
+gaupol/renderers/__init__.py
+gaupol/renderers/float.py
+gaupol/renderers/multiline.py
+gaupol/renderers/time.py
+gaupol/ruler.py
+gaupol/unittest.py
+gaupol/urls.py
+gaupol/util.py
+gaupol/view.py

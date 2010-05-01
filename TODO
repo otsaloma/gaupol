@@ -36,6 +36,7 @@ Gaupol 0.16
 
  --- Done above, todo below ---
 
+ * Update iso-codes
  * Split gaupol to aeidon and gaupol (#595809)
  * Update extension documentation
  * Use transifex.net for translations

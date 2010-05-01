@@ -1,4 +1,4 @@
 [encoding: UTF-8]
-gaupol/test/test_encodings.py
-gaupol/test/test_i18n.py
-gaupol/test/test_locales.py
+aeidon/test/test_encodings.py
+aeidon/test/test_i18n.py
+aeidon/test/test_locales.py
