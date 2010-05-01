@@ -27,6 +27,8 @@ Gaupol 0.16
    subtitle file reading functions for 0.15.1
  * Possibly fix i18n issues with Unicode ellipses of menu items
  * Fix i18n issues with pattern file names and descriptions
+ * Use local copies of iso-codes XML files only as a fallback if they
+   are not found under /usr/share/xml/iso-codes
  * Apply GNOME Goal: Correct Desktop Files
  * Raise Python dependency to 2.6
  * Raise PyGTK dependency to 2.16
@@ -36,7 +38,6 @@ Gaupol 0.16
 
  --- Done above, todo below ---
 
- * Update iso-codes
  * Split gaupol to aeidon and gaupol (#595809)
  * Update extension documentation
  * Use transifex.net for translations

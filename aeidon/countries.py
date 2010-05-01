@@ -26,7 +26,10 @@ _countries = {}
 def _init_countries():
     """Initialize the dictionary mapping codes to names."""
     import xml.etree.ElementTree as ET
-    path = os.path.join(aeidon.DATA_DIR, "iso-codes", "iso_3166.xml")
+    path = "/usr/share/xml/iso-codes/iso_3166.xml"
+    if not os.path.isfile(path):
+        # Use local, possibly outdated copy, only as a fallback.
+        path = os.path.join(aeidon.DATA_DIR, "iso-codes", "iso_3166.xml")
     for element in ET.parse(path).findall("iso_3166_entry"):
         code = element.get("alpha_2_code")
         name = element.get("name")

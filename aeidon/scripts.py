@@ -26,7 +26,10 @@ _scripts = {}
 def _init_scripts():
     """Initialize the dictionary mapping codes to scripts."""
     import xml.etree.ElementTree as ET
-    path = os.path.join(aeidon.DATA_DIR, "iso-codes", "iso_15924.xml")
+    path = "/usr/share/xml/iso-codes/iso_15924.xml"
+    if not os.path.isfile(path):
+        # Use local, possibly outdated copy, only as a fallback.
+        path = os.path.join(aeidon.DATA_DIR, "iso-codes", "iso_15924.xml")
     for element in ET.parse(path).findall("iso_15924_entry"):
         code = element.get("alpha_4_code")
         name = element.get("name")
