@@ -20,6 +20,7 @@ import aeidon
 import gaupol
 import gtk
 import pango
+import re
 _ = aeidon.i18n._
 
 __all__ = ("View",)
@@ -44,6 +45,7 @@ class View(gtk.TreeView):
         gtk.TreeView.__init__(self)
         self._active_attr = None
         self._active_col_name = ""
+        self._calc = aeidon.Calculator()
         self._normal_attr = None
         self.columns = aeidon.Enumeration()
         self._init_column_attributes()
@@ -126,13 +128,9 @@ class View(gtk.TreeView):
 
     def _init_search(self):
         """Initialize the interactive search properties."""
-        def equals_subtitle_number(store, column, key, itr):
-            # Return False if key matches subtitle number.
-            try: return store.get_path(itr)[0] != (int(key) - 1)
-            except ValueError: return False
         self.set_enable_search(True)
         self.set_search_column(self.columns.NUMBER)
-        self.set_search_equal_func(equals_subtitle_number)
+        self.set_search_equal_func(self._search_equals)
 
     def _init_signal_handlers(self):
         """Initialize signal handlers."""
@@ -198,9 +196,11 @@ class View(gtk.TreeView):
         if event.state & gtk.gdk.CONTROL_MASK:
             if event.keyval in (gtk.keysyms.Page_Up, gtk.keysyms.Page_Down):
                 return widget.stop_emission("key-press-event")
-        # Use interactive search for a subtitle number
-        # only if numeric keys have been pressed.
-        self.set_enable_search(event.string.isdigit())
+        # Use interactive search for a subtitle number or time
+        # only if valid string keys have been pressed.
+        self.set_enable_search(event.string.isdigit() or
+                               event.string == ":" or
+                               event.string == ".")
 
     def _reset_columns(self):
         """Recreate the columns enumeration and set all items to ``None``."""
@@ -213,6 +213,44 @@ class View(gtk.TreeView):
         self.columns.DURATION = None
         self.columns.MAIN_TEXT = None
         self.columns.TRAN_TEXT = None
+
+    def _search_equals(self, store, column, key, itr):
+        """Return ``False`` if `key` matches either subtitle number or time."""
+        row = int(store.get_path(itr)[0])
+        if key.count(":") == 0:
+            # Search for subtitle number.
+            try: return row != (int(key) - 1)
+            except ValueError: return False
+        col = gaupol.conf.editor.field_order.index(gaupol.fields.START)
+        hours = minutes = seconds = 0
+        if key.count(":") == 1 and key.startswith(":"):
+            # Search for time of form ':MM'
+            match = re.search(r"^:(\d+)$", key)
+            if match is None: return False
+            minutes = int(match.group(1))
+        if key.count(":") == 1 and not key.startswith(":"):
+            # Search for time of form 'MM:[SS.SSS]'
+            match = re.search(r"^(\d+):([\d.]+)?$", key)
+            if match is None: return False
+            minutes = int(match.group(1))
+            try: seconds = float(match.group(2) or "00.000")
+            except ValueError: return False
+        if key.count(":") == 2:
+            # Search for time of form '[HH]:MM:[SS.SSS]'
+            match = re.search(r"^(\d+)?:(\d+):([\d.]+)?$", key)
+            if match is None: return False
+            hours = int(match.group(1) or "00")
+            minutes = int(match.group(2))
+            try: seconds = float(match.group(3) or "00.000")
+            except ValueError: return False
+        time_key = "%02d:%02d:%06.3f" % (hours, minutes, seconds)
+        time_iter = store[row][col]
+        if not ":" in time_iter: return False
+        try: time_next = store[row + 1][col]
+        except IndexError: time_next = "99:59:59.999"
+        return not (self._calc.time_to_seconds(time_iter)
+                    <= self._calc.time_to_seconds(time_key)
+                    < self._calc.time_to_seconds(time_next))
 
     def get_focus_ensure(self, value):
         store = self.get_model()

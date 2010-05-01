@@ -3,6 +3,8 @@ Gaupol 0.16
 
  * Save menu item keybindings to a GtkAccelMap rc-file in the user's
    configuration directory
+ * Have the interactive search look for times instead of subtitle
+   numbers if the search string contains a colon (fixes #609176)
  * Use existing subtitle file mime-types instead of text/plain when
    adding files to the recent files database
  * Add miscellaneous Latin common error corrections patterns
@@ -36,8 +38,6 @@ Gaupol 0.16
 
  * Split gaupol to aeidon and gaupol (#595809)
  * Rethink when and if at all to raise ParseErrors
- * Allow interactive search to find times
-   - https://bugzilla.gnome.org/show_bug.cgi?id=609176
  * Update extension documentation
  * Use transifex.net for translations
  * http://gmane.org/?
