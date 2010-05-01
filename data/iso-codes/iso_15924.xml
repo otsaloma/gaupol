@@ -5,7 +5,7 @@ This file gives a list of all script names in the ISO 15924
 standard, and is used to provide translations via gettext
 
 Copyright (C) 2007 Ivan Masar <helix84@centrum.sk>
-Copyright (C) 2007-2009 Christian Perrier <bubulle@debian.org>
+Copyright (C) 2007-2010 Christian Perrier <bubulle@debian.org>
 Copyright (C) 2007 Tobias Quathamer <toddy@debian.org>
 
     This file is free software; you can redistribute it and/or
@@ -57,6 +57,14 @@ Source for changes: <http://unicode.org/iso15924/codechanges.html>
 		alpha_4_code="Bali"
 		numeric_code="360"
 		name="Balinese" />
+	<iso_15924_entry
+		alpha_4_code="Bamu"
+		numeric_code="435"
+		name="Bamum" />
+	<iso_15924_entry
+		alpha_4_code="Bass"
+		numeric_code="259"
+		name="Bassa Vah" />
 	<iso_15924_entry
 		alpha_4_code="Batk"
 		numeric_code="365"
@@ -174,6 +182,10 @@ Source for changes: <http://unicode.org/iso15924/codechanges.html>
 		numeric_code="200"
 		name="Greek" />
 	<iso_15924_entry
+		alpha_4_code="Gran"
+		numeric_code="343"
+		name="Grantha" />
+	<iso_15924_entry
 		alpha_4_code="Gujr"
 		numeric_code="320"
 		name="Gujarati" />
@@ -262,13 +274,17 @@ Source for changes: <http://unicode.org/iso15924/codechanges.html>
 		numeric_code="287"
 		name="Korean (alias for Hangul + Han)" />
 	<iso_15924_entry
+		alpha_4_code="Kpel"
+		numeric_code="436"
+		name="Kpelle" />
+	<iso_15924_entry
 		alpha_4_code="Kthi"
 		numeric_code="317"
 		name="Kaithi" />
 	<iso_15924_entry
 		alpha_4_code="Lana"
 		numeric_code="351"
-		name="Tai Thal (Lanna)" />
+		name="Tai Tham (Lanna)" />
 	<iso_15924_entry
 		alpha_4_code="Laoo"
 		numeric_code="356"
@@ -306,6 +322,10 @@ Source for changes: <http://unicode.org/iso15924/codechanges.html>
 		numeric_code="399"
 		name="Lisu (Fraser)" />
 	<iso_15924_entry
+		alpha_4_code="Loma"
+		numeric_code="437"
+		name="Loma" />
+	<iso_15924_entry
 		alpha_4_code="Lyci"
 		numeric_code="202"
 		name="Lycian" />
@@ -326,9 +346,17 @@ Source for changes: <http://unicode.org/iso15924/codechanges.html>
 		numeric_code="090"
 		name="Mayan hieroglyphs" />
 	<iso_15924_entry
+		alpha_4_code="Mend"
+		numeric_code="438"
+		name="Mende" />
+	<iso_15924_entry
+		alpha_4_code="Merc"
+		numeric_code="101"
+		name="Meroitic Cursive" />
+	<iso_15924_entry
 		alpha_4_code="Mero"
 		numeric_code="100"
-		name="Meroitic" />
+		name="Meroitic Hieroglyphic" />
 	<iso_15924_entry
 		alpha_4_code="Mlym"
 		numeric_code="347"
@@ -350,6 +378,14 @@ Source for changes: <http://unicode.org/iso15924/codechanges.html>
 		numeric_code="350"
 		name="Myanmar (Burmese)" />
 	<iso_15924_entry
+		alpha_4_code="Narb"
+		numeric_code="106"
+		name="Old North Arabian (Ancient North Arabian)" />
+	<iso_15924_entry
+		alpha_4_code="Nbat"
+		numeric_code="159"
+		name="Nabataean" />
+	<iso_15924_entry
 		alpha_4_code="Nkgb"
 		numeric_code="420"
 		name="Nakhi Geba ('Na-'Khi ²Ggŏ-¹baw, Naxi Geba)" />
@@ -368,7 +404,7 @@ Source for changes: <http://unicode.org/iso15924/codechanges.html>
 	<iso_15924_entry
 		alpha_4_code="Orkh"
 		numeric_code="175"
-		name="Orkhon" />
+		name="Old Turkic, Orkhon Runic" />
 	<iso_15924_entry
 		alpha_4_code="Orya"
 		numeric_code="327"
@@ -377,6 +413,10 @@ Source for changes: <http://unicode.org/iso15924/codechanges.html>
 		alpha_4_code="Osma"
 		numeric_code="260"
 		name="Osmanya" />
+	<iso_15924_entry
+		alpha_4_code="Palm"
+		numeric_code="126"
+		name="Palmyrene" />
 	<iso_15924_entry
 		alpha_4_code="Perm"
 		numeric_code="227"
@@ -437,6 +477,10 @@ Source for changes: <http://unicode.org/iso15924/codechanges.html>
 		alpha_4_code="Sara"
 		numeric_code="292"
 		name="Sarati" />
+	<iso_15924_entry
+		alpha_4_code="Sarb"
+		numeric_code="105"
+		name="Old South Arabian" />
 	<iso_15924_entry
 		alpha_4_code="Saur"
 		numeric_code="344"
@@ -537,6 +581,10 @@ Source for changes: <http://unicode.org/iso15924/codechanges.html>
 		alpha_4_code="Visp"
 		numeric_code="280"
 		name="Visible Speech" />
+	<iso_15924_entry
+		alpha_4_code="Wara"
+		numeric_code="262"
+		name="Warang Citi (Varang Kshiti)" />
 	<iso_15924_entry
 		alpha_4_code="Xpeo"
 		numeric_code="030"

@@ -268,7 +268,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 		iso_639_2B_code="bih"
 		iso_639_2T_code="bih"
 		iso_639_1_code="bh"
-		name="Bihari" />
+		name="Bihari languages" />
 	<iso_639_entry
 		iso_639_2B_code="bik"
 		iso_639_2T_code="bik"
@@ -802,7 +802,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="him"
 		iso_639_2T_code="him"
-		name="Himachali" />
+		name="Himachali languages; Western Pahari languages" />
 	<iso_639_entry
 		iso_639_2B_code="hin"
 		iso_639_2T_code="hin"
@@ -815,7 +815,7 @@ Source: <http://www.loc.gov/standards/iso639-2/>
 	<iso_639_entry
 		iso_639_2B_code="hmn"
 		iso_639_2T_code="hmn"
-		name="Hmong" />
+		name="Hmong; Mong" />
 	<iso_639_entry
 		iso_639_2B_code="hmo"
 		iso_639_2T_code="hmo"

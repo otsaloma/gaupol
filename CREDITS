@@ -5,11 +5,12 @@ Files from Foreign Sources
  * data/iso-codes/iso_3166.xml
  * data/iso-codes/iso_639.xml
 
-   These files are written by Ivan Masar, Christian Perrier, Tobias
-   Toedter, Alastair McKinstry and Andreas Jochens, and are copied
+   These files are written by various authors and are copied
    unmodified from iso-codes [1]. The files are released under the GNU
    Lesser General Public License (LGPL). See the headers of the files
    in question for full copyright and license information.
+
+    [1] http://alioth.debian.org/projects/pkg-isocodes/
 
  * extensions/bookmarks/bookmark.png
 
@@ -17,6 +18,5 @@ Files from Foreign Sources
    plugin of Anjuta [2]. Image made by "tpgww onepost net" (see [3])
    and licensed under the GNU General Public License (GPL).
 
- [1] http://alioth.debian.org/projects/pkg-isocodes/
- [2] http://anjuta.sourceforge.net/
- [3] http://bugzilla.gnome.org/show_bug.cgi?id=480093
+    [2] http://anjuta.sourceforge.net/
+    [3] http://bugzilla.gnome.org/show_bug.cgi?id=480093
