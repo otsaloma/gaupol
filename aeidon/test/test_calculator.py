@@ -106,6 +106,14 @@ class TestCalculator(aeidon.TestCase):
                         ( "00:01:22.500", "-00:01:00.100", "-00:02:22.600")):
             assert self.calc.get_time_duration(x, y) == z
 
+    def test_is_valid_time__false(self):
+        assert not self.calc.is_valid_time("2:34:56.789")
+        assert not self.calc.is_valid_time("12:60:56.789")
+
+    def test_is_valid_time__true(self):
+        assert self.calc.is_valid_time("12:34:56.789")
+        assert self.calc.is_valid_time("-12:34:56.789")
+
     def test_round_time(self):
         round_time = self.calc.round_time
         assert round_time("02:36:35.857", 3) == "02:36:35.857"

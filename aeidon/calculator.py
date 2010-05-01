@@ -105,6 +105,22 @@ class Calculator(object):
         y = self.time_to_seconds(y)
         return self.seconds_to_time(y - x)
 
+    def is_valid_time(self, time):
+        """Return ``True`` if `time` is a valid time string."""
+        if time.startswith("-"):
+            time = time[1:]
+        try:
+            hours = int(time[:2])
+            minutes = int(time[3:5])
+            seconds = int(time[6:8])
+            mseconds = int(time[9:])
+        except ValueError:
+            return False
+        return (0 <= hours <= 99 and
+                0 <= minutes <= 59 and
+                0 <= seconds <= 59 and
+                0 <= mseconds <= 999)
+
     def round_time(self, time, decimals):
         """Round `time` to amount of `decimals` in seconds."""
         seconds = self.time_to_seconds(time)

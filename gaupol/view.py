@@ -225,25 +225,26 @@ class View(gtk.TreeView):
         hours = minutes = seconds = 0
         if key.count(":") == 1 and key.startswith(":"):
             # Search for time of form ':MM'
-            match = re.search(r"^:(\d+)$", key)
+            match = re.search(r"^:(\d{1,2})$", key)
             if match is None: return False
             minutes = int(match.group(1))
         if key.count(":") == 1 and not key.startswith(":"):
             # Search for time of form 'MM:[SS.SSS]'
-            match = re.search(r"^(\d+):([\d.]+)?$", key)
+            match = re.search(r"^(\d{1,2}):([\d.]+)?$", key)
             if match is None: return False
             minutes = int(match.group(1))
             try: seconds = float(match.group(2) or "00.000")
             except ValueError: return False
         if key.count(":") == 2:
             # Search for time of form '[HH]:MM:[SS.SSS]'
-            match = re.search(r"^(\d+)?:(\d+):([\d.]+)?$", key)
+            match = re.search(r"^(\d{,2}):(\d{1,2}):([\d.]+)?$", key)
             if match is None: return False
             hours = int(match.group(1) or "00")
             minutes = int(match.group(2))
             try: seconds = float(match.group(3) or "00.000")
             except ValueError: return False
         time_key = "%02d:%02d:%06.3f" % (hours, minutes, seconds)
+        if not self._calc.is_valid_time(time_key): return False
         time_iter = store[row][col]
         if not ":" in time_iter: return False
         try: time_next = store[row + 1][col]
