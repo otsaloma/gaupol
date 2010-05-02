@@ -37,14 +37,14 @@ config_defaults = {
         "toolbar_style": gaupol.toolbar_styles.DEFAULT,
         },
     "capitalization": {
-        "country": None,
-        "language": None,
+        "country": "",
+        "language": "",
         "script": "Latn",
         },
     "common_error": {
         "classes": ["Human", "OCR"],
-        "country": None,
-        "language": None,
+        "country": "",
+        "language": "",
         "script": "Latn",
         },
     "debug": {
@@ -109,8 +109,8 @@ config_defaults = {
         "target": gaupol.targets.CURRENT,
         },
     "hearing_impaired": {
-        "country": None,
-        "language": None,
+        "country": "",
+        "language": "",
         "script": "Latn",
         },
     "join_split_words": {
@@ -118,8 +118,8 @@ config_defaults = {
         "split": False,
         },
     "line_break": {
-        "country": None,
-        "language": None,
+        "country": "",
+        "language": "",
         "length_unit": gaupol.length_units.EM,
         "max_deviation": 0.16,
         "max_length": 28,
