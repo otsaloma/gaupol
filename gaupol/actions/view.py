@@ -242,7 +242,7 @@ class ShowTimesAction(gaupol.RadioAction):
 
 class ToggleDurationColumnAction(gaupol.ToggleAction):
 
-    """Show or hide the "Duration" column."""
+    """Show or hide the duration column."""
 
     def __init__(self):
         """Initialize a :class:`ToggleDurationColumnAction` object."""
@@ -250,7 +250,7 @@ class ToggleDurationColumnAction(gaupol.ToggleAction):
         fields = gaupol.conf.editor.visible_fields
         self.props.active = gaupol.fields.DURATION in fields
         self.props.label = _("_Duration")
-        self.props.tooltip = _('Show or hide the "Duration" column')
+        self.props.tooltip = _('Show or hide the duration column')
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
@@ -260,7 +260,7 @@ class ToggleDurationColumnAction(gaupol.ToggleAction):
 
 class ToggleEndColumnAction(gaupol.ToggleAction):
 
-    """Show or hide the "End" column."""
+    """Show or hide the end column."""
 
     def __init__(self):
         """Initialize a :class:`ToggleEndColumnAction` object."""
@@ -268,7 +268,7 @@ class ToggleEndColumnAction(gaupol.ToggleAction):
         fields = gaupol.conf.editor.visible_fields
         self.props.active = gaupol.fields.END in fields
         self.props.label = _("_End")
-        self.props.tooltip = _('Show or hide the "End" column')
+        self.props.tooltip = _('Show or hide the end column')
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
@@ -278,7 +278,7 @@ class ToggleEndColumnAction(gaupol.ToggleAction):
 
 class ToggleMainTextColumnAction(gaupol.ToggleAction):
 
-    """Show or hide the "Main Text" column."""
+    """Show or hide the main text column."""
 
     def __init__(self):
         """Initialize a :class:`ToggleMainTextColumnAction` object."""
@@ -286,7 +286,7 @@ class ToggleMainTextColumnAction(gaupol.ToggleAction):
         fields = gaupol.conf.editor.visible_fields
         self.props.active = gaupol.fields.MAIN_TEXT in fields
         self.props.label = _("_Main Text")
-        self.props.tooltip = _('Show or hide the "Main Text" column')
+        self.props.tooltip = _('Show or hide the main text column')
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
@@ -310,7 +310,7 @@ class ToggleMainToolbarAction(gaupol.ToggleAction):
 
 class ToggleNumberColumnAction(gaupol.ToggleAction):
 
-    """Show or hide the "No." column."""
+    """Show or hide the number column."""
 
     def __init__(self):
         """Initialize a :class:`ToggleNumberColumnAction` object."""
@@ -318,7 +318,7 @@ class ToggleNumberColumnAction(gaupol.ToggleAction):
         fields = gaupol.conf.editor.visible_fields
         self.props.active = gaupol.fields.NUMBER in fields
         self.props.label = _("_No.")
-        self.props.tooltip = _('Show or hide the "No." column')
+        self.props.tooltip = _('Show or hide the number column')
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
@@ -341,7 +341,7 @@ class ToggleOutputWindowAction(gaupol.ToggleAction):
 
 class ToggleStartColumnAction(gaupol.ToggleAction):
 
-    """Show or hide the "Start" column."""
+    """Show or hide the start column."""
 
     def __init__(self):
         """Initialize a :class:`ToggleStartColumnAction` object."""
@@ -349,7 +349,7 @@ class ToggleStartColumnAction(gaupol.ToggleAction):
         fields = gaupol.conf.editor.visible_fields
         self.props.active = gaupol.fields.START in fields
         self.props.label = _("_Start")
-        self.props.tooltip = _('Show or hide the "Start" column')
+        self.props.tooltip = _('Show or hide the start column')
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):
@@ -372,7 +372,7 @@ class ToggleStatusbarAction(gaupol.ToggleAction):
 
 class ToggleTranslationTextColumnAction(gaupol.ToggleAction):
 
-    """Show or hide the "Translation Text" column."""
+    """Show or hide the translation text column."""
 
     def __init__(self):
         """Initialize a :class:`ToggleTranslationTextColumnAction` object."""
@@ -381,7 +381,7 @@ class ToggleTranslationTextColumnAction(gaupol.ToggleAction):
         fields = gaupol.conf.editor.visible_fields
         self.props.active = gaupol.fields.TRAN_TEXT in fields
         self.props.label = _("_Translation Text")
-        self.props.tooltip = _('Show or hide the "Translation Text" column')
+        self.props.tooltip = _('Show or hide the translation text column')
         self.action_group = "main-unsafe"
 
     def _affirm_doable(self, application, page):

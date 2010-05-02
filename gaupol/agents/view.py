@@ -92,17 +92,17 @@ class ViewAgent(aeidon.Delegate):
 
     @aeidon.deco.export
     def _on_toggle_duration_column_toggled(self, *args):
-        """Show or hide the "Duration" column."""
+        """Show or hide the duration column."""
         self._toggle_column(gaupol.fields.DURATION)
 
     @aeidon.deco.export
     def _on_toggle_end_column_toggled(self, *args):
-        """Show or hide the "End" column."""
+        """Show or hide the end column."""
         self._toggle_column(gaupol.fields.END)
 
     @aeidon.deco.export
     def _on_toggle_main_text_column_toggled(self, *args):
-        """Show or hide the "Main Text" column."""
+        """Show or hide the main text column."""
         self._toggle_column(gaupol.fields.MAIN_TEXT)
 
     @aeidon.deco.export
@@ -115,7 +115,7 @@ class ViewAgent(aeidon.Delegate):
 
     @aeidon.deco.export
     def _on_toggle_number_column_toggled(self, *args):
-        """Show or hide the "No." column."""
+        """Show or hide the number column."""
         self._toggle_column(gaupol.fields.NUMBER)
 
     @aeidon.deco.export
@@ -131,7 +131,7 @@ class ViewAgent(aeidon.Delegate):
 
     @aeidon.deco.export
     def _on_toggle_start_column_toggled(self, *args):
-        """Show or hide the "Start" column."""
+        """Show or hide the start column."""
         self._toggle_column(gaupol.fields.START)
 
     @aeidon.deco.export
@@ -143,7 +143,7 @@ class ViewAgent(aeidon.Delegate):
 
     @aeidon.deco.export
     def _on_toggle_translation_text_column_toggled(self, *args):
-        """Show or hide the "Translation Text" column."""
+        """Show or hide the translation text column."""
         self._toggle_column(gaupol.fields.TRAN_TEXT)
 
     @aeidon.deco.export
