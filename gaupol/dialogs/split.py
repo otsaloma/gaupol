@@ -47,11 +47,10 @@ class SplitDialog(gaupol.BuilderDialog):
     def _init_subtitle_spin(self):
         """Initialize the subtitle spin button."""
         page = self.application.get_current_page()
-        self._subtitle_spin.set_range(2, len(page.project.subtitles))
-        self._subtitle_spin.set_value(1)
         rows = page.view.get_selected_rows()
-        subtitle = (rows[0] + 1 if rows else 1)
+        subtitle = (rows[0] + 1 if rows else 2)
         self._subtitle_spin.set_value(subtitle)
+        self._subtitle_spin.set_range(2, len(page.project.subtitles))
 
     def _on_subtitle_spin_value_changed(self, spin_button):
         """Select matching row in the view."""
