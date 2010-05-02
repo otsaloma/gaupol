@@ -205,7 +205,7 @@ class InsertSubtitlesAction(gaupol.Action):
         self.props.label = _("_Insert Subtitles\342\200\246")
         self.props.short_label = _("Insert")
         self.props.stock_id = gtk.STOCK_ADD
-        self.props.tooltip = _("Insert subtitles")
+        self.props.tooltip = _("Insert new subtitles")
         self.accelerator = "Insert"
         self.action_group = "main-unsafe"
 
