@@ -37,11 +37,14 @@ Gaupol 0.16
  * Add Hungarian translation (László Andrássy)
 
  --- Done above, todo below ---
-
+ 
+ * Manual testing
  * Split gaupol to aeidon and gaupol (#595809)
+   - Installation routines (--with-aeidon, --with-gaupol?
+ * Merge hilja with master
  * Update extension documentation
  * Use transifex.net for translations
- * http://gmane.org/?
+ * Use http://gmane.org/?
 
 Gaupol 0.17
 ===========

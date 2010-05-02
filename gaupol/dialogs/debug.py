@@ -108,7 +108,8 @@ class DebugDialog(gaupol.BuilderDialog):
             self._insert_text("\n")
             self._insert_text("Line: %s\n" % str(tb.tb_lineno))
             self._insert_text("In: %s\n\n" % code.co_name)
-            self._insert_text("    %s\n\n" % line)
+            if line.strip():
+                self._insert_text("    %s\n\n" % line)
             tb = tb.tb_next
         exception = traceback.format_exception_only(exctype, value)[0]
         exception, space, message = exception.partition(" ")
