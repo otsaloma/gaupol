@@ -122,20 +122,27 @@ def lines_to_px(nlines, font=None):
 
 def prepare_text_view(text_view):
     """Connect `text_view` to font and length margin updates."""
+    connect = gaupol.conf.editor.connect
     def update_margin(section, value, text_view):
         if gaupol.conf.editor.show_lengths_edit:
             return gaupol.ruler.connect_text_view(text_view)
         return gaupol.ruler.disconnect_text_view(text_view)
-    connect = gaupol.conf.editor.connect
+
     connect("notify::show_lengths_edit", update_margin, text_view)
     update_margin(None, None, text_view)
-
     def update_font(section, value, text_view):
         set_widget_font(text_view, get_font())
-    connect = gaupol.conf.editor.connect
+
     connect("notify::use_custom_font", update_font, text_view)
     connect("notify::custom_font", update_font, text_view)
     update_font(None, None, text_view)
+    def update_spacing(section, value, text_view):
+        if gaupol.conf.editor.show_lengths_cell:
+            return text_view.set_pixels_above_lines(2)
+        return text_view.set_pixels_above_lines(0)
+
+    connect("notify::show_lengths_cell", update_spacing, text_view)
+    update_spacing(None, None, text_view)
 
 def raise_default(expression):
     """Raise :exc:`gaupol.Default` if expression evaluates to ``True``."""
