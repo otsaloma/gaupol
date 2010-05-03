@@ -179,9 +179,7 @@ class SearchDialog(gaupol.BuilderDialog):
         self._pattern_combo.set_model(store)
         for pattern in self.patterns:
             store.append((pattern,))
-        renderer = gtk.CellRendererText()
-        self._pattern_combo.pack_start(renderer, True)
-        self._pattern_combo.add_attribute(renderer, "text", 0)
+        self._pattern_combo.set_text_column(0)
 
     def _init_replacement_combo(self):
         """Initialize the replacement combo box."""
@@ -189,9 +187,7 @@ class SearchDialog(gaupol.BuilderDialog):
         self._replacement_combo.set_model(store)
         for replacement in self.replacements:
             store.append((replacement,))
-        renderer = gtk.CellRendererText()
-        self._replacement_combo.pack_start(renderer, True)
-        self._replacement_combo.add_attribute(renderer, "text", 0)
+        self._replacement_combo.set_text_column(0)
 
     def _init_sensitivities(self):
         """Initialize widget sensitivities."""

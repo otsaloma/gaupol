@@ -59,6 +59,7 @@ Gaupol 0.17
    - PreviewAgent._show_*_error_dialog
  * Batch convert multiple subtitles to an other file format
    - https://bugzilla.gnome.org/show_bug.cgi?id=595685
+ * Add a Finnish translation?
 
 Gaupol 1.0
 ==========
