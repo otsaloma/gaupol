@@ -353,6 +353,7 @@ class LocalePage(BuilderPage):
     def _populate_combo(self, combo_box, items, active):
         """Populate `combo_box` with `items`."""
         store = combo_box.get_model()
+        combo_box.set_model(None)
         store.clear()
         for code, name in items:
             store.append((code, name))
@@ -363,6 +364,7 @@ class LocalePage(BuilderPage):
         for i in range(len(store)):
             if (store[i][0] == active) and active:
                 combo_box.set_active(i)
+        combo_box.set_model(store)
 
     def _populate_country_combo(self):
         """Populate the country combo box."""
