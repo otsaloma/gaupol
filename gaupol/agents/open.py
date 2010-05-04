@@ -140,6 +140,14 @@ class OpenAgent(aeidon.Delegate):
         self.open_main(paths, encoding)
 
     @aeidon.deco.export
+    @aeidon.deco.silent(gaupol.Default)
+    def _on_open_main_files_recent_activate(self, *args):
+        """Open main files."""
+        doc = aeidon.documents.MAIN
+        paths, encoding = self._select_files(_("Open"), doc)
+        self.open_main(paths, encoding)
+
+    @aeidon.deco.export
     def _on_open_main_files_recent_item_activated(self, chooser):
         """Open a recent main file."""
         uri = chooser.get_current_uri()

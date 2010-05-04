@@ -122,6 +122,9 @@ class RecentAction(Action, gtk.RecentAction):
     def finalize(self, application):
         """Connect action to widgets of `application`."""
         self.widgets = tuple(getattr(application, x) for x in self.widgets)
+        callback = "_on_%s_activate" % self.props.name
+        if hasattr(application, callback):
+            self.connect("activate", getattr(application, callback))
         callback = "_on_%s_item_activated" % self.props.name
         self.connect("item-activated", getattr(application, callback))
 
