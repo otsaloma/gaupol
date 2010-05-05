@@ -66,13 +66,15 @@ Gaupol 1.0
 Gaupol 3000
 ===========
 
- * Replace the headers-dialog with a more general properties-dialog
-   with format-specific fields to fill (?)
-   - SubRip: Write coordinates (extended SubRip format)
-   - MicroDVD: Write framerate information subtitle
  * Bump Python dependency to something
    - Remove imports from __future__
    - http://docs.python.org/dev/whatsnew/2.7.html
    - http://docs.python.org/dev/whatsnew/3.0.html
    - http://docs.python.org/dev/whatsnew/3.1.html
    - http://diveintopython3.org/whats-new.html
+ * Replace the headers-dialog with a more general properties-dialog
+   with format-specific fields to fill (?)
+   - SubRip: Write coordinates (extended SubRip format)
+   - MicroDVD: Write framerate information subtitle
+ * Use a metadata XML file to remember associated video files,
+   selected framerates and possibly something else

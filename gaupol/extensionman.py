@@ -167,8 +167,9 @@ class ExtensionManager(object):
                 self._dependants[module] = []
         if inferior:
             self._inferior.append(module)
-        if module in self._inferior:
-            self._inferior.remove(module)
+        else: # superior
+            if module in self._inferior:
+                self._inferior.remove(module)
         self.application.update_gui()
 
     def setup_extensions(self):
