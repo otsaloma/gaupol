@@ -8,27 +8,31 @@ Gaupol 0.16
  * Add miscellaneous Latin common error corrections patterns
  * Add help menu item to browse wiki documentation at
    http://live.gnome.org/Gaupol
- * Fix focus changing when pasting subtitles
  * Increase size of line length superscripts shown in list cells
+ * Fix focus changing when pasting subtitles
+ * Use gtk.RecentAction for recent file menus (fixes #615372 and
+   probably #608951)
+ * Work around a subprocess error launching video player on Windows
+   systems, which resulted in "TypeError: environment can only contain
+   strings" (fixes #605805)
+ * Fix handling of Unicode BOMs that broke as a result of a hasty fix
+   for subtitle file reading functions for 0.15.1
+ * Fix hearing impaired text removal pattern "Speaker before a colon"
+   to not remove too much (fixes #618529)
+ * Apply GNOME Goal: Correct Desktop Files
  * Migrate from Glade to GtkBuilder
  * Use attributes instead of markup in GtkBuilder files
  * Fix GtkBuilder constructed buttons to respect user preferences
    regarding whether or not to show icons in buttons
- * Use Python's JSON module instead of ConfigObj for reading and
-   writing configuration files
- * Use gtk.RecentAction for recent file menus (fixes #615372 and
-   probably #608951)
+ * Use Python's JSON module instead of ConfigObj and Validate for
+   reading and writing configuration files
  * Use enchant's user spell-check dictionaries (usually stored in
    $HOME/.config/enchant) instead gaupol-specific ones
- * Fix preview error on Windows (TypeError: environment can only
-   contain strings, fixes #605805)
- * Fix handling of Unicode BOMs that broke as a result of fixing
-   subtitle file reading functions for 0.15.1
+ * Use copies of iso-codes XML files shipped with gaupol only as a
+   fallback if they are not found under /usr/share/xml/iso-codes
  * Possibly fix i18n issues with Unicode ellipses of menu items
- * Fix i18n issues with pattern file names and descriptions
- * Use local copies of iso-codes XML files only as a fallback if they
-   are not found under /usr/share/xml/iso-codes
- * Apply GNOME Goal: Correct Desktop Files
+ * Fix i18n issues with locale codes and their fallbacks of pattern
+   file names and descriptions
  * Raise Python dependency to 2.6
  * Raise PyGTK dependency to 2.16
  * Raise PyEnchant dependency to 1.4.0
@@ -36,8 +40,10 @@ Gaupol 0.16
  --- Done above, todo below ---
 
  * Manual testing
+ * Add setup.cfg with options and documentation
  * Split gaupol to aeidon and gaupol (#595809)
    - Installation routines (--with-aeidon, --with-gaupol?
+ * Add setup.py option --without-iso-codes
  * Merge hilja with master
  * Update extension documentation
  * Use transifex.net for translations
