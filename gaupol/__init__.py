@@ -48,7 +48,6 @@ __version__ = "0.15.99"
 COMBO_SEPARATOR = "<separator/>"
 
 gtk.rc_parse(os.path.join(aeidon.DATA_DIR, "ui", "gtkrc"))
-gobject.threads_init()
 
 from gaupol.urls import *
 from gaupol import util
