@@ -1052,7 +1052,7 @@ class TextAssistant(gtk.Assistant):
                 page.project.set_action_description(register, description)
                 edits += len(indices)
             indices = [x for i, x in enumerate(indices) if not texts[i]]
-            if indices and gaupol.conf.text_assitant.remove_blank:
+            if indices and gaupol.conf.text_assistant.remove_blank:
                 page.project.remove_subtitles(indices)
                 page.project.group_actions(register, 2, description)
                 removals += len(indices)
