@@ -1,29 +1,8 @@
-[share/gaupol]
-data/gaupol.gtk.conf.spec
-
-[share/gaupol/iso-codes]
-data/iso-codes/*
-
 [share/gaupol/extensions/bookmarks]
-extensions/bookmarks/*
+data/extensions/bookmarks/*
 
 [share/gaupol/extensions/side-pane]
-extensions/side-pane/*
-
-[share/gaupol/glade/assistants/text]
-data/glade/assistants/text/*.glade
-
-[share/gaupol/glade/dialogs]
-data/glade/dialogs/*.glade
-
-[share/gaupol/headers]
-data/headers/*
-
-[share/gaupol/patterns]
-data/patterns/*.conf
-
-[share/gaupol/ui]
-data/ui/*
+data/extensions/side-pane/*
 
 [share/icons/hicolor/16x16/apps]
 data/icons/hicolor/16x16/apps/*.png
@@ -39,6 +18,12 @@ data/icons/hicolor/32x32/apps/*.png
 
 [share/icons/hicolor/scalable/apps]
 data/icons/hicolor/scalable/apps/*.svg
+
+[share/gaupol/ui]
+data/ui/*.*
+
+[share/gaupol/ui/text-assistant]
+data/ui/text-assistant/*.*
 
 [share/man/man1]
 doc/gaupol.1

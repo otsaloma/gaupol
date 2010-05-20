@@ -1,0 +1,5 @@
+[share/gaupol/headers]
+data/headers/*
+
+[share/gaupol/patterns]
+data/patterns/*.conf

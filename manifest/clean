@@ -1,3 +1,6 @@
+aeidon/*.py[co]
+aeidon/*/*.py[co]
+aeidon/*/*/*.py[co]
 build
 ChangeLog
 data/gaupol.desktop
@@ -6,12 +9,17 @@ data/patterns/*.common-error
 data/patterns/*.hearing-impaired
 data/patterns/*.line-break
 dist
+doc/sphinx/*.py[co]
+doc/sphinx/_build
+doc/sphinx/_ext/*.py[co]
+doc/sphinx/api
+doc/sphinx/index.rst
 extensions/*/*.gaupol-extension
 extensions/*/*.py[co]
 gaupol/*.py[co]
 gaupol/*/*.py[co]
 gaupol/*/*/*.py[co]
-gaupol/*/*/*/*.py[co]
 locale
 MANIFEST
+po/*~
 setup.py[co]

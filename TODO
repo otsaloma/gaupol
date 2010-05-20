@@ -39,10 +39,7 @@ Gaupol 0.16
 
  --- Done above, todo below ---
 
- * Manual testing
- * Add setup.cfg with options and documentation
  * Split gaupol to aeidon and gaupol (#595809)
-   - Installation routines (--with-aeidon, --with-gaupol?
  * Add setup.py option --without-iso-codes
  * Merge hilja with master
  * Update extension documentation
