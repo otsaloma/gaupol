@@ -40,8 +40,6 @@ import tarfile
 import tempfile
 
 os.chdir(os.path.dirname(__file__) or ".")
-sys.path.insert(0, os.path.dirname(__file__))
-
 
 clean = distutils.command.clean.clean
 distribution = distutils.dist.Distribution
@@ -83,13 +81,13 @@ def get_gaupol_version():
 
 def run_command_or_exit(command):
     """Run command in shell and raise SystemExit if it fails."""
-    if subprocess.call(command) != 0:
+    if os.system(command) != 0:
         log.error("command %s failed" % repr(command))
         raise SystemExit(1)
 
 def run_command_or_warn(command):
     """Run command in shell and raise SystemExit if it fails."""
-    if subprocess.call(command) != 0:
+    if os.system(command) != 0:
         log.warn("command %s failed" % repr(command))
 
 
@@ -230,7 +228,7 @@ class Install(install):
             if (root is not None) or (data_dir is None): return
             directory = os.path.join(data_dir, "share", "applications")
             log.info("updating desktop database in '%s'" % directory)
-            run_command_or_warn(("update-desktop-database", directory))
+            run_command_or_warn('update-desktop-database "%s"' % directory)
 
 
 class InstallData(install_data):
@@ -244,8 +242,7 @@ class InstallData(install_data):
         optimize = get_command_obj("install_lib").optimize
         data_dir = get_command_obj("install_data").install_dir
         data_dir = os.path.join(data_dir, "share", "gaupol")
-        files = glob.glob("extensions/*/*.py")
-        files = [os.path.join(data_dir, x) for x in files]
+        files = glob.glob("%s/extensions/*/*.py" % data_dir)
         distutils.util.byte_compile(files, optimize, self.force, self.dry_run)
 
     def __get_desktop_file(self):
@@ -297,8 +294,9 @@ class InstallData(install_data):
             for pattern_file in glob.glob("data/patterns/*.in"):
                 self.data_files.append(self.__get_pattern_file(pattern_file))
         if self.distribution.with_gaupol:
-            for extension in os.listdir("extensions"):
-                pattern = "extensions/%s/*.gaupol-extension.in" % extension
+            for extension in os.listdir("data/extensions"):
+                pattern = "data/extensions/%s/*.gaupol-extension.in"
+                pattern = pattern % extension
                 for extension_file in glob.glob(pattern):
                     t = self.__get_extension_file(extension, extension_file)
                     self.data_files.append(t)
@@ -358,8 +356,9 @@ class SDistGna(sdist):
         version = get_gaupol_version()
         if os.path.isfile("ChangeLog"):
             os.remove("ChangeLog")
-        run_command_or_exit("tools/git2cl > ChangeLog")
+        run_command_or_exit("tools/generate-change-log > ChangeLog")
         assert os.path.isfile("ChangeLog")
+        assert open("ChangeLog", "r").read().strip()
         sdist.run(self)
         basename = "gaupol-%s" % version
         tarballs = os.listdir(self.dist_dir)

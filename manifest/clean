@@ -3,6 +3,8 @@ aeidon/*/*.py[co]
 aeidon/*/*/*.py[co]
 build
 ChangeLog
+data/extensions/*/*.gaupol-extension
+data/extensions/*/*.py[co]
 data/gaupol.desktop
 data/patterns/*.capitalization
 data/patterns/*.common-error
@@ -14,8 +16,6 @@ doc/sphinx/_build
 doc/sphinx/_ext/*.py[co]
 doc/sphinx/api
 doc/sphinx/index.rst
-extensions/*/*.gaupol-extension
-extensions/*/*.py[co]
 gaupol/*.py[co]
 gaupol/*/*.py[co]
 gaupol/*/*/*.py[co]
