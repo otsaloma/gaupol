@@ -1,11 +1,18 @@
 #!/usr/bin/env python
 
 """
-There are three relevant customizations to the standard distutils installation
-process: (1) writing the aeidon.paths module, (2) handling translating of
-various files and (3) installing extensions.
+There are four relevant customizations to the standard distutils installation
+process: (1) allowing separate installations of aeidon and gaupol, (2) writing
+the aeidon.paths module, (3) handling translating of various files and
+(4) installing extensions.
 
-(1) Gaupol finds non-Python files based on the paths written in module
+(1) Allowing separate installations of aeidon and gaupol are handled through
+    global options --with-aeidon, --without-aeidon, --with-gaupol and
+    --without-gaupol. See files 'setup.cfg' and 'README.aeidon' for
+    documentation and the Distribution class defined in this file for the
+    implementation and logic of how that is handled.
+
+(2) Gaupol finds non-Python files based on the paths written in module
     aeidon.paths. In aeidon/paths.py the paths default to the ones in the
     source directory. During the 'install_lib' command the file gets rewritten
     to build/aeidon/paths.py with the installation paths and that file will be
@@ -13,12 +20,12 @@ various files and (3) installing extensions.
     variable stripped if it is given. If doing distro-packaging, make sure this
     file gets correctly written.
 
-(2) During installation, the .po files are compiled into .mo files, the desktop
+(3) During installation, the .po files are compiled into .mo files, the desktop
     file, pattern files and extension metadata files are translated. This
     requires gettext and intltool, more specifically, executables 'msgfmt' and
     'intltool-merge' in $PATH.
 
-(3) Extensions are installed under the data directory. All python code included
+(4) Extensions are installed under the data directory. All python code included
     in the extensions are compiled during the 'install_data' command, using the
     same arguments for 'byte_compile' as used by the 'install_lib' command. If
     the 'install_lib' command was given '--no-compile' option, then the
@@ -171,6 +178,19 @@ class Distribution(distribution):
             self.__find_scripts("gaupol")
         if self.with_iso_codes:
             self.__find_data_files("iso-codes")
+        # Redefine name, version and requires metadata attributes. These are
+        # used in the egg-info file written by distutils. While egg-info files
+        # appear completely useless, it needs to be ensured that if aeidon and
+        # gaupol are installed separately, they install differently named
+        # egg-info files in order to avoid overwriting files.
+        if self.with_gaupol:
+            self.metadata.name = "gaupol"
+            self.metadata.version = get_gaupol_version()
+            self.metadata.requires = ("gtk",)
+        else: # Without gaupol.
+            self.metadata.name = "aeidon"
+            self.metadata.version = get_aeidon_version()
+            self.metadata.requires = ()
         return value
 
     def parse_config_files(self, filenames=None):

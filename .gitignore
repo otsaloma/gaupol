@@ -3,6 +3,7 @@
 .hidden
 build/
 ChangeLog
+data/extensions/*/*.gaupol-extension
 data/gaupol.desktop
 data/patterns/*.capitalization
 data/patterns/*.common-error
@@ -12,7 +13,6 @@ dist/
 doc/sphinx/_build
 doc/sphinx/api
 doc/sphinx/index.rst
-extensions/*.gaupol-extension
 locale/
 MANIFEST
 TAGS
