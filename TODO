@@ -1,6 +1,13 @@
 Gaupol 0.16
 ===========
 
+ * Split general-purpose, user interface independent subtitle editing
+   code to a separate Python package called 'aeidon' while keeping the
+   GTK+ user interface code under the package 'gaupol'. Allow
+   installation of these two packages separate of one another.
+   Developers and packagers are encouraged to read './setup.py --help'
+   message and the file 'README.aeidon'. (Fixes #595809 and should
+   allow fixing the likes of Debian bug #569983.)
  * Save menu item keybindings to a GtkAccelMap rc-file in the user's
    configuration directory
  * Have the interactive search look for times instead of subtitle
@@ -30,17 +37,19 @@ Gaupol 0.16
    $HOME/.config/enchant) instead gaupol-specific ones
  * Use copies of iso-codes XML files shipped with gaupol only as a
    fallback if they are not found under /usr/share/xml/iso-codes
- * Possibly fix i18n issues with Unicode ellipses of menu items
- * Fix i18n issues with locale codes and their fallbacks of pattern
-   file names and descriptions
+ * Add global options --with-iso-codes and --without-iso-codes to
+   setup.py to control whether or not to install iso-codes XML files
+   (This means that packagers can use --without-iso-codes and mark the
+   iso-codes package as a hard dependency to avoid duplicate files)
+ * Probably fix i18n issues with Unicode ellipses of menu items
+ * Fix i18n issues with locale codes and their fallbacks used in
+   pattern files for 'Name' and 'Description' fields
  * Raise Python dependency to 2.6
  * Raise PyGTK dependency to 2.16
  * Raise PyEnchant dependency to 1.4.0
 
  --- Done above, todo below ---
 
- * Split gaupol to aeidon and gaupol (#595809)
- * Add setup.py option --without-iso-codes
  * Merge hilja with master
  * Update extension documentation
  * Use transifex.net for translations
