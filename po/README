@@ -1,13 +1,25 @@
 Translating Gaupol
 ==================
 
-To avoid doing pointless work, first check the latest list of existing
-translations at the head of the master branch
+Gaupol translations are available on the Transifex open translation
+web service. It is the best place to check the current status of
+translations and if you like, you can use the web UI to edit and
+submit a translation. Translations submitted via Transifex are sent to
+the maintainer's email and commited into the development repository by
+the maintainer.
 
-    http://gitorious.org/projects/gaupol/repos/mainline/trees/master/po
+    http://www.transifex.net/projects/p/gaupol/c/master/
 
-To try your translation in the source directory, you can compile it
-to the "locale" directory (which does not exist by default)
+In case Transifex is down, you can always check the status of the
+translation files in the development repository.
+
+    http://gitorious.org/gaupol/mainline/trees/master/po
+
+Instead of using Transifex, you can also translate Gaupol the
+traditional way by downloading the source code and editing the
+PO-files. To try your translation in the source directory, you can
+compile it to the "locale" directory (which does not exist by
+default).
 
     mkdir -p locale/XX/LC_MESSAGES
     msgfmt -cv po/XX.po -o locale/XX/LC_MESSAGES/gaupol.mo
