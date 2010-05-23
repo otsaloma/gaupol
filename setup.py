@@ -172,12 +172,12 @@ class Distribution(distribution):
         if self.with_aeidon:
             self.__find_data_files("aeidon")
             self.__find_packages("aeidon")
+            if self.with_iso_codes:
+                self.__find_data_files("iso-codes")
         if self.with_gaupol:
             self.__find_data_files("gaupol")
             self.__find_packages("gaupol")
             self.__find_scripts("gaupol")
-        if self.with_iso_codes:
-            self.__find_data_files("iso-codes")
         # Redefine name, version and requires metadata attributes. These are
         # used in the egg-info file written by distutils. While egg-info files
         # appear completely useless, it needs to be ensured that if aeidon and
