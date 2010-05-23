@@ -390,7 +390,7 @@ class SDistGna(sdist):
         for member in tobj.getmembers():
             tobj.extract(member, temp_dir)
         log.info("comparing tarball (tmp) with working copy (../..)")
-        run_command_or_exit('diff -qr -x ".*" -x "*.pyc" ../.. %s' % test_dir)
+        os.system('diff -qr -x ".*" -x "*.pyc" ../.. %s' % test_dir)
         response = raw_input("Are all files in the tarball [Y/n]? ")
         if response.lower() == "n":
             raise SystemExit("Must edit MANIFEST.in")

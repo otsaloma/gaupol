@@ -17,6 +17,7 @@ Uninstallation
 To uninstall, remove files and directories
 
     .../bin/gaupol
+    .../lib/pythonX.Y/site-packages/aeidon*
     .../lib/pythonX.Y/site-packages/gaupol*
     .../share/applications/gaupol.desktop
     .../share/locale/*/LC_MESSAGES/gaupol.mo

@@ -3,20 +3,14 @@ include doc/gaupol.1
 include doc/MODULES
 include doc/RELEASING
 include doc/RELEASING.win32
-include po/*.po
-include po/gaupol.pot
-include po/POTFILES.*
-include po/README
+include doc/wiki/*
+include manifest/*
+include po/*
+include tools/*
+recursive-include aeidon *.py
 recursive-include data *
-recursive-include extensions *.glade
-recursive-include extensions *.in
-recursive-include extensions *.png
-recursive-include extensions *.py
-recursive-include extensions *.spec
-recursive-include extensions *.xml
+recursive-include doc/sphinx *
 recursive-include gaupol *.py
-recursive-include manifest *
-recursive-include tools *
 include AUTHORS
 include ChangeLog
 include COPYING
@@ -25,6 +19,10 @@ include INSTALL
 include MANIFEST.in
 include NEWS
 include README
+include README.aeidon
 include setup.py
 include TODO
 include winsetup.py
+global-exclude *~
+global-exclude .hidden
+global-exclude TAGS
