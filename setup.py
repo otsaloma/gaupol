@@ -41,7 +41,6 @@ import glob
 import os
 import re
 import shutil
-import subprocess
 import sys
 import tarfile
 import tempfile
@@ -268,8 +267,9 @@ class InstallData(install_data):
     def __get_desktop_file(self):
         """Return a tuple for translated desktop file."""
         path = os.path.join("data", "gaupol.desktop")
-        command = "intltool-merge -d po %s.in %s" % (path, path)
-        run_command_or_exit(command)
+        if not "py2exe" in sys.argv:
+            command = "intltool-merge -d po %s.in %s" % (path, path)
+            run_command_or_exit(command)
         return ("share/applications", (path,))
 
     def __get_extension_file(self, extension, extension_file):
@@ -304,10 +304,6 @@ class InstallData(install_data):
 
     def run(self):
         """Install data files after translating them."""
-        if "py2exe" in sys.argv:
-            # Do not try compiling translations on Windows,
-            # instead expect them to have been precompiled.
-            return install_data.run(self)
         if self.distribution.with_aeidon:
             for po_file in glob.glob("po/*.po"):
                 self.data_files.append(self.__get_mo_file(po_file))
