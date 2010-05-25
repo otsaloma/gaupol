@@ -55,13 +55,13 @@ the native position type of the file format used is.
 
 :mod:`aeidon` handles two separate documents that comprise a project -- a main
 and a translation document. These correspond to separate files, but the
-subtitles are common since the positions are shared.
+subtitles are common since positions are shared.
 
 :mod:`aeidon` includes an undo/redo-system. Any subtitle data-editing methods
 of :class:`aeidon.Project` (ones marked with the :func:`aeidon.deco.revertable`
-decorator) are revertable. If using :mod:`aeidon` in a context where reverting
-actions is never needed, greater flexibility can be achieved by accessing the
-subtitles directly (via :attr:`aeidon.Project.subtitles`).
+decorator) can be undone and redone. If using :mod:`aeidon` in a context where
+reverting actions is never needed, greater flexibility can be achieved by
+accessing the subtitles directly (via :attr:`aeidon.Project.subtitles`).
 
 :var CONFIG_HOME_DIR: Path to the user's local configuration directory
 :var DATA_DIR: Path to the global data directory

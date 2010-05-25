@@ -48,12 +48,6 @@ Gaupol 0.16
  * Raise PyGTK dependency to 2.16
  * Raise PyEnchant dependency to 1.4.0
 
- --- Done above, todo below ---
-
- * Update extension documentation
- * Use transifex.net for translations
- * Use http://gmane.org/?
-
 Gaupol 0.17
 ===========
 
