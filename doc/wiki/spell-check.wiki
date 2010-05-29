@@ -4,7 +4,7 @@ Gaupol uses the [[http://www.abisource.com/projects/enchant/|enchant]] library t
 
 == Unix ==
 
-On Unix-style operating systems, Gaupol will use whatever dictionaries installed (for any of the supported backends) using your operating system's package management tools. In most cases you may already have dictionaries installed if you have used other Applications, that use the enchant spell-check library. If not, search for packages by backend names; most distributions will have package names such as `aspell-en` for the `aspell` backend English (`en`) dictionary.
+On Unix-style operating systems, Gaupol will use whatever dictionaries installed (for any of the supported backends) using your operating system's package management tools. In most cases you may already have dictionaries installed if you have used other applications, that use the enchant spell-check library. If not, search for packages by backend names; most distributions will have package names such as `aspell-en` for the `aspell` backend English (`en`) dictionary.
 
 == Windows ==
 

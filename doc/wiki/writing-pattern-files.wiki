@@ -10,7 +10,7 @@ Pattern files are placed under `~/.local/share/gaupol/patterns` on Unix or `C:\D
 
 Regular expressions in the pattern files are Perl-style regular expressions that follow the [[http://docs.python.org/lib/re-syntax.html|Python syntax]]. As flags, you'll usually want to use DOTALL, MULTILINE and UNICODE.
 
-[[http://home.gna.org/subtitleeditor/|Subtitle Editor]] uses functionally similar, but syntactically different (XML file format and [[http://library.gnome.org/devel/glib/unstable/glib-regex-syntax.html| GRegex regular expressions]]) pattern files. Patterns are shared between Subtitle Editor and Gaupol development teams and you may do the same with the patterns you write or wish to copy from Subtitle Editor hackers.
+[[http://home.gna.org/subtitleeditor/|Subtitle Editor]] uses functionally similar, but syntactically different (XML file format and [[http://library.gnome.org/devel/glib/unstable/glib-regex-syntax.html|GRegex regular expressions]]) pattern files. Patterns are shared between Subtitle Editor and Gaupol development teams and you may do the same with the patterns you write or wish to copy from Subtitle Editor hackers.
 
 == Common Fields in Pattern Files ==
 
@@ -18,7 +18,7 @@ There are some fields that are common for all types of pattern files.
 
  * '''`Name`''' and '''`Description`''' define how the pattern is presented to the user in the text correction assistant.
 
- * '''`Policy`''' is either `Replace` or `Append` and tells how to handle multiple patterns with the same name. All patterns with the same name are shown to the user as one and the user enables or disables them all at once. The default `Policy` value, `Append`, keeps the existing patterns and adds the new pattern to those. `Replace` discards the existing patterns and adds the new pattern. Pattern files are parsed in order of decreasing generality, i.e. general first, then script, then language and finally country with global patterns parsed before local ones. Thus, the choice given is whether to discard or keep already parsed patterns in more general levels. The main purpose of the `Policy` option is to allow more specific patterns to override less specific patterns, e.g. to allow a Latin pattern to be overridden in English patterns.
+ * '''`Policy`''' is either `Replace` or `Append` and tells how to handle multiple patterns with the same name. All patterns with the same name are shown to the user as one and the user enables or disables them all at once. The default `Policy` value, `Append`, keeps the existing patterns and adds the new pattern to those. `Replace` discards the existing patterns and adds the new pattern. Pattern files are parsed in order of decreasing generality, i.e. general first, then script, then language and finally country with global patterns parsed before local ones. Thus, the choice given is whether to discard or keep already parsed patterns in more general levels. The main purpose of the `Policy` option is to allow more specific patterns to override less specific patterns, e.g. to allow an English pattern to override a Latin one.
 
 == Types of Pattern Files ==
 
@@ -37,13 +37,13 @@ Replacement=\040
 Repeat=False
 }}}
 
- * '''`Classes`''' defines if the pattern is valid for human errors, OCR errors or both. The text correction assistant let's the user choose which of these classes are used to minimize the amount false positives. Especially the OCR corrections may be too aggressive and erroneous if used for human-written text.
+ * '''`Classes`''' defines if the pattern is valid for human errors, OCR errors or both. The text correction assistant lets the user choose which of these classes are used to minimize the amount false positives. Especially the OCR corrections may be too aggressive and erroneous if used for human-written text.
 
  * '''`Pattern`''' and '''`Flags`''' define what to search for as a regular expression.
 
  * '''`Replacement`''' defines what is substituted for matches of pattern.
 
- * '''`Repeat`''' can be `True` to do substitutions again and again as long as matches of pattern are found in the text. This is useful if the pattern partially overlaps another match of pattern. Use this with caution as it can cause Gaupol to hang due to an eternal loop.
+ * '''`Repeat`''' can be `True` to do substitutions again and again as long as matches of pattern are found in the text. This is useful if one match of pattern partially overlaps another. Use this with caution as it can cause Gaupol to hang due to an eternal loop.
 
 === Line-Break ===
 
