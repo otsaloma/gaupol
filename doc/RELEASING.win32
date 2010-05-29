@@ -40,9 +40,7 @@ Preparing to Build Windows Installers
     Edit file 'share\themes\MS-Windows\gtk-2.0\gtkrc' according to the
     following lines. TODO: Discard button images with gaupol-0.16.
 
-        gtk-icon-sizes="... gtk-button=16,16 ..."
         gtk-toolbar-style = GTK_TOOLBAR_ICONS
-        gtk-button-images = 1
         GtkTreeView::allow-rules = 1
 
  6. Install py2exe [6.1] and Inno Setup [6.2].
@@ -50,7 +48,13 @@ Preparing to Build Windows Installers
      [6.1] http://www.py2exe.org/
      [6.2] http://www.jrsoftware.org/isdl.php
 
- 7. Test that everything has been installed correctly. Importing
+ 7. Install gettext [7.1] and intltool [7.2]. Add directories
+    containing executables to %PATH%.
+
+     [7.1] http://ftp.gnome.org/pub/GNOME/binaries/win32/dependencies/
+     [7.2] http://ftp.gnome.org/pub/GNOME/binaries/win32/intltool/
+
+ 8. Test that everything has been installed correctly. Importing
     'gtk', 'chardet' and 'enchant' at the Python console is a good
     minimal test. At this point you should also be able to run gaupol
     from the source directory.
@@ -58,15 +62,10 @@ Preparing to Build Windows Installers
 Releasing a New Version for Windows
 ===================================
 
- 1. Generate translations on a Unix machine (or wherever you have
-    gettext and intltool available) [1.1].
+ 1. Copy the whole top-level gaupol directory to a Windows machine, to
+    %SYSTEMDRIVE%\gaupol-X.Y.Z.
 
-     [1.1] ./setup.py clean install_data -d /tmp
-
- 2. Copy the whole top-level gaupol directory to a Windows machine, to
-    %SYSTEMDRIVE%\gaupol-xx.
-
- 3. Run the 'tools\py2exe.bat' installation script. This places a
+ 2. Run the 'tools\py2exe.bat' installation script. This places a
     whole lot of files under the 'dist' directory. You should be able
     to run gaupol from 'gaupol.exe' in that directory. If you get a
     missing DLL error, you will need to edit 'tools\py2exe.bat' to
@@ -74,11 +73,11 @@ Releasing a New Version for Windows
     If you get a Python ImportError, you will need to edit
     'winsetup.py' to include the missing module or package.
 
- 4. Open 'tools\gaupol.iss' using Inno Setup. Update version numbers
+ 3. Open 'tools\gaupol.iss' using Inno Setup. Update version numbers
     and file names. Compile the installer. Run the installer and run
     the installed version of gaupol to make sure that they work. Check
     that extensions, pattern files, spell-check and encoding
     auto-detection work.
 
- 5. Copy the installer to a Unix machine (or wherever you have gpg
+ 4. Copy the installer to a Unix machine (or wherever you have gpg
     available), sign ('gpg --detach') and upload.

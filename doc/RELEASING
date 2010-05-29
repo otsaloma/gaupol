@@ -2,17 +2,16 @@ Releasing a New Version
 =======================
 
  * Do final quality checks
-   $ pylint bin/gaupol gaupol/ setup.py
-   $ py.test --tb=no -k -gtk gaupol
-   $ py.test --tb=no -k gtk gaupol
+   $ tools/pylint bin/gaupol aeidon/ gaupol/ *.py
+   $ py.test --tb=no aeidon
+   $ py.test --tb=no gaupol
 
  * Make final edits to files, commit and tag
-   $ $EDITOR gaupol/__init__.py
-   $ $EDITOR extensions/*/*.gaupol-extension.in
-   po$ intltool-update -m
-   po$ intltool-update -p -g gaupol
+   $ $EDITOR */__init__.py
+   $ $EDITOR data/extensions/*/*.gaupol-extension.in
+   $ tools/update-translations
    $ $EDITOR NEWS TODO
-   $ git commit -a
+   $ git commit -a -m "RELEASE X.Y.Z"
    $ git tag -s X.Y.Z
    $ git push
    $ git push --tags
@@ -23,12 +22,15 @@ Releasing a New Version
 
  * Upload tarballs to download.gna.org:/upload/gaupol/
 
+ * Generate API documentation
+   $ ./setup.py clean doc --format html
+
  * Build and upload a Windows installer, see "RELEASING.win32"
 
  * Send announcements and update web sites
+   - http://users.tkk.fi/~otsaloma/gaupol/doc/
    - http://home.gna.org/gaupol
    - http://bugzilla.gnome.org/editproducts.cgi?action=edit&product=gaupol
-   - http://users.tkk.fi/~otsaloma/gaupol/doc/
    - gaupol-announcements@gna.org
    - http://gna.org/news/?group=gaupol
    - http://www.gnomefiles.com/devs
