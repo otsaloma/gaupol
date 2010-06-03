@@ -299,9 +299,6 @@ class TestSubtitle(aeidon.TestCase):
         self.tsub.set_text(TRAN, "")
         assert self.tsub.tran_text == ""
 
-    def test_set_text__value_error(self):
-        self.raises(ValueError, self.tsub.set_text, None, "")
-
     def test_scale_positions__frame(self):
         self.fsub.scale_positions(2.0)
         assert self.fsub.start == 200

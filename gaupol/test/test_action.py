@@ -25,7 +25,7 @@ class TestAction(gaupol.TestCase):
         self.action.accelerator = "X"
         self.action.widgets = ("notebook",)
         self.application = gaupol.Application()
-        self.application.on_test_activate = lambda *args: None
+        self.application._on_test_activate = lambda *args: None
         self.action.finalize(self.application)
 
     def test_set_sensitive(self):
@@ -42,7 +42,7 @@ class TestMenuAction(gaupol.TestCase):
         self.action = gaupol.MenuAction("test")
         self.action.widgets = ("notebook",)
         self.application = gaupol.Application()
-        self.application.on_test_activate = lambda *args: None
+        self.application._on_test_activate = lambda *args: None
         self.action.finalize(self.application)
 
 
@@ -54,7 +54,7 @@ class TestRecentAction(gaupol.TestCase):
         self.action = gaupol.RecentAction("test")
         self.action.widgets = ("notebook",)
         self.application = gaupol.Application()
-        self.application.on_test_activate = lambda *args: None
+        self.application._on_test_item_activated = lambda *args: None
         self.action.finalize(self.application)
 
 
@@ -64,7 +64,7 @@ class TestToggleAction(gaupol.TestCase):
         self.action = gaupol.ToggleAction("test")
         self.action.widgets = ("notebook",)
         self.application = gaupol.Application()
-        self.application.on_test_toggled = lambda *args: None
+        self.application._on_test_toggled = lambda *args: None
         self.action.finalize(self.application)
 
 
@@ -84,5 +84,5 @@ class TestRadioAction(gaupol.TestCase):
         self.action.widgets = ("notebook",)
         self.action.group = self.action.__class__.__name__
         self.application = gaupol.Application()
-        self.application.on_test_changed = lambda *args: None
+        self.application._on_test_changed = lambda *args: None
         self.action.finalize(self.application)

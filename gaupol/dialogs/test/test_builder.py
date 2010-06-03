@@ -37,8 +37,8 @@ class TestBuilderDialog(gaupol.TestCase):
         self.dialog.props.visible = True
         self.dialog.props.visible = False
 
-    def test__setattr_widgets(self):
-        self.dialog._setattr_widgets(("tree_view",))
+    def test__set_attributes(self):
+        self.dialog._set_attributes(("tree_view",))
 
     def test_run(self):
         self.dialog._dialog.run = lambda: None

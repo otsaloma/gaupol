@@ -273,13 +273,6 @@ class Subtitle(object):
             self._end = self.end_frame
         self._mode = mode
 
-    def set_text(self, doc, value):
-        """Set text corresponding to `doc` to `value`."""
-        if doc == aeidon.documents.MAIN:
-            self.main_text = value
-        if doc == aeidon.documents.TRAN:
-            self.tran_text = value
-
     def scale_positions(self, value):
         """Multiply start and end positions by `value`."""
         if self._mode == aeidon.modes.TIME:
@@ -288,6 +281,13 @@ class Subtitle(object):
         if self._mode == aeidon.modes.FRAME:
             self.start = int(round(self._start * value, 0))
             self.end = int(round(self._end * value, 0))
+
+    def set_text(self, doc, value):
+        """Set text corresponding to `doc` to `value`."""
+        if doc == aeidon.documents.MAIN:
+            self.main_text = value
+        if doc == aeidon.documents.TRAN:
+            self.tran_text = value
 
     def shift_positions(self, value):
         """Add `value` to start and end positions."""
