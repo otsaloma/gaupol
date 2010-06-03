@@ -25,8 +25,6 @@ Releasing a New Version
  * Generate API documentation
    $ ./setup.py clean doc --format html
 
- * Build and upload a Windows installer, see "RELEASING.win32"
-
  * Send announcements and update web sites
    - http://users.tkk.fi/~otsaloma/gaupol/doc/
    - http://home.gna.org/gaupol
