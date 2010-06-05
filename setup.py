@@ -46,6 +46,7 @@ import tarfile
 import tempfile
 
 os.chdir(os.path.dirname(__file__) or ".")
+running_py2exe = "py2exe" in sys.argv
 
 clean = distutils.command.clean.clean
 distribution = distutils.dist.Distribution
@@ -54,6 +55,12 @@ install_data = distutils.command.install_data.install_data
 install_lib = distutils.command.install_lib.install_lib
 log = distutils.log
 sdist = distutils.command.sdist.sdist
+
+if running_py2exe:
+    # py2exe patches the Distribution class, so we need to import py2exe here
+    # and subclass the patched Distribution class ourselves.
+    import py2exe
+    distribution = py2exe.Distribution
 
 ##
 ## Patch distribution class with new global options.
@@ -132,6 +139,7 @@ class Distribution(distribution):
                 dest = line[1:-1]
                 continue
             files = filter(fok, glob.glob(line))
+            files = filter(os.path.isfile, files)
             assert files
             self.data_files.append((dest, files))
         fobj.close()
@@ -267,7 +275,7 @@ class InstallData(install_data):
     def __get_desktop_file(self):
         """Return a tuple for translated desktop file."""
         path = os.path.join("data", "gaupol.desktop")
-        if not "py2exe" in sys.argv:
+        if not running_py2exe:
             command = "intltool-merge -d po %s.in %s" % (path, path)
             run_command_or_exit(command)
         return ("share/applications", (path,))
@@ -276,8 +284,9 @@ class InstallData(install_data):
         """Return a tuple for translated extension metadata file."""
         assert extension_file.endswith(".in")
         path = extension_file[:-3]
-        command = "intltool-merge -d po %s.in %s" % (path, path)
-        run_command_or_exit(command)
+        if not running_py2exe:
+            command = "intltool-merge -d po %s.in %s" % (path, path)
+            run_command_or_exit(command)
         return ("share/gaupol/extensions/%s" % extension, (path,))
 
     def __get_mo_file(self, po_file):
@@ -289,17 +298,19 @@ class InstallData(install_data):
             os.makedirs(mo_dir)
         mo_file = os.path.join(mo_dir, "gaupol.mo")
         dest_dir = os.path.join("share", mo_dir)
-        log.info("compiling '%s'" % mo_file)
-        command = "msgfmt %s -o %s" % (po_file, mo_file)
-        run_command_or_exit(command)
+        if not running_py2exe:
+            log.info("compiling '%s'" % mo_file)
+            command = "msgfmt %s -o %s" % (po_file, mo_file)
+            run_command_or_exit(command)
         return (dest_dir, (mo_file,))
 
     def __get_pattern_file(self, pattern_file):
         """Return a tuple for the translated pattern file."""
         assert pattern_file.endswith(".in")
         path = pattern_file[:-3]
-        command = "intltool-merge -d po %s.in %s" % (path, path)
-        run_command_or_exit(command)
+        if not running_py2exe:
+            command = "intltool-merge -d po %s.in %s" % (path, path)
+            run_command_or_exit(command)
         return ("share/gaupol/patterns", (path,))
 
     def run(self):

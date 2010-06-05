@@ -3,7 +3,6 @@
 """py2exe installation routines built on top of normal setup.py."""
 
 from setup import *
-import py2exe
 
 includes = ("aeidon",
             "atk",
