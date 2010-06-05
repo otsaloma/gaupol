@@ -28,8 +28,11 @@ import locale
 __all__ = ("_", "dgettext", "ngettext")
 
 locale.setlocale(locale.LC_ALL, "")
-locale.bindtextdomain("gaupol", aeidon.LOCALE_DIR)
-locale.textdomain("gaupol")
+try:
+    # Not available on all platforms.
+    locale.bindtextdomain("gaupol", aeidon.LOCALE_DIR)
+    locale.textdomain("gaupol")
+except AttributeError: pass
 
 gettext.bindtextdomain("gaupol", aeidon.LOCALE_DIR)
 gettext.textdomain("gaupol")
