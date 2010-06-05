@@ -20,10 +20,10 @@ data/icons/hicolor/32x32/apps/*.png
 data/icons/hicolor/scalable/apps/*.svg
 
 [share/gaupol/ui]
-data/ui/*.*
+data/ui/*
 
 [share/gaupol/ui/text-assistant]
-data/ui/text-assistant/*.*
+data/ui/text-assistant/*
 
 [share/man/man1]
 doc/gaupol.1
