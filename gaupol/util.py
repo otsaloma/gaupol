@@ -24,7 +24,9 @@ import glib
 import gtk
 import inspect
 import pango
+import sys
 import traceback
+import webbrowser
 
 
 def char_to_px(nchar, font=None):
@@ -255,6 +257,11 @@ def show_exception(exctype, value, tb):
 
 def show_uri(uri):
     """Open `uri` in default application."""
+    if sys.platform == "win32":
+        if uri.startswith(("http://", "https://")):
+            # gtk.show_uri (GTK+ 2.20) fails on Windows.
+            # GError: No application is registered as handling this file
+            return webbrowser.open(uri)
     return gtk.show_uri(None, uri, gtk.gdk.CURRENT_TIME)
 
 def text_field_to_document(field):
