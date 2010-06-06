@@ -1,4 +1,4 @@
-# Copyright (C) 2005-2009 Osmo Salomaa
+# Copyright (C) 2005-2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -109,7 +109,7 @@ class TMPlayer(aeidon.EnumerationItem):
     container = None
     extension = ".txt"
     has_header = False
-    identifier = r"^-?\d\d:\d\d:\d\d:"
+    identifier = r"^-?\d?\d:\d\d:\d\d:"
     label = "TMPlayer"
     mime_type = "text/plain"
 

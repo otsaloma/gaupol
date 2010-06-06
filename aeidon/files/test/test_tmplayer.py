@@ -17,14 +17,14 @@
 import aeidon
 
 
-class TestTMPlayer(aeidon.TestCase):
+class TestTMPlayerOneDigitHour(aeidon.TestCase):
 
     format = aeidon.formats.TMPLAYER
+    name = "tmplayer-one-digit-hour"
 
     def setup_method(self, method):
-        self.file = aeidon.files.new(self.format,
-                                     self.new_temp_file(self.format),
-                                     "ascii")
+        path = self.new_temp_file(self.format, self.name)
+        self.file = aeidon.files.new(self.format, path, "ascii")
 
     def test_read(self):
         assert self.file.read()
@@ -32,5 +32,10 @@ class TestTMPlayer(aeidon.TestCase):
     def test_write(self):
         self.file.write(self.file.read(), aeidon.documents.MAIN)
         text = open(self.file.path, "r").read().strip()
-        reference = self.get_sample_text(self.format)
+        reference = self.get_sample_text(self.format, self.name)
         assert text == reference
+
+
+class TestTMPlayerTwoDigitHour(TestTMPlayerOneDigitHour):
+
+    name = "tmplayer-two-digit-hour"

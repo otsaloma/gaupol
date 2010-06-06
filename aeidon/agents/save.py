@@ -163,6 +163,8 @@ class SaveAgent(aeidon.Delegate):
         Raise :exc:`UnicodeError` if encoding fails.
         """
         sfile = sfile or self.main_file
+        if sfile is not None and self.main_file is not None:
+            sfile.copy_from(self.main_file)
         indices = self._save(aeidon.documents.MAIN, sfile, keep_changes)
         if keep_changes:
             self._ensure_mode(sfile.mode)
@@ -184,6 +186,8 @@ class SaveAgent(aeidon.Delegate):
         Raise :exc:`UnicodeError` if encoding fails.
         """
         sfile = sfile or self.tran_file
+        if sfile is not None and self.tran_file is not None:
+            sfile.copy_from(self.tran_file)
         indices = self._save(aeidon.documents.TRAN, sfile, keep_changes)
         if keep_changes:
             self.tran_file = sfile

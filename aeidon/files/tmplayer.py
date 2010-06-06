@@ -1,4 +1,4 @@
-# Copyright (C) 2006-2009 Osmo Salomaa
+# Copyright (C) 2006-2010 Osmo Salomaa
 #
 # This file is part of Gaupol.
 #
@@ -17,6 +17,7 @@
 """TMPlayer file."""
 
 import aeidon
+import re
 
 __all__ = ("TMPlayer",)
 
@@ -25,8 +26,21 @@ class TMPlayer(aeidon.SubtitleFile):
 
     """TMPlayer file."""
 
+    _re_one_digit_hour = re.compile(r"^-?\d:\d\d:\d\d:")
+    _re_two_digit_hour = re.compile(r"^-?\d\d:\d\d:\d\d:")
     format = aeidon.formats.TMPLAYER
     mode = aeidon.modes.TIME
+
+    def __init__(self, path, encoding, newline=None):
+        """Initialize an :class:`MPsub` object."""
+        aeidon.SubtitleFile.__init__(self, path, encoding, newline)
+        self.two_digit_hour = True
+
+    def copy_from(self, other):
+        """Copy generic properties from `other` file."""
+        aeidon.SubtitleFile.copy_from(self, other)
+        if self.format == other.format:
+            self.two_digit_hour = other.two_digit_hour
 
     def read(self):
         """Read file and return subtitles.
@@ -36,13 +50,27 @@ class TMPlayer(aeidon.SubtitleFile):
         """
         subtitles = [self._get_subtitle()]
         for line in self._read_lines():
-            i = (10 if line.startswith("-") else 9)
-            if len(line.strip()) < i: continue
-            subtitle = self._get_subtitle()
-            subtitle.start = line[:i - 1] + ".000"
-            subtitles[-1].end = subtitle.start_time
-            subtitle.main_text = line[i:].replace("|", "\n")
-            subtitles.append(subtitle)
+            match = self._re_one_digit_hour.search(line)
+            if match is not None:
+                i = match.span()[1]
+                subtitle = self._get_subtitle()
+                subtitle.start = ("-0" + line[1:i - 1] + ".000"
+                                  if line.startswith("-") else
+                                  "0" + line[:i - 1] + ".000")
+
+                subtitles[-1].end = subtitle.start_time
+                subtitle.main_text = line[i:].replace("|", "\n")
+                subtitles.append(subtitle)
+                self.two_digit_hour = False
+            match = self._re_two_digit_hour.search(line)
+            if match is not None:
+                i = match.span()[1]
+                subtitle = self._get_subtitle()
+                subtitle.start = line[:i - 1] + ".000"
+                subtitles[-1].end = subtitle.start_time
+                subtitle.main_text = line[i:].replace("|", "\n")
+                subtitles.append(subtitle)
+                self.two_digit_hour = True
         subtitles.pop(0)
         calc = subtitles[-1].calc
         time = subtitles[-1].start_time
@@ -58,6 +86,9 @@ class TMPlayer(aeidon.SubtitleFile):
         """
         for subtitle in subtitles:
             start = subtitle.calc.round_time(subtitle.start_time, 0)
-            fobj.write("%s:" % start[:-4])
+            fobj.write("%s:" % (start[:-4] if self.two_digit_hour
+                                else "-" + start[2:-4] if start.startswith("-")
+                                else start[1:-4]))
+
             fobj.write(subtitle.get_text(doc).replace("\n", "|"))
             fobj.write(self.newline.value)
