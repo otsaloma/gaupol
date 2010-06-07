@@ -34,3 +34,26 @@ To install only the gaupol package, use command
 
 Note that the --with-* and --without-* are global options and must
 placed before any commands.
+
+Dependencies
+============
+
+As separate packages, aeidon requires Python [1] 2.6 or greater.
+Optional dependencies include: PyEnchant [2] 1.4.0 or greater,
+required for spell-checking; iso-codes [3], used to translate language
+and country names; and Universal Encoding Detector [4], required for
+character encoding auto-detection. If aeidon is installed using the
+'--without-iso-codes' switch, then iso-codes is not optional, but
+rather required.
+
+gaupol requires Python [1] 2.6 or greater, PyGTK [2] 2.16 or greater
+and aeidon of the same version as gaupol. Optional dependencies
+include MPlayer [6] or VLC [7], which are recommended for preview.
+
+ [1] http://www.python.org/
+ [2] http://pyenchant.sourceforge.net/
+ [3] http://pkg-isocodes.alioth.debian.org/
+ [4] http://chardet.feedparser.org/
+ [5] http://www.pygtk.org/
+ [6] http://www.mplayerhq.hu/
+ [7] http://www.videolan.org/vlc/

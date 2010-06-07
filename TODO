@@ -6,7 +6,7 @@ Gaupol 0.16.1
  [D] Fix cropped close icons on tabs
  [D] Fix launching web browser on Windows
  [D] Fix AttributeError related to locale functions on Windows
- [ ] Clarify dependencies in README.aeidon
+ [D] Clarify dependencies of aeidon and gaupol in README.aeidon
  [D] Add Russian translation (Алекс)
 
 Gaupol 0.17
