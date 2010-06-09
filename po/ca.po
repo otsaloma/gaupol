@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gaupol 0.3.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-23 19:45+0300\n"
+"POT-Creation-Date: 2010-06-09 22:10+0300\n"
 "PO-Revision-Date: 2006-01-24 12:28+0100\n"
 "Last-Translator: Gil Forcada <gilforcada@guifi.net>\n"
 "Language-Team: Catalan <ca@dodds.net>\n"
@@ -2630,7 +2630,7 @@ msgstr "%d desconegut"
 msgid "Close project"
 msgstr ""
 
-#: ../gaupol/page.py:327
+#: ../gaupol/page.py:325
 #, python-format
 msgid "%s translation"
 msgstr "%s traducció"

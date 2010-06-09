@@ -1,14 +1,3 @@
-Gaupol 0.16.1
-=============
-
- [D] Add support for a variant of the TMPlayer format with two-digit
-     hours, i.e. time strings of form HH:MM:SS:
- [D] Fix cropped close icons on tabs
- [D] Fix launching web browser on Windows
- [D] Fix AttributeError related to locale functions on Windows
- [D] Clarify dependencies of aeidon and gaupol in README.aeidon
- [D] Add Russian translation (Алекс)
-
 Gaupol 0.17
 ===========
 

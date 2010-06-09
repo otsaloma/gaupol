@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gaupol 0.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-23 19:45+0300\n"
+"POT-Creation-Date: 2010-06-09 22:10+0300\n"
 "PO-Revision-Date: 2009-12-02 11:07+0100\n"
 "Last-Translator: Laszlo Andrassy <andrassy.laszlo@gmail.com>\n"
 "Language-Team: Hungarian\n"
@@ -2644,7 +2644,7 @@ msgstr "Felirat nélkül %d"
 msgid "Close project"
 msgstr "Projekt bezárása"
 
-#: ../gaupol/page.py:327
+#: ../gaupol/page.py:325
 #, python-format
 msgid "%s translation"
 msgstr "%s fordítás"
